@@ -1,8 +1,11 @@
 require "spec_helper"
 
 describe "Manage Discount Codes" do
-  let!(:market)              { create(:market) }
-  let!(:market2)             { create(:market) }
+  let!(:startup_plan)        { create(:plan, discount_codes: false) }
+  let!(:grow_plan)           { create(:plan, discount_codes: true) }
+
+  let!(:market)              { create(:market, plan: grow_plan) }
+  let!(:market2)             { create(:market, plan: startup_plan) }
   let!(:discount_fixed)      { create(:discount, name: "fixed discount", type: "fixed", discount: 5.00) }
   let!(:discount_percentage) { create(:discount, name: "percentage discount", type: "percentage", discount: 10, maximum_uses: 10) }
   let(:organization)         { create(:organization, :buyer, markets: [market]) }
@@ -23,7 +26,7 @@ describe "Manage Discount Codes" do
   end
 
   context "market managers" do
-    let!(:user) { create(:user, managed_markets: [market]) }
+    let!(:user) { create(:user, managed_markets: [market, market2]) }
 
     context "plan does not allow discount codes" do
       let!(:market) { create(:market, plan: create(:plan, discount_codes: false)) }
@@ -49,6 +52,12 @@ describe "Manage Discount Codes" do
       visit new_admin_discount_path
 
       expect(page).to_not have_xpath("//select/option[normalize-space(text())='All Markets']")
+    end
+
+    it "does not show the market with a plan that disallows discount codes as an option" do
+      visit new_admin_discount_path
+
+      expect(page).to_not have_xpath("//select/option[normalize-space(text())='#{market2.name}']")
     end
 
     it "shows a list of discount codes" do
