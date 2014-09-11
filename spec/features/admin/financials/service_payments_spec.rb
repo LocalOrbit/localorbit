@@ -14,14 +14,15 @@ feature "Admin service payments" do
   end
 
   it "navigating to" do
-    click_link "Financials"
+    click_link "Market Admin"
+    click_link "Admin Financials"
     click_link "Service Payments"
 
     expect(page).to have_content("Market Service Payments")
   end
 
   it "shows the active markets" do
-    visit "/admin/financials/service_payments"
+    visit "/admin/financials/admin/service_payments"
 
     within("#service-payments") do
       expect(page).to have_content(unconfigured_market.name)
@@ -31,7 +32,7 @@ feature "Admin service payments" do
   end
 
   it "allows a payment to be run for a configured market" do
-    visit "/admin/financials/service_payments"
+    visit "/admin/financials/admin/service_payments"
 
     within("#market_#{configured_market.id}") do
       expect(page).to have_button(payment_button_text)
@@ -39,7 +40,7 @@ feature "Admin service payments" do
   end
 
   it "does not allow a payment to be run for an unconfigured market" do
-    visit "/admin/financials/service_payments"
+    visit "/admin/financials/admin/service_payments"
 
     within("#market_#{unconfigured_market.id}") do
       expect(page).not_to have_button(payment_button_text)
@@ -49,7 +50,7 @@ feature "Admin service payments" do
   it "runs a service payment through balanced", :vcr do
     market_manager = create(:user, managed_markets: [configured_market])
 
-    visit "/admin/financials/service_payments"
+    visit "/admin/financials/admin/service_payments"
 
     expect(page.find("#market_#{configured_market.id} .next-payment-date").text).to eq(1.day.ago.strftime("%m/%d/%Y"))
 

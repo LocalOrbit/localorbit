@@ -53,8 +53,11 @@ Rails.application.routes.draw do
       end
       resources :receipts, only: [:index, :edit, :update]
       resources :vendor_payments
-      resources :market_payments, only: [:index, :create]
-      resources :service_payments, only: [:index, :create]
+
+      scope path: :admin do
+        resources :market_payments, only: [:index, :create]
+        resources :service_payments, only: [:index, :create]
+      end
     end
 
     resources :orders, only: [:index, :show, :update]
