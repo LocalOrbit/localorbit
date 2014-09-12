@@ -1,6 +1,5 @@
 class SellerPaymentGroup
-  attr_reader :orders
-  attr_reader :organization
+  attr_reader :orders, :organization, :unwrapped_orders
 
   # This goes on the model
   def self.for_scope(scope, seller_id=nil)
@@ -20,6 +19,7 @@ class SellerPaymentGroup
 
   def initialize(org, orders)
     @organization = org
+    @unwrapped_orders = orders
     @orders = SellerOrder.collection(@organization, orders)
   end
 

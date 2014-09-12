@@ -41,7 +41,7 @@ feature "Paying sellsers on the automate plan" do
 
   let!(:market1_order2) { create(:order, items: [create(:order_item, :delivered, product: market1_product2, quantity: 3), create(:order_item, :delivered, product: market1_product4, quantity: 7)], market: market1, organization: market1_buyer, delivery: market1_delivery, payment_method: "ach", order_number: "LO-002", total_cost: 69.90, placed_at: today - 6.days, payment_status: "paid") }
   let!(:market1_order3) { create(:order, items: [create(:order_item, :delivered, product: market1_product3, quantity: 6)], market: market1, organization: market1_buyer, delivery: market1_delivery, payment_method: "ach", order_number: "LO-003", total_cost: 41.94, placed_at: today - 4.days) }
-  let!(:market1_order4) { create(:order, items: [create(:order_item, :delivered, product: market1_product2, quantity: 9), create(:order_item, :delivered, product: market1_product3, quantity: 14)], market: market1, organization: market1_buyer, delivery: market1_delivery, payment_method: "ach", order_number: "LO-004", total_cost: 160.77, placed_at: today - 3.days) }
+  let!(:market1_order4) { create(:order, items: [ create(:order_item, :delivered, product: market1_product4, quantity: 3), create(:order_item, :delivered, product: market1_product2, quantity: 9), create(:order_item, :delivered, product: market1_product3, quantity: 14)], market: market1, organization: market1_buyer, delivery: market1_delivery, payment_method: "ach", order_number: "LO-004", total_cost: 160.77, placed_at: today - 3.days, payment_status: "paid") }
   let!(:market1_order5) { create(:order, items: [create(:order_item, :delivered, product: market1_product2, quantity: 9), create(:order_item, :delivered, product: market1_product3, quantity: 14)], market: market1, organization: market1_buyer, delivery: market1_delivery, payment_method: "ach", order_number: "LO-005", total_cost: 160.77, placed_at: today - 80.days) }
 
   let(:balanced_uri) { "/v1/marketplaces/TEST-MP4X7mSSQwAyDzwUfc5TAQ7D/bank_accounts/BA1YqNWvILpfyq9FqSDPLhCO" }
@@ -54,18 +54,80 @@ feature "Paying sellsers on the automate plan" do
 
   before do
     deliver_order(market1_order1)
-  end
 
-  scenario "admin can pay Sellers" do
     switch_to_subdomain("app")
     sign_in_as user
     visit admin_financials_seller_payments_path
+  end
+
+  module Dom
+    class PaymentsGroup < Domino
+      selector ".seller-payment"
+      attribute :name
+      attribute :owed
+      attribute :subtotal
+
+      def orders
+        node.all(".order").map do |row|
+          LineItem.new(row)
+        end
+      end
+
+      class LineItem
+        def initialize(row)
+          @row = row
+        end
+
+        def check
+          checkbox.set(true)
+        end
+
+        def uncheck
+          checkbox.set(false)
+        end
+
+        def order_number
+          @row.find(".order-number").text
+        end
+
+        def owed
+          @row.find(".item-owed").text
+        end
+
+        private
+        def checkbox
+          @row.find("input[type='checkbox']")
+        end
+      end
+    end
+  end
+
+  scenario "admin can pay Sellers" do
+    group = Dom::PaymentsGroup.find_by_name ""
+
     expect(page).to have_content("Make Payments to Sellers")
     expect(page).to have_content("Betterest Farm")
     expect(page).to have_content("Great Farms")
     expect(page).to have_content("NOT VERIFIED")
-    save_and_open_page
+
     click_button "Pay Great Farms"
+
     expect(page).to have_content("Payment recorded")
+  end
+
+  scenario "admin chooses specific payments to pay out to sellers" do
+    betterest_farms = Dom::PaymentsGroup.find_by_name "Great Farms"
+
+    orders = betterest_farms.orders
+
+    expect(orders.first.order_number).to eql("LO-002")
+    expect(orders.last.order_number).to eql("LO-004")
+
+    orders.last.uncheck
+
+    click_button "Pay Great Farms"
+
+    betterest_farms = Dom::PaymentsGroup.find_by_name "Great Farms"
+    expect(betterest_farms.node).not_to have_content("LO-002")
   end
 end

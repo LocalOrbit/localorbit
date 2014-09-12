@@ -5,10 +5,10 @@
   </div>
 </div>
 <% @groups.each do |group| %>
-  <div class="market-payment">
+  <div class="seller-payment">
     <%= form_tag [:admin, :financials, :seller_payments] do %>
       <%= hidden_field_tag :seller_id, group.id %>
-      <h2><%= group.name %></h2>
+      <h2 class="name"><%= group.name %></h2>
       <table>
         <tr class="table-header">
           <th></th>
@@ -18,19 +18,19 @@
         </tr>
 
         <% group.orders.each do |order| %>
-        <tr class="table-header">
+        <tr class="order">
           <td><%= check_box_tag "order_ids[]", order.id, true %></td>
-          <td><%= order.order_number %></td>
+          <td class="order-number"><%= order.order_number %></td>
           <td></td>
-          <td><%= number_to_currency(order.items_subtotal) %></td>
+          <td class="item-owed"><%= number_to_currency(order.items_subtotal) %></td>
         </tr>
         <% end %>
 
         <tr>
           <td></td>
           <td>Total</td>
-          <td><%= group.owed %></td>
-          <td><%= number_to_currency(group.orders.sum(&:items_subtotal)) %></td>
+          <td class="owed"><%= group.owed %></td>
+          <td class="subtotal"><%= number_to_currency(group.orders.sum(&:items_subtotal)) %></td>
         </tr>
       </table>
       <div>
