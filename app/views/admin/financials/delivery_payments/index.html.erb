@@ -1,0 +1,45 @@
+<%= render "admin/financials/admin_header" %>
+<div class="sub-header stickable">
+  <div class="l-constraint">
+    <div class="l-page-header admin-markets-header">
+      <h1><i class="font-icon" data-icon="&#xe00f;"></i>&nbsp; Market Delivery Fee Payments</h1>
+    </div>
+  </div>
+</div>
+
+<%@market.each do |market, orders| %>
+  <div id="delivery-payment">
+    <%= form_tag [:admin, :financials, :delivery_payments] do %>
+      <%= hidden_field_tag :market_id, market.id %>
+      <h2><%= market.name %></h2>
+      <table>
+        <tr class="table-header">
+          <th></th>
+          <th>Order Numbers</th>
+          <th>Delivery Fee</th>
+        </tr>
+        <% orders.each do |order| %>
+          <tr class="table-header">
+            <td></td>
+            <td><%= order.order_number %></td>
+            <td><%= number_to_currency(order.delivery_fees) %></td>
+          </tr>
+        <% end %>
+        <tr class="totals">
+          <td></td>
+          <td>Total</td>
+          <td><%= number_to_currency(orders.sum(&:delivery_fees)) %></td>
+        </tr>
+      </table>
+      <div>
+        <% if (accounts = market.decorate.payble_accounts_for_select).empty? %>
+          <span class="warning">Market has not added a bank account.</span>
+        <% else %>
+          <%= label_tag :bank_account_id %>
+          <%= select_tag :bank_account_id, options_for_select(market.decorate.payble_accounts_for_select) %>
+          <%= submit_tag "Pay #{market.name}", class: 'btn--small' %>
+        <% end %>
+      </div>
+    <% end %>
+  </div>
+<% end %>

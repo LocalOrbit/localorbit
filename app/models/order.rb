@@ -123,6 +123,10 @@ class Order < ActiveRecord::Base
       preload(:items, :market)
   end
 
+  def self.delivery_fees_payable
+    used_lo_payment_processing.payable.where("orders.delivery_fees > 0.01")
+  end
+
   def self.payable_to_sellers
     subselect = "SELECT 1 FROM payments
       INNER JOIN order_payments ON order_payments.order_id = orders.id AND order_payments.payment_id = payments.id
