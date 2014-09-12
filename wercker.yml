@@ -1,0 +1,9 @@
+box: wercker/ruby
+build:
+  steps:
+    - script:
+        name: "No-op"
+        code: echo "lol"
+
+
+    
