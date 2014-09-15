@@ -45,11 +45,16 @@ feature "Payment history", :truncate_after_all do
 
     @payments = {}
 
-    orders = []
-    orders2 = []
+    @orders = []
+    @orders2 = []
     6.times do |i|
-      order_item = create(:order_item, unit_price: 20.00 + i, quantity: 1)
-      orders << create(:order,
+      order_item = create(:order_item, 
+                          unit_price: 20.00 + i, 
+                          quantity: 1, 
+                          product: create(:product, :sellable, 
+                                          organization: @seller))
+      @orders << create(:order,
+                       market: @market,
                        delivery: @delivery,
                        items: [order_item],
                        organization: @buyer,
@@ -58,8 +63,13 @@ feature "Payment history", :truncate_after_all do
                        order_number: "LO-01-234-4567890-#{i}",
                        total_cost: 20.00 + i
                        )
-      order_item2 = create(:order_item, unit_price: 20.01 + i, quantity: 1)
-      orders2 << create(:order,
+      order_item2 = create(:order_item, 
+                           unit_price: 20.01 + i, 
+                           quantity: 1,
+                           product: create(:product, :sellable, 
+                                          organization: @seller2))
+      @orders2 << create(:order,
+                        market: @market2,
                         delivery: @delivery,
                         items: [order_item2],
                         organization: @buyer2,
@@ -77,8 +87,8 @@ feature "Payment history", :truncate_after_all do
                          payment_method: ["cash", "check", "ach", "ach", "credit card"][i - 1],
                          payer: @buyer,
                          payee: @market,
-                         orders: [orders[i]],
-                         amount: orders[i].total_cost)
+                         orders: [@orders[i]],
+                         amount: @orders[i].total_cost)
 
         payment.update_attribute(:note, "#12345") if i == 2
         payment.update_attributes(bank_account: ach_account) if i == 3
@@ -90,8 +100,8 @@ feature "Payment history", :truncate_after_all do
                           payment_method: ["cash", "check", "ach", "ach", "credit card"][i - 1],
                           payer: @buyer2,
                           payee: @market2,
-                          orders: [orders2[i]],
-                          amount: orders2[i].total_cost)
+                          orders: [@orders2[i]],
+                          amount: @orders2[i].total_cost)
 
         payment2.update_attribute(:note, "#12345") if i == 2
         payment2.update_attributes(bank_account: ach_account) if i == 3
@@ -104,9 +114,9 @@ feature "Payment history", :truncate_after_all do
                          payment_method: ["cash", "check"][i % 2],
                          payer: @market,
                          payee: @seller,
-                         orders: [orders[i]],
+                         orders: [@orders[i]],
                          note: ["", "#67890"][i % 2],
-                         amount: orders[i].total_cost)
+                         amount: @orders[i].total_cost)
         remember_payment(payment)
 
         # Create payment from market to seller2
@@ -114,9 +124,9 @@ feature "Payment history", :truncate_after_all do
                payment_method: ["cash", "check"][i % 2],
                payer: @market2,
                payee: @seller2,
-               orders: [orders2[i]],
+               orders: [@orders2[i]],
                note: ["", "#54321"][i % 2],
-               amount: orders2[i].total_cost)
+               amount: @orders2[i].total_cost)
         remember_payment(payment)
       end
     end
@@ -653,6 +663,28 @@ feature "Payment history", :truncate_after_all do
       expect(Dom::Admin::Financials::PaymentRow.all.count).to eq(3)
     end
 
+    scenario "can click on an Order # to view the Order" do
+      order = @orders[2]
+      
+      # (for MMs there could be multiple entries correspinding to the same order, it doesn't matter which one we click)::
+      page.first("a", text: order.order_number).click
+
+      # See we're not on 404:
+      expect(page.status_code).not_to eq(404)
+      expect(page).not_to have_content("We can't find that page")
+
+      # See we're not on the Delivery selection screen:
+      expect(page).not_to have_content("Please choose a pick up")
+
+      # See we're on the Order page:
+      expect(page).to have_content("Order info for #{order.order_number}")
+      expect(page).to have_content("Payment Method:")
+      expect(page).to have_content("Delivery Status:")
+
+      # (cheat: see we're on the admin version of the product page:)
+      expect(page.current_path).to eq(admin_order_path(order))
+    end
+
     context "who have only one market" do
       let!(:user) { create(:user, :market_manager, managed_markets: [@market]) }
 
@@ -688,6 +720,26 @@ feature "Payment history", :truncate_after_all do
       expect(payment_row("$25.00")).not_to be_nil
       expect(payment_row("$25.00").payment_method).to eql("Credit Card: ************7732")
       expect(payment_row("$25.00").date).to eql(format_date(@payment_day + 5.days))
+    end
+
+    scenario "can click on an Order # to view the Order" do
+      order = @orders[5]
+      click_link order.order_number
+
+      # See we're not on 404:
+      expect(page.status_code).not_to eq(404)
+      expect(page).not_to have_content("We can't find that page")
+
+      # See we're not on the Delivery selection screen:
+      expect(page).not_to have_content("Please choose a pick up")
+
+      # See we're on the Order page:
+      expect(page).to have_content("Order info for #{order.order_number}")
+      expect(page).to have_content("Payment Method:")
+      expect(page).to have_content("Delivery Status:")
+
+      # (cheat: peek at the path to see we're on buyer version of the page:)
+      expect(page.current_path).to eq(order_path(order))
     end
 
     scenario "can view their purchase history after market manage deletes an organization" do
@@ -894,6 +946,27 @@ feature "Payment history", :truncate_after_all do
       expect(page).not_to have_content("LO-01-234-4567890-3")
       expect(page).to have_content("LO-01-234-4567890-4")
       expect(page).not_to have_content("LO-01-234-4567890-5")
+    end
+
+    scenario "can click on an Order # to view the Order" do
+      order = @orders[1]
+      
+      click_link order.order_number
+
+      # See we're not on 404:
+      expect(page.status_code).not_to eq(404)
+      expect(page).not_to have_content("We can't find that page")
+
+      # See we're not on the Delivery selection screen:
+      expect(page).not_to have_content("Please choose a pick up")
+
+      # See we're on the Order page:
+      expect(page).to have_content("Order info for #{order.order_number}")
+      expect(page).to have_content("Payment Method:")
+      expect(page).to have_content("Delivery Status:")
+
+      # (cheat: see we're on the admin version of the product page:)
+      expect(page.current_path).to eq(admin_order_path(order))
     end
   end
 end
