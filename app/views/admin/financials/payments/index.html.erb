@@ -33,7 +33,8 @@
           <td class="date"><%= payment.created_at.strftime("%m/%d/%Y") %></td>
           <td class="description">
             <% if payment.payment_type == "order" || payment.payment_type == "seller payment" || payment.payment_type == "market payment" %>
-              Order #: <%= link_to payment.orders.first.order_number, admin_order_path(payment.orders.first) %>
+              <%- order_link_path = current_user.buyer_only? ? order_path(payment.orders.first) : admin_order_path(payment.orders.first) %>
+              Order #: <%= link_to payment.orders.first.order_number, order_link_path %>
               <% if payment.orders.count > 1 %>
                 <%= link_to raw('<i class="font-icon icon-plus-circle"> </i>'), "#more-info-#{payment.id}", class:"modal-toggle more-info payment-more", data: { modal: "more-info-#{payment.id}"} %>
 

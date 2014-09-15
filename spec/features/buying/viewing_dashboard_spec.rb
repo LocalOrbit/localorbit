@@ -67,6 +67,24 @@ describe "Buyer viewing dashboard" do
       expect(order.payment_status).to eq("Unpaid")
       expect(order.total).to eq("$#{order3.total_cost}")
     end
+
+    it "lets them open their Orders" do
+      switch_to_subdomain(market.subdomain)
+      sign_in_as(user)
+      click_link "Dashboard", match: :first
+
+      orders = Dom::Dashboard::OrderRow.all
+      expect(orders.size).to eq(3)
+      hist_order = orders[0]
+
+      click_link hist_order.order_number
+
+      expect(page).not_to have_content("Please choose a pick up")
+
+      expect(page).to have_content("Order info for #{hist_order.order_number}")
+      expect(page).to have_content("Payment Method:")
+      expect(page).to have_content("Delivery Status:")
+    end
   end
 
   context "without orders" do
