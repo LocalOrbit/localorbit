@@ -1,7 +1,7 @@
 class OrdersController < ApplicationController
   before_action :require_selected_market
   before_action :require_market_open
-  before_action :require_current_organization
+  before_action :require_current_organization, except: [:show]
   before_action :require_organization_location, except: [:show]
   before_action :require_current_delivery, except: [:show]
   before_action :require_cart
