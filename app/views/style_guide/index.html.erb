@@ -19,7 +19,6 @@ section{margin:60px 0;}
    <h6>H6 Header</h6>
    <p>Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words very popular during the Renaissance. The first line of Lorem Ipsum, "Lorem ipsum dolor sit amet..", comes from a line in section 1.10.32.</p>
    <p>The standard chunk of Lorem Ipsum used since the 1500s is reproduced below for those interested. Sections 1.10.32 and 1.10.33 from "de Finibus Bonorum et Malorum" by Cicero are also reproduced in their exact original form, accompanied by English versions from the 1914 translation by H. Rackham.</p>
-   <p><strong>TO DO:</strong> Use text color of #333333</p>
 </section>
 <section>
   <h1>Links</h1>
@@ -30,25 +29,19 @@ section{margin:60px 0;}
    <h1>Gradients</h1>
    <hr class="styleguide">
    
-   <small><strong>EXAMPLE:</strong> (left with current gradient, center with no-gradient, right with proposed gradient)</small>
+   <small><strong>EXAMPLE:</strong> (left with current gradient, right with no-gradient)</small>
    <br>
    <div style="clear:both;"></div>
    
-    <div class="l-app-header" style="float:left;width:33%;height:200px; background-color: <%= current_market.text_color -%>;"></div>
-    <div style="float:left;width:33%;height:200px; background-color:<%= current_market.text_color -%>;"></div>
-    <div class="l-app-header" style="float:left;width:33%;height:200px; background-color: <%= current_market.text_color -%>;background: linear-gradient(to bottom, #ED2A2A, #e92424);"></div>
+    <div class="l-app-header" style="float:left;width:50%;height:200px; background-color: <%= current_market.text_color -%>;"></div>
+    <div style="float:left;width:50%;height:200px; background-color:<%= current_market.text_color -%>;"></div>
+
 
     <div style="clear:both;"></div>
-    
-    <p><strong>To Do:</strong> use a less drastic gradient with lighter color on top. (background-image: linear-gradient(to bottom, #2778b3, #1768a3);)</p>
+
     
     <div class="nav nav--main">
       <span class="current">Shop</span>
-      <a class="" href="/sellers" >Sellers</a>
-    </div>
-    
-    <div class="nav nav--main">
-      <span class="current" style="background: linear-gradient(to bottom, #ED2A2A, #e92424); border-radius:4px;">Shop</span>
       <a class="" href="/sellers" >Sellers</a>
     </div>
 </section>
