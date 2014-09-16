@@ -72,13 +72,13 @@
   > a {
     &:hover {
       color: $hover;
-      @include border-radius(6px);
+      @include border-radius(4px);
       background: $link;
       @include gradient(rgba(0,0,0,0), rgba(0,0,0,0.12));
     }
   }
   > span {
-    @include border-radius(6px);
+    @include border-radius(4px);
     color: #fff;
     background: #0a3078;
     background-color: rgba(10,48,120,0.48);
