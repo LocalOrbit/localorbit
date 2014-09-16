@@ -663,26 +663,9 @@ feature "Payment history", :truncate_after_all do
       expect(Dom::Admin::Financials::PaymentRow.all.count).to eq(3)
     end
 
+    # https://www.pivotaltracker.com/story/show/78823306
     scenario "can click on an Order # to view the Order" do
-      order = @orders[2]
-      
-      # (for MMs there could be multiple entries correspinding to the same order, it doesn't matter which one we click)::
-      page.first("a", text: order.order_number).click
-
-      # See we're not on 404:
-      expect(page.status_code).not_to eq(404)
-      expect(page).not_to have_content("We can't find that page")
-
-      # See we're not on the Delivery selection screen:
-      expect(page).not_to have_content("Please choose a pick up")
-
-      # See we're on the Order page:
-      expect(page).to have_content("Order info for #{order.order_number}")
-      expect(page).to have_content("Payment Method:")
-      expect(page).to have_content("Delivery Status:")
-
-      # (cheat: see we're on the admin version of the product page:)
-      expect(page.current_path).to eq(admin_order_path(order))
+      follow_admin_order_link order: @orders[2]
     end
 
     context "who have only one market" do
@@ -722,24 +705,9 @@ feature "Payment history", :truncate_after_all do
       expect(payment_row("$25.00").date).to eql(format_date(@payment_day + 5.days))
     end
 
+    # https://www.pivotaltracker.com/story/show/78823306
     scenario "can click on an Order # to view the Order" do
-      order = @orders[5]
-      click_link order.order_number
-
-      # See we're not on 404:
-      expect(page.status_code).not_to eq(404)
-      expect(page).not_to have_content("We can't find that page")
-
-      # See we're not on the Delivery selection screen:
-      expect(page).not_to have_content("Please choose a pick up")
-
-      # See we're on the Order page:
-      expect(page).to have_content("Order info for #{order.order_number}")
-      expect(page).to have_content("Payment Method:")
-      expect(page).to have_content("Delivery Status:")
-
-      # (cheat: peek at the path to see we're on buyer version of the page:)
-      expect(page.current_path).to eq(order_path(order))
+      follow_buyer_order_link order: @orders[5]
     end
 
     scenario "can view their purchase history after market manage deletes an organization" do
@@ -948,25 +916,9 @@ feature "Payment history", :truncate_after_all do
       expect(page).not_to have_content("LO-01-234-4567890-5")
     end
 
+    # https://www.pivotaltracker.com/story/show/78823306
     scenario "can click on an Order # to view the Order" do
-      order = @orders[1]
-      
-      click_link order.order_number
-
-      # See we're not on 404:
-      expect(page.status_code).not_to eq(404)
-      expect(page).not_to have_content("We can't find that page")
-
-      # See we're not on the Delivery selection screen:
-      expect(page).not_to have_content("Please choose a pick up")
-
-      # See we're on the Order page:
-      expect(page).to have_content("Order info for #{order.order_number}")
-      expect(page).to have_content("Payment Method:")
-      expect(page).to have_content("Delivery Status:")
-
-      # (cheat: see we're on the admin version of the product page:)
-      expect(page.current_path).to eq(admin_order_path(order))
+      follow_admin_order_link order: @orders[1]
     end
   end
 end
