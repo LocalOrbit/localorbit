@@ -51,11 +51,23 @@
           <% end %>
 
           <% if field == :product_name %>
-            <td class="product"><%= link_to item.product_name, [:admin, item.product] %></td>
+            <td class="product">
+              <%- if current_user.buyer_only? %>
+                <%= link_to item.product_name, item.product %>
+              <%- else %>
+                <%= link_to item.product_name, [:admin, item.product] %>
+              <%- end %>
+            </td>
           <% end %>
 
           <% if field == :seller_name %>
-            <td class="seller"><%= link_to item.seller_name, [:admin, item.product.organization] %></td>
+            <td class="seller">
+              <%- if current_user.buyer_only? %>
+                <%= link_to item.seller_name, seller_path(item.product.organization) %>
+              <%- else %>
+                <%= link_to item.seller_name, [:admin, item.product.organization] %>
+              <%- end %>
+            </td>
           <% end %>
 
           <% if field == :buyer_name %>

@@ -554,6 +554,16 @@ feature "Reports" do
         follow_admin_order_link order_number: "LO-01-234-4567890-0"
       end
 
+      it "provides the Admin link to Products" do
+        product_name = Dom::Report::ItemRow.first.product_name
+        see_admin_product_link product: Product.find_by(name: product_name)
+      end
+      
+      it "provides the Admin link to Sellers" do
+        seller_name = Dom::Report::ItemRow.first.seller_name
+        see_admin_seller_link seller: Organization.selling.find_by(name: seller_name)
+      end
+
       context "who deletes an organization" do
         it "shows the appropriate order items" do
           delete_organization(buyer)
@@ -641,6 +651,16 @@ feature "Reports" do
             order_number = Dom::Report::ItemRow.first.order_number
             see_admin_order_link order: Order.find_by(order_number:order_number)
           end
+
+          it "provides the Admin link to Products" do
+            product_name = Dom::Report::ItemRow.first.product_name
+            see_admin_product_link product: Product.find_by(name: product_name)
+          end
+
+          it "provides the Admin link to Sellers" do
+            seller_name = Dom::Report::ItemRow.first.seller_name
+            see_admin_seller_link seller: Organization.selling.find_by(name: seller_name)
+          end
         end
 
         context "Total Purchases report" do
@@ -668,6 +688,16 @@ feature "Reports" do
           it "provides the admin link to Orders" do
             order_number = Dom::Report::ItemRow.first.order_number
             see_admin_order_link order: Order.find_by(order_number:order_number)
+          end
+          
+          it "provides the Admin link to Products" do
+            product_name = Dom::Report::ItemRow.first.product_name
+            see_admin_product_link product: Product.find_by(name: product_name)
+          end
+
+          it "provides the Admin link to Sellers" do
+            seller_name = Dom::Report::ItemRow.first.seller_name
+            see_admin_seller_link seller: Organization.selling.find_by(name: seller_name)
           end
         end
       end
@@ -721,6 +751,16 @@ feature "Reports" do
         scenario "provides the Buyer link to Orders" do
           follow_buyer_order_link order_number: "LO-01-234-4567890-1"
         end
+
+        scenario "provides the Buyer link to Products" do
+          product_name = Dom::Report::ItemRow.first.product_name
+          see_buyer_product_link product: Product.find_by(name: product_name)
+        end
+
+        scenario "provides the Buyer link to Sellers" do
+          seller_name = Dom::Report::ItemRow.first.seller_name
+          see_buyer_seller_link seller: Organization.selling.find_by(name: seller_name)
+        end
       end
 
       context "Total Purchases report" do
@@ -748,6 +788,16 @@ feature "Reports" do
         # https://www.pivotaltracker.com/story/show/78823306
         scenario "provides the Buyer link to Orders" do
           follow_buyer_order_link order_number: "LO-01-234-4567890-1"
+        end
+
+        scenario "provides the Buyer link to Products" do
+          product_name = Dom::Report::ItemRow.first.product_name
+          see_buyer_product_link product: Product.find_by(name: product_name)
+        end
+
+        scenario "provides the Buyer link to Sellers" do
+          seller_name = Dom::Report::ItemRow.first.seller_name
+          see_buyer_seller_link seller: Organization.selling.find_by(name: seller_name)
         end
       end
     end
