@@ -30,7 +30,11 @@
           <% if field == :placed_at %>
             <td class="placed-at">
               <%= content_tag "span", item.placed_at, class: "order-date" %><br>
-              <%= link_to item.order_number, admin_order_path(item.order), class: "order-number" %>
+              <% if current_user.buyer_only? %>
+                <%= link_to item.order_number, order_path(item.order), class: "order-number" %>
+              <% else %>
+                <%= link_to item.order_number, admin_order_path(item.order), class: "order-number" %>
+              <% end %>
             </td>
           <% end %>
 

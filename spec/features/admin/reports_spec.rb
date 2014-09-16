@@ -550,6 +550,10 @@ feature "Reports" do
         expect(item_rows_for_order("LO-01-234-4567890-4").count).to eq(1)
       end
 
+      it "provides the admin link to Orders" do
+        follow_admin_order_link order_number: "LO-01-234-4567890-0"
+      end
+
       context "who deletes an organization" do
         it "shows the appropriate order items" do
           delete_organization(buyer)
@@ -632,6 +636,11 @@ feature "Reports" do
             expect(totals.discounts).to eq("$0.00")
             expect(totals.net_sales).to eq("$6.99")
           end
+
+          it "provides the admin link to Orders" do
+            order_number = Dom::Report::ItemRow.first.order_number
+            see_admin_order_link order: Order.find_by(order_number:order_number)
+          end
         end
 
         context "Total Purchases report" do
@@ -654,6 +663,11 @@ feature "Reports" do
             expect(totals.processing_fees).to eq("$0.00")
             expect(totals.discounts).to eq("$0.00")
             expect(totals.net_sales).to eq("$6.99")
+          end
+
+          it "provides the admin link to Orders" do
+            order_number = Dom::Report::ItemRow.first.order_number
+            see_admin_order_link order: Order.find_by(order_number:order_number)
           end
         end
       end
@@ -702,6 +716,11 @@ feature "Reports" do
           expect(Dom::Report::ItemRow.all.count).to eq(1)
           expect(item_rows_for_order("LO-01-234-4567890-1").count).to eq(1)
         end
+
+        # https://www.pivotaltracker.com/story/show/78823306
+        scenario "provides the Buyer link to Orders" do
+          follow_buyer_order_link order_number: "LO-01-234-4567890-1"
+        end
       end
 
       context "Total Purchases report" do
@@ -724,6 +743,11 @@ feature "Reports" do
           expect(totals.processing_fees).to eq("$6.25")
           expect(totals.discounts).to eq("$0.00")
           expect(totals.net_sales).to eq("$93.75")
+        end
+
+        # https://www.pivotaltracker.com/story/show/78823306
+        scenario "provides the Buyer link to Orders" do
+          follow_buyer_order_link order_number: "LO-01-234-4567890-1"
         end
       end
     end
