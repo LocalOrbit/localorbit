@@ -75,15 +75,25 @@ describe "Buyer viewing dashboard" do
 
       orders = Dom::Dashboard::OrderRow.all
       expect(orders.size).to eq(3)
-      hist_order = orders[0]
 
-      click_link hist_order.order_number
+      follow_buyer_order_link order_number: orders[0].order_number
+    end
 
-      expect(page).not_to have_content("Please choose a pick up")
+    context "when they're in multiple buying organizations" do
+      let!(:buyer3)  { create(:organization, :single_location, :buyer, users: [user]) }
 
-      expect(page).to have_content("Order info for #{hist_order.order_number}")
-      expect(page).to have_content("Payment Method:")
-      expect(page).to have_content("Delivery Status:")
+      it "lets them jump to Orders without selecting an Organization first" do
+        buyer3.markets << market
+        user.reload
+        switch_to_subdomain(market.subdomain)
+        sign_in_as(user)
+        click_link "Dashboard", match: :first
+
+        orders = Dom::Dashboard::OrderRow.all
+        expect(orders.size).to eq(3)
+
+        follow_buyer_order_link order_number: orders[0].order_number
+      end
     end
   end
 
