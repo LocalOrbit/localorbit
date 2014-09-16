@@ -35,11 +35,11 @@
     border: 0;
     border-left-color: #3f5d97;
     border-left: solid 1px rgba(0,0,0,0.25);
-    border-image:    -moz-linear-gradient(to bottom, rgba(0,0,0,0) 0%, rgba(0,0,0,0.05) 50%, rgba(0,0,0,0.05) 90%, rgba(0,0,0,0) 100%) 1 1 stretch;
-    border-image: -webkit-linear-gradient(to bottom, rgba(0,0,0,0) 0%, rgba(0,0,0,0.05) 50%, rgba(0,0,0,0.05) 90%, rgba(0,0,0,0) 100%) 1 1 stretch;
-    border-image:      -o-linear-gradient(to bottom, rgba(0,0,0,0) 0%, rgba(0,0,0,0.05) 50%, rgba(0,0,0,0.05) 90%, rgba(0,0,0,0) 100%) 1 1 stretch;
-    border-image:     -ms-linear-gradient(to bottom, rgba(0,0,0,0) 0%, rgba(0,0,0,0.05) 50%, rgba(0,0,0,0.05) 90%, rgba(0,0,0,0) 100%) 1 1 stretch;
-    border-image:         linear-gradient(to bottom, rgba(0,0,0,0) 0%, rgba(0,0,0,0.05) 50%, rgba(0,0,0,0.05) 90%, rgba(0,0,0,0) 100%) 1 1 stretch;
+    border-image:    -moz-linear-gradient(to bottom, rgba(0,0,0,0.05) 0%, rgba(0,0,0,0.2) 50%, rgba(0,0,0,0.2) 90%, rgba(0,0,0,0.05) 100%) 1 1 stretch;
+    border-image: -webkit-linear-gradient(to bottom, rgba(0,0,0,0.05) 0%, rgba(0,0,0,0.2) 50%, rgba(0,0,0,0.2) 90%, rgba(0,0,0,0.05) 100%) 1 1 stretch;
+    border-image:      -o-linear-gradient(to bottom, rgba(0,0,0,0.05) 0%, rgba(0,0,0,0.2) 50%, rgba(0,0,0,0.2) 90%, rgba(0,0,0,0.05) 100%) 1 1 stretch;
+    border-image:     -ms-linear-gradient(to bottom, rgba(0,0,0,0.05) 0%, rgba(0,0,0,0.2) 50%, rgba(0,0,0,0.2) 90%, rgba(0,0,0,0.05) 100%) 1 1 stretch;
+    border-image:         linear-gradient(to bottom, rgba(0,0,0,0.05) 0%, rgba(0,0,0,0.2) 50%, rgba(0,0,0,0.2) 90%, rgba(0,0,0,0.05) 100%) 1 1 stretch;
     line-height: 1.6428;
     text-align: center;
   }
