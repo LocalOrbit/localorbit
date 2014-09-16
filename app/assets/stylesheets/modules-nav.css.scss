@@ -75,6 +75,7 @@
       @include border-radius(4px);
       background: $link;
       @include gradient(rgba(0,0,0,0), rgba(0,0,0,0.12));
+      @include transition( 0.2s ease 0s);
     }
   }
   > span {
