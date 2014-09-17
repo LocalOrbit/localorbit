@@ -71,7 +71,9 @@
         .nav--app a:hover,
         .nav--app a:active,
         .nav--app a.current {
-          color: <%= color_mix current_market.text_color, 40 %>;
+          background: <%= color_mix current_market.text_color, 10 %>;
+          color: #ffffff;
+          box-shadow: 0 0 3px <%= color_mix current_market.text_color, 0 %> inset;
         }
         .nav--main > a:hover {
           background-color: <%= current_market.text_color -%>;
