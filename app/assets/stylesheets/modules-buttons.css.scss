@@ -10,7 +10,7 @@ input[type=submit] {
   border: solid 1px #b0b0b0;
   @include border-radius(4px);
   background: #c2c2c2;
-  @include gradient(rgba(0,0,0,0), rgba(0,0,0,0.12));
+  //@include gradient(rgba(0,0,0,0), rgba(0,0,0,0.12));
   color: #777;
   cursor:pointer;
   font-family: inherit;
@@ -21,7 +21,8 @@ input[type=submit] {
   -moz-appearance: none;
 
   &:hover {
-    background-image: none;
+    @include gradient(rgba(0,0,0,0), rgba(0,0,0,0.12));
+//    background-image: none;
     text-decoration: none;
     @include transition( 0.2s ease 0s);
   }
@@ -43,7 +44,7 @@ input[type=submit] {
     margin-right: 0;
   }
   &.btn--small {
-    padding: 4px 18px;
+    padding: 4px 13px;
     font-size: 14px;
   }
   &.alert {
