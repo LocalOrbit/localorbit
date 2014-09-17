@@ -282,11 +282,11 @@ tbody {
 .no-touch {
   tbody:not(.order-summary) {
     tr:not(.destructive):hover {
-      background: #D8EED2;
+      background: #F1F1F1;
     }
   }
   .order-summary:hover {
-    background: #D8EED2;
+    background: #F1F1F1;
   }
 }
 
