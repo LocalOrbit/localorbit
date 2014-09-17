@@ -24,6 +24,7 @@
     &:active,
     &.current {
       color: #9faecb;
+      @include transition( 0.2s ease 0s);
 
       .counter {
         color: #fff;
@@ -135,6 +136,7 @@
   a {
     &:hover {
       background: #e6e6e6;
+      @include transition( 0.2s ease 0s);
     }
     &:active {
       background: #d6d6d6;
