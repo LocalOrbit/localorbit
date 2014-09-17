@@ -1574,3 +1574,21 @@ label ~ .tooltip {
     }
   }
 }
+
+.alert {
+  background-color: #fcf8e3;
+  border: 1px solid #f5e6c7;
+  color: #836634;  
+  border-radius: 4px;
+  line-height: 15px;
+  margin: auto 22%;
+  padding: 2%;
+  
+  p{margin:6px 0 0 0;}
+}
+
+.alert-danger {
+  background-color: #e2cece;
+  border-color: #c8a9ae;
+  color: #a6413f;
+}

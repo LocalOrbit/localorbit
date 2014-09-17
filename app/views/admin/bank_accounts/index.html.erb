@@ -2,12 +2,20 @@
 <div>
   <%= link_to "Add Payment Method", [:new, :admin, @entity, :bank_account], class: "btn btn--add btn--small pull-right mobile-block" %>
 </div>
-<div class="add-bank-warning">
-  <small><strong>Important:</strong> If you've recently added a bank account as a payment method, please don't add the same account to another organization or market until it is verified where it was originally added.</small>
+<div class="alert alert-danger">
+  <strong>Recently set up a payment method?</strong>
+  <br>
+  <p><small>If you've recently added a bank account as a payment method, please don't add the same account to another organization or market until it is verified where it was originally added.</small></p>
 </div>
+<br>
 
 <% if @bank_accounts.empty? %>
-  <p>You don't have any payment methods set up. Please add a payment method.</p>
+  <div class="alert">
+    <strong>No payment methods are set up yet</strong>
+    <br>
+    <p><small>Please use the "add payment method" to the right.</small></p>
+  </div>
+  <br>
 <% else %>
   <% if  current_user.market_manager? %>
     <p>This payment method will be used to deliver payments from orders and from where you will be charged Local Orbit fees.</p>
