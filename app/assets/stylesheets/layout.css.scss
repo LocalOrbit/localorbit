@@ -77,6 +77,7 @@
   padding: 20px 0;
   color: #fff;
   background: #3f5d99;
+  @include gradient(rgba(255,255,255,0.12), rgba(255,255,255,0));
 }
 
 .l-main {
