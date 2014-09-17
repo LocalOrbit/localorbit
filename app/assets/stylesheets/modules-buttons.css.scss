@@ -8,7 +8,7 @@ input[type=submit] {
   display: inline-block;
   padding: 12px 18px;
   border: solid 1px #b0b0b0;
-  @include border-radius(5px);
+  @include border-radius(4px);
   background: #c2c2c2;
   @include gradient(rgba(0,0,0,0), rgba(0,0,0,0.12));
   color: #777;
@@ -201,10 +201,10 @@ input[type=button].btn--save {
 .btn--money:focus, .btn--update:focus {
   border: 3px solid #BFD9AD;
 }
-.btn--add.btn--small {
-  padding-right: 8px;
-  padding-left: 8px;
-}
+//.btn--add.btn--small {
+//  padding-right: 8px;
+//  padding-left: 8px;
+//}
 
 //.btn--add:before {
 //  content: "✚  "
@@ -225,7 +225,7 @@ input ~ .ui-datepicker-trigger,
 input ~ .ui-datepicker-trigger,
 .btn--end,
 input[type=submit].btn--end {
-  @include border-radius(0 2px 2px 0);
+  @include border-radius(0 4px 4px 0);
   margin: 4px 0 2px -4px;
 }
 .btn--start {
