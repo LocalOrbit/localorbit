@@ -1592,3 +1592,9 @@ label ~ .tooltip {
   border-color: #c8a9ae;
   color: #a6413f;
 }
+
+@media screen and (max-width: $mobile_break) {
+  .alert {
+    margin: auto 0%;
+  }
+}
