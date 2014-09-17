@@ -1549,18 +1549,30 @@ label ~ .tooltip {
 }
 
 .info-note {
-  max-width: 380px;
+  max-width: 525px;
   padding: 14px;
-  border: 1px solid #bce8f1;
+  border: 1px solid #f5e6c7;
   @include border-radius(4px);
-  margin: 40px auto 20px;
-  color: #3a87ad;
-  background: #d9edf7;
-  text-shadow: 0 1px 0 rgba(255,255,255,0.5);
+  margin: 24px auto 20px;
+  color: #836634;
+  background-color: #fcf8e3;
+  text-shadow: 0 1px 0 rgba(255,255,255,0.25);
+  line-height: 15px;
+  font-size:12px;
 
   h2 {
-    color: #3a87ad;
+    color: #836634 !important;
     margin-bottom: 5px;
+  }
+}
+
+.info-note-danger{
+  background-color: #e2cece;
+  border-color: #d3b4b9;
+  color: #a6413f;
+  
+  h2{
+    color: #a6413f;
   }
 }
 
@@ -1572,29 +1584,5 @@ label ~ .tooltip {
     p {
       padding: 0 10px;
     }
-  }
-}
-
-.alert {
-  background-color: #fcf8e3;
-  border: 1px solid #f5e6c7;
-  color: #836634;  
-  border-radius: 4px;
-  line-height: 15px;
-  margin: auto 22%;
-  padding: 2%;
-  
-  p{margin:6px 0 0 0;}
-}
-
-.alert-danger {
-  background-color: #e2cece;
-  border-color: #c8a9ae;
-  color: #a6413f;
-}
-
-@media screen and (max-width: $mobile_break) {
-  .alert {
-    margin: auto 0%;
   }
 }
