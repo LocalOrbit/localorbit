@@ -239,6 +239,13 @@ input[type=submit].btn--end {
   @include box-shadow(none);
   margin: 4px -3px 2px 0;
   background-color: #fff;
+  @include gradient(rgba(0,0,0,0), rgba(0,0,0,0.12));
+
+  &:hover{
+   color:#aaa;
+   box-shadow:none !important; 
+   cursor:text;
+  }
 }
 
 input[type=search] + .btn--end,
