@@ -7,11 +7,11 @@ input[type=reset],
 input[type=submit] {
   display: inline-block;
   padding: 12px 18px;
-  border: solid 1px #b0b0b0;
+  border: solid 1px #a6a6a6;
   @include border-radius(4px);
-  background: #c2c2c2;
+  background: #a6a6a6;
   //@include gradient(rgba(0,0,0,0), rgba(0,0,0,0.12));
-  color: #777;
+  color: #ffffff;
   cursor:pointer;
   font-family: inherit;
   font-size: 17px;
