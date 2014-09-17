@@ -140,7 +140,8 @@ input[type=submit] {
     background: none;
   }
   &.btn--test {
-    background-color: #ccc;
+    background-color: #a6a6a6;
+    border-color: #a6a6a6;
   }
   @media screen and (max-width: $mobile_break) {
     &.btn--test {
