@@ -1,14 +1,11 @@
 class OrdersController < ApplicationController
   before_action :require_selected_market
-  before_action :require_market_open
-  before_action :require_current_organization, except: [:show]
-  before_action :require_organization_location, except: [:show]
-  before_action :require_current_delivery, except: [:show]
-  before_action :require_cart
-  before_action :hide_admin_navigation
-
-  before_action :require_cart, only: :create
-  before_action :hide_admin_navigation, only: [:create]
+  before_action :require_market_open,            only: :create
+  before_action :require_current_organization,   only: :create
+  before_action :require_organization_location,  only: :create
+  before_action :require_current_delivery,       only: :create
+  before_action :require_cart,                   only: :create
+  before_action :hide_admin_navigation,          only: :create
 
   def show
     @order = BuyerOrder.find(current_user, params[:id])

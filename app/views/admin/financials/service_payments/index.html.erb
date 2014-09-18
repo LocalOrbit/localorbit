@@ -25,7 +25,7 @@
         <td class="plan"><%= market.plan.try(:name) %></td>
         <td class="interval"><%= market.display_plan_interval %></td>
         <td class="fee"><%= number_to_currency(market.plan_fee) %></td>
-        <td class="last-payment-date"><%= market.last_sevice_payment_at.try(:strftime, "%m/%d/%Y") || "N/A" %></td>
+        <td class="last-payment-date"><%= market.last_service_payment_at.try(:strftime, "%m/%d/%Y") || "N/A" %></td>
         <td class="next-payment-date"><%= market.next_service_payment_at.try(:strftime, "%m/%d/%Y") || 'Not Configured' %></td>
         <td>
           <%= form_tag admin_financials_service_payments_path do %>
