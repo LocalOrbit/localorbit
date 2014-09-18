@@ -152,7 +152,7 @@ class Market < ActiveRecord::Base
     end
   end
 
-  def last_sevice_payment_at
+  def last_service_payment_at
     Payment.successful.not_refunded.where(payer: self, payment_type: "service").order("created_at DESC").first.try(:created_at)
   end
 

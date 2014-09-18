@@ -1,6 +1,6 @@
 require "spec_helper"
 
-feature "Buying in a closed market" do
+feature "When a Market is closed" do
   before do
     Timecop.travel(Date.parse("2014-06-16"))
   end
@@ -15,17 +15,17 @@ feature "Buying in a closed market" do
   let!(:products) { create_list(:product, 5, :sellable, organization: seller) }
   let!(:user)     { create(:user, organizations: [buyer]) }
 
-  context "market has one delivery schedule" do
+  context "and has one delivery schedule" do
     before do
       switch_to_subdomain market.subdomain
       sign_in_as(user)
     end
 
-    scenario "Buyer visits the shop page" do
+    scenario "the Buyer cannot Shop" do
       expect(page).to have_content("The Market Is Currently Closed")
     end
 
-    scenario "Buyer visits the sellers page" do
+    scenario "the Sellers will not display products" do
       click_link "Sellers", match: :first
 
       expect(page).to have_content("Who")
@@ -34,9 +34,21 @@ feature "Buying in a closed market" do
       expect(page).not_to have_content("Currently Selling")
       expect(page).not_to have_content("Quantity")
     end
+
+    context "when Buyer has placed an order" do
+      let!(:delivery_schedule) { create(:delivery_schedule) }
+      let!(:delivery)    { delivery_schedule.next_delivery }
+      let!(:order_item1) { create(:order_item, product: products[0]) }
+      let!(:order1)      { create(:order, delivery: delivery, items: [order_item1], organization: buyer, placed_at: Time.zone.parse("2014-04-02")) }
+
+      scenario "the Buyer may view her Orders" do
+        click_link "Dashboard", match: :first
+        follow_buyer_order_link order: order1
+      end
+    end
   end
 
-  context "market has multiple delivery schedules" do
+  context "an has multiple delivery schedules" do
     let!(:delivery_schedule) { create(:delivery_schedule, market: market) }
 
     before do
@@ -44,11 +56,11 @@ feature "Buying in a closed market" do
       sign_in_as(user)
     end
 
-    scenario "Buyer visits the shop page" do
+    scenario "the Buyer cannot Shop" do
       expect(page).to have_content("The Market Is Currently Closed")
     end
 
-    scenario "Buyer visits the sellers page" do
+    scenario "the Sellers don't display products" do
       click_link "Sellers", match: :first
 
       choose_delivery "Delivery: Tuesday June 17, 2014 Between 7:00AM and 11:00AM"
@@ -61,7 +73,7 @@ feature "Buying in a closed market" do
     end
   end
 
-  context "Market starts as open" do
+  context "given that the Market starts as open" do
     let!(:market)   { create(:market, :with_addresses, :with_delivery_schedule, closed: false) }
 
     before do
@@ -69,7 +81,7 @@ feature "Buying in a closed market" do
       sign_in_as(user)
     end
 
-    scenario "Buyer begins shopping, the market manager closes the market, then the buyer checks out", :js do
+    scenario "if the Buyer begins shopping, and the Market Manager closes the market, the Buyer will not be able to check out.", :js do
       item = Dom::Cart::Item.find_by_name(products[0].name)
       item.set_quantity(12)
       expect(page).to have_content("Added to cart!")
