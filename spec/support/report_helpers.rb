@@ -25,6 +25,7 @@ module ReportHelpers
     # See we're not on 404:
     expect(page.status_code).not_to eq(404), "Got a 404 when following Buyer order link #{order.order_number}"
     expect(page).not_to have_content("We can't find that page")
+    expect(page).not_to have_content("The Market Is Currently Closed")
 
     # See we're not on the Delivery selection screen:
     expect(page).not_to have_content("Please choose a pick up")
