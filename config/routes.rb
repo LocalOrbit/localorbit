@@ -55,8 +55,9 @@ Rails.application.routes.draw do
       resources :vendor_payments
 
       scope path: :admin do
-        resources :market_payments, only: [:index, :create]
+        resources :market_payments,  only: [:index, :create]
         resources :service_payments, only: [:index, :create]
+        resources :lo_payments,      only: [:index, :create]
       end
     end
 

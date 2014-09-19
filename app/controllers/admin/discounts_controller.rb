@@ -85,7 +85,7 @@ module Admin
         Market.all
       else
         current_user.managed_markets
-      end.order(:name)
+      end.order(:name).select {|m| m.plan.discount_codes }
     end
 
     def find_products
