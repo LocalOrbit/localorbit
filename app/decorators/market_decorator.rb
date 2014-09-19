@@ -72,7 +72,7 @@ class MarketDecorator < Draper::Decorator
   end
 
   def payble_accounts_for_select
-    bank_accounts.visible.where(account_type: %w(savings checking)).map do |bank_account|
+    bank_accounts.visible.where(account_type: %w(savings checking)).order(verified: :desc).map do |bank_account|
       [bank_account.display_name, bank_account.id]
     end
   end
