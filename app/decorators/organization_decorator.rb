@@ -1,6 +1,7 @@
 class OrganizationDecorator < Draper::Decorator
   include Draper::LazyHelpers
   include MapHelper
+  # include Decorators::BankAccounts
 
   delegate_all
 
@@ -77,5 +78,11 @@ class OrganizationDecorator < Draper::Decorator
 
   def can_use_advanced_pricing?
     markets.any? {|m| m.plan.advanced_pricing }
+  end
+
+  def payble_accounts_for_select
+    bank_accounts.visible.where(account_type: %w(savings checking)).map do |bank_account|
+      [bank_account.display_name, bank_account.id]
+    end
   end
 end

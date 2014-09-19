@@ -305,7 +305,13 @@ FactoryGirl.define do
     advanced_pricing   true
     advanced_inventory true
     promotions         true
+
+    trait :automate do
+      name "Automate"
+      automatic_payments true
+    end
   end
+
 
   factory :price do
     product
