@@ -68,6 +68,7 @@ class Order < ActiveRecord::Base
   scope :payment_due, -> { unpaid.where("invoice_due_date >= ?", (Time.current - 1.day).end_of_day) }
   scope :paid_between, lambda {|range| paid.where(paid_at: range) }
   scope :due_between, lambda {|range| invoiced.where(invoice_due_date: range) }
+  scope :clean_payment_records, -> { where(arel_table[:placed_at].gt(Time.parse("2014-01-01"))) }
 
   scope_accessible :sort, method: :for_sort, ignore_blank: true
   scope_accessible :payment_status
@@ -138,7 +139,7 @@ class Order < ActiveRecord::Base
   end
 
   def self.payable_lo_fees
-    fully_delivered.purchase_orders.payable.not_paid_for("lo fee", :payer).order(:order_number)
+    fully_delivered.purchase_orders.payable.not_paid_for("lo fee", :payer)
   end
 
   def self.payable_market_fees
@@ -272,6 +273,11 @@ class Order < ActiveRecord::Base
 
   def payable_subtotal
     @payable_subtotal ||= delivery_fees + items.delivered.each.sum(&:gross_total)
+  end
+
+  def payable_lo_fees
+    delivery_fees * (market.local_orbit_seller_fee + market.local_orbit_market_fee) / 100 +
+      items.each.sum {|i| i.local_orbit_seller_fee + i.local_orbit_market_fee }
   end
 
   def market_payable_market_fee
