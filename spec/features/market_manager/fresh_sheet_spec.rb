@@ -6,10 +6,16 @@ feature "A Market Manager sending a weekly Fresh Sheet" do
   let!(:delivery_schedule) { create(:delivery_schedule, market: market) }
   let!(:seller) { create(:organization, :seller, markets: [market]) }
   let!(:product) { create(:product, :sellable, organization: seller) }
+  let!(:fresh_sheet) { create(:subscription_type, :fresh_sheet) }
+  let!(:newsletter) { create(:subscription_type, :newsletter) }
 
   # Intentionally not let! changing that will break tests
   let(:buyer_org) { create(:organization, :buyer, markets: [market]) }
-  let(:buyer_user) { create(:user, organizations: [buyer_org], name: "Jack Stevens") }
+  let(:buyer_user) { 
+    jack = create(:user, organizations: [buyer_org], name: "Jack Stevens")
+    jack.subscribe_to(SubscriptionType::Keywords::FreshSheet)
+    jack 
+  }
 
   scenario "navigating to the page" do
     switch_to_subdomain(market.subdomain)

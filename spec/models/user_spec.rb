@@ -657,4 +657,182 @@ describe User do
       end
     end
   end
+
+  describe ".in_market scope" do
+    let!(:market) { create(:market) }
+    let!(:market2) { create(:market) }
+
+    let!(:user1)  { create(:user) }
+    let!(:user2)  { create(:user) }
+    let!(:user3)  { create(:user) }
+    let!(:user4)  { create(:user) }
+    let!(:user5)  { create(:user) }
+
+    let!(:buyer_org1)   { create(:organization, :buyer, markets: [market], users: [user1]) }
+    let!(:buyer_org2)   { create(:organization, :buyer, markets: [market], users: [user2]) }
+    let!(:seller_org3)   { create(:organization, :seller, markets: [market], users: [user3]) }
+
+    let!(:buyer_org2_again) { create(:organization, :buyer, markets: [market2], users: [user2]) }
+    let!(:buyer_org5) { create(:organization, :buyer, markets: [market2], users: [user5]) }
+
+    it "gets all the Users in a Market" do
+      users = User.in_market(market)
+      expect(users).to contain_exactly(user1,user2,user3)
+    end
+
+    it "can accept an id instead of a Market instance" do
+      expect(User.in_market(market.id)).to contain_exactly(user1,user2,user3)
+    end
+
+    it "respects deleted organization-market links" do
+      buyer_org2.market_organizations.find_by(market: market).soft_delete
+      expect(User.in_market(market)).to contain_exactly(user1,user3)
+    end
+  end
+
+  context "users with subscriptions" do
+    let!(:user1)  { create(:user) }
+    let!(:user2)  { create(:user) }
+    let!(:user3)  { create(:user) }
+    let!(:user4)  { create(:user) }
+
+    let!(:ads) { create(:subscription_type, name: "Advertisements", keyword: "ads") }
+    let!(:notes) { create(:subscription_type, name: "Note Notices", keyword: "notes") }
+
+    before do
+      user1.subscribe_to ads
+      user2.subscribe_to ads
+      user2.subscribe_to notes
+      user3.subscribe_to notes
+    end
+
+    describe ".subscribed_to scope" do
+      it "includes users who are subscribed to the given subscriptio type" do
+        expect(User.subscribed_to(ads)).to contain_exactly(user1,user2)
+        expect(User.subscribed_to(notes)).to contain_exactly(user2,user3)
+      end
+
+      it "accepts a subscription type keyword in lieu of SubscriptionType instance" do
+        expect(User.subscribed_to("ads")).to contain_exactly(user1,user2)
+        expect(User.subscribed_to("notes")).to contain_exactly(user2,user3)
+      end
+
+      it "accepts a subscription type id in lieu of SubscriptionType instance" do
+        expect(User.subscribed_to(ads.id)).to contain_exactly(user1,user2)
+        expect(User.subscribed_to(notes.id)).to contain_exactly(user2,user3)
+      end
+
+      it "respects soft-deleted subscriptions" do
+        # user2 unsubscribes from ads:
+        user2.subscriptions.find_by(subscription_type: ads).soft_delete
+        expect(User.subscribed_to(ads)).to contain_exactly(user1)
+
+        # user1 unsubscribes from ads:
+        user1.subscriptions.find_by(subscription_type: ads).soft_delete
+        expect(User.subscribed_to(ads)).to be_empty
+
+        # user1 REsubscribes to ads:
+        user1.subscriptions.find_by(subscription_type: ads).undelete
+        expect(User.subscribed_to(ads)).to contain_exactly(user1)
+
+        # Check other subs:
+        expect(User.subscribed_to(notes.id)).to contain_exactly(user2,user3)
+      end
+    end
+
+    describe "#subscribe_to and #unsubscribe_from" do
+      it "creates and soft-deletes links" do
+        expect(User.subscribed_to(ads)).not_to include(user3)
+
+        # subscribe to ads:
+        user3.subscribe_to(ads)
+        expect(User.subscribed_to(ads)).to include(user3)
+
+        # Unsubscribe from ads:
+        user3.unsubscribe_from(ads)
+        expect(User.subscribed_to(ads)).not_to include(user3)
+
+        # inspect the subscription link:
+        sub = user3.subscriptions.find_by(subscription_type: ads)
+        expect(sub).to be
+        expect(sub.deleted_at).to be_about(Time.current)
+        token = sub.token
+
+        # Resubscribe and see the subscription come back to life:
+        user3.subscribe_to(ads)
+        sub.reload
+        expect(sub.deleted_at).to be_nil
+        expect(sub.token).to eq(token)
+        expect(User.subscribed_to(ads)).to include(user3)
+      end
+
+    end
+
+    describe "#active_subscriptions" do
+      let!(:ads_sub) { user2.subscriptions.find_by(subscription_type: ads) }
+      let!(:notes_sub) { user2.subscriptions.find_by(subscription_type: notes) }
+
+      it "returns non-deleted subscriptions" do
+        ads_sub = user2.subscriptions.find_by(subscription_type: ads)
+        notes_sub = user2.subscriptions.find_by(subscription_type: notes)
+
+        expect(user2.active_subscriptions).to contain_exactly(ads_sub, notes_sub)
+      end
+
+      it "ignores soft-deleted subscriptions" do
+        ads_sub.soft_delete
+        expect(user2.active_subscriptions).to contain_exactly(notes_sub)
+
+        notes_sub.soft_delete
+        expect(user2.active_subscriptions).to be_empty
+      end
+    end
+
+    describe "#active_subscription_types" do
+      it "returns active subscription types" do
+        expect(user2.active_subscription_types).to contain_exactly(ads,notes)
+      end
+
+      it "ignores soft-deleted subscriptions" do
+        user2.unsubscribe_from(ads)
+        expect(user2.active_subscription_types).to contain_exactly(notes)
+
+        user2.unsubscribe_from(notes)
+        expect(user2.active_subscription_types).to be_empty
+      end
+    end
+  end
+
+
+  describe ".buyers scope" do
+    include_context "the fresh market"
+
+    it "returns all users that belong to buying orgs" do
+      # NOTE: Barry's in here TWICE because he's a member of two separate Buying orgs.
+      expect(User.buyers).to contain_exactly(barry,barry,bill,basil,craig,clarence)
+    end
+
+    it "returns all users that belong to buying orgs in the given Market" do
+      # Barry should still be in twice
+      # OMITTED: Steve's a seller (technically he can buy but he's not JUST a buyer)
+      # OMITTED: Clarence's link to Fresh Market has been soft deleted
+      # OMITTED: Craig's in Other Market
+      expect(User.buyers.in_market(fresh_market)).to contain_exactly(barry,barry,bill,basil)
+    end
+  end
+
+  describe ".sellers scope" do
+    include_context "the fresh market"
+    it "returns users that belong to selling orgs" do
+      expect(User.sellers.map(&:name)).to contain_exactly(*[basil, steve, sol, scarbro].map(&:name))
+      expect(User.sellers).to contain_exactly(basil, steve, sol, scarbro)
+    end
+
+    it "returns users that belong to selling orgs in a market" do
+      # OMITTED: Sol's link is soft deleted
+      # OMITTED: Scarbro's in Other Market
+      expect(User.sellers.in_market(fresh_market).map(&:name)).to contain_exactly(*[steve, basil].map(&:name))
+      expect(User.sellers.in_market(fresh_market)).to contain_exactly(basil, steve)
+    end
+  end
 end

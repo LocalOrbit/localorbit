@@ -1,7 +1,8 @@
 require "spec_helper"
 
 describe "A Market Manager managing Newsletters" do
-  let(:market_manager) { create :user, :market_manager, send_newsletter: true }
+  let!(:newsletter_type) { create(:subscription_type, :newsletter) }
+  let(:market_manager) { create :user, :market_manager, subscription_types: [newsletter_type] }
   let(:market) { market_manager.managed_markets.first }
 
   before(:each) do
@@ -117,7 +118,7 @@ describe "A Market Manager managing Newsletters" do
     end
 
     describe "to groups" do
-      it "sends to specific groups" do
+      it "sends to Market Managers" do
         expect(MarketMailer).to receive(:newsletter).with(newsletter.id, market.id, market_manager.pretty_email).and_return(double(:mailer, deliver: true))
         check "Market Managers"
         click_button "Send Now"

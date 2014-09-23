@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140828145149) do
+ActiveRecord::Schema.define(version: 20140923175626) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -473,9 +473,9 @@ ActiveRecord::Schema.define(version: 20140828145149) do
     t.integer  "legacy_id"
     t.datetime "deleted_at"
     t.integer  "discount_id"
+    t.string   "delivery_status"
     t.string   "invoice_pdf_uid"
     t.string   "invoice_pdf_name"
-    t.string   "delivery_status"
   end
 
   add_index "orders", ["delivery_id"], name: "index_orders_on_delivery_id", using: :btree
@@ -621,6 +621,30 @@ ActiveRecord::Schema.define(version: 20140828145149) do
   end
 
   add_index "sequences", ["name"], name: "index_sequences_on_name", unique: true, using: :btree
+
+  create_table "subscription_types", force: true do |t|
+    t.string   "keyword"
+    t.string   "name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "subscription_types", ["keyword"], name: "index_subscription_types_on_keyword", using: :btree
+
+  create_table "subscriptions", force: true do |t|
+    t.integer  "user_id"
+    t.integer  "subscription_type_id"
+    t.string   "token"
+    t.datetime "deleted_at"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "subscriptions", ["subscription_type_id"], name: "index_subscriptions_on_subscription_type_id", using: :btree
+  add_index "subscriptions", ["token"], name: "index_subscriptions_on_token", using: :btree
+  add_index "subscriptions", ["user_id", "deleted_at"], name: "index_subscriptions_on_user_id_and_deleted_at", using: :btree
+  add_index "subscriptions", ["user_id", "subscription_type_id"], name: "index_subscriptions_on_user_id_and_subscription_type_id", using: :btree
+  add_index "subscriptions", ["user_id"], name: "index_subscriptions_on_user_id", using: :btree
 
   create_table "units", force: true do |t|
     t.string   "singular"

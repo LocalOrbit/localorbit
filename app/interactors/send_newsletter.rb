@@ -6,7 +6,8 @@ class SendNewsletter
       MarketMailer.delay.newsletter(newsletter.id, market.id, email)
       context[:notice] = "Successfully sent a test to #{email}"
     elsif commit == "Send Now"
-      emails = newsletter.recipients.map(&:pretty_email)
+      emails = newsletter.recipients.map(&:pretty_email) # XXX
+      #TODO emails = newsletter.recipients.select(:name,:email).map(&:pretty_email)
       emails.each do |email|
         MarketMailer.delay.newsletter(newsletter.id, market.id, email)
       end

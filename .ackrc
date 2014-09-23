@@ -1,0 +1,3 @@
+--ignore-dir=public/
+--ignore-dir=tmp/
+--ignore-dir=log/

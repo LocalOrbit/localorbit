@@ -3,13 +3,11 @@ class SendFreshSheet
 
   def perform
     if commit == "Send Test"
-      MarketMailer.delay.fresh_sheet(market.id, email, note)
-      context[:notice] = "Successfully sent a test to #{email}"
+      send_test_email
+
     elsif commit == "Send to Everyone Now"
-      emails.each do |email|
-        MarketMailer.delay.fresh_sheet(market.id, email, note)
-      end
-      context[:notice] = "Successfully sent the Fresh Sheet"
+      send_fresh_sheets_to_subscribed_members
+
     else
       context[:error] = "Invalid action chosen"
       context.fail!
@@ -18,10 +16,20 @@ class SendFreshSheet
 
   private
 
-  def emails
-    @emails ||= User.joins(organizations: :market_organizations).
-      where(send_freshsheet: true, market_organizations: {market_id: market.id}).select(:name, :email).
-      uniq. # putting uniq first has the database de-dup the data
-      map(&:pretty_email)
+  def send_test_email
+    MarketMailer.delay.fresh_sheet(market.id, email, note)
+    context[:notice] = "Successfully sent a test to #{email}"
+  end
+
+  def send_fresh_sheets_to_subscribed_members
+    User.in_market(market).
+      subscribed_to(SubscriptionType::Keywords::FreshSheet).
+      select(:name, :email).
+      uniq. 
+      map(&:pretty_email).
+      each do |email|
+        MarketMailer.delay.fresh_sheet(market.id, email, note)
+      end
+    context[:notice] = "Successfully sent the Fresh Sheet"
   end
 end
