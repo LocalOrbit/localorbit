@@ -6,8 +6,12 @@ describe "Manage Discount Codes" do
 
   let!(:market)              { create(:market, plan: grow_plan) }
   let!(:market2)             { create(:market, plan: startup_plan) }
-  let!(:discount_fixed)      { create(:discount, name: "fixed discount", type: "fixed", discount: 5.00) }
-  let!(:discount_percentage) { create(:discount, name: "percentage discount", type: "percentage", discount: 10, maximum_uses: 10) }
+  let!(:market3)             { create(:market, plan: grow_plan) }
+
+  let!(:discount_fixed)      { create(:discount, market: market, name: "fixed discount", type: "fixed", discount: 5.00) }
+  let!(:discount_percentage) { create(:discount, market: market, name: "percentage discount", type: "percentage", discount: 10, maximum_uses: 10) }
+  let!(:discount_percentage2) { create(:discount, market: market3, name: "another percentage discount", type: "percentage", discount: 25, maximum_uses: 5) }
+
   let(:organization)         { create(:organization, :buyer, markets: [market]) }
   let!(:order)               { create(:order, discount: discount_percentage) }
 
@@ -48,17 +52,6 @@ describe "Manage Discount Codes" do
       expect(page).to have_content("Add New Discount")
     end
 
-    it "does not show 'All Markets' as an option" do
-      visit new_admin_discount_path
-
-      expect(page).to_not have_xpath("//select/option[normalize-space(text())='All Markets']")
-    end
-
-    it "does not show the market with a plan that disallows discount codes as an option" do
-      visit new_admin_discount_path
-
-      expect(page).to_not have_xpath("//select/option[normalize-space(text())='#{market2.name}']")
-    end
 
     it "shows a list of discount codes" do
       visit admin_discounts_path
@@ -105,6 +98,12 @@ describe "Manage Discount Codes" do
 
         expect(page).to have_content("Error creating discount")
       end
+
+
+      it "has no All Markets option" do
+        visit new_admin_discount_path
+        expect(find_market_options).not_to include("All Markets")
+      end
     end
 
     context "Deletion" do
@@ -123,7 +122,7 @@ describe "Manage Discount Codes" do
       end
     end
 
-    context "Updation" do
+    context "Updating" do
       it "updates an existing discount code" do
         visit admin_discount_path(discount_fixed)
 
@@ -163,7 +162,7 @@ describe "Manage Discount Codes" do
     it "shows a list of discount codes" do
       visit admin_discounts_path
 
-      expect(Dom::Admin::DiscountRow.all.count).to eql(2)
+      expect(Dom::Admin::DiscountRow.all.count).to eql(3)
 
       code = Dom::Admin::DiscountRow.find_by_name(discount_fixed.name)
       expect(code).to_not be_nil
@@ -176,27 +175,33 @@ describe "Manage Discount Codes" do
       expect(code.code).to have_content(discount_percentage.code)
       expect(code.type).to have_content("%")
       expect(code.amount).to have_content("10.0%")
+
+      code = Dom::Admin::DiscountRow.find_by_name(discount_percentage2.name)
+      expect(code).to_not be_nil
+      expect(code.code).to have_content(discount_percentage2.code)
+      expect(code.type).to have_content("%")
+      expect(code.amount).to have_content("25.0%")
     end
 
-    it "does show 'All Markets' as an option" do
+    it "has no All Markets option" do
       visit new_admin_discount_path
-
-      expect(page).to have_xpath("//select/option[normalize-space(text())='All Markets']")
+      expect(find_market_options).not_to include("All Markets")
     end
 
     context "Creation" do
-      it "adds a new discount code" do
+      it "adds a new discount code for a specific Market" do
         visit new_admin_discount_path
 
         fill_in "Name", with: "Anniversary Celebration"
         fill_in "Code", with: "CELEBRATE3"
+        select market3.name, from: "Market"
         select "Percentage", from: "Type"
         fill_in "Discount", with: "30"
 
         click_button "Save Discount"
 
         expect(page).to have_content("Successfully created discount")
-        expect(Dom::Admin::DiscountRow.all.count).to eql(3)
+        expect(Dom::Admin::DiscountRow.all.count).to eql(4)
         expect(Dom::Admin::DiscountRow.find_by_name("Anniversary Celebration")).to_not be_nil
       end
 
@@ -213,13 +218,13 @@ describe "Manage Discount Codes" do
       it "removes the discount code" do
         visit admin_discounts_path
 
-        expect(Dom::Admin::DiscountRow.all.count).to eql(2)
+        expect(Dom::Admin::DiscountRow.all.count).to eql(3)
 
         code = Dom::Admin::DiscountRow.find_by_name(discount_fixed.name)
         code.click_delete
 
         expect(page).to have_content("Successfully removed discount")
-        expect(Dom::Admin::DiscountRow.all.count).to eql(1)
+        expect(Dom::Admin::DiscountRow.all.count).to eql(2)
 
         expect(Dom::Admin::DiscountRow.find_by_name(discount_fixed.name)).to be_nil
       end
@@ -234,7 +239,7 @@ describe "Manage Discount Codes" do
         click_button "Save Discount"
 
         expect(page).to have_content("Successfully updated discount")
-        expect(Dom::Admin::DiscountRow.all.count).to eql(2)
+        expect(Dom::Admin::DiscountRow.all.count).to eql(3)
         expect(Dom::Admin::DiscountRow.find_by_name("Black Friday")).to_not be_nil
       end
 
@@ -248,5 +253,11 @@ describe "Manage Discount Codes" do
         expect(page).to have_content("Error updating discount")
       end
     end
+  end
+
+  def find_market_options
+    market_field = find_field("Market")
+    expect(market_field).to be, "No 'Market' field on page."
+    market_field.all("option").map(&:text)
   end
 end
