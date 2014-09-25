@@ -10,6 +10,12 @@ class User < ActiveRecord::Base
 
   has_many :managed_markets_join, class_name: "ManagedMarket"
 
+  before_create do |user|
+    if user.subscription_types.empty?
+      Subscription.ensure_user_has_subscription_links_to_fresh_sheet_and_newsletter(user)
+    end
+  end
+
   # prefer Market.managed_by(user) over (user.admin? ? Market.all : user.managed_markets)
   has_many :managed_markets, through: :managed_markets_join, source: :market do
     def can_manage_organization?(org)

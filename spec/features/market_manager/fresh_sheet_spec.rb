@@ -6,8 +6,9 @@ feature "A Market Manager sending a weekly Fresh Sheet" do
   let!(:delivery_schedule) { create(:delivery_schedule, market: market) }
   let!(:seller) { create(:organization, :seller, markets: [market]) }
   let!(:product) { create(:product, :sellable, organization: seller) }
-  let!(:fresh_sheet) { create(:subscription_type, :fresh_sheet) }
-  let!(:newsletter) { create(:subscription_type, :newsletter) }
+  include_context "fresh sheet and newsletter subscription types"
+  let!(:fresh_sheet) { fresh_sheet_subscription_type }
+  let!(:newsletter) { newsletter_subscription_type }
 
   # Intentionally not let! changing that will break tests
   let(:buyer_org) { create(:organization, :buyer, markets: [market]) }

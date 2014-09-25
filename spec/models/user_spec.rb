@@ -835,4 +835,18 @@ describe User do
       expect(User.sellers.in_market(fresh_market)).to contain_exactly(basil, steve)
     end
   end
+
+  describe "default subscriptions" do
+    include_context "fresh sheet and newsletter subscription types"
+    it "will be Fresh Sheet and Newsletter" do
+      user = User.create!(email:"a@a.a", password:"abcd1234",password_confirmation:"abcd1234")
+      expect(user.active_subscription_types).to contain_exactly(fresh_sheet_subscription_type, newsletter_subscription_type)
+    end
+
+    it "won't be installed if User is explicitly built with other subscription types" do
+      my_sub_type = create(:subscription_type, name: "Custom type")
+      user = User.create!(subscription_types: [my_sub_type], email:"a@a.a", password:"abcd1234",password_confirmation:"abcd1234")
+      expect(user.active_subscription_types).to contain_exactly(my_sub_type)
+    end
+  end
 end

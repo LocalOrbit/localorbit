@@ -1,4 +1,3 @@
-puts "HITHERE the fresh market LOADED!"
 shared_context "the fresh market" do
   let!(:fresh_market) { create(:market, name: "Fresh Market") }
   let!(:mary) { create(:user, :market_manager, name: "Mary", managed_markets: [fresh_market]) }

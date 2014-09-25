@@ -2,8 +2,9 @@ require "spec_helper"
 
 describe "Unsubscribing" do
   context "a subscribed user" do
-    let!(:fresh_sheet) { create(:subscription_type, :fresh_sheet) }
-    let!(:newsletter) { create(:subscription_type, :newsletter) }
+    include_context "fresh sheet and newsletter subscription types"
+    let!(:fresh_sheet) { fresh_sheet_subscription_type }
+    let!(:newsletter) { newsletter_subscription_type }
 
     let!(:jeff) { create(:user, name: "Jeff", subscription_types: [fresh_sheet,newsletter]) }
     let(:jeff_fresh_subscription) { jeff.subscriptions.find_by(subscription_type: fresh_sheet) }
