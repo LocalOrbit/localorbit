@@ -4,6 +4,10 @@ class SubscriptionsController < ApplicationController
   skip_before_action :ensure_active_organization
   skip_before_action :ensure_user_not_suspended
 
+  before_action do
+    @show_nav_tagline = true # forces market tagline to show even if user not logged in.
+  end
+
   def unsubscribe
     get_token_and_subscription_type
   rescue Exception => e

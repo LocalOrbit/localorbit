@@ -315,7 +315,7 @@
       <strong>Powered by <a href="http://localorbit.com/">Local Orbit</a></strong><br>
       <em class="lo_copyright">Copyright 2014. All Rights Reserved</em><br>
       <% if @unsubscribe_url %>
-        <em class="lo_unsubscribe">Click here to <%= link_to "Unsubscribe", @unsubscribe_url %></em>
+        <em class="lo_unsubscribe">Click here to <%= link_to "Unsubscribe", @unsubscribe_url, "mc:disable-tracking" => "mc:disable-tracking"%></em>
       <% end %>
     </div>
   </div>
