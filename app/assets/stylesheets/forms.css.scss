@@ -295,6 +295,9 @@ div.field_with_errors {
     font-size: 12px;
     margin-top: -10px;
   }
+  .form-actions.unsubscribe-actions {
+    text-align: center; 
+  }
 
 @media screen and (max-width: $mobile_break) {
   .taxonomy-select {

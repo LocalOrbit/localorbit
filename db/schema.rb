@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140828145149) do
+ActiveRecord::Schema.define(version: 20140926031324) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -473,9 +473,9 @@ ActiveRecord::Schema.define(version: 20140828145149) do
     t.integer  "legacy_id"
     t.datetime "deleted_at"
     t.integer  "discount_id"
+    t.string   "delivery_status"
     t.string   "invoice_pdf_uid"
     t.string   "invoice_pdf_name"
-    t.string   "delivery_status"
   end
 
   add_index "orders", ["delivery_id"], name: "index_orders_on_delivery_id", using: :btree
@@ -622,6 +622,30 @@ ActiveRecord::Schema.define(version: 20140828145149) do
 
   add_index "sequences", ["name"], name: "index_sequences_on_name", unique: true, using: :btree
 
+  create_table "subscription_types", force: true do |t|
+    t.string   "keyword"
+    t.string   "name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "subscription_types", ["keyword"], name: "index_subscription_types_on_keyword", using: :btree
+
+  create_table "subscriptions", force: true do |t|
+    t.integer  "user_id"
+    t.integer  "subscription_type_id"
+    t.string   "token"
+    t.datetime "deleted_at"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "subscriptions", ["subscription_type_id"], name: "index_subscriptions_on_subscription_type_id", using: :btree
+  add_index "subscriptions", ["token"], name: "index_subscriptions_on_token", using: :btree
+  add_index "subscriptions", ["user_id", "deleted_at"], name: "index_subscriptions_on_user_id_and_deleted_at", using: :btree
+  add_index "subscriptions", ["user_id", "subscription_type_id"], name: "index_subscriptions_on_user_id_and_subscription_type_id", using: :btree
+  add_index "subscriptions", ["user_id"], name: "index_subscriptions_on_user_id", using: :btree
+
   create_table "units", force: true do |t|
     t.string   "singular"
     t.string   "plural"
@@ -644,12 +668,12 @@ ActiveRecord::Schema.define(version: 20140828145149) do
   add_index "user_organizations", ["user_id"], name: "index_user_organizations_on_user_id", using: :btree
 
   create_table "users", force: true do |t|
-    t.string   "email",                        default: "",   null: false
+    t.string   "email",                        default: "", null: false
     t.string   "encrypted_password",           default: ""
     t.string   "reset_password_token"
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"
-    t.integer  "sign_in_count",                default: 0,    null: false
+    t.integer  "sign_in_count",                default: 0,  null: false
     t.datetime "current_sign_in_at"
     t.datetime "last_sign_in_at"
     t.string   "current_sign_in_ip"
@@ -666,8 +690,6 @@ ActiveRecord::Schema.define(version: 20140828145149) do
     t.string   "invited_by_type"
     t.string   "name"
     t.integer  "invitations_count",            default: 0
-    t.boolean  "send_freshsheet",              default: true, null: false
-    t.boolean  "send_newsletter",              default: true, null: false
     t.integer  "legacy_id"
     t.string   "confirmation_token"
     t.datetime "confirmed_at"
@@ -682,7 +704,5 @@ ActiveRecord::Schema.define(version: 20140828145149) do
   add_index "users", ["invitations_count"], name: "index_users_on_invitations_count", using: :btree
   add_index "users", ["invited_by_id"], name: "index_users_on_invited_by_id", using: :btree
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
-  add_index "users", ["send_freshsheet"], name: "index_users_on_send_freshsheet", using: :btree
-  add_index "users", ["send_newsletter"], name: "index_users_on_send_newsletter", using: :btree
 
 end

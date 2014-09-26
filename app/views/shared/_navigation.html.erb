@@ -16,7 +16,7 @@ end
     </div>
   <% end %>
 
-  <%= content_tag :span, "#{current_market.tagline}", class: "tagline" if current_market.tagline.present? && current_user %>
+  <%= content_tag :span, "#{current_market.tagline}", class: "tagline" if current_market.tagline.present? && (@show_nav_tagline or current_user) %>
 <% end %>
 
 <% if current_user %>

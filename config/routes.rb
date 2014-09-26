@@ -152,6 +152,11 @@ Rails.application.routes.draw do
     end
   end
 
+  resource :subscriptions do
+    get "unsubscribe" => "subscriptions#unsubscribe"
+    get "confirm_unsubscribe" => "subscriptions#confirm_unsubscribe"
+  end
+
   resources :products, only: [:index, :show]
   resources :organizations, only: :index
   resource  :market, only: [:show]

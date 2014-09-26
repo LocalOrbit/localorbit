@@ -1,0 +1,9 @@
+<h1>Confirm Unsubscribe</h1>
+
+<div class="info-note">
+  If you no longer to receive <%= @subscription_name %> emails, click the Unsubscribe button below.
+</div>
+
+<div class="unsubscribe-actions form-actions">
+  <%= link_to "Unsubscribe from #{@subscription_name}", confirm_unsubscribe_subscriptions_path(token: @token), class: "btn btn--save" %>
+</div>
