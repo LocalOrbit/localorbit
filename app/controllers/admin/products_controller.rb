@@ -7,10 +7,18 @@ module Admin
     before_action :find_sticky_params, only: :index
 
     def index
-      @products = current_user.managed_products.periscope(@query_params).preload(:prices, :lots, :organization).page(params[:page]).per(@query_params[:per_page])
-
-      find_organizations_for_filtering
-      find_markets_for_filtering
+      products = current_user.managed_products.periscope(@query_params).preload(:prices, :lots, :organization)
+      respond_to do |format|
+        format.html do
+          @products = products.page(params[:page]).per(@query_params[:per_page])
+          find_organizations_for_filtering
+          find_markets_for_filtering
+        end
+        format.csv do
+          @filename = 'products.csv'
+          @products = products
+        end
+      end
     end
 
     def new
