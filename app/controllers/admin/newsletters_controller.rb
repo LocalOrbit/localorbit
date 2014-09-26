@@ -39,7 +39,7 @@ class Admin::NewslettersController < AdminController
   private
 
   def send_newsletter
-    sent_newsletter = SendNewsletter.perform(newsletter: @newsletter, market: current_market, commit: params[:commit], email: params[:email])
+    sent_newsletter = SendNewsletter.perform(newsletter: @newsletter, market: current_market, commit: params[:commit], email: params[:email], port: request.port)
     if sent_newsletter.success?
       redirect_to [:admin, @newsletter], notice: sent_newsletter.notice
     else

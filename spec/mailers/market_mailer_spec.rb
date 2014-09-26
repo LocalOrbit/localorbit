@@ -29,7 +29,7 @@ describe MarketMailer do
       expect(fresh_sheet.body).to include("For customer service please reply to this email")
       expect(fresh_sheet.body).to include("616-123-4567")
       expect(fresh_sheet.body).to include("Click here to")
-      expect(fresh_sheet.body).to include(%|href="#{unsubscribe_subscriptions_url(token:token)}"|)
+      expect(fresh_sheet.body).to include(%|href="#{unsubscribe_subscriptions_url(host:market_in.domain, token:token)}"|)
     end
 
     it "displays the fresh sheet note if present" do

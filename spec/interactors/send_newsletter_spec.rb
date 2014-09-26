@@ -13,7 +13,9 @@ describe SendNewsletter do
       market: fresh_market,
       commit: "Send Test",
       email: "hossnfeffer@example.com",
-      newsletter: news_for_all)
+      newsletter: news_for_all,
+      port: 80
+    )
 
     expect(context.success?).to eq(true)
     expect(context.notice).to eq("Successfully sent a test to hossnfeffer@example.com")
@@ -70,7 +72,7 @@ describe SendNewsletter do
       commit: "lol wat",
       market: fresh_market, 
       newsletter: news_for_all, 
-      email:"hossnfeffer@example.com")
+      email:"hossnfeffer@example.com", port:80)
 
     expect(context.success?).to eq(true)
     expect(context.notice).to be_nil
@@ -82,7 +84,7 @@ describe SendNewsletter do
   def send_newsletter(newsletter)
     context = SendNewsletter.perform(newsletter: newsletter, 
                            market: fresh_market, 
-                           commit: "Send Now")
+                           commit: "Send Now",port:80)
   
     expect(context.success?).to eq(true)
     expect(context.notice).to eq("Successfully sent this Newsletter")

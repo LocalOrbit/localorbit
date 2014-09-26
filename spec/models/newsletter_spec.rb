@@ -4,18 +4,20 @@ describe Newsletter do
   describe "#recipients" do
     let!(:newsletter_type) { create :subscription_type, :newsletter }
     let!(:market) { create(:market) }
-    let!(:market_manager) { create :user, :market_manager, managed_markets: [market], subscription_types: [newsletter_type] }
-    let!(:market_manager2) { create :user, :market_manager, managed_markets: [market]}
+    let!(:market_manager) { create :user, :market_manager, email: "manager@santa.org", managed_markets: [market], subscription_types: [newsletter_type] }
+    let!(:market_manager2) { create :user, :market_manager, email: "manager2@santa.org", managed_markets: [market]}
     let!(:newsletter) { create(:newsletter, market: market) }
     let!(:buyer_org) { create(:organization, :buyer, markets: [newsletter.market]) }
     let!(:seller_org) { create(:organization, :seller, markets: [newsletter.market]) }
-    let!(:buyer) { create(:user, send_newsletter: true, organizations: [buyer_org], subscription_types: [newsletter_type] ) }
-    let!(:buyer2) { create(:user, send_newsletter: false, organizations: [buyer_org]) }
-    let!(:seller) { create(:user, send_newsletter: true, organizations: [seller_org], subscription_types: [newsletter_type] ) }
-    let!(:seller2) { create(:user, send_newsletter: false, organizations: [seller_org]) }
+    let!(:buyer) { create(:user, email: "buyer@santa.org", organizations: [buyer_org], subscription_types: [newsletter_type] ) }
+    let!(:buyer2) { create(:user, email: "buyer2@santa.org", organizations: [buyer_org]) }
+    let!(:seller) { create(:user, email: "seller@santa.org", organizations: [seller_org], subscription_types: [newsletter_type] ) }
+    let!(:seller2) { create(:user, email: "seller2@santa.org", organizations: [seller_org]) }
 
     before do
-      User.update_all(send_newsletter: false)
+      buyer2.unsubscribe_from(newsletter_type)
+      seller2.unsubscribe_from(newsletter_type)
+      market_manager2.unsubscribe_from(newsletter_type)
     end
 
     it "can include buyers" do

@@ -14,7 +14,7 @@ class Admin::FreshSheetsController < AdminController
       redirect_to([:admin, :fresh_sheet], notice: "Note saved.") && return
     end
 
-    sent_fresh_sheet = SendFreshSheet.perform(market: current_market, commit: params[:commit], email: params[:email], note: session[:fresh_sheet_note])
+    sent_fresh_sheet = SendFreshSheet.perform(market: current_market, commit: params[:commit], email: params[:email], note: session[:fresh_sheet_note], port: request.port)
     if sent_fresh_sheet.success?
       session[:fresh_sheet_note] = nil if params[:commit] == "Send to Everyone Now"
       redirect_to [:admin, :fresh_sheet], notice: sent_fresh_sheet.notice
@@ -29,7 +29,9 @@ class Admin::FreshSheetsController < AdminController
       to: current_user.email, 
       note: @note, 
       preview: true, 
-      unsubscribe_token: "XYZ987XYZ987XYZ987")
+      unsubscribe_token: "XYZ987XYZ987XYZ987",
+      port: request.port
+    )
     render html: email.body.to_s.html_safe
   end
 

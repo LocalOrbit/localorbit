@@ -9,7 +9,7 @@ class Newsletter < ActiveRecord::Base
 
   def recipients
     newsletter_type = SubscriptionType::Keywords::Newsletter
-    subscribers = User.in_market(market).subscribed_to(newsletter_type)
+    subscribers = User.in_market(market).subscribed_to(newsletter_type).includes(:subscriptions)
 
     recipients = Set.new
     if buyers?
@@ -21,7 +21,7 @@ class Newsletter < ActiveRecord::Base
     end
 
     if market_managers?
-      recipients += market.managers.subscribed_to(newsletter_type)
+      recipients += market.managers.subscribed_to(newsletter_type).includes(:subscriptions)
     end
 
     recipients
