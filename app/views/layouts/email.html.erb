@@ -313,7 +313,10 @@
     <div class="lo_footer">
       <%= image_tag 'email/local-orbit-logo.png', alt: "Local Orbit Logo", class: 'lo_logo' %><br>
       <strong>Powered by <a href="http://localorbit.com/">Local Orbit</a></strong><br>
-      <em class="lo_copyright">Copyright 2014. All Rights Reserved</em>
+      <em class="lo_copyright">Copyright 2014. All Rights Reserved</em><br>
+      <% if @unsubscribe_token %>
+        <em class="lo_unsubscribe">Click here to <%= link_to "Unsubscribe", unsubscribe_subscriptions_url(token: @unsubscribe_token) %></em>
+      <% end %>
     </div>
   </div>
 </body>

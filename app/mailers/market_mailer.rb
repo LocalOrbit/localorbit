@@ -1,9 +1,11 @@
 class MarketMailer < BaseMailer
-  def fresh_sheet(market_id, recipients=nil, note=nil, preview=false)
+
+  def fresh_sheet(market:, to: nil, note: nil, preview: false, unsubscribe_token: nil)
     @preview        = preview
     @note           = note
-    @market         = Market.find(market_id)
+    @market         = market
     @delivery       = @market.next_delivery.decorate
+    @unsubscribe_token = unsubscribe_token
 
     organization    = @market.organizations.build
     cart            = Cart.new(market: @market, organization: organization)
@@ -11,7 +13,7 @@ class MarketMailer < BaseMailer
     @products_for_sale = ProductsForSale.new(@delivery, organization, cart)
 
     mail(
-      to: recipients,
+      to: to,
       subject: "See what's fresh this week!"
     )
   end

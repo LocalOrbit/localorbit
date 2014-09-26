@@ -849,4 +849,12 @@ describe User do
       expect(user.active_subscription_types).to contain_exactly(my_sub_type)
     end
   end
+  describe "#unsubscribe_token" do
+    include_context "fresh sheet and newsletter subscription types"
+    let!(:user) { create(:user) }
+    it "gets the token from the Subscription associated with the given SubscriptionType" do
+      tolkein = user.unsubscribe_token(subscription_type: fresh_sheet_subscription_type)
+      expect(tolkein).to eq(user.subscriptions.find_by(subscription_type: fresh_sheet_subscription_type).token)
+    end
+  end
 end

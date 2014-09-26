@@ -24,7 +24,12 @@ class Admin::FreshSheetsController < AdminController
   end
 
   def preview
-    email = MarketMailer.fresh_sheet(current_market, current_user.email, @note, true)
+    email = MarketMailer.fresh_sheet(
+      market: current_market, 
+      to: current_user.email, 
+      note: @note, 
+      preview: true, 
+      unsubscribe_token: "XYZ987XYZ987XYZ987")
     render html: email.body.to_s.html_safe
   end
 

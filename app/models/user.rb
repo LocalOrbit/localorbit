@@ -146,6 +146,14 @@ class User < ActiveRecord::Base
     active_subscription_types
   end
 
+  def unsubscribe_token(subscription_type:)
+    subscription_type_id = subscription_type.id
+    subscriptions.each.
+      select { |s| s.subscription_type_id == subscription_type_id }.
+      first.
+      try(:token)
+  end
+
   def affiliations
     @affiliations ||= begin
       collection = []

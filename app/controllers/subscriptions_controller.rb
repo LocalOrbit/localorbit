@@ -6,11 +6,18 @@ class SubscriptionsController < ApplicationController
 
   def unsubscribe
     get_token_and_subscription_type
+  rescue Exception => e
+    redirect_to confirm_unsubscribe_subscriptions_path(skip:true)
   end
 
   def confirm_unsubscribe
-    get_token_and_subscription_type
-    Subscription.unsubscribe_by_token(@token)
+    if params[:skip]
+      @token = nil
+      @subscription_name = "Emails"
+    else
+      get_token_and_subscription_type
+      Subscription.unsubscribe_by_token(@token)
+    end
   end
 
   private

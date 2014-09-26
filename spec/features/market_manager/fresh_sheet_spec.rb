@@ -71,8 +71,9 @@ feature "A Market Manager sending a weekly Fresh Sheet" do
         expect(page).to have_content("Forever Young")
       end
 
+
       scenario "note is in sent email" do
-        expect(MarketMailer).to receive(:fresh_sheet).with(market.id, "\"Jack Stevens\" <#{buyer_user.email}>", "Something Else").and_return(double(:mailer, deliver: true))
+        expect_send_fresh_sheet_mail market: market, to: buyer_user.pretty_email, note: "Something Else", unsubscribe_token: buyer_user.unsubscribe_token(subscription_type: fresh_sheet)
         visit admin_fresh_sheet_path
 
         click_link "Add Note"
@@ -103,7 +104,7 @@ feature "A Market Manager sending a weekly Fresh Sheet" do
     end
 
     scenario "sending a test" do
-      expect(MarketMailer).to receive(:fresh_sheet).with(market.id, user.email, "").and_return(double(:mailer, deliver: true))
+      expect_send_fresh_sheet_mail market: market, to: user.email, note: "", unsubscribe_token: "XYZ987"
       visit admin_fresh_sheet_path
       click_button "Send Test"
       expect(page).to have_content("Successfully sent a test to #{user.email}")
@@ -111,7 +112,7 @@ feature "A Market Manager sending a weekly Fresh Sheet" do
     end
 
     scenario "sending a test to a different email" do
-      expect(MarketMailer).to receive(:fresh_sheet).with(market.id, "foo@example.com", "").and_return(double(:mailer, deliver: true))
+      expect_send_fresh_sheet_mail market: market, to: "foo@example.com", note: "", unsubscribe_token: "XYZ987"
       visit admin_fresh_sheet_path
       fill_in "email", with: "foo@example.com"
       click_button "Send Test"
@@ -120,7 +121,7 @@ feature "A Market Manager sending a weekly Fresh Sheet" do
     end
 
     scenario "sending to everyone" do
-      expect(MarketMailer).to receive(:fresh_sheet).with(market.id, "\"Jack Stevens\" <#{buyer_user.email}>", "").and_return(double(:mailer, deliver: true))
+      expect_send_fresh_sheet_mail market: market, to: buyer_user.pretty_email, note: "", unsubscribe_token: buyer_user.unsubscribe_token(subscription_type: fresh_sheet)
       visit admin_fresh_sheet_path
       click_button "Send to Everyone Now"
       expect(page).to have_content("Successfully sent the Fresh Sheet")
@@ -158,4 +159,9 @@ feature "an Admin with more then one market sends a weekly Fresh Sheet" do
     expect(page).to have_content("Fresh Sheet")
     expect(page).to have_css("iframe[src='#{preview_admin_fresh_sheet_path}']")
   end
+
+  #
+  # HELPERS
+  #
+
 end
