@@ -58,6 +58,11 @@
         background-color: <%= current_market.text_color -%>;
         border-color: <%= current_market.text_color -%>;
       }
+      
+      .btn--secondary{
+         background:<%= color_mix current_market.text_color, 14 %>;
+         border-color:<%= color_mix current_market.text_color, 14 %>;
+      }
       .export path {
         fill: <%= current_market.text_color -%>;
       }
