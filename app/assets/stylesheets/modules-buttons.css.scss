@@ -6,7 +6,7 @@ input[type=button],
 input[type=reset],
 input[type=submit] {
   display: inline-block;
-  padding: 12px 18px;
+  padding: 10px 18px;
   border: solid 1px #a6a6a6;
   @include border-radius(4px);
   background: #a6a6a6;
@@ -44,7 +44,7 @@ input[type=submit] {
     margin-right: 0;
   }
   &.btn--small {
-    padding: 4px 13px;
+    padding: 4px 12px;
     font-size: 14px;
   }
   &.alert {
