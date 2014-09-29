@@ -122,33 +122,39 @@ section{margin:60px 0;}
   <button class="btn btn--save">Primary Button</button>
   <button class="btn btn--secondary">Secondary Button</button>
   <br><br><br>
+  
   <small>Actual buttons:</small><br>
-  <input type="submit" value="Save Price" name="commit">
-  <a class="btn btn--add btn--small" href="/admin/organizations/new">Add Organization</a>
-  <a class="btn btn--small btn--save" rel="nofollow" href="/admin/organizations/2/update_active?organization%5Bactive%5D=false" data-method="patch">Deactivate</a>
-  <input type="submit" value="Add" name="commit" class="btn--small">
-  <a href="/admin/products/new" class="btn btn--add">Add Another Product</a>
-  <a title="Delete" href="/admin/products/2" data-method="delete" data-confirm="Are you sure you want to permanently delete this product?" class="delete product-header-delete font-icon"></a>
-  <button class="pull-right close" type="button"><i class="font-icon icon-close"></i></button>
-  <input type="submit" value="Select Organization" name="commit" class="mobile-block">
-  <span class="change-delivery">
-    <a id="change-delivery-date" href="#change-delivery-warning" class="reset btn modal-toggle">Change</a>
-  </span>
-  <input type="submit" value="Start Shopping" name="commit" class="mobile-block">
-  <input type="submit" value="Save Inventory" name="commit" class="btn--small">
-  <a id="review_cart" href="/cart" class="btn btn--money pull-right add-toggle mobile-block">Review Cart</a>
-  <div class="form-actions">
-    <span class="pull-left cancel-link">
-      <a href="/cart" data-method="delete" data-confirm="Are you sure you want to clear the cart?" class="btn btn--small destructive">Cancel Order</a>
-      <span class="note">(Clear Cart)</span>
-    </span>
-    <a href="/products" class="continue-shop">Continue Shopping</a>&nbsp;&nbsp;
-    <input type="submit" value="Place Order" name="commit" id="place-order-button" data-disable-with="Please wait..." class="btn btn btn--money">
+  <div class="row row--partial">
+    <div class="column column--two-thirds">
+  
+      <input type="submit" value="Save Price" name="commit">
+      <a class="btn btn--add btn--small" href="/admin/organizations/new">Add Organization</a>
+      <a class="btn btn--small btn--save" rel="nofollow" href="/admin/organizations/2/update_active?organization%5Bactive%5D=false" data-method="patch">Deactivate</a>
+      <input type="submit" value="Add" name="commit" class="btn--small">
+      <a href="/admin/products/new" class="btn btn--add">Add Another Product</a>
+      <a title="Delete" href="/admin/products/2" data-method="delete" data-confirm="Are you sure you want to permanently delete this product?" class="delete product-header-delete font-icon"></a>
+      <button class="pull-right close" type="button"><i class="font-icon icon-close"></i></button>
+      <input type="submit" value="Select Organization" name="commit" class="mobile-block">
+      <span class="change-delivery">
+        <a id="change-delivery-date" href="#change-delivery-warning" class="reset btn modal-toggle">Change</a>
+      </span>
+      <input type="submit" value="Start Shopping" name="commit" class="mobile-block">
+      <input type="submit" value="Save Inventory" name="commit" class="btn--small">
+      <a id="review_cart" href="/cart" class="btn btn--money pull-right add-toggle mobile-block">Review Cart</a>
+      <div class="form-actions">
+        <span class="pull-left cancel-link">
+          <a href="/cart" data-method="delete" data-confirm="Are you sure you want to clear the cart?" class="btn btn--small destructive">Cancel Order</a>
+          <span class="note">(Clear Cart)</span>
+        </span>
+        <a href="/products" class="continue-shop">Continue Shopping</a>&nbsp;&nbsp;
+        <input type="submit" value="Place Order" name="commit" id="place-order-button" data-disable-with="Please wait..." class="btn btn btn--money">
+      </div>
+      <a class="lo_button pull-right" href="https://springfield.localorbit.com/products">Shop Now</a>
+      <a class="lo_button" href="https://springfield.localorbit.com/admin/products/311" target="_top">Edit</a>
+      <input class="btn--end" name="commit" type="submit" value="Search">
+      <button type="button" class="ui-datepicker-trigger"><img src="https://d3q270946t1v4b.cloudfront.net/assets/icons/calendar@2x-ff5c35352afb1b255af06f08f6a9c2ce.png" alt="..." title="..."></button>
+    </div>
   </div>
-  <a class="lo_button pull-right" href="https://springfield.localorbit.com/products">Shop Now</a>
-  <a class="lo_button" href="https://springfield.localorbit.com/admin/products/311" target="_top">Edit</a>
-  <input class="btn--end" name="commit" type="submit" value="Search">
-  <button type="button" class="ui-datepicker-trigger"><img src="https://d3q270946t1v4b.cloudfront.net/assets/icons/calendar@2x-ff5c35352afb1b255af06f08f6a9c2ce.png" alt="..." title="..."></button>
   
 </section>
 <section>
