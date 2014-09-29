@@ -23,7 +23,8 @@ class Market < ActiveRecord::Base
   has_many :cross_sells, through: :market_cross_sells
 
   has_many :market_organizations
-  has_many :organizations, -> { extending(MarketOrganization::AssociationScopes).excluding_deleted }, through: :market_organizations
+  has_many :organizations, -> { extending(MarketOrganization::AssociationScopes).excluding_deleted }, through: :market_organizations # XXX prefer the merge in the line below to this partially and incorrectly implemened .excluding_deleted scope?
+  # TODO has_many :organizations, -> { merge(MarketOrganization.visible) }, through: :market_organizations
 
   has_many :addresses, class_name: MarketAddress
   has_many :delivery_schedules, inverse_of: :market

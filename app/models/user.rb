@@ -10,6 +10,12 @@ class User < ActiveRecord::Base
 
   has_many :managed_markets_join, class_name: "ManagedMarket"
 
+  before_create do |user|
+    if user.subscription_types.empty?
+      Subscription.ensure_user_has_subscription_links_to_fresh_sheet_and_newsletter(user)
+    end
+  end
+
   # prefer Market.managed_by(user) over (user.admin? ? Market.all : user.managed_markets)
   has_many :managed_markets, through: :managed_markets_join, source: :market do
     def can_manage_organization?(org)
@@ -32,6 +38,9 @@ class User < ActiveRecord::Base
 
   has_many :carts
 
+  has_many :subscriptions
+  has_many :subscription_types, through: :subscriptions
+
   attr_accessor :terms_of_service
 
   validates :terms_of_service, acceptance: true, on: :create
@@ -43,6 +52,47 @@ class User < ActiveRecord::Base
   scope_accessible :sort, method: :for_sort, ignore_blank: true
   scope_accessible :search, method: :for_search, ignore_blank: true
 
+  scope :buyers, -> { joins(:organizations).merge(Organization.buying) }
+  scope :sellers, -> { joins(:organizations).merge(Organization.selling) }
+  
+  scope :in_market, ->(market) { 
+    market_id = case market
+                when Market
+                  market.id
+                else
+                  market.to_i
+                end
+    joins(organizations: :market_organizations).
+    where(market_organizations: {market_id: market_id}).
+    merge(MarketOrganization.visible)
+  }
+
+  # TODO: this needs a spec if we're to bring it in:
+  # scope :managing_market, ->(market) {
+  #   market_id = case market
+  #               when Market
+  #                 market.id
+  #               else
+  #                 market.to_i
+  #               end
+  #   joins(:managed_markets).
+  #   where(managed_markets: {market_id: market_id})
+  # }
+ 
+  scope :subscribed_to, ->(subscription) {
+    where_opts = case subscription
+             when SubscriptionType
+               {subscription_types: {id: subscription.id}}
+             when Fixnum
+               {subscription_types: {id: subscription}}
+             else
+               {subscription_types: {keyword: subscription.to_s}}
+             end
+    joins(subscriptions: :subscription_type).
+    where(where_opts).
+    merge(Subscription.visible)
+  }
+
   def self.with_primary_market(market)
     User.all.select {|u| u.primary_market == market }
   end
@@ -53,6 +103,55 @@ class User < ActiveRecord::Base
     else
       arel_table[:name]
     end
+  end
+
+  def active_subscriptions
+    subscriptions.visible
+  end
+
+  def active_subscription_types
+    subscription_types.merge(Subscription.visible)
+  end
+
+  def subscribe_to(s)
+    keyword = case s
+              when SubscriptionType
+                s.keyword
+              else
+                s.to_s
+              end
+    st = SubscriptionType.find_by(keyword: keyword)
+    raise "No SubscriptionType found for keyword #{keyword.inspect}" unless st
+    if sub = subscriptions.find_by(subscription_type: st)
+      sub.undelete
+    else
+      subscription_types << st
+    end
+    active_subscription_types
+  end
+
+  def unsubscribe_from(s)
+    keyword = case s
+              when SubscriptionType
+                s.keyword
+              else
+                s.to_s
+              end
+    st = SubscriptionType.find_by(keyword: keyword)
+    raise "No SubscriptionType found for keyword #{keyword.inspect}" unless st
+    if sub = subscriptions.find_by(subscription_type: st)
+      sub.soft_delete
+    end
+
+    active_subscription_types
+  end
+
+  def unsubscribe_token(subscription_type:)
+    subscription_type_id = subscription_type.id
+    subscriptions.each.
+      select { |s| s.subscription_type_id == subscription_type_id }.
+      first.
+      try(:token)
   end
 
   def affiliations

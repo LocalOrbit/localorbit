@@ -5,10 +5,19 @@ describe BankAccount do
     let!(:organization) { create(:organization) }
 
     it "does not allow duplication accounts" do
-      create(:bank_account, account_type: "visa", last_four: "1234", bankable: organization)
+      atts = {
+        account_type: "visa",
+        last_four: "1234",
+        bankable: organization,
+        bank_name: "House of Dollars"
+      }
+      create(:bank_account, atts.dup)
 
-      subject = BankAccount.new(bankable: organization, account_type: "visa", last_four: "1234")
+      subject = BankAccount.new(atts.dup)
       expect(subject).to have(1).errors_on(:bankable_id)
+      field,msg = subject.errors.first
+      expect(field).to eq(:bankable_id)
+      expect(msg).to match(/already exists/)
 
       subject = BankAccount.new(bankable: organization, account_type: "visa", last_four: "1235")
       expect(subject).to be_valid
@@ -52,4 +61,10 @@ describe BankAccount do
       expect(subject).not_to be_verification_failed
     end
   end
+
+  describe "soft_delete" do
+    include_context "soft delete-able models"
+    it_behaves_like "a soft deleted model"
+  end
+
 end

@@ -305,4 +305,11 @@ describe DeliverySchedule do
       expect(delivery_schedule.required?(cross_sell_org)).to be_truthy
     end
   end
+
+
+  describe "soft_delete" do
+    include_context "soft delete-able models"
+    it_behaves_like "a soft deleted model"
+  end
+
 end

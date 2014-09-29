@@ -8,29 +8,22 @@ class Newsletter < ActiveRecord::Base
   validates_property :format, of: :image,  in: %w(jpeg png gif)
 
   def recipients
-    recipients = Set.new
+    newsletter_type = SubscriptionType::Keywords::Newsletter
+    subscribers = User.in_market(market).subscribed_to(newsletter_type).includes(:subscriptions)
 
+    recipients = Set.new
     if buyers?
-      recipients += recipients_for_organizations(market.organizations.buying)
+      recipients += subscribers.buyers
     end
 
     if sellers?
-      recipients += recipients_for_organizations(market.organizations.selling)
+      recipients += subscribers.sellers
     end
 
     if market_managers?
-      recipients += market.managers.where(send_newsletter: true).select(:name, :email)
+      recipients += market.managers.subscribed_to(newsletter_type).includes(:subscriptions)
     end
 
     recipients
-  end
-
-  private
-
-  def recipients_for_organizations(organizations)
-    User.joins(:organizations).where(
-      organizations: {id: organizations.pluck(:id)},
-      users: {send_newsletter: true}
-    ).select(:name, :email)
   end
 end

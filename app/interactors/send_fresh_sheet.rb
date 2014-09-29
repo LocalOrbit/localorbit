@@ -3,13 +3,11 @@ class SendFreshSheet
 
   def perform
     if commit == "Send Test"
-      MarketMailer.delay.fresh_sheet(market.id, email, note)
-      context[:notice] = "Successfully sent a test to #{email}"
+      send_test_email
+
     elsif commit == "Send to Everyone Now"
-      emails.each do |email|
-        MarketMailer.delay.fresh_sheet(market.id, email, note)
-      end
-      context[:notice] = "Successfully sent the Fresh Sheet"
+      send_fresh_sheets_to_subscribed_members
+
     else
       context[:error] = "Invalid action chosen"
       context.fail!
@@ -18,10 +16,33 @@ class SendFreshSheet
 
   private
 
-  def emails
-    @emails ||= User.joins(organizations: :market_organizations).
-      where(send_freshsheet: true, market_organizations: {market_id: market.id}).select(:name, :email).
-      uniq. # putting uniq first has the database de-dup the data
-      map(&:pretty_email)
+  def send_test_email
+    MarketMailer.delay.fresh_sheet(market: market, to: email, note: note, unsubscribe_token: "XYZ987", port: get_port)
+    context[:notice] = "Successfully sent a test to #{email}"
+  end
+
+  def send_fresh_sheets_to_subscribed_members
+    fresh_sheet_type = SubscriptionType.find_by(keyword: SubscriptionType::Keywords::FreshSheet)
+    User.in_market(market).
+      subscribed_to(fresh_sheet_type).
+      uniq. 
+      includes(:subscriptions).
+      each do |user|
+        token = user.unsubscribe_token(subscription_type: fresh_sheet_type)
+        MarketMailer.delay.fresh_sheet(market: market, 
+                                       to: user.pretty_email, 
+                                       note: note, 
+                                       unsubscribe_token: token,
+                                       port: get_port)
+      end
+    context[:notice] = "Successfully sent the Fresh Sheet"
+  end
+
+  def get_port
+    if respond_to?(:port)
+      port
+    else
+      80
+    end
   end
 end
