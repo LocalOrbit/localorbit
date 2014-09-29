@@ -1,4 +1,4 @@
-csv << ["ID", "Products", "Category"]
+csv << ["Id", "Products", "Category"]
 
 @root.descendants.each do |category|
   csv << [category.id, category.products.count] + category.self_and_ancestors.where("depth > 0").pluck(:name)
