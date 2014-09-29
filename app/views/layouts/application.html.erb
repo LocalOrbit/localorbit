@@ -60,7 +60,8 @@
         border-color: <%= current_market.text_color -%>;
       }
       
-      .btn--secondary{
+      .btn--secondary,
+      input[type=submit].btn--secondary {
          background:<%= color_mix current_market.text_color, 14 %>;
          border-color:<%= color_mix current_market.text_color, 14 %>;
       }
