@@ -149,6 +149,9 @@ input[type=submit] {
     color: $alert_text;
     background: none;
   }
+  &.destructive:hover {
+    color: $alert_text;
+  }
   &.btn--test {
     background-color: #a6a6a6;
     border-color: #a6a6a6;
