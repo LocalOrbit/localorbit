@@ -126,7 +126,7 @@
 }
 .order-data {
   width: 100%;
-  input.btn{
+  input.btn.pull-right{
     margin-left:6px;
   }
 }
@@ -142,7 +142,7 @@
     .btn {
       margin-bottom: 20px;
     }
-    input.btn{
+    input.btn.pull-right{
       margin-left:0;
     }
   }
