@@ -9,8 +9,8 @@ module SoftDelete
     update_attribute(:deleted_at, Time.current)
   end
 
-  def soft_delete_all
-    update_all(deleted_at: Time.current)
+  def undelete
+    update_attribute(:deleted_at, nil)
   end
 
   module ClassMethods

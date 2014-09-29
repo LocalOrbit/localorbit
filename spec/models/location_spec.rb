@@ -4,7 +4,7 @@ describe Location do
   let(:organization) { create(:organization) }
 
   describe "soft_delete" do
-    subject { create(:location) }
+    include_context "soft delete-able models"
     it_behaves_like "a soft deleted model"
   end
 

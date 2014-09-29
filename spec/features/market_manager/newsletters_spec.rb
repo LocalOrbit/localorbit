@@ -1,7 +1,8 @@
 require "spec_helper"
 
 describe "A Market Manager managing Newsletters" do
-  let(:market_manager) { create :user, :market_manager, send_newsletter: true }
+  let!(:newsletter_type) { create(:subscription_type, :newsletter) }
+  let(:market_manager) { create :user, :market_manager, subscription_types: [newsletter_type] }
   let(:market) { market_manager.managed_markets.first }
 
   before(:each) do
@@ -95,7 +96,8 @@ describe "A Market Manager managing Newsletters" do
   end
 
   describe "Sending" do
-    let!(:newsletter) { create :newsletter, market: market }
+    let!(:newsletter) { create :newsletter, market: market, buyers: false, sellers: false, market_managers: false }
+    let(:token) { "XYZ-test-unsub-newsletter-0986" }
 
     before do
       visit admin_newsletter_path(newsletter)
@@ -103,13 +105,13 @@ describe "A Market Manager managing Newsletters" do
 
     describe "a test" do
       it "sends a test" do
-        expect(MarketMailer).to receive(:newsletter).with(newsletter.id, market.id, market_manager.email).and_return(double(:mailer, deliver: true))
+        expect_send_newsletter_mail(newsletter:newsletter, market:market, to:market_manager.email,unsubscribe_token:token)
         click_button "Send Test"
         expect(page).to have_content("Successfully sent a test to #{market_manager.email}")
       end
 
       it "allows sending a test to a different email" do
-        expect(MarketMailer).to receive(:newsletter).with(newsletter.id, market.id, "foo@example.com").and_return(double(:mailer, deliver: true))
+        expect_send_newsletter_mail(newsletter:newsletter, market:market, to:"foo@example.com",unsubscribe_token:token)
         fill_in "email", with: "foo@example.com"
         click_button "Send Test"
         expect(page).to have_content("Successfully sent a test to foo@example.com")
@@ -117,8 +119,10 @@ describe "A Market Manager managing Newsletters" do
     end
 
     describe "to groups" do
-      it "sends to specific groups" do
-        expect(MarketMailer).to receive(:newsletter).with(newsletter.id, market.id, market_manager.pretty_email).and_return(double(:mailer, deliver: true))
+      it "sends to Market Managers" do
+        newsletter.market_managers=true
+        mmtoken = market_manager.unsubscribe_token(subscription_type: SubscriptionType.find_by(keyword:SubscriptionType::Keywords::Newsletter))
+        expect_send_newsletter_mail(newsletter:newsletter, market:market, to:market_manager.pretty_email,unsubscribe_token:mmtoken)
         check "Market Managers"
         click_button "Send Now"
         expect(page).to have_content("Successfully sent this Newsletter")

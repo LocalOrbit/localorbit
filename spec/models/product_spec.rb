@@ -573,4 +573,10 @@ describe Product do
       expect(product.reload.available_inventory).to eql(30)
     end
   end
+
+  describe "soft_delete" do
+    include_context "soft delete-able models"
+    it_behaves_like "a soft deleted model"
+  end
+
 end

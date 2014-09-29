@@ -3,16 +3,32 @@ class SendNewsletter
 
   def perform
     if commit == "Send Test"
-      MarketMailer.delay.newsletter(newsletter.id, market.id, email)
+      MarketMailer.delay.newsletter(newsletter: newsletter, market: market, to: email, port: get_port, unsubscribe_token: "XYZ-test-unsub-newsletter-0986")
       context[:notice] = "Successfully sent a test to #{email}"
+
     elsif commit == "Send Now"
-      emails = newsletter.recipients.map(&:pretty_email)
-      emails.each do |email|
-        MarketMailer.delay.newsletter(newsletter.id, market.id, email)
-      end
+      newsletter_type = SubscriptionType.find_by(keyword: SubscriptionType::Keywords::Newsletter)
+      newsletter.recipients.each do |user|
+          token = user.unsubscribe_token(subscription_type: newsletter_type)
+          MarketMailer.delay.newsletter(
+            newsletter: newsletter, 
+            market: market, 
+            to: user.pretty_email, 
+            unsubscribe_token: token,
+            port: get_port)
+        end
       context[:notice] = "Successfully sent this Newsletter"
+
     else
       context[:notice] = nil
+    end
+  end
+
+  def get_port
+    if respond_to?(:port)
+      port
+    else
+      80
     end
   end
 end

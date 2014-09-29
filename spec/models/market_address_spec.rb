@@ -56,7 +56,8 @@ describe MarketAddress do
   end
 
   describe "soft_delete" do
-    subject { create(:market_address, market: market) }
+    include_context "soft delete-able models"
     it_behaves_like "a soft deleted model"
   end
+
 end

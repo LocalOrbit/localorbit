@@ -1,17 +1,24 @@
 FactoryGirl.define do
   factory :bank_account do
-    trait :credit_card do
-      bank_name        "Visa"
-      account_type     "visa"
-      sequence(:last_four) {|n| "#{'%04d' % n}"}
-      expiration_month 5
-      expiration_year  2020
+    association :bankable, factory: :market
+
+    # Default as CC account:
+    bank_name        "Visa"
+    account_type     "visa"
+    sequence(:last_four) {|n| "#{'%04d' % n}"}
+    expiration_month 5
+    expiration_year  2020
+
+    trait :credit_card do 
+      # bank_accounts now default to CC stuff
     end
 
     trait :checking do
       bank_name        "LMCU"
       account_type     "checking"
       sequence(:last_four) {|n| "#{'%04d' % n}"}
+      expiration_month nil # do not want
+      expiration_year nil  # do not want 
     end
 
     trait :verified do
@@ -163,6 +170,7 @@ FactoryGirl.define do
   end
 
   factory :market_address do
+    market
     sequence(:name) {|n| "Market Address #{n}" }
     address "44 E. 8th St"
     city "Holland"
@@ -171,11 +179,39 @@ FactoryGirl.define do
     phone "(616) 555-1212"
   end
 
+  factory :market_organization do
+    market
+    organization
+  end
+
   factory :newsletter do
     subject "Some News"
     header "Some Exciting News"
     body "news goes here"
     market
+    trait :buyers do
+      header "Exciting news for Buyers"
+      subject "Buyer's News!"
+      body "This one goes out to the Buyers."
+      buyers true
+    end
+    trait :sellers do
+      header "Exciting news for Sellers"
+      subject "Seller's News!"
+      body "This one goes out to the Sellers."
+      sellers true
+    end
+    trait :market_managers do
+      header "Exciting news for Market Managers"
+      subject "Manager's News!"
+      body "This one goes out to the Market Managers."
+      market_managers true
+    end
+    trait :everyone do
+      market_managers true
+      sellers true
+      buyers true
+    end
   end
 
   factory :order do
@@ -386,6 +422,26 @@ FactoryGirl.define do
         o = create(:organization, :seller, markets: [m])
         user.organizations << o
       end
+    end
+  end
+
+  factory :subscription do
+    user
+    subscription_type
+  end
+
+  factory :subscription_type do
+    sequence(:name) {|n| "Subscription Type #{n}" }
+    sequence(:keyword) {|n| "subtype_#{n}" }
+
+    trait :fresh_sheet do
+      name "Fresh Sheet (testing)"
+      keyword SubscriptionType::Keywords::FreshSheet
+    end
+
+    trait :newsletter do
+      name "Newsletter (testing)"
+      keyword SubscriptionType::Keywords::Newsletter
     end
   end
 end
