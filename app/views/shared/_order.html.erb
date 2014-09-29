@@ -34,7 +34,7 @@
                         map {|d| d.decorate(context: {current_organization: current_organization}) }.
                         sort_by {|d| d.deliver_on }.map{|d| ["#{d.type} - #{d.display_date} #{d.buyer_time_range}", d.id] } %>
             <br>
-            <%= f.submit "Change Delivery", class: "btn btn--blue btn--small" %>
+            <%= f.submit "Change Delivery", class: "btn btn--small" %>
           </div>
         </div>
       <% end %>
@@ -80,7 +80,7 @@
   <div class="order-data">
     <h2 class="pull-left">Items for Delivery</h2>
     <% if !current_user.buyer_only? && order.undelivered_for_user?(current_user) %>
-      <%= button_tag "Mark all delivered", class: 'pull-right btn btn--blue btn--small mobile-block', id: 'mark-all-delivered', type: 'button' %>
+      <%= button_tag "Mark all delivered", class: 'pull-right btn btn--small mobile-block', id: 'mark-all-delivered', type: 'button' %>
     <% end %>
   <div class="table-wrapper">
     <table class="current-sales-table odd order-table-1">
@@ -184,10 +184,10 @@
   </div>
 
   <% if current_user.can_manage_market?(order.market) %>
-    <%= f.submit @show_add_items_form ? "Add items and Update quantities" : "Update quantities", class: 'pull-right btn btn--blue btn--small mobile-block' %>
+    <%= f.submit @show_add_items_form ? "Add items and Update quantities" : "Update quantities", class: 'pull-right btn btn--small mobile-block' %>
   <% end %>
   <% if can_add_products_to_order?(order) && !@show_add_items_form %>
-    <%= f.submit "Add Items", class: 'pull-right btn btn--blue btn--small mobile-block' %>
+    <%= f.submit "Add Items", class: 'pull-right btn btn--small mobile-block' %>
   <% end %>
 
   <% if !current_user.buyer_only? %>
@@ -223,7 +223,7 @@
     <div class="order-notes">
       <%= f.label :notes %>
       <%= f.text_area :notes, rows: 10 %>
-      <%= f.submit "Save Notes", class: 'btn btn--blue btn--small mobile-block' %>
+      <%= f.submit "Save Notes", class: 'btn btn--small mobile-block' %>
     </div>
   <% end %>
 
