@@ -31,6 +31,28 @@ describe DeliveryDecorator do
     end
   end
 
+  describe "#buyer_display_date" do
+    subject { delivery.decorate }
+    let(:delivery) { create(:delivery, 
+                     deliver_on: Time.parse("2014-05-15 06:00:00 EDT"),
+                     buyer_deliver_on: Time.parse("2014-07-21 09:15:00 EDT")) }
+
+    it "displays the date of the upcoming delivery" do
+      expect(subject.buyer_display_date).to eq("Monday July 21, 2014")
+    end
+
+    it "falls back to deliver_on if buyer_deliver_on is null" do
+      delivery.buyer_deliver_on = nil
+      expect(subject.buyer_display_date).to eq("Thursday May 15, 2014")
+    end
+
+    it "falls back to nil if both dates are null" do
+      delivery.deliver_on = nil
+      delivery.buyer_deliver_on = nil
+      expect(subject.buyer_display_date).to be_nil
+    end
+  end
+
   describe "#time_range" do
     let(:delivery_schedule)do
       create(:delivery_schedule,

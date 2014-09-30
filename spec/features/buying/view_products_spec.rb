@@ -2,7 +2,13 @@ require "spec_helper"
 
 feature "Viewing products" do
   let!(:market) { create(:market, :with_addresses) }
-  let!(:delivery_schedule1) { create(:delivery_schedule, :buyer_pickup, market: market, day: 5, order_cutoff: 24, buyer_pickup_location_id: 0, buyer_pickup_start: "12:00 PM", buyer_pickup_end: "2:00 PM") }
+  let!(:delivery_schedule1) { create(:delivery_schedule, :buyer_pickup,
+                                     market: market,
+                                     order_cutoff: 24,
+                                     day: 5,
+                                     buyer_pickup_location_id: 0,
+                                     buyer_pickup_start: "12:00 PM",
+                                     buyer_pickup_end: "2:00 PM") }
   let!(:delivery_schedule2) { create(:delivery_schedule, market: market, day: 3, deleted_at: Time.parse("2013-03-21")) }
 
   let!(:org1) { create(:organization, :seller, markets: [market]) }
@@ -168,6 +174,29 @@ feature "Viewing products" do
     expect(celery_item.node.find(".total")).to have_content("$7.50")
   end
 
+  context "when selecting amongst Delivery Dates, some of which have different seller days than buyer days" do
+    let!(:delivery_schedule3) { create(:delivery_schedule, :buyer_pickup,
+                                       market: market,
+                                       order_cutoff: 24,
+                                       day: 3,
+                                       seller_delivery_start: "6:00 PM",
+                                       seller_delivery_end: "8:00 PM",
+                                       buyer_day: 4,
+                                       buyer_pickup_location_id: 0,
+                                       buyer_pickup_start: "1:30 PM",
+                                       buyer_pickup_end: "3:30 PM"
+                                      ) }
+
+    it "shows the correct date info (buyer pickup day and time)" do
+      sign_in_as user
+      expected_desc = "Delivery: Thursday October 9, 2014 Between 1:30PM and 3:30PM"
+      choices = []
+      Dom::Buying::DeliveryChoice.each do |dc| choices << dc end
+      choice = choices.select do |dc| dc.description == expected_desc end.first
+      expect(choice).not_to be_nil, "Expected to find a delivery with description of '#{expected_desc}' but instead there were: #{choices.map do |dc| dc.description end.inspect}"
+    end
+  end
+
   context "pick up or delivery date" do
     let!(:delivery_schedule) { create(:delivery_schedule, market: market, day: 3, seller_delivery_start: "4:00 PM", seller_delivery_end: "8:00 PM") }
 
@@ -202,6 +231,7 @@ feature "Viewing products" do
       expect(selected_delivery.location_name).to eq(location.name)
       expect(selected_delivery.location_address).to eq("#{location.address} #{location.city}, #{location.state} #{location.zip}")
     end
+
 
     context "when changing selected delivery", js: true do
       it "allows user to change" do

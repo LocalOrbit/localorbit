@@ -30,9 +30,9 @@
       <div class="row">
         <div class="column column--half">
           <h2 class="heading heading-delivery-tool">Seller Delivers to <%= @delivery.display_dropoff_location_type %> on</h2>
-          <span class="upcoming-delivery-date"><%= @delivery.display_date %> <%= @delivery.fulfillment_time_range %></span>
+          <span class="upcoming-delivery-date"><%= @delivery.seller_display_date %> <%= @delivery.fulfillment_time_range %></span>
           <% if @delivery.buyer_pickup? %>
-          <p class="note">For pick up on <%= @delivery.display_date %> <%= @delivery.buyer_time_range %></p>
+          <p class="note">For pick up on <%= @delivery.buyer_display_date %> <%= @delivery.buyer_time_range %></p>
           <% end %>
         </div><div class="column column--half">
 
