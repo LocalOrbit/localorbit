@@ -223,17 +223,17 @@
   color: #913900;
 }
 
-//.add-bank-warning {
-//  width: 600px;
-//  margin-bottom: 30px;
-//  color: #913900;
-//  line-height: 15px;
-//}
-//@media screen and (max-width: $mobile_break) {
-//  .add-bank-warning {
-//    width: auto;
-//  }
-//}
+.add-bank-warning {
+  width: 600px;
+  margin-bottom: 30px;
+  color: #913900;
+  line-height: 15px;
+}
+@media screen and (max-width: $mobile_break) {
+  .add-bank-warning {
+    width: auto;
+  }
+}
 
 /* Financials Vendor Payment Tab */
 
