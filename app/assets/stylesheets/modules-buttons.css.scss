@@ -6,7 +6,7 @@ input[type=button],
 input[type=reset],
 input[type=submit] {
   display: inline-block;
-  padding: 8px 16px;
+  padding: 6px 14px;
   border: solid 1px #a6a6a6;
   @include border-radius(4px);
   background: #a6a6a6;
