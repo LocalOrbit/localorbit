@@ -1549,30 +1549,18 @@ label ~ .tooltip {
 }
 
 .info-note {
-  max-width: 525px;
+  max-width: 380px;
   padding: 14px;
-  border: 1px solid #f5e6c7;
+  border: 1px solid #bce8f1;
   @include border-radius(4px);
-  margin: 24px auto 20px;
-  color: #836634;
-  background-color: #fcf8e3;
-  text-shadow: 0 1px 0 rgba(255,255,255,0.25);
-  line-height: 15px;
-  font-size:12px;
+  margin: 40px auto 20px;
+  color: #3a87ad;
+  background: #d9edf7;
+  text-shadow: 0 1px 0 rgba(255,255,255,0.5);
 
   h2 {
-    color: #836634 !important;
+    color: #3a87ad;
     margin-bottom: 5px;
-  }
-}
-
-.info-note-danger{
-  background-color: #e2cece;
-  border-color: #d3b4b9;
-  color: #a6413f;
-  
-  h2{
-    color: #a6413f;
   }
 }
 
