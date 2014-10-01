@@ -14,12 +14,7 @@ class DeliveryScheduleDecorator < Draper::Decorator
   end
 
   # Used on Market page
-  def plural_weekday
-    buyer_weekday + "s"
-  end
-  
-  # Used on Market page
-  def time_window
+  def buyer_time_window
     if direct_to_customer?
       "#{seller_delivery_start} to #{seller_delivery_end}"
     else
@@ -39,16 +34,9 @@ class DeliveryScheduleDecorator < Draper::Decorator
   # The implementation of dropoff_time_window appears to be incorrect.
   # Also, this method is only used from a/v/a/organizations/_delivery_schedules.html.erb, and I'm not sure that's even in use anymore.
   # XXX delete this bugger asap
-  # def seller_human_description
-  #   result = "from #{dropoff_time_window} #{seller_location_name}"
-  #   if Rails.env.development? 
-  #     File.open("HEY_LOOK_seller_human_description_WAS_CALLED_AFTER_ALL.txt", "wa") do |f|
-  #       f.puts "DeliveryScheduleDecotor has in fact been called, returning '#{result}', called from:"
-  #       f.puts caller
-  #     end
-  #   end
-  #   return result
-  # end
+  def seller_human_description
+    "from #{dropoff_time_window} #{seller_location_name}"
+  end
   #
 
   # XXX
@@ -73,17 +61,17 @@ class DeliveryScheduleDecorator < Draper::Decorator
 
   private
   #XXX delete this bugger asap (only used by #seller_human_description)
-  # def dropoff_time_window
-  #   buyer_pickup? ? "#{buyer_pickup_start} to #{buyer_pickup_end}" : "#{seller_delivery_start} to #{seller_delivery_end}"
-  # end
+  def dropoff_time_window
+    buyer_pickup? ? "#{buyer_pickup_start} to #{buyer_pickup_end}" : "#{seller_delivery_start} to #{seller_delivery_end}"
+  end
 
   #XXX delete this bugger asap (only used by #seller_human_description)
-  # def seller_location_name
-  #   if has_seller_fulfillment_location?
-  #     "at #{seller_fulfillment_location.address} #{seller_fulfillment_location.city}, #{seller_fulfillment_location.state} #{seller_fulfillment_location.zip}"
-  #   else
-  #     "direct to customer"
-  #   end
-  # end
+  def seller_location_name
+    if has_seller_fulfillment_location?
+      "at #{seller_fulfillment_location.address} #{seller_fulfillment_location.city}, #{seller_fulfillment_location.state} #{seller_fulfillment_location.zip}"
+    else
+      "direct to customer"
+    end
+  end
 
 end

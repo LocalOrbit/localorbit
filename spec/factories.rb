@@ -52,6 +52,7 @@ FactoryGirl.define do
   factory :delivery do
     delivery_schedule
     deliver_on Date.today
+    buyer_deliver_on { deliver_on }
   end
 
   factory :delivery_schedule do

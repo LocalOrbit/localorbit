@@ -92,6 +92,10 @@ class DeliverySchedule < ActiveRecord::Base
   end
 
   def weekday
+    seller_weekday
+  end
+
+  def seller_weekday
     WEEKDAYS[day]
   end
 

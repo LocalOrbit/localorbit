@@ -93,7 +93,7 @@ class DeliveryDecorator < Draper::Decorator
   end
 
   def direct_to_customer?
-    delivery_schedule.buyer_pickup?
+    delivery_schedule.direct_to_customer?
   end
 
   # Display methods for currently selected delivery
@@ -120,10 +120,10 @@ class DeliveryDecorator < Draper::Decorator
   end
 
   def format_time_range(start_time, end_time)
-    start_time.gsub!(" ", "")
-    end_time.gsub!(" ", "")
+    start_str = start_time.nil? ? "?" : start_time.gsub(" ", "")
+    end_str = end_time.nil? ? "?" : end_time.gsub(" ", "")
 
-    "between #{start_time} and #{end_time}"
+    "between #{start_str} and #{end_str}"
   end
 
   def delivery_expired_notice
