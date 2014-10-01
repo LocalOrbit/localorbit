@@ -68,7 +68,7 @@
       .export path {
         fill: <%= current_market.text_color -%>;
       }
-      .counter{background-color: <%= current_market.text_color -%>;}
+      .nav--app a .counter{background-color: <%= current_market.text_color -%>;}
       .sidebar-box{border-color: <%= current_market.text_color -%>;}
       @media screen and (min-width: 601px) {
         a:hover {
@@ -81,12 +81,13 @@
         .nav--app a:active,
         .nav--app a.current {
           background: <%= color_mix current_market.text_color, 5.5 %>;
-          color: #ffffff;
-/*          box-shadow: 0 0 3px <%= color_mix current_market.text_color, 0 %> inset;*/
-          box-shadow: 0 0 3px rgba(0,0,0,.25) inset;
         }
         .nav--main > a:hover {
           background-color: <%= current_market.text_color -%>;
+        }
+        
+        #admin-nav a:hover {
+           color: inherit;
         }
         .nav--main a:hover,
         .nav--main a:active,
