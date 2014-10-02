@@ -49,6 +49,7 @@ textarea {
     margin: 0;
   }
 }
+
 @media screen and (max-width: $mobile_break) {
   input[type=date],
   input[type=datetime],
@@ -95,7 +96,7 @@ input[type=search] {
   height: 25px;
   padding-left: 20px;
   border: solid 1px #b0b0b0;
-  @include border-radius(0);
+  @include border-radius(4px 0 0 4px);
   @include box-shadow(none);
   margin: 0;
   background: asset_url('magnify-search.png') 6px center no-repeat #fff;

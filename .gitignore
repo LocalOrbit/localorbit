@@ -22,3 +22,7 @@ dragonfly.log
 /config/application.yml
 /dragonfly
 public/system/dragonfly/development
+
+tags
+*.swp
+*.swo

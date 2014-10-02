@@ -48,31 +48,47 @@
       .nav--sidebar a {
         color: <%= current_market.text_color -%>;
       }
+
       .l-app-header,
       .l-app-footer,
       .nav--main > span,
+      .btn--primary,
       .btn--add,
       .btn--save,
-      input[type=submit] {
+      input[type=submit],
+      input[type=button].btn {
         background-color: <%= current_market.text_color -%>;
+        border-color: <%= current_market.text_color -%>;
+      }
+      
+      .btn--secondary,
+      input[type=submit].btn--secondary {
+         background:<%= color_mix current_market.text_color, 14 %>;
+         border-color:<%= color_mix current_market.text_color, 14 %>;
       }
       .export path {
         fill: <%= current_market.text_color -%>;
       }
+      .nav--app a .counter{background-color: <%= current_market.text_color -%>;}
+      .sidebar-box{border-color: <%= current_market.text_color -%>;}
       @media screen and (min-width: 601px) {
         a:hover {
           color: <%= color_mix current_market.text_color, 10 %>;
         }
-        .btn--add:hover,
+        /*.btn--add:hover,
         .btn--add:active,
-        .btn--add.current,
+        .btn--add.current,*/
         .nav--app a:hover,
         .nav--app a:active,
         .nav--app a.current {
-          color: <%= color_mix current_market.text_color, 40 %>
+          background: <%= color_mix current_market.text_color, 5.5 %>;
         }
         .nav--main > a:hover {
           background-color: <%= current_market.text_color -%>;
+        }
+        
+        #admin-nav a:hover {
+           color: inherit;
         }
         .nav--main a:hover,
         .nav--main a:active,

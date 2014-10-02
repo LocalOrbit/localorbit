@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  get 'style_guide/index'
+
   get '*path', constraints: NonMarketDomain.new, format: false,
     to: redirect {|params, request|
       "#{request.protocol}app.#{Figaro.env.domain}/#{params[:path]}"
