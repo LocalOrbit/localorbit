@@ -3,7 +3,7 @@ require "spec_helper"
 feature "A Market Manager sending a weekly Fresh Sheet" do
   let!(:user) { create(:user, :market_manager) }
   let!(:market) { user.managed_markets.first }
-  let!(:delivery_schedule) { create(:delivery_schedule, market: market) }
+  let!(:delivery_schedule) { create(:delivery_schedule, seller_fulfillment_location: create(:market_address), buyer_pickup_location_id: 0, day: 1, buyer_day: 2, buyer_pickup_start: "1:00 PM", buyer_pickup_end: "2:00 PM", market: market) }
   let!(:seller) { create(:organization, :seller, markets: [market]) }
   let!(:product) { create(:product, :sellable, organization: seller) }
   include_context "fresh sheet and newsletter subscription types"
@@ -55,6 +55,7 @@ feature "A Market Manager sending a weekly Fresh Sheet" do
         visit preview_admin_fresh_sheet_path
 
         expect(page).to have_content("See what's fresh at #{market.name}")
+        expect(page).to have_content("Tuesday October 7, 2014 between 1:00PM and 2:00PM")
       end
     end
 
