@@ -282,11 +282,11 @@ tbody {
 .no-touch {
   tbody:not(.order-summary) {
     tr:not(.destructive):hover {
-      background: #D8EED2;
+      background: #F1F1F1;
     }
   }
   .order-summary:hover {
-    background: #D8EED2;
+    background: #F1F1F1;
   }
 }
 
@@ -376,6 +376,10 @@ th {
     list-style: none;
     padding: 0;
     margin: 0;
+  }
+  .affiliations{
+    margin:0;
+    padding-left:12px;
   }
 
   .meta {
@@ -861,7 +865,7 @@ th {
     text-decoration: none;
   }
   th {
-    color: #0A3078;
+//    color: #0A3078;
     cursor: pointer;
     > a {
       color: inherit;
@@ -871,7 +875,7 @@ th {
 .sort_link,
 .sort_link:hover,
 .sort_link:active {
-  color: #0A3078;
+//  color: #0A3078;
 }
 .asc:before,
 .desc:before,
