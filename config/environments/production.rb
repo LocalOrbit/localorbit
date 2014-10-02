@@ -82,5 +82,9 @@ Rails.application.configure do
   # Do not dump schema after migrations.
   config.active_record.dump_schema_after_migration = false
 
-  config.action_mailer.default_url_options = {protocol: 'https', host: "app.#{Figaro.env.domain}"}
+  if Figaro.env.deploy_env == 'production'
+    config.action_mailer.default_url_options = {protocol: 'https', host: "app.#{Figaro.env.domain}"}
+  else
+    config.action_mailer.default_url_options = {protocol: 'https', host: Figaro.env.domain}
+  end
 end
