@@ -6,22 +6,25 @@ input[type=button],
 input[type=reset],
 input[type=submit] {
   display: inline-block;
-  padding: 12px 18px;
-  border: solid 1px #b0b0b0;
-  @include border-radius(3px);
-  background: #c2c2c2;
-  @include gradient(rgba(0,0,0,0), rgba(0,0,0,0.2));
-  color: #777;
+  padding: 6px 14px;
+  border: solid 1px #a6a6a6;
+  @include border-radius(5px);
+  background: #a6a6a6;
+  //@include gradient(rgba(0,0,0,0), rgba(0,0,0,0.12));
+  color: #ffffff;
+  cursor:pointer;
   font-family: inherit;
-  font-size: 17px;
+  font-size: 16px;
   text-align: center;
   -webkit-appearance: none;
   -webkit-font-smoothing: antialiased;
   -moz-appearance: none;
 
   &:hover {
-    background-image: none;
+    @include gradient(rgba(0,0,0,0), rgba(0,0,0,0.12));
+//    background-image: none;
     text-decoration: none;
+    @include transition( 0.2s ease 0s);
   }
 
   &:disabled,
@@ -32,7 +35,7 @@ input[type=submit] {
   }
   &:active {
     @include box-shadow(inset 0 1px 3px rgba(0,0,0,0.5));
-    @include gradient(rgba(0,0,0,0), rgba(0,0,0,0.3));
+    @include gradient(rgba(0,0,0,0), rgba(0,0,0,0.12));
   }
   &:focus {
     outline: none;
@@ -41,7 +44,7 @@ input[type=submit] {
     margin-right: 0;
   }
   &.btn--small {
-    padding: 4px 18px;
+    padding: 4px 10px;
     font-size: 14px;
   }
   &.alert {
@@ -91,6 +94,16 @@ input[type=submit] {
   }
 }
 
+.btn--primary{
+  background: #43639f;
+  border-color: #43639f;
+}
+
+.btn--secondary {
+  background-color: #6686c2;
+  border-color:#6686c2;
+}
+
 .btn--headline {
   margin-top: 10px;
 }
@@ -136,8 +149,12 @@ input[type=submit] {
     color: $alert_text;
     background: none;
   }
+  &.destructive:hover {
+    color: $alert_text;
+  }
   &.btn--test {
-    background-color: #ccc;
+    background-color: #a6a6a6;
+    border-color: #a6a6a6;
   }
   @media screen and (max-width: $mobile_break) {
     &.btn--test {
@@ -181,6 +198,7 @@ input[type=submit] {
 input[type=submit] {
   color: #fff;
   background-color: #43639f;
+  border-color:#43639f;
 }
 input[type=button].btn--save {
   color: #fff;
@@ -199,16 +217,16 @@ input[type=button].btn--save {
 .btn--money:focus, .btn--update:focus {
   border: 3px solid #BFD9AD;
 }
-.btn--add.btn--small {
-  padding-right: 8px;
-  padding-left: 8px;
-}
+//.btn--add.btn--small {
+//  padding-right: 8px;
+//  padding-left: 8px;
+//}
 
-.btn--add:before {
-  content: "✚  "
-}
+//.btn--add:before {
+//  content: "✚  "
+//}
 
-.btn--add:hover {
+.btn:hover {
   color: #fff;
 }
 
@@ -219,11 +237,12 @@ input ~ .ui-datepicker-trigger,
   padding: 6px 10px 5px;
   background-color: #fff;
   vertical-align: top;
+  @include gradient(rgba(0,0,0,0), rgba(0,0,0,0.12));
 }
 input ~ .ui-datepicker-trigger,
 .btn--end,
 input[type=submit].btn--end {
-  @include border-radius(0 2px 2px 0);
+  @include border-radius(0 4px 4px 0);
   margin: 4px 0 2px -4px;
 }
 .btn--start {
@@ -234,6 +253,13 @@ input[type=submit].btn--end {
   @include box-shadow(none);
   margin: 4px -3px 2px 0;
   background-color: #fff;
+  @include gradient(rgba(0,0,0,0), rgba(0,0,0,0.12));
+
+  &:hover{
+   color:#aaa;
+   box-shadow:none !important; 
+   cursor:text;
+  }
 }
 
 input[type=search] + .btn--end,
@@ -246,10 +272,12 @@ input[type=search] + input[type=submit].btn--end {
   background-color: #fff;
   vertical-align: middle;
   font-size: 14px;
+  border-color: #b0b0b0;
+  @include gradient(rgba(0,0,0,0), rgba(0,0,0,0.12));
 }
 input[type=search] + .btn--end:hover {
   color: #333;
-  background-color: #eee;
+  background-color: #eee !important;
 }
 
 
@@ -260,12 +288,12 @@ input[type=submit].popup-submit {
 span.btn {
   color: #aaa;
   text-shadow: 0 1px 0 #fff;
-  @include gradient(rgba(0,0,0,0), rgba(0,0,0,0.1));
+  @include gradient(rgba(0,0,0,0), rgba(0,0,0,0.12));
 
   &:hover,
   &:active {
     @include box-shadow(inset 0 0 0 1px #b0b0b0);
-    @include gradient(rgba(0,0,0,0), rgba(0,0,0,0.1));
+    @include gradient(rgba(0,0,0,0), rgba(0,0,0,0.12));
   }
 }
 

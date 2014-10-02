@@ -1,0 +1,1068 @@
+<style>
+section{margin:60px 0;}
+</style>
+
+<h1>StyleGuide#index</h1>
+<p>Find me in app/views/style_guide/index.html.erb</p>
+
+
+
+<section>
+  <h1>The Grid</h1>
+  <hr class="styleguide">
+  <div class="row">
+    <div class="column--full" style="background:#add8e6;  border-radius:3px;">
+      column--full
+    </div>
+    <br>
+    <div class="column--eleven-twelfths" style="background:#add8e6;  border-radius:3px;">
+      column--eleven-twelfths
+    </div>
+    <br>
+    <div class="column--three-fourths" style="background:#add8e6;  border-radius:3px;">
+      column--three-fourths
+    </div>
+    <br>
+    <div class="column--two-thirds" style="background:#a7d2e0;  border-radius:3px;">
+      column--two-thirds
+    </div>
+    <br>
+    <div class="column--seven-twelfths" style="background:#a7d2e0;  border-radius:3px;">
+      column--seven-twelfths
+    </div>
+    <br>
+    <div class="column--half" style="background:#a1ccda;  border-radius:3px;">
+      column--half
+    </div>
+    <br>
+    <div class="column--five-twelfths" style="background:#9bc6d4;  border-radius:3px;">
+      column--five-twelfths
+    </div>
+    <br>
+    <div class="column--third" style="background:#9bc6d4;  border-radius:3px;">
+      column--third
+    </div>
+    <br>
+    <div class="column--fourth" style="background:#95c0ce;  border-radius:3px;">
+      column--fourth
+    </div>
+  </div>
+  
+  <hr>
+  <div class="row">
+    <div class="column column--third " style="background:#9bc6d4; border-radius:3px;">
+      column--third
+    </div>
+    <div class="column column--third " style="background:#9bc6d4; border-radius:3px;">
+      column--third
+    </div>
+    <div class="column column--third " style="background:#9bc6d4; border-radius:3px;">
+      column--third
+    </div>
+  </div>
+  <div class="row">
+    <div class="column--half" style="background:#a1ccda;  border-radius:3px;">
+      column--half
+    </div>
+    <div class="column--half" style="background:#a1ccda;  border-radius:3px;">
+      column--half
+    </div>
+  </div>
+  .column--guttered
+  <br>
+  .row--squash
+  <br>
+  .l-constraint
+  
+</section>
+
+<section>
+  <h1>Text</h1>
+  <hr class="styleguide">
+   <h1>H1 Header</h1>
+   <h2>H2 Header</h2>
+   <h3>H3 Header</h3>
+   <h4>H4 Header</h4>
+   <h5>H5 Header</h5>
+   <h6>H6 Header</h6>
+   <p>Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words very popular during the Renaissance. The first line of Lorem Ipsum, "Lorem ipsum dolor sit amet..", comes from a line in section 1.10.32.</p>
+   <p>The standard chunk of Lorem Ipsum used since the 1500s is reproduced below for those interested. Sections 1.10.32 and 1.10.33 from "de Finibus Bonorum et Malorum" by Cicero are also reproduced in their exact original form, accompanied by English versions from the 1914 translation by H. Rackham.</p>
+</section>
+<section>
+  <h1>Links</h1>
+  <hr class="styleguide">
+  <p>This is a <a href="#">link</a> in a sentance.</p>
+</section>
+<section>
+   <h1>Gradients</h1>
+   <hr class="styleguide">
+   
+   <small><strong>EXAMPLE:</strong> (left with current gradient, right with no-gradient)</small>
+   <br>
+   <div style="clear:both;"></div>
+   
+    <div class="l-app-header" style="float:left;width:50%;height:200px; background-color: <%= current_market.text_color -%>;"></div>
+    <div style="float:left;width:50%;height:200px; background-color:<%= current_market.text_color -%>;"></div>
+
+
+    <div style="clear:both;"></div>
+
+    
+    <div class="nav nav--main">
+      <span class="current">Shop</span>
+      <a class="" href="/sellers" >Sellers</a>
+    </div>
+</section>
+<section>
+  <h1>Buttons</h1>
+  <hr class="styleguide">
+  <br>
+  <button class="btn btn--primary">Primary Button</button>
+  <button class="btn btn--secondary">Secondary Button</button>
+  <button class="btn btn--primary btn--small">Small Button</button>
+  <br><br><br>
+  
+  <small>Actual buttons:</small><br>
+  <div class="row row--partial">
+    <div class="column column--two-thirds">
+  
+      <input type="submit" value="Save Price" name="commit">
+      <a class="btn btn--add btn--small" href="/admin/organizations/new">Add Organization</a>
+      <a class="btn btn--small btn--save" rel="nofollow" href="/admin/organizations/2/update_active?organization%5Bactive%5D=false" data-method="patch">Deactivate</a>
+      <input type="submit" value="Add" name="commit" class="btn--small">
+      <a href="/admin/products/new" class="btn btn--add">Add Another Product</a>
+      <a title="Delete" href="/admin/products/2" data-method="delete" data-confirm="Are you sure you want to permanently delete this product?" class="delete product-header-delete font-icon"></a>
+      <button class="pull-right close" type="button"><i class="font-icon icon-close"></i></button>
+      <input type="submit" value="Select Organization" name="commit" class="mobile-block">
+      <span class="change-delivery">
+        <a id="change-delivery-date" href="#change-delivery-warning" class="reset btn modal-toggle">Change</a>
+      </span>
+      <input type="submit" value="Start Shopping" name="commit" class="mobile-block">
+      <input type="submit" value="Save Inventory" name="commit" class="btn--small">
+      <a id="review_cart" href="/cart" class="btn btn--money pull-right add-toggle mobile-block">Review Cart</a>
+      <div class="form-actions">
+        <span class="pull-left cancel-link">
+          <a href="/cart" data-method="delete" data-confirm="Are you sure you want to clear the cart?" class="btn btn--small destructive">Cancel Order</a>
+          <span class="note">(Clear Cart)</span>
+        </span>
+        <a href="/products" class="continue-shop">Continue Shopping</a>&nbsp;&nbsp;
+        <input type="submit" value="Place Order" name="commit" id="place-order-button" data-disable-with="Please wait..." class="btn btn btn--money">
+      </div>
+      <a class="lo_button pull-right" href="https://springfield.localorbit.com/products">Shop Now</a>
+      <a class="lo_button" href="https://springfield.localorbit.com/admin/products/311" target="_top">Edit</a>
+      <input class="btn--end" name="commit" type="submit" value="Search">
+      <button type="button" class="ui-datepicker-trigger"><img src="https://d3q270946t1v4b.cloudfront.net/assets/icons/calendar@2x-ff5c35352afb1b255af06f08f6a9c2ce.png" alt="..." title="..."></button>
+    </div>
+  </div>
+  
+</section>
+<section>
+   <h1>Navigation</h1>
+   <hr class="styleguide">
+   
+   
+   <header id="top" class="l-app-header" data-height="44" data-offset="0">
+         <div class="l-constraint">
+           <p class="header header--welcome">
+               Fulton Market
+               <span class="welcome-user">Welcome mm@example.com</span>
+           </p>
+           <a class="nav-admin-toggle" href="#admin-nav"><img height="20" src="/assets/hamburger.png" alt="Toggle Navigation"></a>
+           <ul class="l-inline-list nav nav--app">
+             <li><a href="/dashboard" class="hidden-mobile">Dashboard</a></li><li>
+
+   <a href="/cart" data-count="0" class="cart">
+     <i class="font-icon icon-cart"></i> Cart <span class="counter">0</span>
+   <div class="is-hidden message"></div></a>
+   <div class="popup popup--centered with-anchor top-centered-anchor is-hidden" id="empty-cart">
+     <div class="popup-header">
+       Your cart is empty.
+     </div>
+
+     <div class="popup-body">
+       <p>Please add items to your cart to see them here and make a purchase.</p>
+     </div>
+   </div>
+   </li>
+   <li><a href="https://localorbit.zendesk.com/home">Help</a></li><li><a rel="nofollow" href="/users/sign_out" data-method="delete">Sign Out</a></li>
+           </ul>
+           <div class="clearfix"></div>
+         </div>
+       </header>
+       
+   <div class="nav nav--main pull-right">
+     <span class="current">Shop</span>
+     <a href="/sellers" class="">Sellers</a>
+     <a href="/market" class="">Market Info</a>
+   </div>
+   <br><br>
+   <div class="clear:both;"></div>
+   <br><br>
+   <ul class="l-inline-list nav nav--admin clear-before " id="admin-nav">
+       <li class="mobile-only"><span class="current">Dashboard</span></li>
+
+         <li>
+           <a class="caretted" href="#market-dropdown"><i data-icon="" class="font-icon"></i>Market Admin</a>
+           <ul id="market-dropdown" class="dropdown with-anchor top-anchor">
+             <li><a href="/admin/markets?sort=name-asc"><i data-icon="" class="font-icon"></i> Markets</a></li>
+             <li><a href="/admin/organizations?sort=name-asc"><i data-icon="" class="font-icon"></i> Organizations</a></li>
+             <li><a href="/admin/users?sort=name-asc"><i data-icon="" class="font-icon"></i> All Users</a></li>
+           </ul>
+         </li>
+         <li><a href="/admin/financials"><i data-icon="" class="font-icon"></i>Financials</a></li>
+
+         <li>
+           <a class="caretted" href="#orders-dropdown"><i data-icon="" class="font-icon"></i>Orders &amp; Delivery</a>
+           <ul id="orders-dropdown" class="dropdown with-anchor top-anchor">
+             <li><a href="/admin/orders"><i data-icon="" class="font-icon"></i> Orders</a></li>
+             <li><a href="/admin/delivery_tools"><i data-icon="" class="font-icon"></i> Upcoming Deliveries</a></li>
+             <li><a href="/admin/sold_items"><i data-icon="" class="font-icon"></i> Sold Items</a></li>
+           </ul>
+         </li>
+
+         <li>
+           <a href="/admin/products?sort=name-asc"><i data-icon="" class="font-icon"></i> Products</a>
+         </li>
+
+         <li>
+           <a class="caretted" href="#marketing-dropdown"><i data-icon="" class="font-icon"></i> Marketing</a>
+           <ul id="marketing-dropdown" class="dropdown with-anchor top-anchor">
+             <li><a href="/admin/fresh_sheet"><i data-icon="" class="font-icon"></i> Fresh Sheet</a></li>
+             <li><a href="/admin/newsletters"><i data-icon="" class="font-icon"></i> Newsletters</a></li>
+             <li><a href="/admin/promotions"><i data-icon="" class="font-icon"></i> Featured Promotions</a></li>
+             <li><a href="/admin/discounts"><i data-icon="" class="font-icon"></i> Discount Codes</a></li>
+           </ul>
+         </li>
+
+       <li>
+         <a class="caretted" href="#reports-dropdown"><i data-icon="" class="font-icon"></i> Reports</a>
+         <ul id="reports-dropdown" class="dropdown with-anchor top-anchor">
+           <li><a href="/admin/reports"><i data-icon="" class="font-icon"></i> Reports</a></li>
+         </ul>
+       </li>
+
+       <li>
+         <a class="caretted" href="#account-dropdown"><i data-icon="" class="font-icon"></i>Account</a>
+         <ul id="account-dropdown" class="dropdown with-anchor top-anchor">
+           <li><a href="/account"><i data-icon="" class="font-icon"></i> E-mail &amp; Password</a></li>
+           <li><a href="/organizations"><i data-icon="" class="font-icon"></i>Your Organizations</a></li>
+         </ul>
+       </li>
+       <li class="mobile-only"><a href="/products" class="">Shop</a></li>
+       <li class="mobile-only"><a href="/sellers" class="">Sellers</a></li>
+       <li class="mobile-only"><a href="/market" class="">Market Info</a></li>
+     </ul>
+     
+     <p><strong>NOTE:</strong> think about changing the navigation layouts.</p>
+     
+</section>
+
+<section>
+  <h1>Tabs</h1>
+  <hr class="styleguide">
+    <div class="tabs-wrapper">
+      <ul class="tabs">
+          <li class="tab"><a href="/admin/financials/overview">Overview</a></li>
+
+          <li class="tab"><span class="current">Tab 1</span></li>
+          <li class="tab"><a href="#">Tab 2</a></li>
+          <li class="tab"><a href="#">Tab 3</a></li>
+          <li class="tab"><a href="#">Tab 4</a></li>
+      </ul>
+    </div>
+    <div class="tabs-wrapper hidden-mobile">
+      <ul class="tabs">
+          <li class="tab"><span class="current">Total Sales</span></li>
+          <li class="tab"><a href="/admin/reports/sales-by-seller">Sales By Seller</a></li>
+          <li class="tab"><a href="/admin/reports/sales-by-buyer">Sales By Buyer</a></li>
+          <li class="tab"><a href="/admin/reports/sales-by-product">Sales By Product</a></li>
+          <li class="tab"><a href="/admin/reports/sales-by-payment-method">Sales By Payment Method</a></li>
+          <li class="tab"><a href="/admin/reports/sales-by-fulfillment">Sales By Fulfillment</a></li>
+          <li class="tab"><a href="/admin/reports/discount-code">Discount Code</a></li>
+      </ul>
+    </div>
+    <div class="tabs-wrapper">
+      <ul class="tabs">
+          <li class="completed tab"><a href="/admin/products/2">Product Info</a></li>
+            <li id="product-inventory-nav" class="tab is-hidden"><span data-error="Save this product to add inventory." class="is-disabled">Inventory</span></li>
+          <li id="product-pricing-nav" class="tab"><span class="current">Pricing</span></li>
+      </ul>
+    </div>
+    
+    <p>SOURCE: /market</p>
+    <ul class="tabs tabs--small unguttered">
+      <li class="tab">
+        <a class="active" href="#market-about">About</a>
+      </li>
+      <li class="tab">
+        <a class="inactive" href="#market-policies">Policies</a>
+      </li>
+    </ul>
+</section>
+<section>
+  <h1>Alerts</h1>
+  <hr class="styleguide">
+  <p>SOURCE: /reports/total-sales</p>
+  <div class="info-note">
+    <h2>No Results</h2>
+    This table is empty, either because there is no data, or because the filter you've applied is hiding it.
+  </div>
+  <p><strong>NOTE:</strong> Doesnt seem to match the rest of the application color/feel</p>
+  
+  <p>SOURCE: admin/products/2/prices</p>
+  <div class="product-status-alert">Your product will not appear in the Shop until you add&nbsp;pricing</div>
+  
+  <p>SOURCE: sessions/organizations/new?redirect_back_to=%2Fproducts</p>
+  <div class="info-note">You manage multiple organizations. For which organization would you like to place an order?</div>
+  
+  <p>SOURCE: /products</p>
+  <p class="table-summary">
+    Please complete your order by September 9 at&nbsp; 1AM.<br>
+    Pick up date is Tuesday September  9, 2014 between 12:00PM and&nbsp;3:00PM.
+  </p>
+  
+  <p>SOURCE: /admin/markets/1/bank_accounts</p>
+  <div class="add-bank-warning">
+    <small><strong>Important:</strong> If you've recently added a bank account as a payment method, please don't add the same account to another organization or market until it is verified where it was originally added.</small>
+  </div>
+  <br><br>
+  <style>
+
+
+  .error-page {
+    background-color: #fff;
+    color: #2E2F30;
+    text-align: center;
+    font-family: arial, sans-serif;
+  }
+
+  .error-page div.dialog {
+    width: 25em;
+    margin: 4em auto 0 auto;
+    border: 1px solid #CCC;
+    border-right-color: #999;
+    border-left-color: #999;
+    border-bottom-color: #BBB;
+    border-top: #666 solid 4px;
+    border-top-left-radius: 9px;
+    border-top-right-radius: 9px;
+    background-color: white;
+    padding: 7px 4em 0 4em;
+  }
+
+  .error-page h1 {
+    font-size: 24px;
+    color: #730E15;
+  }
+
+  .error-page > p {
+    width: 33em;
+    margin: 0 auto 1em;
+    padding: 1em 0;
+    background-color: #F7F7F7;
+    border: 1px solid #CCC;
+    border-right-color: #999;
+    border-bottom-color: #999;
+    border-bottom-left-radius: 4px;
+    border-bottom-right-radius: 4px;
+    border-top-color: #DADADA;
+    color: #666;
+    box-shadow:0 3px 8px rgba(50, 50, 50, 0.17);
+  }
+
+  .error-page > p > a {
+    color: #B00100;
+    text-decoration: none;
+  }
+
+  .error-page > p > a:hover {
+    text-decoration: underline;
+  }
+  
+  </style>
+  <div class="error-page">
+      <div class="dialog">
+        <h1> Uh-oh! Wait a sec...</h1>
+        <p>Hi, .</p>
+        <p>
+          The market Fulton Market has been deactivated.
+        </p>
+      </div>
+      <p>If you continue having trouble, please contact <a href="https://localorbit.zendesk.com/anonymous_requests/new">Local Orbit support</a>.</p>
+    </div>
+    <div class="error-page">
+        <div class="dialog">
+          <h1>We can't find that page.</h1>
+          <p>The page you were looking for is not available at this address. You may have mistyped it <i>or</i> the page may have moved. Please check the link and try again.</p>
+        </div>
+        <p>If you continue having trouble, please contact <a href="https://localorbit.zendesk.com/anonymous_requests/new">Local Orbit support</a>.</p>
+      </div>
+</section>
+<section>
+  <h1>Select Dropdown</h1>
+  <hr class="styleguide">
+  <select name="per_page" id="per_page" class="filter-input per-page-filter">
+    <option value="/admin/reports/total-sales?per_page=50" selected="selected">Show 50 rows</option>
+    <option value="/admin/reports/total-sales?per_page=100">Show 100 rows</option>
+    <option value="/admin/reports/total-sales?per_page=250">Show 250 rows</option>
+    <option value="/admin/reports/total-sales?per_page=500">Show 500 rows</option></select>  
+  <p><strong>NOTE:</strong> Font seems large.  Should standardize the font-sizes</p>
+  
+  <p>SOURCE: /admin/products/new</p>
+  <div class="chosen-container chosen-container-single" style="width: 100%;" title="" id="product_category_id_chosen"><a tabindex="-1" class="chosen-single chosen-default"><span>Click and type to search for a Category</span><div><b></b></div></a><div class="chosen-drop"><div class="chosen-search"><input type="text" autocomplete="off"></div><ul class="chosen-results"><li class="group-result">Fruits</li><li class="active-result group-option" style="" data-option-array-index="2">Apples / Akane Apples</li><li class="active-result group-option" style="" data-option-array-index="3">Apples / Apples</li><li class="active-result group-option" style="" data-option-array-index="4">Apples / Cortland Apples</li><li class="active-result group-option" style="" data-option-array-index="5">Apples / Empire Apples</li><li class="active-result group-option" style="" data-option-array-index="6">Apples / Fuji</li><li class="active-result group-option" style="" data-option-array-index="7">Apples / Gala Apples</li><li class="active-result group-option" style="" data-option-array-index="8">Apples / Gingergold Apples</li><li class="active-result group-option" style="" data-option-array-index="9">Apples / Gold Rush Apples</li><li class="active-result group-option" style="" data-option-array-index="10">Apples / Golden Delicious Apples</li><li class="active-result group-option" style="" data-option-array-index="11">Apples / IDA</li><li class="active-result group-option" style="" data-option-array-index="12">Apples / Jonagold Apples</li><li class="active-result group-option" style="" data-option-array-index="13">Apples / Jonamac Apples</li><li class="active-result group-option" style="" data-option-array-index="14">Apples / Jonathan Apples</li><li class="active-result group-option" style="" data-option-array-index="15">Apples / Macintosh Apples</li><li class="active-result group-option" style="" data-option-array-index="16">Apples / Mutsu</li><li class="active-result group-option" style="" data-option-array-index="17">Apples / Pinova</li><li class="active-result group-option" style="" data-option-array-index="18">Apples / Red Delicious</li><li class="active-result group-option" style="" data-option-array-index="19">Apples / Red Gravenstein Apples</li><li class="active-result group-option" style="" data-option-array-index="20">Apples / Rome</li><li class="active-result group-option" style="" data-option-array-index="21">Apples / Staymen</li><li class="active-result group-option" style="" data-option-array-index="22">Apples / Summer Apples</li><li class="active-result group-option" style="" data-option-array-index="23">Bananas</li><li class="active-result group-option" style="" data-option-array-index="24">Berries &amp; Cherries / Black Currants</li><li class="group-result">Clothing</li><li class="active-result group-option" style="" data-option-array-index="1092">T-Shirt</li><li class="group-result">Art, Crafts &amp; Pottery</li><li class="active-result group-option" style="" data-option-array-index="1094">Art</li><li class="active-result group-option" style="" data-option-array-index="1095">Crafts</li><li class="active-result group-option" style="" data-option-array-index="1096">Pottery</li></ul></div></div>
+</section>
+
+
+<section>
+  <h1>Inputs</h1>
+  <hr class="styleguide">
+  <p>SOURCE: admin/products/new</p>
+  <div class="field">
+    <label for="product_name">Product Name</label>
+    <span data-tooltip="Only list the product name here. Quantity, sizes and units should be included in the short description section." class="tooltip pull-right"></span>
+    <br>
+    <input type="text" name="product[name]" id="product_name" class="column column--full">
+  </div>
+  <div class="field field--inline">
+    <label for="market_facebook">Facebook</label>
+    <div class="combo-input">
+      <span class="btn btn--start">facebook.com/</span><input type="text" name="market[facebook]" id="market_facebook">
+    </div>
+  </div>
+  <div class="field field--inline fresh-sheet-test">
+    <input name="email" type="email" placeholder="Email address" class="input--short" value="bryan.elkus@atomicobject.com">
+    <input class="btn btn--test btn--small btn--test trigger-email " name="commit" type="submit" value="Send Test">
+  </div>
+  <div data-color="#e92424" class="input-append color">
+    <input type="text" value="#e92424" size="7" name="market[text_color]" id="market_text_color" class="input-hex"><button type="button" class="add-on btn btn--end"><i class="swatch" style="background-color: rgb(233, 36, 36);"></i></button>
+  </div>
+  <div class="field column column--half column--guttered">
+    <label for="market_logo">Logo</label>
+    <span data-tooltip="This logo appears in the header of every page and email." class="tooltip pull-right"></span>
+    <br>
+
+    <input type="file" name="market[logo]" id="market_logo" class="photo-button"><br>
+    <div><small>Drag and drop your logo anywhere in the "Choose File" area and it will be uploaded when you save.</small></div>
+  </div>
+  <p><strong>NOTE:</strong> check border radius consistency</p>
+  
+</section>
+
+<section>
+  <h1>Filters</h1>
+  <hr class="styleguide">
+  <p>SOURCE: /products</p>
+  <div id="delivery_filters" class="mobile-pane">
+    <div class="vacuus"></div>
+    <a class="pane-toggle mobile-only btn" href="#delivery_products">Return to Shop</a>
+    <div class="header header--column">
+      <h2 class="heading heading--sidebar">Filter the Shop</h2>
+    </div>
+
+    <div id="product-filter">
+
+      <a class="filter-toggle caretted caretted--right" href="#product-filter-organization">Seller</a>
+      <ul id="product-filter-organization" data-count="0" class="filter-list"></ul>
+
+      <a class="filter-toggle caretted caretted--right" href="#product-filter-category">Category</a>
+      <ul id="product-filter-category" data-count="0" class="filter-list"></ul>
+    </div>
+  </div>
+  
+  <p>SOURCE: /admin/reports/total-sales</p>
+  <form method="get" id="order_item_search" class="payment_search clear-after" action="/admin/reports/total-sales" accept-charset="UTF-8"><div style="display:none"><input type="hidden" value="✓" name="utf8"></div>
+    <div class="reports-filters">
+      <div data-filter-count="1" class="pull-left">
+            <div>
+              <label for="q_order_order_number_cont">Search by order number</label><br>
+              <div class="search-widget">
+                <input type="search" placeholder="Search" name="q[order_order_number_cont]" id="q_order_order_number_cont"><input type="submit" value="Search" name="commit" class="btn--end">
+              </div>
+            </div>
+            <br>
+      </div>
+        <div class="pull-right date-filters">
+          <span class="preserve-alignment">
+            <label for="q_order_placed_at_date_gteq">Placed on or after</label><br>
+            <input type="datetime" value="2014-08-06" name="q[order_placed_at_date_gteq]" id="q_order_placed_at_date_gteq" class="datepicker hasDatepicker" readonly=""><button class="clear-link"><i class="font-icon icon-clear"></i></button><button type="button" class="ui-datepicker-trigger"><img src="/assets/icons/calendar@2x.png" alt="..." title="..."></button>
+          </span>
+          <span class="preserve-alignment">
+            <label for="q_order_placed_at_date_lteq">Placed on or before</label><br>
+            <input type="datetime" value="2014-09-05" name="q[order_placed_at_date_lteq]" id="q_order_placed_at_date_lteq" class="datepicker hasDatepicker" readonly=""><button class="clear-link"><i class="font-icon icon-clear"></i></button><button type="button" class="ui-datepicker-trigger"><img src="/assets/icons/calendar@2x.png" alt="..." title="..."></button>
+          </span>
+          <span class="preserve-alignment">
+            <br>
+            <input type="submit" value="Filter" name="commit" class="btn--small mobile-block screen-only">
+          </span>
+        </div>
+    </div>
+  </form>
+  <p><strong>To Do:</strong> Use the filter button convention for the filter to activate. button use 'apply filter'</p>
+  
+</section>
+
+
+<section>
+  <h1>Search Field</h1>
+  <hr class="styleguide">
+  <span class="preserve-alignment">
+        <label for="q_order_number_or_payment_note_cont">Search Label</label><br>
+        <input type="search" placeholder="Order # or PO #" name="q[order_number_or_payment_note_cont]" id="q_order_number_or_payment_note_cont"><input type="submit" value="Search" name="commit" class="btn--end">
+      </span>
+      
+  <p><strong>To Do:</strong> Switch out the image to vector icon</p>
+</section>
+<section>
+  <h1>Table</h1>
+  <hr class="styleguide">
+  <table class="product-table product-table--admin sortable">
+    <thead class="" data-height="27" data-offset="415.566650390625">
+      <tr>
+        <th data-column="seller" class="hidden-mobile ">Seller</th>
+        <th class="sorted headerSortUp">Name</th>
+        <th class="" >Pricing</th>
+        <th class="" >Available</th>
+        <th>&nbsp;</th>
+      </tr>
+    </thead>
+    <tbody><tr class="product-row odd">
+      <td class="seller hidden-mobile"><a href="/admin/organizations/2">Alto Valley Farms</a></td>
+      <td class="name product-name"><a href="/admin/products/1">Grapes (Box)</a></td>
+      <td class="pricing">
+        <ul class="l-inline-list">
+          <li>
+            <a href="#" class="edit-toggle popup-toggle">$3.00</a>
+            <form novalidate="novalidate" method="post" id="edit_price_1" data-prefix="price_1" class="popup popup--edit is-hidden edit_price" action="/admin/products/1/prices/1.js?query_params%5Bsort%5D=name-asc" accept-charset="UTF-8">
+              <div style="display:none"><input type="hidden" value="✓" name="utf8"><input type="hidden" value="patch" name="_method"><input type="hidden" value="sC8LjZABW8l2AsTNGzXA+PCPIlTm0tN0Nkcq0IbRezw=" name="authenticity_token"></div>
+              <button class="pull-right close" type="button"><i class="font-icon icon-close"></i></button>
+              <hgroup>
+                <h2>Edit Price</h2>
+                <h3>Grapes</h3>
+              </hgroup>
+              <div class="fields">
+                <select name="price[1][market_id]" id="price_1_market_id" class="price_market_id"><option value="">All Markets</option>
+                  <option value="1">Fulton Market</option></select>
+                <h3>Price for all Buyers</h3>
+                <span class="preserve-alignment">
+                  <label for="price_1_net_price">Net Price</label>
+                  <input type="number" value="3.0" step="0.01" size="4" name="price[1][net_price]" min="0" id="price_1_net_price" data-net-percent="1.0" class="net-price">
+                </span>
+                <span class="preserve-alignment">
+                  <label for="price_1_sale_price">Sale Price</label>
+                  <input type="number" value="3.00" step="0.01" size="4" name="price[1][sale_price]" min="0" inputmode="numeric" id="price_1_sale_price" class="sale-price">
+                </span>
+                <span class="preserve-alignment">
+                  <label for="price_1_min_quantity">Min Qty</label>
+                  <input type="number" value="1" size="4" name="price[1][min_quantity]" min="0" id="price_1_min_quantity">
+                </span>
+                <div class="popup-error">
+                </div>
+              </div>
+              <div class="form-actions pull-right">
+                <input type="submit" value="Save Price" name="commit">
+              </div>
+              <div class="links">
+                <a href="/admin/products/1/prices">✚&nbsp;Add New Price</a>
+                <a href="/admin/products/1/prices">Go to Price List</a>
+              </div>
+            </form>
+          </li>
+        </ul>
+      </td>
+      <td class="stock">
+        <a href="#edit_product_1" class="edit-toggle popup-toggle">12</a>
+          <form method="post" id="#" data-type="edit" data-organizations="null" class="popup popup--edit is-hidden" action="/admin/products/1.js?query_params%5Bsort%5D=name-asc" accept-charset="UTF-8"><div style="display:none"><input type="hidden" value="✓" name="utf8"><input type="hidden" value="patch" name="_method"><input type="hidden" value="sC8LjZABW8l2AsTNGzXA+PCPIlTm0tN0Nkcq0IbRezw=" name="authenticity_token"></div>
+            <div class="fields">
+              <button class="pull-right close" type="button"><i class="font-icon icon-close"></i></button>
+              <hgroup>
+                <h2>Edit Inventory</h2>
+                <h3>Grapes</h3>
+              </hgroup>
+
+              <label for="product_simple_inventory">Quantity</label><br>
+              <input type="number" value="12" size="3" name="product[simple_inventory]" min="0" id="product_simple_inventory">
+              <div class="popup-error">
+              </div>
+            </div>
+
+            <div class="form-actions">
+              <input type="submit" value="Save Inventory" name="commit" class="btn--small">
+            </div>
+          </form>
+          </td>
+          <td class="delete action-link"><a title="Delete" rel="nofollow" href="#" data-method="delete" data-confirm="Are you sure you want to delete this product?" class="font-icon"></a></td>
+        </tr>
+    </tbody>
+  </table>
+  
+  <br><br>
+  
+  <table class="sortable market-addresses">
+    <thead>
+      <tr>
+        <th>Address</th>
+        <th>Phone</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr class="address odd">
+        <td>
+          <div><a href="/admin/markets/1/addresses/2/edit">Default Marketplace</a></div>
+          <div>89 Niles Rd., Rockford, Michigan 48836</div>
+        </td>
+        <td>
+        
+        </td>
+        <td class="delete">
+          <a class="delete-address" data-method="delete" href="/admin/markets/1/addresses/2"><i class="font-icon icon-delete"></i></a>
+        </td>
+      </tr>
+      <tr class="address even">
+        <td>
+          <div><a href="/admin/markets/1/addresses/1/edit">Rockford Location</a></div>
+          <div>1238f First St., Rockford, MI 93228</div>
+        </td>
+        <td>
+        
+        </td>
+        <td class="delete">
+          <a class="delete-address" data-method="delete" href="/admin/markets/1/addresses/1"><i class="font-icon icon-delete"></i></a>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <br><br>
+  
+  <table class="sortable">
+    <thead>
+      <tr><th>Schedule</th>
+      <th>Seller Delivery</th>
+      <th>Buyer Pick up/Delivery</th>
+    </tr></thead>
+    <tbody>
+        <tr>
+          <td class="delivery-text">
+            <strong><a href="/admin/markets/1/deliveries/1/edit">Tuesday, order cutoff 6 hours before delivery.</a></strong><br>
+            <span class="address">Deliver to: 1238f First St., Rockford, MI 93228</span>
+          </td>
+          <td class="delivery-time">
+            7:00 AM &ndash; 11:00 AM
+          </td>
+          <td class="pickup-time">
+            12:00 PM &ndash; 3:00PM
+          </td>
+          <td class="delete">
+            <a title="Delete" href="/admin/markets/1/deliveries/1" data-method="delete" data-confirm="Are you sure you want to delete this delivery" class="font-icon"></a>
+          </td>
+        </tr>
+    </tbody>
+  </table>
+  
+  <br><br>
+  <p>SOURCE: /admin</p>
+  <table class="sortable market-org-list">
+    <thead class="" data-height="27" data-offset="316">
+      <tr>
+        <th class="sorted headerSortUp" data-column="name">Name</th>
+        <th class="" data-column="subdomain">Subdomain</th>
+        <th class="" data-column="contact">Contact Name</th>
+        <th>Contact Phone</th>
+      </tr>
+    </thead>
+      <tbody><tr class="odd vcard">
+        <td class="name fn"><a href="/admin/markets/1">Fulton Market</a></td>
+        <td class="subdomain"><a href="http://fulton.localtest.me:3000/">fulton</a></td>
+        <td class="contact">Jill Smith</td>
+        <td>616-222-2222</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <br><br>
+  
+  <p>SOURCE: /organizations</p>
+  <table class="sortable organization-table market-org-list">
+    <thead class="" data-height="27" data-offset="455.066650390625">
+      <tr>
+        <th class="sorted headerSortUp" data-column="name">Name</th>
+        <th>Market</th>
+        <th class="" data-column="registered">Registered On</th>
+        <th class="" data-column="can_sell">Role</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="name"><a href="/admin/organizations/2">Alto Valley Farms</a></td>
+        <td class="market">Fulton Market</td>
+        <td class="registered">Sep, 03 2014</td>
+        <td class="can-sell">Seller</td>
+        <td class="action">
+          <a rel="nofollow" href="/admin/organizations/2/update_active?organization%5Bactive%5D=false" data-method="patch" class="btn btn--small btn--save">Deactivate</a>
+            <a title="Delete" rel="nofollow" href="/admin/organizations/2?ids%5B%5D=1" data-method="delete" data-confirm="Are you sure you want to delete organization Alto Valley Farms? All discounts, users, prices, products related to this organization will also be deleted. This cannot be undone." class="action-link font-icon"></a>
+        </td>
+      </tr>
+      <tr>
+        <td class="name"><a href="/admin/organizations/1">Farm to Table Cafe</a></td>
+        <td class="market">Fulton Market</td>
+        <td class="registered">Sep, 03 2014</td>
+        <td class="can-sell">Buyer</td>
+        <td class="action">
+          <a rel="nofollow" href="/admin/organizations/1/update_active?organization%5Bactive%5D=false" data-method="patch" class="btn btn--small btn--save">Deactivate</a>
+          <a title="Delete" rel="nofollow" href="/admin/organizations/1?ids%5B%5D=1" data-method="delete" data-confirm="Are you sure you want to delete organization Farm to Table Cafe? All discounts, users, prices, products related to this organization will also be deleted. This cannot be undone." class="action-link font-icon"></a>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <br><br>
+  
+  <p>SOURCE: /user</p>
+  <table class="product-table product-table--admin user-table sortable">
+    <thead class="" data-height="27" data-offset="414">
+      <tr>
+        <th class="sorted headerSortUp" data-column="name">Name</th>
+        <th class="" data-column="email">E-mail</th>
+        <th>Affiliations</th>
+          <th class="action"></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr class="user-row">
+        <td class="name"><a href="/admin/users/8/edit">Edit</a></td>
+        <td class="email">seller@example.com</td>
+        <td>
+          <ul class="affiliations">
+              <li><span>Fulton Market: Alto Valley Farms, Seller</span></li>
+          </ul>
+        </td>
+        <td class="action">
+  	      <a rel="nofollow" href="/admin/users/8/update_enabled?enabled=false&amp;organization_ids%5B%5D=2" data-method="patch" class="btn btn--small btn--save">Suspend</a>
+          <a href="http://fulton.localtest.me:3000/users/masquerade/8" class="btn btn--small btn--save">Log In</a>
+        </td>
+      </tr>
+      <tr class="user-row">
+        <td class="name"><a href="/admin/users/7/edit">Edit</a></td>
+        <td class="email">buyer@example.com</td>
+        <td>
+          <ul class="affiliations">
+              <li><span>Fulton Market: Farm to Table Cafe, Buyer</span></li>
+          </ul>
+        </td>
+        <td class="action">
+          <a rel="nofollow" href="/admin/users/7/update_enabled?enabled=false&amp;organization_ids%5B%5D=1" data-method="patch" class="btn btn--small btn--save">Suspend</a>
+          <a href="http://fulton.localtest.me:3000/users/masquerade/7" class="btn btn--small btn--save">Log In</a>
+        </td>
+      </tr>
+      <tr class="user-row">
+        <td class="name"><a href="/admin/users/6/edit">Edit</a></td>
+        <td class="email">mm@example.com</td>
+        <td>
+          <ul class="affiliations">
+            <li>Fulton Market, Market Manager</li>
+          </ul>
+        </td>
+        <td class="action">
+          <a href="http://fulton.localtest.me:3000/users/masquerade/6" class="btn btn--small btn--save">Log In</a>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <p><strong>NOTE:</strong> verticle align the td</p>
+  
+  
+  <p>SOURCE: admin/products/2/prices</p>
+  <table border="0" id="pricing_table" class="sortable pricing-table">
+    <thead>
+      <tr>
+        <th>Buyer</th>
+        <th>
+          Min Qty
+          <span data-tooltip="This is the minimum quantity available for sale of this product." class="tooltip"></span>
+        </th>
+        <th>
+          Net Price
+          <span data-tooltip="This is the amount that the Seller wants to receive for this product. It is calculated by the system based on sale price and associated fees." class="tooltip"></span>
+        </th>
+        <th>
+          Sale Price
+          <span data-tooltip="This is the sale price that the Buyer will see. The net price will adjust when you enter a sale price." class="tooltip"></span>
+        </th>
+        <th></th>
+      </tr>
+      <tr id="add-row" class="add-price price even open-row">  
+        <td><select name="price[organization_id]" id="price_organization_id" class="price_buyer_id">
+          <option value="">All Buyers</option>
+          <option value="2">Alto Valley Farms</option>
+          <option value="1">Farm to Table Cafe</option></select>
+        </td>
+        <td><input type="number" value="1" size="4" name="price[min_quantity]" min="0" id="price_min_quantity"></td>
+        <td><input type="number" value="0.0" step="0.01" size="4" name="price[net_price]" min="0" id="price_net_price" data-net-percent="1.0" class="net-price"></td>
+        <td><input type="number" step="0.01" size="4" name="price[sale_price]" min="0" id="price_sale_price" class="sale-price"></td>
+        <td><input type="submit" value="Add" name="commit" class="btn--small"></td>
+      </tr>
+    </thead>
+  </table>
+  
+  <br><br>
+  <p><strong>To Do:</strong> change hover state to background:none repeat scroll 0 0 rgba(0, 0, 0, 0.05)</p>
+  
+  <p>SOURCE: /cart</p>
+  <table class="cart">
+    <tbody class="item-group">
+      <tr class="">
+        <th class="subheading-cart">Your Order</th>
+        <td class="cart-quantity-column">Quantity</td>
+        <td class="cart-price-column">Price</td>
+        <td class="cart-total-column">Total</td>
+        <td class="product-clear"></td>
+      </tr>
+      <tr>
+        <th class="seller" colspan="5">Alto Valley Farms</th>
+      </tr>
+        <tr id="cart_item_1" data-id="1" data-cart-item="{&quot;id&quot;:1,&quot;cart_id&quot;:3,&quot;product_id&quot;:1,&quot;quantity&quot;:3,&quot;created_at&quot;:&quot;2014-09-05T11:04:39.881-05:00&quot;,&quot;updated_at&quot;:&quot;2014-09-05T11:04:39.881-05:00&quot;,&quot;total_price&quot;:&quot;9.0&quot;,&quot;unit_sale_price&quot;:&quot;3.0&quot;,&quot;valid?&quot;:true,&quot;destroyed?&quot;:false}" class="cart_item product">
+          <td class="name">Grapes (Boxes)</td>
+          <td class="quantity math="><input type="text" max="12" value="3" min="0" size="3" name="quantity"></td>
+          <td class="price-for-quantity math">$3.00</td>
+          <td class="price math">$9.00</td>
+          <td class="product-clear"><a href="#" class="font-icon icon-clear"></a></td>
+</tr>            </tbody>
+    <tbody id="totals" class="math">
+      <tr class="cart_total">
+        <th colspan="3" scope="row">Item Subtotal</th>
+        <td class="subtotal">$9.00</td>
+        <td></td>
+      </tr>
+
+      <tr class="cart_total is-hidden">
+        <th colspan="3" scope="row">Discount</th>
+        <td class="discount">$0.00</td>
+        <td></td>
+      </tr>
+
+      <tr class="cart_total">
+        <th colspan="3" scope="row">Delivery Fees</th>
+        <td class="delivery_fees">Free!</td>
+        <td></td>
+      </tr>
+
+      <tr class="cart_total">
+        <th colspan="3" scope="row"><strong>Total</strong></th>
+        <td class="total"><strong>$9.00</strong></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+</section>
+<section>
+  <h1>Forms</h1>
+  <hr class="styleguide">
+  <form method="post" id="edit_user" class="column column--two-thirds" action="/account" accept-charset="UTF-8"><div style="display:none"><input type="hidden" value="✓" name="utf8"><input type="hidden" value="put" name="_method"><input type="hidden" value="sC8LjZABW8l2AsTNGzXA+PCPIlTm0tN0Nkcq0IbRezw=" name="authenticity_token"></div>
+      <h1><i data-icon="" class="font-icon"></i>&nbsp; Editing User</h1>
+      <div class="field">
+        <label for="user_name">Name</label><br>
+        <input type="text" name="user[name]" id="user_name" class="column--full">
+      </div>
+      <div class="row row--field">
+        <div class="field column column--half column--guttered">
+          <label for="user_email">Email</label><br>
+          <input type="email" value="mm@example.com" name="user[email]" id="user_email" class="column--full">
+        </div>
+      </div>
+      <div class="row row--field">
+        <div class="field column column--half column--guttered">
+          <label for="user_password">New Password</label><br>
+          <input type="password" name="user[password]" id="user_password" class="column--full" autocomplete="off">
+        </div><div class="field column column--half column--guttered">
+          <label for="user_password_confirmation">Confirm Password</label><br>
+          <input type="password" name="user[password_confirmation]" id="user_password_confirmation" class="column--full">
+        </div>
+      </div>
+      <div class="row row--field">
+        <div class="field column column--half column--guttered">
+          <label for="user_current_password">Current password</label><br>
+          <input type="password" name="user[current_password]" id="user_current_password" class="column--full">
+        </div>
+      </div>
+      <div class="scroll-wrapper hard-left hard-right"><div class="fade-left"></div><div class="table-wrapper">
+        <table class="sortable">
+          <thead>
+            <tr>
+              <th>Market</th>
+              <th>Organization(s)</th>
+              <th>Role</th>
+            </tr>
+          </thead>
+            <tbody><tr>
+              <td>Fulton Market</td>
+              <td>Farm to Table Cafe and Alto Valley Farms</td>
+              <td>Market Manager</td>
+            </tr>
+
+        </tbody></table>
+      </div><div class="fade-right"></div></div>
+      <div class="form-actions">
+        <a href="/account" class="btn cancel">Clear Changes</a>
+        <input type="submit" value="Save Changes" name="commit">
+      </div>
+  </form>
+  
+  <p></p>
+  <div class="form-actions">
+    <a href="/admin/markets" class="btn cancel">Cancel</a>
+    <input type="submit" value="Update Market" name="commit">
+  </div>
+  
+  <form accept-charset="UTF-8" action="/admin/markets/10/managers" class="form-actions" method="post"><div style="display:none"><input name="utf8" type="hidden" value="✓"><input name="authenticity_token" type="hidden" value="LSPp6YKcnHmEQMq8inC21HtkA+OZ9zvCqfXasYc3FS4="></div>
+    <input class="email-field" id="email" name="email" placeholder="Email address" type="email">
+    <button type="submit" class="btn--add btn--small">Add Market Manager</button>
+  </form>
+</section>
+
+<section>
+  <h1>Help Text Examples</h1>
+  <hr class="styleguide">
+  
+  
+  <fieldset class="conditional">
+    <input type="hidden" value="0" name="user[remember_me]"><input type="checkbox" value="1" name="user[remember_me]" id="user_remember_me">
+    <label for="user_remember_me">Keep me signed in.</label>
+   <span data-tooltip="This is not recommended for shared computers. Unless you log out, anyone using this computer will be able to access your account." class="tooltip"></span><br>
+  </fieldset>
+  
+  <br><br>
+  
+  <div class="field">
+    <label for="product_image">Photo</label><br>
+  
+    <input type="file" name="product[image]" id="product_image" class="column column--full photo-button">
+    <div><small>Drag and drop your photo anywhere in the "Choose File" area and it will be uploaded when you save.</small></div>
+  </div>
+  <p><strong>Note: </strong>Well should go across the column esp. for 2-colforms.  look at lineheight seems too large.</p>
+  
+  <br><br>
+  
+  <div>
+      <p>This payment method will be used to deliver payments from orders and from where you will be charged Local Orbit fees.</p>
+  </div>
+vs.
+  <div>
+      <p style="font-style:italic"><strong>Tip: </strong>This payment method will be used to deliver payments from orders and from where you will be charged Local Orbit fees.</p>
+  </div>
+  
+  <br><br>
+  
+  <div class="field column column--half column--guttered">
+    <label for="balanced_account_name">Name</label>
+    <span class="hint">Full name as it appears on the account</span>
+    <br>
+    <input type="text" class="column--full" value="" name="name" id="balanced_account_name">
+  </div>
+</section>
+<section>
+  <h1>Progress Bar</h1>
+  <hr class="styleguide">
+  <img src="/assets/progressbar.gif">
+</section>
+<!-- <section>
+   <h1>Printing</h1>
+   <hr class="styleguide">
+<div class="row">
+    <div class="column column--two-thirds">
+      <h1>Invoice</h1>
+    </div><div class="column column--third">
+          <a class="btn btn--small btn--save pull-right print-button" href="/admin/invoices/3188/mark-invoiced" id="print-and-mark-invoiced">Print And Mark Invoiced</a>
+    </div>
+  </div>
+  <div class="row invoice-basics">
+      <div class="column column--two-thirds">
+        <h2>Invoice Number</h2>
+        <p class="invoice-num">LO-14-SPRINGFIELD-0000071</p><br>
+        <h2>Purchase Order Number</h2><p class="po-num">A34738</p><br>
+      </div><div class="column column--third">
+        <div class="due-date">
+          <h2>Due Date</h2>
+          8/19/2014
+        </div>
+        <h2 class="inline">Invoice Date</h2>
+        <span class="date">
+          8/12/2014
+        </span>
+      </div>
+    </div>
+    <img alt="Springfield Demo Market logo" class="logo" src="https://d3q270946t1v4b.cloudfront.net/media/W1siZiIsIjIwMTQvMDUvMDcvMDgvMzQvMjAvNjc5L2xvZ29fbGFyZ2UuanBnIl0sWyJwIiwidGh1bWIiLCIyMDB4MTUwXHUwMDNlIl1d?sha=bd0a18b515a91ca5">
+    <div class="row invoice-parties">
+        <div class="market-info column column--half">
+          <div class="vcard">
+            <h2>From</h2>
+            <h3 class="fn org org-from">Springfield Demo Market</h3>
+              <div>
+                401 N. Main St<br>
+                Ann Arbor, MI 48104 <br>
+                (734) 418-0680<br>
+                another@email.com
+              </div>
+          </div>
+        </div><div class="column column--half">
+          <div class="vcard vcard-buyer">
+            <h2>To</h2>
+            <h3 class="fn org buyer-name">Local Diner</h3>
+            <div>
+              2934 Russell Street<br>
+              Detroit,
+              MI
+              48207
+            </div>
+          </div>
+        </div>
+      </div>
+  </section> -->
+<section>
+  <h1>Pagination</h1>
+  <hr class="styleguide">
+  <nav class="pagination">
+    
+    
+          <span class="page current">
+    1
+  </span>
+
+          <span class="page">
+    <a href="/admin/reports/total-sales?page=2" rel="next">2</a>
+  </span>
+
+          <span class="page">
+    <a href="/admin/reports/total-sales?page=3">3</a>
+  </span>
+
+      <span class="next">
+    <a href="/admin/reports/total-sales?page=2" rel="next">Next ›</a>
+  </span>
+
+      <span class="last">
+    <a href="/admin/reports/total-sales?page=3">Last »</a>
+  </span>
+
+    </nav>
+</section>
+<section>
+  <h1>Validation</h1>
+  <hr class="styleguide">
+
+</section>
+<section>
+  <h1></h1>
+  <hr class="styleguide">
+
+</section>
+  
+  
+  
+  
+  
+  
+  
