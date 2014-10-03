@@ -63,6 +63,16 @@ FactoryGirl.define do
     seller_delivery_end "11:00 AM"
     association :market, factory: [:market, :with_addresses]
 
+    trait :seller_to_buyer do
+    end
+
+    trait :hub_to_buyer do
+      seller_fulfillment_location { market.addresses.first }
+      buyer_pickup_start "10:00 AM"
+      buyer_pickup_end "12:00 PM"
+      buyer_pickup_location_id 0
+    end
+
     trait :buyer_pickup do
       seller_fulfillment_location { market.addresses.first }
       buyer_pickup_start "10:00 AM"

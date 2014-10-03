@@ -72,7 +72,7 @@ class DeliverySchedule < ActiveRecord::Base
   end
 
   def hub_to_customer?
-    has_seller_fulfillment_location? and !has_buyer_pickup_location
+    has_seller_fulfillment_location? and !has_buyer_pickup_location?
   end
 
   def has_seller_fulfillment_location?

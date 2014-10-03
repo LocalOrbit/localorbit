@@ -22,32 +22,6 @@ class DeliveryScheduleDecorator < Draper::Decorator
     end
   end
 
-  # XXX?
-  # def location_name
-  #   if buyer_pickup? && buyer_pickup_location.present?
-  #     "at #{buyer_pickup_location.name}"
-  #   else
-  #     "direct to customer"
-  #   end
-  # end
-
-  # The implementation of dropoff_time_window appears to be incorrect.
-  # Also, this method is only used from a/v/a/organizations/_delivery_schedules.html.erb, and I'm not sure that's even in use anymore.
-  # XXX delete this bugger asap
-  def seller_human_description
-    "from #{dropoff_time_window} #{seller_location_name}"
-  end
-  #
-
-  # XXX
-  # def attached_to_product(product)
-  #   if product && product.persisted?
-  #     product.delivery_schedule_ids.include?(id)
-  #   else
-  #     true
-  #   end
-  # end
-
   # Used by OrderItemDecorator
   def fulfillment_type
     if buyer_pickup?
@@ -59,19 +33,19 @@ class DeliveryScheduleDecorator < Draper::Decorator
     end
   end
 
-  private
-  #XXX delete this bugger asap (only used by #seller_human_description)
-  def dropoff_time_window
-    buyer_pickup? ? "#{buyer_pickup_start} to #{buyer_pickup_end}" : "#{seller_delivery_start} to #{seller_delivery_end}"
-  end
-
-  #XXX delete this bugger asap (only used by #seller_human_description)
-  def seller_location_name
-    if has_seller_fulfillment_location?
-      "at #{seller_fulfillment_location.address} #{seller_fulfillment_location.city}, #{seller_fulfillment_location.state} #{seller_fulfillment_location.zip}"
+  # Describes the seller and buyer time windows for listing on the Product editor.
+  def product_schedule_description
+    str = h.content_tag(:span, class: "weekday") { seller_weekday.pluralize }
+    str += " from #{seller_delivery_start} to #{seller_delivery_end}"
+    if direct_to_customer?
+      str += " direct to customer."
     else
-      "direct to customer"
+      addr = seller_fulfillment_location
+      str += " at #{addr.address} #{addr.city}, #{addr.state} #{addr.zip}."
+      str += " For Buyer pick up/delivery #{buyer_weekday.pluralize} from #{buyer_pickup_start} to #{buyer_pickup_end}."
     end
+    
+    str
   end
 
 end
