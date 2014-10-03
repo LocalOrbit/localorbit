@@ -106,11 +106,11 @@ class DeliverySchedule < ActiveRecord::Base
   end
 
   def next_delivery_date
-    @next_delivery_date ||= calc_next_date(day, seller_delivery_start)
+    @next_delivery_date ||= calc_next_delivery_date
   end
 
   def next_buyer_delivery_date
-    @next_buyer_delivery_date ||= calc_next_date(buyer_day, buyer_pickup_start)
+    @next_buyer_delivery_date ||= calc_next_buyer_delivery_date(next_delivery_date)
   end
 
   def timezone
@@ -118,6 +118,18 @@ class DeliverySchedule < ActiveRecord::Base
   end
 
   def next_delivery
+    preexisting = find_next_delivery
+    return preexisting if preexisting
+    #
+    # deliver_on = next_delivery_date
+    # cutoff_time = next_order_cutoff_time
+    # buyer_deliver_on = calc_next_date2(buyer_day, buyer_pickup_start, cutoff_time)
+    #
+    # deliveries.create!(
+    #   deliver_on: deliver_on,
+    #   buyer_deliver_on: buyer_deliver_on,
+    #   cutoff_time: cutoff_time
+    # )
     find_next_delivery || deliveries.create!(
       deliver_on: next_delivery_date,
       buyer_deliver_on: next_buyer_delivery_date,
@@ -181,15 +193,28 @@ class DeliverySchedule < ActiveRecord::Base
     end
   end
 
-  def calc_next_date(day_num, hour_of_day)
+  # day, seller_delivery_start
+  def calc_next_delivery_date
     Time.use_zone timezone do
       current_time = Time.current
       beginning = current_time.beginning_of_week(:sunday) - 1.week
-      date = (beginning + day_num.days).to_date
-      d = Time.zone.parse("#{date} #{hour_of_day}")
+      date = (beginning + day.days).to_date
+      d = Time.zone.parse("#{date} #{seller_delivery_start}")
       d += 1.week while (d - self.order_cutoff.hours) < current_time
       return d
     end
   end
+
+  def calc_next_buyer_delivery_date(delivery_time)
+    Time.use_zone timezone do
+      current_time = Time.current
+      beginning = current_time.beginning_of_week(:sunday) - 1.week
+      date = (beginning + buyer_day.days).to_date
+      d = Time.zone.parse("#{date} #{buyer_pickup_start || seller_delivery_start}")
+      d += 1.week while d < delivery_time
+      return d
+    end
+  end
+
 
 end

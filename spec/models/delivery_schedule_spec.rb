@@ -256,6 +256,68 @@ describe DeliverySchedule do
         expect(schedule.next_delivery).to eql(delivery)
       end
     end
+
+  end
+
+  describe "#next_delivery bug fix" do
+    context "when we're beyond the cutoff as calculated from the seller dropoff time, but BEFORE the cutoff as (incorrectly) calculated based on buyer pickup time" do
+
+      let(:delivery_schedule) { create(:delivery_schedule, :buyer_pickup,
+                                       market: market, 
+                                       order_cutoff: 96, 
+                                       day: 2, 
+                                       seller_delivery_start: "9:00 AM", 
+                                       seller_delivery_end: "11:00 AM",
+                                       buyer_day: 2,
+                                       buyer_pickup_start: "4:00 PM", 
+                                       buyer_pickup_end: "6:00 PM") } 
+
+      before do
+        Timecop.freeze(Time.parse "Oct 3, 2014 13:37") # srlsy, this is when Anna found the bug
+      end
+
+      after do
+        Timecop.return
+      end
+
+      it "ensures the buyer_deliver_on date is consistent with a SELLER-time-based cutoff" do
+        nd = delivery_schedule.next_delivery
+        expect(nd.cutoff_time).to eq(Time.zone.parse("Oct 10 2014, 9:00 AM"))
+        expect(nd.deliver_on.strftime("%A %B %e, %Y")).to eq("Tuesday October 14, 2014")
+        expect(nd.buyer_deliver_on.strftime("%A %B %e, %Y")).to eq("Tuesday October 14, 2014")
+        
+        # => {"id"=>1,
+        #    "delivery_schedule_id"=>1,
+        #     "deliver_on"=>Tue, 14 Oct 2014 09:00:00 EDT -04:00,
+        #      "cutoff_time"=>Fri, 10 Oct 2014 09:00:00 EDT -04:00,
+        #       "created_at"=>Fri, 03 Oct 2014 13:37:00 EDT -04:00,
+        #        "updated_at"=>Fri, 03 Oct 2014 13:37:00 EDT -04:00,
+        #         "legacy_id"=>nil,
+        #          "buyer_deliver_on"=>Tue, 07 Oct 2014 16:00:00 EDT -04:00}
+      end
+    end
+
+    context "when buyer_pickup_start is nil" do
+      let(:delivery_schedule) { create(:delivery_schedule, 
+                                       market: market, 
+                                       day: 3) }
+      before do
+        Timecop.travel(DateTime.parse "Oct 7, 2014") # srlsy, this is when Anna found the bug
+      end
+
+      after do
+        Timecop.return
+      end
+
+      it "uses seller_delivery_start to calc buyer_deliver_on and determine cutoff" do
+        nd = delivery_schedule.next_delivery
+        expect(nd.cutoff_time).to eq(Time.zone.parse("Oct 8 2014, 1:00 AM"))
+        expect(nd.deliver_on.strftime("%A %B %e, %Y")).to eq("Wednesday October  8, 2014")
+        expect(nd.buyer_deliver_on.strftime("%A %B %e, %Y")).to eq("Wednesday October  8, 2014")
+      end
+    end
+    
+
   end
 
   describe "#buyer_pickup?" do
