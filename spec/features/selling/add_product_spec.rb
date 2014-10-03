@@ -340,10 +340,7 @@ describe "Adding a product", chosen_js: true do
             del = Dom::Admin::ProductDelivery.find_by_weekday(day)
             expect(del).to be_checked, "#{day} should be checked"
             expect(del.description).to eq(expected_description), "#{day} wrong description, wanted '#{expected_description}' but got '#{del.description}'"
-          end
-        # expect(Dom::Admin::ProductDelivery.find_by_weekday("Mondays")).to be_checked
-        # expect(Dom::Admin::ProductDelivery.find_by_weekday("Tuesdays")).to be_checked
-        # expect(Dom::Admin::ProductDelivery.find_by_weekday("Wednesdays")).to be_checked
+        end
       end
 
       it "allows the user to select delivery schedules" do
