@@ -63,7 +63,8 @@ FactoryGirl.define do
     seller_delivery_end "11:00 AM"
     association :market, factory: [:market, :with_addresses]
 
-    trait :seller_to_buyer do
+    trait :direct_to_customer do
+      # this is currently the same as the above defaults
     end
 
     trait :hub_to_buyer do

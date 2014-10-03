@@ -29,8 +29,10 @@ class DeliverySchedule < ActiveRecord::Base
 
   validate :buyer_pickup_end_after_start,                      unless: :direct_to_customer?
   validate :seller_delivery_end_after_start
+  validate :seller_day_and_buyer_day_are_same, if: :direct_to_customer?
 
   before_validation :ensure_days_are_set
+
   # used on Sales by Fulfillment report where OrderItems are filtered by type
   # (Seller to Buyer or Market to Buyer) or pickup location
   ransacker :fulfillment_type do |_|
@@ -163,6 +165,12 @@ class DeliverySchedule < ActiveRecord::Base
 
   def validate_time_after(field, before, after, message)
     errors.add(field, message) if before && after && Time.parse(before) <= Time.parse(after)
+  end
+
+  def seller_day_and_buyer_day_are_same
+    if day != buyer_day
+      errors.add(:day, "must match Day when fulfillment method is Direct to Customer")
+    end
   end
 
   def ensure_days_are_set

@@ -1,12 +1,15 @@
 require "spec_helper"
 
 describe DeliverySchedule do
-  let(:market) { create(:market) }
+  let(:market) { create(:market, :with_addresses) }
 
   describe "validates" do
 
     [:day, :buyer_day].each do |field|
       describe field.to_s do
+        before do
+          subject.update_attributes(market: market, seller_fulfillment_location: market.addresses.first)
+        end
         it "is required" do
           expect(subject).to have(1).error_on(field)
         end
@@ -123,6 +126,34 @@ describe DeliverySchedule do
           expect(subject).to have(1).error_on(:buyer_pickup_end)
         end
       end
+
+    end
+    describe "seller and buyer days" do
+      describe "when fulfillment method is 'Direct to customer'" do
+        let(:sched) { create(:delivery_schedule, :direct_to_customer) }
+        it "requires 'day' and 'buyer_day' fields to be equal" do
+          expect(sched).to be_valid
+          expect(sched.day).to eq(sched.buyer_day)
+
+          sched.day += 1
+
+          expect(sched).not_to be_valid
+          expect(sched).to have(1).error
+          expect(sched).to have(1).error_on(:day)
+          expect(sched.errors[:day].first).to match(/match.*direct/i)
+        end
+      end
+
+      describe "when fulfillment method is NOT 'Direct to customer'" do
+        let(:sched) { create(:delivery_schedule, :buyer_pickup) }
+        it "allows 'day' and 'buyer_day' fields to be different" do
+          expect(sched).to be_valid
+          expect(sched.day).to eq(sched.buyer_day)
+
+          sched.day += 1
+          expect(sched).to be_valid
+        end
+      end
     end
   end
 
@@ -145,7 +176,7 @@ describe DeliverySchedule do
   end
 
   describe "#next_delivery" do
-    let(:market) { create(:market, timezone: "US/Eastern") }
+    let(:market) { create(:market, :with_addresses, timezone: "US/Eastern") }
 
     let(:base_schedule) { { market: market, order_cutoff: 8, 
                         day: 4, 
@@ -156,7 +187,7 @@ describe DeliverySchedule do
 
     let(:schedule) { create(:delivery_schedule, base_schedule) }
 
-    let(:offset_schedule) { create(:delivery_schedule, 
+    let(:offset_schedule) { create(:delivery_schedule, :hub_to_buyer,
                                    base_schedule.merge(buyer_day: 5)) }
 
 
