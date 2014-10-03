@@ -34,8 +34,13 @@ class DeliveryScheduleDecorator < Draper::Decorator
   end
 
   # Describes the seller and buyer time windows for listing on the Product editor.
-  def product_schedule_description
-    str = h.content_tag(:span, class: "weekday") { seller_weekday.pluralize }
+  def product_schedule_description(html: true)
+    str = ""
+    if html
+      str += h.content_tag(:span, class: "weekday") { seller_weekday.pluralize }
+    else
+      str += seller_weekday.pluralize
+    end
     str += " from #{seller_delivery_start} to #{seller_delivery_end}"
     if direct_to_customer?
       str += " direct to customer."
@@ -45,7 +50,11 @@ class DeliveryScheduleDecorator < Draper::Decorator
       str += " For Buyer pick up/delivery #{buyer_weekday.pluralize} from #{buyer_pickup_start} to #{buyer_pickup_end}."
     end
     
-    str
+    if html
+      raw(str)
+    else
+      str
+    end
   end
 
 end
