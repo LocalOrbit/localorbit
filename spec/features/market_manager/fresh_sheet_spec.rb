@@ -55,7 +55,8 @@ feature "A Market Manager sending a weekly Fresh Sheet" do
         visit preview_admin_fresh_sheet_path
 
         expect(page).to have_content("See what's fresh at #{market.name}")
-        expect(page).to have_content("Tuesday October 7, 2014 between 1:00PM and 2:00PM")
+        delivery = delivery_schedule.next_delivery.decorate
+        expect(page).to have_content("#{delivery.buyer_display_date} #{delivery.buyer_time_range}")
       end
     end
 
