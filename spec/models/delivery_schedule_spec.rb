@@ -203,7 +203,11 @@ describe DeliverySchedule do
       it "creates a delivery for the next delivery time" do
         delivery = schedule.next_delivery
         expected_deliver_on_time = Time.parse("2014-05-15 06:00:00 EDT")
-        expected_buyer_deliver_on_time = Time.parse("2014-05-15 09:00:00 EDT")
+        # NOTE: The buyer_pickup_start time is set to 9am BUT this is a direct-to-customer
+        # delivery, which means the actual buyer_deliver_on start time will be calc'd based
+        # on the seller's start time.  Ideally, buyer_pickup_start should not be different
+        # than seller_delivery_start for direct deliverires.
+        expected_buyer_deliver_on_time = Time.parse("2014-05-15 06:00:00 EDT")
 
         expect(delivery).to be_a(Delivery)
         expect(delivery.deliver_on).to eql(expected_deliver_on_time)
@@ -231,7 +235,7 @@ describe DeliverySchedule do
       it "creates a delivery for the next delivery time" do
         delivery = schedule.next_delivery
         expected_time = Time.parse("2014-06-05 06:00:00 EDT")
-        expected_buyer_time = Time.parse("2014-06-05 09:00:00 EDT")
+        expected_buyer_time = Time.parse("2014-06-05 06:00:00 EDT")
 
         expect(delivery).to be_a(Delivery)
         expect(delivery.deliver_on).to eql(expected_time)
@@ -285,15 +289,6 @@ describe DeliverySchedule do
         expect(nd.cutoff_time).to eq(Time.zone.parse("Oct 10 2014, 9:00 AM"))
         expect(nd.deliver_on.strftime("%A %B %e, %Y")).to eq("Tuesday October 14, 2014")
         expect(nd.buyer_deliver_on.strftime("%A %B %e, %Y")).to eq("Tuesday October 14, 2014")
-        
-        # => {"id"=>1,
-        #    "delivery_schedule_id"=>1,
-        #     "deliver_on"=>Tue, 14 Oct 2014 09:00:00 EDT -04:00,
-        #      "cutoff_time"=>Fri, 10 Oct 2014 09:00:00 EDT -04:00,
-        #       "created_at"=>Fri, 03 Oct 2014 13:37:00 EDT -04:00,
-        #        "updated_at"=>Fri, 03 Oct 2014 13:37:00 EDT -04:00,
-        #         "legacy_id"=>nil,
-        #          "buyer_deliver_on"=>Tue, 07 Oct 2014 16:00:00 EDT -04:00}
       end
     end
 
@@ -302,7 +297,7 @@ describe DeliverySchedule do
                                        market: market, 
                                        day: 3) }
       before do
-        Timecop.travel(DateTime.parse "Oct 7, 2014") # srlsy, this is when Anna found the bug
+        Timecop.travel(DateTime.parse "Oct 7, 2014") 
       end
 
       after do
@@ -314,6 +309,27 @@ describe DeliverySchedule do
         expect(nd.cutoff_time).to eq(Time.zone.parse("Oct 8 2014, 1:00 AM"))
         expect(nd.deliver_on.strftime("%A %B %e, %Y")).to eq("Wednesday October  8, 2014")
         expect(nd.buyer_deliver_on.strftime("%A %B %e, %Y")).to eq("Wednesday October  8, 2014")
+      end
+    end
+
+    context "direct customer delivery when buyer times are 12AM" do
+      let(:delivery_schedule) { create(:delivery_schedule, :direct_to_customer,
+                                       seller_delivery_start: "6:00 AM",
+                                       seller_delivery_end: "8:00 AM",
+                                       day: 0) }
+      before do
+        Timecop.travel(DateTime.parse "Oct 6, 2014 11:35AM") 
+      end
+
+      after do
+        Timecop.return
+      end
+
+      it "doesn't screw up and add a week" do
+        nd = delivery_schedule.next_delivery
+        expect(nd.deliver_on.strftime("%A %B %e, %Y")).to eq("Sunday October 12, 2014")
+        expect(nd.buyer_deliver_on.strftime("%A %B %e, %Y")).to eq("Sunday October 12, 2014")
+        expect(nd.cutoff_time).to eq(Time.zone.parse("Oct 12 2014, 12:00 AM")) # 6 hrs before 6am
       end
     end
     

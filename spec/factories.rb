@@ -61,6 +61,8 @@ FactoryGirl.define do
     seller_fulfillment_location_id 0
     seller_delivery_start "7:00 AM"
     seller_delivery_end "11:00 AM"
+    buyer_pickup_start "12:00 AM"
+    buyer_pickup_end "12:00 AM"
     association :market, factory: [:market, :with_addresses]
 
     trait :direct_to_customer do

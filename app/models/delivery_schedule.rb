@@ -206,11 +206,17 @@ class DeliverySchedule < ActiveRecord::Base
   end
 
   def calc_next_buyer_delivery_date(delivery_time)
+    time_of_day = if buyer_pickup_start.present? and !direct_to_customer?
+                    buyer_pickup_start
+                  else
+                    seller_delivery_start
+                  end
     Time.use_zone timezone do
       current_time = Time.current
       beginning = current_time.beginning_of_week(:sunday) - 1.week
       date = (beginning + buyer_day.days).to_date
-      d = Time.zone.parse("#{date} #{buyer_pickup_start || seller_delivery_start}")
+      d = Time.zone.parse("#{date} #{time_of_day}")
+      # d = Time.zone.parse("#{date} #{buyer_pickup_start || seller_delivery_start}")
       d += 1.week while d < delivery_time
       return d
     end
