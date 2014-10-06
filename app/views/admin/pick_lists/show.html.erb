@@ -13,7 +13,7 @@
     <div class="upcoming-delivery">
 
       <h2 class="heading heading-delivery-tool">Seller Delivery</h2>
-      <div class="upcoming-delivery-date"><%= @delivery.display_date %> <%= @delivery.time_range %></div>
+      <div class="upcoming-delivery-date"><%= @delivery.seller_display_date %> <%= @delivery.seller_time_range %></div>
       <% if @delivery.available_to_order? %>
         <p class="note">Ordering has not yet closed for this delivery</p>
       <% end %>

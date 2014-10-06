@@ -17,10 +17,10 @@ class DeliveryDecorator < Draper::Decorator
     direct_to_customer? ? "Customer" : "Market"
   end
 
-  def display_date
+  def seller_display_date
     deliver_on.strftime("%A %B %e, %Y")
   end
-  alias_method :seller_display_date, :display_date
+  alias_method :display_date, :seller_display_date
 
   def buyer_display_date
     if date = get_buyer_deliver_on
@@ -29,6 +29,7 @@ class DeliveryDecorator < Draper::Decorator
       nil
     end
   end
+
   def get_buyer_deliver_on
     buyer_deliver_on || deliver_on
   end
@@ -45,18 +46,6 @@ class DeliveryDecorator < Draper::Decorator
     cutoff_time.in_time_zone(delivery_schedule.market.timezone).strftime("%B %-d at %l%p")
   end
 
-  def time_range
-    if buyer_pickup?
-      start_time = delivery_schedule.buyer_pickup_start
-      end_time = delivery_schedule.buyer_pickup_end
-    else
-      start_time = delivery_schedule.seller_delivery_start
-      end_time = delivery_schedule.seller_delivery_end
-    end
-
-    format_time_range(start_time, end_time)
-  end
-
   def buyer_time_range
     if direct_to_customer?
       start_time = delivery_schedule.seller_delivery_start
@@ -69,12 +58,13 @@ class DeliveryDecorator < Draper::Decorator
     format_time_range(start_time, end_time)
   end
 
-  def fulfillment_time_range
+  def seller_time_range
     start_time = delivery_schedule.seller_delivery_start
     end_time   = delivery_schedule.seller_delivery_end
 
     format_time_range(start_time, end_time)
   end
+  alias_method :fulfillment_time_range, :seller_time_range
 
   def buyer_time_range_capitalized
     buyer_time_range.sub("between", "Between")

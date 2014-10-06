@@ -53,28 +53,14 @@ describe DeliveryDecorator do
     end
   end
 
-  describe "#time_range" do
-    let(:delivery_schedule)do
-      create(:delivery_schedule,
-             seller_delivery_start: "4:00 PM",
-             seller_delivery_end: "7:00 PM")
-    end
-
-    context "schedule is a delivery" do
-      it "returns the seller delivery times" do
-        expect(subject.time_range).to eq("between 4:00PM and 7:00PM")
-      end
-    end
-
-    context "schedule is a pickup" do
-      let(:delivery_schedule) { create(:delivery_schedule, :buyer_pickup) }
-      it "displays the pickup times" do
-        delivery_schedule.buyer_pickup_start = "7:00 PM"
-        delivery_schedule.buyer_pickup_end = "8:00 PM"
-        delivery_schedule.save!
-
-        expect(subject.time_range).to eq("between 7:00PM and 8:00PM")
-      end
+  describe "#seller_time_range and #fulfillment_time_range" do
+    it "formats the seller delivery start/end times in human-readable format" do
+      expect(subject.seller_time_range).to match(/between 7:00AM.+11:00AM/)
+      expect(subject.fulfillment_time_range).to match(/between 7:00AM.+11:00AM/)
+      delivery_schedule.seller_delivery_start = "4:15 PM"
+      delivery_schedule.seller_delivery_end = "10:47 PM"
+      expect(subject.seller_time_range).to match(/between 4:15PM.+10:47PM/)
+      expect(subject.fulfillment_time_range).to match(/between 4:15PM.+10:47PM/)
     end
   end
 
