@@ -6,7 +6,7 @@ feature "User signing in" do
   let!(:org2) { create(:organization, markets: [market2]) }
   let!(:user2) { create(:user, organizations: [org2]) }
 
-  let(:cookie_name) { "_local_orbit_session_test" }
+  let(:session_cookie_name) { "_local_orbit_session_#{Figaro.env.deploy_env}" }
 
   scenario "A user can sign in" do
     visit "/"
@@ -25,9 +25,7 @@ feature "User signing in" do
     check "Keep me signed in."
     click_button "Sign In"
 
-    # Hack to remove a cookie from the cookie jar
-    jar = Capybara.current_session.driver.browser.current_session.instance_variable_get(:@rack_mock_session).cookie_jar
-    jar.delete(cookie_name)
+    delete_cookie session_cookie_name
 
     visit new_user_session_path
     expect(page).to have_text("Dashboard")
@@ -40,9 +38,7 @@ feature "User signing in" do
     fill_in "Password", with: "password"
     click_button "Sign In"
 
-    # Hack to remove a cookie from the cookie jar
-    jar = Capybara.current_session.driver.browser.current_session.instance_variable_get(:@rack_mock_session).cookie_jar
-    jar.delete(cookie_name)
+    delete_cookie session_cookie_name
 
     visit "/"
     expect(page).to_not have_text("Dashboard")

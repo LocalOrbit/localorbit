@@ -93,6 +93,74 @@ feature "sending invoices" do
     expect(Dom::Admin::Financials::InvoiceRow.all.size).to eq(0)
   end
 
+  context "Preview Selected Invoice" do
+    before do
+      switch_to_subdomain(market1.subdomain)
+      sign_in_as market_manager
+      visit admin_financials_invoices_path
+    end
+
+    context "without selecting any invoices" do
+      it "fails", js: true, vcr: {match_requests_on: [:host, invoice_auth_matcher]} do
+        # (select nothing)
+        click_preview_selected_invoices
+        expect(page).to have_content("Please select one or more invoices to preview")
+      end
+    end
+
+    context "selecting all invoices" do
+      # it "generates a single PDF containing all individual invoices", js: true, vcr: {match_requests_on: [:host, invoice_auth_matcher]} do
+      it "generates a single PDF containing all individual invoices", js: true do
+
+        Dom::Admin::Financials::InvoiceRow.select_all
+
+        click_preview_selected_invoices
+
+        expect(page).to have_content("Generating invoice previews...")
+        # TODO: make the processing happen in Delayed Job and see intermediate progress on screen
+
+        # See that we've been redirected to the PDF uri for a BatchInvoice...
+        batch_invoice = nil
+        patiently do
+          uid = current_path[1..-1]
+          batch_invoice = BatchInvoice.find_by(pdf_uid: uid)
+          expect(batch_invoice).to be
+          expect(batch_invoice.pdf).to be
+          expect(batch_invoice.pdf.file).to be
+          expect(batch_invoice.pdf.file.readlines.first).to match(/PDF-1\.4/)
+        end
+      end
+    end
+  end
+
+  def click_preview_selected_invoices
+    suppressing_new_tab do
+      click_button "Preview Selected Invoices"
+      expect(internal_server_error_message).to be_nil
+    end
+  end
+
+  def suppressing_new_tab()
+    page.execute_script %|$("#invoice-list").prop("data-suppress-target","1")|
+    begin
+      yield
+    ensure
+      begin 
+        page.execute_script %|$("#invoice-list").prop("data-suppress-target",null)|
+      rescue Exception => e2 
+        puts "(Couldn't clear the data-suppress-target data attribute from #invoice-list, probably due to an error or being on a different page.)"
+      end
+    end
+  end
+
+  def internal_server_error_message
+    if text =~ /internal server error/i
+      text
+    else
+      nil
+    end
+  end
+
   context "filtering" do
     let!(:market2) { create(:market, subdomain: "betterest2", po_payment_term: 14) }
     let!(:delivery_schedule2) { create(:delivery_schedule) }

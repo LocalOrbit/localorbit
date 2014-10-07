@@ -1,0 +1,38 @@
+<div class="batch-invoice-progress" data-status-uri="<%=progress_admin_financials_batch_invoice_path(@batch_invoice, format:'json') %>" align="center">
+  <h1>Generating invoice previews...</h1>
+  <div>
+    <div class="loading-progress batch-invoice-progress-spinner">
+      <%= image_tag "loading-progress.gif" %>
+    </div>
+    <span class="batch-invoice-progress-text">Progress: 0%</span>
+  </div>
+</div>
+
+<div class="batch-invoice-ready" style="display:none;">
+  <p>Your invoices are ready for download.</p>
+</div>
+
+<div class="batch-invoice-partial-fail" style="display:none;">
+  <p>Your invoices are ready for download, but we encountered some difficulties. Some invoices are not included in your preview.</p>
+</div>
+
+<div class="batch-invoice-failed" style="display:none;">
+  <p>Sorry, we couldn't generate your invoices. Please contact <a href="mailto:service@localorbit.com ">service@localorbit.com</a> for additional assistance.</p>
+</div>
+
+<div class="batch-invoice-download" style="display:none;">
+  <p>
+    <a class="btn btn--save btn--small mobile-block" href="#">Download Invoices PDF</a>
+  </p>
+</div>
+
+<div class="batch-invoice-close" style="display:none;">
+  <p>
+    <a class="btn btn--save btn--small mobile-block" class="close-tab" href="#">Close</a>
+  </p>
+</div>
+
+<div class="batch-invoice-errors" style="display:none;">
+  <p>Errors:</p>
+  <ul class="batch-invoice-error-list"></ul>
+</div>
