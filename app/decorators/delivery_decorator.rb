@@ -14,39 +14,40 @@ class DeliveryDecorator < Draper::Decorator
   end
 
   def display_dropoff_location_type
-    buyer_pickup? ? "Market" : "Customer"
+    direct_to_customer? ? "Customer" : "Market"
   end
 
-  def display_date
+  def seller_display_date
     deliver_on.strftime("%A %B %e, %Y")
+  end
+  alias_method :display_date, :seller_display_date
+
+  def buyer_display_date
+    if date = get_buyer_deliver_on
+      date.strftime("%A %B %e, %Y") if date
+    else
+      nil
+    end
+  end
+
+  def get_buyer_deliver_on
+    buyer_deliver_on || deliver_on
   end
 
   def human_delivery_date
-    "#{display_date} #{time_range}"
+    "#{buyer_display_date} #{buyer_time_range}"
   end
 
   def checkout_date
-    h.content_tag(:time, datetime: deliver_on.xmlschema) { human_delivery_date }
+    h.content_tag(:time, datetime: get_buyer_deliver_on.xmlschema) { human_delivery_date }
   end
 
   def display_cutoff_time
     cutoff_time.in_time_zone(delivery_schedule.market.timezone).strftime("%B %-d at %l%p")
   end
 
-  def time_range
-    if buyer_pickup?
-      start_time = delivery_schedule.buyer_pickup_start
-      end_time = delivery_schedule.buyer_pickup_end
-    else
-      start_time = delivery_schedule.seller_delivery_start
-      end_time = delivery_schedule.seller_delivery_end
-    end
-
-    format_time_range(start_time, end_time)
-  end
-
   def buyer_time_range
-    if delivery_schedule.direct_to_customer?
+    if direct_to_customer?
       start_time = delivery_schedule.seller_delivery_start
       end_time   = delivery_schedule.seller_delivery_end
     else
@@ -57,12 +58,13 @@ class DeliveryDecorator < Draper::Decorator
     format_time_range(start_time, end_time)
   end
 
-  def fulfillment_time_range
+  def seller_time_range
     start_time = delivery_schedule.seller_delivery_start
     end_time   = delivery_schedule.seller_delivery_end
 
     format_time_range(start_time, end_time)
   end
+  alias_method :fulfillment_time_range, :seller_time_range
 
   def buyer_time_range_capitalized
     buyer_time_range.sub("between", "Between")
@@ -80,6 +82,10 @@ class DeliveryDecorator < Draper::Decorator
     delivery_schedule.buyer_pickup?
   end
 
+  def direct_to_customer?
+    delivery_schedule.direct_to_customer?
+  end
+
   # Display methods for currently selected delivery
 
   def selected_type
@@ -88,7 +94,7 @@ class DeliveryDecorator < Draper::Decorator
 
   # Display for upcoming delivery
   def upcoming_delivery_date_heading
-    "#{display_date} #{delivery_schedule.seller_delivery_start}"
+    "#{seller_display_date} #{delivery_schedule.seller_delivery_start}"
   end
 
   def deliver_to_name
@@ -104,10 +110,10 @@ class DeliveryDecorator < Draper::Decorator
   end
 
   def format_time_range(start_time, end_time)
-    start_time.gsub!(" ", "")
-    end_time.gsub!(" ", "")
+    start_str = start_time.nil? ? "?" : start_time.gsub(" ", "")
+    end_str = end_time.nil? ? "?" : end_time.gsub(" ", "")
 
-    "between #{start_time} and #{end_time}"
+    "between #{start_str} and #{end_str}"
   end
 
   def delivery_expired_notice

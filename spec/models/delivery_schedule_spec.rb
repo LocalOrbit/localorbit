@@ -1,30 +1,35 @@
 require "spec_helper"
 
 describe DeliverySchedule do
-  let(:market) { create(:market) }
+  let(:market) { create(:market, :with_addresses) }
 
   describe "validates" do
-    describe "day" do
-      it "is required" do
-        expect(subject).to have(1).error_on(:day)
-      end
 
-      it "is greater than or equal to 0" do
-        subject.day = -1
-        expect(subject).to have(1).error_on(:day)
-      end
+    [:day, :buyer_day].each do |field|
+      describe field.to_s do
+        before do
+          subject.update_attributes(market: market, seller_fulfillment_location: market.addresses.first)
+        end
+        it "is required" do
+          expect(subject).to have(1).error_on(field)
+        end
 
-      it "is less than or equal to 6" do
-        subject.day = 7
-        expect(subject).to have(1).error_on(:day)
-      end
+        it "is greater than or equal to 0" do
+          subject.send("#{field}=", -1)
+          expect(subject).to have(1).error_on(field)
+        end
 
-      it "with valid day" do
-        subject.day = 0
-        expect(subject).to have(0).error_on(:day)
+        it "is less than or equal to 6" do
+          subject.send("#{field}=", 7)
+          expect(subject).to have(1).error_on(field)
+        end
 
-        subject.day = 6
-        expect(subject).to have(0).error_on(:day)
+        it "with valid day" do
+          subject.send("#{field}=", 0)
+          expect(subject).to have(0).error_on(field)
+          subject.send("#{field}=", 6)
+          expect(subject).to have(0).error_on(field)
+        end
       end
     end
 
@@ -101,12 +106,11 @@ describe DeliverySchedule do
         it "is required" do
           expect(subject).to have(1).error_on(:buyer_pickup_start)
         end
-
-        it "must be after seller_delivery_start" do
+        it "need not be after seller_delivery_start" do
           subject.seller_delivery_start = "8:00 AM"
           subject.buyer_pickup_start    = "7:00 AM"
 
-          expect(subject).to have(1).error_on(:buyer_pickup_start)
+          expect(subject).to have(0).error_on(:buyer_pickup_start)
         end
       end
 
@@ -122,15 +126,70 @@ describe DeliverySchedule do
           expect(subject).to have(1).error_on(:buyer_pickup_end)
         end
       end
+
+    end
+    describe "seller and buyer days" do
+      describe "when fulfillment method is 'Direct to customer'" do
+        let(:sched) { create(:delivery_schedule, :direct_to_customer) }
+        it "requires 'day' and 'buyer_day' fields to be equal" do
+          expect(sched).to be_valid
+          expect(sched.day).to eq(sched.buyer_day)
+
+          sched.day += 1
+
+          expect(sched).not_to be_valid
+          expect(sched).to have(1).error
+          expect(sched).to have(1).error_on(:day)
+          expect(sched.errors[:day].first).to match(/match.*direct/i)
+        end
+      end
+
+      describe "when fulfillment method is NOT 'Direct to customer'" do
+        let(:sched) { create(:delivery_schedule, :buyer_pickup) }
+        it "allows 'day' and 'buyer_day' fields to be different" do
+          expect(sched).to be_valid
+          expect(sched.day).to eq(sched.buyer_day)
+
+          sched.day += 1
+          expect(sched).to be_valid
+        end
+      end
+    end
+  end
+
+  describe "buyer_day and day fields cross-default" do 
+    it "copies 'day' to 'buyer_day' if 'buyer_day' is not set" do
+      subject.buyer_day = nil
+      subject.day = 5
+      subject.valid? # trigger the defaulting
+      expect(subject.day).to eq(5)
+      expect(subject.buyer_day).to eq(5)
+    end
+
+    it "copies 'buyer_day' to 'day' if 'day' is not set" do
+      subject.buyer_day = 3
+      subject.day = nil
+      subject.valid? # trigger the defaulting
+      expect(subject.day).to eq(3)
+      expect(subject.buyer_day).to eq(3)
     end
   end
 
   describe "#next_delivery" do
-    let(:market) { create(:market, timezone: "US/Eastern") }
-    let(:schedule) do
-      create(:delivery_schedule, market: market,
-             order_cutoff: 6, seller_delivery_start: "6:00 am", seller_delivery_end: "10:00 am", day: 4)
-    end
+    let(:market) { create(:market, :with_addresses, timezone: "US/Eastern") }
+
+    let(:base_schedule) { { market: market, order_cutoff: 8, 
+                        day: 4, 
+                        seller_delivery_start: "6:00 am", 
+                        seller_delivery_end: "10:00 am",
+                        buyer_pickup_start: "9:00 am", 
+                        buyer_pickup_end: "11:00 am"} }
+
+    let(:schedule) { create(:delivery_schedule, base_schedule) }
+
+    let(:offset_schedule) { create(:delivery_schedule, :hub_to_buyer,
+                                   base_schedule.merge(buyer_day: 5)) }
+
 
     before do
       Timecop.freeze(Time.parse "May 10, 2014 06:00")
@@ -143,12 +202,29 @@ describe DeliverySchedule do
     describe "delivery with short cutoff" do
       it "creates a delivery for the next delivery time" do
         delivery = schedule.next_delivery
-        expected_time = Time.parse("2014-05-15 06:00:00 EDT")
+        expected_deliver_on_time = Time.parse("2014-05-15 06:00:00 EDT")
+        # NOTE: The buyer_pickup_start time is set to 9am BUT this is a direct-to-customer
+        # delivery, which means the actual buyer_deliver_on start time will be calc'd based
+        # on the seller's start time.  Ideally, buyer_pickup_start should not be different
+        # than seller_delivery_start for direct deliverires.
+        expected_buyer_deliver_on_time = Time.parse("2014-05-15 06:00:00 EDT")
 
         expect(delivery).to be_a(Delivery)
-        expect(delivery.deliver_on).to eql(expected_time)
+        expect(delivery.deliver_on).to eql(expected_deliver_on_time)
+        expect(delivery.buyer_deliver_on).to eql(expected_buyer_deliver_on_time)
       end
     end
+
+    describe "when the seller delivery day is different than the buyer pickup day" do
+      it "creates proper buyer_deliver_on time based on buyer day/time" do
+        delivery = offset_schedule.next_delivery
+        expected_deliver_on_time = Time.parse("2014-05-15 06:00:00 EDT")
+        expected_buyer_deliver_on_time = Time.parse("2014-05-16 09:00:00 EDT")
+        expect(delivery.deliver_on).to eql(expected_deliver_on_time)
+        expect(delivery.buyer_deliver_on).to eql(expected_buyer_deliver_on_time)
+      end
+    end
+
 
     describe "when the delivery cutoff is weeks before the current time" do
       before do
@@ -159,9 +235,20 @@ describe DeliverySchedule do
       it "creates a delivery for the next delivery time" do
         delivery = schedule.next_delivery
         expected_time = Time.parse("2014-06-05 06:00:00 EDT")
+        expected_buyer_time = Time.parse("2014-06-05 06:00:00 EDT")
 
         expect(delivery).to be_a(Delivery)
         expect(delivery.deliver_on).to eql(expected_time)
+        expect(delivery.buyer_deliver_on).to eql(expected_buyer_time)
+      end
+
+      it "creates proper buyer_deliver_on time based on buyer day/time" do
+        delivery = offset_schedule.next_delivery
+        expected_deliver_on_time = Time.parse("2014-05-15 06:00:00 EDT")
+        expected_buyer_deliver_on_time = Time.parse("2014-05-16 09:00:00 EDT")
+
+        expect(delivery.deliver_on).to eql(expected_deliver_on_time)
+        expect(delivery.buyer_deliver_on).to eql(expected_buyer_deliver_on_time)
       end
     end
 
@@ -173,6 +260,80 @@ describe DeliverySchedule do
         expect(schedule.next_delivery).to eql(delivery)
       end
     end
+
+  end
+
+  describe "#next_delivery bug fix" do
+    context "when we're beyond the cutoff as calculated from the seller dropoff time, but BEFORE the cutoff as (incorrectly) calculated based on buyer pickup time" do
+
+      let(:delivery_schedule) { create(:delivery_schedule, :buyer_pickup,
+                                       market: market, 
+                                       order_cutoff: 96, 
+                                       day: 2, 
+                                       seller_delivery_start: "9:00 AM", 
+                                       seller_delivery_end: "11:00 AM",
+                                       buyer_day: 2,
+                                       buyer_pickup_start: "4:00 PM", 
+                                       buyer_pickup_end: "6:00 PM") } 
+
+      before do
+        Timecop.freeze(Time.parse "Oct 3, 2014 13:37") # srlsy, this is when Anna found the bug
+      end
+
+      after do
+        Timecop.return
+      end
+
+      it "ensures the buyer_deliver_on date is consistent with a SELLER-time-based cutoff" do
+        nd = delivery_schedule.next_delivery
+        expect(nd.cutoff_time).to eq(Time.zone.parse("Oct 10 2014, 9:00 AM"))
+        expect(nd.deliver_on.strftime("%A %B %e, %Y")).to eq("Tuesday October 14, 2014")
+        expect(nd.buyer_deliver_on.strftime("%A %B %e, %Y")).to eq("Tuesday October 14, 2014")
+      end
+    end
+
+    context "when buyer_pickup_start is nil" do
+      let(:delivery_schedule) { create(:delivery_schedule, 
+                                       market: market, 
+                                       day: 3) }
+      before do
+        Timecop.travel(DateTime.parse "Oct 7, 2014") 
+      end
+
+      after do
+        Timecop.return
+      end
+
+      it "uses seller_delivery_start to calc buyer_deliver_on and determine cutoff" do
+        nd = delivery_schedule.next_delivery
+        expect(nd.cutoff_time).to eq(Time.zone.parse("Oct 8 2014, 1:00 AM"))
+        expect(nd.deliver_on.strftime("%A %B %e, %Y")).to eq("Wednesday October  8, 2014")
+        expect(nd.buyer_deliver_on.strftime("%A %B %e, %Y")).to eq("Wednesday October  8, 2014")
+      end
+    end
+
+    context "direct customer delivery when buyer times are 12AM" do
+      let(:delivery_schedule) { create(:delivery_schedule, :direct_to_customer,
+                                       seller_delivery_start: "6:00 AM",
+                                       seller_delivery_end: "8:00 AM",
+                                       day: 0) }
+      before do
+        Timecop.travel(DateTime.parse "Oct 6, 2014 11:35AM") 
+      end
+
+      after do
+        Timecop.return
+      end
+
+      it "doesn't screw up and add a week" do
+        nd = delivery_schedule.next_delivery
+        expect(nd.deliver_on.strftime("%A %B %e, %Y")).to eq("Sunday October 12, 2014")
+        expect(nd.buyer_deliver_on.strftime("%A %B %e, %Y")).to eq("Sunday October 12, 2014")
+        expect(nd.cutoff_time).to eq(Time.zone.parse("Oct 12 2014, 12:00 AM")) # 6 hrs before 6am
+      end
+    end
+    
+
   end
 
   describe "#buyer_pickup?" do
@@ -311,5 +472,24 @@ describe DeliverySchedule do
     include_context "soft delete-able models"
     it_behaves_like "a soft deleted model"
   end
+
+  describe "weekday" do
+    it "maps the current day value to the friendly weekday name" do
+      %w{Sunday Monday Tuesday Wednesday Thursday Friday Saturday}.each.with_index do |day_name,i|
+        subject.day = i
+        expect(subject.weekday).to eq(day_name)
+      end
+    end
+  end
+
+  describe "buyer_weekday" do
+    it "maps the current buyer_day value to the friendly weekday name" do
+      %w{Sunday Monday Tuesday Wednesday Thursday Friday Saturday}.each.with_index do |day_name,i|
+        subject.buyer_day = i
+        expect(subject.buyer_weekday).to eq(day_name)
+      end
+    end
+  end
+
 
 end

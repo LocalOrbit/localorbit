@@ -94,7 +94,13 @@ class Order < ActiveRecord::Base
   def self.payable
     # This is a slightly fuzzy match right now.
     # TODO: Implement delivery_end on deliveries for greater accuracy
-    joins(:delivery).where("deliveries.deliver_on < ?", 48.hours.ago)
+    two_days_ago = 48.hours.ago
+
+    deliver_on = Delivery.arel_table[:deliver_on]
+    buyer_deliver_on = Delivery.arel_table[:buyer_deliver_on]
+    joins(:delivery).where(
+      buyer_deliver_on.not_eq(nil).and(buyer_deliver_on.lt(two_days_ago)).
+      or(deliver_on.lt(two_days_ago)))
   end
 
   def self.payment_status(status)

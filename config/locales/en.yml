@@ -25,6 +25,8 @@ en:
       bank_account:
         bankable_id: Payment method
       delivery_schedule:
+        buyer_day: Day
+        day: Seller delivery day
         seller_fulfillment_location_id: Fulfillment method
         buyer_pickup_location_id: Buyer pickup location
       lot:

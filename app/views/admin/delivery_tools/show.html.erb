@@ -8,7 +8,8 @@
       <p>This is a list of all upcoming deliveries for your market.</p>
       <% @upcoming_deliveries.each do |delivery| %>
         <div class="upcoming-delivery">
-          <span class="market"><%= delivery.delivery_schedule.market.name %></span><br>
+          <span class="market"><%= delivery.delivery_schedule.market.name %></span><br><br>
+          <span>Seller Delivery Begins:</span><br>
           <h2 class="upcoming-delivery-date"><%= delivery.upcoming_delivery_date_heading %></h2>
           Deliver to:
           <%= content_tag :div, delivery.deliver_to_name, class: "location-name" if delivery.deliver_to_name.present? %>
