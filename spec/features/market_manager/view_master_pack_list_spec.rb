@@ -6,8 +6,10 @@ describe "Master Pack List" do
   let!(:address)            { create(:market_address, market: market, address: "321 Main", city: "Holland", state: "MI", zip: "49423", phone: "(321) 456-3456") }
   let!(:thursdays_schedule) { create(:delivery_schedule, market: market, day: 4) }
   let!(:thursday_delivery)  { create(:delivery, delivery_schedule: thursdays_schedule, deliver_on: Date.parse("May 8, 2014")) }
-  let!(:fridays_schedule)   { create(:delivery_schedule, :buyer_pickup, market: market, day: 5) }
-  let!(:friday_delivery)    { create(:delivery, delivery_schedule: fridays_schedule, deliver_on: Date.parse("May 9, 2014")) }
+  let!(:fridays_schedule)   { create(:delivery_schedule, :buyer_pickup, market: market, day: 4, seller_delivery_start: "4:45 PM", seller_delivery_end: "9:05 PM", buyer_day: 5, buyer_pickup_start: "8:30 AM", buyer_pickup_end: "10:15 AM")}
+  let!(:friday_delivery)    { create(:delivery, delivery_schedule: fridays_schedule, deliver_on: Date.parse("May 8, 2014"), buyer_deliver_on: Date.parse("May 9, 2014")) }
+  # let!(:thursdays_schedule) { create(:delivery_schedule, market: market, day: 3, 
+  # let!(:thursday_delivery)  { create(:delivery, delivery_schedule: thursdays_schedule, deliver_on: Date.parse("May 7, 2014"), buyer_deliver_on: Date.parse("May 8, 2014")) }
 
   let!(:sellers1)           { create(:organization, :seller, :single_location, markets: [market]) }
   let!(:product1)           { create(:product, :sellable, organization: sellers1) }
@@ -93,7 +95,7 @@ describe "Master Pack List" do
           expect(pack_list.order_number).to eq(order_other.order_number)
           expect(pack_list.note).to eq("1 of 1")
           expect(pack_list.delivery_message).to eq("Buyer picks up from market on")
-          expect(pack_list.upcoming_delivery_date).to eq("Friday May 9, 2014 between 10:00AM and 12:00PM")
+          expect(pack_list.upcoming_delivery_date).to eq("Friday May 9, 2014 between 8:30AM and 10:15AM")
 
           buyer = pack_list.buyer
           expect(buyer.org).to eq(buyer1.name)

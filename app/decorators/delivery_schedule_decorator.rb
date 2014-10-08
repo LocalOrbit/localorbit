@@ -3,8 +3,9 @@ class DeliveryScheduleDecorator < Draper::Decorator
 
   delegate_all
 
+  # Used on Market page
   def pickup_or_dropoff
-    if buyer_pickup? && buyer_pickup_location.present?
+    if buyer_pickup?
       location = buyer_pickup_location
       "pickup at #{location.address}, #{location.city}, #{location.state} #{location.zip}"
     else
@@ -12,46 +13,16 @@ class DeliveryScheduleDecorator < Draper::Decorator
     end
   end
 
-  def plural_weekday
-    weekday + "s"
-  end
-
-  def time_window
-    seller_fulfillment_location.present? ? "#{buyer_pickup_start} to #{buyer_pickup_end}" : "#{seller_delivery_start} to #{seller_delivery_end}"
-  end
-
-  def dropoff_time_window
-    buyer_pickup? ? "#{buyer_pickup_start} to #{buyer_pickup_end}" : "#{seller_delivery_start} to #{seller_delivery_end}"
-  end
-
-  def seller_location_name
-    if seller_fulfillment_location.present?
-      "at #{seller_fulfillment_location.address} #{seller_fulfillment_location.city}, #{seller_fulfillment_location.state} #{seller_fulfillment_location.zip}"
+  # Used on Market page
+  def buyer_time_window
+    if direct_to_customer?
+      "#{seller_delivery_start} to #{seller_delivery_end}"
     else
-      "direct to customer"
+      "#{buyer_pickup_start} to #{buyer_pickup_end}"
     end
   end
 
-  def location_name
-    if buyer_pickup? && buyer_pickup_location.present?
-      "at #{buyer_pickup_location.name}"
-    else
-      "direct to customer"
-    end
-  end
-
-  def seller_human_description
-    "from #{dropoff_time_window} #{seller_location_name}"
-  end
-
-  def attached_to_product(product)
-    if product && product.persisted?
-      product.delivery_schedule_ids.include?(id)
-    else
-      true
-    end
-  end
-
+  # Used by OrderItemDecorator
   def fulfillment_type
     if buyer_pickup?
       "Pick Up: #{seller_fulfillment_address}"
@@ -61,4 +32,29 @@ class DeliveryScheduleDecorator < Draper::Decorator
       "Delivery: From Market to Buyer"
     end
   end
+
+  # Describes the seller and buyer time windows for listing on the Product editor.
+  def product_schedule_description(html: true)
+    str = ""
+    if html
+      str += h.content_tag(:span, class: "weekday") { seller_weekday.pluralize }
+    else
+      str += seller_weekday.pluralize
+    end
+    str += " from #{seller_delivery_start} to #{seller_delivery_end}"
+    if direct_to_customer?
+      str += " direct to customer."
+    else
+      addr = seller_fulfillment_location
+      str += " at #{addr.address} #{addr.city}, #{addr.state} #{addr.zip}."
+      str += " For Buyer pick up/delivery #{buyer_weekday.pluralize} from #{buyer_pickup_start} to #{buyer_pickup_end}."
+    end
+    
+    if html
+      raw(str)
+    else
+      str
+    end
+  end
+
 end

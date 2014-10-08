@@ -27,19 +27,35 @@ describe "Adding a product", chosen_js: true do
   let!(:inactive_seller) { create(:organization, :seller, markets: [market], active: false) }
 
   let!(:mondays_schedule) { create(:delivery_schedule, market: market, day: 1, require_delivery: true) }
+  let(:monday_schedule_description) { "Mondays from 7:00 AM to 11:00 AM direct to customer. (required)" }
   # This is the schedule we'll model after the Appleton bug
   # Seller fulfillment location is what will show for the seller
   let!(:tuesdays_schedule) do
-    create(
-      :delivery_schedule,
+    create(:delivery_schedule, :hub_to_buyer,
+      seller_fulfillment_location: aggregation_point,
       market: market,
       day: 2,
-      buyer_pickup_location_id: 0,
-      seller_fulfillment_location: aggregation_point,
+      seller_delivery_start: "7:00 AM",
+      seller_delivery_end: "9:00 AM",
+      buyer_day: 2,
       buyer_pickup_start: "8:30 AM",
       buyer_pickup_end: "10:00 AM"
     )
   end
+  let(:tuesday_schedule_description) { "Tuesdays from 7:00 AM to 9:00 AM at 1123 Grand Rd. Appleton, WI 83992. For Buyer pick up/delivery Tuesdays from 8:30 AM to 10:00 AM." }
+
+  let!(:wed_thu_schedule) do
+    create(:delivery_schedule, :buyer_pickup,
+      market: market,
+      day: 3,
+      seller_delivery_start: "5:30 PM",
+      seller_delivery_end: "8:15 PM",
+      buyer_day: 4,
+      buyer_pickup_start: "6:05 AM",
+      buyer_pickup_end: "10:12 AM"
+    )
+  end
+  let(:wednesday_schedule_description) { "Wednesdays from 5:30 PM to 8:15 PM at 44 E. 8th St Holland, MI 49423. For Buyer pick up/delivery Thursdays from 6:05 AM to 10:12 AM." }
 
   let!(:deleted_schedule) { create(:delivery_schedule, market: market, day: 2, deleted_at: Time.current) }
 
@@ -317,16 +333,21 @@ describe "Adding a product", chosen_js: true do
 
         click_link "Product Info"
 
-        expect(Dom::Admin::ProductDelivery.count).to eql(2)
-        expect(Dom::Admin::ProductDelivery.find_by_weekday("Mondays")).to be_checked
-        expect(Dom::Admin::ProductDelivery.find_by_weekday("Tuesdays")).to be_checked
+        expect(Dom::Admin::ProductDelivery.count).to eql(3)
+        [ ["Mondays", monday_schedule_description],
+          ["Tuesdays", tuesday_schedule_description],
+          ["Wednesdays", wednesday_schedule_description] ].each do |(day, expected_description)|
+            del = Dom::Admin::ProductDelivery.find_by_weekday(day)
+            expect(del).to be_checked, "#{day} should be checked"
+            expect(del.description).to eq(expected_description), "#{day} wrong description, wanted '#{expected_description}' but got '#{del.description}'"
+        end
       end
 
       it "allows the user to select delivery schedules" do
         expect(page).to_not have_content(stub_warning_both)
         expect(page).to_not have_content(organization_label)
 
-        expect(page).to have_content("Tuesdays from 7:00 AM to 11:00 AM at 1123 Grand Rd. Appleton, WI 83992")
+        expect(page).to have_content(tuesday_schedule_description)
 
         fill_in_required_fields(:with_chosen)
 
@@ -344,16 +365,17 @@ describe "Adding a product", chosen_js: true do
 
         click_link "Product Info"
 
-        expect(Dom::Admin::ProductDelivery.count).to eql(2)
+        expect(Dom::Admin::ProductDelivery.count).to eql(3)
         expect(Dom::Admin::ProductDelivery.find_by_weekday("Mondays")).to be_checked
         expect(Dom::Admin::ProductDelivery.find_by_weekday("Tuesdays")).to_not be_checked
+        expect(Dom::Admin::ProductDelivery.find_by_weekday("Wednesdays")).to be_checked
       end
 
       it "user can not deselect required deliveries" do
         expect(page).to_not have_content(stub_warning_both)
         expect(page).to_not have_content(organization_label)
 
-        expect(page).to have_content("Tuesdays from 7:00 AM to 11:00 AM at 1123 Grand Rd. Appleton, WI 83992")
+        expect(page).to have_content(tuesday_schedule_description)
 
         fill_in_required_fields(:with_chosen)
 
@@ -427,7 +449,7 @@ describe "Adding a product", chosen_js: true do
       expect(page).to have_field("seller_info")
 
       # Wait for delivery schedule request to finish
-      expect(page).to have_checked_field("Tuesdays from 7:00 AM to 11:00 AM at 1123 Grand Rd. Appleton, WI 83992", disabled: true)
+      expect(page).to have_checked_field(tuesday_schedule_description, disabled: true)
     end
 
     context "Uncheck 'use seller info'", js: true do
@@ -437,7 +459,7 @@ describe "Adding a product", chosen_js: true do
 
         # Wait for delivery schedule load to finish
         # Should help with timing issues
-        expect(page).to have_checked_field("Tuesdays from 7:00 AM to 11:00 AM at 1123 Grand Rd. Appleton, WI 83992", disabled: true)
+        expect(page).to have_checked_field(tuesday_schedule_description, disabled: true)
       end
 
       it "pre-populates who/where/how fields from the organization" do
@@ -462,7 +484,7 @@ describe "Adding a product", chosen_js: true do
         expect(product_form.locations).not_to include(*org2.locations.map(&:name))
 
         # Wait for delivery schedule load to finish
-        expect(page).to have_checked_field("Tuesdays from 7:00 AM to 11:00 AM at 1123 Grand Rd. Appleton, WI 83992", disabled: true)
+        expect(page).to have_checked_field(tuesday_schedule_description, disabled: true)
       end
 
       it "selecting the blank organization option disables seller info" do
@@ -476,7 +498,7 @@ describe "Adding a product", chosen_js: true do
 
     it "maintains delivery schedule changes on error", :js do
       select org2.name, from: "Seller Organization"
-      expect(page).to have_checked_field("Tuesdays from 7:00 AM to 11:00 AM at 1123 Grand Rd. Appleton, WI 83992", disabled: true)
+      expect(page).to have_checked_field(tuesday_schedule_description, disabled: true)
 
       uncheck "Make product available on all market delivery dates"
       Dom::Admin::ProductDelivery.find_by_weekday("Tuesdays").uncheck!
@@ -570,7 +592,7 @@ describe "Adding a product", chosen_js: true do
       select org2.name, from: "Seller Organization"
 
       # Wait for delivery schedule load to finish
-      expect(page).to have_checked_field("Tuesdays from 7:00 AM to 11:00 AM at 1123 Grand Rd. Appleton, WI 83992", disabled: true)
+      expect(page).to have_checked_field(tuesday_schedule_description, disabled: true)
 
       fill_in_required_fields(:with_chosen)
 

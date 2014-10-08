@@ -53,6 +53,7 @@ module Admin
     def delivery_schedule_params
       params.require(:delivery_schedule).permit(
         :day,
+        :buyer_day,
         :fee,
         :fee_type,
         :order_cutoff,
