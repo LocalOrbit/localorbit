@@ -9,14 +9,14 @@ feature "Viewing products" do
                                      buyer_pickup_location_id: 0,
                                      buyer_pickup_start: "12:00 PM",
                                      buyer_pickup_end: "2:00 PM") }
-  let!(:delivery_schedule2) { create(:delivery_schedule, market: market, day: 3, deleted_at: Time.parse("2013-03-21")) }
+  let!(:delivery_schedule2) { create(:delivery_schedule, market: market, day: 3, deleted_at: Time.zone.parse("2013-03-21")) }
 
   let!(:org1) { create(:organization, :seller, markets: [market]) }
   let!(:org1_product) { create(:product, :sellable, name: "celery", organization: org1, delivery_schedules: [delivery_schedule1]) }
 
   let!(:org2) { create(:organization, :seller, markets: [market]) }
   let!(:org2_product) { create(:product, :sellable, organization: org2, delivery_schedules: [delivery_schedule1]) }
-  let!(:org2_product_deleted) { create(:product, :sellable, organization: org2, deleted_at: 1.day.ago) }
+  let!(:org2_product_deleted) { create(:product, :sellable, organization: org2, deleted_at: Time.zone.parse("2014-10-01")) }
 
   let!(:inactive_org) { create(:organization, :seller, active: false, markets: [market]) }
   let!(:inactive_org_product) { create(:product, :sellable, organization: inactive_org, delivery_schedules: [delivery_schedule1]) }
@@ -35,7 +35,7 @@ feature "Viewing products" do
   end
 
   before do
-    Timecop.travel(DateTime.parse("October 7 2014"))
+    Timecop.travel(Time.zone.parse("October 7 2014"))
     switch_to_subdomain market.subdomain
   end
 
@@ -135,7 +135,10 @@ feature "Viewing products" do
   end
 
   scenario "a product with inventory that expires before the delivery" do
-    org1_product.lots.first.update(number: "1", expires_at: DateTime.parse("October 8, 2014 00:00"))
+    lot = org1_product.lots.first
+    lot.update_attribute(:number, "1")
+    lot.update_attribute(:expires_at, Time.zone.parse("2014-10-08"))
+
     sign_in_as(user)
 
     expect(Dom::Product.all.count).to eql(1)
