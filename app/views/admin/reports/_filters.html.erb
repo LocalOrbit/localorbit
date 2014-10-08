@@ -36,8 +36,8 @@
 
         <% if filter == :fulfillment_day %>
           <span class="preserve-alignment mobile-block">
-            <%= f.label :order_delivery_delivery_schedule_day_eq, "Fulfillment Day" %><br>
-            <%= f.select :order_delivery_delivery_schedule_day_eq, options_from_collection_for_select(presenter.fulfillment_days, :first, :last, presenter.q.order_delivery_delivery_schedule_day_eq), { include_blank: "All" }, { class: "filter-input" } %>
+            <%= f.label :order_delivery_delivery_schedule_buyer_day_eq, "Fulfillment Day" %><br>
+            <%= f.select :order_delivery_delivery_schedule_buyer_day_eq, options_from_collection_for_select(presenter.fulfillment_days, :first, :last, presenter.q.order_delivery_delivery_schedule_day_eq), { include_blank: "All" }, { class: "filter-input" } %>
           </span>
         <% end %>
 

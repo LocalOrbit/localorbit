@@ -5,6 +5,8 @@ class DeliverySchedule < ActiveRecord::Base
   WEEKDAYS = %w(Sunday Monday Tuesday Wednesday Thursday Friday Saturday)
   WEEKDAY_ABBREVIATIONS = %w(Su M Tu W Th F Sa)
 
+  WeekdayValidation = {presence: true, numericality: {greater_than_or_equal_to: 0, less_than_or_equal_to: 6,   allow_nil: true}}
+
   belongs_to :market, inverse_of: :delivery_schedules
 
   belongs_to :seller_fulfillment_location, class: MarketAddress
@@ -14,7 +16,9 @@ class DeliverySchedule < ActiveRecord::Base
   has_many :product_deliveries
   has_many :products, through: :product_deliveries
 
-  validates :day,          presence: true, numericality: {greater_than_or_equal_to: 0, less_than_or_equal_to: 6,   allow_nil: true}
+
+  validates :day,                            WeekdayValidation
+  validates :buyer_day,                      WeekdayValidation
   validates :order_cutoff, presence: true, numericality: {greater_than_or_equal_to: 6, less_than_or_equal_to: 504, allow_nil: true}
   validates :seller_fulfillment_location_id, presence: true
   validates :seller_delivery_start,          presence: true
@@ -24,8 +28,10 @@ class DeliverySchedule < ActiveRecord::Base
   validates :buyer_pickup_start,             presence: true, unless: :direct_to_customer?
 
   validate :buyer_pickup_end_after_start,                      unless: :direct_to_customer?
-  validate :buyer_pickup_start_after_seller_fulfillment_start, unless: :direct_to_customer?
   validate :seller_delivery_end_after_start
+  validate :seller_day_and_buyer_day_are_same, if: :direct_to_customer?
+
+  before_validation :ensure_days_are_set
 
   # used on Sales by Fulfillment report where OrderItems are filtered by type
   # (Seller to Buyer or Market to Buyer) or pickup location
@@ -60,11 +66,23 @@ class DeliverySchedule < ActiveRecord::Base
   end
 
   def buyer_pickup?
-    seller_fulfillment_location.present? && buyer_pickup_location.present?
+    has_seller_fulfillment_location? and has_buyer_pickup_location?
   end
 
   def direct_to_customer?
-    seller_fulfillment_location_id == 0
+    !has_seller_fulfillment_location?
+  end
+
+  def hub_to_customer?
+    has_seller_fulfillment_location? and !has_buyer_pickup_location?
+  end
+
+  def has_seller_fulfillment_location?
+    seller_fulfillment_location_id != nil and seller_fulfillment_location_id != 0
+  end
+
+  def has_buyer_pickup_location?
+    buyer_pickup_location_id != nil and buyer_pickup_location_id != 0
   end
 
   def seller_fulfillment_address
@@ -76,21 +94,23 @@ class DeliverySchedule < ActiveRecord::Base
   end
 
   def weekday
+    seller_weekday
+  end
+
+  def seller_weekday
     WEEKDAYS[day]
   end
 
+  def buyer_weekday
+    WEEKDAYS[buyer_day]
+  end
+
   def next_delivery_date
-    return @next_delivery_date if defined?(@next_delivery_date)
+    @next_delivery_date ||= calc_next_delivery_date
+  end
 
-    Time.use_zone timezone do
-      current_time = Time.current
-      beginning = current_time.beginning_of_week(:sunday) - 1.week
-      date = (beginning + day.days).to_date
-      d = Time.zone.parse("#{date} #{seller_delivery_start}")
-      d += 1.week while (d - order_cutoff.hours) < current_time
-
-      @next_delivery_date = d
-    end
+  def next_buyer_delivery_date
+    @next_buyer_delivery_date ||= calc_next_buyer_delivery_date(next_delivery_date)
   end
 
   def timezone
@@ -98,8 +118,21 @@ class DeliverySchedule < ActiveRecord::Base
   end
 
   def next_delivery
+    preexisting = find_next_delivery
+    return preexisting if preexisting
+    #
+    # deliver_on = next_delivery_date
+    # cutoff_time = next_order_cutoff_time
+    # buyer_deliver_on = calc_next_date2(buyer_day, buyer_pickup_start, cutoff_time)
+    #
+    # deliveries.create!(
+    #   deliver_on: deliver_on,
+    #   buyer_deliver_on: buyer_deliver_on,
+    #   cutoff_time: cutoff_time
+    # )
     find_next_delivery || deliveries.create!(
       deliver_on: next_delivery_date,
+      buyer_deliver_on: next_buyer_delivery_date,
       cutoff_time: next_order_cutoff_time
     )
   end
@@ -138,10 +171,6 @@ class DeliverySchedule < ActiveRecord::Base
     validate_time_after(:buyer_pickup_end, buyer_pickup_end, buyer_pickup_start, "must be after buyer pickup start")
   end
 
-  def buyer_pickup_start_after_seller_fulfillment_start
-    validate_time_after(:buyer_pickup_start, buyer_pickup_start, seller_delivery_start, "must be after delivery start")
-  end
-
   def seller_delivery_end_after_start
     validate_time_after(:seller_delivery_end, seller_delivery_end, seller_delivery_start, "must be after delivery start")
   end
@@ -149,4 +178,49 @@ class DeliverySchedule < ActiveRecord::Base
   def validate_time_after(field, before, after, message)
     errors.add(field, message) if before && after && Time.parse(before) <= Time.parse(after)
   end
+
+  def seller_day_and_buyer_day_are_same
+    if day != buyer_day
+      errors.add(:day, "must match Day when fulfillment method is Direct to Customer")
+    end
+  end
+
+  def ensure_days_are_set
+    if day and buyer_day.nil?
+      self.buyer_day = day
+    elsif buyer_day and day.nil?
+      self.day = buyer_day
+    end
+  end
+
+  # day, seller_delivery_start
+  def calc_next_delivery_date
+    Time.use_zone timezone do
+      current_time = Time.current
+      beginning = current_time.beginning_of_week(:sunday) - 1.week
+      date = (beginning + day.days).to_date
+      d = Time.zone.parse("#{date} #{seller_delivery_start}")
+      d += 1.week while (d - self.order_cutoff.hours) < current_time
+      return d
+    end
+  end
+
+  def calc_next_buyer_delivery_date(delivery_time)
+    time_of_day = if buyer_pickup_start.present? and !direct_to_customer?
+                    buyer_pickup_start
+                  else
+                    seller_delivery_start
+                  end
+    Time.use_zone timezone do
+      current_time = Time.current
+      beginning = current_time.beginning_of_week(:sunday) - 1.week
+      date = (beginning + buyer_day.days).to_date
+      d = Time.zone.parse("#{date} #{time_of_day}")
+      # d = Time.zone.parse("#{date} #{buyer_pickup_start || seller_delivery_start}")
+      d += 1.week while d < delivery_time
+      return d
+    end
+  end
+
+
 end

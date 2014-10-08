@@ -184,13 +184,10 @@ describe "Editing a product" do
         product_deliveries = Dom::Admin::ProductDelivery.all
         expect(product_deliveries.count).to eql(3)
         expect(find_field("Make product available on all market delivery dates")).to_not be_checked
-        expect(Dom::Admin::ProductDelivery.find_by_weekday("Mondays")).to be_checked
-        expect(Dom::Admin::ProductDelivery.find_by_weekday("Tuesdays")).to_not be_checked
-        expect(Dom::Admin::ProductDelivery.find_by_weekday("Thursdays")).to be_checked
 
-        expect(page).to have_content("Mondays from 7:00 AM to 11:00 AM direct to customer")
-        expect(page).to have_content("Tuesdays from 10:00 AM to 12:00 PM at 44 E. 8th St Holland, MI 49423")
-        expect(page).to have_content("Thursdays from 10:00 AM to 12:00 PM at 44 E. 8th St Holland, MI 49423")
+        see_product_delivery_choices({delivery_schedule: monday_delivery, checked: true},
+                                     {delivery_schedule: tuesday_delivery, checked: false},
+                                     {delivery_schedule: thursday_delivery, checked: true, required: true})
       end
 
       it "persists changes" do
@@ -202,8 +199,8 @@ describe "Editing a product" do
         click_button "Save and Continue"
         click_link "Product Info"
 
-        expect(Dom::Admin::ProductDelivery.find_by_weekday("Mondays")).to_not be_checked
-        expect(Dom::Admin::ProductDelivery.find_by_weekday("Tuesdays")).to be_checked
+        see_product_delivery_choices({delivery_schedule: monday_delivery, checked: false},
+                                    {delivery_schedule: tuesday_delivery, checked: true})
       end
 
       it "allows all delivery schedules to be unselected" do
@@ -248,15 +245,10 @@ describe "Editing a product" do
         product_deliveries = Dom::Admin::ProductDelivery.all
         expect(product_deliveries.count).to eql(4)
         expect(find_field("Make product available on all market delivery dates")).to_not be_checked
-        expect(Dom::Admin::ProductDelivery.find_by_weekday("Mondays")).to be_checked
-        expect(Dom::Admin::ProductDelivery.find_by_weekday("Tuesdays")).to_not be_checked
-        expect(Dom::Admin::ProductDelivery.find_by_weekday("Wednesdays")).to_not be_checked
-        expect(Dom::Admin::ProductDelivery.find_by_weekday("Thursdays")).to be_checked
-
-        expect(page).to have_content("Mondays from 7:00 AM to 11:00 AM direct to customer")
-        expect(page).to have_content("Tuesdays from 10:00 AM to 12:00 PM at 44 E. 8th St Holland, MI 49423")
-        expect(page).to have_content("Wednesdays from 7:00 AM to 11:00 AM direct to customer")
-        expect(page).to have_content("Thursdays from 10:00 AM to 12:00 PM at 44 E. 8th St Holland, MI 49423")
+        see_product_delivery_choices({delivery_schedule: monday_delivery, checked: true},
+                                     {delivery_schedule: tuesday_delivery, checked: false},
+                                     {delivery_schedule: wednesday_delivery, checked: false},
+                                     {delivery_schedule: thursday_delivery, checked: true, required: true})
       end
 
       it "persists changes" do

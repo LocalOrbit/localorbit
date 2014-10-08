@@ -31,28 +31,36 @@ describe DeliveryDecorator do
     end
   end
 
-  describe "#time_range" do
-    let(:delivery_schedule)do
-      create(:delivery_schedule,
-             seller_delivery_start: "4:00 PM",
-             seller_delivery_end: "7:00 PM")
+  describe "#buyer_display_date" do
+    subject { delivery.decorate }
+    let(:delivery) { create(:delivery, 
+                     deliver_on: Time.parse("2014-05-15 06:00:00 EDT"),
+                     buyer_deliver_on: Time.parse("2014-07-21 09:15:00 EDT")) }
+
+    it "displays the date of the upcoming delivery" do
+      expect(subject.buyer_display_date).to eq("Monday July 21, 2014")
     end
 
-    context "schedule is a delivery" do
-      it "returns the seller delivery times" do
-        expect(subject.time_range).to eq("between 4:00PM and 7:00PM")
-      end
+    it "falls back to deliver_on if buyer_deliver_on is null" do
+      delivery.buyer_deliver_on = nil
+      expect(subject.buyer_display_date).to eq("Thursday May 15, 2014")
     end
 
-    context "schedule is a pickup" do
-      let(:delivery_schedule) { create(:delivery_schedule, :buyer_pickup) }
-      it "displays the pickup times" do
-        delivery_schedule.buyer_pickup_start = "7:00 PM"
-        delivery_schedule.buyer_pickup_end = "8:00 PM"
-        delivery_schedule.save!
+    it "falls back to nil if both dates are null" do
+      delivery.deliver_on = nil
+      delivery.buyer_deliver_on = nil
+      expect(subject.buyer_display_date).to be_nil
+    end
+  end
 
-        expect(subject.time_range).to eq("between 7:00PM and 8:00PM")
-      end
+  describe "#seller_time_range and #fulfillment_time_range" do
+    it "formats the seller delivery start/end times in human-readable format" do
+      expect(subject.seller_time_range).to match(/between 7:00AM.+11:00AM/)
+      expect(subject.fulfillment_time_range).to match(/between 7:00AM.+11:00AM/)
+      delivery_schedule.seller_delivery_start = "4:15 PM"
+      delivery_schedule.seller_delivery_end = "10:47 PM"
+      expect(subject.seller_time_range).to match(/between 4:15PM.+10:47PM/)
+      expect(subject.fulfillment_time_range).to match(/between 4:15PM.+10:47PM/)
     end
   end
 

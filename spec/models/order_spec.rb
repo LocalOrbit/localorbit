@@ -542,4 +542,36 @@ describe Order do
     it_behaves_like "a soft deleted model"
   end
 
+  describe ".payable scope" do
+    #              -48 ago                         NOW
+    # ---------------|------------------------------|
+    # o1             |                              
+    # o2.do o2.bdo   |                              
+    #       o3.bdo   |  o3.do             
+    #                |  o4
+    let(:now) { Time.current }
+    let(:forty_nine_hours_ago) { now - 49.hours }
+    let(:forty_seven_hours_ago) { now - 47.hours }
+    let(:three_days_ago) { now - 3.days }
+
+    let!(:order1) { create_order_with_delivery_times(both: forty_nine_hours_ago) }
+    let!(:order2) { create_order_with_delivery_times(deliver_on: three_days_ago, buyer_deliver_on: forty_nine_hours_ago) }
+    let!(:order3) { create_order_with_delivery_times(deliver_on: forty_seven_hours_ago, buyer_deliver_on: forty_nine_hours_ago) }
+    let!(:order4) { create_order_with_delivery_times(deliver_on: forty_seven_hours_ago, buyer_deliver_on: forty_seven_hours_ago) }
+
+    it "includes orders which have been delivered for 48 hours" do
+      expect(Order.payable).to contain_exactly(order1, order2, order3)
+    end
+
+    def create_order_with_delivery_times(both:nil,buyer_deliver_on: nil, deliver_on: nil)
+      if (deliver_on and buyer_deliver_on) or both
+        deliver_on ||= both
+        buyer_deliver_on ||= both
+        delivery = create(:delivery, deliver_on: deliver_on, buyer_deliver_on: buyer_deliver_on)
+        create(:order, delivery: delivery)
+      else
+        raise "Alternatives: provide :both, or both :deliver_on AND :buyer_deliver_on"
+      end
+    end
+  end
 end

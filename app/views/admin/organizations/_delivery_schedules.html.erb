@@ -13,8 +13,7 @@
                           id: "product_schedule_ids_#{schedule.id}", disabled: product.nil? || product.use_all_deliveries?, class: 'optional-delivery' %>
         <% end %>
         <label for="product_schedule_ids_<%= schedule.id %>">
-          <span class="weekday"><%= schedule.weekday.pluralize %></span>
-          <%= schedule.seller_human_description %>
+          <%= schedule.product_schedule_description  %>
           <%= "(required)" if schedule.required?(organization) %>
         </label>
       </li>

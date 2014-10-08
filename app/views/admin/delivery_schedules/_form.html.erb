@@ -7,8 +7,8 @@
     <span>Weekly</span>
   </div
   ><div class="field">
-    <%= f.label :day %><br>
-    <%= f.select :day, weekday_options %>
+    <%= f.label :buyer_day %><br>
+    <%= f.select :buyer_day, weekday_options %>
   </div>
 
   <div class="field">
@@ -56,11 +56,15 @@
   </div>
 
   <div class="row row--field">
-    <div class="field column column--half column--guttered">
+    <div class="field column column--third column--guttered">
+      <%= f.label :day %><br>
+      <%= f.select :day, weekday_options %>
+    </div
+    ><div class="field column column--third column--guttered">
       <%= f.label :seller_delivery_start %><br>
       <%= f.select :seller_delivery_start, quarter_hour_select_options %>
     </div
-    ><div class="field column column--half column--guttered">
+    ><div class="field column column--third column--guttered">
       <%= f.label :seller_delivery_end %><br>
       <%= f.select :seller_delivery_end, quarter_hour_select_options %>
     </div>

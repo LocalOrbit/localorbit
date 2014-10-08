@@ -1,6 +1,6 @@
 # Payable LO fees
 
-orders = Order.payable_lo_fees.where('placed_at > ?', 2.months.ago).preload(:items).joins(:market).except(:order).order("MAX(markets.name)", "orders.order_number"); nil
+orders = Order.payable_lo_fees.clean_payment_records.preload(:items, :market).joins(:market).order("MAX(markets.name)", "orders.order_number")
 grouped = orders.group_by {|o| o.market_id }; grouped.size
 lo_fees = Market.where(id: grouped.keys).inject({}) {|h,m| h[m.id] = m.local_orbit_seller_fee > m.local_orbit_market_fee ? m.local_orbit_seller_fee : m.local_orbit_market_fee; h }
 
