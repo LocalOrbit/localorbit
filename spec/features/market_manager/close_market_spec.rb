@@ -26,6 +26,9 @@ feature "Opening and closing a market:" do
 
       click_link "Shop", match: :first
       expect(page).to have_content("The Market Is Currently Closed")
+
+      expect(page).not_to have_content("Select an Organization")
+    
     end
   end
 
@@ -44,7 +47,37 @@ feature "Opening and closing a market:" do
 
       click_link "Shop", match: :first
       expect(page).not_to have_content("The Market Is Currently Closed")
+      expect(page).to have_content("Select an Organization")
     end
   end
 
+  context "a market manager customizing a market closed message" do
+    let!(:market) { create(:market, :with_addresses, :with_delivery_schedule) }
+
+    scenario "a market manager can close a market and provide custom message" do
+      switch_to_subdomain market.subdomain
+      sign_in_as(market_manager)
+
+      click_link "Market Admin"
+      click_link "Markets"
+      click_link market.name
+
+      expect(find_field("This market is open")).to be_checked
+
+      uncheck "This market is open"
+      fill_in "Store Closed Note", with: "We're closed go away." 
+      
+      click_button "Update Market"
+
+      expect(find_field("This market is open")).not_to be_checked
+
+      click_link "Shop", match: :first
+      expect(page).to have_content("The Market Is Currently Closed")
+      expect(page).to have_content("We're closed go away.")
+      expect(page).not_to have_content("Thanks for stopping by.")
+
+      expect(page).not_to have_content("Select an Organization")
+    
+    end
+  end
 end

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140930213427) do
+ActiveRecord::Schema.define(version: 20141009171523) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -355,6 +355,7 @@ ActiveRecord::Schema.define(version: 20140930213427) do
     t.integer  "plan_interval",                                         default: 1,     null: false
     t.decimal  "plan_fee",                      precision: 7, scale: 2, default: 0.0,   null: false
     t.integer  "plan_bank_account_id"
+    t.text     "store_closed_note"
   end
 
   add_index "markets", ["name"], name: "index_markets_on_name", using: :btree

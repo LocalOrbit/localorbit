@@ -69,7 +69,8 @@ class Admin::MarketsController < AdminController
       :photo,
       :allow_cross_sell,
       :auto_activate_organizations,
-      :closed
+      :closed,
+      :store_closed_note
     ]
     if current_user.admin?
       columns.concat([
