@@ -6,7 +6,11 @@
 
 <div class="sub-header-whitespace"></div>
 
-<p><%= current_market.name %> is temporarily closed. </p>
-<p> Thanks for stopping by. Our market is temporarily closed while we make a few updates.
+<% if current_market.store_closed_note.present? %>
+  <p><%=current_market.store_closed_note %></p>
+<% else %>
+  <p><%= current_market.name %> is temporarily closed. </p>
+  <p> Thanks for stopping by. Our market is temporarily closed while we make a few updates.
   We'll reopen again soon, we promise.</p>
+<% end %>
 
