@@ -1,6 +1,8 @@
 require "spec_helper"
 
 describe Market do
+
+  subject{create(:market)}
   describe "validates" do
     let(:original_market) { create(:market) }
 
@@ -300,6 +302,17 @@ describe Market do
       end
     end
   end
+
+  describe "#store_closed_note" do
+    it "stores text" do
+
+      subject.store_closed_note = "We have closed this store."
+      subject.save!
+      subject.reload
+      expect(subject.store_closed_note).to eq("We have closed this store.")
+    end
+  end
+
 
   describe "#fulfillment_locations" do
     let!(:market) { create(:market) }

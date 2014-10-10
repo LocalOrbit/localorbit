@@ -100,6 +100,13 @@
     </div>
   </div>
 
+  <div class="field">
+    <%= f.label :store_closed_note %>
+    <span class="tooltip pull-right" data-tooltip="This information will appear on the Market Closed page"></span>
+    <br>
+    <%= f.text_area :store_closed_note, rows: 2, class: "column--full"  %>
+  </div>
+
   <% if @market.new_record? || @market.plan.try(:cross_selling?) %>
     <div class="row row--field">
       <div class="field column column--half column--guttered">
