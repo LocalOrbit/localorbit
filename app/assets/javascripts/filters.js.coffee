@@ -46,6 +46,8 @@ $ ->
     submitInvoiceList "send-selected-invoices"
 
   $('#submit_preview_selected').click ->
+    numSelected = $('.invoice-row input:checked').length
+    Intercom('trackEvent', 'batch-generated-invoice-pdfs', {num_invoices: numSelected})
     submitInvoiceList "preview-selected-invoices", newTab: true
 
 

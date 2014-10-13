@@ -1,4 +1,6 @@
 class ApplicationController < ActionController::Base
+  include EventTracker
+
   before_action :configure_permitted_parameters, if: :devise_controller?
   before_action :masquerade_user!
   before_action :authenticate_user!
@@ -7,6 +9,7 @@ class ApplicationController < ActionController::Base
   before_action :ensure_active_organization
 
   before_action :set_timezone
+  before_action :set_intercom_attributes
 
   helper_method :current_market
   helper_method :current_organization
@@ -20,6 +23,10 @@ class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
 
   rescue_from ActiveRecord::RecordNotFound, with: :render_404
+
+  def track_event(event, metadata={})
+    track_event_for_user current_user, event, metadata if current_user
+  end
 
   private
 
@@ -175,7 +182,7 @@ class ApplicationController < ActionController::Base
 
   def require_current_organization
     return unless current_organization.nil?
-    redirect_to new_sessions_organization_path(redirect_back_to: request.fullpath)
+    redirect_to new_sessions_organization_path(redirect_back_to: request.original_url)
   end
 
   def require_current_delivery
@@ -202,6 +209,11 @@ class ApplicationController < ActionController::Base
 
   def redirect_to_url
     params[:redirect_back_to] || [:products]
+  end
+
+  def set_intercom_attributes
+    intercom_custom_data.user[:market] = current_market.name if current_market
+    intercom_custom_data.user[:org] = current_organization.name if current_organization
   end
 end
 

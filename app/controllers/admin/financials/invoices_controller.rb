@@ -12,6 +12,7 @@ module Admin::Financials
       @q = filter_and_search_orders(base_scope, @query_params, @search_presenter)
 
       @orders = @q.result.page(params[:page]).per(@query_params[:per_page])
+      track_event 'viewed-invoices'
     end
 
     def show
