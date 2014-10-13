@@ -117,6 +117,13 @@ describe "Admin Managing Markets" do
 
       expect(page).to have_text("Name can't be blank")
     end
+
+    it "provides some Canadian province choices" do
+      click_link "Add Address"
+      select "Quebec", from: "State"
+      select "British Columbia", from: "State"
+      select "Ontario", from: "State"
+    end
   end
 
   describe "as an admin" do
