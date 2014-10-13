@@ -108,6 +108,23 @@ describe "Register" do
         # end
       end
 
+      context "a Canadian" do
+        let!(:user) { create(:user) }
+
+        it "provides a handful of Canadian province choices in the State pulldown" do
+          switch_to_subdomain market.subdomain
+          visit root_path
+
+          click_link "Request an Account"
+
+          expect(page).to have_content("Registration: Step One")
+
+          select "British Columbia", from: "State" 
+          select "Quebec", from: "State" 
+          select "Ontario", from: "State"
+        end
+      end
+
       context "sad path" do
         it "is shows error messages" do
           switch_to_subdomain market.subdomain

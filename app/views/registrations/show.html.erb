@@ -67,7 +67,7 @@
       </div
       ><div class="field column column--fourth column--guttered">
         <%= f.label :state %><br>
-        <%= f.select :state, us_states, {include_blank: true}, class: "column--full" %>
+        <%= f.select :state, options_for_state_select, {include_blank: true}, class: "column--full" %>
       </div
       ><div class="field column column--fourth column--guttered">
         <%= f.label :zip, "Postal Code" %><br>
