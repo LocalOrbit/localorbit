@@ -192,6 +192,38 @@ describe "admin manange organization", :vcr do
           expect(page).to have_content("Postal code can't be blank")
         end
       end
+
+      context "when in Canada" do
+        it "allows you to select from a few Canadian provinces" do
+          visit "/admin/organizations"
+          click_link "University of Michigan Farmers"
+
+          click_link "Addresses"
+          click_link "Add New Address"
+
+          fill_in "Address Label", with: "Surprisingly Remote Location"
+          fill_in "Address",       with: "68 Dennis St."
+          fill_in "City",          with: "Sault Ste. Marie"
+          select  "British Columbia", from: "State" # just checking
+          select  "Quebec",       from: "State" # just checking
+          select  "Ontario",       from: "State" # aha!
+          fill_in "Postal Code",   with: "P6A 1Y6"
+          fill_in "Phone", with: "616-555-1234"
+          fill_in "Fax", with: "616-555-4321"
+
+          click_button "Add Address"
+
+          locations = Dom::Admin::OrganizationLocation.all
+
+          expect(locations.size).to eq(1)
+          expect(locations.first.name_and_address).to include("Surprisingly Remote Location")
+          expect(locations.first.name_and_address).to include("68 Dennis St., Sault Ste. Marie, ON P6A 1Y6")
+          expect(locations.first.default_billing).to be_checked
+          expect(locations.first.default_shipping).to be_checked
+
+          expect(page).to have_content("Successfully added address Surprisingly Remote Location")
+        end
+      end
     end
 
     it "removes a location" do
