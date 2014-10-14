@@ -124,4 +124,13 @@ module ApplicationHelper
 
     svg
   end
+
+  def ensure_full_url(path)
+    if path =~ /^http/
+      path
+    else
+      request or raise("ensure_full_url requires url_info or request to be set")
+      "#{request.base_url}#{path}"
+    end
+  end
 end

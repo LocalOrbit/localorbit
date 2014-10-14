@@ -13,6 +13,7 @@ Controller =
         Debug.log "Handling 'failed' status:", status
         Poller.stop()
         View.showFailed()
+        View.showSupportNotice()
         View.setErrors status.errors
         View.showCloseLink()
 
@@ -24,6 +25,7 @@ Controller =
         Debug.log "Handling 'completeWithErrors' status:", status
         View.hideProgress()
         View.showPartialFail()
+        View.showSupportNotice()
         View.setErrors status.errors
         View.setDownloadLink status.pdf_uri
         View.showDownloadLink()
@@ -39,6 +41,7 @@ Controller =
         View.showDownloadLink()
         View.hideFailed()
         View.hidePartialFail()
+        View.hideSupportNotice()
         View.hideErrors()
 
       when State.inProgress(status)
@@ -47,6 +50,7 @@ Controller =
         View.showProgress()
         View.hideFailed()
         View.hidePartialFail()
+        View.hideSupportNotice()
         View.hideDownloadLink()
         View.hideErrors()
 
@@ -57,6 +61,7 @@ Controller =
         View.hideFailed()
         View.hidePartialFail()
         View.hideDownloadLink()
+        View.hideSupportNotice()
         View.hideErrors()
 
 State =
@@ -89,6 +94,7 @@ View =
   batchInvoiceClose:    -> $(".batch-invoice-close")
   batchInvoiceFailed:    -> $(".batch-invoice-failed")
   batchInvoicePartialFail:    -> $(".batch-invoice-partial-fail")
+  batchInvoiceSupportNotice: -> $(".batch-invoice-support-notice")
 
   init: ->
     View.batchInvoiceClose().find("a.close-tab").click ->
@@ -115,6 +121,9 @@ View =
 
   showPartialFail: -> View.batchInvoicePartialFail().show()
   hidePartialFail: -> View.batchInvoicePartialFail().hide()
+
+  showSupportNotice: -> View.batchInvoiceSupportNotice().show()
+  hideSupportNotice: -> View.batchInvoiceSupportNotice().hide()
 
   setErrors: (errors) ->
     div = View.batchInvoiceErrors()

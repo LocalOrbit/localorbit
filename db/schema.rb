@@ -65,8 +65,8 @@ ActiveRecord::Schema.define(version: 20141011155616) do
   create_table "batch_invoice_errors", force: true do |t|
     t.integer  "batch_invoice_id"
     t.string   "task"
-    t.string   "message"
-    t.string   "exception"
+    t.text     "message"
+    t.text     "exception"
     t.text     "backtrace"
     t.integer  "order_id"
     t.datetime "created_at"

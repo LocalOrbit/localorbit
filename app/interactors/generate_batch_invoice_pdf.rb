@@ -8,7 +8,7 @@ class GenerateBatchInvoicePdf
     invoice_tempfiles = []
     batch_invoice.orders.each do |order|
       begin
-        made = MakeInvoicePdfTempFile.perform(order: order)
+        made = MakeInvoicePdfTempFile.perform(request: request, order: order)
         if made.success?
           invoice_tempfiles << made.file
         else

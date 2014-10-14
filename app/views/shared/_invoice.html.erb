@@ -33,11 +33,11 @@
 
   <%=
   if market.logo_stored?
-    image_tag(market.logo.thumb('200x150>').url, alt: "#{market.name} logo", class: "logo")
+    image_tag(ensure_full_url(market.logo.thumb('200x150>').url), alt: "#{market.name} logo", class: "logo")
   elsif @logo_path
-    image_tag(@logo_path, alt: "Local Orbit logo", class: "logo")
+    image_tag(ensure_full_url(@logo_path), alt: "Local Orbit logo", class: "logo")
   else
-    image_tag(asset_url("logo.png"), alt: "Local Orbit logo", class: "logo")
+    image_tag(ensure_full_url(asset_url("logo.png")), alt: "Local Orbit logo", class: "logo")
   end
   %>
   <div class="row invoice-parties">

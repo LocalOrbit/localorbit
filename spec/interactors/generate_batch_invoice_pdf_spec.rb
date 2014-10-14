@@ -5,6 +5,8 @@ describe GenerateBatchInvoicePdf do
 
   let!(:orders) { [ create(:order), create(:order) ] }
   let!(:batch_invoice) { create(:batch_invoice, orders: orders) } 
+  let(:request) { double("Request") }
+
 
   let(:temp_file_contexts) {
     [ double("temp-file-result-0", file: "file-0", pdf: "pdf-0", success?:true),
@@ -23,7 +25,7 @@ describe GenerateBatchInvoicePdf do
     batch_invoice.orders.zip(temp_file_contexts).each.with_index do |(order,ctx),i|
       expect(MakeInvoicePdfTempFile).
         to receive(:perform).
-        with(order: order).
+        with(request: request, order: order).
         and_return(ctx)
       expect(GenerateBatchInvoicePdf::BatchInvoiceUpdater).
         to receive(:update_generation_progress!).
@@ -39,7 +41,7 @@ describe GenerateBatchInvoicePdf do
       to receive(:complete_generation!).
       with(batch_invoice, pdf: "the uber PDF", pdf_name: "invoices.pdf")
 
-   subject.perform(batch_invoice: batch_invoice)
+   subject.perform(request: request, batch_invoice: batch_invoice)
   end
 
 
@@ -62,7 +64,7 @@ describe GenerateBatchInvoicePdf do
     batch_invoice.orders.zip(temp_file_contexts).each.with_index do |(order,ctx),i|
       expect(MakeInvoicePdfTempFile).
         to receive(:perform).
-        with(order: order).
+        with(request: request, order: order).
         and_return(ctx)
 
       expect(GenerateBatchInvoicePdf::BatchInvoiceUpdater).
@@ -80,7 +82,7 @@ describe GenerateBatchInvoicePdf do
       with(batch_invoice, pdf: "the uber PDF", pdf_name: "invoices.pdf")
 
     # Go!
-     subject.perform(batch_invoice: batch_invoice)
+     subject.perform(request: request, batch_invoice: batch_invoice)
   end
 
   it "records individual PDF generation Exceptions" do
@@ -103,7 +105,7 @@ describe GenerateBatchInvoicePdf do
     batch_invoice.orders.zip(temp_file_contexts).each.with_index do |(order,ctx),i|
       exp = expect(MakeInvoicePdfTempFile).
               to receive(:perform).
-              with(order: order)
+              with(request: request, order: order)
       if i == 0
         # First order should blow up:
         exp.and_raise(exception)
@@ -127,7 +129,7 @@ describe GenerateBatchInvoicePdf do
       with(batch_invoice, pdf: "the uber PDF", pdf_name: "invoices.pdf")
 
     # Go!
-     subject.perform(batch_invoice: batch_invoice)
+     subject.perform(request: request, batch_invoice: batch_invoice)
   end
 
   it "captures overarching exceptions and records them as errors" do
@@ -139,7 +141,7 @@ describe GenerateBatchInvoicePdf do
     batch_invoice.orders.zip(temp_file_contexts).each.with_index do |(order,ctx),i|
       expect(MakeInvoicePdfTempFile).
         to receive(:perform).
-        with(order: order).
+        with(request: request, order: order).
         and_return(ctx)
       expect(GenerateBatchInvoicePdf::BatchInvoiceUpdater).
         to receive(:update_generation_progress!).
@@ -168,7 +170,7 @@ describe GenerateBatchInvoicePdf do
       with(batch_invoice)
 
     # Go!
-    subject.perform(batch_invoice: batch_invoice)
+    subject.perform(request: request, batch_invoice: batch_invoice)
   end
 
 

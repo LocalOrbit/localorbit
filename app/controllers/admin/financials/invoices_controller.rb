@@ -21,7 +21,10 @@ module Admin::Financials
     def create
       case params[:invoice_list_batch_action]
       when "send-selected-invoices"
-        @orders.uninvoiced.each {|order| CreateInvoice.perform(order: order) }
+        @orders.uninvoiced.each do |order| 
+          CreateInvoice.perform(order: order,
+                                request: RequestUrlPresenter.new(request))
+        end
         message = "Invoice sent for order #{"number".pluralize(@orders.size)} #{@orders.map(&:order_number).sort.join(", ")}. Invoices can be downloaded on the Enter Receipts page"
         redirect_to admin_financials_invoices_path, notice: message
 
@@ -29,7 +32,8 @@ module Admin::Financials
         context = InitializeBatchInvoice.perform(user: current_user, orders: @orders)
         if context.success?
           batch_invoice = context.batch_invoice
-          GenerateBatchInvoicePdf.delay.perform(batch_invoice: batch_invoice)
+          GenerateBatchInvoicePdf.delay.perform(batch_invoice: batch_invoice,
+                                                request: RequestUrlPresenter.new(request))
           redirect_to admin_financials_batch_invoice_path(batch_invoice)
         else
           redirect_to admin_financials_invoices_path, alert: context.message
