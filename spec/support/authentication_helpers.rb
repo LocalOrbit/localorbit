@@ -37,6 +37,16 @@ module AuthenticationHelpers
 
     visit previous_url
   end
+
+  # Hack to remove a cookie from the cookie jar.
+  # Only works on Rack-driven tests.
+  def delete_cookie(cookie_name)
+    jar = Capybara.current_session.driver.browser.current_session.instance_variable_get(:@rack_mock_session).cookie_jar
+    expect(jar[cookie_name]).to be, "Expected cookie jar to contain a cookie named '#{cookie_name}', instead there were: #{jar.to_hash.inspect}\n.Cookie jar looks like: #{jar.inspect}"
+    jar.delete(cookie_name)
+  end
+
+  
 end
 
 RSpec.configure do |config|

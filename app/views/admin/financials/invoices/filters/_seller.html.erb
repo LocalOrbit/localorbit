@@ -23,18 +23,23 @@
   </div>
 
   <div class="manager-filters pull-left">
-    <% if current_user.multi_market_membership? %>
-    <span class="preserve-alignment">
-      <%= f.label :market_id_eq, "Market" %><br>
-      <%= f.collection_select :market_id_eq, @search_presenter.selling_markets, :id, :name, {include_blank: "All"}, {class: "filter-input"} %>
-    </span>
-    <% end %>
+    <div class="pull-left">
+      <% if current_user.multi_market_membership? %>
+      <span class="preserve-alignment">
+        <%= f.label :market_id_eq, "Market" %><br>
+        <%= f.collection_select :market_id_eq, @search_presenter.selling_markets, :id, :name, {include_blank: "All"}, {class: "filter-input"} %>
+      </span>
+      <% end %>
 
-    <span class="preserve-alignment">
-      <%= f.label :organization_id_eq, "Buyer" %><br>
-      <%= f.collection_select :organization_id_eq, @search_presenter.buyer_organizations, :id, :name, {include_blank: "All"}, {class: "filter-input"} %>
-    </span>
-    <input type="button" value="Send Selected Invoices" id="submit_send_selected" class="btn btn--small btn--save mobile-block">
+      <span class="preserve-alignment">
+        <%= f.label :organization_id_eq, "Buyer" %><br>
+        <%= f.collection_select :organization_id_eq, @search_presenter.buyer_organizations, :id, :name, {include_blank: "All"}, {class: "filter-input"} %>
+      </span>
+    </div>
+    <div class="pull-right">
+      <input type="button" value="Send Selected Invoices" id="submit_send_selected" class="btn btn--small btn--save mobile-block">
+      <input type="button" value="Preview Selected Invoices" id="submit_preview_selected" class="btn btn--small btn--save mobile-block">
+    </div>
   </div>
   
 <% end %>

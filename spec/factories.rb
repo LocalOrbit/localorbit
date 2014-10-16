@@ -458,4 +458,12 @@ FactoryGirl.define do
       keyword SubscriptionType::Keywords::Newsletter
     end
   end
+
+  factory :batch_invoice do
+    user
+  end
+
+  factory :batch_invoice_error do
+
+  end
 end

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141009171523) do
+ActiveRecord::Schema.define(version: 20141011155616) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -61,6 +61,40 @@ ActiveRecord::Schema.define(version: 20141009171523) do
   end
 
   add_index "bank_accounts", ["bankable_type", "bankable_id"], name: "index_bank_accounts_on_bankable_type_and_bankable_id", using: :btree
+
+  create_table "batch_invoice_errors", force: true do |t|
+    t.integer  "batch_invoice_id"
+    t.string   "task"
+    t.text     "message"
+    t.text     "exception"
+    t.text     "backtrace"
+    t.integer  "order_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "batch_invoices", force: true do |t|
+    t.integer  "user_id"
+    t.string   "pdf_uid"
+    t.string   "pdf_name"
+    t.string   "generation_status",                           default: "not_started", null: false
+    t.decimal  "generation_progress", precision: 5, scale: 2, default: 0.0,           null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "batch_invoices", ["user_id"], name: "index_batch_invoices_on_user_id", using: :btree
+
+  create_table "batch_invoices_orders", force: true do |t|
+    t.integer  "batch_invoice_id"
+    t.integer  "order_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "batch_invoices_orders", ["batch_invoice_id"], name: "index_batch_invoices_orders_on_batch_invoice_id", using: :btree
+  add_index "batch_invoices_orders", ["order_id", "batch_invoice_id"], name: "index_batch_invoices_orders_on_order_id_and_batch_invoice_id", using: :btree
+  add_index "batch_invoices_orders", ["order_id"], name: "index_batch_invoices_orders_on_order_id", using: :btree
 
   create_table "cart_items", force: true do |t|
     t.integer  "cart_id"

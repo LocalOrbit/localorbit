@@ -3,6 +3,6 @@ class CreateInvoice
 
   def perform
     result = MarkOrderInvoiced.perform(order: order)
-    result.success? ? GenerateInvoicePdfAndSend.delay.perform(order: order) : fail!
+    result.success? ? GenerateInvoicePdfAndSend.delay.perform(request: request, order: order) : fail!
   end
 end
