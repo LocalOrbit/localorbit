@@ -57,6 +57,7 @@ RSpec.configure do |config|
   config.include EmailSpec::Helpers
   config.include EmailSpec::Matchers
   config.include ChosenJs::Helpers, chosen_js: true
+  config.include FirePoll
 
   config.before(:suite) do
     DatabaseCleaner.clean_with(:truncation)

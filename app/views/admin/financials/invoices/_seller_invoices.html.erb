@@ -7,6 +7,7 @@
 </div>
 
 <%= form_tag admin_financials_invoices_path, method: :post, id: 'invoice-list' do %>
+  <input type="hidden" name="invoice_list_batch_action" id="invoice_list_batch_action">
   <div class="clearfix sub-header-whitespace"></div>
   <div class="table-wrapper">
     <table class="sortable">
@@ -31,7 +32,7 @@
           <td class="delivery-status"><%= order.delivery_status_for_user(current_user).titleize %></td>
           <td class="amount"><%= number_to_currency(order.total_cost) %></td>
           <td class="action">
-            <%= link_to 'Send Invoice', admin_financials_invoices_path(order_id: order.id), method: :post, class: 'action-link font-icon icon-mail-send' %>
+            <%= link_to 'Send Invoice', admin_financials_invoices_path(order_id: order.id, invoice_list_batch_action: "send-selected-invoices"), method: :post, class: 'action-link font-icon icon-mail-send' %>
             <% if current_user.admin? || current_user.market_manager? %>
               <%= link_to 'Preview', admin_invoice_path(order.id), class: 'action-link font-icon icon-preview' %>
             <% end %>

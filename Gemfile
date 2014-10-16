@@ -95,6 +95,7 @@ group :test do
   gem "timecop"
   gem "vcr"
   gem "webmock"
+  gem 'fire_poll', '1.2.0'
 end
 
 group :production, :staging do

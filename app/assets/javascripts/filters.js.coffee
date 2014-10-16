@@ -26,8 +26,28 @@ $ ->
     if (e.which && e.which == 13) || (e.keyCode && e.keyCode == 13)
       $("#search-btn").click()
 
+  #
+  # Invoice batch operations:
+  #
+  invoiceList = -> $('#invoice-list')
+  invoiceListBatchAction = -> $('#invoice_list_batch_action')
+
+  submitInvoiceList = (batchAction, opts={}) ->
+    invoiceListBatchAction().val(batchAction)
+    # Note: automated system tests need to suppress the target="_blank" function due
+    # to a shortcoming in Poltergeist:
+    if opts.newTab and !(invoiceList().prop("data-suppress-target") == "1")
+      invoiceList().prop("target", "_blank")
+    else
+      invoiceList().removeAttr("target")
+    invoiceList().trigger('submit')
+
   $('#submit_send_selected').click ->
-    $('#invoice-list').trigger('submit')
+    submitInvoiceList "send-selected-invoices"
+
+  $('#submit_preview_selected').click ->
+    submitInvoiceList "preview-selected-invoices", newTab: true
+
 
   parseSearchString = () ->
     list = window.location.search.substr(1).split("&")

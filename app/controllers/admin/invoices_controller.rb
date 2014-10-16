@@ -14,7 +14,8 @@ module Admin
       if @order.invoice_pdf.present?
         redirect_to @order.invoice_pdf.remote_url
       else
-        GenerateInvoicePdf.delay.perform(order: @order)
+        GenerateInvoicePdf.delay.perform(order: @order,
+                                         request: RequestUrlPresenter.new(request))
         render "generating"
       end
     end
