@@ -53,6 +53,11 @@ Rails.application.routes.draw do
           post :resend_overdue
         end
       end
+      resources :batch_invoices, only: [:show] do
+        member do
+          get :progress
+        end
+      end
       resources :receipts, only: [:index, :edit, :update]
       resources :vendor_payments
 
