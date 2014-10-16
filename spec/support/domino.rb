@@ -984,9 +984,14 @@ module Dom
       attribute :total
       attribute :payment_status
       attribute :delivery_status
+      
 
       def quantity_delivered_field
         node.first(".quantity-delivered")
+      end
+
+      def quantity_delivered
+        quantity_delivered_field.value
       end
 
       def set_quantity_delivered(qty)

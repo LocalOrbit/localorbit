@@ -133,4 +133,8 @@ module ApplicationHelper
       "#{request.base_url}#{path}"
     end
   end
+
+  def format_quantity(quantity)
+    number_with_delimiter(number_with_precision(quantity, strip_insignificant_zeros:true))
+  end
 end

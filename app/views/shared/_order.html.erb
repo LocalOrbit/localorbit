@@ -116,7 +116,7 @@
             <% end %> <%= item.object.unit %> (Ordered)<br />
 
             <% if current_user.admin? || current_user.market_manager? %>
-              <%= item.text_field :quantity_delivered, class: 'quantity-delivered' %>
+              <%= item.text_field :quantity_delivered, value: format_quantity(item.object.quantity_delivered), class: 'quantity-delivered' %>
             <% else %>
               <span><%= item.object.quantity_delivered %></span>
             <% end %> <%= item.object.unit %> (Delivered)
