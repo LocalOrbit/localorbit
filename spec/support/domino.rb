@@ -984,7 +984,6 @@ module Dom
       attribute :total
       attribute :payment_status
       attribute :delivery_status
-      
 
       def quantity_delivered_field
         node.first(".quantity-delivered")
@@ -992,6 +991,14 @@ module Dom
 
       def quantity_delivered
         quantity_delivered_field.value
+      end
+
+      def quantity_ordered_readonly
+        node.first(".quantity-ordered-ro").text
+      end
+
+      def quantity_delivered_readonly
+        node.first(".quantity-delivered-ro").text
       end
 
       def set_quantity_delivered(qty)
@@ -1005,6 +1012,7 @@ module Dom
       def click_delete
         node.first(".action-link > a").trigger("click")
       end
+
     end
   end
 

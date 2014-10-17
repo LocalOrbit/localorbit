@@ -93,14 +93,51 @@ describe "Checking Out", :js, :vcr do
       expect(page).to have_content("If you have any questions, please let us know")
     end
 
-    it "links to the order to review" do
-      checkout
+    context "reviewing the order after checkout" do
+      it "links to the order to review" do
+        checkout
 
-      click_link "Review Order"
-      expect(page).to have_content("Order info")
-      expect(page).to have_content("Bananas")
-      expect(page).to have_content("Potatoes")
-      expect(page).to have_content("Kale")
+        click_link "Review Order"
+
+        expect(page).to have_content("Order info")
+        expect(page).to have_content("Bananas")
+        expect(page).to have_content("Potatoes")
+        expect(page).to have_content("Kale")
+      end
+
+      context "after delivery" do
+        it "shows quantity delivered along side quantity ordered" do
+          checkout
+
+          # Find the current order:
+          order = if page.find("a.review-order")["href"] =~ /\/orders\/(\d+)/
+                    order_id = $1 
+                    order = Order.find(order_id)
+                  else
+                    raise "Couldn't extract order id from 'Review Order' button"
+                  end
+
+          # Updated delivered quantities:
+          order.items.find_by(name: "Kale").update(quantity_delivered: "18.3".to_d)
+          order.items.find_by(name: "Potatoes").update(quantity_delivered: "5".to_d)
+          order.items.find_by(name: "Bananas").update(quantity_delivered: "12.25".to_d)
+          order.save! # force an update
+
+          # Review the order:
+          click_link "Review Order"
+          expect(page).to have_content("Order info")
+
+          # See all the quantities are proper:
+          verify_each(Dom::Order::ItemRow, [
+            { name: "Kale from Fulton St. Farms",    quantity_ordered_readonly: "20", quantity_delivered_readonly:  "18.3", total: "$18.30" },
+            { name: "Potatoes from Ada Farms",       quantity_ordered_readonly:  "5", quantity_delivered_readonly:     "5", total: "$15.00" },
+            { name: "Bananas from Fulton St. Farms", quantity_ordered_readonly: "10", quantity_delivered_readonly: "12.25", total: "$6.13"  },
+          ], find_by: :name)
+
+          expect(page).to have_content("Delivery Fees: $9.86")
+          expect(page).to have_content("Grand Total: $49.28")
+        end
+      end
     end
 
     it "sends the buyer an email about the order" do
