@@ -14,7 +14,7 @@ context "Viewing sold items" do
   let!(:order_items) do
     [
       create(:order_item, product: product1, seller_name: seller.name, name: product1.name, unit_price: 6.50, quantity: 5, quantity_delivered: 0, unit: "Bushels", market_seller_fee: 0.75, delivery_status: "canceled", payment_status: "refunded"),
-      create(:order_item, product: product2, seller_name: seller.name, name: product2.name, unit_price: 5.00, quantity: 10, unit: "Lots", payment_seller_fee: 1.20),
+      create(:order_item, product: product2, seller_name: seller.name, name: product2.name, unit_price: 5.00, quantity: 10, quantity_delivered: 10, unit: "Lots", payment_seller_fee: 1.20),
       create(:order_item, product: product3, seller_name: seller2.name, name: product3.name, unit_price: 2.00, quantity: 12, unit: "Heads", local_orbit_seller_fee: 4)
     ]
   end
@@ -279,8 +279,8 @@ context "Viewing sold items" do
 
       expect(sold_items.count).to eq(2)
 
-      sold_item = Dom::Admin::SoldItemRow.first
-
+      items = Dom::Admin::SoldItemRow.all.to_a
+      sold_item = items[0]
       expect(sold_item.order_number).to have_content("LO-ADA-0000001")
       expect(sold_item.order_date).to eq(order.placed_at.strftime("%m/%d/%Y"))
       expect(sold_item.buyer).to eq("Big Money")
@@ -291,6 +291,62 @@ context "Viewing sold items" do
       expect(sold_item.unit_price).to eq("$6.50/Bushels")
       expect(sold_item.delivery_status).to eq("Canceled")
       expect(sold_item.buyer_payment_status).to eq("Refunded")
+      expect(sold_item.seller_payment_status).to eq("Unpaid")
+
+      # sold_item = items[1]
+      # expect(sold_item.order_number).to have_content("LO-ADA-0000001")
+      # expect(sold_item.order_date).to eq(order.placed_at.strftime("%m/%d/%Y"))
+      # expect(sold_item.buyer).to eq("Big Money")
+      # expect(sold_item.seller).to eq("Good foodz")
+      # expect(sold_item.product).to eq("Purple cucumbers")
+      # expect(sold_item.quantity).to eq("10")
+      # expect(sold_item.total_price).to eq("$50.00")
+      # expect(sold_item.unit_price).to eq("$5.00/Lots")
+      # expect(sold_item.delivery_status).to eq("Pending")
+      # expect(sold_item.buyer_payment_status).to eq("Unpaid")
+      # expect(sold_item.seller_payment_status).to eq("Unpaid")
+    end
+  end
+
+  context "as a seller viewing delivered items" do
+    let(:user) { create(:user, organizations: [seller]) }
+
+    before do
+      order.items.each do |oi| oi.update(delivery_status: "delivered") end
+      sign_in_as user
+      visit admin_order_items_path
+    end
+
+    it "lists delivered items and their quantities correctly" do
+      sold_items = Dom::Admin::SoldItemRow.all
+
+      expect(sold_items.count).to eq(2)
+
+      items = Dom::Admin::SoldItemRow.all.to_a
+      sold_item = items[0]
+      expect(sold_item.order_number).to have_content("LO-ADA-0000001")
+      expect(sold_item.order_date).to eq(order.placed_at.strftime("%m/%d/%Y"))
+      expect(sold_item.buyer).to eq("Big Money")
+      expect(sold_item.seller).to eq("Good foodz")
+      expect(sold_item.product).to eq("Green things")
+      expect(sold_item.quantity).to eq("0")
+      expect(sold_item.total_price).to eq("$0.00")
+      expect(sold_item.unit_price).to eq("$6.50/Bushels")
+      expect(sold_item.delivery_status).to eq("Delivered")
+      expect(sold_item.buyer_payment_status).to eq("Refunded")
+      expect(sold_item.seller_payment_status).to eq("Unpaid")
+
+      sold_item = items[1]
+      expect(sold_item.order_number).to have_content("LO-ADA-0000001")
+      expect(sold_item.order_date).to eq(order.placed_at.strftime("%m/%d/%Y"))
+      expect(sold_item.buyer).to eq("Big Money")
+      expect(sold_item.seller).to eq("Good foodz")
+      expect(sold_item.product).to eq("Purple cucumbers")
+      expect(sold_item.quantity).to eq("10")
+      expect(sold_item.total_price).to eq("$50.00")
+      expect(sold_item.unit_price).to eq("$5.00/Lots")
+      expect(sold_item.delivery_status).to eq("Delivered")
+      expect(sold_item.buyer_payment_status).to eq("Unpaid")
       expect(sold_item.seller_payment_status).to eq("Unpaid")
     end
   end

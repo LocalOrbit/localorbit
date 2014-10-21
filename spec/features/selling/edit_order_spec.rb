@@ -406,21 +406,16 @@ describe "Editing an order" do
           click_button "Update quantities"
         end
 
-        it "updates the item total" do
+        it "updates the item total, grand totals and fees" do
           subject
 
           item = Dom::Order::ItemRow.first
-          expect(item.total).to have_content("$6.00")
-        end
 
-        it "updates the grand total for the order" do
-          subject
+          expect(item.quantity_delivered).to eq("2")
+
+          expect(item.total).to have_content("$6.00")
 
           expect(page).to have_content("Grand Total: $6.00")
-        end
-
-        it "updates the fees for the order" do
-          subject
 
           expect(Dom::Admin::OrderSummaryRow.first.gross_total).to eql("$6.00")
           expect(Dom::Admin::OrderSummaryRow.first.market_fees).to eql("$0.30")
@@ -445,6 +440,40 @@ describe "Editing an order" do
           expect(ClearInvoicePdf).to receive(:perform)
 
           subject
+        end
+      end
+
+      context "fractional quantity, less than ordered" do
+
+        before do
+          expect(UpdateBalancedPurchase).to receive(:perform).and_return(double("interactor", "success?" => true))
+        end
+
+        subject do
+          visit admin_order_path(order)
+
+          item = Dom::Order::ItemRow.first
+          expect(item.total).to have_content("$15.00")
+          expect(Dom::Admin::OrderSummaryRow.first.gross_total).to eql("$15.00")
+
+          item.set_quantity_delivered(2.3)
+          click_button "Update quantities"
+        end
+
+        it "updates the item total, grand totals and fees" do
+          subject
+
+          item = Dom::Order::ItemRow.first
+
+          expect(item.quantity_delivered).to eq("2.3")
+
+          expect(item.total).to have_content("$6.90")
+
+          expect(page).to have_content("Grand Total: $6.90")
+
+          expect(Dom::Admin::OrderSummaryRow.first.gross_total).to eql("$6.90")
+          expect(Dom::Admin::OrderSummaryRow.first.market_fees).to eql("$0.35")
+          expect(Dom::Admin::OrderSummaryRow.first.net_sale).to eql("$6.18")
         end
       end
 

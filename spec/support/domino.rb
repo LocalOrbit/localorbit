@@ -989,6 +989,18 @@ module Dom
         node.first(".quantity-delivered")
       end
 
+      def quantity_delivered
+        quantity_delivered_field.value
+      end
+
+      def quantity_ordered_readonly
+        node.first(".quantity-ordered-ro").text
+      end
+
+      def quantity_delivered_readonly
+        node.first(".quantity-delivered-ro").text
+      end
+
       def set_quantity_delivered(qty)
         quantity_delivered_field.set(qty)
       end
@@ -1000,6 +1012,7 @@ module Dom
       def click_delete
         node.first(".action-link > a").trigger("click")
       end
+
     end
   end
 
