@@ -66,6 +66,11 @@ GEM
       audited (= 4.0.0)
     awesome_nested_set (3.0.1)
       activerecord (>= 4.0.0, < 5)
+    aws-sdk (1.56.0)
+      aws-sdk-v1 (= 1.56.0)
+    aws-sdk-v1 (1.56.0)
+      json (~> 1.4)
+      nokogiri (>= 1.4.4)
     balanced (0.8.2)
       faraday (~> 0.8.6)
       faraday_middleware (~> 0.9.0)
@@ -444,6 +449,7 @@ DEPENDENCIES
   acts_as_geocodable
   audited-activerecord
   awesome_nested_set
+  aws-sdk
   balanced (~> 0.7)
   capybara
   codeclimate-test-reporter

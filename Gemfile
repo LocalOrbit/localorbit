@@ -72,6 +72,7 @@ group :development do
   gem "spring-commands-rspec"
   gem "rubocop", require: false
   gem "quiet_assets"
+  gem "aws-sdk"
 end
 
 group :development, :test do

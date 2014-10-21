@@ -26,3 +26,5 @@ public/system/dragonfly/development
 tags
 *.swp
 *.swo
+latest.prod.dump
+cleansed.prod.dump

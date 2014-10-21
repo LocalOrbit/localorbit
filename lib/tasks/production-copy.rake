@@ -1,0 +1,237 @@
+namespace :production_copy do
+  task :to, [:env] do |_,args|
+    args[:env] || raise("Supply environment, eg: rake production_copy:to[demo]")
+    include CloneProductionHelper
+    @config_name = args[:env].to_sym
+
+    copy_production_to_local
+    connect_production_copy
+    cleanse_production_copy
+
+    restore_cleansed_dump_to_target
+    replicate_s3_bucket
+  end
+
+  desc "Get and cleanse a local copy of production"
+  task bring_down: [:environment]  do
+    include CloneProductionHelper
+    copy_production_to_local
+    connect_production_copy
+    cleanse_production_copy
+  end
+
+  desc "Push local prod copy out to a target environment, and sync its S3 bucket from production's S3 bucket"
+  task :push_out, [:env] do |_, args|
+    args[:env] || raise("Supply environment, eg: rake production_copy:push_out[demo]")
+    include CloneProductionHelper
+    @config_name = args[:env].to_sym
+    restore_cleansed_dump_to_target
+    replicate_s3_bucket
+  end
+
+
+  desc "Clone the production database to local Postgresql db 'localorbit-production-copy'"
+  task :get do
+    include CloneProductionHelper
+    copy_production_to_local
+  end
+
+  desc "Clean up BalancedPayments refs and user email and passwords"
+  task :cleanse do
+    include CloneProductionHelper
+    connect_production_copy
+    cleanse_production_copy
+
+
+  end
+
+
+
+  desc "Put the cleansed prod copy data into the target database"
+  task :put do
+    include CloneProductionHelper
+    restore_cleansed_dump_to_target
+  end
+
+  desc "Copy the production S3 bucket to the target's bucket"
+  task :sync_bucket do
+    include CloneProductionHelper
+    replicate_s3_bucket
+  end
+
+  desc "Run a console connected to 'localorbit-production-copy'"
+  task console: :environment do
+    include CloneProductionHelper
+    console
+  end
+
+end
+
+#
+# HELPERS:
+#
+
+module CloneProductionHelper
+  def configs
+    {
+      demo: {
+        app: "localorbit-demo",
+        env: "demo",
+        bucket: "localorbit-demo",
+        database: "HEROKU_POSTGRESQL_IVORY"
+      },
+      dev1: {
+        app: "localorbit-dev1",
+        env: "dev1",
+        bucket: "localorbit-uploads-dev1",
+        database: "HEROKU_POSTGRESQL_COBALT"
+      }
+    }
+  end
+
+  def config
+    @config_name || raise("Please set @config_name, eg, @config_name = :demo")
+    configs[@config_name] || raise("No config for '#{@config_name}'")
+  end
+
+  def target_app
+    # "localorbit-demo"
+    config[:app]
+  end
+
+  def target_env
+    # "demo"
+    config[:env]
+  end
+
+  def target_bucket
+    # "localorbit-demo"
+    config[:bucket]
+  end
+
+  def target_database
+    # "HEROKU_POSTGRESQL_IVORY"
+    config[:database]
+  end
+
+  def source_app
+    "localorbit-production"
+  end
+
+  def prod_copy_name
+    "localorbit-production-copy"
+  end
+
+  def dump_file
+    "latest.prod.dump"
+  end
+
+  def cleansed_dump_file
+    "cleansed.prod.dump"
+  end
+
+  def production_copy_params
+    {
+      database:"localorbit-production-copy",
+      adapter:"postgresql", 
+      encoding:"unicode",
+      template:"template0"
+    }
+  end
+
+  def copy_production_to_local
+    backup_and_download
+    import_local_copy
+  end
+
+  def cleanse_production_copy
+    clear_all_balanced_payments_refs
+    reset_all_passwords
+    nerf_all_email_addresses
+    dump_cleansed_copy
+  end
+
+  def backup_and_download
+    sh "heroku pgbackups:capture --expire -a #{source_app}"
+    sh "curl -o #{dump_file} `heroku pgbackups:url -a #{source_app}`"
+  end
+
+  def import_local_copy
+    system "createdb #{prod_copy_name}" # don't care if this fails due to already existing
+    sh "pg_restore --verbose --clean --no-acl --no-owner -h localhost -d #{prod_copy_name} #{dump_file}"
+  end
+
+  def connect_production_copy
+    ActiveRecord::Base.establish_connection(production_copy_params)
+  end
+
+  def balanced_payments_refs
+    [ { model: BankAccount, fields: [ :balanced_uri, :balanced_verification_uri ] },
+      { model: Market     , fields: [ :balanced_customer_uri ] },
+      { model: Organization,fields: [ :balanced_customer_uri ] },
+      { model: Payment,     fields: [ :balanced_uri ] } ]
+  end
+
+  def clear_all_balanced_payments_refs
+    balanced_payments_refs.each do |model:,fields:|
+      fields.each do |field|
+        puts "Setting all #{model.name}##{field} to nil"
+        model.update_all("#{field} = NULL")
+      end
+    end
+  end
+
+  def reset_all_passwords
+    puts "Setting all user passwords to 'password1'"
+    User.update_all(encrypted_password: Devise.bcrypt(User, "password1"))
+  end
+
+  def nerf_all_email_addresses
+    puts "Transforming all user emails to @example.com"
+    User.all.each do |user|
+      email = user.email
+      unless email =~ /@example\.com$/ or email =~ /atomicobject/ or email =~ /localorb/
+        new_email = user.email.gsub("@","_at_") + "@example.com"
+        user.update(email: new_email)
+      end
+    end
+  end
+
+  def dump_cleansed_copy
+    sh "pg_dump -Fc --no-acl --no-owner -h localhost #{prod_copy_name} > #{cleansed_dump_file}"
+  end
+
+  def restore_cleansed_dump_to_target
+    # Step 1: Upload to S3
+    puts "Connecting to S3"
+    config = secrets_for(target_env)
+    s3 = AWS::S3.new(
+      :access_key_id => config["UPLOADS_ACCESS_KEY_ID"],
+      :secret_access_key => config["UPLOADS_SECRET_ACCESS_KEY"])
+    object = s3.buckets[config["UPLOADS_BUCKET"]].objects['backup/cleansed.prod.dump']
+    puts "Uploading cleansed production copy to S3"
+    object.write(Pathname.new(cleansed_dump_file))
+    dump_url = object.url_for(:get, { :expires => 20.minutes.from_now, :secure => true }).to_s
+    puts "Done.  #{dump_url}"
+
+    # Step 2: Restore 
+    puts "Restoring db from backup on S3"
+    sh "heroku pgbackups:restore #{target_database} '#{dump_url}' -a #{target_app} --confirm #{target_app}"
+  end
+
+  def secrets_for(key)
+    secrets = YAML.load(File.read("../secrets/secrets.yml"))
+    secrets[key] || raise("No secrets found for #{key}")
+  end
+
+  def replicate_s3_bucket
+    source_bucket = secrets_for("production")["UPLOADS_BUCKET"]
+    dest_bucket = secrets_for(target_env)["UPLOADS_BUCKET"]
+    sh "aws s3 sync s3://#{source_bucket}/ s3://#{dest_bucket}/"
+  end
+
+  def console
+    connect_production_copy
+    binding.pry
+  end
+end
