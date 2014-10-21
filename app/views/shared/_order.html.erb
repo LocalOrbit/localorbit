@@ -112,13 +112,13 @@
             <% if (current_user.admin? || current_user.market_manager?) && item.object.delivery_status == 'pending' %>
               <%= item.text_field :quantity, class: 'quantity-ordered' %>
             <% else %>
-              <span><%= item.object.quantity %></span>
+              <span class="quantity-ordered-ro"><%= item.object.quantity %></span>
             <% end %> <%= item.object.unit %> (Ordered)<br />
 
             <% if current_user.admin? || current_user.market_manager? %>
-              <%= item.text_field :quantity_delivered, class: 'quantity-delivered' %>
+              <%= item.text_field :quantity_delivered, value: Format.quantity(item.object.quantity_delivered), class: 'quantity-delivered' %>
             <% else %>
-              <span><%= item.object.quantity_delivered %></span>
+              <span class="quantity-delivered-ro"><%= Format.quantity item.object.quantity_delivered %></span>
             <% end %> <%= item.object.unit %> (Delivered)
           </td>
           <td class="price"><%= number_to_currency item.object.unit_price %></td>
