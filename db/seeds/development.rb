@@ -12,6 +12,8 @@ market = Market.find_or_create_by!(name: "Fulton Market") {|m|
   m.contact_name =  'Jill Smith'
   m.contact_email = 'jill@smith.com'
   m.contact_phone = '616-222-2222'
+  m.closed = false
+  m.active = true
   m.plan = Plan.find_by_name("Grow")
 }
 
@@ -51,6 +53,9 @@ delivery_schedule = DeliverySchedule.find_or_create_by!(
 buy_org = Organization.find_or_create_by!(name: "Farm to Table Cafe", allow_purchase_orders: true) {|org|
   org.can_sell = false
 }
+buy_org.active = true
+buy_org.needs_activated_notification = false
+buy_org.save!
 
 buy_loc = Location.find_or_create_by!(name: "Downtown Location") {|loc|
   loc.address = "1234 Perl St."
@@ -76,6 +81,9 @@ end
 sell_org = Organization.find_or_create_by!(name: "Alto Valley Farms", allow_purchase_orders: true) {|org|
   org.can_sell = true
 }
+sell_org.active = true
+sell_org.needs_activated_notification = false
+sell_org.save!
 
 sell_loc = Location.find_or_create_by!(name: "Default Location") {|loc|
   loc.address = "32 Boynton Rd."
@@ -117,6 +125,7 @@ unless sell_org.users.include?(seller_user)
 end
 
 market_manager.save!
+market_manager.confirm!
 
 market.organizations << buy_org unless market.organizations.include?(buy_org)
 market.organizations << sell_org unless market.organizations.include?(sell_org)

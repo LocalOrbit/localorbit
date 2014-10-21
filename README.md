@@ -18,14 +18,17 @@ See the `docs/` directory for more documentation.
 ### Setup
 
 1. Clone the repo
-2. `brew bundle` (on OS X. Install Requirements above for other platforms)
+2. `brew bundle` (on OS X. Install Requirements above for other platforms. May require you to unlink and reinstall previously installed packages.)
 3. `bundle`
 4. `cp config/application.yml{.example,}` and modify if needed
-5. `cp config/database.yml{.example,}` and modify if needed
-6. `rake db:setup`
-7. `rake db:seed:development`
-8. `rails server`
-9. Go to http://localtest.me:3000 in a browser (we use localtest.me to always point to 127.0.0.1 so we can use subdomains, which localhost doesn't allow.)
+5. `cp config/database.yml{.example,}` and modify if needed (Some modification is probably necessary. Try adding `template: template0`)
+6. Run memcached. `memcached &`
+7. `rake db:setup`
+9. `rake db:seed`
+10. `rake db:seed:development`
+11. `rails server`
+12. Add `127.0.0.1 localtest.me` to `/etc/hosts`
+13. Go to http://localtest.me:3000 in a browser (we use localtest.me to always point to 127.0.0.1 so we can use subdomains, which localhost doesn't allow.)
 
 ### Production Setup
 * At least one Market must be created before creating Organizations

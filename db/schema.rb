@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141011155616) do
+ActiveRecord::Schema.define(version: 20141016200439) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -458,7 +458,7 @@ ActiveRecord::Schema.define(version: 20141011155616) do
     t.string   "delivery_status"
     t.datetime "delivered_at"
     t.integer  "legacy_id"
-    t.integer  "quantity_delivered"
+    t.decimal  "quantity_delivered",     precision: 10, scale: 2
     t.string   "payment_status",                                  default: "unpaid"
     t.decimal  "discount_seller",        precision: 10, scale: 2, default: 0.0,      null: false
   end
