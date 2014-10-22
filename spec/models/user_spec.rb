@@ -857,4 +857,49 @@ describe User do
       expect(tolkein).to eq(user.subscriptions.find_by(subscription_type: fresh_sheet_subscription_type).token)
     end
   end
+
+  describe "#default_market" do
+    let(:market0) { create(:market) }
+    let(:org1) { create(:organization, markets: [market0]) }
+    let(:user) { create(:user) }
+
+    context "when the user belongs to multiple markets" do
+      let!(:market1) { create(:market) }
+      let!(:market2) { create(:market) }
+      let!(:market3) { create(:market) }
+
+      before do
+        user.managed_markets << market1
+        user.organizations << org1
+        user.managed_markets << market2
+      end
+
+      it "returns the user's first Market" do
+        expect(user.default_market).to be
+        expect(user.default_market).to eq(user.markets.first)
+      end
+
+      context "when user is an admin" do
+        let(:user) { create(:user, :admin) }
+        context "and the 'admin' market exists" do
+          let!(:admin_market) { create(:market, subdomain: "admin") }
+          it "returns the admin market" do
+            expect(user.default_market).to eq(admin_market)
+          end
+        end
+        context "but the 'admin' market doesn't exist" do
+          it "returns the first market" do
+            expect(user.default_market).to be
+            expect(user.default_market).to eq(user.markets.first)
+          end
+        end
+      end
+    end
+
+    context "when user has no markets" do
+      it "returns nil" do
+        expect(user.default_market).to be_nil
+      end
+    end
+  end
 end
