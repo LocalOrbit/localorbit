@@ -9,7 +9,7 @@ FactoryGirl.define do
     expiration_month 5
     expiration_year  2020
 
-    trait :credit_card do 
+    trait :credit_card do
       # bank_accounts now default to CC stuff
     end
 
@@ -18,7 +18,7 @@ FactoryGirl.define do
       account_type     "checking"
       sequence(:last_four) {|n| "#{'%04d' % n}"}
       expiration_month nil # do not want
-      expiration_year nil  # do not want 
+      expiration_year nil  # do not want
     end
 
     trait :verified do
@@ -434,6 +434,14 @@ FactoryGirl.define do
       after(:create) do |user|
         m = create(:market)
         o = create(:organization, :seller, markets: [m])
+        user.organizations << o
+      end
+    end
+
+    trait :buyer do
+      after(:create) do |user|
+        m = create :market
+        o = create(:organization, :buyer, markets: [m])
         user.organizations << o
       end
     end
