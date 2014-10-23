@@ -23,10 +23,10 @@ class ApplicationController < ActionController::Base
 
   private
 
-  def signed_in_root_path(resource)
-    return root_path unless resource
-    extra = on_main_domain? && resource.markets.any? ? {host: resource.markets.first.domain} : {}
-    if resource.buyer_only?
+  def signed_in_root_path(user)
+    return root_path unless user
+    extra = on_main_domain? && user.default_market ? {host: user.default_market.domain} : {}
+    if user.buyer_only?
       products_url(extra)
     else
       dashboard_url(extra)
