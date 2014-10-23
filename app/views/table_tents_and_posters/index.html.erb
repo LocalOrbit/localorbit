@@ -1,0 +1,34 @@
+<div class="main-printables" data-ko-module="main_printables" data-printable-type="<%= @type %>">
+
+  <div class="main-printable-ad">
+    <h1><%= @title %>
+    <h4>Why use <%= @printables.downcase %>?</h4>
+    <p><%= @printables[0].titleize + @printables[1..-1].downcase %> help you tell the stories of the farms and food makers you work with. The <%= @printables %> are customized to your order and you can access them for each order you place.</p>
+    <h4>Printing Instructions</h4>
+    <p>To print the <%= @printables.downcase %>, click the button below to download the PDF. From there you can open, save, or send the PDF to your printer.</p>
+    <%= form_tag("", method: "post", data: { bind: "attr: { target: formTarget }" }) do %>
+      <span><input type="checkbox" name="include_product_names" data-bind="checked: includeProductName"></input><strong>Include the Product Name</strong></span>
+      <p><em>By selecting this option, the <%= @printables %> will display product information from your order.</em></p>
+      <button href="#" class="btn printable-btn">Download the PDF</button>
+    <% end %>
+  </div>
+
+  <!-- ko if: isPoster() -->
+  <div class="main-printable posters-image">
+    <%= image_tag "table_tents_and_posters/poster.png", style: "display:none", class: "main-printable-img", data: {bind: "visible: !includeProductName()"} %>
+    <%= image_tag "table_tents_and_posters/poster_name.png", style: "display:none", class: "main-printable-img", data: {bind: "visible: includeProductName()"} %>
+    <p class="disclaimer" style="display:none" data-bind="visible: isPoster">* Sample document. Your <%=@printables%> will be customized to your order.</p>
+  </div>
+  <!-- /ko -->
+
+  <!-- ko ifnot: isPoster() -->
+  <div class="main-printable table-tents-image">
+    <%= image_tag "table_tents_and_posters/tabletent.png", style: "display:none", class: "main-printable-img", data: {bind: "visible: !includeProductName()"} %>
+    <%= image_tag "table_tents_and_posters/tabletent_name.png", style: "display:none", class: "main-printable-img", data: {bind: "visible: includeProductName()"} %>
+    <p class="disclaimer" style="display:none" data-bind="visible: !isPoster()">* Sample document. Your <%=@printables%> will be customized to your order.</p>
+  </div>
+  <!-- /ko -->
+
+</div>
+<div class="clearfix"></div>
+

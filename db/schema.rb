@@ -15,6 +15,7 @@ ActiveRecord::Schema.define(version: 20141107205633) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+  enable_extension "pg_stat_statements"
 
   create_table "audits", force: true do |t|
     t.integer  "auditable_id"
@@ -488,6 +489,17 @@ ActiveRecord::Schema.define(version: 20141107205633) do
   add_index "order_payments", ["order_id"], name: "index_order_payments_on_order_id", using: :btree
   add_index "order_payments", ["payment_id"], name: "index_order_payments_on_payment_id", using: :btree
 
+  create_table "order_printables", force: true do |t|
+    t.integer  "user_id"
+    t.integer  "order_id"
+    t.boolean  "include_product_names"
+    t.string   "printable_type"
+    t.string   "pdf_uid"
+    t.string   "pdf_name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "orders", force: true do |t|
     t.integer  "organization_id"
     t.integer  "market_id"
@@ -591,6 +603,7 @@ ActiveRecord::Schema.define(version: 20141107205633) do
     t.boolean  "promotions",         default: false, null: false
     t.boolean  "advanced_pricing",   default: false, null: false
     t.boolean  "advanced_inventory", default: false, null: false
+    t.boolean  "order_printables",   default: false, null: false
   end
 
   create_table "prices", force: true do |t|

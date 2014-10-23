@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <script src="<%= asset_url('jquery.js') %>"></script>
+    <script src="<%= asset_url('pdf_resizer.js') %>"></script>
+  </head>
+  <body style='margin: 0; padding: 0;'>
+  <style>
+    .container{max-width:960px;font-family: 'Helvetica', sans-serif;margin:0;padding:0;font-size: 16px;min-height: 1032px;max-height: 1032px;overflow:hidden;}
+     section{float:left; width: 100%;}
+
+    .header{background:#3F3E40; background-image:url("<%= asset_url('table_tents_and_posters/Group.png') %>");color:#E3E3E4; text-align:center; font-size:200%; position:relative; background-size:cover; background-position:center center; height:190px;width:100%;overflow: hidden;}
+    .arrow-down{width: 0; height: 0; border-left: 62px solid transparent;
+                 border-right: 62px solid transparent; border-top: 22px solid; margin: 0 auto;margin-top:-1px;}
+    .container{page-break-after: always;}
+    .header h4{margin-top: 0px;}
+    .headerPosterText{padding:5px;margin-bottom: 0px;font-size:48px;margin-top:5%;}
+    .farm-details{color:#3F3E40;text-align:center;background:#E3E3E4;background-image:url("<%= asset_url('table_tents_and_posters/map.png') %>"); position:relative;background-size:cover; background-position:center center;font-size:70%;line-height:175%;height:121px;overflow:hidden;}
+
+    .farm-details h2{font-size:300%;margin: 2% 0 1%;}
+    .farm-location{font-weight:bold;font-size:116%;}
+
+    .farm-content{padding: 6% 0; position: relative;height:510px;overflow: hidden;text-align: left;}
+    .farm-content p, .farm-content h4{padding:0 25% 0 6%; font-size: 100%;}
+    .farm-content span{font-size:60%; padding-right:2%;position:absolute; bottom:0;right:0;z-index:9999999;}
+    .farm-content span img{ width:6px; width:20px; padding-right: 4px; padding-bottom: 3px; vertical-align: middle;}
+    .farm-content ul{float:right; list-style:none;}
+    .farm-content li img{max-width:320px;max-height:200px;margin: 3% 0;}
+
+    .footer{background:#3F3E40; background-image:url("<%= asset_url('table_tents_and_posters/Group.png') %>"); color:#FEFEFE; background-size:cover; background-position:center center; margin-top: 5px;}
+    .footer img {background:#ffffff; max-width:75%;max-height: 120px;margin: -10% auto 4%;border: 1px solid #dfdfdf;}
+    .footer h5{margin:3% 0 1%;text-transform:uppercase; border-bottom:1px solid; color:#8E8C8E; font-size: 80%;}
+    .footer h4{line-height: 0; margin: 4% 0 2%;font-size:140%;}
+    .footer span{font-size:100%;}
+  </style>
+  <% params[:page_list].each do |page| %>
+    <%= render partial: "table_tents_and_posters/poster_page", locals: {farm: page[:farm], farm_map: page[:farm_map], product_name: page[:product_name], include_product_names: params[:include_product_names], market: params[:market]} %>
+  <% end %>
+</body>
+</html>

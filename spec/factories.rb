@@ -9,7 +9,7 @@ FactoryGirl.define do
     expiration_month 5
     expiration_year  2020
 
-    trait :credit_card do 
+    trait :credit_card do
       # bank_accounts now default to CC stuff
     end
 
@@ -18,7 +18,7 @@ FactoryGirl.define do
       account_type     "checking"
       sequence(:last_four) {|n| "#{'%04d' % n}"}
       expiration_month nil # do not want
-      expiration_year nil  # do not want 
+      expiration_year nil  # do not want
     end
 
     trait :verified do
@@ -355,6 +355,43 @@ FactoryGirl.define do
     advanced_pricing   true
     advanced_inventory true
     promotions         true
+    order_printables   true
+
+    trait :start_up do
+      name "Start Up"
+      discount_codes     false
+      cross_selling      false
+      custom_branding    false
+      automatic_payments false
+      advanced_pricing   false #this is true in the real world
+      advanced_inventory false
+      promotions         false
+      order_printables   false
+    end
+
+    trait :grow do
+      name "Grow"
+      discount_codes     true
+      cross_selling      true
+      custom_branding    true
+      automatic_payments true
+      advanced_pricing   true
+      advanced_inventory true
+      promotions         true
+      order_printables   true
+    end
+
+    trait :automate do
+      name "Automate"
+      discount_codes     true
+      cross_selling      true
+      custom_branding    true
+      automatic_payments true
+      advanced_pricing   true
+      advanced_inventory true
+      promotions         true
+      order_printables   true
+    end
   end
 
   factory :price do
@@ -437,6 +474,14 @@ FactoryGirl.define do
         user.organizations << o
       end
     end
+
+    trait :buyer do
+      after(:create) do |user|
+        m = create :market
+        o = create(:organization, :buyer, markets: [m])
+        user.organizations << o
+      end
+    end
   end
 
   factory :subscription do
@@ -471,5 +516,12 @@ FactoryGirl.define do
 
   factory :batch_invoice_error do
 
+  end
+
+  factory :order_printable do
+    user
+    order
+    include_product_names false
+    printable_type "table tent"
   end
 end
