@@ -7,5 +7,5 @@ checkout:
     - cp config/application.yml{.example,}
 test:
   override:
-    - bundle exec rspec --tag ~@wip:
-      parallel: true
+    - "bundle exec rspec --tag ~@wip":
+        parallel: true
