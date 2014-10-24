@@ -9,3 +9,5 @@ test:
   override:
     - "bundle exec rspec --tag ~@wip":
         parallel: true
+        files:
+          - spec/**/*.rb
