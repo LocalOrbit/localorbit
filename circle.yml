@@ -10,4 +10,4 @@ test:
     - "bundle exec rspec --tag ~@wip":
         parallel: true
         files:
-          - spec/**/*.rb
+          - spec/**/*_spec.rb
