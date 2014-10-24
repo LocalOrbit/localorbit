@@ -1,4 +1,5 @@
 namespace :production_copy do
+  desc "Copy all production data and S3 assets to a target env."
   task :to, [:env] do |_,args|
     args[:env] || raise("Supply environment, eg: rake production_copy:to[demo]")
     include CloneProductionHelper
@@ -45,18 +46,17 @@ namespace :production_copy do
 
   end
 
-
+  desc "Copy the production S3 bucket to a target env"
+  task :bucket, [:env] do |_, args|
+    include CloneProductionHelper
+    @config_name = args[:env].to_sym
+    replicate_s3_bucket
+  end
 
   desc "Put the cleansed prod copy data into the target database"
   task :put do
     include CloneProductionHelper
     restore_cleansed_dump_to_target
-  end
-
-  desc "Copy the production S3 bucket to the target's bucket"
-  task :sync_bucket do
-    include CloneProductionHelper
-    replicate_s3_bucket
   end
 
   desc "Run a console connected to 'localorbit-production-copy'"
@@ -227,7 +227,11 @@ module CloneProductionHelper
   def replicate_s3_bucket
     source_bucket = secrets_for("production")["UPLOADS_BUCKET"]
     dest_bucket = secrets_for(target_env)["UPLOADS_BUCKET"]
-    sh "aws s3 sync s3://#{source_bucket}/ s3://#{dest_bucket}/"
+    # sh "aws s3 sync s3://#{source_bucket}/ s3://#{dest_bucket}/"
+    everyone_uri = "http://acs.amazonaws.com/groups/global/AllUsers"
+    blockworkaws_id = "7462d205c2b14829eaa79c77b6eaae2e4166a2b30d06e9d261db44a3e27c0d1f" # Ericka's 
+    grants="--grants read=uri=#{everyone_uri} full=id=#{blockworkaws_id}"
+    sh "aws s3 sync s3://#{source_bucket}/ s3://#{dest_bucket}/ #{grants}"
   end
 
   def console
