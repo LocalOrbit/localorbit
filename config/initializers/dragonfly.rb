@@ -7,7 +7,7 @@ Dragonfly.app.configure do
   protect_from_dos_attacks true
   secret "c8583e781acd7fdbb14323520b44d98d1b29c345cfcbcb0003078a6bc4da670b"
 
-  url_host   Figaro.env.asset_host
+  url_host   Figaro.env.dragonfly_host
   url_format "/media/:job/:name"
 
   s3_headers = {
