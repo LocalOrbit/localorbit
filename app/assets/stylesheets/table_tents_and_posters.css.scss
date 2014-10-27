@@ -1,11 +1,12 @@
+.printable-btn {
+  color: #fff;
+  background-color: #43639f;
+  border-color: #43639f;
+}
+
 .downloadable-ad {
   margin-top: 30px;
   height: 350px;
-  a {
-    color: #fff;
-    background-color: #43639f;
-    border-color: #43639f;
-  }
   .downloadable-type {
     width: 50%;
     float: left;
@@ -13,4 +14,10 @@
       margin-bottom: 0px;
     }
   }
+}
+
+.main-printable-ad {
+  margin-left: 10%;
+  width: 50%;
+  float: left;
 }
