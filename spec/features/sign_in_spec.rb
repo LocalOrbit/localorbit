@@ -6,7 +6,7 @@ feature "User signing in" do
   let!(:org2) { create(:organization, markets: [market2]) }
   let!(:user2) { create(:user, organizations: [org2]) }
 
-  let(:session_cookie_name) { "_local_orbit_session_#{Figaro.env.deploy_env}" }
+  let(:session_cookie_name) { "_LocalOrbit_session_data_test" }
 
   scenario "A user can sign in" do
     visit "/"

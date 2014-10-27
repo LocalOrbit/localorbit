@@ -1,6 +1,6 @@
 BALANCED_API_KEY: "ak-test-2nUrWp1vUFJ9T17cN1sbKBGvue3lZkHmE"
 BALANCED_MARKETPLACE_URI: "/v1/marketplaces/TEST-MP4X7mSSQwAyDzwUfc5TAQ7D"
-SECRET_TOKEN: 4edd1c93887a120e04b118d93dc0dc0a79def610c8f3b04669891b7ce8b0c1cafbc0a3c5d6651f108e15257e1dc3fd689d049a4e23c648168ac432c3f03b9fe6
+SECRET_TOKEN: 02a52cf6230014a0ba90ed4ab8aa8fe91d6cb4bd9fd295656f51cc3019f4ec8c095ec5a792f290e04906ed859b166709abacd80832db765112bec0bbaac9a055
 GOOGLE_MAPS_KEY: "AIzaSyDRQCjRSGyFnuGb5kNdk7IHjUyyRWmsPrQ"
 ASSET_HOST: "http://localhost:3000"
 DOMAIN: "localtest.me" # localtest.me points to 127.0.0.1 and lets us use subdomains. localhost does not. see http://readme.localtest.me/
