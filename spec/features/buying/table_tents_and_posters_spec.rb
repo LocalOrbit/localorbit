@@ -16,6 +16,6 @@ feature "Downloading table tents or posters", :wip=>true do
     expect(page).to have_text "Download the table tents"
     find(".app-download-table-tents-btn").click
     expect(page).to have_text 'Table Tents (4" x 6")'
-    expect(page).to have_text 'Why use Table Tents?'
+    expect(page).to have_text 'Why use table tents?'
   end
 end

@@ -1,6 +1,6 @@
 require "spec_helper"
 
-describe Admin::TableTentsAndPostersController do
+describe TableTentsAndPostersController do
   let(:admin) { create(:user, :admin) }
   before do
     sign_in admin

@@ -1,4 +1,4 @@
-class Admin::TableTentsAndPostersController < AdminController
+class TableTentsAndPostersController < ApplicationController
   def index
     if params[:type] == "poster"
       @printables = 'posters'

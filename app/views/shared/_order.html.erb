@@ -262,5 +262,5 @@
 <% end %>
 
 <% if current_user.buyer_only? || current_user.market_manager? || current_user.admin? %>
-  <%= render "table_tents_and_posters/ad" %>
+  <%= render :partial=>"table_tents_and_posters/ad", locals: { order: order } %>
 <% end %>
