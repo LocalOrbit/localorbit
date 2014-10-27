@@ -1,6 +1,6 @@
 namespace :production_copy do
   desc "Copy all production data and S3 assets to a target env."
-  task :to, [:env] do |_,args|
+  task :to, [:env] => :environment do |_,args|
     args[:env] || raise("Supply environment, eg: rake production_copy:to[demo]")
     include CloneProductionHelper
     @config_name = args[:env].to_sym
@@ -74,6 +74,12 @@ end
 module CloneProductionHelper
   def configs
     {
+      staging: {
+        app: "localorbit-staging",
+        env: "staging",
+        bucket: "localorbit-uploads-staging",
+        database: "HEROKU_POSTGRESQL_RED"
+      },
       demo: {
         app: "localorbit-demo",
         env: "demo",
@@ -85,7 +91,25 @@ module CloneProductionHelper
         env: "dev1",
         bucket: "localorbit-uploads-dev1",
         database: "HEROKU_POSTGRESQL_COBALT"
-      }
+      },
+      dev2: {
+        app: "localorbit-dev2",
+        env: "dev2",
+        bucket: "localorbit-uploads-dev2",
+        database: "HEROKU_POSTGRESQL_VIOLET"
+      },
+      dev3: {
+        app: "localorbit-dev3",
+        env: "dev3",
+        bucket: "localorbit-uploads-dev3",
+        database: "HEROKU_POSTGRESQL_BROWN"
+      },
+      dev4: {
+        app: "localorbit-dev4",
+        env: "dev4",
+        bucket: "localorbit-uploads-dev4",
+        database: "HEROKU_POSTGRESQL_AMBER"
+      },
     }
   end
 
