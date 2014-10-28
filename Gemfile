@@ -30,7 +30,6 @@ gem "balanced", "~> 0.7"
 gem "color"
 gem "countries"
 gem "csv_builder"
-gem "dalli"
 gem "delayed_job"
 gem "delayed_job_active_record"
 gem "devise"
@@ -72,6 +71,7 @@ group :development do
   gem "spring-commands-rspec"
   gem "rubocop", require: false
   gem "quiet_assets"
+  gem "aws-sdk"
 end
 
 group :development, :test do

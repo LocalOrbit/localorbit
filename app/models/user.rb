@@ -344,6 +344,19 @@ class User < ActiveRecord::Base
     "#{name.to_s.inspect} <#{email}>"
   end
 
+  def default_market
+    if admin?
+      admin_market = markets.select do |m| m.subdomain == "admin" end.first
+      if admin_market
+        admin_market
+      else
+        markets.first
+      end
+    else
+      markets.first
+    end
+  end
+
   private
 
   def markets_for_non_admin
