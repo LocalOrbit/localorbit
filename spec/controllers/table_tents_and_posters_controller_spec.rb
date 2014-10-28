@@ -20,14 +20,23 @@ describe TableTentsAndPostersController do
     end
   end
 
-  [ "poster", "table_tent" ].each do |type_string|
-    describe "Creating #{type_string}s..." do
+  [ "poster", "table_tent", nil ].each do |type_string|
+    describe "Creating #{type_string || "default printable"}s..." do
       let(:printable_type) { type_string }
+      let(:expected_printable_type) { type_string || "table tent" }
 
-      describe "#create", :wip=>true do
+      describe "#create" do
+        def post_create
+          if printable_type
+            post :create, order_id: order.id, type: printable_type, include_product_names: false
+          else
+            post :create, order_id: order.id, include_product_names: false
+          end
+        end
+
         def expect_generate_pdf
           expect(GenerateTableTentsOrPosters).to receive(:perform).
-            with(order: order, type: printable_type, include_product_names: false).
+            with(order: order, type: expected_printable_type, include_product_names: false).
             and_return(context)
         end
 
@@ -39,7 +48,7 @@ describe TableTentsAndPostersController do
 
           it "renders the PDF data" do
             expect_generate_pdf
-            post :create, order_id: order.id, type: printable_type, include_product_names: false
+            post_create
             expect(response.content_type).to eq "application/pdf"
             expect(response.body).to eq pdf_result.data 
           end
@@ -51,9 +60,9 @@ describe TableTentsAndPostersController do
           it "redirects to index and shows an error" do
             expect_generate_pdf
             post :create, order_id: order.id, type: printable_type, include_product_names: false
-            expect(response).to redirect_to([:order, :table_tents_and_posters, type: printable_type])
+            expect(response).to redirect_to([:order, :table_tents_and_posters, type: expected_printable_type])
 
-            expect(flash[:alert]).to match(/generate.*#{printable_type}/i)
+            expect(flash[:alert]).to match(/generate.*#{expected_printable_type}/i)
           end
         end
       end
