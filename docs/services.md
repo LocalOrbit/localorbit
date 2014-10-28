@@ -18,7 +18,6 @@ Service | Purpose | Owner | Notes
 [Google Maps](https://developers.google.com/maps/) | Backup Geocoding | LO | Mapbox can't find a few addresses.
 [Twitter](https://twitter.com) | Widget for displaying Tweets | LO | @localorbit provides a token
 [Zendesk](https://localorbit.zendesk.com) | Uses LO for SSO | LO
-[Memcached Cloud](http://redislabs.com/memcached-cloud)<br>(via Heroku add-on) | Session storage | LO
 [Heroku Scheduler](https://scheduler.heroku.com)<br>(via Heroku add-on) | Periodic tasks | LO | offsite backups (daily), check ACH status (daily), update metrics (hourly)
 [New Relic](http://newrelic.com)<br>(via Heroku add-on) | App stats & notifications | LO
 [Papertrail](https://papertrailapp.com)<br>(via Heroku add-on) | App logs | LO | Archived to S3

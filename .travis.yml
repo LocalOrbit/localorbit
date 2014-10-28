@@ -25,7 +25,6 @@ env:
   - CODECLIMATE_REPO_TOKEN=d6c14655ddff198718ea2c98a73973c24ff1b9d812d06b822aa85018ebef547d CAPYBARA_WAIT_TIME=30
 cache: bundler
 services:
-  - memcached
 addons:
   hosts:
     - localtest.me
