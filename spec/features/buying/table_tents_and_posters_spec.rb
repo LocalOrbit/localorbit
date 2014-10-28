@@ -1,6 +1,6 @@
 require "spec_helper"
 
-feature "Downloading table tents or posters", :wip=>true do
+feature "Downloading table tents or posters" do
   let(:user) {create :user, :buyer}
   let(:organization) {user.organizations.first}
   let(:market) {user.markets.first}
