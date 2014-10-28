@@ -59,9 +59,8 @@ describe TableTentsAndPostersController do
 
           it "redirects to index and shows an error" do
             expect_generate_pdf
-            post :create, order_id: order.id, type: printable_type, include_product_names: false
+            post_create
             expect(response).to redirect_to([:order, :table_tents_and_posters, type: expected_printable_type])
-
             expect(flash[:alert]).to match(/generate.*#{expected_printable_type}/i)
           end
         end
