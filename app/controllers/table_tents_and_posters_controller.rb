@@ -15,9 +15,10 @@ class TableTentsAndPostersController < ApplicationController
     order = Order.orders_for_buyer(current_user).find(params[:order_id])
     type = params[:type] || DefaultPrintableType
     include_product_names = params[:include_product_names] || false
-    context = GenerateTableTentsOrPosters.perform(order: order, type: type, include_product_names: include_product_names, request: request)
+    request_url_presenter = RequestUrlPresenter.new(request)
+    context = GenerateTableTentsOrPosters.perform(order: order, type: type, include_product_names: include_product_names, request: request_url_presenter)
     if context.success?
-      render text: context.pdf.data, content_type: "application/pdf"
+      render text: context.pdf_result.data, content_type: "application/pdf"
     else
       flash[:alert] = "Couldn't generate #{type} document."
       redirect_to order_table_tents_and_posters_path(order_id:order.id, type: type)

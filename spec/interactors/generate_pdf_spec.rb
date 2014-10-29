@@ -9,7 +9,7 @@ describe GeneratePdf do
     pdf_size = {page_size: "letter"}
 
     context = GeneratePdf.perform(request: request, template: template, params: params, pdf_size: pdf_size)
-    expect(context.pdf.match(/^%PDF-1.4/)).to_not eq nil
+    expect(context.pdf_result.data.match(/^%PDF-1.4/)).to_not eq nil
   end
 
   it "throws an exception given invalid parameters" do

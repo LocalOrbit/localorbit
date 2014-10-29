@@ -3,14 +3,14 @@ class GeneratePdf
 
   def perform
     request, template, params, pdf_size = require_in_context :request, :template, :params, :pdf_size
-    context[:pdf] = generate_pdf(request: request, template: template, params: params)
+    context[:pdf_result] = generate_pdf(request: request, template: template, params: params)
   end
 
   def generate_pdf(request:,template:,params:)
     html = generate_html(request: request, template: template, params: params)
     pdf_settings = pdf_size.merge({margin_top: 0, margin_right: 0, margin_left: 0, margin_bottom: 0})
     pdf_kit = PDFKit.new(html, pdf_settings)
-    pdf_kit.to_pdf
+    PdfResult.new(pdf_kit)
   end
 
   def generate_html(request:,template:,params:)

@@ -35,9 +35,16 @@ describe TableTentsAndPostersController do
         end
 
         def expect_generate_pdf
-          expect(GenerateTableTentsOrPosters).to receive(:perform).
-            with(order: order, type: expected_printable_type, include_product_names: false).
-            and_return(context)
+          # expect(GenerateTableTentsOrPosters).to receive(:perform).
+            # with(order: order, type: expected_printable_type, include_product_names: false).
+            # and_return(context)
+          expect(GenerateTableTentsOrPosters).to receive(:perform) do |arg|
+            expect(arg[:order]).to eq(order)
+            expect(arg[:type]).to eq(expected_printable_type)
+            expect(arg[:include_product_name]).to be_falsey
+            expect(arg[:request].base_url).to eq request.base_url
+            context
+          end
         end
 
         let (:order) {create(:order, organization: buyer_organization)}
@@ -50,7 +57,7 @@ describe TableTentsAndPostersController do
             expect_generate_pdf
             post_create
             expect(response.content_type).to eq "application/pdf"
-            expect(response.body).to eq pdf_result.data 
+            expect(response.body).to eq pdf_result.data
           end
         end
 
