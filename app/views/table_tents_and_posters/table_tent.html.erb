@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+    <head>
+      <script src="<%= asset_url('jquery.js') %>"></script>
+    </head>
+    <body style='margin: 0; padding: 0;'>
+    <style>
+       .container{max-width:500px;font-family: 'Helvetica', sans-serif;margin:0;padding:0;font-size: 14px;page-break-inside:avoid;}
+       section{float:left; width: 100%;}
+
+       #header{background:#3F3E40; background-image:url("<%= asset_url('pdf/Group.png') %> ");color:#E3E3E4; text-align:center; font-size:140%; position:relative; background-size:cover; background-position:center center;height:124px;width:100%;overflow: hidden;}
+       #header h4{margin-top: 0px;}
+       #headerText{padding:5px;margin-bottom: 0px;}
+       .arrow-down{width: 0; height: 0; border-left: 32px solid transparent;
+                   border-right: 32px solid transparent; border-top: 14px solid; margin: 0 auto; margin-top: -1px;}
+       #farm-details{color:#3F3E40;text-align:center;background:#E3E3E4;background-image:url("<%= asset_url('pdf/map.png') %> "); position:relative;background-size:cover; background-position:center center;}
+
+       #farm-details h2{font-size:160%;margin: 2% 0 1%;}
+       #farm-location{font-weight:bold;font-size:86%;}
+
+       #farm-content{padding: 5% 0; position: relative;height:254px;overflow:hidden;z-index: -1;}
+       #farm-content p,#farm-content h4{padding:0 6%; font-size: 84%;}
+       #farm-content span{font-size:60%;position:absolute;bottom:0;right:3%;z-index:999999;background-color:white;}
+       #farm-content span img{ width:6px; width:20px; padding-right: 4px; padding-bottom: 3px; vertical-align: middle;}
+
+       #footer{background:#3F3E40; background-image:url("<%= asset_url('pdf/Group.png') %> "); color:#FEFEFE;
+               background-size:cover; background-position:center center;}
+       #footer img {background:#ffffff; width:90%;margin: -15% auto 4%;border: 1px solid #dfdfdf;}
+       #footer h5{margin:3% 0 1%;text-transform:uppercase; border-bottom:1px solid; color:#8E8C8E; font-size: 60%;}
+       #footer h4{line-height: 0; margin: 4% 0 2%;font-size: 80%;}
+       #footer span{font-size:80%;}
+    </style>
+    <div class="container">
+
+        <section id="header">
+          <% if(params[:product]) %>
+           <div id="productContent"><h1 id="headerText"><%= params[:product] %></h1><h4>from <span style="text-decoration:underline;">local</span> producers!</h1></h4></div>
+          <% else %>
+           <h1 style="margin-top:15px;">Real food from <span style="text-decoration:underline;">local</span> producers!</h1>
+          <% end %>
+        </section>
+
+        <section id="farm-details">
+           <div class="arrow-down"></div>
+           <h2>Chestnut Growers, Inc.</h2>
+           <div id="farm-location">
+              <span>Ann Arbor, MI</span>
+              <span>|</span>
+              <span>42.911234, -83.482759</span>
+              <br><br>
+           </div>
+        </section>
+
+        <section id="farm-content">
+            <h4>Who We Are</h4>
+             <% params[:size].to_i.times do %>
+              <p> In many of the more relaxed civilizations on the Outer Eastern Rim of the Galaxy, the Hitchhiker's Guide has already supplanted the great Encyclopaedia Galactica as the standard repository of all knowledge and wisdom, for though it has many omissions and contains much that is apocryphal, or at least wildly inaccurate, it scores over the older, more pedestrian work in two important respects.</p><p> First, it is slightly cheaper; and secondly it has the words <strong>DON'T PANIC</strong> inscribed in large friendly letters on its cover. </p>
+             <% end %>
+
+         <span><img src="<%= asset_url('pdf/LO_Circle_lo.png') %>" />Powered by <strong>Local Orbit</strong></span>
+        </section>
+
+        <section id="footer">
+           <div style="width:30%;float:left;text-align:center;">
+              <img src="<%= asset_url('pdf/footer-image.png') %>" />
+           </div>
+           <div style="width:62%;margin-left: 1%;float:left;">
+              <h5>Brought to you by</h5>
+
+              <h4>Oregon State University Food Service</h4>
+              <span>Bringing regional, ecological food to Tahoe</span>
+              <br><br>
+           </div>
+
+        </section>
+
+    </div>
+    </body>
+</html>
