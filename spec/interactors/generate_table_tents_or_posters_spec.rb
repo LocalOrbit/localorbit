@@ -17,15 +17,19 @@ describe GenerateTableTentsOrPosters do
   describe "#get_page_list" do
     it "creates an array of sellers for an order if include_product_names is false" do
       items_for_printing = GenerateTableTentsOrPosters.get_page_list(order: order.reload, include_product_names: false)
-      expect(items_for_printing.size).to eq 2
-      expect(items_for_printing.first[:farm][:id]).to eq prefect_farms.id
+      expect(items_for_printing).to contain_exactly(
+        { farm: prefect_farms },
+        { farm: zaphod_farms }
+      )
     end
 
     it "creates an array of sellers and item names if include_product_names is true" do
       items_for_printing = GenerateTableTentsOrPosters.get_page_list(order: order.reload, include_product_names: true)
-      expect(items_for_printing.size).to eq 3
-      expect(items_for_printing.first[:farm][:id]).to eq prefect_farms.id
-      expect(items_for_printing.first[:product_name]).to eq product3.name
+      expect(items_for_printing).to contain_exactly(
+        { farm: zaphod_farms, product_name: product1.name },
+        { farm: zaphod_farms, product_name: product2.name },
+        { farm: prefect_farms, product_name: product3.name }
+      )
     end
   end
 
@@ -50,13 +54,27 @@ describe GenerateTableTentsOrPosters do
     end
 
     it "sends the correct poster parameters to GeneratePdf" do
-      expect(GeneratePdf).to receive(:perform).with(request: request, template: "table_tents_and_posters/poster", pdf_size: {page_size: "letter"}, params: {page_list: GenerateTableTentsOrPosters.get_page_list(order: order.reload, include_product_names: false), include_product_names: false}).and_return(double "context", pdf_result: "ThePdf")
+      expect(GeneratePdf).to receive(:perform).
+        with(request: request, 
+             template: "table_tents_and_posters/poster", 
+             pdf_size: {page_size: "letter"}, 
+             params: { page_list: GenerateTableTentsOrPosters.get_page_list(order: order.reload, include_product_names: false), 
+                       include_product_names: false}).
+        and_return(double "context", pdf_result: "ThePdf")
+
       context = GenerateTableTentsOrPosters.perform(order: order, type: "poster", include_product_names: false, request: request)
       expect(context.pdf_result).to eq "ThePdf"
     end
 
     it "sends the correct table tent parameters to GeneratePdf" do
-      expect(GeneratePdf).to receive(:perform).with(request: request, template: "table_tents_and_posters/table_tent", pdf_size: {page_width: 101.6, page_height: 152.4}, params: {page_list: GenerateTableTentsOrPosters.get_page_list(order: order.reload, include_product_names: false), include_product_names: false}).and_return(double "context", pdf_result: "ThePdf")
+      expect(GeneratePdf).to receive(:perform).
+        with(request: request, 
+             template: "table_tents_and_posters/table_tent", 
+             pdf_size: {page_width: 101.6, page_height: 152.4}, 
+             params: {page_list: GenerateTableTentsOrPosters.get_page_list(order: order.reload, include_product_names: false), 
+                      include_product_names: false}).
+        and_return(double "context", pdf_result: "ThePdf")
+
       context = GenerateTableTentsOrPosters.perform(order: order, type: "table tents", include_product_names: false, request: request)
       expect(context.pdf_result).to eq "ThePdf"
     end
