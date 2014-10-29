@@ -6,8 +6,7 @@ class GenerateTableTentsOrPosters
     page_list = GenerateTableTentsOrPosters.get_page_list(order: order, include_product_names: include_product_names)
     template = GenerateTableTentsOrPosters.get_template_from_type(type: type)
     pdf_size  = GenerateTableTentsOrPosters.get_pdf_size(type: type)
-    pdf_context = GeneratePdf.perform(request:request, template: template, pdf_size: pdf_size, params: {pages: page_list, include_product_names: include_product_names})
-    context[:pdf] = pdf_context.pdf
+    context[:pdf] = GeneratePdf.perform(request:request, template: template, pdf_size: pdf_size, params: {page_list: page_list, include_product_names: include_product_names}).pdf
   end
 
   def self.get_page_list(order:,include_product_names:)

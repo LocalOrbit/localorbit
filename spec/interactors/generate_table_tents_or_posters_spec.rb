@@ -29,10 +29,36 @@ describe GenerateTableTentsOrPosters do
     end
   end
 
+  describe "#get_template_from_type" do
+    it "gets from the type" do
+      expect(GenerateTableTentsOrPosters.get_template_from_type(type: "poster")).to eq "table_tents_and_posters/poster"
+      expect(GenerateTableTentsOrPosters.get_template_from_type(type: "table tents")).to eq "table_tents_and_posters/table_tent"
+    end
+  end
+
+  describe "#get_pdf_size" do
+    it "gets from the type" do
+      expect(GenerateTableTentsOrPosters.get_pdf_size(type: "poster")).to eq({page_size: "letter"})
+      expect(GenerateTableTentsOrPosters.get_pdf_size(type: "table tents")).to eq({page_width: 101.6, page_height: 152.4})
+    end
+  end
+
   describe "#perform"  do
     it "creates a pdf" do
       context = GenerateTableTentsOrPosters.perform(order: order, type: "poster", include_product_names: false, request: request)
       expect(context.pdf.match(/^%PDF-1.4/)).to_not eq nil
+    end
+
+    it "sends the correct poster parameters to GeneratePdf" do
+      expect(GeneratePdf).to receive(:perform).with(request: request, template: "table_tents_and_posters/poster", pdf_size: {page_size: "letter"}, params: {page_list: GenerateTableTentsOrPosters.get_page_list(order: order.reload, include_product_names: false), include_product_names: false}).and_return(double "context", pdf: "ThePdf")
+      result = GenerateTableTentsOrPosters.perform(order: order, type: "poster", include_product_names: false, request: request)
+      expect(result.pdf).to eq "ThePdf"
+    end
+
+    it "sends the correct table tent parameters to GeneratePdf" do
+      expect(GeneratePdf).to receive(:perform).with(request: request, template: "table_tents_and_posters/table_tent", pdf_size: {page_width: 101.6, page_height: 152.4}, params: {page_list: GenerateTableTentsOrPosters.get_page_list(order: order.reload, include_product_names: false), include_product_names: false}).and_return(double "context", pdf: "ThePdf")
+      result = GenerateTableTentsOrPosters.perform(order: order, type: "table tents", include_product_names: false, request: request)
+      expect(result.pdf).to eq "ThePdf"
     end
   end
 end
