@@ -23,12 +23,23 @@ describe GenerateTableTentsOrPosters do
       )
     end
 
-    it "creates an array of sellers and item names if include_product_names is true" do
+    def expect_get_category_names(key_vals)
+      key_vals.each do |(product,cat_name)|
+        expect(GenerateTableTentsOrPosters).to receive(:product_category_name).with(product).and_return(cat_name)
+      end
+    end
+
+    it "creates an array of sellers and item names if include_product_names is true", wip:true do
+      expect_get_category_names product1 => "Vogons", 
+                                product2 => "Silastic Armourfiends",
+                                product3 => "Poghrils"
+
       items_for_printing = GenerateTableTentsOrPosters.get_page_list(order: order.reload, include_product_names: true)
+
       expect(items_for_printing).to contain_exactly(
-        { farm: zaphod_farms, product_name: product1.name, farm_map: GenerateTableTentsOrPosters.build_seller_map(zaphod_farms)},
-        { farm: zaphod_farms, product_name: product2.name, farm_map: GenerateTableTentsOrPosters.build_seller_map(zaphod_farms) },
-        { farm: prefect_farms, product_name: product3.name, farm_map: GenerateTableTentsOrPosters.build_seller_map(prefect_farms) }
+        { farm: zaphod_farms, product_name: "Vogons", farm_map: GenerateTableTentsOrPosters.build_seller_map(zaphod_farms)},
+        { farm: zaphod_farms, product_name: "Silastic Armourfiends", farm_map: GenerateTableTentsOrPosters.build_seller_map(zaphod_farms) },
+        { farm: prefect_farms, product_name: "Poghrils", farm_map: GenerateTableTentsOrPosters.build_seller_map(prefect_farms) }
       )
     end
   end
@@ -54,7 +65,7 @@ describe GenerateTableTentsOrPosters do
     end
   end
 
-  describe ".product_category_name", wip: true do
+  describe ".product_category_name" do
     # IDs of categories in production at level 2 who should prefer their parent (level 1) category names:
     let(:special_cat_ids) { [312, 1269, 397, 498, 504, 228, 248, 276, 1275] } 
     # (omitted "2" because in dev/test it's Fruits which is a) confusing as heck for this test and b) Specialty in Production.  We'll trust the remaining items will be good to test.)
