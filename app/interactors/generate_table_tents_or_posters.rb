@@ -43,4 +43,8 @@ class GenerateTableTentsOrPosters
     end
   end
 
+  def self.product_category_name(product)
+    raise "TODO"
+  end
+
 end
