@@ -19,6 +19,7 @@
 //= require underscore
 //= require accountingjs
 //= require jquery.tablesorter.min
+//= require knockout-3.2.0
 //= require mapbox
 //= stub balanced
 //= require_tree .
