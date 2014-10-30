@@ -1,6 +1,6 @@
 <!DOCTYPE html>
   <head>
-    <script src="<%= asset_url('jquery.js') %>"></script>
+
   </head>
   <body style='margin: 0; padding: 0;'>
   <style>
@@ -11,6 +11,7 @@
              text-align:center; font-size:200%; position:relative; background-size:cover; background-position:center center; height:190px;width:100%;overflow: hidden;}
      .arrow-down{width: 0; height: 0; border-left: 62px solid transparent;
                  border-right: 62px solid transparent; border-top: 22px solid; margin: 0 auto;margin-top:-1px;}
+    .container{page-break-after: always;}
      #header h4{margin-top: 0px;}
      #headerPosterText{padding:5px;margin-bottom: 0px;font-size:48px;margin-top:5%;}
      #farm-details{color:#3F3E40;text-align:center;background:#E3E3E4;background-image:url("<%= asset_url('pdf/map.png') %>"); position:relative;background-size:cover; background-position:center center;font-size:70%;line-height:175%;}
@@ -32,58 +33,8 @@
      #footer h4{line-height: 0; margin: 4% 0 2%;font-size:140%;}
      #footer span{font-size:100%;}
   </style>
-  <div class="container">
-
-      <section id="header">
-          <% if(params[:product]) %>
-           <div id="productContent"><h1 id="headerPosterText"><%= params[:product] %></h1><h4>from <span style="text-decoration:underline;">local</span> producers!</h1></h4></div>
-          <% else %>
-           <h1 style="margin-top:15px;">Real food from <span style="text-decoration:underline;">local</span> producers!</h1>
-          <% end %>
-      </section>
-
-      <section id="farm-details">
-         <div class="arrow-down"></div>
-         <h2>Chestnut Growers, Inc.</h2>
-         <div id="farm-location">
-            <span>Ann Arbor, MI</span>
-            <span>|</span>
-            <span>42.911234, -83.482759</span>
-            <br><br><br>
-         </div>
-      </section>
-
-      <section id="farm-content">
-         <div style="float:left; width:50%;">
-            <ul style="float:right;">
-            <li><img src="<%= asset_url('pdf/profile-photo.png') %>" /></li>
-            <li><img src="<%= asset_url('pdf/profile-photo.png') %>" /></li>
-         </ul>
-         </div>
-         <div style="float:left; width:50%;">
-            <br>
-            <h4>Who We Are</h4>
-             <% params[:size].to_i.times do %>
-              <p> In many of the more relaxed civilizations on the Outer Eastern Rim of the Galaxy, the Hitchhiker's Guide has already supplanted the great Encyclopaedia Galactica as the standard repository of all knowledge and wisdom, for though it has many omissions and contains much that is apocryphal, or at least wildly inaccurate, it scores over the older, more pedestrian work in two important respects.</p><p> First, it is slightly cheaper; and secondly it has the words <strong>DON'T PANIC</strong> inscribed in large friendly letters on its cover. </p>
-             <% end %>
-         </div>
-
-         <span><img src="<%= asset_url('pdf/LO_Circle_lo.png') %>" />Powered by <strong>Local Orbit</strong></span>
-      </section>
-
-      <section id="footer">
-         <div style="width:30%;float:left;text-align:center;">
-            <img src="<%= asset_url('pdf/footer-image.png') %>" />
-         </div>
-         <div style="width:62%;margin-left: 1%;float:left;">
-            <h5>Brought to you by</h5>
-
-            <h4>Oregon State University Food Service</h4>
-            <span>Bringing regional, ecological food to Tahoe</span>
-            <br><br>
-         </div>
-
-      </section>
-</div>
+  <% params[:page_list].each do |page| %>
+    <%= render partial: "table_tents_and_posters/poster_page", locals: {farm: page[:farm], farm_map: page[:farm_map], product_name: page[:product_name], include_product_names: params[:include_product_names], buyer: params[:buyer]} %>
+  <% end %>
 </body>
 </html>

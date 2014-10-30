@@ -1,0 +1,52 @@
+<div class="container">
+
+<section id="header">
+    <% if(include_product_names) %>
+     <div id="productContent"><h1 id="headerPosterText"><%= product_name %></h1><h4>from <span style="text-decoration:underline;">local</span> producers!</h1></h4></div>
+    <% else %>
+     <h1 style="margin-top:15px;">Real food from <span style="text-decoration:underline;">local</span> producers!</h1>
+    <% end %>
+</section>
+
+<section id="farm-details">
+   <div class="arrow-down"></div>
+   <h2><%= farm.name %></h2>
+   <div id="farm-location">
+      <span><%= "#{farm.shipping_location.city}, #{farm.shipping_location.state}" %></span>
+      <span>|</span>
+      <span><%= farm.shipping_location.geocode %></span>
+      <br><br><br>
+   </div>
+</section>
+
+<section id="farm-content">
+   <div style="float:left; width:50%;">
+      <ul style="float:right;">
+      <li><%= image_tag farm.photo.url %></li>
+      <li><%= image_tag farm_map %></li>
+   </ul>
+   </div>
+   <div style="float:left; width:50%;">
+      <br>
+      <h4>Who We Are</h4>
+      <%= farm.who_story %>
+   </div>
+
+   <span><%= image_tag "logo" %>Powered by <strong>Local Orbit</strong></span>
+</section>
+
+<section id="footer">
+   <div style="width:30%;float:left;text-align:center;">
+      <%= image_tag "" %>
+   </div>
+   <div style="width:62%;margin-left: 1%;float:left;">
+      <h5>Brought to you by</h5>
+
+      <h4><%= buyer.name %></h4>
+      <span>Bringing regional, ecological food to Tahoe</span>
+      <br><br>
+   </div>
+
+</section>
+
+</div>

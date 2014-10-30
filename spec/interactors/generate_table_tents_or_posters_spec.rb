@@ -5,8 +5,8 @@ describe GenerateTableTentsOrPosters do
 
   let(:request) {double("request", {:base_url=>"http://www.example.com"})}
   let(:order) {create(:order, organization: buyer_organization)}
-  let(:zaphod_farms) {create(:organization, :seller, name: "Zaphod")}
-  let(:prefect_farms) {create(:organization, :seller, name: "Prefect")}
+  let(:zaphod_farms) {create(:organization, :seller, :single_location, name: "Zaphod")}
+  let(:prefect_farms) {create(:organization, :seller, :single_location, name: "Prefect")}
   let(:product1) {create :product, :sellable, organization: zaphod_farms}
   let(:product2) {create :product, :sellable, organization: zaphod_farms}
   let(:product3) {create :product, :sellable, organization: prefect_farms}
@@ -47,6 +47,12 @@ describe GenerateTableTentsOrPosters do
     end
   end
 
+  describe "#build_seller_map", :wip=>true do
+    it "gets a map from the seller's shipping location" do
+      p GenerateTableTentsOrPosters.build_seller_map(zaphod_farms)
+    end
+  end
+
   describe "#perform"  do
     it "creates a pdf" do
       context = GenerateTableTentsOrPosters.perform(order: order, type: "poster", include_product_names: false, request: request)
@@ -55,10 +61,10 @@ describe GenerateTableTentsOrPosters do
 
     it "sends the correct poster parameters to GeneratePdf" do
       expect(GeneratePdf).to receive(:perform).
-        with(request: request, 
-             template: "table_tents_and_posters/poster", 
-             pdf_size: {page_size: "letter"}, 
-             params: { page_list: GenerateTableTentsOrPosters.get_page_list(order: order.reload, include_product_names: false), 
+        with(request: request,
+             template: "table_tents_and_posters/poster",
+             pdf_size: {page_size: "letter"},
+             params: { page_list: GenerateTableTentsOrPosters.get_page_list(order: order.reload, include_product_names: false),
                        include_product_names: false}).
         and_return(double "context", pdf_result: "ThePdf")
 
@@ -68,10 +74,10 @@ describe GenerateTableTentsOrPosters do
 
     it "sends the correct table tent parameters to GeneratePdf" do
       expect(GeneratePdf).to receive(:perform).
-        with(request: request, 
-             template: "table_tents_and_posters/table_tent", 
-             pdf_size: {page_width: 101.6, page_height: 152.4}, 
-             params: {page_list: GenerateTableTentsOrPosters.get_page_list(order: order.reload, include_product_names: false), 
+        with(request: request,
+             template: "table_tents_and_posters/table_tent",
+             pdf_size: {page_width: 101.6, page_height: 152.4},
+             params: {page_list: GenerateTableTentsOrPosters.get_page_list(order: order.reload, include_product_names: false),
                       include_product_names: false}).
         and_return(double "context", pdf_result: "ThePdf")
 
