@@ -43,8 +43,21 @@ class GenerateTableTentsOrPosters
     end
   end
 
+  CategoriesWhoseNamesShouldBeAvoided = [312, 1269, 397, 498, 504, 228, 248, 276, 1275, 2]
+
   def self.product_category_name(product)
-    raise "TODO"
+    cat = product.category
+    return "Real food" unless cat
+    cat = if cat.depth <= 2
+            cat
+          else
+            product.category.ancestors.where(depth:2).first
+          end
+
+    if CategoriesWhoseNamesShouldBeAvoided.include?(cat.id)
+      cat = cat.parent
+    end
+    cat.name
   end
 
 end

@@ -54,7 +54,7 @@ describe GenerateTableTentsOrPosters do
     end
   end
 
-  describe ".product_category_name" do
+  describe ".product_category_name", wip: true do
     # IDs of categories in production at level 2 who should prefer their parent (level 1) category names:
     let(:special_cat_ids) { [312, 1269, 397, 498, 504, 228, 248, 276, 1275] } 
     # (omitted "2" because in dev/test it's Fruits which is a) confusing as heck for this test and b) Specialty in Production.  We'll trust the remaining items will be good to test.)
@@ -64,7 +64,7 @@ describe GenerateTableTentsOrPosters do
         if existing = Category.where(id:cat_id).first 
           existing.destroy # go away for this test, we want our own categories in these slots:
         end
-        create(:category, parent: l1_fruits)
+        create(:category, id:cat_id, parent: l1_fruits)
       end
     }
 
@@ -73,7 +73,7 @@ describe GenerateTableTentsOrPosters do
     let(:l1_beverages) { Category.find_by_name("Beverages") }
 
     let(:l2_broc_caul_cabbage) { l3_cabbage.parent }
-    let(:l2_citris) { Category.find_by_name("Citris") }
+    let!(:l2_citrus) { Category.find_by_name("Citrus") }
 
     let(:l3_cabbage) { Category.find_by_name("Cabbage") }
 
@@ -83,6 +83,11 @@ describe GenerateTableTentsOrPosters do
     let(:l2_prod) { create(:product, name: "L2 Prod", category: l2_broc_caul_cabbage) }
     let(:l3_prod) { create(:product, name: "L3 Prod", category: l3_cabbage) }
     let(:l4_prod) { create(:product, name: "L4 Prod", category: l4_oranges) }
+    let(:prod_without_cat) { 
+      prod = create(:product, name: "Prod w/o Cat")
+      prod.update(category: nil)
+      prod
+    }
 
     def product_category_name(product)
       GenerateTableTentsOrPosters.product_category_name(product)
@@ -90,27 +95,51 @@ describe GenerateTableTentsOrPosters do
 
     context "products in Category level 2" do
       it "returns the name of their level 2 Category" do
-        expect(product_category_name(l2_prod)).to eq(l2_broc_caul_cabbage)
+        expect(product_category_name(l2_prod)).to eq(l2_broc_caul_cabbage.name)
       end
     end
     context "products in Category level 3" do
-      it "returns the name of their level 2 Category" 
+      it "returns the name of the level 2 Category" do
+        expect(product_category_name(l3_prod)).to eq(l2_broc_caul_cabbage.name)
+      end
     end
     context "products in Category level 4" do
-      it "returns the name of the level 2 Category" 
+      it "returns the name of the level 2 Category" do
+        expect(product_category_name(l4_prod)).to eq(l2_citrus.name)
+      end
     end
 
     context "products in Category level 1 (unrealistic)" do
-      it "returns the name of their level 1 Category"
+      it "returns the name of their level 1 Category" do
+        expect(product_category_name(l1_prod)).to eq(l1_beverages.name)
+      end
     end
 
     context "products with missing Category (unrealistic)" do
-      it "returns ?"
+      it "returns 'Real food'" do
+        expect(product_category_name(prod_without_cat)).to eq('Real food')
+      end
     end
 
-    context "products with level 3 category with missing parent (unrealistic)" do
-      it "returns ?"
+    context "products associated the specially-avoided level 2 categories" do
+      it "returns the level 1 Category name" do
+        special_cats.each do |cat|
+          prod = create(:product, category: cat)
+          expect(product_category_name(prod)).to eq(l1_fruits.name)
+        end
+      end
     end
+
+    context "products BENEATH the specially-avoided level 2 categories" do
+      it "returns the level 1 Category name" do
+        special_cats.each do |cat|
+          intermediate = create(:category, parent: cat)
+          prod = create(:product, category: intermediate)
+          expect(product_category_name(prod)).to eq(l1_fruits.name)
+        end
+      end
+    end
+
   end
 
   describe "#perform"  do
