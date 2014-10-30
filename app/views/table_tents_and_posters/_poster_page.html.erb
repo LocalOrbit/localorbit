@@ -1,17 +1,17 @@
 <div class="container">
 
-<section id="header">
+<section class="header">
     <% if(include_product_names) %>
-     <div id="productContent"><h1 id="headerPosterText"><%= product_name %></h1><h4>from <span style="text-decoration:underline;">local</span> producers!</h1></h4></div>
+      <div class="productContent"><h1 class="headerPosterText"><%= product_name %></h1><h4>from <span style="text-decoration:underline;">local</span> producers!</h1></h4></div>
     <% else %>
-     <h1 style="margin-top:15px;">Real food from <span style="text-decoration:underline;">local</span> producers!</h1>
+      <h1 style="margin-top:15px;font-size:64px;">Real food from<br/><span style="text-decoration:underline;">local</span> producers!</h1>
     <% end %>
 </section>
 
-<section id="farm-details">
+<section class="farm-details">
    <div class="arrow-down"></div>
    <h2><%= farm.name %></h2>
-   <div id="farm-location">
+   <div class="farm-location">
       <span><%= "#{farm.shipping_location.city}, #{farm.shipping_location.state}" %></span>
       <span>|</span>
       <span><%= farm.shipping_location.geocode %></span>
@@ -19,9 +19,9 @@
    </div>
 </section>
 
-<section id="farm-content">
+<section class="farm-content">
    <div style="float:left; width:50%;">
-      <ul style="float:right;">
+      <ul style="float:left;text-align:center;">
       <li><%= image_tag farm.photo.url %></li>
       <li><%= image_tag farm_map %></li>
    </ul>
@@ -32,10 +32,10 @@
       <%= farm.who_story %>
    </div>
 
-   <span><%= image_tag "logo" %>Powered by <strong>Local Orbit</strong></span>
+   <span><%= image_tag asset_url("table_tents_and_posters/LO_Circle_lo.png") %>Powered by <strong>Local Orbit</strong></span>
 </section>
 
-<section id="footer">
+<section class="footer">
    <div style="width:30%;float:left;text-align:center;">
       <%= image_tag market.photo.url %>
    </div>
