@@ -21,7 +21,7 @@
 
 <section class="farm-content">
    <div style="float:left; width:50%;">
-      <ul style="float:left;text-align:center;">
+      <ul style="float:right;text-align:center;">
       <li><%= image_tag farm.photo.url %></li>
       <li><%= image_tag farm_map %></li>
    </ul>
@@ -29,7 +29,7 @@
    <div style="float:left; width:50%;">
       <br>
       <h4>Who We Are</h4>
-      <%= farm.who_story %>
+      <p><%= farm.who_story %></p>
    </div>
 
    <span><%= image_tag asset_url("table_tents_and_posters/LO_Circle_lo.png") %>Powered by <strong>Local Orbit</strong></span>
