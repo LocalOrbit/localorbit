@@ -30,7 +30,7 @@ describe GenerateTableTentsOrPosters do
     end
 
     it "creates an array of sellers and item names if include_product_names is true", wip:true do
-      expect_get_category_names product1 => "Vogons", 
+      expect_get_category_names product1 => "Vogons",
                                 product2 => "Silastic Armourfiends",
                                 product3 => "Poghrils"
 
@@ -40,6 +40,19 @@ describe GenerateTableTentsOrPosters do
         { farm: zaphod_farms, product_name: "Vogons", farm_map: GenerateTableTentsOrPosters.build_seller_map(zaphod_farms)},
         { farm: zaphod_farms, product_name: "Silastic Armourfiends", farm_map: GenerateTableTentsOrPosters.build_seller_map(zaphod_farms) },
         { farm: prefect_farms, product_name: "Poghrils", farm_map: GenerateTableTentsOrPosters.build_seller_map(prefect_farms) }
+      )
+    end
+
+    it "the list it generates is distinct", :wip=>true do
+      product3.organization = zaphod_farms
+      product3.save
+      expect_get_category_names product1 => "Vogons",
+                                product2 => "Vogons",
+                                product3 => "Silastic Armourfiends"
+      items_for_printing = GenerateTableTentsOrPosters.get_page_list(order: order.reload, include_product_names: true)
+      expect(items_for_printing).to contain_exactly(
+        { farm: zaphod_farms, product_name: "Vogons", farm_map: GenerateTableTentsOrPosters.build_seller_map(zaphod_farms)},
+        { farm: zaphod_farms, product_name: "Silastic Armourfiends", farm_map: GenerateTableTentsOrPosters.build_seller_map(zaphod_farms) }
       )
     end
   end
@@ -67,12 +80,12 @@ describe GenerateTableTentsOrPosters do
 
   describe ".product_category_name" do
     # IDs of categories in production at level 2 who should prefer their parent (level 1) category names:
-    let(:special_cat_ids) { [312, 1269, 397, 498, 504, 228, 248, 276, 1275] } 
+    let(:special_cat_ids) { [312, 1269, 397, 498, 504, 228, 248, 276, 1275] }
     # (omitted "2" because in dev/test it's Fruits which is a) confusing as heck for this test and b) Specialty in Production.  We'll trust the remaining items will be good to test.)
 
     let(:special_cats) {
-      special_cat_ids.map do |cat_id| 
-        if existing = Category.where(id:cat_id).first 
+      special_cat_ids.map do |cat_id|
+        if existing = Category.where(id:cat_id).first
           existing.destroy # go away for this test, we want our own categories in these slots:
         end
         create(:category, id:cat_id, parent: l1_fruits)
@@ -94,7 +107,7 @@ describe GenerateTableTentsOrPosters do
     let(:l2_prod) { create(:product, name: "L2 Prod", category: l2_broc_caul_cabbage) }
     let(:l3_prod) { create(:product, name: "L3 Prod", category: l3_cabbage) }
     let(:l4_prod) { create(:product, name: "L4 Prod", category: l4_oranges) }
-    let(:prod_without_cat) { 
+    let(:prod_without_cat) {
       prod = create(:product, name: "Prod w/o Cat")
       prod.update(category: nil)
       prod

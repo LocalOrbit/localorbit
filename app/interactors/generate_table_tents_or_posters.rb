@@ -12,14 +12,14 @@ class GenerateTableTentsOrPosters
 
   def self.get_page_list(order:,include_product_names:)
     if include_product_names
-      order.items.map do |item| 
-        { farm: item.seller, 
-          product_name: GenerateTableTentsOrPosters.product_category_name(item.product), 
+      order.items.map do |item|
+        { farm: item.seller,
+          product_name: GenerateTableTentsOrPosters.product_category_name(item.product),
           farm_map: GenerateTableTentsOrPosters.build_seller_map(item.seller) }
-      end
+      end.uniq
     else
-      order.items.map do |item| 
-        { farm: item.seller, 
+      order.items.map do |item|
+        { farm: item.seller,
           farm_map: GenerateTableTentsOrPosters.build_seller_map(item.seller) }
       end.uniq
     end
