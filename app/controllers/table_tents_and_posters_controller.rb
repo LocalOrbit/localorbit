@@ -2,7 +2,8 @@ class TableTentsAndPostersController < ApplicationController
   DefaultPrintableType = 'table tent'
 
   def index
-    if params[:type] == "poster"
+    @type = params[:type]
+    if @type == "poster"
       @printables = 'posters'
       @title = 'Posters (8.5" x 11")'
     else

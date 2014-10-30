@@ -1,12 +1,25 @@
-<div class="main-printable-ad">
-  <h1><%= @title %>
-  <h4>Why use <%= @printables.downcase %>?</h4>
-  <p><%= @printables[0].titleize + @printables[1..-1].downcase %> help you tell the stories of the farms and food markets you work with. The <%= @printables %> are customized to your order and you can access them for each order you place.</p>
-  <h4>Printing Instructions</h4>
-  <p>To print the <%= @printables.downcase %>, click the button below to download the PDF. From there you can open, save, or send the PDF to your printer.</p>
-  <%= form_tag("", :method=>"post", :target=>"_blank") do %>
-    <span><input type="checkbox" name="include_product_names"></input><strong>Include the Product Name</strong></span>
-    <p><em>By selecting this option, the <%= @printables %> will display product information from your order.</em></p>
-    <button href="" class="btn printable-btn">Download the PDF</button>
-  <% end %>
+<div class="main-printables" data-ko-module="main_printables" data-printable-type="<%= @type %>">
+
+  <div class="main-printable-ad">
+    <h1><%= @title %>
+    <h4>Why use <%= @printables.downcase %>?</h4>
+    <p><%= @printables[0].titleize + @printables[1..-1].downcase %> help you tell the stories of the farms and food markets you work with. The <%= @printables %> are customized to your order and you can access them for each order you place.</p>
+    <h4>Printing Instructions</h4>
+    <p>To print the <%= @printables.downcase %>, click the button below to download the PDF. From there you can open, save, or send the PDF to your printer.</p>
+    <%= form_tag("", :method=>"post", :target=>"_blank") do %>
+      <span><input type="checkbox" name="include_product_names" data-bind="checked: includeProductName"></input><strong>Include the Product Name</strong></span>
+      <p><em>By selecting this option, the <%= @printables %> will display product information from your order.</em></p>
+      <button href="#" class="btn printable-btn">Download the PDF</button>
+    <% end %>
+  </div>
+
+  <%= image_tag "table_tents_and_posters/poster.png", class: "main-printable-img", data: {bind: "visible: showPoster"} %>
+
+  <%= image_tag "table_tents_and_posters/poster_name.png", class: "main-printable-img", data: {bind: "visible: showPosterWithName"} %>
+
+  <%= image_tag "table_tents_and_posters/tabletent.png", class: "main-printable-img", data: {bind: "visible: showTableTent"} %>
+
+  <%= image_tag "table_tents_and_posters/tabletent_name.png", class: "main-printable-img", data: {bind: "visible: showTableTentWithName"} %>
 </div>
+<div class="clearfix"></div>
+
