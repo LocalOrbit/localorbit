@@ -7,15 +7,14 @@ class GenerateTableTentsOrPosters
     page_list = GenerateTableTentsOrPosters.get_page_list(order: order, include_product_names: include_product_names)
     template = GenerateTableTentsOrPosters.get_template_from_type(type: type)
     pdf_size  = GenerateTableTentsOrPosters.get_pdf_size(type: type)
-    context[:pdf_result] = GeneratePdf.perform(request:request, template: template, pdf_size: pdf_size, params: {page_list: page_list, include_product_names: include_product_names, buyer: order.organization}).pdf_result
+    context[:pdf_result] = GeneratePdf.perform(request:request, template: template, pdf_size: pdf_size, params: {page_list: page_list, include_product_names: include_product_names, market: order.market}).pdf_result
   end
 
   def self.get_page_list(order:,include_product_names:)
     if include_product_names
-      farm_map_url = GenerateTableTentsOrPosters
       order.items.map {|item| {:farm=>item.seller, :product_name=>item.product.name, :farm_map=>GenerateTableTentsOrPosters.build_seller_map(item.seller)}}
     else
-      order.items.map {|item| {:farm=>item.seller}}.uniq
+      order.items.map {|item| {:farm=>item.seller, :farm_map=>GenerateTableTentsOrPosters.build_seller_map(item.seller)}}.uniq
     end
   end
 
@@ -24,7 +23,7 @@ class GenerateTableTentsOrPosters
     if seller_location
       "http:" + static_map([seller_location], seller_location, 320, 200)
     else
-      "no shipping location"
+      ""
     end
   end
 

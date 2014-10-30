@@ -6,7 +6,7 @@ describe GenerateTableTentsOrPosters do
   let(:request) {double("request", {:base_url=>"http://www.example.com"})}
   let(:order) {create(:order, organization: buyer_organization)}
   let(:zaphod_farms) {create(:organization, :seller, :single_location, name: "Zaphod")}
-  let(:prefect_farms) {create(:organization, :seller, :single_location, name: "Prefect")}
+  let(:prefect_farms) {create(:organization, :seller, name: "Prefect")}
   let(:product1) {create :product, :sellable, organization: zaphod_farms}
   let(:product2) {create :product, :sellable, organization: zaphod_farms}
   let(:product3) {create :product, :sellable, organization: prefect_farms}
@@ -18,17 +18,17 @@ describe GenerateTableTentsOrPosters do
     it "creates an array of sellers for an order if include_product_names is false" do
       items_for_printing = GenerateTableTentsOrPosters.get_page_list(order: order.reload, include_product_names: false)
       expect(items_for_printing).to contain_exactly(
-        { farm: prefect_farms },
-        { farm: zaphod_farms }
+        { farm: prefect_farms, farm_map: GenerateTableTentsOrPosters.build_seller_map(prefect_farms) },
+        { farm: zaphod_farms, farm_map: GenerateTableTentsOrPosters.build_seller_map(zaphod_farms) }
       )
     end
 
     it "creates an array of sellers and item names if include_product_names is true" do
       items_for_printing = GenerateTableTentsOrPosters.get_page_list(order: order.reload, include_product_names: true)
       expect(items_for_printing).to contain_exactly(
-        { farm: zaphod_farms, product_name: product1.name },
-        { farm: zaphod_farms, product_name: product2.name },
-        { farm: prefect_farms, product_name: product3.name }
+        { farm: zaphod_farms, product_name: product1.name, farm_map: GenerateTableTentsOrPosters.build_seller_map(zaphod_farms)},
+        { farm: zaphod_farms, product_name: product2.name, farm_map: GenerateTableTentsOrPosters.build_seller_map(zaphod_farms) },
+        { farm: prefect_farms, product_name: product3.name, farm_map: GenerateTableTentsOrPosters.build_seller_map(prefect_farms) }
       )
     end
   end
@@ -47,9 +47,10 @@ describe GenerateTableTentsOrPosters do
     end
   end
 
-  describe "#build_seller_map", :wip=>true do
+  describe "#build_seller_map" do
     it "gets a map from the seller's shipping location" do
-      p GenerateTableTentsOrPosters.build_seller_map(zaphod_farms)
+      expect(GenerateTableTentsOrPosters.build_seller_map(zaphod_farms).match(/mapbox/)).to_not eq nil
+      expect(GenerateTableTentsOrPosters.build_seller_map(prefect_farms)).to eq ""
     end
   end
 
@@ -65,7 +66,8 @@ describe GenerateTableTentsOrPosters do
              template: "table_tents_and_posters/poster",
              pdf_size: {page_size: "letter"},
              params: { page_list: GenerateTableTentsOrPosters.get_page_list(order: order.reload, include_product_names: false),
-                       include_product_names: false}).
+                       include_product_names: false,
+                       market: order.market}).
         and_return(double "context", pdf_result: "ThePdf")
 
       context = GenerateTableTentsOrPosters.perform(order: order, type: "poster", include_product_names: false, request: request)
@@ -78,7 +80,8 @@ describe GenerateTableTentsOrPosters do
              template: "table_tents_and_posters/table_tent",
              pdf_size: {page_width: 101.6, page_height: 152.4},
              params: {page_list: GenerateTableTentsOrPosters.get_page_list(order: order.reload, include_product_names: false),
-                      include_product_names: false}).
+                      include_product_names: false,
+                      market: order.market}).
         and_return(double "context", pdf_result: "ThePdf")
 
       context = GenerateTableTentsOrPosters.perform(order: order, type: "table tents", include_product_names: false, request: request)
