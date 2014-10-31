@@ -22,8 +22,8 @@
 <section class="farm-content">
    <div style="float:left; width:50%;">
       <ul style="float:right;text-align:center;">
-      <li><%= image_tag farm.photo.try(:url) %></li>
-      <li><%= image_tag farm_map %></li>
+      <li><%= image_tag ensure_full_url(farm.photo.try(:url)) %></li>
+      <li><%= image_tag ensure_full_url(farm_map) %></li>
    </ul>
    </div>
    <div style="float:left; width:50%;">
@@ -32,12 +32,12 @@
       <p><%= farm.who_story %></p>
    </div>
 
-   <span><%= image_tag asset_url("table_tents_and_posters/LO_Circle_lo.png") %>Powered by <strong>Local Orbit</strong></span>
+   <span><%= image_tag ensure_full_url(asset_url("table_tents_and_posters/LO_Circle_lo.png")) %>Powered by <strong>Local Orbit</strong></span>
 </section>
 
 <section class="footer">
    <div style="width:30%;float:left;text-align:center;">
-      <%= image_tag market.photo.try(:url) %>
+      <%= image_tag ensure_full_url(market.photo.try(:url)) %>
    </div>
    <div style="width:62%;margin-left: 1%;float:left;">
       <h5>Brought to you by</h5>
