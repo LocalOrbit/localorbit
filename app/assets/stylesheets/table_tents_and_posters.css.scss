@@ -4,20 +4,37 @@
   border-color: #43639f;
 }
 
+.downloadable-content {
+  padding-left: 5%;
+  padding-right: 5%;
+}
+
 .downloadable-ad {
   margin-top: 30px;
   height: 350px;
   .downloadable-type {
     width: 50%;
     float: left;
+    p {
+      padding-right: 20%;
+    }
     .downloadable-title {
       margin-bottom: 0px;
     }
+  }
+  img {
+    float: left;
+    height: 250px;
+    margin-right: 8%;
   }
 }
 
 .main-printables {
   float: left;
+  img {
+    height: 530px;
+    margin-left: 10px;
+  }
 }
 
 .main-printable-ad {
