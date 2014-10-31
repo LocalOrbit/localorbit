@@ -6,20 +6,22 @@
     <p><%= @printables[0].titleize + @printables[1..-1].downcase %> help you tell the stories of the farms and food markets you work with. The <%= @printables %> are customized to your order and you can access them for each order you place.</p>
     <h4>Printing Instructions</h4>
     <p>To print the <%= @printables.downcase %>, click the button below to download the PDF. From there you can open, save, or send the PDF to your printer.</p>
-    <%= form_tag("", :method=>"post", :target=>"_blank") do %>
+    <%= form_tag("", method: "post", data: { bind: "attr: { target: formTarget }" }) do %>
       <span><input type="checkbox" name="include_product_names" data-bind="checked: includeProductName"></input><strong>Include the Product Name</strong></span>
       <p><em>By selecting this option, the <%= @printables %> will display product information from your order.</em></p>
       <button href="#" class="btn printable-btn">Download the PDF</button>
     <% end %>
   </div>
 
-  <%= image_tag "table_tents_and_posters/poster.png", class: "main-printable-img", data: {bind: "visible: showPoster"} %>
+  <!-- ko if: isPoster() -->
+  <%= image_tag "table_tents_and_posters/poster.png", style: "display:none", class: "main-printable-img", data: {bind: "visible: !includeProductName()"} %>
+  <%= image_tag "table_tents_and_posters/poster_name.png", style: "display:none", class: "main-printable-img", data: {bind: "visible: includeProductName()"} %>
+  <!-- /ko -->
 
-  <%= image_tag "table_tents_and_posters/poster_name.png", class: "main-printable-img", data: {bind: "visible: showPosterWithName"} %>
-
-  <%= image_tag "table_tents_and_posters/tabletent.png", class: "main-printable-img", data: {bind: "visible: showTableTent"} %>
-
-  <%= image_tag "table_tents_and_posters/tabletent_name.png", class: "main-printable-img", data: {bind: "visible: showTableTentWithName"} %>
+  <!-- ko ifnot: isPoster() -->
+  <%= image_tag "table_tents_and_posters/tabletent.png", style: "display:none", class: "main-printable-img", data: {bind: "visible: !includeProductName()"} %>
+  <%= image_tag "table_tents_and_posters/tabletent_name.png", style: "display:none", class: "main-printable-img", data: {bind: "visible: includeProductName()"} %>
+  <!-- /ko -->
 </div>
 <div class="clearfix"></div>
 

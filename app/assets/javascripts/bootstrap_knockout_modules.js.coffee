@@ -19,7 +19,8 @@ KM.register = (name, args={}) ->
   debug "Registering ko-module '#{name}':", args
   KM.modules[name] = args
 
-debug = (args...) -> console.log "KnockoutModule setup:", args...
+# debug = (args...) -> console.log "KnockoutModule setup:", args...
+debug = (args...) ->
 warn = (args...) -> console.log "KnockoutModule setup:", args...
     
 KM.bootstrapModules = (ko) ->
