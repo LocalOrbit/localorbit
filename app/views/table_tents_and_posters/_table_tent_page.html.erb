@@ -27,9 +27,11 @@
     </section>
 
     <section class="footer">
-       <div style="width:30%;float:left;text-align:center;">
-          <%= image_tag market.photo.url %>
-       </div>
+      <% if market.photo %>
+         <div style="width:30%;float:left;text-align:center;">
+            <%= image_tag market.photo.url %>
+         </div>
+      <% end %>
        <div style="width:62%;margin-left: 1%;float:left;">
           <h5>Brought to you by</h5>
           <h4><%= market.name %></h4>
