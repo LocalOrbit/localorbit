@@ -74,4 +74,15 @@ describe TableTentsAndPostersController do
       end
     end
   end
+
+  describe "#show" do
+    context "GET html" do
+      it "uhhh" do
+        get :show, order_id: 5, id: 42, format: :json
+        # binding.pry
+        expect(response.status).to eq 200
+        expect(response.content_type).to eq "application/json"
+      end
+    end
+  end
 end
