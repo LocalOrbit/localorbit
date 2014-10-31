@@ -36,7 +36,6 @@ KM.bootstrapModules = (ko) ->
 
       viewModel = if module.viewModel
         if typeof module.viewModel == "function"
-          window.wtff = ko
           module.viewModel(ko,el)
         else
           module.viewModel
