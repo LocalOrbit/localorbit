@@ -12,9 +12,9 @@
    <div class="arrow-down"></div>
    <h2><%= farm.name %></h2>
    <div class="farm-location">
-      <span><%= "#{farm.shipping_location.city}, #{farm.shipping_location.state}" %></span>
+      <span><%= "#{farm.shipping_location.try(:city)}, #{farm.shipping_location.try(:state)}" %></span>
       <span>|</span>
-      <span><%= farm.shipping_location.geocode %></span>
+      <span><%= farm.shipping_location.try(:geocode) %></span>
       <br><br><br>
    </div>
 </section>
@@ -22,7 +22,7 @@
 <section class="farm-content">
    <div style="float:left; width:50%;">
       <ul style="float:right;text-align:center;">
-      <li><%= image_tag farm.photo.url %></li>
+      <li><%= image_tag farm.photo.try(:url) %></li>
       <li><%= image_tag farm_map %></li>
    </ul>
    </div>
@@ -37,7 +37,7 @@
 
 <section class="footer">
    <div style="width:30%;float:left;text-align:center;">
-      <%= image_tag market.photo.url %>
+      <%= image_tag market.photo.try(:url) %>
    </div>
    <div style="width:62%;margin-left: 1%;float:left;">
       <h5>Brought to you by</h5>

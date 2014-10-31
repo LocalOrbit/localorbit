@@ -12,10 +12,10 @@
        <div class="arrow-down"></div>
        <h2>Chestnut Growers, Inc.</h2>
        <div class="farm-location">
-          <span>Ann Arbor, MI</span>
+          <span><%= "#{farm.shipping_location.try(:city)}, #{farm.shipping_location.try(:state)}" %></span>
           <span>|</span>
-          <span>42.911234, -83.482759</span>
-          <br><br>
+          <span><%= farm.shipping_location.try(:geocode) %></span>
+          <br><br><br>
        </div>
     </section>
 
@@ -29,7 +29,7 @@
     <section class="footer">
       <% if market.photo %>
          <div style="width:30%;float:left;text-align:center;">
-            <%= image_tag market.photo.url %>
+            <%= image_tag market.photo.try(:url) %>
          </div>
       <% end %>
        <div style="width:62%;margin-left: 1%;float:left;">

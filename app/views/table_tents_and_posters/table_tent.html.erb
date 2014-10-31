@@ -1,5 +1,9 @@
 <!DOCTYPE html>
+<html>
     <head>
+      <meta charset="utf-8">
+      <script src="<%= asset_url('jquery.js') %>"></script>
+      <script src="<%= asset_url('pdf_resizer.js') %>"></script>
     </head>
     <body style='margin: 0; padding: 0;'>
     <style>
@@ -21,7 +25,7 @@
       .farm-content span{font-size:60%;position:absolute;bottom:0;right:3%;z-index:999999;background-color:white;}
       .farm-content span img{ width:6px; width:20px; padding-right: 4px; padding-bottom: 3px; vertical-align: middle;}
 
-      .footer{background:#3F3E40; background-image:url("<%= asset_url('table_tents_and_posters/Group.png') %> "); color:#FEFEFE; background-size:cover; background-position:center center; height: 69px;}
+      .footer{background:#3F3E40; background-image:url("<%= asset_url('table_tents_and_posters/Group.png') %> "); color:#FEFEFE; background-size:cover; background-position:center center; height: 69px; overflow: hidden;}
       .footer img {background:#ffffff; width:90%;margin: -15% auto 4%;border: 1px solid #dfdfdf;}
       .footer h5{margin:3% 0 1%;text-transform:uppercase; border-bottom:1px solid; color:#8E8C8E; font-size: 60%;}
       .footer h4{line-height: 0; margin: 4% 0 2%;font-size: 80%;}

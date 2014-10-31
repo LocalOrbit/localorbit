@@ -1,6 +1,5 @@
 $ ->
-  fitText = (id, maxHeight, minFont) ->
-    element = $(id)
+  fitText = (element, maxHeight, minFont) ->
     height = $(element)?[0]?.scrollHeight
     while height > maxHeight
       fontSize = $(element).css("font-size").replace(/px/, "")
@@ -9,11 +8,15 @@ $ ->
       height = (if (newHeight is height or fontSize <= minFont) then -1 else newHeight)
 
   resizeContent = ->
-    fitText("#farm-content", 1800, 9)
+    $(".farm-content").each ->
+      el = this
+      fitText(el, 1800, 9)
 
   resizeHeader = ->
-    fitText("#headerText", 56, 24)
-    $('#headerText').css('margin-top', $('#productContent').height() * 0.15 + 'px')
+    $(".headerText").each ->
+      el = this
+      fitText(el, 56, 24)
+      # $(el).css('margin-top', $('.productContent').height() * 0.15 + 'px')
 
   resizeContent()
   resizeHeader()
