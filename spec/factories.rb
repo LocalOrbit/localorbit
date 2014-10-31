@@ -480,4 +480,11 @@ FactoryGirl.define do
   factory :batch_invoice_error do
 
   end
+
+  factory :order_printable do
+    user
+    order
+    include_product_names false
+    printable_type "table tent"
+  end
 end

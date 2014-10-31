@@ -488,6 +488,17 @@ ActiveRecord::Schema.define(version: 20141107205633) do
   add_index "order_payments", ["order_id"], name: "index_order_payments_on_order_id", using: :btree
   add_index "order_payments", ["payment_id"], name: "index_order_payments_on_payment_id", using: :btree
 
+  create_table "order_printables", force: true do |t|
+    t.integer  "user_id"
+    t.integer  "order_id"
+    t.boolean  "include_product_names"
+    t.string   "printable_type"
+    t.string   "pdf_uid"
+    t.string   "pdf_name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "orders", force: true do |t|
     t.integer  "organization_id"
     t.integer  "market_id"
