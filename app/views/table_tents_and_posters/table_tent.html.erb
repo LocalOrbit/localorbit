@@ -7,10 +7,10 @@
     </head>
     <body style='margin: 0; padding: 0;'>
     <style>
-      .container{max-width:500px;font-family: 'Helvetica', sans-serif;margin:0;padding:0;font-size: 14px;page-break-inside:avoid;}
-       section{float:left; width: 100%;}
+      .container{max-width:500px;font-family: 'Helvetica', sans-serif;margin:0;padding:0;font-size: 14px;}
+       section{float:left; width: 100%; page-break-after: always;}
 
-      .header{background:#3F3E40; background-image:url("<%= asset_url('table_tents_and_posters/Group.png') %> ");color:#E3E3E4; text-align:center; font-size:140%; position:relative; background-size:cover; background-position:center center;height:124px;width:100%;overflow: hidden;}
+      .header{background:#3F3E40; background-image:url("<%= asset_url('table_tents_and_posters/Group.png') %> ");color:#E3E3E4; text-align:center; font-size:140%; position:relative; background-size:cover; background-position:center center;height:124px;width:100%;}
       .header h4{margin-top: 0px;}
       .headerText{padding:5px;margin-bottom: 0px;}
       .arrow-down{width: 0; height: 0; border-left: 32px solid transparent;
@@ -20,12 +20,12 @@
       .farm-details h2{font-size:160%;margin: 2% 0 1%;}
       .farm-location{font-weight:bold;font-size:86%;}
 
-      .farm-content{padding: 5% 0; position: relative;height:254px;overflow:hidden;z-index: -1;}
+      .farm-content{padding: 5% 0; position: relative;height:240px;overflow:hidden;z-index: -1;}
       .farm-content p,.farm-content h4{padding:0 6%; font-size: 84%;}
       .farm-content span{font-size:60%;position:absolute;bottom:0;right:3%;z-index:999999;background-color:white;}
       .farm-content span img{ width:6px; width:20px; padding-right: 4px; padding-bottom: 3px; vertical-align: middle;}
 
-      .footer{background:#3F3E40; background-image:url("<%= asset_url('table_tents_and_posters/Group.png') %> "); color:#FEFEFE; background-size:cover; background-position:center center; height: 69px; overflow: hidden;}
+      .footer{background:#3F3E40; background-image:url("<%= asset_url('table_tents_and_posters/Group.png') %> "); color:#FEFEFE; background-size:cover; background-position:center center; overflow:hidden;}
       .footer img {background:#ffffff; width:90%;margin: -15% auto 4%;border: 1px solid #dfdfdf;}
       .footer h5{margin:3% 0 1%;text-transform:uppercase; border-bottom:1px solid; color:#8E8C8E; font-size: 60%;}
       .footer h4{line-height: 0; margin: 4% 0 2%;font-size: 80%;}
