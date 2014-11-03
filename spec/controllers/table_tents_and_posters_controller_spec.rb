@@ -1,6 +1,6 @@
 require "spec_helper"
 
-describe TableTentsAndPostersController do
+describe TableTentsAndPostersController, wip: true do
 
   include_context "the mini market"
 
@@ -24,64 +24,90 @@ describe TableTentsAndPostersController do
     describe "Creating #{type_string || "default printable"}s..." do
       let(:printable_type) { type_string }
       let(:expected_printable_type) { type_string || "table tent" }
+      let(:include_product_names) {[false, true].sample} #wink
 
       describe "#create" do
         def post_create
           if printable_type
-            post :create, order_id: order.id, type: printable_type, include_product_names: false
+            post :create, order_id: order.id, type: printable_type, include_product_names: include_product_names
           else
-            post :create, order_id: order.id, include_product_names: false
+            post :create, order_id: order.id, include_product_names: include_product_names
           end
         end
 
-        def expect_generate_pdf
-          # expect(GenerateTableTentsOrPosters).to receive(:perform).
-            # with(order: order, type: expected_printable_type, include_product_names: false).
-            # and_return(context)
-          expect(GenerateTableTentsOrPosters).to receive(:perform) do |arg|
-            expect(arg[:order]).to eq(order)
-            expect(arg[:type]).to eq(expected_printable_type)
-            expect(arg[:include_product_name]).to be_falsey
-            expect(arg[:request].base_url).to eq request.base_url
-            context
+        def expect_process_order_printable
+          delayed_job = double "Delayed job"
+          expect(ProcessOrderPrintable).to receive(:delay).and_return(delayed_job)
+          expect(delayed_job).to receive(:perform) do |args|
+            @delayed_job_args = args
           end
         end
 
         let (:order) {create(:order, organization: buyer_organization)}
         let (:pdf_result) { double "PDF Result", data: "the pdf data" }
 
-        describe "when PDF generation succeeds" do
-          let (:context) { double "Result Context", success?: true, pdf_result: pdf_result }
+        it "inserts an OrderPrintable record per our inputs and starts a delayed job to process the PDF" do
+          pre_count = OrderPrintable.all.size
+          expect_process_order_printable
 
-          it "renders the PDF data" do
-            expect_generate_pdf
-            post_create
-            expect(response.content_type).to eq "application/pdf"
-            expect(response.body).to eq pdf_result.data
-          end
-        end
+          post_create
 
-        describe "when PDF generation fails" do
-          let (:context) { double "Result Context", success?: false, message: "Too much want" }
+          order_printable = OrderPrintable.where(order_id: order.id, printable_type: expected_printable_type).first
+          expect(OrderPrintable.all.size).to eq pre_count + 1
+          expect(order_printable).to be
+          expect(order_printable.order.id).to eq order.id
+          expect(order_printable.printable_type).to eq expected_printable_type
+          expect(order_printable.include_product_names).to eq include_product_names
 
-          it "redirects to index and shows an error" do
-            expect_generate_pdf
-            post_create
-            expect(response).to redirect_to([:order, :table_tents_and_posters, type: expected_printable_type])
-            expect(flash[:alert]).to match(/generate.*#{expected_printable_type}/i)
-          end
+          expect(response).to redirect_to(order_table_tents_and_poster_path(order_id:order.id, id: order_printable.id))
+
+          expect(@delayed_job_args).to be
+          expect(@delayed_job_args[:order_printable_id]).to eq order_printable.id
+          expect(@delayed_job_args[:request].base_url).to eq request.base_url
         end
       end
     end
   end
 
-  describe "#show" do
+  describe "#show", :wip=>true do
+    let(:order_printable) {create :order_printable, user: barry}
+    let(:order) {order_printable.order}
+
     context "GET html" do
-      it "uhhh" do
-        get :show, order_id: 5, id: 42, format: :json
-        # binding.pry
+      it "returns HTML" do
+        get :show, order_id: order.id, id: order_printable.id
         expect(response.status).to eq 200
-        expect(response.content_type).to eq "application/json"
+        expect(response.content_type).to eq "text/html"
+      end
+      
+      context "when PDF is not available" do
+        it "returns the JSON status with pdf_url nil" do
+          get :show, order_id:order.id, id: order_printable.id, format: :json
+          expect(response.status).to eq 200
+          expect(response.content_type).to eq "application/json"
+          data = JSON.parse(response.body)
+          expect(data.keys).to contain_exactly("pdf_url")
+          expect(data["pdf_url"]).to be_nil
+        end
+      end
+
+      context "when PDF is  available" do
+        before do
+          order_printable.pdf = "mostly harmless"
+          order_printable.pdf.name = "dolphins.pdf"
+          order_printable.save
+        end
+        
+        it "returns the JSON status with pdf_url set appropriately" do
+          get :show, order_id:order.id, id: order_printable.id, format: :json
+          expect(response.status).to eq 200
+          expect(response.content_type).to eq "application/json"
+          data = JSON.parse(response.body)
+          expect(data.keys).to contain_exactly("pdf_url")
+          expect(data["pdf_url"]).to_not be_nil
+          order_printable_reloaded = OrderPrintable.find order_printable.id # BECUZ ARGH
+          expect(data["pdf_url"]).to eq order_printable_reloaded.pdf.remote_url
+        end
       end
     end
   end

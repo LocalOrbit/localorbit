@@ -13,6 +13,10 @@
 #   applyBindings: (ko,el) ->
 
 KM = {}
+if RAILS_ENV? and RAILS_ENV == 'test'
+  KM.testMode = ko.observable(true)
+else
+  KM.testMode = ko.observable(false)
 KM.modules = {}
 KM.viewModels = {}
 KM.register = (name, args={}) ->

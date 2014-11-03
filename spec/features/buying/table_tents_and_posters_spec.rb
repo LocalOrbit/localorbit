@@ -1,6 +1,6 @@
 require "spec_helper"
 
-feature "Downloading table tents or posters" do
+feature "Downloading table tents or posters", js:true, wip:true do
   let(:user) {create :user, :buyer}
   let(:organization) {user.organizations.first}
   let(:market) {user.markets.first}
@@ -18,7 +18,17 @@ feature "Downloading table tents or posters" do
     expect(page).to have_text 'Table Tents (4" x 6")'
     expect(page).to have_text 'Why use table tents?'
     click_on "Download the PDF"
-    expect(page.body).to match(/^%PDF-1.4/)
+    expect(page).to have_text "Generating"
+    
+    # EGAD
+    patiently do
+      uid = current_path[1..-1]
+      order_printably = OrderPrintable.find_by(pdf_uid: uid)
+      expect(order_printably).to be
+      expect(order_printably.pdf).to be
+      expect(order_printably.pdf.file).to be
+      expect(order_printably.pdf.file.readlines.first).to match(/PDF-1\.4/)
+    end
   end
 
   scenario "lets users download a Poster for a placed order" do
@@ -28,6 +38,17 @@ feature "Downloading table tents or posters" do
     expect(page).to have_text 'Posters (8.5" x 11")'
     expect(page).to have_text 'Why use posters?'
     click_on "Download the PDF"
-    expect(page.body).to match(/^%PDF-1.4/)
+    expect(page).to have_text "Generating"
+    
+    # EGAD.
+    # We were having MAJRO TRUBL getting the PDF to actually fully render.  Dragonfly URL hell yall.
+    patiently do
+      uid = current_path[1..-1]
+      order_printably = OrderPrintable.find_by(pdf_uid: uid)
+      expect(order_printably).to be
+      expect(order_printably.pdf).to be
+      expect(order_printably.pdf.file).to be
+      expect(order_printably.pdf.file.readlines.first).to match(/PDF-1\.4/)
+    end
   end
 end

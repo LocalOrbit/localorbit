@@ -173,6 +173,7 @@
   </div>
   <div class="overlay"></div>
 
+  <script>RAILS_ENV = '<%= Rails.env %>';</script>
   <%= javascript_include_tag "application" %>
   <%= javascript_include_tag "balanced" if @balanced %>
 </body>
