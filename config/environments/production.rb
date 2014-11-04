@@ -85,6 +85,7 @@ Rails.application.configure do
   if Figaro.env.deploy_env == 'production'
     config.action_mailer.default_url_options = {protocol: 'https', host: "app.#{Figaro.env.domain}"}
   else
+    config.force_ssl = false # XXX ?
     config.action_mailer.default_url_options = {protocol: 'https', host: Figaro.env.domain}
   end
 end

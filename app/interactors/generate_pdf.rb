@@ -8,6 +8,9 @@ class GeneratePdf
 
   def generate_pdf(request:,template:,params:)
     html = generate_html(request: request, template: template, params: params)
+    puts "XXXX HTML GENERATED USING template=#{template}, request=#{request.inspect} (base_url=#{request.base_url}) params=#{params.inspect} XXXX"
+    puts html
+    puts "XXXX END HTML XXXX"
     pdf_settings = pdf_size.merge({margin_top: 0, margin_right: 0, margin_left: 0, margin_bottom: 0})
     pdf_kit = PDFKit.new(html, pdf_settings)
     PdfResult.new(pdf_kit)
