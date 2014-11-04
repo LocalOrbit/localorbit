@@ -456,7 +456,7 @@ ActiveRecord::Schema.define(version: 20141107205633) do
     t.string   "seller_name"
     t.integer  "quantity"
     t.string   "unit"
-    t.decimal  "discount_seller",        precision: 10, scale: 2, default: 0.0,      null: false
+    t.decimal  "discount_market",        precision: 10, scale: 2, default: 0.0,      null: false
     t.decimal  "market_seller_fee",      precision: 10, scale: 2, default: 0.0,      null: false
     t.decimal  "local_orbit_seller_fee", precision: 10, scale: 2, default: 0.0,      null: false
     t.decimal  "local_orbit_market_fee", precision: 10, scale: 2, default: 0.0,      null: false
@@ -470,7 +470,7 @@ ActiveRecord::Schema.define(version: 20141107205633) do
     t.integer  "legacy_id"
     t.decimal  "quantity_delivered",     precision: 10, scale: 2
     t.string   "payment_status",                                  default: "unpaid"
-    t.decimal  "discount_market",        precision: 10, scale: 2, default: 0.0,      null: false
+    t.decimal  "discount_seller",        precision: 10, scale: 2, default: 0.0,      null: false
   end
 
   add_index "order_items", ["order_id", "product_id"], name: "index_order_items_on_order_id_and_product_id", using: :btree
@@ -640,8 +640,8 @@ ActiveRecord::Schema.define(version: 20141107205633) do
     t.integer  "location_id"
     t.boolean  "use_simple_inventory",     default: true, null: false
     t.integer  "unit_id"
-    t.string   "image_uid"
     t.integer  "top_level_category_id"
+    t.string   "image_uid"
     t.datetime "deleted_at"
     t.text     "short_description"
     t.text     "long_description"

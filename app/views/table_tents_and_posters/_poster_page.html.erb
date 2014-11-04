@@ -38,9 +38,11 @@
 </section>
 
 <section class="footer">
-   <div style="width:30%;float:left;text-align:center;">
-      <%= image_tag ensure_full_url(market.logo.try(:url)) %>
-   </div>
+   <% if market.logo %>
+      <div style="width:30%;float:left;text-align:center;">
+         <%= image_tag ensure_full_url(market.logo.url) %>
+      </div>
+   <% end %>
    <div style="width:62%;margin-left: 1%;float:left;">
       <h5>Brought to you by</h5>
 

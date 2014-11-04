@@ -6,7 +6,7 @@ class ProcessOrderPrintable
     order_printable = OrderPrintable.find order_printable_id
     context = GenerateTableTentsOrPosters.perform(order: order_printable.order, type: order_printable.printable_type, include_product_names: order_printable.include_product_names, request: request)
     order_printable.pdf = context.pdf_result.data
-    order_printable.pdf.name = "SRSLY.pdf"
+    order_printable.pdf.name = "#{order_printable_id}.pdf"
     order_printable.save
   end
 end

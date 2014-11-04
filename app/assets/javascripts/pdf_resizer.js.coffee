@@ -10,7 +10,7 @@ $ ->
   resizeContent = ->
     $(".farm-content").each ->
       el = this
-      fitText(el, 1800, 9)
+      fitText(el, 1900, 14)
 
   resizeHeader = ->
     $(".headerText").each ->
