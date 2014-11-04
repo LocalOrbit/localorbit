@@ -3,20 +3,22 @@ class GeneratePdf
 
   def perform
     request, template, params, pdf_size = require_in_context :request, :template, :params, :pdf_size
-    context[:pdf_result] = generate_pdf(request: request, template: template, params: params)
+    context[:pdf_result] = GeneratePdf.generate_pdf(request: request, template: template, params: params, pdf_size: pdf_size)
   end
 
-  def generate_pdf(request:,template:,params:)
+  def self.generate_pdf(request:,template:,params:,pdf_size:)
     html = generate_html(request: request, template: template, params: params)
-    puts "XXXX HTML GENERATED USING template=#{template}, request=#{request.inspect} (base_url=#{request.base_url}) params=#{params.inspect} XXXX"
-    puts html
-    puts "XXXX END HTML XXXX"
+    if Figaro.env.debug == 'ON'
+      puts ">>> HTML GENERATED USING template=#{template}, request=#{request.inspect} (base_url=#{request.base_url}) params=#{params.inspect} <<<"
+      puts html
+      puts ">>> END HTML <<<"
+    end
     pdf_settings = pdf_size.merge({margin_top: 0, margin_right: 0, margin_left: 0, margin_bottom: 0})
     pdf_kit = PDFKit.new(html, pdf_settings)
     PdfResult.new(pdf_kit)
   end
 
-  def generate_html(request:,template:,params:)
+  def self.generate_html(request:,template:,params:)
     locals = {params: params}
     view = get_view(request)
     view.render(
@@ -25,7 +27,7 @@ class GeneratePdf
     )
   end
 
-  def get_view(request)
+  def self.get_view(request)
     action_view = ActionView::Base.new(ActionController::Base.view_paths, {})
     action_view.request = request
     action_view.extend ApplicationHelper

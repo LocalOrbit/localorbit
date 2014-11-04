@@ -22,7 +22,9 @@
 <section class="farm-content">
    <div style="float:left; width:50%;">
       <ul style="float:right;text-align:center;">
-      <li><%= image_tag ensure_full_url(farm.photo.try(:url)) %></li>
+      <% if farm.photo.present? %>
+        <li><%= image_tag ensure_full_url(farm.photo.url) %></li>
+      <% end %>
       <li><%= image_tag ensure_full_url(farm_map) %></li>
    </ul>
    </div>
@@ -37,7 +39,7 @@
 
 <section class="footer">
    <div style="width:30%;float:left;text-align:center;">
-      <%= image_tag ensure_full_url(market.photo.try(:url)) %>
+      <%= image_tag ensure_full_url(market.logo.try(:url)) %>
    </div>
    <div style="width:62%;margin-left: 1%;float:left;">
       <h5>Brought to you by</h5>
