@@ -4,7 +4,7 @@ feature "Downloading table tents or posters", js:true do
   let(:user) {create :user, :buyer}
   let(:organization) {user.organizations.first}
   let(:market) {user.markets.first}
-  let(:order) {create :order, :with_items, organization: organization}
+  let(:order) {create :order, :with_items, organization: organization, market: market}
 
   before do
     switch_to_subdomain(market.subdomain)
