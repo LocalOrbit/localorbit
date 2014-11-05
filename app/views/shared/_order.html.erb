@@ -261,6 +261,6 @@
 </div>
 <% end %>
 
-<% if current_user.buyer_only? || current_user.market_manager? || current_user.admin? %>
+<% if FeatureAccess.order_printables?(user: current_user, order: order) %>
   <%= render :partial=>"table_tents_and_posters/ad", locals: { order: order } %>
 <% end %>

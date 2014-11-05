@@ -29,7 +29,7 @@ describe GenerateTableTentsOrPosters do
       end
     end
 
-    it "creates an array of sellers and item names if include_product_names is true", wip:true do
+    it "creates an array of sellers and item names if include_product_names is true" do
       expect_get_category_names product1 => "Vogons",
                                 product2 => "Silastic Armourfiends",
                                 product3 => "Poghrils"
@@ -43,7 +43,7 @@ describe GenerateTableTentsOrPosters do
       )
     end
 
-    it "the list it generates is distinct", :wip=>true do
+    it "the list it generates is distinct" do
       product3.organization = zaphod_farms
       product3.save
       expect_get_category_names product1 => "Vogons",

@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe PdfResult, wip:true do
+describe PdfResult do
   subject { described_class.new(pdf_kit) }
   let(:pdf_kit) { double "PdfKit", to_pdf: "the pdf data" }
 

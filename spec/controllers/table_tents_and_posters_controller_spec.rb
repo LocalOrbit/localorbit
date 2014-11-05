@@ -1,6 +1,6 @@
 require "spec_helper"
 
-describe TableTentsAndPostersController, wip: true do
+describe TableTentsAndPostersController do
 
   include_context "the mini market"
 
@@ -69,7 +69,7 @@ describe TableTentsAndPostersController, wip: true do
     end
   end
 
-  describe "#show", :wip=>true do
+  describe "#show" do
     let(:order_printable) {create :order_printable, user: barry}
     let(:order) {order_printable.order}
 
@@ -79,7 +79,7 @@ describe TableTentsAndPostersController, wip: true do
         expect(response.status).to eq 200
         expect(response.content_type).to eq "text/html"
       end
-      
+
       context "when PDF is not available" do
         it "returns the JSON status with pdf_url nil" do
           get :show, order_id:order.id, id: order_printable.id, format: :json
@@ -97,7 +97,7 @@ describe TableTentsAndPostersController, wip: true do
           order_printable.pdf.name = "dolphins.pdf"
           order_printable.save
         end
-        
+
         it "returns the JSON status with pdf_url set appropriately" do
           get :show, order_id:order.id, id: order_printable.id, format: :json
           expect(response.status).to eq 200

@@ -1,9 +1,9 @@
 require 'spec_helper'
 
-describe OrderPrintable, :type => :model, wip:true do
+describe OrderPrintable, :type => :model do
   subject { create(:order_printable) }
 
-  it "can be created" do 
+  it "can be created" do
     expect(subject).to be
     expect(subject.include_product_names).to eq false
     expect(subject.printable_type).to eq "table tent"
@@ -25,7 +25,7 @@ describe OrderPrintable, :type => :model, wip:true do
     subject.pdf = nil
     subject.save
   end
-  
+
   describe ".for_user scope" do
     let!(:user) { create(:user) }
     let!(:admin) { create(:user, :admin) }

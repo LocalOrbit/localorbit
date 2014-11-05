@@ -355,6 +355,43 @@ FactoryGirl.define do
     advanced_pricing   true
     advanced_inventory true
     promotions         true
+    order_printables   true
+
+    trait :start_up do
+      name "Start Up"
+      discount_codes     false
+      cross_selling      false
+      custom_branding    false
+      automatic_payments false
+      advanced_pricing   false #this is true in the real world
+      advanced_inventory false
+      promotions         false
+      order_printables   false
+    end
+
+    trait :grow do
+      name "Grow"
+      discount_codes     true
+      cross_selling      true
+      custom_branding    true
+      automatic_payments true
+      advanced_pricing   true
+      advanced_inventory true
+      promotions         true
+      order_printables   true
+    end
+
+    trait :automate do
+      name "Automate"
+      discount_codes     true
+      cross_selling      true
+      custom_branding    true
+      automatic_payments true
+      advanced_pricing   true
+      advanced_inventory true
+      promotions         true
+      order_printables   true
+    end
   end
 
   factory :price do

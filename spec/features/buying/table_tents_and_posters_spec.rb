@@ -1,6 +1,6 @@
 require "spec_helper"
 
-feature "Downloading table tents or posters", js:true, wip:true do
+feature "Downloading table tents or posters", js:true do
   let(:user) {create :user, :buyer}
   let(:organization) {user.organizations.first}
   let(:market) {user.markets.first}
@@ -19,7 +19,7 @@ feature "Downloading table tents or posters", js:true, wip:true do
     expect(page).to have_text 'Why use table tents?'
     click_on "Download the PDF"
     expect(page).to have_text "Generating"
-    
+
     # EGAD
     patiently do
       uid = current_path[1..-1]
@@ -39,7 +39,7 @@ feature "Downloading table tents or posters", js:true, wip:true do
     expect(page).to have_text 'Why use posters?'
     click_on "Download the PDF"
     expect(page).to have_text "Generating"
-    
+
     # EGAD.
     # We were having MAJRO TRUBL getting the PDF to actually fully render.  Dragonfly URL hell yall.
     patiently do
