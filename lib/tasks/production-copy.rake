@@ -46,6 +46,7 @@ namespace :production_copy do
 
   end
 
+
   desc "Copy the production S3 bucket to a target env"
   task :bucket, [:env] do |_, args|
     include CloneProductionHelper
@@ -57,6 +58,21 @@ namespace :production_copy do
   task :put do
     include CloneProductionHelper
     restore_cleansed_dump_to_target
+  end
+
+  desc "Assuming a local clenased prod dump, overwrite the local dev db with the copy"
+  task :stomp_dev do
+    include CloneProductionHelper
+    if ENV['ALREADY_DOWNLOADED'] == 'YES'
+      puts "Skipping the part where we backup and cleanse the prod db."
+    else
+      puts "Backup and cleanse the prod db..."
+      copy_production_to_local
+      connect_production_copy
+      cleanse_production_copy
+    end
+    stomp_local_dev_with_cleansed_prod_copy
+    sync_prod_uploads_to_local_dev
   end
 
   desc "Run a console connected to 'localorbit-production-copy'"
@@ -154,6 +170,11 @@ module CloneProductionHelper
     "cleansed.prod.dump"
   end
 
+  def local_development_db
+    configs = YAML.load_file(File.new("config/database.yml"))
+    configs["development"]["database"]
+  end
+
   def production_copy_params
     {
       database:"localorbit-production-copy",
@@ -183,6 +204,38 @@ module CloneProductionHelper
   def import_local_copy
     system "createdb #{prod_copy_name}" # don't care if this fails due to already existing
     sh "pg_restore --verbose --clean --no-acl --no-owner -h localhost -d #{prod_copy_name} #{dump_file}"
+  end
+
+  def stomp_local_dev_with_cleansed_prod_copy
+
+    if ENV["REALLY"] != "YES"
+      puts "THIS COMMAND CRUSHES YOUR LOCAL DEV DB"
+      puts "If you're certain, retype your command like this:"
+      puts
+      puts ">>  rake production_copy:stomp_dev REALLY=YES"
+      puts
+      puts "Aborting."
+      exit 1
+    end
+
+    if !File.exists?(cleansed_dump_file)
+      puts "Can't find a production dump file at '#{cleansed_dump_file}'."
+      puts "Maybe run 'rake production_copy:bring_down' first?"
+      puts "Aborting."
+      exit 1
+    end
+
+    sh "rake db:drop db:create RAILS_ENV=development"
+    cmd =  "pg_restore --clean --no-acl --no-owner -h localhost -d #{local_development_db} #{cleansed_dump_file} > /dev/null 2>&1"
+    puts "#{cmd}"
+    `#{cmd}`
+  end
+
+  def sync_prod_uploads_to_local_dev
+    dest_dir = "public/system/dragonfly/development"
+    mkdir_p dest_dir
+    source_bucket = secrets_for("production")["UPLOADS_BUCKET"]
+    sh "aws s3 sync s3://#{source_bucket}/ #{dest_dir}/"
   end
 
   def connect_production_copy
@@ -251,9 +304,8 @@ module CloneProductionHelper
   def replicate_s3_bucket
     source_bucket = secrets_for("production")["UPLOADS_BUCKET"]
     dest_bucket = secrets_for(target_env)["UPLOADS_BUCKET"]
-    # sh "aws s3 sync s3://#{source_bucket}/ s3://#{dest_bucket}/"
     everyone_uri = "http://acs.amazonaws.com/groups/global/AllUsers"
-    blockworkaws_id = "7462d205c2b14829eaa79c77b6eaae2e4166a2b30d06e9d261db44a3e27c0d1f" # Ericka's 
+    blockworkaws_id = "7462d205c2b14829eaa79c77b6eaae2e4166a2b30d06e9d261db44a3e27c0d1f" # Ericka's canonical Amazon ID
     grants="--grants read=uri=#{everyone_uri} full=id=#{blockworkaws_id}"
     sh "aws s3 sync s3://#{source_bucket}/ s3://#{dest_bucket}/ #{grants}"
   end
