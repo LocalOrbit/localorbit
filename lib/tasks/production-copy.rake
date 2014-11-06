@@ -61,7 +61,7 @@ namespace :production_copy do
   end
 
   desc "Assuming a local clenased prod dump, overwrite the local dev db with the copy"
-  task :stomp_dev do
+  task stomp_dev: :environment do
     include CloneProductionHelper
     if ENV['ALREADY_DOWNLOADED'] == 'YES'
       puts "Skipping the part where we backup and cleanse the prod db."
@@ -178,7 +178,7 @@ module CloneProductionHelper
   def production_copy_params
     {
       database:"localorbit-production-copy",
-      adapter:"postgresql", 
+      adapter:"postgresql",
       encoding:"unicode",
       template:"template0"
     }
@@ -291,7 +291,7 @@ module CloneProductionHelper
     dump_url = object.url_for(:get, { :expires => 20.minutes.from_now, :secure => true }).to_s
     puts "Done.  #{dump_url}"
 
-    # Step 2: Restore 
+    # Step 2: Restore
     puts "Restoring db from backup on S3"
     sh "heroku pgbackups:restore #{target_database} '#{dump_url}' -a #{target_app} --confirm #{target_app}"
   end
