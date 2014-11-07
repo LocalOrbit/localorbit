@@ -94,6 +94,9 @@ Rails.application.routes.draw do
       resources :pack_lists, only: :show
       resources :individual_pack_lists, only: :show
       resources :order_summaries, only: :show
+      resources :deliveries do
+        resources :packing_labels, :controller=>"/deliveries/packing_labels", only: [:show, :create]
+      end
     end
 
     resources :products do

@@ -5,21 +5,21 @@
   <div class="label-content">
     <div class="order-row">
       <span class="small-text">For delivery on:</span><br/>
-      <%= delivery.deliver_on.strftime("%B %e, %Y") %>
+      <%= order[:deliver_on] %>
     </div>
     <div class="order-row">
       <span class="small-text">Order #:</span><br/>
-      <%= order.order_number %>
+      <%= order[:order_number] %>
     </div>
     <div class="order-row">
       <span class="small-text">Buyer</span><br/>
-      <%= order.organization.name %>
+      <%= order[:buyer_name] %>
     </div>
     <div class="order-row">
       <div class="footer-row">
         <img class="qr-code" src="http://chart.apis.google.com/chart?cht=qr&chs=300x300&chl=test&chld=H|0"></img>
-        <% if order.market.logo %>
-          <%= image_tag ensure_full_url(order.market.logo.url).gsub("3000", "3500") %>
+        <% if order[:market_logo_url] %>
+          <%= image_tag ensure_full_url(order[:market_logo_url]) %>
         <% end %>
       </div>
     </div>
