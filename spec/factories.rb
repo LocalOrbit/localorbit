@@ -459,6 +459,12 @@ FactoryGirl.define do
     end
   end
 
+  factory :fresh_sheet do
+    user
+    market
+    note "This is a note to go with the Fresh Sheet."
+  end
+
   factory :batch_invoice do
     user
   end
