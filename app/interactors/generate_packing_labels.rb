@@ -1,5 +1,7 @@
 class GeneratePackingLabels
   include Interactor
+  OrderTemplate = "avery_labels/order"
+  ProductTemplate = "avery_labels/vertical_product"
 
   def perform
     delivery, request = require_in_context(:delivery, :request)
@@ -23,10 +25,10 @@ class GeneratePackingLabels
     delivery.orders.map {|order| make_order_info(order)}
   end
 
-  # def self.make_labels(order_infos)
-  #   raise "TODO"
-  # end
-  #
+  def self.make_labels(order_infos)
+    order_infos.map{|order_info| make_order_labels(order_info)}
+  end
+
   # def self.make_pages(labels)
   #   raise "TODO"
   # end
@@ -61,5 +63,19 @@ class GeneratePackingLabels
     ""
   end
 
+  def self.make_order_labels(order_info)
+    labels = []
+    products = order_info.delete :products
+    labels << make_label(OrderTemplate, order_info)
+    labels << products.map{|product_info| make_label(ProductTemplate, product_info) }
+    labels
+  end
+
+  def self.make_label(template, info_object)
+    {
+      template: template,
+      data: info_object
+    }
+  end
 
 end

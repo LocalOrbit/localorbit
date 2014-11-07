@@ -15,6 +15,12 @@ describe GeneratePackingLabels, wip:true do
   let!(:order) { create(:order, items: order_items, organization: buyer, market: market, delivery: delivery, order_number: "LO-ADA-0000001", total_cost: order_items.sum(&:gross_total)) }
   subject { described_class }
 
+  before do
+    lot = order_items.first.lots.first
+    lot.lot_id = 2
+    lot.save
+  end
+
   product_info_object = {
     product_name: "Giant Carrots",
     unit_desc: "stuff",
@@ -63,6 +69,12 @@ describe GeneratePackingLabels, wip:true do
   describe "#make_order_info" do
     it "creates an order_infos structure for a given order" do
       expect(GeneratePackingLabels.make_order_infos(delivery)).to eq [full_order_info]
+    end
+  end
+
+  describe "#make_labels" do
+    it "creates labels for a given order_infos" do
+      expect(GeneratePackingLabels.make_labels([full_order_info])).to eq [order_label_object, product_label_object]
     end
   end
 end
