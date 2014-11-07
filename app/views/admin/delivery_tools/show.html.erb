@@ -22,7 +22,7 @@
             <% end %>
             <div class="tool"><%= link_to "Individual Packing Slips <span class='note'>per Seller</span>".html_safe, admin_delivery_tools_individual_pack_list_path(delivery) %></div>
             <div class="tool"><%= link_to "Order Summary", admin_delivery_tools_order_summary_path(delivery)%></div>
-            <div class="tool"><%= link_to "Labels", coming_soon_dashboard_path %></div>
+            <div class="tool"><%= link_to "Labels", coming_soon_dashboard_path, class: "app-labels-link" %></div>
           </div>
           <hr>
         </div>
