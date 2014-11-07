@@ -16,8 +16,8 @@ class Deliveries::PackingLabelsController < ApplicationController
               order_number: "LO-14-ALLENMARKETPLACE-000002",
               buyer_name: "Ah Vue",
               market_logo_url: allen_market_logo,
-              qr_code_url: "http://chart.apis.google.com/chart?cht=qr&chs=300x300&chl=test&chld=H|0"
-            }
+            },
+            qr_code_url: "http://chart.apis.google.com/chart?cht=qr&chs=300x300&chl=test&chld=H|0"
           }
         },
 
@@ -29,8 +29,8 @@ class Deliveries::PackingLabelsController < ApplicationController
               order_number: "LO-14-ALLENMARKETPLACE-000002",
               buyer_name: "Ah Vue",
               market_logo_url: allen_market_logo,
-              qr_code_url: "http://chart.apis.google.com/chart?cht=qr&chs=300x300&chl=test&chld=H|0"
             },
+            qr_code_url: "http://chart.apis.google.com/chart?cht=qr&chs=300x300&chl=test&chld=H|0",
             product: {
               product_name: "Gold Rush Apples",
               quantity: 1,
@@ -49,8 +49,9 @@ class Deliveries::PackingLabelsController < ApplicationController
               order_number: "LO-14-ALLENMARKETPLACE-000002",
               buyer_name: "Ah Vue",
               market_logo_url: allen_market_logo,
-              qr_code_url: "http://chart.apis.google.com/chart?cht=qr&chs=300x300&chl=test&chld=H|0"
             },
+
+            qr_code_url: "http://chart.apis.google.com/chart?cht=qr&chs=300x300&chl=test&chld=H|0",
             product: {
               product_name: "Giant Pumpkins",
               unit_desc: "each",
@@ -69,8 +70,8 @@ class Deliveries::PackingLabelsController < ApplicationController
               order_number: "LO-14-ALLENMARKETPLACE-000002",
               buyer_name: "Ah Vue",
               market_logo_url: allen_market_logo,
-              qr_code_url: "http://chart.apis.google.com/chart?cht=qr&chs=300x300&chl=test&chld=H|0"
             },
+            qr_code_url: "http://chart.apis.google.com/chart?cht=qr&chs=300x300&chl=test&chld=H|0",
             product: {
               product_name: "Giant Carrots",
               unit_desc: "stuff",

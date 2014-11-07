@@ -1,0 +1,85 @@
+Tasks:
+
+GeneratePackingLabels interactor:
+  Convert data: Delivery >-?-> order_infos >-?-> labels >-?-> pages 
+  Invoke GeneratePdf with pages to generate (HTML >> PDF)
+
+Create/test(Migrate!) PackingLabelsPrintable AR model
+  bundle exec rails generate model PackingLabelsPrintable user_id:integer delivery_id:integer pdf_uid:string pdf_name:string
+
+PackingLabelsController#show 
+  view 
+  Javascript for "Generating..." progress meter / polling
+  json status
+
+Implement PackingLabelsController create and show actions
+  Create PackingLabelsPrintable record
+  Invoke delayed "ProcessPackingLabels" interactor
+
+ProcessPackingLabels interactor:
+  get the PackingLabelsPrintable and associated Delivery from the database
+  invoke GeneratePackingLabels interactor
+  store resulting PDF as attachment on the PackingLabelsPrintable
+
+
+
+
+
+# Shape of our data:
+
+Process:
+
+Delivery >-?-> order_infos >-?-> labels >-?-> pages >> HTML >> PDF
+
+
+Data source:
+
+Delivery
+  Order*
+    OrderItem*
+
+
+
+pages: [ page* ]
+
+page:
+  a
+  b
+  c
+  d
+
+  - a,b,c,d are all "labels"
+
+label:
+  template: path_to_view_string
+  data
+
+label^order:
+  template: path_to_view_string
+  data
+    order_info
+    qr_code_url: string_url
+
+label^product:
+  template: path_to_view_string
+  data
+    order_info
+    qr_code_url: string_url
+    product_info
+
+order_info:
+  deliver_on: string
+  order_number: string
+  buyer_name: string
+  market_logo_url: string
+  order_url: string
+  product_infos: [ product_info* ]
+
+product_info:
+  product_name: string
+  quantity: number
+  unit_desc: string
+  lot_desc: string
+  producer_name: string
+
+
