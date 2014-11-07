@@ -63,7 +63,14 @@ end; nil
 
 
 
-# Payable Market fees
+#############################################################################
+# 
+# Monthly payments to 'Automate' Markets
+#
+#############################################################################
+
+# Step 1: Copy-n-paste the code below into a heroku terminal, then copy-n-paste the output
+#         in an email to Anna or Dawn @ LocalOrbit
 
 orders = Order.payable_market_fees.preload(:items, :market).joins(:market).except(:order).order("MAX(markets.name)", "orders.order_number"); nil
 grouped = orders.group_by {|o| o.market_id }; grouped.size
@@ -85,7 +92,9 @@ grouped.each do |market_id, orders|
   puts "\tTotal: Delivery: $#{'%.2f' % delivery_total}  Market: $#{'%.2f' % market_total}"
 end; nil
 
-# Process payables
+# Step 2: When approved by Anna or Dawn, copy-n-paste the rest of this code in the 
+#         Heroku terminal to actually execute the payments.  Copy the output back via
+#         email to Anna or Dawn for posterity.
 
 grouped.each do |market_id, orders|
   market = Market.find(market_id)
