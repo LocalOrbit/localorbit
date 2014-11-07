@@ -2,21 +2,22 @@ class Admin::FreshSheetsController < AdminController
   before_action :require_admin_or_market_manager
   before_action :require_selected_market
   before_action :require_valid_market
-  before_action :load_saved_note, only: [:preview, :show]
+  before_action :load_fresh_sheet, only: [:create, :preview, :show]
 
   def show
   end
 
   def create
-    session[:fresh_sheet_note] = params[:note]
+    note = params[:note]
+    update_fresh_sheet_note(note)
 
     if params[:commit] == "Add Note"
       redirect_to([:admin, :fresh_sheet], notice: "Note saved.") && return
     end
 
-    sent_fresh_sheet = SendFreshSheet.perform(market: current_market, commit: params[:commit], email: params[:email], note: session[:fresh_sheet_note], port: request.port)
+    sent_fresh_sheet = SendFreshSheet.perform(market: current_market, commit: params[:commit], email: params[:email], note: note, port: request.port)
     if sent_fresh_sheet.success?
-      session[:fresh_sheet_note] = nil if params[:commit] == "Send to Everyone Now"
+      clear_fresh_sheet_note if params[:commit] == "Send to Everyone Now"
       redirect_to [:admin, :fresh_sheet], notice: sent_fresh_sheet.notice
     else
       redirect_to [:admin, :fresh_sheet], alert: sent_fresh_sheet.error
@@ -37,8 +38,18 @@ class Admin::FreshSheetsController < AdminController
 
   protected
 
-  def load_saved_note
-    @note = session[:fresh_sheet_note]
+  def load_fresh_sheet
+    @fresh_sheet = FreshSheet.find_or_create_by(market: current_market, user: current_user)
+    @note = @fresh_sheet.note
+  end
+
+  def update_fresh_sheet_note(note)
+    @note = note
+    @fresh_sheet.update(note: @note)
+  end
+
+  def clear_fresh_sheet_note
+    update_fresh_sheet_note(nil)
   end
 
   def require_valid_market
