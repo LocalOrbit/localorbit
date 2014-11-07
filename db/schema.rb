@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141016200439) do
+ActiveRecord::Schema.define(version: 20141107205633) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -219,6 +219,16 @@ ActiveRecord::Schema.define(version: 20141016200439) do
   end
 
   add_index "discounts", ["code"], name: "index_discounts_on_code", using: :btree
+
+  create_table "fresh_sheets", force: true do |t|
+    t.integer  "market_id"
+    t.integer  "user_id"
+    t.text     "note"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "fresh_sheets", ["market_id", "user_id"], name: "index_fresh_sheets_on_market_id_and_user_id", using: :btree
 
   create_table "geocodes", force: true do |t|
     t.decimal "latitude",    precision: 15, scale: 12
@@ -446,7 +456,7 @@ ActiveRecord::Schema.define(version: 20141016200439) do
     t.string   "seller_name"
     t.integer  "quantity"
     t.string   "unit"
-    t.decimal  "discount_market",        precision: 10, scale: 2, default: 0.0,      null: false
+    t.decimal  "discount_seller",        precision: 10, scale: 2, default: 0.0,      null: false
     t.decimal  "market_seller_fee",      precision: 10, scale: 2, default: 0.0,      null: false
     t.decimal  "local_orbit_seller_fee", precision: 10, scale: 2, default: 0.0,      null: false
     t.decimal  "local_orbit_market_fee", precision: 10, scale: 2, default: 0.0,      null: false
@@ -460,7 +470,7 @@ ActiveRecord::Schema.define(version: 20141016200439) do
     t.integer  "legacy_id"
     t.decimal  "quantity_delivered",     precision: 10, scale: 2
     t.string   "payment_status",                                  default: "unpaid"
-    t.decimal  "discount_seller",        precision: 10, scale: 2, default: 0.0,      null: false
+    t.decimal  "discount_market",        precision: 10, scale: 2, default: 0.0,      null: false
   end
 
   add_index "order_items", ["order_id", "product_id"], name: "index_order_items_on_order_id_and_product_id", using: :btree
@@ -619,8 +629,8 @@ ActiveRecord::Schema.define(version: 20141016200439) do
     t.integer  "location_id"
     t.boolean  "use_simple_inventory",     default: true, null: false
     t.integer  "unit_id"
-    t.integer  "top_level_category_id"
     t.string   "image_uid"
+    t.integer  "top_level_category_id"
     t.datetime "deleted_at"
     t.text     "short_description"
     t.text     "long_description"

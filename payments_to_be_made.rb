@@ -1,4 +1,5 @@
-# Automate seller payments
+# Weekly payments to 'Automate' sellers
+
 # Run this part in a production console
 # to produce a report of what is payable
 # Email report to Anna
