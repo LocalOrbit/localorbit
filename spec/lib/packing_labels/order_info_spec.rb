@@ -21,9 +21,7 @@ describe PackingLabels::OrderInfo do
   let!(:order) { create(:order, items: order_items, organization: buyer, market: market, delivery: delivery, order_number: order_number, total_cost: order_items.sum(&:gross_total)) }
 
   before do
-    market.logo = dont_panic
-    market.save!
-
+    market.update(logo: dont_panic)
   end
 
   describe ".make_product_info" do

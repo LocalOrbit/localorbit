@@ -1,7 +1,8 @@
 module PackingLabels
-   class OrderInfo
+   class Page
      class << self
        def make_pages(labels)
+         raise "TODO"
        end
      end
    end
