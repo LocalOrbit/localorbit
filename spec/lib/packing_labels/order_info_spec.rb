@@ -1,4 +1,4 @@
-describe PackingLabels::OrderInfo do
+describe PackingLabels::OrderInfo, wip:true do
   subject { described_class }
 
   let(:market) { create(:market) }
@@ -19,6 +19,8 @@ describe PackingLabels::OrderInfo do
 
   let(:order_number) { "LO-ADA-0000001" }
   let!(:order) { create(:order, items: order_items, organization: buyer, market: market, delivery: delivery, order_number: order_number, total_cost: order_items.sum(&:gross_total)) }
+
+  let(:qr_code) { "the QR code" }
 
   before do
     market.update(logo: dont_panic)
@@ -69,7 +71,6 @@ describe PackingLabels::OrderInfo do
   end
 
   describe ".make_order_info" do
-    let(:qr_code) { "the QR code" }
     let(:expected_product_infos) { subject.make_product_infos(order) }
 
     context "a normal Order" do
@@ -119,9 +120,12 @@ describe PackingLabels::OrderInfo do
       end
     end
     context "null deliver_on" do
-
-
-      it "has a fit?" 
+      before do 
+        order.delivery.update_column(:deliver_on, nil)
+      end
+      it "raises a specific error" do
+        expect { subject.make_order_info(order) }.to raise_error(/delivery/)
+      end
     end
   end
 
@@ -138,6 +142,8 @@ describe PackingLabels::OrderInfo do
     let!(:order2) { create(:order, items: order_items2, organization: buyer2, market: market, delivery: delivery, order_number: order_number2, total_cost: order_items2.sum(&:gross_total)) }
 
     it "generates a list of order_infos based on a list of Orders" do
+      allow(PackingLabels::QrCode).to receive(:make_qr_code).and_return(qr_code)
+
       order_infos = subject.make_order_infos(delivery)
       expect(order_infos).to contain_exactly(
         subject.make_order_info(order),

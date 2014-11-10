@@ -7,6 +7,10 @@ module PackingLabels
 
       def make_order_info(order)
         market_logo_url = if(order.market.logo) then order.market.logo.url else nil end
+        if(!order.delivery || !order.delivery.deliver_on)
+          raise "No delivery date for order ##{order.id}."
+          return nil
+        end
         order_info = {
           deliver_on: order.delivery.deliver_on.strftime("%B %e, %Y"),
           order_number: order.order_number,
