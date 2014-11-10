@@ -2,23 +2,23 @@ module PackingLabels
   class OrderInfo
     class << self
       def make_order_infos(delivery)
-        # delivery.orders.map {|order| make_order_info(delivery, order)}
+        delivery.orders.map {|order| make_order_info(order)}
       end
 
       def make_order_info(order)
-        market_logo_url = if(order.market.logo) then order.market.logo.url else "" end
+        market_logo_url = if(order.market.logo) then order.market.logo.url else nil end
         order_info = {
           deliver_on: order.delivery.deliver_on.strftime("%B %e, %Y"),
           order_number: order.order_number,
           buyer_name: order.organization.name,
           market_logo_url: market_logo_url,
           qr_code_url: PackingLabels::QrCode.make_qr_code(order),
-          products: order.items.map {|order_item| make_product_info(order_item)}
+          products: make_product_infos(order)
         }
       end
 
       def make_product_infos(order)
-        order.items.map { |order_item| make_product_info(order_item) }
+        order.items.sort_by(&:product_id).map { |order_item| make_product_info(order_item) }
       end
 
       def make_product_info(order_item)
