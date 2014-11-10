@@ -66,6 +66,33 @@ describe GeneratePackingLabels, wip:true do
     expect(context.pdf_result.data.match(/^%PDF-1.4/)).to_not eq nil
   end
 
+  context "#perform interaction testing" do
+    let(:request)     { double :request, :base_url=>"the base url" }
+    let(:delivery)    { double "Delivery"  }
+    let(:order_infos) { double "A list of order infos"  }
+    let(:labels)      { double "A list of labels"  }
+    let(:pages)       { double "A list of pages"  }
+    let(:pdf_context) { double "A PDF context", pdf_result: "the pdf result" }
+
+    it "works by creating order infos, labels, and then pages REPRISE" do 
+      expect(subject).to receive(:make_order_infos).with(delivery).and_return(order_infos)
+      expect(subject).to receive(:make_labels).with(order_infos).and_return(labels)
+      expect(subject).to receive(:make_pages).with(labels).and_return(pages)
+
+      expect(GeneratePdf).to receive(:perform).with(
+        request: request,
+        template: "avery_labels/labels",
+        pdf_size: { page_size: "letter" },
+        params: { pages: pages }
+      ).and_return(pdf_context)
+
+      context = subject.perform(delivery: delivery, 
+                                request: request)
+
+      expect(context.pdf_result).to eq("the pdf result")
+    end
+  end
+
   describe "#make_order_info" do
     it "creates an order_infos structure for a given order" do
       expect(GeneratePackingLabels.make_order_infos(delivery)).to eq [full_order_info]

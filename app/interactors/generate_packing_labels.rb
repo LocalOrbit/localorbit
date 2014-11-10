@@ -11,7 +11,7 @@ class GeneratePackingLabels
     pages = GeneratePackingLabels.make_pages(labels)
 
     pdf_context = GeneratePdf.perform(
-      request: RequestUrlPresenter.new(request),
+      request: request,
       template: "avery_labels/labels",
       pdf_size: { page_size: "letter" },
       params: {
@@ -22,7 +22,7 @@ class GeneratePackingLabels
   end
 
   def self.make_order_infos(delivery)
-    delivery.orders.map {|order| make_order_info(order)}
+    delivery.orders.map {|order| make_order_info(delivery, order)}
   end
 
   def self.make_labels(order_infos)
@@ -32,8 +32,6 @@ class GeneratePackingLabels
   # def self.make_pages(labels)
   #   raise "TODO"
   # end
-
-  private
 
   def self.make_order_info(order)
     market_logo_url = if(order.market.logo) then order.market.logo.url else "" end
