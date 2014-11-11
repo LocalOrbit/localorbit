@@ -176,5 +176,9 @@ Rails.application.routes.draw do
   end
   resource :registration, only: [:show, :create]
 
+  if Rails.env.development?
+    get "dev/pdf(/:action)", to: "dev/pdf", as: "dev_pdf"
+  end
+
   root to: redirect("/users/sign_in")
 end
