@@ -1,6 +1,4 @@
 module PackingLabels
-  # /orders/5
-  # /admin/orders/5 
   class QrCode
    class << self
      def make_qr_code(order,host:)

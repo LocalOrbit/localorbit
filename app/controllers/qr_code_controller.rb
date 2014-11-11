@@ -1,5 +1,7 @@
 class QrCodeController < ApplicationController
   def order
-    render text: "QR code for Order #{params[:id]}", content_type: "text/html"
+    html = "QR code for Order #{params[:id]}<br/>"
+    html << "buyer_only? #{current_user.buyer_only?}"
+    render text: html, content_type: "text/html"
   end
 end
