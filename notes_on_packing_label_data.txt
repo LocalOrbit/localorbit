@@ -1,14 +1,11 @@
 Tasks:
 
-Create/test(Migrate!) PackingLabelsPrintable AR model
-  bundle exec rails generate model PackingLabelsPrintable user_id:integer delivery_id:integer pdf_uid:string pdf_name:string
-
 PackingLabelsController#create
   Create PackingLabelsPrintable record
   Invoke delayed "ProcessPackingLabels" interactor
 
-PackingLabelsController#show 
-  view 
+PackingLabelsController#show
+  view
   Javascript for "Generating..." progress meter / polling
   json status
 

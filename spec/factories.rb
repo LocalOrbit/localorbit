@@ -524,4 +524,9 @@ FactoryGirl.define do
     include_product_names false
     printable_type "table tent"
   end
+
+  factory :packing_labels_printable do
+    user
+    delivery
+  end
 end
