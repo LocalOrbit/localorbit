@@ -5,11 +5,12 @@ describe PackingLabels::QrCode, wip:true do
 
   describe ".make_qr_code" do
     let(:order) { create(:order) }
-    let(:host) { "http://the.webs.example.com" }
-    let(:order_url) { Rails.application.routes.url_helpers.qr_code_url(host:host, id:order.id) }
+    let(:in_host) { "http://webs.example.com" }
+    let(:used_host) { "http://app.example.com" }
+    let(:order_url) { Rails.application.routes.url_helpers.qr_code_url(host:used_host, id:order.id) }
 
     it "gets and order's url" do
-      qr_code_url = subject.make_qr_code(order, host:host)
+      qr_code_url = subject.make_qr_code(order, host:in_host)
       expect(qr_code_url).to match(/chl=#{Rack::Utils.escape(order_url)}/)
       expect(qr_code_url).to match(/http:\/\/chart.apis.google.com\/chart\?/)
       puts qr_code_url

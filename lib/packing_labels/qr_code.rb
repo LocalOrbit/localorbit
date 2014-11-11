@@ -2,6 +2,7 @@ module PackingLabels
   class QrCode
    class << self
      def make_qr_code(order,host:)
+       host = force_subdomain_to(host, 'app')
        order_url = Rails.application.routes.url_helpers.qr_code_url(host: host, id: order.id)
        google_qr_code_url_for order_url
      end
@@ -16,6 +17,10 @@ module PackingLabels
          "#{key}=#{val}"
        end.join("&")
        "http://chart.apis.google.com/chart?#{query_string}"
+     end
+
+     def force_subdomain_to(url,subdomain)
+       url.sub(/\/\/\w+\./, "//app.")
      end
    end
   end
