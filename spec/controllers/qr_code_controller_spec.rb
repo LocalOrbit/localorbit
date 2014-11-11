@@ -5,29 +5,32 @@ describe QrCodeController do
   let!(:order_item1) { create(:order_item, product: product1) }
   let!(:order) { create(:order, items: [order_item1], market: mini_market, organization: buyer_organization) }
 
+  let(:host) { "http://#{order.market.subdomain}.localtest.me" }
+
+  before do
+    switch_to_subdomain mini_market.subdomain
+    sign_in user
+    switch_to_subdomain "app"
+  end
+
+  def hit_qr_code_url
+    get :order, id: order.id
+  end
+
   describe "#order" do
     context "logged in as a buyer" do
-      before do
-        switch_to_subdomain mini_market.subdomain
-        sign_in barry
-        switch_to_subdomain "app"
-      end
+      let(:user) { barry }
       it "redirects to the correct order url on the correct subdomain" do
-        get :order, id: order.id
-        host = "http://#{order.market.subdomain}.localtest.me"
+        hit_qr_code_url
         expect(response).to redirect_to(order_url(host: host, id: order.id))
       end
     end
 
     context "logged in as a seller" do
-      before do
-        switch_to_subdomain mini_market.subdomain
-        sign_in sally
-        switch_to_subdomain "app"
-      end
+      let(:user) { sally }
+
       it "redirects to the correct order url on the correct subdomain" do
-        get :order, id: order.id
-        host = "http://#{order.market.subdomain}.localtest.me"
+        hit_qr_code_url
         expect(response).to redirect_to(admin_order_url(host: host, id: order.id))
       end
     end
