@@ -12,11 +12,16 @@ $ ->
       el = this
       fitText(el, 1900, 14)
 
-  resizeHeader = ->
+  resizeTTHeader = ->
     $(".headerText").each ->
       el = this
       fitText(el, 56, 24)
-      # $(el).css('margin-top', $('.productContent').height() * 0.15 + 'px')
+
+  resizePosterHeader = ->
+    $(".farm-name").each ->
+      el = this
+      fitText(el, 106, 24)
 
   resizeContent()
-  resizeHeader()
+  resizeTTHeader()
+  resizePosterHeader()
