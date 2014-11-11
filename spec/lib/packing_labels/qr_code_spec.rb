@@ -6,7 +6,7 @@ describe PackingLabels::QrCode, wip:true do
   describe ".make_qr_code" do
     let(:order) { create(:order) }
     let(:host) { "http://the.webs.example.com" }
-    let(:order_url) { Rails.application.routes.url_helpers.admin_order_url(host:host, id:order.id) }
+    let(:order_url) { Rails.application.routes.url_helpers.qr_code_url(host:host, id:order.id) }
 
     it "gets and order's url" do
       qr_code_url = subject.make_qr_code(order, host:host)

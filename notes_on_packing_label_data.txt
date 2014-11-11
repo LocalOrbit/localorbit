@@ -1,28 +1,34 @@
 Tasks:
 
-GeneratePackingLabels interactor:
-  Convert data: Delivery >-?-> order_infos >-?-> labels >-?-> pages 
-  Invoke GeneratePdf with pages to generate (HTML >> PDF)
-
 Create/test(Migrate!) PackingLabelsPrintable AR model
   bundle exec rails generate model PackingLabelsPrintable user_id:integer delivery_id:integer pdf_uid:string pdf_name:string
+
+PackingLabelsController#create
+  Create PackingLabelsPrintable record
+  Invoke delayed "ProcessPackingLabels" interactor
 
 PackingLabelsController#show 
   view 
   Javascript for "Generating..." progress meter / polling
   json status
 
-Implement PackingLabelsController create and show actions
-  Create PackingLabelsPrintable record
-  Invoke delayed "ProcessPackingLabels" interactor
-
 ProcessPackingLabels interactor:
   get the PackingLabelsPrintable and associated Delivery from the database
-  invoke GeneratePackingLabels interactor
+  invoke PackingLabels::Generator.generate
   store resulting PDF as attachment on the PackingLabelsPrintable
 
+QR Code update:
+     Use a "generic" QR handler route, like:
+     http://app.localorbit.com/o/1234
 
+     Route:
+       get "o/:id", to: "qr_code#order"
 
+QrCodeController < ApplicationController
+     # relieve some of the before_filter requirements
+     def order
+          params[:id]
+          # get the order, find out current user, redirect to a) proper order url (admin or buyer) and b) go to proper subdomain
 
 
 # Shape of our data:

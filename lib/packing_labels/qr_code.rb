@@ -4,7 +4,7 @@ module PackingLabels
   class QrCode
    class << self
      def make_qr_code(order,host:)
-       order_url = Rails.application.routes.url_helpers.admin_order_url(host: host, id: order.id)
+       order_url = Rails.application.routes.url_helpers.qr_code_url(host: host, id: order.id)
        google_qr_code_url_for order_url
      end
 

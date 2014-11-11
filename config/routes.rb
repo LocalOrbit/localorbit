@@ -183,5 +183,7 @@ Rails.application.routes.draw do
     get "dev/pdf(/:action)", to: "dev/pdf", as: "dev_pdf"
   end
 
+  get "o/:id", to: "qr_code#order", as: "qr_code"
+
   root to: redirect("/users/sign_in")
 end
