@@ -3,8 +3,22 @@ module PackingLabels
     class << self
       def generate(delivery:,request:)
         order_infos = PackingLabels::OrderInfo.make_order_infos(delivery)
+        # [ 
+        #   { order_number: .... }
+        #   { order_number: .... }
+        #   { order_number: .... }
+        # ]
         labels = PackingLabels::Label.make_labels(order_infos)
+        # [
+        #   { template: "...", data: { ... } }
+        #   { template: "...", data: { ... } }
+        # ]
         pages = PackingLabels::Page.make_pages(labels)
+        # [ 
+        #   {a: {label} b: {label} ... }
+        #   {a: {label} b: {label} ... }
+        #   {a: {label} b: {label} ... }
+        # ]
 
         pdf_context = GeneratePdf.perform(
           request: request,

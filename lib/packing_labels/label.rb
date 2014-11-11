@@ -10,10 +10,10 @@ module PackingLabels
 
       def make_order_labels(order_info)
         labels = []
-        order_info = order_info.dup
-        products = order_info.delete :products
-        labels << make_label(OrderTemplate, order_info)
-        labels << products.map{|product_info| make_label(ProductTemplate, product_info) }
+        order = order_info.dup
+        products = order.delete :products
+        labels << make_label(OrderTemplate, {order: order})
+        labels << products.map{|product_info| make_label(ProductTemplate, {order: order, product: product_info}) }
         labels.flatten
       end
 
