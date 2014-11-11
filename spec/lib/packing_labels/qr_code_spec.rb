@@ -2,15 +2,8 @@ require "spec_helper"
 
 describe PackingLabels::QrCode, wip:true do
   subject { described_class }
-  include_context "the mini market"
-  let(:order) {create(:order, organization: buyer_organization)}
 
   describe ".make_qr_code" do
-    # it "gets an order's url" do 
-    # end
-  end
-
-  describe ".get_order_url" do
     let(:order) { create(:order) }
     let(:host) { "http://the.webs.example.com" }
     let(:order_url) { Rails.application.routes.url_helpers.admin_order_url(host:host, id:order.id) }
