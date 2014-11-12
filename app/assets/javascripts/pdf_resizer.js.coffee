@@ -8,7 +8,7 @@ $ ->
       height = (if (newHeight is height or fontSize <= minFont) then -1 else newHeight)
 
   resizeContent = ->
-    $(".farm-content").each ->
+    $(".farm-content p").each ->
       el = this
       fitText(el, 1900, 14)
 
