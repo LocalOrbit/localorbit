@@ -14,14 +14,21 @@
   </div>
 
   <!-- ko if: isPoster() -->
-  <%= image_tag "table_tents_and_posters/poster.png", style: "display:none", class: "main-printable-img", data: {bind: "visible: !includeProductName()"} %>
-  <%= image_tag "table_tents_and_posters/poster_name.png", style: "display:none", class: "main-printable-img", data: {bind: "visible: includeProductName()"} %>
+  <div class="main-printable posters-image">
+    <%= image_tag "table_tents_and_posters/poster.png", style: "display:none", class: "main-printable-img", data: {bind: "visible: !includeProductName()"} %>
+    <%= image_tag "table_tents_and_posters/poster_name.png", style: "display:none", class: "main-printable-img", data: {bind: "visible: includeProductName()"} %>
+    <p class="disclaimer" style="display:none" data-bind="visible: isPoster">* Sample document. Your <%=@printables%> will be customized to your order.</p>
+  </div>
   <!-- /ko -->
 
   <!-- ko ifnot: isPoster() -->
-  <%= image_tag "table_tents_and_posters/tabletent.png", style: "display:none", class: "main-printable-img", data: {bind: "visible: !includeProductName()"} %>
-  <%= image_tag "table_tents_and_posters/tabletent_name.png", style: "display:none", class: "main-printable-img", data: {bind: "visible: includeProductName()"} %>
+  <div class="main-printable table-tents-image">
+    <%= image_tag "table_tents_and_posters/tabletent.png", style: "display:none", class: "main-printable-img", data: {bind: "visible: !includeProductName()"} %>
+    <%= image_tag "table_tents_and_posters/tabletent_name.png", style: "display:none", class: "main-printable-img", data: {bind: "visible: includeProductName()"} %>
+    <p class="disclaimer" style="display:none" data-bind="visible: !isPoster()">* Sample document. Your <%=@printables%> will be customized to your order.</p>
+  </div>
   <!-- /ko -->
+
 </div>
 <div class="clearfix"></div>
 

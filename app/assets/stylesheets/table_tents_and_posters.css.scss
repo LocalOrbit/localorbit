@@ -43,7 +43,23 @@
   float: left;
 }
 
-.main-printable-img {
+.main-printable {
   width: 35%;
   float: left;
+  // position: relative;
+  .disclaimer {
+    float:left;
+    margin-top: -20px;
+    font-style: italic;
+    color: gray;
+    // position: absolute;
+    // bottom: 0px;
+  }
 }
+
+.main-printable-img {
+  // width: 35%;
+  // float: left;
+}
+
+
