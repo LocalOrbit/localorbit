@@ -34,6 +34,7 @@
     .footer h4{line-height: 0; margin: 4% 0 2%;font-size:140%;}
     .footer span{font-size:100%;}
   </style>
+  <% puts Rails.application.config.assets.prefix %>
   <% params[:page_list].each do |page| %>
     <%= render partial: "table_tents_and_posters/poster_page", locals: {farm: page[:farm], farm_map: page[:farm_map], product_name: page[:product_name], include_product_names: params[:include_product_names], market: params[:market]} %>
   <% end %>
