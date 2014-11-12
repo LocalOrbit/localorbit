@@ -1,6 +1,6 @@
 require "spec_helper"
 
-context "Viewing upcoming deliveries" do
+context "Downloading packing labels", js:true do
   let(:market) { create(:market) }
 
   let!(:buyer) { create(:organization, :buyer, name: "Big Money", markets: [market]) }
@@ -27,16 +27,18 @@ context "Viewing upcoming deliveries" do
     sign_in_as(user)
   end
 
-  it "lets users generate shipping labels", wip:true do
+  it "lets users generate shipping labels as a PDF document", wip:true do
     visit admin_delivery_tools_path
     expect(page).to have_text "Upcoming Deliveries"
     expect(page).to have_text "Labels"
+
     find(".app-labels-link").click
+
     expect(page).to have_text("Generating packing labels...")
 
     patiently do
       uid = current_path[1..-1]
-      order_printably = PackingLabelPrintable.find_by(pdf_uid: uid)
+      order_printably = PackingLabelsPrintable.find_by(pdf_uid: uid)
       expect(order_printably).to be
       expect(order_printably.pdf).to be
       expect(order_printably.pdf.file).to be

@@ -1,11 +1,11 @@
 module PackingLabels
   class OrderInfo
     class << self
-      def make_order_infos(delivery)
-        delivery.orders.map {|order| make_order_info(order)}
+      def make_order_infos(delivery, host:)
+        delivery.orders.map {|order| make_order_info(order, host: host)}
       end
 
-      def make_order_info(order)
+      def make_order_info(order, host:)
         market_logo_url = if(order.market.logo) then order.market.logo.url else nil end
         if(!order.delivery || !order.delivery.deliver_on)
           raise "No delivery date for order ##{order.id}."
@@ -16,7 +16,7 @@ module PackingLabels
           order_number: order.order_number,
           buyer_name: order.organization.name,
           market_logo_url: market_logo_url,
-          qr_code_url: PackingLabels::QrCode.make_qr_code(order),
+          qr_code_url: PackingLabels::QrCode.make_qr_code(order, host: host),
           products: make_product_infos(order)
         }
       end

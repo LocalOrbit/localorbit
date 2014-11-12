@@ -7,6 +7,6 @@ class ProcessOrderPrintable
     context = GenerateTableTentsOrPosters.perform(order: order_printable.order, type: order_printable.printable_type, include_product_names: order_printable.include_product_names, request: request)
     order_printable.pdf = context.pdf_result.data
     order_printable.pdf.name = "#{order_printable.printable_type.gsub(/\s+/,'_')}.pdf"
-    order_printable.save
+    order_printable.save!
   end
 end

@@ -20,6 +20,7 @@ describe PackingLabels::OrderInfo, wip:true do
   let(:order_number) { "LO-ADA-0000001" }
   let!(:order) { create(:order, items: order_items, organization: buyer, market: market, delivery: delivery, order_number: order_number, total_cost: order_items.sum(&:gross_total)) }
 
+  let(:host) { "the host" }
   let(:qr_code) { "the QR code" }
 
   before do
@@ -76,9 +77,9 @@ describe PackingLabels::OrderInfo, wip:true do
     context "a normal Order" do
 
       it "returns an order_info" do
-        expect(PackingLabels::QrCode).to receive(:make_qr_code).with(order).and_return(qr_code)
+        expect(PackingLabels::QrCode).to receive(:make_qr_code).with(order,host:host).and_return(qr_code)
 
-        order_info = subject.make_order_info(order)
+        order_info = subject.make_order_info(order,host:host)
         expect(order_info).to eq({
           deliver_on: formatted_delivery_time(deliver_on),
           order_number: order_number,
@@ -96,9 +97,9 @@ describe PackingLabels::OrderInfo, wip:true do
       end
 
       it "includes a nil logo url" do
-        expect(PackingLabels::QrCode).to receive(:make_qr_code).with(order).and_return(qr_code)
+        expect(PackingLabels::QrCode).to receive(:make_qr_code).with(order,host:host).and_return(qr_code)
 
-        order_info = subject.make_order_info(order)
+        order_info = subject.make_order_info(order,host:host)
         expect(order_info).to eq({
           deliver_on: formatted_delivery_time(deliver_on),
           order_number: order_number,
@@ -116,7 +117,7 @@ describe PackingLabels::OrderInfo, wip:true do
       end
 
       it "raises a specific error" do
-        expect { subject.make_order_info(order) }.to raise_error(/delivery/)
+        expect { subject.make_order_info(order,host:host) }.to raise_error(/delivery/)
       end
     end
     context "null deliver_on" do
@@ -124,7 +125,7 @@ describe PackingLabels::OrderInfo, wip:true do
         order.delivery.update_column(:deliver_on, nil)
       end
       it "raises a specific error" do
-        expect { subject.make_order_info(order) }.to raise_error(/delivery/)
+        expect { subject.make_order_info(order,host:host) }.to raise_error(/delivery/)
       end
     end
   end
@@ -144,10 +145,10 @@ describe PackingLabels::OrderInfo, wip:true do
     it "generates a list of order_infos based on a list of Orders" do
       allow(PackingLabels::QrCode).to receive(:make_qr_code).and_return(qr_code)
 
-      order_infos = subject.make_order_infos(delivery)
+      order_infos = subject.make_order_infos(delivery, host:host)
       expect(order_infos).to contain_exactly(
-        subject.make_order_info(order),
-        subject.make_order_info(order2)
+        subject.make_order_info(order,host:host),
+        subject.make_order_info(order2,host:host)
       )
     end
   end

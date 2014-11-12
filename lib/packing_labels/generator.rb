@@ -2,7 +2,7 @@ module PackingLabels
   class Generator
     class << self
       def generate(delivery:,request:)
-        order_infos = PackingLabels::OrderInfo.make_order_infos(delivery)
+        order_infos = PackingLabels::OrderInfo.make_order_infos(delivery, host: request.base_url)
         # [ 
         #   { order_number: .... }
         #   { order_number: .... }

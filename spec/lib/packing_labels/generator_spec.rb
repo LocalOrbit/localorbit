@@ -3,7 +3,8 @@ module PackingLabels
     subject { described_class }
 
     context "#perform interaction testing" do
-      let(:request)     { double :request, :base_url=>"the base url" }
+      let(:request)     { double :request, base_url: base_url }
+      let(:base_url)    { "the base url" }
       let(:delivery)    { double "Delivery"  }
       let(:order_infos) { double "A list of order infos"  }
       let(:labels)      { double "A list of labels"  }
@@ -11,7 +12,7 @@ module PackingLabels
       let(:pdf_context) { double "A PDF context", pdf_result: "the pdf result" }
 
       it "works by creating order infos, labels, and then pages REPRISE" do 
-        expect(PackingLabels::OrderInfo).to receive(:make_order_infos).with(delivery).and_return(order_infos)
+        expect(PackingLabels::OrderInfo).to receive(:make_order_infos).with(delivery,host:base_url).and_return(order_infos)
         expect(PackingLabels::Label).to receive(:make_labels).with(order_infos).and_return(labels)
         expect(PackingLabels::Page).to receive(:make_pages).with(labels).and_return(pages)
 
