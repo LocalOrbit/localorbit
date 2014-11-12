@@ -12,10 +12,12 @@
    <div class="arrow-down"></div>
    <h2 class="farm-name"><%= farm.name %></h2>
    <div class="farm-location">
-      <% if farm.shipping_location %>
-      <span><%= "#{farm.shipping_location.try(:city)}, #{farm.shipping_location.try(:state)}" %></span>
-      <span>|</span>
-      <span><%= farm.shipping_location.try(:geocode) %></span>
+    <% if farm.shipping_location %>
+      <span><%= [farm.shipping_location.try(:city), farm.shipping_location.try(:state)].compact.join(", ") %></span>
+      <% if farm.shipping_location.geocode.present? %>
+        <span>|</span>
+        <span><%= farm.shipping_location.geocode %></span>
+      <% end %>
       <br><br><br>
     <% end %>
    </div>
