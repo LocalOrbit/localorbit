@@ -14,6 +14,14 @@ ProcessPackingLabels interactor:
   invoke PackingLabels::Generator.generate
   store resulting PDF as attachment on the PackingLabelsPrintable
 
+CHECK:
+  QR Code density
+  Look into "error correction"
+  
+DONE: 
+Create/test(Migrate!) PackingLabelsPrintable AR model
+  bundle exec rails generate model PackingLabelsPrintable user_id:integer delivery_id:integer pdf_uid:string pdf_name:string
+
 QR Code update:
      Use a "generic" QR handler route, like:
      http://app.localorbit.com/o/1234
