@@ -12,10 +12,12 @@
    <div class="arrow-down"></div>
    <h2 class="farm-name"><%= farm.name %></h2>
    <div class="farm-location">
+      <% if farm.shipping_location %>
       <span><%= "#{farm.shipping_location.try(:city)}, #{farm.shipping_location.try(:state)}" %></span>
       <span>|</span>
       <span><%= farm.shipping_location.try(:geocode) %></span>
       <br><br><br>
+    <% end %>
    </div>
 </section>
 
@@ -25,13 +27,17 @@
       <% if farm.photo.present? %>
         <li><%= image_tag ensure_full_url(farm.photo.url) %></li>
       <% end %>
-      <li><%= image_tag ensure_full_url(farm_map) %></li>
+      <% if farm_map.present? %>
+        <li><%= image_tag ensure_full_url(farm_map) %></li>
+      <% end %>
    </ul>
    </div>
    <div style="float:left; width:50%;">
       <br>
-      <h4>Who We Are</h4>
-      <p><%= farm.who_story %></p>
+      <% if farm.who_story.present? %>
+        <h4>Who We Are</h4>
+        <p><%= farm.who_story %></p>
+    <% end %>
    </div>
 
    <span><%= image_tag ensure_full_url(asset_url("table_tents_and_posters/LO_Circle_lo.png")) %>Powered by <strong>Local Orbit</strong></span>
