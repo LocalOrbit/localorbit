@@ -17,6 +17,11 @@ $ ->
       el = this
       fitText(el, 56, 24)
 
+  resizeTTFarmName = ->
+    $(".tt-farm-name").each ->
+      el = this
+      fitText(el, 86, 18)
+
   resizePosterHeader = ->
     $(".farm-name").each ->
       el = this
@@ -24,4 +29,5 @@ $ ->
 
   resizeContent()
   resizeTTHeader()
+  resizeTTFarmName()
   resizePosterHeader()

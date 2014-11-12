@@ -10,7 +10,7 @@
 
     <section class="farm-details">
        <div class="arrow-down"></div>
-       <h2><%= farm.name %></h2>
+       <h2 class="tt-farm-name"><%= farm.name %></h2>
        <div class="farm-location">
           <span><%= "#{farm.shipping_location.try(:city)}, #{farm.shipping_location.try(:state)}" %></span>
           <span>|</span>
