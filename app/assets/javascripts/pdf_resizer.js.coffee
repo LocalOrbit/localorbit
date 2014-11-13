@@ -5,7 +5,23 @@ $ ->
       fontSize = $(element).css("font-size").replace(/px/, "")
       $(element).css "font-size", (fontSize * 0.95) + "px"
       newHeight = $(element)?[0]?.scrollHeight
-      height = (if (newHeight is height or fontSize <= minFont) then -1 else newHeight)
+      if (newHeight is height or fontSize <= minFont)
+        clipText(element, maxHeight + 2000)
+        height = -1
+      else
+        height = newHeight
+
+  clipText = (element, maxHeight) ->
+    height = $(element)[0].scrollHeight
+    attempts = 0
+    words = $(element).text().split(' ')
+    wordCount = words.length
+    while(height > maxHeight and attempts < wordCount)
+      attempts += 1
+      newWords = words[0..(wordCount - (1 + attempts))]
+      $(element).text(newWords.join(' '))
+      height = $(element)[0].scrollHeight
+
 
   resizeContent = ->
     $(".farm-content p").each ->
