@@ -14,7 +14,7 @@
    <div class="farm-location">
     <% if farm.shipping_location %>
       <span><%= [farm.shipping_location.try(:city), farm.shipping_location.try(:state)].compact.join(", ") %></span>
-      <% if farm.shipping_location.geocode.present? %>
+      <% if farm.shipping_location and farm.shipping_location.geocode.present? %>
         <span>|</span>
         <span><%= farm.shipping_location.geocode %></span>
       <% end %>

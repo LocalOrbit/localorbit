@@ -9,14 +9,16 @@
     </section>
 
     <section class="farm-details">
-       <div class="arrow-down"></div>
-       <h2 class="tt-farm-name"><%= farm.name %></h2>
-       <div class="farm-location">
-          <span><%= "#{farm.shipping_location.try(:city)}, #{farm.shipping_location.try(:state)}" %></span>
+      <div class="arrow-down"></div>
+      <h2 class="tt-farm-name"><%= farm.name %></h2>
+      <div class="farm-location">
+      <span><%= [farm.shipping_location.try(:city), farm.shipping_location.try(:state)].compact.join(", ") %></span>
+        <% if farm.shipping_location and farm.shipping_location.geocode.present? %>
           <span>|</span>
-          <span><%= farm.shipping_location.try(:geocode) %></span>
-          <br><br><br>
-       </div>
+          <span><%= farm.shipping_location.geocode %></span>
+        <% end %>
+        <br><br><br>
+      </div>
     </section>
 
     <section class="farm-content">
