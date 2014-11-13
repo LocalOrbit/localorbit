@@ -31,5 +31,12 @@ module Dev
       end
     end
 
+    def mit
+      html = File.read("tmp/mi_tierra_order.html")
+      pdf_settings = {:page_size=>"letter", :margin_top=>0, :margin_right=>0, :margin_left=>0, :margin_bottom=>0}
+      pdf_kit = PDFKit.new(html, pdf_settings)
+      render text: pdf_kit.to_pdf, content_type: "application/pdf"
+    end
+
   end
 end
