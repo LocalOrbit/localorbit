@@ -8,12 +8,13 @@ class GeneratePdf
 
   def self.generate_pdf(request:,template:,params:,pdf_size:)
     html = generate_html(request: request, template: template, params: params)
+    pdf_settings = pdf_size.merge({margin_top: 0, margin_right: 0, margin_left: 0, margin_bottom: 0})
     if Figaro.env.debug == 'ON'
       puts ">>> HTML GENERATED USING template=#{template}, request=#{request.inspect} (base_url=#{request.base_url}) params=#{params.inspect} <<<"
       puts html
       puts ">>> END HTML <<<"
+      puts ">>> PDF_SETTINGS: #{pdf_settings.inspect} <<<"
     end
-    pdf_settings = pdf_size.merge({margin_top: 0, margin_right: 0, margin_left: 0, margin_bottom: 0})
     pdf_kit = PDFKit.new(html, pdf_settings)
     PdfResult.new(pdf_kit)
   end
