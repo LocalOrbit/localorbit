@@ -1,5 +1,5 @@
 @media print {
-  footer, #top, .nav, .logo, .logo-link, .back-button, .btn, a.export, .tabs-wrapper, .screen-only, .teflon, .tagline {
+  .no-print, footer, #top, .nav, .logo, .logo-link, .back-button, .btn, a.export, .tabs-wrapper, .screen-only, .teflon, .tagline {
     display: none !important;
   }
   tr, td, th {

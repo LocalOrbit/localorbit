@@ -4,30 +4,69 @@ describe "Plan Limits" do
   let(:plan)      { create(:plan) }
   let!(:market)   { create(:market, :with_delivery_schedule, :with_address, plan: plan) }
   let!(:seller)   { create(:organization, :seller, markets: [market]) }
+  let!(:buyer)    { create(:organization, :buyer, markets: [market]) }
   let!(:product)  { create(:product, :sellable, organization: seller) }
+  let!(:order_item) {create(:order_item, order: order, product: product)}
+  let(:order)     { create :order, :with_items, organization: buyer, market: market }
 
-  let(:user)     { create(:user, managed_markets: [market]) }
+  let(:user)      { create(:user, managed_markets: [market]) }
 
   before do
     switch_to_subdomain(market.subdomain)
     sign_in_as(user)
   end
 
-  context "as a buyer" do
+  context "as an admin" do
+    let!(:user) { create(:user, :admin)}
+    it "is allowed to view table tents or posters" do
+      visit order_path(order)
+      expect(page).to_not have_text "404"
+      expect(page).to have_text "Download the table tents"
+      expect(page).to have_selector ".app-download-table-tents-btn"
+    end
+  end
 
+  context "as a seller" do
+    let!(:user) {create(:user, organizations:[seller] )}
+
+    it "is not allowed to view table tents or posters" do
+      visit admin_order_path(order)
+      expect(page).to_not have_text "404"
+      expect(page).to_not have_text "Download the table tents"
+      expect(page).to_not have_selector ".app-download-table-tents-btn"
+    end
+  end
+
+  context "as a buyer" do
+    let!(:user) { create(:user, managed_markets: [], organizations: [buyer])}
+
+    context "on a grow plan" do
+      let!(:plan) { create(:plan, :grow) }
+
+      it "is allowed to view table tents or posters" do
+        visit order_path(order)
+        expect(page).to_not have_text "404"
+        expect(page).to have_text "Download the table tents"
+        expect(page).to have_selector ".app-download-table-tents-btn"
+      end
+    end
   end
 
   context "as a market manager" do
-    context "on the startup plan" do
-      let!(:plan) do
-        create(:plan,
-          discount_codes: false,
-          promotions: false,
-          custom_branding: false,
-          cross_selling: false,
-          advanced_pricing: false,
-          advanced_inventory: false)
+    context "on a grow plan" do
+      let!(:plan) { create(:plan, :grow) }
+
+      it "is allowed to view table tents or posters" do
+        user.organizations << buyer
+        visit order_path(order)
+        expect(page).to_not have_text "404"
+        expect(page).to have_text "Download the table tents"
+        expect(page).to have_selector ".app-download-table-tents-btn"
       end
+    end
+
+    context "on the startup plan" do
+      let!(:plan) { create(:plan, :start_up) }
 
       it "is not allowed to manage discount codes" do
         within("#admin-nav") do
@@ -51,6 +90,14 @@ describe "Plan Limits" do
         visit admin_market_path(market)
 
         expect(page).to_not have_content("Cross Sell")
+      end
+
+      it "is not allowed to view table tents or posters" do
+        user.organizations << buyer
+        visit order_path(order)
+        expect(page).to_not have_text "404"
+        expect(page).to_not have_text "Download the table tents"
+        expect(page).to_not have_selector ".app-download-table-tents-btn"
       end
 
       context "from the products list", :js do

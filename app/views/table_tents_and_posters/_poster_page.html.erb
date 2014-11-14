@@ -1,0 +1,64 @@
+<div class="container">
+
+<section class="header">
+    <% if(include_product_names) %>
+      <div class="productContent"><h1 class="headerPosterText"><%= product_name %></h1><h4>from <span style="text-decoration:underline;">local</span> producers!</h1></h4></div>
+    <% else %>
+      <h1 style="margin-top:15px;font-size:64px;">Real food from<br/><span style="text-decoration:underline;">local</span> producers!</h1>
+    <% end %>
+</section>
+
+<section class="farm-details">
+   <div class="arrow-down"></div>
+   <h2 class="farm-name"><%= farm.name %></h2>
+   <div class="farm-location">
+    <% if farm.shipping_location %>
+      <span><%= [farm.shipping_location.try(:city), farm.shipping_location.try(:state)].compact.join(", ") %></span>
+      <% if farm.shipping_location and farm.shipping_location.geocode.present? %>
+        <span>|</span>
+        <span><%= farm.shipping_location.geocode %></span>
+      <% end %>
+      <br><br><br>
+    <% end %>
+   </div>
+</section>
+
+<section class="farm-content">
+   <div style="float:left; width:50%;">
+      <ul style="float:right;text-align:center;">
+      <% if farm.photo.present? %>
+        <li><%= image_tag ensure_full_url(farm.photo.url) %></li>
+      <% end %>
+      <% if farm_map.present? %>
+        <li><%= image_tag ensure_full_url(farm_map) %></li>
+      <% end %>
+   </ul>
+   </div>
+   <div style="float:left; width:50%;">
+      <br>
+      <% if farm.who_story.present? %>
+        <h4>Who We Are</h4>
+        <p><%= farm.who_story %></p>
+    <% end %>
+   </div>
+
+   <span><%= image_tag ensure_full_url(asset_url("table_tents_and_posters/LO_Circle_lo.png")) %>Powered by <strong>Local Orbit</strong></span>
+</section>
+
+<section class="footer">
+   <% if market.logo %>
+      <div style="width:30%;float:left;text-align:center;">
+         <%= image_tag ensure_full_url(market.logo.url) %>
+      </div>
+   <% end %>
+   <div style="width:62%;margin-left: 1%;float:left;">
+      <h5>Brought to you by</h5>
+
+      <h4><%= market.name %></h4>
+      <span><%= market.tagline %></span>
+      <br><br>
+   </div>
+
+</section>
+
+</div>
