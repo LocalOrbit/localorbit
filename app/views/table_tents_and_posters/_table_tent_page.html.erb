@@ -1,0 +1,45 @@
+<div class="container">
+
+    <section class="header">
+      <% if(include_product_names) %>
+       <div class="productContent"><h1 class="headerText"><%= product_name %></h1><h4>from <span style="text-decoration:underline;">local</span> producers!</h1></h4></div>
+      <% else %>
+       <h1>Real food from <span style="text-decoration:underline;">local</span> producers!</h1>
+      <% end %>
+    </section>
+
+    <section class="farm-details">
+      <div class="arrow-down"></div>
+      <h2 class="tt-farm-name"><%= farm.name %></h2>
+      <div class="farm-location">
+      <span><%= [farm.shipping_location.try(:city), farm.shipping_location.try(:state)].compact.join(", ") %></span>
+        <% if farm.shipping_location and farm.shipping_location.geocode.present? %>
+          <span>|</span>
+          <span><%= farm.shipping_location.geocode %></span>
+        <% end %>
+        <br><br><br>
+      </div>
+    </section>
+
+    <section class="farm-content">
+      <h4>Who We Are</h4>
+      <p class="who-story"><%= farm.who_story %></p>
+      <p class="lo-logo">
+        <%= image_tag asset_url("table_tents_and_posters/LO_Circle_lo.png") %>
+        Powered by <strong>Local Orbit</strong>
+      </p>
+    </section>
+
+    <section class="footer">
+      <% if market.logo %>
+        <div class="market-logo"><%= image_tag market.logo.url %></div>
+      <% end %>
+      <div class="market-content">
+          <h5>Brought to you by</h5>
+          <h4><%= market.name %></h4>
+          <span><%= market.tagline %></span>
+          <br><br>
+       </div>
+    </section>
+
+</div>

@@ -68,7 +68,9 @@ Rails.application.routes.draw do
       end
     end
 
-    resources :orders, only: [:index, :show, :update]
+    resources :orders, only: [:index, :show, :update] do
+      resources :table_tents_and_posters, :controller=>"/table_tents_and_posters", only: [:index, :show, :create]
+    end
 
     resources :organizations, concerns: [:bank_account, :activatable] do
       resources :organization_users, as: :users, path: :users
@@ -169,8 +171,14 @@ Rails.application.routes.draw do
   resource  :market, only: [:show]
   resources :sellers, only: [:index, :show]
   resource :cart, only: [:update, :show, :destroy]
-  resources :orders, only: [:show, :create]
+  resources :orders, only: [:show, :create] do
+    resources :table_tents_and_posters, :controller=>"table_tents_and_posters", only: [:index, :show, :create]
+  end
   resource :registration, only: [:show, :create]
+
+  if Rails.env.development?
+    get "dev/pdf(/:action)", to: "dev/pdf", as: "dev_pdf"
+  end
 
   root to: redirect("/users/sign_in")
 end

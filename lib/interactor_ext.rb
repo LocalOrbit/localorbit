@@ -1,11 +1,13 @@
 module Interactor
   def require_in_context(*names)
-    names.map do |name|
-      if context[name]
-        self.send(name)
-      else
+    context_keys = context.keys
+    names.each do |name|
+      if !context_keys.include?(name)
         raise "Interactor #{self.class.name} requires #{name.inspect} but it wasn't found in context."
       end
+    end
+    names.map do |name|
+      self.send(name)
     end
   end
 end

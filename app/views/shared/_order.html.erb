@@ -260,3 +260,7 @@
 
 </div>
 <% end %>
+
+<% if FeatureAccess.order_printables?(user: current_user, order: order) %>
+  <%= render :partial=>"table_tents_and_posters/ad", locals: { order: order } %>
+<% end %>

@@ -1,7 +1,13 @@
-# Circle CI config 
+# Circle CI config
 machine:
   environment:
     CAPYBARA_WAIT_TIME: 30
 checkout:
   post:
     - cp config/application.yml{.example,}
+test:
+  override:
+    - "bundle exec rspec --tag ~@wip":
+        parallel: true
+        files:
+          - spec/**/*_spec.rb
