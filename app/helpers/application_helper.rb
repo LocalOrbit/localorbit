@@ -14,7 +14,8 @@ module ApplicationHelper
   end
 
   def pdf_asset_url(asset)
-    "NOT DONE YET"
+    path = asset_path(asset) 
+    "#{Figaro.env.pdf_asset_host}#{path}"
   end
 
   # Used in navigation to get to the users organization(s)
