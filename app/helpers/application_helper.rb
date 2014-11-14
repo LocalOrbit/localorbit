@@ -13,9 +13,9 @@ module ApplicationHelper
     end
   end
 
-  def pdf_asset_path(asset)
-    path = Rails.env.development? ? Figaro.env.asset_host : ""
-    path += asset_path(asset)
+  def pdf_asset_url(asset)
+    path = asset_path(asset) 
+    "#{Figaro.env.pdf_asset_host}#{path}"
   end
 
   # Used in navigation to get to the users organization(s)
