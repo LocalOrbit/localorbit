@@ -103,6 +103,7 @@ GEM
       sass (~> 3.2.19)
     compass-rails (2.0.0)
       compass (>= 0.12.2)
+    constructor (2.0.0)
     countries (0.9.3)
       currencies (~> 0.4.2)
     crack (0.4.2)
@@ -455,6 +456,7 @@ DEPENDENCIES
   coffee-rails (~> 4.0.0)
   color
   compass-rails
+  constructor
   countries
   csv_builder
   database_cleaner
