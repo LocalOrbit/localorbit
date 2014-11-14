@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html>
+    <head>
+      <meta charset="utf-8">
+      <script src="<%= asset_url('jquery.js') %>"></script>
+      <script src="<%= asset_url('pdf_resizer.js') %>"></script>
+    </head>
+    <body style='margin: 0; padding: 0;'>
+    <style>
+      .container{
+        max-width: 480px;
+        page-break-after: always;
+        /* page-break-inside: avoid; */
+        height: 562px;
+        max-height: 562px;
+        font-family: 'Helvetica', sans-serif;
+        margin:0;
+        padding:0;
+        font-size: 14px;
+        overflow:hidden;
+        position: relative;
+      }
+      section{
+        width: 100%;
+        position: relative;
+        display: inline-block;
+      }
+
+      .header{
+        height:124px;
+        background:#3F3E40;
+        color:#E3E3E4;
+        background-image:url("<%= asset_url 'table_tents_and_posters/Group.png' %> ");
+        background-size:cover;
+        background-position:center center;
+        text-align:center;
+        font-size:140%;
+        /* position:relative; */
+        /* width:100%; */
+      }
+      .header h4{
+        margin-top: 0px;
+      }
+      .header h1{
+        margin-top:15px;
+      }
+      .headerText{
+        padding:5px;
+        margin-bottom: 0px;
+      }
+      .arrow-down{
+        width: 0;
+        height: 0;
+        border-left: 32px solid transparent;
+        border-right: 32px solid transparent;
+        border-top: 14px solid;
+        margin: 0 auto;
+        margin-top: -1px;
+      }
+
+      .farm-details{
+        color:#3F3E40;
+        text-align:center;
+        background:#E3E3E4;
+        background-image:url("<%= asset_url 'table_tents_and_posters/map.png' %> ");
+        position:relative;
+        background-size:cover;
+        background-position:center center;
+        height: 88px;
+        min-height: 88px;
+        max-height: 88px;
+        overflow: hidden;
+      }
+
+      .farm-details h2{
+        font-size:160%;
+        margin: 2% 0 1%;
+      }
+      .farm-location{
+        font-weight:bold;
+        font-size:86%;
+      }
+
+      .farm-content{
+        padding: 0;
+        height: 275px;
+        min-height: 275px;
+        max-height: 275px;
+        overflow:hidden;
+      }
+      .farm-content p,.farm-content h4{
+        padding:0 6%;
+        font-size: 84%;
+      }
+      .farm-content .who-story {
+        height: 210px;
+        overflow: hidden;
+      }
+      .footer{
+        background:#3F3E40;
+        background-image:url("<%= asset_url 'table_tents_and_posters/Group.png' %> ");
+        color:#FEFEFE;
+        background-size:cover;
+        background-position:center center;
+        height: 69px;
+        /* overflow:hidden; */
+      }
+      p.lo-logo {
+        font-size: 60%;
+        color:black;
+        right:3%;
+        z-index:999999;
+        background-color:white;
+        text-align: right;
+        position: absolute;
+        bottom: -10px;
+        right: 0px;
+      }
+      .lo-logo img{
+        width:6px;
+        width:16px;
+        padding-right: 4px;
+        padding-bottom: 3px;
+        vertical-align: middle;
+      }
+
+      .footer img {
+        /* background:#ffffff; */
+        width:90%;
+        margin: 0% auto 0%;
+        border: 2px solid #dfdfdf;
+      }
+
+      .footer h5{
+        /* margin:15% 0 1%; */
+        text-transform:uppercase;
+        border-bottom:1px solid;
+        margin-top: 4%;
+        color:#8E8C8E;
+        font-size: 70%;
+        margin-bottom: 0px;
+      }
+      .footer h4{
+        line-height: 0;
+        /* margin: 4% 0 2%; */
+        font-size: 80%;
+        margin-bottom: 0px;
+      }
+      .footer span{
+        margin-top: 0px;
+        font-size:60%;
+      }
+      .footer .market-logo {
+        width:25%;
+        /* margin-top: -15px; */
+        text-align:center;
+        bottom: 0;
+        margin-left: 2%;
+        position: absolute;
+      }
+      .footer .market-content {
+        width:62%;
+        margin-left: 29%;
+        position:relative;
+      }
+    </style>
+    <% params[:page_list].each do |page| %>
+      <%= render partial: "table_tents_and_posters/table_tent_page", locals: {farm: page[:farm], farm_map: page[:farm_map], product_name: page[:product_name], include_product_names: params[:include_product_names], market: params[:market]} %>
+    <% end %>
+
+    <section>&nbsp;</section>
+  </body>
+</html>

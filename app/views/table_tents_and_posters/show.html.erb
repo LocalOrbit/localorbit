@@ -1,0 +1,9 @@
+<div data-ko-module="download_printables" align="center">
+  <h1>Generating <%= @printables %>...</h1>
+  <%= image_tag "loading-progress.gif", data: { bind: "visible: !pdfUri()" } %>
+  <div style="display:none;" data-bind="visible: pdfUri">
+    <p>
+      <a class="btn btn--save btn--small mobile-block" data-bind="attr: { href: pdfUri }">Download <%= @printables %> PDF</a>
+    </p>
+  </div>
+</div>
