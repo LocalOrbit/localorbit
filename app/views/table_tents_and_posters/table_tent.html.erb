@@ -2,8 +2,8 @@
 <html>
     <head>
       <meta charset="utf-8">
-      <script src="<%= asset_url('jquery.js') %>"></script>
-      <script src="<%= asset_url('pdf_resizer.js') %>"></script>
+      <script src="<%= pdf_asset_url('jquery.js') %>"></script>
+      <script src="<%= pdf_asset_url('pdf_resizer.js') %>"></script>
     </head>
     <body style='margin: 0; padding: 0;'>
     <style>
@@ -30,7 +30,7 @@
         height:124px;
         background:#3F3E40;
         color:#E3E3E4;
-        background-image:url("<%= asset_url 'table_tents_and_posters/Group.png' %> ");
+        background-image:url("<%= pdf_asset_url 'table_tents_and_posters/Group.png' %> ");
         background-size:cover;
         background-position:center center;
         text-align:center;
@@ -62,7 +62,7 @@
         color:#3F3E40;
         text-align:center;
         background:#E3E3E4;
-        background-image:url("<%= asset_url 'table_tents_and_posters/map.png' %> ");
+        background-image:url("<%= pdf_asset_url 'table_tents_and_posters/map.png' %> ");
         position:relative;
         background-size:cover;
         background-position:center center;
@@ -98,7 +98,7 @@
       }
       .footer{
         background:#3F3E40;
-        background-image:url("<%= asset_url 'table_tents_and_posters/Group.png' %> ");
+        background-image:url("<%= pdf_asset_url 'table_tents_and_posters/Group.png' %> ");
         color:#FEFEFE;
         background-size:cover;
         background-position:center center;
