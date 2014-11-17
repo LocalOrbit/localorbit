@@ -4,7 +4,7 @@
     <% if(include_product_names) %>
       <div class="productContent"><h1 class="headerPosterText"><%= product_name %></h1><h4>from <span style="text-decoration:underline;">local</span> producers!</h1></h4></div>
     <% else %>
-      <h1 style="margin-top:15px;font-size:64px;">Real food from<br/><span style="text-decoration:underline;">local</span> producers!</h1>
+      <div class="productContent"><h1 class="real-food">Real food from<br/><span style="text-decoration:underline;">local</span> producers!</h1></div>
     <% end %>
 </section>
 
@@ -47,13 +47,12 @@
 
 <section class="footer">
    <% if market.logo %>
-      <div style="width:30%;float:left;text-align:center;">
+     <div class="footer-image-holder">
          <%= image_tag ensure_full_url(market.logo.url) %>
       </div>
    <% end %>
-   <div style="width:62%;margin-left: 1%;float:left;">
+   <div class="market-info">
       <h5>Brought to you by</h5>
-
       <h4><%= market.name %></h4>
       <span><%= market.tagline %></span>
       <br><br>
