@@ -17,6 +17,12 @@ GIT
     groupdate (2.2.1)
       activesupport (>= 3)
 
+GIT
+  remote: git://github.com/zakird/wkhtmltopdf_binary_gem.git
+  revision: 77a62c35e4a9bb8d6583ffeadf0073ac92748a91
+  specs:
+    wkhtmltopdf-binary (0.9.9.3)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -433,7 +439,6 @@ GEM
       addressable (>= 2.3.6)
       crack (>= 0.3.2)
     websocket-driver (0.3.4)
-    wkhtmltopdf-binary (0.9.9.3)
     wysihtml5-rails (0.0.4)
       railties (>= 3.1.0)
     xpath (2.0.0)
@@ -520,5 +525,5 @@ DEPENDENCIES
   underscore-rails
   vcr
   webmock
-  wkhtmltopdf-binary
+  wkhtmltopdf-binary!
   wysihtml5-rails
