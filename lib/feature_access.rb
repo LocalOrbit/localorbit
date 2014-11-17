@@ -11,8 +11,7 @@ class FeatureAccess
   # end
   def self.packing_labels?(user_delivery_context:)
     return true if user_delivery_context.is_admin
-    #
-    # if user_delivery_context.market_manager? 
-    # market.plan && market.plan.order_printables?
+
+    return (user_delivery_context.has_feature(:order_printables) and (user_delivery_context.is_seller or user_delivery_context.is_market_manager))
   end
 end

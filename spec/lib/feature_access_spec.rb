@@ -53,9 +53,15 @@ describe FeatureAccess do
     :available_features,
     :is_market_manager,
     :is_seller,
-    :is_buyer,
+    :is_buyer_only,
     :is_admin
   )
+
+  class UserDeliveryContext
+    def has_feature(sym)
+      available_features.include?(sym)
+    end
+  end
 
 
   describe ".packing_labels?" do
@@ -63,9 +69,9 @@ describe FeatureAccess do
       UserDeliveryContext.new( 
         available_features: available_features,
         is_market_manager: is_market_manager,
-        is_seller: is_market_seller,
-        is_buyer_only: is_market_buyer_only,
-        is_market_admin: is_market_admin
+        is_seller: is_seller,
+        is_buyer_only: is_buyer_only,
+        is_admin: is_admin
       ) 
     }
 
@@ -76,13 +82,13 @@ describe FeatureAccess do
     let(:is_admin) { false }
     
     context "market with order_printables enabled in plan" do
-      let(:available_features) { [ :packing_labels ] }
+      let(:available_features) { [ :order_printables ] }
 
       context "market managers" do
         let(:is_market_manager) { true }
 
         it "returns true" do
-          expect(subject.packing_labels?(user_delivery_context)).to eq true
+          expect(subject.packing_labels?(user_delivery_context: user_delivery_context)).to eq true
         end
       end
 
@@ -90,7 +96,7 @@ describe FeatureAccess do
         let(:is_seller) { true }
 
         it "returns true" do
-          expect(subject.packing_labels?(user_delivery_context)).to eq true
+          expect(subject.packing_labels?(user_delivery_context: user_delivery_context)).to eq true
         end
       end
 
@@ -98,7 +104,7 @@ describe FeatureAccess do
         let(:is_admin) { true }
 
         it "returns true" do
-          expect(subject.packing_labels?(user_delivery_context)).to eq true
+          expect(subject.packing_labels?(user_delivery_context: user_delivery_context)).to eq true
         end
       end
 
@@ -106,14 +112,45 @@ describe FeatureAccess do
         let(:is_buyer_only) { true }
 
         it "returns false" do
-          expect(subject.packing_labels?(user_delivery_context)).to eq false
+          expect(subject.packing_labels?(user_delivery_context: user_delivery_context)).to eq false
         end
       end
     end
 
-    context "market with order_printables DISabled in plan" do
-      it "returns false for everyone" do
-        raise "TODO"
+
+    context "market with order_printables enabled in plan" do
+      let(:available_features) { [ :other, :things ] }
+
+      context "admins" do
+        let(:is_admin) { true }
+
+        it "returns true, because admins are admins" do
+          expect(subject.packing_labels?(user_delivery_context: user_delivery_context)).to eq true
+        end
+      end
+
+      context "market managers" do
+        let(:is_market_manager) { true }
+
+        it "returns false" do
+          expect(subject.packing_labels?(user_delivery_context: user_delivery_context)).to eq false
+        end
+      end
+
+      context "sellers" do
+        let(:is_seller) { true }
+
+        it "returns false" do
+          expect(subject.packing_labels?(user_delivery_context: user_delivery_context)).to eq false
+        end
+      end
+
+      context "buyers" do
+        let(:is_buyer_only) { true }
+
+        it "returns false" do
+          expect(subject.packing_labels?(user_delivery_context: user_delivery_context)).to eq false
+        end
       end
     end
 
