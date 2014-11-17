@@ -50,14 +50,13 @@ describe FeatureAccess do
 
   require 'constructor_struct'
   UserDeliveryContext = ConstructorStruct.new(
-    :available_features,
-    :is_market_manager,
-    :is_seller,
-    :is_buyer_only,
-    :is_admin
-  )
+      :available_features,
+      :is_market_manager,
+      :is_seller,
+      :is_buyer_only,
+      :is_admin
+    ) do 
 
-  class UserDeliveryContext
     def has_feature(sym)
       available_features.include?(sym)
     end
