@@ -27,7 +27,7 @@ context "Downloading packing labels", js:true do
     sign_in_as(user)
   end
 
-  it "lets users generate shipping labels as a PDF document", wip:true do
+  it "lets users generate shipping labels as a PDF document" do
     visit admin_delivery_tools_path
     expect(page).to have_text "Upcoming Deliveries"
     expect(page).to have_text "Labels"

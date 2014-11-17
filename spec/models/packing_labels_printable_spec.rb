@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-RSpec.describe PackingLabelsPrintable, :type => :model, :wip=>true do
+RSpec.describe PackingLabelsPrintable, :type => :model do
   subject { create(:packing_labels_printable) }
 
   it "can be created" do

@@ -1,12 +1,12 @@
 require "spec_helper"
 
-describe ProcessPackingLabelsPrintable, wip:true do
+describe ProcessPackingLabelsPrintable do
   subject { described_class }
 
   let(:packing_labels_printable) { create(:packing_labels_printable) }
   let(:packing_labels_printable_id) { packing_labels_printable.id }
 
-  let(:context) { double("result context", 
+  let(:context) { double("result context",
                          pdf_result: double("Pdf result", data: "the pdf data")
                         )}
   let(:request) { double "a request" }

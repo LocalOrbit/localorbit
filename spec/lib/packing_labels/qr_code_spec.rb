@@ -1,6 +1,6 @@
 require "spec_helper"
 
-describe PackingLabels::QrCode, wip:true do
+describe PackingLabels::QrCode do
   subject { described_class }
 
   describe ".make_qr_code" do

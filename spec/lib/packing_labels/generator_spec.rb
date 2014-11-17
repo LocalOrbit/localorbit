@@ -1,5 +1,5 @@
 module PackingLabels
-  describe Generator, wip:true do
+  describe Generator do
     subject { described_class }
 
     context "#perform interaction testing" do
@@ -11,7 +11,7 @@ module PackingLabels
       let(:pages)       { double "A list of pages"  }
       let(:pdf_context) { double "A PDF context", pdf_result: "the pdf result" }
 
-      it "works by creating order infos, labels, and then pages REPRISE" do 
+      it "works by creating order infos, labels, and then pages REPRISE" do
         expect(PackingLabels::OrderInfo).to receive(:make_order_infos).with(delivery,host:base_url).and_return(order_infos)
         expect(PackingLabels::Label).to receive(:make_labels).with(order_infos).and_return(labels)
         expect(PackingLabels::Page).to receive(:make_pages).with(labels).and_return(pages)

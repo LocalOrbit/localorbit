@@ -1,6 +1,6 @@
 require "spec_helper"
 
-describe Deliveries::PackingLabelsController, wip:true do
+describe Deliveries::PackingLabelsController do
 
   include_context "the mini market"
 

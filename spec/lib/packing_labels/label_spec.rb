@@ -1,5 +1,5 @@
 module PackingLabels
-describe PackingLabels::Label, wip:true do
+describe PackingLabels::Label do
 
   subject { described_class }
 
@@ -9,7 +9,7 @@ describe PackingLabels::Label, wip:true do
 
   describe ".make_labels" do
 
-    it "creates labels for an array of order_info objects" do 
+    it "creates labels for an array of order_info objects" do
       expect(subject.make_labels(order_infos)).to eq ([
         {:template=>Label::OrderTemplate, :data=>{:order=>{:foo=>:bar}}},
         {:template=>Label::ProductTemplate, :data=>{:order=>{:foo=>:bar}, :product=>'prod a'}},
@@ -22,7 +22,7 @@ describe PackingLabels::Label, wip:true do
   end
 
   describe ".make_order_labels" do
-    it "creates an array of labels from an order_info" do 
+    it "creates an array of labels from an order_info" do
       expect(subject.make_order_labels(order_info1)).to eq ([
         {:template=>Label::OrderTemplate, :data=>{:order=>{:foo=>:bar}}},
         {:template=>Label::ProductTemplate, :data=>{:order=>{:foo=>:bar}, :product=>'prod a'}},

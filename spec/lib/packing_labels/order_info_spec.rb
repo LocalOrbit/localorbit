@@ -1,4 +1,4 @@
-describe PackingLabels::OrderInfo, wip:true do
+describe PackingLabels::OrderInfo do
   subject { described_class }
 
   let(:market) { create(:market) }
@@ -92,7 +92,7 @@ describe PackingLabels::OrderInfo, wip:true do
     end
 
     context "missing Market logo" do
-      before do 
+      before do
         market.update(logo: nil)
       end
 
@@ -112,7 +112,7 @@ describe PackingLabels::OrderInfo, wip:true do
     end
 
     context "missing delivery" do
-      before do 
+      before do
         order.update(delivery:nil)
       end
 
@@ -121,7 +121,7 @@ describe PackingLabels::OrderInfo, wip:true do
       end
     end
     context "null deliver_on" do
-      before do 
+      before do
         order.delivery.update_column(:deliver_on, nil)
       end
       it "raises a specific error" do
