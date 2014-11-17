@@ -24,7 +24,8 @@
             <div class="tool"><%= link_to "Individual Packing Slips <span class='note'>per Seller</span>".html_safe, admin_delivery_tools_individual_pack_list_path(delivery) %></div>
             <div class="tool"><%= link_to "Order Summary", admin_delivery_tools_order_summary_path(delivery)%></div>
             <% if FeatureAccess.packing_labels?(user_delivery_context: user_delivery_context) %>
-              <div class="tool"><%= link_to "Labels", admin_delivery_tools_delivery_packing_labels_path(delivery_id: delivery.id), method: "post", class: "app-labels-link", target: "_blank" %></div>
+              <% target = if Rails.env.test? then "" else "_blank" end %>
+              <div class="tool"><%= link_to "Labels", admin_delivery_tools_delivery_packing_labels_path(delivery_id: delivery.id), method: "post", class: "app-labels-link", target: target %></div>
             <% end %>
           </div>
           <hr>
