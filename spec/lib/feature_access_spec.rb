@@ -1,10 +1,7 @@
 require "spec_helper"
 
 describe FeatureAccess do
-<<<<<<< HEAD
-=======
   subject { described_class }
->>>>>>> feature/avery-labels
   let(:plan)                   { create(:plan, :grow) }
   let!(:market)                { create(:market, :with_delivery_schedule, :with_address, plan: plan) }
   let!(:wrong_market)          { create(:market, :with_delivery_schedule, :with_address, plan: plan) }

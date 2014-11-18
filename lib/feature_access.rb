@@ -40,4 +40,3 @@ class FeatureAccess
     end
   end
 end
->>>>>>> feature/avery-labels
