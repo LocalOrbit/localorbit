@@ -9,9 +9,9 @@ describe Deliveries::PackingLabelsController do
     sign_in barry
   end
 
-  describe "#create" do
-    def post_create
-      post :create, delivery_id: delivery.id
+  describe "#index" do
+    def get_index
+      get :index, delivery_id: delivery.id
     end
 
     def expect_process_delivery_printable
@@ -31,7 +31,7 @@ describe Deliveries::PackingLabelsController do
 
       expect_process_delivery_printable
 
-      post_create
+      get_index
 
       delivery_printable = PackingLabelsPrintable.where(delivery_id: delivery.id).first
       expect(delivery_printable).to be

@@ -1,7 +1,8 @@
 require "spec_helper"
 
 context "Downloading packing labels", js:true do
-  let(:market) { create(:market) }
+  let(:plan_with_packing_labels) { create(:plan, :nothing, packing_labels: true) }
+  let(:market) { create(:market, plan: plan_with_packing_labels) }
 
   let!(:buyer) { create(:organization, :buyer, name: "Big Money", markets: [market]) }
   let!(:seller) { create(:organization, :seller, name: "Good foodz", markets: [market]) }
@@ -30,6 +31,7 @@ context "Downloading packing labels", js:true do
   it "lets users generate shipping labels as a PDF document" do
     visit admin_delivery_tools_path
     expect(page).to have_text "Upcoming Deliveries"
+
     expect(page).to have_text "Labels"
 
     find(".app-labels-link").click
