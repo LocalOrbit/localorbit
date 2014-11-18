@@ -1,0 +1,37 @@
+<div class="label-heading">
+  PRODUCT
+</div>
+<div class="label-content">
+  <div class="label-row">
+    <span class="small-text">For delivery on:</span><br/>
+    <%= order[:deliver_on] %>
+  </div>
+  <div class="label-row">
+    <span class="small-text">Order #:</span><br/>
+    <%= order[:order_number] %>
+  </div>
+  <div class="label-row">
+    <span class="small-text">Buyer</span><br/>
+    <%= order[:buyer_name] %>
+  </div>
+  <div class="label-row">
+    <span class="small-text">Product</span><br/>
+    <%= product[:product_name] %> <br/>
+    <span style="font-size:80%">
+      <%= "#{product[:quantity]} #{product[:unit_desc]}" %>
+      <%= "| #{product[:lot_desc]}" if product[:lot_desc] %>
+    </span>
+  </div>
+  <div class="label-row">
+    <span class="small-text">Producer</span><br/>
+    <%= product[:producer_name] %>
+  </div>
+  <div class="label-row">
+    <div class="footer-row">
+      <%= image_tag ensure_full_url(order[:qr_code_url]), :class=>"qr-code" %>
+      <% if order[:market_logo_url] %>
+        <%= image_tag ensure_full_url(order[:market_logo_url]) %>
+      <% end %>
+    </div>
+  </div>
+</div>

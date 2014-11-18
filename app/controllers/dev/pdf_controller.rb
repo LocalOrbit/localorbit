@@ -37,6 +37,5 @@ module Dev
       pdf_kit = PDFKit.new(html, pdf_settings)
       render text: pdf_kit.to_pdf, content_type: "application/pdf"
     end
-
   end
 end
