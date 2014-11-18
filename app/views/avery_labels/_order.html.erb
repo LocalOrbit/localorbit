@@ -1,0 +1,27 @@
+<div class="horizontal" style="font-size:125%">
+  <div class="label-heading">
+    ORDER
+  </div>
+  <div class="label-content">
+    <div class="order-row">
+      <span class="small-text">For delivery on:</span><br/>
+      <%= order[:deliver_on] %>
+    </div>
+    <div class="order-row">
+      <span class="small-text">Order #:</span><br/>
+      <%= order[:order_number] %>
+    </div>
+    <div class="order-row">
+      <span class="small-text">Buyer</span><br/>
+      <%= order[:buyer_name] %>
+    </div>
+    <div class="order-row">
+      <div class="footer-row">
+        <%= image_tag ensure_full_url(order[:qr_code_url]), :class=>"qr-code" %>
+        <% if order[:market_logo_url] %>
+          <%= image_tag ensure_full_url(order[:market_logo_url]) %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>

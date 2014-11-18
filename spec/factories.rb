@@ -357,6 +357,18 @@ FactoryGirl.define do
     promotions         true
     order_printables   true
 
+    trait :nothing do
+      name "Start Up"
+      discount_codes     false
+      cross_selling      false
+      custom_branding    false
+      automatic_payments false
+      advanced_pricing   false 
+      advanced_inventory false
+      promotions         false
+      order_printables   false
+    end
+    
     trait :start_up do
       name "Start Up"
       discount_codes     false
@@ -523,5 +535,10 @@ FactoryGirl.define do
     order
     include_product_names false
     printable_type "table tent"
+  end
+
+  factory :packing_labels_printable do
+    user
+    delivery
   end
 end
