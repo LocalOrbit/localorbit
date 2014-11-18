@@ -11,10 +11,11 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141107205633) do
+ActiveRecord::Schema.define(version: 20141111184650) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+  enable_extension "pg_stat_statements"
 
   create_table "audits", force: true do |t|
     t.integer  "auditable_id"
@@ -565,6 +566,15 @@ ActiveRecord::Schema.define(version: 20141107205633) do
   end
 
   add_index "organizations", ["name"], name: "index_organizations_on_name", using: :btree
+
+  create_table "packing_labels_printables", force: true do |t|
+    t.integer  "user_id"
+    t.integer  "delivery_id"
+    t.string   "pdf_uid"
+    t.string   "pdf_name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "payments", force: true do |t|
     t.integer  "payee_id"

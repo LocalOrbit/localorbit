@@ -57,6 +57,8 @@ gem "rack-canonical-host"
 gem "ransack"
 gem "simpleidn"
 
+gem "constructor"
+
 # wkhtmltopdf versions are a mess. 0.12.1 is stable but not well supported by gems
 # See https://github.com/zakird/wkhtmltopdf_binary_gem/issues/13
 # The github version is massive and makes the Heroku slug huge

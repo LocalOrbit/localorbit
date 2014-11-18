@@ -94,6 +94,9 @@ Rails.application.routes.draw do
       resources :pack_lists, only: :show
       resources :individual_pack_lists, only: :show
       resources :order_summaries, only: :show
+      resources :deliveries do
+        resources :packing_labels, :controller=>"/deliveries/packing_labels", only: [:show, :create]
+      end
     end
 
     resources :products do
@@ -179,6 +182,8 @@ Rails.application.routes.draw do
   if Rails.env.development?
     get "dev/pdf(/:action)", to: "dev/pdf", as: "dev_pdf"
   end
+
+  get "o/:id", to: "qr_code#order", as: "qr_code"
 
   root to: redirect("/users/sign_in")
 end

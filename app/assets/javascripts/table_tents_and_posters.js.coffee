@@ -10,6 +10,7 @@ KnockoutModules.register "main_printables",
     vm
 
 KnockoutModules.register "download_printables",
+<<<<<<< HEAD
   viewModel: (ko, el) ->
     jsonPoller = new Util.JSONPoller()
     jsonPoller.start()
@@ -23,4 +24,8 @@ KnockoutModules.register "download_printables",
 
     pdfUri: pdfUriObservable
 
+=======
+  viewModel: (ko,el) ->
+    PdfUriPoller.viewModel(ko,el)
+>>>>>>> feature/avery-labels
 

@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <%= render partial: "shared/print_opensans" %>
+    <%= render partial: "shared/print_opensanscondensed_bold" %>
+    <%= render partial: "shared/print_opensanscondensed_light" %>
+  </head>
+  <body style='margin: 0; padding: 0;'>
+  <style>
+    .page{page-break-after: always; font-family: "Open Sans Condensed"; line-height: 110%; margin:0; padding:0; font-size: 16px; min-height: 1030px; max-height: 1030px; min-width: 795px; max-width: 795px; position: relative; overflow:hidden;white-space: nowrap;}
+    .page-quarter { min-width: 395px; max-width: 395px; min-height: 510px; max-height: 510px; overflow: hidden; float: left; }
+    .label-box { min-width: 375px; max-width: 375px; min-height: 472px; max-height: 472px; overflow: hidden; }
+    .upper-label { margin-top:  35px; }
+    .lower-label { margin-top:  15px; }
+    .left-label  { margin-left: 18px; }
+    .right-label { margin-left: 13px; }
+
+    .horizontal {
+      -webkit-transform: rotate(-90deg);
+      margin-left: -50px;
+      margin-top: 60px;
+      width: 462px;
+      height: 365px;
+    }
+    .horizontal .label-row {
+      width: 100%;
+      margin-bottom: 5px;
+      float: left;
+    }
+    .order-row {
+      width: 100%;
+      margin-bottom: 25px;
+      float: left;
+    }
+    .label-content {
+      padding: 10%;
+      font-weight: 700;
+    }
+    .label-heading {
+      text-align: center;
+      background-color: black;
+      color: white;
+      padding: 8px;
+      padding-top: 20px;
+      font-weight: 800;
+      font-size: 14px;
+      width: 100%;
+      margin-bottom: 20px;
+      float: left;
+    }
+    .label-row {
+      width: 100%;
+      margin-bottom: 15px;
+      float: left;
+    }
+    .small-text {
+      font-size: 80%;
+      font-weight: 400;
+    }
+    .footer-row {
+      margin-top: 10px;
+    }
+    .footer-row img {
+      max-height: 110px;
+      max-width: 110px;
+    }
+    .qr-code {
+      float: right;
+    }
+  </style>
+  <% params[:pages].each do |page| %>
+    <div class="page">
+        <div class="page-quarter">
+          <div class="label-box upper-label left-label">
+            <%= render partial: page[:a][:template], locals: page[:a][:data] if page[:a] %>
+          </div>
+        </div>
+
+      <div class="page-quarter">
+        <div class="label-box upper-label right-label">
+          <%= render partial: page[:b][:template], locals: page[:b][:data] if page[:b] %>
+        </div>
+      </div>
+      <div class="page-quarter">
+        <div class="label-box lower-label left-label">
+          <%= render partial: page[:c][:template], locals: page[:c][:data] if page[:c] %>
+        </div>
+      </div>
+      <div class="page-quarter">
+        <div class="label-box lower-label right-label">
+          <%= render partial: page[:d][:template], locals: page[:d][:data] if page[:d] %>
+        </div>
+      </div>
+    </div>
+  <% end %>
+</body>
+</html>

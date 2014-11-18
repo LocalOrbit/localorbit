@@ -5,6 +5,7 @@ $ ->
       fontSize = $(element).css("font-size").replace(/px/, "")
       $(element).css "font-size", (fontSize * 0.95) + "px"
       newHeight = $(element)?[0]?.scrollHeight
+<<<<<<< HEAD
       if (newHeight is height or fontSize <= minFont)
         clipText(element, maxHeight + 2000)
         height = -1
@@ -25,6 +26,12 @@ $ ->
 
   resizeContent = ->
     $(".farm-content p").each ->
+=======
+      height = (if (newHeight is height or fontSize <= minFont) then -1 else newHeight)
+
+  resizeContent = ->
+    $(".farm-content").each ->
+>>>>>>> feature/avery-labels
       el = this
       fitText(el, 1900, 14)
 
@@ -46,4 +53,8 @@ $ ->
   resizeContent()
   resizeTTHeader()
   resizeTTFarmName()
+<<<<<<< HEAD
   resizePosterHeader()
+=======
+  resizePosterHeader()
+>>>>>>> feature/avery-labels
