@@ -24,8 +24,10 @@
     </section>
 
     <section class="farm-content">
-      <h4>Who We Are</h4>
-      <p class="who-story"><%= farm.who_story %></p>
+      <% if farm.who_story.present? %>
+        <h4>Who We Are</h4>
+        <p class="who-story"><%= farm.who_story %></p>
+      <% end %>
       <p class="lo-logo">
         <%= image_tag pdf_asset_url("table_tents_and_posters/LO_Circle_lo.png") %>
         Powered by <strong>Local Orbit</strong>
