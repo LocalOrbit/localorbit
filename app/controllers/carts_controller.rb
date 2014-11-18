@@ -8,14 +8,22 @@ class CartsController < ApplicationController
   before_action :set_balanced_flag
 
   def show
-    if current_cart.items.empty?
-      redirect_to [:products], alert: "Your cart is empty. Please add items to your cart before checking out."
-    else
-      @grouped_items = current_cart.items.for_checkout
+    respond_to do |format|
+      format.html do
+        if current_cart.items.empty?
+          redirect_to [:products], alert: "Your cart is empty. Please add items to your cart before checking out."
+        else
+          @grouped_items = current_cart.items.for_checkout
 
-      if !flash.now[:discount_message] && current_cart.discount.present?
-        @apply_discount = ApplyDiscountToCart.perform(cart: current_cart, code: current_cart.discount.code)
-        flash.now[:discount_message] = @apply_discount.context[:message]
+          if !flash.now[:discount_message] && current_cart.discount.present?
+            @apply_discount = ApplyDiscountToCart.perform(cart: current_cart, code: current_cart.discount.code)
+            flash.now[:discount_message] = @apply_discount.context[:message]
+          end
+        end
+      end
+      format.json do
+        total = if current_cart then current_cart.items.count else 0 end
+        render json: {:total=>total}
       end
     end
   end
