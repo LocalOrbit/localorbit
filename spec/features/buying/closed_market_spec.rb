@@ -81,10 +81,12 @@ feature "When a Market is closed" do
       sign_in_as(user)
     end
 
-    scenario "if the Buyer begins shopping, and the Market Manager closes the market, the Buyer will not be able to check out.", :js do
+    scenario "if the Buyer begins shopping, and the Market Manager closes the market, the Buyer will not be able to check out.", js:true do
       item = Dom::Cart::Item.find_by_name(products[0].name)
       item.set_quantity(12)
       expect(page).to have_content("Added to cart!")
+      expect(page).to_not have_content("Added to cart!")
+      expect(page).to have_text("Cart 1")
 
       market_copy = Market.find(market.id)
       market_copy.closed = true

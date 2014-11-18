@@ -59,6 +59,7 @@ describe "Add item to cart", js: true do
 
     bananas_row.set_quantity(12)
     expect(page).to have_content("Added to cart!")
+    expect(page).to_not have_content("Added to cart!")
 
     cart_link.node.click
     expect(page).not_to have_content("Your cart is empty")
@@ -164,6 +165,8 @@ describe "Add item to cart", js: true do
       expect(page).to have_content("Kale")
 
       tomatoes_row.set_quantity(3)
+      expect(page).to have_content("Added to cart!")
+      expect(page).to_not have_content("Added to cart!")
       expect(page).to have_content("You must order at least 5")
     end
   end

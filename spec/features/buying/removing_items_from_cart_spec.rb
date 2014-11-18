@@ -122,6 +122,7 @@ describe "Removing items" do
       it "shows the remove link once a cart item exists" do
         kale_item.set_quantity(1)
         expect(Dom::CartLink.first).to have_content("Added to cart!")
+        expect(Dom::CartLink.first).to_not have_content("Added to cart!")
 
         expect(kale_item.node).to have_css(".icon-clear")
       end
@@ -130,6 +131,7 @@ describe "Removing items" do
     it "by clicking an items delete link" do
       kale_item.remove_link.trigger("click")
       expect(Dom::CartLink.first).to have_content("Removed from cart!")
+      expect(Dom::CartLink.first).to_not have_content("Removed from cart!")
 
       expect(kale_item.quantity_field.value).to eql("0")
       expect(cart_link.count).to have_content("2")
@@ -138,6 +140,7 @@ describe "Removing items" do
     it "by setting the quantity to 0" do
       kale_item.set_quantity(0)
       expect(Dom::CartLink.first).to have_content("Removed from cart!")
+      expect(Dom::CartLink.first).to_not have_content("Removed from cart!")
 
       expect(kale_item.quantity_field.value).to eq("0")
       expect(cart_link.count).to have_content("2")
