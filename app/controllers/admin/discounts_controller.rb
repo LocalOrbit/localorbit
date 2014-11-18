@@ -12,7 +12,7 @@ module Admin
       base_scope = Discount.visible.where(market_id: visible_markets.map(&:id))
 
       # For use by the Markets filter pulldown:
-      @markets   = base_scope.map(&:market).uniq 
+      @markets   = base_scope.map(&:market).uniq
       @q         = base_scope.search(@query_params["q"])
       @discounts = @q.result.page(params[:page]).per(@query_params[:per_page])
     end
@@ -53,6 +53,14 @@ module Admin
       end
     end
 
+    def find_markets
+      if current_user.admin?
+        Market.all
+      else
+        current_user.managed_markets
+      end.order(:name).select {|m| if(m.plan) then m.plan.discount_codes else nil end }
+    end
+
     private
 
     def discount_params
@@ -81,14 +89,6 @@ module Admin
       find_products
       find_categories
       find_organizations
-    end
-
-    def find_markets
-      if current_user.admin?
-        Market.all
-      else
-        current_user.managed_markets
-      end.order(:name).select {|m| m.plan.discount_codes }
     end
 
     def find_products
