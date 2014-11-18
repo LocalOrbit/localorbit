@@ -39,6 +39,11 @@ $ ->
       fitText(el, 86, 18)
 
   resizePosterHeader = ->
+    $("h1.headerPosterText").each ->
+      el = this
+      fitText(el, 140, 24)
+
+  resizePosterFarmName = ->
     $(".farm-name").each ->
       el = this
       fitText(el, 106, 24)
@@ -46,4 +51,5 @@ $ ->
   resizeContent()
   resizeTTHeader()
   resizeTTFarmName()
-  resizePosterHeader()
+  # resizePosterHeader() # Not needed at present?
+  resizePosterFarmName()

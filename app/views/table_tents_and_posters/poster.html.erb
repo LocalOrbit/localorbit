@@ -16,13 +16,27 @@
         min-height: 1030px;
         max-height: 1030px;
         overflow:hidden;
+        page-break-after: always;
       }
      section{float:left; width: 100%;}
 
-    .header{background:#3F3E40; background-image:url("<%= pdf_asset_url 'table_tents_and_posters/Group.png'  %>");color:#E3E3E4; text-align:center; font-size:200%; position:relative; background-size:cover; background-position:center center; height:190px;width:100%;overflow: hidden;}
+     .header{
+       background:#3F3E40;
+       background-image:url("<%= pdf_asset_url 'table_tents_and_posters/Group.png'  %>");
+       color:#E3E3E4;
+       text-align:center;
+       font-size:200%;
+       position:relative;
+       background-size:cover;
+       background-position:center center;
+       height:190px;
+       width:100%;
+       overflow: hidden;
+     }
 
     .productContent {
       display: inline-block;
+      width: 90%;
     }
 
     h1.real-food {
@@ -30,16 +44,16 @@
       margin-top:25px;
       line-height: 122%;
     }
-    .arrow-down{width: 0; height: 0; border-left: 62px solid transparent;
-                 border-right: 62px solid transparent; border-top: 22px solid; margin: 0 auto;margin-top:-1px;}
-    .container{page-break-after: always;}
-    .header h4{margin-top: 0px;}
-    .headerPosterText{padding:5px;
+    h1.headerPosterText{
+      padding:5px;
       margin-bottom: 0px;
       font-size:48px;
-      margin-top:14%;
+      margin-top:5%;
       line-height: 125%;
     }
+    .arrow-down{width: 0; height: 0; border-left: 62px solid transparent;
+                 border-right: 62px solid transparent; border-top: 22px solid; margin: 0 auto;margin-top:-1px;}
+    .header h4{margin-top: 0px;}
     .farm-details{color:#3F3E40;text-align:center;background:#E3E3E4;background-image:url("<%= pdf_asset_url 'table_tents_and_posters/map.png'  %>"); position:relative;background-size:cover; background-position:center center;font-size:70%;line-height:175%;height:121px;overflow:hidden;}
 
     .farm-details h2{font-size:300%;margin: 2% 0 1%;}
@@ -52,6 +66,7 @@
     .farm-content span img{ width:6px; width:20px; padding-right: 4px; padding-bottom: 3px; vertical-align: middle;}
     .farm-content ul{float:right; list-style:none;}
     .farm-content li img{max-width:320px;max-height:200px;margin: 3% 0;}
+
 
     .footer{
       background:#3F3E40; 
@@ -73,7 +88,6 @@
       position: relative;
     }
     .footer .footer-image-holder img {
-      /* float: left; */
       max-width: 120px;
 
       margin-top: -10%;
@@ -89,7 +103,6 @@
       margin-left: 1%;
       float:left;
     }
-
 
 
   </style>
