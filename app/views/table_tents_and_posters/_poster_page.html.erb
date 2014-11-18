@@ -47,19 +47,26 @@
    <span><%= image_tag ensure_full_url(pdf_asset_url("table_tents_and_posters/LO_Circle_lo.png")) %>Powered by <strong>Local Orbit</strong></span>
 </section>
 
-<section class="footer">
-   <% if market.logo %>
-     <div class="footer-image-holder">
-         <%= image_tag ensure_full_url(market.logo.url) %>
-      </div>
-   <% end %>
-   <div class="market-info">
-      <h5>Brought to you by</h5>
-      <h4><%= market.name %></h4>
-      <span><%= market.tagline %></span>
-      <br><br>
-   </div>
+  <section class="footer">
+    <table class="footer-table">
+    <tbody>
+    <tr>
+     <td class="footer-image-holder">
+     <% if market.logo %>
+       <%= image_tag ensure_full_url(market.logo.url) %>
+    <% else %>
+        &nbsp;
+     <% end %>
+     </td>
+     <td class="market-info">
+        <h5>Brought to you by</h5>
+        <h4><%= market.name %></h4>
+        <span><%= market.tagline %></span>
+     </td>
+     </tr>
+     </tbody>
+     </table>
+  </section>
 
-</section>
 
 </div>
