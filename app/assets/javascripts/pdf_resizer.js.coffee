@@ -29,7 +29,7 @@ $ ->
       fitText(el, 1900, 14)
 
   resizeTTHeader = ->
-    $(".headerText").each ->
+    $("h1.productName").each ->
       el = this
       fitText(el, 56, 24)
 
