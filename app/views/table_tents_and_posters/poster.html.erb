@@ -21,15 +21,25 @@
 
     .header{background:#3F3E40; background-image:url("<%= pdf_asset_url 'table_tents_and_posters/Group.png'  %>");color:#E3E3E4; text-align:center; font-size:200%; position:relative; background-size:cover; background-position:center center; height:190px;width:100%;overflow: hidden;}
 
+    .productContent {
+      display: inline-block;
+    }
+
     h1.real-food {
-      margin-top:30px;
       font-size:64px;
+      margin-top:25px;
+      line-height: 122%;
     }
     .arrow-down{width: 0; height: 0; border-left: 62px solid transparent;
                  border-right: 62px solid transparent; border-top: 22px solid; margin: 0 auto;margin-top:-1px;}
     .container{page-break-after: always;}
     .header h4{margin-top: 0px;}
-    .headerPosterText{padding:5px;margin-bottom: 0px;font-size:48px;margin-top:15%;}
+    .headerPosterText{padding:5px;
+      margin-bottom: 0px;
+      font-size:48px;
+      margin-top:14%;
+      line-height: 125%;
+    }
     .farm-details{color:#3F3E40;text-align:center;background:#E3E3E4;background-image:url("<%= pdf_asset_url 'table_tents_and_posters/map.png'  %>"); position:relative;background-size:cover; background-position:center center;font-size:70%;line-height:175%;height:121px;overflow:hidden;}
 
     .farm-details h2{font-size:300%;margin: 2% 0 1%;}
@@ -63,12 +73,12 @@
       position: relative;
     }
     .footer .footer-image-holder img {
-      float: left;
+      /* float: left; */
       max-width: 120px;
 
-      margin-top: -15%;
-      margin-left: 10%;
-      margin-bottom: 4%;
+      margin-top: -10%;
+      margin-left: 0%;
+      margin-bottom: 2%;
       margin-right: 0px;
 
       background:#ffffff;
@@ -81,9 +91,6 @@
     }
 
 
-    .productContent {
-      display: inline-block;
-    }
 
   </style>
   <% params[:page_list].each do |page| %>
