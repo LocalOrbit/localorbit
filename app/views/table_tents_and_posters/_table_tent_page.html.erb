@@ -1,11 +1,14 @@
 <div class="container">
 
     <section class="header">
+      <div class="headerWrapper">
       <% if(include_product_names) %>
-       <div class="productContent"><h1 class="headerText"><%= product_name %></h1><h4>from <span style="text-decoration:underline;">local</span> producers!</h1></h4></div>
+        <h1 class="headerText"><%= product_name %></h1>
+        <h4>from <span style="text-decoration:underline;">local</span> producers!</h4>
       <% else %>
-       <h1>Real food from <span style="text-decoration:underline;">local</span> producers!</h1>
+        <h1>Real food from <span style="text-decoration:underline;">local</span> producers!</h1>
       <% end %>
+      </div>
     </section>
 
     <section class="farm-details">
@@ -17,7 +20,6 @@
           <span>|</span>
           <span><%= farm.shipping_location.geocode %></span>
         <% end %>
-        <br><br><br>
       </div>
     </section>
 
@@ -35,11 +37,10 @@
         <div class="market-logo"><%= image_tag market.logo.url %></div>
       <% end %>
       <div class="market-content">
-          <h5>Brought to you by</h5>
-          <h4><%= market.name %></h4>
-          <span><%= market.tagline %></span>
-          <br><br>
-       </div>
+        <div class="heading">Brought to you by</div>
+        <div class="market-name"><%= market.name %></div>
+        <div class="market-tagline"><%= market.tagline %></div>
+      </div>
     </section>
 
 </div>

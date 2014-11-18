@@ -19,6 +19,7 @@
         font-size: 14px;
         overflow:hidden;
         position: relative;
+        background: #CCF;
       }
       section{
         width: 100%;
@@ -38,11 +39,16 @@
         /* position:relative; */
         /* width:100%; */
       }
+      .headerWrapper {
+        display: inline-block;
+      }
       .header h4{
         margin-top: 0px;
       }
       .header h1{
-        margin-top:15px;
+        margin-top:25px;
+        font-size: 40px;
+        line-height: 130%;
       }
       .headerText{
         padding:5px;
@@ -72,9 +78,12 @@
         overflow: hidden;
       }
 
-      .farm-details h2{
+      .farm-details h2 {
         font-size:160%;
-        margin: 2% 0 1%;
+        margin-top: 3%;
+        margin-right: 0;
+        margin-bottom: 2%;
+        margin-left: 0;
       }
       .farm-location{
         font-weight:bold;
@@ -102,7 +111,7 @@
         color:#FEFEFE;
         background-size:cover;
         background-position:center center;
-        height: 69px;
+        height: 75px;
         /* overflow:hidden; */
       }
       p.lo-logo {
@@ -113,8 +122,9 @@
         background-color:white;
         text-align: right;
         position: absolute;
-        bottom: -10px;
+        bottom: -7px;
         right: 0px;
+        width: 30%;
       }
       .lo-logo img{
         width:6px;
@@ -131,43 +141,46 @@
         border: 2px solid #dfdfdf;
       }
 
-      .footer h5{
-        /* margin:15% 0 1%; */
-        text-transform:uppercase;
-        border-bottom:1px solid;
-        margin-top: 4%;
-        color:#8E8C8E;
-        font-size: 70%;
-        margin-bottom: 0px;
-      }
-      .footer h4{
-        line-height: 0;
-        /* margin: 4% 0 2%; */
-        font-size: 80%;
-        margin-bottom: 0px;
-      }
-      .footer span{
-        margin-top: 0px;
-        font-size:60%;
-      }
-      .footer .market-logo {
-        width:25%;
-        /* margin-top: -15px; */
-        text-align:center;
-        bottom: 0;
-        margin-left: 2%;
-        position: absolute;
-      }
-      .footer .market-content {
-        width:62%;
-        margin-left: 29%;
-        position:relative;
-      }
+        .footer .market-logo {
+          width:25%;
+          /* margin-top: -15px; */
+          text-align:center;
+          bottom: 0;
+          margin-left: 2%;
+          position: absolute;
+        }
+
+        .footer .market-content {
+          width:62%;
+          margin-left: 29%;
+          position:relative;
+        }
+          .footer .market-content .heading{
+            text-transform:uppercase;
+            border-bottom:1px solid;
+            margin-top: 7%;
+            color:#8E8C8E;
+            font-size: 70%;
+            margin-bottom: 0px;
+          }
+
+          .footer .market-content .market-name {
+            margin-top: 4%;
+            margin-bottom: 0%;
+            font-weight: bold;
+            font-size: 80%;
+          }
+
+          .footer .market-content .market-tagline {
+            margin-top: 1%;
+            font-size:60%;
+          }
+
     </style>
     <% params[:page_list].each do |page| %>
       <%= render partial: "table_tents_and_posters/table_tent_page", locals: {farm: page[:farm], farm_map: page[:farm_map], product_name: page[:product_name], include_product_names: params[:include_product_names], market: params[:market]} %>
     <% end %>
 
-    <section>&nbsp;</section>
+    <!-- <section>&#38;nbsp;</section> -->
   </body>
 </html>
