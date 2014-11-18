@@ -1,7 +1,6 @@
 class Deliveries::PackingLabelsController < ApplicationController
 
-  def create
-
+  def index
     delivery =  Delivery.find(params[:delivery_id])
     printable = PackingLabelsPrintable.create!(user: current_user, delivery: delivery)
     ProcessPackingLabelsPrintable.delay.perform(
