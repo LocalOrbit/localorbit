@@ -46,4 +46,34 @@ describe CartsController do
       expect(cart.reload.items.count).to eql(1)
     end
   end
+
+  describe "#show" do
+    before do
+      sign_in(user)
+      switch_to_subdomain(market.subdomain)
+    end
+
+    it "returns the total count for a cart if .json is requested" do
+      get :show, {format: "json"}
+      data = JSON.parse(response.body)
+      expect(data["total"]).to eq 0
+    end
+
+    it "returns accurate counts for multiple items" do
+      create_list(:cart_item, 2, cart: cart)
+      get :show, {format: "json"}
+      data = JSON.parse(response.body)
+      expect(data["total"]).to eq 2
+    end
+
+    it "does not count quantity" do
+      cart_item = create(:cart_item, cart: cart)
+      create(:cart_item, cart: cart)
+      cart_item.quantity = 2
+      cart_item.save
+      get :show, {format: "json"}
+      data = JSON.parse(response.body)
+      expect(data["total"]).to eq 2
+    end
+  end
 end
