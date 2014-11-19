@@ -7,6 +7,7 @@
     </head>
     <body style='margin: 0; padding: 0;'>
     <style>
+
       .container{
         max-width: 480px;
         page-break-after: always;
@@ -109,15 +110,8 @@
         height: 210px;
         overflow: hidden;
       }
-      .footer{
-        background:#3F3E40;
-        background-image:url("<%= pdf_asset_url 'table_tents_and_posters/Group.png' %> ");
-        color:#FEFEFE;
-        background-size:cover;
-        background-position:center center;
-        height: 75px;
-        /* overflow:hidden; */
-      }
+
+
       p.lo-logo {
         font-size: 60%;
         color:black;
@@ -138,48 +132,54 @@
         vertical-align: middle;
       }
 
-      .footer img {
-        background:#ffffff;
-        width:90%;
-        margin: 0% auto 0%;
-        border: 2px solid #dfdfdf;
+      .footer{
+        background:#3F3E40;
+        background-image:url("<%= pdf_asset_url 'table_tents_and_posters/Group.png' %> ");
+        color:#FEFEFE;
+        background-size:cover;
+        background-position:center center;
+        min-height: 75px;
+        /* overflow:hidden; */
       }
 
-      .footer .market-logo {
-        width:25%;
-        /* margin-top: -15px; */
-        text-align:center;
-        bottom: 0;
-        margin-left: 2%;
-        position: absolute;
-      }
+    .footer-table {
+      width: 100%;
+      height: 75px;
+    }
+    .footer-table tbody {
+      /* background-color: red; */
+    }
+      
+    
+    .market-info h5{
+      margin:0% 0 1%;
+      text-transform:uppercase;
+      border-bottom:1px solid;
+      color:#8E8C8E;
+      font-size: 70%;
+    }
+    .market-info h4{
+      line-height: 70%;
+      margin: 4% 0 0%;
+      font-size: 80%;
+      font-weight: bold;
+    }
+    .market-info span {
+      font-size: 70%;
+    }
 
-      .footer .market-content {
-        width:62%;
-        margin-left: 29%;
-        position:relative;
-      }
-        .footer .market-content .heading{
-          text-transform:uppercase;
-          border-bottom:1px solid;
-          margin-top: 7%;
-          color:#8E8C8E;
-          font-size: 70%;
-          margin-bottom: 0px;
-        }
-
-        .footer .market-content .market-name {
-          margin-top: 4%;
-          margin-bottom: 0%;
-          font-weight: bold;
-          font-size: 80%;
-        }
-
-        .footer .market-content .market-tagline {
-          margin-top: 1%;
-          font-size:60%;
-        }
-
+    .footer-image-holder {
+      width:120px;
+      text-align:center;
+      vertical-align:middle;
+      padding-top:5px;
+    }
+    .footer-image-holder img {
+      max-width: 100px;
+      max-height: 50px;
+      background:#ffffff;
+      border: 1px solid #dfdfdf;
+    }
     </style>
     <% params[:page_list].each do |page| %>
       <%= render partial: "table_tents_and_posters/table_tent_page", locals: {farm: page[:farm], farm_map: page[:farm_map], product_name: page[:product_name], include_product_names: params[:include_product_names], market: params[:market]} %>

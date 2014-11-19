@@ -36,15 +36,25 @@
       </p>
     </section>
 
-    <section class="footer">
-      <% if market.logo %>
-        <div class="market-logo"><%= image_tag market.logo.url %></div>
-      <% end %>
-      <div class="market-content">
-        <div class="heading">Brought to you by</div>
-        <div class="market-name"><%= market.name %></div>
-        <div class="market-tagline"><%= market.tagline %></div>
-      </div>
-    </section>
+  <div class="footer">
+    <table class="footer-table">
+    <tbody>
+      <tr>
+        <td class="footer-image-holder">
+           <% if market.logo %>
+             <%= image_tag ensure_full_url(market.logo.url) %>
+          <% else %>
+              &nbsp;
+           <% end %>
+        </td>
+        <td class="market-info">
+          <h5>Brought to you by</h5>
+          <h4><%= market.name %></h4>
+          <span><%= market.tagline %></span>
+        </td>
+      </tr>
+    </tbody>
+    </table>
+  </div>
 
 </div>
