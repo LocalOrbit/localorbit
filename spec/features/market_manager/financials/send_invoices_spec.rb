@@ -46,7 +46,7 @@ feature "sending invoices" do
     expect(invoice.action).to include("Preview")
   end
 
-  scenario "sending a invoice", vcr: {match_requests_on: [:host, invoice_auth_matcher]} do
+  scenario "sending a invoice", pdf:true, vcr: {match_requests_on: [:host, invoice_auth_matcher]} do
     switch_to_subdomain(market1.subdomain)
     sign_in_as market_manager
     visit admin_financials_invoices_path
@@ -68,7 +68,7 @@ feature "sending invoices" do
     expect(attachment.content_type).to eq("application/pdf; charset=UTF-8")
   end
 
-  scenario "sending an invoice to an organization with no users" do
+  scenario "sending an invoice to an organization with no users", pdf: true do
     switch_to_subdomain(market1.subdomain)
     sign_in_as market_manager
     visit admin_financials_invoices_path
@@ -81,7 +81,7 @@ feature "sending invoices" do
     expect(ActionMailer::Base.deliveries.size).to eq(0)
   end
 
-  scenario "sending selected invoices", :js, vcr: {match_requests_on: [:host, invoice_auth_matcher]} do
+  scenario "sending selected invoices", js: true, pdf: true, vcr: {match_requests_on: [:host, invoice_auth_matcher]} do
     switch_to_subdomain(market1.subdomain)
     sign_in_as market_manager
     visit admin_financials_invoices_path
