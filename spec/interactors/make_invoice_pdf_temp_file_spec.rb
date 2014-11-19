@@ -14,7 +14,6 @@ describe "MakeInvoicePdfTempFile interactor" do
     expect(context.file).to be_a Tempfile
     expect(context.file.path).to match(/order_#{order.order_number}/)
     expect(context.pdf).to eq("The PDF")
-    expect(context.document_name).to eq("#{order.order_number}.pdf")
 
     expect(order.invoice_pdf).to be_nil
   end

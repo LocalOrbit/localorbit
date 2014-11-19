@@ -8,19 +8,15 @@ class GenerateBatchInvoicePdf
     invoice_tempfiles = []
     batch_invoice.orders.each do |order|
       begin
-        made = MakeInvoicePdfTempFile.perform(request: request, order: order)
-        if made.success?
-          invoice_tempfiles << made.file
-        else
-          BatchInvoiceUpdater.record_error!(batch_invoice, 
-                                            task: "Generating invoice PDF",
-                                            message: made.message,
-                                            order: order)
-        end
+        tempfile = Tempfile.new("tmp-invoice-#{order.order_number}")
+        invoice_tempfiles << tempfile
+
+        pdf_result = Invoices::InvoicePdfGenerator.generate_pdf(request:request, order:order, path:tempfile.path)
+        
       rescue Exception => e
         BatchInvoiceUpdater.record_error!(batch_invoice, 
                                           task: "Generating invoice PDF",
-                                          message: "Unexpected exception in MakeInvoicePdfTempFile",
+                                          message: "Unexpected exception in InvoicePdfGenerate",
                                           exception: e.inspect,
                                           backtrace: e.backtrace,
                                           order: order)
@@ -30,8 +26,10 @@ class GenerateBatchInvoicePdf
       BatchInvoiceUpdater.update_generation_progress!(batch_invoice, completed_count: completed_count)
     end
     
-    merged = MergePdfFiles.perform(files: invoice_tempfiles)
-    BatchInvoiceUpdater.complete_generation!(batch_invoice, pdf: merged.pdf, pdf_name: "invoices.pdf")
+    merged_pdf = GhostscriptWrapper.merge_pdf_files(invoice_tempfiles)
+    invoice_tempfiles.each { |file| file.unlink }
+
+    BatchInvoiceUpdater.complete_generation!(batch_invoice, pdf: merged_pdf, pdf_name: "invoices.pdf")
   rescue Exception => e
     BatchInvoiceUpdater.record_error!(batch_invoice,
                                       task: "Generating batch invoice PDF",
@@ -40,6 +38,10 @@ class GenerateBatchInvoicePdf
                                       backtrace: e.backtrace)
     BatchInvoiceUpdater.fail_generation!(batch_invoice)
   end
+
+  #
+  # Helpers:
+  #
 
   class BatchInvoiceUpdater
     class << self
