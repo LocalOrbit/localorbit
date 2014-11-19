@@ -27,6 +27,8 @@
       <% if farm.who_story.present? %>
         <h4>Who We Are</h4>
         <p class="who-story"><%= farm.who_story %></p>
+      <% else # this is curently needed because of some last-paage-in-pdf layout funny business that causes the footer to vanish if this h4 is omitted entirely.%>
+        <h4>&nbsp;</h4>
       <% end %>
       <p class="lo-logo">
         <%= image_tag pdf_asset_url("table_tents_and_posters/LO_Circle_lo.png") %>

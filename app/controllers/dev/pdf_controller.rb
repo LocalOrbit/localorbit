@@ -1,5 +1,9 @@
 module Dev
   class PdfController < ApplicationController
+    before_action do 
+      return render_404 unless current_user.admin?
+    end
+
     layout false
 
     def index
