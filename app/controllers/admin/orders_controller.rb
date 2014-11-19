@@ -26,7 +26,7 @@ class Admin::OrdersController < AdminController
       @order = SellerOrder.new(order, current_user)
     end
     setup_deliveries(@order)
-    track_event 'viewed-order', order: { url: request.original_fullpath, value: @order.order_number }
+    track_event EventTracker::ViewedOrder.name, order: { url: admin_order_url(order.id), value: @order.order_number }
   end
 
   def update

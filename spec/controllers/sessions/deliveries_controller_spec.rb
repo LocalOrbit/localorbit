@@ -120,7 +120,7 @@ describe Sessions::DeliveriesController do
 
       it "clears out the organization if it isn't linked to the market" do
         get :new, {}, current_organization_id: other_organization.id
-        expect(response).to redirect_to(new_sessions_organization_path(redirect_back_to: new_sessions_deliveries_path))
+        expect(response).to redirect_to(new_sessions_organization_path(redirect_back_to: new_sessions_deliveries_url))
       end
     end
   end

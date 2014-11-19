@@ -25,7 +25,7 @@ class ApplicationController < ActionController::Base
   rescue_from ActiveRecord::RecordNotFound, with: :render_404
 
   def track_event(event, metadata={})
-    track_event_for_user current_user, event, metadata if current_user
+    EventTracker.track_event_for_user current_user, event, metadata if current_user
   end
 
   private
@@ -57,7 +57,8 @@ class ApplicationController < ActionController::Base
   end
 
   def find_current_organization
-    return nil unless current_market
+    return nil unless current_market 
+    return nil unless current_user
 
     current_user.managed_organizations_within_market(current_market)
     organization = if current_user.managed_organizations.count == 1

@@ -1,19 +1,26 @@
 IntercomRails.config do |config|
   # == Intercom app_id
-  #
-  config.app_id = ENV["INTERCOM_APP_ID"] || "oh52vbpl"
+
+  if Figaro.env.deploy_env == 'production'
+    # config.app_id = ["INTERCOM_APP_ID"] || "oh52vbpl"
+    config.app_id = "oh52vbpl"
+    config.api_secret = "mFWk_GyKfsZmhnekr3r0uky-pjjPLAgKIkut4yNN"
+    config.api_key = "fe0ac32a401cdef0784140fa0610ed906969ba4d"
+  else
+    # Test mode:
+    config.app_id =  "bn6bws5t"
+    config.api_key = "c3eb5968384cb5f2afef55634023b9b201a00985"
+  end
 
   # == Intercom secret key
   # This is required to enable secure mode, you can find it on your Intercom
   # "security" configuration page.
   #
-  config.api_secret = "mFWk_GyKfsZmhnekr3r0uky-pjjPLAgKIkut4yNN"
 
   # == Intercom API Key
   # This is required for some Intercom rake tasks like importing your users;
   # you can generate one at https://app.intercom.io/apps/api_keys.
   #
-  config.api_key = "fe0ac32a401cdef0784140fa0610ed906969ba4d"
 
   # == Enabled Environments
   # Which environments is auto inclusion of the Javascript enabled for
@@ -46,7 +53,7 @@ IntercomRails.config do |config|
   #   :plan => Proc.new { |current_user| current_user.plan.name },
   #   :favorite_color => :favorite_color
   # }
-  
+
   config.user.custom_data = {
     :role => Proc.new { |user|
       case
@@ -61,7 +68,7 @@ IntercomRails.config do |config|
         end
     }
   }
-  
+
   # == User -> Company association
   # A Proc that given a user returns an array of companies
   # that the user belongs to.
