@@ -95,14 +95,19 @@ $ ->
       {@counter} = opts
 
     #actions
-    updateCounter: (count)->
-      @counter.attr("data-count", count.toString())
-      @counter.find(".counter").text(count.toString())
-      @counter.data('count', count)
-      if count > 0
-        $('#review_cart').removeClass('is-hidden')
-      else
-        $('#review_cart').addClass('is-hidden')
+    updateCounter: ->
+      counter = @counter
+      $.getJSON("/cart", {},
+        (res) ->
+          count = res.total
+          counter.attr("data-count", count.toString())
+          counter.find(".counter").text(count.toString())
+          counter.data('count', count)
+          if count > 0
+            $('#review_cart').removeClass('is-hidden')
+          else
+            $('#review_cart').addClass('is-hidden')
+      )
 
     updateSubtotal: (subtotal)->
       totals = $("#totals")
@@ -189,7 +194,7 @@ $ ->
       filteredItems.length
 
     updateTotals: (data) ->
-      @view.updateCounter(@itemCount())
+      @view.updateCounter()
       @view.updateSubtotal(@subtotal())
       @view.updateDiscount(data.discount)
       @view.updateDiscountStatus(data.discount_status)
@@ -237,6 +242,7 @@ $ ->
     items: $(".cart_item")
 
 
+  view.updateCounter()
 
   $(".cart_item .quantity input").on 'cart.inputFinished', ->
     data = $(this).closest(".cart_item").data("cart-item")

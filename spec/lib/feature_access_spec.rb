@@ -48,34 +48,6 @@ describe FeatureAccess do
     end
   end
 
-  UserDeliveryContext = ConstructorStruct.new(
-      :available_features,
-      :is_market_manager,
-      :is_seller,
-      :is_buyer_only,
-      :is_admin
-    ) do
-
-    def has_feature(sym)
-      available_features.include?(sym)
-    end
-  end
-
-  describe ".build_delivery_context(user:,delivery:)" do
-    let(:delivery) {create(:delivery, orders: [order])}
-
-    it "creates a user delivery context from a user and delivery" do
-      delivery_context = FeatureAccess.build_delivery_context(user: user, delivery: delivery)
-      expect(delivery_context.available_features).to contain_exactly(:discount_codes, :cross_selling, :custom_branding, :automatic_payments, :advanced_pricing, :advanced_inventory, :promotions, :order_printables)
-      expect(delivery_context.is_market_manager).to eq false
-      expect(delivery_context.is_seller).to eq false
-      expect(delivery_context.is_buyer_only).to eq true
-      expect(delivery_context.is_admin).to eq false
-      expect(delivery_context.has_feature(:order_printables)).to eq true
-    end
-  end
-
-
   describe ".packing_labels?" do
     let(:user_delivery_context) {
       UserDeliveryContext.new(
@@ -93,8 +65,8 @@ describe FeatureAccess do
     let(:is_buyer_only) { false }
     let(:is_admin) { false }
 
-    context "market with order_printables enabled in plan" do
-      let(:available_features) { [ :order_printables ] }
+    context "market with packing_labels enabled in plan" do
+      let(:available_features) { [ :packing_labels ] }
 
       context "market managers" do
         let(:is_market_manager) { true }
@@ -131,7 +103,7 @@ describe FeatureAccess do
 
 
     context "market with order_printables enabled in plan" do
-      let(:available_features) { [ :other, :things ] }
+      let(:available_features) { [ :other, :things, :order_printables ] }
 
       context "admins" do
         let(:is_admin) { true }
