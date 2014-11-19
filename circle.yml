@@ -2,12 +2,15 @@
 machine:
   environment:
     CAPYBARA_WAIT_TIME: 30
+dependencies:
+  pre:
+    - "sudo apt-get update; sudo apt-get install libjpeg62"
 checkout:
   post:
     - cp config/application.yml{.example,}
 test:
   override:
-    - "bundle exec rspec --tag ~@wip --tag ~@pdf":
+    - "bundle exec rspec --tag ~@wip":
         parallel: true
         files:
           - spec/**/*_spec.rb
