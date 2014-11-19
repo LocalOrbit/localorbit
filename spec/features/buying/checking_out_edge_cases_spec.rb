@@ -64,6 +64,8 @@ describe "Checking Out", :js, :vcr do
 
       Dom::Cart::Item.find_by_name("Bananas").set_quantity(12)
       expect(page).to have_content("Added to cart!")
+      expect(page).to_not have_content("Added to cart!")
+      expect(page).to have_text("Cart 1")
 
       cart_link.node.click
 

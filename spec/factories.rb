@@ -367,6 +367,7 @@ FactoryGirl.define do
       advanced_inventory false
       promotions         false
       order_printables   false
+      packing_labels     false
     end
     
     trait :start_up do
@@ -379,6 +380,7 @@ FactoryGirl.define do
       advanced_inventory false
       promotions         false
       order_printables   false
+      packing_labels     false
     end
 
     trait :grow do
@@ -391,6 +393,7 @@ FactoryGirl.define do
       advanced_inventory true
       promotions         true
       order_printables   true
+      packing_labels     true
     end
 
     trait :automate do
@@ -403,6 +406,7 @@ FactoryGirl.define do
       advanced_inventory true
       promotions         true
       order_printables   true
+      packing_labels     true
     end
   end
 
