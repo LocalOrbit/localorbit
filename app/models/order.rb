@@ -69,6 +69,7 @@ class Order < ActiveRecord::Base
   scope :paid_between, lambda {|range| paid.where(paid_at: range) }
   scope :due_between, lambda {|range| invoiced.where(invoice_due_date: range) }
   scope :clean_payment_records, -> { where(arel_table[:placed_at].gt(Time.parse("2014-01-01"))) }
+  scope :for_seller, -> (user) { orders_for_seller(user) }
 
   scope_accessible :sort, method: :for_sort, ignore_blank: true
   scope_accessible :payment_status

@@ -13,4 +13,7 @@ class FeatureAccess
     return (user_delivery_context.has_feature(:packing_labels) and (user_delivery_context.is_seller or user_delivery_context.is_market_manager))
   end
 
+  def self.master_packing_slips?(user_delivery_context:)
+    (user_delivery_context.is_admin or user_delivery_context.is_market_manager)
+  end
 end

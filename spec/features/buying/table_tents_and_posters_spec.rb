@@ -11,7 +11,7 @@ feature "Downloading table tents or posters", js:true do
     sign_in_as(user)
   end
 
-  scenario "lets users download a Table Tent for a placed order" do
+  scenario "lets users download a Table Tent for a placed order", pdf: true do
     visit order_path(order)
     expect(page).to have_text "Download the table tents"
     find(".app-download-table-tents-btn").click
@@ -31,7 +31,7 @@ feature "Downloading table tents or posters", js:true do
     end
   end
 
-  scenario "lets users download a Poster for a placed order" do
+  scenario "lets users download a Poster for a placed order", pdf: true do
     visit order_path(order)
     expect(page).to have_text "Download the posters"
     find(".app-download-posters-btn").click

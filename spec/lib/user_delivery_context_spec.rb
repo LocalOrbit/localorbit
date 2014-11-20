@@ -1,6 +1,6 @@
 describe UserDeliveryContext do
 
-  describe ".build_delivery_context(user:,delivery:)" do
+  describe ".build(user:,delivery:)" do
     let(:plan)                   { create(:plan, :grow) }
     let!(:market)                { create(:market, :with_delivery_schedule, :with_address, plan: plan) }
     let!(:wrong_market)          { create(:market, :with_delivery_schedule, :with_address, plan: plan) }
@@ -12,7 +12,7 @@ describe UserDeliveryContext do
     let(:delivery) {create(:delivery, delivery_schedule: market.delivery_schedules.first, orders: [order])}
 
     it "creates a user delivery context from a user and delivery" do
-      delivery_context = UserDeliveryContext.build_delivery_context(user: user, delivery: delivery)
+      delivery_context = UserDeliveryContext.build(user: user, delivery: delivery)
       full_list_of_features = [:discount_codes,
         :cross_selling,
         :custom_branding,
