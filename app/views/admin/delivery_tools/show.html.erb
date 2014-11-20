@@ -15,7 +15,7 @@
           <%= content_tag :div, delivery.deliver_to_name, class: "location-name" if delivery.deliver_to_name.present? %>
           <div class="location"><%= delivery.deliver_to_location %></div>
 
-          <% dc = UserDeliveryContext.build_delivery_context(user: current_user, delivery: delivery) 
+          <% dc = UserDeliveryContext.build(user: current_user, delivery: delivery) 
              access_master_packing_slips = FeatureAccess.master_packing_slips?(user_delivery_context: dc)
              access_packing_labels = FeatureAccess.packing_labels?(user_delivery_context: dc)
              tool_count = 3
