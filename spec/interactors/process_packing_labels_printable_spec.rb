@@ -67,24 +67,33 @@ describe ProcessPackingLabelsPrintable do
     obj.class.find(obj.id)
   end
 
+  def fake_seller_order_for(order)
+    "Fake SellerOrder[#{order.id}]"
+  end
+
   def expect_generate_packing_labels_for_orders(orders,user)
-    expect(PackingLabels::Generator).to receive(:generate).
-      with(orders:orders, # TODO! these will be SellerOrders oooops
-           request: request).
-      and_return(pdf_result)
+    orders.each do |o|
+      expect(SellerOrder).to receive(:new).
+        with(o, user).
+        and_return(fake_seller_order_for(o))
+    end
+
+    expect(PackingLabels::Generator).to receive(:generate) do |args|
+      expect(args[:request]).to eq request
+      expect(args[:orders]).to eq(orders.map do |o| fake_seller_order_for(o) end)
+      pdf_result
+    end
   end
 
   def verify_pdf_generated_on(printable)
     printable = unfortunately_forcible_reload(printable)
     expect(printable.pdf.file.read).to eq("the pdf data")
-    expect(printable.pdf.name).to eq("delivery_labels.pdf")\
+    expect(printable.pdf.name).to eq("delivery_labels.pdf")
   end
 
   context "an admin" do
-    pending
     it "loads an PackingLabelsPrintable and generates the corresponding PDF document, stores that PDF as an attachment" do
-      pending
-      expect_generate_packing_labels_for_orders(all_orders)
+      expect_generate_packing_labels_for_orders(all_orders, admin_user)
 
       subject.perform(packing_labels_printable_id: admin_printable.id, request: request)
 
@@ -94,8 +103,7 @@ describe ProcessPackingLabelsPrintable do
 
   context "as a seller" do
     it "only includes orders for the specific seller" do
-      pending
-      expect_generate_packing_labels_for_orders(seller_orders,seller)
+      expect_generate_packing_labels_for_orders(seller_orders,seller_user)
 
       subject.perform(packing_labels_printable_id: seller_printable.id, request: request)
 
@@ -105,8 +113,7 @@ describe ProcessPackingLabelsPrintable do
 
   context "as the OTHER seller" do
     it "only includes orders for the specific seller" do
-      pending
-      expect_generate_packing_labels_for_orders(seller2_orders)
+      expect_generate_packing_labels_for_orders(seller2_orders, seller_user2)
 
       subject.perform(packing_labels_printable_id: seller2_printable.id, request: request)
 
@@ -116,8 +123,7 @@ describe ProcessPackingLabelsPrintable do
 
   context "as a market manager" do
     it "includes all orders" do
-      pending
-      expect_generate_packing_labels_for_orders(all_orders)
+      expect_generate_packing_labels_for_orders(all_orders, manager)
 
       subject.perform(packing_labels_printable_id: manager_printable.id, request: request)
 
