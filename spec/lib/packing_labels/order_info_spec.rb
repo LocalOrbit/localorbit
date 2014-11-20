@@ -141,11 +141,13 @@ describe PackingLabels::OrderInfo do
 
     let(:order_number2) { "LO-ADA-0000002" }
     let!(:order2) { create(:order, items: order_items2, organization: buyer2, market: market, delivery: delivery, order_number: order_number2, total_cost: order_items2.sum(&:gross_total)) }
+    let(:orders) { delivery.orders }
 
     it "generates a list of order_infos based on a list of Orders" do
       allow(PackingLabels::QrCode).to receive(:make_qr_code).and_return(qr_code)
 
-      order_infos = subject.make_order_infos(delivery, host:host)
+      order_infos = subject.make_order_infos(orders:orders, host:host)
+
       expect(order_infos).to contain_exactly(
         subject.make_order_info(order,host:host),
         subject.make_order_info(order2,host:host)

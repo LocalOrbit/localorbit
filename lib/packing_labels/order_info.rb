@@ -1,8 +1,8 @@
 module PackingLabels
   class OrderInfo
     class << self
-      def make_order_infos(delivery, host:)
-        delivery.orders.map {|order| make_order_info(order, host: host)}
+      def make_order_infos(orders:, host:)
+        orders.map {|order| make_order_info(order, host: host)}
       end
 
       def make_order_info(order, host:)
