@@ -3,18 +3,67 @@ require "spec_helper"
 describe ProcessPackingLabelsPrintable do
   subject { described_class }
 
-  let(:packing_labels_printable) { create(:packing_labels_printable) }
-  let(:packing_labels_printable_id) { packing_labels_printable.id }
-  let(:delivery) { packing_labels_printable.delivery }
-  let!(:order1) { create(:order, delivery: delivery) }
-  let!(:order2) { create(:order, delivery: delivery) }
-  let(:orders) { [order1,order2].sort_by(&:id) }
+  ####
+  
+  let(:admin_user) { create(:user, :admin, name: "Admin user") }
 
-  let(:context) { double("result context",
-                         pdf_result: double("Pdf result", data: "the pdf data")
-                        )}
+  let(:market) { create(:market) }
+  let(:manager) { create(:user, :market_manager, name: "The Manatee", managed_markets: [market]) }
+
+  let!(:buyer) { create(:organization, :buyer, name: "Big Money", markets: [market]) }
+  let!(:seller_user) { create(:user, name: "The Seller") }
+  let!(:seller) { create(:organization, :seller, name: "Good foodz", markets: [market], users: [seller_user]) }
+  let!(:product1) { create(:product, :sellable, name: "Giant Carrots", organization: seller) }
+  let!(:product2) { create(:product, :sellable, name: "Tiny Beets", organization: seller) }
+  let!(:delivery_schedule) { create(:delivery_schedule, market: market) }
+  let!(:deliver_on) { 2.days.from_now }
+  let!(:delivery) { create(:delivery, delivery_schedule: delivery_schedule, deliver_on: deliver_on) }
+  let!(:order_items) do
+    [
+      create(:order_item, product: product1, seller_name: seller.name, name: product1.name, unit_price: 6.50, quantity: 5, quantity_delivered: 0, unit: "stuff"),
+      create(:order_item, product: product2, seller_name: seller.name, name: product2.name, unit_price: 4.25, quantity: 3, quantity_delivered: 0, unit: "each"),
+    ]
+  end
+
+  let(:order_number) { "LO-ADA-0000001" }
+  let!(:order) { create(:order, items: order_items, organization: buyer, market: market, delivery: delivery, order_number: order_number, total_cost: order_items.sum(&:gross_total)) }
+
+
+  let!(:seller_user2) { create(:user, name: "The OTHER Seller") }
+  let!(:seller2) { create(:organization, :seller, name: "Other Farm", markets: [market], users: [seller_user2]) }
+  let!(:buyer2) { create(:organization, :buyer, name: "Small Timer", markets: [market]) }
+  let!(:product3) { create(:product, :sellable, name: "Flat Chikkens", organization: seller2) }
+  let!(:order_items2) do
+    [
+      create(:order_item, product: product3, seller_name: seller2.name, name: product3.name, unit_price: 10, quantity: 2, quantity_delivered: 0, unit: "stacks"),
+    ]
+  end
+
+  let(:order_number2) { "LO-ADA-0000002" }
+  let!(:order2) { create(:order, items: order_items2, organization: buyer2, market: market, delivery: delivery, order_number: order_number2, total_cost: order_items2.sum(&:gross_total)) }
+
+  let(:all_orders) { delivery.orders.sort_by(&:id) }
+  let(:seller_orders) { [ order ] }
+  let(:seller2_orders) { [ order2 ] }
+
+  ####
+
+  let(:admin_printable) { create(:packing_labels_printable, user: admin_user, delivery: delivery) }
+  let(:seller_printable) { create(:packing_labels_printable, user: seller_user, delivery: delivery) }
+  let(:seller2_printable) { create(:packing_labels_printable, user: seller_user2, delivery: delivery) }
+  let(:manager_printable) { create(:packing_labels_printable, user: manager, delivery: delivery) }
+
+  ####
+
+  # Fake stuff
+  let(:context) { double("result context", pdf_result: double("Pdf result", data: "the pdf data"))}
   let(:request) { double "a request" }
   let(:pdf_result) {double("Pdf result", data: "the pdf data")}
+
+  def unfortunately_forcible_reload(obj)
+    # Dragonfly's side effects are only observible in this test if we get a fresh new AR instance. :(
+    obj.class.find(obj.id)
+  end
 
   def expect_generate_packing_labels_for_orders(orders)
     expect(PackingLabels::Generator).to receive(:generate).
@@ -23,13 +72,49 @@ describe ProcessPackingLabelsPrintable do
       and_return(pdf_result)
   end
 
-  it "loads an PackingLabelsPrintable and generates the corresponding PDF document, stores that PDF as an attachment" do
-    expect_generate_packing_labels_for_orders(orders)
+  def verify_pdf_generated_on(printable)
+    printable = unfortunately_forcible_reload(printable)
+    expect(printable.pdf.file.read).to eq("the pdf data")
+    expect(printable.pdf.name).to eq("delivery_labels.pdf")\
+  end
 
-    subject.perform(packing_labels_printable_id: packing_labels_printable_id, request: request)
+  context "an admin" do
+    it "loads an PackingLabelsPrintable and generates the corresponding PDF document, stores that PDF as an attachment" do
+      expect_generate_packing_labels_for_orders(all_orders)
 
-    updated_packing_labels_printable = PackingLabelsPrintable.find(packing_labels_printable_id)
-    expect(updated_packing_labels_printable.pdf.file.read).to eq("the pdf data")
-    expect(updated_packing_labels_printable.pdf.name).to eq("delivery_labels.pdf")
+      subject.perform(packing_labels_printable_id: admin_printable.id, request: request)
+
+      verify_pdf_generated_on admin_printable
+    end
+  end
+
+  context "as a seller" do
+    it "only includes orders for the specific seller" do
+      expect_generate_packing_labels_for_orders(seller_orders)
+
+      subject.perform(packing_labels_printable_id: seller_printable.id, request: request)
+
+      verify_pdf_generated_on seller_printable
+    end
+  end
+
+  context "as the OTHER seller" do
+    it "only includes orders for the specific seller" do
+      expect_generate_packing_labels_for_orders(seller2_orders)
+
+      subject.perform(packing_labels_printable_id: seller2_printable.id, request: request)
+
+      verify_pdf_generated_on seller2_printable
+    end
+  end
+
+  context "as a market manager" do
+    it "includes all orders" do
+      expect_generate_packing_labels_for_orders(all_orders)
+
+      subject.perform(packing_labels_printable_id: manager_printable.id, request: request)
+
+      verify_pdf_generated_on manager_printable
+    end
   end
 end
