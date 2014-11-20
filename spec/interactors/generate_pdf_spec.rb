@@ -3,7 +3,7 @@ require "spec_helper"
 describe GeneratePdf do
   let(:request) {double("request", {:base_url=>"http://www.example.com"})}
 
-  it "generates a pdf given valid parameters" do
+  it "generates a pdf given valid parameters", pdf: true do
     template = "dashboards/coming_soon"
     params = {}
     pdf_size = {page_size: "letter"}
