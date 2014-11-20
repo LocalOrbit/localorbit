@@ -9,7 +9,7 @@
     <%= form_tag("", method: "post", data: { bind: "attr: { target: formTarget }" }) do %>
       <span><input type="checkbox" name="include_product_names" data-bind="checked: includeProductName"></input><strong>Include the Product Name</strong></span>
       <p><em>By selecting this option, the <%= @printables %> will display product information from your order.</em></p>
-      <button href="#" class="btn printable-btn">Download the PDF</button>
+      <button href="#" class="btn printable-btn btn--primary">Download the PDF</button>
     <% end %>
   </div>
 
