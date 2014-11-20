@@ -36,7 +36,7 @@ $ ->
   resizeTTHeader = ->
     $("h1.productName").each ->
       el = this
-      fitText(el, 100, 2100, 14)
+      fitText(el, 60, 2100, 14)
 
   resizeTTFarmName = ->
     $(".tt-farm-name").each ->
