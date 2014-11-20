@@ -7,7 +7,10 @@ class ProcessPackingLabelsPrintable
     delivery = delivery_printable.delivery
     user = delivery_printable.user
     orders = delivery.orders.for_seller(user).sort_by(&:id)
-    pdf_result = PackingLabels::Generator.generate(orders: orders, request: request)
+    seller_orders = orders.map do |o| SellerOrder.new(o,user) end
+
+    # pdf_result = PackingLabels::Generator.generate(orders: orders, request: request)
+    pdf_result = PackingLabels::Generator.generate(orders: seller_orders, request: request)
     delivery_printable.pdf = pdf_result.data
     delivery_printable.pdf.name = "delivery_labels.pdf"
     delivery_printable.save!
