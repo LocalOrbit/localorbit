@@ -15,15 +15,21 @@
           <%= content_tag :div, delivery.deliver_to_name, class: "location-name" if delivery.deliver_to_name.present? %>
           <div class="location"><%= delivery.deliver_to_location %></div>
 
-          <% user_delivery_context = UserDeliveryContext.build_delivery_context(user: current_user, delivery: delivery) %>
-          <div class="seller-tools toolbar" data-tools="<%= FeatureAccess.packing_labels?(user_delivery_context: user_delivery_context) ? "5" : "4" %>">
+          <% dc = UserDeliveryContext.build_delivery_context(user: current_user, delivery: delivery) 
+             access_master_packing_slips = FeatureAccess.master_packing_slips?(user_delivery_context: dc)
+             access_packing_labels = FeatureAccess.packing_labels?(user_delivery_context: dc)
+             tool_count = 3
+             tool_count += 1 if access_master_packing_slips
+             tool_count += 1 if access_packing_labels
+          %>
+          <div class="seller-tools toolbar" data-tools="<%= tool_count %>">
             <div class="tool"><%= link_to "Pick List", admin_delivery_tools_pick_list_path(delivery) %></div>
-            <% if current_user.market_manager? || current_user.admin? %>
+            <% if access_master_packing_slips %>
               <div class="tool"><%= link_to "Master Packing Slips <span class='note'>for aggregation</span>".html_safe, admin_delivery_tools_pack_list_path(delivery) %></div>
             <% end %>
             <div class="tool"><%= link_to "Individual Packing Slips <span class='note'>per Seller</span>".html_safe, admin_delivery_tools_individual_pack_list_path(delivery) %></div>
             <div class="tool"><%= link_to "Order Summary", admin_delivery_tools_order_summary_path(delivery)%></div>
-            <% if FeatureAccess.packing_labels?(user_delivery_context: user_delivery_context) %>
+            <% if access_packing_labels %>
               <% target = if Rails.env.test? then "" else "_blank" end %>
               <div class="tool"><%= link_to "Labels", admin_delivery_tools_delivery_packing_labels_path(delivery_id: delivery.id), class: "app-labels-link", target: target %></div>
             <% end %>
