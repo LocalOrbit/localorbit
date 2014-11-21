@@ -1,0 +1,7 @@
+<h1>PDF Tester</h1>
+<%= form_tag "/pdf_tester/generate", method: :post, id: "pdf_tester" do |f| %>
+  <textarea rows="10" name="html">
+  </textarea>
+  <label for="type">Type:</label><input name="type" value="poster" />
+  <input type="submit" value="HTML-to-PDF" />
+<% end %>

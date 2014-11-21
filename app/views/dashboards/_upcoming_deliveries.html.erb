@@ -13,10 +13,24 @@
         <div class="location-name"><%= delivery.deliver_to_name %></div>
         <div class="location"><%= delivery.deliver_to_location %></div>
 
+        <% 
+          dc = UserDeliveryContext.build(user: current_user, delivery: delivery)
+          access_packing_labels = FeatureAccess.packing_labels?(user_delivery_context: dc)
+          summary_last = "last"
+          labels_last = ""
+          if access_packing_labels
+            summary_last = ""
+            labels_last = "last"
+          end
+        %>
         <div class="seller-tools-mini">
           <div class="tool-mini"><%= link_to "Pick List", admin_delivery_tools_pick_list_path(delivery) %></div>
           <div class="tool-mini"><%= link_to "Individual\nPacking Slips", admin_delivery_tools_individual_pack_list_path(delivery) %></div>
-          <div class="tool-mini"><%= link_to "Order Summary", admin_delivery_tools_order_summary_path(delivery) %></div>
+          <div class="tool-mini <%=summary_last%>" ><%= link_to "Order Summary", admin_delivery_tools_order_summary_path(delivery) %></div>
+          <% if access_packing_labels %>
+            <% target = if Rails.env.test? then "" else "_blank" end %>
+            <div class="tool-mini <%=labels_last%>"><%= link_to "Labels", admin_delivery_tools_delivery_packing_labels_path(delivery_id: delivery), class: "app-labels-link", target: target %></div>
+          <% end %>
         </div>
       </div>
     <% end %>

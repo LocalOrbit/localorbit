@@ -48,7 +48,8 @@ describe FeatureAccess do
     end
   end
 
-  describe ".packing_labels?" do
+
+  context "Delivery tools perms" do
     let(:user_delivery_context) {
       UserDeliveryContext.new(
         available_features: available_features,
@@ -65,79 +66,108 @@ describe FeatureAccess do
     let(:is_buyer_only) { false }
     let(:is_admin) { false }
 
-    context "market with packing_labels enabled in plan" do
-      let(:available_features) { [ :packing_labels ] }
+    describe ".packing_labels?" do
 
-      context "market managers" do
-        let(:is_market_manager) { true }
+      context "market with packing_labels enabled in plan" do
+        let(:available_features) { [ :packing_labels ] }
 
-        it "returns true" do
-          expect(subject.packing_labels?(user_delivery_context: user_delivery_context)).to eq true
+        context "market managers" do
+          let(:is_market_manager) { true }
+
+          it "returns true" do
+            expect(subject.packing_labels?(user_delivery_context: user_delivery_context)).to eq true
+          end
+        end
+
+        context "sellers" do
+          let(:is_seller) { true }
+
+          it "returns true" do
+            expect(subject.packing_labels?(user_delivery_context: user_delivery_context)).to eq true
+          end
+        end
+
+        context "admins" do
+          let(:is_admin) { true }
+
+          it "returns true" do
+            expect(subject.packing_labels?(user_delivery_context: user_delivery_context)).to eq true
+          end
+        end
+
+        context "buyers" do
+          let(:is_buyer_only) { true }
+
+          it "returns false" do
+            expect(subject.packing_labels?(user_delivery_context: user_delivery_context)).to eq false
+          end
         end
       end
 
-      context "sellers" do
-        let(:is_seller) { true }
 
-        it "returns true" do
-          expect(subject.packing_labels?(user_delivery_context: user_delivery_context)).to eq true
+      context "market with order_printables enabled in plan" do
+        let(:available_features) { [ :other, :things, :order_printables ] }
+
+        context "admins" do
+          let(:is_admin) { true }
+
+          it "returns true, because admins are admins" do
+            expect(subject.packing_labels?(user_delivery_context: user_delivery_context)).to eq true
+          end
         end
-      end
 
-      context "admins" do
-        let(:is_admin) { true }
+        context "market managers" do
+          let(:is_market_manager) { true }
 
-        it "returns true" do
-          expect(subject.packing_labels?(user_delivery_context: user_delivery_context)).to eq true
+          it "returns false" do
+            expect(subject.packing_labels?(user_delivery_context: user_delivery_context)).to eq false
+          end
         end
-      end
 
-      context "buyers" do
-        let(:is_buyer_only) { true }
+        context "sellers" do
+          let(:is_seller) { true }
 
-        it "returns false" do
-          expect(subject.packing_labels?(user_delivery_context: user_delivery_context)).to eq false
+          it "returns false" do
+            expect(subject.packing_labels?(user_delivery_context: user_delivery_context)).to eq false
+          end
+        end
+
+        context "buyers" do
+          let(:is_buyer_only) { true }
+
+          it "returns false" do
+            expect(subject.packing_labels?(user_delivery_context: user_delivery_context)).to eq false
+          end
         end
       end
     end
 
-
-    context "market with order_printables enabled in plan" do
-      let(:available_features) { [ :other, :things, :order_printables ] }
-
+    describe ".master_packing_slips?" do
       context "admins" do
         let(:is_admin) { true }
-
-        it "returns true, because admins are admins" do
-          expect(subject.packing_labels?(user_delivery_context: user_delivery_context)).to eq true
+        it "returns true" do
+          expect(subject.master_packing_slips?(user_delivery_context: user_delivery_context)).to eq true
         end
       end
-
       context "market managers" do
         let(:is_market_manager) { true }
-
-        it "returns false" do
-          expect(subject.packing_labels?(user_delivery_context: user_delivery_context)).to eq false
+        it "returns true" do
+          expect(subject.master_packing_slips?(user_delivery_context: user_delivery_context)).to eq true
         end
       end
-
       context "sellers" do
         let(:is_seller) { true }
-
         it "returns false" do
-          expect(subject.packing_labels?(user_delivery_context: user_delivery_context)).to eq false
+          expect(subject.master_packing_slips?(user_delivery_context: user_delivery_context)).to eq false
         end
       end
-
       context "buyers" do
         let(:is_buyer_only) { true }
-
         it "returns false" do
-          expect(subject.packing_labels?(user_delivery_context: user_delivery_context)).to eq false
+          expect(subject.master_packing_slips?(user_delivery_context: user_delivery_context)).to eq false
         end
       end
     end
 
   end
-
 end

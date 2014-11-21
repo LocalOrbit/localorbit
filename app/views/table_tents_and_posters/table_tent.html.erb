@@ -7,6 +7,7 @@
     </head>
     <body style='margin: 0; padding: 0;'>
     <style>
+
       .container{
         max-width: 480px;
         page-break-after: always;
@@ -38,13 +39,26 @@
         /* position:relative; */
         /* width:100%; */
       }
+      .headerWrapper {
+        display: inline-block;
+      }
       .header h4{
         margin-top: 0px;
       }
-      .header h1{
-        margin-top:15px;
+      h1.productName{
+        margin-top:25px;
+        font-size: 40px;
+        line-height: 130%;
+        padding:5px;
+        margin-bottom: 0px;
+        width: 350px;
+        text-align: center;
+        whitespace: nowrap;
       }
-      .headerText{
+      h1.realFood{
+        margin-top:5px;
+        font-size: 40px;
+        line-height: 130%;
         padding:5px;
         margin-bottom: 0px;
       }
@@ -72,39 +86,35 @@
         overflow: hidden;
       }
 
-      .farm-details h2{
+      .farm-details h2 {
         font-size:160%;
-        margin: 2% 0 1%;
+        margin-top: 3%;
+        margin-right: 0;
+        margin-bottom: 2%;
+        margin-left: 0;
       }
       .farm-location{
         font-weight:bold;
         font-size:86%;
       }
 
-      .farm-content{
+      .tt-farm-content{
         padding: 0;
         height: 275px;
         min-height: 275px;
         max-height: 275px;
         overflow:hidden;
       }
-      .farm-content p,.farm-content h4{
+      .tt-farm-content p,.tt-farm-content h4{
         padding:0 6%;
         font-size: 84%;
       }
-      .farm-content .who-story {
-        height: 210px;
+      .tt-farm-content .who-story {
+        height: 208px;
         overflow: hidden;
       }
-      .footer{
-        background:#3F3E40;
-        background-image:url("<%= pdf_asset_url 'table_tents_and_posters/Group.png' %> ");
-        color:#FEFEFE;
-        background-size:cover;
-        background-position:center center;
-        height: 69px;
-        /* overflow:hidden; */
-      }
+
+
       p.lo-logo {
         font-size: 60%;
         color:black;
@@ -113,8 +123,9 @@
         background-color:white;
         text-align: right;
         position: absolute;
-        bottom: -10px;
+        bottom: -7px;
         right: 0px;
+        width: 30%;
       }
       .lo-logo img{
         width:6px;
@@ -124,50 +135,59 @@
         vertical-align: middle;
       }
 
-      .footer img {
-        /* background:#ffffff; */
-        width:90%;
-        margin: 0% auto 0%;
-        border: 2px solid #dfdfdf;
+      .footer{
+        background:#3F3E40;
+        background-image:url("<%= pdf_asset_url 'table_tents_and_posters/Group.png' %> ");
+        color:#FEFEFE;
+        background-size:cover;
+        background-position:center center;
+        min-height: 75px;
+        /* overflow:hidden; */
       }
 
-      .footer h5{
-        /* margin:15% 0 1%; */
-        text-transform:uppercase;
-        border-bottom:1px solid;
-        margin-top: 4%;
-        color:#8E8C8E;
-        font-size: 70%;
-        margin-bottom: 0px;
-      }
-      .footer h4{
-        line-height: 0;
-        /* margin: 4% 0 2%; */
-        font-size: 80%;
-        margin-bottom: 0px;
-      }
-      .footer span{
-        margin-top: 0px;
-        font-size:60%;
-      }
-      .footer .market-logo {
-        width:25%;
-        /* margin-top: -15px; */
-        text-align:center;
-        bottom: 0;
-        margin-left: 2%;
-        position: absolute;
-      }
-      .footer .market-content {
-        width:62%;
-        margin-left: 29%;
-        position:relative;
-      }
+    .footer-table {
+      width: 100%;
+      height: 75px;
+    }
+    .footer-table tbody {
+      /* background-color: red; */
+    }
+
+
+    .market-info h5{
+      margin:0% 0 1%;
+      text-transform:uppercase;
+      border-bottom:1px solid;
+      color:#8E8C8E;
+      font-size: 70%;
+    }
+    .market-info h4{
+      line-height: 70%;
+      margin: 4% 0 0%;
+      font-size: 80%;
+      font-weight: bold;
+    }
+    .market-info span {
+      font-size: 70%;
+    }
+
+    .footer-image-holder {
+      width:120px;
+      text-align:center;
+      vertical-align:middle;
+      padding-top:5px;
+    }
+    .footer-image-holder img {
+      max-width: 100px;
+      max-height: 50px;
+      background:#ffffff;
+      border: 1px solid #dfdfdf;
+    }
     </style>
     <% params[:page_list].each do |page| %>
       <%= render partial: "table_tents_and_posters/table_tent_page", locals: {farm: page[:farm], farm_map: page[:farm_map], product_name: page[:product_name], include_product_names: params[:include_product_names], market: params[:market]} %>
     <% end %>
 
-    <section>&nbsp;</section>
+    <!-- <section>&#38;nbsp;</section> -->
   </body>
 </html>

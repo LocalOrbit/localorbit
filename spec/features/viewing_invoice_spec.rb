@@ -193,7 +193,7 @@ feature "Viewing invoices" do
         end
       end
 
-      scenario "generates a PDF of the content" do
+      scenario "generates a PDF of the content", pdf: true do
         visit admin_invoice_path(order.id, format: "pdf")
 
         expect(response_headers["Content-Type"]).to eq("application/pdf")
