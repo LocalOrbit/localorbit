@@ -9,9 +9,9 @@ class BaseMailer < ActionMailer::Base
 
   def default_from
     if @market
-      "#{@market.name.inspect} <service@localorb.it>"
+      "#{@market.name.inspect} <service@localorbit.com>"
     else
-      "Local Orbit <service@localorb.it>"
+      "Local Orbit <service@localorbit.com>"
     end
   end
 
