@@ -44,6 +44,7 @@ feature "sending invoices" do
     expect(invoice.delivery_status).to eq("Pending")
     expect(invoice.action).to include("Send Invoice")
     expect(invoice.action).to include("Preview")
+    expect(invoice.text).to include(delivery.buyer_deliver_on.strftime("%m/%d/%Y") || delivery.deliver_on.strftime("%m/%d/%Y"))
   end
 
   scenario "sending a invoice", pdf:true, vcr: {match_requests_on: [:host, invoice_auth_matcher]} do
@@ -145,9 +146,9 @@ feature "sending invoices" do
     begin
       yield
     ensure
-      begin 
+      begin
         page.execute_script %|$("#invoice-list").prop("data-suppress-target",null)|
-      rescue Exception => e2 
+      rescue Exception => e2
         puts "(Couldn't clear the data-suppress-target data attribute from #invoice-list, probably due to an error or being on a different page.)"
       end
     end

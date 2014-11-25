@@ -13,32 +13,32 @@ Market.where(subdomain:"springfield").exists? || Market.create(
   subdomain:"springfield"
 )
 
-User.where(email: "erika@localorb.it").exists? || User.create!(
-  email: "erika@localorb.it",
+User.where(email: "erika@localorbit.com").exists? || User.create!(
+  email: "erika@localorbit.com",
   password: "password1",
   password_confirmation: "password1",
   role: "admin",
   name: "Erika Block"
 )
 
-User.where(email: "anna@localorb.it").exists? || User.create!(
-  email: "anna@localorb.it",
+User.where(email: "anna@localorbit.com").exists? || User.create!(
+  email: "anna@localorbit.com",
   password: "password1",
   password_confirmation: "password1",
   role: "admin",
   name: "Anna Richardson"
 )
 
-User.where(email: "ragan@localorb.it").exists? || User.create!(
-  email: "ragan@localorb.it",
+User.where(email: "ragan@localorbit.com").exists? || User.create!(
+  email: "ragan@localorbit.com",
   password: "password1",
   password_confirmation: "password1",
   role: "admin",
   name: "Ragan Erickson"
 )
 
-User.where(email: "kate@localorb.it").exists? || User.create!(
-  email: "kate@localorb.it",
+User.where(email: "kate@localorbit.com").exists? || User.create!(
+  email: "kate@localorbit.com",
   password: "password1",
   password_confirmation: "password1",
   role: "admin",
