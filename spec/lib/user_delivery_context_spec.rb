@@ -1,36 +1,54 @@
 describe UserDeliveryContext do
 
   describe ".build(user:,delivery:)" do
-    let(:plan)                   { create(:plan, :grow) }
-    let!(:market)                { create(:market, :with_delivery_schedule, :with_address, plan: plan) }
-    let!(:wrong_market)          { create(:market, :with_delivery_schedule, :with_address, plan: plan) }
-    let!(:buyer)                 { create(:organization, :buyer, markets: [market]) }
-    let!(:wrong_organization)    { create(:organization, :buyer, markets: [market]) }
-    let(:order)                  { create :order, :with_items, organization: buyer, market: market }
+    include_context "the mini market"
 
-    let(:user)                   { create(:user, organizations: [buyer]) }
-    let(:delivery) {create(:delivery, delivery_schedule: market.delivery_schedules.first, orders: [order])}
+    let(:delivery) {create(:delivery, 
+                           delivery_schedule: mm_delivery_schedule, 
+                           orders: [ mm_order ])}
 
-    it "creates a user delivery context from a user and delivery" do
-      delivery_context = UserDeliveryContext.build(user: user, delivery: delivery)
-      full_list_of_features = [:discount_codes,
-        :cross_selling,
-        :custom_branding,
-        :automatic_payments,
-        :advanced_pricing,
-        :advanced_inventory,
-        :promotions,
-        :order_printables,
-        :packing_labels
-      ]
-      expect(delivery_context.available_features).to contain_exactly(*full_list_of_features)
-      expect(delivery_context.is_market_manager).to eq false
-      expect(delivery_context.is_seller).to eq false
-      expect(delivery_context.is_buyer_only).to eq true
-      expect(delivery_context.is_admin).to eq false
-      full_list_of_features.each do |feature|
-        expect(delivery_context.has_feature(feature)).to eq true
-      end
+    it "correctly sets is_admin" do
+      c = UserDeliveryContext.build(user: barry, delivery: delivery)
+      expect(c.is_admin).to eq false
+      c = UserDeliveryContext.build(user: aaron, delivery: delivery)
+      expect(c.is_admin).to eq true
     end
+
+    it "correctly sets is_market_manager" do
+      c = UserDeliveryContext.build(user: barry, delivery: delivery)
+      expect(c.is_market_manager).to eq false
+      c = UserDeliveryContext.build(user: mary, delivery: delivery)
+      expect(c.is_market_manager).to eq true
+    end
+
+    it "correctly sets is_seller" do
+      c = UserDeliveryContext.build(user: barry, delivery: delivery)
+      expect(c.is_seller).to eq false
+      c = UserDeliveryContext.build(user: mary, delivery: delivery)
+      expect(c.is_seller).to eq false
+      c = UserDeliveryContext.build(user: sally, delivery: delivery)
+      expect(c.is_seller).to eq true
+    end
+    
+    it "correctly sets is_buyer_only" do
+      c = UserDeliveryContext.build(user: mary, delivery: delivery)
+      expect(c.is_buyer_only).to eq false
+      c = UserDeliveryContext.build(user: sally, delivery: delivery)
+      expect(c.is_buyer_only).to eq false
+      c = UserDeliveryContext.build(user: barry, delivery: delivery)
+      expect(c.is_buyer_only).to eq true
+    end
+
+    it "correctly sets packing_labels_feature" do
+      mini_market_plan.update(packing_labels: false)
+      c = UserDeliveryContext.build(user: mary, delivery: delivery)
+      expect(c.packing_labels_feature).to eq false
+
+      mini_market_plan.update(packing_labels: true)
+      c = UserDeliveryContext.build(user: mary, delivery: delivery)
+      expect(c.packing_labels_feature).to eq true
+    end
+
+    
   end
 end
