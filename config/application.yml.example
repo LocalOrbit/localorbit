@@ -4,7 +4,7 @@ SECRET_TOKEN: 02a52cf6230014a0ba90ed4ab8aa8fe91d6cb4bd9fd295656f51cc3019f4ec8c09
 GOOGLE_MAPS_KEY: "AIzaSyDRQCjRSGyFnuGb5kNdk7IHjUyyRWmsPrQ"
 ASSET_HOST: "http://localhost:3000"
 DOMAIN: "localtest.me" # localtest.me points to 127.0.0.1 and lets us use subdomains. localhost does not. see http://readme.localtest.me/
-ZENDESK_EMAIL: "service@localorb.it"
+ZENDESK_EMAIL: "service@localorbit.com"
 ZENDESK_SHARED_SECRET: "fake"
 ZENDESK_SUBDOMAIN: "localorbit"
 UPLOADS_BUCKET: "localorbit-fake"
