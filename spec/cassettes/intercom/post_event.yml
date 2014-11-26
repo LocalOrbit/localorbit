@@ -1,0 +1,211 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: https://bn6bws5t:c3eb5968384cb5f2afef55634023b9b201a00985@api.intercom.io/users?email=mary%2Btesting@example.com
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept-Encoding:
+      - gzip, deflate
+      Accept:
+      - application/vnd.intercom.3+json
+      User-Agent:
+      - Intercom-Ruby/2.3.0
+      Acceptencoding:
+      - gzip, deflate
+  response:
+    status:
+      code: 404
+      message: Not Found
+    headers:
+      Cache-Control:
+      - no-cache
+      Content-Encoding:
+      - gzip
+      Content-Type:
+      - application/json; charset=utf-8
+      Date:
+      - Thu, 20 Nov 2014 20:09:23 GMT
+      Server:
+      - nginx
+      Status:
+      - 404 Not Found
+      Strict-Transport-Security:
+      - max-age=31536000
+      Vary:
+      - Accept-Encoding
+      X-Content-Type-Options:
+      - nosniff
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Intercom-Version:
+      - 699ebb65499e2334a163b310592fa4f049a87e6f
+      X-Ratelimit-Limit:
+      - '1000'
+      X-Ratelimit-Remaining:
+      - '1000'
+      X-Ratelimit-Reset:
+      - '1416514200'
+      X-Request-Id:
+      - 1233bfd8-b1db-48c7-99e7-b4bb1bd465c7
+      X-Runtime:
+      - '0.159078'
+      X-Xss-Protection:
+      - 1; mode=block
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        H4sIAHNKblQAAxzMQQ6CMBCF4auQWVuTSrXAAVy6Y0UMcTqDIVGqM2VhCHe3
+        sH1f3r9A+n0YGmCRKMfXqAkOIPydWVM/UhZ7KkscqDJoCY2rgjd1zd6gQ7RI
+        7nIOPn/2gELTLRAibckppn6I80RZ36z6eG5rqyzFLabiutN6X/8AAAD//wMA
+        fXNQk4QAAAA=
+    http_version: 
+  recorded_at: Thu, 20 Nov 2014 20:09:23 GMT
+- request:
+    method: post
+    uri: https://bn6bws5t:c3eb5968384cb5f2afef55634023b9b201a00985@api.intercom.io/users
+    body:
+      encoding: UTF-8
+      string: '{"email":"mary+testing@example.com","custom_attributes":{}}'
+    headers:
+      Accept-Encoding:
+      - gzip, deflate
+      Accept:
+      - application/vnd.intercom.3+json
+      User-Agent:
+      - Intercom-Ruby/2.3.0
+      Content-Type:
+      - application/json
+      Acceptencoding:
+      - gzip, deflate
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      Content-Encoding:
+      - gzip
+      Content-Type:
+      - application/json; charset=utf-8
+      Date:
+      - Thu, 20 Nov 2014 20:09:23 GMT
+      Etag:
+      - '"427267f9d8477a3b1440d9a5410e3c21"'
+      Server:
+      - nginx
+      Status:
+      - 200 OK
+      Strict-Transport-Security:
+      - max-age=31536000
+      Vary:
+      - Accept-Encoding
+      X-Content-Type-Options:
+      - nosniff
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Intercom-Version:
+      - 699ebb65499e2334a163b310592fa4f049a87e6f
+      X-Ratelimit-Limit:
+      - '1000'
+      X-Ratelimit-Remaining:
+      - '999'
+      X-Ratelimit-Reset:
+      - '1416514200'
+      X-Request-Id:
+      - c5e1e4e8-2df9-40c6-b834-70f5901074c4
+      X-Runtime:
+      - '0.186200'
+      X-Xss-Protection:
+      - 1; mode=block
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        H4sIAHNKblQAA2xR227CMAz9l7wOoTKgTDztP6YpclO3ipTbYmcbQvz73JQi
+        2PYSNefic5yeFZ8SqqMqhFmtlO3le79rcQeH7XDohxdoO2Oaptm0z8JPMj2J
+        QnFupdCDdeLwkE9PjMQ2jK/4DT45XJvoxRHA4yKHT2DI6nheUq+A5HoYUZfs
+        ZulFtCnVINWFtvuiPYtKJiYIFuluxIyd1s7SL8nbu4xx0QDbGHQvSWKbICDW
+        GT+K9NXASzmTERj7imx2m3Y/HduVyugjo76nZ0NJ/b8GQqIp0cQShGoEicaC
+        0ynHwbqH9o/MssQffV2lBCodmWw7CR1y9Lo+v9ADOMLrz5F3DHzddu7JMN5H
+        ynXJmZk6nHD0YnzoNkO3UjdFNZhCLBWAWQoVrltdLj8AAAD//wMAw6yoa1AC
+        AAA=
+    http_version: 
+  recorded_at: Thu, 20 Nov 2014 20:09:23 GMT
+- request:
+    method: post
+    uri: https://bn6bws5t:c3eb5968384cb5f2afef55634023b9b201a00985@api.intercom.io/events
+    body:
+      encoding: UTF-8
+      string: '{"event_name":"viewed-order","created_at":1416514163,"metadata":{"order":{"url":"/admin/orders/1","value":"LO-14-MARKET1-0000001"}},"email":"mary+testing@example.com"}'
+    headers:
+      Accept-Encoding:
+      - gzip, deflate
+      Accept:
+      - application/vnd.intercom.3+json
+      User-Agent:
+      - Intercom-Ruby/2.3.0
+      Content-Type:
+      - application/json
+      Acceptencoding:
+      - gzip, deflate
+  response:
+    status:
+      code: 202
+      message: Accepted
+    headers:
+      Cache-Control:
+      - no-cache
+      Content-Encoding:
+      - gzip
+      Date:
+      - Thu, 20 Nov 2014 20:09:23 GMT
+      Server:
+      - nginx
+      Status:
+      - 202 Accepted
+      Strict-Transport-Security:
+      - max-age=31536000
+      Vary:
+      - Accept-Encoding
+      X-Content-Type-Options:
+      - nosniff
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Intercom-Version:
+      - 699ebb65499e2334a163b310592fa4f049a87e6f
+      X-Intercomrade:
+      - Like APIs? Check out https://www.intercom.io/careers!
+      X-Ratelimit-Limit:
+      - '1000'
+      X-Ratelimit-Remaining:
+      - '998'
+      X-Ratelimit-Reset:
+      - '1416514200'
+      X-Request-Id:
+      - 3fb3df8a-ebf5-42ec-a543-7a0c0ec2c18d
+      X-Runtime:
+      - '0.147964'
+      X-Xss-Protection:
+      - 1; mode=block
+      Content-Length:
+      - '27'
+      Connection:
+      - keep-alive
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        H4sIAHNKblQAA1IAAAAA//8DAEXPbOkBAAAA
+    http_version: 
+  recorded_at: Thu, 20 Nov 2014 20:09:24 GMT
+recorded_with: VCR 2.9.3

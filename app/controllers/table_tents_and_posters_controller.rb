@@ -12,11 +12,13 @@ class TableTentsAndPostersController < ApplicationController
     type = params[:type] || DefaultPrintableType
     include_product_names = params[:include_product_names] || false
     request_url_presenter = RequestUrlPresenter.new(request)
+    intercom_event_type = if type == "poster" then EventTracker::DownloadedPosters.name else EventTracker::DownloadedTableTents.name end
 
     order_printable = OrderPrintable.create!(order: order, printable_type: type, include_product_names: include_product_names)
 
     ProcessOrderPrintable.delay.perform(order_printable_id: order_printable.id, request: RequestUrlPresenter.new(request))
 
+    track_event intercom_event_type, order: { url: admin_order_url(id: order.id), value: order.order_number }
     redirect_to order_table_tents_and_poster_path(order_id:order.id, id: order_printable.id)
   end
 
