@@ -42,6 +42,8 @@ feature "entering receipts" do
     expect(row.order_date).to eq(19.days.ago.strftime("%m/%d/%Y"))
     expect(row.due_date).to eq("4 Days Overdue")
     expect(row.amount).to eq("$210.00")
+    delivery = order1.delivery
+    expect(row.text).to include(delivery.buyer_deliver_on.strftime("%m/%d/%Y") || delivery.deliver_on.strftime("%m/%d/%Y"))
 
     row = rows[1]
     expect(row.order_number).to eq("#{order4.order_number} PDF")
@@ -49,6 +51,8 @@ feature "entering receipts" do
     expect(row.order_date).to eq(15.days.ago.strftime("%m/%d/%Y"))
     expect(row.due_date).to eq("2 Days Overdue")
     expect(row.amount).to eq("$420.00")
+    delivery = order2.delivery
+    expect(row.text).to include(delivery.buyer_deliver_on.strftime("%m/%d/%Y") || delivery.deliver_on.strftime("%m/%d/%Y"))
   end
 
   context "after a seller has been deleted by the market manager" do
