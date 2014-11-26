@@ -1,5 +1,9 @@
 class Deliveries::PackingLabelsController < ApplicationController
 
+
+  # Arrive at index when user clicks "Lables" on their Upcoming Deliveries.
+  # Triggers creation of a new Packing Labels printable PDF and redirects 
+  # to the #show action where you wait for the generator to complete.
   def index
     delivery =  Delivery.find(params[:delivery_id])
     printable = PackingLabelsPrintable.create!(user: current_user, delivery: delivery)
@@ -7,12 +11,13 @@ class Deliveries::PackingLabelsController < ApplicationController
       packing_labels_printable_id: printable.id, 
       request: RequestUrlPresenter.new(request)
     )
+
+    track_event EventTracker::DownloadedPackingLabels.name
+
     redirect_to action: :show, delivery_id: delivery.id, id: printable.id
   end
 
   def show
-    # PackingLabelsPrintable.for_user(current_user).find(params[:id])
-    # render text: context.pdf_result.data, content_type: "application/pdf"
     printable = PackingLabelsPrintable.for_user(current_user).find params[:id]
     respond_to do |format|
       format.html {}

@@ -22,7 +22,17 @@ describe Deliveries::PackingLabelsController do
       end
     end
 
-    let (:delivery) {create(:delivery)}
+    def verify_packing_labels_event_tracked
+      e = EventTracker.previously_captured_events.first
+      expect(e).to be
+      expect(e).to eq({
+        user: barry,
+        event: EventTracker::DownloadedPackingLabels.name, 
+        metadata: { }
+      })
+    end
+
+    let (:delivery) {create(:delivery, delivery_schedule: create(:delivery_schedule, market: mini_market))}
     let (:pdf_result) { double "PDF Result", data: "the pdf data" }
 
     it "inserts an PackingLabelsPrintable record per our inputs and starts a delayed job to process the PDF" do
@@ -30,6 +40,7 @@ describe Deliveries::PackingLabelsController do
       expect(before).to be_empty
 
       expect_process_delivery_printable
+
 
       get_index
 
@@ -41,6 +52,8 @@ describe Deliveries::PackingLabelsController do
       expect(@delayed_job_args).to be
       expect(@delayed_job_args[:packing_labels_printable_id]).to eq delivery_printable.id
       expect(@delayed_job_args[:request].base_url).to eq request.base_url
+
+      verify_packing_labels_event_tracked
     end
   end
 

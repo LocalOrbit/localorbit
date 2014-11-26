@@ -44,6 +44,8 @@ gem "honeybadger"
 gem "groupdate", github: "trestrantham/groupdate", branch: "custom-calculations" # Waiting on https://github.com/ankane/groupdate/pull/53
 gem "interactor-rails", "< 3.0"
 gem "interactor", "< 3.0" # We are not ready for 3 yet
+gem 'intercom-rails', '~> 0.2.26'
+gem 'intercom', '~> 2.3.0'
 gem "jbuilder"
 gem "jwt"
 gem "kaminari"

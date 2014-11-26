@@ -9,6 +9,7 @@ class OrdersController < ApplicationController
 
   def show
     @order = BuyerOrder.find(current_user, params[:id])
+    track_event EventTracker::ViewedOrder.name, order: { url: order_url(id: @order.id), value: @order.order_number }
   end
 
   def create
