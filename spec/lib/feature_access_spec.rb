@@ -9,6 +9,8 @@ describe FeatureAccess do
   let!(:wrong_organization)    { create(:organization, :buyer, markets: [market]) }
   let(:order)                  { create :order, :with_items, organization: buyer, market: market }
   let(:user)                   { create(:user, organizations: [buyer]) }
+  let(:admin)                  { create(:user, :admin) }
+  let(:market_manager)         { create(:user, managed_markets: [market]) }
 
   before do
     user.markets << market
@@ -52,7 +54,7 @@ describe FeatureAccess do
   context "Delivery tools perms" do
     let(:user_delivery_context) {
       UserDeliveryContext.new(
-        available_features: available_features,
+        packing_labels_feature: packing_labels_feature,
         is_market_manager: is_market_manager,
         is_seller: is_seller,
         is_buyer_only: is_buyer_only,
@@ -60,7 +62,7 @@ describe FeatureAccess do
       )
     }
 
-    let(:available_features) { [] }
+    let(:packing_labels_feature) { false }
     let(:is_market_manager) { false }
     let(:is_seller) { false }
     let(:is_buyer_only) { false }
@@ -69,7 +71,7 @@ describe FeatureAccess do
     describe ".packing_labels?" do
 
       context "market with packing_labels enabled in plan" do
-        let(:available_features) { [ :packing_labels ] }
+        let(:packing_labels_feature) { true }
 
         context "market managers" do
           let(:is_market_manager) { true }
@@ -105,8 +107,8 @@ describe FeatureAccess do
       end
 
 
-      context "market with order_printables enabled in plan" do
-        let(:available_features) { [ :other, :things, :order_printables ] }
+      context "market without packing labels enabled in plan" do
+        let(:packing_labels_feature) { false }
 
         context "admins" do
           let(:is_admin) { true }
@@ -166,6 +168,498 @@ describe FeatureAccess do
         it "returns false" do
           expect(subject.master_packing_slips?(user_delivery_context: user_delivery_context)).to eq false
         end
+      end
+    end
+
+  end
+
+  describe ".edit_ordered_quantity?" do
+    let(:context) {
+      UserOrderItemContext.new(
+        delivery_pending: delivery_pending,
+        is_admin: is_admin,
+        is_market_manager: is_market_manager,
+        is_seller: is_seller,
+        sellers_edit_orders_feature: sellers_edit_orders_feature
+      )
+    }
+
+    let(:delivery_pending) {false}
+    let(:is_admin) {false}
+    let(:is_market_manager) { false }
+    let(:is_seller) {false}
+    let(:sellers_edit_orders_feature) {false}
+
+    context "delivery_pending false" do
+      it "returns false" do
+        expect(subject.edit_ordered_quantity?(user_order_item_context: context)).to eq false
+      end
+
+      context "for admins" do
+        let(:is_admin) { true }
+        it "returns false" do
+          expect(subject.edit_ordered_quantity?(user_order_item_context: context)).to eq false
+        end
+      end
+
+      context "for market managers" do
+        let(:is_market_manager) { true }
+        it "returns false" do
+          expect(subject.edit_ordered_quantity?(user_order_item_context: context)).to eq false
+        end
+      end
+
+      context "for sellers" do
+        let(:is_seller) { true }
+        context "when sellers_edit_orders feature is NOT available in this market" do
+          it "returns false" do
+            expect(subject.edit_ordered_quantity?(user_order_item_context: context)).to eq false
+          end
+        end
+
+        context "when sellers_edit_orders feature is available in this market" do
+          let(:sellers_edit_orders_feature) { true }
+          it "returns false" do
+            expect(subject.edit_ordered_quantity?(user_order_item_context: context)).to eq false
+          end
+        end
+      end
+    end
+
+    context "delivery_pending true" do
+      let(:delivery_pending) { true }
+
+      it "returns false with no other interesting conditions met" do
+        expect(subject.edit_ordered_quantity?(user_order_item_context: context)).to eq false
+      end
+
+      context "for admins" do
+        let(:is_admin) { true }
+        it "returns true" do
+          expect(subject.edit_ordered_quantity?(user_order_item_context: context)).to eq true
+        end
+      end
+
+      context "for market managers" do
+        let(:is_market_manager) { true }
+        it "returns true" do
+          expect(subject.edit_ordered_quantity?(user_order_item_context: context)).to eq true
+        end
+      end
+
+      context "for sellers" do
+        let(:is_seller) { true }
+        context "when sellers_edit_orders feature is NOT available in this market" do
+          it "returns false" do
+            expect(subject.edit_ordered_quantity?(user_order_item_context: context)).to eq false
+          end
+        end
+
+        context "when sellers_edit_orders feature is available in this market" do
+          let(:sellers_edit_orders_feature) { true }
+          it "returns true" do
+            expect(subject.edit_ordered_quantity?(user_order_item_context: context)).to eq true
+          end
+        end
+      end
+
+    end
+  end
+
+  describe ".edit_delivered_quantity?" do
+    let(:context) {
+      UserOrderItemContext.new(
+        delivery_pending: delivery_pending,
+        is_admin: is_admin,
+        is_market_manager: is_market_manager,
+        is_seller: is_seller,
+        sellers_edit_orders_feature: sellers_edit_orders_feature
+      )
+    }
+
+    let(:delivery_pending) {false}
+    let(:is_admin) {false}
+    let(:is_market_manager) { false }
+    let(:is_seller) {false}
+    let(:sellers_edit_orders_feature) {false}
+
+    context "delivery_pending false" do
+      it "returns false with no other interesting criteria set true" do
+        expect(subject.edit_delivered_quantity?(user_order_item_context: context)).to eq false
+      end
+
+      context "for admins" do
+        let(:is_admin) { true }
+        it "returns true" do
+          expect(subject.edit_delivered_quantity?(user_order_item_context: context)).to eq true
+        end
+      end
+
+      context "for market managers" do
+        let(:is_market_manager) { true }
+        it "returns true" do
+          expect(subject.edit_delivered_quantity?(user_order_item_context: context)).to eq true
+        end
+      end
+
+      context "for sellers" do
+        let(:is_seller) { true }
+        context "when sellers_edit_orders feature is NOT available in this market" do
+          it "returns false" do
+            expect(subject.edit_delivered_quantity?(user_order_item_context: context)).to eq false
+          end
+        end
+
+        context "when sellers_edit_orders feature is available in this market" do
+          let(:sellers_edit_orders_feature) {true}
+          it "returns true" do
+            expect(subject.edit_delivered_quantity?(user_order_item_context: context)).to eq true
+          end
+        end
+      end
+    end
+
+    context "delivery_pending true" do
+      let(:delivery_pending) { true }
+
+      it "returns false with no other interesting conditions met" do
+        expect(subject.edit_delivered_quantity?(user_order_item_context: context)).to eq false
+      end
+
+      context "for admins" do
+        let(:is_admin) { true }
+        it "returns true" do
+          expect(subject.edit_delivered_quantity?(user_order_item_context: context)).to eq true
+        end
+      end
+
+      context "for market managers" do
+        let(:is_market_manager) { true }
+        it "returns true" do
+          expect(subject.edit_delivered_quantity?(user_order_item_context: context)).to eq true
+        end
+      end
+
+      context "for sellers" do
+        let(:is_seller) { true }
+        context "when sellers_edit_orders feature is NOT available in this market" do
+          it "returns false" do
+            expect(subject.edit_delivered_quantity?(user_order_item_context: context)).to eq false
+          end
+        end
+        context "when sellers_edit_orders feature is available in this market" do
+          let(:sellers_edit_orders_feature) { true }
+          it "returns true" do
+            expect(subject.edit_delivered_quantity?(user_order_item_context: context)).to eq true
+          end
+        end
+      end
+
+    end
+
+  end
+
+  describe ".delete_order_item?" do
+    let(:context) {
+      UserOrderItemContext.new(
+        delivery_pending: delivery_pending,
+        is_admin: is_admin,
+        is_market_manager: is_market_manager,
+        is_seller: is_seller,
+        sellers_edit_orders_feature: sellers_edit_orders_feature
+      )
+    }
+
+    let(:delivery_pending) {false}
+    let(:is_admin) {false}
+    let(:is_market_manager) { false }
+    let(:is_seller) {false}
+    let(:sellers_edit_orders_feature) {false}
+
+    context "delivery_pending false" do
+      it "returns false" do
+        expect(subject.delete_order_item?(user_order_item_context: context)).to eq false
+      end
+
+      context "for admins" do
+        let(:is_admin) { true }
+        it "returns false" do
+          expect(subject.delete_order_item?(user_order_item_context: context)).to eq false
+        end
+      end
+
+      context "for market managers" do
+        let(:is_market_manager) { true }
+        it "returns false" do
+          expect(subject.delete_order_item?(user_order_item_context: context)).to eq false
+        end
+      end
+
+      context "for sellers" do
+        let(:is_seller) { true }
+        context "when sellers_edit_orders feature is NOT available in this market" do
+          it "returns false" do
+            expect(subject.delete_order_item?(user_order_item_context: context)).to eq false
+          end
+        end
+
+        context "when sellers_edit_orders feature is available in this market" do
+          let(:sellers_edit_orders_feature) { true }
+          it "returns false" do
+            expect(subject.delete_order_item?(user_order_item_context: context)).to eq false
+          end
+        end
+      end
+    end
+
+    context "delivery_pending true" do
+      let(:delivery_pending) { true }
+
+      it "returns false with no other interesting conditions met" do
+        expect(subject.delete_order_item?(user_order_item_context: context)).to eq false
+      end
+
+      context "for admins" do
+        let(:is_admin) { true }
+        it "returns true" do
+          expect(subject.delete_order_item?(user_order_item_context: context)).to eq true
+        end
+      end
+
+      context "for market managers" do
+        let(:is_market_manager) { true }
+        it "returns true" do
+          expect(subject.delete_order_item?(user_order_item_context: context)).to eq true
+        end
+      end
+
+      context "for sellers" do
+        let(:is_seller) { true }
+        context "when sellers_edit_orders feature is NOT available in this market" do
+          it "returns false" do
+            expect(subject.delete_order_item?(user_order_item_context: context)).to eq false
+          end
+        end
+
+        context "when sellers_edit_orders feature is available in this market" do
+          let(:sellers_edit_orders_feature) { true }
+          it "returns true" do
+            expect(subject.delete_order_item?(user_order_item_context: context)).to eq true
+          end
+        end
+      end
+
+    end
+  end
+
+  describe ".order_action_links?" do
+    let(:context) {
+      UserOrderContext.new(
+        is_admin: is_admin,
+        is_market_manager: is_market_manager,
+        is_seller: is_seller,
+        sellers_edit_orders_feature: sellers_edit_orders_feature
+      )
+    }
+
+    let(:delivery_pending) {false}
+    let(:is_admin) {false}
+    let(:is_market_manager) { false }
+    let(:is_seller) {false}
+    let(:sellers_edit_orders_feature) { false }
+
+    context "delivery_pending false" do
+      it "returns false with no other interesting criteria set true" do
+        expect(subject.order_action_links?(user_order_context: context)).to eq false
+      end
+
+      context "for admins" do
+        let(:is_admin) { true }
+        it "returns true" do
+          expect(subject.order_action_links?(user_order_context: context)).to eq true
+        end
+      end
+
+      context "for market managers" do
+        let(:is_market_manager) { true }
+        it "returns true" do
+          expect(subject.order_action_links?(user_order_context: context)).to eq true
+        end
+      end
+
+      context "for sellers" do
+        let(:is_seller) { true }
+        context "when sellers_edit_orders feature is NOT available in this market" do
+          it "returns false" do
+            expect(subject.order_action_links?(user_order_context: context)).to eq false
+          end
+        end
+
+        context "when sellers_edit_orders feature is available in this market" do
+          let(:sellers_edit_orders_feature) { true }
+          it "returns true" do
+            expect(subject.order_action_links?(user_order_context: context)).to eq true
+          end
+        end
+      end
+    end
+
+    context "delivery_pending true" do
+      let(:delivery_pending) { true }
+
+      it "returns false with no other interesting conditions met" do
+        expect(subject.order_action_links?(user_order_context: context)).to eq false
+      end
+
+      context "for admins" do
+        let(:is_admin) { true }
+        it "returns true" do
+          expect(subject.order_action_links?(user_order_context: context)).to eq true
+        end
+      end
+
+      context "for market managers" do
+        let(:is_market_manager) { true }
+        it "returns true" do
+          expect(subject.order_action_links?(user_order_context: context)).to eq true
+        end
+      end
+
+      context "for sellers" do
+        let(:is_seller) { true }
+        context "when sellers_edit_orders feature is NOT available in this market" do
+          it "returns false" do
+            expect(subject.order_action_links?(user_order_context: context)).to eq false
+          end
+        end
+        context "when sellers_edit_orders feature is available in this market" do
+          let(:sellers_edit_orders_feature) { true }
+          it "returns true" do
+            expect(subject.order_action_links?(user_order_context: context)).to eq true
+          end
+        end
+      end
+
+    end
+
+  end
+
+  describe ".add_order_items?" do
+    let(:context) {
+      UserOrderContext.new(
+        is_admin: is_admin,
+        is_market_manager: is_market_manager,
+        is_seller: is_seller,
+        sellers_edit_orders_feature: sellers_edit_orders_feature
+      )
+    }
+
+    let(:delivery_pending) {false}
+    let(:is_admin) {false}
+    let(:is_market_manager) { false }
+    let(:is_seller) {false}
+    let(:sellers_edit_orders_feature) { false }
+
+    context "delivery_pending false" do
+      it "returns false with no other interesting criteria set true" do
+        expect(subject.add_order_items?(user_order_context: context)).to eq false
+      end
+
+      context "for admins" do
+        let(:is_admin) { true }
+        it "returns true" do
+          expect(subject.add_order_items?(user_order_context: context)).to eq true
+        end
+      end
+
+      context "for market managers" do
+        let(:is_market_manager) { true }
+        it "returns true" do
+          expect(subject.add_order_items?(user_order_context: context)).to eq true
+        end
+      end
+
+      context "for sellers" do
+        let(:is_seller) { true }
+        context "when sellers_edit_orders feature is NOT available in this market" do
+          it "returns false" do
+            expect(subject.add_order_items?(user_order_context: context)).to eq false
+          end
+        end
+
+        context "when sellers_edit_orders feature is available in this market" do
+          let(:sellers_edit_orders_feature) { true }
+          it "returns true" do
+            expect(subject.add_order_items?(user_order_context: context)).to eq true
+          end
+        end
+      end
+    end
+
+    context "delivery_pending true" do
+      let(:delivery_pending) { true }
+
+      it "returns false with no other interesting conditions met" do
+        expect(subject.add_order_items?(user_order_context: context)).to eq false
+      end
+
+      context "for admins" do
+        let(:is_admin) { true }
+        it "returns true" do
+          expect(subject.add_order_items?(user_order_context: context)).to eq true
+        end
+      end
+
+      context "for market managers" do
+        let(:is_market_manager) { true }
+        it "returns true" do
+          expect(subject.add_order_items?(user_order_context: context)).to eq true
+        end
+      end
+
+      context "for sellers" do
+        let(:is_seller) { true }
+        context "when sellers_edit_orders feature is NOT available in this market" do
+          it "returns false" do
+            expect(subject.add_order_items?(user_order_context: context)).to eq false
+          end
+        end
+        context "when sellers_edit_orders feature is available in this market" do
+          let(:sellers_edit_orders_feature) { true }
+          it "returns true" do
+            expect(subject.add_order_items?(user_order_context: context)).to eq true
+          end
+        end
+      end
+
+    end
+  end
+
+  describe ".sellers_edit_orders_feature_available?" do
+    context "Market has no Plan" do
+      before do
+        market.update_column :plan_id, nil
+      end
+      it "returns false" do
+        expect(subject.sellers_edit_orders_feature_available?(market: market)).to eq false
+      end
+    end
+
+    context "Market Plan has :sellers_edit_orders set true" do
+      before do
+        plan.update sellers_edit_orders: true
+      end
+      it "returns true" do
+        expect(subject.sellers_edit_orders_feature_available?(market: market)).to eq true
+      end
+    end
+
+    context "Market Plan has :sellers_edit_orders set false" do
+      before do
+        plan.update sellers_edit_orders: false
+      end
+      it "returns false" do
+        expect(subject.sellers_edit_orders_feature_available?(market: market)).to eq false
       end
     end
 

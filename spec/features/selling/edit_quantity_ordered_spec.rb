@@ -36,17 +36,19 @@ describe "Edit quantity ordered" do
     let!(:user) { create(:user, organizations: [seller]) }
 
     before do
+      market.update sellers_edit_orders: true
       switch_to_subdomain(market.subdomain)
       sign_in_as(user)
       visit admin_order_path(order)
     end
 
-    it "should not show quantity ordered fields" do
-      expect(page).to_not have_css(".quantity-ordered")
+    it "should show quantity ordered editing fields" do
+      expect(page).to have_css(".quantity-ordered")
+      expect(page).to have_css(".quantity-delivered")
     end
 
-    it "should not have an update button" do
-      expect(page).to_not have_button("Update quantities")
+    it "should have an 'Update quantities' button" do
+      expect(page).to have_button("Update quantities")
     end
   end
 
