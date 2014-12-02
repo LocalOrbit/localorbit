@@ -1,6 +1,7 @@
 <%= render "shared/errors", { resource: order } %>
 
 <%= form_for order, url: admin_order_path(order.id), as: :order, method: :put do |f| %>
+  <% user_order_context = UserOrderContext.build(user:current_user, order:order) %>
 <div class="order-info">
   <h1>Order info for <%= order.order_number %></h1>
   <div class="order-info-date">Placed On: <strong><%= order.placed_at.strftime "%m/%d/%Y at %l:%M%p" %></strong></div>
@@ -96,26 +97,28 @@
           <% if !current_user.buyer_only? %>
             <th>Seller Payment</th>
           <% end %>
-          <% if current_user.market_manager? || current_user.admin? %>
+          <% if FeatureAccess.order_action_links?(user_order_context: user_order_context) %>
             <th></th>
           <% end %>
         </tr>
       </thead>
       <tbody>
         <%= f.fields_for :items do |item| %>
+          <% user_order_item_context = UserOrderItemContext.build(user: current_user, order_item: item.object) %>
         <tr class="order-item-row">
           <td class="name">
             <span class="product-ordered"><%= item.object.name %></span> <br />
             <span class="seller-name">from <%= item.object.product.organization.name %></span>
           </td>
           <td class="quantity">
-            <% if (current_user.admin? || current_user.market_manager?) && item.object.delivery_status == 'pending' %>
+            <%# if (current_user.admin? || current_user.market_manager?) && item.object.delivery_status == 'pending' %>
+            <% if FeatureAccess.edit_ordered_quantity?(user_order_item_context: user_order_item_context) %>
               <%= item.text_field :quantity, class: 'quantity-ordered' %>
             <% else %>
               <span class="quantity-ordered-ro"><%= item.object.quantity %></span>
             <% end %> <%= item.object.unit %> (Ordered)<br />
 
-            <% if current_user.admin? || current_user.market_manager? %>
+            <% if FeatureAccess.edit_delivered_quantity?(user_order_item_context: user_order_item_context) %>
               <%= item.text_field :quantity_delivered, value: Format.quantity(item.object.quantity_delivered), class: 'quantity-delivered' %>
             <% else %>
               <span class="quantity-delivered-ro"><%= Format.quantity item.object.quantity_delivered %></span>
@@ -132,9 +135,9 @@
           <% if !current_user.buyer_only? %>
             <td class="seller-status"><%= item.object.seller_payment_status %></td>
           <% end %>
-          <% if (current_user.market_manager? || current_user.admin?) %>
+          <% if FeatureAccess.order_action_links?(user_order_context: user_order_context) %>
             <td class="action-link">
-              <% if item.object.delivery_status == 'pending' %>
+              <% if FeatureAccess.delete_order_item?(user_order_item_context: user_order_item_context) %>
                 <%= item.hidden_field :_destroy %>
                 <%= link_to raw('<i class="font-icon icon-delete"></i>'), "#delete" %>
               <% end %>
@@ -144,7 +147,7 @@
         <% end %>
       </tbody>
 
-      <% if can_add_products_to_order?(order) && @show_add_items_form %>
+      <% if can_add_products_to_order?(order, user_order_context) && @show_add_items_form %>
         <tbody>
           <% @products_for_sale.each_category_with_products do |category, products| %>
             <tr><th colspan="9"><%= category.name %></th></tr>
@@ -183,10 +186,10 @@
     </table>
   </div>
 
-  <% if current_user.can_manage_market?(order.market) %>
+  <% if FeatureAccess.order_action_links?(user_order_context: user_order_context) %>
     <%= f.submit @show_add_items_form ? "Add items and Update quantities" : "Update quantities", class: 'pull-right btn btn--small mobile-block' %>
   <% end %>
-  <% if can_add_products_to_order?(order) && !@show_add_items_form %>
+  <% if can_add_products_to_order?(order, user_order_context) && !@show_add_items_form %>
     <%= f.submit "Add Items", class: 'pull-right btn btn--small mobile-block' %>
   <% end %>
 

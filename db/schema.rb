@@ -11,10 +11,11 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141118171231) do
+ActiveRecord::Schema.define(version: 20141128182121) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+  enable_extension "pg_stat_statements"
 
   create_table "audits", force: true do |t|
     t.integer  "auditable_id"
@@ -400,6 +401,7 @@ ActiveRecord::Schema.define(version: 20141118171231) do
     t.decimal  "plan_fee",                      precision: 7, scale: 2, default: 0.0,   null: false
     t.integer  "plan_bank_account_id"
     t.text     "store_closed_note"
+    t.boolean  "sellers_edit_orders",                                   default: false, null: false
   end
 
   add_index "markets", ["name"], name: "index_markets_on_name", using: :btree
@@ -602,17 +604,18 @@ ActiveRecord::Schema.define(version: 20141118171231) do
 
   create_table "plans", force: true do |t|
     t.string   "name"
-    t.boolean  "discount_codes",     default: false
-    t.boolean  "cross_selling",      default: false
-    t.boolean  "custom_branding",    default: false
-    t.boolean  "automatic_payments", default: false
+    t.boolean  "discount_codes",      default: false
+    t.boolean  "cross_selling",       default: false
+    t.boolean  "custom_branding",     default: false
+    t.boolean  "automatic_payments",  default: false
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.boolean  "promotions",         default: false, null: false
-    t.boolean  "advanced_pricing",   default: false, null: false
-    t.boolean  "advanced_inventory", default: false, null: false
-    t.boolean  "order_printables",   default: false, null: false
-    t.boolean  "packing_labels",     default: false, null: false
+    t.boolean  "promotions",          default: false, null: false
+    t.boolean  "advanced_pricing",    default: false, null: false
+    t.boolean  "advanced_inventory",  default: false, null: false
+    t.boolean  "order_printables",    default: false, null: false
+    t.boolean  "packing_labels",      default: false, null: false
+    t.boolean  "sellers_edit_orders", default: false, null: false
   end
 
   create_table "prices", force: true do |t|
