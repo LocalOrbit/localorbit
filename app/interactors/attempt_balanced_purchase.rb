@@ -1,11 +1,10 @@
 class AttemptBalancedPurchase
   include Interactor
-  include MoneyHelpers
 
   def perform
     if ["credit card", "ach"].include?(payment_method) && order
       begin
-        amount = amount_to_cents(cart.total) # USD in cents
+        amount = ::Financials::MoneyHelpers.amount_to_cents(cart.total) # USD in cents
         debit = create_debit(amount)
         record_payment(debit)
         update_order_payment_method

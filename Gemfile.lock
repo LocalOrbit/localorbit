@@ -1,4 +1,10 @@
 GIT
+  remote: git://github.com/dcrosby42/tabulator.git
+  revision: aa3d14ea734979580dae3c6878a83a6a80643678
+  specs:
+    tabulator (1.0.0)
+
+GIT
   remote: git://github.com/heroku/heroku.git
   revision: a276639f3f62e3152b71272425e1901e2777dcdb
   specs:
@@ -8,6 +14,12 @@ GIT
       netrc (~> 0.7.7)
       rest-client (= 1.6.7)
       rubyzip (= 0.9.9)
+
+GIT
+  remote: git://github.com/tomdalling/rschema.git
+  revision: 867ff1524a0791aaee6a0225d3e17b39cd7092ee
+  specs:
+    rschema (0.1.0)
 
 GIT
   remote: git://github.com/trestrantham/groupdate.git
@@ -72,6 +84,7 @@ GEM
       audited (= 4.0.0)
     awesome_nested_set (3.0.1)
       activerecord (>= 4.0.0, < 5)
+    awesome_print (1.2.0)
     aws-sdk (1.56.0)
       aws-sdk-v1 (= 1.56.0)
     aws-sdk-v1 (1.56.0)
@@ -458,6 +471,7 @@ DEPENDENCIES
   acts_as_geocodable
   audited-activerecord
   awesome_nested_set
+  awesome_print
   aws-sdk
   balanced (~> 0.7)
   capybara
@@ -517,6 +531,7 @@ DEPENDENCIES
   rails (~> 4.1.6.rc1)
   rails_12factor
   ransack
+  rschema!
   rspec-collection_matchers
   rspec-rails (~> 3.0)
   rubocop
@@ -526,6 +541,7 @@ DEPENDENCIES
   simpleidn
   spring
   spring-commands-rspec
+  tabulator!
   timecop
   uglifier (>= 1.3.0)
   underscore-rails
