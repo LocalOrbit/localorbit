@@ -70,7 +70,8 @@ class Admin::MarketsController < AdminController
       :allow_cross_sell,
       :auto_activate_organizations,
       :closed,
-      :store_closed_note
+      :store_closed_note,
+      :sellers_edit_orders
     ]
     if current_user.admin?
       columns.concat([

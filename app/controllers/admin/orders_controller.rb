@@ -75,7 +75,13 @@ class Admin::OrdersController < AdminController
   def setup_add_items_form(order)
     @show_add_items_form = true
     @order = SellerOrder.new(order, current_user)
-    @products_for_sale = ProductsForSale.new(order.delivery, order.organization, Cart.new(market: order.market))
+    user_order_context = UserOrderContext.build(user: current_user, order: @order)
+    if FeatureAccess.add_order_items?(user_order_context: user_order_context)
+      @products_for_sale = ProductsForSale.new(order.delivery, order.organization, Cart.new(market: order.market), {}, {seller: user_order_context.seller_organization })
+
+    else
+      @products_for_sale = ProductsForSale.new(order.delivery, order.organization, Cart.new(market: order.market))
+    end
   end
 
   # Builds a list of deliveries for potential changes
