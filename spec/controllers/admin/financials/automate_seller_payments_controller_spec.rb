@@ -4,6 +4,7 @@ describe Admin::Financials::AutomateSellerPaymentsController do
   include_context "the mini market"
 
   let(:seller_sections) { [double("Seller Section 1"), double("Seller Section 2")] }
+  let(:payment) { double "Payment", status: "pending" }
 
   before do
     switch_to_subdomain mini_market.subdomain
@@ -46,7 +47,8 @@ describe Admin::Financials::AutomateSellerPaymentsController do
 
     it "re-loads the SellerSections filtered by selected seller and orders then executes the payment" do
       expect_find_seller_sections
-      expect_pay_and_notify_seller
+      expect_pay_and_notify_seller.
+        and_return(payment)
 
       post :create, 
         seller_id: seller_id, 
@@ -56,6 +58,25 @@ describe Admin::Financials::AutomateSellerPaymentsController do
 
       expect(response).to redirect_to(admin_financials_automate_seller_payments_path)
       expect(flash.notice).to eq "Payment recorded"
+    end
+
+    context "when Payment comes back failed" do
+      let(:payment) { double "Payment", status: "failed" }
+      it "complains via an alert" do
+        expect_find_seller_sections
+        expect_pay_and_notify_seller.
+          and_return(payment)
+
+        expect_log_tagged_error "AutomateSellerPaymentsController Error", /^Payment status came back failed: #{Regexp.escape(payment.inspect)}/
+        post :create, 
+          seller_id: seller_id, 
+          order_ids: order_ids, 
+          bank_account_id: bank_account_id,
+          as_of_time: as_of_time
+
+        expect(response).to redirect_to(admin_financials_automate_seller_payments_path)
+        expect(flash.alert).to eq "Payment failed"
+      end
     end
 
     context "when exception occurs" do

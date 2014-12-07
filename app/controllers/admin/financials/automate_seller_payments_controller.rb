@@ -25,12 +25,20 @@ module Admin::Financials
       )
       seller_section = seller_sections.first
 
-      ::Financials::SellerPayments::Processor.pay_and_notify_seller(
+      payment = ::Financials::SellerPayments::Processor.pay_and_notify_seller(
         seller_section: seller_section,
         bank_account_id: bank_account_id
       )
 
-      redirect_to({action: :index}, {notice: "Payment recorded"})
+      if payment.status == 'failed'
+        logger.tagged("AutomateSellerPaymentsController Error") do
+          logger.error("Payment status came back failed: #{payment.inspect}")
+        end
+        redirect_to({action: :index}, {alert: "Payment failed"})
+      else
+        redirect_to({action: :index}, {notice: "Payment recorded"})
+      end
+
 
     rescue Exception => e
       # Payment failures are serious.  Let's be sure to capture these failures
