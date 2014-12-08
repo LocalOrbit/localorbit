@@ -1,6 +1,5 @@
 class UpdateBalancedPurchase
   include Interactor
-  include MoneyHelpers
 
   def perform
     if ["credit card", "ach"].include?(order.payment_method)
@@ -43,7 +42,7 @@ class UpdateBalancedPurchase
         context[:type] = payment.payment_method
 
         refund_amount = [remaining_amount, payment.unrefunded_amount].min
-        refund = payment.balanced_transaction.refund(amount: amount_to_cents(refund_amount))
+        refund = payment.balanced_transaction.refund(amount: ::Financials::MoneyHelpers.amount_to_cents(refund_amount))
 
         payment.increment!(:refunded_amount, refund_amount)
         record_payment("order refund", -refund_amount, refund, payment.bank_account)
@@ -65,7 +64,7 @@ class UpdateBalancedPurchase
     context[:type] = payment.payment_method
 
     new_debit = account.bankable.balanced_customer.debit(
-      amount: amount_to_cents(amount),
+      amount: ::Financials::MoneyHelpers.amount_to_cents(amount),
       source_uri: account.balanced_uri,
       description: "#{order.market.name} purchase",
       appears_on_statement_as: order.market.on_statement_as,

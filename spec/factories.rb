@@ -21,6 +21,14 @@ FactoryGirl.define do
       expiration_year nil  # do not want
     end
 
+    trait :savings do
+      bank_name        "LMCU"
+      account_type     "savings"
+      sequence(:last_four) {|n| "#{'%04d' % n}"}
+      expiration_month nil # do not want
+      expiration_year nil  # do not want
+    end
+
     trait :verified do
       verified true
     end

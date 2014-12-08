@@ -60,6 +60,8 @@ gem "ransack"
 gem "simpleidn"
 
 gem "constructor"
+gem "tabulator", github: "dcrosby42/tabulator"
+gem "rschema", github: "tomdalling/rschema"
 
 # wkhtmltopdf versions are a mess. 0.12.1 is stable but not well supported by gems
 # See https://github.com/zakird/wkhtmltopdf_binary_gem/issues/13
@@ -86,6 +88,7 @@ group :development, :test do
   gem "pry-remote"
   gem "launchy"
   gem "guard-rspec"
+  gem "awesome_print"
 end
 
 group :test do

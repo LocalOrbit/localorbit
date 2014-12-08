@@ -8,8 +8,12 @@ class BankAccount < ActiveRecord::Base
 
   validate :account_is_unique_to_bankable
 
-  scope :debitable_bank_accounts, -> { visible.where(verified: true, account_type: %w(savings checking)) }
+  scope :verified, -> { where(verified: true) }
+  scope :unverified, -> { where(verified: false) }
+  scope :debitable_bank_accounts, -> { visible.verified.where(account_type: %w(savings checking)) }
+  scope :creditable_bank_accounts, -> { visible.where(account_type: %w(savings checking)) }
   scope :credit_cards, -> { visible.where.not(account_type: %w(savings checking)) }
+  
 
   def balanced_verification
     return nil if verified? || balanced_verification_uri.nil?
