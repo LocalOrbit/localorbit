@@ -70,6 +70,7 @@ class Order < ActiveRecord::Base
   scope :due_between, lambda {|range| invoiced.where(invoice_due_date: range) }
   scope :clean_payment_records, -> { where(arel_table[:placed_at].gt(Time.parse("2014-01-01"))) }
   scope :for_seller, -> (user) { orders_for_seller(user) }
+  scope :on_automate_plan, -> { joins(market: :plan).where(plans: {name: 'Automate'}) }
 
   scope_accessible :sort, method: :for_sort, ignore_blank: true
   scope_accessible :payment_status
@@ -92,10 +93,10 @@ class Order < ActiveRecord::Base
     where.not(id: OrderPayment.market_paid_orders_subselect(payment_type, type))
   end
 
-  def self.payable
+  def self.payable(current_time:Time.current)
     # This is a slightly fuzzy match right now.
     # TODO: Implement delivery_end on deliveries for greater accuracy
-    two_days_ago = 48.hours.ago
+    two_days_ago = current_time - 48.hours
 
     deliver_on = Delivery.arel_table[:deliver_on]
     buyer_deliver_on = Delivery.arel_table[:buyer_deliver_on]
@@ -131,18 +132,23 @@ class Order < ActiveRecord::Base
       preload(:items, :market)
   end
 
-  def self.payable_to_sellers
+  def self.payable_to_sellers(current_time:Time.current, seller_organization_id:nil)
     subselect = "SELECT 1 FROM payments
       INNER JOIN order_payments ON order_payments.order_id = orders.id AND order_payments.payment_id = payments.id
       WHERE payments.payee_type = ? AND payments.payee_id = products.organization_id"
 
-    fully_delivered.payable.
+    res = fully_delivered.payable(current_time: current_time).
       select("orders.*, products.organization_id as seller_id").
       joins(items: :product).
       where("NOT EXISTS(#{subselect})", "Organization").
       group("seller_id"). # orders.id is already present from fully_delivered
       order(:order_number).
       includes(:market)
+    if seller_organization_id.present?
+      res = res.where(products: { organization_id: seller_organization_id })
+    end
+
+    res
   end
 
   def self.payable_lo_fees

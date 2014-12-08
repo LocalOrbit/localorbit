@@ -1,0 +1,1 @@
+require 'constructor_struct'
