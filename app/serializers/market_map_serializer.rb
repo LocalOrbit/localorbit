@@ -12,7 +12,7 @@ class MarketMapSerializer < ActiveModel::Serializer
   end
 
   def plan_name
-    object.plan.name
+    object.plan.try(:name)
   end
 
   def market_path

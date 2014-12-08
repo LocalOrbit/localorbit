@@ -326,6 +326,66 @@ module Dom
           node.all("td").last
         end
       end
+
+      module Automate
+        class SellerSection < Domino
+          selector ".seller-payment"
+
+          attribute :seller_name
+
+          def orders
+            node.all("tr.order-row").map do |tr|
+              SellerOrderRow.new(tr)
+            end
+          end
+
+          def totals
+            SellerPaymentTotals.new(node.find("tr.totals"))
+          end
+
+          def select_bank_account(name)
+            node.select name, from: "Bank account"
+          end
+
+          def pay_button
+            node.find("input[type='submit'][value='Pay #{seller_name}']")
+          end
+        end
+
+        class SellerOrderRow < Domino
+          selector ".seller-payment tr.order-row"
+
+          attribute :order_number
+          attribute :net_sales
+          attribute :gross_sales
+          attribute :market_fees
+          attribute :transaction_fees
+          attribute :payment_processing_fees
+          attribute :discounts
+          attribute :delivery_status
+          attribute :buyer_payment_status
+          attribute :seller_payment_status
+          attribute :payment_method
+
+          public :initialize
+        end
+
+        class SellerPaymentTotals < Domino
+          selector ".seller-payment tr.totals"
+          attribute :net_sales
+          attribute :gross_sales
+          attribute :market_fees
+          attribute :transaction_fees
+          attribute :payment_processing_fees
+          attribute :discounts
+          public :initialize # So we can construct these ourselves
+
+          def net_sales_as_decimal
+            net_sales[1..-1].to_d
+          end
+        end
+
+      end
     end
 
     class DiscountRow < Domino
