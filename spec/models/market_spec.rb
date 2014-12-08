@@ -535,4 +535,11 @@ describe Market do
       end
     end
   end
+
+  describe "#local_orbit_seller_and_market_fee_fraction" do
+    let(:market) { create(:market, local_orbit_seller_fee: "1.0".to_d, local_orbit_market_fee: "2.0".to_d) }
+    it "returns a combination of seller and market fees due LO divided by 100" do
+      expect(market.local_orbit_seller_and_market_fee_fraction).to eq "0.03".to_d
+    end
+  end
 end

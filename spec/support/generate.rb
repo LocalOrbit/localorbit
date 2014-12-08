@@ -10,11 +10,12 @@ module Generate
     paid_with = opts[:paid_with]
     delivered = opts[:delivered]
     num_order_items = opts[:items] || 1
+    plan_sym = opts[:plan] || :automate
 
     #
     # Market
     #
-    plan = FactoryGirl.create(:plan, :automate)
+    plan = FactoryGirl.create(:plan, plan_sym)
     market = FactoryGirl.create(:market, plan: plan)
 
     #

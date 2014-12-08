@@ -19,6 +19,15 @@ describe SellerOrder do
   let!(:order)    { create(:order, delivery: delivery, items: [item1, item2, item3, item4], organization: buyer, market: market) }
   let!(:user)     { create(:user, :admin) }
 
+
+  describe "#seller and #seller_id" do
+    it "provides Seller org and the id of the seller org" do
+      seller_order = SellerOrder.new(order, seller1)
+      expect(seller_order.seller).to eq seller1
+      expect(seller_order.seller_id).to eq seller1.id
+    end
+  end
+
   describe "#items" do
     it "loads the right items for seller 1 organization" do
       seller_order = SellerOrder.new(order, seller1)
@@ -109,4 +118,5 @@ describe SellerOrder do
       it { should eq("contested, partially delivered") }
     end
   end
+
 end

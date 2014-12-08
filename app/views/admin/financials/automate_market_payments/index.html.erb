@@ -1,0 +1,56 @@
+<%= render "admin/financials/admin_header" %>
+
+<div class="sub-header stickable">
+  <div class="l-constraint">
+    <h1>Make Payments to Markets on Automate Plan</h1>
+  </div>
+</div>
+
+<% @market_sections.each do |section| %>
+  <div class="market-payment" id="market_section_<%= section[:market_id] %>">
+  <%= form_tag [:admin, :financials, :automate_market_payments] do %>
+    <%= hidden_field_tag :market_id, section[:market_id] %>
+    <%= hidden_field_tag :as_of_time, @as_of_time %>
+    <h2 class="market-name"><%= section[:market_name] %></h2>
+    <table>
+      <tr class="table-header">
+        <th></th><%# selection checkboxes go in this column %>
+        <th>Order Number</th>
+        <th>Owed</th>
+        <th>Order Total</th>
+        <th>Delivery Fee</th>
+        <th>Market Fee</th>
+      </tr>
+      <% section[:order_rows].each do |order_row| %>
+        <% order_totals = order_row[:order_totals] %>
+        <tr class="order-row" id="market_order_<%= order_row[:order_id] %>}">
+          <td><%= check_box_tag "order_ids[]", order_row[:order_id], true %></td>
+          <td class="order-number"><%= order_row[:order_number] %></td>
+          <td class="owed"><%= number_to_currency(order_totals[:owed]) %></td>
+          <td class="order-total"><%= number_to_currency(order_totals[:order_total]) %></td>
+          <td class="delivery-fee"><%= number_to_currency(order_totals[:delivery_fee]) %></td>
+          <td class="market-fee"><%= number_to_currency(order_totals[:market_fee]) %></td>
+        </tr>
+      <% end %>
+      <tr class="totals">
+        <td></td>
+        <td>Total</td>
+        <% totals = section[:market_totals] %>
+        <td class="owed"><%= number_to_currency(totals[:owed]) %></td>
+        <td class="order-total"><%= number_to_currency(totals[:order_total]) %></td>
+        <td class="delivery-fee"><%= number_to_currency(totals[:delivery_fee]) %></td>
+        <td class="market-fee"><%= number_to_currency(totals[:market_fee]) %></td>
+      </tr>
+    </table>
+    <div>
+      <% if (accounts = section[:payable_accounts_for_select]).any? %>
+        <%= label_tag :bank_account_id %>
+        <%= select_tag :bank_account_id, options_for_select(accounts) %>
+        <%= submit_tag "Pay #{section[:market_name]}", class: 'btn--small' %>
+      <% else %>
+        <span class="warning">Market has not added a bank account.</span>
+      <% end %>
+    </div>
+  <% end %>
+</div>
+<% end %>
