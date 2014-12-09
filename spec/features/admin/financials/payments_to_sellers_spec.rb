@@ -7,6 +7,8 @@ feature "Payments to Sellers on plans with Automatic Payments", :js, :focus  do
   let(:order_time) { Time.zone.parse("May 20, 2014 2:00 PM") }
   let(:deliver_time) { Time.zone.parse("May 25, 2014 3:30 PM") }
   let(:now_time) { Time.zone.parse("May 30, 2014 1:15 AM") }
+  let!(:m0) { Generate.market_with_orders }
+  let!(:m00) { Generate.market_with_orders }
 
   let!(:m1) { Generate.market_with_orders(
                 order_time: order_time, 
@@ -96,14 +98,14 @@ feature "Payments to Sellers on plans with Automatic Payments", :js, :focus  do
 
       expected_payment_amount_str = section.totals.net_sales
       expected_payment_amount = section.totals.net_sales_as_decimal
-      expected_bank_account = BankAccount.find(8) # see above 
+      expected_bank_account = seller_bank_account(seller_a, "North Bank")
       expected_orders = section.orders.map do |o|
         Order.find_by_order_number(o.order_number)
       end
       expected_market = seller_a.markets.first
 
       # Pay!
-      section.select_bank_account seller_bank_account(seller_a, "North Bank").display_name
+      section.select_bank_account expected_bank_account.display_name
       section.pay_button.click
 
       expect(page).to have_content("Payment recorded")
