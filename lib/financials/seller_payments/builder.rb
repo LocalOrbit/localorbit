@@ -7,19 +7,15 @@ module Financials
         def build_seller_section(seller_organization:, seller_orders:)
           order_rows = seller_orders.map { |o| build_order_row(o) }
           seller_totals = crunch_totals(order_rows.map { |r| r[:order_totals] })
-          accounts = seller_organization.
-            bank_accounts.
-            verified.
-            creditable_bank_accounts.
-            sort_by(&:display_name).
-            map do |acct|
-              [acct.display_name, acct.id]
-            end
+          
+          account_options = Financials::BankAccounts::Builder.options_for_select(
+            bank_accounts: Financials::BankAccounts::Finder.creditable_bank_accounts(
+              bank_accounts: seller_organization.bank_accounts))
 
           seller_section = {
             seller_id: seller_organization.id,
             seller_name: seller_organization.name,
-            payable_accounts_for_select: accounts,
+            payable_accounts_for_select: account_options,
             order_rows: order_rows,
             seller_totals: seller_totals
           }
@@ -35,14 +31,7 @@ module Financials
 
         def crunch_totals(totals_array)
           valid [Totals], totals_array
-
-          keys = Totals.keys
-          crunched = totals_array.inject(default_totals) do |total, t|
-            keys.each do |k|
-              total[k] += t[k]
-            end
-            total
-          end
+          crunched = DataCalc.sums_of_keys(totals_array, default: default_totals)
           return valid(Totals, crunched)
         end
 
@@ -92,7 +81,7 @@ module Financials
         end
 
         def default_totals
-          zero =  "0.0".to_d
+          zero =  0.to_d
           t = {
             gross_sales:             zero,
             net_sales:               zero,

@@ -93,7 +93,8 @@ describe Financials::SellerPayments::Builder do
         seller_orders: seller_orders
       )
       expected_order_rows = seller_orders.map { |so| builder.build_order_row(so) }
-      expected_seller_totals = builder.crunch_totals(expected_order_rows.map { |r| r[:order_totals] })
+      # expected_seller_totals = builder.crunch_totals(expected_order_rows.map { |r| r[:order_totals] })
+      expected_seller_totals = DataCalc.sums_of_keys(expected_order_rows.map { |r| r[:order_totals] })
       expected_accounts = seller.
         bank_accounts.
         verified.
