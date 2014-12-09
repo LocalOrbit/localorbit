@@ -26,25 +26,13 @@ describe Financials::MarketPayments::Builder do
       t = builder.build_order_totals(order)
       expect_valid_schema Financials::MarketPayments::Schema::Totals, t
       expect(t).to eq({
-        order_total: "15.4".to_d,
+        order_total: "14.2".to_d, # 15.4 - 1.2 discount
         market_fee:   "0.3".to_d,
         delivery_fee:"7.84".to_d,
         owed:        "8.14".to_d,
       })
     end
 
-    it "provides a blended answer if the Order contains no items" do
-      # not super realistic, just checking how the code works:
-      order.items.destroy_all
-      t = builder.build_order_totals(order)
-      expect_valid_schema Financials::MarketPayments::Schema::Totals, t
-      expect(t).to eq({
-        order_total:  "0.0".to_d,
-        market_fee:   "0.0".to_d,
-        delivery_fee:"7.84".to_d,
-        owed:        "7.84".to_d,
-      })
-    end
   end
 
   describe ".build_order_row" do

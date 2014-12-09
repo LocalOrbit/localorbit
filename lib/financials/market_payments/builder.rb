@@ -41,8 +41,8 @@ module Financials
           market_share = 1 - lo_fee_fraction
 
           totals = {}
-          totals[:order_total]  = DataCalc.sum_of_field(order.items, :gross_total)
-          totals[:market_fee]   = DataCalc.sum_of_field(order.items, :market_seller_fee)
+          totals[:order_total]  = order.total_cost #DataCalc.sum_of_field(order.items, :gross_total, default: 0.to_d)
+          totals[:market_fee]   = DataCalc.sum_of_field(order.items, :market_seller_fee, default: 0.to_d)
           totals[:delivery_fee] = order.delivery_fees * market_share
           totals[:owed]         = totals[:delivery_fee] + totals[:market_fee]
 

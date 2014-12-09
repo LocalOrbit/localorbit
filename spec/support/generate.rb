@@ -11,12 +11,20 @@ module Generate
     delivered = opts[:delivered]
     num_order_items = opts[:items] || 1
     plan_sym = opts[:plan] || :automate
+    num_market_bank_accounts = opts[:num_market_bank_accounts] || 1
 
     #
     # Market
     #
     plan = FactoryGirl.create(:plan, plan_sym)
     market = FactoryGirl.create(:market, plan: plan)
+    num_market_bank_accounts.times do 
+      FactoryGirl.create(:bank_account, :checking, :verified,
+                        name: "MarqetBanc", bankable: market)
+    end
+    market_manager = FactoryGirl.create(:user, name: "Mr Mgr #{market.id}", managed_markets: [market])
+    
+    
 
     #
     # Buyers

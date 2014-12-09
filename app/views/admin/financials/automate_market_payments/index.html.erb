@@ -27,7 +27,7 @@
           <td><%= check_box_tag "order_ids[]", order_row[:order_id], true %></td>
           <td class="order-number"><%= order_row[:order_number] %></td>
           <td class="owed"><%= number_to_currency(order_totals[:owed]) %></td>
-          <td class="order-total"><%= number_to_currency(order_totals[:order_total]) %></td>
+          <td class="the-order-total"><%= number_to_currency(order_totals[:order_total]) %></td><%# goofy css class to avoid another def of order-total that wreaks havoc on us %>
           <td class="delivery-fee"><%= number_to_currency(order_totals[:delivery_fee]) %></td>
           <td class="market-fee"><%= number_to_currency(order_totals[:market_fee]) %></td>
         </tr>
@@ -37,7 +37,7 @@
         <td>Total</td>
         <% totals = section[:market_totals] %>
         <td class="owed"><%= number_to_currency(totals[:owed]) %></td>
-        <td class="order-total"><%= number_to_currency(totals[:order_total]) %></td>
+        <td class="the-order-total"><%= number_to_currency(totals[:order_total]) %></td>
         <td class="delivery-fee"><%= number_to_currency(totals[:delivery_fee]) %></td>
         <td class="market-fee"><%= number_to_currency(totals[:market_fee]) %></td>
       </tr>

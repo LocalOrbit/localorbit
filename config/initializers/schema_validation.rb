@@ -7,3 +7,4 @@ else
   SchemaValidation.validation = true
 end
   
+require 'rschema_ext/either'

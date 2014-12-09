@@ -29,20 +29,6 @@ module Financials
           end
 
           return SchemaValidation.validate!([MarketSection], market_sections)
-
-          # seller_orders = find_payable_seller_orders(as_of: as_of, seller_id: seller_id, order_id: order_id)
-          #
-          # # Group by seller_id,market_id  # .... market_id really? is important?
-          # seller_sections = seller_orders.group_by(&:seller_id).map do |_, sos| 
-          #   ::Financials::SellerPayments::Builder.build_seller_section( 
-          #     seller_organization: sos.first.seller,
-          #     seller_orders: sos
-          #   )
-          # end.sort_by do |section|
-          #   section[:seller_name]
-          # end
-          #
-          # return SchemaValidation.validate!([MarketSection], [])
         end
       end
     end

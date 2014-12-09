@@ -60,18 +60,42 @@ namespace :production_copy do
     restore_cleansed_dump_to_target
   end
 
-  desc "Assuming a local clenased prod dump, overwrite the local dev db with the copy"
-  task stomp_dev: :environment do
+  desc "Copy prod database over top of your local dev database"
+  task stomp_dev_db: :environment do
+    if ENV["REALLY"] != "YES"
+      puts "THIS COMMAND REPLACES YOUR LOCAL DEV DB"
+      puts "If you're certain, retype your command like this:"
+      puts
+      puts ">>  rake production_copy:stomp_dev_db REALLY=YES"
+      puts
+      puts "Aborting."
+      exit 1
+    end
+
     include CloneProductionHelper
-    if ENV['ALREADY_DOWNLOADED'] == 'YES'
-      puts "Skipping the part where we backup and cleanse the prod db."
-    else
+    if ENV['DOWNLOAD_NEW'] == 'YES'
       puts "Backup and cleanse the prod db..."
       copy_production_to_local
       connect_production_copy
       cleanse_production_copy
+    else
+      puts "Not downloading a prod backup, assuming that's already been done, if not, retry with DOWNLOAD_NEW=YES"
     end
     stomp_local_dev_with_cleansed_prod_copy
+  end
+
+  desc "Copy prod S3 bucket assets to local dev environment"
+  task stomp_dev_uploads: :environment do
+    if ENV["REALLY"] != "YES"
+      puts "THIS COMMAND REPLACES YOUR LOCAL DEV UPLOAD ASSETS"
+      puts "If you're certain, retype your command like this:"
+      puts
+      puts ">>  rake production_copy:stomp_dev_uploads REALLY=YES"
+      puts
+      puts "Aborting."
+      exit 1
+    end
+    include CloneProductionHelper
     sync_prod_uploads_to_local_dev
   end
 
@@ -207,16 +231,6 @@ module CloneProductionHelper
   end
 
   def stomp_local_dev_with_cleansed_prod_copy
-
-    if ENV["REALLY"] != "YES"
-      puts "THIS COMMAND CRUSHES YOUR LOCAL DEV DB"
-      puts "If you're certain, retype your command like this:"
-      puts
-      puts ">>  rake production_copy:stomp_dev REALLY=YES"
-      puts
-      puts "Aborting."
-      exit 1
-    end
 
     if !File.exists?(cleansed_dump_file)
       puts "Can't find a production dump file at '#{cleansed_dump_file}'."

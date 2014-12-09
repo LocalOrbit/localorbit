@@ -24,14 +24,6 @@ module Financials
         order_rows:                  [ OrderRow ],
         market_totals:               Totals
       }
-      
-      # PaymentInfo = {
-      #   payee:        Organization,
-      #   bank_account: BankAccount,
-      #   amount:       Money,
-      #   market:       Market,
-      #   orders:       [Order]
-      # }
     end
   end
 end

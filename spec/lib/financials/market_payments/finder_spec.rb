@@ -108,23 +108,44 @@ describe Financials::MarketPayments::Finder do
     end
 
     context "(state-based test)" do
-      # let(:sellers) { (m1[:seller_organizations] + m2[:seller_organizations]).sort_by(&:name) }
-      # let(:results) { finder.find_seller_payment_sections(as_of: now_time) }
+      let(:markets) { [m1[:market], m2[:market]] }
+      let(:results) { finder.find_market_payment_sections(as_of: now_time) }
 
-      it "creates an array of SellerSections for each Seller based on their payable orders" do
-        pending
-        # expected_sections = sellers.map do |seller|
-        #   orders = Order.for_seller(seller.users.first).sort_by(&:id)
-        #   seller_orders = orders.map do |o| SellerOrder.new(o, seller) end
-        #   builder.build_seller_section(
-        #     seller_organization: seller, 
-        #     seller_orders: seller_orders)
-        # end.sort_by do |s| s[:seller_name] end
-        #
-        # expect(results).to eq expected_sections
+      it "creates an array of MarketSections for each Market based on their payable orders" do
+        expected_sections = markets.map do |market|
+          orders = Order.where(market:market).order(:order_number)
+          builder.build_market_section(
+            market: market, 
+            orders: orders)
+        end.sort_by do |s| s[:market_name] end
+        
+        # Check the full result:
+        expect(results).to eq expected_sections
+
+        # A litle sanity checking on our expectations:
+        results.each do |section|
+          expect(section[:order_rows]).not_to be_empty, "Sanity check failed: Section for #{section[:market_name]} has no OrderRows"
+          expect(section[:payable_accounts_for_select]).not_to be_empty, "Sanity check failed: Section for #{section[:market_name]} has no payable bank accounts"
+        end
       end
 
       context "for a specific Market and subset of Orders" do
+        let(:markets) { [m1[:market], m2[:market]] }
+        let(:market) { m1[:market] }
+        # Grab just the first two:
+        let(:expected_orders) { 
+          Order.
+            where(market:market).
+            order(:order_number).
+            to_a[0..1]
+        }
+
+        let(:results) { 
+          finder.find_market_payment_sections(
+            as_of: now_time,
+            market_id: market.id,
+            order_id: expected_orders.map(&:id))
+        }
         # let(:seller) { m1[:seller_organizations].first }
         # let(:user) { seller.users.first }
         # let(:expected_orders) { [Order.for_seller(user).last] }
@@ -137,13 +158,11 @@ describe Financials::MarketPayments::Finder do
         # }
 
         it "returns only the specified orders for the given Seller" do
-          pending
-          # expected_section = builder.build_seller_section(
-          #   seller_organization: seller, 
-          #   seller_orders: expected_orders.map do |o| SellerOrder.new(o, seller) end
-          # )
-          #
-          # expect(results).to eq [expected_section]
+          expected_section = builder.build_market_section(
+              market: market, 
+              orders: expected_orders)
+          
+          expect(results).to eq [expected_section]
         end
       end
 
