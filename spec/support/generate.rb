@@ -2,6 +2,7 @@ module Generate
   extend self
 
   def market_with_orders(opts={})
+    market_name = opts[:market_name]
     num_orders = opts[:num_orders] || 2
     num_sellers = opts[:num_sellers] || num_orders
     num_products = opts[:num_products] || num_sellers
@@ -17,7 +18,11 @@ module Generate
     # Market
     #
     plan = FactoryGirl.create(:plan, plan_sym)
-    market = FactoryGirl.create(:market, plan: plan)
+    if market_name
+      market = FactoryGirl.create(:market, plan: plan, name: market_name)
+    else
+      market = FactoryGirl.create(:market, plan: plan)
+    end
     num_market_bank_accounts.times do 
       FactoryGirl.create(:bank_account, :checking, :verified,
                         name: "MarqetBanc", bankable: market)

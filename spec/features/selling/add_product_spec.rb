@@ -496,7 +496,7 @@ describe "Adding a product", chosen_js: true do
       end
     end
 
-    it "maintains delivery schedule changes on error", :js do
+    it "maintains delivery schedule changes on error", :js, :shaky do
       select org2.name, from: "Seller Organization"
       expect(page).to have_checked_field(tuesday_schedule_description, disabled: true)
 
@@ -504,10 +504,11 @@ describe "Adding a product", chosen_js: true do
       Dom::Admin::ProductDelivery.find_by_weekday("Tuesdays").uncheck!
 
       click_button "Save and Continue"
-
-      expect(page).to have_unchecked_field("Make product available on all market delivery dates")
-      expect(Dom::Admin::ProductDelivery.find_by_weekday("Mondays")).to be_checked
-      expect(Dom::Admin::ProductDelivery.find_by_weekday("Tuesdays")).to_not be_checked
+      patiently(20) do
+        expect(page).to have_unchecked_field("Make product available on all market delivery dates")
+        expect(Dom::Admin::ProductDelivery.find_by_weekday("Mondays")).to be_checked
+        expect(Dom::Admin::ProductDelivery.find_by_weekday("Tuesdays")).to_not be_checked
+      end
     end
 
     it "does not offer non-selling organizations as options for the Organization select" do
