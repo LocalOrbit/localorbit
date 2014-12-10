@@ -1,6 +1,8 @@
 namespace :admin do
   desc "Cleanup failed payments and order history"
   task :cleanup_payments do
-    exec "heroku run rails runner tools/admin/cleanup_payments.rb --app localorbit-dev3"
+    # deploy_env = "localorbit-production"
+    deploy_env = "localorbit-dev3"
+    exec "heroku run rails runner tools/admin/cleanup_refunds.rb --app #{deploy_env}"
   end
 end
