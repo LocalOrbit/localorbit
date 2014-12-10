@@ -53,14 +53,14 @@ describe Admin::Financials::AutomateMarketPaymentsController do
       { status: :ok, payment: double("Market Fee Payment") }
     }
     let(:failing_market_fee_results) { 
-      { status: :oopsie, message: "Things went awry", payment: double("Failed Market Fee Payment") }
+      { status: :payment_failed, message: "Things went awry", payment: double("Failed Market Fee Payment") }
     }
 
     let(:delivery_fee_results) { 
       { status: :ok, payment: double("Delivery Fee Payment") }
     }
     let(:failing_delivery_fee_results) { 
-      { status: :dangit, message: "He chose... poorly.", payment: double("Failed Delivery Fee Payment") }
+      { status: :payment_failed, message: "He chose... poorly.", payment: double("Failed Delivery Fee Payment") }
     }
 
     def expect_find_market_sections
@@ -101,6 +101,44 @@ describe Admin::Financials::AutomateMarketPaymentsController do
       expect(flash.notice).to eq "Payment recorded"
     end
 
+    context "when PaymentProcesor returns skipped payment results for market fees" do
+      let(:skipped_market_fee_results) { 
+        { status: :payment_skipped, message: "Nothing to pay", payment_info: double("pmt info") }
+      }
+
+      let(:delivery_fee_results) { 
+        { status: :ok, payment: double("Delivery Fee Payment") }
+      }
+      let(:skipped_delivery_fee_results) { 
+        { status: :payment_skipped, message: "More nothing", payment_info: double("pmt info2") }
+      }
+
+      it "logs, and quietly provides success message" do
+        expect_find_market_sections
+
+        expect_pay_and_notify(market_fees_to_market).
+          and_return(skipped_market_fee_results)
+
+        expect_pay_and_notify(delivery_fees_to_market).
+          and_return(skipped_delivery_fee_results)
+
+        begin_log_capture
+
+        post_create
+
+        log_data = end_log_capture
+
+        expect(response).to redirect_to(admin_financials_automate_market_payments_path)
+        expect(flash.notice).to eq "Payment recorded"
+
+        expect(log_data).to match(/payment_skipped/)
+        expect(log_data).to match(/Nothing to pay/)
+        expect(log_data).to match(/pmt info/)
+        expect(log_data).to match(/More nothing/)
+        expect(log_data).to match(/pmt info2/)
+      end
+    end
+
     context "when PaymentProcesor returns failure results for market fees" do
       it "complains via an alert" do
         expect_find_market_sections
@@ -121,7 +159,7 @@ describe Admin::Financials::AutomateMarketPaymentsController do
         expect(flash.alert).to eq "Payment failed"
 
         expect(log_data).to match(/PAYMENT_ERROR - #{controller.class.name}/)
-        expect(log_data).to match(/Result status: :oopsie/)
+        expect(log_data).to match(/Result status: :payment_failed/)
         expect(log_data).to match(/Things went awry/)
         expect(log_data).to match(/#{Regexp.escape(failing_market_fee_results[:payment].inspect)}/)
       end

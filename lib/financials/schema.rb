@@ -27,9 +27,9 @@ module Financials
 
 
     PaymentInfo = {
+      amount:       Money,
       payee:        RSchema::DSL.either(Organization,Market),
       bank_account: BankAccount,
-      amount:       Money,
       market:       Market,
       orders:       [Order]
     }

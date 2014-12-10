@@ -10,6 +10,16 @@ module Financials
           payment_config[:payment_info_converter],
           inputs)
 
+        if payment_info[:amount] == 0
+          res = {
+            status: :payment_skipped,
+            message: "Payment skipped due to 0 amount",
+            payment_info: payment_info
+          }
+          return SchemaValidation.validate!(Result, res)
+        end
+
+            
         payment_attrs = payment_config[:payment_base_attrs].
           merge(payment_info)
 
@@ -41,10 +51,23 @@ module Financials
     end
     
     # Description of the result structure from .pay_and_notify
-    Result = RSchema.schema {{
-      :status      => enum([:ok, :payment_failed]),
-      _?(:message) => String,
-      :payment     => maybe(Payment)
-    }}
+    Result = RSchema.schema {
+      either(
+        {
+          :status  => enum([:ok]),
+          :payment => Payment,
+        },
+        {
+          :status      => enum([:payment_failed]),
+          :message     => String,
+          :payment     => Payment,
+        },
+        {
+          :status       => enum([:payment_skipped]),
+          :message      => String,
+          :payment_info => Financials::Schema::PaymentInfo,
+        }
+      )
+    }
   end
 end

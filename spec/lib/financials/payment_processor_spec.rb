@@ -48,6 +48,32 @@ describe Financials::PaymentProcessor do
       expect(ret).to eq({ status: :ok, payment: payment })
     end
 
+    context "when payment amount is 0" do
+      before do
+        payment_info[:amount] = 0.to_d
+      end
+
+      it "skips the payment" do
+        expect(payment_info_converter).to receive(payment_config[:payment_info_converter]).
+          with(converter_inputs).
+          and_return(payment_info)
+
+        expect(payment_executor).not_to receive(:execute_credit)
+
+        ret = processor.pay_and_notify(
+          payment_config: payment_config,
+          inputs: converter_inputs
+        )
+
+        expect_valid_schema Financials::PaymentProcessor::Result, ret
+        expect(ret).to eq({ 
+          status: :payment_skipped, 
+          payment_info: payment_info,
+          message: "Payment skipped due to 0 amount"
+        })
+      end
+    end
+
     context "when payment executor fails" do
       let(:payment) { Payment.new(status:"failed") }
 

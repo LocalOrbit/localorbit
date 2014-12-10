@@ -75,12 +75,19 @@ module Admin::Financials
     end
 
     def handle_results(results)
-      if results[:status] != :ok
+      case results[:status]
+      when :payment_failed
         logger.tagged("PAYMENT_ERROR - #{self.class.name}") do
           logger.error("Result status: #{results[:status].inspect}, #{results[:message]}")
           logger.error("Payment: #{results[:payment].inspect}")
         end
         flash_payment_failed
+
+      when :payment_skipped
+        logger.tagged("PAYMENT_SKIPPED - #{self.class.name}") do
+          logger.error("Result status: #{results[:status].inspect}, #{results[:message]}")
+          logger.error("PaymentInfo: #{results[:payment_info].inspect}")
+        end
       end
     end
   end
