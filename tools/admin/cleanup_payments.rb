@@ -2,6 +2,12 @@ module Admin
   class CleanupPayments
     class << self
       def run
+        puts "\n\n\n\n"
+        puts "***************************************************************"
+        puts
+        puts "Connected to LocalOrbit environment '#{Figaro.env.deploy_env}'"
+        puts
+        puts "***************************************************************"
         puts "Clean up Payments and Order History"
         puts "(Type quit to leave.)"
         alive = true
@@ -21,41 +27,6 @@ module Admin
       end
 
       private
-      def attstring(obj, *keys)
-        str = keys.map do |key| 
-          val = obj.send(key)
-          "#{key}: #{val}"
-        end.join(", ")
-        str
-      end
-
-      def help_failed_refund(balanced_uri)
-        payment = Payment.find_by(balanced_uri: balanced_uri)
-        order = payment.orders.first
-
-        puts "Order id: #{attstring(order,:id, :order_number,:created_at,:placed_at)}"
-        puts "Original payment: #{attstring(payment,:id,:amount,:payment_type,:payment_method,:status,:balanced_uri, :created_at)}"
-        print_events(payment)
-        puts "All payments for order #{order.order_number}:"
-        order.payments.each do |pmt|
-          puts "  #{attstring pmt,:id,:amount,:payment_type,:payment_method,:status,:balanced_uri,:created_at}"
-        end
-        order
-      end
-
-      def print_events(payment)
-        payment = payment.is_a?(Payment) ? payment : Payment.find(payment)
-        if payment and (trans = payment.balanced_transaction)
-          events = trans.events.sort_by(&:occurred_at)
-          puts "Payment #{payment.id} events:"
-          events.each do |e|
-            puts "  #{attstring(e, :type, :occurred_at)}"
-          end
-        else
-          puts "No Balanced transaction for Payment #{payment.id}"
-        end
-        nil
-      end
 
       def remove_failed_refunds(o)
         order =if o.is_a?(Order)
@@ -64,7 +35,7 @@ module Admin
                  Order.where(id: o).first || Order.find_by_order_number(o)
                end
         if order.nil?
-          puts "Couldn't find Order with id or order_number '#{order}'"
+          puts "Couldn't find Order with id or order_number '#{o}'"
           return nil
         end
 
@@ -95,6 +66,43 @@ module Admin
           puts "Payment #{pmt.id} removed."
         end
       end
+
+      def help_failed_refund(balanced_uri)
+        payment = Payment.find_by(balanced_uri: balanced_uri)
+        order = payment.orders.first
+
+        puts "Order id: #{attstring(order,:id, :order_number,:created_at,:placed_at)}"
+        puts "Original payment: #{attstring(payment,:id,:amount,:payment_type,:payment_method,:status,:balanced_uri, :created_at)}"
+        print_events(payment)
+        puts "All payments for order #{order.order_number}:"
+        order.payments.each do |pmt|
+          puts "  #{attstring pmt,:id,:amount,:payment_type,:payment_method,:status,:balanced_uri,:created_at}"
+        end
+        order
+      end
+
+      def attstring(obj, *keys)
+        str = keys.map do |key| 
+          val = obj.send(key)
+          "#{key}: #{val}"
+        end.join(", ")
+        str
+      end
+
+      def print_events(payment)
+        payment = payment.is_a?(Payment) ? payment : Payment.find(payment)
+        if payment and (trans = payment.balanced_transaction)
+          events = trans.events.sort_by(&:occurred_at)
+          puts "Payment #{payment.id} events:"
+          events.each do |e|
+            puts "  #{attstring(e, :type, :occurred_at)}"
+          end
+        else
+          puts "No Balanced transaction for Payment #{payment.id}"
+        end
+        nil
+      end
+
 
       def print_buyer_payments(order)
         order = order.is_a?(Order) ? order : Order.find(order)
