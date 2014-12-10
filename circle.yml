@@ -10,7 +10,7 @@ checkout:
     - cp config/application.yml{.example,}
 test:
   override:
-    - "bundle exec rspec --tag @focus":
+    - "bundle exec rspec --tag ~@wip":
         parallel: true
         files:
           - spec/**/*_spec.rb
