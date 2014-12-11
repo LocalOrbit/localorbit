@@ -93,7 +93,8 @@ class Order < ActiveRecord::Base
     where.not(id: OrderPayment.market_paid_orders_subselect(payment_type, type))
   end
 
-  def self.payable(current_time:Time.current)
+  def self.payable(current_time:nil)
+    current_time ||= Time.current
     # This is a slightly fuzzy match right now.
     # TODO: Implement delivery_end on deliveries for greater accuracy
     two_days_ago = current_time - 48.hours
@@ -155,15 +156,34 @@ class Order < ActiveRecord::Base
     fully_delivered.purchase_orders.payable.not_paid_for("lo fee", :payer)
   end
 
-  def self.payable_market_fees
-    # TODO: figure out how to make sure the orders haven't changed
-    automate_market_ids = Market.joins(:plan).where(plans: {name: "Automate"}).pluck(:id)
-
-    fully_delivered.used_lo_payment_processing.payable.not_paid_for("hub fee").
-      # orders before this were poorly tracked
-      where("orders.placed_at > ?", Time.parse("2014-01-01")).
-      where(market_id: automate_market_ids).
+  # 
+  # Scope: For Markets on Automate plan, get all 
+  # Orders with payable market fees.
+  # Options:
+  #   current_time: Delivery must be earlier than 48 hrs before this time. 
+  #                 Default: Time.current
+  #   market_id: If present, narrow the results based on one or more Market ids.  
+  #              Default: nil (include all Markets on Automate)
+  #   order_id: If present, narrow the results to one or more specific Order ids.  
+  #             Default: nil (nil all matching orders).
+  def self.payable_market_fees(current_time: Time.current, market_id: nil, order_id: nil)
+    res = clean_payment_records.
+      on_automate_plan.
+      fully_delivered.
+      used_lo_payment_processing.
+      payable(current_time: current_time).
+      not_paid_for("hub fee").
       order(:order_number)
+
+    if market_id.present?
+      res = res.where(market_id: market_id)
+    end
+
+    if order_id.present?
+      res = res.where(id: order_id)
+    end
+
+    res
   end
 
   def self.arel_column_for_sort(column_name)

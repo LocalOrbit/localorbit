@@ -101,6 +101,11 @@ class Market < ActiveRecord::Base
     BigDecimal("1") - (local_orbit_seller_fee + market_seller_fee + [ach_seller_fee, credit_card_seller_fee].max) / 100
   end
 
+  # LO's % take as a true decimal: eg, if local_orbit_seller_fee = 2.0 and local_orbit_market_fee  = 1.0 then this method returns 0.03 as a BigDecimal
+  def local_orbit_seller_and_market_fee_fraction
+    (local_orbit_seller_fee + local_orbit_market_fee) / 100
+  end
+
   def products
     Product.where(organization_id: organizations.pluck(:id))
   end

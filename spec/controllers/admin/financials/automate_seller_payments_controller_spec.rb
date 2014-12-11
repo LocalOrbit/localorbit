@@ -11,6 +11,21 @@ describe Admin::Financials::AutomateSellerPaymentsController do
     sign_in aaron
   end
 
+  def begin_log_capture
+    require 'stringio'
+    @log_io = StringIO.new
+    l = ActiveSupport::Logger.new(@log_io)
+    @logger2 = ActiveSupport::TaggedLogging.new(l)
+    @saved_controller_logger = controller.logger
+    controller.logger = @logger2
+  end
+
+  def end_log_capture
+    controller.logger = @saved_controller_logger
+    data = @log_io.string
+    return data
+  end
+
   describe "#index" do
     it "provides all potentially payable sellers by assigning SellerSections" do
       search_as_of = nil
@@ -31,6 +46,15 @@ describe Admin::Financials::AutomateSellerPaymentsController do
     let (:seller_id) { "300" }
     let (:as_of_time) { Time.zone.parse("Nov 16 2014 12:30pm").to_s }
 
+    let(:net_to_seller) { ::Financials::PaymentMetadata::payment_config_for(:net_to_seller) }
+
+    let(:results) { 
+      { status: :ok, payment: double("Seller payment") }
+    }
+    let(:failing_results) { 
+      { status: :oopsie, message: "Things went awry", payment: double("Failed Seller Payment") }
+    }
+
     def expect_find_seller_sections
       expect(::Financials::SellerPayments::Finder).to receive(:find_seller_payment_sections).
         with(as_of: Time.zone.parse(as_of_time),
@@ -39,43 +63,53 @@ describe Admin::Financials::AutomateSellerPaymentsController do
         and_return(seller_sections)
     end
 
-    def expect_pay_and_notify_seller
-      expect(::Financials::SellerPayments::Processor).to receive(:pay_and_notify_seller).
-        with(seller_section: seller_sections[0],
-             bank_account_id: bank_account_id.to_i)
+    def expect_pay_and_notify
+      expect(::Financials::PaymentProcessor).to receive(:pay_and_notify).
+        with(payment_config: net_to_seller,
+             inputs: { seller_section: seller_sections.first,
+             bank_account_id: bank_account_id.to_i})
     end
 
-    it "re-loads the SellerSections filtered by selected seller and orders then executes the payment" do
-      expect_find_seller_sections
-      expect_pay_and_notify_seller.
-        and_return(payment)
-
+    def post_create
       post :create, 
         seller_id: seller_id, 
         order_ids: order_ids, 
         bank_account_id: bank_account_id,
         as_of_time: as_of_time
+    end
+
+    it "re-loads the SellerSections filtered by selected seller and orders then executes the payment" do
+      expect_find_seller_sections
+
+      expect_pay_and_notify.
+        and_return(results)
+
+      post_create
 
       expect(response).to redirect_to(admin_financials_automate_seller_payments_path)
       expect(flash.notice).to eq "Payment recorded"
     end
 
-    context "when Payment comes back failed" do
-      let(:payment) { double "Payment", status: "failed" }
+    context "when results comes back failed" do
       it "complains via an alert" do
         expect_find_seller_sections
-        expect_pay_and_notify_seller.
-          and_return(payment)
 
-        expect_log_tagged_error "AutomateSellerPaymentsController Error", /^Payment status came back failed: #{Regexp.escape(payment.inspect)}/
-        post :create, 
-          seller_id: seller_id, 
-          order_ids: order_ids, 
-          bank_account_id: bank_account_id,
-          as_of_time: as_of_time
+        expect_pay_and_notify.
+          and_return(failing_results)
+
+        begin_log_capture
+
+        post_create
+
+        log_data = end_log_capture
 
         expect(response).to redirect_to(admin_financials_automate_seller_payments_path)
         expect(flash.alert).to eq "Payment failed"
+
+        expect(log_data).to match(/PAYMENT_ERROR - #{controller.class.name}/)
+        expect(log_data).to match(/Result status: :oopsie/)
+        expect(log_data).to match(/Things went awry/)
+        expect(log_data).to match(/#{Regexp.escape(failing_results[:payment].inspect)}/)
       end
     end
 
@@ -83,17 +117,21 @@ describe Admin::Financials::AutomateSellerPaymentsController do
       
       it "logs a tagged error and flashes an error" do
         expect_find_seller_sections
-        expect_pay_and_notify_seller.and_raise("Kerbloof")
 
-        expect_log_tagged_error "AutomateSellerPaymentsController Error", /^While paying\/notifying Sellers on Automate plan/
-        post :create, 
-          seller_id: seller_id, 
-          order_ids: order_ids, 
-          bank_account_id: bank_account_id,
-          as_of_time: as_of_time
+        expect_pay_and_notify.
+          and_raise("CHOOM")
+
+        begin_log_capture
+
+        post_create
+
+        log_data = end_log_capture
 
         expect(response).to redirect_to(admin_financials_automate_seller_payments_path)
-        expect(flash.notice).to eq "Payment failed"
+        expect(flash.alert).to eq "Payment failed"
+
+        expect(log_data).to match(/PAYMENT_ERROR - #{controller.class.name}/)
+        expect(log_data).to match(/While paying\/notifying Sellers on Automate plan: CHOOM/)
       end
     end
 

@@ -91,7 +91,7 @@ describe "A Market Manager", :vcr do
         market_manager.managed_markets << market2
       end
 
-      it "creates an organization with valid information", :js do
+      it "creates an organization with valid information", :js, :shaky do
         visit "/admin/organizations"
         click_link "Add Organization"
 

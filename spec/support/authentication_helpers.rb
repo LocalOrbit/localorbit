@@ -7,9 +7,11 @@ module AuthenticationHelpers
       post user_session_path, user: {email: user.email, password: password}
     when :feature
       visit new_user_session_path
-      fill_in "Email", with: user.email
-      fill_in "Password", with: password
-      click_button "Sign In"
+      patiently do
+        fill_in "Email", with: user.email
+        fill_in "Password", with: password
+        click_button "Sign In"
+      end
     end
 
     @@data[:user] = user
