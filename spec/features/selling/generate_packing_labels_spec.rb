@@ -26,7 +26,9 @@ context "Downloading packing labels", js:true do
 
   def generate_packing_labels
     click_on "Labels"
-    expect(page).to have_text("Generating packing labels...")
+    patiently do
+      expect(page).to have_text("Generating packing labels...")
+    end
     patiently do
       uid = current_path[1..-1]
       order_printably = PackingLabelsPrintable.find_by(pdf_uid: uid)
