@@ -47,9 +47,10 @@ $ ->
 
   $('#submit_preview_selected').click ->
     numSelected = $('.invoice-row input:checked').length
-    # Eg: Intercom('trackEvent', 'batch-generated-invoice-pdfs', {num_invoices: numSelected})
     submitInvoiceList "preview-selected-invoices", newTab: true
 
+  $('#submit_mark_selected_invoiced').click ->
+    submitInvoiceList "mark-selected-invoiced"
 
   parseSearchString = () ->
     list = window.location.search.substr(1).split("&")

@@ -239,6 +239,10 @@ module Dom
         def resend_invoice
           node.click_link("Resend Invoice")
         end
+
+        def mark_invoiced
+          node.click_link("Mark Invoiced")
+        end
       end
 
       class MoneyOut < Domino
