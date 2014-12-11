@@ -38,7 +38,7 @@ module Financials
         payment_info = {
           payee:        seller_org,
           bank_account: bank_account,
-          amount:       amount,
+          amount:       amount.round(2),
           market:       market,
           orders:       orders,
         }
@@ -77,7 +77,7 @@ module Financials
           bank_account: bank_account,
           market:       market,
           orders:       orders,
-          amount:       amount
+          amount:       amount.round(2)
         }
         return SchemaValidation.validate!(Financials::Schema::PaymentInfo, payment_info)
       end

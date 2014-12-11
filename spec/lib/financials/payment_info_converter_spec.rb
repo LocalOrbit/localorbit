@@ -11,6 +11,7 @@ describe Financials::PaymentInfoConverter do
                 items: 3,
                 paid_with: "credit card",
                 delivered: "delivered",
+                delivery_fee_percent: 13.to_d
   )}
 
   #
@@ -39,7 +40,7 @@ describe Financials::PaymentInfoConverter do
       )
       expect(payment_info[:payee]).to eq(seller)
       expect(payment_info[:bank_account]).to eq(BankAccount.find(bank_account_id))
-      expect(payment_info[:amount]).to eq(total_amount)
+      expect(payment_info[:amount]).to eq(total_amount.round(2))
       expect(payment_info[:market]).to eq(market)
       expect(payment_info[:orders]).to contain_exactly(*Order.find(order_ids))
     end
@@ -68,14 +69,13 @@ describe Financials::PaymentInfoConverter do
   end
 
   #
-  # Payments to markets
+  # Payments to markets (market fees, delivery fees)
   #
 
   {
     market_hub_fee_payment_info: :market_fee,
     market_delivery_fee_payment_info: :delivery_fee,
   }.each do |(method_sym, payment_total_key)|
-    # payment_total_key = :market_fee
 
     describe ".#{method_sym}" do
       let(:market) { m1[:market] }
@@ -98,7 +98,7 @@ describe Financials::PaymentInfoConverter do
         )
         expect(payment_info[:payee]).to eq(market)
         expect(payment_info[:bank_account]).to eq(BankAccount.find(bank_account_id))
-        expect(payment_info[:amount]).to eq(total_amount)
+        expect(payment_info[:amount]).to eq(total_amount.round(2))
         expect(payment_info[:market]).to eq(market)
         expect(payment_info[:orders]).to contain_exactly(*Order.find(order_ids))
       end

@@ -9,7 +9,12 @@ module Financials
             current_time: as_of,
             market_id: market_id,
             order_id: order_id
-          ).preload(:items, :market)
+          ).
+            preload(:items, :market).
+            each.select do |order|
+              # Only return Orders for which there are fees owed to their market
+              Financials::MarketPayments::Calc.fee_owed_to_market(order) > 0
+            end
         end
         
         # Returns an Array of Financials::SellerPayments::Schema::SellerSection 

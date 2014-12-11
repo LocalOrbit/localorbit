@@ -40,6 +40,37 @@ describe Financials::MarketPayments::Finder do
       end
     end
 
+    context "for orders which have nothing owed to their market" do
+      let(:excluded_orders) {[
+        m1[:orders][0],
+        m1[:orders][2], 
+        m2[:orders][0],
+        m2[:orders][1],
+      ]}
+
+      let(:included_orders) {[
+        m1[:orders][1],
+        m1[:orders][3], 
+      ]}
+
+      let(:results) { finder.find_orders_with_payable_market_fees(as_of: now_time) }
+
+      before do
+        # Remove market and delivery fees for the orders and items we want to exclude:
+        excluded_orders.each do |order|
+          order.items.each do |oi|
+            oi.update(market_seller_fee: 0)
+          end
+          order.update_column(:delivery_fees, 0)
+        end
+      end
+
+      it "excludes orders with no market or delivery fees" do
+        expect(results).to contain_exactly(*included_orders)
+      end
+    end
+
+
     context "for a specific market" do
       let(:market) { m2[:market] }
       let(:expected_orders) { m2[:orders] }

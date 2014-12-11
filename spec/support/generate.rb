@@ -13,6 +13,7 @@ module Generate
     num_order_items = opts[:items] || 1
     plan_sym = opts[:plan] || :automate
     num_market_bank_accounts = opts[:num_market_bank_accounts] || 1
+    delivery_fee_percent = opts[:delivery_fee_percent] || 0
 
     #
     # Market
@@ -111,7 +112,10 @@ module Generate
         order_items << order_item
       end
 
-      order = FactoryGirl.create(:order, items: order_items, organization: buyer_org, market: market)
+      delivery_schedule = FactoryGirl.create(:delivery_schedule, :percent_fee, fee: delivery_fee_percent)
+      delivery = FactoryGirl.create(:delivery, delivery_schedule: delivery_schedule)
+
+      order = FactoryGirl.create(:order, items: order_items, organization: buyer_org, market: market, delivery: delivery)
       if order_time
         order.update_column(:created_at, order_time)
         order.update_column(:updated_at, order_time)
@@ -120,6 +124,7 @@ module Generate
       if deliver_time
         order.delivery.update(deliver_on: deliver_time, buyer_deliver_on: deliver_time)
       end
+      
       if paid_with
         order.update(payment_status: "paid", payment_method: paid_with)
       end

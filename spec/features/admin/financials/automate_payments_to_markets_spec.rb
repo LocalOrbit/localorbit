@@ -17,21 +17,24 @@ feature "Payment of hub and delivery fees to Markets on the Automate plan", :js 
                 paid_with: "credit card",
                 delivered: "delivered",
                 num_orders: 4,
-                num_sellers: 2
+                num_sellers: 2,
+                delivery_fee_percent: 12.to_d
   )}
   let!(:m2) { Generate.market_with_orders(
                 market_name: "Too Hoss",
                 order_time: order_time, 
                 deliver_time: deliver_time,
                 paid_with: "credit card",
-                delivered: "delivered"
+                delivered: "delivered",
+                delivery_fee_percent: 17.to_d
   )}
   # This market's orders will be too late to be considered payable:
   let!(:m3) { Generate.market_with_orders(
                 order_time: now_time,
                 deliver_time: now_time+1.day,
                 paid_with: "credit card",
-                delivered: "delivered"
+                delivered: "delivered",
+                delivery_fee_percent: 55.to_d
   )}
 
 
@@ -51,21 +54,19 @@ feature "Payment of hub and delivery fees to Markets on the Automate plan", :js 
 
       market_b = m2[:market]
       order_b = m2[:orders][0]
-      binding.pry
-
 
       verify_market_payment_section(
         market: market_b,
         market_name: market_b.name, 
         orders: [
           :order_number,        :owed,   :order_total, :delivery_fee, :market_fee,
-          order_b.order_number, "$0.10", "$0.70",      "$0.00",       "$0.10", 
+          order_b.order_number, "$0.29", "$0.89",      "$0.19",       "$0.10", 
           # ...there are more rows but we're not looking at all 
         ], 
         totals: {
-          owed: "$0.20",
-          order_total: "$1.40",
-          delivery_fee: "$0.00",
+          owed: "$0.57",
+          order_total: "$1.78",
+          delivery_fee: "$0.37",
           market_fee: "$0.20",
         },
         bank_accounts: [
@@ -78,14 +79,14 @@ feature "Payment of hub and delivery fees to Markets on the Automate plan", :js 
         market_name: market_a.name,
         orders: [
           :order_number,         :owed,   :order_total, :delivery_fee, :market_fee,
-          order_a2.order_number, "$0.10", "$0.70",      "$0.00",       "$0.10", 
-          order_a4.order_number, "$0.10", "$0.70",      "$0.00",       "$0.10", 
+          order_a2.order_number, "$0.23", "$0.83",      "$0.13",       "$0.10", 
+          order_a4.order_number, "$0.23", "$0.83",      "$0.13",       "$0.10", 
           # ...there are more rows but we're not looking at all 
         ], 
         totals: {
-          owed: "$0.40",
-          order_total: "$2.80",
-          delivery_fee: "$0.00",
+          owed: "$0.91",
+          order_total: "$3.32",
+          delivery_fee: "$0.51",
           market_fee: "$0.40",
         },
         bank_accounts: [
@@ -100,13 +101,13 @@ feature "Payment of hub and delivery fees to Markets on the Automate plan", :js 
 
       # The section on the page for the first Market:
       section = section_for(market_a.name)
+
       # Expected payment / owed amounts to see:
-      # TODO FIX THESE ASSIGNMENTS:
-      #   - expected Market Fee amounts
-      #   - expected Delivery Fee amounts
-      raise "FINISH FIXING THIS UP"
-      expected_payment_amount_str = section.totals.net_sales
-      expected_payment_amount = section.totals.net_sales_as_decimal
+      expected_market_fee_str = section.totals.market_fee
+      expected_market_fee = section.totals.market_fee_as_decimal
+
+      expected_delivery_fee_str = section.totals.delivery_fee
+      expected_delivery_fee = section.totals.delivery_fee_as_decimal
 
       expected_bank_account = market_bank_account(market_a, "LMCU")
       expected_orders = section.orders.map do |o|
@@ -134,8 +135,10 @@ feature "Payment of hub and delivery fees to Markets on the Automate plan", :js 
           raise "Captured unexpected payment: #{h.inspect}"
         end
       end
+
       # Make sure we got em both:
       expect(payments.keys).to contain_exactly(:market_fee_payment, :delivery_fee_payment), "Didn't capture the payments we wanted to see"
+      # expect(payments.keys).to contain_exactly(:market_fee_payment), "Didn't capture the payments we wanted to see"
         
       market_fee_payment = payments[:market_fee_payment]
       delivery_fee_payment = payments[:delivery_fee_payment]
@@ -147,7 +150,7 @@ feature "Payment of hub and delivery fees to Markets on the Automate plan", :js 
       expect(market_fee_payment.payment_method).to eq "ach"
       expect(market_fee_payment.status).to eq "pending"
       expect(market_fee_payment.payee).to eq expected_market
-      expect(market_fee_payment.amount).to eq expected_payment_amount
+      expect(market_fee_payment.amount).to eq expected_market_fee
       expect(market_fee_payment.bank_account).to eq expected_bank_account
       expect(market_fee_payment.market).to eq expected_market
       expect(market_fee_payment.orders).to contain_exactly(*expected_orders)
@@ -155,11 +158,11 @@ feature "Payment of hub and delivery fees to Markets on the Automate plan", :js 
       # Check notification for Market Fee Payment
       mail = ActionMailer::Base.deliveries[0] # Market Fee Payment is probably first.
       expect(mail).to be, "No Market Fee email sent"
-      expect(mail.to).to eq market_a.users.map(&:email)
+      expect(mail.to).to eq market_a.managers.map(&:email)
       expect(mail.subject).to eq "You Have Received a Payment"
       expect(mail.body).to match(/You have received a payment/i)
       expect(mail.body).to match(/payment was sent to.*#{market_a.name}/i)
-      expect(mail.body).to match(/#{Regexp.escape(expected_payment_amount_str)}/)
+      expect(mail.body).to match(/#{Regexp.escape(expected_market_fee_str)}/)
       expect(mail.body).to match(/Visit #{expected_market.name}/)
       
       #
@@ -169,7 +172,8 @@ feature "Payment of hub and delivery fees to Markets on the Automate plan", :js 
       expect(delivery_fee_payment.payment_method).to eq "ach"
       expect(delivery_fee_payment.status).to eq "pending"
       expect(delivery_fee_payment.payee).to eq expected_market
-      expect(delivery_fee_payment.amount).to eq expected_payment_amount
+
+      expect(delivery_fee_payment.amount).to eq expected_delivery_fee
       expect(delivery_fee_payment.bank_account).to eq expected_bank_account
       expect(delivery_fee_payment.market).to eq expected_market
       expect(delivery_fee_payment.orders).to contain_exactly(*expected_orders)
@@ -177,11 +181,11 @@ feature "Payment of hub and delivery fees to Markets on the Automate plan", :js 
       # Check notification for Market Fee Payment
       mail = ActionMailer::Base.deliveries[1] # Market Fee Payment is probably first.
       expect(mail).to be, "No Delivery Fee email sent"
-      expect(mail.to).to eq market_a.users.map(&:email)
+      expect(mail.to).to eq market_a.managers.map(&:email)
       expect(mail.subject).to eq "You Have Received a Payment"
       expect(mail.body).to match(/You have received a payment/i)
       expect(mail.body).to match(/payment was sent to.*#{market_a.name}/i)
-      expect(mail.body).to match(/#{Regexp.escape(expected_payment_amount_str)}/)
+      expect(mail.body).to match(/#{Regexp.escape(expected_delivery_fee_str)}/)
       expect(mail.body).to match(/Visit #{expected_market.name}/)
 
     rescue Exception => e
@@ -245,10 +249,5 @@ feature "Payment of hub and delivery fees to Markets on the Automate plan", :js 
     Financials::PaymentExecutor.previously_captured_payments
   end
 
-  # XXX
-  # def only_captured_payment
-  #   expect(captured_payments.length).to eq(1), "Should be 1 and only 1 captured payment. Instead there are #{captured_payments.length}: #{captured_payments.inspect}"
-  #   captured_payments.first
-  # end
 end
 

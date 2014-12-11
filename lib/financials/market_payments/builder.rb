@@ -36,14 +36,10 @@ module Financials
         end
 
         def build_order_totals(order)
-          market = order.market
-          lo_fee_fraction = market.local_orbit_seller_and_market_fee_fraction
-          market_share = 1 - lo_fee_fraction
-
           totals = {}
-          totals[:order_total]  = order.total_cost #DataCalc.sum_of_field(order.items, :gross_total, default: 0.to_d)
-          totals[:market_fee]   = DataCalc.sum_of_field(order.items, :market_seller_fee, default: 0.to_d)
-          totals[:delivery_fee] = order.delivery_fees * market_share
+          totals[:order_total]  = order.total_cost
+          totals[:market_fee]   = Financials::MarketPayments::Calc.market_fee(order)
+          totals[:delivery_fee] = Financials::MarketPayments::Calc.market_delivery_fee(order)
           totals[:owed]         = totals[:delivery_fee] + totals[:market_fee]
 
           return valid(Totals, totals)
