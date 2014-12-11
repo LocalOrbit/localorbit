@@ -63,6 +63,7 @@ Rails.application.routes.draw do
 
       scope path: :admin do
         resources :market_payments,  only: [:index, :create]
+        resources :automate_market_payments,  only: [:index, :create]
         resources :service_payments, only: [:index, :create]
         resources :lo_payments,      only: [:index, :create]
         resources :automate_seller_payments,  only: [:index, :create]

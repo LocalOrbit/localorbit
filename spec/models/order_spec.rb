@@ -574,4 +574,74 @@ describe Order do
       end
     end
   end
+
+  describe ".on_automate_plan scope" do
+    let(:m1) { Generate.market_with_orders(plan: :grow) }
+    let(:m2) { Generate.market_with_orders(plan: :automate) }
+
+    it "returns orders only for markets on the Automate plan" do
+      expect(Order.on_automate_plan).to contain_exactly(*m2[:orders])
+    end
+
+  end
+
+  describe ".payable and .payable_to_sellers" do
+    let(:order_time) { Time.zone.parse("May 20, 2014 2:00 PM") }
+    let(:deliver_time) { Time.zone.parse("May 25, 2014 3:30 PM") }
+    let(:now_time) { Time.zone.parse("May 30, 2014 1:15 AM") }
+
+
+    let!(:m1) { Generate.market_with_orders(
+                  order_time: order_time, 
+                  deliver_time: deliver_time,
+                  paid_with: "credit card",
+                  delivered: "delivered",
+    )}
+
+    let(:expected_order_ids) { m1[:orders].map(&:id) }
+
+    describe ".payable" do
+      def payable_order_ids(*args)
+        Order.payable(*args).map(&:id)
+      end
+
+      it "considers the given time a 48 hours cutoff for payability" do
+        expect(payable_order_ids(current_time: deliver_time)).to be_empty
+        expect(payable_order_ids(current_time: deliver_time+2.days)).to be_empty
+        expect(payable_order_ids(current_time: deliver_time+2.days+1.hour)).to contain_exactly(*expected_order_ids)
+        expect(payable_order_ids).to contain_exactly(*expected_order_ids)
+        expect(payable_order_ids(current_time: now_time)).to contain_exactly(*expected_order_ids)
+        expect(payable_order_ids(current_time: nil)).to contain_exactly(*expected_order_ids)
+      end
+    end
+
+    describe ".payable_to_sellers" do
+      def payable_order_ids(*args)
+        Order.payable_to_sellers(*args).map(&:id)
+      end
+
+      it "considers the given time a 48 hours cutoff for payability" do
+        expect(payable_order_ids(current_time: deliver_time)).to be_empty
+        expect(payable_order_ids(current_time: deliver_time+2.days)).to be_empty
+        expect(payable_order_ids(current_time: deliver_time+2.days+1.hour)).to contain_exactly(*expected_order_ids)
+        expect(payable_order_ids).to contain_exactly(*expected_order_ids)
+        expect(payable_order_ids(current_time: now_time)).to contain_exactly(*expected_order_ids)
+      end
+
+      it "filters results based on optional seller id" do
+        # NOTE: Being lazy. The assumptions about the seller and order(s) involved are coincidental based
+        # on assumed knowledge of how Generate.market_with_orders creates data. (This isn't the same as order-of-insertion reliance  on the db, but almost as naughty.)
+        # I just happen to know that function creates Orders and Sellers in tandem, 1 apiece given the above params.
+        # Upshot: be thoughtful when updating this stuff.
+        seller_id = m1[:seller_organizations].first # the first seller ...
+        seller_order_ids = [ m1[:orders].first.id ] # ...will correspond to the first order
+        expect(payable_order_ids(current_time: now_time, seller_organization_id: seller_id)).to contain_exactly(*seller_order_ids)
+
+        seller_id = m1[:seller_organizations].last # the last seller...
+        seller_order_ids = [ m1[:orders].last.id ] # ...will correspond to the last order
+        expect(payable_order_ids(current_time: now_time, seller_organization_id: seller_id)).to contain_exactly(*seller_order_ids)
+      end
+    end
+  end
+
 end
