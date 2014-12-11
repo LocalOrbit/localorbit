@@ -1,6 +1,6 @@
 require "spec_helper"
 
-feature "Payments to Sellers on plans with Automatic Payments", :js, :focus  do
+feature "Payments of net sales to Sellers on Automate plan", :js do
 
   include_context "the mini market"
   

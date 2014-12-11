@@ -11,6 +11,7 @@ describe Financials::PaymentExecutor do
                          bank_account: bank_account, 
                          market: market, 
                          amount: "42.42".to_d) }
+  let(:payment_attributes) { double("Payment attributes") }
 
   let(:description) { "some descript" }
 
@@ -32,6 +33,22 @@ describe Financials::PaymentExecutor do
         expect_credit
         ret = executor.execute_credit(payment: payment, description: description)
         expect(ret).to eq payment
+      end
+    end
+
+    context "with payment_attributs and description" do
+      it "uses the Balanced API to credit the Payment's targeted bank account" do
+        expect_find_balanced_bank_account
+        expect_credit
+        expect_create_new_payment_from_attributes
+        ret = executor.execute_credit(payment_attributes: payment_attributes, description: description)
+        expect(ret).to eq payment
+      end
+    end
+
+    context "omitting both :payment and :payment_attributes" do
+      it "raises an error" do
+        expect { executor.execute_credit(description: description) }.to raise_error(/:payment or :payment_attributes/)
       end
     end
 
@@ -139,6 +156,10 @@ describe Financials::PaymentExecutor do
            description: description).
       and_return(credit)
     expect(payment).to receive(:update_column).with(:balanced_uri, credit.uri).and_return(payment)
+  end
+
+  def expect_create_new_payment_from_attributes
+    expect(Payment).to receive(:create!).with(payment_attributes).and_return(payment)
   end
 
   class ErrorWithCategory < StandardError
