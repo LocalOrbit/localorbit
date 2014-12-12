@@ -27,7 +27,7 @@ module Admin::Financials
           CreateInvoice.perform(order: order,
                                 request: RequestUrlPresenter.new(request))
         end
-        message = "Invoice sent for order #{"number".pluralize(@orders.size)} #{@orders.map(&:order_number).sort.join(", ")}. Invoices can be downloaded on the Enter Receipts page"
+        message = mk_order_number_message what: "Invoice sent", orders: @orders
         redirect_to admin_financials_invoices_path, notice: message
 
       when "preview-selected-invoices"
@@ -40,6 +40,22 @@ module Admin::Financials
           redirect_to admin_financials_batch_invoice_path(batch_invoice)
         else
           redirect_to admin_financials_invoices_path, alert: context.message
+        end
+
+      when "mark-selected-invoiced"
+        if @orders.empty?
+          redirect_to admin_financials_invoices_path, alert: "Please select one or more invoices to mark"
+        else
+          results = Orders::Invoicing.mark_orders_invoiced(orders: @orders)
+          if results[:status] == :failed
+            logger.tagged("INVOICE_ERROR - #{self.class.name}") do
+              logger.error("While marking orders as invoiced, something didn't go perfectly.\n#{results.inspect}")
+            end
+          end
+        
+          message = mk_order_number_message what: "Invoice marked", orders: @orders
+
+          redirect_to admin_financials_invoices_path, notice: message
         end
 
       when nil, ""
@@ -93,6 +109,10 @@ module Admin::Financials
 
       redirect_path = params[:redirect_to] || admin_financials_invoices_path
       redirect_to redirect_path, notice: resend_message(@orders)
+    end
+
+    def mk_order_number_message(what:,orders:)
+      "#{what} for order #{"number".pluralize(orders.size)} #{orders.map(&:order_number).sort.join(", ")}. Invoices can be downloaded on the Enter Receipts page"
     end
   end
 end
