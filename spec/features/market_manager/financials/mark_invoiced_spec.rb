@@ -42,21 +42,25 @@ feature "sending invoices" do
     end
 
     context "marking a specific invoice by clicking its individual link", :wip do
+      let(:order) { market1_order1 }
+
       it "marks it as invoiced and moves it off the page", :js do
 
-        row = invoice_row_for(order: market1_order1)
+        row = invoice_row_for(order: order)
         expect(row).to be
+
+        now = Time.current
 
         row.mark_invoiced
 
-        # TODO: check notice
+        expect(page).to have_content("Invoice marked for order number #{order.order_number}")
         
-        row = invoice_row_for(order: market1_order1)
-        expect(row).to be nil
+        expect(invoice_row_for(order: order)).to be nil
         
-        # TODO: check database 
+        order.reload
+        expect(order.invoiced_at).to be_within(5.seconds).of(now)
+        expect(order.invoice_due_date).to be_within(5.seconds).of(market1.po_payment_term.days.from_now(now))
       
-        pending "FINISH ME"
       end
     end
 

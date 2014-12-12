@@ -46,6 +46,14 @@ h1 .font-icon {
 .icon-checkmark:before {
   content: "\e031";
 }
+.icon-stack-checkmark:before {
+  content: "\e02d";
+}
+.icon-stack-checkmark-rightpad:before {
+  content: "\e02d";
+  padding-right: 4px;
+}
+
 .icon-close:before {
   content: "\e030";
 }
@@ -96,6 +104,9 @@ h1 .font-icon {
 .icon-preview:before {
   content: "\e02b";
   padding-right: 4px;
+}
+.icon-checkbox-checked:before {
+  content: "\e034";
 }
 
 /* Use the following CSS code if you want to have a class per icon */
