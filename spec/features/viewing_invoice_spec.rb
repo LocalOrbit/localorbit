@@ -70,15 +70,13 @@ feature "Viewing invoices" do
       end
 
       scenario "html content" do
-        visit admin_invoice_path(order.id)
+        visit peek_admin_invoice_path(order.id)
 
         expect_invoice_content
 
         # Line items total
         expect(find("tr:last-child td:last-child")).to have_content("$412.95")
         expect(page).to have_content("Subtotal $400.00")
-        expect(page).to_not have_content("Print And Mark Invoiced")
-        expect(page).to have_content("Print")
       end
     end
   end
@@ -92,7 +90,7 @@ feature "Viewing invoices" do
       end
 
       scenario "html content" do
-        visit admin_invoice_path(order.id)
+        visit peek_admin_invoice_path(order.id)
 
         expect_invoice_content
         expect_market_address
@@ -100,8 +98,6 @@ feature "Viewing invoices" do
         # Line items total
         expect(find("tr:last-child td:last-child")).to have_content("$412.95")
         expect(page).to have_content("Subtotal $400.00")
-        expect(page).to_not have_content("Print And Mark Invoiced")
-        expect(page).to have_content("Print")
       end
     end
 
@@ -112,7 +108,7 @@ feature "Viewing invoices" do
       end
 
       scenario "html content" do
-        visit admin_invoice_path(order.id)
+        visit peek_admin_invoice_path(order.id)
 
         expect(page).to have_content("Invoice Number LO-001")
 
@@ -142,13 +138,41 @@ feature "Viewing invoices" do
         expect(find("tr:last-child td:last-child")).to have_content("$412.95")
       end
 
+      scenario "generate invoice PDF preview", :js do
+        # Tweak order so it appears in the Send Invoices tab:
+        # 1. it needs not to be invoiced already
+        # 2. it needs to be placed recently, to stay inside the default date filter
+        order.update(invoiced_at: nil, invoice_due_date: nil, placed_at: 1.day.ago)
+        expect(order.invoice_pdf).to be nil # be sure there's no attached invoice
+
+        # Go to the list
+        visit admin_financials_invoices_path
+
+        # Click Preview for this order:
+        row = Dom::Admin::Financials::InvoiceRow.find_by_order_number(order.order_number)
+        row.preview
+
+        patiently do
+          expect(page).to have_text("Generating invoice for #{order.order_number}...")
+        end
+
+        patiently do
+          uid = current_path[1..-1]
+          the_order = Order.find_by(invoice_pdf_uid: uid)
+          expect(the_order).to be
+          expect(the_order.invoice_pdf).to be
+          expect(the_order.invoice_pdf.file).to be
+          expect(the_order.invoice_pdf.file.readlines.first).to match(/PDF-1\.4/)
+        end
+      end
+
       context "with irregular phone numbers" do
         before do
           market.update_attribute(:contact_phone, "+123 (456) 789-0987 ext. 654")
         end
 
         scenario "html content" do
-          visit admin_invoice_path(order.id)
+          visit peek_admin_invoice_path(order.id)
 
           expect(page).to have_content("Invoice Number LO-001")
 
@@ -164,7 +188,7 @@ feature "Viewing invoices" do
         let!(:order_items) { [order_item1, order_item2, order_item3] }
 
         scenario "html content" do
-          visit admin_invoice_path(order.id)
+          visit peek_admin_invoice_path(order.id)
 
           expect(page).to have_content("Invoice Number LO-001")
 
@@ -193,11 +217,6 @@ feature "Viewing invoices" do
         end
       end
 
-      scenario "generates a PDF of the content", pdf: true do
-        visit admin_invoice_path(order.id, format: "pdf")
-
-        expect(response_headers["Content-Type"]).to eq("application/pdf")
-      end
     end
   end
 end

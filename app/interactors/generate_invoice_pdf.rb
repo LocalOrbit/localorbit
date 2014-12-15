@@ -2,7 +2,10 @@ class GenerateInvoicePdf
   include Interactor
 
   def perform
-    if context[:order].present? && order.invoiced? && !order.invoice_pdf.present?
+    # Setting pre_invoice to true gets us past the order.invoiced? check
+    invoiced_ok = (context[:pre_invoice] == true) || order.invoiced?
+
+    if context[:order].present? && invoiced_ok && !order.invoice_pdf.present?
       # res = MakeInvoicePdfTempFile.perform(order:order)
       res = MakeInvoicePdfTempFile.perform(request: request, order: order)
       order.invoice_pdf = res.pdf
