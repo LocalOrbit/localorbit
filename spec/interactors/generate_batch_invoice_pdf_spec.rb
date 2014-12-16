@@ -7,111 +7,24 @@ describe GenerateBatchInvoicePdf do
   let!(:batch_invoice) { create(:batch_invoice, orders: orders) } 
   let(:request) { double("Request") }
 
-
-  let(:temp_file_contexts) {
-    [ double("temp-file-result-0", file: "file-0", pdf: "pdf-0", success?:true),
-      double("temp-file-result-1", file: "file-1", pdf: "pdf-1", success?:true) ]
-  }
-
-  let(:merge_context) {
-    double("Merge context", pdf: "the uber PDF")
-  }
-
-  it "generates PDFs for all the Orders attached to the BatchInvoice" do
+  def expect_updater_start
     expect(GenerateBatchInvoicePdf::BatchInvoiceUpdater).
       to receive(:start_generation!).
       with(batch_invoice)
-
-    batch_invoice.orders.zip(temp_file_contexts).each.with_index do |(order,ctx),i|
-      expect(MakeInvoicePdfTempFile).
-        to receive(:perform).
-        with(request: request, order: order).
-        and_return(ctx)
-      expect(GenerateBatchInvoicePdf::BatchInvoiceUpdater).
-        to receive(:update_generation_progress!).
-        with(batch_invoice, completed_count: i+1)
-    end
-    
-    expect(MergePdfFiles).
-      to receive(:perform).
-      with(files:["file-0","file-1"]).
-      and_return(merge_context)
-
-    expect(GenerateBatchInvoicePdf::BatchInvoiceUpdater).
-      to receive(:complete_generation!).
-      with(batch_invoice, pdf: "the uber PDF", pdf_name: "invoices.pdf")
-
-   subject.perform(request: request, batch_invoice: batch_invoice)
   end
 
+  def expect_generate_and_merge_pdfs(generator_exceptions:{}, merge_exception:nil)
+    pdf_file_paths = []
 
-  it "records individual PDF generation errors" do
-    expect(GenerateBatchInvoicePdf::BatchInvoiceUpdater).
-      to receive(:start_generation!).
-      with(batch_invoice)
-
-    # Rig the first temp file to fail formally:
-    temp_file_contexts[0] = double("temp-file-result-0", success?: false, message: "oops")
-
-    # Expect that an error will be recorded for the first order:
-    expect(GenerateBatchInvoicePdf::BatchInvoiceUpdater).
-      to receive(:record_error!).
-      with(batch_invoice, task: "Generating invoice PDF", 
-                          message: "oops", 
-                          order: batch_invoice.orders[0])
-
-    # Still expect to see all orders processes and all progress updates made to BatchInvoice:
-    batch_invoice.orders.zip(temp_file_contexts).each.with_index do |(order,ctx),i|
-      expect(MakeInvoicePdfTempFile).
-        to receive(:perform).
-        with(request: request, order: order).
-        and_return(ctx)
-
-      expect(GenerateBatchInvoicePdf::BatchInvoiceUpdater).
-        to receive(:update_generation_progress!).
-        with(batch_invoice, completed_count: i+1)
-    end
-
-    expect(MergePdfFiles).
-      to receive(:perform).
-      with(files:["file-1"]).   # First PDF should NOT be included because it wasn't successfully generated
-      and_return(merge_context)
-   
-    expect(GenerateBatchInvoicePdf::BatchInvoiceUpdater).
-      to receive(:complete_generation!).
-      with(batch_invoice, pdf: "the uber PDF", pdf_name: "invoices.pdf")
-
-    # Go!
-     subject.perform(request: request, batch_invoice: batch_invoice)
-  end
-
-  it "records individual PDF generation Exceptions" do
-    expect(GenerateBatchInvoicePdf::BatchInvoiceUpdater).
-      to receive(:start_generation!).
-      with(batch_invoice)
-
-    exception = begin; raise("Skadoosh"); rescue => e; e; end
-
-    # Expect that an error will be recorded for the first order:
-    expect(GenerateBatchInvoicePdf::BatchInvoiceUpdater).
-      to receive(:record_error!).
-      with(batch_invoice, task: "Generating invoice PDF", 
-                          message: "Unexpected exception in MakeInvoicePdfTempFile", 
-                          exception: exception.inspect,
-                          backtrace: exception.backtrace,
-                          order: batch_invoice.orders[0])
-
-    # Still expect to see all orders processes and all progress updates made to BatchInvoice:
-    batch_invoice.orders.zip(temp_file_contexts).each.with_index do |(order,ctx),i|
-      exp = expect(MakeInvoicePdfTempFile).
-              to receive(:perform).
-              with(request: request, order: order)
-      if i == 0
-        # First order should blow up:
-        exp.and_raise(exception)
-      else
-        # Others should work as expected:
-        exp.and_return(ctx)
+    batch_invoice.orders.each.with_index do |order,i|
+      expect(Invoices::InvoicePdfGenerator).to receive(:generate_pdf) do |args|
+        expect(args[:request]).to eq request
+        expect(args[:order]).to eq order 
+        if ex = generator_exceptions[order.id]
+          raise ex
+        end
+        pdf_file_paths << args[:path]
+        "some pdf" # not actually used by the batch generator
       end
 
       expect(GenerateBatchInvoicePdf::BatchInvoiceUpdater).
@@ -119,57 +32,68 @@ describe GenerateBatchInvoicePdf do
         with(batch_invoice, completed_count: i+1)
     end
 
-    expect(MergePdfFiles).
-      to receive(:perform).
-      with(files:["file-1"]).   # First PDF should NOT be included because it wasn't successfully generated
-      and_return(merge_context)
-   
-    expect(GenerateBatchInvoicePdf::BatchInvoiceUpdater).
-      to receive(:complete_generation!).
-      with(batch_invoice, pdf: "the uber PDF", pdf_name: "invoices.pdf")
-
-    # Go!
-     subject.perform(request: request, batch_invoice: batch_invoice)
+    expect(GhostscriptWrapper).to receive(:merge_pdf_files) do |tempfiles|
+      expect(tempfiles.map { |f| f.path }).to eq(pdf_file_paths)
+      raise merge_exception if merge_exception
+      "the merged PDF"
+    end
   end
 
-  it "captures overarching exceptions and records them as errors" do
-    # All the loopy stuff build-up stuff will happen normally:
+  def expect_updater_complete
     expect(GenerateBatchInvoicePdf::BatchInvoiceUpdater).
-      to receive(:start_generation!).
-      with(batch_invoice)
+      to receive(:complete_generation!).
+      with(batch_invoice, pdf: "the merged PDF", pdf_name: "invoices.pdf")
+  end
 
-    batch_invoice.orders.zip(temp_file_contexts).each.with_index do |(order,ctx),i|
-      expect(MakeInvoicePdfTempFile).
-        to receive(:perform).
-        with(request: request, order: order).
-        and_return(ctx)
-      expect(GenerateBatchInvoicePdf::BatchInvoiceUpdater).
-        to receive(:update_generation_progress!).
-        with(batch_invoice, completed_count: i+1)
-    end
-    
-    exception = begin; raise("Skadoosh major"); rescue => e; e; end
-
-    # Rig the final merge to go BOOM
-    expect(MergePdfFiles).
-      to receive(:perform).
-      with(files:["file-0","file-1"]).
-      and_raise(exception)
-   
-    # Expect that an error will be recorded for the overarching error:
+  def expect_updater_record_error(order:nil,exception:)
     expect(GenerateBatchInvoicePdf::BatchInvoiceUpdater).
-      to receive(:record_error!).
-      with(batch_invoice, task: "Generating batch invoice PDF", 
-                          message: "Unexpected exception while processing and merging invoice PDFs", 
-                          exception: exception.inspect,
-                          backtrace: exception.backtrace)
+      to receive(:record_error!) do |bi, args|
+        expect(bi).to eq batch_invoice
+        expect(args[:exception]).to eq(exception.inspect)
+        expect(args[:backtrace]).to eq(exception.backtrace)
+        if order
+          expect(args[:order]).to eq(order)
+        end
+      end
+  end
 
-    # Instead of being completed, this batch should be failed:
+  def expect_updater_fail
     expect(GenerateBatchInvoicePdf::BatchInvoiceUpdater).
       to receive(:fail_generation!).
       with(batch_invoice)
+  end
 
-    # Go!
+  it "generates PDFs for all the Orders attached to the BatchInvoice" do
+    expect_updater_start
+    expect_generate_and_merge_pdfs
+    expect_updater_complete
+    subject.perform(request: request, batch_invoice: batch_invoice)
+  end
+
+
+  it "records individual PDF generation Exceptions" do
+    broken_order = batch_invoice.orders.first
+    exception = begin; raise("Skadoosh"); rescue => e; e; end
+
+    expect_updater_start
+    expect_generate_and_merge_pdfs(
+      generator_exceptions: {broken_order.id => exception}
+    )
+    expect_updater_record_error(order: broken_order, exception: exception)
+    expect_updater_complete
+    subject.perform(request: request, batch_invoice: batch_invoice)
+  end
+
+  it "captures overarching exceptions and records them as errors" do
+    exception = begin; raise("Skadoosh major"); rescue => e; e; end
+
+    expect_updater_start
+    expect_generate_and_merge_pdfs(
+      merge_exception: exception
+    )
+    expect_updater_record_error(exception: exception)
+    expect_updater_fail
+
     subject.perform(request: request, batch_invoice: batch_invoice)
   end
 

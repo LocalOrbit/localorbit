@@ -176,7 +176,7 @@ describe GenerateTableTentsOrPosters do
       expect(TemplatedPdfGenerator).to receive(:generate_pdf).
         with(request: request,
              template: "table_tents_and_posters/poster",
-             pdf_settings: {page_size: "letter"},
+             pdf_settings: TemplatedPdfGenerator::ZeroMargins.merge({page_size: "letter"}),
              locals: {
                params: { 
                  page_list: GenerateTableTentsOrPosters.get_page_list(order: order.reload, include_product_names: false),
@@ -201,7 +201,7 @@ describe GenerateTableTentsOrPosters do
                  market: order.market
                }
              },
-             pdf_settings: {page_width: 101.6, page_height: 152.4}
+             pdf_settings: TemplatedPdfGenerator::ZeroMargins.merge({page_width: 101.6, page_height: 152.4})
         ).and_return("the other pdf result")
 
       context = GenerateTableTentsOrPosters.perform(order: order, type: "table tents", include_product_names: false, request: request)

@@ -9,14 +9,15 @@ class GenerateBatchInvoicePdf
     batch_invoice.orders.each do |order|
       begin
         tempfile = Tempfile.new("tmp-invoice-#{order.order_number}")
-        invoice_tempfiles << tempfile
 
         pdf_result = Invoices::InvoicePdfGenerator.generate_pdf(request:request, order:order, path:tempfile.path)
+
+        invoice_tempfiles << tempfile
         
       rescue Exception => e
         BatchInvoiceUpdater.record_error!(batch_invoice, 
                                           task: "Generating invoice PDF",
-                                          message: "Unexpected exception in InvoicePdfGenerate",
+                                          message: "Unexpected exception in InvoicePdfGenerator",
                                           exception: e.inspect,
                                           backtrace: e.backtrace,
                                           order: order)
@@ -30,6 +31,7 @@ class GenerateBatchInvoicePdf
     invoice_tempfiles.each { |file| file.unlink }
 
     BatchInvoiceUpdater.complete_generation!(batch_invoice, pdf: merged_pdf, pdf_name: "invoices.pdf")
+
   rescue Exception => e
     BatchInvoiceUpdater.record_error!(batch_invoice,
                                       task: "Generating batch invoice PDF",

@@ -67,7 +67,7 @@ describe "Buyer invoices" do
       end
     end
 
-    it "shows an invoices details page" do
+    it "shows an invoices details page", :js do
       click_link "Financials"
 
       expect(page).to have_content("Financials Overview")
@@ -76,11 +76,17 @@ describe "Buyer invoices" do
       expect(page).to have_content("Invoices")
       click_link invoiced_order.order_number
 
-      expect(page).to have_content("Due Date")
+      patiently do
+        expect(page).to have_text("Generating invoice for #{invoiced_order.order_number}...")
+      end
 
-      within(".market-info") do
-        expect(page).to have_content(market_address.address)
-        expect(page).to have_content(market_address.city)
+      patiently do
+        uid = current_path[1..-1]
+        the_order = Order.find_by(invoice_pdf_uid: uid)
+        expect(the_order).to be, "NO FINDY #{uid}"
+        expect(the_order.invoice_pdf).to be
+        expect(the_order.invoice_pdf.file).to be
+        expect(the_order.invoice_pdf.file.readlines.first).to match(/PDF-1\.4/)
       end
     end
 
