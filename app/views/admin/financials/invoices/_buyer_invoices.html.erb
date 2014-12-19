@@ -24,7 +24,7 @@
         <% if order.payment_status == "unpaid" %>
           <tr class="invoice-row">
             <td class="due-date"><%= order.invoice_due_date.strftime("%m/%d/%Y") %></td>
-            <td class="order-number"><%= link_to order.order_number, admin_financials_invoice_path(order) %></td>
+            <td class="order-number"><%= link_to order.order_number, admin_invoice_path(order), target: (Rails.env.test? ? "" : "_blank") %></td>
             <td class="po-number"><%= order.payment_note if order.payment_method == "purchase order" %></td>
             <td class="order-date"><%= order.placed_at.strftime("%m/%d/%Y") %></td>
             <td class="delivery-date"><%= order.delivery.buyer_deliver_on.strftime("%m/%d/%Y") || order.delivery.deliver_on.strftime("%m/%d/%Y") %>

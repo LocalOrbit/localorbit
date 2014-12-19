@@ -200,7 +200,7 @@ Test =
     [ Test.mkStatus("not_started", "0.0")
       Test.mkStatus("generating", "0.50")
       Test.mkStatus("generating", "1.0")
-      Test.mkStatus("complete", "1.0", "http://atomicobject.com", ["LO-14-TAHOEFOODHUB-0000022 - Generating invoice PDF - Unexpected exception in MakeInvoicePdfTempFile", "LO-14-TAHOEFOODHUB-0000023 - Generating invoice PDF - Unexpected exception in MakeInvoicePdfTempFile"]) ]
+      Test.mkStatus("complete", "1.0", "http://atomicobject.com", ["LO-14-TAHOEFOODHUB-0000022 - Generating invoice PDF - Unexpected exception in The Generator", "LO-14-TAHOEFOODHUB-0000023 - Generating invoice PDF - Unexpected exception in The Generator"]) ]
 
   seq3: ->
     [ Test.mkStatus("not_started", "0.0")

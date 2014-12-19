@@ -172,32 +172,40 @@ describe GenerateTableTentsOrPosters do
       expect(context.pdf_result.data.match(/^%PDF-1.4/)).to_not eq nil
     end
 
-    it "sends the correct poster parameters to GeneratePdf" do
-      expect(GeneratePdf).to receive(:perform).
+    it "sends the correct Poster parameters to TemplatedPdfGenerator" do
+      expect(TemplatedPdfGenerator).to receive(:generate_pdf).
         with(request: request,
              template: "table_tents_and_posters/poster",
-             pdf_size: {page_size: "letter"},
-             params: { page_list: GenerateTableTentsOrPosters.get_page_list(order: order.reload, include_product_names: false),
-                       include_product_names: false,
-                       market: order.market}).
-        and_return(double "context", pdf_result: "ThePdf")
+             pdf_settings: TemplatedPdfGenerator::ZeroMargins.merge({page_size: "letter"}),
+             locals: {
+               params: { 
+                 page_list: GenerateTableTentsOrPosters.get_page_list(order: order.reload, include_product_names: false),
+                 include_product_names: false,
+                 market: order.market
+               }
+             }
+        ).and_return("the pdf result")
 
       context = GenerateTableTentsOrPosters.perform(order: order, type: "poster", include_product_names: false, request: request)
-      expect(context.pdf_result).to eq "ThePdf"
+      expect(context.pdf_result).to eq "the pdf result"
     end
 
-    it "sends the correct table tent parameters to GeneratePdf" do
-      expect(GeneratePdf).to receive(:perform).
+    it "sends the correct Table Tent parameters to TemplatedPdfGenerator" do
+      expect(TemplatedPdfGenerator).to receive(:generate_pdf).
         with(request: request,
              template: "table_tents_and_posters/table_tent",
-             pdf_size: {page_width: 101.6, page_height: 152.4},
-             params: {page_list: GenerateTableTentsOrPosters.get_page_list(order: order.reload, include_product_names: false),
-                      include_product_names: false,
-                      market: order.market}).
-        and_return(double "context", pdf_result: "ThePdf")
+             locals: {
+               params: { 
+                 page_list: GenerateTableTentsOrPosters.get_page_list(order: order.reload, include_product_names: false),
+                 include_product_names: false,
+                 market: order.market
+               }
+             },
+             pdf_settings: TemplatedPdfGenerator::ZeroMargins.merge({page_width: 101.6, page_height: 152.4})
+        ).and_return("the other pdf result")
 
       context = GenerateTableTentsOrPosters.perform(order: order, type: "table tents", include_product_names: false, request: request)
-      expect(context.pdf_result).to eq "ThePdf"
+      expect(context.pdf_result).to eq "the other pdf result"
     end
   end
 end

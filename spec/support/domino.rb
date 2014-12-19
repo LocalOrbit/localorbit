@@ -243,6 +243,10 @@ module Dom
         def mark_invoiced
           node.click_link("Mark Invoiced")
         end
+
+        def preview
+          node.click_link("Preview")
+        end
       end
 
       class MoneyOut < Domino
