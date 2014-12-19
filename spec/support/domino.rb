@@ -335,6 +335,57 @@ module Dom
         end
       end
 
+      class MarketSection < Domino
+        selector ".market-payment"
+
+        attribute :market_name
+
+        def orders
+          node.all("tr.order-row").map do |tr|
+            MarketOrderRow.new(tr)
+          end
+        end
+
+        def totals
+          MarketPaymentTotals.new(node.find("tr.totals"))
+        end
+
+        def select_bank_account(name)
+          node.select name, from: "Bank account"
+        end
+
+        def pay_button
+          node.find("input[type='submit'][value='Pay #{market_name}']")
+        end
+      end
+
+      class MarketOrderRow < Domino
+        selector ".market-payment tr.order-row"
+        public :initialize
+
+        attribute :order_number
+        attribute :payable_to_market
+        attribute :payable_subtotal
+        attribute :discount_amount
+        attribute :delivery_fees
+        attribute :market_payable_local_orbit_fee
+        attribute :market_payable_payment_fee
+      end
+
+      class MarketPaymentTotals < Domino
+        selector ".market-payment tr.totals"
+        public :initialize # So we can construct these ourselves
+
+        attribute :order_number
+        attribute :payable_to_market
+        attribute :payable_subtotal
+        attribute :discount_amount
+        attribute :delivery_fees
+        attribute :market_payable_local_orbit_fee
+        attribute :market_payable_payment_fee
+      end
+
+      
       module Automate
         class SellerSection < Domino
           selector ".seller-payment"

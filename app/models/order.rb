@@ -71,6 +71,7 @@ class Order < ActiveRecord::Base
   scope :clean_payment_records, -> { where(arel_table[:placed_at].gt(Time.parse("2014-01-01"))) }
   scope :for_seller, -> (user) { orders_for_seller(user) }
   scope :on_automate_plan, -> { joins(market: :plan).where(plans: {name: 'Automate'}) }
+  scope :not_on_automate_plan, -> { joins(market: :plan).where.not(plans: {name: 'Automate'}) }
 
   scope_accessible :sort, method: :for_sort, ignore_blank: true
   scope_accessible :payment_status
@@ -124,27 +125,42 @@ class Order < ActiveRecord::Base
   end
 
   def self.balanced_payable_to_market
-    # TODO: figure out how to make sure the orders haven't changed
-    non_automate_market_ids = Market.joins(:plan).where.not(plans: {name: "Automate"}).pluck(:id)
-
-    paid.fully_delivered.used_lo_payment_processing.not_paid_for("market payment").
-      where("orders.placed_at > ?", 6.months.ago).
-      where(market_id: non_automate_market_ids).
+    paid.
+      fully_delivered.
+      used_lo_payment_processing.
+      not_paid_for("market payment").
+      without_payments_made_to_sellers.
+      clean_payment_records.
+      not_on_automate_plan.
       preload(:items, :market)
   end
 
-  def self.payable_to_sellers(current_time:Time.current, seller_organization_id:nil)
-    subselect = "SELECT 1 FROM payments
+  def self.payments_to_sellers_subselect
+    %|SELECT 1 FROM payments
       INNER JOIN order_payments ON order_payments.order_id = orders.id AND order_payments.payment_id = payments.id
-      WHERE payments.payee_type = ? AND payments.payee_id = products.organization_id"
+      WHERE payments.payee_type = 'Organization' AND payments.payee_id = products.organization_id|
+  end
 
-    res = fully_delivered.payable(current_time: current_time).
-      select("orders.*, products.organization_id as seller_id").
-      joins(items: :product).
-      where("NOT EXISTS(#{subselect})", "Organization").
-      group("seller_id"). # orders.id is already present from fully_delivered
+  def self.with_payments_made_to_sellers 
+    joins(items: :product).
+    where("EXISTS(#{payments_to_sellers_subselect})")
+  end
+
+  def self.without_payments_made_to_sellers 
+    joins(items: :product).
+    where("NOT EXISTS(#{payments_to_sellers_subselect})")
+  end
+
+  def self.payable_to_sellers(current_time:Time.current, seller_organization_id:nil)
+    res = select("orders.*, products.organization_id as seller_id").
+      fully_delivered.
+      payable(current_time: current_time).
+      without_payments_made_to_sellers.
+      not_paid_for("market payment").
+      group("seller_id"). 
       order(:order_number).
       includes(:market)
+
     if seller_organization_id.present?
       res = res.where(products: { organization_id: seller_organization_id })
     end
@@ -173,6 +189,7 @@ class Order < ActiveRecord::Base
       used_lo_payment_processing.
       payable(current_time: current_time).
       not_paid_for("hub fee").
+      not_paid_for("market payment").
       order(:order_number)
 
     if market_id.present?
