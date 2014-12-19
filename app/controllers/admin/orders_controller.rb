@@ -77,11 +77,17 @@ class Admin::OrdersController < AdminController
     @order = SellerOrder.new(order, current_user)
     user_order_context = UserOrderContext.build(user: current_user, order: @order)
     if FeatureAccess.add_order_items?(user_order_context: user_order_context)
-      @products_for_sale = ProductsForSale.new(order.delivery, order.organization, Cart.new(market: order.market), {}, {seller: user_order_context.seller_organization })
+      if user_order_context.is_admin or user_order_context.is_market_manager
+        # If admin or MM, do NOT limit products to seller org:
+        @products_for_sale = ProductsForSale.new(order.delivery, order.organization, Cart.new(market: order.market))
+      else
+        @products_for_sale = ProductsForSale.new(order.delivery, order.organization, Cart.new(market: order.market), {}, {seller: user_order_context.seller_organization })
+      end
 
     else
       @products_for_sale = ProductsForSale.new(order.delivery, order.organization, Cart.new(market: order.market))
     end
+    binding.pry
   end
 
   # Builds a list of deliveries for potential changes
