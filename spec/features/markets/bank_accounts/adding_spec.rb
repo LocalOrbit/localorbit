@@ -1,6 +1,6 @@
 require "spec_helper"
 
-feature "Adding bank account to a market", :js do
+feature "Adding bank account to a market", :js, :shaky do
   let!(:market) { create(:market, name: "Marketville") }
   let(:org)     { create(:organization, markets: [market]) }
 

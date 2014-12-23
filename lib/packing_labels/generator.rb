@@ -20,15 +20,16 @@ module PackingLabels
         #   {a: {label} b: {label} ... }
         # ]
 
-        pdf_context = GeneratePdf.perform(
+        TemplatedPdfGenerator.generate_pdf(
           request: request,
           template: "avery_labels/labels",
-          pdf_size: { page_size: "letter" },
-          params: {
-            pages: pages
-          })
-
-        return pdf_context.pdf_result
+          pdf_settings: TemplatedPdfGenerator::ZeroMargins.merge(page_size: "letter"),
+          locals: {
+            params: {
+              pages: pages
+            }
+          }
+        )
       end
     end
   end

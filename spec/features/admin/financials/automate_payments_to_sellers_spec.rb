@@ -32,7 +32,12 @@ feature "Payments of net sales to Sellers on Automate plan", :js do
                 delivered: "delivered"
   )}
 
-
+  let!(:market_payment_0) {
+    market = m1[:market]
+    bank_account = market.bank_accounts.first
+    create(:payment, payment_type: "market payment", payee: market, orders: [ m1[:orders][2] ], market: market, bank_account: bank_account, payment_method: "ach", amount: 100)
+  }
+    
   before do
     switch_to_subdomain mini_market.subdomain
     sign_in_as aaron
@@ -104,7 +109,15 @@ feature "Payments of net sales to Sellers on Automate plan", :js do
       end
       expected_market = seller_a.markets.first
 
+      # Make sure seller_c has ONLY ONE order, as m1[:orders][2] was already paid via "market payment".
+      # (Seller C is the first Seller in m1 and has orders 0 and 2 (first and third) of the four total orders in m1)
+      seller_c = m1[:seller_organizations][0]
+      c_order_nums = section_for(seller_c.name).orders.map do |o| o.order_number end
+      expect(c_order_nums).to eq [ m1[:orders][0].order_number ]
+
+      #
       # Pay!
+      #
       section.select_bank_account expected_bank_account.display_name
       section.pay_button.click
 

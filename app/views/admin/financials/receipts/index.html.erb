@@ -69,7 +69,7 @@
         <tr class="invoice-row<%= " past-due" if order.invoice_due_date < Time.current %>">
           <td class="order-number">
             <%= link_to order.order_number, admin_invoice_path(order) %>
-            <%= link_to 'PDF', pdf_admin_invoice_path(order.id), class: 'pdf-download', target: '_blank' if order.invoiced? %>
+            <%= link_to 'PDF', admin_invoice_path(order.id), class: 'pdf-download', target: '_blank' if order.invoiced? %>
           </td>
           <td class="buyer"><%= order.organization.name %></td>
           <td class="order-date"><%= order.placed_at.strftime("%m/%d/%Y") %></td>

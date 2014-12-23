@@ -3,27 +3,38 @@ module Admin
     before_action :fetch_order
 
     def show
-      @invoice = BuyerOrder.new(@order)
-      @market  = @invoice.market.decorate
-      @needs_js = true
-
-      render layout: false, locals: { invoice: @invoice, user: current_user }
-    end
-
-    def show_pdf
       if @order.invoice_pdf.present?
         redirect_to @order.invoice_pdf.remote_url
       else
         GenerateInvoicePdf.delay.perform(order: @order,
+                                         pre_invoice: true,
                                          request: RequestUrlPresenter.new(request))
-        render "generating"
+        redirect_to action: :await_pdf
       end
     end
 
-    def mark_invoiced
-      @order.invoice
-      head @order.save ? :ok : :not_found
+    def await_pdf
+      respond_to do |format|
+        format.html {}
+        format.json do
+          status = if @order.invoice_pdf.present?
+                     { pdf_url: @order.invoice_pdf.remote_url }
+                   else
+                     { pdf_url: nil }
+                   end
+          render json: status
+        end
+      end
     end
+    
+    # Secret: peek at an HTML version of the Invoice
+    def peek
+      @invoice = BuyerOrder.new(@order)
+      @market  = @invoice.market.decorate
+      @needs_js = true
+      render "show", layout: false, locals: { invoice: @invoice, user: current_user }
+    end
+
 
     private
 
