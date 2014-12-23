@@ -445,6 +445,23 @@ th {
   }
 }
 
+.invoice-row {
+  .action {
+    width: 115px;
+
+    ul {
+      list-style-type: none;
+      margin: 0;
+      padding: 0;
+
+      li {
+        margin: 0;
+        padding: 0;
+      }
+    }
+  }
+}
+
 @media screen and (max-width: 800px) {
   .product-row,
   .user-row {

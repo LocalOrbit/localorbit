@@ -118,7 +118,7 @@ describe "Upcoming Deliveries" do
       it "shows the the market name with the upcoming delivery" do
         deliveries = Dom::UpcomingDelivery.all
         expect(deliveries.count).to eql(2)
-        expect(deliveries.first.market).to have_content(market.name)
+        expect(deliveries.map { |d| d.market }).to contain_exactly(market.name, other_market.name)
       end
 
       it "shows all upcoming deliveries for all markets the user is authorized to view" do

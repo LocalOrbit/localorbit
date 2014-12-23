@@ -88,7 +88,7 @@ feature "sending invoices" do
     visit admin_financials_invoices_path
 
     Dom::Admin::Financials::InvoiceRow.select_all
-    click_button "Send Selected Invoices"
+    click_button "Send Selected"
 
     expect(page).to have_content("Invoice sent for order numbers LO-001, LO-005, LO-006")
     expect(Dom::Admin::Financials::InvoiceRow.all.size).to eq(0)
@@ -136,7 +136,7 @@ feature "sending invoices" do
 
   def click_preview_selected_invoices
     suppressing_new_tab do
-      click_button "Preview Selected Invoices"
+      click_button "Preview Selected"
       expect(internal_server_error_message).to be_nil
     end
   end

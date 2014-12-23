@@ -137,8 +137,8 @@ Rails.application.routes.draw do
     resources :invoices, only: :show do
       member do
         get "invoice" => "invoices#show"
-        get "mark-invoiced" => "invoices#mark_invoiced"
-        get :pdf, to: "invoices#show_pdf"
+        get :await_pdf, to: "invoices#await_pdf"
+        get :peek, to: "invoices#peek"
       end
     end
 

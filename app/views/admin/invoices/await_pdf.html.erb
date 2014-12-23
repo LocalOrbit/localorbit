@@ -1,0 +1,9 @@
+<div data-ko-module="invoice_preview_pdf" align="center">
+  <h1>Generating invoice for <%= @order.order_number %>...</h1>
+  <%= image_tag "loading-progress.gif", data: { bind: "visible: !pdfUri()" } %>
+  <div style="display:none;" data-bind="visible: pdfUri">
+    <p>
+      <a class="btn btn--save btn--small mobile-block" data-bind="attr: { href: pdfUri }">Download Invoice PDF</a>
+    </p>
+  </div>
+</div>

@@ -6,8 +6,20 @@ class GenerateTableTentsOrPosters
     order, type, include_product_names, request = require_in_context :order, :type, :include_product_names, :request
     page_list = GenerateTableTentsOrPosters.get_page_list(order: order, include_product_names: include_product_names)
     template = GenerateTableTentsOrPosters.get_template_from_type(type: type)
-    pdf_size  = GenerateTableTentsOrPosters.get_pdf_size(type: type)
-    context[:pdf_result] = GeneratePdf.perform(request:request, template: template, pdf_size: pdf_size, params: {page_list: page_list, include_product_names: include_product_names, market: order.market}).pdf_result
+    pdf_settings  = TemplatedPdfGenerator::ZeroMargins.merge(
+      GenerateTableTentsOrPosters.get_pdf_size(type: type)
+    )
+    context[:pdf_result] = TemplatedPdfGenerator.generate_pdf(
+                             request: request, 
+                             template: template, 
+                             locals: { 
+                               params: { # For some reason we packed all our data into a single local called 'params'
+                                 page_list: page_list, 
+                                 include_product_names: include_product_names, 
+                                 market: order.market
+                               }
+                             },
+                             pdf_settings: pdf_settings)
   end
 
   def self.get_page_list(order:,include_product_names:)
