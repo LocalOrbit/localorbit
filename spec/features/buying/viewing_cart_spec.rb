@@ -408,7 +408,7 @@ describe "Viewing the cart", js:true do
 
         expect(page).to have_content("Discount applied")
 
-        click_link "Shop"
+        click_link "Order"
 
         kale_item.set_quantity(1)
         bananas_item.quantity_field.click

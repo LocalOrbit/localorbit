@@ -194,7 +194,7 @@
             <%= link_to "Cancel Order", [:cart], data: {method: :delete, confirm: "Are you sure you want to clear the cart?"}, class: "btn btn--small destructive" %>
             <span class="note">(Clear Cart)</span>
           </span>
-          <%= link_to "Continue Shopping", products_path, class: "continue-shop" %>  
+          <%= link_to "Continue Ordering", products_path, class: "continue-shop" %>  
           <%= f.submit "Place Order", class: 'btn btn btn--money', id: 'place-order-button', disabled: true, data: {disable_with: "Please wait..."} %>
         </div>
       </div>
