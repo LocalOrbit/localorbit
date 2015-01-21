@@ -70,7 +70,7 @@ describe "Add item to cart", js: true do
       switch_to_subdomain(market.subdomain)
       sign_in_as(user)
 
-      expect(page).to have_content("Filter the Shop")
+      expect(page).to have_content("Filter")
       expect(page).to have_content("Bananas")
       expect(page).to have_content("Kale")
 
@@ -160,7 +160,7 @@ describe "Add item to cart", js: true do
       switch_to_subdomain(market.subdomain)
       sign_in_as(user)
 
-      expect(page).to have_content("Filter the Shop")
+      expect(page).to have_content("Filter")
       expect(page).to have_content("Bananas")
       expect(page).to have_content("Kale")
 
