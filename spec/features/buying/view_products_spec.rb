@@ -335,7 +335,7 @@ feature "Viewing products" do
       end
 
       scenario "has to select an organization to shop as" do
-        click_link "Shop", match: :first
+        click_link "Order", match: :first
 
         select buyer_org.name, from: "Organization"
 
@@ -417,7 +417,7 @@ feature "Viewing products" do
       expect(delivery_choices[2].time_range).to eq("Between 7:00AM and 11:00AM")
       expect(delivery_choices[2]).to have_location_select
 
-      click_button "Start Shopping"
+      click_button "Start Ordering"
       within(".flash--alert") do
         expect(page).to have_content("Please select a delivery")
       end
@@ -598,7 +598,7 @@ feature "Viewing products" do
     buyer_org.locations.each(&:soft_delete)
 
     click_link "Dashboard", match: :first
-    click_link "Shop", match: :first
+    click_link "Order", match: :first
 
     expect(page).to have_content("You must enter an address for this organization before you can shop")
 
@@ -612,7 +612,7 @@ feature "Viewing products" do
 
     click_button "Add Address"
 
-    click_link "Shop", match: :first
+    click_link "Order", match: :first
 
     products = Dom::Product.all
     expect(products).to have(2).products
@@ -629,7 +629,7 @@ feature "Viewing products" do
     delivery_schedule2.update_attribute(:deleted_at, nil)
 
     click_link "Dashboard", match: :first
-    click_link "Shop", match: :first
+    click_link "Order", match: :first
 
     within(".selected-delivery") do
       expect(page).to have_content("October 8, 2014")

@@ -10,9 +10,9 @@ end
 <% if current_market %>
   <% if current_user %>
     <div class="nav nav--main pull-right">
-      <%= link_to_or_span "Shop", products_path, class: "" %>
+      <%= link_to_or_span "Order", products_path, class: "" %>
       <%= link_to_or_span "Sellers", sellers_path, class: "" %>
-      <%= link_to_or_span "Market Info", market_path, class: "" %>
+      <%= link_to_or_span "About", market_path, class: "" %>
     </div>
   <% end %>
 
@@ -105,8 +105,8 @@ end
         <li><%= link_to_my_organization %></li>
       </ul>
     </li>
-    <li class="mobile-only"><%= link_to_or_span "Shop", products_path, class: "" %></li>
+    <li class="mobile-only"><%= link_to_or_span "Order", products_path, class: "" %></li>
     <li class="mobile-only"><%= link_to_or_span "Sellers", sellers_path, class: "" %></li>
-    <li class="mobile-only"><%= link_to_or_span "Market Info", market_path, class: "" %></li>
+    <li class="mobile-only"><%= link_to_or_span "About", market_path, class: "" %></li>
   </ul>
 <% end %>
