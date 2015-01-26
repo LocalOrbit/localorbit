@@ -1113,7 +1113,7 @@ module Dom
 
       def self.submit
         within("#deliveries") do
-          click_button "Start Shopping"
+          click_button "Start Ordering"
         end
       end
 

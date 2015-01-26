@@ -24,7 +24,7 @@ feature "Opening and closing a market:" do
 
       expect(find_field("This market is open")).not_to be_checked
 
-      click_link "Shop", match: :first
+      click_link "Order", match: :first
       expect(page).to have_content("The Market Is Currently Closed")
 
       expect(page).not_to have_content("Select an Organization")
@@ -45,7 +45,7 @@ feature "Opening and closing a market:" do
       check "This market is open"
       click_button "Update Market"
 
-      click_link "Shop", match: :first
+      click_link "Order", match: :first
       expect(page).not_to have_content("The Market Is Currently Closed")
       expect(page).to have_content("Select an Organization")
     end
@@ -71,7 +71,7 @@ feature "Opening and closing a market:" do
 
       expect(find_field("This market is open")).not_to be_checked
 
-      click_link "Shop", match: :first
+      click_link "Order", match: :first
       expect(page).to have_content("The Market Is Currently Closed")
       expect(page).to have_content("We're closed go away.")
       expect(page).not_to have_content("Thanks for stopping by.")
