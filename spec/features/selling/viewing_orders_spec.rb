@@ -68,6 +68,15 @@ feature "Viewing orders" do
       expect(order.delivery_status).to eq("Pending")
       expect(order.buyer_name).to eql(market1_buyer_org2.name)
       expect(order.buyer_status).to eq("Unpaid")
+
+      totals = Dom::Admin::TotalSales.first
+
+      expect(totals.gross_sales).to eq("$27.96")
+      expect(totals.market_fees).to eq("$1.40")
+      expect(totals.lo_fees).to eq("$1.12")
+      expect(totals.processing_fees).to eq("$0.00")
+      expect(totals.discounts).to eq("$0.00")
+      expect(totals.net_sales).to eq("$25.44")
     end
 
     scenario "order details" do

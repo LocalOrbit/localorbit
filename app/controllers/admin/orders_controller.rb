@@ -14,8 +14,10 @@ class Admin::OrdersController < AdminController
     results = Order.orders_for_seller(current_user).uniq.search(search.query)
     results.sorts = "placed_at desc" if results.sorts.empty?
 
-    order_ids = results.result.map(&:id)
-    [results, OrderTotals.new(OrderItem.where(order_id: order_ids))]
+    order_items = results.result.flat_map do |order|
+      SellerOrder.new(order, current_user).items
+    end
+    [results, OrderTotals.new(order_items)]
   end
 
   def show
