@@ -13,10 +13,9 @@ class Admin::OrdersController < AdminController
   def search_and_calculate_totals(search)
     results = Order.orders_for_seller(current_user).uniq.search(search.query)
     results.sorts = "placed_at desc" if results.sorts.empty?
+    order_ids = results.result.map(&:id)
 
-    order_items = results.result.flat_map do |order|
-      SellerOrder.new(order, current_user).items
-    end
+    order_items = OrderItem.joins(:product).where(:order_id => order_ids, "products.organization_id" => current_user.managed_organization_ids_including_deleted)
     [results, OrderTotals.new(order_items)]
   end
 
