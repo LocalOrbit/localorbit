@@ -168,7 +168,10 @@ class Order < ActiveRecord::Base
   end
 
   def self.payable_to_automate_sellers(current_time:Time.current, seller_organization_id:nil)
-    payable_to_sellers.not_paid_for("market payment")
+    payable_to_sellers(
+      current_time: current_time, 
+      seller_organization_id: seller_organization_id
+    ).not_paid_for("market payment")
   end
 
   def self.payable_lo_fees
