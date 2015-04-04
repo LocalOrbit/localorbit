@@ -10,7 +10,7 @@ module Financials
             on_automate_plan.
             paid.
             used_lo_payment_processing.
-            payable_to_sellers(current_time: as_of, seller_organization_id: seller_id)
+            payable_to_automate_sellers(current_time: as_of, seller_organization_id: seller_id)
 
           if order_id != nil
             scope = scope.where(id: order_id)

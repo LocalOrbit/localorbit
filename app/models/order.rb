@@ -156,7 +156,6 @@ class Order < ActiveRecord::Base
       fully_delivered.
       payable(current_time: current_time).
       without_payments_made_to_sellers.
-      not_paid_for("market payment").
       group("seller_id"). 
       order(:order_number).
       includes(:market)
@@ -166,6 +165,13 @@ class Order < ActiveRecord::Base
     end
 
     res
+  end
+
+  def self.payable_to_automate_sellers(current_time:Time.current, seller_organization_id:nil)
+    payable_to_sellers(
+      current_time: current_time, 
+      seller_organization_id: seller_organization_id
+    ).not_paid_for("market payment")
   end
 
   def self.payable_lo_fees

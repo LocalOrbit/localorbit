@@ -1,3 +1,5 @@
+require "spec_helper"
+
 describe Financials::SellerPayments::Finder do
   subject(:finder) { described_class }
 
