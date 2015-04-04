@@ -615,9 +615,13 @@ describe Order do
       end
     end
 
-    describe ".payable_to_sellers" do
+    describe ".payable_to_sellers and .payable_to_automate_sellers" do
       def payable_order_ids(*args)
         Order.payable_to_sellers(*args).map(&:id)
+      end
+
+      def payable_automate_order_ids(*args)
+        Order.payable_to_automate_sellers(*args).map(&:id)
       end
 
       it "considers the given time a 48 hours cutoff for payability" do
@@ -626,6 +630,13 @@ describe Order do
         expect(payable_order_ids(current_time: deliver_time+2.days+1.hour)).to contain_exactly(*expected_order_ids)
         expect(payable_order_ids).to contain_exactly(*expected_order_ids)
         expect(payable_order_ids(current_time: now_time)).to contain_exactly(*expected_order_ids)
+
+        # .payable_to_automate_sellers works the same way:
+        expect(payable_automate_order_ids(current_time: deliver_time)).to be_empty
+        expect(payable_automate_order_ids(current_time: deliver_time+2.days)).to be_empty
+        expect(payable_automate_order_ids(current_time: deliver_time+2.days+1.hour)).to contain_exactly(*expected_order_ids)
+        expect(payable_automate_order_ids).to contain_exactly(*expected_order_ids)
+        expect(payable_automate_order_ids(current_time: now_time)).to contain_exactly(*expected_order_ids)
       end
 
       it "filters results based on optional seller id" do
@@ -636,10 +647,33 @@ describe Order do
         seller_id = m1[:seller_organizations].first # the first seller ...
         seller_order_ids = [ m1[:orders].first.id ] # ...will correspond to the first order
         expect(payable_order_ids(current_time: now_time, seller_organization_id: seller_id)).to contain_exactly(*seller_order_ids)
+        expect(payable_automate_order_ids(current_time: now_time, seller_organization_id: seller_id)).to contain_exactly(*seller_order_ids)
 
         seller_id = m1[:seller_organizations].last # the last seller...
         seller_order_ids = [ m1[:orders].last.id ] # ...will correspond to the last order
         expect(payable_order_ids(current_time: now_time, seller_organization_id: seller_id)).to contain_exactly(*seller_order_ids)
+        expect(payable_automate_order_ids(current_time: now_time, seller_organization_id: seller_id)).to contain_exactly(*seller_order_ids)
+      end
+
+      describe "when some orders have market payments" do
+        # Setup a market payment...
+        let(:market_payment1) { create(:payment, :market_orders, payee: m1[:market]) }
+
+        before do
+          # Link the market payment to the last order in our working set:
+          m1[:orders].last.payments << market_payment1
+        end
+
+        it ".payable_to_sellers still includes orders w market payments" do
+          expect(payable_order_ids(current_time: deliver_time+2.days+1.hour)).to contain_exactly(*expected_order_ids)
+        end
+
+        it ".payable_to_automate_sellers EXCLUDES orders which have market orders" do
+          less_orders = expected_order_ids[0..-2] # we associated a market payment with m1[:orders].last, so let's not expect the last order id
+          expect(payable_automate_order_ids(current_time: deliver_time+2.days+1.hour)).to contain_exactly(*less_orders)
+        end
+
+
       end
     end
   end
