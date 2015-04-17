@@ -269,7 +269,7 @@
   .overlay + .modal {
     left: 50%;
     @include box-sizing(border-box);
-    @include transform(translateX(-50%));
+//    @include transform(translateX(-50%));
   }
   .popup--edit {
     width: 90%;
