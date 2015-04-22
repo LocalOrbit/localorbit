@@ -497,6 +497,7 @@ describe "Adding a product", chosen_js: true do
     end
 
     it "maintains delivery schedule changes on error", :js, :shaky do
+      pending "shaky test"
       select org2.name, from: "Seller Organization"
       expect(page).to have_checked_field(tuesday_schedule_description, disabled: true)
 
