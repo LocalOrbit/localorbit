@@ -35,6 +35,15 @@ GIT
   specs:
     wkhtmltopdf-binary (0.9.9.3)
 
+GIT
+  remote: git@github.com:circleci/rspec_junit_formatter.git
+  revision: 7b098c8ab2ac5e5f78190b51629ed6d67a9de4d1
+  specs:
+    rspec_junit_formatter (0.2.0)
+      builder (< 4)
+      rspec (>= 2, < 4)
+      rspec-core (!= 2.12.0)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -534,6 +543,7 @@ DEPENDENCIES
   rschema!
   rspec-collection_matchers
   rspec-rails (~> 3.0)
+  rspec_junit_formatter!
   rubocop
   sass-rails (~> 4.0.0)
   sdoc
