@@ -17,7 +17,7 @@ feature "Adding bank account to a market", :js, :shaky do
   end
 
   scenario "as an admin" do
-    pending "shaky test"
+    skip "shaky test"
     switch_to_subdomain(market.subdomain)
     sign_in_as(create(:user, :admin))
 
@@ -54,7 +54,7 @@ feature "Adding bank account to a market", :js, :shaky do
   end
 
   scenario "as a market manager" do
-    pending "shaky test"
+    skip "shaky test"
     switch_to_subdomain(market.subdomain)
     sign_in_as(create(:user, managed_markets: [market]))
 

@@ -22,7 +22,7 @@ feature "Adding a bank account to an organization", :js, :shaky do
     end
 
     scenario "successfully adding a bank account" do
-      pending "shaky test"
+      skip "shaky test"
       select "Checking", from: "balanced_account_type"
 
       fill_in "Organization EIN", with: "20-1234567"
@@ -56,7 +56,7 @@ feature "Adding a bank account to an organization", :js, :shaky do
     end
 
     scenario "failing to enter a valid account" do
-      pending "shaky test"
+      skip "shaky test"
       click_button "Save"
       expect(page).not_to have_content("Successfully added a payment method")
       expect(page).to have_content("Account type: Please select an account type.")
@@ -76,7 +76,7 @@ feature "Adding a bank account to an organization", :js, :shaky do
     end
 
     scenario "duplicate bank account gives an error" do
-      pending "shaky test"
+      skip "shaky test"
       create(:bank_account, :checking, bank_name: "JPMORGAN CHASE BANK", name: "Org Bank Account", last_four: "0002", bankable: org)
 
       fill_in "Name", with: "Org Bank Account"
@@ -103,7 +103,7 @@ feature "Adding a bank account to an organization", :js, :shaky do
     end
 
     scenario "successfully adding a bank account" do
-      pending "shaky test"
+      skip "shaky test"
       select "Checking", from: "balanced_account_type"
 
       expect(page).not_to have_content("Last 4 of SSN")

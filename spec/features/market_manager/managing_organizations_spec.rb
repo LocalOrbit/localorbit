@@ -92,7 +92,7 @@ describe "A Market Manager", :vcr do
       end
 
       it "creates an organization with valid information", :js, :shaky do
-        pending "shaky test"
+        skip "shaky test"
         visit "/admin/organizations"
         click_link "Add Organization"
 

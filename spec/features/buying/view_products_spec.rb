@@ -65,7 +65,7 @@ feature "Viewing products" do
   end
 
   scenario "list of products after a selling organization is deleted", :shaky do
-    pending "shaky test"
+    skip "shaky test"
     switch_user(market_manager) do
       delete_organization(org2)
     end
@@ -155,7 +155,7 @@ feature "Viewing products" do
   end
 
   scenario "changing the quantity for a listed product", :js, :shaky do
-    pending "shaky test"
+    skip "shaky test"
     create(:price, product: org1_product, sale_price: 1.50, min_quantity: 5)
 
     sign_in_as(user)
@@ -648,7 +648,7 @@ feature "Viewing products" do
   end
 
   scenario "delivery schedule info shows correctly for pick up products", :shaky do
-    pending "shaky test"
+    skip "shaky test"
     delivery_schedule1.update_column(:buyer_pickup_location_id, market.addresses.first.id)
 
     sign_in_as(user)
