@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141128182121) do
+ActiveRecord::Schema.define(version: 20150423194007) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -59,6 +59,7 @@ ActiveRecord::Schema.define(version: 20141128182121) do
     t.string   "name"
     t.string   "notes"
     t.datetime "deleted_at"
+    t.string   "stripe_id"
   end
 
   add_index "bank_accounts", ["bankable_type", "bankable_id"], name: "index_bank_accounts_on_bankable_type_and_bankable_id", using: :btree
@@ -402,6 +403,8 @@ ActiveRecord::Schema.define(version: 20141128182121) do
     t.integer  "plan_bank_account_id"
     t.text     "store_closed_note"
     t.boolean  "sellers_edit_orders",                                   default: false, null: false
+    t.string   "stripe_customer_id"
+    t.string   "stripe_account_id"
   end
 
   add_index "markets", ["name"], name: "index_markets_on_name", using: :btree
@@ -564,6 +567,7 @@ ActiveRecord::Schema.define(version: 20141128182121) do
     t.boolean  "show_profile",                 default: true
     t.boolean  "active",                       default: false
     t.boolean  "needs_activated_notification", default: true
+    t.string   "stripe_customer_id"
   end
 
   add_index "organizations", ["name"], name: "index_organizations_on_name", using: :btree
@@ -595,6 +599,7 @@ ActiveRecord::Schema.define(version: 20141128182121) do
     t.integer  "market_id"
     t.integer  "bank_account_id"
     t.integer  "parent_id"
+    t.string   "stripe_id"
   end
 
   add_index "payments", ["bank_account_id"], name: "index_payments_on_bank_account_id", using: :btree
