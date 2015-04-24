@@ -91,7 +91,6 @@ group :development, :test do
   gem "launchy"
   gem "guard-rspec"
   gem "awesome_print"
-  gem "birdbath"
 end
 
 group :test do
