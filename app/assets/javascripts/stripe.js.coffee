@@ -5,22 +5,22 @@ getFormData = ($form) ->
 
 tokenize = (type, info) ->
   deferred = $.Deferred()
-  balanced[type].create info, (response) =>
-    if response.status == 201
-      deferred.resolve(response.data)
-    else
+  Stripe[type].createToken info, (status, response) =>
+    if response.error
       deferred.reject(response.error)
+    else
+      deferred.resolve(response)
 
   deferred.promise()
 
-displayErrors = ($form, errors)->
+displayStripeError = ($form, error)->
   setupErrorsContainer($form)
 
-  for key of errors
-    field_name = key.replace(/_/g, " ")
-    field_name = field_name.charAt(0).toUpperCase() + field_name.substr(1)
-    $form.find("[name^=#{key}]").wrap('<div class="field_with_errors"/>')
-    displayError(field_name, errors[key])
+  key = error.param
+  field_name = key.replace(/_/g, " ")
+  field_name = field_name.charAt(0).toUpperCase() + field_name.substr(1)
+  $form.find("[name^=#{key}]").wrap('<div class="field_with_errors"/>')
+  displayError(field_name, error.message)
 
 displayError = (field, error) ->
   $("#payment-provider-errors").append("<li>#{field}: #{error}</li>")
@@ -36,29 +36,36 @@ updateInputs = (object, $form) ->
     "card" : {
       "brand" : "bank_account[bank_name]",
       "name" : "bank_account[name]",
-      "last_four" : "bank_account[last_four]",
-      "uri" : "bank_account[balanced_uri]",
-      "card_type" : "bank_account[account_type]",
-      "expiration_month" : "bank_account[expiration_month]",
-      "expiration_year" : "bank_account[expiration_year]",
+      "last4" : "bank_account[last_four]",
+      "exp_month" : "bank_account[expiration_month]",
+      "exp_year" : "bank_account[expiration_year]",
     },
     "bank_account" : {
       "bank_name" : "bank_account[bank_name]",
-      "name" : "bank_account[name]",
-      "last_four" : "bank_account[last_four]",
-      "uri" : "bank_account[balanced_uri]",
-      "type" : "bank_account[account_type]"
+      "last4" : "bank_account[last_four]",
     }
   }
 
-  for key, field of fields[object["_type"]]
+  commonFields = {
+    "id" : "bank_account[stripe_id]",
+    "type" : "bank_account[account_type]"
+  }
+
+  for key, field of fields[object["type"]]
+    $("<input>").attr(
+      type: 'hidden',
+      name: field,
+      value: object['card'][key]
+    ).appendTo($form)
+
+  for key, field of commonFields
     $("<input>").attr(
       type: 'hidden',
       name: field,
       value: object[key]
     ).appendTo($form)
 
-  $("#notes").val if object["_type"] == "card"
+  $("#notes").val if object["type"] == "card"
     value = $("#credit-card-notes").val()
   else
     value = $("#bank-account-notes").val()
@@ -75,9 +82,7 @@ validateEIN = () ->
 
   return true
 
-
-
-$.getScript "https://js.balancedpayments.com/v1/balanced.js", ->
+$.getScript "https://js.stripe.com/v2/", ->
   $ ->
     $("#provider_account_type").change (e)->
       val = $(this).val()
@@ -98,7 +103,7 @@ $.getScript "https://js.balancedpayments.com/v1/balanced.js", ->
       if $("#provider_account_type").val()
         $("#payment-provider-container").trigger "submit"
       else
-        displayErrors($("#payment-provider-container"), { "account_type" : "Please select an account type."})
+        displayStripeError($("#payment-provider-container"), { "param": "account_type", "message": "Please select an account type."})
 
 
     $("#payment-provider-container").submit (event) ->
@@ -106,19 +111,19 @@ $.getScript "https://js.balancedpayments.com/v1/balanced.js", ->
       return unless validateEIN()
 
       $form = $(event.target)
-      balanced.init($form.data("balanced-marketplace-uri"))
+      Stripe.setPublishableKey($form.data("stripe-publishable-key"))
       type = $form.data("provider-object-type")
 
       $(".field_with_errors :input").unwrap()
       $('input[type="submit"]').attr("disabled", "disabled")
       tokenize(type, getFormData($form))
-        .done (payment_object) ->
-          $("##{type}-uri").val(payment_object.uri)
-          realFormId = $form.data("target-form") || "#{type}-uri-form"
+        .done (response) ->
+          $("##{type}-id").val(response.uri)
+          realFormId = $form.data("target-form") || "#{type}-id-form"
           $realForm = $("##{realFormId}")
-          updateInputs(payment_object, $realForm)
+          updateInputs(response, $realForm)
           $realForm.submit()
         .fail (error) ->
-          messages = if error.extras? then error.extras else error
-          displayErrors($form, messages)
+          displayStripeError($form, error)
           $('input[type="submit"]').removeAttr("disabled")
+

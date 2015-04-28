@@ -127,19 +127,23 @@
                       <% end %><br>
 
                       <label>New Credit Card</label><br>
-                      <fieldset id="balanced-payments-uri" data-balanced-marketplace-uri="<%= ENV["BALANCED_MARKETPLACE_URI"] %>">
+
+                      <% case @payment_provider %>
+                      <% when 'balanced' %>
+
+                      <fieldset id="payment-provider-container" data-payment-provider="balanced" data-balanced-marketplace-uri="<%= ENV["BALANCED_MARKETPLACE_URI"] %>">
                         <div class="row">
                           <div class="column column--full column--guttered">
-                            <label for="balanced_account_name">Name</label>
+                            <label for="provider_account_name">Name</label>
                             <span class="hint">Full name as it appears on the account</span>
                             <br>
-                            <input id="balanced_account_name" type="text" value="" name="order[credit_card][name]" class="column--full">
+                            <input id="provider_account_name" type="text" value="" name="order[credit_card][name]" class="column--full">
                           </div>
                         </div>
                         <div class="row">
                           <div class="column column--full column--guttered">
-                            <label for="balanced_card_number">Card Number</label><br>
-                            <input class="column--full" id="balanced_card_number" type="text" name="card_number">
+                            <label for="provider_card_number">Card Number</label><br>
+                            <input class="column--full" id="provider_card_number" type="text" name="card_number">
                           </div>
                         </div>
                         <div class="row">
@@ -152,8 +156,8 @@
                             <%= select_tag(:expiration_year, options_for_select(expiration_year_options), class: "column--full") %>
                           </div
                           ><div class="column column--third column--guttered">
-                            <label for="balanced_security_code">Security Code</label><br>
-                            <input class="column--full" id="balanced_security_code" type="text" name="security_code">
+                            <label for="provider_security_code">Security Code</label><br>
+                            <input class="column--full" id="provider_security_code" type="text" name="security_code">
                           </div>
                           <div class="row">
                             <div class="field column column--full column--guttered">
@@ -163,6 +167,48 @@
                           </div>
                         </div>
                       </fieldset>
+
+                      <% when 'stripe' %>
+
+                      <fieldset id="payment-provider-container" data-payment-provider='stripe' data-stripe-publishable-key="<%= ENV["STRIPE_PUBLISHABLE_KEY"] %>">
+                        <div class="row">
+                          <div class="column column--full column--guttered">
+                            <label for="provider_account_name">Name</label>
+                            <span class="hint">Full name as it appears on the account</span>
+                            <br>
+                            <input id="provider_account_name" type="text" value="" name="order[credit_card][name]" class="column--full">
+                          </div>
+                        </div>
+                        <div class="row">
+                          <div class="column column--full column--guttered">
+                            <label for="provider_card_number">Card Number</label><br>
+                            <input class="column--full" id="provider_card_number" type="text" name="card_number">
+                          </div>
+                        </div>
+                        <div class="row">
+                          <div class="column column--third column--guttered">
+                            <label for="expiration_month">Month</label><br>
+                            <%= select_tag(:expiration_month, options_for_select(expiration_month_options), class: "column--full") %>
+                          </div
+                          ><div class="column column--third column--guttered">
+                            <label for="expiration_year">Year</label><br>
+                            <%= select_tag(:expiration_year, options_for_select(expiration_year_options), class: "column--full") %>
+                          </div
+                          ><div class="column column--third column--guttered">
+                            <label for="provider_security_code">Security Code</label><br>
+                            <input class="column--full" id="provider_security_code" type="text" name="security_code">
+                          </div>
+                          <div class="row">
+                            <div class="field column column--full column--guttered">
+                              <input id="save_for_future" type="checkbox" name="order[credit_card][save_for_future]">
+                              <label for="save_for_future">Save credit card for future use</label>
+                            </div>
+                          </div>
+                        </div>
+                      </fieldset>
+
+                      <% end %>
+
                     </div>
                   </fieldset>
                 </div>

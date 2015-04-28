@@ -61,6 +61,6 @@ class CartsController < ApplicationController
   private
 
   def set_balanced_flag
-    @balanced = true
+    @payment_provider = current_market.payment_provider
   end
 end

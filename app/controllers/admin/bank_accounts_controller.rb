@@ -57,7 +57,7 @@ class Admin::BankAccountsController < AdminController
     )
   end
 
-  def set_balanced_flag
-    @balanced = true
+  def set_payment_provider
+    @payment_provider = 'balanced'
   end
 end

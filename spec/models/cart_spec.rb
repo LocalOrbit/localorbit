@@ -3,7 +3,7 @@ require "spec_helper"
 describe Cart do
 
   it "requires an organization" do
-    expect(subject).to have(1).error_on(:organization)
+a   expect(subject).to have(1).error_on(:organization)
   end
 
   it "requires a market" do
