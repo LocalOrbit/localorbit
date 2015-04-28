@@ -10,14 +10,20 @@ displayErrors = ($form, errors)->
 displayError = (field, error) ->
   $("#payment-provider-errors").append("<li>#{field}: #{error}</li>")
 
+displayGenericError = (message) ->
+  $("#payment-provider-errors").append("<li>#{message}</li>")
+
 displayStripeError = ($form, error)->
   setupErrorsContainer($form)
 
-  key = error.param
-  field_name = key.replace(/_/g, " ")
-  field_name = field_name.charAt(0).toUpperCase() + field_name.substr(1)
-  $form.find("[name^=#{key}]").wrap('<div class="field_with_errors"/>')
-  displayError(field_name, error.message)
+  if error.param
+    key = error.param
+    field_name = key.replace(/_/g, " ")
+    field_name = field_name.charAt(0).toUpperCase() + field_name.substr(1)
+    $form.find("[name^=#{key}]").wrap('<div class="field_with_errors"/>')
+    displayError(field_name, error.message)
+  else
+    displayGenericError(error.message)
 
 setupErrorsContainer = ($form) ->
   if $("#payment-provider-errors").length
@@ -322,25 +328,21 @@ $ ->
                 value: accountFieldData[key]
               ).appendTo($form)
 
-            stripeFields = {
+            balancedFields = {
               "brand" : "order[credit_card][bank_name]",
-              "last4" : "order[credit_card][last_four]",
-              "exp_month" : "order[credit_card][expiration_month]",
-              "exp_year" : "order[credit_card][expiration_year]",
+              "last_four" : "order[credit_card][last_four]",
+              "uri" : "order[credit_card][balanced_uri]",
+              "card_type" : "order[credit_card][account_type]"
+              "expiration_month" : "order[credit_card][expiration_month]",
+              "expiration_year" : "order[credit_card][expiration_year]",
             }
 
-            commonFields = {
-              "id" : "order[credit_card][stripe_id]",
-              "type" : "order[credit_card][account_type]"
-            }
-
-            for key, field of stripeFields
+            for key, field of balancedFields
               $("<input>").attr(
                 type: 'hidden',
                 name: field,
-                value: response[key]
+                value: response.data[key]
               ).appendTo($form)
-
 
             $("#payment-provider-container").prop("disabled", true)
             $form.submit()
@@ -359,7 +361,7 @@ $ ->
         }
 
         Stripe.setPublishableKey($("#payment-provider-container").data("stripe-publishable-key"))
-        Stripe.card.create newCard, (status, response) ->
+        Stripe.card.createToken newCard, (status, response) ->
           if response.error
             displayStripeError($("#payment-provider-container"), response.error)
             $("#place-order-button").prop("disabled", false)
@@ -392,7 +394,7 @@ $ ->
             }
 
             commonFields = {
-              "id" : "order[credit_card][stripe_id]",
+              "id" : "order[credit_card][stripe_tok]",
               "type" : "order[credit_card][account_type]"
             }
 
@@ -400,14 +402,14 @@ $ ->
               $("<input>").attr(
                 type: 'hidden',
                 name: field,
-                value: response.data['card'][key]
+                value: response.card[key]
               ).appendTo($form)
 
             for key, field of commonFields
               $("<input>").attr(
                 type: 'hidden',
                 name: field,
-                value: response.data[key]
+                value: response[key]
               ).appendTo($form)
 
             $("#payment-provider-container").prop("disabled", true)
