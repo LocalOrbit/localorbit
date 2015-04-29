@@ -307,6 +307,10 @@
   .modal--extended {
     width: 90%;
     left: 5%;
+    
+    .popup-body {
+      max-height: 300px;
+    }
   }
 }
 
