@@ -1,3 +1,5 @@
+@import "mixins.css.scss";
+
 .printable-btn {
   color: #fff;
   background-color: #43639f;
@@ -62,4 +64,23 @@
   // float: left;
 }
 
+@media screen and (max-width: 840px) {
+  .downloadable-ad{
+    height: 500px;
+    
+    .downloadable-type{
+      width:100%; 
+      margin-bottom: 20px;
+    
+      img{height:184px;}
+    }
+  }
+}
+@media screen and (max-width: 640px) {
+  .downloadable-ad{
+    height: 630px;
+    
+    p{margin-bottom: 30px;}
+}
+}
 

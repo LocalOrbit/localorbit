@@ -159,6 +159,18 @@
       }
     }
   }
+  
+  
+  #terms-of-service {
+    top: 1em !important;
+    
+    .popup-footer {
+      .cancel {
+        padding: 8px 26px 20px;
+      }
+      .btn--action{font-size:14px;}
+    }
+  }
 }
 
 .popup-header {
