@@ -24,7 +24,7 @@ class PaymentProvider
         meta: {'order number' => order.order_number}
       ) 
     when 'stripe'
-      customer = buyer_organization.stripe_id
+      customer = buyer_organization.stripe_customer_id
       source = bank_account.stripe_id
       destination = market.stripe_account_id
       descriptor = market.on_statement_as
@@ -92,7 +92,7 @@ class PaymentProvider
       charge ||= Stripe::Charge.retrieve(payment.stripe_id)
       charge.refunds.create(refund_application_fee: true,
                             reverse_transfer: true,
-                            metadata: { 'lo.order_id' => order.id 
+                            metadata: { 'lo.order_id' => order.id,
                                          'lo.order_number' => order.order_number})
     end
   end
