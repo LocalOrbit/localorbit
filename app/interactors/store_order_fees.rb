@@ -46,12 +46,13 @@ class StoreOrderFees
     item.market_seller_fee      = calculated_fee(item, market.market_seller_fee)
     item.local_orbit_seller_fee = calculated_fee(item, market.local_orbit_seller_fee)
     item.local_orbit_market_fee = calculated_fee(item, market.local_orbit_market_fee)
+
     item.payment_seller_fee     = calculated_fee(item, payment_seller_fee)
     item.payment_market_fee     = calculated_fee(item, payment_market_fee)
   end
 
   def calculated_fee(item, fee)
-    (item.gross_total - item.discount_market - item.discount_seller) * fee / 100
+    item.discounted_total * (fee / 100)
   end
 
   def market
