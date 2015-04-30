@@ -6,19 +6,18 @@ class CreateStripeCustomerForEntity
   end
 
   def perform
-    if entity.balanced_customer_uri.nil?
-      customer = Balanced::Customer.new(balanced_customer_info).save
-      entity.update_attribute(:balanced_customer_uri, customer.uri)
+    if entity.stripe_customer_id.nil?
+      customer = Stripe::Customer.create(stripe_customer_info)
+      entity.update_attribute(:stripe_customer_id, customer.id)
     end
   end
 
-  def balanced_customer_info
+  def stripe_customer_info
     {
-      name: entity.name,
-      meta: {
-        entity_id: entity.id,
-        entity_name: entity.name,
-        entity_type: entity.class.name.underscore
+      description: entity.name,
+      metadata: {
+        "lo.entity_id" => entity.id,
+        "lo.entity_type" => entity.class.name.underscore
       }
     }
   end

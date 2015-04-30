@@ -7,6 +7,7 @@ class CreateTemporaryStripeCreditCard
 
       @credit_card_params = order_params["credit_card"]
       @credit_card_params.merge!(deleted_at: Time.current) unless should_save_card?
+      @credit_
 
       temp_card = @org.bank_accounts.create(@credit_card_params)
       if temp_card.valid?

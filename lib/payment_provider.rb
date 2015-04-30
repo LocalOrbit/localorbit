@@ -45,5 +45,57 @@ class PaymentProvider
     end
   end
 
+  def self.translate_status(payment_provider, cart:, charge:, payment_method:)
+    case payment_provider
+    when 'balanced'
+      if cart.total == 0 || payment_method == "credit card"
+        "paid"
+      else
+        "pending"
+      end
+    when 'stripe'
+      case charge.status
+      when 'pending'   then 'pending'
+      when 'succeeded' then 'paid'
+      when 'failed'    then 'failed'
+      end
+    end
+  end
+
+  def self.create_order_payment(payment_provider, charge:, market_id:, bank_account:, payer:,
+                                payment_method:, amount:, order:, status:)
+    args = {
+      market_id: market_id,
+      bank_account: bank_account,
+      payer: payer,
+      payment_method: payment_method,
+      amount: amount,
+      payment_type: 'order',
+      orders: [order],
+      status: status
+    }
+    case payment_provider
+    when 'balanced'
+      args[:balanced_uri] = charge.try(:uri)
+    when 'stripe'
+      args[:stripe_id] = charge.try(:id)
+    end
+    Payment.create(args)
+  end
+
+  def self.fully_refund(payment_provider, charge:nil, payment:, order:)
+    case payment_provider
+    when 'balanced'
+      charge ||= Balanced::Debit.find(payment.balanced_uri)
+      charge.refund
+    when 'stripe'
+      charge ||= Stripe::Charge.retrieve(payment.stripe_id)
+      charge.refunds.create(refund_application_fee: true,
+                            reverse_transfer: true,
+                            metadata: { 'lo.order_id' => order.id 
+                                         'lo.order_number' => order.order_number})
+    end
+  end
+
 
 end
