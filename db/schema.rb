@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150428180631) do
+ActiveRecord::Schema.define(version: 20150430213211) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -603,6 +603,7 @@ ActiveRecord::Schema.define(version: 20150428180631) do
     t.integer  "parent_id"
     t.string   "stripe_id"
     t.string   "payment_provider"
+    t.string   "stripe_refund_id"
   end
 
   add_index "payments", ["bank_account_id"], name: "index_payments_on_bank_account_id", using: :btree

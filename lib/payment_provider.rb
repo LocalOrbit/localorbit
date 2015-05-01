@@ -45,19 +45,33 @@ class PaymentProvider
     end
   end
 
-  def self.translate_status(payment_provider, cart:, charge:, payment_method:)
+  def self.translate_status(payment_provider, cart:nil, charge:, payment_method:nil)
     case payment_provider
     when 'balanced'
-      if cart.total == 0 || payment_method == "credit card"
-        "paid"
+      # cart checkout
+      if cart
+        if cart.total == 0 || payment_method == "credit card"
+          "paid"
+        else
+          "pending"
+        end
       else
-        "pending"
+        # update order
+        case charge.try(:status)
+        when "pending"
+          "pending"
+        when "succeeded"
+          "paid"
+        else
+          "failed"
+        end
       end
     when 'stripe'
-      case charge.status
+      case charge.try(:status)
       when 'pending'   then 'pending'
       when 'succeeded' then 'paid'
-      when 'failed'    then 'failed'
+      else
+        'failed'
       end
     end
   end
@@ -83,6 +97,29 @@ class PaymentProvider
     Payment.create(args)
   end
 
+  def self.create_refund_payment(payment_provider, charge:, market_id:, bank_account:, payer:,
+                                payment_method:, amount:, order:, status:, refund:, parent_payment:)
+    args = {
+      market_id: market_id,
+      bank_account: bank_account,
+      payer: payer,
+      payment_method: payment_method,
+      amount: amount,
+      payment_type: 'order refund',
+      orders: [order],
+      parent_id: parent_payment.id,
+      status: status
+    }
+    case payment_provider
+    when 'balanced'
+      args[:balanced_uri] = refund.try(:uri)
+    when 'stripe'
+      args[:stripe_id] = charge.try(:id)
+      args[:stripe_refund_id] = refund.try(:id)
+    end
+    Payment.create(args)
+  end
+
   def self.fully_refund(payment_provider, charge:nil, payment:, order:)
     case payment_provider
     when 'balanced'
@@ -93,9 +130,30 @@ class PaymentProvider
       charge.refunds.create(refund_application_fee: true,
                             reverse_transfer: true,
                             metadata: { 'lo.order_id' => order.id,
-                                         'lo.order_number' => order.order_number})
+                                        'lo.order_number' => order.order_number })
     end
   end
 
+  def self.refund_charge(payment_provider, charge:, amount:, order:)
+    case payment_provider
+    when 'balanced'
+      charge.refund(amount: amount)
+    when 'stripe'
+      charge.refunds.create(refund_application_fee: true,
+                            reverse_transfer: true,
+                            amount: amount,
+                            metadata: { 'lo.order_id' => order.id,
+                                        'lo.order_number' => order.order_number })
+    end
+  end
+
+  def self.find_charge(payment_provider, payment:)
+    case payment_provider
+    when 'balanced'
+      payment.balanced_transaction
+    when 'stripe'
+      Stripe::Charge.retrieve(payment.stripe_id)
+    end
+  end
 
 end

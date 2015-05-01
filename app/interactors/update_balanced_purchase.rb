@@ -42,14 +42,16 @@ class UpdateBalancedPurchase
         context[:type] = payment.payment_method
 
         refund_amount = [remaining_amount, payment.unrefunded_amount].min
-        refund = payment.balanced_transaction.refund(amount: ::Financials::MoneyHelpers.amount_to_cents(refund_amount))
+        charge = PaymentProvider.find_charge(payment_provider, payment: payment)
+        refund = PaymentProvider.refund_charge(payment_provider, order: order,
+          charge: charge, amount: ::Financials::MoneyHelpers.amount_to_cents(refund_amount))
 
         payment.increment!(:refunded_amount, refund_amount)
-        record_payment("order refund", -refund_amount, refund, payment.bank_account)
+        record_refund(-refund_amount, charge, refund, payment.bank_account, payment)
 
         remaining_amount -= refund_amount
       rescue => e
-        process_exception(e, "order refund", -refund_amount, payment.bank_account)
+        process_exception(e, "order refund", -refund_amount, payment.bank_account, payment)
         break
       end
     end
@@ -63,51 +65,61 @@ class UpdateBalancedPurchase
 
     context[:type] = payment.payment_method
 
-    new_debit = account.bankable.balanced_customer.debit(
+    charge = PaymentProvider.charge_for_order(order.payment_provider, 
       amount: ::Financials::MoneyHelpers.amount_to_cents(amount),
-      source_uri: account.balanced_uri,
-      description: "#{order.market.name} purchase",
-      appears_on_statement_as: order.market.on_statement_as,
-      meta: {'order number' => order.order_number}
-    )
+      bank_account: account, market: order.market, order: order,
+      buyer_organization: order.organization)
+
     context[:status] = "paid"
 
-    record_payment("order", amount, new_debit, account)
+    record_charge(amount, charge, account)
   rescue => e
     process_exception(e, "order", amount, account)
   end
 
-  def process_exception(exception, type, amount, account)
+  def process_exception(exception, type, amount, account, parent_payment=nil)
     Honeybadger.notify_or_ignore(exception) unless Rails.env.test? || Rails.env.development?
-    record_payment(type, amount, nil, account)
+    if type == "order"
+      record_charge(amount, nil, account)
+    else
+      record_refund(amount, nil, nil, account, parent_payment)
+    end
 
     context[:status] = "failed"
     fail!
   end
 
-  def record_payment(type, amount, balanced_record, bank_account)
-    adjustment_payment = Payment.create!(
+  def record_charge(amount, charge, bank_account)
+    status = PaymentProvider.translate_status(payment_provider, charge: charge)
+    adjustment_payment = PaymentProvider.create_order_payment(payment_provider,
+      charge: charge,
+      order: order,
       market_id: order.market_id,
       bank_account: bank_account,
       payer: order.organization,
-      payment_type: type,
       payment_method: context[:type],
       amount: amount,
-      status: parse_payment_status(balanced_record.try(:status)),
-      balanced_uri: balanced_record.try(:uri)
+      status: status
     )
-
-    order.payments << adjustment_payment
   end
 
-  def parse_payment_status(status)
-    case status
-    when "pending"
-      "pending"
-    when "succeeded"
-      "paid"
-    else
-      "failed"
-    end
+  def record_refund(amount, charge, refund, bank_account, parent_payment)
+    status = PaymentProvider.translate_status(payment_provider, charge: charge)
+    adjustment_payment = PaymentProvider.create_refund_payment(payment_provider,
+      charge: charge,
+      order: order,
+      market_id: order.market_id,
+      bank_account: bank_account,
+      payer: order.organization,
+      payment_method: context[:type],
+      amount: amount,
+      refund: refund,
+      status: status,
+      parent_payment: parent_payment
+    )
+  end
+
+  def payment_provider
+    order.payment_provider
   end
 end

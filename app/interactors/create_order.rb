@@ -18,6 +18,7 @@ class CreateOrder
     billing = cart.organization.locations.default_billing
 
     order = Order.new(
+      payment_provider: payment_provider,
       placed_by: buyer,
       order_number: OrderNumber.new(cart.market).id,
       organization: cart.organization,
