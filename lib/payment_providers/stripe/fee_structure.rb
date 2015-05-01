@@ -1,4 +1,4 @@
-module PaymentProvider
+module PaymentProviders
   module Stripe
     class FeeStructure
 

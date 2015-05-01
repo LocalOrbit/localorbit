@@ -32,9 +32,9 @@ class PaymentProvider
 
 
       fee = if bank_account.credit_card?
-              PaymentProvider::Stripe::FeeStructure.estimate_credit_card_processing_fee(amount)
+              PaymentProviders::Stripe::FeeStructure.estimate_credit_card_processing_fee(amount)
             else
-              PaymentProvider::Stripe::FeeStructure.estimate_ach_processing_fee(amount)
+              PaymentProviders::Stripe::FeeStructure.estimate_ach_processing_fee(amount)
             end
 
       charge = Stripe::Charge.create(amount: amount, currency: 'usd', 
