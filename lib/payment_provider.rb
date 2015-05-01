@@ -28,14 +28,14 @@ class PaymentProvider
       source = bank_account.stripe_id
       destination = market.stripe_account_id
       descriptor = market.on_statement_as
-      fee = order.items.inject(0) do |total, item|
-        item.payment_seller_fee + 
-        item.payment_market_fee + 
-        item.local_orbit_seller_fee + 
-        item.local_orbit_market_fee + 
-        total
-      end
-      fee = ::Financials::MoneyHelpers.amount_to_cents(fee)
+
+
+      fee = if bank_account.credit_card?
+              PaymentProvider::Stripe::FeeStructure.estimate_credit_card_processing_fee(amount)
+            else
+              PaymentProvider::Stripe::FeeStructure.estimate_ach_processing_fee(amount)
+            end
+
       Stripe::Charge.create(amount: amount, currency: 'usd', 
                             source: source, customer: customer,
                             destination: destination, statement_descriptor: descriptor,
