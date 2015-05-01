@@ -175,21 +175,44 @@ class PaymentProvider
   def self.store_payment_fees(payment_provider, order:)
     case payment_provider
     when 'balanced'
-      
+      # nothing 
     when 'stripe'
-      # distribute_fee ...
+      total_fee = order.payments.where(payment_type: 'order').sum(:stripe_payment_fee)
+      total_fee_cents = ::Financials::MoneyHelpers.amount_to_cents(total_fee)
+      fees = distribute_fee(total_fee_cents, order)
+
+      fee_payer = order.market.payment_fee_payer
+      order.items.each do |item|
+        fee_cents = fees[item.id]
+        fee = if fee_cents.nil?
+                0.to_d
+              else
+                ::Financials::MoneyHelpers.cents_to_amount(fee_cents)
+              end
+        item.update :"payment_#{fee_payer}_fee", fee
+      end
     end
   end
 
   private
 
-  def distribute_fee(total_fee_cents, order)
+  #
+  # Fee distribution to order items is accomplished using the largest remainder method
+  # calculating the Quota using the Hare (or simple) method.
+  # - http://en.wikipedia.org/wiki/Largest_remainder_method
+  #
+  def self.distribute_fee(total_fee_cents, order)
     order_total_cents = ::Financials::MoneyHelpers.amount_to_cents(order.gross_total)
-    return [] if order_total_cents == 0
+    # TODO: set all fees to 0 if total_fee_cents is 0
+    return {} if order_total_cents == 0 # TODO: "equally" distribute total_fee_cents
+    usable_items = order.usable_items
+    return {} if usable_items.empty?
+    return { usable_items.first.id => total_fee_cents } if usable_items.count == 1
+
     remaining_fee_cents = total_fee_cents
     quota = order_total_cents.to_r / total_fee_cents.to_r
 
-    items = order.usable_items.reject do |item|
+    items = usable_items.reject do |item|
       item.gross_total == 0
     end.map do |item|
       item_total_cents = ::Financials::MoneyHelpers.amount_to_cents(item.gross_total)
@@ -202,7 +225,10 @@ class PaymentProvider
       item = sorted_items.shift
       item[:fee] += 1
     end
-    items
+    items.inject({}) do |memo, item|
+      memo[item[:item].id] = item[:fee]
+      memo
+    end
   end
 
 end
