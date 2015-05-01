@@ -11,6 +11,8 @@ class UpdateBalancedPurchase
         create_new_charge(current_amount)
       end
     end
+  ensure
+    PaymentProvider.store_payment_fees(payment_provider, order: order)
   end
 
   def rollup_payment_amounts

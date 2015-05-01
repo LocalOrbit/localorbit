@@ -359,6 +359,14 @@ class Order < ActiveRecord::Base
     self.delivery_phone   = address.phone
   end
 
+  def usable_items
+    items.reject {|i| i.destroyed? || i.marked_for_destruction? }
+  end
+
+  def gross_total
+    usable_items.sum(&:gross_total)
+  end
+
   private
 
   def update_paid_at
@@ -376,10 +384,7 @@ class Order < ActiveRecord::Base
   end
 
   def update_total_cost
-    usable_items = items.reject {|i| i.destroyed? || i.marked_for_destruction? }
-
-    cost = usable_items.sum(&:gross_total)
-
+    cost = gross_total
     self.delivery_fees = calculate_delivery_fees(cost)
     self.total_cost    = calculate_total_cost(cost)
   end

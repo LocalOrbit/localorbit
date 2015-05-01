@@ -106,7 +106,7 @@ class PaymentProvider
 
     app_fee = Stripe::ApplicationFee.retrieve(charge.application_fee)
     if app_fee
-      app_fee.amount - app_fee.amount_refunded
+      ::Financials::MoneyHelpers.cents_to_amount(app_fee.amount - app_fee.amount_refunded)
     else
       "0".to_d
     end
@@ -131,7 +131,7 @@ class PaymentProvider
     when 'stripe'
       args[:stripe_id] = charge.try(:id)
       args[:stripe_refund_id] = refund.try(:id)
-      args[:stripe_payment_fee] = get_stripe_application_fee_on_charge(charge)
+      parent_payment.update stripe_payment_fee: get_stripe_application_fee_on_charge(charge)
     end
     Payment.create(args)
   end
@@ -170,6 +170,39 @@ class PaymentProvider
     when 'stripe'
       Stripe::Charge.retrieve(payment.stripe_id)
     end
+  end
+
+  def self.store_payment_fees(payment_provider, order:)
+    case payment_provider
+    when 'balanced'
+      
+    when 'stripe'
+      # distribute_fee ...
+    end
+  end
+
+  private
+
+  def distribute_fee(total_fee_cents, order)
+    order_total_cents = ::Financials::MoneyHelpers.amount_to_cents(order.gross_total)
+    return [] if order_total_cents == 0
+    remaining_fee_cents = total_fee_cents
+    quota = order_total_cents.to_r / total_fee_cents.to_r
+
+    items = order.usable_items.reject do |item|
+      item.gross_total == 0
+    end.map do |item|
+      item_total_cents = ::Financials::MoneyHelpers.amount_to_cents(item.gross_total)
+      item_fee_cents, remainder = item_total_cents.divmod(quota)
+      remaining_fee_cents -= item_fee_cents
+      { item: item, fee: item_fee_cents, remainder: remainder }
+    end
+    sorted_items = items.sort_by {|item| item[:remainder]}.reverse
+    remaining_fee_cents.times do 
+      item = sorted_items.shift
+      item[:fee] += 1
+    end
+    items
   end
 
 end

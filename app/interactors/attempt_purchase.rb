@@ -23,6 +23,8 @@ class AttemptPurchase
         context.fail!
 
         raise e if Rails.env.development?
+      ensure
+        PaymentProvider.store_payment_fees(payment_provider, order: order)
       end
     end
   end
