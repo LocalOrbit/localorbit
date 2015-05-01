@@ -19,7 +19,9 @@ class StoreOrderFees
   end
 
   def calculate_fees
-    order.items.each {|item| fees_for(item) }
+    order.items.each do |item| 
+      update_accounting_fees_for(item)
+    end
   end
 
   def cap_market_fees
@@ -42,13 +44,10 @@ class StoreOrderFees
     end
   end
 
-  def fees_for(item)
+  def update_accounting_fees_for(item)
     item.market_seller_fee      = calculated_fee(item, market.market_seller_fee)
     item.local_orbit_seller_fee = calculated_fee(item, market.local_orbit_seller_fee)
     item.local_orbit_market_fee = calculated_fee(item, market.local_orbit_market_fee)
-
-    item.payment_seller_fee     = calculated_fee(item, payment_seller_fee)
-    item.payment_market_fee     = calculated_fee(item, payment_market_fee)
   end
 
   def calculated_fee(item, fee)
