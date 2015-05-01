@@ -23,6 +23,7 @@ class PaymentProvider
         appears_on_statement_as: market.on_statement_as,
         meta: {'order number' => order.order_number}
       ) 
+      
     when 'stripe'
       customer = buyer_organization.stripe_customer_id
       source = bank_account.stripe_id
@@ -36,10 +37,11 @@ class PaymentProvider
               PaymentProvider::Stripe::FeeStructure.estimate_ach_processing_fee(amount)
             end
 
-      Stripe::Charge.create(amount: amount, currency: 'usd', 
+      charge = Stripe::Charge.create(amount: amount, currency: 'usd', 
                             source: source, customer: customer,
                             destination: destination, statement_descriptor: descriptor,
                             application_fee: fee)
+
     else
       raise "unknown payment provider: #{payment_provider}"
     end
@@ -93,8 +95,21 @@ class PaymentProvider
       args[:balanced_uri] = charge.try(:uri)
     when 'stripe'
       args[:stripe_id] = charge.try(:id)
+      args[:stripe_payment_fee] = get_stripe_application_fee_on_charge(charge)
+
     end
     Payment.create(args)
+  end
+
+  def self.get_stripe_application_fee_on_charge(charge)
+    return "0".to_d unless charge
+
+    app_fee = Stripe::ApplicationFee.retrieve(charge.application_fee)
+    if app_fee
+      app_fee.amount - app_fee.amount_refunded
+    else
+      "0".to_d
+    end
   end
 
   def self.create_refund_payment(payment_provider, charge:, market_id:, bank_account:, payer:,
@@ -116,6 +131,7 @@ class PaymentProvider
     when 'stripe'
       args[:stripe_id] = charge.try(:id)
       args[:stripe_refund_id] = refund.try(:id)
+      args[:stripe_payment_fee] = get_stripe_application_fee_on_charge(charge)
     end
     Payment.create(args)
   end
