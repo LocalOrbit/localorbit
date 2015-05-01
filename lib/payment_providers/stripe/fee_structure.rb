@@ -23,11 +23,11 @@ module PaymentProviders
       class << self
 
         def estimate_credit_card_processing_fee(amount_in_cents)
-          (amount_in_cents * CreditCard[:rate]) + CreditCard[:flat_fee]
+          (amount_in_cents * CreditCard[:rate]).round + ::Financials::MoneyHelpers.amount_to_cents(CreditCard[:flat_fee])
         end
 
         def estimate_ach_processing_fee(amount_in_cents)
-          ACH[:flat_fee]
+          ::Financials::MoneyHelpers.amount_to_cents(ACH[:flat_fee])
           # [
           #   (amount_in_cents * ACH[:rate]) + ACH[:flat_fee],
           #   ACH[:cap]

@@ -189,7 +189,7 @@ class PaymentProvider
               else
                 ::Financials::MoneyHelpers.cents_to_amount(fee_cents)
               end
-        item.update :"payment_#{fee_payer}_fee", fee
+        item.update :"payment_#{fee_payer}_fee" => fee
       end
     end
   end
