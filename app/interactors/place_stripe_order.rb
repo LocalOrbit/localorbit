@@ -2,14 +2,14 @@ class PlaceStripeOrder
   include Interactor::Organizer
 
   organize(
-    # CreateBalancedCustomerForEntity,
+    # CreateStripeCustomerForEntity, # TODO
     # EnsureCartIsNotEmpty,
     # CreateOrder,
-    # CreateTemporaryCreditCard,
+    # CreateTemporaryStripeCreditCard, #TODO
     # ApplyDiscountToOrderItems,
-    # StoreOrderFees,
+    # StoreOrderFees, #TODO
     # AttemptPurchaseOrderPurchase,
-    # AttemptBalancedPurchase,
+    # AttemptPurchase, # TODO
     # SendOrderEmails,
     # DeleteCart
   )
