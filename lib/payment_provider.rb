@@ -2,7 +2,6 @@ module PaymentProvider
   Implementations = {
     stripe: PaymentProvider::Stripe,
     balanced: PaymentProvider::Balanced
-    # test: PaymentProvider::TestProvider
   }
 
   class << self
@@ -20,18 +19,6 @@ module PaymentProvider
         user: user,
         order_params: order_params,
         cart: cart)
-
-      # raise "implement me"
-      # case payment_provider
-      # when 'balanced'
-      #   PlaceOrder.perform(payment_provider: payment_provider, entity: buyer_organization, buyer: user,
-      #                      order_params: order_params, cart: cart)
-      # when 'stripe'
-      #   PlaceStripeOrder.perform(payment_provider: payment_provider, entity: buyer_organization, buyer: user,
-      #                            order_params: order_params, cart: cart)
-      # else
-      #   raise "unknown payment provider: #{payment_provider}"
-      # end
     end
 
   end
