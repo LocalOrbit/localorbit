@@ -72,15 +72,10 @@ describe CreateTemporaryStripeCreditCard do
       before do
         org.update(stripe_customer_id: stripe_customer.id)
         delete_later stripe_customer
-        delete_later stripe_card_token
       end
 
       it "creates a new BankAccount and Stripe::Customer" do
-        binding.pry
-        
         result = subject.perform(order_params: order_params, cart: cart, order: order)
-        binding.pry
-        
         expect(result.success?).to be true
         
         bank_account_id = result.context[:order_params]["credit_card"]["id"]
