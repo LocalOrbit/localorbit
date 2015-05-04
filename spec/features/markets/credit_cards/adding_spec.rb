@@ -1,7 +1,8 @@
 require "spec_helper"
 
 feature "Adding credit card to a market", :js, :vcr do
-  let!(:market)         { create(:market, name: "Fake Market") }
+  # TODO: use payment_provider constants
+  let!(:market)         { create(:market, name: "Fake Market", payment_provider: 'balanced') }
   let!(:admin)          { create(:user, :admin) }
   let!(:market_manager) { create(:user, :market_manager, managed_markets: [market]) }
   let!(:org)            { create(:organization, name: "Fake Organization", markets: [market]) }

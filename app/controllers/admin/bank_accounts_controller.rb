@@ -1,6 +1,6 @@
 class Admin::BankAccountsController < AdminController
   include BankAccountEntity
-  before_action :set_balanced_flag
+  before_action :set_payment_provider
 
   def index
     @bank_accounts = @entity.bank_accounts.visible
@@ -57,7 +57,12 @@ class Admin::BankAccountsController < AdminController
     )
   end
 
-  def set_balanced_flag
-    @balanced = true
+  def set_payment_provider
+    @payment_provider = case @entity
+                        when Market
+                          @entity.payment_provider
+                        when Organization
+                          @entity.markets.first.payment_provider
+                        end
   end
 end

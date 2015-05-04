@@ -1,7 +1,7 @@
 require "spec_helper"
 
 describe Admin::BankAccountsController, :vcr do
-  let!(:market)                   { create(:market) }
+  let!(:market)                   { create(:market, payment_provider: 'the provider') }
   let(:admin)                     { create(:user, :admin) }
   let(:market_manager_member)     { create(:user, managed_markets: [market]) }
   let(:market_manager_non_member) { create(:user, :market_manager) }
@@ -52,73 +52,55 @@ describe Admin::BankAccountsController, :vcr do
     end
 
     context "for market" do
+      let(:bank_account) { create(:bank_account, :checking, bankable: market) }
+
       before do
         CreateBalancedCustomerForEntity.perform(market: market)
       end
 
-      describe "#index" do
-        it_behaves_like "an action restricted to admin or market manager", lambda { get :index, market_id: market.id }
-      end
+      {
+        index:   lambda { get :index, market_id: market.id },
+        new:     lambda { get :index, market_id: market.id },
+        create:  lambda { post :create, {market_id: market.id}.merge(valid_params) },
+        destroy: lambda { delete :destroy, market_id: market.id, id: bank_account.id }
+      }.each do |(action, block)|
+        describe "##{action}" do
+          it_behaves_like "an action restricted to admin or market manager", block
 
-      describe "#new" do
-        it_behaves_like "an action restricted to admin or market manager", lambda { get :new, market_id: market.id }
-      end
-
-      describe "#create" do
-        it_behaves_like "an action restricted to admin or market manager", lambda { post :create, {market_id: market.id}.merge(valid_params) }
-      end
-
-      describe "#destroy" do
-        let(:bank_account) { create(:bank_account, :checking, bankable: market) }
-        it_behaves_like "an action restricted to admin or market manager", lambda { delete :destroy, market_id: market.id, id: bank_account.id }
-      end
-    end
-
-    context "for seller organization" do
-      before do
-        CreateBalancedCustomerForEntity.perform(organization: organization)
-      end
-
-      describe "#index" do
-        it_behaves_like "an action restricted to admin, market manager, member", lambda { get :index, organization_id: organization.id }
-      end
-
-      describe "#new" do
-        it_behaves_like "an action restricted to admin, market manager, member", lambda { get :index, organization_id: organization.id }
-      end
-
-      describe "#create" do
-        it_behaves_like "an action restricted to admin, market manager, member", lambda { post :create, {organization_id: organization.id}.merge(valid_params) }
-      end
-
-      describe "#destroy" do
-        let(:bank_account) { create(:bank_account, :checking, bankable: organization) }
-        it_behaves_like "an action restricted to admin, market manager, member", lambda { delete :destroy, organization_id: organization.id, id: bank_account.id }
+          it "sets the payment provider" do
+            sign_in admin
+            instance_exec(&block)
+            expect(assigns[:payment_provider]).to eq('the provider')
+          end
+        end
       end
     end
 
-    context "for buyer organization" do
-      let(:organization) { create(:organization, :buyer, markets: [market]) }
-
-      before do
-        CreateBalancedCustomerForEntity.perform(organization: organization)
-      end
-
-      describe "#index" do
-        it_behaves_like "an action restricted to admin, market manager, member", lambda { get :index, organization_id: organization.id }
-      end
-
-      describe "#new" do
-        it_behaves_like "an action restricted to admin, market manager, member", lambda { get :index, organization_id: organization.id }
-      end
-
-      describe "#create" do
-        it_behaves_like "an action restricted to admin, market manager, member", lambda { post :create, {organization_id: organization.id}.merge(valid_params) }
-      end
-
-      describe "#destroy" do
+    [ :buyer, :seller ].each do |role|
+      context "for #{role} organization" do
+        let(:organization) { create(:organization, role, markets: [market]) }
         let(:bank_account) { create(:bank_account, :checking, bankable: organization) }
-        it_behaves_like "an action restricted to admin, market manager, member", lambda { delete :destroy, organization_id: organization.id, id: bank_account.id }
+
+        before do
+          CreateBalancedCustomerForEntity.perform(organization: organization)
+        end
+
+        {
+          index:   lambda { get :index, organization_id: organization.id },
+          new:     lambda { get :index, organization_id: organization.id },
+          create:  lambda { post :create, {organization_id: organization.id}.merge(valid_params) },
+          destroy: lambda { delete :destroy, organization_id: organization.id, id: bank_account.id }
+        }.each do |(action, block)|
+          describe "##{action}" do
+            it_behaves_like "an action restricted to admin, market manager, member", block
+
+            it "sets the payment provider" do
+              sign_in admin
+              instance_exec(&block)
+              expect(assigns[:payment_provider]).to eq('the provider')
+            end
+          end
+        end
       end
     end
   end
@@ -155,73 +137,53 @@ describe Admin::BankAccountsController, :vcr do
     end
 
     context "for market" do
+      let(:credit_card) { create(:bank_account, :credit_card, bankable: market) }
+
       before do
         CreateBalancedCustomerForEntity.perform(market: market)
       end
 
-      describe "#index" do
-        it_behaves_like "an action restricted to admin or market manager", lambda { get :index, market_id: market.id }
-      end
-
-      describe "#new" do
-        it_behaves_like "an action restricted to admin or market manager", lambda { get :new, market_id: market.id }
-      end
-
-      describe "#create" do
-        it_behaves_like "an action restricted to admin or market manager", lambda { post :create, {market_id: market.id}.merge(valid_params) }
-      end
-
-      describe "#destroy" do
-        let(:credit_card) { create(:bank_account, :credit_card, bankable: market) }
-        it_behaves_like "an action restricted to admin or market manager", lambda { delete :destroy, market_id: market.id, id: credit_card.id }
-      end
-    end
-
-    context "for seller organization" do
-      before do
-        CreateBalancedCustomerForEntity.perform(organization: organization)
-      end
-
-      describe "#index" do
-        it_behaves_like "an action restricted to admin, market manager, member", lambda { get :index, organization_id: organization.id }
-      end
-
-      describe "#new" do
-        it_behaves_like "an action restricted to admin, market manager, member", lambda { get :index, organization_id: organization.id }
-      end
-
-      describe "#create" do
-        it_behaves_like "an action restricted to admin, market manager, member", lambda { post :create, {organization_id: organization.id}.merge(valid_params) }
-      end
-
-      describe "#destroy" do
-        let(:credit_card) { create(:bank_account, :credit_card, bankable: organization) }
-        it_behaves_like "an action restricted to admin, market manager, member", lambda { delete :destroy, organization_id: organization.id, id: credit_card.id }
+      {
+        index:   lambda { get :index, market_id: market.id },
+        new:     lambda { get :index, market_id: market.id },
+        create:  lambda { post :create, {market_id: market.id}.merge(valid_params) },
+        destroy: lambda { delete :destroy, market_id: market.id, id: credit_card.id }
+      }.each do |(action, block)|
+        describe "##{action}" do
+          it_behaves_like "an action restricted to admin or market manager", block
+          it "sets the payment provider" do
+            sign_in admin
+            instance_exec(&block)
+            expect(assigns[:payment_provider]).to eq('the provider')
+          end
+        end
       end
     end
 
-    context "for buyer organization" do
-      let(:organization) { create(:organization, :buyer, markets: [market]) }
-
-      before do
-        CreateBalancedCustomerForEntity.perform(organization: organization)
-      end
-
-      describe "#index" do
-        it_behaves_like "an action restricted to admin, market manager, member", lambda { get :index, organization_id: organization.id }
-      end
-
-      describe "#new" do
-        it_behaves_like "an action restricted to admin, market manager, member", lambda { get :index, organization_id: organization.id }
-      end
-
-      describe "#create" do
-        it_behaves_like "an action restricted to admin, market manager, member", lambda { post :create, {organization_id: organization.id}.merge(valid_params) }
-      end
-
-      describe "#destroy" do
+    [ :buyer, :seller ].each do |role|
+      context "for #{role} organization" do
+        let(:organization) { create(:organization, role, markets: [market]) }
         let(:credit_card) { create(:bank_account, :credit_card, bankable: organization) }
-        it_behaves_like "an action restricted to admin, market manager, member", lambda { delete :destroy, organization_id: organization.id, id: credit_card.id }
+
+        before do
+          CreateBalancedCustomerForEntity.perform(organization: organization)
+        end
+
+        {
+          index:   lambda { get :index, organization_id: organization.id },
+          new:     lambda { get :index, organization_id: organization.id },
+          create:  lambda { post :create, {organization_id: organization.id}.merge(valid_params) },
+          destroy: lambda { delete :destroy, organization_id: organization.id, id: credit_card.id }
+        }.each do |(action, block)|
+          describe "##{action}" do
+            it_behaves_like "an action restricted to admin, market manager, member", block
+            it "sets the payment provider" do
+              sign_in admin
+              instance_exec(&block)
+              expect(assigns[:payment_provider]).to eq('the provider')
+            end
+          end
+        end
       end
     end
   end
