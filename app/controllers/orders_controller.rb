@@ -18,7 +18,6 @@ class OrdersController < ApplicationController
       flash[:discount_message] = @apply_discount.context[:message]
       redirect_to cart_path
     else
-      # @placed_order = PlaceOrder.perform(entity: current_cart.organization, buyer: current_user, order_params: order_params, cart: current_cart)
        @placed_order = PaymentProvider.place_order(current_market.payment_provider, 
                                                    buyer_organization: current_cart.organization,
                                                    user: current_user, 
