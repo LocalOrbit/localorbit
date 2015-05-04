@@ -5,7 +5,7 @@ class CartsController < ApplicationController
   before_action :require_current_delivery
   before_action :require_cart
   before_action :hide_admin_navigation
-  before_action :set_balanced_flag
+  before_action :set_payment_provider
 
   def show
     respond_to do |format|
@@ -60,7 +60,7 @@ class CartsController < ApplicationController
 
   private
 
-  def set_balanced_flag
+  def set_payment_provider
     @payment_provider = current_market.payment_provider
   end
 end
