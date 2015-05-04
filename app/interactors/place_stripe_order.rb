@@ -2,9 +2,9 @@ class PlaceStripeOrder
   include Interactor::Organizer
 
   organize(
-    # CreateStripeCustomerForEntity, # TODO
-    # EnsureCartIsNotEmpty,
-    # CreateOrder,
+    CreateStripeCustomerForEntity, 
+    EnsureCartIsNotEmpty,
+    CreateOrder,
     # CreateTemporaryStripeCreditCard, #TODO
     # ApplyDiscountToOrderItems,
     # StoreOrderFees, #TODO
