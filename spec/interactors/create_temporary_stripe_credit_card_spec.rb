@@ -29,27 +29,8 @@ describe CreateTemporaryStripeCreditCard do
   context "integration tests" do
     subject { described_class }
 
-    context "credit card not yet on file" do
-      let!(:org) { create(:organization, name: "Customer Creation Tests") }
-      let!(:cart) { create(:organization, name: "Customer Creation Tests") }
-
-      it "creates a new Stripe customer and associates it with the entity" do
-        result = subject.perform(entity: org)
-
-        expect(result.success?).to be true
-        expect(org.stripe_customer_id).to be
-
-        customer = Stripe::Customer.retrieve(org.stripe_customer_id)
-        expect(customer).to be
-        delete_later customer
-        expect(customer.description).to eq org.name
-        expect(customer.metadata["lo.entity_type"]).to eq 'organization'
-        expect(customer.metadata["lo.entity_id"]).to eq org.id.to_s
-      end
-    end
-
     context "when Stripe customer already associated with the entity" do
-      let!(:org)       { create(:organization, name: "Customer Creation Testes") }
+      let!(:org)       { create(:organization, name: "Customer for make test of temp credit cards") }
       let!(:cart)      { create(:cart, organization: org) }
       let!(:order) { create(:order) }
 
@@ -60,58 +41,61 @@ describe CreateTemporaryStripeCreditCard do
             account_type: "visa",
             last_four: "1111",
             bank_name: "House of Test",
-            name: "My Test Visa"
+            name: "My Test Visa",
+            expiration_month: "06",
+            expiration_year: "2016",
+            stripe_tok: stripe_card_token.id
           )
         )
       }
 
+      let!(:stripe_card_token) {
+        Stripe::Token.create(
+          card: {
+            number: "4012888888881881", 
+            exp_month: 5, 
+            exp_year: 2016, 
+            cvc: "314"
+          }
+        )
+      }
+
+      let!(:stripe_customer) { Stripe::Customer.create(
+          description: org.name,
+          metadata: {
+            "lo.entity_id" => org.id,
+            "lo.entity_type" => 'organization'
+          }
+        ) 
+      }
+
+      before do
+        org.update(stripe_customer_id: stripe_customer.id)
+        delete_later stripe_customer
+        delete_later stripe_card_token
+      end
+
       it "creates a new BankAccount and Stripe::Customer" do
-        raise "WIP"
-        # binding.pry
-        #
-        # result = subject.perform(order_params: order_params, cart: card, order: order)
-        #
-        # expect(result.success?).to be true
-        #
-        # bank_account_id = result.context[:order_params]["credit_card"]["id"]
-        # bank_account = BankAccount.find(bank_account_id)
-        # Stripe::Customer.    bank_account.stripe_id
-        # expect(result.context[:order_params]["credit_card"]["id"]).to be
+        binding.pry
+        
+        result = subject.perform(order_params: order_params, cart: cart, order: order)
+        binding.pry
+        
+        expect(result.success?).to be true
+        
+        bank_account_id = result.context[:order_params]["credit_card"]["id"]
+        expect(bank_account_id).to be
+
+        bank_account = BankAccount.find(bank_account_id)
+        expect(bank_account).to be
+        expect(bank_account.bankable).to eq org
+        expect(bank_account.deleted_at).to be
+        expect(bank_account.stripe_id).to be
+
+        card = stripe_customer.sources.retrieve(bank_account.stripe_id)
+        expect(card).to be
+
       end
     end
   end
-
-  # context "interaction-based tests" do
-    # context "when Stripe customer doesn't yet exist" do
-      # let!(:entity) { create(:organization, name: "Fake Organization") }
-      
-      # subject { CreateBalancedCustomerForEntity.perform(entity: entity) }
-      
-      # it "creates a balanced customer" do
-      #   expect(Balanced::Customer).to receive(:new).and_return(double("Balanced Customer", save: double("Balanced Customer", uri: "/balanced-customer-uri")))
-      #
-      #   expect {
-      #     subject
-      #   }.to change {
-      #     entity.balanced_customer_uri
-      #   }.from(nil).to("/balanced-customer-uri")
-      # end
-    # end
-
-    # context "stripe customer already exists" do
-      # let!(:entity) { create(:organization, name: "Fake Organization", balanced_customer_uri: "/existing-balanced-customer") }
-      #
-      # subject { CreateBalancedCustomerForEntity.perform(entity: entity) }
-      #
-      # it "does not create a balanced customer" do
-      #   expect(Balanced::Customer).to_not receive(:new)
-      #
-      #   expect {
-      #     subject
-      #   }.to_not change {
-      #     entity.balanced_customer_uri
-      #   }.from("/existing-balanced-customer")
-      # end
-    # end
-  # end # end interaction tests
 end

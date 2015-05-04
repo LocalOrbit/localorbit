@@ -75,14 +75,18 @@ class CreateTemporaryStripeCreditCard
     expiration_year: String,
   }
 
-  SubmittedCardParams = CardParams.merge(
-    id: String,
-    save_for_future: String,
-    stripe_tok: String
-  )
+  SubmittedCardParams = RSchema.schema do
+    CardParams.merge(
+      _?(:id) => String,
+      _?(:save_for_future) => String,
+      :stripe_tok => String
+    )
+  end
 
-  NewCardParams = CardParams.merge(
-    delete_at: Time
-  )
+  NewCardParams = RSchema.schema do
+    CardParams.merge(
+      _?(:deleted_at) => Time
+    )
+  end
 
 end
