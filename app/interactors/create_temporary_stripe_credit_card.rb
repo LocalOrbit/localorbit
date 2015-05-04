@@ -3,7 +3,7 @@ class CreateTemporaryStripeCreditCard
 
   def perform
     # This interactor is only for credit cards
-    return unless "credit card" == order_params["payment_method"]
+    return unless "credit card" == order_params[:payment_method]
 
     credit_card_params = order_params["credit_card"].to_hash.symbolize_keys
     SchemaValidation.validate!(SubmittedCardParams, credit_card_params)

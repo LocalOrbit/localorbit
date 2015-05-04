@@ -25,31 +25,30 @@ describe CreateTemporaryStripeCreditCard do
     end
   end
 
+  let(:cart)      { create(:cart, organization: org) }
+  let(:org)       { create(:organization, name: "Customer for make test of temp credit cards") }
+  let(:order) { create(:order) }
+  let(:payment_method) { "credit card" }
+  let(:order_params) {
+    HashWithIndifferentAccess.new(
+      payment_method: payment_method,
+      credit_card: HashWithIndifferentAccess.new(
+        account_type: "visa",
+        last_four: "1111",
+        bank_name: "House of Test",
+        name: "My Test Visa",
+        expiration_month: "06",
+        expiration_year: "2016"
+      )
+    )
+  }
 
   context "integration tests" do
     subject { described_class }
 
     context "when Stripe customer already associated with the entity" do
-      let!(:org)       { create(:organization, name: "Customer for make test of temp credit cards") }
-      let!(:cart)      { create(:cart, organization: org) }
-      let!(:order) { create(:order) }
 
-      let(:order_params) {
-        HashWithIndifferentAccess.new(
-          payment_method: "credit card",
-          credit_card: HashWithIndifferentAccess.new(
-            account_type: "visa",
-            last_four: "1111",
-            bank_name: "House of Test",
-            name: "My Test Visa",
-            expiration_month: "06",
-            expiration_year: "2016",
-            stripe_tok: stripe_card_token.id
-          )
-        )
-      }
-
-      let!(:stripe_card_token) {
+      let(:stripe_card_token) {
         Stripe::Token.create(
           card: {
             number: "4012888888881881", 
@@ -60,7 +59,7 @@ describe CreateTemporaryStripeCreditCard do
         )
       }
 
-      let!(:stripe_customer) { Stripe::Customer.create(
+      let(:stripe_customer) { Stripe::Customer.create(
           description: org.name,
           metadata: {
             "lo.entity_id" => org.id,
@@ -70,6 +69,7 @@ describe CreateTemporaryStripeCreditCard do
       }
 
       before do
+        order_params[:credit_card][:stripe_tok] = stripe_card_token.id
         org.update(stripe_customer_id: stripe_customer.id)
         delete_later stripe_customer
       end
@@ -92,5 +92,48 @@ describe CreateTemporaryStripeCreditCard do
 
       end
     end
+
+
+    context "non-CC payment" do
+      let(:order_params) {
+        HashWithIndifferentAccess.new(
+          payment_method: "other",
+        )
+      }
+
+      it "doesn't process" do
+        result = subject.perform(order_params: order_params, cart: cart, order: order)
+        expect(result.success?).to be true
+      end
+    end
+
+    context "utilizing an existing card or account" do
+      before do
+        order_params[:credit_card][:id] = "123"
+        order_params[:credit_card][:stripe_tok] = "something"
+      end
+      it "doesn't process" do
+        result = subject.perform(order_params: order_params, cart: cart, order: order)
+        expect(result.success?).to be true
+      end
+    end
+
+    context "bank account already exists for given card info" do
+      let!(:bank_account) { create(:bank_account, :credit_card,
+                                  bankable: org,
+                                  last_four: "1111",
+                                  bank_name: "House of Test",
+                                  name: "My Test Visa") }
+      
+      it "sets that bank account" do
+        order_params[:credit_card][:stripe_tok] = "not matter"
+        result = subject.perform(order_params: order_params, cart: cart, order: order)
+        expect(result.success?).to be true
+
+        bank_account_id = result.context[:order_params]["credit_card"]["id"]
+        expect(bank_account_id).to eq bank_account.id
+      end
+    end
   end
+
 end
