@@ -6,15 +6,15 @@ class CreateTemporaryStripeCreditCard
     return unless "credit card" == order_params[:payment_method]
 
     credit_card_params = order_params["credit_card"].to_hash.symbolize_keys
-    SchemaValidation.validate!(SubmittedCardParams, credit_card_params)
 
     # ...only for cards that aren't already on file:
     return unless credit_card_params[:id].blank?
+    SchemaValidation.validate!(SubmittedCardParams, credit_card_params)
 
     @org = cart.organization
 
     # Munge card params:
-    should_save_card = credit_card_params.delete(:save_for_future) == "on"
+    should_save_card = credit_card_params.delete(:save_for_future) == "true"
     unless should_save_card
       credit_card_params.merge!(deleted_at: Time.current)
     end

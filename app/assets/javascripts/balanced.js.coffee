@@ -122,3 +122,39 @@ $.getScript "https://js.balancedpayments.com/v1/balanced.js", ->
           messages = if error.extras? then error.extras else error
           displayErrors($form, messages)
           $('input[type="submit"]').removeAttr("disabled")
+
+
+class @PaymentProvider
+
+  @tokenize: (fields, type, $container) ->
+    deferred = $.Deferred()
+
+    balanced.init($container.data("balanced-marketplace-uri"))
+
+    params =
+      card_number: fields.card_number,
+      expiration_month: fields.expiration_month,
+      expiration_year: fields.expiration_year,
+      security_code: fields.security_code,
+
+    balanced[type].create params, (response) ->
+      if response.status == 201
+        data = response.data
+        result =
+          balanced_uri:     data.uri,
+          last_four:        data.last_four,
+          expiration_month: data.expiration_month,
+          expiration_year:  data.expiration_year,
+          account_type:     data.card_type,
+          bank_name:        data.brand
+        deferred.resolve(result)
+      else
+        messages = if response.error.extras? then response.error.extras else response.error
+        errors = []
+        for param, message of messages
+          errors.push
+            param: param,
+            message: message
+        deferred.reject(errors)
+
+    deferred.promise()

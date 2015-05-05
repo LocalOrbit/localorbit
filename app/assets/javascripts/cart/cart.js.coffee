@@ -1,20 +1,27 @@
+displayError = (field, error) ->
+  $("#payment-provider-errors").append("<li>#{field}: #{error}</li>")
+
+displayGenericError = (message) ->
+  $("#payment-provider-errors").append("<li>#{message}</li>")
+
 displayErrors = ($form, errors)->
   setupErrorsContainer($form)
 
-  for key of errors
-    field_name = key.replace(/_/g, " ")
-    field_name = field_name.charAt(0).toUpperCase() + field_name.substr(1)
-    $form.find("[name^=#{key}]").wrap('<div class="field_with_errors"/>')
-    displayError(field_name, errors[key])
-
-displayError = (field, error) ->
-  $("#balanced-js-errors").append("<li>#{field}: #{error}</li>")
+  for error in errors
+    if error.param
+      key = error.param
+      field_name = key.replace(/_/g, " ")
+      field_name = field_name.charAt(0).toUpperCase() + field_name.substr(1)
+      $form.find("[name^=#{key}]").wrap('<div class="field_with_errors"/>')
+      displayError(field_name, error.message)
+    else
+      displayGenericError(error.message)
 
 setupErrorsContainer = ($form) ->
-  if $("#balanced-js-errors").length
-    $("#balanced-js-errors").html("")
+  if $("#payment-provider-errors").length
+    $("#payment-provider-errors").html("")
   else
-    $form.prepend('<ul id="balanced-js-errors" class="form-errors">')
+    $form.prepend('<ul id="payment-provider-errors" class="form-errors">')
 
 $ ->
   return unless $(".cart_item").length
@@ -264,7 +271,7 @@ $ ->
     buttonState = !$paymentFields.data('available') == true
     $("#place-order-button").attr("disabled", buttonState)
 
-  $("#balanced_card_number").keyup (e) ->
+  $("#provider_card_number").keyup (e) ->
     if $(this).val() != ''
       $("#place-order-button").attr("disabled", false)
     else
@@ -274,7 +281,7 @@ $ ->
     e.preventDefault()
     $(this).prop("disabled", true)
 
-    $("#balanced-js-errors").html("")
+    $("#payment-provider-errors").html("")
     $(".field_with_errors :input").unwrap()
 
     isSubmittingUnsavedCreditCard = ()->
@@ -284,27 +291,25 @@ $ ->
       $(".quantity input").prop("readonly", true)
 
       newCard = {
-        card_number: $("#balanced_card_number").val(),
+        card_number: $("#provider_card_number").val(),
         expiration_month: $("#expiration_month").val(),
         expiration_year: $("#expiration_year").val(),
-        security_code: $("#balanced_security_code").val()
+        security_code: $("#provider_security_code").val()
       }
 
-      balanced.init($("#balanced-payments-uri").data("balanced-marketplace-uri"))
-      balanced.card.create newCard, (response) ->
-        if response.status == 201
-          $form = $("#order-form")
+      PaymentProvider.tokenize(newCard, "card", $("#payment-provider-container"))
 
+        .done (params) ->
+
+          $form = $("#order-form")
           accountFields = {
             "name" : "order[credit_card][name]",
             "save_for_future" : "order[credit_card][save_for_future]",
           }
-
           accountFieldData = {
-            name: $("#balanced_account_name").val(),
-            save_for_future: $("#save_for_future").val()
+            name: $("#provider_account_name").val(),
+            save_for_future: "true" # $("#save_for_future").is(":checked")
           }
-
           for key, field of accountFields
             $("<input>").attr(
               type: 'hidden',
@@ -312,31 +317,22 @@ $ ->
               value: accountFieldData[key]
             ).appendTo($form)
 
-          balancedFields = {
-            "brand" : "order[credit_card][bank_name]",
-            "last_four" : "order[credit_card][last_four]",
-            "uri" : "order[credit_card][balanced_uri]",
-            "card_type" : "order[credit_card][account_type]",
-            "expiration_month" : "order[credit_card][expiration_month]",
-            "expiration_year" : "order[credit_card][expiration_year]",
-          }
-
-          for key, field of balancedFields
+          for key, value of params
             $("<input>").attr(
               type: 'hidden',
-              name: field,
-              value: response.data[key]
+              name: "order[credit_card][#{key}]",
+              value: value
             ).appendTo($form)
-
-
-          $("#balanced-payments-uri").prop("disabled", true)
+          $("#payment-provider-container").prop("disabled", true)
           $form.submit()
 
-        else
-          messages = if response.error.extras? then response.error.extras else response.error
-          displayErrors($("#balanced-payments-uri"), messages)
+        .fail (errors) ->
+
+          displayErrors($("#payment-provider-container"), errors)
           $("#place-order-button").prop("disabled", false)
+
     else
+
       $(".quantity input").prop("readonly", true)
       $("#order-form").submit()
 
