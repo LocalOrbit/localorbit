@@ -125,6 +125,7 @@ GEM
       execjs
     coffee-script-source (1.8.0)
     color (1.7.1)
+    colorize (0.7.7)
     compass (0.12.7)
       chunky_png (~> 1.2)
       fssm (>= 0.2.7)
@@ -266,6 +267,12 @@ GEM
     kaminari (0.16.1)
       actionpack (>= 3.0.0)
       activesupport (>= 3.0.0)
+    konacha (3.3.0)
+      actionpack (>= 3.1, < 5)
+      capybara
+      colorize
+      railties (>= 3.1, < 5)
+      sprockets
     launchy (2.4.2)
       addressable (~> 2.3)
     listen (2.7.9)
@@ -523,6 +530,7 @@ DEPENDENCIES
   jquery-ui-rails
   jwt
   kaminari
+  konacha
   launchy
   mapbox-rails
   newrelic-dragonfly

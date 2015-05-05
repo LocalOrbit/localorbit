@@ -92,6 +92,7 @@ group :development, :test do
   gem "launchy"
   gem "guard-rspec"
   gem "awesome_print"
+  gem "konacha"
 end
 
 group :test do
