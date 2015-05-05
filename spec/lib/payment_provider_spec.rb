@@ -19,7 +19,9 @@ describe PaymentProvider do
 
 
   [
-    :balanced
+    PaymentProvider::Balanced.id,
+    PaymentProvider::Stripe.id,
+
   ].each do |provider_name|
     provider_object = PaymentProvider.for(provider_name)
 
@@ -32,7 +34,7 @@ describe PaymentProvider do
       }
       it "delegates to #{provider_object.name}.place_order" do
         expect(provider_object).to receive(:place_order).with(params)
-        PaymentProvider.place_order :balanced, params
+        PaymentProvider.place_order provider_name, params
       end
     end
 

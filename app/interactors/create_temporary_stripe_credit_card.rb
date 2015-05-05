@@ -3,7 +3,7 @@ class CreateTemporaryStripeCreditCard
 
   def perform
     # This interactor is only for credit cards
-    return unless "credit card" == order_params["payment_method"]
+    return unless "credit card" == order_params[:payment_method]
 
     credit_card_params = order_params["credit_card"].to_hash.symbolize_keys
     SchemaValidation.validate!(SubmittedCardParams, credit_card_params)
@@ -75,14 +75,18 @@ class CreateTemporaryStripeCreditCard
     expiration_year: String,
   }
 
-  SubmittedCardParams = CardParams.merge(
-    id: String,
-    save_for_future: String,
-    stripe_tok: String
-  )
+  SubmittedCardParams = RSchema.schema do
+    CardParams.merge(
+      _?(:id) => String,
+      _?(:save_for_future) => String,
+      :stripe_tok => String
+    )
+  end
 
-  NewCardParams = CardParams.merge(
-    delete_at: Time
-  )
+  NewCardParams = RSchema.schema do
+    CardParams.merge(
+      _?(:deleted_at) => Time
+    )
+  end
 
 end

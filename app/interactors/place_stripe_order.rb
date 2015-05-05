@@ -5,8 +5,8 @@ class PlaceStripeOrder
     CreateStripeCustomerForEntity, 
     EnsureCartIsNotEmpty,
     CreateOrder,
-    # CreateTemporaryStripeCreditCard, #TODO
-    # ApplyDiscountToOrderItems,
+    CreateTemporaryStripeCreditCard, 
+    ApplyDiscountToOrderItems,
     # StoreOrderFees, #TODO
     # AttemptPurchaseOrderPurchase,
     # AttemptPurchase, # TODO
