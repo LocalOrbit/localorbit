@@ -19,11 +19,12 @@ describe StoreOrderFees do
   let!(:cart_item2)        { create(:cart_item, cart: cart, product: product2, quantity: 15) }
   let!(:cart_item3)        { create(:cart_item, cart: cart, product: product3, quantity: 10) }
   let(:params)            { {payment_method: "purchase order"} }
+  let(:payment_provider) { PaymentProvider::Balanced.id }
 
   subject do
     order = CreateOrder.perform(order_params: params, cart: cart, buyer: user).order
     order.update(payment_method: params[:payment_method])
-    StoreOrderFees.perform(order_params: params, cart: cart, order: order).order.reload.items.index_by {|item| item.product_id }
+    StoreOrderFees.perform(payment_provider: payment_provider, order_params: params, cart: cart, order: order).order.reload.items.index_by {|item| item.product_id }
   end
 
   context "discounts" do
@@ -31,7 +32,7 @@ describe StoreOrderFees do
       order_item = create(:order_item, product: product1, quantity: 10, discount_market: 1.00)
       discounted_order = create(:order, market: market, items: [order_item])
 
-      StoreOrderFees.perform(order_params: params, cart: cart, order: discounted_order).order.reload.items.index_by {|item| item.product_id }
+      StoreOrderFees.perform(payment_provider: payment_provider, order_params: params, cart: cart, order: discounted_order).order.reload.items.index_by {|item| item.product_id }
 
       item = discounted_order.items.first # 69.90
       expect(item.market_seller_fee.to_f).to eq(6.89)
@@ -94,6 +95,33 @@ describe StoreOrderFees do
       expect(item.local_orbit_market_fee).to eq(0.9)
       expect(item.payment_seller_fee).to eq(3.6)
       expect(item.payment_market_fee).to eq(4.05)
+    end
+
+    context "using Stripe payment provider" do
+      let(:payment_provider) { PaymentProvider::Stripe.id }
+
+      it "captures the fees at order creation" do
+        item = subject[product1.id] # 100
+        expect(item.market_seller_fee).to eq(10)
+        expect(item.local_orbit_seller_fee).to eq(1.5)
+        expect(item.local_orbit_market_fee).to eq(1)
+        expect(item.payment_seller_fee).to eq(0)
+        expect(item.payment_market_fee).to eq(0)
+
+        item = subject[product2.id] # 105
+        expect(item.market_seller_fee).to eq(10.5)
+        expect(item.local_orbit_seller_fee).to eq(1.58)
+        expect(item.local_orbit_market_fee).to eq(1.05)
+        expect(item.payment_seller_fee).to eq(0)
+        expect(item.payment_market_fee).to eq(0)
+
+        item = subject[product3.id] # 90
+        expect(item.market_seller_fee).to eq(9)
+        expect(item.local_orbit_seller_fee).to eq(1.35)
+        expect(item.local_orbit_market_fee).to eq(0.9)
+        expect(item.payment_seller_fee).to eq(0)
+        expect(item.payment_market_fee).to eq(0)
+      end
     end
   end
 

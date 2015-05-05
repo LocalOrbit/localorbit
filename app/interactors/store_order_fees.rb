@@ -46,8 +46,10 @@ class StoreOrderFees
     item.market_seller_fee      = calculated_fee(item, market.market_seller_fee)
     item.local_orbit_seller_fee = calculated_fee(item, market.local_orbit_seller_fee)
     item.local_orbit_market_fee = calculated_fee(item, market.local_orbit_market_fee)
-    item.payment_seller_fee     = calculated_fee(item, payment_seller_fee)
-    item.payment_market_fee     = calculated_fee(item, payment_market_fee)
+    if PaymentProvider.is_balanced?(payment_provider)
+      item.payment_seller_fee     = calculated_fee(item, payment_seller_fee)
+      item.payment_market_fee     = calculated_fee(item, payment_market_fee)
+    end
   end
 
   def calculated_fee(item, fee)
