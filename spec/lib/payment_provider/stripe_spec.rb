@@ -192,4 +192,11 @@ describe PaymentProvider::Stripe do
 
   end
 
+  describe ".store_payment_fees" do
+    it "does ...something" do
+      pending
+    end
+  end
+
+
 end

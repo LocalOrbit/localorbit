@@ -65,6 +65,23 @@ module PaymentProvider
                                           'lo.order_number' => order.order_number })
       end
 
+      def store_payment_fees(order:)
+        # total_fee = order.payments.where(payment_type: 'order').sum(:stripe_payment_fee)
+        # total_fee_cents = ::Financials::MoneyHelpers.amount_to_cents(total_fee)
+        # fees = distribute_fee(total_fee_cents, order)
+        #
+        # fee_payer = order.market.payment_fee_payer
+        # order.items.each do |item|
+        #   fee_cents = fees[item.id]
+        #   fee = if fee_cents.nil?
+        #           0.to_d
+        #         else
+        #           ::Financials::MoneyHelpers.cents_to_amount(fee_cents)
+        #         end
+        #   item.update :"payment_#{fee_payer}_fee" => fee
+        # end
+      end
+
     end
     
   end

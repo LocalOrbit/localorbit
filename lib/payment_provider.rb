@@ -57,5 +57,9 @@ module PaymentProvider
         payment: payment,
         order: order)
     end
+
+    def store_payment_fees(payment_provider, order:)
+      PaymentProvider.for(payment_provider).store_payment_fees(order: order)
+    end
   end
 end

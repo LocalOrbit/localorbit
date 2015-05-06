@@ -135,4 +135,10 @@ describe PaymentProvider::Balanced do
 
   end
 
+  describe ".store_payment_fees" do
+    it "does nothing" do
+      expect(subject.store_payment_fees(order: "whatever")).to be nil
+    end
+  end
+
 end

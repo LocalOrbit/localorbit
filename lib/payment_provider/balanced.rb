@@ -49,6 +49,10 @@ module PaymentProvider
         charge.refund
       end
 
+      def store_payment_fees(order:)
+        # Intentional no-op for Balanced provider.
+      end
+
     end
   end
 end

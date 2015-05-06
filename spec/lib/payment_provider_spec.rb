@@ -108,6 +108,15 @@ describe PaymentProvider do
       end
     end
 
+    describe ".store_payment_fees" do
+      let(:params) { { order: "the order" } }
+
+      it "delegates to #{provider_object.name}.store_payment_fees" do
+        expect(provider_object).to receive(:store_payment_fees).with(params)
+        PaymentProvider.store_payment_fees provider_name, params
+      end
+    end
+
   end # end each provider loop
 end
 
