@@ -10,23 +10,12 @@ describe CreateTemporaryStripeCreditCard do
     VCR.turn_on!
   end
 
-  def delete_later(obj)
-    @objects_to_delete ||= []
-    @objects_to_delete << obj
-  end
-
   after do
-    (@objects_to_delete || []).each do |obj|
-      begin
-        obj.delete
-      rescue Exception => e
-        puts "(Error while trying to delete #{obj.inspect}: #{e.message})"
-      end 
-    end
+    cleanup_stripe_objects
   end
 
   let(:cart)      { create(:cart, organization: org) }
-  let(:org)       { create(:organization, name: "Customer for make test of temp credit cards") }
+  let(:org)       { create(:organization, name: "[Test] temp credit cards") }
   let(:order) { create(:order) }
   let(:payment_method) { "credit card" }
   let(:order_params) {
@@ -71,7 +60,7 @@ describe CreateTemporaryStripeCreditCard do
       before do
         order_params[:credit_card][:stripe_tok] = stripe_card_token.id
         org.update(stripe_customer_id: stripe_customer.id)
-        delete_later stripe_customer
+        track_stripe_object_for_cleanup stripe_customer
       end
 
       it "creates a new BankAccount and Stripe::Customer" do

@@ -96,12 +96,30 @@ module StripeSpecHelpers
     end
   end
 
-  def create_stripe(type, params={})
+  def create_stripe_mock(type, params={})
     template_data = HashWithIndifferentAccess.new(Templates[type.to_sym])
     if template_data
       Wrapper.new(template_data.merge(params))
     else
       raise "Dunno how to create a Stripe test object for #{type.inspect}"
+    end
+  end
+
+  #
+  # For dealing with real Stripe entities:
+  #
+  def track_stripe_object_for_cleanup(obj)
+    @stripe_objects_to_cleanup ||= []
+    @stripe_objects_to_cleanup << obj
+  end
+
+  def cleanup_stripe_objects
+    (@stripe_objects_to_cleanup || []).each do |obj|
+      begin
+        obj.delete
+      rescue Exception => e
+        puts "(Error while trying to delete Stripe object #{obj.inspect}: #{e.message})"
+      end 
     end
   end
 end
