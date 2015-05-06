@@ -57,11 +57,46 @@ describe PaymentProvider::Balanced do
         }
         expectations.each do |input,output|
           input = nil if input == '_nil_'
-          charge = create_stripe(:charge, status: input)
-          translated = subject.translate_status(charge: charge, cart: nil, payment_method: 'unused')
+          debit = double "the debit", status: input
+          translated = subject.translate_status(charge: debit, cart: nil, payment_method: 'unused')
           expect(translated).to eq(output), "Expected status '#{input}' to translate to '#{output}' but got '#{translated}'"
         end
       end
     end
   end
+
+  describe ".charge_for_order" do
+    # Simple "double-books accounting"-style test for Balanced implementation.  
+    # This interaction spec is based on an implementation that is known to work due to past
+    # use and testing.  Expecting to delete this bugger soon, anyway.
+    let(:amount)       { "123.45".to_d }
+    let(:market)       { double "the market", name: "The Cold Sto", on_statement_as: "COLD STO!" }
+    let(:order)        { double "the order", order_number: "123-order-456" }
+    let(:bank_account) { double "the bank account", balanced_uri: "/bank/acct/balanced/uri" }
+    let(:customer)     { double "the balanced customer" }
+    let(:buyer_organization) { double "the buyer", balanced_customer: customer }
+    let(:debit)        { double "the resulting debit" }
+
+    it "creates a debit using the Balanced customer of the buying organization" do
+
+      amount_in_cents = ::Financials::MoneyHelpers.amount_to_cents(amount)
+
+      expect(customer).to receive(:debit).with(
+        amount: amount_in_cents,
+        source_uri: bank_account.balanced_uri,
+        description: "The Cold Sto purchase",
+        appears_on_statement_as: "COLD STO!",
+        meta: { 'order number' => order.order_number }
+      ).and_return(debit)
+
+      subject.charge_for_order(
+        amount: amount,
+        bank_account: bank_account,
+        market: market,
+        order: order,
+        buyer_organization: buyer_organization)
+
+    end
+  end
+
 end

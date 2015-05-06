@@ -34,9 +34,15 @@ module PaymentProvider
       end
 
       def charge_for_order(amount:, bank_account:, market:, order:, buyer_organization:)
-        raise ".charge_for_order is not implemented yet for Balanced provider!"
+        amount_in_cents = ::Financials::MoneyHelpers.amount_to_cents(amount)
+        buyer_organization.balanced_customer.debit(
+          amount: amount_in_cents,
+          source_uri: bank_account.balanced_uri,
+          description: "#{market.name} purchase",
+          appears_on_statement_as: market.on_statement_as,
+          meta: {'order number' => order.order_number}
+        ) 
       end
-
 
     end
   end
