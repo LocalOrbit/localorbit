@@ -24,6 +24,28 @@ module PaymentProvider
           'failed'
         end
       end
+
+      def charge_for_order(amount:, bank_account:, market:, order:, buyer_organization:)
+        raise "not done"
+        # customer = buyer_organization.stripe_customer_id
+        # source = bank_account.stripe_id
+        # destination = market.stripe_account_id
+        # descriptor = market.on_statement_as
+        #
+        #
+        # fee = if bank_account.credit_card?
+        #         PaymentProviders::Stripe::FeeStructure.estimate_credit_card_processing_fee(amount)
+        #       else
+        #         PaymentProviders::Stripe::FeeStructure.estimate_ach_processing_fee(amount)
+        #       end
+        #
+        # charge = Stripe::Charge.create(amount: amount, currency: 'usd', 
+        #                       source: source, customer: customer,
+        #                       destination: destination, statement_descriptor: descriptor,
+        #                       application_fee: fee)
+        #
+      end
+
     end
   end
 end

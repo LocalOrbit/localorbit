@@ -40,5 +40,15 @@ module PaymentProvider
         cart: cart,
         payment_method: payment_method)
     end
+
+    def charge_for_order(payment_provider, amount:, bank_account:, market:, order:, buyer_organization:)
+      PaymentProvider.for(payment_provider).charge_for_order(
+                          amount: amount,
+                          bank_account: bank_account,
+                          market: market,
+                          order: order,
+                          buyer_organization: buyer_organization)
+
+    end
   end
 end

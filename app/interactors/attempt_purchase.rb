@@ -12,12 +12,15 @@ class AttemptPurchase
     cart             = context[:cart] 
     order            = context[:order] 
     order_params     = context[:order_params]
-    payment_method = order_params['payment_method']
+    payment_method   = order_params['payment_method']
 
     return if order.nil?
-    return unless PaymentProvider.supports_payment_method?(payment_provider, payment_method)
 
     begin
+      unless PaymentProvider.supports_payment_method?(payment_provider, payment_method)
+        raise "AttemptPurchase invoked with payment_method=#{payment_method}, but #{payment_provider} payment provider does NOT support this payment method!"
+      end
+
 
       #
       # Charge for the order

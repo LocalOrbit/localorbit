@@ -15,6 +15,11 @@ module PaymentProvider
       def translate_status(charge:, cart:, payment_method:)
         raise ".translate_status is not implemented yet for Balanced provider!"
       end
+
+      def charge_for_order(amount:, bank_account:, market:, order:, buyer_organization:)
+        raise ".charge_for_order is not implemented yet for Balanced provider!"
+      end
+
       # # cart checkout
       # if cart
       #   if cart.total == 0 || payment_method == "credit card"
