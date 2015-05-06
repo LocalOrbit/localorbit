@@ -13,31 +13,30 @@ module PaymentProvider
       end
 
       def translate_status(charge:, cart:, payment_method:)
-        raise ".translate_status is not implemented yet for Balanced provider!"
+        if cart
+          # ...happens during cart checkout
+          if cart.total == 0 || payment_method == "credit card"
+            "paid"
+          else
+            "pending"
+          end
+        else
+          # ...happens during update order
+          case charge.try(:status)
+          when "pending"
+            "pending"
+          when "succeeded"
+            "paid"
+          else
+            "failed"
+          end
+        end
       end
 
       def charge_for_order(amount:, bank_account:, market:, order:, buyer_organization:)
         raise ".charge_for_order is not implemented yet for Balanced provider!"
       end
 
-      # # cart checkout
-      # if cart
-      #   if cart.total == 0 || payment_method == "credit card"
-      #     "paid"
-      #   else
-      #     "pending"
-      #   end
-      # else
-      #   # update order
-      #   case charge.try(:status)
-      #   when "pending"
-      #     "pending"
-      #   when "succeeded"
-      #     "paid"
-      #   else
-      #     "failed"
-      #   end
-      # end
 
     end
   end
