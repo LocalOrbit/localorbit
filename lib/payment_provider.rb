@@ -17,6 +17,10 @@ module PaymentProvider
       return false if payment_provider_identifier.nil?
       PaymentProvider::Balanced.id == payment_provider_identifier.to_sym
     end
+    
+    def supports_payment_method?(payment_provider_identifier, payment_method)
+      PaymentProvider.for(payment_provider_identifier).supported_payment_methods.include?(payment_method)
+    end
 
 
     def place_order(payment_provider, buyer_organization:, user:, order_params:, cart:)

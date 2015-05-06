@@ -1,6 +1,12 @@
 describe PaymentProvider::Stripe do
   subject { described_class } 
 
+  describe ".supported_payment_methods" do
+    it "has 'credit card'" do
+      expect(subject.supported_payment_methods).to eq ['credit card']
+    end
+  end
+
   describe ".place_order" do
     let(:params) {
       { 

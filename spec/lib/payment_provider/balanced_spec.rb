@@ -1,6 +1,13 @@
 describe PaymentProvider::Balanced do
   subject { described_class } 
 
+  describe ".supported_payment_methods" do
+    it "has 'credit card' and 'ach'" do
+      expect(subject.supported_payment_methods).to eq ['credit card', 'ach']
+    end
+  end
+
+
   describe ".place_order" do
     let(:params) {
       { 
