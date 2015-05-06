@@ -31,4 +31,9 @@ describe PaymentProvider::Balanced do
     end
   end
 
+  describe ".translate_status" do
+    it "isn't implemented yet" do
+      expect(lambda { subject.translate_status(cart:nil,charge:nil,payment_method:nil)}).to raise_error(/implemented/)
+    end
+  end
 end
