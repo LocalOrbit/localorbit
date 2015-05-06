@@ -99,4 +99,40 @@ describe PaymentProvider::Balanced do
     end
   end
 
+  describe ".fully_refund" do
+    context "(interaction tests)" do
+      let(:debit) { double "the debit" }
+      let(:payment) { double "the payment", balanced_uri: "the payment balanced uri" }
+      # let(:order) { double "the order", id: 'the order id', order_number: "the order number" }
+      # let(:refund_list) { double "the list of refunds" }
+      let(:new_refund) { double "the new refund" }
+      
+      it "refunds the debit" do
+        expect(debit).to receive(:refund).and_return(new_refund)
+
+        ref = subject.fully_refund(
+          charge: debit,
+          payment: payment,
+          order: "unused"
+        )
+
+        expect(ref).to be new_refund
+      end
+
+      it "looks up the charge based on payment balanced_uri if not provided as arg" do
+        expect(Balanced::Debit).to receive(:find).with(payment.balanced_uri).and_return(debit)
+
+        expect(debit).to receive(:refund).and_return(new_refund)
+
+        ref = subject.fully_refund(
+          payment: payment,
+          order: "unused"
+        )
+
+        expect(ref).to be new_refund
+      end
+    end # end interaction tests
+
+  end
+
 end
