@@ -117,6 +117,26 @@ describe PaymentProvider do
       end
     end
 
+    describe ".create_order_payment" do
+      let(:params) { 
+        { 
+          charge: 'the charge',
+          market_id: 'the market_id',
+          bank_account: 'the bank_account',
+          payer: 'the payer',
+          payment_method: 'the payment method',
+          amount: 'the amount',
+          order: 'the order',
+          status: 'the status'
+        } 
+      }
+
+      it "delegates to #{provider_object.name}.create_order_payment" do
+        expect(provider_object).to receive(:create_order_payment).with(params)
+        PaymentProvider.create_order_payment provider_name, params
+      end
+    end
+
   end # end each provider loop
 end
 

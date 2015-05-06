@@ -59,7 +59,21 @@ module PaymentProvider
     end
 
     def store_payment_fees(payment_provider, order:)
-      PaymentProvider.for(payment_provider).store_payment_fees(order: order)
+      PaymentProvider.for(payment_provider).store_payment_fees(
+        order: order)
+    end
+
+    def create_order_payment(payment_provider, charge:, market_id:, bank_account:, payer:,
+                                payment_method:, amount:, order:, status:)
+      PaymentProvider.for(payment_provider).create_order_payment(
+          charge: charge,
+          market_id: market_id,
+          bank_account: bank_account,
+          payer: payer,
+          payment_method: payment_method,
+          amount: amount,
+          order: order,
+          status: status)
     end
   end
 end

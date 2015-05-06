@@ -141,4 +141,10 @@ describe PaymentProvider::Balanced do
     end
   end
 
+  describe ".create_order_payment" do
+    it "works..." do
+      subject.create_order_payment()
+    end
+  end
+
 end

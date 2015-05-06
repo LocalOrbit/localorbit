@@ -193,8 +193,14 @@ describe PaymentProvider::Stripe do
   end
 
   describe ".store_payment_fees" do
-    it "does ...something" do
-      pending
+    it "works..." do
+      subject.store_payment_fees()
+    end
+  end
+
+  describe ".create_order_payment" do
+    it "works..." do
+      subject.create_order_payment()
     end
   end
 

@@ -66,6 +66,7 @@ module PaymentProvider
       end
 
       def store_payment_fees(order:)
+        raise ".store_payment_fees not implemented for Stripe provider yet!"
         # total_fee = order.payments.where(payment_type: 'order').sum(:stripe_payment_fee)
         # total_fee_cents = ::Financials::MoneyHelpers.amount_to_cents(total_fee)
         # fees = distribute_fee(total_fee_cents, order)
@@ -82,6 +83,29 @@ module PaymentProvider
         # end
       end
 
+      def create_order_payment(charge:, market_id:, bank_account:, payer:,
+                                  payment_method:, amount:, order:, status:)
+        raise ".create_order_payment not implemented for Stripe provider yet!"
+        # args = {
+        #   market_id: market_id,
+        #   bank_account: bank_account,
+        #   payer: payer,
+        #   payment_method: payment_method,
+        #   amount: amount,
+        #   payment_type: 'order',
+        #   orders: [order],
+        #   status: status
+        # }
+        # case payment_provider
+        # when 'balanced'
+        #   args[:balanced_uri] = charge.try(:uri)
+        # when 'stripe'
+        #   args[:stripe_id] = charge.try(:id)
+        #   args[:stripe_payment_fee] = get_stripe_application_fee_on_charge(charge)
+        #
+        # end
+        # Payment.create(args)
+      end
     end
     
   end
