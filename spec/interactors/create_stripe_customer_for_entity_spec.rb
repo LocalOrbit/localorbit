@@ -10,19 +10,8 @@ describe CreateStripeCustomerForEntity do
     VCR.turn_on!
   end
 
-  def delete_later(obj)
-    @objects_to_delete ||= []
-    @objects_to_delete << obj
-  end
-
   after do
-    (@objects_to_delete || []).each do |obj|
-      begin
-        obj.delete
-      rescue Exception => e
-        puts "(Error while trying to delete #{obj.inspect}: #{e.message})"
-      end 
-    end
+    cleanup_stripe_objects
   end
 
 
@@ -40,7 +29,7 @@ describe CreateStripeCustomerForEntity do
 
         customer = Stripe::Customer.retrieve(org.stripe_customer_id)
         expect(customer).to be
-        delete_later customer
+        track_stripe_object_for_cleanup customer
         expect(customer.description).to eq org.name
         expect(customer.metadata["lo.entity_type"]).to eq 'organization'
         expect(customer.metadata["lo.entity_id"]).to eq org.id.to_s
@@ -48,7 +37,7 @@ describe CreateStripeCustomerForEntity do
     end
 
     context "when Stripe customer already associated with the entity" do
-      let!(:org) { create(:organization, name: "Customer Creation Testes") }
+      let!(:org) { create(:organization, name: "[Test] Customer Creation") }
 
       it "keeps the existing customer" do
         # Setup a customer:
@@ -58,7 +47,7 @@ describe CreateStripeCustomerForEntity do
         expect(org.stripe_customer_id).to be
         customer = Stripe::Customer.retrieve(org.stripe_customer_id)
         expect(customer).to be
-        delete_later customer
+        track_stripe_object_for_cleanup customer
 
         # Remember the id:
         existing_customer_id = org.stripe_customer_id
@@ -71,7 +60,7 @@ describe CreateStripeCustomerForEntity do
         if org.stripe_customer_id != existing_customer_id
           customer2 = Stripe::Customer.retrieve(org.stripe_customer_id)
           p customer2
-          delete_later customer2
+          track_stripe_object_for_cleanup customer2
         end
         expect(org.stripe_customer_id).to eq existing_customer_id 
       end

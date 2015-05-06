@@ -36,6 +36,17 @@ describe PaymentProvider do
   ].each do |provider_name|
     provider_object = PaymentProvider.for(provider_name)
 
+
+    describe ".supports_payment_method" do
+      it "checks the provider for supported payment methods and returns true or false" do
+        provider_object.supported_payment_methods.each do |good|
+          expect(PaymentProvider.supports_payment_method?(provider_name, good)).to eq true
+        end
+        expect(PaymentProvider.supports_payment_method?(provider_name, :no_chance)).to eq false
+        expect(PaymentProvider.supports_payment_method?(provider_name, nil)).to eq false
+      end
+    end
+
     describe ".place_order" do
       let(:params) {
         { buyer_organization: 'the buyer', 
@@ -49,6 +60,82 @@ describe PaymentProvider do
       end
     end
 
+    describe ".translate_status" do
+      let(:params) {
+        { charge: 'the charge', 
+          payment_method: 'the payment method', 
+          cart: 'the cart' }
+      }
+      it "delegates to #{provider_object.name}.translate_status" do
+        expect(provider_object).to receive(:translate_status).with(params)
+        PaymentProvider.translate_status provider_name, params
+      end
+    end
+
+    describe ".charge_for_order" do
+      let(:params) {
+        { amount: 'the amount', 
+          bank_account: 'the bank account', 
+          market: 'the market',
+          order: 'the order',
+          buyer_organization: 'the buyer organization' }
+      }
+      it "delegates to #{provider_object.name}.charge_for_order" do
+        expect(provider_object).to receive(:charge_for_order).with(params)
+        PaymentProvider.charge_for_order provider_name, params
+      end
+    end
+
+    describe ".fully_refund" do
+      let(:params) {
+        { charge: 'the charge', 
+          order: 'the order',
+          payment: 'the payment' }
+      }
+      it "delegates to #{provider_object.name}.fully_refund" do
+        expect(provider_object).to receive(:fully_refund).with(params)
+        PaymentProvider.fully_refund provider_name, params
+      end
+      
+      it "defaults :charge to nil if omitted" do
+        expected = params.dup
+        expected[:charge] = nil
+
+        params.delete(:charge)
+
+        expect(provider_object).to receive(:fully_refund).with(expected)
+        PaymentProvider.fully_refund provider_name, params
+      end
+    end
+
+    describe ".store_payment_fees" do
+      let(:params) { { order: "the order" } }
+
+      it "delegates to #{provider_object.name}.store_payment_fees" do
+        expect(provider_object).to receive(:store_payment_fees).with(params)
+        PaymentProvider.store_payment_fees provider_name, params
+      end
+    end
+
+    describe ".create_order_payment" do
+      let(:params) { 
+        { 
+          charge: 'the charge',
+          market_id: 'the market_id',
+          bank_account: 'the bank_account',
+          payer: 'the payer',
+          payment_method: 'the payment method',
+          amount: 'the amount',
+          order: 'the order',
+          status: 'the status'
+        } 
+      }
+
+      it "delegates to #{provider_object.name}.create_order_payment" do
+        expect(provider_object).to receive(:create_order_payment).with(params)
+        PaymentProvider.create_order_payment provider_name, params
+      end
+    end
 
   end # end each provider loop
 end
