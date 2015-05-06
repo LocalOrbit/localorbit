@@ -58,7 +58,11 @@ module PaymentProvider
       end
 
       def fully_refund(charge:nil, payment:, order:)
-        raise "fully_refund not implemented for Stripe provider yet"
+        charge ||= ::Stripe::Charge.retrieve(payment.stripe_id)
+        charge.refunds.create(refund_application_fee: true,
+                              reverse_transfer: true,
+                              metadata: { 'lo.order_id' => order.id,
+                                          'lo.order_number' => order.order_number })
       end
 
     end

@@ -142,4 +142,54 @@ describe PaymentProvider::Stripe do
     end
   end
 
+  describe ".fully_refund" do
+    context "(interaction tests)" do
+      let(:payment) { double "the payment", stripe_id: "the payment stripe id" }
+      let(:order) { double "the order", id: 'the order id', order_number: "the order number" }
+      let(:charge) { double "the charge", refunds: refund_list }
+      let(:refund_list) { double "the list of refunds" }
+      let(:new_refund) { double "the new refund" }
+      
+      it "creates a refund on the given charge" do
+        expect(refund_list).to receive(:create).with(
+          refund_application_fee: true,
+          reverse_transfer: true,
+          metadata: {
+            'lo.order_id' => order.id,
+            'lo.order_number' => order.order_number,
+          }
+        ).and_return(new_refund)
+
+        ref = subject.fully_refund(
+          charge: charge,
+          payment: payment,
+          order: order
+        )
+
+        expect(ref).to be new_refund
+      end
+
+      it "looks up the charge based on payment stripe_id if not provided as arg" do
+        expect(Stripe::Charge).to receive(:retrieve).with(payment.stripe_id).and_return(charge)
+
+        expect(refund_list).to receive(:create).with(
+          refund_application_fee: true,
+          reverse_transfer: true,
+          metadata: {
+            'lo.order_id' => order.id,
+            'lo.order_number' => order.order_number,
+          }
+        ).and_return(new_refund)
+
+        ref = subject.fully_refund(
+          payment: payment,
+          order: order
+        )
+
+        expect(ref).to be new_refund
+      end
+    end # end interaction tests
+
+  end
+
 end
