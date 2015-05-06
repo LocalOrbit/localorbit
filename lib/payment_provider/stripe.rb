@@ -57,6 +57,10 @@ module PaymentProvider
           application_fee: fee_in_cents)
       end
 
+      def fully_refund(charge:nil, payment:, order:)
+        raise "fully_refund not implemented for Stripe provider yet"
+      end
+
     end
     
   end

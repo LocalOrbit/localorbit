@@ -86,6 +86,28 @@ describe PaymentProvider do
       end
     end
 
+    describe ".fully_refund" do
+      let(:params) {
+        { charge: 'the charge', 
+          order: 'the order',
+          payment: 'the payment' }
+      }
+      it "delegates to #{provider_object.name}.fully_refund" do
+        expect(provider_object).to receive(:fully_refund).with(params)
+        PaymentProvider.fully_refund provider_name, params
+      end
+      
+      it "defaults :charge to nil if omitted" do
+        expected = params.dup
+        expected[:charge] = nil
+
+        params.delete(:charge)
+
+        expect(provider_object).to receive(:fully_refund).with(expected)
+        PaymentProvider.fully_refund provider_name, params
+      end
+    end
+
   end # end each provider loop
 end
 

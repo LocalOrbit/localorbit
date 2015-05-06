@@ -50,5 +50,12 @@ module PaymentProvider
                           buyer_organization: buyer_organization)
 
     end
+
+    def fully_refund(payment_provider, charge: nil, payment:, order:)
+      PaymentProvider.for(payment_provider).fully_refund(
+        charge: charge,
+        payment: payment,
+        order: order)
+    end
   end
 end

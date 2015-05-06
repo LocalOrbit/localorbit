@@ -44,6 +44,10 @@ module PaymentProvider
         ) 
       end
 
+      def fully_refund(charge:nil, payment:, order:)
+        raise "fully_refund not implemented for Balanced provider yet"
+      end
+
     end
   end
 end
