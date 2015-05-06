@@ -1,28 +1,3 @@
-displayError = (field, error) ->
-  $("#payment-provider-errors").append("<li>#{field}: #{error}</li>")
-
-displayGenericError = (message) ->
-  $("#payment-provider-errors").append("<li>#{message}</li>")
-
-displayErrors = ($form, errors)->
-  setupErrorsContainer($form)
-
-  for error in errors
-    if error.param
-      key = error.param
-      field_name = key.replace(/_/g, " ")
-      field_name = field_name.charAt(0).toUpperCase() + field_name.substr(1)
-      $form.find("[name^=#{key}]").wrap('<div class="field_with_errors"/>')
-      displayError(field_name, error.message)
-    else
-      displayGenericError(error.message)
-
-setupErrorsContainer = ($form) ->
-  if $("#payment-provider-errors").length
-    $("#payment-provider-errors").html("")
-  else
-    $form.prepend('<ul id="payment-provider-errors" class="form-errors">')
-
 $ ->
   return unless $(".cart_item").length
   selector = $('.cart_item')
@@ -297,38 +272,19 @@ $ ->
         security_code: $("#provider_security_code").val()
       }
 
-      PaymentProvider.tokenize(newCard, "card", $("#payment-provider-container"))
-
-        .done (params) ->
-
-          $form = $("#order-form")
-          accountFields = {
-            "name" : "order[credit_card][name]",
-            "save_for_future" : "order[credit_card][save_for_future]",
-          }
-          accountFieldData = {
+      $container = $("#payment-provider-container")
+      $form = $("#order-form")
+      tokenizer = new PaymentSourceTokenizer($form, $container, (key) -> "order[credit_card][#{key}]")
+      tokenizer.tokenize(newCard, "card")
+        .done (addParam) ->
+          # success - update custom params before auto-submit
+          accountFields =
             name: $("#provider_account_name").val(),
             save_for_future: "true" # $("#save_for_future").is(":checked")
-          }
-          for key, field of accountFields
-            $("<input>").attr(
-              type: 'hidden',
-              name: field,
-              value: accountFieldData[key]
-            ).appendTo($form)
-
-          for key, value of params
-            $("<input>").attr(
-              type: 'hidden',
-              name: "order[credit_card][#{key}]",
-              value: value
-            ).appendTo($form)
-          $("#payment-provider-container").prop("disabled", true)
-          $form.submit()
-
-        .fail (errors) ->
-
-          displayErrors($("#payment-provider-container"), errors)
+          addParam key, accountFields[key] for key, field of accountFields
+          $container.prop("disabled", true)
+        .fail ->
+          # failure
           $("#place-order-button").prop("disabled", false)
 
     else
