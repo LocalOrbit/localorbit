@@ -60,6 +60,18 @@ describe PaymentProvider do
       end
     end
 
+    describe ".translate_status" do
+      let(:params) {
+        { charge: 'the charge', 
+          payment_method: 'the payment method', 
+          cart: 'the cart' }
+      }
+      it "delegates to #{provider_object.name}.translate_status" do
+        expect(provider_object).to receive(:translate_status).with(params)
+        PaymentProvider.translate_status provider_name, params
+      end
+    end
+
 
   end # end each provider loop
 end

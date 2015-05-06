@@ -30,4 +30,27 @@ describe PaymentProvider::Stripe do
     end
   end
 
+  describe ".translate_status" do
+    it "maps 'pending' to 'pending' and 'succeeded' to 'paid' and anything else to 'failed'" do
+      expectations = {
+        'pending' => 'pending',
+        'succeeded' => 'paid',
+        'failed' => 'failed',
+        'other' => 'failed',
+        '_nil_' => 'failed'
+      }
+      expectations.each do |input,output|
+        input = nil if input == '_nil_'
+        charge = create_stripe(:charge, status: input)
+        translated = subject.translate_status(charge: charge, cart: 'wat', payment_method: 'evar')
+        expect(translated).to eq(output), "Expected status '#{input}' to translate to '#{output}' but got '#{translated}'"
+      end
+    end
+
+    it "returns 'failed' for nil charge" do
+      translated = subject.translate_status(charge: nil, cart: 'wat', payment_method: 'evar')
+      expect(translated).to eq('failed')
+    end
+  end
+
 end

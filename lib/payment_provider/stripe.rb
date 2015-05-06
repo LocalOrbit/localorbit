@@ -14,6 +14,16 @@ module PaymentProvider
                                  order_params: order_params, 
                                  cart: cart)
       end
+
+      def translate_status(charge:, cart:nil, payment_method:nil)
+        return 'failed' if charge.nil?
+        case charge.status
+        when 'pending'   then 'pending'
+        when 'succeeded' then 'paid'
+        else
+          'failed'
+        end
+      end
     end
   end
 end
