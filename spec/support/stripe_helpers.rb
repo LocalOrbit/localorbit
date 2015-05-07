@@ -133,6 +133,32 @@ module StripeSpecHelpers
     end
   end
 
+  def create_stripe_token(opts={})
+    card_params = {
+      number: "4012888888881881", 
+      exp_month: 5, 
+      exp_year: 2016, 
+      cvc: "314"
+    }.merge(opts)
+
+    Stripe::Token.create({card: card_params})
+  end
+
+  def get_or_create_stripe_account_for_market(market)
+    # Don't judge me.
+
+    # See if there's already an Account lurking out there in Test land:
+    acct = Stripe::Account.all(limit:100).detect { |a| a.email == market.contact_email }
+    acct ||= Stripe::Account.create(
+      managed: true,
+      country: 'US',
+      email: market.contact_email
+    )
+    
+    market.update(stripe_account_id: acct.id)
+    acct
+  end
+
   #
   # For dealing with real Stripe entities:
   #

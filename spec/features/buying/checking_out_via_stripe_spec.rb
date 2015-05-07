@@ -1,6 +1,6 @@
 require "spec_helper"
 
-describe "Checking Out using Stripe payment provider", :js, :vcr do
+describe "Checking Out using Stripe payment provider", :js do
   let!(:user) { create(:user) }
   let!(:other_buying_user) {  create(:user) }
   let!(:buyer) { create(:organization, :single_location, :buyer, users: [user, other_buying_user]) }
@@ -57,11 +57,13 @@ describe "Checking Out using Stripe payment provider", :js, :vcr do
   end
 
   before do
+    VCR.turn_off!
     Timecop.travel("May 5, 2014")
   end
 
   after do
     Timecop.return
+    VCR.turn_on!
   end
 
   def checkout
@@ -391,15 +393,32 @@ describe "Checking Out using Stripe payment provider", :js, :vcr do
   # end
 
   context "via credit card" do
-    let(:balanced_debit)  { double("balanced debit", uri: "/balanced-debit-uri") }
-    let!(:balanced_customer) { double("balanced customer", debit: balanced_debit) }
+    
+    let!(:stripe_customer) { Stripe::Customer.create(
+        description: buyer.name,
+        metadata: {
+          "lo.entity_id" => buyer.id,
+          "lo.entity_type" => 'organization'
+        }
+      ) 
+    }
+
+    let!(:stripe_card_token) { create_stripe_token() }
+
+    let!(:stripe_card) { stripe_customer.sources.create(source: stripe_card_token.id) }
+
+    let!(:stripe_account) { 
+      get_or_create_stripe_account_for_market(market) 
+    }
 
     before do
-      allow(Balanced::Customer).to receive(:find).and_return(balanced_customer)
+      buyer.update(stripe_customer_id: stripe_customer.id)
+      credit_card.update(stripe_id: stripe_card.id)
     end
 
     context "successful payment processing" do
       it "uses a stored credit card" do
+
         choose "Pay by Credit Card"
         select "Visa", from: "Saved credit cards"
 
@@ -460,10 +479,6 @@ describe "Checking Out using Stripe payment provider", :js, :vcr do
     # end
 
     context "unsaved credit card" do
-      before do
-        expect(balanced_customer).to receive(:add_card)
-      end
-
       it "uses the card as a one off transaction" do
         choose "Pay by Credit Card"
         fill_in "Name", with: "John Doe"

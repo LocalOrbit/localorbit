@@ -82,18 +82,8 @@ describe PaymentProvider::Stripe do
         }
       ) 
     }
-    let(:stripe_account) { 
-      acct = Stripe::Account.all(limit:100).detect { |a| a.email == mini_market.contact_email }
-      if acct
-        acct
-      else
-        Stripe::Account.create(
-          managed: true,
-          country: 'US',
-          email: mini_market.contact_email
-        )
-      end
-    }
+
+    let(:stripe_account) { get_or_create_stripe_account_for_market(mini_market) }
 
     before do
       VCR.turn_off!
