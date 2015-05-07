@@ -66,7 +66,6 @@ module PaymentProvider
       end
 
       def store_payment_fees(order:)
-        # raise ".store_payment_fees not implemented for Stripe provider yet!"
         total_fee = order.payments.where(payment_type: 'order').sum(:stripe_payment_fee)
         total_fee_cents = ::Financials::MoneyHelpers.amount_to_cents(total_fee)
         fees = distribute_fee_amongst_order_items(total_fee_cents, order)
@@ -86,28 +85,25 @@ module PaymentProvider
 
       def create_order_payment(charge:, market_id:, bank_account:, payer:,
                                   payment_method:, amount:, order:, status:)
-        raise ".create_order_payment not implemented for Stripe provider yet!"
-        # args = {
-        #   market_id: market_id,
-        #   bank_account: bank_account,
-        #   payer: payer,
-        #   payment_method: payment_method,
-        #   amount: amount,
-        #   payment_type: 'order',
-        #   orders: [order],
-        #   status: status
-        # }
-        # case payment_provider
-        # when 'balanced'
-        #   args[:balanced_uri] = charge.try(:uri)
-        # when 'stripe'
-        #   args[:stripe_id] = charge.try(:id)
-        #   args[:stripe_payment_fee] = get_stripe_application_fee_on_charge(charge)
-        #
-        # end
-        # Payment.create(args)
+        # raise ".create_order_payment not implemented for Stripe provider yet!"
+        stripe_id = if charge then charge.id else nil end
+
+        Payment.create(
+          market_id: market_id,
+          bank_account: bank_account,
+          payer: payer,
+          payment_method: payment_method,
+          amount: amount,
+          payment_type: 'order',
+          orders: [order],
+          status: status,
+          stripe_id: stripe_id,
+          stripe_payment_fee: get_stripe_application_fee_for_charge(charge)
+        )
       end
 
+      private 
+      
       def distribute_fee_amongst_order_items(total_fee_cents, order)
         order_total_cents = ::Financials::MoneyHelpers.amount_to_cents(order.gross_total)
 
@@ -119,6 +115,17 @@ module PaymentProvider
                            memo
                          end
         )
+      end
+
+      def get_stripe_application_fee_for_charge(charge)
+        return "0".to_d unless charge
+
+        app_fee = ::Stripe::ApplicationFee.retrieve(charge.application_fee)
+        if app_fee
+          ::Financials::MoneyHelpers.cents_to_amount(app_fee.amount - app_fee.amount_refunded)
+        else
+          "0".to_d
+        end
       end
     end
     

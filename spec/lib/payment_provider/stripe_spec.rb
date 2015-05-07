@@ -210,7 +210,7 @@ describe PaymentProvider::Stripe do
     #   order1_item2 amounts to 19.00
     #   total 25.99
     #   payment fees: 1.35
-    it "redistributes payment fees pro-rata to order items" do
+    it "redistributes payment fees pro-rata to order items' payment_seller_fee" do
       expect(order1_item1.payment_seller_fee).to eq 0
       expect(order1_item2.payment_seller_fee).to eq 0
 
@@ -226,7 +226,7 @@ describe PaymentProvider::Stripe do
         mini_market.update(credit_card_seller_fee: "0".to_d, credit_card_market_fee: "3".to_d)
       end
 
-      it "redistributes payment fees pro-rata to order items" do
+      it "redistributes payment fees pro-rata to order items' payment_market_fee" do
         expect(order1_item1.payment_market_fee).to eq 0
         expect(order1_item2.payment_market_fee).to eq 0
 
@@ -239,9 +239,61 @@ describe PaymentProvider::Stripe do
   end
 
   describe ".create_order_payment" do
-    it "works..." do
-      subject.create_order_payment()
+    include_context "the mini market"
+
+    let(:charge) { create_stripe_mock(:charge, id: 'the charge id', application_fee: 'the app fee id') }
+    let(:app_fee) { create_stripe_mock(:application_fee, amount: 320, amount_refunded: 40) }
+    let(:bank_account) { create(:bank_account, :credit_card) }
+    let(:params) {
+      {
+        charge: charge,
+        market_id: mini_market.id,
+        bank_account: bank_account,
+        payer: buyer_organization,
+        payment_method: "credit card",
+        amount: order1.gross_total,
+        order: order1,
+        status: 'paid'
+      }
+    }
+
+    it "stores a Payment record corresponding to a charge" do
+      expect(Stripe::ApplicationFee).to receive(:retrieve).with(charge.application_fee).and_return(app_fee)
+      payment = subject.create_order_payment(params)
+      expect(payment).to be
+      expect(payment.id).to be # stored to database
+      expect(payment.market_id).to eq mini_market.id
+      expect(payment.bank_account).to eq bank_account
+      expect(payment.payer).to eq buyer_organization
+      expect(payment.payment_method).to eq 'credit card'
+      expect(payment.amount).to eq order1.gross_total
+      expect(payment.payment_type).to eq 'order'
+      expect(payment.orders).to eq [ order1 ]
+      expect(payment.status).to eq 'paid'
+      expect(payment.stripe_id).to eq charge.id
+      expect(payment.stripe_payment_fee).to eq "2.80".to_d
     end
+
+    context "when the ApplicationFee is not found" do
+      it "sets 0 for app fee" do
+        expect(Stripe::ApplicationFee).to receive(:retrieve).with(charge.application_fee).and_return(nil)
+        payment = subject.create_order_payment(params)
+        expect(payment.stripe_id).to eq charge.id
+        expect(payment.stripe_payment_fee).to eq "0".to_d
+      end
+    end
+
+    context "when the charge is nil" do
+      it "leaves the stripe_id unset and sets 0 for app fee" do
+        # expect(Stripe::ApplicationFee).to receive(:retrieve).with(charge.application_fee).and_return(app_fee)
+        params[:charge] = nil
+        payment = subject.create_order_payment(params)
+        expect(payment.stripe_id).to be nil
+        expect(payment.stripe_payment_fee).to eq "0".to_d
+      end
+    end
+    # TODO: nil charge
+    # TODO: no app fee found
   end
 
 end

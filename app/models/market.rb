@@ -84,7 +84,7 @@ class Market < ActiveRecord::Base
     end
   end
 
-  def payment_fee_payer
+  def credit_card_payment_fee_payer
     credit_card_seller_fee == 0 ? 'market' : 'seller'
   end
 
