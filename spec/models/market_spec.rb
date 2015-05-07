@@ -543,9 +543,18 @@ describe Market do
     end
   end
 
-  describe "#payment_fee_payer" do
-    it "needs testing" do
-      pending
+  describe "#credit_card_payment_fee_payer" do
+    let(:market) { create(:market) }
+    [
+      [{ credit_card_seller_fee: 0, credit_card_market_fee: 0 }, 'market' ],
+      [{ credit_card_seller_fee: 0, credit_card_market_fee: 1 }, 'market' ],
+      [{ credit_card_seller_fee: 1, credit_card_market_fee: 0 }, 'seller' ],
+      [{ credit_card_seller_fee: 1, credit_card_market_fee: 1 }, 'seller' ],
+    ].each do |(input, output)|
+      it "returns #{output.inspect} when #{input.inspect}" do
+        market.update(input)
+        expect(market.credit_card_payment_fee_payer).to eq output
+      end
     end
   end
 end
