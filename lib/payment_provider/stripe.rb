@@ -69,7 +69,7 @@ module PaymentProvider
         raise ".store_payment_fees not implemented for Stripe provider yet!"
         # total_fee = order.payments.where(payment_type: 'order').sum(:stripe_payment_fee)
         # total_fee_cents = ::Financials::MoneyHelpers.amount_to_cents(total_fee)
-        # fees = distribute_fee(total_fee_cents, order)
+        # fees = distribute_fee_amongst_order_items(total_fee_cents, order)
         #
         # fee_payer = order.market.payment_fee_payer
         # order.items.each do |item|
@@ -105,6 +105,18 @@ module PaymentProvider
         #
         # end
         # Payment.create(args)
+      end
+
+      def distribute_fee_amongst_order_items(total_fee_cents, order)
+        order_total_cents = ::Financials::MoneyHelpers.amount_to_cents(order.gross_total)
+
+        LargestRemainder.distribute_shares(
+          to_distribute: total_fee_cents,
+          total:         order_total_cents,
+          items:         order.usable_items.inject({}) do |memo,item|
+                           memo[item.id] = ::Financials::MoneyHelpers.amount_to_cents(item.gross_total)
+                         end
+        )
       end
     end
     

@@ -193,14 +193,25 @@ describe PaymentProvider::Stripe do
   end
 
   describe ".store_payment_fees" do
+    include_context "the mini market"
     it "works..." do
-      subject.store_payment_fees()
+      binding.pry
+
+      # subject.store_payment_fees()
     end
   end
 
   describe ".create_order_payment" do
     it "works..." do
       subject.create_order_payment()
+    end
+  end
+
+  describe ".distribute_fee_amongst_order_items" do
+    # order: gross_total, usable_items
+    # item: gross_total, id
+    it "works..." do
+      raise "todo"
     end
   end
 
