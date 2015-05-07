@@ -17,13 +17,12 @@ feature "Adding bank account to a market", :js, :shaky do
   end
 
   scenario "as an admin" do
-    skip "shaky test"
     switch_to_subdomain(market.subdomain)
     sign_in_as(create(:user, :admin))
 
     visit new_admin_market_bank_account_path(market)
 
-    select "Checking", from: "balanced_account_type"
+    select "Checking", from: "provider_account_type"
 
     fill_in "EIN", with: "20-1234567"
     fill_in "Full Legal Name", with: "John Patrick Doe"
@@ -54,13 +53,12 @@ feature "Adding bank account to a market", :js, :shaky do
   end
 
   scenario "as a market manager" do
-    skip "shaky test"
     switch_to_subdomain(market.subdomain)
     sign_in_as(create(:user, managed_markets: [market]))
 
     visit new_admin_market_bank_account_path(market)
 
-    select "Checking", from: "balanced_account_type"
+    select "Checking", from: "provider_account_type"
 
     fill_in "EIN", with: "20-1234567"
     fill_in "Full Legal Name", with: "John Patrick Doe"

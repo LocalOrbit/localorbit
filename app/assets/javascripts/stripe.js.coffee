@@ -14,12 +14,15 @@ class @PaymentProvider
 
     Stripe[type].createToken params, (status, response) ->
       error = response.error
+
       if error
         errors = [{
           param: error.param,
           message: error.message
         }]
+
         deferred.reject(errors)
+
       else
         result =
           stripe_tok:       response.id,
@@ -28,6 +31,7 @@ class @PaymentProvider
           last_four:        response[type].last4,
           expiration_month: response[type].exp_month,
           expiration_year:  response[type].exp_year
+
         deferred.resolve(result)
 
     deferred.promise()
