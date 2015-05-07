@@ -85,7 +85,6 @@ module PaymentProvider
 
       def create_order_payment(charge:, market_id:, bank_account:, payer:,
                                   payment_method:, amount:, order:, status:)
-        # raise ".create_order_payment not implemented for Stripe provider yet!"
         stripe_id = if charge then charge.id else nil end
 
         Payment.create(

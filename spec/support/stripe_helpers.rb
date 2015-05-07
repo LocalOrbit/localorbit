@@ -66,6 +66,33 @@ module StripeSpecHelpers
     }
   }
   }) # end Charge
+  
+  Templates[:application_fee] = JSON.parse(%{
+    {
+      "id": "fee_6C3CvCyYu1aT71",
+      "object": "application_fee",
+      "created": 1430967047,
+      "livemode": false,
+      "amount": 320,
+      "currency": "usd",
+      "refunded": false,
+      "amount_refunded": 0,
+      "refunds": {
+        "object": "list",
+        "total_count": 0,
+        "has_more": false,
+        "url": "/v1/application_fees/fee_6C3CvCyYu1aT71/refunds",
+        "data": [
+
+        ]
+      },
+      "balance_transaction": "txn_15zZj02VpjOYk6TmxMoaZH85",
+      "account": "acct_15zXYjJo1Ucry63F",
+      "application": "ca_5vj31wLn9y0tO1AOBXSs20NcwKHAcPO0",
+      "charge": "py_15zf63Jo1Ucry63FAm2OuJHM",
+      "originating_transaction": "ch_15zf622VpjOYk6Tm8ptYKMoT"
+    }
+  })
 
   class Wrapper
     def initialize(params)
@@ -97,9 +124,10 @@ module StripeSpecHelpers
   end
 
   def create_stripe_mock(type, params={})
-    template_data = HashWithIndifferentAccess.new(Templates[type.to_sym])
+    # template_data = HashWithIndifferentAccess.new(Templates[type.to_sym])
+    template_data = Templates[type.to_sym]
     if template_data
-      Wrapper.new(template_data.merge(params))
+      Wrapper.new(HashWithIndifferentAccess.new(template_data).merge(params))
     else
       raise "Dunno how to create a Stripe test object for #{type.inspect}"
     end
