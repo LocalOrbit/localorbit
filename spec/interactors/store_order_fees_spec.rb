@@ -22,7 +22,7 @@ describe StoreOrderFees do
   let(:payment_provider) { PaymentProvider::Stripe.id }
 
   subject do
-    order = CreateOrder.perform(order_params: params, cart: cart, buyer: user).order
+    order = CreateOrder.perform(payment_provider: payment_provider, order_params: params, cart: cart, buyer: user).order
     order.update(payment_method: params[:payment_method])
     StoreOrderFees.perform(payment_provider: payment_provider, order_params: params, cart: cart, order: order).order.reload.items.index_by {|item| item.product_id }
   end
