@@ -194,10 +194,47 @@ describe PaymentProvider::Stripe do
 
   describe ".store_payment_fees" do
     include_context "the mini market"
-    it "works..." do
-      binding.pry
 
-      # subject.store_payment_fees()
+    let(:order1_item2) { create(:order_item, product: sally_product2, quantity: 2, unit_price: "9.5".to_d) }
+    let(:order1_payment1) { create(:payment, :credit_card, amount: "10".to_d, stripe_payment_fee: "0.59".to_d) }
+    let(:order1_payment2) { create(:payment, :credit_card, amount: "15.99".to_d, stripe_payment_fee: "0.76".to_d) }
+
+    before do
+      order1.items << order1_item2
+      order1.payments << order1_payment1
+      order1.payments << order1_payment2
+    end
+
+    # order1 now has 2 items:
+    #   order1_item1 amounts to 6.99 
+    #   order1_item2 amounts to 19.00
+    #   total 25.99
+    #   payment fees: 1.35
+    it "redistributes payment fees pro-rata to order items" do
+      expect(order1_item1.payment_seller_fee).to eq 0
+      expect(order1_item2.payment_seller_fee).to eq 0
+
+      res = subject.store_payment_fees(order: order1)
+      expect(res).to be nil
+
+      expect(order1_item1.payment_seller_fee).to eq "0.36".to_d
+      expect(order1_item2.payment_seller_fee).to eq "0.99".to_d
+    end
+
+    context "when Market pays payment fees" do
+      before do
+        mini_market.update(credit_card_seller_fee: "0".to_d, credit_card_market_fee: "3".to_d)
+      end
+
+      it "redistributes payment fees pro-rata to order items" do
+        expect(order1_item1.payment_market_fee).to eq 0
+        expect(order1_item2.payment_market_fee).to eq 0
+
+        subject.store_payment_fees(order: order1)
+
+        expect(order1_item1.payment_market_fee).to eq "0.36".to_d
+        expect(order1_item2.payment_market_fee).to eq "0.99".to_d
+      end
     end
   end
 
@@ -206,14 +243,5 @@ describe PaymentProvider::Stripe do
       subject.create_order_payment()
     end
   end
-
-  describe ".distribute_fee_amongst_order_items" do
-    # order: gross_total, usable_items
-    # item: gross_total, id
-    it "works..." do
-      raise "todo"
-    end
-  end
-
 
 end

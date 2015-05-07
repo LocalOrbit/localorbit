@@ -66,21 +66,22 @@ module PaymentProvider
       end
 
       def store_payment_fees(order:)
-        raise ".store_payment_fees not implemented for Stripe provider yet!"
-        # total_fee = order.payments.where(payment_type: 'order').sum(:stripe_payment_fee)
-        # total_fee_cents = ::Financials::MoneyHelpers.amount_to_cents(total_fee)
-        # fees = distribute_fee_amongst_order_items(total_fee_cents, order)
-        #
-        # fee_payer = order.market.payment_fee_payer
-        # order.items.each do |item|
-        #   fee_cents = fees[item.id]
-        #   fee = if fee_cents.nil?
-        #           0.to_d
-        #         else
-        #           ::Financials::MoneyHelpers.cents_to_amount(fee_cents)
-        #         end
-        #   item.update :"payment_#{fee_payer}_fee" => fee
-        # end
+        # raise ".store_payment_fees not implemented for Stripe provider yet!"
+        total_fee = order.payments.where(payment_type: 'order').sum(:stripe_payment_fee)
+        total_fee_cents = ::Financials::MoneyHelpers.amount_to_cents(total_fee)
+        fees = distribute_fee_amongst_order_items(total_fee_cents, order)
+        
+        fee_payer = order.market.credit_card_payment_fee_payer
+        order.items.each do |item|
+          fee_cents = fees[item.id]
+          fee = if fee_cents.nil?
+                  0.to_d
+                else
+                  ::Financials::MoneyHelpers.cents_to_amount(fee_cents)
+                end
+          item.update :"payment_#{fee_payer}_fee" => fee
+        end
+        nil
       end
 
       def create_order_payment(charge:, market_id:, bank_account:, payer:,
@@ -115,6 +116,7 @@ module PaymentProvider
           total:         order_total_cents,
           items:         order.usable_items.inject({}) do |memo,item|
                            memo[item.id] = ::Financials::MoneyHelpers.amount_to_cents(item.gross_total)
+                           memo
                          end
         )
       end
