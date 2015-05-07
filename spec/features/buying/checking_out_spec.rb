@@ -460,66 +460,39 @@ describe "Checking Out", :js, :vcr do
     end
 
     context "unsaved credit card" do
-      before do
-        expect(balanced_customer).to receive(:add_card)
-      end
+      context "successfully entering credit card" do
+        before do
+          expect(balanced_customer).to receive(:add_card)
+        end
 
-      it "uses the card as a one off transaction" do
-        choose "Pay by Credit Card"
-        fill_in "Name", with: "John Doe"
-        fill_in "Card Number", with: "5105105105105100"
-        select "12", from: "Month"
-        select "2020", from: "Year"
-        fill_in "Security Code", with: "123"
-
-        checkout
-
-        expect(page).to have_content("Thank you for your order")
-        expect(page).to have_content("Credit Card")
-
-        order = Order.last
-        expect(order.payment_status).to eql("paid")
-        expect(order.payments.count).to eql(1)
-        expect(order.payments.first.status).to eql("paid")
-      end
-
-      it "saves the card for later use" do
-        expect(buyer.bank_accounts.visible.count).to eql(2)
-
-        choose "Pay by Credit Card"
-        fill_in "Name", with: "John Doe"
-        fill_in "Card Number", with: "5105105105105100"
-        select "12", from: "Month"
-        select "2020", from: "Year"
-        fill_in "Security Code", with: "123"
-        check "Save credit card for future use"
-
-        checkout
-
-        expect(page).to have_content("Thank you for your order")
-        expect(page).to have_content("Credit Card")
-
-        order = Order.last
-        expect(order.payment_status).to eql("paid")
-        expect(order.payments.count).to eql(1)
-        expect(order.payments.first.status).to eql("paid")
-
-        expect(buyer.bank_accounts.visible.count).to eql(3)
-      end
-
-      context "when the user tries to checkout with a credit card they've already saved", record: :new_episodes do
-        let!(:credit_card)  { create(:bank_account, :credit_card, name: "John Doe", bank_name: "MasterCard", account_type: "mastercard", bankable: buyer, last_four: "5100") }
-
-        it "uses the bank account that's already saved" do
-          expect(buyer.bank_accounts.visible.count).to eql(2)
-
+        it "uses the card as a one off transaction" do
           choose "Pay by Credit Card"
-          fill_in "Name", with: credit_card.name
+          fill_in "Name", with: "John Doe"
           fill_in "Card Number", with: "5105105105105100"
           select "12", from: "Month"
           select "2020", from: "Year"
           fill_in "Security Code", with: "123"
 
+          checkout
+
+          expect(page).to have_content("Thank you for your order")
+          expect(page).to have_content("Credit Card")
+
+          order = Order.last
+          expect(order.payment_status).to eql("paid")
+          expect(order.payments.count).to eql(1)
+          expect(order.payments.first.status).to eql("paid")
+        end
+
+        it "saves the card for later use" do
+          expect(buyer.bank_accounts.visible.count).to eql(2)
+
+          choose "Pay by Credit Card"
+          fill_in "Name", with: "John Doe"
+          fill_in "Card Number", with: "5105105105105100"
+          select "12", from: "Month"
+          select "2020", from: "Year"
+          fill_in "Security Code", with: "123"
           check "Save credit card for future use"
 
           checkout
@@ -532,8 +505,73 @@ describe "Checking Out", :js, :vcr do
           expect(order.payments.count).to eql(1)
           expect(order.payments.first.status).to eql("paid")
 
-          # The entered credit card doesn't get saved in this case
-          expect(buyer.bank_accounts.visible.count).to eql(2)
+          expect(buyer.bank_accounts.visible.count).to eql(3)
+        end
+
+        context "when the user tries to checkout with a credit card they've already saved", record: :new_episodes do
+          let!(:credit_card)  { create(:bank_account, :credit_card, name: "John Doe", bank_name: "MasterCard", account_type: "mastercard", bankable: buyer, last_four: "5100") }
+
+          it "uses the bank account that's already saved" do
+            expect(buyer.bank_accounts.visible.count).to eql(2)
+
+            choose "Pay by Credit Card"
+            fill_in "Name", with: credit_card.name
+            fill_in "Card Number", with: "5105105105105100"
+            select "12", from: "Month"
+            select "2020", from: "Year"
+            fill_in "Security Code", with: "123"
+
+            check "Save credit card for future use"
+
+            checkout
+
+            expect(page).to have_content("Thank you for your order")
+            expect(page).to have_content("Credit Card")
+
+            order = Order.last
+            expect(order.payment_status).to eql("paid")
+            expect(order.payments.count).to eql(1)
+            expect(order.payments.first.status).to eql("paid")
+
+            # The entered credit card doesn't get saved in this case
+            expect(buyer.bank_accounts.visible.count).to eql(2)
+          end
+        end
+      end
+
+      context "failing to create a new credit card" do
+        it "detects invalid card numbers" do
+          num_orders = Order.count
+
+          choose "Pay by Credit Card"
+          fill_in "Name", with: "John Doe"
+          fill_in "Card Number", with: "5105105105105107"
+          select "12", from: "Month"
+          select "2020", from: "Year"
+          fill_in "Security Code", with: "123"
+          check "Save credit card for future use"
+
+          checkout
+
+          expect(page).to have_content('Card number: "5105105105105107" is not a valid credit card number')
+          expect(num_orders).to eq Order.count
+        end
+
+        it "detects a tokenization error" do
+          num_orders = Order.count
+
+          choose "Pay by Credit Card"
+          fill_in "Name", with: "John Doe"
+          fill_in "Card Number", with: "4222222222222220"
+          select "12", from: "Month"
+          select "2020", from: "Year"
+          fill_in "Security Code", with: "123"
+          check "Save credit card for future use"
+
+          checkout
+
+          expect(page).to have_content('Additional: This transaction was declined by the card issuer. Customer please call bank.')
+          expect(num_orders).to eq Order.count
         end
       end
     end

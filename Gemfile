@@ -93,6 +93,7 @@ group :development, :test do
   gem "guard-rspec"
   gem "awesome_print"
   gem "konacha"
+  gem "poltergeist"
 end
 
 group :test do
@@ -103,7 +104,6 @@ group :test do
   gem "factory_girl_rails"
   gem "email_spec"
   gem "database_cleaner"
-  gem "poltergeist"
   gem "timecop"
   gem "vcr"
   gem "webmock"

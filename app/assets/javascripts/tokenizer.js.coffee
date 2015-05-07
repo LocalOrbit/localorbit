@@ -26,6 +26,7 @@ class @PaymentSourceErrors
     else
       $form.prepend('<ul id="payment-provider-errors" class="form-errors">')
 
+
 class @PaymentSourceTokenizer
 
   constructor: (@$form, @$container, @nameForKey) ->

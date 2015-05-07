@@ -1,7 +1,7 @@
 <%= render "admin/bank_accounts/header" %>
 
 <div class="row row--partial">
-<form class="column column--three-fourths" id="payment-provider-container" data-balanced-marketplace-uri="<%= ENV["BALANCED_MARKETPLACE_URI"] %>" data-target-form="new_bank_account" data-provider-object-type="bankAccount">
+<form class="column column--three-fourths" id="payment-provider-container" data-payment-provider="<%= @payment_provider %>" data-balanced-marketplace-uri="<%= ENV["BALANCED_MARKETPLACE_URI"] %>" data-stripe-publishable-key="<%= ENV["STRIPE_PUBLISHABLE_KEY"] %>" data-target-form="new_bank_account" data-provider-object-type="bankAccount">
   <%= render 'shared/enable_javascript' %>
 
   <%= render 'shared/errors', resource: @bank_account %>

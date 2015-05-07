@@ -521,6 +521,41 @@ describe "Checking Out using Stripe payment provider", :js do
 
         expect(buyer.bank_accounts.visible.count).to eql(3)
       end
+
+      context "failing to create a new credit card" do
+        it "detects invalid card numbers" do
+          num_orders = Order.count
+
+          choose "Pay by Credit Card"
+          fill_in "Name", with: "John Doe"
+          fill_in "Card Number", with: "4242424242424247"
+          select "12", from: "Month"
+          select "2020", from: "Year"
+          fill_in "Security Code", with: "123"
+
+          checkout
+
+          expect(page).to have_content('Number: Your card number is incorrect.')
+          expect(num_orders).to eq Order.count
+        end
+
+        it "detects a tokenization error" do
+          num_orders = Order.count
+
+          choose "Pay by Credit Card"
+          fill_in "Name", with: "John Doe"
+          fill_in "Card Number", with: "4242424242424242"
+          select "12", from: "Month"
+          select "2020", from: "Year"
+          fill_in "Security Code", with: "12"
+          check "Save credit card for future use"
+
+          checkout
+
+          expect(page).to have_content("Cvc: Your card's security code is invalid.")
+          expect(num_orders).to eq Order.count
+        end
+      end
     end
 
     #   context "when the user tries to checkout with a credit card they've already saved", record: :new_episodes do
