@@ -292,8 +292,7 @@ describe PaymentProvider::Stripe do
         expect(payment.stripe_payment_fee).to eq "0".to_d
       end
     end
-    # TODO: nil charge
-    # TODO: no app fee found
+
   end
 
 end
