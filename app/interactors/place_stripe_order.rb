@@ -7,10 +7,10 @@ class PlaceStripeOrder
     CreateOrder,
     CreateTemporaryStripeCreditCard, 
     ApplyDiscountToOrderItems,
-    # StoreOrderFees, #TODO
-    # AttemptPurchaseOrderPurchase,
-    # AttemptPurchase, # TODO
-    # SendOrderEmails,
-    # DeleteCart
+    StoreOrderFees,
+    AttemptPurchaseOrderPurchase,
+    AttemptPurchase,
+    SendOrderEmails,
+    DeleteCart
   )
 end

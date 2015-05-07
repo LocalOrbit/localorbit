@@ -13,12 +13,14 @@ class AttemptPurchase
     order            = context[:order] 
     order_params     = context[:order_params]
     payment_method   = order_params['payment_method']
+    buyer_organization = cart.organization
 
     return if order.nil?
 
     begin
       unless PaymentProvider.supports_payment_method?(payment_provider, payment_method)
         raise "AttemptPurchase invoked with payment_method=#{payment_method}, but #{payment_provider} payment provider does NOT support this payment method!"
+        # ... this should get caught and reported below in the 'rescue' clause
       end
 
 
@@ -33,11 +35,11 @@ class AttemptPurchase
                           else
                             order_params["bank_account"]
                           end
-        bank_account = organization.bank_accounts.find(id)
+        bank_account = buyer_organization.bank_accounts.find(bank_account_id)
 
         charge = PaymentProvider.charge_for_order(payment_provider, 
                                                   amount:             cart.total, 
-                                                  buyer_organization: cart.organization,
+                                                  buyer_organization: buyer_organization,
                                                   bank_account:       bank_account,
                                                   market:             cart.market, 
                                                   order:              order)
@@ -53,7 +55,7 @@ class AttemptPurchase
                                                      charge:         charge, 
                                                      market_id:      cart.market_id,
                                                      bank_account:   bank_account,
-                                                     payer:          cart.organization,
+                                                     payer:          buyer_organization,
                                                      payment_method: payment_method,
                                                      amount:         cart.total,
                                                      status:         status,
@@ -80,7 +82,6 @@ class AttemptPurchase
                    payment_status: status)
       order.items.update_all(payment_status: status)
 
-
       context[:payment] = payment
 
       # Execute a refund if Payment didn't save to our database correctly:
@@ -93,6 +94,7 @@ class AttemptPurchase
       end
 
     rescue => e
+      binding.pry
       Honeybadger.notify_or_ignore(e) unless Rails.env.test? || Rails.env.development?
       raise e if Rails.env.development?
       context[:order].errors.add(:credit_card, "Payment processor error.")
