@@ -542,4 +542,10 @@ describe Market do
       expect(market.local_orbit_seller_and_market_fee_fraction).to eq "0.03".to_d
     end
   end
+
+  describe "#payment_fee_payer" do
+    it "needs testing" do
+      pending
+    end
+  end
 end

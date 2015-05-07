@@ -84,6 +84,10 @@ class Market < ActiveRecord::Base
     end
   end
 
+  def payment_fee_payer
+    credit_card_seller_fee == 0 ? 'market' : 'seller'
+  end
+
   def balanced_customer
     Balanced::Customer.find(balanced_customer_uri)
   end
