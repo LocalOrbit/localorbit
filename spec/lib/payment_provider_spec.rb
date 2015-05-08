@@ -175,6 +175,21 @@ describe PaymentProvider do
         PaymentProvider.find_charge provider_name, params
       end
     end
+
+    describe ".refund_charge" do
+      let(:params) { 
+        { 
+          charge: 'the charge',
+          amount: 'the amount',
+          order: 'the order'
+        } 
+      }
+
+      it "delegates to #{provider_object.name}.refund_charge" do
+        expect(provider_object).to receive(:refund_charge).with(params)
+        PaymentProvider.refund_charge provider_name, params
+      end
+    end
   end # end each provider loop
 end
 

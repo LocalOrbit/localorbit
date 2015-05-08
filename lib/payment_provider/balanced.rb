@@ -87,6 +87,10 @@ module PaymentProvider
         payment.balanced_transaction
       end
 
+      def refund_charge(charge:, amount:, order:)
+        amount_in_cents = ::Financials::MoneyHelpers.amount_to_cents(amount)
+        charge.refund(amount: amount_in_cents)
+      end
 
     end
   end

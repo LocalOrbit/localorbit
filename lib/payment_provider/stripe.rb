@@ -127,6 +127,17 @@ module PaymentProvider
         ::Stripe::Charge.retrieve(payment.stripe_id)
       end
 
+      def refund_charge(charge:, amount:, order:)
+        amount_in_cents = ::Financials::MoneyHelpers.amount_to_cents(amount)
+        charge.refunds.create(refund_application_fee: true,
+                              reverse_transfer: true,
+                              amount: amount_in_cents,
+                              metadata: { 
+                                'lo.order_id' => order.id,
+                                'lo.order_number' => order.order_number 
+                              })
+      end
+
       private 
       
       def distribute_fee_amongst_order_items(total_fee_cents, order)

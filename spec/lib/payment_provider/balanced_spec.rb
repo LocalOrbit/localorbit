@@ -238,7 +238,15 @@ describe PaymentProvider::Balanced do
     end
   end
 
-
-
+  describe ".refund_charge" do
+    let(:debit) { double "the debit" }
+    let(:amount) { "12.34".to_d }
+    let(:refund) { "the refund" }
+    
+    it "refunds the given amount against the given debit" do
+      expect(debit).to receive(:refund).with(amount:1234).and_return(refund)
+      expect(described_class.refund_charge(charge:debit, amount:amount, order:'unused')).to eq refund
+    end
+  end
 
 end

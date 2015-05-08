@@ -96,5 +96,13 @@ module PaymentProvider
         payment: payment
       )
     end
+
+    def refund_charge(payment_provider, charge:, amount:, order:)
+      PaymentProvider.for(payment_provider).refund_charge(
+        charge: charge,
+        amount: amount,
+        order: order
+      )
+    end
   end
 end

@@ -368,7 +368,28 @@ describe PaymentProvider::Stripe do
       expect(Stripe::Charge).to receive(:retrieve).with(payment.stripe_id).and_return(charge)
       expect(described_class.find_charge(payment: payment)).to eq charge
     end
+  end
 
-    
+  describe ".refund_charge" do
+    let(:order) { double "an order", id: "the order id", order_number: "the order number" }
+    let(:charge) { double "an charge", refunds: refunds_object }
+    let(:amount) { "42.35".to_d }
+    let(:refunds_object) { double "a list of refunds" }
+    let(:refund) { double "a refund" }
+
+    it "adds a refund to the charge based on the amount and order metadata, reversing the transfer" do
+      expect(refunds_object).to receive(:create).with(
+        amount: 4235,
+        reverse_transfer: true,
+        refund_application_fee: true,
+        metadata: {
+          'lo.order_id' => order.id,
+          'lo.order_number' => order.order_number,
+        }
+      ).and_return refund
+
+      expect(described_class.refund_charge(charge:charge, amount:amount, order:order)).to eq refund
+    end
+
   end
 end
