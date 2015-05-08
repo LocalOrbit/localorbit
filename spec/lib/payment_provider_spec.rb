@@ -141,6 +141,28 @@ describe PaymentProvider do
       end
     end
 
+    describe ".create_refund_payment" do
+      let(:params) { 
+        { 
+          charge: 'the charge',
+          market_id: 'the market_id',
+          bank_account: 'the bank_account',
+          payer: 'the payer',
+          payment_method: 'the payment method',
+          amount: 'the amount',
+          order: 'the order',
+          status: 'the status',
+          refund: 'the refund',
+          parent_payment: 'the parent payment'
+        } 
+      }
+
+      it "delegates to #{provider_object.name}.create_refund_payment" do
+        expect(provider_object).to receive(:create_refund_payment).with(params)
+        PaymentProvider.create_refund_payment provider_name, params
+      end
+    end
+
   end # end each provider loop
 end
 

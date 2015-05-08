@@ -64,16 +64,31 @@ module PaymentProvider
     end
 
     def create_order_payment(payment_provider, charge:, market_id:, bank_account:, payer:,
-                                payment_method:, amount:, order:, status:)
+                             payment_method:, amount:, order:, status:)
       PaymentProvider.for(payment_provider).create_order_payment(
-          charge: charge,
-          market_id: market_id,
-          bank_account: bank_account,
-          payer: payer,
-          payment_method: payment_method,
-          amount: amount,
-          order: order,
-          status: status)
+        charge: charge,
+        market_id: market_id,
+        bank_account: bank_account,
+        payer: payer,
+        payment_method: payment_method,
+        amount: amount,
+        order: order,
+        status: status)
+    end
+
+    def create_refund_payment(payment_provider, charge:, market_id:, bank_account:, payer:,
+                                  payment_method:, amount:, order:, status:, refund:, parent_payment:)
+      PaymentProvider.for(payment_provider).create_refund_payment(
+        charge: charge,
+        market_id: market_id,
+        bank_account: bank_account,
+        payer: payer,
+        payment_method: payment_method,
+        amount: amount,
+        order: order,
+        status: status,
+        refund: refund,
+        parent_payment: parent_payment)
     end
   end
 end

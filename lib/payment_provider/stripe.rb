@@ -101,6 +101,28 @@ module PaymentProvider
         )
       end
 
+      def create_refund_payment(charge:, market_id:, bank_account:, payer:,
+                                    payment_method:, amount:, order:, status:, refund:, parent_payment:)
+        stripe_id = charge ? charge.id : nil
+        stripe_refund_id = refund ? refund.id : nil
+
+        payment = Payment.create(
+          market_id: market_id,
+          bank_account: bank_account,
+          payer: payer,
+          payment_method: payment_method,
+          amount: amount,
+          payment_type: 'order refund',
+          orders: [order],
+          parent_id: parent_payment.id,
+          status: status,
+          stripe_id: stripe_id,
+          stripe_refund_id: stripe_refund_id
+        )
+        parent_payment.update stripe_payment_fee: get_stripe_application_fee_for_charge(charge)
+        return payment
+      end
+
       private 
       
       def distribute_fee_amongst_order_items(total_fee_cents, order)

@@ -275,9 +275,84 @@ describe PaymentProvider::Stripe do
 
     context "when the charge is nil" do
       it "leaves the stripe_id unset and sets 0 for app fee" do
-        # expect(Stripe::ApplicationFee).to receive(:retrieve).with(charge.application_fee).and_return(app_fee)
         params[:charge] = nil
         payment = subject.create_order_payment(params)
+        expect(payment.stripe_id).to be nil
+        expect(payment.stripe_payment_fee).to eq "0".to_d
+      end
+    end
+
+  end
+
+  describe ".create_refund_payment" do
+    include_context "the mini market"
+
+    let(:charge) { create_stripe_mock(:charge, id: 'the charge id', application_fee: 'the app fee id') }
+    let(:app_fee) { create_stripe_mock(:application_fee, amount: 320, amount_refunded: 58) } # 58 cents refunded off of 320 is 262
+    let(:bank_account) { create(:bank_account, :credit_card) }
+    let(:refund) { create_stripe_mock(:refund, id: 'the refund id') }
+    let(:parent_payment) { create(:payment, :credit_card, amount: "100".to_d, stripe_id: charge.id) }
+
+    let(:params) {
+      {
+        charge: charge,
+        market_id: mini_market.id,
+        bank_account: bank_account,
+        payer: buyer_organization,
+        payment_method: "credit card",
+        amount: "-20.0".to_d,
+        order: order1,
+        status: 'paid',
+        refund: refund,
+        parent_payment: parent_payment
+      }
+    }
+
+    subject { described_class.create_refund_payment(params) }
+      
+
+    it "stores a Payment record corresponding to a refund on a charge, parented to the original Payment instance" do
+      expect(Stripe::ApplicationFee).to receive(:retrieve).with(charge.application_fee).and_return(app_fee)
+      payment = subject
+      expect(payment).to be
+      expect(payment.id).to be # stored to database
+      expect(payment.market_id).to eq mini_market.id
+      expect(payment.bank_account).to eq bank_account
+      expect(payment.payer).to eq buyer_organization
+      expect(payment.payment_method).to eq 'credit card'
+      expect(payment.amount).to eq "-20.0".to_d
+      expect(payment.payment_type).to eq 'order refund'
+      expect(payment.orders).to eq [ order1 ]
+      expect(payment.status).to eq 'paid'
+      expect(payment.stripe_id).to eq charge.id # same charge reference as our parent
+      expect(payment.stripe_payment_fee).to eq "0".to_d # no payment fees are recorded on the refund Payment
+      expect(payment.stripe_refund_id).to eq refund.id
+
+      expect(parent_payment.reload.stripe_payment_fee).to eq "2.62".to_d # 320 - 58 cents
+    end
+
+    context "when the ApplicationFee is not found" do
+      it "sets 0 for app fee" do
+        expect(Stripe::ApplicationFee).to receive(:retrieve).with(charge.application_fee).and_return(nil)
+        payment = subject
+        expect(payment.stripe_id).to eq charge.id
+        expect(payment.stripe_payment_fee).to eq "0".to_d
+      end
+    end
+
+    context "when the refund is nil" do
+      it "leaves the stripe_refund_id unset" do
+        expect(Stripe::ApplicationFee).to receive(:retrieve).with(charge.application_fee).and_return(app_fee)
+        params[:refund] = nil
+        payment = subject
+        expect(payment.stripe_refund_id).to be nil
+      end
+    end
+
+    context "when the charge is nil" do
+      it "leaves the stripe_id unset and sets 0 for app fee" do
+        params[:charge] = nil
+        payment = subject
         expect(payment.stripe_id).to be nil
         expect(payment.stripe_payment_fee).to eq "0".to_d
       end
