@@ -91,7 +91,7 @@ group :development, :test do
   gem "pry-remote"
   gem "launchy"
   gem "guard-rspec"
-  gem "guard-konacha"
+  gem "guard-konacha-rails"
   gem "awesome_print"
   gem "konacha"
   gem "konacha-chai-matchers"
