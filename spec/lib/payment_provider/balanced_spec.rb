@@ -153,8 +153,10 @@ describe PaymentProvider::Balanced do
       }
     }
 
+    subject { described_class.create_order_payment(params) }
+
     it "stores a Payment record corresponding to a charge" do
-      payment = subject.create_order_payment(params)
+      payment = subject
       expect(payment).to be
       expect(payment.id).to be # stored to database
       expect(payment.market_id).to eq mini_market.id
@@ -171,7 +173,58 @@ describe PaymentProvider::Balanced do
     context "when the charge is nil" do
       it "leaves the balanced_uri unset" do
         params[:charge] = nil
-        payment = subject.create_order_payment(params)
+        payment = subject
+        expect(payment.balanced_uri).to be nil
+      end
+    end
+
+  end
+
+  describe ".create_refund_payment" do
+    include_context "the mini market"
+
+    let(:debit) { double "the debit", uri: "debit balanced uri" }
+    let(:bank_account) { create(:bank_account, :credit_card) }
+    let(:parent_payment) { create(:payment, :credit_card, amount: "100".to_d, balanced_uri: "the balanced uri") }
+    let(:refund) { double "the balanced refund", uri: "balanced refund uri" }
+
+    let(:params) {
+      {
+        charge: debit,
+        market_id: mini_market.id,
+        bank_account: bank_account,
+        payer: buyer_organization,
+        payment_method: "credit card",
+        amount: order1.gross_total,
+        order: order1,
+        status: 'paid',
+        parent_payment: parent_payment,
+        refund: refund
+      }
+    }
+
+    subject { described_class.create_refund_payment(params) }
+
+    it "stores a Payment record corresponding to a refund on a charge" do
+      payment = subject
+      expect(payment).to be
+      expect(payment.id).to be # stored to database
+      expect(payment.market_id).to eq mini_market.id
+      expect(payment.bank_account).to eq bank_account
+      expect(payment.payer).to eq buyer_organization
+      expect(payment.payment_method).to eq 'credit card'
+      expect(payment.amount).to eq order1.gross_total
+      expect(payment.payment_type).to eq 'order refund'
+      expect(payment.orders).to eq [ order1 ]
+      expect(payment.status).to eq 'paid'
+      expect(payment.balanced_uri).to eq refund.uri
+      expect(payment.parent).to eq parent_payment
+    end
+
+    context "when the refund is nil" do
+      it "leaves the balanced_uri unset" do
+        params[:refund] = nil
+        payment = subject
         expect(payment.balanced_uri).to be nil
       end
     end

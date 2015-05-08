@@ -68,29 +68,19 @@ module PaymentProvider
         )
       end
 
-      def create_refund_payment(charge:, market_id:, bank_account:, payer:,
-                                    payment_method:, amount:, order:, status:, refund:, parent_payment:)
-        raise "create_refund_payment not implemented for Balanced yet!" 
-        # args = {
-        #   market_id: market_id,
-        #   bank_account: bank_account,
-        #   payer: payer,
-        #   payment_method: payment_method,
-        #   amount: amount,
-        #   payment_type: 'order refund',
-        #   orders: [order],
-        #   parent_id: parent_payment.id,
-        #   status: status
-        # }
-        # case payment_provider
-        # when 'balanced'
-        #   args[:balanced_uri] = refund.try(:uri)
-        # when 'stripe'
-        #   args[:stripe_id] = charge.try(:id)
-        #   args[:stripe_refund_id] = refund.try(:id)
-        #   parent_payment.update stripe_payment_fee: get_stripe_application_fee_on_charge(charge)
-        # end
-        # Payment.create(args)
+      def create_refund_payment(charge:, market_id:, bank_account:, payer:, payment_method:, amount:, order:, status:, refund:, parent_payment:)
+        Payment.create(
+          market_id: market_id,
+          bank_account: bank_account,
+          payer: payer,
+          payment_method: payment_method,
+          amount: amount,
+          payment_type: 'order refund',
+          orders: [order],
+          parent_id: parent_payment.id,
+          status: status,
+          balanced_uri: refund.try(:uri)
+        )
       end
 
     end
