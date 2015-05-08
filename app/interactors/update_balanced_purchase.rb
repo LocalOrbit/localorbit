@@ -47,8 +47,7 @@ class UpdateBalancedPurchase
 
         refund_amount = [remaining_amount, payment.unrefunded_amount].min
         charge = PaymentProvider.find_charge(payment_provider, payment: payment)
-        refund = PaymentProvider.refund_charge(payment_provider, order: order,
-          charge: charge, amount: ::Financials::MoneyHelpers.amount_to_cents(refund_amount))
+        refund = PaymentProvider.refund_charge(payment_provider, order: order, charge: charge, amount: refund_amount)
 
         payment.increment!(:refunded_amount, refund_amount)
         record_refund(-refund_amount, charge, refund, payment.bank_account, payment)
@@ -70,7 +69,7 @@ class UpdateBalancedPurchase
     context[:type] = payment.payment_method
 
     charge = PaymentProvider.charge_for_order(order.payment_provider, 
-      amount: ::Financials::MoneyHelpers.amount_to_cents(amount),
+      amount: amount,
       bank_account: account, market: order.market, order: order,
       buyer_organization: order.organization)
 
