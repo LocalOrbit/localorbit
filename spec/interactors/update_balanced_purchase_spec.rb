@@ -11,8 +11,12 @@ describe UpdateBalancedPurchase do
   let(:existing_debit) { double("balanced debit", amount: 4500) }
   let(:balanced_customer) { double("balanced_customer") }
 
+  let(:payment_provider) { PaymentProvider::Balanced.id }
+
+  subject { UpdateBalancedPurchase.perform(order: order) }
+
   context "credit card" do
-    let!(:order) { create(:order, organization: buyer, delivery: delivery, market: market, items: [order_item], payment_method: "credit card", total_cost: 30.00) }
+    let!(:order) { create(:order, organization: buyer, delivery: delivery, market: market, items: [order_item], payment_method: "credit card", total_cost: 30.00, payment_provider: payment_provider) }
     let!(:bank_account) { create(:bank_account, :credit_card, bankable: buyer, balanced_uri: "/balanced-card-uri") }
 
     context "without any items" do
@@ -29,7 +33,7 @@ describe UpdateBalancedPurchase do
 
         expect(order.reload.payments.count).to eql(1)
 
-        UpdateBalancedPurchase.perform(order: order)
+        subject
 
         expect(order.reload.payments.count).to eql(2)
         expect(order.total_cost.to_f).to eql(0.0)
@@ -49,7 +53,7 @@ describe UpdateBalancedPurchase do
 
         expect(order.reload.payments.count).to eql(2)
 
-        UpdateBalancedPurchase.perform(order: order)
+        subject
 
         expect(order.reload.payments.count).to eql(3)
         expect(Payment.first.amount.to_f).to eql(45.15)
@@ -72,7 +76,7 @@ describe UpdateBalancedPurchase do
 
         expect(order.reload.payments.count).to eql(5)
 
-        UpdateBalancedPurchase.perform(order: order)
+        subject
 
         payments = order.payments.buyer_payments.order(:id)
         expect(payments.size).to eql(6)
@@ -119,7 +123,7 @@ describe UpdateBalancedPurchase do
 
         expect(order.reload.payments.count).to eql(5)
 
-        UpdateBalancedPurchase.perform(order: order)
+        subject
 
         payments = order.payments.buyer_payments.order(:id)
         expect(payments.size).to eql(6)
@@ -158,7 +162,7 @@ describe UpdateBalancedPurchase do
 
         expect(order.reload.payments.count).to eql(2)
 
-        UpdateBalancedPurchase.perform(order: order)
+        subject
 
         expect(order.reload.payments.count).to eql(3)
         expect(Payment.first.amount.to_f).to eql(45.15)
@@ -176,7 +180,7 @@ describe UpdateBalancedPurchase do
 
         expect(order.reload.payments.count).to eql(1)
 
-        UpdateBalancedPurchase.perform(order: order)
+        subject
 
         expect(order.reload.payments.count).to eql(2)
         expect(Payment.first.amount.to_f).to eql(15.00)
@@ -189,7 +193,7 @@ describe UpdateBalancedPurchase do
 
         expect(order.reload.payments.count).to eql(1)
 
-        UpdateBalancedPurchase.perform(order: order)
+        subject
 
         expect(order.reload.payments.count).to eql(2)
         expect(Payment.last.amount.to_f).to eql(15.00)
@@ -199,7 +203,7 @@ describe UpdateBalancedPurchase do
   end
 
   context "ach" do
-    let!(:order)      { create(:order, organization: buyer, delivery: delivery, market: market, items: [order_item], payment_method: "ach", total_cost: 30.00) }
+    let!(:order)      { create(:order, organization: buyer, delivery: delivery, market: market, items: [order_item], payment_method: "ach", total_cost: 30.00, payment_provider: payment_provider) }
     let!(:bank_account) { create(:bank_account, :checking, :verified, bankable: buyer, balanced_uri: "/balanced-bank-account-uri") }
 
     context "refund difference" do
@@ -211,7 +215,7 @@ describe UpdateBalancedPurchase do
 
         expect(order.reload.payments.count).to eql(1)
 
-        UpdateBalancedPurchase.perform(order: order)
+        subject
 
         expect(order.reload.payments.count).to eql(2)
         expect(Payment.first.amount.to_f).to eql(45.00)
@@ -234,7 +238,7 @@ describe UpdateBalancedPurchase do
 
         expect(order.reload.payments.count).to eql(4)
 
-        UpdateBalancedPurchase.perform(order: order)
+        subject
 
         expect(order.reload.payments.count).to eql(6)
         expect(Payment.first.amount.to_f).to eql(45.00)
@@ -248,7 +252,7 @@ describe UpdateBalancedPurchase do
 
         expect(order.reload.payments.count).to eql(1)
 
-        UpdateBalancedPurchase.perform(order: order)
+        subject
 
         expect(order.reload.payments.count).to eql(2)
         expect(Payment.first.amount.to_f).to eql(45.00)
@@ -267,7 +271,7 @@ describe UpdateBalancedPurchase do
 
         expect(order.reload.payments.count).to eql(1)
 
-        UpdateBalancedPurchase.perform(order: order)
+        subject
 
         expect(order.reload.payments.count).to eql(2)
         expect(Payment.first.amount.to_f).to eql(15.00)
@@ -280,7 +284,7 @@ describe UpdateBalancedPurchase do
 
         expect(order.reload.payments.count).to eql(1)
 
-        UpdateBalancedPurchase.perform(order: order)
+        subject
 
         expect(order.reload.payments.count).to eql(2)
         expect(Payment.last.amount.to_f).to eql(15.00)

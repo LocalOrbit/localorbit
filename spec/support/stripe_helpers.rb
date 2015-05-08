@@ -94,6 +94,24 @@ module StripeSpecHelpers
     }
   })
 
+  Templates[:refund] = JSON.parse(%{
+     {
+      "id": "re_15xlYm2VpjOYk6TmxU8PwVTm",
+      "amount": 3800,
+      "currency": "usd",
+      "created": 1430515236,
+      "object": "refund",
+      "balance_transaction": "txn_15xlYm2VpjOYk6TmpkgDcvmD",
+      "metadata": {
+        "lo.order_id": "8876",
+        "lo.order_number": "LO-15-HAWAII-0000042"
+      },
+      "charge": "ch_15xlF22VpjOYk6Tm5fzPN0cr",
+      "receipt_number": null,
+      "reason": null
+    }
+  })
+
   class Wrapper
     def initialize(params)
       @params = params || "Can't make a Wrapper with nil params!"

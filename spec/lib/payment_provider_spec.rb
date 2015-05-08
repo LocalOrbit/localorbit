@@ -64,11 +64,15 @@ describe PaymentProvider do
       let(:params) {
         { charge: 'the charge', 
           payment_method: 'the payment method', 
-          cart: 'the cart' }
+          amount: 'the amount' }
       }
       it "delegates to #{provider_object.name}.translate_status" do
         expect(provider_object).to receive(:translate_status).with(params)
         PaymentProvider.translate_status provider_name, params
+      end
+      it "tolerates missing :amount and :payment_method fields" do
+        expect(provider_object).to receive(:translate_status).with(charge: 'bull', amount:nil, payment_method:nil)
+        PaymentProvider.translate_status provider_name, charge: 'bull'
       end
     end
 
@@ -134,6 +138,28 @@ describe PaymentProvider do
       it "delegates to #{provider_object.name}.create_order_payment" do
         expect(provider_object).to receive(:create_order_payment).with(params)
         PaymentProvider.create_order_payment provider_name, params
+      end
+    end
+
+    describe ".create_refund_payment" do
+      let(:params) { 
+        { 
+          charge: 'the charge',
+          market_id: 'the market_id',
+          bank_account: 'the bank_account',
+          payer: 'the payer',
+          payment_method: 'the payment method',
+          amount: 'the amount',
+          order: 'the order',
+          status: 'the status',
+          refund: 'the refund',
+          parent_payment: 'the parent payment'
+        } 
+      }
+
+      it "delegates to #{provider_object.name}.create_refund_payment" do
+        expect(provider_object).to receive(:create_refund_payment).with(params)
+        PaymentProvider.create_refund_payment provider_name, params
       end
     end
 

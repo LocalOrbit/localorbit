@@ -12,10 +12,10 @@ module PaymentProvider
                            order_params: order_params, cart: cart)
       end
 
-      def translate_status(charge:, cart:, payment_method:)
-        if cart
+      def translate_status(charge:, amount:nil, payment_method:nil)
+        if amount
           # ...happens during cart checkout
-          if cart.total == 0 || payment_method == "credit card"
+          if amount == 0 || payment_method == "credit card"
             "paid"
           else
             "pending"
@@ -65,6 +65,21 @@ module PaymentProvider
           orders: [order],
           status: status,
           balanced_uri: charge.try(:uri)
+        )
+      end
+
+      def create_refund_payment(charge:, market_id:, bank_account:, payer:, payment_method:, amount:, order:, status:, refund:, parent_payment:)
+        Payment.create(
+          market_id: market_id,
+          bank_account: bank_account,
+          payer: payer,
+          payment_method: payment_method,
+          amount: amount,
+          payment_type: 'order refund',
+          orders: [order],
+          parent_id: parent_payment.id,
+          status: status,
+          balanced_uri: refund.try(:uri)
         )
       end
 

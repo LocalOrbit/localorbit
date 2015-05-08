@@ -46,7 +46,7 @@ class AttemptPurchase
       end
       status = PaymentProvider.translate_status(payment_provider, 
                                                 charge: charge, 
-                                                cart: cart, 
+                                                amount: cart.total, 
                                                 payment_method: payment_method)
       #
       # Record payment
