@@ -91,9 +91,12 @@ group :development, :test do
   gem "pry-remote"
   gem "launchy"
   gem "guard-rspec"
+  gem "guard-konacha"
   gem "awesome_print"
   gem "konacha"
+  gem "konacha-chai-matchers"
   gem "poltergeist"
+  gem "webmock"
 end
 
 group :test do
@@ -106,7 +109,6 @@ group :test do
   gem "database_cleaner"
   gem "timecop"
   gem "vcr"
-  gem "webmock"
   gem 'fire_poll', '1.2.0'
 end
 
