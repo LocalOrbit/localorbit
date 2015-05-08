@@ -1,7 +1,4 @@
-
-#= require jquery
-#= require chai-jquery
-#= require sinon
+#= require spec_helper
 #= require tokenizer
 
 describe "PaymentSourceErrors", ->
@@ -74,13 +71,19 @@ describe "PaymentSourceTokenizer", ->
 
     describe "failed tokenization", ->
       beforeEach ->
-        # @displayErrorsSpy = sinon.spy(PaymentSourceErrors, 'displayErrors')
+        @displayErrorsSpy = sinon.stub(PaymentSourceErrors, 'displayErrors')
+      afterEach ->
+        @displayErrorsSpy.restore()
 
       it "displays errors", ->
-        # @tokenizer.tokenize('the data', 'a type').done(@done).fail(@fail)
-        # @deferred.reject('the errors')
-        # expect(
+        @tokenizer.tokenize('the data', 'a type').done(@done).fail(@fail)
+        @deferred.reject('the errors')
+        expect(@displayErrorsSpy.calledWithExactly('the container', 'the errors')).to.be.ok
 
       it "rejects the promise", ->
+        @tokenizer.tokenize('the data', 'a type').done(@done).fail(@fail)
+        @deferred.reject('the errors')
+        expect(@done.called).to.not.be.ok
+        expect(@fail.called).to.be.ok
 
 
