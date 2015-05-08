@@ -16,37 +16,11 @@ describe AttemptPurchase do
     let(:payment_method) { "credit card" }
     let(:amount) { "100.00".to_d }
 
-    let(:stripe_card_token) {
-      Stripe::Token.create(
-        card: {
-          number: "4012888888881881", 
-          exp_month: 5, 
-          exp_year: 2016, 
-          cvc: "314"
-        }
-      )
-    }
+    let(:stripe_card_token) { create_stripe_token }
 
-    let(:stripe_customer) { Stripe::Customer.create(
-        description: buyer_organization.name,
-        metadata: {
-          "lo.entity_id" => buyer_organization.id,
-          "lo.entity_type" => 'organization'
-        }
-      ) 
-    }
-    let(:stripe_account) { 
-      acct = Stripe::Account.all(limit:100).detect { |a| a.email == mini_market.contact_email }
-      if acct
-        acct
-      else
-        Stripe::Account.create(
-          managed: true,
-          country: 'US',
-          email: mini_market.contact_email
-        )
-      end
-    }
+    let(:stripe_customer) { create_stripe_customer organization: buyer_organization }
+    
+    let(:stripe_account) { get_or_create_stripe_account_for_market(mini_market) }
 
     let(:order_params) {
       HashWithIndifferentAccess.new(

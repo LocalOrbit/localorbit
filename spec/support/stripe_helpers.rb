@@ -151,6 +151,10 @@ module StripeSpecHelpers
     end
   end
 
+  #
+  # REAL STUFF:
+  #
+  
   def create_stripe_token(opts={})
     card_params = {
       number: "4012888888881881", 
@@ -160,6 +164,16 @@ module StripeSpecHelpers
     }.merge(opts)
 
     Stripe::Token.create({card: card_params})
+  end
+
+  def create_stripe_customer(organization:)
+    Stripe::Customer.create(
+      description: "[Test] #{organization.name}",
+      metadata: {
+        "lo.entity_id" => organization.id,
+        "lo.entity_type" => 'organization'
+      }
+    ) 
   end
 
   def get_or_create_stripe_account_for_market(market)
