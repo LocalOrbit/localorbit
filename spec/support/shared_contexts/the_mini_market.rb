@@ -7,7 +7,7 @@ shared_context "the mini market" do
   let!(:sally) { create(:user, name: "Sally") }
   let!(:seller_organization) { create(:organization, :seller, name: "Sally's Staples", users: [sally], markets:[mini_market]) }
 
-  let!(:barry) { create(:user, name: "Barry Sagitarious") }
+  let!(:barry) { create(:user, name: "Barry Sagitarius") }
   let!(:buyer_organization) { create(:organization, :buyer, name: barry.name, users: [barry], markets:[mini_market]) }
 
   let!(:aaron) { create(:user, :admin, name: "Aaron") }

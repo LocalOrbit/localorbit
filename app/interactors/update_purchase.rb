@@ -2,7 +2,7 @@ class UpdatePurchase
   include Interactor
 
   def perform
-    if PaymentProvider.supports_payment_method?(order.payment_provider, order.payment_method)
+    if PaymentProvider.supports_payment_method?(payment_provider, order.payment_method)
       current_amount = rollup_payment_amounts
 
       if current_amount > order.total_cost
@@ -14,7 +14,7 @@ class UpdatePurchase
       end
     end
   ensure
-    PaymentProvider.store_payment_fees(order.payment_provider, order: order)
+    PaymentProvider.store_payment_fees(payment_provider, order: order)
   end
 
   def rollup_payment_amounts
@@ -68,7 +68,7 @@ class UpdatePurchase
 
     context[:type] = payment.payment_method
 
-    charge = PaymentProvider.charge_for_order(order.payment_provider, 
+    charge = PaymentProvider.charge_for_order(payment_provider, 
       amount: amount,
       bank_account: account, market: order.market, order: order,
       buyer_organization: order.organization)

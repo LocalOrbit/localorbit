@@ -48,19 +48,12 @@ describe CreateTemporaryStripeCreditCard do
         )
       }
 
-      let(:stripe_customer) { Stripe::Customer.create(
-          description: org.name,
-          metadata: {
-            "lo.entity_id" => org.id,
-            "lo.entity_type" => 'organization'
-          }
-        ) 
+      let!(:stripe_customer) { 
+        create_stripe_customer(organization: org)
       }
 
       before do
         order_params[:credit_card][:stripe_tok] = stripe_card_token.id
-        org.update(stripe_customer_id: stripe_customer.id)
-        track_stripe_object_for_cleanup stripe_customer
       end
 
       it "creates a new BankAccount and Stripe::Customer" do

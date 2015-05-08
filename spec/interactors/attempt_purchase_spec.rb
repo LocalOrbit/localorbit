@@ -4,23 +4,24 @@ describe AttemptPurchase do
   context "making a purchase through Stripe" do
     include_context "the mini market"
 
+    before :all do VCR.turn_off!  end
+    after :all do VCR.turn_on!  end
+
     let(:cart) { 
       create(:cart, 
              organization: buyer_organization, 
              market: mini_market) 
     }
 
-    let(:credit_card) { create(:bank_account, :credit_card) }
+    let!(:credit_card) { create_and_attach_stripe_credit_card organization: buyer_organization, stripe_customer: stripe_customer }
+    let!(:stripe_customer) { create_stripe_customer organization: buyer_organization }
+    let!(:stripe_account) { get_or_create_stripe_account_for_market(mini_market) }
+    
     let(:order) { mm_order1 } # from mini market
     
     let(:payment_method) { "credit card" }
     let(:amount) { "100.00".to_d }
 
-    let(:stripe_card_token) { create_stripe_token }
-
-    let(:stripe_customer) { create_stripe_customer organization: buyer_organization }
-    
-    let(:stripe_account) { get_or_create_stripe_account_for_market(mini_market) }
 
     let(:order_params) {
       HashWithIndifferentAccess.new(
@@ -39,20 +40,6 @@ describe AttemptPurchase do
     }
 
     before do
-      VCR.turn_off!
-
-      track_stripe_object_for_cleanup stripe_customer
-      
-      # Connect Barry to his Stripe customer...
-      buyer_organization.update(stripe_customer_id: stripe_customer.id)
-      # ...and his credit card:
-      stripe_card = stripe_customer.sources.create(source: stripe_card_token.id)
-      credit_card.update(stripe_id: stripe_card.id)
-      buyer_organization.bank_accounts << credit_card
-
-      # Connect Market to its Stripe account:
-      mini_market.update(stripe_account_id: stripe_account.id)
-
       # 
       # This could be a nasty shortcut, since Cart#total is a summation method
       # involving a bunch of CartItems and price schemes we don't have setup in
@@ -68,7 +55,6 @@ describe AttemptPurchase do
 
     after do
       cleanup_stripe_objects
-      VCR.turn_on!
     end
 
     it "creates Charge and Payments to execute a credit card payment for an order" do

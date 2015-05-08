@@ -166,15 +166,33 @@ module StripeSpecHelpers
     Stripe::Token.create({card: card_params})
   end
 
+  def create_stripe_credit_card(stripe_customer:,bank_account:)
+    tok = create_stripe_token
+    stripe_card = stripe_customer.sources.create(source: tok.id)
+    bank_account.update stripe_id: stripe_card.id
+    stripe_card
+  end
+
+  def create_and_attach_stripe_credit_card(organization:,stripe_customer:)
+    bank_account = create(:bank_account, :credit_card) 
+    create_stripe_credit_card(stripe_customer: stripe_customer, bank_account: bank_account)
+    organization.bank_accounts << bank_account
+    bank_account
+  end
+
   def create_stripe_customer(organization:)
-    Stripe::Customer.create(
+    customer = Stripe::Customer.create(
       description: "[Test] #{organization.name}",
       metadata: {
         "lo.entity_id" => organization.id,
         "lo.entity_type" => 'organization'
       }
     ) 
+    organization.update stripe_customer_id: customer.id
+    track_stripe_object_for_cleanup customer
+    customer
   end
+  
 
   def get_or_create_stripe_account_for_market(market)
     # Don't judge me.

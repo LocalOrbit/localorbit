@@ -1,6 +1,9 @@
 describe PaymentProvider::Stripe do
   subject { described_class } 
 
+  before :all do VCR.turn_off! end
+  after :all do VCR.turn_on! end
+
   describe ".supported_payment_methods" do
     it "has 'credit card'" do
       expect(subject.supported_payment_methods).to eq ['credit card']
@@ -57,53 +60,36 @@ describe PaymentProvider::Stripe do
     include_context "the mini market"
 
     let(:cart)      { create(:cart, organization: buyer_organization) }
-    let(:credit_card) { create(:bank_account, :credit_card) }
+    
+    let!(:credit_card) { 
+      bank_account = create(:bank_account, :credit_card) 
+      create_stripe_credit_card(stripe_customer: stripe_customer, bank_account: bank_account)
+      
+      # Make sure Barry has the credit card 
+      buyer_organization.bank_accounts << bank_account
+
+      bank_account
+    }
     let(:order) { mm_order1 } # from mini market
     
     let(:payment_method) { "credit card" }
     let(:amount) { "100.00".to_d }
 
-    let(:stripe_card_token) {
-      Stripe::Token.create(
-        card: {
-          number: "4012888888881881", 
-          exp_month: 5, 
-          exp_year: 2016, 
-          cvc: "314"
-        }
-      )
-    }
+    let!(:stripe_customer) { create_stripe_customer(organization: buyer_organization) }
 
-    let(:stripe_customer) { Stripe::Customer.create(
-        description: buyer_organization.name,
-        metadata: {
-          "lo.entity_id" => buyer_organization.id,
-          "lo.entity_type" => 'organization'
-        }
-      ) 
-    }
-
-    let(:stripe_account) { get_or_create_stripe_account_for_market(mini_market) }
+    let!(:stripe_account) { get_or_create_stripe_account_for_market(mini_market) }
 
     before do
-      VCR.turn_off!
-
-      track_stripe_object_for_cleanup stripe_customer
-      
-      # Connect Barry to his Stripe customer...
-      buyer_organization.update(stripe_customer_id: stripe_customer.id)
       # ...and his credit card:
-      stripe_card = stripe_customer.sources.create(source: stripe_card_token.id)
-      credit_card.update(stripe_id: stripe_card.id)
-      buyer_organization.bank_accounts << credit_card
-
-      # Connect Market to its Stripe account:
-      mini_market.update(stripe_account_id: stripe_account.id)
+      # credit_card.update(stripe_id: stripe_card.id)
+      # buyer_organization.bank_accounts << credit_card
+      #
+      # # Connect Market to its Stripe account:
+      # mini_market.update(stripe_account_id: stripe_account.id)
     end
 
     after do
       cleanup_stripe_objects
-      VCR.turn_on!
     end
 
     it "creates a Stripe charge" do
