@@ -231,4 +231,14 @@ describe PaymentProvider::Balanced do
 
   end
 
+  describe ".find_charge" do
+    let(:payment) { double "the payment", balanced_transaction: 'the balanced transaction' }
+    it "returns the balanced_transaction associated with the given Payment" do
+      expect(described_class.find_charge(payment:payment)).to eq payment.balanced_transaction
+    end
+  end
+
+
+
+
 end

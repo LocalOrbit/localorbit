@@ -90,5 +90,11 @@ module PaymentProvider
         refund: refund,
         parent_payment: parent_payment)
     end
+
+    def find_charge(payment_provider, payment:)
+      PaymentProvider.for(payment_provider).find_charge(
+        payment: payment
+      )
+    end
   end
 end

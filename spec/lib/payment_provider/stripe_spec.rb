@@ -360,4 +360,15 @@ describe PaymentProvider::Stripe do
 
   end
 
+  describe ".find_charge" do
+    let(:payment) { double "the payment", stripe_id: 'the stripe id' }
+    let(:charge) { double "the charge" }
+
+    it "retrieves the Charge from Stripe per the stripe_id of the given Payment" do
+      expect(Stripe::Charge).to receive(:retrieve).with(payment.stripe_id).and_return(charge)
+      expect(described_class.find_charge(payment: payment)).to eq charge
+    end
+
+    
+  end
 end

@@ -123,6 +123,10 @@ module PaymentProvider
         return payment
       end
 
+      def find_charge(payment:)
+        ::Stripe::Charge.retrieve(payment.stripe_id)
+      end
+
       private 
       
       def distribute_fee_amongst_order_items(total_fee_cents, order)

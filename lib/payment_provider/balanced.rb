@@ -83,6 +83,11 @@ module PaymentProvider
         )
       end
 
+      def find_charge(payment:)
+        payment.balanced_transaction
+      end
+
+
     end
   end
 end

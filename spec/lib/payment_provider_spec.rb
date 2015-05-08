@@ -163,6 +163,18 @@ describe PaymentProvider do
       end
     end
 
+    describe ".find_charge" do
+      let(:params) { 
+        { 
+          payment: 'the payment'
+        } 
+      }
+
+      it "delegates to #{provider_object.name}.find_charge" do
+        expect(provider_object).to receive(:find_charge).with(params)
+        PaymentProvider.find_charge provider_name, params
+      end
+    end
   end # end each provider loop
 end
 
