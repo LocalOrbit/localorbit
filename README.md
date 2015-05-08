@@ -52,6 +52,15 @@ Password: password1
 Email: mm@example.com
 Password: password1
 
+### Javascript Specs
+
+Specs live in spec/javascripts/*.js.coffee
+
+Run suite on command line:  bundle exec rake konacha:run
+Run suite via browser:  bundle exec rake konacha:serve (then visit http://localhost:3500)
+Run suite automatically on changes to javascript sources or specs:  bundle exec guard
+
+
 ### Cloning staging for local development
 Run `rake db:dump:staging`
 
