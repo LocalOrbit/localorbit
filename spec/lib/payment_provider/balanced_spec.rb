@@ -32,21 +32,15 @@ describe PaymentProvider::Balanced do
   end
 
   describe ".translate_status" do
-    context "when :cart is supplied" do
+    context "when :amount and :payment_method are supplied" do
       it "is 'paid' when cart total is 0 or payment method is CC, 'pending' otherwise" do
-        cart = Cart.new
-        expect(cart).to receive(:total).and_return(0)
-        expect(subject.translate_status(charge: 'unused', cart: cart, payment_method: 'whatever')).to eq 'paid'
-
-        expect(cart).to receive(:total).and_return(10)
-        expect(subject.translate_status(charge: 'unused', cart: cart, payment_method: 'credit card')).to eq 'paid'
-
-        expect(cart).to receive(:total).and_return(10)
-        expect(subject.translate_status(charge: 'unused', cart: cart, payment_method: 'ach')).to eq 'pending'
+        expect(subject.translate_status(charge: 'unused', amount: "0".to_d, payment_method: 'whatever')).to eq 'paid'
+        expect(subject.translate_status(charge: 'unused', amount: "10".to_d, payment_method: 'credit card')).to eq 'paid'
+        expect(subject.translate_status(charge: 'unused', amount: "10".to_d, payment_method: 'ach')).to eq 'pending'
       end
     end
 
-    context "when :cart is NOT supplied" do
+    context "when :amount and :payment_method are NOT supplied" do
       it "maps 'pending' to 'pending' and 'succeeded' to 'paid' and anything else to 'failed'" do
         expectations = {
           'pending' => 'pending',
@@ -58,7 +52,7 @@ describe PaymentProvider::Balanced do
         expectations.each do |input,output|
           input = nil if input == '_nil_'
           debit = double "the debit", status: input
-          translated = subject.translate_status(charge: debit, cart: nil, payment_method: 'unused')
+          translated = subject.translate_status(charge: debit)
           expect(translated).to eq(output), "Expected status '#{input}' to translate to '#{output}' but got '#{translated}'"
         end
       end

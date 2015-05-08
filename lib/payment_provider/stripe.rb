@@ -21,7 +21,7 @@ module PaymentProvider
                                  cart: cart)
       end
 
-      def translate_status(charge:, cart:nil, payment_method:nil)
+      def translate_status(charge:, amount:nil, payment_method:nil)
         return 'failed' if charge.nil?
         case charge.status
         when 'pending'   then 'pending'

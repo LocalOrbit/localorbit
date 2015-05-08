@@ -34,10 +34,10 @@ module PaymentProvider
         cart: cart)
     end
 
-    def translate_status(payment_provider, charge:, cart:, payment_method:)
+    def translate_status(payment_provider, charge:, amount:nil, payment_method:nil)
       PaymentProvider.for(payment_provider).translate_status(
         charge: charge,
-        cart: cart,
+        amount: amount,
         payment_method: payment_method)
     end
 

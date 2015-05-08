@@ -42,13 +42,13 @@ describe PaymentProvider::Stripe do
       expectations.each do |input,output|
         input = nil if input == '_nil_'
         charge = create_stripe_mock(:charge, status: input)
-        translated = subject.translate_status(charge: charge, cart: 'wat', payment_method: 'evar')
+        translated = subject.translate_status(charge: charge, amount:nil, payment_method:nil)
         expect(translated).to eq(output), "Expected status '#{input}' to translate to '#{output}' but got '#{translated}'"
       end
     end
 
     it "returns 'failed' for nil charge" do
-      translated = subject.translate_status(charge: nil, cart: 'wat', payment_method: 'evar')
+      translated = subject.translate_status(charge: nil, amount:nil, payment_method:nil)
       expect(translated).to eq('failed')
     end
   end

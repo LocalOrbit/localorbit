@@ -12,10 +12,10 @@ module PaymentProvider
                            order_params: order_params, cart: cart)
       end
 
-      def translate_status(charge:, cart:, payment_method:)
-        if cart
+      def translate_status(charge:, amount:nil, payment_method:nil)
+        if amount
           # ...happens during cart checkout
-          if cart.total == 0 || payment_method == "credit card"
+          if amount == 0 || payment_method == "credit card"
             "paid"
           else
             "pending"
