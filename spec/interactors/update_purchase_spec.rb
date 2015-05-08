@@ -1,6 +1,6 @@
 require "spec_helper"
 
-describe UpdateBalancedPurchase do
+describe UpdatePurchase do
   let!(:market)            { create(:market) }
   let!(:delivery_schedule) { create(:delivery_schedule, fee: 0.0, fee_type: "fixed") }
   let!(:delivery)          { delivery_schedule.next_delivery }
@@ -13,7 +13,7 @@ describe UpdateBalancedPurchase do
 
   let(:payment_provider) { PaymentProvider::Balanced.id }
 
-  subject { UpdateBalancedPurchase.perform(order: order) }
+  subject { described_class.perform(order: order) }
 
   context "credit card" do
     let!(:order) { create(:order, organization: buyer, delivery: delivery, market: market, items: [order_item], payment_method: "credit card", total_cost: 30.00, payment_provider: payment_provider) }

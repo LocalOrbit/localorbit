@@ -76,7 +76,7 @@ describe "Edit quantity ordered" do
         expect(item.total).to have_content("$15.00")
         expect(Dom::Admin::OrderSummaryRow.first.gross_total).to eql("$15.00")
 
-        allow(UpdateBalancedPurchase).to receive(:perform).and_return(double("interactor", "success?" => true)) # failure messages are non-sensical if we expect it to_not receive(:perform)
+        allow(UpdatePurchase).to receive(:perform).and_return(double("interactor", "success?" => true)) # failure messages are non-sensical if we expect it to_not receive(:perform)
         item.quantity_delivered_field.native.send_keys(:Enter)
 
         expect(page).to have_content("Order successfully updated.")
@@ -90,7 +90,7 @@ describe "Edit quantity ordered" do
 
     context "less then ordered" do
       before do
-        expect(UpdateBalancedPurchase).to receive(:perform).and_return(double("interactor", "success?" => true))
+        expect(UpdatePurchase).to receive(:perform).and_return(double("interactor", "success?" => true))
       end
 
       subject do
@@ -140,7 +140,7 @@ describe "Edit quantity ordered" do
 
     context "more then ordered" do
       before do
-        expect(UpdateBalancedPurchase).to receive(:perform).and_return(double("interactor", "success?" => true))
+        expect(UpdatePurchase).to receive(:perform).and_return(double("interactor", "success?" => true))
       end
 
       subject do
@@ -243,7 +243,7 @@ describe "Edit quantity ordered" do
 
     context "less then ordered" do
       before do
-        expect(UpdateBalancedPurchase).to receive(:perform).and_return(double("interactor", "success?" => true))
+        expect(UpdatePurchase).to receive(:perform).and_return(double("interactor", "success?" => true))
       end
 
       subject do
@@ -293,7 +293,7 @@ describe "Edit quantity ordered" do
 
     context "more then ordered" do
       before do
-        expect(UpdateBalancedPurchase).to receive(:perform).and_return(double("interactor", "success?" => true))
+        expect(UpdatePurchase).to receive(:perform).and_return(double("interactor", "success?" => true))
       end
 
       subject do

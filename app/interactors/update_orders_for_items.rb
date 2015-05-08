@@ -6,7 +6,7 @@ class UpdateOrdersForItems
     orders.each do |order|
       order.save
       StoreOrderFees.perform(payment_provider: order.payment_provider, order: order)
-      UpdateBalancedPurchase.perform(payment_provider: order.payment_provider, order: order)
+      UpdatePurchase.perform(payment_provider: order.payment_provider, order: order)
     end
   end
 end

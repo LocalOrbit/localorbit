@@ -1,4 +1,4 @@
-class UpdateBalancedPurchase
+class UpdatePurchase
   include Interactor
 
   def perform
