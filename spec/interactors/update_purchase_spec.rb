@@ -16,10 +16,10 @@ describe UpdatePurchase do
     let(:order) { mm_order1 } # from mini market
 
     # Add another item to the order:
-    let(:order1_item2) { create(:order_item, product: sally_product2, quantity: 2, unit_price: "9.5".to_d) }
+    let(:mm_order1_item2) { create(:order_item, product: sally_product2, quantity: 2, unit_price: "9.5".to_d) }
     # Setup realistic-looking payments for the items:
     let(:order1_payment1) { create(:payment, :credit_card, amount: "10".to_d, stripe_payment_fee: "0.59".to_d, bank_account: credit_card) }
-    let(:order1_payment2) { create(:payment, :credit_card, amount: "15.99".to_d, stripe_payment_fee: "0.76".to_d, bank_account: credit_card) }
+    let(:order1_payment2) { create(:payment, :credit_card, amount: "15".to_d, stripe_payment_fee: "0.74".to_d, bank_account: credit_card) }
 
     before do
       order.update(
@@ -44,11 +44,11 @@ describe UpdatePurchase do
       retro_charge.call order1_payment2
 
       # Setup order1 to have two items:
-      #   order1_item1 amounts to 6.99 
-      #   order1_item2 amounts to 19.00
-      #   total 25.99
-      #   payment fees: 1.35
-      order.items << order1_item2
+      #   mm_order1_item1 amounts to 6.00
+      #   mm_order1_item2 amounts to 19.00
+      #   total 25.00
+      #   payment fees: 1.03
+      order.items << mm_order1_item2
       order.payments << order1_payment1
       order.payments << order1_payment2
       order.save # update total cost
@@ -68,7 +68,8 @@ describe UpdatePurchase do
 
     context "when less was delivered than was ordered" do
       before do
-        order1_item2.update quantity_delivered: 1
+        mm_order1_item2.update quantity_delivered: 1
+        mm_order1_item1.update quantity_delivered: 1
         order.save # update total cost
       end
       it "creates a refund" do
@@ -78,8 +79,8 @@ describe UpdatePurchase do
         subject
 
         order.reload
-        expect(order.total_cost).to eq "15.50".to_d
-        expect(order.payments.sum(:amount)).to eq "15.50".to_d
+        expect(order.total_cost).to eq "12.50".to_d
+        expect(order.payments.sum(:amount)).to eq "12.50".to_d
         expect(order.payments.count).to eq 4
 
         refund_payments = order.payments.to_a.select do |p| p.payment_type == 'order refund' end.sort_by(&:id)
@@ -90,13 +91,11 @@ describe UpdatePurchase do
         expect(rp1.parent).to eq order1_payment1
 
         rp2 = refund_payments[1]
-        expect(rp2.amount).to eq("-0.49".to_d)
+        expect(rp2.amount).to eq("-2.50".to_d)
         expect(rp2.status).to eq "paid"
         expect(rp2.parent).to eq order1_payment2
 
       end
-
-      it "spreads refund across multiple charges if necessary"
     end
 
     context "when more quantity is added" do
