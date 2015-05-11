@@ -14,7 +14,7 @@ class Admin::BankAccountsController < AdminController
     results = if params[:type] == "card"
       AddBalancedCreditCardToEntity.perform(entity: @entity, bank_account_params: bank_account_params, representative_params: representative_params)
     else
-      AddBankAccountToEntity.perform(entity: @entity, bank_account_params: bank_account_params, representative_params: representative_params)
+      AddBalancedBankAccountToEntity.perform(entity: @entity, bank_account_params: bank_account_params, representative_params: representative_params)
     end
     # TODO:
     # results = PaymentProvider.add_payment_method(@payment_provider, 

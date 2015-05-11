@@ -188,7 +188,7 @@ module PaymentProvider
         # if type == "card"
         #   AddBalancedCreditCardToEntity.perform(params)
         # else
-        #   AddBankAccountToEntity.perform(params)
+        #   AddBalancedBankAccountToEntity.perform(params)
         # end
       end
     end

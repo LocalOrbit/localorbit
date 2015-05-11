@@ -1,4 +1,4 @@
-class AddBankAccountToEntity
+class AddBalancedBankAccountToEntity
   include Interactor::Organizer
 
   organize [
