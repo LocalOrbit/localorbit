@@ -177,6 +177,20 @@ module PaymentProvider
           "0".to_d
         end
       end
+
+      def add_payment_method(type:, entity:, bank_account_params:, representative_params:)
+        raise "add_payment_method not implemented for PaymentProvider::Stripe!"
+        # params = {
+        #   entity: entity, 
+        #   bank_account_params: bank_account_params, 
+        #   representative_params: representative_params
+        # }
+        # if type == "card"
+        #   AddCreditCardToEntity.perform(params)
+        # else
+        #   AddBankAccountToEntity.perform(params)
+        # end
+      end
     end
     
   end

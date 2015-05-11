@@ -16,6 +16,12 @@ class Admin::BankAccountsController < AdminController
     else
       AddBankAccountToEntity.perform(entity: @entity, bank_account_params: bank_account_params, representative_params: representative_params)
     end
+    # TODO:
+    # results = PaymentProvider.add_payment_method(@payment_provider, 
+    #                                              type: params[:type], 
+    #                                              entity: @entity, 
+    #                                              bank_account_params: bank_account_params,
+    #                                              representative_params: representative_params)
 
     if results.success?
       redirect_to [:admin, @entity, :bank_accounts], notice: "Successfully added a payment method"
@@ -39,6 +45,7 @@ class Admin::BankAccountsController < AdminController
       :name,
       :last_four,
       :balanced_uri,
+      :stripe_tok,
       :account_type,
       :expiration_month,
       :expiration_year,
