@@ -11,7 +11,6 @@ describe "Checking Out using Stripe payment provider", :js do
   let!(:ada_farms) { create(:organization, :seller, :single_location, name: "Ada Farms", users: [create(:user)]) }
 
   let(:payment_provider) { "stripe" }
-  # let(:payment_provider) { "balanced" }
   let(:market_manager) { create(:user) }
   let(:market) { create(:market, :with_addresses, organizations: [buyer, fulton_farms, ada_farms], managers: [market_manager], payment_provider: payment_provider) }
   let(:delivery_schedule) { create(:delivery_schedule, :percent_fee,  market: market, day: 5) }
@@ -170,25 +169,24 @@ describe "Checking Out using Stripe payment provider", :js do
       end
     end
 
-    # TODO
-    # context "payment processor error" do
-    #   before do
-    #     expect(balanced_customer).to receive(:debit).and_raise(RuntimeError)
-    #   end
-    #
-    #   it "uses a stored credit card" do
-    #     choose "Pay by Credit Card"
-    #     select "Visa", from: "Saved credit cards"
-    #
-    #     checkout
-    #
-    #     expect(page).to have_content("Your order could not be completed.")
-    #     expect(page).to have_content("Payment processor error")
-    #
-    #     expect(Order.all.count).to eql(0)
-    #     expect(Payment.all.count).to eql(0)
-    #   end
-    # end
+    context "when charging, and PaymentProvider generates an error" do
+      before do
+        expect(PaymentProvider::Stripe).to receive(:charge_for_order).and_raise("MAJOR FAIL")
+      end
+
+      it "displays an error, and creates no Orders nor Payments" do
+        choose "Pay by Credit Card"
+        select "Visa", from: "Saved credit cards"
+
+        checkout
+
+        expect(page).to have_content("Your order could not be completed.")
+        expect(page).to have_content("Payment processor error")
+
+        expect(Order.all.count).to eql(0)
+        expect(Payment.all.count).to eql(0)
+      end
+    end
 
     context "unsaved credit card" do
       it "uses the card as a one off transaction" do
