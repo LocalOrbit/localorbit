@@ -1,8 +1,8 @@
 require "spec_helper"
 
 feature "Adding a credit card to an organization", :js, :vcr do
-  # TODO: use payment_provider constants
-  let!(:market)         { create(:market, name: "Fake Market", payment_provider: 'balanced') }
+  let(:payment_provider) { PaymentProvider::Balanced.id }
+  let!(:market)         { create(:market, name: "Fake Market", payment_provider: payment_provider) }
   let!(:org)            { create(:organization, name: "Fake Organization", markets: [market]) }
   let!(:member)         { create(:user, organizations: [org]) }
 
