@@ -430,32 +430,51 @@ describe "Checking Out using Stripe payment provider", :js do
         order = Order.last
         expect(order.payment_status).to eql("paid")
         expect(order.payments.count).to eql(1)
-        expect(order.payments.first.status).to eql("paid")
+        payment = order.payments.first
+        expect(payment.status).to eql("paid")
+        expect(payment.amount).to eq order.total_cost
+        # peek a litle deeper
+        expect(payment.stripe_id).to be
+        charge = Stripe::Charge.retrieve(payment.stripe_id)
+        expect(charge).to be
+        expect(charge.amount).to eq Financials::MoneyHelpers.amount_to_cents(payment.amount)
+
+        expect(charge.application_fee).to be
+        app_fee = Stripe::ApplicationFee.retrieve(charge.application_fee)
+        expect(app_fee).to be
+        # This will break if the credit card fee structure for stripe changes:
+        expected_fee = (payment.amount * "0.029".to_d) + "0.30".to_d
+        expected_fee_in_cents = Financials::MoneyHelpers.amount_to_cents(expected_fee)
+        expect(app_fee.amount).to eq expected_fee_in_cents
       end
 
-      # context "cart total of zero" do
-      #   let(:discount) { create(:discount, code: "60off", discount: "60", type: "fixed") }
-      #
-      #   before do
-      #     delivery_schedule.update_column(:fee, 0)
-      #     cart.update_column(:discount_id, discount.id)
-      #   end
-      #
-      #   it "allows a zero dollar purchase" do
-      #     choose "Pay by Credit Card"
-      #     select "Visa", from: "Saved credit cards"
-      #
-      #     checkout
-      #
-      #     expect(page).to have_content("Thank you for your order")
-      #     expect(page).to have_content("Credit Card")
-      #
-      #     order = Order.last
-      #     expect(order.payment_status).to eql("paid")
-      #     expect(order.payments.count).to eql(1)
-      #     expect(order.payments.first.status).to eql("paid")
-      #   end
-      # end
+      context "cart total of zero" do
+        let(:discount) { create(:discount, code: "60off", discount: "60", type: "fixed") }
+
+        before do
+          delivery_schedule.update_column(:fee, 0)
+          cart.update_column(:discount_id, discount.id)
+        end
+
+        it "allows a zero dollar purchase" do
+          choose "Pay by Credit Card"
+          select "Visa", from: "Saved credit cards"
+
+          checkout
+
+          expect(page).to have_content("Thank you for your order")
+          expect(page).to have_content("Credit Card")
+
+          order = Order.last
+
+          expect(order.payment_status).to eql("paid")
+          expect(order.payments.count).to eql(1)
+          payment = order.payments.first
+          expect(payment.status).to eql("paid")
+          expect(payment.amount).to eq "0".to_d
+          expect(payment.stripe_id).to eq nil
+        end
+      end
     end
 
     # TODO

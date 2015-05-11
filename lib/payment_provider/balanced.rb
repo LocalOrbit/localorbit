@@ -56,6 +56,7 @@ module PaymentProvider
       def create_order_payment(charge:, market_id:, bank_account:, payer:,
                                   payment_method:, amount:, order:, status:)
         Payment.create(
+          payment_provider: self.id.to_s,
           market_id: market_id,
           bank_account: bank_account,
           payer: payer,
@@ -70,6 +71,7 @@ module PaymentProvider
 
       def create_refund_payment(charge:, market_id:, bank_account:, payer:, payment_method:, amount:, order:, status:, refund:, parent_payment:)
         Payment.create(
+          payment_provider: self.id.to_s,
           market_id: market_id,
           bank_account: bank_account,
           payer: payer,

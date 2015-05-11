@@ -168,6 +168,7 @@ describe PaymentProvider::Balanced do
       expect(payment.orders).to eq [ order1 ]
       expect(payment.status).to eq 'paid'
       expect(payment.balanced_uri).to eq debit.uri
+      expect(payment.payment_provider).to eq described_class.id.to_s
     end
 
     context "when the charge is nil" do
@@ -219,6 +220,7 @@ describe PaymentProvider::Balanced do
       expect(payment.status).to eq 'paid'
       expect(payment.balanced_uri).to eq refund.uri
       expect(payment.parent).to eq parent_payment
+      expect(payment.payment_provider).to eq described_class.id.to_s
     end
 
     context "when the refund is nil" do

@@ -22,10 +22,22 @@ module PaymentProvider
       end
 
       def translate_status(charge:, amount:nil, payment_method:nil)
-        return 'failed' if charge.nil?
+        if charge.nil? 
+          if amount == 0 and payment_method == "credit card"
+            # Sigh.  The overarching payment processing scheme is to treat CC payments of $0.00 as instantly "paid" 
+            # without actually executing a transaction with the provider...
+            return "paid"
+          else
+            # ...but generally, missing charge is a sign of failure:
+            return "failed"
+          end
+        end
+
         case charge.status
-        when 'pending'   then 'pending'
-        when 'succeeded' then 'paid'
+        when 'pending'   
+          'pending'
+        when 'succeeded' 
+          'paid'
         else
           'failed'
         end
@@ -88,6 +100,7 @@ module PaymentProvider
         stripe_id = if charge then charge.id else nil end
 
         Payment.create(
+          payment_provider: self.id.to_s,
           market_id: market_id,
           bank_account: bank_account,
           payer: payer,
@@ -107,6 +120,7 @@ module PaymentProvider
         stripe_refund_id = refund ? refund.id : nil
 
         payment = Payment.create(
+          payment_provider: self.id.to_s,
           market_id: market_id,
           bank_account: bank_account,
           payer: payer,

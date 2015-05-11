@@ -50,9 +50,19 @@ describe PaymentProvider::Stripe do
       end
     end
 
-    it "returns 'failed' for nil charge" do
-      translated = subject.translate_status(charge: nil, amount:nil, payment_method:nil)
-      expect(translated).to eq('failed')
+    context "when charge is nil" do
+      it "returns 'failed' for nil charge" do
+        translated = subject.translate_status(charge: nil, amount:nil, payment_method:"credit card")
+        expect(translated).to eq('failed')
+      end
+      context "...and amount is 0 and payment_method is 'credit card'" do
+        it "returns 'paid' for nil charge" do
+          # This is part of the hokey dance of pretending 0-amount payments are paid.  See AttemptPurchase to
+          # understand the context for this odd interpretation.  
+          translated = subject.translate_status(charge: nil, amount:"0".to_d, payment_method:"credit card")
+          expect(translated).to eq('paid')
+        end
+      end
     end
   end
 
@@ -248,6 +258,8 @@ describe PaymentProvider::Stripe do
       expect(payment.status).to eq 'paid'
       expect(payment.stripe_id).to eq charge.id
       expect(payment.stripe_payment_fee).to eq "2.80".to_d
+      expect(payment.payment_provider).to eq 'stripe'
+      expect(payment.payment_provider).to eq described_class.id.to_s
     end
 
     context "when the ApplicationFee is not found" do
@@ -313,6 +325,7 @@ describe PaymentProvider::Stripe do
       expect(payment.stripe_id).to eq charge.id # same charge reference as our parent
       expect(payment.stripe_payment_fee).to eq "0".to_d # no payment fees are recorded on the refund Payment
       expect(payment.stripe_refund_id).to eq refund.id
+      expect(payment.payment_provider).to eq described_class.id.to_s
 
       expect(parent_payment.reload.stripe_payment_fee).to eq "2.62".to_d # 320 - 58 cents
     end

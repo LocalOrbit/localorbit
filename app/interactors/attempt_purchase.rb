@@ -94,7 +94,6 @@ class AttemptPurchase
       end
 
     rescue => e
-      # binding.pry
       Honeybadger.notify_or_ignore(e) unless Rails.env.test? || Rails.env.development?
       raise e if Rails.env.development?
       context[:order].errors.add(:credit_card, "Payment processor error.")
