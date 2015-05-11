@@ -4,7 +4,7 @@ class AddBalancedBankAccountToEntity
   organize [
     CreateBalancedCustomerForEntity,
     CreateBankAccount,
-    UnderwriteEntity,
+    UnderwriteBalancedEntity,
     AddBankAccountToBalancedCustomer,
     CreateBalancedBankAccountVerification
   ]

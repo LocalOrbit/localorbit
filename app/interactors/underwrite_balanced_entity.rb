@@ -1,4 +1,4 @@
-class UnderwriteEntity
+class UnderwriteBalancedEntity
   include Interactor
 
   def setup
