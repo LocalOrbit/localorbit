@@ -106,7 +106,11 @@ module PaymentProvider
     end
 
     def add_payment_method(payment_provider, entity:, type:, bank_account_params:, representative_params:)
-      raise "TODO: delegate add_payment_method to correct provider"
+      PaymentProvider.for(payment_provider).add_payment_method(
+        entity: entity,
+        type: type,
+        bank_account_params: bank_account_params,
+        representative_params: representative_params)
     end
   end
 end

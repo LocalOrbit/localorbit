@@ -190,6 +190,19 @@ describe PaymentProvider do
         PaymentProvider.refund_charge provider_name, params
       end
     end
+
+    describe ".add_payment_method" do
+      let(:params) {
+        { type: 'the type', 
+          entity: 'the entity', 
+          bank_account_params: 'the bank acct params', 
+          representative_params: 'the rep params' }
+      }
+      it "delegates to #{provider_object.name}.add_payment_method" do
+        expect(provider_object).to receive(:add_payment_method).with(params)
+        PaymentProvider.add_payment_method provider_name, params
+      end
+    end
   end # end each provider loop
 end
 

@@ -152,6 +152,20 @@ module PaymentProvider
                               })
       end
 
+      def add_payment_method(type:, entity:, bank_account_params:, representative_params:)
+        raise "add_payment_method not implemented for PaymentProvider::Stripe!"
+        # params = {
+        #   entity: entity, 
+        #   bank_account_params: bank_account_params, 
+        #   representative_params: representative_params
+        # }
+        # if type == "card"
+        #   AddBalancedCreditCardToEntity.perform(params)
+        # else
+        #   AddBalancedBankAccountToEntity.perform(params)
+        # end
+      end
+
       private 
       
       def distribute_fee_amongst_order_items(total_fee_cents, order)
@@ -178,19 +192,6 @@ module PaymentProvider
         end
       end
 
-      def add_payment_method(type:, entity:, bank_account_params:, representative_params:)
-        raise "add_payment_method not implemented for PaymentProvider::Stripe!"
-        # params = {
-        #   entity: entity, 
-        #   bank_account_params: bank_account_params, 
-        #   representative_params: representative_params
-        # }
-        # if type == "card"
-        #   AddBalancedCreditCardToEntity.perform(params)
-        # else
-        #   AddBalancedBankAccountToEntity.perform(params)
-        # end
-      end
     end
     
   end
