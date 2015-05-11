@@ -1,4 +1,4 @@
-class AddCreditCardToEntity
+class AddBalancedCreditCardToEntity
   include Interactor::Organizer
 
   def setup

@@ -12,7 +12,7 @@ class Admin::BankAccountsController < AdminController
 
   def create
     results = if params[:type] == "card"
-      AddCreditCardToEntity.perform(entity: @entity, bank_account_params: bank_account_params, representative_params: representative_params)
+      AddBalancedCreditCardToEntity.perform(entity: @entity, bank_account_params: bank_account_params, representative_params: representative_params)
     else
       AddBankAccountToEntity.perform(entity: @entity, bank_account_params: bank_account_params, representative_params: representative_params)
     end

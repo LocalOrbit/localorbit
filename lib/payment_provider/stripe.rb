@@ -186,7 +186,7 @@ module PaymentProvider
         #   representative_params: representative_params
         # }
         # if type == "card"
-        #   AddCreditCardToEntity.perform(params)
+        #   AddBalancedCreditCardToEntity.perform(params)
         # else
         #   AddBankAccountToEntity.perform(params)
         # end
