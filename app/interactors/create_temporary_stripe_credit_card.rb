@@ -37,7 +37,7 @@ class CreateTemporaryStripeCreditCard
 
   def find_bank_account(org, params)
     org.bank_accounts.visible.where(
-      account_type: params[:account_type],
+      # account_type: params[:account_type], # XXX during the May 2015 Balanced-Stripe migration, we boiled-down account_type for CC's to "card" instead of "mastercard", "visa" etc. In transition we might fail a match if we use this field. crosby 5/11
       last_four: params[:last_four],
       bank_name: params[:bank_name],
       name: params[:name]
