@@ -24,7 +24,7 @@ describe CreateTemporaryStripeCreditCard do
       credit_card: HashWithIndifferentAccess.new(
         account_type: "visa",
         last_four: "1111",
-        bank_name: "House of Test",
+        bank_name: "Horse the Bank",
         name: "My Test Visa",
         expiration_month: "06",
         expiration_year: "2016"
@@ -104,7 +104,7 @@ describe CreateTemporaryStripeCreditCard do
       let!(:bank_account) { create(:bank_account, :credit_card,
                                   bankable: org,
                                   last_four: "1111",
-                                  bank_name: "House of Test",
+                                  bank_name: "Horse the Bank",
                                   name: "My Test Visa") }
       
       it "sets that bank account" do
