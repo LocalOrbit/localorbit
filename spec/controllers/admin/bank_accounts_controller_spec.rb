@@ -1,7 +1,8 @@
 require "spec_helper"
 
 describe Admin::BankAccountsController, :vcr do
-  let!(:market)                   { create(:market, payment_provider: 'the provider') }
+  let(:payment_provider) { PaymentProvider::Balanced.id.to_s }
+  let!(:market)                   { create(:market, payment_provider: payment_provider) }
   let(:admin)                     { create(:user, :admin) }
   let(:market_manager_member)     { create(:user, managed_markets: [market]) }
   let(:market_manager_non_member) { create(:user, :market_manager) }
@@ -70,7 +71,7 @@ describe Admin::BankAccountsController, :vcr do
           it "sets the payment provider" do
             sign_in admin
             instance_exec(&block)
-            expect(assigns[:payment_provider]).to eq('the provider')
+            expect(assigns[:payment_provider]).to eq(payment_provider)
           end
         end
       end
@@ -97,7 +98,7 @@ describe Admin::BankAccountsController, :vcr do
             it "sets the payment provider" do
               sign_in admin
               instance_exec(&block)
-              expect(assigns[:payment_provider]).to eq('the provider')
+              expect(assigns[:payment_provider]).to eq(payment_provider)
             end
           end
         end
@@ -154,7 +155,7 @@ describe Admin::BankAccountsController, :vcr do
           it "sets the payment provider" do
             sign_in admin
             instance_exec(&block)
-            expect(assigns[:payment_provider]).to eq('the provider')
+            expect(assigns[:payment_provider]).to eq(payment_provider)
           end
         end
       end
@@ -180,7 +181,7 @@ describe Admin::BankAccountsController, :vcr do
             it "sets the payment provider" do
               sign_in admin
               instance_exec(&block)
-              expect(assigns[:payment_provider]).to eq('the provider')
+              expect(assigns[:payment_provider]).to eq(payment_provider)
             end
           end
         end

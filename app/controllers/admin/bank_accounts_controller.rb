@@ -11,17 +11,11 @@ class Admin::BankAccountsController < AdminController
   end
 
   def create
-    results = if params[:type] == "card"
-      AddBalancedCreditCardToEntity.perform(entity: @entity, bank_account_params: bank_account_params, representative_params: representative_params)
-    else
-      AddBalancedBankAccountToEntity.perform(entity: @entity, bank_account_params: bank_account_params, representative_params: representative_params)
-    end
-    # TODO:
-    # results = PaymentProvider.add_payment_method(@payment_provider, 
-    #                                              type: params[:type], 
-    #                                              entity: @entity, 
-    #                                              bank_account_params: bank_account_params,
-    #                                              representative_params: representative_params)
+    results = PaymentProvider.add_payment_method(@payment_provider, 
+                                                 type: params[:type], 
+                                                 entity: @entity, 
+                                                 bank_account_params: bank_account_params,
+                                                 representative_params: representative_params)
 
     if results.success?
       redirect_to [:admin, @entity, :bank_accounts], notice: "Successfully added a payment method"

@@ -95,17 +95,17 @@ module PaymentProvider
       end
 
       def add_payment_method(type:, entity:, bank_account_params:, representative_params:)
-        raise "add_payment_method not implemented for PaymentProvider::Balanced!"
-        # params = {
-        #   entity: entity, 
-        #   bank_account_params: bank_account_params, 
-        #   representative_params: representative_params
-        # }
-        # if type == "card"
-        #   AddCreditBalancedCardToEntity.perform(params)
-        # else
-        #   AddBalancedBankAccountToEntity.perform(params)
-        # end
+        # raise "add_payment_method not implemented for PaymentProvider::Balanced!"
+        params = {
+          entity: entity, 
+          bank_account_params: bank_account_params, 
+          representative_params: representative_params
+        }
+        if type == "card"
+          AddBalancedCreditCardToEntity.perform(params)
+        else
+          AddBalancedBankAccountToEntity.perform(params)
+        end
       end
 
     end
