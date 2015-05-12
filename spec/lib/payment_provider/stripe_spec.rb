@@ -435,4 +435,29 @@ describe PaymentProvider::Stripe do
     end
 
   end
+
+  describe ".add_payment_method" do
+
+    let(:params) do
+      {
+        entity: "foo bar",
+        bank_account_params: "money",
+        representative_params: "stuff"
+      }
+    end
+
+    it "invokes AddStripeCreditCardToEntity" do
+      expect(AddStripeCreditCardToEntity).to receive(:perform).with(params)
+      subject.add_payment_method(params.merge(type: "card"))  
+    end
+
+    it "raises error for type not equal card" do
+      expect(AddStripeCreditCardToEntity).not_to receive(:perform)
+
+      expect {
+        subject.add_payment_method(params.merge(type: "checking"))
+      }.to raise_error(/doesn't support/)
+    end
+  end
 end
+

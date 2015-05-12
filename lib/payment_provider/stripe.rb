@@ -180,17 +180,15 @@ module PaymentProvider
       end
 
       def add_payment_method(type:, entity:, bank_account_params:, representative_params:)
-        raise "add_payment_method not implemented for PaymentProvider::Stripe!"
-        # if type == "card"
-        #   AddStripeCreditCardToEntity.perform(
-        #     entity: entity, 
-        #     bank_account_params: bank_account_params, 
-        #     representative_params: representative_params)
-        # else
-        #   raise "PaymentProvider::Stripe doesn't support adding payment methods of type #{type.inspect}; only 'card' supported currently."
-        # end
+        if type == "card"
+          AddStripeCreditCardToEntity.perform(
+            entity: entity, 
+            bank_account_params: bank_account_params, 
+            representative_params: representative_params)
+        else
+          raise "PaymentProvider::Stripe doesn't support adding payment methods of type #{type.inspect}; only 'card' supported currently."
+        end
       end
-
 
       def create_stripe_card_for_bankable(organization:nil, market:nil, entity:nil, card_params:,stripe_tok:)
         entity = organization || market || entity || raise("must supply either :organization or :market or :entity")
