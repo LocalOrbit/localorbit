@@ -12,6 +12,7 @@ describe 'stripe PaymentProvider', ->
       Stripe.card.createToken = @createCardToken
       @container = { data: sinon.stub() }
       @fields =
+        name: 'Name De Card'
         card_number: '12345'
         expiration_month: '01'
         expiration_year: '2020'
@@ -44,6 +45,7 @@ describe 'stripe PaymentProvider', ->
       callback(200, response)
       result =
         stripe_tok: 'tok_123'
+        name: 'Name De Card'
         account_type: 'card'
         bank_name: 'Visa'
         last_four: '0092'
