@@ -6,6 +6,33 @@ module PaymentProvider
       rate:  "0.029".to_d, # 2.9% of total
     )
 
+    module CardSchema
+      Base = {
+        name: String,
+        bank_name: String,
+        account_type: String,
+        last_four: String,
+        expiration_month: String,
+        expiration_year: String,
+      }
+
+      SubmittedParams = RSchema.schema do
+        Base.merge(
+          _?(:id) => String,
+          _?(:save_for_future) => String,
+          :stripe_tok => String
+        )
+      end
+
+      NewParams = RSchema.schema do
+        Base.merge(
+          _?(:stripe_id) => String,
+          _?(:notes) => String,
+          _?(:deleted_at) => Time
+        )
+      end
+    end
+
     class << self
       def id; :stripe; end
 
@@ -154,16 +181,32 @@ module PaymentProvider
 
       def add_payment_method(type:, entity:, bank_account_params:, representative_params:)
         raise "add_payment_method not implemented for PaymentProvider::Stripe!"
-        # params = {
-        #   entity: entity, 
-        #   bank_account_params: bank_account_params, 
-        #   representative_params: representative_params
-        # }
         # if type == "card"
-        #   AddBalancedCreditCardToEntity.perform(params)
+        #   AddStripeCreditCardToEntity.perform(
+        #     entity: entity, 
+        #     bank_account_params: bank_account_params, 
+        #     representative_params: representative_params)
         # else
-        #   AddBalancedBankAccountToEntity.perform(params)
+        #   raise "PaymentProvider::Stripe doesn't support adding payment methods of type #{type.inspect}; only 'card' supported currently."
         # end
+      end
+
+
+      def create_stripe_card_for_bankable(organization:nil, market:nil, entity:nil, card_params:,stripe_tok:)
+        entity = organization || market || entity || raise("must supply either :organization or :market or :entity")
+
+        SchemaValidation.validate!(CardSchema::NewParams, card_params)
+
+        card = create_stripe_card_for_stripe_customer(
+          stripe_customer_id: entity.stripe_customer_id,
+          stripe_tok: stripe_tok)
+        entity.bank_accounts.create!(card_params.merge(stripe_id: card.id))
+      end
+
+      def create_stripe_card_for_stripe_customer(stripe_customer_id:, stripe_tok:)
+        customer = ::Stripe::Customer.retrieve(stripe_customer_id)
+        credit_card = customer.sources.create(source: stripe_tok)
+        credit_card
       end
 
       private 

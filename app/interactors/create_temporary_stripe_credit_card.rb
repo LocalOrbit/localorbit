@@ -1,6 +1,8 @@
 class CreateTemporaryStripeCreditCard
   include Interactor
 
+  CardSchema = ::PaymentProvider::Stripe::CardSchema
+
   def perform
     # This interactor is only for credit cards
     return unless "credit card" == order_params[:payment_method]
@@ -9,7 +11,7 @@ class CreateTemporaryStripeCreditCard
 
     # ...only for cards that aren't already on file:
     return unless credit_card_params[:id].blank?
-    SchemaValidation.validate!(SubmittedCardParams, credit_card_params)
+    SchemaValidation.validate!(CardSchema::SubmittedParams, credit_card_params)
 
     @org = cart.organization
 
@@ -20,7 +22,7 @@ class CreateTemporaryStripeCreditCard
     end
     stripe_tok = credit_card_params.delete(:stripe_tok)
     credit_card_params.delete(:id)
-    SchemaValidation.validate!(NewCardParams, credit_card_params)
+    SchemaValidation.validate!(CardSchema::NewParams, credit_card_params)
 
     bank_account = if existing_bank_account = find_bank_account(@org, credit_card_params)
                      # use this account
@@ -49,9 +51,11 @@ class CreateTemporaryStripeCreditCard
   end
 
   def create_stripe_card_bank_account(org, stripe_tok, card_params)
-    customer = Stripe::Customer.retrieve(org.stripe_customer_id)
-    card = customer.sources.create(source: stripe_tok)
-    org.bank_accounts.create!(card_params.merge(stripe_id: card.id))
+    PaymentProvider::Stripe.create_stripe_card_for_bankable(
+      organization: org,
+      card_params: card_params,
+      stripe_tok: stripe_tok)
+
   rescue => e
     if Rails.env.test? || Rails.env.development?
       raise e
@@ -62,31 +66,6 @@ class CreateTemporaryStripeCreditCard
     context.fail!
   end
 
-  #
-  # Schema for card params
-  #
 
-  CardParams = {
-    name: String,
-    bank_name: String,
-    account_type: String,
-    last_four: String,
-    expiration_month: String,
-    expiration_year: String,
-  }
-
-  SubmittedCardParams = RSchema.schema do
-    CardParams.merge(
-      _?(:id) => String,
-      _?(:save_for_future) => String,
-      :stripe_tok => String
-    )
-  end
-
-  NewCardParams = RSchema.schema do
-    CardParams.merge(
-      _?(:deleted_at) => Time
-    )
-  end
 
 end
