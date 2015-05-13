@@ -8,7 +8,7 @@ class AddBalancedCreditCardToEntity
   organize [
     CreateBalancedCustomerForEntity,
     CreateBankAccount,
-    UnderwriteBalancedEntity, # TODO: rename to UnderwriteBalancedEntity
+    UnderwriteBalancedEntity, 
     AddCreditCardToBalancedCustomer
   ]
 end

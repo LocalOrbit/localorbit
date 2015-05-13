@@ -7,14 +7,15 @@ module PaymentProvider
     )
 
     module CardSchema
-      Base = {
+      Base = RSchema.schema {{
         name: String,
         bank_name: String,
         account_type: String,
         last_four: String,
         expiration_month: String,
         expiration_year: String,
-      }
+        _?(:notes) => String,
+      }}
 
       SubmittedParams = RSchema.schema do
         Base.merge(
@@ -27,7 +28,6 @@ module PaymentProvider
       NewParams = RSchema.schema do
         Base.merge(
           _?(:stripe_id) => String,
-          _?(:notes) => String,
           _?(:deleted_at) => Time
         )
       end

@@ -63,6 +63,7 @@ class Admin::BankAccountsController < AdminController
                         when Market
                           @entity.payment_provider
                         when Organization
+                          # TODO : THIS IS POTENTIALLY CRAZY. Solve for multiple market membership!
                           @entity.markets.first.payment_provider
                         end
   end
