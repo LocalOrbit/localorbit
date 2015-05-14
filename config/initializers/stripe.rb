@@ -5,3 +5,7 @@ Rails.configuration.stripe = {
 }
 
 Stripe.api_key = Rails.configuration.stripe[:secret_key]
+
+StripeEvent.configure do |events|
+  events.subscribe 'transfer.paid', PaymentProvider::Handlers::AsyncHandler.new
+end
