@@ -7,7 +7,7 @@ class AddStripeCreditCardToEntity
 
   organize [
     CreateStripeCustomerForEntity,
-    CreateBankAccount,
+    #XXX CreateBankAccount,
     # TODO ?? UnderwriteStripeEntity,
     AddCreditCardToStripeCustomer
   ]

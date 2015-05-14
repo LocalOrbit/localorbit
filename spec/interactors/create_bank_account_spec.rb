@@ -33,6 +33,15 @@ describe CreateBankAccount do
     # make sure it leaves stripe_tok in place in the bank_account_params
     expect(bank_account_params[:stripe_tok]).to eq "a token"
   end
+  
+  it "fails the interaction on bank account creation error" do
+    result = perform
+    expect(result.success?).to be true
+
+    result2 = perform
+    expect(result2.success?).to be false
+    expect(result2.bank_account.valid?).to be false
+  end
 
 
 
