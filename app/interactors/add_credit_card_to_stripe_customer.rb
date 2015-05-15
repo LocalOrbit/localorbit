@@ -1,22 +1,16 @@
 class AddCreditCardToStripeCustomer
   include Interactor
 
-  CardSchema = ::PaymentProvider::Stripe::CardSchema
-
   def perform
-    entity = context[:entity]
-    card_params = (context[:bank_account_params] || {}).symbolize_keys
+    stripe_customer = context[:stripe_customer]
     bank_account = context[:bank_account]
+    stripe_tok = context[:bank_account_params][:stripe_tok]
 
-    SchemaValidation.validate!(CardSchema::SubmittedParams, card_params)
-
-    stripe_tok = card_params[:stripe_tok]
-
-    card = PaymentProvider::Stripe.create_stripe_card_for_stripe_customer(
-      stripe_customer_id: entity.stripe_customer_id,
+    stripe_card = PaymentProvider::Stripe.create_stripe_card_for_stripe_customer(
+      stripe_customer_id: stripe_customer.id,
       stripe_tok: stripe_tok
     )
 
-    bank_account.update(stripe_id: card.id)
+    bank_account.update(stripe_id: stripe_card.id)
   end
 end

@@ -245,7 +245,7 @@ describe "Checking Out using Stripe payment provider", :js do
 
           checkout
 
-          expect(page).to have_content('Number: Your card number is incorrect.')
+          expect(page).to have_content('Your card number is incorrect.')
           expect(num_orders).to eq Order.count
         end
 
@@ -262,7 +262,7 @@ describe "Checking Out using Stripe payment provider", :js do
 
           checkout
 
-          expect(page).to have_content("Cvc: Your card's security code is invalid.")
+          expect(page).to have_content("Your card's security code is invalid.")
           expect(num_orders).to eq Order.count
         end
       end

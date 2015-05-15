@@ -60,11 +60,6 @@ class CreateTemporaryStripeCreditCard
 
     bank_account = org.bank_accounts.create(card_params.merge(stripe_id: card.id))
 
-    # PaymentProvider::Stripe.create_stripe_card_for_bankable(
-    #   organization: org,
-    #   card_params: card_params,
-    #   stripe_tok: stripe_tok)
-
   rescue => e
     if Rails.env.test? || Rails.env.development?
       raise e
