@@ -71,3 +71,20 @@ describe 'stripe PaymentProvider', ->
       expect(@done.called).to.not.be.ok
       expect(@fail.calledWith(result)).to.be.ok
 
+    it 'maps error param names back to app names', ->
+      PaymentProvider.tokenize(@fields, 'card', @container).done(@done).fail(@fail)
+      expect(@createCardToken.calledOnce).to.be.ok
+      callback = @createCardToken.lastCall.args[1]
+      response =
+        error:
+          param: 'number'
+          message: 'dag yo'
+      # status code is ignored for now
+      callback(200, response)
+      result = [{
+        param: 'card_number'
+        message: 'dag yo'
+      }]
+      expect(@done.called).to.not.be.ok
+      expect(@fail.calledWith(result)).to.be.ok
+

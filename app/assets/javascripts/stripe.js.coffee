@@ -1,3 +1,8 @@
+fieldNameMappings =
+  number:    'card_number'
+  exp_month: 'expiration_month'
+  exp_year:  'expiration_year'
+  cvc:       'security_code'
 
 class @PaymentProvider
 
@@ -7,18 +12,16 @@ class @PaymentProvider
     Stripe.setPublishableKey($container.data("stripe-publishable-key"))
     name = fields.name
 
-    params =
-      number: fields.card_number,
-      exp_month: fields.expiration_month,
-      exp_year: fields.expiration_year,
-      cvc: fields.security_code,
+    params = {}
+    for stripeName, appName of fieldNameMappings
+      params[stripeName] = fields[appName]
 
     Stripe[type].createToken params, (status, response) ->
       error = response.error
 
       if error
         errors = [{
-          param: error.param,
+          param: (fieldNameMappings[error.param] || error.param)
           message: error.message
         }]
 
@@ -37,3 +40,4 @@ class @PaymentProvider
         deferred.resolve(result)
 
     deferred.promise()
+

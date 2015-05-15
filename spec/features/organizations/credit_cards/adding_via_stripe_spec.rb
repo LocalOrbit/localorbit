@@ -52,13 +52,14 @@ feature "Adding a credit card to an organization", :js, :vcr do
       select "2020", from: "expiration_year"
 
       click_button "Save"
+
       expect(page).not_to have_content("Successfully added a payment method")
       expect(page).to have_css(".field_with_errors")
-      expect(page).to have_content("is not a valid credit card number")
+      expect(page).to have_content("Your card number is incorrect") # stripe verbiage
     end
 
     scenario "duplicate credit card gives an error" do
-      create(:bank_account, :credit_card, name: "John Doe", bank_name: "MasterCard", account_type: "mastercard", last_four: "5100", bankable: org)
+      create(:bank_account, :credit_card, name: "John Doe", bank_name: "MasterCard", account_type: "card", last_four: "5100", bankable: org)
 
       select "Credit Card", from: "provider_account_type"
       fill_in "Name", with: "John Doe"
