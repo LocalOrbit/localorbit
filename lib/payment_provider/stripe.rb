@@ -190,16 +190,16 @@ module PaymentProvider
         end
       end
 
-      def create_stripe_card_for_bankable(organization:nil, market:nil, entity:nil, card_params:,stripe_tok:)
-        entity = organization || market || entity || raise("must supply either :organization or :market or :entity")
-
-        SchemaValidation.validate!(CardSchema::NewParams, card_params)
-
-        card = create_stripe_card_for_stripe_customer(
-          stripe_customer_id: entity.stripe_customer_id,
-          stripe_tok: stripe_tok)
-        entity.bank_accounts.create!(card_params.merge(stripe_id: card.id))
-      end
+      # def create_stripe_card_for_bankable(organization:nil, market:nil, entity:nil, card_params:,stripe_tok:)
+      #   entity = organization || market || entity || raise("must supply either :organization or :market or :entity")
+      #
+      #   SchemaValidation.validate!(CardSchema::NewParams, card_params)
+      #
+      #   card = create_stripe_card_for_stripe_customer(
+      #     stripe_customer_id: entity.stripe_customer_id,
+      #     stripe_tok: stripe_tok)
+      #   entity.bank_accounts.create!(card_params.merge(stripe_id: card.id))
+      # end
 
       def create_stripe_card_for_stripe_customer(stripe_customer_id:, stripe_tok:)
         customer = ::Stripe::Customer.retrieve(stripe_customer_id)

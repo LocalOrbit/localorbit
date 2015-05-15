@@ -51,10 +51,19 @@ class CreateTemporaryStripeCreditCard
   end
 
   def create_stripe_card_bank_account(org, stripe_tok, card_params)
-    PaymentProvider::Stripe.create_stripe_card_for_bankable(
-      organization: org,
-      card_params: card_params,
-      stripe_tok: stripe_tok)
+    SchemaValidation.validate!(CardSchema::SubmittedParams, card_params)
+
+    card = PaymentProvider::Stripe.create_stripe_card_for_stripe_customer(
+      stripe_customer_id: org.stripe_customer_id,
+      stripe_tok: stripe_tok
+    )
+
+    bank_account = org.bank_accounts.create(card_params.merge(stripe_id: card.id)
+
+    # PaymentProvider::Stripe.create_stripe_card_for_bankable(
+    #   organization: org,
+    #   card_params: card_params,
+    #   stripe_tok: stripe_tok)
 
   rescue => e
     if Rails.env.test? || Rails.env.development?

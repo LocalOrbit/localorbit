@@ -392,49 +392,63 @@ describe PaymentProvider::Stripe do
 
   end
 
-  describe ".create_stripe_card_for_bankable" do
-    include_context "the mini market"
+  describe ".create_stripe_card_for_stripe_customer" do
+    let!(:stripe_customer) { create_stripe_customer(organization: create(:organization, :buyer)) }
+    let!(:stripe_token) { create_stripe_token }
 
-    let(:card_number) { "4012888888881881" }
-
-    let(:params) {
-      {
-        name: "Jethro",
-        bank_name:"Visa",
-        last_four:card_number[-4..-1],
-        account_type:"card",
-        expiration_month:"5",
-        expiration_year:"2018",
-        notes:""
-      }
-    }
-    let(:org) { buyer_organization }
-    let!(:stripe_customer) { create_stripe_customer(organization: org) }
-    let(:stripe_token) { create_stripe_token }
-
-    it "creates a new BankAccount and Stripe card and links them by stripe_id" do
-      expect(org.bank_accounts).to eq []
-      described_class.create_stripe_card_for_bankable(
-        entity: org,
-        card_params: params,
-        stripe_tok: stripe_token.id)
-
-      expect(org.bank_accounts.count).to eq 1
-      bank_account = org.bank_accounts.first
-
-      expect(bank_account.name).to eq "Jethro"
-      expect(bank_account.bank_name).to eq "Visa"
-      expect(bank_account.last_four).to eq "1881"
-      expect(bank_account.account_type).to eq "card"
-      expect(bank_account.expiration_month).to eq 5
-      expect(bank_account.expiration_year).to eq 2018
-      expect(bank_account.notes).to eq ""
-
-      stripe_card = stripe_customer.sources.retrieve(bank_account.stripe_id)
-      expect(stripe_card).to be # we're not testing tokenization, just that we can USE a token to create a card.
+    it "makes a credit card" do
+      credit_card = described_class.create_stripe_card_for_stripe_customer(
+        stripe_customer_id: stripe_customer.id,
+        stripe_tok: stripe_token.id
+      )
+      expect(credit_card).to be
     end
-
+    
   end
+
+  # describe ".create_stripe_card_for_bankable" do
+  #   include_context "the mini market"
+  #
+  #   let(:card_number) { "4012888888881881" }
+  #
+  #   let(:params) {
+  #     {
+  #       name: "Jethro",
+  #       bank_name:"Visa",
+  #       last_four:card_number[-4..-1],
+  #       account_type:"card",
+  #       expiration_month:"5",
+  #       expiration_year:"2018",
+  #       notes:""
+  #     }
+  #   }
+  #   let(:org) { buyer_organization }
+  #   let!(:stripe_customer) { create_stripe_customer(organization: org) }
+  #   let(:stripe_token) { create_stripe_token }
+  #
+  #   it "creates a new BankAccount and Stripe card and links them by stripe_id" do
+  #     expect(org.bank_accounts).to eq []
+  #     described_class.create_stripe_card_for_bankable(
+  #       entity: org,
+  #       card_params: params,
+  #       stripe_tok: stripe_token.id)
+  #
+  #     expect(org.bank_accounts.count).to eq 1
+  #     bank_account = org.bank_accounts.first
+  #
+  #     expect(bank_account.name).to eq "Jethro"
+  #     expect(bank_account.bank_name).to eq "Visa"
+  #     expect(bank_account.last_four).to eq "1881"
+  #     expect(bank_account.account_type).to eq "card"
+  #     expect(bank_account.expiration_month).to eq 5
+  #     expect(bank_account.expiration_year).to eq 2018
+  #     expect(bank_account.notes).to eq ""
+  #
+  #     stripe_card = stripe_customer.sources.retrieve(bank_account.stripe_id)
+  #     expect(stripe_card).to be # we're not testing tokenization, just that we can USE a token to create a card.
+  #   end
+  #
+  # end
 
   describe ".add_payment_method" do
 

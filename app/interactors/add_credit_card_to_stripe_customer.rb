@@ -10,7 +10,7 @@ class AddCreditCardToStripeCustomer
 
     SchemaValidation.validate!(CardSchema::SubmittedParams, card_params)
 
-    stripe_tok = card_params.delete(:stripe_tok)
+    stripe_tok = card_params[:stripe_tok]
 
     card = PaymentProvider::Stripe.create_stripe_card_for_stripe_customer(
       stripe_customer_id: entity.stripe_customer_id,
