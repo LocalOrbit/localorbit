@@ -23,6 +23,10 @@ Dir[Rails.root.join("spec/support/**/*.rb")].each {|f| require f }
 # If you are not using ActiveRecord, you can remove this line.
 ActiveRecord::Migration.maintain_test_schema!
 
+module CapybaraApp
+  def app; Capybara.app; end
+end
+
 RSpec.configure do |config|
   # ## Mock Framework
   #
@@ -58,6 +62,8 @@ RSpec.configure do |config|
   config.include EmailSpec::Matchers
   config.include ChosenJs::Helpers, chosen_js: true
   config.include FirePoll
+  config.include CapybaraApp
+  config.include Rack::Test::Methods
 
   config.before(:suite) do
     DatabaseCleaner.clean_with(:truncation)

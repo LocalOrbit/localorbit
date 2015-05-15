@@ -27,10 +27,10 @@ describe PaymentProvider::Handlers::TransferPaid do
       transfer = double(amount: 1234)
       payment = double(id: 187)
 
-      expect(PaymentProvider::Stripe).to receive(:order_ids_for_market_payout_trasnfer).
+      expect(PaymentProvider::Stripe).to receive(:order_ids_for_market_payout_transfer).
         with(transfer_id: 'transfer id', stripe_account_id: 'account id').
         and_return(['123', '456'])
-      expect(PaymentProvider::Stripe).to receive(:get_trasnfer).
+      expect(PaymentProvider::Stripe).to receive(:get_transfer).
         with(transfer_id: 'transfer id').and_return(transfer)
       expect(PaymentProvider::Stripe).to receive(:create_market_payment).
         with(transfer_id: 'transfer id', market: market, order_ids: ['123', '456'], 
