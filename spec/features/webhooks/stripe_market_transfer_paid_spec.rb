@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe "stripe market transfer.paid event", vcr: true do
+describe "stripe market transfer.paid event", vcr: true, webhook: true do
   it "creates a payment and emails the market's managers" do
     post '/webhooks/stripe', JSON.parse(File.read('spec/features/webhooks/transfer.paid.json'))
     raise "FINISH HIM"

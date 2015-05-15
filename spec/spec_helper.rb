@@ -62,8 +62,8 @@ RSpec.configure do |config|
   config.include EmailSpec::Matchers
   config.include ChosenJs::Helpers, chosen_js: true
   config.include FirePoll
-  config.include CapybaraApp
-  config.include Rack::Test::Methods
+  config.include CapybaraApp, webhook: true
+  config.include Rack::Test::Methods, webhook: true
 
   config.before(:suite) do
     DatabaseCleaner.clean_with(:truncation)
