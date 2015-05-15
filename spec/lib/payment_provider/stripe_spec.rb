@@ -1,3 +1,5 @@
+require 'spec_helper'
+
 describe PaymentProvider::Stripe do
   subject { described_class } 
 
@@ -392,3 +394,18 @@ describe PaymentProvider::Stripe do
 
   end
 end
+
+
+
+describe PaymentProvider::Stripe, vcr: true do
+  subject { described_class } 
+
+  describe '.order_ids_for_market_payout_transfer' do
+    it "returns lo order ids from a transaction's payments" do
+      order_ids = subject.order_ids_for_market_payout_transfer(
+        transfer_id: 'tr_15xxwkHouQbaP1MV8O0tEg2b', stripe_account_id: 'acct_15xJY9HouQbaP1MV')
+      expect(order_ids).to eq([1234, 187, 1337])
+    end
+  end
+end
+
