@@ -22,8 +22,7 @@ module PaymentProvider
             status: 'paid', 
             amount: ::Financials::MoneyHelpers.cents_to_amount(amount_in_cents))
 
-          recipient_emails = market.managers.map(&:pretty_email)
-          PaymentMailer.payment_received(recipient_emails, payment.id).deliver
+          ::Financials::PaymentNotifier.market_payment_received(payment: payment, async: false)
 
           nil
         end

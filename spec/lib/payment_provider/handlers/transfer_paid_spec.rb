@@ -36,7 +36,7 @@ describe PaymentProvider::Handlers::TransferPaid do
     end
 
     it 'creates a market payment for the transfer amount and releated orders' do
-      payment = double(id: 187)
+      payment = double('the payment', id: 187, payee: market)
       expect(PaymentProvider::Stripe).to receive(:order_ids_for_market_payout_transfer).
         with(transfer_id: 'transfer id', stripe_account_id: 'account id').
         and_return(['123', '456'])
@@ -45,14 +45,12 @@ describe PaymentProvider::Handlers::TransferPaid do
              status:'paid', amount: '12.34'.to_d).
         and_return(payment)
 
-      email_addresses = [user.pretty_email]
-      email_object = double "da email, da email, da, da, da email"
-      expect(PaymentMailer).to receive(:payment_received).with(email_addresses, 187).and_return email_object
-      expect(email_object).to receive(:deliver).and_return('gotcha')
-
-      returned = subject.handle(transfer_id: 'transfer id', stripe_account_id: 'account id', 
+      expect(Financials::PaymentNotifier).to receive(:market_payment_received).with(
+        payment: payment,
+        async: false
+      )
+      subject.handle(transfer_id: 'transfer id', stripe_account_id: 'account id', 
                      amount_in_cents: '1234')
-      expect(returned).to be nil
     end
 
   end
