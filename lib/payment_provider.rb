@@ -25,6 +25,14 @@ module PaymentProvider
     def can_add_payment_method?(payment_provider, payment_method)
       PaymentProvider.for(payment_provider).addable_payment_methods.include?(payment_method)
     end
+
+    def can_add_credit_card_payment_method?(payment_provider)
+      can_add_payment_method?(payment_provider, "credit card")
+    end
+
+    def can_add_ach_payment_method?(payment_provider)
+      can_add_payment_method?(payment_provider, "ach")
+    end
     
     #
     # Common PaymentProvide interface: 
