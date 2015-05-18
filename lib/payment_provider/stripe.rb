@@ -216,6 +216,7 @@ module PaymentProvider
 
       def create_market_payment(transfer_id:, market:, order_ids:, status:, amount:)
         Payment.create!(
+          payment_provider: self.id.to_s,
           payment_type:   "market payment",
           amount:         amount,
           status:         status,
