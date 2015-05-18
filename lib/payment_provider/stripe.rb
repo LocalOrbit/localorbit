@@ -152,6 +152,12 @@ module PaymentProvider
                               })
       end
 
+      #
+      #
+      # NON-PaymentProvider interface:
+      #
+      #
+
       def order_ids_for_market_payout_transfer(transfer_id:, stripe_account_id:)
 
         order_ids = enumerate_transfer_transactions(transfer_id: transfer_id, stripe_account_id: stripe_account_id).map do |transaction|
@@ -162,6 +168,12 @@ module PaymentProvider
         end
         order_ids.compact.uniq
       end
+
+      def create_market_payment(transfer_id:, market:, order_ids:, status:, amount:)
+        raise "IMPLEMENT ME:  create_market_payment"
+      end
+
+
 
       private 
 
