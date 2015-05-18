@@ -96,7 +96,7 @@
 
           <fieldset class="conditional">
             <legend class="haiku">Select Payment Method</legend>
-              <% if allow_payment_option?(:allow_purchase_orders) %>
+              <% if allow_payment_option?(:purchase_order, current_market, current_organization) %>
                 <div class="field">
                   <label>
                     <%= f.radio_button :payment_method, "purchase order" %>
@@ -111,7 +111,7 @@
                 </div>
               <% end %>
 
-              <% if allow_payment_option?(:allow_credit_cards) %>
+              <% if allow_payment_option?(:credit_card, current_market, current_organization) %>
                 <div class="field">
                   <label>
                     <%= f.radio_button :payment_method, "credit card" %>
@@ -170,7 +170,7 @@
                 </div>
               <% end %>
 
-              <% if allow_payment_option?(:allow_ach) %>
+              <% if allow_payment_option?(:ach, current_market, current_organization) %>
                 <div class="field">
                   <label>
                     <%= f.radio_button :payment_method, "ach" %>
