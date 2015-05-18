@@ -1,4 +1,7 @@
 Rails.application.routes.draw do
+
+  mount StripeEvent::Engine, at: '/webhooks/stripe'
+
   get 'style_guide/index'
 
   get '*path', constraints: NonMarketDomain.new, format: false,
@@ -190,6 +193,7 @@ Rails.application.routes.draw do
 
   get "pdf_tester", to: "pdf_tester#index", as: "pdf_tester"
   post "pdf_tester/generate", to: "pdf_tester#generate", as: "pdf_tester_generate"
+
 
   root to: redirect("/users/sign_in")
 end

@@ -9,4 +9,4 @@ VCR.configure do |c|
   c.ignore_hosts "fonts.googleapis.com", "codeclimate.com"
 end
 
-WebMock.allow_net_connect!
+# WebMock.allow_net_connect!

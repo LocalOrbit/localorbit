@@ -191,13 +191,53 @@ module PaymentProvider
         end
       end
 
+      #
+      #
+      # NON-PaymentProvider interface:
+      #
+      #
+
       def create_stripe_card_for_stripe_customer(stripe_customer:nil,stripe_customer_id:nil, stripe_tok:)
         customer = stripe_customer || ::Stripe::Customer.retrieve(stripe_customer_id)
         credit_card = customer.sources.create(source: stripe_tok)
         credit_card
       end
 
+      def order_ids_for_market_payout_transfer(transfer_id:, stripe_account_id:)
+
+        order_ids = enumerate_transfer_transactions(transfer_id: transfer_id, stripe_account_id: stripe_account_id).map do |transaction|
+          if metadata = transaction.try(:source).try(:metadata)
+            order_id = metadata['lo.order_id']
+            order_id.to_i unless order_id.nil?
+          end
+        end
+        order_ids.compact.uniq
+      end
+
+      def create_market_payment(transfer_id:, market:, order_ids:, status:, amount:)
+        Payment.create!(
+          payment_type:   "market payment",
+          amount:         amount,
+          status:         status,
+          stripe_transfer_id: transfer_id,
+          market:         market,
+          payee:          market,
+          bank_account:   nil,
+          order_ids:      order_ids,
+          payment_method: "ach"
+        )
+      end
+
       private 
+
+      def enumerate_transfer_transactions(transfer_id:, stripe_account_id:)
+        response = ::Stripe::BalanceTransaction.all(
+          {limit: 100, type: 'payment', expand: ['data.source'], 
+            transfer: transfer_id}, {stripe_account: stripe_account_id})
+
+        response.data
+      end
+
       
       def distribute_fee_amongst_order_items(total_fee_cents, order)
         order_total_cents = ::Financials::MoneyHelpers.amount_to_cents(order.gross_total)

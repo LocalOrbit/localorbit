@@ -60,6 +60,7 @@ gem "postgres_ext"
 gem "rack-canonical-host"
 gem "ransack"
 gem "simpleidn"
+gem "stripe_event"
 
 gem "constructor"
 gem "tabulator", github: "dcrosby42/tabulator"
@@ -76,6 +77,7 @@ group :doc do
 end
 
 group :development do
+  gem "ultrahook"
   gem "spring"
   gem "spring-commands-rspec"
   gem "rubocop", require: false
