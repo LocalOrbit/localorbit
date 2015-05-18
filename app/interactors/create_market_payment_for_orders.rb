@@ -7,6 +7,7 @@ class CreateMarketPaymentForOrders
     orders       = market.orders.find(order_ids)
 
     context[:payment] = Payment.create(
+      payment_provider: PaymentProvider::Balanced.id.to_s,
       orders:         orders,
       market:         market,
       bank_account:   bank_account,

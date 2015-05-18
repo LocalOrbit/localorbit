@@ -61,6 +61,7 @@ class AttemptBalancedPurchase
 
   def record_payment(debit)
     context[:payment] = Payment.create(
+      payment_provider: PaymentProvider::Balanced.id.to_s,
       market_id: cart.market_id,
       bank_account: bank_account,
       payer: cart.organization,

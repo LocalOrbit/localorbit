@@ -3,6 +3,7 @@ class CreateServicePayment
 
   def perform
     context[:payment] = Payment.create({
+      payment_provider: PaymentProvider::Balanced.id.to_s,
       payment_type:   "service",
       market:         market,
       payer:          market,
