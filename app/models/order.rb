@@ -130,7 +130,8 @@ class Order < ActiveRecord::Base
   end
 
   def self.balanced_payable_to_market
-    paid.
+    balanced.
+      paid.
       fully_delivered.
       used_lo_payment_processing.
       not_paid_for("market payment").
