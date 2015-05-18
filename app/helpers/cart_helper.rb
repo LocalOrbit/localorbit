@@ -2,7 +2,7 @@ module CartHelper
   def allow_payment_option?(kind, market, organization)
     case kind
     when :purchase_order
-      return market.allow_purchase_orders? and organization.allow_purchase_orders?
+      return (market.allow_purchase_orders? and organization.allow_purchase_orders?)
 
     when :ach
       return (PaymentProvider.supports_payment_method?(market.payment_provider, "ach") and
