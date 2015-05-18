@@ -41,7 +41,7 @@ module PaymentProvider
       end
 
       def place_order(buyer_organization:, user:, order_params:, cart:)
-        PlaceStripeOrder.perform(payment_provider: :stripe, 
+        PlaceStripeOrder.perform(payment_provider: self.id.to_s, 
                                  entity: buyer_organization, 
                                  buyer: user,
                                  order_params: order_params, 
@@ -225,6 +225,7 @@ module PaymentProvider
 
       def create_market_payment(transfer_id:, market:, order_ids:, status:, amount:)
         Payment.create!(
+          payment_provider: self.id.to_s,
           payment_type:   "market payment",
           amount:         amount,
           status:         status,

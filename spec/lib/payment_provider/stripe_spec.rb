@@ -24,7 +24,7 @@ describe PaymentProvider::Stripe do
 
     it "invokes PlaceOrder interactor" do
       expect(PlaceStripeOrder).to receive(:perform).with(
-        payment_provider: :stripe,
+        payment_provider: PaymentProvider::Stripe.id.to_s,
         entity: params[:buyer_organization],
         buyer: params[:user],
         order_params: params[:order_params],
@@ -421,6 +421,7 @@ describe PaymentProvider::Stripe do
       expect(payment.stripe_transfer_id).to eq 'the transfer id'
       expect(payment.status).to eq 'the status'
       expect(payment.amount).to eq '12.34'.to_d
+      expect(payment.payment_provider).to eq PaymentProvider::Stripe.id.to_s
     end
 
   end

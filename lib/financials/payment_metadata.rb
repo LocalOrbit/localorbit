@@ -7,6 +7,7 @@ module Financials
       payment_notifier: Symbol, # a class method on Financials::PaymentNotifier
       payment_info_converter: Symbol, # a class method on Financials::PaymentInfoConverter
       payment_base_attrs: {
+        payment_provider: PaymentProviderSelector,
         payment_type:   PaymentTypeLower,
         payment_method: PaymentMethodLower,
         status:         PaymentStatusLower
@@ -17,6 +18,7 @@ module Financials
       net_to_seller: {
         description: "Payment to Seller on 'Automate'",
         payment_base_attrs: {
+          payment_provider: 'balanced',
           payment_type:   "seller payment",
           payment_method: "ach",
           status:         "pending"
@@ -28,6 +30,7 @@ module Financials
       market_fees_to_market: {
         description: "Market Fee payment to Market on 'Automate'",
         payment_base_attrs: {
+          payment_provider: 'balanced',
           payment_type:   "hub fee",
           payment_method: "ach",
           status:         "pending"
@@ -39,6 +42,7 @@ module Financials
       delivery_fees_to_market: {
         description: "Delivery Fee payment to Market on 'Automate'",
         payment_base_attrs: {
+          payment_provider: 'balanced',
           payment_type:   "delivery fee",
           payment_method: "ach",
           status:         "pending"
