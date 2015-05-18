@@ -308,12 +308,14 @@ describe PaymentProvider::Stripe do
       }
     }
 
-    subject { described_class.create_refund_payment(params) }
+    def create_refund_payment
+      subject.create_refund_payment(params)
+    end
       
 
     it "stores a Payment record corresponding to a refund on a charge, parented to the original Payment instance" do
       expect(Stripe::ApplicationFee).to receive(:retrieve).with(charge.application_fee).and_return(app_fee)
-      payment = subject
+      payment = create_refund_payment
       expect(payment).to be
       expect(payment.id).to be # stored to database
       expect(payment.market_id).to eq mini_market.id
@@ -335,7 +337,7 @@ describe PaymentProvider::Stripe do
     context "when the ApplicationFee is not found" do
       it "sets 0 for app fee" do
         expect(Stripe::ApplicationFee).to receive(:retrieve).with(charge.application_fee).and_return(nil)
-        payment = subject
+        payment = create_refund_payment
         expect(payment.stripe_id).to eq charge.id
         expect(payment.stripe_payment_fee).to eq "0".to_d
       end
@@ -345,7 +347,7 @@ describe PaymentProvider::Stripe do
       it "leaves the stripe_refund_id unset" do
         expect(Stripe::ApplicationFee).to receive(:retrieve).with(charge.application_fee).and_return(app_fee)
         params[:refund] = nil
-        payment = subject
+        payment = create_refund_payment
         expect(payment.stripe_refund_id).to be nil
       end
     end
@@ -353,7 +355,7 @@ describe PaymentProvider::Stripe do
     context "when the charge is nil" do
       it "leaves the stripe_id unset and sets 0 for app fee" do
         params[:charge] = nil
-        payment = subject
+        payment = create_refund_payment
         expect(payment.stripe_id).to be nil
         expect(payment.stripe_payment_fee).to eq "0".to_d
       end
@@ -367,7 +369,7 @@ describe PaymentProvider::Stripe do
 
     it "retrieves the Charge from Stripe per the stripe_id of the given Payment" do
       expect(Stripe::Charge).to receive(:retrieve).with(payment.stripe_id).and_return(charge)
-      expect(described_class.find_charge(payment: payment)).to eq charge
+      expect(subject.find_charge(payment: payment)).to eq charge
     end
   end
 
@@ -389,7 +391,39 @@ describe PaymentProvider::Stripe do
         }
       ).and_return refund
 
-      expect(described_class.refund_charge(charge:charge, amount:amount, order:order)).to eq refund
+      expect(subject.refund_charge(charge:charge, amount:amount, order:order)).to eq refund
+    end
+
+  end
+
+  describe ".create_market_payment" do
+    let!(:market) { create(:market) }
+    let!(:order1) { create(:order, market: market) }
+    let!(:order2) { create(:order, market: market) }
+    let(:orders) { [order1,order2] }
+    let(:order_ids) { orders.map do |o| o.id end }
+
+    let(:params) {{
+      transfer_id: 'the transfer id',
+      market: market,
+      order_ids: order_ids,
+      status: 'the status',
+      amount: "12.34".to_d
+    }}
+      
+    it "creates and returns a Payment record to track the Stripe transfer and the involved Orders" do
+      payment = subject.create_market_payment(params)
+      expect(payment).to be
+      expect(payment.id).to be
+      expect(payment.payment_type).to eq 'market payment'
+      expect(payment.bank_account).to be nil
+
+      expect(payment.payee).to eq(market)
+      expect(payment.market).to eq(market)
+      expect(payment.order_ids.to_set).to eq(order_ids.to_set)
+      expect(payment.stripe_transfer_id).to eq 'the transfer id'
+      expect(payment.status).to eq 'the status'
+      expect(payment.amount).to eq '12.34'.to_d
     end
 
   end

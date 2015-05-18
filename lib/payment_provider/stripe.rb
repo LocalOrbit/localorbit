@@ -170,7 +170,17 @@ module PaymentProvider
       end
 
       def create_market_payment(transfer_id:, market:, order_ids:, status:, amount:)
-        raise "IMPLEMENT ME:  create_market_payment"
+        Payment.create!(
+          payment_type:   "market payment",
+          amount:         amount,
+          status:         status,
+          stripe_transfer_id: transfer_id,
+          market:         market,
+          payee:          market,
+          bank_account:   nil,
+          order_ids:      order_ids,
+          payment_method: "ach"
+        )
       end
 
 

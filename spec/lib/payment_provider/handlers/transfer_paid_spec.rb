@@ -25,6 +25,16 @@ describe PaymentProvider::Handlers::TransferPaid do
       expect(Payment.count).to eq(0)
     end
 
+    context 'when there is no Market connected with the given stripe_account_id' do
+      it 'does nothing if no Market bears the given stripe_account_id' do
+        market.update(stripe_account_id: 'will not match')
+        expect(PaymentProvider::Stripe).to_not receive(:create_market_payment)
+        expect(PaymentMailer).to_not receive(:payment_received)
+        subject.handle(transfer_id: 'transfer id', stripe_account_id: 'account id', amount_in_cents: '1234')
+        expect(Payment.count).to eq(0)
+      end
+    end
+
     it 'creates a market payment for the transfer amount and releated orders' do
       payment = double(id: 187)
       expect(PaymentProvider::Stripe).to receive(:order_ids_for_market_payout_transfer).

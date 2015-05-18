@@ -11,8 +11,7 @@ module PaymentProvider
       end
 
       def self.handle(transfer_id:, stripe_account_id:, amount_in_cents:)
-        if stripe_account_id
-          market = Market.where(stripe_account_id: stripe_account_id).first
+        if stripe_account_id and market = Market.where(stripe_account_id: stripe_account_id).first
           order_ids = PaymentProvider::Stripe.order_ids_for_market_payout_transfer(
             transfer_id: transfer_id, 
             stripe_account_id: stripe_account_id)
