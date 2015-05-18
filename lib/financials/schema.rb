@@ -25,7 +25,7 @@ module Financials
     PaymentMethod = RSchema::DSL.enum([ "Credit Card", "ACH", "Paypal", "Purchase Order" ])
     PaymentMethodLower = RSchema::DSL.enum([ "credit card", "ach", "paypal", "purchase order" ])
 
-    PaymentProviderSelector = RSchema::DSL.either('balanced', :balanced, 'stripe', :stripe)
+    PaymentProviderSelector = RSchema::DSL.enum(['balanced', :balanced, 'stripe', :stripe])
 
     PaymentInfo = {
       amount:       Money,
