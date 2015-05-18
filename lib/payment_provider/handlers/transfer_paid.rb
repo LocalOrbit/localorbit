@@ -24,6 +24,8 @@ module PaymentProvider
 
           recipient_emails = market.managers.map(&:pretty_email)
           PaymentMailer.payment_received(recipient_emails, payment.id).deliver
+
+          nil
         end
       end
     end

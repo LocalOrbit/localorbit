@@ -42,16 +42,17 @@ describe PaymentProvider::Handlers::TransferPaid do
         and_return(['123', '456'])
       expect(PaymentProvider::Stripe).to receive(:create_market_payment).
         with(transfer_id: 'transfer id', market: market, order_ids: ['123', '456'], 
-             status: 'paid', amount: '12.34'.to_d).
+             status:'paid', amount: '12.34'.to_d).
         and_return(payment)
 
       email_addresses = [user.pretty_email]
       email_object = double "da email, da email, da, da, da email"
       expect(PaymentMailer).to receive(:payment_received).with(email_addresses, 187).and_return email_object
-      expect(email_object).to receive(:deliver)
+      expect(email_object).to receive(:deliver).and_return('gotcha')
 
-      subject.handle(transfer_id: 'transfer id', stripe_account_id: 'account id', 
+      returned = subject.handle(transfer_id: 'transfer id', stripe_account_id: 'account id', 
                      amount_in_cents: '1234')
+      expect(returned).to be nil
     end
 
   end
