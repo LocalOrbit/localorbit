@@ -8,7 +8,7 @@ module PaymentProvider
       end
 
       def place_order(buyer_organization:, user:, order_params:, cart:)
-        PlaceOrder.perform(payment_provider: :balanced, entity: buyer_organization, buyer: user,
+        PlaceOrder.perform(payment_provider: PaymentProvider::Balanced.id, entity: buyer_organization, buyer: user,
                            order_params: order_params, cart: cart)
       end
 
