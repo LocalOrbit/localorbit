@@ -86,7 +86,7 @@ module PaymentProvider
         #                  estimate_ach_processing_fee_in_cents(amount_in_cents)
         #                end
         
-        return ::Stripe::Charge.create(
+        charge = ::Stripe::Charge.create(
           amount: amount_in_cents, 
           currency: 'usd', 
           source: source, 
@@ -94,6 +94,15 @@ module PaymentProvider
           destination: destination, 
           statement_descriptor: descriptor,
           application_fee: fee_in_cents)
+
+        # Pin some order metadata on the Stripe::Payment object that appears in the managed account:
+        transfer = ::Stripe::Transfer.retrieve(charge.transfer)
+        payment = ::Stripe::Charge.retrieve(transfer.destination_payment, {stripe_account: transfer.destination})
+        payment["metadata"]["lo.order_id"] = order.id.to_s
+        payment["metadata"]["lo.order_number"] = order.order_number
+        payment.save
+
+        return charge
       end
 
       def fully_refund(charge:nil, payment:, order:)

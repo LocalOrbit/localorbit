@@ -91,19 +91,6 @@ describe PaymentProvider::Stripe do
 
     let!(:stripe_account) { get_or_create_stripe_account_for_market(mini_market) }
 
-    before do
-      # ...and his credit card:
-      # credit_card.update(stripe_id: stripe_card.id)
-      # buyer_organization.bank_accounts << credit_card
-      #
-      # # Connect Market to its Stripe account:
-      # mini_market.update(stripe_account_id: stripe_account.id)
-    end
-
-    after do
-      cleanup_stripe_objects
-    end
-
     it "creates a Stripe charge" do
       charge = subject.charge_for_order(
         amount: amount,
@@ -115,6 +102,7 @@ describe PaymentProvider::Stripe do
       expected_amount = ::Financials::MoneyHelpers.amount_to_cents(amount)
       estimated_fee = ::PaymentProvider::FeeEstimator.estimate_payment_fee PaymentProvider::Stripe::CreditCardFeeStructure, expected_amount
 
+      # Examine the Charge:
       expect(charge).to be
       expect(charge.status).to eq 'succeeded'
       expect(charge.amount).to eq expected_amount
@@ -124,9 +112,18 @@ describe PaymentProvider::Stripe do
       expect(charge.destination).to eq mini_market.stripe_account_id
       expect(charge.application_fee).to be
 
+      # Examine the app fee:
       app_fee = Stripe::ApplicationFee.retrieve(charge.application_fee)
       expect(app_fee).to be
       expect(app_fee.amount).to eq estimated_fee
+
+      # Find the associated Payment and check its metadata:
+      stripe_transfer = Stripe::Transfer.retrieve(charge.transfer)
+      stripe_payment = Stripe::Charge.retrieve(stripe_transfer.destination_payment, {stripe_account: stripe_transfer.destination})
+      expect(stripe_payment).to be
+      expect(stripe_payment["metadata"]).to be
+      expect(stripe_payment["metadata"]["lo.order_id"]).to eq order.id.to_s
+      expect(stripe_payment["metadata"]["lo.order_number"]).to eq order.order_number
     end
   end
 
