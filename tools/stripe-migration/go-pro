@@ -1,0 +1,3 @@
+export STRIPE_PUBLISHABLE_KEY=pk_live_j85VTsrz51POrss3ni460qaf
+export STRIPE_SECRET_KEY=sk_live_x7BnCwzeVmzRr1Kd40zRYSIh
+
