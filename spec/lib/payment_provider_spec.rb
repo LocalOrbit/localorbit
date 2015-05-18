@@ -37,9 +37,19 @@ describe PaymentProvider do
     provider_object = PaymentProvider.for(provider_name)
 
 
-    describe ".supports_payment_method" do
+    describe ".supports_payment_method?" do
       it "checks the provider for supported payment methods and returns true or false" do
         provider_object.supported_payment_methods.each do |good|
+          expect(PaymentProvider.supports_payment_method?(provider_name, good)).to eq true
+        end
+        expect(PaymentProvider.supports_payment_method?(provider_name, :no_chance)).to eq false
+        expect(PaymentProvider.supports_payment_method?(provider_name, nil)).to eq false
+      end
+    end
+
+    describe ".can_add_payment_method?" do
+      it "checks the provider for supported payment methods and returns true or false" do
+        provider_object.addable_payment_methods.each do |good|
           expect(PaymentProvider.supports_payment_method?(provider_name, good)).to eq true
         end
         expect(PaymentProvider.supports_payment_method?(provider_name, :no_chance)).to eq false

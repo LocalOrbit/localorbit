@@ -21,6 +21,10 @@ module PaymentProvider
     def supports_payment_method?(payment_provider, payment_method)
       PaymentProvider.for(payment_provider).supported_payment_methods.include?(payment_method)
     end
+
+    def can_add_payment_method?(payment_provider, payment_method)
+      PaymentProvider.for(payment_provider).addable_payment_methods.include?(payment_method)
+    end
     
     #
     # Common PaymentProvide interface: 

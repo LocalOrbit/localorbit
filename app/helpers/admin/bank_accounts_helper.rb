@@ -22,15 +22,20 @@ module Admin
       end
     end
 
-    def account_type_options(bank_account)
-      options_for_select(
-        [
-          ["Checking", "checking"],
-          ["Savings", "savings"],
-          ["Credit Card", "card"]
-        ],
-        selected: selected_type(bank_account)
-      )
+    def account_type_options(bank_account, payment_provider)
+      options = []
+
+      if PaymentProvider.can_add_payment_method?(payment_provider, "credit card")
+        options << ["Credit Card", "card"]
+      end
+
+      if PaymentProvider.can_add_payment_method?(payment_provider, "ach")
+        options << ["Checking", "checking"]
+        options << ["Savings", "savings"]
+      end
+
+      options_for_select(options, selected: selected_type(bank_account))
     end
+
   end
 end

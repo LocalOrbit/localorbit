@@ -7,6 +7,11 @@ module PaymentProvider
         [ "credit card", "ach" ]
       end
 
+      def addable_payment_methods
+        supported_payment_methods #XXX
+        # TODO []
+      end
+
       def place_order(buyer_organization:, user:, order_params:, cart:)
         PlaceOrder.perform(payment_provider: PaymentProvider::Balanced.id, entity: buyer_organization, buyer: user,
                            order_params: order_params, cart: cart)

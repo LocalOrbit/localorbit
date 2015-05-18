@@ -40,6 +40,10 @@ module PaymentProvider
         [ "credit card" ]
       end
 
+      def addable_payment_methods
+        [ "credit card" ]
+      end
+
       def place_order(buyer_organization:, user:, order_params:, cart:)
         PlaceStripeOrder.perform(payment_provider: self.id.to_s, 
                                  entity: buyer_organization, 
