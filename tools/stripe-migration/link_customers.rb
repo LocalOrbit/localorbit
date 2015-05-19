@@ -4,7 +4,6 @@ module LinkCustomers
   extend self
   def match_markets
     markets = load_markets
-    # markets_by_bcid = index_markets(markets)
 
     stripe_custs = load_stripe_customers
     stripe_custs_by_bcid = index_stripe_custs(stripe_custs)
@@ -21,9 +20,30 @@ module LinkCustomers
       end
     end
 
-
     write_yaml "tools/stripe-migration/matched_markets.yml", matched_markets
     write_yaml "tools/stripe-migration/missed_markets.yml", missed_markets
+  end
+
+  def match_organizations
+    orgs = load_organizations
+
+    stripe_custs = load_stripe_customers
+    stripe_custs_by_bcid = index_stripe_custs(stripe_custs)
+
+    matched_orgs = []
+    missed_orgs = []
+
+    orgs.each do |_,org|
+      bcid = org[:balanced_customer_id]
+      if bcid and sc = stripe_custs_by_bcid[bcid]
+        matched_orgs << org.merge(stripe_customer_id: sc[:id])
+      else
+        missed_orgs << org
+      end
+    end
+
+    write_yaml "tools/stripe-migration/matched_organizations.yml", matched_orgs
+    write_yaml "tools/stripe-migration/missed_organizations.yml", missed_orgs
   end
 
   def load_stripe_customers
@@ -32,6 +52,10 @@ module LinkCustomers
 
   def load_markets
     YAML.load_file("#{lo_prod_dir}/markets.yml")
+  end
+
+  def load_organizations
+    YAML.load_file("#{lo_prod_dir}/organizations.yml")
   end
 
   def index_markets(markets)
@@ -62,4 +86,5 @@ module LinkCustomers
   end
 end
 
-LinkCustomers.match_markets
+# LinkCustomers.match_markets
+LinkCustomers.match_organizations
