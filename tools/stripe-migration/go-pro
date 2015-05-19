@@ -1,5 +1,8 @@
 #!/bin/bash
 export STRIPE_PUBLISHABLE_KEY=pk_live_j85VTsrz51POrss3ni460qaf
 export STRIPE_SECRET_KEY=sk_live_x7BnCwzeVmzRr1Kd40zRYSIh
+export BALANCED_API_KEY=ak-prod-OsBWfpnMgzgDouy4HNaQQU7eZpJKKBIv
+export BALANCED_MARKETPLACE_URI=/v1/marketplaces/MP2eXZmrOPof80u3Irf94Wre
+export RAILS_ENV=production
 ruby -e 'require "./config/environment"; require "pry"; binding.pry'
 

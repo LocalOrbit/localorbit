@@ -20,8 +20,8 @@ module LinkCustomers
       end
     end
 
-    write_yaml "tools/stripe-migration/matched_markets.yml", matched_markets
-    write_yaml "tools/stripe-migration/missed_markets.yml", missed_markets
+    write_yaml "tools/stripe-migration/market_stripe_customer_ids.yml", matched_markets
+    write_yaml "tools/stripe-migration/unmatched_market_stripe_customer_ids.yml", missed_markets
     puts "Matched markets: #{matched_markets.count}"
     puts "Missed markets: #{missed_markets.count}"
     puts "Total: #{missed_markets.count + matched_markets.count}"
@@ -45,8 +45,8 @@ module LinkCustomers
       end
     end
 
-    write_yaml "tools/stripe-migration/matched_organizations.yml", matched_orgs
-    write_yaml "tools/stripe-migration/missed_organizations.yml", missed_orgs
+    write_yaml "tools/stripe-migration/organization_stripe_customer_ids.yml", matched_orgs
+    write_yaml "tools/stripe-migration/unmatched_organization_stripe_customer_ids.yml", missed_orgs
 
     puts "Matched organizations: #{matched_orgs.count}"
     puts "Missed organizations: #{missed_orgs.count}"

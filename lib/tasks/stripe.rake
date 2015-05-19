@@ -28,9 +28,19 @@ namespace :stripe do
       puts "\n\n"
     end
 
-    desc "Download Stripe customer metadata (to local files)"
+    desc "Download LO customer metadata (to local files)"
     task :download_lo_customer_data do
-      ruby "tools/stripe-migration/download_lo_prod_ids.rb"
+      secrets = YAML.load_file("../secrets/secrets.yml")
+      command = [
+        "export BALANCED_API_KEY=#{secrets["production"]["BALANCED_API_KEY"]}",
+        "export BALANCED_MARKETPLACE_URI=#{secrets["production"]["BALANCED_MARKETPLACE_URI"]}",
+        "ruby tools/stripe-migration/download_lo_prod_ids.rb"
+      ].join("; ")
+      puts "\n\n"
+      puts "HEY YOU: cut n paste this:\n\n"
+      puts command
+      puts "\n\n"
+      # sh "ruby tools/stripe-migration/download_lo_prod_ids.rb"
     end
 
     desc "Connect stripe_customer_ids to organizations and markets (local data)"
