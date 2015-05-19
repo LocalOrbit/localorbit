@@ -7,6 +7,57 @@ namespace :stripe do
       switch_apple_ridge_farm
     end
   end
+
+  namespace :migrate do
+    desc "Download Stripe customer metadata (to local files)"
+    task :download_stripe_customer_data do
+      ruby "tools/stripe-migration/download_stripe_customer_metadata.rb"
+    end
+
+    desc "Download Stripe bank account metadata (to local files)"
+    task :download_stripe_bank_accounts do
+      secrets = YAML.load_file("../secrets/secrets.yml")
+      command = [
+        "export STRIPE_SECRET_KEY=#{secrets["production"]["STRIPE_SECRET_KEY"]}",
+        "export STRIPE_PUBLISHABLE_KEY=#{secrets["production"]["STRIPE_PUBLISHABLE_KEY"]}",
+        "ruby tools/stripe-migration/download_stripe_bank_accounts.rb"
+      ].join("; ")
+      puts "\n\n"
+      puts "HEY YOU: cut n paste this:\n\n"
+      puts command
+      puts "\n\n"
+    end
+
+    desc "Download LO customer metadata (to local files)"
+    task :download_lo_customer_data do
+      secrets = YAML.load_file("../secrets/secrets.yml")
+      command = [
+        "export BALANCED_API_KEY=#{secrets["production"]["BALANCED_API_KEY"]}",
+        "export BALANCED_MARKETPLACE_URI=#{secrets["production"]["BALANCED_MARKETPLACE_URI"]}",
+        "ruby tools/stripe-migration/download_lo_prod_ids.rb"
+      ].join("; ")
+      puts "\n\n"
+      puts "HEY YOU: cut n paste this:\n\n"
+      puts command
+      puts "\n\n"
+      # sh "ruby tools/stripe-migration/download_lo_prod_ids.rb"
+    end
+
+    desc "Connect stripe_customer_ids to organizations and markets (local data)"
+    task :link_customers do
+      ruby "tools/stripe-migration/link_customers.rb"
+    end
+
+    desc "Sync stripe_customer_ids from Market files to prod"
+    task :push_market_stripe_customer_ids do
+      ruby "tools/stripe-migration/push_market_stripe_customer_ids.rb"
+    end
+
+    desc "Sync stripe_customer_ids from Organization files to prod"
+    task :push_organization_stripe_customer_ids do
+      ruby "tools/stripe-migration/push_organization_stripe_customer_ids.rb"
+    end
+  end
 end
 
 

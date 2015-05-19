@@ -1,0 +1,73 @@
+market_id,name,stripe_customer_id,stripe_account_id,balanced_customer_uri,balanced_customer_id,balanced_underwritten,entity_name,entity_type,entity_id
+28,Rooted in Appalachia Tennessee,cus_5uQ56kdn8UOf4T,acct_15l1ySEhQqTJw3Zm,/v1/customers/CU58fSpgA5BBNhiAiM8OJAf1,CU58fSpgA5BBNhiAiM8OJAf1,false,Rooted in Appalachia,market,27
+84,SB Admin,cus_5wZu8IDKk8lUzY,,/v1/customers/CU1bBXdeRCTZuKaICMtdit7A,CU1bBXdeRCTZuKaICMtdit7A,false,Farm to Restaurant Admin,market,84
+4,All Things Food,,,/v1/customers/CU6RyC3RgJJy9oBAq0AbFHXd,CU6RyC3RgJJy9oBAq0AbFHXd,true,All Things Food LLC,market,4
+83,Re:Vision Comunidad,cus_5wAHJnkpt9ZOxX,,/v1/customers/CU1gHl3Bk91fLumMV7SqB6Ay,CU1gHl3Bk91fLumMV7SqB6Ay,false,Re:Vision Comunidad,market,83
+36,Big City Farms,cus_5uQ4KxTWMTTInf,acct_15l1yTEfmlDtMdOr,/v1/customers/CU230HhLfHA0IeVl90tOcRTB,CU230HhLfHA0IeVl90tOcRTB,false,Big City Farms,organization,1611
+20,Western U.P. Marketplace,,,,,false,,,
+21,Eastern U.P. Marketplace,,,,,false,,,
+11,Adelante Mujeres Distributor,cus_5uQ5nAOeEhjodT,,/v1/customers/CU1apGifVW5dm9Qr7kinyo7V,CU1apGifVW5dm9Qr7kinyo7V,false,Adelante Mujeres,market,11
+85,"Innovation Kitchens, LLC",cus_5yNBl5qWQjkgYl,,/v1/customers/CU46ngLcdbiDR508kC8iGR3c,CU46ngLcdbiDR508kC8iGR3c,false,"Innovation Kitchens, LLC",market,85
+17,Allen Market Place,,,/v1/customers/CU4dnvLI9vnHmofr5HxQvqNZ,CU4dnvLI9vnHmofr5HxQvqNZ,true,Allen Market Place,market,17
+31,Demo Foodservice,cus_5uQ5zCpjLG9693,,/v1/customers/CU1vM4JxdOQxMS6pHHQJsLer,CU1vM4JxdOQxMS6pHHQJsLer,false,Farm Fresh Demo Market,market,31
+93,Intervale Food Hub,cus_6BH6B0WxiZkYW4,,/v1/customers/CU1Kvu4M3UnMyTmLqn3YugPw,CU1Kvu4M3UnMyTmLqn3YugPw,false,Intervale Food Hub,market,93
+40,Happy Valley Fresh Farm to Fork,cus_5uQ4WKr6f0hFNc,,/v1/customers/CU2eFeirIDJCZxhCFl3E0ZgT,CU2eFeirIDJCZxhCFl3E0ZgT,false,Happy Valley Fresh Farm to Fork,market,40
+41,Happy Valley Fresh Farm to Hub,cus_5uQ5BQDExw5VVV,,/v1/customers/CUQ1LKVgJm44PBrJOId10f,CUQ1LKVgJm44PBrJOId10f,false,Happy Valley Fresh Farm to Hub,market,41
+44,RAI Wisconsin Market,cus_5uQ4wXZ8zm5SiJ,,/v1/customers/CU20ijQ5XYcE7WD64D82RGgH,CU20ijQ5XYcE7WD64D82RGgH,false,Acorns,market,44
+8,Potluck Café Society,,,,,false,,,
+47,Products,cus_5uQ5K3iAY7kgkk,,/v1/customers/CUw5dfHdrHxaQSQZ6mapNK2,CUw5dfHdrHxaQSQZ6mapNK2,false,Products,market,47
+86,The Pickup ,cus_5yihK7AkteLW3v,,/v1/customers/CU1RZUNZtcxMQvL0mUMXZFDc,CU1RZUNZtcxMQvL0mUMXZFDc,false,The Pickup ,market,86
+87,Valley Roots Food Hub,cus_61Qn2w8iaFF2hF,,/v1/customers/CU1WKOfpxAOPzgNyRSPVYgB1,CU1WKOfpxAOPzgNyRSPVYgB1,false,Valley Roots Food Hub,market,87
+39,Happy Valley Fresh/Farm to School,,,/v1/customers/CU7is1HNN7GnaCuKp7dKnok2,CU7is1HNN7GnaCuKp7dKnok2,true,Happy Valley Fresh Farm to School,market,39
+2,The Locals Food Hub,cus_5uQ4Q3uzWB2fe0,acct_15l1yTClqVnHxlgk,/v1/customers/CU3V92xlfogBZQcH5luPdmAj,CU3V92xlfogBZQcH5luPdmAj,false,La Lucha Space,market,2
+49,Farm to Table,cus_5uQ4t2jYi0R1ZG,,/v1/customers/CU4qDLGjVExYQczzYTL4rPo7,CU4qDLGjVExYQczzYTL4rPo7,false,Farm to Table,market,49
+30,Oshkosh Market,cus_5uQ5yAON6tk71i,acct_15l1ySFmX4WrecmE,/v1/customers/CUA08eyjmGIB9EhfqoPe4S7,CUA08eyjmGIB9EhfqoPe4S7,false,Oshkosh Food Hub,market,30
+46,American Hazelnut Company,cus_5uQ4ezPjJRPBuU,,/v1/customers/CU5WZZwARRxwhB7CJ9DuSXt0,CU5WZZwARRxwhB7CJ9DuSXt0,false,Hazelnuts,market,46
+32,Happy Valley Fresh,,,/v1/customers/CUYDNQduQq4RwEKybHl5zbJ,CUYDNQduQq4RwEKybHl5zbJ,true,Happy Valley Fresh,market,32
+50,Brookbound Farm,cus_5uQ4EOQ1ex2sGv,acct_15l1yUGytIHJC8qD,/v1/customers/CU5yqibyLaTT1ANCRuFgngDh,CU5yqibyLaTT1ANCRuFgngDh,false,Brookbound Farm,market,50
+10,Springfield Demo Market,,,,,false,,,
+43,Restoration Agriculture International ,cus_5uQ4UvEL3moUzx,,/v1/customers/CU7Jlcl5jLY9WRmm29VPdvrk,CU7Jlcl5jLY9WRmm29VPdvrk,false,Restoration Agriculture,market,43
+88,Chesapeake Farm to Table,cus_63LUTIeLIucj0Z,,/v1/customers/CU1YmghBwTNGVHvgQuObIIvE,CU1YmghBwTNGVHvgQuObIIvE,false,Chesapeake Farm to Table,market,88
+12,Clarion River Organics,,,/v1/customers/CU2qitI4Yj2WXZWHMiq0kJb4,CU2qitI4Yj2WXZWHMiq0kJb4,true,Clarion River Organics,market,12
+52,Local Orbit Admin,cus_5uQ4RmDGyylOj4,,/v1/customers/CU4Yu77mw7KohbXMnbg1pSPM,CU4Yu77mw7KohbXMnbg1pSPM,false,Local Orbit Admin Market,market,52
+29,RiA Local Food,cus_5uQ56kdn8UOf4T,acct_15l1ySEhQqTJw3Zm,/v1/customers/CU58fSpgA5BBNhiAiM8OJAf1,CU58fSpgA5BBNhiAiM8OJAf1,false,Rooted in Appalachia,market,27
+54,orderboard,cus_5uQ4t57BJSRfJ3,,/v1/customers/CU6jSPuRUxCohKf54XtuVl9M,CU6jSPuRUxCohKf54XtuVl9M,false,orderboard,market,54
+19,Central U.P. Marketplace,cus_5uQ5O6iITxAPi1,acct_15l1yTLQ4u01Xv8M,/v1/customers/CU24dc5UoTcerCZyrjLm1eLR,CU24dc5UoTcerCZyrjLm1eLR,false,Central U.P. Marketplace,market,19
+15,Headwater Food Hub,cus_5uQ4nhT9BhCRaf,acct_15l1yWEkVERGDXQ6,/v1/customers/CU6CtVChbnV1V4Ldk0hDWCoq,CU6CtVChbnV1V4Ldk0hDWCoq,true,Headwater Food Hub,organization,337
+56,4Rivers Fresh Foods,cus_5uQ4pi8kQyHSMl,,/v1/customers/CU4y8ev1cC5jtQ4Q4W3CRZvV,CU4y8ev1cC5jtQ4Q4W3CRZvV,false,4Rivers Fresh Foods,market,56
+69,Aglink Consumer,cus_5uQ4gbqXvFXsmA,,/v1/customers/CU4Eu2WrzwYsjgVR2TzGEYED,CU4Eu2WrzwYsjgVR2TzGEYED,false,Aglink Consumer,market,69
+71,Aglink Wholesale,cus_5uQ4DrH4Zm8160,,/v1/customers/CUKITvAuakrOJNx2DGLm3J,CUKITvAuakrOJNx2DGLm3J,false,Aglink Wholesale,market,71
+67,Tulsa Farmers' Market -Wholesale Division,cus_5uQ4YmmxyQVBqI,acct_15l1yULnlQGv511a,/v1/customers/CU5ASYl7F0ylLClPpU0HaXYP,CU5ASYl7F0ylLClPpU0HaXYP,false,Tulsa Farmers' Market -Wholesale Division,market,67
+96,Linden Hills Farmers' Market,cus_6EzxdkywagHO8p,,/v1/customers/CU5NoVqrEvKoDppj8xIKz18b,CU5NoVqrEvKoDppj8xIKz18b,false,"digiGlyph, Inc.",market,96
+94,Ohio Valley Food,,,/v1/customers/CU4uFGj0JaG43KtmFuzibUpN,CU4uFGj0JaG43KtmFuzibUpN,false,Ohio Valley Food,market,94
+61,Farm Link Hawai‘i,cus_5vQtaemTsKuavk,acct_15l1yRK6Xb2qcrM5,/v1/customers/CU1jrnubeYC8Wp5J6XxR5HkX,CU1jrnubeYC8Wp5J6XxR5HkX,true,Counter Culture Foods,market,61
+7,Appleton Market,cus_5uQ54JWzsSVeXT,acct_15l1yVLOzRELz1SB,/v1/customers/CU4gch9e72QxzLNT7kmJvCjU,CU4gch9e72QxzLNT7kmJvCjU,false,Appleton Food Hub,market,7
+95,Farmer's Direct Food Hub,cus_6EBUldRpb2wSGf,,/v1/customers/CU1jJigLYKuoX1RF0ddi7H2W,CU1jJigLYKuoX1RF0ddi7H2W,false,Casitas Valley Farm,market,95
+45,Forest Agriculture Enterprises,cus_5uQ4DaFXDzmhMf,acct_15l1yeBPCBbyCkiW,/v1/customers/CU4HvyE8nlEGXaKwbA5c0vEv,CU4HvyE8nlEGXaKwbA5c0vEv,false,Chestnuts,market,45
+38,LINC Foods,cus_5uQ4f1D7qpQTeI,acct_15l1yUKrJTZzbTAP,/v1/customers/CU14Nj6OWsKeu3ZAwYBfUOf8,CU14Nj6OWsKeu3ZAwYBfUOf8,false,Linc Foods,market,38
+65,Re:Vision,cus_5uQ5ugkVDzmZ2M,acct_15l1yQDQ8hn0P3tB,/v1/customers/CU2pBgq7OC6EJLTI2biTYSnd,CU2pBgq7OC6EJLTI2biTYSnd,false,Revision,market,65
+90,Holoholo Food Hub,cus_64U3TIutkg8nZ7,,/v1/customers/CU3cZQQZ0aJKLArQF37Y1BSG,CU3cZQQZ0aJKLArQF37Y1BSG,true,holoholo,market,90
+13,Tahoe Food Hub,cus_5uQ5XxNuXX9V1R,acct_15l1yTIN84gklqQV,/v1/customers/CU26OzBpHHXxJCivtSmoXBLd,CU26OzBpHHXxJCivtSmoXBLd,false,Tahoe Food Hub,market,13
+64,Virtual Monroe Farmers Market,cus_5uQ4cibMVG5h65,acct_15l1yRAhS5gXOhb4,/v1/customers/CU4dAmSJCI8gU0Di58EBjX1B,CU4dAmSJCI8gU0Di58EBjX1B,false,Monroe Farmers Market,market,64
+57,Jack & Jakes School Sales,cus_5uQ5sKdr4Z7lVH,,/v1/customers/CU4tsJR64UWyIpRSRI2x8NUz,CU4tsJR64UWyIpRSRI2x8NUz,false,Jack & Jakes,market,57
+18,Apple Ridge Farm,,,/v1/customers/CU48kl5kLA9EzU1EN6xZBnO2,CU48kl5kLA9EzU1EN6xZBnO2,true,Apple Ridge Farm,market,18
+59,One Green Place,cus_5uQ5vbcWvhpw0e,,/v1/customers/CU5mBfM1bmJMw053UX73YmNx,CU5mBfM1bmJMw053UX73YmNx,false,One Green Place,market,59
+58,Jack & Jake's Restaurant Sales,cus_5uQ5N67wl14Vga,,/v1/customers/CUbXwXHpNlyw8skzN8xwICS,CUbXwXHpNlyw8skzN8xwICS,false,Jack & Jake's Restaurant Sales,market,58
+97,Tiny Diner Farmers' Market,cus_6GOv9OGMYCw7I0,,/v1/customers/CU7FMpIYZmXD5iOodXJuQcPt,CU7FMpIYZmXD5iOodXJuQcPt,false,Tiny Diner Farmers Market,market,97
+70,Aglink Foodservice,cus_5uQ4apiz6U67W7,acct_15l1yTIacDq6O8zg,/v1/customers/CU6mwnbFOpZx0Ck8h9vNHdl8,CU6mwnbFOpZx0Ck8h9vNHdl8,false,Aglink Foodservice,market,70
+92,Ohio Valley Food Connection ,cus_69bbhSTLCD4koO,,/v1/customers/CU6ZnwE2dYDcy8nNgJEB3lSa,CU6ZnwE2dYDcy8nNgJEB3lSa,false,Ohio Valley Food Connection,market,92
+76,Squash Blossom WHOLESALE,cus_5uQ50xPQ2Wo4Hn,,/v1/customers/CUGkT08fAyBoyYPS6BvfxW2,CUGkT08fAyBoyYPS6BvfxW2,false,NM Farm to Restaurant,market,76
+60,Mini Mac Farm,cus_5uQ41kjFys9M09,,/v1/customers/CU4TsU0a8oKIR0elYRftsLXN,CU4TsU0a8oKIR0elYRftsLXN,false,Mini Mac Farm,market,60
+82,SFC Farm Direct,cus_5vT7BncXZZQVBa,,/v1/customers/CUKE9ccjN2Qc93eUcgmgCJF,CUKE9ccjN2Qc93eUcgmgCJF,false,Sustainable Food Center,market,82
+68,Nashville Grown,cus_5uQ4CkRCiAoS4b,acct_15jsfBJ6lStDVKM4,/v1/customers/CU4TBrELugVtRZp6n1n2dYVN,CU4TBrELugVtRZp6n1n2dYVN,true,Nashville Grown,market,68
+48,Green Bay Market,cus_5uQ5WN5VVv7wFy,,/v1/customers/CU4lMNzcyFfhcThetSk4gRou,CU4lMNzcyFfhcThetSk4gRou,false,Greenbay,market,48
+78,z_Micahs Test Market,cus_5uQ6rFCJlmM6Qt,,/v1/customers/CUS5II508AkFOe3WyVMO1tg,CUS5II508AkFOe3WyVMO1tg,false,Micahs Test Market,market,78
+27,Rooted in Appalachia,cus_5uQ56kdn8UOf4T,acct_15l1ySEhQqTJw3Zm,/v1/customers/CU58fSpgA5BBNhiAiM8OJAf1,CU58fSpgA5BBNhiAiM8OJAf1,false,Rooted in Appalachia,market,27
+91,SFC TEST Market,cus_677tiMmc6CSts5,,/v1/customers/CU3Z3KzCYrAplExnjbcNMeP8,CU3Z3KzCYrAplExnjbcNMeP8,false,SFCtest Market,market,91
+62,Agricultural Connections,cus_5uQ4cUF14Jaew3,,/v1/customers/CU10gHtd7sdW44VPeoa4gYNV,CU10gHtd7sdW44VPeoa4gYNV,false,Agricultural Connections,market,62
+81,Local Pumpkin,cus_5uQ5Fwv38V5EXw,acct_15l1ySDQWLWduI2u,/v1/customers/CU3dLo2sRUutvVFNxKWZCcm6,CU3dLo2sRUutvVFNxKWZCcm6,false,Local Pumpkin,market,81
+63,North Valley Food Hub CSUC Associated Students,cus_5uQ4fMPk5DdGp5,,/v1/customers/CU2yrNDWmZhYOYE29I5TByC6,CU2yrNDWmZhYOYE29I5TByC6,false,North Valley Food Hub CSUC Associated Students,market,63
+79,Admin,cus_5uQ5cICEo4tlhu,,/v1/customers/CU2UfJeiBPPAhv9YnZxipFc3,CU2UfJeiBPPAhv9YnZxipFc3,false,Fresh Start Admin,market,79
+80,Squash Blossom,cus_5uQ5DcaCnBkQPl,,/v1/customers/CU6ytH2iPueI1QFvrgRNi5cH,CU6ytH2iPueI1QFvrgRNi5cH,false,SFFM Online,market,80
+77,Fresh Start Farms,cus_5uQ52KQQVKZpTB,,/v1/customers/CU6M7LICeLFyPljR1kfdZVxt,CU6M7LICeLFyPljR1kfdZVxt,false,Cultivating Community,market,77
+9,North Valley Food Hub,cus_5vQvE7rZmphokO,acct_15l1yUHk3obTskNe,/v1/customers/CUEVBxX3HzF1bEGbXur9oUG,CUEVBxX3HzF1bEGbXur9oUG,true,North Valley Food Hub,market,9
