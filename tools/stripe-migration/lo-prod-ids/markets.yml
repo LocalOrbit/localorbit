@@ -1,0 +1,433 @@
+---
+28:
+  :market_id: 28
+  :name: Rooted in Appalachia Tennessee
+  :balanced_customer_uri: "/v1/customers/CU58fSpgA5BBNhiAiM8OJAf1"
+  :balanced_customer_id: CU58fSpgA5BBNhiAiM8OJAf1
+  :balanced_underwritten: false
+84:
+  :market_id: 84
+  :name: SB Admin
+  :balanced_customer_uri: "/v1/customers/CU1bBXdeRCTZuKaICMtdit7A"
+  :balanced_customer_id: CU1bBXdeRCTZuKaICMtdit7A
+  :balanced_underwritten: false
+4:
+  :market_id: 4
+  :name: All Things Food
+  :balanced_customer_uri: "/v1/customers/CU6RyC3RgJJy9oBAq0AbFHXd"
+  :balanced_customer_id: CU6RyC3RgJJy9oBAq0AbFHXd
+  :balanced_underwritten: true
+83:
+  :market_id: 83
+  :name: Re:Vision Comunidad
+  :balanced_customer_uri: "/v1/customers/CU1gHl3Bk91fLumMV7SqB6Ay"
+  :balanced_customer_id: CU1gHl3Bk91fLumMV7SqB6Ay
+  :balanced_underwritten: false
+36:
+  :market_id: 36
+  :name: Big City Farms
+  :balanced_customer_uri: "/v1/customers/CU230HhLfHA0IeVl90tOcRTB"
+  :balanced_customer_id: CU230HhLfHA0IeVl90tOcRTB
+  :balanced_underwritten: false
+20:
+  :market_id: 20
+  :name: Western U.P. Marketplace
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+21:
+  :market_id: 21
+  :name: Eastern U.P. Marketplace
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+11:
+  :market_id: 11
+  :name: Adelante Mujeres Distributor
+  :balanced_customer_uri: "/v1/customers/CU1apGifVW5dm9Qr7kinyo7V"
+  :balanced_customer_id: CU1apGifVW5dm9Qr7kinyo7V
+  :balanced_underwritten: false
+85:
+  :market_id: 85
+  :name: Innovation Kitchens, LLC
+  :balanced_customer_uri: "/v1/customers/CU46ngLcdbiDR508kC8iGR3c"
+  :balanced_customer_id: CU46ngLcdbiDR508kC8iGR3c
+  :balanced_underwritten: false
+17:
+  :market_id: 17
+  :name: Allen Market Place
+  :balanced_customer_uri: "/v1/customers/CU4dnvLI9vnHmofr5HxQvqNZ"
+  :balanced_customer_id: CU4dnvLI9vnHmofr5HxQvqNZ
+  :balanced_underwritten: true
+31:
+  :market_id: 31
+  :name: Demo Foodservice
+  :balanced_customer_uri: "/v1/customers/CU1vM4JxdOQxMS6pHHQJsLer"
+  :balanced_customer_id: CU1vM4JxdOQxMS6pHHQJsLer
+  :balanced_underwritten: false
+93:
+  :market_id: 93
+  :name: Intervale Food Hub
+  :balanced_customer_uri: "/v1/customers/CU1Kvu4M3UnMyTmLqn3YugPw"
+  :balanced_customer_id: CU1Kvu4M3UnMyTmLqn3YugPw
+  :balanced_underwritten: false
+40:
+  :market_id: 40
+  :name: Happy Valley Fresh Farm to Fork
+  :balanced_customer_uri: "/v1/customers/CU2eFeirIDJCZxhCFl3E0ZgT"
+  :balanced_customer_id: CU2eFeirIDJCZxhCFl3E0ZgT
+  :balanced_underwritten: false
+41:
+  :market_id: 41
+  :name: Happy Valley Fresh Farm to Hub
+  :balanced_customer_uri: "/v1/customers/CUQ1LKVgJm44PBrJOId10f"
+  :balanced_customer_id: CUQ1LKVgJm44PBrJOId10f
+  :balanced_underwritten: false
+44:
+  :market_id: 44
+  :name: RAI Wisconsin Market
+  :balanced_customer_uri: "/v1/customers/CU20ijQ5XYcE7WD64D82RGgH"
+  :balanced_customer_id: CU20ijQ5XYcE7WD64D82RGgH
+  :balanced_underwritten: false
+8:
+  :market_id: 8
+  :name: Potluck Café Society
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+47:
+  :market_id: 47
+  :name: Products
+  :balanced_customer_uri: "/v1/customers/CUw5dfHdrHxaQSQZ6mapNK2"
+  :balanced_customer_id: CUw5dfHdrHxaQSQZ6mapNK2
+  :balanced_underwritten: false
+86:
+  :market_id: 86
+  :name: 'The Pickup '
+  :balanced_customer_uri: "/v1/customers/CU1RZUNZtcxMQvL0mUMXZFDc"
+  :balanced_customer_id: CU1RZUNZtcxMQvL0mUMXZFDc
+  :balanced_underwritten: false
+87:
+  :market_id: 87
+  :name: Valley Roots Food Hub
+  :balanced_customer_uri: "/v1/customers/CU1WKOfpxAOPzgNyRSPVYgB1"
+  :balanced_customer_id: CU1WKOfpxAOPzgNyRSPVYgB1
+  :balanced_underwritten: false
+39:
+  :market_id: 39
+  :name: Happy Valley Fresh/Farm to School
+  :balanced_customer_uri: "/v1/customers/CU7is1HNN7GnaCuKp7dKnok2"
+  :balanced_customer_id: CU7is1HNN7GnaCuKp7dKnok2
+  :balanced_underwritten: true
+2:
+  :market_id: 2
+  :name: The Locals Food Hub
+  :balanced_customer_uri: "/v1/customers/CU3V92xlfogBZQcH5luPdmAj"
+  :balanced_customer_id: CU3V92xlfogBZQcH5luPdmAj
+  :balanced_underwritten: false
+49:
+  :market_id: 49
+  :name: Farm to Table
+  :balanced_customer_uri: "/v1/customers/CU4qDLGjVExYQczzYTL4rPo7"
+  :balanced_customer_id: CU4qDLGjVExYQczzYTL4rPo7
+  :balanced_underwritten: false
+30:
+  :market_id: 30
+  :name: Oshkosh Market
+  :balanced_customer_uri: "/v1/customers/CUA08eyjmGIB9EhfqoPe4S7"
+  :balanced_customer_id: CUA08eyjmGIB9EhfqoPe4S7
+  :balanced_underwritten: false
+46:
+  :market_id: 46
+  :name: American Hazelnut Company
+  :balanced_customer_uri: "/v1/customers/CU5WZZwARRxwhB7CJ9DuSXt0"
+  :balanced_customer_id: CU5WZZwARRxwhB7CJ9DuSXt0
+  :balanced_underwritten: false
+32:
+  :market_id: 32
+  :name: Happy Valley Fresh
+  :balanced_customer_uri: "/v1/customers/CUYDNQduQq4RwEKybHl5zbJ"
+  :balanced_customer_id: CUYDNQduQq4RwEKybHl5zbJ
+  :balanced_underwritten: true
+50:
+  :market_id: 50
+  :name: Brookbound Farm
+  :balanced_customer_uri: "/v1/customers/CU5yqibyLaTT1ANCRuFgngDh"
+  :balanced_customer_id: CU5yqibyLaTT1ANCRuFgngDh
+  :balanced_underwritten: false
+10:
+  :market_id: 10
+  :name: Springfield Demo Market
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+43:
+  :market_id: 43
+  :name: 'Restoration Agriculture International '
+  :balanced_customer_uri: "/v1/customers/CU7Jlcl5jLY9WRmm29VPdvrk"
+  :balanced_customer_id: CU7Jlcl5jLY9WRmm29VPdvrk
+  :balanced_underwritten: false
+88:
+  :market_id: 88
+  :name: Chesapeake Farm to Table
+  :balanced_customer_uri: "/v1/customers/CU1YmghBwTNGVHvgQuObIIvE"
+  :balanced_customer_id: CU1YmghBwTNGVHvgQuObIIvE
+  :balanced_underwritten: false
+12:
+  :market_id: 12
+  :name: Clarion River Organics
+  :balanced_customer_uri: "/v1/customers/CU2qitI4Yj2WXZWHMiq0kJb4"
+  :balanced_customer_id: CU2qitI4Yj2WXZWHMiq0kJb4
+  :balanced_underwritten: true
+52:
+  :market_id: 52
+  :name: Local Orbit Admin
+  :balanced_customer_uri: "/v1/customers/CU4Yu77mw7KohbXMnbg1pSPM"
+  :balanced_customer_id: CU4Yu77mw7KohbXMnbg1pSPM
+  :balanced_underwritten: false
+29:
+  :market_id: 29
+  :name: RiA Local Food
+  :balanced_customer_uri: "/v1/customers/CU58fSpgA5BBNhiAiM8OJAf1"
+  :balanced_customer_id: CU58fSpgA5BBNhiAiM8OJAf1
+  :balanced_underwritten: false
+54:
+  :market_id: 54
+  :name: orderboard
+  :balanced_customer_uri: "/v1/customers/CU6jSPuRUxCohKf54XtuVl9M"
+  :balanced_customer_id: CU6jSPuRUxCohKf54XtuVl9M
+  :balanced_underwritten: false
+19:
+  :market_id: 19
+  :name: Central U.P. Marketplace
+  :balanced_customer_uri: "/v1/customers/CU24dc5UoTcerCZyrjLm1eLR"
+  :balanced_customer_id: CU24dc5UoTcerCZyrjLm1eLR
+  :balanced_underwritten: false
+15:
+  :market_id: 15
+  :name: Headwater Food Hub
+  :balanced_customer_uri: "/v1/customers/CU6CtVChbnV1V4Ldk0hDWCoq"
+  :balanced_customer_id: CU6CtVChbnV1V4Ldk0hDWCoq
+  :balanced_underwritten: true
+56:
+  :market_id: 56
+  :name: 4Rivers Fresh Foods
+  :balanced_customer_uri: "/v1/customers/CU4y8ev1cC5jtQ4Q4W3CRZvV"
+  :balanced_customer_id: CU4y8ev1cC5jtQ4Q4W3CRZvV
+  :balanced_underwritten: false
+69:
+  :market_id: 69
+  :name: Aglink Consumer
+  :balanced_customer_uri: "/v1/customers/CU4Eu2WrzwYsjgVR2TzGEYED"
+  :balanced_customer_id: CU4Eu2WrzwYsjgVR2TzGEYED
+  :balanced_underwritten: false
+71:
+  :market_id: 71
+  :name: Aglink Wholesale
+  :balanced_customer_uri: "/v1/customers/CUKITvAuakrOJNx2DGLm3J"
+  :balanced_customer_id: CUKITvAuakrOJNx2DGLm3J
+  :balanced_underwritten: false
+67:
+  :market_id: 67
+  :name: Tulsa Farmers' Market -Wholesale Division
+  :balanced_customer_uri: "/v1/customers/CU5ASYl7F0ylLClPpU0HaXYP"
+  :balanced_customer_id: CU5ASYl7F0ylLClPpU0HaXYP
+  :balanced_underwritten: false
+96:
+  :market_id: 96
+  :name: Linden Hills Farmers' Market
+  :balanced_customer_uri: "/v1/customers/CU5NoVqrEvKoDppj8xIKz18b"
+  :balanced_customer_id: CU5NoVqrEvKoDppj8xIKz18b
+  :balanced_underwritten: false
+94:
+  :market_id: 94
+  :name: Ohio Valley Food
+  :balanced_customer_uri: "/v1/customers/CU4uFGj0JaG43KtmFuzibUpN"
+  :balanced_customer_id: CU4uFGj0JaG43KtmFuzibUpN
+  :balanced_underwritten: false
+61:
+  :market_id: 61
+  :name: Farm Link Hawai‘i
+  :balanced_customer_uri: "/v1/customers/CU1jrnubeYC8Wp5J6XxR5HkX"
+  :balanced_customer_id: CU1jrnubeYC8Wp5J6XxR5HkX
+  :balanced_underwritten: true
+7:
+  :market_id: 7
+  :name: Appleton Market
+  :balanced_customer_uri: "/v1/customers/CU4gch9e72QxzLNT7kmJvCjU"
+  :balanced_customer_id: CU4gch9e72QxzLNT7kmJvCjU
+  :balanced_underwritten: false
+95:
+  :market_id: 95
+  :name: Farmer's Direct Food Hub
+  :balanced_customer_uri: "/v1/customers/CU1jJigLYKuoX1RF0ddi7H2W"
+  :balanced_customer_id: CU1jJigLYKuoX1RF0ddi7H2W
+  :balanced_underwritten: false
+45:
+  :market_id: 45
+  :name: Forest Agriculture Enterprises
+  :balanced_customer_uri: "/v1/customers/CU4HvyE8nlEGXaKwbA5c0vEv"
+  :balanced_customer_id: CU4HvyE8nlEGXaKwbA5c0vEv
+  :balanced_underwritten: false
+38:
+  :market_id: 38
+  :name: LINC Foods
+  :balanced_customer_uri: "/v1/customers/CU14Nj6OWsKeu3ZAwYBfUOf8"
+  :balanced_customer_id: CU14Nj6OWsKeu3ZAwYBfUOf8
+  :balanced_underwritten: false
+65:
+  :market_id: 65
+  :name: Re:Vision
+  :balanced_customer_uri: "/v1/customers/CU2pBgq7OC6EJLTI2biTYSnd"
+  :balanced_customer_id: CU2pBgq7OC6EJLTI2biTYSnd
+  :balanced_underwritten: false
+90:
+  :market_id: 90
+  :name: Holoholo Food Hub
+  :balanced_customer_uri: "/v1/customers/CU3cZQQZ0aJKLArQF37Y1BSG"
+  :balanced_customer_id: CU3cZQQZ0aJKLArQF37Y1BSG
+  :balanced_underwritten: true
+13:
+  :market_id: 13
+  :name: Tahoe Food Hub
+  :balanced_customer_uri: "/v1/customers/CU26OzBpHHXxJCivtSmoXBLd"
+  :balanced_customer_id: CU26OzBpHHXxJCivtSmoXBLd
+  :balanced_underwritten: false
+64:
+  :market_id: 64
+  :name: Virtual Monroe Farmers Market
+  :balanced_customer_uri: "/v1/customers/CU4dAmSJCI8gU0Di58EBjX1B"
+  :balanced_customer_id: CU4dAmSJCI8gU0Di58EBjX1B
+  :balanced_underwritten: false
+57:
+  :market_id: 57
+  :name: Jack & Jakes School Sales
+  :balanced_customer_uri: "/v1/customers/CU4tsJR64UWyIpRSRI2x8NUz"
+  :balanced_customer_id: CU4tsJR64UWyIpRSRI2x8NUz
+  :balanced_underwritten: false
+18:
+  :market_id: 18
+  :name: Apple Ridge Farm
+  :balanced_customer_uri: "/v1/customers/CU48kl5kLA9EzU1EN6xZBnO2"
+  :balanced_customer_id: CU48kl5kLA9EzU1EN6xZBnO2
+  :balanced_underwritten: true
+59:
+  :market_id: 59
+  :name: One Green Place
+  :balanced_customer_uri: "/v1/customers/CU5mBfM1bmJMw053UX73YmNx"
+  :balanced_customer_id: CU5mBfM1bmJMw053UX73YmNx
+  :balanced_underwritten: false
+58:
+  :market_id: 58
+  :name: Jack & Jake's Restaurant Sales
+  :balanced_customer_uri: "/v1/customers/CUbXwXHpNlyw8skzN8xwICS"
+  :balanced_customer_id: CUbXwXHpNlyw8skzN8xwICS
+  :balanced_underwritten: false
+97:
+  :market_id: 97
+  :name: Tiny Diner Farmers' Market
+  :balanced_customer_uri: "/v1/customers/CU7FMpIYZmXD5iOodXJuQcPt"
+  :balanced_customer_id: CU7FMpIYZmXD5iOodXJuQcPt
+  :balanced_underwritten: false
+70:
+  :market_id: 70
+  :name: Aglink Foodservice
+  :balanced_customer_uri: "/v1/customers/CU6mwnbFOpZx0Ck8h9vNHdl8"
+  :balanced_customer_id: CU6mwnbFOpZx0Ck8h9vNHdl8
+  :balanced_underwritten: false
+92:
+  :market_id: 92
+  :name: 'Ohio Valley Food Connection '
+  :balanced_customer_uri: "/v1/customers/CU6ZnwE2dYDcy8nNgJEB3lSa"
+  :balanced_customer_id: CU6ZnwE2dYDcy8nNgJEB3lSa
+  :balanced_underwritten: false
+76:
+  :market_id: 76
+  :name: Squash Blossom WHOLESALE
+  :balanced_customer_uri: "/v1/customers/CUGkT08fAyBoyYPS6BvfxW2"
+  :balanced_customer_id: CUGkT08fAyBoyYPS6BvfxW2
+  :balanced_underwritten: false
+60:
+  :market_id: 60
+  :name: Mini Mac Farm
+  :balanced_customer_uri: "/v1/customers/CU4TsU0a8oKIR0elYRftsLXN"
+  :balanced_customer_id: CU4TsU0a8oKIR0elYRftsLXN
+  :balanced_underwritten: false
+82:
+  :market_id: 82
+  :name: SFC Farm Direct
+  :balanced_customer_uri: "/v1/customers/CUKE9ccjN2Qc93eUcgmgCJF"
+  :balanced_customer_id: CUKE9ccjN2Qc93eUcgmgCJF
+  :balanced_underwritten: false
+68:
+  :market_id: 68
+  :name: Nashville Grown
+  :balanced_customer_uri: "/v1/customers/CU4TBrELugVtRZp6n1n2dYVN"
+  :balanced_customer_id: CU4TBrELugVtRZp6n1n2dYVN
+  :balanced_underwritten: true
+48:
+  :market_id: 48
+  :name: Green Bay Market
+  :balanced_customer_uri: "/v1/customers/CU4lMNzcyFfhcThetSk4gRou"
+  :balanced_customer_id: CU4lMNzcyFfhcThetSk4gRou
+  :balanced_underwritten: false
+78:
+  :market_id: 78
+  :name: z_Micahs Test Market
+  :balanced_customer_uri: "/v1/customers/CUS5II508AkFOe3WyVMO1tg"
+  :balanced_customer_id: CUS5II508AkFOe3WyVMO1tg
+  :balanced_underwritten: false
+27:
+  :market_id: 27
+  :name: Rooted in Appalachia
+  :balanced_customer_uri: "/v1/customers/CU58fSpgA5BBNhiAiM8OJAf1"
+  :balanced_customer_id: CU58fSpgA5BBNhiAiM8OJAf1
+  :balanced_underwritten: false
+91:
+  :market_id: 91
+  :name: SFC TEST Market
+  :balanced_customer_uri: "/v1/customers/CU3Z3KzCYrAplExnjbcNMeP8"
+  :balanced_customer_id: CU3Z3KzCYrAplExnjbcNMeP8
+  :balanced_underwritten: false
+62:
+  :market_id: 62
+  :name: Agricultural Connections
+  :balanced_customer_uri: "/v1/customers/CU10gHtd7sdW44VPeoa4gYNV"
+  :balanced_customer_id: CU10gHtd7sdW44VPeoa4gYNV
+  :balanced_underwritten: false
+81:
+  :market_id: 81
+  :name: Local Pumpkin
+  :balanced_customer_uri: "/v1/customers/CU3dLo2sRUutvVFNxKWZCcm6"
+  :balanced_customer_id: CU3dLo2sRUutvVFNxKWZCcm6
+  :balanced_underwritten: false
+63:
+  :market_id: 63
+  :name: North Valley Food Hub CSUC Associated Students
+  :balanced_customer_uri: "/v1/customers/CU2yrNDWmZhYOYE29I5TByC6"
+  :balanced_customer_id: CU2yrNDWmZhYOYE29I5TByC6
+  :balanced_underwritten: false
+79:
+  :market_id: 79
+  :name: Admin
+  :balanced_customer_uri: "/v1/customers/CU2UfJeiBPPAhv9YnZxipFc3"
+  :balanced_customer_id: CU2UfJeiBPPAhv9YnZxipFc3
+  :balanced_underwritten: false
+80:
+  :market_id: 80
+  :name: Squash Blossom
+  :balanced_customer_uri: "/v1/customers/CU6ytH2iPueI1QFvrgRNi5cH"
+  :balanced_customer_id: CU6ytH2iPueI1QFvrgRNi5cH
+  :balanced_underwritten: false
+77:
+  :market_id: 77
+  :name: Fresh Start Farms
+  :balanced_customer_uri: "/v1/customers/CU6M7LICeLFyPljR1kfdZVxt"
+  :balanced_customer_id: CU6M7LICeLFyPljR1kfdZVxt
+  :balanced_underwritten: false
+9:
+  :market_id: 9
+  :name: North Valley Food Hub
+  :balanced_customer_uri: "/v1/customers/CUEVBxX3HzF1bEGbXur9oUG"
+  :balanced_customer_id: CUEVBxX3HzF1bEGbXur9oUG
+  :balanced_underwritten: true
