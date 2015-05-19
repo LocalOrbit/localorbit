@@ -1,21 +1,25 @@
 class CreateManagedStripeAccountForMarket
   include Interactor
 
-  def setup
-  end
-
   def perform
     market = context[:market]
-    raise "NOT IMPLEMENTED"
+    stripe_account = Stripe::Account.create( stripe_account_info(market) )
+    market.update(stripe_account_id: stripe_account.id)
+    context[:stripe_account] = stripe_account
   end
 
-  # def stripe_customer_info
-  #   {
-  #     description: entity.name,
-  #     metadata: {
-  #       "lo.entity_id" => entity.id,
-  #       "lo.entity_type" => entity.class.name.underscore
-  #     }
-  #   }
-  # end
+  def stripe_account_info(market)
+    {
+      managed:                true,
+      # display_name:           market.name, # documented but not accepted?
+      email:                  market.contact_email,
+      country:                'US',
+      debit_negative_balances: true,
+      metadata: {
+        "lo.market_id" => market.id
+      }
+      # # timezone: :timezone
+      # #business_name: :name
+    }
+  end
 end
