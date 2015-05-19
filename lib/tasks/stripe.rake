@@ -62,6 +62,21 @@ namespace :stripe do
     task :push_organization_stripe_customer_ids do
       ruby "tools/stripe-migration/push_organization_stripe_customer_ids.rb"
     end
+
+    desc "For all BankAccounts, try to connect them to their Stripe IDs"
+    task :update_market_bank_account_stripe_ids do
+      secrets = YAML.load_file("../secrets/secrets.yml")
+      command = [
+        "export STRIPE_SECRET_KEY=#{secrets["production"]["STRIPE_SECRET_KEY"]}",
+        "export STRIPE_PUBLISHABLE_KEY=#{secrets["production"]["STRIPE_PUBLISHABLE_KEY"]}",
+        "ruby tools/stripe-migration/update_market_bank_account_stripe_ids.rb"
+      ].join("; ")
+      puts "\n\n"
+      puts "HEY YOU: cut n paste this:\n\n"
+      puts command
+      puts "\n\n"
+    end
+
   end
 end
 
