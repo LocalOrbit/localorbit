@@ -1,6 +1,6 @@
 require_relative "../../config/environment"
 
-module DownloadCustomerMetadata
+module DownloadStripeCustomerMetadata
   class << self
     def go(file:)
       data = get_all
@@ -25,4 +25,4 @@ module DownloadCustomerMetadata
   end
 end
 
-DownloadCustomerMetadata.go file: "tools/stripe-migration/downloaded_customers.yml"
+DownloadStripeCustomerMetadata.go file: "tools/stripe-migration/downloaded_stripe_customers.yml"
