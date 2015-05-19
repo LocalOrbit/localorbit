@@ -247,6 +247,9 @@ describe "Managing Markets" do
       expect(find_field("Tagline").value).to eq("Dutch People, Dutch Prices!")
       expect(find_field("Contact name").value).to eq("Jill Smith")
       expect(find_field("Twitter").value).to eq("hollandfarmers")
+
+      # TODO: verify Stripe customer and account objects created.
+      # binding.pry
     end
 
     describe "adding a market without valid information" do

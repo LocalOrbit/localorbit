@@ -1,9 +1,9 @@
 class CreateStripeCustomerForEntity
   include Interactor
 
-  # def setup
-    # context[:entity] ||= context[:market] || context[:organization]
-  # end
+  def setup
+    context[:entity] ||= context[:market] || context[:organization]
+  end
 
   def perform
     entity = context[:entity]

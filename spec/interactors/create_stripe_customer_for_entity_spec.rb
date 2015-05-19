@@ -41,7 +41,7 @@ describe CreateStripeCustomerForEntity do
 
       it "keeps the existing customer" do
         # Setup a customer:
-        result = subject.perform(entity: org)
+        result = subject.perform(organization: org) # :organization is an allowable alternative key in the context
 
         # Peek, see it's good:
         expect(org.stripe_customer_id).to be
