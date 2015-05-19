@@ -249,7 +249,11 @@ describe "Managing Markets" do
       expect(find_field("Twitter").value).to eq("hollandfarmers")
 
       # TODO: verify Stripe customer and account objects created.
-      # binding.pry
+      market = Market.find_by_name('Holland Farmers')
+
+      expect(market.balanced_customer_uri).to be(nil), "should no longer be creating Balanced objects"
+      expect(market.stripe_customer_id).to be
+      expect(market.stripe_account_id).to be
     end
 
     describe "adding a market without valid information" do
