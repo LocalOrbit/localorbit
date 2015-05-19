@@ -6,6 +6,12 @@ module PaymentProvider
       rate:  "0.029".to_d, # 2.9% of total
     )
 
+    TransferSchedule = {
+      delay_days:    2,
+      interval:      'weekly',
+      weekly_anchor: 'wednesday'
+    }
+
     module CardSchema
       Base = RSchema.schema {{
         name: String,

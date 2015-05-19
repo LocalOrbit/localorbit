@@ -16,6 +16,7 @@ class CreateManagedStripeAccountForMarket
       email:                  market.contact_email,
       country:                'US',
       debit_negative_balances: true,
+      transfer_schedule: PaymentProvider::Stripe::TransferSchedule.stringify_keys,
       metadata: {
         "lo.market_id" => market.id
       }
