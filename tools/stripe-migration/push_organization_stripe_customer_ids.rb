@@ -7,7 +7,8 @@ module PushOrganizationStripeCustomerIds
   extend self
 
   def update_organizations
-    organizations = YAML.load_file("tools/stripe-migration/matched_organizations.yml")
+    puts "Environment: #{Rails.env}"
+    organizations = YAML.load_file("tools/stripe-migration/organization_stripe_customer_ids.yml")
 
     organizations.each do |o|
       oid = o[:organization_id]

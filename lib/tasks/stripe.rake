@@ -53,6 +53,11 @@ namespace :stripe do
       ruby "tools/stripe-migration/push_market_stripe_customer_ids.rb"
     end
 
+    desc "Sync stripe_account_ids from Market files to prod"
+    task :push_market_stripe_customer_ids do
+      ruby "tools/stripe-migration/push_market_stripe_account_ids.rb"
+    end
+
     desc "Sync stripe_customer_ids from Organization files to prod"
     task :push_organization_stripe_customer_ids do
       ruby "tools/stripe-migration/push_organization_stripe_customer_ids.rb"
