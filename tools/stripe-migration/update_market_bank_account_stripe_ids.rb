@@ -1,5 +1,11 @@
 require_relative "../../config/environment"
 
+puts "WHOA THERE"
+puts "Edit this file #{__FILE__} and address the TODOs."
+puts "ALSO: gear this action to focus on one market at a time?"
+
+exit
+
 def find_stripe_bank_accounts(sabas, bank_name, last_four)
   sabas.select do |saba|
     (saba[:bank_name] == bank_name and saba[:last4] == last_four)
