@@ -12,6 +12,7 @@ class CreateManagedStripeAccountForMarket
     {
       managed:                true,
       # display_name:           market.name, # documented but not accepted?
+      business_name:          market.name,
       email:                  market.contact_email,
       country:                'US',
       debit_negative_balances: true,

@@ -21,6 +21,7 @@ describe CreateManagedStripeAccountForMarket do
 
     expect(stripe_account.managed).to be true
     expect(stripe_account.email).to eq market.contact_email
+    expect(stripe_account.business_name).to eq market.name
     expect(stripe_account.country).to eq 'US'
     expect(stripe_account.debit_negative_balances).to be true
     expect(stripe_account.metadata).to be

@@ -248,12 +248,21 @@ describe "Managing Markets" do
       expect(find_field("Contact name").value).to eq("Jill Smith")
       expect(find_field("Twitter").value).to eq("hollandfarmers")
 
-      # TODO: verify Stripe customer and account objects created.
       market = Market.find_by_name('Holland Farmers')
 
+      # See we got setup w Stripe:
       expect(market.balanced_customer_uri).to be(nil), "should no longer be creating Balanced objects"
-      expect(market.stripe_customer_id).to be
       expect(market.stripe_account_id).to be
+      expect(market.stripe_customer_id).to be
+
+      stripe_account = Stripe::Account.retrieve(market.stripe_account_id)
+      expect(stripe_account.business_name).to eq market.name
+      expect(stripe_account.debit_negative_balances).to be true
+      expect(stripe_account.metadata['lo.market_id']).to eq market.id.to_s
+
+      stripe_customer = Stripe::Customer.retrieve(market.stripe_customer_id)
+      expect(stripe_customer).to be
+      expect(stripe_customer.description).to eq market.name
     end
 
     describe "adding a market without valid information" do
