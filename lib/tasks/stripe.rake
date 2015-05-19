@@ -14,6 +14,20 @@ namespace :stripe do
       ruby "tools/stripe-migration/download_stripe_customer_metadata.rb"
     end
 
+    desc "Download Stripe bank account metadata (to local files)"
+    task :download_stripe_bank_accounts do
+      secrets = YAML.load_file("../secrets/secrets.yml")
+      command = [
+        "export STRIPE_SECRET_KEY=#{secrets["production"]["STRIPE_SECRET_KEY"]}",
+        "export STRIPE_PUBLISHABLE_KEY=#{secrets["production"]["STRIPE_PUBLISHABLE_KEY"]}",
+        "ruby tools/stripe-migration/download_stripe_bank_accounts.rb"
+      ].join("; ")
+      puts "\n\n"
+      puts "HEY YOU: cut n paste this:\n\n"
+      puts command
+      puts "\n\n"
+    end
+
     desc "Download Stripe customer metadata (to local files)"
     task :download_lo_customer_data do
       ruby "tools/stripe-migration/download_lo_prod_ids.rb"
