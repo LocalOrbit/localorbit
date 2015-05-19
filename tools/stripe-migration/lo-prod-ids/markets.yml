@@ -5,429 +5,787 @@
   :balanced_customer_uri: "/v1/customers/CU58fSpgA5BBNhiAiM8OJAf1"
   :balanced_customer_id: CU58fSpgA5BBNhiAiM8OJAf1
   :balanced_underwritten: false
+  :balanced_customer_meta:
+    entity_id: '27'
+    entity_type: market
+    stripe.account_id: acct_15l1ySEhQqTJw3Zm
+    entity_name: Rooted in Appalachia
+    stripe.customer_id: cus_5uQ56kdn8UOf4T
 84:
   :market_id: 84
   :name: SB Admin
   :balanced_customer_uri: "/v1/customers/CU1bBXdeRCTZuKaICMtdit7A"
   :balanced_customer_id: CU1bBXdeRCTZuKaICMtdit7A
   :balanced_underwritten: false
+  :balanced_customer_meta:
+    entity_id: '84'
+    entity_type: market
+    entity_name: Farm to Restaurant Admin
+    stripe.customer_id: cus_5wZu8IDKk8lUzY
 4:
   :market_id: 4
   :name: All Things Food
   :balanced_customer_uri: "/v1/customers/CU6RyC3RgJJy9oBAq0AbFHXd"
   :balanced_customer_id: CU6RyC3RgJJy9oBAq0AbFHXd
   :balanced_underwritten: true
+  :balanced_customer_meta:
+    entity_id: '4'
+    entity_name: All Things Food LLC
+    entity_type: market
 83:
   :market_id: 83
   :name: Re:Vision Comunidad
   :balanced_customer_uri: "/v1/customers/CU1gHl3Bk91fLumMV7SqB6Ay"
   :balanced_customer_id: CU1gHl3Bk91fLumMV7SqB6Ay
   :balanced_underwritten: false
+  :balanced_customer_meta:
+    entity_id: '83'
+    entity_type: market
+    entity_name: Re:Vision Comunidad
+    stripe.customer_id: cus_5wAHJnkpt9ZOxX
 36:
   :market_id: 36
   :name: Big City Farms
   :balanced_customer_uri: "/v1/customers/CU230HhLfHA0IeVl90tOcRTB"
   :balanced_customer_id: CU230HhLfHA0IeVl90tOcRTB
   :balanced_underwritten: false
+  :balanced_customer_meta:
+    entity_id: '1611'
+    entity_type: organization
+    stripe.account_id: acct_15l1yTEfmlDtMdOr
+    entity_name: Big City Farms
+    stripe.customer_id: cus_5uQ4KxTWMTTInf
 20:
   :market_id: 20
   :name: Western U.P. Marketplace
   :balanced_customer_uri: 
   :balanced_customer_id: 
   :balanced_underwritten: false
+  :balanced_customer_meta: 
 21:
   :market_id: 21
   :name: Eastern U.P. Marketplace
   :balanced_customer_uri: 
   :balanced_customer_id: 
   :balanced_underwritten: false
+  :balanced_customer_meta: 
 11:
   :market_id: 11
   :name: Adelante Mujeres Distributor
   :balanced_customer_uri: "/v1/customers/CU1apGifVW5dm9Qr7kinyo7V"
   :balanced_customer_id: CU1apGifVW5dm9Qr7kinyo7V
   :balanced_underwritten: false
+  :balanced_customer_meta:
+    entity_id: '11'
+    entity_type: market
+    entity_name: Adelante Mujeres
+    stripe.customer_id: cus_5uQ5nAOeEhjodT
 85:
   :market_id: 85
   :name: Innovation Kitchens, LLC
   :balanced_customer_uri: "/v1/customers/CU46ngLcdbiDR508kC8iGR3c"
   :balanced_customer_id: CU46ngLcdbiDR508kC8iGR3c
   :balanced_underwritten: false
+  :balanced_customer_meta:
+    entity_id: '85'
+    entity_type: market
+    entity_name: Innovation Kitchens, LLC
+    stripe.customer_id: cus_5yNBl5qWQjkgYl
 17:
   :market_id: 17
   :name: Allen Market Place
   :balanced_customer_uri: "/v1/customers/CU4dnvLI9vnHmofr5HxQvqNZ"
   :balanced_customer_id: CU4dnvLI9vnHmofr5HxQvqNZ
   :balanced_underwritten: true
+  :balanced_customer_meta:
+    entity_id: '17'
+    entity_name: Allen Market Place
+    entity_type: market
 31:
   :market_id: 31
   :name: Demo Foodservice
   :balanced_customer_uri: "/v1/customers/CU1vM4JxdOQxMS6pHHQJsLer"
   :balanced_customer_id: CU1vM4JxdOQxMS6pHHQJsLer
   :balanced_underwritten: false
+  :balanced_customer_meta:
+    entity_id: '31'
+    entity_type: market
+    entity_name: Farm Fresh Demo Market
+    stripe.customer_id: cus_5uQ5zCpjLG9693
 93:
   :market_id: 93
   :name: Intervale Food Hub
   :balanced_customer_uri: "/v1/customers/CU1Kvu4M3UnMyTmLqn3YugPw"
   :balanced_customer_id: CU1Kvu4M3UnMyTmLqn3YugPw
   :balanced_underwritten: false
+  :balanced_customer_meta:
+    entity_id: '93'
+    entity_type: market
+    entity_name: Intervale Food Hub
+    stripe.customer_id: cus_6BH6B0WxiZkYW4
 40:
   :market_id: 40
   :name: Happy Valley Fresh Farm to Fork
   :balanced_customer_uri: "/v1/customers/CU2eFeirIDJCZxhCFl3E0ZgT"
   :balanced_customer_id: CU2eFeirIDJCZxhCFl3E0ZgT
   :balanced_underwritten: false
+  :balanced_customer_meta:
+    entity_id: '40'
+    entity_type: market
+    entity_name: Happy Valley Fresh Farm to Fork
+    stripe.customer_id: cus_5uQ4WKr6f0hFNc
 41:
   :market_id: 41
   :name: Happy Valley Fresh Farm to Hub
   :balanced_customer_uri: "/v1/customers/CUQ1LKVgJm44PBrJOId10f"
   :balanced_customer_id: CUQ1LKVgJm44PBrJOId10f
   :balanced_underwritten: false
+  :balanced_customer_meta:
+    entity_id: '41'
+    entity_type: market
+    entity_name: Happy Valley Fresh Farm to Hub
+    stripe.customer_id: cus_5uQ5BQDExw5VVV
 44:
   :market_id: 44
   :name: RAI Wisconsin Market
   :balanced_customer_uri: "/v1/customers/CU20ijQ5XYcE7WD64D82RGgH"
   :balanced_customer_id: CU20ijQ5XYcE7WD64D82RGgH
   :balanced_underwritten: false
+  :balanced_customer_meta:
+    entity_id: '44'
+    entity_type: market
+    entity_name: Acorns
+    stripe.customer_id: cus_5uQ4wXZ8zm5SiJ
 8:
   :market_id: 8
   :name: Potluck Café Society
   :balanced_customer_uri: 
   :balanced_customer_id: 
   :balanced_underwritten: false
+  :balanced_customer_meta: 
 47:
   :market_id: 47
   :name: Products
   :balanced_customer_uri: "/v1/customers/CUw5dfHdrHxaQSQZ6mapNK2"
   :balanced_customer_id: CUw5dfHdrHxaQSQZ6mapNK2
   :balanced_underwritten: false
+  :balanced_customer_meta:
+    entity_id: '47'
+    entity_type: market
+    entity_name: Products
+    stripe.customer_id: cus_5uQ5K3iAY7kgkk
 86:
   :market_id: 86
   :name: 'The Pickup '
   :balanced_customer_uri: "/v1/customers/CU1RZUNZtcxMQvL0mUMXZFDc"
   :balanced_customer_id: CU1RZUNZtcxMQvL0mUMXZFDc
   :balanced_underwritten: false
+  :balanced_customer_meta:
+    entity_id: '86'
+    entity_type: market
+    entity_name: 'The Pickup '
+    stripe.customer_id: cus_5yihK7AkteLW3v
 87:
   :market_id: 87
   :name: Valley Roots Food Hub
   :balanced_customer_uri: "/v1/customers/CU1WKOfpxAOPzgNyRSPVYgB1"
   :balanced_customer_id: CU1WKOfpxAOPzgNyRSPVYgB1
   :balanced_underwritten: false
+  :balanced_customer_meta:
+    entity_id: '87'
+    entity_type: market
+    entity_name: Valley Roots Food Hub
+    stripe.customer_id: cus_61Qn2w8iaFF2hF
 39:
   :market_id: 39
   :name: Happy Valley Fresh/Farm to School
   :balanced_customer_uri: "/v1/customers/CU7is1HNN7GnaCuKp7dKnok2"
   :balanced_customer_id: CU7is1HNN7GnaCuKp7dKnok2
   :balanced_underwritten: true
+  :balanced_customer_meta:
+    entity_id: '39'
+    entity_name: Happy Valley Fresh Farm to School
+    entity_type: market
 2:
   :market_id: 2
   :name: The Locals Food Hub
   :balanced_customer_uri: "/v1/customers/CU3V92xlfogBZQcH5luPdmAj"
   :balanced_customer_id: CU3V92xlfogBZQcH5luPdmAj
   :balanced_underwritten: false
+  :balanced_customer_meta:
+    entity_id: '2'
+    entity_type: market
+    stripe.account_id: acct_15l1yTClqVnHxlgk
+    entity_name: La Lucha Space
+    stripe.customer_id: cus_5uQ4Q3uzWB2fe0
 49:
   :market_id: 49
   :name: Farm to Table
   :balanced_customer_uri: "/v1/customers/CU4qDLGjVExYQczzYTL4rPo7"
   :balanced_customer_id: CU4qDLGjVExYQczzYTL4rPo7
   :balanced_underwritten: false
+  :balanced_customer_meta:
+    entity_id: '49'
+    entity_type: market
+    entity_name: Farm to Table
+    stripe.customer_id: cus_5uQ4t2jYi0R1ZG
 30:
   :market_id: 30
   :name: Oshkosh Market
   :balanced_customer_uri: "/v1/customers/CUA08eyjmGIB9EhfqoPe4S7"
   :balanced_customer_id: CUA08eyjmGIB9EhfqoPe4S7
   :balanced_underwritten: false
+  :balanced_customer_meta:
+    entity_id: '30'
+    entity_type: market
+    stripe.account_id: acct_15l1ySFmX4WrecmE
+    entity_name: Oshkosh Food Hub
+    stripe.customer_id: cus_5uQ5yAON6tk71i
 46:
   :market_id: 46
   :name: American Hazelnut Company
   :balanced_customer_uri: "/v1/customers/CU5WZZwARRxwhB7CJ9DuSXt0"
   :balanced_customer_id: CU5WZZwARRxwhB7CJ9DuSXt0
   :balanced_underwritten: false
+  :balanced_customer_meta:
+    entity_id: '46'
+    entity_type: market
+    entity_name: Hazelnuts
+    stripe.customer_id: cus_5uQ4ezPjJRPBuU
 32:
   :market_id: 32
   :name: Happy Valley Fresh
   :balanced_customer_uri: "/v1/customers/CUYDNQduQq4RwEKybHl5zbJ"
   :balanced_customer_id: CUYDNQduQq4RwEKybHl5zbJ
   :balanced_underwritten: true
+  :balanced_customer_meta:
+    entity_id: '32'
+    entity_name: Happy Valley Fresh
+    entity_type: market
 50:
   :market_id: 50
   :name: Brookbound Farm
   :balanced_customer_uri: "/v1/customers/CU5yqibyLaTT1ANCRuFgngDh"
   :balanced_customer_id: CU5yqibyLaTT1ANCRuFgngDh
   :balanced_underwritten: false
+  :balanced_customer_meta:
+    entity_id: '50'
+    entity_type: market
+    stripe.account_id: acct_15l1yUGytIHJC8qD
+    entity_name: Brookbound Farm
+    stripe.customer_id: cus_5uQ4EOQ1ex2sGv
 10:
   :market_id: 10
   :name: Springfield Demo Market
   :balanced_customer_uri: 
   :balanced_customer_id: 
   :balanced_underwritten: false
+  :balanced_customer_meta: 
 43:
   :market_id: 43
   :name: 'Restoration Agriculture International '
   :balanced_customer_uri: "/v1/customers/CU7Jlcl5jLY9WRmm29VPdvrk"
   :balanced_customer_id: CU7Jlcl5jLY9WRmm29VPdvrk
   :balanced_underwritten: false
+  :balanced_customer_meta:
+    entity_id: '43'
+    entity_type: market
+    entity_name: Restoration Agriculture
+    stripe.customer_id: cus_5uQ4UvEL3moUzx
 88:
   :market_id: 88
   :name: Chesapeake Farm to Table
   :balanced_customer_uri: "/v1/customers/CU1YmghBwTNGVHvgQuObIIvE"
   :balanced_customer_id: CU1YmghBwTNGVHvgQuObIIvE
   :balanced_underwritten: false
+  :balanced_customer_meta:
+    entity_id: '88'
+    entity_type: market
+    entity_name: Chesapeake Farm to Table
+    stripe.customer_id: cus_63LUTIeLIucj0Z
 12:
   :market_id: 12
   :name: Clarion River Organics
   :balanced_customer_uri: "/v1/customers/CU2qitI4Yj2WXZWHMiq0kJb4"
   :balanced_customer_id: CU2qitI4Yj2WXZWHMiq0kJb4
   :balanced_underwritten: true
+  :balanced_customer_meta:
+    entity_id: '12'
+    entity_name: Clarion River Organics
+    entity_type: market
 52:
   :market_id: 52
   :name: Local Orbit Admin
   :balanced_customer_uri: "/v1/customers/CU4Yu77mw7KohbXMnbg1pSPM"
   :balanced_customer_id: CU4Yu77mw7KohbXMnbg1pSPM
   :balanced_underwritten: false
+  :balanced_customer_meta:
+    entity_id: '52'
+    entity_type: market
+    entity_name: Local Orbit Admin Market
+    stripe.customer_id: cus_5uQ4RmDGyylOj4
 29:
   :market_id: 29
   :name: RiA Local Food
   :balanced_customer_uri: "/v1/customers/CU58fSpgA5BBNhiAiM8OJAf1"
   :balanced_customer_id: CU58fSpgA5BBNhiAiM8OJAf1
   :balanced_underwritten: false
+  :balanced_customer_meta:
+    entity_id: '27'
+    entity_type: market
+    stripe.account_id: acct_15l1ySEhQqTJw3Zm
+    entity_name: Rooted in Appalachia
+    stripe.customer_id: cus_5uQ56kdn8UOf4T
 54:
   :market_id: 54
   :name: orderboard
   :balanced_customer_uri: "/v1/customers/CU6jSPuRUxCohKf54XtuVl9M"
   :balanced_customer_id: CU6jSPuRUxCohKf54XtuVl9M
   :balanced_underwritten: false
+  :balanced_customer_meta:
+    entity_id: '54'
+    entity_type: market
+    entity_name: orderboard
+    stripe.customer_id: cus_5uQ4t57BJSRfJ3
 19:
   :market_id: 19
   :name: Central U.P. Marketplace
   :balanced_customer_uri: "/v1/customers/CU24dc5UoTcerCZyrjLm1eLR"
   :balanced_customer_id: CU24dc5UoTcerCZyrjLm1eLR
   :balanced_underwritten: false
+  :balanced_customer_meta:
+    entity_id: '19'
+    entity_type: market
+    stripe.account_id: acct_15l1yTLQ4u01Xv8M
+    entity_name: Central U.P. Marketplace
+    stripe.customer_id: cus_5uQ5O6iITxAPi1
 15:
   :market_id: 15
   :name: Headwater Food Hub
   :balanced_customer_uri: "/v1/customers/CU6CtVChbnV1V4Ldk0hDWCoq"
   :balanced_customer_id: CU6CtVChbnV1V4Ldk0hDWCoq
   :balanced_underwritten: true
+  :balanced_customer_meta:
+    entity_id: '337'
+    entity_type: organization
+    stripe.account_id: acct_15l1yWEkVERGDXQ6
+    entity_name: Headwater Food Hub
+    stripe.customer_id: cus_5uQ4nhT9BhCRaf
 56:
   :market_id: 56
   :name: 4Rivers Fresh Foods
   :balanced_customer_uri: "/v1/customers/CU4y8ev1cC5jtQ4Q4W3CRZvV"
   :balanced_customer_id: CU4y8ev1cC5jtQ4Q4W3CRZvV
   :balanced_underwritten: false
+  :balanced_customer_meta:
+    entity_id: '56'
+    entity_type: market
+    entity_name: 4Rivers Fresh Foods
+    stripe.customer_id: cus_5uQ4pi8kQyHSMl
 69:
   :market_id: 69
   :name: Aglink Consumer
   :balanced_customer_uri: "/v1/customers/CU4Eu2WrzwYsjgVR2TzGEYED"
   :balanced_customer_id: CU4Eu2WrzwYsjgVR2TzGEYED
   :balanced_underwritten: false
+  :balanced_customer_meta:
+    entity_id: '69'
+    entity_type: market
+    entity_name: Aglink Consumer
+    stripe.customer_id: cus_5uQ4gbqXvFXsmA
 71:
   :market_id: 71
   :name: Aglink Wholesale
   :balanced_customer_uri: "/v1/customers/CUKITvAuakrOJNx2DGLm3J"
   :balanced_customer_id: CUKITvAuakrOJNx2DGLm3J
   :balanced_underwritten: false
+  :balanced_customer_meta:
+    entity_id: '71'
+    entity_type: market
+    entity_name: Aglink Wholesale
+    stripe.customer_id: cus_5uQ4DrH4Zm8160
 67:
   :market_id: 67
   :name: Tulsa Farmers' Market -Wholesale Division
   :balanced_customer_uri: "/v1/customers/CU5ASYl7F0ylLClPpU0HaXYP"
   :balanced_customer_id: CU5ASYl7F0ylLClPpU0HaXYP
   :balanced_underwritten: false
+  :balanced_customer_meta:
+    entity_id: '67'
+    entity_type: market
+    stripe.account_id: acct_15l1yULnlQGv511a
+    entity_name: Tulsa Farmers' Market -Wholesale Division
+    stripe.customer_id: cus_5uQ4YmmxyQVBqI
 96:
   :market_id: 96
   :name: Linden Hills Farmers' Market
   :balanced_customer_uri: "/v1/customers/CU5NoVqrEvKoDppj8xIKz18b"
   :balanced_customer_id: CU5NoVqrEvKoDppj8xIKz18b
   :balanced_underwritten: false
+  :balanced_customer_meta:
+    entity_id: '96'
+    entity_type: market
+    entity_name: digiGlyph, Inc.
+    stripe.customer_id: cus_6EzxdkywagHO8p
 94:
   :market_id: 94
   :name: Ohio Valley Food
   :balanced_customer_uri: "/v1/customers/CU4uFGj0JaG43KtmFuzibUpN"
   :balanced_customer_id: CU4uFGj0JaG43KtmFuzibUpN
   :balanced_underwritten: false
+  :balanced_customer_meta:
+    entity_id: '94'
+    entity_name: Ohio Valley Food
+    entity_type: market
 61:
   :market_id: 61
   :name: Farm Link Hawai‘i
   :balanced_customer_uri: "/v1/customers/CU1jrnubeYC8Wp5J6XxR5HkX"
   :balanced_customer_id: CU1jrnubeYC8Wp5J6XxR5HkX
   :balanced_underwritten: true
+  :balanced_customer_meta:
+    entity_id: '61'
+    entity_type: market
+    stripe.account_id: acct_15l1yRK6Xb2qcrM5
+    entity_name: Counter Culture Foods
+    stripe.customer_id: cus_5vQtaemTsKuavk
 7:
   :market_id: 7
   :name: Appleton Market
   :balanced_customer_uri: "/v1/customers/CU4gch9e72QxzLNT7kmJvCjU"
   :balanced_customer_id: CU4gch9e72QxzLNT7kmJvCjU
   :balanced_underwritten: false
+  :balanced_customer_meta:
+    entity_id: '7'
+    entity_type: market
+    stripe.account_id: acct_15l1yVLOzRELz1SB
+    entity_name: Appleton Food Hub
+    stripe.customer_id: cus_5uQ54JWzsSVeXT
 95:
   :market_id: 95
   :name: Farmer's Direct Food Hub
   :balanced_customer_uri: "/v1/customers/CU1jJigLYKuoX1RF0ddi7H2W"
   :balanced_customer_id: CU1jJigLYKuoX1RF0ddi7H2W
   :balanced_underwritten: false
+  :balanced_customer_meta:
+    entity_id: '95'
+    entity_type: market
+    entity_name: Casitas Valley Farm
+    stripe.customer_id: cus_6EBUldRpb2wSGf
 45:
   :market_id: 45
   :name: Forest Agriculture Enterprises
   :balanced_customer_uri: "/v1/customers/CU4HvyE8nlEGXaKwbA5c0vEv"
   :balanced_customer_id: CU4HvyE8nlEGXaKwbA5c0vEv
   :balanced_underwritten: false
+  :balanced_customer_meta:
+    entity_id: '45'
+    entity_type: market
+    stripe.account_id: acct_15l1yeBPCBbyCkiW
+    entity_name: Chestnuts
+    stripe.customer_id: cus_5uQ4DaFXDzmhMf
 38:
   :market_id: 38
   :name: LINC Foods
   :balanced_customer_uri: "/v1/customers/CU14Nj6OWsKeu3ZAwYBfUOf8"
   :balanced_customer_id: CU14Nj6OWsKeu3ZAwYBfUOf8
   :balanced_underwritten: false
+  :balanced_customer_meta:
+    entity_id: '38'
+    entity_type: market
+    stripe.account_id: acct_15l1yUKrJTZzbTAP
+    entity_name: Linc Foods
+    stripe.customer_id: cus_5uQ4f1D7qpQTeI
 65:
   :market_id: 65
   :name: Re:Vision
   :balanced_customer_uri: "/v1/customers/CU2pBgq7OC6EJLTI2biTYSnd"
   :balanced_customer_id: CU2pBgq7OC6EJLTI2biTYSnd
   :balanced_underwritten: false
+  :balanced_customer_meta:
+    entity_id: '65'
+    entity_type: market
+    stripe.account_id: acct_15l1yQDQ8hn0P3tB
+    entity_name: Revision
+    stripe.customer_id: cus_5uQ5ugkVDzmZ2M
 90:
   :market_id: 90
   :name: Holoholo Food Hub
   :balanced_customer_uri: "/v1/customers/CU3cZQQZ0aJKLArQF37Y1BSG"
   :balanced_customer_id: CU3cZQQZ0aJKLArQF37Y1BSG
   :balanced_underwritten: true
+  :balanced_customer_meta:
+    entity_id: '90'
+    entity_type: market
+    entity_name: holoholo
+    stripe.customer_id: cus_64U3TIutkg8nZ7
 13:
   :market_id: 13
   :name: Tahoe Food Hub
   :balanced_customer_uri: "/v1/customers/CU26OzBpHHXxJCivtSmoXBLd"
   :balanced_customer_id: CU26OzBpHHXxJCivtSmoXBLd
   :balanced_underwritten: false
+  :balanced_customer_meta:
+    entity_id: '13'
+    entity_type: market
+    stripe.account_id: acct_15l1yTIN84gklqQV
+    entity_name: Tahoe Food Hub
+    stripe.customer_id: cus_5uQ5XxNuXX9V1R
 64:
   :market_id: 64
   :name: Virtual Monroe Farmers Market
   :balanced_customer_uri: "/v1/customers/CU4dAmSJCI8gU0Di58EBjX1B"
   :balanced_customer_id: CU4dAmSJCI8gU0Di58EBjX1B
   :balanced_underwritten: false
+  :balanced_customer_meta:
+    entity_id: '64'
+    entity_type: market
+    stripe.account_id: acct_15l1yRAhS5gXOhb4
+    entity_name: Monroe Farmers Market
+    stripe.customer_id: cus_5uQ4cibMVG5h65
 57:
   :market_id: 57
   :name: Jack & Jakes School Sales
   :balanced_customer_uri: "/v1/customers/CU4tsJR64UWyIpRSRI2x8NUz"
   :balanced_customer_id: CU4tsJR64UWyIpRSRI2x8NUz
   :balanced_underwritten: false
+  :balanced_customer_meta:
+    entity_id: '57'
+    entity_type: market
+    entity_name: Jack & Jakes
+    stripe.customer_id: cus_5uQ5sKdr4Z7lVH
 18:
   :market_id: 18
   :name: Apple Ridge Farm
   :balanced_customer_uri: "/v1/customers/CU48kl5kLA9EzU1EN6xZBnO2"
   :balanced_customer_id: CU48kl5kLA9EzU1EN6xZBnO2
   :balanced_underwritten: true
+  :balanced_customer_meta:
+    entity_id: '18'
+    entity_name: Apple Ridge Farm
+    entity_type: market
 59:
   :market_id: 59
   :name: One Green Place
   :balanced_customer_uri: "/v1/customers/CU5mBfM1bmJMw053UX73YmNx"
   :balanced_customer_id: CU5mBfM1bmJMw053UX73YmNx
   :balanced_underwritten: false
+  :balanced_customer_meta:
+    entity_id: '59'
+    entity_type: market
+    entity_name: One Green Place
+    stripe.customer_id: cus_5uQ5vbcWvhpw0e
 58:
   :market_id: 58
   :name: Jack & Jake's Restaurant Sales
   :balanced_customer_uri: "/v1/customers/CUbXwXHpNlyw8skzN8xwICS"
   :balanced_customer_id: CUbXwXHpNlyw8skzN8xwICS
   :balanced_underwritten: false
+  :balanced_customer_meta:
+    entity_id: '58'
+    entity_type: market
+    entity_name: Jack & Jake's Restaurant Sales
+    stripe.customer_id: cus_5uQ5N67wl14Vga
 97:
   :market_id: 97
   :name: Tiny Diner Farmers' Market
   :balanced_customer_uri: "/v1/customers/CU7FMpIYZmXD5iOodXJuQcPt"
   :balanced_customer_id: CU7FMpIYZmXD5iOodXJuQcPt
   :balanced_underwritten: false
+  :balanced_customer_meta:
+    entity_id: '97'
+    entity_type: market
+    entity_name: Tiny Diner Farmers Market
+    stripe.customer_id: cus_6GOv9OGMYCw7I0
 70:
   :market_id: 70
   :name: Aglink Foodservice
   :balanced_customer_uri: "/v1/customers/CU6mwnbFOpZx0Ck8h9vNHdl8"
   :balanced_customer_id: CU6mwnbFOpZx0Ck8h9vNHdl8
   :balanced_underwritten: false
+  :balanced_customer_meta:
+    entity_id: '70'
+    entity_type: market
+    stripe.account_id: acct_15l1yTIacDq6O8zg
+    entity_name: Aglink Foodservice
+    stripe.customer_id: cus_5uQ4apiz6U67W7
 92:
   :market_id: 92
   :name: 'Ohio Valley Food Connection '
   :balanced_customer_uri: "/v1/customers/CU6ZnwE2dYDcy8nNgJEB3lSa"
   :balanced_customer_id: CU6ZnwE2dYDcy8nNgJEB3lSa
   :balanced_underwritten: false
+  :balanced_customer_meta:
+    entity_id: '92'
+    entity_type: market
+    entity_name: Ohio Valley Food Connection
+    stripe.customer_id: cus_69bbhSTLCD4koO
 76:
   :market_id: 76
   :name: Squash Blossom WHOLESALE
   :balanced_customer_uri: "/v1/customers/CUGkT08fAyBoyYPS6BvfxW2"
   :balanced_customer_id: CUGkT08fAyBoyYPS6BvfxW2
   :balanced_underwritten: false
+  :balanced_customer_meta:
+    entity_id: '76'
+    entity_type: market
+    entity_name: NM Farm to Restaurant
+    stripe.customer_id: cus_5uQ50xPQ2Wo4Hn
 60:
   :market_id: 60
   :name: Mini Mac Farm
   :balanced_customer_uri: "/v1/customers/CU4TsU0a8oKIR0elYRftsLXN"
   :balanced_customer_id: CU4TsU0a8oKIR0elYRftsLXN
   :balanced_underwritten: false
+  :balanced_customer_meta:
+    entity_id: '60'
+    entity_type: market
+    entity_name: Mini Mac Farm
+    stripe.customer_id: cus_5uQ41kjFys9M09
 82:
   :market_id: 82
   :name: SFC Farm Direct
   :balanced_customer_uri: "/v1/customers/CUKE9ccjN2Qc93eUcgmgCJF"
   :balanced_customer_id: CUKE9ccjN2Qc93eUcgmgCJF
   :balanced_underwritten: false
+  :balanced_customer_meta:
+    entity_id: '82'
+    entity_type: market
+    entity_name: Sustainable Food Center
+    stripe.customer_id: cus_5vT7BncXZZQVBa
 68:
   :market_id: 68
   :name: Nashville Grown
   :balanced_customer_uri: "/v1/customers/CU4TBrELugVtRZp6n1n2dYVN"
   :balanced_customer_id: CU4TBrELugVtRZp6n1n2dYVN
   :balanced_underwritten: true
+  :balanced_customer_meta:
+    entity_id: '68'
+    entity_type: market
+    stripe.account_id: acct_15jsfBJ6lStDVKM4
+    entity_name: Nashville Grown
+    stripe.customer_id: cus_5uQ4CkRCiAoS4b
 48:
   :market_id: 48
   :name: Green Bay Market
   :balanced_customer_uri: "/v1/customers/CU4lMNzcyFfhcThetSk4gRou"
   :balanced_customer_id: CU4lMNzcyFfhcThetSk4gRou
   :balanced_underwritten: false
+  :balanced_customer_meta:
+    entity_id: '48'
+    entity_type: market
+    entity_name: Greenbay
+    stripe.customer_id: cus_5uQ5WN5VVv7wFy
 78:
   :market_id: 78
   :name: z_Micahs Test Market
   :balanced_customer_uri: "/v1/customers/CUS5II508AkFOe3WyVMO1tg"
   :balanced_customer_id: CUS5II508AkFOe3WyVMO1tg
   :balanced_underwritten: false
+  :balanced_customer_meta:
+    entity_id: '78'
+    entity_type: market
+    entity_name: Micahs Test Market
+    stripe.customer_id: cus_5uQ6rFCJlmM6Qt
 27:
   :market_id: 27
   :name: Rooted in Appalachia
   :balanced_customer_uri: "/v1/customers/CU58fSpgA5BBNhiAiM8OJAf1"
   :balanced_customer_id: CU58fSpgA5BBNhiAiM8OJAf1
   :balanced_underwritten: false
+  :balanced_customer_meta:
+    entity_id: '27'
+    entity_type: market
+    stripe.account_id: acct_15l1ySEhQqTJw3Zm
+    entity_name: Rooted in Appalachia
+    stripe.customer_id: cus_5uQ56kdn8UOf4T
 91:
   :market_id: 91
   :name: SFC TEST Market
   :balanced_customer_uri: "/v1/customers/CU3Z3KzCYrAplExnjbcNMeP8"
   :balanced_customer_id: CU3Z3KzCYrAplExnjbcNMeP8
   :balanced_underwritten: false
+  :balanced_customer_meta:
+    entity_id: '91'
+    entity_type: market
+    entity_name: SFCtest Market
+    stripe.customer_id: cus_677tiMmc6CSts5
 62:
   :market_id: 62
   :name: Agricultural Connections
   :balanced_customer_uri: "/v1/customers/CU10gHtd7sdW44VPeoa4gYNV"
   :balanced_customer_id: CU10gHtd7sdW44VPeoa4gYNV
   :balanced_underwritten: false
+  :balanced_customer_meta:
+    entity_id: '62'
+    entity_type: market
+    entity_name: Agricultural Connections
+    stripe.customer_id: cus_5uQ4cUF14Jaew3
 81:
   :market_id: 81
   :name: Local Pumpkin
   :balanced_customer_uri: "/v1/customers/CU3dLo2sRUutvVFNxKWZCcm6"
   :balanced_customer_id: CU3dLo2sRUutvVFNxKWZCcm6
   :balanced_underwritten: false
+  :balanced_customer_meta:
+    entity_id: '81'
+    entity_type: market
+    stripe.account_id: acct_15l1ySDQWLWduI2u
+    entity_name: Local Pumpkin
+    stripe.customer_id: cus_5uQ5Fwv38V5EXw
 63:
   :market_id: 63
   :name: North Valley Food Hub CSUC Associated Students
   :balanced_customer_uri: "/v1/customers/CU2yrNDWmZhYOYE29I5TByC6"
   :balanced_customer_id: CU2yrNDWmZhYOYE29I5TByC6
   :balanced_underwritten: false
+  :balanced_customer_meta:
+    entity_id: '63'
+    entity_type: market
+    entity_name: North Valley Food Hub CSUC Associated Students
+    stripe.customer_id: cus_5uQ4fMPk5DdGp5
 79:
   :market_id: 79
   :name: Admin
   :balanced_customer_uri: "/v1/customers/CU2UfJeiBPPAhv9YnZxipFc3"
   :balanced_customer_id: CU2UfJeiBPPAhv9YnZxipFc3
   :balanced_underwritten: false
+  :balanced_customer_meta:
+    entity_id: '79'
+    entity_type: market
+    entity_name: Fresh Start Admin
+    stripe.customer_id: cus_5uQ5cICEo4tlhu
 80:
   :market_id: 80
   :name: Squash Blossom
   :balanced_customer_uri: "/v1/customers/CU6ytH2iPueI1QFvrgRNi5cH"
   :balanced_customer_id: CU6ytH2iPueI1QFvrgRNi5cH
   :balanced_underwritten: false
+  :balanced_customer_meta:
+    entity_id: '80'
+    entity_type: market
+    entity_name: SFFM Online
+    stripe.customer_id: cus_5uQ5DcaCnBkQPl
 77:
   :market_id: 77
   :name: Fresh Start Farms
   :balanced_customer_uri: "/v1/customers/CU6M7LICeLFyPljR1kfdZVxt"
   :balanced_customer_id: CU6M7LICeLFyPljR1kfdZVxt
   :balanced_underwritten: false
+  :balanced_customer_meta:
+    entity_id: '77'
+    entity_type: market
+    entity_name: Cultivating Community
+    stripe.customer_id: cus_5uQ52KQQVKZpTB
 9:
   :market_id: 9
   :name: North Valley Food Hub
   :balanced_customer_uri: "/v1/customers/CUEVBxX3HzF1bEGbXur9oUG"
   :balanced_customer_id: CUEVBxX3HzF1bEGbXur9oUG
   :balanced_underwritten: true
+  :balanced_customer_meta:
+    entity_id: '9'
+    entity_type: market
+    stripe.account_id: acct_15l1yUHk3obTskNe
+    entity_name: North Valley Food Hub
+    stripe.customer_id: cus_5vQvE7rZmphokO

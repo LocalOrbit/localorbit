@@ -1,3 +1,10 @@
+require 'yaml'
+require 'pry'
+secrets = YAML.load_file("../secrets/secrets.yml")
+ENV['BALANCED_API_KEY'] = secrets["production"]["BALANCED_API_KEY"]
+ENV['BALANCED_MARKETPLACE_URI'] = secrets["production"]["BALANCED_MARKETPLACE_URI"]
+ENV['RAILS_ENV'] = 'production'
+
 require_relative "../../config/environment"
 
 module DownloadLoProdIds
@@ -7,28 +14,44 @@ module DownloadLoProdIds
     puts "download_organizations..."; $stdout.flush
     data = {}
     Organization.visible.each do |org|
+      meta = get_balanced_customer_meta(org)
       data[org.id] = {
         organization_id: org.id,
         name: org.name,
         balanced_customer_uri: org.balanced_customer_uri,
         balanced_customer_id: balanced_uri_to_id(org.balanced_customer_uri),
         balanced_underwritten: org.balanced_underwritten,
+        balanced_customer_meta: meta
         # stripe_customer_id: org.stripe_customer_id
       }
     end
     write_yaml "#{dir}/organizations.yml", data
   end
 
+  def get_balanced_customer_meta(entity)
+    meta = nil
+    if entity.balanced_customer_uri
+      begin
+        meta = entity.balanced_customer.meta
+      rescue Exception => e 
+        meta = { "exception" => e.message }
+      end
+    end
+    meta
+  end
+
   def download_markets
     puts "download_markets..."; $stdout.flush
     data = {}
     Market.active.each do |market|
+      meta = get_balanced_customer_meta(market)
       data[market.id] = {
         market_id: market.id,
         name: market.name,
         balanced_customer_uri: market.balanced_customer_uri,
         balanced_customer_id: balanced_uri_to_id(market.balanced_customer_uri),
         balanced_underwritten: market.balanced_underwritten,
+        balanced_customer_meta: meta
         # stripe_customer_id: market.stripe_customer_id,
         # stripe_account_id: market.stripe_customer_id,
       }
