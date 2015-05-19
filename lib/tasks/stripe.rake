@@ -7,6 +7,33 @@ namespace :stripe do
       switch_apple_ridge_farm
     end
   end
+
+  namespace :migrate do
+    desc "Download Stripe customer metadata (to local files)"
+    task :download_stripe_customer_data do
+      ruby "tools/stripe-migration/download_stripe_customer_metadata.rb"
+    end
+
+    desc "Download Stripe customer metadata (to local files)"
+    task :download_lo_customer_data do
+      ruby "tools/stripe-migration/download_lo_prod_ids.rb"
+    end
+
+    desc "Connect stripe_customer_ids to organizations and markets (local data)"
+    task :link_customers do
+      ruby "tools/stripe-migration/link_customers.rb"
+    end
+
+    desc "Sync stripe_customer_ids from Market files to prod"
+    task :push_market_stripe_customer_ids do
+      ruby "tools/stripe-migration/push_market_stripe_customer_ids.rb"
+    end
+
+    desc "Sync stripe_customer_ids from Organization files to prod"
+    task :push_organization_stripe_customer_ids do
+      ruby "tools/stripe-migration/push_organization_stripe_customer_ids.rb"
+    end
+  end
 end
 
 
