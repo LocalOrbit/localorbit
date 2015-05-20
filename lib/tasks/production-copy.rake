@@ -126,30 +126,30 @@ module CloneProductionHelper
         bucket: "localorbit-demo",
         database: "HEROKU_POSTGRESQL_IVORY"
       },
-      dev1: {
-        app: "localorbit-dev1",
-        env: "dev1",
-        bucket: "localorbit-uploads-dev1",
-        database: "HEROKU_POSTGRESQL_COBALT"
-      },
+      # dev1: {
+      #   app: "localorbit-dev1",
+      #   env: "dev1",
+      #   bucket: "localorbit-uploads-dev1",
+      #   database: "HEROKU_POSTGRESQL_COBALT"
+      # },
       dev2: {
         app: "localorbit-dev2",
         env: "dev2",
         bucket: "localorbit-uploads-dev2",
-        database: "HEROKU_POSTGRESQL_VIOLET"
+        database: "HEROKU_POSTGRESQL_AQUA"
       },
-      dev3: {
-        app: "localorbit-dev3",
-        env: "dev3",
-        bucket: "localorbit-uploads-dev3",
-        database: "HEROKU_POSTGRESQL_BROWN"
-      },
-      dev4: {
-        app: "localorbit-dev4",
-        env: "dev4",
-        bucket: "localorbit-uploads-dev4",
-        database: "HEROKU_POSTGRESQL_AMBER"
-      },
+      # dev3: {
+      #   app: "localorbit-dev3",
+      #   env: "dev3",
+      #   bucket: "localorbit-uploads-dev3",
+      #   database: "HEROKU_POSTGRESQL_BROWN"
+      # },
+      # dev4: {
+      #   app: "localorbit-dev4",
+      #   env: "dev4",
+      #   bucket: "localorbit-uploads-dev4",
+      #   database: "HEROKU_POSTGRESQL_AMBER"
+      # },
     }
   end
 
