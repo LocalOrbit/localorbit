@@ -27,7 +27,7 @@ namespace :production_copy do
     include CloneProductionHelper
     @config_name = args[:env].to_sym
     restore_cleansed_dump_to_target
-    replicate_s3_bucket
+    replicate_s3_bucket unless (ENV["BUCKET"] =~ /^(n|off|false|skip)/i)
   end
 
 
@@ -256,15 +256,19 @@ module CloneProductionHelper
     ActiveRecord::Base.establish_connection(production_copy_params)
   end
 
-  def balanced_payments_refs
-    [ { model: BankAccount, fields: [ :balanced_uri, :balanced_verification_uri ] },
-      { model: Market     , fields: [ :balanced_customer_uri ] },
-      { model: Organization,fields: [ :balanced_customer_uri ] },
-      { model: Payment,     fields: [ :balanced_uri ] } ]
+  def balanced_payments_refs_to_clear
+    if ENV["KEEP_BALANCED_URIS"] =~ /^(y|on|true)/i
+      [ { model: Payment,     fields: [ :balanced_uri ] } ]
+    else
+      [ { model: BankAccount, fields: [ :balanced_uri, :balanced_verification_uri ] },
+        { model: Market     , fields: [ :balanced_customer_uri ] },
+        { model: Organization,fields: [ :balanced_customer_uri ] },
+        { model: Payment,     fields: [ :balanced_uri ] } ]
+    end
   end
 
   def clear_all_balanced_payments_refs
-    balanced_payments_refs.each do |model:,fields:|
+    balanced_payments_refs_to_clear.each do |model:,fields:|
       fields.each do |field|
         puts "Setting all #{model.name}##{field} to nil"
         model.update_all("#{field} = NULL")
@@ -293,6 +297,7 @@ module CloneProductionHelper
   end
 
   def restore_cleansed_dump_to_target
+    WebMock.disable!
     # Step 1: Upload to S3
     puts "Connecting to S3"
     config = secrets_for(target_env)

@@ -86,6 +86,12 @@ namespace :stripe do
       exec(env, command)
     end
 
+    desc "Update stripe*_ids across all active markets"
+    task :update_stripe_ids_on_active_markets do
+      active_market_ids = "39,36,18,15,13,19,8,68,38,57,58,60,27,65,17,45,9,32,62,61,20,88,2,67,12,4,82,7,91,63,11,77,86,46,54,70,92,43"
+      ENV['market'] = active_market_ids
+      Rake::Task["stripe:migrate:update_stripe_ids_on_market"].invoke
+    end
   end
 end
 
