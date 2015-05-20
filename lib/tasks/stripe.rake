@@ -77,6 +77,15 @@ namespace :stripe do
       puts "\n\n"
     end
 
+    desc "Update stripe*_ids for orgs and bank accounts in a given Market" 
+    task :update_stripe_ids_on_market do
+      env = { 'RAILS_ENV' => 'production' }
+      market_id = ENV['market_id'] || ENV['market'] || raise("Set market id, eg, market=18")
+      command = "ruby tools/stripe-migration/update_stripe_ids_on_market.rb #{market_id}"
+      puts command
+      exec(env, command)
+    end
+
   end
 end
 
