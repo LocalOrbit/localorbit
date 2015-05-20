@@ -9,9 +9,12 @@ def index(rows)
   h
 end
 
-export_file = Dir["tools/stripe-migration/from_balanced/*.csv"].sort.last
-export_data = CSV.read(export_file, headers: true)
+def get_export_data
+  export_file = Dir["tools/stripe-migration/from_balanced/*.csv"].sort.last
+  CSV.read(export_file, headers: true)
+end
 
+export_data = get_export_data
 by_cid = index(export_data)
 
 markets = YAML.load_file("tools/stripe-migration/lo-prod-ids/markets.yml")
