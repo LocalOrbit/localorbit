@@ -1,6 +1,10 @@
 class BalancedExport
   attr_reader :data
 
+  def self.latest
+    new
+  end
+
   def initialize(file:nil)
     file ||= Dir["#{here}/from_balanced/*.csv"].sort.last
     @data = load_export_data(file)
