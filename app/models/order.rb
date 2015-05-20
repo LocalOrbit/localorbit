@@ -174,14 +174,14 @@ class Order < ActiveRecord::Base
   end
 
   def self.payable_to_automate_sellers(current_time:Time.current, seller_organization_id:nil)
-    payable_to_sellers(
+    balanced.payable_to_sellers(
       current_time: current_time, 
       seller_organization_id: seller_organization_id
     ).not_paid_for("market payment")
   end
 
   def self.payable_lo_fees
-    fully_delivered.purchase_orders.payable.not_paid_for("lo fee", :payer)
+    balanced.fully_delivered.purchase_orders.payable.not_paid_for("lo fee", :payer)
   end
 
   # 
@@ -195,7 +195,7 @@ class Order < ActiveRecord::Base
   #   order_id: If present, narrow the results to one or more specific Order ids.  
   #             Default: nil (nil all matching orders).
   def self.payable_market_fees(current_time: Time.current, market_id: nil, order_id: nil)
-    res = clean_payment_records.
+    res = balanced.clean_payment_records.
       on_automate_plan.
       fully_delivered.
       used_lo_payment_processing.
