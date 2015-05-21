@@ -1,0 +1,43 @@
+[2015-05-20 22:59:07 -0400] - UpdateStripeIdsOnMarket - Jack & Jake's Restaurant Sales (58) - ====================================================================================================
+[2015-05-20 22:59:07 -0400] - UpdateStripeIdsOnMarket - Jack & Jake's Restaurant Sales (58) -  Jack & Jake's Restaurant Sales (58)
+[2015-05-20 22:59:07 -0400] - UpdateStripeIdsOnMarket - Jack & Jake's Restaurant Sales (58) -  Updating stripe IDs for market, orgs and bank accounts.
+[2015-05-20 22:59:07 -0400] - UpdateStripeIdsOnMarket - Jack & Jake's Restaurant Sales (58) - 
+[2015-05-20 22:59:07 -0400] - UpdateStripeIdsOnMarket - Jack & Jake's Restaurant Sales (58) -  Rails.env: production
+[2015-05-20 22:59:07 -0400] - UpdateStripeIdsOnMarket - Jack & Jake's Restaurant Sales (58) -  Stripe keys:
+[2015-05-20 22:59:07 -0400] - UpdateStripeIdsOnMarket - Jack & Jake's Restaurant Sales (58) -   --> STRIPE_PUBLISHABLE_KEY: pk_live_j85VTsrz51POrss3ni460qaf (pk_live_j85VTsrz51POrss3ni460qaf)
+[2015-05-20 22:59:07 -0400] - UpdateStripeIdsOnMarket - Jack & Jake's Restaurant Sales (58) - ====================================================================================================
+[2015-05-20 22:59:07 -0400] - UpdateStripeIdsOnMarket - Jack & Jake's Restaurant Sales (58) - Connecting market customer - Updated Market stripe_customer_id: cus_5uQ5N67wl14Vga
+[2015-05-20 22:59:07 -0400] - UpdateStripeIdsOnMarket - Jack & Jake's Restaurant Sales (58) - Connecting market account - MISS - No stripe_account_id found for market balanced_customer_uri /v1/customers/CUbXwXHpNlyw8skzN8xwICS
+[2015-05-20 22:59:07 -0400] - UpdateStripeIdsOnMarket - Jack & Jake's Restaurant Sales (58) - Connecting org customers - Updated Organization August (2757) stripe_customer_id: cus_5uQ4ufQom0DM4o
+[2015-05-20 22:59:08 -0400] - UpdateStripeIdsOnMarket - Jack & Jake's Restaurant Sales (58) - Connecting org customers - Updated Organization Borgne (2758) stripe_customer_id: cus_5uQ4SIDV1Y9coE
+[2015-05-20 22:59:08 -0400] - UpdateStripeIdsOnMarket - Jack & Jake's Restaurant Sales (58) - Connecting org customers - Updated Organization Domenica (2759) stripe_customer_id: cus_5uQ4lq5HOHP1TO
+[2015-05-20 22:59:08 -0400] - UpdateStripeIdsOnMarket - Jack & Jake's Restaurant Sales (58) - Connecting org customers - Updated Organization Johnny Sanchez (2760) stripe_customer_id: cus_5uQ4aFchBilovr
+[2015-05-20 22:59:09 -0400] - UpdateStripeIdsOnMarket - Jack & Jake's Restaurant Sales (58) - Connecting org customers - Updated Organization Luke (2761) stripe_customer_id: cus_5uQ4BQr40IMxUK
+[2015-05-20 22:59:09 -0400] - UpdateStripeIdsOnMarket - Jack & Jake's Restaurant Sales (58) - Connecting org customers - Updated Organization Bourbon House (2762) stripe_customer_id: cus_5uQ5EEzrFJ40il
+[2015-05-20 22:59:09 -0400] - UpdateStripeIdsOnMarket - Jack & Jake's Restaurant Sales (58) - Connecting org customers - Updated Organization Dickie Brennan's Steakhouse (2763) stripe_customer_id: cus_5uQ4xcV3c2ecna
+[2015-05-20 22:59:10 -0400] - UpdateStripeIdsOnMarket - Jack & Jake's Restaurant Sales (58) - Connecting org customers - Updated Organization Palace Cafe (2764) stripe_customer_id: cus_5uQ5RdrwHz3xIW
+[2015-05-20 22:59:10 -0400] - UpdateStripeIdsOnMarket - Jack & Jake's Restaurant Sales (58) - Connecting org customers - Updated Organization Tableau (2765) stripe_customer_id: cus_5uQ4QcqAcaC9Rq
+[2015-05-20 22:59:10 -0400] - UpdateStripeIdsOnMarket - Jack & Jake's Restaurant Sales (58) - Connecting org customers - Updated Organization Emeril's (2766) stripe_customer_id: cus_5uQ4VtlxzvJXdt
+[2015-05-20 22:59:11 -0400] - UpdateStripeIdsOnMarket - Jack & Jake's Restaurant Sales (58) - Connecting org customers - Updated Organization NOLA (2769) stripe_customer_id: cus_5uQ4zwIJVj1klS
+[2015-05-20 22:59:11 -0400] - UpdateStripeIdsOnMarket - Jack & Jake's Restaurant Sales (58) - Connecting org customers - Updated Organization Delmonico (2770) stripe_customer_id: cus_5uQ4gdmfokIxu2
+[2015-05-20 22:59:11 -0400] - UpdateStripeIdsOnMarket - Jack & Jake's Restaurant Sales (58) - Connecting org customers - Updated Organization Cochon (2771) stripe_customer_id: cus_5uQ4Xd2BNdDdU3
+[2015-05-20 22:59:11 -0400] - UpdateStripeIdsOnMarket - Jack & Jake's Restaurant Sales (58) - Connecting org customers - Updated Organization Cochon Butcher (2772) stripe_customer_id: cus_5uQ4qzHkbks1yG
+[2015-05-20 22:59:12 -0400] - UpdateStripeIdsOnMarket - Jack & Jake's Restaurant Sales (58) - Connecting org customers - Updated Organization Calcasieu (2773) stripe_customer_id: cus_5uQ46TJM9L8nNh
+[2015-05-20 22:59:12 -0400] - UpdateStripeIdsOnMarket - Jack & Jake's Restaurant Sales (58) - Connecting org customers - Updated Organization Herbsaint (2774) stripe_customer_id: cus_5uQ4vTb7RpULT8
+[2015-05-20 22:59:12 -0400] - UpdateStripeIdsOnMarket - Jack & Jake's Restaurant Sales (58) - Connecting org customers - Updated Organization Peche (2775) stripe_customer_id: cus_5uQ460exIGqNjY
+[2015-05-20 22:59:13 -0400] - UpdateStripeIdsOnMarket - Jack & Jake's Restaurant Sales (58) - Connecting org customers - Updated Organization Local (2842) stripe_customer_id: cus_5uQ4xK5neOMPRf
+[2015-05-20 22:59:13 -0400] - UpdateStripeIdsOnMarket - Jack & Jake's Restaurant Sales (58) - Connecting org customers - Updated Organization Regional (2843) stripe_customer_id: cus_5uQ4wPyIP9EqKf
+[2015-05-20 22:59:13 -0400] - UpdateStripeIdsOnMarket - Jack & Jake's Restaurant Sales (58) - Connecting org customers - Updated Organization Conventional (2844) stripe_customer_id: cus_5uQ4aNaNvixXun
+[2015-05-20 22:59:14 -0400] - UpdateStripeIdsOnMarket - Jack & Jake's Restaurant Sales (58) - Connecting org customers - Updated Organization Sylvain (2983) stripe_customer_id: cus_5uQ5ECSP2whNWi
+[2015-05-20 22:59:14 -0400] - UpdateStripeIdsOnMarket - Jack & Jake's Restaurant Sales (58) - Connecting org customers - Updated Organization Hyatt Regency New Orleans (2985) stripe_customer_id: cus_5uQ5BVGwAjHXnm
+[2015-05-20 22:59:14 -0400] - UpdateStripeIdsOnMarket - Jack & Jake's Restaurant Sales (58) - Connecting org customers - Updated Organization Fulton Alley (2986) stripe_customer_id: cus_5uQ5hviaE3zrbP
+[2015-05-20 22:59:14 -0400] - UpdateStripeIdsOnMarket - Jack & Jake's Restaurant Sales (58) - Connecting org customers - Updated Organization Manning's (3022) stripe_customer_id: cus_5uQ5OmCNmw2e4C
+[2015-05-20 22:59:15 -0400] - UpdateStripeIdsOnMarket - Jack & Jake's Restaurant Sales (58) - Connecting org customers - Updated Organization Marti's (3031) stripe_customer_id: cus_5uQ5QIuOyPY0et
+[2015-05-20 22:59:15 -0400] - UpdateStripeIdsOnMarket - Jack & Jake's Restaurant Sales (58) - Connecting org customers - Updated Organization Root (3071) stripe_customer_id: cus_5uQ5A8IMPmHhqs
+[2015-05-20 22:59:15 -0400] - UpdateStripeIdsOnMarket - Jack & Jake's Restaurant Sales (58) - Connecting org customers - Updated Organization Meauxbar (3073) stripe_customer_id: cus_5uQ5LeL5q9Up3c
+[2015-05-20 22:59:16 -0400] - UpdateStripeIdsOnMarket - Jack & Jake's Restaurant Sales (58) - Connecting org customers - Updated Organization American Sector (3074) stripe_customer_id: cus_5uQ5n80GOr1WZF
+[2015-05-20 22:59:16 -0400] - UpdateStripeIdsOnMarket - Jack & Jake's Restaurant Sales (58) - Connecting org customers - Updated Organization Brennan's (3144) stripe_customer_id: cus_5uQ52cBkOZkzCV
+[2015-05-20 22:59:16 -0400] - UpdateStripeIdsOnMarket - Jack & Jake's Restaurant Sales (58) - Connecting org customers - Updated Organization St. Lawrence (3145) stripe_customer_id: cus_5uQ5Ir0arf8Ey4
+[2015-05-20 22:59:17 -0400] - UpdateStripeIdsOnMarket - Jack & Jake's Restaurant Sales (58) - Connecting org customers - Updated Organization Commander's Palace (3146) stripe_customer_id: cus_5uQ5oBTgvWjxbu
+[2015-05-20 22:59:17 -0400] - UpdateStripeIdsOnMarket - Jack & Jake's Restaurant Sales (58) - Connecting org customers - Updated Organization Coquette (3147) stripe_customer_id: cus_5uQ5p21FCPqkGu
+[2015-05-20 22:59:17 -0400] - UpdateStripeIdsOnMarket - Jack & Jake's Restaurant Sales (58) - Connecting org customers - Updated Organization Bayona (3148) stripe_customer_id: cus_5uQ5411KbMUU77

@@ -163,7 +163,8 @@ market_ids = market_ids_str.gsub(',',' ').split(/\s+/).map(&:strip)
 market_ids.each do |market_id|
   updater = UpdateStripeIdsOnMarket.new(
     market_id: market_id,
-    dry_run: true
+    dry_run: false
+    # dry_run: true
   )
   updater.run
 end
