@@ -65,7 +65,7 @@ describe "Editing an order" do
 
         context "removes an item" do
           it "removes an item" do
-            expect(UpdateBalancedPurchase).to receive(:perform).and_return(double("interactor", "success?" => true))
+            expect(UpdatePurchase).to receive(:perform).and_return(double("interactor", "success?" => true))
 
             expect(Dom::Order::ItemRow.count).to eq(2)
             expect(Dom::Order::ItemRow.all.map(&:name)).to include(long_name(order_item), long_name(order_item2))
@@ -78,7 +78,7 @@ describe "Editing an order" do
           end
 
           it "updates the order total" do
-            expect(UpdateBalancedPurchase).to receive(:perform).and_return(double("interactor", "success?" => true))
+            expect(UpdatePurchase).to receive(:perform).and_return(double("interactor", "success?" => true))
 
             expect(page).to have_content("Grand Total: $45.00")
 
@@ -89,7 +89,7 @@ describe "Editing an order" do
           end
 
           it "updates the order summary totals" do
-            expect(UpdateBalancedPurchase).to receive(:perform).and_return(double("interactor", "success?" => true))
+            expect(UpdatePurchase).to receive(:perform).and_return(double("interactor", "success?" => true))
 
             expect(Dom::Admin::OrderSummaryRow.first.gross_total).to eql("$45.00")
 
@@ -100,7 +100,7 @@ describe "Editing an order" do
           end
 
           it "returns the inventory" do
-            expect(UpdateBalancedPurchase).to receive(:perform).and_return(double("interactor", "success?" => true))
+            expect(UpdatePurchase).to receive(:perform).and_return(double("interactor", "success?" => true))
             expect(product.available_inventory).to eql(145)
 
             first_order_item.click_delete
@@ -116,7 +116,7 @@ describe "Editing an order" do
 
         context "remove an item" do
           it "removes an item" do
-            expect(UpdateBalancedPurchase).to receive(:perform).and_return(double("interactor", "success?" => true))
+            expect(UpdatePurchase).to receive(:perform).and_return(double("interactor", "success?" => true))
 
             expect(Dom::Order::ItemRow.count).to eq(2)
             expect(Dom::Order::ItemRow.all.map(&:name)).to include(long_name(order_item), long_name(order_item2))
@@ -129,7 +129,7 @@ describe "Editing an order" do
           end
 
           it "updates the order total" do
-            expect(UpdateBalancedPurchase).to receive(:perform).and_return(double("interactor", "success?" => true))
+            expect(UpdatePurchase).to receive(:perform).and_return(double("interactor", "success?" => true))
 
             expect(page).to have_content("Grand Total: $45.00")
 
@@ -140,7 +140,7 @@ describe "Editing an order" do
           end
 
           it "updates the order summary totals" do
-            expect(UpdateBalancedPurchase).to receive(:perform).and_return(double("interactor", "success?" => true))
+            expect(UpdatePurchase).to receive(:perform).and_return(double("interactor", "success?" => true))
 
             expect(Dom::Admin::OrderSummaryRow.first.gross_total).to eql("$45.00")
 
@@ -151,7 +151,7 @@ describe "Editing an order" do
           end
 
           it "returns the inventory" do
-            expect(UpdateBalancedPurchase).to receive(:perform).and_return(double("interactor", "success?" => true))
+            expect(UpdatePurchase).to receive(:perform).and_return(double("interactor", "success?" => true))
             expect(product.available_inventory).to eql(145)
 
             first_order_item.click_delete
@@ -187,7 +187,7 @@ describe "Editing an order" do
         end
 
         it "returns you to the orders list" do
-          expect(UpdateBalancedPurchase).to receive(:perform).and_return(double("interactor", "success?" => true))
+          expect(UpdatePurchase).to receive(:perform).and_return(double("interactor", "success?" => true))
 
           first_order_item.click_delete
 
@@ -196,7 +196,7 @@ describe "Editing an order" do
         end
 
         it "soft deletes the order" do
-          expect(UpdateBalancedPurchase).to receive(:perform).and_return(double("interactor", "success?" => true))
+          expect(UpdatePurchase).to receive(:perform).and_return(double("interactor", "success?" => true))
 
           first_order_item.click_delete
 
@@ -205,7 +205,7 @@ describe "Editing an order" do
         end
 
         it "returns the inventory" do
-          expect(UpdateBalancedPurchase).to receive(:perform).and_return(double("interactor", "success?" => true))
+          expect(UpdatePurchase).to receive(:perform).and_return(double("interactor", "success?" => true))
           expect(product.available_inventory).to eql(145)
 
           first_order_item.click_delete
@@ -226,7 +226,7 @@ describe "Editing an order" do
         end
 
         it "returns you to the orders list" do
-          expect(UpdateBalancedPurchase).to receive(:perform).and_return(double("interactor", "success?" => true))
+          expect(UpdatePurchase).to receive(:perform).and_return(double("interactor", "success?" => true))
 
           first_order_item.click_delete
 
@@ -235,7 +235,7 @@ describe "Editing an order" do
         end
 
         it "soft deletes the order" do
-          expect(UpdateBalancedPurchase).to receive(:perform).and_return(double("interactor", "success?" => true))
+          expect(UpdatePurchase).to receive(:perform).and_return(double("interactor", "success?" => true))
 
           first_order_item.click_delete
 
@@ -244,7 +244,7 @@ describe "Editing an order" do
         end
 
         it "returns the inventory" do
-          expect(UpdateBalancedPurchase).to receive(:perform).and_return(double("interactor", "success?" => true))
+          expect(UpdatePurchase).to receive(:perform).and_return(double("interactor", "success?" => true))
           expect(product.available_inventory).to eql(145)
 
           first_order_item.click_delete
@@ -393,7 +393,7 @@ describe "Editing an order" do
 
       context "less then ordered" do
         before do
-          expect(UpdateBalancedPurchase).to receive(:perform).and_return(double("interactor", "success?" => true))
+          expect(UpdatePurchase).to receive(:perform).and_return(double("interactor", "success?" => true))
         end
 
         subject do
@@ -447,7 +447,7 @@ describe "Editing an order" do
       context "fractional quantity, less than ordered" do
 
         before do
-          expect(UpdateBalancedPurchase).to receive(:perform).and_return(double("interactor", "success?" => true))
+          expect(UpdatePurchase).to receive(:perform).and_return(double("interactor", "success?" => true))
         end
 
         subject do
@@ -480,7 +480,7 @@ describe "Editing an order" do
 
       context "more then ordered" do
         before do
-          expect(UpdateBalancedPurchase).to receive(:perform).and_return(double("interactor", "success?" => true))
+          expect(UpdatePurchase).to receive(:perform).and_return(double("interactor", "success?" => true))
         end
 
         subject do
@@ -598,7 +598,7 @@ describe "Editing an order" do
 
       context "less then ordered" do
         before do
-          expect(UpdateBalancedPurchase).to receive(:perform).and_return(double("interactor", "success?" => true))
+          expect(UpdatePurchase).to receive(:perform).and_return(double("interactor", "success?" => true))
         end
 
         subject do
@@ -656,7 +656,7 @@ describe "Editing an order" do
 
       context "more then ordered" do
         before do
-          expect(UpdateBalancedPurchase).to receive(:perform).and_return(double("interactor", "success?" => true))
+          expect(UpdatePurchase).to receive(:perform).and_return(double("interactor", "success?" => true))
         end
 
         subject do

@@ -20,7 +20,7 @@ class UpdateOrderDelivery
     order.delivery_id = delivery_id
     if order.valid?
       order.save
-      UpdateBalancedPurchase.perform(order: order)
+      UpdatePurchase.perform(order: order)
     else
       fail_and_notify
     end

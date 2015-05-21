@@ -247,6 +247,15 @@ describe "Managing Markets" do
       expect(find_field("Tagline").value).to eq("Dutch People, Dutch Prices!")
       expect(find_field("Contact name").value).to eq("Jill Smith")
       expect(find_field("Twitter").value).to eq("hollandfarmers")
+
+      market = Market.find_by_name('Holland Farmers')
+
+      # See we got setup w Stripe:
+      expect(market.balanced_customer_uri).to be(nil), "should no longer be creating Balanced objects"
+      expect(market.stripe_account_id).to be
+      expect(market.stripe_customer_id).to be
+
+      # No point in actually checking the Stripe API since VCR stumped all that
     end
 
     describe "adding a market without valid information" do

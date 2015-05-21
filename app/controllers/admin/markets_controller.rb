@@ -20,7 +20,7 @@ class Admin::MarketsController < AdminController
   end
 
   def create
-    results = RegisterMarket.perform(market_params: market_params)
+    results = RegisterStripeMarket.perform(market_params: market_params)
 
     if results.success?
       redirect_to [:admin, results.market]

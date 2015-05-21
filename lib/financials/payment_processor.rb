@@ -6,6 +6,7 @@ module Financials
       def pay_and_notify(payment_config:, inputs:)
         SchemaValidation.validate!(Financials::PaymentMetadata::ConfigSchema, payment_config)
 
+        # See financials/payment_metadata.rb for the various Payment configurations.
         payment_info = Financials::PaymentInfoConverter.send(
           payment_config[:payment_info_converter],
           inputs)

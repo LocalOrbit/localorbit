@@ -21,12 +21,14 @@ gem "underscore-rails"
 gem "wysihtml5-rails"
 gem "mapbox-rails"
 
+
 gem "active_model_serializers"
 gem "active_record_union"
 gem "acts_as_geocodable"
 gem "audited-activerecord"
 gem "awesome_nested_set"
 gem "balanced", "~> 0.7"
+gem "stripe"
 gem "color"
 gem "countries"
 gem "csv_builder"
@@ -58,6 +60,7 @@ gem "postgres_ext"
 gem "rack-canonical-host"
 gem "ransack"
 gem "simpleidn"
+gem "stripe_event"
 
 gem "constructor"
 gem "tabulator", github: "dcrosby42/tabulator"
@@ -74,6 +77,7 @@ group :doc do
 end
 
 group :development do
+  gem "ultrahook"
   gem "spring"
   gem "spring-commands-rspec"
   gem "rubocop", require: false
@@ -84,11 +88,17 @@ end
 group :development, :test do
   gem "rspec-rails", "~> 3.0"
   gem "rspec-collection_matchers"
+  gem 'rspec_junit_formatter', :git => 'git@github.com:circleci/rspec_junit_formatter.git'
   gem "pry-rails"
   gem "pry-remote"
   gem "launchy"
   gem "guard-rspec"
+  gem "guard-konacha-rails"
   gem "awesome_print"
+  gem "konacha"
+  gem "konacha-chai-matchers"
+  gem "poltergeist"
+  gem "webmock"
 end
 
 group :test do
@@ -99,10 +109,8 @@ group :test do
   gem "factory_girl_rails"
   gem "email_spec"
   gem "database_cleaner"
-  gem "poltergeist"
   gem "timecop"
   gem "vcr"
-  gem "webmock"
   gem 'fire_poll', '1.2.0'
 end
 

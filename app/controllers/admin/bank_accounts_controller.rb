@@ -1,6 +1,6 @@
 class Admin::BankAccountsController < AdminController
   include BankAccountEntity
-  before_action :set_balanced_flag
+  before_action :set_payment_provider
 
   def index
     @bank_accounts = @entity.bank_accounts.visible
@@ -11,11 +11,11 @@ class Admin::BankAccountsController < AdminController
   end
 
   def create
-    results = if params[:type] == "card"
-      AddCreditCardToEntity.perform(entity: @entity, bank_account_params: bank_account_params, representative_params: representative_params)
-    else
-      AddBankAccountToEntity.perform(entity: @entity, bank_account_params: bank_account_params, representative_params: representative_params)
-    end
+    results = PaymentProvider.add_payment_method(@payment_provider, 
+                                                 type: params[:type], 
+                                                 entity: @entity, 
+                                                 bank_account_params: bank_account_params,
+                                                 representative_params: representative_params)
 
     if results.success?
       redirect_to [:admin, @entity, :bank_accounts], notice: "Successfully added a payment method"
@@ -39,6 +39,7 @@ class Admin::BankAccountsController < AdminController
       :name,
       :last_four,
       :balanced_uri,
+      :stripe_tok,
       :account_type,
       :expiration_month,
       :expiration_year,
@@ -57,7 +58,13 @@ class Admin::BankAccountsController < AdminController
     )
   end
 
-  def set_balanced_flag
-    @balanced = true
+  def set_payment_provider
+    @payment_provider = case @entity
+                        when Market
+                          @entity.payment_provider
+                        when Organization
+                          # TODO : THIS IS POTENTIALLY CRAZY. Solve for multiple market membership!
+                          @entity.markets.first.payment_provider
+                        end
   end
 end

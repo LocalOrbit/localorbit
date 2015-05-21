@@ -1,0 +1,18 @@
+[2015-05-20 23:06:33 -0400] - UpdateStripeIdsOnMarket - z_SFC TEST Market (91) - ====================================================================================================
+[2015-05-20 23:06:33 -0400] - UpdateStripeIdsOnMarket - z_SFC TEST Market (91) -  z_SFC TEST Market (91)
+[2015-05-20 23:06:33 -0400] - UpdateStripeIdsOnMarket - z_SFC TEST Market (91) -  Updating stripe IDs for market, orgs and bank accounts.
+[2015-05-20 23:06:33 -0400] - UpdateStripeIdsOnMarket - z_SFC TEST Market (91) - 
+[2015-05-20 23:06:33 -0400] - UpdateStripeIdsOnMarket - z_SFC TEST Market (91) -  Rails.env: production
+[2015-05-20 23:06:33 -0400] - UpdateStripeIdsOnMarket - z_SFC TEST Market (91) -  Stripe keys:
+[2015-05-20 23:06:33 -0400] - UpdateStripeIdsOnMarket - z_SFC TEST Market (91) -   --> STRIPE_PUBLISHABLE_KEY: pk_live_j85VTsrz51POrss3ni460qaf (pk_live_j85VTsrz51POrss3ni460qaf)
+[2015-05-20 23:06:33 -0400] - UpdateStripeIdsOnMarket - z_SFC TEST Market (91) - ====================================================================================================
+[2015-05-20 23:06:33 -0400] - UpdateStripeIdsOnMarket - z_SFC TEST Market (91) - Connecting market customer - Updated Market stripe_customer_id: cus_677tiMmc6CSts5
+[2015-05-20 23:06:33 -0400] - UpdateStripeIdsOnMarket - z_SFC TEST Market (91) - Connecting market account - MISS - No stripe_account_id found for market balanced_customer_uri /v1/customers/CU3Z3KzCYrAplExnjbcNMeP8
+[2015-05-20 23:06:34 -0400] - UpdateStripeIdsOnMarket - z_SFC TEST Market (91) - Connecting org customers - Updated Organization 1 - Buyer (3619) stripe_customer_id: cus_688h2bcxMOne3M
+[2015-05-20 23:06:34 -0400] - UpdateStripeIdsOnMarket - z_SFC TEST Market (91) - Connecting org customers - Updated Organization 2 - Buyer (3620) stripe_customer_id: cus_688jhZYfFYfHBP
+[2015-05-20 23:06:34 -0400] - UpdateStripeIdsOnMarket - z_SFC TEST Market (91) - Connecting org customers - Updated Organization 3 - Buyer (3621) stripe_customer_id: cus_688kVC0w3hoEZz
+[2015-05-20 23:06:35 -0400] - UpdateStripeIdsOnMarket - z_SFC TEST Market (91) - Connecting org customers - Updated Organization 1 - Farmer (3622) stripe_customer_id: cus_688moRm9xklmZ2
+[2015-05-20 23:06:35 -0400] - UpdateStripeIdsOnMarket - z_SFC TEST Market (91) - Connecting org customers - Updated Organization 2 - Farmer (3623) stripe_customer_id: cus_688nCsuKobnJ9C
+[2015-05-20 23:06:35 -0400] - UpdateStripeIdsOnMarket - z_SFC TEST Market (91) - Connecting org customers - Updated Organization Nathan Buyer (3625) stripe_customer_id: cus_68AZWpZTXp9pTS
+[2015-05-20 23:06:37 -0400] - UpdateStripeIdsOnMarket - z_SFC TEST Market (91) - Connecting org customers - Updated Organization Nathan Seller (3626) stripe_customer_id: cus_68AbW5oBXvFn0I
+[2015-05-20 23:06:38 -0400] - UpdateStripeIdsOnMarket - z_SFC TEST Market (91) - Connecting org BankAccounts - Organization 1 - Buyer (3619) - Updated Visa 2608 (548) stripe_id: card_162URS2VpjOYk6Tm9QYKjnCE

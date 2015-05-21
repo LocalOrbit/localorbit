@@ -75,5 +75,11 @@ describe CartsController do
       data = JSON.parse(response.body)
       expect(data["total"]).to eq 2
     end
+
+    it "sets the payment provider" do
+      market.update payment_provider: 'the provider' 
+      get :show
+      expect(assigns[:payment_provider]).to eq('the provider')
+    end
   end
 end

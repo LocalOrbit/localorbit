@@ -1,0 +1,33 @@
+[2015-05-20 22:59:53 -0400] - UpdateStripeIdsOnMarket - Rooted in Appalachia (27) - ====================================================================================================
+[2015-05-20 22:59:53 -0400] - UpdateStripeIdsOnMarket - Rooted in Appalachia (27) -  Rooted in Appalachia (27)
+[2015-05-20 22:59:53 -0400] - UpdateStripeIdsOnMarket - Rooted in Appalachia (27) -  Updating stripe IDs for market, orgs and bank accounts.
+[2015-05-20 22:59:53 -0400] - UpdateStripeIdsOnMarket - Rooted in Appalachia (27) - 
+[2015-05-20 22:59:53 -0400] - UpdateStripeIdsOnMarket - Rooted in Appalachia (27) -  Rails.env: production
+[2015-05-20 22:59:53 -0400] - UpdateStripeIdsOnMarket - Rooted in Appalachia (27) -  Stripe keys:
+[2015-05-20 22:59:53 -0400] - UpdateStripeIdsOnMarket - Rooted in Appalachia (27) -   --> STRIPE_PUBLISHABLE_KEY: pk_live_j85VTsrz51POrss3ni460qaf (pk_live_j85VTsrz51POrss3ni460qaf)
+[2015-05-20 22:59:53 -0400] - UpdateStripeIdsOnMarket - Rooted in Appalachia (27) - ====================================================================================================
+[2015-05-20 22:59:55 -0400] - UpdateStripeIdsOnMarket - Rooted in Appalachia (27) - Connecting market customer - Updated Market stripe_customer_id: cus_5uQ56kdn8UOf4T
+[2015-05-20 22:59:55 -0400] - UpdateStripeIdsOnMarket - Rooted in Appalachia (27) - Connecting market account - Updated Market stripe_account_id: acct_15l1ySEhQqTJw3Zm
+[2015-05-20 22:59:56 -0400] - UpdateStripeIdsOnMarket - Rooted in Appalachia (27) - Connecting org customers - Updated Organization Carter's Farm (1510) stripe_customer_id: cus_5uQ4ZiyiXgEGY8
+[2015-05-20 22:59:56 -0400] - UpdateStripeIdsOnMarket - Rooted in Appalachia (27) - Connecting org customers - Updated Organization Black sheep market (1522) stripe_customer_id: cus_5uQ54I0lK54KzB
+[2015-05-20 22:59:56 -0400] - UpdateStripeIdsOnMarket - Rooted in Appalachia (27) - Connecting org customers - Updated Organization The Farm at Cove Creek (1539) stripe_customer_id: cus_5uQ5TSeFvz6YmI
+[2015-05-20 22:59:56 -0400] - UpdateStripeIdsOnMarket - Rooted in Appalachia (27) - Connecting org customers - Updated Organization Caney Valley Enterprises (1829) stripe_customer_id: cus_5uQ4TffPBgvwQD
+[2015-05-20 22:59:57 -0400] - UpdateStripeIdsOnMarket - Rooted in Appalachia (27) - Connecting org customers - Updated Organization Twin Gap Farm (2216) stripe_customer_id: cus_5uQ4M7aiJlRinA
+[2015-05-20 22:59:58 -0400] - UpdateStripeIdsOnMarket - Rooted in Appalachia (27) - Connecting org customers - Updated Organization Grow Your Own (2353) stripe_customer_id: cus_5uQ4SbMXPKmSda
+[2015-05-20 22:59:59 -0400] - UpdateStripeIdsOnMarket - Rooted in Appalachia (27) - Connecting org customers - Updated Organization Appalachian Harvest (2407) stripe_customer_id: cus_5uQ4liUmtebNpc
+[2015-05-20 22:59:59 -0400] - UpdateStripeIdsOnMarket - Rooted in Appalachia (27) - Connecting org customers - Updated Organization Sunset View Farm (2419) stripe_customer_id: cus_5uQ4Y1gLZb5dua
+[2015-05-20 22:59:59 -0400] - UpdateStripeIdsOnMarket - Rooted in Appalachia (27) - Connecting org customers - Updated Organization Pleasant Valley Farms (2420) stripe_customer_id: cus_5uQ4liG6TTNoYT
+[2015-05-20 22:59:59 -0400] - UpdateStripeIdsOnMarket - Rooted in Appalachia (27) - Connecting org customers - Updated Organization A Lotta Lamb (2480) stripe_customer_id: cus_5uQ573QDyLy5sn
+[2015-05-20 23:00:00 -0400] - UpdateStripeIdsOnMarket - Rooted in Appalachia (27) - Connecting org customers - Updated Organization Boone Street Market (2754) stripe_customer_id: cus_5uQ4uOC1VWAiau
+[2015-05-20 23:00:00 -0400] - UpdateStripeIdsOnMarket - Rooted in Appalachia (27) - Connecting org customers - Updated Organization Main Street Pizza (2902) stripe_customer_id: cus_5uQ4co0CkbMDSB
+[2015-05-20 23:00:00 -0400] - UpdateStripeIdsOnMarket - Rooted in Appalachia (27) - Connecting org customers - Updated Organization Wild Hare Farms (3112) stripe_customer_id: cus_5uQ5KUbQOhraAf
+[2015-05-20 23:00:01 -0400] - UpdateStripeIdsOnMarket - Rooted in Appalachia (27) - Connecting org customers - Updated Organization Glade Green Grocer (3200) stripe_customer_id: cus_5uQ5qJgzQ58JVd
+[2015-05-20 23:00:01 -0400] - UpdateStripeIdsOnMarket - Rooted in Appalachia (27) - Connecting org customers - Updated Organization Cheri Wagner (3286) stripe_customer_id: cus_5wUyw4njPqLCqg
+[2015-05-20 23:00:01 -0400] - UpdateStripeIdsOnMarket - Rooted in Appalachia (27) - Connecting org customers - Updated Organization Blackthorn Club (3357) stripe_customer_id: cus_5yjnaxE1YGfLEb
+[2015-05-20 23:00:02 -0400] - UpdateStripeIdsOnMarket - Rooted in Appalachia (27) - Connecting org customers - Updated Organization Garden Spot Produce (3431) stripe_customer_id: cus_61jO1WFQiNtEI7
+[2015-05-20 23:00:02 -0400] - UpdateStripeIdsOnMarket - Rooted in Appalachia (27) - Connecting org customers - Updated Organization Rocket Farms (3466) stripe_customer_id: cus_63FIQYbrqW2hZF
+[2015-05-20 23:00:02 -0400] - UpdateStripeIdsOnMarket - Rooted in Appalachia (27) - Connecting org customers - Updated Organization Holston View Farm (3552) stripe_customer_id: cus_65vVyDmpY8uwMc
+[2015-05-20 23:00:03 -0400] - UpdateStripeIdsOnMarket - Rooted in Appalachia (27) - Connecting org customers - Updated Organization Foxglove Farms (3664) stripe_customer_id: cus_69yH8TDVT0Pxoq
+[2015-05-20 23:00:03 -0400] - UpdateStripeIdsOnMarket - Rooted in Appalachia (27) - Connecting org customers - MISS - No stripe_customer_id found for Organization Carter at Main (3875) balanced_customer_uri /v1/customers/CU1DBTVqYYrSNtKcpjeZDXv1
+[2015-05-20 23:00:04 -0400] - UpdateStripeIdsOnMarket - Rooted in Appalachia (27) - Connecting market BankAccounts - Updated HIGHLANDS UNION BANK 4439 (159) stripe_id: ba_15ic9g2VpjOYk6TmMUI9Rv7i
+[2015-05-20 23:00:05 -0400] - UpdateStripeIdsOnMarket - Rooted in Appalachia (27) - Connecting org BankAccounts - Organization Foxglove Farms (3664) - Updated BRANCH BANKING & TRUST COMPANY 8007 (531) stripe_id: btok_69yH7Y2RQX9sbG

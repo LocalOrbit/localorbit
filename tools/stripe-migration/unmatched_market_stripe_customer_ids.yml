@@ -1,0 +1,31 @@
+---
+- :market_id: 20
+  :name: Western U.P. Marketplace
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :market_id: 21
+  :name: Eastern U.P. Marketplace
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :market_id: 8
+  :name: Potluck Café Society
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :market_id: 10
+  :name: Springfield Demo Market
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :market_id: 94
+  :name: Ohio Valley Food
+  :balanced_customer_uri: "/v1/customers/CU4uFGj0JaG43KtmFuzibUpN"
+  :balanced_customer_id: CU4uFGj0JaG43KtmFuzibUpN
+  :balanced_underwritten: false
+- :market_id: 61
+  :name: Farm Link Hawai‘i
+  :balanced_customer_uri: "/v1/customers/CU1jrnubeYC8Wp5J6XxR5HkX"
+  :balanced_customer_id: CU1jrnubeYC8Wp5J6XxR5HkX
+  :balanced_underwritten: true

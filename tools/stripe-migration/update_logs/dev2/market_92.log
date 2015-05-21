@@ -1,0 +1,27 @@
+[2015-05-20 23:07:38 -0400] - UpdateStripeIdsOnMarket - Ohio Valley Food Connection  (92) - ====================================================================================================
+[2015-05-20 23:07:38 -0400] - UpdateStripeIdsOnMarket - Ohio Valley Food Connection  (92) -  Ohio Valley Food Connection  (92)
+[2015-05-20 23:07:38 -0400] - UpdateStripeIdsOnMarket - Ohio Valley Food Connection  (92) -  Updating stripe IDs for market, orgs and bank accounts.
+[2015-05-20 23:07:38 -0400] - UpdateStripeIdsOnMarket - Ohio Valley Food Connection  (92) - 
+[2015-05-20 23:07:38 -0400] - UpdateStripeIdsOnMarket - Ohio Valley Food Connection  (92) -  Rails.env: production
+[2015-05-20 23:07:38 -0400] - UpdateStripeIdsOnMarket - Ohio Valley Food Connection  (92) -  Stripe keys:
+[2015-05-20 23:07:38 -0400] - UpdateStripeIdsOnMarket - Ohio Valley Food Connection  (92) -   --> STRIPE_PUBLISHABLE_KEY: pk_live_j85VTsrz51POrss3ni460qaf (pk_live_j85VTsrz51POrss3ni460qaf)
+[2015-05-20 23:07:38 -0400] - UpdateStripeIdsOnMarket - Ohio Valley Food Connection  (92) - ====================================================================================================
+[2015-05-20 23:07:40 -0400] - UpdateStripeIdsOnMarket - Ohio Valley Food Connection  (92) - Connecting market customer - Updated Market stripe_customer_id: cus_69bbhSTLCD4koO
+[2015-05-20 23:07:40 -0400] - UpdateStripeIdsOnMarket - Ohio Valley Food Connection  (92) - Connecting market account - MISS - No stripe_account_id found for market balanced_customer_uri /v1/customers/CU6ZnwE2dYDcy8nNgJEB3lSa
+[2015-05-20 23:07:40 -0400] - UpdateStripeIdsOnMarket - Ohio Valley Food Connection  (92) - Connecting org customers - Updated Organization Test Seller (3729) stripe_customer_id: cus_6BuNssXeJvw7St
+[2015-05-20 23:07:40 -0400] - UpdateStripeIdsOnMarket - Ohio Valley Food Connection  (92) - Connecting org customers - Updated Organization 5 Oaks Organics (3742) stripe_customer_id: cus_6DNZX3JAlP3IFT
+[2015-05-20 23:07:41 -0400] - UpdateStripeIdsOnMarket - Ohio Valley Food Connection  (92) - Connecting org customers - Updated Organization Brookhill Farm LLC (3743) stripe_customer_id: cus_6DNcCNirwaVRLs
+[2015-05-20 23:07:42 -0400] - UpdateStripeIdsOnMarket - Ohio Valley Food Connection  (92) - Connecting org customers - Updated Organization That Guy's Family Farm  (3744) stripe_customer_id: cus_6DNddyvzzEh0z3
+[2015-05-20 23:07:42 -0400] - UpdateStripeIdsOnMarket - Ohio Valley Food Connection  (92) - Connecting org customers - Updated Organization Downing Farm  (3745) stripe_customer_id: cus_6DNe9E94GfrpdT
+[2015-05-20 23:07:43 -0400] - UpdateStripeIdsOnMarket - Ohio Valley Food Connection  (92) - Connecting org customers - Updated Organization Stoke's Berry Farm (3746) stripe_customer_id: cus_6DNgB4JxKvlrXc
+[2015-05-20 23:07:44 -0400] - UpdateStripeIdsOnMarket - Ohio Valley Food Connection  (92) - Connecting org customers - Updated Organization TS Farms (3766) stripe_customer_id: cus_6EIBExSKPet5TZ
+[2015-05-20 23:07:45 -0400] - UpdateStripeIdsOnMarket - Ohio Valley Food Connection  (92) - Connecting org customers - Updated Organization Fox Tail Farm (3767) stripe_customer_id: cus_6EIKc5KYYcLOpL
+[2015-05-20 23:07:46 -0400] - UpdateStripeIdsOnMarket - Ohio Valley Food Connection  (92) - Connecting org customers - Updated Organization Otto's (3801) stripe_customer_id: cus_6FF7wZfN77A7vK
+[2015-05-20 23:07:46 -0400] - UpdateStripeIdsOnMarket - Ohio Valley Food Connection  (92) - Connecting org customers - Updated Organization Turner Farm  (3804) stripe_customer_id: cus_6FGez4kJNzVioy
+[2015-05-20 23:07:46 -0400] - UpdateStripeIdsOnMarket - Ohio Valley Food Connection  (92) - Connecting org customers - Updated Organization Greener Portions Aquaponics (3817) stripe_customer_id: cus_6FQOH2nUxM4ca0
+[2015-05-20 23:07:47 -0400] - UpdateStripeIdsOnMarket - Ohio Valley Food Connection  (92) - Connecting org customers - Updated Organization Napoleon Ridge Farm (3818) stripe_customer_id: cus_6FQRpG3fsjdJu1
+[2015-05-20 23:07:47 -0400] - UpdateStripeIdsOnMarket - Ohio Valley Food Connection  (92) - Connecting org customers - Updated Organization Fair Ridge Farm (3841) stripe_customer_id: cus_6GffKl7feZOBgU
+[2015-05-20 23:07:47 -0400] - UpdateStripeIdsOnMarket - Ohio Valley Food Connection  (92) - Connecting org customers - MISS - No stripe_customer_id found for Organization Butcher Bettie's (3864) balanced_customer_uri /v1/customers/CU4Y2XIVRiFDUQCJ7cqV4ajl
+[2015-05-20 23:07:47 -0400] - UpdateStripeIdsOnMarket - Ohio Valley Food Connection  (92) - Connecting org customers - MISS - No stripe_customer_id found for Organization Branstrator Farm  (3865) balanced_customer_uri /v1/customers/CU5B1rJ9XDji93DCHOzDrp1g
+[2015-05-20 23:07:47 -0400] - UpdateStripeIdsOnMarket - Ohio Valley Food Connection  (92) - Connecting org customers - MISS - No stripe_customer_id found for Organization Bouquet's (3866) balanced_customer_uri /v1/customers/CU6rlsPGht67ptgOqlo69On
+[2015-05-20 23:07:48 -0400] - UpdateStripeIdsOnMarket - Ohio Valley Food Connection  (92) - Connecting market BankAccounts - Updated U.S. BANK NATIONAL ASSOCIATION 4543 (532) stripe_id: ba_15xfZ72VpjOYk6TmaMs4Nqn2

@@ -1,0 +1,22 @@
+[2015-05-20 23:07:23 -0400] - UpdateStripeIdsOnMarket - Aglink Foodservice (70) - ====================================================================================================
+[2015-05-20 23:07:23 -0400] - UpdateStripeIdsOnMarket - Aglink Foodservice (70) -  Aglink Foodservice (70)
+[2015-05-20 23:07:23 -0400] - UpdateStripeIdsOnMarket - Aglink Foodservice (70) -  Updating stripe IDs for market, orgs and bank accounts.
+[2015-05-20 23:07:23 -0400] - UpdateStripeIdsOnMarket - Aglink Foodservice (70) - 
+[2015-05-20 23:07:23 -0400] - UpdateStripeIdsOnMarket - Aglink Foodservice (70) -  Rails.env: production
+[2015-05-20 23:07:23 -0400] - UpdateStripeIdsOnMarket - Aglink Foodservice (70) -  Stripe keys:
+[2015-05-20 23:07:23 -0400] - UpdateStripeIdsOnMarket - Aglink Foodservice (70) -   --> STRIPE_PUBLISHABLE_KEY: pk_live_j85VTsrz51POrss3ni460qaf (pk_live_j85VTsrz51POrss3ni460qaf)
+[2015-05-20 23:07:23 -0400] - UpdateStripeIdsOnMarket - Aglink Foodservice (70) - ====================================================================================================
+[2015-05-20 23:07:25 -0400] - UpdateStripeIdsOnMarket - Aglink Foodservice (70) - Connecting market customer - Updated Market stripe_customer_id: cus_5uQ4apiz6U67W7
+[2015-05-20 23:07:26 -0400] - UpdateStripeIdsOnMarket - Aglink Foodservice (70) - Connecting market account - Updated Market stripe_account_id: acct_15l1yTIacDq6O8zg
+[2015-05-20 23:07:27 -0400] - UpdateStripeIdsOnMarket - Aglink Foodservice (70) - Connecting org customers - Updated Organization Top Line Milk (2891) stripe_customer_id: cus_5uQ4KeekjmGXK0
+[2015-05-20 23:07:28 -0400] - UpdateStripeIdsOnMarket - Aglink Foodservice (70) - Connecting org customers - Updated Organization Commonwealth Pub (2969) stripe_customer_id: cus_5uQ59gXTtZiK1N
+[2015-05-20 23:07:30 -0400] - UpdateStripeIdsOnMarket - Aglink Foodservice (70) - Connecting org customers - Updated Organization Burroughs Family Farms (3003) stripe_customer_id: cus_5uQ6BSAg5qFNmt
+[2015-05-20 23:07:30 -0400] - UpdateStripeIdsOnMarket - Aglink Foodservice (70) - Connecting org customers - Updated Organization SunWest Fruit Company (3129) stripe_customer_id: cus_5uQ5eV6fImhBPD
+[2015-05-20 23:07:31 -0400] - UpdateStripeIdsOnMarket - Aglink Foodservice (70) - Connecting org customers - Updated Organization Ratto Bros (3164) stripe_customer_id: cus_5uQ5cw6GFXlnmm
+[2015-05-20 23:07:32 -0400] - UpdateStripeIdsOnMarket - Aglink Foodservice (70) - Connecting org customers - Updated Organization Jelly Ranch  (3302) stripe_customer_id: cus_5wxzXPU2ivvWZy
+[2015-05-20 23:07:33 -0400] - UpdateStripeIdsOnMarket - Aglink Foodservice (70) - Connecting org customers - Updated Organization Doreva Produce (3303) stripe_customer_id: cus_5wy6AifhPkNg15
+[2015-05-20 23:07:34 -0400] - UpdateStripeIdsOnMarket - Aglink Foodservice (70) - Connecting org customers - Updated Organization Dave's Meat Service (3359) stripe_customer_id: cus_5ynr84sZg3wjXA
+[2015-05-20 23:07:35 -0400] - UpdateStripeIdsOnMarket - Aglink Foodservice (70) - Connecting org customers - Updated Organization Live Oak Farms (3735) stripe_customer_id: cus_6CIMEKNsdvrsmE
+[2015-05-20 23:07:36 -0400] - UpdateStripeIdsOnMarket - Aglink Foodservice (70) - Connecting org customers - Updated Organization Magnolia Citrus (3809) stripe_customer_id: cus_6FIdyLLsQfZEkx
+[2015-05-20 23:07:37 -0400] - UpdateStripeIdsOnMarket - Aglink Foodservice (70) - Connecting org customers - Updated Organization Del Mar Farms (3810) stripe_customer_id: cus_6FIfe82t7pdDRL
+[2015-05-20 23:07:38 -0400] - UpdateStripeIdsOnMarket - Aglink Foodservice (70) - Connecting market BankAccounts - Updated MODESTO COMM BK-A DIV OF BK STOCKTON 3330 (413) stripe_id: ba_15ic902VpjOYk6TmmIRFf1uT

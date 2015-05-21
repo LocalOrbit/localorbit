@@ -44,7 +44,12 @@ feature "Payment of 'market payments' to Markets on non-Automate plans", :js  do
     order = m1[:orders][0]
     seller = order.items.first.seller
     bank_account = seller.bank_accounts.first
+
+    # Generate a seller payment for the first order in m1 such that we'd expect it to be excluded from the display
     create(:payment, payment_type: "seller payment", payee: seller, orders: [ m1[:orders][0] ], market: market, bank_account: bank_account, payment_method: "ach", amount: 100)
+
+    # Update the SECOND order to be from a non-Balanced payment provider, such that we expect it to be excluded
+    m1[:orders][1].update(payment_provider: PaymentProvider::Stripe.id.to_s)
   }
 
   before do
@@ -64,8 +69,10 @@ feature "Payment of 'market payments' to Markets on non-Automate plans", :js  do
       # Determine which orders we expect to see:
       market = m1[:market]
       section = Dom::Admin::Financials::MarketSection.find_by_market_name(market.name)
-      # (m1 has four orders, the first of which should have a 'seller payment' and thus should not be included)
-      expected_order_nums = m1[:orders][1..-1].map do |o| o.order_number end
+      # (m1 has four orders, 
+      #   the first of which should have a 'seller payment' and thus should not be included,
+      #   the second of which has Stripe payment provider and thus should not be included)
+      expected_order_nums = m1[:orders][2..-1].map do |o| o.order_number end
 
       # What order numbers are showing for this market?
       order_nums = section.orders.map do |o| o.order_number end

@@ -3,6 +3,7 @@ class RefundServicePayment
 
   def perform
     context[:refund_payment] = Payment.create({
+      payment_provider: PaymentProvider::Balanced.id.to_s,
       payment_type:   "service refund",
       market:         payment.market,
       payer:          payment.market,

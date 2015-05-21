@@ -1,0 +1,34 @@
+[2015-05-20 23:03:18 -0400] - UpdateStripeIdsOnMarket - Farm Link Hawai‘i (61) - ====================================================================================================
+[2015-05-20 23:03:18 -0400] - UpdateStripeIdsOnMarket - Farm Link Hawai‘i (61) -  Farm Link Hawai‘i (61)
+[2015-05-20 23:03:18 -0400] - UpdateStripeIdsOnMarket - Farm Link Hawai‘i (61) -  Updating stripe IDs for market, orgs and bank accounts.
+[2015-05-20 23:03:18 -0400] - UpdateStripeIdsOnMarket - Farm Link Hawai‘i (61) - 
+[2015-05-20 23:03:18 -0400] - UpdateStripeIdsOnMarket - Farm Link Hawai‘i (61) -  Rails.env: production
+[2015-05-20 23:03:18 -0400] - UpdateStripeIdsOnMarket - Farm Link Hawai‘i (61) -  Stripe keys:
+[2015-05-20 23:03:18 -0400] - UpdateStripeIdsOnMarket - Farm Link Hawai‘i (61) -   --> STRIPE_PUBLISHABLE_KEY: pk_live_j85VTsrz51POrss3ni460qaf (pk_live_j85VTsrz51POrss3ni460qaf)
+[2015-05-20 23:03:18 -0400] - UpdateStripeIdsOnMarket - Farm Link Hawai‘i (61) - ====================================================================================================
+[2015-05-20 23:03:21 -0400] - UpdateStripeIdsOnMarket - Farm Link Hawai‘i (61) - Connecting market customer - Updated Market stripe_customer_id: cus_5vQtaemTsKuavk
+[2015-05-20 23:03:21 -0400] - UpdateStripeIdsOnMarket - Farm Link Hawai‘i (61) - Connecting market account - Updated Market stripe_account_id: acct_15l1yRK6Xb2qcrM5
+[2015-05-20 23:03:23 -0400] - UpdateStripeIdsOnMarket - Farm Link Hawai‘i (61) - Connecting org customers - Updated Organization Counter Culture Food + Ferments (2565) stripe_customer_id: cus_5vQtaemTsKuavk
+[2015-05-20 23:03:25 -0400] - UpdateStripeIdsOnMarket - Farm Link Hawai‘i (61) - Connecting org customers - Updated Organization De Veras Farm (2574) stripe_customer_id: cus_5uQ5M3fHKoVDwg
+[2015-05-20 23:03:25 -0400] - UpdateStripeIdsOnMarket - Farm Link Hawai‘i (61) - Connecting org customers - Updated Organization Juicy Brew (2585) stripe_customer_id: cus_5uQ4K3Dz6I7gAG
+[2015-05-20 23:03:25 -0400] - UpdateStripeIdsOnMarket - Farm Link Hawai‘i (61) - Connecting org customers - Updated Organization Waimānalo Market Co-op (2586) stripe_customer_id: cus_5uQ5dAv7r4kdmy
+[2015-05-20 23:03:25 -0400] - UpdateStripeIdsOnMarket - Farm Link Hawai‘i (61) - Connecting org customers - Updated Organization Cactus Bistro (2587) stripe_customer_id: cus_5uQ4EWcUM1oJw5
+[2015-05-20 23:03:26 -0400] - UpdateStripeIdsOnMarket - Farm Link Hawai‘i (61) - Connecting org customers - Updated Organization Lunch Box (2588) stripe_customer_id: cus_5uQ4RK25OXW2jY
+[2015-05-20 23:03:26 -0400] - UpdateStripeIdsOnMarket - Farm Link Hawai‘i (61) - Connecting org customers - Updated Organization Morning Glass Coffee + Café (2589) stripe_customer_id: cus_5uQ5IjwIwmhsO9
+[2015-05-20 23:03:26 -0400] - UpdateStripeIdsOnMarket - Farm Link Hawai‘i (61) - Connecting org customers - Updated Organization Buzz's Steakhouse (2590) stripe_customer_id: cus_5uQ4xHvD2NLZBD
+[2015-05-20 23:03:28 -0400] - UpdateStripeIdsOnMarket - Farm Link Hawai‘i (61) - Connecting org customers - Updated Organization J&J Farm (2592) stripe_customer_id: cus_5uQ4aWGInPnjIX
+[2015-05-20 23:03:29 -0400] - UpdateStripeIdsOnMarket - Farm Link Hawai‘i (61) - Connecting org customers - Updated Organization Sweet Home Waimānalo (2593) stripe_customer_id: cus_5uQ4K87paoTLpu
+[2015-05-20 23:03:29 -0400] - UpdateStripeIdsOnMarket - Farm Link Hawai‘i (61) - Connecting org customers - Updated Organization Kokua Market (2597) stripe_customer_id: cus_5uQ51VUJoRheh9
+[2015-05-20 23:03:30 -0400] - UpdateStripeIdsOnMarket - Farm Link Hawai‘i (61) - Connecting org customers - Updated Organization Peace Cafe (2616) stripe_customer_id: cus_5uQ4fz33uS63VG
+[2015-05-20 23:03:30 -0400] - UpdateStripeIdsOnMarket - Farm Link Hawai‘i (61) - Connecting org customers - MISS - No stripe_customer_id found for Organization Akamai Greens (2658) balanced_customer_uri /v1/customers/CU1LITOWsRjC7iuoUO5rwmj5
+[2015-05-20 23:03:31 -0400] - UpdateStripeIdsOnMarket - Farm Link Hawai‘i (61) - Connecting org customers - Updated Organization Summer Sky Organic Farm (2668) stripe_customer_id: cus_5uQ5IYxz9A8Sej
+[2015-05-20 23:03:31 -0400] - UpdateStripeIdsOnMarket - Farm Link Hawai‘i (61) - Connecting org customers - Updated Organization Livestock Tavern (2683) stripe_customer_id: cus_5uQ4LkSeJ08ohD
+[2015-05-20 23:03:32 -0400] - UpdateStripeIdsOnMarket - Farm Link Hawai‘i (61) - Connecting org customers - Updated Organization Holoholo Farm (3133) stripe_customer_id: cus_5uQ5KdfjbVuF5A
+[2015-05-20 23:03:38 -0400] - UpdateStripeIdsOnMarket - Farm Link Hawai‘i (61) - Connecting org customers - Updated Organization Small Kine Farm (3150) stripe_customer_id: cus_5uQ55PBJUxJKWf
+[2015-05-20 23:03:38 -0400] - UpdateStripeIdsOnMarket - Farm Link Hawai‘i (61) - Connecting org customers - Updated Organization Alan Wong's Honolulu (3290) stripe_customer_id: cus_5yHUZxUy7qzC7Y
+[2015-05-20 23:03:39 -0400] - UpdateStripeIdsOnMarket - Farm Link Hawai‘i (61) - Connecting market BankAccounts - Updated HAWAIIUSA FEDERAL CREDIT UNION 1321 (496) stripe_id: ba_15rCfu2VpjOYk6TmkNZyZld9
+[2015-05-20 23:03:40 -0400] - UpdateStripeIdsOnMarket - Farm Link Hawai‘i (61) - Connecting org BankAccounts - Organization Counter Culture Food + Ferments (2565) - Updated HAWAIIUSA FEDERAL CREDIT UNION 1321 (512) stripe_id: ba_15rCfu2VpjOYk6TmkNZyZld9
+[2015-05-20 23:03:41 -0400] - UpdateStripeIdsOnMarket - Farm Link Hawai‘i (61) - Connecting org BankAccounts - Organization Juicy Brew (2585) - Updated American Express 2001 (368) stripe_id: card_15ic9e2VpjOYk6TmGWBTMphy
+[2015-05-20 23:03:41 -0400] - UpdateStripeIdsOnMarket - Farm Link Hawai‘i (61) - Connecting org BankAccounts - Organization Juicy Brew (2585) - Updated American Express 1039 (488) stripe_id: card_15pZDm2VpjOYk6Tm2yqBBHGL
+[2015-05-20 23:03:42 -0400] - UpdateStripeIdsOnMarket - Farm Link Hawai‘i (61) - Connecting org BankAccounts - Organization Akamai Greens (2658) - MISS - No stripe_id found for BANK OF HAWAII 4187 (445) balanced_customer_uri /v1/marketplaces/MP2eXZmrOPof80u3Irf94Wre/bank_accounts/BA3nY0VcdGzRUIb5iTMaw8uC
+[2015-05-20 23:03:43 -0400] - UpdateStripeIdsOnMarket - Farm Link Hawai‘i (61) - Connecting org BankAccounts - Organization Alan Wong's Honolulu (3290) - Updated MasterCard 0676 (479) stripe_id: card_15mKv62VpjOYk6TmAsqokOfI

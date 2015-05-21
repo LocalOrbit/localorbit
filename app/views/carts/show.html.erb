@@ -96,7 +96,7 @@
 
           <fieldset class="conditional">
             <legend class="haiku">Select Payment Method</legend>
-              <% if allow_payment_option?(:allow_purchase_orders) %>
+              <% if allow_payment_option?(:purchase_order, current_market, current_organization) %>
                 <div class="field">
                   <label>
                     <%= f.radio_button :payment_method, "purchase order" %>
@@ -111,7 +111,7 @@
                 </div>
               <% end %>
 
-              <% if allow_payment_option?(:allow_credit_cards) %>
+              <% if allow_payment_option?(:credit_card, current_market, current_organization) %>
                 <div class="field">
                   <label>
                     <%= f.radio_button :payment_method, "credit card" %>
@@ -127,19 +127,20 @@
                       <% end %><br>
 
                       <label>New Credit Card</label><br>
-                      <fieldset id="balanced-payments-uri" data-balanced-marketplace-uri="<%= ENV["BALANCED_MARKETPLACE_URI"] %>">
+
+                      <fieldset id="payment-provider-container" data-payment-provider="<%= @payment_provider %>" data-balanced-marketplace-uri="<%= ENV["BALANCED_MARKETPLACE_URI"] %>" data-stripe-publishable-key="<%= ENV["STRIPE_PUBLISHABLE_KEY"] %>">
                         <div class="row">
                           <div class="column column--full column--guttered">
-                            <label for="balanced_account_name">Name</label>
+                            <label for="provider_account_name">Name</label>
                             <span class="hint">Full name as it appears on the account</span>
                             <br>
-                            <input id="balanced_account_name" type="text" value="" name="order[credit_card][name]" class="column--full">
+                            <input id="provider_account_name" type="text" value="" name="order[credit_card][name]" class="column--full">
                           </div>
                         </div>
                         <div class="row">
                           <div class="column column--full column--guttered">
-                            <label for="balanced_card_number">Card Number</label><br>
-                            <input class="column--full" id="balanced_card_number" type="text" name="card_number">
+                            <label for="provider_card_number">Card Number</label><br>
+                            <input class="column--full" id="provider_card_number" type="text" name="card_number">
                           </div>
                         </div>
                         <div class="row">
@@ -152,8 +153,8 @@
                             <%= select_tag(:expiration_year, options_for_select(expiration_year_options), class: "column--full") %>
                           </div
                           ><div class="column column--third column--guttered">
-                            <label for="balanced_security_code">Security Code</label><br>
-                            <input class="column--full" id="balanced_security_code" type="text" name="security_code">
+                            <label for="provider_security_code">Security Code</label><br>
+                            <input class="column--full" id="provider_security_code" type="text" name="security_code">
                           </div>
                           <div class="row">
                             <div class="field column column--full column--guttered">
@@ -163,12 +164,13 @@
                           </div>
                         </div>
                       </fieldset>
+
                     </div>
                   </fieldset>
                 </div>
               <% end %>
 
-              <% if allow_payment_option?(:allow_ach) %>
+              <% if allow_payment_option?(:ach, current_market, current_organization) %>
                 <div class="field">
                   <label>
                     <%= f.radio_button :payment_method, "ach" %>
