@@ -546,10 +546,10 @@ describe Market do
   describe "#credit_card_payment_fee_payer" do
     let(:market) { create(:market) }
     [
-      [{ credit_card_seller_fee: 0, credit_card_market_fee: 0 }, 'market' ],
+      [{ credit_card_seller_fee: 0, credit_card_market_fee: 0 }, 'seller' ],
       [{ credit_card_seller_fee: 0, credit_card_market_fee: 1 }, 'market' ],
       [{ credit_card_seller_fee: 1, credit_card_market_fee: 0 }, 'seller' ],
-      [{ credit_card_seller_fee: 1, credit_card_market_fee: 1 }, 'seller' ],
+      [{ credit_card_seller_fee: 1, credit_card_market_fee: 1 }, 'market' ],
     ].each do |(fees, payer)|
       it "returns #{payer.inspect} when fees are #{fees.inspect}" do
         market.update(fees)

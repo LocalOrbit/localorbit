@@ -91,7 +91,7 @@ class Market < ActiveRecord::Base
   # to better represent what's actually going on.
   # 
   def credit_card_payment_fee_payer
-    credit_card_seller_fee == 0 ? 'market' : 'seller'
+    credit_card_market_fee != 0 ? 'market' : 'seller'
   end
   
   def set_credit_card_payment_fee_payer(payer_string)
