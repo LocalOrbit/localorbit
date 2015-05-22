@@ -60,6 +60,17 @@
           $<%= f.number_field :ach_fee_cap, min: 0, max: 9999.99, step: "0.01", size: 6 %>
         </div>
       </fieldset>
+    <% else %>
+      <fieldset>
+        <legend>Payment Fees</legend>
+        <div class="row row--field">
+          <div class="field column column--half column--guttered">
+            Payment processing fees to be paid by:<br/>
+            <input type="radio" name="payment_fees_paid_by" value="seller" checked="checked"><label for="payment_fees">Seller</label><br>
+            <input type="radio" name="payment_fees_paid_by" value="market"><label for="payment_fees">Market</label><br>
+          </div>
+        </div>
+      </fieldset>
     <% end %>
 
     <fieldset>

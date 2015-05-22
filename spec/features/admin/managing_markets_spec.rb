@@ -444,6 +444,18 @@ describe "Managing Markets" do
           expect(page.all(:field, field_label).count).to eq(0), "Field '#{field_label}' should NOT be present!"
         end
 
+        current_payer = find_field('payment_fees_paid_by', checked: true)
+        other_payer = find_field('payment_fees_paid_by', checked: false)
+        expect(current_payer.value).to eq 'seller'
+        expect(other_payer.value).to eq 'market'
+
+        choose('payment_fees_paid_by', checked: false)
+
+        current_payer = find_field('payment_fees_paid_by', checked: true)
+        other_payer = find_field('payment_fees_paid_by', checked: false)
+        expect(current_payer.value).to eq 'market'
+        expect(other_payer.value).to eq 'seller'
+
         fill_in "PO Payment Terms",               with: "18"
 
         click_button "Update Fees"
@@ -453,6 +465,11 @@ describe "Managing Markets" do
         expect(find_field("Local Orbit % paid by market").value).to eq("4.000")
         expect(find_field("Market % paid by Seller").value).to eq("3.000")
         expect(find_field("PO Payment Terms").value).to eq("18")
+
+        current_payer = find_field('payment_fees_paid_by', checked: true)
+        other_payer = find_field('payment_fees_paid_by', checked: false)
+        expect(current_payer.value).to eq 'market'
+        expect(other_payer.value).to eq 'seller'
       end
     end
   end
