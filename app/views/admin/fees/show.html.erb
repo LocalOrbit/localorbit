@@ -66,8 +66,8 @@
         <div class="row row--field">
           <div class="field column column--half column--guttered">
             Payment processing fees to be paid by:<br/>
-            <input type="radio" name="payment_fees_paid_by" value="seller" checked="checked"><label for="payment_fees">Seller</label><br>
-            <input type="radio" name="payment_fees_paid_by" value="market"><label for="payment_fees">Market</label><br>
+            <input type="radio" name="market[payment_fees_paid_by]" value="seller" <%= 'checked="checked"' if @market.credit_card_payment_fee_payer == 'seller' %>><label for="payment_fees">Seller</label><br>
+            <input type="radio" name="market[payment_fees_paid_by]" value="market" <%= 'checked="checked"' if @market.credit_card_payment_fee_payer == 'market' %>><label for="payment_fees">Market</label><br>
           </div>
         </div>
       </fieldset>
