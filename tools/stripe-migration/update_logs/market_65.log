@@ -1,0 +1,99 @@
+[2015-05-26 16:05:39 -0400] - UpdateStripeIdsOnMarket - Re:Vision (65) - ====================================================================================================
+[2015-05-26 16:05:39 -0400] - UpdateStripeIdsOnMarket - Re:Vision (65) -  Re:Vision (65)
+[2015-05-26 16:05:39 -0400] - UpdateStripeIdsOnMarket - Re:Vision (65) -  Updating stripe IDs for market, orgs and bank accounts.
+[2015-05-26 16:05:39 -0400] - UpdateStripeIdsOnMarket - Re:Vision (65) - 
+[2015-05-26 16:05:39 -0400] - UpdateStripeIdsOnMarket - Re:Vision (65) -  Rails.env: production
+[2015-05-26 16:05:39 -0400] - UpdateStripeIdsOnMarket - Re:Vision (65) -  Stripe keys:
+[2015-05-26 16:05:39 -0400] - UpdateStripeIdsOnMarket - Re:Vision (65) -   --> STRIPE_PUBLISHABLE_KEY: pk_live_j85VTsrz51POrss3ni460qaf (pk_live_j85VTsrz51POrss3ni460qaf)
+[2015-05-26 16:05:39 -0400] - UpdateStripeIdsOnMarket - Re:Vision (65) - ====================================================================================================
+[2015-05-26 16:05:40 -0400] - UpdateStripeIdsOnMarket - Re:Vision (65) - Connecting market customer - Updated Market stripe_customer_id: cus_5uQ5ugkVDzmZ2M
+[2015-05-26 16:05:41 -0400] - UpdateStripeIdsOnMarket - Re:Vision (65) - Connecting market account - Updated Market stripe_account_id: acct_15l1yQDQ8hn0P3tB
+[2015-05-26 16:05:41 -0400] - UpdateStripeIdsOnMarket - Re:Vision (65) - Connecting org customers - Updated Organization none (3727) stripe_customer_id: cus_6BtImYCGgoRmh5
+[2015-05-26 16:05:42 -0400] - UpdateStripeIdsOnMarket - Re:Vision (65) - Connecting org customers - Updated Organization Love Grown Foods  (3694) stripe_customer_id: cus_6B71n28j7VvTlU
+[2015-05-26 16:05:42 -0400] - UpdateStripeIdsOnMarket - Re:Vision (65) - Connecting org customers - Updated Organization Mallory Howard (3670) stripe_customer_id: cus_69eEQh9RBBldMq
+[2015-05-26 16:05:43 -0400] - UpdateStripeIdsOnMarket - Re:Vision (65) - Connecting org customers - Updated Organization The Real Dill  (3660) stripe_customer_id: cus_69IDIiIGTnOLOS
+[2015-05-26 16:05:43 -0400] - UpdateStripeIdsOnMarket - Re:Vision (65) - Connecting org customers - Updated Organization Eric's Eggs  (3548) stripe_customer_id: cus_65uNiQ70UvOjEF
+[2015-05-26 16:05:43 -0400] - UpdateStripeIdsOnMarket - Re:Vision (65) - Connecting org customers - Updated Organization Lucretia Krause (3456) stripe_customer_id: cus_632TnvV5nYdU6M
+[2015-05-26 16:05:44 -0400] - UpdateStripeIdsOnMarket - Re:Vision (65) - Connecting org customers - Updated Organization Erin Raney (3364) stripe_customer_id: cus_69F6SbP4AFLa2l
+[2015-05-26 16:05:44 -0400] - UpdateStripeIdsOnMarket - Re:Vision (65) - Connecting org customers - Updated Organization Ela Family Farms (3353) stripe_customer_id: cus_5yO15cJ2TMTeJP
+[2015-05-26 16:05:44 -0400] - UpdateStripeIdsOnMarket - Re:Vision (65) - Connecting org customers - Updated Organization Elevation Ketchup (3352) stripe_customer_id: cus_5yNyg35UG33Gn3
+[2015-05-26 16:05:45 -0400] - UpdateStripeIdsOnMarket - Re:Vision (65) - Connecting org customers - Updated Organization Flying B Bar Ranch (3336) stripe_customer_id: cus_5y1kwBE1hPRFde
+[2015-05-26 16:05:45 -0400] - UpdateStripeIdsOnMarket - Re:Vision (65) - Connecting org customers - Updated Organization Matilde's House (3203) stripe_customer_id: cus_5voxyGC2wlUkaP
+[2015-05-26 16:05:46 -0400] - UpdateStripeIdsOnMarket - Re:Vision (65) - Connecting org customers - Updated Organization Mayra's House (3202) stripe_customer_id: cus_5uQ6GyzWwoXKFK
+[2015-05-26 16:05:46 -0400] - UpdateStripeIdsOnMarket - Re:Vision (65) - Connecting org customers - Updated Organization Revision (3201) stripe_customer_id: cus_5uQ5gfl0J5UWJL
+[2015-05-26 16:05:46 -0400] - UpdateStripeIdsOnMarket - Re:Vision (65) - Connecting org customers - Updated Organization JVA Consulting (3175) stripe_customer_id: cus_69FLYjo8CVOH5t
+[2015-05-26 16:05:47 -0400] - UpdateStripeIdsOnMarket - Re:Vision (65) - Connecting org customers - Updated Organization Claire Slattery-Quintanilla (3155) stripe_customer_id: cus_5uQ5pMwPCoNPwq
+[2015-05-26 16:05:47 -0400] - UpdateStripeIdsOnMarket - Re:Vision (65) - Connecting org customers - Updated Organization Katie Knoll (3113) stripe_customer_id: cus_68zc5RUEgmREoy
+[2015-05-26 16:05:47 -0400] - UpdateStripeIdsOnMarket - Re:Vision (65) - Connecting org customers - Updated Organization Re:Vision Community Gardens (3083) stripe_customer_id: cus_5uQ55uW28xQn5G
+[2015-05-26 16:05:47 -0400] - UpdateStripeIdsOnMarket - Re:Vision (65) - Connecting org customers - Updated Organization Kristin Lacy  (3076) stripe_customer_id: cus_5uQ5jAN0d3sqdB
+[2015-05-26 16:05:48 -0400] - UpdateStripeIdsOnMarket - Re:Vision (65) - Connecting org customers - Updated Organization Paige & Conroy (3067) stripe_customer_id: cus_5uQ5qQrU9wKxz7
+[2015-05-26 16:05:48 -0400] - UpdateStripeIdsOnMarket - Re:Vision (65) - Connecting org customers - Updated Organization Home (3066) stripe_customer_id: cus_68zflwPVwDrDKn
+[2015-05-26 16:05:48 -0400] - UpdateStripeIdsOnMarket - Re:Vision (65) - Connecting org customers - Updated Organization Martha Medrano (3063) stripe_customer_id: cus_5uQ52wv8plosPY
+[2015-05-26 16:05:48 -0400] - UpdateStripeIdsOnMarket - Re:Vision (65) - Connecting org customers - Updated Organization Sarah Parmar (3050) stripe_customer_id: cus_5uQ5j8ynDtLMVw
+[2015-05-26 16:05:49 -0400] - UpdateStripeIdsOnMarket - Re:Vision (65) - Connecting org customers - Updated Organization Family McGill (3045) stripe_customer_id: cus_5vMcSiRzBSrtQh
+[2015-05-26 16:05:49 -0400] - UpdateStripeIdsOnMarket - Re:Vision (65) - Connecting org customers - Updated Organization Elizabeth Mcguire- I am not an organization (3039) stripe_customer_id: cus_5uQ594M41qxY8F
+[2015-05-26 16:05:49 -0400] - UpdateStripeIdsOnMarket - Re:Vision (65) - Connecting org customers - Updated Organization Boeke-Kavanagh Family (3038) stripe_customer_id: cus_5uQ5AY71PUUbyO
+[2015-05-26 16:05:50 -0400] - UpdateStripeIdsOnMarket - Re:Vision (65) - Connecting org customers - Updated Organization Tamara Arredondo (3024) stripe_customer_id: cus_5uQ6vZbGGsclQy
+[2015-05-26 16:05:50 -0400] - UpdateStripeIdsOnMarket - Re:Vision (65) - Connecting org customers - Updated Organization Advantage (3023) stripe_customer_id: cus_5vrMcOu41r6mdB
+[2015-05-26 16:05:50 -0400] - UpdateStripeIdsOnMarket - Re:Vision (65) - Connecting org customers - Updated Organization Mariah Shell (3005) stripe_customer_id: cus_6Gnkd5h9Bh68Bo
+[2015-05-26 16:05:50 -0400] - UpdateStripeIdsOnMarket - Re:Vision (65) - Connecting org customers - Updated Organization Elin Curry (2999) stripe_customer_id: cus_617FsPH4kIWxNl
+[2015-05-26 16:05:51 -0400] - UpdateStripeIdsOnMarket - Re:Vision (65) - Connecting org customers - Updated Organization Marissa Jaross (2998) stripe_customer_id: cus_63j9r5OJwfMmbG
+[2015-05-26 16:05:51 -0400] - UpdateStripeIdsOnMarket - Re:Vision (65) - Connecting org customers - Updated Organization Megan Lloyd (2997) stripe_customer_id: cus_5uQ5mhm7rTYqs1
+[2015-05-26 16:05:51 -0400] - UpdateStripeIdsOnMarket - Re:Vision (65) - Connecting org customers - Updated Organization Myra (2996) stripe_customer_id: cus_5uQ5tslP5c42N6
+[2015-05-26 16:05:51 -0400] - UpdateStripeIdsOnMarket - Re:Vision (65) - Connecting org customers - Updated Organization Lauren Welch (2984) stripe_customer_id: cus_63jReEFaLptx1E
+[2015-05-26 16:05:52 -0400] - UpdateStripeIdsOnMarket - Re:Vision (65) - Connecting org customers - Updated Organization Kim Massey (2980) stripe_customer_id: cus_5uQ54Nvik70tqc
+[2015-05-26 16:05:52 -0400] - UpdateStripeIdsOnMarket - Re:Vision (65) - Connecting org customers - Updated Organization Sara Cougill (2971) stripe_customer_id: cus_5uQ5L714J5oWZo
+[2015-05-26 16:05:52 -0400] - UpdateStripeIdsOnMarket - Re:Vision (65) - Connecting org customers - Updated Organization Pelan Household (2965) stripe_customer_id: cus_5uQ5f3xLReYhXM
+[2015-05-26 16:05:52 -0400] - UpdateStripeIdsOnMarket - Re:Vision (65) - Connecting org customers - Updated Organization Joseph Teipel (2920) stripe_customer_id: cus_5ypc52BNQZJOC7
+[2015-05-26 16:05:53 -0400] - UpdateStripeIdsOnMarket - Re:Vision (65) - Connecting org customers - Updated Organization Clarks Honey Farm (2912) stripe_customer_id: cus_5uQ4wRCTVGfBJr
+[2015-05-26 16:05:53 -0400] - UpdateStripeIdsOnMarket - Re:Vision (65) - Connecting org customers - Updated Organization Golden Organics (2910) stripe_customer_id: cus_5uQ4MnYlh6y2nf
+[2015-05-26 16:05:54 -0400] - UpdateStripeIdsOnMarket - Re:Vision (65) - Connecting org customers - Updated Organization Royal Crest Dairy (2747) stripe_customer_id: cus_5uQ4V7pTyHudE1
+[2015-05-26 16:05:54 -0400] - UpdateStripeIdsOnMarket - Re:Vision (65) - Connecting org customers - Updated Organization Diestel Turkey Ranch (2746) stripe_customer_id: cus_5uQ5H5w2pVNj2w
+[2015-05-26 16:05:55 -0400] - UpdateStripeIdsOnMarket - Re:Vision (65) - Connecting org customers - Updated Organization Rocking W Cheese & Milk (2745) stripe_customer_id: cus_5uQ590y9OsQLw5
+[2015-05-26 16:05:55 -0400] - UpdateStripeIdsOnMarket - Re:Vision (65) - Connecting org customers - Updated Organization Denver Bacon Company (2744) stripe_customer_id: cus_5uQ5xIPl1VH8jW
+[2015-05-26 16:05:56 -0400] - UpdateStripeIdsOnMarket - Re:Vision (65) - Connecting org customers - Updated Organization Morning Fresh Dairy  (2743) stripe_customer_id: cus_5uQ48d6yce5M5u
+[2015-05-26 16:05:56 -0400] - UpdateStripeIdsOnMarket - Re:Vision (65) - Connecting org customers - Updated Organization Chocolove (2742) stripe_customer_id: cus_5uQ5559GZNQYo1
+[2015-05-26 16:05:57 -0400] - UpdateStripeIdsOnMarket - Re:Vision (65) - Connecting org customers - Updated Organization Kornacki Household (3016) stripe_customer_id: cus_5uQ5SwzdscrkNS
+[2015-05-26 16:05:57 -0400] - UpdateStripeIdsOnMarket - Re:Vision (65) - Connecting org customers - Updated Organization Boulder Natural Meats (2741) stripe_customer_id: cus_5uQ5iM5l5GbSBJ
+[2015-05-26 16:05:58 -0400] - UpdateStripeIdsOnMarket - Re:Vision (65) - Connecting org customers - Updated Organization Continental Sausage (2740) stripe_customer_id: cus_5uQ4T3d0gxqWQ0
+[2015-05-26 16:05:58 -0400] - UpdateStripeIdsOnMarket - Re:Vision (65) - Connecting org customers - Updated Organization Innovative Foods (2739) stripe_customer_id: cus_5uQ4rO788OX5zG
+[2015-05-26 16:05:59 -0400] - UpdateStripeIdsOnMarket - Re:Vision (65) - Connecting org customers - Updated Organization Haystack Mountain Goat Dairy (2738) stripe_customer_id: cus_5uQ4TaIZHYbpVC
+[2015-05-26 16:06:00 -0400] - UpdateStripeIdsOnMarket - Re:Vision (65) - Connecting org customers - Updated Organization Fiona's Natural Foods (2737) stripe_customer_id: cus_5uQ4hOUCKr3Hfv
+[2015-05-26 16:06:00 -0400] - UpdateStripeIdsOnMarket - Re:Vision (65) - Connecting org customers - Updated Organization Chicken Track Eggs (2736) stripe_customer_id: cus_5uQ4OigZ6AnZzd
+[2015-05-26 16:06:01 -0400] - UpdateStripeIdsOnMarket - Re:Vision (65) - Connecting org customers - Updated Organization Frontiere Natural Meats (2735) stripe_customer_id: cus_5uQ5N1am5yl5We
+[2015-05-26 16:06:01 -0400] - UpdateStripeIdsOnMarket - Re:Vision (65) - Connecting org customers - Updated Organization Noosa Yoghurt (2734) stripe_customer_id: cus_5uQ4JnZ4V90CxF
+[2015-05-26 16:06:02 -0400] - UpdateStripeIdsOnMarket - Re:Vision (65) - Connecting market BankAccounts - Updated DENVER COMMUNITY CREDIT UNION 3805 (387) stripe_id: ba_15ic9t2VpjOYk6TmYGk7lhk6
+[2015-05-26 16:06:02 -0400] - UpdateStripeIdsOnMarket - Re:Vision (65) - Connecting org BankAccounts - Organization none (3727) - Updated Visa 2489 (536) stripe_id: card_15zVWP2VpjOYk6Tmrxr6dn1U
+[2015-05-26 16:06:03 -0400] - UpdateStripeIdsOnMarket - Re:Vision (65) - Connecting org BankAccounts - Organization Mallory Howard (3670) - Updated Visa 7886 (529) stripe_id: card_15xKwS2VpjOYk6TmwTOOhcAs
+[2015-05-26 16:06:03 -0400] - UpdateStripeIdsOnMarket - Re:Vision (65) - Connecting org BankAccounts - Organization Lucretia Krause (3456) - Updated American Express 1011 (494) stripe_id: card_15qwOt2VpjOYk6TmMGxyNwNu
+[2015-05-26 16:06:04 -0400] - UpdateStripeIdsOnMarket - Re:Vision (65) - Connecting org BankAccounts - Organization Erin Raney (3364) - Updated RED ROCKS CREDIT UNION 1896 (527) stripe_id: ba_15wwci2VpjOYk6TmnsFHC2oJ
+[2015-05-26 16:06:05 -0400] - UpdateStripeIdsOnMarket - Re:Vision (65) - Connecting org BankAccounts - Organization Matilde's House (3203) - Updated Visa 6756 (471) stripe_id: card_15k14F2VpjOYk6TmzRQyKJ2N
+[2015-05-26 16:06:05 -0400] - UpdateStripeIdsOnMarket - Re:Vision (65) - Connecting org BankAccounts - Organization Mayra's House (3202) - Updated Visa 5334 (461) stripe_id: card_15icAh2VpjOYk6TmvPoQIhMr
+[2015-05-26 16:06:05 -0400] - UpdateStripeIdsOnMarket - Re:Vision (65) - Connecting org BankAccounts - Organization Revision (3201) - Updated Visa 0248 (515) stripe_id: card_15u3Gb2VpjOYk6Tm3sUmVYuJ
+[2015-05-26 16:06:06 -0400] - UpdateStripeIdsOnMarket - Re:Vision (65) - Connecting org BankAccounts - Organization Revision (3201) - Updated MasterCard 0535 (460) stripe_id: card_15icAA2VpjOYk6TmHGrd0Ki5
+[2015-05-26 16:06:06 -0400] - UpdateStripeIdsOnMarket - Re:Vision (65) - Connecting org BankAccounts - Organization JVA Consulting (3175) - Updated Visa 1709 (528) stripe_id: card_15wwqt2VpjOYk6Tm83uwzOSd
+[2015-05-26 16:06:07 -0400] - UpdateStripeIdsOnMarket - Re:Vision (65) - Connecting org BankAccounts - Organization Claire Slattery-Quintanilla (3155) - Updated MasterCard 6034 (449) stripe_id: card_15ic9t2VpjOYk6TmVsU39gMR
+[2015-05-26 16:06:07 -0400] - UpdateStripeIdsOnMarket - Re:Vision (65) - Connecting org BankAccounts - Organization Katie Knoll (3113) - Updated Visa 3592 (525) stripe_id: card_15whcr2VpjOYk6TmqRqDzTAP
+[2015-05-26 16:06:08 -0400] - UpdateStripeIdsOnMarket - Re:Vision (65) - Connecting org BankAccounts - Organization Kristin Lacy  (3076) - Updated Visa 8327 (453) stripe_id: card_15icA52VpjOYk6TmBReTS0Ue
+[2015-05-26 16:06:08 -0400] - UpdateStripeIdsOnMarket - Re:Vision (65) - Connecting org BankAccounts - Organization Kristin Lacy  (3076) - Updated Visa 1665 (452) stripe_id: card_15ic9y2VpjOYk6TmPcvsQ5D3
+[2015-05-26 16:06:08 -0400] - UpdateStripeIdsOnMarket - Re:Vision (65) - Connecting org BankAccounts - Organization Paige & Conroy (3067) - Updated MasterCard 5953 (438) stripe_id: card_15ic9v2VpjOYk6TmTEgYplxP
+[2015-05-26 16:06:09 -0400] - UpdateStripeIdsOnMarket - Re:Vision (65) - Connecting org BankAccounts - Organization Home (3066) - Updated Visa 0534 (526) stripe_id: card_15whgZ2VpjOYk6TmIwmXP5er
+[2015-05-26 16:06:09 -0400] - UpdateStripeIdsOnMarket - Re:Vision (65) - Connecting org BankAccounts - Organization Martha Medrano (3063) - Updated MasterCard 7654 (522) stripe_id: card_15vpV62VpjOYk6TmrCYHVkXY
+[2015-05-26 16:06:10 -0400] - UpdateStripeIdsOnMarket - Re:Vision (65) - Connecting org BankAccounts - Organization Martha Medrano (3063) - Updated MasterCard 4695 (437) stripe_id: card_15ic9v2VpjOYk6TmmPvKtOzw
+[2015-05-26 16:06:10 -0400] - UpdateStripeIdsOnMarket - Re:Vision (65) - Connecting org BankAccounts - Organization Sarah Parmar (3050) - Updated American Express 7110 (435) stripe_id: card_15ic9y2VpjOYk6TmJCgTN6C1
+[2015-05-26 16:06:11 -0400] - UpdateStripeIdsOnMarket - Re:Vision (65) - Connecting org BankAccounts - Organization Family McGill (3045) - Updated Visa 3663 (467) stripe_id: card_15jW3R2VpjOYk6TmkZbhkkpS
+[2015-05-26 16:06:11 -0400] - UpdateStripeIdsOnMarket - Re:Vision (65) - Connecting org BankAccounts - Organization Elizabeth Mcguire- I am not an organization (3039) - Updated Visa 9785 (432) stripe_id: card_15ic9y2VpjOYk6TmvnQs4KXi
+[2015-05-26 16:06:12 -0400] - UpdateStripeIdsOnMarket - Re:Vision (65) - Connecting org BankAccounts - Organization Boeke-Kavanagh Family (3038) - Updated Visa 1360 (431) stripe_id: card_15ic9s2VpjOYk6TmkSMRTfV6
+[2015-05-26 16:06:12 -0400] - UpdateStripeIdsOnMarket - Re:Vision (65) - Connecting org BankAccounts - Organization Tamara Arredondo (3024) - Updated Visa 2552 (428) stripe_id: card_15icAj2VpjOYk6TmYe9BBvtx
+[2015-05-26 16:06:12 -0400] - UpdateStripeIdsOnMarket - Re:Vision (65) - Connecting org BankAccounts - Organization Advantage (3023) - Updated Visa 1303 (472) stripe_id: card_15k3402VpjOYk6TmRlBZG6Fm
+[2015-05-26 16:06:13 -0400] - UpdateStripeIdsOnMarket - Re:Vision (65) - Connecting org BankAccounts - Organization Mariah Shell (3005) - Updated Visa 7966 (558) stripe_id: card_164G8w2VpjOYk6TmNtYdlrzT
+[2015-05-26 16:06:13 -0400] - UpdateStripeIdsOnMarket - Re:Vision (65) - Connecting org BankAccounts - Organization Elin Curry (2999) - Updated Visa 9134 (486) stripe_id: card_15p5Og2VpjOYk6TmnkaGxjoT
+[2015-05-26 16:06:14 -0400] - UpdateStripeIdsOnMarket - Re:Vision (65) - Connecting org BankAccounts - Organization Marissa Jaross (2998) - Updated Visa 1760 (500) stripe_id: card_15rbhe2VpjOYk6Tmzw5VNq6D
+[2015-05-26 16:06:14 -0400] - UpdateStripeIdsOnMarket - Re:Vision (65) - Connecting org BankAccounts - Organization Megan Lloyd (2997) - Updated Visa 4692 (434) stripe_id: card_15ic9v2VpjOYk6Tm08nFlaNw
+[2015-05-26 16:06:15 -0400] - UpdateStripeIdsOnMarket - Re:Vision (65) - Connecting org BankAccounts - Organization Myra (2996) - Updated Visa 8161 (429) stripe_id: card_15ie0x2VpjOYk6TmI8nGf7sz
+[2015-05-26 16:06:15 -0400] - UpdateStripeIdsOnMarket - Re:Vision (65) - Connecting org BankAccounts - Organization Lauren Welch (2984) - Updated Visa 0790 (501) stripe_id: card_15rbyh2VpjOYk6TmAmJKd43P
+[2015-05-26 16:06:16 -0400] - UpdateStripeIdsOnMarket - Re:Vision (65) - Connecting org BankAccounts - Organization Kim Massey (2980) - Updated MasterCard 8177 (425) stripe_id: card_15icA72VpjOYk6TmzfUKsNEo
+[2015-05-26 16:06:16 -0400] - UpdateStripeIdsOnMarket - Re:Vision (65) - Connecting org BankAccounts - Organization Sara Cougill (2971) - Updated Visa 4667 (433) stripe_id: card_15ic9u2VpjOYk6TmqNUeDVo4
+[2015-05-26 16:06:16 -0400] - UpdateStripeIdsOnMarket - Re:Vision (65) - Connecting org BankAccounts - Organization Pelan Household (2965) - Updated Visa 8342 (450) stripe_id: card_15ic9q2VpjOYk6TmiNihn3g0
+[2015-05-26 16:06:17 -0400] - UpdateStripeIdsOnMarket - Re:Vision (65) - Connecting org BankAccounts - Organization Joseph Teipel (2920) - Updated Visa 5490 (482) stripe_id: card_15mrxa2VpjOYk6TmbYvSWiF5
+[2015-05-26 16:06:18 -0400] - UpdateStripeIdsOnMarket - Re:Vision (65) - Connecting org BankAccounts - Organization Kornacki Household (3016) - Updated Visa 0435 (426) stripe_id: card_15ic9x2VpjOYk6Tm6MWnuDNn

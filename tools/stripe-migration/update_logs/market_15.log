@@ -1,0 +1,94 @@
+[2015-05-26 16:01:57 -0400] - UpdateStripeIdsOnMarket - Headwater Food Hub (15) - ====================================================================================================
+[2015-05-26 16:01:57 -0400] - UpdateStripeIdsOnMarket - Headwater Food Hub (15) -  Headwater Food Hub (15)
+[2015-05-26 16:01:57 -0400] - UpdateStripeIdsOnMarket - Headwater Food Hub (15) -  Updating stripe IDs for market, orgs and bank accounts.
+[2015-05-26 16:01:57 -0400] - UpdateStripeIdsOnMarket - Headwater Food Hub (15) - 
+[2015-05-26 16:01:57 -0400] - UpdateStripeIdsOnMarket - Headwater Food Hub (15) -  Rails.env: production
+[2015-05-26 16:01:57 -0400] - UpdateStripeIdsOnMarket - Headwater Food Hub (15) -  Stripe keys:
+[2015-05-26 16:01:57 -0400] - UpdateStripeIdsOnMarket - Headwater Food Hub (15) -   --> STRIPE_PUBLISHABLE_KEY: pk_live_j85VTsrz51POrss3ni460qaf (pk_live_j85VTsrz51POrss3ni460qaf)
+[2015-05-26 16:01:57 -0400] - UpdateStripeIdsOnMarket - Headwater Food Hub (15) - ====================================================================================================
+[2015-05-26 16:01:59 -0400] - UpdateStripeIdsOnMarket - Headwater Food Hub (15) - Connecting market customer - Updated Market stripe_customer_id: cus_5uQ4nhT9BhCRaf
+[2015-05-26 16:02:00 -0400] - UpdateStripeIdsOnMarket - Headwater Food Hub (15) - Connecting market account - Updated Market stripe_account_id: acct_15l1yWEkVERGDXQ6
+[2015-05-26 16:02:00 -0400] - UpdateStripeIdsOnMarket - Headwater Food Hub (15) - Connecting org customers - Updated Organization Summertime Farm (3770) stripe_customer_id: cus_6ESk7YGGVeCtCJ
+[2015-05-26 16:02:00 -0400] - UpdateStripeIdsOnMarket - Headwater Food Hub (15) - Connecting org customers - Updated Organization Root Catering (3761) stripe_customer_id: cus_6GRBff033wR58q
+[2015-05-26 16:02:01 -0400] - UpdateStripeIdsOnMarket - Headwater Food Hub (15) - Connecting org customers - Updated Organization Schrader Farms Meat Market Buying (3750) stripe_customer_id: cus_6DjhdNlGfFhmTv
+[2015-05-26 16:02:01 -0400] - UpdateStripeIdsOnMarket - Headwater Food Hub (15) - Connecting org customers - Updated Organization The Genesee Valley Club (3693) stripe_customer_id: cus_6BC38VMeQ4wN4m
+[2015-05-26 16:02:01 -0400] - UpdateStripeIdsOnMarket - Headwater Food Hub (15) - Connecting org customers - Updated Organization Williams Farm (3659) stripe_customer_id: cus_69G7EvKWCgDBcm
+[2015-05-26 16:02:02 -0400] - UpdateStripeIdsOnMarket - Headwater Food Hub (15) - Connecting org customers - Updated Organization M/Body Cafe' (3579) stripe_customer_id: cus_6B60D2yzqFdWJ2
+[2015-05-26 16:02:02 -0400] - UpdateStripeIdsOnMarket - Headwater Food Hub (15) - Connecting org customers - Updated Organization Lackmann Culinary Services - Ward (3462) stripe_customer_id: cus_63JSBmZwHWzfAy
+[2015-05-26 16:02:02 -0400] - UpdateStripeIdsOnMarket - Headwater Food Hub (15) - Connecting org customers - Updated Organization Restaurant 2Vine (3448) stripe_customer_id: cus_63fzqyWTQReuy4
+[2015-05-26 16:02:02 -0400] - UpdateStripeIdsOnMarket - Headwater Food Hub (15) - Connecting org customers - Updated Organization The Highlands at Pittsford (3396) stripe_customer_id: cus_6GQfCWJlkItSUu
+[2015-05-26 16:02:03 -0400] - UpdateStripeIdsOnMarket - Headwater Food Hub (15) - Connecting org customers - Updated Organization Bolton Farms (3295) stripe_customer_id: cus_5wrTLAaJZDZKny
+[2015-05-26 16:02:03 -0400] - UpdateStripeIdsOnMarket - Headwater Food Hub (15) - Connecting org customers - Updated Organization Small World Food (3271) stripe_customer_id: cus_5w7q0WMlJzi6S2
+[2015-05-26 16:02:04 -0400] - UpdateStripeIdsOnMarket - Headwater Food Hub (15) - Connecting org customers - Updated Organization PalMac Central School (3215) stripe_customer_id: cus_60aa1HwpQNm4Ol
+[2015-05-26 16:02:04 -0400] - UpdateStripeIdsOnMarket - Headwater Food Hub (15) - Connecting org customers - Updated Organization Newark Central School (3214) stripe_customer_id: cus_60cANaNFfdOcIf
+[2015-05-26 16:02:04 -0400] - UpdateStripeIdsOnMarket - Headwater Food Hub (15) - Connecting org customers - Updated Organization Marion Central School (3213) stripe_customer_id: cus_60fRwQuhsV1AsA
+[2015-05-26 16:02:04 -0400] - UpdateStripeIdsOnMarket - Headwater Food Hub (15) - Connecting org customers - Updated Organization City Grill (3205) stripe_customer_id: cus_5zJVPuKH6atGht
+[2015-05-26 16:02:05 -0400] - UpdateStripeIdsOnMarket - Headwater Food Hub (15) - Connecting org customers - Updated Organization Heluva Good Cheese (2941) stripe_customer_id: cus_5uQ5xw2zJZmU5l
+[2015-05-26 16:02:05 -0400] - UpdateStripeIdsOnMarket - Headwater Food Hub (15) - Connecting org customers - Updated Organization Good Luck (2900) stripe_customer_id: cus_5uQ4lD1U6X9OYG
+[2015-05-26 16:02:05 -0400] - UpdateStripeIdsOnMarket - Headwater Food Hub (15) - Connecting org customers - Updated Organization Wholeshare (2777) stripe_customer_id: cus_5uQ4W4kzFccX80
+[2015-05-26 16:02:06 -0400] - UpdateStripeIdsOnMarket - Headwater Food Hub (15) - Connecting org customers - Updated Organization Jake's Gouda (2767) stripe_customer_id: cus_5uQ4Kpu8ymv0eU
+[2015-05-26 16:02:07 -0400] - UpdateStripeIdsOnMarket - Headwater Food Hub (15) - Connecting org customers - Updated Organization Lively Run Dairy (2756) stripe_customer_id: cus_5uQ4moRIx88wrm
+[2015-05-26 16:02:07 -0400] - UpdateStripeIdsOnMarket - Headwater Food Hub (15) - Connecting org customers - Updated Organization Schoonmaker's Acres (2656) stripe_customer_id: cus_5uQ4rmjwwKnH2Q
+[2015-05-26 16:02:07 -0400] - UpdateStripeIdsOnMarket - Headwater Food Hub (15) - Connecting org customers - Updated Organization Paul (2601) stripe_customer_id: cus_5uQ5GnkrTFqfWf
+[2015-05-26 16:02:07 -0400] - UpdateStripeIdsOnMarket - Headwater Food Hub (15) - Connecting org customers - Updated Organization University of Rochester - Wilson (2444) stripe_customer_id: cus_5uQ4bkw5w8BDTI
+[2015-05-26 16:02:08 -0400] - UpdateStripeIdsOnMarket - Headwater Food Hub (15) - Connecting org customers - Updated Organization Bushart Farms (2434) stripe_customer_id: cus_5uQ5Niz6TgXRaT
+[2015-05-26 16:02:08 -0400] - UpdateStripeIdsOnMarket - Headwater Food Hub (15) - Connecting org customers - Updated Organization Williamson Central School  (2401) stripe_customer_id: cus_5uQ5wEbeSRpTpH
+[2015-05-26 16:02:08 -0400] - UpdateStripeIdsOnMarket - Headwater Food Hub (15) - Connecting org customers - Updated Organization Lyons Central School District  (2399) stripe_customer_id: cus_5uQ4ldL71GXXy9
+[2015-05-26 16:02:11 -0400] - UpdateStripeIdsOnMarket - Headwater Food Hub (15) - Connecting org customers - Updated Organization Juniper Hill Farm (2390) stripe_customer_id: cus_5uQ4b1OvamcEJY
+[2015-05-26 16:02:11 -0400] - UpdateStripeIdsOnMarket - Headwater Food Hub (15) - Connecting org customers - Updated Organization ButaPub (2385) stripe_customer_id: cus_5uQ4gtcH1Ad5PY
+[2015-05-26 16:02:12 -0400] - UpdateStripeIdsOnMarket - Headwater Food Hub (15) - Connecting org customers - Updated Organization Bauman's Farm Market (2287) stripe_customer_id: cus_5uQ42cGo8dBYe7
+[2015-05-26 16:02:12 -0400] - UpdateStripeIdsOnMarket - Headwater Food Hub (15) - Connecting org customers - Updated Organization Wendale Farm (2224) stripe_customer_id: cus_5uQ4MVxhpatP7W
+[2015-05-26 16:02:12 -0400] - UpdateStripeIdsOnMarket - Headwater Food Hub (15) - Connecting org customers - Updated Organization Vercruysse & Son (2205) stripe_customer_id: cus_5uQ5L4y6G90Wc4
+[2015-05-26 16:02:13 -0400] - UpdateStripeIdsOnMarket - Headwater Food Hub (15) - Connecting org customers - Updated Organization Fledging Crow (2196) stripe_customer_id: cus_5uQ4zAxS4Kbsc8
+[2015-05-26 16:02:13 -0400] - UpdateStripeIdsOnMarket - Headwater Food Hub (15) - Connecting org customers - Updated Organization Wayne Central Schools (2169) stripe_customer_id: cus_5uQ4FjDTMpVH89
+[2015-05-26 16:02:14 -0400] - UpdateStripeIdsOnMarket - Headwater Food Hub (15) - Connecting org customers - Updated Organization Winter Sun Farms (2154) stripe_customer_id: cus_5uQ4kqpAdYfeLE
+[2015-05-26 16:02:14 -0400] - UpdateStripeIdsOnMarket - Headwater Food Hub (15) - Connecting org customers - Updated Organization The Harley School (2146) stripe_customer_id: cus_5uQ4sPunGjewc9
+[2015-05-26 16:02:14 -0400] - UpdateStripeIdsOnMarket - Headwater Food Hub (15) - Connecting org customers - Updated Organization Midtown Athletic Club (2064) stripe_customer_id: cus_5uQ4oJAQglIKfi
+[2015-05-26 16:02:15 -0400] - UpdateStripeIdsOnMarket - Headwater Food Hub (15) - Connecting org customers - Updated Organization Schrader Farms Meat Market (2061) stripe_customer_id: cus_5uQ4NPvyQqglpn
+[2015-05-26 16:02:15 -0400] - UpdateStripeIdsOnMarket - Headwater Food Hub (15) - Connecting org customers - Updated Organization University of Rochester-Eastman (2027) stripe_customer_id: cus_5xy1WBP7wKuVug
+[2015-05-26 16:02:16 -0400] - UpdateStripeIdsOnMarket - Headwater Food Hub (15) - Connecting org customers - Updated Organization Stick and Stone Organic Farm (2020) stripe_customer_id: cus_5uQ48lRfsfkeCN
+[2015-05-26 16:02:16 -0400] - UpdateStripeIdsOnMarket - Headwater Food Hub (15) - Connecting org customers - Updated Organization Brockport Central School District (1979) stripe_customer_id: cus_5uQ5T29MdJxZGS
+[2015-05-26 16:02:16 -0400] - UpdateStripeIdsOnMarket - Headwater Food Hub (15) - Connecting org customers - Updated Organization University of Rochester- Connections Cafe (1963) stripe_customer_id: cus_5uQ4BJdJo0tAZw
+[2015-05-26 16:02:17 -0400] - UpdateStripeIdsOnMarket - Headwater Food Hub (15) - Connecting org customers - Updated Organization Lackmann Culinary Services- Murphy (1962) stripe_customer_id: cus_5uQ5boFk7QiUH2
+[2015-05-26 16:02:17 -0400] - UpdateStripeIdsOnMarket - Headwater Food Hub (15) - Connecting org customers - Updated Organization Whiskey Hill Organics (1950) stripe_customer_id: cus_5uQ4NJgT7fBftb
+[2015-05-26 16:02:17 -0400] - UpdateStripeIdsOnMarket - Headwater Food Hub (15) - Connecting org customers - Updated Organization Green Zebra Catering (1944) stripe_customer_id: cus_5uQ5DOPAzuBNh5
+[2015-05-26 16:02:18 -0400] - UpdateStripeIdsOnMarket - Headwater Food Hub (15) - Connecting org customers - Updated Organization Mason Farm (1942) stripe_customer_id: cus_5uQ4AX9L3CSs46
+[2015-05-26 16:02:18 -0400] - UpdateStripeIdsOnMarket - Headwater Food Hub (15) - Connecting org customers - Updated Organization Allendale Columbia School (1903) stripe_customer_id: cus_5uS7q938w56qSM
+[2015-05-26 16:02:18 -0400] - UpdateStripeIdsOnMarket - Headwater Food Hub (15) - Connecting org customers - Updated Organization Hart's Local Grocers (1897) stripe_customer_id: cus_5uQ4i6tF3T1OQU
+[2015-05-26 16:02:18 -0400] - UpdateStripeIdsOnMarket - Headwater Food Hub (15) - Connecting org customers - Updated Organization University of Rochester- Douglass (1833) stripe_customer_id: cus_5uQ6QzmprZJ0VP
+[2015-05-26 16:02:19 -0400] - UpdateStripeIdsOnMarket - Headwater Food Hub (15) - Connecting org customers - Updated Organization Windy Ridge Organic Farm (1826) stripe_customer_id: cus_5uQ5p3kUFfDuv2
+[2015-05-26 16:02:19 -0400] - UpdateStripeIdsOnMarket - Headwater Food Hub (15) - Connecting org customers - Updated Organization Max Chophouse (1814) stripe_customer_id: cus_5uQ4DugsUdQ5Ev
+[2015-05-26 16:02:19 -0400] - UpdateStripeIdsOnMarket - Headwater Food Hub (15) - Connecting org customers - Updated Organization University of Rochester- Meliora (1766) stripe_customer_id: cus_5uQ5ficqbJmonk
+[2015-05-26 16:02:19 -0400] - UpdateStripeIdsOnMarket - Headwater Food Hub (15) - Connecting org customers - Updated Organization Park Slope Food Coop (1744) stripe_customer_id: cus_5uQ43DvPxehBjg
+[2015-05-26 16:02:20 -0400] - UpdateStripeIdsOnMarket - Headwater Food Hub (15) - Connecting org customers - Updated Organization Down to Earth Whole Foods, Inc (1730) stripe_customer_id: cus_5uQ4ezFeiwQhyW
+[2015-05-26 16:02:20 -0400] - UpdateStripeIdsOnMarket - Headwater Food Hub (15) - Connecting org customers - Updated Organization The Owl House (1726) stripe_customer_id: cus_5uQ4aya5ANKlmc
+[2015-05-26 16:02:21 -0400] - UpdateStripeIdsOnMarket - Headwater Food Hub (15) - Connecting org customers - Updated Organization Char Steak and Lounge (1722) stripe_customer_id: cus_5uQ4AI4zSjk7mR
+[2015-05-26 16:02:21 -0400] - UpdateStripeIdsOnMarket - Headwater Food Hub (15) - Connecting org customers - Updated Organization Abundance Cooperative Market (1712) stripe_customer_id: cus_5uQ42lQqFHglCK
+[2015-05-26 16:02:21 -0400] - UpdateStripeIdsOnMarket - Headwater Food Hub (15) - Connecting org customers - Updated Organization Flour City Bread (the most awesome bakery, ever) (1708) stripe_customer_id: cus_5uQ4YFFRsXqXN5
+[2015-05-26 16:02:21 -0400] - UpdateStripeIdsOnMarket - Headwater Food Hub (15) - Connecting org customers - Updated Organization University Of Rochester - Danforth (1641) stripe_customer_id: cus_5uQ5KTy8anxbzF
+[2015-05-26 16:02:22 -0400] - UpdateStripeIdsOnMarket - Headwater Food Hub (15) - Connecting org customers - Updated Organization Just Juice For Life (1638) stripe_customer_id: cus_5uQ4a1Vo8vPZtI
+[2015-05-26 16:02:22 -0400] - UpdateStripeIdsOnMarket - Headwater Food Hub (15) - Connecting org customers - Updated Organization Orbs Restaurant and Bar (1637) stripe_customer_id: cus_5uQ4xUVAhuC7fL
+[2015-05-26 16:02:22 -0400] - UpdateStripeIdsOnMarket - Headwater Food Hub (15) - Connecting org customers - Updated Organization Breathe Yoga (1614) stripe_customer_id: cus_5uQ5RVKi6ex7dH
+[2015-05-26 16:02:23 -0400] - UpdateStripeIdsOnMarket - Headwater Food Hub (15) - Connecting org customers - Updated Organization Thorpe’s Organic Family Farm  (1568) stripe_customer_id: cus_5uQ5xDwqRoFtjN
+[2015-05-26 16:02:24 -0400] - UpdateStripeIdsOnMarket - Headwater Food Hub (15) - Connecting org customers - Updated Organization Sweet Grass Meats  (1566) stripe_customer_id: cus_5uQ5GI7pjnSJEb
+[2015-05-26 16:02:25 -0400] - UpdateStripeIdsOnMarket - Headwater Food Hub (15) - Connecting org customers - Updated Organization Muranda Cheese Company  (1565) stripe_customer_id: cus_5uQ5HkfR2NL3Ee
+[2015-05-26 16:02:26 -0400] - UpdateStripeIdsOnMarket - Headwater Food Hub (15) - Connecting org customers - Updated Organization Lagoner Farms  (1564) stripe_customer_id: cus_5uQ5dXP4iAfoMr
+[2015-05-26 16:02:27 -0400] - UpdateStripeIdsOnMarket - Headwater Food Hub (15) - Connecting org customers - Updated Organization Joe Bean Coffee Roasters  (1563) stripe_customer_id: cus_5uQ5IRed9wMdaE
+[2015-05-26 16:02:28 -0400] - UpdateStripeIdsOnMarket - Headwater Food Hub (15) - Connecting org customers - Updated Organization Interbrook Farm (1561) stripe_customer_id: cus_5uQ5kRsfN8vnw1
+[2015-05-26 16:02:28 -0400] - UpdateStripeIdsOnMarket - Headwater Food Hub (15) - Connecting org customers - Updated Organization Hurd Orchards (1560) stripe_customer_id: cus_5uQ5ucQBpjyG6T
+[2015-05-26 16:02:29 -0400] - UpdateStripeIdsOnMarket - Headwater Food Hub (15) - Connecting org customers - Updated Organization Honeyhill Farm (1559) stripe_customer_id: cus_5uQ5Ygu0nNXRXW
+[2015-05-26 16:02:30 -0400] - UpdateStripeIdsOnMarket - Headwater Food Hub (15) - Connecting org customers - Updated Organization Hilltop Farm (1558) stripe_customer_id: cus_5uQ5i2zEgGznXv
+[2015-05-26 16:02:31 -0400] - UpdateStripeIdsOnMarket - Headwater Food Hub (15) - Connecting org customers - Updated Organization Growing Family Farms (1557) stripe_customer_id: cus_5uQ52UxTSCKzd2
+[2015-05-26 16:02:32 -0400] - UpdateStripeIdsOnMarket - Headwater Food Hub (15) - Connecting org customers - Updated Organization Flour City Pasta (1556) stripe_customer_id: cus_5uQ5c3EmRo29Pm
+[2015-05-26 16:02:33 -0400] - UpdateStripeIdsOnMarket - Headwater Food Hub (15) - Connecting org customers - Updated Organization Fisher Hill Farm (1553) stripe_customer_id: cus_5uQ5orvzwSxNA0
+[2015-05-26 16:02:34 -0400] - UpdateStripeIdsOnMarket - Headwater Food Hub (15) - Connecting org customers - Updated Organization First Light Creamery  (1552) stripe_customer_id: cus_5uQ5N2LoWgpha7
+[2015-05-26 16:02:35 -0400] - UpdateStripeIdsOnMarket - Headwater Food Hub (15) - Connecting org customers - Updated Organization Engelbert Farms (1551) stripe_customer_id: cus_5uQ5ZhE6Ab9nid
+[2015-05-26 16:02:35 -0400] - UpdateStripeIdsOnMarket - Headwater Food Hub (15) - Connecting org customers - Updated Organization Clearview Farm (1548) stripe_customer_id: cus_5uQ5JRaiBgJYlp
+[2015-05-26 16:02:36 -0400] - UpdateStripeIdsOnMarket - Headwater Food Hub (15) - Connecting org customers - Updated Organization Autumn's Harvest (1546) stripe_customer_id: cus_5uQ5jGPLTx3EwY
+[2015-05-26 16:02:37 -0400] - UpdateStripeIdsOnMarket - Headwater Food Hub (15) - Connecting org customers - Updated Organization Fraser Garlic Farm (1542) stripe_customer_id: cus_5uQ5LibH3DtrAZ
+[2015-05-26 16:02:39 -0400] - UpdateStripeIdsOnMarket - Headwater Food Hub (15) - Connecting org customers - Updated Organization Remembrance Farm (1540) stripe_customer_id: cus_5uQ5Xf9n8WXNOT
+[2015-05-26 16:02:39 -0400] - UpdateStripeIdsOnMarket - Headwater Food Hub (15) - Connecting org customers - Updated Organization Raindance Harvest (1538) stripe_customer_id: cus_5uQ59GMSxA8mnx
+[2015-05-26 16:02:40 -0400] - UpdateStripeIdsOnMarket - Headwater Food Hub (15) - Connecting org customers - Updated Organization Old Ridge Farm (1491) stripe_customer_id: cus_5uQ5uqQUM8AyXV
+[2015-05-26 16:02:41 -0400] - UpdateStripeIdsOnMarket - Headwater Food Hub (15) - Connecting org customers - Updated Organization Headwater Food Hub (337) stripe_customer_id: cus_5uQ4nhT9BhCRaf
+[2015-05-26 16:02:41 -0400] - UpdateStripeIdsOnMarket - Headwater Food Hub (15) - Connecting market BankAccounts - Updated CANANDAIGUA NAT'L BANK & TR. CO. 9347 (215) stripe_id: ba_15ic8p2VpjOYk6TmSGstE7IZ
+[2015-05-26 16:02:45 -0400] - UpdateStripeIdsOnMarket - Headwater Food Hub (15) - Connecting org BankAccounts - Organization Headwater Food Hub (337) - Updated CANANDAIGUA NAT'L BANK & TR. CO. 9347 (51) stripe_id: ba_15ic8p2VpjOYk6TmSGstE7IZ

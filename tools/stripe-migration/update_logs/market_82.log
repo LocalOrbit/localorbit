@@ -1,0 +1,27 @@
+[2015-05-26 16:10:18 -0400] - UpdateStripeIdsOnMarket - SFC Farm Direct (82) - ====================================================================================================
+[2015-05-26 16:10:18 -0400] - UpdateStripeIdsOnMarket - SFC Farm Direct (82) -  SFC Farm Direct (82)
+[2015-05-26 16:10:18 -0400] - UpdateStripeIdsOnMarket - SFC Farm Direct (82) -  Updating stripe IDs for market, orgs and bank accounts.
+[2015-05-26 16:10:18 -0400] - UpdateStripeIdsOnMarket - SFC Farm Direct (82) - 
+[2015-05-26 16:10:18 -0400] - UpdateStripeIdsOnMarket - SFC Farm Direct (82) -  Rails.env: production
+[2015-05-26 16:10:18 -0400] - UpdateStripeIdsOnMarket - SFC Farm Direct (82) -  Stripe keys:
+[2015-05-26 16:10:18 -0400] - UpdateStripeIdsOnMarket - SFC Farm Direct (82) -   --> STRIPE_PUBLISHABLE_KEY: pk_live_j85VTsrz51POrss3ni460qaf (pk_live_j85VTsrz51POrss3ni460qaf)
+[2015-05-26 16:10:18 -0400] - UpdateStripeIdsOnMarket - SFC Farm Direct (82) - ====================================================================================================
+[2015-05-26 16:10:21 -0400] - UpdateStripeIdsOnMarket - SFC Farm Direct (82) - Connecting market customer - Updated Market stripe_customer_id: cus_5vT7BncXZZQVBa
+[2015-05-26 16:10:21 -0400] - UpdateStripeIdsOnMarket - SFC Farm Direct (82) - Connecting market account - MISS - No stripe_account_id found for market balanced_customer_uri /v1/customers/CUKE9ccjN2Qc93eUcgmgCJF
+[2015-05-26 16:10:21 -0400] - UpdateStripeIdsOnMarket - SFC Farm Direct (82) - Connecting org customers - Updated Organization Cold Ones Pops (3607) stripe_customer_id: cus_67OWOp0367DH1j
+[2015-05-26 16:10:21 -0400] - UpdateStripeIdsOnMarket - SFC Farm Direct (82) - Connecting org customers - Updated Organization St. Edwards University (3586) stripe_customer_id: cus_66PsGLadHelymh
+[2015-05-26 16:10:22 -0400] - UpdateStripeIdsOnMarket - SFC Farm Direct (82) - Connecting org customers - Updated Organization Test Farmer 2 (3585) stripe_customer_id: cus_66OsBx8KfK2f9L
+[2015-05-26 16:10:22 -0400] - UpdateStripeIdsOnMarket - SFC Farm Direct (82) - Connecting org customers - Updated Organization Test Buyer (3584) stripe_customer_id: cus_66OVZbM9vlUqbK
+[2015-05-26 16:10:23 -0400] - UpdateStripeIdsOnMarket - SFC Farm Direct (82) - Connecting org customers - Updated Organization Test Farmer (3583) stripe_customer_id: cus_66OVXc59A8Z67F
+[2015-05-26 16:10:23 -0400] - UpdateStripeIdsOnMarket - SFC Farm Direct (82) - Connecting org customers - Updated Organization University of Texas - Austin (3563) stripe_customer_id: cus_65zOolojsgl5lk
+[2015-05-26 16:10:24 -0400] - UpdateStripeIdsOnMarket - SFC Farm Direct (82) - Connecting org customers - Updated Organization Leaf Safari (3562) stripe_customer_id: cus_65zHEqo1uBpSkT
+[2015-05-26 16:10:25 -0400] - UpdateStripeIdsOnMarket - SFC Farm Direct (82) - Connecting org customers - Updated Organization Kubena Farms (3561) stripe_customer_id: cus_65yjS1Wqbk9LpF
+[2015-05-26 16:10:25 -0400] - UpdateStripeIdsOnMarket - SFC Farm Direct (82) - Connecting org customers - Updated Organization Lightsey Farms (3560) stripe_customer_id: cus_65ydGZ0akpbd2Y
+[2015-05-26 16:10:26 -0400] - UpdateStripeIdsOnMarket - SFC Farm Direct (82) - Connecting org customers - Updated Organization Tecolote Farm (3559) stripe_customer_id: cus_65y6zKS8G0zSEP
+[2015-05-26 16:10:27 -0400] - UpdateStripeIdsOnMarket - SFC Farm Direct (82) - Connecting org customers - Updated Organization Fat Frog Farm (3558) stripe_customer_id: cus_65xu5SoH0JMy7Y
+[2015-05-26 16:10:27 -0400] - UpdateStripeIdsOnMarket - SFC Farm Direct (82) - Connecting org customers - Updated Organization Gusto - Italian Kitchen + Wine Bar (3557) stripe_customer_id: cus_65xjSPg4V5bTpW
+[2015-05-26 16:10:28 -0400] - UpdateStripeIdsOnMarket - SFC Farm Direct (82) - Connecting org customers - Updated Organization Esperanza Farms (3504) stripe_customer_id: cus_644hUoAgdTtMi2
+[2015-05-26 16:10:28 -0400] - UpdateStripeIdsOnMarket - SFC Farm Direct (82) - Connecting market BankAccounts - Updated FROST BANK 0050 (534) stripe_id: ba_15ymHf2VpjOYk6TmxBxAa14i
+[2015-05-26 16:10:29 -0400] - UpdateStripeIdsOnMarket - SFC Farm Direct (82) - Connecting market BankAccounts - Updated Visa 9400 (470) stripe_id: card_15k13B2VpjOYk6TmUix80N5U
+[2015-05-26 16:10:29 -0400] - UpdateStripeIdsOnMarket - SFC Farm Direct (82) - Connecting org BankAccounts - Organization Cold Ones Pops (3607) - Updated Visa 3408 (521) stripe_id: card_15vDsF2VpjOYk6TmdY6JV5qG
+[2015-05-26 16:10:30 -0400] - UpdateStripeIdsOnMarket - SFC Farm Direct (82) - Connecting org BankAccounts - Organization Test Buyer (3584) - Updated Visa 2608 (557) stripe_id: card_164EaE2VpjOYk6Tm1IH8YndF

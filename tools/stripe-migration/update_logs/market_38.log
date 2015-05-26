@@ -1,0 +1,67 @@
+[2015-05-26 16:04:20 -0400] - UpdateStripeIdsOnMarket - LINC Foods (38) - ====================================================================================================
+[2015-05-26 16:04:20 -0400] - UpdateStripeIdsOnMarket - LINC Foods (38) -  LINC Foods (38)
+[2015-05-26 16:04:20 -0400] - UpdateStripeIdsOnMarket - LINC Foods (38) -  Updating stripe IDs for market, orgs and bank accounts.
+[2015-05-26 16:04:20 -0400] - UpdateStripeIdsOnMarket - LINC Foods (38) - 
+[2015-05-26 16:04:20 -0400] - UpdateStripeIdsOnMarket - LINC Foods (38) -  Rails.env: production
+[2015-05-26 16:04:20 -0400] - UpdateStripeIdsOnMarket - LINC Foods (38) -  Stripe keys:
+[2015-05-26 16:04:20 -0400] - UpdateStripeIdsOnMarket - LINC Foods (38) -   --> STRIPE_PUBLISHABLE_KEY: pk_live_j85VTsrz51POrss3ni460qaf (pk_live_j85VTsrz51POrss3ni460qaf)
+[2015-05-26 16:04:20 -0400] - UpdateStripeIdsOnMarket - LINC Foods (38) - ====================================================================================================
+[2015-05-26 16:04:21 -0400] - UpdateStripeIdsOnMarket - LINC Foods (38) - Connecting market customer - Updated Market stripe_customer_id: cus_5uQ4f1D7qpQTeI
+[2015-05-26 16:04:22 -0400] - UpdateStripeIdsOnMarket - LINC Foods (38) - Connecting market account - Updated Market stripe_account_id: acct_15l1yUKrJTZzbTAP
+[2015-05-26 16:04:22 -0400] - UpdateStripeIdsOnMarket - LINC Foods (38) - Connecting org customers - MISS - No stripe_customer_id found for Organization Frisson Farm (3896) balanced_customer_uri /v1/customers/CU721BhoBGhX920MphmYw0w7
+[2015-05-26 16:04:22 -0400] - UpdateStripeIdsOnMarket - LINC Foods (38) - Connecting org customers - MISS - No stripe_customer_id found for Organization Luna (3876) balanced_customer_uri /v1/customers/CU1Hin6wfjc4Hdf9JU0Ff07Z
+[2015-05-26 16:04:22 -0400] - UpdateStripeIdsOnMarket - LINC Foods (38) - Connecting org customers - Updated Organization Chez Beth (3605) stripe_customer_id: cus_6DRPFjqXnVtLeu
+[2015-05-26 16:04:22 -0400] - UpdateStripeIdsOnMarket - LINC Foods (38) - Connecting org customers - Updated Organization The Wandering Table (3485) stripe_customer_id: cus_64rrc8oGSZWzdx
+[2015-05-26 16:04:22 -0400] - UpdateStripeIdsOnMarket - LINC Foods (38) - Connecting org customers - Updated Organization Bouzies Bakeshop (3477) stripe_customer_id: cus_660WA5hfNiRwyV
+[2015-05-26 16:04:23 -0400] - UpdateStripeIdsOnMarket - LINC Foods (38) - Connecting org customers - Updated Organization Cloudview EcoFarms (3409) stripe_customer_id: cus_610RJwtexKVVrU
+[2015-05-26 16:04:24 -0400] - UpdateStripeIdsOnMarket - LINC Foods (38) - Connecting org customers - Updated Organization Scabland Farm (3242) stripe_customer_id: cus_5vOTh0WVUZ6eou
+[2015-05-26 16:04:24 -0400] - UpdateStripeIdsOnMarket - LINC Foods (38) - Connecting org customers - Updated Organization Common Crumb (2915) stripe_customer_id: cus_5uQ4xwWYHD2Cve
+[2015-05-26 16:04:24 -0400] - UpdateStripeIdsOnMarket - LINC Foods (38) - Connecting org customers - Updated Organization EGA Farms (2732) stripe_customer_id: cus_5uQ4LjGQfYDhin
+[2015-05-26 16:04:26 -0400] - UpdateStripeIdsOnMarket - LINC Foods (38) - Connecting org customers - Updated Organization Prairie Pantry LLC (2669) stripe_customer_id: cus_5xpyM8R0E9vY0P
+[2015-05-26 16:04:27 -0400] - UpdateStripeIdsOnMarket - LINC Foods (38) - Connecting org customers - Updated Organization Olsen Farms (2580) stripe_customer_id: cus_5uQ49UOwAFQtAi
+[2015-05-26 16:04:28 -0400] - UpdateStripeIdsOnMarket - LINC Foods (38) - Connecting org customers - Updated Organization Channing Farm (2456) stripe_customer_id: cus_5uQ5HNxOqJRBIz
+[2015-05-26 16:04:28 -0400] - UpdateStripeIdsOnMarket - LINC Foods (38) - Connecting org customers - Updated Organization Sodexo - University of Idaho (2455) stripe_customer_id: cus_5uQ5QBbuc2IyNh
+[2015-05-26 16:04:28 -0400] - UpdateStripeIdsOnMarket - LINC Foods (38) - Connecting org customers - Updated Organization Northern Quest Casino (2440) stripe_customer_id: cus_5uQ4LZIGjzIGM0
+[2015-05-26 16:04:29 -0400] - UpdateStripeIdsOnMarket - LINC Foods (38) - Connecting org customers - Updated Organization Bunny Laine Fruit (2426) stripe_customer_id: cus_5uQ5NzI9j1EuVt
+[2015-05-26 16:04:29 -0400] - UpdateStripeIdsOnMarket - LINC Foods (38) - Connecting org customers - Updated Organization Sodexo - Whitworth (2393) stripe_customer_id: cus_5uQ4L7BEUtwcsi
+[2015-05-26 16:04:30 -0400] - UpdateStripeIdsOnMarket - LINC Foods (38) - Connecting org customers - Updated Organization Harlequin Produce (2386) stripe_customer_id: cus_5uQ4J2mhDEYhQ7
+[2015-05-26 16:04:30 -0400] - UpdateStripeIdsOnMarket - LINC Foods (38) - Connecting org customers - Updated Organization SODEXO - Spokane Community College (2346) stripe_customer_id: cus_5uQ45sTaugtGcG
+[2015-05-26 16:04:31 -0400] - UpdateStripeIdsOnMarket - LINC Foods (38) - Connecting org customers - Updated Organization South Perry Pizza (2340) stripe_customer_id: cus_64oBf4Q5sLyNk9
+[2015-05-26 16:04:31 -0400] - UpdateStripeIdsOnMarket - LINC Foods (38) - Connecting org customers - Updated Organization Sante Restaurant & Charcuterie (2313) stripe_customer_id: cus_5uQ46oiS9fqxSe
+[2015-05-26 16:04:31 -0400] - UpdateStripeIdsOnMarket - LINC Foods (38) - Connecting org customers - Updated Organization The Lolo (2291) stripe_customer_id: cus_5uQ4pR3Ym9e7GE
+[2015-05-26 16:04:31 -0400] - UpdateStripeIdsOnMarket - LINC Foods (38) - Connecting org customers - Updated Organization Batch Bakeshop (2275) stripe_customer_id: cus_5uQ4kmNkAy01Ss
+[2015-05-26 16:04:32 -0400] - UpdateStripeIdsOnMarket - LINC Foods (38) - Connecting org customers - Updated Organization Gardens at Sunset (2251) stripe_customer_id: cus_5uQ46jCjb7Wo7u
+[2015-05-26 16:04:32 -0400] - UpdateStripeIdsOnMarket - LINC Foods (38) - Connecting org customers - Updated Organization Heron Pond Farms (2250) stripe_customer_id: cus_5uQ4FS4RY6IFTk
+[2015-05-26 16:04:33 -0400] - UpdateStripeIdsOnMarket - LINC Foods (38) - Connecting org customers - Updated Organization Okanogan Producer's Marketing Association (2247) stripe_customer_id: cus_5uQ5pOQakD9ezS
+[2015-05-26 16:04:33 -0400] - UpdateStripeIdsOnMarket - LINC Foods (38) - Connecting org customers - Updated Organization Western Montana Growers Cooperative (2246) stripe_customer_id: cus_5uQ4KYL5jG62fg
+[2015-05-26 16:04:34 -0400] - UpdateStripeIdsOnMarket - LINC Foods (38) - Connecting org customers - Updated Organization Kallstrom Sweet Corn (2223) stripe_customer_id: cus_5uQ4BdNE4a7aVR
+[2015-05-26 16:04:35 -0400] - UpdateStripeIdsOnMarket - LINC Foods (38) - Connecting org customers - Updated Organization Washington State University Food Sense (2178) stripe_customer_id: cus_5uQ4WCuf5McFxU
+[2015-05-26 16:04:36 -0400] - UpdateStripeIdsOnMarket - LINC Foods (38) - Connecting org customers - Updated Organization Fleming Family Farm (2157) stripe_customer_id: cus_5xcaziLZySOyGJ
+[2015-05-26 16:04:36 -0400] - UpdateStripeIdsOnMarket - LINC Foods (38) - Connecting org customers - Updated Organization Ruins (2076) stripe_customer_id: cus_5uQ4FDi5jrhGHw
+[2015-05-26 16:04:37 -0400] - UpdateStripeIdsOnMarket - LINC Foods (38) - Connecting org customers - Updated Organization SN & P dba: CLOVER restaurant, bar & bakery (2074) stripe_customer_id: cus_5uQ4hQG2UmJxNl
+[2015-05-26 16:04:37 -0400] - UpdateStripeIdsOnMarket - LINC Foods (38) - Connecting org customers - Updated Organization Sodexo - Gonzaga (2067) stripe_customer_id: cus_5uQ53yEyMi7KHK
+[2015-05-26 16:04:37 -0400] - UpdateStripeIdsOnMarket - LINC Foods (38) - Connecting org customers - Updated Organization Main Market Co-op (1823) stripe_customer_id: cus_5uQ4YMeBUvFjSV
+[2015-05-26 16:04:37 -0400] - UpdateStripeIdsOnMarket - LINC Foods (38) - Connecting org customers - Updated Organization Steelhead Bar and Grille (1811) stripe_customer_id: cus_5uQ4j5jxb1uQ2U
+[2015-05-26 16:04:38 -0400] - UpdateStripeIdsOnMarket - LINC Foods (38) - Connecting org customers - Updated Organization Central Food (1807) stripe_customer_id: cus_5uQ5ukSsPAHkwR
+[2015-05-26 16:04:38 -0400] - UpdateStripeIdsOnMarket - LINC Foods (38) - Connecting org customers - Updated Organization The Mason Jar (1782) stripe_customer_id: cus_5uQ4dxGFmMNVRG
+[2015-05-26 16:04:38 -0400] - UpdateStripeIdsOnMarket - LINC Foods (38) - Connecting org customers - Updated Organization Stacks at Steam Plant (1771) stripe_customer_id: cus_5uQ4SsFznrmNn1
+[2015-05-26 16:04:39 -0400] - UpdateStripeIdsOnMarket - LINC Foods (38) - Connecting org customers - Updated Organization Eastern Washington University (1752) stripe_customer_id: cus_5uQ4IM7HHfaqgX
+[2015-05-26 16:04:39 -0400] - UpdateStripeIdsOnMarket - LINC Foods (38) - Connecting org customers - Updated Organization Lazy R Ranch (1748) stripe_customer_id: cus_5uQ4kpzgz7AeLR
+[2015-05-26 16:04:40 -0400] - UpdateStripeIdsOnMarket - LINC Foods (38) - Connecting org customers - Updated Organization Kagele Farm (1745) stripe_customer_id: cus_5uQ45EcL91xNXQ
+[2015-05-26 16:04:41 -0400] - UpdateStripeIdsOnMarket - LINC Foods (38) - Connecting org customers - Updated Organization Footehill Farms (1732) stripe_customer_id: cus_5uQ47SDxKLyx0e
+[2015-05-26 16:04:42 -0400] - UpdateStripeIdsOnMarket - LINC Foods (38) - Connecting org customers - Updated Organization LINC Foods  (1731) stripe_customer_id: cus_5uQ4uXU2YBU8dt
+[2015-05-26 16:04:42 -0400] - UpdateStripeIdsOnMarket - LINC Foods (38) - Connecting org customers - Updated Organization LINC Farmers (1685) stripe_customer_id: cus_5uQ4e7g1FPibEE
+[2015-05-26 16:04:43 -0400] - UpdateStripeIdsOnMarket - LINC Foods (38) - Connecting org customers - Updated Organization LINC Foods - Buyer (1684) stripe_customer_id: cus_5uQ4LYWRCuQQe6
+[2015-05-26 16:04:43 -0400] - UpdateStripeIdsOnMarket - LINC Foods (38) - Connecting market BankAccounts - Updated SPOKANE TEACHERS CREDIT UNION 5558 (189) stripe_id: ba_15ic8z2VpjOYk6Tm2IxOjqVB
+[2015-05-26 16:04:43 -0400] - UpdateStripeIdsOnMarket - LINC Foods (38) - Connecting org BankAccounts - Organization Frisson Farm (3896) - MISS - No stripe_id found for Visa 4384 (563) balanced_customer_uri /v1/marketplaces/MP2eXZmrOPof80u3Irf94Wre/cards/CC6X8s2dTYyEiy4FByMvWavw
+[2015-05-26 16:04:43 -0400] - UpdateStripeIdsOnMarket - LINC Foods (38) - Connecting org BankAccounts - Organization Luna (3876) - MISS - No stripe_id found for Visa 9276 (561) balanced_customer_uri /v1/marketplaces/MP2eXZmrOPof80u3Irf94Wre/cards/CC5zX4qLlWVvKYTOwPKh0bpZ
+[2015-05-26 16:04:44 -0400] - UpdateStripeIdsOnMarket - LINC Foods (38) - Connecting org BankAccounts - Organization Bouzies Bakeshop (3477) - Updated Visa 9276 (545) stripe_id: card_16255m2VpjOYk6TmIx91HcmL
+[2015-05-26 16:04:44 -0400] - UpdateStripeIdsOnMarket - LINC Foods (38) - Connecting org BankAccounts - Organization Scabland Farm (3242) - MISS - No stripe_id found for WHEATLAND BK 2647 (473) balanced_customer_uri /v1/marketplaces/MP2eXZmrOPof80u3Irf94Wre/bank_accounts/BA3OJwYoAzew6MA5crpsG27w
+[2015-05-26 16:04:44 -0400] - UpdateStripeIdsOnMarket - LINC Foods (38) - Connecting org BankAccounts - Organization Prairie Pantry LLC (2669) - Updated BANK OF AMERICA, N.A. (SFNB) 4509 (478) stripe_id: btok_5xpyr42DKXFC7v
+[2015-05-26 16:04:45 -0400] - UpdateStripeIdsOnMarket - LINC Foods (38) - Connecting org BankAccounts - Organization South Perry Pizza (2340) - Updated Visa 7921 (509) stripe_id: card_15seZU2VpjOYk6TmM0tQ6fss
+[2015-05-26 16:04:45 -0400] - UpdateStripeIdsOnMarket - LINC Foods (38) - Connecting org BankAccounts - Organization The Lolo (2291) - MISS - No stripe_id found for Visa 3440 (305) balanced_customer_uri /v1/marketplaces/MP2eXZmrOPof80u3Irf94Wre/cards/CC7j1l4vV7ayUzvt3H5IV4SK
+[2015-05-26 16:04:46 -0400] - UpdateStripeIdsOnMarket - LINC Foods (38) - Connecting org BankAccounts - Organization Gardens at Sunset (2251) - Updated American Express 1006 (492) stripe_id: card_15qIlp2VpjOYk6TmkEoqW2IJ
+[2015-05-26 16:04:46 -0400] - UpdateStripeIdsOnMarket - LINC Foods (38) - Connecting org BankAccounts - Organization Washington State University Food Sense (2178) - Updated Visa 5951 (334) stripe_id: card_15ic9G2VpjOYk6TmLYwswZML
+[2015-05-26 16:04:47 -0400] - UpdateStripeIdsOnMarket - LINC Foods (38) - Connecting org BankAccounts - Organization Fleming Family Farm (2157) - Updated NUMERICA CREDIT UNION 0103 (476) stripe_id: btok_5xcaEUnT9jjfp8
+[2015-05-26 16:04:47 -0400] - UpdateStripeIdsOnMarket - LINC Foods (38) - Connecting org BankAccounts - Organization Ruins (2076) - Updated Visa 1985 (249) stripe_id: card_15ic8x2VpjOYk6TmmwhSV29l
+[2015-05-26 16:04:48 -0400] - UpdateStripeIdsOnMarket - LINC Foods (38) - Connecting org BankAccounts - Organization Central Food (1807) - Updated Visa 8208 (311) stripe_id: card_15ic9m2VpjOYk6Tmj1wxXpQp
