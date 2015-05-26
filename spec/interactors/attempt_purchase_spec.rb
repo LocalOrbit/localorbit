@@ -105,5 +105,27 @@ describe AttemptPurchase do
 
     end
 
+    context "non-CC order" do
+      it "does nothing" do
+        params[:order_params][:payment_method] = "something interesting"
+        expect(PaymentProvider).not_to receive(:charge_for_order)
+        expect(PaymentProvider).not_to receive(:translate_status)
+        expect(PaymentProvider).not_to receive(:create_order_payment)
+        res = subject.perform(params)
+        expect(res.success?).to be true
+      end
+    end
+
+    context "no order" do
+      it "does nothing" do
+        params[:order] = nil
+        expect(PaymentProvider).not_to receive(:charge_for_order)
+        expect(PaymentProvider).not_to receive(:translate_status)
+        expect(PaymentProvider).not_to receive(:create_order_payment)
+        res = subject.perform(params)
+        expect(res.success?).to be true
+      end
+    end
   end
+
 end

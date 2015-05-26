@@ -6,24 +6,23 @@ class AttemptPurchase
   include Interactor
 
   def perform
-    # The following assignments are redundant given Interactor's context magic.
-    # I hate Interactor's context magic.    crosby 5/6/2015
+    # The following assignments are redundant given Interactor's context magic. But let's be clear.
     payment_provider = context[:payment_provider]
+    payment_method   = order_params['payment_method']
+
+    # Do nothing if the current payment provider doesn't support the payment method.
+    # This is necessary to avoid busting up on POs.
+    return unless PaymentProvider.supports_payment_method?(payment_provider, payment_method)
+
     cart             = context[:cart] 
     order            = context[:order] 
     order_params     = context[:order_params]
-    payment_method   = order_params['payment_method']
     buyer_organization = cart.organization
 
+    # No order?  No purchase.
     return if order.nil?
 
     begin
-      unless PaymentProvider.supports_payment_method?(payment_provider, payment_method)
-        raise "AttemptPurchase invoked with payment_method=#{payment_method}, but #{payment_provider} payment provider does NOT support this payment method!"
-        # ... this should get caught and reported below in the 'rescue' clause
-      end
-
-
       #
       # Charge for the order
       #
