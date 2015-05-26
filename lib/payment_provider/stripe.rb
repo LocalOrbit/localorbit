@@ -7,7 +7,7 @@ module PaymentProvider
     )
 
     TransferSchedule = {
-      delay_days:    2,
+      delay_days:    5,
       interval:      'weekly',
       weekly_anchor: 'wednesday'
     }
