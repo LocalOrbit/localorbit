@@ -1,0 +1,33 @@
+[2015-05-26 16:07:38 -0400] - UpdateStripeIdsOnMarket - North Valley Food Hub (9) - ====================================================================================================
+[2015-05-26 16:07:38 -0400] - UpdateStripeIdsOnMarket - North Valley Food Hub (9) -  North Valley Food Hub (9)
+[2015-05-26 16:07:38 -0400] - UpdateStripeIdsOnMarket - North Valley Food Hub (9) -  Updating stripe IDs for market, orgs and bank accounts.
+[2015-05-26 16:07:38 -0400] - UpdateStripeIdsOnMarket - North Valley Food Hub (9) - 
+[2015-05-26 16:07:38 -0400] - UpdateStripeIdsOnMarket - North Valley Food Hub (9) -  Rails.env: production
+[2015-05-26 16:07:38 -0400] - UpdateStripeIdsOnMarket - North Valley Food Hub (9) -  Stripe keys:
+[2015-05-26 16:07:38 -0400] - UpdateStripeIdsOnMarket - North Valley Food Hub (9) -   --> STRIPE_PUBLISHABLE_KEY: pk_live_j85VTsrz51POrss3ni460qaf (pk_live_j85VTsrz51POrss3ni460qaf)
+[2015-05-26 16:07:38 -0400] - UpdateStripeIdsOnMarket - North Valley Food Hub (9) - ====================================================================================================
+[2015-05-26 16:07:41 -0400] - UpdateStripeIdsOnMarket - North Valley Food Hub (9) - Connecting market customer - Updated Market stripe_customer_id: cus_5vQvE7rZmphokO
+[2015-05-26 16:07:41 -0400] - UpdateStripeIdsOnMarket - North Valley Food Hub (9) - Connecting market account - Updated Market stripe_account_id: acct_15l1yUHk3obTskNe
+[2015-05-26 16:07:42 -0400] - UpdateStripeIdsOnMarket - North Valley Food Hub (9) - Connecting org customers - Updated Organization Farmelot (78) stripe_customer_id: cus_5vQuDhjr86ntEP
+[2015-05-26 16:07:42 -0400] - UpdateStripeIdsOnMarket - North Valley Food Hub (9) - Connecting org customers - Updated Organization Maywood Farms (1152) stripe_customer_id: cus_5uQ5Mu0KLynmYI
+[2015-05-26 16:07:43 -0400] - UpdateStripeIdsOnMarket - North Valley Food Hub (9) - Connecting org customers - Updated Organization Wine Time (2073) stripe_customer_id: cus_5uQ4NVaFheD6px
+[2015-05-26 16:07:43 -0400] - UpdateStripeIdsOnMarket - North Valley Food Hub (9) - Connecting org customers - Updated Organization The Rock Creek Ranch (2278) stripe_customer_id: cus_5uQ4hP8TaSudIa
+[2015-05-26 16:07:45 -0400] - UpdateStripeIdsOnMarket - North Valley Food Hub (9) - Connecting org customers - Updated Organization Martin's Navel Oranges (2411) stripe_customer_id: cus_5uQ4JBhPzyZR57
+[2015-05-26 16:07:45 -0400] - UpdateStripeIdsOnMarket - North Valley Food Hub (9) - Connecting org customers - MISS - No stripe_customer_id found for Organization Kenneth Sullivan Farm (2338) balanced_customer_uri /v1/customers/CUi3B9sVIlRp9P50ZbVfTN
+[2015-05-26 16:07:45 -0400] - UpdateStripeIdsOnMarket - North Valley Food Hub (9) - Connecting org customers - Updated Organization Chico Natural Foods Cooperative (2403) stripe_customer_id: cus_65vat5zYTotE4V
+[2015-05-26 16:07:46 -0400] - UpdateStripeIdsOnMarket - North Valley Food Hub (9) - Connecting org customers - Updated Organization Citrus Norte (2424) stripe_customer_id: cus_5uQ46lRZVVAkhZ
+[2015-05-26 16:07:46 -0400] - UpdateStripeIdsOnMarket - North Valley Food Hub (9) - Connecting org customers - Updated Organization The Black Kettle (2921) stripe_customer_id: cus_5uQ5WyYR1wYTEi
+[2015-05-26 16:07:47 -0400] - UpdateStripeIdsOnMarket - North Valley Food Hub (9) - Connecting org customers - Updated Organization AJ Velasquez Farming (2405) stripe_customer_id: cus_5uQ4TWU6jP7FtR
+[2015-05-26 16:07:47 -0400] - UpdateStripeIdsOnMarket - North Valley Food Hub (9) - Connecting org customers - Updated Organization Center for Healthy Communities - FMPP Tastings (2675) stripe_customer_id: cus_5uQ5YbtTLys5Pt
+[2015-05-26 16:07:47 -0400] - UpdateStripeIdsOnMarket - North Valley Food Hub (9) - Connecting org customers - Updated Organization Raw Bar (2755) stripe_customer_id: cus_5uQ4RgVyixjOFr
+[2015-05-26 16:07:48 -0400] - UpdateStripeIdsOnMarket - North Valley Food Hub (9) - Connecting org customers - Updated Organization Madrone Meadows Ranch (2702) stripe_customer_id: cus_5uQ4JKtvHxecS8
+[2015-05-26 16:07:49 -0400] - UpdateStripeIdsOnMarket - North Valley Food Hub (9) - Connecting org customers - Updated Organization Chico Unified School District - Nutrition Services (1837) stripe_customer_id: cus_5uQ45TNfDKXZ9w
+[2015-05-26 16:07:49 -0400] - UpdateStripeIdsOnMarket - North Valley Food Hub (9) - Connecting org customers - Updated Organization Grana Wood Fired Foods (2584) stripe_customer_id: cus_5uQ5GJA62czSsV
+[2015-05-26 16:07:49 -0400] - UpdateStripeIdsOnMarket - North Valley Food Hub (9) - Connecting org customers - Updated Organization Leon Bistro (2970) stripe_customer_id: cus_5uQ5BUhBOJAE6x
+[2015-05-26 16:07:50 -0400] - UpdateStripeIdsOnMarket - North Valley Food Hub (9) - Connecting org customers - Updated Organization D.Maciel Farms (3379) stripe_customer_id: cus_5zYVviZe2ESgMZ
+[2015-05-26 16:07:51 -0400] - UpdateStripeIdsOnMarket - North Valley Food Hub (9) - Connecting org customers - Updated Organization Rancho Llano Seco (3807) stripe_customer_id: cus_6FILyZ1Vaha39h
+[2015-05-26 16:07:51 -0400] - UpdateStripeIdsOnMarket - North Valley Food Hub (9) - Connecting org customers - Updated Organization OM Foods (3442) stripe_customer_id: cus_62Jz2LusgMH6ew
+[2015-05-26 16:07:52 -0400] - UpdateStripeIdsOnMarket - North Valley Food Hub (9) - Connecting market BankAccounts - Updated RABOBANK NA 1089 (73) stripe_id: ba_15l25C2VpjOYk6TmoTJZoc94
+[2015-05-26 16:07:52 -0400] - UpdateStripeIdsOnMarket - North Valley Food Hub (9) - Connecting org BankAccounts - Organization Farmelot (78) - Updated TRI COUNTIES BANK 1566 (326) stripe_id: ba_15l2592VpjOYk6TmjbGQB9P7
+[2015-05-26 16:07:52 -0400] - UpdateStripeIdsOnMarket - North Valley Food Hub (9) - Connecting org BankAccounts - Organization Kenneth Sullivan Farm (2338) - MISS - No stripe_id found for TRI COUNTIES BANK 2771 (318) balanced_customer_uri /v1/marketplaces/MP2eXZmrOPof80u3Irf94Wre/bank_accounts/BA7JVc5TFMNDeHkZL59zeLif
+[2015-05-26 16:07:53 -0400] - UpdateStripeIdsOnMarket - North Valley Food Hub (9) - Connecting org BankAccounts - Organization Madrone Meadows Ranch (2702) - Updated WELLS FARGO BANK NA 4052 (416) stripe_id: ba_15ic8m2VpjOYk6TmU08jbXKK

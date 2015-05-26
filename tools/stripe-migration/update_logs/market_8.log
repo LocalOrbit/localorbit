@@ -1,0 +1,34 @@
+[2015-05-26 16:03:48 -0400] - UpdateStripeIdsOnMarket - Potluck Café Society (8) - ====================================================================================================
+[2015-05-26 16:03:48 -0400] - UpdateStripeIdsOnMarket - Potluck Café Society (8) -  Potluck Café Society (8)
+[2015-05-26 16:03:48 -0400] - UpdateStripeIdsOnMarket - Potluck Café Society (8) -  Updating stripe IDs for market, orgs and bank accounts.
+[2015-05-26 16:03:48 -0400] - UpdateStripeIdsOnMarket - Potluck Café Society (8) - 
+[2015-05-26 16:03:48 -0400] - UpdateStripeIdsOnMarket - Potluck Café Society (8) -  Rails.env: production
+[2015-05-26 16:03:48 -0400] - UpdateStripeIdsOnMarket - Potluck Café Society (8) -  Stripe keys:
+[2015-05-26 16:03:48 -0400] - UpdateStripeIdsOnMarket - Potluck Café Society (8) -   --> STRIPE_PUBLISHABLE_KEY: pk_live_j85VTsrz51POrss3ni460qaf (pk_live_j85VTsrz51POrss3ni460qaf)
+[2015-05-26 16:03:48 -0400] - UpdateStripeIdsOnMarket - Potluck Café Society (8) - ====================================================================================================
+[2015-05-26 16:03:48 -0400] - UpdateStripeIdsOnMarket - Potluck Café Society (8) - !! Market has no balanced_customer_uri; not updating its stripe_customer_id or stripe_account_id
+[2015-05-26 16:03:48 -0400] - UpdateStripeIdsOnMarket - Potluck Café Society (8) - Connecting org customers - MISS - No stripe_customer_id found for Organization Gelderman Farms (3880) balanced_customer_uri /v1/customers/CU47NoqywtHjJ4VcgBOOMwnU
+[2015-05-26 16:03:48 -0400] - UpdateStripeIdsOnMarket - Potluck Café Society (8) - Connecting org customers - MISS - No stripe_customer_id found for Organization Fresh Roots Urban Farm (3879) balanced_customer_uri /v1/customers/CU11thawjwbD042FMrVDMyjU
+[2015-05-26 16:03:49 -0400] - UpdateStripeIdsOnMarket - Potluck Café Society (8) - Connecting org customers - Updated Organization Jordon Miller (2917) stripe_customer_id: cus_5uQ4GFaAb5KpAQ
+[2015-05-26 16:03:49 -0400] - UpdateStripeIdsOnMarket - Potluck Café Society (8) - Connecting org customers - Updated Organization DTES KT - Donations (2583) stripe_customer_id: cus_5uQ5YOTtozSzvC
+[2015-05-26 16:03:49 -0400] - UpdateStripeIdsOnMarket - Potluck Café Society (8) - Connecting org customers - Updated Organization Doris Chow (2494) stripe_customer_id: cus_5uQ5VORWXq2h1f
+[2015-05-26 16:03:49 -0400] - UpdateStripeIdsOnMarket - Potluck Café Society (8) - Connecting org customers - Updated Organization Colin Stansfield (2493) stripe_customer_id: cus_5uS6xrpcm4iTZK
+[2015-05-26 16:03:50 -0400] - UpdateStripeIdsOnMarket - Potluck Café Society (8) - Connecting org customers - Updated Organization Dugout Drop-In society (2489) stripe_customer_id: cus_5uQ5xaQQIa213g
+[2015-05-26 16:03:50 -0400] - UpdateStripeIdsOnMarket - Potluck Café Society (8) - Connecting org customers - Updated Organization Lookout Emergency Aid Society - Living Room (2441) stripe_customer_id: cus_5uQ5aa0e0VpOif
+[2015-05-26 16:03:50 -0400] - UpdateStripeIdsOnMarket - Potluck Café Society (8) - Connecting org customers - Updated Organization YWCA Crabtree Corner (2375) stripe_customer_id: cus_5uQ4mauBC3gIxL
+[2015-05-26 16:03:51 -0400] - UpdateStripeIdsOnMarket - Potluck Café Society (8) - Connecting org customers - Updated Organization Lookout Emergency Aid Society - Al Mitchell Place (2308) stripe_customer_id: cus_5uQ4m8VSfvRinU
+[2015-05-26 16:03:51 -0400] - UpdateStripeIdsOnMarket - Potluck Café Society (8) - Connecting org customers - Updated Organization Hannah Brook Farms (2283) stripe_customer_id: cus_5uQ4rYyoR7cvnt
+[2015-05-26 16:03:51 -0400] - UpdateStripeIdsOnMarket - Potluck Café Society (8) - Connecting org customers - Updated Organization Rossdown Farms (2282) stripe_customer_id: cus_5uQ4bUlg4tpPp9
+[2015-05-26 16:03:51 -0400] - UpdateStripeIdsOnMarket - Potluck Café Society (8) - Connecting org customers - Updated Organization Tenth Church (2271) stripe_customer_id: cus_5uQ4VEW6GgBEDx
+[2015-05-26 16:03:52 -0400] - UpdateStripeIdsOnMarket - Potluck Café Society (8) - Connecting org customers - Updated Organization Potluck Catering Inc. (2176) stripe_customer_id: cus_5uQ4DR7GbXQIde
+[2015-05-26 16:03:52 -0400] - UpdateStripeIdsOnMarket - Potluck Café Society (8) - Connecting org customers - Updated Organization A Loving Spoonful (2080) stripe_customer_id: cus_5uQ4mDX5Qjh5St
+[2015-05-26 16:03:52 -0400] - UpdateStripeIdsOnMarket - Potluck Café Society (8) - Connecting org customers - Updated Organization Covenant House Vancouver (1998) stripe_customer_id: cus_5uQ49jUkD8lf3L
+[2015-05-26 16:03:52 -0400] - UpdateStripeIdsOnMarket - Potluck Café Society (8) - Connecting org customers - Updated Organization Fresh Point (1862) stripe_customer_id: cus_5uQ41Ocq40iGiL
+[2015-05-26 16:03:53 -0400] - UpdateStripeIdsOnMarket - Potluck Café Society (8) - Connecting org customers - Updated Organization Heppell's Potato Farm (1854) stripe_customer_id: cus_5uQ4531UuqPU40
+[2015-05-26 16:03:53 -0400] - UpdateStripeIdsOnMarket - Potluck Café Society (8) - Connecting org customers - Updated Organization Lookout Emergency Aid Society - Yukon (1853) stripe_customer_id: cus_5uQ5oh9oKmVWIS
+[2015-05-26 16:03:53 -0400] - UpdateStripeIdsOnMarket - Potluck Café Society (8) - Connecting org customers - Updated Organization Raincity Housing (1852) stripe_customer_id: cus_5uQ5gpyiMMi57O
+[2015-05-26 16:03:53 -0400] - UpdateStripeIdsOnMarket - Potluck Café Society (8) - Connecting org customers - Updated Organization BC Tree Fruits (1772) stripe_customer_id: cus_5uQ4C19ZpScwUX
+[2015-05-26 16:03:54 -0400] - UpdateStripeIdsOnMarket - Potluck Café Society (8) - Connecting org customers - Updated Organization DTES Fresh Produce Market (1689) stripe_customer_id: cus_5uQ4LhtrgLgjO7
+[2015-05-26 16:03:54 -0400] - UpdateStripeIdsOnMarket - Potluck Café Society (8) - Connecting org customers - Updated Organization Carnegie Community Centre (193) stripe_customer_id: cus_5uQ5VlBEfwbY8w
+[2015-05-26 16:03:54 -0400] - UpdateStripeIdsOnMarket - Potluck Café Society (8) - Connecting org customers - Updated Organization Gathering Place  (194) stripe_customer_id: cus_5uQ5I4G3yl5p76
+[2015-05-26 16:03:55 -0400] - UpdateStripeIdsOnMarket - Potluck Café Society (8) - Connecting org customers - Updated Organization Potluck Cafe Society (195) stripe_customer_id: cus_5uQ5QBjQlwrG2B

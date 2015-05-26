@@ -1,0 +1,17 @@
+[2015-05-26 16:11:16 -0400] - UpdateStripeIdsOnMarket - The Pickup  (86) - ====================================================================================================
+[2015-05-26 16:11:16 -0400] - UpdateStripeIdsOnMarket - The Pickup  (86) -  The Pickup  (86)
+[2015-05-26 16:11:16 -0400] - UpdateStripeIdsOnMarket - The Pickup  (86) -  Updating stripe IDs for market, orgs and bank accounts.
+[2015-05-26 16:11:16 -0400] - UpdateStripeIdsOnMarket - The Pickup  (86) - 
+[2015-05-26 16:11:16 -0400] - UpdateStripeIdsOnMarket - The Pickup  (86) -  Rails.env: production
+[2015-05-26 16:11:16 -0400] - UpdateStripeIdsOnMarket - The Pickup  (86) -  Stripe keys:
+[2015-05-26 16:11:16 -0400] - UpdateStripeIdsOnMarket - The Pickup  (86) -   --> STRIPE_PUBLISHABLE_KEY: pk_live_j85VTsrz51POrss3ni460qaf (pk_live_j85VTsrz51POrss3ni460qaf)
+[2015-05-26 16:11:16 -0400] - UpdateStripeIdsOnMarket - The Pickup  (86) - ====================================================================================================
+[2015-05-26 16:11:17 -0400] - UpdateStripeIdsOnMarket - The Pickup  (86) - Connecting market customer - Updated Market stripe_customer_id: cus_5yihK7AkteLW3v
+[2015-05-26 16:11:17 -0400] - UpdateStripeIdsOnMarket - The Pickup  (86) - Connecting market account - MISS - No stripe_account_id found for market balanced_customer_uri /v1/customers/CU1RZUNZtcxMQvL0mUMXZFDc
+[2015-05-26 16:11:17 -0400] - UpdateStripeIdsOnMarket - The Pickup  (86) - Connecting org customers - MISS - No stripe_customer_id found for Organization Barrels Community Market (3955) balanced_customer_uri /v1/customers/CU2zyoqJqpx835657YNHjoUv
+[2015-05-26 16:11:17 -0400] - UpdateStripeIdsOnMarket - The Pickup  (86) - Connecting org customers - MISS - No stripe_customer_id found for Organization Cayford Orchards (3938) balanced_customer_uri /v1/customers/CU5U2Qmcw2FXsEsBEFZe4i9k
+[2015-05-26 16:11:17 -0400] - UpdateStripeIdsOnMarket - The Pickup  (86) - Connecting org customers - MISS - No stripe_customer_id found for Organization The Cafe (3937) balanced_customer_uri /v1/customers/CUR54vqfMabKOQTowCNOjiv
+[2015-05-26 16:11:17 -0400] - UpdateStripeIdsOnMarket - The Pickup  (86) - Connecting org customers - MISS - No stripe_customer_id found for Organization Emery Farm (3934) balanced_customer_uri /v1/customers/CU5YOvO8vnpAGiAg3d7o7BAj
+[2015-05-26 16:11:17 -0400] - UpdateStripeIdsOnMarket - The Pickup  (86) - Connecting org customers - MISS - No stripe_customer_id found for Organization Bowden's Egg Farm (3870) balanced_customer_uri /v1/customers/CU51M69uqDqxwsVHwk6i53lJ
+[2015-05-26 16:11:17 -0400] - UpdateStripeIdsOnMarket - The Pickup  (86) - Connecting org customers - Updated Organization The CSA (3738) stripe_customer_id: cus_6Dk9FNAc0bI2Z0
+[2015-05-26 16:11:18 -0400] - UpdateStripeIdsOnMarket - The Pickup  (86) - Connecting market BankAccounts - Updated BANGOR SAVINGS BANK 8413 (485) stripe_id: ba_15ogDn2VpjOYk6TmJupQOGpI

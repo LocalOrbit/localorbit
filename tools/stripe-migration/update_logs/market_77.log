@@ -1,0 +1,16 @@
+[2015-05-26 16:11:11 -0400] - UpdateStripeIdsOnMarket - z_Fresh Start Farms (77) - ====================================================================================================
+[2015-05-26 16:11:11 -0400] - UpdateStripeIdsOnMarket - z_Fresh Start Farms (77) -  z_Fresh Start Farms (77)
+[2015-05-26 16:11:11 -0400] - UpdateStripeIdsOnMarket - z_Fresh Start Farms (77) -  Updating stripe IDs for market, orgs and bank accounts.
+[2015-05-26 16:11:11 -0400] - UpdateStripeIdsOnMarket - z_Fresh Start Farms (77) - 
+[2015-05-26 16:11:11 -0400] - UpdateStripeIdsOnMarket - z_Fresh Start Farms (77) -  Rails.env: production
+[2015-05-26 16:11:11 -0400] - UpdateStripeIdsOnMarket - z_Fresh Start Farms (77) -  Stripe keys:
+[2015-05-26 16:11:11 -0400] - UpdateStripeIdsOnMarket - z_Fresh Start Farms (77) -   --> STRIPE_PUBLISHABLE_KEY: pk_live_j85VTsrz51POrss3ni460qaf (pk_live_j85VTsrz51POrss3ni460qaf)
+[2015-05-26 16:11:11 -0400] - UpdateStripeIdsOnMarket - z_Fresh Start Farms (77) - ====================================================================================================
+[2015-05-26 16:11:13 -0400] - UpdateStripeIdsOnMarket - z_Fresh Start Farms (77) - Connecting market customer - Updated Market stripe_customer_id: cus_5uQ52KQQVKZpTB
+[2015-05-26 16:11:13 -0400] - UpdateStripeIdsOnMarket - z_Fresh Start Farms (77) - Connecting market account - MISS - No stripe_account_id found for market balanced_customer_uri /v1/customers/CU6M7LICeLFyPljR1kfdZVxt
+[2015-05-26 16:11:13 -0400] - UpdateStripeIdsOnMarket - z_Fresh Start Farms (77) - Connecting org customers - Updated Organization Phony Market - TEST BUYER (3361) stripe_customer_id: cus_5yo0hrGspVqUYA
+[2015-05-26 16:11:13 -0400] - UpdateStripeIdsOnMarket - z_Fresh Start Farms (77) - Connecting org customers - Updated Organization Fake Restaurant TEST BUYER (3360) stripe_customer_id: cus_5ynyz7UY7P5uqY
+[2015-05-26 16:11:14 -0400] - UpdateStripeIdsOnMarket - z_Fresh Start Farms (77) - Connecting org customers - Updated Organization Theoretical School TEST BUYER (3241) stripe_customer_id: cus_5vM1CIimSKXbxn
+[2015-05-26 16:11:14 -0400] - UpdateStripeIdsOnMarket - z_Fresh Start Farms (77) - Connecting org customers - Updated Organization Fresh Start Farms (3219) stripe_customer_id: cus_5uQ4RhLjANHwpg
+[2015-05-26 16:11:15 -0400] - UpdateStripeIdsOnMarket - z_Fresh Start Farms (77) - Connecting market BankAccounts - Updated MasterCard 8130 (484) stripe_id: card_15nHSF2VpjOYk6TmViaWqo0I
+[2015-05-26 16:11:16 -0400] - UpdateStripeIdsOnMarket - z_Fresh Start Farms (77) - Connecting market BankAccounts - Updated MasterCard 1837 (483) stripe_id: card_15nHPk2VpjOYk6TmCj8Ch0vU

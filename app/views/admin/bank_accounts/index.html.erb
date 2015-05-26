@@ -2,10 +2,6 @@
 <div>
   <%= link_to "Add Payment Method", [:new, :admin, @entity, :bank_account], class: "btn btn--add btn--small pull-right mobile-block" %>
 </div>
-<div class="add-bank-warning">
-  <small><strong>Important:</strong>If you've recently added a bank account as a payment method, please don't add the same account to another organization or market until it is verified where it was originally added.
-</small>
-</div>
 
 <% if @bank_accounts.empty? %>
   <p>You don't have any payment methods set up. Please add a payment method.</p>

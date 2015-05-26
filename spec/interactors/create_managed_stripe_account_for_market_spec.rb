@@ -28,7 +28,7 @@ describe CreateManagedStripeAccountForMarket do
     expect(stripe_account.metadata['lo.market_id']).to eq market.id.to_s
     
     # Check the transfer schedule (determined by PaymentProvider::Stripe::TransferSchedule)
-    expect(stripe_account.transfer_schedule.delay_days).to eq 2
+    expect(stripe_account.transfer_schedule.delay_days).to eq 5
     expect(stripe_account.transfer_schedule.interval).to eq 'weekly'
     expect(stripe_account.transfer_schedule.weekly_anchor).to eq 'wednesday'
   end

@@ -11,10 +11,11 @@ describe "Checking Out via Purchase Order", :js, :vcr do
   let!(:ada_farms) { create(:organization, :seller, :single_location, name: "Ada Farms", users: [create(:user)]) }
 
   let(:market_manager) { create(:user) }
-  # TODO: use payment_provider constants
+
   let(:market) { create(:market, :with_addresses, 
-                        payment_provider: 'balanced',
+                        payment_provider: PaymentProvider::Stripe.id,
                         organizations: [buyer, fulton_farms, ada_farms], managers: [market_manager]) }
+
   let(:delivery_schedule) { create(:delivery_schedule, :percent_fee,  market: market, day: 5) }
   let(:delivery_day) { DateTime.parse("May 9, 2014, 11:00:00") }
   let(:delivery) do

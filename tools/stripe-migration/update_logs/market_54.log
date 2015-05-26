@@ -1,0 +1,12 @@
+[2015-05-26 16:11:20 -0400] - UpdateStripeIdsOnMarket - orderboard (54) - ====================================================================================================
+[2015-05-26 16:11:20 -0400] - UpdateStripeIdsOnMarket - orderboard (54) -  orderboard (54)
+[2015-05-26 16:11:20 -0400] - UpdateStripeIdsOnMarket - orderboard (54) -  Updating stripe IDs for market, orgs and bank accounts.
+[2015-05-26 16:11:20 -0400] - UpdateStripeIdsOnMarket - orderboard (54) - 
+[2015-05-26 16:11:20 -0400] - UpdateStripeIdsOnMarket - orderboard (54) -  Rails.env: production
+[2015-05-26 16:11:20 -0400] - UpdateStripeIdsOnMarket - orderboard (54) -  Stripe keys:
+[2015-05-26 16:11:20 -0400] - UpdateStripeIdsOnMarket - orderboard (54) -   --> STRIPE_PUBLISHABLE_KEY: pk_live_j85VTsrz51POrss3ni460qaf (pk_live_j85VTsrz51POrss3ni460qaf)
+[2015-05-26 16:11:20 -0400] - UpdateStripeIdsOnMarket - orderboard (54) - ====================================================================================================
+[2015-05-26 16:11:22 -0400] - UpdateStripeIdsOnMarket - orderboard (54) - Connecting market customer - Updated Market stripe_customer_id: cus_5uQ4t57BJSRfJ3
+[2015-05-26 16:11:22 -0400] - UpdateStripeIdsOnMarket - orderboard (54) - Connecting market account - MISS - No stripe_account_id found for market balanced_customer_uri /v1/customers/CU6jSPuRUxCohKf54XtuVl9M
+[2015-05-26 16:11:22 -0400] - UpdateStripeIdsOnMarket - orderboard (54) - Connecting org customers - Updated Organization Colab Test Buyer (2336) stripe_customer_id: cus_5uQ4w7oONWDRPr
+[2015-05-26 16:11:22 -0400] - UpdateStripeIdsOnMarket - orderboard (54) - Connecting market BankAccounts - Updated MasterCard 0567 (312) stripe_id: card_15ic9E2VpjOYk6TmtWGYPeT4
