@@ -1,0 +1,101 @@
+[2015-05-26 16:02:45 -0400] - UpdateStripeIdsOnMarket - Tahoe Food Hub (13) - ====================================================================================================
+[2015-05-26 16:02:45 -0400] - UpdateStripeIdsOnMarket - Tahoe Food Hub (13) -  Tahoe Food Hub (13)
+[2015-05-26 16:02:45 -0400] - UpdateStripeIdsOnMarket - Tahoe Food Hub (13) -  Updating stripe IDs for market, orgs and bank accounts.
+[2015-05-26 16:02:45 -0400] - UpdateStripeIdsOnMarket - Tahoe Food Hub (13) - 
+[2015-05-26 16:02:45 -0400] - UpdateStripeIdsOnMarket - Tahoe Food Hub (13) -  Rails.env: production
+[2015-05-26 16:02:45 -0400] - UpdateStripeIdsOnMarket - Tahoe Food Hub (13) -  Stripe keys:
+[2015-05-26 16:02:45 -0400] - UpdateStripeIdsOnMarket - Tahoe Food Hub (13) -   --> STRIPE_PUBLISHABLE_KEY: pk_live_j85VTsrz51POrss3ni460qaf (pk_live_j85VTsrz51POrss3ni460qaf)
+[2015-05-26 16:02:45 -0400] - UpdateStripeIdsOnMarket - Tahoe Food Hub (13) - ====================================================================================================
+[2015-05-26 16:02:47 -0400] - UpdateStripeIdsOnMarket - Tahoe Food Hub (13) - Connecting market customer - Updated Market stripe_customer_id: cus_5uQ5XxNuXX9V1R
+[2015-05-26 16:02:47 -0400] - UpdateStripeIdsOnMarket - Tahoe Food Hub (13) - Connecting market account - Updated Market stripe_account_id: acct_15l1yTIN84gklqQV
+[2015-05-26 16:02:47 -0400] - UpdateStripeIdsOnMarket - Tahoe Food Hub (13) - Connecting org customers - MISS - No stripe_customer_id found for Organization Produce Alive (3884) balanced_customer_uri /v1/customers/CU7dRKlfPoZZqMnvNsizsE78
+[2015-05-26 16:02:47 -0400] - UpdateStripeIdsOnMarket - Tahoe Food Hub (13) - Connecting org customers - MISS - No stripe_customer_id found for Organization Sunblest Orchards (3863) balanced_customer_uri /v1/customers/CU5bopmLrQRenuCNhObsBxjN
+[2015-05-26 16:02:47 -0400] - UpdateStripeIdsOnMarket - Tahoe Food Hub (13) - Connecting org customers - MISS - No stripe_customer_id found for Organization Riverdog Farm (3862) balanced_customer_uri /v1/customers/CUKqgiP2V72U7fmv9EnOUie
+[2015-05-26 16:02:47 -0400] - UpdateStripeIdsOnMarket - Tahoe Food Hub (13) - Connecting org customers - MISS - No stripe_customer_id found for Organization JTF Organics (3861) balanced_customer_uri /v1/customers/CU6181q8BwGu0I8q6zUJM8bg
+[2015-05-26 16:02:47 -0400] - UpdateStripeIdsOnMarket - Tahoe Food Hub (13) - Connecting org customers - MISS - No stripe_customer_id found for Organization Capay Organic (3859) balanced_customer_uri /v1/customers/CU1w8QQ4YMHMovBjBGalDm78
+[2015-05-26 16:02:47 -0400] - UpdateStripeIdsOnMarket - Tahoe Food Hub (13) - Connecting org customers - MISS - No stripe_customer_id found for Organization Far West Fungi - Certified Organic (3858) balanced_customer_uri /v1/customers/CU29AZg0Wl7nL1vCd4lQGulF
+[2015-05-26 16:02:47 -0400] - UpdateStripeIdsOnMarket - Tahoe Food Hub (13) - Connecting org customers - MISS - No stripe_customer_id found for Organization Something Good - Certified Organic (3857) balanced_customer_uri /v1/customers/CU5MwSFdNbQutsSwaaA3ZZ5l
+[2015-05-26 16:02:48 -0400] - UpdateStripeIdsOnMarket - Tahoe Food Hub (13) - Connecting org customers - Updated Organization Say Hay Farms - Certified Organic (3856) stripe_customer_id: cus_6GpdHCacPMRfQI
+[2015-05-26 16:02:49 -0400] - UpdateStripeIdsOnMarket - Tahoe Food Hub (13) - Connecting org customers - Updated Organization Jacobs Farm - Certified Organic (3855) stripe_customer_id: cus_6GpY6jgUBAA3Dk
+[2015-05-26 16:02:50 -0400] - UpdateStripeIdsOnMarket - Tahoe Food Hub (13) - Connecting org customers - Updated Organization Shingai Farms - Certified Organic (3854) stripe_customer_id: cus_6GpOZN9ZHiCLZ8
+[2015-05-26 16:02:50 -0400] - UpdateStripeIdsOnMarket - Tahoe Food Hub (13) - Connecting org customers - Updated Organization Devine Organics - Certified Organic (3853) stripe_customer_id: cus_6GpMy5PHHVf3hB
+[2015-05-26 16:02:51 -0400] - UpdateStripeIdsOnMarket - Tahoe Food Hub (13) - Connecting org customers - Updated Organization Heirloom Organic Gardens - Certified Organic (3852) stripe_customer_id: cus_6GpAc5KCjXpVR1
+[2015-05-26 16:02:51 -0400] - UpdateStripeIdsOnMarket - Tahoe Food Hub (13) - Connecting org customers - Updated Organization Josie's Organics (3255) stripe_customer_id: cus_5vYxnanoZplOV7
+[2015-05-26 16:02:52 -0400] - UpdateStripeIdsOnMarket - Tahoe Food Hub (13) - Connecting org customers - Updated Organization Sierra Nevada Honey - Al Bees (3102) stripe_customer_id: cus_5uQ5touQt7FHiz
+[2015-05-26 16:02:53 -0400] - UpdateStripeIdsOnMarket - Tahoe Food Hub (13) - Connecting org customers - Updated Organization Happy Boy Farms - Certified Organic (2950) stripe_customer_id: cus_5uQ5RJ3wjhh4XG
+[2015-05-26 16:02:54 -0400] - UpdateStripeIdsOnMarket - Tahoe Food Hub (13) - Connecting org customers - Updated Organization Township Valley Farm (2947) stripe_customer_id: cus_5uQ5XDDLKUMSsB
+[2015-05-26 16:02:54 -0400] - UpdateStripeIdsOnMarket - Tahoe Food Hub (13) - Connecting org customers - Updated Organization T & D Willey Farm - Certified Organic  (2908) stripe_customer_id: cus_5uQ4NUINEoTal5
+[2015-05-26 16:02:54 -0400] - UpdateStripeIdsOnMarket - Tahoe Food Hub (13) - Connecting org customers - MISS - No stripe_customer_id found for Organization The Crest Cafe & Catering (2805) balanced_customer_uri /v1/customers/CU2iT4lFP8uFbjcC7k05mXiv
+[2015-05-26 16:02:55 -0400] - UpdateStripeIdsOnMarket - Tahoe Food Hub (13) - Connecting org customers - Updated Organization Cal-Organic Farms (2716) stripe_customer_id: cus_5uQ5PdZxhLywm6
+[2015-05-26 16:02:55 -0400] - UpdateStripeIdsOnMarket - Tahoe Food Hub (13) - Connecting org customers - Updated Organization Drunken monkey (2715) stripe_customer_id: cus_5uQ4l1bCsfqRKE
+[2015-05-26 16:02:56 -0400] - UpdateStripeIdsOnMarket - Tahoe Food Hub (13) - Connecting org customers - Updated Organization Capay Organic - Certified Organic (2708) stripe_customer_id: cus_5uQ5S2GElHQc9l
+[2015-05-26 16:02:56 -0400] - UpdateStripeIdsOnMarket - Tahoe Food Hub (13) - Connecting org customers - Updated Organization The Rustic Lounge  (2643) stripe_customer_id: cus_5uQ5CPIzgUgshW
+[2015-05-26 16:02:56 -0400] - UpdateStripeIdsOnMarket - Tahoe Food Hub (13) - Connecting org customers - Updated Organization Jay Leaf  (2641) stripe_customer_id: cus_5uQ4FyIGZd2T13
+[2015-05-26 16:02:57 -0400] - UpdateStripeIdsOnMarket - Tahoe Food Hub (13) - Connecting org customers - Updated Organization Alpine Meadows Ski Resort (2548) stripe_customer_id: cus_5uQ45s74Q9vxuU
+[2015-05-26 16:02:57 -0400] - UpdateStripeIdsOnMarket - Tahoe Food Hub (13) - Connecting org customers - Updated Organization Pleasant Grove Farm - Certified Organic (2544) stripe_customer_id: cus_5uQ5eWvx6bDCzs
+[2015-05-26 16:02:58 -0400] - UpdateStripeIdsOnMarket - Tahoe Food Hub (13) - Connecting org customers - Updated Organization Tomatero Organic Farm - Certified Organic (2543) stripe_customer_id: cus_5uQ4XKOdgGLYq0
+[2015-05-26 16:02:58 -0400] - UpdateStripeIdsOnMarket - Tahoe Food Hub (13) - Connecting org customers - Updated Organization Tahoe Food Hub (2542) stripe_customer_id: cus_5vwnTRIU1Ifqrn
+[2015-05-26 16:02:58 -0400] - UpdateStripeIdsOnMarket - Tahoe Food Hub (13) - Connecting org customers - Updated Organization Earthbound Farm (2535) stripe_customer_id: cus_5uQ55tbkHkDlnx
+[2015-05-26 16:02:59 -0400] - UpdateStripeIdsOnMarket - Tahoe Food Hub (13) - Connecting org customers - Updated Organization Deardorff Farm (2534) stripe_customer_id: cus_5uQ5mKgxqaOQvQ
+[2015-05-26 16:02:59 -0400] - UpdateStripeIdsOnMarket - Tahoe Food Hub (13) - Connecting org customers - Updated Organization Seka Hills (2500) stripe_customer_id: cus_5uQ4jmn6yfPd6l
+[2015-05-26 16:03:00 -0400] - UpdateStripeIdsOnMarket - Tahoe Food Hub (13) - Connecting org customers - Updated Organization BZ-Bee Honey (2499) stripe_customer_id: cus_5uQ556gH6ieFB2
+[2015-05-26 16:03:00 -0400] - UpdateStripeIdsOnMarket - Tahoe Food Hub (13) - Connecting org customers - Updated Organization Atwater Packing Co. (2465) stripe_customer_id: cus_5uQ5WcqzGGflLx
+[2015-05-26 16:03:01 -0400] - UpdateStripeIdsOnMarket - Tahoe Food Hub (13) - Connecting org customers - Updated Organization Coke Farms - Certified Organic (2464) stripe_customer_id: cus_5uQ5JR7fSSC230
+[2015-05-26 16:03:02 -0400] - UpdateStripeIdsOnMarket - Tahoe Food Hub (13) - Connecting org customers - Updated Organization Peri & Sons Farms - Certified Organic (2463) stripe_customer_id: cus_5uQ5Pv8Umd5mlI
+[2015-05-26 16:03:02 -0400] - UpdateStripeIdsOnMarket - Tahoe Food Hub (13) - Connecting org customers - Updated Organization Pinnacle Organically Grown Produce - Certified Organic (2462) stripe_customer_id: cus_5uQ5cTdQVxKbfI
+[2015-05-26 16:03:03 -0400] - UpdateStripeIdsOnMarket - Tahoe Food Hub (13) - Connecting org customers - Updated Organization Al's Bees Mountain Honey (2461) stripe_customer_id: cus_5uQ5guJ5OB4aCN
+[2015-05-26 16:03:03 -0400] - UpdateStripeIdsOnMarket - Tahoe Food Hub (13) - Connecting org customers - Updated Organization Full Belly Farm - Certified Organic (2460) stripe_customer_id: cus_5uQ4nSTtlGdj49
+[2015-05-26 16:03:04 -0400] - UpdateStripeIdsOnMarket - Tahoe Food Hub (13) - Connecting org customers - Updated Organization Terra Firma Farm - Certified Organic (2459) stripe_customer_id: cus_5uQ4MXHXhHbFTm
+[2015-05-26 16:03:04 -0400] - UpdateStripeIdsOnMarket - Tahoe Food Hub (13) - Connecting org customers - Updated Organization Cottonwood Restaurant (2432) stripe_customer_id: cus_5uQ4baWhBZMTnU
+[2015-05-26 16:03:04 -0400] - UpdateStripeIdsOnMarket - Tahoe Food Hub (13) - Connecting org customers - Updated Organization Maisie Jane's California Sunshine Products (2430) stripe_customer_id: cus_5uQ5ztKqMnDvfC
+[2015-05-26 16:03:05 -0400] - UpdateStripeIdsOnMarket - Tahoe Food Hub (13) - Connecting org customers - Updated Organization Rue and Forsman Ranch  (2429) stripe_customer_id: cus_5uQ4vKnmPkbqvl
+[2015-05-26 16:03:06 -0400] - UpdateStripeIdsOnMarket - Tahoe Food Hub (13) - Connecting org customers - Updated Organization Sunset Ridge Mandarins (2428) stripe_customer_id: cus_5uQ4gJIIAupzOc
+[2015-05-26 16:03:07 -0400] - UpdateStripeIdsOnMarket - Tahoe Food Hub (13) - Connecting org customers - Updated Organization Calolea Olive Oil (2427) stripe_customer_id: cus_5uQ4bsVWFTzXYd
+[2015-05-26 16:03:07 -0400] - UpdateStripeIdsOnMarket - Tahoe Food Hub (13) - Connecting org customers - Updated Organization Soule Domain (2412) stripe_customer_id: cus_5uQ4HTS1NJeTMu
+[2015-05-26 16:03:07 -0400] - UpdateStripeIdsOnMarket - Tahoe Food Hub (13) - Connecting org customers - Updated Organization Nor Cal Produce (2262) stripe_customer_id: cus_5uQ4AsntGzs1Ff
+[2015-05-26 16:03:08 -0400] - UpdateStripeIdsOnMarket - Tahoe Food Hub (13) - Connecting org customers - Updated Organization Kelly Family (2239) stripe_customer_id: cus_5uQ4zAD4hz0vfF
+[2015-05-26 16:03:08 -0400] - UpdateStripeIdsOnMarket - Tahoe Food Hub (13) - Connecting org customers - Updated Organization Blue Oaks Mandarin (2237) stripe_customer_id: cus_5uQ4W5WLaRPqDO
+[2015-05-26 16:03:09 -0400] - UpdateStripeIdsOnMarket - Tahoe Food Hub (13) - Connecting org customers - Updated Organization Ohnoki Orchard (2211) stripe_customer_id: cus_5uQ4tcF7tKMmXf
+[2015-05-26 16:03:09 -0400] - UpdateStripeIdsOnMarket - Tahoe Food Hub (13) - Connecting org customers - Updated Organization The Picky Pantry (2200) stripe_customer_id: cus_5uQ4Uwd2czjZuN
+[2015-05-26 16:03:10 -0400] - UpdateStripeIdsOnMarket - Tahoe Food Hub (13) - Connecting org customers - Updated Organization Boorinakis Harper Ranch (2128) stripe_customer_id: cus_5uQ44VwijRBIDO
+[2015-05-26 16:03:10 -0400] - UpdateStripeIdsOnMarket - Tahoe Food Hub (13) - Connecting org customers - Updated Organization Wade Eybel (2044) stripe_customer_id: cus_5uQ4qKqzinGswz
+[2015-05-26 16:03:10 -0400] - UpdateStripeIdsOnMarket - Tahoe Food Hub (13) - Connecting org customers - Updated Organization Tahoe Mountain Club - Executive Chef (2041) stripe_customer_id: cus_5uQ4oOOgpG8BoQ
+[2015-05-26 16:03:11 -0400] - UpdateStripeIdsOnMarket - Tahoe Food Hub (13) - Connecting org customers - Updated Organization Eric Dickerson (2040) stripe_customer_id: cus_5uQ4ri9Xgzx9xJ
+[2015-05-26 16:03:11 -0400] - UpdateStripeIdsOnMarket - Tahoe Food Hub (13) - Connecting org customers - Updated Organization Lisa and Griffy (2034) stripe_customer_id: cus_5uQ4rS6haa23ug
+[2015-05-26 16:03:11 -0400] - UpdateStripeIdsOnMarket - Tahoe Food Hub (13) - Connecting org customers - Updated Organization Humble Bee Hill Farms (1973) stripe_customer_id: cus_5uQ50DF8aR31OM
+[2015-05-26 16:03:11 -0400] - UpdateStripeIdsOnMarket - Tahoe Food Hub (13) - Connecting org customers - Updated Organization Town of Truckee  (1960) stripe_customer_id: cus_5uQ5Gg6P1dOzdt
+[2015-05-26 16:03:12 -0400] - UpdateStripeIdsOnMarket - Tahoe Food Hub (13) - Connecting org customers - Updated Organization Tahoe Forest Hospital (1922) stripe_customer_id: cus_5uQ4rTnKSWKMVg
+[2015-05-26 16:03:12 -0400] - UpdateStripeIdsOnMarket - Tahoe Food Hub (13) - Connecting org customers - Updated Organization Project Mana (1905) stripe_customer_id: cus_5uQ59mz1Fxd1cO
+[2015-05-26 16:03:13 -0400] - UpdateStripeIdsOnMarket - Tahoe Food Hub (13) - Connecting org customers - Updated Organization Jollity Farm (1899) stripe_customer_id: cus_5uQ4X01iFvY5MH
+[2015-05-26 16:03:13 -0400] - UpdateStripeIdsOnMarket - Tahoe Food Hub (13) - Connecting org customers - Updated Organization Granlibaken Resort (1847) stripe_customer_id: cus_5uQ4WtkPRqabrD
+[2015-05-26 16:03:13 -0400] - UpdateStripeIdsOnMarket - Tahoe Food Hub (13) - Connecting org customers - Updated Organization Hyatt Regency Lake Tahoe (1824) stripe_customer_id: cus_5uQ4ortsfhQgEl
+[2015-05-26 16:03:13 -0400] - UpdateStripeIdsOnMarket - Tahoe Food Hub (13) - Connecting org customers - Updated Organization One Horse Farm (1822) stripe_customer_id: cus_5uQ4ZZet9plEQW
+[2015-05-26 16:03:14 -0400] - UpdateStripeIdsOnMarket - Tahoe Food Hub (13) - Connecting org customers - Updated Organization Fowler Family Farm (1821) stripe_customer_id: cus_5uQ4USPqjnDy9h
+[2015-05-26 16:03:14 -0400] - UpdateStripeIdsOnMarket - Tahoe Food Hub (13) - Connecting org customers - Updated Organization Brewery Beef (1820) stripe_customer_id: cus_5uQ40z7E65S92m
+[2015-05-26 16:03:14 -0400] - UpdateStripeIdsOnMarket - Tahoe Food Hub (13) - Connecting org customers - Updated Organization Nourish (1810) stripe_customer_id: cus_5uQ4JmuXesWALq
+[2015-05-26 16:03:14 -0400] - UpdateStripeIdsOnMarket - Tahoe Food Hub (13) - Connecting org customers - Updated Organization Sugar Bowl Resort (1762) stripe_customer_id: cus_5uQ4uh3btWy1Np
+[2015-05-26 16:03:15 -0400] - UpdateStripeIdsOnMarket - Tahoe Food Hub (13) - Connecting org customers - Updated Organization Pho Real  (1725) stripe_customer_id: cus_5uQ4z6iFCDLx04
+[2015-05-26 16:03:16 -0400] - UpdateStripeIdsOnMarket - Tahoe Food Hub (13) - Connecting org customers - Updated Organization Abbot Organics (1720) stripe_customer_id: cus_5uQ4V4HFLFUfux
+[2015-05-26 16:03:16 -0400] - UpdateStripeIdsOnMarket - Tahoe Food Hub (13) - Connecting org customers - Updated Organization Back to Basics Farm (1692) stripe_customer_id: cus_5uQ45SsPVOLOQz
+[2015-05-26 16:03:17 -0400] - UpdateStripeIdsOnMarket - Tahoe Food Hub (13) - Connecting org customers - Updated Organization Rainbow Orchards (1677) stripe_customer_id: cus_5uQ4ks4hsTkK30
+[2015-05-26 16:03:19 -0400] - UpdateStripeIdsOnMarket - Tahoe Food Hub (13) - Connecting org customers - Updated Organization Filaki Farm - Certified Organic (1676) stripe_customer_id: cus_5uQ5TvMO1vIOcP
+[2015-05-26 16:03:19 -0400] - UpdateStripeIdsOnMarket - Tahoe Food Hub (13) - Connecting org customers - Updated Organization Mountain High Sandwich Co. (1620) stripe_customer_id: cus_5uQ5j3t9FCk9u3
+[2015-05-26 16:03:19 -0400] - UpdateStripeIdsOnMarket - Tahoe Food Hub (13) - Connecting org customers - Updated Organization Van Dyke Ranch - Certified Organic (1618) stripe_customer_id: cus_5uQ5nVBQa9pYhm
+[2015-05-26 16:03:20 -0400] - UpdateStripeIdsOnMarket - Tahoe Food Hub (13) - Connecting org customers - Updated Organization Squaw Valley Resort (1609) stripe_customer_id: cus_5uQ5iegI9PHTFT
+[2015-05-26 16:03:20 -0400] - UpdateStripeIdsOnMarket - Tahoe Food Hub (13) - Connecting org customers - Updated Organization Lahontan Golf Club (1601) stripe_customer_id: cus_5uQ4oNfXVKO3dR
+[2015-05-26 16:03:20 -0400] - UpdateStripeIdsOnMarket - Tahoe Food Hub (13) - Connecting org customers - Updated Organization Red Truck (1600) stripe_customer_id: cus_5uQ47Kik8i8uva
+[2015-05-26 16:03:21 -0400] - UpdateStripeIdsOnMarket - Tahoe Food Hub (13) - Connecting org customers - Updated Organization Wolfdale's  (1589) stripe_customer_id: cus_5uQ5NrykVYnJns
+[2015-05-26 16:03:21 -0400] - UpdateStripeIdsOnMarket - Tahoe Food Hub (13) - Connecting org customers - Updated Organization Northstar (1541) stripe_customer_id: cus_5uQ5uqR2AvNaip
+[2015-05-26 16:03:21 -0400] - UpdateStripeIdsOnMarket - Tahoe Food Hub (13) - Connecting org customers - Updated Organization Fireside Pizza Company (1520) stripe_customer_id: cus_5uQ5TwMOzydwKS
+[2015-05-26 16:03:21 -0400] - UpdateStripeIdsOnMarket - Tahoe Food Hub (13) - Connecting org customers - Updated Organization Earthly Delights (1511) stripe_customer_id: cus_5uQ59QJd2iHwGf
+[2015-05-26 16:03:22 -0400] - UpdateStripeIdsOnMarket - Tahoe Food Hub (13) - Connecting org customers - Updated Organization Brenner Ranch (1507) stripe_customer_id: cus_5uQ5GoI9PzeJfI
+[2015-05-26 16:03:23 -0400] - UpdateStripeIdsOnMarket - Tahoe Food Hub (13) - Connecting org customers - Updated Organization Sierra Valley Farms, Certified Organic (1506) stripe_customer_id: cus_5uQ4VVDJBG2GWx
+[2015-05-26 16:03:23 -0400] - UpdateStripeIdsOnMarket - Tahoe Food Hub (13) - Connecting org customers - Updated Organization Meals by Michael (1487) stripe_customer_id: cus_5uQ5SOYlkJjMSy
+[2015-05-26 16:03:23 -0400] - UpdateStripeIdsOnMarket - Tahoe Food Hub (13) - Connecting org customers - Updated Organization Spice (1473) stripe_customer_id: cus_5uQ5pjNMljeRum
+[2015-05-26 16:03:24 -0400] - UpdateStripeIdsOnMarket - Tahoe Food Hub (13) - Connecting org customers - Updated Organization Hot and Healthy Foods (1156) stripe_customer_id: cus_5uQ5O7Yv7Fr5Jn
+[2015-05-26 16:03:25 -0400] - UpdateStripeIdsOnMarket - Tahoe Food Hub (13) - Connecting org customers - Updated Organization Salle Orchards (1155) stripe_customer_id: cus_5uQ5fLZcp2XkSN
+[2015-05-26 16:03:25 -0400] - UpdateStripeIdsOnMarket - Tahoe Food Hub (13) - Connecting org customers - Updated Organization Tahoe Mountain Club (1055) stripe_customer_id: cus_5uQ5cWWNdi6Xh0
+[2015-05-26 16:03:25 -0400] - UpdateStripeIdsOnMarket - Tahoe Food Hub (13) - Connecting org customers - Updated Organization Homewood Mt. Resort (334) stripe_customer_id: cus_5uQ4g56mwE0ISM
+[2015-05-26 16:03:25 -0400] - UpdateStripeIdsOnMarket - Tahoe Food Hub (13) - Connecting org customers - Updated Organization Stella (338) stripe_customer_id: cus_5uQ4OSOSRoJL7a
+[2015-05-26 16:03:26 -0400] - UpdateStripeIdsOnMarket - Tahoe Food Hub (13) - Connecting market BankAccounts - Updated PLUMAS BANK 8736 (48) stripe_id: ba_15ic9Z2VpjOYk6Tm9TXbIYIE
+[2015-05-26 16:03:29 -0400] - UpdateStripeIdsOnMarket - Tahoe Food Hub (13) - Connecting org BankAccounts - Organization Northstar (1541) - MISS - No stripe_id found for Visa 9110 (130) balanced_customer_uri /v1/marketplaces/MP2eXZmrOPof80u3Irf94Wre/cards/CC4K48rwucjfuD2rNbeCqDGj

@@ -1,0 +1,12 @@
+[2015-05-26 16:11:18 -0400] - UpdateStripeIdsOnMarket - American Hazelnut Company (46) - ====================================================================================================
+[2015-05-26 16:11:18 -0400] - UpdateStripeIdsOnMarket - American Hazelnut Company (46) -  American Hazelnut Company (46)
+[2015-05-26 16:11:18 -0400] - UpdateStripeIdsOnMarket - American Hazelnut Company (46) -  Updating stripe IDs for market, orgs and bank accounts.
+[2015-05-26 16:11:18 -0400] - UpdateStripeIdsOnMarket - American Hazelnut Company (46) - 
+[2015-05-26 16:11:18 -0400] - UpdateStripeIdsOnMarket - American Hazelnut Company (46) -  Rails.env: production
+[2015-05-26 16:11:18 -0400] - UpdateStripeIdsOnMarket - American Hazelnut Company (46) -  Stripe keys:
+[2015-05-26 16:11:18 -0400] - UpdateStripeIdsOnMarket - American Hazelnut Company (46) -   --> STRIPE_PUBLISHABLE_KEY: pk_live_j85VTsrz51POrss3ni460qaf (pk_live_j85VTsrz51POrss3ni460qaf)
+[2015-05-26 16:11:18 -0400] - UpdateStripeIdsOnMarket - American Hazelnut Company (46) - ====================================================================================================
+[2015-05-26 16:11:19 -0400] - UpdateStripeIdsOnMarket - American Hazelnut Company (46) - Connecting market customer - Updated Market stripe_customer_id: cus_5uQ4ezPjJRPBuU
+[2015-05-26 16:11:19 -0400] - UpdateStripeIdsOnMarket - American Hazelnut Company (46) - Connecting market account - MISS - No stripe_account_id found for market balanced_customer_uri /v1/customers/CU5WZZwARRxwhB7CJ9DuSXt0
+[2015-05-26 16:11:20 -0400] - UpdateStripeIdsOnMarket - American Hazelnut Company (46) - Connecting org customers - Updated Organization Test Buyer (2304) stripe_customer_id: cus_5uQ4oVqqgmNgQ3
+[2015-05-26 16:11:20 -0400] - UpdateStripeIdsOnMarket - American Hazelnut Company (46) - Connecting org customers - Updated Organization Test Grower (2209) stripe_customer_id: cus_5uQ4cdmlIKyStn

@@ -21,6 +21,12 @@ namespace :production_copy do
     cleanse_production_copy
   end
 
+  desc "Get a local copy of production (no cleansing)"
+  task fetch_db: [:environment]  do
+    include CloneProductionHelper
+    copy_production_to_local
+  end
+
   desc "Push local prod copy out to a target environment, and sync its S3 bucket from production's S3 bucket"
   task :push_out, [:env] do |_, args|
     args[:env] || raise("Supply environment, eg: rake production_copy:push_out[demo]")

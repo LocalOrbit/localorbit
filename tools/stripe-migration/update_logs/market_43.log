@@ -1,0 +1,16 @@
+[2015-05-26 16:11:47 -0400] - UpdateStripeIdsOnMarket - Restoration Agriculture International  (43) - ====================================================================================================
+[2015-05-26 16:11:47 -0400] - UpdateStripeIdsOnMarket - Restoration Agriculture International  (43) -  Restoration Agriculture International  (43)
+[2015-05-26 16:11:47 -0400] - UpdateStripeIdsOnMarket - Restoration Agriculture International  (43) -  Updating stripe IDs for market, orgs and bank accounts.
+[2015-05-26 16:11:47 -0400] - UpdateStripeIdsOnMarket - Restoration Agriculture International  (43) - 
+[2015-05-26 16:11:47 -0400] - UpdateStripeIdsOnMarket - Restoration Agriculture International  (43) -  Rails.env: production
+[2015-05-26 16:11:47 -0400] - UpdateStripeIdsOnMarket - Restoration Agriculture International  (43) -  Stripe keys:
+[2015-05-26 16:11:47 -0400] - UpdateStripeIdsOnMarket - Restoration Agriculture International  (43) -   --> STRIPE_PUBLISHABLE_KEY: pk_live_j85VTsrz51POrss3ni460qaf (pk_live_j85VTsrz51POrss3ni460qaf)
+[2015-05-26 16:11:47 -0400] - UpdateStripeIdsOnMarket - Restoration Agriculture International  (43) - ====================================================================================================
+[2015-05-26 16:11:49 -0400] - UpdateStripeIdsOnMarket - Restoration Agriculture International  (43) - Connecting market customer - Updated Market stripe_customer_id: cus_5uQ4UvEL3moUzx
+[2015-05-26 16:11:49 -0400] - UpdateStripeIdsOnMarket - Restoration Agriculture International  (43) - Connecting market account - MISS - No stripe_account_id found for market balanced_customer_uri /v1/customers/CU7Jlcl5jLY9WRmm29VPdvrk
+[2015-05-26 16:11:49 -0400] - UpdateStripeIdsOnMarket - Restoration Agriculture International  (43) - Connecting org customers - Updated Organization Test Buyer (2244) stripe_customer_id: cus_5uQ4oX7RtQCNmw
+[2015-05-26 16:11:49 -0400] - UpdateStripeIdsOnMarket - Restoration Agriculture International  (43) - Connecting org customers - Updated Organization Deanna Moore (2233) stripe_customer_id: cus_5uQ4CR6TkhRK3o
+[2015-05-26 16:11:50 -0400] - UpdateStripeIdsOnMarket - Restoration Agriculture International  (43) - Connecting org customers - Updated Organization Dana Faldmo (2232) stripe_customer_id: cus_5uQ4YrUt6DTjNs
+[2015-05-26 16:11:50 -0400] - UpdateStripeIdsOnMarket - Restoration Agriculture International  (43) - Connecting org customers - Updated Organization Test Grower (2209) stripe_customer_id: cus_5uQ4cdmlIKyStn
+[2015-05-26 16:11:50 -0400] - UpdateStripeIdsOnMarket - Restoration Agriculture International  (43) - Connecting org customers - Updated Organization New Forest Farm LLC  (2103) stripe_customer_id: cus_5uQ4NSXBVm3wBr
+[2015-05-26 16:11:51 -0400] - UpdateStripeIdsOnMarket - Restoration Agriculture International  (43) - Connecting market BankAccounts - Updated Visa 0309 (207) stripe_id: card_15ic8w2VpjOYk6TmOkmNVCJB

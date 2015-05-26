@@ -92,6 +92,15 @@ namespace :stripe do
       ENV['market'] = active_market_ids
       Rake::Task["stripe:migrate:update_stripe_ids_on_market"].invoke
     end
+
+    desc "Set transfer schedule and debit_negative_balances flag"
+    task :set_transfer_schedule do
+      env = { 'RAILS_ENV' => 'production' }
+      market_id = ENV['market_id'] || ENV['market'] || raise("Set market id, eg, market=18")
+      command = "ruby tools/stripe-migration/set_transfer_schedule.rb #{market_id}"
+      puts command
+      exec(env, command)
+    end
   end
 end
 
