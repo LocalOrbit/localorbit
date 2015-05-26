@@ -7,7 +7,11 @@ module Admin
     end
 
     def update
-      if @market.update_attributes(fee_params)
+      attrs = fee_params
+      payment_fees_paid_by = attrs.delete('payment_fees_paid_by')
+      @market.set_credit_card_payment_fee_payer(payment_fees_paid_by)
+
+      if @market.update_attributes(attrs)
         redirect_to [:admin, @market, :fees], notice: "#{@market.name} fees successfully updated"
       else
         render :show
@@ -32,6 +36,7 @@ module Admin
         :plan_interval,
         :plan_fee,
         :plan_bank_account_id,
+        :payment_fees_paid_by,
       ])
     end
   end

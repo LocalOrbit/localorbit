@@ -84,8 +84,30 @@ class Market < ActiveRecord::Base
     end
   end
 
+  #
+  # NOTE: We're transitioning from per-market payment fee config to provider-based payment structures.
+  # We still need to indicate whether Market or Seller must pay, so for now we're re-using the 
+  # existing numeric fee fields to determine who's paying.  TODO: cleanup and remodel the markets table
+  # to better represent what's actually going on.
+  # 
   def credit_card_payment_fee_payer
-    credit_card_seller_fee == 0 ? 'market' : 'seller'
+    credit_card_market_fee != 0 ? 'market' : 'seller'
+  end
+  
+  def set_credit_card_payment_fee_payer(payer_string)
+    payment_fees = {
+      credit_card_market_fee: 0,
+      credit_card_seller_fee: 0,
+      ach_market_fee: 0,
+      ach_seller_fee: 0,
+    }
+    if payer_string == 'market'
+      payment_fees[:credit_card_market_fee] = 1 # amount is irrelevant; this just needs to be non-zero
+    else
+      payment_fees[:credit_card_seller_fee] = 1
+    end
+
+    self.update(payment_fees)
   end
 
   def balanced_customer

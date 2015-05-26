@@ -48,34 +48,34 @@ namespace :stripe do
       ruby "tools/stripe-migration/link_customers.rb"
     end
 
-    desc "Sync stripe_customer_ids from Market files to prod"
-    task :push_market_stripe_customer_ids do
-      ruby "tools/stripe-migration/push_market_stripe_customer_ids.rb"
-    end
+    # desc "Sync stripe_customer_ids from Market files to prod"
+    # task :push_market_stripe_customer_ids do
+    #   ruby "tools/stripe-migration/push_market_stripe_customer_ids.rb"
+    # end
+    #
+    # desc "Sync stripe_account_ids from Market files to prod"
+    # task :push_market_stripe_customer_ids do
+    #   ruby "tools/stripe-migration/push_market_stripe_account_ids.rb"
+    # end
+    #
+    # desc "Sync stripe_customer_ids from Organization files to prod"
+    # task :push_organization_stripe_customer_ids do
+    #   ruby "tools/stripe-migration/push_organization_stripe_customer_ids.rb"
+    # end
 
-    desc "Sync stripe_account_ids from Market files to prod"
-    task :push_market_stripe_customer_ids do
-      ruby "tools/stripe-migration/push_market_stripe_account_ids.rb"
-    end
-
-    desc "Sync stripe_customer_ids from Organization files to prod"
-    task :push_organization_stripe_customer_ids do
-      ruby "tools/stripe-migration/push_organization_stripe_customer_ids.rb"
-    end
-
-    desc "For all BankAccounts, try to connect them to their Stripe IDs"
-    task :update_market_bank_account_stripe_ids do
-      secrets = YAML.load_file("../secrets/secrets.yml")
-      command = [
-        "export STRIPE_SECRET_KEY=#{secrets["production"]["STRIPE_SECRET_KEY"]}",
-        "export STRIPE_PUBLISHABLE_KEY=#{secrets["production"]["STRIPE_PUBLISHABLE_KEY"]}",
-        "ruby tools/stripe-migration/update_market_bank_account_stripe_ids.rb"
-      ].join("; ")
-      puts "\n\n"
-      puts "HEY YOU: cut n paste this:\n\n"
-      puts command
-      puts "\n\n"
-    end
+    # desc "For all BankAccounts, try to connect them to their Stripe IDs"
+    # task :update_market_bank_account_stripe_ids do
+    #   secrets = YAML.load_file("../secrets/secrets.yml")
+    #   command = [
+    #     "export STRIPE_SECRET_KEY=#{secrets["production"]["STRIPE_SECRET_KEY"]}",
+    #     "export STRIPE_PUBLISHABLE_KEY=#{secrets["production"]["STRIPE_PUBLISHABLE_KEY"]}",
+    #     "ruby tools/stripe-migration/update_market_bank_account_stripe_ids.rb"
+    #   ].join("; ")
+    #   puts "\n\n"
+    #   puts "HEY YOU: cut n paste this:\n\n"
+    #   puts command
+    #   puts "\n\n"
+    # end
 
     desc "Update stripe*_ids for orgs and bank accounts in a given Market" 
     task :update_stripe_ids_on_market do
