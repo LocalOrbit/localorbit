@@ -57,6 +57,13 @@ class BankAccount < ActiveRecord::Base
     balanced_verification.try(:state) == "failed"
   end
 
+  def primary_payment_provider
+    if bankable and bankable.respond_to?(:primary_payment_provider)
+      bankable.primary_payment_provider
+    else
+      raise "Bankable #{bankable.inspect} doesn't respond to :primary_payment_provider"
+    end
+  end
   private
 
   def account_is_unique_to_bankable
