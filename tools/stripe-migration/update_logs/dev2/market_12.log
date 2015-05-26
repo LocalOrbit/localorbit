@@ -1,0 +1,16 @@
+[2015-05-20 23:04:42 -0400] - UpdateStripeIdsOnMarket - Clarion River Organics (12) - ====================================================================================================
+[2015-05-20 23:04:42 -0400] - UpdateStripeIdsOnMarket - Clarion River Organics (12) -  Clarion River Organics (12)
+[2015-05-20 23:04:42 -0400] - UpdateStripeIdsOnMarket - Clarion River Organics (12) -  Updating stripe IDs for market, orgs and bank accounts.
+[2015-05-20 23:04:42 -0400] - UpdateStripeIdsOnMarket - Clarion River Organics (12) - 
+[2015-05-20 23:04:42 -0400] - UpdateStripeIdsOnMarket - Clarion River Organics (12) -  Rails.env: production
+[2015-05-20 23:04:42 -0400] - UpdateStripeIdsOnMarket - Clarion River Organics (12) -  Stripe keys:
+[2015-05-20 23:04:42 -0400] - UpdateStripeIdsOnMarket - Clarion River Organics (12) -   --> STRIPE_PUBLISHABLE_KEY: pk_live_j85VTsrz51POrss3ni460qaf (pk_live_j85VTsrz51POrss3ni460qaf)
+[2015-05-20 23:04:42 -0400] - UpdateStripeIdsOnMarket - Clarion River Organics (12) - ====================================================================================================
+[2015-05-20 23:04:42 -0400] - UpdateStripeIdsOnMarket - Clarion River Organics (12) - Connecting market customer - MISS - No stripe_customer_id found for market balanced_customer_uri /v1/customers/CU2qitI4Yj2WXZWHMiq0kJb4
+[2015-05-20 23:04:42 -0400] - UpdateStripeIdsOnMarket - Clarion River Organics (12) - Connecting market account - MISS - No stripe_account_id found for market balanced_customer_uri /v1/customers/CU2qitI4Yj2WXZWHMiq0kJb4
+[2015-05-20 23:04:43 -0400] - UpdateStripeIdsOnMarket - Clarion River Organics (12) - Connecting org customers - Updated Organization Farm Market - Zach (3645) stripe_customer_id: cus_68cNx86ncfE0gt
+[2015-05-20 23:04:43 -0400] - UpdateStripeIdsOnMarket - Clarion River Organics (12) - Connecting org customers - Updated Organization PCFA CSA (3687) stripe_customer_id: cus_6A6He0lnzOider
+[2015-05-20 23:04:43 -0400] - UpdateStripeIdsOnMarket - Clarion River Organics (12) - Connecting org customers - Updated Organization PCFA Restaurants (3723) stripe_customer_id: cus_6Bqb0EvF4U0uUj
+[2015-05-20 23:04:44 -0400] - UpdateStripeIdsOnMarket - Clarion River Organics (12) - Connecting org customers - Updated Organization Frankferd Farms (3724) stripe_customer_id: cus_6BqmMqG7eU2x9N
+[2015-05-20 23:04:44 -0400] - UpdateStripeIdsOnMarket - Clarion River Organics (12) - Connecting org customers - Updated Organization East End Foo Co-op Produce Dept. (3753) stripe_customer_id: cus_6DoD0L7G4Lfffz
+[2015-05-20 23:04:44 -0400] - UpdateStripeIdsOnMarket - Clarion River Organics (12) - Connecting market BankAccounts - MISS - No stripe_id found for NORTHWEST SAVINGS BANK 4255 (37) balanced_customer_uri /v1/marketplaces/MP2eXZmrOPof80u3Irf94Wre/bank_accounts/BA2yxryZhn9DTO7PWH6Rr2am

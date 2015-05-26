@@ -2,7 +2,7 @@ class UpdatePaymentStatus
   include Interactor
 
   def perform
-    Payment.where(status: "pending").where.not(balanced_uri: nil).each do |payment|
+    Payment.where(payment_provider: "balanced", status: "pending").where.not(balanced_uri: nil).each do |payment|
       update_status(payment)
     end
   end
@@ -20,6 +20,10 @@ class UpdatePaymentStatus
       payment.update(status: "failed")
     end
   rescue => e
-    Honeybadger.notify_or_ignore(e) unless Rails.env.test? || Rails.env.development?
+    if Rails.env.test? || Rails.env.development?
+      raise e
+    else
+      Honeybadger.notify_or_ignore(e)
+    end
   end
 end

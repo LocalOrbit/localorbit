@@ -7,8 +7,8 @@ shared_context "the mini market" do
   let!(:sally) { create(:user, name: "Sally") }
   let!(:seller_organization) { create(:organization, :seller, name: "Sally's Staples", users: [sally], markets:[mini_market]) }
 
-  let!(:barry) { create(:user, name: "Barry") }
-  let!(:buyer_organization) { create(:organization, :buyer, users: [barry], markets:[mini_market]) }
+  let!(:barry) { create(:user, name: "Barry Sagitarius") }
+  let!(:buyer_organization) { create(:organization, :buyer, name: barry.name, users: [barry], markets:[mini_market]) }
 
   let!(:aaron) { create(:user, :admin, name: "Aaron") }
 
@@ -24,10 +24,10 @@ shared_context "the mini market" do
   let!(:mm_product1)           { create(:product, :sellable, organization: seller_organization) }
   let!(:mm_order1_item1)       { create(:order_item, product: mm_product1, quantity: 2, unit_price: 3.00) }
   let(:mm_order1_items) { [mm_order1_item1] }
-  let!(:mm_order) { create(:order, items: mm_order1_items, organization: buyer_organization, market: mini_market) }
+  let!(:mm_order) { create(:order, items: mm_order1_items, organization: buyer_organization, market: mini_market) } # HUH?
 
   let!(:mm_order1) { create(:order, items: mm_order1_items, organization: buyer_organization, market: mini_market) }
-  let(:mm_order) { mm_order1 }
+  let(:mm_order) { mm_order1 } # HUH?
   let(:mm_order1_items) { [mm_order1_item1] }
   let!(:mm_product1)           { create(:product, :sellable, organization: seller_organization) }
   let!(:mm_order1_item1)       { create(:order_item, product: mm_product1, quantity: 2, unit_price: 3.00) }

@@ -50,6 +50,6 @@ class CreateTemporaryCreditCard
   end
 
   def should_save_card?
-    @credit_card_params.delete(:save_for_future) == "on"
+    @credit_card_params.delete(:save_for_future) == "true"
   end
 end

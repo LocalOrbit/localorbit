@@ -40,4 +40,8 @@ Rails.application.configure do
   config.action_controller.action_on_unpermitted_parameters = :raise
 
   Delayed::Worker.delay_jobs = false
+
+  config.assets.configure do |env|
+    env.cache = ThreadSafe::Cache.new
+  end
 end

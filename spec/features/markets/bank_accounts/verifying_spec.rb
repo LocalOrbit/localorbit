@@ -18,7 +18,7 @@ feature "Verifying a market bank account", :js, :vcr do
       )
       bank_account.save
 
-      AddBankAccountToEntity.perform(
+      AddBalancedBankAccountToEntity.perform(
         entity: market,
         bank_account_params: {
           name: "Org Bank Account",

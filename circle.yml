@@ -8,9 +8,3 @@ dependencies:
 checkout:
   post:
     - cp config/application.yml{.example,}
-test:
-  override:
-    - "bundle exec rspec --tag ~@wip --tag ~@shaky":
-        parallel: true
-        files:
-          - spec/**/*_spec.rb

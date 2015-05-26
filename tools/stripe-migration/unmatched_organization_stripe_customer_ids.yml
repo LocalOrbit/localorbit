@@ -1,0 +1,5491 @@
+---
+- :organization_id: 1693
+  :name: Trish Mainwaring
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 3697
+  :name: 'Tyrrell '
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 47
+  :name: Riverview Gardens
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 1518
+  :name: Rob's buying group
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 1588
+  :name: Buck Hill Falls Company
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 3698
+  :name: 'YMCA of Greater Rochester '
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 3702
+  :name: Derek Joshua Medina
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 3822
+  :name: TwoBootsBaltimore
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 3819
+  :name: Buffalo Road Produce
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 77
+  :name: Wookey Ranch
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 1592
+  :name: The Laughing Rooster
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 1519
+  :name: The Free Market
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 3703
+  :name: Claire Bowman
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 3704
+  :name: NutriSpec Food Labeling
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 3705
+  :name: Sarah Andrews
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 3820
+  :name: Carol Peabody
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 3699
+  :name: Canyon Creek Roadhouse Cafe & Store
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 69
+  :name: Ariza Farm
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 70
+  :name: 'Massa Organics '
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 1753
+  :name: Eastern Washington University
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 80
+  :name: Sierra Cascade Blueberry Farm
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 100
+  :name: City Harvest
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 3701
+  :name: Katie Johnston
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 1775
+  :name: 'Mindy Abraham '
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 1521
+  :name: Family
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 1774
+  :name: Buffalo Street Downtown Deli
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 105
+  :name: Rogowski Farm
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 108
+  :name: Brittanie's Thyme
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 112
+  :name: Chestnut Growers, Inc
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 106
+  :name: Pregitzer Farm
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 120
+  :name: Local Ocean
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 253
+  :name: M & A McEwen Ranch
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 254
+  :name: Starbright Acres Family Farm
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 255
+  :name: Wobbly Wagon Farms
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 3707
+  :name: Gretchen Crowe
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 1523
+  :name: None
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 151
+  :name: Wendy Chan
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 138
+  :name: 'Lori Hanna '
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 152
+  :name: Brenda Farnsworth
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 147
+  :name: Entenman Farms
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 139
+  :name: Jean Rychener
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 140
+  :name: Kelli Lamberson
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 145
+  :name: Maris Sabestian
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 154
+  :name: Pam Steel
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 269
+  :name: Laughing Duck Farm
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 160
+  :name: Anna Williams
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 3708
+  :name: Biehlers
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 143
+  :name: Beverly Miller-Pigmon
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 137
+  :name: 'John M. Tripodi '
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 164
+  :name: A Simple Plenty
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 165
+  :name: Joy Richmond
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 172
+  :name: Kim Grime
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 169
+  :name: Kasey Bailey
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 159
+  :name: Amy Beck
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 168
+  :name: Stacy Whitlock
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 178
+  :name: Warncke Davis Haus
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 425
+  :name: Break O' Day Farm llc
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 149
+  :name: Pendleton Family Farms
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 3709
+  :name: Evelyn Peos
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 272
+  :name: Local Yolk
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 200
+  :name: BTB
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 207
+  :name: Ruth Schwenk
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 205
+  :name: Amy Bellamy
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 191
+  :name: Kevin Martin
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 190
+  :name: Test organization
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 232
+  :name: Sinclair Family Farm
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 1783
+  :name: Richard jackson
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 233
+  :name: Mount Pleasant Farm & Garden
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 234
+  :name: Twin Peaks Orchards
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 219
+  :name: The Hungry Cricket, LLC
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 231
+  :name: Pilz Produce at Hillcrest
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 237
+  :name: Bakbraken Acres
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 241
+  :name: Foothill Roots Farm
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 240
+  :name: Greg's Organics - Certified Organic
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 239
+  :name: Dinner Bell Farm
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 1653
+  :name: The Juice Bar
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 1654
+  :name: Just Baked
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 248
+  :name: Soil Sisters
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 251
+  :name: Llano Seco Rancho
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 252
+  :name: Baker Ranch
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 289
+  :name: Tin Roof Farm
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 245
+  :name: Indian Springs Organic Farm - Certified Organic
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 244
+  :name: Sweet Roots Farm, Certified Organic
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 249
+  :name: Towani Organic Farm, Certified Organic
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 247
+  :name: 'Sierra Harvest '
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 1672
+  :name: Molly Young
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 279
+  :name: Mountain Bounty Farm
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 1504
+  :name: the farm bistro
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 282
+  :name: Grass Valley Grains
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 3714
+  :name: Farmhouse Table Catering
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 283
+  :name: Mandarin Hill Orchards
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 284
+  :name: Funky Beet Farm
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 287
+  :name: Willow Creek Ranch
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 1527
+  :name: Mo. Tressler
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 290
+  :name: Side Hill Citrus
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 301
+  :name: Simply Manna Gourmet Mushroom Farm
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 1529
+  :name: Michelle
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 305
+  :name: Pasta Queen
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 315
+  :name: Singer
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 316
+  :name: Singer
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 1530
+  :name: Resort @ Squaw Creek
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 1608
+  :name: Rester & Associates
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 328
+  :name: J. J. Keller & Associates, Inc.
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 321
+  :name: Basil Thai Bristro
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 322
+  :name: Basil Thai Bistro
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 336
+  :name: Fox Banquets & Rivertyme Catering
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 339
+  :name: East Slope Farm
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 347
+  :name: BiggerFarm
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 351
+  :name: Sunny Side Food Co-op
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 356
+  :name: Capital Village Trade Cooperative
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 361
+  :name: Just For You Farm
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 1659
+  :name: Urban Honeybee
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 1531
+  :name: My Home - Jamie Collins
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 1761
+  :name: Whine
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 368
+  :name: Old Town General Store
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 377
+  :name: Tirrell Farmstead Specialties
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 414
+  :name: American Delicacy LLC
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 1533
+  :name: Sam's
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 383
+  :name: Lansing Roots
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 392
+  :name: Full Circle LLC
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 399
+  :name: Macs Market
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 447
+  :name: Felzke Farms
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 453
+  :name: The Coffee Barrel
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 454
+  :name: Upton Farms
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 460
+  :name: The Van Fleet Farm
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 1610
+  :name: Alec Aaron
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 1534
+  :name: Fireside Pizza Company
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 1764
+  :name: Whine
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 1721
+  :name: Max Chophouse
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 1763
+  :name: Whine
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 468
+  :name: Dutch Hill Preserves,co
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 469
+  :name: Stryker Farm
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 470
+  :name: Ray of Sun Farm
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 479
+  :name: Saltopia Artisan Infused Sea Salts
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 622
+  :name: Yogifarmgirl Herbals / HoneyWood Herbals
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 633
+  :name: Silver Birch Kitchens
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 667
+  :name: Easton Salsa Co., LLC
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 3718
+  :name: Theys Orchards
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 786
+  :name: Cranberry Creek Farm
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 913
+  :name: Nature's Harvest
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 3719
+  :name: Erin Neville
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 955
+  :name: Toy Cow Creamery
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 1613
+  :name: North State Grocery
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 236
+  :name: First Rain Farm, Certified Organic
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 3720
+  :name: Bethany Pell
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 466
+  :name: Mishelle Nofziger
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 230
+  :name: Natural Trading Company, Certified Organic
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 1078
+  :name: Ever Yielding Acres
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 1737
+  :name: Kathreen Francis
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 1085
+  :name: Rico Mercantile (RCM)
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 1104
+  :name: The Drouses
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 1097
+  :name: Beaver Meadow Creek Farms
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 1091
+  :name: Osma Acres Farm
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 1142
+  :name: TFHD
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 1147
+  :name: Mountain High Sandwich Co.
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 1723
+  :name: Purchaser
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 1724
+  :name: Max Chophouse
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 1154
+  :name: Richard jackson
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 1678
+  :name: Sugar Pine Cakery
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 1157
+  :name: Greater Lansing Food Bank
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 281
+  :name: Shared Abundance Organic Farm, Certified Organic
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 1583
+  :name: Jil Richards
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 1679
+  :name: Heffron Farms Market
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 1727
+  :name: Brighton Central Schools
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 1509
+  :name: D'lish catering
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 1508
+  :name: Peterson Squad
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 1590
+  :name: Pat and Jean
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 3475
+  :name: Pinewood Farms
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 1681
+  :name: glenshire general store
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 1738
+  :name: Eastern Washington University
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 1809
+  :name: Home
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 1554
+  :name: Apple Blossom Orchard and Market
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 1584
+  :name: The source public house
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 1573
+  :name: BTB
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 1571
+  :name: My Family
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 1682
+  :name: Municipal Software Inc
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 1585
+  :name: Detzi's Tavern Inc
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 1537
+  :name: Cottage 40
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 1622
+  :name: Mid MI Consulting
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 1512
+  :name: Heath Farm / Heaven Bound
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 1687
+  :name: the Soule Domain
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 3823
+  :name: E & R Mathez Farm
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 1623
+  :name: North State Grocery
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 1562
+  :name: Stephanie Singer
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 3728
+  :name: Helen's Hazelnuts
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 1379
+  :name: Abingdon Organics
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 1397
+  :name: River Valley Farm
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 1398
+  :name: Blue Door Garden
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 1768
+  :name: Indiviual
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 3739
+  :name: N/A
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 3191
+  :name: Cranberry Creek Farm
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 1399
+  :name: Mi Tierra Grass Fed/Finished Beef and Lamb
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 1404
+  :name: Appalachian Wildside
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 1406
+  :name: Wardell Farm -Little River Cattle Company
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 1408
+  :name: Laughing Water Farm
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 1410
+  :name: The Baker Homestead
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 1411
+  :name: Ziegenwald Dairy
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 1412
+  :name: Kyhunly Herb Farm
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 1422
+  :name: Copper Creek Green Works
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 1425
+  :name: The Country Market
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 3824
+  :name: Aidan Bazikian
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 3731
+  :name: Lynn Dolan
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 1448
+  :name: The Pillow Farm
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 1462
+  :name: Kickin Chicken
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 1470
+  :name: Heath Farm - Heaven Bound
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 1742
+  :name: The H Hotel
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 1619
+  :name: Koserowski
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 1477
+  :name: Sisters of St. Francis
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 1478
+  :name: Linda J Meyer
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 1479
+  :name: Chris Entenman
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 1480
+  :name: Five Rivers Market
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 3732
+  :name: Kombucha Town
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 3825
+  :name: SIlve Queen Capital
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 1515
+  :name: Black Sheep Market
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 1635
+  :name: Stone Circle Bakehouse
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 1739
+  :name: Eastern Washington University
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 1740
+  :name: Eastern Washington University
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 1489
+  :name: spruce Hill Farms
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 1578
+  :name: homeowner
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 3826
+  :name: Katie Smith
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 1579
+  :name: The Re-Generation
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 1494
+  :name: Ole's Market Manager Test Farm NO SALES
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 3827
+  :name: Test Organization
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 3828
+  :name: Test Organization
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 3740
+  :name: Douglas Realty Group
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 1591
+  :name: Test
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 1516
+  :name: William a romero
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 3752
+  :name: An Ounce of Nutrition
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 3741
+  :name: Mrs.
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 3408
+  :name: Middle Mountain Dairy
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 1777
+  :name: Raymond's Produce
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 1778
+  :name: Raymond's Produce
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 1779
+  :name: Susan Rusbasan
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 1780
+  :name: Rusbasan
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 1710
+  :name: Eat Me Ice Cream
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 1781
+  :name: Richard jackson
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 3829
+  :name: Teff-riffic
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 1580
+  :name: Wooley Farms
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 1813
+  :name: Inn on the Lake
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 1939
+  :name: Masterpieces Ltd.
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 1812
+  :name: Heichel Homestead
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 299
+  :name: Azolla Farm
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 1827
+  :name: ACE NATURAL INC
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 1825
+  :name: Willow Creek Ranch
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 235
+  :name: Super Tuber Farm, Certified Organic
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 1923
+  :name: Tahoe Forest Hospital District
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 1921
+  :name: Chuck Faulkinberry Farm
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 1924
+  :name: ms.
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 1927
+  :name: Lisha Piszczatoski
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 1925
+  :name: KRUGERart
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 1929
+  :name: Home
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 1817
+  :name: buyer
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 1932
+  :name: Steve's School
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 3759
+  :name: kitchen at lagoner farms
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 1850
+  :name: East Lansing Food Co-Op
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 3755
+  :name: Jackie Ramsey
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 1841
+  :name: Urban Eden Farm
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 1842
+  :name: Sagebrush Culinary
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 1881
+  :name: LXC
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 1849
+  :name: Halfmoon Salads
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 1857
+  :name: Ganesh Vegetables and Herbs
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 3830
+  :name: Build It Up East TN
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 1863
+  :name: Bradley's Bistro
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 1882
+  :name: TSF
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 1883
+  :name: HTF
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 1884
+  :name: TSS
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 1885
+  :name: HVF
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 1886
+  :name: DMS
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 1887
+  :name: RBF
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 1889
+  :name: JEF
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 1890
+  :name: ESS
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 1843
+  :name: Adrian's Countryside Retreat
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 1851
+  :name: Melissa Penta
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 1940
+  :name: kyle smith
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 1864
+  :name: Joanne Laurie
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 1860
+  :name: Grim Family Fruit & Timber
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 1888
+  :name: DMF
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 1891
+  :name: VDF
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 1892
+  :name: OVF
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 1893
+  :name: DSS
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 1894
+  :name: JSS
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 1895
+  :name: HV
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 1896
+  :name: LPF
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 3760
+  :name: kitchen at lagoner farms
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 1908
+  :name: hartslocalgrocers
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 1909
+  :name: harts local grocers
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 3756
+  :name: DeCamp Gardens
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 1910
+  :name: bamack
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 1919
+  :name: Rester & Associates
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 1928
+  :name: Amy DeLong
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 1945
+  :name: Kate Seller
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 1946
+  :name: 'Holiday Market #59, Placer Street, Redding'
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 1947
+  :name: Collective Idea
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 1957
+  :name: Telos Partners aka Uncorked, soupa & Petra
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 1969
+  :name: ANNA
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 1970
+  :name: Croz
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 1949
+  :name: prayer sisters
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 1959
+  :name: Kim Coccio
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 1951
+  :name: Joyce M. Jose
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 1953
+  :name: Rust Belt Roastery
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 1974
+  :name: Kay
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 1975
+  :name: Rothhorn
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 1976
+  :name: Rothhorn
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 1977
+  :name: Rothhorn
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 1978
+  :name: Sav-Mor#17, Quincy, Tom Ballew
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 243
+  :name: Riverhill Farm - Certified Organic
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 3749
+  :name: SLO Farmer's Co-op
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 1972
+  :name: Dragon Juice
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 3762
+  :name: Edible Creations
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 3758
+  :name: R's Market
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 1994
+  :name: Holiday Market#34 Cottonwood, Laura Jamerson
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 1989
+  :name: Murawski Farms
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 2003
+  :name: Dow Corning
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 2018
+  :name: Abundance Cooperative Market
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 1743
+  :name: All Good Farms
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 3831
+  :name: build it up (mikki hammitt)
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 2024
+  :name: Chef's Catering
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 2023
+  :name: Thompson Creek Orchard
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 2025
+  :name: Cottonwood Union School District, Glenda Stull
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 2026
+  :name: Go Green Trikes, LLC
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 2013
+  :name: Enterprise Elementary School District
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 2010
+  :name: Debbie and Ryan - Home
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 2017
+  :name: Estella Farms
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 2022
+  :name: Corder Farms
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 2030
+  :name: NCRLT
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 2032
+  :name: Rita O'Brien
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 1914
+  :name: Howard's Natural Produce
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 2036
+  :name: Evergreen USD
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 1855
+  :name: Chico Box & Postal
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 1992
+  :name: Urban Farmacy
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 1765
+  :name: Raymond's Produce
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 76
+  :name: Maise Jane's California Sunshine Products
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 2051
+  :name: Pacific Culture
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 1728
+  :name: Allison Whidden
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 1617
+  :name: Quinn
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 1818
+  :name: Private Buyer
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 1535
+  :name: 'M&R Catering '
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 1176
+  :name: CSA 2013 member
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 2052
+  :name: Watter Farms
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 2055
+  :name: customer
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 2056
+  :name: Brandie U
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 2057
+  :name: Holiday Market#57 Placerville
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 3763
+  :name: Pam Donahue
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 2059
+  :name: Individual
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 1773
+  :name: Buffalo Street Downtown Deli
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 3833
+  :name: La Casa Sena
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 2053
+  :name: Karen' Family
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 2068
+  :name: Chairs Public House
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 2063
+  :name: SBAH Foodservice
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 2066
+  :name: Pansy Blackburn
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 3764
+  :name: Krisztina Gyori
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 2069
+  :name: Nicole's Nice & Nifty Market
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 1943
+  :name: Peone Permaculture
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 2832
+  :name: 'Nails by Jodi '
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 2072
+  :name: Checkerboard Bar
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 2075
+  :name: No organization
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 2087
+  :name: Diane Riba
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 2077
+  :name: Central UP Demo Buyer
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 111
+  :name: True Blue Farms
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 2081
+  :name: Monte Vista
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 2083
+  :name: RMG Maple Products, Inc.
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 2310
+  :name: 'aub and julian '
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 2458
+  :name: Hubbard's Herb Hub
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 2070
+  :name: Next Generation Foods
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 2538
+  :name: Ham Sweet Farm
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 3835
+  :name: "-"
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 2107
+  :name: springport pta
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 2122
+  :name: aaaaaaana
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 2124
+  :name: Personal
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 2125
+  :name: X
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 2123
+  :name: Live54218
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 2108
+  :name: The Urban Mushroom
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 2109
+  :name: My Square Garden
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 2288
+  :name: Susie Island Farms LLC
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 2606
+  :name: Bacio Catering
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 2833
+  :name: mary
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 2141
+  :name: Chico Unified School District
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 2143
+  :name: Alta Mesa
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 2147
+  :name: 'Arkadia Stanczak '
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 2158
+  :name: OCESD District Office, Paul Mabie
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 2540
+  :name: 'Michael Wissel '
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 2818
+  :name: jeanne moore
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 2819
+  :name: Sustainable Food Systems, LLC
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 2834
+  :name: Food hub assistant manager
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 3252
+  :name: Mariah Bloom
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 2106
+  :name: Feed-Me-Ma Unlimited
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 2162
+  :name: Oakdale Heights
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 2164
+  :name: OCESD
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 2168
+  :name: None
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 2170
+  :name: Oakdale Heights
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 2171
+  :name: Oroville Elemtary School District
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 2255
+  :name: Luis O. Riva Saleta
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 2177
+  :name: Wendling household
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 2160
+  :name: Spice Traders Mercantile
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 113
+  :name: Cherry Bay Orchards
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 102
+  :name: Sunset Farm
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 2187
+  :name: Columbia
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 2167
+  :name: Dow Corning
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 2190
+  :name: Emma Lewis-Van Vorst
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 2191
+  :name: Murdock Cafeteria
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 3768
+  :name: NC
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 2193
+  :name: Heather's
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 2206
+  :name: Steelhead Bar & Grille
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 2314
+  :name: Orland Farmstead Creamery
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 2208
+  :name: Leslie Uke
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 2541
+  :name: Larry Davis-Swing
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 2213
+  :name: Town of Truckee
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 2214
+  :name: OUSD Fairview School
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 2218
+  :name: Montpelier Chamber
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 2215
+  :name: Slagle's Family Farm
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 2292
+  :name: Miss
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 2252
+  :name: Jesus Center Community Farm
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 2453
+  :name: Down to Earth Whole Foods, Inc.
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 3837
+  :name: Test
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 2820
+  :name: Excited College Kid
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 2822
+  :name: Future technologies
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 2823
+  :name: 'highland hospital '
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 2911
+  :name: Fake Org
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 3356
+  :name: Becket's restaurant & ski's grocery
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 2293
+  :name: Jessica White
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 2347
+  :name: none
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 2341
+  :name: Manito Tap House
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 3769
+  :name: Maggies Farm
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 2727
+  :name: Virginia Street Farm
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 2836
+  :name: Cute Little Goats Virtual Co-op
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 2824
+  :name: Oogolow, DBA The OVEN
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 2937
+  :name: 2Vine
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 3156
+  :name: Dorcas' Delectable Delights
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 3253
+  :name: Vern's Veggies and More!/Spencer Heritage Farm
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 2294
+  :name: Jessica White
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 2342
+  :name: Elras
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 2188
+  :name: PNW Co-op Specialty Foods
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 2350
+  :name: Jackson household
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 2221
+  :name: HawkHavenHavanese
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 2222
+  :name: Wilczek
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 2285
+  :name: cunninghams restaurant
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 2938
+  :name: Miss Ing et al
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 2837
+  :name: Heartwood
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 3238
+  :name: Bell Prairie Farm
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 3610
+  :name: P & S Solutions Inc
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 3624
+  :name: BikeDenver
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 2230
+  :name: golden harvest
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 2225
+  :name: Saranac Public House
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 2226
+  :name: Lover of bread =)
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 2227
+  :name: My family
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 2228
+  :name: Bon Appetit
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 2235
+  :name: 'Restoration Agriculture International, Inc. '
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 2256
+  :name: "-"
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 2286
+  :name: Jeff&Carmen&Sons
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 2295
+  :name: 'Darek Davidson '
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 2343
+  :name: Dawn Hockman
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 2238
+  :name: HighCross Farm
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 1445
+  :name: Mountain Top Farms
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 2231
+  :name: Rocko's RADicchio Farm & Other Fine Products
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 2261
+  :name: keta
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 2264
+  :name: waterfront kitchen
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 2265
+  :name: Jennifer McNeill
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 2266
+  :name: eesd
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 2267
+  :name: Ullom
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 2269
+  :name: Shae
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 2270
+  :name: Nine Mile Falls School District Food Service
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 2273
+  :name: Cure Cottage Foods
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 2263
+  :name: Cooper Creek Farm
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 2033
+  :name: triple J farms
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 2280
+  :name: Shasta Union High School District
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 1431
+  :name: Willow Bend Farm
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 2284
+  :name: cunninghams restaurant
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 2279
+  :name: Full Bushel Farm
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 2281
+  :name: Mike Rann
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 2268
+  :name: Farm Star Pizza
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 1444
+  :name: Spring Ridge Farms
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 2296
+  :name: Self
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 2305
+  :name: Bellin Health
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 2300
+  :name: 'Fox Valley Technical College '
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 2303
+  :name: Oakdale Heights
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 2309
+  :name: My House
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 2301
+  :name: organic mushrooms
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 2302
+  :name: Bodacious Berries, Fruits and Brews
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 2320
+  :name: Cindy Balhorn
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 2298
+  :name: GBAPS Food Service Department
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 2312
+  :name: Rachel Roberts
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 2316
+  :name: veraci pizza
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 2328
+  :name: Test Seller
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 2317
+  :name: Peter Egan
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 2322
+  :name: Bliss Avocados
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 2324
+  :name: Orderboard's Fish Company
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 2323
+  :name: Pete's Produce
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 2330
+  :name: Eaton Conservation District
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 2327
+  :name: Test Buyer
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 2331
+  :name: Test Seller 2
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 2335
+  :name: Lompoc Test Farm
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 2334
+  :name: Santa Barbara Test
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 2333
+  :name: San Diego Seller
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 2329
+  :name: Red Wheelbarrow Produce
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 71
+  :name: 'Pyramid Farms '
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 2351
+  :name: Pyramid Farms
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 2581
+  :name: Tom O'Malley
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 2729
+  :name: Willowbrook Farm
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 2841
+  :name: Buddha Belly Acres
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 2352
+  :name: Deer Park Homemakers
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 3239
+  :name: Candy Repsher
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 2940
+  :name: CRC
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 2354
+  :name: D'lish catering LLC
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 2355
+  :name: turkeyman
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 2356
+  :name: School District of West De Pere
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 2840
+  :name: Buddha Belly Acres
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 2730
+  :name: RimRock Ranches
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 3004
+  :name: Alliance for Sustainable Colorado
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 3005
+  :name: Mariah Shell
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 3064
+  :name: Nicole Brush
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 2359
+  :name: Bobbi Jo Hopstetter
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 2361
+  :name: Morrow household
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 2362
+  :name: N/A
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 2363
+  :name: Ashwaubenon School District
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 2365
+  :name: De Pere School District
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 2446
+  :name: Taryn Tillou
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 2374
+  :name: Lisa Newberry
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 2373
+  :name: Sleepy Hollow Farm & CSA
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 2357
+  :name: Howard-Suamico School District
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 2358
+  :name: Pulaski Community School District
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 2731
+  :name: hvcb
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 2378
+  :name: Ariza Farm
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 2389
+  :name: Super
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 2383
+  :name: Clare Garza
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 2384
+  :name: princeton univ press
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 2392
+  :name: Self
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 402
+  :name: Craft & Mason Coffee Roasters
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 2388
+  :name: Harpstrings Wellness Studio
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 84
+  :name: 'Divide Ranch '
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 2379
+  :name: Gonzaga University School of Business
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 2905
+  :name: Michaelle Rehmann
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 2943
+  :name: CSU Chico
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 2397
+  :name: Jss
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 2406
+  :name: Maria DelGrosso
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 2906
+  :name: Robin Lentz
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 2413
+  :name: Famiglia Madaro
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 2414
+  :name: North Rose Wolcott CSD
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 2415
+  :name: Francis Street Co-op
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 2396
+  :name: Nutty Goat
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 2417
+  :name: Clair Tappaan Lodge
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 2418
+  :name: b
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 1770
+  :name: Joseph's Grainery
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 2382
+  :name: Anya Farms, LLC
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 2423
+  :name: Trillium Wood Farm
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 2907
+  :name: willits nursery
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 2404
+  :name: Gonzaga NVL
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 3065
+  :name: Chala Mohr
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 1954
+  :name: Jackson Farm
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 3007
+  :name: JVA Consulting
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 3057
+  :name: 'Restoration Agriculture Development, Inc. '
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 2435
+  :name: Elena Tsoy
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 2436
+  :name: self
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 2439
+  :name: Earth Fare
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 2442
+  :name: Good Stead Farm
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 2445
+  :name: Maxine Rusbasan
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 3008
+  :name: Lauren Mansanares
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 3223
+  :name: 'Amanda Gonzalez '
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 3009
+  :name: Hazon
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 3069
+  :name: Jubilee Orchard
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 2918
+  :name: Shine and Rise Farm
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 2467
+  :name: Brandon Nieves
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 3010
+  :name: MBO
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 2470
+  :name: cultivating community north valley
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 2471
+  :name: Roxanne
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 2472
+  :name: Roxanne
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 2474
+  :name: Lori DeWitt
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 2475
+  :name: Smiths
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 2476
+  :name: Nicole Parry
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 2479
+  :name: HankyBook
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 2481
+  :name: Evans Family
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 2919
+  :name: Amy Schatz
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 2468
+  :name: Johnnie's Restaurant
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 2483
+  :name: Rita O'Brien
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 2487
+  :name: Lisa Levine
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 2490
+  :name: Pocono Medical Center
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 2491
+  :name: Live
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 3775
+  :name: LAURA CASTELLANO
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 3776
+  :name: n/a
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 2549
+  :name: Danielle Sandt
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 2550
+  :name: Savanna Institute
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 2551
+  :name: Midwest Agriculture & Restoration Services LLC
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 2552
+  :name: Old Town General Store
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 2557
+  :name: Aaron Kelimakar, LLC
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 2559
+  :name: Constantine Giannakis
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 1834
+  :name: BSB Farms
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 2556
+  :name: RIT- Grace Watson Dining Hall
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 2558
+  :name: Shared Abundance Organic Farm
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 3012
+  :name: susanna nycz
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 3013
+  :name: Megan Miller
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 3224
+  :name: None
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 3240
+  :name: Vincent
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 3494
+  :name: Umbella Farm
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 2560
+  :name: Tatiana Chaplar
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 3777
+  :name: Birroteca
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 2569
+  :name: Not an Organization
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 2570
+  :name: Thomas Foley
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 2572
+  :name: Manna Mills
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 2575
+  :name: Ironstone Creamery & Farm
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 2598
+  :name: 'Effortlessly Healthy '
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 2599
+  :name: Cephos
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 2600
+  :name: 'Dogwood BYOB '
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 2602
+  :name: Green Dragon
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 2608
+  :name: Aramark- Paychex
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 2609
+  :name: 'Squaw Valley Academy '
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 2610
+  :name: theresa kane
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 2612
+  :name: cindy perschy
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 2614
+  :name: The Fresh Market
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 3225
+  :name: Andrea Rosolie
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 2568
+  :name: S & P Homestead Farm
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 2749
+  :name: Tony Felder
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 925
+  :name: Blue Ridge Herb Farm/Mountain Ridge Coffee & Roasters
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 3014
+  :name: Snow Household
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 3227
+  :name: Ivette Gonzalez
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 3162
+  :name: Hutton Hotel
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 3309
+  :name: Harvest Life
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 3493
+  :name: 'Kloverdalen Farm '
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 2638
+  :name: Peck of Pickles, LLC
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 2622
+  :name: Personal
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 3163
+  :name: Silo
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 2628
+  :name: Boetjes Food
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 2631
+  :name: McGraw household
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 2634
+  :name: Blyler Fruit Farm
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 2636
+  :name: Neighborhood Partnerships
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 2637
+  :name: Eirene Charney
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 2642
+  :name: Underwood Forest Farms (soon to be)
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 2644
+  :name: Chicks of the Wild West
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 2646
+  :name: Red Spire Permaculture
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 2648
+  :name: Not an organization
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 2653
+  :name: Westside Shelter
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 2651
+  :name: Elemental Food Products
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 2647
+  :name: Circle Union Farm
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 2649
+  :name: Grace Watson
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 2650
+  :name: Grace Watson
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 3226
+  :name: domus
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 2640
+  :name: Beatniks
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 2948
+  :name: Mark Shepard
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 3015
+  :name: University of Denver
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 3075
+  :name: Test Customer 2
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 3348
+  :name: Lazy Drone Farm
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 3390
+  :name: Eve Wenger
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 3461
+  :name: David Cohen
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 3778
+  :name: Aramark Paychex Sawgrass
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 2655
+  :name: Savanna Gardens LLC
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 2657
+  :name: Amy's Home
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 3779
+  :name: Aramark paychex HQ
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 2661
+  :name: East Valley School District
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 2662
+  :name: Greg Yuen MD Inc.
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 2663
+  :name: Victoria Henderson
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 2664
+  :name: April Sage
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 2665
+  :name: Asma Nisar
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 2667
+  :name: Artemisia's Forest Garden Nursery
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 2673
+  :name: Two Pines Farm
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 2928
+  :name: Tabitha
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 3780
+  :name: Aramark Paychex Webster
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 2678
+  :name: Brittany
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 2676
+  :name: Thomas Hanna
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 2677
+  :name: Dad
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 3017
+  :name: Laura Pescador
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 3077
+  :name: Tracy Kaye
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 2672
+  :name: Half Barn Farm
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 2035
+  :name: Spokane's Family Farm
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 3228
+  :name: Pat Bratina
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 3609
+  :name: CSUS Hoophouses for Health
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 3612
+  :name: The Balanced Body
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 2680
+  :name: Headwater Guest
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 2681
+  :name: Back to nature (me)
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 2682
+  :name: Radburn LLC
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 2686
+  :name: Swillburger / The Playhouse
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 3781
+  :name: Schaffer's Mill Golf Club
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 2688
+  :name: Paul Lewis
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 3095
+  :name: Nashville Farmers Market
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 3018
+  :name: Evolve to LOVE, LLC
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 3229
+  :name: Shana Kisatsky
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 3244
+  :name: Stasia Raines
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 3463
+  :name: Doobyhan Collective
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 3676
+  :name: Lee Amoroso
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 2425
+  :name: Westside Domestic Violence Shelter
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 2691
+  :name: Mary Alice Creasy
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 2699
+  :name: plants by mel
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 2700
+  :name: Laura
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 2701
+  :name: Kathy Sanay
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 2706
+  :name: E.W.U.
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 3782
+  :name: Guidera House
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 2724
+  :name: War Memorial Hospital
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 2710
+  :name: Center for Healthy Communities - SNP
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 2713
+  :name: Food Services
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 2714
+  :name: Jessica Pollman
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 2694
+  :name: Trish
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 2719
+  :name: Kaukauna Coffee & Tea
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 2720
+  :name: william hulings
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 2725
+  :name: Virginia Street Farm
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 2726
+  :name: Virginia Street Farm
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 2704
+  :name: Goodwill Grows
+  :balanced_customer_uri: "/v1/customers/CU4ClF6zW9BtmwgdJLAZcnqi"
+  :balanced_customer_id: CU4ClF6zW9BtmwgdJLAZcnqi
+  :balanced_underwritten: false
+- :organization_id: 2750
+  :name: Bolles Family
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 3783
+  :name: Pronghorn Golf Resort
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 2752
+  :name: TechArt
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 2753
+  :name: Boone Street Market
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 2816
+  :name: William Higgins
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 2831
+  :name: Deanna Meehan
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 3019
+  :name: Trevor Skaggs
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 2929
+  :name: Tim & Sylvia
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 2925
+  :name: Emilie Giordano
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 3231
+  :name: Patricia Kozelnik
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 3245
+  :name: Nicole Shook
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 3350
+  :name: Georgia Bulko
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 3362
+  :name: Ed Miedema
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 3627
+  :name: 'Jen McCabe '
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 3677
+  :name: Wild Peace Farm
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 3691
+  :name: Camacho Insights
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 2778
+  :name: Larry Baner
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 2779
+  :name: Auld Dubliner
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 2780
+  :name: Dancing frog farm
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 2787
+  :name: MisterPureServices.Inc
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 2784
+  :name: steven
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 2785
+  :name: Michigan Department of Natural Resources
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 2786
+  :name: Dave Crawford
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 2789
+  :name: Bernadette Ali
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 2793
+  :name: personal home residence
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 2802
+  :name: Olaitan
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 2805
+  :name: The Crest Cafe & Catering
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 2821
+  :name: Brenda Snider
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 2790
+  :name: ChaCha
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 2781
+  :name: Waimanalo Learning Center
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 3785
+  :name: Jeni Rinner
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 3246
+  :name: EarthLinks
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 2853
+  :name: Priya Chandnani
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 2856
+  :name: Anna Egorova
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 2794
+  :name: Chico Creek Paleo Co
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 2858
+  :name: 'Kaitlin Papson '
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 2860
+  :name: Ray Bendas
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 3678
+  :name: 'Kristy Klein '
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 2861
+  :name: Eileen Papson
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 2864
+  :name: R.Neuner Consulting
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 2865
+  :name: Adam Wagner
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 2868
+  :name: Jamie Kinsel
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 2867
+  :name: Kate Ball
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 2857
+  :name: 'Jess Geanoules '
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 2791
+  :name: 'Gaines Ranch '
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 2863
+  :name: Toni Bowman
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 2933
+  :name: Robyn Venturini
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 2932
+  :name: Gill St Bernards
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 3232
+  :name: Young Life
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 3247
+  :name: EarthLinks
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 3467
+  :name: Sky Farm
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 3628
+  :name: The Wine Market Bistro
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 3692
+  :name: Suzanne Sena
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 2454
+  :name: plants by mel
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 2934
+  :name: Flocktown Farm
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 3072
+  :name: Val & Sue
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 3094
+  :name: Nashville Farmers Market
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 3210
+  :name: Scissortail Farms
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 3495
+  :name: Caren Laboy
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 3629
+  :name: The Wine Market Bistro
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 2903
+  :name: BW Farms
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 3675
+  :name: Actual Food Nashville
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 3784
+  :name: Paul Cortese
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 2880
+  :name: RHG
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 2733
+  :name: Marigold Farm
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 2897
+  :name: TemetUSA
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 2914
+  :name: Cloverland Farm
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 2924
+  :name: Lantern Taphouse
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 2707
+  :name: Irvine Ranch
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 2939
+  :name: Test Org
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 2951
+  :name: 'Martin Gonzalez '
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 2953
+  :name: Don Quijote USA
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 3020
+  :name: Special Lady's Gourmet Spreads
+  :balanced_customer_uri: "/v1/customers/CU2lgOugkOk7amhornT3Rwph"
+  :balanced_customer_id: CU2lgOugkOk7amhornT3Rwph
+  :balanced_underwritten: false
+- :organization_id: 2959
+  :name: Ferrara Family
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 2960
+  :name: 'Anne Ridge Farms '
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 2972
+  :name: Stephanie Turco
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 2961
+  :name: Cynthia Espinosa
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 2973
+  :name: Michelle Sturm
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 2958
+  :name: Gill St. Bernard
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 2962
+  :name: GSB
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 2974
+  :name: Shelley Herbert
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 2967
+  :name: Erin Nakashima
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 2966
+  :name: BuCu West
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 2968
+  :name: plants by mel
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 2977
+  :name: Strickland Family
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 2978
+  :name: Kevin & Elin Curry
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 2976
+  :name: Yogarden Life
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 2981
+  :name: Energy Resources
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 2982
+  :name: Eliot Hoyt
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 2991
+  :name: Venner Family
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 3000
+  :name: Glorious Gluten Free Foods
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 3001
+  :name: Kaitlin Fischer
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 3002
+  :name: Alyssa Kopf & Megan Devenport
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 2975
+  :name: Sarah Marino
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 2956
+  :name: 'Mary Spadaro '
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 2979
+  :name: Cyrus Howe
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 3788
+  :name: NA
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 3027
+  :name: Northstar California
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 3100
+  :name: Jess Deugan
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 2079
+  :name: Ancient Traditions
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 3469
+  :name: self
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 3217
+  :name: Sonja Semion
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 3233
+  :name: Rocky Mountain Institute
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 3799
+  :name: Family
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 3034
+  :name: Allybelle Investments
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 3011
+  :name: Grace and Life Church
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 3033
+  :name: Patrice Hauptman
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 3036
+  :name: Mary Yost
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 3037
+  :name: Schnell Farms
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 2376
+  :name: Shambani
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 3048
+  :name: Deaconess Hospital
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 3044
+  :name: Danielle Short
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 3789
+  :name: Katie's Catering
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 3046
+  :name: LB
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 3047
+  :name: Kelly Menegocci
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 3049
+  :name: UC Davis Tahoe Environmental Research Center
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 3043
+  :name: Kim Byrne
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 3051
+  :name: chef at large
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 3032
+  :name: Victor Central Schools
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 3052
+  :name: Sarah Bay
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 3053
+  :name: Amber & Brian Palmeri
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 3054
+  :name: Sembrando Semillas San Luis
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 3055
+  :name: Rebecca Mayer
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 3058
+  :name: Deanna Butterbaugh
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 3059
+  :name: Greg Schreiber
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 3060
+  :name: Janine Vanderburg
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 3061
+  :name: The Neighborhood Monkeys
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 3062
+  :name: Scott and Lisa Goldy
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 3800
+  :name: Faison Zutavern
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 3103
+  :name: Mimis Meatballs
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 3107
+  :name: Amanda Lum
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 3109
+  :name: Bambi Lipsey
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 3114
+  :name: Christine Nguyen
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 3376
+  :name: " Amber"
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 3115
+  :name: Myself
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 3116
+  :name: me
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 3120
+  :name: Jennifer Fogg
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 3790
+  :name: Lutz Family
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 3118
+  :name: Andrea Mayer
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 3391
+  :name: Waseda Farm Market
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 3121
+  :name: MaryLauren Agee
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 3122
+  :name: Elysha Zaide
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 3119
+  :name: Tiffany Reidinger
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 3157
+  :name: Jeff Girbach
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 3497
+  :name: Clear Creek Organics
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 3111
+  :name: 'Sheryl Kincaid '
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 3365
+  :name: The Kohala Center
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 3123
+  :name: Liberty Naturals
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 3791
+  :name: Shontael Elward
+  :balanced_customer_uri: "/v1/customers/CU3WOQAjByYzV8Ma3lOPxYdI"
+  :balanced_customer_id: CU3WOQAjByYzV8Ma3lOPxYdI
+  :balanced_underwritten: false
+- :organization_id: 3130
+  :name: Liberty Naturals
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 3131
+  :name: Liberty Naturals
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 3132
+  :name: Schoen Valley Farm
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 3126
+  :name: Mary Jo Reid
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 3125
+  :name: Cassandra Faraci
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 3127
+  :name: Barnum resident
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 3135
+  :name: Live Well Herb Gardens
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 3136
+  :name: Leslie Moser
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 3802
+  :name: Stacie Dosch
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 3149
+  :name: USPS
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 3151
+  :name: Le Sel
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 3152
+  :name: Anna Rouvillois
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 3153
+  :name: Jessica Simmons
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 2913
+  :name: Ancient Paths Poultry
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 3124
+  :name: JS Goodman
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 3792
+  :name: Black Estates
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 3167
+  :name: Ireland-Grantham Household
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 2895
+  :name: TurkeyTail Farm
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 3154
+  :name: Michele Renna
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 3178
+  :name: Suzann Balian
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 3803
+  :name: Stacie Dosch
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 3177
+  :name: Sandy Brook Farm
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 3170
+  :name: Roots True Foods LLC
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 3168
+  :name: Pro Vita
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 3166
+  :name: timbertop farm
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 3169
+  :name: Timothy Lise
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 3180
+  :name: DexSys
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 3236
+  :name: Caroline Savery
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 3251
+  :name: Writeforyoucolorado
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 3366
+  :name: Matthew acevedo
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 3377
+  :name: Elisa Tukeva
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 3392
+  :name: Lum Enterprises
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 3498
+  :name: Green Arrow Farm
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 2728
+  :name: Greenwood Gardens
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 3193
+  :name: Avo
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 3182
+  :name: ReVision
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 3183
+  :name: Anthony Pratt
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 3187
+  :name: Colorado Forward
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 3194
+  :name: Heather Somerville
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 3206
+  :name: Thistledown Farms Specialty Meats LLC
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 3195
+  :name: Brooke Kelman
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 3793
+  :name: Edible Creations
+  :balanced_customer_uri: "/v1/customers/CUG5WDTFAksOxvk4YCNMjqv"
+  :balanced_customer_id: CUG5WDTFAksOxvk4YCNMjqv
+  :balanced_underwritten: false
+- :organization_id: 3196
+  :name: Revision
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 3192
+  :name: Alana berland
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 3197
+  :name: RE:Vision
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 3204
+  :name: Daily Juice
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 3207
+  :name: jim wiehe
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 3208
+  :name: Foodie Fiction
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 3209
+  :name: LaDiva Dietitian
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 3211
+  :name: Tyler Schrock
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 3378
+  :name: Fork & Spoon
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 3216
+  :name: N/A
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 3257
+  :name: Constantino's Market
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 3258
+  :name: revision
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 3259
+  :name: '1950'
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 3261
+  :name: Essential Health
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 3263
+  :name: Jenkins family
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 3264
+  :name: Cooking Matters Colorado
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 3265
+  :name: Taylor Moellers
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 1376
+  :name: TNT Farm N Greenhouse
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 3267
+  :name: Cottonwood Hollow Foods
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 3805
+  :name: Two Boots Baltimore
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 3272
+  :name: tree philantropist
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 3292
+  :name: 'Label 7 Napa Eatery & Bar '
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 3371
+  :name: Nobriga Farms
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 3806
+  :name: Two Boots Baltimore
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 3275
+  :name: P2Binvestor
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 3276
+  :name: Miss Ing et al
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 2946
+  :name: Diana Olsen
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 2944
+  :name: Greystones.org
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 3278
+  :name: Seed Restaurant
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 3795
+  :name: Rolling Hills Farm
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 3280
+  :name: the nook, neighborhood bistro
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 3281
+  :name: Forest Garden Growers
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 3282
+  :name: Ace of Spades Farm
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 3283
+  :name: Blue Sky Stewardship
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 3284
+  :name: n/a
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 3285
+  :name: Alan Wongs Restaurant
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 3288
+  :name: Jamie Lollback
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 3289
+  :name: Mel
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 3354
+  :name: Shared Growth Cooperative
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 3368
+  :name: Norge
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 3369
+  :name: Beth Cohen
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 3501
+  :name: Peter and Martha
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 3277
+  :name: John Fornarola
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 3298
+  :name: Minor home products
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 3294
+  :name: Pint and Jigger
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 3279
+  :name: Winniford Family Farm LLC
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 3299
+  :name: The MarQ Restaurant
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 3293
+  :name: Lucero Household
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 3297
+  :name: Carol Tumaylle
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 3355
+  :name: Self
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 3372
+  :name: Tyler Hegemann
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 3296
+  :name: Sustainable Food Center
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 3798
+  :name: Alexander Wojcik
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 3305
+  :name: CU Denver School of Public Hea
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 3306
+  :name: Aged Artesians Corp.
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 3307
+  :name: Zac Cogley
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 3311
+  :name: Oceanic Partners Ltd
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 3308
+  :name: Heidi Wohlleb
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 3312
+  :name: Mana Micro Farm
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 3313
+  :name: Hanschen Family
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 3315
+  :name: robert richardson
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 3337
+  :name: Easy Grubs LLC
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 3347
+  :name: Teeka
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 3393
+  :name: All Seasons Farm
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 3395
+  :name: Galloway Mushrooms
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 3397
+  :name: Exner Family
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 3808
+  :name: Capay Valley Farm Shop
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 3410
+  :name: Lacey Ingrao
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 3404
+  :name: 'Sugar Camp Farm '
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 3411
+  :name: Kaimana Farm Cafe
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 3401
+  :name: Barkery & Company, LLC
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 3399
+  :name: Amy Moorby
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 3394
+  :name: Harrington farm
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 3406
+  :name: Bevy LLC
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 3407
+  :name: Brendan OShaughnessy
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 3423
+  :name: Shelley campbell
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 3417
+  :name: Tamarack Public House
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 3419
+  :name: Niki Hawthorne
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 3421
+  :name: Vintage Cave Honolulu
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 3511
+  :name: Camp Ramaquois
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 3422
+  :name: 'Beth Manning '
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 3614
+  :name: Wilbur Davis Studios
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 1859
+  :name: The Piggery inc.
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 3424
+  :name: Barbara Mariner
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 3425
+  :name: M/Body
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 3436
+  :name: Ronald Rafferty
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 3430
+  :name: Radisson Hotel Rochester Riverside
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 3437
+  :name: Spam Test
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 3429
+  :name: Hometown Harvest
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 3438
+  :name: Chartwells
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 3451
+  :name: 'Test Resturant '
+  :balanced_customer_uri: "/v1/customers/CU3pmaNBzJlv3qTcsiOZfuMW"
+  :balanced_customer_id: CU3pmaNBzJlv3qTcsiOZfuMW
+  :balanced_underwritten: false
+- :organization_id: 3433
+  :name: James Ducroiset
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 3435
+  :name: Town Hospitality Group
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 3443
+  :name: Megan Hart Ness
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 3427
+  :name: Thrive Cafe
+  :balanced_customer_uri: "/v1/customers/CU3P4dCTHMBg8Kfssv4xrgV1"
+  :balanced_customer_id: CU3P4dCTHMBg8Kfssv4xrgV1
+  :balanced_underwritten: false
+- :organization_id: 3440
+  :name: 'Gill st Bernard''s '
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 3439
+  :name: Lourdes Inoa
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 3441
+  :name: CorePower Yoga
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 75
+  :name: Berkeley Olive Grove
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 3445
+  :name: Carla Morello Schmidt
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 3446
+  :name: Debbie Helder
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 3447
+  :name: Tracy Schauer
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 3453
+  :name: Full Cirle Farm
+  :balanced_customer_uri: "/v1/customers/CU6mlyfgu1gOTU2CYV7VJN55"
+  :balanced_customer_id: CU6mlyfgu1gOTU2CYV7VJN55
+  :balanced_underwritten: false
+- :organization_id: 3452
+  :name: Jennifer Vande Weghe
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 3459
+  :name: Parts & Labor
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 3457
+  :name: Test Customer 7
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 3455
+  :name: Kozelnik Family
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 3460
+  :name: 'McCann''s Local Meats '
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 2835
+  :name: Green Rows Farm
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 3478
+  :name: Prospect Rock Permaculture
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 3479
+  :name: 'University of Rochester '
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 3812
+  :name: 'Joe On The Go Cafe '
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 3481
+  :name: The Vault
+  :balanced_customer_uri: "/v1/customers/CU7z7PqiYx3cAsPFjMlfXon0"
+  :balanced_customer_id: CU7z7PqiYx3cAsPFjMlfXon0
+  :balanced_underwritten: false
+- :organization_id: 3484
+  :name: Grassland Organic Farm
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 3489
+  :name: Ripple Farm
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 3490
+  :name: Kloverdalen Farm
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 3492
+  :name: 'Kloverdalen Farm '
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 3491
+  :name: Ripple Farm
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 3634
+  :name: Maryetta Rivas
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 3636
+  :name: Batteese Creek Farm
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 3480
+  :name: Brady Tavern
+  :balanced_customer_uri: "/v1/customers/CULvWctJ1isYN29HMcTXbc"
+  :balanced_customer_id: CULvWctJ1isYN29HMcTXbc
+  :balanced_underwritten: false
+- :organization_id: 3512
+  :name: Grassland Organic Farm
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 3464
+  :name: Doobys
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 3515
+  :name: Cafe Cito
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 3514
+  :name: Don Hannis Foundations Preschool
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 3517
+  :name: RASTAFARMI
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 3513
+  :name: Peg Van Brunt
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 3516
+  :name: Common Crumb Bakery
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 3567
+  :name: Three Springs Fruit Farm
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 3565
+  :name: Roberts Roost Farm
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 3635
+  :name: 'Bean Pole Farm '
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 3814
+  :name: Turlock USD
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 3813
+  :name: La Mo's Cafe
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 3474
+  :name: Farmacy Tower Gardens
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 3518
+  :name: Capay River Grange
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 3519
+  :name: 'Patient Meadows '
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 3505
+  :name: Kate's Kitchen
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 3520
+  :name: Leo and Betsy Dion
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 3522
+  :name: Northern California Ecologhical Garden
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 3534
+  :name: 'Herb & Soul '
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 3535
+  :name: The Farm on Cragged Mountain LLC.
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 3528
+  :name: Highland Realm
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 3530
+  :name: Fairview Cottage
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 3527
+  :name: Margaret O'Connell
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 3533
+  :name: fig and miel catering
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 3545
+  :name: luke polles
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 3454
+  :name: Waihuena Farm
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 3544
+  :name: Pieceful Worlds Clothing
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 3541
+  :name: mark golden
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 3546
+  :name: Tate and Tate Catering
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 3542
+  :name: Pieceful Worlds Clothing
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 3537
+  :name: Oahu Fresh
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 3547
+  :name: Clementine
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 3536
+  :name: FRESH Fine Real Edibles Sow Happiness
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 3543
+  :name: Pen & Quill
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 3553
+  :name: Myrna Camacho
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 3554
+  :name: Oak Spring Farm
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 3682
+  :name: 'AS Sustainability '
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 3569
+  :name: Moodytown Gardens
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 3564
+  :name: Sweet Nature Farm
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 3568
+  :name: Calvert's Gift Farm
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 3566
+  :name: Rocky Glade Farm
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 3570
+  :name: 'Highland Realm '
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 3574
+  :name: kp cafe and catering company
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 3577
+  :name: Andrew Muth
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 3576
+  :name: The Summit at Brighton
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 3578
+  :name: Local Pie
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 3580
+  :name: One Drop Farm
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 3581
+  :name: Echo Rivera
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 3815
+  :name: Manteca USD
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 3573
+  :name: Calvert's Gift Farm
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 3575
+  :name: Calvert's Gift Farm
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 3571
+  :name: Alex
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 3590
+  :name: Jeremy Katz
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 3593
+  :name: Plantbar, LLC
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 3597
+  :name: Woodberry Pantry
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 3683
+  :name: 'AS Sustainability '
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 3598
+  :name: Little Gunpowder Farm
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 3472
+  :name: Berean Hill Farm
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 3601
+  :name: The Fat Greek
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 3604
+  :name: Marlon Calliste
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 3596
+  :name: 'UC Cooperative Extension '
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 3611
+  :name: Wild Peace Farm
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 3641
+  :name: 'Aromes restaurant '
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 3638
+  :name: Shelby Bennett
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 3639
+  :name: Sustainable Long Island
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 3426
+  :name: Ramble Hill Farm
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 3640
+  :name: spoon restaurant
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 3642
+  :name: 'Aromes restaurant '
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 3643
+  :name: Pearlstone Center
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 3647
+  :name: Robin bandzi
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 3648
+  :name: Robin bandzi
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 3684
+  :name: Paige Filice
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 3644
+  :name: Foxglove Farms
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 1836
+  :name: Crosswinds Farm & Creamery
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 3686
+  :name: Eleven Lakes Restaurant Group
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 3606
+  :name: Shady Lane Farm
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 3816
+  :name: Amber Alarid
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 3663
+  :name: The Souper Wagon
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 3650
+  :name: Talmar Gardens & Horticultural Therapy Center
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 3651
+  :name: Shanan Lopez
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 3652
+  :name: The Wine Market Bistro
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 3654
+  :name: Friendly Home
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 3662
+  :name: Pure Foods Home Delivery
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 3658
+  :name: Valley Services (Representing Meals on Wheels)
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 3665
+  :name: 'David Jacobus, Esq. '
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 3667
+  :name: Tara Glasgow
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 3668
+  :name: Tara Glasgow
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 3674
+  :name: 'Caggiano '
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 3695
+  :name: HEX Ferments
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 1912
+  :name: Urban Eden Farm
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 3696
+  :name: Connor Family
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 2348
+  :name: JP's Farms
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false
+- :organization_id: 3688
+  :name: Sprout Head Greens
+  :balanced_customer_uri: 
+  :balanced_customer_id: 
+  :balanced_underwritten: false

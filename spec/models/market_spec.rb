@@ -542,4 +542,39 @@ describe Market do
       expect(market.local_orbit_seller_and_market_fee_fraction).to eq "0.03".to_d
     end
   end
+
+  describe "#credit_card_payment_fee_payer" do
+    let(:market) { create(:market) }
+    [
+      [{ credit_card_seller_fee: 0, credit_card_market_fee: 0 }, 'seller' ],
+      [{ credit_card_seller_fee: 0, credit_card_market_fee: 1 }, 'market' ],
+      [{ credit_card_seller_fee: 1, credit_card_market_fee: 0 }, 'seller' ],
+      [{ credit_card_seller_fee: 1, credit_card_market_fee: 1 }, 'market' ],
+    ].each do |(fees, payer)|
+      it "returns #{payer.inspect} when fees are #{fees.inspect}" do
+        market.update(fees)
+        expect(market.credit_card_payment_fee_payer).to eq payer
+      end
+    end
+  end
+
+  describe "#set_credit_card_payment_fee_payer" do
+    let(:market) { create(:market) }
+    [
+      [{ credit_card_seller_fee: 0, credit_card_market_fee: 1 }, 'market' ],
+      [{ credit_card_seller_fee: 1, credit_card_market_fee: 0 }, 'seller' ],
+    ].each do |(fees, payer)|
+      it "sets the fees to #{fees.inspect} when set to #{payer.inspect}" do
+        market.set_credit_card_payment_fee_payer(payer)
+        fees.each do |field,val|
+          expect(market[field]).to eq val
+        end
+        expect(market.ach_market_fee).to eq 0
+        expect(market.ach_seller_fee).to eq 0
+      end
+    end
+  end
+
+
+
 end

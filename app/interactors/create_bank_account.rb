@@ -2,7 +2,9 @@ class CreateBankAccount
   include Interactor
 
   def perform
-    context[:bank_account] = entity.bank_accounts.create(bank_account_params)
+    params = bank_account_params.dup
+    params.delete(:stripe_tok)
+    context[:bank_account] = entity.bank_accounts.create(params)
 
     unless context[:bank_account].valid?
       context.fail!

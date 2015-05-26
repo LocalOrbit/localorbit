@@ -27,38 +27,51 @@
       </div>
     </fieldset>
 
-    <fieldset>
-      <legend>Credit Card Fees</legend>
-      <div class="row row--field">
-        <div class="field column column--half column--guttered">
-          <%= f.label :credit_card_seller_fee, "Credit Card fee paid by Seller" %><br>
-          <%= f.number_field :credit_card_seller_fee, min: 0, max: 99.999, step: "0.001", size: 6 %>%
-        </div
-        ><div class="field column column--half column--guttered">
-          <%= f.label :credit_card_market_fee, "Credit Card fee paid by market" %><br>
-          <%= f.number_field :credit_card_market_fee, min: 0, max: 99.999, step: "0.001", size: 6 %>%
+    <% if PaymentProvider.is_balanced?(@market.payment_provider) %>
+      <fieldset>
+        <legend>Credit Card Fees</legend>
+        <div class="row row--field">
+          <div class="field column column--half column--guttered">
+            <%= f.label :credit_card_seller_fee, "Credit Card fee paid by Seller" %><br>
+            <%= f.number_field :credit_card_seller_fee, min: 0, max: 99.999, step: "0.001", size: 6 %>%
+          </div
+          ><div class="field column column--half column--guttered">
+            <%= f.label :credit_card_market_fee, "Credit Card fee paid by market" %><br>
+            <%= f.number_field :credit_card_market_fee, min: 0, max: 99.999, step: "0.001", size: 6 %>%
+          </div>
         </div>
-      </div>
-    </fieldset>
+      </fieldset>
 
-    <fieldset>
-      <legend>ACH Fees</legend>
-      <div class="row row--field">
-        <div class="field column column--half column--guttered">
-          <%= f.label :ach_seller_fee, "ACH fee paid by Seller" %><br>
-          <%= f.number_field :ach_seller_fee, min: 0, max: 99.999, step: "0.001", size: 6 %>%
-        </div
-        ><div class="field column column--half column--guttered">
-          <%= f.label :ach_market_fee, "ACH fee paid by market" %><br>
-          <%= f.number_field :ach_market_fee, min: 0, max: 99.999, step: "0.001", size: 6 %>%
+      <fieldset>
+        <legend>ACH Fees</legend>
+        <div class="row row--field">
+          <div class="field column column--half column--guttered">
+            <%= f.label :ach_seller_fee, "ACH fee paid by Seller" %><br>
+            <%= f.number_field :ach_seller_fee, min: 0, max: 99.999, step: "0.001", size: 6 %>%
+          </div
+          ><div class="field column column--half column--guttered">
+            <%= f.label :ach_market_fee, "ACH fee paid by market" %><br>
+            <%= f.number_field :ach_market_fee, min: 0, max: 99.999, step: "0.001", size: 6 %>%
+          </div>
         </div>
-      </div>
 
-      <div class="field">
-        <%= f.label :ach_fee_cap, "ACH fee cap" %><br>
-        $<%= f.number_field :ach_fee_cap, min: 0, max: 9999.99, step: "0.01", size: 6 %>
-      </div>
-    </fieldset>
+        <div class="field">
+          <%= f.label :ach_fee_cap, "ACH fee cap" %><br>
+          $<%= f.number_field :ach_fee_cap, min: 0, max: 9999.99, step: "0.01", size: 6 %>
+        </div>
+      </fieldset>
+    <% else %>
+      <fieldset>
+        <legend>Payment Fees</legend>
+        <div class="row row--field">
+          <div class="field column column--half column--guttered">
+            Payment processing fees to be paid by:<br/>
+            <input type="radio" name="market[payment_fees_paid_by]" value="seller" <%= 'checked="checked"' if @market.credit_card_payment_fee_payer == 'seller' %>><label for="payment_fees">Seller</label><br>
+            <input type="radio" name="market[payment_fees_paid_by]" value="market" <%= 'checked="checked"' if @market.credit_card_payment_fee_payer == 'market' %>><label for="payment_fees">Market</label><br>
+          </div>
+        </div>
+      </fieldset>
+    <% end %>
 
     <fieldset>
       <legend>Payment Methods</legend>

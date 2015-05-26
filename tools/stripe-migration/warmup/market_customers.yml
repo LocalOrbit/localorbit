@@ -1,0 +1,437 @@
+---
+CU58fSpgA5BBNhiAiM8OJAf1:
+  :market_id: 27
+  :balanced_customer_uri: "/v1/customers/CU58fSpgA5BBNhiAiM8OJAf1"
+  :balanced_customer_id: CU58fSpgA5BBNhiAiM8OJAf1
+  :stripe_customer_id: cus_5uQ56kdn8UOf4T
+CU1bBXdeRCTZuKaICMtdit7A:
+  :market_id: 84
+  :balanced_customer_uri: "/v1/customers/CU1bBXdeRCTZuKaICMtdit7A"
+  :balanced_customer_id: CU1bBXdeRCTZuKaICMtdit7A
+  :stripe_customer_id: cus_5wZu8IDKk8lUzY
+CU6RyC3RgJJy9oBAq0AbFHXd:
+  :market_id: 4
+  :balanced_customer_uri: "/v1/customers/CU6RyC3RgJJy9oBAq0AbFHXd"
+  :balanced_customer_id: CU6RyC3RgJJy9oBAq0AbFHXd
+  :stripe_customer_id: cus_5vQuaRCuSVmv0y
+CU1gHl3Bk91fLumMV7SqB6Ay:
+  :market_id: 83
+  :balanced_customer_uri: "/v1/customers/CU1gHl3Bk91fLumMV7SqB6Ay"
+  :balanced_customer_id: CU1gHl3Bk91fLumMV7SqB6Ay
+  :stripe_customer_id: cus_5wAHJnkpt9ZOxX
+CU230HhLfHA0IeVl90tOcRTB:
+  :market_id: 36
+  :balanced_customer_uri: "/v1/customers/CU230HhLfHA0IeVl90tOcRTB"
+  :balanced_customer_id: CU230HhLfHA0IeVl90tOcRTB
+CU1apGifVW5dm9Qr7kinyo7V:
+  :market_id: 11
+  :balanced_customer_uri: "/v1/customers/CU1apGifVW5dm9Qr7kinyo7V"
+  :balanced_customer_id: CU1apGifVW5dm9Qr7kinyo7V
+  :stripe_customer_id: cus_5uQ5nAOeEhjodT
+CU3R599vHVQWo8LoBHykomgO:
+  :market_id: 55
+  :balanced_customer_uri: "/v1/customers/CU3R599vHVQWo8LoBHykomgO"
+  :balanced_customer_id: CU3R599vHVQWo8LoBHykomgO
+  :stripe_customer_id: cus_5uQ4imeHSKGNHA
+CU29qTF6laldZBz0iYv7ZnN9:
+  :market_id: 14
+  :balanced_customer_uri: "/v1/customers/CU29qTF6laldZBz0iYv7ZnN9"
+  :balanced_customer_id: CU29qTF6laldZBz0iYv7ZnN9
+  :stripe_customer_id: cus_5uQ5O53UTkjuCb
+CU3Ls9EWsHkYk7VOI6u9ILWP:
+  :market_id: 5
+  :balanced_customer_uri: "/v1/customers/CU3Ls9EWsHkYk7VOI6u9ILWP"
+  :balanced_customer_id: CU3Ls9EWsHkYk7VOI6u9ILWP
+  :stripe_customer_id: cus_5uQ4poIqo7v3iM
+CUTe0XlwBZmOJFxFbhr8v3B:
+  :market_id: 6
+  :balanced_customer_uri: "/v1/customers/CUTe0XlwBZmOJFxFbhr8v3B"
+  :balanced_customer_id: CUTe0XlwBZmOJFxFbhr8v3B
+  :stripe_customer_id: cus_5uQ55idNB3nwqK
+CU6FyU3k8O9wUA1nQfGzm5Vw:
+  :market_id: 23
+  :balanced_customer_uri: "/v1/customers/CU6FyU3k8O9wUA1nQfGzm5Vw"
+  :balanced_customer_id: CU6FyU3k8O9wUA1nQfGzm5Vw
+  :stripe_customer_id: cus_5uQ574guWpSwZ7
+CU46ngLcdbiDR508kC8iGR3c:
+  :market_id: 85
+  :balanced_customer_uri: "/v1/customers/CU46ngLcdbiDR508kC8iGR3c"
+  :balanced_customer_id: CU46ngLcdbiDR508kC8iGR3c
+  :stripe_customer_id: cus_5yNBl5qWQjkgYl
+CU4dnvLI9vnHmofr5HxQvqNZ:
+  :market_id: 17
+  :balanced_customer_uri: "/v1/customers/CU4dnvLI9vnHmofr5HxQvqNZ"
+  :balanced_customer_id: CU4dnvLI9vnHmofr5HxQvqNZ
+  :stripe_customer_id: cus_5vQuqIjnLKiYzr
+CU6NIPoEHJTGBjrXh9rMJ8IH:
+  :market_id: 24
+  :balanced_customer_uri: "/v1/customers/CU6NIPoEHJTGBjrXh9rMJ8IH"
+  :balanced_customer_id: CU6NIPoEHJTGBjrXh9rMJ8IH
+  :stripe_customer_id: cus_5uQ5QRYbou94yU
+CU1vM4JxdOQxMS6pHHQJsLer:
+  :market_id: 31
+  :balanced_customer_uri: "/v1/customers/CU1vM4JxdOQxMS6pHHQJsLer"
+  :balanced_customer_id: CU1vM4JxdOQxMS6pHHQJsLer
+  :stripe_customer_id: cus_5uQ5zCpjLG9693
+CU3AeWjIgUI2uzKiKWOLVPE7:
+  :market_id: 33
+  :balanced_customer_uri: "/v1/customers/CU3AeWjIgUI2uzKiKWOLVPE7"
+  :balanced_customer_id: CU3AeWjIgUI2uzKiKWOLVPE7
+  :stripe_customer_id: cus_5uQ4K3dl7wuX9u
+CU5lTgAz1s2kaaBImHPvMuQb:
+  :market_id: 34
+  :balanced_customer_uri: "/v1/customers/CU5lTgAz1s2kaaBImHPvMuQb"
+  :balanced_customer_id: CU5lTgAz1s2kaaBImHPvMuQb
+  :stripe_customer_id: cus_5uQ5wMtrv4vxmG
+CU1Kvu4M3UnMyTmLqn3YugPw:
+  :market_id: 93
+  :balanced_customer_uri: "/v1/customers/CU1Kvu4M3UnMyTmLqn3YugPw"
+  :balanced_customer_id: CU1Kvu4M3UnMyTmLqn3YugPw
+  :stripe_customer_id: cus_6BH6B0WxiZkYW4
+CU2eFeirIDJCZxhCFl3E0ZgT:
+  :market_id: 40
+  :balanced_customer_uri: "/v1/customers/CU2eFeirIDJCZxhCFl3E0ZgT"
+  :balanced_customer_id: CU2eFeirIDJCZxhCFl3E0ZgT
+  :stripe_customer_id: cus_5uQ4WKr6f0hFNc
+CUQ1LKVgJm44PBrJOId10f:
+  :market_id: 41
+  :balanced_customer_uri: "/v1/customers/CUQ1LKVgJm44PBrJOId10f"
+  :balanced_customer_id: CUQ1LKVgJm44PBrJOId10f
+  :stripe_customer_id: cus_5uQ5BQDExw5VVV
+CU20ijQ5XYcE7WD64D82RGgH:
+  :market_id: 44
+  :balanced_customer_uri: "/v1/customers/CU20ijQ5XYcE7WD64D82RGgH"
+  :balanced_customer_id: CU20ijQ5XYcE7WD64D82RGgH
+  :stripe_customer_id: cus_5uQ4wXZ8zm5SiJ
+CUw5dfHdrHxaQSQZ6mapNK2:
+  :market_id: 47
+  :balanced_customer_uri: "/v1/customers/CUw5dfHdrHxaQSQZ6mapNK2"
+  :balanced_customer_id: CUw5dfHdrHxaQSQZ6mapNK2
+  :stripe_customer_id: cus_5uQ5K3iAY7kgkk
+CU1RZUNZtcxMQvL0mUMXZFDc:
+  :market_id: 86
+  :balanced_customer_uri: "/v1/customers/CU1RZUNZtcxMQvL0mUMXZFDc"
+  :balanced_customer_id: CU1RZUNZtcxMQvL0mUMXZFDc
+  :stripe_customer_id: cus_5yihK7AkteLW3v
+CUE4uXtTnAYZeArFDzNZbvQ:
+  :market_id: 66
+  :balanced_customer_uri: "/v1/customers/CUE4uXtTnAYZeArFDzNZbvQ"
+  :balanced_customer_id: CUE4uXtTnAYZeArFDzNZbvQ
+  :stripe_customer_id: cus_5uQ5GPJ1Irdee0
+CU1WKOfpxAOPzgNyRSPVYgB1:
+  :market_id: 87
+  :balanced_customer_uri: "/v1/customers/CU1WKOfpxAOPzgNyRSPVYgB1"
+  :balanced_customer_id: CU1WKOfpxAOPzgNyRSPVYgB1
+  :stripe_customer_id: cus_61Qn2w8iaFF2hF
+CU7is1HNN7GnaCuKp7dKnok2:
+  :market_id: 39
+  :balanced_customer_uri: "/v1/customers/CU7is1HNN7GnaCuKp7dKnok2"
+  :balanced_customer_id: CU7is1HNN7GnaCuKp7dKnok2
+  :stripe_customer_id: cus_5vQuZCIbCyOqv8
+CU3V92xlfogBZQcH5luPdmAj:
+  :market_id: 2
+  :balanced_customer_uri: "/v1/customers/CU3V92xlfogBZQcH5luPdmAj"
+  :balanced_customer_id: CU3V92xlfogBZQcH5luPdmAj
+  :stripe_customer_id: cus_5uQ4Q3uzWB2fe0
+CU4qDLGjVExYQczzYTL4rPo7:
+  :market_id: 49
+  :balanced_customer_uri: "/v1/customers/CU4qDLGjVExYQczzYTL4rPo7"
+  :balanced_customer_id: CU4qDLGjVExYQczzYTL4rPo7
+  :stripe_customer_id: cus_5uQ4t2jYi0R1ZG
+CU1jk9RcGuj8iWu015eJvKD0:
+  :market_id: 22
+  :balanced_customer_uri: "/v1/customers/CU1jk9RcGuj8iWu015eJvKD0"
+  :balanced_customer_id: CU1jk9RcGuj8iWu015eJvKD0
+  :stripe_customer_id: cus_5uQ591qCXKAoZ0
+CU6pbOO1RbDcuaRUbQWnoUWC:
+  :market_id: 42
+  :balanced_customer_uri: "/v1/customers/CU6pbOO1RbDcuaRUbQWnoUWC"
+  :balanced_customer_id: CU6pbOO1RbDcuaRUbQWnoUWC
+  :stripe_customer_id: cus_5uQ4NtrzTl9fYo
+CUA08eyjmGIB9EhfqoPe4S7:
+  :market_id: 30
+  :balanced_customer_uri: "/v1/customers/CUA08eyjmGIB9EhfqoPe4S7"
+  :balanced_customer_id: CUA08eyjmGIB9EhfqoPe4S7
+  :stripe_customer_id: cus_5uQ5yAON6tk71i
+CU5WZZwARRxwhB7CJ9DuSXt0:
+  :market_id: 46
+  :balanced_customer_uri: "/v1/customers/CU5WZZwARRxwhB7CJ9DuSXt0"
+  :balanced_customer_id: CU5WZZwARRxwhB7CJ9DuSXt0
+  :stripe_customer_id: cus_5uQ4ezPjJRPBuU
+CUYDNQduQq4RwEKybHl5zbJ:
+  :market_id: 32
+  :balanced_customer_uri: "/v1/customers/CUYDNQduQq4RwEKybHl5zbJ"
+  :balanced_customer_id: CUYDNQduQq4RwEKybHl5zbJ
+  :stripe_customer_id: cus_5vQu4uvN3jiYg7
+CU5yqibyLaTT1ANCRuFgngDh:
+  :market_id: 50
+  :balanced_customer_uri: "/v1/customers/CU5yqibyLaTT1ANCRuFgngDh"
+  :balanced_customer_id: CU5yqibyLaTT1ANCRuFgngDh
+  :stripe_customer_id: cus_5uQ4EOQ1ex2sGv
+CU5gG3SDMPFepHNFugBRznJh:
+  :market_id: 51
+  :balanced_customer_uri: "/v1/customers/CU5gG3SDMPFepHNFugBRznJh"
+  :balanced_customer_id: CU5gG3SDMPFepHNFugBRznJh
+  :stripe_customer_id: cus_5uQ4vmdigx3VHk
+CU7Jlcl5jLY9WRmm29VPdvrk:
+  :market_id: 43
+  :balanced_customer_uri: "/v1/customers/CU7Jlcl5jLY9WRmm29VPdvrk"
+  :balanced_customer_id: CU7Jlcl5jLY9WRmm29VPdvrk
+  :stripe_customer_id: cus_5uQ4UvEL3moUzx
+CU1YmghBwTNGVHvgQuObIIvE:
+  :market_id: 88
+  :balanced_customer_uri: "/v1/customers/CU1YmghBwTNGVHvgQuObIIvE"
+  :balanced_customer_id: CU1YmghBwTNGVHvgQuObIIvE
+  :stripe_customer_id: cus_63LUTIeLIucj0Z
+CU2qitI4Yj2WXZWHMiq0kJb4:
+  :market_id: 12
+  :balanced_customer_uri: "/v1/customers/CU2qitI4Yj2WXZWHMiq0kJb4"
+  :balanced_customer_id: CU2qitI4Yj2WXZWHMiq0kJb4
+  :stripe_customer_id: cus_5vQzpNrz1pZcDK
+CU4Yu77mw7KohbXMnbg1pSPM:
+  :market_id: 52
+  :balanced_customer_uri: "/v1/customers/CU4Yu77mw7KohbXMnbg1pSPM"
+  :balanced_customer_id: CU4Yu77mw7KohbXMnbg1pSPM
+  :stripe_customer_id: cus_5uQ4RmDGyylOj4
+CU1GZlnF6NKrVINFovTsdOoq:
+  :market_id: 72
+  :balanced_customer_uri: "/v1/customers/CU1GZlnF6NKrVINFovTsdOoq"
+  :balanced_customer_id: CU1GZlnF6NKrVINFovTsdOoq
+  :stripe_customer_id: cus_5uQ4bKPGlorXYf
+CU6jSPuRUxCohKf54XtuVl9M:
+  :market_id: 54
+  :balanced_customer_uri: "/v1/customers/CU6jSPuRUxCohKf54XtuVl9M"
+  :balanced_customer_id: CU6jSPuRUxCohKf54XtuVl9M
+  :stripe_customer_id: cus_5uQ4t57BJSRfJ3
+CU24dc5UoTcerCZyrjLm1eLR:
+  :market_id: 19
+  :balanced_customer_uri: "/v1/customers/CU24dc5UoTcerCZyrjLm1eLR"
+  :balanced_customer_id: CU24dc5UoTcerCZyrjLm1eLR
+  :stripe_customer_id: cus_5uQ5O6iITxAPi1
+CU6CtVChbnV1V4Ldk0hDWCoq:
+  :market_id: 15
+  :balanced_customer_uri: "/v1/customers/CU6CtVChbnV1V4Ldk0hDWCoq"
+  :balanced_customer_id: CU6CtVChbnV1V4Ldk0hDWCoq
+CU49v79WhtOIImiaBeobNjgP:
+  :market_id: 53
+  :balanced_customer_uri: "/v1/customers/CU49v79WhtOIImiaBeobNjgP"
+  :balanced_customer_id: CU49v79WhtOIImiaBeobNjgP
+  :stripe_customer_id: cus_5vQud2zNCVoxhu
+CU4y8ev1cC5jtQ4Q4W3CRZvV:
+  :market_id: 56
+  :balanced_customer_uri: "/v1/customers/CU4y8ev1cC5jtQ4Q4W3CRZvV"
+  :balanced_customer_id: CU4y8ev1cC5jtQ4Q4W3CRZvV
+  :stripe_customer_id: cus_5uQ4pi8kQyHSMl
+CU4Eu2WrzwYsjgVR2TzGEYED:
+  :market_id: 69
+  :balanced_customer_uri: "/v1/customers/CU4Eu2WrzwYsjgVR2TzGEYED"
+  :balanced_customer_id: CU4Eu2WrzwYsjgVR2TzGEYED
+  :stripe_customer_id: cus_5uQ4gbqXvFXsmA
+CUKITvAuakrOJNx2DGLm3J:
+  :market_id: 71
+  :balanced_customer_uri: "/v1/customers/CUKITvAuakrOJNx2DGLm3J"
+  :balanced_customer_id: CUKITvAuakrOJNx2DGLm3J
+  :stripe_customer_id: cus_5uQ4DrH4Zm8160
+CU5ASYl7F0ylLClPpU0HaXYP:
+  :market_id: 67
+  :balanced_customer_uri: "/v1/customers/CU5ASYl7F0ylLClPpU0HaXYP"
+  :balanced_customer_id: CU5ASYl7F0ylLClPpU0HaXYP
+  :stripe_customer_id: cus_5uQ4YmmxyQVBqI
+CU5NoVqrEvKoDppj8xIKz18b:
+  :market_id: 96
+  :balanced_customer_uri: "/v1/customers/CU5NoVqrEvKoDppj8xIKz18b"
+  :balanced_customer_id: CU5NoVqrEvKoDppj8xIKz18b
+  :stripe_customer_id: cus_6EzxdkywagHO8p
+CU4uFGj0JaG43KtmFuzibUpN:
+  :market_id: 94
+  :balanced_customer_uri: "/v1/customers/CU4uFGj0JaG43KtmFuzibUpN"
+  :balanced_customer_id: CU4uFGj0JaG43KtmFuzibUpN
+CU1jrnubeYC8Wp5J6XxR5HkX:
+  :market_id: 61
+  :balanced_customer_uri: "/v1/customers/CU1jrnubeYC8Wp5J6XxR5HkX"
+  :balanced_customer_id: CU1jrnubeYC8Wp5J6XxR5HkX
+CU4gch9e72QxzLNT7kmJvCjU:
+  :market_id: 7
+  :balanced_customer_uri: "/v1/customers/CU4gch9e72QxzLNT7kmJvCjU"
+  :balanced_customer_id: CU4gch9e72QxzLNT7kmJvCjU
+  :stripe_customer_id: cus_5uQ54JWzsSVeXT
+CU8TI89NaJ4x6heTAAjkf8K:
+  :market_id: 89
+  :balanced_customer_uri: "/v1/customers/CU8TI89NaJ4x6heTAAjkf8K"
+  :balanced_customer_id: CU8TI89NaJ4x6heTAAjkf8K
+  :stripe_customer_id: cus_63fmRIw3DZUl5Q
+CU1jJigLYKuoX1RF0ddi7H2W:
+  :market_id: 95
+  :balanced_customer_uri: "/v1/customers/CU1jJigLYKuoX1RF0ddi7H2W"
+  :balanced_customer_id: CU1jJigLYKuoX1RF0ddi7H2W
+  :stripe_customer_id: cus_6EBUldRpb2wSGf
+CU2GFMtaUlbXeXGurGIDmWoa:
+  :market_id: 3
+  :balanced_customer_uri: "/v1/customers/CU2GFMtaUlbXeXGurGIDmWoa"
+  :balanced_customer_id: CU2GFMtaUlbXeXGurGIDmWoa
+  :stripe_customer_id: cus_5uQ4OvPxVySIQo
+CU4HvyE8nlEGXaKwbA5c0vEv:
+  :market_id: 45
+  :balanced_customer_uri: "/v1/customers/CU4HvyE8nlEGXaKwbA5c0vEv"
+  :balanced_customer_id: CU4HvyE8nlEGXaKwbA5c0vEv
+  :stripe_customer_id: cus_5uQ4DaFXDzmhMf
+CU14Nj6OWsKeu3ZAwYBfUOf8:
+  :market_id: 38
+  :balanced_customer_uri: "/v1/customers/CU14Nj6OWsKeu3ZAwYBfUOf8"
+  :balanced_customer_id: CU14Nj6OWsKeu3ZAwYBfUOf8
+  :stripe_customer_id: cus_5uQ4f1D7qpQTeI
+CU2pBgq7OC6EJLTI2biTYSnd:
+  :market_id: 65
+  :balanced_customer_uri: "/v1/customers/CU2pBgq7OC6EJLTI2biTYSnd"
+  :balanced_customer_id: CU2pBgq7OC6EJLTI2biTYSnd
+  :stripe_customer_id: cus_5uQ5ugkVDzmZ2M
+CU3cZQQZ0aJKLArQF37Y1BSG:
+  :market_id: 90
+  :balanced_customer_uri: "/v1/customers/CU3cZQQZ0aJKLArQF37Y1BSG"
+  :balanced_customer_id: CU3cZQQZ0aJKLArQF37Y1BSG
+  :stripe_customer_id: cus_64U3TIutkg8nZ7
+CU26OzBpHHXxJCivtSmoXBLd:
+  :market_id: 13
+  :balanced_customer_uri: "/v1/customers/CU26OzBpHHXxJCivtSmoXBLd"
+  :balanced_customer_id: CU26OzBpHHXxJCivtSmoXBLd
+  :stripe_customer_id: cus_5uQ5XxNuXX9V1R
+CU4dAmSJCI8gU0Di58EBjX1B:
+  :market_id: 64
+  :balanced_customer_uri: "/v1/customers/CU4dAmSJCI8gU0Di58EBjX1B"
+  :balanced_customer_id: CU4dAmSJCI8gU0Di58EBjX1B
+  :stripe_customer_id: cus_5uQ4cibMVG5h65
+CU4tsJR64UWyIpRSRI2x8NUz:
+  :market_id: 57
+  :balanced_customer_uri: "/v1/customers/CU4tsJR64UWyIpRSRI2x8NUz"
+  :balanced_customer_id: CU4tsJR64UWyIpRSRI2x8NUz
+  :stripe_customer_id: cus_5uQ5sKdr4Z7lVH
+CU48kl5kLA9EzU1EN6xZBnO2:
+  :market_id: 18
+  :balanced_customer_uri: "/v1/customers/CU48kl5kLA9EzU1EN6xZBnO2"
+  :balanced_customer_id: CU48kl5kLA9EzU1EN6xZBnO2
+  :stripe_customer_id: cus_5vQutn5dFPmoRX
+CU5mBfM1bmJMw053UX73YmNx:
+  :market_id: 59
+  :balanced_customer_uri: "/v1/customers/CU5mBfM1bmJMw053UX73YmNx"
+  :balanced_customer_id: CU5mBfM1bmJMw053UX73YmNx
+  :stripe_customer_id: cus_5uQ5vbcWvhpw0e
+CUbXwXHpNlyw8skzN8xwICS:
+  :market_id: 58
+  :balanced_customer_uri: "/v1/customers/CUbXwXHpNlyw8skzN8xwICS"
+  :balanced_customer_id: CUbXwXHpNlyw8skzN8xwICS
+  :stripe_customer_id: cus_5uQ5N67wl14Vga
+CU7FMpIYZmXD5iOodXJuQcPt:
+  :market_id: 97
+  :balanced_customer_uri: "/v1/customers/CU7FMpIYZmXD5iOodXJuQcPt"
+  :balanced_customer_id: CU7FMpIYZmXD5iOodXJuQcPt
+  :stripe_customer_id: cus_6GOv9OGMYCw7I0
+CU6mwnbFOpZx0Ck8h9vNHdl8:
+  :market_id: 70
+  :balanced_customer_uri: "/v1/customers/CU6mwnbFOpZx0Ck8h9vNHdl8"
+  :balanced_customer_id: CU6mwnbFOpZx0Ck8h9vNHdl8
+  :stripe_customer_id: cus_5uQ4apiz6U67W7
+CU6ZnwE2dYDcy8nNgJEB3lSa:
+  :market_id: 92
+  :balanced_customer_uri: "/v1/customers/CU6ZnwE2dYDcy8nNgJEB3lSa"
+  :balanced_customer_id: CU6ZnwE2dYDcy8nNgJEB3lSa
+  :stripe_customer_id: cus_69bbhSTLCD4koO
+CUGkT08fAyBoyYPS6BvfxW2:
+  :market_id: 76
+  :balanced_customer_uri: "/v1/customers/CUGkT08fAyBoyYPS6BvfxW2"
+  :balanced_customer_id: CUGkT08fAyBoyYPS6BvfxW2
+  :stripe_customer_id: cus_5uQ50xPQ2Wo4Hn
+CU4TsU0a8oKIR0elYRftsLXN:
+  :market_id: 60
+  :balanced_customer_uri: "/v1/customers/CU4TsU0a8oKIR0elYRftsLXN"
+  :balanced_customer_id: CU4TsU0a8oKIR0elYRftsLXN
+  :stripe_customer_id: cus_5uQ41kjFys9M09
+CUKE9ccjN2Qc93eUcgmgCJF:
+  :market_id: 82
+  :balanced_customer_uri: "/v1/customers/CUKE9ccjN2Qc93eUcgmgCJF"
+  :balanced_customer_id: CUKE9ccjN2Qc93eUcgmgCJF
+  :stripe_customer_id: cus_5vT7BncXZZQVBa
+CU4TBrELugVtRZp6n1n2dYVN:
+  :market_id: 68
+  :balanced_customer_uri: "/v1/customers/CU4TBrELugVtRZp6n1n2dYVN"
+  :balanced_customer_id: CU4TBrELugVtRZp6n1n2dYVN
+  :stripe_customer_id: cus_5uQ4CkRCiAoS4b
+CU4lMNzcyFfhcThetSk4gRou:
+  :market_id: 48
+  :balanced_customer_uri: "/v1/customers/CU4lMNzcyFfhcThetSk4gRou"
+  :balanced_customer_id: CU4lMNzcyFfhcThetSk4gRou
+  :stripe_customer_id: cus_5uQ5WN5VVv7wFy
+CUS5II508AkFOe3WyVMO1tg:
+  :market_id: 78
+  :balanced_customer_uri: "/v1/customers/CUS5II508AkFOe3WyVMO1tg"
+  :balanced_customer_id: CUS5II508AkFOe3WyVMO1tg
+  :stripe_customer_id: cus_5uQ6rFCJlmM6Qt
+CU6x1i3JKj6jXMWLzYyCupo6:
+  :market_id: 73
+  :balanced_customer_uri: "/v1/customers/CU6x1i3JKj6jXMWLzYyCupo6"
+  :balanced_customer_id: CU6x1i3JKj6jXMWLzYyCupo6
+  :stripe_customer_id: cus_5uS7vCcOXDccNr
+CUTHpI3B37D9uXqsANSe9r9:
+  :market_id: 74
+  :balanced_customer_uri: "/v1/customers/CUTHpI3B37D9uXqsANSe9r9"
+  :balanced_customer_id: CUTHpI3B37D9uXqsANSe9r9
+  :stripe_customer_id: cus_5uQ59uZgd4YBEm
+CU4K5TF30lgwqZztBeQY2Xwe:
+  :market_id: 75
+  :balanced_customer_uri: "/v1/customers/CU4K5TF30lgwqZztBeQY2Xwe"
+  :balanced_customer_id: CU4K5TF30lgwqZztBeQY2Xwe
+  :stripe_customer_id: cus_5uQ5oQeLuyJJMR
+CU3Z3KzCYrAplExnjbcNMeP8:
+  :market_id: 91
+  :balanced_customer_uri: "/v1/customers/CU3Z3KzCYrAplExnjbcNMeP8"
+  :balanced_customer_id: CU3Z3KzCYrAplExnjbcNMeP8
+  :stripe_customer_id: cus_677tiMmc6CSts5
+CU10gHtd7sdW44VPeoa4gYNV:
+  :market_id: 62
+  :balanced_customer_uri: "/v1/customers/CU10gHtd7sdW44VPeoa4gYNV"
+  :balanced_customer_id: CU10gHtd7sdW44VPeoa4gYNV
+  :stripe_customer_id: cus_5uQ4cUF14Jaew3
+CU2pl9bT347JZHV6AzMKe03o:
+  :market_id: 37
+  :balanced_customer_uri: "/v1/customers/CU2pl9bT347JZHV6AzMKe03o"
+  :balanced_customer_id: CU2pl9bT347JZHV6AzMKe03o
+  :stripe_customer_id: cus_5uQ45k0rodAbRV
+CU75AvaQmjXXGaEpnAohlks2:
+  :market_id: 35
+  :balanced_customer_uri: "/v1/customers/CU75AvaQmjXXGaEpnAohlks2"
+  :balanced_customer_id: CU75AvaQmjXXGaEpnAohlks2
+  :stripe_customer_id: cus_5uQ48bXh5JFaUV
+CUo3GpsK2GG1cELGuoDVMNB:
+  :market_id: 16
+  :balanced_customer_uri: "/v1/customers/CUo3GpsK2GG1cELGuoDVMNB"
+  :balanced_customer_id: CUo3GpsK2GG1cELGuoDVMNB
+  :stripe_customer_id: cus_5uQ5VsApfgHZ0S
+CU3dLo2sRUutvVFNxKWZCcm6:
+  :market_id: 81
+  :balanced_customer_uri: "/v1/customers/CU3dLo2sRUutvVFNxKWZCcm6"
+  :balanced_customer_id: CU3dLo2sRUutvVFNxKWZCcm6
+  :stripe_customer_id: cus_5uQ5Fwv38V5EXw
+CU2yrNDWmZhYOYE29I5TByC6:
+  :market_id: 63
+  :balanced_customer_uri: "/v1/customers/CU2yrNDWmZhYOYE29I5TByC6"
+  :balanced_customer_id: CU2yrNDWmZhYOYE29I5TByC6
+  :stripe_customer_id: cus_5uQ4fMPk5DdGp5
+CU2UfJeiBPPAhv9YnZxipFc3:
+  :market_id: 79
+  :balanced_customer_uri: "/v1/customers/CU2UfJeiBPPAhv9YnZxipFc3"
+  :balanced_customer_id: CU2UfJeiBPPAhv9YnZxipFc3
+  :stripe_customer_id: cus_5uQ5cICEo4tlhu
+CU6ytH2iPueI1QFvrgRNi5cH:
+  :market_id: 80
+  :balanced_customer_uri: "/v1/customers/CU6ytH2iPueI1QFvrgRNi5cH"
+  :balanced_customer_id: CU6ytH2iPueI1QFvrgRNi5cH
+  :stripe_customer_id: cus_5uQ5DcaCnBkQPl
+CU6M7LICeLFyPljR1kfdZVxt:
+  :market_id: 77
+  :balanced_customer_uri: "/v1/customers/CU6M7LICeLFyPljR1kfdZVxt"
+  :balanced_customer_id: CU6M7LICeLFyPljR1kfdZVxt
+  :stripe_customer_id: cus_5uQ52KQQVKZpTB
+CUEVBxX3HzF1bEGbXur9oUG:
+  :market_id: 9
+  :balanced_customer_uri: "/v1/customers/CUEVBxX3HzF1bEGbXur9oUG"
+  :balanced_customer_id: CUEVBxX3HzF1bEGbXur9oUG
+  :stripe_customer_id: cus_5vQvE7rZmphokO

@@ -1,5 +1,5 @@
 class UpdateOrderWithNewItems
   include Interactor::Organizer
 
-  organize AddItemsToOrder, StoreOrderFees, UpdateBalancedPurchase
+  organize AddItemsToOrder, StoreOrderFees, UpdatePurchase
 end

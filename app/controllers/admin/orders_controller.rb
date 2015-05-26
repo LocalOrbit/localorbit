@@ -100,7 +100,7 @@ class Admin::OrdersController < AdminController
   end
 
   def perform_order_update(order, params)
-    updates = UpdateOrder.perform(order: order, order_params: params)
+    updates = UpdateOrder.perform(payment_provider: order.payment_provider, order: order, order_params: params)
     if updates.success?
       if order.reload.items.any?
         redirect_to admin_order_path(order), notice: "Order successfully updated."
@@ -117,7 +117,7 @@ class Admin::OrdersController < AdminController
   end
 
   def perform_add_items(order)
-    result = UpdateOrderWithNewItems.perform(order: order, item_hashes: items_to_add)
+    result = UpdateOrderWithNewItems.perform(payment_provider: order.payment_provider, order: order, item_hashes: items_to_add)
     if !result.success?
       setup_add_items_form(order)
       order.errors[:base] << "Failed to add items to this order."

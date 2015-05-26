@@ -22,7 +22,7 @@ feature "Adding a bank account to an organization", :js, :shaky do
     end
 
     scenario "successfully adding a bank account" do
-      select "Checking", from: "balanced_account_type"
+      select "Checking", from: "provider_account_type"
 
       fill_in "Organization EIN", with: "20-1234567"
       fill_in "Full Legal Name", with: "John Patrick Doe"
@@ -59,7 +59,7 @@ feature "Adding a bank account to an organization", :js, :shaky do
       expect(page).not_to have_content("Successfully added a payment method")
       expect(page).to have_content("Account type: Please select an account type.")
 
-      select "Checking", from: "balanced_account_type"
+      select "Checking", from: "provider_account_type"
 
       fill_in "Name", with: "Org Bank Account"
       select("Checking", from: "Account Type")
@@ -100,7 +100,7 @@ feature "Adding a bank account to an organization", :js, :shaky do
     end
 
     scenario "successfully adding a bank account" do
-      select "Checking", from: "balanced_account_type"
+      select "Checking", from: "provider_account_type"
 
       expect(page).not_to have_content("Last 4 of SSN")
       expect(page).not_to have_content("Street Address (Personal)")

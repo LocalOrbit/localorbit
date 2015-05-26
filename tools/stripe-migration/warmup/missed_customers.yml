@@ -1,0 +1,169 @@
+---
+CU1TjL4SpFYQGL3tTJo0lenw:
+  :id: cus_5vQuSIUwKmqDzh
+  :description: Headwater Food Hub
+  :created: 1427134379
+  :livemode: true
+  :sources: []
+  :metadata:
+    :balanced.customer_id: CU1TjL4SpFYQGL3tTJo0lenw
+CUfGzHi9xVu461vBI9OjWdc:
+  :id: cus_5uQ5gM4QwCmj4p
+  :description: 
+  :created: 1426900663
+  :livemode: true
+  :sources: []
+  :metadata:
+    :balanced.customer_id: CUfGzHi9xVu461vBI9OjWdc
+CU1lmFh0MC7dvjFZt26QMmaD:
+  :id: cus_5uQ5BFoX865Bfq
+  :description: 
+  :created: 1426900658
+  :livemode: true
+  :sources:
+  - :id: ba_15ic9j2VpjOYk6TmWX6HZINh
+    :last4: '4439'
+    :fingerprint: wvKWSsz2pOaE2IMt
+    :country: US
+  :metadata:
+    :balanced.customer_id: CU1lmFh0MC7dvjFZt26QMmaD
+CU2bXoPWvnYOQYiyzJ2Wm8D0:
+  :id: cus_5uQ5Qy61zWWt3K
+  :description: 
+  :created: 1426900655
+  :livemode: true
+  :sources: []
+  :metadata:
+    :balanced.customer_id: CU2bXoPWvnYOQYiyzJ2Wm8D0
+! '':
+  :id: cus_5uQ4MP4Ep0Oe6f
+  :description: 
+  :created: 1426900585
+  :livemode: true
+  :sources: []
+  :metadata: {}
+CU7169sz5bp8qCp5hNuerqLM:
+  :id: cus_5uQ5BgRJ8qpHTJ
+  :description: 
+  :created: 1426900645
+  :livemode: true
+  :sources: []
+  :metadata:
+    :balanced.customer_id: CU7169sz5bp8qCp5hNuerqLM
+CU1azzqGQCyhZLEA0nCi4lU7:
+  :id: cus_5uQ562wn6tiZSL
+  :description: 
+  :created: 1426900644
+  :livemode: true
+  :sources: []
+  :metadata:
+    :balanced.customer_id: CU1azzqGQCyhZLEA0nCi4lU7
+CU5jRLJKrwdzOrBG9bKEsvdF:
+  :id: cus_5uQ5G6BIfYH6Xf
+  :description: 
+  :created: 1426900644
+  :livemode: true
+  :sources: []
+  :metadata:
+    :balanced.customer_id: CU5jRLJKrwdzOrBG9bKEsvdF
+CUVU7987AXuNjfGvPx0N1yG:
+  :id: cus_5uQ5gUWXxp83Ki
+  :description: 
+  :created: 1426900643
+  :livemode: true
+  :sources: []
+  :metadata:
+    :balanced.customer_id: CUVU7987AXuNjfGvPx0N1yG
+CU53KZIBgyOrjOlbTKGyEQPU:
+  :id: cus_5uQ5NUPsZPNwqT
+  :description: 
+  :created: 1426900642
+  :livemode: true
+  :sources: []
+  :metadata:
+    :balanced.customer_id: CU53KZIBgyOrjOlbTKGyEQPU
+CU50dbJBkiPkh7Hi0W2EOPJw:
+  :id: cus_5uQ5kLPGJnHkxp
+  :description: 
+  :created: 1426900641
+  :livemode: true
+  :sources: []
+  :metadata:
+    :balanced.customer_id: CU50dbJBkiPkh7Hi0W2EOPJw
+CU5Fm0ztWSCFw7XUOPAtURR8:
+  :id: cus_5uQ5emkIklETaZ
+  :description: 
+  :created: 1426900640
+  :livemode: true
+  :sources: []
+  :metadata:
+    :balanced.customer_id: CU5Fm0ztWSCFw7XUOPAtURR8
+CU1D3HTYtfU5YhZUmEr7mg9Q:
+  :id: cus_5uQ5eIkrhf6oLO
+  :description: 
+  :created: 1426900640
+  :livemode: true
+  :sources: []
+  :metadata:
+    :balanced.customer_id: CU1D3HTYtfU5YhZUmEr7mg9Q
+CU1Hn5rJeSmbD6zLefIvhMDh:
+  :id: cus_5uQ5VueBkZWMhp
+  :description: Erika Block
+  :created: 1426900640
+  :livemode: true
+  :sources:
+  - :id: card_15ic9R2VpjOYk6Tmk4tYTknY
+    :last4: '6639'
+    :brand: MasterCard
+    :funding: credit
+    :exp_year: 2015
+    :exp_month: 12
+    :fingerprint: crzKe1pSsJYkTxbt
+    :country: US
+    :name: Erika Block
+  :metadata:
+    :balanced.customer_id: CU1Hn5rJeSmbD6zLefIvhMDh
+CU5DGzj2UxJJ3dk9xbQq9SsP:
+  :id: cus_5uQ4src8AaMKHK
+  :description: 
+  :created: 1426900638
+  :livemode: true
+  :sources: []
+  :metadata:
+    :balanced.customer_id: CU5DGzj2UxJJ3dk9xbQq9SsP
+CU3hK3FifUOjhUvUSgldOLHY:
+  :id: cus_5uQ4qnZIxRnQBZ
+  :description: 
+  :created: 1426900634
+  :livemode: true
+  :sources: []
+  :metadata:
+    :balanced.customer_id: CU3hK3FifUOjhUvUSgldOLHY
+CU72h2ZGYrhjASr8u0SCln2r:
+  :id: cus_5uQ4QCWYJYP4aC
+  :description: 
+  :created: 1426900595
+  :livemode: true
+  :sources:
+  - :id: ba_15ic8q2VpjOYk6TmlhTPue0Z
+    :last4: '4439'
+    :fingerprint: wvKWSsz2pOaE2IMt
+    :country: US
+  :metadata:
+    :balanced.customer_id: CU72h2ZGYrhjASr8u0SCln2r
+CU6CquDaX36yuFvQiUsn0Pdw:
+  :id: cus_5uQ4uMOXCaXLxb
+  :description: 
+  :created: 1426900588
+  :livemode: true
+  :sources: []
+  :metadata:
+    :balanced.customer_id: CU6CquDaX36yuFvQiUsn0Pdw
+CU5JiKmGoFBEQDXd6PicxDxp:
+  :id: cus_5uQ4FSFpQRBrCQ
+  :description: 
+  :created: 1426900586
+  :livemode: true
+  :sources: []
+  :metadata:
+    :balanced.customer_id: CU5JiKmGoFBEQDXd6PicxDxp

@@ -35,6 +35,18 @@ describe Financials::PaymentNotifier do
           notifier.send(method_sym, payment: payment)
         end
 
+        context "with async:false" do
+          let(:mail_object) { double "an email object" }
+
+          it "delivers immediately, not via 'delay'" do
+            expect(mailer).not_to receive(:delay)
+            expect(mailer).to receive(:payment_received).with(email_addresses, payment.id).and_return(mail_object)
+            expect(mail_object).to receive(:deliver)
+
+            notifier.send(method_sym, payment: payment, async: false)
+          end
+        end
+
         context "no payment" do
           it "does NOT send" do
             expect(mailer).not_to receive(:delay)

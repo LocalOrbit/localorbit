@@ -15,6 +15,8 @@ describe Admin::MarketsController do
   describe "#create" do
     context "when not signed in", :vcr do
       it_behaves_like "admin only action", lambda {
+
+        allow(RegisterStripeMarket).to receive(:perform) { double("Results", success?: true, market: market) }
         post :create, market: {name: "Major Market", subdomain: "major-market", contact_name: "Johnny", contact_email: "johnny@example.com"}
       }
     end
@@ -27,7 +29,7 @@ describe Admin::MarketsController do
 
       context "success" do
         it "redirects to admin market page" do
-          allow(RegisterMarket).to receive(:perform) { double("Results", success?: true, market: market) }
+          allow(RegisterStripeMarket).to receive(:perform) { double("Results", success?: true, market: market) }
 
           post :create
           expect(response).to redirect_to(admin_market_path(market))
@@ -36,7 +38,7 @@ describe Admin::MarketsController do
 
       context "failure" do
         it "renders the new page" do
-          allow(RegisterMarket).to receive(:perform) { double("Results", success?: false, market: market) }
+          allow(RegisterStripeMarket).to receive(:perform) { double("Results", success?: false, market: market) }
 
           post :create
           expect(response).to be_success

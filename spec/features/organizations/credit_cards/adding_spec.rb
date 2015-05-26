@@ -1,7 +1,8 @@
 require "spec_helper"
 
 feature "Adding a credit card to an organization", :js, :vcr do
-  let!(:market)         { create(:market, name: "Fake Market") }
+  let(:payment_provider) { PaymentProvider::Balanced.id }
+  let!(:market)         { create(:market, name: "Fake Market", payment_provider: payment_provider) }
   let!(:org)            { create(:organization, name: "Fake Organization", markets: [market]) }
   let!(:member)         { create(:user, organizations: [org]) }
 
@@ -14,7 +15,7 @@ feature "Adding a credit card to an organization", :js, :vcr do
     end
 
     scenario "successfully adding a credit card" do
-      select "Credit Card", from: "balanced_account_type"
+      select "Credit Card", from: "provider_account_type"
       fill_in "Name", with: "John Doe"
       fill_in "Card Number", with: "5105105105105100"
       fill_in "Security Code", with: "123"
@@ -44,7 +45,7 @@ feature "Adding a credit card to an organization", :js, :vcr do
       expect(page).not_to have_content("Successfully added a credit card")
       expect(page).to have_content("Account type: Please select an account type.")
 
-      select "Credit Card", from: "balanced_account_type"
+      select "Credit Card", from: "provider_account_type"
       fill_in "Card Number", with: "5105105105105"
       fill_in "Security Code", with: "123"
       select "5", from: "expiration_month"
@@ -59,7 +60,7 @@ feature "Adding a credit card to an organization", :js, :vcr do
     scenario "duplicate credit card gives an error" do
       create(:bank_account, :credit_card, name: "John Doe", bank_name: "MasterCard", account_type: "mastercard", last_four: "5100", bankable: org)
 
-      select "Credit Card", from: "balanced_account_type"
+      select "Credit Card", from: "provider_account_type"
       fill_in "Name", with: "John Doe"
       fill_in "Card Number", with: "5105105105105100"
       fill_in "Security Code", with: "123"
@@ -84,7 +85,7 @@ feature "Adding a credit card to an organization", :js, :vcr do
     end
 
     scenario "successfully adding a credit card" do
-      select "Credit Card", from: "balanced_account_type"
+      select "Credit Card", from: "provider_account_type"
       fill_in "Name", with: "John Doe"
       fill_in "Card Number", with: "5105105105105100"
       fill_in "Security Code", with: "123"

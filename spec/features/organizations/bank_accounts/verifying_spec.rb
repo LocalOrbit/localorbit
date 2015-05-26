@@ -19,7 +19,7 @@ feature "Verifying a bank account", :js, :vcr do
       )
       bank_account.save
 
-      AddBankAccountToEntity.perform(
+      AddBalancedBankAccountToEntity.perform(
         entity: org,
         bank_account_params: {
           name: "Org Bank Account",

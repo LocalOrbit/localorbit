@@ -22,7 +22,7 @@ feature "Adding bank account to a market", :js, :shaky do
 
     visit new_admin_market_bank_account_path(market)
 
-    select "Checking", from: "balanced_account_type"
+    select "Checking", from: "provider_account_type"
 
     fill_in "EIN", with: "20-1234567"
     fill_in "Full Legal Name", with: "John Patrick Doe"
@@ -58,7 +58,7 @@ feature "Adding bank account to a market", :js, :shaky do
 
     visit new_admin_market_bank_account_path(market)
 
-    select "Checking", from: "balanced_account_type"
+    select "Checking", from: "provider_account_type"
 
     fill_in "EIN", with: "20-1234567"
     fill_in "Full Legal Name", with: "John Patrick Doe"

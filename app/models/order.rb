@@ -73,6 +73,11 @@ class Order < ActiveRecord::Base
   scope :on_automate_plan, -> { joins(market: :plan).where(plans: {name: 'Automate'}) }
   scope :not_on_automate_plan, -> { joins(market: :plan).where.not(plans: {name: 'Automate'}) }
 
+  scope :balanced,     -> { where(payment_provider: PaymentProvider::Balanced.id.to_s) }
+  scope :not_balanced, -> { where.not(payment_provider: PaymentProvider::Balanced.id.to_s) }
+  scope :stripe,       -> { where(payment_provider: PaymentProvider::Stripe.id.to_s) }
+  scope :not_stripe,   -> { where.not(payment_provider: PaymentProvider::Stripe.id.to_s) }
+
   scope_accessible :sort, method: :for_sort, ignore_blank: true
   scope_accessible :payment_status
 
@@ -125,7 +130,8 @@ class Order < ActiveRecord::Base
   end
 
   def self.balanced_payable_to_market
-    paid.
+    balanced.
+      paid.
       fully_delivered.
       used_lo_payment_processing.
       not_paid_for("market payment").
@@ -168,14 +174,14 @@ class Order < ActiveRecord::Base
   end
 
   def self.payable_to_automate_sellers(current_time:Time.current, seller_organization_id:nil)
-    payable_to_sellers(
+    balanced.payable_to_sellers(
       current_time: current_time, 
       seller_organization_id: seller_organization_id
     ).not_paid_for("market payment")
   end
 
   def self.payable_lo_fees
-    fully_delivered.purchase_orders.payable.not_paid_for("lo fee", :payer)
+    balanced.fully_delivered.purchase_orders.payable.not_paid_for("lo fee", :payer)
   end
 
   # 
@@ -189,7 +195,7 @@ class Order < ActiveRecord::Base
   #   order_id: If present, narrow the results to one or more specific Order ids.  
   #             Default: nil (nil all matching orders).
   def self.payable_market_fees(current_time: Time.current, market_id: nil, order_id: nil)
-    res = clean_payment_records.
+    res = balanced.clean_payment_records.
       on_automate_plan.
       fully_delivered.
       used_lo_payment_processing.
@@ -356,6 +362,14 @@ class Order < ActiveRecord::Base
     self.delivery_phone   = address.phone
   end
 
+  def usable_items
+    items.reject {|i| i.destroyed? || i.marked_for_destruction? }
+  end
+
+  def gross_total
+    usable_items.sum(&:gross_total)
+  end
+
   private
 
   def update_paid_at
@@ -373,9 +387,7 @@ class Order < ActiveRecord::Base
   end
 
   def update_total_cost
-    usable_items = items.reject {|i| i.destroyed? || i.marked_for_destruction? }
-
-    cost = usable_items.sum(&:gross_total)
+    cost = gross_total
 
     self.delivery_fees = calculate_delivery_fees(cost)
     self.total_cost    = calculate_total_cost(cost)

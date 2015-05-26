@@ -1,0 +1,43 @@
+{
+  "id": "evt_15xcvAHouQbaP1MV0Qwrf4VG",
+  "created": 1430482028,
+  "livemode": false,
+  "type": "transfer.paid",
+  "data": {
+    "object": {
+      "id": "tr_15xcv9HouQbaP1MVXim58UCZ",
+      "object": "transfer",
+      "created": 1430482027,
+      "date": 1430524800,
+      "livemode": false,
+      "amount": 33210,
+      "currency": "usd",
+      "reversed": false,
+      "status": "pending",
+      "type": "bank_account",
+      "reversals": {
+        "object": "list",
+        "total_count": 0,
+        "has_more": false,
+        "url": "/v1/transfers/tr_15xcv9HouQbaP1MVXim58UCZ/reversals",
+        "data": []
+      },
+      "balance_transaction": "txn_15xcv9HouQbaP1MVh0dMRAi8",
+      "destination": null,
+      "description": "STRIPE TRANSFER",
+      "failure_message": null,
+      "failure_code": null,
+      "amount_reversed": 0,
+      "metadata": {},
+      "statement_descriptor": null,
+      "recipient": null,
+      "source_transaction": null,
+      "application_fee": null
+    }
+  },
+  "object": "event",
+  "pending_webhooks": 2,
+  "request": null,
+  "api_version": "2015-04-07",
+  "user_id": "acct_15xJY9HouQbaP1MV"
+}

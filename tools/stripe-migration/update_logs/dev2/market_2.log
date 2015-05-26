@@ -1,0 +1,29 @@
+[2015-05-20 23:03:57 -0400] - UpdateStripeIdsOnMarket - The Locals Food Hub (2) - ====================================================================================================
+[2015-05-20 23:03:57 -0400] - UpdateStripeIdsOnMarket - The Locals Food Hub (2) -  The Locals Food Hub (2)
+[2015-05-20 23:03:57 -0400] - UpdateStripeIdsOnMarket - The Locals Food Hub (2) -  Updating stripe IDs for market, orgs and bank accounts.
+[2015-05-20 23:03:57 -0400] - UpdateStripeIdsOnMarket - The Locals Food Hub (2) - 
+[2015-05-20 23:03:57 -0400] - UpdateStripeIdsOnMarket - The Locals Food Hub (2) -  Rails.env: production
+[2015-05-20 23:03:57 -0400] - UpdateStripeIdsOnMarket - The Locals Food Hub (2) -  Stripe keys:
+[2015-05-20 23:03:57 -0400] - UpdateStripeIdsOnMarket - The Locals Food Hub (2) -   --> STRIPE_PUBLISHABLE_KEY: pk_live_j85VTsrz51POrss3ni460qaf (pk_live_j85VTsrz51POrss3ni460qaf)
+[2015-05-20 23:03:57 -0400] - UpdateStripeIdsOnMarket - The Locals Food Hub (2) - ====================================================================================================
+[2015-05-20 23:03:58 -0400] - UpdateStripeIdsOnMarket - The Locals Food Hub (2) - Connecting market customer - Updated Market stripe_customer_id: cus_5uQ4Q3uzWB2fe0
+[2015-05-20 23:03:59 -0400] - UpdateStripeIdsOnMarket - The Locals Food Hub (2) - Connecting market account - Updated Market stripe_account_id: acct_15l1yTClqVnHxlgk
+[2015-05-20 23:04:00 -0400] - UpdateStripeIdsOnMarket - The Locals Food Hub (2) - Connecting org customers - Updated Organization The Locals (3) stripe_customer_id: cus_5uQ4pnRudERPvK
+[2015-05-20 23:04:02 -0400] - UpdateStripeIdsOnMarket - The Locals Food Hub (2) - Connecting org customers - Updated Organization Crescent Creek Farm (4) stripe_customer_id: cus_5uQ47SNp1tfkt6
+[2015-05-20 23:04:02 -0400] - UpdateStripeIdsOnMarket - The Locals Food Hub (2) - Connecting org customers - Updated Organization Kings (5) stripe_customer_id: cus_5uQ5DRhzWMri9I
+[2015-05-20 23:04:02 -0400] - UpdateStripeIdsOnMarket - The Locals Food Hub (2) - Connecting org customers - Updated Organization Zaza's (6) stripe_customer_id: cus_5uQ43hL3DJTbAv
+[2015-05-20 23:04:03 -0400] - UpdateStripeIdsOnMarket - The Locals Food Hub (2) - Connecting org customers - Updated Organization Patio Cafe (7) stripe_customer_id: cus_5uQ4vg2Jba86rd
+[2015-05-20 23:04:04 -0400] - UpdateStripeIdsOnMarket - The Locals Food Hub (2) - Connecting org customers - Updated Organization Makin' Bakin' (9) stripe_customer_id: cus_5uQ4Yr5ull1YDq
+[2015-05-20 23:04:05 -0400] - UpdateStripeIdsOnMarket - The Locals Food Hub (2) - Connecting org customers - Updated Organization The Gathering Place (10) stripe_customer_id: cus_5uQ4E6RrdYkmNL
+[2015-05-20 23:04:05 -0400] - UpdateStripeIdsOnMarket - The Locals Food Hub (2) - Connecting org customers - Updated Organization Ratchford (66) stripe_customer_id: cus_5uS7iw1T7ft2B9
+[2015-05-20 23:04:06 -0400] - UpdateStripeIdsOnMarket - The Locals Food Hub (2) - Connecting org customers - Updated Organization Los Tibiriches (133) stripe_customer_id: cus_5uQ5bQF5ZR0Ica
+[2015-05-20 23:04:06 -0400] - UpdateStripeIdsOnMarket - The Locals Food Hub (2) - Connecting org customers - Updated Organization Rattle's Garden (1633) stripe_customer_id: cus_5uQ4UsOxYXNtjz
+[2015-05-20 23:04:07 -0400] - UpdateStripeIdsOnMarket - The Locals Food Hub (2) - Connecting org customers - Updated Organization Caney Creek Berry Farm (1674) stripe_customer_id: cus_5uQ4t1ZAJDOagr
+[2015-05-20 23:04:08 -0400] - UpdateStripeIdsOnMarket - The Locals Food Hub (2) - Connecting org customers - Updated Organization Natural State Grillers (1808) stripe_customer_id: cus_5uQ4x2HAYyogsH
+[2015-05-20 23:04:08 -0400] - UpdateStripeIdsOnMarket - The Locals Food Hub (2) - Connecting org customers - Updated Organization The Root Cafe (3358) stripe_customer_id: cus_5ynr5dxO0BJLl1
+[2015-05-20 23:04:08 -0400] - UpdateStripeIdsOnMarket - The Locals Food Hub (2) - Connecting org customers - Updated Organization Test Farmer (3400) stripe_customer_id: cus_60hFyv3X354tVU
+[2015-05-20 23:04:09 -0400] - UpdateStripeIdsOnMarket - The Locals Food Hub (2) - Connecting org customers - Updated Organization Test Buyer (3403) stripe_customer_id: cus_60iBFluQgy9P8Y
+[2015-05-20 23:04:09 -0400] - UpdateStripeIdsOnMarket - The Locals Food Hub (2) - Connecting org customers - Updated Organization Maria's Home Made Country Fare (3592) stripe_customer_id: cus_66dVvqhUOk0t5t
+[2015-05-20 23:04:09 -0400] - UpdateStripeIdsOnMarket - The Locals Food Hub (2) - Connecting org customers - Updated Organization Geek Eats (3594) stripe_customer_id: cus_66drBhqcVD3mIq
+[2015-05-20 23:04:10 -0400] - UpdateStripeIdsOnMarket - The Locals Food Hub (2) - Connecting org customers - Updated Organization Kent Walker Cheese (3595) stripe_customer_id: cus_66f3t9BIiXe0BD
+[2015-05-20 23:04:10 -0400] - UpdateStripeIdsOnMarket - The Locals Food Hub (2) - Connecting market BankAccounts - Updated FIRST SECURITY BK 2411 (60) stripe_id: ba_15ic9K2VpjOYk6TmXqWgJ60i

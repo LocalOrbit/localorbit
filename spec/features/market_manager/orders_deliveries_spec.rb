@@ -120,7 +120,7 @@ context "Viewing sold items" do
     end
 
     it "sets item delivery status" do
-      expect(UpdateBalancedPurchase).to receive(:perform).twice.and_return(double("interactor", success?: true))
+      expect(UpdatePurchase).to receive(:perform).twice.and_return(double("interactor", success?: true))
 
       sold_item = Dom::Admin::SoldItemRow.first
       sold_item.select
@@ -143,7 +143,7 @@ context "Viewing sold items" do
     end
 
     it "cancels an item from an order that has not been paid for yet" do
-      expect(UpdateBalancedPurchase).to receive(:perform).and_return(double("interactor", success?: true))
+      expect(UpdatePurchase).to receive(:perform).and_return(double("interactor", success?: true))
       expect(order.total_cost.to_f).to eql(74.00)
       sold_items = Dom::Admin::SoldItemRow.all
       expect(sold_items.map(&:buyer_payment_status)).to eql(["Unpaid", "Refunded", "Unpaid"])
@@ -162,7 +162,7 @@ context "Viewing sold items" do
     it "cancels an item from an order that has been paid for" do
       order.items.each {|i| i.update(payment_status: "paid") if i.payment_status == "unpaid" }
 
-      expect(UpdateBalancedPurchase).to receive(:perform).and_return(double("interactor", success?: true))
+      expect(UpdatePurchase).to receive(:perform).and_return(double("interactor", success?: true))
       expect(order.total_cost.to_f).to eql(74.00)
       sold_items = Dom::Admin::SoldItemRow.all
       expect(sold_items.map(&:buyer_payment_status)).to eql(["Unpaid", "Refunded", "Unpaid"])
@@ -203,7 +203,7 @@ context "Viewing sold items" do
     end
 
     it "sets item delivery status" do
-      expect(UpdateBalancedPurchase).to receive(:perform).twice.and_return(double("interactor", success?: true))
+      expect(UpdatePurchase).to receive(:perform).twice.and_return(double("interactor", success?: true))
 
       sold_item = Dom::Admin::SoldItemRow.first
       sold_item.select
@@ -226,7 +226,7 @@ context "Viewing sold items" do
     end
 
     it "cancels an item from an order" do
-      expect(UpdateBalancedPurchase).to receive(:perform).and_return(double("interactor", success?: true))
+      expect(UpdatePurchase).to receive(:perform).and_return(double("interactor", success?: true))
       expect(order.total_cost.to_f).to eql(74.00)
 
       sold_item = Dom::Admin::SoldItemRow.first

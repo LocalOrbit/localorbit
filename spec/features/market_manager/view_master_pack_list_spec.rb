@@ -129,12 +129,17 @@ describe "Master Pack List" do
       it "shows packing slips for the buyers" do
         pack_lists = Dom::Admin::PackList.all
 
+        buyers = [buyer1, buyer2]
+
         pack_list = pack_lists[0]
         expect(pack_list.note).to eq("1 of 2")
 
         buyer = pack_list.buyer
-        expect(buyer.org).to eq(buyer1.name)
-        expect(buyer.street).to eq(buyer1.locations.first.address)
+        expected = buyers.find { |b| b.name == buyer.org }
+        buyers.delete(expected)
+        expect(expected).to be
+        expect(buyer.org).to eq(expected.name)
+        expect(buyer.street).to eq(expected.locations.first.address)
 
         expect(pack_list.market.org).to eq(market.name)
         expect(pack_list.market.street).to eq("321 Main")
@@ -143,11 +148,16 @@ describe "Master Pack List" do
         expect(pack_list.note).to eq("2 of 2")
 
         buyer = pack_list.buyer
-        expect(buyer.org).to eq(buyer2.name)
-        expect(buyer.street).to eq(buyer2.locations.first.address)
+        expected = buyers.find { |b| b.name == buyer.org }
+        buyers.delete(expected)
+        expect(expected).to be
+        expect(buyer.org).to eq(expected.name)
+        expect(buyer.street).to eq(expected.locations.first.address)
 
         expect(pack_list.market.org).to eq(market.name)
         expect(pack_list.market.street).to eq("321 Main")
+
+        expect(buyers).to be_empty
       end
     end
   end

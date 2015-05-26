@@ -247,6 +247,15 @@ describe "Managing Markets" do
       expect(find_field("Tagline").value).to eq("Dutch People, Dutch Prices!")
       expect(find_field("Contact name").value).to eq("Jill Smith")
       expect(find_field("Twitter").value).to eq("hollandfarmers")
+
+      market = Market.find_by_name('Holland Farmers')
+
+      # See we got setup w Stripe:
+      expect(market.balanced_customer_uri).to be(nil), "should no longer be creating Balanced objects"
+      expect(market.stripe_account_id).to be
+      expect(market.stripe_customer_id).to be
+
+      # No point in actually checking the Stripe API since VCR stumped all that
     end
 
     describe "adding a market without valid information" do
@@ -411,6 +420,59 @@ describe "Managing Markets" do
       expect(find_field("ACH fee paid by market").value).to eq("5.500")
       expect(find_field("ACH fee cap").value).to eq("10.00")
       expect(find_field("PO Payment Terms").value).to eq("18")
+    end
+
+    context "using Stripe payment provider" do
+      before do
+        market.update(payment_provider: PaymentProvider::Stripe.id)
+      end
+
+      it "can update some market fees but NOT ACH or Credit Cards" do
+        visit "/admin/markets/#{market.id}"
+        click_link "Fees"
+
+        fill_in "Local Orbit % paid by Seller",   with: "2.0"
+        fill_in "Local Orbit % paid by market",   with: "4.0"
+        fill_in "Market % paid by Seller",        with: "3.0"
+
+        ["Credit Card fee paid by Seller",
+          "Credit Card fee paid by market",
+          "ACH fee paid by Seller",
+          "ACH fee paid by market",
+          "ACH fee cap",
+        ].each do |field_label|
+          expect(page.all(:field, field_label).count).to eq(0), "Field '#{field_label}' should NOT be present!"
+        end
+
+        fee_payer_fname = "market[payment_fees_paid_by]"
+
+        current_payer = find_field(fee_payer_fname, checked: true)
+        other_payer = find_field(fee_payer_fname, checked: false)
+        expect(current_payer.value).to eq 'seller'
+        expect(other_payer.value).to eq 'market'
+
+        choose(fee_payer_fname, checked: false)
+
+        current_payer = find_field(fee_payer_fname, checked: true)
+        other_payer = find_field(fee_payer_fname, checked: false)
+        expect(current_payer.value).to eq 'market'
+        expect(other_payer.value).to eq 'seller'
+
+        fill_in "PO Payment Terms",               with: "18"
+
+        click_button "Update Fees"
+
+        expect(page).to have_content("#{market.name} fees successfully updated")
+        expect(find_field("Local Orbit % paid by Seller").value).to eq("2.000")
+        expect(find_field("Local Orbit % paid by market").value).to eq("4.000")
+        expect(find_field("Market % paid by Seller").value).to eq("3.000")
+        expect(find_field("PO Payment Terms").value).to eq("18")
+
+        current_payer = find_field(fee_payer_fname, checked: true)
+        other_payer = find_field(fee_payer_fname, checked: false)
+        expect(current_payer.value).to eq 'market'
+        expect(other_payer.value).to eq 'seller'
+      end
     end
   end
 end
