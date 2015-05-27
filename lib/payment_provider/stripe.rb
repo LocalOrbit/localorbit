@@ -248,6 +248,10 @@ module PaymentProvider
         )
       end
 
+      def select_usable_bank_accounts(bank_accounts)
+        bank_accounts.reject do |ba| ba.stripe_id.nil? end
+      end
+
       private 
 
       def enumerate_transfer_transactions(transfer_id:, stripe_account_id:)
