@@ -37,7 +37,10 @@ class CreateMarket
     # params.require(:market).permit(columns)
 
   def perform
-    market = Market.create(market_params)
+    defaults = {
+      payment_provider: PaymentProvider.for_new_markets.id
+    }
+    market = Market.create(defaults.merge(market_params))
     context[:market] = market
     context.fail! if market.errors.any?
   end

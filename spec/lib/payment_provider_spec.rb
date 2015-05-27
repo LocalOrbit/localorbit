@@ -1,6 +1,22 @@
 describe PaymentProvider do
   # subject { described_class } 
 
+  describe ".for_new_markets" do
+    it "returns Stripe" do
+      expect(PaymentProvider.for_new_markets).to be PaymentProvider::Stripe
+    end
+
+    context "when env var is set for Balanced override" do
+      let(:magic_word) { 'USE_BALANCED_FOR_NEW_MARKETS' }
+      before { ENV[magic_word] = 'YES' }
+      after { ENV.delete(magic_word) }
+
+      it "returns Balanced" do
+        expect(PaymentProvider.for_new_markets).to be PaymentProvider::Balanced
+      end
+    end
+  end
+
   describe ".for" do
     it "returns the mapped provider object" do
       expect(PaymentProvider.for(:stripe)).to be(PaymentProvider::Stripe)

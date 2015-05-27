@@ -16,7 +16,7 @@ class Admin::MarketsController < AdminController
   end
 
   def new
-    @market = Market.new
+    @market = Market.new(payment_provider: PaymentProvider.for_new_markets.id)
   end
 
   def create

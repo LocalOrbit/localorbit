@@ -9,6 +9,23 @@ module Admin
       ]
     end
 
+    def support_payment_type?(payment_type)
+      if @markets 
+        if market = @markets.first
+          return PaymentProvider.supports_payment_method?(market.payment_provider, payment_type)
+        else
+          return false
+        end
+      elsif @organization
+        if provider = @organization.primary_payment_provider
+          return PaymentProvider.supports_payment_method?(provider, payment_type)
+        else
+          return false
+        end
+      end
+      false
+    end
+
     def allow_payment_type?(column)
       column = column.to_sym
       if @markets
