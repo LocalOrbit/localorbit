@@ -1,72 +1,74 @@
-[2015-05-26 16:03:56 -0400] - UpdateStripeIdsOnMarket - Nashville Grown (68) - ====================================================================================================
-[2015-05-26 16:03:56 -0400] - UpdateStripeIdsOnMarket - Nashville Grown (68) -  Nashville Grown (68)
-[2015-05-26 16:03:56 -0400] - UpdateStripeIdsOnMarket - Nashville Grown (68) -  Updating stripe IDs for market, orgs and bank accounts.
-[2015-05-26 16:03:56 -0400] - UpdateStripeIdsOnMarket - Nashville Grown (68) - 
-[2015-05-26 16:03:56 -0400] - UpdateStripeIdsOnMarket - Nashville Grown (68) -  Rails.env: production
-[2015-05-26 16:03:56 -0400] - UpdateStripeIdsOnMarket - Nashville Grown (68) -  Stripe keys:
-[2015-05-26 16:03:56 -0400] - UpdateStripeIdsOnMarket - Nashville Grown (68) -   --> STRIPE_PUBLISHABLE_KEY: pk_live_j85VTsrz51POrss3ni460qaf (pk_live_j85VTsrz51POrss3ni460qaf)
-[2015-05-26 16:03:56 -0400] - UpdateStripeIdsOnMarket - Nashville Grown (68) - ====================================================================================================
-[2015-05-26 16:03:56 -0400] - UpdateStripeIdsOnMarket - Nashville Grown (68) - Connecting market customer - Updated Market stripe_customer_id: cus_5uQ4CkRCiAoS4b
-[2015-05-26 16:03:57 -0400] - UpdateStripeIdsOnMarket - Nashville Grown (68) - Connecting market account - Updated Market stripe_account_id: acct_15jsfBJ6lStDVKM4
-[2015-05-26 16:03:57 -0400] - UpdateStripeIdsOnMarket - Nashville Grown (68) - Connecting org customers - Updated Organization Chic Pea Catering Co. (3796) stripe_customer_id: cus_6FDHmD3RBzB2UB
-[2015-05-26 16:03:57 -0400] - UpdateStripeIdsOnMarket - Nashville Grown (68) - Connecting org customers - Updated Organization Bear Haven Farm (3751) stripe_customer_id: cus_6DjhGLkPosAVhk
-[2015-05-26 16:03:58 -0400] - UpdateStripeIdsOnMarket - Nashville Grown (68) - Connecting org customers - Updated Organization Four Springs Farm (3637) stripe_customer_id: cus_68VJJaoZ2FfFeW
-[2015-05-26 16:03:58 -0400] - UpdateStripeIdsOnMarket - Nashville Grown (68) - Connecting org customers - Updated Organization Coleman Brothers Farm (3600) stripe_customer_id: cus_671p3yywBaEsVQ
-[2015-05-26 16:03:58 -0400] - UpdateStripeIdsOnMarket - Nashville Grown (68) - Connecting org customers - Updated Organization Marche (3599) stripe_customer_id: cus_66yUckfefIGjIi
-[2015-05-26 16:03:59 -0400] - UpdateStripeIdsOnMarket - Nashville Grown (68) - Connecting org customers - Updated Organization Pinewood Social (3555) stripe_customer_id: cus_65xiDaqGX94PYv
-[2015-05-26 16:03:59 -0400] - UpdateStripeIdsOnMarket - Nashville Grown (68) - Connecting org customers - Updated Organization From the Wild/ Alan Powell (3500) stripe_customer_id: cus_641LyoiIDJOPCh
-[2015-05-26 16:03:59 -0400] - UpdateStripeIdsOnMarket - Nashville Grown (68) - Connecting org customers - Updated Organization Hearts in the Mix (3470) stripe_customer_id: cus_63KURSwj8gJZyV
-[2015-05-26 16:03:59 -0400] - UpdateStripeIdsOnMarket - Nashville Grown (68) - Connecting org customers - MISS - No stripe_customer_id found for Organization Thrive Cafe (3427) balanced_customer_uri /v1/customers/CU3P4dCTHMBg8Kfssv4xrgV1
-[2015-05-26 16:03:59 -0400] - UpdateStripeIdsOnMarket - Nashville Grown (68) - Connecting org customers - Updated Organization Patterson House (3415) stripe_customer_id: cus_612BQKWxHilPQb
-[2015-05-26 16:04:00 -0400] - UpdateStripeIdsOnMarket - Nashville Grown (68) - Connecting org customers - Updated Organization Poultry House (3414) stripe_customer_id: cus_6121pvshxPhCdM
-[2015-05-26 16:04:00 -0400] - UpdateStripeIdsOnMarket - Nashville Grown (68) - Connecting org customers - Updated Organization Graves Farm (3413) stripe_customer_id: cus_611phdBKhcfPPV
-[2015-05-26 16:04:00 -0400] - UpdateStripeIdsOnMarket - Nashville Grown (68) - Connecting org customers - Updated Organization Wedge Oak Farm (3370) stripe_customer_id: cus_5zFtrfW9KqalaH
-[2015-05-26 16:04:00 -0400] - UpdateStripeIdsOnMarket - Nashville Grown (68) - Connecting org customers - Updated Organization Betty Lou's Biskits (3291) stripe_customer_id: cus_62y54QOmqOrsaC
-[2015-05-26 16:04:01 -0400] - UpdateStripeIdsOnMarket - Nashville Grown (68) - Connecting org customers - Updated Organization Chop Wood Carry Water Farm  (3243) stripe_customer_id: cus_5vlGMAwFAq50xN
-[2015-05-26 16:04:02 -0400] - UpdateStripeIdsOnMarket - Nashville Grown (68) - Connecting org customers - Updated Organization Chef William Gentry (3188) stripe_customer_id: cus_5uQ620EDvv85lH
-[2015-05-26 16:04:03 -0400] - UpdateStripeIdsOnMarket - Nashville Grown (68) - Connecting org customers - Updated Organization Fresh and Local LLC (3181) stripe_customer_id: cus_642zxwFr97j3bL
-[2015-05-26 16:04:03 -0400] - UpdateStripeIdsOnMarket - Nashville Grown (68) - Connecting org customers - Updated Organization Smoke Et AL (3172) stripe_customer_id: cus_63JhYyCjIMH7P1
-[2015-05-26 16:04:03 -0400] - UpdateStripeIdsOnMarket - Nashville Grown (68) - Connecting org customers - Updated Organization Franklin Juice Co. (3161) stripe_customer_id: cus_5uQ5Q1YLBvbdL6
-[2015-05-26 16:04:03 -0400] - UpdateStripeIdsOnMarket - Nashville Grown (68) - Connecting org customers - MISS - No stripe_customer_id found for Organization Scott Greenwood Organic (3139) balanced_customer_uri /v1/customers/CUknYIyUpx7ihy52iBnCZ5Z
-[2015-05-26 16:04:03 -0400] - UpdateStripeIdsOnMarket - Nashville Grown (68) - Connecting org customers - Updated Organization Martha Stamps Catering (3137) stripe_customer_id: cus_5uQ5576zgZmtay
-[2015-05-26 16:04:04 -0400] - UpdateStripeIdsOnMarket - Nashville Grown (68) - Connecting org customers - Updated Organization Noelle Restaurant (3117) stripe_customer_id: cus_6C3JbUyG1gkPam
-[2015-05-26 16:04:04 -0400] - UpdateStripeIdsOnMarket - Nashville Grown (68) - Connecting org customers - Updated Organization Short Mountain Sanctuary (3110) stripe_customer_id: cus_644IQZQOO9Hwhh
-[2015-05-26 16:04:04 -0400] - UpdateStripeIdsOnMarket - Nashville Grown (68) - Connecting org customers - Updated Organization AVO (3106) stripe_customer_id: cus_5uQ59iY695Avk5
-[2015-05-26 16:04:04 -0400] - UpdateStripeIdsOnMarket - Nashville Grown (68) - Connecting org customers - Updated Organization No. 9 Farms (3105) stripe_customer_id: cus_5uQ5sVX8BaOWkt
-[2015-05-26 16:04:05 -0400] - UpdateStripeIdsOnMarket - Nashville Grown (68) - Connecting org customers - Updated Organization Miel Restaurant (3097) stripe_customer_id: cus_5uQ5Hh1vVuKP5j
-[2015-05-26 16:04:05 -0400] - UpdateStripeIdsOnMarket - Nashville Grown (68) - Connecting org customers - Updated Organization Southern Ground Nashville (3096) stripe_customer_id: cus_5uQ5Yf33vlGJqH
-[2015-05-26 16:04:05 -0400] - UpdateStripeIdsOnMarket - Nashville Grown (68) - Connecting org customers - Updated Organization Fifty First (3091) stripe_customer_id: cus_5uQ5jrKTC61iDB
-[2015-05-26 16:04:06 -0400] - UpdateStripeIdsOnMarket - Nashville Grown (68) - Connecting org customers - Updated Organization Capitol Grille (3090) stripe_customer_id: cus_5uQ5GxQajhEqrz
-[2015-05-26 16:04:06 -0400] - UpdateStripeIdsOnMarket - Nashville Grown (68) - Connecting org customers - Updated Organization Second Harvest Food Bank of Middle Tennessee (3089) stripe_customer_id: cus_5uQ5PkNDbYmxwJ
-[2015-05-26 16:04:06 -0400] - UpdateStripeIdsOnMarket - Nashville Grown (68) - Connecting org customers - Updated Organization City Winery (3088) stripe_customer_id: cus_5uQ5SaBJ2yU4XQ
-[2015-05-26 16:04:06 -0400] - UpdateStripeIdsOnMarket - Nashville Grown (68) - Connecting org customers - Updated Organization Sloco (3087) stripe_customer_id: cus_5uQ5oh0YFlV68z
-[2015-05-26 16:04:07 -0400] - UpdateStripeIdsOnMarket - Nashville Grown (68) - Connecting org customers - Updated Organization Silly Goose (3086) stripe_customer_id: cus_5uQ5bGEA1ncXc3
-[2015-05-26 16:04:07 -0400] - UpdateStripeIdsOnMarket - Nashville Grown (68) - Connecting org customers - Updated Organization Bella (3085) stripe_customer_id: cus_5uQ5iEycYMxaJl
-[2015-05-26 16:04:07 -0400] - UpdateStripeIdsOnMarket - Nashville Grown (68) - Connecting org customers - Updated Organization Hohenwald Growers Collective (3084) stripe_customer_id: cus_5uQ5JeQ2v7ZGca
-[2015-05-26 16:04:07 -0400] - UpdateStripeIdsOnMarket - Nashville Grown (68) - Connecting org customers - Updated Organization Husk (3035) stripe_customer_id: cus_5uQ5BcrD2pcINe
-[2015-05-26 16:04:08 -0400] - UpdateStripeIdsOnMarket - Nashville Grown (68) - Connecting org customers - Updated Organization Old School Farm (3029) stripe_customer_id: cus_5uQ5rPYJNbRcXl
-[2015-05-26 16:04:09 -0400] - UpdateStripeIdsOnMarket - Nashville Grown (68) - Connecting org customers - Updated Organization Six Boots Collective (3028) stripe_customer_id: cus_5uQ5pb4xxqv3Bl
-[2015-05-26 16:04:09 -0400] - UpdateStripeIdsOnMarket - Nashville Grown (68) - Connecting org customers - Updated Organization Stony Creek Farm (3026) stripe_customer_id: cus_5uQ6AWFMSTjKxn
-[2015-05-26 16:04:10 -0400] - UpdateStripeIdsOnMarket - Nashville Grown (68) - Connecting org customers - Updated Organization Sherrill Homestead (3025) stripe_customer_id: cus_5uQ5c3knjEvXVt
-[2015-05-26 16:04:10 -0400] - UpdateStripeIdsOnMarket - Nashville Grown (68) - Connecting org customers - Updated Organization Hungry Gnome Farm (3006) stripe_customer_id: cus_5uQ5ceeGj9Eb6r
-[2015-05-26 16:04:10 -0400] - UpdateStripeIdsOnMarket - Nashville Grown (68) - Connecting org customers - Updated Organization The Nashville Food Project (2955) stripe_customer_id: cus_5uQ5O1rlN5UuzN
-[2015-05-26 16:04:10 -0400] - UpdateStripeIdsOnMarket - Nashville Grown (68) - Connecting org customers - Updated Organization Wild Cow (2954) stripe_customer_id: cus_5uQ5zBFje7ihJJ
-[2015-05-26 16:04:11 -0400] - UpdateStripeIdsOnMarket - Nashville Grown (68) - Connecting org customers - Updated Organization Whispering Creek Mushrooms (2892) stripe_customer_id: cus_5uQ46qeJKwFj0f
-[2015-05-26 16:04:11 -0400] - UpdateStripeIdsOnMarket - Nashville Grown (68) - Connecting org customers - Updated Organization Merchants (2883) stripe_customer_id: cus_5uQ45d0fa1KB6G
-[2015-05-26 16:04:11 -0400] - UpdateStripeIdsOnMarket - Nashville Grown (68) - Connecting org customers - Updated Organization Table 3 (2882) stripe_customer_id: cus_5uQ4wbvG0xYD4q
-[2015-05-26 16:04:12 -0400] - UpdateStripeIdsOnMarket - Nashville Grown (68) - Connecting org customers - Updated Organization Green Door Gourmet Farm (2878) stripe_customer_id: cus_5uQ4Y6cb5YBjcP
-[2015-05-26 16:04:12 -0400] - UpdateStripeIdsOnMarket - Nashville Grown (68) - Connecting org customers - Updated Organization Windy Acres Farm (2877) stripe_customer_id: cus_5uQ4FWPgNJxORq
-[2015-05-26 16:04:13 -0400] - UpdateStripeIdsOnMarket - Nashville Grown (68) - Connecting org customers - Updated Organization Jeff Poppen aka The Barefoot Farmer (2876) stripe_customer_id: cus_5uQ4rPCVh230je
-[2015-05-26 16:04:14 -0400] - UpdateStripeIdsOnMarket - Nashville Grown (68) - Connecting org customers - Updated Organization Greener Roots Farm (2875) stripe_customer_id: cus_5uQ4XZdli1aQz0
-[2015-05-26 16:04:14 -0400] - UpdateStripeIdsOnMarket - Nashville Grown (68) - Connecting org customers - Updated Organization Bloomsbury Farm (2874) stripe_customer_id: cus_5uQ4cMadW0AArc
-[2015-05-26 16:04:14 -0400] - UpdateStripeIdsOnMarket - Nashville Grown (68) - Connecting org customers - Updated Organization Bloomin Shrooms (2873) stripe_customer_id: cus_5uQ4pRHZ3isdHz
-[2015-05-26 16:04:15 -0400] - UpdateStripeIdsOnMarket - Nashville Grown (68) - Connecting org customers - Updated Organization Nashville Grown (2848) stripe_customer_id: cus_5uQ4kkkd34VkiI
-[2015-05-26 16:04:15 -0400] - UpdateStripeIdsOnMarket - Nashville Grown (68) - Connecting org customers - Updated Organization Bountiful Blessings Farm (2847) stripe_customer_id: cus_5uQ4MDG8vzYMKS
-[2015-05-26 16:04:15 -0400] - UpdateStripeIdsOnMarket - Nashville Grown (68) - Connecting org customers - Updated Organization Jenny's Farm (2846) stripe_customer_id: cus_5uQ4Ti68zgpNmo
-[2015-05-26 16:04:16 -0400] - UpdateStripeIdsOnMarket - Nashville Grown (68) - Connecting org customers - Updated Organization Bells Bend Farms (2845) stripe_customer_id: cus_5uQ4Z5jnPns4xh
-[2015-05-26 16:04:16 -0400] - UpdateStripeIdsOnMarket - Nashville Grown (68) - Connecting market BankAccounts - MISS - No stripe_id found for AVENUE BANK 5829 (412) balanced_customer_uri /v1/marketplaces/MP2eXZmrOPof80u3Irf94Wre/bank_accounts/BA6DFo3TwqSZan6y528Eabzk
-[2015-05-26 16:04:17 -0400] - UpdateStripeIdsOnMarket - Nashville Grown (68) - Connecting org BankAccounts - Organization Hearts in the Mix (3470) - Updated Visa 9655 (498) stripe_id: card_15rDvE2VpjOYk6Tm2DwDhkHV
-[2015-05-26 16:04:17 -0400] - UpdateStripeIdsOnMarket - Nashville Grown (68) - Connecting org BankAccounts - Organization Chop Wood Carry Water Farm  (3243) - Updated PINNACLE BANK 8142 (469) stripe_id: ba_15jzWd2VpjOYk6Tm7IQoAwwo
-[2015-05-26 16:04:18 -0400] - UpdateStripeIdsOnMarket - Nashville Grown (68) - Connecting org BankAccounts - Organization Fresh and Local LLC (3181) - Updated PINNACLE BANK 7001 (503) stripe_id: ba_15ruu32VpjOYk6Tmrihpahe5
-[2015-05-26 16:04:18 -0400] - UpdateStripeIdsOnMarket - Nashville Grown (68) - Connecting org BankAccounts - Organization Franklin Juice Co. (3161) - Updated MasterCard 2087 (462) stripe_id: card_15icAA2VpjOYk6TmJFYQEeVO
-[2015-05-26 16:04:18 -0400] - UpdateStripeIdsOnMarket - Nashville Grown (68) - Connecting org BankAccounts - Organization Scott Greenwood Organic (3139) - MISS - No stripe_id found for SUMNER BANK & TRUST 3204 (451) balanced_customer_uri /v1/marketplaces/MP2eXZmrOPof80u3Irf94Wre/bank_accounts/BAjlrJEnOIFiTO7iUo4syj5
+[2015-05-27 11:26:34 -0400] - UpdateStripeIdsOnMarket - Nashville Grown (68) - ====================================================================================================
+[2015-05-27 11:26:34 -0400] - UpdateStripeIdsOnMarket - Nashville Grown (68) -  Nashville Grown (68)
+[2015-05-27 11:26:34 -0400] - UpdateStripeIdsOnMarket - Nashville Grown (68) -  Updating stripe IDs for market, orgs and bank accounts.
+[2015-05-27 11:26:34 -0400] - UpdateStripeIdsOnMarket - Nashville Grown (68) - 
+[2015-05-27 11:26:34 -0400] - UpdateStripeIdsOnMarket - Nashville Grown (68) -  Balanced export file: /home/vagrant/git/localorbit/tools/stripe-migration/from_balanced/2015-05-27-1432735944-MP2eXZmrOPof80u3Irf94Wre.csv
+[2015-05-27 11:26:34 -0400] - UpdateStripeIdsOnMarket - Nashville Grown (68) - 
+[2015-05-27 11:26:34 -0400] - UpdateStripeIdsOnMarket - Nashville Grown (68) -  Rails.env: production
+[2015-05-27 11:26:34 -0400] - UpdateStripeIdsOnMarket - Nashville Grown (68) -  Stripe keys:
+[2015-05-27 11:26:34 -0400] - UpdateStripeIdsOnMarket - Nashville Grown (68) -   --> STRIPE_PUBLISHABLE_KEY: pk_live_j85VTsrz51POrss3ni460qaf (pk_live_j85VTsrz51POrss3ni460qaf)
+[2015-05-27 11:26:34 -0400] - UpdateStripeIdsOnMarket - Nashville Grown (68) - ====================================================================================================
+[2015-05-27 11:26:34 -0400] - UpdateStripeIdsOnMarket - Nashville Grown (68) - Connecting market customer - Updated Market stripe_customer_id: cus_5uQ4CkRCiAoS4b
+[2015-05-27 11:26:34 -0400] - UpdateStripeIdsOnMarket - Nashville Grown (68) - Connecting market account - Updated Market stripe_account_id: acct_15jsfBJ6lStDVKM4
+[2015-05-27 11:26:35 -0400] - UpdateStripeIdsOnMarket - Nashville Grown (68) - Connecting org customers - Updated Organization Chic Pea Catering Co. (3796) stripe_customer_id: cus_6FDHmD3RBzB2UB
+[2015-05-27 11:26:35 -0400] - UpdateStripeIdsOnMarket - Nashville Grown (68) - Connecting org customers - Updated Organization Bear Haven Farm (3751) stripe_customer_id: cus_6DjhGLkPosAVhk
+[2015-05-27 11:26:35 -0400] - UpdateStripeIdsOnMarket - Nashville Grown (68) - Connecting org customers - Updated Organization Four Springs Farm (3637) stripe_customer_id: cus_68VJJaoZ2FfFeW
+[2015-05-27 11:26:35 -0400] - UpdateStripeIdsOnMarket - Nashville Grown (68) - Connecting org customers - Updated Organization Coleman Brothers Farm (3600) stripe_customer_id: cus_671p3yywBaEsVQ
+[2015-05-27 11:26:35 -0400] - UpdateStripeIdsOnMarket - Nashville Grown (68) - Connecting org customers - Updated Organization Marche (3599) stripe_customer_id: cus_66yUckfefIGjIi
+[2015-05-27 11:26:35 -0400] - UpdateStripeIdsOnMarket - Nashville Grown (68) - Connecting org customers - Updated Organization Pinewood Social (3555) stripe_customer_id: cus_65xiDaqGX94PYv
+[2015-05-27 11:26:35 -0400] - UpdateStripeIdsOnMarket - Nashville Grown (68) - Connecting org customers - Updated Organization From the Wild/ Alan Powell (3500) stripe_customer_id: cus_641LyoiIDJOPCh
+[2015-05-27 11:26:35 -0400] - UpdateStripeIdsOnMarket - Nashville Grown (68) - Connecting org customers - Updated Organization Hearts in the Mix (3470) stripe_customer_id: cus_63KURSwj8gJZyV
+[2015-05-27 11:26:35 -0400] - UpdateStripeIdsOnMarket - Nashville Grown (68) - Connecting org customers - MISS - No stripe_customer_id found for Organization Thrive Cafe (3427) balanced_customer_uri /v1/customers/CU3P4dCTHMBg8Kfssv4xrgV1
+[2015-05-27 11:26:35 -0400] - UpdateStripeIdsOnMarket - Nashville Grown (68) - Connecting org customers - Updated Organization Patterson House (3415) stripe_customer_id: cus_612BQKWxHilPQb
+[2015-05-27 11:26:35 -0400] - UpdateStripeIdsOnMarket - Nashville Grown (68) - Connecting org customers - Updated Organization Poultry House (3414) stripe_customer_id: cus_6121pvshxPhCdM
+[2015-05-27 11:26:35 -0400] - UpdateStripeIdsOnMarket - Nashville Grown (68) - Connecting org customers - Updated Organization Graves Farm (3413) stripe_customer_id: cus_611phdBKhcfPPV
+[2015-05-27 11:26:35 -0400] - UpdateStripeIdsOnMarket - Nashville Grown (68) - Connecting org customers - Updated Organization Wedge Oak Farm (3370) stripe_customer_id: cus_5zFtrfW9KqalaH
+[2015-05-27 11:26:35 -0400] - UpdateStripeIdsOnMarket - Nashville Grown (68) - Connecting org customers - Updated Organization Betty Lou's Biskits (3291) stripe_customer_id: cus_62y54QOmqOrsaC
+[2015-05-27 11:26:35 -0400] - UpdateStripeIdsOnMarket - Nashville Grown (68) - Connecting org customers - Updated Organization Chop Wood Carry Water Farm  (3243) stripe_customer_id: cus_5vlGMAwFAq50xN
+[2015-05-27 11:26:36 -0400] - UpdateStripeIdsOnMarket - Nashville Grown (68) - Connecting org customers - Updated Organization Chef William Gentry (3188) stripe_customer_id: cus_5uQ620EDvv85lH
+[2015-05-27 11:26:36 -0400] - UpdateStripeIdsOnMarket - Nashville Grown (68) - Connecting org customers - Updated Organization Fresh and Local LLC (3181) stripe_customer_id: cus_642zxwFr97j3bL
+[2015-05-27 11:26:36 -0400] - UpdateStripeIdsOnMarket - Nashville Grown (68) - Connecting org customers - Updated Organization Smoke Et AL (3172) stripe_customer_id: cus_63JhYyCjIMH7P1
+[2015-05-27 11:26:36 -0400] - UpdateStripeIdsOnMarket - Nashville Grown (68) - Connecting org customers - Updated Organization Franklin Juice Co. (3161) stripe_customer_id: cus_5uQ5Q1YLBvbdL6
+[2015-05-27 11:26:36 -0400] - UpdateStripeIdsOnMarket - Nashville Grown (68) - Connecting org customers - MISS - No stripe_customer_id found for Organization Scott Greenwood Organic (3139) balanced_customer_uri /v1/customers/CUknYIyUpx7ihy52iBnCZ5Z
+[2015-05-27 11:26:36 -0400] - UpdateStripeIdsOnMarket - Nashville Grown (68) - Connecting org customers - Updated Organization Martha Stamps Catering (3137) stripe_customer_id: cus_5uQ5576zgZmtay
+[2015-05-27 11:26:36 -0400] - UpdateStripeIdsOnMarket - Nashville Grown (68) - Connecting org customers - Updated Organization Noelle Restaurant (3117) stripe_customer_id: cus_6C3JbUyG1gkPam
+[2015-05-27 11:26:36 -0400] - UpdateStripeIdsOnMarket - Nashville Grown (68) - Connecting org customers - Updated Organization Short Mountain Sanctuary (3110) stripe_customer_id: cus_644IQZQOO9Hwhh
+[2015-05-27 11:26:36 -0400] - UpdateStripeIdsOnMarket - Nashville Grown (68) - Connecting org customers - Updated Organization AVO (3106) stripe_customer_id: cus_5uQ59iY695Avk5
+[2015-05-27 11:26:36 -0400] - UpdateStripeIdsOnMarket - Nashville Grown (68) - Connecting org customers - Updated Organization No. 9 Farms (3105) stripe_customer_id: cus_5uQ5sVX8BaOWkt
+[2015-05-27 11:26:36 -0400] - UpdateStripeIdsOnMarket - Nashville Grown (68) - Connecting org customers - Updated Organization Miel Restaurant (3097) stripe_customer_id: cus_5uQ5Hh1vVuKP5j
+[2015-05-27 11:26:36 -0400] - UpdateStripeIdsOnMarket - Nashville Grown (68) - Connecting org customers - Updated Organization Southern Ground Nashville (3096) stripe_customer_id: cus_5uQ5Yf33vlGJqH
+[2015-05-27 11:26:36 -0400] - UpdateStripeIdsOnMarket - Nashville Grown (68) - Connecting org customers - Updated Organization Fifty First (3091) stripe_customer_id: cus_5uQ5jrKTC61iDB
+[2015-05-27 11:26:36 -0400] - UpdateStripeIdsOnMarket - Nashville Grown (68) - Connecting org customers - Updated Organization Capitol Grille (3090) stripe_customer_id: cus_5uQ5GxQajhEqrz
+[2015-05-27 11:26:37 -0400] - UpdateStripeIdsOnMarket - Nashville Grown (68) - Connecting org customers - Updated Organization Second Harvest Food Bank of Middle Tennessee (3089) stripe_customer_id: cus_5uQ5PkNDbYmxwJ
+[2015-05-27 11:26:37 -0400] - UpdateStripeIdsOnMarket - Nashville Grown (68) - Connecting org customers - Updated Organization City Winery (3088) stripe_customer_id: cus_5uQ5SaBJ2yU4XQ
+[2015-05-27 11:26:37 -0400] - UpdateStripeIdsOnMarket - Nashville Grown (68) - Connecting org customers - Updated Organization Sloco (3087) stripe_customer_id: cus_5uQ5oh0YFlV68z
+[2015-05-27 11:26:37 -0400] - UpdateStripeIdsOnMarket - Nashville Grown (68) - Connecting org customers - Updated Organization Silly Goose (3086) stripe_customer_id: cus_5uQ5bGEA1ncXc3
+[2015-05-27 11:26:37 -0400] - UpdateStripeIdsOnMarket - Nashville Grown (68) - Connecting org customers - Updated Organization Bella (3085) stripe_customer_id: cus_5uQ5iEycYMxaJl
+[2015-05-27 11:26:37 -0400] - UpdateStripeIdsOnMarket - Nashville Grown (68) - Connecting org customers - Updated Organization Hohenwald Growers Collective (3084) stripe_customer_id: cus_5uQ5JeQ2v7ZGca
+[2015-05-27 11:26:37 -0400] - UpdateStripeIdsOnMarket - Nashville Grown (68) - Connecting org customers - Updated Organization Husk (3035) stripe_customer_id: cus_5uQ5BcrD2pcINe
+[2015-05-27 11:26:37 -0400] - UpdateStripeIdsOnMarket - Nashville Grown (68) - Connecting org customers - Updated Organization Old School Farm (3029) stripe_customer_id: cus_5uQ5rPYJNbRcXl
+[2015-05-27 11:26:38 -0400] - UpdateStripeIdsOnMarket - Nashville Grown (68) - Connecting org customers - Updated Organization Six Boots Collective (3028) stripe_customer_id: cus_5uQ5pb4xxqv3Bl
+[2015-05-27 11:26:38 -0400] - UpdateStripeIdsOnMarket - Nashville Grown (68) - Connecting org customers - Updated Organization Stony Creek Farm (3026) stripe_customer_id: cus_5uQ6AWFMSTjKxn
+[2015-05-27 11:26:38 -0400] - UpdateStripeIdsOnMarket - Nashville Grown (68) - Connecting org customers - Updated Organization Sherrill Homestead (3025) stripe_customer_id: cus_5uQ5c3knjEvXVt
+[2015-05-27 11:26:38 -0400] - UpdateStripeIdsOnMarket - Nashville Grown (68) - Connecting org customers - Updated Organization Hungry Gnome Farm (3006) stripe_customer_id: cus_5uQ5ceeGj9Eb6r
+[2015-05-27 11:26:38 -0400] - UpdateStripeIdsOnMarket - Nashville Grown (68) - Connecting org customers - Updated Organization The Nashville Food Project (2955) stripe_customer_id: cus_5uQ5O1rlN5UuzN
+[2015-05-27 11:26:38 -0400] - UpdateStripeIdsOnMarket - Nashville Grown (68) - Connecting org customers - Updated Organization Wild Cow (2954) stripe_customer_id: cus_5uQ5zBFje7ihJJ
+[2015-05-27 11:26:38 -0400] - UpdateStripeIdsOnMarket - Nashville Grown (68) - Connecting org customers - Updated Organization Whispering Creek Mushrooms (2892) stripe_customer_id: cus_5uQ46qeJKwFj0f
+[2015-05-27 11:26:38 -0400] - UpdateStripeIdsOnMarket - Nashville Grown (68) - Connecting org customers - Updated Organization Merchants (2883) stripe_customer_id: cus_5uQ45d0fa1KB6G
+[2015-05-27 11:26:38 -0400] - UpdateStripeIdsOnMarket - Nashville Grown (68) - Connecting org customers - Updated Organization Table 3 (2882) stripe_customer_id: cus_5uQ4wbvG0xYD4q
+[2015-05-27 11:26:39 -0400] - UpdateStripeIdsOnMarket - Nashville Grown (68) - Connecting org customers - Updated Organization Green Door Gourmet Farm (2878) stripe_customer_id: cus_5uQ4Y6cb5YBjcP
+[2015-05-27 11:26:39 -0400] - UpdateStripeIdsOnMarket - Nashville Grown (68) - Connecting org customers - Updated Organization Windy Acres Farm (2877) stripe_customer_id: cus_5uQ4FWPgNJxORq
+[2015-05-27 11:26:39 -0400] - UpdateStripeIdsOnMarket - Nashville Grown (68) - Connecting org customers - Updated Organization Jeff Poppen aka The Barefoot Farmer (2876) stripe_customer_id: cus_5uQ4rPCVh230je
+[2015-05-27 11:26:39 -0400] - UpdateStripeIdsOnMarket - Nashville Grown (68) - Connecting org customers - Updated Organization Greener Roots Farm (2875) stripe_customer_id: cus_5uQ4XZdli1aQz0
+[2015-05-27 11:26:39 -0400] - UpdateStripeIdsOnMarket - Nashville Grown (68) - Connecting org customers - Updated Organization Bloomsbury Farm (2874) stripe_customer_id: cus_5uQ4cMadW0AArc
+[2015-05-27 11:26:39 -0400] - UpdateStripeIdsOnMarket - Nashville Grown (68) - Connecting org customers - Updated Organization Bloomin Shrooms (2873) stripe_customer_id: cus_5uQ4pRHZ3isdHz
+[2015-05-27 11:26:39 -0400] - UpdateStripeIdsOnMarket - Nashville Grown (68) - Connecting org customers - Updated Organization Nashville Grown (2848) stripe_customer_id: cus_5uQ4kkkd34VkiI
+[2015-05-27 11:26:39 -0400] - UpdateStripeIdsOnMarket - Nashville Grown (68) - Connecting org customers - Updated Organization Bountiful Blessings Farm (2847) stripe_customer_id: cus_5uQ4MDG8vzYMKS
+[2015-05-27 11:26:39 -0400] - UpdateStripeIdsOnMarket - Nashville Grown (68) - Connecting org customers - Updated Organization Jenny's Farm (2846) stripe_customer_id: cus_5uQ4Ti68zgpNmo
+[2015-05-27 11:26:40 -0400] - UpdateStripeIdsOnMarket - Nashville Grown (68) - Connecting org customers - Updated Organization Bells Bend Farms (2845) stripe_customer_id: cus_5uQ4Z5jnPns4xh
+[2015-05-27 11:26:40 -0400] - UpdateStripeIdsOnMarket - Nashville Grown (68) - Connecting market BankAccounts - MISS - No stripe_id found for AVENUE BANK 5829 (412) balanced_customer_uri /v1/marketplaces/MP2eXZmrOPof80u3Irf94Wre/bank_accounts/BA6DFo3TwqSZan6y528Eabzk
+[2015-05-27 11:26:40 -0400] - UpdateStripeIdsOnMarket - Nashville Grown (68) - Connecting org BankAccounts - Organization Hearts in the Mix (3470) - Updated Visa 9655 (498) stripe_id: card_15rDvE2VpjOYk6Tm2DwDhkHV
+[2015-05-27 11:26:40 -0400] - UpdateStripeIdsOnMarket - Nashville Grown (68) - Connecting org BankAccounts - Organization Chop Wood Carry Water Farm  (3243) - Updated PINNACLE BANK 8142 (469) stripe_id: ba_15jzWd2VpjOYk6Tm7IQoAwwo
+[2015-05-27 11:26:40 -0400] - UpdateStripeIdsOnMarket - Nashville Grown (68) - Connecting org BankAccounts - Organization Fresh and Local LLC (3181) - Updated PINNACLE BANK 7001 (503) stripe_id: ba_15ruu32VpjOYk6Tmrihpahe5
+[2015-05-27 11:26:40 -0400] - UpdateStripeIdsOnMarket - Nashville Grown (68) - Connecting org BankAccounts - Organization Franklin Juice Co. (3161) - Updated MasterCard 2087 (462) stripe_id: card_15icAA2VpjOYk6TmJFYQEeVO
+[2015-05-27 11:26:40 -0400] - UpdateStripeIdsOnMarket - Nashville Grown (68) - Connecting org BankAccounts - Organization Scott Greenwood Organic (3139) - MISS - No stripe_id found for SUMNER BANK & TRUST 3204 (451) balanced_customer_uri /v1/marketplaces/MP2eXZmrOPof80u3Irf94Wre/bank_accounts/BAjlrJEnOIFiTO7iUo4syj5
