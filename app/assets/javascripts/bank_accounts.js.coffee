@@ -15,20 +15,27 @@ validateEIN = () ->
 
   return true
 
+showCardControls = (accountType) ->
+  $("#payment-provider-container").data("provider-object-type", "card")
+  $("#bank-account-fields, #underwriting-fields").addClass('is-hidden').prop('disabled', true)
+  $("#credit-card-fields").removeClass('is-hidden').prop('disabled', false)
+  $("#account_type").val(accountType)
+  null
+
+showBankAccountControls = (accountType) ->
+  $("#payment-provider-container").data("provider-object-type", "bankAccount")
+  $("#bank-account-fields, #underwriting-fields").removeClass('is-hidden').prop('disabled', false)
+  $("#credit-card-fields").addClass('is-hidden').prop('disabled', true)
+  $("#account_type").val(accountType)
+  null
+
 $ ->
   $("#provider_account_type").change (e)->
-    val = $(this).val()
-    if val == "card"
-      $("#payment-provider-container").data("provider-object-type", "card")
-      $("#bank-account-fields, #underwriting-fields").addClass('is-hidden').prop('disabled', true)
-      $("#credit-card-fields").removeClass('is-hidden').prop('disabled', false)
-      $("#account_type").val(val)
+    accountType = $(this).val()
+    if accountType == "card"
+      showCardControls(accountType)
     else
-      $("#payment-provider-container").data("provider-object-type", "bankAccount")
-      $("#bank-account-fields, #underwriting-fields").removeClass('is-hidden').prop('disabled', false)
-      $("#credit-card-fields").addClass('is-hidden').prop('disabled', true)
-      $("#account_type").val(val)
-
+      showBankAccountControls(accountType)
 
   $("#submit-bank-account").click (e) ->
     e.preventDefault()
@@ -62,3 +69,7 @@ $ ->
         # failure
         $('input[type="submit"]').removeAttr("disabled")
 
+
+  if accountType = $("#provider_account_type").val()
+    if (accountType == 'checking') or (accountType == 'savings')
+      showBankAccountControls()

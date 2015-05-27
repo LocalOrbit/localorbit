@@ -1,0 +1,97 @@
+<%= render "admin/markets/header" %>
+
+<div class="row row--partial">
+<form class="column column--three-fourths" id="payment-provider-container" data-payment-provider="<%= @payment_provider %>" data-balanced-marketplace-uri="<%= ENV["BALANCED_MARKETPLACE_URI"] %>" data-stripe-publishable-key="<%= ENV["STRIPE_PUBLISHABLE_KEY"] %>" data-target-form="new_bank_account" data-provider-object-type="bankAccount">
+  <%= render 'shared/enable_javascript' %>
+
+  <%= render 'shared/errors', resource: @bank_account %>
+
+  <fieldset>
+    <legend>Account Information</legend>
+    <%= link_to "Our Security Assurance", "#security-assurance", class: "popup-toggle" %>
+    <div class="is-hidden popup popup--wide with-anchor top-anchor" id="security-assurance">
+      <h3>About Our Security Assurance</h3>
+      <p>Adding a payment method to your Local Orbit powered market is safe and secure. Here's how we protect you:</p>
+      <ul>
+       <li>No one from Local Orbit, your market or the payment processor can view or access your bank account or credit card information at any time. Account information is stored using the strictest security standards and transmitted securely by our payments provider.</li>
+       <li>You will receive a receipt each time you make an online payment so you can monitor your account activity.</li>
+      </ul>
+    </div>
+
+    <div>
+      <p>This deposit account will be used to deliver payments from orders.</p>
+    </div>
+
+    <div class="row">
+      <div class="field column column--half column--guttered">
+        <label for="provider_account_name">Name</label>
+        <span class="hint">Full name as it appears on the account</span>
+        <br>
+        <input id="provider_account_name" type="text" name="name" value="<%= @bank_account.name %>" class="column--full">
+      </div
+      ><div class="field column column--half column--guttered">
+        <label for="provider_account_type">Account Type</label><br>
+        <%= select_tag :type, deposit_account_type_options(), prompt: 'Select an account type', id: 'provider_account_type', class: 'column--full' %>
+      </div>
+    </div>
+
+    <fieldset id="bank-account-fields" <%= raw 'class="is-hidden" disabled' if @bank_account.account_type.nil? || is_credit_card?(@bank_account) %>>
+      <div class="row">
+        <div class="field column column--half column--guttered">
+          <label for="routing_number">Routing Number</label><br>
+          <input class="column--full" id="routing_number" type="text" name="routing_number">
+        </div
+        ><div class="field column column--half column--guttered">
+          <label for="account_number">Account Number</label><br>
+          <input class="column--full" id="account_number" type="text" name="account_number">
+        </div>
+      </div>
+      <div class="row">
+        <div class="field column column--half column--guttered">
+          <label for="bank-account-notes">Notes</label><br>
+          <input class="column--full" id="bank-account-notes" type="text" name="notes">
+          <input id="bank-account-country" type="hidden" name="country" value="US">
+        </div>
+      </div>
+    </fieldset>
+
+    <fieldset id="credit-card-fields" <%= raw 'class="is-hidden" disabled' unless @bank_account.account_type.present? && is_credit_card?(@bank_account) %>>
+      <div class="row">
+        <div class="field column column--half column--guttered">
+          <label for="provider_card_number">Card Number</label><br>
+          <input class="column--full" id="provider_card_number" type="text" name="card_number">
+        </div
+        ><div class="field column column--half column--guttered">
+          <label for="provider_security_code">Security Code</label><br>
+          <input class="column--full" id="provider_security_code" type="text" name="security_code">
+        </div>
+      </div>
+      <div class="row">
+        <div class="field column column--fourth column--guttered">
+          <label for="expiration_month">Month</label><br>
+          <%= select_tag(:expiration_month, options_for_select(expiration_month_options), class: "column--full") %>
+        </div
+        ><div class="field column column--fourth column--guttered">
+          <label for="expiration_year">Year</label><br>
+          <%= select_tag(:expiration_year, options_for_select(expiration_year_options), class: "column--full") %>
+        </div
+        ><div class="field column column--half column--guttered">
+          <label for="credit-card-notes">Notes</label><br>
+          <input class="column--full" id="credit-card-notes" type="text" name="notes">
+        </div>
+      </div>
+    </fieldset>
+
+  </fieldset>
+</form>
+
+  <ul id="payment-provider-errors" class="form-errors"></ul>
+
+  <div class="column column--three-fourths">
+    <div class="form-actions">
+      <%= link_to "Cancel", [:admin, @entity, @bank_account], class: "btn cancel" %>
+      <input type="submit" value="Save This Payment Method" id="submit-bank-account">
+    </div>
+
+  </div>
+</div>

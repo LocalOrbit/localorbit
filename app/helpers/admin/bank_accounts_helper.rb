@@ -23,13 +23,21 @@ module Admin
     end
 
     def account_type_options(bank_account)
-      payment_provider = bank_account.primary_payment_provider
       options = []
-      options << ["Credit Card", "card"]  if PaymentProvider.can_add_credit_card_payment_method?(payment_provider)
-      options << ["Checking", "checking"] if PaymentProvider.can_add_ach_payment_method?(payment_provider)
-      options << ["Savings", "savings"]   if PaymentProvider.can_add_ach_payment_method?(payment_provider)
+      if bank_account
+        payment_provider = bank_account.primary_payment_provider
+        options << ["Credit Card", "card"]  if PaymentProvider.can_add_credit_card_payment_method?(payment_provider)
+        options << ["Checking", "checking"] if PaymentProvider.can_add_ach_payment_method?(payment_provider)
+        options << ["Savings", "savings"]   if PaymentProvider.can_add_ach_payment_method?(payment_provider)
+      end
 
       options_for_select(options, selected: selected_type(bank_account))
+    end
+
+    def deposit_account_type_options()
+      options = []
+      options << ["Checking", "checking"]
+      options_for_select(options, selected: "checking")
     end
 
   end
