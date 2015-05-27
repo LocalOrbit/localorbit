@@ -13,7 +13,7 @@ describe "A Market Manager", :vcr do
 
   describe "Adding an organization" do
     context "with valid information", :js do
-      before do
+      it "creates the organization" do
         visit "/admin/organizations"
         click_link "Add Organization"
 
@@ -28,19 +28,22 @@ describe "A Market Manager", :vcr do
         fill_in "Postal Code", with: "49883"
         fill_in "Phone", with: "616-555-9983"
 
+        check "Allow purchase orders"
+
         attach_file "Profile photo", "app/assets/images/logo.png"
 
         click_button "Add Organization"
-      end
 
-      it "creates the organization" do
         expect(page).to have_content("Famous Farm has been created")
+
+        expect(page).to have_css("img[alt='Profile photo']")
+
+        expect(find_field("Organization is active")).not_to be_checked
 
         org_form = Dom::Admin::OrganizationForm.first
         expect(org_form.name).to eql("Famous Farm")
-      end
 
-      it "creates a default location for the organization" do
+        # it "creates a default location for the organization"
         click_link "Addresses"
 
         click_link "Warehouse 1"
@@ -52,14 +55,6 @@ describe "A Market Manager", :vcr do
         expect(location.city.value).to eql("Orleans Twp.")
         expect(location.selected_state.value).to eql("MI")
         expect(location.zip.value).to eql("49883")
-      end
-
-      it "attaches a profile photo" do
-        expect(page).to have_css("img[alt='Profile photo']")
-      end
-
-      it "creates the organization as not active" do
-        expect(find_field("Organization is active")).not_to be_checked
       end
     end
 
