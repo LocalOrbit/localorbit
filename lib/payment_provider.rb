@@ -5,6 +5,13 @@ module PaymentProvider
   }
 
   class << self
+    def for_new_markets
+      if ENV['USE_BALANCED_FOR_NEW_MARKETS'] == 'YES'
+        PaymentProvider::Balanced
+      else
+        PaymentProvider::Stripe
+      end
+    end
 
     def for(payment_provider)
       raise "No PaymentProvider... payment_provider can't be nil" if payment_provider.nil?
