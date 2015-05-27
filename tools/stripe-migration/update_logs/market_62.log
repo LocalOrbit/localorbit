@@ -1,44 +1,46 @@
-[2015-05-26 16:08:07 -0400] - UpdateStripeIdsOnMarket - Agricultural Connections (62) - ====================================================================================================
-[2015-05-26 16:08:07 -0400] - UpdateStripeIdsOnMarket - Agricultural Connections (62) -  Agricultural Connections (62)
-[2015-05-26 16:08:07 -0400] - UpdateStripeIdsOnMarket - Agricultural Connections (62) -  Updating stripe IDs for market, orgs and bank accounts.
-[2015-05-26 16:08:07 -0400] - UpdateStripeIdsOnMarket - Agricultural Connections (62) - 
-[2015-05-26 16:08:07 -0400] - UpdateStripeIdsOnMarket - Agricultural Connections (62) -  Rails.env: production
-[2015-05-26 16:08:07 -0400] - UpdateStripeIdsOnMarket - Agricultural Connections (62) -  Stripe keys:
-[2015-05-26 16:08:07 -0400] - UpdateStripeIdsOnMarket - Agricultural Connections (62) -   --> STRIPE_PUBLISHABLE_KEY: pk_live_j85VTsrz51POrss3ni460qaf (pk_live_j85VTsrz51POrss3ni460qaf)
-[2015-05-26 16:08:07 -0400] - UpdateStripeIdsOnMarket - Agricultural Connections (62) - ====================================================================================================
-[2015-05-26 16:08:08 -0400] - UpdateStripeIdsOnMarket - Agricultural Connections (62) - Connecting market customer - Updated Market stripe_customer_id: cus_5uQ4cUF14Jaew3
-[2015-05-26 16:08:08 -0400] - UpdateStripeIdsOnMarket - Agricultural Connections (62) - Connecting market account - MISS - No stripe_account_id found for market balanced_customer_uri /v1/customers/CU10gHtd7sdW44VPeoa4gYNV
-[2015-05-26 16:08:08 -0400] - UpdateStripeIdsOnMarket - Agricultural Connections (62) - Connecting org customers - MISS - No stripe_customer_id found for Organization Foraged Goods - TS (3926) balanced_customer_uri /v1/customers/CU15g4S0UNk9IuZuD6LkleJk
-[2015-05-26 16:08:08 -0400] - UpdateStripeIdsOnMarket - Agricultural Connections (62) - Connecting org customers - MISS - No stripe_customer_id found for Organization DD Ranch (3881) balanced_customer_uri /v1/customers/CU3UJ0yuzV8XqW9Wv5wRfhxg
-[2015-05-26 16:08:08 -0400] - UpdateStripeIdsOnMarket - Agricultural Connections (62) - Connecting org customers - MISS - No stripe_customer_id found for Organization Chow Restaurant (3878) balanced_customer_uri /v1/customers/CU2mY0AoOPjjiwkKMal9W2bR
-[2015-05-26 16:08:08 -0400] - UpdateStripeIdsOnMarket - Agricultural Connections (62) - Connecting org customers - Updated Organization Mill Inn Bed & Breakfast (3832) stripe_customer_id: cus_6GOIvIzL8rGSry
-[2015-05-26 16:08:08 -0400] - UpdateStripeIdsOnMarket - Agricultural Connections (62) - Connecting org customers - MISS - No stripe_customer_id found for Organization Pronghorn Golf Resort (3783) balanced_customer_uri /v1/customers/CU5ZJnqesSQDk8KbdJmt3dVM
-[2015-05-26 16:08:08 -0400] - UpdateStripeIdsOnMarket - Agricultural Connections (62) - Connecting org customers - Updated Organization Joolz (3765) stripe_customer_id: cus_6EFAcOokV0yDAG
-[2015-05-26 16:08:09 -0400] - UpdateStripeIdsOnMarket - Agricultural Connections (62) - Connecting org customers - Updated Organization Good Earth Farms (3733) stripe_customer_id: cus_6BzC9OYOygqQQS
-[2015-05-26 16:08:09 -0400] - UpdateStripeIdsOnMarket - Agricultural Connections (62) - Connecting org customers - Updated Organization Pine Ridge Inn (3679) stripe_customer_id: cus_69vveLguTIB5Jj
-[2015-05-26 16:08:09 -0400] - UpdateStripeIdsOnMarket - Agricultural Connections (62) - Connecting org customers - Updated Organization Josh Podwils (3618) stripe_customer_id: cus_686dgPCtAm0AVq
-[2015-05-26 16:08:10 -0400] - UpdateStripeIdsOnMarket - Agricultural Connections (62) - Connecting org customers - Updated Organization Pronghorn Resort (3617) stripe_customer_id: cus_686ZuQAsLhGHTp
-[2015-05-26 16:08:10 -0400] - UpdateStripeIdsOnMarket - Agricultural Connections (62) - Connecting org customers - Updated Organization Fearless Baking (3616) stripe_customer_id: cus_686Qli9H1Y4yv3
-[2015-05-26 16:08:10 -0400] - UpdateStripeIdsOnMarket - Agricultural Connections (62) - Connecting org customers - Updated Organization The Well Traveled Fork (3615) stripe_customer_id: cus_686OosjtmSl29k
-[2015-05-26 16:08:11 -0400] - UpdateStripeIdsOnMarket - Agricultural Connections (62) - Connecting org customers - Updated Organization Jackalope Grill (3540) stripe_customer_id: cus_65thwM342WaxLH
-[2015-05-26 16:08:11 -0400] - UpdateStripeIdsOnMarket - Agricultural Connections (62) - Connecting org customers - Updated Organization Bean, Pea & the Pumpkin (3539) stripe_customer_id: cus_65ehLZOlXUecp3
-[2015-05-26 16:08:11 -0400] - UpdateStripeIdsOnMarket - Agricultural Connections (62) - Connecting org customers - Updated Organization DumpCity Dumplings (3538) stripe_customer_id: cus_65efSU90eQE56V
-[2015-05-26 16:08:12 -0400] - UpdateStripeIdsOnMarket - Agricultural Connections (62) - Connecting org customers - Updated Organization Central Oregon Locavore (3468) stripe_customer_id: cus_65uKx87sZerljO
-[2015-05-26 16:08:12 -0400] - UpdateStripeIdsOnMarket - Agricultural Connections (62) - Connecting org customers - Updated Organization Sunny Yoga Cafe (3450) stripe_customer_id: cus_62KQjlFzfGtKK1
-[2015-05-26 16:08:12 -0400] - UpdateStripeIdsOnMarket - Agricultural Connections (62) - Connecting org customers - Updated Organization Central Oregon Locavore (3449) stripe_customer_id: cus_62KQvYLXIP0w8k
-[2015-05-26 16:08:13 -0400] - UpdateStripeIdsOnMarket - Agricultural Connections (62) - Connecting org customers - Updated Organization Jackson's Corner - EAST (3381) stripe_customer_id: cus_5zZfjQLJjGMDqQ
-[2015-05-26 16:08:13 -0400] - UpdateStripeIdsOnMarket - Agricultural Connections (62) - Connecting org customers - Updated Organization Volcano Veggies (3304) stripe_customer_id: cus_5wygRiru0cotJV
-[2015-05-26 16:08:13 -0400] - UpdateStripeIdsOnMarket - Agricultural Connections (62) - Connecting org customers - Updated Organization Springbank Farm (3254) stripe_customer_id: cus_5vYY1rUMNwzJtZ
-[2015-05-26 16:08:14 -0400] - UpdateStripeIdsOnMarket - Agricultural Connections (62) - Connecting org customers - Updated Organization Good Food Easy (3101) stripe_customer_id: cus_5uQ5Q7ju4kapsD
-[2015-05-26 16:08:15 -0400] - UpdateStripeIdsOnMarket - Agricultural Connections (62) - Connecting org customers - Updated Organization Windflower Farm (3099) stripe_customer_id: cus_5uQ57T6Jdhmrhz
-[2015-05-26 16:08:15 -0400] - UpdateStripeIdsOnMarket - Agricultural Connections (62) - Connecting org customers - Updated Organization Rainshadow Organics (3098) stripe_customer_id: cus_5uQ5RQOYNGi8HB
-[2015-05-26 16:08:16 -0400] - UpdateStripeIdsOnMarket - Agricultural Connections (62) - Connecting org customers - Updated Organization Juniper Jungle Farm (2872) stripe_customer_id: cus_5uQ4sobTfJDmb1
-[2015-05-26 16:08:17 -0400] - UpdateStripeIdsOnMarket - Agricultural Connections (62) - Connecting org customers - Updated Organization The Next Season Farm (2871) stripe_customer_id: cus_5uQ47yvCAKupte
-[2015-05-26 16:08:18 -0400] - UpdateStripeIdsOnMarket - Agricultural Connections (62) - Connecting org customers - Updated Organization Organic Redneck (2870) stripe_customer_id: cus_5uQ4e8suqbIENC
-[2015-05-26 16:08:19 -0400] - UpdateStripeIdsOnMarket - Agricultural Connections (62) - Connecting org customers - Updated Organization Mycological Products (2869) stripe_customer_id: cus_5uQ4d7MZojxZff
-[2015-05-26 16:08:19 -0400] - UpdateStripeIdsOnMarket - Agricultural Connections (62) - Connecting org customers - Updated Organization Cinco Estrellas (2621) stripe_customer_id: cus_5uQ5JOhBuBAM7G
-[2015-05-26 16:08:20 -0400] - UpdateStripeIdsOnMarket - Agricultural Connections (62) - Connecting org customers - Updated Organization Jackson's Corner - WEST (2620) stripe_customer_id: cus_5uQ5FjWs1wLydZ
-[2015-05-26 16:08:20 -0400] - UpdateStripeIdsOnMarket - Agricultural Connections (62) - Connecting market BankAccounts - Updated Visa 9914 (410) stripe_id: card_15ic9G2VpjOYk6Tm0NYyD0Xe
-[2015-05-26 16:08:21 -0400] - UpdateStripeIdsOnMarket - Agricultural Connections (62) - Connecting org BankAccounts - Organization Fearless Baking (3616) - Updated Visa 8973 (524) stripe_id: card_15vwc42VpjOYk6Tm18iHw6yD
-[2015-05-26 16:08:22 -0400] - UpdateStripeIdsOnMarket - Agricultural Connections (62) - Connecting org BankAccounts - Organization The Well Traveled Fork (3615) - Updated HIGH DESERT BANK 1380 (523) stripe_id: ba_15vw7Y2VpjOYk6Tm1rvOp5gp
-[2015-05-26 16:08:22 -0400] - UpdateStripeIdsOnMarket - Agricultural Connections (62) - Connecting org BankAccounts - Organization DumpCity Dumplings (3538) - Updated Visa 9214 (518) stripe_id: card_15uJuk2VpjOYk6TmnfOc0mel
+[2015-05-27 11:27:40 -0400] - UpdateStripeIdsOnMarket - Agricultural Connections (62) - ====================================================================================================
+[2015-05-27 11:27:40 -0400] - UpdateStripeIdsOnMarket - Agricultural Connections (62) -  Agricultural Connections (62)
+[2015-05-27 11:27:40 -0400] - UpdateStripeIdsOnMarket - Agricultural Connections (62) -  Updating stripe IDs for market, orgs and bank accounts.
+[2015-05-27 11:27:40 -0400] - UpdateStripeIdsOnMarket - Agricultural Connections (62) - 
+[2015-05-27 11:27:40 -0400] - UpdateStripeIdsOnMarket - Agricultural Connections (62) -  Balanced export file: /home/vagrant/git/localorbit/tools/stripe-migration/from_balanced/2015-05-27-1432735944-MP2eXZmrOPof80u3Irf94Wre.csv
+[2015-05-27 11:27:40 -0400] - UpdateStripeIdsOnMarket - Agricultural Connections (62) - 
+[2015-05-27 11:27:40 -0400] - UpdateStripeIdsOnMarket - Agricultural Connections (62) -  Rails.env: production
+[2015-05-27 11:27:40 -0400] - UpdateStripeIdsOnMarket - Agricultural Connections (62) -  Stripe keys:
+[2015-05-27 11:27:40 -0400] - UpdateStripeIdsOnMarket - Agricultural Connections (62) -   --> STRIPE_PUBLISHABLE_KEY: pk_live_j85VTsrz51POrss3ni460qaf (pk_live_j85VTsrz51POrss3ni460qaf)
+[2015-05-27 11:27:40 -0400] - UpdateStripeIdsOnMarket - Agricultural Connections (62) - ====================================================================================================
+[2015-05-27 11:27:40 -0400] - UpdateStripeIdsOnMarket - Agricultural Connections (62) - Connecting market customer - Updated Market stripe_customer_id: cus_5uQ4cUF14Jaew3
+[2015-05-27 11:27:40 -0400] - UpdateStripeIdsOnMarket - Agricultural Connections (62) - Connecting market account - MISS - No stripe_account_id found for market balanced_customer_uri /v1/customers/CU10gHtd7sdW44VPeoa4gYNV
+[2015-05-27 11:27:40 -0400] - UpdateStripeIdsOnMarket - Agricultural Connections (62) - Connecting org customers - Updated Organization Foraged Goods - TS (3926) stripe_customer_id: cus_6I2eni8if8U5Hw
+[2015-05-27 11:27:40 -0400] - UpdateStripeIdsOnMarket - Agricultural Connections (62) - Connecting org customers - Updated Organization DD Ranch (3881) stripe_customer_id: cus_6HFcOKNG9fetuw
+[2015-05-27 11:27:40 -0400] - UpdateStripeIdsOnMarket - Agricultural Connections (62) - Connecting org customers - Updated Organization Chow Restaurant (3878) stripe_customer_id: cus_6HDIWB0N3RQZJY
+[2015-05-27 11:27:40 -0400] - UpdateStripeIdsOnMarket - Agricultural Connections (62) - Connecting org customers - Updated Organization Mill Inn Bed & Breakfast (3832) stripe_customer_id: cus_6GOIvIzL8rGSry
+[2015-05-27 11:27:41 -0400] - UpdateStripeIdsOnMarket - Agricultural Connections (62) - Connecting org customers - Updated Organization Pronghorn Golf Resort (3783) stripe_customer_id: cus_6IhMWLa1UyxDgs
+[2015-05-27 11:27:41 -0400] - UpdateStripeIdsOnMarket - Agricultural Connections (62) - Connecting org customers - Updated Organization Joolz (3765) stripe_customer_id: cus_6EFAcOokV0yDAG
+[2015-05-27 11:27:41 -0400] - UpdateStripeIdsOnMarket - Agricultural Connections (62) - Connecting org customers - Updated Organization Good Earth Farms (3733) stripe_customer_id: cus_6BzC9OYOygqQQS
+[2015-05-27 11:27:41 -0400] - UpdateStripeIdsOnMarket - Agricultural Connections (62) - Connecting org customers - Updated Organization Pine Ridge Inn (3679) stripe_customer_id: cus_69vveLguTIB5Jj
+[2015-05-27 11:27:41 -0400] - UpdateStripeIdsOnMarket - Agricultural Connections (62) - Connecting org customers - Updated Organization Josh Podwils (3618) stripe_customer_id: cus_686dgPCtAm0AVq
+[2015-05-27 11:27:41 -0400] - UpdateStripeIdsOnMarket - Agricultural Connections (62) - Connecting org customers - Updated Organization Pronghorn Resort (3617) stripe_customer_id: cus_686ZuQAsLhGHTp
+[2015-05-27 11:27:41 -0400] - UpdateStripeIdsOnMarket - Agricultural Connections (62) - Connecting org customers - Updated Organization Fearless Baking (3616) stripe_customer_id: cus_686Qli9H1Y4yv3
+[2015-05-27 11:27:41 -0400] - UpdateStripeIdsOnMarket - Agricultural Connections (62) - Connecting org customers - Updated Organization The Well Traveled Fork (3615) stripe_customer_id: cus_686OosjtmSl29k
+[2015-05-27 11:27:41 -0400] - UpdateStripeIdsOnMarket - Agricultural Connections (62) - Connecting org customers - Updated Organization Jackalope Grill (3540) stripe_customer_id: cus_65thwM342WaxLH
+[2015-05-27 11:27:41 -0400] - UpdateStripeIdsOnMarket - Agricultural Connections (62) - Connecting org customers - Updated Organization Bean, Pea & the Pumpkin (3539) stripe_customer_id: cus_65ehLZOlXUecp3
+[2015-05-27 11:27:41 -0400] - UpdateStripeIdsOnMarket - Agricultural Connections (62) - Connecting org customers - Updated Organization DumpCity Dumplings (3538) stripe_customer_id: cus_65efSU90eQE56V
+[2015-05-27 11:27:41 -0400] - UpdateStripeIdsOnMarket - Agricultural Connections (62) - Connecting org customers - Updated Organization Central Oregon Locavore (3468) stripe_customer_id: cus_65uKx87sZerljO
+[2015-05-27 11:27:41 -0400] - UpdateStripeIdsOnMarket - Agricultural Connections (62) - Connecting org customers - Updated Organization Sunny Yoga Cafe (3450) stripe_customer_id: cus_62KQjlFzfGtKK1
+[2015-05-27 11:27:41 -0400] - UpdateStripeIdsOnMarket - Agricultural Connections (62) - Connecting org customers - Updated Organization Central Oregon Locavore (3449) stripe_customer_id: cus_62KQvYLXIP0w8k
+[2015-05-27 11:27:41 -0400] - UpdateStripeIdsOnMarket - Agricultural Connections (62) - Connecting org customers - Updated Organization Jackson's Corner - EAST (3381) stripe_customer_id: cus_5zZfjQLJjGMDqQ
+[2015-05-27 11:27:41 -0400] - UpdateStripeIdsOnMarket - Agricultural Connections (62) - Connecting org customers - Updated Organization Volcano Veggies (3304) stripe_customer_id: cus_5wygRiru0cotJV
+[2015-05-27 11:27:41 -0400] - UpdateStripeIdsOnMarket - Agricultural Connections (62) - Connecting org customers - Updated Organization Springbank Farm (3254) stripe_customer_id: cus_5vYY1rUMNwzJtZ
+[2015-05-27 11:27:42 -0400] - UpdateStripeIdsOnMarket - Agricultural Connections (62) - Connecting org customers - Updated Organization Good Food Easy (3101) stripe_customer_id: cus_5uQ5Q7ju4kapsD
+[2015-05-27 11:27:42 -0400] - UpdateStripeIdsOnMarket - Agricultural Connections (62) - Connecting org customers - Updated Organization Windflower Farm (3099) stripe_customer_id: cus_5uQ57T6Jdhmrhz
+[2015-05-27 11:27:42 -0400] - UpdateStripeIdsOnMarket - Agricultural Connections (62) - Connecting org customers - Updated Organization Rainshadow Organics (3098) stripe_customer_id: cus_5uQ5RQOYNGi8HB
+[2015-05-27 11:27:42 -0400] - UpdateStripeIdsOnMarket - Agricultural Connections (62) - Connecting org customers - Updated Organization Juniper Jungle Farm (2872) stripe_customer_id: cus_5uQ4sobTfJDmb1
+[2015-05-27 11:27:43 -0400] - UpdateStripeIdsOnMarket - Agricultural Connections (62) - Connecting org customers - Updated Organization The Next Season Farm (2871) stripe_customer_id: cus_5uQ47yvCAKupte
+[2015-05-27 11:27:43 -0400] - UpdateStripeIdsOnMarket - Agricultural Connections (62) - Connecting org customers - Updated Organization Organic Redneck (2870) stripe_customer_id: cus_5uQ4e8suqbIENC
+[2015-05-27 11:27:43 -0400] - UpdateStripeIdsOnMarket - Agricultural Connections (62) - Connecting org customers - Updated Organization Mycological Products (2869) stripe_customer_id: cus_5uQ4d7MZojxZff
+[2015-05-27 11:27:43 -0400] - UpdateStripeIdsOnMarket - Agricultural Connections (62) - Connecting org customers - Updated Organization Cinco Estrellas (2621) stripe_customer_id: cus_5uQ5JOhBuBAM7G
+[2015-05-27 11:27:43 -0400] - UpdateStripeIdsOnMarket - Agricultural Connections (62) - Connecting org customers - Updated Organization Jackson's Corner - WEST (2620) stripe_customer_id: cus_5uQ5FjWs1wLydZ
+[2015-05-27 11:27:43 -0400] - UpdateStripeIdsOnMarket - Agricultural Connections (62) - Connecting market BankAccounts - Updated Visa 9914 (410) stripe_id: card_15ic9G2VpjOYk6Tm0NYyD0Xe
+[2015-05-27 11:27:44 -0400] - UpdateStripeIdsOnMarket - Agricultural Connections (62) - Connecting org BankAccounts - Organization Fearless Baking (3616) - Updated Visa 8973 (524) stripe_id: card_15vwc42VpjOYk6Tm18iHw6yD
+[2015-05-27 11:27:44 -0400] - UpdateStripeIdsOnMarket - Agricultural Connections (62) - Connecting org BankAccounts - Organization The Well Traveled Fork (3615) - Updated HIGH DESERT BANK 1380 (523) stripe_id: ba_15vw7Y2VpjOYk6Tm1rvOp5gp
+[2015-05-27 11:27:44 -0400] - UpdateStripeIdsOnMarket - Agricultural Connections (62) - Connecting org BankAccounts - Organization DumpCity Dumplings (3538) - Updated Visa 9214 (518) stripe_id: card_15uJuk2VpjOYk6TmnfOc0mel

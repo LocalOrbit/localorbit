@@ -213,6 +213,15 @@ describe PaymentProvider do
         PaymentProvider.add_payment_method provider_name, params
       end
     end
+
+    describe ".select_usable_bank_accounts" do
+      let(:params) { "the bank accounts" }
+      it "delegates to #{provider_object.name}.select_usable_bank_accounts" do
+        expect(provider_object).to receive(:select_usable_bank_accounts).with(params)
+        PaymentProvider.select_usable_bank_accounts provider_name, params
+      end
+    end
+
   end # end each provider loop
 end
 

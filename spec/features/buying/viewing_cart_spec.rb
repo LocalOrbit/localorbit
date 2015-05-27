@@ -332,7 +332,7 @@ describe "Viewing the cart", js:true do
       end
 
       it "enables the button if there is at least one valid credit card for the organization" do
-        create(:bank_account, :credit_card, bankable: buyer)
+        create(:bank_account, :credit_card, bankable: buyer, balanced_uri: 'fake uri')
         visit cart_path
 
         expect(page).to have_button("Place Order", disabled: true)

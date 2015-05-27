@@ -183,4 +183,37 @@ describe Organization do
       end
     end
   end
+
+  describe "#primary_payment_provider" do
+    let(:provider) { 'the payment provider' }
+    let!(:market) {create(:market, payment_provider: provider)}
+    let!(:organization) { create(:organization, markets: [market]) }
+
+    it "returns the payment provider of the first market" do
+      expect(organization.primary_payment_provider).to eq provider
+    end
+
+    describe "when payment provider on Market is nil" do
+      it "returns nil" do
+        market.update(payment_provider: nil)
+        expect(organization.primary_payment_provider).to be nil
+      end
+    end
+
+    describe "when there's more than one market" do
+      it "returns payment provider of first market" do
+        organization.markets << create(:market, payment_provider: "other provider")
+        expect(organization.primary_payment_provider).to eq provider
+      end
+    end
+
+    describe "when there's NO market" do
+      it "returns nil" do
+        organization.markets.clear
+        expect(organization.primary_payment_provider).to be nil
+      end
+    end
+
+
+  end
 end

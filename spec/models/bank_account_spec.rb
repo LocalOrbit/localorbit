@@ -67,4 +67,39 @@ describe BankAccount do
     it_behaves_like "a soft deleted model"
   end
 
+  describe "#primary_payment_provider" do
+    let(:provider) { "the payment provider" }
+    let!(:market) { create(:market, payment_provider: provider) }
+    let!(:organization) { create(:organization, :buyer, markets:[market]) }
+    let!(:bank_account) { create(:bank_account) }
+
+    context "when bankable is a market" do
+      before { bank_account.update(bankable: market) }
+
+      it "returns the market's payment provider" do
+        expect(bank_account.primary_payment_provider).to eq provider
+      end
+    end
+
+    context "when bankable is an organization" do
+      before { bank_account.update(bankable: organization) }
+
+      it "returns the organization's first market's payment provider" do
+        expect(bank_account.primary_payment_provider).to eq provider
+      end
+    end
+
+    context "when bankable mysteriously doesn't respond to #primary_payment_provider" do
+      before do
+        # Total fake-out; our real objects can't currently get us into a situation where
+        # a BankAccount has bankable that's not an Organization or a Market
+        allow(bank_account).to receive(:bankable).and_return "oops"
+      end
+      
+      it "raises an error" do
+        expect(lambda { bank_account.primary_payment_provider }).to raise_error(/oops.*primary_payment_provider/)
+      end
+    end
+  end
+
 end

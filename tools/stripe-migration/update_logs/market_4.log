@@ -1,118 +1,120 @@
-[2015-05-26 16:09:30 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - ====================================================================================================
-[2015-05-26 16:09:30 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) -  All Things Food (4)
-[2015-05-26 16:09:30 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) -  Updating stripe IDs for market, orgs and bank accounts.
-[2015-05-26 16:09:30 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - 
-[2015-05-26 16:09:30 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) -  Rails.env: production
-[2015-05-26 16:09:30 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) -  Stripe keys:
-[2015-05-26 16:09:30 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) -   --> STRIPE_PUBLISHABLE_KEY: pk_live_j85VTsrz51POrss3ni460qaf (pk_live_j85VTsrz51POrss3ni460qaf)
-[2015-05-26 16:09:30 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - ====================================================================================================
-[2015-05-26 16:09:30 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting market customer - MISS - No stripe_customer_id found for market balanced_customer_uri /v1/customers/CU6RyC3RgJJy9oBAq0AbFHXd
-[2015-05-26 16:09:30 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting market account - MISS - No stripe_account_id found for market balanced_customer_uri /v1/customers/CU6RyC3RgJJy9oBAq0AbFHXd
-[2015-05-26 16:09:30 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org customers - MISS - No stripe_customer_id found for Organization Chefs Way Farm (3874) balanced_customer_uri /v1/customers/CU7o4WH2z9MHF1ToKicZVVzx
-[2015-05-26 16:09:30 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org customers - MISS - No stripe_customer_id found for Organization Shontael Elward (3791) balanced_customer_uri /v1/customers/CU3WOQAjByYzV8Ma3lOPxYdI
-[2015-05-26 16:09:31 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org customers - Updated Organization April's Greenhouse (3672) stripe_customer_id: cus_69elkjNxuZr1vJ
-[2015-05-26 16:09:31 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org customers - Updated Organization West Lakes Produce (3671) stripe_customer_id: cus_69eTlhQfm26X4X
-[2015-05-26 16:09:31 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org customers - Updated Organization Tara Glasgow (3669) stripe_customer_id: cus_69bvC9WEVipncR
-[2015-05-26 16:09:31 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org customers - Updated Organization Lakeside Frms (3657) stripe_customer_id: cus_69F1zlbqwo0pm9
-[2015-05-26 16:09:32 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org customers - Updated Organization Azzitshudbe Farm (3656) stripe_customer_id: cus_69Ex3yCmjrd0Qz
-[2015-05-26 16:09:32 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org customers - Updated Organization Fox Trail Farm (3655) stripe_customer_id: cus_69EtslA9GhnUew
-[2015-05-26 16:09:32 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org customers - Updated Organization Master Plan Feeds (3613) stripe_customer_id: cus_67m7DbG2DYNpGY
-[2015-05-26 16:09:33 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org customers - Updated Organization Schmidlin Greenhouse (3608) stripe_customer_id: cus_67Qd2kX7swB0p9
-[2015-05-26 16:09:33 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org customers - Updated Organization Valley View Organic Farm (3603) stripe_customer_id: cus_676EDes6NwBCvV
-[2015-05-26 16:09:33 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org customers - Updated Organization Sheep Dreams Farm (3418) stripe_customer_id: cus_6178TvWLdXgpLv
-[2015-05-26 16:09:34 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org customers - Updated Organization Sheep Dreams Farm (3287) stripe_customer_id: cus_5wVZ9cDeRYYKfb
-[2015-05-26 16:09:34 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org customers - Updated Organization DeCamp Gardens (2684) stripe_customer_id: cus_5uQ48SP2Cy6KS6
-[2015-05-26 16:09:34 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org customers - Updated Organization The Bell Family (2243) stripe_customer_id: cus_5uQ4mIBMJlZm47
-[2015-05-26 16:09:35 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org customers - Updated Organization Tony Tressler (2242) stripe_customer_id: cus_5uS7asojsZBQ2c
-[2015-05-26 16:09:35 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org customers - Updated Organization Kyli McCullough (2229) stripe_customer_id: cus_5uQ4x2CN0w9w3t
-[2015-05-26 16:09:35 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org customers - Updated Organization Kelsey (2210) stripe_customer_id: cus_5uQ46cjR7rRwvF
-[2015-05-26 16:09:35 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org customers - Updated Organization Sonya Mavis (2207) stripe_customer_id: cus_5uQ4EAsg0IEz96
-[2015-05-26 16:09:36 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org customers - Updated Organization One Smart Cookie (2185) stripe_customer_id: cus_5uQ4F89GQQfFpy
-[2015-05-26 16:09:36 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org customers - Updated Organization Marcia Culler (2183) stripe_customer_id: cus_5uQ4uSSu8ePw1U
-[2015-05-26 16:09:36 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org customers - Updated Organization Mindy Wade (2049) stripe_customer_id: cus_5uQ4V7KZhHVIlZ
-[2015-05-26 16:09:37 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org customers - Updated Organization Wende Sharma (2005) stripe_customer_id: cus_5uQ4lus49wtJA2
-[2015-05-26 16:09:38 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org customers - Updated Organization Larry's Berries (1999) stripe_customer_id: cus_5uQ4SSmvLJvB0M
-[2015-05-26 16:09:39 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org customers - Updated Organization All Things Food - Buyer (1819) stripe_customer_id: cus_5uQ5Mzuwor9KQz
-[2015-05-26 16:09:39 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org customers - Updated Organization Sharon Ransom - OB/GYN Bryan (1815) stripe_customer_id: cus_5uQ5LukyVebcY4
-[2015-05-26 16:09:39 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org customers - Updated Organization Melodee Moore (1760) stripe_customer_id: cus_5uQ5g0ubuU4mXL
-[2015-05-26 16:09:39 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org customers - Updated Organization Brittany M. Hudson - SNAP Benefits (1711) stripe_customer_id: cus_5uQ47mdyvKeCEv
-[2015-05-26 16:09:40 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org customers - Updated Organization Kari Shininger (1690) stripe_customer_id: cus_5uQ4G6a4B3sNOc
-[2015-05-26 16:09:40 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org customers - Updated Organization Karmin Brooks (1616) stripe_customer_id: cus_5uQ4JHkDFrNt4p
-[2015-05-26 16:09:40 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org customers - Updated Organization Karmin Brooks (1615) stripe_customer_id: cus_5uQ5jBg5lSkbxC
-[2015-05-26 16:09:41 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org customers - Updated Organization Mark Lorntz (1582) stripe_customer_id: cus_5uQ5xwd28wjzC3
-[2015-05-26 16:09:41 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org customers - Updated Organization Kay Cummins (1503) stripe_customer_id: cus_5uQ4pTqT2eGAVU
-[2015-05-26 16:09:41 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org customers - MISS - No stripe_customer_id found for Organization All Things Food  (20) balanced_customer_uri /v1/customers/CU3W2dTYSDAwPzNo7imzuv7Z
-[2015-05-26 16:09:43 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org customers - Updated Organization Maple Lane Farm (27) stripe_customer_id: cus_5uQ55aq13zPUc1
-[2015-05-26 16:09:44 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org customers - Updated Organization Natural Goodness Garden (29) stripe_customer_id: cus_5uQ5EQf6Qk9y0G
-[2015-05-26 16:09:45 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org customers - Updated Organization North Central FFA (31) stripe_customer_id: cus_5uQ5S3ldaAOr0c
-[2015-05-26 16:09:45 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org customers - Updated Organization Shagbark Seed & Mill (33) stripe_customer_id: cus_5uQ5wnzY4IpDKR
-[2015-05-26 16:09:46 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org customers - Updated Organization Black Creek Farm (34) stripe_customer_id: cus_5uQ5Fd7v7m3bH4
-[2015-05-26 16:09:47 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org customers - Updated Organization The Upper Crust, LLC (37) stripe_customer_id: cus_5uQ4vbCXMxiqLA
-[2015-05-26 16:09:48 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org customers - Updated Organization Pure Maple Syrup (38) stripe_customer_id: cus_5uQ5uS3Z8mzIVT
-[2015-05-26 16:09:49 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org customers - Updated Organization Turkeyfoot Creek Creamery (39) stripe_customer_id: cus_5uQ5yw6XCcI3oA
-[2015-05-26 16:09:49 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org customers - Updated Organization Whitehouse Specialty Crops (68) stripe_customer_id: cus_5uQ5a5Q9H1V0w0
-[2015-05-26 16:09:50 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org customers - Updated Organization Sustainable Local Foods (136) stripe_customer_id: cus_5uQ5HvJDarKf0Y
-[2015-05-26 16:09:50 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org customers - Updated Organization Beverly (142) stripe_customer_id: cus_5uQ5oTrINxCWtF
-[2015-05-26 16:09:51 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org customers - Updated Organization Mike Gill (146) stripe_customer_id: cus_5uQ59FNztBBnqR
-[2015-05-26 16:09:51 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org customers - Updated Organization Pam Sauder (148) stripe_customer_id: cus_5vQun7wdBCYbZ0
-[2015-05-26 16:09:51 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org customers - Updated Organization Abby Williams (150) stripe_customer_id: cus_5uQ58EJy98S0aF
-[2015-05-26 16:09:52 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org customers - Updated Organization Lou Pendleton (153) stripe_customer_id: cus_5uQ5Jw1uHU2Fyk
-[2015-05-26 16:09:52 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org customers - Updated Organization Becky McGuire (155) stripe_customer_id: cus_5uQ5iJW8NcvGXB
-[2015-05-26 16:09:52 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org customers - Updated Organization Melody Turner (156) stripe_customer_id: cus_5vQtDESuIjwArD
-[2015-05-26 16:09:53 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org customers - Updated Organization Marion Allen (158) stripe_customer_id: cus_5uQ5xLigQkwbMK
-[2015-05-26 16:09:53 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org customers - Updated Organization CHWC - Bryan (161) stripe_customer_id: cus_5uQ5nlCFWtjGYv
-[2015-05-26 16:09:53 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org customers - Updated Organization Katieland Dairy (162) stripe_customer_id: cus_5uQ54UaAw8iEad
-[2015-05-26 16:09:54 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org customers - Updated Organization Mary Lloyd (163) stripe_customer_id: cus_5uQ5zLHAQeFqxx
-[2015-05-26 16:09:54 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org customers - Updated Organization Sandy Gordon (170) stripe_customer_id: cus_5uQ4JFLoK9utku
-[2015-05-26 16:09:55 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org customers - Updated Organization Stoney Ridge Farm and Winery (173) stripe_customer_id: cus_5uQ5Zz6uZ7odly
-[2015-05-26 16:09:55 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org customers - Updated Organization Season's Coffee & Bistro (176) stripe_customer_id: cus_5uQ5LWZf9vBN5h
-[2015-05-26 16:09:56 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org customers - Updated Organization Stephanie Bexten (180) stripe_customer_id: cus_5uQ59luCjVzoMz
-[2015-05-26 16:09:56 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org customers - Updated Organization Logan Smith (185) stripe_customer_id: cus_5uQ5O0wUdcXWQM
-[2015-05-26 16:09:56 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org customers - Updated Organization Tracey Kennedy (187) stripe_customer_id: cus_5uQ5xCqoLP9Sxu
-[2015-05-26 16:09:57 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org customers - Updated Organization Northwest Ohio Chiropractic (197) stripe_customer_id: cus_5uQ5rlHvTgpInh
-[2015-05-26 16:09:57 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org customers - Updated Organization Anne Bard (204) stripe_customer_id: cus_5uQ5BfQUIaMpae
-[2015-05-26 16:09:57 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org customers - Updated Organization Amanda Andres (208) stripe_customer_id: cus_5uQ4cmasPqpGfL
-[2015-05-26 16:09:57 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org customers - Updated Organization Nate Meyers (209) stripe_customer_id: cus_5uQ54oy2iCq2Va
-[2015-05-26 16:09:58 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org customers - Updated Organization Doreen DeLisle (221) stripe_customer_id: cus_5uQ5EW9JRKnp83
-[2015-05-26 16:09:58 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org customers - Updated Organization Debra Kepler (222) stripe_customer_id: cus_5uQ5n4toFsuBC9
-[2015-05-26 16:09:58 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org customers - Updated Organization Dawn Sipes (340) stripe_customer_id: cus_5uQ4QE0OWoNp1n
-[2015-05-26 16:09:58 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting market BankAccounts - MISS - No stripe_id found for FIRST FEDERAL BANK OF THE MIDWEST 2555 (222) balanced_customer_uri /v1/marketplaces/MP2eXZmrOPof80u3Irf94Wre/bank_accounts/BA27FNhPX0JMNupY5cmn5bAm
-[2015-05-26 16:09:59 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org BankAccounts - Organization Shontael Elward (3791) - Updated MasterCard 4559 (547) stripe_id: tok_162TTn2VpjOYk6Tmcvvgll0k
-[2015-05-26 16:10:00 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org BankAccounts - Organization The Bell Family (2243) - Updated MasterCard 4750 (286) stripe_id: card_15ic992VpjOYk6Tm86bb3d9j
-[2015-05-26 16:10:01 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org BankAccounts - Organization Kyli McCullough (2229) - Updated MasterCard 6307 (283) stripe_id: card_15ic9Q2VpjOYk6Tmw30B6tqP
-[2015-05-26 16:10:01 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org BankAccounts - Organization Kelsey (2210) - Updated MasterCard 7086 (282) stripe_id: card_15ic972VpjOYk6Tm3JIf69Fg
-[2015-05-26 16:10:02 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org BankAccounts - Organization Kelsey (2210) - Updated MasterCard 8801 (276) stripe_id: card_15ic9B2VpjOYk6Tm142vzo2C
-[2015-05-26 16:10:02 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org BankAccounts - Organization Sonya Mavis (2207) - Updated MasterCard 3995 (281) stripe_id: card_15ic9K2VpjOYk6TmCY1dbgnJ
-[2015-05-26 16:10:03 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org BankAccounts - Organization Marcia Culler (2183) - Updated Visa 6873 (267) stripe_id: card_15ic992VpjOYk6TmAkbhgMA2
-[2015-05-26 16:10:03 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org BankAccounts - Organization Mindy Wade (2049) - Updated Visa 0191 (241) stripe_id: card_15ic982VpjOYk6TmNRazxejG
-[2015-05-26 16:10:04 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org BankAccounts - Organization Wende Sharma (2005) - Updated MasterCard 5579 (232) stripe_id: card_15ic962VpjOYk6TmuheVZ2ok
-[2015-05-26 16:10:05 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org BankAccounts - Organization Sharon Ransom - OB/GYN Bryan (1815) - Updated American Express 2013 (199) stripe_id: card_15ic9k2VpjOYk6Tm2wjxlgHc
-[2015-05-26 16:10:05 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org BankAccounts - Organization Melodee Moore (1760) - Updated Visa 1286 (190) stripe_id: card_15ic9u2VpjOYk6Tm4neuPmr5
-[2015-05-26 16:10:05 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org BankAccounts - Organization Kari Shininger (1690) - MISS - No stripe_id found for Visa 6628 (181) balanced_customer_uri /v1/marketplaces/MP2eXZmrOPof80u3Irf94Wre/cards/CC22UVonuDXdttNlVGNSZ4v1
-[2015-05-26 16:10:06 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org BankAccounts - Organization Karmin Brooks (1616) - Updated MasterCard 1987 (198) stripe_id: card_15ic8r2VpjOYk6TmfKoPMkSQ
-[2015-05-26 16:10:06 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org BankAccounts - Organization Karmin Brooks (1615) - Updated MasterCard 1987 (172) stripe_id: card_15ic9j2VpjOYk6TmRCQ6NvZn
-[2015-05-26 16:10:07 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org BankAccounts - Organization Kay Cummins (1503) - Updated American Express 1003 (291) stripe_id: card_15ic972VpjOYk6TmIbDkqFMA
-[2015-05-26 16:10:08 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org BankAccounts - Organization Beverly (142) - Updated Visa 1825 (43) stripe_id: card_15ic9Q2VpjOYk6TmpniwDgBI
-[2015-05-26 16:10:08 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org BankAccounts - Organization Beverly (142) - Updated THE HICKSVILLE BANK 4446 (42) stripe_id: ba_15ic9b2VpjOYk6TmbvP8Ko7R
-[2015-05-26 16:10:09 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org BankAccounts - Organization Mike Gill (146) - Updated MasterCard 0646 (18) stripe_id: card_15ic9t2VpjOYk6TmrgENSyXN
-[2015-05-26 16:10:09 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org BankAccounts - Organization Pam Sauder (148) - MISS - No stripe_id found for MasterCard 4356 (49) balanced_customer_uri /v1/marketplaces/MP2eXZmrOPof80u3Irf94Wre/cards/CChgk0m7SKJ5Z9edVzmu2ps
-[2015-05-26 16:10:09 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org BankAccounts - Organization Abby Williams (150) - Updated Visa 5942 (25) stripe_id: card_15ic9m2VpjOYk6TmHQHLZrgg
-[2015-05-26 16:10:10 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org BankAccounts - Organization Lou Pendleton (153) - Updated MasterCard 4513 (19) stripe_id: card_15ic9W2VpjOYk6Tm130Km52Z
-[2015-05-26 16:10:10 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org BankAccounts - Organization Becky McGuire (155) - Updated Visa 4842 (35) stripe_id: card_15ic9o2VpjOYk6Tme9eMnRlh
-[2015-05-26 16:10:11 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org BankAccounts - Organization Melody Turner (156) - Updated FIRST FEDERAL BANK OF THE MIDWEST 4474 (20) stripe_id: ba_15l25E2VpjOYk6TmekHovelC
-[2015-05-26 16:10:11 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org BankAccounts - Organization Marion Allen (158) - MISS - No stripe_id found for MasterCard 6681 (21) balanced_customer_uri /v1/marketplaces/MP2eXZmrOPof80u3Irf94Wre/cards/CC3ahL7A5HViy5b8Xv0IZ9vJ
-[2015-05-26 16:10:12 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org BankAccounts - Organization Katieland Dairy (162) - Updated American Express 2006 (36) stripe_id: card_15ic9m2VpjOYk6Tm12lt26ou
-[2015-05-26 16:10:12 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org BankAccounts - Organization Mary Lloyd (163) - Updated American Express 1015 (238) stripe_id: card_15ic9Y2VpjOYk6TmoFnsG3XB
-[2015-05-26 16:10:12 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org BankAccounts - Organization Mary Lloyd (163) - MISS - No stripe_id found for MasterCard 5925 (22) balanced_customer_uri /v1/marketplaces/MP2eXZmrOPof80u3Irf94Wre/cards/CC48HfFb4LmlvWN31sxcYk1t
-[2015-05-26 16:10:13 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org BankAccounts - Organization Sandy Gordon (170) - Updated Visa 1179 (50) stripe_id: card_15ic8n2VpjOYk6Tmrfa09GUS
-[2015-05-26 16:10:13 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org BankAccounts - Organization Stephanie Bexten (180) - Updated MasterCard 9631 (29) stripe_id: card_15ic9L2VpjOYk6TmWpOkVBsF
-[2015-05-26 16:10:14 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org BankAccounts - Organization Logan Smith (185) - Updated MasterCard 2706 (27) stripe_id: card_15ic9V2VpjOYk6TmvyQnt07t
-[2015-05-26 16:10:14 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org BankAccounts - Organization Tracey Kennedy (187) - Updated MasterCard 9812 (28) stripe_id: card_15ic9I2VpjOYk6TmzRUCH8SM
-[2015-05-26 16:10:15 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org BankAccounts - Organization Northwest Ohio Chiropractic (197) - Updated MIDWEST COMMUNITY FCU 0623 (69) stripe_id: ba_15ic9S2VpjOYk6TmiVRdxdAw
-[2015-05-26 16:10:15 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org BankAccounts - Organization Anne Bard (204) - Updated MasterCard 3190 (290) stripe_id: card_15ic9U2VpjOYk6TmkjlfWEph
-[2015-05-26 16:10:16 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org BankAccounts - Organization Anne Bard (204) - Updated American Express 2541 (205) stripe_id: card_15ic9V2VpjOYk6Tm1upVyiaB
-[2015-05-26 16:10:16 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org BankAccounts - Organization Anne Bard (204) - Updated Visa 4510 (45) stripe_id: card_15ic9Z2VpjOYk6TmSArCKcpD
-[2015-05-26 16:10:17 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org BankAccounts - Organization Amanda Andres (208) - Updated MasterCard 8007 (231) stripe_id: card_15ic902VpjOYk6Tm2Vq6uTEY
-[2015-05-26 16:10:17 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org BankAccounts - Organization Doreen DeLisle (221) - Updated FIRST FEDERAL BANK OF THE MIDWEST 9830 (40) stripe_id: ba_15ic9N2VpjOYk6TmootSnYMp
-[2015-05-26 16:10:18 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org BankAccounts - Organization Doreen DeLisle (221) - Updated Discover 0864 (41) stripe_id: card_15ic9T2VpjOYk6Tm6WX07yGJ
-[2015-05-26 16:10:18 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org BankAccounts - Organization Debra Kepler (222) - MISS - No stripe_id found for MasterCard 6233 (44) balanced_customer_uri /v1/marketplaces/MP2eXZmrOPof80u3Irf94Wre/cards/CC1FPExz2G5v1JrAJdgNH7Ts
+[2015-05-27 11:28:02 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - ====================================================================================================
+[2015-05-27 11:28:02 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) -  All Things Food (4)
+[2015-05-27 11:28:02 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) -  Updating stripe IDs for market, orgs and bank accounts.
+[2015-05-27 11:28:02 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - 
+[2015-05-27 11:28:02 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) -  Balanced export file: /home/vagrant/git/localorbit/tools/stripe-migration/from_balanced/2015-05-27-1432735944-MP2eXZmrOPof80u3Irf94Wre.csv
+[2015-05-27 11:28:02 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - 
+[2015-05-27 11:28:02 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) -  Rails.env: production
+[2015-05-27 11:28:02 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) -  Stripe keys:
+[2015-05-27 11:28:02 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) -   --> STRIPE_PUBLISHABLE_KEY: pk_live_j85VTsrz51POrss3ni460qaf (pk_live_j85VTsrz51POrss3ni460qaf)
+[2015-05-27 11:28:02 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - ====================================================================================================
+[2015-05-27 11:28:02 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting market customer - MISS - No stripe_customer_id found for market balanced_customer_uri /v1/customers/CU6RyC3RgJJy9oBAq0AbFHXd
+[2015-05-27 11:28:02 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting market account - MISS - No stripe_account_id found for market balanced_customer_uri /v1/customers/CU6RyC3RgJJy9oBAq0AbFHXd
+[2015-05-27 11:28:02 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org customers - Updated Organization Chefs Way Farm (3874) stripe_customer_id: cus_6H9f6MKHHTusVh
+[2015-05-27 11:28:02 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org customers - MISS - No stripe_customer_id found for Organization Shontael Elward (3791) balanced_customer_uri /v1/customers/CU3WOQAjByYzV8Ma3lOPxYdI
+[2015-05-27 11:28:02 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org customers - Updated Organization April's Greenhouse (3672) stripe_customer_id: cus_69elkjNxuZr1vJ
+[2015-05-27 11:28:02 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org customers - Updated Organization West Lakes Produce (3671) stripe_customer_id: cus_69eTlhQfm26X4X
+[2015-05-27 11:28:02 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org customers - Updated Organization Tara Glasgow (3669) stripe_customer_id: cus_69bvC9WEVipncR
+[2015-05-27 11:28:02 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org customers - Updated Organization Lakeside Frms (3657) stripe_customer_id: cus_69F1zlbqwo0pm9
+[2015-05-27 11:28:02 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org customers - Updated Organization Azzitshudbe Farm (3656) stripe_customer_id: cus_69Ex3yCmjrd0Qz
+[2015-05-27 11:28:02 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org customers - Updated Organization Fox Trail Farm (3655) stripe_customer_id: cus_69EtslA9GhnUew
+[2015-05-27 11:28:02 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org customers - Updated Organization Master Plan Feeds (3613) stripe_customer_id: cus_67m7DbG2DYNpGY
+[2015-05-27 11:28:02 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org customers - Updated Organization Schmidlin Greenhouse (3608) stripe_customer_id: cus_67Qd2kX7swB0p9
+[2015-05-27 11:28:02 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org customers - Updated Organization Valley View Organic Farm (3603) stripe_customer_id: cus_676EDes6NwBCvV
+[2015-05-27 11:28:02 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org customers - Updated Organization Sheep Dreams Farm (3418) stripe_customer_id: cus_6178TvWLdXgpLv
+[2015-05-27 11:28:02 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org customers - Updated Organization Sheep Dreams Farm (3287) stripe_customer_id: cus_5wVZ9cDeRYYKfb
+[2015-05-27 11:28:03 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org customers - Updated Organization DeCamp Gardens (2684) stripe_customer_id: cus_5uQ48SP2Cy6KS6
+[2015-05-27 11:28:03 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org customers - Updated Organization The Bell Family (2243) stripe_customer_id: cus_5uQ4mIBMJlZm47
+[2015-05-27 11:28:03 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org customers - Updated Organization Tony Tressler (2242) stripe_customer_id: cus_5uS7asojsZBQ2c
+[2015-05-27 11:28:03 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org customers - Updated Organization Kyli McCullough (2229) stripe_customer_id: cus_5uQ4x2CN0w9w3t
+[2015-05-27 11:28:03 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org customers - Updated Organization Kelsey (2210) stripe_customer_id: cus_5uQ46cjR7rRwvF
+[2015-05-27 11:28:03 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org customers - Updated Organization Sonya Mavis (2207) stripe_customer_id: cus_5uQ4EAsg0IEz96
+[2015-05-27 11:28:03 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org customers - Updated Organization One Smart Cookie (2185) stripe_customer_id: cus_5uQ4F89GQQfFpy
+[2015-05-27 11:28:03 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org customers - Updated Organization Marcia Culler (2183) stripe_customer_id: cus_5uQ4uSSu8ePw1U
+[2015-05-27 11:28:03 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org customers - Updated Organization Mindy Wade (2049) stripe_customer_id: cus_5uQ4V7KZhHVIlZ
+[2015-05-27 11:28:03 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org customers - Updated Organization Wende Sharma (2005) stripe_customer_id: cus_5uQ4lus49wtJA2
+[2015-05-27 11:28:03 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org customers - Updated Organization Larry's Berries (1999) stripe_customer_id: cus_5uQ4SSmvLJvB0M
+[2015-05-27 11:28:03 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org customers - Updated Organization All Things Food - Buyer (1819) stripe_customer_id: cus_5uQ5Mzuwor9KQz
+[2015-05-27 11:28:03 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org customers - Updated Organization Sharon Ransom - OB/GYN Bryan (1815) stripe_customer_id: cus_5uQ5LukyVebcY4
+[2015-05-27 11:28:03 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org customers - Updated Organization Melodee Moore (1760) stripe_customer_id: cus_5uQ5g0ubuU4mXL
+[2015-05-27 11:28:04 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org customers - Updated Organization Brittany M. Hudson - SNAP Benefits (1711) stripe_customer_id: cus_5uQ47mdyvKeCEv
+[2015-05-27 11:28:04 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org customers - Updated Organization Kari Shininger (1690) stripe_customer_id: cus_5uQ4G6a4B3sNOc
+[2015-05-27 11:28:04 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org customers - Updated Organization Karmin Brooks (1616) stripe_customer_id: cus_5uQ4JHkDFrNt4p
+[2015-05-27 11:28:04 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org customers - Updated Organization Karmin Brooks (1615) stripe_customer_id: cus_5uQ5jBg5lSkbxC
+[2015-05-27 11:28:04 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org customers - Updated Organization Mark Lorntz (1582) stripe_customer_id: cus_5uQ5xwd28wjzC3
+[2015-05-27 11:28:04 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org customers - Updated Organization Kay Cummins (1503) stripe_customer_id: cus_5uQ4pTqT2eGAVU
+[2015-05-27 11:28:04 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org customers - MISS - No stripe_customer_id found for Organization All Things Food  (20) balanced_customer_uri /v1/customers/CU3W2dTYSDAwPzNo7imzuv7Z
+[2015-05-27 11:28:04 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org customers - Updated Organization Maple Lane Farm (27) stripe_customer_id: cus_5uQ55aq13zPUc1
+[2015-05-27 11:28:05 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org customers - Updated Organization Natural Goodness Garden (29) stripe_customer_id: cus_5uQ5EQf6Qk9y0G
+[2015-05-27 11:28:05 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org customers - Updated Organization North Central FFA (31) stripe_customer_id: cus_5uQ5S3ldaAOr0c
+[2015-05-27 11:28:05 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org customers - Updated Organization Shagbark Seed & Mill (33) stripe_customer_id: cus_5uQ5wnzY4IpDKR
+[2015-05-27 11:28:06 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org customers - Updated Organization Black Creek Farm (34) stripe_customer_id: cus_5uQ5Fd7v7m3bH4
+[2015-05-27 11:28:06 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org customers - Updated Organization The Upper Crust, LLC (37) stripe_customer_id: cus_5uQ4vbCXMxiqLA
+[2015-05-27 11:28:06 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org customers - Updated Organization Pure Maple Syrup (38) stripe_customer_id: cus_5uQ5uS3Z8mzIVT
+[2015-05-27 11:28:07 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org customers - Updated Organization Turkeyfoot Creek Creamery (39) stripe_customer_id: cus_5uQ5yw6XCcI3oA
+[2015-05-27 11:28:07 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org customers - Updated Organization Whitehouse Specialty Crops (68) stripe_customer_id: cus_5uQ5a5Q9H1V0w0
+[2015-05-27 11:28:07 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org customers - Updated Organization Sustainable Local Foods (136) stripe_customer_id: cus_5uQ5HvJDarKf0Y
+[2015-05-27 11:28:07 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org customers - Updated Organization Beverly (142) stripe_customer_id: cus_5uQ5oTrINxCWtF
+[2015-05-27 11:28:07 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org customers - Updated Organization Mike Gill (146) stripe_customer_id: cus_5uQ59FNztBBnqR
+[2015-05-27 11:28:07 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org customers - Updated Organization Pam Sauder (148) stripe_customer_id: cus_5vQun7wdBCYbZ0
+[2015-05-27 11:28:08 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org customers - Updated Organization Abby Williams (150) stripe_customer_id: cus_5uQ58EJy98S0aF
+[2015-05-27 11:28:08 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org customers - Updated Organization Lou Pendleton (153) stripe_customer_id: cus_5uQ5Jw1uHU2Fyk
+[2015-05-27 11:28:08 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org customers - Updated Organization Becky McGuire (155) stripe_customer_id: cus_5uQ5iJW8NcvGXB
+[2015-05-27 11:28:08 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org customers - Updated Organization Melody Turner (156) stripe_customer_id: cus_5vQtDESuIjwArD
+[2015-05-27 11:28:08 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org customers - Updated Organization Marion Allen (158) stripe_customer_id: cus_5uQ5xLigQkwbMK
+[2015-05-27 11:28:08 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org customers - Updated Organization CHWC - Bryan (161) stripe_customer_id: cus_5uQ5nlCFWtjGYv
+[2015-05-27 11:28:08 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org customers - Updated Organization Katieland Dairy (162) stripe_customer_id: cus_5uQ54UaAw8iEad
+[2015-05-27 11:28:08 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org customers - Updated Organization Mary Lloyd (163) stripe_customer_id: cus_5uQ5zLHAQeFqxx
+[2015-05-27 11:28:08 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org customers - Updated Organization Sandy Gordon (170) stripe_customer_id: cus_5uQ4JFLoK9utku
+[2015-05-27 11:28:09 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org customers - Updated Organization Stoney Ridge Farm and Winery (173) stripe_customer_id: cus_5uQ5Zz6uZ7odly
+[2015-05-27 11:28:09 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org customers - Updated Organization Season's Coffee & Bistro (176) stripe_customer_id: cus_5uQ5LWZf9vBN5h
+[2015-05-27 11:28:09 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org customers - Updated Organization Stephanie Bexten (180) stripe_customer_id: cus_5uQ59luCjVzoMz
+[2015-05-27 11:28:09 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org customers - Updated Organization Logan Smith (185) stripe_customer_id: cus_5uQ5O0wUdcXWQM
+[2015-05-27 11:28:09 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org customers - Updated Organization Tracey Kennedy (187) stripe_customer_id: cus_5uQ5xCqoLP9Sxu
+[2015-05-27 11:28:09 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org customers - Updated Organization Northwest Ohio Chiropractic (197) stripe_customer_id: cus_5uQ5rlHvTgpInh
+[2015-05-27 11:28:09 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org customers - Updated Organization Anne Bard (204) stripe_customer_id: cus_5uQ5BfQUIaMpae
+[2015-05-27 11:28:09 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org customers - Updated Organization Amanda Andres (208) stripe_customer_id: cus_5uQ4cmasPqpGfL
+[2015-05-27 11:28:09 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org customers - Updated Organization Nate Meyers (209) stripe_customer_id: cus_5uQ54oy2iCq2Va
+[2015-05-27 11:28:09 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org customers - Updated Organization Doreen DeLisle (221) stripe_customer_id: cus_5uQ5EW9JRKnp83
+[2015-05-27 11:28:09 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org customers - Updated Organization Debra Kepler (222) stripe_customer_id: cus_5uQ5n4toFsuBC9
+[2015-05-27 11:28:09 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org customers - Updated Organization Dawn Sipes (340) stripe_customer_id: cus_5uQ4QE0OWoNp1n
+[2015-05-27 11:28:09 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting market BankAccounts - MISS - No stripe_id found for FIRST FEDERAL BANK OF THE MIDWEST 2555 (222) balanced_customer_uri /v1/marketplaces/MP2eXZmrOPof80u3Irf94Wre/bank_accounts/BA27FNhPX0JMNupY5cmn5bAm
+[2015-05-27 11:28:10 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org BankAccounts - Organization Shontael Elward (3791) - Updated MasterCard 4559 (547) stripe_id: tok_162TTn2VpjOYk6Tmcvvgll0k
+[2015-05-27 11:28:10 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org BankAccounts - Organization The Bell Family (2243) - Updated MasterCard 4750 (286) stripe_id: card_15ic992VpjOYk6Tm86bb3d9j
+[2015-05-27 11:28:10 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org BankAccounts - Organization Kyli McCullough (2229) - Updated MasterCard 6307 (283) stripe_id: card_15ic9Q2VpjOYk6Tmw30B6tqP
+[2015-05-27 11:28:10 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org BankAccounts - Organization Kelsey (2210) - Updated MasterCard 7086 (282) stripe_id: card_15ic972VpjOYk6Tm3JIf69Fg
+[2015-05-27 11:28:10 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org BankAccounts - Organization Kelsey (2210) - Updated MasterCard 8801 (276) stripe_id: card_15ic9B2VpjOYk6Tm142vzo2C
+[2015-05-27 11:28:10 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org BankAccounts - Organization Sonya Mavis (2207) - Updated MasterCard 3995 (281) stripe_id: card_15ic9K2VpjOYk6TmCY1dbgnJ
+[2015-05-27 11:28:10 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org BankAccounts - Organization Marcia Culler (2183) - Updated Visa 6873 (267) stripe_id: card_15ic992VpjOYk6TmAkbhgMA2
+[2015-05-27 11:28:10 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org BankAccounts - Organization Mindy Wade (2049) - Updated Visa 0191 (241) stripe_id: card_15ic982VpjOYk6TmNRazxejG
+[2015-05-27 11:28:10 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org BankAccounts - Organization Wende Sharma (2005) - Updated MasterCard 5579 (232) stripe_id: card_15ic962VpjOYk6TmuheVZ2ok
+[2015-05-27 11:28:10 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org BankAccounts - Organization Sharon Ransom - OB/GYN Bryan (1815) - Updated American Express 2013 (199) stripe_id: card_15ic9k2VpjOYk6Tm2wjxlgHc
+[2015-05-27 11:28:10 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org BankAccounts - Organization Melodee Moore (1760) - Updated Visa 1286 (190) stripe_id: card_15ic9u2VpjOYk6Tm4neuPmr5
+[2015-05-27 11:28:11 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org BankAccounts - Organization Kari Shininger (1690) - MISS - No stripe_id found for Visa 6628 (181) balanced_customer_uri /v1/marketplaces/MP2eXZmrOPof80u3Irf94Wre/cards/CC22UVonuDXdttNlVGNSZ4v1
+[2015-05-27 11:28:11 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org BankAccounts - Organization Karmin Brooks (1616) - Updated MasterCard 1987 (198) stripe_id: card_15ic8r2VpjOYk6TmfKoPMkSQ
+[2015-05-27 11:28:11 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org BankAccounts - Organization Karmin Brooks (1615) - Updated MasterCard 1987 (172) stripe_id: card_15ic9j2VpjOYk6TmRCQ6NvZn
+[2015-05-27 11:28:11 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org BankAccounts - Organization Kay Cummins (1503) - Updated American Express 1003 (291) stripe_id: card_15ic972VpjOYk6TmIbDkqFMA
+[2015-05-27 11:28:11 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org BankAccounts - Organization Beverly (142) - Updated Visa 1825 (43) stripe_id: card_15ic9Q2VpjOYk6TmpniwDgBI
+[2015-05-27 11:28:11 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org BankAccounts - Organization Beverly (142) - Updated THE HICKSVILLE BANK 4446 (42) stripe_id: ba_15ic9b2VpjOYk6TmbvP8Ko7R
+[2015-05-27 11:28:11 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org BankAccounts - Organization Mike Gill (146) - Updated MasterCard 0646 (18) stripe_id: card_15ic9t2VpjOYk6TmrgENSyXN
+[2015-05-27 11:28:11 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org BankAccounts - Organization Pam Sauder (148) - MISS - No stripe_id found for MasterCard 4356 (49) balanced_customer_uri /v1/marketplaces/MP2eXZmrOPof80u3Irf94Wre/cards/CChgk0m7SKJ5Z9edVzmu2ps
+[2015-05-27 11:28:11 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org BankAccounts - Organization Abby Williams (150) - Updated Visa 5942 (25) stripe_id: card_15ic9m2VpjOYk6TmHQHLZrgg
+[2015-05-27 11:28:11 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org BankAccounts - Organization Lou Pendleton (153) - Updated MasterCard 4513 (19) stripe_id: card_15ic9W2VpjOYk6Tm130Km52Z
+[2015-05-27 11:28:11 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org BankAccounts - Organization Becky McGuire (155) - Updated Visa 4842 (35) stripe_id: card_15ic9o2VpjOYk6Tme9eMnRlh
+[2015-05-27 11:28:11 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org BankAccounts - Organization Melody Turner (156) - Updated FIRST FEDERAL BANK OF THE MIDWEST 4474 (20) stripe_id: ba_15l25E2VpjOYk6TmekHovelC
+[2015-05-27 11:28:11 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org BankAccounts - Organization Marion Allen (158) - MISS - No stripe_id found for MasterCard 6681 (21) balanced_customer_uri /v1/marketplaces/MP2eXZmrOPof80u3Irf94Wre/cards/CC3ahL7A5HViy5b8Xv0IZ9vJ
+[2015-05-27 11:28:12 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org BankAccounts - Organization Katieland Dairy (162) - Updated American Express 2006 (36) stripe_id: card_15ic9m2VpjOYk6Tm12lt26ou
+[2015-05-27 11:28:12 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org BankAccounts - Organization Mary Lloyd (163) - Updated American Express 1015 (238) stripe_id: card_15ic9Y2VpjOYk6TmoFnsG3XB
+[2015-05-27 11:28:12 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org BankAccounts - Organization Mary Lloyd (163) - MISS - No stripe_id found for MasterCard 5925 (22) balanced_customer_uri /v1/marketplaces/MP2eXZmrOPof80u3Irf94Wre/cards/CC48HfFb4LmlvWN31sxcYk1t
+[2015-05-27 11:28:12 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org BankAccounts - Organization Sandy Gordon (170) - Updated Visa 1179 (50) stripe_id: card_15ic8n2VpjOYk6Tmrfa09GUS
+[2015-05-27 11:28:12 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org BankAccounts - Organization Stephanie Bexten (180) - Updated MasterCard 9631 (29) stripe_id: card_15ic9L2VpjOYk6TmWpOkVBsF
+[2015-05-27 11:28:12 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org BankAccounts - Organization Logan Smith (185) - Updated MasterCard 2706 (27) stripe_id: card_15ic9V2VpjOYk6TmvyQnt07t
+[2015-05-27 11:28:12 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org BankAccounts - Organization Tracey Kennedy (187) - Updated MasterCard 9812 (28) stripe_id: card_15ic9I2VpjOYk6TmzRUCH8SM
+[2015-05-27 11:28:12 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org BankAccounts - Organization Northwest Ohio Chiropractic (197) - Updated MIDWEST COMMUNITY FCU 0623 (69) stripe_id: ba_15ic9S2VpjOYk6TmiVRdxdAw
+[2015-05-27 11:28:12 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org BankAccounts - Organization Anne Bard (204) - Updated MasterCard 3190 (290) stripe_id: card_15ic9U2VpjOYk6TmkjlfWEph
+[2015-05-27 11:28:12 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org BankAccounts - Organization Anne Bard (204) - Updated American Express 2541 (205) stripe_id: card_15ic9V2VpjOYk6Tm1upVyiaB
+[2015-05-27 11:28:12 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org BankAccounts - Organization Anne Bard (204) - Updated Visa 4510 (45) stripe_id: card_15ic9Z2VpjOYk6TmSArCKcpD
+[2015-05-27 11:28:12 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org BankAccounts - Organization Amanda Andres (208) - Updated MasterCard 8007 (231) stripe_id: card_15ic902VpjOYk6Tm2Vq6uTEY
+[2015-05-27 11:28:12 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org BankAccounts - Organization Doreen DeLisle (221) - Updated FIRST FEDERAL BANK OF THE MIDWEST 9830 (40) stripe_id: ba_15ic9N2VpjOYk6TmootSnYMp
+[2015-05-27 11:28:12 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org BankAccounts - Organization Doreen DeLisle (221) - Updated Discover 0864 (41) stripe_id: card_15ic9T2VpjOYk6Tm6WX07yGJ
+[2015-05-27 11:28:12 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org BankAccounts - Organization Debra Kepler (222) - MISS - No stripe_id found for MasterCard 6233 (44) balanced_customer_uri /v1/marketplaces/MP2eXZmrOPof80u3Irf94Wre/cards/CC1FPExz2G5v1JrAJdgNH7Ts

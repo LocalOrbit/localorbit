@@ -113,6 +113,10 @@ module PaymentProvider
         end
       end
 
+      def select_usable_bank_accounts(bank_accounts)
+        bank_accounts.reject do |ba| ba.balanced_uri.nil? end
+      end
+
     end
   end
 end

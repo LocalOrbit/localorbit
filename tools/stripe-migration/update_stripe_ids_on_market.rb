@@ -15,8 +15,6 @@ class UpdateStripeIdsOnMarket
 
     print_header
 
-    export_data = BalancedExport.latest
-
     if @market.balanced_customer_uri
       update_market_stripe_customer_id 
       update_market_stripe_account_id 
@@ -117,6 +115,8 @@ class UpdateStripeIdsOnMarket
     log "="*100
     log " #{@market_title}"
     log " Updating stripe IDs for market, orgs and bank accounts."
+    log ""
+    log " Balanced export file: #{@export_data.file}"
     log ""
     log " Rails.env: #{Rails.env}"
     log " Stripe keys:"

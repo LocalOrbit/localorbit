@@ -1,0 +1,13 @@
+[2015-05-27 09:53:25 -0400] - SetTransferSchedule - Appleton Market (7) - ====================================================================================================
+[2015-05-27 09:53:25 -0400] - SetTransferSchedule - Appleton Market (7) -  Appleton Market (7)
+[2015-05-27 09:53:25 -0400] - SetTransferSchedule - Appleton Market (7) -  Setting transfer schedule and debit_negative_balances flag on Stripe Accounts.
+[2015-05-27 09:53:25 -0400] - SetTransferSchedule - Appleton Market (7) - 
+[2015-05-27 09:53:25 -0400] - SetTransferSchedule - Appleton Market (7) -  Rails.env: production
+[2015-05-27 09:53:25 -0400] - SetTransferSchedule - Appleton Market (7) -  Stripe keys:
+[2015-05-27 09:53:25 -0400] - SetTransferSchedule - Appleton Market (7) -   --> STRIPE_PUBLISHABLE_KEY: pk_live_j85VTsrz51POrss3ni460qaf (pk_live_j85VTsrz51POrss3ni460qaf)
+[2015-05-27 09:53:25 -0400] - SetTransferSchedule - Appleton Market (7) - ====================================================================================================
+[2015-05-27 09:53:29 -0400] - SetTransferSchedule - Appleton Market (7) - Stripe Account acct_15l1yVLOzRELz1SB - business_name: Appleton Market, email: ndvorachek@goodwillncw.org, metadata: {:"lo.market_id"=>"7"}, debit_negative_balances: true, transfer_schedule: #<Stripe::StripeObject:0x3fd124f3903c> JSON: {
+  "delay_days": 5,
+  "interval": "weekly",
+  "weekly_anchor": "wednesday"
+}

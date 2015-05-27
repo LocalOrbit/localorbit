@@ -1,0 +1,13 @@
+[2015-05-27 09:53:29 -0400] - SetTransferSchedule - Central U.P. Marketplace (19) - ====================================================================================================
+[2015-05-27 09:53:29 -0400] - SetTransferSchedule - Central U.P. Marketplace (19) -  Central U.P. Marketplace (19)
+[2015-05-27 09:53:29 -0400] - SetTransferSchedule - Central U.P. Marketplace (19) -  Setting transfer schedule and debit_negative_balances flag on Stripe Accounts.
+[2015-05-27 09:53:29 -0400] - SetTransferSchedule - Central U.P. Marketplace (19) - 
+[2015-05-27 09:53:29 -0400] - SetTransferSchedule - Central U.P. Marketplace (19) -  Rails.env: production
+[2015-05-27 09:53:29 -0400] - SetTransferSchedule - Central U.P. Marketplace (19) -  Stripe keys:
+[2015-05-27 09:53:29 -0400] - SetTransferSchedule - Central U.P. Marketplace (19) -   --> STRIPE_PUBLISHABLE_KEY: pk_live_j85VTsrz51POrss3ni460qaf (pk_live_j85VTsrz51POrss3ni460qaf)
+[2015-05-27 09:53:29 -0400] - SetTransferSchedule - Central U.P. Marketplace (19) - ====================================================================================================
+[2015-05-27 09:53:32 -0400] - SetTransferSchedule - Central U.P. Marketplace (19) - Stripe Account acct_15l1yTLQ4u01Xv8M - business_name: Central U.P. Marketplace, email: ncurran@marquettefood.coop, metadata: {:"lo.market_id"=>"19"}, debit_negative_balances: true, transfer_schedule: #<Stripe::StripeObject:0x3fd124e98204> JSON: {
+  "delay_days": 5,
+  "interval": "weekly",
+  "weekly_anchor": "wednesday"
+}

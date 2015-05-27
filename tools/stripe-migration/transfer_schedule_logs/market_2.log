@@ -1,0 +1,13 @@
+[2015-05-27 09:53:17 -0400] - SetTransferSchedule - The Locals Food Hub (2) - ====================================================================================================
+[2015-05-27 09:53:17 -0400] - SetTransferSchedule - The Locals Food Hub (2) -  The Locals Food Hub (2)
+[2015-05-27 09:53:17 -0400] - SetTransferSchedule - The Locals Food Hub (2) -  Setting transfer schedule and debit_negative_balances flag on Stripe Accounts.
+[2015-05-27 09:53:17 -0400] - SetTransferSchedule - The Locals Food Hub (2) - 
+[2015-05-27 09:53:17 -0400] - SetTransferSchedule - The Locals Food Hub (2) -  Rails.env: production
+[2015-05-27 09:53:17 -0400] - SetTransferSchedule - The Locals Food Hub (2) -  Stripe keys:
+[2015-05-27 09:53:17 -0400] - SetTransferSchedule - The Locals Food Hub (2) -   --> STRIPE_PUBLISHABLE_KEY: pk_live_j85VTsrz51POrss3ni460qaf (pk_live_j85VTsrz51POrss3ni460qaf)
+[2015-05-27 09:53:17 -0400] - SetTransferSchedule - The Locals Food Hub (2) - ====================================================================================================
+[2015-05-27 09:53:21 -0400] - SetTransferSchedule - The Locals Food Hub (2) - Stripe Account acct_15l1yTClqVnHxlgk - business_name: The Locals Food Hub, email: sandra@laluchaspace.com, metadata: {:"lo.market_id"=>"2"}, debit_negative_balances: true, transfer_schedule: #<Stripe::StripeObject:0x3fd1243b2e20> JSON: {
+  "delay_days": 5,
+  "interval": "weekly",
+  "weekly_anchor": "wednesday"
+}

@@ -1,0 +1,13 @@
+[2015-05-27 09:53:14 -0400] - SetTransferSchedule - Big City Farms (36) - ====================================================================================================
+[2015-05-27 09:53:14 -0400] - SetTransferSchedule - Big City Farms (36) -  Big City Farms (36)
+[2015-05-27 09:53:14 -0400] - SetTransferSchedule - Big City Farms (36) -  Setting transfer schedule and debit_negative_balances flag on Stripe Accounts.
+[2015-05-27 09:53:14 -0400] - SetTransferSchedule - Big City Farms (36) - 
+[2015-05-27 09:53:14 -0400] - SetTransferSchedule - Big City Farms (36) -  Rails.env: production
+[2015-05-27 09:53:14 -0400] - SetTransferSchedule - Big City Farms (36) -  Stripe keys:
+[2015-05-27 09:53:14 -0400] - SetTransferSchedule - Big City Farms (36) -   --> STRIPE_PUBLISHABLE_KEY: pk_live_j85VTsrz51POrss3ni460qaf (pk_live_j85VTsrz51POrss3ni460qaf)
+[2015-05-27 09:53:14 -0400] - SetTransferSchedule - Big City Farms (36) - ====================================================================================================
+[2015-05-27 09:53:17 -0400] - SetTransferSchedule - Big City Farms (36) - Stripe Account acct_15l1yTEfmlDtMdOr - business_name: Big City Farms, email: sales.bigcityfarms@gmail.com, metadata: {:"lo.market_id"=>"36"}, debit_negative_balances: true, transfer_schedule: #<Stripe::StripeObject:0x3fd12491d590> JSON: {
+  "delay_days": 5,
+  "interval": "weekly",
+  "weekly_anchor": "wednesday"
+}
