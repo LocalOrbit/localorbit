@@ -7,12 +7,13 @@
     <input type="checkbox" name="organization[allow_purchase_orders]" id="organization_allow_purchase_orders" value="1" <%= 'checked="checked"' if payment_type_enabled?("allow_purchase_orders") %>>
     <label for="organization_allow_purchase_orders">Allow purchase orders</label><br>
   <% end %>
-  <% if allow_payment_type?("allow_credit_cards") %>
+  <% if PaymentProvider.supports_payment_method?(@organization.primary_payment_provider, 'credit card') and allow_payment_type?("allow_credit_cards") %>
     <input type="hidden" name="organization[allow_credit_cards]" value="0">
     <input type="checkbox" name="organization[allow_credit_cards]" id="organization_allow_credit_cards" value="1" <%= 'checked="checked"' if payment_type_enabled?("allow_credit_cards") %>>
     <label for="organization_allow_credit_cards">Allow credit cards</label><br>
   <% end %>
-  <% if allow_payment_type?("allow_ach") %>
+
+  <% if PaymentProvider.supports_payment_method?(@organization.primary_payment_provider, 'ach') and allow_payment_type?("allow_ach") %>
     <input type="hidden" name="organization[allow_ach]" value="0">
     <input type="checkbox" name="organization[allow_ach]" id="organization_allow_ach" value="1" <%= 'checked="checked"' if payment_type_enabled?("allow_ach") %>>
     <label for="organization_allow_ach">Allow ACH</label><br>

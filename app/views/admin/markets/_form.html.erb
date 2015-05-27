@@ -133,19 +133,27 @@
         <label>Allowed payment methods</label><br>
         <%= f.check_box :allow_purchase_orders %>
         <%= f.label :allow_purchase_orders %><br>
-        <%= f.check_box :allow_credit_cards %>
-        <%= f.label :allow_credit_cards %><br>
-        <%= f.check_box :allow_ach %>
-        <%= f.label :allow_ach, "Allow ACH" %><br>
+        <% if PaymentProvider.supports_payment_method?(@market.payment_provider, 'credit card') %>
+          <%= f.check_box :allow_credit_cards %>
+          <%= f.label :allow_credit_cards %><br>
+        <% end %>
+        <% if PaymentProvider.supports_payment_method?(@market.payment_provider, 'ach') %>
+          <%= f.check_box :allow_ach %>
+          <%= f.label :allow_ach, "Allow ACH" %><br>
+        <% end %>
       </div
       ><div class="field column column--half column--guttered" id="default-payment-options">
         <label>Default organization payment methods</label><br>
         <%= f.check_box :default_allow_purchase_orders %>
         <%= f.label :default_allow_purchase_orders, "Allow purchase orders" %><br>
-        <%= f.check_box :default_allow_credit_cards %>
-        <%= f.label :default_allow_credit_cards, "Allow credit cards" %><br>
-        <%= f.check_box :default_allow_ach %>
-        <%= f.label :default_allow_ach, "Allow ACH" %><br>
+        <% if PaymentProvider.supports_payment_method?(@market.payment_provider, 'credit card') %>
+          <%= f.check_box :default_allow_credit_cards %>
+          <%= f.label :default_allow_credit_cards, "Allow credit cards" %><br>
+        <% end %>
+        <% if PaymentProvider.supports_payment_method?(@market.payment_provider, 'ach') %>
+          <%= f.check_box :default_allow_ach %>
+          <%= f.label :default_allow_ach, "Allow ACH" %><br>
+        <% end %>
       </div>
     </div>
   <% end %>
