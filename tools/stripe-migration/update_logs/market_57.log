@@ -1,17 +1,19 @@
-[2015-05-26 16:04:48 -0400] - UpdateStripeIdsOnMarket - Jack & Jakes School Sales (57) - ====================================================================================================
-[2015-05-26 16:04:48 -0400] - UpdateStripeIdsOnMarket - Jack & Jakes School Sales (57) -  Jack & Jakes School Sales (57)
-[2015-05-26 16:04:48 -0400] - UpdateStripeIdsOnMarket - Jack & Jakes School Sales (57) -  Updating stripe IDs for market, orgs and bank accounts.
-[2015-05-26 16:04:48 -0400] - UpdateStripeIdsOnMarket - Jack & Jakes School Sales (57) - 
-[2015-05-26 16:04:48 -0400] - UpdateStripeIdsOnMarket - Jack & Jakes School Sales (57) -  Rails.env: production
-[2015-05-26 16:04:48 -0400] - UpdateStripeIdsOnMarket - Jack & Jakes School Sales (57) -  Stripe keys:
-[2015-05-26 16:04:48 -0400] - UpdateStripeIdsOnMarket - Jack & Jakes School Sales (57) -   --> STRIPE_PUBLISHABLE_KEY: pk_live_j85VTsrz51POrss3ni460qaf (pk_live_j85VTsrz51POrss3ni460qaf)
-[2015-05-26 16:04:48 -0400] - UpdateStripeIdsOnMarket - Jack & Jakes School Sales (57) - ====================================================================================================
-[2015-05-26 16:04:49 -0400] - UpdateStripeIdsOnMarket - Jack & Jakes School Sales (57) - Connecting market customer - Updated Market stripe_customer_id: cus_5uQ5sKdr4Z7lVH
-[2015-05-26 16:04:49 -0400] - UpdateStripeIdsOnMarket - Jack & Jakes School Sales (57) - Connecting market account - MISS - No stripe_account_id found for market balanced_customer_uri /v1/customers/CU4tsJR64UWyIpRSRI2x8NUz
-[2015-05-26 16:04:49 -0400] - UpdateStripeIdsOnMarket - Jack & Jakes School Sales (57) - Connecting org customers - Updated Organization Joseph S. Clark High School (3199) stripe_customer_id: cus_5uQ5MR9F5kSaxX
-[2015-05-26 16:04:50 -0400] - UpdateStripeIdsOnMarket - Jack & Jakes School Sales (57) - Connecting org customers - Updated Organization John Dibert Community School At Phillis Wheatley (3198) stripe_customer_id: cus_5uQ5xqmnTrxmKi
-[2015-05-26 16:04:50 -0400] - UpdateStripeIdsOnMarket - Jack & Jakes School Sales (57) - Connecting org customers - Updated Organization Samuel J. Green Charter School (2689) stripe_customer_id: cus_5uQ4zygBIXPxpu
-[2015-05-26 16:04:50 -0400] - UpdateStripeIdsOnMarket - Jack & Jakes School Sales (57) - Connecting org customers - Updated Organization Conventional (2539) stripe_customer_id: cus_5uQ5rD9IpeBpqq
-[2015-05-26 16:04:51 -0400] - UpdateStripeIdsOnMarket - Jack & Jakes School Sales (57) - Connecting org customers - Updated Organization Regional (2530) stripe_customer_id: cus_5uQ5fevfAwHFkm
-[2015-05-26 16:04:51 -0400] - UpdateStripeIdsOnMarket - Jack & Jakes School Sales (57) - Connecting org customers - Updated Organization Local (2529) stripe_customer_id: cus_5uQ4lX1LgcyCbV
-[2015-05-26 16:04:51 -0400] - UpdateStripeIdsOnMarket - Jack & Jakes School Sales (57) - Connecting market BankAccounts - Updated Visa 5620 (354) stripe_id: card_15ic9l2VpjOYk6TmNjWuVrSH
+[2015-05-27 11:26:51 -0400] - UpdateStripeIdsOnMarket - Jack & Jakes School Sales (57) - ====================================================================================================
+[2015-05-27 11:26:51 -0400] - UpdateStripeIdsOnMarket - Jack & Jakes School Sales (57) -  Jack & Jakes School Sales (57)
+[2015-05-27 11:26:51 -0400] - UpdateStripeIdsOnMarket - Jack & Jakes School Sales (57) -  Updating stripe IDs for market, orgs and bank accounts.
+[2015-05-27 11:26:51 -0400] - UpdateStripeIdsOnMarket - Jack & Jakes School Sales (57) - 
+[2015-05-27 11:26:51 -0400] - UpdateStripeIdsOnMarket - Jack & Jakes School Sales (57) -  Balanced export file: /home/vagrant/git/localorbit/tools/stripe-migration/from_balanced/2015-05-27-1432735944-MP2eXZmrOPof80u3Irf94Wre.csv
+[2015-05-27 11:26:51 -0400] - UpdateStripeIdsOnMarket - Jack & Jakes School Sales (57) - 
+[2015-05-27 11:26:51 -0400] - UpdateStripeIdsOnMarket - Jack & Jakes School Sales (57) -  Rails.env: production
+[2015-05-27 11:26:51 -0400] - UpdateStripeIdsOnMarket - Jack & Jakes School Sales (57) -  Stripe keys:
+[2015-05-27 11:26:51 -0400] - UpdateStripeIdsOnMarket - Jack & Jakes School Sales (57) -   --> STRIPE_PUBLISHABLE_KEY: pk_live_j85VTsrz51POrss3ni460qaf (pk_live_j85VTsrz51POrss3ni460qaf)
+[2015-05-27 11:26:51 -0400] - UpdateStripeIdsOnMarket - Jack & Jakes School Sales (57) - ====================================================================================================
+[2015-05-27 11:26:51 -0400] - UpdateStripeIdsOnMarket - Jack & Jakes School Sales (57) - Connecting market customer - Updated Market stripe_customer_id: cus_5uQ5sKdr4Z7lVH
+[2015-05-27 11:26:51 -0400] - UpdateStripeIdsOnMarket - Jack & Jakes School Sales (57) - Connecting market account - MISS - No stripe_account_id found for market balanced_customer_uri /v1/customers/CU4tsJR64UWyIpRSRI2x8NUz
+[2015-05-27 11:26:51 -0400] - UpdateStripeIdsOnMarket - Jack & Jakes School Sales (57) - Connecting org customers - Updated Organization Joseph S. Clark High School (3199) stripe_customer_id: cus_5uQ5MR9F5kSaxX
+[2015-05-27 11:26:51 -0400] - UpdateStripeIdsOnMarket - Jack & Jakes School Sales (57) - Connecting org customers - Updated Organization John Dibert Community School At Phillis Wheatley (3198) stripe_customer_id: cus_5uQ5xqmnTrxmKi
+[2015-05-27 11:26:51 -0400] - UpdateStripeIdsOnMarket - Jack & Jakes School Sales (57) - Connecting org customers - Updated Organization Samuel J. Green Charter School (2689) stripe_customer_id: cus_5uQ4zygBIXPxpu
+[2015-05-27 11:26:51 -0400] - UpdateStripeIdsOnMarket - Jack & Jakes School Sales (57) - Connecting org customers - Updated Organization Conventional (2539) stripe_customer_id: cus_5uQ5rD9IpeBpqq
+[2015-05-27 11:26:51 -0400] - UpdateStripeIdsOnMarket - Jack & Jakes School Sales (57) - Connecting org customers - Updated Organization Regional (2530) stripe_customer_id: cus_5uQ5fevfAwHFkm
+[2015-05-27 11:26:51 -0400] - UpdateStripeIdsOnMarket - Jack & Jakes School Sales (57) - Connecting org customers - Updated Organization Local (2529) stripe_customer_id: cus_5uQ4lX1LgcyCbV
+[2015-05-27 11:26:51 -0400] - UpdateStripeIdsOnMarket - Jack & Jakes School Sales (57) - Connecting market BankAccounts - Updated Visa 5620 (354) stripe_id: card_15ic9l2VpjOYk6TmNjWuVrSH

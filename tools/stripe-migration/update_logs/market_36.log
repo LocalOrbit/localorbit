@@ -1,85 +1,87 @@
-[2015-05-26 16:01:03 -0400] - UpdateStripeIdsOnMarket - Big City Farms (36) - ====================================================================================================
-[2015-05-26 16:01:03 -0400] - UpdateStripeIdsOnMarket - Big City Farms (36) -  Big City Farms (36)
-[2015-05-26 16:01:03 -0400] - UpdateStripeIdsOnMarket - Big City Farms (36) -  Updating stripe IDs for market, orgs and bank accounts.
-[2015-05-26 16:01:03 -0400] - UpdateStripeIdsOnMarket - Big City Farms (36) - 
-[2015-05-26 16:01:03 -0400] - UpdateStripeIdsOnMarket - Big City Farms (36) -  Rails.env: production
-[2015-05-26 16:01:03 -0400] - UpdateStripeIdsOnMarket - Big City Farms (36) -  Stripe keys:
-[2015-05-26 16:01:03 -0400] - UpdateStripeIdsOnMarket - Big City Farms (36) -   --> STRIPE_PUBLISHABLE_KEY: pk_live_j85VTsrz51POrss3ni460qaf (pk_live_j85VTsrz51POrss3ni460qaf)
-[2015-05-26 16:01:03 -0400] - UpdateStripeIdsOnMarket - Big City Farms (36) - ====================================================================================================
-[2015-05-26 16:01:04 -0400] - UpdateStripeIdsOnMarket - Big City Farms (36) - Connecting market customer - Updated Market stripe_customer_id: cus_5uQ4KxTWMTTInf
-[2015-05-26 16:01:05 -0400] - UpdateStripeIdsOnMarket - Big City Farms (36) - Connecting market account - Updated Market stripe_account_id: acct_15l1yTEfmlDtMdOr
-[2015-05-26 16:01:05 -0400] - UpdateStripeIdsOnMarket - Big City Farms (36) - Connecting org customers - MISS - No stripe_customer_id found for Organization Blacksauce Kitchen (3847) balanced_customer_uri /v1/customers/CU4fIILneXVYzBb3aMd5QQnl
-[2015-05-26 16:01:05 -0400] - UpdateStripeIdsOnMarket - Big City Farms (36) - Connecting org customers - Updated Organization The Brewer's Art (3821) stripe_customer_id: cus_6GQo2mpFkdvOkc
-[2015-05-26 16:01:05 -0400] - UpdateStripeIdsOnMarket - Big City Farms (36) - Connecting org customers - Updated Organization Eddie's Mt Vernon (1804) stripe_customer_id: cus_5uQ4qPonSJce9z
-[2015-05-26 16:01:06 -0400] - UpdateStripeIdsOnMarket - Big City Farms (36) - Connecting org customers - Updated Organization Big City Farms (1611) stripe_customer_id: cus_5uQ4KxTWMTTInf
-[2015-05-26 16:01:06 -0400] - UpdateStripeIdsOnMarket - Big City Farms (36) - Connecting org customers - Updated Organization Gertrude's (1785) stripe_customer_id: cus_5uQ4SCRokfBEmG
-[2015-05-26 16:01:06 -0400] - UpdateStripeIdsOnMarket - Big City Farms (36) - Connecting org customers - Updated Organization Marriott Inner Harbor (1786) stripe_customer_id: cus_5uQ4OkIGdiDzRp
-[2015-05-26 16:01:06 -0400] - UpdateStripeIdsOnMarket - Big City Farms (36) - Connecting org customers - Updated Organization Corner Pantry (1792) stripe_customer_id: cus_5uQ4GHDeg3mlq6
-[2015-05-26 16:01:07 -0400] - UpdateStripeIdsOnMarket - Big City Farms (36) - Connecting org customers - Updated Organization Barracudas Tavern (1791) stripe_customer_id: cus_5uQ4AIT2nTxYBc
-[2015-05-26 16:01:07 -0400] - UpdateStripeIdsOnMarket - Big City Farms (36) - Connecting org customers - Updated Organization Atwater's Canton (1788) stripe_customer_id: cus_5uQ4hlEPupdzY6
-[2015-05-26 16:01:07 -0400] - UpdateStripeIdsOnMarket - Big City Farms (36) - Connecting org customers - Updated Organization Bluegrass (1790) stripe_customer_id: cus_5uQ5uaPaB5WiXn
-[2015-05-26 16:01:07 -0400] - UpdateStripeIdsOnMarket - Big City Farms (36) - Connecting org customers - Updated Organization Atwater's Catonsville (1800) stripe_customer_id: cus_5uQ4eMac7AyO5S
-[2015-05-26 16:01:08 -0400] - UpdateStripeIdsOnMarket - Big City Farms (36) - Connecting org customers - Updated Organization Nickel Taphouse (1801) stripe_customer_id: cus_5uQ4XSvjThDQ80
-[2015-05-26 16:01:08 -0400] - UpdateStripeIdsOnMarket - Big City Farms (36) - Connecting org customers - Updated Organization Woodberry Group (1802) stripe_customer_id: cus_5uQ5KtRbSE76WM
-[2015-05-26 16:01:08 -0400] - UpdateStripeIdsOnMarket - Big City Farms (36) - Connecting org customers - Updated Organization Cowboys and Rednecks (1805) stripe_customer_id: cus_5uQ4eisHwrej5Z
-[2015-05-26 16:01:08 -0400] - UpdateStripeIdsOnMarket - Big City Farms (36) - Connecting org customers - Updated Organization Ten Ten (1793) stripe_customer_id: cus_5uQ4NKG4up0dhW
-[2015-05-26 16:01:09 -0400] - UpdateStripeIdsOnMarket - Big City Farms (36) - Connecting org customers - Updated Organization Cunningham's (1806) stripe_customer_id: cus_5uQ4kFXsagpNYf
-[2015-05-26 16:01:09 -0400] - UpdateStripeIdsOnMarket - Big City Farms (36) - Connecting org customers - Updated Organization Milk and Honey (1794) stripe_customer_id: cus_5uQ5C1i3VURwDa
-[2015-05-26 16:01:09 -0400] - UpdateStripeIdsOnMarket - Big City Farms (36) - Connecting org customers - Updated Organization Waterfront Kitchen (1769) stripe_customer_id: cus_5uQ4nkAFunPzNm
-[2015-05-26 16:01:10 -0400] - UpdateStripeIdsOnMarket - Big City Farms (36) - Connecting org customers - Updated Organization Cafe Azafran (1795) stripe_customer_id: cus_5uQ4GYetw1ayWU
-[2015-05-26 16:01:10 -0400] - UpdateStripeIdsOnMarket - Big City Farms (36) - Connecting org customers - Updated Organization Spoons (1797) stripe_customer_id: cus_5uQ467mkrPzsL2
-[2015-05-26 16:01:10 -0400] - UpdateStripeIdsOnMarket - Big City Farms (36) - Connecting org customers - Updated Organization Felici (1798) stripe_customer_id: cus_5uQ4qILwgio4NL
-[2015-05-26 16:01:10 -0400] - UpdateStripeIdsOnMarket - Big City Farms (36) - Connecting org customers - Updated Organization Heavy Seas Ale House (1799) stripe_customer_id: cus_5uQ47FTplMmC9E
-[2015-05-26 16:01:11 -0400] - UpdateStripeIdsOnMarket - Big City Farms (36) - Connecting org customers - Updated Organization Test Customer (1911) stripe_customer_id: cus_5uQ4sXiwpiDgej
-[2015-05-26 16:01:11 -0400] - UpdateStripeIdsOnMarket - Big City Farms (36) - Connecting org customers - Updated Organization B&O American Brasserie (2129) stripe_customer_id: cus_5uQ4P8qtkC5f8J
-[2015-05-26 16:01:11 -0400] - UpdateStripeIdsOnMarket - Big City Farms (36) - Connecting org customers - Updated Organization Farmstead Grill (2132) stripe_customer_id: cus_5uQ4udc8xFQNW7
-[2015-05-26 16:01:12 -0400] - UpdateStripeIdsOnMarket - Big City Farms (36) - Connecting org customers - Updated Organization The Waterfront Hotel (2135) stripe_customer_id: cus_5uQ4yYIlgff0FV
-[2015-05-26 16:01:12 -0400] - UpdateStripeIdsOnMarket - Big City Farms (36) - Connecting org customers - Updated Organization Joe Squared - North Ave (2133) stripe_customer_id: cus_5uQ41Gu5zpcOsu
-[2015-05-26 16:01:12 -0400] - UpdateStripeIdsOnMarket - Big City Farms (36) - Connecting org customers - Updated Organization Birroteca (2130) stripe_customer_id: cus_5uQ4I5WHhGXTar
-[2015-05-26 16:01:12 -0400] - UpdateStripeIdsOnMarket - Big City Farms (36) - Connecting org customers - Updated Organization Wine Market Bistro (2136) stripe_customer_id: cus_5uQ42orS4qWigH
-[2015-05-26 16:01:13 -0400] - UpdateStripeIdsOnMarket - Big City Farms (36) - Connecting org customers - Updated Organization The Ivy Hotel (3834) stripe_customer_id: cus_6GPjsRqJxJkMoi
-[2015-05-26 16:01:13 -0400] - UpdateStripeIdsOnMarket - Big City Farms (36) - Connecting org customers - Updated Organization Brewer's Art (2131) stripe_customer_id: cus_5uQ4UkXZv7p4wD
-[2015-05-26 16:01:13 -0400] - UpdateStripeIdsOnMarket - Big City Farms (36) - Connecting org customers - Updated Organization Relay Foods (2134) stripe_customer_id: cus_5uQ4hkTaKPiaH6
-[2015-05-26 16:01:13 -0400] - UpdateStripeIdsOnMarket - Big City Farms (36) - Connecting org customers - Updated Organization Sobo Cafe (2137) stripe_customer_id: cus_5uQ5lngTGK7TlI
-[2015-05-26 16:01:14 -0400] - UpdateStripeIdsOnMarket - Big City Farms (36) - Connecting org customers - Updated Organization Fleet Street Kitchen (2110) stripe_customer_id: cus_5uQ4hVfWh2m0uv
-[2015-05-26 16:01:14 -0400] - UpdateStripeIdsOnMarket - Big City Farms (36) - Connecting org customers - Updated Organization Pen and Quill (2117) stripe_customer_id: cus_5uQ4NIk5r6DM5D
-[2015-05-26 16:01:14 -0400] - UpdateStripeIdsOnMarket - Big City Farms (36) - Connecting org customers - Updated Organization Ryleigh's Oyster - Hunt Valley (2119) stripe_customer_id: cus_5uQ5xhdPU9ucl3
-[2015-05-26 16:01:15 -0400] - UpdateStripeIdsOnMarket - Big City Farms (36) - Connecting org customers - Updated Organization Ryleigh's Oyster - Federal Hill (2118) stripe_customer_id: cus_5uQ43FXKX1QQEv
-[2015-05-26 16:01:15 -0400] - UpdateStripeIdsOnMarket - Big City Farms (36) - Connecting org customers - Updated Organization Atwater's Falls Road (2126) stripe_customer_id: cus_5uQ4t0oTybex81
-[2015-05-26 16:01:15 -0400] - UpdateStripeIdsOnMarket - Big City Farms (36) - Connecting org customers - Updated Organization Goucher - Stimson (2121) stripe_customer_id: cus_5uQ47sG0Yxdz4Y
-[2015-05-26 16:01:15 -0400] - UpdateStripeIdsOnMarket - Big City Farms (36) - Connecting org customers - Updated Organization Dooby's (2115) stripe_customer_id: cus_5uQ5VLErS4NC9Q
-[2015-05-26 16:01:16 -0400] - UpdateStripeIdsOnMarket - Big City Farms (36) - Connecting org customers - Updated Organization Hopkins - Charles St Market (2145) stripe_customer_id: cus_5uQ46unN2xdL76
-[2015-05-26 16:01:16 -0400] - UpdateStripeIdsOnMarket - Big City Farms (36) - Connecting org customers - Updated Organization Atwater's Kenilworth (2161) stripe_customer_id: cus_5uQ5dv9w7i822B
-[2015-05-26 16:01:16 -0400] - UpdateStripeIdsOnMarket - Big City Farms (36) - Connecting org customers - Updated Organization Hopkins - Levering (2179) stripe_customer_id: cus_5uQ4djMCS3yoLf
-[2015-05-26 16:01:16 -0400] - UpdateStripeIdsOnMarket - Big City Farms (36) - Connecting org customers - Updated Organization Hopkins - Fresh Food Cafe (2181) stripe_customer_id: cus_5uQ4B7Iswr7MjL
-[2015-05-26 16:01:17 -0400] - UpdateStripeIdsOnMarket - Big City Farms (36) - Connecting org customers - Updated Organization Atwaters - Big Kitchen (2204) stripe_customer_id: cus_5uQ4L8OW0G26Mb
-[2015-05-26 16:01:17 -0400] - UpdateStripeIdsOnMarket - Big City Farms (36) - Connecting org customers - Updated Organization Atwaters Belvedere  (2212) stripe_customer_id: cus_5uQ4rViUyTOgRr
-[2015-05-26 16:01:17 -0400] - UpdateStripeIdsOnMarket - Big City Farms (36) - Connecting org customers - Updated Organization Test Customer 5 (3081) stripe_customer_id: cus_5uQ5jglOjM8107
-[2015-05-26 16:01:18 -0400] - UpdateStripeIdsOnMarket - Big City Farms (36) - Connecting org customers - Updated Organization Test Customer 6 (3082) stripe_customer_id: cus_5uQ5TiAA0wVHWE
-[2015-05-26 16:01:18 -0400] - UpdateStripeIdsOnMarket - Big City Farms (36) - Connecting org customers - Updated Organization Grano Emporio (2219) stripe_customer_id: cus_5uQ4MYeYm7ythb
-[2015-05-26 16:01:18 -0400] - UpdateStripeIdsOnMarket - Big City Farms (36) - Connecting org customers - Updated Organization Goucher - Heubeck (2241) stripe_customer_id: cus_5uQ4hYIUrnpPQu
-[2015-05-26 16:01:18 -0400] - UpdateStripeIdsOnMarket - Big City Farms (36) - Connecting org customers - Updated Organization Atwater's Hopkins (JHH) (2254) stripe_customer_id: cus_5uQ42hhfaijy0R
-[2015-05-26 16:01:19 -0400] - UpdateStripeIdsOnMarket - Big City Farms (36) - Connecting org customers - Updated Organization The Corner Pantry (2253) stripe_customer_id: cus_5uQ4poTIRBM1hC
-[2015-05-26 16:01:19 -0400] - UpdateStripeIdsOnMarket - Big City Farms (36) - Connecting org customers - Updated Organization Hopkins - Catering (2326) stripe_customer_id: cus_5uQ59Y0ZcCRjvI
-[2015-05-26 16:01:19 -0400] - UpdateStripeIdsOnMarket - Big City Farms (36) - Connecting org customers - Updated Organization Woodberry Kitchen (2477) stripe_customer_id: cus_5uQ5gWG8MtHpy6
-[2015-05-26 16:01:19 -0400] - UpdateStripeIdsOnMarket - Big City Farms (36) - Connecting org customers - Updated Organization Artifact (2578) stripe_customer_id: cus_5uQ4s3Qgiqwg01
-[2015-05-26 16:01:20 -0400] - UpdateStripeIdsOnMarket - Big City Farms (36) - Connecting org customers - Updated Organization Shoofly (2577) stripe_customer_id: cus_5uQ5UiWPv6kJWW
-[2015-05-26 16:01:20 -0400] - UpdateStripeIdsOnMarket - Big City Farms (36) - Connecting org customers - MISS - No stripe_customer_id found for Organization St. Timothy's School (3387) balanced_customer_uri /v1/customers/CU2Cku0fl5ovKRMoc1QuprpR
-[2015-05-26 16:01:20 -0400] - UpdateStripeIdsOnMarket - Big City Farms (36) - Connecting org customers - Updated Organization Test Customer 3 (3079) stripe_customer_id: cus_5uQ58Jb6Ps9joK
-[2015-05-26 16:01:20 -0400] - UpdateStripeIdsOnMarket - Big City Farms (36) - Connecting org customers - Updated Organization Test Customer 4 (3080) stripe_customer_id: cus_5uQ5psQq4u9N5D
-[2015-05-26 16:01:20 -0400] - UpdateStripeIdsOnMarket - Big City Farms (36) - Connecting org customers - Updated Organization Joe Squared - Powerplant (3794) stripe_customer_id: cus_6EwqEtpwhTQVTO
-[2015-05-26 16:01:21 -0400] - UpdateStripeIdsOnMarket - Big City Farms (36) - Connecting org customers - Updated Organization Hopkins - Nolan's on 33rd (2182) stripe_customer_id: cus_5uQ41TJ68Dlj2B
-[2015-05-26 16:01:21 -0400] - UpdateStripeIdsOnMarket - Big City Farms (36) - Connecting org customers - Updated Organization La Cuchara (3458) stripe_customer_id: cus_630DWVR5LJ5SpU
-[2015-05-26 16:01:21 -0400] - UpdateStripeIdsOnMarket - Big City Farms (36) - Connecting org customers - Updated Organization Renaissance Baltimore Harborplace Hotel (3482) stripe_customer_id: cus_63hswsy90AaTwV
-[2015-05-26 16:01:22 -0400] - UpdateStripeIdsOnMarket - Big City Farms (36) - Connecting org customers - Updated Organization Nakia's Peace of Life (3680) stripe_customer_id: cus_69ydyIshw2IoPK
-[2015-05-26 16:01:22 -0400] - UpdateStripeIdsOnMarket - Big City Farms (36) - Connecting org customers - Updated Organization Local Pie (3587) stripe_customer_id: cus_66crnQfWyXFmbo
-[2015-05-26 16:01:22 -0400] - UpdateStripeIdsOnMarket - Big City Farms (36) - Connecting org customers - Updated Organization Loyola - Parkhurst Dining (3589) stripe_customer_id: cus_66dD6QSmlt8LbN
-[2015-05-26 16:01:22 -0400] - UpdateStripeIdsOnMarket - Big City Farms (36) - Connecting org customers - Updated Organization From the Farmer (3602) stripe_customer_id: cus_675YUOZR62AgMH
-[2015-05-26 16:01:23 -0400] - UpdateStripeIdsOnMarket - Big City Farms (36) - Connecting org customers - Updated Organization Washington's Green Grocer (3661) stripe_customer_id: cus_69Jj6lf8yI1hd6
-[2015-05-26 16:01:23 -0400] - UpdateStripeIdsOnMarket - Big City Farms (36) - Connecting market BankAccounts - Updated PNC BANK, NA 4185 (179) stripe_id: ba_15ic982VpjOYk6TmiEfBZOHc
-[2015-05-26 16:01:23 -0400] - UpdateStripeIdsOnMarket - Big City Farms (36) - Connecting org BankAccounts - Organization Blacksauce Kitchen (3847) - MISS - No stripe_id found for Visa 2412 (564) balanced_customer_uri /v1/marketplaces/MP2eXZmrOPof80u3Irf94Wre/cards/CC4dgpSgT4L67ndUAcvxBzsH
-[2015-05-26 16:01:24 -0400] - UpdateStripeIdsOnMarket - Big City Farms (36) - Connecting org BankAccounts - Organization Big City Farms (1611) - Updated PNC BANK, NA 4185 (176) stripe_id: ba_15ic982VpjOYk6TmiEfBZOHc
-[2015-05-26 16:01:25 -0400] - UpdateStripeIdsOnMarket - Big City Farms (36) - Connecting org BankAccounts - Organization Test Customer (1911) - Updated Visa 2729 (465) stripe_id: card_15jFTX2VpjOYk6Tm27fi2QgW
-[2015-05-26 16:01:25 -0400] - UpdateStripeIdsOnMarket - Big City Farms (36) - Connecting org BankAccounts - Organization Test Customer (1911) - Updated PNC BANK, NA 4185 (464) stripe_id: btok_5v5BWzQhu7Loi8
-[2015-05-26 16:01:26 -0400] - UpdateStripeIdsOnMarket - Big City Farms (36) - Connecting org BankAccounts - Organization Dooby's (2115) - Updated Visa 3160 (497) stripe_id: card_15rDkZ2VpjOYk6Tm77CRCRn8
-[2015-05-26 16:01:28 -0400] - UpdateStripeIdsOnMarket - Big City Farms (36) - Connecting org BankAccounts - Organization La Cuchara (3458) - Updated Visa 4335 (505) stripe_id: card_15sFGV2VpjOYk6Tm2xrd8Pb7
+[2015-05-27 11:25:47 -0400] - UpdateStripeIdsOnMarket - Big City Farms (36) - ====================================================================================================
+[2015-05-27 11:25:47 -0400] - UpdateStripeIdsOnMarket - Big City Farms (36) -  Big City Farms (36)
+[2015-05-27 11:25:47 -0400] - UpdateStripeIdsOnMarket - Big City Farms (36) -  Updating stripe IDs for market, orgs and bank accounts.
+[2015-05-27 11:25:47 -0400] - UpdateStripeIdsOnMarket - Big City Farms (36) - 
+[2015-05-27 11:25:47 -0400] - UpdateStripeIdsOnMarket - Big City Farms (36) -  Balanced export file: /home/vagrant/git/localorbit/tools/stripe-migration/from_balanced/2015-05-27-1432735944-MP2eXZmrOPof80u3Irf94Wre.csv
+[2015-05-27 11:25:47 -0400] - UpdateStripeIdsOnMarket - Big City Farms (36) - 
+[2015-05-27 11:25:47 -0400] - UpdateStripeIdsOnMarket - Big City Farms (36) -  Rails.env: production
+[2015-05-27 11:25:47 -0400] - UpdateStripeIdsOnMarket - Big City Farms (36) -  Stripe keys:
+[2015-05-27 11:25:47 -0400] - UpdateStripeIdsOnMarket - Big City Farms (36) -   --> STRIPE_PUBLISHABLE_KEY: pk_live_j85VTsrz51POrss3ni460qaf (pk_live_j85VTsrz51POrss3ni460qaf)
+[2015-05-27 11:25:47 -0400] - UpdateStripeIdsOnMarket - Big City Farms (36) - ====================================================================================================
+[2015-05-27 11:25:48 -0400] - UpdateStripeIdsOnMarket - Big City Farms (36) - Connecting market customer - Updated Market stripe_customer_id: cus_5uQ4KxTWMTTInf
+[2015-05-27 11:25:48 -0400] - UpdateStripeIdsOnMarket - Big City Farms (36) - Connecting market account - Updated Market stripe_account_id: acct_15l1yTEfmlDtMdOr
+[2015-05-27 11:25:48 -0400] - UpdateStripeIdsOnMarket - Big City Farms (36) - Connecting org customers - Updated Organization Blacksauce Kitchen (3847) stripe_customer_id: cus_6HvJEp5grPC8ck
+[2015-05-27 11:25:48 -0400] - UpdateStripeIdsOnMarket - Big City Farms (36) - Connecting org customers - Updated Organization The Brewer's Art (3821) stripe_customer_id: cus_6GQo2mpFkdvOkc
+[2015-05-27 11:25:48 -0400] - UpdateStripeIdsOnMarket - Big City Farms (36) - Connecting org customers - Updated Organization Test Customer 6 (3082) stripe_customer_id: cus_5uQ5TiAA0wVHWE
+[2015-05-27 11:25:48 -0400] - UpdateStripeIdsOnMarket - Big City Farms (36) - Connecting org customers - Updated Organization Atwater's Hopkins (JHH) (2254) stripe_customer_id: cus_5uQ42hhfaijy0R
+[2015-05-27 11:25:48 -0400] - UpdateStripeIdsOnMarket - Big City Farms (36) - Connecting org customers - Updated Organization The Corner Pantry (2253) stripe_customer_id: cus_5uQ4poTIRBM1hC
+[2015-05-27 11:25:48 -0400] - UpdateStripeIdsOnMarket - Big City Farms (36) - Connecting org customers - Updated Organization Shoofly (2577) stripe_customer_id: cus_5uQ5UiWPv6kJWW
+[2015-05-27 11:25:48 -0400] - UpdateStripeIdsOnMarket - Big City Farms (36) - Connecting org customers - Updated Organization Joe Squared - Powerplant (3794) stripe_customer_id: cus_6EwqEtpwhTQVTO
+[2015-05-27 11:25:48 -0400] - UpdateStripeIdsOnMarket - Big City Farms (36) - Connecting org customers - Updated Organization From the Farmer (3602) stripe_customer_id: cus_675YUOZR62AgMH
+[2015-05-27 11:25:48 -0400] - UpdateStripeIdsOnMarket - Big City Farms (36) - Connecting org customers - Updated Organization Eddie's Mt Vernon (1804) stripe_customer_id: cus_5uQ4qPonSJce9z
+[2015-05-27 11:25:48 -0400] - UpdateStripeIdsOnMarket - Big City Farms (36) - Connecting org customers - Updated Organization Big City Farms (1611) stripe_customer_id: cus_5uQ4KxTWMTTInf
+[2015-05-27 11:25:48 -0400] - UpdateStripeIdsOnMarket - Big City Farms (36) - Connecting org customers - Updated Organization Gertrude's (1785) stripe_customer_id: cus_5uQ4SCRokfBEmG
+[2015-05-27 11:25:48 -0400] - UpdateStripeIdsOnMarket - Big City Farms (36) - Connecting org customers - Updated Organization Bluegrass (1790) stripe_customer_id: cus_5uQ5uaPaB5WiXn
+[2015-05-27 11:25:48 -0400] - UpdateStripeIdsOnMarket - Big City Farms (36) - Connecting org customers - Updated Organization Atwater's Catonsville (1800) stripe_customer_id: cus_5uQ4eMac7AyO5S
+[2015-05-27 11:25:48 -0400] - UpdateStripeIdsOnMarket - Big City Farms (36) - Connecting org customers - Updated Organization Nickel Taphouse (1801) stripe_customer_id: cus_5uQ4XSvjThDQ80
+[2015-05-27 11:25:49 -0400] - UpdateStripeIdsOnMarket - Big City Farms (36) - Connecting org customers - Updated Organization Woodberry Group (1802) stripe_customer_id: cus_5uQ5KtRbSE76WM
+[2015-05-27 11:25:49 -0400] - UpdateStripeIdsOnMarket - Big City Farms (36) - Connecting org customers - Updated Organization Cowboys and Rednecks (1805) stripe_customer_id: cus_5uQ4eisHwrej5Z
+[2015-05-27 11:25:49 -0400] - UpdateStripeIdsOnMarket - Big City Farms (36) - Connecting org customers - Updated Organization Milk and Honey (1794) stripe_customer_id: cus_5uQ5C1i3VURwDa
+[2015-05-27 11:25:49 -0400] - UpdateStripeIdsOnMarket - Big City Farms (36) - Connecting org customers - Updated Organization Waterfront Kitchen (1769) stripe_customer_id: cus_5uQ4nkAFunPzNm
+[2015-05-27 11:25:49 -0400] - UpdateStripeIdsOnMarket - Big City Farms (36) - Connecting org customers - Updated Organization Cafe Azafran (1795) stripe_customer_id: cus_5uQ4GYetw1ayWU
+[2015-05-27 11:25:49 -0400] - UpdateStripeIdsOnMarket - Big City Farms (36) - Connecting org customers - Updated Organization Felici (1798) stripe_customer_id: cus_5uQ4qILwgio4NL
+[2015-05-27 11:25:49 -0400] - UpdateStripeIdsOnMarket - Big City Farms (36) - Connecting org customers - Updated Organization Heavy Seas Ale House (1799) stripe_customer_id: cus_5uQ47FTplMmC9E
+[2015-05-27 11:25:49 -0400] - UpdateStripeIdsOnMarket - Big City Farms (36) - Connecting org customers - Updated Organization Test Customer (1911) stripe_customer_id: cus_5uQ4sXiwpiDgej
+[2015-05-27 11:25:49 -0400] - UpdateStripeIdsOnMarket - Big City Farms (36) - Connecting org customers - Updated Organization B&O American Brasserie (2129) stripe_customer_id: cus_5uQ4P8qtkC5f8J
+[2015-05-27 11:25:49 -0400] - UpdateStripeIdsOnMarket - Big City Farms (36) - Connecting org customers - Updated Organization Farmstead Grill (2132) stripe_customer_id: cus_5uQ4udc8xFQNW7
+[2015-05-27 11:25:49 -0400] - UpdateStripeIdsOnMarket - Big City Farms (36) - Connecting org customers - Updated Organization The Waterfront Hotel (2135) stripe_customer_id: cus_5uQ4yYIlgff0FV
+[2015-05-27 11:25:49 -0400] - UpdateStripeIdsOnMarket - Big City Farms (36) - Connecting org customers - Updated Organization Birroteca (2130) stripe_customer_id: cus_5uQ4I5WHhGXTar
+[2015-05-27 11:25:49 -0400] - UpdateStripeIdsOnMarket - Big City Farms (36) - Connecting org customers - Updated Organization Joe Squared - North Ave (2133) stripe_customer_id: cus_5uQ41Gu5zpcOsu
+[2015-05-27 11:25:49 -0400] - UpdateStripeIdsOnMarket - Big City Farms (36) - Connecting org customers - Updated Organization Wine Market Bistro (2136) stripe_customer_id: cus_5uQ42orS4qWigH
+[2015-05-27 11:25:49 -0400] - UpdateStripeIdsOnMarket - Big City Farms (36) - Connecting org customers - Updated Organization The Ivy Hotel (3834) stripe_customer_id: cus_6GPjsRqJxJkMoi
+[2015-05-27 11:25:49 -0400] - UpdateStripeIdsOnMarket - Big City Farms (36) - Connecting org customers - Updated Organization Brewer's Art (2131) stripe_customer_id: cus_5uQ4UkXZv7p4wD
+[2015-05-27 11:25:49 -0400] - UpdateStripeIdsOnMarket - Big City Farms (36) - Connecting org customers - Updated Organization Relay Foods (2134) stripe_customer_id: cus_5uQ4hkTaKPiaH6
+[2015-05-27 11:25:49 -0400] - UpdateStripeIdsOnMarket - Big City Farms (36) - Connecting org customers - Updated Organization Sobo Cafe (2137) stripe_customer_id: cus_5uQ5lngTGK7TlI
+[2015-05-27 11:25:49 -0400] - UpdateStripeIdsOnMarket - Big City Farms (36) - Connecting org customers - Updated Organization Fleet Street Kitchen (2110) stripe_customer_id: cus_5uQ4hVfWh2m0uv
+[2015-05-27 11:25:49 -0400] - UpdateStripeIdsOnMarket - Big City Farms (36) - Connecting org customers - Updated Organization Pen and Quill (2117) stripe_customer_id: cus_5uQ4NIk5r6DM5D
+[2015-05-27 11:25:49 -0400] - UpdateStripeIdsOnMarket - Big City Farms (36) - Connecting org customers - Updated Organization Ryleigh's Oyster - Hunt Valley (2119) stripe_customer_id: cus_5uQ5xhdPU9ucl3
+[2015-05-27 11:25:49 -0400] - UpdateStripeIdsOnMarket - Big City Farms (36) - Connecting org customers - Updated Organization Ryleigh's Oyster - Federal Hill (2118) stripe_customer_id: cus_5uQ43FXKX1QQEv
+[2015-05-27 11:25:50 -0400] - UpdateStripeIdsOnMarket - Big City Farms (36) - Connecting org customers - Updated Organization Atwater's Falls Road (2126) stripe_customer_id: cus_5uQ4t0oTybex81
+[2015-05-27 11:25:50 -0400] - UpdateStripeIdsOnMarket - Big City Farms (36) - Connecting org customers - Updated Organization Goucher - Stimson (2121) stripe_customer_id: cus_5uQ47sG0Yxdz4Y
+[2015-05-27 11:25:50 -0400] - UpdateStripeIdsOnMarket - Big City Farms (36) - Connecting org customers - Updated Organization Dooby's (2115) stripe_customer_id: cus_5uQ5VLErS4NC9Q
+[2015-05-27 11:25:50 -0400] - UpdateStripeIdsOnMarket - Big City Farms (36) - Connecting org customers - Updated Organization Hopkins - Charles St Market (2145) stripe_customer_id: cus_5uQ46unN2xdL76
+[2015-05-27 11:25:50 -0400] - UpdateStripeIdsOnMarket - Big City Farms (36) - Connecting org customers - Updated Organization Atwater's Kenilworth (2161) stripe_customer_id: cus_5uQ5dv9w7i822B
+[2015-05-27 11:25:50 -0400] - UpdateStripeIdsOnMarket - Big City Farms (36) - Connecting org customers - Updated Organization Hopkins - Levering (2179) stripe_customer_id: cus_5uQ4djMCS3yoLf
+[2015-05-27 11:25:50 -0400] - UpdateStripeIdsOnMarket - Big City Farms (36) - Connecting org customers - Updated Organization Hopkins - Fresh Food Cafe (2181) stripe_customer_id: cus_5uQ4B7Iswr7MjL
+[2015-05-27 11:25:50 -0400] - UpdateStripeIdsOnMarket - Big City Farms (36) - Connecting org customers - Updated Organization Atwaters - Big Kitchen (2204) stripe_customer_id: cus_5uQ4L8OW0G26Mb
+[2015-05-27 11:25:50 -0400] - UpdateStripeIdsOnMarket - Big City Farms (36) - Connecting org customers - Updated Organization Atwaters Belvedere  (2212) stripe_customer_id: cus_5uQ4rViUyTOgRr
+[2015-05-27 11:25:50 -0400] - UpdateStripeIdsOnMarket - Big City Farms (36) - Connecting org customers - Updated Organization Test Customer 5 (3081) stripe_customer_id: cus_5uQ5jglOjM8107
+[2015-05-27 11:25:50 -0400] - UpdateStripeIdsOnMarket - Big City Farms (36) - Connecting org customers - Updated Organization Grano Emporio (2219) stripe_customer_id: cus_5uQ4MYeYm7ythb
+[2015-05-27 11:25:50 -0400] - UpdateStripeIdsOnMarket - Big City Farms (36) - Connecting org customers - Updated Organization Goucher - Heubeck (2241) stripe_customer_id: cus_5uQ4hYIUrnpPQu
+[2015-05-27 11:25:50 -0400] - UpdateStripeIdsOnMarket - Big City Farms (36) - Connecting org customers - Updated Organization Hopkins - Catering (2326) stripe_customer_id: cus_5uQ59Y0ZcCRjvI
+[2015-05-27 11:25:50 -0400] - UpdateStripeIdsOnMarket - Big City Farms (36) - Connecting org customers - Updated Organization Woodberry Kitchen (2477) stripe_customer_id: cus_5uQ5gWG8MtHpy6
+[2015-05-27 11:25:50 -0400] - UpdateStripeIdsOnMarket - Big City Farms (36) - Connecting org customers - Updated Organization Artifact (2578) stripe_customer_id: cus_5uQ4s3Qgiqwg01
+[2015-05-27 11:25:50 -0400] - UpdateStripeIdsOnMarket - Big City Farms (36) - Connecting org customers - MISS - No stripe_customer_id found for Organization St. Timothy's School (3387) balanced_customer_uri /v1/customers/CU2Cku0fl5ovKRMoc1QuprpR
+[2015-05-27 11:25:50 -0400] - UpdateStripeIdsOnMarket - Big City Farms (36) - Connecting org customers - Updated Organization Test Customer 3 (3079) stripe_customer_id: cus_5uQ58Jb6Ps9joK
+[2015-05-27 11:25:50 -0400] - UpdateStripeIdsOnMarket - Big City Farms (36) - Connecting org customers - Updated Organization Test Customer 4 (3080) stripe_customer_id: cus_5uQ5psQq4u9N5D
+[2015-05-27 11:25:50 -0400] - UpdateStripeIdsOnMarket - Big City Farms (36) - Connecting org customers - Updated Organization Hopkins - Nolan's on 33rd (2182) stripe_customer_id: cus_5uQ41TJ68Dlj2B
+[2015-05-27 11:25:50 -0400] - UpdateStripeIdsOnMarket - Big City Farms (36) - Connecting org customers - Updated Organization La Cuchara (3458) stripe_customer_id: cus_630DWVR5LJ5SpU
+[2015-05-27 11:25:50 -0400] - UpdateStripeIdsOnMarket - Big City Farms (36) - Connecting org customers - Updated Organization Renaissance Baltimore Harborplace Hotel (3482) stripe_customer_id: cus_63hswsy90AaTwV
+[2015-05-27 11:25:51 -0400] - UpdateStripeIdsOnMarket - Big City Farms (36) - Connecting org customers - Updated Organization Nakia's Peace of Life (3680) stripe_customer_id: cus_69ydyIshw2IoPK
+[2015-05-27 11:25:51 -0400] - UpdateStripeIdsOnMarket - Big City Farms (36) - Connecting org customers - Updated Organization Local Pie (3587) stripe_customer_id: cus_66crnQfWyXFmbo
+[2015-05-27 11:25:51 -0400] - UpdateStripeIdsOnMarket - Big City Farms (36) - Connecting org customers - Updated Organization Loyola - Parkhurst Dining (3589) stripe_customer_id: cus_66dD6QSmlt8LbN
+[2015-05-27 11:25:51 -0400] - UpdateStripeIdsOnMarket - Big City Farms (36) - Connecting org customers - Updated Organization Washington's Green Grocer (3661) stripe_customer_id: cus_69Jj6lf8yI1hd6
+[2015-05-27 11:25:51 -0400] - UpdateStripeIdsOnMarket - Big City Farms (36) - Connecting org customers - Updated Organization Marriott Inner Harbor (1786) stripe_customer_id: cus_5uQ4OkIGdiDzRp
+[2015-05-27 11:25:51 -0400] - UpdateStripeIdsOnMarket - Big City Farms (36) - Connecting org customers - Updated Organization Corner Pantry (1792) stripe_customer_id: cus_5uQ4GHDeg3mlq6
+[2015-05-27 11:25:51 -0400] - UpdateStripeIdsOnMarket - Big City Farms (36) - Connecting org customers - Updated Organization Barracudas Tavern (1791) stripe_customer_id: cus_5uQ4AIT2nTxYBc
+[2015-05-27 11:25:51 -0400] - UpdateStripeIdsOnMarket - Big City Farms (36) - Connecting org customers - Updated Organization Atwater's Canton (1788) stripe_customer_id: cus_5uQ4hlEPupdzY6
+[2015-05-27 11:25:51 -0400] - UpdateStripeIdsOnMarket - Big City Farms (36) - Connecting org customers - Updated Organization Ten Ten (1793) stripe_customer_id: cus_5uQ4NKG4up0dhW
+[2015-05-27 11:25:51 -0400] - UpdateStripeIdsOnMarket - Big City Farms (36) - Connecting org customers - Updated Organization Cunningham's (1806) stripe_customer_id: cus_5uQ4kFXsagpNYf
+[2015-05-27 11:25:51 -0400] - UpdateStripeIdsOnMarket - Big City Farms (36) - Connecting org customers - Updated Organization Spoons (1797) stripe_customer_id: cus_5uQ467mkrPzsL2
+[2015-05-27 11:25:51 -0400] - UpdateStripeIdsOnMarket - Big City Farms (36) - Connecting market BankAccounts - Updated PNC BANK, NA 4185 (179) stripe_id: ba_15ic982VpjOYk6TmiEfBZOHc
+[2015-05-27 11:25:51 -0400] - UpdateStripeIdsOnMarket - Big City Farms (36) - Connecting org BankAccounts - Organization Blacksauce Kitchen (3847) - Updated Visa 2412 (564) stripe_id: card_165LSn2VpjOYk6TmglkqytB1
+[2015-05-27 11:25:52 -0400] - UpdateStripeIdsOnMarket - Big City Farms (36) - Connecting org BankAccounts - Organization Big City Farms (1611) - Updated PNC BANK, NA 4185 (176) stripe_id: ba_15ic982VpjOYk6TmiEfBZOHc
+[2015-05-27 11:25:52 -0400] - UpdateStripeIdsOnMarket - Big City Farms (36) - Connecting org BankAccounts - Organization Test Customer (1911) - Updated Visa 2729 (465) stripe_id: card_15jFTX2VpjOYk6Tm27fi2QgW
+[2015-05-27 11:25:52 -0400] - UpdateStripeIdsOnMarket - Big City Farms (36) - Connecting org BankAccounts - Organization Test Customer (1911) - Updated PNC BANK, NA 4185 (464) stripe_id: btok_5v5BWzQhu7Loi8
+[2015-05-27 11:25:52 -0400] - UpdateStripeIdsOnMarket - Big City Farms (36) - Connecting org BankAccounts - Organization Dooby's (2115) - Updated Visa 3160 (497) stripe_id: card_15rDkZ2VpjOYk6Tm77CRCRn8
+[2015-05-27 11:25:52 -0400] - UpdateStripeIdsOnMarket - Big City Farms (36) - Connecting org BankAccounts - Organization La Cuchara (3458) - Updated Visa 4335 (505) stripe_id: card_15sFGV2VpjOYk6Tm2xrd8Pb7

@@ -22,7 +22,8 @@ module Admin
       end
     end
 
-    def account_type_options(bank_account, payment_provider)
+    def account_type_options(bank_account)
+      payment_provider = bank_account.primary_payment_provider
       options = []
       options << ["Credit Card", "card"]  if PaymentProvider.can_add_credit_card_payment_method?(payment_provider)
       options << ["Checking", "checking"] if PaymentProvider.can_add_ach_payment_method?(payment_provider)

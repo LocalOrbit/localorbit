@@ -575,6 +575,14 @@ describe Market do
     end
   end
 
+  describe "#primary_payment_provider" do
+    it "returns the payment_provider" do
+      market = Market.new(payment_provider: "whatever")
+      expect(market.payment_provider).to eq "whatever"
+      expect(market.primary_payment_provider).to eq "whatever"
+    end
+  end
+
 
 
 end

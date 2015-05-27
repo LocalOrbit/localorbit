@@ -463,6 +463,17 @@ describe PaymentProvider::Stripe do
       }.to raise_error(/doesn't support/)
     end
   end
+
+  describe ".select_usable_bank_accounts" do
+    let!(:cc1) { create(:bank_account, :credit_card, stripe_id: "sid1") }
+    let!(:cc2) { create(:bank_account, :credit_card) }
+    let!(:cc3) { create(:bank_account, :credit_card, stripe_id: "sid2") }
+    let(:cards) { [ cc1,cc2,cc3] }
+
+    it "returns only bank accounts with stripe_ids set" do
+      expect(subject.select_usable_bank_accounts(cards).to_set).to eq([cc1,cc3].to_set)
+    end
+  end
 end
 
 describe PaymentProvider::Stripe, vcr: true do

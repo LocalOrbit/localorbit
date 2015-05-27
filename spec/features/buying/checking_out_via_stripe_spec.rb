@@ -4,8 +4,8 @@ describe "Checking Out using Stripe payment provider", :js do
   let!(:user) { create(:user) }
   let!(:other_buying_user) {  create(:user) }
   let!(:buyer) { create(:organization, :single_location, :buyer, users: [user, other_buying_user]) }
-  let!(:credit_card)  { create(:bank_account, :credit_card, bankable: buyer) }
-  let!(:bank_account) { create(:bank_account, :checking, :verified, bankable: buyer) }
+  let!(:credit_card)  { create(:bank_account, :credit_card, bankable: buyer, stripe_id: 'fake stripe id') }
+  let!(:bank_account) { create(:bank_account, :checking, :verified, bankable: buyer, stripe_id: 'another fake stripe id') }
 
   let!(:fulton_farms) { create(:organization, :seller, :single_location, name: "Fulton St. Farms", users: [create(:user), create(:user)]) }
   let!(:ada_farms) { create(:organization, :seller, :single_location, name: "Ada Farms", users: [create(:user)]) }
@@ -269,7 +269,7 @@ describe "Checking Out using Stripe payment provider", :js do
     end
 
     context "when the user tries to checkout with a credit card they've already saved", record: :new_episodes do
-      let!(:credit_card)  { create(:bank_account, :credit_card, name: "John Doe", bank_name: "MasterCard", account_type: "mastercard", bankable: buyer, last_four: "5100") }
+      let!(:credit_card)  { create(:bank_account, :credit_card, name: "John Doe", bank_name: "MasterCard", account_type: "mastercard", bankable: buyer, last_four: "5100", stripe_id: 'a fake id') }
 
       it "uses the bank account that's already saved" do
         expect(buyer.bank_accounts.visible.count).to eql(2)

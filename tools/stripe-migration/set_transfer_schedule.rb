@@ -1,5 +1,6 @@
 require_relative "../../config/environment"
 require_relative "balanced_export"
+require 'pry'
 
 class SetTransferSchedule
   def initialize(market_id: market_id, dry_run: false)
@@ -18,10 +19,16 @@ class SetTransferSchedule
     if @market.stripe_account_id
       begin
         stripe_account = Stripe::Account.retrieve(@market.stripe_account_id)
-        execute_update log_message: "Stripe Account #{stripe_account.id} - debit_negative_balances: #{stripe_account.debit_negative_balances}, transfer_schedule: #{stripe_account.transfer_schedule.inspect}" do
+        msg_fn = -> { "Stripe Account #{stripe_account.id} - business_name: #{stripe_account.business_name}, email: #{stripe_account.email}, metadata: #{stripe_account.metadata.to_hash.inspect}, debit_negative_balances: #{stripe_account.debit_negative_balances}, transfer_schedule: #{stripe_account.transfer_schedule.inspect}" }
+        execute_update log_message: msg_fn do
+          stripe_account.email = @market.contact_email
+          stripe_account.business_name = @market.name
+          stripe_account.metadata["lo.market_id"] = @market.id
+
           stripe_account.transfer_schedule = PaymentProvider::Stripe::TransferSchedule.stringify_keys
           stripe_account.debit_negative_balances = true
           stripe_account.save
+          
         end
       rescue Exception => ex
         log "!! ERROR UPDATING STRIPE ACCOUNT #{@market.stripe_account_id}: #{ex.message}"
@@ -39,6 +46,9 @@ class SetTransferSchedule
       # log "(DRY RUN: not executing the update)"
     else
       block.call
+    end
+    if log_message.respond_to?(:call)
+      log_message = log_message.call()
     end
     log log_message
   end
@@ -93,8 +103,8 @@ market_ids = market_ids_str.gsub(',',' ').split(/\s+/).map(&:strip)
 market_ids.each do |market_id|
   updater = SetTransferSchedule.new(
     market_id: market_id,
-    # dry_run: false
-    dry_run: true
+    dry_run: false
+    # dry_run: true
   )
   updater.run
 end

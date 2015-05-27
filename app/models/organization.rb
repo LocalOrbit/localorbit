@@ -134,6 +134,14 @@ class Organization < ActiveRecord::Base
     markets.any?
   end
 
+  def primary_payment_provider
+    if m = markets.first 
+      m.primary_payment_provider
+    else
+      nil
+    end
+  end
+
   private
 
   def reject_location(attributed)

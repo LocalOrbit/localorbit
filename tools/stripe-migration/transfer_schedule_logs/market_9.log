@@ -1,0 +1,13 @@
+[2015-05-27 10:07:33 -0400] - SetTransferSchedule - North Valley Food Hub (9) - ====================================================================================================
+[2015-05-27 10:07:33 -0400] - SetTransferSchedule - North Valley Food Hub (9) -  North Valley Food Hub (9)
+[2015-05-27 10:07:33 -0400] - SetTransferSchedule - North Valley Food Hub (9) -  Setting transfer schedule and debit_negative_balances flag on Stripe Accounts.
+[2015-05-27 10:07:33 -0400] - SetTransferSchedule - North Valley Food Hub (9) - 
+[2015-05-27 10:07:33 -0400] - SetTransferSchedule - North Valley Food Hub (9) -  Rails.env: production
+[2015-05-27 10:07:33 -0400] - SetTransferSchedule - North Valley Food Hub (9) -  Stripe keys:
+[2015-05-27 10:07:33 -0400] - SetTransferSchedule - North Valley Food Hub (9) -   --> STRIPE_PUBLISHABLE_KEY: pk_live_j85VTsrz51POrss3ni460qaf (pk_live_j85VTsrz51POrss3ni460qaf)
+[2015-05-27 10:07:33 -0400] - SetTransferSchedule - North Valley Food Hub (9) - ====================================================================================================
+[2015-05-27 10:07:40 -0400] - SetTransferSchedule - North Valley Food Hub (9) - Stripe Account acct_15l1yUHk3obTskNe - business_name: North Valley Food Hub, email: gina@northvalleyfoodhub.com, metadata: {:"lo.market_id"=>"9"}, debit_negative_balances: true, transfer_schedule: #<Stripe::StripeObject:0x3ff84d21fd88> JSON: {
+  "delay_days": 5,
+  "interval": "weekly",
+  "weekly_anchor": "wednesday"
+}

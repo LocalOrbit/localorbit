@@ -1,0 +1,13 @@
+[2015-05-27 09:53:02 -0400] - SetTransferSchedule - Aglink Foodservice (70) - ====================================================================================================
+[2015-05-27 09:53:02 -0400] - SetTransferSchedule - Aglink Foodservice (70) -  Aglink Foodservice (70)
+[2015-05-27 09:53:02 -0400] - SetTransferSchedule - Aglink Foodservice (70) -  Setting transfer schedule and debit_negative_balances flag on Stripe Accounts.
+[2015-05-27 09:53:02 -0400] - SetTransferSchedule - Aglink Foodservice (70) - 
+[2015-05-27 09:53:02 -0400] - SetTransferSchedule - Aglink Foodservice (70) -  Rails.env: production
+[2015-05-27 09:53:02 -0400] - SetTransferSchedule - Aglink Foodservice (70) -  Stripe keys:
+[2015-05-27 09:53:02 -0400] - SetTransferSchedule - Aglink Foodservice (70) -   --> STRIPE_PUBLISHABLE_KEY: pk_live_j85VTsrz51POrss3ni460qaf (pk_live_j85VTsrz51POrss3ni460qaf)
+[2015-05-27 09:53:02 -0400] - SetTransferSchedule - Aglink Foodservice (70) - ====================================================================================================
+[2015-05-27 09:53:09 -0400] - SetTransferSchedule - Aglink Foodservice (70) - Stripe Account acct_15l1yTIacDq6O8zg - business_name: Aglink Foodservice, email: jana@aglink.com, metadata: {:"lo.market_id"=>"70"}, debit_negative_balances: true, transfer_schedule: #<Stripe::StripeObject:0x3fd121db7be4> JSON: {
+  "delay_days": 5,
+  "interval": "weekly",
+  "weekly_anchor": "wednesday"
+}

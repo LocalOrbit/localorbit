@@ -196,6 +196,10 @@ class Market < ActiveRecord::Base
     name.sub(/[^0-9a-zA-Z\.\-_ \^\`\|]/, '')[0, 22]
   end
 
+  def primary_payment_provider
+    self.payment_provider
+  end
+
   private
 
   def require_payment_method

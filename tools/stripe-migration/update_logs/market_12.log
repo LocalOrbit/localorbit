@@ -1,23 +1,22 @@
-[2015-05-26 16:09:28 -0400] - UpdateStripeIdsOnMarket - Clarion River Organics (12) - ====================================================================================================
-[2015-05-26 16:09:28 -0400] - UpdateStripeIdsOnMarket - Clarion River Organics (12) -  Clarion River Organics (12)
-[2015-05-26 16:09:28 -0400] - UpdateStripeIdsOnMarket - Clarion River Organics (12) -  Updating stripe IDs for market, orgs and bank accounts.
-[2015-05-26 16:09:28 -0400] - UpdateStripeIdsOnMarket - Clarion River Organics (12) - 
-[2015-05-26 16:09:28 -0400] - UpdateStripeIdsOnMarket - Clarion River Organics (12) -  Rails.env: production
-[2015-05-26 16:09:28 -0400] - UpdateStripeIdsOnMarket - Clarion River Organics (12) -  Stripe keys:
-[2015-05-26 16:09:28 -0400] - UpdateStripeIdsOnMarket - Clarion River Organics (12) -   --> STRIPE_PUBLISHABLE_KEY: pk_live_j85VTsrz51POrss3ni460qaf (pk_live_j85VTsrz51POrss3ni460qaf)
-[2015-05-26 16:09:28 -0400] - UpdateStripeIdsOnMarket - Clarion River Organics (12) - ====================================================================================================
-[2015-05-26 16:09:28 -0400] - UpdateStripeIdsOnMarket - Clarion River Organics (12) - Connecting market customer - MISS - No stripe_customer_id found for market balanced_customer_uri /v1/customers/CU2qitI4Yj2WXZWHMiq0kJb4
-[2015-05-26 16:09:28 -0400] - UpdateStripeIdsOnMarket - Clarion River Organics (12) - Connecting market account - MISS - No stripe_account_id found for market balanced_customer_uri /v1/customers/CU2qitI4Yj2WXZWHMiq0kJb4
-[2015-05-26 16:09:28 -0400] - UpdateStripeIdsOnMarket - Clarion River Organics (12) - Connecting org customers - MISS - No stripe_customer_id found for Organization Whole Foods Pittsburgh Grocery Dept. (3954) balanced_customer_uri /v1/customers/CU4lkS4EUKFIsyqTuRNWcmhk
-[2015-05-26 16:09:28 -0400] - UpdateStripeIdsOnMarket - Clarion River Organics (12) - Connecting org customers - MISS - No stripe_customer_id found for Organization Whole Foods Wexford Prepared Foods Dept. (3953) balanced_customer_uri /v1/customers/CU1UI2wRbZ2ayGv5S29wn3x
-[2015-05-26 16:09:28 -0400] - UpdateStripeIdsOnMarket - Clarion River Organics (12) - Connecting org customers - MISS - No stripe_customer_id found for Organization Whole Foods Wexford Produce Dept. (3952) balanced_customer_uri /v1/customers/CU5ZeaNxtUs6w2JNrTyYROjd
-[2015-05-26 16:09:28 -0400] - UpdateStripeIdsOnMarket - Clarion River Organics (12) - Connecting org customers - MISS - No stripe_customer_id found for Organization Whole Foods Pittsburgh Prepared Foods Dept. (3951) balanced_customer_uri /v1/customers/CU3SxLWODyxAuYq3UP2fNcsa
-[2015-05-26 16:09:28 -0400] - UpdateStripeIdsOnMarket - Clarion River Organics (12) - Connecting org customers - MISS - No stripe_customer_id found for Organization Whole Foods Pittsburgh Produce Dept. (3950) balanced_customer_uri /v1/customers/CU6XM4rDcnzFLyIXGwNEB2lN
-[2015-05-26 16:09:28 -0400] - UpdateStripeIdsOnMarket - Clarion River Organics (12) - Connecting org customers - MISS - No stripe_customer_id found for Organization East End Food Coop Cafe (3949) balanced_customer_uri /v1/customers/CU1MPmzwTwnor8DMERwiMEmm
-[2015-05-26 16:09:28 -0400] - UpdateStripeIdsOnMarket - Clarion River Organics (12) - Connecting org customers - MISS - No stripe_customer_id found for Organization DSF (3942) balanced_customer_uri /v1/customers/CU6DIF9Mi0cAhLklHOnbqb34
-[2015-05-26 16:09:28 -0400] - UpdateStripeIdsOnMarket - Clarion River Organics (12) - Connecting org customers - Updated Organization East End Food Co-op Produce Dept. (3753) stripe_customer_id: cus_6DoD0L7G4Lfffz
-[2015-05-26 16:09:28 -0400] - UpdateStripeIdsOnMarket - Clarion River Organics (12) - Connecting org customers - Updated Organization Frankferd Farms (3724) stripe_customer_id: cus_6BqmMqG7eU2x9N
-[2015-05-26 16:09:29 -0400] - UpdateStripeIdsOnMarket - Clarion River Organics (12) - Connecting org customers - Updated Organization PCFA Restaurants (3723) stripe_customer_id: cus_6Bqb0EvF4U0uUj
-[2015-05-26 16:09:29 -0400] - UpdateStripeIdsOnMarket - Clarion River Organics (12) - Connecting org customers - Updated Organization PCFA CSA (3687) stripe_customer_id: cus_6A6He0lnzOider
-[2015-05-26 16:09:29 -0400] - UpdateStripeIdsOnMarket - Clarion River Organics (12) - Connecting org customers - Updated Organization Farm Market - Zach (3645) stripe_customer_id: cus_68cNx86ncfE0gt
-[2015-05-26 16:09:29 -0400] - UpdateStripeIdsOnMarket - Clarion River Organics (12) - Connecting market BankAccounts - MISS - No stripe_id found for NORTHWEST SAVINGS BANK 4255 (37) balanced_customer_uri /v1/marketplaces/MP2eXZmrOPof80u3Irf94Wre/bank_accounts/BA2yxryZhn9DTO7PWH6Rr2am
+[2015-05-27 11:28:01 -0400] - UpdateStripeIdsOnMarket - Clarion River Organics (12) - ====================================================================================================
+[2015-05-27 11:28:01 -0400] - UpdateStripeIdsOnMarket - Clarion River Organics (12) -  Clarion River Organics (12)
+[2015-05-27 11:28:01 -0400] - UpdateStripeIdsOnMarket - Clarion River Organics (12) -  Updating stripe IDs for market, orgs and bank accounts.
+[2015-05-27 11:28:01 -0400] - UpdateStripeIdsOnMarket - Clarion River Organics (12) - 
+[2015-05-27 11:28:01 -0400] - UpdateStripeIdsOnMarket - Clarion River Organics (12) -  Balanced export file: /home/vagrant/git/localorbit/tools/stripe-migration/from_balanced/2015-05-27-1432735944-MP2eXZmrOPof80u3Irf94Wre.csv
+[2015-05-27 11:28:01 -0400] - UpdateStripeIdsOnMarket - Clarion River Organics (12) - 
+[2015-05-27 11:28:01 -0400] - UpdateStripeIdsOnMarket - Clarion River Organics (12) -  Rails.env: production
+[2015-05-27 11:28:01 -0400] - UpdateStripeIdsOnMarket - Clarion River Organics (12) -  Stripe keys:
+[2015-05-27 11:28:01 -0400] - UpdateStripeIdsOnMarket - Clarion River Organics (12) -   --> STRIPE_PUBLISHABLE_KEY: pk_live_j85VTsrz51POrss3ni460qaf (pk_live_j85VTsrz51POrss3ni460qaf)
+[2015-05-27 11:28:01 -0400] - UpdateStripeIdsOnMarket - Clarion River Organics (12) - ====================================================================================================
+[2015-05-27 11:28:01 -0400] - UpdateStripeIdsOnMarket - Clarion River Organics (12) - Connecting market customer - MISS - No stripe_customer_id found for market balanced_customer_uri /v1/customers/CU2qitI4Yj2WXZWHMiq0kJb4
+[2015-05-27 11:28:01 -0400] - UpdateStripeIdsOnMarket - Clarion River Organics (12) - Connecting market account - MISS - No stripe_account_id found for market balanced_customer_uri /v1/customers/CU2qitI4Yj2WXZWHMiq0kJb4
+[2015-05-27 11:28:01 -0400] - UpdateStripeIdsOnMarket - Clarion River Organics (12) - Connecting org customers - Updated Organization Whole Foods Pittsburgh Grocery Dept. (3954) stripe_customer_id: cus_6JJ6U1jGzF2FFl
+[2015-05-27 11:28:01 -0400] - UpdateStripeIdsOnMarket - Clarion River Organics (12) - Connecting org customers - Updated Organization Whole Foods Wexford Prepared Foods Dept. (3953) stripe_customer_id: cus_6JJ2NdAuCqHvcC
+[2015-05-27 11:28:01 -0400] - UpdateStripeIdsOnMarket - Clarion River Organics (12) - Connecting org customers - Updated Organization Whole Foods Wexford Produce Dept. (3952) stripe_customer_id: cus_6JJ04iZQF0FjCW
+[2015-05-27 11:28:01 -0400] - UpdateStripeIdsOnMarket - Clarion River Organics (12) - Connecting org customers - Updated Organization Whole Foods Pittsburgh Prepared Foods Dept. (3951) stripe_customer_id: cus_6JIrzUPXZxyF0n
+[2015-05-27 11:28:01 -0400] - UpdateStripeIdsOnMarket - Clarion River Organics (12) - Connecting org customers - Updated Organization Whole Foods Pittsburgh Produce Dept. (3950) stripe_customer_id: cus_6JInhOObqc0zWO
+[2015-05-27 11:28:01 -0400] - UpdateStripeIdsOnMarket - Clarion River Organics (12) - Connecting org customers - Updated Organization East End Food Coop Cafe (3949) stripe_customer_id: cus_6JIivl0Dg4bxvG
+[2015-05-27 11:28:01 -0400] - UpdateStripeIdsOnMarket - Clarion River Organics (12) - Connecting org customers - Updated Organization DSF (3942) stripe_customer_id: cus_6J3tyn9hQiBErg
+[2015-05-27 11:28:02 -0400] - UpdateStripeIdsOnMarket - Clarion River Organics (12) - Connecting org customers - Updated Organization Test CRO (3828) stripe_customer_id: cus_6Jgam3XF4znCa8
+[2015-05-27 11:28:02 -0400] - UpdateStripeIdsOnMarket - Clarion River Organics (12) - Connecting org customers - Updated Organization East End Food Co-op Produce Dept. (3753) stripe_customer_id: cus_6DoD0L7G4Lfffz
+[2015-05-27 11:28:02 -0400] - UpdateStripeIdsOnMarket - Clarion River Organics (12) - Connecting market BankAccounts - MISS - No stripe_id found for NORTHWEST SAVINGS BANK 4255 (37) balanced_customer_uri /v1/marketplaces/MP2eXZmrOPof80u3Irf94Wre/bank_accounts/BA2yxryZhn9DTO7PWH6Rr2am
