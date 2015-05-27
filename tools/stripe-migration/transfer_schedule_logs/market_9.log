@@ -1,0 +1,9 @@
+[2015-05-27 09:53:40 -0400] - SetTransferSchedule - North Valley Food Hub (9) - ====================================================================================================
+[2015-05-27 09:53:40 -0400] - SetTransferSchedule - North Valley Food Hub (9) -  North Valley Food Hub (9)
+[2015-05-27 09:53:40 -0400] - SetTransferSchedule - North Valley Food Hub (9) -  Setting transfer schedule and debit_negative_balances flag on Stripe Accounts.
+[2015-05-27 09:53:40 -0400] - SetTransferSchedule - North Valley Food Hub (9) - 
+[2015-05-27 09:53:40 -0400] - SetTransferSchedule - North Valley Food Hub (9) -  Rails.env: production
+[2015-05-27 09:53:40 -0400] - SetTransferSchedule - North Valley Food Hub (9) -  Stripe keys:
+[2015-05-27 09:53:40 -0400] - SetTransferSchedule - North Valley Food Hub (9) -   --> STRIPE_PUBLISHABLE_KEY: pk_live_j85VTsrz51POrss3ni460qaf (pk_live_j85VTsrz51POrss3ni460qaf)
+[2015-05-27 09:53:40 -0400] - SetTransferSchedule - North Valley Food Hub (9) - ====================================================================================================
+[2015-05-27 09:53:41 -0400] - SetTransferSchedule - North Valley Food Hub (9) - !! ERROR UPDATING STRIPE ACCOUNT acct_15l1yUHk3obTskNe: Invalid email address: gina@northvalleyfoodhub.com 

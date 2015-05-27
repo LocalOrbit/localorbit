@@ -1,0 +1,13 @@
+[2015-05-27 09:53:36 -0400] - SetTransferSchedule - Farm Link Hawai‘i (61) - ====================================================================================================
+[2015-05-27 09:53:36 -0400] - SetTransferSchedule - Farm Link Hawai‘i (61) -  Farm Link Hawai‘i (61)
+[2015-05-27 09:53:36 -0400] - SetTransferSchedule - Farm Link Hawai‘i (61) -  Setting transfer schedule and debit_negative_balances flag on Stripe Accounts.
+[2015-05-27 09:53:36 -0400] - SetTransferSchedule - Farm Link Hawai‘i (61) - 
+[2015-05-27 09:53:36 -0400] - SetTransferSchedule - Farm Link Hawai‘i (61) -  Rails.env: production
+[2015-05-27 09:53:36 -0400] - SetTransferSchedule - Farm Link Hawai‘i (61) -  Stripe keys:
+[2015-05-27 09:53:36 -0400] - SetTransferSchedule - Farm Link Hawai‘i (61) -   --> STRIPE_PUBLISHABLE_KEY: pk_live_j85VTsrz51POrss3ni460qaf (pk_live_j85VTsrz51POrss3ni460qaf)
+[2015-05-27 09:53:36 -0400] - SetTransferSchedule - Farm Link Hawai‘i (61) - ====================================================================================================
+[2015-05-27 09:53:40 -0400] - SetTransferSchedule - Farm Link Hawai‘i (61) - Stripe Account acct_15l1yRK6Xb2qcrM5 - business_name: Farm Link Hawai‘i, email: rob@farmlinkhawaii.com, metadata: {:"lo.market_id"=>"61"}, debit_negative_balances: true, transfer_schedule: #<Stripe::StripeObject:0x3fd124d65ea4> JSON: {
+  "delay_days": 5,
+  "interval": "weekly",
+  "weekly_anchor": "wednesday"
+}

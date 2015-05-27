@@ -1,0 +1,13 @@
+[2015-05-27 09:53:09 -0400] - SetTransferSchedule - LINC Foods (38) - ====================================================================================================
+[2015-05-27 09:53:09 -0400] - SetTransferSchedule - LINC Foods (38) -  LINC Foods (38)
+[2015-05-27 09:53:09 -0400] - SetTransferSchedule - LINC Foods (38) -  Setting transfer schedule and debit_negative_balances flag on Stripe Accounts.
+[2015-05-27 09:53:09 -0400] - SetTransferSchedule - LINC Foods (38) - 
+[2015-05-27 09:53:09 -0400] - SetTransferSchedule - LINC Foods (38) -  Rails.env: production
+[2015-05-27 09:53:09 -0400] - SetTransferSchedule - LINC Foods (38) -  Stripe keys:
+[2015-05-27 09:53:09 -0400] - SetTransferSchedule - LINC Foods (38) -   --> STRIPE_PUBLISHABLE_KEY: pk_live_j85VTsrz51POrss3ni460qaf (pk_live_j85VTsrz51POrss3ni460qaf)
+[2015-05-27 09:53:09 -0400] - SetTransferSchedule - LINC Foods (38) - ====================================================================================================
+[2015-05-27 09:53:14 -0400] - SetTransferSchedule - LINC Foods (38) - Stripe Account acct_15l1yUKrJTZzbTAP - business_name: LINC Foods, email: info@lincfoods.com, metadata: {:"lo.market_id"=>"38"}, debit_negative_balances: true, transfer_schedule: #<Stripe::StripeObject:0x3fd124fb1244> JSON: {
+  "delay_days": 5,
+  "interval": "weekly",
+  "weekly_anchor": "wednesday"
+}

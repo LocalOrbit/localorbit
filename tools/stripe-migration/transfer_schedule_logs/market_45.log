@@ -1,0 +1,9 @@
+[2015-05-27 09:53:02 -0400] - SetTransferSchedule - Forest Agriculture Enterprises (45) - ====================================================================================================
+[2015-05-27 09:53:02 -0400] - SetTransferSchedule - Forest Agriculture Enterprises (45) -  Forest Agriculture Enterprises (45)
+[2015-05-27 09:53:02 -0400] - SetTransferSchedule - Forest Agriculture Enterprises (45) -  Setting transfer schedule and debit_negative_balances flag on Stripe Accounts.
+[2015-05-27 09:53:02 -0400] - SetTransferSchedule - Forest Agriculture Enterprises (45) - 
+[2015-05-27 09:53:02 -0400] - SetTransferSchedule - Forest Agriculture Enterprises (45) -  Rails.env: production
+[2015-05-27 09:53:02 -0400] - SetTransferSchedule - Forest Agriculture Enterprises (45) -  Stripe keys:
+[2015-05-27 09:53:02 -0400] - SetTransferSchedule - Forest Agriculture Enterprises (45) -   --> STRIPE_PUBLISHABLE_KEY: pk_live_j85VTsrz51POrss3ni460qaf (pk_live_j85VTsrz51POrss3ni460qaf)
+[2015-05-27 09:53:02 -0400] - SetTransferSchedule - Forest Agriculture Enterprises (45) - ====================================================================================================
+[2015-05-27 09:53:02 -0400] - SetTransferSchedule - Forest Agriculture Enterprises (45) - !! Market has no stripe_account_id; not updating transfer schedule or debit_negative_balances flag

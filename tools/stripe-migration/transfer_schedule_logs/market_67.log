@@ -1,0 +1,13 @@
+[2015-05-27 09:53:21 -0400] - SetTransferSchedule - Tulsa Farmers' Market -Wholesale Division (67) - ====================================================================================================
+[2015-05-27 09:53:21 -0400] - SetTransferSchedule - Tulsa Farmers' Market -Wholesale Division (67) -  Tulsa Farmers' Market -Wholesale Division (67)
+[2015-05-27 09:53:21 -0400] - SetTransferSchedule - Tulsa Farmers' Market -Wholesale Division (67) -  Setting transfer schedule and debit_negative_balances flag on Stripe Accounts.
+[2015-05-27 09:53:21 -0400] - SetTransferSchedule - Tulsa Farmers' Market -Wholesale Division (67) - 
+[2015-05-27 09:53:21 -0400] - SetTransferSchedule - Tulsa Farmers' Market -Wholesale Division (67) -  Rails.env: production
+[2015-05-27 09:53:21 -0400] - SetTransferSchedule - Tulsa Farmers' Market -Wholesale Division (67) -  Stripe keys:
+[2015-05-27 09:53:21 -0400] - SetTransferSchedule - Tulsa Farmers' Market -Wholesale Division (67) -   --> STRIPE_PUBLISHABLE_KEY: pk_live_j85VTsrz51POrss3ni460qaf (pk_live_j85VTsrz51POrss3ni460qaf)
+[2015-05-27 09:53:21 -0400] - SetTransferSchedule - Tulsa Farmers' Market -Wholesale Division (67) - ====================================================================================================
+[2015-05-27 09:53:25 -0400] - SetTransferSchedule - Tulsa Farmers' Market -Wholesale Division (67) - Stripe Account acct_15l1yULnlQGv511a - business_name: Tulsa Farmers' Market -Wholesale Division, email: tulsafoodhub@gmail.com, metadata: {:"lo.market_id"=>"67"}, debit_negative_balances: true, transfer_schedule: #<Stripe::StripeObject:0x3fd125030f1c> JSON: {
+  "delay_days": 5,
+  "interval": "weekly",
+  "weekly_anchor": "wednesday"
+}

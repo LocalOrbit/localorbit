@@ -101,6 +101,14 @@ namespace :stripe do
       puts command
       exec(env, command)
     end
+
+    desc "Update transfer_schedule and debit_negative_balance flag across all active markets"
+    task :set_transfer_schedules_on_active_markets do
+      # active_market_ids = "39,36,18,15,13,19,8,68,38,57,58,60,27,65,17,45,9,32,62,61,20,88,2,67,12,4,82,7,91,63,11,77,86,46,54,70,92,43"
+      active_market_ids = "'18, 4, 17, 45, 70, 38, 36, 2, 67, 7, 19, 65, 61, 9, 82'"
+      ENV['market'] = active_market_ids
+      Rake::Task["stripe:migrate:set_transfer_schedule"].invoke
+    end
   end
 end
 
