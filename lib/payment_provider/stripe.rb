@@ -82,8 +82,8 @@ module PaymentProvider
 
       def charge_for_order(amount:, bank_account:, market:, order:, buyer_organization:)
         amount_in_cents = ::Financials::MoneyHelpers.amount_to_cents(amount)
-        customer = buyer_organization.stripe_customer_id
-        source = bank_account.stripe_id
+        customer = buyer_organization.stripe_customer_id || raise("Can't create a charge; Organization #{buyer_organization.name} (#{buyer_organization.id}) has no stripe_customer_id")
+        source = bank_account.stripe_id || raise("Can't create a charge; BankAccount #{bank_account.bank_name} #{bank_account.last_four} (#{bank_account.id}) has no stripe_id")
         destination = market.stripe_account_id
         descriptor = market.on_statement_as
         
