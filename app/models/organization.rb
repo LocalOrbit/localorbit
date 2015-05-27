@@ -135,7 +135,11 @@ class Organization < ActiveRecord::Base
   end
 
   def primary_payment_provider
-    markets.first.primary_payment_provider
+    if m = markets.first 
+      m.primary_payment_provider
+    else
+      nil
+    end
   end
 
   private
