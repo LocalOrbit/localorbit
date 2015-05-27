@@ -131,5 +131,9 @@ module PaymentProvider
         bank_account_params: bank_account_params,
         representative_params: representative_params)
     end
+
+    def select_usable_bank_accounts(payment_provider, bank_accounts)
+      PaymentProvider.for(payment_provider).select_usable_bank_accounts(bank_accounts)
+    end
   end
 end
