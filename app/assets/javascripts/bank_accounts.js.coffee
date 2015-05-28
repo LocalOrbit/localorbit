@@ -72,4 +72,4 @@ $ ->
 
   if accountType = $("#provider_account_type").val()
     if (accountType == 'checking') or (accountType == 'savings')
-      showBankAccountControls()
+      showBankAccountControls(accountType)
