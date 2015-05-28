@@ -1,0 +1,8 @@
+[2015-05-28 11:02:34 -0400] - FlipMarketToStripe - LINC Foods (38) - ====================================================================================================
+[2015-05-28 11:02:34 -0400] - FlipMarketToStripe - LINC Foods (38) -  LINC Foods (38)
+[2015-05-28 11:02:34 -0400] - FlipMarketToStripe - LINC Foods (38) -  Flipping market to use Stripe.
+[2015-05-28 11:02:34 -0400] - FlipMarketToStripe - LINC Foods (38) - 
+[2015-05-28 11:02:34 -0400] - FlipMarketToStripe - LINC Foods (38) -  Rails.env: production
+[2015-05-28 11:02:34 -0400] - FlipMarketToStripe - LINC Foods (38) -  Stripe key: pk_live_j85VTsrz51POrss3ni460qaf
+[2015-05-28 11:02:34 -0400] - FlipMarketToStripe - LINC Foods (38) - ====================================================================================================
+[2015-05-28 11:02:34 -0400] - FlipMarketToStripe - LINC Foods (38) - Flipped Market to use Stripe payment provider.
