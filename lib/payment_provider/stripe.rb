@@ -210,6 +210,16 @@ module PaymentProvider
         end
       end
 
+      def add_deposit_account(entity:, type:, bank_account_params:)
+        if type == 'checking' 
+          AddStripeDepositAccountToMarket.perform(
+            entity: entity,
+            bank_account_params: bank_account_params)
+        else
+          raise "PaymentProvider::Stripe only supports adding Deposit Accounts of type 'checking'; dunno what to do with this type: #{type.inspect}"
+        end
+      end
+
       #
       #
       # NON-PaymentProvider interface:

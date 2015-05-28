@@ -230,6 +230,18 @@ describe PaymentProvider do
       end
     end
 
+    describe ".add_deposit_account" do
+      let(:params) {
+        { type: 'the type', 
+          entity: 'the entity', 
+          bank_account_params: 'the bank acct params'}
+      }
+      it "delegates to #{provider_object.name}.add_deposit_account" do
+        expect(provider_object).to receive(:add_deposit_account).with(params)
+        PaymentProvider.add_deposit_account provider_name, params
+      end
+    end
+
     describe ".select_usable_bank_accounts" do
       let(:params) { "the bank accounts" }
       it "delegates to #{provider_object.name}.select_usable_bank_accounts" do

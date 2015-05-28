@@ -464,6 +464,28 @@ describe PaymentProvider::Stripe do
     end
   end
 
+  describe ".add_deposit_account" do
+    let(:params) do
+      {
+        entity: "foo bar",
+        bank_account_params: "stuff",
+      }
+    end
+
+    it "invokes AddStripeCreditCardToEntity" do
+      expect(AddStripeDepositAccountToMarket).to receive(:perform).with(params)
+      subject.add_deposit_account(params.merge(type: "checking"))  
+    end
+
+    it "raises error for type not equal 'checking'" do
+      expect(AddStripeDepositAccountToMarket).not_to receive(:perform)
+
+      expect {
+        subject.add_deposit_account(params.merge(type: "savings"))
+      }.to raise_error(/only supports.*'checking'.*dunno.*savings/)
+    end
+  end
+
   describe ".select_usable_bank_accounts" do
     let!(:cc1) { create(:bank_account, :credit_card, stripe_id: "sid1") }
     let!(:cc2) { create(:bank_account, :credit_card) }
