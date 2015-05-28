@@ -2,11 +2,12 @@ require_relative "../../config/environment"
 require 'pry'
 
 class FlipMarketToStripe
-  def initialize(market_id: market_id, dry_run: false)
+  def initialize(market_id: market_id, dry_run: false, only_flip_markets_with_stripe_accounts: true)
     @market_id = market_id
     @market = Market.find(@market_id)
     @market_title = "#{@market.name} (#{@market_id})"
     @dry_run = dry_run
+    @only_flip_markets_with_stripe_accounts = only_flip_markets_with_stripe_accounts
   end
 
   def run
@@ -18,7 +19,7 @@ class FlipMarketToStripe
     payment_provider_id = payment_provider.id
 
 
-    if @market.stripe_account_id
+    unless @only_flip_markets_with_stripe_accounts and !@market.stripe_account_id
       begin
         execute_update log_message: "Flipped Market to use Stripe payment provider." do
           @market.update(
@@ -34,7 +35,7 @@ class FlipMarketToStripe
         log "!! ERROR FLIPPING MARKET TO STRIPE ACCOUNT - #{@market.stripe_account_id}: #{ex.message}"
       end
     else
-      log "!! Market has no stripe_account_id; not updating transfer schedule or debit_negative_balances flag"
+      log "!! only_flip_markets_with_stripe_accounts is #{@only_flip_markets_with_stripe_accounts}... and since Market has no stripe_account_id; NOT UPDATING PAYMENT PROVIDER"
     end
 
   ensure
@@ -97,6 +98,7 @@ market_ids = market_ids_str.gsub(',',' ').split(/\s+/).map(&:strip)
 market_ids.each do |market_id|
   updater = FlipMarketToStripe.new(
     market_id: market_id,
+    only_flip_markets_with_stripe_accounts: false,
     dry_run: false
     # dry_run: true
   )
