@@ -13,6 +13,7 @@ describe 'stripe PaymentProvider', ->
       @container = { data: sinon.stub() }
       @fields =
         name: 'Name De Card'
+        notes: 'a notes'
         card_number: '12345'
         expiration_month: '01'
         expiration_year: '2020'
@@ -51,6 +52,7 @@ describe 'stripe PaymentProvider', ->
         last_four: '0092'
         expiration_month: '12'
         expiration_year: '2021'
+        notes: 'a notes'
       expect(@done.calledWith(result)).to.be.ok
       expect(@fail.called).to.not.be.ok
 

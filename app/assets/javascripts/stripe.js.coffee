@@ -1,6 +1,6 @@
 StripeMeta =
   card:
-    createToken: Stripe.card.createToken
+    createToken: (params,handler) -> Stripe.card.createToken(params,handler)
     fieldMappings:
       number:    'card_number'
       exp_month: 'expiration_month'
@@ -20,7 +20,7 @@ StripeMeta =
       result
 
   bankAccount:
-    createToken: Stripe.bankAccount.createToken
+    createToken: (params,handler) -> Stripe.bankAccount.createToken(params,handler)
     fieldMappings:
       country:         'country'
       account_number:  'account_number'

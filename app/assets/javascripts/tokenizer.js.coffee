@@ -49,7 +49,7 @@ class @PaymentSourceTokenizer
       .done (params) =>
         addField key, value for key, value of params
         deferred.resolve(addField)
-        #TODO @$form.submit()
+        @$form.submit()
       .fail (errors) =>
         PaymentSourceErrors.displayErrors(@$container, errors)
         deferred.reject()
