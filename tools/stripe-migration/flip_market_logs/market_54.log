@@ -1,0 +1,8 @@
+[2015-05-28 11:58:41 -0400] - FlipMarketToStripe - orderboard (54) - ====================================================================================================
+[2015-05-28 11:58:41 -0400] - FlipMarketToStripe - orderboard (54) -  orderboard (54)
+[2015-05-28 11:58:41 -0400] - FlipMarketToStripe - orderboard (54) -  Flipping market to use Stripe.
+[2015-05-28 11:58:41 -0400] - FlipMarketToStripe - orderboard (54) - 
+[2015-05-28 11:58:41 -0400] - FlipMarketToStripe - orderboard (54) -  Rails.env: production
+[2015-05-28 11:58:41 -0400] - FlipMarketToStripe - orderboard (54) -  Stripe key: pk_live_j85VTsrz51POrss3ni460qaf
+[2015-05-28 11:58:41 -0400] - FlipMarketToStripe - orderboard (54) - ====================================================================================================
+[2015-05-28 11:58:42 -0400] - FlipMarketToStripe - orderboard (54) - Flipped Market to use Stripe payment provider.
