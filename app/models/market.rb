@@ -114,6 +114,14 @@ class Market < ActiveRecord::Base
     Balanced::Customer.find(balanced_customer_uri)
   end
 
+  def stripe_customer
+    Stripe::Customer.retrieve(stripe_customer_id) if stripe_customer_id
+  end
+
+  def stripe_account
+    Stripe::Account.retrieve(stripe_account_id) if stripe_account_id
+  end
+
   def fulfillment_locations(default_name)
     addresses.visible.order(:name).map {|a| [a.name, a.id] }.unshift([default_name, 0])
   end
