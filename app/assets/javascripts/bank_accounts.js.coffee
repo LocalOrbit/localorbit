@@ -23,7 +23,7 @@ showCardControls = (accountType) ->
   null
 
 showBankAccountControls = (accountType) ->
-  $("#payment-provider-container").data("provider-object-type", "bankAccount")
+  $("#payment-provider-container").data("provider-object-type", accountType)
   $("#bank-account-fields, #underwriting-fields").removeClass('is-hidden').prop('disabled', false)
   $("#credit-card-fields").addClass('is-hidden').prop('disabled', true)
   $("#account_type").val(accountType)

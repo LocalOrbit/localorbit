@@ -1,17 +1,11 @@
 describe AddBankAccountToManagedStripeAccount do
   subject { described_class }
-  before { VCR.turn_off! }
-  after { VCR.turn_on! }
 
-  let!(:stripe_token) { create_stripe_bank_account_token }
-  let!(:bank_account) { create(:bank_account, :checking) }
-  let!(:stripe_account) { get_or_create_stripe_account_for_market(create(:market, contact_email: "testing_add_bank_accounts@example.com")) }
-
-  let(:bank_account_params) {
-    HashWithIndifferentAccess.new(stripe_tok: stripe_token.id)
-  }
-
-  # let(:organization) { create(:organization, :buyer) }
+  let(:stripe_bank_account) { double "stripe bank account", id: 'saba id' }
+  let(:bank_accounts_proxy) { double "bank accounts proxy" }
+  let(:stripe_account) { double "stripe account", bank_accounts: bank_accounts_proxy }
+  let(:bank_account) { double "bank account" }
+  let(:bank_account_params) { HashWithIndifferentAccess.new(stripe_tok: "a stripe token") }
 
   let(:params) {{
     stripe_account: stripe_account,
@@ -20,18 +14,11 @@ describe AddBankAccountToManagedStripeAccount do
   }}
 
   it "creates a new Stripe Account Bank Account and links it to the given BankAccount" do
+    expect(bank_accounts_proxy).to receive(:create).with(bank_account: "a stripe token").and_return(stripe_bank_account)
+    expect(bank_account).to receive(:update).with(stripe_id: 'saba id', account_role: 'deposit')
+
     result = subject.perform(params)
     expect(result.success?).to be true
-
-
-    sid = bank_account.stripe_id
-    expect(sid).to be
-
-    binding.pry
-    x = Stripe::Account.retrieve(stripe_account.id) # need to reload the stripe account
-    ba_list = x.bank_accounts.data
-    expect(ba_list).to be
-    expect(ba_list.first.id).to eq(sid)
   end
   
 

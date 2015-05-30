@@ -1,10 +1,10 @@
 <%= render "admin/markets/header" %>
-<div>
-  <%= link_to "Add Deposit Account", [:new, :admin, @market, :deposit_account], class: "btn btn--add btn--small pull-right mobile-block" %>
-</div>
 
 <% if @bank_accounts.empty? %>
-  <p>You don't have any deposit accounts set up. Please add one.</p>
+  <div>
+    <%= link_to "Add Deposit Account", [:new, :admin, @market, :deposit_account], class: "btn btn--add btn--small pull-right mobile-block" %>
+  </div>
+  <p>Please add a Deposit Account by clicking the button on the right.</p>
 <% else %>
   <div class="table-wrapper">
     <table class="sortable" id="bank-accounts">

@@ -2,7 +2,7 @@ class CreateManagedStripeAccountForMarket
   include Interactor
 
   def perform
-    market = context[:market]
+    market = context[:market] || context[:entity]
     stripe_account = market.stripe_account
     if stripe_account.nil?
       stripe_account = Stripe::Account.create( stripe_account_info(market) )

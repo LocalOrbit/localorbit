@@ -11,6 +11,6 @@ class AddBankAccountToManagedStripeAccount
     stripe_bank_account = stripe_account.bank_accounts.create(bank_account: stripe_tok)
 
     # Update bank account w stripe id
-    bank_account.update(stripe_id: stripe_bank_account.id)
+    bank_account.update(stripe_id: stripe_bank_account.id, account_role: 'deposit')
   end
 end

@@ -9,7 +9,6 @@ StripeMeta =
     convertResponse: (response,data={}) ->
       result = {
         stripe_tok:       response.id
-        account_type:     'card'
         bank_name:        response.card.brand
         last_four:        response.card.last4
         expiration_month: response.card.exp_month
@@ -19,7 +18,7 @@ StripeMeta =
         result[k] = v
       result
 
-  bankAccount:
+  _bankAccount:
     createToken: (params,handler) -> Stripe.bankAccount.createToken(params,handler)
     fieldMappings:
       country:         'country'
@@ -28,13 +27,15 @@ StripeMeta =
     convertResponse: (response,data={}) ->
       result = {
         stripe_tok:       response.id
-        account_type:     'bank_account'
         bank_name:        response.bank_account.bank_name
         last_four:        response.bank_account.last4
       }
       for k,v of data
         result[k] = v
       result
+
+StripeMeta['checking'] = StripeMeta['_bankAccount']
+StripeMeta['savings'] = StripeMeta['_bankAccount']
 
 class @PaymentProvider
 
@@ -65,7 +66,7 @@ class @PaymentProvider
         deferred.reject(errors)
 
       else
-        result = convertResponse(response, name: name, notes: notes)
+        result = convertResponse(response, account_type: type, name: name, notes: notes)
 
         deferred.resolve(result)
 
