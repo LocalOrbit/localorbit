@@ -90,7 +90,7 @@
 This will be give the id of 'new_bank_account' which is targeted by the tokenize/submit code in bank_accounts.js.coffee 
 -->
 <%= form_for @bank_account, url: admin_market_deposit_accounts_path, html: { class: "column column--three-fourths" } do |f| %>
-  <input type="hidden" name="type" value="checking" id="account_type">
+  <input type="hidden" name="type" value="checking" id="account_type"> <!-- gets reset by bank_accounts.js when selection of account type changes in form above -->
 <% end -%>
 
 

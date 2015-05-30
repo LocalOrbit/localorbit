@@ -2,8 +2,8 @@ class AddStripeDepositAccountToMarket
   include Interactor::Organizer
 
   organize [
-    # CreateStripeCustomerForEntity,
+    #TODO: CreateManagedStripeAccountForMarket,
     # CreateBankAccount,
-    # AddCreditCardToStripeCustomer
+    # TODO: AddBankAccountToManagedStripeAccount
   ]
 end

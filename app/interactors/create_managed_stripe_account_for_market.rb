@@ -3,8 +3,11 @@ class CreateManagedStripeAccountForMarket
 
   def perform
     market = context[:market]
-    stripe_account = Stripe::Account.create( stripe_account_info(market) )
-    market.update(stripe_account_id: stripe_account.id)
+    stripe_account = market.stripe_account
+    if stripe_account.nil?
+      stripe_account = Stripe::Account.create( stripe_account_info(market) )
+      market.update(stripe_account_id: stripe_account.id)
+    end
     context[:stripe_account] = stripe_account
   end
 

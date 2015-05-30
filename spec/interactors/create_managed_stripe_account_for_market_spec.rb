@@ -32,4 +32,25 @@ describe CreateManagedStripeAccountForMarket do
     expect(stripe_account.transfer_schedule.interval).to eq 'weekly'
     expect(stripe_account.transfer_schedule.weekly_anchor).to eq 'wednesday'
   end
+
+  context "when Market already has a Stripe account" do
+    let!(:stripe_account) { get_or_create_stripe_account_for_market(market) }
+
+    it "sets the existing stripe_account into the results instead of making new" do
+      # Sanity check the market/account relationship:
+      expect(stripe_account).to be
+      existing_account_id = market.reload.stripe_account_id
+      expect(existing_account_id).to eq stripe_account.id
+
+      # Do not want for calls to .create:
+      expect(Stripe::Account).not_to receive(:create)
+
+      # Go!
+      results = subject.perform(market: market)
+      expect(results.success?).to be true
+
+      expect(market.reload.stripe_account_id).to eq existing_account_id
+      expect(results.stripe_account.id).to eq stripe_account.id
+    end
+  end
 end
