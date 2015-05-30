@@ -11,13 +11,10 @@ class Admin::DepositAccountsController < AdminController
   end
 
   def create
-    redirect_to [:admin, @market, :deposit_accounts], notice: "TODO: add payment method"
-    # TODO:
     # results = PaymentProvider.add_deposit_account(@payment_provider, 
     #                                              type: params[:type], 
     #                                              entity: @market, 
     #                                              bank_account_params: bank_account_params)
-    #
     # if results.success?
     #   redirect_to [:admin, @market, :deposit_accounts], notice: "Successfully added deposit account"
     # else
@@ -30,7 +27,7 @@ class Admin::DepositAccountsController < AdminController
   def destroy
     # @entity.bank_accounts.find(params[:id]).destroy
     # redirect_to [:admin, @entity, :bank_accounts], notice: "Successfully removed payment method"
-    redirect_to [:admin, @market, :bank_accounts], notice: "TODO: remove deposit account"
+    redirect_to [:admin, @market, :deposit_accounts], notice: "TODO: remove deposit account"
   end
 
   private
@@ -51,7 +48,7 @@ class Admin::DepositAccountsController < AdminController
       :name,
       :last_four,
       :stripe_tok,
-      :account_type,
+      :account_type,  # "bank_account"
       :notes
     )
   end
