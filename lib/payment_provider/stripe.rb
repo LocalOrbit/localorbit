@@ -95,6 +95,16 @@ module PaymentProvider
         #                else
         #                  estimate_ach_processing_fee_in_cents(amount_in_cents)
         #                end
+        metadata = {
+          market: market.name,
+          market_id: market.id,
+          order_number: order.order_number,
+          order_id: order.id,
+          buyer_organization: buyer_organization.name,
+          buyer_organization_id: buyer_organization.id,
+          bank_account_id: bank_account.id,
+          market_stripe_account: market.stripe_account_id,
+        }
         
         charge_params = {
           amount: amount_in_cents, 
@@ -105,6 +115,13 @@ module PaymentProvider
           statement_descriptor: descriptor,
           application_fee: fee_in_cents
         }
+
+        if destination.nil?
+          data = { charge_params: charge_params, metadata: metadata }
+          message = "Can't create a Stripe charge! Market '#{market.name}' (#{market.id}) has no Stripe Account.  #{data.to_json}"
+          raise message
+        end
+
         charge = ::Stripe::Charge.create(charge_params)
 
         # Pin some order metadata on the Stripe::Payment object that appears in the managed account:
