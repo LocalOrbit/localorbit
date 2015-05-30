@@ -125,6 +125,53 @@ describe PaymentProvider::Stripe do
       expect(stripe_payment["metadata"]["lo.order_id"]).to eq order.id.to_s
       expect(stripe_payment["metadata"]["lo.order_number"]).to eq order.order_number
     end
+
+    context "when Stripe charge fails" do
+      it "recreates and raises the exception without a root cause (to dance around Honeybadger's unwrap_exception which occludes the cause." do
+        err = Stripe::InvalidRequestError.new("The message", "the_param", 123, "the http body", {the:'json body'})
+        expect(Stripe::Charge).to receive(:create).and_raise(err)
+
+        charge_params = {
+          amount: amount,
+          bank_account: credit_card,
+          market: mini_market,
+          order: order,
+          buyer_organization: buyer_organization
+        }
+
+        begin
+          subject.charge_for_order(charge_params)
+          raise ".charge_for_order should have raised an error"
+        rescue Exception => e
+          expected_data = {
+            error_json_body: err.json_body,
+            charge_params: {
+              amount: Financials::MoneyHelpers.amount_to_cents(amount),
+              currency: 'usd',
+              source: credit_card.stripe_id,
+              customer: buyer_organization.stripe_customer_id,
+              destination: mini_market.stripe_account_id,
+              statement_descriptor: mini_market.on_statement_as,
+              application_fee: 320, # mocked
+            },
+            metadata: {
+              market: mini_market.name,
+              market_id: mini_market.id,
+              order_number: order.order_number,
+              order_id: order.id,
+              buyer_organization: buyer_organization.name,
+              buyer_organization_id: buyer_organization.id,
+              bank_account_id: credit_card.id,
+              market_stripe_account: mini_market.stripe_account_id,
+            }
+          }
+          expect(e.class).to be ::Stripe::StripeError
+          expect(e.message).to eq "(Status 123) The message #{expected_data.to_json}"
+          expect(e.backtrace).to eq err.backtrace
+        end
+
+      end
+    end
   end
 
   describe ".fully_refund" do
