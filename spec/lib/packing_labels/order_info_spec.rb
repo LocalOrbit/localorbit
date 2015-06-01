@@ -1,3 +1,5 @@
+require 'spec_helper'
+
 describe PackingLabels::OrderInfo do
   subject { described_class }
 

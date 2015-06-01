@@ -1,3 +1,5 @@
+require 'spec_helper'
+
 describe AddStripeCreditCardToEntity do
   subject { described_class }
 

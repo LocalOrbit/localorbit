@@ -1,3 +1,5 @@
+require 'spec_helper'
+
 describe CreateManagedStripeAccountForMarket do
   subject { described_class }
 

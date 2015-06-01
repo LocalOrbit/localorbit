@@ -1,3 +1,5 @@
+require 'spec_helper'
+
 describe Financials::PaymentMetadata do
   subject { described_class }
 

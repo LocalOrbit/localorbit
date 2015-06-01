@@ -1,3 +1,5 @@
+require 'spec_helper'
+
 describe PaymentProvider do
   # subject { described_class } 
 

@@ -1,3 +1,5 @@
+require 'spec_helper'
+
 describe Financials::BankAccounts::Builder do
   subject(:builder) { described_class }
 
