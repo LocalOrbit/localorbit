@@ -142,6 +142,10 @@ class Organization < ActiveRecord::Base
     end
   end
 
+  def stripe_customer
+    Stripe::Customer.retrieve(stripe_customer_id) if stripe_customer_id
+  end
+
   private
 
   def reject_location(attributed)
