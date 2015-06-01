@@ -1,22 +1,22 @@
-[2015-05-27 11:28:23 -0400] - UpdateStripeIdsOnMarket - North Valley Food Hub CSUC Associated Students (63) - ====================================================================================================
-[2015-05-27 11:28:23 -0400] - UpdateStripeIdsOnMarket - North Valley Food Hub CSUC Associated Students (63) -  North Valley Food Hub CSUC Associated Students (63)
-[2015-05-27 11:28:23 -0400] - UpdateStripeIdsOnMarket - North Valley Food Hub CSUC Associated Students (63) -  Updating stripe IDs for market, orgs and bank accounts.
-[2015-05-27 11:28:23 -0400] - UpdateStripeIdsOnMarket - North Valley Food Hub CSUC Associated Students (63) - 
-[2015-05-27 11:28:23 -0400] - UpdateStripeIdsOnMarket - North Valley Food Hub CSUC Associated Students (63) -  Balanced export file: /home/vagrant/git/localorbit/tools/stripe-migration/from_balanced/2015-05-27-1432735944-MP2eXZmrOPof80u3Irf94Wre.csv
-[2015-05-27 11:28:23 -0400] - UpdateStripeIdsOnMarket - North Valley Food Hub CSUC Associated Students (63) - 
-[2015-05-27 11:28:23 -0400] - UpdateStripeIdsOnMarket - North Valley Food Hub CSUC Associated Students (63) -  Rails.env: production
-[2015-05-27 11:28:23 -0400] - UpdateStripeIdsOnMarket - North Valley Food Hub CSUC Associated Students (63) -  Stripe keys:
-[2015-05-27 11:28:23 -0400] - UpdateStripeIdsOnMarket - North Valley Food Hub CSUC Associated Students (63) -   --> STRIPE_PUBLISHABLE_KEY: pk_live_j85VTsrz51POrss3ni460qaf (pk_live_j85VTsrz51POrss3ni460qaf)
-[2015-05-27 11:28:23 -0400] - UpdateStripeIdsOnMarket - North Valley Food Hub CSUC Associated Students (63) - ====================================================================================================
-[2015-05-27 11:28:23 -0400] - UpdateStripeIdsOnMarket - North Valley Food Hub CSUC Associated Students (63) - Connecting market customer - Updated Market stripe_customer_id: cus_5uQ4fMPk5DdGp5
-[2015-05-27 11:28:23 -0400] - UpdateStripeIdsOnMarket - North Valley Food Hub CSUC Associated Students (63) - Connecting market account - MISS - No stripe_account_id found for market balanced_customer_uri /v1/customers/CU2yrNDWmZhYOYE29I5TByC6
-[2015-05-27 11:28:24 -0400] - UpdateStripeIdsOnMarket - North Valley Food Hub CSUC Associated Students (63) - Connecting org customers - Updated Organization Rancho Llano Seco (3807) stripe_customer_id: cus_6FILyZ1Vaha39h
-[2015-05-27 11:28:24 -0400] - UpdateStripeIdsOnMarket - North Valley Food Hub CSUC Associated Students (63) - Connecting org customers - Updated Organization D.Maciel Farms (3379) stripe_customer_id: cus_5zYVviZe2ESgMZ
-[2015-05-27 11:28:24 -0400] - UpdateStripeIdsOnMarket - North Valley Food Hub CSUC Associated Students (63) - Connecting org customers - Updated Organization ASDS School Meal Program (2815) stripe_customer_id: cus_5uQ42urA0Q1PK4
-[2015-05-27 11:28:24 -0400] - UpdateStripeIdsOnMarket - North Valley Food Hub CSUC Associated Students (63) - Connecting org customers - Updated Organization ASDS Common Grounds & Creekside (2814) stripe_customer_id: cus_5uQ4yMq5esybgV
-[2015-05-27 11:28:24 -0400] - UpdateStripeIdsOnMarket - North Valley Food Hub CSUC Associated Students (63) - Connecting org customers - Updated Organization ASDS Butte Station & Holt Station (2813) stripe_customer_id: cus_5uQ4Qkv39pAzJM
-[2015-05-27 11:28:24 -0400] - UpdateStripeIdsOnMarket - North Valley Food Hub CSUC Associated Students (63) - Connecting org customers - Updated Organization ASDS Sutter Dining Services (2812) stripe_customer_id: cus_5uQ4vddCb1edWB
-[2015-05-27 11:28:24 -0400] - UpdateStripeIdsOnMarket - North Valley Food Hub CSUC Associated Students (63) - Connecting org customers - Updated Organization ASDS Catering (2718) stripe_customer_id: cus_5uQ4EO5DT5W7IW
-[2015-05-27 11:28:24 -0400] - UpdateStripeIdsOnMarket - North Valley Food Hub CSUC Associated Students (63) - Connecting org customers - Updated Organization ASDS Marketplace (2717) stripe_customer_id: cus_5uQ5qHy8mNd4rJ
-[2015-05-27 11:28:24 -0400] - UpdateStripeIdsOnMarket - North Valley Food Hub CSUC Associated Students (63) - Connecting org customers - Updated Organization Farmelot (78) stripe_customer_id: cus_5vQuDhjr86ntEP
-[2015-05-27 11:28:25 -0400] - UpdateStripeIdsOnMarket - North Valley Food Hub CSUC Associated Students (63) - Connecting org BankAccounts - Organization Farmelot (78) - Updated TRI COUNTIES BANK 1566 (326) stripe_id: ba_15l2592VpjOYk6TmjbGQB9P7
+[2015-06-01 14:24:04 -0400] - UpdateStripeIdsOnMarket - North Valley Food Hub CSUC Associated Students (63) - ====================================================================================================
+[2015-06-01 14:24:04 -0400] - UpdateStripeIdsOnMarket - North Valley Food Hub CSUC Associated Students (63) -  North Valley Food Hub CSUC Associated Students (63)
+[2015-06-01 14:24:04 -0400] - UpdateStripeIdsOnMarket - North Valley Food Hub CSUC Associated Students (63) -  Updating stripe IDs for market, orgs and bank accounts.
+[2015-06-01 14:24:04 -0400] - UpdateStripeIdsOnMarket - North Valley Food Hub CSUC Associated Students (63) - 
+[2015-06-01 14:24:04 -0400] - UpdateStripeIdsOnMarket - North Valley Food Hub CSUC Associated Students (63) -  Balanced export file: /home/vagrant/git/localorbit/tools/stripe-migration/from_balanced/2015-06-01-1433181180-MP2eXZmrOPof80u3Irf94Wre.csv
+[2015-06-01 14:24:04 -0400] - UpdateStripeIdsOnMarket - North Valley Food Hub CSUC Associated Students (63) - 
+[2015-06-01 14:24:04 -0400] - UpdateStripeIdsOnMarket - North Valley Food Hub CSUC Associated Students (63) -  Rails.env: production
+[2015-06-01 14:24:04 -0400] - UpdateStripeIdsOnMarket - North Valley Food Hub CSUC Associated Students (63) -  Stripe keys:
+[2015-06-01 14:24:04 -0400] - UpdateStripeIdsOnMarket - North Valley Food Hub CSUC Associated Students (63) -   --> STRIPE_PUBLISHABLE_KEY: pk_live_j85VTsrz51POrss3ni460qaf (pk_live_j85VTsrz51POrss3ni460qaf)
+[2015-06-01 14:24:04 -0400] - UpdateStripeIdsOnMarket - North Valley Food Hub CSUC Associated Students (63) - ====================================================================================================
+[2015-06-01 14:24:04 -0400] - UpdateStripeIdsOnMarket - North Valley Food Hub CSUC Associated Students (63) - Connecting market customer - Market already has stripe_customer_id: cus_5uQ4fMPk5DdGp5
+[2015-06-01 14:24:04 -0400] - UpdateStripeIdsOnMarket - North Valley Food Hub CSUC Associated Students (63) - Connecting market account - MISS - No stripe_account_id found for market balanced_customer_uri /v1/customers/CU2yrNDWmZhYOYE29I5TByC6
+[2015-06-01 14:24:04 -0400] - UpdateStripeIdsOnMarket - North Valley Food Hub CSUC Associated Students (63) - Connecting org customers - Organization already has stripe_customer_id: cus_6FILyZ1Vaha39h
+[2015-06-01 14:24:04 -0400] - UpdateStripeIdsOnMarket - North Valley Food Hub CSUC Associated Students (63) - Connecting org customers - Organization already has stripe_customer_id: cus_5zYVviZe2ESgMZ
+[2015-06-01 14:24:04 -0400] - UpdateStripeIdsOnMarket - North Valley Food Hub CSUC Associated Students (63) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ42urA0Q1PK4
+[2015-06-01 14:24:04 -0400] - UpdateStripeIdsOnMarket - North Valley Food Hub CSUC Associated Students (63) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4yMq5esybgV
+[2015-06-01 14:24:04 -0400] - UpdateStripeIdsOnMarket - North Valley Food Hub CSUC Associated Students (63) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4Qkv39pAzJM
+[2015-06-01 14:24:04 -0400] - UpdateStripeIdsOnMarket - North Valley Food Hub CSUC Associated Students (63) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4vddCb1edWB
+[2015-06-01 14:24:04 -0400] - UpdateStripeIdsOnMarket - North Valley Food Hub CSUC Associated Students (63) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4EO5DT5W7IW
+[2015-06-01 14:24:04 -0400] - UpdateStripeIdsOnMarket - North Valley Food Hub CSUC Associated Students (63) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ5qHy8mNd4rJ
+[2015-06-01 14:24:04 -0400] - UpdateStripeIdsOnMarket - North Valley Food Hub CSUC Associated Students (63) - Connecting org customers - Organization already has stripe_customer_id: cus_5vQuDhjr86ntEP
+[2015-06-01 14:24:04 -0400] - UpdateStripeIdsOnMarket - North Valley Food Hub CSUC Associated Students (63) - Connecting org BankAccounts - Organization Farmelot (78) - TRI COUNTIES BANK 1566 (326) already has stripe_id: ba_15l2592VpjOYk6TmjbGQB9P7

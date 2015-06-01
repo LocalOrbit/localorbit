@@ -1,43 +1,43 @@
-[2015-05-27 11:28:17 -0400] - UpdateStripeIdsOnMarket - Appleton Market (7) - ====================================================================================================
-[2015-05-27 11:28:17 -0400] - UpdateStripeIdsOnMarket - Appleton Market (7) -  Appleton Market (7)
-[2015-05-27 11:28:17 -0400] - UpdateStripeIdsOnMarket - Appleton Market (7) -  Updating stripe IDs for market, orgs and bank accounts.
-[2015-05-27 11:28:17 -0400] - UpdateStripeIdsOnMarket - Appleton Market (7) - 
-[2015-05-27 11:28:17 -0400] - UpdateStripeIdsOnMarket - Appleton Market (7) -  Balanced export file: /home/vagrant/git/localorbit/tools/stripe-migration/from_balanced/2015-05-27-1432735944-MP2eXZmrOPof80u3Irf94Wre.csv
-[2015-05-27 11:28:17 -0400] - UpdateStripeIdsOnMarket - Appleton Market (7) - 
-[2015-05-27 11:28:17 -0400] - UpdateStripeIdsOnMarket - Appleton Market (7) -  Rails.env: production
-[2015-05-27 11:28:17 -0400] - UpdateStripeIdsOnMarket - Appleton Market (7) -  Stripe keys:
-[2015-05-27 11:28:17 -0400] - UpdateStripeIdsOnMarket - Appleton Market (7) -   --> STRIPE_PUBLISHABLE_KEY: pk_live_j85VTsrz51POrss3ni460qaf (pk_live_j85VTsrz51POrss3ni460qaf)
-[2015-05-27 11:28:17 -0400] - UpdateStripeIdsOnMarket - Appleton Market (7) - ====================================================================================================
-[2015-05-27 11:28:17 -0400] - UpdateStripeIdsOnMarket - Appleton Market (7) - Connecting market customer - Updated Market stripe_customer_id: cus_5uQ54JWzsSVeXT
-[2015-05-27 11:28:17 -0400] - UpdateStripeIdsOnMarket - Appleton Market (7) - Connecting market account - Updated Market stripe_account_id: acct_15l1yVLOzRELz1SB
-[2015-05-27 11:28:17 -0400] - UpdateStripeIdsOnMarket - Appleton Market (7) - Connecting org customers - Updated Organization Wolf River Farms, LLC (3872) stripe_customer_id: cus_6H8mrVwjpPV7jJ
-[2015-05-27 11:28:18 -0400] - UpdateStripeIdsOnMarket - Appleton Market (7) - Connecting org customers - Updated Organization SLO Farmer's Co-op (3749) stripe_customer_id: cus_6GrwyM1n43Na2Y
-[2015-05-27 11:28:18 -0400] - UpdateStripeIdsOnMarket - Appleton Market (7) - Connecting org customers - MISS - No stripe_customer_id found for Organization Goodwill Grows (2704) balanced_customer_uri /v1/customers/CU4ClF6zW9BtmwgdJLAZcnqi
-[2015-05-27 11:28:18 -0400] - UpdateStripeIdsOnMarket - Appleton Market (7) - Connecting org customers - Updated Organization FIeld Notes Farm (2400) stripe_customer_id: cus_5uQ4nP8axirVUB
-[2015-05-27 11:28:18 -0400] - UpdateStripeIdsOnMarket - Appleton Market (7) - Connecting org customers - Updated Organization Ganesh Vegetables and Herbs (1856) stripe_customer_id: cus_5uQ5S2jz3M3eH1
-[2015-05-27 11:28:18 -0400] - UpdateStripeIdsOnMarket - Appleton Market (7) - Connecting org customers - Updated Organization Ledgeview Farms of Johnsburg, LLC (1845) stripe_customer_id: cus_5uQ4AylxryxPSU
-[2015-05-27 11:28:18 -0400] - UpdateStripeIdsOnMarket - Appleton Market (7) - Connecting org customers - Updated Organization The Source Public House (1828) stripe_customer_id: cus_5uQ45C0WJx4HYl
-[2015-05-27 11:28:18 -0400] - UpdateStripeIdsOnMarket - Appleton Market (7) - Connecting org customers - MISS - No stripe_customer_id found for Organization Grow Local (48) balanced_customer_uri /v1/customers/CU6fWKOBtubgKK1P9l5BEE0r
-[2015-05-27 11:28:18 -0400] - UpdateStripeIdsOnMarket - Appleton Market (7) - Connecting org customers - Updated Organization Gravel Road Farm (52) stripe_customer_id: cus_5vQtWBGCekh6Lt
-[2015-05-27 11:28:19 -0400] - UpdateStripeIdsOnMarket - Appleton Market (7) - Connecting org customers - Updated Organization Sun Brothers Naturals, LLC. (58) stripe_customer_id: cus_5uQ58i5yCzFrPX
-[2015-05-27 11:28:19 -0400] - UpdateStripeIdsOnMarket - Appleton Market (7) - Connecting org customers - Updated Organization Keune Authentic Foods (56) stripe_customer_id: cus_5uQ55l9ZDP7tdJ
-[2015-05-27 11:28:20 -0400] - UpdateStripeIdsOnMarket - Appleton Market (7) - Connecting org customers - Updated Organization Whitefeather Organics LLC (90) stripe_customer_id: cus_5uQ5WtsmR7ZMNg
-[2015-05-27 11:28:20 -0400] - UpdateStripeIdsOnMarket - Appleton Market (7) - Connecting org customers - Updated Organization Great Lakes Farm (91) stripe_customer_id: cus_5uQ5XKHQiCU5p8
-[2015-05-27 11:28:20 -0400] - UpdateStripeIdsOnMarket - Appleton Market (7) - Connecting org customers - Updated Organization Houdini's Escape (171) stripe_customer_id: cus_5uQ5iHQ1yzRCIn
-[2015-05-27 11:28:20 -0400] - UpdateStripeIdsOnMarket - Appleton Market (7) - Connecting org customers - Updated Organization Beyond Organic (186) stripe_customer_id: cus_5uQ4azgdJc0qvG
-[2015-05-27 11:28:20 -0400] - UpdateStripeIdsOnMarket - Appleton Market (7) - Connecting org customers - Updated Organization St. Elizabeth Hospital (216) stripe_customer_id: cus_5uQ5s1QcnLD3Up
-[2015-05-27 11:28:20 -0400] - UpdateStripeIdsOnMarket - Appleton Market (7) - Connecting org customers - Updated Organization Green Gecko Grocer and Deli (314) stripe_customer_id: cus_5uQ5nnEDOy9D5v
-[2015-05-27 11:28:21 -0400] - UpdateStripeIdsOnMarket - Appleton Market (7) - Connecting market BankAccounts - Updated WELLS FARGO BK NA WISCONSIN 4462 (507) stripe_id: ba_15sEwx2VpjOYk6TmYIkXD621
-[2015-05-27 11:28:21 -0400] - UpdateStripeIdsOnMarket - Appleton Market (7) - Connecting org BankAccounts - Organization SLO Farmer's Co-op (3749) - Updated NICOLET NATIONAL BANK 3060 (559) stripe_id: ba_164KCr2VpjOYk6Tmj2RzdxfO
-[2015-05-27 11:28:21 -0400] - UpdateStripeIdsOnMarket - Appleton Market (7) - Connecting org BankAccounts - Organization Goodwill Grows (2704) - MISS - No stripe_id found for WELLS FARGO BK NA WISCONSIN 4462 (499) balanced_customer_uri /v1/marketplaces/MP2eXZmrOPof80u3Irf94Wre/bank_accounts/BA4BeJaWbJa9Fx3Bl8JNistk
-[2015-05-27 11:28:21 -0400] - UpdateStripeIdsOnMarket - Appleton Market (7) - Connecting org BankAccounts - Organization Ganesh Vegetables and Herbs (1856) - Updated CAPITAL CREDIT UNION 4447 (214) stripe_id: ba_15ic9f2VpjOYk6Tmk7ItgvTq
-[2015-05-27 11:28:21 -0400] - UpdateStripeIdsOnMarket - Appleton Market (7) - Connecting org BankAccounts - Organization Ledgeview Farms of Johnsburg, LLC (1845) - Updated BANK FIRST NATIONAL 7915 (329) stripe_id: ba_15ic942VpjOYk6Tm7SP4njSE
-[2015-05-27 11:28:21 -0400] - UpdateStripeIdsOnMarket - Appleton Market (7) - Connecting org BankAccounts - Organization The Source Public House (1828) - Updated AMERICAN NATL BANK-FOX CITIES 7982 (233) stripe_id: ba_15ic8z2VpjOYk6Tmx9VYqdnW
-[2015-05-27 11:28:21 -0400] - UpdateStripeIdsOnMarket - Appleton Market (7) - Connecting org BankAccounts - Organization Grow Local (48) - MISS - No stripe_id found for FIRST NATIONAL BANK FOX VALLEY 5212 (39) balanced_customer_uri /v1/marketplaces/MP2eXZmrOPof80u3Irf94Wre/bank_accounts/BA4R27yU88bBDUolmzk4Ep19
-[2015-05-27 11:28:21 -0400] - UpdateStripeIdsOnMarket - Appleton Market (7) - Connecting org BankAccounts - Organization Gravel Road Farm (52) - Updated COMMUNITY FIRST CREDIT UNION 7109 (270) stripe_id: ba_15l2572VpjOYk6Tmxqc6WaNm
-[2015-05-27 11:28:21 -0400] - UpdateStripeIdsOnMarket - Appleton Market (7) - Connecting org BankAccounts - Organization Sun Brothers Naturals, LLC. (58) - Updated CAPITAL CREDIT UNION 6154 (33) stripe_id: ba_15ic9U2VpjOYk6Tm7hOC66cS
-[2015-05-27 11:28:21 -0400] - UpdateStripeIdsOnMarket - Appleton Market (7) - Connecting org BankAccounts - Organization Keune Authentic Foods (56) - Updated FIRST NATIONAL BANK 5544 (16) stripe_id: ba_15ic9n2VpjOYk6Tm3jSj0BEi
-[2015-05-27 11:28:21 -0400] - UpdateStripeIdsOnMarket - Appleton Market (7) - Connecting org BankAccounts - Organization Whitefeather Organics LLC (90) - Updated INTERNATIONAL BANK OF AMHERST 1384 (197) stripe_id: ba_15ic9R2VpjOYk6TmeDriL8gQ
-[2015-05-27 11:28:21 -0400] - UpdateStripeIdsOnMarket - Appleton Market (7) - Connecting org BankAccounts - Organization Beyond Organic (186) - Updated Visa 3970 (211) stripe_id: tok_15ibh12VpjOYk6Tm0A1STy3O
-[2015-05-27 11:28:21 -0400] - UpdateStripeIdsOnMarket - Appleton Market (7) - Connecting org BankAccounts - Organization St. Elizabeth Hospital (216) - Updated US BANK NA 7149 (115) stripe_id: ba_15ic9T2VpjOYk6TmwZvSvWK9
-[2015-05-27 11:28:21 -0400] - UpdateStripeIdsOnMarket - Appleton Market (7) - Connecting org BankAccounts - Organization Green Gecko Grocer and Deli (314) - Updated ASSOCIATED BANK GREEN BAY 0435 (47) stripe_id: ba_15ic9v2VpjOYk6Tmviuv70eq
+[2015-06-01 14:23:31 -0400] - UpdateStripeIdsOnMarket - Appleton Market (7) - ====================================================================================================
+[2015-06-01 14:23:31 -0400] - UpdateStripeIdsOnMarket - Appleton Market (7) -  Appleton Market (7)
+[2015-06-01 14:23:31 -0400] - UpdateStripeIdsOnMarket - Appleton Market (7) -  Updating stripe IDs for market, orgs and bank accounts.
+[2015-06-01 14:23:31 -0400] - UpdateStripeIdsOnMarket - Appleton Market (7) - 
+[2015-06-01 14:23:31 -0400] - UpdateStripeIdsOnMarket - Appleton Market (7) -  Balanced export file: /home/vagrant/git/localorbit/tools/stripe-migration/from_balanced/2015-06-01-1433181180-MP2eXZmrOPof80u3Irf94Wre.csv
+[2015-06-01 14:23:31 -0400] - UpdateStripeIdsOnMarket - Appleton Market (7) - 
+[2015-06-01 14:23:31 -0400] - UpdateStripeIdsOnMarket - Appleton Market (7) -  Rails.env: production
+[2015-06-01 14:23:31 -0400] - UpdateStripeIdsOnMarket - Appleton Market (7) -  Stripe keys:
+[2015-06-01 14:23:31 -0400] - UpdateStripeIdsOnMarket - Appleton Market (7) -   --> STRIPE_PUBLISHABLE_KEY: pk_live_j85VTsrz51POrss3ni460qaf (pk_live_j85VTsrz51POrss3ni460qaf)
+[2015-06-01 14:23:31 -0400] - UpdateStripeIdsOnMarket - Appleton Market (7) - ====================================================================================================
+[2015-06-01 14:23:31 -0400] - UpdateStripeIdsOnMarket - Appleton Market (7) - Connecting market customer - Market already has stripe_customer_id: cus_5uQ54JWzsSVeXT
+[2015-06-01 14:23:31 -0400] - UpdateStripeIdsOnMarket - Appleton Market (7) - Connecting market account - Market already has stripe_account_id: acct_15l1yVLOzRELz1SB
+[2015-06-01 14:23:31 -0400] - UpdateStripeIdsOnMarket - Appleton Market (7) - Connecting org customers - Organization already has stripe_customer_id: cus_6H8mrVwjpPV7jJ
+[2015-06-01 14:23:31 -0400] - UpdateStripeIdsOnMarket - Appleton Market (7) - Connecting org customers - Organization already has stripe_customer_id: cus_6GrwyM1n43Na2Y
+[2015-06-01 14:23:31 -0400] - UpdateStripeIdsOnMarket - Appleton Market (7) - Connecting org customers - MISS - No stripe_customer_id found for Organization Goodwill Grows (2704) balanced_customer_uri /v1/customers/CU4ClF6zW9BtmwgdJLAZcnqi
+[2015-06-01 14:23:31 -0400] - UpdateStripeIdsOnMarket - Appleton Market (7) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4nP8axirVUB
+[2015-06-01 14:23:31 -0400] - UpdateStripeIdsOnMarket - Appleton Market (7) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ5S2jz3M3eH1
+[2015-06-01 14:23:31 -0400] - UpdateStripeIdsOnMarket - Appleton Market (7) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4AylxryxPSU
+[2015-06-01 14:23:31 -0400] - UpdateStripeIdsOnMarket - Appleton Market (7) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ45C0WJx4HYl
+[2015-06-01 14:23:31 -0400] - UpdateStripeIdsOnMarket - Appleton Market (7) - Connecting org customers - MISS - No stripe_customer_id found for Organization Grow Local (48) balanced_customer_uri /v1/customers/CU6fWKOBtubgKK1P9l5BEE0r
+[2015-06-01 14:23:31 -0400] - UpdateStripeIdsOnMarket - Appleton Market (7) - Connecting org customers - Organization already has stripe_customer_id: cus_5vQtWBGCekh6Lt
+[2015-06-01 14:23:31 -0400] - UpdateStripeIdsOnMarket - Appleton Market (7) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ58i5yCzFrPX
+[2015-06-01 14:23:31 -0400] - UpdateStripeIdsOnMarket - Appleton Market (7) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ55l9ZDP7tdJ
+[2015-06-01 14:23:31 -0400] - UpdateStripeIdsOnMarket - Appleton Market (7) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ5WtsmR7ZMNg
+[2015-06-01 14:23:31 -0400] - UpdateStripeIdsOnMarket - Appleton Market (7) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ5XKHQiCU5p8
+[2015-06-01 14:23:31 -0400] - UpdateStripeIdsOnMarket - Appleton Market (7) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ5iHQ1yzRCIn
+[2015-06-01 14:23:31 -0400] - UpdateStripeIdsOnMarket - Appleton Market (7) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4azgdJc0qvG
+[2015-06-01 14:23:31 -0400] - UpdateStripeIdsOnMarket - Appleton Market (7) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ5s1QcnLD3Up
+[2015-06-01 14:23:31 -0400] - UpdateStripeIdsOnMarket - Appleton Market (7) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ5nnEDOy9D5v
+[2015-06-01 14:23:31 -0400] - UpdateStripeIdsOnMarket - Appleton Market (7) - Connecting market BankAccounts - WELLS FARGO BK NA WISCONSIN 4462 (507) already has stripe_id: ba_15sEwx2VpjOYk6TmYIkXD621
+[2015-06-01 14:23:31 -0400] - UpdateStripeIdsOnMarket - Appleton Market (7) - Connecting org BankAccounts - Organization SLO Farmer's Co-op (3749) - NICOLET NATIONAL BANK 3060 (559) already has stripe_id: ba_164KCr2VpjOYk6Tmj2RzdxfO
+[2015-06-01 14:23:31 -0400] - UpdateStripeIdsOnMarket - Appleton Market (7) - Connecting org BankAccounts - Organization Goodwill Grows (2704) - MISS - No stripe_id found for WELLS FARGO BK NA WISCONSIN 4462 (499) balanced_customer_uri /v1/marketplaces/MP2eXZmrOPof80u3Irf94Wre/bank_accounts/BA4BeJaWbJa9Fx3Bl8JNistk
+[2015-06-01 14:23:31 -0400] - UpdateStripeIdsOnMarket - Appleton Market (7) - Connecting org BankAccounts - Organization Ganesh Vegetables and Herbs (1856) - CAPITAL CREDIT UNION 4447 (214) already has stripe_id: ba_15ic9f2VpjOYk6Tmk7ItgvTq
+[2015-06-01 14:23:31 -0400] - UpdateStripeIdsOnMarket - Appleton Market (7) - Connecting org BankAccounts - Organization Ledgeview Farms of Johnsburg, LLC (1845) - BANK FIRST NATIONAL 7915 (329) already has stripe_id: ba_15ic942VpjOYk6Tm7SP4njSE
+[2015-06-01 14:23:31 -0400] - UpdateStripeIdsOnMarket - Appleton Market (7) - Connecting org BankAccounts - Organization The Source Public House (1828) - AMERICAN NATL BANK-FOX CITIES 7982 (233) already has stripe_id: ba_15ic8z2VpjOYk6Tmx9VYqdnW
+[2015-06-01 14:23:31 -0400] - UpdateStripeIdsOnMarket - Appleton Market (7) - Connecting org BankAccounts - Organization Grow Local (48) - MISS - No stripe_id found for FIRST NATIONAL BANK FOX VALLEY 5212 (39) balanced_customer_uri /v1/marketplaces/MP2eXZmrOPof80u3Irf94Wre/bank_accounts/BA4R27yU88bBDUolmzk4Ep19
+[2015-06-01 14:23:31 -0400] - UpdateStripeIdsOnMarket - Appleton Market (7) - Connecting org BankAccounts - Organization Gravel Road Farm (52) - COMMUNITY FIRST CREDIT UNION 7109 (270) already has stripe_id: ba_15l2572VpjOYk6Tmxqc6WaNm
+[2015-06-01 14:23:31 -0400] - UpdateStripeIdsOnMarket - Appleton Market (7) - Connecting org BankAccounts - Organization Sun Brothers Naturals, LLC. (58) - CAPITAL CREDIT UNION 6154 (33) already has stripe_id: ba_15ic9U2VpjOYk6Tm7hOC66cS
+[2015-06-01 14:23:31 -0400] - UpdateStripeIdsOnMarket - Appleton Market (7) - Connecting org BankAccounts - Organization Keune Authentic Foods (56) - FIRST NATIONAL BANK 5544 (16) already has stripe_id: ba_15ic9n2VpjOYk6Tm3jSj0BEi
+[2015-06-01 14:23:31 -0400] - UpdateStripeIdsOnMarket - Appleton Market (7) - Connecting org BankAccounts - Organization Whitefeather Organics LLC (90) - INTERNATIONAL BANK OF AMHERST 1384 (197) already has stripe_id: ba_15ic9R2VpjOYk6TmeDriL8gQ
+[2015-06-01 14:23:31 -0400] - UpdateStripeIdsOnMarket - Appleton Market (7) - Connecting org BankAccounts - Organization Beyond Organic (186) - Visa 3970 (211) already has stripe_id: tok_15ibh12VpjOYk6Tm0A1STy3O
+[2015-06-01 14:23:31 -0400] - UpdateStripeIdsOnMarket - Appleton Market (7) - Connecting org BankAccounts - Organization St. Elizabeth Hospital (216) - US BANK NA 7149 (115) already has stripe_id: ba_15ic9T2VpjOYk6TmwZvSvWK9
+[2015-06-01 14:23:31 -0400] - UpdateStripeIdsOnMarket - Appleton Market (7) - Connecting org BankAccounts - Organization Green Gecko Grocer and Deli (314) - ASSOCIATED BANK GREEN BAY 0435 (47) already has stripe_id: ba_15ic9v2VpjOYk6Tmviuv70eq

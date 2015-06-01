@@ -1,0 +1,17 @@
+[2015-06-01 14:24:00 -0400] - UpdateStripeIdsOnMarket - Farmer's Direct Food Hub (95) - ====================================================================================================
+[2015-06-01 14:24:00 -0400] - UpdateStripeIdsOnMarket - Farmer's Direct Food Hub (95) -  Farmer's Direct Food Hub (95)
+[2015-06-01 14:24:00 -0400] - UpdateStripeIdsOnMarket - Farmer's Direct Food Hub (95) -  Updating stripe IDs for market, orgs and bank accounts.
+[2015-06-01 14:24:00 -0400] - UpdateStripeIdsOnMarket - Farmer's Direct Food Hub (95) - 
+[2015-06-01 14:24:00 -0400] - UpdateStripeIdsOnMarket - Farmer's Direct Food Hub (95) -  Balanced export file: /home/vagrant/git/localorbit/tools/stripe-migration/from_balanced/2015-06-01-1433181180-MP2eXZmrOPof80u3Irf94Wre.csv
+[2015-06-01 14:24:00 -0400] - UpdateStripeIdsOnMarket - Farmer's Direct Food Hub (95) - 
+[2015-06-01 14:24:00 -0400] - UpdateStripeIdsOnMarket - Farmer's Direct Food Hub (95) -  Rails.env: production
+[2015-06-01 14:24:00 -0400] - UpdateStripeIdsOnMarket - Farmer's Direct Food Hub (95) -  Stripe keys:
+[2015-06-01 14:24:00 -0400] - UpdateStripeIdsOnMarket - Farmer's Direct Food Hub (95) -   --> STRIPE_PUBLISHABLE_KEY: pk_live_j85VTsrz51POrss3ni460qaf (pk_live_j85VTsrz51POrss3ni460qaf)
+[2015-06-01 14:24:00 -0400] - UpdateStripeIdsOnMarket - Farmer's Direct Food Hub (95) - ====================================================================================================
+[2015-06-01 14:24:00 -0400] - UpdateStripeIdsOnMarket - Farmer's Direct Food Hub (95) - Connecting market customer - Updated Market stripe_customer_id: cus_6EBUldRpb2wSGf
+[2015-06-01 14:24:00 -0400] - UpdateStripeIdsOnMarket - Farmer's Direct Food Hub (95) - Connecting market account - MISS - No stripe_account_id found for market balanced_customer_uri /v1/customers/CU1jJigLYKuoX1RF0ddi7H2W
+[2015-06-01 14:24:00 -0400] - UpdateStripeIdsOnMarket - Farmer's Direct Food Hub (95) - Connecting org customers - Updated Organization Casitas Valley Piggery (3774) stripe_customer_id: cus_6ETuG05RappLwH
+[2015-06-01 14:24:01 -0400] - UpdateStripeIdsOnMarket - Farmer's Direct Food Hub (95) - Connecting org customers - Updated Organization Casitas Valley Creamery (3773) stripe_customer_id: cus_6ETptdjBeI21iL
+[2015-06-01 14:24:02 -0400] - UpdateStripeIdsOnMarket - Farmer's Direct Food Hub (95) - Connecting org customers - Updated Organization Casitas Valley Microgreens (3772) stripe_customer_id: cus_6ETg5BEc0lBRBT
+[2015-06-01 14:24:02 -0400] - UpdateStripeIdsOnMarket - Farmer's Direct Food Hub (95) - Connecting org customers - Updated Organization Casitas Valley Farm (3771) stripe_customer_id: cus_6ETSttjwuu2NyL
+[2015-06-01 14:24:02 -0400] - UpdateStripeIdsOnMarket - Farmer's Direct Food Hub (95) - Connecting market BankAccounts - Updated Visa 2027 (554) stripe_id: card_163tNZ2VpjOYk6TmgKqXZMKc

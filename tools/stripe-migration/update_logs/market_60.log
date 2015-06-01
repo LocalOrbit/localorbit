@@ -1,70 +1,71 @@
-[2015-05-27 11:26:54 -0400] - UpdateStripeIdsOnMarket - Mini Mac Farm (60) - ====================================================================================================
-[2015-05-27 11:26:54 -0400] - UpdateStripeIdsOnMarket - Mini Mac Farm (60) -  Mini Mac Farm (60)
-[2015-05-27 11:26:54 -0400] - UpdateStripeIdsOnMarket - Mini Mac Farm (60) -  Updating stripe IDs for market, orgs and bank accounts.
-[2015-05-27 11:26:54 -0400] - UpdateStripeIdsOnMarket - Mini Mac Farm (60) - 
-[2015-05-27 11:26:54 -0400] - UpdateStripeIdsOnMarket - Mini Mac Farm (60) -  Balanced export file: /home/vagrant/git/localorbit/tools/stripe-migration/from_balanced/2015-05-27-1432735944-MP2eXZmrOPof80u3Irf94Wre.csv
-[2015-05-27 11:26:54 -0400] - UpdateStripeIdsOnMarket - Mini Mac Farm (60) - 
-[2015-05-27 11:26:54 -0400] - UpdateStripeIdsOnMarket - Mini Mac Farm (60) -  Rails.env: production
-[2015-05-27 11:26:54 -0400] - UpdateStripeIdsOnMarket - Mini Mac Farm (60) -  Stripe keys:
-[2015-05-27 11:26:54 -0400] - UpdateStripeIdsOnMarket - Mini Mac Farm (60) -   --> STRIPE_PUBLISHABLE_KEY: pk_live_j85VTsrz51POrss3ni460qaf (pk_live_j85VTsrz51POrss3ni460qaf)
-[2015-05-27 11:26:54 -0400] - UpdateStripeIdsOnMarket - Mini Mac Farm (60) - ====================================================================================================
-[2015-05-27 11:26:54 -0400] - UpdateStripeIdsOnMarket - Mini Mac Farm (60) - Connecting market customer - Updated Market stripe_customer_id: cus_5uQ41kjFys9M09
-[2015-05-27 11:26:54 -0400] - UpdateStripeIdsOnMarket - Mini Mac Farm (60) - Connecting market account - MISS - No stripe_account_id found for market balanced_customer_uri /v1/customers/CU4TsU0a8oKIR0elYRftsLXN
-[2015-05-27 11:26:55 -0400] - UpdateStripeIdsOnMarket - Mini Mac Farm (60) - Connecting org customers - Updated Organization The Palmieri Family (3811) stripe_customer_id: cus_6FJyk1EI6vbOYx
-[2015-05-27 11:26:55 -0400] - UpdateStripeIdsOnMarket - Mini Mac Farm (60) - Connecting org customers - Updated Organization Lorraine Dias-Sotiriou (3722) stripe_customer_id: cus_6Brzvov2y0kbMq
-[2015-05-27 11:26:55 -0400] - UpdateStripeIdsOnMarket - Mini Mac Farm (60) - Connecting org customers - Updated Organization Katie Regan (3681) stripe_customer_id: cus_6A197i7YqdmL7v
-[2015-05-27 11:26:55 -0400] - UpdateStripeIdsOnMarket - Mini Mac Farm (60) - Connecting org customers - Updated Organization Kristen Davis (3444) stripe_customer_id: cus_62KlpZYdBXrJlk
-[2015-05-27 11:26:55 -0400] - UpdateStripeIdsOnMarket - Mini Mac Farm (60) - Connecting org customers - Updated Organization Grateful Harvest Organic (3375) stripe_customer_id: cus_5zFw6A6nKzXj79
-[2015-05-27 11:26:55 -0400] - UpdateStripeIdsOnMarket - Mini Mac Farm (60) - Connecting org customers - Updated Organization Nancy Lioudis GSB (3349) stripe_customer_id: cus_5yMWBojnFr3EPH
-[2015-05-27 11:26:55 -0400] - UpdateStripeIdsOnMarket - Mini Mac Farm (60) - Connecting org customers - Updated Organization gill st. bernards (3316) stripe_customer_id: cus_5y1xblOIvyLk9Q
-[2015-05-27 11:26:55 -0400] - UpdateStripeIdsOnMarket - Mini Mac Farm (60) - Connecting org customers - Updated Organization Frances Howard (3314) stripe_customer_id: cus_5y07FTYqaAHUUL
-[2015-05-27 11:26:55 -0400] - UpdateStripeIdsOnMarket - Mini Mac Farm (60) - Connecting org customers - Updated Organization The D'Angelo Family (Home Delivery or GSB pick up) (3237) stripe_customer_id: cus_5w6OJEdG6kMAZP
-[2015-05-27 11:26:55 -0400] - UpdateStripeIdsOnMarket - Mini Mac Farm (60) - Connecting org customers - Updated Organization helen clear (3235) stripe_customer_id: cus_5xF4Di082622yJ
-[2015-05-27 11:26:55 -0400] - UpdateStripeIdsOnMarket - Mini Mac Farm (60) - Connecting org customers - Updated Organization Rose  Basile (3234) stripe_customer_id: cus_5wbE6EllLnc4y3
-[2015-05-27 11:26:55 -0400] - UpdateStripeIdsOnMarket - Mini Mac Farm (60) - Connecting org customers - Updated Organization Pamela Spencer (3230) stripe_customer_id: cus_6ALHrxz6RbW8BR
-[2015-05-27 11:26:56 -0400] - UpdateStripeIdsOnMarket - Mini Mac Farm (60) - Connecting org customers - Updated Organization Mo Green Juice (3218) stripe_customer_id: cus_5uQ4tNdPCh8E44
-[2015-05-27 11:26:56 -0400] - UpdateStripeIdsOnMarket - Mini Mac Farm (60) - Connecting org customers - Updated Organization Rachel Rich (3212) stripe_customer_id: cus_5uQ4FLYnZpm5yX
-[2015-05-27 11:26:56 -0400] - UpdateStripeIdsOnMarket - Mini Mac Farm (60) - Connecting org customers - Updated Organization Matthew Robson (3176) stripe_customer_id: cus_5uQ5MwW7mltFrv
-[2015-05-27 11:26:56 -0400] - UpdateStripeIdsOnMarket - Mini Mac Farm (60) - Connecting org customers - Updated Organization Stephanie (3158) stripe_customer_id: cus_5uQ5wzsUbIFsT4
-[2015-05-27 11:26:56 -0400] - UpdateStripeIdsOnMarket - Mini Mac Farm (60) - Connecting org customers - Updated Organization Carol Higgins (3142) stripe_customer_id: cus_5uQ55ITBk8tXx8
-[2015-05-27 11:26:56 -0400] - UpdateStripeIdsOnMarket - Mini Mac Farm (60) - Connecting org customers - Updated Organization Christine Warren (3128) stripe_customer_id: cus_6Fah6fEoq7CdVk
-[2015-05-27 11:26:56 -0400] - UpdateStripeIdsOnMarket - Mini Mac Farm (60) - Connecting org customers - Updated Organization Kathy K. Aprile (3068) stripe_customer_id: cus_5uQ576FyxJYwd3
-[2015-05-27 11:26:56 -0400] - UpdateStripeIdsOnMarket - Mini Mac Farm (60) - Connecting org customers - Updated Organization Virginia Posluszny  (3056) stripe_customer_id: cus_5uQ5tgTpjjZp2f
-[2015-05-27 11:26:56 -0400] - UpdateStripeIdsOnMarket - Mini Mac Farm (60) - Connecting org customers - Updated Organization Patti Douglass (3021) stripe_customer_id: cus_5uQ53Yar7lZ4dZ
-[2015-05-27 11:26:56 -0400] - UpdateStripeIdsOnMarket - Mini Mac Farm (60) - Connecting org customers - Updated Organization Carolyn Layden GSB (2963) stripe_customer_id: cus_5yVxSRhLrve4BF
-[2015-05-27 11:26:56 -0400] - UpdateStripeIdsOnMarket - Mini Mac Farm (60) - Connecting org customers - Updated Organization Michele Parkins (2936) stripe_customer_id: cus_5uQ5udh1mWvUla
-[2015-05-27 11:26:56 -0400] - UpdateStripeIdsOnMarket - Mini Mac Farm (60) - Connecting org customers - Updated Organization Jacqui and Scott Polakoff (2935) stripe_customer_id: cus_5uQ5NmqXKOPAto
-[2015-05-27 11:26:56 -0400] - UpdateStripeIdsOnMarket - Mini Mac Farm (60) - Connecting org customers - Updated Organization Taryn Peck (2931) stripe_customer_id: cus_5uQ5UfD0nENOz9
-[2015-05-27 11:26:56 -0400] - UpdateStripeIdsOnMarket - Mini Mac Farm (60) - Connecting org customers - Updated Organization Denise Dahl (2930) stripe_customer_id: cus_5uQ5PZmcUB8hLK
-[2015-05-27 11:26:56 -0400] - UpdateStripeIdsOnMarket - Mini Mac Farm (60) - Connecting org customers - Updated Organization The Escobars (2926) stripe_customer_id: cus_5uQ5eZtiLPu4nk
-[2015-05-27 11:26:56 -0400] - UpdateStripeIdsOnMarket - Mini Mac Farm (60) - Connecting org customers - Updated Organization Pam Mondelli (2916) stripe_customer_id: cus_5uQ42fgSnmddYC
-[2015-05-27 11:26:56 -0400] - UpdateStripeIdsOnMarket - Mini Mac Farm (60) - Connecting org customers - Updated Organization Dori Fitzsimmons (2909) stripe_customer_id: cus_5uQ4iwKcndykn6
-[2015-05-27 11:26:57 -0400] - UpdateStripeIdsOnMarket - Mini Mac Farm (60) - Connecting org customers - Updated Organization Melissa Altieri (2894) stripe_customer_id: cus_5uQ5sWWw7jzWMe
-[2015-05-27 11:26:57 -0400] - UpdateStripeIdsOnMarket - Mini Mac Farm (60) - Connecting org customers - Updated Organization Youngman Family (2890) stripe_customer_id: cus_5uQ5EDAdsGhErW
-[2015-05-27 11:26:57 -0400] - UpdateStripeIdsOnMarket - Mini Mac Farm (60) - Connecting org customers - Updated Organization The Lavell Family (2866) stripe_customer_id: cus_5uQ5PSILGphYHP
-[2015-05-27 11:26:57 -0400] - UpdateStripeIdsOnMarket - Mini Mac Farm (60) - Connecting org customers - Updated Organization Susan Hagen (2862) stripe_customer_id: cus_5uQ4h14MPZ6Cvq
-[2015-05-27 11:26:57 -0400] - UpdateStripeIdsOnMarket - Mini Mac Farm (60) - Connecting org customers - Updated Organization Karyn & Greg (2859) stripe_customer_id: cus_5uQ4q9m8zTa0WU
-[2015-05-27 11:26:57 -0400] - UpdateStripeIdsOnMarket - Mini Mac Farm (60) - Connecting org customers - Updated Organization Kathleen McGoldrick (2855) stripe_customer_id: cus_5uQ4btQo6zVukc
-[2015-05-27 11:26:57 -0400] - UpdateStripeIdsOnMarket - Mini Mac Farm (60) - Connecting org customers - Updated Organization Jerelyn Hurley (2854) stripe_customer_id: cus_5uQ5aiL08oE4i8
-[2015-05-27 11:26:57 -0400] - UpdateStripeIdsOnMarket - Mini Mac Farm (60) - Connecting org customers - Updated Organization Judy Johnson (2852) stripe_customer_id: cus_5uQ6HDKZH1566t
-[2015-05-27 11:26:57 -0400] - UpdateStripeIdsOnMarket - Mini Mac Farm (60) - Connecting org customers - Updated Organization Alisa Laudicina (2851) stripe_customer_id: cus_5uQ421OTGULgNs
-[2015-05-27 11:26:57 -0400] - UpdateStripeIdsOnMarket - Mini Mac Farm (60) - Connecting org customers - Updated Organization Trish (2849) stripe_customer_id: cus_5uQ4ZjM7QJ3Ca6
-[2015-05-27 11:26:58 -0400] - UpdateStripeIdsOnMarket - Mini Mac Farm (60) - Connecting org customers - Updated Organization Flocktown Farm (2839) stripe_customer_id: cus_5uQ4FIetpSQgyE
-[2015-05-27 11:26:58 -0400] - UpdateStripeIdsOnMarket - Mini Mac Farm (60) - Connecting org customers - Updated Organization Mt. Lebanon Soap Company (2828) stripe_customer_id: cus_5uQ4z0qJhNwLmr
-[2015-05-27 11:26:58 -0400] - UpdateStripeIdsOnMarket - Mini Mac Farm (60) - Connecting org customers - Updated Organization Lazy Susan Granola (2827) stripe_customer_id: cus_5uQ43BMCK5LxFx
-[2015-05-27 11:26:58 -0400] - UpdateStripeIdsOnMarket - Mini Mac Farm (60) - Connecting org customers - Updated Organization Starseed Bakery (2826) stripe_customer_id: cus_5uQ4yUlfjfbNaA
-[2015-05-27 11:26:58 -0400] - UpdateStripeIdsOnMarket - Mini Mac Farm (60) - Connecting org customers - Updated Organization Rubia Imports (2808) stripe_customer_id: cus_5uQ4CvoPZusH7b
-[2015-05-27 11:26:58 -0400] - UpdateStripeIdsOnMarket - Mini Mac Farm (60) - Connecting org customers - Updated Organization The Old Schoolhouse (2807) stripe_customer_id: cus_5uQ4eIvlaSUbKt
-[2015-05-27 11:26:58 -0400] - UpdateStripeIdsOnMarket - Mini Mac Farm (60) - Connecting org customers - Updated Organization Jersey Barnfire (2806) stripe_customer_id: cus_5uQ4wNvmoxH6Ei
-[2015-05-27 11:26:58 -0400] - UpdateStripeIdsOnMarket - Mini Mac Farm (60) - Connecting org customers - Updated Organization Mama Yolanda (2804) stripe_customer_id: cus_5uQ44EsPUlmdxL
-[2015-05-27 11:26:59 -0400] - UpdateStripeIdsOnMarket - Mini Mac Farm (60) - Connecting org customers - Updated Organization Tassot Apiaries (2803) stripe_customer_id: cus_5uQ4tRaupwXHcW
-[2015-05-27 11:26:59 -0400] - UpdateStripeIdsOnMarket - Mini Mac Farm (60) - Connecting org customers - Updated Organization Black RIver Roasters (2800) stripe_customer_id: cus_5uQ4gIkwoRZenb
-[2015-05-27 11:26:59 -0400] - UpdateStripeIdsOnMarket - Mini Mac Farm (60) - Connecting org customers - Updated Organization Silver Birch Kitchens (2798) stripe_customer_id: cus_5uQ44Pqc3j2mUC
-[2015-05-27 11:26:59 -0400] - UpdateStripeIdsOnMarket - Mini Mac Farm (60) - Connecting org customers - Updated Organization Treeline Cheese (2797) stripe_customer_id: cus_5uQ4tofhNRV3DD
-[2015-05-27 11:26:59 -0400] - UpdateStripeIdsOnMarket - Mini Mac Farm (60) - Connecting org customers - Updated Organization Natural by Nature (2796) stripe_customer_id: cus_5uQ4k7MDBMKwQJ
-[2015-05-27 11:27:00 -0400] - UpdateStripeIdsOnMarket - Mini Mac Farm (60) - Connecting org customers - Updated Organization Andrew & Everett  (2795) stripe_customer_id: cus_5uQ4gf2u9MnTSa
-[2015-05-27 11:27:00 -0400] - UpdateStripeIdsOnMarket - Mini Mac Farm (60) - Connecting org customers - Updated Organization Mini Mac Farm (2537) stripe_customer_id: cus_5uQ59e6y7WFYiU
-[2015-05-27 11:27:00 -0400] - UpdateStripeIdsOnMarket - Mini Mac Farm (60) - Connecting market BankAccounts - Updated Visa 4245 (365) stripe_id: card_15ic9P2VpjOYk6TmQ8CsEwJ9
-[2015-05-27 11:27:00 -0400] - UpdateStripeIdsOnMarket - Mini Mac Farm (60) - Connecting org BankAccounts - Organization Michele Parkins (2936) - Updated MasterCard 1775 (436) stripe_id: card_15ic9w2VpjOYk6Tm1UHZIT8F
-[2015-05-27 11:27:00 -0400] - UpdateStripeIdsOnMarket - Mini Mac Farm (60) - Connecting org BankAccounts - Organization Michele Parkins (2936) - Updated MasterCard 1775 (421) stripe_id: card_15ic9w2VpjOYk6Tm1UHZIT8F
-[2015-05-27 11:27:01 -0400] - UpdateStripeIdsOnMarket - Mini Mac Farm (60) - Connecting org BankAccounts - Organization Mini Mac Farm (2537) - Updated Visa 4245 (351) stripe_id: card_15ic9k2VpjOYk6Tmz0PqDfpG
+[2015-06-01 14:23:28 -0400] - UpdateStripeIdsOnMarket - Mini Mac Farm (60) - ====================================================================================================
+[2015-06-01 14:23:28 -0400] - UpdateStripeIdsOnMarket - Mini Mac Farm (60) -  Mini Mac Farm (60)
+[2015-06-01 14:23:28 -0400] - UpdateStripeIdsOnMarket - Mini Mac Farm (60) -  Updating stripe IDs for market, orgs and bank accounts.
+[2015-06-01 14:23:28 -0400] - UpdateStripeIdsOnMarket - Mini Mac Farm (60) - 
+[2015-06-01 14:23:28 -0400] - UpdateStripeIdsOnMarket - Mini Mac Farm (60) -  Balanced export file: /home/vagrant/git/localorbit/tools/stripe-migration/from_balanced/2015-06-01-1433181180-MP2eXZmrOPof80u3Irf94Wre.csv
+[2015-06-01 14:23:28 -0400] - UpdateStripeIdsOnMarket - Mini Mac Farm (60) - 
+[2015-06-01 14:23:28 -0400] - UpdateStripeIdsOnMarket - Mini Mac Farm (60) -  Rails.env: production
+[2015-06-01 14:23:28 -0400] - UpdateStripeIdsOnMarket - Mini Mac Farm (60) -  Stripe keys:
+[2015-06-01 14:23:28 -0400] - UpdateStripeIdsOnMarket - Mini Mac Farm (60) -   --> STRIPE_PUBLISHABLE_KEY: pk_live_j85VTsrz51POrss3ni460qaf (pk_live_j85VTsrz51POrss3ni460qaf)
+[2015-06-01 14:23:28 -0400] - UpdateStripeIdsOnMarket - Mini Mac Farm (60) - ====================================================================================================
+[2015-06-01 14:23:28 -0400] - UpdateStripeIdsOnMarket - Mini Mac Farm (60) - Connecting market customer - Market already has stripe_customer_id: cus_5uQ41kjFys9M09
+[2015-06-01 14:23:28 -0400] - UpdateStripeIdsOnMarket - Mini Mac Farm (60) - Connecting market account - MISS - No stripe_account_id found for market balanced_customer_uri /v1/customers/CU4TsU0a8oKIR0elYRftsLXN
+[2015-06-01 14:23:28 -0400] - UpdateStripeIdsOnMarket - Mini Mac Farm (60) - Connecting org customers - Organization already has stripe_customer_id: cus_6FJyk1EI6vbOYx
+[2015-06-01 14:23:29 -0400] - UpdateStripeIdsOnMarket - Mini Mac Farm (60) - Connecting org customers - Updated Organization Lynn Dolan (3731) stripe_customer_id: cus_6Joii77bZcjGP8
+[2015-06-01 14:23:29 -0400] - UpdateStripeIdsOnMarket - Mini Mac Farm (60) - Connecting org customers - Organization already has stripe_customer_id: cus_6Brzvov2y0kbMq
+[2015-06-01 14:23:29 -0400] - UpdateStripeIdsOnMarket - Mini Mac Farm (60) - Connecting org customers - Organization already has stripe_customer_id: cus_6A197i7YqdmL7v
+[2015-06-01 14:23:29 -0400] - UpdateStripeIdsOnMarket - Mini Mac Farm (60) - Connecting org customers - Organization already has stripe_customer_id: cus_62KlpZYdBXrJlk
+[2015-06-01 14:23:29 -0400] - UpdateStripeIdsOnMarket - Mini Mac Farm (60) - Connecting org customers - Organization already has stripe_customer_id: cus_5zFw6A6nKzXj79
+[2015-06-01 14:23:29 -0400] - UpdateStripeIdsOnMarket - Mini Mac Farm (60) - Connecting org customers - Organization already has stripe_customer_id: cus_5yMWBojnFr3EPH
+[2015-06-01 14:23:29 -0400] - UpdateStripeIdsOnMarket - Mini Mac Farm (60) - Connecting org customers - Organization already has stripe_customer_id: cus_5y1xblOIvyLk9Q
+[2015-06-01 14:23:29 -0400] - UpdateStripeIdsOnMarket - Mini Mac Farm (60) - Connecting org customers - Organization already has stripe_customer_id: cus_5y07FTYqaAHUUL
+[2015-06-01 14:23:29 -0400] - UpdateStripeIdsOnMarket - Mini Mac Farm (60) - Connecting org customers - Organization already has stripe_customer_id: cus_5w6OJEdG6kMAZP
+[2015-06-01 14:23:29 -0400] - UpdateStripeIdsOnMarket - Mini Mac Farm (60) - Connecting org customers - Organization already has stripe_customer_id: cus_5xF4Di082622yJ
+[2015-06-01 14:23:29 -0400] - UpdateStripeIdsOnMarket - Mini Mac Farm (60) - Connecting org customers - Organization already has stripe_customer_id: cus_5wbE6EllLnc4y3
+[2015-06-01 14:23:29 -0400] - UpdateStripeIdsOnMarket - Mini Mac Farm (60) - Connecting org customers - Organization already has stripe_customer_id: cus_6ALHrxz6RbW8BR
+[2015-06-01 14:23:29 -0400] - UpdateStripeIdsOnMarket - Mini Mac Farm (60) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4tNdPCh8E44
+[2015-06-01 14:23:29 -0400] - UpdateStripeIdsOnMarket - Mini Mac Farm (60) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4FLYnZpm5yX
+[2015-06-01 14:23:29 -0400] - UpdateStripeIdsOnMarket - Mini Mac Farm (60) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ5MwW7mltFrv
+[2015-06-01 14:23:29 -0400] - UpdateStripeIdsOnMarket - Mini Mac Farm (60) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ5wzsUbIFsT4
+[2015-06-01 14:23:29 -0400] - UpdateStripeIdsOnMarket - Mini Mac Farm (60) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ55ITBk8tXx8
+[2015-06-01 14:23:29 -0400] - UpdateStripeIdsOnMarket - Mini Mac Farm (60) - Connecting org customers - Organization already has stripe_customer_id: cus_6Fah6fEoq7CdVk
+[2015-06-01 14:23:29 -0400] - UpdateStripeIdsOnMarket - Mini Mac Farm (60) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ576FyxJYwd3
+[2015-06-01 14:23:29 -0400] - UpdateStripeIdsOnMarket - Mini Mac Farm (60) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ5tgTpjjZp2f
+[2015-06-01 14:23:29 -0400] - UpdateStripeIdsOnMarket - Mini Mac Farm (60) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ53Yar7lZ4dZ
+[2015-06-01 14:23:29 -0400] - UpdateStripeIdsOnMarket - Mini Mac Farm (60) - Connecting org customers - Organization already has stripe_customer_id: cus_5yVxSRhLrve4BF
+[2015-06-01 14:23:29 -0400] - UpdateStripeIdsOnMarket - Mini Mac Farm (60) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ5udh1mWvUla
+[2015-06-01 14:23:29 -0400] - UpdateStripeIdsOnMarket - Mini Mac Farm (60) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ5NmqXKOPAto
+[2015-06-01 14:23:29 -0400] - UpdateStripeIdsOnMarket - Mini Mac Farm (60) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ5UfD0nENOz9
+[2015-06-01 14:23:29 -0400] - UpdateStripeIdsOnMarket - Mini Mac Farm (60) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ5PZmcUB8hLK
+[2015-06-01 14:23:29 -0400] - UpdateStripeIdsOnMarket - Mini Mac Farm (60) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ5eZtiLPu4nk
+[2015-06-01 14:23:29 -0400] - UpdateStripeIdsOnMarket - Mini Mac Farm (60) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ42fgSnmddYC
+[2015-06-01 14:23:29 -0400] - UpdateStripeIdsOnMarket - Mini Mac Farm (60) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4iwKcndykn6
+[2015-06-01 14:23:29 -0400] - UpdateStripeIdsOnMarket - Mini Mac Farm (60) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ5sWWw7jzWMe
+[2015-06-01 14:23:29 -0400] - UpdateStripeIdsOnMarket - Mini Mac Farm (60) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ5EDAdsGhErW
+[2015-06-01 14:23:29 -0400] - UpdateStripeIdsOnMarket - Mini Mac Farm (60) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ5PSILGphYHP
+[2015-06-01 14:23:29 -0400] - UpdateStripeIdsOnMarket - Mini Mac Farm (60) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4h14MPZ6Cvq
+[2015-06-01 14:23:29 -0400] - UpdateStripeIdsOnMarket - Mini Mac Farm (60) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4q9m8zTa0WU
+[2015-06-01 14:23:29 -0400] - UpdateStripeIdsOnMarket - Mini Mac Farm (60) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4btQo6zVukc
+[2015-06-01 14:23:29 -0400] - UpdateStripeIdsOnMarket - Mini Mac Farm (60) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ5aiL08oE4i8
+[2015-06-01 14:23:29 -0400] - UpdateStripeIdsOnMarket - Mini Mac Farm (60) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ6HDKZH1566t
+[2015-06-01 14:23:29 -0400] - UpdateStripeIdsOnMarket - Mini Mac Farm (60) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ421OTGULgNs
+[2015-06-01 14:23:29 -0400] - UpdateStripeIdsOnMarket - Mini Mac Farm (60) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4ZjM7QJ3Ca6
+[2015-06-01 14:23:29 -0400] - UpdateStripeIdsOnMarket - Mini Mac Farm (60) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4FIetpSQgyE
+[2015-06-01 14:23:29 -0400] - UpdateStripeIdsOnMarket - Mini Mac Farm (60) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4z0qJhNwLmr
+[2015-06-01 14:23:29 -0400] - UpdateStripeIdsOnMarket - Mini Mac Farm (60) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ43BMCK5LxFx
+[2015-06-01 14:23:29 -0400] - UpdateStripeIdsOnMarket - Mini Mac Farm (60) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4yUlfjfbNaA
+[2015-06-01 14:23:29 -0400] - UpdateStripeIdsOnMarket - Mini Mac Farm (60) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4CvoPZusH7b
+[2015-06-01 14:23:29 -0400] - UpdateStripeIdsOnMarket - Mini Mac Farm (60) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4eIvlaSUbKt
+[2015-06-01 14:23:29 -0400] - UpdateStripeIdsOnMarket - Mini Mac Farm (60) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4wNvmoxH6Ei
+[2015-06-01 14:23:29 -0400] - UpdateStripeIdsOnMarket - Mini Mac Farm (60) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ44EsPUlmdxL
+[2015-06-01 14:23:29 -0400] - UpdateStripeIdsOnMarket - Mini Mac Farm (60) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4tRaupwXHcW
+[2015-06-01 14:23:29 -0400] - UpdateStripeIdsOnMarket - Mini Mac Farm (60) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4gIkwoRZenb
+[2015-06-01 14:23:29 -0400] - UpdateStripeIdsOnMarket - Mini Mac Farm (60) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ44Pqc3j2mUC
+[2015-06-01 14:23:29 -0400] - UpdateStripeIdsOnMarket - Mini Mac Farm (60) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4tofhNRV3DD
+[2015-06-01 14:23:29 -0400] - UpdateStripeIdsOnMarket - Mini Mac Farm (60) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4k7MDBMKwQJ
+[2015-06-01 14:23:29 -0400] - UpdateStripeIdsOnMarket - Mini Mac Farm (60) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4gf2u9MnTSa
+[2015-06-01 14:23:29 -0400] - UpdateStripeIdsOnMarket - Mini Mac Farm (60) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ59e6y7WFYiU
+[2015-06-01 14:23:29 -0400] - UpdateStripeIdsOnMarket - Mini Mac Farm (60) - Connecting market BankAccounts - Visa 4245 (365) already has stripe_id: card_15ic9P2VpjOYk6TmQ8CsEwJ9
+[2015-06-01 14:23:29 -0400] - UpdateStripeIdsOnMarket - Mini Mac Farm (60) - Connecting org BankAccounts - Organization Michele Parkins (2936) - MasterCard 1775 (436) already has stripe_id: card_15ic9w2VpjOYk6Tm1UHZIT8F
+[2015-06-01 14:23:29 -0400] - UpdateStripeIdsOnMarket - Mini Mac Farm (60) - Connecting org BankAccounts - Organization Michele Parkins (2936) - MasterCard 1775 (421) already has stripe_id: card_15ic9w2VpjOYk6Tm1UHZIT8F
+[2015-06-01 14:23:30 -0400] - UpdateStripeIdsOnMarket - Mini Mac Farm (60) - Connecting org BankAccounts - Organization Mini Mac Farm (2537) - Visa 4245 (351) already has stripe_id: card_15ic9k2VpjOYk6Tmz0PqDfpG

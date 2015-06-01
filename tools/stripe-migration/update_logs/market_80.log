@@ -1,0 +1,29 @@
+[2015-06-01 14:23:16 -0400] - UpdateStripeIdsOnMarket - Squash Blossom (80) - ====================================================================================================
+[2015-06-01 14:23:16 -0400] - UpdateStripeIdsOnMarket - Squash Blossom (80) -  Squash Blossom (80)
+[2015-06-01 14:23:16 -0400] - UpdateStripeIdsOnMarket - Squash Blossom (80) -  Updating stripe IDs for market, orgs and bank accounts.
+[2015-06-01 14:23:16 -0400] - UpdateStripeIdsOnMarket - Squash Blossom (80) - 
+[2015-06-01 14:23:16 -0400] - UpdateStripeIdsOnMarket - Squash Blossom (80) -  Balanced export file: /home/vagrant/git/localorbit/tools/stripe-migration/from_balanced/2015-06-01-1433181180-MP2eXZmrOPof80u3Irf94Wre.csv
+[2015-06-01 14:23:16 -0400] - UpdateStripeIdsOnMarket - Squash Blossom (80) - 
+[2015-06-01 14:23:16 -0400] - UpdateStripeIdsOnMarket - Squash Blossom (80) -  Rails.env: production
+[2015-06-01 14:23:16 -0400] - UpdateStripeIdsOnMarket - Squash Blossom (80) -  Stripe keys:
+[2015-06-01 14:23:16 -0400] - UpdateStripeIdsOnMarket - Squash Blossom (80) -   --> STRIPE_PUBLISHABLE_KEY: pk_live_j85VTsrz51POrss3ni460qaf (pk_live_j85VTsrz51POrss3ni460qaf)
+[2015-06-01 14:23:16 -0400] - UpdateStripeIdsOnMarket - Squash Blossom (80) - ====================================================================================================
+[2015-06-01 14:23:17 -0400] - UpdateStripeIdsOnMarket - Squash Blossom (80) - Connecting market customer - Updated Market stripe_customer_id: cus_5uQ5DcaCnBkQPl
+[2015-06-01 14:23:17 -0400] - UpdateStripeIdsOnMarket - Squash Blossom (80) - Connecting market account - MISS - No stripe_account_id found for market balanced_customer_uri /v1/customers/CU6ytH2iPueI1QFvrgRNi5cH
+[2015-06-01 14:23:17 -0400] - UpdateStripeIdsOnMarket - Squash Blossom (80) - Connecting org customers - Organization already has stripe_customer_id: cus_5y0Zg4ikn1sedF
+[2015-06-01 14:23:17 -0400] - UpdateStripeIdsOnMarket - Squash Blossom (80) - Connecting org customers - Organization already has stripe_customer_id: cus_5y0Ya3DcaZSN1M
+[2015-06-01 14:23:17 -0400] - UpdateStripeIdsOnMarket - Squash Blossom (80) - Connecting org customers - Organization already has stripe_customer_id: cus_5y0YUE9WnDS49L
+[2015-06-01 14:23:17 -0400] - UpdateStripeIdsOnMarket - Squash Blossom (80) - Connecting org customers - Organization already has stripe_customer_id: cus_5y0X4YlNR2CI2Q
+[2015-06-01 14:23:17 -0400] - UpdateStripeIdsOnMarket - Squash Blossom (80) - Connecting org customers - Organization already has stripe_customer_id: cus_5y0WlqyWthvkEq
+[2015-06-01 14:23:17 -0400] - UpdateStripeIdsOnMarket - Squash Blossom (80) - Connecting org customers - Organization already has stripe_customer_id: cus_5y0W5Xsgk8SX2r
+[2015-06-01 14:23:17 -0400] - UpdateStripeIdsOnMarket - Squash Blossom (80) - Connecting org customers - Organization already has stripe_customer_id: cus_5y0Tc4VlpYng0y
+[2015-06-01 14:23:17 -0400] - UpdateStripeIdsOnMarket - Squash Blossom (80) - Connecting org customers - Organization already has stripe_customer_id: cus_5y0TYebNOdgiDf
+[2015-06-01 14:23:17 -0400] - UpdateStripeIdsOnMarket - Squash Blossom (80) - Connecting org customers - Organization already has stripe_customer_id: cus_5y0SVQWlAb61v5
+[2015-06-01 14:23:17 -0400] - UpdateStripeIdsOnMarket - Squash Blossom (80) - Connecting org customers - Organization already has stripe_customer_id: cus_5y0SWwrRkDkfMP
+[2015-06-01 14:23:17 -0400] - UpdateStripeIdsOnMarket - Squash Blossom (80) - Connecting org customers - Organization already has stripe_customer_id: cus_5y0QdvNVCULfQf
+[2015-06-01 14:23:17 -0400] - UpdateStripeIdsOnMarket - Squash Blossom (80) - Connecting org customers - Organization already has stripe_customer_id: cus_5y0LNW9VfwzqvU
+[2015-06-01 14:23:17 -0400] - UpdateStripeIdsOnMarket - Squash Blossom (80) - Connecting org customers - Organization already has stripe_customer_id: cus_5y0KDrrYYyb4R9
+[2015-06-01 14:23:17 -0400] - UpdateStripeIdsOnMarket - Squash Blossom (80) - Connecting org customers - Organization already has stripe_customer_id: cus_5y0FQCHKafxnGq
+[2015-06-01 14:23:17 -0400] - UpdateStripeIdsOnMarket - Squash Blossom (80) - Connecting org customers - Organization already has stripe_customer_id: cus_5y0D0NrnAH5Gb1
+[2015-06-01 14:23:17 -0400] - UpdateStripeIdsOnMarket - Squash Blossom (80) - Connecting org customers - Organization already has stripe_customer_id: cus_5y08HNC3hiffR7
+[2015-06-01 14:23:17 -0400] - UpdateStripeIdsOnMarket - Squash Blossom (80) - Connecting org customers - Organization already has stripe_customer_id: cus_5y06qfvHCDxBKe

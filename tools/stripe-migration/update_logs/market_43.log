@@ -1,18 +1,18 @@
-[2015-05-27 11:28:42 -0400] - UpdateStripeIdsOnMarket - Restoration Agriculture International  (43) - ====================================================================================================
-[2015-05-27 11:28:42 -0400] - UpdateStripeIdsOnMarket - Restoration Agriculture International  (43) -  Restoration Agriculture International  (43)
-[2015-05-27 11:28:42 -0400] - UpdateStripeIdsOnMarket - Restoration Agriculture International  (43) -  Updating stripe IDs for market, orgs and bank accounts.
-[2015-05-27 11:28:42 -0400] - UpdateStripeIdsOnMarket - Restoration Agriculture International  (43) - 
-[2015-05-27 11:28:42 -0400] - UpdateStripeIdsOnMarket - Restoration Agriculture International  (43) -  Balanced export file: /home/vagrant/git/localorbit/tools/stripe-migration/from_balanced/2015-05-27-1432735944-MP2eXZmrOPof80u3Irf94Wre.csv
-[2015-05-27 11:28:42 -0400] - UpdateStripeIdsOnMarket - Restoration Agriculture International  (43) - 
-[2015-05-27 11:28:42 -0400] - UpdateStripeIdsOnMarket - Restoration Agriculture International  (43) -  Rails.env: production
-[2015-05-27 11:28:42 -0400] - UpdateStripeIdsOnMarket - Restoration Agriculture International  (43) -  Stripe keys:
-[2015-05-27 11:28:42 -0400] - UpdateStripeIdsOnMarket - Restoration Agriculture International  (43) -   --> STRIPE_PUBLISHABLE_KEY: pk_live_j85VTsrz51POrss3ni460qaf (pk_live_j85VTsrz51POrss3ni460qaf)
-[2015-05-27 11:28:42 -0400] - UpdateStripeIdsOnMarket - Restoration Agriculture International  (43) - ====================================================================================================
-[2015-05-27 11:28:42 -0400] - UpdateStripeIdsOnMarket - Restoration Agriculture International  (43) - Connecting market customer - Updated Market stripe_customer_id: cus_5uQ4UvEL3moUzx
-[2015-05-27 11:28:42 -0400] - UpdateStripeIdsOnMarket - Restoration Agriculture International  (43) - Connecting market account - MISS - No stripe_account_id found for market balanced_customer_uri /v1/customers/CU7Jlcl5jLY9WRmm29VPdvrk
-[2015-05-27 11:28:42 -0400] - UpdateStripeIdsOnMarket - Restoration Agriculture International  (43) - Connecting org customers - Updated Organization Test Buyer (2244) stripe_customer_id: cus_5uQ4oX7RtQCNmw
-[2015-05-27 11:28:42 -0400] - UpdateStripeIdsOnMarket - Restoration Agriculture International  (43) - Connecting org customers - Updated Organization Deanna Moore (2233) stripe_customer_id: cus_5uQ4CR6TkhRK3o
-[2015-05-27 11:28:42 -0400] - UpdateStripeIdsOnMarket - Restoration Agriculture International  (43) - Connecting org customers - Updated Organization Dana Faldmo (2232) stripe_customer_id: cus_5uQ4YrUt6DTjNs
-[2015-05-27 11:28:42 -0400] - UpdateStripeIdsOnMarket - Restoration Agriculture International  (43) - Connecting org customers - Updated Organization Test Grower (2209) stripe_customer_id: cus_5uQ4cdmlIKyStn
-[2015-05-27 11:28:42 -0400] - UpdateStripeIdsOnMarket - Restoration Agriculture International  (43) - Connecting org customers - Updated Organization New Forest Farm LLC  (2103) stripe_customer_id: cus_5uQ4NSXBVm3wBr
-[2015-05-27 11:28:42 -0400] - UpdateStripeIdsOnMarket - Restoration Agriculture International  (43) - Connecting market BankAccounts - Updated Visa 0309 (207) stripe_id: card_15ic8w2VpjOYk6TmOkmNVCJB
+[2015-06-01 14:23:44 -0400] - UpdateStripeIdsOnMarket - Restoration Agriculture International  (43) - ====================================================================================================
+[2015-06-01 14:23:44 -0400] - UpdateStripeIdsOnMarket - Restoration Agriculture International  (43) -  Restoration Agriculture International  (43)
+[2015-06-01 14:23:44 -0400] - UpdateStripeIdsOnMarket - Restoration Agriculture International  (43) -  Updating stripe IDs for market, orgs and bank accounts.
+[2015-06-01 14:23:44 -0400] - UpdateStripeIdsOnMarket - Restoration Agriculture International  (43) - 
+[2015-06-01 14:23:44 -0400] - UpdateStripeIdsOnMarket - Restoration Agriculture International  (43) -  Balanced export file: /home/vagrant/git/localorbit/tools/stripe-migration/from_balanced/2015-06-01-1433181180-MP2eXZmrOPof80u3Irf94Wre.csv
+[2015-06-01 14:23:44 -0400] - UpdateStripeIdsOnMarket - Restoration Agriculture International  (43) - 
+[2015-06-01 14:23:44 -0400] - UpdateStripeIdsOnMarket - Restoration Agriculture International  (43) -  Rails.env: production
+[2015-06-01 14:23:44 -0400] - UpdateStripeIdsOnMarket - Restoration Agriculture International  (43) -  Stripe keys:
+[2015-06-01 14:23:44 -0400] - UpdateStripeIdsOnMarket - Restoration Agriculture International  (43) -   --> STRIPE_PUBLISHABLE_KEY: pk_live_j85VTsrz51POrss3ni460qaf (pk_live_j85VTsrz51POrss3ni460qaf)
+[2015-06-01 14:23:44 -0400] - UpdateStripeIdsOnMarket - Restoration Agriculture International  (43) - ====================================================================================================
+[2015-06-01 14:23:44 -0400] - UpdateStripeIdsOnMarket - Restoration Agriculture International  (43) - Connecting market customer - Market already has stripe_customer_id: cus_5uQ4UvEL3moUzx
+[2015-06-01 14:23:44 -0400] - UpdateStripeIdsOnMarket - Restoration Agriculture International  (43) - Connecting market account - MISS - No stripe_account_id found for market balanced_customer_uri /v1/customers/CU7Jlcl5jLY9WRmm29VPdvrk
+[2015-06-01 14:23:44 -0400] - UpdateStripeIdsOnMarket - Restoration Agriculture International  (43) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4oX7RtQCNmw
+[2015-06-01 14:23:44 -0400] - UpdateStripeIdsOnMarket - Restoration Agriculture International  (43) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4CR6TkhRK3o
+[2015-06-01 14:23:45 -0400] - UpdateStripeIdsOnMarket - Restoration Agriculture International  (43) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4YrUt6DTjNs
+[2015-06-01 14:23:45 -0400] - UpdateStripeIdsOnMarket - Restoration Agriculture International  (43) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4cdmlIKyStn
+[2015-06-01 14:23:45 -0400] - UpdateStripeIdsOnMarket - Restoration Agriculture International  (43) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4NSXBVm3wBr
+[2015-06-01 14:23:45 -0400] - UpdateStripeIdsOnMarket - Restoration Agriculture International  (43) - Connecting market BankAccounts - Visa 0309 (207) already has stripe_id: card_15ic8w2VpjOYk6TmOkmNVCJB

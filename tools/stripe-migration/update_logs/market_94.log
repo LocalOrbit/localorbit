@@ -1,0 +1,27 @@
+[2015-06-01 14:24:00 -0400] - UpdateStripeIdsOnMarket - Ohio Valley Food (94) - ====================================================================================================
+[2015-06-01 14:24:00 -0400] - UpdateStripeIdsOnMarket - Ohio Valley Food (94) -  Ohio Valley Food (94)
+[2015-06-01 14:24:00 -0400] - UpdateStripeIdsOnMarket - Ohio Valley Food (94) -  Updating stripe IDs for market, orgs and bank accounts.
+[2015-06-01 14:24:00 -0400] - UpdateStripeIdsOnMarket - Ohio Valley Food (94) - 
+[2015-06-01 14:24:00 -0400] - UpdateStripeIdsOnMarket - Ohio Valley Food (94) -  Balanced export file: /home/vagrant/git/localorbit/tools/stripe-migration/from_balanced/2015-06-01-1433181180-MP2eXZmrOPof80u3Irf94Wre.csv
+[2015-06-01 14:24:00 -0400] - UpdateStripeIdsOnMarket - Ohio Valley Food (94) - 
+[2015-06-01 14:24:00 -0400] - UpdateStripeIdsOnMarket - Ohio Valley Food (94) -  Rails.env: production
+[2015-06-01 14:24:00 -0400] - UpdateStripeIdsOnMarket - Ohio Valley Food (94) -  Stripe keys:
+[2015-06-01 14:24:00 -0400] - UpdateStripeIdsOnMarket - Ohio Valley Food (94) -   --> STRIPE_PUBLISHABLE_KEY: pk_live_j85VTsrz51POrss3ni460qaf (pk_live_j85VTsrz51POrss3ni460qaf)
+[2015-06-01 14:24:00 -0400] - UpdateStripeIdsOnMarket - Ohio Valley Food (94) - ====================================================================================================
+[2015-06-01 14:24:00 -0400] - UpdateStripeIdsOnMarket - Ohio Valley Food (94) - Connecting market customer - MISS - No stripe_customer_id found for market balanced_customer_uri /v1/customers/CU4uFGj0JaG43KtmFuzibUpN
+[2015-06-01 14:24:00 -0400] - UpdateStripeIdsOnMarket - Ohio Valley Food (94) - Connecting market account - MISS - No stripe_account_id found for market balanced_customer_uri /v1/customers/CU4uFGj0JaG43KtmFuzibUpN
+[2015-06-01 14:24:00 -0400] - UpdateStripeIdsOnMarket - Ohio Valley Food (94) - Connecting org customers - Organization already has stripe_customer_id: cus_6LQTqtCLsFvlSD
+[2015-06-01 14:24:00 -0400] - UpdateStripeIdsOnMarket - Ohio Valley Food (94) - Connecting org customers - Organization already has stripe_customer_id: cus_6I1OmDDLptpCl4
+[2015-06-01 14:24:00 -0400] - UpdateStripeIdsOnMarket - Ohio Valley Food (94) - Connecting org customers - Organization already has stripe_customer_id: cus_6FGez4kJNzVioy
+[2015-06-01 14:24:00 -0400] - UpdateStripeIdsOnMarket - Ohio Valley Food (94) - Connecting org customers - Organization already has stripe_customer_id: cus_6EIBExSKPet5TZ
+[2015-06-01 14:24:00 -0400] - UpdateStripeIdsOnMarket - Ohio Valley Food (94) - Connecting org customers - Organization already has stripe_customer_id: cus_6DNgB4JxKvlrXc
+[2015-06-01 14:24:00 -0400] - UpdateStripeIdsOnMarket - Ohio Valley Food (94) - Connecting org customers - Organization already has stripe_customer_id: cus_6HRGlg1BLW7MoD
+[2015-06-01 14:24:00 -0400] - UpdateStripeIdsOnMarket - Ohio Valley Food (94) - Connecting org customers - Organization already has stripe_customer_id: cus_6FQRpG3fsjdJu1
+[2015-06-01 14:24:00 -0400] - UpdateStripeIdsOnMarket - Ohio Valley Food (94) - Connecting org customers - Organization already has stripe_customer_id: cus_6FQOH2nUxM4ca0
+[2015-06-01 14:24:00 -0400] - UpdateStripeIdsOnMarket - Ohio Valley Food (94) - Connecting org customers - Organization already has stripe_customer_id: cus_6EIKc5KYYcLOpL
+[2015-06-01 14:24:00 -0400] - UpdateStripeIdsOnMarket - Ohio Valley Food (94) - Connecting org customers - Organization already has stripe_customer_id: cus_6GffKl7feZOBgU
+[2015-06-01 14:24:00 -0400] - UpdateStripeIdsOnMarket - Ohio Valley Food (94) - Connecting org customers - Organization already has stripe_customer_id: cus_6DNe9E94GfrpdT
+[2015-06-01 14:24:00 -0400] - UpdateStripeIdsOnMarket - Ohio Valley Food (94) - Connecting org customers - Organization already has stripe_customer_id: cus_6DNcCNirwaVRLs
+[2015-06-01 14:24:00 -0400] - UpdateStripeIdsOnMarket - Ohio Valley Food (94) - Connecting org customers - Organization already has stripe_customer_id: cus_6GuzfeGtZbgo3Q
+[2015-06-01 14:24:00 -0400] - UpdateStripeIdsOnMarket - Ohio Valley Food (94) - Connecting org customers - Organization already has stripe_customer_id: cus_6DNZX3JAlP3IFT
+[2015-06-01 14:24:00 -0400] - UpdateStripeIdsOnMarket - Ohio Valley Food (94) - Connecting org customers - Organization already has stripe_customer_id: cus_6DNddyvzzEh0z3

@@ -1,19 +1,20 @@
-[2015-05-27 11:28:29 -0400] - UpdateStripeIdsOnMarket - The Pickup  (86) - ====================================================================================================
-[2015-05-27 11:28:29 -0400] - UpdateStripeIdsOnMarket - The Pickup  (86) -  The Pickup  (86)
-[2015-05-27 11:28:29 -0400] - UpdateStripeIdsOnMarket - The Pickup  (86) -  Updating stripe IDs for market, orgs and bank accounts.
-[2015-05-27 11:28:29 -0400] - UpdateStripeIdsOnMarket - The Pickup  (86) - 
-[2015-05-27 11:28:29 -0400] - UpdateStripeIdsOnMarket - The Pickup  (86) -  Balanced export file: /home/vagrant/git/localorbit/tools/stripe-migration/from_balanced/2015-05-27-1432735944-MP2eXZmrOPof80u3Irf94Wre.csv
-[2015-05-27 11:28:29 -0400] - UpdateStripeIdsOnMarket - The Pickup  (86) - 
-[2015-05-27 11:28:29 -0400] - UpdateStripeIdsOnMarket - The Pickup  (86) -  Rails.env: production
-[2015-05-27 11:28:29 -0400] - UpdateStripeIdsOnMarket - The Pickup  (86) -  Stripe keys:
-[2015-05-27 11:28:29 -0400] - UpdateStripeIdsOnMarket - The Pickup  (86) -   --> STRIPE_PUBLISHABLE_KEY: pk_live_j85VTsrz51POrss3ni460qaf (pk_live_j85VTsrz51POrss3ni460qaf)
-[2015-05-27 11:28:29 -0400] - UpdateStripeIdsOnMarket - The Pickup  (86) - ====================================================================================================
-[2015-05-27 11:28:29 -0400] - UpdateStripeIdsOnMarket - The Pickup  (86) - Connecting market customer - Updated Market stripe_customer_id: cus_5yihK7AkteLW3v
-[2015-05-27 11:28:29 -0400] - UpdateStripeIdsOnMarket - The Pickup  (86) - Connecting market account - MISS - No stripe_account_id found for market balanced_customer_uri /v1/customers/CU1RZUNZtcxMQvL0mUMXZFDc
-[2015-05-27 11:28:29 -0400] - UpdateStripeIdsOnMarket - The Pickup  (86) - Connecting org customers - Updated Organization Barrels Community Market (3955) stripe_customer_id: cus_6JLbjHqVmRiFgV
-[2015-05-27 11:28:29 -0400] - UpdateStripeIdsOnMarket - The Pickup  (86) - Connecting org customers - Updated Organization Cayford Orchards (3938) stripe_customer_id: cus_6J0eSJBkTpD2VG
-[2015-05-27 11:28:29 -0400] - UpdateStripeIdsOnMarket - The Pickup  (86) - Connecting org customers - Updated Organization The Cafe (3937) stripe_customer_id: cus_6J0LV10SwCT4q9
-[2015-05-27 11:28:30 -0400] - UpdateStripeIdsOnMarket - The Pickup  (86) - Connecting org customers - Updated Organization Emery Farm (3934) stripe_customer_id: cus_6IvuTJkFEkY88O
-[2015-05-27 11:28:30 -0400] - UpdateStripeIdsOnMarket - The Pickup  (86) - Connecting org customers - Updated Organization Bowden's Egg Farm (3870) stripe_customer_id: cus_6H7n63KWu5HvxT
-[2015-05-27 11:28:30 -0400] - UpdateStripeIdsOnMarket - The Pickup  (86) - Connecting org customers - Updated Organization The CSA (3738) stripe_customer_id: cus_6Dk9FNAc0bI2Z0
-[2015-05-27 11:28:30 -0400] - UpdateStripeIdsOnMarket - The Pickup  (86) - Connecting market BankAccounts - Updated BANGOR SAVINGS BANK 8413 (485) stripe_id: ba_15ogDn2VpjOYk6TmJupQOGpI
+[2015-06-01 14:23:20 -0400] - UpdateStripeIdsOnMarket - The Pickup  (86) - ====================================================================================================
+[2015-06-01 14:23:20 -0400] - UpdateStripeIdsOnMarket - The Pickup  (86) -  The Pickup  (86)
+[2015-06-01 14:23:20 -0400] - UpdateStripeIdsOnMarket - The Pickup  (86) -  Updating stripe IDs for market, orgs and bank accounts.
+[2015-06-01 14:23:20 -0400] - UpdateStripeIdsOnMarket - The Pickup  (86) - 
+[2015-06-01 14:23:20 -0400] - UpdateStripeIdsOnMarket - The Pickup  (86) -  Balanced export file: /home/vagrant/git/localorbit/tools/stripe-migration/from_balanced/2015-06-01-1433181180-MP2eXZmrOPof80u3Irf94Wre.csv
+[2015-06-01 14:23:20 -0400] - UpdateStripeIdsOnMarket - The Pickup  (86) - 
+[2015-06-01 14:23:20 -0400] - UpdateStripeIdsOnMarket - The Pickup  (86) -  Rails.env: production
+[2015-06-01 14:23:20 -0400] - UpdateStripeIdsOnMarket - The Pickup  (86) -  Stripe keys:
+[2015-06-01 14:23:20 -0400] - UpdateStripeIdsOnMarket - The Pickup  (86) -   --> STRIPE_PUBLISHABLE_KEY: pk_live_j85VTsrz51POrss3ni460qaf (pk_live_j85VTsrz51POrss3ni460qaf)
+[2015-06-01 14:23:20 -0400] - UpdateStripeIdsOnMarket - The Pickup  (86) - ====================================================================================================
+[2015-06-01 14:23:20 -0400] - UpdateStripeIdsOnMarket - The Pickup  (86) - Connecting market customer - Market already has stripe_customer_id: cus_5yihK7AkteLW3v
+[2015-06-01 14:23:20 -0400] - UpdateStripeIdsOnMarket - The Pickup  (86) - Connecting market account - MISS - No stripe_account_id found for market balanced_customer_uri /v1/customers/CU1RZUNZtcxMQvL0mUMXZFDc
+[2015-06-01 14:23:21 -0400] - UpdateStripeIdsOnMarket - The Pickup  (86) - Connecting org customers - Updated Organization Maine Grains (4002) stripe_customer_id: cus_6Jo8sHHw8ILENa
+[2015-06-01 14:23:21 -0400] - UpdateStripeIdsOnMarket - The Pickup  (86) - Connecting org customers - Organization already has stripe_customer_id: cus_6JLbjHqVmRiFgV
+[2015-06-01 14:23:21 -0400] - UpdateStripeIdsOnMarket - The Pickup  (86) - Connecting org customers - Organization already has stripe_customer_id: cus_6J0eSJBkTpD2VG
+[2015-06-01 14:23:21 -0400] - UpdateStripeIdsOnMarket - The Pickup  (86) - Connecting org customers - Organization already has stripe_customer_id: cus_6J0LV10SwCT4q9
+[2015-06-01 14:23:21 -0400] - UpdateStripeIdsOnMarket - The Pickup  (86) - Connecting org customers - Organization already has stripe_customer_id: cus_6IvuTJkFEkY88O
+[2015-06-01 14:23:21 -0400] - UpdateStripeIdsOnMarket - The Pickup  (86) - Connecting org customers - Organization already has stripe_customer_id: cus_6H7n63KWu5HvxT
+[2015-06-01 14:23:21 -0400] - UpdateStripeIdsOnMarket - The Pickup  (86) - Connecting org customers - Organization already has stripe_customer_id: cus_6Dk9FNAc0bI2Z0
+[2015-06-01 14:23:21 -0400] - UpdateStripeIdsOnMarket - The Pickup  (86) - Connecting market BankAccounts - BANGOR SAVINGS BANK 8413 (485) already has stripe_id: ba_15ogDn2VpjOYk6TmJupQOGpI

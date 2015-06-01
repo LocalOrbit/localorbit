@@ -86,6 +86,14 @@ namespace :stripe do
       exec(env, command)
     end
 
+    desc "Update stripe*_ids across all markets"
+    task :update_stripe_ids_on_all_markets do
+      market_ids = [4, 92, 13, 83, 61, 82, 21, 36, 11, 20, 84, 17, 48, 85, 30, 102, 8, 47, 40, 38, 103, 101, 80, 45, 41, 70, 86, 93, 104, 44, 67, 57, 58, 39, 59, 76, 2, 46, 60, 50, 7, 65, 32, 27, 62, 81, 15, 68, 88, 19, 54, 96, 43, 69, 64, 90, 18, 99, 12, 98, 71, 56, 94, 95, 100, 97, 63, 9, 87]
+      ENV['market'] = market_ids.map(&:to_s).join(",")
+      Rake::Task["stripe:migrate:update_stripe_ids_on_market"].invoke
+    end
+    
+
     desc "Update stripe*_ids across all active markets"
     task :update_stripe_ids_on_active_markets do
       active_market_ids = "39,36,18,15,13,19,8,68,38,57,58,60,27,65,17,45,9,32,62,61,20,88,2,67,12,4,82,7,91,63,11,77,86,46,54,70,92,43"
