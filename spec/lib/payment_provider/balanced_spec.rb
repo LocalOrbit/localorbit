@@ -1,3 +1,5 @@
+require 'spec_helper'
+
 describe PaymentProvider::Balanced do
   subject { described_class } 
 

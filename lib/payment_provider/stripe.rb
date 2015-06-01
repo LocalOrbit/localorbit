@@ -95,15 +95,34 @@ module PaymentProvider
         #                else
         #                  estimate_ach_processing_fee_in_cents(amount_in_cents)
         #                end
+        metadata = {
+          market: market.name,
+          market_id: market.id,
+          order_number: order.order_number,
+          order_id: order.id,
+          buyer_organization: buyer_organization.name,
+          buyer_organization_id: buyer_organization.id,
+          bank_account_id: bank_account.id,
+          market_stripe_account: market.stripe_account_id,
+        }
         
-        charge = ::Stripe::Charge.create(
+        charge_params = {
           amount: amount_in_cents, 
           currency: 'usd', 
           source: source, 
           customer: customer,
           destination: destination, 
           statement_descriptor: descriptor,
-          application_fee: fee_in_cents)
+          application_fee: fee_in_cents
+        }
+
+        if destination.nil?
+          data = { charge_params: charge_params, metadata: metadata }
+          message = "Can't create a Stripe charge! Market '#{market.name}' (#{market.id}) has no Stripe Account.  #{data.to_json}"
+          raise message
+        end
+
+        charge = ::Stripe::Charge.create(charge_params)
 
         # Pin some order metadata on the Stripe::Payment object that appears in the managed account:
         transfer = ::Stripe::Transfer.retrieve(charge.transfer)
@@ -113,6 +132,25 @@ module PaymentProvider
         payment.save
 
         return charge
+      rescue ::Stripe::StripeError => e
+        data = {
+          error_json_body: e.json_body,
+          charge_params: charge_params,
+          metadata: {
+            market: market.name,
+            market_id: market.id,
+            order_number: order.order_number,
+            order_id: order.id,
+            buyer_organization: buyer_organization.name,
+            buyer_organization_id: buyer_organization.id,
+            bank_account_id: bank_account.id,
+            market_stripe_account: market.stripe_account_id,
+          }
+        }
+        new_message = "(Status #{e.http_status}) #{e.message} #{data.to_json}"
+        new_err = ::Stripe::StripeError.new(new_message, e.http_status, e.http_body, data)
+        new_err.set_backtrace(e.backtrace)
+        raise new_err
       end
 
       def fully_refund(charge:nil, payment:, order:)
@@ -207,6 +245,16 @@ module PaymentProvider
             representative_params: representative_params)
         else
           raise "PaymentProvider::Stripe doesn't support adding payment methods of type #{type.inspect}; only 'card' supported currently."
+        end
+      end
+
+      def add_deposit_account(entity:, type:, bank_account_params:)
+        if type == 'checking' 
+          AddStripeDepositAccountToMarket.perform(
+            entity: entity,
+            bank_account_params: bank_account_params)
+        else
+          raise "PaymentProvider::Stripe only supports adding Deposit Accounts of type 'checking'; dunno what to do with this type: #{type.inspect}"
         end
       end
 

@@ -1,3 +1,5 @@
+require 'spec_helper'
+
 describe "'Either' extension to RSchema" do
   let(:organization) { Organization.new }
   let(:market) { Market.new }

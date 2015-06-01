@@ -1,3 +1,5 @@
+require 'spec_helper'
+
 describe Financials::MoneyHelpers do
   subject(:subject) { described_class }
 

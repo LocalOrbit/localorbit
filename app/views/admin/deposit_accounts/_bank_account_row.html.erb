@@ -1,0 +1,19 @@
+<% content_for bank_account do %>
+    <td class="bank-name"><%= bank_account.bank_name %></td>
+    <td class="name"><%= bank_account.name %></td>
+    <td class="account-number">******<%= bank_account.last_four %></td>
+    <td class="account-type"><%= bank_account.account_type.titleize %></td>
+<% end %>
+
+
+  <tr class="bank-account">
+    <%= yield bank_account %>
+    <td class="verified">
+      <!-- tbd for stripe -->
+    </td>
+    <td class="notes"><%= bank_account.notes %></td>
+    <td class="delete">
+      <%= link_to raw("&#57418;"), admin_market_deposit_account_path(market_id: bank_account.bankable_id, id: bank_account.id), {method: :delete, title: "Delete", class: "font-icon"} %>
+    </td>
+  </tr>
+

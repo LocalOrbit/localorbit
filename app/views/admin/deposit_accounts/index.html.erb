@@ -1,0 +1,31 @@
+<%= render "admin/markets/header" %>
+
+<% if @bank_accounts.empty? %>
+  <div>
+    <%= link_to "Add Deposit Account", [:new, :admin, @market, :deposit_account], class: "btn btn--add btn--small pull-right mobile-block" %>
+  </div>
+  <p>Please add a Deposit Account by clicking the button on the right.</p>
+<% else %>
+  <div class="table-wrapper">
+    <table class="sortable" id="bank-accounts">
+      <thead>
+        <tr>
+          <th>Account</th>
+          <th>Name</th>
+          <th>Account Number</th>
+          <th>Type</th>
+          <th></th>
+          <th>Notes</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+      <% @bank_accounts.each do |bank_account| %>
+        <% if ["savings", "checking"].include?(bank_account.account_type) %>
+          <%= render partial: "bank_account_row", locals: { bank_account: bank_account } %>
+        <% end %>
+      <% end %>
+      </tbody>
+    </table>
+  </div>
+<% end %>

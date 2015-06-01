@@ -1,9 +1,18 @@
 
 $.getScript "https://js.balancedpayments.com/v1/balanced.js"
 
+
 class @PaymentProvider
+  @_convertType: (type) ->
+    {
+      card: 'card'
+      checking: 'bankAccount'
+      savings: 'bankAccount'
+    }[type]
+
 
   @tokenize: (fields, type, $container) ->
+    type = @_convertType(type)
     deferred = $.Deferred()
 
     balanced.init($container.data("balanced-marketplace-uri"))

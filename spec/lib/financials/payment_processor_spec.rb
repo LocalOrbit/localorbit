@@ -1,3 +1,5 @@
+require 'spec_helper'
+
 
 describe Financials::PaymentProcessor do
   subject(:processor) { described_class }

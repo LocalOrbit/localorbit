@@ -1,3 +1,5 @@
+require 'spec_helper'
+
 describe UserDeliveryContext do
 
   describe ".build(user:,delivery:)" do

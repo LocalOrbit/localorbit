@@ -1,3 +1,5 @@
+require 'spec_helper'
+
 describe Financials::MarketPayments::Builder do
   let(:builder) { described_class }
 

@@ -1,3 +1,5 @@
+require 'spec_helper'
+
 describe Financials::PaymentExecutor do
   subject(:executor) { described_class }
 

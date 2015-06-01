@@ -1,3 +1,5 @@
+require 'spec_helper'
+
 describe Financials::PaymentInfoConverter do
   let(:converter) { described_class }
 
