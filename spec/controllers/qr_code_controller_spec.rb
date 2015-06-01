@@ -1,3 +1,5 @@
+require 'spec_helper'
+
 describe QrCodeController do
   include_context "the mini market" 
 

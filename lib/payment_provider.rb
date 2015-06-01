@@ -132,6 +132,13 @@ module PaymentProvider
         representative_params: representative_params)
     end
 
+    def add_deposit_account(payment_provider, entity:, type:, bank_account_params:)
+      PaymentProvider.for(payment_provider).add_deposit_account(
+        entity: entity,
+        type: type,
+        bank_account_params: bank_account_params)
+    end
+
     def select_usable_bank_accounts(payment_provider, bank_accounts)
       PaymentProvider.for(payment_provider).select_usable_bank_accounts(bank_accounts)
     end

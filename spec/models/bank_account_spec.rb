@@ -102,4 +102,20 @@ describe BankAccount do
     end
   end
 
+  describe "deposit_accounts scope" do
+    let!(:checking_accounts) { create_list(:bank_account, 3, :checking) }
+    let!(:other_accounts) { create_list(:bank_account, 2, :credit_card) }
+    let(:all_accounts) { checking_accounts.concat(other_accounts) }
+
+    before do
+      checking_accounts[0].update(account_role: 'deposit')
+      checking_accounts[2].update(account_role: 'deposit')
+    end
+
+    it "returns only accounts with accoun_role=deposit" do
+      expect(BankAccount.all.to_a.to_set).to eq(all_accounts.to_set)
+      expect(BankAccount.all.deposit_accounts.to_a.to_set).to eq([checking_accounts[0], checking_accounts[2]].to_set)
+    end
+  end
+
 end

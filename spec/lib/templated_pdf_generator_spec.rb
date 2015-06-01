@@ -1,3 +1,5 @@
+require 'spec_helper'
+
 describe TemplatedPdfGenerator do
   subject { described_class }
 

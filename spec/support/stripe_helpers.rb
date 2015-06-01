@@ -166,6 +166,14 @@ module StripeSpecHelpers
     Stripe::Token.create({card: card_params})
   end
 
+  def create_stripe_bank_account_token
+    bank_account_params = { 
+      routing_number: "110000000", 
+      account_number: "000123456789", 
+      country: 'US' }
+    Stripe::Token.create(bank_account: bank_account_params)
+  end
+
   def create_stripe_credit_card(stripe_customer:,bank_account:)
     tok = create_stripe_token
     stripe_card = stripe_customer.sources.create(source: tok.id)

@@ -1,3 +1,5 @@
+require 'spec_helper'
+
 describe Financials::SellerPayments::Builder do
   let(:builder) { described_class }
 

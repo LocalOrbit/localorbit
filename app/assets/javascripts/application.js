@@ -23,4 +23,5 @@
 //= require knockout-3.2.0
 //= require bootstrap_knockout_modules
 //= stub balanced
+//= stub stripe
 //= require_tree .

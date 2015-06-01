@@ -113,6 +113,10 @@ module PaymentProvider
         end
       end
 
+      def add_deposit_account(entity:, type:, bank_account_params:)
+        raise "Balanced provider doesn't implement the concept of Deposit Account!"
+      end
+
       def select_usable_bank_accounts(bank_accounts)
         bank_accounts.reject do |ba| ba.balanced_uri.nil? end
       end

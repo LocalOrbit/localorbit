@@ -1,3 +1,5 @@
+require 'spec_helper'
+
 describe Orders::DeliveryStatusLogic do
   subject(:logic) { described_class }
 

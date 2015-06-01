@@ -62,7 +62,8 @@ class OrdersController < ApplicationController
         :account_type,
         :balanced_uri,
         :stripe_tok,
-        :save_for_future
+        :save_for_future,
+        :notes
       ]
     )
   end

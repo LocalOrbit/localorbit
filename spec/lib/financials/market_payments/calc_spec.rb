@@ -1,3 +1,5 @@
+require 'spec_helper'
+
 describe Financials::MarketPayments::Calc do
   let(:calc) { described_class }
 

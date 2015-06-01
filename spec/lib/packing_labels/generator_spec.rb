@@ -1,3 +1,5 @@
+require 'spec_helper'
+
 module PackingLabels
   describe Generator do
     subject { described_class }

@@ -1,3 +1,5 @@
+require 'spec_helper'
+
 describe HtmlTemplateRenderer do
   subject { described_class }
 

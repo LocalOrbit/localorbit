@@ -13,6 +13,7 @@ class BankAccount < ActiveRecord::Base
   scope :debitable_bank_accounts, -> { visible.verified.where(account_type: %w(savings checking)) }
   scope :creditable_bank_accounts, -> { visible.where(account_type: %w(savings checking)) }
   scope :credit_cards, -> { visible.where.not(account_type: %w(savings checking)) }
+  scope :deposit_accounts, -> { visible.where(account_role: 'deposit') }
   
 
   def balanced_verification

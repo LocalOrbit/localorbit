@@ -1,3 +1,5 @@
+require 'spec_helper'
+
 describe Financials::PaymentNotifier do
   subject(:notifier) { described_class }
 

@@ -1,3 +1,5 @@
+require 'spec_helper'
+
 describe CreateBankAccount do
   subject { described_class }
 

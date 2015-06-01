@@ -1,3 +1,5 @@
+require 'spec_helper'
+
 describe LargestRemainder do
   subject { described_class }
 

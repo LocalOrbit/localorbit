@@ -1,3 +1,5 @@
+require 'spec_helper'
+
 describe UserOrderContext do
   describe ".build(user:,order_item:)" do
     include_context "the mini market"

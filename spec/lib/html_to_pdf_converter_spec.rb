@@ -1,3 +1,5 @@
+require 'spec_helper'
+
 describe HtmlToPdfConverter, :pdf do
   subject { described_class }
 

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150518131514) do
+ActiveRecord::Schema.define(version: 20150528141550) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -60,6 +60,7 @@ ActiveRecord::Schema.define(version: 20150518131514) do
     t.string   "notes"
     t.datetime "deleted_at"
     t.string   "stripe_id"
+    t.string   "account_role"
   end
 
   add_index "bank_accounts", ["bankable_type", "bankable_id"], name: "index_bank_accounts_on_bankable_type_and_bankable_id", using: :btree
