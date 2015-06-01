@@ -30,7 +30,20 @@ class UpdateStripeIdsOnMarket
   end
 
   def update_market_stripe_customer_id
-    if scid = @export_data.stripe_customer_id_for_balanced_customer_uri(@market.balanced_customer_uri)
+    existing_stripe_customer_id = @market.stripe_customer_id
+    scid = @export_data.stripe_customer_id_for_balanced_customer_uri(@market.balanced_customer_uri)
+
+    if existing_stripe_customer_id
+      if scid
+        if scid == existing_stripe_customer_id
+          log "Connecting market customer - Market already has stripe_customer_id: #{scid}"
+        else
+          log "Connecting market customer - CONFLICT - Market stripe_customer_id is ALREADY #{existing_stripe_customer_id}, but export data says it should be #{scid}"
+        end
+      else
+        log "Connecting market customer - INTERESTING - Market stripe_customer_id is #{existing_stripe_customer_id}, but export data doesn't have Stripe Customer id for this market."
+      end
+    elsif scid
       execute_update log_message: "Connecting market customer - Updated Market stripe_customer_id: #{scid}" do
         @market.update(stripe_customer_id: scid)
       end
@@ -41,7 +54,20 @@ class UpdateStripeIdsOnMarket
 
 
   def update_market_stripe_account_id
-    if said = @export_data.stripe_account_id_for_balanced_customer_uri(@market.balanced_customer_uri)
+    existing_stripe_account_id = @market.stripe_account_id
+    said = @export_data.stripe_account_id_for_balanced_customer_uri(@market.balanced_customer_uri)
+
+    if existing_stripe_account_id
+      if said 
+        if said == existing_stripe_account_id
+          log "Connecting market account - Market already has stripe_account_id: #{said}"
+        else
+          log "Connecting market account - CONFLICT - Market stripe_account_id is ALREADY #{existing_stripe_account_id}, but export data says it should be #{said}"
+        end
+      else
+        log "Connecting market account - INTERESTING - Market stripe_account_id is #{existing_stripe_account_id}, but export data doesn't have Stripe Account id for this market."
+      end
+    elsif said
       execute_update log_message: "Connecting market account - Updated Market stripe_account_id: #{said}" do
         @market.update(stripe_account_id: said)
       end
@@ -59,7 +85,19 @@ class UpdateStripeIdsOnMarket
 
   def update_organization_stripe_customer_id(org)
     org_title = "Organization #{org.name} (#{org.id})"
-    if scid = @export_data.stripe_customer_id_for_balanced_customer_uri(org.balanced_customer_uri)
+    existing_stripe_customer_id = org.stripe_customer_id
+    scid = @export_data.stripe_customer_id_for_balanced_customer_uri(org.balanced_customer_uri)
+    if existing_stripe_customer_id
+      if scid
+        if scid == existing_stripe_customer_id
+          log "Connecting org customers - Organization already has stripe_customer_id: #{scid}"
+        else
+          log "Connecting org customers - CONFLICT - Organization stripe_customer_id is ALREADY #{existing_stripe_customer_id}, but export data says it should be #{scid}"
+        end
+      else
+        log "Connecting org customer - INTERESTING - Organization stripe_customer_id is #{existing_stripe_customer_id}, but export data doesn't have Stripe Customer id for this org."
+      end
+    elsif scid
       execute_update log_message: "Connecting org customers - Updated #{org_title} stripe_customer_id: #{scid}" do
         org.update(stripe_customer_id: scid)
       end
@@ -97,7 +135,20 @@ class UpdateStripeIdsOnMarket
 
   def update_bank_account_stripe_id(ba,prefix:"?")
     bank_account_title = "#{ba.bank_name} #{ba.last_four} (#{ba.id})"
-    if sid = @export_data.stripe_id_for_bank_account_balanced_uri(ba.balanced_uri)
+    existing_stripe_id = ba.stripe_id
+    sid = @export_data.stripe_id_for_bank_account_balanced_uri(ba.balanced_uri)
+    if existing_stripe_id
+      if sid
+        if sid == existing_stripe_id
+          log "#{prefix} - #{bank_account_title} already has stripe_id: #{sid}"
+        else
+          log "#{prefix} - CONFLICT - #{bank_account_title} stripe_id is ALREADY #{existing_stripe_id}, but export data says it should be #{sid}"
+        end
+      else
+        log "#{prefix} - INTERESTING - #{bank_account_title} stripe_id is #{existing_stripe_id}, but export data doesn't have Stripe id for this bank account."
+      end
+
+    elsif sid
       execute_update log_message: "#{prefix} - Updated #{bank_account_title} stripe_id: #{sid}" do
         ba.update(stripe_id: sid)
       end
