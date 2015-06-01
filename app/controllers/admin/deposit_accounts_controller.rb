@@ -35,7 +35,7 @@ class Admin::DepositAccountsController < AdminController
   private
 
   def load_market_and_set_payment_provider
-    @market = Market.find(params[:market_id])
+    @market = Market.managed_by(current_user).find(params[:market_id])
     @entity = @market
     @payment_provider = @market.payment_provider
 
