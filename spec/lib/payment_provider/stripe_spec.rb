@@ -156,6 +156,7 @@ describe PaymentProvider::Stripe do
               destination: mini_market.stripe_account_id,
               statement_descriptor: mini_market.on_statement_as,
               application_fee: 320, # mocked
+              description: "Charge for #{order.order_number}"
             },
             metadata: {
               market: mini_market.name,
@@ -197,6 +198,7 @@ describe PaymentProvider::Stripe do
               destination: mini_market.stripe_account_id,
               statement_descriptor: mini_market.on_statement_as,
               application_fee: 320, # mocked
+              description: "Charge for #{order.order_number}"
             },
             metadata: {
               market: mini_market.name,
