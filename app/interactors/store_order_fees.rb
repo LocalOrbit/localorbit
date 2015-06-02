@@ -43,18 +43,16 @@ class StoreOrderFees
   end
 
   def update_accounting_fees_for(item)
-    # item.market_seller_fee      = calculated_fee(item, market.market_seller_fee) # WRONG
-    item.market_seller_fee = (market.market_seller_fee / 100) * (item.gross_total - item.discount_seller) # MORE RIGHTER
-    item.local_orbit_seller_fee = calculated_fee(item, market.local_orbit_seller_fee)
-    item.local_orbit_market_fee = calculated_fee(item, market.local_orbit_market_fee)
-    if PaymentProvider.is_balanced?(payment_provider)
-      item.payment_seller_fee     = calculated_fee(item, payment_seller_fee)
-      item.payment_market_fee     = calculated_fee(item, payment_market_fee)
-    end
-  end
+    item.market_seller_fee = Financials::OrderItemFeeCalculator.market_fee_paid_by_seller(market: market, order_item: item)
+    item.local_orbit_seller_fee = Financials::OrderItemFeeCalculator.local_orbit_fee_paid_by_seller(market: market, order_item: item)
+    item.local_orbit_market_fee = Financials::OrderItemFeeCalculator.local_orbit_fee_paid_by_market(market: market, order_item: item)
 
-  def calculated_fee(item, fee)
-    item.discounted_total * (fee / 100)
+    if PaymentProvider.is_balanced?(payment_provider)
+      # These calculations were not migrated into Financials:OrderItemFeeCalculator because they are 
+      # going to be defunct once Balanced is 100% in our past.   6/2 crosby
+      item.payment_seller_fee     = item.discounted_total * (payment_seller_fee / 100)
+      item.payment_market_fee     = item.discounted_total * (payment_market_fee / 100)
+    end
   end
 
   def market
