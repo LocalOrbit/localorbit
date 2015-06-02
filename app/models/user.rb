@@ -300,8 +300,20 @@ class User < ActiveRecord::Base
     end
   end
 
+  def all_markets
+    @all_markets ||= if admin?
+      Market.all
+    else
+      all_markets_for_non_admin
+    end
+  end
+
   def multi_market_membership?
     markets.count > 1
+  end
+
+  def multi_market_membership_broadly_speaking?
+    all_markets.count > 1
   end
 
   def managed_products
@@ -318,8 +330,24 @@ class User < ActiveRecord::Base
     for_select.sort {|a, b| a[0] <=> b[0] }
   end
 
+  def all_buyers_for_select
+    for_select = []
+    all_markets.each do |m|
+      by_market = m.organizations.map {|o| [o.name, o.id] }
+      for_select |= (by_market)
+    end
+    for_select.sort {|a, b| a[0] <=> b[0] }
+  end
+
   def markets_for_select
     for_select = markets.map do |m|
+      [m.name, m.id]
+    end
+    for_select.sort {|a, b| a[0] <=> b[0] }
+  end
+  
+  def all_markets_for_select
+    for_select = all_markets.map do |m|
       [m.name, m.id]
     end
     for_select.sort {|a, b| a[0] <=> b[0] }
@@ -363,6 +391,13 @@ class User < ActiveRecord::Base
     managed_market_ids = managed_markets.pluck(:id)
 
     organization_member_market_ids = organizations.map(&:market_ids).flatten
+    Market.where(id: (managed_market_ids + organization_member_market_ids))
+  end
+
+  def all_markets_for_non_admin
+    managed_market_ids = managed_markets.pluck(:id)
+
+    organization_member_market_ids = organizations.map(&:all_market_ids).flatten
     Market.where(id: (managed_market_ids + organization_member_market_ids))
   end
 

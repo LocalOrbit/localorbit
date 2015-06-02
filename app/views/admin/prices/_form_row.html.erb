@@ -1,15 +1,15 @@
 <%= content_tag(:td, "", class: "hidden-mobile") if @product.prices.view_sorted.any? %>
-<% if current_user.multi_market_membership? %>
+<% if current_user.multi_market_membership_broadly_speaking? %>
 <td>
   <% if organization_can_access?(@product.organization, :advanced_pricing) %>
-    <%= f.select :market_id, current_user.markets_for_select, {include_blank: 'All Markets'}, {class: "price_market_id"} %>
+    <%= f.select :market_id, current_user.all_markets_for_select, {include_blank: 'All Markets'}, {class: "price_market_id"} %>
   <% else %>
     All Markets
   <% end %>
 <% end %>
 <td>
   <% if organization_can_access?(@product.organization, :advanced_pricing) %>
-    <%= f.select :organization_id, current_user.buyers_for_select, {include_blank: 'All Buyers'}, {class: "price_buyer_id"} %>
+    <%= f.select :organization_id, current_user.all_buyers_for_select, {include_blank: 'All Buyers'}, {class: "price_buyer_id"} %>
   <% else %>
     All Buyers
   <% end %>

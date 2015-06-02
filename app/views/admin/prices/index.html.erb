@@ -33,7 +33,7 @@
       <thead>
         <tr>
           <%= content_tag :th, raw('<input type="checkbox" class="select-all">'), class: "delete-check-mobile" if @product.prices.view_sorted.any? %>
-          <%= content_tag(:th, 'Market') if current_user.multi_market_membership? %>
+          <%= content_tag(:th, 'Market') if current_user.multi_market_membership_broadly_speaking? %>
           <th>Buyer</th>
           <th>
             Min Qty
@@ -62,14 +62,14 @@
             <td class="delete delete-check-mobile">
               <input type="checkbox" name="id[]" value="<%= price.id %>">
             </td>
-            <% if current_user.multi_market_membership? %>
+            <% if current_user.multi_market_membership_broadly_speaking? %>
             <td class="market">
               <div class="edit-trigger view-cell">
                 <%= price.market_name %>
               </div>
               <div class="edit-cell">
                 <% if organization_can_access?(@product.organization, :advanced_pricing) %>
-                <%= f.select :market_id, current_user.markets_for_select, {include_blank: 'All Markets'}, {class: "price_market_id"} %>
+                <%= f.select :market_id, current_user.all_markets_for_select, {include_blank: 'All Markets'}, {class: "price_market_id"} %>
                 <% else %>
                   <%= price.market_name %>
                 <% end %>
@@ -82,7 +82,7 @@
               </div>
               <div class="edit-cell">
                 <% if organization_can_access?(@product.organization, :advanced_pricing) %>
-                  <%= f.select :organization_id, current_user.buyers_for_select, {include_blank: 'All Buyers'}, {class: "price_buyer_id"} %>
+                  <%= f.select :organization_id, current_user.all_buyers_for_select, {include_blank: 'All Buyers'}, {class: "price_buyer_id"} %>
                 <% else %>
                   <%= price.organization_name %>
                 <% end %>
