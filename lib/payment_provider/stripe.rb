@@ -113,7 +113,8 @@ module PaymentProvider
           customer: customer,
           destination: destination, 
           statement_descriptor: descriptor,
-          application_fee: fee_in_cents
+          application_fee: fee_in_cents,
+          description: "Charge for #{order.order_number}"
         }
 
         if destination.nil?

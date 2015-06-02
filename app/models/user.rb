@@ -362,7 +362,7 @@ class User < ActiveRecord::Base
   def markets_for_non_admin
     managed_market_ids = managed_markets.pluck(:id)
 
-    organization_member_market_ids = organizations.map(&:market_ids).flatten
+    organization_member_market_ids = organizations.map(&:all_market_ids).flatten
     Market.where(id: (managed_market_ids + organization_member_market_ids))
   end
 

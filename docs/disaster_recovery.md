@@ -28,7 +28,7 @@ The app relies on a CNAME for `*.localorbit.com` but that points to `app.localor
 
 The PostgreSQL database is backed up by Heroku (PG Backups addon) daily.
 
-Running `$ heroku pgbackups` gives a list of available backup files and you can download/restore/etc using the commands availble. See: `$ heroku help pgbackups`
+Running `$ heroku pg:backups` gives a list of available backup files and you can download/restore/etc using the commands availble. See: `$ heroku help pg:backups`
 
 A daily backup is also stored offsite in an AWS S3 bucket in a different region. If Heroku is unavailable, you can sign in to S3 and download the backup.
 
