@@ -43,7 +43,8 @@ class StoreOrderFees
   end
 
   def update_accounting_fees_for(item)
-    item.market_seller_fee      = calculated_fee(item, market.market_seller_fee)
+    # item.market_seller_fee      = calculated_fee(item, market.market_seller_fee) # WRONG
+    item.market_seller_fee = (market.market_seller_fee / 100) * (item.gross_total - item.discount_seller) # MORE RIGHTER
     item.local_orbit_seller_fee = calculated_fee(item, market.local_orbit_seller_fee)
     item.local_orbit_market_fee = calculated_fee(item, market.local_orbit_market_fee)
     if PaymentProvider.is_balanced?(payment_provider)
