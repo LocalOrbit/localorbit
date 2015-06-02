@@ -1,0 +1,115 @@
+[2015-06-02 11:03:13 -0400] - UpdateStripeCustomerMetadataForMarket - Allen Market Place (17) - ====================================================================================================
+[2015-06-02 11:03:13 -0400] - UpdateStripeCustomerMetadataForMarket - Allen Market Place (17) -  Allen Market Place (17)
+[2015-06-02 11:03:13 -0400] - UpdateStripeCustomerMetadataForMarket - Allen Market Place (17) -  Updating stripe customer metadata for Market and all Organizations.
+[2015-06-02 11:03:13 -0400] - UpdateStripeCustomerMetadataForMarket - Allen Market Place (17) - 
+[2015-06-02 11:03:13 -0400] - UpdateStripeCustomerMetadataForMarket - Allen Market Place (17) -  Rails.env: production
+[2015-06-02 11:03:13 -0400] - UpdateStripeCustomerMetadataForMarket - Allen Market Place (17) -  Stripe key: pk_live_j85VTsrz51POrss3ni460qaf
+[2015-06-02 11:03:13 -0400] - UpdateStripeCustomerMetadataForMarket - Allen Market Place (17) - ====================================================================================================
+[2015-06-02 11:03:13 -0400] - UpdateStripeCustomerMetadataForMarket - Allen Market Place (17) - No Stripe Customer linked to this Market.
+[2015-06-02 11:03:13 -0400] - UpdateStripeCustomerMetadataForMarket - Allen Market Place (17) - No Stripe Customer linked to start up (3860).
+[2015-06-02 11:03:13 -0400] - UpdateStripeCustomerMetadataForMarket - Allen Market Place (17) - No Stripe Customer linked to Teff-riffic (3829).
+[2015-06-02 11:03:13 -0400] - UpdateStripeCustomerMetadataForMarket - Allen Market Place (17) - No Stripe Customer linked to Claire Bowman (3703).
+[2015-06-02 11:03:13 -0400] - UpdateStripeCustomerMetadataForMarket - Allen Market Place (17) - No Stripe Customer linked to Paige Filice (3684).
+[2015-06-02 11:03:13 -0400] - UpdateStripeCustomerMetadataForMarket - Allen Market Place (17) - No Stripe Customer linked to Pure Foods Home Delivery (3662).
+[2015-06-02 11:03:13 -0400] - UpdateStripeCustomerMetadataForMarket - Allen Market Place (17) - No Stripe Customer linked to Batteese Creek Farm (3636).
+[2015-06-02 11:03:13 -0400] - UpdateStripeCustomerMetadataForMarket - Allen Market Place (17) - No Stripe Customer linked to CSUS Hoophouses for Health (3609).
+[2015-06-02 11:03:14 -0400] - UpdateStripeCustomerMetadataForMarket - Allen Market Place (17) - Updating Organization Cultured (3588)'s Stripe Customer cus_66zfoAmQ2Tf5CL with {:description=>"Cultured", :metadata=>{"lo.entity_id"=>3588, "lo.entity_type"=>"organization"}}
+[2015-06-02 11:03:14 -0400] - UpdateStripeCustomerMetadataForMarket - Allen Market Place (17) - No Stripe Customer linked to Leo and Betsy Dion (3520).
+[2015-06-02 11:03:15 -0400] - UpdateStripeCustomerMetadataForMarket - Allen Market Place (17) - Updating Organization Lansing Eastern HS (3434)'s Stripe Customer cus_61sVm0IQpiBFSE with {:description=>"Lansing Eastern HS", :metadata=>{"lo.entity_id"=>3434, "lo.entity_type"=>"organization"}}
+[2015-06-02 11:03:15 -0400] - UpdateStripeCustomerMetadataForMarket - Allen Market Place (17) - No Stripe Customer linked to Lacey Ingrao (3410).
+[2015-06-02 11:03:15 -0400] - UpdateStripeCustomerMetadataForMarket - Allen Market Place (17) - No Stripe Customer linked to Easy Grubs LLC (3337).
+[2015-06-02 11:03:15 -0400] - UpdateStripeCustomerMetadataForMarket - Allen Market Place (17) - No Stripe Customer linked to DexSys (3180).
+[2015-06-02 11:03:15 -0400] - UpdateStripeCustomerMetadataForMarket - Allen Market Place (17) - No Stripe Customer linked to Jeff Girbach (3157).
+[2015-06-02 11:03:15 -0400] - UpdateStripeCustomerMetadataForMarket - Allen Market Place (17) - No Stripe Customer linked to Rooted Home Farm & Goods (3078).
+[2015-06-02 11:03:15 -0400] - UpdateStripeCustomerMetadataForMarket - Allen Market Place (17) - No Stripe Customer linked to Anne Ridge Farms  (2960).
+[2015-06-02 11:03:15 -0400] - UpdateStripeCustomerMetadataForMarket - Allen Market Place (17) - No Stripe Customer linked to Michaelle Rehmann (2905).
+[2015-06-02 11:03:16 -0400] - UpdateStripeCustomerMetadataForMarket - Allen Market Place (17) - Updating Organization Bluegrass Farm (2904)'s Stripe Customer cus_5uQ44jWj9EUeQf with {:description=>"Bluegrass Farm", :metadata=>{"lo.entity_id"=>2904, "lo.entity_type"=>"organization"}}
+[2015-06-02 11:03:16 -0400] - UpdateStripeCustomerMetadataForMarket - Allen Market Place (17) - No Stripe Customer linked to R.Neuner Consulting (2864).
+[2015-06-02 11:03:16 -0400] - UpdateStripeCustomerMetadataForMarket - Allen Market Place (17) - No Stripe Customer linked to Buddha Belly Acres (2841).
+[2015-06-02 11:03:16 -0400] - UpdateStripeCustomerMetadataForMarket - Allen Market Place (17) - No Stripe Customer linked to Willowbrook Farm (2729).
+[2015-06-02 11:03:16 -0400] - UpdateStripeCustomerMetadataForMarket - Allen Market Place (17) - No Stripe Customer linked to Two Pines Farm (2673).
+[2015-06-02 11:03:16 -0400] - UpdateStripeCustomerMetadataForMarket - Allen Market Place (17) - No Stripe Customer linked to Half Barn Farm (2672).
+[2015-06-02 11:03:16 -0400] - UpdateStripeCustomerMetadataForMarket - Allen Market Place (17) - No Stripe Customer linked to Peck of Pickles, LLC (2638).
+[2015-06-02 11:03:17 -0400] - UpdateStripeCustomerMetadataForMarket - Allen Market Place (17) - Updating Organization Moores Park Neighborhood (2629)'s Stripe Customer cus_5uQ5QfKFifIP9y with {:description=>"Moores Park Neighborhood", :metadata=>{"lo.entity_id"=>2629, "lo.entity_type"=>"organization"}}
+[2015-06-02 11:03:17 -0400] - UpdateStripeCustomerMetadataForMarket - Allen Market Place (17) - No Stripe Customer linked to Boetjes Food (2628).
+[2015-06-02 11:03:18 -0400] - UpdateStripeCustomerMetadataForMarket - Allen Market Place (17) - Updating Organization Stone E River Ranch (2604)'s Stripe Customer cus_5vQuEhv3UMMpnZ with {:description=>"Stone E River Ranch", :metadata=>{"lo.entity_id"=>2604, "lo.entity_type"=>"organization"}}
+[2015-06-02 11:03:18 -0400] - UpdateStripeCustomerMetadataForMarket - Allen Market Place (17) - No Stripe Customer linked to Manna Mills (2572).
+[2015-06-02 11:03:18 -0400] - UpdateStripeCustomerMetadataForMarket - Allen Market Place (17) - No Stripe Customer linked to Old Town General Store (2552).
+[2015-06-02 11:03:18 -0400] - UpdateStripeCustomerMetadataForMarket - Allen Market Place (17) - No Stripe Customer linked to Michael Wissel  (2540).
+[2015-06-02 11:03:18 -0400] - UpdateStripeCustomerMetadataForMarket - Allen Market Place (17) - No Stripe Customer linked to Ham Sweet Farm (2538).
+[2015-06-02 11:03:18 -0400] - UpdateStripeCustomerMetadataForMarket - Allen Market Place (17) - No Stripe Customer linked to Lisa Levine (2487).
+[2015-06-02 11:03:19 -0400] - UpdateStripeCustomerMetadataForMarket - Allen Market Place (17) - Updating Organization Rita O'Brien (2484)'s Stripe Customer cus_5uQ4ZUeg8ofHsg with {:description=>"Rita O'Brien", :metadata=>{"lo.entity_id"=>2484, "lo.entity_type"=>"organization"}}
+[2015-06-02 11:03:19 -0400] - UpdateStripeCustomerMetadataForMarket - Allen Market Place (17) - No Stripe Customer linked to Evans Family (2481).
+[2015-06-02 11:03:19 -0400] - UpdateStripeCustomerMetadataForMarket - Allen Market Place (17) - No Stripe Customer linked to Bloom Coffee Roasters (2457).
+[2015-06-02 11:03:19 -0400] - UpdateStripeCustomerMetadataForMarket - Allen Market Place (17) - No Stripe Customer linked to Elena Tsoy (2435).
+[2015-06-02 11:03:19 -0400] - UpdateStripeCustomerMetadataForMarket - Allen Market Place (17) - No Stripe Customer linked to Trillium Wood Farm (2423).
+[2015-06-02 11:03:20 -0400] - UpdateStripeCustomerMetadataForMarket - Allen Market Place (17) - No Stripe Customer linked to Francis Street Co-op (2415).
+[2015-06-02 11:03:21 -0400] - UpdateStripeCustomerMetadataForMarket - Allen Market Place (17) - Updating Organization Finley's Grill  and Smokehouse (2410)'s Stripe Customer cus_5uQ4Dfc0edHRfq with {:description=>"Finley's Grill  and Smokehouse", :metadata=>{"lo.entity_id"=>2410, "lo.entity_type"=>"organization"}}
+[2015-06-02 11:03:21 -0400] - UpdateStripeCustomerMetadataForMarket - Allen Market Place (17) - No Stripe Customer linked to turkeyman (2355).
+[2015-06-02 11:03:21 -0400] - UpdateStripeCustomerMetadataForMarket - Allen Market Place (17) - No Stripe Customer linked to Jackson household (2350).
+[2015-06-02 11:03:22 -0400] - UpdateStripeCustomerMetadataForMarket - Allen Market Place (17) - Updating Organization The Local Grocer (2349)'s Stripe Customer cus_5uQ5oRtMODzVqa with {:description=>"The Local Grocer", :metadata=>{"lo.entity_id"=>2349, "lo.entity_type"=>"organization"}}
+[2015-06-02 11:03:23 -0400] - UpdateStripeCustomerMetadataForMarket - Allen Market Place (17) - Updating Organization Better Health Food Stores - West Saginaw (2345)'s Stripe Customer cus_5uQ476uszXDuLr with {:description=>"Better Health Food Stores - West Saginaw", :metadata=>{"lo.entity_id"=>2345, "lo.entity_type"=>"organization"}}
+[2015-06-02 11:03:24 -0400] - UpdateStripeCustomerMetadataForMarket - Allen Market Place (17) - Updating Organization The Warren (2344)'s Stripe Customer cus_5vQue6XTWlBQWU with {:description=>"The Warren", :metadata=>{"lo.entity_id"=>2344, "lo.entity_type"=>"organization"}}
+[2015-06-02 11:03:24 -0400] - UpdateStripeCustomerMetadataForMarket - Allen Market Place (17) - No Stripe Customer linked to Smith Floral & Greenhouses (2332).
+[2015-06-02 11:03:24 -0400] - UpdateStripeCustomerMetadataForMarket - Allen Market Place (17) - No Stripe Customer linked to Eaton Conservation District (2330).
+[2015-06-02 11:03:25 -0400] - UpdateStripeCustomerMetadataForMarket - Allen Market Place (17) - Updating Organization South Facing Farm and Orchard (2297)'s Stripe Customer cus_5uQ4wCdorTB1xv with {:description=>"South Facing Farm and Orchard", :metadata=>{"lo.entity_id"=>2297, "lo.entity_type"=>"organization"}}
+[2015-06-02 11:03:26 -0400] - UpdateStripeCustomerMetadataForMarket - Allen Market Place (17) - Updating Organization MSU CSS 424 (2290)'s Stripe Customer cus_5uQ4MvYMEPReWv with {:description=>"MSU CSS 424", :metadata=>{"lo.entity_id"=>2290, "lo.entity_type"=>"organization"}}
+[2015-06-02 11:03:26 -0400] - UpdateStripeCustomerMetadataForMarket - Allen Market Place (17) - No Stripe Customer linked to Mike Rann (2281).
+[2015-06-02 11:03:27 -0400] - UpdateStripeCustomerMetadataForMarket - Allen Market Place (17) - Updating Organization Twin Sprout Farms (2277)'s Stripe Customer cus_5vQtLPVtG0l2oR with {:description=>"Twin Sprout Farms", :metadata=>{"lo.entity_id"=>2277, "lo.entity_type"=>"organization"}}
+[2015-06-02 11:03:27 -0400] - UpdateStripeCustomerMetadataForMarket - Allen Market Place (17) - No Stripe Customer linked to - (2256).
+[2015-06-02 11:03:27 -0400] - UpdateStripeCustomerMetadataForMarket - Allen Market Place (17) - No Stripe Customer linked to golden harvest (2230).
+[2015-06-02 11:03:27 -0400] - UpdateStripeCustomerMetadataForMarket - Allen Market Place (17) - No Stripe Customer linked to The Urban Mushroom (2108).
+[2015-06-02 11:03:27 -0400] - UpdateStripeCustomerMetadataForMarket - Allen Market Place (17) - No Stripe Customer linked to springport pta (2107).
+[2015-06-02 11:03:28 -0400] - UpdateStripeCustomerMetadataForMarket - Allen Market Place (17) - Updating Organization Suzanne Love (2047)'s Stripe Customer cus_5uQ5WKTq7M0kKJ with {:description=>"Suzanne Love", :metadata=>{"lo.entity_id"=>2047, "lo.entity_type"=>"organization"}}
+[2015-06-02 11:03:28 -0400] - UpdateStripeCustomerMetadataForMarket - Allen Market Place (17) - No Stripe Customer linked to Go Green Trikes, LLC (2026).
+[2015-06-02 11:03:28 -0400] - UpdateStripeCustomerMetadataForMarket - Allen Market Place (17) - No Stripe Customer linked to Rothhorn (1977).
+[2015-06-02 11:03:28 -0400] - UpdateStripeCustomerMetadataForMarket - Allen Market Place (17) - No Stripe Customer linked to Rothhorn (1976).
+[2015-06-02 11:03:28 -0400] - UpdateStripeCustomerMetadataForMarket - Allen Market Place (17) - No Stripe Customer linked to Rothhorn (1975).
+[2015-06-02 11:03:29 -0400] - UpdateStripeCustomerMetadataForMarket - Allen Market Place (17) - Updating Organization Ten Hens Farm (1915)'s Stripe Customer cus_5uQ5VrGCszJigh with {:description=>"Ten Hens Farm", :metadata=>{"lo.entity_id"=>1915, "lo.entity_type"=>"organization"}}
+[2015-06-02 11:03:30 -0400] - UpdateStripeCustomerMetadataForMarket - Allen Market Place (17) - Updating Organization Rust Belt Roastery (1906)'s Stripe Customer cus_5uQ4nievLE4aio with {:description=>"Rust Belt Roastery", :metadata=>{"lo.entity_id"=>1906, "lo.entity_type"=>"organization"}}
+[2015-06-02 11:03:31 -0400] - UpdateStripeCustomerMetadataForMarket - Allen Market Place (17) - Updating Organization Heffron Farms Markets (1861)'s Stripe Customer cus_5uQ4M25y6TEvFS with {:description=>"Heffron Farms Markets", :metadata=>{"lo.entity_id"=>1861, "lo.entity_type"=>"organization"}}
+[2015-06-02 11:03:31 -0400] - UpdateStripeCustomerMetadataForMarket - Allen Market Place (17) - No Stripe Customer linked to East Lansing Food Co-Op (1850).
+[2015-06-02 11:03:31 -0400] - UpdateStripeCustomerMetadataForMarket - Allen Market Place (17) - No Stripe Customer linked to Kathreen Francis (1737).
+[2015-06-02 11:03:32 -0400] - UpdateStripeCustomerMetadataForMarket - Allen Market Place (17) - Updating Organization Paulette Granberry Russell (1729)'s Stripe Customer cus_5uQ4xYGS4jaZNe with {:description=>"Paulette Granberry Russell", :metadata=>{"lo.entity_id"=>1729, "lo.entity_type"=>"organization"}}
+[2015-06-02 11:03:32 -0400] - UpdateStripeCustomerMetadataForMarket - Allen Market Place (17) - No Stripe Customer linked to Heffron Farms Market (1679).
+[2015-06-02 11:03:33 -0400] - UpdateStripeCustomerMetadataForMarket - Allen Market Place (17) - Updating Organization Mid Michigan Consulting (1671)'s Stripe Customer cus_5uQ4hMwx19YoDV with {:description=>"Mid Michigan Consulting", :metadata=>{"lo.entity_id"=>1671, "lo.entity_type"=>"organization"}}
+[2015-06-02 11:03:33 -0400] - UpdateStripeCustomerMetadataForMarket - Allen Market Place (17) - No Stripe Customer linked to Mid MI Consulting (1622).
+[2015-06-02 11:03:35 -0400] - UpdateStripeCustomerMetadataForMarket - Allen Market Place (17) - Updating Organization Cake Art (1621)'s Stripe Customer cus_5uQ44jMPI62Krf with {:description=>"Cake Art", :metadata=>{"lo.entity_id"=>1621, "lo.entity_type"=>"organization"}}
+[2015-06-02 11:03:35 -0400] - UpdateStripeCustomerMetadataForMarket - Allen Market Place (17) - No Stripe Customer linked to Alec Aaron (1610).
+[2015-06-02 11:03:36 -0400] - UpdateStripeCustomerMetadataForMarket - Allen Market Place (17) - Updating Organization Hillcrest Organics (1598)'s Stripe Customer cus_5vQvviZyTF8gbf with {:description=>"Hillcrest Organics", :metadata=>{"lo.entity_id"=>1598, "lo.entity_type"=>"organization"}}
+[2015-06-02 11:03:36 -0400] - UpdateStripeCustomerMetadataForMarket - Allen Market Place (17) - No Stripe Customer linked to Green Gardens Community Farm (1597).
+[2015-06-02 11:03:36 -0400] - UpdateStripeCustomerMetadataForMarket - Allen Market Place (17) - No Stripe Customer linked to The Laughing Rooster (1592).
+[2015-06-02 11:03:36 -0400] - UpdateStripeCustomerMetadataForMarket - Allen Market Place (17) - No Stripe Customer linked to The Re-Generation (1579).
+[2015-06-02 11:03:36 -0400] - UpdateStripeCustomerMetadataForMarket - Allen Market Place (17) - No Stripe Customer linked to Greater Lansing Food Bank (1157).
+[2015-06-02 11:03:37 -0400] - UpdateStripeCustomerMetadataForMarket - Allen Market Place (17) - Updating Organization Fork in The Road Diner (1150)'s Stripe Customer cus_5uQ51gKgz4RcDv with {:description=>"Fork in The Road Diner", :metadata=>{"lo.entity_id"=>1150, "lo.entity_type"=>"organization"}}
+[2015-06-02 11:03:38 -0400] - UpdateStripeCustomerMetadataForMarket - Allen Market Place (17) - Updating Organization Grazing Fields Cooperative (1149)'s Stripe Customer cus_5uQ4t7j6EzXWLU with {:description=>"Grazing Fields Cooperative", :metadata=>{"lo.entity_id"=>1149, "lo.entity_type"=>"organization"}}
+[2015-06-02 11:03:38 -0400] - UpdateStripeCustomerMetadataForMarket - Allen Market Place (17) - No Stripe Customer linked to Upton Farms (454).
+[2015-06-02 11:03:38 -0400] - UpdateStripeCustomerMetadataForMarket - Allen Market Place (17) - No Stripe Customer linked to The Coffee Barrel (453).
+[2015-06-02 11:03:40 -0400] - UpdateStripeCustomerMetadataForMarket - Allen Market Place (17) - Updating Organization Lonesome Pines Beef (450)'s Stripe Customer cus_5vQuIIFkqyWXtL with {:description=>"Lonesome Pines Beef", :metadata=>{"lo.entity_id"=>450, "lo.entity_type"=>"organization"}}
+[2015-06-02 11:03:40 -0400] - UpdateStripeCustomerMetadataForMarket - Allen Market Place (17) - No Stripe Customer linked to Felzke Farms (447).
+[2015-06-02 11:03:40 -0400] - UpdateStripeCustomerMetadataForMarket - Allen Market Place (17) - No Stripe Customer linked to MANNA Acres (437).
+[2015-06-02 11:03:41 -0400] - UpdateStripeCustomerMetadataForMarket - Allen Market Place (17) - Updating Organization Titus Farms (429)'s Stripe Customer cus_5vQunABfCbsjzY with {:description=>"Titus Farms", :metadata=>{"lo.entity_id"=>429, "lo.entity_type"=>"organization"}}
+[2015-06-02 11:03:42 -0400] - UpdateStripeCustomerMetadataForMarket - Allen Market Place (17) - Updating Organization Glory Bee Sweet Treats (426)'s Stripe Customer cus_5uQ4QDZcHQ3yUT with {:description=>"Glory Bee Sweet Treats", :metadata=>{"lo.entity_id"=>426, "lo.entity_type"=>"organization"}}
+[2015-06-02 11:03:42 -0400] - UpdateStripeCustomerMetadataForMarket - Allen Market Place (17) - No Stripe Customer linked to Break O' Day Farm llc (425).
+[2015-06-02 11:03:42 -0400] - UpdateStripeCustomerMetadataForMarket - Allen Market Place (17) - No Stripe Customer linked to American Delicacy LLC (414).
+[2015-06-02 11:03:42 -0400] - UpdateStripeCustomerMetadataForMarket - Allen Market Place (17) - No Stripe Customer linked to Craft & Mason Roasting Co. (402).
+[2015-06-02 11:03:42 -0400] - UpdateStripeCustomerMetadataForMarket - Allen Market Place (17) - No Stripe Customer linked to Macs Market (399).
+[2015-06-02 11:03:43 -0400] - UpdateStripeCustomerMetadataForMarket - Allen Market Place (17) - Updating Organization Wildflower Eco Farm (393)'s Stripe Customer cus_5vQumRG62jDozd with {:description=>"Wildflower Eco Farm", :metadata=>{"lo.entity_id"=>393, "lo.entity_type"=>"organization"}}
+[2015-06-02 11:03:43 -0400] - UpdateStripeCustomerMetadataForMarket - Allen Market Place (17) - No Stripe Customer linked to Full Circle LLC (392).
+[2015-06-02 11:03:43 -0400] - UpdateStripeCustomerMetadataForMarket - Allen Market Place (17) - No Stripe Customer linked to Lansing Roots (383).
+[2015-06-02 11:03:43 -0400] - UpdateStripeCustomerMetadataForMarket - Allen Market Place (17) - No Stripe Customer linked to Tirrell Farmstead Specialties (377).
+[2015-06-02 11:03:44 -0400] - UpdateStripeCustomerMetadataForMarket - Allen Market Place (17) - Updating Organization Peckham Farms (373)'s Stripe Customer cus_5uQ52hkh8ifx92 with {:description=>"Peckham Farms", :metadata=>{"lo.entity_id"=>373, "lo.entity_type"=>"organization"}}
+[2015-06-02 11:03:45 -0400] - UpdateStripeCustomerMetadataForMarket - Allen Market Place (17) - Updating Organization Country Mill Farms (372)'s Stripe Customer cus_5uQ5TYCtEkACwm with {:description=>"Country Mill Farms", :metadata=>{"lo.entity_id"=>372, "lo.entity_type"=>"organization"}}
+[2015-06-02 11:03:47 -0400] - UpdateStripeCustomerMetadataForMarket - Allen Market Place (17) - Updating Organization Hickory Knoll Farms Creamery, LLC (371)'s Stripe Customer cus_5vQuW8PnAbWF9t with {:description=>"Hickory Knoll Farms Creamery, LLC", :metadata=>{"lo.entity_id"=>371, "lo.entity_type"=>"organization"}}
+[2015-06-02 11:03:48 -0400] - UpdateStripeCustomerMetadataForMarket - Allen Market Place (17) - Updating Organization The VanFleet Farm (370)'s Stripe Customer cus_5vQtVXS6oDg2DP with {:description=>"The VanFleet Farm", :metadata=>{"lo.entity_id"=>370, "lo.entity_type"=>"organization"}}
+[2015-06-02 11:03:48 -0400] - UpdateStripeCustomerMetadataForMarket - Allen Market Place (17) - No Stripe Customer linked to Old Town General Store (368).
+[2015-06-02 11:03:48 -0400] - UpdateStripeCustomerMetadataForMarket - Allen Market Place (17) - No Stripe Customer linked to Just For You Farm (361).
+[2015-06-02 11:03:49 -0400] - UpdateStripeCustomerMetadataForMarket - Allen Market Place (17) - Updating Organization AppleSchram (360)'s Stripe Customer cus_5uQ5tls7FxZRRU with {:description=>"AppleSchram", :metadata=>{"lo.entity_id"=>360, "lo.entity_type"=>"organization"}}
+[2015-06-02 11:03:50 -0400] - UpdateStripeCustomerMetadataForMarket - Allen Market Place (17) - Updating Organization CBI's Giving Tree Farm (358)'s Stripe Customer cus_5uQ5y7WZmNuygA with {:description=>"CBI's Giving Tree Farm", :metadata=>{"lo.entity_id"=>358, "lo.entity_type"=>"organization"}}
+[2015-06-02 11:03:50 -0400] - UpdateStripeCustomerMetadataForMarket - Allen Market Place (17) - No Stripe Customer linked to Capital Village Trade Cooperative (356).
+[2015-06-02 11:03:51 -0400] - UpdateStripeCustomerMetadataForMarket - Allen Market Place (17) - Updating Organization Stone Circle Bakehouse (346)'s Stripe Customer cus_5uQ4nK6XPFoWS5 with {:description=>"Stone Circle Bakehouse", :metadata=>{"lo.entity_id"=>346, "lo.entity_type"=>"organization"}}
+[2015-06-02 11:03:52 -0400] - UpdateStripeCustomerMetadataForMarket - Allen Market Place (17) - Updating Organization Green Eagle Farm (345)'s Stripe Customer cus_5vQtJewwi0cOCp with {:description=>"Green Eagle Farm", :metadata=>{"lo.entity_id"=>345, "lo.entity_type"=>"organization"}}
+[2015-06-02 11:03:54 -0400] - UpdateStripeCustomerMetadataForMarket - Allen Market Place (17) - Updating Organization Hunter Park GardenHouse (344)'s Stripe Customer cus_5uQ5bfr8vOkctj with {:description=>"Hunter Park GardenHouse", :metadata=>{"lo.entity_id"=>344, "lo.entity_type"=>"organization"}}
+[2015-06-02 11:03:54 -0400] - UpdateStripeCustomerMetadataForMarket - Allen Market Place (17) - No Stripe Customer linked to Hillcrest Farms (343).
+[2015-06-02 11:03:55 -0400] - UpdateStripeCustomerMetadataForMarket - Allen Market Place (17) - Updating Organization Urbandale Farm (342)'s Stripe Customer cus_5uS7J1Pbx60tlK with {:description=>"Urbandale Farm", :metadata=>{"lo.entity_id"=>342, "lo.entity_type"=>"organization"}}
+[2015-06-02 11:03:56 -0400] - UpdateStripeCustomerMetadataForMarket - Allen Market Place (17) - Updating Organization Winters Calico Fields Farm (341)'s Stripe Customer cus_5vQu8Cwop3nXv4 with {:description=>"Winters Calico Fields Farm", :metadata=>{"lo.entity_id"=>341, "lo.entity_type"=>"organization"}}

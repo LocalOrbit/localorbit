@@ -1,0 +1,10 @@
+[2015-06-02 11:11:14 -0400] - UpdateStripeCustomerMetadataForMarket - American Hazelnut Company (46) - ====================================================================================================
+[2015-06-02 11:11:14 -0400] - UpdateStripeCustomerMetadataForMarket - American Hazelnut Company (46) -  American Hazelnut Company (46)
+[2015-06-02 11:11:14 -0400] - UpdateStripeCustomerMetadataForMarket - American Hazelnut Company (46) -  Updating stripe customer metadata for Market and all Organizations.
+[2015-06-02 11:11:14 -0400] - UpdateStripeCustomerMetadataForMarket - American Hazelnut Company (46) - 
+[2015-06-02 11:11:14 -0400] - UpdateStripeCustomerMetadataForMarket - American Hazelnut Company (46) -  Rails.env: production
+[2015-06-02 11:11:14 -0400] - UpdateStripeCustomerMetadataForMarket - American Hazelnut Company (46) -  Stripe key: pk_live_j85VTsrz51POrss3ni460qaf
+[2015-06-02 11:11:14 -0400] - UpdateStripeCustomerMetadataForMarket - American Hazelnut Company (46) - ====================================================================================================
+[2015-06-02 11:11:15 -0400] - UpdateStripeCustomerMetadataForMarket - American Hazelnut Company (46) - Updating Market's Stripe Customer with {:description=>"American Hazelnut Company", :metadata=>{"lo.entity_id"=>46, "lo.entity_type"=>"market"}}
+[2015-06-02 11:11:16 -0400] - UpdateStripeCustomerMetadataForMarket - American Hazelnut Company (46) - Updating Organization Test Buyer (2304)'s Stripe Customer cus_5uQ4oVqqgmNgQ3 with {:description=>"Test Buyer", :metadata=>{"lo.entity_id"=>2304, "lo.entity_type"=>"organization"}}
+[2015-06-02 11:11:17 -0400] - UpdateStripeCustomerMetadataForMarket - American Hazelnut Company (46) - Updating Organization Test Grower (2209)'s Stripe Customer cus_5uQ4cdmlIKyStn with {:description=>"Test Grower", :metadata=>{"lo.entity_id"=>2209, "lo.entity_type"=>"organization"}}

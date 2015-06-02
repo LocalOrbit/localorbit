@@ -1,0 +1,8 @@
+[2015-06-02 11:20:00 -0400] - UpdateStripeCustomerMetadataForMarket - All Things Food Hub (98) - ====================================================================================================
+[2015-06-02 11:20:00 -0400] - UpdateStripeCustomerMetadataForMarket - All Things Food Hub (98) -  All Things Food Hub (98)
+[2015-06-02 11:20:00 -0400] - UpdateStripeCustomerMetadataForMarket - All Things Food Hub (98) -  Updating stripe customer metadata for Market and all Organizations.
+[2015-06-02 11:20:00 -0400] - UpdateStripeCustomerMetadataForMarket - All Things Food Hub (98) - 
+[2015-06-02 11:20:00 -0400] - UpdateStripeCustomerMetadataForMarket - All Things Food Hub (98) -  Rails.env: production
+[2015-06-02 11:20:00 -0400] - UpdateStripeCustomerMetadataForMarket - All Things Food Hub (98) -  Stripe key: pk_live_j85VTsrz51POrss3ni460qaf
+[2015-06-02 11:20:00 -0400] - UpdateStripeCustomerMetadataForMarket - All Things Food Hub (98) - ====================================================================================================
+[2015-06-02 11:20:01 -0400] - UpdateStripeCustomerMetadataForMarket - All Things Food Hub (98) - Updating Market's Stripe Customer with {:description=>"All Things Food Hub", :metadata=>{"lo.entity_id"=>98, "lo.entity_type"=>"market"}}

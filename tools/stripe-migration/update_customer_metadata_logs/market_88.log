@@ -1,0 +1,56 @@
+[2015-06-02 11:17:44 -0400] - UpdateStripeCustomerMetadataForMarket - Chesapeake Farm to Table (88) - ====================================================================================================
+[2015-06-02 11:17:44 -0400] - UpdateStripeCustomerMetadataForMarket - Chesapeake Farm to Table (88) -  Chesapeake Farm to Table (88)
+[2015-06-02 11:17:44 -0400] - UpdateStripeCustomerMetadataForMarket - Chesapeake Farm to Table (88) -  Updating stripe customer metadata for Market and all Organizations.
+[2015-06-02 11:17:44 -0400] - UpdateStripeCustomerMetadataForMarket - Chesapeake Farm to Table (88) - 
+[2015-06-02 11:17:44 -0400] - UpdateStripeCustomerMetadataForMarket - Chesapeake Farm to Table (88) -  Rails.env: production
+[2015-06-02 11:17:44 -0400] - UpdateStripeCustomerMetadataForMarket - Chesapeake Farm to Table (88) -  Stripe key: pk_live_j85VTsrz51POrss3ni460qaf
+[2015-06-02 11:17:44 -0400] - UpdateStripeCustomerMetadataForMarket - Chesapeake Farm to Table (88) - ====================================================================================================
+[2015-06-02 11:17:46 -0400] - UpdateStripeCustomerMetadataForMarket - Chesapeake Farm to Table (88) - Updating Market's Stripe Customer with {:description=>"Chesapeake Farm to Table", :metadata=>{"lo.entity_id"=>88, "lo.entity_type"=>"market"}}
+[2015-06-02 11:17:46 -0400] - UpdateStripeCustomerMetadataForMarket - Chesapeake Farm to Table (88) - No Stripe Customer linked to Parts & Labor (3997).
+[2015-06-02 11:17:46 -0400] - UpdateStripeCustomerMetadataForMarket - Chesapeake Farm to Table (88) - No Stripe Customer linked to Le Garage (3957).
+[2015-06-02 11:17:47 -0400] - UpdateStripeCustomerMetadataForMarket - Chesapeake Farm to Table (88) - Updating Organization Woodberry Kitchen (3936)'s Stripe Customer cus_6JO0PxMoITT12K with {:description=>"Woodberry Kitchen", :metadata=>{"lo.entity_id"=>3936, "lo.entity_type"=>"organization"}}
+[2015-06-02 11:17:47 -0400] - UpdateStripeCustomerMetadataForMarket - Chesapeake Farm to Table (88) - No Stripe Customer linked to Butterbee Farm (3924).
+[2015-06-02 11:17:47 -0400] - UpdateStripeCustomerMetadataForMarket - Chesapeake Farm to Table (88) - No Stripe Customer linked to Tooloulou (3923).
+[2015-06-02 11:17:48 -0400] - UpdateStripeCustomerMetadataForMarket - Chesapeake Farm to Table (88) - Updating Organization Peters Inn (3909)'s Stripe Customer cus_6JNYGV2exKFm63 with {:description=>"Peters Inn", :metadata=>{"lo.entity_id"=>3909, "lo.entity_type"=>"organization"}}
+[2015-06-02 11:17:48 -0400] - UpdateStripeCustomerMetadataForMarket - Chesapeake Farm to Table (88) - No Stripe Customer linked to Young Sohn Gardens (3886).
+[2015-06-02 11:17:48 -0400] - UpdateStripeCustomerMetadataForMarket - Chesapeake Farm to Table (88) - No Stripe Customer linked to Hayfields Country Club (3877).
+[2015-06-02 11:17:48 -0400] - UpdateStripeCustomerMetadataForMarket - Chesapeake Farm to Table (88) - No Stripe Customer linked to Catonsville Cooperative Market (3846).
+[2015-06-02 11:17:48 -0400] - UpdateStripeCustomerMetadataForMarket - Chesapeake Farm to Table (88) - No Stripe Customer linked to Catonsville Cooperativekitkatinfl@gmail.com (3845).
+[2015-06-02 11:17:49 -0400] - UpdateStripeCustomerMetadataForMarket - Chesapeake Farm to Table (88) - Updating Organization the arthouse (3843)'s Stripe Customer cus_6Gh6BJiP4SAEpG with {:description=>"the arthouse", :metadata=>{"lo.entity_id"=>3843, "lo.entity_type"=>"organization"}}
+[2015-06-02 11:17:49 -0400] - UpdateStripeCustomerMetadataForMarket - Chesapeake Farm to Table (88) - No Stripe Customer linked to TwoBootsBaltimore (3822).
+[2015-06-02 11:17:49 -0400] - UpdateStripeCustomerMetadataForMarket - Chesapeake Farm to Table (88) - No Stripe Customer linked to Two Boots Baltimore (3806).
+[2015-06-02 11:17:49 -0400] - UpdateStripeCustomerMetadataForMarket - Chesapeake Farm to Table (88) - No Stripe Customer linked to Two Boots Baltimore (3805).
+[2015-06-02 11:17:49 -0400] - UpdateStripeCustomerMetadataForMarket - Chesapeake Farm to Table (88) - No Stripe Customer linked to Katie's Catering (3789).
+[2015-06-02 11:17:49 -0400] - UpdateStripeCustomerMetadataForMarket - Chesapeake Farm to Table (88) - No Stripe Customer linked to Birroteca (3777).
+[2015-06-02 11:17:49 -0400] - UpdateStripeCustomerMetadataForMarket - Chesapeake Farm to Table (88) - No Stripe Customer linked to Maggies Farm (3769).
+[2015-06-02 11:17:50 -0400] - UpdateStripeCustomerMetadataForMarket - Chesapeake Farm to Table (88) - Updating Organization Bookmakers (3737)'s Stripe Customer cus_6CdRqmcOWFBpps with {:description=>"Bookmakers", :metadata=>{"lo.entity_id"=>3737, "lo.entity_type"=>"organization"}}
+[2015-06-02 11:17:51 -0400] - UpdateStripeCustomerMetadataForMarket - Chesapeake Farm to Table (88) - Updating Organization Herb & Soul Express (3736)'s Stripe Customer cus_6ChgfpyyPr4Qva with {:description=>"Herb & Soul Express", :metadata=>{"lo.entity_id"=>3736, "lo.entity_type"=>"organization"}}
+[2015-06-02 11:17:51 -0400] - UpdateStripeCustomerMetadataForMarket - Chesapeake Farm to Table (88) - No Stripe Customer linked to HEX Ferments (3695).
+[2015-06-02 11:17:51 -0400] - UpdateStripeCustomerMetadataForMarket - Chesapeake Farm to Table (88) - No Stripe Customer linked to Wild Peace Farm (3677).
+[2015-06-02 11:17:52 -0400] - UpdateStripeCustomerMetadataForMarket - Chesapeake Farm to Table (88) - Updating Organization The Wine Market Bistro (3653)'s Stripe Customer cus_69FRAkvMolluRw with {:description=>"The Wine Market Bistro", :metadata=>{"lo.entity_id"=>3653, "lo.entity_type"=>"organization"}}
+[2015-06-02 11:17:52 -0400] - UpdateStripeCustomerMetadataForMarket - Chesapeake Farm to Table (88) - No Stripe Customer linked to Talmar Gardens & Horticultural Therapy Center (3650).
+[2015-06-02 11:17:52 -0400] - UpdateStripeCustomerMetadataForMarket - Chesapeake Farm to Table (88) - No Stripe Customer linked to Pearlstone Center (3643).
+[2015-06-02 11:17:52 -0400] - UpdateStripeCustomerMetadataForMarket - Chesapeake Farm to Table (88) - No Stripe Customer linked to Aromes restaurant  (3642).
+[2015-06-02 11:17:52 -0400] - UpdateStripeCustomerMetadataForMarket - Chesapeake Farm to Table (88) - No Stripe Customer linked to Aromes restaurant  (3641).
+[2015-06-02 11:17:53 -0400] - UpdateStripeCustomerMetadataForMarket - Chesapeake Farm to Table (88) - Updating Organization Gertrude's (3630)'s Stripe Customer cus_6EP53h6qAEfHfQ with {:description=>"Gertrude's", :metadata=>{"lo.entity_id"=>3630, "lo.entity_type"=>"organization"}}
+[2015-06-02 11:17:53 -0400] - UpdateStripeCustomerMetadataForMarket - Chesapeake Farm to Table (88) - No Stripe Customer linked to Wild Peace Farm (3611).
+[2015-06-02 11:17:53 -0400] - UpdateStripeCustomerMetadataForMarket - Chesapeake Farm to Table (88) - No Stripe Customer linked to Little Gunpowder Farm (3598).
+[2015-06-02 11:17:53 -0400] - UpdateStripeCustomerMetadataForMarket - Chesapeake Farm to Table (88) - No Stripe Customer linked to Woodberry Pantry (3597).
+[2015-06-02 11:17:53 -0400] - UpdateStripeCustomerMetadataForMarket - Chesapeake Farm to Table (88) - No Stripe Customer linked to Plantbar, LLC (3593).
+[2015-06-02 11:17:53 -0400] - UpdateStripeCustomerMetadataForMarket - Chesapeake Farm to Table (88) - No Stripe Customer linked to Local Pie (3578).
+[2015-06-02 11:17:53 -0400] - UpdateStripeCustomerMetadataForMarket - Chesapeake Farm to Table (88) - No Stripe Customer linked to Calvert's Gift Farm (3575).
+[2015-06-02 11:17:53 -0400] - UpdateStripeCustomerMetadataForMarket - Chesapeake Farm to Table (88) - No Stripe Customer linked to Three Springs Fruit Farm (3567).
+[2015-06-02 11:17:53 -0400] - UpdateStripeCustomerMetadataForMarket - Chesapeake Farm to Table (88) - No Stripe Customer linked to Roberts Roost Farm (3565).
+[2015-06-02 11:17:53 -0400] - UpdateStripeCustomerMetadataForMarket - Chesapeake Farm to Table (88) - No Stripe Customer linked to Sweet Nature Farm (3564).
+[2015-06-02 11:17:53 -0400] - UpdateStripeCustomerMetadataForMarket - Chesapeake Farm to Table (88) - No Stripe Customer linked to Oak Spring Farm (3554).
+[2015-06-02 11:17:54 -0400] - UpdateStripeCustomerMetadataForMarket - Chesapeake Farm to Table (88) - Updating Organization Aromes restaurant (3551)'s Stripe Customer cus_68cCZsYQeEaQiW with {:description=>"Aromes restaurant", :metadata=>{"lo.entity_id"=>3551, "lo.entity_type"=>"organization"}}
+[2015-06-02 11:17:54 -0400] - UpdateStripeCustomerMetadataForMarket - Chesapeake Farm to Table (88) - No Stripe Customer linked to Clementine (3547).
+[2015-06-02 11:17:54 -0400] - UpdateStripeCustomerMetadataForMarket - Chesapeake Farm to Table (88) - No Stripe Customer linked to Pen & Quill (3543).
+[2015-06-02 11:17:54 -0400] - UpdateStripeCustomerMetadataForMarket - Chesapeake Farm to Table (88) - No Stripe Customer linked to Herb & Soul  (3534).
+[2015-06-02 11:17:55 -0400] - UpdateStripeCustomerMetadataForMarket - Chesapeake Farm to Table (88) - Updating Organization Bottega (3529)'s Stripe Customer cus_68SYEUb2uR6XoR with {:description=>"Bottega", :metadata=>{"lo.entity_id"=>3529, "lo.entity_type"=>"organization"}}
+[2015-06-02 11:17:56 -0400] - UpdateStripeCustomerMetadataForMarket - Chesapeake Farm to Table (88) - Updating Organization Local Pie (3523)'s Stripe Customer cus_68oWsi7sCpD5B4 with {:description=>"Local Pie", :metadata=>{"lo.entity_id"=>3523, "lo.entity_type"=>"organization"}}
+[2015-06-02 11:17:57 -0400] - UpdateStripeCustomerMetadataForMarket - Chesapeake Farm to Table (88) - Updating Organization Clementine (3521)'s Stripe Customer cus_6BfIjLb1RB2Go3 with {:description=>"Clementine", :metadata=>{"lo.entity_id"=>3521, "lo.entity_type"=>"organization"}}
+[2015-06-02 11:17:57 -0400] - UpdateStripeCustomerMetadataForMarket - Chesapeake Farm to Table (88) - No Stripe Customer linked to RASTAFARMI (3517).
+[2015-06-02 11:17:58 -0400] - UpdateStripeCustomerMetadataForMarket - Chesapeake Farm to Table (88) - Updating Organization Cafe Cito (3515)'s Stripe Customer cus_6JVpzjulM7ddRi with {:description=>"Cafe Cito", :metadata=>{"lo.entity_id"=>3515, "lo.entity_type"=>"organization"}}
+[2015-06-02 11:18:00 -0400] - UpdateStripeCustomerMetadataForMarket - Chesapeake Farm to Table (88) - Updating Organization Two Boots Farm (3508)'s Stripe Customer cus_64JJXZKFxBfwWo with {:description=>"Two Boots Farm", :metadata=>{"lo.entity_id"=>3508, "lo.entity_type"=>"organization"}}
+[2015-06-02 11:18:00 -0400] - UpdateStripeCustomerMetadataForMarket - Chesapeake Farm to Table (88) - No Stripe Customer linked to Berean Hill Farm (3472).

@@ -1,0 +1,254 @@
+[2015-06-02 11:18:57 -0400] - UpdateStripeCustomerMetadataForMarket - Apple Ridge Farm (18) - ====================================================================================================
+[2015-06-02 11:18:57 -0400] - UpdateStripeCustomerMetadataForMarket - Apple Ridge Farm (18) -  Apple Ridge Farm (18)
+[2015-06-02 11:18:57 -0400] - UpdateStripeCustomerMetadataForMarket - Apple Ridge Farm (18) -  Updating stripe customer metadata for Market and all Organizations.
+[2015-06-02 11:18:57 -0400] - UpdateStripeCustomerMetadataForMarket - Apple Ridge Farm (18) - 
+[2015-06-02 11:18:57 -0400] - UpdateStripeCustomerMetadataForMarket - Apple Ridge Farm (18) -  Rails.env: production
+[2015-06-02 11:18:57 -0400] - UpdateStripeCustomerMetadataForMarket - Apple Ridge Farm (18) -  Stripe key: pk_live_j85VTsrz51POrss3ni460qaf
+[2015-06-02 11:18:57 -0400] - UpdateStripeCustomerMetadataForMarket - Apple Ridge Farm (18) - ====================================================================================================
+[2015-06-02 11:18:57 -0400] - UpdateStripeCustomerMetadataForMarket - Apple Ridge Farm (18) - No Stripe Customer linked to this Market.
+[2015-06-02 11:18:57 -0400] - UpdateStripeCustomerMetadataForMarket - Apple Ridge Farm (18) - No Stripe Customer linked to Michael LaVigne (4077).
+[2015-06-02 11:18:57 -0400] - UpdateStripeCustomerMetadataForMarket - Apple Ridge Farm (18) - No Stripe Customer linked to Victoria Hulsizer (4075).
+[2015-06-02 11:18:57 -0400] - UpdateStripeCustomerMetadataForMarket - Apple Ridge Farm (18) - No Stripe Customer linked to Danna MacCorkle (4071).
+[2015-06-02 11:18:57 -0400] - UpdateStripeCustomerMetadataForMarket - Apple Ridge Farm (18) - No Stripe Customer linked to BRIGHTER DAY AT SMALE'S FARM (4064).
+[2015-06-02 11:18:57 -0400] - UpdateStripeCustomerMetadataForMarket - Apple Ridge Farm (18) - No Stripe Customer linked to Soulhaven (4055).
+[2015-06-02 11:18:58 -0400] - UpdateStripeCustomerMetadataForMarket - Apple Ridge Farm (18) - Updating Organization Castro Residence (4053)'s Stripe Customer cus_6LFAR81KQNUVW8 with {:description=>"Castro Residence", :metadata=>{"lo.entity_id"=>4053, "lo.entity_type"=>"organization"}}
+[2015-06-02 11:18:58 -0400] - UpdateStripeCustomerMetadataForMarket - Apple Ridge Farm (18) - No Stripe Customer linked to Shufeldt Family (4037).
+[2015-06-02 11:18:58 -0400] - UpdateStripeCustomerMetadataForMarket - Apple Ridge Farm (18) - No Stripe Customer linked to Melissa Colden (4024).
+[2015-06-02 11:18:58 -0400] - UpdateStripeCustomerMetadataForMarket - Apple Ridge Farm (18) - No Stripe Customer linked to Trevor (4018).
+[2015-06-02 11:18:58 -0400] - UpdateStripeCustomerMetadataForMarket - Apple Ridge Farm (18) - No Stripe Customer linked to Personal purchase (4017).
+[2015-06-02 11:18:58 -0400] - UpdateStripeCustomerMetadataForMarket - Apple Ridge Farm (18) - No Stripe Customer linked to laura otoole (4013).
+[2015-06-02 11:18:58 -0400] - UpdateStripeCustomerMetadataForMarket - Apple Ridge Farm (18) - No Stripe Customer linked to Residence (4001).
+[2015-06-02 11:18:58 -0400] - UpdateStripeCustomerMetadataForMarket - Apple Ridge Farm (18) - No Stripe Customer linked to Peter Blume (3994).
+[2015-06-02 11:18:58 -0400] - UpdateStripeCustomerMetadataForMarket - Apple Ridge Farm (18) - No Stripe Customer linked to doug (3947).
+[2015-06-02 11:18:58 -0400] - UpdateStripeCustomerMetadataForMarket - Apple Ridge Farm (18) - No Stripe Customer linked to Waldo Cuba Jr (3931).
+[2015-06-02 11:18:58 -0400] - UpdateStripeCustomerMetadataForMarket - Apple Ridge Farm (18) - No Stripe Customer linked to Dublin (3927).
+[2015-06-02 11:18:58 -0400] - UpdateStripeCustomerMetadataForMarket - Apple Ridge Farm (18) - No Stripe Customer linked to Chris Cheah (3910).
+[2015-06-02 11:18:59 -0400] - UpdateStripeCustomerMetadataForMarket - Apple Ridge Farm (18) - Updating Organization Cindy Lou Morris (3888)'s Stripe Customer cus_6LOt5YJURuMEWF with {:description=>"Cindy Lou Morris", :metadata=>{"lo.entity_id"=>3888, "lo.entity_type"=>"organization"}}
+[2015-06-02 11:18:59 -0400] - UpdateStripeCustomerMetadataForMarket - Apple Ridge Farm (18) - No Stripe Customer linked to Got Todd, LLC (3871).
+[2015-06-02 11:19:00 -0400] - UpdateStripeCustomerMetadataForMarket - Apple Ridge Farm (18) - Updating Organization Rich Kuklentz (3839)'s Stripe Customer cus_6GkRwdEUbbUDIN with {:description=>"Rich Kuklentz", :metadata=>{"lo.entity_id"=>3839, "lo.entity_type"=>"organization"}}
+[2015-06-02 11:19:00 -0400] - UpdateStripeCustomerMetadataForMarket - Apple Ridge Farm (18) - No Stripe Customer linked to - (3835).
+[2015-06-02 11:19:00 -0400] - UpdateStripeCustomerMetadataForMarket - Apple Ridge Farm (18) - No Stripe Customer linked to Katie Smith (3826).
+[2015-06-02 11:19:00 -0400] - UpdateStripeCustomerMetadataForMarket - Apple Ridge Farm (18) - No Stripe Customer linked to Aidan Bazikian (3824).
+[2015-06-02 11:19:00 -0400] - UpdateStripeCustomerMetadataForMarket - Apple Ridge Farm (18) - No Stripe Customer linked to Carol Peabody (3820).
+[2015-06-02 11:19:00 -0400] - UpdateStripeCustomerMetadataForMarket - Apple Ridge Farm (18) - No Stripe Customer linked to Family (3799).
+[2015-06-02 11:19:00 -0400] - UpdateStripeCustomerMetadataForMarket - Apple Ridge Farm (18) - No Stripe Customer linked to NA (3788).
+[2015-06-02 11:19:00 -0400] - UpdateStripeCustomerMetadataForMarket - Apple Ridge Farm (18) - No Stripe Customer linked to LAURA CASTELLANO (3775).
+[2015-06-02 11:19:00 -0400] - UpdateStripeCustomerMetadataForMarket - Apple Ridge Farm (18) - No Stripe Customer linked to Krisztina Gyori (3764).
+[2015-06-02 11:19:00 -0400] - UpdateStripeCustomerMetadataForMarket - Apple Ridge Farm (18) - No Stripe Customer linked to Pam Donahue (3763).
+[2015-06-02 11:19:00 -0400] - UpdateStripeCustomerMetadataForMarket - Apple Ridge Farm (18) - No Stripe Customer linked to Jackie Ramsey (3755).
+[2015-06-02 11:19:00 -0400] - UpdateStripeCustomerMetadataForMarket - Apple Ridge Farm (18) - No Stripe Customer linked to Mrs. (3741).
+[2015-06-02 11:19:00 -0400] - UpdateStripeCustomerMetadataForMarket - Apple Ridge Farm (18) - No Stripe Customer linked to Douglas Realty Group (3740).
+[2015-06-02 11:19:00 -0400] - UpdateStripeCustomerMetadataForMarket - Apple Ridge Farm (18) - No Stripe Customer linked to N/A (3739).
+[2015-06-02 11:19:00 -0400] - UpdateStripeCustomerMetadataForMarket - Apple Ridge Farm (18) - No Stripe Customer linked to Connor Family (3696).
+[2015-06-02 11:19:00 -0400] - UpdateStripeCustomerMetadataForMarket - Apple Ridge Farm (18) - No Stripe Customer linked to Caggiano  (3674).
+[2015-06-02 11:19:00 -0400] - UpdateStripeCustomerMetadataForMarket - Apple Ridge Farm (18) - No Stripe Customer linked to Shanan Lopez (3651).
+[2015-06-02 11:19:00 -0400] - UpdateStripeCustomerMetadataForMarket - Apple Ridge Farm (18) - No Stripe Customer linked to Robin bandzi (3648).
+[2015-06-02 11:19:00 -0400] - UpdateStripeCustomerMetadataForMarket - Apple Ridge Farm (18) - No Stripe Customer linked to Robin bandzi (3647).
+[2015-06-02 11:19:00 -0400] - UpdateStripeCustomerMetadataForMarket - Apple Ridge Farm (18) - No Stripe Customer linked to Sustainable Long Island (3639).
+[2015-06-02 11:19:00 -0400] - UpdateStripeCustomerMetadataForMarket - Apple Ridge Farm (18) - No Stripe Customer linked to Maryetta Rivas (3634).
+[2015-06-02 11:19:00 -0400] - UpdateStripeCustomerMetadataForMarket - Apple Ridge Farm (18) - No Stripe Customer linked to Marlon Calliste (3604).
+[2015-06-02 11:19:00 -0400] - UpdateStripeCustomerMetadataForMarket - Apple Ridge Farm (18) - No Stripe Customer linked to Andrew Muth (3577).
+[2015-06-02 11:19:00 -0400] - UpdateStripeCustomerMetadataForMarket - Apple Ridge Farm (18) - No Stripe Customer linked to luke polles (3545).
+[2015-06-02 11:19:00 -0400] - UpdateStripeCustomerMetadataForMarket - Apple Ridge Farm (18) - No Stripe Customer linked to Fairview Cottage (3530).
+[2015-06-02 11:19:00 -0400] - UpdateStripeCustomerMetadataForMarket - Apple Ridge Farm (18) - No Stripe Customer linked to Peter and Martha (3501).
+[2015-06-02 11:19:00 -0400] - UpdateStripeCustomerMetadataForMarket - Apple Ridge Farm (18) - No Stripe Customer linked to self (3469).
+[2015-06-02 11:19:00 -0400] - UpdateStripeCustomerMetadataForMarket - Apple Ridge Farm (18) - No Stripe Customer linked to James Ducroiset (3433).
+[2015-06-02 11:19:00 -0400] - UpdateStripeCustomerMetadataForMarket - Apple Ridge Farm (18) - No Stripe Customer linked to Exner Family (3397).
+[2015-06-02 11:19:00 -0400] - UpdateStripeCustomerMetadataForMarket - Apple Ridge Farm (18) - No Stripe Customer linked to Eve Wenger (3390).
+[2015-06-02 11:19:00 -0400] - UpdateStripeCustomerMetadataForMarket - Apple Ridge Farm (18) - No Stripe Customer linked to Elisa Tukeva (3377).
+[2015-06-02 11:19:00 -0400] - UpdateStripeCustomerMetadataForMarket - Apple Ridge Farm (18) - No Stripe Customer linked to  Amber (3376).
+[2015-06-02 11:19:00 -0400] - UpdateStripeCustomerMetadataForMarket - Apple Ridge Farm (18) - No Stripe Customer linked to Beth Cohen (3369).
+[2015-06-02 11:19:00 -0400] - UpdateStripeCustomerMetadataForMarket - Apple Ridge Farm (18) - No Stripe Customer linked to Norge (3368).
+[2015-06-02 11:19:00 -0400] - UpdateStripeCustomerMetadataForMarket - Apple Ridge Farm (18) - No Stripe Customer linked to Matthew acevedo (3366).
+[2015-06-02 11:19:00 -0400] - UpdateStripeCustomerMetadataForMarket - Apple Ridge Farm (18) - No Stripe Customer linked to Self (3355).
+[2015-06-02 11:19:00 -0400] - UpdateStripeCustomerMetadataForMarket - Apple Ridge Farm (18) - No Stripe Customer linked to Lazy Drone Farm (3348).
+[2015-06-02 11:19:00 -0400] - UpdateStripeCustomerMetadataForMarket - Apple Ridge Farm (18) - No Stripe Customer linked to Teeka (3347).
+[2015-06-02 11:19:00 -0400] - UpdateStripeCustomerMetadataForMarket - Apple Ridge Farm (18) - No Stripe Customer linked to robert richardson (3315).
+[2015-06-02 11:19:00 -0400] - UpdateStripeCustomerMetadataForMarket - Apple Ridge Farm (18) - No Stripe Customer linked to Minor home products (3298).
+[2015-06-02 11:19:00 -0400] - UpdateStripeCustomerMetadataForMarket - Apple Ridge Farm (18) - No Stripe Customer linked to n/a (3284).
+[2015-06-02 11:19:00 -0400] - UpdateStripeCustomerMetadataForMarket - Apple Ridge Farm (18) - No Stripe Customer linked to Essential Health (3261).
+[2015-06-02 11:19:00 -0400] - UpdateStripeCustomerMetadataForMarket - Apple Ridge Farm (18) - No Stripe Customer linked to 1950 (3259).
+[2015-06-02 11:19:00 -0400] - UpdateStripeCustomerMetadataForMarket - Apple Ridge Farm (18) - No Stripe Customer linked to Patricia Kozelnik (3231).
+[2015-06-02 11:19:00 -0400] - UpdateStripeCustomerMetadataForMarket - Apple Ridge Farm (18) - No Stripe Customer linked to None (3224).
+[2015-06-02 11:19:00 -0400] - UpdateStripeCustomerMetadataForMarket - Apple Ridge Farm (18) - No Stripe Customer linked to LaDiva Dietitian (3209).
+[2015-06-02 11:19:00 -0400] - UpdateStripeCustomerMetadataForMarket - Apple Ridge Farm (18) - No Stripe Customer linked to Lelia Cahill (3165).
+[2015-06-02 11:19:00 -0400] - UpdateStripeCustomerMetadataForMarket - Apple Ridge Farm (18) - No Stripe Customer linked to USPS (3149).
+[2015-06-02 11:19:00 -0400] - UpdateStripeCustomerMetadataForMarket - Apple Ridge Farm (18) - No Stripe Customer linked to me (3116).
+[2015-06-02 11:19:00 -0400] - UpdateStripeCustomerMetadataForMarket - Apple Ridge Farm (18) - No Stripe Customer linked to Myself (3115).
+[2015-06-02 11:19:00 -0400] - UpdateStripeCustomerMetadataForMarket - Apple Ridge Farm (18) - No Stripe Customer linked to Nicole Brush (3064).
+[2015-06-02 11:19:00 -0400] - UpdateStripeCustomerMetadataForMarket - Apple Ridge Farm (18) - No Stripe Customer linked to Scott and Lisa Goldy (3062).
+[2015-06-02 11:19:00 -0400] - UpdateStripeCustomerMetadataForMarket - Apple Ridge Farm (18) - No Stripe Customer linked to MBO (3010).
+[2015-06-02 11:19:00 -0400] - UpdateStripeCustomerMetadataForMarket - Apple Ridge Farm (18) - No Stripe Customer linked to Martin Gonzalez  (2951).
+[2015-06-02 11:19:00 -0400] - UpdateStripeCustomerMetadataForMarket - Apple Ridge Farm (18) - No Stripe Customer linked to Robyn Venturini (2933).
+[2015-06-02 11:19:00 -0400] - UpdateStripeCustomerMetadataForMarket - Apple Ridge Farm (18) - No Stripe Customer linked to Tabitha (2928).
+[2015-06-02 11:19:00 -0400] - UpdateStripeCustomerMetadataForMarket - Apple Ridge Farm (18) - No Stripe Customer linked to Amy Schatz (2919).
+[2015-06-02 11:19:00 -0400] - UpdateStripeCustomerMetadataForMarket - Apple Ridge Farm (18) - No Stripe Customer linked to Robin Lentz (2906).
+[2015-06-02 11:19:00 -0400] - UpdateStripeCustomerMetadataForMarket - Apple Ridge Farm (18) - No Stripe Customer linked to mary (2833).
+[2015-06-02 11:19:00 -0400] - UpdateStripeCustomerMetadataForMarket - Apple Ridge Farm (18) - No Stripe Customer linked to Deanna Meehan (2831).
+[2015-06-02 11:19:02 -0400] - UpdateStripeCustomerMetadataForMarket - Apple Ridge Farm (18) - Updating Organization Pamela Grube (2825)'s Stripe Customer cus_5uQ5nXC2LiF9qF with {:description=>"Pamela Grube", :metadata=>{"lo.entity_id"=>2825, "lo.entity_type"=>"organization"}}
+[2015-06-02 11:19:02 -0400] - UpdateStripeCustomerMetadataForMarket - Apple Ridge Farm (18) - No Stripe Customer linked to jeanne moore (2818).
+[2015-06-02 11:19:02 -0400] - UpdateStripeCustomerMetadataForMarket - Apple Ridge Farm (18) - No Stripe Customer linked to William Higgins (2816).
+[2015-06-02 11:19:02 -0400] - UpdateStripeCustomerMetadataForMarket - Apple Ridge Farm (18) - No Stripe Customer linked to Olaitan (2802).
+[2015-06-02 11:19:02 -0400] - UpdateStripeCustomerMetadataForMarket - Apple Ridge Farm (18) - No Stripe Customer linked to personal home residence (2793).
+[2015-06-02 11:19:02 -0400] - UpdateStripeCustomerMetadataForMarket - Apple Ridge Farm (18) - No Stripe Customer linked to Bernadette Ali (2789).
+[2015-06-02 11:19:02 -0400] - UpdateStripeCustomerMetadataForMarket - Apple Ridge Farm (18) - No Stripe Customer linked to Bolles Family (2750).
+[2015-06-02 11:19:02 -0400] - UpdateStripeCustomerMetadataForMarket - Apple Ridge Farm (18) - No Stripe Customer linked to Jessica Pollman (2714).
+[2015-06-02 11:19:03 -0400] - UpdateStripeCustomerMetadataForMarket - Apple Ridge Farm (18) - Updating Organization Sylwia Sacci (2703)'s Stripe Customer cus_5uQ46B7UDd6ea5 with {:description=>"Sylwia Sacci", :metadata=>{"lo.entity_id"=>2703, "lo.entity_type"=>"organization"}}
+[2015-06-02 11:19:03 -0400] - UpdateStripeCustomerMetadataForMarket - Apple Ridge Farm (18) - No Stripe Customer linked to Kathy Sanay (2701).
+[2015-06-02 11:19:03 -0400] - UpdateStripeCustomerMetadataForMarket - Apple Ridge Farm (18) - No Stripe Customer linked to Laura (2700).
+[2015-06-02 11:19:03 -0400] - UpdateStripeCustomerMetadataForMarket - Apple Ridge Farm (18) - No Stripe Customer linked to Paul Lewis (2688).
+[2015-06-02 11:19:03 -0400] - UpdateStripeCustomerMetadataForMarket - Apple Ridge Farm (18) - No Stripe Customer linked to Radburn LLC (2682).
+[2015-06-02 11:19:03 -0400] - UpdateStripeCustomerMetadataForMarket - Apple Ridge Farm (18) - No Stripe Customer linked to Brittany (2678).
+[2015-06-02 11:19:03 -0400] - UpdateStripeCustomerMetadataForMarket - Apple Ridge Farm (18) - No Stripe Customer linked to Dad (2677).
+[2015-06-02 11:19:03 -0400] - UpdateStripeCustomerMetadataForMarket - Apple Ridge Farm (18) - No Stripe Customer linked to Asma Nisar (2665).
+[2015-06-02 11:19:03 -0400] - UpdateStripeCustomerMetadataForMarket - Apple Ridge Farm (18) - No Stripe Customer linked to Victoria Henderson (2663).
+[2015-06-02 11:19:03 -0400] - UpdateStripeCustomerMetadataForMarket - Apple Ridge Farm (18) - No Stripe Customer linked to Amy's Home (2657).
+[2015-06-02 11:19:04 -0400] - UpdateStripeCustomerMetadataForMarket - Apple Ridge Farm (18) - Updating Organization Arlene Gontz (2654)'s Stripe Customer cus_5uQ5oAv8FEo4w4 with {:description=>"Arlene Gontz", :metadata=>{"lo.entity_id"=>2654, "lo.entity_type"=>"organization"}}
+[2015-06-02 11:19:04 -0400] - UpdateStripeCustomerMetadataForMarket - Apple Ridge Farm (18) - No Stripe Customer linked to Not an organization (2648).
+[2015-06-02 11:19:05 -0400] - UpdateStripeCustomerMetadataForMarket - Apple Ridge Farm (18) - Updating Organization Sherry Thomas (2645)'s Stripe Customer cus_5uQ5G9rBPh58Hm with {:description=>"Sherry Thomas", :metadata=>{"lo.entity_id"=>2645, "lo.entity_type"=>"organization"}}
+[2015-06-02 11:19:05 -0400] - UpdateStripeCustomerMetadataForMarket - Apple Ridge Farm (18) - No Stripe Customer linked to Eirene Charney (2637).
+[2015-06-02 11:19:05 -0400] - UpdateStripeCustomerMetadataForMarket - Apple Ridge Farm (18) - No Stripe Customer linked to McGraw household (2631).
+[2015-06-02 11:19:05 -0400] - UpdateStripeCustomerMetadataForMarket - Apple Ridge Farm (18) - No Stripe Customer linked to Personal (2622).
+[2015-06-02 11:19:06 -0400] - UpdateStripeCustomerMetadataForMarket - Apple Ridge Farm (18) - Updating Organization Burt family (2613)'s Stripe Customer cus_5xmGhHfP3F71Cj with {:description=>"Burt family", :metadata=>{"lo.entity_id"=>2613, "lo.entity_type"=>"organization"}}
+[2015-06-02 11:19:06 -0400] - UpdateStripeCustomerMetadataForMarket - Apple Ridge Farm (18) - No Stripe Customer linked to cindy perschy (2612).
+[2015-06-02 11:19:07 -0400] - UpdateStripeCustomerMetadataForMarket - Apple Ridge Farm (18) - Updating Organization Johnathan Post (2611)'s Stripe Customer cus_5uQ5QXn78bcatm with {:description=>"Johnathan Post", :metadata=>{"lo.entity_id"=>2611, "lo.entity_type"=>"organization"}}
+[2015-06-02 11:19:07 -0400] - UpdateStripeCustomerMetadataForMarket - Apple Ridge Farm (18) - No Stripe Customer linked to theresa kane (2610).
+[2015-06-02 11:19:08 -0400] - UpdateStripeCustomerMetadataForMarket - Apple Ridge Farm (18) - Updating Organization Lynette Williams (2605)'s Stripe Customer cus_5uQ4HKFjydgKDG with {:description=>"Lynette Williams", :metadata=>{"lo.entity_id"=>2605, "lo.entity_type"=>"organization"}}
+[2015-06-02 11:19:08 -0400] - UpdateStripeCustomerMetadataForMarket - Apple Ridge Farm (18) - No Stripe Customer linked to Dogwood BYOB  (2600).
+[2015-06-02 11:19:08 -0400] - UpdateStripeCustomerMetadataForMarket - Apple Ridge Farm (18) - No Stripe Customer linked to Tom O'Malley (2581).
+[2015-06-02 11:19:08 -0400] - UpdateStripeCustomerMetadataForMarket - Apple Ridge Farm (18) - No Stripe Customer linked to Ironstone Creamery & Farm (2575).
+[2015-06-02 11:19:08 -0400] - UpdateStripeCustomerMetadataForMarket - Apple Ridge Farm (18) - No Stripe Customer linked to Thomas Foley (2570).
+[2015-06-02 11:19:08 -0400] - UpdateStripeCustomerMetadataForMarket - Apple Ridge Farm (18) - No Stripe Customer linked to Tatiana Chaplar (2560).
+[2015-06-02 11:19:08 -0400] - UpdateStripeCustomerMetadataForMarket - Apple Ridge Farm (18) - No Stripe Customer linked to Constantine Giannakis (2559).
+[2015-06-02 11:19:08 -0400] - UpdateStripeCustomerMetadataForMarket - Apple Ridge Farm (18) - No Stripe Customer linked to Aaron Kelimakar, LLC (2557).
+[2015-06-02 11:19:08 -0400] - UpdateStripeCustomerMetadataForMarket - Apple Ridge Farm (18) - No Stripe Customer linked to Danielle Sandt (2549).
+[2015-06-02 11:19:08 -0400] - UpdateStripeCustomerMetadataForMarket - Apple Ridge Farm (18) - No Stripe Customer linked to Larry Davis-Swing (2541).
+[2015-06-02 11:19:10 -0400] - UpdateStripeCustomerMetadataForMarket - Apple Ridge Farm (18) - Updating Organization Valley Milkhouse (2501)'s Stripe Customer cus_5uQ4oCOpv9frqt with {:description=>"Valley Milkhouse", :metadata=>{"lo.entity_id"=>2501, "lo.entity_type"=>"organization"}}
+[2015-06-02 11:19:10 -0400] - UpdateStripeCustomerMetadataForMarket - Apple Ridge Farm (18) - No Stripe Customer linked to Pocono Medical Center (2490).
+[2015-06-02 11:19:10 -0400] - UpdateStripeCustomerMetadataForMarket - Apple Ridge Farm (18) - No Stripe Customer linked to Nicole Parry (2476).
+[2015-06-02 11:19:10 -0400] - UpdateStripeCustomerMetadataForMarket - Apple Ridge Farm (18) - No Stripe Customer linked to Lori DeWitt (2474).
+[2015-06-02 11:19:11 -0400] - UpdateStripeCustomerMetadataForMarket - Apple Ridge Farm (18) - Updating Organization Provate (2473)'s Stripe Customer cus_5uQ4opytL4WP3T with {:description=>"Provate", :metadata=>{"lo.entity_id"=>2473, "lo.entity_type"=>"organization"}}
+[2015-06-02 11:19:11 -0400] - UpdateStripeCustomerMetadataForMarket - Apple Ridge Farm (18) - No Stripe Customer linked to Roxanne (2472).
+[2015-06-02 11:19:11 -0400] - UpdateStripeCustomerMetadataForMarket - Apple Ridge Farm (18) - No Stripe Customer linked to Roxanne (2471).
+[2015-06-02 11:19:11 -0400] - UpdateStripeCustomerMetadataForMarket - Apple Ridge Farm (18) - No Stripe Customer linked to Brandon Nieves (2467).
+[2015-06-02 11:19:11 -0400] - UpdateStripeCustomerMetadataForMarket - Apple Ridge Farm (18) - No Stripe Customer linked to Taryn Tillou (2446).
+[2015-06-02 11:19:11 -0400] - UpdateStripeCustomerMetadataForMarket - Apple Ridge Farm (18) - No Stripe Customer linked to Maxine Rusbasan (2445).
+[2015-06-02 11:19:11 -0400] - UpdateStripeCustomerMetadataForMarket - Apple Ridge Farm (18) - No Stripe Customer linked to self (2436).
+[2015-06-02 11:19:12 -0400] - UpdateStripeCustomerMetadataForMarket - Apple Ridge Farm (18) - Updating Organization Mary Lou Seibert (2431)'s Stripe Customer cus_5uQ5FpSZRau8YF with {:description=>"Mary Lou Seibert", :metadata=>{"lo.entity_id"=>2431, "lo.entity_type"=>"organization"}}
+[2015-06-02 11:19:12 -0400] - UpdateStripeCustomerMetadataForMarket - Apple Ridge Farm (18) - No Stripe Customer linked to b (2418).
+[2015-06-02 11:19:13 -0400] - UpdateStripeCustomerMetadataForMarket - Apple Ridge Farm (18) - Updating Organization The Gardners (2416)'s Stripe Customer cus_5uQ5IsgpuauWFj with {:description=>"The Gardners", :metadata=>{"lo.entity_id"=>2416, "lo.entity_type"=>"organization"}}
+[2015-06-02 11:19:13 -0400] - UpdateStripeCustomerMetadataForMarket - Apple Ridge Farm (18) - No Stripe Customer linked to Maria DelGrosso (2406).
+[2015-06-02 11:19:13 -0400] - UpdateStripeCustomerMetadataForMarket - Apple Ridge Farm (18) - No Stripe Customer linked to Jss (2397).
+[2015-06-02 11:19:13 -0400] - UpdateStripeCustomerMetadataForMarket - Apple Ridge Farm (18) - No Stripe Customer linked to Self (2392).
+[2015-06-02 11:19:13 -0400] - UpdateStripeCustomerMetadataForMarket - Apple Ridge Farm (18) - No Stripe Customer linked to Super (2389).
+[2015-06-02 11:19:13 -0400] - UpdateStripeCustomerMetadataForMarket - Apple Ridge Farm (18) - No Stripe Customer linked to Harpstrings Wellness Studio (2388).
+[2015-06-02 11:19:14 -0400] - UpdateStripeCustomerMetadataForMarket - Apple Ridge Farm (18) - Updating Organization Pat Huffman (Kastania Olive Oil) (2387)'s Stripe Customer cus_5uQ4CJbnepALTU with {:description=>"Pat Huffman (Kastania Olive Oil)", :metadata=>{"lo.entity_id"=>2387, "lo.entity_type"=>"organization"}}
+[2015-06-02 11:19:14 -0400] - UpdateStripeCustomerMetadataForMarket - Apple Ridge Farm (18) - No Stripe Customer linked to princeton univ press (2384).
+[2015-06-02 11:19:14 -0400] - UpdateStripeCustomerMetadataForMarket - Apple Ridge Farm (18) - No Stripe Customer linked to Morrow household (2361).
+[2015-06-02 11:19:14 -0400] - UpdateStripeCustomerMetadataForMarket - Apple Ridge Farm (18) - No Stripe Customer linked to Bobbi Jo Hopstetter (2359).
+[2015-06-02 11:19:14 -0400] - UpdateStripeCustomerMetadataForMarket - Apple Ridge Farm (18) - No Stripe Customer linked to none (2347).
+[2015-06-02 11:19:14 -0400] - UpdateStripeCustomerMetadataForMarket - Apple Ridge Farm (18) - No Stripe Customer linked to Dawn Hockman (2343).
+[2015-06-02 11:19:14 -0400] - UpdateStripeCustomerMetadataForMarket - Apple Ridge Farm (18) - No Stripe Customer linked to Elras (2342).
+[2015-06-02 11:19:14 -0400] - UpdateStripeCustomerMetadataForMarket - Apple Ridge Farm (18) - No Stripe Customer linked to Rachel Roberts (2312).
+[2015-06-02 11:19:14 -0400] - UpdateStripeCustomerMetadataForMarket - Apple Ridge Farm (18) - No Stripe Customer linked to My House (2309).
+[2015-06-02 11:19:14 -0400] - UpdateStripeCustomerMetadataForMarket - Apple Ridge Farm (18) - No Stripe Customer linked to Self (2296).
+[2015-06-02 11:19:14 -0400] - UpdateStripeCustomerMetadataForMarket - Apple Ridge Farm (18) - No Stripe Customer linked to Jessica White (2294).
+[2015-06-02 11:19:14 -0400] - UpdateStripeCustomerMetadataForMarket - Apple Ridge Farm (18) - No Stripe Customer linked to Jessica White (2293).
+[2015-06-02 11:19:14 -0400] - UpdateStripeCustomerMetadataForMarket - Apple Ridge Farm (18) - No Stripe Customer linked to Miss (2292).
+[2015-06-02 11:19:16 -0400] - UpdateStripeCustomerMetadataForMarket - Apple Ridge Farm (18) - Updating Organization Glenn & Susan Yetter (2289)'s Stripe Customer cus_5uQ465AnNVYZyg with {:description=>"Glenn & Susan Yetter", :metadata=>{"lo.entity_id"=>2289, "lo.entity_type"=>"organization"}}
+[2015-06-02 11:19:16 -0400] - UpdateStripeCustomerMetadataForMarket - Apple Ridge Farm (18) - No Stripe Customer linked to Jeff&Carmen&Sons (2286).
+[2015-06-02 11:19:17 -0400] - UpdateStripeCustomerMetadataForMarket - Apple Ridge Farm (18) - Updating Organization Melissa Andersen (2274)'s Stripe Customer cus_5uQ4jcOuqdZcUP with {:description=>"Melissa Andersen", :metadata=>{"lo.entity_id"=>2274, "lo.entity_type"=>"organization"}}
+[2015-06-02 11:19:17 -0400] - UpdateStripeCustomerMetadataForMarket - Apple Ridge Farm (18) - No Stripe Customer linked to Shae (2269).
+[2015-06-02 11:19:17 -0400] - UpdateStripeCustomerMetadataForMarket - Apple Ridge Farm (18) - No Stripe Customer linked to Jennifer McNeill (2265).
+[2015-06-02 11:19:17 -0400] - UpdateStripeCustomerMetadataForMarket - Apple Ridge Farm (18) - No Stripe Customer linked to Luis O. Riva Saleta (2255).
+[2015-06-02 11:19:17 -0400] - UpdateStripeCustomerMetadataForMarket - Apple Ridge Farm (18) - No Stripe Customer linked to My family (2227).
+[2015-06-02 11:19:17 -0400] - UpdateStripeCustomerMetadataForMarket - Apple Ridge Farm (18) - No Stripe Customer linked to Lover of bread =) (2226).
+[2015-06-02 11:19:17 -0400] - UpdateStripeCustomerMetadataForMarket - Apple Ridge Farm (18) - No Stripe Customer linked to Wilczek (2222).
+[2015-06-02 11:19:17 -0400] - UpdateStripeCustomerMetadataForMarket - Apple Ridge Farm (18) - No Stripe Customer linked to HawkHavenHavanese (2221).
+[2015-06-02 11:19:17 -0400] - UpdateStripeCustomerMetadataForMarket - Apple Ridge Farm (18) - No Stripe Customer linked to None (2168).
+[2015-06-02 11:19:19 -0400] - UpdateStripeCustomerMetadataForMarket - Apple Ridge Farm (18) - Updating Organization Mr. and Mrs. Alan P. Young (2166)'s Stripe Customer cus_5uQ4rjjDSK8lRs with {:description=>"Mr. and Mrs. Alan P. Young", :metadata=>{"lo.entity_id"=>2166, "lo.entity_type"=>"organization"}}
+[2015-06-02 11:19:20 -0400] - UpdateStripeCustomerMetadataForMarket - Apple Ridge Farm (18) - Updating Organization Buck Hill Falls Post Office (2151)'s Stripe Customer cus_5uQ4qqOXFXELgC with {:description=>"Buck Hill Falls Post Office", :metadata=>{"lo.entity_id"=>2151, "lo.entity_type"=>"organization"}}
+[2015-06-02 11:19:20 -0400] - UpdateStripeCustomerMetadataForMarket - Apple Ridge Farm (18) - No Stripe Customer linked to Arkadia Stanczak  (2147).
+[2015-06-02 11:19:21 -0400] - UpdateStripeCustomerMetadataForMarket - Apple Ridge Farm (18) - Updating Organization edward urban (2140)'s Stripe Customer cus_5uQ4tCEEW4Vq3k with {:description=>"edward urban", :metadata=>{"lo.entity_id"=>2140, "lo.entity_type"=>"organization"}}
+[2015-06-02 11:19:21 -0400] - UpdateStripeCustomerMetadataForMarket - Apple Ridge Farm (18) - No Stripe Customer linked to Personal (2124).
+[2015-06-02 11:19:21 -0400] - UpdateStripeCustomerMetadataForMarket - Apple Ridge Farm (18) - No Stripe Customer linked to Individual (2059).
+[2015-06-02 11:19:21 -0400] - UpdateStripeCustomerMetadataForMarket - Apple Ridge Farm (18) - No Stripe Customer linked to Brandie U (2056).
+[2015-06-02 11:19:21 -0400] - UpdateStripeCustomerMetadataForMarket - Apple Ridge Farm (18) - No Stripe Customer linked to customer (2055).
+[2015-06-02 11:19:21 -0400] - UpdateStripeCustomerMetadataForMarket - Apple Ridge Farm (18) - No Stripe Customer linked to Debbie and Ryan - Home (2010).
+[2015-06-02 11:19:21 -0400] - UpdateStripeCustomerMetadataForMarket - Apple Ridge Farm (18) - No Stripe Customer linked to Kim Coccio (1959).
+[2015-06-02 11:19:22 -0400] - UpdateStripeCustomerMetadataForMarket - Apple Ridge Farm (18) - Updating Organization Timpone (1952)'s Stripe Customer cus_5uQ5dtX9l0VxAF with {:description=>"Timpone", :metadata=>{"lo.entity_id"=>1952, "lo.entity_type"=>"organization"}}
+[2015-06-02 11:19:22 -0400] - UpdateStripeCustomerMetadataForMarket - Apple Ridge Farm (18) - No Stripe Customer linked to Joyce M. Jose (1951).
+[2015-06-02 11:19:22 -0400] - UpdateStripeCustomerMetadataForMarket - Apple Ridge Farm (18) - No Stripe Customer linked to kyle smith (1940).
+[2015-06-02 11:19:23 -0400] - UpdateStripeCustomerMetadataForMarket - Apple Ridge Farm (18) - Updating Organization Jen Powers (1938)'s Stripe Customer cus_5uQ4GXTTWNdWac with {:description=>"Jen Powers", :metadata=>{"lo.entity_id"=>1938, "lo.entity_type"=>"organization"}}
+[2015-06-02 11:19:23 -0400] - UpdateStripeCustomerMetadataForMarket - Apple Ridge Farm (18) - No Stripe Customer linked to Home (1929).
+[2015-06-02 11:19:23 -0400] - UpdateStripeCustomerMetadataForMarket - Apple Ridge Farm (18) - No Stripe Customer linked to Lisha Piszczatoski (1927).
+[2015-06-02 11:19:23 -0400] - UpdateStripeCustomerMetadataForMarket - Apple Ridge Farm (18) - No Stripe Customer linked to KRUGERart (1925).
+[2015-06-02 11:19:23 -0400] - UpdateStripeCustomerMetadataForMarket - Apple Ridge Farm (18) - No Stripe Customer linked to ms. (1924).
+[2015-06-02 11:19:25 -0400] - UpdateStripeCustomerMetadataForMarket - Apple Ridge Farm (18) - Updating Organization Judy Snyder (1913)'s Stripe Customer cus_5uQ4TrLvdrlUL6 with {:description=>"Judy Snyder", :metadata=>{"lo.entity_id"=>1913, "lo.entity_type"=>"organization"}}
+[2015-06-02 11:19:25 -0400] - UpdateStripeCustomerMetadataForMarket - Apple Ridge Farm (18) - No Stripe Customer linked to bamack (1910).
+[2015-06-02 11:19:26 -0400] - UpdateStripeCustomerMetadataForMarket - Apple Ridge Farm (18) - Updating Organization Barbara Herkner (1900)'s Stripe Customer cus_5uQ4WibQRcCGDA with {:description=>"Barbara Herkner", :metadata=>{"lo.entity_id"=>1900, "lo.entity_type"=>"organization"}}
+[2015-06-02 11:19:26 -0400] - UpdateStripeCustomerMetadataForMarket - Apple Ridge Farm (18) - No Stripe Customer linked to Joanne Laurie (1864).
+[2015-06-02 11:19:26 -0400] - UpdateStripeCustomerMetadataForMarket - Apple Ridge Farm (18) - No Stripe Customer linked to Melissa Penta (1851).
+[2015-06-02 11:19:26 -0400] - UpdateStripeCustomerMetadataForMarket - Apple Ridge Farm (18) - No Stripe Customer linked to Adrian's Countryside Retreat (1843).
+[2015-06-02 11:19:27 -0400] - UpdateStripeCustomerMetadataForMarket - Apple Ridge Farm (18) - Updating Organization temporarily at Red Rock Studio (1838)'s Stripe Customer cus_5uQ4uc4WZjdo0I with {:description=>"temporarily at Red Rock Studio", :metadata=>{"lo.entity_id"=>1838, "lo.entity_type"=>"organization"}}
+[2015-06-02 11:19:27 -0400] - UpdateStripeCustomerMetadataForMarket - Apple Ridge Farm (18) - No Stripe Customer linked to Private Buyer (1818).
+[2015-06-02 11:19:27 -0400] - UpdateStripeCustomerMetadataForMarket - Apple Ridge Farm (18) - No Stripe Customer linked to buyer (1817).
+[2015-06-02 11:19:28 -0400] - UpdateStripeCustomerMetadataForMarket - Apple Ridge Farm (18) - Updating Organization Hurley Home (1816)'s Stripe Customer cus_5uQ56GKtv31EiI with {:description=>"Hurley Home", :metadata=>{"lo.entity_id"=>1816, "lo.entity_type"=>"organization"}}
+[2015-06-02 11:19:28 -0400] - UpdateStripeCustomerMetadataForMarket - Apple Ridge Farm (18) - No Stripe Customer linked to Home (1809).
+[2015-06-02 11:19:29 -0400] - UpdateStripeCustomerMetadataForMarket - Apple Ridge Farm (18) - Updating Organization Jill Ravenscroft (1784)'s Stripe Customer cus_5uQ40EOgWK6q1K with {:description=>"Jill Ravenscroft", :metadata=>{"lo.entity_id"=>1784, "lo.entity_type"=>"organization"}}
+[2015-06-02 11:19:29 -0400] - UpdateStripeCustomerMetadataForMarket - Apple Ridge Farm (18) - No Stripe Customer linked to Richard jackson (1783).
+[2015-06-02 11:19:29 -0400] - UpdateStripeCustomerMetadataForMarket - Apple Ridge Farm (18) - No Stripe Customer linked to Richard jackson (1781).
+[2015-06-02 11:19:29 -0400] - UpdateStripeCustomerMetadataForMarket - Apple Ridge Farm (18) - No Stripe Customer linked to Rusbasan (1780).
+[2015-06-02 11:19:29 -0400] - UpdateStripeCustomerMetadataForMarket - Apple Ridge Farm (18) - No Stripe Customer linked to Susan Rusbasan (1779).
+[2015-06-02 11:19:30 -0400] - UpdateStripeCustomerMetadataForMarket - Apple Ridge Farm (18) - Updating Organization Joseph DiLauro (1776)'s Stripe Customer cus_5uQ4sIKLS6rEgk with {:description=>"Joseph DiLauro", :metadata=>{"lo.entity_id"=>1776, "lo.entity_type"=>"organization"}}
+[2015-06-02 11:19:30 -0400] - UpdateStripeCustomerMetadataForMarket - Apple Ridge Farm (18) - No Stripe Customer linked to Mindy Abraham  (1775).
+[2015-06-02 11:19:30 -0400] - UpdateStripeCustomerMetadataForMarket - Apple Ridge Farm (18) - No Stripe Customer linked to Indiviual (1768).
+[2015-06-02 11:19:32 -0400] - UpdateStripeCustomerMetadataForMarket - Apple Ridge Farm (18) - Updating Organization Brian Reilly (1741)'s Stripe Customer cus_5uQ4b0hLrB5ZCC with {:description=>"Brian Reilly", :metadata=>{"lo.entity_id"=>1741, "lo.entity_type"=>"organization"}}
+[2015-06-02 11:19:32 -0400] - UpdateStripeCustomerMetadataForMarket - Apple Ridge Farm (18) - No Stripe Customer linked to Allison Whidden (1728).
+[2015-06-02 11:19:32 -0400] - UpdateStripeCustomerMetadataForMarket - Apple Ridge Farm (18) - No Stripe Customer linked to Purchaser (1723).
+[2015-06-02 11:19:32 -0400] - UpdateStripeCustomerMetadataForMarket - Apple Ridge Farm (18) - No Stripe Customer linked to Trish Mainwaring (1693).
+[2015-06-02 11:19:33 -0400] - UpdateStripeCustomerMetadataForMarket - Apple Ridge Farm (18) - Updating Organization Buck hill falls (1688)'s Stripe Customer cus_5uQ4NulCfarNTX with {:description=>"Buck hill falls", :metadata=>{"lo.entity_id"=>1688, "lo.entity_type"=>"organization"}}
+[2015-06-02 11:19:33 -0400] - UpdateStripeCustomerMetadataForMarket - Apple Ridge Farm (18) - No Stripe Customer linked to Municipal Software Inc (1682).
+[2015-06-02 11:19:33 -0400] - UpdateStripeCustomerMetadataForMarket - Apple Ridge Farm (18) - No Stripe Customer linked to Koserowski (1619).
+[2015-06-02 11:19:33 -0400] - UpdateStripeCustomerMetadataForMarket - Apple Ridge Farm (18) - No Stripe Customer linked to Quinn (1617).
+[2015-06-02 11:19:33 -0400] - UpdateStripeCustomerMetadataForMarket - Apple Ridge Farm (18) - No Stripe Customer linked to Pat and Jean (1590).
+[2015-06-02 11:19:33 -0400] - UpdateStripeCustomerMetadataForMarket - Apple Ridge Farm (18) - No Stripe Customer linked to Buck Hill Falls Company (1588).
+[2015-06-02 11:19:34 -0400] - UpdateStripeCustomerMetadataForMarket - Apple Ridge Farm (18) - Updating Organization Virginia Hockenjos (1586)'s Stripe Customer cus_5uQ5Xq8M6f1O57 with {:description=>"Virginia Hockenjos", :metadata=>{"lo.entity_id"=>1586, "lo.entity_type"=>"organization"}}
+[2015-06-02 11:19:34 -0400] - UpdateStripeCustomerMetadataForMarket - Apple Ridge Farm (18) - No Stripe Customer linked to Detzi's Tavern Inc (1585).
+[2015-06-02 11:19:35 -0400] - UpdateStripeCustomerMetadataForMarket - Apple Ridge Farm (18) - Updating Organization Jenny Collins (1581)'s Stripe Customer cus_5uQ4Og27jM88Oo with {:description=>"Jenny Collins", :metadata=>{"lo.entity_id"=>1581, "lo.entity_type"=>"organization"}}
+[2015-06-02 11:19:35 -0400] - UpdateStripeCustomerMetadataForMarket - Apple Ridge Farm (18) - No Stripe Customer linked to homeowner (1578).
+[2015-06-02 11:19:36 -0400] - UpdateStripeCustomerMetadataForMarket - Apple Ridge Farm (18) - Updating Organization judith redway (1572)'s Stripe Customer cus_5uQ5fdLgEzgLE2 with {:description=>"judith redway", :metadata=>{"lo.entity_id"=>1572, "lo.entity_type"=>"organization"}}
+[2015-06-02 11:19:36 -0400] - UpdateStripeCustomerMetadataForMarket - Apple Ridge Farm (18) - No Stripe Customer linked to My Family (1571).
+[2015-06-02 11:19:37 -0400] - UpdateStripeCustomerMetadataForMarket - Apple Ridge Farm (18) - Updating Organization Bowen Miller (1569)'s Stripe Customer cus_5uQ4lc11dfC6kZ with {:description=>"Bowen Miller", :metadata=>{"lo.entity_id"=>1569, "lo.entity_type"=>"organization"}}
+[2015-06-02 11:19:38 -0400] - UpdateStripeCustomerMetadataForMarket - Apple Ridge Farm (18) - Updating Organization Regina Rabinovich (1543)'s Stripe Customer cus_5uQ5Sgn3i78tzT with {:description=>"Regina Rabinovich", :metadata=>{"lo.entity_id"=>1543, "lo.entity_type"=>"organization"}}
+[2015-06-02 11:19:38 -0400] - UpdateStripeCustomerMetadataForMarket - Apple Ridge Farm (18) - No Stripe Customer linked to Cottage 40 (1537).
+[2015-06-02 11:19:38 -0400] - UpdateStripeCustomerMetadataForMarket - Apple Ridge Farm (18) - No Stripe Customer linked to M&R Catering  (1535).
+[2015-06-02 11:19:38 -0400] - UpdateStripeCustomerMetadataForMarket - Apple Ridge Farm (18) - No Stripe Customer linked to Michelle (1529).
+[2015-06-02 11:19:38 -0400] - UpdateStripeCustomerMetadataForMarket - Apple Ridge Farm (18) - No Stripe Customer linked to None (1523).
+[2015-06-02 11:19:38 -0400] - UpdateStripeCustomerMetadataForMarket - Apple Ridge Farm (18) - No Stripe Customer linked to Family (1521).
+[2015-06-02 11:19:38 -0400] - UpdateStripeCustomerMetadataForMarket - Apple Ridge Farm (18) - No Stripe Customer linked to William a romero (1516).
+[2015-06-02 11:19:39 -0400] - UpdateStripeCustomerMetadataForMarket - Apple Ridge Farm (18) - Updating Organization Jill preston (1513)'s Stripe Customer cus_5uQ54OR7rgJrVe with {:description=>"Jill preston", :metadata=>{"lo.entity_id"=>1513, "lo.entity_type"=>"organization"}}
+[2015-06-02 11:19:39 -0400] - UpdateStripeCustomerMetadataForMarket - Apple Ridge Farm (18) - No Stripe Customer linked to Peterson Squad (1508).
+[2015-06-02 11:19:41 -0400] - UpdateStripeCustomerMetadataForMarket - Apple Ridge Farm (18) - Updating Organization Teresa A Barry (1500)'s Stripe Customer cus_5uQ5H6WSlYNt7U with {:description=>"Teresa A Barry", :metadata=>{"lo.entity_id"=>1500, "lo.entity_type"=>"organization"}}
+[2015-06-02 11:19:42 -0400] - UpdateStripeCustomerMetadataForMarket - Apple Ridge Farm (18) - Updating Organization Adrienne Fretz (1493)'s Stripe Customer cus_5uQ5kY30IUwt7G with {:description=>"Adrienne Fretz", :metadata=>{"lo.entity_id"=>1493, "lo.entity_type"=>"organization"}}
+[2015-06-02 11:19:43 -0400] - UpdateStripeCustomerMetadataForMarket - Apple Ridge Farm (18) - Updating Organization Klatt Family (1490)'s Stripe Customer cus_5uQ4N2TMhuufz6 with {:description=>"Klatt Family", :metadata=>{"lo.entity_id"=>1490, "lo.entity_type"=>"organization"}}
+[2015-06-02 11:19:43 -0400] - UpdateStripeCustomerMetadataForMarket - Apple Ridge Farm (18) - No Stripe Customer linked to spruce Hill Farms (1489).
+[2015-06-02 11:19:44 -0400] - UpdateStripeCustomerMetadataForMarket - Apple Ridge Farm (18) - Updating Organization Elise Ross (1488)'s Stripe Customer cus_5uQ5j6hDorv329 with {:description=>"Elise Ross", :metadata=>{"lo.entity_id"=>1488, "lo.entity_type"=>"organization"}}
+[2015-06-02 11:19:44 -0400] - UpdateStripeCustomerMetadataForMarket - Apple Ridge Farm (18) - No Stripe Customer linked to CSA 2013 member (1176).
+[2015-06-02 11:19:44 -0400] - UpdateStripeCustomerMetadataForMarket - Apple Ridge Farm (18) - No Stripe Customer linked to Richard jackson (1154).
+[2015-06-02 11:19:45 -0400] - UpdateStripeCustomerMetadataForMarket - Apple Ridge Farm (18) - Updating Organization Apple Ridge Farm (1054)'s Stripe Customer cus_5uQ5Ev2VnR3paJ with {:description=>"Apple Ridge Farm", :metadata=>{"lo.entity_id"=>1054, "lo.entity_type"=>"organization"}}
+[2015-06-02 11:19:45 -0400] - UpdateStripeCustomerMetadataForMarket - Apple Ridge Farm (18) - No Stripe Customer linked to Toy Cow Creamery (955).
+[2015-06-02 11:19:45 -0400] - UpdateStripeCustomerMetadataForMarket - Apple Ridge Farm (18) - No Stripe Customer linked to Cranberry Creek Farm (786).
+[2015-06-02 11:19:45 -0400] - UpdateStripeCustomerMetadataForMarket - Apple Ridge Farm (18) - No Stripe Customer linked to Clare Garza (2383).
+[2015-06-02 11:19:47 -0400] - UpdateStripeCustomerMetadataForMarket - Apple Ridge Farm (18) - Updating Organization Stephanie forte (2380)'s Stripe Customer cus_5uQ4mrAohcsefh with {:description=>"Stephanie forte", :metadata=>{"lo.entity_id"=>2380, "lo.entity_type"=>"organization"}}
+[2015-06-02 11:19:47 -0400] - UpdateStripeCustomerMetadataForMarket - Apple Ridge Farm (18) - No Stripe Customer linked to Lisa Newberry (2374).
+[2015-06-02 11:19:47 -0400] - UpdateStripeCustomerMetadataForMarket - Apple Ridge Farm (18) - No Stripe Customer linked to N/A (2362).
+[2015-06-02 11:19:47 -0400] - UpdateStripeCustomerMetadataForMarket - Apple Ridge Farm (18) - No Stripe Customer linked to Easton Salsa Co., LLC (667).
+[2015-06-02 11:19:47 -0400] - UpdateStripeCustomerMetadataForMarket - Apple Ridge Farm (18) - No Stripe Customer linked to Silver Birch Kitchens (633).
+[2015-06-02 11:19:47 -0400] - UpdateStripeCustomerMetadataForMarket - Apple Ridge Farm (18) - No Stripe Customer linked to Yogifarmgirl Herbals / HoneyWood Herbals (622).
+[2015-06-02 11:19:47 -0400] - UpdateStripeCustomerMetadataForMarket - Apple Ridge Farm (18) - No Stripe Customer linked to Blue Ridge Herb Farm/Mountain Ridge Coffee & Roasters (925).
+[2015-06-02 11:19:47 -0400] - UpdateStripeCustomerMetadataForMarket - Apple Ridge Farm (18) - No Stripe Customer linked to Nature's Harvest (913).
+[2015-06-02 11:19:47 -0400] - UpdateStripeCustomerMetadataForMarket - Apple Ridge Farm (18) - No Stripe Customer linked to Saltopia Artisan Infused Sea Salts (479).
+[2015-06-02 11:19:47 -0400] - UpdateStripeCustomerMetadataForMarket - Apple Ridge Farm (18) - No Stripe Customer linked to Ray of Sun Farm (470).
+[2015-06-02 11:19:47 -0400] - UpdateStripeCustomerMetadataForMarket - Apple Ridge Farm (18) - No Stripe Customer linked to Stryker Farm (469).
+[2015-06-02 11:19:47 -0400] - UpdateStripeCustomerMetadataForMarket - Apple Ridge Farm (18) - No Stripe Customer linked to Dutch Hill Preserves,co (468).

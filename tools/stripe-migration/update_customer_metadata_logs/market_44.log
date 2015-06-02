@@ -1,0 +1,8 @@
+[2015-06-02 11:07:44 -0400] - UpdateStripeCustomerMetadataForMarket - RAI Wisconsin Market (44) - ====================================================================================================
+[2015-06-02 11:07:44 -0400] - UpdateStripeCustomerMetadataForMarket - RAI Wisconsin Market (44) -  RAI Wisconsin Market (44)
+[2015-06-02 11:07:44 -0400] - UpdateStripeCustomerMetadataForMarket - RAI Wisconsin Market (44) -  Updating stripe customer metadata for Market and all Organizations.
+[2015-06-02 11:07:44 -0400] - UpdateStripeCustomerMetadataForMarket - RAI Wisconsin Market (44) - 
+[2015-06-02 11:07:44 -0400] - UpdateStripeCustomerMetadataForMarket - RAI Wisconsin Market (44) -  Rails.env: production
+[2015-06-02 11:07:44 -0400] - UpdateStripeCustomerMetadataForMarket - RAI Wisconsin Market (44) -  Stripe key: pk_live_j85VTsrz51POrss3ni460qaf
+[2015-06-02 11:07:44 -0400] - UpdateStripeCustomerMetadataForMarket - RAI Wisconsin Market (44) - ====================================================================================================
+[2015-06-02 11:07:45 -0400] - UpdateStripeCustomerMetadataForMarket - RAI Wisconsin Market (44) - Updating Market's Stripe Customer with {:description=>"RAI Wisconsin Market", :metadata=>{"lo.entity_id"=>44, "lo.entity_type"=>"market"}}

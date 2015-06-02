@@ -1,0 +1,21 @@
+[2015-06-02 11:02:44 -0400] - UpdateStripeCustomerMetadataForMarket - Western U.P. Marketplace (20) - ====================================================================================================
+[2015-06-02 11:02:44 -0400] - UpdateStripeCustomerMetadataForMarket - Western U.P. Marketplace (20) -  Western U.P. Marketplace (20)
+[2015-06-02 11:02:44 -0400] - UpdateStripeCustomerMetadataForMarket - Western U.P. Marketplace (20) -  Updating stripe customer metadata for Market and all Organizations.
+[2015-06-02 11:02:44 -0400] - UpdateStripeCustomerMetadataForMarket - Western U.P. Marketplace (20) - 
+[2015-06-02 11:02:44 -0400] - UpdateStripeCustomerMetadataForMarket - Western U.P. Marketplace (20) -  Rails.env: production
+[2015-06-02 11:02:44 -0400] - UpdateStripeCustomerMetadataForMarket - Western U.P. Marketplace (20) -  Stripe key: pk_live_j85VTsrz51POrss3ni460qaf
+[2015-06-02 11:02:44 -0400] - UpdateStripeCustomerMetadataForMarket - Western U.P. Marketplace (20) - ====================================================================================================
+[2015-06-02 11:02:44 -0400] - UpdateStripeCustomerMetadataForMarket - Western U.P. Marketplace (20) - No Stripe Customer linked to this Market.
+[2015-06-02 11:02:44 -0400] - UpdateStripeCustomerMetadataForMarket - Western U.P. Marketplace (20) - No Stripe Customer linked to Tyrrell  (3697).
+[2015-06-02 11:02:44 -0400] - UpdateStripeCustomerMetadataForMarket - Western U.P. Marketplace (20) - No Stripe Customer linked to BSB Farms (1834).
+[2015-06-02 11:02:44 -0400] - UpdateStripeCustomerMetadataForMarket - Western U.P. Marketplace (20) - No Stripe Customer linked to Susie Island Farms LLC (2288).
+[2015-06-02 11:02:44 -0400] - UpdateStripeCustomerMetadataForMarket - Western U.P. Marketplace (20) - No Stripe Customer linked to Anya Farms, LLC (2382).
+[2015-06-02 11:02:45 -0400] - UpdateStripeCustomerMetadataForMarket - Western U.P. Marketplace (20) - Updating Organization Syl's Cafe (2217)'s Stripe Customer cus_5uQ4BK9R0HsDiT with {:description=>"Syl's Cafe", :metadata=>{"lo.entity_id"=>2217, "lo.entity_type"=>"organization"}}
+[2015-06-02 11:02:47 -0400] - UpdateStripeCustomerMetadataForMarket - Western U.P. Marketplace (20) - Updating Organization MTU Dining Services (2192)'s Stripe Customer cus_5uQ47BlAU0yJSR with {:description=>"MTU Dining Services", :metadata=>{"lo.entity_id"=>2192, "lo.entity_type"=>"organization"}}
+[2015-06-02 11:02:47 -0400] - UpdateStripeCustomerMetadataForMarket - Western U.P. Marketplace (20) - No Stripe Customer linked to RMG Maple Products, Inc. (2083).
+[2015-06-02 11:02:48 -0400] - UpdateStripeCustomerMetadataForMarket - Western U.P. Marketplace (20) - Updating Organization Michigan Tech Catering (1965)'s Stripe Customer cus_5uQ4vvr8SGXEke with {:description=>"Michigan Tech Catering", :metadata=>{"lo.entity_id"=>1965, "lo.entity_type"=>"organization"}}
+[2015-06-02 11:02:49 -0400] - UpdateStripeCustomerMetadataForMarket - Western U.P. Marketplace (20) - Updating Organization Western Demo Buyer (1902)'s Stripe Customer cus_5uQ5Hce2yWANaF with {:description=>"Western Demo Buyer", :metadata=>{"lo.entity_id"=>1902, "lo.entity_type"=>"organization"}}
+[2015-06-02 11:02:50 -0400] - UpdateStripeCustomerMetadataForMarket - Western U.P. Marketplace (20) - Updating Organization Wixtrom Natural Farms (1061)'s Stripe Customer cus_5uQ4YFv0Xi1CqB with {:description=>"Wixtrom Natural Farms", :metadata=>{"lo.entity_id"=>1061, "lo.entity_type"=>"organization"}}
+[2015-06-02 11:02:51 -0400] - UpdateStripeCustomerMetadataForMarket - Western U.P. Marketplace (20) - Updating Organization Seeds & Spores Family Farm (1062)'s Stripe Customer cus_5uQ4yRCqNqxEIq with {:description=>"Seeds & Spores Family Farm", :metadata=>{"lo.entity_id"=>1062, "lo.entity_type"=>"organization"}}
+[2015-06-02 11:02:51 -0400] - UpdateStripeCustomerMetadataForMarket - Western U.P. Marketplace (20) - No Stripe Customer linked to Osma Acres Farm (1091).
+[2015-06-02 11:02:52 -0400] - UpdateStripeCustomerMetadataForMarket - Western U.P. Marketplace (20) - Updating Organization Wintergreen Farm (1087)'s Stripe Customer cus_5vQutq2KInMfpL with {:description=>"Wintergreen Farm", :metadata=>{"lo.entity_id"=>1087, "lo.entity_type"=>"organization"}}

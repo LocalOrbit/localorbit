@@ -1,0 +1,8 @@
+[2015-06-02 11:07:42 -0400] - UpdateStripeCustomerMetadataForMarket - Intervale Food Hub (93) - ====================================================================================================
+[2015-06-02 11:07:42 -0400] - UpdateStripeCustomerMetadataForMarket - Intervale Food Hub (93) -  Intervale Food Hub (93)
+[2015-06-02 11:07:42 -0400] - UpdateStripeCustomerMetadataForMarket - Intervale Food Hub (93) -  Updating stripe customer metadata for Market and all Organizations.
+[2015-06-02 11:07:42 -0400] - UpdateStripeCustomerMetadataForMarket - Intervale Food Hub (93) - 
+[2015-06-02 11:07:42 -0400] - UpdateStripeCustomerMetadataForMarket - Intervale Food Hub (93) -  Rails.env: production
+[2015-06-02 11:07:42 -0400] - UpdateStripeCustomerMetadataForMarket - Intervale Food Hub (93) -  Stripe key: pk_live_j85VTsrz51POrss3ni460qaf
+[2015-06-02 11:07:42 -0400] - UpdateStripeCustomerMetadataForMarket - Intervale Food Hub (93) - ====================================================================================================
+[2015-06-02 11:07:43 -0400] - UpdateStripeCustomerMetadataForMarket - Intervale Food Hub (93) - Updating Market's Stripe Customer with {:description=>"Intervale Food Hub", :metadata=>{"lo.entity_id"=>93, "lo.entity_type"=>"market"}}

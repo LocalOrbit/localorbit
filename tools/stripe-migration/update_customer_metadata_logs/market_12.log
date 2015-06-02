@@ -1,0 +1,30 @@
+[2015-06-02 11:19:51 -0400] - UpdateStripeCustomerMetadataForMarket - Clarion River Organics (12) - ====================================================================================================
+[2015-06-02 11:19:51 -0400] - UpdateStripeCustomerMetadataForMarket - Clarion River Organics (12) -  Clarion River Organics (12)
+[2015-06-02 11:19:51 -0400] - UpdateStripeCustomerMetadataForMarket - Clarion River Organics (12) -  Updating stripe customer metadata for Market and all Organizations.
+[2015-06-02 11:19:51 -0400] - UpdateStripeCustomerMetadataForMarket - Clarion River Organics (12) - 
+[2015-06-02 11:19:51 -0400] - UpdateStripeCustomerMetadataForMarket - Clarion River Organics (12) -  Rails.env: production
+[2015-06-02 11:19:51 -0400] - UpdateStripeCustomerMetadataForMarket - Clarion River Organics (12) -  Stripe key: pk_live_j85VTsrz51POrss3ni460qaf
+[2015-06-02 11:19:51 -0400] - UpdateStripeCustomerMetadataForMarket - Clarion River Organics (12) - ====================================================================================================
+[2015-06-02 11:19:51 -0400] - UpdateStripeCustomerMetadataForMarket - Clarion River Organics (12) - No Stripe Customer linked to this Market.
+[2015-06-02 11:19:52 -0400] - UpdateStripeCustomerMetadataForMarket - Clarion River Organics (12) - Updating Organization Whole Foods Pittsburgh Grocery Dept. (3954)'s Stripe Customer cus_6JJ6U1jGzF2FFl with {:description=>"Whole Foods Pittsburgh Grocery Dept.", :metadata=>{"lo.entity_id"=>3954, "lo.entity_type"=>"organization"}}
+[2015-06-02 11:19:53 -0400] - UpdateStripeCustomerMetadataForMarket - Clarion River Organics (12) - Updating Organization Whole Foods Wexford Prepared Foods Dept. (3953)'s Stripe Customer cus_6JJ2NdAuCqHvcC with {:description=>"Whole Foods Wexford Prepared Foods Dept.", :metadata=>{"lo.entity_id"=>3953, "lo.entity_type"=>"organization"}}
+[2015-06-02 11:19:54 -0400] - UpdateStripeCustomerMetadataForMarket - Clarion River Organics (12) - Updating Organization Whole Foods Wexford Produce Dept. (3952)'s Stripe Customer cus_6JJ04iZQF0FjCW with {:description=>"Whole Foods Wexford Produce Dept.", :metadata=>{"lo.entity_id"=>3952, "lo.entity_type"=>"organization"}}
+[2015-06-02 11:19:55 -0400] - UpdateStripeCustomerMetadataForMarket - Clarion River Organics (12) - Updating Organization Whole Foods Pittsburgh Prepared Foods Dept. (3951)'s Stripe Customer cus_6JIrzUPXZxyF0n with {:description=>"Whole Foods Pittsburgh Prepared Foods Dept.", :metadata=>{"lo.entity_id"=>3951, "lo.entity_type"=>"organization"}}
+[2015-06-02 11:19:56 -0400] - UpdateStripeCustomerMetadataForMarket - Clarion River Organics (12) - Updating Organization Whole Foods Pittsburgh Produce Dept. (3950)'s Stripe Customer cus_6JInhOObqc0zWO with {:description=>"Whole Foods Pittsburgh Produce Dept.", :metadata=>{"lo.entity_id"=>3950, "lo.entity_type"=>"organization"}}
+[2015-06-02 11:19:57 -0400] - UpdateStripeCustomerMetadataForMarket - Clarion River Organics (12) - Updating Organization East End Food Coop Cafe (3949)'s Stripe Customer cus_6JIivl0Dg4bxvG with {:description=>"East End Food Coop Cafe", :metadata=>{"lo.entity_id"=>3949, "lo.entity_type"=>"organization"}}
+[2015-06-02 11:19:58 -0400] - UpdateStripeCustomerMetadataForMarket - Clarion River Organics (12) - Updating Organization DSF (3942)'s Stripe Customer cus_6J3tyn9hQiBErg with {:description=>"DSF", :metadata=>{"lo.entity_id"=>3942, "lo.entity_type"=>"organization"}}
+[2015-06-02 11:19:59 -0400] - UpdateStripeCustomerMetadataForMarket - Clarion River Organics (12) - Updating Organization Test CRO (3828)'s Stripe Customer cus_6Jgam3XF4znCa8 with {:description=>"Test CRO", :metadata=>{"lo.entity_id"=>3828, "lo.entity_type"=>"organization"}}
+[2015-06-02 11:20:00 -0400] - UpdateStripeCustomerMetadataForMarket - Clarion River Organics (12) - Updating Organization East End Food Co-op Produce Dept. (3753)'s Stripe Customer cus_6DoD0L7G4Lfffz with {:description=>"East End Food Co-op Produce Dept.", :metadata=>{"lo.entity_id"=>3753, "lo.entity_type"=>"organization"}}
+[2015-06-02 11:20:00 -0400] - UpdateStripeCustomerMetadataForMarket - Clarion River Organics (12) - No Stripe Customer linked to LPF (1896).
+[2015-06-02 11:20:00 -0400] - UpdateStripeCustomerMetadataForMarket - Clarion River Organics (12) - No Stripe Customer linked to JSS (1894).
+[2015-06-02 11:20:00 -0400] - UpdateStripeCustomerMetadataForMarket - Clarion River Organics (12) - No Stripe Customer linked to DSS (1893).
+[2015-06-02 11:20:00 -0400] - UpdateStripeCustomerMetadataForMarket - Clarion River Organics (12) - No Stripe Customer linked to ESS (1890).
+[2015-06-02 11:20:00 -0400] - UpdateStripeCustomerMetadataForMarket - Clarion River Organics (12) - No Stripe Customer linked to JEF (1889).
+[2015-06-02 11:20:00 -0400] - UpdateStripeCustomerMetadataForMarket - Clarion River Organics (12) - No Stripe Customer linked to DMF (1888).
+[2015-06-02 11:20:00 -0400] - UpdateStripeCustomerMetadataForMarket - Clarion River Organics (12) - No Stripe Customer linked to RBF (1887).
+[2015-06-02 11:20:00 -0400] - UpdateStripeCustomerMetadataForMarket - Clarion River Organics (12) - No Stripe Customer linked to DMS (1886).
+[2015-06-02 11:20:00 -0400] - UpdateStripeCustomerMetadataForMarket - Clarion River Organics (12) - No Stripe Customer linked to HVF (1885).
+[2015-06-02 11:20:00 -0400] - UpdateStripeCustomerMetadataForMarket - Clarion River Organics (12) - No Stripe Customer linked to TSS (1884).
+[2015-06-02 11:20:00 -0400] - UpdateStripeCustomerMetadataForMarket - Clarion River Organics (12) - No Stripe Customer linked to HTF (1883).
+[2015-06-02 11:20:00 -0400] - UpdateStripeCustomerMetadataForMarket - Clarion River Organics (12) - No Stripe Customer linked to TSF (1882).
+[2015-06-02 11:20:00 -0400] - UpdateStripeCustomerMetadataForMarket - Clarion River Organics (12) - No Stripe Customer linked to LXC (1881).

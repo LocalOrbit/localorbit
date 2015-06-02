@@ -1,0 +1,8 @@
+[2015-06-02 11:07:12 -0400] - UpdateStripeCustomerMetadataForMarket - Happy Valley Fresh Farm to Hub (41) - ====================================================================================================
+[2015-06-02 11:07:12 -0400] - UpdateStripeCustomerMetadataForMarket - Happy Valley Fresh Farm to Hub (41) -  Happy Valley Fresh Farm to Hub (41)
+[2015-06-02 11:07:12 -0400] - UpdateStripeCustomerMetadataForMarket - Happy Valley Fresh Farm to Hub (41) -  Updating stripe customer metadata for Market and all Organizations.
+[2015-06-02 11:07:12 -0400] - UpdateStripeCustomerMetadataForMarket - Happy Valley Fresh Farm to Hub (41) - 
+[2015-06-02 11:07:12 -0400] - UpdateStripeCustomerMetadataForMarket - Happy Valley Fresh Farm to Hub (41) -  Rails.env: production
+[2015-06-02 11:07:12 -0400] - UpdateStripeCustomerMetadataForMarket - Happy Valley Fresh Farm to Hub (41) -  Stripe key: pk_live_j85VTsrz51POrss3ni460qaf
+[2015-06-02 11:07:12 -0400] - UpdateStripeCustomerMetadataForMarket - Happy Valley Fresh Farm to Hub (41) - ====================================================================================================
+[2015-06-02 11:07:13 -0400] - UpdateStripeCustomerMetadataForMarket - Happy Valley Fresh Farm to Hub (41) - Updating Market's Stripe Customer with {:description=>"Happy Valley Fresh Farm to Hub", :metadata=>{"lo.entity_id"=>41, "lo.entity_type"=>"market"}}

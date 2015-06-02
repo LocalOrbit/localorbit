@@ -1,0 +1,30 @@
+[2015-06-02 11:07:31 -0400] - UpdateStripeCustomerMetadataForMarket - The Pickup  (86) - ====================================================================================================
+[2015-06-02 11:07:31 -0400] - UpdateStripeCustomerMetadataForMarket - The Pickup  (86) -  The Pickup  (86)
+[2015-06-02 11:07:31 -0400] - UpdateStripeCustomerMetadataForMarket - The Pickup  (86) -  Updating stripe customer metadata for Market and all Organizations.
+[2015-06-02 11:07:31 -0400] - UpdateStripeCustomerMetadataForMarket - The Pickup  (86) - 
+[2015-06-02 11:07:31 -0400] - UpdateStripeCustomerMetadataForMarket - The Pickup  (86) -  Rails.env: production
+[2015-06-02 11:07:31 -0400] - UpdateStripeCustomerMetadataForMarket - The Pickup  (86) -  Stripe key: pk_live_j85VTsrz51POrss3ni460qaf
+[2015-06-02 11:07:31 -0400] - UpdateStripeCustomerMetadataForMarket - The Pickup  (86) - ====================================================================================================
+[2015-06-02 11:07:32 -0400] - UpdateStripeCustomerMetadataForMarket - The Pickup  (86) - Updating Market's Stripe Customer with {:description=>"The Pickup ", :metadata=>{"lo.entity_id"=>86, "lo.entity_type"=>"market"}}
+[2015-06-02 11:07:34 -0400] - UpdateStripeCustomerMetadataForMarket - The Pickup  (86) - Updating Organization 45 North Sugarloaf (4016)'s Stripe Customer cus_6LEAv3fBGWlhK2 with {:description=>"45 North Sugarloaf", :metadata=>{"lo.entity_id"=>4016, "lo.entity_type"=>"organization"}}
+[2015-06-02 11:07:34 -0400] - UpdateStripeCustomerMetadataForMarket - The Pickup  (86) - No Stripe Customer linked to Uncle Dean's Good Groceries (4015).
+[2015-06-02 11:07:34 -0400] - UpdateStripeCustomerMetadataForMarket - The Pickup  (86) - No Stripe Customer linked to Portland Food Co-op (4014).
+[2015-06-02 11:07:34 -0400] - UpdateStripeCustomerMetadataForMarket - The Pickup  (86) - No Stripe Customer linked to KVCAP Child and Family Services (4012).
+[2015-06-02 11:07:34 -0400] - UpdateStripeCustomerMetadataForMarket - The Pickup  (86) - No Stripe Customer linked to Mary Thomas (4011).
+[2015-06-02 11:07:34 -0400] - UpdateStripeCustomerMetadataForMarket - The Pickup  (86) - No Stripe Customer linked to 3 Level Farm Store (4010).
+[2015-06-02 11:07:34 -0400] - UpdateStripeCustomerMetadataForMarket - The Pickup  (86) - Updating Organization Maine General -Alfond Center For Health (4009)'s Stripe Customer cus_6LgDPsX7N3nUFt with {:description=>"Maine General -Alfond Center For Health", :metadata=>{"lo.entity_id"=>4009, "lo.entity_type"=>"organization"}}
+[2015-06-02 11:07:34 -0400] - UpdateStripeCustomerMetadataForMarket - The Pickup  (86) - No Stripe Customer linked to Skowhegan School of Painting & Sculpture (4005).
+[2015-06-02 11:07:35 -0400] - UpdateStripeCustomerMetadataForMarket - The Pickup  (86) - Updating Organization Maine Grains (4002)'s Stripe Customer cus_6Jo8sHHw8ILENa with {:description=>"Maine Grains", :metadata=>{"lo.entity_id"=>4002, "lo.entity_type"=>"organization"}}
+[2015-06-02 11:07:36 -0400] - UpdateStripeCustomerMetadataForMarket - The Pickup  (86) - Updating Organization Barrels Community Market (3955)'s Stripe Customer cus_6JLbjHqVmRiFgV with {:description=>"Barrels Community Market", :metadata=>{"lo.entity_id"=>3955, "lo.entity_type"=>"organization"}}
+[2015-06-02 11:07:36 -0400] - UpdateStripeCustomerMetadataForMarket - The Pickup  (86) - No Stripe Customer linked to Rolling Fatties (3948).
+[2015-06-02 11:07:37 -0400] - UpdateStripeCustomerMetadataForMarket - The Pickup  (86) - Updating Organization Cayford Orchards (3938)'s Stripe Customer cus_6J0eSJBkTpD2VG with {:description=>"Cayford Orchards", :metadata=>{"lo.entity_id"=>3938, "lo.entity_type"=>"organization"}}
+[2015-06-02 11:07:38 -0400] - UpdateStripeCustomerMetadataForMarket - The Pickup  (86) - Updating Organization The Cafe (3937)'s Stripe Customer cus_6J0LV10SwCT4q9 with {:description=>"The Cafe", :metadata=>{"lo.entity_id"=>3937, "lo.entity_type"=>"organization"}}
+[2015-06-02 11:07:40 -0400] - UpdateStripeCustomerMetadataForMarket - The Pickup  (86) - Updating Organization Emery Farm (3934)'s Stripe Customer cus_6IvuTJkFEkY88O with {:description=>"Emery Farm", :metadata=>{"lo.entity_id"=>3934, "lo.entity_type"=>"organization"}}
+[2015-06-02 11:07:40 -0400] - UpdateStripeCustomerMetadataForMarket - The Pickup  (86) - No Stripe Customer linked to Sandy Meadow farm (3904).
+[2015-06-02 11:07:41 -0400] - UpdateStripeCustomerMetadataForMarket - The Pickup  (86) - Updating Organization Bowden's Egg Farm (3870)'s Stripe Customer cus_6H7n63KWu5HvxT with {:description=>"Bowden's Egg Farm", :metadata=>{"lo.entity_id"=>3870, "lo.entity_type"=>"organization"}}
+[2015-06-02 11:07:41 -0400] - UpdateStripeCustomerMetadataForMarket - The Pickup  (86) - No Stripe Customer linked to Groundswell Seed Farm (3850).
+[2015-06-02 11:07:41 -0400] - UpdateStripeCustomerMetadataForMarket - The Pickup  (86) - No Stripe Customer linked to Blue Ribbon Farm (3844).
+[2015-06-02 11:07:42 -0400] - UpdateStripeCustomerMetadataForMarket - The Pickup  (86) - Updating Organization The CSA (3738)'s Stripe Customer cus_6Dk9FNAc0bI2Z0 with {:description=>"The CSA", :metadata=>{"lo.entity_id"=>3738, "lo.entity_type"=>"organization"}}
+[2015-06-02 11:07:42 -0400] - UpdateStripeCustomerMetadataForMarket - The Pickup  (86) - No Stripe Customer linked to One Drop Farm (3580).
+[2015-06-02 11:07:42 -0400] - UpdateStripeCustomerMetadataForMarket - The Pickup  (86) - No Stripe Customer linked to Moodytown Gardens (3569).
+[2015-06-02 11:07:42 -0400] - UpdateStripeCustomerMetadataForMarket - The Pickup  (86) - No Stripe Customer linked to Grassland Organic Farm (3484).

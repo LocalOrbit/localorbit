@@ -1,0 +1,183 @@
+[2015-06-02 11:12:37 -0400] - UpdateStripeCustomerMetadataForMarket - Re:Vision (65) - ====================================================================================================
+[2015-06-02 11:12:37 -0400] - UpdateStripeCustomerMetadataForMarket - Re:Vision (65) -  Re:Vision (65)
+[2015-06-02 11:12:37 -0400] - UpdateStripeCustomerMetadataForMarket - Re:Vision (65) -  Updating stripe customer metadata for Market and all Organizations.
+[2015-06-02 11:12:37 -0400] - UpdateStripeCustomerMetadataForMarket - Re:Vision (65) - 
+[2015-06-02 11:12:37 -0400] - UpdateStripeCustomerMetadataForMarket - Re:Vision (65) -  Rails.env: production
+[2015-06-02 11:12:37 -0400] - UpdateStripeCustomerMetadataForMarket - Re:Vision (65) -  Stripe key: pk_live_j85VTsrz51POrss3ni460qaf
+[2015-06-02 11:12:37 -0400] - UpdateStripeCustomerMetadataForMarket - Re:Vision (65) - ====================================================================================================
+[2015-06-02 11:12:38 -0400] - UpdateStripeCustomerMetadataForMarket - Re:Vision (65) - Updating Market's Stripe Customer with {:description=>"Re:Vision", :metadata=>{"lo.entity_id"=>65, "lo.entity_type"=>"market"}}
+[2015-06-02 11:12:38 -0400] - UpdateStripeCustomerMetadataForMarket - Re:Vision (65) - No Stripe Customer linked to Matt Pelan (4063).
+[2015-06-02 11:12:38 -0400] - UpdateStripeCustomerMetadataForMarket - Re:Vision (65) - No Stripe Customer linked to Jenna Fisher (4006).
+[2015-06-02 11:12:39 -0400] - UpdateStripeCustomerMetadataForMarket - Re:Vision (65) - Updating Organization LeMasters Family (4004)'s Stripe Customer cus_6LPWQvk6lrpRdo with {:description=>"LeMasters Family", :metadata=>{"lo.entity_id"=>4004, "lo.entity_type"=>"organization"}}
+[2015-06-02 11:12:39 -0400] - UpdateStripeCustomerMetadataForMarket - Re:Vision (65) - No Stripe Customer linked to Michael Simon (3911).
+[2015-06-02 11:12:39 -0400] - UpdateStripeCustomerMetadataForMarket - Re:Vision (65) - No Stripe Customer linked to Hannah Miller (3903).
+[2015-06-02 11:12:39 -0400] - UpdateStripeCustomerMetadataForMarket - Re:Vision (65) - No Stripe Customer linked to Kathryn Kubala (3892).
+[2015-06-02 11:12:39 -0400] - UpdateStripeCustomerMetadataForMarket - Re:Vision (65) - No Stripe Customer linked to Marie Martinez (3885).
+[2015-06-02 11:12:39 -0400] - UpdateStripeCustomerMetadataForMarket - Re:Vision (65) - No Stripe Customer linked to Thomas (3883).
+[2015-06-02 11:12:39 -0400] - UpdateStripeCustomerMetadataForMarket - Re:Vision (65) - No Stripe Customer linked to Jerome Campbell (3840).
+[2015-06-02 11:12:39 -0400] - UpdateStripeCustomerMetadataForMarket - Re:Vision (65) - No Stripe Customer linked to SIlve Queen Capital (3825).
+[2015-06-02 11:12:39 -0400] - UpdateStripeCustomerMetadataForMarket - Re:Vision (65) - No Stripe Customer linked to Amber Alarid (3816).
+[2015-06-02 11:12:39 -0400] - UpdateStripeCustomerMetadataForMarket - Re:Vision (65) - No Stripe Customer linked to Jeni Rinner (3785).
+[2015-06-02 11:12:39 -0400] - UpdateStripeCustomerMetadataForMarket - Re:Vision (65) - No Stripe Customer linked to n/a (3776).
+[2015-06-02 11:12:39 -0400] - UpdateStripeCustomerMetadataForMarket - Re:Vision (65) - No Stripe Customer linked to An Ounce of Nutrition (3752).
+[2015-06-02 11:12:40 -0400] - UpdateStripeCustomerMetadataForMarket - Re:Vision (65) - Updating Organization none (3727)'s Stripe Customer cus_6BtImYCGgoRmh5 with {:description=>"none", :metadata=>{"lo.entity_id"=>3727, "lo.entity_type"=>"organization"}}
+[2015-06-02 11:12:40 -0400] - UpdateStripeCustomerMetadataForMarket - Re:Vision (65) - No Stripe Customer linked to Bethany Pell (3720).
+[2015-06-02 11:12:40 -0400] - UpdateStripeCustomerMetadataForMarket - Re:Vision (65) - No Stripe Customer linked to Erin Neville (3719).
+[2015-06-02 11:12:40 -0400] - UpdateStripeCustomerMetadataForMarket - Re:Vision (65) - No Stripe Customer linked to Biehlers (3708).
+[2015-06-02 11:12:40 -0400] - UpdateStripeCustomerMetadataForMarket - Re:Vision (65) - No Stripe Customer linked to Gretchen Crowe (3707).
+[2015-06-02 11:12:40 -0400] - UpdateStripeCustomerMetadataForMarket - Re:Vision (65) - No Stripe Customer linked to Sarah Andrews (3705).
+[2015-06-02 11:12:40 -0400] - UpdateStripeCustomerMetadataForMarket - Re:Vision (65) - No Stripe Customer linked to NutriSpec Food Labeling (3704).
+[2015-06-02 11:12:40 -0400] - UpdateStripeCustomerMetadataForMarket - Re:Vision (65) - No Stripe Customer linked to Derek Joshua Medina (3702).
+[2015-06-02 11:12:40 -0400] - UpdateStripeCustomerMetadataForMarket - Re:Vision (65) - No Stripe Customer linked to Katie Johnston (3701).
+[2015-06-02 11:12:41 -0400] - UpdateStripeCustomerMetadataForMarket - Re:Vision (65) - Updating Organization Love Grown Foods  (3694)'s Stripe Customer cus_6B71n28j7VvTlU with {:description=>"Love Grown Foods ", :metadata=>{"lo.entity_id"=>3694, "lo.entity_type"=>"organization"}}
+[2015-06-02 11:12:41 -0400] - UpdateStripeCustomerMetadataForMarket - Re:Vision (65) - No Stripe Customer linked to Camacho Insights (3691).
+[2015-06-02 11:12:43 -0400] - UpdateStripeCustomerMetadataForMarket - Re:Vision (65) - Updating Organization Mallory Howard (3670)'s Stripe Customer cus_69eEQh9RBBldMq with {:description=>"Mallory Howard", :metadata=>{"lo.entity_id"=>3670, "lo.entity_type"=>"organization"}}
+[2015-06-02 11:12:44 -0400] - UpdateStripeCustomerMetadataForMarket - Re:Vision (65) - Updating Organization The Real Dill  (3660)'s Stripe Customer cus_69IDIiIGTnOLOS with {:description=>"The Real Dill ", :metadata=>{"lo.entity_id"=>3660, "lo.entity_type"=>"organization"}}
+[2015-06-02 11:12:44 -0400] - UpdateStripeCustomerMetadataForMarket - Re:Vision (65) - No Stripe Customer linked to Shelby Bennett (3638).
+[2015-06-02 11:12:44 -0400] - UpdateStripeCustomerMetadataForMarket - Re:Vision (65) - No Stripe Customer linked to Jen McCabe  (3627).
+[2015-06-02 11:12:44 -0400] - UpdateStripeCustomerMetadataForMarket - Re:Vision (65) - No Stripe Customer linked to BikeDenver (3624).
+[2015-06-02 11:12:45 -0400] - UpdateStripeCustomerMetadataForMarket - Re:Vision (65) - Updating Organization Jeremy Katz (3590)'s Stripe Customer cus_6JSHfjjVGm22fQ with {:description=>"Jeremy Katz", :metadata=>{"lo.entity_id"=>3590, "lo.entity_type"=>"organization"}}
+[2015-06-02 11:12:45 -0400] - UpdateStripeCustomerMetadataForMarket - Re:Vision (65) - No Stripe Customer linked to Echo Rivera (3581).
+[2015-06-02 11:12:45 -0400] - UpdateStripeCustomerMetadataForMarket - Re:Vision (65) - No Stripe Customer linked to Myrna Camacho (3553).
+[2015-06-02 11:12:46 -0400] - UpdateStripeCustomerMetadataForMarket - Re:Vision (65) - Updating Organization Eric's Eggs  (3548)'s Stripe Customer cus_65uNiQ70UvOjEF with {:description=>"Eric's Eggs ", :metadata=>{"lo.entity_id"=>3548, "lo.entity_type"=>"organization"}}
+[2015-06-02 11:12:46 -0400] - UpdateStripeCustomerMetadataForMarket - Re:Vision (65) - No Stripe Customer linked to David Cohen (3461).
+[2015-06-02 11:12:47 -0400] - UpdateStripeCustomerMetadataForMarket - Re:Vision (65) - Updating Organization Lucretia Krause (3456)'s Stripe Customer cus_632TnvV5nYdU6M with {:description=>"Lucretia Krause", :metadata=>{"lo.entity_id"=>3456, "lo.entity_type"=>"organization"}}
+[2015-06-02 11:12:47 -0400] - UpdateStripeCustomerMetadataForMarket - Re:Vision (65) - No Stripe Customer linked to Megan Hart Ness (3443).
+[2015-06-02 11:12:47 -0400] - UpdateStripeCustomerMetadataForMarket - Re:Vision (65) - No Stripe Customer linked to CorePower Yoga (3441).
+[2015-06-02 11:12:47 -0400] - UpdateStripeCustomerMetadataForMarket - Re:Vision (65) - No Stripe Customer linked to Barbara Mariner (3424).
+[2015-06-02 11:12:47 -0400] - UpdateStripeCustomerMetadataForMarket - Re:Vision (65) - No Stripe Customer linked to Niki Hawthorne (3419).
+[2015-06-02 11:12:47 -0400] - UpdateStripeCustomerMetadataForMarket - Re:Vision (65) - No Stripe Customer linked to Brendan OShaughnessy (3407).
+[2015-06-02 11:12:47 -0400] - UpdateStripeCustomerMetadataForMarket - Re:Vision (65) - No Stripe Customer linked to Tyler Hegemann (3372).
+[2015-06-02 11:12:48 -0400] - UpdateStripeCustomerMetadataForMarket - Re:Vision (65) - Updating Organization Erin Raney (3364)'s Stripe Customer cus_69F6SbP4AFLa2l with {:description=>"Erin Raney", :metadata=>{"lo.entity_id"=>3364, "lo.entity_type"=>"organization"}}
+[2015-06-02 11:12:48 -0400] - UpdateStripeCustomerMetadataForMarket - Re:Vision (65) - No Stripe Customer linked to Ed Miedema (3362).
+[2015-06-02 11:12:49 -0400] - UpdateStripeCustomerMetadataForMarket - Re:Vision (65) - Updating Organization Ela Family Farms (3353)'s Stripe Customer cus_5yO15cJ2TMTeJP with {:description=>"Ela Family Farms", :metadata=>{"lo.entity_id"=>3353, "lo.entity_type"=>"organization"}}
+[2015-06-02 11:12:50 -0400] - UpdateStripeCustomerMetadataForMarket - Re:Vision (65) - Updating Organization Elevation Ketchup (3352)'s Stripe Customer cus_5yNyg35UG33Gn3 with {:description=>"Elevation Ketchup", :metadata=>{"lo.entity_id"=>3352, "lo.entity_type"=>"organization"}}
+[2015-06-02 11:12:51 -0400] - UpdateStripeCustomerMetadataForMarket - Re:Vision (65) - Updating Organization Flying B Bar Ranch (3336)'s Stripe Customer cus_5y1kwBE1hPRFde with {:description=>"Flying B Bar Ranch", :metadata=>{"lo.entity_id"=>3336, "lo.entity_type"=>"organization"}}
+[2015-06-02 11:12:51 -0400] - UpdateStripeCustomerMetadataForMarket - Re:Vision (65) - No Stripe Customer linked to Hanschen Family (3313).
+[2015-06-02 11:12:51 -0400] - UpdateStripeCustomerMetadataForMarket - Re:Vision (65) - No Stripe Customer linked to CU Denver School of Public Hea (3305).
+[2015-06-02 11:12:51 -0400] - UpdateStripeCustomerMetadataForMarket - Re:Vision (65) - No Stripe Customer linked to Carol Tumaylle (3297).
+[2015-06-02 11:12:51 -0400] - UpdateStripeCustomerMetadataForMarket - Re:Vision (65) - No Stripe Customer linked to Lucero Household (3293).
+[2015-06-02 11:12:51 -0400] - UpdateStripeCustomerMetadataForMarket - Re:Vision (65) - No Stripe Customer linked to Jamie Lollback (3288).
+[2015-06-02 11:12:51 -0400] - UpdateStripeCustomerMetadataForMarket - Re:Vision (65) - No Stripe Customer linked to P2Binvestor (3275).
+[2015-06-02 11:12:51 -0400] - UpdateStripeCustomerMetadataForMarket - Re:Vision (65) - No Stripe Customer linked to Taylor Moellers (3265).
+[2015-06-02 11:12:51 -0400] - UpdateStripeCustomerMetadataForMarket - Re:Vision (65) - No Stripe Customer linked to Cooking Matters Colorado (3264).
+[2015-06-02 11:12:51 -0400] - UpdateStripeCustomerMetadataForMarket - Re:Vision (65) - No Stripe Customer linked to Jenkins family (3263).
+[2015-06-02 11:12:51 -0400] - UpdateStripeCustomerMetadataForMarket - Re:Vision (65) - No Stripe Customer linked to revision (3258).
+[2015-06-02 11:12:51 -0400] - UpdateStripeCustomerMetadataForMarket - Re:Vision (65) - No Stripe Customer linked to Mariah Bloom (3252).
+[2015-06-02 11:12:51 -0400] - UpdateStripeCustomerMetadataForMarket - Re:Vision (65) - No Stripe Customer linked to Writeforyoucolorado (3251).
+[2015-06-02 11:12:51 -0400] - UpdateStripeCustomerMetadataForMarket - Re:Vision (65) - No Stripe Customer linked to EarthLinks (3247).
+[2015-06-02 11:12:51 -0400] - UpdateStripeCustomerMetadataForMarket - Re:Vision (65) - No Stripe Customer linked to EarthLinks (3246).
+[2015-06-02 11:12:51 -0400] - UpdateStripeCustomerMetadataForMarket - Re:Vision (65) - No Stripe Customer linked to Nicole Shook (3245).
+[2015-06-02 11:12:51 -0400] - UpdateStripeCustomerMetadataForMarket - Re:Vision (65) - No Stripe Customer linked to Stasia Raines (3244).
+[2015-06-02 11:12:51 -0400] - UpdateStripeCustomerMetadataForMarket - Re:Vision (65) - No Stripe Customer linked to Caroline Savery (3236).
+[2015-06-02 11:12:51 -0400] - UpdateStripeCustomerMetadataForMarket - Re:Vision (65) - No Stripe Customer linked to Rocky Mountain Institute (3233).
+[2015-06-02 11:12:51 -0400] - UpdateStripeCustomerMetadataForMarket - Re:Vision (65) - No Stripe Customer linked to Young Life (3232).
+[2015-06-02 11:12:51 -0400] - UpdateStripeCustomerMetadataForMarket - Re:Vision (65) - No Stripe Customer linked to Pat Bratina (3228).
+[2015-06-02 11:12:51 -0400] - UpdateStripeCustomerMetadataForMarket - Re:Vision (65) - No Stripe Customer linked to domus (3226).
+[2015-06-02 11:12:51 -0400] - UpdateStripeCustomerMetadataForMarket - Re:Vision (65) - No Stripe Customer linked to Amanda Gonzalez  (3223).
+[2015-06-02 11:12:51 -0400] - UpdateStripeCustomerMetadataForMarket - Re:Vision (65) - No Stripe Customer linked to Sonja Semion (3217).
+[2015-06-02 11:12:51 -0400] - UpdateStripeCustomerMetadataForMarket - Re:Vision (65) - No Stripe Customer linked to N/A (3216).
+[2015-06-02 11:12:51 -0400] - UpdateStripeCustomerMetadataForMarket - Re:Vision (65) - No Stripe Customer linked to Tyler Schrock (3211).
+[2015-06-02 11:12:53 -0400] - UpdateStripeCustomerMetadataForMarket - Re:Vision (65) - Updating Organization Matilde's House (3203)'s Stripe Customer cus_5voxyGC2wlUkaP with {:description=>"Matilde's House", :metadata=>{"lo.entity_id"=>3203, "lo.entity_type"=>"organization"}}
+[2015-06-02 11:12:54 -0400] - UpdateStripeCustomerMetadataForMarket - Re:Vision (65) - Updating Organization Mayra's House (3202)'s Stripe Customer cus_5uQ6GyzWwoXKFK with {:description=>"Mayra's House", :metadata=>{"lo.entity_id"=>3202, "lo.entity_type"=>"organization"}}
+[2015-06-02 11:12:55 -0400] - UpdateStripeCustomerMetadataForMarket - Re:Vision (65) - Updating Organization Revision (3201)'s Stripe Customer cus_5uQ5gfl0J5UWJL with {:description=>"Revision", :metadata=>{"lo.entity_id"=>3201, "lo.entity_type"=>"organization"}}
+[2015-06-02 11:12:55 -0400] - UpdateStripeCustomerMetadataForMarket - Re:Vision (65) - No Stripe Customer linked to RE:Vision (3197).
+[2015-06-02 11:12:55 -0400] - UpdateStripeCustomerMetadataForMarket - Re:Vision (65) - No Stripe Customer linked to Revision (3196).
+[2015-06-02 11:12:55 -0400] - UpdateStripeCustomerMetadataForMarket - Re:Vision (65) - No Stripe Customer linked to Heather Somerville (3194).
+[2015-06-02 11:12:55 -0400] - UpdateStripeCustomerMetadataForMarket - Re:Vision (65) - No Stripe Customer linked to Alana berland (3192).
+[2015-06-02 11:12:55 -0400] - UpdateStripeCustomerMetadataForMarket - Re:Vision (65) - No Stripe Customer linked to Colorado Forward (3187).
+[2015-06-02 11:12:55 -0400] - UpdateStripeCustomerMetadataForMarket - Re:Vision (65) - No Stripe Customer linked to Anthony Pratt (3183).
+[2015-06-02 11:12:55 -0400] - UpdateStripeCustomerMetadataForMarket - Re:Vision (65) - No Stripe Customer linked to ReVision (3182).
+[2015-06-02 11:12:56 -0400] - UpdateStripeCustomerMetadataForMarket - Re:Vision (65) - Updating Organization JVA Consulting (3175)'s Stripe Customer cus_69FLYjo8CVOH5t with {:description=>"JVA Consulting", :metadata=>{"lo.entity_id"=>3175, "lo.entity_type"=>"organization"}}
+[2015-06-02 11:12:57 -0400] - UpdateStripeCustomerMetadataForMarket - Re:Vision (65) - Updating Organization Claire Slattery-Quintanilla (3155)'s Stripe Customer cus_5uQ5pMwPCoNPwq with {:description=>"Claire Slattery-Quintanilla", :metadata=>{"lo.entity_id"=>3155, "lo.entity_type"=>"organization"}}
+[2015-06-02 11:12:57 -0400] - UpdateStripeCustomerMetadataForMarket - Re:Vision (65) - No Stripe Customer linked to Jessica Simmons (3153).
+[2015-06-02 11:12:57 -0400] - UpdateStripeCustomerMetadataForMarket - Re:Vision (65) - No Stripe Customer linked to Leslie Moser (3136).
+[2015-06-02 11:12:57 -0400] - UpdateStripeCustomerMetadataForMarket - Re:Vision (65) - No Stripe Customer linked to Live Well Herb Gardens (3135).
+[2015-06-02 11:12:57 -0400] - UpdateStripeCustomerMetadataForMarket - Re:Vision (65) - No Stripe Customer linked to Barnum resident (3127).
+[2015-06-02 11:12:57 -0400] - UpdateStripeCustomerMetadataForMarket - Re:Vision (65) - No Stripe Customer linked to Elysha Zaide (3122).
+[2015-06-02 11:12:57 -0400] - UpdateStripeCustomerMetadataForMarket - Re:Vision (65) - No Stripe Customer linked to MaryLauren Agee (3121).
+[2015-06-02 11:12:57 -0400] - UpdateStripeCustomerMetadataForMarket - Re:Vision (65) - No Stripe Customer linked to Jennifer Fogg (3120).
+[2015-06-02 11:12:57 -0400] - UpdateStripeCustomerMetadataForMarket - Re:Vision (65) - No Stripe Customer linked to Christine Nguyen (3114).
+[2015-06-02 11:12:59 -0400] - UpdateStripeCustomerMetadataForMarket - Re:Vision (65) - Updating Organization Katie Knoll (3113)'s Stripe Customer cus_68zc5RUEgmREoy with {:description=>"Katie Knoll", :metadata=>{"lo.entity_id"=>3113, "lo.entity_type"=>"organization"}}
+[2015-06-02 11:12:59 -0400] - UpdateStripeCustomerMetadataForMarket - Re:Vision (65) - No Stripe Customer linked to Bambi Lipsey (3109).
+[2015-06-02 11:12:59 -0400] - UpdateStripeCustomerMetadataForMarket - Re:Vision (65) - No Stripe Customer linked to Amanda Lum (3107).
+[2015-06-02 11:12:59 -0400] - UpdateStripeCustomerMetadataForMarket - Re:Vision (65) - No Stripe Customer linked to Mimis Meatballs (3103).
+[2015-06-02 11:12:59 -0400] - UpdateStripeCustomerMetadataForMarket - Re:Vision (65) - No Stripe Customer linked to Jess Deugan (3100).
+[2015-06-02 11:13:00 -0400] - UpdateStripeCustomerMetadataForMarket - Re:Vision (65) - Updating Organization Re:Vision Community Gardens (3083)'s Stripe Customer cus_5uQ55uW28xQn5G with {:description=>"Re:Vision Community Gardens", :metadata=>{"lo.entity_id"=>3083, "lo.entity_type"=>"organization"}}
+[2015-06-02 11:13:00 -0400] - UpdateStripeCustomerMetadataForMarket - Re:Vision (65) - No Stripe Customer linked to Tracy Kaye (3077).
+[2015-06-02 11:13:01 -0400] - UpdateStripeCustomerMetadataForMarket - Re:Vision (65) - Updating Organization Kristin Lacy  (3076)'s Stripe Customer cus_5uQ5jAN0d3sqdB with {:description=>"Kristin Lacy ", :metadata=>{"lo.entity_id"=>3076, "lo.entity_type"=>"organization"}}
+[2015-06-02 11:13:02 -0400] - UpdateStripeCustomerMetadataForMarket - Re:Vision (65) - Updating Organization Paige & Conroy (3067)'s Stripe Customer cus_5uQ5qQrU9wKxz7 with {:description=>"Paige & Conroy", :metadata=>{"lo.entity_id"=>3067, "lo.entity_type"=>"organization"}}
+[2015-06-02 11:13:03 -0400] - UpdateStripeCustomerMetadataForMarket - Re:Vision (65) - Updating Organization Home (3066)'s Stripe Customer cus_68zflwPVwDrDKn with {:description=>"Home", :metadata=>{"lo.entity_id"=>3066, "lo.entity_type"=>"organization"}}
+[2015-06-02 11:13:03 -0400] - UpdateStripeCustomerMetadataForMarket - Re:Vision (65) - No Stripe Customer linked to Chala Mohr (3065).
+[2015-06-02 11:13:04 -0400] - UpdateStripeCustomerMetadataForMarket - Re:Vision (65) - Updating Organization Martha Medrano (3063)'s Stripe Customer cus_5uQ52wv8plosPY with {:description=>"Martha Medrano", :metadata=>{"lo.entity_id"=>3063, "lo.entity_type"=>"organization"}}
+[2015-06-02 11:13:04 -0400] - UpdateStripeCustomerMetadataForMarket - Re:Vision (65) - No Stripe Customer linked to The Neighborhood Monkeys (3061).
+[2015-06-02 11:13:04 -0400] - UpdateStripeCustomerMetadataForMarket - Re:Vision (65) - No Stripe Customer linked to Janine Vanderburg (3060).
+[2015-06-02 11:13:04 -0400] - UpdateStripeCustomerMetadataForMarket - Re:Vision (65) - No Stripe Customer linked to Greg Schreiber (3059).
+[2015-06-02 11:13:04 -0400] - UpdateStripeCustomerMetadataForMarket - Re:Vision (65) - No Stripe Customer linked to Deanna Butterbaugh (3058).
+[2015-06-02 11:13:04 -0400] - UpdateStripeCustomerMetadataForMarket - Re:Vision (65) - No Stripe Customer linked to Rebecca Mayer (3055).
+[2015-06-02 11:13:04 -0400] - UpdateStripeCustomerMetadataForMarket - Re:Vision (65) - No Stripe Customer linked to Sembrando Semillas San Luis (3054).
+[2015-06-02 11:13:04 -0400] - UpdateStripeCustomerMetadataForMarket - Re:Vision (65) - No Stripe Customer linked to Amber & Brian Palmeri (3053).
+[2015-06-02 11:13:04 -0400] - UpdateStripeCustomerMetadataForMarket - Re:Vision (65) - No Stripe Customer linked to Sarah Bay (3052).
+[2015-06-02 11:13:05 -0400] - UpdateStripeCustomerMetadataForMarket - Re:Vision (65) - Updating Organization Sarah Parmar (3050)'s Stripe Customer cus_5uQ5j8ynDtLMVw with {:description=>"Sarah Parmar", :metadata=>{"lo.entity_id"=>3050, "lo.entity_type"=>"organization"}}
+[2015-06-02 11:13:05 -0400] - UpdateStripeCustomerMetadataForMarket - Re:Vision (65) - No Stripe Customer linked to Kelly Menegocci (3047).
+[2015-06-02 11:13:05 -0400] - UpdateStripeCustomerMetadataForMarket - Re:Vision (65) - No Stripe Customer linked to LB (3046).
+[2015-06-02 11:13:07 -0400] - UpdateStripeCustomerMetadataForMarket - Re:Vision (65) - Updating Organization Family McGill (3045)'s Stripe Customer cus_5vMcSiRzBSrtQh with {:description=>"Family McGill", :metadata=>{"lo.entity_id"=>3045, "lo.entity_type"=>"organization"}}
+[2015-06-02 11:13:07 -0400] - UpdateStripeCustomerMetadataForMarket - Re:Vision (65) - No Stripe Customer linked to Danielle Short (3044).
+[2015-06-02 11:13:08 -0400] - UpdateStripeCustomerMetadataForMarket - Re:Vision (65) - Updating Organization Elizabeth Mcguire- I am not an organization (3039)'s Stripe Customer cus_5uQ594M41qxY8F with {:description=>"Elizabeth Mcguire- I am not an organization", :metadata=>{"lo.entity_id"=>3039, "lo.entity_type"=>"organization"}}
+[2015-06-02 11:13:09 -0400] - UpdateStripeCustomerMetadataForMarket - Re:Vision (65) - Updating Organization Boeke-Kavanagh Family (3038)'s Stripe Customer cus_5uQ5AY71PUUbyO with {:description=>"Boeke-Kavanagh Family", :metadata=>{"lo.entity_id"=>3038, "lo.entity_type"=>"organization"}}
+[2015-06-02 11:13:09 -0400] - UpdateStripeCustomerMetadataForMarket - Re:Vision (65) - No Stripe Customer linked to Mary Yost (3036).
+[2015-06-02 11:13:09 -0400] - UpdateStripeCustomerMetadataForMarket - Re:Vision (65) - No Stripe Customer linked to Patrice Hauptman (3033).
+[2015-06-02 11:13:10 -0400] - UpdateStripeCustomerMetadataForMarket - Re:Vision (65) - Updating Organization Tamara Arredondo (3024)'s Stripe Customer cus_5uQ6vZbGGsclQy with {:description=>"Tamara Arredondo", :metadata=>{"lo.entity_id"=>3024, "lo.entity_type"=>"organization"}}
+[2015-06-02 11:13:11 -0400] - UpdateStripeCustomerMetadataForMarket - Re:Vision (65) - Updating Organization Advantage (3023)'s Stripe Customer cus_5vrMcOu41r6mdB with {:description=>"Advantage", :metadata=>{"lo.entity_id"=>3023, "lo.entity_type"=>"organization"}}
+[2015-06-02 11:13:11 -0400] - UpdateStripeCustomerMetadataForMarket - Re:Vision (65) - No Stripe Customer linked to JVA Consulting (3007).
+[2015-06-02 11:13:12 -0400] - UpdateStripeCustomerMetadataForMarket - Re:Vision (65) - Updating Organization Mariah Shell (3005)'s Stripe Customer cus_6Gnkd5h9Bh68Bo with {:description=>"Mariah Shell", :metadata=>{"lo.entity_id"=>3005, "lo.entity_type"=>"organization"}}
+[2015-06-02 11:13:12 -0400] - UpdateStripeCustomerMetadataForMarket - Re:Vision (65) - No Stripe Customer linked to Alliance for Sustainable Colorado (3004).
+[2015-06-02 11:13:12 -0400] - UpdateStripeCustomerMetadataForMarket - Re:Vision (65) - No Stripe Customer linked to Alyssa Kopf & Megan Devenport (3002).
+[2015-06-02 11:13:12 -0400] - UpdateStripeCustomerMetadataForMarket - Re:Vision (65) - No Stripe Customer linked to Kaitlin Fischer (3001).
+[2015-06-02 11:13:12 -0400] - UpdateStripeCustomerMetadataForMarket - Re:Vision (65) - No Stripe Customer linked to Glorious Gluten Free Foods (3000).
+[2015-06-02 11:13:14 -0400] - UpdateStripeCustomerMetadataForMarket - Re:Vision (65) - Updating Organization Elin Curry (2999)'s Stripe Customer cus_617FsPH4kIWxNl with {:description=>"Elin Curry", :metadata=>{"lo.entity_id"=>2999, "lo.entity_type"=>"organization"}}
+[2015-06-02 11:13:15 -0400] - UpdateStripeCustomerMetadataForMarket - Re:Vision (65) - Updating Organization Marissa Jaross (2998)'s Stripe Customer cus_63j9r5OJwfMmbG with {:description=>"Marissa Jaross", :metadata=>{"lo.entity_id"=>2998, "lo.entity_type"=>"organization"}}
+[2015-06-02 11:13:16 -0400] - UpdateStripeCustomerMetadataForMarket - Re:Vision (65) - Updating Organization Megan Lloyd (2997)'s Stripe Customer cus_5uQ5mhm7rTYqs1 with {:description=>"Megan Lloyd", :metadata=>{"lo.entity_id"=>2997, "lo.entity_type"=>"organization"}}
+[2015-06-02 11:13:17 -0400] - UpdateStripeCustomerMetadataForMarket - Re:Vision (65) - Updating Organization Myra (2996)'s Stripe Customer cus_5uQ5tslP5c42N6 with {:description=>"Myra", :metadata=>{"lo.entity_id"=>2996, "lo.entity_type"=>"organization"}}
+[2015-06-02 11:13:17 -0400] - UpdateStripeCustomerMetadataForMarket - Re:Vision (65) - No Stripe Customer linked to Venner Family (2991).
+[2015-06-02 11:13:18 -0400] - UpdateStripeCustomerMetadataForMarket - Re:Vision (65) - Updating Organization Lauren Welch (2984)'s Stripe Customer cus_63jReEFaLptx1E with {:description=>"Lauren Welch", :metadata=>{"lo.entity_id"=>2984, "lo.entity_type"=>"organization"}}
+[2015-06-02 11:13:18 -0400] - UpdateStripeCustomerMetadataForMarket - Re:Vision (65) - No Stripe Customer linked to Eliot Hoyt (2982).
+[2015-06-02 11:13:18 -0400] - UpdateStripeCustomerMetadataForMarket - Re:Vision (65) - No Stripe Customer linked to Energy Resources (2981).
+[2015-06-02 11:13:20 -0400] - UpdateStripeCustomerMetadataForMarket - Re:Vision (65) - Updating Organization Kim Massey (2980)'s Stripe Customer cus_5uQ54Nvik70tqc with {:description=>"Kim Massey", :metadata=>{"lo.entity_id"=>2980, "lo.entity_type"=>"organization"}}
+[2015-06-02 11:13:20 -0400] - UpdateStripeCustomerMetadataForMarket - Re:Vision (65) - No Stripe Customer linked to Kevin & Elin Curry (2978).
+[2015-06-02 11:13:20 -0400] - UpdateStripeCustomerMetadataForMarket - Re:Vision (65) - No Stripe Customer linked to Strickland Family (2977).
+[2015-06-02 11:13:20 -0400] - UpdateStripeCustomerMetadataForMarket - Re:Vision (65) - No Stripe Customer linked to Yogarden Life (2976).
+[2015-06-02 11:13:20 -0400] - UpdateStripeCustomerMetadataForMarket - Re:Vision (65) - No Stripe Customer linked to Sarah Marino (2975).
+[2015-06-02 11:13:20 -0400] - UpdateStripeCustomerMetadataForMarket - Re:Vision (65) - No Stripe Customer linked to Shelley Herbert (2974).
+[2015-06-02 11:13:20 -0400] - UpdateStripeCustomerMetadataForMarket - Re:Vision (65) - No Stripe Customer linked to Michelle Sturm (2973).
+[2015-06-02 11:13:20 -0400] - UpdateStripeCustomerMetadataForMarket - Re:Vision (65) - No Stripe Customer linked to Stephanie Turco (2972).
+[2015-06-02 11:13:21 -0400] - UpdateStripeCustomerMetadataForMarket - Re:Vision (65) - Updating Organization Sara Cougill (2971)'s Stripe Customer cus_5uQ5L714J5oWZo with {:description=>"Sara Cougill", :metadata=>{"lo.entity_id"=>2971, "lo.entity_type"=>"organization"}}
+[2015-06-02 11:13:21 -0400] - UpdateStripeCustomerMetadataForMarket - Re:Vision (65) - No Stripe Customer linked to BuCu West (2966).
+[2015-06-02 11:13:22 -0400] - UpdateStripeCustomerMetadataForMarket - Re:Vision (65) - Updating Organization Pelan Household (2965)'s Stripe Customer cus_5uQ5f3xLReYhXM with {:description=>"Pelan Household", :metadata=>{"lo.entity_id"=>2965, "lo.entity_type"=>"organization"}}
+[2015-06-02 11:13:23 -0400] - UpdateStripeCustomerMetadataForMarket - Re:Vision (65) - Updating Organization Joseph Teipel (2920)'s Stripe Customer cus_5ypc52BNQZJOC7 with {:description=>"Joseph Teipel", :metadata=>{"lo.entity_id"=>2920, "lo.entity_type"=>"organization"}}
+[2015-06-02 11:13:24 -0400] - UpdateStripeCustomerMetadataForMarket - Re:Vision (65) - Updating Organization Clarks Honey Farm (2912)'s Stripe Customer cus_5uQ4wRCTVGfBJr with {:description=>"Clarks Honey Farm", :metadata=>{"lo.entity_id"=>2912, "lo.entity_type"=>"organization"}}
+[2015-06-02 11:13:25 -0400] - UpdateStripeCustomerMetadataForMarket - Re:Vision (65) - Updating Organization Golden Organics (2910)'s Stripe Customer cus_5uQ4MnYlh6y2nf with {:description=>"Golden Organics", :metadata=>{"lo.entity_id"=>2910, "lo.entity_type"=>"organization"}}
+[2015-06-02 11:13:26 -0400] - UpdateStripeCustomerMetadataForMarket - Re:Vision (65) - Updating Organization Royal Crest Dairy (2747)'s Stripe Customer cus_5uQ4V7pTyHudE1 with {:description=>"Royal Crest Dairy", :metadata=>{"lo.entity_id"=>2747, "lo.entity_type"=>"organization"}}
+[2015-06-02 11:13:27 -0400] - UpdateStripeCustomerMetadataForMarket - Re:Vision (65) - Updating Organization Diestel Turkey Ranch (2746)'s Stripe Customer cus_5uQ5H5w2pVNj2w with {:description=>"Diestel Turkey Ranch", :metadata=>{"lo.entity_id"=>2746, "lo.entity_type"=>"organization"}}
+[2015-06-02 11:13:28 -0400] - UpdateStripeCustomerMetadataForMarket - Re:Vision (65) - Updating Organization Rocking W Cheese & Milk (2745)'s Stripe Customer cus_5uQ590y9OsQLw5 with {:description=>"Rocking W Cheese & Milk", :metadata=>{"lo.entity_id"=>2745, "lo.entity_type"=>"organization"}}
+[2015-06-02 11:13:29 -0400] - UpdateStripeCustomerMetadataForMarket - Re:Vision (65) - Updating Organization Denver Bacon Company (2744)'s Stripe Customer cus_5uQ5xIPl1VH8jW with {:description=>"Denver Bacon Company", :metadata=>{"lo.entity_id"=>2744, "lo.entity_type"=>"organization"}}
+[2015-06-02 11:13:30 -0400] - UpdateStripeCustomerMetadataForMarket - Re:Vision (65) - Updating Organization Morning Fresh Dairy  (2743)'s Stripe Customer cus_5uQ48d6yce5M5u with {:description=>"Morning Fresh Dairy ", :metadata=>{"lo.entity_id"=>2743, "lo.entity_type"=>"organization"}}
+[2015-06-02 11:13:31 -0400] - UpdateStripeCustomerMetadataForMarket - Re:Vision (65) - Updating Organization Chocolove (2742)'s Stripe Customer cus_5uQ5559GZNQYo1 with {:description=>"Chocolove", :metadata=>{"lo.entity_id"=>2742, "lo.entity_type"=>"organization"}}
+[2015-06-02 11:13:31 -0400] - UpdateStripeCustomerMetadataForMarket - Re:Vision (65) - No Stripe Customer linked to Evolve to LOVE, LLC (3018).
+[2015-06-02 11:13:31 -0400] - UpdateStripeCustomerMetadataForMarket - Re:Vision (65) - No Stripe Customer linked to Laura Pescador (3017).
+[2015-06-02 11:13:32 -0400] - UpdateStripeCustomerMetadataForMarket - Re:Vision (65) - Updating Organization Kornacki Household (3016)'s Stripe Customer cus_5uQ5SwzdscrkNS with {:description=>"Kornacki Household", :metadata=>{"lo.entity_id"=>3016, "lo.entity_type"=>"organization"}}
+[2015-06-02 11:13:32 -0400] - UpdateStripeCustomerMetadataForMarket - Re:Vision (65) - No Stripe Customer linked to University of Denver (3015).
+[2015-06-02 11:13:32 -0400] - UpdateStripeCustomerMetadataForMarket - Re:Vision (65) - No Stripe Customer linked to Snow Household (3014).
+[2015-06-02 11:13:32 -0400] - UpdateStripeCustomerMetadataForMarket - Re:Vision (65) - No Stripe Customer linked to Megan Miller (3013).
+[2015-06-02 11:13:32 -0400] - UpdateStripeCustomerMetadataForMarket - Re:Vision (65) - No Stripe Customer linked to susanna nycz (3012).
+[2015-06-02 11:13:32 -0400] - UpdateStripeCustomerMetadataForMarket - Re:Vision (65) - No Stripe Customer linked to Grace and Life Church (3011).
+[2015-06-02 11:13:32 -0400] - UpdateStripeCustomerMetadataForMarket - Re:Vision (65) - No Stripe Customer linked to Hazon (3009).
+[2015-06-02 11:13:32 -0400] - UpdateStripeCustomerMetadataForMarket - Re:Vision (65) - No Stripe Customer linked to Lauren Mansanares (3008).
+[2015-06-02 11:13:33 -0400] - UpdateStripeCustomerMetadataForMarket - Re:Vision (65) - Updating Organization Boulder Natural Meats (2741)'s Stripe Customer cus_5uQ5iM5l5GbSBJ with {:description=>"Boulder Natural Meats", :metadata=>{"lo.entity_id"=>2741, "lo.entity_type"=>"organization"}}
+[2015-06-02 11:13:34 -0400] - UpdateStripeCustomerMetadataForMarket - Re:Vision (65) - Updating Organization Continental Sausage (2740)'s Stripe Customer cus_5uQ4T3d0gxqWQ0 with {:description=>"Continental Sausage", :metadata=>{"lo.entity_id"=>2740, "lo.entity_type"=>"organization"}}
+[2015-06-02 11:13:36 -0400] - UpdateStripeCustomerMetadataForMarket - Re:Vision (65) - Updating Organization Innovative Foods (2739)'s Stripe Customer cus_5uQ4rO788OX5zG with {:description=>"Innovative Foods", :metadata=>{"lo.entity_id"=>2739, "lo.entity_type"=>"organization"}}
+[2015-06-02 11:13:36 -0400] - UpdateStripeCustomerMetadataForMarket - Re:Vision (65) - Updating Organization Haystack Mountain Goat Dairy (2738)'s Stripe Customer cus_5uQ4TaIZHYbpVC with {:description=>"Haystack Mountain Goat Dairy", :metadata=>{"lo.entity_id"=>2738, "lo.entity_type"=>"organization"}}
+[2015-06-02 11:13:37 -0400] - UpdateStripeCustomerMetadataForMarket - Re:Vision (65) - Updating Organization Fiona's Natural Foods (2737)'s Stripe Customer cus_5uQ4hOUCKr3Hfv with {:description=>"Fiona's Natural Foods", :metadata=>{"lo.entity_id"=>2737, "lo.entity_type"=>"organization"}}
+[2015-06-02 11:13:38 -0400] - UpdateStripeCustomerMetadataForMarket - Re:Vision (65) - Updating Organization Chicken Track Eggs (2736)'s Stripe Customer cus_5uQ4OigZ6AnZzd with {:description=>"Chicken Track Eggs", :metadata=>{"lo.entity_id"=>2736, "lo.entity_type"=>"organization"}}
+[2015-06-02 11:13:40 -0400] - UpdateStripeCustomerMetadataForMarket - Re:Vision (65) - Updating Organization Frontiere Natural Meats (2735)'s Stripe Customer cus_5uQ5N1am5yl5We with {:description=>"Frontiere Natural Meats", :metadata=>{"lo.entity_id"=>2735, "lo.entity_type"=>"organization"}}
+[2015-06-02 11:13:40 -0400] - UpdateStripeCustomerMetadataForMarket - Re:Vision (65) - Updating Organization Noosa Yoghurt (2734)'s Stripe Customer cus_5uQ4JnZ4V90CxF with {:description=>"Noosa Yoghurt", :metadata=>{"lo.entity_id"=>2734, "lo.entity_type"=>"organization"}}

@@ -1,0 +1,41 @@
+[2015-06-02 11:12:19 -0400] - UpdateStripeCustomerMetadataForMarket - Appleton Market (7) - ====================================================================================================
+[2015-06-02 11:12:19 -0400] - UpdateStripeCustomerMetadataForMarket - Appleton Market (7) -  Appleton Market (7)
+[2015-06-02 11:12:19 -0400] - UpdateStripeCustomerMetadataForMarket - Appleton Market (7) -  Updating stripe customer metadata for Market and all Organizations.
+[2015-06-02 11:12:19 -0400] - UpdateStripeCustomerMetadataForMarket - Appleton Market (7) - 
+[2015-06-02 11:12:19 -0400] - UpdateStripeCustomerMetadataForMarket - Appleton Market (7) -  Rails.env: production
+[2015-06-02 11:12:19 -0400] - UpdateStripeCustomerMetadataForMarket - Appleton Market (7) -  Stripe key: pk_live_j85VTsrz51POrss3ni460qaf
+[2015-06-02 11:12:19 -0400] - UpdateStripeCustomerMetadataForMarket - Appleton Market (7) - ====================================================================================================
+[2015-06-02 11:12:20 -0400] - UpdateStripeCustomerMetadataForMarket - Appleton Market (7) - Updating Market's Stripe Customer with {:description=>"Appleton Market", :metadata=>{"lo.entity_id"=>7, "lo.entity_type"=>"market"}}
+[2015-06-02 11:12:21 -0400] - UpdateStripeCustomerMetadataForMarket - Appleton Market (7) - Updating Organization Wolf River Farms, LLC (3872)'s Stripe Customer cus_6H8mrVwjpPV7jJ with {:description=>"Wolf River Farms, LLC", :metadata=>{"lo.entity_id"=>3872, "lo.entity_type"=>"organization"}}
+[2015-06-02 11:12:22 -0400] - UpdateStripeCustomerMetadataForMarket - Appleton Market (7) - Updating Organization SLO Farmer's Co-op (3749)'s Stripe Customer cus_6GrwyM1n43Na2Y with {:description=>"SLO Farmer's Co-op", :metadata=>{"lo.entity_id"=>3749, "lo.entity_type"=>"organization"}}
+[2015-06-02 11:12:22 -0400] - UpdateStripeCustomerMetadataForMarket - Appleton Market (7) - No Stripe Customer linked to Chartwells (3438).
+[2015-06-02 11:12:22 -0400] - UpdateStripeCustomerMetadataForMarket - Appleton Market (7) - No Stripe Customer linked to Don Quijote USA (2953).
+[2015-06-02 11:12:22 -0400] - UpdateStripeCustomerMetadataForMarket - Appleton Market (7) - No Stripe Customer linked to Marigold Farm (2733).
+[2015-06-02 11:12:22 -0400] - UpdateStripeCustomerMetadataForMarket - Appleton Market (7) - No Stripe Customer linked to Kaukauna Coffee & Tea (2719).
+[2015-06-02 11:12:22 -0400] - UpdateStripeCustomerMetadataForMarket - Appleton Market (7) - No Stripe Customer linked to Goodwill Grows (2704).
+[2015-06-02 11:12:23 -0400] - UpdateStripeCustomerMetadataForMarket - Appleton Market (7) - Updating Organization FIeld Notes Farm (2400)'s Stripe Customer cus_5uQ4nP8axirVUB with {:description=>"FIeld Notes Farm", :metadata=>{"lo.entity_id"=>2400, "lo.entity_type"=>"organization"}}
+[2015-06-02 11:12:23 -0400] - UpdateStripeCustomerMetadataForMarket - Appleton Market (7) - No Stripe Customer linked to Fox Valley Technical College  (2300).
+[2015-06-02 11:12:23 -0400] - UpdateStripeCustomerMetadataForMarket - Appleton Market (7) - No Stripe Customer linked to HighCross Farm (2238).
+[2015-06-02 11:12:23 -0400] - UpdateStripeCustomerMetadataForMarket - Appleton Market (7) - No Stripe Customer linked to Watter Farms (2052).
+[2015-06-02 11:12:23 -0400] - UpdateStripeCustomerMetadataForMarket - Appleton Market (7) - No Stripe Customer linked to Rester & Associates (1919).
+[2015-06-02 11:12:24 -0400] - UpdateStripeCustomerMetadataForMarket - Appleton Market (7) - Updating Organization Ganesh Vegetables and Herbs (1856)'s Stripe Customer cus_5uQ5S2jz3M3eH1 with {:description=>"Ganesh Vegetables and Herbs", :metadata=>{"lo.entity_id"=>1856, "lo.entity_type"=>"organization"}}
+[2015-06-02 11:12:25 -0400] - UpdateStripeCustomerMetadataForMarket - Appleton Market (7) - Updating Organization Ledgeview Farms of Johnsburg, LLC (1845)'s Stripe Customer cus_5uQ4AylxryxPSU with {:description=>"Ledgeview Farms of Johnsburg, LLC", :metadata=>{"lo.entity_id"=>1845, "lo.entity_type"=>"organization"}}
+[2015-06-02 11:12:27 -0400] - UpdateStripeCustomerMetadataForMarket - Appleton Market (7) - Updating Organization The Source Public House (1828)'s Stripe Customer cus_5uQ45C0WJx4HYl with {:description=>"The Source Public House", :metadata=>{"lo.entity_id"=>1828, "lo.entity_type"=>"organization"}}
+[2015-06-02 11:12:27 -0400] - UpdateStripeCustomerMetadataForMarket - Appleton Market (7) - No Stripe Customer linked to Rester & Associates (1608).
+[2015-06-02 11:12:27 -0400] - UpdateStripeCustomerMetadataForMarket - Appleton Market (7) - No Stripe Customer linked to Apple Blossom Orchard and Market (1554).
+[2015-06-02 11:12:27 -0400] - UpdateStripeCustomerMetadataForMarket - Appleton Market (7) - No Stripe Customer linked to The Free Market (1519).
+[2015-06-02 11:12:27 -0400] - UpdateStripeCustomerMetadataForMarket - Appleton Market (7) - No Stripe Customer linked to Riverview Gardens (47).
+[2015-06-02 11:12:27 -0400] - UpdateStripeCustomerMetadataForMarket - Appleton Market (7) - No Stripe Customer linked to Grow Local (48).
+[2015-06-02 11:12:28 -0400] - UpdateStripeCustomerMetadataForMarket - Appleton Market (7) - Updating Organization Gravel Road Farm (52)'s Stripe Customer cus_5vQtWBGCekh6Lt with {:description=>"Gravel Road Farm", :metadata=>{"lo.entity_id"=>52, "lo.entity_type"=>"organization"}}
+[2015-06-02 11:12:29 -0400] - UpdateStripeCustomerMetadataForMarket - Appleton Market (7) - Updating Organization Sun Brothers Naturals, LLC. (58)'s Stripe Customer cus_5uQ58i5yCzFrPX with {:description=>"Sun Brothers Naturals, LLC.", :metadata=>{"lo.entity_id"=>58, "lo.entity_type"=>"organization"}}
+[2015-06-02 11:12:30 -0400] - UpdateStripeCustomerMetadataForMarket - Appleton Market (7) - Updating Organization Keune Authentic Foods (56)'s Stripe Customer cus_5uQ55l9ZDP7tdJ with {:description=>"Keune Authentic Foods", :metadata=>{"lo.entity_id"=>56, "lo.entity_type"=>"organization"}}
+[2015-06-02 11:12:31 -0400] - UpdateStripeCustomerMetadataForMarket - Appleton Market (7) - Updating Organization Whitefeather Organics LLC (90)'s Stripe Customer cus_5uQ5WtsmR7ZMNg with {:description=>"Whitefeather Organics LLC", :metadata=>{"lo.entity_id"=>90, "lo.entity_type"=>"organization"}}
+[2015-06-02 11:12:33 -0400] - UpdateStripeCustomerMetadataForMarket - Appleton Market (7) - Updating Organization Great Lakes Farm (91)'s Stripe Customer cus_5uQ5XKHQiCU5p8 with {:description=>"Great Lakes Farm", :metadata=>{"lo.entity_id"=>91, "lo.entity_type"=>"organization"}}
+[2015-06-02 11:12:34 -0400] - UpdateStripeCustomerMetadataForMarket - Appleton Market (7) - Updating Organization Houdini's Escape (171)'s Stripe Customer cus_5uQ5iHQ1yzRCIn with {:description=>"Houdini's Escape", :metadata=>{"lo.entity_id"=>171, "lo.entity_type"=>"organization"}}
+[2015-06-02 11:12:34 -0400] - UpdateStripeCustomerMetadataForMarket - Appleton Market (7) - Updating Organization Beyond Organic (186)'s Stripe Customer cus_5uQ4azgdJc0qvG with {:description=>"Beyond Organic", :metadata=>{"lo.entity_id"=>186, "lo.entity_type"=>"organization"}}
+[2015-06-02 11:12:36 -0400] - UpdateStripeCustomerMetadataForMarket - Appleton Market (7) - Updating Organization St. Elizabeth Hospital (216)'s Stripe Customer cus_5uQ5s1QcnLD3Up with {:description=>"St. Elizabeth Hospital", :metadata=>{"lo.entity_id"=>216, "lo.entity_type"=>"organization"}}
+[2015-06-02 11:12:36 -0400] - UpdateStripeCustomerMetadataForMarket - Appleton Market (7) - No Stripe Customer linked to The Hungry Cricket, LLC (219).
+[2015-06-02 11:12:37 -0400] - UpdateStripeCustomerMetadataForMarket - Appleton Market (7) - Updating Organization Green Gecko Grocer and Deli (314)'s Stripe Customer cus_5uQ5nnEDOy9D5v with {:description=>"Green Gecko Grocer and Deli", :metadata=>{"lo.entity_id"=>314, "lo.entity_type"=>"organization"}}
+[2015-06-02 11:12:37 -0400] - UpdateStripeCustomerMetadataForMarket - Appleton Market (7) - No Stripe Customer linked to J. J. Keller & Associates, Inc. (328).
+[2015-06-02 11:12:37 -0400] - UpdateStripeCustomerMetadataForMarket - Appleton Market (7) - No Stripe Customer linked to Fox Banquets & Rivertyme Catering (336).
+[2015-06-02 11:12:37 -0400] - UpdateStripeCustomerMetadataForMarket - Appleton Market (7) - No Stripe Customer linked to East Slope Farm (339).

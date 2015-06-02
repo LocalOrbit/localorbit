@@ -1,0 +1,10 @@
+[2015-06-02 11:12:16 -0400] - UpdateStripeCustomerMetadataForMarket - Brookbound Farm (50) - ====================================================================================================
+[2015-06-02 11:12:16 -0400] - UpdateStripeCustomerMetadataForMarket - Brookbound Farm (50) -  Brookbound Farm (50)
+[2015-06-02 11:12:16 -0400] - UpdateStripeCustomerMetadataForMarket - Brookbound Farm (50) -  Updating stripe customer metadata for Market and all Organizations.
+[2015-06-02 11:12:16 -0400] - UpdateStripeCustomerMetadataForMarket - Brookbound Farm (50) - 
+[2015-06-02 11:12:16 -0400] - UpdateStripeCustomerMetadataForMarket - Brookbound Farm (50) -  Rails.env: production
+[2015-06-02 11:12:16 -0400] - UpdateStripeCustomerMetadataForMarket - Brookbound Farm (50) -  Stripe key: pk_live_j85VTsrz51POrss3ni460qaf
+[2015-06-02 11:12:16 -0400] - UpdateStripeCustomerMetadataForMarket - Brookbound Farm (50) - ====================================================================================================
+[2015-06-02 11:12:18 -0400] - UpdateStripeCustomerMetadataForMarket - Brookbound Farm (50) - Updating Market's Stripe Customer with {:description=>"Brookbound Farm", :metadata=>{"lo.entity_id"=>50, "lo.entity_type"=>"market"}}
+[2015-06-02 11:12:18 -0400] - UpdateStripeCustomerMetadataForMarket - Brookbound Farm (50) - No Stripe Customer linked to Emma Lewis-Van Vorst (2190).
+[2015-06-02 11:12:19 -0400] - UpdateStripeCustomerMetadataForMarket - Brookbound Farm (50) - Updating Organization Brookbound Farm (2189)'s Stripe Customer cus_5uQ4S1Hi6trPHi with {:description=>"Brookbound Farm", :metadata=>{"lo.entity_id"=>2189, "lo.entity_type"=>"organization"}}

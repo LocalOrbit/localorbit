@@ -1,0 +1,66 @@
+[2015-06-02 11:14:14 -0400] - UpdateStripeCustomerMetadataForMarket - Rooted in Appalachia (27) - ====================================================================================================
+[2015-06-02 11:14:14 -0400] - UpdateStripeCustomerMetadataForMarket - Rooted in Appalachia (27) -  Rooted in Appalachia (27)
+[2015-06-02 11:14:14 -0400] - UpdateStripeCustomerMetadataForMarket - Rooted in Appalachia (27) -  Updating stripe customer metadata for Market and all Organizations.
+[2015-06-02 11:14:14 -0400] - UpdateStripeCustomerMetadataForMarket - Rooted in Appalachia (27) - 
+[2015-06-02 11:14:14 -0400] - UpdateStripeCustomerMetadataForMarket - Rooted in Appalachia (27) -  Rails.env: production
+[2015-06-02 11:14:14 -0400] - UpdateStripeCustomerMetadataForMarket - Rooted in Appalachia (27) -  Stripe key: pk_live_j85VTsrz51POrss3ni460qaf
+[2015-06-02 11:14:14 -0400] - UpdateStripeCustomerMetadataForMarket - Rooted in Appalachia (27) - ====================================================================================================
+[2015-06-02 11:14:15 -0400] - UpdateStripeCustomerMetadataForMarket - Rooted in Appalachia (27) - Updating Market's Stripe Customer with {:description=>"Rooted in Appalachia", :metadata=>{"lo.entity_id"=>27, "lo.entity_type"=>"market"}}
+[2015-06-02 11:14:15 -0400] - UpdateStripeCustomerMetadataForMarket - Rooted in Appalachia (27) - No Stripe Customer linked to Mountain Mother Farm (3960).
+[2015-06-02 11:14:16 -0400] - UpdateStripeCustomerMetadataForMarket - Rooted in Appalachia (27) - Updating Organization Carter at Main (3875)'s Stripe Customer cus_6HB5hqtURvKAn7 with {:description=>"Carter at Main", :metadata=>{"lo.entity_id"=>3875, "lo.entity_type"=>"organization"}}
+[2015-06-02 11:14:16 -0400] - UpdateStripeCustomerMetadataForMarket - Rooted in Appalachia (27) - No Stripe Customer linked to Foodtopia (3869).
+[2015-06-02 11:14:16 -0400] - UpdateStripeCustomerMetadataForMarket - Rooted in Appalachia (27) - No Stripe Customer linked to New Creation Gardens, a Build It Up Garden (3838).
+[2015-06-02 11:14:16 -0400] - UpdateStripeCustomerMetadataForMarket - Rooted in Appalachia (27) - No Stripe Customer linked to build it up (mikki hammitt) (3831).
+[2015-06-02 11:14:16 -0400] - UpdateStripeCustomerMetadataForMarket - Rooted in Appalachia (27) - No Stripe Customer linked to Build It Up East TN (3830).
+[2015-06-02 11:14:16 -0400] - UpdateStripeCustomerMetadataForMarket - Rooted in Appalachia (27) - No Stripe Customer linked to Sprout Head Greens (3688).
+[2015-06-02 11:14:17 -0400] - UpdateStripeCustomerMetadataForMarket - Rooted in Appalachia (27) - Updating Organization Foxglove Farms (3664)'s Stripe Customer cus_69yH8TDVT0Pxoq with {:description=>"Foxglove Farms", :metadata=>{"lo.entity_id"=>3664, "lo.entity_type"=>"organization"}}
+[2015-06-02 11:14:17 -0400] - UpdateStripeCustomerMetadataForMarket - Rooted in Appalachia (27) - No Stripe Customer linked to kp cafe and catering company (3574).
+[2015-06-02 11:14:18 -0400] - UpdateStripeCustomerMetadataForMarket - Rooted in Appalachia (27) - Updating Organization Holston View Farm (3552)'s Stripe Customer cus_65vVyDmpY8uwMc with {:description=>"Holston View Farm", :metadata=>{"lo.entity_id"=>3552, "lo.entity_type"=>"organization"}}
+[2015-06-02 11:14:19 -0400] - UpdateStripeCustomerMetadataForMarket - Rooted in Appalachia (27) - Updating Organization Rocket Farms (3466)'s Stripe Customer cus_63FIQYbrqW2hZF with {:description=>"Rocket Farms", :metadata=>{"lo.entity_id"=>3466, "lo.entity_type"=>"organization"}}
+[2015-06-02 11:14:20 -0400] - UpdateStripeCustomerMetadataForMarket - Rooted in Appalachia (27) - Updating Organization Garden Spot Produce (3431)'s Stripe Customer cus_61jO1WFQiNtEI7 with {:description=>"Garden Spot Produce", :metadata=>{"lo.entity_id"=>3431, "lo.entity_type"=>"organization"}}
+[2015-06-02 11:14:20 -0400] - UpdateStripeCustomerMetadataForMarket - Rooted in Appalachia (27) - No Stripe Customer linked to Shelley campbell (3423).
+[2015-06-02 11:14:20 -0400] - UpdateStripeCustomerMetadataForMarket - Rooted in Appalachia (27) - No Stripe Customer linked to Barkery & Company, LLC (3401).
+[2015-06-02 11:14:21 -0400] - UpdateStripeCustomerMetadataForMarket - Rooted in Appalachia (27) - Updating Organization Blackthorn Club (3357)'s Stripe Customer cus_5yjnaxE1YGfLEb with {:description=>"Blackthorn Club", :metadata=>{"lo.entity_id"=>3357, "lo.entity_type"=>"organization"}}
+[2015-06-02 11:14:22 -0400] - UpdateStripeCustomerMetadataForMarket - Rooted in Appalachia (27) - Updating Organization Cheri Wagner (3286)'s Stripe Customer cus_5wUyw4njPqLCqg with {:description=>"Cheri Wagner", :metadata=>{"lo.entity_id"=>3286, "lo.entity_type"=>"organization"}}
+[2015-06-02 11:14:22 -0400] - UpdateStripeCustomerMetadataForMarket - Rooted in Appalachia (27) - No Stripe Customer linked to Foodie Fiction (3208).
+[2015-06-02 11:14:23 -0400] - UpdateStripeCustomerMetadataForMarket - Rooted in Appalachia (27) - Updating Organization Glade Green Grocer (3200)'s Stripe Customer cus_5uQ5qJgzQ58JVd with {:description=>"Glade Green Grocer", :metadata=>{"lo.entity_id"=>3200, "lo.entity_type"=>"organization"}}
+[2015-06-02 11:14:24 -0400] - UpdateStripeCustomerMetadataForMarket - Rooted in Appalachia (27) - Updating Organization Wild Hare Farms (3112)'s Stripe Customer cus_5uQ5KUbQOhraAf with {:description=>"Wild Hare Farms", :metadata=>{"lo.entity_id"=>3112, "lo.entity_type"=>"organization"}}
+[2015-06-02 11:14:24 -0400] - UpdateStripeCustomerMetadataForMarket - Rooted in Appalachia (27) - No Stripe Customer linked to Allybelle Investments (3034).
+[2015-06-02 11:14:24 -0400] - UpdateStripeCustomerMetadataForMarket - Rooted in Appalachia (27) - No Stripe Customer linked to Ancient Paths Poultry (2913).
+[2015-06-02 11:14:25 -0400] - UpdateStripeCustomerMetadataForMarket - Rooted in Appalachia (27) - Updating Organization Main Street Pizza (2902)'s Stripe Customer cus_5uQ4co0CkbMDSB with {:description=>"Main Street Pizza", :metadata=>{"lo.entity_id"=>2902, "lo.entity_type"=>"organization"}}
+[2015-06-02 11:14:25 -0400] - UpdateStripeCustomerMetadataForMarket - Rooted in Appalachia (27) - No Stripe Customer linked to Heartwood (2837).
+[2015-06-02 11:14:26 -0400] - UpdateStripeCustomerMetadataForMarket - Rooted in Appalachia (27) - Updating Organization Boone Street Market (2754)'s Stripe Customer cus_5uQ4uOC1VWAiau with {:description=>"Boone Street Market", :metadata=>{"lo.entity_id"=>2754, "lo.entity_type"=>"organization"}}
+[2015-06-02 11:14:26 -0400] - UpdateStripeCustomerMetadataForMarket - Rooted in Appalachia (27) - No Stripe Customer linked to Greenwood Gardens (2728).
+[2015-06-02 11:14:26 -0400] - UpdateStripeCustomerMetadataForMarket - Rooted in Appalachia (27) - No Stripe Customer linked to The Fresh Market (2614).
+[2015-06-02 11:14:27 -0400] - UpdateStripeCustomerMetadataForMarket - Rooted in Appalachia (27) - Updating Organization A Lotta Lamb (2480)'s Stripe Customer cus_5uQ573QDyLy5sn with {:description=>"A Lotta Lamb", :metadata=>{"lo.entity_id"=>2480, "lo.entity_type"=>"organization"}}
+[2015-06-02 11:14:27 -0400] - UpdateStripeCustomerMetadataForMarket - Rooted in Appalachia (27) - No Stripe Customer linked to Earth Fare (2439).
+[2015-06-02 11:14:28 -0400] - UpdateStripeCustomerMetadataForMarket - Rooted in Appalachia (27) - Updating Organization Pleasant Valley Farms (2420)'s Stripe Customer cus_5uQ4liG6TTNoYT with {:description=>"Pleasant Valley Farms", :metadata=>{"lo.entity_id"=>2420, "lo.entity_type"=>"organization"}}
+[2015-06-02 11:14:29 -0400] - UpdateStripeCustomerMetadataForMarket - Rooted in Appalachia (27) - Updating Organization Sunset View Farm (2419)'s Stripe Customer cus_5uQ4Y1gLZb5dua with {:description=>"Sunset View Farm", :metadata=>{"lo.entity_id"=>2419, "lo.entity_type"=>"organization"}}
+[2015-06-02 11:14:30 -0400] - UpdateStripeCustomerMetadataForMarket - Rooted in Appalachia (27) - Updating Organization Appalachian Harvest (2407)'s Stripe Customer cus_5uQ4liUmtebNpc with {:description=>"Appalachian Harvest", :metadata=>{"lo.entity_id"=>2407, "lo.entity_type"=>"organization"}}
+[2015-06-02 11:14:31 -0400] - UpdateStripeCustomerMetadataForMarket - Rooted in Appalachia (27) - Updating Organization Grow Your Own (2353)'s Stripe Customer cus_5uQ4SbMXPKmSda with {:description=>"Grow Your Own", :metadata=>{"lo.entity_id"=>2353, "lo.entity_type"=>"organization"}}
+[2015-06-02 11:14:32 -0400] - UpdateStripeCustomerMetadataForMarket - Rooted in Appalachia (27) - Updating Organization Twin Gap Farm (2216)'s Stripe Customer cus_5uQ4M7aiJlRinA with {:description=>"Twin Gap Farm", :metadata=>{"lo.entity_id"=>2216, "lo.entity_type"=>"organization"}}
+[2015-06-02 11:14:32 -0400] - UpdateStripeCustomerMetadataForMarket - Rooted in Appalachia (27) - No Stripe Customer linked to Feed-Me-Ma Unlimited (2106).
+[2015-06-02 11:14:33 -0400] - UpdateStripeCustomerMetadataForMarket - Rooted in Appalachia (27) - Updating Organization Caney Valley Enterprises (1829)'s Stripe Customer cus_5uQ4TffPBgvwQD with {:description=>"Caney Valley Enterprises", :metadata=>{"lo.entity_id"=>1829, "lo.entity_type"=>"organization"}}
+[2015-06-02 11:14:33 -0400] - UpdateStripeCustomerMetadataForMarket - Rooted in Appalachia (27) - No Stripe Customer linked to Buffalo Street Downtown Deli (1774).
+[2015-06-02 11:14:33 -0400] - UpdateStripeCustomerMetadataForMarket - Rooted in Appalachia (27) - No Stripe Customer linked to Buffalo Street Downtown Deli (1773).
+[2015-06-02 11:14:34 -0400] - UpdateStripeCustomerMetadataForMarket - Rooted in Appalachia (27) - Updating Organization The Farm at Cove Creek (1539)'s Stripe Customer cus_5uQ5TSeFvz6YmI with {:description=>"The Farm at Cove Creek", :metadata=>{"lo.entity_id"=>1539, "lo.entity_type"=>"organization"}}
+[2015-06-02 11:14:35 -0400] - UpdateStripeCustomerMetadataForMarket - Rooted in Appalachia (27) - Updating Organization Black sheep market (1522)'s Stripe Customer cus_5uQ54I0lK54KzB with {:description=>"Black sheep market", :metadata=>{"lo.entity_id"=>1522, "lo.entity_type"=>"organization"}}
+[2015-06-02 11:14:36 -0400] - UpdateStripeCustomerMetadataForMarket - Rooted in Appalachia (27) - Updating Organization Carter's Farm (1510)'s Stripe Customer cus_5uQ4ZiyiXgEGY8 with {:description=>"Carter's Farm", :metadata=>{"lo.entity_id"=>1510, "lo.entity_type"=>"organization"}}
+[2015-06-02 11:14:36 -0400] - UpdateStripeCustomerMetadataForMarket - Rooted in Appalachia (27) - No Stripe Customer linked to Heath Farm - Heaven Bound (1470).
+[2015-06-02 11:14:36 -0400] - UpdateStripeCustomerMetadataForMarket - Rooted in Appalachia (27) - No Stripe Customer linked to Kickin Chicken (1462).
+[2015-06-02 11:14:36 -0400] - UpdateStripeCustomerMetadataForMarket - Rooted in Appalachia (27) - No Stripe Customer linked to The Pillow Farm (1448).
+[2015-06-02 11:14:36 -0400] - UpdateStripeCustomerMetadataForMarket - Rooted in Appalachia (27) - No Stripe Customer linked to Mountain Top Farms (1445).
+[2015-06-02 11:14:36 -0400] - UpdateStripeCustomerMetadataForMarket - Rooted in Appalachia (27) - No Stripe Customer linked to Spring Ridge Farms (1444).
+[2015-06-02 11:14:36 -0400] - UpdateStripeCustomerMetadataForMarket - Rooted in Appalachia (27) - No Stripe Customer linked to Willow Bend Farm (1431).
+[2015-06-02 11:14:36 -0400] - UpdateStripeCustomerMetadataForMarket - Rooted in Appalachia (27) - No Stripe Customer linked to Copper Creek Green Works (1422).
+[2015-06-02 11:14:36 -0400] - UpdateStripeCustomerMetadataForMarket - Rooted in Appalachia (27) - No Stripe Customer linked to Kyhunly Herb Farm (1412).
+[2015-06-02 11:14:36 -0400] - UpdateStripeCustomerMetadataForMarket - Rooted in Appalachia (27) - No Stripe Customer linked to Ziegenwald Dairy (1411).
+[2015-06-02 11:14:36 -0400] - UpdateStripeCustomerMetadataForMarket - Rooted in Appalachia (27) - No Stripe Customer linked to The Baker Homestead (1410).
+[2015-06-02 11:14:36 -0400] - UpdateStripeCustomerMetadataForMarket - Rooted in Appalachia (27) - No Stripe Customer linked to Laughing Water Farm (1408).
+[2015-06-02 11:14:36 -0400] - UpdateStripeCustomerMetadataForMarket - Rooted in Appalachia (27) - No Stripe Customer linked to Wardell Farm -Little River Cattle Company (1406).
+[2015-06-02 11:14:36 -0400] - UpdateStripeCustomerMetadataForMarket - Rooted in Appalachia (27) - No Stripe Customer linked to Appalachian Wildside (1404).
+[2015-06-02 11:14:36 -0400] - UpdateStripeCustomerMetadataForMarket - Rooted in Appalachia (27) - No Stripe Customer linked to Mi Tierra Grass Fed/Finished Beef and Lamb (1399).
+[2015-06-02 11:14:36 -0400] - UpdateStripeCustomerMetadataForMarket - Rooted in Appalachia (27) - No Stripe Customer linked to Blue Door Garden (1398).
+[2015-06-02 11:14:36 -0400] - UpdateStripeCustomerMetadataForMarket - Rooted in Appalachia (27) - No Stripe Customer linked to River Valley Farm (1397).
+[2015-06-02 11:14:36 -0400] - UpdateStripeCustomerMetadataForMarket - Rooted in Appalachia (27) - No Stripe Customer linked to Abingdon Organics (1379).
+[2015-06-02 11:14:36 -0400] - UpdateStripeCustomerMetadataForMarket - Rooted in Appalachia (27) - No Stripe Customer linked to TNT Farm N Greenhouse (1376).

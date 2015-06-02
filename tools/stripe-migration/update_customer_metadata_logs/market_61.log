@@ -1,0 +1,60 @@
+[2015-06-02 11:00:27 -0400] - UpdateStripeCustomerMetadataForMarket - Farm Link Hawai‘i (61) - ====================================================================================================
+[2015-06-02 11:00:27 -0400] - UpdateStripeCustomerMetadataForMarket - Farm Link Hawai‘i (61) -  Farm Link Hawai‘i (61)
+[2015-06-02 11:00:27 -0400] - UpdateStripeCustomerMetadataForMarket - Farm Link Hawai‘i (61) -  Updating stripe customer metadata for Market and all Organizations.
+[2015-06-02 11:00:27 -0400] - UpdateStripeCustomerMetadataForMarket - Farm Link Hawai‘i (61) - 
+[2015-06-02 11:00:27 -0400] - UpdateStripeCustomerMetadataForMarket - Farm Link Hawai‘i (61) -  Rails.env: production
+[2015-06-02 11:00:27 -0400] - UpdateStripeCustomerMetadataForMarket - Farm Link Hawai‘i (61) -  Stripe key: pk_live_j85VTsrz51POrss3ni460qaf
+[2015-06-02 11:00:27 -0400] - UpdateStripeCustomerMetadataForMarket - Farm Link Hawai‘i (61) - ====================================================================================================
+[2015-06-02 11:00:28 -0400] - UpdateStripeCustomerMetadataForMarket - Farm Link Hawai‘i (61) - Updating Market's Stripe Customer with {:description=>"Farm Link Hawai‘i", :metadata=>{"lo.entity_id"=>61, "lo.entity_type"=>"market"}}
+[2015-06-02 11:00:29 -0400] - UpdateStripeCustomerMetadataForMarket - Farm Link Hawai‘i (61) - Updating Organization Counter Culture Food + Ferments (2565)'s Stripe Customer cus_5vQtaemTsKuavk with {:description=>"Counter Culture Food + Ferments", :metadata=>{"lo.entity_id"=>2565, "lo.entity_type"=>"organization"}}
+[2015-06-02 11:00:30 -0400] - UpdateStripeCustomerMetadataForMarket - Farm Link Hawai‘i (61) - Updating Organization De Veras Farm (2574)'s Stripe Customer cus_5uQ5M3fHKoVDwg with {:description=>"De Veras Farm", :metadata=>{"lo.entity_id"=>2574, "lo.entity_type"=>"organization"}}
+[2015-06-02 11:00:31 -0400] - UpdateStripeCustomerMetadataForMarket - Farm Link Hawai‘i (61) - Updating Organization Juicy Brew (2585)'s Stripe Customer cus_5uQ4K3Dz6I7gAG with {:description=>"Juicy Brew", :metadata=>{"lo.entity_id"=>2585, "lo.entity_type"=>"organization"}}
+[2015-06-02 11:00:33 -0400] - UpdateStripeCustomerMetadataForMarket - Farm Link Hawai‘i (61) - Updating Organization Waimānalo Market Co-op (2586)'s Stripe Customer cus_5uQ5dAv7r4kdmy with {:description=>"Waimānalo Market Co-op", :metadata=>{"lo.entity_id"=>2586, "lo.entity_type"=>"organization"}}
+[2015-06-02 11:00:34 -0400] - UpdateStripeCustomerMetadataForMarket - Farm Link Hawai‘i (61) - Updating Organization Cactus Bistro (2587)'s Stripe Customer cus_5uQ4EWcUM1oJw5 with {:description=>"Cactus Bistro", :metadata=>{"lo.entity_id"=>2587, "lo.entity_type"=>"organization"}}
+[2015-06-02 11:00:35 -0400] - UpdateStripeCustomerMetadataForMarket - Farm Link Hawai‘i (61) - Updating Organization Lunch Box (2588)'s Stripe Customer cus_5uQ4RK25OXW2jY with {:description=>"Lunch Box", :metadata=>{"lo.entity_id"=>2588, "lo.entity_type"=>"organization"}}
+[2015-06-02 11:00:36 -0400] - UpdateStripeCustomerMetadataForMarket - Farm Link Hawai‘i (61) - Updating Organization Morning Glass Coffee + Café (2589)'s Stripe Customer cus_5uQ5IjwIwmhsO9 with {:description=>"Morning Glass Coffee + Café", :metadata=>{"lo.entity_id"=>2589, "lo.entity_type"=>"organization"}}
+[2015-06-02 11:00:37 -0400] - UpdateStripeCustomerMetadataForMarket - Farm Link Hawai‘i (61) - Updating Organization Buzz's Steakhouse (2590)'s Stripe Customer cus_5uQ4xHvD2NLZBD with {:description=>"Buzz's Steakhouse", :metadata=>{"lo.entity_id"=>2590, "lo.entity_type"=>"organization"}}
+[2015-06-02 11:00:38 -0400] - UpdateStripeCustomerMetadataForMarket - Farm Link Hawai‘i (61) - Updating Organization J&J Farm (2592)'s Stripe Customer cus_5uQ4aWGInPnjIX with {:description=>"J&J Farm", :metadata=>{"lo.entity_id"=>2592, "lo.entity_type"=>"organization"}}
+[2015-06-02 11:00:39 -0400] - UpdateStripeCustomerMetadataForMarket - Farm Link Hawai‘i (61) - Updating Organization Sweet Home Waimānalo (2593)'s Stripe Customer cus_5uQ4K87paoTLpu with {:description=>"Sweet Home Waimānalo", :metadata=>{"lo.entity_id"=>2593, "lo.entity_type"=>"organization"}}
+[2015-06-02 11:00:40 -0400] - UpdateStripeCustomerMetadataForMarket - Farm Link Hawai‘i (61) - Updating Organization Kokua Market (2597)'s Stripe Customer cus_5uQ51VUJoRheh9 with {:description=>"Kokua Market", :metadata=>{"lo.entity_id"=>2597, "lo.entity_type"=>"organization"}}
+[2015-06-02 11:00:41 -0400] - UpdateStripeCustomerMetadataForMarket - Farm Link Hawai‘i (61) - Updating Organization Peace Cafe (2616)'s Stripe Customer cus_5uQ4fz33uS63VG with {:description=>"Peace Cafe", :metadata=>{"lo.entity_id"=>2616, "lo.entity_type"=>"organization"}}
+[2015-06-02 11:00:41 -0400] - UpdateStripeCustomerMetadataForMarket - Farm Link Hawai‘i (61) - No Stripe Customer linked to Akamai Greens (2658).
+[2015-06-02 11:00:41 -0400] - UpdateStripeCustomerMetadataForMarket - Farm Link Hawai‘i (61) - No Stripe Customer linked to Greg Yuen MD Inc. (2662).
+[2015-06-02 11:00:42 -0400] - UpdateStripeCustomerMetadataForMarket - Farm Link Hawai‘i (61) - Updating Organization Summer Sky Organic Farm (2668)'s Stripe Customer cus_5uQ5IYxz9A8Sej with {:description=>"Summer Sky Organic Farm", :metadata=>{"lo.entity_id"=>2668, "lo.entity_type"=>"organization"}}
+[2015-06-02 11:00:43 -0400] - UpdateStripeCustomerMetadataForMarket - Farm Link Hawai‘i (61) - Updating Organization Livestock Tavern (2683)'s Stripe Customer cus_5uQ4LkSeJ08ohD with {:description=>"Livestock Tavern", :metadata=>{"lo.entity_id"=>2683, "lo.entity_type"=>"organization"}}
+[2015-06-02 11:00:43 -0400] - UpdateStripeCustomerMetadataForMarket - Farm Link Hawai‘i (61) - No Stripe Customer linked to hvcb (2731).
+[2015-06-02 11:00:43 -0400] - UpdateStripeCustomerMetadataForMarket - Farm Link Hawai‘i (61) - No Stripe Customer linked to Waimanalo Learning Center (2781).
+[2015-06-02 11:00:43 -0400] - UpdateStripeCustomerMetadataForMarket - Farm Link Hawai‘i (61) - No Stripe Customer linked to steven (2784).
+[2015-06-02 11:00:43 -0400] - UpdateStripeCustomerMetadataForMarket - Farm Link Hawai‘i (61) - No Stripe Customer linked to Green Rows Farm (2835).
+[2015-06-02 11:00:43 -0400] - UpdateStripeCustomerMetadataForMarket - Farm Link Hawai‘i (61) - No Stripe Customer linked to CRC (2940).
+[2015-06-02 11:00:43 -0400] - UpdateStripeCustomerMetadataForMarket - Farm Link Hawai‘i (61) - No Stripe Customer linked to Greystones.org (2944).
+[2015-06-02 11:00:43 -0400] - UpdateStripeCustomerMetadataForMarket - Farm Link Hawai‘i (61) - No Stripe Customer linked to Diana Olsen (2946).
+[2015-06-02 11:00:43 -0400] - UpdateStripeCustomerMetadataForMarket - Farm Link Hawai‘i (61) - No Stripe Customer linked to Mary Spadaro  (2956).
+[2015-06-02 11:00:43 -0400] - UpdateStripeCustomerMetadataForMarket - Farm Link Hawai‘i (61) - No Stripe Customer linked to Erin Nakashima (2967).
+[2015-06-02 11:00:43 -0400] - UpdateStripeCustomerMetadataForMarket - Farm Link Hawai‘i (61) - No Stripe Customer linked to Cyrus Howe (2979).
+[2015-06-02 11:00:43 -0400] - UpdateStripeCustomerMetadataForMarket - Farm Link Hawai‘i (61) - No Stripe Customer linked to Sheryl Kincaid  (3111).
+[2015-06-02 11:00:43 -0400] - UpdateStripeCustomerMetadataForMarket - Farm Link Hawai‘i (61) - No Stripe Customer linked to JS Goodman (3124).
+[2015-06-02 11:00:44 -0400] - UpdateStripeCustomerMetadataForMarket - Farm Link Hawai‘i (61) - Updating Organization Small Kine Farm (3150)'s Stripe Customer cus_5uQ55PBJUxJKWf with {:description=>"Small Kine Farm", :metadata=>{"lo.entity_id"=>3150, "lo.entity_type"=>"organization"}}
+[2015-06-02 11:00:44 -0400] - UpdateStripeCustomerMetadataForMarket - Farm Link Hawai‘i (61) - No Stripe Customer linked to Vincent (3240).
+[2015-06-02 11:00:44 -0400] - UpdateStripeCustomerMetadataForMarket - Farm Link Hawai‘i (61) - No Stripe Customer linked to Miss Ing et al (3276).
+[2015-06-02 11:00:44 -0400] - UpdateStripeCustomerMetadataForMarket - Farm Link Hawai‘i (61) - No Stripe Customer linked to Seed Restaurant (3278).
+[2015-06-02 11:00:44 -0400] - UpdateStripeCustomerMetadataForMarket - Farm Link Hawai‘i (61) - No Stripe Customer linked to the nook, neighborhood bistro (3280).
+[2015-06-02 11:00:44 -0400] - UpdateStripeCustomerMetadataForMarket - Farm Link Hawai‘i (61) - No Stripe Customer linked to Alan Wongs Restaurant (3285).
+[2015-06-02 11:00:45 -0400] - UpdateStripeCustomerMetadataForMarket - Farm Link Hawai‘i (61) - Updating Organization Alan Wong's Honolulu (3290)'s Stripe Customer cus_5yHUZxUy7qzC7Y with {:description=>"Alan Wong's Honolulu", :metadata=>{"lo.entity_id"=>3290, "lo.entity_type"=>"organization"}}
+[2015-06-02 11:00:45 -0400] - UpdateStripeCustomerMetadataForMarket - Farm Link Hawai‘i (61) - No Stripe Customer linked to Pint and Jigger (3294).
+[2015-06-02 11:00:45 -0400] - UpdateStripeCustomerMetadataForMarket - Farm Link Hawai‘i (61) - No Stripe Customer linked to Aged Artesians Corp. (3306).
+[2015-06-02 11:00:45 -0400] - UpdateStripeCustomerMetadataForMarket - Farm Link Hawai‘i (61) - No Stripe Customer linked to Harvest Life (3309).
+[2015-06-02 11:00:45 -0400] - UpdateStripeCustomerMetadataForMarket - Farm Link Hawai‘i (61) - No Stripe Customer linked to Mana Micro Farm (3312).
+[2015-06-02 11:00:45 -0400] - UpdateStripeCustomerMetadataForMarket - Farm Link Hawai‘i (61) - No Stripe Customer linked to The Kohala Center (3365).
+[2015-06-02 11:00:45 -0400] - UpdateStripeCustomerMetadataForMarket - Farm Link Hawai‘i (61) - No Stripe Customer linked to Lum Enterprises (3392).
+[2015-06-02 11:00:45 -0400] - UpdateStripeCustomerMetadataForMarket - Farm Link Hawai‘i (61) - No Stripe Customer linked to Bevy LLC (3406).
+[2015-06-02 11:00:45 -0400] - UpdateStripeCustomerMetadataForMarket - Farm Link Hawai‘i (61) - No Stripe Customer linked to Kaimana Farm Cafe (3411).
+[2015-06-02 11:00:45 -0400] - UpdateStripeCustomerMetadataForMarket - Farm Link Hawai‘i (61) - No Stripe Customer linked to Vintage Cave Honolulu (3421).
+[2015-06-02 11:00:45 -0400] - UpdateStripeCustomerMetadataForMarket - Farm Link Hawai‘i (61) - No Stripe Customer linked to Town Hospitality Group (3435).
+[2015-06-02 11:00:45 -0400] - UpdateStripeCustomerMetadataForMarket - Farm Link Hawai‘i (61) - No Stripe Customer linked to Waihuena Farm (3454).
+[2015-06-02 11:00:45 -0400] - UpdateStripeCustomerMetadataForMarket - Farm Link Hawai‘i (61) - No Stripe Customer linked to fig and miel catering (3533).
+[2015-06-02 11:00:45 -0400] - UpdateStripeCustomerMetadataForMarket - Farm Link Hawai‘i (61) - No Stripe Customer linked to Oahu Fresh (3537).
+[2015-06-02 11:00:45 -0400] - UpdateStripeCustomerMetadataForMarket - Farm Link Hawai‘i (61) - No Stripe Customer linked to The Fat Greek (3601).
+[2015-06-02 11:00:45 -0400] - UpdateStripeCustomerMetadataForMarket - Farm Link Hawai‘i (61) - No Stripe Customer linked to Ulupono Initiative (3905).
+[2015-06-02 11:00:45 -0400] - UpdateStripeCustomerMetadataForMarket - Farm Link Hawai‘i (61) - No Stripe Customer linked to Waimomona Farm (4023).
+[2015-06-02 11:00:45 -0400] - UpdateStripeCustomerMetadataForMarket - Farm Link Hawai‘i (61) - No Stripe Customer linked to Justin (4078).

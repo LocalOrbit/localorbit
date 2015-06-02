@@ -1,0 +1,27 @@
+[2015-06-02 11:03:56 -0400] - UpdateStripeCustomerMetadataForMarket - Green Bay Market (48) - ====================================================================================================
+[2015-06-02 11:03:56 -0400] - UpdateStripeCustomerMetadataForMarket - Green Bay Market (48) -  Green Bay Market (48)
+[2015-06-02 11:03:56 -0400] - UpdateStripeCustomerMetadataForMarket - Green Bay Market (48) -  Updating stripe customer metadata for Market and all Organizations.
+[2015-06-02 11:03:56 -0400] - UpdateStripeCustomerMetadataForMarket - Green Bay Market (48) - 
+[2015-06-02 11:03:56 -0400] - UpdateStripeCustomerMetadataForMarket - Green Bay Market (48) -  Rails.env: production
+[2015-06-02 11:03:56 -0400] - UpdateStripeCustomerMetadataForMarket - Green Bay Market (48) -  Stripe key: pk_live_j85VTsrz51POrss3ni460qaf
+[2015-06-02 11:03:56 -0400] - UpdateStripeCustomerMetadataForMarket - Green Bay Market (48) - ====================================================================================================
+[2015-06-02 11:03:57 -0400] - UpdateStripeCustomerMetadataForMarket - Green Bay Market (48) - Updating Market's Stripe Customer with {:description=>"Green Bay Market", :metadata=>{"lo.entity_id"=>48, "lo.entity_type"=>"market"}}
+[2015-06-02 11:03:57 -0400] - UpdateStripeCustomerMetadataForMarket - Green Bay Market (48) - No Stripe Customer linked to Goodwill Grows (2704).
+[2015-06-02 11:03:58 -0400] - UpdateStripeCustomerMetadataForMarket - Green Bay Market (48) - Updating Organization Wolf River Farms, LLC (3872)'s Stripe Customer cus_6H8mrVwjpPV7jJ with {:description=>"Wolf River Farms, LLC", :metadata=>{"lo.entity_id"=>3872, "lo.entity_type"=>"organization"}}
+[2015-06-02 11:03:59 -0400] - UpdateStripeCustomerMetadataForMarket - Green Bay Market (48) - Updating Organization Ledgeview Farms of Johnsburg, LLC (1845)'s Stripe Customer cus_5uQ4AylxryxPSU with {:description=>"Ledgeview Farms of Johnsburg, LLC", :metadata=>{"lo.entity_id"=>1845, "lo.entity_type"=>"organization"}}
+[2015-06-02 11:04:01 -0400] - UpdateStripeCustomerMetadataForMarket - Green Bay Market (48) - Updating Organization SLO Farmer's Co-op (3749)'s Stripe Customer cus_6GrwyM1n43Na2Y with {:description=>"SLO Farmer's Co-op", :metadata=>{"lo.entity_id"=>3749, "lo.entity_type"=>"organization"}}
+[2015-06-02 11:04:01 -0400] - UpdateStripeCustomerMetadataForMarket - Green Bay Market (48) - No Stripe Customer linked to Theys Orchards (3718).
+[2015-06-02 11:04:01 -0400] - UpdateStripeCustomerMetadataForMarket - Green Bay Market (48) - No Stripe Customer linked to Waseda Farm Market (3391).
+[2015-06-02 11:04:01 -0400] - UpdateStripeCustomerMetadataForMarket - Green Bay Market (48) - No Stripe Customer linked to Elemental Food Products (2651).
+[2015-06-02 11:04:01 -0400] - UpdateStripeCustomerMetadataForMarket - Green Bay Market (48) - No Stripe Customer linked to Circle Union Farm (2647).
+[2015-06-02 11:04:02 -0400] - UpdateStripeCustomerMetadataForMarket - Green Bay Market (48) - Updating Organization FIeld Notes Farm (2400)'s Stripe Customer cus_5uQ4nP8axirVUB with {:description=>"FIeld Notes Farm", :metadata=>{"lo.entity_id"=>2400, "lo.entity_type"=>"organization"}}
+[2015-06-02 11:04:02 -0400] - UpdateStripeCustomerMetadataForMarket - Green Bay Market (48) - No Stripe Customer linked to Sleepy Hollow Farm & CSA (2373).
+[2015-06-02 11:04:02 -0400] - UpdateStripeCustomerMetadataForMarket - Green Bay Market (48) - No Stripe Customer linked to De Pere School District (2365).
+[2015-06-02 11:04:02 -0400] - UpdateStripeCustomerMetadataForMarket - Green Bay Market (48) - No Stripe Customer linked to Ashwaubenon School District (2363).
+[2015-06-02 11:04:02 -0400] - UpdateStripeCustomerMetadataForMarket - Green Bay Market (48) - No Stripe Customer linked to Pulaski Community School District (2358).
+[2015-06-02 11:04:02 -0400] - UpdateStripeCustomerMetadataForMarket - Green Bay Market (48) - No Stripe Customer linked to Howard-Suamico School District (2357).
+[2015-06-02 11:04:02 -0400] - UpdateStripeCustomerMetadataForMarket - Green Bay Market (48) - No Stripe Customer linked to School District of West De Pere (2356).
+[2015-06-02 11:04:02 -0400] - UpdateStripeCustomerMetadataForMarket - Green Bay Market (48) - No Stripe Customer linked to Bellin Health (2305).
+[2015-06-02 11:04:02 -0400] - UpdateStripeCustomerMetadataForMarket - Green Bay Market (48) - No Stripe Customer linked to GBAPS Food Service Department (2298).
+[2015-06-02 11:04:02 -0400] - UpdateStripeCustomerMetadataForMarket - Green Bay Market (48) - No Stripe Customer linked to Live54218 (2123).
+[2015-06-02 11:04:03 -0400] - UpdateStripeCustomerMetadataForMarket - Green Bay Market (48) - Updating Organization Great Lakes Farm (91)'s Stripe Customer cus_5uQ5XKHQiCU5p8 with {:description=>"Great Lakes Farm", :metadata=>{"lo.entity_id"=>91, "lo.entity_type"=>"organization"}}

@@ -1,0 +1,9 @@
+[2015-06-02 11:20:44 -0400] - UpdateStripeCustomerMetadataForMarket - Tiny Diner Farmers' Market (97) - ====================================================================================================
+[2015-06-02 11:20:44 -0400] - UpdateStripeCustomerMetadataForMarket - Tiny Diner Farmers' Market (97) -  Tiny Diner Farmers' Market (97)
+[2015-06-02 11:20:44 -0400] - UpdateStripeCustomerMetadataForMarket - Tiny Diner Farmers' Market (97) -  Updating stripe customer metadata for Market and all Organizations.
+[2015-06-02 11:20:44 -0400] - UpdateStripeCustomerMetadataForMarket - Tiny Diner Farmers' Market (97) - 
+[2015-06-02 11:20:44 -0400] - UpdateStripeCustomerMetadataForMarket - Tiny Diner Farmers' Market (97) -  Rails.env: production
+[2015-06-02 11:20:44 -0400] - UpdateStripeCustomerMetadataForMarket - Tiny Diner Farmers' Market (97) -  Stripe key: pk_live_j85VTsrz51POrss3ni460qaf
+[2015-06-02 11:20:44 -0400] - UpdateStripeCustomerMetadataForMarket - Tiny Diner Farmers' Market (97) - ====================================================================================================
+[2015-06-02 11:20:45 -0400] - UpdateStripeCustomerMetadataForMarket - Tiny Diner Farmers' Market (97) - Updating Market's Stripe Customer with {:description=>"Tiny Diner Farmers' Market", :metadata=>{"lo.entity_id"=>97, "lo.entity_type"=>"market"}}
+[2015-06-02 11:20:46 -0400] - UpdateStripeCustomerMetadataForMarket - Tiny Diner Farmers' Market (97) - Updating Organization Mana Gardens (Demo Account) (3873)'s Stripe Customer cus_6H9EUgN2HBGxDn with {:description=>"Mana Gardens (Demo Account)", :metadata=>{"lo.entity_id"=>3873, "lo.entity_type"=>"organization"}}

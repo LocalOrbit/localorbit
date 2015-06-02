@@ -1,0 +1,8 @@
+[2015-06-02 11:07:43 -0400] - UpdateStripeCustomerMetadataForMarket - Donation Market (104) - ====================================================================================================
+[2015-06-02 11:07:43 -0400] - UpdateStripeCustomerMetadataForMarket - Donation Market (104) -  Donation Market (104)
+[2015-06-02 11:07:43 -0400] - UpdateStripeCustomerMetadataForMarket - Donation Market (104) -  Updating stripe customer metadata for Market and all Organizations.
+[2015-06-02 11:07:43 -0400] - UpdateStripeCustomerMetadataForMarket - Donation Market (104) - 
+[2015-06-02 11:07:43 -0400] - UpdateStripeCustomerMetadataForMarket - Donation Market (104) -  Rails.env: production
+[2015-06-02 11:07:43 -0400] - UpdateStripeCustomerMetadataForMarket - Donation Market (104) -  Stripe key: pk_live_j85VTsrz51POrss3ni460qaf
+[2015-06-02 11:07:43 -0400] - UpdateStripeCustomerMetadataForMarket - Donation Market (104) - ====================================================================================================
+[2015-06-02 11:07:44 -0400] - UpdateStripeCustomerMetadataForMarket - Donation Market (104) - Updating Market's Stripe Customer with {:description=>"Donation Market", :metadata=>{"lo.entity_id"=>104, "lo.entity_type"=>"market"}}

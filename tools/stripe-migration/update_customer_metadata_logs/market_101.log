@@ -1,0 +1,25 @@
+[2015-06-02 11:05:48 -0400] - UpdateStripeCustomerMetadataForMarket - PCFA (101) - ====================================================================================================
+[2015-06-02 11:05:48 -0400] - UpdateStripeCustomerMetadataForMarket - PCFA (101) -  PCFA (101)
+[2015-06-02 11:05:48 -0400] - UpdateStripeCustomerMetadataForMarket - PCFA (101) -  Updating stripe customer metadata for Market and all Organizations.
+[2015-06-02 11:05:48 -0400] - UpdateStripeCustomerMetadataForMarket - PCFA (101) - 
+[2015-06-02 11:05:48 -0400] - UpdateStripeCustomerMetadataForMarket - PCFA (101) -  Rails.env: production
+[2015-06-02 11:05:48 -0400] - UpdateStripeCustomerMetadataForMarket - PCFA (101) -  Stripe key: pk_live_j85VTsrz51POrss3ni460qaf
+[2015-06-02 11:05:48 -0400] - UpdateStripeCustomerMetadataForMarket - PCFA (101) - ====================================================================================================
+[2015-06-02 11:05:49 -0400] - UpdateStripeCustomerMetadataForMarket - PCFA (101) - Updating Market's Stripe Customer with {:description=>"PCFA", :metadata=>{"lo.entity_id"=>101, "lo.entity_type"=>"market"}}
+[2015-06-02 11:05:50 -0400] - UpdateStripeCustomerMetadataForMarket - PCFA (101) - Updating Organization PCFA CSA Z Route (4031)'s Stripe Customer cus_6KYUWgaJe6EW4Z with {:description=>"PCFA CSA Z Route", :metadata=>{"lo.entity_id"=>4031, "lo.entity_type"=>"organization"}}
+[2015-06-02 11:05:51 -0400] - UpdateStripeCustomerMetadataForMarket - PCFA (101) - Updating Organization PCFA Restaurants (3968)'s Stripe Customer cus_6JVmVL3K1YIMTg with {:description=>"PCFA Restaurants", :metadata=>{"lo.entity_id"=>3968, "lo.entity_type"=>"organization"}}
+[2015-06-02 11:05:52 -0400] - UpdateStripeCustomerMetadataForMarket - PCFA (101) - Updating Organization PCFA CSA A Route (3967)'s Stripe Customer cus_6JVmJQ1nxgxqbx with {:description=>"PCFA CSA A Route", :metadata=>{"lo.entity_id"=>3967, "lo.entity_type"=>"organization"}}
+[2015-06-02 11:05:52 -0400] - UpdateStripeCustomerMetadataForMarket - PCFA (101) - No Stripe Customer linked to LXC (1881).
+[2015-06-02 11:05:52 -0400] - UpdateStripeCustomerMetadataForMarket - PCFA (101) - No Stripe Customer linked to TSS (1884).
+[2015-06-02 11:05:52 -0400] - UpdateStripeCustomerMetadataForMarket - PCFA (101) - No Stripe Customer linked to TSF (1882).
+[2015-06-02 11:05:52 -0400] - UpdateStripeCustomerMetadataForMarket - PCFA (101) - No Stripe Customer linked to RBF (1887).
+[2015-06-02 11:05:52 -0400] - UpdateStripeCustomerMetadataForMarket - PCFA (101) - No Stripe Customer linked to LPF (1896).
+[2015-06-02 11:05:52 -0400] - UpdateStripeCustomerMetadataForMarket - PCFA (101) - No Stripe Customer linked to JSS (1894).
+[2015-06-02 11:05:52 -0400] - UpdateStripeCustomerMetadataForMarket - PCFA (101) - No Stripe Customer linked to JEF (1889).
+[2015-06-02 11:05:52 -0400] - UpdateStripeCustomerMetadataForMarket - PCFA (101) - No Stripe Customer linked to HVF (1885).
+[2015-06-02 11:05:52 -0400] - UpdateStripeCustomerMetadataForMarket - PCFA (101) - No Stripe Customer linked to HTF (1883).
+[2015-06-02 11:05:52 -0400] - UpdateStripeCustomerMetadataForMarket - PCFA (101) - No Stripe Customer linked to ESS (1890).
+[2015-06-02 11:05:52 -0400] - UpdateStripeCustomerMetadataForMarket - PCFA (101) - No Stripe Customer linked to DSS (1893).
+[2015-06-02 11:05:52 -0400] - UpdateStripeCustomerMetadataForMarket - PCFA (101) - No Stripe Customer linked to DMS (1886).
+[2015-06-02 11:05:52 -0400] - UpdateStripeCustomerMetadataForMarket - PCFA (101) - No Stripe Customer linked to DMF (1888).
+[2015-06-02 11:05:53 -0400] - UpdateStripeCustomerMetadataForMarket - PCFA (101) - Updating Organization DSF (3942)'s Stripe Customer cus_6J3tyn9hQiBErg with {:description=>"DSF", :metadata=>{"lo.entity_id"=>3942, "lo.entity_type"=>"organization"}}

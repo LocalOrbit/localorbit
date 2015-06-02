@@ -1,0 +1,15 @@
+[2015-06-02 11:18:30 -0400] - UpdateStripeCustomerMetadataForMarket - Linden Hills Farmers' Market (96) - ====================================================================================================
+[2015-06-02 11:18:30 -0400] - UpdateStripeCustomerMetadataForMarket - Linden Hills Farmers' Market (96) -  Linden Hills Farmers' Market (96)
+[2015-06-02 11:18:30 -0400] - UpdateStripeCustomerMetadataForMarket - Linden Hills Farmers' Market (96) -  Updating stripe customer metadata for Market and all Organizations.
+[2015-06-02 11:18:30 -0400] - UpdateStripeCustomerMetadataForMarket - Linden Hills Farmers' Market (96) - 
+[2015-06-02 11:18:30 -0400] - UpdateStripeCustomerMetadataForMarket - Linden Hills Farmers' Market (96) -  Rails.env: production
+[2015-06-02 11:18:30 -0400] - UpdateStripeCustomerMetadataForMarket - Linden Hills Farmers' Market (96) -  Stripe key: pk_live_j85VTsrz51POrss3ni460qaf
+[2015-06-02 11:18:30 -0400] - UpdateStripeCustomerMetadataForMarket - Linden Hills Farmers' Market (96) - ====================================================================================================
+[2015-06-02 11:18:31 -0400] - UpdateStripeCustomerMetadataForMarket - Linden Hills Farmers' Market (96) - Updating Market's Stripe Customer with {:description=>"Linden Hills Farmers' Market", :metadata=>{"lo.entity_id"=>96, "lo.entity_type"=>"market"}}
+[2015-06-02 11:18:31 -0400] - UpdateStripeCustomerMetadataForMarket - Linden Hills Farmers' Market (96) - No Stripe Customer linked to Horner's Corner  (4070).
+[2015-06-02 11:18:31 -0400] - UpdateStripeCustomerMetadataForMarket - Linden Hills Farmers' Market (96) - No Stripe Customer linked to Blue Ox Organics (4044).
+[2015-06-02 11:18:31 -0400] - UpdateStripeCustomerMetadataForMarket - Linden Hills Farmers' Market (96) - No Stripe Customer linked to Blue Ox Organics (4043).
+[2015-06-02 11:18:31 -0400] - UpdateStripeCustomerMetadataForMarket - Linden Hills Farmers' Market (96) - No Stripe Customer linked to Barkley's Bistro (4038).
+[2015-06-02 11:18:33 -0400] - UpdateStripeCustomerMetadataForMarket - Linden Hills Farmers' Market (96) - Updating Organization Superior Switchel Co. (4036)'s Stripe Customer cus_6KheE13ackSYnW with {:description=>"Superior Switchel Co.", :metadata=>{"lo.entity_id"=>4036, "lo.entity_type"=>"organization"}}
+[2015-06-02 11:18:33 -0400] - UpdateStripeCustomerMetadataForMarket - Linden Hills Farmers' Market (96) - No Stripe Customer linked to Grlk (4027).
+[2015-06-02 11:18:34 -0400] - UpdateStripeCustomerMetadataForMarket - Linden Hills Farmers' Market (96) - Updating Organization Mana Gardens (Demo Account) (3873)'s Stripe Customer cus_6H9EUgN2HBGxDn with {:description=>"Mana Gardens (Demo Account)", :metadata=>{"lo.entity_id"=>3873, "lo.entity_type"=>"organization"}}

@@ -1,0 +1,8 @@
+[2015-06-02 11:10:28 -0400] - UpdateStripeCustomerMetadataForMarket - One Green Place (59) - ====================================================================================================
+[2015-06-02 11:10:28 -0400] - UpdateStripeCustomerMetadataForMarket - One Green Place (59) -  One Green Place (59)
+[2015-06-02 11:10:28 -0400] - UpdateStripeCustomerMetadataForMarket - One Green Place (59) -  Updating stripe customer metadata for Market and all Organizations.
+[2015-06-02 11:10:28 -0400] - UpdateStripeCustomerMetadataForMarket - One Green Place (59) - 
+[2015-06-02 11:10:28 -0400] - UpdateStripeCustomerMetadataForMarket - One Green Place (59) -  Rails.env: production
+[2015-06-02 11:10:28 -0400] - UpdateStripeCustomerMetadataForMarket - One Green Place (59) -  Stripe key: pk_live_j85VTsrz51POrss3ni460qaf
+[2015-06-02 11:10:28 -0400] - UpdateStripeCustomerMetadataForMarket - One Green Place (59) - ====================================================================================================
+[2015-06-02 11:10:30 -0400] - UpdateStripeCustomerMetadataForMarket - One Green Place (59) - Updating Market's Stripe Customer with {:description=>"One Green Place", :metadata=>{"lo.entity_id"=>59, "lo.entity_type"=>"market"}}

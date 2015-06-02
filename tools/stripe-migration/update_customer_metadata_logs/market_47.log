@@ -1,0 +1,8 @@
+[2015-06-02 11:04:52 -0400] - UpdateStripeCustomerMetadataForMarket - Products (47) - ====================================================================================================
+[2015-06-02 11:04:52 -0400] - UpdateStripeCustomerMetadataForMarket - Products (47) -  Products (47)
+[2015-06-02 11:04:52 -0400] - UpdateStripeCustomerMetadataForMarket - Products (47) -  Updating stripe customer metadata for Market and all Organizations.
+[2015-06-02 11:04:52 -0400] - UpdateStripeCustomerMetadataForMarket - Products (47) - 
+[2015-06-02 11:04:52 -0400] - UpdateStripeCustomerMetadataForMarket - Products (47) -  Rails.env: production
+[2015-06-02 11:04:52 -0400] - UpdateStripeCustomerMetadataForMarket - Products (47) -  Stripe key: pk_live_j85VTsrz51POrss3ni460qaf
+[2015-06-02 11:04:52 -0400] - UpdateStripeCustomerMetadataForMarket - Products (47) - ====================================================================================================
+[2015-06-02 11:04:53 -0400] - UpdateStripeCustomerMetadataForMarket - Products (47) - Updating Market's Stripe Customer with {:description=>"Products", :metadata=>{"lo.entity_id"=>47, "lo.entity_type"=>"market"}}

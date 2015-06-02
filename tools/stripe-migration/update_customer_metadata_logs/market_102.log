@@ -1,0 +1,26 @@
+[2015-06-02 11:04:24 -0400] - UpdateStripeCustomerMetadataForMarket - Farm Market Pick-up (102) - ====================================================================================================
+[2015-06-02 11:04:24 -0400] - UpdateStripeCustomerMetadataForMarket - Farm Market Pick-up (102) -  Farm Market Pick-up (102)
+[2015-06-02 11:04:24 -0400] - UpdateStripeCustomerMetadataForMarket - Farm Market Pick-up (102) -  Updating stripe customer metadata for Market and all Organizations.
+[2015-06-02 11:04:24 -0400] - UpdateStripeCustomerMetadataForMarket - Farm Market Pick-up (102) - 
+[2015-06-02 11:04:24 -0400] - UpdateStripeCustomerMetadataForMarket - Farm Market Pick-up (102) -  Rails.env: production
+[2015-06-02 11:04:24 -0400] - UpdateStripeCustomerMetadataForMarket - Farm Market Pick-up (102) -  Stripe key: pk_live_j85VTsrz51POrss3ni460qaf
+[2015-06-02 11:04:24 -0400] - UpdateStripeCustomerMetadataForMarket - Farm Market Pick-up (102) - ====================================================================================================
+[2015-06-02 11:04:25 -0400] - UpdateStripeCustomerMetadataForMarket - Farm Market Pick-up (102) - Updating Market's Stripe Customer with {:description=>"Farm Market Pick-up", :metadata=>{"lo.entity_id"=>102, "lo.entity_type"=>"market"}}
+[2015-06-02 11:04:25 -0400] - UpdateStripeCustomerMetadataForMarket - Farm Market Pick-up (102) - No Stripe Customer linked to Hazelwood Urban Farms (4058).
+[2015-06-02 11:04:25 -0400] - UpdateStripeCustomerMetadataForMarket - Farm Market Pick-up (102) - No Stripe Customer linked to Louis Balenzano (4057).
+[2015-06-02 11:04:25 -0400] - UpdateStripeCustomerMetadataForMarket - Farm Market Pick-up (102) - No Stripe Customer linked to MIX Salad Concept, Inc. (3965).
+[2015-06-02 11:04:26 -0400] - UpdateStripeCustomerMetadataForMarket - Farm Market Pick-up (102) - Updating Organization Test FMP (3964)'s Stripe Customer cus_6JQTD7zzCjQphm with {:description=>"Test FMP", :metadata=>{"lo.entity_id"=>3964, "lo.entity_type"=>"organization"}}
+[2015-06-02 11:04:26 -0400] - UpdateStripeCustomerMetadataForMarket - Farm Market Pick-up (102) - No Stripe Customer linked to LXC (1881).
+[2015-06-02 11:04:26 -0400] - UpdateStripeCustomerMetadataForMarket - Farm Market Pick-up (102) - No Stripe Customer linked to TSS (1884).
+[2015-06-02 11:04:26 -0400] - UpdateStripeCustomerMetadataForMarket - Farm Market Pick-up (102) - No Stripe Customer linked to TSF (1882).
+[2015-06-02 11:04:26 -0400] - UpdateStripeCustomerMetadataForMarket - Farm Market Pick-up (102) - No Stripe Customer linked to RBF (1887).
+[2015-06-02 11:04:26 -0400] - UpdateStripeCustomerMetadataForMarket - Farm Market Pick-up (102) - No Stripe Customer linked to LPF (1896).
+[2015-06-02 11:04:26 -0400] - UpdateStripeCustomerMetadataForMarket - Farm Market Pick-up (102) - No Stripe Customer linked to JSS (1894).
+[2015-06-02 11:04:26 -0400] - UpdateStripeCustomerMetadataForMarket - Farm Market Pick-up (102) - No Stripe Customer linked to JEF (1889).
+[2015-06-02 11:04:26 -0400] - UpdateStripeCustomerMetadataForMarket - Farm Market Pick-up (102) - No Stripe Customer linked to HVF (1885).
+[2015-06-02 11:04:26 -0400] - UpdateStripeCustomerMetadataForMarket - Farm Market Pick-up (102) - No Stripe Customer linked to HTF (1883).
+[2015-06-02 11:04:26 -0400] - UpdateStripeCustomerMetadataForMarket - Farm Market Pick-up (102) - No Stripe Customer linked to ESS (1890).
+[2015-06-02 11:04:26 -0400] - UpdateStripeCustomerMetadataForMarket - Farm Market Pick-up (102) - No Stripe Customer linked to DSS (1893).
+[2015-06-02 11:04:26 -0400] - UpdateStripeCustomerMetadataForMarket - Farm Market Pick-up (102) - No Stripe Customer linked to DMS (1886).
+[2015-06-02 11:04:26 -0400] - UpdateStripeCustomerMetadataForMarket - Farm Market Pick-up (102) - No Stripe Customer linked to DMF (1888).
+[2015-06-02 11:04:27 -0400] - UpdateStripeCustomerMetadataForMarket - Farm Market Pick-up (102) - Updating Organization DSF (3942)'s Stripe Customer cus_6J3tyn9hQiBErg with {:description=>"DSF", :metadata=>{"lo.entity_id"=>3942, "lo.entity_type"=>"organization"}}

@@ -1,0 +1,18 @@
+[2015-06-02 11:01:02 -0400] - UpdateStripeCustomerMetadataForMarket - Eastern U.P. Marketplace (21) - ====================================================================================================
+[2015-06-02 11:01:02 -0400] - UpdateStripeCustomerMetadataForMarket - Eastern U.P. Marketplace (21) -  Eastern U.P. Marketplace (21)
+[2015-06-02 11:01:02 -0400] - UpdateStripeCustomerMetadataForMarket - Eastern U.P. Marketplace (21) -  Updating stripe customer metadata for Market and all Organizations.
+[2015-06-02 11:01:02 -0400] - UpdateStripeCustomerMetadataForMarket - Eastern U.P. Marketplace (21) - 
+[2015-06-02 11:01:02 -0400] - UpdateStripeCustomerMetadataForMarket - Eastern U.P. Marketplace (21) -  Rails.env: production
+[2015-06-02 11:01:02 -0400] - UpdateStripeCustomerMetadataForMarket - Eastern U.P. Marketplace (21) -  Stripe key: pk_live_j85VTsrz51POrss3ni460qaf
+[2015-06-02 11:01:02 -0400] - UpdateStripeCustomerMetadataForMarket - Eastern U.P. Marketplace (21) - ====================================================================================================
+[2015-06-02 11:01:02 -0400] - UpdateStripeCustomerMetadataForMarket - Eastern U.P. Marketplace (21) - No Stripe Customer linked to this Market.
+[2015-06-02 11:01:02 -0400] - UpdateStripeCustomerMetadataForMarket - Eastern U.P. Marketplace (21) - No Stripe Customer linked to Edible Creations (3793).
+[2015-06-02 11:01:02 -0400] - UpdateStripeCustomerMetadataForMarket - Eastern U.P. Marketplace (21) - No Stripe Customer linked to Alex (3571).
+[2015-06-02 11:01:03 -0400] - UpdateStripeCustomerMetadataForMarket - Eastern U.P. Marketplace (21) - Updating Organization Seeds & Spores Family Farm (1062)'s Stripe Customer cus_5uQ4yRCqNqxEIq with {:description=>"Seeds & Spores Family Farm", :metadata=>{"lo.entity_id"=>1062, "lo.entity_type"=>"organization"}}
+[2015-06-02 11:01:03 -0400] - UpdateStripeCustomerMetadataForMarket - Eastern U.P. Marketplace (21) - No Stripe Customer linked to BSB Farms (1834).
+[2015-06-02 11:01:03 -0400] - UpdateStripeCustomerMetadataForMarket - Eastern U.P. Marketplace (21) - No Stripe Customer linked to War Memorial Hospital (2724).
+[2015-06-02 11:01:03 -0400] - UpdateStripeCustomerMetadataForMarket - Eastern U.P. Marketplace (21) - No Stripe Customer linked to Anya Farms, LLC (2382).
+[2015-06-02 11:01:03 -0400] - UpdateStripeCustomerMetadataForMarket - Eastern U.P. Marketplace (21) - No Stripe Customer linked to Susie Island Farms LLC (2288).
+[2015-06-02 11:01:03 -0400] - UpdateStripeCustomerMetadataForMarket - Eastern U.P. Marketplace (21) - No Stripe Customer linked to RMG Maple Products, Inc. (2083).
+[2015-06-02 11:01:04 -0400] - UpdateStripeCustomerMetadataForMarket - Eastern U.P. Marketplace (21) - Updating Organization Wixtrom Natural Farms (1061)'s Stripe Customer cus_5uQ4YFv0Xi1CqB with {:description=>"Wixtrom Natural Farms", :metadata=>{"lo.entity_id"=>1061, "lo.entity_type"=>"organization"}}
+[2015-06-02 11:01:04 -0400] - UpdateStripeCustomerMetadataForMarket - Eastern U.P. Marketplace (21) - No Stripe Customer linked to Beaver Meadow Creek Farms (1097).

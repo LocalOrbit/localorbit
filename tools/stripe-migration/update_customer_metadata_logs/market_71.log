@@ -1,0 +1,13 @@
+[2015-06-02 11:20:01 -0400] - UpdateStripeCustomerMetadataForMarket - Aglink Wholesale (71) - ====================================================================================================
+[2015-06-02 11:20:01 -0400] - UpdateStripeCustomerMetadataForMarket - Aglink Wholesale (71) -  Aglink Wholesale (71)
+[2015-06-02 11:20:01 -0400] - UpdateStripeCustomerMetadataForMarket - Aglink Wholesale (71) -  Updating stripe customer metadata for Market and all Organizations.
+[2015-06-02 11:20:01 -0400] - UpdateStripeCustomerMetadataForMarket - Aglink Wholesale (71) - 
+[2015-06-02 11:20:01 -0400] - UpdateStripeCustomerMetadataForMarket - Aglink Wholesale (71) -  Rails.env: production
+[2015-06-02 11:20:01 -0400] - UpdateStripeCustomerMetadataForMarket - Aglink Wholesale (71) -  Stripe key: pk_live_j85VTsrz51POrss3ni460qaf
+[2015-06-02 11:20:01 -0400] - UpdateStripeCustomerMetadataForMarket - Aglink Wholesale (71) - ====================================================================================================
+[2015-06-02 11:20:02 -0400] - UpdateStripeCustomerMetadataForMarket - Aglink Wholesale (71) - Updating Market's Stripe Customer with {:description=>"Aglink Wholesale", :metadata=>{"lo.entity_id"=>71, "lo.entity_type"=>"market"}}
+[2015-06-02 11:20:03 -0400] - UpdateStripeCustomerMetadataForMarket - Aglink Wholesale (71) - Updating Organization Magnolia Citrus (3809)'s Stripe Customer cus_6FIdyLLsQfZEkx with {:description=>"Magnolia Citrus", :metadata=>{"lo.entity_id"=>3809, "lo.entity_type"=>"organization"}}
+[2015-06-02 11:20:04 -0400] - UpdateStripeCustomerMetadataForMarket - Aglink Wholesale (71) - Updating Organization Live Oak Farms (3735)'s Stripe Customer cus_6CIMEKNsdvrsmE with {:description=>"Live Oak Farms", :metadata=>{"lo.entity_id"=>3735, "lo.entity_type"=>"organization"}}
+[2015-06-02 11:20:05 -0400] - UpdateStripeCustomerMetadataForMarket - Aglink Wholesale (71) - Updating Organization SunWest Fruit Company (3129)'s Stripe Customer cus_5uQ5eV6fImhBPD with {:description=>"SunWest Fruit Company", :metadata=>{"lo.entity_id"=>3129, "lo.entity_type"=>"organization"}}
+[2015-06-02 11:20:06 -0400] - UpdateStripeCustomerMetadataForMarket - Aglink Wholesale (71) - Updating Organization Burroughs Family Farms (3003)'s Stripe Customer cus_5uQ6BSAg5qFNmt with {:description=>"Burroughs Family Farms", :metadata=>{"lo.entity_id"=>3003, "lo.entity_type"=>"organization"}}
+[2015-06-02 11:20:12 -0400] - UpdateStripeCustomerMetadataForMarket - Aglink Wholesale (71) - Updating Organization Top Line Milk (2891)'s Stripe Customer cus_5uQ4KeekjmGXK0 with {:description=>"Top Line Milk", :metadata=>{"lo.entity_id"=>2891, "lo.entity_type"=>"organization"}}

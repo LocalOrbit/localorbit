@@ -1,0 +1,10 @@
+[2015-06-02 11:15:11 -0400] - UpdateStripeCustomerMetadataForMarket - Local Pumpkin (81) - ====================================================================================================
+[2015-06-02 11:15:11 -0400] - UpdateStripeCustomerMetadataForMarket - Local Pumpkin (81) -  Local Pumpkin (81)
+[2015-06-02 11:15:11 -0400] - UpdateStripeCustomerMetadataForMarket - Local Pumpkin (81) -  Updating stripe customer metadata for Market and all Organizations.
+[2015-06-02 11:15:11 -0400] - UpdateStripeCustomerMetadataForMarket - Local Pumpkin (81) - 
+[2015-06-02 11:15:11 -0400] - UpdateStripeCustomerMetadataForMarket - Local Pumpkin (81) -  Rails.env: production
+[2015-06-02 11:15:11 -0400] - UpdateStripeCustomerMetadataForMarket - Local Pumpkin (81) -  Stripe key: pk_live_j85VTsrz51POrss3ni460qaf
+[2015-06-02 11:15:11 -0400] - UpdateStripeCustomerMetadataForMarket - Local Pumpkin (81) - ====================================================================================================
+[2015-06-02 11:15:12 -0400] - UpdateStripeCustomerMetadataForMarket - Local Pumpkin (81) - Updating Market's Stripe Customer with {:description=>"Local Pumpkin", :metadata=>{"lo.entity_id"=>81, "lo.entity_type"=>"market"}}
+[2015-06-02 11:15:13 -0400] - UpdateStripeCustomerMetadataForMarket - Local Pumpkin (81) - Updating Organization Test Farmer (3721)'s Stripe Customer cus_6BimrBmphBXioj with {:description=>"Test Farmer", :metadata=>{"lo.entity_id"=>3721, "lo.entity_type"=>"organization"}}
+[2015-06-02 11:15:13 -0400] - UpdateStripeCustomerMetadataForMarket - Local Pumpkin (81) - No Stripe Customer linked to Test Resturant  (3451).

@@ -1,0 +1,63 @@
+[2015-06-02 11:20:57 -0400] - UpdateStripeCustomerMetadataForMarket - North Valley Food Hub (9) - ====================================================================================================
+[2015-06-02 11:20:57 -0400] - UpdateStripeCustomerMetadataForMarket - North Valley Food Hub (9) -  North Valley Food Hub (9)
+[2015-06-02 11:20:57 -0400] - UpdateStripeCustomerMetadataForMarket - North Valley Food Hub (9) -  Updating stripe customer metadata for Market and all Organizations.
+[2015-06-02 11:20:57 -0400] - UpdateStripeCustomerMetadataForMarket - North Valley Food Hub (9) - 
+[2015-06-02 11:20:57 -0400] - UpdateStripeCustomerMetadataForMarket - North Valley Food Hub (9) -  Rails.env: production
+[2015-06-02 11:20:57 -0400] - UpdateStripeCustomerMetadataForMarket - North Valley Food Hub (9) -  Stripe key: pk_live_j85VTsrz51POrss3ni460qaf
+[2015-06-02 11:20:57 -0400] - UpdateStripeCustomerMetadataForMarket - North Valley Food Hub (9) - ====================================================================================================
+[2015-06-02 11:20:58 -0400] - UpdateStripeCustomerMetadataForMarket - North Valley Food Hub (9) - Updating Market's Stripe Customer with {:description=>"North Valley Food Hub", :metadata=>{"lo.entity_id"=>9, "lo.entity_type"=>"market"}}
+[2015-06-02 11:20:58 -0400] - UpdateStripeCustomerMetadataForMarket - North Valley Food Hub (9) - No Stripe Customer linked to Canopy Farm (3962).
+[2015-06-02 11:20:59 -0400] - UpdateStripeCustomerMetadataForMarket - North Valley Food Hub (9) - Updating Organization Rancho Llano Seco (3807)'s Stripe Customer cus_6FILyZ1Vaha39h with {:description=>"Rancho Llano Seco", :metadata=>{"lo.entity_id"=>3807, "lo.entity_type"=>"organization"}}
+[2015-06-02 11:20:59 -0400] - UpdateStripeCustomerMetadataForMarket - North Valley Food Hub (9) - No Stripe Customer linked to Canyon Creek Roadhouse Cafe & Store (3699).
+[2015-06-02 11:20:59 -0400] - UpdateStripeCustomerMetadataForMarket - North Valley Food Hub (9) - No Stripe Customer linked to UC Cooperative Extension  (3596).
+[2015-06-02 11:20:59 -0400] - UpdateStripeCustomerMetadataForMarket - North Valley Food Hub (9) - No Stripe Customer linked to FRESH Fine Real Edibles Sow Happiness (3536).
+[2015-06-02 11:20:59 -0400] - UpdateStripeCustomerMetadataForMarket - North Valley Food Hub (9) - No Stripe Customer linked to Capay River Grange (3518).
+[2015-06-02 11:21:05 -0400] - UpdateStripeCustomerMetadataForMarket - North Valley Food Hub (9) - Updating Organization OM Foods (3442)'s Stripe Customer cus_62Jz2LusgMH6ew with {:description=>"OM Foods", :metadata=>{"lo.entity_id"=>3442, "lo.entity_type"=>"organization"}}
+[2015-06-02 11:21:06 -0400] - UpdateStripeCustomerMetadataForMarket - North Valley Food Hub (9) - Updating Organization D.Maciel Farms (3379)'s Stripe Customer cus_5zYVviZe2ESgMZ with {:description=>"D.Maciel Farms", :metadata=>{"lo.entity_id"=>3379, "lo.entity_type"=>"organization"}}
+[2015-06-02 11:21:06 -0400] - UpdateStripeCustomerMetadataForMarket - North Valley Food Hub (9) - No Stripe Customer linked to Fork & Spoon (3378).
+[2015-06-02 11:21:06 -0400] - UpdateStripeCustomerMetadataForMarket - North Valley Food Hub (9) - No Stripe Customer linked to Dorcas' Delectable Delights (3156).
+[2015-06-02 11:21:07 -0400] - UpdateStripeCustomerMetadataForMarket - North Valley Food Hub (9) - Updating Organization Leon Bistro (2970)'s Stripe Customer cus_5uQ5BUhBOJAE6x with {:description=>"Leon Bistro", :metadata=>{"lo.entity_id"=>2970, "lo.entity_type"=>"organization"}}
+[2015-06-02 11:21:07 -0400] - UpdateStripeCustomerMetadataForMarket - North Valley Food Hub (9) - No Stripe Customer linked to CSU Chico (2943).
+[2015-06-02 11:21:08 -0400] - UpdateStripeCustomerMetadataForMarket - North Valley Food Hub (9) - Updating Organization The Black Kettle (2921)'s Stripe Customer cus_5uQ5WyYR1wYTEi with {:description=>"The Black Kettle", :metadata=>{"lo.entity_id"=>2921, "lo.entity_type"=>"organization"}}
+[2015-06-02 11:21:08 -0400] - UpdateStripeCustomerMetadataForMarket - North Valley Food Hub (9) - No Stripe Customer linked to BW Farms (2903).
+[2015-06-02 11:21:08 -0400] - UpdateStripeCustomerMetadataForMarket - North Valley Food Hub (9) - No Stripe Customer linked to TurkeyTail Farm (2895).
+[2015-06-02 11:21:08 -0400] - UpdateStripeCustomerMetadataForMarket - North Valley Food Hub (9) - No Stripe Customer linked to Oogolow, DBA The OVEN (2824).
+[2015-06-02 11:21:08 -0400] - UpdateStripeCustomerMetadataForMarket - North Valley Food Hub (9) - No Stripe Customer linked to Chico Creek Paleo Co (2794).
+[2015-06-02 11:21:08 -0400] - UpdateStripeCustomerMetadataForMarket - North Valley Food Hub (9) - No Stripe Customer linked to Gaines Ranch  (2791).
+[2015-06-02 11:21:09 -0400] - UpdateStripeCustomerMetadataForMarket - North Valley Food Hub (9) - Updating Organization Raw Bar (2755)'s Stripe Customer cus_5uQ4RgVyixjOFr with {:description=>"Raw Bar", :metadata=>{"lo.entity_id"=>2755, "lo.entity_type"=>"organization"}}
+[2015-06-02 11:21:09 -0400] - UpdateStripeCustomerMetadataForMarket - North Valley Food Hub (9) - No Stripe Customer linked to Center for Healthy Communities - SNP (2710).
+[2015-06-02 11:21:09 -0400] - UpdateStripeCustomerMetadataForMarket - North Valley Food Hub (9) - No Stripe Customer linked to Irvine Ranch (2707).
+[2015-06-02 11:21:10 -0400] - UpdateStripeCustomerMetadataForMarket - North Valley Food Hub (9) - Updating Organization Madrone Meadows Ranch (2702)'s Stripe Customer cus_5uQ4JKtvHxecS8 with {:description=>"Madrone Meadows Ranch", :metadata=>{"lo.entity_id"=>2702, "lo.entity_type"=>"organization"}}
+[2015-06-02 11:21:11 -0400] - UpdateStripeCustomerMetadataForMarket - North Valley Food Hub (9) - Updating Organization Center for Healthy Communities - FMPP Tastings (2675)'s Stripe Customer cus_5uQ5YbtTLys5Pt with {:description=>"Center for Healthy Communities - FMPP Tastings", :metadata=>{"lo.entity_id"=>2675, "lo.entity_type"=>"organization"}}
+[2015-06-02 11:21:11 -0400] - UpdateStripeCustomerMetadataForMarket - North Valley Food Hub (9) - No Stripe Customer linked to Beatniks (2640).
+[2015-06-02 11:21:11 -0400] - UpdateStripeCustomerMetadataForMarket - North Valley Food Hub (9) - No Stripe Customer linked to Bacio Catering (2606).
+[2015-06-02 11:21:12 -0400] - UpdateStripeCustomerMetadataForMarket - North Valley Food Hub (9) - Updating Organization Grana Wood Fired Foods (2584)'s Stripe Customer cus_5uQ5GJA62czSsV with {:description=>"Grana Wood Fired Foods", :metadata=>{"lo.entity_id"=>2584, "lo.entity_type"=>"organization"}}
+[2015-06-02 11:21:12 -0400] - UpdateStripeCustomerMetadataForMarket - North Valley Food Hub (9) - No Stripe Customer linked to Shared Abundance Organic Farm (2558).
+[2015-06-02 11:21:12 -0400] - UpdateStripeCustomerMetadataForMarket - North Valley Food Hub (9) - No Stripe Customer linked to Plants by Mel (2454).
+[2015-06-02 11:21:12 -0400] - UpdateStripeCustomerMetadataForMarket - North Valley Food Hub (9) - No Stripe Customer linked to Westside Domestic Violence Shelter (2425).
+[2015-06-02 11:21:13 -0400] - UpdateStripeCustomerMetadataForMarket - North Valley Food Hub (9) - Updating Organization Citrus Norte (2424)'s Stripe Customer cus_5uQ46lRZVVAkhZ with {:description=>"Citrus Norte", :metadata=>{"lo.entity_id"=>2424, "lo.entity_type"=>"organization"}}
+[2015-06-02 11:21:14 -0400] - UpdateStripeCustomerMetadataForMarket - North Valley Food Hub (9) - Updating Organization Martin's Navel Oranges (2411)'s Stripe Customer cus_5uQ4JBhPzyZR57 with {:description=>"Martin's Navel Oranges", :metadata=>{"lo.entity_id"=>2411, "lo.entity_type"=>"organization"}}
+[2015-06-02 11:21:15 -0400] - UpdateStripeCustomerMetadataForMarket - North Valley Food Hub (9) - Updating Organization AJ Velasquez Farming (2405)'s Stripe Customer cus_5uQ4TWU6jP7FtR with {:description=>"AJ Velasquez Farming", :metadata=>{"lo.entity_id"=>2405, "lo.entity_type"=>"organization"}}
+[2015-06-02 11:21:16 -0400] - UpdateStripeCustomerMetadataForMarket - North Valley Food Hub (9) - Updating Organization Chico Natural Foods Cooperative (2403)'s Stripe Customer cus_65vat5zYTotE4V with {:description=>"Chico Natural Foods Cooperative", :metadata=>{"lo.entity_id"=>2403, "lo.entity_type"=>"organization"}}
+[2015-06-02 11:21:16 -0400] - UpdateStripeCustomerMetadataForMarket - North Valley Food Hub (9) - No Stripe Customer linked to Ariza Farm (2378).
+[2015-06-02 11:21:16 -0400] - UpdateStripeCustomerMetadataForMarket - North Valley Food Hub (9) - No Stripe Customer linked to Shambani (2376).
+[2015-06-02 11:21:16 -0400] - UpdateStripeCustomerMetadataForMarket - North Valley Food Hub (9) - No Stripe Customer linked to Pyramid Farms (2351).
+[2015-06-02 11:21:16 -0400] - UpdateStripeCustomerMetadataForMarket - North Valley Food Hub (9) - No Stripe Customer linked to Kenneth Sullivan Farm (2338).
+[2015-06-02 11:21:16 -0400] - UpdateStripeCustomerMetadataForMarket - North Valley Food Hub (9) - No Stripe Customer linked to Orland Farmstead Creamery (2314).
+[2015-06-02 11:21:17 -0400] - UpdateStripeCustomerMetadataForMarket - North Valley Food Hub (9) - Updating Organization The Rock Creek Ranch (2278)'s Stripe Customer cus_5uQ4hP8TaSudIa with {:description=>"The Rock Creek Ranch", :metadata=>{"lo.entity_id"=>2278, "lo.entity_type"=>"organization"}}
+[2015-06-02 11:21:17 -0400] - UpdateStripeCustomerMetadataForMarket - North Valley Food Hub (9) - No Stripe Customer linked to Farm Star Pizza (2268).
+[2015-06-02 11:21:17 -0400] - UpdateStripeCustomerMetadataForMarket - North Valley Food Hub (9) - No Stripe Customer linked to Jesus Center Community Farm (2252).
+[2015-06-02 11:21:18 -0400] - UpdateStripeCustomerMetadataForMarket - North Valley Food Hub (9) - Updating Organization Wine Time (2073)'s Stripe Customer cus_5uQ4NVaFheD6px with {:description=>"Wine Time", :metadata=>{"lo.entity_id"=>2073, "lo.entity_type"=>"organization"}}
+[2015-06-02 11:21:18 -0400] - UpdateStripeCustomerMetadataForMarket - North Valley Food Hub (9) - No Stripe Customer linked to Next Generation Foods (2070).
+[2015-06-02 11:21:18 -0400] - UpdateStripeCustomerMetadataForMarket - North Valley Food Hub (9) - No Stripe Customer linked to Pacific Culture (2051).
+[2015-06-02 11:21:18 -0400] - UpdateStripeCustomerMetadataForMarket - North Valley Food Hub (9) - No Stripe Customer linked to Triple J Farms (2033).
+[2015-06-02 11:21:18 -0400] - UpdateStripeCustomerMetadataForMarket - North Valley Food Hub (9) - No Stripe Customer linked to Corder Farms (2022).
+[2015-06-02 11:21:18 -0400] - UpdateStripeCustomerMetadataForMarket - North Valley Food Hub (9) - No Stripe Customer linked to Urban Farmacy (1992).
+[2015-06-02 11:21:18 -0400] - UpdateStripeCustomerMetadataForMarket - North Valley Food Hub (9) - No Stripe Customer linked to Howard's Natural Produce (1914).
+[2015-06-02 11:21:19 -0400] - UpdateStripeCustomerMetadataForMarket - North Valley Food Hub (9) - Updating Organization Chico Unified School District - Nutrition Services (1837)'s Stripe Customer cus_5uQ45TNfDKXZ9w with {:description=>"Chico Unified School District - Nutrition Services", :metadata=>{"lo.entity_id"=>1837, "lo.entity_type"=>"organization"}}
+[2015-06-02 11:21:20 -0400] - UpdateStripeCustomerMetadataForMarket - North Valley Food Hub (9) - Updating Organization Maywood Farms (1152)'s Stripe Customer cus_5uQ5Mu0KLynmYI with {:description=>"Maywood Farms", :metadata=>{"lo.entity_id"=>1152, "lo.entity_type"=>"organization"}}
+[2015-06-02 11:21:20 -0400] - UpdateStripeCustomerMetadataForMarket - North Valley Food Hub (9) - No Stripe Customer linked to Massa Organics  (70).
+[2015-06-02 11:21:20 -0400] - UpdateStripeCustomerMetadataForMarket - North Valley Food Hub (9) - No Stripe Customer linked to Berkeley Olive Grove (75).
+[2015-06-02 11:21:20 -0400] - UpdateStripeCustomerMetadataForMarket - North Valley Food Hub (9) - No Stripe Customer linked to Wookey Ranch (77).
+[2015-06-02 11:21:21 -0400] - UpdateStripeCustomerMetadataForMarket - North Valley Food Hub (9) - Updating Organization Farmelot (78)'s Stripe Customer cus_5vQuDhjr86ntEP with {:description=>"Farmelot", :metadata=>{"lo.entity_id"=>78, "lo.entity_type"=>"organization"}}
+[2015-06-02 11:21:21 -0400] - UpdateStripeCustomerMetadataForMarket - North Valley Food Hub (9) - No Stripe Customer linked to Divide Ranch  (84).

@@ -1,0 +1,29 @@
+[2015-06-02 11:05:45 -0400] - UpdateStripeCustomerMetadataForMarket - CRO Wednesday (103) - ====================================================================================================
+[2015-06-02 11:05:45 -0400] - UpdateStripeCustomerMetadataForMarket - CRO Wednesday (103) -  CRO Wednesday (103)
+[2015-06-02 11:05:45 -0400] - UpdateStripeCustomerMetadataForMarket - CRO Wednesday (103) -  Updating stripe customer metadata for Market and all Organizations.
+[2015-06-02 11:05:45 -0400] - UpdateStripeCustomerMetadataForMarket - CRO Wednesday (103) - 
+[2015-06-02 11:05:45 -0400] - UpdateStripeCustomerMetadataForMarket - CRO Wednesday (103) -  Rails.env: production
+[2015-06-02 11:05:45 -0400] - UpdateStripeCustomerMetadataForMarket - CRO Wednesday (103) -  Stripe key: pk_live_j85VTsrz51POrss3ni460qaf
+[2015-06-02 11:05:45 -0400] - UpdateStripeCustomerMetadataForMarket - CRO Wednesday (103) - ====================================================================================================
+[2015-06-02 11:05:46 -0400] - UpdateStripeCustomerMetadataForMarket - CRO Wednesday (103) - Updating Market's Stripe Customer with {:description=>"CRO Wednesday", :metadata=>{"lo.entity_id"=>103, "lo.entity_type"=>"market"}}
+[2015-06-02 11:05:46 -0400] - UpdateStripeCustomerMetadataForMarket - CRO Wednesday (103) - No Stripe Customer linked to Whole Foods Co-operative (4042).
+[2015-06-02 11:05:46 -0400] - UpdateStripeCustomerMetadataForMarket - CRO Wednesday (103) - No Stripe Customer linked to Divani Chocolatier Inc (4034).
+[2015-06-02 11:05:46 -0400] - UpdateStripeCustomerMetadataForMarket - CRO Wednesday (103) - No Stripe Customer linked to Marty's Market (3998).
+[2015-06-02 11:05:46 -0400] - UpdateStripeCustomerMetadataForMarket - CRO Wednesday (103) - No Stripe Customer linked to Community Kitchen Pittsburgh (3988).
+[2015-06-02 11:05:46 -0400] - UpdateStripeCustomerMetadataForMarket - CRO Wednesday (103) - No Stripe Customer linked to Twig n' Kooties (3986).
+[2015-06-02 11:05:47 -0400] - UpdateStripeCustomerMetadataForMarket - CRO Wednesday (103) - Updating Organization Test Wednesday (3980)'s Stripe Customer cus_6JgEdsEDzxxF5Z with {:description=>"Test Wednesday", :metadata=>{"lo.entity_id"=>3980, "lo.entity_type"=>"organization"}}
+[2015-06-02 11:05:47 -0400] - UpdateStripeCustomerMetadataForMarket - CRO Wednesday (103) - No Stripe Customer linked to GOODLife Juices (3976).
+[2015-06-02 11:05:47 -0400] - UpdateStripeCustomerMetadataForMarket - CRO Wednesday (103) - No Stripe Customer linked to LXC (1881).
+[2015-06-02 11:05:47 -0400] - UpdateStripeCustomerMetadataForMarket - CRO Wednesday (103) - No Stripe Customer linked to TSS (1884).
+[2015-06-02 11:05:47 -0400] - UpdateStripeCustomerMetadataForMarket - CRO Wednesday (103) - No Stripe Customer linked to TSF (1882).
+[2015-06-02 11:05:47 -0400] - UpdateStripeCustomerMetadataForMarket - CRO Wednesday (103) - No Stripe Customer linked to RBF (1887).
+[2015-06-02 11:05:47 -0400] - UpdateStripeCustomerMetadataForMarket - CRO Wednesday (103) - No Stripe Customer linked to LPF (1896).
+[2015-06-02 11:05:47 -0400] - UpdateStripeCustomerMetadataForMarket - CRO Wednesday (103) - No Stripe Customer linked to JSS (1894).
+[2015-06-02 11:05:47 -0400] - UpdateStripeCustomerMetadataForMarket - CRO Wednesday (103) - No Stripe Customer linked to JEF (1889).
+[2015-06-02 11:05:47 -0400] - UpdateStripeCustomerMetadataForMarket - CRO Wednesday (103) - No Stripe Customer linked to HVF (1885).
+[2015-06-02 11:05:47 -0400] - UpdateStripeCustomerMetadataForMarket - CRO Wednesday (103) - No Stripe Customer linked to HTF (1883).
+[2015-06-02 11:05:47 -0400] - UpdateStripeCustomerMetadataForMarket - CRO Wednesday (103) - No Stripe Customer linked to ESS (1890).
+[2015-06-02 11:05:47 -0400] - UpdateStripeCustomerMetadataForMarket - CRO Wednesday (103) - No Stripe Customer linked to DSS (1893).
+[2015-06-02 11:05:47 -0400] - UpdateStripeCustomerMetadataForMarket - CRO Wednesday (103) - No Stripe Customer linked to DMS (1886).
+[2015-06-02 11:05:47 -0400] - UpdateStripeCustomerMetadataForMarket - CRO Wednesday (103) - No Stripe Customer linked to DMF (1888).
+[2015-06-02 11:05:48 -0400] - UpdateStripeCustomerMetadataForMarket - CRO Wednesday (103) - Updating Organization DSF (3942)'s Stripe Customer cus_6J3tyn9hQiBErg with {:description=>"DSF", :metadata=>{"lo.entity_id"=>3942, "lo.entity_type"=>"organization"}}

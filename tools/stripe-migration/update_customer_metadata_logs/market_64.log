@@ -1,0 +1,50 @@
+[2015-06-02 11:18:46 -0400] - UpdateStripeCustomerMetadataForMarket - Virtual Monroe Farmers Market (64) - ====================================================================================================
+[2015-06-02 11:18:46 -0400] - UpdateStripeCustomerMetadataForMarket - Virtual Monroe Farmers Market (64) -  Virtual Monroe Farmers Market (64)
+[2015-06-02 11:18:46 -0400] - UpdateStripeCustomerMetadataForMarket - Virtual Monroe Farmers Market (64) -  Updating stripe customer metadata for Market and all Organizations.
+[2015-06-02 11:18:46 -0400] - UpdateStripeCustomerMetadataForMarket - Virtual Monroe Farmers Market (64) - 
+[2015-06-02 11:18:46 -0400] - UpdateStripeCustomerMetadataForMarket - Virtual Monroe Farmers Market (64) -  Rails.env: production
+[2015-06-02 11:18:46 -0400] - UpdateStripeCustomerMetadataForMarket - Virtual Monroe Farmers Market (64) -  Stripe key: pk_live_j85VTsrz51POrss3ni460qaf
+[2015-06-02 11:18:46 -0400] - UpdateStripeCustomerMetadataForMarket - Virtual Monroe Farmers Market (64) - ====================================================================================================
+[2015-06-02 11:18:47 -0400] - UpdateStripeCustomerMetadataForMarket - Virtual Monroe Farmers Market (64) - Updating Market's Stripe Customer with {:description=>"Virtual Monroe Farmers Market", :metadata=>{"lo.entity_id"=>64, "lo.entity_type"=>"market"}}
+[2015-06-02 11:18:47 -0400] - UpdateStripeCustomerMetadataForMarket - Virtual Monroe Farmers Market (64) - No Stripe Customer linked to Pocono Medical Center  (4104).
+[2015-06-02 11:18:47 -0400] - UpdateStripeCustomerMetadataForMarket - Virtual Monroe Farmers Market (64) - No Stripe Customer linked to Maria Menegus (4103).
+[2015-06-02 11:18:47 -0400] - UpdateStripeCustomerMetadataForMarket - Virtual Monroe Farmers Market (64) - No Stripe Customer linked to POCONO MEDICAL CENTER (4102).
+[2015-06-02 11:18:47 -0400] - UpdateStripeCustomerMetadataForMarket - Virtual Monroe Farmers Market (64) - No Stripe Customer linked to Pocono Medical Center (4101).
+[2015-06-02 11:18:47 -0400] - UpdateStripeCustomerMetadataForMarket - Virtual Monroe Farmers Market (64) - No Stripe Customer linked to Pocono Medical  Center (4100).
+[2015-06-02 11:18:47 -0400] - UpdateStripeCustomerMetadataForMarket - Virtual Monroe Farmers Market (64) - No Stripe Customer linked to Pocono Medical Center (4099).
+[2015-06-02 11:18:47 -0400] - UpdateStripeCustomerMetadataForMarket - Virtual Monroe Farmers Market (64) - No Stripe Customer linked to Pocono Medical Center (4098).
+[2015-06-02 11:18:47 -0400] - UpdateStripeCustomerMetadataForMarket - Virtual Monroe Farmers Market (64) - No Stripe Customer linked to Pocono Medical Center Employee (4097).
+[2015-06-02 11:18:47 -0400] - UpdateStripeCustomerMetadataForMarket - Virtual Monroe Farmers Market (64) - No Stripe Customer linked to pocono medical center (4096).
+[2015-06-02 11:18:47 -0400] - UpdateStripeCustomerMetadataForMarket - Virtual Monroe Farmers Market (64) - No Stripe Customer linked to Pocono Medical Center (4095).
+[2015-06-02 11:18:47 -0400] - UpdateStripeCustomerMetadataForMarket - Virtual Monroe Farmers Market (64) - No Stripe Customer linked to Pocono Medical Center (4094).
+[2015-06-02 11:18:47 -0400] - UpdateStripeCustomerMetadataForMarket - Virtual Monroe Farmers Market (64) - No Stripe Customer linked to Pocono Medical Center (4093).
+[2015-06-02 11:18:47 -0400] - UpdateStripeCustomerMetadataForMarket - Virtual Monroe Farmers Market (64) - No Stripe Customer linked to Pocono Medical Center (4092).
+[2015-06-02 11:18:47 -0400] - UpdateStripeCustomerMetadataForMarket - Virtual Monroe Farmers Market (64) - No Stripe Customer linked to Pocono Medical Center (4090).
+[2015-06-02 11:18:47 -0400] - UpdateStripeCustomerMetadataForMarket - Virtual Monroe Farmers Market (64) - No Stripe Customer linked to Pocono Medical Center (4089).
+[2015-06-02 11:18:47 -0400] - UpdateStripeCustomerMetadataForMarket - Virtual Monroe Farmers Market (64) - No Stripe Customer linked to Pocono Medical Center (4088).
+[2015-06-02 11:18:47 -0400] - UpdateStripeCustomerMetadataForMarket - Virtual Monroe Farmers Market (64) - No Stripe Customer linked to Pocono Medical Center (4087).
+[2015-06-02 11:18:47 -0400] - UpdateStripeCustomerMetadataForMarket - Virtual Monroe Farmers Market (64) - No Stripe Customer linked to Pocono Medical Center (4086).
+[2015-06-02 11:18:47 -0400] - UpdateStripeCustomerMetadataForMarket - Virtual Monroe Farmers Market (64) - No Stripe Customer linked to Pocono Medical Center (4085).
+[2015-06-02 11:18:47 -0400] - UpdateStripeCustomerMetadataForMarket - Virtual Monroe Farmers Market (64) - No Stripe Customer linked to Pocono Medical Center (4084).
+[2015-06-02 11:18:47 -0400] - UpdateStripeCustomerMetadataForMarket - Virtual Monroe Farmers Market (64) - No Stripe Customer linked to Pocono Medical Center (4083).
+[2015-06-02 11:18:47 -0400] - UpdateStripeCustomerMetadataForMarket - Virtual Monroe Farmers Market (64) - No Stripe Customer linked to Carrie Strohl (4082).
+[2015-06-02 11:18:47 -0400] - UpdateStripeCustomerMetadataForMarket - Virtual Monroe Farmers Market (64) - No Stripe Customer linked to Pocono Medical Center (4081).
+[2015-06-02 11:18:47 -0400] - UpdateStripeCustomerMetadataForMarket - Virtual Monroe Farmers Market (64) - No Stripe Customer linked to Sweet Rileys Bakery (4061).
+[2015-06-02 11:18:47 -0400] - UpdateStripeCustomerMetadataForMarket - Virtual Monroe Farmers Market (64) - No Stripe Customer linked to Marc Kurtz (4022).
+[2015-06-02 11:18:47 -0400] - UpdateStripeCustomerMetadataForMarket - Virtual Monroe Farmers Market (64) - No Stripe Customer linked to Barbara Langenburg (4021).
+[2015-06-02 11:18:47 -0400] - UpdateStripeCustomerMetadataForMarket - Virtual Monroe Farmers Market (64) - No Stripe Customer linked to Kathy Dellamo (3990).
+[2015-06-02 11:18:47 -0400] - UpdateStripeCustomerMetadataForMarket - Virtual Monroe Farmers Market (64) - No Stripe Customer linked to Krisztina Gyori (3984).
+[2015-06-02 11:18:48 -0400] - UpdateStripeCustomerMetadataForMarket - Virtual Monroe Farmers Market (64) - Updating Organization Marisa Hudson (3983)'s Stripe Customer cus_6Ji9Fcn9N1XB8j with {:description=>"Marisa Hudson", :metadata=>{"lo.entity_id"=>3983, "lo.entity_type"=>"organization"}}
+[2015-06-02 11:18:48 -0400] - UpdateStripeCustomerMetadataForMarket - Virtual Monroe Farmers Market (64) - No Stripe Customer linked to Margaret Brittain (3982).
+[2015-06-02 11:18:48 -0400] - UpdateStripeCustomerMetadataForMarket - Virtual Monroe Farmers Market (64) - No Stripe Customer linked to Lindsey Jones (3981).
+[2015-06-02 11:18:48 -0400] - UpdateStripeCustomerMetadataForMarket - Virtual Monroe Farmers Market (64) - No Stripe Customer linked to Menegus Farm (3940).
+[2015-06-02 11:18:48 -0400] - UpdateStripeCustomerMetadataForMarket - Virtual Monroe Farmers Market (64) - No Stripe Customer linked to E & R Mathez Farm (3823).
+[2015-06-02 11:18:48 -0400] - UpdateStripeCustomerMetadataForMarket - Virtual Monroe Farmers Market (64) - No Stripe Customer linked to Rolling Hills Farm (3795).
+[2015-06-02 11:18:48 -0400] - UpdateStripeCustomerMetadataForMarket - Virtual Monroe Farmers Market (64) - No Stripe Customer linked to Cranberry Creek Farm (3191).
+[2015-06-02 11:18:49 -0400] - UpdateStripeCustomerMetadataForMarket - Virtual Monroe Farmers Market (64) - Updating Organization Daily Bread Bakeshop (3190)'s Stripe Customer cus_5uQ5hO6vK5NRSy with {:description=>"Daily Bread Bakeshop", :metadata=>{"lo.entity_id"=>3190, "lo.entity_type"=>"organization"}}
+[2015-06-02 11:18:49 -0400] - UpdateStripeCustomerMetadataForMarket - Virtual Monroe Farmers Market (64) - No Stripe Customer linked to Special Lady's Gourmet Spreads (3020).
+[2015-06-02 11:18:49 -0400] - UpdateStripeCustomerMetadataForMarket - Virtual Monroe Farmers Market (64) - No Stripe Customer linked to Toy Cow Creamery (955).
+[2015-06-02 11:18:50 -0400] - UpdateStripeCustomerMetadataForMarket - Virtual Monroe Farmers Market (64) - Updating Organization Test Buyer (2783)'s Stripe Customer cus_5uQ4ZREG7V1NFC with {:description=>"Test Buyer", :metadata=>{"lo.entity_id"=>2783, "lo.entity_type"=>"organization"}}
+[2015-06-02 11:18:52 -0400] - UpdateStripeCustomerMetadataForMarket - Virtual Monroe Farmers Market (64) - Updating Organization Apple Ridge Farm (1054)'s Stripe Customer cus_5uQ5Ev2VnR3paJ with {:description=>"Apple Ridge Farm", :metadata=>{"lo.entity_id"=>1054, "lo.entity_type"=>"organization"}}
+[2015-06-02 11:18:52 -0400] - UpdateStripeCustomerMetadataForMarket - Virtual Monroe Farmers Market (64) - No Stripe Customer linked to Blue Ridge Herb Farm/Mountain Ridge Coffee & Roasters (925).
+[2015-06-02 11:18:52 -0400] - UpdateStripeCustomerMetadataForMarket - Virtual Monroe Farmers Market (64) - No Stripe Customer linked to Dutch Hill Preserves,co (468).

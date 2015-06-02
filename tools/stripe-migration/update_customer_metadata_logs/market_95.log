@@ -1,0 +1,12 @@
+[2015-06-02 11:20:35 -0400] - UpdateStripeCustomerMetadataForMarket - Farmer's Direct Food Hub (95) - ====================================================================================================
+[2015-06-02 11:20:35 -0400] - UpdateStripeCustomerMetadataForMarket - Farmer's Direct Food Hub (95) -  Farmer's Direct Food Hub (95)
+[2015-06-02 11:20:35 -0400] - UpdateStripeCustomerMetadataForMarket - Farmer's Direct Food Hub (95) -  Updating stripe customer metadata for Market and all Organizations.
+[2015-06-02 11:20:35 -0400] - UpdateStripeCustomerMetadataForMarket - Farmer's Direct Food Hub (95) - 
+[2015-06-02 11:20:35 -0400] - UpdateStripeCustomerMetadataForMarket - Farmer's Direct Food Hub (95) -  Rails.env: production
+[2015-06-02 11:20:35 -0400] - UpdateStripeCustomerMetadataForMarket - Farmer's Direct Food Hub (95) -  Stripe key: pk_live_j85VTsrz51POrss3ni460qaf
+[2015-06-02 11:20:35 -0400] - UpdateStripeCustomerMetadataForMarket - Farmer's Direct Food Hub (95) - ====================================================================================================
+[2015-06-02 11:20:36 -0400] - UpdateStripeCustomerMetadataForMarket - Farmer's Direct Food Hub (95) - Updating Market's Stripe Customer with {:description=>"Farmer's Direct Food Hub", :metadata=>{"lo.entity_id"=>95, "lo.entity_type"=>"market"}}
+[2015-06-02 11:20:37 -0400] - UpdateStripeCustomerMetadataForMarket - Farmer's Direct Food Hub (95) - Updating Organization Casitas Valley Piggery (3774)'s Stripe Customer cus_6ETuG05RappLwH with {:description=>"Casitas Valley Piggery", :metadata=>{"lo.entity_id"=>3774, "lo.entity_type"=>"organization"}}
+[2015-06-02 11:20:38 -0400] - UpdateStripeCustomerMetadataForMarket - Farmer's Direct Food Hub (95) - Updating Organization Casitas Valley Creamery (3773)'s Stripe Customer cus_6ETptdjBeI21iL with {:description=>"Casitas Valley Creamery", :metadata=>{"lo.entity_id"=>3773, "lo.entity_type"=>"organization"}}
+[2015-06-02 11:20:39 -0400] - UpdateStripeCustomerMetadataForMarket - Farmer's Direct Food Hub (95) - Updating Organization Casitas Valley Microgreens (3772)'s Stripe Customer cus_6ETg5BEc0lBRBT with {:description=>"Casitas Valley Microgreens", :metadata=>{"lo.entity_id"=>3772, "lo.entity_type"=>"organization"}}
+[2015-06-02 11:20:40 -0400] - UpdateStripeCustomerMetadataForMarket - Farmer's Direct Food Hub (95) - Updating Organization Casitas Valley Farm (3771)'s Stripe Customer cus_6ETSttjwuu2NyL with {:description=>"Casitas Valley Farm", :metadata=>{"lo.entity_id"=>3771, "lo.entity_type"=>"organization"}}

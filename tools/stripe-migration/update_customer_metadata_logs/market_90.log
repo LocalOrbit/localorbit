@@ -1,0 +1,12 @@
+[2015-06-02 11:18:52 -0400] - UpdateStripeCustomerMetadataForMarket - Holoholo Food Hub (90) - ====================================================================================================
+[2015-06-02 11:18:52 -0400] - UpdateStripeCustomerMetadataForMarket - Holoholo Food Hub (90) -  Holoholo Food Hub (90)
+[2015-06-02 11:18:52 -0400] - UpdateStripeCustomerMetadataForMarket - Holoholo Food Hub (90) -  Updating stripe customer metadata for Market and all Organizations.
+[2015-06-02 11:18:52 -0400] - UpdateStripeCustomerMetadataForMarket - Holoholo Food Hub (90) - 
+[2015-06-02 11:18:52 -0400] - UpdateStripeCustomerMetadataForMarket - Holoholo Food Hub (90) -  Rails.env: production
+[2015-06-02 11:18:52 -0400] - UpdateStripeCustomerMetadataForMarket - Holoholo Food Hub (90) -  Stripe key: pk_live_j85VTsrz51POrss3ni460qaf
+[2015-06-02 11:18:52 -0400] - UpdateStripeCustomerMetadataForMarket - Holoholo Food Hub (90) - ====================================================================================================
+[2015-06-02 11:18:53 -0400] - UpdateStripeCustomerMetadataForMarket - Holoholo Food Hub (90) - Updating Market's Stripe Customer with {:description=>"Holoholo Food Hub", :metadata=>{"lo.entity_id"=>90, "lo.entity_type"=>"market"}}
+[2015-06-02 11:18:54 -0400] - UpdateStripeCustomerMetadataForMarket - Holoholo Food Hub (90) - Updating Organization Counter Culture Food + Ferments (3941)'s Stripe Customer cus_6J3r712fBnxiLQ with {:description=>"Counter Culture Food + Ferments", :metadata=>{"lo.entity_id"=>3941, "lo.entity_type"=>"organization"}}
+[2015-06-02 11:18:55 -0400] - UpdateStripeCustomerMetadataForMarket - Holoholo Food Hub (90) - Updating Organization Holoholo Farm (3526)'s Stripe Customer cus_65GFhNLg5jmT5S with {:description=>"Holoholo Farm", :metadata=>{"lo.entity_id"=>3526, "lo.entity_type"=>"organization"}}
+[2015-06-02 11:18:56 -0400] - UpdateStripeCustomerMetadataForMarket - Holoholo Food Hub (90) - Updating Organization Nozawa Farm (3525)'s Stripe Customer cus_65GM0e07ndoF67 with {:description=>"Nozawa Farm", :metadata=>{"lo.entity_id"=>3525, "lo.entity_type"=>"organization"}}
+[2015-06-02 11:18:57 -0400] - UpdateStripeCustomerMetadataForMarket - Holoholo Food Hub (90) - Updating Organization Twin Bridge Farm (3524)'s Stripe Customer cus_65GMrl7OTWosyk with {:description=>"Twin Bridge Farm", :metadata=>{"lo.entity_id"=>3524, "lo.entity_type"=>"organization"}}
