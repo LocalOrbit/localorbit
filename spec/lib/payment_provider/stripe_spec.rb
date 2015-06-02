@@ -119,6 +119,7 @@ describe PaymentProvider::Stripe do
       expect(charge.source.id).to eq credit_card.stripe_id
       expect(charge.customer).to eq buyer_organization.stripe_customer_id
       expect(charge.destination).to eq mini_market.stripe_account_id
+      expect(charge.description).to eq "Charge for #{order.order_number}"
       expect(charge.application_fee).to be
 
       # Examine the app fee:
