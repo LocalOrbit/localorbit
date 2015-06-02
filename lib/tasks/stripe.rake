@@ -85,7 +85,7 @@ namespace :stripe do
       puts command
       exec(env, command)
     end
-
+    
     desc "Update stripe*_ids across all markets"
     task :update_stripe_ids_on_all_markets do
       market_ids = [4, 92, 13, 83, 61, 82, 21, 36, 11, 20, 84, 17, 48, 85, 30, 102, 8, 47, 40, 38, 103, 101, 80, 45, 41, 70, 86, 93, 104, 44, 67, 57, 58, 39, 59, 76, 2, 46, 60, 50, 7, 65, 32, 27, 62, 81, 15, 68, 88, 19, 54, 96, 43, 69, 64, 90, 18, 99, 12, 98, 71, 56, 94, 95, 100, 97, 63, 9, 87]
@@ -126,6 +126,23 @@ namespace :stripe do
       puts command
       exec(env, command)
     end
+
+    desc "Update customer metadata across all markets"
+    task :update_stripe_customer_metadata_for_all_markets do
+      market_ids = [4, 92, 13, 83, 61, 82, 21, 36, 11, 20, 84, 17, 48, 85, 30, 102, 8, 47, 40, 38, 103, 101, 80, 45, 41, 70, 86, 93, 104, 44, 67, 57, 58, 39, 59, 76, 2, 46, 60, 50, 7, 65, 32, 27, 62, 81, 15, 68, 88, 19, 54, 96, 43, 69, 64, 90, 18, 99, 12, 98, 71, 56, 94, 95, 100, 97, 63, 9, 87]
+      ENV['market'] = market_ids.map(&:to_s).join(",")
+      Rake::Task["stripe:migrate:update_stripe_customer_metadata_for_market"].invoke
+    end
+
+    desc "Update customer metadata for market"
+    task :update_stripe_customer_metadata_for_market do
+      env = { 'RAILS_ENV' => 'production' }
+      market_id = ENV['market_id'] || ENV['market'] || raise("Set market id, eg, market=18")
+      command = "ruby tools/stripe-migration/update_stripe_customer_metadata_for_market.rb #{market_id}"
+      puts command
+      exec(env, command)
+    end
+
   end
 end
 
