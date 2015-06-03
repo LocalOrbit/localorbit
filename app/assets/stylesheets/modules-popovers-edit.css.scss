@@ -159,6 +159,18 @@
       }
     }
   }
+  
+  
+  #terms-of-service {
+    top: 1em !important;
+    
+    .popup-footer {
+      .cancel {
+        padding: 8px 26px 20px;
+      }
+      .btn--action{font-size:14px;}
+    }
+  }
 }
 
 .popup-header {
@@ -269,7 +281,7 @@
   .overlay + .modal {
     left: 50%;
     @include box-sizing(border-box);
-    @include transform(translateX(-50%));
+//    @include transform(translateX(-50%));
   }
   .popup--edit {
     width: 90%;
@@ -295,6 +307,10 @@
   .modal--extended {
     width: 90%;
     left: 5%;
+    
+    .popup-body {
+      max-height: 300px;
+    }
   }
 }
 
