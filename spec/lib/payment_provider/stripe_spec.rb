@@ -119,6 +119,7 @@ describe PaymentProvider::Stripe do
       expect(charge.source.id).to eq credit_card.stripe_id
       expect(charge.customer).to eq buyer_organization.stripe_customer_id
       expect(charge.destination).to eq mini_market.stripe_account_id
+      expect(charge.description).to eq "Charge for #{order.order_number}"
       expect(charge.application_fee).to be
 
       # Examine the app fee:
@@ -155,6 +156,7 @@ describe PaymentProvider::Stripe do
               destination: mini_market.stripe_account_id,
               statement_descriptor: mini_market.on_statement_as,
               application_fee: 320, # mocked
+              description: "Charge for #{order.order_number}"
             },
             metadata: {
               market: mini_market.name,
@@ -196,6 +198,7 @@ describe PaymentProvider::Stripe do
               destination: mini_market.stripe_account_id,
               statement_descriptor: mini_market.on_statement_as,
               application_fee: 320, # mocked
+              description: "Charge for #{order.order_number}"
             },
             metadata: {
               market: mini_market.name,
