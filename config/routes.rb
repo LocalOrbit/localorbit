@@ -16,7 +16,6 @@ Rails.application.routes.draw do
   end
   resource :registration do
     get "terms-of-service" => "registrations#terms_of_service"
-    get "standards" => "registrations#standards"
   end
   get "zendesk/sso" => "zendesk_sso#show"
 
