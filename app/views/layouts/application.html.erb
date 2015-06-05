@@ -153,7 +153,7 @@
       <div class="l-constraint">
         <% if current_market.present? %>
           <div class="pull-right market-manager-contact">
-            <%= mail_to current_market.contact_email, current_market.contact_name, class: "email" %>, Market Manager<br>
+            <%= mail_to current_market.contact_email, current_market.contact_name, class: "email" %>, Manager<br>
             <% if current_market.contact_phone.present? %>
               Phone <%= number_to_phone current_market.contact_phone %>
             <% end %>

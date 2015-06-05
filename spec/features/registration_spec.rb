@@ -32,11 +32,10 @@ describe "Register" do
           expect(page).not_to have_content("Local Orbit User Agreement")
           check "registration_terms_of_service"
 
-          expect(page).to have_content("I have read the Terms of Service")
-          find("button.read-terms").trigger("click")
-
           click_button "Sign Up"
         end
+
+
 
         it "creates a new organization" do
           expect(page).to have_content("Registration: Step Two")
