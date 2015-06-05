@@ -68,7 +68,7 @@ class BankAccount < ActiveRecord::Base
   private
 
   def account_is_unique_to_bankable
-    accounts = bankable.bank_accounts.visible.where(account_type: account_type, last_four: last_four, bank_name: bank_name, name: name)
+    accounts = bankable.bank_accounts.visible.where(account_type: account_type, last_four: last_four, bank_name: bank_name, name: name, account_role: account_role)
     accounts = accounts.where.not(id: id) if persisted?
 
     errors.add(:bankable_id, "already exists for this #{bankable_type.downcase}.") if accounts.any?

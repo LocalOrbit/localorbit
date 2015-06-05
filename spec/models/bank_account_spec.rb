@@ -30,6 +30,26 @@ describe BankAccount do
       expect(subject).to be_valid
     end
 
+    it "considers account role when checking for duplicates" do
+      atts = {
+        account_type: "visa",
+        last_four: "1234",
+        bankable: organization,
+        bank_name: "House of Dollars",
+        account_role: nil
+      }
+      create(:bank_account, atts.dup)
+
+      subject = BankAccount.new(atts.dup)
+      expect(subject).to have(1).errors_on(:bankable_id)
+      field,msg = subject.errors.first
+      expect(field).to eq(:bankable_id)
+      expect(msg).to match(/already exists/)
+
+      subject = BankAccount.new(atts.dup.merge(account_role: "deposit"))
+      expect(subject).to be_valid
+    end
+
     it "calling valid? does not return a false negative" do
       subject = create(:bank_account, account_type: "visa", last_four: "1234", bankable: organization, deleted_at: Time.current)
       expect(subject.valid?).to eql(true)
