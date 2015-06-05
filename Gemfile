@@ -119,6 +119,5 @@ group :production, :staging do
   gem "rack-cache", require: "rack/cache"
   gem "rails_12factor"
   gem "pgbackups-archive"
-  gem "heroku", github: "heroku/heroku" # remove this line once 3.10.6 is released. See: https://github.com/heroku/heroku/issues/1201
   gem "heroku-api"
 end
