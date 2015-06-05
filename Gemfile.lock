@@ -5,18 +5,6 @@ GIT
     tabulator (1.0.0)
 
 GIT
-  remote: git://github.com/heroku/heroku.git
-  revision: 1df2bb0828534c5225a6771fa65bd8998acb1ecf
-  specs:
-    heroku (3.37.5)
-      heroku-api (>= 0.3.19)
-      launchy (>= 0.3.2)
-      multi_json (>= 1.10)
-      netrc (>= 0.10.0)
-      rest-client (>= 1.6.0)
-      rubyzip (>= 0.9.9)
-
-GIT
   remote: git://github.com/tomdalling/rschema.git
   revision: 867ff1524a0791aaee6a0225d3e17b39cd7092ee
   specs:
@@ -322,6 +310,13 @@ GEM
     guard-rspec (4.3.1)
       guard (~> 2.1)
       rspec (>= 2.14, < 4.0)
+    heroku (3.37.6)
+      heroku-api (>= 0.3.19)
+      launchy (>= 0.3.2)
+      multi_json (>= 1.10)
+      netrc (>= 0.10.0)
+      rest-client (>= 1.6.0)
+      rubyzip (>= 0.9.9)
     heroku-api (0.3.23)
       excon (~> 0.44)
       multi_json (~> 1.8)
@@ -622,7 +617,6 @@ DEPENDENCIES
   groupdate!
   guard-konacha-rails
   guard-rspec
-  heroku!
   heroku-api
   honeybadger
   interactor (< 3.0)
