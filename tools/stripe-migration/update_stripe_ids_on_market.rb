@@ -158,7 +158,7 @@ class UpdateStripeIdsOnMarket
   end
 
   def get_market_organizations
-    orgs_with_bcu = @market.organizations.visible.where('balanced_customer_uri IS NOT NULL')
+    orgs_with_bcu = @market.organizations.where('balanced_customer_uri IS NOT NULL')
     orgs_with_bcu
   end
 
