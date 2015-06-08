@@ -1,35 +1,37 @@
-[2015-06-01 14:23:26 -0400] - UpdateStripeIdsOnMarket - Squash Blossom WHOLESALE (76) - ====================================================================================================
-[2015-06-01 14:23:26 -0400] - UpdateStripeIdsOnMarket - Squash Blossom WHOLESALE (76) -  Squash Blossom WHOLESALE (76)
-[2015-06-01 14:23:26 -0400] - UpdateStripeIdsOnMarket - Squash Blossom WHOLESALE (76) -  Updating stripe IDs for market, orgs and bank accounts.
-[2015-06-01 14:23:26 -0400] - UpdateStripeIdsOnMarket - Squash Blossom WHOLESALE (76) - 
-[2015-06-01 14:23:26 -0400] - UpdateStripeIdsOnMarket - Squash Blossom WHOLESALE (76) -  Balanced export file: /home/vagrant/git/localorbit/tools/stripe-migration/from_balanced/2015-06-01-1433181180-MP2eXZmrOPof80u3Irf94Wre.csv
-[2015-06-01 14:23:26 -0400] - UpdateStripeIdsOnMarket - Squash Blossom WHOLESALE (76) - 
-[2015-06-01 14:23:26 -0400] - UpdateStripeIdsOnMarket - Squash Blossom WHOLESALE (76) -  Rails.env: production
-[2015-06-01 14:23:26 -0400] - UpdateStripeIdsOnMarket - Squash Blossom WHOLESALE (76) -  Stripe keys:
-[2015-06-01 14:23:26 -0400] - UpdateStripeIdsOnMarket - Squash Blossom WHOLESALE (76) -   --> STRIPE_PUBLISHABLE_KEY: pk_live_j85VTsrz51POrss3ni460qaf (pk_live_j85VTsrz51POrss3ni460qaf)
-[2015-06-01 14:23:26 -0400] - UpdateStripeIdsOnMarket - Squash Blossom WHOLESALE (76) - ====================================================================================================
-[2015-06-01 14:23:26 -0400] - UpdateStripeIdsOnMarket - Squash Blossom WHOLESALE (76) - Connecting market customer - Updated Market stripe_customer_id: cus_5uQ50xPQ2Wo4Hn
-[2015-06-01 14:23:26 -0400] - UpdateStripeIdsOnMarket - Squash Blossom WHOLESALE (76) - Connecting market account - MISS - No stripe_account_id found for market balanced_customer_uri /v1/customers/CUGkT08fAyBoyYPS6BvfxW2
-[2015-06-01 14:23:26 -0400] - UpdateStripeIdsOnMarket - Squash Blossom WHOLESALE (76) - Connecting org customers - Updated Organization Crumpackers (3943) stripe_customer_id: cus_6JllZsaZ5KwTN1
-[2015-06-01 14:23:26 -0400] - UpdateStripeIdsOnMarket - Squash Blossom WHOLESALE (76) - Connecting org customers - Organization already has stripe_customer_id: cus_5y0Zg4ikn1sedF
-[2015-06-01 14:23:26 -0400] - UpdateStripeIdsOnMarket - Squash Blossom WHOLESALE (76) - Connecting org customers - Organization already has stripe_customer_id: cus_5y0Ya3DcaZSN1M
-[2015-06-01 14:23:26 -0400] - UpdateStripeIdsOnMarket - Squash Blossom WHOLESALE (76) - Connecting org customers - Organization already has stripe_customer_id: cus_5y0YUE9WnDS49L
-[2015-06-01 14:23:26 -0400] - UpdateStripeIdsOnMarket - Squash Blossom WHOLESALE (76) - Connecting org customers - Organization already has stripe_customer_id: cus_5y0X4YlNR2CI2Q
-[2015-06-01 14:23:26 -0400] - UpdateStripeIdsOnMarket - Squash Blossom WHOLESALE (76) - Connecting org customers - Organization already has stripe_customer_id: cus_5y0WlqyWthvkEq
-[2015-06-01 14:23:26 -0400] - UpdateStripeIdsOnMarket - Squash Blossom WHOLESALE (76) - Connecting org customers - Organization already has stripe_customer_id: cus_5y0W5Xsgk8SX2r
-[2015-06-01 14:23:26 -0400] - UpdateStripeIdsOnMarket - Squash Blossom WHOLESALE (76) - Connecting org customers - Organization already has stripe_customer_id: cus_5y0UlVUMWhJc2Y
-[2015-06-01 14:23:26 -0400] - UpdateStripeIdsOnMarket - Squash Blossom WHOLESALE (76) - Connecting org customers - Organization already has stripe_customer_id: cus_5y0Tc4VlpYng0y
-[2015-06-01 14:23:26 -0400] - UpdateStripeIdsOnMarket - Squash Blossom WHOLESALE (76) - Connecting org customers - Organization already has stripe_customer_id: cus_5y0TYebNOdgiDf
-[2015-06-01 14:23:26 -0400] - UpdateStripeIdsOnMarket - Squash Blossom WHOLESALE (76) - Connecting org customers - Organization already has stripe_customer_id: cus_5y0SVQWlAb61v5
-[2015-06-01 14:23:26 -0400] - UpdateStripeIdsOnMarket - Squash Blossom WHOLESALE (76) - Connecting org customers - Organization already has stripe_customer_id: cus_5y0SWwrRkDkfMP
-[2015-06-01 14:23:26 -0400] - UpdateStripeIdsOnMarket - Squash Blossom WHOLESALE (76) - Connecting org customers - Organization already has stripe_customer_id: cus_5y0QdvNVCULfQf
-[2015-06-01 14:23:26 -0400] - UpdateStripeIdsOnMarket - Squash Blossom WHOLESALE (76) - Connecting org customers - Organization already has stripe_customer_id: cus_5y0LNW9VfwzqvU
-[2015-06-01 14:23:26 -0400] - UpdateStripeIdsOnMarket - Squash Blossom WHOLESALE (76) - Connecting org customers - Organization already has stripe_customer_id: cus_5y0KDrrYYyb4R9
-[2015-06-01 14:23:26 -0400] - UpdateStripeIdsOnMarket - Squash Blossom WHOLESALE (76) - Connecting org customers - Organization already has stripe_customer_id: cus_5y0I49QgZu2uO6
-[2015-06-01 14:23:26 -0400] - UpdateStripeIdsOnMarket - Squash Blossom WHOLESALE (76) - Connecting org customers - Organization already has stripe_customer_id: cus_5y0FQCHKafxnGq
-[2015-06-01 14:23:26 -0400] - UpdateStripeIdsOnMarket - Squash Blossom WHOLESALE (76) - Connecting org customers - Organization already has stripe_customer_id: cus_5y0D0NrnAH5Gb1
-[2015-06-01 14:23:26 -0400] - UpdateStripeIdsOnMarket - Squash Blossom WHOLESALE (76) - Connecting org customers - Organization already has stripe_customer_id: cus_5y08HNC3hiffR7
-[2015-06-01 14:23:26 -0400] - UpdateStripeIdsOnMarket - Squash Blossom WHOLESALE (76) - Connecting org customers - Organization already has stripe_customer_id: cus_5y06qfvHCDxBKe
-[2015-06-01 14:23:27 -0400] - UpdateStripeIdsOnMarket - Squash Blossom WHOLESALE (76) - Connecting market BankAccounts - Updated LOS ALAMOS NATL BANK 7701 (552) stripe_id: ba_163tGJ2VpjOYk6TmkxL2q0uA
-[2015-06-01 14:23:27 -0400] - UpdateStripeIdsOnMarket - Squash Blossom WHOLESALE (76) - Connecting market BankAccounts - Updated Visa 8220 (474) stripe_id: tok_15kH2K2VpjOYk6Tm20HIAsCB
-[2015-06-01 14:23:27 -0400] - UpdateStripeIdsOnMarket - Squash Blossom WHOLESALE (76) - Connecting org BankAccounts - Organization Crumpackers (3943) - Updated Visa 8568 (572) stripe_id: card_1678E52VpjOYk6TmqYjkgLZJ
+[2015-06-08 12:26:07 -0400] - UpdateStripeIdsOnMarket - Squash Blossom WHOLESALE (76) - ====================================================================================================
+[2015-06-08 12:26:07 -0400] - UpdateStripeIdsOnMarket - Squash Blossom WHOLESALE (76) -  Squash Blossom WHOLESALE (76)
+[2015-06-08 12:26:07 -0400] - UpdateStripeIdsOnMarket - Squash Blossom WHOLESALE (76) -  Updating stripe IDs for market, orgs and bank accounts.
+[2015-06-08 12:26:07 -0400] - UpdateStripeIdsOnMarket - Squash Blossom WHOLESALE (76) - 
+[2015-06-08 12:26:07 -0400] - UpdateStripeIdsOnMarket - Squash Blossom WHOLESALE (76) -  Balanced export file: /home/vagrant/git/localorbit/tools/stripe-migration/from_balanced/2015-06-08-1433769720-MP2eXZmrOPof80u3Irf94Wre.csv
+[2015-06-08 12:26:07 -0400] - UpdateStripeIdsOnMarket - Squash Blossom WHOLESALE (76) - 
+[2015-06-08 12:26:07 -0400] - UpdateStripeIdsOnMarket - Squash Blossom WHOLESALE (76) -  Rails.env: production
+[2015-06-08 12:26:07 -0400] - UpdateStripeIdsOnMarket - Squash Blossom WHOLESALE (76) -  Stripe keys:
+[2015-06-08 12:26:07 -0400] - UpdateStripeIdsOnMarket - Squash Blossom WHOLESALE (76) -   --> STRIPE_PUBLISHABLE_KEY: pk_live_j85VTsrz51POrss3ni460qaf (pk_live_j85VTsrz51POrss3ni460qaf)
+[2015-06-08 12:26:07 -0400] - UpdateStripeIdsOnMarket - Squash Blossom WHOLESALE (76) - ====================================================================================================
+[2015-06-08 12:26:07 -0400] - UpdateStripeIdsOnMarket - Squash Blossom WHOLESALE (76) - Connecting market customer - Market already has stripe_customer_id: cus_5uQ50xPQ2Wo4Hn
+[2015-06-08 12:26:07 -0400] - UpdateStripeIdsOnMarket - Squash Blossom WHOLESALE (76) - Connecting market account - INTERESTING - Market stripe_account_id is acct_169PYICfLoBQYOE1, but export data doesn't have Stripe Account id for this market.
+[2015-06-08 12:26:07 -0400] - UpdateStripeIdsOnMarket - Squash Blossom WHOLESALE (76) - Connecting org customers - CONFLICT - Organization stripe_customer_id is ALREADY cus_6LiCFy9S8nokK0, but export data says it should be cus_6LiA0PhMK2z4Ca
+[2015-06-08 12:26:07 -0400] - UpdateStripeIdsOnMarket - Squash Blossom WHOLESALE (76) - Connecting org customers - Organization already has stripe_customer_id: cus_6JllZsaZ5KwTN1
+[2015-06-08 12:26:07 -0400] - UpdateStripeIdsOnMarket - Squash Blossom WHOLESALE (76) - Connecting org customers - Organization already has stripe_customer_id: cus_5y0Zg4ikn1sedF
+[2015-06-08 12:26:07 -0400] - UpdateStripeIdsOnMarket - Squash Blossom WHOLESALE (76) - Connecting org customers - Organization already has stripe_customer_id: cus_5y0Ya3DcaZSN1M
+[2015-06-08 12:26:07 -0400] - UpdateStripeIdsOnMarket - Squash Blossom WHOLESALE (76) - Connecting org customers - Organization already has stripe_customer_id: cus_5y0YUE9WnDS49L
+[2015-06-08 12:26:07 -0400] - UpdateStripeIdsOnMarket - Squash Blossom WHOLESALE (76) - Connecting org customers - Organization already has stripe_customer_id: cus_5y0X4YlNR2CI2Q
+[2015-06-08 12:26:07 -0400] - UpdateStripeIdsOnMarket - Squash Blossom WHOLESALE (76) - Connecting org customers - Organization already has stripe_customer_id: cus_5y0WlqyWthvkEq
+[2015-06-08 12:26:07 -0400] - UpdateStripeIdsOnMarket - Squash Blossom WHOLESALE (76) - Connecting org customers - Organization already has stripe_customer_id: cus_5y0W5Xsgk8SX2r
+[2015-06-08 12:26:07 -0400] - UpdateStripeIdsOnMarket - Squash Blossom WHOLESALE (76) - Connecting org customers - Organization already has stripe_customer_id: cus_5y0UlVUMWhJc2Y
+[2015-06-08 12:26:07 -0400] - UpdateStripeIdsOnMarket - Squash Blossom WHOLESALE (76) - Connecting org customers - Organization already has stripe_customer_id: cus_5y0Tc4VlpYng0y
+[2015-06-08 12:26:07 -0400] - UpdateStripeIdsOnMarket - Squash Blossom WHOLESALE (76) - Connecting org customers - Organization already has stripe_customer_id: cus_5y0TYebNOdgiDf
+[2015-06-08 12:26:07 -0400] - UpdateStripeIdsOnMarket - Squash Blossom WHOLESALE (76) - Connecting org customers - Organization already has stripe_customer_id: cus_5y0SVQWlAb61v5
+[2015-06-08 12:26:07 -0400] - UpdateStripeIdsOnMarket - Squash Blossom WHOLESALE (76) - Connecting org customers - Organization already has stripe_customer_id: cus_5y0SWwrRkDkfMP
+[2015-06-08 12:26:07 -0400] - UpdateStripeIdsOnMarket - Squash Blossom WHOLESALE (76) - Connecting org customers - Organization already has stripe_customer_id: cus_5y0QdvNVCULfQf
+[2015-06-08 12:26:07 -0400] - UpdateStripeIdsOnMarket - Squash Blossom WHOLESALE (76) - Connecting org customers - Organization already has stripe_customer_id: cus_5y0LNW9VfwzqvU
+[2015-06-08 12:26:07 -0400] - UpdateStripeIdsOnMarket - Squash Blossom WHOLESALE (76) - Connecting org customers - Organization already has stripe_customer_id: cus_5y0KDrrYYyb4R9
+[2015-06-08 12:26:07 -0400] - UpdateStripeIdsOnMarket - Squash Blossom WHOLESALE (76) - Connecting org customers - Organization already has stripe_customer_id: cus_5y0I49QgZu2uO6
+[2015-06-08 12:26:07 -0400] - UpdateStripeIdsOnMarket - Squash Blossom WHOLESALE (76) - Connecting org customers - Organization already has stripe_customer_id: cus_5y0FQCHKafxnGq
+[2015-06-08 12:26:07 -0400] - UpdateStripeIdsOnMarket - Squash Blossom WHOLESALE (76) - Connecting org customers - Organization already has stripe_customer_id: cus_5y0D0NrnAH5Gb1
+[2015-06-08 12:26:07 -0400] - UpdateStripeIdsOnMarket - Squash Blossom WHOLESALE (76) - Connecting org customers - Organization already has stripe_customer_id: cus_5y08HNC3hiffR7
+[2015-06-08 12:26:07 -0400] - UpdateStripeIdsOnMarket - Squash Blossom WHOLESALE (76) - Connecting org customers - Organization already has stripe_customer_id: cus_5y06qfvHCDxBKe
+[2015-06-08 12:26:07 -0400] - UpdateStripeIdsOnMarket - Squash Blossom WHOLESALE (76) - Connecting org customers - Organization already has stripe_customer_id: cus_5vsAqcjwhsY5kl
+[2015-06-08 12:26:07 -0400] - UpdateStripeIdsOnMarket - Squash Blossom WHOLESALE (76) - Connecting market BankAccounts - LOS ALAMOS NATL BANK 7701 (552) already has stripe_id: ba_163tGJ2VpjOYk6TmkxL2q0uA
+[2015-06-08 12:26:07 -0400] - UpdateStripeIdsOnMarket - Squash Blossom WHOLESALE (76) - Connecting market BankAccounts - Visa 8220 (474) already has stripe_id: tok_15kH2K2VpjOYk6Tm20HIAsCB
+[2015-06-08 12:26:07 -0400] - UpdateStripeIdsOnMarket - Squash Blossom WHOLESALE (76) - Connecting org BankAccounts - Organization Crumpackers (3943) - Visa 8568 (572) already has stripe_id: card_1678E52VpjOYk6TmqYjkgLZJ

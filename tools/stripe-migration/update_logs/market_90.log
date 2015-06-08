@@ -1,17 +1,17 @@
-[2015-06-01 14:23:48 -0400] - UpdateStripeIdsOnMarket - Holoholo Food Hub (90) - ====================================================================================================
-[2015-06-01 14:23:48 -0400] - UpdateStripeIdsOnMarket - Holoholo Food Hub (90) -  Holoholo Food Hub (90)
-[2015-06-01 14:23:48 -0400] - UpdateStripeIdsOnMarket - Holoholo Food Hub (90) -  Updating stripe IDs for market, orgs and bank accounts.
-[2015-06-01 14:23:48 -0400] - UpdateStripeIdsOnMarket - Holoholo Food Hub (90) - 
-[2015-06-01 14:23:48 -0400] - UpdateStripeIdsOnMarket - Holoholo Food Hub (90) -  Balanced export file: /home/vagrant/git/localorbit/tools/stripe-migration/from_balanced/2015-06-01-1433181180-MP2eXZmrOPof80u3Irf94Wre.csv
-[2015-06-01 14:23:48 -0400] - UpdateStripeIdsOnMarket - Holoholo Food Hub (90) - 
-[2015-06-01 14:23:48 -0400] - UpdateStripeIdsOnMarket - Holoholo Food Hub (90) -  Rails.env: production
-[2015-06-01 14:23:48 -0400] - UpdateStripeIdsOnMarket - Holoholo Food Hub (90) -  Stripe keys:
-[2015-06-01 14:23:48 -0400] - UpdateStripeIdsOnMarket - Holoholo Food Hub (90) -   --> STRIPE_PUBLISHABLE_KEY: pk_live_j85VTsrz51POrss3ni460qaf (pk_live_j85VTsrz51POrss3ni460qaf)
-[2015-06-01 14:23:48 -0400] - UpdateStripeIdsOnMarket - Holoholo Food Hub (90) - ====================================================================================================
-[2015-06-01 14:23:48 -0400] - UpdateStripeIdsOnMarket - Holoholo Food Hub (90) - Connecting market customer - Updated Market stripe_customer_id: cus_64U3TIutkg8nZ7
-[2015-06-01 14:23:48 -0400] - UpdateStripeIdsOnMarket - Holoholo Food Hub (90) - Connecting market account - MISS - No stripe_account_id found for market balanced_customer_uri /v1/customers/CU3cZQQZ0aJKLArQF37Y1BSG
-[2015-06-01 14:23:48 -0400] - UpdateStripeIdsOnMarket - Holoholo Food Hub (90) - Connecting org customers - Updated Organization Counter Culture Food + Ferments (3941) stripe_customer_id: cus_6J3r712fBnxiLQ
-[2015-06-01 14:23:48 -0400] - UpdateStripeIdsOnMarket - Holoholo Food Hub (90) - Connecting org customers - Updated Organization Holoholo Farm (3526) stripe_customer_id: cus_65GFhNLg5jmT5S
-[2015-06-01 14:23:49 -0400] - UpdateStripeIdsOnMarket - Holoholo Food Hub (90) - Connecting org customers - Updated Organization Nozawa Farm (3525) stripe_customer_id: cus_65GM0e07ndoF67
-[2015-06-01 14:23:49 -0400] - UpdateStripeIdsOnMarket - Holoholo Food Hub (90) - Connecting org customers - Updated Organization Twin Bridge Farm (3524) stripe_customer_id: cus_65GMrl7OTWosyk
-[2015-06-01 14:23:49 -0400] - UpdateStripeIdsOnMarket - Holoholo Food Hub (90) - Connecting market BankAccounts - MISS - No stripe_id found for ALOHA PACIFIC FEDERAL CREDIT UNION 0017 (511) balanced_customer_uri /v1/marketplaces/MP2eXZmrOPof80u3Irf94Wre/bank_accounts/BA3Tpe42ROwVu4GPm7GMsGvw
+[2015-06-08 12:26:26 -0400] - UpdateStripeIdsOnMarket - Holoholo Food Hub (90) - ====================================================================================================
+[2015-06-08 12:26:26 -0400] - UpdateStripeIdsOnMarket - Holoholo Food Hub (90) -  Holoholo Food Hub (90)
+[2015-06-08 12:26:26 -0400] - UpdateStripeIdsOnMarket - Holoholo Food Hub (90) -  Updating stripe IDs for market, orgs and bank accounts.
+[2015-06-08 12:26:26 -0400] - UpdateStripeIdsOnMarket - Holoholo Food Hub (90) - 
+[2015-06-08 12:26:26 -0400] - UpdateStripeIdsOnMarket - Holoholo Food Hub (90) -  Balanced export file: /home/vagrant/git/localorbit/tools/stripe-migration/from_balanced/2015-06-08-1433769720-MP2eXZmrOPof80u3Irf94Wre.csv
+[2015-06-08 12:26:26 -0400] - UpdateStripeIdsOnMarket - Holoholo Food Hub (90) - 
+[2015-06-08 12:26:26 -0400] - UpdateStripeIdsOnMarket - Holoholo Food Hub (90) -  Rails.env: production
+[2015-06-08 12:26:26 -0400] - UpdateStripeIdsOnMarket - Holoholo Food Hub (90) -  Stripe keys:
+[2015-06-08 12:26:26 -0400] - UpdateStripeIdsOnMarket - Holoholo Food Hub (90) -   --> STRIPE_PUBLISHABLE_KEY: pk_live_j85VTsrz51POrss3ni460qaf (pk_live_j85VTsrz51POrss3ni460qaf)
+[2015-06-08 12:26:26 -0400] - UpdateStripeIdsOnMarket - Holoholo Food Hub (90) - ====================================================================================================
+[2015-06-08 12:26:26 -0400] - UpdateStripeIdsOnMarket - Holoholo Food Hub (90) - Connecting market customer - Market already has stripe_customer_id: cus_64U3TIutkg8nZ7
+[2015-06-08 12:26:26 -0400] - UpdateStripeIdsOnMarket - Holoholo Food Hub (90) - Connecting market account - MISS - No stripe_account_id found for market balanced_customer_uri /v1/customers/CU3cZQQZ0aJKLArQF37Y1BSG
+[2015-06-08 12:26:26 -0400] - UpdateStripeIdsOnMarket - Holoholo Food Hub (90) - Connecting org customers - Organization already has stripe_customer_id: cus_6J3r712fBnxiLQ
+[2015-06-08 12:26:26 -0400] - UpdateStripeIdsOnMarket - Holoholo Food Hub (90) - Connecting org customers - Organization already has stripe_customer_id: cus_65GFhNLg5jmT5S
+[2015-06-08 12:26:26 -0400] - UpdateStripeIdsOnMarket - Holoholo Food Hub (90) - Connecting org customers - Organization already has stripe_customer_id: cus_65GM0e07ndoF67
+[2015-06-08 12:26:26 -0400] - UpdateStripeIdsOnMarket - Holoholo Food Hub (90) - Connecting org customers - Organization already has stripe_customer_id: cus_65GMrl7OTWosyk
+[2015-06-08 12:26:26 -0400] - UpdateStripeIdsOnMarket - Holoholo Food Hub (90) - Connecting market BankAccounts - MISS - No stripe_id found for ALOHA PACIFIC FEDERAL CREDIT UNION 0017 (511) balanced_customer_uri /v1/marketplaces/MP2eXZmrOPof80u3Irf94Wre/bank_accounts/BA3Tpe42ROwVu4GPm7GMsGvw

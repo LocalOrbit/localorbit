@@ -1,22 +1,22 @@
-[2015-06-01 14:22:56 -0400] - UpdateStripeIdsOnMarket - Innovation Kitchens, LLC (85) - ====================================================================================================
-[2015-06-01 14:22:56 -0400] - UpdateStripeIdsOnMarket - Innovation Kitchens, LLC (85) -  Innovation Kitchens, LLC (85)
-[2015-06-01 14:22:56 -0400] - UpdateStripeIdsOnMarket - Innovation Kitchens, LLC (85) -  Updating stripe IDs for market, orgs and bank accounts.
-[2015-06-01 14:22:56 -0400] - UpdateStripeIdsOnMarket - Innovation Kitchens, LLC (85) - 
-[2015-06-01 14:22:56 -0400] - UpdateStripeIdsOnMarket - Innovation Kitchens, LLC (85) -  Balanced export file: /home/vagrant/git/localorbit/tools/stripe-migration/from_balanced/2015-06-01-1433181180-MP2eXZmrOPof80u3Irf94Wre.csv
-[2015-06-01 14:22:56 -0400] - UpdateStripeIdsOnMarket - Innovation Kitchens, LLC (85) - 
-[2015-06-01 14:22:56 -0400] - UpdateStripeIdsOnMarket - Innovation Kitchens, LLC (85) -  Rails.env: production
-[2015-06-01 14:22:56 -0400] - UpdateStripeIdsOnMarket - Innovation Kitchens, LLC (85) -  Stripe keys:
-[2015-06-01 14:22:56 -0400] - UpdateStripeIdsOnMarket - Innovation Kitchens, LLC (85) -   --> STRIPE_PUBLISHABLE_KEY: pk_live_j85VTsrz51POrss3ni460qaf (pk_live_j85VTsrz51POrss3ni460qaf)
-[2015-06-01 14:22:56 -0400] - UpdateStripeIdsOnMarket - Innovation Kitchens, LLC (85) - ====================================================================================================
-[2015-06-01 14:22:56 -0400] - UpdateStripeIdsOnMarket - Innovation Kitchens, LLC (85) - Connecting market customer - Updated Market stripe_customer_id: cus_5yNBl5qWQjkgYl
-[2015-06-01 14:22:56 -0400] - UpdateStripeIdsOnMarket - Innovation Kitchens, LLC (85) - Connecting market account - MISS - No stripe_account_id found for market balanced_customer_uri /v1/customers/CU46ngLcdbiDR508kC8iGR3c
-[2015-06-01 14:22:57 -0400] - UpdateStripeIdsOnMarket - Innovation Kitchens, LLC (85) - Connecting org customers - Updated Organization Wisconsin Innovation Kitchen (3915) stripe_customer_id: cus_6HrhEWojWw5fQg
-[2015-06-01 14:22:57 -0400] - UpdateStripeIdsOnMarket - Innovation Kitchens, LLC (85) - Connecting org customers - Updated Organization RE Golden Produce (3914) stripe_customer_id: cus_6HrEAH1pTomkAt
-[2015-06-01 14:22:57 -0400] - UpdateStripeIdsOnMarket - Innovation Kitchens, LLC (85) - Connecting org customers - Updated Organization Fifth Season Cooperative (3913) stripe_customer_id: cus_6Hr7hTZh1ye6yI
-[2015-06-01 14:22:57 -0400] - UpdateStripeIdsOnMarket - Innovation Kitchens, LLC (85) - Connecting org customers - Updated Organization Gourmet Gorilla (3912) stripe_customer_id: cus_6Hr3v1Zp2w5Gu2
-[2015-06-01 14:22:57 -0400] - UpdateStripeIdsOnMarket - Innovation Kitchens, LLC (85) - Connecting org customers - Updated Organization Growing Power (3908) stripe_customer_id: cus_6HgWEHdpSVJaqo
-[2015-06-01 14:22:58 -0400] - UpdateStripeIdsOnMarket - Innovation Kitchens, LLC (85) - Connecting org customers - Updated Organization Heartland Fruit & Produce (3907) stripe_customer_id: cus_6HgNaWwrrftTlz
-[2015-06-01 14:22:58 -0400] - UpdateStripeIdsOnMarket - Innovation Kitchens, LLC (85) - Connecting org customers - Updated Organization Mutch Better Foods, LLC (3906) stripe_customer_id: cus_6HgCxhU88XJ2BC
-[2015-06-01 14:22:58 -0400] - UpdateStripeIdsOnMarket - Innovation Kitchens, LLC (85) - Connecting org customers - Updated Organization Innovation Kitchens LLC (3898) stripe_customer_id: cus_6HY0oMWpmF4TYE
-[2015-06-01 14:22:58 -0400] - UpdateStripeIdsOnMarket - Innovation Kitchens, LLC (85) - Connecting org customers - Updated Organization Good Local Foods (3797) stripe_customer_id: cus_6F3vP3WdqAC6Er
-[2015-06-01 14:22:58 -0400] - UpdateStripeIdsOnMarket - Innovation Kitchens, LLC (85) - Connecting market BankAccounts - Updated Visa 1235 (562) stripe_id: card_164yLK2VpjOYk6TmGPIsPWJS
+[2015-06-08 12:25:49 -0400] - UpdateStripeIdsOnMarket - Innovation Kitchens, LLC (85) - ====================================================================================================
+[2015-06-08 12:25:49 -0400] - UpdateStripeIdsOnMarket - Innovation Kitchens, LLC (85) -  Innovation Kitchens, LLC (85)
+[2015-06-08 12:25:49 -0400] - UpdateStripeIdsOnMarket - Innovation Kitchens, LLC (85) -  Updating stripe IDs for market, orgs and bank accounts.
+[2015-06-08 12:25:49 -0400] - UpdateStripeIdsOnMarket - Innovation Kitchens, LLC (85) - 
+[2015-06-08 12:25:50 -0400] - UpdateStripeIdsOnMarket - Innovation Kitchens, LLC (85) -  Balanced export file: /home/vagrant/git/localorbit/tools/stripe-migration/from_balanced/2015-06-08-1433769720-MP2eXZmrOPof80u3Irf94Wre.csv
+[2015-06-08 12:25:50 -0400] - UpdateStripeIdsOnMarket - Innovation Kitchens, LLC (85) - 
+[2015-06-08 12:25:50 -0400] - UpdateStripeIdsOnMarket - Innovation Kitchens, LLC (85) -  Rails.env: production
+[2015-06-08 12:25:50 -0400] - UpdateStripeIdsOnMarket - Innovation Kitchens, LLC (85) -  Stripe keys:
+[2015-06-08 12:25:50 -0400] - UpdateStripeIdsOnMarket - Innovation Kitchens, LLC (85) -   --> STRIPE_PUBLISHABLE_KEY: pk_live_j85VTsrz51POrss3ni460qaf (pk_live_j85VTsrz51POrss3ni460qaf)
+[2015-06-08 12:25:50 -0400] - UpdateStripeIdsOnMarket - Innovation Kitchens, LLC (85) - ====================================================================================================
+[2015-06-08 12:25:50 -0400] - UpdateStripeIdsOnMarket - Innovation Kitchens, LLC (85) - Connecting market customer - Market already has stripe_customer_id: cus_5yNBl5qWQjkgYl
+[2015-06-08 12:25:50 -0400] - UpdateStripeIdsOnMarket - Innovation Kitchens, LLC (85) - Connecting market account - MISS - No stripe_account_id found for market balanced_customer_uri /v1/customers/CU46ngLcdbiDR508kC8iGR3c
+[2015-06-08 12:25:50 -0400] - UpdateStripeIdsOnMarket - Innovation Kitchens, LLC (85) - Connecting org customers - Organization already has stripe_customer_id: cus_6HrhEWojWw5fQg
+[2015-06-08 12:25:50 -0400] - UpdateStripeIdsOnMarket - Innovation Kitchens, LLC (85) - Connecting org customers - Organization already has stripe_customer_id: cus_6HrEAH1pTomkAt
+[2015-06-08 12:25:50 -0400] - UpdateStripeIdsOnMarket - Innovation Kitchens, LLC (85) - Connecting org customers - Organization already has stripe_customer_id: cus_6Hr7hTZh1ye6yI
+[2015-06-08 12:25:50 -0400] - UpdateStripeIdsOnMarket - Innovation Kitchens, LLC (85) - Connecting org customers - Organization already has stripe_customer_id: cus_6Hr3v1Zp2w5Gu2
+[2015-06-08 12:25:50 -0400] - UpdateStripeIdsOnMarket - Innovation Kitchens, LLC (85) - Connecting org customers - Organization already has stripe_customer_id: cus_6HgWEHdpSVJaqo
+[2015-06-08 12:25:50 -0400] - UpdateStripeIdsOnMarket - Innovation Kitchens, LLC (85) - Connecting org customers - Organization already has stripe_customer_id: cus_6HgNaWwrrftTlz
+[2015-06-08 12:25:50 -0400] - UpdateStripeIdsOnMarket - Innovation Kitchens, LLC (85) - Connecting org customers - Organization already has stripe_customer_id: cus_6HgCxhU88XJ2BC
+[2015-06-08 12:25:50 -0400] - UpdateStripeIdsOnMarket - Innovation Kitchens, LLC (85) - Connecting org customers - Organization already has stripe_customer_id: cus_6HY0oMWpmF4TYE
+[2015-06-08 12:25:50 -0400] - UpdateStripeIdsOnMarket - Innovation Kitchens, LLC (85) - Connecting org customers - Organization already has stripe_customer_id: cus_6F3vP3WdqAC6Er
+[2015-06-08 12:25:50 -0400] - UpdateStripeIdsOnMarket - Innovation Kitchens, LLC (85) - Connecting market BankAccounts - Visa 1235 (562) already has stripe_id: card_164yLK2VpjOYk6TmGPIsPWJS

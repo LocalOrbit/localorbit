@@ -1,30 +1,39 @@
-[2015-06-01 14:23:20 -0400] - UpdateStripeIdsOnMarket - Aglink Foodservice (70) - ====================================================================================================
-[2015-06-01 14:23:20 -0400] - UpdateStripeIdsOnMarket - Aglink Foodservice (70) -  Aglink Foodservice (70)
-[2015-06-01 14:23:20 -0400] - UpdateStripeIdsOnMarket - Aglink Foodservice (70) -  Updating stripe IDs for market, orgs and bank accounts.
-[2015-06-01 14:23:20 -0400] - UpdateStripeIdsOnMarket - Aglink Foodservice (70) - 
-[2015-06-01 14:23:20 -0400] - UpdateStripeIdsOnMarket - Aglink Foodservice (70) -  Balanced export file: /home/vagrant/git/localorbit/tools/stripe-migration/from_balanced/2015-06-01-1433181180-MP2eXZmrOPof80u3Irf94Wre.csv
-[2015-06-01 14:23:20 -0400] - UpdateStripeIdsOnMarket - Aglink Foodservice (70) - 
-[2015-06-01 14:23:20 -0400] - UpdateStripeIdsOnMarket - Aglink Foodservice (70) -  Rails.env: production
-[2015-06-01 14:23:20 -0400] - UpdateStripeIdsOnMarket - Aglink Foodservice (70) -  Stripe keys:
-[2015-06-01 14:23:20 -0400] - UpdateStripeIdsOnMarket - Aglink Foodservice (70) -   --> STRIPE_PUBLISHABLE_KEY: pk_live_j85VTsrz51POrss3ni460qaf (pk_live_j85VTsrz51POrss3ni460qaf)
-[2015-06-01 14:23:20 -0400] - UpdateStripeIdsOnMarket - Aglink Foodservice (70) - ====================================================================================================
-[2015-06-01 14:23:20 -0400] - UpdateStripeIdsOnMarket - Aglink Foodservice (70) - Connecting market customer - Market already has stripe_customer_id: cus_5uQ4apiz6U67W7
-[2015-06-01 14:23:20 -0400] - UpdateStripeIdsOnMarket - Aglink Foodservice (70) - Connecting market account - Market already has stripe_account_id: acct_15l1yTIacDq6O8zg
-[2015-06-01 14:23:20 -0400] - UpdateStripeIdsOnMarket - Aglink Foodservice (70) - Connecting org customers - Organization already has stripe_customer_id: cus_6Hb9xwePKliqzp
-[2015-06-01 14:23:20 -0400] - UpdateStripeIdsOnMarket - Aglink Foodservice (70) - Connecting org customers - Organization already has stripe_customer_id: cus_6HaruklrcfIT07
-[2015-06-01 14:23:20 -0400] - UpdateStripeIdsOnMarket - Aglink Foodservice (70) - Connecting org customers - Organization already has stripe_customer_id: cus_6HaLIJ7MmgcsLF
-[2015-06-01 14:23:20 -0400] - UpdateStripeIdsOnMarket - Aglink Foodservice (70) - Connecting org customers - Organization already has stripe_customer_id: cus_6HZMgiABro9j8a
-[2015-06-01 14:23:20 -0400] - UpdateStripeIdsOnMarket - Aglink Foodservice (70) - Connecting org customers - Organization already has stripe_customer_id: cus_6HXf64BGYWxzfs
-[2015-06-01 14:23:20 -0400] - UpdateStripeIdsOnMarket - Aglink Foodservice (70) - Connecting org customers - Organization already has stripe_customer_id: cus_6HVKxvESAApFBo
-[2015-06-01 14:23:20 -0400] - UpdateStripeIdsOnMarket - Aglink Foodservice (70) - Connecting org customers - Organization already has stripe_customer_id: cus_6FIfe82t7pdDRL
-[2015-06-01 14:23:20 -0400] - UpdateStripeIdsOnMarket - Aglink Foodservice (70) - Connecting org customers - Organization already has stripe_customer_id: cus_6FIdyLLsQfZEkx
-[2015-06-01 14:23:20 -0400] - UpdateStripeIdsOnMarket - Aglink Foodservice (70) - Connecting org customers - Organization already has stripe_customer_id: cus_6CIMEKNsdvrsmE
-[2015-06-01 14:23:20 -0400] - UpdateStripeIdsOnMarket - Aglink Foodservice (70) - Connecting org customers - Organization already has stripe_customer_id: cus_5ynr84sZg3wjXA
-[2015-06-01 14:23:20 -0400] - UpdateStripeIdsOnMarket - Aglink Foodservice (70) - Connecting org customers - Organization already has stripe_customer_id: cus_5wy6AifhPkNg15
-[2015-06-01 14:23:20 -0400] - UpdateStripeIdsOnMarket - Aglink Foodservice (70) - Connecting org customers - Organization already has stripe_customer_id: cus_5wxzXPU2ivvWZy
-[2015-06-01 14:23:20 -0400] - UpdateStripeIdsOnMarket - Aglink Foodservice (70) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ5cw6GFXlnmm
-[2015-06-01 14:23:20 -0400] - UpdateStripeIdsOnMarket - Aglink Foodservice (70) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ5eV6fImhBPD
-[2015-06-01 14:23:20 -0400] - UpdateStripeIdsOnMarket - Aglink Foodservice (70) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ6BSAg5qFNmt
-[2015-06-01 14:23:20 -0400] - UpdateStripeIdsOnMarket - Aglink Foodservice (70) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ59gXTtZiK1N
-[2015-06-01 14:23:20 -0400] - UpdateStripeIdsOnMarket - Aglink Foodservice (70) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4KeekjmGXK0
-[2015-06-01 14:23:20 -0400] - UpdateStripeIdsOnMarket - Aglink Foodservice (70) - Connecting market BankAccounts - MODESTO COMM BK-A DIV OF BK STOCKTON 3330 (413) already has stripe_id: ba_15ic902VpjOYk6TmmIRFf1uT
+[2015-06-08 12:25:55 -0400] - UpdateStripeIdsOnMarket - Ag Link Food Hub (70) - ====================================================================================================
+[2015-06-08 12:25:55 -0400] - UpdateStripeIdsOnMarket - Ag Link Food Hub (70) -  Ag Link Food Hub (70)
+[2015-06-08 12:25:55 -0400] - UpdateStripeIdsOnMarket - Ag Link Food Hub (70) -  Updating stripe IDs for market, orgs and bank accounts.
+[2015-06-08 12:25:55 -0400] - UpdateStripeIdsOnMarket - Ag Link Food Hub (70) - 
+[2015-06-08 12:25:55 -0400] - UpdateStripeIdsOnMarket - Ag Link Food Hub (70) -  Balanced export file: /home/vagrant/git/localorbit/tools/stripe-migration/from_balanced/2015-06-08-1433769720-MP2eXZmrOPof80u3Irf94Wre.csv
+[2015-06-08 12:25:55 -0400] - UpdateStripeIdsOnMarket - Ag Link Food Hub (70) - 
+[2015-06-08 12:25:55 -0400] - UpdateStripeIdsOnMarket - Ag Link Food Hub (70) -  Rails.env: production
+[2015-06-08 12:25:55 -0400] - UpdateStripeIdsOnMarket - Ag Link Food Hub (70) -  Stripe keys:
+[2015-06-08 12:25:55 -0400] - UpdateStripeIdsOnMarket - Ag Link Food Hub (70) -   --> STRIPE_PUBLISHABLE_KEY: pk_live_j85VTsrz51POrss3ni460qaf (pk_live_j85VTsrz51POrss3ni460qaf)
+[2015-06-08 12:25:55 -0400] - UpdateStripeIdsOnMarket - Ag Link Food Hub (70) - ====================================================================================================
+[2015-06-08 12:25:55 -0400] - UpdateStripeIdsOnMarket - Ag Link Food Hub (70) - Connecting market customer - Market already has stripe_customer_id: cus_5uQ4apiz6U67W7
+[2015-06-08 12:25:55 -0400] - UpdateStripeIdsOnMarket - Ag Link Food Hub (70) - Connecting market account - Market already has stripe_account_id: acct_15l1yTIacDq6O8zg
+[2015-06-08 12:25:56 -0400] - UpdateStripeIdsOnMarket - Ag Link Food Hub (70) - Connecting org customers - Updated Organization Woot Froot (4189) stripe_customer_id: cus_6MqGI5xafNV4pP
+[2015-06-08 12:25:56 -0400] - UpdateStripeIdsOnMarket - Ag Link Food Hub (70) - Connecting org customers - Updated Organization Wawona Packing Company  (4188) stripe_customer_id: cus_6Mpq5JC089hLPZ
+[2015-06-08 12:25:57 -0400] - UpdateStripeIdsOnMarket - Ag Link Food Hub (70) - Connecting org customers - Updated Organization Trinity Fruit Sales (4187) stripe_customer_id: cus_6Mp6PYd7vwRR0X
+[2015-06-08 12:25:57 -0400] - UpdateStripeIdsOnMarket - Ag Link Food Hub (70) - Connecting org customers - Updated Organization Taylor Farms (4186) stripe_customer_id: cus_6MocmckYQrJjy2
+[2015-06-08 12:25:57 -0400] - UpdateStripeIdsOnMarket - Ag Link Food Hub (70) - Connecting org customers - Updated Organization Rivermaid Trading Company (4173) stripe_customer_id: cus_6MW1pCLNKY2SyV
+[2015-06-08 12:25:57 -0400] - UpdateStripeIdsOnMarket - Ag Link Food Hub (70) - Connecting org customers - Updated Organization Kingsburg Orchards (4172) stripe_customer_id: cus_6MW0xc564ov65T
+[2015-06-08 12:25:58 -0400] - UpdateStripeIdsOnMarket - Ag Link Food Hub (70) - Connecting org customers - Updated Organization HMC Farms (4171) stripe_customer_id: cus_6MW0d9GCmQ1oYX
+[2015-06-08 12:25:59 -0400] - UpdateStripeIdsOnMarket - Ag Link Food Hub (70) - Connecting org customers - Updated Organization George Perry and Sons, Inc. (4170) stripe_customer_id: cus_6MVzQ71UTVOKpc
+[2015-06-08 12:25:59 -0400] - UpdateStripeIdsOnMarket - Ag Link Food Hub (70) - Connecting org customers - Updated Organization CAL Giant Berry Farms (4168) stripe_customer_id: cus_6MVzh2d7Tqz0Kf
+[2015-06-08 12:25:59 -0400] - UpdateStripeIdsOnMarket - Ag Link Food Hub (70) - Connecting org customers - Organization already has stripe_customer_id: cus_6Hb9xwePKliqzp
+[2015-06-08 12:25:59 -0400] - UpdateStripeIdsOnMarket - Ag Link Food Hub (70) - Connecting org customers - Organization already has stripe_customer_id: cus_6HaruklrcfIT07
+[2015-06-08 12:25:59 -0400] - UpdateStripeIdsOnMarket - Ag Link Food Hub (70) - Connecting org customers - Organization already has stripe_customer_id: cus_6HaLIJ7MmgcsLF
+[2015-06-08 12:25:59 -0400] - UpdateStripeIdsOnMarket - Ag Link Food Hub (70) - Connecting org customers - Organization already has stripe_customer_id: cus_6HZMgiABro9j8a
+[2015-06-08 12:25:59 -0400] - UpdateStripeIdsOnMarket - Ag Link Food Hub (70) - Connecting org customers - Organization already has stripe_customer_id: cus_6HXf64BGYWxzfs
+[2015-06-08 12:25:59 -0400] - UpdateStripeIdsOnMarket - Ag Link Food Hub (70) - Connecting org customers - Organization already has stripe_customer_id: cus_6HVKxvESAApFBo
+[2015-06-08 12:25:59 -0400] - UpdateStripeIdsOnMarket - Ag Link Food Hub (70) - Connecting org customers - Organization already has stripe_customer_id: cus_6FIfe82t7pdDRL
+[2015-06-08 12:25:59 -0400] - UpdateStripeIdsOnMarket - Ag Link Food Hub (70) - Connecting org customers - Organization already has stripe_customer_id: cus_6FIdyLLsQfZEkx
+[2015-06-08 12:25:59 -0400] - UpdateStripeIdsOnMarket - Ag Link Food Hub (70) - Connecting org customers - Organization already has stripe_customer_id: cus_6CIMEKNsdvrsmE
+[2015-06-08 12:25:59 -0400] - UpdateStripeIdsOnMarket - Ag Link Food Hub (70) - Connecting org customers - Organization already has stripe_customer_id: cus_5ynr84sZg3wjXA
+[2015-06-08 12:25:59 -0400] - UpdateStripeIdsOnMarket - Ag Link Food Hub (70) - Connecting org customers - Organization already has stripe_customer_id: cus_5wy6AifhPkNg15
+[2015-06-08 12:25:59 -0400] - UpdateStripeIdsOnMarket - Ag Link Food Hub (70) - Connecting org customers - Organization already has stripe_customer_id: cus_5wxzXPU2ivvWZy
+[2015-06-08 12:25:59 -0400] - UpdateStripeIdsOnMarket - Ag Link Food Hub (70) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ5cw6GFXlnmm
+[2015-06-08 12:25:59 -0400] - UpdateStripeIdsOnMarket - Ag Link Food Hub (70) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ5eV6fImhBPD
+[2015-06-08 12:25:59 -0400] - UpdateStripeIdsOnMarket - Ag Link Food Hub (70) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ6BSAg5qFNmt
+[2015-06-08 12:25:59 -0400] - UpdateStripeIdsOnMarket - Ag Link Food Hub (70) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ59gXTtZiK1N
+[2015-06-08 12:25:59 -0400] - UpdateStripeIdsOnMarket - Ag Link Food Hub (70) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4KeekjmGXK0
+[2015-06-08 12:25:59 -0400] - UpdateStripeIdsOnMarket - Ag Link Food Hub (70) - Connecting market BankAccounts - MODESTO COMM BK-A DIV OF BK STOCKTON 3330 (413) already has stripe_id: ba_15ic902VpjOYk6TmmIRFf1uT

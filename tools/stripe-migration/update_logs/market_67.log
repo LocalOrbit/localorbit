@@ -1,65 +1,67 @@
-[2015-06-01 14:23:22 -0400] - UpdateStripeIdsOnMarket - Tulsa Farmers' Market -Wholesale Division (67) - ====================================================================================================
-[2015-06-01 14:23:22 -0400] - UpdateStripeIdsOnMarket - Tulsa Farmers' Market -Wholesale Division (67) -  Tulsa Farmers' Market -Wholesale Division (67)
-[2015-06-01 14:23:22 -0400] - UpdateStripeIdsOnMarket - Tulsa Farmers' Market -Wholesale Division (67) -  Updating stripe IDs for market, orgs and bank accounts.
-[2015-06-01 14:23:22 -0400] - UpdateStripeIdsOnMarket - Tulsa Farmers' Market -Wholesale Division (67) - 
-[2015-06-01 14:23:22 -0400] - UpdateStripeIdsOnMarket - Tulsa Farmers' Market -Wholesale Division (67) -  Balanced export file: /home/vagrant/git/localorbit/tools/stripe-migration/from_balanced/2015-06-01-1433181180-MP2eXZmrOPof80u3Irf94Wre.csv
-[2015-06-01 14:23:22 -0400] - UpdateStripeIdsOnMarket - Tulsa Farmers' Market -Wholesale Division (67) - 
-[2015-06-01 14:23:22 -0400] - UpdateStripeIdsOnMarket - Tulsa Farmers' Market -Wholesale Division (67) -  Rails.env: production
-[2015-06-01 14:23:22 -0400] - UpdateStripeIdsOnMarket - Tulsa Farmers' Market -Wholesale Division (67) -  Stripe keys:
-[2015-06-01 14:23:22 -0400] - UpdateStripeIdsOnMarket - Tulsa Farmers' Market -Wholesale Division (67) -   --> STRIPE_PUBLISHABLE_KEY: pk_live_j85VTsrz51POrss3ni460qaf (pk_live_j85VTsrz51POrss3ni460qaf)
-[2015-06-01 14:23:22 -0400] - UpdateStripeIdsOnMarket - Tulsa Farmers' Market -Wholesale Division (67) - ====================================================================================================
-[2015-06-01 14:23:22 -0400] - UpdateStripeIdsOnMarket - Tulsa Farmers' Market -Wholesale Division (67) - Connecting market customer - Market already has stripe_customer_id: cus_5uQ4YmmxyQVBqI
-[2015-06-01 14:23:22 -0400] - UpdateStripeIdsOnMarket - Tulsa Farmers' Market -Wholesale Division (67) - Connecting market account - Market already has stripe_account_id: acct_15l1yULnlQGv511a
-[2015-06-01 14:23:22 -0400] - UpdateStripeIdsOnMarket - Tulsa Farmers' Market -Wholesale Division (67) - Connecting org customers - Updated Organization Cancer Treatment Center of America (4068) stripe_customer_id: cus_6LdNFvRcZNYKQ2
-[2015-06-01 14:23:22 -0400] - UpdateStripeIdsOnMarket - Tulsa Farmers' Market -Wholesale Division (67) - Connecting org customers - Organization already has stripe_customer_id: cus_6J0xjFKEyet1vW
-[2015-06-01 14:23:22 -0400] - UpdateStripeIdsOnMarket - Tulsa Farmers' Market -Wholesale Division (67) - Connecting org customers - Organization already has stripe_customer_id: cus_6GS5mQmeeOGa13
-[2015-06-01 14:23:22 -0400] - UpdateStripeIdsOnMarket - Tulsa Farmers' Market -Wholesale Division (67) - Connecting org customers - Organization already has stripe_customer_id: cus_6CGbG2HbrsBogm
-[2015-06-01 14:23:22 -0400] - UpdateStripeIdsOnMarket - Tulsa Farmers' Market -Wholesale Division (67) - Connecting org customers - Organization already has stripe_customer_id: cus_6BsAXEhUa2rs4F
-[2015-06-01 14:23:22 -0400] - UpdateStripeIdsOnMarket - Tulsa Farmers' Market -Wholesale Division (67) - Connecting org customers - Organization already has stripe_customer_id: cus_6BZd7EHHQABQwr
-[2015-06-01 14:23:22 -0400] - UpdateStripeIdsOnMarket - Tulsa Farmers' Market -Wholesale Division (67) - Connecting org customers - Organization already has stripe_customer_id: cus_6BV0tKdFkrBSG7
-[2015-06-01 14:23:22 -0400] - UpdateStripeIdsOnMarket - Tulsa Farmers' Market -Wholesale Division (67) - Connecting org customers - Organization already has stripe_customer_id: cus_6DoV9yXVI0bLaa
-[2015-06-01 14:23:22 -0400] - UpdateStripeIdsOnMarket - Tulsa Farmers' Market -Wholesale Division (67) - Connecting org customers - Organization already has stripe_customer_id: cus_6AKxGry2xxFwEq
-[2015-06-01 14:23:22 -0400] - UpdateStripeIdsOnMarket - Tulsa Farmers' Market -Wholesale Division (67) - Connecting org customers - Organization already has stripe_customer_id: cus_68sS83iwOd0Jwe
-[2015-06-01 14:23:22 -0400] - UpdateStripeIdsOnMarket - Tulsa Farmers' Market -Wholesale Division (67) - Connecting org customers - Organization already has stripe_customer_id: cus_68rEzbxyxqdf7l
-[2015-06-01 14:23:22 -0400] - UpdateStripeIdsOnMarket - Tulsa Farmers' Market -Wholesale Division (67) - Connecting org customers - Organization already has stripe_customer_id: cus_66dUGVZLCK8GOZ
-[2015-06-01 14:23:22 -0400] - UpdateStripeIdsOnMarket - Tulsa Farmers' Market -Wholesale Division (67) - Connecting org customers - Organization already has stripe_customer_id: cus_65uU09pYvFwLF9
-[2015-06-01 14:23:22 -0400] - UpdateStripeIdsOnMarket - Tulsa Farmers' Market -Wholesale Division (67) - Connecting org customers - Organization already has stripe_customer_id: cus_65uNJdoNFvxHdw
-[2015-06-01 14:23:22 -0400] - UpdateStripeIdsOnMarket - Tulsa Farmers' Market -Wholesale Division (67) - Connecting org customers - Organization already has stripe_customer_id: cus_6B5rMJzNUQ4vOc
-[2015-06-01 14:23:22 -0400] - UpdateStripeIdsOnMarket - Tulsa Farmers' Market -Wholesale Division (67) - Connecting org customers - Organization already has stripe_customer_id: cus_65bjM2sHUWTtm7
-[2015-06-01 14:23:22 -0400] - UpdateStripeIdsOnMarket - Tulsa Farmers' Market -Wholesale Division (67) - Connecting org customers - Organization already has stripe_customer_id: cus_6445hAqzp19mue
-[2015-06-01 14:23:22 -0400] - UpdateStripeIdsOnMarket - Tulsa Farmers' Market -Wholesale Division (67) - Connecting org customers - Organization already has stripe_customer_id: cus_641a1rDugZVwUW
-[2015-06-01 14:23:22 -0400] - UpdateStripeIdsOnMarket - Tulsa Farmers' Market -Wholesale Division (67) - Connecting org customers - MISS - No stripe_customer_id found for Organization The Vault (3481) balanced_customer_uri /v1/customers/CU7z7PqiYx3cAsPFjMlfXon0
-[2015-06-01 14:23:22 -0400] - UpdateStripeIdsOnMarket - Tulsa Farmers' Market -Wholesale Division (67) - Connecting org customers - MISS - No stripe_customer_id found for Organization Brady Tavern (3480) balanced_customer_uri /v1/customers/CULvWctJ1isYN29HMcTXbc
-[2015-06-01 14:23:22 -0400] - UpdateStripeIdsOnMarket - Tulsa Farmers' Market -Wholesale Division (67) - Connecting org customers - Organization already has stripe_customer_id: cus_614li2ZTNb5z54
-[2015-06-01 14:23:22 -0400] - UpdateStripeIdsOnMarket - Tulsa Farmers' Market -Wholesale Division (67) - Connecting org customers - Organization already has stripe_customer_id: cus_611gyPtZAgRauW
-[2015-06-01 14:23:22 -0400] - UpdateStripeIdsOnMarket - Tulsa Farmers' Market -Wholesale Division (67) - Connecting org customers - Organization already has stripe_customer_id: cus_60gRW7B1sv7j2j
-[2015-06-01 14:23:22 -0400] - UpdateStripeIdsOnMarket - Tulsa Farmers' Market -Wholesale Division (67) - Connecting org customers - Organization already has stripe_customer_id: cus_5zb8v818ajML6R
-[2015-06-01 14:23:22 -0400] - UpdateStripeIdsOnMarket - Tulsa Farmers' Market -Wholesale Division (67) - Connecting org customers - Organization already has stripe_customer_id: cus_5zb2YbJIn0VCD0
-[2015-06-01 14:23:22 -0400] - UpdateStripeIdsOnMarket - Tulsa Farmers' Market -Wholesale Division (67) - Connecting org customers - Organization already has stripe_customer_id: cus_5zawEfL5qQ4vfn
-[2015-06-01 14:23:22 -0400] - UpdateStripeIdsOnMarket - Tulsa Farmers' Market -Wholesale Division (67) - Connecting org customers - Organization already has stripe_customer_id: cus_5zar6Ut352X4gl
-[2015-06-01 14:23:22 -0400] - UpdateStripeIdsOnMarket - Tulsa Farmers' Market -Wholesale Division (67) - Connecting org customers - Organization already has stripe_customer_id: cus_5zangKluPE1LL8
-[2015-06-01 14:23:22 -0400] - UpdateStripeIdsOnMarket - Tulsa Farmers' Market -Wholesale Division (67) - Connecting org customers - Organization already has stripe_customer_id: cus_5zah9fCvl6v1L2
-[2015-06-01 14:23:22 -0400] - UpdateStripeIdsOnMarket - Tulsa Farmers' Market -Wholesale Division (67) - Connecting org customers - Organization already has stripe_customer_id: cus_5zaYyHD5I162d4
-[2015-06-01 14:23:22 -0400] - UpdateStripeIdsOnMarket - Tulsa Farmers' Market -Wholesale Division (67) - Connecting org customers - Organization already has stripe_customer_id: cus_5zZeoiIGQrBXEP
-[2015-06-01 14:23:22 -0400] - UpdateStripeIdsOnMarket - Tulsa Farmers' Market -Wholesale Division (67) - Connecting org customers - Organization already has stripe_customer_id: cus_5zFwIsJKs6WFSo
-[2015-06-01 14:23:22 -0400] - UpdateStripeIdsOnMarket - Tulsa Farmers' Market -Wholesale Division (67) - Connecting org customers - Organization already has stripe_customer_id: cus_5zFvZNWVDNXqTe
-[2015-06-01 14:23:22 -0400] - UpdateStripeIdsOnMarket - Tulsa Farmers' Market -Wholesale Division (67) - Connecting org customers - Organization already has stripe_customer_id: cus_5yNaZNu8XKlPoM
-[2015-06-01 14:23:22 -0400] - UpdateStripeIdsOnMarket - Tulsa Farmers' Market -Wholesale Division (67) - Connecting org customers - Organization already has stripe_customer_id: cus_5y8EDMRqBcbQdV
-[2015-06-01 14:23:22 -0400] - UpdateStripeIdsOnMarket - Tulsa Farmers' Market -Wholesale Division (67) - Connecting org customers - Organization already has stripe_customer_id: cus_5y8EuK0l6NgpBy
-[2015-06-01 14:23:22 -0400] - UpdateStripeIdsOnMarket - Tulsa Farmers' Market -Wholesale Division (67) - Connecting org customers - Organization already has stripe_customer_id: cus_5y8EV6qhhudkOD
-[2015-06-01 14:23:22 -0400] - UpdateStripeIdsOnMarket - Tulsa Farmers' Market -Wholesale Division (67) - Connecting org customers - Organization already has stripe_customer_id: cus_5y8DKePgc8rH7W
-[2015-06-01 14:23:22 -0400] - UpdateStripeIdsOnMarket - Tulsa Farmers' Market -Wholesale Division (67) - Connecting org customers - Organization already has stripe_customer_id: cus_5y8DZIIIfzHjwd
-[2015-06-01 14:23:22 -0400] - UpdateStripeIdsOnMarket - Tulsa Farmers' Market -Wholesale Division (67) - Connecting org customers - Organization already has stripe_customer_id: cus_5y7tF16qWIKCuV
-[2015-06-01 14:23:22 -0400] - UpdateStripeIdsOnMarket - Tulsa Farmers' Market -Wholesale Division (67) - Connecting org customers - Organization already has stripe_customer_id: cus_5y6NLCFHvFVmpF
-[2015-06-01 14:23:22 -0400] - UpdateStripeIdsOnMarket - Tulsa Farmers' Market -Wholesale Division (67) - Connecting org customers - Organization already has stripe_customer_id: cus_5y5DiVFEFosThF
-[2015-06-01 14:23:22 -0400] - UpdateStripeIdsOnMarket - Tulsa Farmers' Market -Wholesale Division (67) - Connecting org customers - Organization already has stripe_customer_id: cus_5y4aKTgQThVEmj
-[2015-06-01 14:23:22 -0400] - UpdateStripeIdsOnMarket - Tulsa Farmers' Market -Wholesale Division (67) - Connecting org customers - Organization already has stripe_customer_id: cus_5vUV2eFpROESZU
-[2015-06-01 14:23:22 -0400] - UpdateStripeIdsOnMarket - Tulsa Farmers' Market -Wholesale Division (67) - Connecting market BankAccounts - BOKF, N.A. 1752 (443) already has stripe_id: ba_15ic8n2VpjOYk6Tmpxbl6F2D
-[2015-06-01 14:23:22 -0400] - UpdateStripeIdsOnMarket - Tulsa Farmers' Market -Wholesale Division (67) - Connecting org BankAccounts - Organization Bodeans (3734) - MasterCard 3884 (553) already has stripe_id: card_163tH92VpjOYk6Tm8FOvSQby
-[2015-06-01 14:23:22 -0400] - UpdateStripeIdsOnMarket - Tulsa Farmers' Market -Wholesale Division (67) - Connecting org BankAccounts - Organization Smoke on cherry street (3532) - Visa 3955 (538) already has stripe_id: card_15yjgA2VpjOYk6TmSF0YLK3J
-[2015-06-01 14:23:22 -0400] - UpdateStripeIdsOnMarket - Tulsa Farmers' Market -Wholesale Division (67) - Connecting org BankAccounts - Organization Smoke on cherry street (3532) - Visa 3955 (533) already has stripe_id: card_15yjgA2VpjOYk6TmSF0YLK3J
-[2015-06-01 14:23:22 -0400] - UpdateStripeIdsOnMarket - Tulsa Farmers' Market -Wholesale Division (67) - Connecting org BankAccounts - Organization TFMA Buyer Account (3531) - MasterCard 0636 (514) already has stripe_id: card_15tiU92VpjOYk6TmCgMzTDht
-[2015-06-01 14:23:22 -0400] - UpdateStripeIdsOnMarket - Tulsa Farmers' Market -Wholesale Division (67) - Connecting org BankAccounts - Organization Juniper (3389) - Visa 3421 (542) already has stripe_id: card_161Pm72VpjOYk6Tms5VCAMJ3
-[2015-06-01 14:23:23 -0400] - UpdateStripeIdsOnMarket - Tulsa Farmers' Market -Wholesale Division (67) - Connecting org BankAccounts - Organization Cafe Samana (3384) - Visa 1883 (543) already has stripe_id: card_161SZv2VpjOYk6TmUbcOXiyI
-[2015-06-01 14:23:23 -0400] - UpdateStripeIdsOnMarket - Tulsa Farmers' Market -Wholesale Division (67) - Connecting org BankAccounts - Organization Smoke on Cherry Street (3383) - Visa 3955 (520) already has stripe_id: card_15uqhq2VpjOYk6TmyQSh6ZrD
-[2015-06-01 14:23:23 -0400] - UpdateStripeIdsOnMarket - Tulsa Farmers' Market -Wholesale Division (67) - Connecting org BankAccounts - Organization Antoinette Baking Company (3374) - MasterCard 4546 (510) already has stripe_id: card_15tbCK2VpjOYk6Tmw2pz5UvL
+[2015-06-08 12:26:01 -0400] - UpdateStripeIdsOnMarket - Tulsa Farmers' Market -Wholesale Division (67) - ====================================================================================================
+[2015-06-08 12:26:01 -0400] - UpdateStripeIdsOnMarket - Tulsa Farmers' Market -Wholesale Division (67) -  Tulsa Farmers' Market -Wholesale Division (67)
+[2015-06-08 12:26:01 -0400] - UpdateStripeIdsOnMarket - Tulsa Farmers' Market -Wholesale Division (67) -  Updating stripe IDs for market, orgs and bank accounts.
+[2015-06-08 12:26:01 -0400] - UpdateStripeIdsOnMarket - Tulsa Farmers' Market -Wholesale Division (67) - 
+[2015-06-08 12:26:01 -0400] - UpdateStripeIdsOnMarket - Tulsa Farmers' Market -Wholesale Division (67) -  Balanced export file: /home/vagrant/git/localorbit/tools/stripe-migration/from_balanced/2015-06-08-1433769720-MP2eXZmrOPof80u3Irf94Wre.csv
+[2015-06-08 12:26:01 -0400] - UpdateStripeIdsOnMarket - Tulsa Farmers' Market -Wholesale Division (67) - 
+[2015-06-08 12:26:01 -0400] - UpdateStripeIdsOnMarket - Tulsa Farmers' Market -Wholesale Division (67) -  Rails.env: production
+[2015-06-08 12:26:01 -0400] - UpdateStripeIdsOnMarket - Tulsa Farmers' Market -Wholesale Division (67) -  Stripe keys:
+[2015-06-08 12:26:01 -0400] - UpdateStripeIdsOnMarket - Tulsa Farmers' Market -Wholesale Division (67) -   --> STRIPE_PUBLISHABLE_KEY: pk_live_j85VTsrz51POrss3ni460qaf (pk_live_j85VTsrz51POrss3ni460qaf)
+[2015-06-08 12:26:01 -0400] - UpdateStripeIdsOnMarket - Tulsa Farmers' Market -Wholesale Division (67) - ====================================================================================================
+[2015-06-08 12:26:01 -0400] - UpdateStripeIdsOnMarket - Tulsa Farmers' Market -Wholesale Division (67) - Connecting market customer - Market already has stripe_customer_id: cus_5uQ4YmmxyQVBqI
+[2015-06-08 12:26:01 -0400] - UpdateStripeIdsOnMarket - Tulsa Farmers' Market -Wholesale Division (67) - Connecting market account - Market already has stripe_account_id: acct_15l1yULnlQGv511a
+[2015-06-08 12:26:01 -0400] - UpdateStripeIdsOnMarket - Tulsa Farmers' Market -Wholesale Division (67) - Connecting org customers - Updated Organization Dilly Diner (4165) stripe_customer_id: cus_6MVywYkUrzaqPc
+[2015-06-08 12:26:01 -0400] - UpdateStripeIdsOnMarket - Tulsa Farmers' Market -Wholesale Division (67) - Connecting org customers - Updated Organization Lovera's Handcrafted Foods (4161) stripe_customer_id: cus_6MPyAQCdxNJOL1
+[2015-06-08 12:26:01 -0400] - UpdateStripeIdsOnMarket - Tulsa Farmers' Market -Wholesale Division (67) - Connecting org customers - Organization already has stripe_customer_id: cus_6LdNFvRcZNYKQ2
+[2015-06-08 12:26:01 -0400] - UpdateStripeIdsOnMarket - Tulsa Farmers' Market -Wholesale Division (67) - Connecting org customers - Organization already has stripe_customer_id: cus_6J0xjFKEyet1vW
+[2015-06-08 12:26:01 -0400] - UpdateStripeIdsOnMarket - Tulsa Farmers' Market -Wholesale Division (67) - Connecting org customers - Organization already has stripe_customer_id: cus_6GS5mQmeeOGa13
+[2015-06-08 12:26:01 -0400] - UpdateStripeIdsOnMarket - Tulsa Farmers' Market -Wholesale Division (67) - Connecting org customers - Organization already has stripe_customer_id: cus_6CGbG2HbrsBogm
+[2015-06-08 12:26:01 -0400] - UpdateStripeIdsOnMarket - Tulsa Farmers' Market -Wholesale Division (67) - Connecting org customers - Organization already has stripe_customer_id: cus_6BsAXEhUa2rs4F
+[2015-06-08 12:26:01 -0400] - UpdateStripeIdsOnMarket - Tulsa Farmers' Market -Wholesale Division (67) - Connecting org customers - Organization already has stripe_customer_id: cus_6BZd7EHHQABQwr
+[2015-06-08 12:26:01 -0400] - UpdateStripeIdsOnMarket - Tulsa Farmers' Market -Wholesale Division (67) - Connecting org customers - Organization already has stripe_customer_id: cus_6BV0tKdFkrBSG7
+[2015-06-08 12:26:01 -0400] - UpdateStripeIdsOnMarket - Tulsa Farmers' Market -Wholesale Division (67) - Connecting org customers - Organization already has stripe_customer_id: cus_6DoV9yXVI0bLaa
+[2015-06-08 12:26:01 -0400] - UpdateStripeIdsOnMarket - Tulsa Farmers' Market -Wholesale Division (67) - Connecting org customers - Organization already has stripe_customer_id: cus_6AKxGry2xxFwEq
+[2015-06-08 12:26:01 -0400] - UpdateStripeIdsOnMarket - Tulsa Farmers' Market -Wholesale Division (67) - Connecting org customers - Organization already has stripe_customer_id: cus_68sS83iwOd0Jwe
+[2015-06-08 12:26:01 -0400] - UpdateStripeIdsOnMarket - Tulsa Farmers' Market -Wholesale Division (67) - Connecting org customers - Organization already has stripe_customer_id: cus_68rEzbxyxqdf7l
+[2015-06-08 12:26:01 -0400] - UpdateStripeIdsOnMarket - Tulsa Farmers' Market -Wholesale Division (67) - Connecting org customers - Organization already has stripe_customer_id: cus_66dUGVZLCK8GOZ
+[2015-06-08 12:26:01 -0400] - UpdateStripeIdsOnMarket - Tulsa Farmers' Market -Wholesale Division (67) - Connecting org customers - Organization already has stripe_customer_id: cus_65uU09pYvFwLF9
+[2015-06-08 12:26:01 -0400] - UpdateStripeIdsOnMarket - Tulsa Farmers' Market -Wholesale Division (67) - Connecting org customers - Organization already has stripe_customer_id: cus_65uNJdoNFvxHdw
+[2015-06-08 12:26:01 -0400] - UpdateStripeIdsOnMarket - Tulsa Farmers' Market -Wholesale Division (67) - Connecting org customers - Organization already has stripe_customer_id: cus_6B5rMJzNUQ4vOc
+[2015-06-08 12:26:01 -0400] - UpdateStripeIdsOnMarket - Tulsa Farmers' Market -Wholesale Division (67) - Connecting org customers - Organization already has stripe_customer_id: cus_65bjM2sHUWTtm7
+[2015-06-08 12:26:01 -0400] - UpdateStripeIdsOnMarket - Tulsa Farmers' Market -Wholesale Division (67) - Connecting org customers - Organization already has stripe_customer_id: cus_6445hAqzp19mue
+[2015-06-08 12:26:01 -0400] - UpdateStripeIdsOnMarket - Tulsa Farmers' Market -Wholesale Division (67) - Connecting org customers - Organization already has stripe_customer_id: cus_641a1rDugZVwUW
+[2015-06-08 12:26:01 -0400] - UpdateStripeIdsOnMarket - Tulsa Farmers' Market -Wholesale Division (67) - Connecting org customers - MISS - No stripe_customer_id found for Organization The Vault (3481) balanced_customer_uri /v1/customers/CU7z7PqiYx3cAsPFjMlfXon0
+[2015-06-08 12:26:01 -0400] - UpdateStripeIdsOnMarket - Tulsa Farmers' Market -Wholesale Division (67) - Connecting org customers - MISS - No stripe_customer_id found for Organization Brady Tavern (3480) balanced_customer_uri /v1/customers/CULvWctJ1isYN29HMcTXbc
+[2015-06-08 12:26:01 -0400] - UpdateStripeIdsOnMarket - Tulsa Farmers' Market -Wholesale Division (67) - Connecting org customers - Organization already has stripe_customer_id: cus_614li2ZTNb5z54
+[2015-06-08 12:26:01 -0400] - UpdateStripeIdsOnMarket - Tulsa Farmers' Market -Wholesale Division (67) - Connecting org customers - Organization already has stripe_customer_id: cus_611gyPtZAgRauW
+[2015-06-08 12:26:01 -0400] - UpdateStripeIdsOnMarket - Tulsa Farmers' Market -Wholesale Division (67) - Connecting org customers - Organization already has stripe_customer_id: cus_60gRW7B1sv7j2j
+[2015-06-08 12:26:01 -0400] - UpdateStripeIdsOnMarket - Tulsa Farmers' Market -Wholesale Division (67) - Connecting org customers - Organization already has stripe_customer_id: cus_5zb8v818ajML6R
+[2015-06-08 12:26:01 -0400] - UpdateStripeIdsOnMarket - Tulsa Farmers' Market -Wholesale Division (67) - Connecting org customers - Organization already has stripe_customer_id: cus_5zb2YbJIn0VCD0
+[2015-06-08 12:26:01 -0400] - UpdateStripeIdsOnMarket - Tulsa Farmers' Market -Wholesale Division (67) - Connecting org customers - Organization already has stripe_customer_id: cus_5zawEfL5qQ4vfn
+[2015-06-08 12:26:01 -0400] - UpdateStripeIdsOnMarket - Tulsa Farmers' Market -Wholesale Division (67) - Connecting org customers - Organization already has stripe_customer_id: cus_5zar6Ut352X4gl
+[2015-06-08 12:26:01 -0400] - UpdateStripeIdsOnMarket - Tulsa Farmers' Market -Wholesale Division (67) - Connecting org customers - Organization already has stripe_customer_id: cus_5zangKluPE1LL8
+[2015-06-08 12:26:01 -0400] - UpdateStripeIdsOnMarket - Tulsa Farmers' Market -Wholesale Division (67) - Connecting org customers - Organization already has stripe_customer_id: cus_5zah9fCvl6v1L2
+[2015-06-08 12:26:01 -0400] - UpdateStripeIdsOnMarket - Tulsa Farmers' Market -Wholesale Division (67) - Connecting org customers - Organization already has stripe_customer_id: cus_5zaYyHD5I162d4
+[2015-06-08 12:26:01 -0400] - UpdateStripeIdsOnMarket - Tulsa Farmers' Market -Wholesale Division (67) - Connecting org customers - Organization already has stripe_customer_id: cus_5zZeoiIGQrBXEP
+[2015-06-08 12:26:01 -0400] - UpdateStripeIdsOnMarket - Tulsa Farmers' Market -Wholesale Division (67) - Connecting org customers - Organization already has stripe_customer_id: cus_5zFwIsJKs6WFSo
+[2015-06-08 12:26:01 -0400] - UpdateStripeIdsOnMarket - Tulsa Farmers' Market -Wholesale Division (67) - Connecting org customers - Organization already has stripe_customer_id: cus_5zFvZNWVDNXqTe
+[2015-06-08 12:26:01 -0400] - UpdateStripeIdsOnMarket - Tulsa Farmers' Market -Wholesale Division (67) - Connecting org customers - Organization already has stripe_customer_id: cus_5yNaZNu8XKlPoM
+[2015-06-08 12:26:01 -0400] - UpdateStripeIdsOnMarket - Tulsa Farmers' Market -Wholesale Division (67) - Connecting org customers - Organization already has stripe_customer_id: cus_5y8EDMRqBcbQdV
+[2015-06-08 12:26:01 -0400] - UpdateStripeIdsOnMarket - Tulsa Farmers' Market -Wholesale Division (67) - Connecting org customers - Organization already has stripe_customer_id: cus_5y8EuK0l6NgpBy
+[2015-06-08 12:26:01 -0400] - UpdateStripeIdsOnMarket - Tulsa Farmers' Market -Wholesale Division (67) - Connecting org customers - Organization already has stripe_customer_id: cus_5y8EV6qhhudkOD
+[2015-06-08 12:26:01 -0400] - UpdateStripeIdsOnMarket - Tulsa Farmers' Market -Wholesale Division (67) - Connecting org customers - Organization already has stripe_customer_id: cus_5y8DKePgc8rH7W
+[2015-06-08 12:26:01 -0400] - UpdateStripeIdsOnMarket - Tulsa Farmers' Market -Wholesale Division (67) - Connecting org customers - Organization already has stripe_customer_id: cus_5y8DZIIIfzHjwd
+[2015-06-08 12:26:01 -0400] - UpdateStripeIdsOnMarket - Tulsa Farmers' Market -Wholesale Division (67) - Connecting org customers - Organization already has stripe_customer_id: cus_5y7tF16qWIKCuV
+[2015-06-08 12:26:01 -0400] - UpdateStripeIdsOnMarket - Tulsa Farmers' Market -Wholesale Division (67) - Connecting org customers - Organization already has stripe_customer_id: cus_5y6NLCFHvFVmpF
+[2015-06-08 12:26:01 -0400] - UpdateStripeIdsOnMarket - Tulsa Farmers' Market -Wholesale Division (67) - Connecting org customers - Organization already has stripe_customer_id: cus_5y5DiVFEFosThF
+[2015-06-08 12:26:01 -0400] - UpdateStripeIdsOnMarket - Tulsa Farmers' Market -Wholesale Division (67) - Connecting org customers - Organization already has stripe_customer_id: cus_5y4aKTgQThVEmj
+[2015-06-08 12:26:01 -0400] - UpdateStripeIdsOnMarket - Tulsa Farmers' Market -Wholesale Division (67) - Connecting org customers - Organization already has stripe_customer_id: cus_5vUV2eFpROESZU
+[2015-06-08 12:26:01 -0400] - UpdateStripeIdsOnMarket - Tulsa Farmers' Market -Wholesale Division (67) - Connecting market BankAccounts - BOKF, N.A. 1752 (443) already has stripe_id: ba_15ic8n2VpjOYk6Tmpxbl6F2D
+[2015-06-08 12:26:01 -0400] - UpdateStripeIdsOnMarket - Tulsa Farmers' Market -Wholesale Division (67) - Connecting org BankAccounts - Organization Bodeans (3734) - MasterCard 3884 (553) already has stripe_id: card_163tH92VpjOYk6Tm8FOvSQby
+[2015-06-08 12:26:02 -0400] - UpdateStripeIdsOnMarket - Tulsa Farmers' Market -Wholesale Division (67) - Connecting org BankAccounts - Organization Smoke on cherry street (3532) - Visa 3955 (538) already has stripe_id: card_15yjgA2VpjOYk6TmSF0YLK3J
+[2015-06-08 12:26:02 -0400] - UpdateStripeIdsOnMarket - Tulsa Farmers' Market -Wholesale Division (67) - Connecting org BankAccounts - Organization Smoke on cherry street (3532) - Visa 3955 (533) already has stripe_id: card_15yjgA2VpjOYk6TmSF0YLK3J
+[2015-06-08 12:26:02 -0400] - UpdateStripeIdsOnMarket - Tulsa Farmers' Market -Wholesale Division (67) - Connecting org BankAccounts - Organization TFMA Buyer Account (3531) - MasterCard 0636 (514) already has stripe_id: card_15tiU92VpjOYk6TmCgMzTDht
+[2015-06-08 12:26:02 -0400] - UpdateStripeIdsOnMarket - Tulsa Farmers' Market -Wholesale Division (67) - Connecting org BankAccounts - Organization Juniper (3389) - Visa 3421 (542) already has stripe_id: card_161Pm72VpjOYk6Tms5VCAMJ3
+[2015-06-08 12:26:02 -0400] - UpdateStripeIdsOnMarket - Tulsa Farmers' Market -Wholesale Division (67) - Connecting org BankAccounts - Organization Cafe Samana (3384) - Visa 1883 (543) already has stripe_id: card_161SZv2VpjOYk6TmUbcOXiyI
+[2015-06-08 12:26:02 -0400] - UpdateStripeIdsOnMarket - Tulsa Farmers' Market -Wholesale Division (67) - Connecting org BankAccounts - Organization Smoke on Cherry Street (3383) - Visa 3955 (520) already has stripe_id: card_15uqhq2VpjOYk6TmyQSh6ZrD
+[2015-06-08 12:26:02 -0400] - UpdateStripeIdsOnMarket - Tulsa Farmers' Market -Wholesale Division (67) - Connecting org BankAccounts - Organization Antoinette Baking Company (3374) - MasterCard 4546 (510) already has stripe_id: card_15tbCK2VpjOYk6Tmw2pz5UvL

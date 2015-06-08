@@ -1,15 +1,15 @@
-[2015-06-01 14:23:37 -0400] - UpdateStripeIdsOnMarket - Local Pumpkin (81) - ====================================================================================================
-[2015-06-01 14:23:37 -0400] - UpdateStripeIdsOnMarket - Local Pumpkin (81) -  Local Pumpkin (81)
-[2015-06-01 14:23:37 -0400] - UpdateStripeIdsOnMarket - Local Pumpkin (81) -  Updating stripe IDs for market, orgs and bank accounts.
-[2015-06-01 14:23:37 -0400] - UpdateStripeIdsOnMarket - Local Pumpkin (81) - 
-[2015-06-01 14:23:37 -0400] - UpdateStripeIdsOnMarket - Local Pumpkin (81) -  Balanced export file: /home/vagrant/git/localorbit/tools/stripe-migration/from_balanced/2015-06-01-1433181180-MP2eXZmrOPof80u3Irf94Wre.csv
-[2015-06-01 14:23:37 -0400] - UpdateStripeIdsOnMarket - Local Pumpkin (81) - 
-[2015-06-01 14:23:37 -0400] - UpdateStripeIdsOnMarket - Local Pumpkin (81) -  Rails.env: production
-[2015-06-01 14:23:37 -0400] - UpdateStripeIdsOnMarket - Local Pumpkin (81) -  Stripe keys:
-[2015-06-01 14:23:37 -0400] - UpdateStripeIdsOnMarket - Local Pumpkin (81) -   --> STRIPE_PUBLISHABLE_KEY: pk_live_j85VTsrz51POrss3ni460qaf (pk_live_j85VTsrz51POrss3ni460qaf)
-[2015-06-01 14:23:37 -0400] - UpdateStripeIdsOnMarket - Local Pumpkin (81) - ====================================================================================================
-[2015-06-01 14:23:38 -0400] - UpdateStripeIdsOnMarket - Local Pumpkin (81) - Connecting market customer - Updated Market stripe_customer_id: cus_5uQ5Fwv38V5EXw
-[2015-06-01 14:23:38 -0400] - UpdateStripeIdsOnMarket - Local Pumpkin (81) - Connecting market account - Updated Market stripe_account_id: acct_15l1ySDQWLWduI2u
-[2015-06-01 14:23:38 -0400] - UpdateStripeIdsOnMarket - Local Pumpkin (81) - Connecting org customers - Updated Organization Test Farmer (3721) stripe_customer_id: cus_6BimrBmphBXioj
-[2015-06-01 14:23:38 -0400] - UpdateStripeIdsOnMarket - Local Pumpkin (81) - Connecting org customers - MISS - No stripe_customer_id found for Organization Test Resturant  (3451) balanced_customer_uri /v1/customers/CU3pmaNBzJlv3qTcsiOZfuMW
-[2015-06-01 14:23:38 -0400] - UpdateStripeIdsOnMarket - Local Pumpkin (81) - Connecting market BankAccounts - Updated COMMUNITY FIRST BANK 2591 (468) stripe_id: btok_5vaorV5VJVYZ6s
+[2015-06-08 12:26:18 -0400] - UpdateStripeIdsOnMarket - Local Pumpkin (81) - ====================================================================================================
+[2015-06-08 12:26:18 -0400] - UpdateStripeIdsOnMarket - Local Pumpkin (81) -  Local Pumpkin (81)
+[2015-06-08 12:26:18 -0400] - UpdateStripeIdsOnMarket - Local Pumpkin (81) -  Updating stripe IDs for market, orgs and bank accounts.
+[2015-06-08 12:26:18 -0400] - UpdateStripeIdsOnMarket - Local Pumpkin (81) - 
+[2015-06-08 12:26:18 -0400] - UpdateStripeIdsOnMarket - Local Pumpkin (81) -  Balanced export file: /home/vagrant/git/localorbit/tools/stripe-migration/from_balanced/2015-06-08-1433769720-MP2eXZmrOPof80u3Irf94Wre.csv
+[2015-06-08 12:26:18 -0400] - UpdateStripeIdsOnMarket - Local Pumpkin (81) - 
+[2015-06-08 12:26:18 -0400] - UpdateStripeIdsOnMarket - Local Pumpkin (81) -  Rails.env: production
+[2015-06-08 12:26:18 -0400] - UpdateStripeIdsOnMarket - Local Pumpkin (81) -  Stripe keys:
+[2015-06-08 12:26:18 -0400] - UpdateStripeIdsOnMarket - Local Pumpkin (81) -   --> STRIPE_PUBLISHABLE_KEY: pk_live_j85VTsrz51POrss3ni460qaf (pk_live_j85VTsrz51POrss3ni460qaf)
+[2015-06-08 12:26:18 -0400] - UpdateStripeIdsOnMarket - Local Pumpkin (81) - ====================================================================================================
+[2015-06-08 12:26:18 -0400] - UpdateStripeIdsOnMarket - Local Pumpkin (81) - Connecting market customer - Market already has stripe_customer_id: cus_5uQ5Fwv38V5EXw
+[2015-06-08 12:26:18 -0400] - UpdateStripeIdsOnMarket - Local Pumpkin (81) - Connecting market account - Market already has stripe_account_id: acct_15l1ySDQWLWduI2u
+[2015-06-08 12:26:18 -0400] - UpdateStripeIdsOnMarket - Local Pumpkin (81) - Connecting org customers - Organization already has stripe_customer_id: cus_6BimrBmphBXioj
+[2015-06-08 12:26:18 -0400] - UpdateStripeIdsOnMarket - Local Pumpkin (81) - Connecting org customers - MISS - No stripe_customer_id found for Organization Test Resturant  (3451) balanced_customer_uri /v1/customers/CU3pmaNBzJlv3qTcsiOZfuMW
+[2015-06-08 12:26:18 -0400] - UpdateStripeIdsOnMarket - Local Pumpkin (81) - Connecting market BankAccounts - COMMUNITY FIRST BANK 2591 (468) already has stripe_id: btok_5vaorV5VJVYZ6s

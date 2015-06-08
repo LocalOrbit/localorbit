@@ -1,14 +1,14 @@
-[2015-06-01 14:23:44 -0400] - UpdateStripeIdsOnMarket - Linden Hills Farmers' Market (96) - ====================================================================================================
-[2015-06-01 14:23:44 -0400] - UpdateStripeIdsOnMarket - Linden Hills Farmers' Market (96) -  Linden Hills Farmers' Market (96)
-[2015-06-01 14:23:44 -0400] - UpdateStripeIdsOnMarket - Linden Hills Farmers' Market (96) -  Updating stripe IDs for market, orgs and bank accounts.
-[2015-06-01 14:23:44 -0400] - UpdateStripeIdsOnMarket - Linden Hills Farmers' Market (96) - 
-[2015-06-01 14:23:44 -0400] - UpdateStripeIdsOnMarket - Linden Hills Farmers' Market (96) -  Balanced export file: /home/vagrant/git/localorbit/tools/stripe-migration/from_balanced/2015-06-01-1433181180-MP2eXZmrOPof80u3Irf94Wre.csv
-[2015-06-01 14:23:44 -0400] - UpdateStripeIdsOnMarket - Linden Hills Farmers' Market (96) - 
-[2015-06-01 14:23:44 -0400] - UpdateStripeIdsOnMarket - Linden Hills Farmers' Market (96) -  Rails.env: production
-[2015-06-01 14:23:44 -0400] - UpdateStripeIdsOnMarket - Linden Hills Farmers' Market (96) -  Stripe keys:
-[2015-06-01 14:23:44 -0400] - UpdateStripeIdsOnMarket - Linden Hills Farmers' Market (96) -   --> STRIPE_PUBLISHABLE_KEY: pk_live_j85VTsrz51POrss3ni460qaf (pk_live_j85VTsrz51POrss3ni460qaf)
-[2015-06-01 14:23:44 -0400] - UpdateStripeIdsOnMarket - Linden Hills Farmers' Market (96) - ====================================================================================================
-[2015-06-01 14:23:44 -0400] - UpdateStripeIdsOnMarket - Linden Hills Farmers' Market (96) - Connecting market customer - Updated Market stripe_customer_id: cus_6EzxdkywagHO8p
-[2015-06-01 14:23:44 -0400] - UpdateStripeIdsOnMarket - Linden Hills Farmers' Market (96) - Connecting market account - MISS - No stripe_account_id found for market balanced_customer_uri /v1/customers/CU5NoVqrEvKoDppj8xIKz18b
-[2015-06-01 14:23:44 -0400] - UpdateStripeIdsOnMarket - Linden Hills Farmers' Market (96) - Connecting org customers - Updated Organization Mana Gardens (Demo Account) (3873) stripe_customer_id: cus_6H9EUgN2HBGxDn
-[2015-06-01 14:23:44 -0400] - UpdateStripeIdsOnMarket - Linden Hills Farmers' Market (96) - Connecting market BankAccounts - Updated Visa 3812 (551) stripe_id: card_163r1x2VpjOYk6Tme7s4mhat
+[2015-06-08 12:26:25 -0400] - UpdateStripeIdsOnMarket - Linden Hills Farmers' Market (96) - ====================================================================================================
+[2015-06-08 12:26:25 -0400] - UpdateStripeIdsOnMarket - Linden Hills Farmers' Market (96) -  Linden Hills Farmers' Market (96)
+[2015-06-08 12:26:25 -0400] - UpdateStripeIdsOnMarket - Linden Hills Farmers' Market (96) -  Updating stripe IDs for market, orgs and bank accounts.
+[2015-06-08 12:26:25 -0400] - UpdateStripeIdsOnMarket - Linden Hills Farmers' Market (96) - 
+[2015-06-08 12:26:25 -0400] - UpdateStripeIdsOnMarket - Linden Hills Farmers' Market (96) -  Balanced export file: /home/vagrant/git/localorbit/tools/stripe-migration/from_balanced/2015-06-08-1433769720-MP2eXZmrOPof80u3Irf94Wre.csv
+[2015-06-08 12:26:25 -0400] - UpdateStripeIdsOnMarket - Linden Hills Farmers' Market (96) - 
+[2015-06-08 12:26:25 -0400] - UpdateStripeIdsOnMarket - Linden Hills Farmers' Market (96) -  Rails.env: production
+[2015-06-08 12:26:25 -0400] - UpdateStripeIdsOnMarket - Linden Hills Farmers' Market (96) -  Stripe keys:
+[2015-06-08 12:26:25 -0400] - UpdateStripeIdsOnMarket - Linden Hills Farmers' Market (96) -   --> STRIPE_PUBLISHABLE_KEY: pk_live_j85VTsrz51POrss3ni460qaf (pk_live_j85VTsrz51POrss3ni460qaf)
+[2015-06-08 12:26:25 -0400] - UpdateStripeIdsOnMarket - Linden Hills Farmers' Market (96) - ====================================================================================================
+[2015-06-08 12:26:25 -0400] - UpdateStripeIdsOnMarket - Linden Hills Farmers' Market (96) - Connecting market customer - Market already has stripe_customer_id: cus_6EzxdkywagHO8p
+[2015-06-08 12:26:25 -0400] - UpdateStripeIdsOnMarket - Linden Hills Farmers' Market (96) - Connecting market account - MISS - No stripe_account_id found for market balanced_customer_uri /v1/customers/CU5NoVqrEvKoDppj8xIKz18b
+[2015-06-08 12:26:25 -0400] - UpdateStripeIdsOnMarket - Linden Hills Farmers' Market (96) - Connecting org customers - Organization already has stripe_customer_id: cus_6H9EUgN2HBGxDn
+[2015-06-08 12:26:25 -0400] - UpdateStripeIdsOnMarket - Linden Hills Farmers' Market (96) - Connecting market BankAccounts - Visa 3812 (551) already has stripe_id: card_163r1x2VpjOYk6Tme7s4mhat

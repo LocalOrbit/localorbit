@@ -1,87 +1,87 @@
-[2015-06-01 14:22:50 -0400] - UpdateStripeIdsOnMarket - Big City Farms (36) - ====================================================================================================
-[2015-06-01 14:22:50 -0400] - UpdateStripeIdsOnMarket - Big City Farms (36) -  Big City Farms (36)
-[2015-06-01 14:22:50 -0400] - UpdateStripeIdsOnMarket - Big City Farms (36) -  Updating stripe IDs for market, orgs and bank accounts.
-[2015-06-01 14:22:50 -0400] - UpdateStripeIdsOnMarket - Big City Farms (36) - 
-[2015-06-01 14:22:50 -0400] - UpdateStripeIdsOnMarket - Big City Farms (36) -  Balanced export file: /home/vagrant/git/localorbit/tools/stripe-migration/from_balanced/2015-06-01-1433181180-MP2eXZmrOPof80u3Irf94Wre.csv
-[2015-06-01 14:22:50 -0400] - UpdateStripeIdsOnMarket - Big City Farms (36) - 
-[2015-06-01 14:22:50 -0400] - UpdateStripeIdsOnMarket - Big City Farms (36) -  Rails.env: production
-[2015-06-01 14:22:50 -0400] - UpdateStripeIdsOnMarket - Big City Farms (36) -  Stripe keys:
-[2015-06-01 14:22:50 -0400] - UpdateStripeIdsOnMarket - Big City Farms (36) -   --> STRIPE_PUBLISHABLE_KEY: pk_live_j85VTsrz51POrss3ni460qaf (pk_live_j85VTsrz51POrss3ni460qaf)
-[2015-06-01 14:22:50 -0400] - UpdateStripeIdsOnMarket - Big City Farms (36) - ====================================================================================================
-[2015-06-01 14:22:50 -0400] - UpdateStripeIdsOnMarket - Big City Farms (36) - Connecting market customer - Market already has stripe_customer_id: cus_5uQ4KxTWMTTInf
-[2015-06-01 14:22:50 -0400] - UpdateStripeIdsOnMarket - Big City Farms (36) - Connecting market account - Market already has stripe_account_id: acct_15l1yTEfmlDtMdOr
-[2015-06-01 14:22:50 -0400] - UpdateStripeIdsOnMarket - Big City Farms (36) - Connecting org customers - Organization already has stripe_customer_id: cus_6HvJEp5grPC8ck
-[2015-06-01 14:22:50 -0400] - UpdateStripeIdsOnMarket - Big City Farms (36) - Connecting org customers - Organization already has stripe_customer_id: cus_6GPjsRqJxJkMoi
-[2015-06-01 14:22:50 -0400] - UpdateStripeIdsOnMarket - Big City Farms (36) - Connecting org customers - Organization already has stripe_customer_id: cus_6GQo2mpFkdvOkc
-[2015-06-01 14:22:50 -0400] - UpdateStripeIdsOnMarket - Big City Farms (36) - Connecting org customers - Organization already has stripe_customer_id: cus_6EwqEtpwhTQVTO
-[2015-06-01 14:22:50 -0400] - UpdateStripeIdsOnMarket - Big City Farms (36) - Connecting org customers - Organization already has stripe_customer_id: cus_69ydyIshw2IoPK
-[2015-06-01 14:22:50 -0400] - UpdateStripeIdsOnMarket - Big City Farms (36) - Connecting org customers - Organization already has stripe_customer_id: cus_69Jj6lf8yI1hd6
-[2015-06-01 14:22:50 -0400] - UpdateStripeIdsOnMarket - Big City Farms (36) - Connecting org customers - Organization already has stripe_customer_id: cus_675YUOZR62AgMH
-[2015-06-01 14:22:50 -0400] - UpdateStripeIdsOnMarket - Big City Farms (36) - Connecting org customers - Organization already has stripe_customer_id: cus_66dD6QSmlt8LbN
-[2015-06-01 14:22:50 -0400] - UpdateStripeIdsOnMarket - Big City Farms (36) - Connecting org customers - Organization already has stripe_customer_id: cus_66crnQfWyXFmbo
-[2015-06-01 14:22:50 -0400] - UpdateStripeIdsOnMarket - Big City Farms (36) - Connecting org customers - Organization already has stripe_customer_id: cus_63hswsy90AaTwV
-[2015-06-01 14:22:50 -0400] - UpdateStripeIdsOnMarket - Big City Farms (36) - Connecting org customers - Organization already has stripe_customer_id: cus_630DWVR5LJ5SpU
-[2015-06-01 14:22:50 -0400] - UpdateStripeIdsOnMarket - Big City Farms (36) - Connecting org customers - MISS - No stripe_customer_id found for Organization St. Timothy's School (3387) balanced_customer_uri /v1/customers/CU2Cku0fl5ovKRMoc1QuprpR
-[2015-06-01 14:22:50 -0400] - UpdateStripeIdsOnMarket - Big City Farms (36) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ5TiAA0wVHWE
-[2015-06-01 14:22:50 -0400] - UpdateStripeIdsOnMarket - Big City Farms (36) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ5jglOjM8107
-[2015-06-01 14:22:50 -0400] - UpdateStripeIdsOnMarket - Big City Farms (36) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ5psQq4u9N5D
-[2015-06-01 14:22:50 -0400] - UpdateStripeIdsOnMarket - Big City Farms (36) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ58Jb6Ps9joK
-[2015-06-01 14:22:50 -0400] - UpdateStripeIdsOnMarket - Big City Farms (36) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4s3Qgiqwg01
-[2015-06-01 14:22:50 -0400] - UpdateStripeIdsOnMarket - Big City Farms (36) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ5UiWPv6kJWW
-[2015-06-01 14:22:50 -0400] - UpdateStripeIdsOnMarket - Big City Farms (36) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ5gWG8MtHpy6
-[2015-06-01 14:22:50 -0400] - UpdateStripeIdsOnMarket - Big City Farms (36) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ59Y0ZcCRjvI
-[2015-06-01 14:22:50 -0400] - UpdateStripeIdsOnMarket - Big City Farms (36) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ42hhfaijy0R
-[2015-06-01 14:22:50 -0400] - UpdateStripeIdsOnMarket - Big City Farms (36) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4poTIRBM1hC
-[2015-06-01 14:22:50 -0400] - UpdateStripeIdsOnMarket - Big City Farms (36) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4hYIUrnpPQu
-[2015-06-01 14:22:50 -0400] - UpdateStripeIdsOnMarket - Big City Farms (36) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4MYeYm7ythb
-[2015-06-01 14:22:50 -0400] - UpdateStripeIdsOnMarket - Big City Farms (36) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4rViUyTOgRr
-[2015-06-01 14:22:50 -0400] - UpdateStripeIdsOnMarket - Big City Farms (36) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4L8OW0G26Mb
-[2015-06-01 14:22:50 -0400] - UpdateStripeIdsOnMarket - Big City Farms (36) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ41TJ68Dlj2B
-[2015-06-01 14:22:50 -0400] - UpdateStripeIdsOnMarket - Big City Farms (36) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4B7Iswr7MjL
-[2015-06-01 14:22:50 -0400] - UpdateStripeIdsOnMarket - Big City Farms (36) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4djMCS3yoLf
-[2015-06-01 14:22:50 -0400] - UpdateStripeIdsOnMarket - Big City Farms (36) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ5dv9w7i822B
-[2015-06-01 14:22:50 -0400] - UpdateStripeIdsOnMarket - Big City Farms (36) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ46unN2xdL76
-[2015-06-01 14:22:50 -0400] - UpdateStripeIdsOnMarket - Big City Farms (36) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ5lngTGK7TlI
-[2015-06-01 14:22:50 -0400] - UpdateStripeIdsOnMarket - Big City Farms (36) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ42orS4qWigH
-[2015-06-01 14:22:50 -0400] - UpdateStripeIdsOnMarket - Big City Farms (36) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4yYIlgff0FV
-[2015-06-01 14:22:50 -0400] - UpdateStripeIdsOnMarket - Big City Farms (36) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4hkTaKPiaH6
-[2015-06-01 14:22:50 -0400] - UpdateStripeIdsOnMarket - Big City Farms (36) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ41Gu5zpcOsu
-[2015-06-01 14:22:50 -0400] - UpdateStripeIdsOnMarket - Big City Farms (36) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4udc8xFQNW7
-[2015-06-01 14:22:50 -0400] - UpdateStripeIdsOnMarket - Big City Farms (36) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4UkXZv7p4wD
-[2015-06-01 14:22:50 -0400] - UpdateStripeIdsOnMarket - Big City Farms (36) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4I5WHhGXTar
-[2015-06-01 14:22:50 -0400] - UpdateStripeIdsOnMarket - Big City Farms (36) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4P8qtkC5f8J
-[2015-06-01 14:22:50 -0400] - UpdateStripeIdsOnMarket - Big City Farms (36) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4t0oTybex81
-[2015-06-01 14:22:50 -0400] - UpdateStripeIdsOnMarket - Big City Farms (36) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ47sG0Yxdz4Y
-[2015-06-01 14:22:50 -0400] - UpdateStripeIdsOnMarket - Big City Farms (36) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ5xhdPU9ucl3
-[2015-06-01 14:22:50 -0400] - UpdateStripeIdsOnMarket - Big City Farms (36) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ43FXKX1QQEv
-[2015-06-01 14:22:50 -0400] - UpdateStripeIdsOnMarket - Big City Farms (36) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4NIk5r6DM5D
-[2015-06-01 14:22:50 -0400] - UpdateStripeIdsOnMarket - Big City Farms (36) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ5VLErS4NC9Q
-[2015-06-01 14:22:50 -0400] - UpdateStripeIdsOnMarket - Big City Farms (36) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4hVfWh2m0uv
-[2015-06-01 14:22:50 -0400] - UpdateStripeIdsOnMarket - Big City Farms (36) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4sXiwpiDgej
-[2015-06-01 14:22:50 -0400] - UpdateStripeIdsOnMarket - Big City Farms (36) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4kFXsagpNYf
-[2015-06-01 14:22:50 -0400] - UpdateStripeIdsOnMarket - Big City Farms (36) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4eisHwrej5Z
-[2015-06-01 14:22:50 -0400] - UpdateStripeIdsOnMarket - Big City Farms (36) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4qPonSJce9z
-[2015-06-01 14:22:50 -0400] - UpdateStripeIdsOnMarket - Big City Farms (36) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ5KtRbSE76WM
-[2015-06-01 14:22:50 -0400] - UpdateStripeIdsOnMarket - Big City Farms (36) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4XSvjThDQ80
-[2015-06-01 14:22:50 -0400] - UpdateStripeIdsOnMarket - Big City Farms (36) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4eMac7AyO5S
-[2015-06-01 14:22:50 -0400] - UpdateStripeIdsOnMarket - Big City Farms (36) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ47FTplMmC9E
-[2015-06-01 14:22:50 -0400] - UpdateStripeIdsOnMarket - Big City Farms (36) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4qILwgio4NL
-[2015-06-01 14:22:50 -0400] - UpdateStripeIdsOnMarket - Big City Farms (36) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ467mkrPzsL2
-[2015-06-01 14:22:50 -0400] - UpdateStripeIdsOnMarket - Big City Farms (36) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4GYetw1ayWU
-[2015-06-01 14:22:50 -0400] - UpdateStripeIdsOnMarket - Big City Farms (36) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ5C1i3VURwDa
-[2015-06-01 14:22:50 -0400] - UpdateStripeIdsOnMarket - Big City Farms (36) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4NKG4up0dhW
-[2015-06-01 14:22:50 -0400] - UpdateStripeIdsOnMarket - Big City Farms (36) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4GHDeg3mlq6
-[2015-06-01 14:22:50 -0400] - UpdateStripeIdsOnMarket - Big City Farms (36) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4AIT2nTxYBc
-[2015-06-01 14:22:50 -0400] - UpdateStripeIdsOnMarket - Big City Farms (36) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ5uaPaB5WiXn
-[2015-06-01 14:22:50 -0400] - UpdateStripeIdsOnMarket - Big City Farms (36) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4hlEPupdzY6
-[2015-06-01 14:22:50 -0400] - UpdateStripeIdsOnMarket - Big City Farms (36) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4OkIGdiDzRp
-[2015-06-01 14:22:50 -0400] - UpdateStripeIdsOnMarket - Big City Farms (36) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4SCRokfBEmG
-[2015-06-01 14:22:50 -0400] - UpdateStripeIdsOnMarket - Big City Farms (36) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4nkAFunPzNm
-[2015-06-01 14:22:50 -0400] - UpdateStripeIdsOnMarket - Big City Farms (36) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4KxTWMTTInf
-[2015-06-01 14:22:50 -0400] - UpdateStripeIdsOnMarket - Big City Farms (36) - Connecting market BankAccounts - PNC BANK, NA 4185 (179) already has stripe_id: ba_15ic982VpjOYk6TmiEfBZOHc
-[2015-06-01 14:22:50 -0400] - UpdateStripeIdsOnMarket - Big City Farms (36) - Connecting org BankAccounts - Organization Blacksauce Kitchen (3847) - Visa 2412 (564) already has stripe_id: card_165LSn2VpjOYk6TmglkqytB1
-[2015-06-01 14:22:51 -0400] - UpdateStripeIdsOnMarket - Big City Farms (36) - Connecting org BankAccounts - Organization La Cuchara (3458) - Visa 4335 (505) already has stripe_id: card_15sFGV2VpjOYk6Tm2xrd8Pb7
-[2015-06-01 14:22:51 -0400] - UpdateStripeIdsOnMarket - Big City Farms (36) - Connecting org BankAccounts - Organization Dooby's (2115) - Visa 3160 (497) already has stripe_id: card_15rDkZ2VpjOYk6Tm77CRCRn8
-[2015-06-01 14:22:51 -0400] - UpdateStripeIdsOnMarket - Big City Farms (36) - Connecting org BankAccounts - Organization Test Customer (1911) - Visa 2729 (465) already has stripe_id: card_15jFTX2VpjOYk6Tm27fi2QgW
-[2015-06-01 14:22:51 -0400] - UpdateStripeIdsOnMarket - Big City Farms (36) - Connecting org BankAccounts - Organization Test Customer (1911) - PNC BANK, NA 4185 (464) already has stripe_id: btok_5v5BWzQhu7Loi8
-[2015-06-01 14:22:51 -0400] - UpdateStripeIdsOnMarket - Big City Farms (36) - Connecting org BankAccounts - Organization Big City Farms (1611) - PNC BANK, NA 4185 (176) already has stripe_id: ba_15ic982VpjOYk6TmiEfBZOHc
+[2015-06-08 12:25:41 -0400] - UpdateStripeIdsOnMarket - Big City Farms (36) - ====================================================================================================
+[2015-06-08 12:25:41 -0400] - UpdateStripeIdsOnMarket - Big City Farms (36) -  Big City Farms (36)
+[2015-06-08 12:25:41 -0400] - UpdateStripeIdsOnMarket - Big City Farms (36) -  Updating stripe IDs for market, orgs and bank accounts.
+[2015-06-08 12:25:41 -0400] - UpdateStripeIdsOnMarket - Big City Farms (36) - 
+[2015-06-08 12:25:41 -0400] - UpdateStripeIdsOnMarket - Big City Farms (36) -  Balanced export file: /home/vagrant/git/localorbit/tools/stripe-migration/from_balanced/2015-06-08-1433769720-MP2eXZmrOPof80u3Irf94Wre.csv
+[2015-06-08 12:25:41 -0400] - UpdateStripeIdsOnMarket - Big City Farms (36) - 
+[2015-06-08 12:25:41 -0400] - UpdateStripeIdsOnMarket - Big City Farms (36) -  Rails.env: production
+[2015-06-08 12:25:41 -0400] - UpdateStripeIdsOnMarket - Big City Farms (36) -  Stripe keys:
+[2015-06-08 12:25:41 -0400] - UpdateStripeIdsOnMarket - Big City Farms (36) -   --> STRIPE_PUBLISHABLE_KEY: pk_live_j85VTsrz51POrss3ni460qaf (pk_live_j85VTsrz51POrss3ni460qaf)
+[2015-06-08 12:25:41 -0400] - UpdateStripeIdsOnMarket - Big City Farms (36) - ====================================================================================================
+[2015-06-08 12:25:41 -0400] - UpdateStripeIdsOnMarket - Big City Farms (36) - Connecting market customer - Market already has stripe_customer_id: cus_5uQ4KxTWMTTInf
+[2015-06-08 12:25:41 -0400] - UpdateStripeIdsOnMarket - Big City Farms (36) - Connecting market account - Market already has stripe_account_id: acct_15l1yTEfmlDtMdOr
+[2015-06-08 12:25:41 -0400] - UpdateStripeIdsOnMarket - Big City Farms (36) - Connecting org customers - Organization already has stripe_customer_id: cus_6HvJEp5grPC8ck
+[2015-06-08 12:25:41 -0400] - UpdateStripeIdsOnMarket - Big City Farms (36) - Connecting org customers - Organization already has stripe_customer_id: cus_6GPjsRqJxJkMoi
+[2015-06-08 12:25:41 -0400] - UpdateStripeIdsOnMarket - Big City Farms (36) - Connecting org customers - Organization already has stripe_customer_id: cus_6GQo2mpFkdvOkc
+[2015-06-08 12:25:41 -0400] - UpdateStripeIdsOnMarket - Big City Farms (36) - Connecting org customers - Organization already has stripe_customer_id: cus_6EwqEtpwhTQVTO
+[2015-06-08 12:25:41 -0400] - UpdateStripeIdsOnMarket - Big City Farms (36) - Connecting org customers - Organization already has stripe_customer_id: cus_69ydyIshw2IoPK
+[2015-06-08 12:25:41 -0400] - UpdateStripeIdsOnMarket - Big City Farms (36) - Connecting org customers - Organization already has stripe_customer_id: cus_69Jj6lf8yI1hd6
+[2015-06-08 12:25:41 -0400] - UpdateStripeIdsOnMarket - Big City Farms (36) - Connecting org customers - Organization already has stripe_customer_id: cus_675YUOZR62AgMH
+[2015-06-08 12:25:41 -0400] - UpdateStripeIdsOnMarket - Big City Farms (36) - Connecting org customers - Organization already has stripe_customer_id: cus_66dD6QSmlt8LbN
+[2015-06-08 12:25:41 -0400] - UpdateStripeIdsOnMarket - Big City Farms (36) - Connecting org customers - Organization already has stripe_customer_id: cus_66crnQfWyXFmbo
+[2015-06-08 12:25:41 -0400] - UpdateStripeIdsOnMarket - Big City Farms (36) - Connecting org customers - Organization already has stripe_customer_id: cus_63hswsy90AaTwV
+[2015-06-08 12:25:41 -0400] - UpdateStripeIdsOnMarket - Big City Farms (36) - Connecting org customers - Organization already has stripe_customer_id: cus_630DWVR5LJ5SpU
+[2015-06-08 12:25:41 -0400] - UpdateStripeIdsOnMarket - Big City Farms (36) - Connecting org customer - INTERESTING - Organization stripe_customer_id is cus_6M6karpNrqEP31, but export data doesn't have Stripe Customer id for this org.
+[2015-06-08 12:25:41 -0400] - UpdateStripeIdsOnMarket - Big City Farms (36) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ5TiAA0wVHWE
+[2015-06-08 12:25:41 -0400] - UpdateStripeIdsOnMarket - Big City Farms (36) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ5jglOjM8107
+[2015-06-08 12:25:41 -0400] - UpdateStripeIdsOnMarket - Big City Farms (36) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ5psQq4u9N5D
+[2015-06-08 12:25:41 -0400] - UpdateStripeIdsOnMarket - Big City Farms (36) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ58Jb6Ps9joK
+[2015-06-08 12:25:41 -0400] - UpdateStripeIdsOnMarket - Big City Farms (36) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4s3Qgiqwg01
+[2015-06-08 12:25:41 -0400] - UpdateStripeIdsOnMarket - Big City Farms (36) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ5UiWPv6kJWW
+[2015-06-08 12:25:41 -0400] - UpdateStripeIdsOnMarket - Big City Farms (36) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ5gWG8MtHpy6
+[2015-06-08 12:25:41 -0400] - UpdateStripeIdsOnMarket - Big City Farms (36) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ59Y0ZcCRjvI
+[2015-06-08 12:25:41 -0400] - UpdateStripeIdsOnMarket - Big City Farms (36) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ42hhfaijy0R
+[2015-06-08 12:25:41 -0400] - UpdateStripeIdsOnMarket - Big City Farms (36) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4poTIRBM1hC
+[2015-06-08 12:25:41 -0400] - UpdateStripeIdsOnMarket - Big City Farms (36) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4hYIUrnpPQu
+[2015-06-08 12:25:41 -0400] - UpdateStripeIdsOnMarket - Big City Farms (36) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4MYeYm7ythb
+[2015-06-08 12:25:41 -0400] - UpdateStripeIdsOnMarket - Big City Farms (36) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4rViUyTOgRr
+[2015-06-08 12:25:41 -0400] - UpdateStripeIdsOnMarket - Big City Farms (36) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4L8OW0G26Mb
+[2015-06-08 12:25:41 -0400] - UpdateStripeIdsOnMarket - Big City Farms (36) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ41TJ68Dlj2B
+[2015-06-08 12:25:41 -0400] - UpdateStripeIdsOnMarket - Big City Farms (36) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4B7Iswr7MjL
+[2015-06-08 12:25:41 -0400] - UpdateStripeIdsOnMarket - Big City Farms (36) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4djMCS3yoLf
+[2015-06-08 12:25:41 -0400] - UpdateStripeIdsOnMarket - Big City Farms (36) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ5dv9w7i822B
+[2015-06-08 12:25:41 -0400] - UpdateStripeIdsOnMarket - Big City Farms (36) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ46unN2xdL76
+[2015-06-08 12:25:41 -0400] - UpdateStripeIdsOnMarket - Big City Farms (36) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ5lngTGK7TlI
+[2015-06-08 12:25:41 -0400] - UpdateStripeIdsOnMarket - Big City Farms (36) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ42orS4qWigH
+[2015-06-08 12:25:41 -0400] - UpdateStripeIdsOnMarket - Big City Farms (36) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4yYIlgff0FV
+[2015-06-08 12:25:41 -0400] - UpdateStripeIdsOnMarket - Big City Farms (36) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4hkTaKPiaH6
+[2015-06-08 12:25:41 -0400] - UpdateStripeIdsOnMarket - Big City Farms (36) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ41Gu5zpcOsu
+[2015-06-08 12:25:41 -0400] - UpdateStripeIdsOnMarket - Big City Farms (36) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4udc8xFQNW7
+[2015-06-08 12:25:41 -0400] - UpdateStripeIdsOnMarket - Big City Farms (36) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4UkXZv7p4wD
+[2015-06-08 12:25:41 -0400] - UpdateStripeIdsOnMarket - Big City Farms (36) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4I5WHhGXTar
+[2015-06-08 12:25:41 -0400] - UpdateStripeIdsOnMarket - Big City Farms (36) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4P8qtkC5f8J
+[2015-06-08 12:25:41 -0400] - UpdateStripeIdsOnMarket - Big City Farms (36) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4t0oTybex81
+[2015-06-08 12:25:41 -0400] - UpdateStripeIdsOnMarket - Big City Farms (36) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ47sG0Yxdz4Y
+[2015-06-08 12:25:41 -0400] - UpdateStripeIdsOnMarket - Big City Farms (36) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ5xhdPU9ucl3
+[2015-06-08 12:25:41 -0400] - UpdateStripeIdsOnMarket - Big City Farms (36) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ43FXKX1QQEv
+[2015-06-08 12:25:41 -0400] - UpdateStripeIdsOnMarket - Big City Farms (36) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4NIk5r6DM5D
+[2015-06-08 12:25:41 -0400] - UpdateStripeIdsOnMarket - Big City Farms (36) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ5VLErS4NC9Q
+[2015-06-08 12:25:41 -0400] - UpdateStripeIdsOnMarket - Big City Farms (36) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4hVfWh2m0uv
+[2015-06-08 12:25:41 -0400] - UpdateStripeIdsOnMarket - Big City Farms (36) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4sXiwpiDgej
+[2015-06-08 12:25:41 -0400] - UpdateStripeIdsOnMarket - Big City Farms (36) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4kFXsagpNYf
+[2015-06-08 12:25:41 -0400] - UpdateStripeIdsOnMarket - Big City Farms (36) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4eisHwrej5Z
+[2015-06-08 12:25:41 -0400] - UpdateStripeIdsOnMarket - Big City Farms (36) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4qPonSJce9z
+[2015-06-08 12:25:41 -0400] - UpdateStripeIdsOnMarket - Big City Farms (36) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ5KtRbSE76WM
+[2015-06-08 12:25:41 -0400] - UpdateStripeIdsOnMarket - Big City Farms (36) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4XSvjThDQ80
+[2015-06-08 12:25:41 -0400] - UpdateStripeIdsOnMarket - Big City Farms (36) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4eMac7AyO5S
+[2015-06-08 12:25:41 -0400] - UpdateStripeIdsOnMarket - Big City Farms (36) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ47FTplMmC9E
+[2015-06-08 12:25:41 -0400] - UpdateStripeIdsOnMarket - Big City Farms (36) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4qILwgio4NL
+[2015-06-08 12:25:41 -0400] - UpdateStripeIdsOnMarket - Big City Farms (36) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ467mkrPzsL2
+[2015-06-08 12:25:41 -0400] - UpdateStripeIdsOnMarket - Big City Farms (36) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4GYetw1ayWU
+[2015-06-08 12:25:41 -0400] - UpdateStripeIdsOnMarket - Big City Farms (36) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ5C1i3VURwDa
+[2015-06-08 12:25:41 -0400] - UpdateStripeIdsOnMarket - Big City Farms (36) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4NKG4up0dhW
+[2015-06-08 12:25:41 -0400] - UpdateStripeIdsOnMarket - Big City Farms (36) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4GHDeg3mlq6
+[2015-06-08 12:25:41 -0400] - UpdateStripeIdsOnMarket - Big City Farms (36) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4AIT2nTxYBc
+[2015-06-08 12:25:41 -0400] - UpdateStripeIdsOnMarket - Big City Farms (36) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ5uaPaB5WiXn
+[2015-06-08 12:25:41 -0400] - UpdateStripeIdsOnMarket - Big City Farms (36) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4hlEPupdzY6
+[2015-06-08 12:25:41 -0400] - UpdateStripeIdsOnMarket - Big City Farms (36) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4OkIGdiDzRp
+[2015-06-08 12:25:41 -0400] - UpdateStripeIdsOnMarket - Big City Farms (36) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4SCRokfBEmG
+[2015-06-08 12:25:41 -0400] - UpdateStripeIdsOnMarket - Big City Farms (36) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4nkAFunPzNm
+[2015-06-08 12:25:41 -0400] - UpdateStripeIdsOnMarket - Big City Farms (36) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4KxTWMTTInf
+[2015-06-08 12:25:41 -0400] - UpdateStripeIdsOnMarket - Big City Farms (36) - Connecting market BankAccounts - PNC BANK, NA 4185 (179) already has stripe_id: ba_15ic982VpjOYk6TmiEfBZOHc
+[2015-06-08 12:25:41 -0400] - UpdateStripeIdsOnMarket - Big City Farms (36) - Connecting org BankAccounts - Organization Blacksauce Kitchen (3847) - Visa 2412 (564) already has stripe_id: card_165LSn2VpjOYk6TmglkqytB1
+[2015-06-08 12:25:41 -0400] - UpdateStripeIdsOnMarket - Big City Farms (36) - Connecting org BankAccounts - Organization La Cuchara (3458) - Visa 4335 (505) already has stripe_id: card_15sFGV2VpjOYk6Tm2xrd8Pb7
+[2015-06-08 12:25:42 -0400] - UpdateStripeIdsOnMarket - Big City Farms (36) - Connecting org BankAccounts - Organization Dooby's (2115) - Visa 3160 (497) already has stripe_id: card_15rDkZ2VpjOYk6Tm77CRCRn8
+[2015-06-08 12:25:42 -0400] - UpdateStripeIdsOnMarket - Big City Farms (36) - Connecting org BankAccounts - Organization Test Customer (1911) - Visa 2729 (465) already has stripe_id: card_15jFTX2VpjOYk6Tm27fi2QgW
+[2015-06-08 12:25:42 -0400] - UpdateStripeIdsOnMarket - Big City Farms (36) - Connecting org BankAccounts - Organization Test Customer (1911) - PNC BANK, NA 4185 (464) already has stripe_id: btok_5v5BWzQhu7Loi8
+[2015-06-08 12:25:42 -0400] - UpdateStripeIdsOnMarket - Big City Farms (36) - Connecting org BankAccounts - Organization Big City Farms (1611) - PNC BANK, NA 4185 (176) already has stripe_id: ba_15ic982VpjOYk6TmiEfBZOHc

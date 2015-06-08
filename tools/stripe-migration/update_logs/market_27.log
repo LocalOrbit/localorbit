@@ -1,35 +1,47 @@
-[2015-06-01 14:23:34 -0400] - UpdateStripeIdsOnMarket - Rooted in Appalachia (27) - ====================================================================================================
-[2015-06-01 14:23:34 -0400] - UpdateStripeIdsOnMarket - Rooted in Appalachia (27) -  Rooted in Appalachia (27)
-[2015-06-01 14:23:34 -0400] - UpdateStripeIdsOnMarket - Rooted in Appalachia (27) -  Updating stripe IDs for market, orgs and bank accounts.
-[2015-06-01 14:23:34 -0400] - UpdateStripeIdsOnMarket - Rooted in Appalachia (27) - 
-[2015-06-01 14:23:34 -0400] - UpdateStripeIdsOnMarket - Rooted in Appalachia (27) -  Balanced export file: /home/vagrant/git/localorbit/tools/stripe-migration/from_balanced/2015-06-01-1433181180-MP2eXZmrOPof80u3Irf94Wre.csv
-[2015-06-01 14:23:34 -0400] - UpdateStripeIdsOnMarket - Rooted in Appalachia (27) - 
-[2015-06-01 14:23:34 -0400] - UpdateStripeIdsOnMarket - Rooted in Appalachia (27) -  Rails.env: production
-[2015-06-01 14:23:34 -0400] - UpdateStripeIdsOnMarket - Rooted in Appalachia (27) -  Stripe keys:
-[2015-06-01 14:23:34 -0400] - UpdateStripeIdsOnMarket - Rooted in Appalachia (27) -   --> STRIPE_PUBLISHABLE_KEY: pk_live_j85VTsrz51POrss3ni460qaf (pk_live_j85VTsrz51POrss3ni460qaf)
-[2015-06-01 14:23:34 -0400] - UpdateStripeIdsOnMarket - Rooted in Appalachia (27) - ====================================================================================================
-[2015-06-01 14:23:34 -0400] - UpdateStripeIdsOnMarket - Rooted in Appalachia (27) - Connecting market customer - Market already has stripe_customer_id: cus_5uQ56kdn8UOf4T
-[2015-06-01 14:23:34 -0400] - UpdateStripeIdsOnMarket - Rooted in Appalachia (27) - Connecting market account - Market already has stripe_account_id: acct_15l1ySEhQqTJw3Zm
-[2015-06-01 14:23:34 -0400] - UpdateStripeIdsOnMarket - Rooted in Appalachia (27) - Connecting org customers - Organization already has stripe_customer_id: cus_6HB5hqtURvKAn7
-[2015-06-01 14:23:34 -0400] - UpdateStripeIdsOnMarket - Rooted in Appalachia (27) - Connecting org customers - Organization already has stripe_customer_id: cus_69yH8TDVT0Pxoq
-[2015-06-01 14:23:34 -0400] - UpdateStripeIdsOnMarket - Rooted in Appalachia (27) - Connecting org customers - Organization already has stripe_customer_id: cus_65vVyDmpY8uwMc
-[2015-06-01 14:23:34 -0400] - UpdateStripeIdsOnMarket - Rooted in Appalachia (27) - Connecting org customers - Organization already has stripe_customer_id: cus_63FIQYbrqW2hZF
-[2015-06-01 14:23:34 -0400] - UpdateStripeIdsOnMarket - Rooted in Appalachia (27) - Connecting org customers - Organization already has stripe_customer_id: cus_61jO1WFQiNtEI7
-[2015-06-01 14:23:34 -0400] - UpdateStripeIdsOnMarket - Rooted in Appalachia (27) - Connecting org customers - Organization already has stripe_customer_id: cus_5yjnaxE1YGfLEb
-[2015-06-01 14:23:34 -0400] - UpdateStripeIdsOnMarket - Rooted in Appalachia (27) - Connecting org customers - Organization already has stripe_customer_id: cus_5wUyw4njPqLCqg
-[2015-06-01 14:23:34 -0400] - UpdateStripeIdsOnMarket - Rooted in Appalachia (27) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ5qJgzQ58JVd
-[2015-06-01 14:23:34 -0400] - UpdateStripeIdsOnMarket - Rooted in Appalachia (27) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ5KUbQOhraAf
-[2015-06-01 14:23:34 -0400] - UpdateStripeIdsOnMarket - Rooted in Appalachia (27) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4co0CkbMDSB
-[2015-06-01 14:23:34 -0400] - UpdateStripeIdsOnMarket - Rooted in Appalachia (27) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4uOC1VWAiau
-[2015-06-01 14:23:34 -0400] - UpdateStripeIdsOnMarket - Rooted in Appalachia (27) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ573QDyLy5sn
-[2015-06-01 14:23:34 -0400] - UpdateStripeIdsOnMarket - Rooted in Appalachia (27) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4liG6TTNoYT
-[2015-06-01 14:23:34 -0400] - UpdateStripeIdsOnMarket - Rooted in Appalachia (27) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4Y1gLZb5dua
-[2015-06-01 14:23:34 -0400] - UpdateStripeIdsOnMarket - Rooted in Appalachia (27) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4liUmtebNpc
-[2015-06-01 14:23:34 -0400] - UpdateStripeIdsOnMarket - Rooted in Appalachia (27) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4SbMXPKmSda
-[2015-06-01 14:23:34 -0400] - UpdateStripeIdsOnMarket - Rooted in Appalachia (27) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4M7aiJlRinA
-[2015-06-01 14:23:34 -0400] - UpdateStripeIdsOnMarket - Rooted in Appalachia (27) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4TffPBgvwQD
-[2015-06-01 14:23:34 -0400] - UpdateStripeIdsOnMarket - Rooted in Appalachia (27) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ5TSeFvz6YmI
-[2015-06-01 14:23:34 -0400] - UpdateStripeIdsOnMarket - Rooted in Appalachia (27) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ54I0lK54KzB
-[2015-06-01 14:23:34 -0400] - UpdateStripeIdsOnMarket - Rooted in Appalachia (27) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4ZiyiXgEGY8
-[2015-06-01 14:23:34 -0400] - UpdateStripeIdsOnMarket - Rooted in Appalachia (27) - Connecting market BankAccounts - HIGHLANDS UNION BANK 4439 (159) already has stripe_id: ba_15ic9g2VpjOYk6TmMUI9Rv7i
-[2015-06-01 14:23:34 -0400] - UpdateStripeIdsOnMarket - Rooted in Appalachia (27) - Connecting org BankAccounts - Organization Foxglove Farms (3664) - BRANCH BANKING & TRUST COMPANY 8007 (531) already has stripe_id: btok_69yH7Y2RQX9sbG
+[2015-06-08 12:26:15 -0400] - UpdateStripeIdsOnMarket - Rooted in Appalachia (27) - ====================================================================================================
+[2015-06-08 12:26:15 -0400] - UpdateStripeIdsOnMarket - Rooted in Appalachia (27) -  Rooted in Appalachia (27)
+[2015-06-08 12:26:15 -0400] - UpdateStripeIdsOnMarket - Rooted in Appalachia (27) -  Updating stripe IDs for market, orgs and bank accounts.
+[2015-06-08 12:26:15 -0400] - UpdateStripeIdsOnMarket - Rooted in Appalachia (27) - 
+[2015-06-08 12:26:15 -0400] - UpdateStripeIdsOnMarket - Rooted in Appalachia (27) -  Balanced export file: /home/vagrant/git/localorbit/tools/stripe-migration/from_balanced/2015-06-08-1433769720-MP2eXZmrOPof80u3Irf94Wre.csv
+[2015-06-08 12:26:15 -0400] - UpdateStripeIdsOnMarket - Rooted in Appalachia (27) - 
+[2015-06-08 12:26:15 -0400] - UpdateStripeIdsOnMarket - Rooted in Appalachia (27) -  Rails.env: production
+[2015-06-08 12:26:15 -0400] - UpdateStripeIdsOnMarket - Rooted in Appalachia (27) -  Stripe keys:
+[2015-06-08 12:26:15 -0400] - UpdateStripeIdsOnMarket - Rooted in Appalachia (27) -   --> STRIPE_PUBLISHABLE_KEY: pk_live_j85VTsrz51POrss3ni460qaf (pk_live_j85VTsrz51POrss3ni460qaf)
+[2015-06-08 12:26:15 -0400] - UpdateStripeIdsOnMarket - Rooted in Appalachia (27) - ====================================================================================================
+[2015-06-08 12:26:15 -0400] - UpdateStripeIdsOnMarket - Rooted in Appalachia (27) - Connecting market customer - Market already has stripe_customer_id: cus_5uQ56kdn8UOf4T
+[2015-06-08 12:26:15 -0400] - UpdateStripeIdsOnMarket - Rooted in Appalachia (27) - Connecting market account - Market already has stripe_account_id: acct_15l1ySEhQqTJw3Zm
+[2015-06-08 12:26:15 -0400] - UpdateStripeIdsOnMarket - Rooted in Appalachia (27) - Connecting org customers - Organization already has stripe_customer_id: cus_6HB5hqtURvKAn7
+[2015-06-08 12:26:15 -0400] - UpdateStripeIdsOnMarket - Rooted in Appalachia (27) - Connecting org customers - Organization already has stripe_customer_id: cus_69yH8TDVT0Pxoq
+[2015-06-08 12:26:15 -0400] - UpdateStripeIdsOnMarket - Rooted in Appalachia (27) - Connecting org customers - Organization already has stripe_customer_id: cus_65vVyDmpY8uwMc
+[2015-06-08 12:26:15 -0400] - UpdateStripeIdsOnMarket - Rooted in Appalachia (27) - Connecting org customers - Organization already has stripe_customer_id: cus_63FIQYbrqW2hZF
+[2015-06-08 12:26:15 -0400] - UpdateStripeIdsOnMarket - Rooted in Appalachia (27) - Connecting org customers - Organization already has stripe_customer_id: cus_61jO1WFQiNtEI7
+[2015-06-08 12:26:15 -0400] - UpdateStripeIdsOnMarket - Rooted in Appalachia (27) - Connecting org customers - Organization already has stripe_customer_id: cus_5yjnaxE1YGfLEb
+[2015-06-08 12:26:15 -0400] - UpdateStripeIdsOnMarket - Rooted in Appalachia (27) - Connecting org customers - Organization already has stripe_customer_id: cus_5wUyw4njPqLCqg
+[2015-06-08 12:26:15 -0400] - UpdateStripeIdsOnMarket - Rooted in Appalachia (27) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ5qJgzQ58JVd
+[2015-06-08 12:26:15 -0400] - UpdateStripeIdsOnMarket - Rooted in Appalachia (27) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ5KUbQOhraAf
+[2015-06-08 12:26:15 -0400] - UpdateStripeIdsOnMarket - Rooted in Appalachia (27) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4co0CkbMDSB
+[2015-06-08 12:26:15 -0400] - UpdateStripeIdsOnMarket - Rooted in Appalachia (27) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4uOC1VWAiau
+[2015-06-08 12:26:15 -0400] - UpdateStripeIdsOnMarket - Rooted in Appalachia (27) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ573QDyLy5sn
+[2015-06-08 12:26:15 -0400] - UpdateStripeIdsOnMarket - Rooted in Appalachia (27) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4liG6TTNoYT
+[2015-06-08 12:26:15 -0400] - UpdateStripeIdsOnMarket - Rooted in Appalachia (27) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4Y1gLZb5dua
+[2015-06-08 12:26:15 -0400] - UpdateStripeIdsOnMarket - Rooted in Appalachia (27) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4liUmtebNpc
+[2015-06-08 12:26:15 -0400] - UpdateStripeIdsOnMarket - Rooted in Appalachia (27) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4SbMXPKmSda
+[2015-06-08 12:26:15 -0400] - UpdateStripeIdsOnMarket - Rooted in Appalachia (27) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4M7aiJlRinA
+[2015-06-08 12:26:15 -0400] - UpdateStripeIdsOnMarket - Rooted in Appalachia (27) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4TffPBgvwQD
+[2015-06-08 12:26:15 -0400] - UpdateStripeIdsOnMarket - Rooted in Appalachia (27) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ5TSeFvz6YmI
+[2015-06-08 12:26:15 -0400] - UpdateStripeIdsOnMarket - Rooted in Appalachia (27) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ54I0lK54KzB
+[2015-06-08 12:26:15 -0400] - UpdateStripeIdsOnMarket - Rooted in Appalachia (27) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4ZiyiXgEGY8
+[2015-06-08 12:26:16 -0400] - UpdateStripeIdsOnMarket - Rooted in Appalachia (27) - Connecting org customers - Updated Organization Appalachian Sustainable Development (1472) stripe_customer_id: cus_5vT7dixlQ5lMMq
+[2015-06-08 12:26:16 -0400] - UpdateStripeIdsOnMarket - Rooted in Appalachia (27) - Connecting org customers - Updated Organization Mid City Grill (1464) stripe_customer_id: cus_5uQ4XpyU7BNYkg
+[2015-06-08 12:26:16 -0400] - UpdateStripeIdsOnMarket - Rooted in Appalachia (27) - Connecting org customers - CONFLICT - Organization stripe_customer_id is ALREADY cus_6LakoGV4AE5NuX, but export data says it should be cus_5uQ4QBefoBYoSV
+[2015-06-08 12:26:16 -0400] - UpdateStripeIdsOnMarket - Rooted in Appalachia (27) - Connecting org customers - CONFLICT - Organization stripe_customer_id is ALREADY cus_6LxgTyvymfvKsW, but export data says it should be cus_5uQ5UNAaNgjSfB
+[2015-06-08 12:26:16 -0400] - UpdateStripeIdsOnMarket - Rooted in Appalachia (27) - Connecting org customers - Updated Organization Figaredo's (1423) stripe_customer_id: cus_5uQ5sRjsGlITCh
+[2015-06-08 12:26:16 -0400] - UpdateStripeIdsOnMarket - Rooted in Appalachia (27) - Connecting org customers - Updated Organization Rain (1420) stripe_customer_id: cus_5uQ5foVP7WlpWh
+[2015-06-08 12:26:16 -0400] - UpdateStripeIdsOnMarket - Rooted in Appalachia (27) - Connecting org customers - Updated Organization Zazzy'z (1400) stripe_customer_id: cus_5uQ48KfJLyBT7y
+[2015-06-08 12:26:16 -0400] - UpdateStripeIdsOnMarket - Rooted in Appalachia (27) - Connecting org customers - Updated Organization Lum & Sue's (1391) stripe_customer_id: cus_5uQ5pUJKoyx7eW
+[2015-06-08 12:26:16 -0400] - UpdateStripeIdsOnMarket - Rooted in Appalachia (27) - Connecting org customers - Updated Organization Sisters at the Martha (1389) stripe_customer_id: cus_5uQ5X65tC1jDHW
+[2015-06-08 12:26:16 -0400] - UpdateStripeIdsOnMarket - Rooted in Appalachia (27) - Connecting org customers - Updated Organization Heartwood (1388) stripe_customer_id: cus_5uQ4nE3e5RUTx7
+[2015-06-08 12:26:16 -0400] - UpdateStripeIdsOnMarket - Rooted in Appalachia (27) - Connecting org customers - Updated Organization Harvest Table (1387) stripe_customer_id: cus_5uQ56IXYTTH7oH
+[2015-06-08 12:26:16 -0400] - UpdateStripeIdsOnMarket - Rooted in Appalachia (27) - Connecting org customers - Updated Organization Machiavelli's (1381) stripe_customer_id: cus_5uQ5KecxmFRTkA
+[2015-06-08 12:26:16 -0400] - UpdateStripeIdsOnMarket - Rooted in Appalachia (27) - Connecting market BankAccounts - HIGHLANDS UNION BANK 4439 (159) already has stripe_id: ba_15ic9g2VpjOYk6TmMUI9Rv7i
+[2015-06-08 12:26:17 -0400] - UpdateStripeIdsOnMarket - Rooted in Appalachia (27) - Connecting org BankAccounts - Organization Foxglove Farms (3664) - BRANCH BANKING & TRUST COMPANY 8007 (531) already has stripe_id: btok_69yH7Y2RQX9sbG

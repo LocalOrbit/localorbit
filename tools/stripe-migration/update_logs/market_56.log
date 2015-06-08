@@ -1,18 +1,18 @@
-[2015-06-01 14:23:52 -0400] - UpdateStripeIdsOnMarket - 4Rivers Fresh Foods (56) - ====================================================================================================
-[2015-06-01 14:23:52 -0400] - UpdateStripeIdsOnMarket - 4Rivers Fresh Foods (56) -  4Rivers Fresh Foods (56)
-[2015-06-01 14:23:52 -0400] - UpdateStripeIdsOnMarket - 4Rivers Fresh Foods (56) -  Updating stripe IDs for market, orgs and bank accounts.
-[2015-06-01 14:23:52 -0400] - UpdateStripeIdsOnMarket - 4Rivers Fresh Foods (56) - 
-[2015-06-01 14:23:52 -0400] - UpdateStripeIdsOnMarket - 4Rivers Fresh Foods (56) -  Balanced export file: /home/vagrant/git/localorbit/tools/stripe-migration/from_balanced/2015-06-01-1433181180-MP2eXZmrOPof80u3Irf94Wre.csv
-[2015-06-01 14:23:52 -0400] - UpdateStripeIdsOnMarket - 4Rivers Fresh Foods (56) - 
-[2015-06-01 14:23:52 -0400] - UpdateStripeIdsOnMarket - 4Rivers Fresh Foods (56) -  Rails.env: production
-[2015-06-01 14:23:52 -0400] - UpdateStripeIdsOnMarket - 4Rivers Fresh Foods (56) -  Stripe keys:
-[2015-06-01 14:23:52 -0400] - UpdateStripeIdsOnMarket - 4Rivers Fresh Foods (56) -   --> STRIPE_PUBLISHABLE_KEY: pk_live_j85VTsrz51POrss3ni460qaf (pk_live_j85VTsrz51POrss3ni460qaf)
-[2015-06-01 14:23:52 -0400] - UpdateStripeIdsOnMarket - 4Rivers Fresh Foods (56) - ====================================================================================================
-[2015-06-01 14:23:53 -0400] - UpdateStripeIdsOnMarket - 4Rivers Fresh Foods (56) - Connecting market customer - Updated Market stripe_customer_id: cus_5uQ4pi8kQyHSMl
-[2015-06-01 14:23:53 -0400] - UpdateStripeIdsOnMarket - 4Rivers Fresh Foods (56) - Connecting market account - MISS - No stripe_account_id found for market balanced_customer_uri /v1/customers/CU4y8ev1cC5jtQ4Q4W3CRZvV
-[2015-06-01 14:23:53 -0400] - UpdateStripeIdsOnMarket - 4Rivers Fresh Foods (56) - Connecting org customers - Updated Organization Homestead Farms (2452) stripe_customer_id: cus_5uQ4Dd8IMtnSCl
-[2015-06-01 14:23:53 -0400] - UpdateStripeIdsOnMarket - 4Rivers Fresh Foods (56) - Connecting org customers - Updated Organization Dickey Farms Mushrooms (2451) stripe_customer_id: cus_5uQ58D7TQGD8ar
-[2015-06-01 14:23:53 -0400] - UpdateStripeIdsOnMarket - 4Rivers Fresh Foods (56) - Connecting org customers - Updated Organization Cherry Creek Orchards (2450) stripe_customer_id: cus_5uQ57W9wRHI1xv
-[2015-06-01 14:23:54 -0400] - UpdateStripeIdsOnMarket - 4Rivers Fresh Foods (56) - Connecting org customers - Updated Organization Lady Bugg Bakery (2449) stripe_customer_id: cus_5uQ46GhRbeiiV4
-[2015-06-01 14:23:59 -0400] - UpdateStripeIdsOnMarket - 4Rivers Fresh Foods (56) - Connecting org customers - Updated Organization Delta Grind (2448) stripe_customer_id: cus_5uQ4TG6m4811Mq
-[2015-06-01 14:23:59 -0400] - UpdateStripeIdsOnMarket - 4Rivers Fresh Foods (56) - Connecting org customers - Updated Organization Brown Family Dairy (2447) stripe_customer_id: cus_5uQ5LttBKhyhKK
+[2015-06-08 12:26:30 -0400] - UpdateStripeIdsOnMarket - 4Rivers Fresh Foods (56) - ====================================================================================================
+[2015-06-08 12:26:30 -0400] - UpdateStripeIdsOnMarket - 4Rivers Fresh Foods (56) -  4Rivers Fresh Foods (56)
+[2015-06-08 12:26:30 -0400] - UpdateStripeIdsOnMarket - 4Rivers Fresh Foods (56) -  Updating stripe IDs for market, orgs and bank accounts.
+[2015-06-08 12:26:30 -0400] - UpdateStripeIdsOnMarket - 4Rivers Fresh Foods (56) - 
+[2015-06-08 12:26:30 -0400] - UpdateStripeIdsOnMarket - 4Rivers Fresh Foods (56) -  Balanced export file: /home/vagrant/git/localorbit/tools/stripe-migration/from_balanced/2015-06-08-1433769720-MP2eXZmrOPof80u3Irf94Wre.csv
+[2015-06-08 12:26:30 -0400] - UpdateStripeIdsOnMarket - 4Rivers Fresh Foods (56) - 
+[2015-06-08 12:26:30 -0400] - UpdateStripeIdsOnMarket - 4Rivers Fresh Foods (56) -  Rails.env: production
+[2015-06-08 12:26:30 -0400] - UpdateStripeIdsOnMarket - 4Rivers Fresh Foods (56) -  Stripe keys:
+[2015-06-08 12:26:30 -0400] - UpdateStripeIdsOnMarket - 4Rivers Fresh Foods (56) -   --> STRIPE_PUBLISHABLE_KEY: pk_live_j85VTsrz51POrss3ni460qaf (pk_live_j85VTsrz51POrss3ni460qaf)
+[2015-06-08 12:26:30 -0400] - UpdateStripeIdsOnMarket - 4Rivers Fresh Foods (56) - ====================================================================================================
+[2015-06-08 12:26:30 -0400] - UpdateStripeIdsOnMarket - 4Rivers Fresh Foods (56) - Connecting market customer - Market already has stripe_customer_id: cus_5uQ4pi8kQyHSMl
+[2015-06-08 12:26:30 -0400] - UpdateStripeIdsOnMarket - 4Rivers Fresh Foods (56) - Connecting market account - MISS - No stripe_account_id found for market balanced_customer_uri /v1/customers/CU4y8ev1cC5jtQ4Q4W3CRZvV
+[2015-06-08 12:26:30 -0400] - UpdateStripeIdsOnMarket - 4Rivers Fresh Foods (56) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4Dd8IMtnSCl
+[2015-06-08 12:26:30 -0400] - UpdateStripeIdsOnMarket - 4Rivers Fresh Foods (56) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ58D7TQGD8ar
+[2015-06-08 12:26:30 -0400] - UpdateStripeIdsOnMarket - 4Rivers Fresh Foods (56) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ57W9wRHI1xv
+[2015-06-08 12:26:30 -0400] - UpdateStripeIdsOnMarket - 4Rivers Fresh Foods (56) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ46GhRbeiiV4
+[2015-06-08 12:26:30 -0400] - UpdateStripeIdsOnMarket - 4Rivers Fresh Foods (56) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4TG6m4811Mq
+[2015-06-08 12:26:30 -0400] - UpdateStripeIdsOnMarket - 4Rivers Fresh Foods (56) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ5LttBKhyhKK

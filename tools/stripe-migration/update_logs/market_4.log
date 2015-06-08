@@ -1,119 +1,126 @@
-[2015-06-01 14:22:38 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - ====================================================================================================
-[2015-06-01 14:22:38 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) -  All Things Food (4)
-[2015-06-01 14:22:38 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) -  Updating stripe IDs for market, orgs and bank accounts.
-[2015-06-01 14:22:38 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - 
-[2015-06-01 14:22:38 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) -  Balanced export file: /home/vagrant/git/localorbit/tools/stripe-migration/from_balanced/2015-06-01-1433181180-MP2eXZmrOPof80u3Irf94Wre.csv
-[2015-06-01 14:22:38 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - 
-[2015-06-01 14:22:38 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) -  Rails.env: production
-[2015-06-01 14:22:38 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) -  Stripe keys:
-[2015-06-01 14:22:38 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) -   --> STRIPE_PUBLISHABLE_KEY: pk_live_j85VTsrz51POrss3ni460qaf (pk_live_j85VTsrz51POrss3ni460qaf)
-[2015-06-01 14:22:38 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - ====================================================================================================
-[2015-06-01 14:22:38 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting market customer - MISS - No stripe_customer_id found for market balanced_customer_uri /v1/customers/CU6RyC3RgJJy9oBAq0AbFHXd
-[2015-06-01 14:22:38 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting market account - MISS - No stripe_account_id found for market balanced_customer_uri /v1/customers/CU6RyC3RgJJy9oBAq0AbFHXd
-[2015-06-01 14:22:38 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ5wnzY4IpDKR
-[2015-06-01 14:22:38 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ54UaAw8iEad
-[2015-06-01 14:22:38 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ5zLHAQeFqxx
-[2015-06-01 14:22:38 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org customers - MISS - No stripe_customer_id found for Organization All Things Food  (20) balanced_customer_uri /v1/customers/CU3W2dTYSDAwPzNo7imzuv7Z
-[2015-06-01 14:22:38 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4JFLoK9utku
-[2015-06-01 14:22:38 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ5LWZf9vBN5h
-[2015-06-01 14:22:38 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ5O0wUdcXWQM
-[2015-06-01 14:22:38 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ5xCqoLP9Sxu
-[2015-06-01 14:22:38 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ5EW9JRKnp83
-[2015-06-01 14:22:38 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4pTqT2eGAVU
-[2015-06-01 14:22:38 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4QE0OWoNp1n
-[2015-06-01 14:22:38 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4vbCXMxiqLA
-[2015-06-01 14:22:38 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ5EQf6Qk9y0G
-[2015-06-01 14:22:38 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ5xwd28wjzC3
-[2015-06-01 14:22:38 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ5Zz6uZ7odly
-[2015-06-01 14:22:38 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ5jBg5lSkbxC
-[2015-06-01 14:22:38 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ47mdyvKeCEv
-[2015-06-01 14:22:38 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4G6a4B3sNOc
-[2015-06-01 14:22:38 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ5Fd7v7m3bH4
-[2015-06-01 14:22:38 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ5LukyVebcY4
-[2015-06-01 14:22:39 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4JHkDFrNt4p
-[2015-06-01 14:22:39 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ5Mzuwor9KQz
-[2015-06-01 14:22:39 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ5g0ubuU4mXL
-[2015-06-01 14:22:39 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4lus49wtJA2
-[2015-06-01 14:22:39 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4cmasPqpGfL
-[2015-06-01 14:22:39 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4V7KZhHVIlZ
-[2015-06-01 14:22:39 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org customers - Organization already has stripe_customer_id: cus_6H9f6MKHHTusVh
-[2015-06-01 14:22:39 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4SSmvLJvB0M
-[2015-06-01 14:22:39 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4F89GQQfFpy
-[2015-06-01 14:22:39 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4uSSu8ePw1U
-[2015-06-01 14:22:39 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ46cjR7rRwvF
-[2015-06-01 14:22:39 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4EAsg0IEz96
-[2015-06-01 14:22:39 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org customers - Organization already has stripe_customer_id: cus_5uS7asojsZBQ2c
-[2015-06-01 14:22:39 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4x2CN0w9w3t
-[2015-06-01 14:22:39 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4mIBMJlZm47
-[2015-06-01 14:22:39 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org customers - Organization already has stripe_customer_id: cus_67Qd2kX7swB0p9
-[2015-06-01 14:22:39 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org customers - Organization already has stripe_customer_id: cus_67m7DbG2DYNpGY
-[2015-06-01 14:22:39 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org customers - MISS - No stripe_customer_id found for Organization Shontael Elward (3791) balanced_customer_uri /v1/customers/CU3WOQAjByYzV8Ma3lOPxYdI
-[2015-06-01 14:22:39 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org customers - Organization already has stripe_customer_id: cus_5wVZ9cDeRYYKfb
-[2015-06-01 14:22:39 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org customers - Organization already has stripe_customer_id: cus_6178TvWLdXgpLv
-[2015-06-01 14:22:39 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ5a5Q9H1V0w0
-[2015-06-01 14:22:39 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ5HvJDarKf0Y
-[2015-06-01 14:22:39 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ5Jw1uHU2Fyk
-[2015-06-01 14:22:39 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ5iJW8NcvGXB
-[2015-06-01 14:22:39 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org customers - Organization already has stripe_customer_id: cus_5vQtDESuIjwArD
-[2015-06-01 14:22:39 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ5xLigQkwbMK
-[2015-06-01 14:22:39 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ5nlCFWtjGYv
-[2015-06-01 14:22:39 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ59luCjVzoMz
-[2015-06-01 14:22:39 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ5rlHvTgpInh
-[2015-06-01 14:22:39 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ5BfQUIaMpae
-[2015-06-01 14:22:39 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ54oy2iCq2Va
-[2015-06-01 14:22:39 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ5n4toFsuBC9
-[2015-06-01 14:22:39 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org customers - Organization already has stripe_customer_id: cus_69elkjNxuZr1vJ
-[2015-06-01 14:22:39 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org customers - Organization already has stripe_customer_id: cus_69F1zlbqwo0pm9
-[2015-06-01 14:22:39 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org customers - Organization already has stripe_customer_id: cus_69Ex3yCmjrd0Qz
-[2015-06-01 14:22:39 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org customers - Organization already has stripe_customer_id: cus_69EtslA9GhnUew
-[2015-06-01 14:22:39 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org customers - Organization already has stripe_customer_id: cus_69eTlhQfm26X4X
-[2015-06-01 14:22:39 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org customers - Organization already has stripe_customer_id: cus_69bvC9WEVipncR
-[2015-06-01 14:22:39 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ55aq13zPUc1
-[2015-06-01 14:22:39 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ5S3ldaAOr0c
-[2015-06-01 14:22:39 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ5uS3Z8mzIVT
-[2015-06-01 14:22:39 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ5oTrINxCWtF
-[2015-06-01 14:22:39 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org customers - Organization already has stripe_customer_id: cus_676EDes6NwBCvV
-[2015-06-01 14:22:39 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ5yw6XCcI3oA
-[2015-06-01 14:22:39 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ59FNztBBnqR
-[2015-06-01 14:22:39 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org customers - Organization already has stripe_customer_id: cus_5vQun7wdBCYbZ0
-[2015-06-01 14:22:39 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ58EJy98S0aF
-[2015-06-01 14:22:39 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting market BankAccounts - MISS - No stripe_id found for FIRST FEDERAL BANK OF THE MIDWEST 2555 (222) balanced_customer_uri /v1/marketplaces/MP2eXZmrOPof80u3Irf94Wre/bank_accounts/BA27FNhPX0JMNupY5cmn5bAm
-[2015-06-01 14:22:39 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org BankAccounts - Organization Katieland Dairy (162) - American Express 2006 (36) already has stripe_id: card_15ic9m2VpjOYk6Tm12lt26ou
-[2015-06-01 14:22:39 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org BankAccounts - Organization Mary Lloyd (163) - American Express 1015 (238) already has stripe_id: card_15ic9Y2VpjOYk6TmoFnsG3XB
-[2015-06-01 14:22:39 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org BankAccounts - Organization Mary Lloyd (163) - MISS - No stripe_id found for MasterCard 5925 (22) balanced_customer_uri /v1/marketplaces/MP2eXZmrOPof80u3Irf94Wre/cards/CC48HfFb4LmlvWN31sxcYk1t
-[2015-06-01 14:22:39 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org BankAccounts - Organization Sandy Gordon (170) - Visa 1179 (50) already has stripe_id: card_15ic8n2VpjOYk6Tmrfa09GUS
-[2015-06-01 14:22:39 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org BankAccounts - Organization Logan Smith (185) - MasterCard 2706 (27) already has stripe_id: card_15ic9V2VpjOYk6TmvyQnt07t
-[2015-06-01 14:22:39 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org BankAccounts - Organization Tracey Kennedy (187) - MasterCard 9812 (28) already has stripe_id: card_15ic9I2VpjOYk6TmzRUCH8SM
-[2015-06-01 14:22:39 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org BankAccounts - Organization Doreen DeLisle (221) - FIRST FEDERAL BANK OF THE MIDWEST 9830 (40) already has stripe_id: ba_15ic9N2VpjOYk6TmootSnYMp
-[2015-06-01 14:22:39 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org BankAccounts - Organization Doreen DeLisle (221) - Discover 0864 (41) already has stripe_id: card_15ic9T2VpjOYk6Tm6WX07yGJ
-[2015-06-01 14:22:39 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org BankAccounts - Organization Kay Cummins (1503) - American Express 1003 (291) already has stripe_id: card_15ic972VpjOYk6TmIbDkqFMA
-[2015-06-01 14:22:39 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org BankAccounts - Organization Karmin Brooks (1615) - MasterCard 1987 (172) already has stripe_id: card_15ic9j2VpjOYk6TmRCQ6NvZn
-[2015-06-01 14:22:39 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org BankAccounts - Organization Kari Shininger (1690) - MISS - No stripe_id found for Visa 6628 (181) balanced_customer_uri /v1/marketplaces/MP2eXZmrOPof80u3Irf94Wre/cards/CC22UVonuDXdttNlVGNSZ4v1
-[2015-06-01 14:22:39 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org BankAccounts - Organization Sharon Ransom - OB/GYN Bryan (1815) - American Express 2013 (199) already has stripe_id: card_15ic9k2VpjOYk6Tm2wjxlgHc
-[2015-06-01 14:22:39 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org BankAccounts - Organization Karmin Brooks (1616) - MasterCard 1987 (198) already has stripe_id: card_15ic8r2VpjOYk6TmfKoPMkSQ
-[2015-06-01 14:22:39 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org BankAccounts - Organization Melodee Moore (1760) - Visa 1286 (190) already has stripe_id: card_15ic9u2VpjOYk6Tm4neuPmr5
-[2015-06-01 14:22:39 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org BankAccounts - Organization Wende Sharma (2005) - MasterCard 5579 (232) already has stripe_id: card_15ic962VpjOYk6TmuheVZ2ok
-[2015-06-01 14:22:39 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org BankAccounts - Organization Amanda Andres (208) - MasterCard 8007 (231) already has stripe_id: card_15ic902VpjOYk6Tm2Vq6uTEY
-[2015-06-01 14:22:39 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org BankAccounts - Organization Mindy Wade (2049) - Visa 0191 (241) already has stripe_id: card_15ic982VpjOYk6TmNRazxejG
-[2015-06-01 14:22:39 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org BankAccounts - Organization Marcia Culler (2183) - Visa 6873 (267) already has stripe_id: card_15ic992VpjOYk6TmAkbhgMA2
-[2015-06-01 14:22:39 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org BankAccounts - Organization Kelsey (2210) - MasterCard 7086 (282) already has stripe_id: card_15ic972VpjOYk6Tm3JIf69Fg
-[2015-06-01 14:22:39 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org BankAccounts - Organization Kelsey (2210) - MasterCard 8801 (276) already has stripe_id: card_15ic9B2VpjOYk6Tm142vzo2C
-[2015-06-01 14:22:39 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org BankAccounts - Organization Sonya Mavis (2207) - MasterCard 3995 (281) already has stripe_id: card_15ic9K2VpjOYk6TmCY1dbgnJ
-[2015-06-01 14:22:39 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org BankAccounts - Organization Kyli McCullough (2229) - MasterCard 6307 (283) already has stripe_id: card_15ic9Q2VpjOYk6Tmw30B6tqP
-[2015-06-01 14:22:39 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org BankAccounts - Organization The Bell Family (2243) - MasterCard 4750 (286) already has stripe_id: card_15ic992VpjOYk6Tm86bb3d9j
-[2015-06-01 14:22:39 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org BankAccounts - Organization Shontael Elward (3791) - MasterCard 4559 (547) already has stripe_id: tok_162TTn2VpjOYk6Tmcvvgll0k
-[2015-06-01 14:22:39 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org BankAccounts - Organization Lou Pendleton (153) - MasterCard 4513 (19) already has stripe_id: card_15ic9W2VpjOYk6Tm130Km52Z
-[2015-06-01 14:22:39 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org BankAccounts - Organization Becky McGuire (155) - Visa 4842 (35) already has stripe_id: card_15ic9o2VpjOYk6Tme9eMnRlh
-[2015-06-01 14:22:39 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org BankAccounts - Organization Melody Turner (156) - FIRST FEDERAL BANK OF THE MIDWEST 4474 (20) already has stripe_id: ba_15l25E2VpjOYk6TmekHovelC
-[2015-06-01 14:22:39 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org BankAccounts - Organization Marion Allen (158) - MISS - No stripe_id found for MasterCard 6681 (21) balanced_customer_uri /v1/marketplaces/MP2eXZmrOPof80u3Irf94Wre/cards/CC3ahL7A5HViy5b8Xv0IZ9vJ
-[2015-06-01 14:22:39 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org BankAccounts - Organization Stephanie Bexten (180) - MasterCard 9631 (29) already has stripe_id: card_15ic9L2VpjOYk6TmWpOkVBsF
-[2015-06-01 14:22:39 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org BankAccounts - Organization Northwest Ohio Chiropractic (197) - MIDWEST COMMUNITY FCU 0623 (69) already has stripe_id: ba_15ic9S2VpjOYk6TmiVRdxdAw
-[2015-06-01 14:22:39 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org BankAccounts - Organization Anne Bard (204) - MasterCard 3190 (290) already has stripe_id: card_15ic9U2VpjOYk6TmkjlfWEph
-[2015-06-01 14:22:39 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org BankAccounts - Organization Anne Bard (204) - American Express 2541 (205) already has stripe_id: card_15ic9V2VpjOYk6Tm1upVyiaB
-[2015-06-01 14:22:39 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org BankAccounts - Organization Anne Bard (204) - Visa 4510 (45) already has stripe_id: card_15ic9Z2VpjOYk6TmSArCKcpD
-[2015-06-01 14:22:40 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org BankAccounts - Organization Debra Kepler (222) - MISS - No stripe_id found for MasterCard 6233 (44) balanced_customer_uri /v1/marketplaces/MP2eXZmrOPof80u3Irf94Wre/cards/CC1FPExz2G5v1JrAJdgNH7Ts
-[2015-06-01 14:22:40 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org BankAccounts - Organization Beverly (142) - Visa 1825 (43) already has stripe_id: card_15ic9Q2VpjOYk6TmpniwDgBI
-[2015-06-01 14:22:40 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org BankAccounts - Organization Beverly (142) - THE HICKSVILLE BANK 4446 (42) already has stripe_id: ba_15ic9b2VpjOYk6TmbvP8Ko7R
-[2015-06-01 14:22:40 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org BankAccounts - Organization Mike Gill (146) - MasterCard 0646 (18) already has stripe_id: card_15ic9t2VpjOYk6TmrgENSyXN
-[2015-06-01 14:22:40 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org BankAccounts - Organization Pam Sauder (148) - MISS - No stripe_id found for MasterCard 4356 (49) balanced_customer_uri /v1/marketplaces/MP2eXZmrOPof80u3Irf94Wre/cards/CChgk0m7SKJ5Z9edVzmu2ps
-[2015-06-01 14:22:40 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org BankAccounts - Organization Abby Williams (150) - Visa 5942 (25) already has stripe_id: card_15ic9m2VpjOYk6TmHQHLZrgg
+[2015-06-08 12:25:26 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - ====================================================================================================
+[2015-06-08 12:25:26 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) -  All Things Food (4)
+[2015-06-08 12:25:26 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) -  Updating stripe IDs for market, orgs and bank accounts.
+[2015-06-08 12:25:26 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - 
+[2015-06-08 12:25:26 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) -  Balanced export file: /home/vagrant/git/localorbit/tools/stripe-migration/from_balanced/2015-06-08-1433769720-MP2eXZmrOPof80u3Irf94Wre.csv
+[2015-06-08 12:25:26 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - 
+[2015-06-08 12:25:26 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) -  Rails.env: production
+[2015-06-08 12:25:26 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) -  Stripe keys:
+[2015-06-08 12:25:26 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) -   --> STRIPE_PUBLISHABLE_KEY: pk_live_j85VTsrz51POrss3ni460qaf (pk_live_j85VTsrz51POrss3ni460qaf)
+[2015-06-08 12:25:26 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - ====================================================================================================
+[2015-06-08 12:25:26 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting market customer - MISS - No stripe_customer_id found for market balanced_customer_uri /v1/customers/CU6RyC3RgJJy9oBAq0AbFHXd
+[2015-06-08 12:25:26 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting market account - MISS - No stripe_account_id found for market balanced_customer_uri /v1/customers/CU6RyC3RgJJy9oBAq0AbFHXd
+[2015-06-08 12:25:26 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org customers - Updated Organization The Ridge Project (12) stripe_customer_id: cus_5uQ5pIiJbeZih6
+[2015-06-08 12:25:26 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org customers - Updated Organization Sandy Acres (32) stripe_customer_id: cus_5uQ5nzCXXUlFXT
+[2015-06-08 12:25:26 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org customers - Updated Organization Primitive Serendipity Homestead (30) stripe_customer_id: cus_5uQ5iSh4JC8SFS
+[2015-06-08 12:25:26 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ5wnzY4IpDKR
+[2015-06-08 12:25:26 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org customers - Updated Organization Laura Juarez (166) stripe_customer_id: cus_5uQ4a6dmC3PYPg
+[2015-06-08 12:25:26 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ54UaAw8iEad
+[2015-06-08 12:25:26 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ5zLHAQeFqxx
+[2015-06-08 12:25:26 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org customers - MISS - No stripe_customer_id found for Organization All Things Food  (20) balanced_customer_uri /v1/customers/CU3W2dTYSDAwPzNo7imzuv7Z
+[2015-06-08 12:25:26 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4JFLoK9utku
+[2015-06-08 12:25:26 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ5LWZf9vBN5h
+[2015-06-08 12:25:26 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ5O0wUdcXWQM
+[2015-06-08 12:25:26 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ5xCqoLP9Sxu
+[2015-06-08 12:25:26 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ5EW9JRKnp83
+[2015-06-08 12:25:26 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4pTqT2eGAVU
+[2015-06-08 12:25:26 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4QE0OWoNp1n
+[2015-06-08 12:25:26 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4vbCXMxiqLA
+[2015-06-08 12:25:26 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ5EQf6Qk9y0G
+[2015-06-08 12:25:26 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ5xwd28wjzC3
+[2015-06-08 12:25:26 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ5Zz6uZ7odly
+[2015-06-08 12:25:26 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ5jBg5lSkbxC
+[2015-06-08 12:25:26 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ47mdyvKeCEv
+[2015-06-08 12:25:26 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4G6a4B3sNOc
+[2015-06-08 12:25:26 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ5Fd7v7m3bH4
+[2015-06-08 12:25:26 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ5LukyVebcY4
+[2015-06-08 12:25:26 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4JHkDFrNt4p
+[2015-06-08 12:25:26 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ5Mzuwor9KQz
+[2015-06-08 12:25:26 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ5g0ubuU4mXL
+[2015-06-08 12:25:26 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4lus49wtJA2
+[2015-06-08 12:25:26 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4cmasPqpGfL
+[2015-06-08 12:25:26 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4V7KZhHVIlZ
+[2015-06-08 12:25:26 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org customers - Organization already has stripe_customer_id: cus_6H9f6MKHHTusVh
+[2015-06-08 12:25:26 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4SSmvLJvB0M
+[2015-06-08 12:25:26 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org customers - Updated Organization Fr. John's Micobrewery (206) stripe_customer_id: cus_5uQ5Z6Eae6cuQx
+[2015-06-08 12:25:26 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4F89GQQfFpy
+[2015-06-08 12:25:26 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4uSSu8ePw1U
+[2015-06-08 12:25:26 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ46cjR7rRwvF
+[2015-06-08 12:25:26 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4EAsg0IEz96
+[2015-06-08 12:25:27 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org customers - Organization already has stripe_customer_id: cus_5uS7asojsZBQ2c
+[2015-06-08 12:25:27 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4x2CN0w9w3t
+[2015-06-08 12:25:27 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4mIBMJlZm47
+[2015-06-08 12:25:27 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org customers - Updated Organization TESTING Pre-Order Buyers Club (40) stripe_customer_id: cus_5uQ5s4oLVXmb04
+[2015-06-08 12:25:27 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org customers - Organization already has stripe_customer_id: cus_67Qd2kX7swB0p9
+[2015-06-08 12:25:27 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org customers - Organization already has stripe_customer_id: cus_67m7DbG2DYNpGY
+[2015-06-08 12:25:27 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org customers - MISS - No stripe_customer_id found for Organization Shontael Elward (3791) balanced_customer_uri /v1/customers/CU3WOQAjByYzV8Ma3lOPxYdI
+[2015-06-08 12:25:27 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org customers - Organization already has stripe_customer_id: cus_5wVZ9cDeRYYKfb
+[2015-06-08 12:25:27 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org customers - Organization already has stripe_customer_id: cus_6178TvWLdXgpLv
+[2015-06-08 12:25:27 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ5a5Q9H1V0w0
+[2015-06-08 12:25:27 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ5HvJDarKf0Y
+[2015-06-08 12:25:27 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ5Jw1uHU2Fyk
+[2015-06-08 12:25:27 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ5iJW8NcvGXB
+[2015-06-08 12:25:27 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org customers - Organization already has stripe_customer_id: cus_5vQtDESuIjwArD
+[2015-06-08 12:25:27 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ5xLigQkwbMK
+[2015-06-08 12:25:27 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ5nlCFWtjGYv
+[2015-06-08 12:25:27 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ59luCjVzoMz
+[2015-06-08 12:25:27 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ5rlHvTgpInh
+[2015-06-08 12:25:27 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ5BfQUIaMpae
+[2015-06-08 12:25:27 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ54oy2iCq2Va
+[2015-06-08 12:25:27 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ5n4toFsuBC9
+[2015-06-08 12:25:27 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org customers - Organization already has stripe_customer_id: cus_69elkjNxuZr1vJ
+[2015-06-08 12:25:27 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org customers - Organization already has stripe_customer_id: cus_69F1zlbqwo0pm9
+[2015-06-08 12:25:27 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org customers - Organization already has stripe_customer_id: cus_69Ex3yCmjrd0Qz
+[2015-06-08 12:25:27 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org customers - Organization already has stripe_customer_id: cus_69EtslA9GhnUew
+[2015-06-08 12:25:27 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org customers - Organization already has stripe_customer_id: cus_69eTlhQfm26X4X
+[2015-06-08 12:25:27 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org customers - Organization already has stripe_customer_id: cus_69bvC9WEVipncR
+[2015-06-08 12:25:27 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ55aq13zPUc1
+[2015-06-08 12:25:27 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ5S3ldaAOr0c
+[2015-06-08 12:25:27 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ5uS3Z8mzIVT
+[2015-06-08 12:25:27 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ5oTrINxCWtF
+[2015-06-08 12:25:27 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org customers - Organization already has stripe_customer_id: cus_676EDes6NwBCvV
+[2015-06-08 12:25:27 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ5yw6XCcI3oA
+[2015-06-08 12:25:27 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ59FNztBBnqR
+[2015-06-08 12:25:27 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org customers - Organization already has stripe_customer_id: cus_5vQun7wdBCYbZ0
+[2015-06-08 12:25:27 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ58EJy98S0aF
+[2015-06-08 12:25:27 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting market BankAccounts - MISS - No stripe_id found for FIRST FEDERAL BANK OF THE MIDWEST 2555 (222) balanced_customer_uri /v1/marketplaces/MP2eXZmrOPof80u3Irf94Wre/bank_accounts/BA27FNhPX0JMNupY5cmn5bAm
+[2015-06-08 12:25:27 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org BankAccounts - Organization Laura Juarez (166) - MISS - No stripe_id found for Visa 1387 (183) balanced_customer_uri /v1/marketplaces/MP2eXZmrOPof80u3Irf94Wre/cards/CCUiV8cdTy4b6fcb8zDLPt
+[2015-06-08 12:25:27 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org BankAccounts - Organization Katieland Dairy (162) - American Express 2006 (36) already has stripe_id: card_15ic9m2VpjOYk6Tm12lt26ou
+[2015-06-08 12:25:27 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org BankAccounts - Organization Mary Lloyd (163) - American Express 1015 (238) already has stripe_id: card_15ic9Y2VpjOYk6TmoFnsG3XB
+[2015-06-08 12:25:27 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org BankAccounts - Organization Mary Lloyd (163) - MISS - No stripe_id found for MasterCard 5925 (22) balanced_customer_uri /v1/marketplaces/MP2eXZmrOPof80u3Irf94Wre/cards/CC48HfFb4LmlvWN31sxcYk1t
+[2015-06-08 12:25:27 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org BankAccounts - Organization Sandy Gordon (170) - Visa 1179 (50) already has stripe_id: card_15ic8n2VpjOYk6Tmrfa09GUS
+[2015-06-08 12:25:27 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org BankAccounts - Organization Logan Smith (185) - MasterCard 2706 (27) already has stripe_id: card_15ic9V2VpjOYk6TmvyQnt07t
+[2015-06-08 12:25:27 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org BankAccounts - Organization Tracey Kennedy (187) - MasterCard 9812 (28) already has stripe_id: card_15ic9I2VpjOYk6TmzRUCH8SM
+[2015-06-08 12:25:27 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org BankAccounts - Organization Doreen DeLisle (221) - FIRST FEDERAL BANK OF THE MIDWEST 9830 (40) already has stripe_id: ba_15ic9N2VpjOYk6TmootSnYMp
+[2015-06-08 12:25:27 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org BankAccounts - Organization Doreen DeLisle (221) - Discover 0864 (41) already has stripe_id: card_15ic9T2VpjOYk6Tm6WX07yGJ
+[2015-06-08 12:25:27 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org BankAccounts - Organization Kay Cummins (1503) - American Express 1003 (291) already has stripe_id: card_15ic972VpjOYk6TmIbDkqFMA
+[2015-06-08 12:25:27 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org BankAccounts - Organization Karmin Brooks (1615) - MasterCard 1987 (172) already has stripe_id: card_15ic9j2VpjOYk6TmRCQ6NvZn
+[2015-06-08 12:25:27 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org BankAccounts - Organization Kari Shininger (1690) - MISS - No stripe_id found for Visa 6628 (181) balanced_customer_uri /v1/marketplaces/MP2eXZmrOPof80u3Irf94Wre/cards/CC22UVonuDXdttNlVGNSZ4v1
+[2015-06-08 12:25:27 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org BankAccounts - Organization Sharon Ransom - OB/GYN Bryan (1815) - American Express 2013 (199) already has stripe_id: card_15ic9k2VpjOYk6Tm2wjxlgHc
+[2015-06-08 12:25:27 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org BankAccounts - Organization Karmin Brooks (1616) - MasterCard 1987 (198) already has stripe_id: card_15ic8r2VpjOYk6TmfKoPMkSQ
+[2015-06-08 12:25:27 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org BankAccounts - Organization Melodee Moore (1760) - Visa 1286 (190) already has stripe_id: card_15ic9u2VpjOYk6Tm4neuPmr5
+[2015-06-08 12:25:27 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org BankAccounts - Organization Wende Sharma (2005) - MasterCard 5579 (232) already has stripe_id: card_15ic962VpjOYk6TmuheVZ2ok
+[2015-06-08 12:25:27 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org BankAccounts - Organization Amanda Andres (208) - MasterCard 8007 (231) already has stripe_id: card_15ic902VpjOYk6Tm2Vq6uTEY
+[2015-06-08 12:25:27 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org BankAccounts - Organization Mindy Wade (2049) - Visa 0191 (241) already has stripe_id: card_15ic982VpjOYk6TmNRazxejG
+[2015-06-08 12:25:28 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org BankAccounts - Organization Marcia Culler (2183) - Visa 6873 (267) already has stripe_id: card_15ic992VpjOYk6TmAkbhgMA2
+[2015-06-08 12:25:28 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org BankAccounts - Organization Kelsey (2210) - MasterCard 7086 (282) already has stripe_id: card_15ic972VpjOYk6Tm3JIf69Fg
+[2015-06-08 12:25:28 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org BankAccounts - Organization Kelsey (2210) - MasterCard 8801 (276) already has stripe_id: card_15ic9B2VpjOYk6Tm142vzo2C
+[2015-06-08 12:25:28 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org BankAccounts - Organization Sonya Mavis (2207) - MasterCard 3995 (281) already has stripe_id: card_15ic9K2VpjOYk6TmCY1dbgnJ
+[2015-06-08 12:25:28 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org BankAccounts - Organization Kyli McCullough (2229) - MasterCard 6307 (283) already has stripe_id: card_15ic9Q2VpjOYk6Tmw30B6tqP
+[2015-06-08 12:25:28 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org BankAccounts - Organization The Bell Family (2243) - MasterCard 4750 (286) already has stripe_id: card_15ic992VpjOYk6Tm86bb3d9j
+[2015-06-08 12:25:28 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org BankAccounts - Organization Shontael Elward (3791) - MasterCard 4559 (547) already has stripe_id: tok_162TTn2VpjOYk6Tmcvvgll0k
+[2015-06-08 12:25:28 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org BankAccounts - Organization Lou Pendleton (153) - MasterCard 4513 (19) already has stripe_id: card_15ic9W2VpjOYk6Tm130Km52Z
+[2015-06-08 12:25:28 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org BankAccounts - Organization Becky McGuire (155) - Visa 4842 (35) already has stripe_id: card_15ic9o2VpjOYk6Tme9eMnRlh
+[2015-06-08 12:25:28 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org BankAccounts - Organization Melody Turner (156) - FIRST FEDERAL BANK OF THE MIDWEST 4474 (20) already has stripe_id: ba_15l25E2VpjOYk6TmekHovelC
+[2015-06-08 12:25:28 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org BankAccounts - Organization Marion Allen (158) - MISS - No stripe_id found for MasterCard 6681 (21) balanced_customer_uri /v1/marketplaces/MP2eXZmrOPof80u3Irf94Wre/cards/CC3ahL7A5HViy5b8Xv0IZ9vJ
+[2015-06-08 12:25:28 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org BankAccounts - Organization Stephanie Bexten (180) - MasterCard 9631 (29) already has stripe_id: card_15ic9L2VpjOYk6TmWpOkVBsF
+[2015-06-08 12:25:28 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org BankAccounts - Organization Northwest Ohio Chiropractic (197) - MIDWEST COMMUNITY FCU 0623 (69) already has stripe_id: ba_15ic9S2VpjOYk6TmiVRdxdAw
+[2015-06-08 12:25:28 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org BankAccounts - Organization Anne Bard (204) - MasterCard 3190 (290) already has stripe_id: card_15ic9U2VpjOYk6TmkjlfWEph
+[2015-06-08 12:25:28 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org BankAccounts - Organization Anne Bard (204) - American Express 2541 (205) already has stripe_id: card_15ic9V2VpjOYk6Tm1upVyiaB
+[2015-06-08 12:25:28 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org BankAccounts - Organization Anne Bard (204) - Visa 4510 (45) already has stripe_id: card_15ic9Z2VpjOYk6TmSArCKcpD
+[2015-06-08 12:25:28 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org BankAccounts - Organization Debra Kepler (222) - MISS - No stripe_id found for MasterCard 6233 (44) balanced_customer_uri /v1/marketplaces/MP2eXZmrOPof80u3Irf94Wre/cards/CC1FPExz2G5v1JrAJdgNH7Ts
+[2015-06-08 12:25:28 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org BankAccounts - Organization Beverly (142) - Visa 1825 (43) already has stripe_id: card_15ic9Q2VpjOYk6TmpniwDgBI
+[2015-06-08 12:25:28 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org BankAccounts - Organization Beverly (142) - THE HICKSVILLE BANK 4446 (42) already has stripe_id: ba_15ic9b2VpjOYk6TmbvP8Ko7R
+[2015-06-08 12:25:28 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org BankAccounts - Organization Mike Gill (146) - MasterCard 0646 (18) already has stripe_id: card_15ic9t2VpjOYk6TmrgENSyXN
+[2015-06-08 12:25:28 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org BankAccounts - Organization Pam Sauder (148) - MISS - No stripe_id found for MasterCard 4356 (49) balanced_customer_uri /v1/marketplaces/MP2eXZmrOPof80u3Irf94Wre/cards/CChgk0m7SKJ5Z9edVzmu2ps
+[2015-06-08 12:25:28 -0400] - UpdateStripeIdsOnMarket - All Things Food (4) - Connecting org BankAccounts - Organization Abby Williams (150) - Visa 5942 (25) already has stripe_id: card_15ic9m2VpjOYk6TmHQHLZrgg

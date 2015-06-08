@@ -1,37 +1,37 @@
-[2015-06-01 14:22:51 -0400] - UpdateStripeIdsOnMarket - Adelante Mujeres Distributor (11) - ====================================================================================================
-[2015-06-01 14:22:51 -0400] - UpdateStripeIdsOnMarket - Adelante Mujeres Distributor (11) -  Adelante Mujeres Distributor (11)
-[2015-06-01 14:22:51 -0400] - UpdateStripeIdsOnMarket - Adelante Mujeres Distributor (11) -  Updating stripe IDs for market, orgs and bank accounts.
-[2015-06-01 14:22:51 -0400] - UpdateStripeIdsOnMarket - Adelante Mujeres Distributor (11) - 
-[2015-06-01 14:22:51 -0400] - UpdateStripeIdsOnMarket - Adelante Mujeres Distributor (11) -  Balanced export file: /home/vagrant/git/localorbit/tools/stripe-migration/from_balanced/2015-06-01-1433181180-MP2eXZmrOPof80u3Irf94Wre.csv
-[2015-06-01 14:22:51 -0400] - UpdateStripeIdsOnMarket - Adelante Mujeres Distributor (11) - 
-[2015-06-01 14:22:51 -0400] - UpdateStripeIdsOnMarket - Adelante Mujeres Distributor (11) -  Rails.env: production
-[2015-06-01 14:22:51 -0400] - UpdateStripeIdsOnMarket - Adelante Mujeres Distributor (11) -  Stripe keys:
-[2015-06-01 14:22:51 -0400] - UpdateStripeIdsOnMarket - Adelante Mujeres Distributor (11) -   --> STRIPE_PUBLISHABLE_KEY: pk_live_j85VTsrz51POrss3ni460qaf (pk_live_j85VTsrz51POrss3ni460qaf)
-[2015-06-01 14:22:51 -0400] - UpdateStripeIdsOnMarket - Adelante Mujeres Distributor (11) - ====================================================================================================
-[2015-06-01 14:22:51 -0400] - UpdateStripeIdsOnMarket - Adelante Mujeres Distributor (11) - Connecting market customer - Market already has stripe_customer_id: cus_5uQ5nAOeEhjodT
-[2015-06-01 14:22:51 -0400] - UpdateStripeIdsOnMarket - Adelante Mujeres Distributor (11) - Connecting market account - MISS - No stripe_account_id found for market balanced_customer_uri /v1/customers/CU1apGifVW5dm9Qr7kinyo7V
-[2015-06-01 14:22:51 -0400] - UpdateStripeIdsOnMarket - Adelante Mujeres Distributor (11) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ5vsKg1S66ap
-[2015-06-01 14:22:51 -0400] - UpdateStripeIdsOnMarket - Adelante Mujeres Distributor (11) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ52s8kgGrKUp
-[2015-06-01 14:22:51 -0400] - UpdateStripeIdsOnMarket - Adelante Mujeres Distributor (11) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4TdMTTaFZc3
-[2015-06-01 14:22:51 -0400] - UpdateStripeIdsOnMarket - Adelante Mujeres Distributor (11) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ5ECxIx0QMho
-[2015-06-01 14:22:51 -0400] - UpdateStripeIdsOnMarket - Adelante Mujeres Distributor (11) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4jxVeT4lnjB
-[2015-06-01 14:22:51 -0400] - UpdateStripeIdsOnMarket - Adelante Mujeres Distributor (11) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ42VIsmYxGS6
-[2015-06-01 14:22:51 -0400] - UpdateStripeIdsOnMarket - Adelante Mujeres Distributor (11) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4GfcsVYkIZF
-[2015-06-01 14:22:51 -0400] - UpdateStripeIdsOnMarket - Adelante Mujeres Distributor (11) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ5UHWQaSlZiC
-[2015-06-01 14:22:51 -0400] - UpdateStripeIdsOnMarket - Adelante Mujeres Distributor (11) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ520AmewT543
-[2015-06-01 14:22:51 -0400] - UpdateStripeIdsOnMarket - Adelante Mujeres Distributor (11) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ54wLDJR5hQS
-[2015-06-01 14:22:51 -0400] - UpdateStripeIdsOnMarket - Adelante Mujeres Distributor (11) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ561dT5aA5DM
-[2015-06-01 14:22:51 -0400] - UpdateStripeIdsOnMarket - Adelante Mujeres Distributor (11) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ5mO2GaZQVjc
-[2015-06-01 14:22:51 -0400] - UpdateStripeIdsOnMarket - Adelante Mujeres Distributor (11) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ5C3NrDdEeMi
-[2015-06-01 14:22:51 -0400] - UpdateStripeIdsOnMarket - Adelante Mujeres Distributor (11) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ5CD0uR3RvIC
-[2015-06-01 14:22:51 -0400] - UpdateStripeIdsOnMarket - Adelante Mujeres Distributor (11) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ5a9lPtY74MI
-[2015-06-01 14:22:51 -0400] - UpdateStripeIdsOnMarket - Adelante Mujeres Distributor (11) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ54SMFdy7EK3
-[2015-06-01 14:22:51 -0400] - UpdateStripeIdsOnMarket - Adelante Mujeres Distributor (11) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ5GGuUa0DQ1w
-[2015-06-01 14:22:51 -0400] - UpdateStripeIdsOnMarket - Adelante Mujeres Distributor (11) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ5tssHmsvRlt
-[2015-06-01 14:22:51 -0400] - UpdateStripeIdsOnMarket - Adelante Mujeres Distributor (11) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ5f9CqIQ4042
-[2015-06-01 14:22:51 -0400] - UpdateStripeIdsOnMarket - Adelante Mujeres Distributor (11) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ5LX5LsahAQh
-[2015-06-01 14:22:51 -0400] - UpdateStripeIdsOnMarket - Adelante Mujeres Distributor (11) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ5Ku3EgCfqt8
-[2015-06-01 14:22:51 -0400] - UpdateStripeIdsOnMarket - Adelante Mujeres Distributor (11) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4WmSI230A5c
-[2015-06-01 14:22:52 -0400] - UpdateStripeIdsOnMarket - Adelante Mujeres Distributor (11) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4ScONJeTliq
-[2015-06-01 14:22:52 -0400] - UpdateStripeIdsOnMarket - Adelante Mujeres Distributor (11) - Connecting market BankAccounts - Visa 8328 (46) already has stripe_id: card_15ic9b2VpjOYk6Tm4QKzsE2H
-[2015-06-01 14:22:52 -0400] - UpdateStripeIdsOnMarket - Adelante Mujeres Distributor (11) - Connecting org BankAccounts - Organization Adelante Mujeres Distributor (182) - Visa 8328 (32) already has stripe_id: card_15ic9G2VpjOYk6TmWaxXTwGV
+[2015-06-08 12:25:42 -0400] - UpdateStripeIdsOnMarket - Adelante Mujeres Distributor (11) - ====================================================================================================
+[2015-06-08 12:25:42 -0400] - UpdateStripeIdsOnMarket - Adelante Mujeres Distributor (11) -  Adelante Mujeres Distributor (11)
+[2015-06-08 12:25:42 -0400] - UpdateStripeIdsOnMarket - Adelante Mujeres Distributor (11) -  Updating stripe IDs for market, orgs and bank accounts.
+[2015-06-08 12:25:42 -0400] - UpdateStripeIdsOnMarket - Adelante Mujeres Distributor (11) - 
+[2015-06-08 12:25:42 -0400] - UpdateStripeIdsOnMarket - Adelante Mujeres Distributor (11) -  Balanced export file: /home/vagrant/git/localorbit/tools/stripe-migration/from_balanced/2015-06-08-1433769720-MP2eXZmrOPof80u3Irf94Wre.csv
+[2015-06-08 12:25:42 -0400] - UpdateStripeIdsOnMarket - Adelante Mujeres Distributor (11) - 
+[2015-06-08 12:25:42 -0400] - UpdateStripeIdsOnMarket - Adelante Mujeres Distributor (11) -  Rails.env: production
+[2015-06-08 12:25:42 -0400] - UpdateStripeIdsOnMarket - Adelante Mujeres Distributor (11) -  Stripe keys:
+[2015-06-08 12:25:42 -0400] - UpdateStripeIdsOnMarket - Adelante Mujeres Distributor (11) -   --> STRIPE_PUBLISHABLE_KEY: pk_live_j85VTsrz51POrss3ni460qaf (pk_live_j85VTsrz51POrss3ni460qaf)
+[2015-06-08 12:25:42 -0400] - UpdateStripeIdsOnMarket - Adelante Mujeres Distributor (11) - ====================================================================================================
+[2015-06-08 12:25:42 -0400] - UpdateStripeIdsOnMarket - Adelante Mujeres Distributor (11) - Connecting market customer - Market already has stripe_customer_id: cus_5uQ5nAOeEhjodT
+[2015-06-08 12:25:42 -0400] - UpdateStripeIdsOnMarket - Adelante Mujeres Distributor (11) - Connecting market account - MISS - No stripe_account_id found for market balanced_customer_uri /v1/customers/CU1apGifVW5dm9Qr7kinyo7V
+[2015-06-08 12:25:42 -0400] - UpdateStripeIdsOnMarket - Adelante Mujeres Distributor (11) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ5vsKg1S66ap
+[2015-06-08 12:25:42 -0400] - UpdateStripeIdsOnMarket - Adelante Mujeres Distributor (11) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ52s8kgGrKUp
+[2015-06-08 12:25:42 -0400] - UpdateStripeIdsOnMarket - Adelante Mujeres Distributor (11) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4TdMTTaFZc3
+[2015-06-08 12:25:42 -0400] - UpdateStripeIdsOnMarket - Adelante Mujeres Distributor (11) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ5ECxIx0QMho
+[2015-06-08 12:25:42 -0400] - UpdateStripeIdsOnMarket - Adelante Mujeres Distributor (11) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4jxVeT4lnjB
+[2015-06-08 12:25:42 -0400] - UpdateStripeIdsOnMarket - Adelante Mujeres Distributor (11) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ42VIsmYxGS6
+[2015-06-08 12:25:42 -0400] - UpdateStripeIdsOnMarket - Adelante Mujeres Distributor (11) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4GfcsVYkIZF
+[2015-06-08 12:25:42 -0400] - UpdateStripeIdsOnMarket - Adelante Mujeres Distributor (11) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ5UHWQaSlZiC
+[2015-06-08 12:25:42 -0400] - UpdateStripeIdsOnMarket - Adelante Mujeres Distributor (11) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ520AmewT543
+[2015-06-08 12:25:42 -0400] - UpdateStripeIdsOnMarket - Adelante Mujeres Distributor (11) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ54wLDJR5hQS
+[2015-06-08 12:25:42 -0400] - UpdateStripeIdsOnMarket - Adelante Mujeres Distributor (11) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ561dT5aA5DM
+[2015-06-08 12:25:42 -0400] - UpdateStripeIdsOnMarket - Adelante Mujeres Distributor (11) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ5mO2GaZQVjc
+[2015-06-08 12:25:42 -0400] - UpdateStripeIdsOnMarket - Adelante Mujeres Distributor (11) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ5C3NrDdEeMi
+[2015-06-08 12:25:42 -0400] - UpdateStripeIdsOnMarket - Adelante Mujeres Distributor (11) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ5CD0uR3RvIC
+[2015-06-08 12:25:42 -0400] - UpdateStripeIdsOnMarket - Adelante Mujeres Distributor (11) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ5a9lPtY74MI
+[2015-06-08 12:25:42 -0400] - UpdateStripeIdsOnMarket - Adelante Mujeres Distributor (11) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ54SMFdy7EK3
+[2015-06-08 12:25:42 -0400] - UpdateStripeIdsOnMarket - Adelante Mujeres Distributor (11) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ5GGuUa0DQ1w
+[2015-06-08 12:25:42 -0400] - UpdateStripeIdsOnMarket - Adelante Mujeres Distributor (11) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ5tssHmsvRlt
+[2015-06-08 12:25:42 -0400] - UpdateStripeIdsOnMarket - Adelante Mujeres Distributor (11) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ5f9CqIQ4042
+[2015-06-08 12:25:42 -0400] - UpdateStripeIdsOnMarket - Adelante Mujeres Distributor (11) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ5LX5LsahAQh
+[2015-06-08 12:25:42 -0400] - UpdateStripeIdsOnMarket - Adelante Mujeres Distributor (11) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ5Ku3EgCfqt8
+[2015-06-08 12:25:42 -0400] - UpdateStripeIdsOnMarket - Adelante Mujeres Distributor (11) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4WmSI230A5c
+[2015-06-08 12:25:42 -0400] - UpdateStripeIdsOnMarket - Adelante Mujeres Distributor (11) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4ScONJeTliq
+[2015-06-08 12:25:42 -0400] - UpdateStripeIdsOnMarket - Adelante Mujeres Distributor (11) - Connecting market BankAccounts - Visa 8328 (46) already has stripe_id: card_15ic9b2VpjOYk6Tm4QKzsE2H
+[2015-06-08 12:25:42 -0400] - UpdateStripeIdsOnMarket - Adelante Mujeres Distributor (11) - Connecting org BankAccounts - Organization Adelante Mujeres Distributor (182) - Visa 8328 (32) already has stripe_id: card_15ic9G2VpjOYk6TmWaxXTwGV

@@ -1,16 +1,17 @@
-[2015-06-01 14:23:16 -0400] - UpdateStripeIdsOnMarket - PCFA (101) - ====================================================================================================
-[2015-06-01 14:23:16 -0400] - UpdateStripeIdsOnMarket - PCFA (101) -  PCFA (101)
-[2015-06-01 14:23:16 -0400] - UpdateStripeIdsOnMarket - PCFA (101) -  Updating stripe IDs for market, orgs and bank accounts.
-[2015-06-01 14:23:16 -0400] - UpdateStripeIdsOnMarket - PCFA (101) - 
-[2015-06-01 14:23:16 -0400] - UpdateStripeIdsOnMarket - PCFA (101) -  Balanced export file: /home/vagrant/git/localorbit/tools/stripe-migration/from_balanced/2015-06-01-1433181180-MP2eXZmrOPof80u3Irf94Wre.csv
-[2015-06-01 14:23:16 -0400] - UpdateStripeIdsOnMarket - PCFA (101) - 
-[2015-06-01 14:23:16 -0400] - UpdateStripeIdsOnMarket - PCFA (101) -  Rails.env: production
-[2015-06-01 14:23:16 -0400] - UpdateStripeIdsOnMarket - PCFA (101) -  Stripe keys:
-[2015-06-01 14:23:16 -0400] - UpdateStripeIdsOnMarket - PCFA (101) -   --> STRIPE_PUBLISHABLE_KEY: pk_live_j85VTsrz51POrss3ni460qaf (pk_live_j85VTsrz51POrss3ni460qaf)
-[2015-06-01 14:23:16 -0400] - UpdateStripeIdsOnMarket - PCFA (101) - ====================================================================================================
-[2015-06-01 14:23:16 -0400] - UpdateStripeIdsOnMarket - PCFA (101) - Connecting market customer - Updated Market stripe_customer_id: cus_6H7RItTwOZzSmt
-[2015-06-01 14:23:16 -0400] - UpdateStripeIdsOnMarket - PCFA (101) - Connecting market account - MISS - No stripe_account_id found for market balanced_customer_uri /v1/customers/CU4KhkgAiMvfTEXiiKT8ykFV
-[2015-06-01 14:23:16 -0400] - UpdateStripeIdsOnMarket - PCFA (101) - Connecting org customers - CONFLICT - Organization stripe_customer_id is ALREADY cus_6KYWD4qPHqD4x4, but export data says it should be cus_6KYUWgaJe6EW4Z
-[2015-06-01 14:23:16 -0400] - UpdateStripeIdsOnMarket - PCFA (101) - Connecting org customers - Updated Organization PCFA Restaurants (3968) stripe_customer_id: cus_6JVmVL3K1YIMTg
-[2015-06-01 14:23:16 -0400] - UpdateStripeIdsOnMarket - PCFA (101) - Connecting org customers - CONFLICT - Organization stripe_customer_id is ALREADY cus_6KYU8X9FjVgu21, but export data says it should be cus_6JVmJQ1nxgxqbx
-[2015-06-01 14:23:16 -0400] - UpdateStripeIdsOnMarket - PCFA (101) - Connecting org customers - Organization already has stripe_customer_id: cus_6J3tyn9hQiBErg
+[2015-06-08 12:25:53 -0400] - UpdateStripeIdsOnMarket - PCFA (101) - ====================================================================================================
+[2015-06-08 12:25:53 -0400] - UpdateStripeIdsOnMarket - PCFA (101) -  PCFA (101)
+[2015-06-08 12:25:53 -0400] - UpdateStripeIdsOnMarket - PCFA (101) -  Updating stripe IDs for market, orgs and bank accounts.
+[2015-06-08 12:25:53 -0400] - UpdateStripeIdsOnMarket - PCFA (101) - 
+[2015-06-08 12:25:53 -0400] - UpdateStripeIdsOnMarket - PCFA (101) -  Balanced export file: /home/vagrant/git/localorbit/tools/stripe-migration/from_balanced/2015-06-08-1433769720-MP2eXZmrOPof80u3Irf94Wre.csv
+[2015-06-08 12:25:53 -0400] - UpdateStripeIdsOnMarket - PCFA (101) - 
+[2015-06-08 12:25:53 -0400] - UpdateStripeIdsOnMarket - PCFA (101) -  Rails.env: production
+[2015-06-08 12:25:53 -0400] - UpdateStripeIdsOnMarket - PCFA (101) -  Stripe keys:
+[2015-06-08 12:25:53 -0400] - UpdateStripeIdsOnMarket - PCFA (101) -   --> STRIPE_PUBLISHABLE_KEY: pk_live_j85VTsrz51POrss3ni460qaf (pk_live_j85VTsrz51POrss3ni460qaf)
+[2015-06-08 12:25:53 -0400] - UpdateStripeIdsOnMarket - PCFA (101) - ====================================================================================================
+[2015-06-08 12:25:53 -0400] - UpdateStripeIdsOnMarket - PCFA (101) - Connecting market customer - Market already has stripe_customer_id: cus_6H7RItTwOZzSmt
+[2015-06-08 12:25:53 -0400] - UpdateStripeIdsOnMarket - PCFA (101) - Connecting market account - MISS - No stripe_account_id found for market balanced_customer_uri /v1/customers/CU4KhkgAiMvfTEXiiKT8ykFV
+[2015-06-08 12:25:53 -0400] - UpdateStripeIdsOnMarket - PCFA (101) - Connecting org customers - Organization already has stripe_customer_id: cus_6MRAkWwb7GhdHG
+[2015-06-08 12:25:53 -0400] - UpdateStripeIdsOnMarket - PCFA (101) - Connecting org customers - Organization already has stripe_customer_id: cus_6KYUWgaJe6EW4Z
+[2015-06-08 12:25:53 -0400] - UpdateStripeIdsOnMarket - PCFA (101) - Connecting org customers - Organization already has stripe_customer_id: cus_6JVmVL3K1YIMTg
+[2015-06-08 12:25:53 -0400] - UpdateStripeIdsOnMarket - PCFA (101) - Connecting org customers - Organization already has stripe_customer_id: cus_6JVmJQ1nxgxqbx
+[2015-06-08 12:25:53 -0400] - UpdateStripeIdsOnMarket - PCFA (101) - Connecting org customers - Organization already has stripe_customer_id: cus_6J3tyn9hQiBErg

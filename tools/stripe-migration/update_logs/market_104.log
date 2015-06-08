@@ -1,11 +1,11 @@
-[2015-06-01 14:23:21 -0400] - UpdateStripeIdsOnMarket - Donation Market (104) - ====================================================================================================
-[2015-06-01 14:23:21 -0400] - UpdateStripeIdsOnMarket - Donation Market (104) -  Donation Market (104)
-[2015-06-01 14:23:21 -0400] - UpdateStripeIdsOnMarket - Donation Market (104) -  Updating stripe IDs for market, orgs and bank accounts.
-[2015-06-01 14:23:21 -0400] - UpdateStripeIdsOnMarket - Donation Market (104) - 
-[2015-06-01 14:23:21 -0400] - UpdateStripeIdsOnMarket - Donation Market (104) -  Balanced export file: /home/vagrant/git/localorbit/tools/stripe-migration/from_balanced/2015-06-01-1433181180-MP2eXZmrOPof80u3Irf94Wre.csv
-[2015-06-01 14:23:21 -0400] - UpdateStripeIdsOnMarket - Donation Market (104) - 
-[2015-06-01 14:23:21 -0400] - UpdateStripeIdsOnMarket - Donation Market (104) -  Rails.env: production
-[2015-06-01 14:23:21 -0400] - UpdateStripeIdsOnMarket - Donation Market (104) -  Stripe keys:
-[2015-06-01 14:23:21 -0400] - UpdateStripeIdsOnMarket - Donation Market (104) -   --> STRIPE_PUBLISHABLE_KEY: pk_live_j85VTsrz51POrss3ni460qaf (pk_live_j85VTsrz51POrss3ni460qaf)
-[2015-06-01 14:23:21 -0400] - UpdateStripeIdsOnMarket - Donation Market (104) - ====================================================================================================
-[2015-06-01 14:23:21 -0400] - UpdateStripeIdsOnMarket - Donation Market (104) - !! Market has no balanced_customer_uri; not updating its stripe_customer_id or stripe_account_id
+[2015-06-08 12:26:00 -0400] - UpdateStripeIdsOnMarket - Donation Market (104) - ====================================================================================================
+[2015-06-08 12:26:00 -0400] - UpdateStripeIdsOnMarket - Donation Market (104) -  Donation Market (104)
+[2015-06-08 12:26:00 -0400] - UpdateStripeIdsOnMarket - Donation Market (104) -  Updating stripe IDs for market, orgs and bank accounts.
+[2015-06-08 12:26:00 -0400] - UpdateStripeIdsOnMarket - Donation Market (104) - 
+[2015-06-08 12:26:00 -0400] - UpdateStripeIdsOnMarket - Donation Market (104) -  Balanced export file: /home/vagrant/git/localorbit/tools/stripe-migration/from_balanced/2015-06-08-1433769720-MP2eXZmrOPof80u3Irf94Wre.csv
+[2015-06-08 12:26:00 -0400] - UpdateStripeIdsOnMarket - Donation Market (104) - 
+[2015-06-08 12:26:00 -0400] - UpdateStripeIdsOnMarket - Donation Market (104) -  Rails.env: production
+[2015-06-08 12:26:00 -0400] - UpdateStripeIdsOnMarket - Donation Market (104) -  Stripe keys:
+[2015-06-08 12:26:00 -0400] - UpdateStripeIdsOnMarket - Donation Market (104) -   --> STRIPE_PUBLISHABLE_KEY: pk_live_j85VTsrz51POrss3ni460qaf (pk_live_j85VTsrz51POrss3ni460qaf)
+[2015-06-08 12:26:00 -0400] - UpdateStripeIdsOnMarket - Donation Market (104) - ====================================================================================================
+[2015-06-08 12:26:00 -0400] - UpdateStripeIdsOnMarket - Donation Market (104) - !! Market has no balanced_customer_uri; not updating its stripe_customer_id or stripe_account_id

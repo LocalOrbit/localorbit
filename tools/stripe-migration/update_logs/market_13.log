@@ -1,112 +1,143 @@
-[2015-06-01 14:22:41 -0400] - UpdateStripeIdsOnMarket - Tahoe Food Hub (13) - ====================================================================================================
-[2015-06-01 14:22:41 -0400] - UpdateStripeIdsOnMarket - Tahoe Food Hub (13) -  Tahoe Food Hub (13)
-[2015-06-01 14:22:41 -0400] - UpdateStripeIdsOnMarket - Tahoe Food Hub (13) -  Updating stripe IDs for market, orgs and bank accounts.
-[2015-06-01 14:22:41 -0400] - UpdateStripeIdsOnMarket - Tahoe Food Hub (13) - 
-[2015-06-01 14:22:41 -0400] - UpdateStripeIdsOnMarket - Tahoe Food Hub (13) -  Balanced export file: /home/vagrant/git/localorbit/tools/stripe-migration/from_balanced/2015-06-01-1433181180-MP2eXZmrOPof80u3Irf94Wre.csv
-[2015-06-01 14:22:41 -0400] - UpdateStripeIdsOnMarket - Tahoe Food Hub (13) - 
-[2015-06-01 14:22:41 -0400] - UpdateStripeIdsOnMarket - Tahoe Food Hub (13) -  Rails.env: production
-[2015-06-01 14:22:41 -0400] - UpdateStripeIdsOnMarket - Tahoe Food Hub (13) -  Stripe keys:
-[2015-06-01 14:22:41 -0400] - UpdateStripeIdsOnMarket - Tahoe Food Hub (13) -   --> STRIPE_PUBLISHABLE_KEY: pk_live_j85VTsrz51POrss3ni460qaf (pk_live_j85VTsrz51POrss3ni460qaf)
-[2015-06-01 14:22:41 -0400] - UpdateStripeIdsOnMarket - Tahoe Food Hub (13) - ====================================================================================================
-[2015-06-01 14:22:41 -0400] - UpdateStripeIdsOnMarket - Tahoe Food Hub (13) - Connecting market customer - Market already has stripe_customer_id: cus_5uQ5XxNuXX9V1R
-[2015-06-01 14:22:41 -0400] - UpdateStripeIdsOnMarket - Tahoe Food Hub (13) - Connecting market account - Market already has stripe_account_id: acct_15l1yTIN84gklqQV
-[2015-06-01 14:22:41 -0400] - UpdateStripeIdsOnMarket - Tahoe Food Hub (13) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ5ztKqMnDvfC
-[2015-06-01 14:22:41 -0400] - UpdateStripeIdsOnMarket - Tahoe Food Hub (13) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4vKnmPkbqvl
-[2015-06-01 14:22:41 -0400] - UpdateStripeIdsOnMarket - Tahoe Food Hub (13) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ5TwMOzydwKS
-[2015-06-01 14:22:41 -0400] - UpdateStripeIdsOnMarket - Tahoe Food Hub (13) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4gJIIAupzOc
-[2015-06-01 14:22:41 -0400] - UpdateStripeIdsOnMarket - Tahoe Food Hub (13) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4oNfXVKO3dR
-[2015-06-01 14:22:41 -0400] - UpdateStripeIdsOnMarket - Tahoe Food Hub (13) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4bsVWFTzXYd
-[2015-06-01 14:22:41 -0400] - UpdateStripeIdsOnMarket - Tahoe Food Hub (13) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4W5WLaRPqDO
-[2015-06-01 14:22:41 -0400] - UpdateStripeIdsOnMarket - Tahoe Food Hub (13) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ44VwijRBIDO
-[2015-06-01 14:22:41 -0400] - UpdateStripeIdsOnMarket - Tahoe Food Hub (13) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ5nVBQa9pYhm
-[2015-06-01 14:22:41 -0400] - UpdateStripeIdsOnMarket - Tahoe Food Hub (13) - Connecting org customers - Organization already has stripe_customer_id: cus_6Gq1Rp0ONdck6Z
-[2015-06-01 14:22:41 -0400] - UpdateStripeIdsOnMarket - Tahoe Food Hub (13) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ5iegI9PHTFT
-[2015-06-01 14:22:41 -0400] - UpdateStripeIdsOnMarket - Tahoe Food Hub (13) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4V4HFLFUfux
-[2015-06-01 14:22:41 -0400] - UpdateStripeIdsOnMarket - Tahoe Food Hub (13) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ5pjNMljeRum
-[2015-06-01 14:22:41 -0400] - UpdateStripeIdsOnMarket - Tahoe Food Hub (13) - Connecting org customers - Organization already has stripe_customer_id: cus_6GqBYjNlULPl4H
-[2015-06-01 14:22:41 -0400] - UpdateStripeIdsOnMarket - Tahoe Food Hub (13) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4ks4hsTkK30
-[2015-06-01 14:22:41 -0400] - UpdateStripeIdsOnMarket - Tahoe Food Hub (13) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ5NrykVYnJns
-[2015-06-01 14:22:41 -0400] - UpdateStripeIdsOnMarket - Tahoe Food Hub (13) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ50DF8aR31OM
-[2015-06-01 14:22:41 -0400] - UpdateStripeIdsOnMarket - Tahoe Food Hub (13) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ5GoI9PzeJfI
-[2015-06-01 14:22:41 -0400] - UpdateStripeIdsOnMarket - Tahoe Food Hub (13) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4X01iFvY5MH
-[2015-06-01 14:22:41 -0400] - UpdateStripeIdsOnMarket - Tahoe Food Hub (13) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4JmuXesWALq
-[2015-06-01 14:22:41 -0400] - UpdateStripeIdsOnMarket - Tahoe Food Hub (13) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4uh3btWy1Np
-[2015-06-01 14:22:41 -0400] - UpdateStripeIdsOnMarket - Tahoe Food Hub (13) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ45SsPVOLOQz
-[2015-06-01 14:22:41 -0400] - UpdateStripeIdsOnMarket - Tahoe Food Hub (13) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ47Kik8i8uva
-[2015-06-01 14:22:41 -0400] - UpdateStripeIdsOnMarket - Tahoe Food Hub (13) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ59QJd2iHwGf
-[2015-06-01 14:22:41 -0400] - UpdateStripeIdsOnMarket - Tahoe Food Hub (13) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ5fLZcp2XkSN
-[2015-06-01 14:22:41 -0400] - UpdateStripeIdsOnMarket - Tahoe Food Hub (13) - Connecting org customers - Organization already has stripe_customer_id: cus_6GpdHCacPMRfQI
-[2015-06-01 14:22:41 -0400] - UpdateStripeIdsOnMarket - Tahoe Food Hub (13) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ5j3t9FCk9u3
-[2015-06-01 14:22:41 -0400] - UpdateStripeIdsOnMarket - Tahoe Food Hub (13) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ5SOYlkJjMSy
-[2015-06-01 14:22:41 -0400] - UpdateStripeIdsOnMarket - Tahoe Food Hub (13) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ5uqR2AvNaip
-[2015-06-01 14:22:41 -0400] - UpdateStripeIdsOnMarket - Tahoe Food Hub (13) - Connecting org customers - Organization already has stripe_customer_id: cus_6GpOZN9ZHiCLZ8
-[2015-06-01 14:22:41 -0400] - UpdateStripeIdsOnMarket - Tahoe Food Hub (13) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4z6iFCDLx04
-[2015-06-01 14:22:41 -0400] - UpdateStripeIdsOnMarket - Tahoe Food Hub (13) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4rTnKSWKMVg
-[2015-06-01 14:22:41 -0400] - UpdateStripeIdsOnMarket - Tahoe Food Hub (13) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4ortsfhQgEl
-[2015-06-01 14:22:41 -0400] - UpdateStripeIdsOnMarket - Tahoe Food Hub (13) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4ZZet9plEQW
-[2015-06-01 14:22:41 -0400] - UpdateStripeIdsOnMarket - Tahoe Food Hub (13) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4USPqjnDy9h
-[2015-06-01 14:22:41 -0400] - UpdateStripeIdsOnMarket - Tahoe Food Hub (13) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ40z7E65S92m
-[2015-06-01 14:22:41 -0400] - UpdateStripeIdsOnMarket - Tahoe Food Hub (13) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4WtkPRqabrD
-[2015-06-01 14:22:41 -0400] - UpdateStripeIdsOnMarket - Tahoe Food Hub (13) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ5TvMO1vIOcP
-[2015-06-01 14:22:41 -0400] - UpdateStripeIdsOnMarket - Tahoe Food Hub (13) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ59mz1Fxd1cO
-[2015-06-01 14:22:41 -0400] - UpdateStripeIdsOnMarket - Tahoe Food Hub (13) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ5Gg6P1dOzdt
-[2015-06-01 14:22:41 -0400] - UpdateStripeIdsOnMarket - Tahoe Food Hub (13) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4qKqzinGswz
-[2015-06-01 14:22:41 -0400] - UpdateStripeIdsOnMarket - Tahoe Food Hub (13) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4oOOgpG8BoQ
-[2015-06-01 14:22:41 -0400] - UpdateStripeIdsOnMarket - Tahoe Food Hub (13) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4ri9Xgzx9xJ
-[2015-06-01 14:22:41 -0400] - UpdateStripeIdsOnMarket - Tahoe Food Hub (13) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4rS6haa23ug
-[2015-06-01 14:22:41 -0400] - UpdateStripeIdsOnMarket - Tahoe Food Hub (13) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ5cWWNdi6Xh0
-[2015-06-01 14:22:41 -0400] - UpdateStripeIdsOnMarket - Tahoe Food Hub (13) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ5O7Yv7Fr5Jn
-[2015-06-01 14:22:41 -0400] - UpdateStripeIdsOnMarket - Tahoe Food Hub (13) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4g56mwE0ISM
-[2015-06-01 14:22:41 -0400] - UpdateStripeIdsOnMarket - Tahoe Food Hub (13) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4OSOSRoJL7a
-[2015-06-01 14:22:41 -0400] - UpdateStripeIdsOnMarket - Tahoe Food Hub (13) - Connecting org customers - Organization already has stripe_customer_id: cus_6GpnCUTo4x2CM5
-[2015-06-01 14:22:41 -0400] - UpdateStripeIdsOnMarket - Tahoe Food Hub (13) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4tcF7tKMmXf
-[2015-06-01 14:22:41 -0400] - UpdateStripeIdsOnMarket - Tahoe Food Hub (13) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4Uwd2czjZuN
-[2015-06-01 14:22:41 -0400] - UpdateStripeIdsOnMarket - Tahoe Food Hub (13) - Connecting org customers - Organization already has stripe_customer_id: cus_5vwnTRIU1Ifqrn
-[2015-06-01 14:22:41 -0400] - UpdateStripeIdsOnMarket - Tahoe Food Hub (13) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4zAD4hz0vfF
-[2015-06-01 14:22:41 -0400] - UpdateStripeIdsOnMarket - Tahoe Food Hub (13) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4AsntGzs1Ff
-[2015-06-01 14:22:41 -0400] - UpdateStripeIdsOnMarket - Tahoe Food Hub (13) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4HTS1NJeTMu
-[2015-06-01 14:22:41 -0400] - UpdateStripeIdsOnMarket - Tahoe Food Hub (13) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ5mKgxqaOQvQ
-[2015-06-01 14:22:41 -0400] - UpdateStripeIdsOnMarket - Tahoe Food Hub (13) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4MXHXhHbFTm
-[2015-06-01 14:22:41 -0400] - UpdateStripeIdsOnMarket - Tahoe Food Hub (13) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4baWhBZMTnU
-[2015-06-01 14:22:41 -0400] - UpdateStripeIdsOnMarket - Tahoe Food Hub (13) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ5WcqzGGflLx
-[2015-06-01 14:22:41 -0400] - UpdateStripeIdsOnMarket - Tahoe Food Hub (13) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ45s74Q9vxuU
-[2015-06-01 14:22:41 -0400] - UpdateStripeIdsOnMarket - Tahoe Food Hub (13) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ5CPIzgUgshW
-[2015-06-01 14:22:41 -0400] - UpdateStripeIdsOnMarket - Tahoe Food Hub (13) - Connecting org customers - Updated Organization Schaffer's Mill Golf Club (3781) stripe_customer_id: cus_6Jmxv3yz7ObY6H
-[2015-06-01 14:22:41 -0400] - UpdateStripeIdsOnMarket - Tahoe Food Hub (13) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ5PdZxhLywm6
-[2015-06-01 14:22:41 -0400] - UpdateStripeIdsOnMarket - Tahoe Food Hub (13) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4l1bCsfqRKE
-[2015-06-01 14:22:41 -0400] - UpdateStripeIdsOnMarket - Tahoe Food Hub (13) - Connecting org customers - Organization already has stripe_customer_id: cus_6HGdDX6nAyGNd6
-[2015-06-01 14:22:41 -0400] - UpdateStripeIdsOnMarket - Tahoe Food Hub (13) - Connecting org customers - Organization already has stripe_customer_id: cus_6JVn7HLtioyyeQ
-[2015-06-01 14:22:41 -0400] - UpdateStripeIdsOnMarket - Tahoe Food Hub (13) - Connecting org customers - Organization already has stripe_customer_id: cus_6JVnC1iEj7kula
-[2015-06-01 14:22:41 -0400] - UpdateStripeIdsOnMarket - Tahoe Food Hub (13) - Connecting org customers - Updated Organization Plumpjack Squaw Valley Inn (3882) stripe_customer_id: cus_6JrHRPJLjfBqqP
-[2015-06-01 14:22:42 -0400] - UpdateStripeIdsOnMarket - Tahoe Food Hub (13) - Connecting org customers - Updated Organization The Souper Wagon (3663) stripe_customer_id: cus_6JqH5szvyxeYBw
-[2015-06-01 14:22:42 -0400] - UpdateStripeIdsOnMarket - Tahoe Food Hub (13) - Connecting org customers - Organization already has stripe_customer_id: cus_6GprHnNloZkXLB
-[2015-06-01 14:22:42 -0400] - UpdateStripeIdsOnMarket - Tahoe Food Hub (13) - Connecting org customers - Organization already has stripe_customer_id: cus_6HGFtzBCFUCW8S
-[2015-06-01 14:22:42 -0400] - UpdateStripeIdsOnMarket - Tahoe Food Hub (13) - Connecting org customers - Organization already has stripe_customer_id: cus_6GtiurcvwD8v5o
-[2015-06-01 14:22:42 -0400] - UpdateStripeIdsOnMarket - Tahoe Food Hub (13) - Connecting org customers - Updated Organization Soupa  (3993) stripe_customer_id: cus_6JlQR6HxbcA8n9
-[2015-06-01 14:22:42 -0400] - UpdateStripeIdsOnMarket - Tahoe Food Hub (13) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4XKOdgGLYq0
-[2015-06-01 14:22:42 -0400] - UpdateStripeIdsOnMarket - Tahoe Food Hub (13) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4VVDJBG2GWx
-[2015-06-01 14:22:42 -0400] - UpdateStripeIdsOnMarket - Tahoe Food Hub (13) - Connecting org customers - Organization already has stripe_customer_id: cus_6JVnj9AWty9jZa
-[2015-06-01 14:22:42 -0400] - UpdateStripeIdsOnMarket - Tahoe Food Hub (13) - Connecting org customers - Organization already has stripe_customer_id: cus_6JVpr5bwHntcib
-[2015-06-01 14:22:42 -0400] - UpdateStripeIdsOnMarket - Tahoe Food Hub (13) - Connecting org customers - Organization already has stripe_customer_id: cus_6JVnUAmgBmvWMZ
-[2015-06-01 14:22:42 -0400] - UpdateStripeIdsOnMarket - Tahoe Food Hub (13) - Connecting org customers - Organization already has stripe_customer_id: cus_6GpxMI57ui6F6v
-[2015-06-01 14:22:42 -0400] - UpdateStripeIdsOnMarket - Tahoe Food Hub (13) - Connecting org customers - Organization already has stripe_customer_id: cus_6GpY6jgUBAA3Dk
-[2015-06-01 14:22:42 -0400] - UpdateStripeIdsOnMarket - Tahoe Food Hub (13) - Connecting org customers - Organization already has stripe_customer_id: cus_6GpMy5PHHVf3hB
-[2015-06-01 14:22:42 -0400] - UpdateStripeIdsOnMarket - Tahoe Food Hub (13) - Connecting org customers - Organization already has stripe_customer_id: cus_6GpAc5KCjXpVR1
-[2015-06-01 14:22:42 -0400] - UpdateStripeIdsOnMarket - Tahoe Food Hub (13) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ5eWvx6bDCzs
-[2015-06-01 14:22:42 -0400] - UpdateStripeIdsOnMarket - Tahoe Food Hub (13) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ55tbkHkDlnx
-[2015-06-01 14:22:42 -0400] - UpdateStripeIdsOnMarket - Tahoe Food Hub (13) - Connecting org customers - Organization already has stripe_customer_id: cus_5vYxnanoZplOV7
-[2015-06-01 14:22:42 -0400] - UpdateStripeIdsOnMarket - Tahoe Food Hub (13) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ5touQt7FHiz
-[2015-06-01 14:22:42 -0400] - UpdateStripeIdsOnMarket - Tahoe Food Hub (13) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ5RJ3wjhh4XG
-[2015-06-01 14:22:42 -0400] - UpdateStripeIdsOnMarket - Tahoe Food Hub (13) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ5XDDLKUMSsB
-[2015-06-01 14:22:42 -0400] - UpdateStripeIdsOnMarket - Tahoe Food Hub (13) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4NUINEoTal5
-[2015-06-01 14:22:42 -0400] - UpdateStripeIdsOnMarket - Tahoe Food Hub (13) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ5S2GElHQc9l
-[2015-06-01 14:22:42 -0400] - UpdateStripeIdsOnMarket - Tahoe Food Hub (13) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4FyIGZd2T13
-[2015-06-01 14:22:42 -0400] - UpdateStripeIdsOnMarket - Tahoe Food Hub (13) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4jmn6yfPd6l
-[2015-06-01 14:22:42 -0400] - UpdateStripeIdsOnMarket - Tahoe Food Hub (13) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ556gH6ieFB2
-[2015-06-01 14:22:42 -0400] - UpdateStripeIdsOnMarket - Tahoe Food Hub (13) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ5JR7fSSC230
-[2015-06-01 14:22:42 -0400] - UpdateStripeIdsOnMarket - Tahoe Food Hub (13) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ5Pv8Umd5mlI
-[2015-06-01 14:22:42 -0400] - UpdateStripeIdsOnMarket - Tahoe Food Hub (13) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ5cTdQVxKbfI
-[2015-06-01 14:22:42 -0400] - UpdateStripeIdsOnMarket - Tahoe Food Hub (13) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ5guJ5OB4aCN
-[2015-06-01 14:22:42 -0400] - UpdateStripeIdsOnMarket - Tahoe Food Hub (13) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4nSTtlGdj49
-[2015-06-01 14:22:42 -0400] - UpdateStripeIdsOnMarket - Tahoe Food Hub (13) - Connecting market BankAccounts - PLUMAS BANK 8736 (48) already has stripe_id: ba_15ic9Z2VpjOYk6Tm9TXbIYIE
-[2015-06-01 14:22:43 -0400] - UpdateStripeIdsOnMarket - Tahoe Food Hub (13) - Connecting org BankAccounts - Organization Northstar (1541) - MISS - No stripe_id found for Visa 9110 (130) balanced_customer_uri /v1/marketplaces/MP2eXZmrOPof80u3Irf94Wre/cards/CC4K48rwucjfuD2rNbeCqDGj
+[2015-06-08 12:25:33 -0400] - UpdateStripeIdsOnMarket - Tahoe Food Hub (13) - ====================================================================================================
+[2015-06-08 12:25:33 -0400] - UpdateStripeIdsOnMarket - Tahoe Food Hub (13) -  Tahoe Food Hub (13)
+[2015-06-08 12:25:33 -0400] - UpdateStripeIdsOnMarket - Tahoe Food Hub (13) -  Updating stripe IDs for market, orgs and bank accounts.
+[2015-06-08 12:25:33 -0400] - UpdateStripeIdsOnMarket - Tahoe Food Hub (13) - 
+[2015-06-08 12:25:33 -0400] - UpdateStripeIdsOnMarket - Tahoe Food Hub (13) -  Balanced export file: /home/vagrant/git/localorbit/tools/stripe-migration/from_balanced/2015-06-08-1433769720-MP2eXZmrOPof80u3Irf94Wre.csv
+[2015-06-08 12:25:33 -0400] - UpdateStripeIdsOnMarket - Tahoe Food Hub (13) - 
+[2015-06-08 12:25:33 -0400] - UpdateStripeIdsOnMarket - Tahoe Food Hub (13) -  Rails.env: production
+[2015-06-08 12:25:33 -0400] - UpdateStripeIdsOnMarket - Tahoe Food Hub (13) -  Stripe keys:
+[2015-06-08 12:25:33 -0400] - UpdateStripeIdsOnMarket - Tahoe Food Hub (13) -   --> STRIPE_PUBLISHABLE_KEY: pk_live_j85VTsrz51POrss3ni460qaf (pk_live_j85VTsrz51POrss3ni460qaf)
+[2015-06-08 12:25:33 -0400] - UpdateStripeIdsOnMarket - Tahoe Food Hub (13) - ====================================================================================================
+[2015-06-08 12:25:33 -0400] - UpdateStripeIdsOnMarket - Tahoe Food Hub (13) - Connecting market customer - Market already has stripe_customer_id: cus_5uQ5XxNuXX9V1R
+[2015-06-08 12:25:33 -0400] - UpdateStripeIdsOnMarket - Tahoe Food Hub (13) - Connecting market account - Market already has stripe_account_id: acct_15l1yTIN84gklqQV
+[2015-06-08 12:25:33 -0400] - UpdateStripeIdsOnMarket - Tahoe Food Hub (13) - Connecting org customers - Updated Organization Picnic, Catering & Mountain Girl Soup Co. (302) stripe_customer_id: cus_5uQ5ojdF3BGInQ
+[2015-06-08 12:25:33 -0400] - UpdateStripeIdsOnMarket - Tahoe Food Hub (13) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ5ztKqMnDvfC
+[2015-06-08 12:25:33 -0400] - UpdateStripeIdsOnMarket - Tahoe Food Hub (13) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4vKnmPkbqvl
+[2015-06-08 12:25:33 -0400] - UpdateStripeIdsOnMarket - Tahoe Food Hub (13) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ5TwMOzydwKS
+[2015-06-08 12:25:33 -0400] - UpdateStripeIdsOnMarket - Tahoe Food Hub (13) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4gJIIAupzOc
+[2015-06-08 12:25:33 -0400] - UpdateStripeIdsOnMarket - Tahoe Food Hub (13) - Connecting org customers - Updated Organization Coffeebar (260) stripe_customer_id: cus_5uQ5NCfjFzdQCv
+[2015-06-08 12:25:33 -0400] - UpdateStripeIdsOnMarket - Tahoe Food Hub (13) - Connecting org customers - CONFLICT - Organization stripe_customer_id is ALREADY cus_6MVVg0mwAApvhX, but export data says it should be cus_5uQ404jJ9iX3Pd
+[2015-06-08 12:25:33 -0400] - UpdateStripeIdsOnMarket - Tahoe Food Hub (13) - Connecting org customers - CONFLICT - Organization stripe_customer_id is ALREADY cus_6MD0Y3qqSnr9OE, but export data says it should be cus_5uQ5ZOH2rNd22J
+[2015-06-08 12:25:33 -0400] - UpdateStripeIdsOnMarket - Tahoe Food Hub (13) - Connecting org customers - CONFLICT - Organization stripe_customer_id is ALREADY cus_6MV3uKxshYMBDX, but export data says it should be cus_5uQ5oMfvQSmad8
+[2015-06-08 12:25:33 -0400] - UpdateStripeIdsOnMarket - Tahoe Food Hub (13) - Connecting org customers - CONFLICT - Organization stripe_customer_id is ALREADY cus_6MVhxgpV8E8SwU, but export data says it should be cus_5uQ5l5rZW7lEja
+[2015-06-08 12:25:33 -0400] - UpdateStripeIdsOnMarket - Tahoe Food Hub (13) - Connecting org customers - Updated Organization Resort at Squaw Creek (271) stripe_customer_id: cus_5uQ4qtPtQ7JDMD
+[2015-06-08 12:25:33 -0400] - UpdateStripeIdsOnMarket - Tahoe Food Hub (13) - Connecting org customers - Updated Organization full belly deli/season'd catering (257) stripe_customer_id: cus_5uQ5NrzIce7OzF
+[2015-06-08 12:25:33 -0400] - UpdateStripeIdsOnMarket - Tahoe Food Hub (13) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4oNfXVKO3dR
+[2015-06-08 12:25:33 -0400] - UpdateStripeIdsOnMarket - Tahoe Food Hub (13) - Connecting org customers - Updated Organization Mog Grog (274) stripe_customer_id: cus_5uQ4SWbDyvsowo
+[2015-06-08 12:25:33 -0400] - UpdateStripeIdsOnMarket - Tahoe Food Hub (13) - Connecting org customers - Updated Organization Test (Katie) (1502) stripe_customer_id: cus_5uQ5pcGrmxJ5yw
+[2015-06-08 12:25:33 -0400] - UpdateStripeIdsOnMarket - Tahoe Food Hub (13) - Connecting org customers - Updated Organization New Moon Natural Foods (286) stripe_customer_id: cus_5uQ5JtvZlseZ1p
+[2015-06-08 12:25:33 -0400] - UpdateStripeIdsOnMarket - Tahoe Food Hub (13) - Connecting org customers - Updated Organization Sacco Dining (285) stripe_customer_id: cus_5uQ5ls3OZaPTYa
+[2015-06-08 12:25:33 -0400] - UpdateStripeIdsOnMarket - Tahoe Food Hub (13) - Connecting org customers - Updated Organization Mamasake (292) stripe_customer_id: cus_5uQ5sJs5fuhKap
+[2015-06-08 12:25:34 -0400] - UpdateStripeIdsOnMarket - Tahoe Food Hub (13) - Connecting org customers - Updated Organization West Shore Cafe (295) stripe_customer_id: cus_5uQ4xY6w5wMUvL
+[2015-06-08 12:25:34 -0400] - UpdateStripeIdsOnMarket - Tahoe Food Hub (13) - Connecting org customers - MISS - No stripe_customer_id found for Organization The Mill (303) balanced_customer_uri /v1/customers/CU3UyIknQcdmrkctvGB9jLR1
+[2015-06-08 12:25:34 -0400] - UpdateStripeIdsOnMarket - Tahoe Food Hub (13) - Connecting org customers - Updated Organization Soupa (297) stripe_customer_id: cus_5uQ5vDf5ch1lpX
+[2015-06-08 12:25:34 -0400] - UpdateStripeIdsOnMarket - Tahoe Food Hub (13) - Connecting org customers - Updated Organization SunMie Won (307) stripe_customer_id: cus_5uQ4APSExlhFIU
+[2015-06-08 12:25:34 -0400] - UpdateStripeIdsOnMarket - Tahoe Food Hub (13) - Connecting org customers - CONFLICT - Organization stripe_customer_id is ALREADY cus_6M2DhWp9qlYtk4, but export data says it should be cus_5uQ57M8HiQSyMq
+[2015-06-08 12:25:34 -0400] - UpdateStripeIdsOnMarket - Tahoe Food Hub (13) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4bsVWFTzXYd
+[2015-06-08 12:25:34 -0400] - UpdateStripeIdsOnMarket - Tahoe Food Hub (13) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4W5WLaRPqDO
+[2015-06-08 12:25:34 -0400] - UpdateStripeIdsOnMarket - Tahoe Food Hub (13) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ44VwijRBIDO
+[2015-06-08 12:25:34 -0400] - UpdateStripeIdsOnMarket - Tahoe Food Hub (13) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ5nVBQa9pYhm
+[2015-06-08 12:25:34 -0400] - UpdateStripeIdsOnMarket - Tahoe Food Hub (13) - Connecting org customers - CONFLICT - Organization stripe_customer_id is ALREADY cus_6MAJaWIUdGgM0t, but export data says it should be cus_5uQ5lOzmy90gsP
+[2015-06-08 12:25:34 -0400] - UpdateStripeIdsOnMarket - Tahoe Food Hub (13) - Connecting org customers - Organization already has stripe_customer_id: cus_6Gq1Rp0ONdck6Z
+[2015-06-08 12:25:34 -0400] - UpdateStripeIdsOnMarket - Tahoe Food Hub (13) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ5iegI9PHTFT
+[2015-06-08 12:25:34 -0400] - UpdateStripeIdsOnMarket - Tahoe Food Hub (13) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4V4HFLFUfux
+[2015-06-08 12:25:34 -0400] - UpdateStripeIdsOnMarket - Tahoe Food Hub (13) - Connecting org customers - Updated Organization Dragon Gourmet Mushrooms (4141) stripe_customer_id: cus_6M8qT8pTaVH3Qg
+[2015-06-08 12:25:34 -0400] - UpdateStripeIdsOnMarket - Tahoe Food Hub (13) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ5pjNMljeRum
+[2015-06-08 12:25:35 -0400] - UpdateStripeIdsOnMarket - Tahoe Food Hub (13) - Connecting org customers - Updated Organization Dwelley Farms (4143) stripe_customer_id: cus_6MAE05H0jnbCKf
+[2015-06-08 12:25:35 -0400] - UpdateStripeIdsOnMarket - Tahoe Food Hub (13) - Connecting org customers - Organization already has stripe_customer_id: cus_6GqBYjNlULPl4H
+[2015-06-08 12:25:35 -0400] - UpdateStripeIdsOnMarket - Tahoe Food Hub (13) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4ks4hsTkK30
+[2015-06-08 12:25:35 -0400] - UpdateStripeIdsOnMarket - Tahoe Food Hub (13) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ5NrykVYnJns
+[2015-06-08 12:25:35 -0400] - UpdateStripeIdsOnMarket - Tahoe Food Hub (13) - Connecting org customers - CONFLICT - Organization stripe_customer_id is ALREADY cus_6MNyoFjETeUNob, but export data says it should be cus_5uQ4UlDxYPAugj
+[2015-06-08 12:25:35 -0400] - UpdateStripeIdsOnMarket - Tahoe Food Hub (13) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ50DF8aR31OM
+[2015-06-08 12:25:35 -0400] - UpdateStripeIdsOnMarket - Tahoe Food Hub (13) - Connecting org customers - Updated Organization Twenty Two Bistro and Bar (288) stripe_customer_id: cus_5uQ5s0Ik2GdpQl
+[2015-06-08 12:25:35 -0400] - UpdateStripeIdsOnMarket - Tahoe Food Hub (13) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ5GoI9PzeJfI
+[2015-06-08 12:25:35 -0400] - UpdateStripeIdsOnMarket - Tahoe Food Hub (13) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4X01iFvY5MH
+[2015-06-08 12:25:35 -0400] - UpdateStripeIdsOnMarket - Tahoe Food Hub (13) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4JmuXesWALq
+[2015-06-08 12:25:35 -0400] - UpdateStripeIdsOnMarket - Tahoe Food Hub (13) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4uh3btWy1Np
+[2015-06-08 12:25:35 -0400] - UpdateStripeIdsOnMarket - Tahoe Food Hub (13) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ45SsPVOLOQz
+[2015-06-08 12:25:35 -0400] - UpdateStripeIdsOnMarket - Tahoe Food Hub (13) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ47Kik8i8uva
+[2015-06-08 12:25:35 -0400] - UpdateStripeIdsOnMarket - Tahoe Food Hub (13) - Connecting org customers - Updated Organization Sunnyside Restaurant (275) stripe_customer_id: cus_5uQ5BnbvStmsqb
+[2015-06-08 12:25:35 -0400] - UpdateStripeIdsOnMarket - Tahoe Food Hub (13) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ59QJd2iHwGf
+[2015-06-08 12:25:35 -0400] - UpdateStripeIdsOnMarket - Tahoe Food Hub (13) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ5fLZcp2XkSN
+[2015-06-08 12:25:35 -0400] - UpdateStripeIdsOnMarket - Tahoe Food Hub (13) - Connecting org customers - Updated Organization Petra (293) stripe_customer_id: cus_5uQ5AoyIlYmfFR
+[2015-06-08 12:25:35 -0400] - UpdateStripeIdsOnMarket - Tahoe Food Hub (13) - Connecting org customers - Organization already has stripe_customer_id: cus_6GpdHCacPMRfQI
+[2015-06-08 12:25:35 -0400] - UpdateStripeIdsOnMarket - Tahoe Food Hub (13) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ5j3t9FCk9u3
+[2015-06-08 12:25:35 -0400] - UpdateStripeIdsOnMarket - Tahoe Food Hub (13) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ5SOYlkJjMSy
+[2015-06-08 12:25:35 -0400] - UpdateStripeIdsOnMarket - Tahoe Food Hub (13) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ5uqR2AvNaip
+[2015-06-08 12:25:35 -0400] - UpdateStripeIdsOnMarket - Tahoe Food Hub (13) - Connecting org customers - Organization already has stripe_customer_id: cus_6GpOZN9ZHiCLZ8
+[2015-06-08 12:25:35 -0400] - UpdateStripeIdsOnMarket - Tahoe Food Hub (13) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4z6iFCDLx04
+[2015-06-08 12:25:35 -0400] - UpdateStripeIdsOnMarket - Tahoe Food Hub (13) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4rTnKSWKMVg
+[2015-06-08 12:25:35 -0400] - UpdateStripeIdsOnMarket - Tahoe Food Hub (13) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4ortsfhQgEl
+[2015-06-08 12:25:35 -0400] - UpdateStripeIdsOnMarket - Tahoe Food Hub (13) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4ZZet9plEQW
+[2015-06-08 12:25:35 -0400] - UpdateStripeIdsOnMarket - Tahoe Food Hub (13) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4USPqjnDy9h
+[2015-06-08 12:25:35 -0400] - UpdateStripeIdsOnMarket - Tahoe Food Hub (13) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ40z7E65S92m
+[2015-06-08 12:25:35 -0400] - UpdateStripeIdsOnMarket - Tahoe Food Hub (13) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4WtkPRqabrD
+[2015-06-08 12:25:35 -0400] - UpdateStripeIdsOnMarket - Tahoe Food Hub (13) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ5TvMO1vIOcP
+[2015-06-08 12:25:35 -0400] - UpdateStripeIdsOnMarket - Tahoe Food Hub (13) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ59mz1Fxd1cO
+[2015-06-08 12:25:35 -0400] - UpdateStripeIdsOnMarket - Tahoe Food Hub (13) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ5Gg6P1dOzdt
+[2015-06-08 12:25:35 -0400] - UpdateStripeIdsOnMarket - Tahoe Food Hub (13) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4qKqzinGswz
+[2015-06-08 12:25:35 -0400] - UpdateStripeIdsOnMarket - Tahoe Food Hub (13) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4oOOgpG8BoQ
+[2015-06-08 12:25:35 -0400] - UpdateStripeIdsOnMarket - Tahoe Food Hub (13) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4ri9Xgzx9xJ
+[2015-06-08 12:25:35 -0400] - UpdateStripeIdsOnMarket - Tahoe Food Hub (13) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4rS6haa23ug
+[2015-06-08 12:25:35 -0400] - UpdateStripeIdsOnMarket - Tahoe Food Hub (13) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ5cWWNdi6Xh0
+[2015-06-08 12:25:35 -0400] - UpdateStripeIdsOnMarket - Tahoe Food Hub (13) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ5O7Yv7Fr5Jn
+[2015-06-08 12:25:35 -0400] - UpdateStripeIdsOnMarket - Tahoe Food Hub (13) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4g56mwE0ISM
+[2015-06-08 12:25:35 -0400] - UpdateStripeIdsOnMarket - Tahoe Food Hub (13) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4OSOSRoJL7a
+[2015-06-08 12:25:35 -0400] - UpdateStripeIdsOnMarket - Tahoe Food Hub (13) - Connecting org customers - Organization already has stripe_customer_id: cus_6GpnCUTo4x2CM5
+[2015-06-08 12:25:35 -0400] - UpdateStripeIdsOnMarket - Tahoe Food Hub (13) - Connecting org customers - Updated Organization Tahoe Truckee USD Food Services (280) stripe_customer_id: cus_5uQ4QZZDJTTBtJ
+[2015-06-08 12:25:35 -0400] - UpdateStripeIdsOnMarket - Tahoe Food Hub (13) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4tcF7tKMmXf
+[2015-06-08 12:25:35 -0400] - UpdateStripeIdsOnMarket - Tahoe Food Hub (13) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4Uwd2czjZuN
+[2015-06-08 12:25:35 -0400] - UpdateStripeIdsOnMarket - Tahoe Food Hub (13) - Connecting org customers - Organization already has stripe_customer_id: cus_5vwnTRIU1Ifqrn
+[2015-06-08 12:25:35 -0400] - UpdateStripeIdsOnMarket - Tahoe Food Hub (13) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4zAD4hz0vfF
+[2015-06-08 12:25:35 -0400] - UpdateStripeIdsOnMarket - Tahoe Food Hub (13) - Connecting org customers - Updated Organization Tahoe Food Hub (312) stripe_customer_id: cus_5uQ5bVbMg0YLck
+[2015-06-08 12:25:35 -0400] - UpdateStripeIdsOnMarket - Tahoe Food Hub (13) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4AsntGzs1Ff
+[2015-06-08 12:25:35 -0400] - UpdateStripeIdsOnMarket - Tahoe Food Hub (13) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4HTS1NJeTMu
+[2015-06-08 12:25:35 -0400] - UpdateStripeIdsOnMarket - Tahoe Food Hub (13) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ5mKgxqaOQvQ
+[2015-06-08 12:25:35 -0400] - UpdateStripeIdsOnMarket - Tahoe Food Hub (13) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4MXHXhHbFTm
+[2015-06-08 12:25:35 -0400] - UpdateStripeIdsOnMarket - Tahoe Food Hub (13) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4baWhBZMTnU
+[2015-06-08 12:25:35 -0400] - UpdateStripeIdsOnMarket - Tahoe Food Hub (13) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ5WcqzGGflLx
+[2015-06-08 12:25:35 -0400] - UpdateStripeIdsOnMarket - Tahoe Food Hub (13) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ45s74Q9vxuU
+[2015-06-08 12:25:35 -0400] - UpdateStripeIdsOnMarket - Tahoe Food Hub (13) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ5CPIzgUgshW
+[2015-06-08 12:25:35 -0400] - UpdateStripeIdsOnMarket - Tahoe Food Hub (13) - Connecting org customers - Organization already has stripe_customer_id: cus_6Jmxv3yz7ObY6H
+[2015-06-08 12:25:35 -0400] - UpdateStripeIdsOnMarket - Tahoe Food Hub (13) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ5PdZxhLywm6
+[2015-06-08 12:25:36 -0400] - UpdateStripeIdsOnMarket - Tahoe Food Hub (13) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4l1bCsfqRKE
+[2015-06-08 12:25:36 -0400] - UpdateStripeIdsOnMarket - Tahoe Food Hub (13) - Connecting org customers - Organization already has stripe_customer_id: cus_6HGdDX6nAyGNd6
+[2015-06-08 12:25:36 -0400] - UpdateStripeIdsOnMarket - Tahoe Food Hub (13) - Connecting org customers - Organization already has stripe_customer_id: cus_6JVn7HLtioyyeQ
+[2015-06-08 12:25:36 -0400] - UpdateStripeIdsOnMarket - Tahoe Food Hub (13) - Connecting org customers - Organization already has stripe_customer_id: cus_6JVnC1iEj7kula
+[2015-06-08 12:25:36 -0400] - UpdateStripeIdsOnMarket - Tahoe Food Hub (13) - Connecting org customers - Organization already has stripe_customer_id: cus_6JrHRPJLjfBqqP
+[2015-06-08 12:25:36 -0400] - UpdateStripeIdsOnMarket - Tahoe Food Hub (13) - Connecting org customers - Organization already has stripe_customer_id: cus_6JqH5szvyxeYBw
+[2015-06-08 12:25:36 -0400] - UpdateStripeIdsOnMarket - Tahoe Food Hub (13) - Connecting org customers - Organization already has stripe_customer_id: cus_6GprHnNloZkXLB
+[2015-06-08 12:25:36 -0400] - UpdateStripeIdsOnMarket - Tahoe Food Hub (13) - Connecting org customers - Organization already has stripe_customer_id: cus_6HGFtzBCFUCW8S
+[2015-06-08 12:25:36 -0400] - UpdateStripeIdsOnMarket - Tahoe Food Hub (13) - Connecting org customers - Organization already has stripe_customer_id: cus_6GtiurcvwD8v5o
+[2015-06-08 12:25:36 -0400] - UpdateStripeIdsOnMarket - Tahoe Food Hub (13) - Connecting org customers - CONFLICT - Organization stripe_customer_id is ALREADY cus_6MPpa7R1QPfAkF, but export data says it should be cus_5uQ5vKRemJU8vn
+[2015-06-08 12:25:36 -0400] - UpdateStripeIdsOnMarket - Tahoe Food Hub (13) - Connecting org customers - Organization already has stripe_customer_id: cus_6JlQR6HxbcA8n9
+[2015-06-08 12:25:36 -0400] - UpdateStripeIdsOnMarket - Tahoe Food Hub (13) - Connecting org customers - Updated Organization Alpenglow Sports (4184) stripe_customer_id: cus_6MoBBJHRBQ2WTD
+[2015-06-08 12:25:36 -0400] - UpdateStripeIdsOnMarket - Tahoe Food Hub (13) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4XKOdgGLYq0
+[2015-06-08 12:25:36 -0400] - UpdateStripeIdsOnMarket - Tahoe Food Hub (13) - Connecting org customers - Updated Organization Truckee Tavern (4166) stripe_customer_id: cus_6MVySh7rr42PZT
+[2015-06-08 12:25:36 -0400] - UpdateStripeIdsOnMarket - Tahoe Food Hub (13) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4VVDJBG2GWx
+[2015-06-08 12:25:36 -0400] - UpdateStripeIdsOnMarket - Tahoe Food Hub (13) - Connecting org customers - Organization already has stripe_customer_id: cus_6JVnj9AWty9jZa
+[2015-06-08 12:25:36 -0400] - UpdateStripeIdsOnMarket - Tahoe Food Hub (13) - Connecting org customers - Organization already has stripe_customer_id: cus_6JVpr5bwHntcib
+[2015-06-08 12:25:36 -0400] - UpdateStripeIdsOnMarket - Tahoe Food Hub (13) - Connecting org customers - Organization already has stripe_customer_id: cus_6JVnUAmgBmvWMZ
+[2015-06-08 12:25:36 -0400] - UpdateStripeIdsOnMarket - Tahoe Food Hub (13) - Connecting org customers - Organization already has stripe_customer_id: cus_6GpxMI57ui6F6v
+[2015-06-08 12:25:36 -0400] - UpdateStripeIdsOnMarket - Tahoe Food Hub (13) - Connecting org customers - Organization already has stripe_customer_id: cus_6GpY6jgUBAA3Dk
+[2015-06-08 12:25:36 -0400] - UpdateStripeIdsOnMarket - Tahoe Food Hub (13) - Connecting org customers - Organization already has stripe_customer_id: cus_6GpMy5PHHVf3hB
+[2015-06-08 12:25:36 -0400] - UpdateStripeIdsOnMarket - Tahoe Food Hub (13) - Connecting org customers - Organization already has stripe_customer_id: cus_6GpAc5KCjXpVR1
+[2015-06-08 12:25:36 -0400] - UpdateStripeIdsOnMarket - Tahoe Food Hub (13) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ5eWvx6bDCzs
+[2015-06-08 12:25:36 -0400] - UpdateStripeIdsOnMarket - Tahoe Food Hub (13) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ55tbkHkDlnx
+[2015-06-08 12:25:36 -0400] - UpdateStripeIdsOnMarket - Tahoe Food Hub (13) - Connecting org customers - Organization already has stripe_customer_id: cus_5vYxnanoZplOV7
+[2015-06-08 12:25:36 -0400] - UpdateStripeIdsOnMarket - Tahoe Food Hub (13) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ5touQt7FHiz
+[2015-06-08 12:25:36 -0400] - UpdateStripeIdsOnMarket - Tahoe Food Hub (13) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ5RJ3wjhh4XG
+[2015-06-08 12:25:36 -0400] - UpdateStripeIdsOnMarket - Tahoe Food Hub (13) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ5XDDLKUMSsB
+[2015-06-08 12:25:36 -0400] - UpdateStripeIdsOnMarket - Tahoe Food Hub (13) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4NUINEoTal5
+[2015-06-08 12:25:36 -0400] - UpdateStripeIdsOnMarket - Tahoe Food Hub (13) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ5S2GElHQc9l
+[2015-06-08 12:25:36 -0400] - UpdateStripeIdsOnMarket - Tahoe Food Hub (13) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4FyIGZd2T13
+[2015-06-08 12:25:36 -0400] - UpdateStripeIdsOnMarket - Tahoe Food Hub (13) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4jmn6yfPd6l
+[2015-06-08 12:25:36 -0400] - UpdateStripeIdsOnMarket - Tahoe Food Hub (13) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ556gH6ieFB2
+[2015-06-08 12:25:36 -0400] - UpdateStripeIdsOnMarket - Tahoe Food Hub (13) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ5JR7fSSC230
+[2015-06-08 12:25:36 -0400] - UpdateStripeIdsOnMarket - Tahoe Food Hub (13) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ5Pv8Umd5mlI
+[2015-06-08 12:25:36 -0400] - UpdateStripeIdsOnMarket - Tahoe Food Hub (13) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ5cTdQVxKbfI
+[2015-06-08 12:25:36 -0400] - UpdateStripeIdsOnMarket - Tahoe Food Hub (13) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ5guJ5OB4aCN
+[2015-06-08 12:25:36 -0400] - UpdateStripeIdsOnMarket - Tahoe Food Hub (13) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4nSTtlGdj49
+[2015-06-08 12:25:36 -0400] - UpdateStripeIdsOnMarket - Tahoe Food Hub (13) - Connecting market BankAccounts - PLUMAS BANK 8736 (48) already has stripe_id: ba_15ic9Z2VpjOYk6Tm9TXbIYIE
+[2015-06-08 12:25:37 -0400] - UpdateStripeIdsOnMarket - Tahoe Food Hub (13) - Connecting org BankAccounts - Organization Northstar (1541) - MISS - No stripe_id found for Visa 9110 (130) balanced_customer_uri /v1/marketplaces/MP2eXZmrOPof80u3Irf94Wre/cards/CC4K48rwucjfuD2rNbeCqDGj
+[2015-06-08 12:25:37 -0400] - UpdateStripeIdsOnMarket - Tahoe Food Hub (13) - Connecting org BankAccounts - Organization Picnic, Catering & Mountain Girl Soup Co. (302) - Updated Visa 4745 (158) stripe_id: card_15ic9b2VpjOYk6Tmc0tIQZYz

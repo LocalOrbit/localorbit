@@ -1,29 +1,29 @@
-[2015-06-01 14:22:43 -0400] - UpdateStripeIdsOnMarket - Re:Vision Comunidad (83) - ====================================================================================================
-[2015-06-01 14:22:43 -0400] - UpdateStripeIdsOnMarket - Re:Vision Comunidad (83) -  Re:Vision Comunidad (83)
-[2015-06-01 14:22:43 -0400] - UpdateStripeIdsOnMarket - Re:Vision Comunidad (83) -  Updating stripe IDs for market, orgs and bank accounts.
-[2015-06-01 14:22:43 -0400] - UpdateStripeIdsOnMarket - Re:Vision Comunidad (83) - 
-[2015-06-01 14:22:43 -0400] - UpdateStripeIdsOnMarket - Re:Vision Comunidad (83) -  Balanced export file: /home/vagrant/git/localorbit/tools/stripe-migration/from_balanced/2015-06-01-1433181180-MP2eXZmrOPof80u3Irf94Wre.csv
-[2015-06-01 14:22:43 -0400] - UpdateStripeIdsOnMarket - Re:Vision Comunidad (83) - 
-[2015-06-01 14:22:43 -0400] - UpdateStripeIdsOnMarket - Re:Vision Comunidad (83) -  Rails.env: production
-[2015-06-01 14:22:43 -0400] - UpdateStripeIdsOnMarket - Re:Vision Comunidad (83) -  Stripe keys:
-[2015-06-01 14:22:43 -0400] - UpdateStripeIdsOnMarket - Re:Vision Comunidad (83) -   --> STRIPE_PUBLISHABLE_KEY: pk_live_j85VTsrz51POrss3ni460qaf (pk_live_j85VTsrz51POrss3ni460qaf)
-[2015-06-01 14:22:43 -0400] - UpdateStripeIdsOnMarket - Re:Vision Comunidad (83) - ====================================================================================================
-[2015-06-01 14:22:49 -0400] - UpdateStripeIdsOnMarket - Re:Vision Comunidad (83) - Connecting market customer - Updated Market stripe_customer_id: cus_5wAHJnkpt9ZOxX
-[2015-06-01 14:22:49 -0400] - UpdateStripeIdsOnMarket - Re:Vision Comunidad (83) - Connecting market account - MISS - No stripe_account_id found for market balanced_customer_uri /v1/customers/CU1gHl3Bk91fLumMV7SqB6Ay
-[2015-06-01 14:22:49 -0400] - UpdateStripeIdsOnMarket - Re:Vision Comunidad (83) - Connecting org customers - Organization already has stripe_customer_id: cus_65uNiQ70UvOjEF
-[2015-06-01 14:22:49 -0400] - UpdateStripeIdsOnMarket - Re:Vision Comunidad (83) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ590y9OsQLw5
-[2015-06-01 14:22:49 -0400] - UpdateStripeIdsOnMarket - Re:Vision Comunidad (83) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ55uW28xQn5G
-[2015-06-01 14:22:49 -0400] - UpdateStripeIdsOnMarket - Re:Vision Comunidad (83) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ48d6yce5M5u
-[2015-06-01 14:22:49 -0400] - UpdateStripeIdsOnMarket - Re:Vision Comunidad (83) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4JnZ4V90CxF
-[2015-06-01 14:22:49 -0400] - UpdateStripeIdsOnMarket - Re:Vision Comunidad (83) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4rO788OX5zG
-[2015-06-01 14:22:49 -0400] - UpdateStripeIdsOnMarket - Re:Vision Comunidad (83) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4TaIZHYbpVC
-[2015-06-01 14:22:49 -0400] - UpdateStripeIdsOnMarket - Re:Vision Comunidad (83) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4MnYlh6y2nf
-[2015-06-01 14:22:49 -0400] - UpdateStripeIdsOnMarket - Re:Vision Comunidad (83) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ5N1am5yl5We
-[2015-06-01 14:22:49 -0400] - UpdateStripeIdsOnMarket - Re:Vision Comunidad (83) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4hOUCKr3Hfv
-[2015-06-01 14:22:49 -0400] - UpdateStripeIdsOnMarket - Re:Vision Comunidad (83) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ5H5w2pVNj2w
-[2015-06-01 14:22:49 -0400] - UpdateStripeIdsOnMarket - Re:Vision Comunidad (83) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ5xIPl1VH8jW
-[2015-06-01 14:22:49 -0400] - UpdateStripeIdsOnMarket - Re:Vision Comunidad (83) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4T3d0gxqWQ0
-[2015-06-01 14:22:49 -0400] - UpdateStripeIdsOnMarket - Re:Vision Comunidad (83) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4wRCTVGfBJr
-[2015-06-01 14:22:49 -0400] - UpdateStripeIdsOnMarket - Re:Vision Comunidad (83) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ5559GZNQYo1
-[2015-06-01 14:22:49 -0400] - UpdateStripeIdsOnMarket - Re:Vision Comunidad (83) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4OigZ6AnZzd
-[2015-06-01 14:22:49 -0400] - UpdateStripeIdsOnMarket - Re:Vision Comunidad (83) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ5iM5l5GbSBJ
+[2015-06-08 12:25:38 -0400] - UpdateStripeIdsOnMarket - Re:Vision Comunidad (83) - ====================================================================================================
+[2015-06-08 12:25:38 -0400] - UpdateStripeIdsOnMarket - Re:Vision Comunidad (83) -  Re:Vision Comunidad (83)
+[2015-06-08 12:25:38 -0400] - UpdateStripeIdsOnMarket - Re:Vision Comunidad (83) -  Updating stripe IDs for market, orgs and bank accounts.
+[2015-06-08 12:25:38 -0400] - UpdateStripeIdsOnMarket - Re:Vision Comunidad (83) - 
+[2015-06-08 12:25:38 -0400] - UpdateStripeIdsOnMarket - Re:Vision Comunidad (83) -  Balanced export file: /home/vagrant/git/localorbit/tools/stripe-migration/from_balanced/2015-06-08-1433769720-MP2eXZmrOPof80u3Irf94Wre.csv
+[2015-06-08 12:25:38 -0400] - UpdateStripeIdsOnMarket - Re:Vision Comunidad (83) - 
+[2015-06-08 12:25:38 -0400] - UpdateStripeIdsOnMarket - Re:Vision Comunidad (83) -  Rails.env: production
+[2015-06-08 12:25:38 -0400] - UpdateStripeIdsOnMarket - Re:Vision Comunidad (83) -  Stripe keys:
+[2015-06-08 12:25:38 -0400] - UpdateStripeIdsOnMarket - Re:Vision Comunidad (83) -   --> STRIPE_PUBLISHABLE_KEY: pk_live_j85VTsrz51POrss3ni460qaf (pk_live_j85VTsrz51POrss3ni460qaf)
+[2015-06-08 12:25:38 -0400] - UpdateStripeIdsOnMarket - Re:Vision Comunidad (83) - ====================================================================================================
+[2015-06-08 12:25:38 -0400] - UpdateStripeIdsOnMarket - Re:Vision Comunidad (83) - Connecting market customer - Market already has stripe_customer_id: cus_5wAHJnkpt9ZOxX
+[2015-06-08 12:25:38 -0400] - UpdateStripeIdsOnMarket - Re:Vision Comunidad (83) - Connecting market account - MISS - No stripe_account_id found for market balanced_customer_uri /v1/customers/CU1gHl3Bk91fLumMV7SqB6Ay
+[2015-06-08 12:25:38 -0400] - UpdateStripeIdsOnMarket - Re:Vision Comunidad (83) - Connecting org customers - Organization already has stripe_customer_id: cus_65uNiQ70UvOjEF
+[2015-06-08 12:25:38 -0400] - UpdateStripeIdsOnMarket - Re:Vision Comunidad (83) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ590y9OsQLw5
+[2015-06-08 12:25:38 -0400] - UpdateStripeIdsOnMarket - Re:Vision Comunidad (83) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ55uW28xQn5G
+[2015-06-08 12:25:38 -0400] - UpdateStripeIdsOnMarket - Re:Vision Comunidad (83) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ48d6yce5M5u
+[2015-06-08 12:25:38 -0400] - UpdateStripeIdsOnMarket - Re:Vision Comunidad (83) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4JnZ4V90CxF
+[2015-06-08 12:25:38 -0400] - UpdateStripeIdsOnMarket - Re:Vision Comunidad (83) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4rO788OX5zG
+[2015-06-08 12:25:38 -0400] - UpdateStripeIdsOnMarket - Re:Vision Comunidad (83) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4TaIZHYbpVC
+[2015-06-08 12:25:38 -0400] - UpdateStripeIdsOnMarket - Re:Vision Comunidad (83) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4MnYlh6y2nf
+[2015-06-08 12:25:38 -0400] - UpdateStripeIdsOnMarket - Re:Vision Comunidad (83) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ5N1am5yl5We
+[2015-06-08 12:25:38 -0400] - UpdateStripeIdsOnMarket - Re:Vision Comunidad (83) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4hOUCKr3Hfv
+[2015-06-08 12:25:38 -0400] - UpdateStripeIdsOnMarket - Re:Vision Comunidad (83) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ5H5w2pVNj2w
+[2015-06-08 12:25:38 -0400] - UpdateStripeIdsOnMarket - Re:Vision Comunidad (83) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ5xIPl1VH8jW
+[2015-06-08 12:25:38 -0400] - UpdateStripeIdsOnMarket - Re:Vision Comunidad (83) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4T3d0gxqWQ0
+[2015-06-08 12:25:38 -0400] - UpdateStripeIdsOnMarket - Re:Vision Comunidad (83) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4wRCTVGfBJr
+[2015-06-08 12:25:38 -0400] - UpdateStripeIdsOnMarket - Re:Vision Comunidad (83) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ5559GZNQYo1
+[2015-06-08 12:25:38 -0400] - UpdateStripeIdsOnMarket - Re:Vision Comunidad (83) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4OigZ6AnZzd
+[2015-06-08 12:25:38 -0400] - UpdateStripeIdsOnMarket - Re:Vision Comunidad (83) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ5iM5l5GbSBJ

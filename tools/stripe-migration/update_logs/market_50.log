@@ -1,14 +1,14 @@
-[2015-06-01 14:23:30 -0400] - UpdateStripeIdsOnMarket - Brookbound Farm (50) - ====================================================================================================
-[2015-06-01 14:23:30 -0400] - UpdateStripeIdsOnMarket - Brookbound Farm (50) -  Brookbound Farm (50)
-[2015-06-01 14:23:30 -0400] - UpdateStripeIdsOnMarket - Brookbound Farm (50) -  Updating stripe IDs for market, orgs and bank accounts.
-[2015-06-01 14:23:30 -0400] - UpdateStripeIdsOnMarket - Brookbound Farm (50) - 
-[2015-06-01 14:23:30 -0400] - UpdateStripeIdsOnMarket - Brookbound Farm (50) -  Balanced export file: /home/vagrant/git/localorbit/tools/stripe-migration/from_balanced/2015-06-01-1433181180-MP2eXZmrOPof80u3Irf94Wre.csv
-[2015-06-01 14:23:30 -0400] - UpdateStripeIdsOnMarket - Brookbound Farm (50) - 
-[2015-06-01 14:23:30 -0400] - UpdateStripeIdsOnMarket - Brookbound Farm (50) -  Rails.env: production
-[2015-06-01 14:23:30 -0400] - UpdateStripeIdsOnMarket - Brookbound Farm (50) -  Stripe keys:
-[2015-06-01 14:23:30 -0400] - UpdateStripeIdsOnMarket - Brookbound Farm (50) -   --> STRIPE_PUBLISHABLE_KEY: pk_live_j85VTsrz51POrss3ni460qaf (pk_live_j85VTsrz51POrss3ni460qaf)
-[2015-06-01 14:23:30 -0400] - UpdateStripeIdsOnMarket - Brookbound Farm (50) - ====================================================================================================
-[2015-06-01 14:23:30 -0400] - UpdateStripeIdsOnMarket - Brookbound Farm (50) - Connecting market customer - Updated Market stripe_customer_id: cus_5uQ4EOQ1ex2sGv
-[2015-06-01 14:23:30 -0400] - UpdateStripeIdsOnMarket - Brookbound Farm (50) - Connecting market account - Updated Market stripe_account_id: acct_15l1yUGytIHJC8qD
-[2015-06-01 14:23:31 -0400] - UpdateStripeIdsOnMarket - Brookbound Farm (50) - Connecting org customers - Updated Organization Brookbound Farm (2189) stripe_customer_id: cus_5uQ4S1Hi6trPHi
-[2015-06-01 14:23:31 -0400] - UpdateStripeIdsOnMarket - Brookbound Farm (50) - Connecting market BankAccounts - Updated TRUSTCO BANK 5348 (264) stripe_id: ba_15ic9C2VpjOYk6TmX5NKNIoz
+[2015-06-08 12:26:11 -0400] - UpdateStripeIdsOnMarket - Brookbound Farm (50) - ====================================================================================================
+[2015-06-08 12:26:11 -0400] - UpdateStripeIdsOnMarket - Brookbound Farm (50) -  Brookbound Farm (50)
+[2015-06-08 12:26:11 -0400] - UpdateStripeIdsOnMarket - Brookbound Farm (50) -  Updating stripe IDs for market, orgs and bank accounts.
+[2015-06-08 12:26:11 -0400] - UpdateStripeIdsOnMarket - Brookbound Farm (50) - 
+[2015-06-08 12:26:11 -0400] - UpdateStripeIdsOnMarket - Brookbound Farm (50) -  Balanced export file: /home/vagrant/git/localorbit/tools/stripe-migration/from_balanced/2015-06-08-1433769720-MP2eXZmrOPof80u3Irf94Wre.csv
+[2015-06-08 12:26:11 -0400] - UpdateStripeIdsOnMarket - Brookbound Farm (50) - 
+[2015-06-08 12:26:11 -0400] - UpdateStripeIdsOnMarket - Brookbound Farm (50) -  Rails.env: production
+[2015-06-08 12:26:11 -0400] - UpdateStripeIdsOnMarket - Brookbound Farm (50) -  Stripe keys:
+[2015-06-08 12:26:11 -0400] - UpdateStripeIdsOnMarket - Brookbound Farm (50) -   --> STRIPE_PUBLISHABLE_KEY: pk_live_j85VTsrz51POrss3ni460qaf (pk_live_j85VTsrz51POrss3ni460qaf)
+[2015-06-08 12:26:11 -0400] - UpdateStripeIdsOnMarket - Brookbound Farm (50) - ====================================================================================================
+[2015-06-08 12:26:11 -0400] - UpdateStripeIdsOnMarket - Brookbound Farm (50) - Connecting market customer - Market already has stripe_customer_id: cus_5uQ4EOQ1ex2sGv
+[2015-06-08 12:26:11 -0400] - UpdateStripeIdsOnMarket - Brookbound Farm (50) - Connecting market account - Market already has stripe_account_id: acct_15l1yUGytIHJC8qD
+[2015-06-08 12:26:11 -0400] - UpdateStripeIdsOnMarket - Brookbound Farm (50) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4S1Hi6trPHi
+[2015-06-08 12:26:11 -0400] - UpdateStripeIdsOnMarket - Brookbound Farm (50) - Connecting market BankAccounts - TRUSTCO BANK 5348 (264) already has stripe_id: ba_15ic9C2VpjOYk6TmX5NKNIoz

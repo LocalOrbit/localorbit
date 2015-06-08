@@ -1,15 +1,16 @@
-[2015-06-01 14:23:50 -0400] - UpdateStripeIdsOnMarket - CRO Farm Market (99) - ====================================================================================================
-[2015-06-01 14:23:50 -0400] - UpdateStripeIdsOnMarket - CRO Farm Market (99) -  CRO Farm Market (99)
-[2015-06-01 14:23:50 -0400] - UpdateStripeIdsOnMarket - CRO Farm Market (99) -  Updating stripe IDs for market, orgs and bank accounts.
-[2015-06-01 14:23:50 -0400] - UpdateStripeIdsOnMarket - CRO Farm Market (99) - 
-[2015-06-01 14:23:50 -0400] - UpdateStripeIdsOnMarket - CRO Farm Market (99) -  Balanced export file: /home/vagrant/git/localorbit/tools/stripe-migration/from_balanced/2015-06-01-1433181180-MP2eXZmrOPof80u3Irf94Wre.csv
-[2015-06-01 14:23:50 -0400] - UpdateStripeIdsOnMarket - CRO Farm Market (99) - 
-[2015-06-01 14:23:50 -0400] - UpdateStripeIdsOnMarket - CRO Farm Market (99) -  Rails.env: production
-[2015-06-01 14:23:50 -0400] - UpdateStripeIdsOnMarket - CRO Farm Market (99) -  Stripe keys:
-[2015-06-01 14:23:50 -0400] - UpdateStripeIdsOnMarket - CRO Farm Market (99) -   --> STRIPE_PUBLISHABLE_KEY: pk_live_j85VTsrz51POrss3ni460qaf (pk_live_j85VTsrz51POrss3ni460qaf)
-[2015-06-01 14:23:50 -0400] - UpdateStripeIdsOnMarket - CRO Farm Market (99) - ====================================================================================================
-[2015-06-01 14:23:51 -0400] - UpdateStripeIdsOnMarket - CRO Farm Market (99) - Connecting market customer - Updated Market stripe_customer_id: cus_6H7Mm7Ii5J2cFJ
-[2015-06-01 14:23:51 -0400] - UpdateStripeIdsOnMarket - CRO Farm Market (99) - Connecting market account - MISS - No stripe_account_id found for market balanced_customer_uri /v1/customers/CU74tayRlXqWZGCCEb1qZlAz
-[2015-06-01 14:23:51 -0400] - UpdateStripeIdsOnMarket - CRO Farm Market (99) - Connecting org customers - Updated Organization Test CRO Farm Market (3979) stripe_customer_id: cus_6JgDWtX7TTB4pr
-[2015-06-01 14:23:51 -0400] - UpdateStripeIdsOnMarket - CRO Farm Market (99) - Connecting org customers - Updated Organization Farm Market - Zach (3944) stripe_customer_id: cus_6J6AooVr20HNIM
-[2015-06-01 14:23:51 -0400] - UpdateStripeIdsOnMarket - CRO Farm Market (99) - Connecting org customers - Organization already has stripe_customer_id: cus_6J3tyn9hQiBErg
+[2015-06-08 12:26:29 -0400] - UpdateStripeIdsOnMarket - CRO Farm Market (99) - ====================================================================================================
+[2015-06-08 12:26:29 -0400] - UpdateStripeIdsOnMarket - CRO Farm Market (99) -  CRO Farm Market (99)
+[2015-06-08 12:26:29 -0400] - UpdateStripeIdsOnMarket - CRO Farm Market (99) -  Updating stripe IDs for market, orgs and bank accounts.
+[2015-06-08 12:26:29 -0400] - UpdateStripeIdsOnMarket - CRO Farm Market (99) - 
+[2015-06-08 12:26:29 -0400] - UpdateStripeIdsOnMarket - CRO Farm Market (99) -  Balanced export file: /home/vagrant/git/localorbit/tools/stripe-migration/from_balanced/2015-06-08-1433769720-MP2eXZmrOPof80u3Irf94Wre.csv
+[2015-06-08 12:26:29 -0400] - UpdateStripeIdsOnMarket - CRO Farm Market (99) - 
+[2015-06-08 12:26:29 -0400] - UpdateStripeIdsOnMarket - CRO Farm Market (99) -  Rails.env: production
+[2015-06-08 12:26:29 -0400] - UpdateStripeIdsOnMarket - CRO Farm Market (99) -  Stripe keys:
+[2015-06-08 12:26:29 -0400] - UpdateStripeIdsOnMarket - CRO Farm Market (99) -   --> STRIPE_PUBLISHABLE_KEY: pk_live_j85VTsrz51POrss3ni460qaf (pk_live_j85VTsrz51POrss3ni460qaf)
+[2015-06-08 12:26:29 -0400] - UpdateStripeIdsOnMarket - CRO Farm Market (99) - ====================================================================================================
+[2015-06-08 12:26:29 -0400] - UpdateStripeIdsOnMarket - CRO Farm Market (99) - Connecting market customer - Market already has stripe_customer_id: cus_6H7Mm7Ii5J2cFJ
+[2015-06-08 12:26:29 -0400] - UpdateStripeIdsOnMarket - CRO Farm Market (99) - Connecting market account - MISS - No stripe_account_id found for market balanced_customer_uri /v1/customers/CU74tayRlXqWZGCCEb1qZlAz
+[2015-06-08 12:26:29 -0400] - UpdateStripeIdsOnMarket - CRO Farm Market (99) - Connecting org customers - Organization already has stripe_customer_id: cus_6MRAkWwb7GhdHG
+[2015-06-08 12:26:29 -0400] - UpdateStripeIdsOnMarket - CRO Farm Market (99) - Connecting org customers - Organization already has stripe_customer_id: cus_6JgDWtX7TTB4pr
+[2015-06-08 12:26:29 -0400] - UpdateStripeIdsOnMarket - CRO Farm Market (99) - Connecting org customers - Organization already has stripe_customer_id: cus_6J6AooVr20HNIM
+[2015-06-08 12:26:29 -0400] - UpdateStripeIdsOnMarket - CRO Farm Market (99) - Connecting org customers - Organization already has stripe_customer_id: cus_6J3tyn9hQiBErg

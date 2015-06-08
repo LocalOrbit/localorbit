@@ -1,12 +1,12 @@
-[2015-06-01 14:23:01 -0400] - UpdateStripeIdsOnMarket - Products (47) - ====================================================================================================
-[2015-06-01 14:23:01 -0400] - UpdateStripeIdsOnMarket - Products (47) -  Products (47)
-[2015-06-01 14:23:01 -0400] - UpdateStripeIdsOnMarket - Products (47) -  Updating stripe IDs for market, orgs and bank accounts.
-[2015-06-01 14:23:01 -0400] - UpdateStripeIdsOnMarket - Products (47) - 
-[2015-06-01 14:23:01 -0400] - UpdateStripeIdsOnMarket - Products (47) -  Balanced export file: /home/vagrant/git/localorbit/tools/stripe-migration/from_balanced/2015-06-01-1433181180-MP2eXZmrOPof80u3Irf94Wre.csv
-[2015-06-01 14:23:01 -0400] - UpdateStripeIdsOnMarket - Products (47) - 
-[2015-06-01 14:23:01 -0400] - UpdateStripeIdsOnMarket - Products (47) -  Rails.env: production
-[2015-06-01 14:23:01 -0400] - UpdateStripeIdsOnMarket - Products (47) -  Stripe keys:
-[2015-06-01 14:23:01 -0400] - UpdateStripeIdsOnMarket - Products (47) -   --> STRIPE_PUBLISHABLE_KEY: pk_live_j85VTsrz51POrss3ni460qaf (pk_live_j85VTsrz51POrss3ni460qaf)
-[2015-06-01 14:23:01 -0400] - UpdateStripeIdsOnMarket - Products (47) - ====================================================================================================
-[2015-06-01 14:23:01 -0400] - UpdateStripeIdsOnMarket - Products (47) - Connecting market customer - Updated Market stripe_customer_id: cus_5uQ5K3iAY7kgkk
-[2015-06-01 14:23:01 -0400] - UpdateStripeIdsOnMarket - Products (47) - Connecting market account - MISS - No stripe_account_id found for market balanced_customer_uri /v1/customers/CUw5dfHdrHxaQSQZ6mapNK2
+[2015-06-08 12:25:51 -0400] - UpdateStripeIdsOnMarket - Products (47) - ====================================================================================================
+[2015-06-08 12:25:51 -0400] - UpdateStripeIdsOnMarket - Products (47) -  Products (47)
+[2015-06-08 12:25:51 -0400] - UpdateStripeIdsOnMarket - Products (47) -  Updating stripe IDs for market, orgs and bank accounts.
+[2015-06-08 12:25:51 -0400] - UpdateStripeIdsOnMarket - Products (47) - 
+[2015-06-08 12:25:51 -0400] - UpdateStripeIdsOnMarket - Products (47) -  Balanced export file: /home/vagrant/git/localorbit/tools/stripe-migration/from_balanced/2015-06-08-1433769720-MP2eXZmrOPof80u3Irf94Wre.csv
+[2015-06-08 12:25:51 -0400] - UpdateStripeIdsOnMarket - Products (47) - 
+[2015-06-08 12:25:51 -0400] - UpdateStripeIdsOnMarket - Products (47) -  Rails.env: production
+[2015-06-08 12:25:51 -0400] - UpdateStripeIdsOnMarket - Products (47) -  Stripe keys:
+[2015-06-08 12:25:51 -0400] - UpdateStripeIdsOnMarket - Products (47) -   --> STRIPE_PUBLISHABLE_KEY: pk_live_j85VTsrz51POrss3ni460qaf (pk_live_j85VTsrz51POrss3ni460qaf)
+[2015-06-08 12:25:51 -0400] - UpdateStripeIdsOnMarket - Products (47) - ====================================================================================================
+[2015-06-08 12:25:51 -0400] - UpdateStripeIdsOnMarket - Products (47) - Connecting market customer - Market already has stripe_customer_id: cus_5uQ5K3iAY7kgkk
+[2015-06-08 12:25:51 -0400] - UpdateStripeIdsOnMarket - Products (47) - Connecting market account - MISS - No stripe_account_id found for market balanced_customer_uri /v1/customers/CUw5dfHdrHxaQSQZ6mapNK2

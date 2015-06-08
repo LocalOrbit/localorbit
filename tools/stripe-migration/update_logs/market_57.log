@@ -1,19 +1,42 @@
-[2015-06-01 14:23:23 -0400] - UpdateStripeIdsOnMarket - Jack & Jakes School Sales (57) - ====================================================================================================
-[2015-06-01 14:23:23 -0400] - UpdateStripeIdsOnMarket - Jack & Jakes School Sales (57) -  Jack & Jakes School Sales (57)
-[2015-06-01 14:23:23 -0400] - UpdateStripeIdsOnMarket - Jack & Jakes School Sales (57) -  Updating stripe IDs for market, orgs and bank accounts.
-[2015-06-01 14:23:23 -0400] - UpdateStripeIdsOnMarket - Jack & Jakes School Sales (57) - 
-[2015-06-01 14:23:23 -0400] - UpdateStripeIdsOnMarket - Jack & Jakes School Sales (57) -  Balanced export file: /home/vagrant/git/localorbit/tools/stripe-migration/from_balanced/2015-06-01-1433181180-MP2eXZmrOPof80u3Irf94Wre.csv
-[2015-06-01 14:23:23 -0400] - UpdateStripeIdsOnMarket - Jack & Jakes School Sales (57) - 
-[2015-06-01 14:23:23 -0400] - UpdateStripeIdsOnMarket - Jack & Jakes School Sales (57) -  Rails.env: production
-[2015-06-01 14:23:23 -0400] - UpdateStripeIdsOnMarket - Jack & Jakes School Sales (57) -  Stripe keys:
-[2015-06-01 14:23:23 -0400] - UpdateStripeIdsOnMarket - Jack & Jakes School Sales (57) -   --> STRIPE_PUBLISHABLE_KEY: pk_live_j85VTsrz51POrss3ni460qaf (pk_live_j85VTsrz51POrss3ni460qaf)
-[2015-06-01 14:23:23 -0400] - UpdateStripeIdsOnMarket - Jack & Jakes School Sales (57) - ====================================================================================================
-[2015-06-01 14:23:23 -0400] - UpdateStripeIdsOnMarket - Jack & Jakes School Sales (57) - Connecting market customer - Market already has stripe_customer_id: cus_5uQ5sKdr4Z7lVH
-[2015-06-01 14:23:23 -0400] - UpdateStripeIdsOnMarket - Jack & Jakes School Sales (57) - Connecting market account - MISS - No stripe_account_id found for market balanced_customer_uri /v1/customers/CU4tsJR64UWyIpRSRI2x8NUz
-[2015-06-01 14:23:23 -0400] - UpdateStripeIdsOnMarket - Jack & Jakes School Sales (57) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ5MR9F5kSaxX
-[2015-06-01 14:23:23 -0400] - UpdateStripeIdsOnMarket - Jack & Jakes School Sales (57) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ5xqmnTrxmKi
-[2015-06-01 14:23:23 -0400] - UpdateStripeIdsOnMarket - Jack & Jakes School Sales (57) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4zygBIXPxpu
-[2015-06-01 14:23:23 -0400] - UpdateStripeIdsOnMarket - Jack & Jakes School Sales (57) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ5rD9IpeBpqq
-[2015-06-01 14:23:23 -0400] - UpdateStripeIdsOnMarket - Jack & Jakes School Sales (57) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ5fevfAwHFkm
-[2015-06-01 14:23:23 -0400] - UpdateStripeIdsOnMarket - Jack & Jakes School Sales (57) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4lX1LgcyCbV
-[2015-06-01 14:23:23 -0400] - UpdateStripeIdsOnMarket - Jack & Jakes School Sales (57) - Connecting market BankAccounts - Visa 5620 (354) already has stripe_id: card_15ic9l2VpjOYk6TmNjWuVrSH
+[2015-06-08 12:26:02 -0400] - UpdateStripeIdsOnMarket - Jack & Jakes School Sales (57) - ====================================================================================================
+[2015-06-08 12:26:02 -0400] - UpdateStripeIdsOnMarket - Jack & Jakes School Sales (57) -  Jack & Jakes School Sales (57)
+[2015-06-08 12:26:02 -0400] - UpdateStripeIdsOnMarket - Jack & Jakes School Sales (57) -  Updating stripe IDs for market, orgs and bank accounts.
+[2015-06-08 12:26:02 -0400] - UpdateStripeIdsOnMarket - Jack & Jakes School Sales (57) - 
+[2015-06-08 12:26:02 -0400] - UpdateStripeIdsOnMarket - Jack & Jakes School Sales (57) -  Balanced export file: /home/vagrant/git/localorbit/tools/stripe-migration/from_balanced/2015-06-08-1433769720-MP2eXZmrOPof80u3Irf94Wre.csv
+[2015-06-08 12:26:02 -0400] - UpdateStripeIdsOnMarket - Jack & Jakes School Sales (57) - 
+[2015-06-08 12:26:02 -0400] - UpdateStripeIdsOnMarket - Jack & Jakes School Sales (57) -  Rails.env: production
+[2015-06-08 12:26:02 -0400] - UpdateStripeIdsOnMarket - Jack & Jakes School Sales (57) -  Stripe keys:
+[2015-06-08 12:26:02 -0400] - UpdateStripeIdsOnMarket - Jack & Jakes School Sales (57) -   --> STRIPE_PUBLISHABLE_KEY: pk_live_j85VTsrz51POrss3ni460qaf (pk_live_j85VTsrz51POrss3ni460qaf)
+[2015-06-08 12:26:02 -0400] - UpdateStripeIdsOnMarket - Jack & Jakes School Sales (57) - ====================================================================================================
+[2015-06-08 12:26:02 -0400] - UpdateStripeIdsOnMarket - Jack & Jakes School Sales (57) - Connecting market customer - Market already has stripe_customer_id: cus_5uQ5sKdr4Z7lVH
+[2015-06-08 12:26:02 -0400] - UpdateStripeIdsOnMarket - Jack & Jakes School Sales (57) - Connecting market account - MISS - No stripe_account_id found for market balanced_customer_uri /v1/customers/CU4tsJR64UWyIpRSRI2x8NUz
+[2015-06-08 12:26:02 -0400] - UpdateStripeIdsOnMarket - Jack & Jakes School Sales (57) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ5MR9F5kSaxX
+[2015-06-08 12:26:02 -0400] - UpdateStripeIdsOnMarket - Jack & Jakes School Sales (57) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ5xqmnTrxmKi
+[2015-06-08 12:26:02 -0400] - UpdateStripeIdsOnMarket - Jack & Jakes School Sales (57) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4zygBIXPxpu
+[2015-06-08 12:26:02 -0400] - UpdateStripeIdsOnMarket - Jack & Jakes School Sales (57) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ5rD9IpeBpqq
+[2015-06-08 12:26:02 -0400] - UpdateStripeIdsOnMarket - Jack & Jakes School Sales (57) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ5fevfAwHFkm
+[2015-06-08 12:26:02 -0400] - UpdateStripeIdsOnMarket - Jack & Jakes School Sales (57) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4lX1LgcyCbV
+[2015-06-08 12:26:02 -0400] - UpdateStripeIdsOnMarket - Jack & Jakes School Sales (57) - Connecting org customers - Updated Organization William J. Fischer Accelerated Academy (2528) stripe_customer_id: cus_5uQ4N5QtgojZ4F
+[2015-06-08 12:26:02 -0400] - UpdateStripeIdsOnMarket - Jack & Jakes School Sales (57) - Connecting org customers - Updated Organization UP Elementary School (2527) stripe_customer_id: cus_5uQ4F2jFoc7eLf
+[2015-06-08 12:26:02 -0400] - UpdateStripeIdsOnMarket - Jack & Jakes School Sales (57) - Connecting org customers - Updated Organization Phyllis Wheaton Charter School (2526) stripe_customer_id: cus_5uQ4OpYRQhIfBr
+[2015-06-08 12:26:02 -0400] - UpdateStripeIdsOnMarket - Jack & Jakes School Sales (57) - Connecting org customers - Updated Organization New Orleans Maritime/Military Academy (2525) stripe_customer_id: cus_5uQ4ztvTlky0od
+[2015-06-08 12:26:03 -0400] - UpdateStripeIdsOnMarket - Jack & Jakes School Sales (57) - Connecting org customers - Updated Organization Miller-McCoy Academy (2524) stripe_customer_id: cus_5uQ5Uij1zZoqhW
+[2015-06-08 12:26:03 -0400] - UpdateStripeIdsOnMarket - Jack & Jakes School Sales (57) - Connecting org customers - Updated Organization Mentorship Academy (2523) stripe_customer_id: cus_5uQ5KqvF7oMunf
+[2015-06-08 12:26:03 -0400] - UpdateStripeIdsOnMarket - Jack & Jakes School Sales (57) - Connecting org customers - Updated Organization Mary Coghill School (2522) stripe_customer_id: cus_5uQ5f2KqfCk70S
+[2015-06-08 12:26:03 -0400] - UpdateStripeIdsOnMarket - Jack & Jakes School Sales (57) - Connecting org customers - Updated Organization Martin Behrman Elementary School (2521) stripe_customer_id: cus_5uQ5dp5h2yEdeA
+[2015-06-08 12:26:03 -0400] - UpdateStripeIdsOnMarket - Jack & Jakes School Sales (57) - Connecting org customers - Updated Organization Lanier Elementary School (2520) stripe_customer_id: cus_5uQ4aLHlRuL4UD
+[2015-06-08 12:26:03 -0400] - UpdateStripeIdsOnMarket - Jack & Jakes School Sales (57) - Connecting org customers - Updated Organization Langston Hughes Academy (2519) stripe_customer_id: cus_5uQ4Qr2fRnfQ3J
+[2015-06-08 12:26:03 -0400] - UpdateStripeIdsOnMarket - Jack & Jakes School Sales (57) - Connecting org customers - Updated Organization Landry Walker School (2518) stripe_customer_id: cus_5uQ4jrGq2ztR7v
+[2015-06-08 12:26:03 -0400] - UpdateStripeIdsOnMarket - Jack & Jakes School Sales (57) - Connecting org customers - Updated Organization Kenner Discovery Health Sciences Academy (2517) stripe_customer_id: cus_5uQ4raINWr8Rdw
+[2015-06-08 12:26:03 -0400] - UpdateStripeIdsOnMarket - Jack & Jakes School Sales (57) - Connecting org customers - Updated Organization Kenilworth Science & Technology School (2516) stripe_customer_id: cus_5uQ5RaIP1NnmKM
+[2015-06-08 12:26:03 -0400] - UpdateStripeIdsOnMarket - Jack & Jakes School Sales (57) - Connecting org customers - Updated Organization John McDonough 32 School (2515) stripe_customer_id: cus_5uQ4oz9rWId2r0
+[2015-06-08 12:26:03 -0400] - UpdateStripeIdsOnMarket - Jack & Jakes School Sales (57) - Connecting org customers - Updated Organization Hosanna Christian Academy (2513) stripe_customer_id: cus_5uQ56XEJb1zeVF
+[2015-06-08 12:26:03 -0400] - UpdateStripeIdsOnMarket - Jack & Jakes School Sales (57) - Connecting org customers - Updated Organization Friendship Capital High School (2512) stripe_customer_id: cus_5uQ58chCZUCp9A
+[2015-06-08 12:26:03 -0400] - UpdateStripeIdsOnMarket - Jack & Jakes School Sales (57) - Connecting org customers - Updated Organization Dalton Elementary (2511) stripe_customer_id: cus_5uQ4ERX0n1W95o
+[2015-06-08 12:26:04 -0400] - UpdateStripeIdsOnMarket - Jack & Jakes School Sales (57) - Connecting org customers - Updated Organization D. Eisenhower Elementary School (2510) stripe_customer_id: cus_5uQ4tJLmRf4fZ3
+[2015-06-08 12:26:04 -0400] - UpdateStripeIdsOnMarket - Jack & Jakes School Sales (57) - Connecting org customers - Updated Organization Audobon Charter (Upper School) (2509) stripe_customer_id: cus_5uQ4mfHiQHIY0L
+[2015-06-08 12:26:04 -0400] - UpdateStripeIdsOnMarket - Jack & Jakes School Sales (57) - Connecting org customers - Updated Organization Audobon Charter (Lower School) (2508) stripe_customer_id: cus_5uQ5slK8ROy1K4
+[2015-06-08 12:26:04 -0400] - UpdateStripeIdsOnMarket - Jack & Jakes School Sales (57) - Connecting org customers - Updated Organization Arthur Ashe School (2507) stripe_customer_id: cus_5uQ5gxJOXT9dvA
+[2015-06-08 12:26:04 -0400] - UpdateStripeIdsOnMarket - Jack & Jakes School Sales (57) - Connecting org customers - CONFLICT - Organization stripe_customer_id is ALREADY cus_6LcrjFzrtxaVXA, but export data says it should be cus_5uQ5of0nLadFFY
+[2015-06-08 12:26:04 -0400] - UpdateStripeIdsOnMarket - Jack & Jakes School Sales (57) - Connecting org customers - Updated Organization Algiers Technology Academy (2505) stripe_customer_id: cus_5uQ43BwCpcxAjF
+[2015-06-08 12:26:04 -0400] - UpdateStripeIdsOnMarket - Jack & Jakes School Sales (57) - Connecting market BankAccounts - Visa 5620 (354) already has stripe_id: card_15ic9l2VpjOYk6TmNjWuVrSH

@@ -1,35 +1,44 @@
-[2015-06-01 14:22:49 -0400] - UpdateStripeIdsOnMarket - Farm Link Hawai‘i (61) - ====================================================================================================
-[2015-06-01 14:22:49 -0400] - UpdateStripeIdsOnMarket - Farm Link Hawai‘i (61) -  Farm Link Hawai‘i (61)
-[2015-06-01 14:22:49 -0400] - UpdateStripeIdsOnMarket - Farm Link Hawai‘i (61) -  Updating stripe IDs for market, orgs and bank accounts.
-[2015-06-01 14:22:49 -0400] - UpdateStripeIdsOnMarket - Farm Link Hawai‘i (61) - 
-[2015-06-01 14:22:49 -0400] - UpdateStripeIdsOnMarket - Farm Link Hawai‘i (61) -  Balanced export file: /home/vagrant/git/localorbit/tools/stripe-migration/from_balanced/2015-06-01-1433181180-MP2eXZmrOPof80u3Irf94Wre.csv
-[2015-06-01 14:22:49 -0400] - UpdateStripeIdsOnMarket - Farm Link Hawai‘i (61) - 
-[2015-06-01 14:22:49 -0400] - UpdateStripeIdsOnMarket - Farm Link Hawai‘i (61) -  Rails.env: production
-[2015-06-01 14:22:49 -0400] - UpdateStripeIdsOnMarket - Farm Link Hawai‘i (61) -  Stripe keys:
-[2015-06-01 14:22:49 -0400] - UpdateStripeIdsOnMarket - Farm Link Hawai‘i (61) -   --> STRIPE_PUBLISHABLE_KEY: pk_live_j85VTsrz51POrss3ni460qaf (pk_live_j85VTsrz51POrss3ni460qaf)
-[2015-06-01 14:22:49 -0400] - UpdateStripeIdsOnMarket - Farm Link Hawai‘i (61) - ====================================================================================================
-[2015-06-01 14:22:49 -0400] - UpdateStripeIdsOnMarket - Farm Link Hawai‘i (61) - Connecting market customer - Market already has stripe_customer_id: cus_5vQtaemTsKuavk
-[2015-06-01 14:22:49 -0400] - UpdateStripeIdsOnMarket - Farm Link Hawai‘i (61) - Connecting market account - Market already has stripe_account_id: acct_15l1yRK6Xb2qcrM5
-[2015-06-01 14:22:49 -0400] - UpdateStripeIdsOnMarket - Farm Link Hawai‘i (61) - Connecting org customers - Organization already has stripe_customer_id: cus_5yHUZxUy7qzC7Y
-[2015-06-01 14:22:49 -0400] - UpdateStripeIdsOnMarket - Farm Link Hawai‘i (61) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ55PBJUxJKWf
-[2015-06-01 14:22:49 -0400] - UpdateStripeIdsOnMarket - Farm Link Hawai‘i (61) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4LkSeJ08ohD
-[2015-06-01 14:22:49 -0400] - UpdateStripeIdsOnMarket - Farm Link Hawai‘i (61) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ5IYxz9A8Sej
-[2015-06-01 14:22:49 -0400] - UpdateStripeIdsOnMarket - Farm Link Hawai‘i (61) - Connecting org customers - MISS - No stripe_customer_id found for Organization Akamai Greens (2658) balanced_customer_uri /v1/customers/CU1LITOWsRjC7iuoUO5rwmj5
-[2015-06-01 14:22:49 -0400] - UpdateStripeIdsOnMarket - Farm Link Hawai‘i (61) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4fz33uS63VG
-[2015-06-01 14:22:49 -0400] - UpdateStripeIdsOnMarket - Farm Link Hawai‘i (61) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ51VUJoRheh9
-[2015-06-01 14:22:49 -0400] - UpdateStripeIdsOnMarket - Farm Link Hawai‘i (61) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4K87paoTLpu
-[2015-06-01 14:22:49 -0400] - UpdateStripeIdsOnMarket - Farm Link Hawai‘i (61) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4aWGInPnjIX
-[2015-06-01 14:22:49 -0400] - UpdateStripeIdsOnMarket - Farm Link Hawai‘i (61) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4xHvD2NLZBD
-[2015-06-01 14:22:49 -0400] - UpdateStripeIdsOnMarket - Farm Link Hawai‘i (61) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ5IjwIwmhsO9
-[2015-06-01 14:22:49 -0400] - UpdateStripeIdsOnMarket - Farm Link Hawai‘i (61) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4RK25OXW2jY
-[2015-06-01 14:22:49 -0400] - UpdateStripeIdsOnMarket - Farm Link Hawai‘i (61) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4EWcUM1oJw5
-[2015-06-01 14:22:49 -0400] - UpdateStripeIdsOnMarket - Farm Link Hawai‘i (61) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ5dAv7r4kdmy
-[2015-06-01 14:22:49 -0400] - UpdateStripeIdsOnMarket - Farm Link Hawai‘i (61) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4K3Dz6I7gAG
-[2015-06-01 14:22:49 -0400] - UpdateStripeIdsOnMarket - Farm Link Hawai‘i (61) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ5M3fHKoVDwg
-[2015-06-01 14:22:49 -0400] - UpdateStripeIdsOnMarket - Farm Link Hawai‘i (61) - Connecting org customers - Organization already has stripe_customer_id: cus_5vQtaemTsKuavk
-[2015-06-01 14:22:49 -0400] - UpdateStripeIdsOnMarket - Farm Link Hawai‘i (61) - Connecting market BankAccounts - HAWAIIUSA FEDERAL CREDIT UNION 1321 (496) already has stripe_id: ba_15rCfu2VpjOYk6TmkNZyZld9
-[2015-06-01 14:22:49 -0400] - UpdateStripeIdsOnMarket - Farm Link Hawai‘i (61) - Connecting org BankAccounts - Organization Alan Wong's Honolulu (3290) - MasterCard 0676 (479) already has stripe_id: card_15mKv62VpjOYk6TmAsqokOfI
-[2015-06-01 14:22:49 -0400] - UpdateStripeIdsOnMarket - Farm Link Hawai‘i (61) - Connecting org BankAccounts - Organization Akamai Greens (2658) - MISS - No stripe_id found for BANK OF HAWAII 4187 (445) balanced_customer_uri /v1/marketplaces/MP2eXZmrOPof80u3Irf94Wre/bank_accounts/BA3nY0VcdGzRUIb5iTMaw8uC
-[2015-06-01 14:22:49 -0400] - UpdateStripeIdsOnMarket - Farm Link Hawai‘i (61) - Connecting org BankAccounts - Organization Juicy Brew (2585) - American Express 1039 (488) already has stripe_id: card_15pZDm2VpjOYk6Tm2yqBBHGL
-[2015-06-01 14:22:50 -0400] - UpdateStripeIdsOnMarket - Farm Link Hawai‘i (61) - Connecting org BankAccounts - Organization Juicy Brew (2585) - American Express 2001 (368) already has stripe_id: card_15ic9e2VpjOYk6TmGWBTMphy
-[2015-06-01 14:22:50 -0400] - UpdateStripeIdsOnMarket - Farm Link Hawai‘i (61) - Connecting org BankAccounts - Organization Counter Culture Food + Ferments (2565) - HAWAIIUSA FEDERAL CREDIT UNION 1321 (512) already has stripe_id: ba_15rCfu2VpjOYk6TmkNZyZld9
+[2015-06-08 12:25:38 -0400] - UpdateStripeIdsOnMarket - Farm Link Hawai‘i (61) - ====================================================================================================
+[2015-06-08 12:25:38 -0400] - UpdateStripeIdsOnMarket - Farm Link Hawai‘i (61) -  Farm Link Hawai‘i (61)
+[2015-06-08 12:25:38 -0400] - UpdateStripeIdsOnMarket - Farm Link Hawai‘i (61) -  Updating stripe IDs for market, orgs and bank accounts.
+[2015-06-08 12:25:38 -0400] - UpdateStripeIdsOnMarket - Farm Link Hawai‘i (61) - 
+[2015-06-08 12:25:38 -0400] - UpdateStripeIdsOnMarket - Farm Link Hawai‘i (61) -  Balanced export file: /home/vagrant/git/localorbit/tools/stripe-migration/from_balanced/2015-06-08-1433769720-MP2eXZmrOPof80u3Irf94Wre.csv
+[2015-06-08 12:25:38 -0400] - UpdateStripeIdsOnMarket - Farm Link Hawai‘i (61) - 
+[2015-06-08 12:25:38 -0400] - UpdateStripeIdsOnMarket - Farm Link Hawai‘i (61) -  Rails.env: production
+[2015-06-08 12:25:38 -0400] - UpdateStripeIdsOnMarket - Farm Link Hawai‘i (61) -  Stripe keys:
+[2015-06-08 12:25:38 -0400] - UpdateStripeIdsOnMarket - Farm Link Hawai‘i (61) -   --> STRIPE_PUBLISHABLE_KEY: pk_live_j85VTsrz51POrss3ni460qaf (pk_live_j85VTsrz51POrss3ni460qaf)
+[2015-06-08 12:25:38 -0400] - UpdateStripeIdsOnMarket - Farm Link Hawai‘i (61) - ====================================================================================================
+[2015-06-08 12:25:38 -0400] - UpdateStripeIdsOnMarket - Farm Link Hawai‘i (61) - Connecting market customer - Market already has stripe_customer_id: cus_5vQtaemTsKuavk
+[2015-06-08 12:25:38 -0400] - UpdateStripeIdsOnMarket - Farm Link Hawai‘i (61) - Connecting market account - Market already has stripe_account_id: acct_15l1yRK6Xb2qcrM5
+[2015-06-08 12:25:38 -0400] - UpdateStripeIdsOnMarket - Farm Link Hawai‘i (61) - Connecting org customers - Updated Organization Yung Su (4193) stripe_customer_id: cus_6Mt7TIOzdoAEBu
+[2015-06-08 12:25:38 -0400] - UpdateStripeIdsOnMarket - Farm Link Hawai‘i (61) - Connecting org customers - Updated Organization Hawaiian Fresh Farms (3367) stripe_customer_id: cus_5yxHdAytUUUZKW
+[2015-06-08 12:25:39 -0400] - UpdateStripeIdsOnMarket - Farm Link Hawai‘i (61) - Connecting org customers - Updated Organization The Pig & The Lady (3310) stripe_customer_id: cus_5xSC5FnNDFVm9U
+[2015-06-08 12:25:39 -0400] - UpdateStripeIdsOnMarket - Farm Link Hawai‘i (61) - Connecting org customers - Organization already has stripe_customer_id: cus_5yHUZxUy7qzC7Y
+[2015-06-08 12:25:39 -0400] - UpdateStripeIdsOnMarket - Farm Link Hawai‘i (61) - Connecting org customers - Updated Organization Kaimuki Superette (3270) stripe_customer_id: cus_5w1qY1rk76oTe7
+[2015-06-08 12:25:39 -0400] - UpdateStripeIdsOnMarket - Farm Link Hawai‘i (61) - Connecting org customers - Updated Organization Le Bistro (3189) stripe_customer_id: cus_5uQ5GqJoOkDNOv
+[2015-06-08 12:25:39 -0400] - UpdateStripeIdsOnMarket - Farm Link Hawai‘i (61) - Connecting org customers - CONFLICT - Organization stripe_customer_id is ALREADY cus_6M6McYMXe1kYDk, but export data says it should be cus_5uQ5yBjvdrFyJf
+[2015-06-08 12:25:39 -0400] - UpdateStripeIdsOnMarket - Farm Link Hawai‘i (61) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ55PBJUxJKWf
+[2015-06-08 12:25:39 -0400] - UpdateStripeIdsOnMarket - Farm Link Hawai‘i (61) - Connecting org customers - MISS - No stripe_customer_id found for Organization Hoalike Farm (3108) balanced_customer_uri /v1/customers/CU4ayhKuWVjlIEhER2mMPVgr
+[2015-06-08 12:25:39 -0400] - UpdateStripeIdsOnMarket - Farm Link Hawai‘i (61) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4LkSeJ08ohD
+[2015-06-08 12:25:39 -0400] - UpdateStripeIdsOnMarket - Farm Link Hawai‘i (61) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ5IYxz9A8Sej
+[2015-06-08 12:25:39 -0400] - UpdateStripeIdsOnMarket - Farm Link Hawai‘i (61) - Connecting org customers - MISS - No stripe_customer_id found for Organization Akamai Greens (2658) balanced_customer_uri /v1/customers/CU1LITOWsRjC7iuoUO5rwmj5
+[2015-06-08 12:25:39 -0400] - UpdateStripeIdsOnMarket - Farm Link Hawai‘i (61) - Connecting org customers - Updated Organization The Lunn Family Farm (2623) stripe_customer_id: cus_5vQvAankRj1UlF
+[2015-06-08 12:25:39 -0400] - UpdateStripeIdsOnMarket - Farm Link Hawai‘i (61) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4fz33uS63VG
+[2015-06-08 12:25:39 -0400] - UpdateStripeIdsOnMarket - Farm Link Hawai‘i (61) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ51VUJoRheh9
+[2015-06-08 12:25:39 -0400] - UpdateStripeIdsOnMarket - Farm Link Hawai‘i (61) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4K87paoTLpu
+[2015-06-08 12:25:39 -0400] - UpdateStripeIdsOnMarket - Farm Link Hawai‘i (61) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4aWGInPnjIX
+[2015-06-08 12:25:39 -0400] - UpdateStripeIdsOnMarket - Farm Link Hawai‘i (61) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4xHvD2NLZBD
+[2015-06-08 12:25:39 -0400] - UpdateStripeIdsOnMarket - Farm Link Hawai‘i (61) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ5IjwIwmhsO9
+[2015-06-08 12:25:39 -0400] - UpdateStripeIdsOnMarket - Farm Link Hawai‘i (61) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4RK25OXW2jY
+[2015-06-08 12:25:39 -0400] - UpdateStripeIdsOnMarket - Farm Link Hawai‘i (61) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4EWcUM1oJw5
+[2015-06-08 12:25:39 -0400] - UpdateStripeIdsOnMarket - Farm Link Hawai‘i (61) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ5dAv7r4kdmy
+[2015-06-08 12:25:39 -0400] - UpdateStripeIdsOnMarket - Farm Link Hawai‘i (61) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4K3Dz6I7gAG
+[2015-06-08 12:25:39 -0400] - UpdateStripeIdsOnMarket - Farm Link Hawai‘i (61) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ5M3fHKoVDwg
+[2015-06-08 12:25:39 -0400] - UpdateStripeIdsOnMarket - Farm Link Hawai‘i (61) - Connecting org customers - Organization already has stripe_customer_id: cus_5vQtaemTsKuavk
+[2015-06-08 12:25:40 -0400] - UpdateStripeIdsOnMarket - Farm Link Hawai‘i (61) - Connecting market BankAccounts - HAWAIIUSA FEDERAL CREDIT UNION 1321 (496) already has stripe_id: ba_15rCfu2VpjOYk6TmkNZyZld9
+[2015-06-08 12:25:40 -0400] - UpdateStripeIdsOnMarket - Farm Link Hawai‘i (61) - Connecting org BankAccounts - Organization Alan Wong's Honolulu (3290) - MasterCard 0676 (479) already has stripe_id: card_15mKv62VpjOYk6TmAsqokOfI
+[2015-06-08 12:25:40 -0400] - UpdateStripeIdsOnMarket - Farm Link Hawai‘i (61) - Connecting org BankAccounts - Organization Hoalike Farm (3108) - MISS - No stripe_id found for AMERICAN SAVINGS BANK FSB 7327 (454) balanced_customer_uri /v1/marketplaces/MP2eXZmrOPof80u3Irf94Wre/bank_accounts/BA494MDDaWv2fxyQQuPgvxMX
+[2015-06-08 12:25:40 -0400] - UpdateStripeIdsOnMarket - Farm Link Hawai‘i (61) - Connecting org BankAccounts - Organization Akamai Greens (2658) - MISS - No stripe_id found for BANK OF HAWAII 4187 (445) balanced_customer_uri /v1/marketplaces/MP2eXZmrOPof80u3Irf94Wre/bank_accounts/BA3nY0VcdGzRUIb5iTMaw8uC
+[2015-06-08 12:25:40 -0400] - UpdateStripeIdsOnMarket - Farm Link Hawai‘i (61) - Connecting org BankAccounts - Organization Juicy Brew (2585) - American Express 1039 (488) already has stripe_id: card_15pZDm2VpjOYk6Tm2yqBBHGL
+[2015-06-08 12:25:40 -0400] - UpdateStripeIdsOnMarket - Farm Link Hawai‘i (61) - Connecting org BankAccounts - Organization Juicy Brew (2585) - American Express 2001 (368) already has stripe_id: card_15ic9e2VpjOYk6TmGWBTMphy
+[2015-06-08 12:25:40 -0400] - UpdateStripeIdsOnMarket - Farm Link Hawai‘i (61) - Connecting org BankAccounts - Organization Counter Culture Food + Ferments (2565) - HAWAIIUSA FEDERAL CREDIT UNION 1321 (512) already has stripe_id: ba_15rCfu2VpjOYk6TmkNZyZld9

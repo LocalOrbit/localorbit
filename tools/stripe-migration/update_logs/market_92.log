@@ -1,38 +1,57 @@
-[2015-06-01 14:22:40 -0400] - UpdateStripeIdsOnMarket - Ohio Valley Food Connection  (92) - ====================================================================================================
-[2015-06-01 14:22:40 -0400] - UpdateStripeIdsOnMarket - Ohio Valley Food Connection  (92) -  Ohio Valley Food Connection  (92)
-[2015-06-01 14:22:40 -0400] - UpdateStripeIdsOnMarket - Ohio Valley Food Connection  (92) -  Updating stripe IDs for market, orgs and bank accounts.
-[2015-06-01 14:22:40 -0400] - UpdateStripeIdsOnMarket - Ohio Valley Food Connection  (92) - 
-[2015-06-01 14:22:40 -0400] - UpdateStripeIdsOnMarket - Ohio Valley Food Connection  (92) -  Balanced export file: /home/vagrant/git/localorbit/tools/stripe-migration/from_balanced/2015-06-01-1433181180-MP2eXZmrOPof80u3Irf94Wre.csv
-[2015-06-01 14:22:40 -0400] - UpdateStripeIdsOnMarket - Ohio Valley Food Connection  (92) - 
-[2015-06-01 14:22:40 -0400] - UpdateStripeIdsOnMarket - Ohio Valley Food Connection  (92) -  Rails.env: production
-[2015-06-01 14:22:40 -0400] - UpdateStripeIdsOnMarket - Ohio Valley Food Connection  (92) -  Stripe keys:
-[2015-06-01 14:22:40 -0400] - UpdateStripeIdsOnMarket - Ohio Valley Food Connection  (92) -   --> STRIPE_PUBLISHABLE_KEY: pk_live_j85VTsrz51POrss3ni460qaf (pk_live_j85VTsrz51POrss3ni460qaf)
-[2015-06-01 14:22:40 -0400] - UpdateStripeIdsOnMarket - Ohio Valley Food Connection  (92) - ====================================================================================================
-[2015-06-01 14:22:40 -0400] - UpdateStripeIdsOnMarket - Ohio Valley Food Connection  (92) - Connecting market customer - Market already has stripe_customer_id: cus_69bbhSTLCD4koO
-[2015-06-01 14:22:40 -0400] - UpdateStripeIdsOnMarket - Ohio Valley Food Connection  (92) - Connecting market account - MISS - No stripe_account_id found for market balanced_customer_uri /v1/customers/CU6ZnwE2dYDcy8nNgJEB3lSa
-[2015-06-01 14:22:40 -0400] - UpdateStripeIdsOnMarket - Ohio Valley Food Connection  (92) - Connecting org customers - Updated Organization Kaze (4065) stripe_customer_id: cus_6LafekwH70jMAa
-[2015-06-01 14:22:40 -0400] - UpdateStripeIdsOnMarket - Ohio Valley Food Connection  (92) - Connecting org customers - Updated Organization Carriage House Farm (4060) stripe_customer_id: cus_6LQTqtCLsFvlSD
-[2015-06-01 14:22:40 -0400] - UpdateStripeIdsOnMarket - Ohio Valley Food Connection  (92) - Connecting org customers - Updated Organization The Palace (4052) stripe_customer_id: cus_6LBfXtr13ApZvi
-[2015-06-01 14:22:40 -0400] - UpdateStripeIdsOnMarket - Ohio Valley Food Connection  (92) - Connecting org customers - Updated Organization Jean Robert's Table (4051) stripe_customer_id: cus_6LBdaiJg9Q30ov
-[2015-06-01 14:22:40 -0400] - UpdateStripeIdsOnMarket - Ohio Valley Food Connection  (92) - Connecting org customers - Updated Organization Maribelle Eat + Drink (4050) stripe_customer_id: cus_6LBbpDwXrmi1N1
-[2015-06-01 14:22:40 -0400] - UpdateStripeIdsOnMarket - Ohio Valley Food Connection  (92) - Connecting org customers - Updated Organization Red Feather (4049) stripe_customer_id: cus_6LBZfUg0Uefb0I
-[2015-06-01 14:22:41 -0400] - UpdateStripeIdsOnMarket - Ohio Valley Food Connection  (92) - Connecting org customers - Updated Organization Orchids at Palm Court (4048) stripe_customer_id: cus_6LAjRhY9qxY3NJ
-[2015-06-01 14:22:41 -0400] - UpdateStripeIdsOnMarket - Ohio Valley Food Connection  (92) - Connecting org customers - Updated Organization Hoosier Harvest Market (4029) stripe_customer_id: cus_6KWfWKswbbV8FZ
-[2015-06-01 14:22:41 -0400] - UpdateStripeIdsOnMarket - Ohio Valley Food Connection  (92) - Connecting org customers - Organization already has stripe_customer_id: cus_6I1OmDDLptpCl4
-[2015-06-01 14:22:41 -0400] - UpdateStripeIdsOnMarket - Ohio Valley Food Connection  (92) - Connecting org customers - Organization already has stripe_customer_id: cus_6HRGlg1BLW7MoD
-[2015-06-01 14:22:41 -0400] - UpdateStripeIdsOnMarket - Ohio Valley Food Connection  (92) - Connecting org customers - Organization already has stripe_customer_id: cus_6Gv1zjUd181OiR
-[2015-06-01 14:22:41 -0400] - UpdateStripeIdsOnMarket - Ohio Valley Food Connection  (92) - Connecting org customers - Organization already has stripe_customer_id: cus_6GuzfeGtZbgo3Q
-[2015-06-01 14:22:41 -0400] - UpdateStripeIdsOnMarket - Ohio Valley Food Connection  (92) - Connecting org customers - Organization already has stripe_customer_id: cus_6GuysvdSdFjb3q
-[2015-06-01 14:22:41 -0400] - UpdateStripeIdsOnMarket - Ohio Valley Food Connection  (92) - Connecting org customers - Organization already has stripe_customer_id: cus_6GffKl7feZOBgU
-[2015-06-01 14:22:41 -0400] - UpdateStripeIdsOnMarket - Ohio Valley Food Connection  (92) - Connecting org customers - Organization already has stripe_customer_id: cus_6FQRpG3fsjdJu1
-[2015-06-01 14:22:41 -0400] - UpdateStripeIdsOnMarket - Ohio Valley Food Connection  (92) - Connecting org customers - Organization already has stripe_customer_id: cus_6FQOH2nUxM4ca0
-[2015-06-01 14:22:41 -0400] - UpdateStripeIdsOnMarket - Ohio Valley Food Connection  (92) - Connecting org customers - Organization already has stripe_customer_id: cus_6FGez4kJNzVioy
-[2015-06-01 14:22:41 -0400] - UpdateStripeIdsOnMarket - Ohio Valley Food Connection  (92) - Connecting org customers - Organization already has stripe_customer_id: cus_6FF7wZfN77A7vK
-[2015-06-01 14:22:41 -0400] - UpdateStripeIdsOnMarket - Ohio Valley Food Connection  (92) - Connecting org customers - Organization already has stripe_customer_id: cus_6EIKc5KYYcLOpL
-[2015-06-01 14:22:41 -0400] - UpdateStripeIdsOnMarket - Ohio Valley Food Connection  (92) - Connecting org customers - Organization already has stripe_customer_id: cus_6EIBExSKPet5TZ
-[2015-06-01 14:22:41 -0400] - UpdateStripeIdsOnMarket - Ohio Valley Food Connection  (92) - Connecting org customers - Organization already has stripe_customer_id: cus_6DNgB4JxKvlrXc
-[2015-06-01 14:22:41 -0400] - UpdateStripeIdsOnMarket - Ohio Valley Food Connection  (92) - Connecting org customers - Organization already has stripe_customer_id: cus_6DNe9E94GfrpdT
-[2015-06-01 14:22:41 -0400] - UpdateStripeIdsOnMarket - Ohio Valley Food Connection  (92) - Connecting org customers - Organization already has stripe_customer_id: cus_6DNddyvzzEh0z3
-[2015-06-01 14:22:41 -0400] - UpdateStripeIdsOnMarket - Ohio Valley Food Connection  (92) - Connecting org customers - Organization already has stripe_customer_id: cus_6DNcCNirwaVRLs
-[2015-06-01 14:22:41 -0400] - UpdateStripeIdsOnMarket - Ohio Valley Food Connection  (92) - Connecting org customers - Organization already has stripe_customer_id: cus_6DNZX3JAlP3IFT
-[2015-06-01 14:22:41 -0400] - UpdateStripeIdsOnMarket - Ohio Valley Food Connection  (92) - Connecting market BankAccounts - U.S. BANK NATIONAL ASSOCIATION 4543 (532) already has stripe_id: ba_15xfZ72VpjOYk6TmaMs4Nqn2
+[2015-06-08 12:25:28 -0400] - UpdateStripeIdsOnMarket - Ohio Valley Food Connection  (92) - ====================================================================================================
+[2015-06-08 12:25:28 -0400] - UpdateStripeIdsOnMarket - Ohio Valley Food Connection  (92) -  Ohio Valley Food Connection  (92)
+[2015-06-08 12:25:28 -0400] - UpdateStripeIdsOnMarket - Ohio Valley Food Connection  (92) -  Updating stripe IDs for market, orgs and bank accounts.
+[2015-06-08 12:25:28 -0400] - UpdateStripeIdsOnMarket - Ohio Valley Food Connection  (92) - 
+[2015-06-08 12:25:28 -0400] - UpdateStripeIdsOnMarket - Ohio Valley Food Connection  (92) -  Balanced export file: /home/vagrant/git/localorbit/tools/stripe-migration/from_balanced/2015-06-08-1433769720-MP2eXZmrOPof80u3Irf94Wre.csv
+[2015-06-08 12:25:28 -0400] - UpdateStripeIdsOnMarket - Ohio Valley Food Connection  (92) - 
+[2015-06-08 12:25:28 -0400] - UpdateStripeIdsOnMarket - Ohio Valley Food Connection  (92) -  Rails.env: production
+[2015-06-08 12:25:28 -0400] - UpdateStripeIdsOnMarket - Ohio Valley Food Connection  (92) -  Stripe keys:
+[2015-06-08 12:25:28 -0400] - UpdateStripeIdsOnMarket - Ohio Valley Food Connection  (92) -   --> STRIPE_PUBLISHABLE_KEY: pk_live_j85VTsrz51POrss3ni460qaf (pk_live_j85VTsrz51POrss3ni460qaf)
+[2015-06-08 12:25:28 -0400] - UpdateStripeIdsOnMarket - Ohio Valley Food Connection  (92) - ====================================================================================================
+[2015-06-08 12:25:28 -0400] - UpdateStripeIdsOnMarket - Ohio Valley Food Connection  (92) - Connecting market customer - Market already has stripe_customer_id: cus_69bbhSTLCD4koO
+[2015-06-08 12:25:28 -0400] - UpdateStripeIdsOnMarket - Ohio Valley Food Connection  (92) - Connecting market account - MISS - No stripe_account_id found for market balanced_customer_uri /v1/customers/CU6ZnwE2dYDcy8nNgJEB3lSa
+[2015-06-08 12:25:28 -0400] - UpdateStripeIdsOnMarket - Ohio Valley Food Connection  (92) - Connecting org customers - Updated Organization Nuvo at Greenup (4232) stripe_customer_id: cus_6NuYToQBh1KjOW
+[2015-06-08 12:25:28 -0400] - UpdateStripeIdsOnMarket - Ohio Valley Food Connection  (92) - Connecting org customers - Updated Organization Django (4230) stripe_customer_id: cus_6NuPgYJUdqKp4W
+[2015-06-08 12:25:29 -0400] - UpdateStripeIdsOnMarket - Ohio Valley Food Connection  (92) - Connecting org customers - Updated Organization Kitchen 452 (4229) stripe_customer_id: cus_6NuGD9fs7qjuEC
+[2015-06-08 12:25:29 -0400] - UpdateStripeIdsOnMarket - Ohio Valley Food Connection  (92) - Connecting org customers - Updated Organization Sotto (4228) stripe_customer_id: cus_6NtwvUtHhK6BQf
+[2015-06-08 12:25:29 -0400] - UpdateStripeIdsOnMarket - Ohio Valley Food Connection  (92) - Connecting org customers - Updated Organization Carlo & Johnny (4227) stripe_customer_id: cus_6NtnhcSGrwmz0h
+[2015-06-08 12:25:29 -0400] - UpdateStripeIdsOnMarket - Ohio Valley Food Connection  (92) - Connecting org customers - Updated Organization Meatball Kitchen (4220) stripe_customer_id: cus_6Nfo1nDdahZlvi
+[2015-06-08 12:25:29 -0400] - UpdateStripeIdsOnMarket - Ohio Valley Food Connection  (92) - Connecting org customers - Updated Organization Rookwood, The (4219) stripe_customer_id: cus_6NfMKD8bheZdZu
+[2015-06-08 12:25:29 -0400] - UpdateStripeIdsOnMarket - Ohio Valley Food Connection  (92) - Connecting org customers - Updated Organization Enoteca Emilia (4218) stripe_customer_id: cus_6Nf93nc1I1uhvK
+[2015-06-08 12:25:29 -0400] - UpdateStripeIdsOnMarket - Ohio Valley Food Connection  (92) - Connecting org customers - Updated Organization Nicola's (4216) stripe_customer_id: cus_6Nc2vtrpaFOVgv
+[2015-06-08 12:25:29 -0400] - UpdateStripeIdsOnMarket - Ohio Valley Food Connection  (92) - Connecting org customers - Updated Organization Clifton Natural Foods (4210) stripe_customer_id: cus_6NTixlKeTFNTL1
+[2015-06-08 12:25:29 -0400] - UpdateStripeIdsOnMarket - Ohio Valley Food Connection  (92) - Connecting org customers - Updated Organization Dutch's Larder (4208) stripe_customer_id: cus_6NQLNly5mVPK8b
+[2015-06-08 12:25:29 -0400] - UpdateStripeIdsOnMarket - Ohio Valley Food Connection  (92) - Connecting org customers - Updated Organization Via Vite (4202) stripe_customer_id: cus_6ND7qODyIZ3bjN
+[2015-06-08 12:25:31 -0400] - UpdateStripeIdsOnMarket - Ohio Valley Food Connection  (92) - Connecting org customers - Updated Organization Sunrise Farms (4190) stripe_customer_id: cus_6MqrE85BHVWSyj
+[2015-06-08 12:25:31 -0400] - UpdateStripeIdsOnMarket - Ohio Valley Food Connection  (92) - Connecting org customers - Updated Organization Test Seller (4185) stripe_customer_id: cus_6MoF3B6EX6RQsj
+[2015-06-08 12:25:31 -0400] - UpdateStripeIdsOnMarket - Ohio Valley Food Connection  (92) - Connecting org customers - Updated Organization Salazar (4153) stripe_customer_id: cus_6MKE4hvE334CFf
+[2015-06-08 12:25:31 -0400] - UpdateStripeIdsOnMarket - Ohio Valley Food Connection  (92) - Connecting org customers - Updated Organization Nectar (4152) stripe_customer_id: cus_6MKA4IyfxF67dx
+[2015-06-08 12:25:31 -0400] - UpdateStripeIdsOnMarket - Ohio Valley Food Connection  (92) - Connecting org customers - Updated Organization Sleepy Bee Cafe (4151) stripe_customer_id: cus_6MK78mQCsADUFd
+[2015-06-08 12:25:32 -0400] - UpdateStripeIdsOnMarket - Ohio Valley Food Connection  (92) - Connecting org customers - Updated Organization Blue Ribbon Farm (4091) stripe_customer_id: cus_6LyU3LXoAsHsZq
+[2015-06-08 12:25:32 -0400] - UpdateStripeIdsOnMarket - Ohio Valley Food Connection  (92) - Connecting org customers - Updated Organization Alfio's buon cibo (4080) stripe_customer_id: cus_6Lwzk6yKD0Dw1O
+[2015-06-08 12:25:32 -0400] - UpdateStripeIdsOnMarket - Ohio Valley Food Connection  (92) - Connecting org customers - Organization already has stripe_customer_id: cus_6LafekwH70jMAa
+[2015-06-08 12:25:32 -0400] - UpdateStripeIdsOnMarket - Ohio Valley Food Connection  (92) - Connecting org customers - Organization already has stripe_customer_id: cus_6LQTqtCLsFvlSD
+[2015-06-08 12:25:32 -0400] - UpdateStripeIdsOnMarket - Ohio Valley Food Connection  (92) - Connecting org customers - Organization already has stripe_customer_id: cus_6LBfXtr13ApZvi
+[2015-06-08 12:25:32 -0400] - UpdateStripeIdsOnMarket - Ohio Valley Food Connection  (92) - Connecting org customers - Organization already has stripe_customer_id: cus_6LBdaiJg9Q30ov
+[2015-06-08 12:25:32 -0400] - UpdateStripeIdsOnMarket - Ohio Valley Food Connection  (92) - Connecting org customers - Organization already has stripe_customer_id: cus_6LBbpDwXrmi1N1
+[2015-06-08 12:25:32 -0400] - UpdateStripeIdsOnMarket - Ohio Valley Food Connection  (92) - Connecting org customers - Organization already has stripe_customer_id: cus_6LBZfUg0Uefb0I
+[2015-06-08 12:25:32 -0400] - UpdateStripeIdsOnMarket - Ohio Valley Food Connection  (92) - Connecting org customers - Organization already has stripe_customer_id: cus_6LAjRhY9qxY3NJ
+[2015-06-08 12:25:32 -0400] - UpdateStripeIdsOnMarket - Ohio Valley Food Connection  (92) - Connecting org customers - Organization already has stripe_customer_id: cus_6KWfWKswbbV8FZ
+[2015-06-08 12:25:32 -0400] - UpdateStripeIdsOnMarket - Ohio Valley Food Connection  (92) - Connecting org customers - Organization already has stripe_customer_id: cus_6I1OmDDLptpCl4
+[2015-06-08 12:25:32 -0400] - UpdateStripeIdsOnMarket - Ohio Valley Food Connection  (92) - Connecting org customers - Organization already has stripe_customer_id: cus_6HRGlg1BLW7MoD
+[2015-06-08 12:25:32 -0400] - UpdateStripeIdsOnMarket - Ohio Valley Food Connection  (92) - Connecting org customers - Organization already has stripe_customer_id: cus_6Gv1zjUd181OiR
+[2015-06-08 12:25:32 -0400] - UpdateStripeIdsOnMarket - Ohio Valley Food Connection  (92) - Connecting org customers - Organization already has stripe_customer_id: cus_6GuzfeGtZbgo3Q
+[2015-06-08 12:25:32 -0400] - UpdateStripeIdsOnMarket - Ohio Valley Food Connection  (92) - Connecting org customers - Organization already has stripe_customer_id: cus_6GuysvdSdFjb3q
+[2015-06-08 12:25:32 -0400] - UpdateStripeIdsOnMarket - Ohio Valley Food Connection  (92) - Connecting org customers - Organization already has stripe_customer_id: cus_6GffKl7feZOBgU
+[2015-06-08 12:25:32 -0400] - UpdateStripeIdsOnMarket - Ohio Valley Food Connection  (92) - Connecting org customers - Organization already has stripe_customer_id: cus_6FQRpG3fsjdJu1
+[2015-06-08 12:25:32 -0400] - UpdateStripeIdsOnMarket - Ohio Valley Food Connection  (92) - Connecting org customers - Organization already has stripe_customer_id: cus_6FQOH2nUxM4ca0
+[2015-06-08 12:25:32 -0400] - UpdateStripeIdsOnMarket - Ohio Valley Food Connection  (92) - Connecting org customers - Organization already has stripe_customer_id: cus_6FGez4kJNzVioy
+[2015-06-08 12:25:32 -0400] - UpdateStripeIdsOnMarket - Ohio Valley Food Connection  (92) - Connecting org customers - Organization already has stripe_customer_id: cus_6FF7wZfN77A7vK
+[2015-06-08 12:25:32 -0400] - UpdateStripeIdsOnMarket - Ohio Valley Food Connection  (92) - Connecting org customers - Organization already has stripe_customer_id: cus_6EIKc5KYYcLOpL
+[2015-06-08 12:25:32 -0400] - UpdateStripeIdsOnMarket - Ohio Valley Food Connection  (92) - Connecting org customers - Organization already has stripe_customer_id: cus_6EIBExSKPet5TZ
+[2015-06-08 12:25:32 -0400] - UpdateStripeIdsOnMarket - Ohio Valley Food Connection  (92) - Connecting org customers - Organization already has stripe_customer_id: cus_6DNgB4JxKvlrXc
+[2015-06-08 12:25:32 -0400] - UpdateStripeIdsOnMarket - Ohio Valley Food Connection  (92) - Connecting org customers - Organization already has stripe_customer_id: cus_6DNe9E94GfrpdT
+[2015-06-08 12:25:32 -0400] - UpdateStripeIdsOnMarket - Ohio Valley Food Connection  (92) - Connecting org customers - Organization already has stripe_customer_id: cus_6DNddyvzzEh0z3
+[2015-06-08 12:25:32 -0400] - UpdateStripeIdsOnMarket - Ohio Valley Food Connection  (92) - Connecting org customers - Organization already has stripe_customer_id: cus_6DNcCNirwaVRLs
+[2015-06-08 12:25:32 -0400] - UpdateStripeIdsOnMarket - Ohio Valley Food Connection  (92) - Connecting org customers - Organization already has stripe_customer_id: cus_6DNZX3JAlP3IFT
+[2015-06-08 12:25:32 -0400] - UpdateStripeIdsOnMarket - Ohio Valley Food Connection  (92) - Connecting market BankAccounts - U.S. BANK NATIONAL ASSOCIATION 4543 (532) already has stripe_id: ba_15xfZ72VpjOYk6TmaMs4Nqn2

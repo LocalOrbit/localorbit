@@ -1,31 +1,32 @@
-[2015-06-01 14:22:52 -0400] - UpdateStripeIdsOnMarket - SB Admin (84) - ====================================================================================================
-[2015-06-01 14:22:52 -0400] - UpdateStripeIdsOnMarket - SB Admin (84) -  SB Admin (84)
-[2015-06-01 14:22:52 -0400] - UpdateStripeIdsOnMarket - SB Admin (84) -  Updating stripe IDs for market, orgs and bank accounts.
-[2015-06-01 14:22:52 -0400] - UpdateStripeIdsOnMarket - SB Admin (84) - 
-[2015-06-01 14:22:52 -0400] - UpdateStripeIdsOnMarket - SB Admin (84) -  Balanced export file: /home/vagrant/git/localorbit/tools/stripe-migration/from_balanced/2015-06-01-1433181180-MP2eXZmrOPof80u3Irf94Wre.csv
-[2015-06-01 14:22:52 -0400] - UpdateStripeIdsOnMarket - SB Admin (84) - 
-[2015-06-01 14:22:52 -0400] - UpdateStripeIdsOnMarket - SB Admin (84) -  Rails.env: production
-[2015-06-01 14:22:52 -0400] - UpdateStripeIdsOnMarket - SB Admin (84) -  Stripe keys:
-[2015-06-01 14:22:52 -0400] - UpdateStripeIdsOnMarket - SB Admin (84) -   --> STRIPE_PUBLISHABLE_KEY: pk_live_j85VTsrz51POrss3ni460qaf (pk_live_j85VTsrz51POrss3ni460qaf)
-[2015-06-01 14:22:52 -0400] - UpdateStripeIdsOnMarket - SB Admin (84) - ====================================================================================================
-[2015-06-01 14:22:52 -0400] - UpdateStripeIdsOnMarket - SB Admin (84) - Connecting market customer - Updated Market stripe_customer_id: cus_5wZu8IDKk8lUzY
-[2015-06-01 14:22:52 -0400] - UpdateStripeIdsOnMarket - SB Admin (84) - Connecting market account - MISS - No stripe_account_id found for market balanced_customer_uri /v1/customers/CU1bBXdeRCTZuKaICMtdit7A
-[2015-06-01 14:22:53 -0400] - UpdateStripeIdsOnMarket - SB Admin (84) - Connecting org customers - Updated Organization Wagner Farms (3335) stripe_customer_id: cus_5y0Zg4ikn1sedF
-[2015-06-01 14:22:53 -0400] - UpdateStripeIdsOnMarket - SB Admin (84) - Connecting org customers - Updated Organization Sungreen Living Foods (3334) stripe_customer_id: cus_5y0Ya3DcaZSN1M
-[2015-06-01 14:22:53 -0400] - UpdateStripeIdsOnMarket - SB Admin (84) - Connecting org customers - Updated Organization Serrano Family Farm (3333) stripe_customer_id: cus_5y0YUE9WnDS49L
-[2015-06-01 14:22:53 -0400] - UpdateStripeIdsOnMarket - SB Admin (84) - Connecting org customers - Updated Organization Santa Cruz Farms (3332) stripe_customer_id: cus_5y0X4YlNR2CI2Q
-[2015-06-01 14:22:53 -0400] - UpdateStripeIdsOnMarket - SB Admin (84) - Connecting org customers - Updated Organization Red Mountain Farm (3331) stripe_customer_id: cus_5y0WlqyWthvkEq
-[2015-06-01 14:22:53 -0400] - UpdateStripeIdsOnMarket - SB Admin (84) - Connecting org customers - Updated Organization Rancho La Jolla (3330) stripe_customer_id: cus_5y0W5Xsgk8SX2r
-[2015-06-01 14:22:53 -0400] - UpdateStripeIdsOnMarket - SB Admin (84) - Connecting org customers - Updated Organization Pojoaque Pueblo Farms (3329) stripe_customer_id: cus_5y0UlVUMWhJc2Y
-[2015-06-01 14:22:53 -0400] - UpdateStripeIdsOnMarket - SB Admin (84) - Connecting org customers - Updated Organization Mr. G's Organic Farm (3328) stripe_customer_id: cus_5y0Tc4VlpYng0y
-[2015-06-01 14:22:53 -0400] - UpdateStripeIdsOnMarket - SB Admin (84) - Connecting org customers - Updated Organization Monte Vista Organic Farms (3327) stripe_customer_id: cus_5y0TYebNOdgiDf
-[2015-06-01 14:22:53 -0400] - UpdateStripeIdsOnMarket - SB Admin (84) - Connecting org customers - Updated Organization MiYoung's Farm (3326) stripe_customer_id: cus_5y0SVQWlAb61v5
-[2015-06-01 14:22:53 -0400] - UpdateStripeIdsOnMarket - SB Admin (84) - Connecting org customers - Updated Organization Mendez Produce (3325) stripe_customer_id: cus_5y0SWwrRkDkfMP
-[2015-06-01 14:22:53 -0400] - UpdateStripeIdsOnMarket - SB Admin (84) - Connecting org customers - Updated Organization La Mesa Organic Farm (3324) stripe_customer_id: cus_5y0QdvNVCULfQf
-[2015-06-01 14:22:53 -0400] - UpdateStripeIdsOnMarket - SB Admin (84) - Connecting org customers - Updated Organization Green Tractor Organic Farm (3323) stripe_customer_id: cus_5y0LNW9VfwzqvU
-[2015-06-01 14:22:53 -0400] - UpdateStripeIdsOnMarket - SB Admin (84) - Connecting org customers - Updated Organization Espanola Valley Farms (3322) stripe_customer_id: cus_5y0KDrrYYyb4R9
-[2015-06-01 14:22:54 -0400] - UpdateStripeIdsOnMarket - SB Admin (84) - Connecting org customers - Updated Organization Diamond Sow Gardens (3321) stripe_customer_id: cus_5y0I49QgZu2uO6
-[2015-06-01 14:22:54 -0400] - UpdateStripeIdsOnMarket - SB Admin (84) - Connecting org customers - Updated Organization Charybda Farms (3320) stripe_customer_id: cus_5y0FQCHKafxnGq
-[2015-06-01 14:22:54 -0400] - UpdateStripeIdsOnMarket - SB Admin (84) - Connecting org customers - Updated Organization Box Car Organic Farm (3319) stripe_customer_id: cus_5y0D0NrnAH5Gb1
-[2015-06-01 14:22:54 -0400] - UpdateStripeIdsOnMarket - SB Admin (84) - Connecting org customers - Updated Organization Bohdi Farms (3318) stripe_customer_id: cus_5y08HNC3hiffR7
-[2015-06-01 14:22:54 -0400] - UpdateStripeIdsOnMarket - SB Admin (84) - Connecting org customers - Updated Organization Ancient Waters Farm (3317) stripe_customer_id: cus_5y06qfvHCDxBKe
+[2015-06-08 12:25:44 -0400] - UpdateStripeIdsOnMarket - SB Admin (84) - ====================================================================================================
+[2015-06-08 12:25:44 -0400] - UpdateStripeIdsOnMarket - SB Admin (84) -  SB Admin (84)
+[2015-06-08 12:25:44 -0400] - UpdateStripeIdsOnMarket - SB Admin (84) -  Updating stripe IDs for market, orgs and bank accounts.
+[2015-06-08 12:25:44 -0400] - UpdateStripeIdsOnMarket - SB Admin (84) - 
+[2015-06-08 12:25:44 -0400] - UpdateStripeIdsOnMarket - SB Admin (84) -  Balanced export file: /home/vagrant/git/localorbit/tools/stripe-migration/from_balanced/2015-06-08-1433769720-MP2eXZmrOPof80u3Irf94Wre.csv
+[2015-06-08 12:25:44 -0400] - UpdateStripeIdsOnMarket - SB Admin (84) - 
+[2015-06-08 12:25:44 -0400] - UpdateStripeIdsOnMarket - SB Admin (84) -  Rails.env: production
+[2015-06-08 12:25:44 -0400] - UpdateStripeIdsOnMarket - SB Admin (84) -  Stripe keys:
+[2015-06-08 12:25:44 -0400] - UpdateStripeIdsOnMarket - SB Admin (84) -   --> STRIPE_PUBLISHABLE_KEY: pk_live_j85VTsrz51POrss3ni460qaf (pk_live_j85VTsrz51POrss3ni460qaf)
+[2015-06-08 12:25:44 -0400] - UpdateStripeIdsOnMarket - SB Admin (84) - ====================================================================================================
+[2015-06-08 12:25:44 -0400] - UpdateStripeIdsOnMarket - SB Admin (84) - Connecting market customer - Market already has stripe_customer_id: cus_5wZu8IDKk8lUzY
+[2015-06-08 12:25:44 -0400] - UpdateStripeIdsOnMarket - SB Admin (84) - Connecting market account - MISS - No stripe_account_id found for market balanced_customer_uri /v1/customers/CU1bBXdeRCTZuKaICMtdit7A
+[2015-06-08 12:25:44 -0400] - UpdateStripeIdsOnMarket - SB Admin (84) - Connecting org customers - Organization already has stripe_customer_id: cus_5y0Zg4ikn1sedF
+[2015-06-08 12:25:44 -0400] - UpdateStripeIdsOnMarket - SB Admin (84) - Connecting org customers - Organization already has stripe_customer_id: cus_5y0Ya3DcaZSN1M
+[2015-06-08 12:25:44 -0400] - UpdateStripeIdsOnMarket - SB Admin (84) - Connecting org customers - Organization already has stripe_customer_id: cus_5y0YUE9WnDS49L
+[2015-06-08 12:25:44 -0400] - UpdateStripeIdsOnMarket - SB Admin (84) - Connecting org customers - Organization already has stripe_customer_id: cus_5y0X4YlNR2CI2Q
+[2015-06-08 12:25:44 -0400] - UpdateStripeIdsOnMarket - SB Admin (84) - Connecting org customers - Organization already has stripe_customer_id: cus_5y0WlqyWthvkEq
+[2015-06-08 12:25:44 -0400] - UpdateStripeIdsOnMarket - SB Admin (84) - Connecting org customers - Organization already has stripe_customer_id: cus_5y0W5Xsgk8SX2r
+[2015-06-08 12:25:44 -0400] - UpdateStripeIdsOnMarket - SB Admin (84) - Connecting org customers - Organization already has stripe_customer_id: cus_5y0UlVUMWhJc2Y
+[2015-06-08 12:25:44 -0400] - UpdateStripeIdsOnMarket - SB Admin (84) - Connecting org customers - Organization already has stripe_customer_id: cus_5y0Tc4VlpYng0y
+[2015-06-08 12:25:44 -0400] - UpdateStripeIdsOnMarket - SB Admin (84) - Connecting org customers - Organization already has stripe_customer_id: cus_5y0TYebNOdgiDf
+[2015-06-08 12:25:44 -0400] - UpdateStripeIdsOnMarket - SB Admin (84) - Connecting org customers - Organization already has stripe_customer_id: cus_5y0SVQWlAb61v5
+[2015-06-08 12:25:44 -0400] - UpdateStripeIdsOnMarket - SB Admin (84) - Connecting org customers - Organization already has stripe_customer_id: cus_5y0SWwrRkDkfMP
+[2015-06-08 12:25:44 -0400] - UpdateStripeIdsOnMarket - SB Admin (84) - Connecting org customers - Organization already has stripe_customer_id: cus_5y0QdvNVCULfQf
+[2015-06-08 12:25:44 -0400] - UpdateStripeIdsOnMarket - SB Admin (84) - Connecting org customers - Organization already has stripe_customer_id: cus_5y0LNW9VfwzqvU
+[2015-06-08 12:25:44 -0400] - UpdateStripeIdsOnMarket - SB Admin (84) - Connecting org customers - Updated Organization Squash Blossom (3266) stripe_customer_id: cus_5vsAqcjwhsY5kl
+[2015-06-08 12:25:44 -0400] - UpdateStripeIdsOnMarket - SB Admin (84) - Connecting org customers - Organization already has stripe_customer_id: cus_5y0KDrrYYyb4R9
+[2015-06-08 12:25:44 -0400] - UpdateStripeIdsOnMarket - SB Admin (84) - Connecting org customers - Organization already has stripe_customer_id: cus_5y0I49QgZu2uO6
+[2015-06-08 12:25:44 -0400] - UpdateStripeIdsOnMarket - SB Admin (84) - Connecting org customers - Organization already has stripe_customer_id: cus_5y0FQCHKafxnGq
+[2015-06-08 12:25:44 -0400] - UpdateStripeIdsOnMarket - SB Admin (84) - Connecting org customers - Organization already has stripe_customer_id: cus_5y0D0NrnAH5Gb1
+[2015-06-08 12:25:44 -0400] - UpdateStripeIdsOnMarket - SB Admin (84) - Connecting org customers - Organization already has stripe_customer_id: cus_5y08HNC3hiffR7
+[2015-06-08 12:25:44 -0400] - UpdateStripeIdsOnMarket - SB Admin (84) - Connecting org customers - Organization already has stripe_customer_id: cus_5y06qfvHCDxBKe

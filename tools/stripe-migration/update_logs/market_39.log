@@ -1,88 +1,90 @@
-[2015-06-01 14:23:24 -0400] - UpdateStripeIdsOnMarket - Happy Valley Fresh/Farm to School (39) - ====================================================================================================
-[2015-06-01 14:23:24 -0400] - UpdateStripeIdsOnMarket - Happy Valley Fresh/Farm to School (39) -  Happy Valley Fresh/Farm to School (39)
-[2015-06-01 14:23:24 -0400] - UpdateStripeIdsOnMarket - Happy Valley Fresh/Farm to School (39) -  Updating stripe IDs for market, orgs and bank accounts.
-[2015-06-01 14:23:24 -0400] - UpdateStripeIdsOnMarket - Happy Valley Fresh/Farm to School (39) - 
-[2015-06-01 14:23:24 -0400] - UpdateStripeIdsOnMarket - Happy Valley Fresh/Farm to School (39) -  Balanced export file: /home/vagrant/git/localorbit/tools/stripe-migration/from_balanced/2015-06-01-1433181180-MP2eXZmrOPof80u3Irf94Wre.csv
-[2015-06-01 14:23:24 -0400] - UpdateStripeIdsOnMarket - Happy Valley Fresh/Farm to School (39) - 
-[2015-06-01 14:23:24 -0400] - UpdateStripeIdsOnMarket - Happy Valley Fresh/Farm to School (39) -  Rails.env: production
-[2015-06-01 14:23:24 -0400] - UpdateStripeIdsOnMarket - Happy Valley Fresh/Farm to School (39) -  Stripe keys:
-[2015-06-01 14:23:24 -0400] - UpdateStripeIdsOnMarket - Happy Valley Fresh/Farm to School (39) -   --> STRIPE_PUBLISHABLE_KEY: pk_live_j85VTsrz51POrss3ni460qaf (pk_live_j85VTsrz51POrss3ni460qaf)
-[2015-06-01 14:23:24 -0400] - UpdateStripeIdsOnMarket - Happy Valley Fresh/Farm to School (39) - ====================================================================================================
-[2015-06-01 14:23:24 -0400] - UpdateStripeIdsOnMarket - Happy Valley Fresh/Farm to School (39) - Connecting market customer - MISS - No stripe_customer_id found for market balanced_customer_uri /v1/customers/CU7is1HNN7GnaCuKp7dKnok2
-[2015-06-01 14:23:24 -0400] - UpdateStripeIdsOnMarket - Happy Valley Fresh/Farm to School (39) - Connecting market account - MISS - No stripe_account_id found for market balanced_customer_uri /v1/customers/CU7is1HNN7GnaCuKp7dKnok2
-[2015-06-01 14:23:24 -0400] - UpdateStripeIdsOnMarket - Happy Valley Fresh/Farm to School (39) - Connecting org customers - Organization already has stripe_customer_id: cus_63bCuBnT60e9Ms
-[2015-06-01 14:23:24 -0400] - UpdateStripeIdsOnMarket - Happy Valley Fresh/Farm to School (39) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ5Rud2AqbqOD
-[2015-06-01 14:23:24 -0400] - UpdateStripeIdsOnMarket - Happy Valley Fresh/Farm to School (39) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ5l7bnyxh9L9
-[2015-06-01 14:23:24 -0400] - UpdateStripeIdsOnMarket - Happy Valley Fresh/Farm to School (39) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4LXWbesiHMN
-[2015-06-01 14:23:24 -0400] - UpdateStripeIdsOnMarket - Happy Valley Fresh/Farm to School (39) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4AwUiEp4Lol
-[2015-06-01 14:23:24 -0400] - UpdateStripeIdsOnMarket - Happy Valley Fresh/Farm to School (39) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4g6hUh3gKNk
-[2015-06-01 14:23:24 -0400] - UpdateStripeIdsOnMarket - Happy Valley Fresh/Farm to School (39) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4GXpA8P61WA
-[2015-06-01 14:23:24 -0400] - UpdateStripeIdsOnMarket - Happy Valley Fresh/Farm to School (39) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4Yulm8xBvgE
-[2015-06-01 14:23:24 -0400] - UpdateStripeIdsOnMarket - Happy Valley Fresh/Farm to School (39) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4AesAzEcpSA
-[2015-06-01 14:23:24 -0400] - UpdateStripeIdsOnMarket - Happy Valley Fresh/Farm to School (39) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4lbIalyNTCm
-[2015-06-01 14:23:24 -0400] - UpdateStripeIdsOnMarket - Happy Valley Fresh/Farm to School (39) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4Ue6gW4OPoP
-[2015-06-01 14:23:24 -0400] - UpdateStripeIdsOnMarket - Happy Valley Fresh/Farm to School (39) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4zEotDGcQ3x
-[2015-06-01 14:23:24 -0400] - UpdateStripeIdsOnMarket - Happy Valley Fresh/Farm to School (39) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4o4NcZW860W
-[2015-06-01 14:23:24 -0400] - UpdateStripeIdsOnMarket - Happy Valley Fresh/Farm to School (39) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4eNz8ULbOLL
-[2015-06-01 14:23:24 -0400] - UpdateStripeIdsOnMarket - Happy Valley Fresh/Farm to School (39) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ5nrfP9ntzfr
-[2015-06-01 14:23:24 -0400] - UpdateStripeIdsOnMarket - Happy Valley Fresh/Farm to School (39) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4GdnsEMplZl
-[2015-06-01 14:23:24 -0400] - UpdateStripeIdsOnMarket - Happy Valley Fresh/Farm to School (39) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4bNGTIWt0sk
-[2015-06-01 14:23:24 -0400] - UpdateStripeIdsOnMarket - Happy Valley Fresh/Farm to School (39) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4PohTv6YZfQ
-[2015-06-01 14:23:24 -0400] - UpdateStripeIdsOnMarket - Happy Valley Fresh/Farm to School (39) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4GYRp3NfJGI
-[2015-06-01 14:23:24 -0400] - UpdateStripeIdsOnMarket - Happy Valley Fresh/Farm to School (39) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ5FDEekFFAul
-[2015-06-01 14:23:24 -0400] - UpdateStripeIdsOnMarket - Happy Valley Fresh/Farm to School (39) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4CjiIJF4p7R
-[2015-06-01 14:23:24 -0400] - UpdateStripeIdsOnMarket - Happy Valley Fresh/Farm to School (39) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ5I7zXDTUboc
-[2015-06-01 14:23:24 -0400] - UpdateStripeIdsOnMarket - Happy Valley Fresh/Farm to School (39) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4iQvWeaoQfE
-[2015-06-01 14:23:24 -0400] - UpdateStripeIdsOnMarket - Happy Valley Fresh/Farm to School (39) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4V1ThoTzIYU
-[2015-06-01 14:23:24 -0400] - UpdateStripeIdsOnMarket - Happy Valley Fresh/Farm to School (39) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4TLOEjgJ6dl
-[2015-06-01 14:23:24 -0400] - UpdateStripeIdsOnMarket - Happy Valley Fresh/Farm to School (39) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ56qa5Ek3OiW
-[2015-06-01 14:23:24 -0400] - UpdateStripeIdsOnMarket - Happy Valley Fresh/Farm to School (39) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4vGUR3gmU2D
-[2015-06-01 14:23:24 -0400] - UpdateStripeIdsOnMarket - Happy Valley Fresh/Farm to School (39) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4Kb7RIW8Rcb
-[2015-06-01 14:23:24 -0400] - UpdateStripeIdsOnMarket - Happy Valley Fresh/Farm to School (39) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4BsQdU55xUU
-[2015-06-01 14:23:24 -0400] - UpdateStripeIdsOnMarket - Happy Valley Fresh/Farm to School (39) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4fdwJReMz5C
-[2015-06-01 14:23:24 -0400] - UpdateStripeIdsOnMarket - Happy Valley Fresh/Farm to School (39) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ474oYE1MrCw
-[2015-06-01 14:23:24 -0400] - UpdateStripeIdsOnMarket - Happy Valley Fresh/Farm to School (39) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4SpBco2WJT8
-[2015-06-01 14:23:24 -0400] - UpdateStripeIdsOnMarket - Happy Valley Fresh/Farm to School (39) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ48MXTg86X7k
-[2015-06-01 14:23:24 -0400] - UpdateStripeIdsOnMarket - Happy Valley Fresh/Farm to School (39) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4khdTlIJPgq
-[2015-06-01 14:23:24 -0400] - UpdateStripeIdsOnMarket - Happy Valley Fresh/Farm to School (39) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ5ByJDTyjCfO
-[2015-06-01 14:23:24 -0400] - UpdateStripeIdsOnMarket - Happy Valley Fresh/Farm to School (39) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ5ibJvbRFMoe
-[2015-06-01 14:23:24 -0400] - UpdateStripeIdsOnMarket - Happy Valley Fresh/Farm to School (39) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4Pw46zaRWhu
-[2015-06-01 14:23:24 -0400] - UpdateStripeIdsOnMarket - Happy Valley Fresh/Farm to School (39) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4k2JnMJdlcT
-[2015-06-01 14:23:24 -0400] - UpdateStripeIdsOnMarket - Happy Valley Fresh/Farm to School (39) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4V2T2oc3AWp
-[2015-06-01 14:23:24 -0400] - UpdateStripeIdsOnMarket - Happy Valley Fresh/Farm to School (39) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4QshRZsWAHj
-[2015-06-01 14:23:24 -0400] - UpdateStripeIdsOnMarket - Happy Valley Fresh/Farm to School (39) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ5louHbnkk3h
-[2015-06-01 14:23:24 -0400] - UpdateStripeIdsOnMarket - Happy Valley Fresh/Farm to School (39) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4ww0zgakP2F
-[2015-06-01 14:23:24 -0400] - UpdateStripeIdsOnMarket - Happy Valley Fresh/Farm to School (39) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ5ZdhZX7D5DY
-[2015-06-01 14:23:24 -0400] - UpdateStripeIdsOnMarket - Happy Valley Fresh/Farm to School (39) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ5ftGhM0YtCC
-[2015-06-01 14:23:24 -0400] - UpdateStripeIdsOnMarket - Happy Valley Fresh/Farm to School (39) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4s3mEJUIRon
-[2015-06-01 14:23:24 -0400] - UpdateStripeIdsOnMarket - Happy Valley Fresh/Farm to School (39) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ5pHbo5gTev4
-[2015-06-01 14:23:24 -0400] - UpdateStripeIdsOnMarket - Happy Valley Fresh/Farm to School (39) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4SlcZL57v5t
-[2015-06-01 14:23:24 -0400] - UpdateStripeIdsOnMarket - Happy Valley Fresh/Farm to School (39) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ5x2jXWNX6rX
-[2015-06-01 14:23:24 -0400] - UpdateStripeIdsOnMarket - Happy Valley Fresh/Farm to School (39) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ47Uk8zZAWOC
-[2015-06-01 14:23:24 -0400] - UpdateStripeIdsOnMarket - Happy Valley Fresh/Farm to School (39) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ45HH17372GN
-[2015-06-01 14:23:24 -0400] - UpdateStripeIdsOnMarket - Happy Valley Fresh/Farm to School (39) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ45eiEhGkx7C
-[2015-06-01 14:23:24 -0400] - UpdateStripeIdsOnMarket - Happy Valley Fresh/Farm to School (39) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4KJFcObf13R
-[2015-06-01 14:23:24 -0400] - UpdateStripeIdsOnMarket - Happy Valley Fresh/Farm to School (39) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4QGygx6ubbf
-[2015-06-01 14:23:24 -0400] - UpdateStripeIdsOnMarket - Happy Valley Fresh/Farm to School (39) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4YEJ5kkJ6hS
-[2015-06-01 14:23:24 -0400] - UpdateStripeIdsOnMarket - Happy Valley Fresh/Farm to School (39) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4RAc5fJE4zx
-[2015-06-01 14:23:24 -0400] - UpdateStripeIdsOnMarket - Happy Valley Fresh/Farm to School (39) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4egZPerTWwY
-[2015-06-01 14:23:24 -0400] - UpdateStripeIdsOnMarket - Happy Valley Fresh/Farm to School (39) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4iCfiVAKSW6
-[2015-06-01 14:23:24 -0400] - UpdateStripeIdsOnMarket - Happy Valley Fresh/Farm to School (39) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4IjuFieh29X
-[2015-06-01 14:23:24 -0400] - UpdateStripeIdsOnMarket - Happy Valley Fresh/Farm to School (39) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ45CtmQ270uR
-[2015-06-01 14:23:24 -0400] - UpdateStripeIdsOnMarket - Happy Valley Fresh/Farm to School (39) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ5S1DAtiGYLM
-[2015-06-01 14:23:24 -0400] - UpdateStripeIdsOnMarket - Happy Valley Fresh/Farm to School (39) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4yAHEmibBxl
-[2015-06-01 14:23:24 -0400] - UpdateStripeIdsOnMarket - Happy Valley Fresh/Farm to School (39) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4PhKCpz6Gs1
-[2015-06-01 14:23:24 -0400] - UpdateStripeIdsOnMarket - Happy Valley Fresh/Farm to School (39) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ5YsjyZQb7yW
-[2015-06-01 14:23:24 -0400] - UpdateStripeIdsOnMarket - Happy Valley Fresh/Farm to School (39) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ40FTfNtIaZU
-[2015-06-01 14:23:24 -0400] - UpdateStripeIdsOnMarket - Happy Valley Fresh/Farm to School (39) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ5PxWc7VrBBe
-[2015-06-01 14:23:24 -0400] - UpdateStripeIdsOnMarket - Happy Valley Fresh/Farm to School (39) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4XxV44PauLp
-[2015-06-01 14:23:24 -0400] - UpdateStripeIdsOnMarket - Happy Valley Fresh/Farm to School (39) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4W3z9WsJeWR
-[2015-06-01 14:23:24 -0400] - UpdateStripeIdsOnMarket - Happy Valley Fresh/Farm to School (39) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ5bKUSNHsMKI
-[2015-06-01 14:23:24 -0400] - UpdateStripeIdsOnMarket - Happy Valley Fresh/Farm to School (39) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4bl1cSNpQZN
-[2015-06-01 14:23:24 -0400] - UpdateStripeIdsOnMarket - Happy Valley Fresh/Farm to School (39) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ47pkU9yNbti
-[2015-06-01 14:23:24 -0400] - UpdateStripeIdsOnMarket - Happy Valley Fresh/Farm to School (39) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ5dYqCbmKaDY
-[2015-06-01 14:23:24 -0400] - UpdateStripeIdsOnMarket - Happy Valley Fresh/Farm to School (39) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ56B29CD0ur8
-[2015-06-01 14:23:24 -0400] - UpdateStripeIdsOnMarket - Happy Valley Fresh/Farm to School (39) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4bSLxDlWq9X
-[2015-06-01 14:23:24 -0400] - UpdateStripeIdsOnMarket - Happy Valley Fresh/Farm to School (39) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4ZNyndsZFQS
-[2015-06-01 14:23:25 -0400] - UpdateStripeIdsOnMarket - Happy Valley Fresh/Farm to School (39) - Connecting market BankAccounts - MISS - No stripe_id found for REDDING BANK OF COMMERCE 8596 (252) balanced_customer_uri /v1/marketplaces/MP2eXZmrOPof80u3Irf94Wre/bank_accounts/BA6SF1yBqVpQbqBmemWdnSfp
-[2015-06-01 14:23:25 -0400] - UpdateStripeIdsOnMarket - Happy Valley Fresh/Farm to School (39) - Connecting org BankAccounts - Organization Chartwells, Simpson University (1987) - MasterCard 9796 (244) already has stripe_id: card_15ic8w2VpjOYk6TmwsP6PLIy
+[2015-06-08 12:26:05 -0400] - UpdateStripeIdsOnMarket - Happy Valley Fresh/Farm to School (39) - ====================================================================================================
+[2015-06-08 12:26:05 -0400] - UpdateStripeIdsOnMarket - Happy Valley Fresh/Farm to School (39) -  Happy Valley Fresh/Farm to School (39)
+[2015-06-08 12:26:05 -0400] - UpdateStripeIdsOnMarket - Happy Valley Fresh/Farm to School (39) -  Updating stripe IDs for market, orgs and bank accounts.
+[2015-06-08 12:26:05 -0400] - UpdateStripeIdsOnMarket - Happy Valley Fresh/Farm to School (39) - 
+[2015-06-08 12:26:05 -0400] - UpdateStripeIdsOnMarket - Happy Valley Fresh/Farm to School (39) -  Balanced export file: /home/vagrant/git/localorbit/tools/stripe-migration/from_balanced/2015-06-08-1433769720-MP2eXZmrOPof80u3Irf94Wre.csv
+[2015-06-08 12:26:05 -0400] - UpdateStripeIdsOnMarket - Happy Valley Fresh/Farm to School (39) - 
+[2015-06-08 12:26:05 -0400] - UpdateStripeIdsOnMarket - Happy Valley Fresh/Farm to School (39) -  Rails.env: production
+[2015-06-08 12:26:05 -0400] - UpdateStripeIdsOnMarket - Happy Valley Fresh/Farm to School (39) -  Stripe keys:
+[2015-06-08 12:26:05 -0400] - UpdateStripeIdsOnMarket - Happy Valley Fresh/Farm to School (39) -   --> STRIPE_PUBLISHABLE_KEY: pk_live_j85VTsrz51POrss3ni460qaf (pk_live_j85VTsrz51POrss3ni460qaf)
+[2015-06-08 12:26:05 -0400] - UpdateStripeIdsOnMarket - Happy Valley Fresh/Farm to School (39) - ====================================================================================================
+[2015-06-08 12:26:05 -0400] - UpdateStripeIdsOnMarket - Happy Valley Fresh/Farm to School (39) - Connecting market customer - MISS - No stripe_customer_id found for market balanced_customer_uri /v1/customers/CU7is1HNN7GnaCuKp7dKnok2
+[2015-06-08 12:26:05 -0400] - UpdateStripeIdsOnMarket - Happy Valley Fresh/Farm to School (39) - Connecting market account - MISS - No stripe_account_id found for market balanced_customer_uri /v1/customers/CU7is1HNN7GnaCuKp7dKnok2
+[2015-06-08 12:26:05 -0400] - UpdateStripeIdsOnMarket - Happy Valley Fresh/Farm to School (39) - Connecting org customers - MISS - No stripe_customer_id found for Organization Saeturn Farms (3787) balanced_customer_uri /v1/customers/CUkEl9x1hVn3o96jFi72Da2
+[2015-06-08 12:26:05 -0400] - UpdateStripeIdsOnMarket - Happy Valley Fresh/Farm to School (39) - Connecting org customers - Organization already has stripe_customer_id: cus_63bCuBnT60e9Ms
+[2015-06-08 12:26:05 -0400] - UpdateStripeIdsOnMarket - Happy Valley Fresh/Farm to School (39) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ5Rud2AqbqOD
+[2015-06-08 12:26:05 -0400] - UpdateStripeIdsOnMarket - Happy Valley Fresh/Farm to School (39) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ5l7bnyxh9L9
+[2015-06-08 12:26:05 -0400] - UpdateStripeIdsOnMarket - Happy Valley Fresh/Farm to School (39) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4LXWbesiHMN
+[2015-06-08 12:26:05 -0400] - UpdateStripeIdsOnMarket - Happy Valley Fresh/Farm to School (39) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4AwUiEp4Lol
+[2015-06-08 12:26:05 -0400] - UpdateStripeIdsOnMarket - Happy Valley Fresh/Farm to School (39) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4g6hUh3gKNk
+[2015-06-08 12:26:05 -0400] - UpdateStripeIdsOnMarket - Happy Valley Fresh/Farm to School (39) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4GXpA8P61WA
+[2015-06-08 12:26:05 -0400] - UpdateStripeIdsOnMarket - Happy Valley Fresh/Farm to School (39) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4Yulm8xBvgE
+[2015-06-08 12:26:06 -0400] - UpdateStripeIdsOnMarket - Happy Valley Fresh/Farm to School (39) - Connecting org customers - Updated Organization Sunrise Kiwi Growers, Gridley (2258) stripe_customer_id: cus_5uQ4belaYUTKRd
+[2015-06-08 12:26:06 -0400] - UpdateStripeIdsOnMarket - Happy Valley Fresh/Farm to School (39) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4AesAzEcpSA
+[2015-06-08 12:26:06 -0400] - UpdateStripeIdsOnMarket - Happy Valley Fresh/Farm to School (39) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4lbIalyNTCm
+[2015-06-08 12:26:06 -0400] - UpdateStripeIdsOnMarket - Happy Valley Fresh/Farm to School (39) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4Ue6gW4OPoP
+[2015-06-08 12:26:06 -0400] - UpdateStripeIdsOnMarket - Happy Valley Fresh/Farm to School (39) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4zEotDGcQ3x
+[2015-06-08 12:26:06 -0400] - UpdateStripeIdsOnMarket - Happy Valley Fresh/Farm to School (39) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4o4NcZW860W
+[2015-06-08 12:26:06 -0400] - UpdateStripeIdsOnMarket - Happy Valley Fresh/Farm to School (39) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4eNz8ULbOLL
+[2015-06-08 12:26:06 -0400] - UpdateStripeIdsOnMarket - Happy Valley Fresh/Farm to School (39) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ5nrfP9ntzfr
+[2015-06-08 12:26:06 -0400] - UpdateStripeIdsOnMarket - Happy Valley Fresh/Farm to School (39) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4GdnsEMplZl
+[2015-06-08 12:26:06 -0400] - UpdateStripeIdsOnMarket - Happy Valley Fresh/Farm to School (39) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4bNGTIWt0sk
+[2015-06-08 12:26:06 -0400] - UpdateStripeIdsOnMarket - Happy Valley Fresh/Farm to School (39) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4PohTv6YZfQ
+[2015-06-08 12:26:06 -0400] - UpdateStripeIdsOnMarket - Happy Valley Fresh/Farm to School (39) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4GYRp3NfJGI
+[2015-06-08 12:26:06 -0400] - UpdateStripeIdsOnMarket - Happy Valley Fresh/Farm to School (39) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ5FDEekFFAul
+[2015-06-08 12:26:06 -0400] - UpdateStripeIdsOnMarket - Happy Valley Fresh/Farm to School (39) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4CjiIJF4p7R
+[2015-06-08 12:26:06 -0400] - UpdateStripeIdsOnMarket - Happy Valley Fresh/Farm to School (39) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ5I7zXDTUboc
+[2015-06-08 12:26:06 -0400] - UpdateStripeIdsOnMarket - Happy Valley Fresh/Farm to School (39) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4iQvWeaoQfE
+[2015-06-08 12:26:06 -0400] - UpdateStripeIdsOnMarket - Happy Valley Fresh/Farm to School (39) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4V1ThoTzIYU
+[2015-06-08 12:26:06 -0400] - UpdateStripeIdsOnMarket - Happy Valley Fresh/Farm to School (39) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4TLOEjgJ6dl
+[2015-06-08 12:26:06 -0400] - UpdateStripeIdsOnMarket - Happy Valley Fresh/Farm to School (39) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ56qa5Ek3OiW
+[2015-06-08 12:26:06 -0400] - UpdateStripeIdsOnMarket - Happy Valley Fresh/Farm to School (39) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4vGUR3gmU2D
+[2015-06-08 12:26:06 -0400] - UpdateStripeIdsOnMarket - Happy Valley Fresh/Farm to School (39) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4Kb7RIW8Rcb
+[2015-06-08 12:26:06 -0400] - UpdateStripeIdsOnMarket - Happy Valley Fresh/Farm to School (39) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4BsQdU55xUU
+[2015-06-08 12:26:06 -0400] - UpdateStripeIdsOnMarket - Happy Valley Fresh/Farm to School (39) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4fdwJReMz5C
+[2015-06-08 12:26:06 -0400] - UpdateStripeIdsOnMarket - Happy Valley Fresh/Farm to School (39) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ474oYE1MrCw
+[2015-06-08 12:26:06 -0400] - UpdateStripeIdsOnMarket - Happy Valley Fresh/Farm to School (39) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4SpBco2WJT8
+[2015-06-08 12:26:06 -0400] - UpdateStripeIdsOnMarket - Happy Valley Fresh/Farm to School (39) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ48MXTg86X7k
+[2015-06-08 12:26:06 -0400] - UpdateStripeIdsOnMarket - Happy Valley Fresh/Farm to School (39) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4khdTlIJPgq
+[2015-06-08 12:26:06 -0400] - UpdateStripeIdsOnMarket - Happy Valley Fresh/Farm to School (39) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ5ByJDTyjCfO
+[2015-06-08 12:26:06 -0400] - UpdateStripeIdsOnMarket - Happy Valley Fresh/Farm to School (39) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ5ibJvbRFMoe
+[2015-06-08 12:26:06 -0400] - UpdateStripeIdsOnMarket - Happy Valley Fresh/Farm to School (39) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4Pw46zaRWhu
+[2015-06-08 12:26:06 -0400] - UpdateStripeIdsOnMarket - Happy Valley Fresh/Farm to School (39) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4k2JnMJdlcT
+[2015-06-08 12:26:06 -0400] - UpdateStripeIdsOnMarket - Happy Valley Fresh/Farm to School (39) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4V2T2oc3AWp
+[2015-06-08 12:26:06 -0400] - UpdateStripeIdsOnMarket - Happy Valley Fresh/Farm to School (39) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4QshRZsWAHj
+[2015-06-08 12:26:06 -0400] - UpdateStripeIdsOnMarket - Happy Valley Fresh/Farm to School (39) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ5louHbnkk3h
+[2015-06-08 12:26:06 -0400] - UpdateStripeIdsOnMarket - Happy Valley Fresh/Farm to School (39) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4ww0zgakP2F
+[2015-06-08 12:26:06 -0400] - UpdateStripeIdsOnMarket - Happy Valley Fresh/Farm to School (39) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ5ZdhZX7D5DY
+[2015-06-08 12:26:06 -0400] - UpdateStripeIdsOnMarket - Happy Valley Fresh/Farm to School (39) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ5ftGhM0YtCC
+[2015-06-08 12:26:06 -0400] - UpdateStripeIdsOnMarket - Happy Valley Fresh/Farm to School (39) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4s3mEJUIRon
+[2015-06-08 12:26:06 -0400] - UpdateStripeIdsOnMarket - Happy Valley Fresh/Farm to School (39) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ5pHbo5gTev4
+[2015-06-08 12:26:06 -0400] - UpdateStripeIdsOnMarket - Happy Valley Fresh/Farm to School (39) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4SlcZL57v5t
+[2015-06-08 12:26:06 -0400] - UpdateStripeIdsOnMarket - Happy Valley Fresh/Farm to School (39) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ5x2jXWNX6rX
+[2015-06-08 12:26:06 -0400] - UpdateStripeIdsOnMarket - Happy Valley Fresh/Farm to School (39) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ47Uk8zZAWOC
+[2015-06-08 12:26:06 -0400] - UpdateStripeIdsOnMarket - Happy Valley Fresh/Farm to School (39) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ45HH17372GN
+[2015-06-08 12:26:06 -0400] - UpdateStripeIdsOnMarket - Happy Valley Fresh/Farm to School (39) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ45eiEhGkx7C
+[2015-06-08 12:26:06 -0400] - UpdateStripeIdsOnMarket - Happy Valley Fresh/Farm to School (39) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4KJFcObf13R
+[2015-06-08 12:26:06 -0400] - UpdateStripeIdsOnMarket - Happy Valley Fresh/Farm to School (39) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4QGygx6ubbf
+[2015-06-08 12:26:06 -0400] - UpdateStripeIdsOnMarket - Happy Valley Fresh/Farm to School (39) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4YEJ5kkJ6hS
+[2015-06-08 12:26:06 -0400] - UpdateStripeIdsOnMarket - Happy Valley Fresh/Farm to School (39) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4RAc5fJE4zx
+[2015-06-08 12:26:06 -0400] - UpdateStripeIdsOnMarket - Happy Valley Fresh/Farm to School (39) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4egZPerTWwY
+[2015-06-08 12:26:06 -0400] - UpdateStripeIdsOnMarket - Happy Valley Fresh/Farm to School (39) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4iCfiVAKSW6
+[2015-06-08 12:26:06 -0400] - UpdateStripeIdsOnMarket - Happy Valley Fresh/Farm to School (39) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4IjuFieh29X
+[2015-06-08 12:26:06 -0400] - UpdateStripeIdsOnMarket - Happy Valley Fresh/Farm to School (39) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ45CtmQ270uR
+[2015-06-08 12:26:06 -0400] - UpdateStripeIdsOnMarket - Happy Valley Fresh/Farm to School (39) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ5S1DAtiGYLM
+[2015-06-08 12:26:06 -0400] - UpdateStripeIdsOnMarket - Happy Valley Fresh/Farm to School (39) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4yAHEmibBxl
+[2015-06-08 12:26:06 -0400] - UpdateStripeIdsOnMarket - Happy Valley Fresh/Farm to School (39) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4PhKCpz6Gs1
+[2015-06-08 12:26:06 -0400] - UpdateStripeIdsOnMarket - Happy Valley Fresh/Farm to School (39) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ5YsjyZQb7yW
+[2015-06-08 12:26:06 -0400] - UpdateStripeIdsOnMarket - Happy Valley Fresh/Farm to School (39) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ40FTfNtIaZU
+[2015-06-08 12:26:06 -0400] - UpdateStripeIdsOnMarket - Happy Valley Fresh/Farm to School (39) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ5PxWc7VrBBe
+[2015-06-08 12:26:06 -0400] - UpdateStripeIdsOnMarket - Happy Valley Fresh/Farm to School (39) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4XxV44PauLp
+[2015-06-08 12:26:06 -0400] - UpdateStripeIdsOnMarket - Happy Valley Fresh/Farm to School (39) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4W3z9WsJeWR
+[2015-06-08 12:26:06 -0400] - UpdateStripeIdsOnMarket - Happy Valley Fresh/Farm to School (39) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ5bKUSNHsMKI
+[2015-06-08 12:26:06 -0400] - UpdateStripeIdsOnMarket - Happy Valley Fresh/Farm to School (39) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4bl1cSNpQZN
+[2015-06-08 12:26:06 -0400] - UpdateStripeIdsOnMarket - Happy Valley Fresh/Farm to School (39) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ47pkU9yNbti
+[2015-06-08 12:26:06 -0400] - UpdateStripeIdsOnMarket - Happy Valley Fresh/Farm to School (39) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ5dYqCbmKaDY
+[2015-06-08 12:26:06 -0400] - UpdateStripeIdsOnMarket - Happy Valley Fresh/Farm to School (39) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ56B29CD0ur8
+[2015-06-08 12:26:06 -0400] - UpdateStripeIdsOnMarket - Happy Valley Fresh/Farm to School (39) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4bSLxDlWq9X
+[2015-06-08 12:26:06 -0400] - UpdateStripeIdsOnMarket - Happy Valley Fresh/Farm to School (39) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4ZNyndsZFQS
+[2015-06-08 12:26:06 -0400] - UpdateStripeIdsOnMarket - Happy Valley Fresh/Farm to School (39) - Connecting market BankAccounts - MISS - No stripe_id found for REDDING BANK OF COMMERCE 8596 (252) balanced_customer_uri /v1/marketplaces/MP2eXZmrOPof80u3Irf94Wre/bank_accounts/BA6SF1yBqVpQbqBmemWdnSfp
+[2015-06-08 12:26:07 -0400] - UpdateStripeIdsOnMarket - Happy Valley Fresh/Farm to School (39) - Connecting org BankAccounts - Organization Chartwells, Simpson University (1987) - MasterCard 9796 (244) already has stripe_id: card_15ic8w2VpjOYk6TmwsP6PLIy

@@ -1,12 +1,12 @@
-[2015-06-01 14:23:22 -0400] - UpdateStripeIdsOnMarket - RAI Wisconsin Market (44) - ====================================================================================================
-[2015-06-01 14:23:22 -0400] - UpdateStripeIdsOnMarket - RAI Wisconsin Market (44) -  RAI Wisconsin Market (44)
-[2015-06-01 14:23:22 -0400] - UpdateStripeIdsOnMarket - RAI Wisconsin Market (44) -  Updating stripe IDs for market, orgs and bank accounts.
-[2015-06-01 14:23:22 -0400] - UpdateStripeIdsOnMarket - RAI Wisconsin Market (44) - 
-[2015-06-01 14:23:22 -0400] - UpdateStripeIdsOnMarket - RAI Wisconsin Market (44) -  Balanced export file: /home/vagrant/git/localorbit/tools/stripe-migration/from_balanced/2015-06-01-1433181180-MP2eXZmrOPof80u3Irf94Wre.csv
-[2015-06-01 14:23:22 -0400] - UpdateStripeIdsOnMarket - RAI Wisconsin Market (44) - 
-[2015-06-01 14:23:22 -0400] - UpdateStripeIdsOnMarket - RAI Wisconsin Market (44) -  Rails.env: production
-[2015-06-01 14:23:22 -0400] - UpdateStripeIdsOnMarket - RAI Wisconsin Market (44) -  Stripe keys:
-[2015-06-01 14:23:22 -0400] - UpdateStripeIdsOnMarket - RAI Wisconsin Market (44) -   --> STRIPE_PUBLISHABLE_KEY: pk_live_j85VTsrz51POrss3ni460qaf (pk_live_j85VTsrz51POrss3ni460qaf)
-[2015-06-01 14:23:22 -0400] - UpdateStripeIdsOnMarket - RAI Wisconsin Market (44) - ====================================================================================================
-[2015-06-01 14:23:22 -0400] - UpdateStripeIdsOnMarket - RAI Wisconsin Market (44) - Connecting market customer - Updated Market stripe_customer_id: cus_5uQ4wXZ8zm5SiJ
-[2015-06-01 14:23:22 -0400] - UpdateStripeIdsOnMarket - RAI Wisconsin Market (44) - Connecting market account - MISS - No stripe_account_id found for market balanced_customer_uri /v1/customers/CU20ijQ5XYcE7WD64D82RGgH
+[2015-06-08 12:26:00 -0400] - UpdateStripeIdsOnMarket - RAI Wisconsin Market (44) - ====================================================================================================
+[2015-06-08 12:26:00 -0400] - UpdateStripeIdsOnMarket - RAI Wisconsin Market (44) -  RAI Wisconsin Market (44)
+[2015-06-08 12:26:00 -0400] - UpdateStripeIdsOnMarket - RAI Wisconsin Market (44) -  Updating stripe IDs for market, orgs and bank accounts.
+[2015-06-08 12:26:00 -0400] - UpdateStripeIdsOnMarket - RAI Wisconsin Market (44) - 
+[2015-06-08 12:26:00 -0400] - UpdateStripeIdsOnMarket - RAI Wisconsin Market (44) -  Balanced export file: /home/vagrant/git/localorbit/tools/stripe-migration/from_balanced/2015-06-08-1433769720-MP2eXZmrOPof80u3Irf94Wre.csv
+[2015-06-08 12:26:00 -0400] - UpdateStripeIdsOnMarket - RAI Wisconsin Market (44) - 
+[2015-06-08 12:26:00 -0400] - UpdateStripeIdsOnMarket - RAI Wisconsin Market (44) -  Rails.env: production
+[2015-06-08 12:26:00 -0400] - UpdateStripeIdsOnMarket - RAI Wisconsin Market (44) -  Stripe keys:
+[2015-06-08 12:26:00 -0400] - UpdateStripeIdsOnMarket - RAI Wisconsin Market (44) -   --> STRIPE_PUBLISHABLE_KEY: pk_live_j85VTsrz51POrss3ni460qaf (pk_live_j85VTsrz51POrss3ni460qaf)
+[2015-06-08 12:26:00 -0400] - UpdateStripeIdsOnMarket - RAI Wisconsin Market (44) - ====================================================================================================
+[2015-06-08 12:26:00 -0400] - UpdateStripeIdsOnMarket - RAI Wisconsin Market (44) - Connecting market customer - Market already has stripe_customer_id: cus_5uQ4wXZ8zm5SiJ
+[2015-06-08 12:26:00 -0400] - UpdateStripeIdsOnMarket - RAI Wisconsin Market (44) - Connecting market account - MISS - No stripe_account_id found for market balanced_customer_uri /v1/customers/CU20ijQ5XYcE7WD64D82RGgH

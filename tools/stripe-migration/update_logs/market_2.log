@@ -1,31 +1,34 @@
-[2015-06-01 14:23:28 -0400] - UpdateStripeIdsOnMarket - The Locals Food Hub (2) - ====================================================================================================
-[2015-06-01 14:23:28 -0400] - UpdateStripeIdsOnMarket - The Locals Food Hub (2) -  The Locals Food Hub (2)
-[2015-06-01 14:23:28 -0400] - UpdateStripeIdsOnMarket - The Locals Food Hub (2) -  Updating stripe IDs for market, orgs and bank accounts.
-[2015-06-01 14:23:28 -0400] - UpdateStripeIdsOnMarket - The Locals Food Hub (2) - 
-[2015-06-01 14:23:28 -0400] - UpdateStripeIdsOnMarket - The Locals Food Hub (2) -  Balanced export file: /home/vagrant/git/localorbit/tools/stripe-migration/from_balanced/2015-06-01-1433181180-MP2eXZmrOPof80u3Irf94Wre.csv
-[2015-06-01 14:23:28 -0400] - UpdateStripeIdsOnMarket - The Locals Food Hub (2) - 
-[2015-06-01 14:23:28 -0400] - UpdateStripeIdsOnMarket - The Locals Food Hub (2) -  Rails.env: production
-[2015-06-01 14:23:28 -0400] - UpdateStripeIdsOnMarket - The Locals Food Hub (2) -  Stripe keys:
-[2015-06-01 14:23:28 -0400] - UpdateStripeIdsOnMarket - The Locals Food Hub (2) -   --> STRIPE_PUBLISHABLE_KEY: pk_live_j85VTsrz51POrss3ni460qaf (pk_live_j85VTsrz51POrss3ni460qaf)
-[2015-06-01 14:23:28 -0400] - UpdateStripeIdsOnMarket - The Locals Food Hub (2) - ====================================================================================================
-[2015-06-01 14:23:28 -0400] - UpdateStripeIdsOnMarket - The Locals Food Hub (2) - Connecting market customer - Market already has stripe_customer_id: cus_5uQ4Q3uzWB2fe0
-[2015-06-01 14:23:28 -0400] - UpdateStripeIdsOnMarket - The Locals Food Hub (2) - Connecting market account - Market already has stripe_account_id: acct_15l1yTClqVnHxlgk
-[2015-06-01 14:23:28 -0400] - UpdateStripeIdsOnMarket - The Locals Food Hub (2) - Connecting org customers - Organization already has stripe_customer_id: cus_66f3t9BIiXe0BD
-[2015-06-01 14:23:28 -0400] - UpdateStripeIdsOnMarket - The Locals Food Hub (2) - Connecting org customers - Organization already has stripe_customer_id: cus_66drBhqcVD3mIq
-[2015-06-01 14:23:28 -0400] - UpdateStripeIdsOnMarket - The Locals Food Hub (2) - Connecting org customers - Organization already has stripe_customer_id: cus_66dVvqhUOk0t5t
-[2015-06-01 14:23:28 -0400] - UpdateStripeIdsOnMarket - The Locals Food Hub (2) - Connecting org customers - Organization already has stripe_customer_id: cus_60iBFluQgy9P8Y
-[2015-06-01 14:23:28 -0400] - UpdateStripeIdsOnMarket - The Locals Food Hub (2) - Connecting org customers - Organization already has stripe_customer_id: cus_60hFyv3X354tVU
-[2015-06-01 14:23:28 -0400] - UpdateStripeIdsOnMarket - The Locals Food Hub (2) - Connecting org customers - Organization already has stripe_customer_id: cus_5ynr5dxO0BJLl1
-[2015-06-01 14:23:28 -0400] - UpdateStripeIdsOnMarket - The Locals Food Hub (2) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4x2HAYyogsH
-[2015-06-01 14:23:28 -0400] - UpdateStripeIdsOnMarket - The Locals Food Hub (2) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4t1ZAJDOagr
-[2015-06-01 14:23:28 -0400] - UpdateStripeIdsOnMarket - The Locals Food Hub (2) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4UsOxYXNtjz
-[2015-06-01 14:23:28 -0400] - UpdateStripeIdsOnMarket - The Locals Food Hub (2) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4pnRudERPvK
-[2015-06-01 14:23:28 -0400] - UpdateStripeIdsOnMarket - The Locals Food Hub (2) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ47SNp1tfkt6
-[2015-06-01 14:23:28 -0400] - UpdateStripeIdsOnMarket - The Locals Food Hub (2) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ5DRhzWMri9I
-[2015-06-01 14:23:28 -0400] - UpdateStripeIdsOnMarket - The Locals Food Hub (2) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ43hL3DJTbAv
-[2015-06-01 14:23:28 -0400] - UpdateStripeIdsOnMarket - The Locals Food Hub (2) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4vg2Jba86rd
-[2015-06-01 14:23:28 -0400] - UpdateStripeIdsOnMarket - The Locals Food Hub (2) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4Yr5ull1YDq
-[2015-06-01 14:23:28 -0400] - UpdateStripeIdsOnMarket - The Locals Food Hub (2) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4E6RrdYkmNL
-[2015-06-01 14:23:28 -0400] - UpdateStripeIdsOnMarket - The Locals Food Hub (2) - Connecting org customers - Organization already has stripe_customer_id: cus_5uS7iw1T7ft2B9
-[2015-06-01 14:23:28 -0400] - UpdateStripeIdsOnMarket - The Locals Food Hub (2) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ5bQF5ZR0Ica
-[2015-06-01 14:23:28 -0400] - UpdateStripeIdsOnMarket - The Locals Food Hub (2) - Connecting market BankAccounts - FIRST SECURITY BK 2411 (60) already has stripe_id: ba_15ic9K2VpjOYk6TmXqWgJ60i
+[2015-06-08 12:26:08 -0400] - UpdateStripeIdsOnMarket - The Locals Food Hub (2) - ====================================================================================================
+[2015-06-08 12:26:08 -0400] - UpdateStripeIdsOnMarket - The Locals Food Hub (2) -  The Locals Food Hub (2)
+[2015-06-08 12:26:08 -0400] - UpdateStripeIdsOnMarket - The Locals Food Hub (2) -  Updating stripe IDs for market, orgs and bank accounts.
+[2015-06-08 12:26:08 -0400] - UpdateStripeIdsOnMarket - The Locals Food Hub (2) - 
+[2015-06-08 12:26:08 -0400] - UpdateStripeIdsOnMarket - The Locals Food Hub (2) -  Balanced export file: /home/vagrant/git/localorbit/tools/stripe-migration/from_balanced/2015-06-08-1433769720-MP2eXZmrOPof80u3Irf94Wre.csv
+[2015-06-08 12:26:08 -0400] - UpdateStripeIdsOnMarket - The Locals Food Hub (2) - 
+[2015-06-08 12:26:08 -0400] - UpdateStripeIdsOnMarket - The Locals Food Hub (2) -  Rails.env: production
+[2015-06-08 12:26:08 -0400] - UpdateStripeIdsOnMarket - The Locals Food Hub (2) -  Stripe keys:
+[2015-06-08 12:26:08 -0400] - UpdateStripeIdsOnMarket - The Locals Food Hub (2) -   --> STRIPE_PUBLISHABLE_KEY: pk_live_j85VTsrz51POrss3ni460qaf (pk_live_j85VTsrz51POrss3ni460qaf)
+[2015-06-08 12:26:08 -0400] - UpdateStripeIdsOnMarket - The Locals Food Hub (2) - ====================================================================================================
+[2015-06-08 12:26:08 -0400] - UpdateStripeIdsOnMarket - The Locals Food Hub (2) - Connecting market customer - Market already has stripe_customer_id: cus_5uQ4Q3uzWB2fe0
+[2015-06-08 12:26:08 -0400] - UpdateStripeIdsOnMarket - The Locals Food Hub (2) - Connecting market account - Market already has stripe_account_id: acct_15l1yTClqVnHxlgk
+[2015-06-08 12:26:08 -0400] - UpdateStripeIdsOnMarket - The Locals Food Hub (2) - Connecting org customers - Organization already has stripe_customer_id: cus_66f3t9BIiXe0BD
+[2015-06-08 12:26:08 -0400] - UpdateStripeIdsOnMarket - The Locals Food Hub (2) - Connecting org customers - Organization already has stripe_customer_id: cus_66drBhqcVD3mIq
+[2015-06-08 12:26:08 -0400] - UpdateStripeIdsOnMarket - The Locals Food Hub (2) - Connecting org customers - Organization already has stripe_customer_id: cus_66dVvqhUOk0t5t
+[2015-06-08 12:26:08 -0400] - UpdateStripeIdsOnMarket - The Locals Food Hub (2) - Connecting org customers - Organization already has stripe_customer_id: cus_60iBFluQgy9P8Y
+[2015-06-08 12:26:08 -0400] - UpdateStripeIdsOnMarket - The Locals Food Hub (2) - Connecting org customers - Organization already has stripe_customer_id: cus_60hFyv3X354tVU
+[2015-06-08 12:26:08 -0400] - UpdateStripeIdsOnMarket - The Locals Food Hub (2) - Connecting org customers - Organization already has stripe_customer_id: cus_5ynr5dxO0BJLl1
+[2015-06-08 12:26:08 -0400] - UpdateStripeIdsOnMarket - The Locals Food Hub (2) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4x2HAYyogsH
+[2015-06-08 12:26:08 -0400] - UpdateStripeIdsOnMarket - The Locals Food Hub (2) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4t1ZAJDOagr
+[2015-06-08 12:26:08 -0400] - UpdateStripeIdsOnMarket - The Locals Food Hub (2) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4UsOxYXNtjz
+[2015-06-08 12:26:08 -0400] - UpdateStripeIdsOnMarket - The Locals Food Hub (2) - Connecting org customers - Updated Organization Arkansas Killer Bee & Tomato Farm (2) stripe_customer_id: cus_5uQ5kiEfXKSzfr
+[2015-06-08 12:26:08 -0400] - UpdateStripeIdsOnMarket - The Locals Food Hub (2) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4pnRudERPvK
+[2015-06-08 12:26:08 -0400] - UpdateStripeIdsOnMarket - The Locals Food Hub (2) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ47SNp1tfkt6
+[2015-06-08 12:26:08 -0400] - UpdateStripeIdsOnMarket - The Locals Food Hub (2) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ5DRhzWMri9I
+[2015-06-08 12:26:09 -0400] - UpdateStripeIdsOnMarket - The Locals Food Hub (2) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ43hL3DJTbAv
+[2015-06-08 12:26:09 -0400] - UpdateStripeIdsOnMarket - The Locals Food Hub (2) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4vg2Jba86rd
+[2015-06-08 12:26:09 -0400] - UpdateStripeIdsOnMarket - The Locals Food Hub (2) - Connecting org customers - Updated Organization Laughing Stock Farm (8) stripe_customer_id: cus_5uQ4MhkzC7EXyM
+[2015-06-08 12:26:09 -0400] - UpdateStripeIdsOnMarket - The Locals Food Hub (2) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4Yr5ull1YDq
+[2015-06-08 12:26:09 -0400] - UpdateStripeIdsOnMarket - The Locals Food Hub (2) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4E6RrdYkmNL
+[2015-06-08 12:26:09 -0400] - UpdateStripeIdsOnMarket - The Locals Food Hub (2) - Connecting org customers - Updated Organization Hardin Farm (11) stripe_customer_id: cus_5uQ4rENr0OyyD9
+[2015-06-08 12:26:09 -0400] - UpdateStripeIdsOnMarket - The Locals Food Hub (2) - Connecting org customers - Organization already has stripe_customer_id: cus_5uS7iw1T7ft2B9
+[2015-06-08 12:26:09 -0400] - UpdateStripeIdsOnMarket - The Locals Food Hub (2) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ5bQF5ZR0Ica
+[2015-06-08 12:26:09 -0400] - UpdateStripeIdsOnMarket - The Locals Food Hub (2) - Connecting market BankAccounts - FIRST SECURITY BK 2411 (60) already has stripe_id: ba_15ic9K2VpjOYk6TmXqWgJ60i

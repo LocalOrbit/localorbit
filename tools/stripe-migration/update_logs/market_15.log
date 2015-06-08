@@ -1,100 +1,101 @@
-[2015-06-01 14:23:38 -0400] - UpdateStripeIdsOnMarket - Headwater Food Hub (15) - ====================================================================================================
-[2015-06-01 14:23:38 -0400] - UpdateStripeIdsOnMarket - Headwater Food Hub (15) -  Headwater Food Hub (15)
-[2015-06-01 14:23:38 -0400] - UpdateStripeIdsOnMarket - Headwater Food Hub (15) -  Updating stripe IDs for market, orgs and bank accounts.
-[2015-06-01 14:23:38 -0400] - UpdateStripeIdsOnMarket - Headwater Food Hub (15) - 
-[2015-06-01 14:23:38 -0400] - UpdateStripeIdsOnMarket - Headwater Food Hub (15) -  Balanced export file: /home/vagrant/git/localorbit/tools/stripe-migration/from_balanced/2015-06-01-1433181180-MP2eXZmrOPof80u3Irf94Wre.csv
-[2015-06-01 14:23:38 -0400] - UpdateStripeIdsOnMarket - Headwater Food Hub (15) - 
-[2015-06-01 14:23:38 -0400] - UpdateStripeIdsOnMarket - Headwater Food Hub (15) -  Rails.env: production
-[2015-06-01 14:23:38 -0400] - UpdateStripeIdsOnMarket - Headwater Food Hub (15) -  Stripe keys:
-[2015-06-01 14:23:38 -0400] - UpdateStripeIdsOnMarket - Headwater Food Hub (15) -   --> STRIPE_PUBLISHABLE_KEY: pk_live_j85VTsrz51POrss3ni460qaf (pk_live_j85VTsrz51POrss3ni460qaf)
-[2015-06-01 14:23:38 -0400] - UpdateStripeIdsOnMarket - Headwater Food Hub (15) - ====================================================================================================
-[2015-06-01 14:23:38 -0400] - UpdateStripeIdsOnMarket - Headwater Food Hub (15) - Connecting market customer - Market already has stripe_customer_id: cus_5uQ4nhT9BhCRaf
-[2015-06-01 14:23:38 -0400] - UpdateStripeIdsOnMarket - Headwater Food Hub (15) - Connecting market account - Market already has stripe_account_id: acct_15l1yWEkVERGDXQ6
-[2015-06-01 14:23:39 -0400] - UpdateStripeIdsOnMarket - Headwater Food Hub (15) - Connecting org customers - Updated Organization Smugtown Mushrooms (3992) stripe_customer_id: cus_6Jl9VhSmPFhl5K
-[2015-06-01 14:23:39 -0400] - UpdateStripeIdsOnMarket - Headwater Food Hub (15) - Connecting org customers - Updated Organization Smugtown Mushrooms (3991) stripe_customer_id: cus_6JkzElk6r9QQrk
-[2015-06-01 14:23:39 -0400] - UpdateStripeIdsOnMarket - Headwater Food Hub (15) - Connecting org customers - Updated Organization Aramark Paychex Sawgrass (3778) stripe_customer_id: cus_6K2aekv57Za7tX
-[2015-06-01 14:23:39 -0400] - UpdateStripeIdsOnMarket - Headwater Food Hub (15) - Connecting org customers - Organization already has stripe_customer_id: cus_6ESk7YGGVeCtCJ
-[2015-06-01 14:23:39 -0400] - UpdateStripeIdsOnMarket - Headwater Food Hub (15) - Connecting org customers - Organization already has stripe_customer_id: cus_6GRBff033wR58q
-[2015-06-01 14:23:39 -0400] - UpdateStripeIdsOnMarket - Headwater Food Hub (15) - Connecting org customers - Organization already has stripe_customer_id: cus_6DjhdNlGfFhmTv
-[2015-06-01 14:23:39 -0400] - UpdateStripeIdsOnMarket - Headwater Food Hub (15) - Connecting org customers - Organization already has stripe_customer_id: cus_6BC38VMeQ4wN4m
-[2015-06-01 14:23:39 -0400] - UpdateStripeIdsOnMarket - Headwater Food Hub (15) - Connecting org customers - Updated Organization Eleven Lakes Restaurant Group (3686) stripe_customer_id: cus_6K6OdbIpBXz6KE
-[2015-06-01 14:23:39 -0400] - UpdateStripeIdsOnMarket - Headwater Food Hub (15) - Connecting org customers - Organization already has stripe_customer_id: cus_69G7EvKWCgDBcm
-[2015-06-01 14:23:39 -0400] - UpdateStripeIdsOnMarket - Headwater Food Hub (15) - Connecting org customers - Organization already has stripe_customer_id: cus_6B60D2yzqFdWJ2
-[2015-06-01 14:23:39 -0400] - UpdateStripeIdsOnMarket - Headwater Food Hub (15) - Connecting org customers - Organization already has stripe_customer_id: cus_63JSBmZwHWzfAy
-[2015-06-01 14:23:39 -0400] - UpdateStripeIdsOnMarket - Headwater Food Hub (15) - Connecting org customers - Organization already has stripe_customer_id: cus_63fzqyWTQReuy4
-[2015-06-01 14:23:39 -0400] - UpdateStripeIdsOnMarket - Headwater Food Hub (15) - Connecting org customers - Organization already has stripe_customer_id: cus_6GQfCWJlkItSUu
-[2015-06-01 14:23:39 -0400] - UpdateStripeIdsOnMarket - Headwater Food Hub (15) - Connecting org customers - Organization already has stripe_customer_id: cus_5wrTLAaJZDZKny
-[2015-06-01 14:23:39 -0400] - UpdateStripeIdsOnMarket - Headwater Food Hub (15) - Connecting org customers - Organization already has stripe_customer_id: cus_5w7q0WMlJzi6S2
-[2015-06-01 14:23:39 -0400] - UpdateStripeIdsOnMarket - Headwater Food Hub (15) - Connecting org customers - Organization already has stripe_customer_id: cus_60aa1HwpQNm4Ol
-[2015-06-01 14:23:39 -0400] - UpdateStripeIdsOnMarket - Headwater Food Hub (15) - Connecting org customers - Organization already has stripe_customer_id: cus_60cANaNFfdOcIf
-[2015-06-01 14:23:39 -0400] - UpdateStripeIdsOnMarket - Headwater Food Hub (15) - Connecting org customers - Organization already has stripe_customer_id: cus_60fRwQuhsV1AsA
-[2015-06-01 14:23:39 -0400] - UpdateStripeIdsOnMarket - Headwater Food Hub (15) - Connecting org customers - Organization already has stripe_customer_id: cus_5zJVPuKH6atGht
-[2015-06-01 14:23:39 -0400] - UpdateStripeIdsOnMarket - Headwater Food Hub (15) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ5xw2zJZmU5l
-[2015-06-01 14:23:39 -0400] - UpdateStripeIdsOnMarket - Headwater Food Hub (15) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4lD1U6X9OYG
-[2015-06-01 14:23:39 -0400] - UpdateStripeIdsOnMarket - Headwater Food Hub (15) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4W4kzFccX80
-[2015-06-01 14:23:39 -0400] - UpdateStripeIdsOnMarket - Headwater Food Hub (15) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4Kpu8ymv0eU
-[2015-06-01 14:23:39 -0400] - UpdateStripeIdsOnMarket - Headwater Food Hub (15) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4moRIx88wrm
-[2015-06-01 14:23:39 -0400] - UpdateStripeIdsOnMarket - Headwater Food Hub (15) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4rmjwwKnH2Q
-[2015-06-01 14:23:39 -0400] - UpdateStripeIdsOnMarket - Headwater Food Hub (15) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ5GnkrTFqfWf
-[2015-06-01 14:23:39 -0400] - UpdateStripeIdsOnMarket - Headwater Food Hub (15) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4bkw5w8BDTI
-[2015-06-01 14:23:39 -0400] - UpdateStripeIdsOnMarket - Headwater Food Hub (15) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ5Niz6TgXRaT
-[2015-06-01 14:23:39 -0400] - UpdateStripeIdsOnMarket - Headwater Food Hub (15) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ5wEbeSRpTpH
-[2015-06-01 14:23:39 -0400] - UpdateStripeIdsOnMarket - Headwater Food Hub (15) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4ldL71GXXy9
-[2015-06-01 14:23:39 -0400] - UpdateStripeIdsOnMarket - Headwater Food Hub (15) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4b1OvamcEJY
-[2015-06-01 14:23:39 -0400] - UpdateStripeIdsOnMarket - Headwater Food Hub (15) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4gtcH1Ad5PY
-[2015-06-01 14:23:40 -0400] - UpdateStripeIdsOnMarket - Headwater Food Hub (15) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ42cGo8dBYe7
-[2015-06-01 14:23:40 -0400] - UpdateStripeIdsOnMarket - Headwater Food Hub (15) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4MVxhpatP7W
-[2015-06-01 14:23:40 -0400] - UpdateStripeIdsOnMarket - Headwater Food Hub (15) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ5L4y6G90Wc4
-[2015-06-01 14:23:40 -0400] - UpdateStripeIdsOnMarket - Headwater Food Hub (15) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4zAxS4Kbsc8
-[2015-06-01 14:23:40 -0400] - UpdateStripeIdsOnMarket - Headwater Food Hub (15) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4FjDTMpVH89
-[2015-06-01 14:23:40 -0400] - UpdateStripeIdsOnMarket - Headwater Food Hub (15) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4kqpAdYfeLE
-[2015-06-01 14:23:40 -0400] - UpdateStripeIdsOnMarket - Headwater Food Hub (15) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4sPunGjewc9
-[2015-06-01 14:23:40 -0400] - UpdateStripeIdsOnMarket - Headwater Food Hub (15) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4oJAQglIKfi
-[2015-06-01 14:23:40 -0400] - UpdateStripeIdsOnMarket - Headwater Food Hub (15) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4NPvyQqglpn
-[2015-06-01 14:23:40 -0400] - UpdateStripeIdsOnMarket - Headwater Food Hub (15) - Connecting org customers - Organization already has stripe_customer_id: cus_5xy1WBP7wKuVug
-[2015-06-01 14:23:40 -0400] - UpdateStripeIdsOnMarket - Headwater Food Hub (15) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ48lRfsfkeCN
-[2015-06-01 14:23:40 -0400] - UpdateStripeIdsOnMarket - Headwater Food Hub (15) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ5T29MdJxZGS
-[2015-06-01 14:23:40 -0400] - UpdateStripeIdsOnMarket - Headwater Food Hub (15) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4BJdJo0tAZw
-[2015-06-01 14:23:40 -0400] - UpdateStripeIdsOnMarket - Headwater Food Hub (15) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ5boFk7QiUH2
-[2015-06-01 14:23:40 -0400] - UpdateStripeIdsOnMarket - Headwater Food Hub (15) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4NJgT7fBftb
-[2015-06-01 14:23:40 -0400] - UpdateStripeIdsOnMarket - Headwater Food Hub (15) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ5DOPAzuBNh5
-[2015-06-01 14:23:40 -0400] - UpdateStripeIdsOnMarket - Headwater Food Hub (15) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4AX9L3CSs46
-[2015-06-01 14:23:40 -0400] - UpdateStripeIdsOnMarket - Headwater Food Hub (15) - Connecting org customers - Organization already has stripe_customer_id: cus_5uS7q938w56qSM
-[2015-06-01 14:23:40 -0400] - UpdateStripeIdsOnMarket - Headwater Food Hub (15) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4i6tF3T1OQU
-[2015-06-01 14:23:40 -0400] - UpdateStripeIdsOnMarket - Headwater Food Hub (15) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ6QzmprZJ0VP
-[2015-06-01 14:23:40 -0400] - UpdateStripeIdsOnMarket - Headwater Food Hub (15) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ5p3kUFfDuv2
-[2015-06-01 14:23:40 -0400] - UpdateStripeIdsOnMarket - Headwater Food Hub (15) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4DugsUdQ5Ev
-[2015-06-01 14:23:40 -0400] - UpdateStripeIdsOnMarket - Headwater Food Hub (15) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ5ficqbJmonk
-[2015-06-01 14:23:40 -0400] - UpdateStripeIdsOnMarket - Headwater Food Hub (15) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ43DvPxehBjg
-[2015-06-01 14:23:40 -0400] - UpdateStripeIdsOnMarket - Headwater Food Hub (15) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4ezFeiwQhyW
-[2015-06-01 14:23:40 -0400] - UpdateStripeIdsOnMarket - Headwater Food Hub (15) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4aya5ANKlmc
-[2015-06-01 14:23:40 -0400] - UpdateStripeIdsOnMarket - Headwater Food Hub (15) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4AI4zSjk7mR
-[2015-06-01 14:23:40 -0400] - UpdateStripeIdsOnMarket - Headwater Food Hub (15) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ42lQqFHglCK
-[2015-06-01 14:23:40 -0400] - UpdateStripeIdsOnMarket - Headwater Food Hub (15) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4YFFRsXqXN5
-[2015-06-01 14:23:40 -0400] - UpdateStripeIdsOnMarket - Headwater Food Hub (15) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ5KTy8anxbzF
-[2015-06-01 14:23:40 -0400] - UpdateStripeIdsOnMarket - Headwater Food Hub (15) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4a1Vo8vPZtI
-[2015-06-01 14:23:40 -0400] - UpdateStripeIdsOnMarket - Headwater Food Hub (15) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4xUVAhuC7fL
-[2015-06-01 14:23:40 -0400] - UpdateStripeIdsOnMarket - Headwater Food Hub (15) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ5RVKi6ex7dH
-[2015-06-01 14:23:40 -0400] - UpdateStripeIdsOnMarket - Headwater Food Hub (15) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ5xDwqRoFtjN
-[2015-06-01 14:23:40 -0400] - UpdateStripeIdsOnMarket - Headwater Food Hub (15) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ5GI7pjnSJEb
-[2015-06-01 14:23:40 -0400] - UpdateStripeIdsOnMarket - Headwater Food Hub (15) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ5HkfR2NL3Ee
-[2015-06-01 14:23:40 -0400] - UpdateStripeIdsOnMarket - Headwater Food Hub (15) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ5dXP4iAfoMr
-[2015-06-01 14:23:40 -0400] - UpdateStripeIdsOnMarket - Headwater Food Hub (15) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ5IRed9wMdaE
-[2015-06-01 14:23:40 -0400] - UpdateStripeIdsOnMarket - Headwater Food Hub (15) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ5kRsfN8vnw1
-[2015-06-01 14:23:40 -0400] - UpdateStripeIdsOnMarket - Headwater Food Hub (15) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ5ucQBpjyG6T
-[2015-06-01 14:23:40 -0400] - UpdateStripeIdsOnMarket - Headwater Food Hub (15) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ5Ygu0nNXRXW
-[2015-06-01 14:23:40 -0400] - UpdateStripeIdsOnMarket - Headwater Food Hub (15) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ5i2zEgGznXv
-[2015-06-01 14:23:40 -0400] - UpdateStripeIdsOnMarket - Headwater Food Hub (15) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ52UxTSCKzd2
-[2015-06-01 14:23:40 -0400] - UpdateStripeIdsOnMarket - Headwater Food Hub (15) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ5c3EmRo29Pm
-[2015-06-01 14:23:40 -0400] - UpdateStripeIdsOnMarket - Headwater Food Hub (15) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ5orvzwSxNA0
-[2015-06-01 14:23:40 -0400] - UpdateStripeIdsOnMarket - Headwater Food Hub (15) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ5N2LoWgpha7
-[2015-06-01 14:23:40 -0400] - UpdateStripeIdsOnMarket - Headwater Food Hub (15) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ5ZhE6Ab9nid
-[2015-06-01 14:23:40 -0400] - UpdateStripeIdsOnMarket - Headwater Food Hub (15) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ5JRaiBgJYlp
-[2015-06-01 14:23:40 -0400] - UpdateStripeIdsOnMarket - Headwater Food Hub (15) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ5jGPLTx3EwY
-[2015-06-01 14:23:40 -0400] - UpdateStripeIdsOnMarket - Headwater Food Hub (15) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ5LibH3DtrAZ
-[2015-06-01 14:23:40 -0400] - UpdateStripeIdsOnMarket - Headwater Food Hub (15) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ5Xf9n8WXNOT
-[2015-06-01 14:23:40 -0400] - UpdateStripeIdsOnMarket - Headwater Food Hub (15) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ59GMSxA8mnx
-[2015-06-01 14:23:40 -0400] - UpdateStripeIdsOnMarket - Headwater Food Hub (15) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ5uqQUM8AyXV
-[2015-06-01 14:23:40 -0400] - UpdateStripeIdsOnMarket - Headwater Food Hub (15) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4nhT9BhCRaf
-[2015-06-01 14:23:40 -0400] - UpdateStripeIdsOnMarket - Headwater Food Hub (15) - Connecting market BankAccounts - CANANDAIGUA NAT'L BANK & TR. CO. 9347 (215) already has stripe_id: ba_15ic8p2VpjOYk6TmSGstE7IZ
-[2015-06-01 14:23:41 -0400] - UpdateStripeIdsOnMarket - Headwater Food Hub (15) - Connecting org BankAccounts - Organization Headwater Food Hub (337) - CANANDAIGUA NAT'L BANK & TR. CO. 9347 (51) already has stripe_id: ba_15ic8p2VpjOYk6TmSGstE7IZ
+[2015-06-08 12:26:18 -0400] - UpdateStripeIdsOnMarket - Headwater Food Hub (15) - ====================================================================================================
+[2015-06-08 12:26:18 -0400] - UpdateStripeIdsOnMarket - Headwater Food Hub (15) -  Headwater Food Hub (15)
+[2015-06-08 12:26:18 -0400] - UpdateStripeIdsOnMarket - Headwater Food Hub (15) -  Updating stripe IDs for market, orgs and bank accounts.
+[2015-06-08 12:26:18 -0400] - UpdateStripeIdsOnMarket - Headwater Food Hub (15) - 
+[2015-06-08 12:26:18 -0400] - UpdateStripeIdsOnMarket - Headwater Food Hub (15) -  Balanced export file: /home/vagrant/git/localorbit/tools/stripe-migration/from_balanced/2015-06-08-1433769720-MP2eXZmrOPof80u3Irf94Wre.csv
+[2015-06-08 12:26:18 -0400] - UpdateStripeIdsOnMarket - Headwater Food Hub (15) - 
+[2015-06-08 12:26:18 -0400] - UpdateStripeIdsOnMarket - Headwater Food Hub (15) -  Rails.env: production
+[2015-06-08 12:26:18 -0400] - UpdateStripeIdsOnMarket - Headwater Food Hub (15) -  Stripe keys:
+[2015-06-08 12:26:18 -0400] - UpdateStripeIdsOnMarket - Headwater Food Hub (15) -   --> STRIPE_PUBLISHABLE_KEY: pk_live_j85VTsrz51POrss3ni460qaf (pk_live_j85VTsrz51POrss3ni460qaf)
+[2015-06-08 12:26:18 -0400] - UpdateStripeIdsOnMarket - Headwater Food Hub (15) - ====================================================================================================
+[2015-06-08 12:26:18 -0400] - UpdateStripeIdsOnMarket - Headwater Food Hub (15) - Connecting market customer - Market already has stripe_customer_id: cus_5uQ4nhT9BhCRaf
+[2015-06-08 12:26:18 -0400] - UpdateStripeIdsOnMarket - Headwater Food Hub (15) - Connecting market account - Market already has stripe_account_id: acct_15l1yWEkVERGDXQ6
+[2015-06-08 12:26:19 -0400] - UpdateStripeIdsOnMarket - Headwater Food Hub (15) - Connecting org customers - Updated Organization Pedersen Farms (4072) stripe_customer_id: cus_6LhWdxu8JHLHCa
+[2015-06-08 12:26:19 -0400] - UpdateStripeIdsOnMarket - Headwater Food Hub (15) - Connecting org customers - Organization already has stripe_customer_id: cus_6Jl9VhSmPFhl5K
+[2015-06-08 12:26:19 -0400] - UpdateStripeIdsOnMarket - Headwater Food Hub (15) - Connecting org customers - Organization already has stripe_customer_id: cus_6JkzElk6r9QQrk
+[2015-06-08 12:26:19 -0400] - UpdateStripeIdsOnMarket - Headwater Food Hub (15) - Connecting org customers - Organization already has stripe_customer_id: cus_6K2aekv57Za7tX
+[2015-06-08 12:26:19 -0400] - UpdateStripeIdsOnMarket - Headwater Food Hub (15) - Connecting org customers - Organization already has stripe_customer_id: cus_6ESk7YGGVeCtCJ
+[2015-06-08 12:26:19 -0400] - UpdateStripeIdsOnMarket - Headwater Food Hub (15) - Connecting org customers - Organization already has stripe_customer_id: cus_6GRBff033wR58q
+[2015-06-08 12:26:19 -0400] - UpdateStripeIdsOnMarket - Headwater Food Hub (15) - Connecting org customers - Organization already has stripe_customer_id: cus_6DjhdNlGfFhmTv
+[2015-06-08 12:26:19 -0400] - UpdateStripeIdsOnMarket - Headwater Food Hub (15) - Connecting org customers - Organization already has stripe_customer_id: cus_6BC38VMeQ4wN4m
+[2015-06-08 12:26:19 -0400] - UpdateStripeIdsOnMarket - Headwater Food Hub (15) - Connecting org customers - Organization already has stripe_customer_id: cus_6K6OdbIpBXz6KE
+[2015-06-08 12:26:19 -0400] - UpdateStripeIdsOnMarket - Headwater Food Hub (15) - Connecting org customers - Organization already has stripe_customer_id: cus_69G7EvKWCgDBcm
+[2015-06-08 12:26:19 -0400] - UpdateStripeIdsOnMarket - Headwater Food Hub (15) - Connecting org customers - Organization already has stripe_customer_id: cus_6B60D2yzqFdWJ2
+[2015-06-08 12:26:19 -0400] - UpdateStripeIdsOnMarket - Headwater Food Hub (15) - Connecting org customers - Organization already has stripe_customer_id: cus_63JSBmZwHWzfAy
+[2015-06-08 12:26:19 -0400] - UpdateStripeIdsOnMarket - Headwater Food Hub (15) - Connecting org customers - Organization already has stripe_customer_id: cus_63fzqyWTQReuy4
+[2015-06-08 12:26:19 -0400] - UpdateStripeIdsOnMarket - Headwater Food Hub (15) - Connecting org customers - Organization already has stripe_customer_id: cus_6GQfCWJlkItSUu
+[2015-06-08 12:26:19 -0400] - UpdateStripeIdsOnMarket - Headwater Food Hub (15) - Connecting org customers - Organization already has stripe_customer_id: cus_5wrTLAaJZDZKny
+[2015-06-08 12:26:19 -0400] - UpdateStripeIdsOnMarket - Headwater Food Hub (15) - Connecting org customers - Organization already has stripe_customer_id: cus_5w7q0WMlJzi6S2
+[2015-06-08 12:26:19 -0400] - UpdateStripeIdsOnMarket - Headwater Food Hub (15) - Connecting org customers - Organization already has stripe_customer_id: cus_60aa1HwpQNm4Ol
+[2015-06-08 12:26:19 -0400] - UpdateStripeIdsOnMarket - Headwater Food Hub (15) - Connecting org customers - Organization already has stripe_customer_id: cus_60cANaNFfdOcIf
+[2015-06-08 12:26:19 -0400] - UpdateStripeIdsOnMarket - Headwater Food Hub (15) - Connecting org customers - Organization already has stripe_customer_id: cus_60fRwQuhsV1AsA
+[2015-06-08 12:26:19 -0400] - UpdateStripeIdsOnMarket - Headwater Food Hub (15) - Connecting org customers - Organization already has stripe_customer_id: cus_5zJVPuKH6atGht
+[2015-06-08 12:26:19 -0400] - UpdateStripeIdsOnMarket - Headwater Food Hub (15) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ5xw2zJZmU5l
+[2015-06-08 12:26:19 -0400] - UpdateStripeIdsOnMarket - Headwater Food Hub (15) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4lD1U6X9OYG
+[2015-06-08 12:26:19 -0400] - UpdateStripeIdsOnMarket - Headwater Food Hub (15) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4W4kzFccX80
+[2015-06-08 12:26:19 -0400] - UpdateStripeIdsOnMarket - Headwater Food Hub (15) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4Kpu8ymv0eU
+[2015-06-08 12:26:19 -0400] - UpdateStripeIdsOnMarket - Headwater Food Hub (15) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4moRIx88wrm
+[2015-06-08 12:26:19 -0400] - UpdateStripeIdsOnMarket - Headwater Food Hub (15) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4rmjwwKnH2Q
+[2015-06-08 12:26:19 -0400] - UpdateStripeIdsOnMarket - Headwater Food Hub (15) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ5GnkrTFqfWf
+[2015-06-08 12:26:19 -0400] - UpdateStripeIdsOnMarket - Headwater Food Hub (15) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4bkw5w8BDTI
+[2015-06-08 12:26:19 -0400] - UpdateStripeIdsOnMarket - Headwater Food Hub (15) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ5Niz6TgXRaT
+[2015-06-08 12:26:19 -0400] - UpdateStripeIdsOnMarket - Headwater Food Hub (15) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ5wEbeSRpTpH
+[2015-06-08 12:26:19 -0400] - UpdateStripeIdsOnMarket - Headwater Food Hub (15) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4ldL71GXXy9
+[2015-06-08 12:26:19 -0400] - UpdateStripeIdsOnMarket - Headwater Food Hub (15) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4b1OvamcEJY
+[2015-06-08 12:26:19 -0400] - UpdateStripeIdsOnMarket - Headwater Food Hub (15) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4gtcH1Ad5PY
+[2015-06-08 12:26:19 -0400] - UpdateStripeIdsOnMarket - Headwater Food Hub (15) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ42cGo8dBYe7
+[2015-06-08 12:26:19 -0400] - UpdateStripeIdsOnMarket - Headwater Food Hub (15) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4MVxhpatP7W
+[2015-06-08 12:26:19 -0400] - UpdateStripeIdsOnMarket - Headwater Food Hub (15) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ5L4y6G90Wc4
+[2015-06-08 12:26:19 -0400] - UpdateStripeIdsOnMarket - Headwater Food Hub (15) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4zAxS4Kbsc8
+[2015-06-08 12:26:19 -0400] - UpdateStripeIdsOnMarket - Headwater Food Hub (15) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4FjDTMpVH89
+[2015-06-08 12:26:19 -0400] - UpdateStripeIdsOnMarket - Headwater Food Hub (15) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4kqpAdYfeLE
+[2015-06-08 12:26:19 -0400] - UpdateStripeIdsOnMarket - Headwater Food Hub (15) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4sPunGjewc9
+[2015-06-08 12:26:19 -0400] - UpdateStripeIdsOnMarket - Headwater Food Hub (15) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4oJAQglIKfi
+[2015-06-08 12:26:19 -0400] - UpdateStripeIdsOnMarket - Headwater Food Hub (15) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4NPvyQqglpn
+[2015-06-08 12:26:19 -0400] - UpdateStripeIdsOnMarket - Headwater Food Hub (15) - Connecting org customers - Organization already has stripe_customer_id: cus_5xy1WBP7wKuVug
+[2015-06-08 12:26:19 -0400] - UpdateStripeIdsOnMarket - Headwater Food Hub (15) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ48lRfsfkeCN
+[2015-06-08 12:26:19 -0400] - UpdateStripeIdsOnMarket - Headwater Food Hub (15) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ5T29MdJxZGS
+[2015-06-08 12:26:19 -0400] - UpdateStripeIdsOnMarket - Headwater Food Hub (15) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4BJdJo0tAZw
+[2015-06-08 12:26:19 -0400] - UpdateStripeIdsOnMarket - Headwater Food Hub (15) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ5boFk7QiUH2
+[2015-06-08 12:26:19 -0400] - UpdateStripeIdsOnMarket - Headwater Food Hub (15) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4NJgT7fBftb
+[2015-06-08 12:26:19 -0400] - UpdateStripeIdsOnMarket - Headwater Food Hub (15) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ5DOPAzuBNh5
+[2015-06-08 12:26:19 -0400] - UpdateStripeIdsOnMarket - Headwater Food Hub (15) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4AX9L3CSs46
+[2015-06-08 12:26:19 -0400] - UpdateStripeIdsOnMarket - Headwater Food Hub (15) - Connecting org customers - Organization already has stripe_customer_id: cus_5uS7q938w56qSM
+[2015-06-08 12:26:19 -0400] - UpdateStripeIdsOnMarket - Headwater Food Hub (15) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4i6tF3T1OQU
+[2015-06-08 12:26:19 -0400] - UpdateStripeIdsOnMarket - Headwater Food Hub (15) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ6QzmprZJ0VP
+[2015-06-08 12:26:19 -0400] - UpdateStripeIdsOnMarket - Headwater Food Hub (15) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ5p3kUFfDuv2
+[2015-06-08 12:26:19 -0400] - UpdateStripeIdsOnMarket - Headwater Food Hub (15) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4DugsUdQ5Ev
+[2015-06-08 12:26:19 -0400] - UpdateStripeIdsOnMarket - Headwater Food Hub (15) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ5ficqbJmonk
+[2015-06-08 12:26:19 -0400] - UpdateStripeIdsOnMarket - Headwater Food Hub (15) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ43DvPxehBjg
+[2015-06-08 12:26:19 -0400] - UpdateStripeIdsOnMarket - Headwater Food Hub (15) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4ezFeiwQhyW
+[2015-06-08 12:26:19 -0400] - UpdateStripeIdsOnMarket - Headwater Food Hub (15) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4aya5ANKlmc
+[2015-06-08 12:26:19 -0400] - UpdateStripeIdsOnMarket - Headwater Food Hub (15) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4AI4zSjk7mR
+[2015-06-08 12:26:19 -0400] - UpdateStripeIdsOnMarket - Headwater Food Hub (15) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ42lQqFHglCK
+[2015-06-08 12:26:19 -0400] - UpdateStripeIdsOnMarket - Headwater Food Hub (15) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4YFFRsXqXN5
+[2015-06-08 12:26:19 -0400] - UpdateStripeIdsOnMarket - Headwater Food Hub (15) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ5KTy8anxbzF
+[2015-06-08 12:26:19 -0400] - UpdateStripeIdsOnMarket - Headwater Food Hub (15) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4a1Vo8vPZtI
+[2015-06-08 12:26:19 -0400] - UpdateStripeIdsOnMarket - Headwater Food Hub (15) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4xUVAhuC7fL
+[2015-06-08 12:26:19 -0400] - UpdateStripeIdsOnMarket - Headwater Food Hub (15) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ5RVKi6ex7dH
+[2015-06-08 12:26:19 -0400] - UpdateStripeIdsOnMarket - Headwater Food Hub (15) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ5xDwqRoFtjN
+[2015-06-08 12:26:19 -0400] - UpdateStripeIdsOnMarket - Headwater Food Hub (15) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ5GI7pjnSJEb
+[2015-06-08 12:26:19 -0400] - UpdateStripeIdsOnMarket - Headwater Food Hub (15) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ5HkfR2NL3Ee
+[2015-06-08 12:26:19 -0400] - UpdateStripeIdsOnMarket - Headwater Food Hub (15) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ5dXP4iAfoMr
+[2015-06-08 12:26:19 -0400] - UpdateStripeIdsOnMarket - Headwater Food Hub (15) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ5IRed9wMdaE
+[2015-06-08 12:26:19 -0400] - UpdateStripeIdsOnMarket - Headwater Food Hub (15) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ5kRsfN8vnw1
+[2015-06-08 12:26:19 -0400] - UpdateStripeIdsOnMarket - Headwater Food Hub (15) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ5ucQBpjyG6T
+[2015-06-08 12:26:19 -0400] - UpdateStripeIdsOnMarket - Headwater Food Hub (15) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ5Ygu0nNXRXW
+[2015-06-08 12:26:19 -0400] - UpdateStripeIdsOnMarket - Headwater Food Hub (15) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ5i2zEgGznXv
+[2015-06-08 12:26:19 -0400] - UpdateStripeIdsOnMarket - Headwater Food Hub (15) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ52UxTSCKzd2
+[2015-06-08 12:26:19 -0400] - UpdateStripeIdsOnMarket - Headwater Food Hub (15) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ5c3EmRo29Pm
+[2015-06-08 12:26:19 -0400] - UpdateStripeIdsOnMarket - Headwater Food Hub (15) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ5orvzwSxNA0
+[2015-06-08 12:26:19 -0400] - UpdateStripeIdsOnMarket - Headwater Food Hub (15) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ5N2LoWgpha7
+[2015-06-08 12:26:19 -0400] - UpdateStripeIdsOnMarket - Headwater Food Hub (15) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ5ZhE6Ab9nid
+[2015-06-08 12:26:19 -0400] - UpdateStripeIdsOnMarket - Headwater Food Hub (15) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ5JRaiBgJYlp
+[2015-06-08 12:26:19 -0400] - UpdateStripeIdsOnMarket - Headwater Food Hub (15) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ5jGPLTx3EwY
+[2015-06-08 12:26:19 -0400] - UpdateStripeIdsOnMarket - Headwater Food Hub (15) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ5LibH3DtrAZ
+[2015-06-08 12:26:19 -0400] - UpdateStripeIdsOnMarket - Headwater Food Hub (15) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ5Xf9n8WXNOT
+[2015-06-08 12:26:19 -0400] - UpdateStripeIdsOnMarket - Headwater Food Hub (15) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ59GMSxA8mnx
+[2015-06-08 12:26:19 -0400] - UpdateStripeIdsOnMarket - Headwater Food Hub (15) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ5uqQUM8AyXV
+[2015-06-08 12:26:19 -0400] - UpdateStripeIdsOnMarket - Headwater Food Hub (15) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4nhT9BhCRaf
+[2015-06-08 12:26:19 -0400] - UpdateStripeIdsOnMarket - Headwater Food Hub (15) - Connecting market BankAccounts - CANANDAIGUA NAT'L BANK & TR. CO. 9347 (215) already has stripe_id: ba_15ic8p2VpjOYk6TmSGstE7IZ
+[2015-06-08 12:26:20 -0400] - UpdateStripeIdsOnMarket - Headwater Food Hub (15) - Connecting org BankAccounts - Organization Headwater Food Hub (337) - CANANDAIGUA NAT'L BANK & TR. CO. 9347 (51) already has stripe_id: ba_15ic8p2VpjOYk6TmSGstE7IZ

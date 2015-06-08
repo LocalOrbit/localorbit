@@ -1,22 +1,22 @@
-[2015-06-01 14:23:45 -0400] - UpdateStripeIdsOnMarket - Virtual Monroe Farmers Market (64) - ====================================================================================================
-[2015-06-01 14:23:45 -0400] - UpdateStripeIdsOnMarket - Virtual Monroe Farmers Market (64) -  Virtual Monroe Farmers Market (64)
-[2015-06-01 14:23:45 -0400] - UpdateStripeIdsOnMarket - Virtual Monroe Farmers Market (64) -  Updating stripe IDs for market, orgs and bank accounts.
-[2015-06-01 14:23:45 -0400] - UpdateStripeIdsOnMarket - Virtual Monroe Farmers Market (64) - 
-[2015-06-01 14:23:45 -0400] - UpdateStripeIdsOnMarket - Virtual Monroe Farmers Market (64) -  Balanced export file: /home/vagrant/git/localorbit/tools/stripe-migration/from_balanced/2015-06-01-1433181180-MP2eXZmrOPof80u3Irf94Wre.csv
-[2015-06-01 14:23:45 -0400] - UpdateStripeIdsOnMarket - Virtual Monroe Farmers Market (64) - 
-[2015-06-01 14:23:45 -0400] - UpdateStripeIdsOnMarket - Virtual Monroe Farmers Market (64) -  Rails.env: production
-[2015-06-01 14:23:45 -0400] - UpdateStripeIdsOnMarket - Virtual Monroe Farmers Market (64) -  Stripe keys:
-[2015-06-01 14:23:45 -0400] - UpdateStripeIdsOnMarket - Virtual Monroe Farmers Market (64) -   --> STRIPE_PUBLISHABLE_KEY: pk_live_j85VTsrz51POrss3ni460qaf (pk_live_j85VTsrz51POrss3ni460qaf)
-[2015-06-01 14:23:45 -0400] - UpdateStripeIdsOnMarket - Virtual Monroe Farmers Market (64) - ====================================================================================================
-[2015-06-01 14:23:46 -0400] - UpdateStripeIdsOnMarket - Virtual Monroe Farmers Market (64) - Connecting market customer - Updated Market stripe_customer_id: cus_5uQ4cibMVG5h65
-[2015-06-01 14:23:46 -0400] - UpdateStripeIdsOnMarket - Virtual Monroe Farmers Market (64) - Connecting market account - Updated Market stripe_account_id: acct_15l1yRAhS5gXOhb4
-[2015-06-01 14:23:46 -0400] - UpdateStripeIdsOnMarket - Virtual Monroe Farmers Market (64) - Connecting org customers - Updated Organization Marisa Hudson (3983) stripe_customer_id: cus_6Ji9Fcn9N1XB8j
-[2015-06-01 14:23:47 -0400] - UpdateStripeIdsOnMarket - Virtual Monroe Farmers Market (64) - Connecting org customers - Updated Organization Daily Bread Bakeshop (3190) stripe_customer_id: cus_5uQ5hO6vK5NRSy
-[2015-06-01 14:23:47 -0400] - UpdateStripeIdsOnMarket - Virtual Monroe Farmers Market (64) - Connecting org customers - MISS - No stripe_customer_id found for Organization Special Lady's Gourmet Spreads (3020) balanced_customer_uri /v1/customers/CU2lgOugkOk7amhornT3Rwph
-[2015-06-01 14:23:47 -0400] - UpdateStripeIdsOnMarket - Virtual Monroe Farmers Market (64) - Connecting org customers - Updated Organization Test Buyer (2783) stripe_customer_id: cus_5uQ4ZREG7V1NFC
-[2015-06-01 14:23:47 -0400] - UpdateStripeIdsOnMarket - Virtual Monroe Farmers Market (64) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ5Ev2VnR3paJ
-[2015-06-01 14:23:47 -0400] - UpdateStripeIdsOnMarket - Virtual Monroe Farmers Market (64) - Connecting market BankAccounts - Updated FIRST NORTHERN BANK AND TRUST CO 1778 (386) stripe_id: ba_15ic9d2VpjOYk6TmrIde7zlm
-[2015-06-01 14:23:47 -0400] - UpdateStripeIdsOnMarket - Virtual Monroe Farmers Market (64) - Connecting org BankAccounts - Organization Marisa Hudson (3983) - Updated Visa 7754 (571) stripe_id: card_1674jH2VpjOYk6TmTdytPT9T
-[2015-06-01 14:23:47 -0400] - UpdateStripeIdsOnMarket - Virtual Monroe Farmers Market (64) - Connecting org BankAccounts - Organization Daily Bread Bakeshop (3190) - Updated PNCBANK, N.A. 1078 (458) stripe_id: ba_15icAD2VpjOYk6TmNvwkdb45
-[2015-06-01 14:23:47 -0400] - UpdateStripeIdsOnMarket - Virtual Monroe Farmers Market (64) - Connecting org BankAccounts - Organization Special Lady's Gourmet Spreads (3020) - Updated WELLS FARGO BANK 1461 (546) stripe_id: btok_6ExAjLX6IIM0Xz
-[2015-06-01 14:23:47 -0400] - UpdateStripeIdsOnMarket - Virtual Monroe Farmers Market (64) - Connecting org BankAccounts - Organization Apple Ridge Farm (1054) - MasterCard 9114 (340) already has stripe_id: card_15ic9V2VpjOYk6TmIfqknQI8
+[2015-06-08 12:26:25 -0400] - UpdateStripeIdsOnMarket - Virtual Monroe Farmers Market (64) - ====================================================================================================
+[2015-06-08 12:26:25 -0400] - UpdateStripeIdsOnMarket - Virtual Monroe Farmers Market (64) -  Virtual Monroe Farmers Market (64)
+[2015-06-08 12:26:25 -0400] - UpdateStripeIdsOnMarket - Virtual Monroe Farmers Market (64) -  Updating stripe IDs for market, orgs and bank accounts.
+[2015-06-08 12:26:25 -0400] - UpdateStripeIdsOnMarket - Virtual Monroe Farmers Market (64) - 
+[2015-06-08 12:26:25 -0400] - UpdateStripeIdsOnMarket - Virtual Monroe Farmers Market (64) -  Balanced export file: /home/vagrant/git/localorbit/tools/stripe-migration/from_balanced/2015-06-08-1433769720-MP2eXZmrOPof80u3Irf94Wre.csv
+[2015-06-08 12:26:25 -0400] - UpdateStripeIdsOnMarket - Virtual Monroe Farmers Market (64) - 
+[2015-06-08 12:26:25 -0400] - UpdateStripeIdsOnMarket - Virtual Monroe Farmers Market (64) -  Rails.env: production
+[2015-06-08 12:26:25 -0400] - UpdateStripeIdsOnMarket - Virtual Monroe Farmers Market (64) -  Stripe keys:
+[2015-06-08 12:26:25 -0400] - UpdateStripeIdsOnMarket - Virtual Monroe Farmers Market (64) -   --> STRIPE_PUBLISHABLE_KEY: pk_live_j85VTsrz51POrss3ni460qaf (pk_live_j85VTsrz51POrss3ni460qaf)
+[2015-06-08 12:26:25 -0400] - UpdateStripeIdsOnMarket - Virtual Monroe Farmers Market (64) - ====================================================================================================
+[2015-06-08 12:26:25 -0400] - UpdateStripeIdsOnMarket - Virtual Monroe Farmers Market (64) - Connecting market customer - Market already has stripe_customer_id: cus_5uQ4cibMVG5h65
+[2015-06-08 12:26:25 -0400] - UpdateStripeIdsOnMarket - Virtual Monroe Farmers Market (64) - Connecting market account - Market already has stripe_account_id: acct_15l1yRAhS5gXOhb4
+[2015-06-08 12:26:25 -0400] - UpdateStripeIdsOnMarket - Virtual Monroe Farmers Market (64) - Connecting org customers - Organization already has stripe_customer_id: cus_6Ji9Fcn9N1XB8j
+[2015-06-08 12:26:25 -0400] - UpdateStripeIdsOnMarket - Virtual Monroe Farmers Market (64) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ5hO6vK5NRSy
+[2015-06-08 12:26:25 -0400] - UpdateStripeIdsOnMarket - Virtual Monroe Farmers Market (64) - Connecting org customers - MISS - No stripe_customer_id found for Organization Special Lady's Gourmet Spreads (3020) balanced_customer_uri /v1/customers/CU2lgOugkOk7amhornT3Rwph
+[2015-06-08 12:26:25 -0400] - UpdateStripeIdsOnMarket - Virtual Monroe Farmers Market (64) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4ZREG7V1NFC
+[2015-06-08 12:26:25 -0400] - UpdateStripeIdsOnMarket - Virtual Monroe Farmers Market (64) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ5Ev2VnR3paJ
+[2015-06-08 12:26:25 -0400] - UpdateStripeIdsOnMarket - Virtual Monroe Farmers Market (64) - Connecting market BankAccounts - FIRST NORTHERN BANK AND TRUST CO 1778 (386) already has stripe_id: ba_15ic9d2VpjOYk6TmrIde7zlm
+[2015-06-08 12:26:25 -0400] - UpdateStripeIdsOnMarket - Virtual Monroe Farmers Market (64) - Connecting org BankAccounts - Organization Marisa Hudson (3983) - Visa 7754 (571) already has stripe_id: card_1674jH2VpjOYk6TmTdytPT9T
+[2015-06-08 12:26:25 -0400] - UpdateStripeIdsOnMarket - Virtual Monroe Farmers Market (64) - Connecting org BankAccounts - Organization Daily Bread Bakeshop (3190) - PNCBANK, N.A. 1078 (458) already has stripe_id: ba_15icAD2VpjOYk6TmNvwkdb45
+[2015-06-08 12:26:25 -0400] - UpdateStripeIdsOnMarket - Virtual Monroe Farmers Market (64) - Connecting org BankAccounts - Organization Special Lady's Gourmet Spreads (3020) - WELLS FARGO BANK 1461 (546) already has stripe_id: btok_6ExAjLX6IIM0Xz
+[2015-06-08 12:26:25 -0400] - UpdateStripeIdsOnMarket - Virtual Monroe Farmers Market (64) - Connecting org BankAccounts - Organization Apple Ridge Farm (1054) - MasterCard 9114 (340) already has stripe_id: card_15ic9V2VpjOYk6TmIfqknQI8

@@ -1,45 +1,47 @@
-[2015-06-01 14:23:33 -0400] - UpdateStripeIdsOnMarket - Happy Valley Fresh (32) - ====================================================================================================
-[2015-06-01 14:23:33 -0400] - UpdateStripeIdsOnMarket - Happy Valley Fresh (32) -  Happy Valley Fresh (32)
-[2015-06-01 14:23:33 -0400] - UpdateStripeIdsOnMarket - Happy Valley Fresh (32) -  Updating stripe IDs for market, orgs and bank accounts.
-[2015-06-01 14:23:33 -0400] - UpdateStripeIdsOnMarket - Happy Valley Fresh (32) - 
-[2015-06-01 14:23:33 -0400] - UpdateStripeIdsOnMarket - Happy Valley Fresh (32) -  Balanced export file: /home/vagrant/git/localorbit/tools/stripe-migration/from_balanced/2015-06-01-1433181180-MP2eXZmrOPof80u3Irf94Wre.csv
-[2015-06-01 14:23:33 -0400] - UpdateStripeIdsOnMarket - Happy Valley Fresh (32) - 
-[2015-06-01 14:23:33 -0400] - UpdateStripeIdsOnMarket - Happy Valley Fresh (32) -  Rails.env: production
-[2015-06-01 14:23:33 -0400] - UpdateStripeIdsOnMarket - Happy Valley Fresh (32) -  Stripe keys:
-[2015-06-01 14:23:33 -0400] - UpdateStripeIdsOnMarket - Happy Valley Fresh (32) -   --> STRIPE_PUBLISHABLE_KEY: pk_live_j85VTsrz51POrss3ni460qaf (pk_live_j85VTsrz51POrss3ni460qaf)
-[2015-06-01 14:23:33 -0400] - UpdateStripeIdsOnMarket - Happy Valley Fresh (32) - ====================================================================================================
-[2015-06-01 14:23:33 -0400] - UpdateStripeIdsOnMarket - Happy Valley Fresh (32) - Connecting market customer - MISS - No stripe_customer_id found for market balanced_customer_uri /v1/customers/CUYDNQduQq4RwEKybHl5zbJ
-[2015-06-01 14:23:33 -0400] - UpdateStripeIdsOnMarket - Happy Valley Fresh (32) - Connecting market account - MISS - No stripe_account_id found for market balanced_customer_uri /v1/customers/CUYDNQduQq4RwEKybHl5zbJ
-[2015-06-01 14:23:33 -0400] - UpdateStripeIdsOnMarket - Happy Valley Fresh (32) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ59pVTmmuaWL
-[2015-06-01 14:23:33 -0400] - UpdateStripeIdsOnMarket - Happy Valley Fresh (32) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4TGund13nuU
-[2015-06-01 14:23:33 -0400] - UpdateStripeIdsOnMarket - Happy Valley Fresh (32) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ484PcdSCBBr
-[2015-06-01 14:23:33 -0400] - UpdateStripeIdsOnMarket - Happy Valley Fresh (32) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4AwUiEp4Lol
-[2015-06-01 14:23:33 -0400] - UpdateStripeIdsOnMarket - Happy Valley Fresh (32) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4z3tGi6QBoR
-[2015-06-01 14:23:33 -0400] - UpdateStripeIdsOnMarket - Happy Valley Fresh (32) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ44kCXiHf1vy
-[2015-06-01 14:23:33 -0400] - UpdateStripeIdsOnMarket - Happy Valley Fresh (32) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4hE63VUpnK7
-[2015-06-01 14:23:33 -0400] - UpdateStripeIdsOnMarket - Happy Valley Fresh (32) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ463GC2f8ZiR
-[2015-06-01 14:23:33 -0400] - UpdateStripeIdsOnMarket - Happy Valley Fresh (32) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4VHgDv05nHw
-[2015-06-01 14:23:33 -0400] - UpdateStripeIdsOnMarket - Happy Valley Fresh (32) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4sE3NkG42jm
-[2015-06-01 14:23:33 -0400] - UpdateStripeIdsOnMarket - Happy Valley Fresh (32) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4UClnPr4TGD
-[2015-06-01 14:23:33 -0400] - UpdateStripeIdsOnMarket - Happy Valley Fresh (32) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ5GBj0nJO7Uv
-[2015-06-01 14:23:33 -0400] - UpdateStripeIdsOnMarket - Happy Valley Fresh (32) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4jhYb91FFM5
-[2015-06-01 14:23:33 -0400] - UpdateStripeIdsOnMarket - Happy Valley Fresh (32) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4i2iuAXofyW
-[2015-06-01 14:23:33 -0400] - UpdateStripeIdsOnMarket - Happy Valley Fresh (32) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4G0UeBlF6Vy
-[2015-06-01 14:23:33 -0400] - UpdateStripeIdsOnMarket - Happy Valley Fresh (32) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4Ur5vQ6W4rH
-[2015-06-01 14:23:33 -0400] - UpdateStripeIdsOnMarket - Happy Valley Fresh (32) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ55qWlV0kSRm
-[2015-06-01 14:23:33 -0400] - UpdateStripeIdsOnMarket - Happy Valley Fresh (32) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ47pJuvUgTj2
-[2015-06-01 14:23:33 -0400] - UpdateStripeIdsOnMarket - Happy Valley Fresh (32) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4Vfz8dPEiDm
-[2015-06-01 14:23:33 -0400] - UpdateStripeIdsOnMarket - Happy Valley Fresh (32) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4XxV44PauLp
-[2015-06-01 14:23:33 -0400] - UpdateStripeIdsOnMarket - Happy Valley Fresh (32) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ5mVSCaweyC6
-[2015-06-01 14:23:33 -0400] - UpdateStripeIdsOnMarket - Happy Valley Fresh (32) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4L3wZzXQDPK
-[2015-06-01 14:23:33 -0400] - UpdateStripeIdsOnMarket - Happy Valley Fresh (32) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4Yz9FTAURSp
-[2015-06-01 14:23:33 -0400] - UpdateStripeIdsOnMarket - Happy Valley Fresh (32) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4MoQ9Jnt50N
-[2015-06-01 14:23:33 -0400] - UpdateStripeIdsOnMarket - Happy Valley Fresh (32) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4NmhHu1Im6T
-[2015-06-01 14:23:33 -0400] - UpdateStripeIdsOnMarket - Happy Valley Fresh (32) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ445gkvE22BY
-[2015-06-01 14:23:33 -0400] - UpdateStripeIdsOnMarket - Happy Valley Fresh (32) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4ZNyndsZFQS
-[2015-06-01 14:23:33 -0400] - UpdateStripeIdsOnMarket - Happy Valley Fresh (32) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4bl1cSNpQZN
-[2015-06-01 14:23:33 -0400] - UpdateStripeIdsOnMarket - Happy Valley Fresh (32) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4W3z9WsJeWR
-[2015-06-01 14:23:33 -0400] - UpdateStripeIdsOnMarket - Happy Valley Fresh (32) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4LbyK1w3JZ9
-[2015-06-01 14:23:33 -0400] - UpdateStripeIdsOnMarket - Happy Valley Fresh (32) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ5bKUSNHsMKI
-[2015-06-01 14:23:33 -0400] - UpdateStripeIdsOnMarket - Happy Valley Fresh (32) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ56B29CD0ur8
-[2015-06-01 14:23:33 -0400] - UpdateStripeIdsOnMarket - Happy Valley Fresh (32) - Connecting market BankAccounts - MISS - No stripe_id found for REDDING BANK OF COMMERCE 8596 (122) balanced_customer_uri /v1/marketplaces/MP2eXZmrOPof80u3Irf94Wre/bank_accounts/BAxTKXySz0o45P9IDmIvvnI
+[2015-06-08 12:26:15 -0400] - UpdateStripeIdsOnMarket - Happy Valley Fresh (32) - ====================================================================================================
+[2015-06-08 12:26:15 -0400] - UpdateStripeIdsOnMarket - Happy Valley Fresh (32) -  Happy Valley Fresh (32)
+[2015-06-08 12:26:15 -0400] - UpdateStripeIdsOnMarket - Happy Valley Fresh (32) -  Updating stripe IDs for market, orgs and bank accounts.
+[2015-06-08 12:26:15 -0400] - UpdateStripeIdsOnMarket - Happy Valley Fresh (32) - 
+[2015-06-08 12:26:15 -0400] - UpdateStripeIdsOnMarket - Happy Valley Fresh (32) -  Balanced export file: /home/vagrant/git/localorbit/tools/stripe-migration/from_balanced/2015-06-08-1433769720-MP2eXZmrOPof80u3Irf94Wre.csv
+[2015-06-08 12:26:15 -0400] - UpdateStripeIdsOnMarket - Happy Valley Fresh (32) - 
+[2015-06-08 12:26:15 -0400] - UpdateStripeIdsOnMarket - Happy Valley Fresh (32) -  Rails.env: production
+[2015-06-08 12:26:15 -0400] - UpdateStripeIdsOnMarket - Happy Valley Fresh (32) -  Stripe keys:
+[2015-06-08 12:26:15 -0400] - UpdateStripeIdsOnMarket - Happy Valley Fresh (32) -   --> STRIPE_PUBLISHABLE_KEY: pk_live_j85VTsrz51POrss3ni460qaf (pk_live_j85VTsrz51POrss3ni460qaf)
+[2015-06-08 12:26:15 -0400] - UpdateStripeIdsOnMarket - Happy Valley Fresh (32) - ====================================================================================================
+[2015-06-08 12:26:15 -0400] - UpdateStripeIdsOnMarket - Happy Valley Fresh (32) - Connecting market customer - MISS - No stripe_customer_id found for market balanced_customer_uri /v1/customers/CUYDNQduQq4RwEKybHl5zbJ
+[2015-06-08 12:26:15 -0400] - UpdateStripeIdsOnMarket - Happy Valley Fresh (32) - Connecting market account - MISS - No stripe_account_id found for market balanced_customer_uri /v1/customers/CUYDNQduQq4RwEKybHl5zbJ
+[2015-06-08 12:26:15 -0400] - UpdateStripeIdsOnMarket - Happy Valley Fresh (32) - Connecting org customers - MISS - No stripe_customer_id found for Organization Saeturn Farms (3787) balanced_customer_uri /v1/customers/CUkEl9x1hVn3o96jFi72Da2
+[2015-06-08 12:26:15 -0400] - UpdateStripeIdsOnMarket - Happy Valley Fresh (32) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ59pVTmmuaWL
+[2015-06-08 12:26:15 -0400] - UpdateStripeIdsOnMarket - Happy Valley Fresh (32) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4TGund13nuU
+[2015-06-08 12:26:15 -0400] - UpdateStripeIdsOnMarket - Happy Valley Fresh (32) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ484PcdSCBBr
+[2015-06-08 12:26:15 -0400] - UpdateStripeIdsOnMarket - Happy Valley Fresh (32) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4AwUiEp4Lol
+[2015-06-08 12:26:15 -0400] - UpdateStripeIdsOnMarket - Happy Valley Fresh (32) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4z3tGi6QBoR
+[2015-06-08 12:26:15 -0400] - UpdateStripeIdsOnMarket - Happy Valley Fresh (32) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ44kCXiHf1vy
+[2015-06-08 12:26:15 -0400] - UpdateStripeIdsOnMarket - Happy Valley Fresh (32) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4hE63VUpnK7
+[2015-06-08 12:26:15 -0400] - UpdateStripeIdsOnMarket - Happy Valley Fresh (32) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ463GC2f8ZiR
+[2015-06-08 12:26:15 -0400] - UpdateStripeIdsOnMarket - Happy Valley Fresh (32) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4belaYUTKRd
+[2015-06-08 12:26:15 -0400] - UpdateStripeIdsOnMarket - Happy Valley Fresh (32) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4VHgDv05nHw
+[2015-06-08 12:26:15 -0400] - UpdateStripeIdsOnMarket - Happy Valley Fresh (32) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4sE3NkG42jm
+[2015-06-08 12:26:15 -0400] - UpdateStripeIdsOnMarket - Happy Valley Fresh (32) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4UClnPr4TGD
+[2015-06-08 12:26:15 -0400] - UpdateStripeIdsOnMarket - Happy Valley Fresh (32) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ5GBj0nJO7Uv
+[2015-06-08 12:26:15 -0400] - UpdateStripeIdsOnMarket - Happy Valley Fresh (32) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4jhYb91FFM5
+[2015-06-08 12:26:15 -0400] - UpdateStripeIdsOnMarket - Happy Valley Fresh (32) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4i2iuAXofyW
+[2015-06-08 12:26:15 -0400] - UpdateStripeIdsOnMarket - Happy Valley Fresh (32) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4G0UeBlF6Vy
+[2015-06-08 12:26:15 -0400] - UpdateStripeIdsOnMarket - Happy Valley Fresh (32) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4Ur5vQ6W4rH
+[2015-06-08 12:26:15 -0400] - UpdateStripeIdsOnMarket - Happy Valley Fresh (32) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ55qWlV0kSRm
+[2015-06-08 12:26:15 -0400] - UpdateStripeIdsOnMarket - Happy Valley Fresh (32) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ47pJuvUgTj2
+[2015-06-08 12:26:15 -0400] - UpdateStripeIdsOnMarket - Happy Valley Fresh (32) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4Vfz8dPEiDm
+[2015-06-08 12:26:15 -0400] - UpdateStripeIdsOnMarket - Happy Valley Fresh (32) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4XxV44PauLp
+[2015-06-08 12:26:15 -0400] - UpdateStripeIdsOnMarket - Happy Valley Fresh (32) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ5mVSCaweyC6
+[2015-06-08 12:26:15 -0400] - UpdateStripeIdsOnMarket - Happy Valley Fresh (32) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4L3wZzXQDPK
+[2015-06-08 12:26:15 -0400] - UpdateStripeIdsOnMarket - Happy Valley Fresh (32) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4Yz9FTAURSp
+[2015-06-08 12:26:15 -0400] - UpdateStripeIdsOnMarket - Happy Valley Fresh (32) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4MoQ9Jnt50N
+[2015-06-08 12:26:15 -0400] - UpdateStripeIdsOnMarket - Happy Valley Fresh (32) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4NmhHu1Im6T
+[2015-06-08 12:26:15 -0400] - UpdateStripeIdsOnMarket - Happy Valley Fresh (32) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ445gkvE22BY
+[2015-06-08 12:26:15 -0400] - UpdateStripeIdsOnMarket - Happy Valley Fresh (32) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4ZNyndsZFQS
+[2015-06-08 12:26:15 -0400] - UpdateStripeIdsOnMarket - Happy Valley Fresh (32) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4bl1cSNpQZN
+[2015-06-08 12:26:15 -0400] - UpdateStripeIdsOnMarket - Happy Valley Fresh (32) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4W3z9WsJeWR
+[2015-06-08 12:26:15 -0400] - UpdateStripeIdsOnMarket - Happy Valley Fresh (32) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4LbyK1w3JZ9
+[2015-06-08 12:26:15 -0400] - UpdateStripeIdsOnMarket - Happy Valley Fresh (32) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ5bKUSNHsMKI
+[2015-06-08 12:26:15 -0400] - UpdateStripeIdsOnMarket - Happy Valley Fresh (32) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ56B29CD0ur8
+[2015-06-08 12:26:15 -0400] - UpdateStripeIdsOnMarket - Happy Valley Fresh (32) - Connecting market BankAccounts - MISS - No stripe_id found for REDDING BANK OF COMMERCE 8596 (122) balanced_customer_uri /v1/marketplaces/MP2eXZmrOPof80u3Irf94Wre/bank_accounts/BAxTKXySz0o45P9IDmIvvnI

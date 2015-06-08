@@ -1,16 +1,16 @@
-[2015-06-01 14:22:50 -0400] - UpdateStripeIdsOnMarket - Eastern U.P. Marketplace (21) - ====================================================================================================
-[2015-06-01 14:22:50 -0400] - UpdateStripeIdsOnMarket - Eastern U.P. Marketplace (21) -  Eastern U.P. Marketplace (21)
-[2015-06-01 14:22:50 -0400] - UpdateStripeIdsOnMarket - Eastern U.P. Marketplace (21) -  Updating stripe IDs for market, orgs and bank accounts.
-[2015-06-01 14:22:50 -0400] - UpdateStripeIdsOnMarket - Eastern U.P. Marketplace (21) - 
-[2015-06-01 14:22:50 -0400] - UpdateStripeIdsOnMarket - Eastern U.P. Marketplace (21) -  Balanced export file: /home/vagrant/git/localorbit/tools/stripe-migration/from_balanced/2015-06-01-1433181180-MP2eXZmrOPof80u3Irf94Wre.csv
-[2015-06-01 14:22:50 -0400] - UpdateStripeIdsOnMarket - Eastern U.P. Marketplace (21) - 
-[2015-06-01 14:22:50 -0400] - UpdateStripeIdsOnMarket - Eastern U.P. Marketplace (21) -  Rails.env: production
-[2015-06-01 14:22:50 -0400] - UpdateStripeIdsOnMarket - Eastern U.P. Marketplace (21) -  Stripe keys:
-[2015-06-01 14:22:50 -0400] - UpdateStripeIdsOnMarket - Eastern U.P. Marketplace (21) -   --> STRIPE_PUBLISHABLE_KEY: pk_live_j85VTsrz51POrss3ni460qaf (pk_live_j85VTsrz51POrss3ni460qaf)
-[2015-06-01 14:22:50 -0400] - UpdateStripeIdsOnMarket - Eastern U.P. Marketplace (21) - ====================================================================================================
-[2015-06-01 14:22:50 -0400] - UpdateStripeIdsOnMarket - Eastern U.P. Marketplace (21) - !! Market has no balanced_customer_uri; not updating its stripe_customer_id or stripe_account_id
-[2015-06-01 14:22:50 -0400] - UpdateStripeIdsOnMarket - Eastern U.P. Marketplace (21) - Connecting org customers - MISS - No stripe_customer_id found for Organization Edible Creations (3793) balanced_customer_uri /v1/customers/CUG5WDTFAksOxvk4YCNMjqv
-[2015-06-01 14:22:50 -0400] - UpdateStripeIdsOnMarket - Eastern U.P. Marketplace (21) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4yRCqNqxEIq
-[2015-06-01 14:22:50 -0400] - UpdateStripeIdsOnMarket - Eastern U.P. Marketplace (21) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4YFv0Xi1CqB
-[2015-06-01 14:22:50 -0400] - UpdateStripeIdsOnMarket - Eastern U.P. Marketplace (21) - Connecting org BankAccounts - Organization Seeds & Spores Family Farm (1062) - MARQUETTE COMMUNITY FEDERAL CR UN 1621 (193) already has stripe_id: ba_15ic972VpjOYk6Tmd8wQUZwv
-[2015-06-01 14:22:50 -0400] - UpdateStripeIdsOnMarket - Eastern U.P. Marketplace (21) - Connecting org BankAccounts - Organization Wixtrom Natural Farms (1061) - FIRST NATIONAL BANK 5298 (272) already has stripe_id: ba_15ic932VpjOYk6Tmztm8OZ9r
+[2015-06-08 12:25:41 -0400] - UpdateStripeIdsOnMarket - Eastern U.P. Marketplace (21) - ====================================================================================================
+[2015-06-08 12:25:41 -0400] - UpdateStripeIdsOnMarket - Eastern U.P. Marketplace (21) -  Eastern U.P. Marketplace (21)
+[2015-06-08 12:25:41 -0400] - UpdateStripeIdsOnMarket - Eastern U.P. Marketplace (21) -  Updating stripe IDs for market, orgs and bank accounts.
+[2015-06-08 12:25:41 -0400] - UpdateStripeIdsOnMarket - Eastern U.P. Marketplace (21) - 
+[2015-06-08 12:25:41 -0400] - UpdateStripeIdsOnMarket - Eastern U.P. Marketplace (21) -  Balanced export file: /home/vagrant/git/localorbit/tools/stripe-migration/from_balanced/2015-06-08-1433769720-MP2eXZmrOPof80u3Irf94Wre.csv
+[2015-06-08 12:25:41 -0400] - UpdateStripeIdsOnMarket - Eastern U.P. Marketplace (21) - 
+[2015-06-08 12:25:41 -0400] - UpdateStripeIdsOnMarket - Eastern U.P. Marketplace (21) -  Rails.env: production
+[2015-06-08 12:25:41 -0400] - UpdateStripeIdsOnMarket - Eastern U.P. Marketplace (21) -  Stripe keys:
+[2015-06-08 12:25:41 -0400] - UpdateStripeIdsOnMarket - Eastern U.P. Marketplace (21) -   --> STRIPE_PUBLISHABLE_KEY: pk_live_j85VTsrz51POrss3ni460qaf (pk_live_j85VTsrz51POrss3ni460qaf)
+[2015-06-08 12:25:41 -0400] - UpdateStripeIdsOnMarket - Eastern U.P. Marketplace (21) - ====================================================================================================
+[2015-06-08 12:25:41 -0400] - UpdateStripeIdsOnMarket - Eastern U.P. Marketplace (21) - !! Market has no balanced_customer_uri; not updating its stripe_customer_id or stripe_account_id
+[2015-06-08 12:25:41 -0400] - UpdateStripeIdsOnMarket - Eastern U.P. Marketplace (21) - Connecting org customers - MISS - No stripe_customer_id found for Organization Edible Creations (3793) balanced_customer_uri /v1/customers/CUG5WDTFAksOxvk4YCNMjqv
+[2015-06-08 12:25:41 -0400] - UpdateStripeIdsOnMarket - Eastern U.P. Marketplace (21) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4yRCqNqxEIq
+[2015-06-08 12:25:41 -0400] - UpdateStripeIdsOnMarket - Eastern U.P. Marketplace (21) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4YFv0Xi1CqB
+[2015-06-08 12:25:41 -0400] - UpdateStripeIdsOnMarket - Eastern U.P. Marketplace (21) - Connecting org BankAccounts - Organization Seeds & Spores Family Farm (1062) - MARQUETTE COMMUNITY FEDERAL CR UN 1621 (193) already has stripe_id: ba_15ic972VpjOYk6Tmd8wQUZwv
+[2015-06-08 12:25:41 -0400] - UpdateStripeIdsOnMarket - Eastern U.P. Marketplace (21) - Connecting org BankAccounts - Organization Wixtrom Natural Farms (1061) - FIRST NATIONAL BANK 5298 (272) already has stripe_id: ba_15ic932VpjOYk6Tmztm8OZ9r

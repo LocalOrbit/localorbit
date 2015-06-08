@@ -1,29 +1,35 @@
-[2015-06-01 14:24:05 -0400] - UpdateStripeIdsOnMarket - Valley Roots Food Hub Wholesale (87) - ====================================================================================================
-[2015-06-01 14:24:05 -0400] - UpdateStripeIdsOnMarket - Valley Roots Food Hub Wholesale (87) -  Valley Roots Food Hub Wholesale (87)
-[2015-06-01 14:24:05 -0400] - UpdateStripeIdsOnMarket - Valley Roots Food Hub Wholesale (87) -  Updating stripe IDs for market, orgs and bank accounts.
-[2015-06-01 14:24:05 -0400] - UpdateStripeIdsOnMarket - Valley Roots Food Hub Wholesale (87) - 
-[2015-06-01 14:24:05 -0400] - UpdateStripeIdsOnMarket - Valley Roots Food Hub Wholesale (87) -  Balanced export file: /home/vagrant/git/localorbit/tools/stripe-migration/from_balanced/2015-06-01-1433181180-MP2eXZmrOPof80u3Irf94Wre.csv
-[2015-06-01 14:24:05 -0400] - UpdateStripeIdsOnMarket - Valley Roots Food Hub Wholesale (87) - 
-[2015-06-01 14:24:05 -0400] - UpdateStripeIdsOnMarket - Valley Roots Food Hub Wholesale (87) -  Rails.env: production
-[2015-06-01 14:24:05 -0400] - UpdateStripeIdsOnMarket - Valley Roots Food Hub Wholesale (87) -  Stripe keys:
-[2015-06-01 14:24:05 -0400] - UpdateStripeIdsOnMarket - Valley Roots Food Hub Wholesale (87) -   --> STRIPE_PUBLISHABLE_KEY: pk_live_j85VTsrz51POrss3ni460qaf (pk_live_j85VTsrz51POrss3ni460qaf)
-[2015-06-01 14:24:05 -0400] - UpdateStripeIdsOnMarket - Valley Roots Food Hub Wholesale (87) - ====================================================================================================
-[2015-06-01 14:24:05 -0400] - UpdateStripeIdsOnMarket - Valley Roots Food Hub Wholesale (87) - Connecting market customer - Updated Market stripe_customer_id: cus_61Qn2w8iaFF2hF
-[2015-06-01 14:24:05 -0400] - UpdateStripeIdsOnMarket - Valley Roots Food Hub Wholesale (87) - Connecting market account - MISS - No stripe_account_id found for market balanced_customer_uri /v1/customers/CU1WKOfpxAOPzgNyRSPVYgB1
-[2015-06-01 14:24:05 -0400] - UpdateStripeIdsOnMarket - Valley Roots Food Hub Wholesale (87) - Connecting org customers - Updated Organization Organic Food Worx (3922) stripe_customer_id: cus_6Hsf5TU9DE1jAO
-[2015-06-01 14:24:06 -0400] - UpdateStripeIdsOnMarket - Valley Roots Food Hub Wholesale (87) - Connecting org customers - Updated Organization OFIA (3921) stripe_customer_id: cus_6HsYIUu9VPywjC
-[2015-06-01 14:24:06 -0400] - UpdateStripeIdsOnMarket - Valley Roots Food Hub Wholesale (87) - Connecting org customers - Updated Organization Colorado Mills (3920) stripe_customer_id: cus_6HsTooU6cZAP5o
-[2015-06-01 14:24:06 -0400] - UpdateStripeIdsOnMarket - Valley Roots Food Hub Wholesale (87) - Connecting org customers - Updated Organization Mountian Mama Milling (3919) stripe_customer_id: cus_6HsJN7s5oZbnnf
-[2015-06-01 14:24:06 -0400] - UpdateStripeIdsOnMarket - Valley Roots Food Hub Wholesale (87) - Connecting org customers - Updated Organization Stagecoach Organics, LLC (3918) stripe_customer_id: cus_6HsEyQ5aNoJ562
-[2015-06-01 14:24:06 -0400] - UpdateStripeIdsOnMarket - Valley Roots Food Hub Wholesale (87) - Connecting org customers - Updated Organization Rocking W Cheese (3917) stripe_customer_id: cus_6Hs5XOTvN8PcX3
-[2015-06-01 14:24:06 -0400] - UpdateStripeIdsOnMarket - Valley Roots Food Hub Wholesale (87) - Connecting org customers - Updated Organization Chokurei Ranch (3916) stripe_customer_id: cus_6HrkKcWgNM2iom
-[2015-06-01 14:24:07 -0400] - UpdateStripeIdsOnMarket - Valley Roots Food Hub Wholesale (87) - Connecting org customers - Updated Organization Gosar Natural Foods (3717) stripe_customer_id: cus_6BaIVapqIQI9KI
-[2015-06-01 14:24:07 -0400] - UpdateStripeIdsOnMarket - Valley Roots Food Hub Wholesale (87) - Connecting org customers - Updated Organization High Country Hogs (3716) stripe_customer_id: cus_6BaCQBQTemLfAj
-[2015-06-01 14:24:07 -0400] - UpdateStripeIdsOnMarket - Valley Roots Food Hub Wholesale (87) - Connecting org customers - Updated Organization KW Farms (3715) stripe_customer_id: cus_6Ba69txqePP672
-[2015-06-01 14:24:07 -0400] - UpdateStripeIdsOnMarket - Valley Roots Food Hub Wholesale (87) - Connecting org customers - Updated Organization Colorado Mushroom Farm (3713) stripe_customer_id: cus_6BZuG94201XcF0
-[2015-06-01 14:24:08 -0400] - UpdateStripeIdsOnMarket - Valley Roots Food Hub Wholesale (87) - Connecting org customers - Updated Organization Absmeier High Altitude Garlic (3712) stripe_customer_id: cus_6BZlUwXOf77sYA
-[2015-06-01 14:24:08 -0400] - UpdateStripeIdsOnMarket - Valley Roots Food Hub Wholesale (87) - Connecting org customers - Updated Organization Southern Colorado Farms (3711) stripe_customer_id: cus_6BZf2FZwDfxWli
-[2015-06-01 14:24:08 -0400] - UpdateStripeIdsOnMarket - Valley Roots Food Hub Wholesale (87) - Connecting org customers - Updated Organization Ring a Ding Farms (3633) stripe_customer_id: cus_68EzBgTEiayUvZ
-[2015-06-01 14:24:08 -0400] - UpdateStripeIdsOnMarket - Valley Roots Food Hub Wholesale (87) - Connecting org customers - Updated Organization Simply Honey (3632) stripe_customer_id: cus_68EiZhRlUHAwf0
-[2015-06-01 14:24:09 -0400] - UpdateStripeIdsOnMarket - Valley Roots Food Hub Wholesale (87) - Connecting org customers - Updated Organization White Rock Specialties (3631) stripe_customer_id: cus_68EdqneZrepChz
-[2015-06-01 14:24:09 -0400] - UpdateStripeIdsOnMarket - Valley Roots Food Hub Wholesale (87) - Connecting market BankAccounts - Updated AVENTA CREDIT UNION 0098 (565) stripe_id: ba_165mVG2VpjOYk6TmpBYn2x0N
+[2015-06-08 12:26:32 -0400] - UpdateStripeIdsOnMarket - Valley Roots Food Hub Wholesale (87) - ====================================================================================================
+[2015-06-08 12:26:32 -0400] - UpdateStripeIdsOnMarket - Valley Roots Food Hub Wholesale (87) -  Valley Roots Food Hub Wholesale (87)
+[2015-06-08 12:26:32 -0400] - UpdateStripeIdsOnMarket - Valley Roots Food Hub Wholesale (87) -  Updating stripe IDs for market, orgs and bank accounts.
+[2015-06-08 12:26:32 -0400] - UpdateStripeIdsOnMarket - Valley Roots Food Hub Wholesale (87) - 
+[2015-06-08 12:26:32 -0400] - UpdateStripeIdsOnMarket - Valley Roots Food Hub Wholesale (87) -  Balanced export file: /home/vagrant/git/localorbit/tools/stripe-migration/from_balanced/2015-06-08-1433769720-MP2eXZmrOPof80u3Irf94Wre.csv
+[2015-06-08 12:26:32 -0400] - UpdateStripeIdsOnMarket - Valley Roots Food Hub Wholesale (87) - 
+[2015-06-08 12:26:32 -0400] - UpdateStripeIdsOnMarket - Valley Roots Food Hub Wholesale (87) -  Rails.env: production
+[2015-06-08 12:26:32 -0400] - UpdateStripeIdsOnMarket - Valley Roots Food Hub Wholesale (87) -  Stripe keys:
+[2015-06-08 12:26:32 -0400] - UpdateStripeIdsOnMarket - Valley Roots Food Hub Wholesale (87) -   --> STRIPE_PUBLISHABLE_KEY: pk_live_j85VTsrz51POrss3ni460qaf (pk_live_j85VTsrz51POrss3ni460qaf)
+[2015-06-08 12:26:32 -0400] - UpdateStripeIdsOnMarket - Valley Roots Food Hub Wholesale (87) - ====================================================================================================
+[2015-06-08 12:26:32 -0400] - UpdateStripeIdsOnMarket - Valley Roots Food Hub Wholesale (87) - Connecting market customer - Market already has stripe_customer_id: cus_61Qn2w8iaFF2hF
+[2015-06-08 12:26:32 -0400] - UpdateStripeIdsOnMarket - Valley Roots Food Hub Wholesale (87) - Connecting market account - INTERESTING - Market stripe_account_id is acct_16APfXBBaXVh4hjx, but export data doesn't have Stripe Account id for this market.
+[2015-06-08 12:26:32 -0400] - UpdateStripeIdsOnMarket - Valley Roots Food Hub Wholesale (87) - Connecting org customers - MISS - No stripe_customer_id found for Organization Allen Graber (4242) balanced_customer_uri /v1/customers/CU5u6gmsn9tJfNKXJ295QWLg
+[2015-06-08 12:26:32 -0400] - UpdateStripeIdsOnMarket - Valley Roots Food Hub Wholesale (87) - Connecting org customers - MISS - No stripe_customer_id found for Organization Eat Fresh Farms (4241) balanced_customer_uri /v1/customers/CU5yMIeLdpCpuNUnuEEzN1MX
+[2015-06-08 12:26:32 -0400] - UpdateStripeIdsOnMarket - Valley Roots Food Hub Wholesale (87) - Connecting org customers - MISS - No stripe_customer_id found for Organization Nath's Specialty Catering (4239) balanced_customer_uri /v1/customers/CU6QlrKvnQu9oM7zhnIU6t8j
+[2015-06-08 12:26:33 -0400] - UpdateStripeIdsOnMarket - Valley Roots Food Hub Wholesale (87) - Connecting org customers - Updated Organization Tamale Connection (4225) stripe_customer_id: cus_6Nt5sSJ5QLkliB
+[2015-06-08 12:26:33 -0400] - UpdateStripeIdsOnMarket - Valley Roots Food Hub Wholesale (87) - Connecting org customers - Updated Organization AB Yoder (4217) stripe_customer_id: cus_6NdTj7KWgzmNoG
+[2015-06-08 12:26:33 -0400] - UpdateStripeIdsOnMarket - Valley Roots Food Hub Wholesale (87) - Connecting org customers - Updated Organization Salazar Natural Meats (4213) stripe_customer_id: cus_6NWYxoJn5bVbIj
+[2015-06-08 12:26:33 -0400] - UpdateStripeIdsOnMarket - Valley Roots Food Hub Wholesale (87) - Connecting org customers - Updated Organization Epic Valley Salsa (4199) stripe_customer_id: cus_6N9IXsXkURWMdf
+[2015-06-08 12:26:33 -0400] - UpdateStripeIdsOnMarket - Valley Roots Food Hub Wholesale (87) - Connecting org customers - Organization already has stripe_customer_id: cus_6Hsf5TU9DE1jAO
+[2015-06-08 12:26:33 -0400] - UpdateStripeIdsOnMarket - Valley Roots Food Hub Wholesale (87) - Connecting org customers - Organization already has stripe_customer_id: cus_6HsYIUu9VPywjC
+[2015-06-08 12:26:33 -0400] - UpdateStripeIdsOnMarket - Valley Roots Food Hub Wholesale (87) - Connecting org customers - Organization already has stripe_customer_id: cus_6HsTooU6cZAP5o
+[2015-06-08 12:26:33 -0400] - UpdateStripeIdsOnMarket - Valley Roots Food Hub Wholesale (87) - Connecting org customers - Organization already has stripe_customer_id: cus_6HsJN7s5oZbnnf
+[2015-06-08 12:26:33 -0400] - UpdateStripeIdsOnMarket - Valley Roots Food Hub Wholesale (87) - Connecting org customers - Organization already has stripe_customer_id: cus_6HsEyQ5aNoJ562
+[2015-06-08 12:26:33 -0400] - UpdateStripeIdsOnMarket - Valley Roots Food Hub Wholesale (87) - Connecting org customers - Organization already has stripe_customer_id: cus_6Hs5XOTvN8PcX3
+[2015-06-08 12:26:33 -0400] - UpdateStripeIdsOnMarket - Valley Roots Food Hub Wholesale (87) - Connecting org customers - Organization already has stripe_customer_id: cus_6HrkKcWgNM2iom
+[2015-06-08 12:26:33 -0400] - UpdateStripeIdsOnMarket - Valley Roots Food Hub Wholesale (87) - Connecting org customers - Organization already has stripe_customer_id: cus_6BaIVapqIQI9KI
+[2015-06-08 12:26:33 -0400] - UpdateStripeIdsOnMarket - Valley Roots Food Hub Wholesale (87) - Connecting org customers - Organization already has stripe_customer_id: cus_6BaCQBQTemLfAj
+[2015-06-08 12:26:33 -0400] - UpdateStripeIdsOnMarket - Valley Roots Food Hub Wholesale (87) - Connecting org customers - Organization already has stripe_customer_id: cus_6Ba69txqePP672
+[2015-06-08 12:26:33 -0400] - UpdateStripeIdsOnMarket - Valley Roots Food Hub Wholesale (87) - Connecting org customers - Organization already has stripe_customer_id: cus_6BZuG94201XcF0
+[2015-06-08 12:26:33 -0400] - UpdateStripeIdsOnMarket - Valley Roots Food Hub Wholesale (87) - Connecting org customers - Organization already has stripe_customer_id: cus_6BZlUwXOf77sYA
+[2015-06-08 12:26:33 -0400] - UpdateStripeIdsOnMarket - Valley Roots Food Hub Wholesale (87) - Connecting org customers - Organization already has stripe_customer_id: cus_6BZf2FZwDfxWli
+[2015-06-08 12:26:33 -0400] - UpdateStripeIdsOnMarket - Valley Roots Food Hub Wholesale (87) - Connecting org customers - Organization already has stripe_customer_id: cus_68EzBgTEiayUvZ
+[2015-06-08 12:26:33 -0400] - UpdateStripeIdsOnMarket - Valley Roots Food Hub Wholesale (87) - Connecting org customers - Organization already has stripe_customer_id: cus_68EiZhRlUHAwf0
+[2015-06-08 12:26:33 -0400] - UpdateStripeIdsOnMarket - Valley Roots Food Hub Wholesale (87) - Connecting org customers - Organization already has stripe_customer_id: cus_68EdqneZrepChz

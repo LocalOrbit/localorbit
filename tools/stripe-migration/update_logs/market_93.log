@@ -1,13 +1,13 @@
-[2015-06-01 14:23:21 -0400] - UpdateStripeIdsOnMarket - Intervale Food Hub (93) - ====================================================================================================
-[2015-06-01 14:23:21 -0400] - UpdateStripeIdsOnMarket - Intervale Food Hub (93) -  Intervale Food Hub (93)
-[2015-06-01 14:23:21 -0400] - UpdateStripeIdsOnMarket - Intervale Food Hub (93) -  Updating stripe IDs for market, orgs and bank accounts.
-[2015-06-01 14:23:21 -0400] - UpdateStripeIdsOnMarket - Intervale Food Hub (93) - 
-[2015-06-01 14:23:21 -0400] - UpdateStripeIdsOnMarket - Intervale Food Hub (93) -  Balanced export file: /home/vagrant/git/localorbit/tools/stripe-migration/from_balanced/2015-06-01-1433181180-MP2eXZmrOPof80u3Irf94Wre.csv
-[2015-06-01 14:23:21 -0400] - UpdateStripeIdsOnMarket - Intervale Food Hub (93) - 
-[2015-06-01 14:23:21 -0400] - UpdateStripeIdsOnMarket - Intervale Food Hub (93) -  Rails.env: production
-[2015-06-01 14:23:21 -0400] - UpdateStripeIdsOnMarket - Intervale Food Hub (93) -  Stripe keys:
-[2015-06-01 14:23:21 -0400] - UpdateStripeIdsOnMarket - Intervale Food Hub (93) -   --> STRIPE_PUBLISHABLE_KEY: pk_live_j85VTsrz51POrss3ni460qaf (pk_live_j85VTsrz51POrss3ni460qaf)
-[2015-06-01 14:23:21 -0400] - UpdateStripeIdsOnMarket - Intervale Food Hub (93) - ====================================================================================================
-[2015-06-01 14:23:21 -0400] - UpdateStripeIdsOnMarket - Intervale Food Hub (93) - Connecting market customer - Updated Market stripe_customer_id: cus_6BH6B0WxiZkYW4
-[2015-06-01 14:23:21 -0400] - UpdateStripeIdsOnMarket - Intervale Food Hub (93) - Connecting market account - MISS - No stripe_account_id found for market balanced_customer_uri /v1/customers/CU1Kvu4M3UnMyTmLqn3YugPw
-[2015-06-01 14:23:21 -0400] - UpdateStripeIdsOnMarket - Intervale Food Hub (93) - Connecting market BankAccounts - Updated Visa 0448 (535) stripe_id: card_15zA1V2VpjOYk6Tmj7fbRwpp
+[2015-06-08 12:26:00 -0400] - UpdateStripeIdsOnMarket - Intervale Food Hub (93) - ====================================================================================================
+[2015-06-08 12:26:00 -0400] - UpdateStripeIdsOnMarket - Intervale Food Hub (93) -  Intervale Food Hub (93)
+[2015-06-08 12:26:00 -0400] - UpdateStripeIdsOnMarket - Intervale Food Hub (93) -  Updating stripe IDs for market, orgs and bank accounts.
+[2015-06-08 12:26:00 -0400] - UpdateStripeIdsOnMarket - Intervale Food Hub (93) - 
+[2015-06-08 12:26:00 -0400] - UpdateStripeIdsOnMarket - Intervale Food Hub (93) -  Balanced export file: /home/vagrant/git/localorbit/tools/stripe-migration/from_balanced/2015-06-08-1433769720-MP2eXZmrOPof80u3Irf94Wre.csv
+[2015-06-08 12:26:00 -0400] - UpdateStripeIdsOnMarket - Intervale Food Hub (93) - 
+[2015-06-08 12:26:00 -0400] - UpdateStripeIdsOnMarket - Intervale Food Hub (93) -  Rails.env: production
+[2015-06-08 12:26:00 -0400] - UpdateStripeIdsOnMarket - Intervale Food Hub (93) -  Stripe keys:
+[2015-06-08 12:26:00 -0400] - UpdateStripeIdsOnMarket - Intervale Food Hub (93) -   --> STRIPE_PUBLISHABLE_KEY: pk_live_j85VTsrz51POrss3ni460qaf (pk_live_j85VTsrz51POrss3ni460qaf)
+[2015-06-08 12:26:00 -0400] - UpdateStripeIdsOnMarket - Intervale Food Hub (93) - ====================================================================================================
+[2015-06-08 12:26:00 -0400] - UpdateStripeIdsOnMarket - Intervale Food Hub (93) - Connecting market customer - Market already has stripe_customer_id: cus_6BH6B0WxiZkYW4
+[2015-06-08 12:26:00 -0400] - UpdateStripeIdsOnMarket - Intervale Food Hub (93) - Connecting market account - MISS - No stripe_account_id found for market balanced_customer_uri /v1/customers/CU1Kvu4M3UnMyTmLqn3YugPw
+[2015-06-08 12:26:00 -0400] - UpdateStripeIdsOnMarket - Intervale Food Hub (93) - Connecting market BankAccounts - Visa 0448 (535) already has stripe_id: card_15zA1V2VpjOYk6Tmj7fbRwpp

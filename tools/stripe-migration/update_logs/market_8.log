@@ -1,36 +1,36 @@
-[2015-06-01 14:23:00 -0400] - UpdateStripeIdsOnMarket - Potluck Café Society (8) - ====================================================================================================
-[2015-06-01 14:23:00 -0400] - UpdateStripeIdsOnMarket - Potluck Café Society (8) -  Potluck Café Society (8)
-[2015-06-01 14:23:00 -0400] - UpdateStripeIdsOnMarket - Potluck Café Society (8) -  Updating stripe IDs for market, orgs and bank accounts.
-[2015-06-01 14:23:00 -0400] - UpdateStripeIdsOnMarket - Potluck Café Society (8) - 
-[2015-06-01 14:23:00 -0400] - UpdateStripeIdsOnMarket - Potluck Café Society (8) -  Balanced export file: /home/vagrant/git/localorbit/tools/stripe-migration/from_balanced/2015-06-01-1433181180-MP2eXZmrOPof80u3Irf94Wre.csv
-[2015-06-01 14:23:00 -0400] - UpdateStripeIdsOnMarket - Potluck Café Society (8) - 
-[2015-06-01 14:23:00 -0400] - UpdateStripeIdsOnMarket - Potluck Café Society (8) -  Rails.env: production
-[2015-06-01 14:23:00 -0400] - UpdateStripeIdsOnMarket - Potluck Café Society (8) -  Stripe keys:
-[2015-06-01 14:23:00 -0400] - UpdateStripeIdsOnMarket - Potluck Café Society (8) -   --> STRIPE_PUBLISHABLE_KEY: pk_live_j85VTsrz51POrss3ni460qaf (pk_live_j85VTsrz51POrss3ni460qaf)
-[2015-06-01 14:23:00 -0400] - UpdateStripeIdsOnMarket - Potluck Café Society (8) - ====================================================================================================
-[2015-06-01 14:23:00 -0400] - UpdateStripeIdsOnMarket - Potluck Café Society (8) - !! Market has no balanced_customer_uri; not updating its stripe_customer_id or stripe_account_id
-[2015-06-01 14:23:01 -0400] - UpdateStripeIdsOnMarket - Potluck Café Society (8) - Connecting org customers - Organization already has stripe_customer_id: cus_6HF3NKuz4rBH54
-[2015-06-01 14:23:01 -0400] - UpdateStripeIdsOnMarket - Potluck Café Society (8) - Connecting org customers - Organization already has stripe_customer_id: cus_6HEfwArTbctS3P
-[2015-06-01 14:23:01 -0400] - UpdateStripeIdsOnMarket - Potluck Café Society (8) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4GFaAb5KpAQ
-[2015-06-01 14:23:01 -0400] - UpdateStripeIdsOnMarket - Potluck Café Society (8) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ5YOTtozSzvC
-[2015-06-01 14:23:01 -0400] - UpdateStripeIdsOnMarket - Potluck Café Society (8) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ5VORWXq2h1f
-[2015-06-01 14:23:01 -0400] - UpdateStripeIdsOnMarket - Potluck Café Society (8) - Connecting org customers - Organization already has stripe_customer_id: cus_5uS6xrpcm4iTZK
-[2015-06-01 14:23:01 -0400] - UpdateStripeIdsOnMarket - Potluck Café Society (8) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ5xaQQIa213g
-[2015-06-01 14:23:01 -0400] - UpdateStripeIdsOnMarket - Potluck Café Society (8) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ5aa0e0VpOif
-[2015-06-01 14:23:01 -0400] - UpdateStripeIdsOnMarket - Potluck Café Society (8) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4mauBC3gIxL
-[2015-06-01 14:23:01 -0400] - UpdateStripeIdsOnMarket - Potluck Café Society (8) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4m8VSfvRinU
-[2015-06-01 14:23:01 -0400] - UpdateStripeIdsOnMarket - Potluck Café Society (8) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4rYyoR7cvnt
-[2015-06-01 14:23:01 -0400] - UpdateStripeIdsOnMarket - Potluck Café Society (8) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4bUlg4tpPp9
-[2015-06-01 14:23:01 -0400] - UpdateStripeIdsOnMarket - Potluck Café Society (8) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4VEW6GgBEDx
-[2015-06-01 14:23:01 -0400] - UpdateStripeIdsOnMarket - Potluck Café Society (8) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4DR7GbXQIde
-[2015-06-01 14:23:01 -0400] - UpdateStripeIdsOnMarket - Potluck Café Society (8) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4mDX5Qjh5St
-[2015-06-01 14:23:01 -0400] - UpdateStripeIdsOnMarket - Potluck Café Society (8) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ49jUkD8lf3L
-[2015-06-01 14:23:01 -0400] - UpdateStripeIdsOnMarket - Potluck Café Society (8) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ41Ocq40iGiL
-[2015-06-01 14:23:01 -0400] - UpdateStripeIdsOnMarket - Potluck Café Society (8) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4531UuqPU40
-[2015-06-01 14:23:01 -0400] - UpdateStripeIdsOnMarket - Potluck Café Society (8) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ5oh9oKmVWIS
-[2015-06-01 14:23:01 -0400] - UpdateStripeIdsOnMarket - Potluck Café Society (8) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ5gpyiMMi57O
-[2015-06-01 14:23:01 -0400] - UpdateStripeIdsOnMarket - Potluck Café Society (8) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4C19ZpScwUX
-[2015-06-01 14:23:01 -0400] - UpdateStripeIdsOnMarket - Potluck Café Society (8) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4LhtrgLgjO7
-[2015-06-01 14:23:01 -0400] - UpdateStripeIdsOnMarket - Potluck Café Society (8) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ5VlBEfwbY8w
-[2015-06-01 14:23:01 -0400] - UpdateStripeIdsOnMarket - Potluck Café Society (8) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ5I4G3yl5p76
-[2015-06-01 14:23:01 -0400] - UpdateStripeIdsOnMarket - Potluck Café Society (8) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ5QBjQlwrG2B
+[2015-06-08 12:25:51 -0400] - UpdateStripeIdsOnMarket - Potluck Café Society (8) - ====================================================================================================
+[2015-06-08 12:25:51 -0400] - UpdateStripeIdsOnMarket - Potluck Café Society (8) -  Potluck Café Society (8)
+[2015-06-08 12:25:51 -0400] - UpdateStripeIdsOnMarket - Potluck Café Society (8) -  Updating stripe IDs for market, orgs and bank accounts.
+[2015-06-08 12:25:51 -0400] - UpdateStripeIdsOnMarket - Potluck Café Society (8) - 
+[2015-06-08 12:25:51 -0400] - UpdateStripeIdsOnMarket - Potluck Café Society (8) -  Balanced export file: /home/vagrant/git/localorbit/tools/stripe-migration/from_balanced/2015-06-08-1433769720-MP2eXZmrOPof80u3Irf94Wre.csv
+[2015-06-08 12:25:51 -0400] - UpdateStripeIdsOnMarket - Potluck Café Society (8) - 
+[2015-06-08 12:25:51 -0400] - UpdateStripeIdsOnMarket - Potluck Café Society (8) -  Rails.env: production
+[2015-06-08 12:25:51 -0400] - UpdateStripeIdsOnMarket - Potluck Café Society (8) -  Stripe keys:
+[2015-06-08 12:25:51 -0400] - UpdateStripeIdsOnMarket - Potluck Café Society (8) -   --> STRIPE_PUBLISHABLE_KEY: pk_live_j85VTsrz51POrss3ni460qaf (pk_live_j85VTsrz51POrss3ni460qaf)
+[2015-06-08 12:25:51 -0400] - UpdateStripeIdsOnMarket - Potluck Café Society (8) - ====================================================================================================
+[2015-06-08 12:25:51 -0400] - UpdateStripeIdsOnMarket - Potluck Café Society (8) - !! Market has no balanced_customer_uri; not updating its stripe_customer_id or stripe_account_id
+[2015-06-08 12:25:51 -0400] - UpdateStripeIdsOnMarket - Potluck Café Society (8) - Connecting org customers - Organization already has stripe_customer_id: cus_6HF3NKuz4rBH54
+[2015-06-08 12:25:51 -0400] - UpdateStripeIdsOnMarket - Potluck Café Society (8) - Connecting org customers - Organization already has stripe_customer_id: cus_6HEfwArTbctS3P
+[2015-06-08 12:25:51 -0400] - UpdateStripeIdsOnMarket - Potluck Café Society (8) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4GFaAb5KpAQ
+[2015-06-08 12:25:51 -0400] - UpdateStripeIdsOnMarket - Potluck Café Society (8) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ5YOTtozSzvC
+[2015-06-08 12:25:51 -0400] - UpdateStripeIdsOnMarket - Potluck Café Society (8) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ5VORWXq2h1f
+[2015-06-08 12:25:51 -0400] - UpdateStripeIdsOnMarket - Potluck Café Society (8) - Connecting org customers - Organization already has stripe_customer_id: cus_5uS6xrpcm4iTZK
+[2015-06-08 12:25:51 -0400] - UpdateStripeIdsOnMarket - Potluck Café Society (8) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ5xaQQIa213g
+[2015-06-08 12:25:51 -0400] - UpdateStripeIdsOnMarket - Potluck Café Society (8) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ5aa0e0VpOif
+[2015-06-08 12:25:51 -0400] - UpdateStripeIdsOnMarket - Potluck Café Society (8) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4mauBC3gIxL
+[2015-06-08 12:25:51 -0400] - UpdateStripeIdsOnMarket - Potluck Café Society (8) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4m8VSfvRinU
+[2015-06-08 12:25:51 -0400] - UpdateStripeIdsOnMarket - Potluck Café Society (8) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4rYyoR7cvnt
+[2015-06-08 12:25:51 -0400] - UpdateStripeIdsOnMarket - Potluck Café Society (8) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4bUlg4tpPp9
+[2015-06-08 12:25:51 -0400] - UpdateStripeIdsOnMarket - Potluck Café Society (8) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4VEW6GgBEDx
+[2015-06-08 12:25:51 -0400] - UpdateStripeIdsOnMarket - Potluck Café Society (8) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4DR7GbXQIde
+[2015-06-08 12:25:51 -0400] - UpdateStripeIdsOnMarket - Potluck Café Society (8) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4mDX5Qjh5St
+[2015-06-08 12:25:51 -0400] - UpdateStripeIdsOnMarket - Potluck Café Society (8) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ49jUkD8lf3L
+[2015-06-08 12:25:51 -0400] - UpdateStripeIdsOnMarket - Potluck Café Society (8) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ41Ocq40iGiL
+[2015-06-08 12:25:51 -0400] - UpdateStripeIdsOnMarket - Potluck Café Society (8) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4531UuqPU40
+[2015-06-08 12:25:51 -0400] - UpdateStripeIdsOnMarket - Potluck Café Society (8) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ5oh9oKmVWIS
+[2015-06-08 12:25:51 -0400] - UpdateStripeIdsOnMarket - Potluck Café Society (8) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ5gpyiMMi57O
+[2015-06-08 12:25:51 -0400] - UpdateStripeIdsOnMarket - Potluck Café Society (8) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4C19ZpScwUX
+[2015-06-08 12:25:51 -0400] - UpdateStripeIdsOnMarket - Potluck Café Society (8) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4LhtrgLgjO7
+[2015-06-08 12:25:51 -0400] - UpdateStripeIdsOnMarket - Potluck Café Society (8) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ5VlBEfwbY8w
+[2015-06-08 12:25:51 -0400] - UpdateStripeIdsOnMarket - Potluck Café Society (8) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ5I4G3yl5p76
+[2015-06-08 12:25:51 -0400] - UpdateStripeIdsOnMarket - Potluck Café Society (8) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ5QBjQlwrG2B

@@ -1,13 +1,13 @@
-[2015-06-01 14:23:25 -0400] - UpdateStripeIdsOnMarket - One Green Place (59) - ====================================================================================================
-[2015-06-01 14:23:25 -0400] - UpdateStripeIdsOnMarket - One Green Place (59) -  One Green Place (59)
-[2015-06-01 14:23:25 -0400] - UpdateStripeIdsOnMarket - One Green Place (59) -  Updating stripe IDs for market, orgs and bank accounts.
-[2015-06-01 14:23:25 -0400] - UpdateStripeIdsOnMarket - One Green Place (59) - 
-[2015-06-01 14:23:25 -0400] - UpdateStripeIdsOnMarket - One Green Place (59) -  Balanced export file: /home/vagrant/git/localorbit/tools/stripe-migration/from_balanced/2015-06-01-1433181180-MP2eXZmrOPof80u3Irf94Wre.csv
-[2015-06-01 14:23:25 -0400] - UpdateStripeIdsOnMarket - One Green Place (59) - 
-[2015-06-01 14:23:25 -0400] - UpdateStripeIdsOnMarket - One Green Place (59) -  Rails.env: production
-[2015-06-01 14:23:25 -0400] - UpdateStripeIdsOnMarket - One Green Place (59) -  Stripe keys:
-[2015-06-01 14:23:25 -0400] - UpdateStripeIdsOnMarket - One Green Place (59) -   --> STRIPE_PUBLISHABLE_KEY: pk_live_j85VTsrz51POrss3ni460qaf (pk_live_j85VTsrz51POrss3ni460qaf)
-[2015-06-01 14:23:25 -0400] - UpdateStripeIdsOnMarket - One Green Place (59) - ====================================================================================================
-[2015-06-01 14:23:25 -0400] - UpdateStripeIdsOnMarket - One Green Place (59) - Connecting market customer - Updated Market stripe_customer_id: cus_5uQ5vbcWvhpw0e
-[2015-06-01 14:23:25 -0400] - UpdateStripeIdsOnMarket - One Green Place (59) - Connecting market account - MISS - No stripe_account_id found for market balanced_customer_uri /v1/customers/CU5mBfM1bmJMw053UX73YmNx
-[2015-06-01 14:23:26 -0400] - UpdateStripeIdsOnMarket - One Green Place (59) - Connecting market BankAccounts - Updated American Express 2008 (349) stripe_id: card_15ic9o2VpjOYk6Tmbed44hxV
+[2015-06-08 12:26:07 -0400] - UpdateStripeIdsOnMarket - One Green Place (59) - ====================================================================================================
+[2015-06-08 12:26:07 -0400] - UpdateStripeIdsOnMarket - One Green Place (59) -  One Green Place (59)
+[2015-06-08 12:26:07 -0400] - UpdateStripeIdsOnMarket - One Green Place (59) -  Updating stripe IDs for market, orgs and bank accounts.
+[2015-06-08 12:26:07 -0400] - UpdateStripeIdsOnMarket - One Green Place (59) - 
+[2015-06-08 12:26:07 -0400] - UpdateStripeIdsOnMarket - One Green Place (59) -  Balanced export file: /home/vagrant/git/localorbit/tools/stripe-migration/from_balanced/2015-06-08-1433769720-MP2eXZmrOPof80u3Irf94Wre.csv
+[2015-06-08 12:26:07 -0400] - UpdateStripeIdsOnMarket - One Green Place (59) - 
+[2015-06-08 12:26:07 -0400] - UpdateStripeIdsOnMarket - One Green Place (59) -  Rails.env: production
+[2015-06-08 12:26:07 -0400] - UpdateStripeIdsOnMarket - One Green Place (59) -  Stripe keys:
+[2015-06-08 12:26:07 -0400] - UpdateStripeIdsOnMarket - One Green Place (59) -   --> STRIPE_PUBLISHABLE_KEY: pk_live_j85VTsrz51POrss3ni460qaf (pk_live_j85VTsrz51POrss3ni460qaf)
+[2015-06-08 12:26:07 -0400] - UpdateStripeIdsOnMarket - One Green Place (59) - ====================================================================================================
+[2015-06-08 12:26:07 -0400] - UpdateStripeIdsOnMarket - One Green Place (59) - Connecting market customer - Market already has stripe_customer_id: cus_5uQ5vbcWvhpw0e
+[2015-06-08 12:26:07 -0400] - UpdateStripeIdsOnMarket - One Green Place (59) - Connecting market account - MISS - No stripe_account_id found for market balanced_customer_uri /v1/customers/CU5mBfM1bmJMw053UX73YmNx
+[2015-06-08 12:26:07 -0400] - UpdateStripeIdsOnMarket - One Green Place (59) - Connecting market BankAccounts - American Express 2008 (349) already has stripe_id: card_15ic9o2VpjOYk6Tmbed44hxV

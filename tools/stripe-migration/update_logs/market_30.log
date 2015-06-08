@@ -1,28 +1,28 @@
-[2015-06-01 14:22:59 -0400] - UpdateStripeIdsOnMarket - Oshkosh Market (30) - ====================================================================================================
-[2015-06-01 14:22:59 -0400] - UpdateStripeIdsOnMarket - Oshkosh Market (30) -  Oshkosh Market (30)
-[2015-06-01 14:22:59 -0400] - UpdateStripeIdsOnMarket - Oshkosh Market (30) -  Updating stripe IDs for market, orgs and bank accounts.
-[2015-06-01 14:22:59 -0400] - UpdateStripeIdsOnMarket - Oshkosh Market (30) - 
-[2015-06-01 14:22:59 -0400] - UpdateStripeIdsOnMarket - Oshkosh Market (30) -  Balanced export file: /home/vagrant/git/localorbit/tools/stripe-migration/from_balanced/2015-06-01-1433181180-MP2eXZmrOPof80u3Irf94Wre.csv
-[2015-06-01 14:22:59 -0400] - UpdateStripeIdsOnMarket - Oshkosh Market (30) - 
-[2015-06-01 14:22:59 -0400] - UpdateStripeIdsOnMarket - Oshkosh Market (30) -  Rails.env: production
-[2015-06-01 14:22:59 -0400] - UpdateStripeIdsOnMarket - Oshkosh Market (30) -  Stripe keys:
-[2015-06-01 14:22:59 -0400] - UpdateStripeIdsOnMarket - Oshkosh Market (30) -   --> STRIPE_PUBLISHABLE_KEY: pk_live_j85VTsrz51POrss3ni460qaf (pk_live_j85VTsrz51POrss3ni460qaf)
-[2015-06-01 14:22:59 -0400] - UpdateStripeIdsOnMarket - Oshkosh Market (30) - ====================================================================================================
-[2015-06-01 14:22:59 -0400] - UpdateStripeIdsOnMarket - Oshkosh Market (30) - Connecting market customer - Updated Market stripe_customer_id: cus_5uQ5yAON6tk71i
-[2015-06-01 14:22:59 -0400] - UpdateStripeIdsOnMarket - Oshkosh Market (30) - Connecting market account - Updated Market stripe_account_id: acct_15l1ySFmX4WrecmE
-[2015-06-01 14:22:59 -0400] - UpdateStripeIdsOnMarket - Oshkosh Market (30) - Connecting org customers - MISS - No stripe_customer_id found for Organization Goodwill Grows (2704) balanced_customer_uri /v1/customers/CU4ClF6zW9BtmwgdJLAZcnqi
-[2015-06-01 14:22:59 -0400] - UpdateStripeIdsOnMarket - Oshkosh Market (30) - Connecting org customers - Organization already has stripe_customer_id: cus_6H8mrVwjpPV7jJ
-[2015-06-01 14:22:59 -0400] - UpdateStripeIdsOnMarket - Oshkosh Market (30) - Connecting org customers - Organization already has stripe_customer_id: cus_6GrwyM1n43Na2Y
-[2015-06-01 14:22:59 -0400] - UpdateStripeIdsOnMarket - Oshkosh Market (30) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4nP8axirVUB
-[2015-06-01 14:22:59 -0400] - UpdateStripeIdsOnMarket - Oshkosh Market (30) - Connecting org customers - Organization already has stripe_customer_id: cus_5vQtWBGCekh6Lt
-[2015-06-01 14:22:59 -0400] - UpdateStripeIdsOnMarket - Oshkosh Market (30) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ5XKHQiCU5p8
-[2015-06-01 14:22:59 -0400] - UpdateStripeIdsOnMarket - Oshkosh Market (30) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ5S2jz3M3eH1
-[2015-06-01 14:22:59 -0400] - UpdateStripeIdsOnMarket - Oshkosh Market (30) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4azgdJc0qvG
-[2015-06-01 14:22:59 -0400] - UpdateStripeIdsOnMarket - Oshkosh Market (30) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4AylxryxPSU
-[2015-06-01 14:22:59 -0400] - UpdateStripeIdsOnMarket - Oshkosh Market (30) - Connecting org customers - Updated Organization Avrom Farm (1545) stripe_customer_id: cus_5uQ5LBtatrpdDo
-[2015-06-01 14:22:59 -0400] - UpdateStripeIdsOnMarket - Oshkosh Market (30) - Connecting org BankAccounts - Organization Goodwill Grows (2704) - MISS - No stripe_id found for WELLS FARGO BK NA WISCONSIN 4462 (499) balanced_customer_uri /v1/marketplaces/MP2eXZmrOPof80u3Irf94Wre/bank_accounts/BA4BeJaWbJa9Fx3Bl8JNistk
-[2015-06-01 14:22:59 -0400] - UpdateStripeIdsOnMarket - Oshkosh Market (30) - Connecting org BankAccounts - Organization SLO Farmer's Co-op (3749) - NICOLET NATIONAL BANK 3060 (559) already has stripe_id: ba_164KCr2VpjOYk6Tmj2RzdxfO
-[2015-06-01 14:23:00 -0400] - UpdateStripeIdsOnMarket - Oshkosh Market (30) - Connecting org BankAccounts - Organization Gravel Road Farm (52) - COMMUNITY FIRST CREDIT UNION 7109 (270) already has stripe_id: ba_15l2572VpjOYk6Tmxqc6WaNm
-[2015-06-01 14:23:00 -0400] - UpdateStripeIdsOnMarket - Oshkosh Market (30) - Connecting org BankAccounts - Organization Ganesh Vegetables and Herbs (1856) - CAPITAL CREDIT UNION 4447 (214) already has stripe_id: ba_15ic9f2VpjOYk6Tmk7ItgvTq
-[2015-06-01 14:23:00 -0400] - UpdateStripeIdsOnMarket - Oshkosh Market (30) - Connecting org BankAccounts - Organization Beyond Organic (186) - Visa 3970 (211) already has stripe_id: tok_15ibh12VpjOYk6Tm0A1STy3O
-[2015-06-01 14:23:00 -0400] - UpdateStripeIdsOnMarket - Oshkosh Market (30) - Connecting org BankAccounts - Organization Ledgeview Farms of Johnsburg, LLC (1845) - BANK FIRST NATIONAL 7915 (329) already has stripe_id: ba_15ic942VpjOYk6Tm7SP4njSE
+[2015-06-08 12:25:50 -0400] - UpdateStripeIdsOnMarket - Oshkosh Market (30) - ====================================================================================================
+[2015-06-08 12:25:50 -0400] - UpdateStripeIdsOnMarket - Oshkosh Market (30) -  Oshkosh Market (30)
+[2015-06-08 12:25:50 -0400] - UpdateStripeIdsOnMarket - Oshkosh Market (30) -  Updating stripe IDs for market, orgs and bank accounts.
+[2015-06-08 12:25:50 -0400] - UpdateStripeIdsOnMarket - Oshkosh Market (30) - 
+[2015-06-08 12:25:50 -0400] - UpdateStripeIdsOnMarket - Oshkosh Market (30) -  Balanced export file: /home/vagrant/git/localorbit/tools/stripe-migration/from_balanced/2015-06-08-1433769720-MP2eXZmrOPof80u3Irf94Wre.csv
+[2015-06-08 12:25:50 -0400] - UpdateStripeIdsOnMarket - Oshkosh Market (30) - 
+[2015-06-08 12:25:50 -0400] - UpdateStripeIdsOnMarket - Oshkosh Market (30) -  Rails.env: production
+[2015-06-08 12:25:50 -0400] - UpdateStripeIdsOnMarket - Oshkosh Market (30) -  Stripe keys:
+[2015-06-08 12:25:50 -0400] - UpdateStripeIdsOnMarket - Oshkosh Market (30) -   --> STRIPE_PUBLISHABLE_KEY: pk_live_j85VTsrz51POrss3ni460qaf (pk_live_j85VTsrz51POrss3ni460qaf)
+[2015-06-08 12:25:50 -0400] - UpdateStripeIdsOnMarket - Oshkosh Market (30) - ====================================================================================================
+[2015-06-08 12:25:50 -0400] - UpdateStripeIdsOnMarket - Oshkosh Market (30) - Connecting market customer - Market already has stripe_customer_id: cus_5uQ5yAON6tk71i
+[2015-06-08 12:25:50 -0400] - UpdateStripeIdsOnMarket - Oshkosh Market (30) - Connecting market account - Market already has stripe_account_id: acct_15l1ySFmX4WrecmE
+[2015-06-08 12:25:50 -0400] - UpdateStripeIdsOnMarket - Oshkosh Market (30) - Connecting org customers - MISS - No stripe_customer_id found for Organization Goodwill Grows (2704) balanced_customer_uri /v1/customers/CU4ClF6zW9BtmwgdJLAZcnqi
+[2015-06-08 12:25:50 -0400] - UpdateStripeIdsOnMarket - Oshkosh Market (30) - Connecting org customers - Organization already has stripe_customer_id: cus_6H8mrVwjpPV7jJ
+[2015-06-08 12:25:50 -0400] - UpdateStripeIdsOnMarket - Oshkosh Market (30) - Connecting org customers - Organization already has stripe_customer_id: cus_6GrwyM1n43Na2Y
+[2015-06-08 12:25:50 -0400] - UpdateStripeIdsOnMarket - Oshkosh Market (30) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4nP8axirVUB
+[2015-06-08 12:25:50 -0400] - UpdateStripeIdsOnMarket - Oshkosh Market (30) - Connecting org customers - Organization already has stripe_customer_id: cus_5vQtWBGCekh6Lt
+[2015-06-08 12:25:50 -0400] - UpdateStripeIdsOnMarket - Oshkosh Market (30) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ5XKHQiCU5p8
+[2015-06-08 12:25:50 -0400] - UpdateStripeIdsOnMarket - Oshkosh Market (30) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ5S2jz3M3eH1
+[2015-06-08 12:25:50 -0400] - UpdateStripeIdsOnMarket - Oshkosh Market (30) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4azgdJc0qvG
+[2015-06-08 12:25:50 -0400] - UpdateStripeIdsOnMarket - Oshkosh Market (30) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4AylxryxPSU
+[2015-06-08 12:25:50 -0400] - UpdateStripeIdsOnMarket - Oshkosh Market (30) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ5LBtatrpdDo
+[2015-06-08 12:25:50 -0400] - UpdateStripeIdsOnMarket - Oshkosh Market (30) - Connecting org BankAccounts - Organization Goodwill Grows (2704) - MISS - No stripe_id found for WELLS FARGO BK NA WISCONSIN 4462 (499) balanced_customer_uri /v1/marketplaces/MP2eXZmrOPof80u3Irf94Wre/bank_accounts/BA4BeJaWbJa9Fx3Bl8JNistk
+[2015-06-08 12:25:50 -0400] - UpdateStripeIdsOnMarket - Oshkosh Market (30) - Connecting org BankAccounts - Organization SLO Farmer's Co-op (3749) - NICOLET NATIONAL BANK 3060 (559) already has stripe_id: ba_164KCr2VpjOYk6Tmj2RzdxfO
+[2015-06-08 12:25:50 -0400] - UpdateStripeIdsOnMarket - Oshkosh Market (30) - Connecting org BankAccounts - Organization Gravel Road Farm (52) - COMMUNITY FIRST CREDIT UNION 7109 (270) already has stripe_id: ba_15l2572VpjOYk6Tmxqc6WaNm
+[2015-06-08 12:25:50 -0400] - UpdateStripeIdsOnMarket - Oshkosh Market (30) - Connecting org BankAccounts - Organization Ganesh Vegetables and Herbs (1856) - CAPITAL CREDIT UNION 4447 (214) already has stripe_id: ba_15ic9f2VpjOYk6Tmk7ItgvTq
+[2015-06-08 12:25:50 -0400] - UpdateStripeIdsOnMarket - Oshkosh Market (30) - Connecting org BankAccounts - Organization Beyond Organic (186) - Visa 3970 (211) already has stripe_id: tok_15ibh12VpjOYk6Tm0A1STy3O
+[2015-06-08 12:25:50 -0400] - UpdateStripeIdsOnMarket - Oshkosh Market (30) - Connecting org BankAccounts - Organization Ledgeview Farms of Johnsburg, LLC (1845) - BANK FIRST NATIONAL 7915 (329) already has stripe_id: ba_15ic942VpjOYk6Tm7SP4njSE

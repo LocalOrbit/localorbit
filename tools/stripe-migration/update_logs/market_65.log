@@ -1,103 +1,103 @@
-[2015-06-01 14:23:32 -0400] - UpdateStripeIdsOnMarket - Re:Vision (65) - ====================================================================================================
-[2015-06-01 14:23:32 -0400] - UpdateStripeIdsOnMarket - Re:Vision (65) -  Re:Vision (65)
-[2015-06-01 14:23:32 -0400] - UpdateStripeIdsOnMarket - Re:Vision (65) -  Updating stripe IDs for market, orgs and bank accounts.
-[2015-06-01 14:23:32 -0400] - UpdateStripeIdsOnMarket - Re:Vision (65) - 
-[2015-06-01 14:23:32 -0400] - UpdateStripeIdsOnMarket - Re:Vision (65) -  Balanced export file: /home/vagrant/git/localorbit/tools/stripe-migration/from_balanced/2015-06-01-1433181180-MP2eXZmrOPof80u3Irf94Wre.csv
-[2015-06-01 14:23:32 -0400] - UpdateStripeIdsOnMarket - Re:Vision (65) - 
-[2015-06-01 14:23:32 -0400] - UpdateStripeIdsOnMarket - Re:Vision (65) -  Rails.env: production
-[2015-06-01 14:23:32 -0400] - UpdateStripeIdsOnMarket - Re:Vision (65) -  Stripe keys:
-[2015-06-01 14:23:32 -0400] - UpdateStripeIdsOnMarket - Re:Vision (65) -   --> STRIPE_PUBLISHABLE_KEY: pk_live_j85VTsrz51POrss3ni460qaf (pk_live_j85VTsrz51POrss3ni460qaf)
-[2015-06-01 14:23:32 -0400] - UpdateStripeIdsOnMarket - Re:Vision (65) - ====================================================================================================
-[2015-06-01 14:23:32 -0400] - UpdateStripeIdsOnMarket - Re:Vision (65) - Connecting market customer - Market already has stripe_customer_id: cus_5uQ5ugkVDzmZ2M
-[2015-06-01 14:23:32 -0400] - UpdateStripeIdsOnMarket - Re:Vision (65) - Connecting market account - Market already has stripe_account_id: acct_15l1yQDQ8hn0P3tB
-[2015-06-01 14:23:32 -0400] - UpdateStripeIdsOnMarket - Re:Vision (65) - Connecting org customers - Organization already has stripe_customer_id: cus_6BtImYCGgoRmh5
-[2015-06-01 14:23:32 -0400] - UpdateStripeIdsOnMarket - Re:Vision (65) - Connecting org customers - Organization already has stripe_customer_id: cus_6B71n28j7VvTlU
-[2015-06-01 14:23:32 -0400] - UpdateStripeIdsOnMarket - Re:Vision (65) - Connecting org customers - Organization already has stripe_customer_id: cus_69eEQh9RBBldMq
-[2015-06-01 14:23:32 -0400] - UpdateStripeIdsOnMarket - Re:Vision (65) - Connecting org customers - Organization already has stripe_customer_id: cus_69IDIiIGTnOLOS
-[2015-06-01 14:23:32 -0400] - UpdateStripeIdsOnMarket - Re:Vision (65) - Connecting org customers - Organization already has stripe_customer_id: cus_6JSHfjjVGm22fQ
-[2015-06-01 14:23:32 -0400] - UpdateStripeIdsOnMarket - Re:Vision (65) - Connecting org customers - Organization already has stripe_customer_id: cus_65uNiQ70UvOjEF
-[2015-06-01 14:23:32 -0400] - UpdateStripeIdsOnMarket - Re:Vision (65) - Connecting org customers - Organization already has stripe_customer_id: cus_632TnvV5nYdU6M
-[2015-06-01 14:23:32 -0400] - UpdateStripeIdsOnMarket - Re:Vision (65) - Connecting org customers - Organization already has stripe_customer_id: cus_69F6SbP4AFLa2l
-[2015-06-01 14:23:32 -0400] - UpdateStripeIdsOnMarket - Re:Vision (65) - Connecting org customers - Organization already has stripe_customer_id: cus_5yO15cJ2TMTeJP
-[2015-06-01 14:23:32 -0400] - UpdateStripeIdsOnMarket - Re:Vision (65) - Connecting org customers - Organization already has stripe_customer_id: cus_5yNyg35UG33Gn3
-[2015-06-01 14:23:32 -0400] - UpdateStripeIdsOnMarket - Re:Vision (65) - Connecting org customers - Organization already has stripe_customer_id: cus_5y1kwBE1hPRFde
-[2015-06-01 14:23:32 -0400] - UpdateStripeIdsOnMarket - Re:Vision (65) - Connecting org customers - Organization already has stripe_customer_id: cus_5voxyGC2wlUkaP
-[2015-06-01 14:23:32 -0400] - UpdateStripeIdsOnMarket - Re:Vision (65) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ6GyzWwoXKFK
-[2015-06-01 14:23:32 -0400] - UpdateStripeIdsOnMarket - Re:Vision (65) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ5gfl0J5UWJL
-[2015-06-01 14:23:32 -0400] - UpdateStripeIdsOnMarket - Re:Vision (65) - Connecting org customers - Organization already has stripe_customer_id: cus_69FLYjo8CVOH5t
-[2015-06-01 14:23:32 -0400] - UpdateStripeIdsOnMarket - Re:Vision (65) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ5pMwPCoNPwq
-[2015-06-01 14:23:32 -0400] - UpdateStripeIdsOnMarket - Re:Vision (65) - Connecting org customers - Organization already has stripe_customer_id: cus_68zc5RUEgmREoy
-[2015-06-01 14:23:32 -0400] - UpdateStripeIdsOnMarket - Re:Vision (65) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ55uW28xQn5G
-[2015-06-01 14:23:32 -0400] - UpdateStripeIdsOnMarket - Re:Vision (65) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ5jAN0d3sqdB
-[2015-06-01 14:23:32 -0400] - UpdateStripeIdsOnMarket - Re:Vision (65) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ5qQrU9wKxz7
-[2015-06-01 14:23:32 -0400] - UpdateStripeIdsOnMarket - Re:Vision (65) - Connecting org customers - Organization already has stripe_customer_id: cus_68zflwPVwDrDKn
-[2015-06-01 14:23:32 -0400] - UpdateStripeIdsOnMarket - Re:Vision (65) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ52wv8plosPY
-[2015-06-01 14:23:32 -0400] - UpdateStripeIdsOnMarket - Re:Vision (65) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ5j8ynDtLMVw
-[2015-06-01 14:23:32 -0400] - UpdateStripeIdsOnMarket - Re:Vision (65) - Connecting org customers - Organization already has stripe_customer_id: cus_5vMcSiRzBSrtQh
-[2015-06-01 14:23:32 -0400] - UpdateStripeIdsOnMarket - Re:Vision (65) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ594M41qxY8F
-[2015-06-01 14:23:32 -0400] - UpdateStripeIdsOnMarket - Re:Vision (65) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ5AY71PUUbyO
-[2015-06-01 14:23:32 -0400] - UpdateStripeIdsOnMarket - Re:Vision (65) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ6vZbGGsclQy
-[2015-06-01 14:23:32 -0400] - UpdateStripeIdsOnMarket - Re:Vision (65) - Connecting org customers - Organization already has stripe_customer_id: cus_5vrMcOu41r6mdB
-[2015-06-01 14:23:32 -0400] - UpdateStripeIdsOnMarket - Re:Vision (65) - Connecting org customers - Organization already has stripe_customer_id: cus_6Gnkd5h9Bh68Bo
-[2015-06-01 14:23:32 -0400] - UpdateStripeIdsOnMarket - Re:Vision (65) - Connecting org customers - Organization already has stripe_customer_id: cus_617FsPH4kIWxNl
-[2015-06-01 14:23:32 -0400] - UpdateStripeIdsOnMarket - Re:Vision (65) - Connecting org customers - Organization already has stripe_customer_id: cus_63j9r5OJwfMmbG
-[2015-06-01 14:23:32 -0400] - UpdateStripeIdsOnMarket - Re:Vision (65) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ5mhm7rTYqs1
-[2015-06-01 14:23:32 -0400] - UpdateStripeIdsOnMarket - Re:Vision (65) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ5tslP5c42N6
-[2015-06-01 14:23:32 -0400] - UpdateStripeIdsOnMarket - Re:Vision (65) - Connecting org customers - Organization already has stripe_customer_id: cus_63jReEFaLptx1E
-[2015-06-01 14:23:32 -0400] - UpdateStripeIdsOnMarket - Re:Vision (65) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ54Nvik70tqc
-[2015-06-01 14:23:32 -0400] - UpdateStripeIdsOnMarket - Re:Vision (65) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ5L714J5oWZo
-[2015-06-01 14:23:32 -0400] - UpdateStripeIdsOnMarket - Re:Vision (65) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ5f3xLReYhXM
-[2015-06-01 14:23:32 -0400] - UpdateStripeIdsOnMarket - Re:Vision (65) - Connecting org customers - Organization already has stripe_customer_id: cus_5ypc52BNQZJOC7
-[2015-06-01 14:23:32 -0400] - UpdateStripeIdsOnMarket - Re:Vision (65) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4wRCTVGfBJr
-[2015-06-01 14:23:32 -0400] - UpdateStripeIdsOnMarket - Re:Vision (65) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4MnYlh6y2nf
-[2015-06-01 14:23:32 -0400] - UpdateStripeIdsOnMarket - Re:Vision (65) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4V7pTyHudE1
-[2015-06-01 14:23:32 -0400] - UpdateStripeIdsOnMarket - Re:Vision (65) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ5H5w2pVNj2w
-[2015-06-01 14:23:32 -0400] - UpdateStripeIdsOnMarket - Re:Vision (65) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ590y9OsQLw5
-[2015-06-01 14:23:32 -0400] - UpdateStripeIdsOnMarket - Re:Vision (65) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ5xIPl1VH8jW
-[2015-06-01 14:23:32 -0400] - UpdateStripeIdsOnMarket - Re:Vision (65) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ48d6yce5M5u
-[2015-06-01 14:23:32 -0400] - UpdateStripeIdsOnMarket - Re:Vision (65) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ5559GZNQYo1
-[2015-06-01 14:23:32 -0400] - UpdateStripeIdsOnMarket - Re:Vision (65) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ5SwzdscrkNS
-[2015-06-01 14:23:32 -0400] - UpdateStripeIdsOnMarket - Re:Vision (65) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ5iM5l5GbSBJ
-[2015-06-01 14:23:32 -0400] - UpdateStripeIdsOnMarket - Re:Vision (65) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4T3d0gxqWQ0
-[2015-06-01 14:23:32 -0400] - UpdateStripeIdsOnMarket - Re:Vision (65) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4rO788OX5zG
-[2015-06-01 14:23:32 -0400] - UpdateStripeIdsOnMarket - Re:Vision (65) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4TaIZHYbpVC
-[2015-06-01 14:23:32 -0400] - UpdateStripeIdsOnMarket - Re:Vision (65) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4hOUCKr3Hfv
-[2015-06-01 14:23:32 -0400] - UpdateStripeIdsOnMarket - Re:Vision (65) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4OigZ6AnZzd
-[2015-06-01 14:23:32 -0400] - UpdateStripeIdsOnMarket - Re:Vision (65) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ5N1am5yl5We
-[2015-06-01 14:23:32 -0400] - UpdateStripeIdsOnMarket - Re:Vision (65) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4JnZ4V90CxF
-[2015-06-01 14:23:32 -0400] - UpdateStripeIdsOnMarket - Re:Vision (65) - Connecting market BankAccounts - DENVER COMMUNITY CREDIT UNION 3805 (387) already has stripe_id: ba_15ic9t2VpjOYk6TmYGk7lhk6
-[2015-06-01 14:23:32 -0400] - UpdateStripeIdsOnMarket - Re:Vision (65) - Connecting org BankAccounts - Organization none (3727) - Visa 2489 (536) already has stripe_id: card_15zVWP2VpjOYk6Tmrxr6dn1U
-[2015-06-01 14:23:32 -0400] - UpdateStripeIdsOnMarket - Re:Vision (65) - Connecting org BankAccounts - Organization Mallory Howard (3670) - Visa 7886 (529) already has stripe_id: card_15xKwS2VpjOYk6TmwTOOhcAs
-[2015-06-01 14:23:32 -0400] - UpdateStripeIdsOnMarket - Re:Vision (65) - Connecting org BankAccounts - Organization Jeremy Katz (3590) - Visa 5744 (568) already has stripe_id: card_166pMY2VpjOYk6TmHTcNmO7t
-[2015-06-01 14:23:32 -0400] - UpdateStripeIdsOnMarket - Re:Vision (65) - Connecting org BankAccounts - Organization Lucretia Krause (3456) - American Express 1011 (494) already has stripe_id: card_15qwOt2VpjOYk6TmMGxyNwNu
-[2015-06-01 14:23:32 -0400] - UpdateStripeIdsOnMarket - Re:Vision (65) - Connecting org BankAccounts - Organization Erin Raney (3364) - RED ROCKS CREDIT UNION 1896 (527) already has stripe_id: ba_15wwci2VpjOYk6TmnsFHC2oJ
-[2015-06-01 14:23:32 -0400] - UpdateStripeIdsOnMarket - Re:Vision (65) - Connecting org BankAccounts - Organization Matilde's House (3203) - Visa 6756 (471) already has stripe_id: card_15k14F2VpjOYk6TmzRQyKJ2N
-[2015-06-01 14:23:32 -0400] - UpdateStripeIdsOnMarket - Re:Vision (65) - Connecting org BankAccounts - Organization Mayra's House (3202) - Visa 5334 (461) already has stripe_id: card_15icAh2VpjOYk6TmvPoQIhMr
-[2015-06-01 14:23:32 -0400] - UpdateStripeIdsOnMarket - Re:Vision (65) - Connecting org BankAccounts - Organization Revision (3201) - MasterCard 0535 (460) already has stripe_id: card_15icAA2VpjOYk6TmHGrd0Ki5
-[2015-06-01 14:23:32 -0400] - UpdateStripeIdsOnMarket - Re:Vision (65) - Connecting org BankAccounts - Organization Revision (3201) - Visa 0248 (515) already has stripe_id: card_15u3Gb2VpjOYk6Tm3sUmVYuJ
-[2015-06-01 14:23:32 -0400] - UpdateStripeIdsOnMarket - Re:Vision (65) - Connecting org BankAccounts - Organization JVA Consulting (3175) - Visa 1709 (528) already has stripe_id: card_15wwqt2VpjOYk6Tm83uwzOSd
-[2015-06-01 14:23:32 -0400] - UpdateStripeIdsOnMarket - Re:Vision (65) - Connecting org BankAccounts - Organization Claire Slattery-Quintanilla (3155) - MasterCard 6034 (449) already has stripe_id: card_15ic9t2VpjOYk6TmVsU39gMR
-[2015-06-01 14:23:32 -0400] - UpdateStripeIdsOnMarket - Re:Vision (65) - Connecting org BankAccounts - Organization Katie Knoll (3113) - Visa 3592 (525) already has stripe_id: card_15whcr2VpjOYk6TmqRqDzTAP
-[2015-06-01 14:23:32 -0400] - UpdateStripeIdsOnMarket - Re:Vision (65) - Connecting org BankAccounts - Organization Kristin Lacy  (3076) - Visa 1665 (452) already has stripe_id: card_15ic9y2VpjOYk6TmPcvsQ5D3
-[2015-06-01 14:23:32 -0400] - UpdateStripeIdsOnMarket - Re:Vision (65) - Connecting org BankAccounts - Organization Kristin Lacy  (3076) - Visa 8327 (453) already has stripe_id: card_15icA52VpjOYk6TmBReTS0Ue
-[2015-06-01 14:23:32 -0400] - UpdateStripeIdsOnMarket - Re:Vision (65) - Connecting org BankAccounts - Organization Paige & Conroy (3067) - MasterCard 5953 (438) already has stripe_id: card_15ic9v2VpjOYk6TmTEgYplxP
-[2015-06-01 14:23:32 -0400] - UpdateStripeIdsOnMarket - Re:Vision (65) - Connecting org BankAccounts - Organization Home (3066) - Visa 0534 (526) already has stripe_id: card_15whgZ2VpjOYk6TmIwmXP5er
-[2015-06-01 14:23:32 -0400] - UpdateStripeIdsOnMarket - Re:Vision (65) - Connecting org BankAccounts - Organization Martha Medrano (3063) - MasterCard 4695 (437) already has stripe_id: card_15ic9v2VpjOYk6TmmPvKtOzw
-[2015-06-01 14:23:32 -0400] - UpdateStripeIdsOnMarket - Re:Vision (65) - Connecting org BankAccounts - Organization Martha Medrano (3063) - MasterCard 7654 (522) already has stripe_id: card_15vpV62VpjOYk6TmrCYHVkXY
-[2015-06-01 14:23:32 -0400] - UpdateStripeIdsOnMarket - Re:Vision (65) - Connecting org BankAccounts - Organization Sarah Parmar (3050) - American Express 7110 (435) already has stripe_id: card_15ic9y2VpjOYk6TmJCgTN6C1
-[2015-06-01 14:23:32 -0400] - UpdateStripeIdsOnMarket - Re:Vision (65) - Connecting org BankAccounts - Organization Family McGill (3045) - Visa 3663 (467) already has stripe_id: card_15jW3R2VpjOYk6TmkZbhkkpS
-[2015-06-01 14:23:32 -0400] - UpdateStripeIdsOnMarket - Re:Vision (65) - Connecting org BankAccounts - Organization Elizabeth Mcguire- I am not an organization (3039) - Visa 9785 (432) already has stripe_id: card_15ic9y2VpjOYk6TmvnQs4KXi
-[2015-06-01 14:23:32 -0400] - UpdateStripeIdsOnMarket - Re:Vision (65) - Connecting org BankAccounts - Organization Boeke-Kavanagh Family (3038) - Visa 1360 (431) already has stripe_id: card_15ic9s2VpjOYk6TmkSMRTfV6
-[2015-06-01 14:23:32 -0400] - UpdateStripeIdsOnMarket - Re:Vision (65) - Connecting org BankAccounts - Organization Tamara Arredondo (3024) - Visa 2552 (428) already has stripe_id: card_15icAj2VpjOYk6TmYe9BBvtx
-[2015-06-01 14:23:32 -0400] - UpdateStripeIdsOnMarket - Re:Vision (65) - Connecting org BankAccounts - Organization Advantage (3023) - Visa 1303 (472) already has stripe_id: card_15k3402VpjOYk6TmRlBZG6Fm
-[2015-06-01 14:23:33 -0400] - UpdateStripeIdsOnMarket - Re:Vision (65) - Connecting org BankAccounts - Organization Mariah Shell (3005) - Visa 7966 (558) already has stripe_id: card_164G8w2VpjOYk6TmNtYdlrzT
-[2015-06-01 14:23:33 -0400] - UpdateStripeIdsOnMarket - Re:Vision (65) - Connecting org BankAccounts - Organization Elin Curry (2999) - Visa 9134 (486) already has stripe_id: card_15p5Og2VpjOYk6TmnkaGxjoT
-[2015-06-01 14:23:33 -0400] - UpdateStripeIdsOnMarket - Re:Vision (65) - Connecting org BankAccounts - Organization Marissa Jaross (2998) - Visa 1760 (500) already has stripe_id: card_15rbhe2VpjOYk6Tmzw5VNq6D
-[2015-06-01 14:23:33 -0400] - UpdateStripeIdsOnMarket - Re:Vision (65) - Connecting org BankAccounts - Organization Megan Lloyd (2997) - Visa 4692 (434) already has stripe_id: card_15ic9v2VpjOYk6Tm08nFlaNw
-[2015-06-01 14:23:33 -0400] - UpdateStripeIdsOnMarket - Re:Vision (65) - Connecting org BankAccounts - Organization Myra (2996) - Visa 8161 (429) already has stripe_id: card_15ie0x2VpjOYk6TmI8nGf7sz
-[2015-06-01 14:23:33 -0400] - UpdateStripeIdsOnMarket - Re:Vision (65) - Connecting org BankAccounts - Organization Lauren Welch (2984) - Visa 0790 (501) already has stripe_id: card_15rbyh2VpjOYk6TmAmJKd43P
-[2015-06-01 14:23:33 -0400] - UpdateStripeIdsOnMarket - Re:Vision (65) - Connecting org BankAccounts - Organization Kim Massey (2980) - MasterCard 8177 (425) already has stripe_id: card_15icA72VpjOYk6TmzfUKsNEo
-[2015-06-01 14:23:33 -0400] - UpdateStripeIdsOnMarket - Re:Vision (65) - Connecting org BankAccounts - Organization Sara Cougill (2971) - Visa 4667 (433) already has stripe_id: card_15ic9u2VpjOYk6TmqNUeDVo4
-[2015-06-01 14:23:33 -0400] - UpdateStripeIdsOnMarket - Re:Vision (65) - Connecting org BankAccounts - Organization Pelan Household (2965) - Visa 8342 (450) already has stripe_id: card_15ic9q2VpjOYk6TmiNihn3g0
-[2015-06-01 14:23:33 -0400] - UpdateStripeIdsOnMarket - Re:Vision (65) - Connecting org BankAccounts - Organization Joseph Teipel (2920) - Visa 5490 (482) already has stripe_id: card_15mrxa2VpjOYk6TmbYvSWiF5
-[2015-06-01 14:23:33 -0400] - UpdateStripeIdsOnMarket - Re:Vision (65) - Connecting org BankAccounts - Organization Kornacki Household (3016) - Visa 0435 (426) already has stripe_id: card_15ic9x2VpjOYk6Tm6MWnuDNn
+[2015-06-08 12:26:13 -0400] - UpdateStripeIdsOnMarket - Re:Vision (65) - ====================================================================================================
+[2015-06-08 12:26:13 -0400] - UpdateStripeIdsOnMarket - Re:Vision (65) -  Re:Vision (65)
+[2015-06-08 12:26:13 -0400] - UpdateStripeIdsOnMarket - Re:Vision (65) -  Updating stripe IDs for market, orgs and bank accounts.
+[2015-06-08 12:26:13 -0400] - UpdateStripeIdsOnMarket - Re:Vision (65) - 
+[2015-06-08 12:26:13 -0400] - UpdateStripeIdsOnMarket - Re:Vision (65) -  Balanced export file: /home/vagrant/git/localorbit/tools/stripe-migration/from_balanced/2015-06-08-1433769720-MP2eXZmrOPof80u3Irf94Wre.csv
+[2015-06-08 12:26:13 -0400] - UpdateStripeIdsOnMarket - Re:Vision (65) - 
+[2015-06-08 12:26:13 -0400] - UpdateStripeIdsOnMarket - Re:Vision (65) -  Rails.env: production
+[2015-06-08 12:26:13 -0400] - UpdateStripeIdsOnMarket - Re:Vision (65) -  Stripe keys:
+[2015-06-08 12:26:13 -0400] - UpdateStripeIdsOnMarket - Re:Vision (65) -   --> STRIPE_PUBLISHABLE_KEY: pk_live_j85VTsrz51POrss3ni460qaf (pk_live_j85VTsrz51POrss3ni460qaf)
+[2015-06-08 12:26:13 -0400] - UpdateStripeIdsOnMarket - Re:Vision (65) - ====================================================================================================
+[2015-06-08 12:26:13 -0400] - UpdateStripeIdsOnMarket - Re:Vision (65) - Connecting market customer - Market already has stripe_customer_id: cus_5uQ5ugkVDzmZ2M
+[2015-06-08 12:26:13 -0400] - UpdateStripeIdsOnMarket - Re:Vision (65) - Connecting market account - Market already has stripe_account_id: acct_15l1yQDQ8hn0P3tB
+[2015-06-08 12:26:13 -0400] - UpdateStripeIdsOnMarket - Re:Vision (65) - Connecting org customers - Organization already has stripe_customer_id: cus_6BtImYCGgoRmh5
+[2015-06-08 12:26:13 -0400] - UpdateStripeIdsOnMarket - Re:Vision (65) - Connecting org customers - Organization already has stripe_customer_id: cus_6B71n28j7VvTlU
+[2015-06-08 12:26:13 -0400] - UpdateStripeIdsOnMarket - Re:Vision (65) - Connecting org customers - Organization already has stripe_customer_id: cus_69eEQh9RBBldMq
+[2015-06-08 12:26:13 -0400] - UpdateStripeIdsOnMarket - Re:Vision (65) - Connecting org customers - Organization already has stripe_customer_id: cus_69IDIiIGTnOLOS
+[2015-06-08 12:26:13 -0400] - UpdateStripeIdsOnMarket - Re:Vision (65) - Connecting org customers - Organization already has stripe_customer_id: cus_6JSHfjjVGm22fQ
+[2015-06-08 12:26:13 -0400] - UpdateStripeIdsOnMarket - Re:Vision (65) - Connecting org customers - Organization already has stripe_customer_id: cus_65uNiQ70UvOjEF
+[2015-06-08 12:26:13 -0400] - UpdateStripeIdsOnMarket - Re:Vision (65) - Connecting org customers - Organization already has stripe_customer_id: cus_632TnvV5nYdU6M
+[2015-06-08 12:26:13 -0400] - UpdateStripeIdsOnMarket - Re:Vision (65) - Connecting org customers - Organization already has stripe_customer_id: cus_69F6SbP4AFLa2l
+[2015-06-08 12:26:13 -0400] - UpdateStripeIdsOnMarket - Re:Vision (65) - Connecting org customers - Organization already has stripe_customer_id: cus_5yO15cJ2TMTeJP
+[2015-06-08 12:26:13 -0400] - UpdateStripeIdsOnMarket - Re:Vision (65) - Connecting org customers - Organization already has stripe_customer_id: cus_5yNyg35UG33Gn3
+[2015-06-08 12:26:13 -0400] - UpdateStripeIdsOnMarket - Re:Vision (65) - Connecting org customers - Organization already has stripe_customer_id: cus_5y1kwBE1hPRFde
+[2015-06-08 12:26:13 -0400] - UpdateStripeIdsOnMarket - Re:Vision (65) - Connecting org customers - Organization already has stripe_customer_id: cus_5voxyGC2wlUkaP
+[2015-06-08 12:26:13 -0400] - UpdateStripeIdsOnMarket - Re:Vision (65) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ6GyzWwoXKFK
+[2015-06-08 12:26:13 -0400] - UpdateStripeIdsOnMarket - Re:Vision (65) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ5gfl0J5UWJL
+[2015-06-08 12:26:13 -0400] - UpdateStripeIdsOnMarket - Re:Vision (65) - Connecting org customers - Organization already has stripe_customer_id: cus_69FLYjo8CVOH5t
+[2015-06-08 12:26:13 -0400] - UpdateStripeIdsOnMarket - Re:Vision (65) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ5pMwPCoNPwq
+[2015-06-08 12:26:13 -0400] - UpdateStripeIdsOnMarket - Re:Vision (65) - Connecting org customers - Organization already has stripe_customer_id: cus_68zc5RUEgmREoy
+[2015-06-08 12:26:13 -0400] - UpdateStripeIdsOnMarket - Re:Vision (65) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ55uW28xQn5G
+[2015-06-08 12:26:13 -0400] - UpdateStripeIdsOnMarket - Re:Vision (65) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ5jAN0d3sqdB
+[2015-06-08 12:26:13 -0400] - UpdateStripeIdsOnMarket - Re:Vision (65) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ5qQrU9wKxz7
+[2015-06-08 12:26:13 -0400] - UpdateStripeIdsOnMarket - Re:Vision (65) - Connecting org customers - Organization already has stripe_customer_id: cus_68zflwPVwDrDKn
+[2015-06-08 12:26:13 -0400] - UpdateStripeIdsOnMarket - Re:Vision (65) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ52wv8plosPY
+[2015-06-08 12:26:13 -0400] - UpdateStripeIdsOnMarket - Re:Vision (65) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ5j8ynDtLMVw
+[2015-06-08 12:26:13 -0400] - UpdateStripeIdsOnMarket - Re:Vision (65) - Connecting org customers - Organization already has stripe_customer_id: cus_5vMcSiRzBSrtQh
+[2015-06-08 12:26:13 -0400] - UpdateStripeIdsOnMarket - Re:Vision (65) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ594M41qxY8F
+[2015-06-08 12:26:13 -0400] - UpdateStripeIdsOnMarket - Re:Vision (65) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ5AY71PUUbyO
+[2015-06-08 12:26:13 -0400] - UpdateStripeIdsOnMarket - Re:Vision (65) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ6vZbGGsclQy
+[2015-06-08 12:26:13 -0400] - UpdateStripeIdsOnMarket - Re:Vision (65) - Connecting org customers - Organization already has stripe_customer_id: cus_5vrMcOu41r6mdB
+[2015-06-08 12:26:13 -0400] - UpdateStripeIdsOnMarket - Re:Vision (65) - Connecting org customers - Organization already has stripe_customer_id: cus_6Gnkd5h9Bh68Bo
+[2015-06-08 12:26:13 -0400] - UpdateStripeIdsOnMarket - Re:Vision (65) - Connecting org customers - Organization already has stripe_customer_id: cus_617FsPH4kIWxNl
+[2015-06-08 12:26:13 -0400] - UpdateStripeIdsOnMarket - Re:Vision (65) - Connecting org customers - Organization already has stripe_customer_id: cus_63j9r5OJwfMmbG
+[2015-06-08 12:26:13 -0400] - UpdateStripeIdsOnMarket - Re:Vision (65) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ5mhm7rTYqs1
+[2015-06-08 12:26:13 -0400] - UpdateStripeIdsOnMarket - Re:Vision (65) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ5tslP5c42N6
+[2015-06-08 12:26:13 -0400] - UpdateStripeIdsOnMarket - Re:Vision (65) - Connecting org customers - Organization already has stripe_customer_id: cus_63jReEFaLptx1E
+[2015-06-08 12:26:14 -0400] - UpdateStripeIdsOnMarket - Re:Vision (65) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ54Nvik70tqc
+[2015-06-08 12:26:14 -0400] - UpdateStripeIdsOnMarket - Re:Vision (65) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ5L714J5oWZo
+[2015-06-08 12:26:14 -0400] - UpdateStripeIdsOnMarket - Re:Vision (65) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ5f3xLReYhXM
+[2015-06-08 12:26:14 -0400] - UpdateStripeIdsOnMarket - Re:Vision (65) - Connecting org customers - Organization already has stripe_customer_id: cus_5ypc52BNQZJOC7
+[2015-06-08 12:26:14 -0400] - UpdateStripeIdsOnMarket - Re:Vision (65) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4wRCTVGfBJr
+[2015-06-08 12:26:14 -0400] - UpdateStripeIdsOnMarket - Re:Vision (65) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4MnYlh6y2nf
+[2015-06-08 12:26:14 -0400] - UpdateStripeIdsOnMarket - Re:Vision (65) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4V7pTyHudE1
+[2015-06-08 12:26:14 -0400] - UpdateStripeIdsOnMarket - Re:Vision (65) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ5H5w2pVNj2w
+[2015-06-08 12:26:14 -0400] - UpdateStripeIdsOnMarket - Re:Vision (65) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ590y9OsQLw5
+[2015-06-08 12:26:14 -0400] - UpdateStripeIdsOnMarket - Re:Vision (65) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ5xIPl1VH8jW
+[2015-06-08 12:26:14 -0400] - UpdateStripeIdsOnMarket - Re:Vision (65) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ48d6yce5M5u
+[2015-06-08 12:26:14 -0400] - UpdateStripeIdsOnMarket - Re:Vision (65) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ5559GZNQYo1
+[2015-06-08 12:26:14 -0400] - UpdateStripeIdsOnMarket - Re:Vision (65) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ5SwzdscrkNS
+[2015-06-08 12:26:14 -0400] - UpdateStripeIdsOnMarket - Re:Vision (65) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ5iM5l5GbSBJ
+[2015-06-08 12:26:14 -0400] - UpdateStripeIdsOnMarket - Re:Vision (65) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4T3d0gxqWQ0
+[2015-06-08 12:26:14 -0400] - UpdateStripeIdsOnMarket - Re:Vision (65) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4rO788OX5zG
+[2015-06-08 12:26:14 -0400] - UpdateStripeIdsOnMarket - Re:Vision (65) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4TaIZHYbpVC
+[2015-06-08 12:26:14 -0400] - UpdateStripeIdsOnMarket - Re:Vision (65) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4hOUCKr3Hfv
+[2015-06-08 12:26:14 -0400] - UpdateStripeIdsOnMarket - Re:Vision (65) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4OigZ6AnZzd
+[2015-06-08 12:26:14 -0400] - UpdateStripeIdsOnMarket - Re:Vision (65) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ5N1am5yl5We
+[2015-06-08 12:26:14 -0400] - UpdateStripeIdsOnMarket - Re:Vision (65) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4JnZ4V90CxF
+[2015-06-08 12:26:14 -0400] - UpdateStripeIdsOnMarket - Re:Vision (65) - Connecting market BankAccounts - DENVER COMMUNITY CREDIT UNION 3805 (387) already has stripe_id: ba_15ic9t2VpjOYk6TmYGk7lhk6
+[2015-06-08 12:26:14 -0400] - UpdateStripeIdsOnMarket - Re:Vision (65) - Connecting org BankAccounts - Organization none (3727) - Visa 2489 (536) already has stripe_id: card_15zVWP2VpjOYk6Tmrxr6dn1U
+[2015-06-08 12:26:14 -0400] - UpdateStripeIdsOnMarket - Re:Vision (65) - Connecting org BankAccounts - Organization Mallory Howard (3670) - Visa 7886 (529) already has stripe_id: card_15xKwS2VpjOYk6TmwTOOhcAs
+[2015-06-08 12:26:14 -0400] - UpdateStripeIdsOnMarket - Re:Vision (65) - Connecting org BankAccounts - Organization Jeremy Katz (3590) - Visa 5744 (568) already has stripe_id: card_166pMY2VpjOYk6TmHTcNmO7t
+[2015-06-08 12:26:14 -0400] - UpdateStripeIdsOnMarket - Re:Vision (65) - Connecting org BankAccounts - Organization Lucretia Krause (3456) - American Express 1011 (494) already has stripe_id: card_15qwOt2VpjOYk6TmMGxyNwNu
+[2015-06-08 12:26:14 -0400] - UpdateStripeIdsOnMarket - Re:Vision (65) - Connecting org BankAccounts - Organization Erin Raney (3364) - RED ROCKS CREDIT UNION 1896 (527) already has stripe_id: ba_15wwci2VpjOYk6TmnsFHC2oJ
+[2015-06-08 12:26:14 -0400] - UpdateStripeIdsOnMarket - Re:Vision (65) - Connecting org BankAccounts - Organization Matilde's House (3203) - Visa 6756 (471) already has stripe_id: card_15k14F2VpjOYk6TmzRQyKJ2N
+[2015-06-08 12:26:14 -0400] - UpdateStripeIdsOnMarket - Re:Vision (65) - Connecting org BankAccounts - Organization Mayra's House (3202) - Visa 5334 (461) already has stripe_id: card_15icAh2VpjOYk6TmvPoQIhMr
+[2015-06-08 12:26:14 -0400] - UpdateStripeIdsOnMarket - Re:Vision (65) - Connecting org BankAccounts - Organization Revision (3201) - MasterCard 0535 (460) already has stripe_id: card_15icAA2VpjOYk6TmHGrd0Ki5
+[2015-06-08 12:26:14 -0400] - UpdateStripeIdsOnMarket - Re:Vision (65) - Connecting org BankAccounts - Organization Revision (3201) - Visa 0248 (515) already has stripe_id: card_15u3Gb2VpjOYk6Tm3sUmVYuJ
+[2015-06-08 12:26:14 -0400] - UpdateStripeIdsOnMarket - Re:Vision (65) - Connecting org BankAccounts - Organization JVA Consulting (3175) - Visa 1709 (528) already has stripe_id: card_15wwqt2VpjOYk6Tm83uwzOSd
+[2015-06-08 12:26:14 -0400] - UpdateStripeIdsOnMarket - Re:Vision (65) - Connecting org BankAccounts - Organization Claire Slattery-Quintanilla (3155) - MasterCard 6034 (449) already has stripe_id: card_15ic9t2VpjOYk6TmVsU39gMR
+[2015-06-08 12:26:14 -0400] - UpdateStripeIdsOnMarket - Re:Vision (65) - Connecting org BankAccounts - Organization Katie Knoll (3113) - Visa 3592 (525) already has stripe_id: card_15whcr2VpjOYk6TmqRqDzTAP
+[2015-06-08 12:26:14 -0400] - UpdateStripeIdsOnMarket - Re:Vision (65) - Connecting org BankAccounts - Organization Kristin Lacy  (3076) - Visa 1665 (452) already has stripe_id: card_15ic9y2VpjOYk6TmPcvsQ5D3
+[2015-06-08 12:26:14 -0400] - UpdateStripeIdsOnMarket - Re:Vision (65) - Connecting org BankAccounts - Organization Kristin Lacy  (3076) - Visa 8327 (453) already has stripe_id: card_15icA52VpjOYk6TmBReTS0Ue
+[2015-06-08 12:26:14 -0400] - UpdateStripeIdsOnMarket - Re:Vision (65) - Connecting org BankAccounts - Organization Paige & Conroy (3067) - MasterCard 5953 (438) already has stripe_id: card_15ic9v2VpjOYk6TmTEgYplxP
+[2015-06-08 12:26:14 -0400] - UpdateStripeIdsOnMarket - Re:Vision (65) - Connecting org BankAccounts - Organization Home (3066) - Visa 0534 (526) already has stripe_id: card_15whgZ2VpjOYk6TmIwmXP5er
+[2015-06-08 12:26:14 -0400] - UpdateStripeIdsOnMarket - Re:Vision (65) - Connecting org BankAccounts - Organization Martha Medrano (3063) - MasterCard 4695 (437) already has stripe_id: card_15ic9v2VpjOYk6TmmPvKtOzw
+[2015-06-08 12:26:14 -0400] - UpdateStripeIdsOnMarket - Re:Vision (65) - Connecting org BankAccounts - Organization Martha Medrano (3063) - MasterCard 7654 (522) already has stripe_id: card_15vpV62VpjOYk6TmrCYHVkXY
+[2015-06-08 12:26:14 -0400] - UpdateStripeIdsOnMarket - Re:Vision (65) - Connecting org BankAccounts - Organization Sarah Parmar (3050) - American Express 7110 (435) already has stripe_id: card_15ic9y2VpjOYk6TmJCgTN6C1
+[2015-06-08 12:26:14 -0400] - UpdateStripeIdsOnMarket - Re:Vision (65) - Connecting org BankAccounts - Organization Family McGill (3045) - Visa 3663 (467) already has stripe_id: card_15jW3R2VpjOYk6TmkZbhkkpS
+[2015-06-08 12:26:14 -0400] - UpdateStripeIdsOnMarket - Re:Vision (65) - Connecting org BankAccounts - Organization Elizabeth Mcguire- I am not an organization (3039) - Visa 9785 (432) already has stripe_id: card_15ic9y2VpjOYk6TmvnQs4KXi
+[2015-06-08 12:26:14 -0400] - UpdateStripeIdsOnMarket - Re:Vision (65) - Connecting org BankAccounts - Organization Boeke-Kavanagh Family (3038) - Visa 1360 (431) already has stripe_id: card_15ic9s2VpjOYk6TmkSMRTfV6
+[2015-06-08 12:26:14 -0400] - UpdateStripeIdsOnMarket - Re:Vision (65) - Connecting org BankAccounts - Organization Tamara Arredondo (3024) - Visa 2552 (428) already has stripe_id: card_15icAj2VpjOYk6TmYe9BBvtx
+[2015-06-08 12:26:14 -0400] - UpdateStripeIdsOnMarket - Re:Vision (65) - Connecting org BankAccounts - Organization Advantage (3023) - Visa 1303 (472) already has stripe_id: card_15k3402VpjOYk6TmRlBZG6Fm
+[2015-06-08 12:26:14 -0400] - UpdateStripeIdsOnMarket - Re:Vision (65) - Connecting org BankAccounts - Organization Mariah Shell (3005) - Visa 7966 (558) already has stripe_id: card_164G8w2VpjOYk6TmNtYdlrzT
+[2015-06-08 12:26:14 -0400] - UpdateStripeIdsOnMarket - Re:Vision (65) - Connecting org BankAccounts - Organization Elin Curry (2999) - Visa 9134 (486) already has stripe_id: card_15p5Og2VpjOYk6TmnkaGxjoT
+[2015-06-08 12:26:14 -0400] - UpdateStripeIdsOnMarket - Re:Vision (65) - Connecting org BankAccounts - Organization Marissa Jaross (2998) - Visa 1760 (500) already has stripe_id: card_15rbhe2VpjOYk6Tmzw5VNq6D
+[2015-06-08 12:26:14 -0400] - UpdateStripeIdsOnMarket - Re:Vision (65) - Connecting org BankAccounts - Organization Megan Lloyd (2997) - Visa 4692 (434) already has stripe_id: card_15ic9v2VpjOYk6Tm08nFlaNw
+[2015-06-08 12:26:14 -0400] - UpdateStripeIdsOnMarket - Re:Vision (65) - Connecting org BankAccounts - Organization Myra (2996) - Visa 8161 (429) already has stripe_id: card_15ie0x2VpjOYk6TmI8nGf7sz
+[2015-06-08 12:26:14 -0400] - UpdateStripeIdsOnMarket - Re:Vision (65) - Connecting org BankAccounts - Organization Lauren Welch (2984) - Visa 0790 (501) already has stripe_id: card_15rbyh2VpjOYk6TmAmJKd43P
+[2015-06-08 12:26:14 -0400] - UpdateStripeIdsOnMarket - Re:Vision (65) - Connecting org BankAccounts - Organization Kim Massey (2980) - MasterCard 8177 (425) already has stripe_id: card_15icA72VpjOYk6TmzfUKsNEo
+[2015-06-08 12:26:14 -0400] - UpdateStripeIdsOnMarket - Re:Vision (65) - Connecting org BankAccounts - Organization Sara Cougill (2971) - Visa 4667 (433) already has stripe_id: card_15ic9u2VpjOYk6TmqNUeDVo4
+[2015-06-08 12:26:14 -0400] - UpdateStripeIdsOnMarket - Re:Vision (65) - Connecting org BankAccounts - Organization Pelan Household (2965) - Visa 8342 (450) already has stripe_id: card_15ic9q2VpjOYk6TmiNihn3g0
+[2015-06-08 12:26:14 -0400] - UpdateStripeIdsOnMarket - Re:Vision (65) - Connecting org BankAccounts - Organization Joseph Teipel (2920) - Visa 5490 (482) already has stripe_id: card_15mrxa2VpjOYk6TmbYvSWiF5
+[2015-06-08 12:26:14 -0400] - UpdateStripeIdsOnMarket - Re:Vision (65) - Connecting org BankAccounts - Organization Kornacki Household (3016) - Visa 0435 (426) already has stripe_id: card_15ic9x2VpjOYk6Tm6MWnuDNn

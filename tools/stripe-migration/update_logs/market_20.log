@@ -1,24 +1,31 @@
-[2015-06-01 14:22:52 -0400] - UpdateStripeIdsOnMarket - Western U.P. Marketplace (20) - ====================================================================================================
-[2015-06-01 14:22:52 -0400] - UpdateStripeIdsOnMarket - Western U.P. Marketplace (20) -  Western U.P. Marketplace (20)
-[2015-06-01 14:22:52 -0400] - UpdateStripeIdsOnMarket - Western U.P. Marketplace (20) -  Updating stripe IDs for market, orgs and bank accounts.
-[2015-06-01 14:22:52 -0400] - UpdateStripeIdsOnMarket - Western U.P. Marketplace (20) - 
-[2015-06-01 14:22:52 -0400] - UpdateStripeIdsOnMarket - Western U.P. Marketplace (20) -  Balanced export file: /home/vagrant/git/localorbit/tools/stripe-migration/from_balanced/2015-06-01-1433181180-MP2eXZmrOPof80u3Irf94Wre.csv
-[2015-06-01 14:22:52 -0400] - UpdateStripeIdsOnMarket - Western U.P. Marketplace (20) - 
-[2015-06-01 14:22:52 -0400] - UpdateStripeIdsOnMarket - Western U.P. Marketplace (20) -  Rails.env: production
-[2015-06-01 14:22:52 -0400] - UpdateStripeIdsOnMarket - Western U.P. Marketplace (20) -  Stripe keys:
-[2015-06-01 14:22:52 -0400] - UpdateStripeIdsOnMarket - Western U.P. Marketplace (20) -   --> STRIPE_PUBLISHABLE_KEY: pk_live_j85VTsrz51POrss3ni460qaf (pk_live_j85VTsrz51POrss3ni460qaf)
-[2015-06-01 14:22:52 -0400] - UpdateStripeIdsOnMarket - Western U.P. Marketplace (20) - ====================================================================================================
-[2015-06-01 14:22:52 -0400] - UpdateStripeIdsOnMarket - Western U.P. Marketplace (20) - !! Market has no balanced_customer_uri; not updating its stripe_customer_id or stripe_account_id
-[2015-06-01 14:22:52 -0400] - UpdateStripeIdsOnMarket - Western U.P. Marketplace (20) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4BK9R0HsDiT
-[2015-06-01 14:22:52 -0400] - UpdateStripeIdsOnMarket - Western U.P. Marketplace (20) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ47BlAU0yJSR
-[2015-06-01 14:22:52 -0400] - UpdateStripeIdsOnMarket - Western U.P. Marketplace (20) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4vvr8SGXEke
-[2015-06-01 14:22:52 -0400] - UpdateStripeIdsOnMarket - Western U.P. Marketplace (20) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ5Hce2yWANaF
-[2015-06-01 14:22:52 -0400] - UpdateStripeIdsOnMarket - Western U.P. Marketplace (20) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4YFv0Xi1CqB
-[2015-06-01 14:22:52 -0400] - UpdateStripeIdsOnMarket - Western U.P. Marketplace (20) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4yRCqNqxEIq
-[2015-06-01 14:22:52 -0400] - UpdateStripeIdsOnMarket - Western U.P. Marketplace (20) - Connecting org customers - Organization already has stripe_customer_id: cus_5vQutq2KInMfpL
-[2015-06-01 14:22:52 -0400] - UpdateStripeIdsOnMarket - Western U.P. Marketplace (20) - Connecting org BankAccounts - Organization MTU Dining Services (2192) - Visa 5765 (279) already has stripe_id: card_15ic932VpjOYk6Tm5gc6nGUp
-[2015-06-01 14:22:52 -0400] - UpdateStripeIdsOnMarket - Western U.P. Marketplace (20) - Connecting org BankAccounts - Organization MTU Dining Services (2192) - Visa 4450 (273) already has stripe_id: card_15ic9C2VpjOYk6TmwVXLsCdt
-[2015-06-01 14:22:52 -0400] - UpdateStripeIdsOnMarket - Western U.P. Marketplace (20) - Connecting org BankAccounts - Organization Michigan Tech Catering (1965) - Visa 6128 (321) already has stripe_id: card_15ic9B2VpjOYk6TmacQfwTUe
-[2015-06-01 14:22:52 -0400] - UpdateStripeIdsOnMarket - Western U.P. Marketplace (20) - Connecting org BankAccounts - Organization Wixtrom Natural Farms (1061) - FIRST NATIONAL BANK 5298 (272) already has stripe_id: ba_15ic932VpjOYk6Tmztm8OZ9r
-[2015-06-01 14:22:52 -0400] - UpdateStripeIdsOnMarket - Western U.P. Marketplace (20) - Connecting org BankAccounts - Organization Seeds & Spores Family Farm (1062) - MARQUETTE COMMUNITY FEDERAL CR UN 1621 (193) already has stripe_id: ba_15ic972VpjOYk6Tmd8wQUZwv
-[2015-06-01 14:22:52 -0400] - UpdateStripeIdsOnMarket - Western U.P. Marketplace (20) - Connecting org BankAccounts - Organization Wintergreen Farm (1087) - THE MINERS STATE BANK 6629 (216) already has stripe_id: ba_15l2532VpjOYk6TmQCWLUCcx
+[2015-06-08 12:25:43 -0400] - UpdateStripeIdsOnMarket - Western U.P. Marketplace (20) - ====================================================================================================
+[2015-06-08 12:25:43 -0400] - UpdateStripeIdsOnMarket - Western U.P. Marketplace (20) -  Western U.P. Marketplace (20)
+[2015-06-08 12:25:43 -0400] - UpdateStripeIdsOnMarket - Western U.P. Marketplace (20) -  Updating stripe IDs for market, orgs and bank accounts.
+[2015-06-08 12:25:43 -0400] - UpdateStripeIdsOnMarket - Western U.P. Marketplace (20) - 
+[2015-06-08 12:25:43 -0400] - UpdateStripeIdsOnMarket - Western U.P. Marketplace (20) -  Balanced export file: /home/vagrant/git/localorbit/tools/stripe-migration/from_balanced/2015-06-08-1433769720-MP2eXZmrOPof80u3Irf94Wre.csv
+[2015-06-08 12:25:43 -0400] - UpdateStripeIdsOnMarket - Western U.P. Marketplace (20) - 
+[2015-06-08 12:25:43 -0400] - UpdateStripeIdsOnMarket - Western U.P. Marketplace (20) -  Rails.env: production
+[2015-06-08 12:25:43 -0400] - UpdateStripeIdsOnMarket - Western U.P. Marketplace (20) -  Stripe keys:
+[2015-06-08 12:25:43 -0400] - UpdateStripeIdsOnMarket - Western U.P. Marketplace (20) -   --> STRIPE_PUBLISHABLE_KEY: pk_live_j85VTsrz51POrss3ni460qaf (pk_live_j85VTsrz51POrss3ni460qaf)
+[2015-06-08 12:25:43 -0400] - UpdateStripeIdsOnMarket - Western U.P. Marketplace (20) - ====================================================================================================
+[2015-06-08 12:25:43 -0400] - UpdateStripeIdsOnMarket - Western U.P. Marketplace (20) - !! Market has no balanced_customer_uri; not updating its stripe_customer_id or stripe_account_id
+[2015-06-08 12:25:43 -0400] - UpdateStripeIdsOnMarket - Western U.P. Marketplace (20) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4BK9R0HsDiT
+[2015-06-08 12:25:43 -0400] - UpdateStripeIdsOnMarket - Western U.P. Marketplace (20) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ47BlAU0yJSR
+[2015-06-08 12:25:43 -0400] - UpdateStripeIdsOnMarket - Western U.P. Marketplace (20) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4vvr8SGXEke
+[2015-06-08 12:25:43 -0400] - UpdateStripeIdsOnMarket - Western U.P. Marketplace (20) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ5Hce2yWANaF
+[2015-06-08 12:25:43 -0400] - UpdateStripeIdsOnMarket - Western U.P. Marketplace (20) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4YFv0Xi1CqB
+[2015-06-08 12:25:43 -0400] - UpdateStripeIdsOnMarket - Western U.P. Marketplace (20) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4yRCqNqxEIq
+[2015-06-08 12:25:43 -0400] - UpdateStripeIdsOnMarket - Western U.P. Marketplace (20) - Connecting org customers - Updated Organization Miller Family Farm (1094) stripe_customer_id: cus_5vQuOrOFDWv1K2
+[2015-06-08 12:25:43 -0400] - UpdateStripeIdsOnMarket - Western U.P. Marketplace (20) - Connecting org customers - Updated Organization G & A Farmers Market and Garden Center (1093) stripe_customer_id: cus_5uQ5kF1TEOP5Mk
+[2015-06-08 12:25:43 -0400] - UpdateStripeIdsOnMarket - Western U.P. Marketplace (20) - Connecting org customers - Organization already has stripe_customer_id: cus_5vQutq2KInMfpL
+[2015-06-08 12:25:43 -0400] - UpdateStripeIdsOnMarket - Western U.P. Marketplace (20) - Connecting org customers - Updated Organization Keweenaw Cooperative  (1086) stripe_customer_id: cus_5uQ4snV8UajsCu
+[2015-06-08 12:25:43 -0400] - UpdateStripeIdsOnMarket - Western U.P. Marketplace (20) - Connecting org BankAccounts - Organization MTU Dining Services (2192) - Visa 5765 (279) already has stripe_id: card_15ic932VpjOYk6Tm5gc6nGUp
+[2015-06-08 12:25:43 -0400] - UpdateStripeIdsOnMarket - Western U.P. Marketplace (20) - Connecting org BankAccounts - Organization MTU Dining Services (2192) - Visa 4450 (273) already has stripe_id: card_15ic9C2VpjOYk6TmwVXLsCdt
+[2015-06-08 12:25:43 -0400] - UpdateStripeIdsOnMarket - Western U.P. Marketplace (20) - Connecting org BankAccounts - Organization Michigan Tech Catering (1965) - Visa 6128 (321) already has stripe_id: card_15ic9B2VpjOYk6TmacQfwTUe
+[2015-06-08 12:25:43 -0400] - UpdateStripeIdsOnMarket - Western U.P. Marketplace (20) - Connecting org BankAccounts - Organization Wixtrom Natural Farms (1061) - FIRST NATIONAL BANK 5298 (272) already has stripe_id: ba_15ic932VpjOYk6Tmztm8OZ9r
+[2015-06-08 12:25:43 -0400] - UpdateStripeIdsOnMarket - Western U.P. Marketplace (20) - Connecting org BankAccounts - Organization Seeds & Spores Family Farm (1062) - MARQUETTE COMMUNITY FEDERAL CR UN 1621 (193) already has stripe_id: ba_15ic972VpjOYk6Tmd8wQUZwv
+[2015-06-08 12:25:44 -0400] - UpdateStripeIdsOnMarket - Western U.P. Marketplace (20) - Connecting org BankAccounts - Organization Miller Family Farm (1094) - Updated MICHIGAN TECH EMPL FCU 6080 (63) stripe_id: ba_15l24r2VpjOYk6Tm1KLVq1bT
+[2015-06-08 12:25:44 -0400] - UpdateStripeIdsOnMarket - Western U.P. Marketplace (20) - Connecting org BankAccounts - Organization G & A Farmers Market and Garden Center (1093) - Updated Visa 6912 (310) stripe_id: card_15ic9k2VpjOYk6TmAGZoyR76
+[2015-06-08 12:25:44 -0400] - UpdateStripeIdsOnMarket - Western U.P. Marketplace (20) - Connecting org BankAccounts - Organization G & A Farmers Market and Garden Center (1093) - Updated Visa 6121 (302) stripe_id: card_15ic9m2VpjOYk6TmJdL86WyE
+[2015-06-08 12:25:44 -0400] - UpdateStripeIdsOnMarket - Western U.P. Marketplace (20) - Connecting org BankAccounts - Organization Wintergreen Farm (1087) - THE MINERS STATE BANK 6629 (216) already has stripe_id: ba_15l2532VpjOYk6TmQCWLUCcx
+[2015-06-08 12:25:44 -0400] - UpdateStripeIdsOnMarket - Western U.P. Marketplace (20) - Connecting org BankAccounts - Organization Keweenaw Cooperative  (1086) - Updated WELLS FARGO BANK NA (MICHIGAN) 8804 (209) stripe_id: ba_15ic9F2VpjOYk6TmgdNjFIrT

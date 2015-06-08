@@ -1,47 +1,49 @@
-[2015-06-01 14:23:34 -0400] - UpdateStripeIdsOnMarket - Agricultural Connections (62) - ====================================================================================================
-[2015-06-01 14:23:34 -0400] - UpdateStripeIdsOnMarket - Agricultural Connections (62) -  Agricultural Connections (62)
-[2015-06-01 14:23:34 -0400] - UpdateStripeIdsOnMarket - Agricultural Connections (62) -  Updating stripe IDs for market, orgs and bank accounts.
-[2015-06-01 14:23:34 -0400] - UpdateStripeIdsOnMarket - Agricultural Connections (62) - 
-[2015-06-01 14:23:34 -0400] - UpdateStripeIdsOnMarket - Agricultural Connections (62) -  Balanced export file: /home/vagrant/git/localorbit/tools/stripe-migration/from_balanced/2015-06-01-1433181180-MP2eXZmrOPof80u3Irf94Wre.csv
-[2015-06-01 14:23:34 -0400] - UpdateStripeIdsOnMarket - Agricultural Connections (62) - 
-[2015-06-01 14:23:34 -0400] - UpdateStripeIdsOnMarket - Agricultural Connections (62) -  Rails.env: production
-[2015-06-01 14:23:34 -0400] - UpdateStripeIdsOnMarket - Agricultural Connections (62) -  Stripe keys:
-[2015-06-01 14:23:34 -0400] - UpdateStripeIdsOnMarket - Agricultural Connections (62) -   --> STRIPE_PUBLISHABLE_KEY: pk_live_j85VTsrz51POrss3ni460qaf (pk_live_j85VTsrz51POrss3ni460qaf)
-[2015-06-01 14:23:34 -0400] - UpdateStripeIdsOnMarket - Agricultural Connections (62) - ====================================================================================================
-[2015-06-01 14:23:34 -0400] - UpdateStripeIdsOnMarket - Agricultural Connections (62) - Connecting market customer - Market already has stripe_customer_id: cus_5uQ4cUF14Jaew3
-[2015-06-01 14:23:34 -0400] - UpdateStripeIdsOnMarket - Agricultural Connections (62) - Connecting market account - MISS - No stripe_account_id found for market balanced_customer_uri /v1/customers/CU10gHtd7sdW44VPeoa4gYNV
-[2015-06-01 14:23:34 -0400] - UpdateStripeIdsOnMarket - Agricultural Connections (62) - Connecting org customers - Updated Organization Small Farmers Project (4046) stripe_customer_id: cus_6KyzhedDN0ueBf
-[2015-06-01 14:23:34 -0400] - UpdateStripeIdsOnMarket - Agricultural Connections (62) - Connecting org customers - Organization already has stripe_customer_id: cus_6I2eni8if8U5Hw
-[2015-06-01 14:23:34 -0400] - UpdateStripeIdsOnMarket - Agricultural Connections (62) - Connecting org customers - Organization already has stripe_customer_id: cus_6HFcOKNG9fetuw
-[2015-06-01 14:23:34 -0400] - UpdateStripeIdsOnMarket - Agricultural Connections (62) - Connecting org customers - Organization already has stripe_customer_id: cus_6HDIWB0N3RQZJY
-[2015-06-01 14:23:34 -0400] - UpdateStripeIdsOnMarket - Agricultural Connections (62) - Connecting org customers - Organization already has stripe_customer_id: cus_6GOIvIzL8rGSry
-[2015-06-01 14:23:34 -0400] - UpdateStripeIdsOnMarket - Agricultural Connections (62) - Connecting org customers - Organization already has stripe_customer_id: cus_6IhMWLa1UyxDgs
-[2015-06-01 14:23:34 -0400] - UpdateStripeIdsOnMarket - Agricultural Connections (62) - Connecting org customers - Organization already has stripe_customer_id: cus_6EFAcOokV0yDAG
-[2015-06-01 14:23:34 -0400] - UpdateStripeIdsOnMarket - Agricultural Connections (62) - Connecting org customers - Organization already has stripe_customer_id: cus_6BzC9OYOygqQQS
-[2015-06-01 14:23:34 -0400] - UpdateStripeIdsOnMarket - Agricultural Connections (62) - Connecting org customers - Organization already has stripe_customer_id: cus_69vveLguTIB5Jj
-[2015-06-01 14:23:34 -0400] - UpdateStripeIdsOnMarket - Agricultural Connections (62) - Connecting org customers - Organization already has stripe_customer_id: cus_686dgPCtAm0AVq
-[2015-06-01 14:23:34 -0400] - UpdateStripeIdsOnMarket - Agricultural Connections (62) - Connecting org customers - Organization already has stripe_customer_id: cus_686ZuQAsLhGHTp
-[2015-06-01 14:23:34 -0400] - UpdateStripeIdsOnMarket - Agricultural Connections (62) - Connecting org customers - Organization already has stripe_customer_id: cus_686Qli9H1Y4yv3
-[2015-06-01 14:23:34 -0400] - UpdateStripeIdsOnMarket - Agricultural Connections (62) - Connecting org customers - Organization already has stripe_customer_id: cus_686OosjtmSl29k
-[2015-06-01 14:23:34 -0400] - UpdateStripeIdsOnMarket - Agricultural Connections (62) - Connecting org customers - Organization already has stripe_customer_id: cus_65thwM342WaxLH
-[2015-06-01 14:23:34 -0400] - UpdateStripeIdsOnMarket - Agricultural Connections (62) - Connecting org customers - Organization already has stripe_customer_id: cus_65ehLZOlXUecp3
-[2015-06-01 14:23:37 -0400] - UpdateStripeIdsOnMarket - Agricultural Connections (62) - Connecting org customers - Organization already has stripe_customer_id: cus_65efSU90eQE56V
-[2015-06-01 14:23:37 -0400] - UpdateStripeIdsOnMarket - Agricultural Connections (62) - Connecting org customers - Organization already has stripe_customer_id: cus_65uKx87sZerljO
-[2015-06-01 14:23:37 -0400] - UpdateStripeIdsOnMarket - Agricultural Connections (62) - Connecting org customers - Organization already has stripe_customer_id: cus_62KQjlFzfGtKK1
-[2015-06-01 14:23:37 -0400] - UpdateStripeIdsOnMarket - Agricultural Connections (62) - Connecting org customers - Organization already has stripe_customer_id: cus_62KQvYLXIP0w8k
-[2015-06-01 14:23:37 -0400] - UpdateStripeIdsOnMarket - Agricultural Connections (62) - Connecting org customers - Organization already has stripe_customer_id: cus_5zZfjQLJjGMDqQ
-[2015-06-01 14:23:37 -0400] - UpdateStripeIdsOnMarket - Agricultural Connections (62) - Connecting org customers - Organization already has stripe_customer_id: cus_5wygRiru0cotJV
-[2015-06-01 14:23:37 -0400] - UpdateStripeIdsOnMarket - Agricultural Connections (62) - Connecting org customers - Organization already has stripe_customer_id: cus_5vYY1rUMNwzJtZ
-[2015-06-01 14:23:37 -0400] - UpdateStripeIdsOnMarket - Agricultural Connections (62) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ5Q7ju4kapsD
-[2015-06-01 14:23:37 -0400] - UpdateStripeIdsOnMarket - Agricultural Connections (62) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ57T6Jdhmrhz
-[2015-06-01 14:23:37 -0400] - UpdateStripeIdsOnMarket - Agricultural Connections (62) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ5RQOYNGi8HB
-[2015-06-01 14:23:37 -0400] - UpdateStripeIdsOnMarket - Agricultural Connections (62) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4sobTfJDmb1
-[2015-06-01 14:23:37 -0400] - UpdateStripeIdsOnMarket - Agricultural Connections (62) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ47yvCAKupte
-[2015-06-01 14:23:37 -0400] - UpdateStripeIdsOnMarket - Agricultural Connections (62) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4e8suqbIENC
-[2015-06-01 14:23:37 -0400] - UpdateStripeIdsOnMarket - Agricultural Connections (62) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4d7MZojxZff
-[2015-06-01 14:23:37 -0400] - UpdateStripeIdsOnMarket - Agricultural Connections (62) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ5JOhBuBAM7G
-[2015-06-01 14:23:37 -0400] - UpdateStripeIdsOnMarket - Agricultural Connections (62) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ5FjWs1wLydZ
-[2015-06-01 14:23:37 -0400] - UpdateStripeIdsOnMarket - Agricultural Connections (62) - Connecting market BankAccounts - Visa 9914 (410) already has stripe_id: card_15ic9G2VpjOYk6Tm0NYyD0Xe
-[2015-06-01 14:23:37 -0400] - UpdateStripeIdsOnMarket - Agricultural Connections (62) - Connecting org BankAccounts - Organization Fearless Baking (3616) - Visa 8973 (524) already has stripe_id: card_15vwc42VpjOYk6Tm18iHw6yD
-[2015-06-01 14:23:37 -0400] - UpdateStripeIdsOnMarket - Agricultural Connections (62) - Connecting org BankAccounts - Organization The Well Traveled Fork (3615) - HIGH DESERT BANK 1380 (523) already has stripe_id: ba_15vw7Y2VpjOYk6Tm1rvOp5gp
-[2015-06-01 14:23:37 -0400] - UpdateStripeIdsOnMarket - Agricultural Connections (62) - Connecting org BankAccounts - Organization DumpCity Dumplings (3538) - Visa 9214 (518) already has stripe_id: card_15uJuk2VpjOYk6TmnfOc0mel
+[2015-06-08 12:26:17 -0400] - UpdateStripeIdsOnMarket - Agricultural Connections (62) - ====================================================================================================
+[2015-06-08 12:26:17 -0400] - UpdateStripeIdsOnMarket - Agricultural Connections (62) -  Agricultural Connections (62)
+[2015-06-08 12:26:17 -0400] - UpdateStripeIdsOnMarket - Agricultural Connections (62) -  Updating stripe IDs for market, orgs and bank accounts.
+[2015-06-08 12:26:17 -0400] - UpdateStripeIdsOnMarket - Agricultural Connections (62) - 
+[2015-06-08 12:26:17 -0400] - UpdateStripeIdsOnMarket - Agricultural Connections (62) -  Balanced export file: /home/vagrant/git/localorbit/tools/stripe-migration/from_balanced/2015-06-08-1433769720-MP2eXZmrOPof80u3Irf94Wre.csv
+[2015-06-08 12:26:17 -0400] - UpdateStripeIdsOnMarket - Agricultural Connections (62) - 
+[2015-06-08 12:26:17 -0400] - UpdateStripeIdsOnMarket - Agricultural Connections (62) -  Rails.env: production
+[2015-06-08 12:26:17 -0400] - UpdateStripeIdsOnMarket - Agricultural Connections (62) -  Stripe keys:
+[2015-06-08 12:26:17 -0400] - UpdateStripeIdsOnMarket - Agricultural Connections (62) -   --> STRIPE_PUBLISHABLE_KEY: pk_live_j85VTsrz51POrss3ni460qaf (pk_live_j85VTsrz51POrss3ni460qaf)
+[2015-06-08 12:26:17 -0400] - UpdateStripeIdsOnMarket - Agricultural Connections (62) - ====================================================================================================
+[2015-06-08 12:26:17 -0400] - UpdateStripeIdsOnMarket - Agricultural Connections (62) - Connecting market customer - Market already has stripe_customer_id: cus_5uQ4cUF14Jaew3
+[2015-06-08 12:26:17 -0400] - UpdateStripeIdsOnMarket - Agricultural Connections (62) - Connecting market account - MISS - No stripe_account_id found for market balanced_customer_uri /v1/customers/CU10gHtd7sdW44VPeoa4gYNV
+[2015-06-08 12:26:17 -0400] - UpdateStripeIdsOnMarket - Agricultural Connections (62) - Connecting org customers - Updated Organization Radicle Roots (4205) stripe_customer_id: cus_6NDdQwzmJ11hDD
+[2015-06-08 12:26:17 -0400] - UpdateStripeIdsOnMarket - Agricultural Connections (62) - Connecting org customers - Updated Organization 10 Below (4076) stripe_customer_id: cus_6LjwkZrgnlNaqI
+[2015-06-08 12:26:17 -0400] - UpdateStripeIdsOnMarket - Agricultural Connections (62) - Connecting org customers - Organization already has stripe_customer_id: cus_6KyzhedDN0ueBf
+[2015-06-08 12:26:17 -0400] - UpdateStripeIdsOnMarket - Agricultural Connections (62) - Connecting org customers - Organization already has stripe_customer_id: cus_6I2eni8if8U5Hw
+[2015-06-08 12:26:17 -0400] - UpdateStripeIdsOnMarket - Agricultural Connections (62) - Connecting org customers - Organization already has stripe_customer_id: cus_6HFcOKNG9fetuw
+[2015-06-08 12:26:17 -0400] - UpdateStripeIdsOnMarket - Agricultural Connections (62) - Connecting org customers - Organization already has stripe_customer_id: cus_6HDIWB0N3RQZJY
+[2015-06-08 12:26:17 -0400] - UpdateStripeIdsOnMarket - Agricultural Connections (62) - Connecting org customers - Organization already has stripe_customer_id: cus_6GOIvIzL8rGSry
+[2015-06-08 12:26:17 -0400] - UpdateStripeIdsOnMarket - Agricultural Connections (62) - Connecting org customers - Organization already has stripe_customer_id: cus_6IhMWLa1UyxDgs
+[2015-06-08 12:26:17 -0400] - UpdateStripeIdsOnMarket - Agricultural Connections (62) - Connecting org customers - Organization already has stripe_customer_id: cus_6EFAcOokV0yDAG
+[2015-06-08 12:26:17 -0400] - UpdateStripeIdsOnMarket - Agricultural Connections (62) - Connecting org customers - Organization already has stripe_customer_id: cus_6BzC9OYOygqQQS
+[2015-06-08 12:26:17 -0400] - UpdateStripeIdsOnMarket - Agricultural Connections (62) - Connecting org customers - Organization already has stripe_customer_id: cus_69vveLguTIB5Jj
+[2015-06-08 12:26:17 -0400] - UpdateStripeIdsOnMarket - Agricultural Connections (62) - Connecting org customers - Organization already has stripe_customer_id: cus_686dgPCtAm0AVq
+[2015-06-08 12:26:17 -0400] - UpdateStripeIdsOnMarket - Agricultural Connections (62) - Connecting org customers - Organization already has stripe_customer_id: cus_686ZuQAsLhGHTp
+[2015-06-08 12:26:17 -0400] - UpdateStripeIdsOnMarket - Agricultural Connections (62) - Connecting org customers - Organization already has stripe_customer_id: cus_686Qli9H1Y4yv3
+[2015-06-08 12:26:17 -0400] - UpdateStripeIdsOnMarket - Agricultural Connections (62) - Connecting org customers - Organization already has stripe_customer_id: cus_686OosjtmSl29k
+[2015-06-08 12:26:17 -0400] - UpdateStripeIdsOnMarket - Agricultural Connections (62) - Connecting org customers - Organization already has stripe_customer_id: cus_65thwM342WaxLH
+[2015-06-08 12:26:17 -0400] - UpdateStripeIdsOnMarket - Agricultural Connections (62) - Connecting org customers - Organization already has stripe_customer_id: cus_65ehLZOlXUecp3
+[2015-06-08 12:26:17 -0400] - UpdateStripeIdsOnMarket - Agricultural Connections (62) - Connecting org customers - Organization already has stripe_customer_id: cus_65efSU90eQE56V
+[2015-06-08 12:26:17 -0400] - UpdateStripeIdsOnMarket - Agricultural Connections (62) - Connecting org customers - Organization already has stripe_customer_id: cus_65uKx87sZerljO
+[2015-06-08 12:26:17 -0400] - UpdateStripeIdsOnMarket - Agricultural Connections (62) - Connecting org customers - Organization already has stripe_customer_id: cus_62KQjlFzfGtKK1
+[2015-06-08 12:26:17 -0400] - UpdateStripeIdsOnMarket - Agricultural Connections (62) - Connecting org customers - Organization already has stripe_customer_id: cus_62KQvYLXIP0w8k
+[2015-06-08 12:26:17 -0400] - UpdateStripeIdsOnMarket - Agricultural Connections (62) - Connecting org customers - Organization already has stripe_customer_id: cus_5zZfjQLJjGMDqQ
+[2015-06-08 12:26:17 -0400] - UpdateStripeIdsOnMarket - Agricultural Connections (62) - Connecting org customers - Organization already has stripe_customer_id: cus_5wygRiru0cotJV
+[2015-06-08 12:26:17 -0400] - UpdateStripeIdsOnMarket - Agricultural Connections (62) - Connecting org customers - Organization already has stripe_customer_id: cus_5vYY1rUMNwzJtZ
+[2015-06-08 12:26:17 -0400] - UpdateStripeIdsOnMarket - Agricultural Connections (62) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ5Q7ju4kapsD
+[2015-06-08 12:26:17 -0400] - UpdateStripeIdsOnMarket - Agricultural Connections (62) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ57T6Jdhmrhz
+[2015-06-08 12:26:17 -0400] - UpdateStripeIdsOnMarket - Agricultural Connections (62) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ5RQOYNGi8HB
+[2015-06-08 12:26:17 -0400] - UpdateStripeIdsOnMarket - Agricultural Connections (62) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4sobTfJDmb1
+[2015-06-08 12:26:17 -0400] - UpdateStripeIdsOnMarket - Agricultural Connections (62) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ47yvCAKupte
+[2015-06-08 12:26:17 -0400] - UpdateStripeIdsOnMarket - Agricultural Connections (62) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4e8suqbIENC
+[2015-06-08 12:26:17 -0400] - UpdateStripeIdsOnMarket - Agricultural Connections (62) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ4d7MZojxZff
+[2015-06-08 12:26:17 -0400] - UpdateStripeIdsOnMarket - Agricultural Connections (62) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ5JOhBuBAM7G
+[2015-06-08 12:26:17 -0400] - UpdateStripeIdsOnMarket - Agricultural Connections (62) - Connecting org customers - Organization already has stripe_customer_id: cus_5uQ5FjWs1wLydZ
+[2015-06-08 12:26:17 -0400] - UpdateStripeIdsOnMarket - Agricultural Connections (62) - Connecting market BankAccounts - Visa 9914 (410) already has stripe_id: card_15ic9G2VpjOYk6Tm0NYyD0Xe
+[2015-06-08 12:26:17 -0400] - UpdateStripeIdsOnMarket - Agricultural Connections (62) - Connecting org BankAccounts - Organization Fearless Baking (3616) - Visa 8973 (524) already has stripe_id: card_15vwc42VpjOYk6Tm18iHw6yD
+[2015-06-08 12:26:17 -0400] - UpdateStripeIdsOnMarket - Agricultural Connections (62) - Connecting org BankAccounts - Organization The Well Traveled Fork (3615) - HIGH DESERT BANK 1380 (523) already has stripe_id: ba_15vw7Y2VpjOYk6Tm1rvOp5gp
+[2015-06-08 12:26:18 -0400] - UpdateStripeIdsOnMarket - Agricultural Connections (62) - Connecting org BankAccounts - Organization DumpCity Dumplings (3538) - Visa 9214 (518) already has stripe_id: card_15uJuk2VpjOYk6TmnfOc0mel
