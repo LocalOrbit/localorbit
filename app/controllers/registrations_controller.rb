@@ -15,6 +15,8 @@ class RegistrationsController < ApplicationController
       ActivateOrganization.perform(organization: @registration.organization, market: current_market)
       MarketMailer.delay.registration(current_market, @registration.organization)
 
+      TermsOfService.accept(user:@registration.user,time:Time.now,ip_addr:request.remote_ip)
+
       redirect_to dashboard_path if @registration.user.confirmed?
     else
       flash.now[:alert] = "Unable to complete registration..."

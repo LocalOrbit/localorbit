@@ -101,6 +101,12 @@ describe "Register" do
           expect(mailbox_for("daniel@collectiveidea.com")).to be_empty
         end
 
+        it "has terms of service acceptance date and ip address" do
+          user.reload
+          expect(user.accepted_terms_of_service_at).not_to be_nil
+          expect(user.accepted_terms_of_service_from).not_to be_nil
+        end
+
         # it 'sends the market managers a notification' do
         #   open_email(manager.email)
         #   expect(current_email.body).to have_content("A new organization has registered for your market!")
