@@ -1152,10 +1152,14 @@ module Dom
       attribute :name
       attribute :quantity
       attribute :price
-      attribute :discount
+      #attribute :discount ## Order items no longer expected to show discounts
       attribute :total
       attribute :payment_status
       attribute :delivery_status
+
+      def has_discount?
+        node.all(".discount").count > 0
+      end
 
       def quantity_delivered_field
         node.first(".quantity-delivered")

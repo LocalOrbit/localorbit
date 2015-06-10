@@ -98,7 +98,7 @@ feature "Viewing orders" do
       expect(item.name).to have_content(market1_order_item1.name)
       expect(item.quantity).to have_content(market1_order_item1.quantity.to_s)
       expect(item.price).to eq("$#{market1_order_item1.unit_price}")
-      expect(item.discount).to eq("$0.00")
+      expect(item.has_discount?).to be false
       expect(item.total).to eq("$9.98")
       expect(item.payment_status).to eq("Unpaid")
 
@@ -175,13 +175,13 @@ feature "Viewing orders" do
 
       item = Dom::Order::ItemRow.find_by_name("#{market1_order_item1.name} from #{market1_seller_org1.name}")
       expect(item.price).to eq("$#{market1_order_item1.unit_price}")
-      expect(item.discount).to eq("$0.00")
+      expect(item.has_discount?).to be false
       expect(item.total).to eq("$9.98")
       expect(item.payment_status).to eq("Unpaid")
 
       item = Dom::Order::ItemRow.find_by_name("#{market1_order_item2.name} from #{market1_seller_org2.name}")
       expect(item.price).to eq("$#{market1_order_item2.unit_price}")
-      expect(item.discount).to eq("$0.00")
+      expect(item.has_discount?).to be false
       expect(item.total).to eq("$17.98")
       expect(item.payment_status).to eq("Unpaid")
 
@@ -219,13 +219,13 @@ feature "Viewing orders" do
 
         item = Dom::Order::ItemRow.find_by_name("#{market1_order_item1.name} from #{market1_seller_org1.name}")
         expect(item.price).to eq("$#{market1_order_item1.unit_price}")
-        expect(item.discount).to eq("$0.00")
+        expect(item.has_discount?).to be false
         expect(item.total).to eq("$9.98")
         expect(item.payment_status).to eq("Unpaid")
 
         item = Dom::Order::ItemRow.find_by_name("#{market1_order_item2.name} from #{market1_seller_org2.name}")
         expect(item.price).to eq("$#{market1_order_item2.unit_price}")
-        expect(item.discount).to eq("$0.00")
+        expect(item.has_discount?).to be false
         expect(item.total).to eq("$17.98")
         expect(item.payment_status).to eq("Unpaid")
 
