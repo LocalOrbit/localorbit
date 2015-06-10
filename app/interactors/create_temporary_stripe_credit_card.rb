@@ -32,7 +32,10 @@ class CreateTemporaryStripeCreditCard
                      create_stripe_card_bank_account(@org, stripe_tok, credit_card_params)
                    end
     
-    set_card_for_transaction(bank_account)
+    if bank_account
+      # create_stripe_card_bank_account could fail and return nil, in which case the context has been failed, and we cannot set the card for the transaction
+      set_card_for_transaction(bank_account)
+    end
   end
 
   private
@@ -58,7 +61,7 @@ class CreateTemporaryStripeCreditCard
       stripe_tok: stripe_tok
     )
 
-    bank_account = org.bank_accounts.create(card_params.merge(stripe_id: card.id))
+    return org.bank_accounts.create(card_params.merge(stripe_id: card.id))
 
   rescue => e
     if Rails.env.test? || Rails.env.development?
@@ -70,6 +73,5 @@ class CreateTemporaryStripeCreditCard
     context.fail!
   end
 
-
-
+  return nil
 end
