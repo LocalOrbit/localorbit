@@ -90,7 +90,6 @@
           <th>Product</th>
           <th>Quantity</th>
           <th>Price</th>
-          <th>Discount</th>
           <th>Total</th>
           <th>Delivery</th>
           <th>Buyer Payment</th>
@@ -125,7 +124,6 @@
             <% end %> <%= item.object.unit %> (Delivered)
           </td>
           <td class="price"><%= number_to_currency item.object.unit_price %></td>
-          <td class="discount"><%= number_to_currency item.object.discount %></td>
           <td class="total"><%= number_to_currency item.object.gross_total %></td>
           <td class="delivery-status">
             <%= item.hidden_field :delivery_status %>
