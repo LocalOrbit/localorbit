@@ -77,7 +77,7 @@ feature "Viewing orders" do
       expect(totals.market_fees).to eq("$1.40")
       expect(totals.lo_fees).to eq("$1.12")
       expect(totals.processing_fees).to eq("$0.00")
-      expect(totals.discounts).to eq("$3.56")
+      expect(totals.discounts).to eq("$2.51")
       expect(totals.net_sales).to eq("$#{25.44 - discount_seller}")
     end
 
@@ -189,7 +189,9 @@ feature "Viewing orders" do
 
       summary = Dom::Admin::OrderSummaryRow.first
       expect(summary.gross_total).to eq("$27.96")
-      expect(summary.discount).to eq("$0.00")
+
+      #expect(summary.discount_seller).to eq("$#{discount_seller}")
+      expect(summary.discount_market).to eq("$#{discount_market}")
       expect(summary.market_fees).to eq("$1.40")
       expect(summary.transaction_fees).to eq("$1.12")
       expect(summary.payment_processing).to eq("$0.00")
@@ -233,7 +235,9 @@ feature "Viewing orders" do
 
         summary = Dom::Admin::OrderSummaryRow.first
         expect(summary.gross_total).to eq("$27.96")
-        expect(summary.discount).to eq("$0.00")
+
+        #expect(summary.discount_seller).to eq("$#{discount_seller}")
+        expect(summary.discount_market).to eq("$#{discount_market}")
         expect(summary.market_fees).to eq("$1.40")
         expect(summary.transaction_fees).to eq("$1.12")
         expect(summary.payment_processing).to eq("$0.00")
@@ -418,7 +422,7 @@ feature "Viewing orders" do
       expect(totals.market_fees).to eq("$7.00")
       expect(totals.lo_fees).to eq("$5.60")
       expect(totals.processing_fees).to eq("$0.50")
-      expect(totals.discounts).to eq("$3.56") 
+      expect(totals.discounts).to eq("$#{discount_seller}") # Seller orders, should see seller discount amount 
       expect(totals.net_sales).to eq("$#{140.70.to_d - discount_seller}")
 
       select market1_buyer_org1.name, from: "q_organization_id_eq"
@@ -430,7 +434,7 @@ feature "Viewing orders" do
       expect(totals.market_fees).to eq("$1.40")
       expect(totals.lo_fees).to eq("$1.12")
       expect(totals.processing_fees).to eq("$0.00")
-      expect(totals.discounts).to eq("$#{discount_seller + discount_market}")
+      expect(totals.discounts).to eq("$#{discount_seller + discount_market}") # fails - which should this be
       expect(totals.net_sales).to eq("$#{32.43.to_d - discount_seller}")
     end
   end
