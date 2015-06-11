@@ -676,13 +676,24 @@ module Dom
       selector ".order-summary-row"
 
       attribute :gross_total
-      attribute :discount
+      attribute :discount # ?
+      attribute :discount_market
+      attribute :discount_seller
       attribute :market_fees
       attribute :transaction_fees
       attribute :payment_processing
       attribute :net_sale
       attribute :delivery_status
       attribute :payment_status
+
+      def has_discount_market?
+        node.all(".discount_market").count > 0
+      end
+
+      def has_discount_seller?
+        node.all(".discount_seller").count > 0
+      end
+
     end
 
     class OrganizationLocation < Domino
