@@ -3,6 +3,10 @@ module TotalsPresenter
     totals[:discount]
   end
 
+  def discount_seller
+    totals[:discount_seller]
+  end
+
   def gross_total
     totals[:gross]
   end
@@ -28,6 +32,7 @@ module TotalsPresenter
       next totals if item.delivery_status == "canceled"
 
       totals[:discount]    += item.discount
+      totals[:discount_seller] += item.discount_seller
       totals[:gross]       += item.gross_total
       totals[:transaction] += item.local_orbit_seller_fee
       totals[:net]         += item.seller_net_total
