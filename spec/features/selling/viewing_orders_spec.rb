@@ -12,7 +12,9 @@ feature "Viewing orders" do
   let!(:market1_product1)    { create(:product, :sellable, organization: market1_seller_org1) }
   let!(:market1_product2)    { create(:product, :sellable, organization: market1_seller_org2) }
 
-  let!(:market1_order_item1) { create(:order_item, seller_name: market1_seller_org1.name, product: market1_product1, quantity: 2, unit_price: 4.99, market_seller_fee: 0.50, local_orbit_seller_fee: 0.40, delivery_status: "delivered") }
+  let(:discount_seller) { "2.51".to_d }
+  let(:discount_market) { "1.05".to_d }
+  let!(:market1_order_item1) { create(:order_item, seller_name: market1_seller_org1.name, product: market1_product1, quantity: 2, unit_price: 4.99, market_seller_fee: 0.50, local_orbit_seller_fee: 0.40, delivery_status: "delivered", discount_seller: discount_seller, discount_market: discount_market) }
   let!(:market1_order_item2) { create(:order_item, seller_name: market1_seller_org2.name, product: market1_product2, quantity: 2, unit_price: 8.99, market_seller_fee: 0.90, local_orbit_seller_fee: 0.72, delivery_status: "pending") }
   let!(:market1_order1)      { create(:order, items: [market1_order_item1, market1_order_item2], organization: market1_buyer_org1, market: market1, total_cost: 35.08, delivery: market1_delivery, delivery_fees: 7.12, placed_at: 2.weeks.ago) }
 
@@ -75,8 +77,8 @@ feature "Viewing orders" do
       expect(totals.market_fees).to eq("$1.40")
       expect(totals.lo_fees).to eq("$1.12")
       expect(totals.processing_fees).to eq("$0.00")
-      expect(totals.discounts).to eq("$0.00")
-      expect(totals.net_sales).to eq("$25.44")
+      expect(totals.discounts).to eq("$3.56")
+      expect(totals.net_sales).to eq("$#{25.44 - discount_seller}")
     end
 
     scenario "order details" do
@@ -104,11 +106,11 @@ feature "Viewing orders" do
 
       summary = Dom::Admin::OrderSummaryRow.first
       expect(summary.gross_total).to eq("$9.98")
-      expect(summary.discount).to eq("$0.00")
+      expect(summary.discount).to eq("$#{discount_seller}") 
       expect(summary.market_fees).to eq("$0.50")
       expect(summary.transaction_fees).to eq("$0.40")
       expect(summary.payment_processing).to eq("$0.00")
-      expect(summary.net_sale).to eq("$9.08")
+      expect(summary.net_sale).to eq("$#{9.08-discount_seller}")
     end
   end
 
@@ -416,8 +418,8 @@ feature "Viewing orders" do
       expect(totals.market_fees).to eq("$7.00")
       expect(totals.lo_fees).to eq("$5.60")
       expect(totals.processing_fees).to eq("$0.50")
-      expect(totals.discounts).to eq("$0.00")
-      expect(totals.net_sales).to eq("$140.70")
+      expect(totals.discounts).to eq("$3.56") 
+      expect(totals.net_sales).to eq("$#{140.70.to_d - discount_seller}")
 
       select market1_buyer_org1.name, from: "q_organization_id_eq"
       click_button "Filter"
@@ -428,8 +430,8 @@ feature "Viewing orders" do
       expect(totals.market_fees).to eq("$1.40")
       expect(totals.lo_fees).to eq("$1.12")
       expect(totals.processing_fees).to eq("$0.00")
-      expect(totals.discounts).to eq("$0.00")
-      expect(totals.net_sales).to eq("$32.43")
+      expect(totals.discounts).to eq("$#{discount_seller + discount_market}")
+      expect(totals.net_sales).to eq("$#{32.43.to_d - discount_seller}")
     end
   end
 
