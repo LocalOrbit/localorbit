@@ -422,7 +422,6 @@ feature "Viewing orders" do
       expect(totals.market_fees).to eq("$7.00")
       expect(totals.lo_fees).to eq("$5.60")
       expect(totals.processing_fees).to eq("$0.50")
-      binding.pry
       expect(totals.discount_seller).to eq("$#{discount_seller}") 
       expect(totals.discount_market).to eq("$#{discount_market}") 
       expect(totals.net_sales).to eq("$#{140.70.to_d - discount_seller}")
