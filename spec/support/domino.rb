@@ -659,6 +659,8 @@ module Dom
       attribute :lo_fees
       attribute :processing_fees
       attribute :discounts
+      attribute :discount_seller
+      attribute :discount_market
       attribute :net_sales
     end
 
@@ -676,7 +678,7 @@ module Dom
       selector ".order-summary-row"
 
       attribute :gross_total
-      attribute :discount # ?
+      attribute :discount
       attribute :discount_market
       attribute :discount_seller
       attribute :market_fees

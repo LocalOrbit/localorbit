@@ -219,7 +219,6 @@
               <td class="discount_seller"><%= number_to_currency order.discount_seller %></td>
             <% elsif current_user.seller? %>
               <td class="discount"><%= number_to_currency order.discount_seller %></td>
-              <th>Discount</th>
             <% end %>
             <td class="market-fees"><%= number_to_currency order.market_fees %></td>
             <td class="transaction-fees"><%= number_to_currency order.transaction_fees %></td>
