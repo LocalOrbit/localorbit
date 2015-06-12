@@ -194,7 +194,7 @@ feature "Viewing orders" do
       expect(summary.market_fees).to eq("$1.40")
       expect(summary.transaction_fees).to eq("$1.12")
       expect(summary.payment_processing).to eq("$0.00")
-      expect(summary.net_sale).to eq("$25.44")
+      expect(summary.net_sale).to eq("$#{25.44-discount_seller}")
     end
 
     context "market manager deletes an organization" do
@@ -239,7 +239,7 @@ feature "Viewing orders" do
         expect(summary.market_fees).to eq("$1.40")
         expect(summary.transaction_fees).to eq("$1.12")
         expect(summary.payment_processing).to eq("$0.00")
-        expect(summary.net_sale).to eq("$25.44")
+        expect(summary.net_sale).to eq("$#{25.44-discount_seller}")
       end
     end
 

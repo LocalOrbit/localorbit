@@ -215,8 +215,8 @@
           <tr class="order-summary-row">
             <td class="gross-total"><%= number_to_currency order.gross_total %></td>
             <% if current_user.can_manage_market?(order.market) %>
-              <td class="discount_market"><%= number_to_currency order.discount_market %></td>
-              <td class="discount_seller"><%= number_to_currency order.discount_seller %></td>
+              <td class="discount-market"><%= number_to_currency order.discount_market %></td>
+              <td class="discount-seller"><%= number_to_currency order.discount_seller %></td>
             <% elsif current_user.seller? %>
               <td class="discount"><%= number_to_currency order.discount_seller %></td>
             <% end %>

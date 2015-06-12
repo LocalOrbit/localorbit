@@ -25,8 +25,8 @@
           <td class="lo-fees"><%= number_to_currency totals.transaction_fees %></td>
           <td class="processing-fees"><%= number_to_currency totals.payment_fees %></td>
           <% if is_market_manager %>
-            <td class="discount_market"><%= number_to_currency totals.discount_market %></td>
-            <td class="discount_seller"><%= number_to_currency totals.discount_seller %></td>
+            <td class="discount-market"><%= number_to_currency totals.discount_market %></td>
+            <td class="discount-seller"><%= number_to_currency totals.discount_seller %></td>
           <% else %>
             <td class="discounts"><%= number_to_currency totals.discount_seller %></td>
           <% end %>
