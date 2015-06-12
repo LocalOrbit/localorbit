@@ -27,7 +27,7 @@ module Admin
     end
 
     def create
-      result = RegisterOrganization.perform(organization_params: organization_params, user: current_user, market_id: params[:initial_market_id])
+      result = RegisterStripeOrganization.perform(organization_params: organization_params, user: current_user, market_id: params[:initial_market_id])
 
       if result.success?
         organization = result.organization
