@@ -659,6 +659,8 @@ module Dom
       attribute :lo_fees
       attribute :processing_fees
       attribute :discounts
+      attribute :discount_seller
+      attribute :discount_market
       attribute :net_sales
     end
 
@@ -677,12 +679,23 @@ module Dom
 
       attribute :gross_total
       attribute :discount
+      attribute :discount_market
+      attribute :discount_seller
       attribute :market_fees
       attribute :transaction_fees
       attribute :payment_processing
       attribute :net_sale
       attribute :delivery_status
       attribute :payment_status
+
+      def has_discount_market?
+        node.all(".discount_market").count > 0
+      end
+
+      def has_discount_seller?
+        node.all(".discount_seller").count > 0
+      end
+
     end
 
     class OrganizationLocation < Domino
@@ -1152,10 +1165,14 @@ module Dom
       attribute :name
       attribute :quantity
       attribute :price
-      attribute :discount
+      #attribute :discount ## Order items no longer expected to show discounts
       attribute :total
       attribute :payment_status
       attribute :delivery_status
+
+      def has_discount?
+        node.all(".discount").count > 0
+      end
 
       def quantity_delivered_field
         node.first(".quantity-delivered")
@@ -1237,6 +1254,8 @@ module Dom
       attribute :quantity
       attribute :unit_price,    ".price"
       attribute :discount
+      attribute :discount_seller # need to add these?
+      attribute :discount_market
       attribute :row_total
       attribute :net_sale
       attribute :delivery_status

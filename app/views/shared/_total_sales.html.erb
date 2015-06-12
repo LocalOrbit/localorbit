@@ -8,7 +8,12 @@
           <th>Market Fees</th>
           <th>Transaction Fees</th>
           <th>Payment Processing Fees</th>
-          <th class="discount">Discounts</th>
+          <% if is_market_manager %>
+            <th>Discounts (by Market)</th>
+            <th>Discounts (by Seller)</th>
+          <% else %>
+            <th>Discounts</th>
+          <% end %>
           <th>Net Sales</th>
         </tr>
       </thead>
@@ -19,7 +24,12 @@
           <td class="market-fees"><%= number_to_currency totals.market_fees %></td>
           <td class="lo-fees"><%= number_to_currency totals.transaction_fees %></td>
           <td class="processing-fees"><%= number_to_currency totals.payment_fees %></td>
-          <td class="discounts"><%= number_to_currency totals.discount %></td>
+          <% if is_market_manager %>
+            <td class="discount-market"><%= number_to_currency totals.discount_market %></td>
+            <td class="discount-seller"><%= number_to_currency totals.discount_seller %></td>
+          <% else %>
+            <td class="discounts"><%= number_to_currency totals.discount_seller %></td>
+          <% end %>
           <td class="net-sales"><%= number_to_currency totals.net_total %></td>
         </tr>
       </tbody>

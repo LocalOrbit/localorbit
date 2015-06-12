@@ -3,6 +3,14 @@ module TotalsPresenter
     totals[:discount]
   end
 
+  def discount_seller
+    totals[:discount_seller]
+  end
+
+  def discount_market
+    totals[:discount_market]
+  end
+
   def gross_total
     totals[:gross]
   end
@@ -24,10 +32,12 @@ module TotalsPresenter
   end
 
   def totals
-    @totals ||= items.inject(discount: 0, gross: 0, net: 0, payment: 0, transaction: 0, market: 0) do |totals, item|
+    @totals ||= items.inject(discount: 0, discount_seller: 0, discount_market: 0, gross: 0, net: 0, payment: 0, transaction: 0, market: 0) do |totals, item|
       next totals if item.delivery_status == "canceled"
 
       totals[:discount]    += item.discount
+      totals[:discount_seller] += item.discount_seller
+      totals[:discount_market] += item.discount_market
       totals[:gross]       += item.gross_total
       totals[:transaction] += item.local_orbit_seller_fee
       totals[:net]         += item.seller_net_total
