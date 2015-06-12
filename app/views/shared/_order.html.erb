@@ -90,7 +90,6 @@
           <th>Product</th>
           <th>Quantity</th>
           <th>Price</th>
-          <th>Discount</th>
           <th>Total</th>
           <th>Delivery</th>
           <th>Buyer Payment</th>
@@ -125,7 +124,6 @@
             <% end %> <%= item.object.unit %> (Delivered)
           </td>
           <td class="price"><%= number_to_currency item.object.unit_price %></td>
-          <td class="discount"><%= number_to_currency item.object.discount %></td>
           <td class="total"><%= number_to_currency item.object.gross_total %></td>
           <td class="delivery-status">
             <%= item.hidden_field :delivery_status %>
@@ -201,7 +199,12 @@
         <thead>
           <tr>
             <th>Gross Total</th>
+            <% if current_user.can_manage_market?(order.market) %>
+            <th>Discount (by Market)</th>
+            <th>Discount (by Seller)</th>
+            <% elsif current_user.seller? %>
             <th>Discount</th>
+            <% end %>
             <th>Market Fees</th>
             <th>Transaction Fees</th>
             <th>Payment Processing Fees</th>
@@ -211,7 +214,12 @@
         <tbody>
           <tr class="order-summary-row">
             <td class="gross-total"><%= number_to_currency order.gross_total %></td>
-            <td class="discount"><%= number_to_currency order.discount %></td>
+            <% if current_user.can_manage_market?(order.market) %>
+              <td class="discount-market"><%= number_to_currency order.discount_market %></td>
+              <td class="discount-seller"><%= number_to_currency order.discount_seller %></td>
+            <% elsif current_user.seller? %>
+              <td class="discount"><%= number_to_currency order.discount_seller %></td>
+            <% end %>
             <td class="market-fees"><%= number_to_currency order.market_fees %></td>
             <td class="transaction-fees"><%= number_to_currency order.transaction_fees %></td>
             <td class="payment-processing"><%= number_to_currency order.payment_fees %></td>
