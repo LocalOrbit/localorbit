@@ -189,7 +189,6 @@ feature "Viewing orders" do
 
       summary = Dom::Admin::OrderSummaryRow.first
       expect(summary.gross_total).to eq("$27.96")
-
       expect(summary.discount_seller).to eq("$#{discount_seller}")
       expect(summary.discount_market).to eq("$#{discount_market}")
       expect(summary.market_fees).to eq("$1.40")
@@ -235,7 +234,6 @@ feature "Viewing orders" do
 
         summary = Dom::Admin::OrderSummaryRow.first
         expect(summary.gross_total).to eq("$27.96")
-
         expect(summary.discount_seller).to eq("$#{discount_seller}")
         expect(summary.discount_market).to eq("$#{discount_market}")
         expect(summary.market_fees).to eq("$1.40")

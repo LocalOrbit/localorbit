@@ -3,6 +3,8 @@ require "spec_helper"
 context "Viewing sold items" do
   let(:market) { create(:market) }
 
+  let(:discount_seller) { "0.00".to_d }
+  let(:discount_market) { "0.00".to_d }
   let!(:buyer) { create(:organization, :buyer, name: "Big Money", markets: [market]) }
   let!(:seller) { create(:organization, :seller, name: "Good foodz", markets: [market]) }
   let!(:seller2) { create(:organization, :seller, name: "Better foodz", markets: [market]) }
@@ -186,7 +188,9 @@ context "Viewing sold items" do
       expect(totals.market_fees).to eq("$0.00")
       expect(totals.lo_fees).to eq("$4.00")
       expect(totals.processing_fees).to eq("$1.20")
-      expect(totals.discounts).to eq("$0.00")
+      #expect(totals.discounts).to eq("$0.00")
+      expect(totals.discount_seller).to eq("$0.00")
+      expect(totals.discount_market).to eq("$0.00")
       expect(totals.net_sales).to eq("$68.80")
 
       select seller.name, from: "q_product_organization_id_eq"
@@ -198,7 +202,9 @@ context "Viewing sold items" do
       expect(totals.market_fees).to eq("$0.00")
       expect(totals.lo_fees).to eq("$0.00")
       expect(totals.processing_fees).to eq("$1.20")
-      expect(totals.discounts).to eq("$0.00")
+      #expect(totals.discounts).to eq("$0.00")
+      expect(totals.discount_seller).to eq("$0.00")
+      expect(totals.discount_market).to eq("$0.00")
       expect(totals.net_sales).to eq("$48.80")
     end
 
@@ -249,7 +255,9 @@ context "Viewing sold items" do
       expect(totals.market_fees).to eq("$0.00")
       expect(totals.lo_fees).to eq("$4.00")
       expect(totals.processing_fees).to eq("$1.20")
-      expect(totals.discounts).to eq("$0.00")
+      #expect(totals.discounts).to eq("$0.00")
+      expect(totals.discount_seller).to eq("$0.00")
+      expect(totals.discount_market).to eq("$0.00")
       expect(totals.net_sales).to eq("$68.80")
 
       select seller.name, from: "q_product_organization_id_eq"
@@ -261,7 +269,9 @@ context "Viewing sold items" do
       expect(totals.market_fees).to eq("$0.00")
       expect(totals.lo_fees).to eq("$0.00")
       expect(totals.processing_fees).to eq("$1.20")
-      expect(totals.discounts).to eq("$0.00")
+      #expect(totals.discounts).to eq("$0.00")
+      expect(totals.discount_seller).to eq("$0.00")
+      expect(totals.discount_market).to eq("$0.00")
       expect(totals.net_sales).to eq("$48.80")
     end
   end

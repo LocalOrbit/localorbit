@@ -1254,6 +1254,8 @@ module Dom
       attribute :quantity
       attribute :unit_price,    ".price"
       attribute :discount
+      attribute :discount_seller # need to add these?
+      attribute :discount_market
       attribute :row_total
       attribute :net_sale
       attribute :delivery_status
