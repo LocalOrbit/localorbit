@@ -54,24 +54,27 @@ class CreateTemporaryStripeCreditCard
   end
 
   def create_stripe_card_bank_account(org, stripe_tok, card_params)
-    SchemaValidation.validate!(CardSchema::NewParams, card_params)
+    bank_account = nil
 
-    card = PaymentProvider::Stripe.create_stripe_card_for_stripe_customer(
-      stripe_customer_id: org.stripe_customer_id,
-      stripe_tok: stripe_tok
-    )
+    begin
+      SchemaValidation.validate!(CardSchema::NewParams, card_params)
 
-    return org.bank_accounts.create(card_params.merge(stripe_id: card.id))
-
-  rescue => e
-    if Rails.env.test? || Rails.env.development?
-      raise e
-    else
-      Honeybadger.notify_or_ignore(e)
+      card = PaymentProvider::Stripe.create_stripe_card_for_stripe_customer(
+        stripe_customer_id: org.stripe_customer_id,
+        stripe_tok: stripe_tok
+      )
+      bank_account = org.bank_accounts.create(card_params.merge(stripe_id: card.id))
+    rescue => e
+      if Rails.env.test? || Rails.env.development?
+        raise e
+      else
+        Honeybadger.notify_or_ignore(e)
+      end
+      context[:order].errors.add(:credit_card, "was denied by the payment processor.")
+      context.fail!
     end
-    context[:order].errors.add(:credit_card, "was denied by the payment processor.")
-    context.fail!
+
+    bank_account
   end
 
-  return nil
 end
