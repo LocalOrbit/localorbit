@@ -65,16 +65,25 @@ class CreateTemporaryStripeCreditCard
       )
       bank_account = org.bank_accounts.create(card_params.merge(stripe_id: card.id))
     rescue => e
-      if Rails.env.test? || Rails.env.development?
-        raise e
-      else
-        Honeybadger.notify_or_ignore(e)
-      end
-      context[:order].errors.add(:credit_card, "was denied by the payment processor.")
+      Honeybadger.notify_or_ignore(e)
+      error_message = determine_error_message(e)
+      context[:order].errors.add(:credit_card, error_message)
       context.fail!
     end
 
     bank_account
+  end
+
+  def determine_error_message(e)
+    message = case e
+              when ::Stripe::StripeError
+                if e.respond_to?(:json_body) and data = e.json_body
+                  if err = data[:error] 
+                    ": #{err[:message]}"
+                  end
+                end
+              end
+    return (message || "was denied by the payment processor.")
   end
 
 end
