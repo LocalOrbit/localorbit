@@ -134,4 +134,4 @@
   </div>
 <% end %>
 
-<%= render "shared/total_sales", totals: @totals, is_market_manager: current_user.can_manage_market?(current_market) %>
+<%= render "shared/total_sales", totals: @totals, is_market_manager: current_user.can_manage_market?(current_market),buyer_only: current_user.buyer_only? %>
