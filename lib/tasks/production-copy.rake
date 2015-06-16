@@ -220,7 +220,7 @@ module CloneProductionHelper
   end
 
   def cleanse_production_copy
-    clear_all_balanced_payments_refs
+    clear_all_payment_provider_refs
     reset_all_passwords
     nerf_all_email_addresses
     dump_cleansed_copy
@@ -273,8 +273,23 @@ module CloneProductionHelper
     end
   end
 
-  def clear_all_balanced_payments_refs
-    balanced_payments_refs_to_clear.each do |model:,fields:|
+  def stripe_refs_to_clear
+    if ENV["KEEP_STRIPE_IDS"] =~ /^(y|on|true)/i
+      [ { model: Payment,     fields: [ :stripe_id ] } ]
+    else
+      [ { model: BankAccount, fields: [ :stripe_id ] },
+        { model: Market     , fields: [ :stripe_customer_id, :stripe_account_id ] },
+        { model: Organization,fields: [ :stripe_customer_id ] },
+        { model: Payment,     fields: [ :stripe_id ] } ]
+    end
+  end
+
+  def clear_all_payment_provider_refs
+    refs_to_clear = []
+    refs_to_clear += balanced_payments_refs_to_clear 
+    refs_to_clear += stripe_refs_to_clear 
+    
+    refs_to_clear.each do |model:,fields:|
       fields.each do |field|
         puts "Setting all #{model.name}##{field} to nil"
         model.update_all("#{field} = NULL")
