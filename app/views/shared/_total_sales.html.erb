@@ -4,33 +4,43 @@
     <table>
       <thead>
         <tr>
-          <th>Gross Sales</th>
-          <th>Market Fees</th>
-          <th>Transaction Fees</th>
-          <th>Payment Processing Fees</th>
+          <% if !buyer_only %>
+            <th>Gross Sales</th>
+            <th>Market Fees</th>
+            <th>Transaction Fees</th>
+            <th>Payment Processing Fees</th>
+          <% else %>
+            <th>Total Purchase Cost</th>
+          <% end %>
           <% if is_market_manager %>
             <th>Discounts (by Market)</th>
             <th>Discounts (by Seller)</th>
-          <% else %>
+          <% elsif !buyer_only %>
             <th>Discounts</th>
+            <th>Net Sales</th>
           <% end %>
-          <th>Net Sales</th>
         </tr>
       </thead>
 
       <tbody>
-        <tr>
-          <td class="gross-sales"><%= number_to_currency totals.gross_total %></td>
-          <td class="market-fees"><%= number_to_currency totals.market_fees %></td>
-          <td class="lo-fees"><%= number_to_currency totals.transaction_fees %></td>
-          <td class="processing-fees"><%= number_to_currency totals.payment_fees %></td>
+        <tr> <!-- TODO consider prettier logic? - JZC -->
+          <% if !buyer_only %>
+            <td class="gross-sales"><%= number_to_currency totals.gross_total %></td>
+            <td class="market-fees"><%= number_to_currency totals.market_fees %></td>
+            <td class="lo-fees"><%= number_to_currency totals.transaction_fees %></td>
+            <td class="processing-fees"><%= number_to_currency totals.payment_fees %></td>
+          <% else %>
+            <td class="discounted-total"><%= number_to_currency totals.discounted_total %></td>
+          <% end %>
           <% if is_market_manager %>
             <td class="discount-market"><%= number_to_currency totals.discount_market %></td>
             <td class="discount-seller"><%= number_to_currency totals.discount_seller %></td>
           <% else %>
             <td class="discounts"><%= number_to_currency totals.discount_seller %></td>
           <% end %>
-          <td class="net-sales"><%= number_to_currency totals.net_total %></td>
+          <% if !buyer_only %>
+            <td class="net-sales"><%= number_to_currency totals.net_total %></td>
+          <% end %>
         </tr>
       </tbody>
     </table>

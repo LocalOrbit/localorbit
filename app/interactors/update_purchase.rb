@@ -38,7 +38,7 @@ class UpdatePurchase
     remaining_amount = amount
     context[:status] = "paid"
 
-    order.payments.refundable.order(:created_at).each do |payment|
+    order.payments.refundable.order(created_at: :desc).each do |payment|
 
       break unless remaining_amount > 0
 
