@@ -15,6 +15,8 @@ class AddCreditCardToStripeCustomer
       bank_account.update(stripe_id: stripe_card.id)
 
     rescue Exception => e
+      bank_account.destroy
+      context[:bank_account] = nil
       Honeybadger.notify_or_ignore(e)
       error_message = determine_error_message(e)
       context[:error] = error_message
