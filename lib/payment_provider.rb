@@ -40,6 +40,10 @@ module PaymentProvider
     def can_add_ach_payment_method?(payment_provider)
       can_add_payment_method?(payment_provider, "ach")
     end
+
+    def approximate_credit_card_rate(payment_provider)
+      PaymentProvider.for(payment_provider).approximate_credit_card_rate
+    end
     
     #
     # Common PaymentProvide interface: 

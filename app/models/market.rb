@@ -132,9 +132,13 @@ class Market < ActiveRecord::Base
     "#{subdomain}.#{Figaro.env.domain!}"
   end
 
-  # TODO: exclude fees for payment types not available on the market
   def seller_net_percent
-    BigDecimal("1") - (local_orbit_seller_fee + market_seller_fee + [ach_seller_fee, credit_card_seller_fee].max) / 100
+    subtract_amt = (local_orbit_seller_fee + market_seller_fee)/100 # These fees come in integer numbers and need to be converted to percents
+    cc_rate = PaymentProvider.approximate_credit_card_rate(payment_provider) 
+    if credit_card_seller_fee == 1
+      subtract_amt += BigDecimal(cc_rate)
+    end
+    (BigDecimal(1) - subtract_amt) 
   end
 
   # LO's % take as a true decimal: eg, if local_orbit_seller_fee = 2.0 and local_orbit_market_fee  = 1.0 then this method returns 0.03 as a BigDecimal
