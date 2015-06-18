@@ -332,7 +332,7 @@ describe "Viewing the cart", js:true do
       end
 
       it "enables the button if there is at least one valid credit card for the organization" do
-        create(:bank_account, :credit_card, bankable: buyer, balanced_uri: 'fake uri')
+        create(:bank_account, :credit_card, bankable: buyer, stripe_id: 'fake stripe id')
         visit cart_path
 
         expect(page).to have_button("Place Order", disabled: true)
@@ -343,26 +343,6 @@ describe "Viewing the cart", js:true do
       end
     end
 
-    context "ach" do
-      it "stays disabled if there are no valid bank accounts" do
-        expect(page).to have_button("Place Order", disabled: true)
-
-        choose "Pay by ACH"
-
-        expect(page).to have_button("Place Order", disabled: true)
-      end
-
-      it "enables the button if there is at least one valid bank account for the organization" do
-        create(:bank_account, :checking, :verified, bankable: buyer)
-        visit cart_path
-
-        expect(page).to have_button("Place Order", disabled: true)
-
-        choose "Pay by ACH"
-
-        expect(page).to have_button("Place Order")
-      end
-    end
   end
 
   context "using a discount code" do
