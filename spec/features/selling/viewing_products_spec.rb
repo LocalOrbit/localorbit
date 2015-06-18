@@ -263,7 +263,7 @@ describe "Viewing products" do
       product.click_pricing
       net_price  = find_field("Net Price")
       sale_price = find_field("Sale Price")
-      expect(net_price.value).to eq("11.28")
+      expect(net_price.value).to eq("11.64") # Correct percentage subtracted
       expect(sale_price.value).to eq("12.00")
     end
   end

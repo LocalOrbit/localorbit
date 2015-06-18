@@ -140,7 +140,7 @@ describe "Editing advanced pricing", js: true do
         it "calculates and formats the net price" do
           price_row = Dom::PricingRow.first
           net_price = price_row.node.find("#price_#{price.id}_net_price")
-          expect(net_price.value).to eql("-9.40")
+          expect(net_price.value).to eql("-9.41") # appropriate fees
         end
       end
 
@@ -172,11 +172,11 @@ describe "Editing advanced pricing", js: true do
 
   describe "with different fees", js: true do
     let(:market) { create(:market, local_orbit_seller_fee: 4, market_seller_fee: 6) }
-
+    # total fees: CC seller fee as default, plus this 10 %, so 12.9%
     it "shows updated net sale information" do
       Dom::PricingRow.first.click_edit
       fill_in "price_#{price.id}_sale_price", with: "12.90"
-      expect(find_field("price_#{price.id}_net_price").value).to eq("11.22")
+      expect(find_field("price_#{price.id}_net_price").value).to eq("11.24")
       click_button "Save"
 
       expect(page).to have_content("Successfully saved price")
@@ -184,7 +184,7 @@ describe "Editing advanced pricing", js: true do
       record = Dom::PricingRow.first
       expect(record.buyer).to eq("All Buyers")
       expect(record.min_quantity).to eq("1")
-      expect(record.net_price).to eq("$11.22")
+      expect(record.net_price).to eq("$11.24")
       expect(record.sale_price).to eq("$12.90")
     end
   end
