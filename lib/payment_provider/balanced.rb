@@ -122,7 +122,7 @@ module PaymentProvider
       end
 
       def approximate_credit_card_rate
-        raise "Balanced payment provider doesn't implement approximate_credit_card_rate" 
+        #raise "Balanced payment provider doesn't implement approximate_credit_card_rate" 
       end
 
     end
