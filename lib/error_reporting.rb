@@ -4,7 +4,7 @@ module ErrorReporting
     Backtrace = [ BacktraceItem ]
 
     ErrorInfo = {
-      honey_badger_exception: Exception,
+      honeybadger_exception: Exception,
       application_error_message: String
     }
 
