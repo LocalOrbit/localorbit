@@ -1,5 +1,9 @@
 <div class="totals-table">
-  <h2>Total Sales</h2>
+  <% if buyer_only %>
+    <h2>Totals</h2>
+  <% else %>
+    <h2>Total Sales</h2>
+  <% end %> <!-- Suggests need for new partial -->
   <div class="table-wrapper">
     <table>
       <thead>
@@ -10,7 +14,7 @@
             <th>Transaction Fees</th>
             <th>Payment Processing Fees</th>
           <% else %>
-            <th>Total Purchase Cost</th>
+            <th>Total Purchases</th>
           <% end %>
           <% if is_market_manager %>
             <th>Discounts (by Market)</th>
@@ -23,7 +27,7 @@
       </thead>
 
       <tbody>
-        <tr> <!-- TODO consider prettier logic? - JZC -->
+        <tr>
           <% if !buyer_only %>
             <td class="gross-sales"><%= number_to_currency totals.gross_total %></td>
             <td class="market-fees"><%= number_to_currency totals.market_fees %></td>
@@ -35,7 +39,7 @@
           <% if is_market_manager %>
             <td class="discount-market"><%= number_to_currency totals.discount_market %></td>
             <td class="discount-seller"><%= number_to_currency totals.discount_seller %></td>
-          <% else %>
+          <% elsif !buyer_only %>
             <td class="discounts"><%= number_to_currency totals.discount_seller %></td>
           <% end %>
           <% if !buyer_only %>
