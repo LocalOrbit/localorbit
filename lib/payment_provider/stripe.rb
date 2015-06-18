@@ -3,7 +3,7 @@ module PaymentProvider
     CreditCardFeeStructure = SchemaValidation.validate!(FeeEstimator::Schema::BasePlusRate,
       style: :base_plus_rate,
       base:  30,
-      rate:  "0.029".to_d, # 2.9% of total
+      rate:  BigDecimal.new("0.029") #{}"0.029".to_d, # 2.9% of total
     )
 
     TransferSchedule = {
@@ -257,6 +257,10 @@ module PaymentProvider
         else
           raise "PaymentProvider::Stripe only supports adding Deposit Accounts of type 'checking'; dunno what to do with this type: #{type.inspect}"
         end
+      end
+
+      def approximate_credit_card_rate
+        CreditCardFeeStructure[:rate] # should be decimal value 0.029, see above
       end
 
       #
