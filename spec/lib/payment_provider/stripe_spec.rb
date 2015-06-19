@@ -581,6 +581,12 @@ describe PaymentProvider::Stripe do
     end
   end
 
+  describe "approximate_credit_card_fee" do
+    it "appropriately gets credit card rate from Payment Provider" do
+        expect(PaymentProvider::Stripe.approximate_credit_card_rate).to eq(PaymentProvider::Stripe::CreditCardFeeStructure[:rate])
+    end
+  end
+
   describe ".select_usable_bank_accounts" do
     let!(:cc1) { create(:bank_account, :credit_card, stripe_id: "sid1") }
     let!(:cc2) { create(:bank_account, :credit_card) }
