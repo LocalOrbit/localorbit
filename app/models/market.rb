@@ -133,9 +133,9 @@ class Market < ActiveRecord::Base
   end
 
   def seller_net_percent
-    subtract_amt = (local_orbit_seller_fee + market_seller_fee)/100 # These fees come in integer numbers and need to be converted to percents
+    subtract_amt = (local_orbit_seller_fee + market_seller_fee)/100 # These fees come as rates, numbers 100x bigger and need to be converted to percents
     cc_rate = PaymentProvider.approximate_credit_card_rate(payment_provider) 
-    if credit_card_seller_fee == 1
+    if credit_card_payment_fee_payer == 'seller'
       subtract_amt += BigDecimal(cc_rate)
     end
     (BigDecimal(1) - subtract_amt) 
