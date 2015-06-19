@@ -22,14 +22,14 @@ describe "Adding advanced pricing" do
   end
 
   it "completes successfully given valid information" do
-    fill_in "price_sale_price", with: "1.90"
+    fill_in "price_sale_price", with: "1.90" # 5.9% fees
     click_button "Add"
 
     record = Dom::PricingRow.first
     expect(record.market).to eq("All Markets")
     expect(record.buyer).to eq("All Buyers")
     expect(record.min_quantity).to eq("1")
-    expect(record.net_price).to eq("$1.79")
+    expect(record.net_price).to eq("$1.79") # 1.90 - (5.9% of 1.90)
     expect(record.sale_price).to eq("$1.90")
 
     expect(page).to_not have_content("You don't have any prices yet!")
@@ -51,7 +51,7 @@ describe "Adding advanced pricing" do
       fill_in "price_sale_price", with: "12"
 
       new_price_form = Dom::NewPricingForm.first
-      expect(new_price_form.net_price.value).to eql("11.28")
+      expect(new_price_form.net_price.value).to eql("11.29") # 5.9% fees subtracted
     end
   end
 
@@ -107,7 +107,7 @@ describe "Adding advanced pricing" do
       expect(record.market).to eq("All Markets")
       expect(record.buyer).to eq(organization.name)
       expect(record.min_quantity).to eq("1")
-      expect(record.net_price).to eq("$1.87")
+      expect(record.net_price).to eq("$1.87") # 5.9 % fees
       expect(record.sale_price).to eq("$1.99")
     end
   end
@@ -148,7 +148,7 @@ describe "Adding advanced pricing" do
 
     it "shows updated net sale information" do
       fill_in "price_sale_price", with: "12.90"
-      expect(find_field("price_net_price").value).to eq("11.22")
+      expect(find_field("price_net_price").value).to eq("11.24") # 12.9% fees subtracted
       click_button "Add"
 
       expect(page).to have_content("Successfully added a new price")
@@ -157,7 +157,7 @@ describe "Adding advanced pricing" do
       expect(record.market).to eq("All Markets")
       expect(record.buyer).to eq("All Buyers")
       expect(record.min_quantity).to eq("1")
-      expect(record.net_price).to eq("$11.22")
+      expect(record.net_price).to eq("$11.24") # 12.9% fees subtracted
       expect(record.sale_price).to eq("$12.90")
     end
   end
