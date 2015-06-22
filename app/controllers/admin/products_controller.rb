@@ -1,6 +1,7 @@
 module Admin
   class ProductsController < AdminController
     include StickyFilters
+    include ::Financials::Pricing
 
     before_action :ensure_selling_organization
     before_action :find_product, only: [:show, :update, :destroy]
@@ -13,6 +14,9 @@ module Admin
           @products = products.page(params[:page]).per(@query_params[:per_page])
           find_organizations_for_filtering
           find_markets_for_filtering
+
+          markets = @products.flat_map {|prod| prod.organization.all_markets }
+          @net_percents_by_market_id = ::Financials::Pricing.seller_net_percents_by_market(markets)
         end
         format.csv do
           @filename = 'products.csv'
