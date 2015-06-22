@@ -32,7 +32,10 @@ class CreateTemporaryStripeCreditCard
                      create_stripe_card_bank_account(@org, stripe_tok, credit_card_params)
                    end
     
-    set_card_for_transaction(bank_account)
+    if bank_account
+      # create_stripe_card_bank_account could fail and return nil, in which case the context has been failed, and we cannot set the card for the transaction
+      set_card_for_transaction(bank_account)
+    end
   end
 
   private
@@ -51,25 +54,36 @@ class CreateTemporaryStripeCreditCard
   end
 
   def create_stripe_card_bank_account(org, stripe_tok, card_params)
-    SchemaValidation.validate!(CardSchema::NewParams, card_params)
+    bank_account = nil
 
-    card = PaymentProvider::Stripe.create_stripe_card_for_stripe_customer(
-      stripe_customer_id: org.stripe_customer_id,
-      stripe_tok: stripe_tok
-    )
+    begin
+      SchemaValidation.validate!(CardSchema::NewParams, card_params)
 
-    bank_account = org.bank_accounts.create(card_params.merge(stripe_id: card.id))
-
-  rescue => e
-    if Rails.env.test? || Rails.env.development?
-      raise e
-    else
+      card = PaymentProvider::Stripe.create_stripe_card_for_stripe_customer(
+        stripe_customer_id: org.stripe_customer_id,
+        stripe_tok: stripe_tok
+      )
+      bank_account = org.bank_accounts.create(card_params.merge(stripe_id: card.id))
+    rescue => e
       Honeybadger.notify_or_ignore(e)
+      error_message = determine_error_message(e)
+      context[:order].errors.add(:credit_card, error_message)
+      context.fail!
     end
-    context[:order].errors.add(:credit_card, "was denied by the payment processor.")
-    context.fail!
+
+    bank_account
   end
 
-
+  def determine_error_message(e)
+    message = case e
+              when ::Stripe::StripeError
+                if e.respond_to?(:json_body) and data = e.json_body
+                  if err = data[:error] 
+                    ": #{err[:message]}"
+                  end
+                end
+              end
+    return (message || "was denied by the payment processor.")
+  end
 
 end

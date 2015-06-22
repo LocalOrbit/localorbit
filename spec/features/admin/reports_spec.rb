@@ -312,7 +312,9 @@ feature "Reports" do
           expect(totals.market_fees).to eq("$2.50")
           expect(totals.lo_fees).to eq("$7.50")
           expect(totals.processing_fees).to eq("$6.25")
-          expect(totals.discounts).to eq("$0.00")
+          #expect(totals.discounts).to eq("$0.00")
+          expect(totals.discount_seller).to eq("$0.00")
+          expect(totals.discount_market).to eq("$0.00")
           expect(totals.net_sales).to eq("$504.75")
         end
 
@@ -358,7 +360,9 @@ feature "Reports" do
           expect(totals.market_fees).to eq("$2.50")
           expect(totals.lo_fees).to eq("$7.50")
           expect(totals.processing_fees).to eq("$6.25")
-          expect(totals.discounts).to eq("$0.00")
+          #expect(totals.discounts).to eq("$0.00")
+          expect(totals.discount_seller).to eq("$0.00")
+          expect(totals.discount_market).to eq("$0.00")
           expect(totals.net_sales).to eq("$504.75")
         end
 
@@ -406,7 +410,9 @@ feature "Reports" do
           expect(totals.market_fees).to eq("$2.50")
           expect(totals.lo_fees).to eq("$7.50")
           expect(totals.processing_fees).to eq("$6.25")
-          expect(totals.discounts).to eq("$0.00")
+          #expect(totals.discounts).to eq("$0.00")
+          expect(totals.discount_seller).to eq("$0.00")
+          expect(totals.discount_market).to eq("$0.00")
           expect(totals.net_sales).to eq("$504.75")
         end
 
@@ -463,7 +469,9 @@ feature "Reports" do
           expect(totals.market_fees).to eq("$2.50")
           expect(totals.lo_fees).to eq("$7.50")
           expect(totals.processing_fees).to eq("$6.25")
-          expect(totals.discounts).to eq("$0.00")
+          #expect(totals.discounts).to eq("$0.00")
+          expect(totals.discount_seller).to eq("$0.00")
+          expect(totals.discount_market).to eq("$0.00")
           expect(totals.net_sales).to eq("$504.75")
         end
 
@@ -643,6 +651,7 @@ feature "Reports" do
             expect(totals.market_fees).to eq("$0.00")
             expect(totals.lo_fees).to eq("$0.00")
             expect(totals.processing_fees).to eq("$0.00")
+            #expect(totals.discounts).to eq("$0.00")
             expect(totals.discounts).to eq("$0.00")
             expect(totals.net_sales).to eq("$6.99")
           end
@@ -722,13 +731,9 @@ feature "Reports" do
 
         scenario "displays total sales" do
           totals = Dom::Admin::TotalSales.first
-
-          expect(totals.gross_sales).to eq("$110.00")
-          expect(totals.market_fees).to eq("$2.50")
-          expect(totals.lo_fees).to eq("$7.50")
-          expect(totals.processing_fees).to eq("$6.25")
-          expect(totals.discounts).to eq("$0.00")
-          expect(totals.net_sales).to eq("$93.75")
+          expect(totals.discounted_total).to eq("$110.00") # TODO add tests with real discounts
+          expect(page).to have_content("Total Purchase")
+          expect(page).not_to have_content("Market Fees")
         end
 
         scenario "filters by category" do
@@ -776,13 +781,9 @@ feature "Reports" do
 
         scenario "displays total sales" do
           totals = Dom::Admin::TotalSales.first
-
-          expect(totals.gross_sales).to eq("$110.00")
-          expect(totals.market_fees).to eq("$2.50")
-          expect(totals.lo_fees).to eq("$7.50")
-          expect(totals.processing_fees).to eq("$6.25")
-          expect(totals.discounts).to eq("$0.00")
-          expect(totals.net_sales).to eq("$93.75")
+          expect(totals.discounted_total).to eq("$110.00")
+          expect(page).to have_content("Total Purchase")
+          expect(page).not_to have_content("Market Fees")
         end
 
         # https://www.pivotaltracker.com/story/show/78823306

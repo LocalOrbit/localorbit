@@ -10,4 +10,10 @@ class CreateBankAccount
       context.fail!
     end
   end
+
+  def rollback
+    if bank_account = context[:bank_account]
+      bank_account.destroy
+    end
+  end
 end

@@ -125,4 +125,4 @@
 </div>
 
 <%= render "admin/reports/footer", presenter: @presenter %>
-<%= render "shared/total_sales", totals: @presenter.totals %>
+<%= render "shared/total_sales", totals: @presenter.totals, is_market_manager: current_user.can_manage_market?(current_market), buyer_only: current_user.buyer_only? %>

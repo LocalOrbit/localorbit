@@ -583,6 +583,35 @@ describe Market do
     end
   end
 
+  describe "#stripe_account" do
+    let(:stripe_account) { double("stripe account") }
+    let(:market) { create(:market) }
+
+    it "returns the StripeAccount" do
+      market.update_attribute(:stripe_account_id, "acct id")
+      expect(Stripe::Account).to receive(:retrieve).with(market.stripe_account_id).and_return(stripe_account)
+      expect(market.stripe_account).to be stripe_account
+    end
+
+    context "when stripe_account_id is nil" do
+      it "returns nil" do
+        market.update_attribute(:stripe_account_id, nil)
+        expect(Stripe::Account).not_to receive(:retrieve)
+        expect(market.stripe_account).to be nil
+      end
+    end
+
+    context "when account retrieval fails" do
+      it "returns nil" do
+        market.update_attribute(:stripe_account_id, "oops")
+        expect(Stripe::Account).to receive(:retrieve)
+          .with(market.stripe_account_id)
+          .and_raise("nuked!")
+        expect(market.stripe_account).to be nil
+      end
+    end
+  end
+
 
 
 end

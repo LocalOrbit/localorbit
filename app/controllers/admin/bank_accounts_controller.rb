@@ -20,9 +20,16 @@ class Admin::BankAccountsController < AdminController
     if results.success?
       redirect_to [:admin, @entity, :bank_accounts], notice: "Successfully added a payment method"
     else
-      flash.now[:alert] = "Unable to save payment method"
-      @bank_account = results.bank_account
-      render :new
+      alert = results.context[:error] || "Unable to save payment method"
+      if results.context[:bank_account].nil?
+        # Total bank account creation failure, redirect to #new
+        redirect_to({action: :new}, alert: alert)
+      else
+        # Error adding bank account, re-render #new form w errors:
+        flash.now[:alert] = alert
+        @bank_account = results.bank_account
+        render :new
+      end
     end
   end
 
