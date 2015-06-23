@@ -48,7 +48,6 @@ describe Price do
 
       subject.sale_price = 1.99
 
-      binding.pry
       expect(subject.net_price).to eq(1.87) # 6% fees
 
       subject.sale_price = 3.99
