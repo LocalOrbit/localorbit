@@ -162,7 +162,7 @@ FactoryGirl.define do
     local_orbit_seller_fee 2
     local_orbit_market_fee 0
     market_seller_fee      1
-    credit_card_seller_fee 3
+    credit_card_seller_fee 1
     credit_card_market_fee 0
     ach_seller_fee         1.3
     ach_market_fee         0

@@ -121,6 +121,10 @@ module PaymentProvider
         bank_accounts.reject do |ba| ba.balanced_uri.nil? end
       end
 
+      def approximate_credit_card_rate
+        raise "Balanced payment provider doesn't implement approximate_credit_card_rate" 
+      end
+
     end
   end
 end
