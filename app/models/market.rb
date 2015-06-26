@@ -214,6 +214,10 @@ class Market < ActiveRecord::Base
     self.payment_provider
   end
 
+  def deposit_account
+    self.bank_accounts.visible.deposit_accounts.first
+  end
+
   private
 
   def require_payment_method
