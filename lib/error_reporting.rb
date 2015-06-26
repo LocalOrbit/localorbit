@@ -22,24 +22,25 @@ module ErrorReporting
 
   class << self
 
-    def interpret_exception(e, prefix=nil)
+    def interpret_exception(e, prefix=nil, data=nil)
 
       info = case e
              when ::Stripe::StripeError
-               interpret_stripe_error(e,prefix)
+               interpret_stripe_error(e,prefix,data)
              else
-               interpret_generic_exception(e,prefix)
+               interpret_generic_exception(e,prefix,data)
              end
 
       SchemaValidation.validate!(Schema::ErrorInfo, info)
     end
 
-    def interpret_generic_exception(e,message)
+    def interpret_generic_exception(e,message=nil,data=nil)
       message ||= "Unexpected error"
 
-      data = {
+      data ||= {}
+      data = data.merge(
         exception: exception_to_info(e),
-      }
+      )
 
       honeybadger_exception = DescriptiveError.new(message: message, data: data, root: e)
 
@@ -49,7 +50,7 @@ module ErrorReporting
       }
     end
 
-    def interpret_stripe_error(e,application_error_message=nil)
+    def interpret_stripe_error(e,application_error_message=nil,data=nil)
       application_error_message ||= "Payment processor error."
       json_error_data = nil
 
@@ -63,10 +64,11 @@ module ErrorReporting
         end
       end
 
-      data = {
+      data ||= {}
+      data = data.merge(
         exception: exception_to_info(e),
         error_data: json_error_data
-      }
+      )
 
       honeybadger_exception = DescriptiveError.new(message: technical_message, data: data, root: e)
 
