@@ -7,7 +7,7 @@ module Financials
 	      res
 	    end
 	    if markets.length > 0
-	    	result["all"] = markets.first.seller_net_percent
+		    result["all"] = markets.first.seller_net_percent
 		    markets.each do |mkt|
 		    	if mkt.seller_net_percent < result["all"]
 		    		result["all"] = mkt.seller_net_percent
@@ -15,9 +15,9 @@ module Financials
 		    	result
 		    end
 		  else
-	    	result["all"] = 1.0
+		  	result["all"] = 1
+		  end
 	    result
-	  	end
 		end
 	end
 end

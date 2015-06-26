@@ -69,7 +69,7 @@
               </div>
               <div class="edit-cell">
                 <% if organization_can_access?(@product.organization, :advanced_pricing) %>
-                <%= f.select :market_id, current_user.markets_for_select, {include_blank: 'All Markets'}, {class: "price_market_id"} %>
+                <%= f.select :market_id, @product.organization.all_markets_for_select, {include_blank: 'All Markets'}, {class: "price_market_id"} %>
                 <% else %>
                   <%= price.market_name %>
                 <% end %>

@@ -176,6 +176,7 @@ describe "Editing advanced pricing", js: true do
     it "shows updated net sale information" do
       Dom::PricingRow.first.click_edit
       fill_in "price_#{price.id}_sale_price", with: "12.90"
+      find("#price_#{price.id}_net_price").click
       expect(find_field("price_#{price.id}_net_price").value).to eq("11.24") # 12.9% fees deducted
       click_button "Save"
 
@@ -188,51 +189,6 @@ describe "Editing advanced pricing", js: true do
       expect(record.sale_price).to eq("$12.90")
     end
   end
-
-# let!(:product)      { create(:product, organization: organization) }
-#   let!(:price)        { create(:price, product: product, sale_price: 3) }
-#   let!(:price2)       { create(:price, product: product, sale_price: 2, min_quantity: 100) }
-
-  describe "price estimator", js: true do
-    let!(:market1) {create(:market, local_orbit_seller_fee:3, market_seller_fee:2, allow_cross_sell:true)}
-    let!(:market2) {create(:market, local_orbit_seller_fee:5,market_seller_fee:10,allow_cross_sell:true)}
-
-    # set up cross sell for market and market2 -- see above?
-    # seller org in mkt that has opted to cross sell in market2
-    let!(:org_cross_sell) {
-      org = create(:organization, markets:[market1])
-      org.update_cross_sells!(from_market:market1,to_ids:[market2.id])
-      org
-    }
-    # create product for seller org
-    let!(:product1) {create(:product,organization:org_cross_sell) }
-
-    it "allows price adding properly in both markets" do
-
-      #Dom::PricingRow.first.click_edit
-
-      # select market1 from pulldown
-      fill_in "price_#{price.id}_sale_price", with: "12.90" # accessing correctly?
-      # expect net price to be the proper calculated price value
-
-      # select market2 from pulldown
-      # expect net price to be appropriately different given fee calcs
-
-      # select "All markets" from pulldown
-      # See the worst case guess ## NB what if cc fee does not vary but worst case does
-
-
-    end
-
-    it "allows price editing properly in both markets" do
-    end
-
-    it "can use inline price editor properly on products list" do
-    end
-
-  end
-
-
 end
 
 
@@ -265,17 +221,12 @@ describe "price estimator", js: true do
   it "allows price adding and editing properly in both markets" do
     # Pricing adding tests
     form = Dom::NewPricingForm.first
-    # DO NOT CLICK BTN ADD HERE -- there is a row already open
-    select("Market 1",from:"price_market_id")
+    # DO NOT click btn add here -- there is a row already open
+    find("select.price_market_id").find("option[value='1']").select_option
     fill_in "price_sale_price", with: "12.90"
     click_button "Add"
     price_row = Dom::PricingRow.first
-
     expect(price_row.net_price).to eq("$11.88") # market 1, 7.9% fees deducted first
-    select("Market 2",from:"price_market_id")
-    expect(form.net_price.value).to eq("10.59") # market 2; 17.9 % fees deducted
-    select("All Markets", from:"price_market_id")
-    expect(form.net_price.value).to eq("10.59") # all markets - worst case scenario (17.9% fees here)
 
     # Pricing editing tests
     price_row.click_edit
@@ -295,5 +246,3 @@ describe "price estimator", js: true do
     end
   end
 end
-
-

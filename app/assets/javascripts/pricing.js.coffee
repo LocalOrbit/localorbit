@@ -22,7 +22,7 @@ $ ->
       salePrice.val(v.toFixed(2))
 
     getNetPercent = ->
-      marketId = selectedMarket.val()
+      marketId = selectedMarket.val() || 'all'
       marketToNetPercentMap = netPrice.data('net-percents-by-market-id')
       if marketId == ""
         marketId = "all"
@@ -33,8 +33,10 @@ $ ->
         return 0.00
 
     updateNetPrice = ->
-      x = getSalePriceValue() * getNetPercent()
-      setNetPriceValue(x)
+      salePriceValue = getSalePriceValue()
+      netPercent = getNetPercent()
+      netPriceValue = salePriceValue * netPercent
+      setNetPriceValue(netPriceValue)
 
     updateSalePrice = ->
       y = getNetPriceValue() / getNetPercent()
@@ -66,6 +68,10 @@ $ ->
 
     selectedMarket.change ->
       updateNetPrice()
+
+    window.halp = {
+      np:getNetPercent()
+    }
 
   $('input.sale-price').each ->
     bindCalculator(this)
