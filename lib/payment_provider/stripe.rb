@@ -296,7 +296,7 @@ module PaymentProvider
           market:         market,
           payee:          market,
           bank_account:   nil,
-          order_ids:      order_ids,
+          orders:         Order.where(id: order_ids),
           payment_method: "ach"
         )
       end

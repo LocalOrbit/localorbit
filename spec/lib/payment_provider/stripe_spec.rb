@@ -519,6 +519,16 @@ describe PaymentProvider::Stripe do
       expect(payment.payment_provider).to eq PaymentProvider::Stripe.id.to_s
     end
 
+    describe "when an order id is given that doesn't refer to an actual order" do
+      it "ignores the errant order id" do
+        original_ids = params[:order_ids].dup
+        params[:order_ids].push 1234
+        params[:order_ids].unshift 187
+        payment = subject.create_market_payment(params)
+        expect(payment.order_ids.to_set).to eq(original_ids.to_set)
+      end
+    end
+
   end
 
   describe ".create_stripe_card_for_stripe_customer" do
