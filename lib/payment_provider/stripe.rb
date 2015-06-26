@@ -295,8 +295,8 @@ module PaymentProvider
           stripe_transfer_id: transfer_id,
           market:         market,
           payee:          market,
-          bank_account:   nil,
-          order_ids:      order_ids,
+          bank_account:   market.deposit_account,
+          orders:         Order.where(id: order_ids),
           payment_method: "ach"
         )
       end

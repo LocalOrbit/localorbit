@@ -107,7 +107,13 @@ describe ErrorReporting do
       let (:error) { Stripe::StripeError.new }
 
       it "delegates to .interpret_stripe_error" do
-        expect(ErrorReporting).to receive(:interpret_stripe_error).with(error,nil).and_return(error_info)
+        expect(ErrorReporting).to receive(:interpret_stripe_error).with(error,"Dang",{some:"info"}).and_return(error_info)
+        info = ErrorReporting.interpret_exception(error, "Dang", {some:"info"})
+        expect(info).to eq error_info
+      end
+
+      it "passes default nils for message and data when it delegates to .interpret_stripe_error" do
+        expect(ErrorReporting).to receive(:interpret_stripe_error).with(error,nil,nil).and_return(error_info)
         info = ErrorReporting.interpret_exception(error)
         expect(info).to eq error_info
       end
@@ -117,7 +123,13 @@ describe ErrorReporting do
       let (:error) { RuntimeError.new("OUCH") }
 
       it "delegates to .interpret_generic_exception" do
-        expect(ErrorReporting).to receive(:interpret_generic_exception).with(error,nil).and_return(error_info)
+        expect(ErrorReporting).to receive(:interpret_generic_exception).with(error,"Argh",{a:"note"}).and_return(error_info)
+        info = ErrorReporting.interpret_exception(error, "Argh", {a:"note"})
+        expect(info).to eq error_info
+      end
+
+      it "passes default nils for message and data when it delegates to .interpret_generic_exception" do
+        expect(ErrorReporting).to receive(:interpret_generic_exception).with(error,nil,nil).and_return(error_info)
         info = ErrorReporting.interpret_exception(error)
         expect(info).to eq error_info
       end
