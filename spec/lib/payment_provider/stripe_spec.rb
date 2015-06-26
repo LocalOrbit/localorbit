@@ -490,6 +490,8 @@ describe PaymentProvider::Stripe do
 
   describe ".create_market_payment" do
     let!(:market) { create(:market) }
+    let!(:bank_account) { create(:bank_account, bankable: market) }
+    let!(:deposit_account) { create(:bank_account, bankable: market, account_role: 'deposit') }
     let!(:order1) { create(:order, market: market) }
     let!(:order2) { create(:order, market: market) }
     let(:orders) { [order1,order2] }
@@ -508,7 +510,6 @@ describe PaymentProvider::Stripe do
       expect(payment).to be
       expect(payment.id).to be
       expect(payment.payment_type).to eq 'market payment'
-      expect(payment.bank_account).to be nil
 
       expect(payment.payee).to eq(market)
       expect(payment.market).to eq(market)
@@ -517,6 +518,7 @@ describe PaymentProvider::Stripe do
       expect(payment.status).to eq 'the status'
       expect(payment.amount).to eq '12.34'.to_d
       expect(payment.payment_provider).to eq PaymentProvider::Stripe.id.to_s
+      expect(payment.bank_account).to eq deposit_account
     end
 
     describe "when an order id is given that doesn't refer to an actual order" do
