@@ -657,6 +657,7 @@ module Dom
       attribute :gross_sales
       attribute :discounted_total
       attribute :market_fees
+      attribute :delivery_fees
       attribute :lo_fees
       attribute :processing_fees
       attribute :discounts

@@ -35,8 +35,12 @@ module TotalsPresenter
     totals[:discounted_total]
   end
 
+  def delivery_fees
+    totals[:delivery]
+  end
+
   def totals
-    @totals ||= items.inject(discount: 0, discount_seller: 0, discount_market: 0, gross: 0, net: 0, payment: 0, transaction: 0, market: 0, discounted_total: 0) do |totals, item|
+    @totals ||= items.inject(discount: 0, discount_seller: 0, discount_market: 0, gross: 0, net: 0, payment: 0, transaction: 0, market: 0, discounted_total: 0, delivery: 0) do |totals, item|
       next totals if item.delivery_status == "canceled"
 
       totals[:discount]    += item.discount
@@ -48,6 +52,7 @@ module TotalsPresenter
       totals[:net]         += item.seller_net_total
       totals[:payment]     += item.payment_seller_fee
       totals[:market]      += item.market_seller_fee
+      totals[:delivery]    += (item.order.delivery_fees / item.order.items.count) # multiple items in an order, since we're looping by item we don't want to add the whole fee over again for every single item in the order
       totals
     end
   end
