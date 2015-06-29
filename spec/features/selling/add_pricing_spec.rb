@@ -35,7 +35,7 @@ describe "Adding advanced pricing" do
     expect(page).to_not have_content("You don't have any prices yet!")
   end
 
-  describe "invalid input" do
+  describe "invalid input" do 
     before do
       fill_in "price_sale_price", with: "0"
       fill_in "price_min_quantity", with: "0"
@@ -49,9 +49,8 @@ describe "Adding advanced pricing" do
 
     it "re-enables the net pricing calculator for the new form", js: true do
       fill_in "price_sale_price", with: "12"
-
       new_price_form = Dom::NewPricingForm.first
-      expect(new_price_form.net_price.value).to eql("11.29") # 5.9% fees subtracted
+      expect(new_price_form.net_price.value).to eq("11.29") # 5.9% fees subtracted
     end
   end
 
