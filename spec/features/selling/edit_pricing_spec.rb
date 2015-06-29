@@ -222,9 +222,11 @@ describe "price estimator", js: true do
     # Pricing adding tests
     form = Dom::NewPricingForm.first
     # DO NOT click btn add here -- there is a row already open
-    find("select.price_market_id").find("option[value='1']").select_option
-    fill_in "price_sale_price", with: "12.90"
-    click_button "Add"
+    within form.node do
+      find("select.price_market_id").find("option[value='1']").select_option
+      fill_in "price_sale_price", with: "12.90"
+      click_button "Add"
+    end
     price_row = Dom::PricingRow.first
     expect(price_row.net_price).to eq("$11.88") # market 1, 7.9% fees deducted first
 
