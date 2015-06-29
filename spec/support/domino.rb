@@ -385,7 +385,7 @@ module Dom
         attribute :market_payable_payment_fee
       end
 
-      
+
       module Automate
         class SellerSection < Domino
           selector ".seller-payment"
@@ -443,7 +443,7 @@ module Dom
             net_sales[1..-1].to_d
           end
         end
-        
+
 
         class MarketSection < Domino
           selector ".market-payment"
@@ -688,6 +688,7 @@ module Dom
       attribute :net_sale
       attribute :delivery_status
       attribute :payment_status
+      attribute :delivery_fees
 
       def has_discount_market?
         node.all(".discount_market").count > 0
