@@ -234,11 +234,11 @@ describe "price estimator", js: true do
     price_row.click_edit
 
     within price_row.node do
-      find(".price_market_id").select("Market 1")
+      find(".price_market_id").find("option[value='#{market1.id}']").select_option
       price_row.node.find("input.sale-price").set("16.80")
       expect(price_row.node.find("input.net-price").value).to eq("15.47")
 
-      find(".price_market_id").select("Market 2")
+      find(".price_market_id")..find("option[value='#{market2.id}']").select_option
       price_row.node.find("input.sale-price").set("16.80")
       expect(price_row.node.find("input.net-price").value).to eq("13.79")
 
