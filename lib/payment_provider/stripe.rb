@@ -3,7 +3,7 @@ module PaymentProvider
     CreditCardFeeStructure = SchemaValidation.validate!(FeeEstimator::Schema::BasePlusRate,
       style: :base_plus_rate,
       base:  30,
-      rate:  "0.029".to_d, # 2.9% of total
+      rate:  BigDecimal.new("0.029") #{}"0.029".to_d, # 2.9% of total
     )
 
     TransferSchedule = {
@@ -259,6 +259,10 @@ module PaymentProvider
         end
       end
 
+      def approximate_credit_card_rate
+        CreditCardFeeStructure[:rate] # should be decimal value 0.029, see above
+      end
+
       #
       #
       # NON-PaymentProvider interface:
@@ -291,8 +295,8 @@ module PaymentProvider
           stripe_transfer_id: transfer_id,
           market:         market,
           payee:          market,
-          bank_account:   nil,
-          order_ids:      order_ids,
+          bank_account:   market.deposit_account,
+          orders:         Order.where(id: order_ids),
           payment_method: "ach"
         )
       end

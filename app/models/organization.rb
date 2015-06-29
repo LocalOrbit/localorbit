@@ -146,6 +146,12 @@ class Organization < ActiveRecord::Base
     Stripe::Customer.retrieve(stripe_customer_id) if stripe_customer_id
   end
 
+  def all_markets_for_select
+    all_markets.map do |market|
+      [market.name, market.id]
+    end
+  end
+
   private
 
   def reject_location(attributed)

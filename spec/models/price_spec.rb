@@ -37,7 +37,7 @@ describe Price do
   end
 
   describe "#net_price" do
-    let(:market)  { create(:market) }
+    let(:market)  { create(:market, credit_card_seller_fee:0,credit_card_market_fee:1) }
     let(:org)     { create(:organization, markets: [market]) }
     let(:product) { create(:product, organization: org) }
 
@@ -48,11 +48,11 @@ describe Price do
 
       subject.sale_price = 1.99
 
-      expect(subject.net_price).to eq(1.87) # 6% fees
+      expect(subject.net_price).to eq(1.93) # 3% fees from market.LO fees + market.market_seller_fee
 
       subject.sale_price = 3.99
 
-      expect(subject.net_price).to eq(3.75) # 6% fees
+      expect(subject.net_price).to eq(3.87) # 3% fees as above
     end
   end
 

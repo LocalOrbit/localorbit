@@ -14,7 +14,7 @@ describe "Editing an order" do
   let!(:delivery)        { monday_delivery.next_delivery }
   let!(:order_item)      { create(:order_item, product: product, quantity: 5, unit_price: 3.00, payment_status: "pending", delivery_status: "pending") }
   let!(:order_item_lot)  { create(:order_item_lot, quantity: 5, lot: product_lot, order_item: order_item) }
-  let!(:order)           { create(:order, market: market, organization: buyer, delivery: delivery, items: [order_item], total_cost: 15.00, payment_method: "ach") }
+  let!(:order)           { create(:order, market: market, organization: buyer, delivery: delivery, items: [order_item], total_cost: 15.00, payment_provider: PaymentProvider::Stripe.id, payment_method: "credit card") }
   let!(:bank_account)    { create(:bank_account, :checking, :verified, bankable: buyer) }
   let!(:payment)         { create(:payment, :checking, bank_account: bank_account, balanced_uri: "/debit-1", orders: [order], amount: 15.00) }
 
@@ -391,7 +391,7 @@ describe "Editing an order" do
         expect(item.delivery_status).to eql("Pending")
       end
 
-      context "less then ordered" do
+      context "less than ordered" do
         before do
           expect(UpdatePurchase).to receive(:perform).and_return(double("interactor", "success?" => true))
         end
@@ -420,7 +420,8 @@ describe "Editing an order" do
 
           expect(Dom::Admin::OrderSummaryRow.first.gross_total).to eql("$6.00")
           expect(Dom::Admin::OrderSummaryRow.first.market_fees).to eql("$0.30")
-          expect(Dom::Admin::OrderSummaryRow.first.net_sale).to eql("$5.38")
+          # Payment fees WON'T BE UPDATED because this test mocks the call to UpdatePurchase, which since Stripe, is where we invoke the payment fee update code.
+          expect(Dom::Admin::OrderSummaryRow.first.net_sale).to eql("$5.46")
         end
 
         it "does not update the product inventory" do
@@ -474,7 +475,8 @@ describe "Editing an order" do
 
           expect(Dom::Admin::OrderSummaryRow.first.gross_total).to eql("$6.90")
           expect(Dom::Admin::OrderSummaryRow.first.market_fees).to eql("$0.35")
-          expect(Dom::Admin::OrderSummaryRow.first.net_sale).to eql("$6.18")
+          # Payment fees WON'T BE UPDATED because this test mocks the call to UpdatePurchase, which since Stripe, is where we invoke the payment fee update code.
+          expect(Dom::Admin::OrderSummaryRow.first.net_sale).to eql("$6.27") 
         end
       end
 
@@ -513,7 +515,8 @@ describe "Editing an order" do
 
           expect(Dom::Admin::OrderSummaryRow.first.gross_total).to eql("$21.00")
           expect(Dom::Admin::OrderSummaryRow.first.market_fees).to eql("$1.05")
-          expect(Dom::Admin::OrderSummaryRow.first.net_sale).to eql("$18.84")
+          # Payment fees WON'T BE UPDATED because this test mocks the call to UpdatePurchase, which since Stripe, is where we invoke the payment fee update code.
+          expect(Dom::Admin::OrderSummaryRow.first.net_sale).to eql("$19.11")
         end
 
         it "does not update the product inventory" do
@@ -630,7 +633,8 @@ describe "Editing an order" do
 
           expect(Dom::Admin::OrderSummaryRow.first.gross_total).to eql("$6.00")
           expect(Dom::Admin::OrderSummaryRow.first.market_fees).to eql("$0.30")
-          expect(Dom::Admin::OrderSummaryRow.first.net_sale).to eql("$5.38")
+          # Payment fees WON'T BE UPDATED because this test mocks the call to UpdatePurchase, which since Stripe, is where we invoke the payment fee update code.
+          expect(Dom::Admin::OrderSummaryRow.first.net_sale).to eql("$5.46")
         end
 
         it "does not update the product inventory" do
@@ -689,7 +693,8 @@ describe "Editing an order" do
 
           expect(Dom::Admin::OrderSummaryRow.first.gross_total).to eql("$21.00")
           expect(Dom::Admin::OrderSummaryRow.first.market_fees).to eql("$1.05")
-          expect(Dom::Admin::OrderSummaryRow.first.net_sale).to eql("$18.84")
+          # Payment fees WON'T BE UPDATED because this test mocks the call to UpdatePurchase, which since Stripe, is where we invoke the payment fee update code.
+          expect(Dom::Admin::OrderSummaryRow.first.net_sale).to eql("$19.11")
         end
 
         it "does not update the product inventory" do
@@ -752,28 +757,6 @@ describe "Editing an order" do
         end
       end
 
-      context "payment processor error" do
-        let!(:payment) { create(:payment, :checking, bank_account: bank_account, balanced_uri: "/debit-1", orders: [order], amount: 15.00) }
-
-        before do
-          expect(Balanced::Transaction).to receive(:find).with("/debit-1").and_raise(StandardError)
-
-          visit admin_order_path(order)
-
-          item = Dom::Order::ItemRow.first
-          expect(item.total).to have_content("$15.00")
-        end
-
-        it "shows an error" do
-          item = Dom::Order::ItemRow.first
-          item.set_quantity_delivered("2")
-          click_button "Update quantities"
-
-          expect(page).to have_content("failed to update your payment")
-          item = Dom::Order::ItemRow.first
-          expect(item.total).to have_content("$15.00")
-        end
-      end
     end
   end
 

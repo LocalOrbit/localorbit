@@ -65,7 +65,7 @@ describe "Adding a product", chosen_js: true do
     switch_to_subdomain(market.subdomain)
   end
 
-  it "navigating to form as an org user" do
+  it "navigating to form as an org user", js: true do
     org.users << user
 
     sign_in_as(user)
@@ -74,11 +74,11 @@ describe "Adding a product", chosen_js: true do
       click_link "Products"
     end
     click_link "Add New Product"
-
+    # ^ This will fail in a case where having no specific markets is not handled
     expect(page).to have_field("Product Name")
   end
 
-  it "navigating to form as an admin user" do
+  it "navigating to form as an admin user", js: true do
     user.update_attribute(:role, "admin")
 
     sign_in_as(user)
@@ -574,7 +574,7 @@ describe "Adding a product", chosen_js: true do
       visit "/admin/products/new"
     end
 
-    it "makes the user choose an organization to add the product for" do
+    it "makes the user choose an organization to add the product for", js: true do
       select org2.name, from: "Seller Organization"
 
       fill_in_required_fields(:with_chosen)

@@ -1,8 +1,11 @@
 class Admin::PricesController < AdminController
   include ProductLookup
+  include ::Financials::Pricing
 
   def index
     @price = @product.prices.build.decorate
+    markets = @product.organization.all_markets
+    @net_percents_by_market_id = ::Financials::Pricing.seller_net_percents_by_market(markets)
   end
 
   def create
@@ -11,6 +14,8 @@ class Admin::PricesController < AdminController
       redirect_to [:admin, @product, :prices], notice: "Successfully added a new price"
     else
       @price = @price.decorate
+      markets = @product.organization.all_markets
+      @net_percents_by_market_id = ::Financials::Pricing.seller_net_percents_by_market(markets)
       flash.now[:alert] = "Could not save price"
       render :index
     end
@@ -37,6 +42,8 @@ class Admin::PricesController < AdminController
         format.html do
           @price_with_errors = price
           @price = @product.prices.build.decorate
+          markets = @product.organization.all_markets
+          @net_percents_by_market_id = ::Financials::Pricing.seller_net_percents_by_market(markets)
           flash.now[:alert] = "Could not save price"
           render :index
         end

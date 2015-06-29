@@ -1,14 +1,7 @@
 require "spec_helper"
 
 describe CreateTemporaryStripeCreditCard do
-
-  before :all do
-    VCR.turn_off!  # CUT! CUT! CUT! 
-  end
-
-  after :all do
-    VCR.turn_on!
-  end
+  subject { described_class }
 
   after do
     cleanup_stripe_objects
@@ -33,28 +26,25 @@ describe CreateTemporaryStripeCreditCard do
   }
 
   context "integration tests" do
-    subject { described_class }
+    let(:stripe_card_token) { create_stripe_token }
+
+    before :all do
+      VCR.turn_off!  # CUT! CUT! CUT! 
+    end
+
+    after :all do
+      VCR.turn_on!
+    end
+
 
     context "when Stripe customer already associated with the entity" do
-
-      let(:stripe_card_token) {
-        Stripe::Token.create(
-          card: {
-            number: "4012888888881881", 
-            exp_month: 5, 
-            exp_year: 2016, 
-            cvc: "314"
-          }
-        )
-      }
-
+      before do
+        order_params[:credit_card][:stripe_tok] = stripe_card_token.id
+      end
       let!(:stripe_customer) { 
         create_stripe_customer(organization: org)
       }
 
-      before do
-        order_params[:credit_card][:stripe_tok] = stripe_card_token.id
-      end
 
       it "creates a new BankAccount and Stripe::Customer" do
         result = subject.perform(order_params: order_params, cart: cart, order: order)
@@ -72,6 +62,22 @@ describe CreateTemporaryStripeCreditCard do
         card = stripe_customer.sources.retrieve(bank_account.stripe_id)
         expect(card).to be
 
+      end
+    end
+
+    context "if card creation fails" do
+      before do
+        order_params[:credit_card][:stripe_tok] = "NO GOOD"
+      end
+
+      it "reports an interpreted error to Honeybadger and fails the context" do
+        expect(Honeybadger).to receive(:notify_or_ignore)
+
+        result = subject.perform(order_params: order_params, cart: cart, order: order)
+
+        expect(result.success?).to be false
+        expect(org.bank_accounts).to be_empty
+        expect(result.order.errors.messages[:credit_card]).to be
       end
     end
 
