@@ -35,10 +35,17 @@ module TotalsPresenter
     totals[:discounted_total]
   end
 
+  def delivery_fees
+    totals[:delivery]
+  end
+
   def totals
-    @totals ||= items.inject(discount: 0, discount_seller: 0, discount_market: 0, gross: 0, net: 0, payment: 0, transaction: 0, market: 0, discounted_total: 0) do |totals, item|
+    return @totals if @totals
+    order_ids ||= []
+    @totals ||= items.inject(discount: 0, discount_seller: 0, discount_market: 0, gross: 0, net: 0, payment: 0, transaction: 0, market: 0, discounted_total: 0, delivery: 0) do |totals, item|
       next totals if item.delivery_status == "canceled"
 
+      order_ids.push(item.order_id)
       totals[:discount]    += item.discount
       totals[:discount_seller] += item.discount_seller
       totals[:discount_market] += item.discount_market
@@ -50,5 +57,8 @@ module TotalsPresenter
       totals[:market]      += item.market_seller_fee
       totals
     end
+
+    @totals[:delivery] = Order.where(id: order_ids.uniq).sum(:delivery_fees)
+    @totals
   end
 end
