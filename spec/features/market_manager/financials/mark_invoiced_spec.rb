@@ -41,7 +41,7 @@ feature "sending invoices" do
       end
     end
 
-    context "marking a specific invoice by clicking its individual link", :wip do
+    context "marking a specific invoice by clicking its individual link" do
       let(:order) { market1_order1 }
 
       it "marks it as invoiced and moves it off the page", :js do
@@ -54,13 +54,13 @@ feature "sending invoices" do
         row.mark_invoiced
 
         expect(page).to have_content("Invoice marked for order number #{order.order_number}")
-        
+
         expect(invoice_row_for(order: order)).to be nil
-        
+
         order.reload
         expect(order.invoiced_at).to be_within(5.seconds).of(now)
         expect(order.invoice_due_date).to be_within(5.seconds).of(market1.po_payment_term.days.from_now(now))
-      
+
       end
     end
 
@@ -92,7 +92,7 @@ feature "sending invoices" do
         orders.each do |order|
           expect(invoice_row_for(order: order)).to eq nil
         end
-        
+
         # See the invoice timestamps on the orders:
         orders.each do |order|
           order.reload

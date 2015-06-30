@@ -46,6 +46,7 @@ feature "Reports" do
                        delivery: delivery,
                        items: [order_item],
                        organization: buyer,
+                       delivery_fees: 1,
                        payment_method: ["purchase order", "purchase order", "purchase order", "ach", "ach", "credit card"][i],
                        payment_status: "paid",
                        order_number: "LO-01-234-4567890-#{i}")
@@ -534,6 +535,19 @@ feature "Reports" do
         expect(item_rows_for_order("LO-02-234-4567890-4").count).to eq(1)
         expect(item_rows_for_order("LO-03-234-4567890-1").count).to eq(1)
       end
+
+      it "displays total sales" do
+        totals = Dom::Admin::TotalSales.first
+
+        expect(totals.gross_sales).to eq("$521.00")
+        expect(totals.market_fees).to eq("$2.50")
+        expect(totals.lo_fees).to eq("$7.50")
+        expect(totals.processing_fees).to eq("$6.25")
+        expect(totals.delivery_fees).to eq("$5.00")
+        expect(totals.discount_seller).to eq("$0.00")
+        expect(totals.discount_market).to eq("$0.00")
+        expect(totals.net_sales).to eq("$504.75")
+      end
     end
 
     context "as a Market Manager" do
@@ -558,6 +572,19 @@ feature "Reports" do
         expect(item_rows_for_order("LO-01-234-4567890-4").count).to eq(1)
       end
 
+      it "displays total sales" do
+        totals = Dom::Admin::TotalSales.first
+
+        expect(totals.gross_sales).to eq("$110.00")
+        expect(totals.market_fees).to eq("$2.50")
+        expect(totals.lo_fees).to eq("$7.50")
+        expect(totals.processing_fees).to eq("$6.25")
+        expect(totals.delivery_fees).to eq("$5.00")
+        expect(totals.discount_seller).to eq("$0.00")
+        expect(totals.discount_market).to eq("$0.00")
+        expect(totals.net_sales).to eq("$93.75")
+      end
+
       it "provides the admin link to Orders" do
         follow_admin_order_link order_number: "LO-01-234-4567890-0"
       end
@@ -566,7 +593,7 @@ feature "Reports" do
         product_name = Dom::Report::ItemRow.first.product_name
         see_admin_product_link product: Product.find_by(name: product_name)
       end
-      
+
       it "provides the Admin link to Sellers" do
         seller_name = Dom::Report::ItemRow.first.seller_name
         see_admin_seller_link seller: Organization.selling.find_by(name: seller_name)
@@ -651,6 +678,7 @@ feature "Reports" do
             expect(totals.market_fees).to eq("$0.00")
             expect(totals.lo_fees).to eq("$0.00")
             expect(totals.processing_fees).to eq("$0.00")
+            expect(totals).to_not have_content("Delivery Fees")
             #expect(totals.discounts).to eq("$0.00")
             expect(totals.discounts).to eq("$0.00")
             expect(totals.net_sales).to eq("$6.99")
@@ -691,6 +719,7 @@ feature "Reports" do
             expect(totals.lo_fees).to eq("$0.00")
             expect(totals.processing_fees).to eq("$0.00")
             expect(totals.discounts).to eq("$0.00")
+            expect(totals).to_not have_content("Delivery Fees")
             expect(totals.net_sales).to eq("$6.99")
           end
 
@@ -698,7 +727,7 @@ feature "Reports" do
             order_number = Dom::Report::ItemRow.first.order_number
             see_admin_order_link order: Order.find_by(order_number:order_number)
           end
-          
+
           it "provides the Admin link to Products" do
             product_name = Dom::Report::ItemRow.first.product_name
             see_admin_product_link product: Product.find_by(name: product_name)
@@ -734,6 +763,7 @@ feature "Reports" do
           expect(totals.discounted_total).to eq("$110.00") # TODO add tests with real discounts
           expect(page).to have_content("Total Purchase")
           expect(page).not_to have_content("Market Fees")
+          expect(page).not_to have_content("Delivery Fees")
         end
 
         scenario "filters by category" do
@@ -784,6 +814,7 @@ feature "Reports" do
           expect(totals.discounted_total).to eq("$110.00")
           expect(page).to have_content("Total Purchase")
           expect(page).not_to have_content("Market Fees")
+          expect(page).not_to have_content("Delivery Fees")
         end
 
         # https://www.pivotaltracker.com/story/show/78823306

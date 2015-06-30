@@ -17,6 +17,7 @@
             <th>Total Purchases</th>
           <% end %>
           <% if is_market_manager %>
+            <th>Delivery Fees</th>
             <th>Discounts (by Market)</th>
             <th>Discounts (by Seller)</th>
           <% elsif !buyer_only %>
@@ -37,6 +38,7 @@
             <td class="discounted-total"><%= number_to_currency totals.discounted_total %></td>
           <% end %>
           <% if is_market_manager %>
+            <td class="delivery-fees"><%= number_to_currency totals.delivery_fees %></td>
             <td class="discount-market"><%= number_to_currency totals.discount_market %></td>
             <td class="discount-seller"><%= number_to_currency totals.discount_seller %></td>
           <% elsif !buyer_only %>
