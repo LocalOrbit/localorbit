@@ -3,9 +3,7 @@ module Financials
 		extend self
 		def seller_net_percents_by_market(markets)
 			result = markets.inject({}) do |res,market|
-				unless markets.empty?
-		      res[market.id.to_s] = market.seller_net_percent
-		    end
+		    res[market.id.to_s] = market.seller_net_percent
 	      res
 	    end
 	    if markets.length > 0 # result should be {} or populated {}
