@@ -69,10 +69,6 @@ $ ->
     selectedMarket.change ->
       updateNetPrice()
 
-    window.halp = {
-      np:getNetPercent()
-    }
-
   $('input.sale-price').each ->
     bindCalculator(this)
 
