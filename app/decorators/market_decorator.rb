@@ -10,7 +10,26 @@ class MarketDecorator < Draper::Decorator
   end
 
   def first_address
-    addresses.visible.first
+    addresses.visible.first # remaining, in case (TODO check if it should go)
+  end
+
+  def default_address
+    default_addrs = addresses.map{|addr| addr if addr.default == true and addr.visible} # this should have only one in the array if any
+    # double check ^ OK? same for billing_address
+    unless default_addrs.empty? 
+      default_addrs.first
+    else
+      addresses.visible.first # Check: presumably if an address can be default or billing via those db attrs, it is also visible (not soft-deleted)
+    end
+  end
+
+  def billing_address
+    billing_addrs = addresses.map{|addr| addr if addr.billing == true and addr.visible} # should be just one again
+    unless billing_addrs.empty?
+      billing_addrs.first 
+    else
+      addresses.visible.first
+    end
   end
 
   def seller_locations_map(w=400, h=400)
