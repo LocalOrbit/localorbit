@@ -8,7 +8,7 @@ describe "Admin Managing Markets" do
     switch_to_subdomain(market.subdomain)
   end
 
-  describe "visiting the admin path without loggin in" do
+  describe "visiting the admin path without logging in" do
     it "redirects a user to the login pages" do
       visit admin_market_addresses_path(market)
 
@@ -32,6 +32,7 @@ describe "Admin Managing Markets" do
   describe "as a market manager" do
     let!(:user) { create(:user, role: "user") }
     let!(:address1) { create(:market_address, market: market) }
+    let!(:address1) { create(:market_address, market: market, default:true)}
 
     before do
       user.managed_markets << market
@@ -83,6 +84,9 @@ describe "Admin Managing Markets" do
 
       click_link address1.name
 
+      expect(page).to have_text("default")
+      expect(page).to have_text("billing")
+
       fill_in "Address Label", with: "Edited Address"
 
       click_button "Update Address"
@@ -116,6 +120,23 @@ describe "Admin Managing Markets" do
       click_button "Update Address"
 
       expect(page).to have_text("Name can't be blank")
+    end
+
+    it "deals with default address properly" do
+      # have default one, submit new default, check that there's only one and it's the new one
+    end
+
+    it "deals with billing address properly" do
+      # have billing, submit new billing, check there's only one
+    end
+
+    it "shows default and billing options on form" do
+      # expect checkbox content on page
+    end
+
+    it "keeps correct boxes checked" do
+      # do edit address thing on a default but not billing address
+      # check that default box is checked and billing box is not
     end
 
     it "provides some Canadian province choices" do
