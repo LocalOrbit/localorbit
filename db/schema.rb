@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150605170153) do
+ActiveRecord::Schema.define(version: 20150630154507) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -326,6 +326,8 @@ ActiveRecord::Schema.define(version: 20150605170153) do
     t.string   "phone"
     t.string   "fax"
     t.integer  "legacy_id"
+    t.boolean  "default"
+    t.boolean  "billing"
   end
 
   add_index "market_addresses", ["market_id", "deleted_at"], name: "index_market_addresses_on_market_id_and_deleted_at", using: :btree
