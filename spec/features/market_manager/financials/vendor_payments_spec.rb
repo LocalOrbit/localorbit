@@ -26,7 +26,7 @@ feature "Payments to vendors" do
            delivery: market1_delivery,
            payment_method: "purchase order",
            order_number: "LO-001",
-           total_cost: 27.96,
+           total_cost: 12.00,
            placed_at: today - 19.days)
   end
 
@@ -53,7 +53,7 @@ feature "Payments to vendors" do
       expect(seller_rows.size).to eq(3)
       expect(seller_rows[0].name).to have_content("Better Farms")
       expect(seller_rows[0].order_count).to have_content(/\A1 order from Baskerville Co-op Review/)
-      expect(seller_rows[0].owed).to have_content("$27.96")
+      expect(seller_rows[0].owed).to have_content("$12.00")
 
       expect(seller_rows[1].name).to have_content("Betterest Farms")
       expect(seller_rows[1].order_count).to have_content(/\A1 order from Baskerville Co-op Review/)
@@ -81,7 +81,7 @@ feature "Payments to vendors" do
 
         expect(seller_row.name).to have_content("Better Farms")
         expect(seller_row.order_count).to have_content(/\A1 order from Baskerville Co-op Review/)
-        expect(seller_row.owed).to have_content("$27.96")
+        expect(seller_row.owed).to have_content("$12.00")
       end
     end
 
@@ -101,7 +101,7 @@ feature "Payments to vendors" do
 
         expect(seller_row.name).to have_content("Better Farms")
         expect(seller_row.order_count).to have_content(/\A1 order from Baskerville Co-op Review/)
-        expect(seller_row.owed).to have_content("$17.96")
+        expect(seller_row.owed).to have_content("2.00")
       end
     end
   end
@@ -208,7 +208,7 @@ feature "Payments to vendors" do
     let!(:market2_product3) { create(:product, :sellable, organization: market2_seller2) }
     let!(:market2_product4) { create(:product, :sellable, organization: market2_seller3) }
 
-    let!(:market2_order1) { create(:order, items: [create(:order_item, :delivered, product: market2_product1, quantity: 4)], market: market2, organization: market2_buyer, delivery: market2_delivery, payment_method: "purchase order", order_number: "LO-006", total_cost: 27.96, placed_at: today - 19.days) }
+    let!(:market2_order1) { create(:order, items: [create(:order_item, :delivered, product: market2_product1, quantity: 4)], market: market2, organization: market2_buyer, delivery: market2_delivery, payment_method: "purchase order", order_number: "LO-006", total_cost: 12.00, placed_at: today - 19.days) }
     let!(:market2_order2) { create(:order, items: [create(:order_item, :delivered, product: market2_product2, quantity: 3), create(:order_item, :delivered, product: market2_product4, quantity: 7)], market: market2, organization: market2_buyer, delivery: market2_delivery, payment_method: "purchase order", order_number: "LO-007", total_cost: 69.90, placed_at: today - 6.days, payment_status: "paid") }
     let!(:market2_order3) { create(:order, items: [create(:order_item, :delivered, product: market2_product3, quantity: 6)], market: market2, organization: market2_buyer, delivery: market2_delivery, payment_method: "purchase order", order_number: "LO-0008", total_cost: 41.94, placed_at: today - 4.days) }
     let!(:market2_order4) { create(:order, items: [create(:order_item, :delivered, product: market2_product2, quantity: 9), create(:order_item, :delivered, product: market2_product3, quantity: 14)], market: market2, organization: market2_buyer, delivery: market2_delivery, payment_method: "purchase order", order_number: "LO-009", total_cost: 160.77, placed_at: today - 3.days) }
@@ -227,7 +227,7 @@ feature "Payments to vendors" do
     let!(:market3_product3) { create(:product, :sellable, organization: market3_seller2) }
     let!(:market3_product4) { create(:product, :sellable, organization: market3_seller3) }
 
-    let!(:market3_order1) { create(:order, items: [create(:order_item, :delivered, product: market3_product1, quantity: 4)], market: market3, organization: market3_buyer, delivery: market3_delivery, payment_method: "purchase order", order_number: "LO-092", total_cost: 27.96, placed_at: today - 19.days) }
+    let!(:market3_order1) { create(:order, items: [create(:order_item, :delivered, product: market3_product1, quantity: 4)], market: market3, organization: market3_buyer, delivery: market3_delivery, payment_method: "purchase order", order_number: "LO-092", total_cost: 12.00, placed_at: today - 19.days) }
     let!(:market3_order2) { create(:order, items: [create(:order_item, :delivered, product: market3_product2, quantity: 3), create(:order_item, :delivered, product: market3_product4, quantity: 7)], market: market3, organization: market3_buyer, delivery: market3_delivery, payment_method: "purchase order", order_number: "LO-010", total_cost: 69.90, placed_at: today - 6.days, payment_status: "paid") }
     let!(:market3_order3) { create(:order, items: [create(:order_item, :delivered, product: market3_product3, quantity: 6)], market: market3, organization: market3_buyer, delivery: market3_delivery, payment_method: "purchase order", order_number: "LO-008", total_cost: 41.94, placed_at: today - 4.days) }
     let!(:market3_order4) { create(:order, items: [create(:order_item, :delivered, product: market3_product2, quantity: 9), create(:order_item, :delivered, product: market3_product3, quantity: 14)], market: market3, organization: market3_buyer, delivery: market3_delivery, payment_method: "purchase order", order_number: "LO-082", total_cost: 160.77, placed_at: today - 3.days) }
@@ -386,7 +386,7 @@ feature "Payments to vendors" do
 
       sign_in_as(user)
       visit admin_financials_vendor_payments_path
-      
+
       expect(page).not_to have_select("This is all money that Local Orbit owes to your Sellers.")
     end
   end

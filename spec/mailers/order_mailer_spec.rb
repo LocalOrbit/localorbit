@@ -134,7 +134,7 @@ describe OrderMailer do
       end
 
       it "shows the refund amount" do
-        expect(@notification).to have_body_text("refund of $10.00")
+        expect(@notification).to have_body_text("refund of $3.00")
       end
     end
 
@@ -232,7 +232,7 @@ describe OrderMailer do
       end
 
       it "shows the refund amount" do
-        expect(@notification).to have_body_text("refund of $10.00")
+        expect(@notification).to have_body_text("refund of $3.00")
       end
     end
 

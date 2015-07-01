@@ -10,16 +10,8 @@ class CartItem < ActiveRecord::Base
   validate :validate_minimum_quantity, unless: "errors.has_key? :quantity"
   validate :quantity_is_available, unless: "errors.has_key? :quantity"
 
-  def prices
-    product.prices_for_market_and_organization(cart.market, cart.organization)
-  end
-
   def unit_price
-    if quantity.nil? || quantity <= 0
-      prices.first
-    else
-      prices.select {|p| p.min_quantity <= quantity }.last
-    end
+    Orders::UnitPriceLogic.unit_price(product, cart.market, cart.organization, quantity)
   end
 
   def total_price
