@@ -65,8 +65,6 @@ describe MarketAddress do
     expect(subject.save).to eq(true)
   end
 
-  # need all the tests for what happens on the page in a non-models spec
-
   describe "soft_delete" do
     include_context "soft delete-able models"
     it_behaves_like "a soft deleted model"
