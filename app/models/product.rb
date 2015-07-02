@@ -162,11 +162,11 @@ class Product < ActiveRecord::Base
   end
 
   def market_name
-    organization.original_market.name ## TODO this should not be a thing 
+    organization.original_market.name
   end
 
   def net_percent
-    @net_percent ||= organization.original_market.seller_net_percent # TODO not this
+    @net_percent ||= organization.original_market.seller_net_percent # TODO not this (?)
   end
 
   def organization_name

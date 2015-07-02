@@ -206,7 +206,6 @@ describe "price estimator", js: true do
   let!(:user) { create(:user, organizations: [org_cross_sell]) }
   let!(:product1) {create(:product,organization:org_cross_sell) }
 
-  # borrowed from above
   before do
     switch_to_subdomain(market1.subdomain)
     sign_in_as(user)
@@ -238,13 +237,18 @@ describe "price estimator", js: true do
       price_row.node.find("input.sale-price").set("16.80")
       expect(price_row.node.find("input.net-price").value).to eq("15.47")
 
-      find(".price_market_id")..find("option[value='#{market2.id}']").select_option
+      find(".price_market_id").find("option[value='#{market2.id}']").select_option
       price_row.node.find("input.sale-price").set("16.80")
       expect(price_row.node.find("input.net-price").value).to eq("13.79")
 
       find(".price_market_id").select("All Markets")
       price_row.node.find("input.sale-price").set("16.80")
       expect(price_row.node.find("input.net-price").value).to eq("13.79")
+
+      click_button "Save" # prep for following
     end
+    price_row = Dom::PricingRow.first
+    expect(price_row.net_price).to eq("$13.79")
+
   end
 end
