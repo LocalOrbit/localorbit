@@ -25,7 +25,6 @@ class Admin::MarketAddressesController < AdminController
 
   def update
     if @address.update_attributes(market_address_params) 
-      binding.pry
       redirect_to admin_market_addresses_path(@market)
     else
       render :edit

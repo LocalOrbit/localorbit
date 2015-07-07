@@ -23,19 +23,19 @@ class MarketAddress < ActiveRecord::Base
   # this is worth reviewing/testing
 
   def ensure_single_default
-  	unless market.addresses.map{|mkt| mkt if mkt.default = true}.empty?
-  		market.addresses.map{|mkt| mkt.default = false}
-  		puts "ensuring single default?"
-  	end
-  	# if self.default # self - new market address? like the stuff it can validate?
-  	# 	market.addresses.map{|mkt| mkt.default = false}
-  	# end
+    if self.default 
+      market.addresses.each do |mktad|
+        mktad.default = false
+      end
+    end
   end
 
   def ensure_single_billing
-  	if self.billing
-  		market.addresses.map{|mkt| mkt.billing = false}
-  	end
+  	if self.billing 
+      market.addresses.each do |mktad|
+        mktad.billing = false
+      end
+    end
   end
-
+  
 end
