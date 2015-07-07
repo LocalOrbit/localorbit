@@ -124,19 +124,87 @@ describe "Admin Managing Markets" do
 
     it "deals with default address properly" do
       # have default one, submit new default, check that there's only one and it's the new one
+      # subject = create(:market_address, name: "test", market: market, default: true)
+      # new_default = create(:market_address, name: "test2", market: market, default: true)
+      
+      expect(page).to have_text "Add Address"
+
+      click_link "Add Address"
+
+      fill_in "Address Label", with: "New Address"
+      fill_in "Address", with: "123 Apple"
+      fill_in "City", with: "Holland"
+      select "Michigan", from: "State"
+      fill_in "Zip", with: "49423"
+      fill_in "Phone", with: "616-123-4567"
+      fill_in "Fax", with: "616-321-3214"
+      check('default')
+      check('billing')
+      click_button "Add Address"
+      # add another
+      click_link "Add Address"
+      fill_in "Address Label", with: "New Address2"
+      fill_in "Address", with: "123 Apple2"
+      fill_in "City", with: "Albion"
+      select "Michigan", from: "State"
+      fill_in "Zip", with: "49423"
+      fill_in "Phone", with: "616-123-4566"
+      fill_in "Fax", with: "616-321-3215"
+      check('default')
+      check('billing')
+      click_button "Add Address"
+      # puts market.addresses.visible.select{|mkt| mkt if mkt.default}.first.default
+      # puts market.addresses.visible.select{|mkt| mkt if mkt.default}.last.default
+      expect(market.addresses.visible.select{|mkt| mkt if mkt.default}.length).to eq(1)
+      # expect(market.addresses.visible.map{|mkt| mkt if mkt.default}.first).to eq(new_default)
+      # expect(market.addresses.visible.map{|mkt| mkt if mkt.default}.last).to eq(new_default) # first and last: only one
     end
 
     it "deals with billing address properly" do
       # have billing, submit new billing, check there's only one
-    end
+      expect(page).to have_text "Add Address"
 
-    it "shows default and billing options on form" do
-      # expect checkbox content on page
+      click_link "Add Address"
+
+      fill_in "Address Label", with: "New Address3"
+      fill_in "Address", with: "123 Apple3"
+      fill_in "City", with: "Holland"
+      select "Michigan", from: "State"
+      fill_in "Zip", with: "49423"
+      fill_in "Phone", with: "616-123-4567"
+      fill_in "Fax", with: "616-321-3214"
+      #check('default')
+      check('billing')
+      click_button "Add Address"
+      # add another
+      click_link "Add Address"
+      fill_in "Address Label", with: "New Address4"
+      fill_in "Address", with: "123 Apple4"
+      fill_in "City", with: "Albion"
+      select "Michigan", from: "State"
+      fill_in "Zip", with: "49423"
+      fill_in "Phone", with: "616-123-4566"
+      fill_in "Fax", with: "616-321-3215"
+      #check('default')
+      check('billing')
+      click_button "Add Address"
+      # puts market.addresses.visible.select{|mkt| mkt if mkt.default}.first.default
+      # puts market.addresses.visible.select{|mkt| mkt if mkt.default}.last.default
+      expect(market.addresses.visible.select{|mktadr| mktadr if mktadr.default}.length).to eq(1)
+      # puts market.addresses.visible.select{|mkt| mkt if mkt.billing}.first.billing
+      # puts market.addresses.visible.select{|mkt| mkt if mkt.default}.last.default
+      expect(market.addresses.visible.select{|mktadr| mktadr if mktadr.billing}.length).to eq(1)
+      # subject = create(:market_address, name: "test", market: market, billing: true)
+      # new_billing = create(:market_address, name: "test2", market: market, billing: true)
+      # expect(market.addresses.visible.select{|mkt| mkt if mkt.billing}.first).to eq(new_billing)
+      # expect(market.addresses.visible.select{|mkt| mkt if mkt.billing}.last).to eq(new_billing) # first and last: only one
     end
 
     it "keeps correct boxes checked" do
       # do edit address thing on a default but not billing address
       # check that default box is checked and billing box is not
+      subject = create(:market_address, name: "test", market: market, default: true)
+      # add stuff to find, click, yada yada
     end
 
     it "does not access soft-deleted default addresses as default" do
