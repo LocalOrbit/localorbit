@@ -36,7 +36,7 @@ class MarketDecorator < Draper::Decorator
       seller.shipping_location.geocode if seller.shipping_location
     end.compact
 
-    if (center = first_address.try(:geocode))
+    if (center = default_address.try(:geocode))
       static_map(addresses, center, w, h)
     else
       ""
@@ -48,15 +48,15 @@ class MarketDecorator < Draper::Decorator
   end
 
   def street_address
-    first_address.address
+    default_address.address
   end
 
   def city_state_zip
-    "#{first_address.city}, #{first_address.state} #{first_address.zip} "
+    "#{default_address.city}, #{default_address.state} #{default_address.zip} "
   end
 
   def phone_number
-    first_address.phone
+    default_address.phone
   end
 
   def display_contact_phone
