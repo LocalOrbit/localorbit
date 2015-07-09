@@ -16,24 +16,18 @@ class MarketAddress < ActiveRecord::Base
     order(name: :asc)
   end
 
-  # ok -- things possible to validate are self. attrs? 
-  # if so the checks in the following for before_save s should work (?)
-
-  # or: should set first's default to true? 
-  # this is worth reviewing/testing
-
   def ensure_single_default
-    if self.default 
-      market.addresses.each do |mktad|
-        mktad.default = false
+    if self.default # if the about to be saved market address is default
+      unless market.addresses.select{|mkt| mkt if mkt.default == true}.empty?
+        MarketAddress.where( default:true ).update_all( default:false)
       end
     end
   end
 
   def ensure_single_billing
-  	if self.billing 
-      market.addresses.each do |mktad|
-        mktad.billing = false
+    if self.billing # if the about to be saved mkt address is billing
+      unless market.addresses.select{|mkt| mkt if mkt.billing == true}.empty?
+        MarketAddress.where( billing:true ).update_all( billing:false)
       end
     end
   end
