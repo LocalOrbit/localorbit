@@ -16,7 +16,7 @@ describe OrderItem do
   let!(:delivery_schedule) { create(:delivery_schedule) }
   let!(:delivery)    { delivery_schedule.next_delivery }
 
-  let(:order) { build(:order, delivery: delivery, market: create(:market)) }
+  let(:order) { create(:order, delivery: delivery, market: create(:market)) }
 
   context "changing quantity ordered" do
     subject { OrderItem.new(seller_name: "Fennington Farms", unit: create(:unit), name: product.name, product: product, quantity: 2, delivery_status: "pending", order: order) }
@@ -313,7 +313,6 @@ describe OrderItem do
           name: "Foo",
           seller_name: "Seller",
           unit: create(:unit),
-          order: order,
           product: product2,
           delivery_status: "pending",
           quantity: 8
@@ -389,7 +388,7 @@ describe OrderItem do
     let!(:delivery_schedule) { create(:delivery_schedule) }
     let!(:delivery)    { delivery_schedule.next_delivery }
     let!(:organization)  { create(:organization) }
-    let!(:order)         { build(:order, delivery: delivery, market: market, organization: organization) }
+    let!(:order)         { create(:order, delivery: delivery, market: market, organization: organization) }
     let(:cart_item)      { create(:cart_item, product: product, quantity: 5) }
     let(:deliver_on)     { Date.today }
 
