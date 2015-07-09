@@ -32,4 +32,32 @@ describe AddCreditCardToStripeCustomer do
     expect(result.success?).to be true
   end
 
+  context "when card creation fails" do
+    let(:creation_error) { RuntimeError.new("card creation no go") }
+    let(:error_info) {{
+      honeybadger_exception: "error tailored for HB",
+      application_error_message: "A bad happened."
+    }}
+
+    it "clears the :bank_account from the context and reports the error to Honeybadger" do
+      expect(PaymentProvider::Stripe).to receive(:create_stripe_card_for_stripe_customer)
+        .and_raise(creation_error)
+
+      expect(bank_account).not_to receive(:update)
+      expect(bank_account).to receive(:destroy)
+      expect(ErrorReporting).to receive(:interpret_exception)
+        .with(creation_error)
+        .and_return(error_info)
+
+      expect(Honeybadger).to receive(:notify_or_ignore).with(error_info[:honeybadger_exception])
+
+      result = subject.perform(params)
+      
+      expect(result.success?).to be false
+      expect(result.context[:error]).to eq error_info[:application_error_message]
+      expect(result.context[:bank_account]).to be nil
+    end
+
+  end
+
 end

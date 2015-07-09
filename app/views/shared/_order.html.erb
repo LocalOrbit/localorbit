@@ -202,6 +202,7 @@
             <% if current_user.can_manage_market?(order.market) %>
             <th>Discount (by Market)</th>
             <th>Discount (by Seller)</th>
+            <th>Delivery Fees</th>
             <% elsif current_user.seller? %>
             <th>Discount</th>
             <% end %>
@@ -217,6 +218,7 @@
             <% if current_user.can_manage_market?(order.market) %>
               <td class="discount-market"><%= number_to_currency order.discount_market %></td>
               <td class="discount-seller"><%= number_to_currency order.discount_seller %></td>
+              <td class="delivery-fees"><%= number_to_currency order.delivery_fees %></td>
             <% elsif current_user.seller? %>
               <td class="discount"><%= number_to_currency order.discount_seller %></td>
             <% end %>

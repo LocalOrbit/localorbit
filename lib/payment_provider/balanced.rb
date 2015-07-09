@@ -121,6 +121,10 @@ module PaymentProvider
         bank_accounts.reject do |ba| ba.balanced_uri.nil? end
       end
 
+      def approximate_credit_card_rate # should contain nothing and not raise error (till balanced fully removed)
+        "0.00" # tmp
+      end
+
     end
   end
 end

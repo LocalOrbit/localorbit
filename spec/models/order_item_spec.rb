@@ -5,6 +5,11 @@ describe OrderItem do
     create(:product, lots: [
       create(:lot, quantity: 3),
       create(:lot, quantity: 5)
+    ],
+    prices: [
+      create(:price, min_quantity: 1, sale_price: 3),
+      create(:price, min_quantity: 5, sale_price: 2),
+      create(:price, min_quantity: 8, sale_price: 1)
     ]
   )
   end
@@ -14,7 +19,7 @@ describe OrderItem do
   let(:order) { build(:order, delivery: delivery, market: create(:market)) }
 
   context "changing quantity ordered" do
-    subject { OrderItem.new(seller_name: "Fennington Farms", unit: create(:unit), name: product.name, product: product, quantity: 2, delivery_status: "pending") }
+    subject { OrderItem.new(seller_name: "Fennington Farms", unit: create(:unit), name: product.name, product: product, quantity: 2, delivery_status: "pending", order: order) }
 
     it "sets the delivery status to 'canceled' when a quantity ordered of 0" do
       subject.quantity = 0
@@ -53,6 +58,21 @@ describe OrderItem do
       subject.save!
 
       expect(subject.reload.delivery_status).to eql("contested")
+    end
+
+    it "updates the unit_price when the quantity is updated" do
+      subject.quantity = 5
+      subject.save!
+      subject.reload
+      expect(subject.unit_price).to eql(2)
+      subject.quantity = 8
+      subject.save!
+      subject.reload
+      expect(subject.unit_price).to eql(1)
+      subject.quantity = 2
+      subject.save!
+      subject.reload
+      expect(subject.unit_price).to eql(3)
     end
   end
 
@@ -285,7 +305,7 @@ describe OrderItem do
       let(:lot1) { build(:lot, quantity: 10) }
       let(:lot2) { build(:lot, number: 2, quantity: 3, expires_at: 1.minute.from_now) }
       let(:lot3) { build(:lot, number: 3, quantity: 7, expires_at: 1.hour.from_now) }
-      let(:product2) { create(:product, lots: [lot1, lot2, lot3]) }
+      let(:product2) { create(:product, :sellable, lots: [lot1, lot2, lot3]) }
 
       it "decrements lot quantity on OrderItem creation" do
         item = OrderItem.create!(

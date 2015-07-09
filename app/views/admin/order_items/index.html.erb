@@ -9,11 +9,12 @@
         <%= link_to "#{svg_icon} Export CSV".html_safe, url_for(format: :csv), class: "export" %>
       </div>
       <p>This is a list of all items sold from your market.</p>
-
-      <%= search_form_for @q, url: admin_order_items_path, html: { class: "sold_item_search clear-after" } do |f| %>
+      <span>Search by order #</span>
+      <%= search_form_for @q, url: admin_order_items_path, html: { class: "sold_item_search clear-after"} do |f| %>
         <div class="pull-left sold-item-search-widget">
           <span class="preserve-alignment">
-            <%= f.search_field :order_order_number_cont, placeholder: "Search" -%><%= f.submit "Search", class: "btn--end" %>
+            <%= f.label :order_order_number_cont, "Search by order #" %><br>
+            <%= f.search_field :order_order_number_cont, placeholder: "Order #" -%><%= f.submit "Search", class: "btn--end" %>
           </span>
         </div>
         <a href="#items-filter" class="mobile-only mobile-block btn mobile-toggle">Show Filters</a>

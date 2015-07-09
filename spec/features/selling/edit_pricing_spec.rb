@@ -140,7 +140,7 @@ describe "Editing advanced pricing", js: true do
         it "calculates and formats the net price" do
           price_row = Dom::PricingRow.first
           net_price = price_row.node.find("#price_#{price.id}_net_price")
-          expect(net_price.value).to eql("-9.40")
+          expect(net_price.value).to eql("-9.41") # appropriate fees
         end
       end
 
@@ -172,11 +172,12 @@ describe "Editing advanced pricing", js: true do
 
   describe "with different fees", js: true do
     let(:market) { create(:market, local_orbit_seller_fee: 4, market_seller_fee: 6) }
-
+    # total fees: CC seller fee as default, plus this 10 %, so 12.9%
     it "shows updated net sale information" do
       Dom::PricingRow.first.click_edit
       fill_in "price_#{price.id}_sale_price", with: "12.90"
-      expect(find_field("price_#{price.id}_net_price").value).to eq("11.22")
+      find("#price_#{price.id}_net_price").click
+      expect(find_field("price_#{price.id}_net_price").value).to eq("11.24") # 12.9% fees deducted
       click_button "Save"
 
       expect(page).to have_content("Successfully saved price")
@@ -184,8 +185,70 @@ describe "Editing advanced pricing", js: true do
       record = Dom::PricingRow.first
       expect(record.buyer).to eq("All Buyers")
       expect(record.min_quantity).to eq("1")
-      expect(record.net_price).to eq("$11.22")
+      expect(record.net_price).to eq("$11.24") # 12.9% fees deducted
       expect(record.sale_price).to eq("$12.90")
     end
+  end
+end
+
+
+
+
+describe "price estimator", js: true do
+  let!(:market1) {create(:market, local_orbit_seller_fee:3, market_seller_fee:2, allow_cross_sell:true)}
+  let!(:market2) {create(:market, local_orbit_seller_fee:5,market_seller_fee:10,allow_cross_sell:true)}
+
+  let!(:org_cross_sell) {
+    org = create(:organization, markets:[market1])
+    org.update_cross_sells!(from_market:market1,to_ids:[market2.id])
+    org
+  }
+  let!(:user) { create(:user, organizations: [org_cross_sell]) }
+  let!(:product1) {create(:product,organization:org_cross_sell) }
+
+  before do
+    switch_to_subdomain(market1.subdomain)
+    sign_in_as(user)
+    within "#admin-nav" do
+      click_link "Products"
+    end
+    click_link product1.name
+    click_link "Pricing"
+  end
+
+
+  it "allows price adding and editing properly in both markets" do
+    # Pricing adding tests
+    form = Dom::NewPricingForm.first
+    # DO NOT click btn add here -- there is a row already open
+    within form.node do
+      find("select.price_market_id").find("option[value='#{market1.id}']").select_option
+      fill_in "price_sale_price", with: "12.90"
+      click_button "Add"
+    end
+    price_row = Dom::PricingRow.first
+    expect(price_row.net_price).to eq("$11.88") # market 1, 7.9% fees deducted first
+
+    # Pricing editing tests
+    price_row.click_edit
+
+    within price_row.node do
+      find(".price_market_id").find("option[value='#{market1.id}']").select_option
+      price_row.node.find("input.sale-price").set("16.80")
+      expect(price_row.node.find("input.net-price").value).to eq("15.47")
+
+      find(".price_market_id").find("option[value='#{market2.id}']").select_option
+      price_row.node.find("input.sale-price").set("16.80")
+      expect(price_row.node.find("input.net-price").value).to eq("13.79")
+
+      find(".price_market_id").select("All Markets")
+      price_row.node.find("input.sale-price").set("16.80")
+      expect(price_row.node.find("input.net-price").value).to eq("13.79")
+
+      click_button "Save" # prep for following
+    end
+    price_row = Dom::PricingRow.first
+    expect(price_row.net_price).to eq("$13.79")
+
   end
 end

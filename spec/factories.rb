@@ -162,7 +162,7 @@ FactoryGirl.define do
     local_orbit_seller_fee 2
     local_orbit_market_fee 0
     market_seller_fee      1
-    credit_card_seller_fee 3
+    credit_card_seller_fee 1
     credit_card_market_fee 0
     ach_seller_fee         1.3
     ach_market_fee         0
@@ -376,14 +376,14 @@ FactoryGirl.define do
       cross_selling      false
       custom_branding    false
       automatic_payments false
-      advanced_pricing   false 
+      advanced_pricing   false
       advanced_inventory false
       promotions         false
       order_printables   false
       packing_labels     false
       sellers_edit_orders false
     end
-    
+
     trait :start_up do
       name "Start Up"
       discount_codes     false

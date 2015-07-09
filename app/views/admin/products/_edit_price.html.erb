@@ -13,7 +13,7 @@
         </thead>
         <tr>
           <td>
-            <%= f.number_field :net_price, min: 0, step: 0.01, size: 4, class: 'net-price', data: {"net-percent" => price.product.net_percent} %>
+            <%= f.number_field :net_price, min: 0, step: 0.01, size: 4, class: 'net-price', data: {"net-percents-by-market-id" => json_escape(@net_percents_by_market_id.to_json)} %>
           </td>
           <td>
             <%= f.number_field :sale_price, min: 0, size: 4 %>

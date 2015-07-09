@@ -166,7 +166,7 @@ class Product < ActiveRecord::Base
   end
 
   def net_percent
-    @net_percent ||= organization.original_market.seller_net_percent
+    @net_percent ||= organization.original_market.seller_net_percent # TODO not this (?)
   end
 
   def organization_name

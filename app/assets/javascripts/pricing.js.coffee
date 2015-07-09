@@ -6,13 +6,46 @@ $ ->
 
   bindCalculator = (el)->
     salePrice = $(el)
-
     netPrice = salePrice.parents('tr').first().find('input.net-price')
+    selectedMarket = salePrice.parents('tr').first().find('select.price_market_id')
+
+    getNetPriceValue = ->
+      parseFloat(netPrice.val())
+
+    setNetPriceValue = (v) ->
+      netPrice.val(v.toFixed(2))
+
+    getSalePriceValue = ->
+      parseFloat(salePrice.val())
+
+    setSalePriceValue = (v) ->
+      salePrice.val(v.toFixed(2))
+
+    getNetPercent = ->
+      marketId = selectedMarket.val() || 'all'
+      marketToNetPercentMap = netPrice.data('net-percents-by-market-id')
+      if marketId == ""
+        marketId = "all"
+      if marketToNetPercentMap?
+        netPercent = marketToNetPercentMap[marketId]
+        return netPercent
+      else
+        return 0.00
+
+    updateNetPrice = ->
+      salePriceValue = getSalePriceValue()
+      netPercent = getNetPercent()
+      netPriceValue = salePriceValue * netPercent
+      setNetPriceValue(netPriceValue)
+
+    updateSalePrice = ->
+      y = getNetPriceValue() / getNetPercent()
+      setSalePriceValue(y)
+
+    updateNetPrice()
 
     salePrice.change ->
-      val = parseFloat($(this).val())
-      netPercent = parseFloat(netPrice.data('net-percent'))
-      netPrice.val((val * netPercent).toFixed(2))
+      updateNetPrice()
 
     salePrice.on 'keyup', ->
       $(this).trigger('change')
@@ -23,9 +56,7 @@ $ ->
     salePrice.trigger('blur')
 
     netPrice.change ->
-      val = parseFloat($(this).val())
-      netPercent = parseFloat($(this).data('net-percent'))
-      salePrice.val((val / netPercent).toFixed(2))
+      updateSalePrice()
 
     netPrice.on 'keyup', ->
       $(this).trigger('change')
@@ -34,6 +65,9 @@ $ ->
       formatFieldAsMoney($(this))
 
     netPrice.trigger('blur')
+
+    selectedMarket.change ->
+      updateNetPrice()
 
   $('input.sale-price').each ->
     bindCalculator(this)

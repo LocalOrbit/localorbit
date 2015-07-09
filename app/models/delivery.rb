@@ -4,7 +4,7 @@ class Delivery < ActiveRecord::Base
   has_many :orders, inverse_of: :delivery
 
   scope :upcoming, -> { where("deliveries.cutoff_time > ?", Time.current) }
-  scope :future, -> { where("deliveries.deliver_on >= ?", Time.current.midnight) }
+  scope :future, -> { where("deliveries.buyer_deliver_on >= ?", Time.current.midnight) }
   scope :recent, -> { where(deliver_on: (4.weeks.ago..Time.current)) }
   scope :with_undelivered_orders, -> { joins(orders: {items: :product}).where(order_items: {delivery_status: "pending"}).group("deliveries.id") }
   scope :with_undelivered_orders_for_user, lambda {|user| with_undelivered_orders.where(products: {organization_id: user.organization_ids}) }
