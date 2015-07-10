@@ -64,7 +64,7 @@ class Registration
 
   def location_params
     {
-      name: address_label,
+      name: address_label || "Default Address", # if nil, Default Address
       address: address,
       city: city,
       state: state,
