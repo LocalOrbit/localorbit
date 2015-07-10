@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150605170153) do
+ActiveRecord::Schema.define(version: 20150709182935) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -314,18 +314,20 @@ ActiveRecord::Schema.define(version: 20150605170153) do
   add_index "managed_markets", ["user_id"], name: "index_managed_markets_on_user_id", using: :btree
 
   create_table "market_addresses", force: true do |t|
-    t.string   "name",       null: false
-    t.string   "address",    null: false
-    t.string   "city",       null: false
-    t.string   "state",      null: false
-    t.string   "zip",        null: false
-    t.integer  "market_id",  null: false
+    t.string   "name",                       null: false
+    t.string   "address",                    null: false
+    t.string   "city",                       null: false
+    t.string   "state",                      null: false
+    t.string   "zip",                        null: false
+    t.integer  "market_id",                  null: false
     t.datetime "created_at"
     t.datetime "updated_at"
     t.datetime "deleted_at"
     t.string   "phone"
     t.string   "fax"
     t.integer  "legacy_id"
+    t.boolean  "default",    default: false
+    t.boolean  "billing",    default: false
   end
 
   add_index "market_addresses", ["market_id", "deleted_at"], name: "index_market_addresses_on_market_id_and_deleted_at", using: :btree
