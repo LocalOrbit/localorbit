@@ -45,7 +45,7 @@ describe CreateOrder do
 
   context "when an exception occurs when creating cart items", truncate: true do
     let(:problem_product) { cart.items[1].product }
-    subject { expect { CreateOrder.perform(payment_provider: payment_provider, order_params: params, cart: cart, buyer: buyer) }.to raise_exception }
+    subject { CreateOrder.perform(payment_provider: payment_provider, order_params: params, cart: cart, buyer: buyer) }
 
     before do
       expect(problem_product).to receive(:lots_by_expiration).and_raise
@@ -57,6 +57,12 @@ describe CreateOrder do
       }.not_to change {
         OrderItem.count
       }
+    end
+
+    it "will not increment order number" do
+      expect(OrderNumber.new(market).id.rpartition('-').last.to_i).to eq(1)
+      subject
+      expect(OrderNumber.new(market).id.rpartition('-').last.to_i).to eq(2)
     end
 
     it "will not consume inventory" do

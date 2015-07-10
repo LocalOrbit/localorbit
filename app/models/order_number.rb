@@ -6,6 +6,14 @@ class OrderNumber
   def id
     @order_number ||= "LO-#{order_namespace}-#{order_id}"
   end
+  
+  def self.relinquish(order_number)
+    order_without_LO = order_number.partition('LO-').last
+    partitioned_order = order_without_LO.rpartition('-')
+    name = partitioned_order.first
+    order_id = partitioned_order.last
+    Sequence.decrement_for("order-#{name}", order_id)
+  end
 
   private
 

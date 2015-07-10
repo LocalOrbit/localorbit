@@ -6,6 +6,12 @@ class Sequence < ActiveRecord::Base
     retry
   end
 
+  def self.decrement_for(name, value)
+    sequence = find_by!(name: name)
+    if(sequence.value == value.to_i)
+      find_by_sql(["UPDATE sequences SET value = value - 1 WHERE id=? RETURNING value", sequence.id]).first.value
+    end
+
   def self.set_value_for!(name, value)
     find_or_create_by(name: name).update_attributes!(value: value)
     value
