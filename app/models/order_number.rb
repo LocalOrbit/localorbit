@@ -8,7 +8,8 @@ class OrderNumber
   end
   
   def self.relinquish(order_number)
-    order_without_LO = order_number.partition('LO-').last
+    order_string = (order_number.instance_of? String) ? order_number : order_number.order_number
+    order_without_LO = order_string.partition('LO-').last
     partitioned_order = order_without_LO.rpartition('-')
     name = partitioned_order.first
     order_id = partitioned_order.last

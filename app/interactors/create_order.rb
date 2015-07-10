@@ -9,11 +9,13 @@ class CreateOrder
   def rollback
     if context[:order]
       OrderNumber.relinquish(context[:order])
+      context[:order].destroy
     end
   end
 
   def rollback_order(order)
     OrderNumber.relinquish(order.order_number)
+    order.destroy
   end
 
   protected
