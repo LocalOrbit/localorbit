@@ -11,6 +11,7 @@ class Sequence < ActiveRecord::Base
     if(sequence.value == value.to_i)
       find_by_sql(["UPDATE sequences SET value = value - 1 WHERE id=? RETURNING value", sequence.id]).first.value
     end
+  end
 
   def self.set_value_for!(name, value)
     find_or_create_by(name: name).update_attributes!(value: value)
