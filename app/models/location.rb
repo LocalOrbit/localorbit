@@ -3,12 +3,13 @@ class Location < ActiveRecord::Base
   include SoftDelete
   belongs_to :organization, inverse_of: :locations
 
-  validates :name, presence: true, uniqueness: {scope: [:organization_id, :deleted_at]}
+  #validates :name, presence: true, uniqueness: {scope: [:organization_id, :deleted_at]}
   validates :address, :city, :state, :zip, :organization, presence: true
   validates :default_billing,  uniqueness: {scope: [:organization_id, :deleted_at]}, if: "!!default_billing"
   validates :default_shipping, uniqueness: {scope: [:organization_id, :deleted_at]}, if: "!!default_shipping"
 
   before_create :set_defaults_if_necessary
+  before_save :ensure_default_address_label
   after_update :set_new_defaults
 
   acts_as_geocodable address: {street: :address, locality: :city, region: :state, postal_code: :zip}
@@ -23,6 +24,12 @@ class Location < ActiveRecord::Base
 
   def self.default_shipping
     find_by(default_shipping: true)
+  end
+
+  def ensure_default_address_label
+    unless self.name
+      self.name = "Default Address"
+    end
   end
 
   private
