@@ -4,10 +4,14 @@
     <span class="tooltip pull-right" data-tooltip="You can assign more than one address to an Organization.  This is helpful if you have multiple facilities that are associated with your organization, such as an office and a greenhouse."></span>
     <br>
     <%= f.text_field :name, class: "column--full" %>
+      <%= f.check_box :billing %>
+      <%= f.label :billing, ("Make this the market billing address") %>
   </div
   ><div class="field column column--half column--guttered">
     <%= f.label :address %><br>
     <%= f.text_field :address, class: "column--full" %>
+      <%= f.check_box :default %>
+      <%= f.label :default, ("Make this the market default address") %>
   </div>
 </div>
 <div class="row row--field">
@@ -34,3 +38,4 @@
     <%= f.text_field :fax, class: "column--full" %>
   </div>
 </div>
+

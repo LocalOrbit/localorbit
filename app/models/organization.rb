@@ -155,8 +155,8 @@ class Organization < ActiveRecord::Base
   private
 
   def reject_location(attributed)
-    attributed["name"].blank? ||
-      attributed["address"].blank? ||
+    #attributed["name"].blank? ||
+    attributed["address"].blank? ||
       attributed["city"].blank? ||
       attributed["state"].blank? ||
       attributed["zip"].blank?

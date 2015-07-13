@@ -57,7 +57,8 @@ feature "Viewing invoices" do
       expect(page).to have_content(address.city)
       expect(page).to have_content(address.state)
       expect(page).to have_content(address.zip)
-      expect(page).to have_content("(123) 456-7890")
+      #expect(page).to have_content("(123) 456-7890")
+      expect(page).to have_content("(616) 555-1212") # contact phone number from address
       expect(page).to have_content(market.contact_email)
     end
   end
@@ -124,7 +125,8 @@ feature "Viewing invoices" do
           expect(page).to have_content(address.city)
           expect(page).to have_content(address.state)
           expect(page).to have_content(address.zip)
-          expect(page).to have_content("(123) 456-7890")
+          #expect(page).to have_content("(123) 456-7890")
+          expect(page).to have_content("(616) 555-1212")
           expect(page).to have_content(market.contact_email)
         end
 
@@ -167,11 +169,13 @@ feature "Viewing invoices" do
       end
 
       context "with irregular phone numbers" do
+        let!(:market_address) { create(:market_address, market: market, billing:true, phone:"+123 (456) 789-0987 ext. 654") }
         before do
           market.update_attribute(:contact_phone, "+123 (456) 789-0987 ext. 654")
         end
 
         scenario "html content" do
+
           visit peek_admin_invoice_path(order.id)
 
           expect(page).to have_content("Invoice Number LO-001")
