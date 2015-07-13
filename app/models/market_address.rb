@@ -4,7 +4,7 @@ class MarketAddress < ActiveRecord::Base
 
   belongs_to :market, inverse_of: :addresses
 
-  before_save: ensure_default_address_label
+  before_save :ensure_default_address_label
 
   #validates :name, presence: true, uniqueness: {scope: [:market_id, :deleted_at]}
   validates :address, :city, :state, :zip, :market, presence: true
