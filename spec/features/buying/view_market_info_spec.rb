@@ -28,7 +28,7 @@ feature "Viewing Market Info" do
 
   context "market address" do
     let!(:address) { create(:market_address, market: market) }
-
+    # TODO: check that this is default address?
     scenario "is displayed on the page" do
       click_link "About", match: :first
 

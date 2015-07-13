@@ -24,7 +24,7 @@ class Admin::MarketAddressesController < AdminController
   end
 
   def update
-    if @address.update_attributes(market_address_params)
+    if @address.update_attributes(market_address_params) 
       redirect_to admin_market_addresses_path(@market)
     else
       render :edit
@@ -46,7 +46,9 @@ class Admin::MarketAddressesController < AdminController
       :state,
       :zip,
       :phone,
-      :fax
+      :fax,
+      :default,
+      :billing
     )
   end
 
