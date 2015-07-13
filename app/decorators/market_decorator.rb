@@ -65,7 +65,7 @@ class MarketDecorator < Draper::Decorator
     if formatted_num.length == 10
       number_to_phone(formatted_num, area_code: true)
     else
-      number.phone.to_s
+      number.to_s
     end
   end
 
@@ -82,7 +82,7 @@ class MarketDecorator < Draper::Decorator
     if formatted_num.length == 10
       number_to_phone(formatted_num, area_code: true)
     else
-      number.phone.to_s
+      number.to_s
     end
   end
 
