@@ -28,3 +28,5 @@ tags
 *.swo
 latest.prod.dump
 cleansed.prod.dump
+
+.DS_Store
