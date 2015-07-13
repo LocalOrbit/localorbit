@@ -2,8 +2,9 @@ require "spec_helper"
 
 describe MarketAddress do
   let!(:market) { create(:market) }
-  it "requires a name" do
-    expect(subject).to have(1).errors_on(:name)
+  it "does not require a name" do
+    expect(subject).to have(0).errors_on(:name)
+    #expect(subject.name).to eq("Default Address") # nil at this point, ?
   end
 
   it "ignores soft deleted market addresses in name validation" do

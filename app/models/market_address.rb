@@ -16,7 +16,7 @@ class MarketAddress < ActiveRecord::Base
   end
 
   def ensure_default_address_label
-  	unless self.name
+  	if (not self.name) || self.name == ""
   		self.name = "Default Address"
   	end
   end
