@@ -104,22 +104,13 @@ describe "Admin Managing Markets" do
       expect(page).to_not have_text(address1.name)
     end
 
-    it "displays errors when trying to create a new address" do
-      click_link "Add Address"
-
-      click_button "Add Address"
-
-      expect(page).to have_text("Name can't be blank")
-    end
-
-    it "displays errors when trying to create a new address" do
+    it "handles empty labels when trying to create a new address" do
       click_link address1.name
 
       fill_in "Address Label", with: ""
 
       click_button "Update Address"
-
-      expect(page).to have_text("Name can't be blank")
+      expect(page).to have_text("Default Address")
     end
 
     it "deals with default address properly" do

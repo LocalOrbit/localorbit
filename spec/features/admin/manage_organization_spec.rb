@@ -177,7 +177,6 @@ describe "admin manange organization", :vcr do
     select "Market 2", from: "Market"
     click_button "Add Organization"
 
-    expect(page).to have_content("Name can't be blank")
     expect(find_field("Market").value).to eq(market2.id.to_s)
   end
 
@@ -247,7 +246,6 @@ describe "admin manange organization", :vcr do
 
           click_button "Add Address"
 
-          expect(page).to have_content("Location name can't be blank")
           expect(page).to have_content("Address can't be blank")
           expect(page).to have_content("City can't be blank")
           expect(page).to have_content("State can't be blank")

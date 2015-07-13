@@ -20,7 +20,7 @@ class Registration
                 :organization,
                 :terms_of_service
 
-  validates :market, :name, :contact_name, :address_label, :address,
+  validates :market, :name, :contact_name, :address,
             :city, :state, :zip, presence: true
 
   validates :terms_of_service, acceptance: true
@@ -64,7 +64,7 @@ class Registration
 
   def location_params
     {
-      name: address_label,
+      name: address_label || "Default Address", # if nil, Default Address
       address: address,
       city: city,
       state: state,
