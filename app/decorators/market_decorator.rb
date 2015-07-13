@@ -14,7 +14,7 @@ class MarketDecorator < Draper::Decorator
   end
 
   def default_address
-    default_addrs = addresses.select{|addr| addr if addr.default == true and addr.visible} # this should have only one in the array if any
+    default_addrs = addresses.visible.select{|addr| addr if addr.default? } # this should have only one in the array if any
     unless default_addrs.empty? 
       default_addrs.first
     else
@@ -23,7 +23,7 @@ class MarketDecorator < Draper::Decorator
   end
 
   def billing_address
-    billing_addrs = addresses.select{|addr| addr if addr.billing == true and addr.visible} # should be just one again
+    billing_addrs = addresses.visible.select{|addr| addr if addr.billing? } # should be just one again
     unless billing_addrs.empty?
       billing_addrs.first 
     else
@@ -47,21 +47,47 @@ class MarketDecorator < Draper::Decorator
     addresses.visible.any?
   end
 
-  def street_address
-    default_address.address
+  def billing_street_address
+    billing_address.address
   end
 
-  def city_state_zip
-    "#{default_address.city}, #{default_address.state} #{default_address.zip} "
+  def billing_city_state_zip
+    "#{billing_address.city}, #{billing_address.state} #{billing_address.zip}"
   end
 
-  def phone_number
-    default_address.phone
+  def billing_address_phone_number
+    if billing_address.phone
+      number = billing_address.phone.to_s
+    else
+      number = contact_phone.to_s
+    end
+    formatted_num = number.gsub(/[^0-9]/, "")
+    if formatted_num.length == 10
+      number_to_phone(formatted_num, area_code: true)
+    else
+      number.phone.to_s
+    end
+  end
+
+  # TODO: implement default_street_address etc. if needed.
+  # TODO: remove repetion.
+
+  def default_address_phone_number
+    if default_address.phone
+      number = default_address.phone.to_s
+    else
+      number = contact_phone.to_s
+    end
+    formatted_num = number.gsub(/[^0-9]/, "")
+    if formatted_num.length == 10
+      number_to_phone(formatted_num, area_code: true)
+    else
+      number.phone.to_s
+    end
   end
 
   def display_contact_phone
     number = contact_phone.to_s.gsub(/[^0-9]/, "")
-
     # if we have a clean phone number, format it appropriately, otherwise
     # just display what they give us
     if number.length == 10
