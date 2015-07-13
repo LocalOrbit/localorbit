@@ -56,6 +56,16 @@ describe MarketAddress do
     expect(subject.errors.messages).to have_key(:market)
   end
 
+  it "does not require default check" do
+    subject = MarketAddress.new(name: "new address", address: "123 Apple", city: "Holland", state: "MI", zip: "49423", market: market)
+    expect(subject.save).to eq(true)
+  end
+
+  it "does not require billing check" do
+    subject = MarketAddress.new(name: "new address", address: "123 Apple", city: "Holland", state: "MI", zip: "49423", market: market, billing: true)
+    expect(subject.save).to eq(true)
+  end
+
   describe "soft_delete" do
     include_context "soft delete-able models"
     it_behaves_like "a soft deleted model"

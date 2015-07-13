@@ -8,13 +8,20 @@ class CreateOrder
 
   def rollback
     if context[:order]
+      OrderNumber.relinquish(context[:order])
       context[:order].destroy
     end
+  end
+
+  def rollback_order(order)
+    OrderNumber.relinquish(order.order_number)
+    order.destroy
   end
 
   protected
 
   def create_order_from_cart(params, cart, buyer)
+
     billing = cart.organization.locations.default_billing
 
     order = Order.new(
@@ -41,10 +48,20 @@ class CreateOrder
 
     order.apply_delivery_address(cart.delivery_location)
 
+    success = false
     ActiveRecord::Base.transaction do
-      order.add_cart_items(cart.items, cart.delivery.deliver_on)
-
-      raise ActiveRecord::Rollback unless order.save
+      begin
+        order.add_cart_items(cart.items, cart.delivery.deliver_on)
+        success = order.save 
+      rescue
+        # empty
+      end
+      unless success
+        raise ActiveRecord::Rollback
+      end
+    end
+    unless success
+      rollback_order(order)
     end
 
     order
