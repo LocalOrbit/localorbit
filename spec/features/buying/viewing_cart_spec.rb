@@ -23,21 +23,21 @@ describe "Viewing the cart", js:true do
   end
 
   # Fulton St. Farms
-  let!(:bananas) { create(:product, :sellable, name: "Bananas", organization: fulton_farms, delivery_schedules: [delivery_schedule]) }
+  let!(:bananas) { create(:product, name: "Bananas", organization: fulton_farms, delivery_schedules: [delivery_schedule]) }
   let!(:bananas_lot) { create(:lot, product: bananas, quantity: 100) }
   let!(:bananas_price_buyer_base) do
-    create(:price, market: market, product: bananas, min_quantity: 1, organization: buyer, sale_price: 0.50)
+    create(:price, :past_price, market: market, product: bananas, min_quantity: 1, organization: buyer, sale_price: 0.50)
   end
 
   let!(:kale) { create(:product, :sellable, name: "Kale", organization: fulton_farms, delivery_schedules: [delivery_schedule]) }
   let!(:kale_lot) { kale.lots.first.update_attribute(:quantity, 100) }
   let!(:kale_lot_expired) { create(:lot, product: kale, number: 1, quantity: 25, expires_at: DateTime.parse("May 15, 2014")) }
   let!(:kale_price_tier1) do
-    create(:price, market: market, product: kale, min_quantity: 4, sale_price: 2.50)
+    create(:price, :past_price, market: market, product: kale, min_quantity: 4, sale_price: 2.50)
   end
 
   let!(:kale_price_tier2) do
-    create(:price, market: market, product: kale, min_quantity: 6, sale_price: 1.00)
+    create(:price, :past_price, market: market, product: kale, min_quantity: 6, sale_price: 1.00)
   end
 
   # Ada Farms

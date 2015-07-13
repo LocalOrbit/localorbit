@@ -124,7 +124,7 @@ describe "Editing advanced pricing", js: true do
           price_row = Dom::PricingRow.first
           expect(price_row).to be_editable
 
-          sale_price_field = price_row.node.find("#price_#{price.id}_sale_price")
+          sale_price_field = price_row.node.all(".sale-price")[1]
           expect(sale_price_field.value).to eql("-10.00")
         end
 
@@ -139,7 +139,7 @@ describe "Editing advanced pricing", js: true do
 
         it "calculates and formats the net price" do
           price_row = Dom::PricingRow.first
-          net_price = price_row.node.find("#price_#{price.id}_net_price")
+          net_price = price_row.node.all(".net-price")[1]
           expect(net_price.value).to eql("-9.41") # appropriate fees
         end
       end
