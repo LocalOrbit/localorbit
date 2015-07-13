@@ -6,7 +6,6 @@ class MarketAddress < ActiveRecord::Base
 
   before_save :ensure_default_address_label
 
-  #validates :name, presence: true, uniqueness: {scope: [:market_id, :deleted_at]}
   validates :address, :city, :state, :zip, :market, presence: true
 
   acts_as_geocodable address: {street: :address, locality: :city, region: :state, postal_code: :zip}
@@ -17,7 +16,7 @@ class MarketAddress < ActiveRecord::Base
 
   def ensure_default_address_label
   	if (not self.name) || self.name == ""
-  		self.name = "Default Address"
+      self.name = "Default Address"
   	end
   end
 
