@@ -1,43 +1,78 @@
+require 'fiber'
+
+
+
+
+
 module ProductImport
   class Transform
+    attr_accessor :stage, :desc
 
-    def initialize(source_enum, *args)
-      @source_enum
-      @args = args
+    def initialize(opts={})
+      @opts = opts
     end
 
+    def transform_enum(enum)
+      failed = []
+      success = Enumerator::Lazy.new(enum) {|yielder, value|
+        raw = value.deep_dup
+        transform_value(value) do |status, payload|
+          case status
+          when :success
+            yielder << payload
+          when :failure
+            failed << payload.merge("raw" => raw)
+          end
+        end
+      }
+
+      [success.to_a, failed]
+    end
+
+    def transform_value(value, &block)
+      fiber = Fiber.new{ transform_step(value); nil }
+      while fiber.alive?
+        status, payload = fiber.resume
+        if status.nil?
+          break
+        else
+          yield status, payload
+        end
+      end
+    end
+
+    public
+
+    ###############################
+    # Hooks - override these in your subclasses.
     def check_preconditions(row)
+      # unless row.key? :foo
+      #   reject "Must have a :key"
+      # end
     end
 
-    def transform(row)
+    def transform_step(row)
+      # row[:foo] += "bar"
     end
 
     def check_postconditions(row)
     end
 
-    def to_enum
-      Enumerator::Lazy.new do |yielder, row|
-        failed = false
+    private
 
-        unless check_preconditions(row)
-          failed = true
-        end
-
-        unless failed
-          begin
-            t = transform(row)
-          rescue
-            failed = true
-          end
-        end
-
-        if !failed && check_postconditions(row)
-          yielder << t
-        else
-          failed = true
-        end
-      end
+    def continue value
+      Fiber.yield(:success, value)
     end
-  end
-end
 
+    def reject reason
+      Fiber.yield :failure,
+        "reason" => reason,
+        "stage" => stage,
+        "transform" => desc
+    end
+
+
+  end
+
+
+end
