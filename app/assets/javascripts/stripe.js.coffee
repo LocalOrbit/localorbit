@@ -22,6 +22,7 @@ StripeMeta =
     createToken: (params,handler) -> Stripe.bankAccount.createToken(params,handler)
     fieldMappings:
       country:         'country'
+      currency:        'currency'
       account_number:  'account_number'
       routing_number:  'routing_number'
     convertResponse: (response,data={}) ->

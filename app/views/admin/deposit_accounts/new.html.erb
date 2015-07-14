@@ -47,10 +47,23 @@
         </div>
       </div>
       <div class="row">
-        <div class="field column column--half column--guttered">
+        <div class="field column column--fourth column--guttered">
+          <label for="bank-account-country">Country</label><br>
+          <select id="bank-account-country" name="country">
+            <option value="US" selected>United States</option>
+            <option value="CA">Canada</option>
+          </select>
+        </div
+        ><div class="field column column--fourth column--guttered">
+          <label for="bank-account-currency">Currency</label><br>
+          <select id="bank-account-currency" name="currency">
+            <option value="USD" selected>US Dollars (USD)</option>
+            <option value="CAD">Canadaian Dollars (CAD)</option>
+          </select>
+        </div
+        ><div class="field column column--half column--guttered">
           <label for="bank-account-notes">Notes</label><br>
           <input class="column--full" id="bank-account-notes" type="text" name="notes">
-          <input id="bank-account-country" type="hidden" name="country" value="US">
         </div>
       </div>
     </fieldset>
