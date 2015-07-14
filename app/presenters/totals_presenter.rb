@@ -41,24 +41,23 @@ module TotalsPresenter
 
   def totals
     return @totals if @totals
-    order_ids ||= []
-    @totals ||= items.inject(discount: 0, discount_seller: 0, discount_market: 0, gross: 0, net: 0, payment: 0, transaction: 0, market: 0, discounted_total: 0, delivery: 0) do |totals, item|
-      next totals if item.delivery_status == "canceled"
-
-      order_ids.push(item.order_id)
-      totals[:discount]    += item.discount
-      totals[:discount_seller] += item.discount_seller
-      totals[:discount_market] += item.discount_market
-      totals[:gross]       += item.gross_total
-      totals[:discounted_total] += item.discounted_total
-      totals[:transaction] += item.local_orbit_seller_fee
-      totals[:net]         += item.seller_net_total
-      totals[:payment]     += item.payment_seller_fee
-      totals[:market]      += item.market_seller_fee
-      totals
+    @totals = {discount: 0, discount_seller: 0, gross: 0, discounted_total: 0, transaction: 0, net: 0, payment: 0, market: 0, delivery: 0}
+    @order_ids = []
+    non_cancelled_items = items.where("delivery_status != 'canceled'")
+    non_cancelled_items.each do |item|
+      @order_ids.push(item.order_id)
+      @totals[:discount]    += item.discount
+      @totals[:gross]       += item.gross_total
+      @totals[:discounted_total] += item.discounted_total
+      @totals[:net]         += item.seller_net_total
     end
 
-    @totals[:delivery] = Order.where(id: order_ids.uniq).sum(:delivery_fees)
+    @totals[:discount_seller] = non_cancelled_items.sum(:discount_seller)
+    @totals[:discount_market] = non_cancelled_items.sum(:discount_market)
+    @totals[:transaction] = non_cancelled_items.sum(:local_orbit_seller_fee)
+    @totals[:payment] = non_cancelled_items.sum(:payment_seller_fee)
+    @totals[:market] = non_cancelled_items.sum(:market_seller_fee)
+    @totals[:delivery] = Order.where(id: @order_ids.uniq).sum(:delivery_fees)
     @totals
   end
 end
