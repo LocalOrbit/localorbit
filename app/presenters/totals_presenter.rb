@@ -43,7 +43,7 @@ module TotalsPresenter
     return @totals if @totals
     @totals = {discount: 0, discount_seller: 0, gross: 0, discounted_total: 0, transaction: 0, net: 0, payment: 0, market: 0, delivery: 0}
     @order_ids = []
-    non_cancelled_items = items.where("delivery_status != 'canceled'")
+    non_cancelled_items = items.where("order_items.delivery_status != 'canceled'")
     non_cancelled_items.each do |item|
       @order_ids.push(item.order_id)
       @totals[:discount]    += item.discount
