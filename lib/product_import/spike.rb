@@ -1,7 +1,7 @@
 
 module Import
 
-  class Bakers < FileImporter
+  class Bakers < Framework::FileImporter
 
     format :xlsx
     process_format :remove_empty_rows
@@ -30,37 +30,41 @@ module Import
 
   end
 
-  class Barons < FileImporter
+  class Barons < Framework::FileImporter
 
     format :xls
-    process_format :remove_empty_rows
 
-    process_format :from_table_grouped_by_category,
-      category_column: 0,
-      heading_columns: ["Item", "Item #", "Package Size", "Price/#", "Price/cs.", "QTY.", "Container"],
-#
-    validate 
-      keys: ["Item", "Item #", "Package Size", "Price/cs."]
-#
-    transform :translate_keys, map: {
-      "Item #" => "product_code",
-      "Item" => "name",
-      "Package Size" => "unit",
-      "Price/cs." => "price"
+    stage :extract do
+      transform :remove_empty_rows
 
-    }
-#
-#     transform :join_keys,
-#       into: "name",
-#       keys: %w(brandname desc)
+      transform :from_table_grouped_by_category,
+        category_column: 0,
+        heading_columns: ["Item", "Item #", "Package Size", "Price/#", "Price/cs.", "QTY.", "Container"],
 
-    transform :lookup_or_create_category
+      transform :validate_keys, 
+        ["Item", "Item #", "Package Size", "Price/cs."]
+    end
+
+    stage :canonicalize do |s|
+      s.transform :translate_keys, map: {
+        "Item #" => "product_code",
+        "Item" => "name",
+        "Package Size" => "unit",
+        "Price/cs." => "price"
+      }
+
+  #     transform :join_keys,
+  #       into: "name",
+  #       keys: %w(brandname desc)
+
+      s.transform :lookup_or_create_category
+    end
 
 
   end
 
   # CSV
-  class BiRite < FileImporter
+  class BiRite < Framework::FileImporter
 
     format :csv
 
@@ -84,7 +88,7 @@ module Import
 
   end
 
-  class ChefsWarehouse < FileImporter
+  class ChefsWarehouse < Framework::FileImporter
 
     format :xlsx
 
@@ -107,9 +111,13 @@ module Import
 
     transform :lookup_or_create_category
 
+    transform :label do |value|
+      ...
+    end
+
   end
 
-  class PacificGourmet < FileImporter
+  class PacificGourmet < Framework::FileImporter
 
     format :xlsx
 

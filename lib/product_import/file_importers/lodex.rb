@@ -1,15 +1,13 @@
 module ProductImport
   module FileImporters
-    class Cooks < Framework::FileImporter
+    class Lodex < Framework::FileImporter
 
-      format :xlsx
+      format :csv
 
       stage :extract do |s|
-        # s.transform :from_flat_table,
-        #   headers: true
-
-        # s.transform :validate_keys_are_present,
-        #   keys: %w(item desc gname brandname)
+        s.transform :from_flat_table,
+          headers: true,
+          required_keys: %w(product_code name category price)
       end
 
       stage :canonicalize do

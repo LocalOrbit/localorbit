@@ -1,7 +1,7 @@
 require 'spec_helper'
 
-describe ProductImport::Transform do
-  class AddTransform < ProductImport::Transform
+describe ProductImport::Framework::Transform do
+  class AddTransform < ProductImport::Framework::Transform
     def initialize(adds)
       @adds = adds
     end
