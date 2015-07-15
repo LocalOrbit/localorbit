@@ -5,7 +5,7 @@ module InstantiatableByName
   end
 
   def instantiate(name, *args)
-    lookup_class.new(*args)
+    lookup_class(name).new(*args)
   end
 end
 

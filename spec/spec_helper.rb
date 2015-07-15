@@ -83,13 +83,38 @@ RSpec::Matchers.define :be_canonical_product_data do ||
     schema = RSchema.schema {{
       'product_code' => String,
       'name' => String,
-      'category' => /^([a-z0-9&_ -]*>)*[a-z0-9&_ -]*$/i,
+      'category' => %r{^([a-z/0-9&_ -]*>)*[a-z/0-9&_ -]*$}i,
       'price' => /^(?:\d+\.)?\d+$/,
       'unit' => String,
 
       _?('short_description') => String,
       _?('long_description') => String,
-      _?('original_data') => hash_of(String => Object),
+      _?('source_data') => hash_of(String => either(String, Numeric)),
+    }}
+
+    actual.each do |v|
+      RSchema.validate!(schema, v)
+    end
+  end
+end
+
+RSpec::Matchers.define :be_resolved_canonical_product_data do ||
+  match do |actual|
+    actual = [actual] unless actual.is_a?(Array)
+
+    schema = RSchema.schema {{
+      'organization_id' => Integer,
+      'market_id' => Integer,
+      'category_id' => Integer,
+
+      'product_code' => String,
+      'name' => String,
+      'price' => /^(?:\d+\.)?\d+$/,
+      'unit' => String,
+
+      _?('short_description') => String,
+      _?('long_description') => String,
+      _?('source_data') => hash_of(String => either(String, Numeric)),
     }}
 
     actual.each do |v|

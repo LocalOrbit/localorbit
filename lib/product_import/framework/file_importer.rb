@@ -72,7 +72,7 @@ module ProductImport
         end
       end
 
-      def initialize
+      def initialize(opts={})
         @stages ||= {}
       end
 

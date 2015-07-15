@@ -76,8 +76,14 @@ describe ProductImport::FileImporters::Lodex do
   end
 
 
-  describe "all converstions and validatiosn" do
-    subject { described_class.new.transform_for_stages(:extract, :canonicalize) }
+  describe "all converstions and validations" do
+    subject { 
+      importer = described_class.new(
+        market_id: 123,
+        organization_id: 234
+      )
+      importer.transform_for_stages(:extract, :canonicalize) 
+    }
 
     it "converts to the canonical format" do
       data = [

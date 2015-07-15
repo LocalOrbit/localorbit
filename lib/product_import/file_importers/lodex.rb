@@ -1,6 +1,12 @@
 module ProductImport
   module FileImporters
     class Lodex < Framework::FileImporter
+      attr_accessor :market_id
+
+      def initialize(opts={})
+        super
+        self.market_id = opts[:market_id]
+      end
 
       format :csv
 
@@ -10,7 +16,7 @@ module ProductImport
           required_keys: %w(product_code name category price unit)
       end
 
-      stage :canonicalize do
+      stage :canonicalize do |s|
         # transform :translate_keys, map: {
         #   "item" => "product_code",
         #   "desc" => "name",
@@ -25,8 +31,12 @@ module ProductImport
         #   column: "gname",
         #   map_file: "cooks_categories.yml"
 
+        # s.transform :set_market_and_organization do |row|
+        #   row['market_id'] = @market_id
+        #   row['organization_id'] = @organization_id
+        #   continue row
+        # end
       end
-
     end
   end
 end
