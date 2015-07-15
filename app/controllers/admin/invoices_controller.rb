@@ -8,7 +8,7 @@ module Admin
       if @order.invoice_pdf.present?
         redirect_to @order.invoice_pdf.remote_url
       else
-        GenerateInvoicePdf.perform(order: @order,
+        GenerateInvoicePdf.delay.perform(order: @order,
                                          pre_invoice: true,
                                          request: RequestUrlPresenter.new(request))
         redirect_to action: :await_pdf
@@ -29,7 +29,7 @@ module Admin
         end
       end
     end
-    
+
     # Secret: peek at an HTML version of the Invoice
     def peek
       @invoice = BuyerOrder.new(@order)
