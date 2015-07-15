@@ -7,7 +7,7 @@ module ProductImport
       stage :extract do |s|
         s.transform :from_flat_table,
           headers: true,
-          required_keys: %w(product_code name category price)
+          required_keys: %w(product_code name category price unit)
       end
 
       stage :canonicalize do

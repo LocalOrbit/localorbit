@@ -74,3 +74,26 @@ RSpec.configure do |config|
     ActionMailer::Base.deliveries.clear
   end
 end
+
+
+RSpec::Matchers.define :be_canonical_product_data do ||
+  match do |actual|
+    actual = [actual] unless actual.is_a?(Array)
+
+    schema = RSchema.schema {{
+      'product_code' => String,
+      'name' => String,
+      'category' => /^([a-z0-9&_ -]*>)*[a-z0-9&_ -]*$/i,
+      'price' => /^(?:\d+\.)?\d+$/,
+      'unit' => String,
+
+      _?('short_description') => String,
+      _?('long_description') => String,
+      _?('original_data') => hash_of(String => Object),
+    }}
+
+    actual.each do |v|
+      RSchema.validate!(schema, v)
+    end
+  end
+end

@@ -86,6 +86,16 @@ module ProductImport
         stage_spec_map.keys.map{|k| stage_named(k)}
       end
 
+      def transform_for_stages(*stages)
+        transforms = stages.map{|sn| stage_named(sn).transform}
+
+        ::ProductImport::Framework::TransformPipeline.new(
+          stage: stages,
+          desc: "transform for stages: #{stages.join(", ")}",
+          transforms: transforms
+        )
+      end
+
       def import_file(*args)
         source = _source_enum_for_file(*args)
         transformed = _transformed_enum_for(source)
