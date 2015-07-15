@@ -1,0 +1,63 @@
+<div>
+  <div class="invoices-wrapper">
+    <div class="row">
+      <div class="column">
+        <div class="row">
+          <div class="column logo-column" style="width:1.1in">
+            <br>
+            <%=
+              if market.logo_stored?
+                image_tag(ensure_full_url(market.logo.thumb('200x150>').url), alt: "#{market.name} logo", class: "logo", width: 100)
+              elsif @logo_path
+                image_tag(ensure_full_url(@logo_path), alt: "Local Orbit logo", class: "logo left")
+              else
+                image_tag(ensure_full_url(asset_url("logo.png")), alt: "Local Orbit logo", class: "logo left")
+              end
+            %>
+          </div>
+          <div class="column" style="width:3in">
+            <div class="vcard">
+              <h2>Remit To:</h2>
+              <h3 class="fn org org-from"><%= invoice.market.name %></h3>
+              <% if market.has_address? %>
+                <div>
+                  <%= market.street_address %><br>
+                  <%= market.city_state_zip %><br>
+                  <%= market.display_contact_phone %><br>
+                  <%= market.contact_email %>
+                </div>
+              <% end %>
+            </div>
+            <br>
+            <div class="vcard vcard-buyer">
+              <h2>Bill To:</h2>
+              <h3 class="fn org buyer-name"><%= invoice.billing_organization_name %></h3>
+              <div>
+                <%= invoice.billing_address %><br>
+                <%= invoice.billing_city %>,
+                <%= invoice.billing_state %>
+                <%= invoice.billing_zip %>
+              </div>
+            </div> 
+          </div>
+        </div>
+      </div>
+      <div class="column" style="width:2.4in;display:inline-block;">
+        <h1>Invoice</h1>
+        <h2>Invoice Number</h2>
+        <p class="invoice-num"><%= invoice.order_number %></p><br>
+        <%= "<span class=\"inline-block\"><h2>Delivery Date</h2><p class=\"delivery-date\">#{invoice.delivery_date}</p></span>".html_safe if invoice.delivery_date.present? %>
+        <%= "<span class=\"inline-block\"><h2>Purchase Order Number</h2><p class=\"po-num\">#{invoice.payment_note}</p></span>".html_safe if invoice.payment_note.present? %>
+        <br><br>
+        <div class="due-date">
+          <h2>Due Date</h2>
+          <%= (invoice.invoice_due_date || market.po_payment_term.to_i.days.from_now).strftime("%-m/%-d/%Y") %>
+        </div>
+        <h2 class="inline">Invoice Date&nbsp;&nbsp;</h2>
+        <span class="date">
+          <%= (invoice.invoiced_at || Date.current).strftime("%-m/%-d/%Y") %>
+        </span>
+      </div>
+    </div>
+  </div>
+</div>

@@ -140,6 +140,7 @@ Rails.application.routes.draw do
         get "invoice" => "invoices#show"
         get :await_pdf, to: "invoices#await_pdf"
         get :peek, to: "invoices#peek"
+        
       end
     end
 
@@ -181,6 +182,8 @@ Rails.application.routes.draw do
     resources :table_tents_and_posters, :controller=>"table_tents_and_posters", only: [:index, :show, :create]
   end
   resource :registration, only: [:show, :create]
+
+  get "/pdf_view/header", to: "pdf_view#header"
 
   if Rails.env.development?
     get "dev/pdf(/:action)", to: "dev/pdf", as: "dev_pdf"
