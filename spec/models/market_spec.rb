@@ -32,6 +32,15 @@ describe Market do
       end
     end
 
+    describe "country" do
+      it "must be present" do
+        market = build(:market)
+        market.country = nil
+
+        expect(market).to_not be_valid
+      end
+    end
+
     describe "subdomain" do
       it "must be present" do
         market = build(:market)
@@ -356,7 +365,7 @@ describe Market do
     it "uses appropriate seller CC fees, given correct payment processing" do
       expect(market_other_fees_seller.seller_net_percent).to eq(BigDecimal.new("1.00")-BigDecimal.new("0.029")-BigDecimal.new("0.03"))
       expect(market_other_fees_none.seller_net_percent).to eq(BigDecimal.new("1.00")-BigDecimal.new("0.03"))
-      
+
       market_other_fees_seller.local_orbit_seller_fee = 4
       expect(market_other_fees_seller.seller_net_percent).to eq(BigDecimal.new("1.00")-BigDecimal.new("0.029")-BigDecimal.new("0.05"))
 

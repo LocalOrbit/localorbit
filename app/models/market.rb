@@ -11,7 +11,7 @@ class Market < ActiveRecord::Base
   validates :tagline, length: {maximum: 255, allow_blank: true}
   validates :local_orbit_seller_fee, :local_orbit_market_fee, :market_seller_fee, :credit_card_seller_fee, :credit_card_market_fee, :ach_seller_fee, :ach_market_fee, presence: true, numericality: {greater_than_or_equal_to: 0, less_than: 100, allow_blank: true}
   validates :ach_fee_cap, presence: true, numericality: {greater_than_or_equal_to: 0, less_than: 10_000, allow_blank: true}
-  validates :contact_name, :contact_email, presence: true
+  validates :contact_name, :contact_email, :country, presence: true
   validates :po_payment_term, presence: true, numericality: {greater_than_or_equal_to: 0, less_than: 366}
 
   validate :require_payment_method
@@ -86,14 +86,14 @@ class Market < ActiveRecord::Base
 
   #
   # NOTE: We're transitioning from per-market payment fee config to provider-based payment structures.
-  # We still need to indicate whether Market or Seller must pay, so for now we're re-using the 
+  # We still need to indicate whether Market or Seller must pay, so for now we're re-using the
   # existing numeric fee fields to determine who's paying.  TODO: cleanup and remodel the markets table
   # to better represent what's actually going on.
-  # 
+  #
   def credit_card_payment_fee_payer
     credit_card_market_fee != 0 ? 'market' : 'seller'
   end
-  
+
   def set_credit_card_payment_fee_payer(payer_string)
     payment_fees = {
       credit_card_market_fee: 0,
@@ -134,11 +134,11 @@ class Market < ActiveRecord::Base
 
   def seller_net_percent
     subtract_amt = (local_orbit_seller_fee + market_seller_fee)/100 # These fees come as rates, numbers 100x bigger and need to be converted to percents
-    cc_rate = PaymentProvider.approximate_credit_card_rate(payment_provider) 
+    cc_rate = PaymentProvider.approximate_credit_card_rate(payment_provider)
     if credit_card_payment_fee_payer == 'seller' and allow_credit_cards?
       subtract_amt += BigDecimal(cc_rate)
     end
-    (BigDecimal(1) - subtract_amt) 
+    (BigDecimal(1) - subtract_amt)
   end
 
   # LO's % take as a true decimal: eg, if local_orbit_seller_fee = 2.0 and local_orbit_market_fee  = 1.0 then this method returns 0.03 as a BigDecimal
