@@ -23,7 +23,7 @@ class Product < ActiveRecord::Base
   has_many :delivery_schedules, through: :product_deliveries
   has_many :order_items
   has_many :orders, through: :order_items
-  has_many :prices, autosave: true, inverse_of: :product, dependent: :destroy
+  has_many :prices, -> {visible},  autosave: true, inverse_of: :product, dependent: :destroy
   has_many :promotions, inverse_of: :product
 
   dragonfly_accessor :image

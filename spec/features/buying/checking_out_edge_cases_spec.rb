@@ -20,17 +20,17 @@ describe "Checking Out", :js, :vcr do
   let!(:bananas) { create(:product, :sellable, name: "Bananas", organization: fulton_farms) }
   let!(:bananas_lot) { create(:lot, product: bananas, quantity: 100) }
   let!(:bananas_price_buyer_base) {
-    create(:price, market: market, product: bananas, min_quantity: 1, organization: buyer, sale_price: 0.50)
+    create(:price, :past_price, market: market, product: bananas, min_quantity: 1, organization: buyer, sale_price: 0.50)
   }
 
   let!(:kale) { create(:product, :sellable, name: "Kale", organization: fulton_farms) }
   let!(:kale_lot) { kale.lots.first.update_attribute(:quantity, 100) }
   let!(:kale_price_tier1) {
-    create(:price, market: market, product: kale, min_quantity: 4, sale_price: 2.50)
+    create(:price, :past_price, market: market, product: kale, min_quantity: 4, sale_price: 2.50)
   }
 
   let!(:kale_price_tier2) {
-    create(:price, market: market, product: kale, min_quantity: 6, sale_price: 1.00)
+    create(:price, :past_price, market: market, product: kale, min_quantity: 6, sale_price: 1.00)
   }
 
   # Ada Farms
@@ -44,7 +44,7 @@ describe "Checking Out", :js, :vcr do
   end
 
   before do
-    Timecop.travel((delivery_schedule.order_cutoff - 25.hours).to_s)
+    Timecop.travel(DateTime.now - delivery_schedule.order_cutoff - 25.hours)
   end
 
   after do
