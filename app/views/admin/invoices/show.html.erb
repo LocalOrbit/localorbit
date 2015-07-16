@@ -6,19 +6,16 @@
   <meta name="pdfkit-print_media_type" content="true">
   <meta name="pdfkit-header_left" content="Invoice: <%= invoice.order_number %>">
   <meta name="pdfkit-header_right" content="Page [page] of [toPage]">
-  <meta name="pdfkit-header_html" content='http://admin.localtest.me:3500/pdf_view/header?<%= header_params %>'>
-  <meta name="pdfkit-header_font_size" content="10">
-  <meta name="pdfkit-margin_top" content="3.5in">
   <meta name="pdfkit-header_spacing" content="5">
   <title>Local Orbit</title>
   <%= render 'shared/print_opensanscondensed_bold' %>
   <%= render 'shared/print_opensans' %>
   <%= render 'shared/print_opensans_bold' %>
-  <style type="text/css">
 
+  <style type="text/css">
     .invoices-wrapper {
       font-size: 14px;
-      font-family: OpenSans, "Open Sans", Geneva, Arial, sans-serif;
+      font-family: OpenSans, "Open Sans", Geneva, sans-serif
     }
 
     .invoices-wrapper .btn {
@@ -138,13 +135,13 @@
 
     .invoices-wrapper h1 {
         margin: 0 0 .5em;
-        font: bold 25px Arial
+        font: bold 30px "Open Sans Condensed", OpenSans-Condensed, "Open Sans", sans-serif
     }
 
     .invoices-wrapper h2 {
         margin: 0;
         color: #666;
-        font: bold 14px Arial
+        font: bold 14px "Open Sans Condensed", OpenSans-Condensed, "Open Sans", sans-serif
     }
 
     .invoices-wrapper table {
@@ -154,7 +151,7 @@
 
     .invoices-wrapper caption {
         color: #000;
-        font: bold 14px Arial;
+        font: bold 14px "Open Sans Condensed", OpenSans-Condensed, "Open Sans", sans-serif;
         text-align: left
     }
 
@@ -218,7 +215,7 @@
     .invoices-wrapper .total .amount {
         padding-left: 10px;
         color: #000;
-        font: bold 24px Arial
+        font: bold 24px "Open Sans Condensed", OpenSans-Condensed, "Open Sans", sans-serif
     }
 
     .invoices-wrapper .total td, .invoices-wrapper .total th {
@@ -231,17 +228,16 @@
     }
 
     .invoices-wrapper .date {
-        font-family: Arial;
+        font-family: "Open Sans Condensed", OpenSans-Condensed, "Open Sans", sans-serif;
         font-weight: bold
     }
 
     .invoices-wrapper .due-date {
-        width:150px;
         clear: right;
         padding: 17px;
         border: solid 2px #C7C7C7;
         background: #f9f9f9;
-        font: bold 25px Arial
+        font: bold 25px "Open Sans Condensed", OpenSans-Condensed, "Open Sans", sans-serif
     }
 
     .invoices-wrapper .inline {
@@ -257,20 +253,9 @@
     }
 
     .invoices-wrapper .logo {
-        max-width: 1in;
-    }
-        .invoices-wrapper .logo img, .invoices-wrapper .logo-column { width: 1in; }
-
-    .invoices-wrapper .inline-block {
-        display: inline-block;
-    }
-
-    .invoices-wrapper .left {
-        float:left;
-    }
-
-    .invoices-wrapper .right {
-        float:right;
+        max-width: 200px;
+        margin-right: 15px;
+        margin-bottom: 15px
     }
 
     .invoices-wrapper .vcard {
@@ -282,21 +267,14 @@
     }
 
     .invoices-wrapper .buyer-name, .invoices-wrapper .org-from, .invoices-wrapper .invoice-num,
-    .invoices-wrapper .po-num, .invoices-wrapper .delivery-date {
+    .invoices-wrapper .po-num {
         margin: 0;
-        font: bold 16px Arial
+        font: bold 20px "Open Sans Condensed", OpenSans-Condensed, "Open Sans", sans-serif
     }
 
     .invoices-wrapper .invoice-num, .invoices-wrapper .buyer-name, .invoices-wrapper .org-from {
         word-break: break-all;
-        word-wrap: break-word;
-    }
-
-    .invoices-wrapper .signature {
-        width:45%;
-        color:#666;
-        border-top:1px solid #666;
-        margin-top:60px;
+        word-wrap: break-word
     }
 
     @media print {
@@ -333,6 +311,6 @@
 
 <body class="controller-invoices">
   <% @logo_path = asset_url("logo.png") # needed if market doesn't have a logo %>
-  <%= render "shared/invoice", { market: invoice.market.decorate, invoice: invoice, user: user } %>
+  <%= render "shared/invoice", { market: invoice.market.decorate, invoice: invoice, user: user} %>
 </body>
 </html>
