@@ -29,7 +29,6 @@ class PdfViewController < ActionController::Base
       :delivery_date,
       :delivery_date_present,
       :payment_note,
-      :payment_note_present,
       :due_date,
       :date,
       :page,

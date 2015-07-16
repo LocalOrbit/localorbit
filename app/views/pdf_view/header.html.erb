@@ -5,7 +5,7 @@
     <% @logo_path = asset_url("logo.png") # needed if market doesn't have a logo %>
     <div style="position:relative;">
       <p style="position:absolute;top:22px;left:0px;font-size:10px;font-family:OpenSans,'Open Sans',Geneva,Arial,sans-serif"><%= order_number %> </p>
-      <p style="position:absolute;top:22px;right:0px;font-size:10px;font-family:OpenSans,'Open Sans',Geneva,Arial,sans-serif"><%= "#{page} of #{topage}" %> </p>
+      <p style="position:absolute;top:22px;right:0px;font-size:10px;font-family:OpenSans,'Open Sans',Geneva,Arial,sans-serif"><%= "#{page ||= 0} of #{topage ||= 0}" %> </p>
     </div>
     <br><br><br>
     <div class="invoices-wrapper">
@@ -23,7 +23,7 @@
                    image_tag(ensure_full_url(asset_url("logo.png")), alt: "Local Orbit logo", class: "logo left")
                  end
                %>
-            </div><div class="column" style="width:3in">
+            </div><div class="column" style="width:2.6in">
               <div class="vcard">
                 <h2>Remit To:</h2>
                 <h3 class="fn org org-from"><%= name %></h3>
@@ -49,12 +49,12 @@
               </div> 
             </div>
           </div>
-        </div><div class="column" style="width:2.4in;display:inline-block;">
+        </div><div class="column" style="width:2.8in;display:inline-block;">
           <h1>Invoice</h1>
           <h2>Invoice Number</h2>
           <p class="invoice-num"><%= order_number %></p><br>
           <%= "<span class=\"inline-block\"><h2>Delivery Date</h2><p class=\"delivery-date\">#{delivery_date}</p></span>".html_safe if delivery_date_present %>
-          <%= "<span class=\"inline-block\"><h2>Purchase Order Number</h2><p class=\"po-num\">#{payment_note}</p></span>".html_safe if payment_note_present %>
+          <%= "<span class=\"inline-block\" style=\"margin-left:15px;\"><h2>Purchase Order #</h2><p class=\"po-num\">#{payment_note}</p></span>".html_safe if payment_note.present? %>
           <br><br>
           <div class="due-date">
             <h2>Due Date</h2>
