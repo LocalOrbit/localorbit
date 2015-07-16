@@ -17,7 +17,7 @@ module ProductImport
       end
 
       stage :canonicalize do |s|
-        s.transform :validate_canonical_data
+        s.transform :ensure_canonical_data
       end
     end
   end

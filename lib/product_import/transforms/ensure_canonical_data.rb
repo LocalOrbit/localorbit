@@ -1,6 +1,6 @@
 # Prepackaged validation to ensure all passed data is in the canonical format.
 
-class ProductImport::Transforms::ValidateCanonicalData < ProductImport::Framework::TransformPipeline
+class ProductImport::Transforms::EnsureCanonicalData < ProductImport::Framework::TransformPipeline
 
   transform :validate_keys_are_present,
     keys: %w(product_code name category price unit)

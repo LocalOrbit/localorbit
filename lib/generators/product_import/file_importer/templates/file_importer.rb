@@ -27,7 +27,7 @@ module ProductImport
 
         # TODO: Add your transforms here
 
-        s.transform :validate_canonical_data
+        s.transform :ensure_canonical_data
       end
     end
   end
