@@ -18,13 +18,15 @@ describe 'stripe PaymentProvider', ->
         expiration_month: '01'
         expiration_year: '2020'
         security_code: '123'
+        country: 'US'
+        currency: 'USD'
 
     it 'configures the stripe publishable key', ->
       @container.data.returns('the key')
       PaymentProvider.tokenize(@fields, 'card', @container)
       expect(@container.data.calledWithExactly('stripe-publishable-key')).to.be.ok
       expect(@setPublishableKey.calledWith('the key')).to.be.ok
-      
+
     it 'translates the response on success', ->
       PaymentProvider.tokenize(@fields, 'card', @container).done(@done).fail(@fail)
       params =

@@ -50,7 +50,8 @@
         <div class="field column column--half column--guttered">
           <label for="bank-account-notes">Notes</label><br>
           <input class="column--full" id="bank-account-notes" type="text" name="notes">
-          <input id="bank-account-country" type="hidden" name="country" value="US">
+          <input id="bank-account-country" type="hidden" name="country" value="<%= @market.country %>">
+          <input id="bank-account-currency" type="hidden" name="currency" value="<%= PaymentProvider.default_currency_for_country(@payment_provider, @market.country) %>">
         </div>
       </div>
     </fieldset>
@@ -86,8 +87,8 @@
 </form>
 
 
-<!-- 
-This will be give the id of 'new_bank_account' which is targeted by the tokenize/submit code in bank_accounts.js.coffee 
+<!--
+This will be give the id of 'new_bank_account' which is targeted by the tokenize/submit code in bank_accounts.js.coffee
 -->
 <%= form_for @bank_account, url: admin_market_deposit_accounts_path, html: { class: "column column--three-fourths" } do |f| %>
   <input type="hidden" name="type" value="checking" id="account_type"> <!-- gets reset by bank_accounts.js when selection of account type changes in form above -->
