@@ -7,7 +7,6 @@ class PdfViewController < ActionController::Base
   end
 
   def footer
-    render "footer"
   end
 
   def header_params

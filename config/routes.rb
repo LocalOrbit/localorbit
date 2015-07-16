@@ -184,7 +184,6 @@ Rails.application.routes.draw do
   resource :registration, only: [:show, :create]
 
   get "/pdf_view/header", to: "pdf_view#header"
-  get "/pdf_view/footer", to: "pdf_view#footer"
 
   if Rails.env.development?
     get "dev/pdf(/:action)", to: "dev/pdf", as: "dev_pdf"

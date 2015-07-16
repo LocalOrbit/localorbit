@@ -7,10 +7,8 @@
   <meta name="pdfkit-header_left" content="Invoice: <%= invoice.order_number %>">
   <meta name="pdfkit-header_right" content="Page [page] of [toPage]">
   <meta name="pdfkit-header_html" content='http://admin.localtest.me:3500/pdf_view/header?<%= header_params %>'>
-  <meta name="pdfkit-footer_html" content='http://admin.localtest.me:3500/pdf_view/footer'>
   <meta name="pdfkit-header_font_size" content="10">
   <meta name="pdfkit-margin_top" content="3.5in">
-  <meta name="pdfkit-margin_bottom" content="1in">
   <meta name="pdfkit-header_spacing" content="5">
   <title>Local Orbit</title>
   <%= render 'shared/print_opensanscondensed_bold' %>
