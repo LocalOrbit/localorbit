@@ -23,7 +23,7 @@
                    image_tag(ensure_full_url(asset_url("logo.png")), alt: "Local Orbit logo", class: "logo left")
                  end
                %>
-            </div><div class="column" style="width:2.6in">
+            </div><div class="column invoice-parties" style="width:2.6in">
               <div class="vcard">
                 <h2>Remit To:</h2>
                 <h3 class="fn org org-from"><%= name %></h3>
@@ -56,14 +56,16 @@
           <%= "<span class=\"inline-block\"><h2>Delivery Date</h2><p class=\"delivery-date\">#{delivery_date}</p></span>".html_safe if delivery_date_present %>
           <%= "<span class=\"inline-block\" style=\"margin-left:15px;\"><h2>Purchase Order #</h2><p class=\"po-num\">#{payment_note}</p></span>".html_safe if payment_note.present? %>
           <br><br>
-          <div class="due-date">
-            <h2>Due Date</h2>
-            <%= due_date %>
+          <div class="invoice-basics">
+            <div class="due-date">
+              <h2>Due Date</h2>
+              <%= due_date %>
+            </div>
+            <h2 class="inline">Invoice Date&nbsp;&nbsp;</h2>
+            <span class="date">
+              <%= date %>
+            </span>
           </div>
-          <h2 class="inline">Invoice Date&nbsp;&nbsp;</h2>
-          <span class="date">
-            <%= date %>
-          </span>
         </div>
       </div>
     </div>

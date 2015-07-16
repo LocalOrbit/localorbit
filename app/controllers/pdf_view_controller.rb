@@ -1,5 +1,5 @@
 class PdfViewController < ActionController::Base
-  
+
   def header
     market = header_params[:market]
     invoice = header_params[:invoice]
@@ -32,7 +32,9 @@ class PdfViewController < ActionController::Base
       :due_date,
       :date,
       :page,
-      :topage
+      :topage,
+      # These are just parameters that PDFkit automatically sends when it makes a GET request. If we don't permit them, tests fail.
+      :amp, :section, :sitepage, :title, :subsection, :frompage, :subsubsection, :doctitle, :sitepages, :webpage, :time, :isodate
     )
   end
 end

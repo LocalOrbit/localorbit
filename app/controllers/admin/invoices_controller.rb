@@ -3,7 +3,6 @@ module Admin
     before_action :fetch_order
 
     def show
-      #ClearInvoicePdf.perform(order: @order)
       if @order.invoice_pdf.present?
         redirect_to @order.invoice_pdf.remote_url
       else

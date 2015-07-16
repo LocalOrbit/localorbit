@@ -140,7 +140,6 @@ Rails.application.routes.draw do
         get "invoice" => "invoices#show"
         get :await_pdf, to: "invoices#await_pdf"
         get :peek, to: "invoices#peek"
-        
       end
     end
 
