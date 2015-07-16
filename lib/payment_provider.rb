@@ -44,13 +44,17 @@ module PaymentProvider
     def approximate_credit_card_rate(payment_provider)
       PaymentProvider.for(payment_provider).approximate_credit_card_rate
     end
-    
+
+    def default_currency_for_country(payment_provider, country)
+      PaymentProvider.for(payment_provider).default_currency_for_country(country)
+    end
+
     #
-    # Common PaymentProvide interface: 
-    # 
-    
+    # Common PaymentProvide interface:
+    #
+
     def place_order(payment_provider, buyer_organization:, user:, order_params:, cart:)
-      PaymentProvider.for(payment_provider).place_order( 
+      PaymentProvider.for(payment_provider).place_order(
         buyer_organization: buyer_organization,
         user: user,
         order_params: order_params,
