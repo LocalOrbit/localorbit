@@ -22,8 +22,11 @@ class Admin::PricesController < AdminController
   end
 
   def update
-    price = @product.prices.find(params[:id])
-    params[:price] = params[:price][price.id.to_s]
+    old_price = @product.prices.find(params[:id])
+    params[:price] = params[:price][old_price.id.to_s]
+    price = old_price.dup
+    Price.soft_delete(old_price)
+    price.save
     if price.update price_params
       respond_to do |format|
         format.html { redirect_to [:admin, @product, :prices], notice: "Successfully saved price" }
@@ -58,7 +61,7 @@ class Admin::PricesController < AdminController
   end
 
   def destroy
-    removed = Price.destroy(Array.wrap(params[:id]))
+    removed = Price.soft_delete(Array.wrap(params[:id]))
     redirect_to [:admin, @product, :prices], notice: "Successfully removed price".pluralize(removed.size)
   end
 

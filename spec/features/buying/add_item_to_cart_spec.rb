@@ -12,17 +12,17 @@ describe "Add item to cart", js: true do
   let(:bananas) { create(:product, name: "Bananas", organization: seller, delivery_schedules: [delivery]) }
   let!(:bananas_lot) { create(:lot, product: bananas) }
   let!(:bananas_price_buyer_base) do
-    create(:price, market: market, product: bananas, min_quantity: 1, organization: buyer)
+    create(:price, :past_price, market: market, product: bananas, min_quantity: 1, organization: buyer)
   end
 
   let(:bananas_price_everyone_base) do
-    create(:price, market: market, product: bananas, min_quantity: 1)
+    create(:price, :past_price, market: market, product: bananas, min_quantity: 1)
   end
 
   let(:kale) { create(:product, name: "Kale", organization: seller, delivery_schedules: [delivery]) }
   let!(:kale_lot) { create(:lot, product: kale) }
   let!(:kale_price_buyer_base) do
-    create(:price, market: market, product: kale, min_quantity: 1)
+    create(:price, :past_price, market: market, product: kale, min_quantity: 1)
   end
 
   def bananas_row
@@ -149,7 +149,7 @@ describe "Add item to cart", js: true do
     let(:tomatoes) { create(:product, name: "Tomatoes", organization: seller, delivery_schedules: [delivery]) }
     let!(:tomatoes_lot) { create(:lot, product: tomatoes) }
     let!(:tomatoes_price_buyer_base) do
-      create(:price, market: market, product: tomatoes, min_quantity: 5)
+      create(:price, :past_price, market: market, product: tomatoes, min_quantity: 5)
     end
 
     def tomatoes_row

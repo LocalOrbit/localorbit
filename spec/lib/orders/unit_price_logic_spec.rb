@@ -17,9 +17,21 @@ describe Orders::UnitPriceLogic do
 
   describe "#unit_price" do
     it 'returns the appropriate price for a given quantity' do
-      expect(logic.unit_price(product, order.market, order.organization, 1).sale_price).to eql(3)
-      expect(logic.unit_price(product, order.market, order.organization, 5).sale_price).to eql(2)
-      expect(logic.unit_price(product, order.market, order.organization, 8).sale_price).to eql(1)
+      expect(logic.unit_price(product, order.market, order.organization, DateTime.now, 1).sale_price).to eql(3)
+      expect(logic.unit_price(product, order.market, order.organization, DateTime.now, 5).sale_price).to eql(2)
+      expect(logic.unit_price(product, order.market, order.organization, DateTime.now, 8).sale_price).to eql(1)
+    end
+
+    it "uses the prices that were valid at a given time, not the current pricing" do
+      expect(logic.unit_price(product, order.market, order.organization, DateTime.now, 1).sale_price).to eql(3)
+      order_time = DateTime.now
+      Timecop.travel(order_time + 2.days) do
+        Price.soft_delete(product.prices.first)
+        Price.create!(min_quantity: 1, sale_price: 5, product: product)
+        expect(logic.unit_price(product, order.market, order.organization, order_time, 1).sale_price).to eql(3)
+        expect(logic.unit_price(product, order.market, order.organization, order_time, 5).sale_price).to eql(2)
+        expect(logic.unit_price(product, order.market, order.organization, order_time, 8).sale_price).to eql(1)
+      end
     end
   end
 end
