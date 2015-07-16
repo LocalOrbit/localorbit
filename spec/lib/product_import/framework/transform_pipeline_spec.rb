@@ -1,37 +1,40 @@
 require 'spec_helper'
 
 describe ProductImport::Framework::TransformPipeline do
-  describe "With multiple transforms" do
-    class AddTransform < ProductImport::Framework::Transform
-      def initialize(adds)
-        @adds = adds
-      end
-
-      def transform_step(input)
-        if input.is_a? Numeric
-          @adds.each do |add|
-            continue input + add
-          end
-        else
-          reject "Not a number"
-        end
-      end
+  class AddTransform < ProductImport::Framework::Transform
+    def initialize(opts)
+      super
+      @adds = opts[:adds]
     end
 
-      subject {
-      t1 = AddTransform.new([1]).tap{|t|
-        t.stage = "parse"
-        t.desc = "Add 1"
-      }
+    def transform_step(input)
+      if input.is_a? Numeric
+        @adds.each do |add|
+          continue input + add
+        end
+      else
+        reject "Not a number"
+      end
+    end
+  end
 
-      t2 = AddTransform.new([2, 3]).tap{|t|
-        t.stage = "parse"
-        t.desc = "Add 2 and 3"
-      }
+  describe "With multiple transforms" do
+    subject {
+      t1 = AddTransform.new(
+        adds: [1],
+        stage: "parse",
+        desc: "Add 1"
+      )
 
-      ProductImport::Framework::TransformPipeline.new.tap{|t|
-        t.transforms = [t1,t2]
-      }
+      t2 = AddTransform.new(
+        adds: [2,3],
+        stage: "parse",
+        desc: "Add 2 and 3"
+      )
+
+      ProductImport::Framework::TransformPipeline.new(
+        transforms: [t1,t2]
+      )
     }
 
     it "stacks the results." do
@@ -64,27 +67,13 @@ describe ProductImport::Framework::TransformPipeline do
   end
 
   describe "a single transform" do
-    class AddTransform < ProductImport::Framework::Transform
-      def initialize(adds)
-        @adds = adds
-      end
+    subject {
+      t1 = AddTransform.new(
+        adds: [1],
+        stage: "parse",
+        desc: "Add 1"
+      )
 
-      def transform_step(input)
-        if input.is_a? Numeric
-          @adds.each do |add|
-            continue input + add
-          end
-        else
-          reject "Not a number"
-        end
-      end
-    end
-
-      subject {
-      t1 = AddTransform.new([1]).tap{|t|
-        t.stage = "parse"
-        t.desc = "Add 1"
-      }
 
       ProductImport::Framework::TransformPipeline.new.tap{|t|
         t.transforms = [t1]
@@ -133,6 +122,42 @@ describe ProductImport::Framework::TransformPipeline do
       successes, failures = subject.transform_enum([1,:foo, 3])
 
       expect(successes).to eq([1, :foo, 3])
+      expect(failures.length).to eq(0)
+    end
+  end
+
+
+  describe "a subclass using the DSL" do
+    class MyTransform < ProductImport::Framework::TransformPipeline
+      transform :set_keys_to_importer_option_values, map: {
+        "market_id" => :market_id
+      }
+
+      transform :set_keys_to_importer_option_values, map: {
+        organization_id: :organization_id
+      }
+    end
+
+    subject do
+      importer = double("importer", {
+        opts: {
+          market_id: 1,
+          organization_id: 2,
+        }
+      })
+
+      MyTransform.new(
+        importer: importer
+      )
+    end
+
+    it "instantiates the transforms and applies them in sequence" do
+      successes, failures = subject.transform_enum([{}])
+
+      expect(successes).to eq([{
+        "market_id" => 1,
+        "organization_id" => 2,
+      }])
       expect(failures.length).to eq(0)
     end
   end

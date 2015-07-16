@@ -5,11 +5,27 @@ module ProductImport
   module Framework
 
     class TransformPipeline < Transform
+      class_attribute :transform_specs
       attr_accessor :transforms
+
+      class <<self
+        def transform(*name_and_args)
+          self.transform_specs ||= []
+          transform_specs << ::ProductImport::Transforms.build_spec(*name_and_args)
+        end
+      end
 
       def initialize(opts={})
         super
-        self.transforms = opts[:transforms] || []
+        @transforms = opts[:transforms] if opts.key?(:transforms)
+      end
+
+      def transforms
+        @transforms ||= self.class.transform_specs.map{|spec|
+          ::ProductImport::Transforms.instantiate_spec(spec).tap{|t|
+            t.importer = importer
+          }
+        }
       end
 
       def transform_step v

@@ -3,14 +3,14 @@ require 'spec_helper'
 describe ProductImport::FileImporters::Lodex do
 
   describe "extract stage" do
-    subject { described_class.new.stage_named(:extract).transform }
+    subject { described_class.new.stage_named(:extract) }
   
     it "does something" do
       data = [
         ["product_code", "name", "category", "price", "unit"],
         ["abc123", "St. John's Wart", "Herbs", "1.23", "lbs"],
       ]
-      success, fail = subject.transform_enum(data)
+      success, fail = subject.transform.transform_enum(data)
 
       expect(success).to eq([
         {
@@ -24,78 +24,91 @@ describe ProductImport::FileImporters::Lodex do
       expect(fail.length).to eq(0)
     end
 
-    it "rejects if product_code is missing" do
+    it "rejects if required fields are missing" do
       data = [
-        ["produkt_kode", "name", "category", "price", "unit"],
+        ["product_kode", "name", "category", "price", "unit"],
         ["abc123", "St. John's Wart", "Herbs", "1.23", "lbs"],
       ]
-      success, fail = subject.transform_enum(data)
-      expect(success.length).to eq(0)
-      expect(fail.length).to eq(1)
-    end
 
-    it "rejects if name is missing" do
-      data = [
-        ["product_code", "namez", "category", "price", "unit"],
-        ["abc123", "St. John's Wart", "Herbs", "1.23", "lbs"],
-      ]
-      success, fail = subject.transform_enum(data)
-      expect(success.length).to eq(0)
-      expect(fail.length).to eq(1)
-    end
+      data.first.each.with_index do |k, i|
+        bad_data = data.deep_dup
+        bad_data.first[i] = 'wrong'
 
-    it "rejects if category is missing" do
-      data = [
-        ["product_code", "name", "categoryz", "price", "unit"],
-        ["abc123", "St. John's Wart", "Herbs", "1.23", "lbs"],
-      ]
-      success, fail = subject.transform_enum(data)
-      expect(success.length).to eq(0)
-      expect(fail.length).to eq(1)
-    end
+        success, fail = subject.transform.transform_enum(data)
+        expect(success.length).to eq(0)
+        expect(fail.length).to eq(1)
+      end
 
-    it "rejects if price is missing" do
-      data = [
-        ["product_code", "name", "category", "pricez", "unit"],
-        ["abc123", "St. John's Wart", "Herbs", "1.23", "lbs"],
-      ]
-      success, fail = subject.transform_enum(data)
-      expect(success.length).to eq(0)
-      expect(fail.length).to eq(1)
-    end
-
-    it "rejects if unit is missing" do
-      data = [
-        ["product_code", "name", "category", "price", "unitz"],
-        ["abc123", "St. John's Wart", "Herbs", "1.23", "lbs"],
-      ]
-      success, fail = subject.transform_enum(data)
-      expect(success.length).to eq(0)
-      expect(fail.length).to eq(1)
     end
   end
 
 
-  describe "all converstions and validations" do
+  describe "the extract and canonicalize stages" do
     subject { 
       importer = described_class.new(
         market_id: 123,
         organization_id: 234
       )
-      importer.transform_for_stages(:extract, :canonicalize) 
+      importer.transform_for_stages(:extract..:canonicalize) 
     }
 
-    it "converts to the canonical format" do
+    it "produces data in the canonical format" do
       data = [
         ["product_code", "name", "category", "price", 'unit'],
         ["abc123", "St. John's Wart", "Herbs", "1.23", '2/3 lb tub'],
+
+        # Rejects blanks
+        ["      ", "St. John's Wart", "Herbs", "1.23", '2/3 lb tub'],
+        ["abc123", "               ", "Herbs", "1.23", '2/3 lb tub'],
+        ["abc123", "St. John's Wart", "     ", "1.23", '2/3 lb tub'],
+        ["abc123", "St. John's Wart", "Herbs", "    ", '2/3 lb tub'],
+        ["abc123", "St. John's Wart", "Herbs", "1.23", '          '],
+
+        # Catches invalid price
+        ["abc123", "St. John's Wart", "Herbs", "dolla", '2/3 lb tub'],
       ]
 
       success, fail = subject.transform_enum(data)
 
-      expect(success).to be_canonical_product_data
-      expect(fail.length).to eq(0)
+      expect(success).to be_array_compliant_with_schema(ProductImport::Schemas::CANONICAL)
+      expect(success.length).to eq(1)
+      expect(fail.length).to eq(data.length - success.length - 1)
     end
   end
 
+  describe "File read test" do
+    it "parses and canonicalizes a csv" do
+      file = test_file("lodex_good_and_bad.csv")
+
+      success, fail = subject.run_through_stage(:canonicalize, filename: file)
+      expect(success.size).to eq(1)
+      expect(success).to be_array_compliant_with_schema(ProductImport::Schemas::CANONICAL)
+
+      expect(fail.size).to eq(6)
+    end
+
+    it "bails out on csvs missing required columns" do
+      file = test_file("lodex_missing_headers.csv")
+
+      expect { subject.run_through_stage(:canonicalize, filename: file) }.to raise_error(ArgumentError)
+    end
+
+    it "bails out if the file is empty" do
+      file = test_file("empty")
+
+      expect { subject.run_through_stage(:canonicalize, filename: file) }.to raise_error(ArgumentError)
+    end
+
+    it "bails out if the file is not a csv" do
+      file = test_file("bakers.xlsx")
+
+      expect { subject.run_through_stage(:canonicalize, filename: file) }.to raise_error(ArgumentError)
+    end
+  end
+
+  def test_file(fname)
+    path = Rails.root + "spec/lib/product_import/test_data" + fname
+    raise ArgumentError, "Unknown test file #{fname}" unless path.file?
+    path
+  end
 end

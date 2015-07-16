@@ -1,16 +1,24 @@
+
+# Use this when an input file looks like a typical table with a header row.
+# 
+# This transform takes data straight out of a spreadsheet and uses the first row
+# as keys and subsequent rows as hashes. Inputs are arrays, outputs are hashes.
+#
+# By default, any value without a corresponding header gets associated with its column
+# index (0-based)
 class ProductImport::Transforms::FromFlatTable < ProductImport::Framework::Transform
   def initialize(opts={})
     super
 
     # Future proof for providing static header list
-    raise ArgumentError unless opts[:headers] == true
+    # raise ArgumentError unless opts[:headers] == true
 
     # If true, don't preserve unlabeled values. (Whose header is blank0
     @drop_unlabeled = opts[:drop_unlabeled]
 
     # If provided, these fields must be in the header.
     # Presence on rows is NOT defined
-    @required_keys = opts[:required_keys] || []
+    @required_headers = opts[:required_headers] || []
 
     # Used to track if any required headers were missing
     @missing_keys = nil
@@ -50,7 +58,7 @@ class ProductImport::Transforms::FromFlatTable < ProductImport::Framework::Trans
         end
       }
 
-      missing = @required_keys - @header
+      missing = @required_headers - @header
       if missing.size > 0
         @missing_keys = missing
       end

@@ -2,8 +2,9 @@ require 'spec_helper'
 
 describe ProductImport::Framework::Transform do
   class AddTransform < ProductImport::Framework::Transform
-    def initialize(adds)
-      @adds = adds
+    def initialize(opts)
+      super
+      @adds = opts[:adds]
     end
 
     def transform_step(input)
@@ -19,10 +20,11 @@ describe ProductImport::Framework::Transform do
 
   describe "With a transformer that can succeed or fail" do
     subject {
-      AddTransform.new([1]).tap{|t|
-        t.stage = "parse"
-        t.desc = "Add 1"
-      }
+      AddTransform.new(
+        adds: [1],
+        stage: "parse",
+        desc: "Add 1"
+      )
     }
 
     it "Can create success/failure sets for an input" do
@@ -56,10 +58,11 @@ describe ProductImport::Framework::Transform do
 
   describe "With a transformer that can succeed multiple times" do
     subject {
-      AddTransform.new([1, -1]).tap{|t|
-        t.stage = "parse"
-        t.desc = "Add 1 and -1"
-      }
+      AddTransform.new(
+        adds: [1, -1],
+        stage: "parse",
+        desc: "Add 1 and -1"
+      )
     }
 
     it "Can create success/failure sets for an input" do

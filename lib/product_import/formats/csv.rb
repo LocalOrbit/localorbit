@@ -2,16 +2,13 @@ module ProductImport
   module Formats
     class Csv
       def enum_for(filename:)
+        CSV.foreach(filename) do |row|
+        end
         Enumerator.new do |yielder|
-          require 'spreadsheet'
+          require 'csv'
 
-          workbook = Spreadsheet.open(filename)
-
-          worksheet = workbook.worksheet 0
-
-          worksheet.each do |row|
-            values = (0...row.size).map{|i| row[i]}
-            yielder << values
+          CSV.foreach(filename) do |row|
+            yielder << row
           end
         end
       end

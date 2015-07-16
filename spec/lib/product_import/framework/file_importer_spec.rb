@@ -3,7 +3,8 @@ require 'spec_helper'
 # NOTE: Testing FileImporter api via introspection on Lodex.
 # the following tests should be analogous for any file importer
 
-describe ProductImport::FileImporters::Lodex do
+describe ProductImport::Framework::FileImporter do
+  let(:described_class) { ProductImport::FileImporters::Lodex }
 
   describe "the class" do
     subject { described_class }
@@ -21,7 +22,7 @@ describe ProductImport::FileImporters::Lodex do
     end
 
     it "Initializes the required extract and canonicalize phases" do
-      expect(subject.stage_spec_map.keys.to_set).to eq([:extract, :canonicalize].to_set)
+      expect(subject.stage_spec_map.keys.to_set).to eq(ProductImport::Framework::FileImporter::ALLOWED_STAGES.to_set)
 
       extract_stage = subject.stage_spec_map[:extract]
       expect(extract_stage[:name]).to eq(:extract)
@@ -66,7 +67,7 @@ describe ProductImport::FileImporters::Lodex do
         t = stage.transform
 
         expect(t).to be_kind_of(::ProductImport::Framework::TransformPipeline)
-        expect(t.transforms).to eq(stage.transforms)
+        expect(t.transforms.map(&:spec)).to eq(stage.transforms.map(&:spec))
       end
     end
 

@@ -3,13 +3,15 @@ require 'fiber'
 module ProductImport
   module Framework
     class Transform
-      attr_accessor :stage, :desc
+      attr_accessor :stage, :desc, :spec, :opts, :importer
 
       def initialize(opts={})
         @opts = opts
 
-        self.stage = opts[:stage]
-        self.desc = opts[:desc]
+        @stage = opts[:stage]
+        @desc = opts[:desc]
+        @spec = opts[:spec]
+        @importer = opts[:importer]
       end
 
       def transform_enum(enum)

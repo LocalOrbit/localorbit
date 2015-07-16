@@ -5,12 +5,8 @@ module ProductImport
         @data = data
       end
 
-      def transform(name, *args)
-        @data[:transforms] << {
-          name: name,
-          class: ::ProductImport::Transforms.lookup_class(name),
-          initialize_args: args
-        }
+      def transform(*name_and_args)
+        @data[:transforms] << ::ProductImport::Transforms.build_spec(*name_and_args)
       end
     end
 
@@ -22,12 +18,12 @@ module ProductImport
         @importer = importer
         @name = name
         @spec = importer.stage_spec_map[name]
-        @transforms = nil
       end
 
       def transforms
-        @transforms ||= @spec[:transforms].map do |tspec|
-          t = tspec[:class].new(*tspec[:initialize_args])
+        @spec[:transforms].map do |tspec|
+          t = ::ProductImport::Transforms.instantiate_spec(tspec).tap{|t|
+            t.importer = @importer}
         end
       end
 
@@ -35,14 +31,16 @@ module ProductImport
         ::ProductImport::Framework::TransformPipeline.new(
           stage: @spec[:name],
           desc: "#{@spec[:name]} stage transform",
-          transforms: transforms
+          spec: @spec,
+          transforms: transforms,
+          importer: @importer
         )
       end
     end
 
 
     class FileImporter
-      ALLOWED_STAGES = [:extract, :canonicalize]
+      ALLOWED_STAGES = [:extract, :canonicalize, :resolve]
 
       class_attribute :format_spec, :stage_spec_map
 
@@ -52,12 +50,7 @@ module ProductImport
         # Otherwise, this is just an accessor for the format name
         def format(*name_and_args)
           unless name_and_args.empty?
-            name, *args = name_and_args
-            self.format_spec = {
-              name: name,
-              class: ::ProductImport::Formats.lookup_class(name),
-              initialize_args: args,
-            }
+            self.format_spec = ::ProductImport::Formats.build_spec(*name_and_args)
           end
 
           format_spec[:name]
@@ -76,6 +69,10 @@ module ProductImport
         @stages ||= {}
       end
 
+      def format
+        format ||= ::ProductImport::Formats.instantiate_spec(self.class.format_spec)
+      end
+
       def stage_named(key)
         raise ArgumentError unless ALLOWED_STAGES.include? key
 
@@ -87,6 +84,21 @@ module ProductImport
       end
 
       def transform_for_stages(*stages)
+        # If passed a single Range argument, create a transform for 
+        # all stages between the range's begin and end.
+        #
+        # Use this to test a sequence of stages in a way that won't blow up if
+        # we insert new stages later.
+        if stages.size == 1 and stages[0].is_a? Range
+          range = stages[0]
+          i1 = ALLOWED_STAGES.index range.begin
+          i2 = ALLOWED_STAGES.index range.end
+          raise ArgumentError, "Invalid stages in range #{range.inspect}" if i1.nil? || i2.nil?
+
+          index_range = Range.new i1, i2, range.exclude_end?
+          stages = ALLOWED_STAGES.slice index_range
+        end
+
         transforms = stages.map{|sn| stage_named(sn).transform}
 
         ::ProductImport::Framework::TransformPipeline.new(
@@ -96,23 +108,37 @@ module ProductImport
         )
       end
 
-      def import_file(*args)
-        source = _source_enum_for_file(*args)
-        transformed = _transformed_enum_for(source)
-        import_products transformed_enum
+
+      def run_through_stage(stage, format_args)
+        raise ArgumentError unless ALLOWED_STAGES.include? stage
+
+        check_format_validity!(format_args)
+
+        source_enum = format.enum_for(format_args)
+        transform = transform_for_stages(ALLOWED_STAGES.first..stage)
+        transform.transform_enum(source_enum)
       end
 
-      def convert_file_to_lo(filename, io)
-        source = _source_enum_for_file(*args)
-        transformed = _transformed_enum_for(source)
-        write_lo transformed_enum, io
-      end
+      # ensure the file is readable and nothing is rejected during extract
+      # Does a full pass through the entire file.
+      def check_format_validity!(format_args)
+        extract_transform = stage_named(:extract).transform
 
-      def import_raw_enum(enum)
-        transformed = _transformed_enum_for(source)
-        import_products transformed_enum
-      end
+        got_a_row = false
 
+        format.enum_for(format_args).each do |row|
+          got_a_row = true
+          extract_transform.transform_value row do |status, payload|
+            if status == :failure
+              raise ArgumentError, "A transform failed during the extract phase. Assuming file is invalid and bailing out"
+            end
+          end
+        end
+
+        unless got_a_row
+          raise ArgumentError, "Got zero rows when reading from source file"
+        end
+      end
 
 
       ################################################
@@ -128,36 +154,9 @@ module ProductImport
         end
         subclass.stage :extract
         subclass.stage :canonicalize
+        subclass.stage :resolve
       end
 
-
-
-      def _source_enum_for_file(file)
-        # support whatever our format supports
-        source_enum = format.enum_for *args
-        preprocessed_enum = instatiate_transforms(format_transforms, source_enum)
-
-        if capture?
-          preprocessed_enum = Teenum.new(source_enum, "source_data")
-        end
-
-        preprocessed_enum
-      end
-
-      def _transformed_enum_for(source_enum)
-        active_transforms = self.transforms
-
-        if capture?
-          capture_transforms = base_transforms.map do |t|
-            label = "some function of t"
-            [:teenum, label]
-          end
-
-          active_transforms = active_transforms.zip(capture_transforms).flatten
-        end
-
-        transformed_enum = instatiate_transforms(active_transforms, source_enum)
-      end
     end
   end
 end
