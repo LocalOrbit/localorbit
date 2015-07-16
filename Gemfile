@@ -75,6 +75,7 @@ gem "wkhtmltopdf-binary", github: "zakird/wkhtmltopdf_binary_gem"
 # Product import/export
 gem 'rubyXL', require: false # XLSX
 gem 'spreadsheet', require: false # XLS
+gem 'dedent'
 
 group :doc do
   gem "sdoc", require: false

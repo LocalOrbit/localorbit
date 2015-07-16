@@ -44,10 +44,15 @@ module ProductImport
 
       class_attribute :format_spec, :stage_spec_map
 
+
+      ######################################################
+      # Class-level meta api
       class <<self
 
-        # pass a format name (and optional args) to set
-        # Otherwise, this is just an accessor for the format name
+        # Specify the format (and optional format configuration) for this file importer
+        # Can be any symbol which is the name of a class in ProductImport::Formats.
+        #
+        # Example: format :csv
         def format(*name_and_args)
           unless name_and_args.empty?
             self.format_spec = ::ProductImport::Formats.build_spec(*name_and_args)
@@ -56,9 +61,14 @@ module ProductImport
           format_spec[:name]
         end
 
+        # Configure the stage named `name`. Yields a Dsl object which can be used to
+        # declare transformations.
         def stage(name)
           raise ArgumentError unless ALLOWED_STAGES.include? name
 
+          # stages don't accumulate. Delete the existing value, forcing
+          # reinitialization
+          stage_spec_map.delete name
           stage_hash = stage_spec_map[name]
           stage_hash[:name] = name
           yield StageDsl.new(stage_hash) if block_given?
@@ -69,20 +79,27 @@ module ProductImport
         @stages ||= {}
       end
 
+      # The Format object which can be used to load files given the declared format.
       def format
         format ||= ::ProductImport::Formats.instantiate_spec(self.class.format_spec)
       end
 
+      # Get a stage object representing a stage.
       def stage_named(key)
         raise ArgumentError unless ALLOWED_STAGES.include? key
 
         @stages[key] ||= ImportStage.new self, key
       end
 
+      # Get an array of stage objects representing every stage.
       def stages
         stage_spec_map.keys.map{|k| stage_named(k)}
       end
 
+      # Get a single transform that combines all of the transforms in the provided stages.
+      # Can take a single stage or a range of stages, such as (:extract..:canonicalize),
+      # which runs all of the transforms in extract and canonicalize, as well as any future
+      # stages which might be added in between.
       def transform_for_stages(*stages)
         # If passed a single Range argument, create a transform for 
         # all stages between the range's begin and end.
@@ -109,6 +126,12 @@ module ProductImport
       end
 
 
+      # Given a stage and a hash for loading a file using this importer's format,
+      # load and validate the source data and run it through the transforms
+      # in all stages up to and including `stage`.
+      #
+      # Designed to be used in testing to e.g. ensure a file importer correctly
+      # reads and produces canonical data
       def run_through_stage(stage, format_args)
         raise ArgumentError unless ALLOWED_STAGES.include? stage
 
@@ -119,8 +142,9 @@ module ProductImport
         transform.transform_enum(source_enum)
       end
 
-      # ensure the file is readable and nothing is rejected during extract
-      # Does a full pass through the entire file.
+      # Ensure the file is readable and nothing is rejected during extract
+      # Does a full pass through the entire file. Used to ensure a file is
+      # largely sane before we start putting anything in the database.
       def check_format_validity!(format_args)
         extract_transform = stage_named(:extract).transform
 

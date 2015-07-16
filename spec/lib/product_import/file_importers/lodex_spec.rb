@@ -104,6 +104,24 @@ describe ProductImport::FileImporters::Lodex do
 
       expect { subject.run_through_stage(:canonicalize, filename: file) }.to raise_error(ArgumentError)
     end
+
+    it "stashes extra fields in the source_data field" do
+      file = test_file("lodex_with_extra_fields.csv")
+
+      success,failure = subject.run_through_stage(:canonicalize, filename: file)
+
+      expect(success.size).to eq(2)
+
+      expect(success[0]["source_data"]).to eq({
+        "catalog_id" => "32",
+        "smell" => "strong",
+      })
+
+      expect(success[1]["source_data"]).to eq({
+        "catalog_id" => "32",
+        "smell" => nil,
+      })
+    end
   end
 
   def test_file(fname)
