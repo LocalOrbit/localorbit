@@ -8,9 +8,12 @@ module Admin
       if @order.invoice_pdf.present?
         redirect_to @order.invoice_pdf.remote_url
       else
-        GenerateInvoicePdf.delay.perform(order: @order,
-                                         pre_invoice: true,
-                                         request: RequestUrlPresenter.new(request))
+        GenerateInvoicePdf.perform(order: @order,
+                                 pre_invoice: true,
+                                 request: RequestUrlPresenter.new(request))
+        #GenerateInvoicePdf.delay.perform(order: @order,
+        #                                 pre_invoice: true,
+        #                                 request: RequestUrlPresenter.new(request))
         redirect_to action: :await_pdf
       end
 
@@ -44,7 +47,7 @@ module Admin
         thumb_url: market.logo.thumb('200x150>').url,
         name: market.name,
         has_address: market.has_address?,
-        street_address: market.street_address,
+        street_address: market.street_billing_address,
         city_state_zip: market.city_state_zip,
         display_contact_phone: market.display_contact_phone,
         contact_email: market.contact_email,
