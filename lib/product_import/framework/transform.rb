@@ -14,6 +14,9 @@ module ProductImport
         @importer = opts[:importer]
       end
 
+
+      # Given an enum, return two arrays of the successful conversions and hashes of failure info
+      # Note that this is not lazy and designed for testing.
       def transform_enum(enum)
         failed = []
         success = Enumerator::Lazy.new(enum) {|yielder, value|
@@ -30,6 +33,9 @@ module ProductImport
         [success.to_a, failed]
       end
 
+      # Pass a single value through this transform and yield all successes/failures to
+      # the passed-in block. This is the core implementation that of transform handling
+      # and is used by all other invocation mechanisms.
       def transform_value(value, &block)
         fiber = Fiber.new{ transform_step(value); nil }
         while fiber.alive?
@@ -40,6 +46,7 @@ module ProductImport
           when :failure
             yield status, payload.merge(raw: value)
           else
+            # we got the return value of the block - We're done.
             break
           end
         end
@@ -49,17 +56,13 @@ module ProductImport
 
       ###############################
       # Hooks - override these in your subclasses.
-      def check_preconditions(row)
-        # unless row.key? :foo
-        #   reject "Must have a :key"
-        # end
-      end
 
+      # Given a value, pass along one or more successful conversions or
+      # reject the value.
       def transform_step(row)
       end
 
-      def check_postconditions(row)
-      end
+      ################################
 
       private
 

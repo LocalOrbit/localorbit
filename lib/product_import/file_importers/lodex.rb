@@ -1,13 +1,6 @@
 module ProductImport
   module FileImporters
     class Lodex < Framework::FileImporter
-      attr_accessor :market_id
-
-      def initialize(opts={})
-        super
-        self.market_id = opts[:market_id]
-      end
-
       format :csv
 
       stage :extract do |s|
