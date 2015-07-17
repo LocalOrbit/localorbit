@@ -3,7 +3,7 @@ class ProductImport::TransformGenerator < Rails::Generators::NamedBase
 
   desc "This generator creates a transform"
   def transform
-    template "transform.rb", "lib/product_import/transforms/#{file_name}.rb"
-    template "transform_spec.rb", "spec/lib/product_import/transforms/#{file_name}_spec.rb"
+    template "example.rb", "lib/product_import/transforms/#{file_name}.rb"
+    template "example_spec.rb", "spec/lib/product_import/transforms/#{file_name}_spec.rb"
   end
 end

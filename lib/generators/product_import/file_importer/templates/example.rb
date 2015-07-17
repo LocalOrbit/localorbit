@@ -1,7 +1,9 @@
 module ProductImport
   module FileImporters
     class <%= class_name %> < Framework::FileImporter
-      attr_accessor :market_id
+
+      # if any of these are missing, don't even try to process the file
+      REQUIRED_HEADERS = %w(foo bar baz)
 
       # See lib/product_import/formats for supported formats
       format :csv
@@ -11,12 +13,11 @@ module ProductImport
       #
       # Any rejection in this stage causes the entire file to
       # be rejected
-
       stage :extract do |s|
 
         s.transform :from_flat_table,
           headers: true,
-          required_headers: %w(product_code name category price unit)
+          required_headers: REQUIRED_HEADERS
 
       end
 
@@ -25,8 +26,14 @@ module ProductImport
       # and saved for processing/triage.
       stage :canonicalize do |s|
 
+        # Reject any rows which have blank required fields
+        s.transform :validate_keys_are_present,
+          keys: %w(more headers or just REQUIRED_HEADERS)
+
         # TODO: Add your transforms here
 
+        # provide default values and validate that we've generated
+        # canonical data.
         s.transform :ensure_canonical_data
       end
     end

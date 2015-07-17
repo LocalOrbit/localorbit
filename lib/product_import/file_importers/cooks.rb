@@ -1,35 +1,40 @@
 module ProductImport
   module FileImporters
     class Cooks < Framework::FileImporter
+      REQUIRED_HEADERS = %w(item desc gname brandname master mstruom)
 
-      format :xlsx
+      # See lib/product_import/formats for supported formats
+      format :csv
 
+      # This stage is responsible for transforming raw data from
+      # the format reader into basic sequence of hashes.
+      #
+      # Any rejection in this stage causes the entire file to
+      # be rejected
       stage :extract do |s|
-        # s.transform :from_flat_table,
-        #   headers: true
 
-        # s.transform :validate_keys_are_present,
-        #   keys: %w(item desc gname brandname)
-      end
-
-      stage :canonicalize do
-        # transform :translate_keys, map: {
-        #   "item" => "product_code",
-        #   "desc" => "name",
-        #   "gname" => "category",
-        # }
-
-        # transform :join_keys,
-        #   into: "name",
-        #   keys: %w(brandname desc)
-
-        # transform :lookup_or_create_category,
-        #   column: "gname",
-        #   map_file: "cooks_categories.yml"
+        s.transform :from_flat_table,
+          headers: true,
+          # if any of these are missing, don't even try to process the file
+          required_headers: REQUIRED_HEADERS
 
       end
 
+      # This stage transforms the output of the extract stage
+      # into the canonical format. Any rejected row is not imported
+      # and saved for processing/triage.
+      stage :canonicalize do |s|
+
+        # Reject any rows which have blank required fields
+        s.transform :validate_keys_are_present,
+          keys: %w(item desc gname brandname)
+
+        # TODO: Add your transforms here
+
+        # provide default values and validate that we've generated
+        # canonical data.
+        s.transform :ensure_canonical_data
+      end
     end
   end
 end
-
