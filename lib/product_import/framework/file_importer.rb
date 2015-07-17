@@ -21,9 +21,12 @@ module ProductImport
       end
 
       def transforms
-        @spec[:transforms].map do |tspec|
+        @spec[:transforms].map.with_index do |tspec, index|
           t = ::ProductImport::Transforms.instantiate_spec(tspec).tap{|t|
-            t.importer = @importer}
+            t.stage = @spec[:name]
+            t.desc = "transform #{index + 1} - #{tspec[:name]}"
+            t.importer = @importer
+          }
         end
       end
 
@@ -75,7 +78,10 @@ module ProductImport
         end
       end
 
+      attr_reader :opts
+
       def initialize(opts={})
+        @opts = opts
         @stages ||= {}
       end
 
@@ -132,14 +138,57 @@ module ProductImport
       #
       # Designed to be used in testing to e.g. ensure a file importer correctly
       # reads and produces canonical data
-      def run_through_stage(stage, format_args)
+      def run_through_stage(stage, format_args=nil)
         raise ArgumentError unless ALLOWED_STAGES.include? stage
+        format_args ||= opts
 
         check_format_validity!(format_args)
 
         source_enum = format.enum_for(format_args)
         transform = transform_for_stages(ALLOWED_STAGES.first..stage)
         transform.transform_enum(source_enum)
+      end
+
+      def write_to_lodex(io, format_args=nil)
+        format_args ||= opts
+
+        check_format_validity!(format_args)
+
+        source_enum = format.enum_for(format_args)
+        transform = transform_for_stages(ALLOWED_STAGES.first..:canonicalize)
+
+        CSV(io) do |csv|
+
+          seen_error = false
+          headers = nil
+
+          source_enum.each do |row|
+            transform.transform_value(row) do |status, payload|
+              case status
+              when :success
+                unless headers
+                  headers = payload.keys
+                  if payload.key? 'source_data'
+                    headers.delete 'source_data'
+                    headers.concat payload['source_data'].keys
+                  end
+                  csv << headers
+                end
+                csv << payload.values_at(*headers)
+              else
+                unless seen_error
+                  type = self.class.name.underscore
+                  $stderr.puts "# This file contains details about failures to convert data to lodex"
+                  $stderr.puts "# The source file importer type was #{type}"
+                  $stderr.puts "# You can fix the extract stage and rerun against the source data"
+                  $stderr.puts "# or fix the canonicalize stage and run against the raw values below"
+                  seen_error = true
+                end
+                $stderr.puts payload.to_yaml
+              end
+            end
+          end
+        end
       end
 
       # Ensure the file is readable and nothing is rejected during extract

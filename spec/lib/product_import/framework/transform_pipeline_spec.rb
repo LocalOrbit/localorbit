@@ -44,17 +44,17 @@ describe ProductImport::Framework::TransformPipeline do
       expect(failures.length).to eq(2)
 
       expect(failures[0]).to eq({
-        "reason" => "Not a number",
-        "stage" => "parse",
-        "transform" => "Add 1",
-        "raw" => :foo,
+        reason: "Not a number",
+        stage: "parse",
+        transform: "Add 1",
+        raw: :foo,
       })
 
       expect(failures[1]).to eq({
-        "reason" => "Not a number",
-        "stage" => "parse",
-        "transform" => "Add 1",
-        "raw" => 'bar',
+        reason: "Not a number",
+        stage: "parse",
+        transform: "Add 1",
+        raw: 'bar',
       })
     end
 
@@ -87,17 +87,17 @@ describe ProductImport::Framework::TransformPipeline do
       expect(failures.length).to eq(2)
 
       expect(failures[0]).to eq({
-        "reason" => "Not a number",
-        "stage" => "parse",
-        "transform" => "Add 1",
-        "raw" => :foo,
+        reason: "Not a number",
+        stage: "parse",
+        transform: "Add 1",
+        raw: :foo,
       })
 
       expect(failures[1]).to eq({
-        "reason" => "Not a number",
-        "stage" => "parse",
-        "transform" => "Add 1",
-        "raw" => 'bar',
+        reason: "Not a number",
+        stage: "parse",
+        transform: "Add 1",
+        raw: 'bar',
       })
     end
 
@@ -129,6 +129,9 @@ describe ProductImport::Framework::TransformPipeline do
 
   describe "a subclass using the DSL" do
     class MyTransform < ProductImport::Framework::TransformPipeline
+      transform :validate_keys_are_present,
+        keys: ["good"]
+
       transform :set_keys_to_importer_option_values, map: {
         "market_id" => :market_id
       }
@@ -136,6 +139,7 @@ describe ProductImport::Framework::TransformPipeline do
       transform :set_keys_to_importer_option_values, map: {
         organization_id: :organization_id
       }
+
     end
 
     subject do
@@ -147,19 +151,38 @@ describe ProductImport::Framework::TransformPipeline do
       })
 
       MyTransform.new(
+        stage: :canonicalize,
+        desc: "parent transform",
         importer: importer
       )
     end
 
     it "instantiates the transforms and applies them in sequence" do
-      successes, failures = subject.transform_enum([{}])
+      successes, failures = subject.transform_enum([{"good" => true}])
 
       expect(successes).to eq([{
         "market_id" => 1,
         "organization_id" => 2,
+        "good" => true,
       }])
       expect(failures.length).to eq(0)
     end
+
+    describe "when a transform rejects" do
+      it "passes along the stage and sets the desc" do
+        successes, failures = subject.transform_enum([{}])
+
+        expect(successes.length).to eq(0)
+
+        expect(failures).to eq([{
+          reason: "Missing required key(s): good",
+          stage: :canonicalize,
+          transform: "parent transform - substep 1 - validate_keys_are_present",
+          raw: {}
+        }])
+      end
+    end
+
   end
 end
 

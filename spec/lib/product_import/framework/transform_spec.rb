@@ -34,17 +34,17 @@ describe ProductImport::Framework::Transform do
       expect(failures.length).to eq(2)
 
       expect(failures[0]).to eq({
-        "reason" => "Not a number",
-        "stage" => "parse",
-        "transform" => "Add 1",
-        "raw" => :foo,
+        reason: "Not a number",
+        stage: "parse",
+        transform: "Add 1",
+        raw: :foo,
       })
 
       expect(failures[1]).to eq({
-        "reason" => "Not a number",
-        "stage" => "parse",
-        "transform" => "Add 1",
-        "raw" => 'bar',
+        reason: "Not a number",
+        stage: "parse",
+        transform: "Add 1",
+        raw: 'bar',
       })
     end
 
@@ -72,17 +72,17 @@ describe ProductImport::Framework::Transform do
       expect(failures.length).to eq(2)
 
       expect(failures[0]).to eq({
-        "reason" => "Not a number",
-        "stage" => "parse",
-        "transform" => "Add 1 and -1",
-        "raw" => :foo,
+        reason: "Not a number",
+        stage: "parse",
+        transform: "Add 1 and -1",
+        raw: :foo,
       })
 
       expect(failures[1]).to eq({
-        "reason" => "Not a number",
-        "stage" => "parse",
-        "transform" => "Add 1 and -1",
-        "raw" => 'bar',
+        reason: "Not a number",
+        stage: "parse",
+        transform: "Add 1 and -1",
+        raw: 'bar',
       })
     end
 

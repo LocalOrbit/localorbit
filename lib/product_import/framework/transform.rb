@@ -17,13 +17,12 @@ module ProductImport
       def transform_enum(enum)
         failed = []
         success = Enumerator::Lazy.new(enum) {|yielder, value|
-          raw = value.deep_dup
           transform_value(value) do |status, payload|
             case status
             when :success
               yielder << payload
             when :failure
-              failed << payload.merge("raw" => raw)
+              failed << payload
             end
           end
         }
@@ -35,10 +34,13 @@ module ProductImport
         fiber = Fiber.new{ transform_step(value); nil }
         while fiber.alive?
           status, payload = fiber.resume
-          if status.nil?
-            break
-          else
+          case status
+          when :success
             yield status, payload
+          when :failure
+            yield status, payload.merge(raw: value)
+          else
+            break
           end
         end
       end
@@ -67,9 +69,9 @@ module ProductImport
 
       def reject reason
         Fiber.yield :failure,
-          "reason" => reason,
-          "stage" => stage,
-          "transform" => desc
+          reason: reason,
+          stage: stage,
+          transform: desc
       end
 
 

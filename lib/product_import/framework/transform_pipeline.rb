@@ -21,8 +21,10 @@ module ProductImport
       end
 
       def transforms
-        @transforms ||= self.class.transform_specs.map{|spec|
+        @transforms ||= self.class.transform_specs.map.with_index{|spec, index|
           ::ProductImport::Transforms.instantiate_spec(spec).tap{|t|
+            t.stage = stage
+            t.desc = "#{desc} - substep #{index+1} - #{spec[:name]}"
             t.importer = importer
           }
         }

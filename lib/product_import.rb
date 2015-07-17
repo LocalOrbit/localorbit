@@ -18,6 +18,10 @@ module InstantiatableByName
   def instantiate_spec(spec)
     spec[:class].new(*spec[:initialize_args])
   end
+
+  def instantiate(name, *args)
+    lookup_class(name).new(*args)
+  end
 end
 
 module ProductImport

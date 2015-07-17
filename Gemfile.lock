@@ -668,6 +668,7 @@ DEPENDENCIES
   sdoc
   simplecov
   simpleidn
+  slop (~> 3.0)
   spreadsheet
   spring
   spring-commands-rspec
