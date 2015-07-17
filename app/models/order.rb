@@ -10,7 +10,7 @@ class Order < ActiveRecord::Base
   before_save :cache_delivery_status
   before_update :update_order_item_payment_status
   before_update :update_total_cost
-
+  
   audited allow_mass_assignment: true
   has_associated_audits
 

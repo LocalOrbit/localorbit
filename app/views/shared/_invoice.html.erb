@@ -40,9 +40,9 @@
         <h3 class="fn org org-from"><%= invoice.market.name %></h3>
         <% if market.has_address? %>
           <div>
-            <%= market.street_address %><br>
-            <%= market.city_state_zip %><br>
-            <%= market.display_contact_phone %><br>
+            <%= market.billing_street_address %><br>
+            <%= market.billing_city_state_zip %><br>
+            <%= market.billing_address_phone_number %><br>
             <%= market.contact_email %>
           </div>
         <% end %>

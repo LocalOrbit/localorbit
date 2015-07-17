@@ -431,6 +431,13 @@ FactoryGirl.define do
     product
     min_quantity 1
     sale_price 3.00
+
+    trait :past_price do
+      after(:create) do |price|
+        price.update_column(:updated_at, DateTime.now - 100.years)
+        price.update_column(:created_at, DateTime.now - 100.years)
+      end
+    end
   end
 
   factory :product do
@@ -451,7 +458,7 @@ FactoryGirl.define do
 
     trait :sellable do
       after(:create) do |product|
-        create(:price, product: product)
+        create(:price, :past_price, product: product)
         create(:lot, product: product) if product.lots.empty?
       end
     end
