@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150716141837) do
+ActiveRecord::Schema.define(version: 20150717174829) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -279,6 +279,7 @@ ActiveRecord::Schema.define(version: 20150716141837) do
     t.string   "phone"
     t.string   "fax"
     t.integer  "legacy_id"
+    t.string   "country",          default: "US",  null: false
   end
 
   add_index "locations", ["deleted_at"], name: "index_locations_on_deleted_at", using: :btree
@@ -328,6 +329,7 @@ ActiveRecord::Schema.define(version: 20150716141837) do
     t.integer  "legacy_id"
     t.boolean  "default",    default: false
     t.boolean  "billing",    default: false
+    t.string   "country",    default: "US",  null: false
   end
 
   add_index "market_addresses", ["market_id", "deleted_at"], name: "index_market_addresses_on_market_id_and_deleted_at", using: :btree

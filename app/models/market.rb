@@ -56,6 +56,10 @@ class Market < ActiveRecord::Base
     end
   }
 
+  def self.possible_countries
+    [['United States', 'US'], ['Canada', 'CA']]
+  end
+
   def self.arel_column_for_sort(column_name)
     case column_name
     when "contact"   then arel_table[:contact_name]
