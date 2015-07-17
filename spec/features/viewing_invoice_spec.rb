@@ -33,16 +33,19 @@ feature "Viewing invoices" do
            delivery_fees: "12.95")
   end
 
-  def expect_invoice_content
+  def expect_invoice_header_content
     expect(page).to have_content("Invoice Number LO-001")
 
     within(".invoice-basics") do
-      expect(page).to have_content("Invoice Date 4/2/2014")
+      expect(page).to have_content("Invoice Date   4/2/2014")
       expect(page).to have_content("Due Date 4/16/2014")
     end
 
     expect(page).to have_content(market.name)
 
+  end
+
+  def expect_invoice_body_content
     expect(page).to have_content("Subtotal $400.00")
     expect(page).to have_content("Total $412.95")
 
@@ -70,14 +73,9 @@ feature "Viewing invoices" do
         sign_in_as(buyer_user)
       end
 
-      scenario "html content" do
+      scenario "html content" do 
         visit peek_admin_invoice_path(order.id)
-
-        expect_invoice_content
-
-        # Line items total
-        expect(find("tr:last-child td:last-child")).to have_content("$412.95")
-        expect(page).to have_content("Subtotal $400.00")
+        expect_invoice_body_content
       end
     end
   end
@@ -90,16 +88,17 @@ feature "Viewing invoices" do
         sign_in_as(buyer_user)
       end
 
-      scenario "html content" do
+      scenario "html content" do 
         visit peek_admin_invoice_path(order.id)
-
-        expect_invoice_content
-        expect_market_address
-
-        # Line items total
-        expect(find("tr:last-child td:last-child")).to have_content("$412.95")
-        expect(page).to have_content("Subtotal $400.00")
+        expect_invoice_body_content
       end
+  
+      it "has a header" do
+        visit pdf_view_header_path + "?" + Invoices::InvoiceHeaderParamsGenerator.generate_header_params(BuyerOrder.new(order), market.decorate)
+        expect_invoice_header_content
+        expect_market_address
+      end
+
     end
 
     context "as a market manager" do
@@ -108,38 +107,17 @@ feature "Viewing invoices" do
         sign_in_as market_manager
       end
 
-      scenario "html content" do
+      scenario "html content" do 
         visit peek_admin_invoice_path(order.id)
-
-        expect(page).to have_content("Invoice Number LO-001")
-
-        within(".invoice-basics") do
-          expect(page).to have_content("Invoice Date 4/2/2014")
-          expect(page).to have_content("Due Date 4/16/2014")
-        end
-        within(".invoice-parties") do
-          expect(page).to have_content(market.name)
-
-          address = market.addresses.first
-          expect(page).to have_content(address.address)
-          expect(page).to have_content(address.city)
-          expect(page).to have_content(address.state)
-          expect(page).to have_content(address.zip)
-          #expect(page).to have_content("(123) 456-7890")
-          expect(page).to have_content("(616) 555-1212")
-          expect(page).to have_content(market.contact_email)
-        end
-
-        expect(page).to have_content("Subtotal $400.00")
-        expect(page).to have_content("Total $412.95")
-
-        # There should be 2 line items
-        expect(all(".line-item").size).to eq(2)
-
-        # Line items total
-        expect(find("tr:last-child td:last-child")).to have_content("$412.95")
+        expect_invoice_body_content
       end
 
+      it "has a header" do
+        visit pdf_view_header_path + "?" + Invoices::InvoiceHeaderParamsGenerator.generate_header_params(BuyerOrder.new(order), market.decorate)
+        expect_invoice_header_content
+        expect_market_address
+      end
+      
       scenario "generate invoice PDF preview", :js do
         # Tweak order so it appears in the Send Invoices tab:
         # 1. it needs not to be invoiced already
@@ -174,12 +152,8 @@ feature "Viewing invoices" do
           market.update_attribute(:contact_phone, "+123 (456) 789-0987 ext. 654")
         end
 
-        scenario "html content" do
-
-          visit peek_admin_invoice_path(order.id)
-
-          expect(page).to have_content("Invoice Number LO-001")
-
+        it "has a header" do
+          visit pdf_view_header_path + "?" + Invoices::InvoiceHeaderParamsGenerator.generate_header_params(BuyerOrder.new(order), market.decorate)
           within(".invoice-parties") do
             expect(page).to have_content("+123 (456) 789-0987 ext. 654")
           end
@@ -191,25 +165,10 @@ feature "Viewing invoices" do
         let!(:order_item3) { create(:order_item, product: product3, quantity: 4) }
         let!(:order_items) { [order_item1, order_item2, order_item3] }
 
-        scenario "html content" do
+        scenario "html content" do 
           visit peek_admin_invoice_path(order.id)
 
-          expect(page).to have_content("Invoice Number LO-001")
-
-          within(".invoice-basics") do
-            expect(page).to have_content("Invoice Date 4/2/2014")
-            expect(page).to have_content("Due Date 4/16/2014")
-          end
-
-          within(".invoice-parties") do
-            expect(page).to have_content(market.name)
-
-            address = market.addresses.first
-            expect(page).to have_content(address.address)
-            expect(page).to have_content(address.city)
-            expect(page).to have_content(address.state)
-            expect(page).to have_content(address.zip)
-          end
+          
           expect(page).to have_content("Subtotal $427.96")
           expect(page).to have_content("Total $440.91")
 
@@ -219,8 +178,13 @@ feature "Viewing invoices" do
           # Line items total
           expect(find("tr:last-child td:last-child")).to have_content("$440.91")
         end
-      end
 
+        it "has a header" do
+          visit pdf_view_header_path + "?" + Invoices::InvoiceHeaderParamsGenerator.generate_header_params(BuyerOrder.new(order), market.decorate)
+          expect_invoice_header_content
+          expect_market_address
+        end
+      end
     end
   end
 end
