@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+  <head><style type="text/css">.invoices-wrapper{font-size:14px;font-family:OpenSans,"Open Sans",Geneva,Arial,sans-serif}.invoices-wrapper .btn{display:inline-block;padding:12px 18px;border:1px solid #b0b0b0;-webkit-border-radius:3px;-moz-border-radius:3px;border-radius:3px;background-image:-moz-linear-gradient(top,rgba(0,0,0,0),rgba(0,0,0,.2));background-image:-webkit-linear-gradient(top,rgba(0,0,0,0),rgba(0,0,0,.2));background-image:-o-linear-gradient(top,rgba(0,0,0,0),rgba(0,0,0,.2));background-image:-ms-linear-gradient(top,rgba(0,0,0,0),rgba(0,0,0,.2));background-image:linear-gradient(top,rgba(0,0,0,0),rgba(0,0,0,.2));margin-bottom:.5em;color:#fff;background-color:#43639F;font-family:inherit;font-size:17px;text-decoration:none;-webkit-appearance:none;-webkit-font-smoothing:antialiased}.invoices-wrapper .btn:hover{background-image:none;text-decoration:none}.invoices-wrapper .btn.disabled,.invoices-wrapper .btn:disabled{opacity:.15;cursor:default;cursor:not-allowed}.invoices-wrapper .btn:active{-webkit-box-shadow:inset 0 1px 3px rgba(0,0,0,.5);-moz-box-shadow:inset 0 1px 3px rgba(0,0,0,.5);box-shadow:inset 0 1px 3px rgba(0,0,0,.5);background-image:-moz-linear-gradient(top,rgba(0,0,0,0),rgba(0,0,0,.3));background-image:-webkit-linear-gradient(top,rgba(0,0,0,0),rgba(0,0,0,.3));background-image:-o-linear-gradient(top,rgba(0,0,0,0),rgba(0,0,0,.3));background-image:-ms-linear-gradient(top,rgba(0,0,0,0),rgba(0,0,0,.3));background-image:linear-gradient(top,rgba(0,0,0,0),rgba(0,0,0,.3))}.invoices-wrapper .btn:focus{outline:0}.invoices-wrapper .btn:first-child{margin-bottom:1em}.invoices-wrapper .btn:last-child{margin-right:0}.invoices-wrapper .btn.btn--small{padding:4px 18px;font-size:14px}.invoices-wrapper .column,.invoices-wrapper .row{position:relative;-webkit-box-sizing:border-box;-moz-box-sizing:border-box;box-sizing:border-box}.invoices-wrapper .column{display:inline-block;padding:0 10px 0 0;text-align:left;vertical-align:top}.invoices-wrapper .column:last-child{padding-right:0}.invoices-wrapper .column--three-fourths{width:75%}.invoices-wrapper .column--two-thirds{width:66%}.invoices-wrapper .column--half{width:50%}.invoices-wrapper .column--third{width:33%}.invoices-wrapper .column--fourth{width:25%}.invoices-wrapper .ar{text-align:right}.invoices-wrapper .al{text-align:left}.invoices-wrapper .ac{text-align:center}.invoices-wrapper .left-padded{padding-left:20px}.invoices-wrapper td,.invoices-wrapper th{font-size:12px;padding:10px}.invoices-wrapper h1{margin:0 0 .5em;font:700 25px Arial}.invoices-wrapper h2{margin:0;color:#666;font:700 14px Arial}.invoices-wrapper table{width:100%;border-collapse:collapse}.invoices-wrapper caption{color:#000;font:700 14px Arial;text-align:left}.invoices-wrapper table,.invoices-wrapper td,.invoices-wrapper th,.invoices-wrapper tr{page-break-inside:avoid}.invoices-wrapper th{color:#666;text-align:left;vertical-align:top}.invoices-wrapper tbody tr:nth-child(odd){background:#f9f9f9}.invoices-wrapper .pseudopod{padding:10px 0 0}.invoices-wrapper .pseudopod td{padding:5px 10px}.invoices-wrapper .pseudopod th{font-size:12px;font-weight:400}.invoices-wrapper .canceled>span{text-decoration:line-through}.invoices-wrapper .canceled:after{color:#911;content:" Cancelled";text-decoration:none}.invoices-wrapper .discounts td,.invoices-wrapper .discounts th{padding:10px 10px 2px}.invoices-wrapper .delivery td,.invoices-wrapper .delivery th{padding:2px 10px 10px}.invoices-wrapper .total{border-top:solid 1px #ccc;color:#666}.invoices-wrapper .total .amount{padding-left:10px;color:#000;font:700 24px Arial}.invoices-wrapper .total td,.invoices-wrapper .total th{padding-left:0;font-size:18px}.invoices-wrapper .total td:first-child{font-style:italic}.invoices-wrapper .date{font-family:Arial;font-weight:700}.invoices-wrapper .due-date{width:150px;clear:right;padding:17px;border:2px solid #C7C7C7;background:#f9f9f9;font:700 25px Arial}.invoices-wrapper .inline{display:inline}.invoices-wrapper .invoice-basics,.invoices-wrapper .invoice-parties{margin-bottom:1em}.invoices-wrapper .logo{max-width:1in}.invoices-wrapper .logo img,.invoices-wrapper .logo-column{width:1in}.invoices-wrapper .inline-block{display:inline-block}.invoices-wrapper .left{float:left}.invoices-wrapper .right{float:right}.invoices-wrapper .vcard{overflow:hidden}.invoices-wrapper .vcard-buyer{margin-bottom:25px}.invoices-wrapper .buyer-name,.invoices-wrapper .delivery-date,.invoices-wrapper .invoice-num,.invoices-wrapper .org-from,.invoices-wrapper .po-num{margin:0;font:700 16px Arial}.invoices-wrapper .buyer-name,.invoices-wrapper .invoice-num,.invoices-wrapper .org-from{word-break:break-all;word-wrap:break-word}.invoices-wrapper .signature{width:45%;color:#666;border-top:1px solid #666;margin-top:60px}@media print{.controller-invoices .btn--save,.controller-invoices .l-app-footer,.controller-invoices .l-app-header,.controller-invoices .logo-link,.controller-invoices .nav--admin,.controller-invoices .nav--main,.controller-invoices .no-print,.controller-invoices .tab-header,.controller-invoices .teflon{display:none}.controller-invoices .logo{display:block}}@media screen{body>.invoices-wrapper{width:7.5in;min-height:9in;padding:1in .5in;margin:0 auto;background:#fff}body>.invoices-wrapper .btn--save{float:right}}body.os-android .print-button{display:none}</style></head>
+  <body>
+    <% @logo_path = asset_url("logo.png") # needed if market doesn't have a logo %>
+    <div style="position:relative;">
+      <p style="position:absolute;top:22px;left:0px;font-size:10px;font-family:OpenSans,'Open Sans',Geneva,Arial,sans-serif"><%= order_number %> </p>
+      <p style="position:absolute;top:22px;right:0px;font-size:10px;font-family:OpenSans,'Open Sans',Geneva,Arial,sans-serif"><%= "#{page} of #{topage}" %> </p>
+    </div>
+    <br><br><br>
+    <div class="invoices-wrapper">
+      <div class="row">
+        <div class="column">
+          <div class="row">
+            <div class="column logo-column" style="width:1.1in">
+              <br>
+                <%=
+                 if logo_stored
+                   image_tag(ensure_full_url(thumb_url), alt: "#{name} logo", class: "logo", width: 100)
+                 elsif @logo_path
+                   image_tag(ensure_full_url(@logo_path), alt: "Local Orbit logo", class: "logo left")
+                 else
+                   image_tag(ensure_full_url(asset_url("logo.png")), alt: "Local Orbit logo", class: "logo left")
+                 end
+               %>
+            </div><div class="column" style="width:3in">
+              <div class="vcard">
+                <h2>Remit To:</h2>
+                <h3 class="fn org org-from"><%= name %></h3>
+                <% if has_address %>
+                  <div>
+                    <%= street_address %><br>
+                    <%= city_state_zip %><br>
+                    <%= display_contact_phone %><br>
+                    <%= contact_email %>
+                  </div>
+                <% end %>
+              </div>
+              <br>
+              <div class="vcard vcard-buyer">
+                <h2>Bill To:</h2>
+                <h3 class="fn org buyer-name"><%= billing_organization_name %></h3>
+                <div>
+                  <%= billing_address %><br>
+                  <%= billing_city %>,
+                  <%= billing_state %>
+                  <%= billing_zip %>
+                </div>
+              </div> 
+            </div>
+          </div>
+        </div><div class="column" style="width:2.4in;display:inline-block;">
+          <h1>Invoice</h1>
+          <h2>Invoice Number</h2>
+          <p class="invoice-num"><%= order_number %></p><br>
+          <%= "<span class=\"inline-block\"><h2>Delivery Date</h2><p class=\"delivery-date\">#{delivery_date}</p></span>".html_safe if delivery_date_present %>
+          <%= "<span class=\"inline-block\"><h2>Purchase Order Number</h2><p class=\"po-num\">#{payment_note}</p></span>".html_safe if payment_note_present %>
+          <br><br>
+          <div class="due-date">
+            <h2>Due Date</h2>
+            <%= due_date %>
+          </div>
+          <h2 class="inline">Invoice Date&nbsp;&nbsp;</h2>
+          <span class="date">
+            <%= date %>
+          </span>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
