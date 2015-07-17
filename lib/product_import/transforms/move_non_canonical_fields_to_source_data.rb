@@ -1,22 +1,8 @@
 
 class ProductImport::Transforms::MoveNonCanonicalFieldsToSourceData < ProductImport::Framework::Transform
 
-  def canonical_field_keys
-    @canonical_field_keys ||= begin
-        keys = ProductImport::Schemas::CANONICAL.keys
-
-        # Extract the keys from optional values
-        keys.
-          map {|k| k.respond_to?(:key) ? k.key : k }
-      end
-  end
-
-  def canonical_field_key_set
-    @canonical_field_key_set ||= canonical_field_keys.to_set
-  end
-
   def transform_step(row)
-    if row.keys.any?{|k| !canonical_field_key_set.include?(k)}
+    if row.keys.any?{|k| !canonical_field_keys.include?(k)}
       canon = row.slice(*canonical_field_keys)
 
       noncanon_keys = row.keys - canonical_field_keys
@@ -29,4 +15,15 @@ class ProductImport::Transforms::MoveNonCanonicalFieldsToSourceData < ProductImp
       continue row
     end
   end
+
+  def canonical_field_keys
+    @canonical_field_keys ||= begin
+        keys = ProductImport::Schemas::CANONICAL.keys
+
+        # Extract the keys from optional values
+        keys.
+          map {|k| k.respond_to?(:key) ? k.key : k }
+      end
+  end
+
 end

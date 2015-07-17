@@ -15,6 +15,7 @@ describe "'Regexp' extension to RSchema" do
   it "provides a compound validation error" do
     expect { RSchema.validate!(schema, :foo) }.to raise_error(/is not a String matching \/foo\//)
     expect { RSchema.validate!(schema, 'oops') }.to raise_error(/is not a String matching \/foo\//)
+    expect { RSchema.validate!(schema, nil) }.to raise_error(/is not a String matching \/foo\//)
   end
 
 end
