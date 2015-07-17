@@ -46,6 +46,7 @@ describe "Admin Managing Markets" do
       expect(page).to have_text(address1.city)
       expect(page).to have_text(address1.state)
       expect(page).to have_text(address1.zip)
+      expect(page).to have_text(address1.country)
     end
 
     it "I can delete an address from the index" do
@@ -68,6 +69,7 @@ describe "Admin Managing Markets" do
       fill_in "Zip", with: "49423"
       fill_in "Phone", with: "616-123-4567"
       fill_in "Fax", with: "616-321-3214"
+      select "Canada", from: "Country"
 
       click_button "Add Address"
 
@@ -77,6 +79,7 @@ describe "Admin Managing Markets" do
       expect(page).to have_text("MI")
       expect(page).to have_text("49423")
       expect(page).to have_text("616-123-4567")
+      expect(page).to have_text("CA")
     end
 
     it "I can edit an existing address" do
@@ -189,7 +192,7 @@ describe "Admin Managing Markets" do
       check('default')
       click_button "Add Address"
       click_link "New Address" # click on the label for address just added
-      
+
       expect(find('#market_address_default')).to be_checked
       expect(find('#market_address_billing')).to_not be_checked
     end

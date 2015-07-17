@@ -4,7 +4,7 @@ class MarketAddress < ActiveRecord::Base
 
   belongs_to :market, inverse_of: :addresses
 
-  validates :address, :city, :state, :zip, :market, presence: true
+  validates :address, :city, :state, :zip, :market, :country, presence: true
 
   acts_as_geocodable address: {street: :address, locality: :city, region: :state, postal_code: :zip}
 
@@ -37,5 +37,5 @@ class MarketAddress < ActiveRecord::Base
       end
     end
   end
-  
+
 end

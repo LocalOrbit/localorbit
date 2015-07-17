@@ -71,7 +71,8 @@ class Admin::MarketsController < AdminController
       :auto_activate_organizations,
       :closed,
       :store_closed_note,
-      :sellers_edit_orders
+      :sellers_edit_orders,
+      :country
     ]
     if current_user.admin?
       columns.concat([
