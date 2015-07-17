@@ -41,13 +41,16 @@ describe "Managing Markets" do
       click_link market1.name
 
       expect(find_field("market_contact_name").value).to eq("Jill Smith")
+      expect(page).to have_select('market_country', selected: 'United States')
 
       fill_in "Contact name", with: "Jane Smith"
+      select "Canada", :from => "market_country"
 
       click_button "Update Market"
 
       expect(page).to have_text("Market Information")
       expect(find_field("market_contact_name").value).to eq("Jane Smith")
+      expect(page).to have_select('market_country', selected: 'Canada')
     end
 
     it "I cannot activate a market" do
