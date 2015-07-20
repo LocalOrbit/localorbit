@@ -1,31 +1,40 @@
+# ALl of the below is made up and potentially quite wrong.  Assume each of the
+# following is a rough sketch and is probably incomplete and/or not up to date
+# with how things should be structured.
+#
+# When you go to build one of these, you're probably better off doing a
+# rails g product_import:file_importer and porting over relevant bits.
 
 module Import
 
   class Bakers < Framework::FileImporter
 
     format :xlsx
-    process_format :remove_empty_rows
 
-    process_format :from_table_grouped_by_category,
-      category_column: 2,
-      heading_columns: [nil, "CODE", "PRODUCTS", "Reorder Cycle", nil, "PRICE"],
-    # Assume that the output of this step is hashes. Keys are entries in heading_columns (if non-nil)
-    # or column number (if nil). This last point to support getting values which don't have labels
+    stage :extract do |s|
+      s.transform  :from_table_grouped_by_category,
+        category_column: 2,
+        heading_columns: [nil, "CODE", "PRODUCTS", "Reorder Cycle", nil, "PRICE"],
+      # Assume that the output of this step is hashes. Keys are entries in heading_columns (if non-nil)
+      # or column number (if nil). This last point to support getting values which don't have labels
 
-    validate keys: ['CODE', 'PRODUCTS', 'Reorder Cycle', 'PRICE', 
-      # Created by from_table_grouped_by_category
-      "category"]
+      s.transform  validate_keys_are_present,
+        keys: ['CODE', 'PRODUCTS', 'Reorder Cycle', 'PRICE', 
+          # Created by from_table_grouped_by_category
+          "category"]
+    end
 
-    transform :translate_keys, map: {
-      "CODE" => "product_code",
-      "PRODUCTS" => "name",
+    stage :canonicalize do |s|
+      s.transform :translate_keys, map: {
+        "CODE" => "product_code",
+        "PRODUCTS" => "name",
 
-      #
-      4 => "size",
-      "PRICE" => 'price',
-    }
+        4 => "size",
+        "PRICE" => 'price',
+      }
 
-    transform :lookup_or_create_category
+      s.transform :ensure_canonical_data
+    end
 
 
   end
@@ -35,14 +44,12 @@ module Import
     format :xls
 
     stage :extract do
-      transform :remove_empty_rows
-
-      transform :from_table_grouped_by_category,
+      s.transform :from_table_grouped_by_category,
         category_column: 0,
         heading_columns: ["Item", "Item #", "Package Size", "Price/#", "Price/cs.", "QTY.", "Container"],
 
-      transform :validate_keys, 
-        ["Item", "Item #", "Package Size", "Price/cs."]
+      s.transform :validate_keys_are_present, 
+        keys: ["Item", "Item #", "Package Size", "Price/cs."]
     end
 
     stage :canonicalize do |s|
@@ -57,7 +64,7 @@ module Import
   #       into: "name",
   #       keys: %w(brandname desc)
 
-      s.transform :lookup_or_create_category
+      s.transform :ensure_canonical_data
     end
 
 
@@ -68,23 +75,33 @@ module Import
 
     format :csv
 
-    transform_format :from_flat_table,
-      headers: true
-  
-    # Question: Does distributor name need to be in here? Is Order Guide# important?
-    transform :contrive_key, from: ["Order Guide#", "Distributor Item#"]
+    stage :extract do |s|
+      s.transform :from_flat_table,
+        headers: true
+    end
 
-    transform :translate_keys, map: {
-      "Distributor Item#" => "product_code",
-      "Size" => "unit",
-      "Price" => "price",
-    }
 
-    transform :join_keys,
-      into: "name",
-      keys: ["Brand", "Product Description"]
+    stage :canonicalize do |s|
+      # Question: Does distributor name need to be in here? Is Order Guide# important?
+      s.transform :contrive_key, from: ["Order Guide#", "Distributor Item#"]
 
-    transform :lookup_or_create_category
+      s.transform :translate_keys, map: {
+        "Distributor Item#" => "product_code",
+        "Size" => "unit",
+        "Price" => "price",
+      }
+
+      s.transform :join_keys,
+        into: "name",
+        keys: ["Brand", "Product Description"]
+
+      s.transform :join_keys,
+        into: "name",
+        keys: ["Pack", "Size"],
+        join_with: " / "
+
+      s.transform :ensure_canonical_data
+    end
 
   end
 
@@ -92,27 +109,27 @@ module Import
 
     format :xlsx
 
-    transform_format :from_flat_table,
-      headers: true
+    stage :extract do |s|
+      s.transform :from_flat_table,
+        headers: true
+    end
   
-    transform :translate_keys, map: {
-      "ITEM" => "product_code",
-      "PACK" => "unit",
-      "CLASS -SUBCLASS" => "category"
-    }
+    stage :canonicalize do |s|
+      s.transform :translate_keys, map: {
+        "ITEM" => "product_code",
+        "PACK" => "unit",
+        "CLASS -SUBCLASS" => "category"
+      }
 
-    transform :convert_uom_price,
-      uom_key: "UOM",
-      price_key: "LASTPRICE"
+      s.transform :convert_uom_price,
+        uom_key: "UOM",
+        price_key: "LASTPRICE"
 
-    transform :join_keys,
-      into: "name",
-      keys: ["Brand", "Product Description"]
+      s.transform :join_keys,
+        into: "name",
+        keys: ["Brand", "Product Description"]
 
-    transform :lookup_or_create_category
-
-    transform :label do |value|
-      ...
+      s.transform :ensure_canonical_data
     end
 
   end
@@ -121,29 +138,32 @@ module Import
 
     format :xlsx
 
-    transform_format :from_flat_table,
-      headers: true
+    stage :extract do |s|
+      s.transform_format :from_flat_table,
+        headers: true
+    end
   
-    transform :translate_keys, map: {
-      "SKU" => "product_code",
-      "PACK" => "unit",
-      "ITEM CATEGORY" => "category"
-    }
+    stage :canonicalize do |s|
+      s.transform :translate_keys, map: {
+        "SKU" => "product_code",
+        "PACK" => "unit",
+        "ITEM CATEGORY" => "category"
+      }
 
-    # Convert unit "30/1lb" to a "unit_count" of 30
-    transform :convert_uom_price,
-      uom_key: "UOM",
-      price_key: "UNIT PRICE",
+      # Convert unit "30/1lb" to a "unit_count" of 30
+      s.transform :convert_uom_price,
+        uom_key: "UOM",
+        price_key: "UNIT PRICE",
 
 
-    transform :join_keys,
-      into: "name",
-      keys: ["Brand", "Product Description"]
+      s.transform :join_keys,
+        into: "name",
+        keys: ["Brand", "Product Description"]
 
-    transform :lookup_or_create_category
+      s.transform :ensure_canonical_data
+    end
 
   end
-   
 
 end
 
