@@ -84,7 +84,7 @@ describe ProductImport::FileImporters::PacificGourmet do
       expect(success[0]).to eq({
         "product_code"=>"ASN01",
         "name"=>"SAILING BOAT - MEI-FUN RICE STICK NOODLES, CHINA",
-        "category"=>"ASIAN NOODLES",
+        "category"=>"Pasta > Dried Pasta > Asian Noodles",
         "price"=>1.21,
         "unit"=>"30/1 lb",
         "source_data"=>{

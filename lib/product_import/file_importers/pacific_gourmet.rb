@@ -30,12 +30,15 @@ module ProductImport
           with: " - ",
           into: "name"
 
+        s.transform :map_category,
+          filename: "pacific_gourmet.csv",
+          input_key: "ITEM CATEGORY"
+
         s.transform :alias_keys,
           key_map: {
             "SKU" => "product_code",
             "UNIT PRICE" => "price",
-            "PACK" => "unit",
-            "ITEM CATEGORY" => "category"
+            "PACK" => "unit"
           }
 
 
