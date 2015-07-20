@@ -15,6 +15,17 @@ describe CreateOrder do
 
   subject { CreateOrder.perform(payment_provider: payment_provider, order_params: params, cart: cart, buyer: buyer).order }
 
+  before do
+    # In trying to expose a bug relating to calling Order#destroy on an unpersisted order,
+    # I found I couldn't repro the issue without record auditing activated.
+    # (It's normally de-activated for tests, see spec/support/audited.rb)
+    # I think the ROOT cause of the exception being raised in the first place is a bug in
+    # the Audited rubygem: https://github.com/collectiveidea/audited
+    # 
+    # Enabling auditing helps expose the bug that busted us in production. crosby - 2015-07-20
+    Order.enable_auditing
+  end
+
   context "purchase order" do
     let(:params) { {payment_method: "purchase order", payment_note: "1234"} }
 
