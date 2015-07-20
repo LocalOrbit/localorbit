@@ -107,7 +107,7 @@ module ProductImport
       # which runs all of the transforms in extract and canonicalize, as well as any future
       # stages which might be added in between.
       def transform_for_stages(*stages)
-        # If passed a single Range argument, create a transform for 
+        # If passed a single Range argument, create a transform for
         # all stages between the range's begin and end.
         #
         # Use this to test a sequence of stages in a way that won't blow up if
@@ -200,8 +200,8 @@ module ProductImport
         got_a_row = false
 
         format.enum_for(format_args).each do |row|
-          got_a_row = true
           extract_transform.transform_value row do |status, payload|
+            got_a_row = true
             if status == :failure
               raise ArgumentError, "A transform failed during the extract phase. Assuming file is invalid and bailing out"
             end

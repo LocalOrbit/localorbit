@@ -50,14 +50,14 @@ describe ProductImport::FileImporters::<%= class_name %> do
 
 
   describe "the canonicalize stage" do
-    subject { described_class.new.transform_for_stages(:extract) }
+    subject { described_class.new.transform_for_stages(:canonicalize) }
 
     it "produces data in the canonical format" do
       pending
 
       data = [
-        { 
-          'product_code' => 'abc123', 
+        {
+          'product_code' => 'abc123',
           'name' => 'Tomatoes',
         }
       ]

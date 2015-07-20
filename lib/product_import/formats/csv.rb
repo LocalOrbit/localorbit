@@ -2,8 +2,6 @@ module ProductImport
   module Formats
     class Csv
       def enum_for(filename:)
-        CSV.foreach(filename) do |row|
-        end
         Enumerator.new do |yielder|
           require 'csv'
 

@@ -10,7 +10,7 @@ module ProductImport::Schemas
     'category' => %r{^([a-z/0-9&_ -]*>)*[a-z/0-9&_ -]*$}i,
     # e.g. Grandparent > Parent > Brothers & Sisters
 
-    'price' => /^(?:\d+\.)?\d+$/,
+    'price' => either(Numeric, /^(?:\d+\.)?\d+$/),
     # e.g. 12.34
 
     'unit' => String,

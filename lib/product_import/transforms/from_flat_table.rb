@@ -1,6 +1,6 @@
 
 # Use this when an input file looks like a typical table with a header row.
-# 
+#
 # This transform takes data straight out of a spreadsheet and uses the first row
 # as keys and subsequent rows as hashes. Inputs are arrays, outputs are hashes.
 #
@@ -61,6 +61,7 @@ class ProductImport::Transforms::FromFlatTable < ProductImport::Framework::Trans
       missing = @required_headers - @header
       if missing.size > 0
         @missing_keys = missing
+        reject "Missing keys #{@missing_keys.join(", ")}"
       end
 
     end
