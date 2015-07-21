@@ -15,7 +15,6 @@ class CreateOrder
 
   def rollback_order(order)
     OrderNumber.relinquish(order.order_number)
-    order.destroy
   end
 
   protected

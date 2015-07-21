@@ -1,5 +1,7 @@
 module PaymentProvider
   class Stripe
+    DefaultCurrencies = {'CA' => 'CAD', 'US' => 'USD'}
+
     CreditCardFeeStructure = SchemaValidation.validate!(FeeEstimator::Schema::BasePlusRate,
       style: :base_plus_rate,
       base:  30,
@@ -51,17 +53,17 @@ module PaymentProvider
       end
 
       def place_order(buyer_organization:, user:, order_params:, cart:)
-        PlaceStripeOrder.perform(payment_provider: self.id.to_s, 
-                                 entity: buyer_organization, 
+        PlaceStripeOrder.perform(payment_provider: self.id.to_s,
+                                 entity: buyer_organization,
                                  buyer: user,
-                                 order_params: order_params, 
+                                 order_params: order_params,
                                  cart: cart)
       end
 
       def translate_status(charge:, amount:nil, payment_method:nil)
-        if charge.nil? 
+        if charge.nil?
           if amount == 0 and payment_method == "credit card"
-            # Sigh.  The overarching payment processing scheme is to treat CC payments of $0.00 as instantly "paid" 
+            # Sigh.  The overarching payment processing scheme is to treat CC payments of $0.00 as instantly "paid"
             # without actually executing a transaction with the provider...
             return "paid"
           else
@@ -71,12 +73,20 @@ module PaymentProvider
         end
 
         case charge.status
-        when 'pending'   
+        when 'pending'
           'pending'
-        when 'succeeded' 
+        when 'succeeded'
           'paid'
         else
           'failed'
+        end
+      end
+
+      def default_currency_for_country(country)
+        if (DefaultCurrencies[country])
+          DefaultCurrencies[country]
+        else
+          raise ArgumentError, "#{country} is not a supported country."
         end
       end
 
@@ -86,7 +96,7 @@ module PaymentProvider
         source = bank_account.stripe_id || raise("Can't create a charge; BankAccount #{bank_account.bank_name} #{bank_account.last_four} (#{bank_account.id}) has no stripe_id")
         destination = market.stripe_account_id
         descriptor = market.on_statement_as
-        
+
         fee_in_cents = PaymentProvider::FeeEstimator.estimate_payment_fee CreditCardFeeStructure, amount_in_cents
 
         # TODO: once we support ACH via Stripe, this branch will be needed for an alternate estimate of ACH fees:
@@ -105,13 +115,13 @@ module PaymentProvider
           bank_account_id: bank_account.id,
           market_stripe_account: market.stripe_account_id,
         }
-        
+
         charge_params = {
-          amount: amount_in_cents, 
-          currency: 'usd', 
-          source: source, 
+          amount: amount_in_cents,
+          currency: self.default_currency_for_country(market.country).downcase,
+          source: source,
           customer: customer,
-          destination: destination, 
+          destination: destination,
           statement_descriptor: descriptor,
           application_fee: fee_in_cents,
           description: "Charge for #{order.order_number}"
@@ -166,7 +176,7 @@ module PaymentProvider
         total_fee = order.payments.where(payment_type: 'order').sum(:stripe_payment_fee)
         total_fee_cents = ::Financials::MoneyHelpers.amount_to_cents(total_fee)
         fees = distribute_fee_amongst_order_items(total_fee_cents, order)
-        
+
         fee_payer = order.market.credit_card_payment_fee_payer
         order.items.each do |item|
           fee_cents = fees[item.id]
@@ -231,9 +241,9 @@ module PaymentProvider
         charge.refunds.create(refund_application_fee: true,
                               reverse_transfer: true,
                               amount: amount_in_cents,
-                              metadata: { 
+                              metadata: {
                                 'lo.order_id' => order.id,
-                                'lo.order_number' => order.order_number 
+                                'lo.order_number' => order.order_number
                               })
       end
 
@@ -241,8 +251,8 @@ module PaymentProvider
         if type == "card"
 
           AddStripeCreditCardToEntity.perform(
-            entity: entity, 
-            bank_account_params: bank_account_params, 
+            entity: entity,
+            bank_account_params: bank_account_params,
             representative_params: representative_params)
         else
           raise "PaymentProvider::Stripe doesn't support adding payment methods of type #{type.inspect}; only 'card' supported currently."
@@ -250,7 +260,7 @@ module PaymentProvider
       end
 
       def add_deposit_account(entity:, type:, bank_account_params:)
-        if type == 'checking' 
+        if type == 'checking'
           AddStripeDepositAccountToMarket.perform(
             entity: entity,
             bank_account_params: bank_account_params)
@@ -305,17 +315,17 @@ module PaymentProvider
         bank_accounts.reject do |ba| ba.stripe_id.nil? end
       end
 
-      private 
+      private
 
       def enumerate_transfer_transactions(transfer_id:, stripe_account_id:)
         response = ::Stripe::BalanceTransaction.all(
-          {limit: 100, type: 'payment', expand: ['data.source'], 
+          {limit: 100, type: 'payment', expand: ['data.source'],
             transfer: transfer_id}, {stripe_account: stripe_account_id})
 
         response.data
       end
 
-      
+
       def distribute_fee_amongst_order_items(total_fee_cents, order)
         order_total_cents = ::Financials::MoneyHelpers.amount_to_cents(order.gross_total)
 
@@ -341,6 +351,6 @@ module PaymentProvider
       end
 
     end
-    
+
   end
 end

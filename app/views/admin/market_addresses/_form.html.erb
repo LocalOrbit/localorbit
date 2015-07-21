@@ -15,7 +15,7 @@
   </div>
 </div>
 <div class="row row--field">
-  <div class="field column column--half column--guttered">
+  <div class="field column column--fourth column--guttered">
     <%= f.label :city %><br>
     <%= f.text_field :city, class: "column--full" %>
   </div
@@ -26,6 +26,10 @@
   ><div class="field column column--fourth column--guttered">
     <%= f.label :zip %><br>
     <%= f.text_field :zip, size: 11, class: "column--full" %>
+  </div
+  ><div class="field column column--fourth column--guttered">
+    <%= f.label :country %><br>
+    <%= f.select :country, options_for_select(Market.possible_countries, @address.country), class: "column--full" %>
   </div>
 </div>
 <div class="row row--field">

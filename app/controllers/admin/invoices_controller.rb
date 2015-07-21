@@ -7,10 +7,11 @@ module Admin
         redirect_to @order.invoice_pdf.remote_url
       else
         GenerateInvoicePdf.delay.perform(order: @order,
-                                         pre_invoice: true,
-                                         request: RequestUrlPresenter.new(request))
+                                 pre_invoice: true,
+                                 request: RequestUrlPresenter.new(request))
         redirect_to action: :await_pdf
       end
+
     end
 
     def await_pdf
@@ -26,15 +27,16 @@ module Admin
         end
       end
     end
-    
+
     # Secret: peek at an HTML version of the Invoice
     def peek
       @invoice = BuyerOrder.new(@order)
       @market  = @invoice.market.decorate
       @needs_js = true
-      render "show", layout: false, locals: { invoice: @invoice, user: current_user }
-    end
 
+      @header_params = Invoices::InvoiceHeaderParamsGenerator.generate_header_params(@invoice, @market)
+      render "show", layout: false, locals: { invoice: @invoice, user: current_user, header_params: @header_params }
+    end
 
     private
 

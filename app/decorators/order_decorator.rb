@@ -40,4 +40,9 @@ class OrderDecorator < Draper::Decorator
   def market_address
     market.addresses.visible.first
   end
+
+  def delivery_date
+    delivery.deliver_on.strftime("%m/%d/%Y")
+  end
+
 end
