@@ -22,9 +22,4 @@ class BuyerOrder
   def invoice_due_date
     @order.invoice_due_date
   end
-
-  def delivery_date
-    @order.delivery_date
-  end
-  
 end

@@ -23,8 +23,6 @@ dragonfly.log
 /dragonfly
 public/system/dragonfly/development
 
-.DS_Store
-
 tags
 *.swp
 *.swo
