@@ -281,6 +281,8 @@
 
     .invoices-wrapper .vcard {
         overflow: hidden
+        word-break: break-all;
+        word-wrap: break-word;
     }
 
     .invoices-wrapper .vcard-buyer {
@@ -354,8 +356,8 @@
                   image_tag(ensure_full_url(asset_url("logo.png")), alt: " Local Orbit logo", class: "logo left")
                 end
              %>
-          </div><div class="column invoice-parties" style="width:2.4in">
-            <div class="vcard">
+          </div><div class="column invoice-parties" style="width:2.6in">
+            <div class="vcard app-remit-contact-info">
               <h2>Remit To:</h2>
               <h3 class="fn org org-from"><%= market.name %></h3>
               <% if market.has_address? %>

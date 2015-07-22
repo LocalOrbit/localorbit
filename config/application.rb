@@ -39,9 +39,5 @@ module LocalOrbit
     config.font_assets.origin = "*"
 
     config.middleware.use PDFKit::Middleware, {}, only: [%r[/admin/invoices], %r[/admin/labels]]
-
-    config.action_dispatch.default_headers = {
-      'X-Frame-Options' => 'ALLOWALL'
-    }
   end
 end

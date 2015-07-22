@@ -30,8 +30,13 @@ feature "Viewing invoices" do
            placed_at: Time.zone.parse("2014-04-01"),
            invoiced_at: Time.zone.parse("2014-04-02"),
            invoice_due_date: Time.zone.parse("2014-04-16"),
+           billing_address: "billing address",
+           billing_city: "billing city",
+           billing_zip: "billing zip",
+           billing_phone: "billing phone",
            delivery_fees: "12.95")
   end
+  let(:invoice) {BuyerOrder.new(order)}
 
   def expect_invoice_header_content
     expect(page).to have_content("Invoice Number LO-001")
@@ -53,16 +58,23 @@ feature "Viewing invoices" do
     expect(all(".line-item").size).to eq(2)
   end
 
-  def expect_market_address
-    within(".invoice-parties") do
-      address = market.addresses.visible.first
-      expect(page).to have_content(address.address)
-      expect(page).to have_content(address.city)
-      expect(page).to have_content(address.state)
-      expect(page).to have_content(address.zip)
-      #expect(page).to have_content("(123) 456-7890")
+  def expect_addresses
+    within(".app-remit-contact-info") do
+      market_address = market.addresses.visible.first
+      expect(page).to have_content(market_address.address)
+      expect(page).to have_content(market_address.city)
+      expect(page).to have_content(market_address.state)
+      expect(page).to have_content(market_address.zip)
       expect(page).to have_content("(616) 555-1212") # contact phone number from address
       expect(page).to have_content(market.contact_email)
+    end
+
+    within(".vcard-buyer") do
+      expect(page).to have_content(invoice.billing_address)
+      expect(page).to have_content(invoice.billing_city)
+      expect(page).to have_content(invoice.billing_state)
+      expect(page).to have_content(invoice.billing_zip)
+      expect(page).to have_content(invoice.billing_phone)
     end
   end
 
@@ -73,7 +85,7 @@ feature "Viewing invoices" do
         sign_in_as(buyer_user)
       end
 
-      scenario "html content" do 
+      scenario "html content" do
         visit peek_admin_invoice_path(order.id)
         expect_invoice_body_content
       end
@@ -88,15 +100,11 @@ feature "Viewing invoices" do
         sign_in_as(buyer_user)
       end
 
-      scenario "html content" do 
+      scenario "html content" do
         visit peek_admin_invoice_path(order.id)
         expect_invoice_body_content
-      end
-  
-      it "has a header" do
-        visit pdf_view_header_path + "?" + Invoices::InvoiceHeaderParamsGenerator.generate_header_params(BuyerOrder.new(order), market.decorate)
         expect_invoice_header_content
-        expect_market_address
+        expect_addresses
       end
 
     end
@@ -107,17 +115,13 @@ feature "Viewing invoices" do
         sign_in_as market_manager
       end
 
-      scenario "html content" do 
+      scenario "html content" do
         visit peek_admin_invoice_path(order.id)
         expect_invoice_body_content
+        expect_invoice_header_content
+        expect_addresses
       end
 
-      it "has a header" do
-        visit pdf_view_header_path + "?" + Invoices::InvoiceHeaderParamsGenerator.generate_header_params(BuyerOrder.new(order), market.decorate)
-        expect_invoice_header_content
-        expect_market_address
-      end
-      
       scenario "generate invoice PDF preview", :js do
         # Tweak order so it appears in the Send Invoices tab:
         # 1. it needs not to be invoiced already
@@ -153,7 +157,7 @@ feature "Viewing invoices" do
         end
 
         it "has a header" do
-          visit pdf_view_header_path + "?" + Invoices::InvoiceHeaderParamsGenerator.generate_header_params(BuyerOrder.new(order), market.decorate)
+          visit peek_admin_invoice_path(order.id)
           within(".invoice-parties") do
             expect(page).to have_content("+123 (456) 789-0987 ext. 654")
           end
@@ -165,10 +169,10 @@ feature "Viewing invoices" do
         let!(:order_item3) { create(:order_item, product: product3, quantity: 4) }
         let!(:order_items) { [order_item1, order_item2, order_item3] }
 
-        scenario "html content" do 
+        scenario "html content" do
           visit peek_admin_invoice_path(order.id)
 
-          
+
           expect(page).to have_content("Subtotal $427.96")
           expect(page).to have_content("Total $440.91")
 
@@ -177,12 +181,8 @@ feature "Viewing invoices" do
 
           # Line items total
           expect(find("tr:last-child td:last-child")).to have_content("$440.91")
-        end
-
-        it "has a header" do
-          visit pdf_view_header_path + "?" + Invoices::InvoiceHeaderParamsGenerator.generate_header_params(BuyerOrder.new(order), market.decorate)
           expect_invoice_header_content
-          expect_market_address
+          expect_addresses
         end
       end
     end

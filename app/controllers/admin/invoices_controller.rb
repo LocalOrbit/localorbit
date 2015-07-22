@@ -3,16 +3,29 @@ module Admin
     before_action :fetch_order
 
     def show
-      # ClearInvoicePdf.perform(order: @order)
+      if Rails.env == "development"
+        generate_development_pdf
+      else
+        generate_production_pdf
+      end
+      redirect_to action: :await_pdf
+    end
+
+    def generate_development_pdf
+      ClearInvoicePdf.perform(order: @order)
+      GenerateInvoicePdf.perform(order: @order,
+                                 pre_invoice: true,
+                                 request: RequestUrlPresenter.new(request))
+    end
+
+    def generate_production_pdf
       if @order.invoice_pdf.present?
         redirect_to @order.invoice_pdf.remote_url
       else
         GenerateInvoicePdf.delay.perform(order: @order,
-                                 pre_invoice: true,
-                                 request: RequestUrlPresenter.new(request))
-        redirect_to action: :await_pdf 
+                                         pre_invoice: true,
+                                         request: RequestUrlPresenter.new(request))
       end
-
     end
 
     def await_pdf
@@ -35,8 +48,7 @@ module Admin
       @market  = @invoice.market.decorate
       @needs_js = true
 
-      @header_params = Invoices::InvoiceHeaderParamsGenerator.generate_header_params(@invoice, @market)
-      render "show", layout: false, locals: { invoice: @invoice, market: @market, user: current_user, header_params: @header_params }
+      render "show", layout: false, locals: { invoice: @invoice, market: @market, user: current_user }
     end
 
     private

@@ -14,7 +14,7 @@ Rails.application.routes.draw do
     get "account" => "devise/registrations#edit", as: :edit_user_registration
     put "account" => "devise/registrations#update", as: :user_registration
   end
-  
+
   get "zendesk/sso" => "zendesk_sso#show"
 
   concern :bank_account do
@@ -181,9 +181,6 @@ Rails.application.routes.draw do
     resources :table_tents_and_posters, :controller=>"table_tents_and_posters", only: [:index, :show, :create]
   end
   resource :registration, only: [:show, :create]
-
-  get "/pdf_view/header", to: "pdf_view#header"
-  get "/pdf_view/footer", to: "pdf_view#footer"
 
   if Rails.env.development?
     get "dev/pdf(/:action)", to: "dev/pdf", as: "dev_pdf"
