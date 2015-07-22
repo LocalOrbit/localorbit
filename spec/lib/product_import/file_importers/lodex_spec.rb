@@ -4,7 +4,7 @@ describe ProductImport::FileImporters::Lodex do
 
   describe "extract stage" do
     subject { described_class.new.stage_named(:extract) }
-  
+
     it "turns a table into hashes" do
       data = [
         ["product_code", "name", "category", "price", "unit"],
@@ -16,7 +16,7 @@ describe ProductImport::FileImporters::Lodex do
         {
           "product_code" => "abc123",
           "name" => "St. John's Wart",
-          "category" => "Herbs", 
+          "category" => "Herbs",
           "price" => "1.23",
           "unit" => "lbs",
         },
@@ -36,7 +36,7 @@ describe ProductImport::FileImporters::Lodex do
 
         success, fail = subject.transform.transform_enum(bad_data)
         expect(success.length).to eq(0)
-        expect(fail.length).to eq(1)
+        expect(fail.length).to eq(2)
       end
 
     end
@@ -44,9 +44,9 @@ describe ProductImport::FileImporters::Lodex do
 
 
   describe "the extract and canonicalize stages" do
-    subject { 
+    subject {
       importer = described_class.new
-      importer.transform_for_stages(:extract..:canonicalize) 
+      importer.transform_for_stages(:extract..:canonicalize)
     }
 
     it "produces data in the canonical format" do

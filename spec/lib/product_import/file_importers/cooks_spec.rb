@@ -43,7 +43,7 @@ describe ProductImport::FileImporters::Cooks do
 
         success, fail = subject.transform_enum(bad_data)
         expect(success.length).to eq(0)
-        expect(fail.length).to eq(1)
+        expect(fail.length).to eq(2)
       end
     end
   end
@@ -56,8 +56,8 @@ describe ProductImport::FileImporters::Cooks do
       pending
 
       data = [
-        { 
-          'product_code' => 'abc123', 
+        {
+          'product_code' => 'abc123',
           'name' => 'Tomatoes',
         }
       ]
