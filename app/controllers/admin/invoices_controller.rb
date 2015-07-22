@@ -3,13 +3,14 @@ module Admin
     before_action :fetch_order
 
     def show
+      # ClearInvoicePdf.perform(order: @order)
       if @order.invoice_pdf.present?
         redirect_to @order.invoice_pdf.remote_url
       else
         GenerateInvoicePdf.delay.perform(order: @order,
                                  pre_invoice: true,
                                  request: RequestUrlPresenter.new(request))
-        redirect_to action: :await_pdf
+        redirect_to action: :await_pdf 
       end
 
     end
@@ -35,7 +36,7 @@ module Admin
       @needs_js = true
 
       @header_params = Invoices::InvoiceHeaderParamsGenerator.generate_header_params(@invoice, @market)
-      render "show", layout: false, locals: { invoice: @invoice, user: current_user, header_params: @header_params }
+      render "show", layout: false, locals: { invoice: @invoice, market: @market, user: current_user, header_params: @header_params }
     end
 
     private

@@ -25,6 +25,7 @@ class PdfViewController < ActionController::Base
       :billing_city,
       :billing_state,
       :billing_zip,
+      :billing_phone,
       :order_number,
       :delivery_date,
       :delivery_date_present,

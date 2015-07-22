@@ -4,19 +4,23 @@
   <meta charset="utf-8">
   <meta name="pdfkit-footer_right" content="Powered by Local Orbit">
   <meta name="pdfkit-print_media_type" content="true">
-  <meta name="pdfkit-header_left" content="Invoice: <%= invoice.order_number %>">
-  <meta name="pdfkit-header_right" content="Page [page] of [toPage]">
-  <meta name="pdfkit-header_html" content="<%= request.base_url.gsub(/:3000/, ':3500') + pdf_view_header_path + "?" + header_params %>">
-  <meta name="pdfkit-footer_html" content="<%= request.base_url.gsub(/:3000/, ':3500') + pdf_view_footer_path %>">
   <meta name="pdfkit-header_font_size" content="10">
-  <meta name="pdfkit-margin_top" content="3.5in">
-  <meta name="pdfkit-margin_bottom" content="1in">
-  <meta name="pdfkit-header_spacing" content="5">
   <title>Local Orbit</title>
   <%= render 'shared/print_opensanscondensed_bold' %>
   <%= render 'shared/print_opensans' %>
   <%= render 'shared/print_opensans_bold' %>
   <style type="text/css">
+
+    .signature {
+      display:inline-block;
+      width:45%;
+      color:#666;
+      border-top:1px solid #666;
+      margin-top:60px;
+      font-family:Arial;
+      font-weight:bold;
+      font-size:14px;
+    }
 
     .invoices-wrapper {
       font-size: 14px;
@@ -318,7 +322,7 @@
         body>.invoices-wrapper {
             width: 7.5in;
             min-height: 9in;
-            padding: 1in .5in;
+            padding: 0 .5in 1in;
             margin: 0 auto;
             background: #fff
         }
@@ -335,6 +339,69 @@
 
 <body class="controller-invoices">
   <% @logo_path = asset_url("logo.png") # needed if market doesn't have a logo %>
-  <%= render "shared/invoice", { market: invoice.market.decorate, invoice: invoice, user: user } %>
+  <div class="invoices-wrapper">
+    <div class="row">
+      <div class="column">
+        <div class="row">
+          <div class="column logo-column" style="width:1.1in">
+            <br>
+              <%=
+                if market.logo_stored?
+                  image_tag(ensure_full_url((market.logo_stored?) ? market.logo.thumb('200x150').url : nil), alt: "#{market.name} logo ", class: "logo", width: 100)
+                elsif @logo_path
+                  image_tag(ensure_full_url(@logo_path), alt: "Local  Orbit logo", class: "logo left")
+                else
+                  image_tag(ensure_full_url(asset_url("logo.png")), alt: " Local Orbit logo", class: "logo left")
+                end
+             %>
+          </div><div class="column invoice-parties" style="width:2.4in">
+            <div class="vcard">
+              <h2>Remit To:</h2>
+              <h3 class="fn org org-from"><%= market.name %></h3>
+              <% if market.has_address? %>
+                <div>
+                  <%= (market.has_address?) ? market.billing_street_address : nil %><br>
+                  <%= (market.has_address?) ? market.billing_city_state_zip : nil %><br>
+                  <%= (market.billing_address) ? market.billing_address_phone_number : nil %><br>
+                  <%= market.contact_email %>
+                </div>
+              <% end %>
+            </div>
+            <br>
+            <div class="vcard vcard-buyer">
+              <h2>Bill To:</h2>
+              <h3 class="fn org buyer-name"><%= invoice.billing_organization_name %></h3>
+              <div>
+                <%= invoice.billing_address %><br>
+                <%= invoice.billing_city %>,
+                <%= invoice.billing_state %>
+                <%= invoice.billing_zip %><br>
+                <%= invoice.billing_phone %>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div><div class="column" style="width:2.7in;display:inline-block;">
+        <h1>Invoice</h1>
+        <h2>Invoice Number</h2>
+        <p class="invoice-num"><%= invoice.order_number %></p><br>
+        <%= "<span class=\"inline-block\"><h2>Delivery Date</h2><p class=\"delivery-date\">#{invoice.delivery_date}</p></span>".html_safe if invoice.delivery_date.present? %>
+        <%= "<span class=\"inline-block\" style=\"margin-left:15px;\"><h2>Purchase Order #</h2><p class=\"po-num\">#{invoice.payment_note}</p></span>".html_safe if invoice.payment_note.present? %>
+        <br><br>
+        <div class="invoice-basics">
+          <div class="due-date">
+            <h2>Due Date</h2>
+            <%= (invoice.invoice_due_date || market.po_payment_term.to_i.days.from_now).strftime("%-m/%-d/%Y") %>
+          </div>
+          <h2 class="inline">Invoice Date&nbsp;&nbsp;</h2>
+          <span class="date">
+            <%= (invoice.invoiced_at || Date.current).strftime("%-m/%-d/%Y") %>
+          </span>
+        </div>
+      </div>
+    </div>
+    <%= render "shared/invoice", { market: invoice.market.decorate, invoice: invoice, user: user } %>
+    <div class="signature" style="float:left;">Signature</div><div class="signature" style="float:right;">Signature</div>
+  </div>
 </body>
 </html>
