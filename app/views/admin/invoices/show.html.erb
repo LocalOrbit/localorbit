@@ -2,8 +2,10 @@
 <html lang="en-us">
 <head>
   <meta charset="utf-8">
-  <meta name="pdfkit-footer_right" content="Powered by Local Orbit">
   <meta name="pdfkit-print_media_type" content="true">
+  <meta name="pdfkit-header_html" content="<%= request.base_url.gsub(/:3000/, ':3500') + pdf_view_header_path + "?order_number=" + invoice.order_number  %>">
+  <meta name="pdfkit-margin_top" content="0.78in">
+  <meta name="pdfkit-margin_bottom" content="0.25in">
   <meta name="pdfkit-header_font_size" content="10">
   <title>Local Orbit</title>
   <%= render 'shared/print_opensanscondensed_bold' %>
@@ -16,10 +18,10 @@
       width:45%;
       color:#666;
       border-top:1px solid #666;
-      margin-top:60px;
       font-family:Arial;
       font-weight:bold;
       font-size:14px;
+      height:60px;
     }
 
     .invoices-wrapper {
@@ -403,7 +405,10 @@
       </div>
     </div>
     <%= render "shared/invoice", { market: invoice.market.decorate, invoice: invoice, user: user } %>
-    <div class="signature" style="float:left;">Signature</div><div class="signature" style="float:right;">Signature</div>
+    <div style="page-break-inside: never;page-break-after: never;">
+      <br>
+      <div class="signature" style="float:left">Signature</div><div class="signature" style="float:right;">Signature</div>
+    </div>
   </div>
 </body>
 </html>
