@@ -11,7 +11,7 @@ class Location < ActiveRecord::Base
   before_save :ensure_default_address_label
   after_update :set_new_defaults
 
-  acts_as_geocodable address: {street: :address, locality: :city, region: :state, postal_code: :zip}
+  acts_as_geocodable address: {street: :address, locality: :city, region: :state, postal_code: :zip, country: :country}
 
   def self.alphabetical_by_name
     order(name: :asc)
