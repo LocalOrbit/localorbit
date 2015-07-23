@@ -2,11 +2,14 @@ module Invoices
   class InvoicePdfGenerator
     class << self
       def generate_pdf(request:,order:,path:nil)
+        invoice = BuyerOrder.new(order)
+
         TemplatedPdfGenerator.generate_pdf(
           request: request,
           template: "admin/invoices/show",
           locals: {
-            invoice: BuyerOrder.new(order),
+            invoice: invoice,
+            market: invoice.market.decorate,
             user: nil
           },
           pdf_settings: { 
