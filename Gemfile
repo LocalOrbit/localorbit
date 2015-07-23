@@ -92,6 +92,8 @@ group :development, :test do
   gem 'rspec_junit_formatter', :git => 'git@github.com:circleci/rspec_junit_formatter.git'
   gem "pry-rails"
   gem "pry-remote"
+  gem "byebug"
+  gem "pry-byebug"
   gem "launchy"
   gem "guard-rspec"
   gem "guard-konacha-rails"
