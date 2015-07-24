@@ -48,6 +48,7 @@
       <table class="delivery-tools">
         <thead>
           <tr>
+            <th>Code</th>
             <th>Item</th>
             <th>Lot #</th>
             <th>Quantity</th>
@@ -59,6 +60,7 @@
         </thead>
         <% order.items.undelivered.includes(:product => :organization).order('products.name').each do |item| %>
           <tr class="pack-list-item">
+            <td><%= item.product.product_code || "-" %></td>
             <td class="name"><%= item.product.name %></td>
             <td class="lot">
               <% if !item.product.use_simple_inventory and item.lots.any? %>

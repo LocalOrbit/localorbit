@@ -46,6 +46,7 @@
         <table class="delivery-tools">
           <thead>
             <tr>
+              <th>Product Code</th>
               <th>Item</th>
               <th>Total Sold</th>
               <th>Lot #</th>
@@ -57,6 +58,7 @@
           </thead>
           <% items.each do |item| %>
             <tr class="individual-pack-list-item">
+              <td><%= item.product.product_code || "-" %></td>
               <td class="name"><%= item.product.name %></td>
               <td class="total-sold"><%= item.quantity %></td>
               <td class="lot">
