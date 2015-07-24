@@ -4,6 +4,12 @@ def display_date(date)
   date.strftime("%m/%d/%Y")
 end
 
+def get_results(num_results)
+  link_char = (current_url.include? "?") ? "&" : "?"
+  visit(current_url + link_char + "per_page=" + num_results.to_s)
+end
+
+
 feature "Reports" do
   let!(:market)    { create(:market, name: "Foo Market", po_payment_term: 30, timezone: "Eastern Time (US & Canada)") }
   let!(:market2)   { create(:market, name: "Bar Market", po_payment_term: 30, timezone: "Eastern Time (US & Canada)") }
@@ -118,6 +124,7 @@ feature "Reports" do
     report_title = report.to_s.titleize
 
     click_link(report_title) if page.has_link?(report_title)
+    get_results(50)
   end
 
   def item_rows_for_order(order)
