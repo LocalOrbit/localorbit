@@ -58,7 +58,7 @@
           </thead>
           <% items.each do |item| %>
             <tr class="individual-pack-list-item">
-              <td><%= item.product.product_code || "-" %></td>
+              <td><%= item.product.code || "-" %></td>
               <td class="name"><%= item.product.name %></td>
               <td class="total-sold"><%= item.quantity %></td>
               <td class="lot">

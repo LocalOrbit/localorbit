@@ -88,6 +88,7 @@
       <thead>
         <tr>
           <th>Product</th>
+          <th>Code</th>
           <th>Quantity</th>
           <th>Price</th>
           <th>Total</th>
@@ -106,6 +107,10 @@
           <% user_order_item_context = UserOrderItemContext.build(user: current_user, order_item: item.object) %>
         <tr class="order-item-row">
           <td class="name">
+            <% binding.pry %>
+            <% if item.object.product.code %>
+              <span><%= item.object.product.code %><br><span>
+            <% end %>
             <span class="product-ordered"><%= item.object.name %></span> <br />
             <span class="seller-name">from <%= item.object.product.organization.name %></span>
           </td>
