@@ -5,7 +5,6 @@ module Admin::Financials
     before_action :find_orders_for_invoicing, only: [:create, :resend]
     before_action :find_sticky_params, only: [:index]
 
-
     def index
       base_scope, date_filter_attr = find_base_scope_and_date_filter_attribute
 

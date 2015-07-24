@@ -2,31 +2,20 @@
 <html lang="en-us">
 <head>
   <meta charset="utf-8">
+  <meta name="pdfkit-footer_right" content="Powered by Local Orbit">
   <meta name="pdfkit-print_media_type" content="true">
-  <meta name="pdfkit-header_html" content="<%= request.base_url.gsub(/:3000/, ':3500') + pdf_view_header_path + "?order_number=" + invoice.order_number  %>">
-  <meta name="pdfkit-margin_top" content="0.78in">
-  <meta name="pdfkit-margin_bottom" content="0.25in">
-  <meta name="pdfkit-header_font_size" content="10">
+  <meta name="pdfkit-header_left" content="Invoice: <%= invoice.order_number %>">
+  <meta name="pdfkit-header_right" content="Page [page] of [toPage]">
+  <meta name="pdfkit-header_spacing" content="5">
   <title>Local Orbit</title>
   <%= render 'shared/print_opensanscondensed_bold' %>
   <%= render 'shared/print_opensans' %>
   <%= render 'shared/print_opensans_bold' %>
+
   <style type="text/css">
-
-    .signature {
-      display:inline-block;
-      width:45%;
-      color:#666;
-      border-top:1px solid #666;
-      font-family:Arial;
-      font-weight:bold;
-      font-size:14px;
-      height:60px;
-    }
-
     .invoices-wrapper {
       font-size: 14px;
-      font-family: OpenSans, "Open Sans", Geneva, Arial, sans-serif;
+      font-family: OpenSans, "Open Sans", Geneva, sans-serif
     }
 
     .invoices-wrapper .btn {
@@ -146,13 +135,13 @@
 
     .invoices-wrapper h1 {
         margin: 0 0 .5em;
-        font: bold 25px Arial
+        font: bold 30px "Open Sans Condensed", OpenSans-Condensed, "Open Sans", sans-serif
     }
 
     .invoices-wrapper h2 {
         margin: 0;
         color: #666;
-        font: bold 14px Arial
+        font: bold 14px "Open Sans Condensed", OpenSans-Condensed, "Open Sans", sans-serif
     }
 
     .invoices-wrapper table {
@@ -162,7 +151,7 @@
 
     .invoices-wrapper caption {
         color: #000;
-        font: bold 14px Arial;
+        font: bold 14px "Open Sans Condensed", OpenSans-Condensed, "Open Sans", sans-serif;
         text-align: left
     }
 
@@ -226,7 +215,7 @@
     .invoices-wrapper .total .amount {
         padding-left: 10px;
         color: #000;
-        font: bold 24px Arial
+        font: bold 24px "Open Sans Condensed", OpenSans-Condensed, "Open Sans", sans-serif
     }
 
     .invoices-wrapper .total td, .invoices-wrapper .total th {
@@ -239,17 +228,16 @@
     }
 
     .invoices-wrapper .date {
-        font-family: Arial;
+        font-family: "Open Sans Condensed", OpenSans-Condensed, "Open Sans", sans-serif;
         font-weight: bold
     }
 
     .invoices-wrapper .due-date {
-        width:150px;
         clear: right;
         padding: 17px;
         border: solid 2px #C7C7C7;
         background: #f9f9f9;
-        font: bold 25px Arial
+        font: bold 25px "Open Sans Condensed", OpenSans-Condensed, "Open Sans", sans-serif
     }
 
     .invoices-wrapper .inline {
@@ -265,26 +253,13 @@
     }
 
     .invoices-wrapper .logo {
-        max-width: 1in;
-    }
-        .invoices-wrapper .logo img, .invoices-wrapper .logo-column { width: 1in; }
-
-    .invoices-wrapper .inline-block {
-        display: inline-block;
-    }
-
-    .invoices-wrapper .left {
-        float:left;
-    }
-
-    .invoices-wrapper .right {
-        float:right;
+        max-width: 200px;
+        margin-right: 15px;
+        margin-bottom: 15px
     }
 
     .invoices-wrapper .vcard {
         overflow: hidden
-        word-break: break-all;
-        word-wrap: break-word;
     }
 
     .invoices-wrapper .vcard-buyer {
@@ -292,21 +267,14 @@
     }
 
     .invoices-wrapper .buyer-name, .invoices-wrapper .org-from, .invoices-wrapper .invoice-num,
-    .invoices-wrapper .po-num, .invoices-wrapper .delivery-date {
+    .invoices-wrapper .po-num {
         margin: 0;
-        font: bold 16px Arial
+        font: bold 20px "Open Sans Condensed", OpenSans-Condensed, "Open Sans", sans-serif
     }
 
     .invoices-wrapper .invoice-num, .invoices-wrapper .buyer-name, .invoices-wrapper .org-from {
         word-break: break-all;
-        word-wrap: break-word;
-    }
-
-    .invoices-wrapper .signature {
-        width:45%;
-        color:#666;
-        border-top:1px solid #666;
-        margin-top:60px;
+        word-wrap: break-word
     }
 
     @media print {
@@ -326,7 +294,7 @@
         body>.invoices-wrapper {
             width: 7.5in;
             min-height: 9in;
-            padding: 0 .5in 1in;
+            padding: 1in .5in;
             margin: 0 auto;
             background: #fff
         }
@@ -343,72 +311,6 @@
 
 <body class="controller-invoices">
   <% @logo_path = asset_url("logo.png") # needed if market doesn't have a logo %>
-  <div class="invoices-wrapper">
-    <div class="row">
-      <div class="column">
-        <div class="row">
-          <div class="column logo-column" style="width:1.1in">
-            <br>
-              <%=
-                if market.logo_stored?
-                  image_tag(ensure_full_url((market.logo_stored?) ? market.logo.thumb('200x150').url : nil), alt: "#{market.name} logo ", class: "logo", width: 100)
-                elsif @logo_path
-                  image_tag(ensure_full_url(@logo_path), alt: "Local  Orbit logo", class: "logo left")
-                else
-                  image_tag(ensure_full_url(asset_url("logo.png")), alt: " Local Orbit logo", class: "logo left")
-                end
-             %>
-          </div><div class="column invoice-parties" style="width:2.6in">
-            <div class="vcard app-remit-contact-info">
-              <h2>Remit To:</h2>
-              <h3 class="fn org org-from"><%= market.name %></h3>
-              <% if market.has_address? %>
-                <div>
-                  <%= (market.has_address?) ? market.billing_street_address : nil %><br>
-                  <%= (market.has_address?) ? market.billing_city_state_zip : nil %><br>
-                  <%= (market.billing_address) ? market.billing_address_phone_number : nil %><br>
-                  <%= market.contact_email %>
-                </div>
-              <% end %>
-            </div>
-            <br>
-            <div class="vcard vcard-buyer">
-              <h2>Bill To:</h2>
-              <h3 class="fn org buyer-name"><%= invoice.billing_organization_name %></h3>
-              <div>
-                <%= invoice.billing_address %><br>
-                <%= invoice.billing_city %>,
-                <%= invoice.billing_state %>
-                <%= invoice.billing_zip %><br>
-                <%= invoice.billing_phone %>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div><div class="column" style="width:2.7in;display:inline-block;">
-        <h1>Invoice</h1>
-        <h2>Invoice Number</h2>
-        <p class="invoice-num"><%= invoice.order_number %></p><br>
-        <%= "<span class=\"inline-block\"><h2>Delivery Date</h2><p class=\"delivery-date\">#{invoice.delivery_date}</p></span>".html_safe if invoice.delivery_date.present? %>
-        <%= "<span class=\"inline-block\" style=\"margin-left:15px;\"><h2>Purchase Order #</h2><p class=\"po-num\">#{invoice.payment_note}</p></span>".html_safe if invoice.payment_note.present? %>
-        <br><br>
-        <div class="invoice-basics">
-          <div class="due-date">
-            <h2>Due Date</h2>
-            <%= (invoice.invoice_due_date || market.po_payment_term.to_i.days.from_now).strftime("%-m/%-d/%Y") %>
-          </div>
-          <h2 class="inline">Invoice Date&nbsp;&nbsp;</h2>
-          <span class="date">
-            <%= (invoice.invoiced_at || Date.current).strftime("%-m/%-d/%Y") %>
-          </span>
-        </div>
-      </div>
-    </div>
-    <%= render "shared/invoice", { market: invoice.market.decorate, invoice: invoice, user: user } %>
-    <div style="page-break-inside: never;page-break-after: never;">
-      <br>
-      <div class="signature" style="float:left">Signature</div><div class="signature" style="float:right;">Signature</div>
-    </div>
-  </div>
+  <%= render "shared/invoice", { market: invoice.market.decorate, invoice: invoice, user: user} %>
 </body>
 </html>

@@ -30,27 +30,19 @@ feature "Viewing invoices" do
            placed_at: Time.zone.parse("2014-04-01"),
            invoiced_at: Time.zone.parse("2014-04-02"),
            invoice_due_date: Time.zone.parse("2014-04-16"),
-           billing_address: "billing address",
-           billing_city: "billing city",
-           billing_zip: "billing zip",
-           billing_phone: "billing phone",
            delivery_fees: "12.95")
   end
-  let(:invoice) {BuyerOrder.new(order)}
 
-  def expect_invoice_header_content
+  def expect_invoice_content
     expect(page).to have_content("Invoice Number LO-001")
 
     within(".invoice-basics") do
-      expect(page).to have_content("Invoice Date   4/2/2014")
+      expect(page).to have_content("Invoice Date 4/2/2014")
       expect(page).to have_content("Due Date 4/16/2014")
     end
 
     expect(page).to have_content(market.name)
 
-  end
-
-  def expect_invoice_body_content
     expect(page).to have_content("Subtotal $400.00")
     expect(page).to have_content("Total $412.95")
 
@@ -58,23 +50,16 @@ feature "Viewing invoices" do
     expect(all(".line-item").size).to eq(2)
   end
 
-  def expect_addresses
-    within(".app-remit-contact-info") do
-      market_address = market.addresses.visible.first
-      expect(page).to have_content(market_address.address)
-      expect(page).to have_content(market_address.city)
-      expect(page).to have_content(market_address.state)
-      expect(page).to have_content(market_address.zip)
+  def expect_market_address
+    within(".invoice-parties") do
+      address = market.addresses.visible.first
+      expect(page).to have_content(address.address)
+      expect(page).to have_content(address.city)
+      expect(page).to have_content(address.state)
+      expect(page).to have_content(address.zip)
+      #expect(page).to have_content("(123) 456-7890")
       expect(page).to have_content("(616) 555-1212") # contact phone number from address
       expect(page).to have_content(market.contact_email)
-    end
-
-    within(".vcard-buyer") do
-      expect(page).to have_content(invoice.billing_address)
-      expect(page).to have_content(invoice.billing_city)
-      expect(page).to have_content(invoice.billing_state)
-      expect(page).to have_content(invoice.billing_zip)
-      expect(page).to have_content(invoice.billing_phone)
     end
   end
 
@@ -87,7 +72,12 @@ feature "Viewing invoices" do
 
       scenario "html content" do
         visit peek_admin_invoice_path(order.id)
-        expect_invoice_body_content
+
+        expect_invoice_content
+
+        # Line items total
+        expect(find("tr:last-child td:last-child")).to have_content("$412.95")
+        expect(page).to have_content("Subtotal $400.00")
       end
     end
   end
@@ -102,11 +92,14 @@ feature "Viewing invoices" do
 
       scenario "html content" do
         visit peek_admin_invoice_path(order.id)
-        expect_invoice_body_content
-        expect_invoice_header_content
-        expect_addresses
-      end
 
+        expect_invoice_content
+        expect_market_address
+
+        # Line items total
+        expect(find("tr:last-child td:last-child")).to have_content("$412.95")
+        expect(page).to have_content("Subtotal $400.00")
+      end
     end
 
     context "as a market manager" do
@@ -117,9 +110,34 @@ feature "Viewing invoices" do
 
       scenario "html content" do
         visit peek_admin_invoice_path(order.id)
-        expect_invoice_body_content
-        expect_invoice_header_content
-        expect_addresses
+
+        expect(page).to have_content("Invoice Number LO-001")
+
+        within(".invoice-basics") do
+          expect(page).to have_content("Invoice Date 4/2/2014")
+          expect(page).to have_content("Due Date 4/16/2014")
+        end
+        within(".invoice-parties") do
+          expect(page).to have_content(market.name)
+
+          address = market.addresses.first
+          expect(page).to have_content(address.address)
+          expect(page).to have_content(address.city)
+          expect(page).to have_content(address.state)
+          expect(page).to have_content(address.zip)
+          #expect(page).to have_content("(123) 456-7890")
+          expect(page).to have_content("(616) 555-1212")
+          expect(page).to have_content(market.contact_email)
+        end
+
+        expect(page).to have_content("Subtotal $400.00")
+        expect(page).to have_content("Total $412.95")
+
+        # There should be 2 line items
+        expect(all(".line-item").size).to eq(2)
+
+        # Line items total
+        expect(find("tr:last-child td:last-child")).to have_content("$412.95")
       end
 
       scenario "generate invoice PDF preview", :js do
@@ -156,8 +174,12 @@ feature "Viewing invoices" do
           market.update_attribute(:contact_phone, "+123 (456) 789-0987 ext. 654")
         end
 
-        it "has a header" do
+        scenario "html content" do
+
           visit peek_admin_invoice_path(order.id)
+
+          expect(page).to have_content("Invoice Number LO-001")
+
           within(".invoice-parties") do
             expect(page).to have_content("+123 (456) 789-0987 ext. 654")
           end
@@ -172,7 +194,22 @@ feature "Viewing invoices" do
         scenario "html content" do
           visit peek_admin_invoice_path(order.id)
 
+          expect(page).to have_content("Invoice Number LO-001")
 
+          within(".invoice-basics") do
+            expect(page).to have_content("Invoice Date 4/2/2014")
+            expect(page).to have_content("Due Date 4/16/2014")
+          end
+
+          within(".invoice-parties") do
+            expect(page).to have_content(market.name)
+
+            address = market.addresses.first
+            expect(page).to have_content(address.address)
+            expect(page).to have_content(address.city)
+            expect(page).to have_content(address.state)
+            expect(page).to have_content(address.zip)
+          end
           expect(page).to have_content("Subtotal $427.96")
           expect(page).to have_content("Total $440.91")
 
@@ -181,10 +218,9 @@ feature "Viewing invoices" do
 
           # Line items total
           expect(find("tr:last-child td:last-child")).to have_content("$440.91")
-          expect_invoice_header_content
-          expect_addresses
         end
       end
+
     end
   end
 end
