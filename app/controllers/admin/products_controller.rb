@@ -8,7 +8,7 @@ module Admin
     before_action :find_sticky_params, only: :index
 
     def index
-      products = current_user.managed_products.periscope(@query_params).preload(:prices, :lots, :organization)
+      products = current_user.managed_products.periscope(@query_params).preload(:lots, :unit, :prices=>[:market], :organization => [:all_markets])
       respond_to do |format|
         format.html do
           @products = products.page(params[:page]).per(@query_params[:per_page])
