@@ -83,6 +83,7 @@ module Admin
     def product_params
       results = params.require(:product).permit(
         :name, :image, :category_id, :unit_id, :location_id, :organization_id,
+        :code,
         :short_description, :long_description,
         :who_story, :how_story,
         :use_simple_inventory, :simple_inventory, :use_all_deliveries,
