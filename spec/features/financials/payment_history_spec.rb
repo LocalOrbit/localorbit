@@ -4,6 +4,11 @@ def format_date(date)
   date.strftime("%m/%d/%Y")
 end
 
+def get_results(num_results)
+  link_char = (current_url.include? "?") ? "&" : "?"
+  visit(current_url + link_char + "per_page=" + num_results.to_s)
+end
+
 feature "Payment history", :truncate_after_all do
   def remember_payment(payment)
     @payments[payment.created_at.strftime("%m/%d/%Y")] = payment.orders.map(&:order_number).join(",")
@@ -274,7 +279,7 @@ feature "Payment history", :truncate_after_all do
 
     click_link "Financials"
     click_link "Review Payment History"
-
+    visit "/admin/financials/payments?per_page=50"
     expect(page).to have_content("Payment History")
   end
 
@@ -574,7 +579,7 @@ feature "Payment history", :truncate_after_all do
 
       fill_in "q_created_at_date_gteq", with: (@payment_day + 2.days).to_s
       click_button "Filter"
-
+      get_results(20)
       expect(Dom::Admin::Financials::PaymentRow.all.count).to eq(16)
       expect(payment_rows_for_description("LO-01-234-4567890-2").count).to eq(2)
       expect(payment_rows_for_description("LO-01-234-4567890-3").count).to eq(2)
@@ -615,7 +620,7 @@ feature "Payment history", :truncate_after_all do
 
       select "Order", from: "Payment Type"
       click_button "Filter"
-
+      get_results(30)
       expect(Dom::Admin::Financials::PaymentRow.all.count).to eq(23)
 
       select "Service Fee", from: "Payment Type"

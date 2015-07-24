@@ -123,7 +123,7 @@ class Organization < ActiveRecord::Base
   end
 
   def original_market
-    (markets.empty? ? cross_sells : markets).order("market_organizations.id ASC").first
+    (markets.includes(:markets).empty? ? cross_sells : markets).order("market_organizations.id ASC").first
   end
 
   def cross_selling?(from: nil, to: nil)

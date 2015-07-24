@@ -9,7 +9,7 @@ class PaymentHistoryPresenter
     search = options[:q] || {}
 
     payments = if user.admin?
-      Payment.all
+      Payment.includes(:payee, :payer).all
     elsif user.market_manager?
       payment_table = Payment.arel_table
       order_payment_table = OrderPayment.arel_table
