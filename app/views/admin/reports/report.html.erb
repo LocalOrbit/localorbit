@@ -52,8 +52,12 @@
 
           <% if field == :product_name %>
             <td class="product">
+              <% # If/when procurement manager role is added, change line below to allow procurement managers to see product code %>
+              <% if item.product.code.present? and (current_user.seller? or current_user.market_manager?) %>
+                <%= item.product.code %><br>
+              <% end %>
               <%- if current_user.buyer_only? %>
-                <%= link_to item.product_name, item.product %>
+                <%= link_to item.product_name , item.product %>
               <%- else %>
                 <%= link_to item.product_name, [:admin, item.product] %>
               <%- end %>
