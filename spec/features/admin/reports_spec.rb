@@ -38,7 +38,8 @@ feature "Reports" do
                          :sellable,
                          name: "Product#{i}",
                          category: category,
-                         organization: seller)
+                         organization: seller,
+                         code: "product-code-#{i}")
         order_item = create(:order_item,
                             product: product,
                             seller_name: seller.name,
@@ -68,7 +69,8 @@ feature "Reports" do
                          :sellable,
                          name: "Product#{i}",
                          category: category,
-                         organization: seller2)
+                         organization: seller2,
+                         code: "product-code-#{i}")
         order_item = create(:order_item,
                             product: product,
                             seller_name: seller2.name,
@@ -192,6 +194,10 @@ feature "Reports" do
         expect(item_rows_for_order("LO-02-234-4567890-4").count).to eq(0)
         expect(item_rows_for_order("LO-03-234-4567890-1").count).to eq(1)
         expect(item_rows_for_order("LO-03-234-4567890-2").count).to eq(1)
+      end
+
+      scenario "does not show a product code" do
+        expect(page).to_not have_content("product-code-1")
       end
 
       scenario "displays the appropriate filters" do
@@ -460,6 +466,10 @@ feature "Reports" do
     context "as an Admin" do
       let!(:user) { create(:user, :admin) }
 
+      scenario "does not show a product code" do
+        expect(page).to_not have_content("product-code-1")
+      end
+
       it "shows the appropriate order items" do
         items = Dom::Report::ItemRow.all
 
@@ -495,6 +505,10 @@ feature "Reports" do
     context "as a Market Manager" do
       let!(:user) { create(:user, managed_markets: [market]) }
 
+      scenario "displays a product code" do
+        expect(page).to have_content("product-code-1")
+      end
+
       it "shows the appropriate order items" do
         items = Dom::Report::ItemRow.all
 
@@ -520,6 +534,7 @@ feature "Reports" do
 
       it "provides the Admin link to Products" do
         product_name = Dom::Report::ItemRow.first.product_name
+        product_name = product_name.split("product-code-4 ").last
         see_admin_product_link product: Product.find_by(name: product_name)
       end
 
@@ -560,6 +575,10 @@ feature "Reports" do
     context "as a Seller" do
       let!(:user)      { create(:user, organizations: [seller2]) }
       let!(:subdomain) { market2.subdomain }
+
+      scenario "displays a product code" do
+        expect(page).to have_content("product-code-1")
+      end
 
       it "shows the appropriate order items" do
         items = Dom::Report::ItemRow.all
@@ -668,12 +687,15 @@ feature "Reports" do
           end
         end
       end
-
     end
 
     context "as a Buyer" do
       let!(:user) { create(:user, organizations: [buyer]) }
 
+      scenario "does not show a product code" do
+        expect(page).to_not have_content("product-code-1")
+      end
+      
       context "Purchases by Product report" do
         let!(:report) { :purchases_by_product }
 
