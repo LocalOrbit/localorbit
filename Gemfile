@@ -77,6 +77,7 @@ group :doc do
 end
 
 group :development do
+  gem "bullet"
   gem "ultrahook"
   gem "spring"
   gem "spring-commands-rspec"

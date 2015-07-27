@@ -13,12 +13,17 @@ class Admin::OrdersController < AdminController
   end
 
   def search_and_calculate_totals(search)
-    results = Order.includes(:placed_by).orders_for_seller(current_user).uniq.search(search.query)
+    results = Order.includes(:organization, :items).orders_for_seller(current_user).uniq.search(search.query)
     results.sorts = "placed_at desc" if results.sorts.empty?
-    order_ids = results.result.map(&:id)
 
-    order_items = OrderItem.includes(:product).joins(:product).where(:order_id => order_ids, "products.organization_id" => current_user.managed_organization_ids_including_deleted)
-    [results, OrderTotals.new(order_items)]
+    if current_user.seller? && !current_user.admin?
+      order_ids = results.result.map(&:id)
+      order_items = OrderItem.includes(:product, :order).joins(:product).where(:order_id => order_ids, "products.organization_id" => current_user.managed_organization_ids_including_deleted)
+      totals = OrderTotals.new(order_items)
+    else
+      totals = OrderTotals.new(OrderItem.where("1 = 0"))
+    end
+    [results, totals]
   end
 
   def show

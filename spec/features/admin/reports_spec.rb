@@ -4,6 +4,12 @@ def display_date(date)
   date.strftime("%m/%d/%Y")
 end
 
+def get_results(num_results)
+  link_char = (current_url.include? "?") ? "&" : "?"
+  visit(current_url + link_char + "per_page=" + num_results.to_s)
+end
+
+
 feature "Reports" do
   let!(:market)    { create(:market, name: "Foo Market", po_payment_term: 30, timezone: "Eastern Time (US & Canada)") }
   let!(:market2)   { create(:market, name: "Bar Market", po_payment_term: 30, timezone: "Eastern Time (US & Canada)") }
@@ -118,6 +124,7 @@ feature "Reports" do
     report_title = report.to_s.titleize
 
     click_link(report_title) if page.has_link?(report_title)
+    get_results(50)
   end
 
   def item_rows_for_order(order)
@@ -306,19 +313,6 @@ feature "Reports" do
           expect(page).to have_select("Seller")
         end
 
-        scenario "displays total sales" do
-          totals = Dom::Admin::TotalSales.first
-
-          expect(totals.gross_sales).to eq("$521.00")
-          expect(totals.market_fees).to eq("$2.50")
-          expect(totals.lo_fees).to eq("$7.50")
-          expect(totals.processing_fees).to eq("$6.25")
-          #expect(totals.discounts).to eq("$0.00")
-          expect(totals.discount_seller).to eq("$0.00")
-          expect(totals.discount_market).to eq("$0.00")
-          expect(totals.net_sales).to eq("$504.75")
-        end
-
         scenario "filters by seller" do
           expect(Dom::Report::ItemRow.all.count).to eq(11)
 
@@ -352,19 +346,6 @@ feature "Reports" do
           expect(page).to have_field("Placed on or after")
           expect(page).to have_field("Placed on or before")
           expect(page).to have_select("Market")
-        end
-
-        scenario "displays total sales" do
-          totals = Dom::Admin::TotalSales.first
-
-          expect(totals.gross_sales).to eq("$521.00")
-          expect(totals.market_fees).to eq("$2.50")
-          expect(totals.lo_fees).to eq("$7.50")
-          expect(totals.processing_fees).to eq("$6.25")
-          #expect(totals.discounts).to eq("$0.00")
-          expect(totals.discount_seller).to eq("$0.00")
-          expect(totals.discount_market).to eq("$0.00")
-          expect(totals.net_sales).to eq("$504.75")
         end
 
         scenario "filters by buyer" do
@@ -402,19 +383,6 @@ feature "Reports" do
           expect(page).to have_select("Market")
           expect(page).to have_select("Category")
           expect(page).to have_select("Product")
-        end
-
-        scenario "displays total sales" do
-          totals = Dom::Admin::TotalSales.first
-
-          expect(totals.gross_sales).to eq("$521.00")
-          expect(totals.market_fees).to eq("$2.50")
-          expect(totals.lo_fees).to eq("$7.50")
-          expect(totals.processing_fees).to eq("$6.25")
-          #expect(totals.discounts).to eq("$0.00")
-          expect(totals.discount_seller).to eq("$0.00")
-          expect(totals.discount_market).to eq("$0.00")
-          expect(totals.net_sales).to eq("$504.75")
         end
 
         scenario "filters by category" do
@@ -461,19 +429,6 @@ feature "Reports" do
           expect(page).to have_field("Placed on or before")
           expect(page).to have_select("Market")
           expect(page).to have_select("Payment Method")
-        end
-
-        scenario "displays total sales" do
-          totals = Dom::Admin::TotalSales.first
-
-          expect(totals.gross_sales).to eq("$521.00")
-          expect(totals.market_fees).to eq("$2.50")
-          expect(totals.lo_fees).to eq("$7.50")
-          expect(totals.processing_fees).to eq("$6.25")
-          #expect(totals.discounts).to eq("$0.00")
-          expect(totals.discount_seller).to eq("$0.00")
-          expect(totals.discount_market).to eq("$0.00")
-          expect(totals.net_sales).to eq("$504.75")
         end
 
         scenario "filters by payment method" do
@@ -535,19 +490,6 @@ feature "Reports" do
         expect(item_rows_for_order("LO-02-234-4567890-4").count).to eq(1)
         expect(item_rows_for_order("LO-03-234-4567890-1").count).to eq(1)
       end
-
-      it "displays total sales" do
-        totals = Dom::Admin::TotalSales.first
-
-        expect(totals.gross_sales).to eq("$521.00")
-        expect(totals.market_fees).to eq("$2.50")
-        expect(totals.lo_fees).to eq("$7.50")
-        expect(totals.processing_fees).to eq("$6.25")
-        expect(totals.delivery_fees).to eq("$5.00")
-        expect(totals.discount_seller).to eq("$0.00")
-        expect(totals.discount_market).to eq("$0.00")
-        expect(totals.net_sales).to eq("$504.75")
-      end
     end
 
     context "as a Market Manager" do
@@ -570,19 +512,6 @@ feature "Reports" do
         expect(item_rows_for_order("LO-01-234-4567890-2").count).to eq(1)
         expect(item_rows_for_order("LO-01-234-4567890-3").count).to eq(1)
         expect(item_rows_for_order("LO-01-234-4567890-4").count).to eq(1)
-      end
-
-      it "displays total sales" do
-        totals = Dom::Admin::TotalSales.first
-
-        expect(totals.gross_sales).to eq("$110.00")
-        expect(totals.market_fees).to eq("$2.50")
-        expect(totals.lo_fees).to eq("$7.50")
-        expect(totals.processing_fees).to eq("$6.25")
-        expect(totals.delivery_fees).to eq("$5.00")
-        expect(totals.discount_seller).to eq("$0.00")
-        expect(totals.discount_market).to eq("$0.00")
-        expect(totals.net_sales).to eq("$93.75")
       end
 
       it "provides the admin link to Orders" do
@@ -758,14 +687,6 @@ feature "Reports" do
           expect(page).to have_select("Product")
         end
 
-        scenario "displays total sales" do
-          totals = Dom::Admin::TotalSales.first
-          expect(totals.discounted_total).to eq("$110.00") # TODO add tests with real discounts
-          expect(page).to have_content("Total Purchase")
-          expect(page).not_to have_content("Market Fees")
-          expect(page).not_to have_content("Delivery Fees")
-        end
-
         scenario "filters by category" do
           expect(Dom::Report::ItemRow.all.count).to eq(5)
 
@@ -807,14 +728,6 @@ feature "Reports" do
           expect(page).to have_field("Search")
           expect(page).to have_field("Placed on or after")
           expect(page).to have_field("Placed on or before")
-        end
-
-        scenario "displays total sales" do
-          totals = Dom::Admin::TotalSales.first
-          expect(totals.discounted_total).to eq("$110.00")
-          expect(page).to have_content("Total Purchase")
-          expect(page).not_to have_content("Market Fees")
-          expect(page).not_to have_content("Delivery Fees")
         end
 
         # https://www.pivotaltracker.com/story/show/78823306
