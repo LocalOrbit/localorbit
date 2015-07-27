@@ -200,7 +200,7 @@ describe "Admin Managing Markets" do
     it "does not access soft-deleted default addresses as default" do
       subject = create(:market_address, name: "test", market: market, default: true, deleted_at: 1.day.ago)
       new_default = create(:market_address, name: "test2", market: market, default: true)
-      expect(market.addresses.visible.map{|mkt| mkt if mkt.default}.first).to eq(new_default)
+      expect(market.addresses.visible.select{|mkt| mkt if mkt.default}.first).to eq(new_default)
     end
 
     it "provides some Canadian province choices" do
