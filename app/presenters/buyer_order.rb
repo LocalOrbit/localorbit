@@ -22,4 +22,8 @@ class BuyerOrder
   def invoice_due_date
     @order.invoice_due_date
   end
+
+  def gross_total
+    @order.gross_total
+  end
 end
