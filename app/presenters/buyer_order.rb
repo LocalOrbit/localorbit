@@ -27,4 +27,7 @@ class BuyerOrder
     @order.delivery_date
   end
   
+  def gross_total
+    @order.gross_total
+  end
 end

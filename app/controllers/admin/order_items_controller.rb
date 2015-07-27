@@ -42,7 +42,14 @@ module Admin
       query = items.search(search)
       query.sorts = ["order_placed_at desc", "name"] if query.sorts.empty?
 
-      [query, OrderTotals.new(query.result)]
+      if current_user.seller? && !current_user.admin?
+        order_ids = query.result.map(&:id)
+        order_items = OrderItem.includes(:product, :order).joins(:product).where(:order_id => order_ids, "products.organization_id" => current_user.managed_organization_ids_including_deleted)
+        totals = OrderTotals.new(order_items)
+      else
+        totals = OrderTotals.new(OrderItem.where("1 = 0"))
+      end
+      [query, totals]
     end
 
     def fetch_order_items
