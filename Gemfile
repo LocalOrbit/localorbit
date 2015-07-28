@@ -89,7 +89,7 @@ end
 group :development, :test do
   gem "rspec-rails", "~> 3.0"
   gem "rspec-collection_matchers"
-  gem 'rspec_junit_formatter', :git => 'git@github.com:circleci/rspec_junit_formatter.git'
+  gem 'rspec_junit_formatter', :github => 'circleci/rspec_junit_formatter'
   gem "pry-rails"
   gem "pry-remote"
   gem "launchy"

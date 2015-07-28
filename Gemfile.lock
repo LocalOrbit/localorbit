@@ -1,4 +1,13 @@
 GIT
+  remote: git://github.com/circleci/rspec_junit_formatter.git
+  revision: 6885218137afbadf560c922114767866953f8cbf
+  specs:
+    rspec_junit_formatter (0.2.0)
+      builder (< 4)
+      rspec (>= 2, < 4)
+      rspec-core (!= 2.12.0)
+
+GIT
   remote: git://github.com/dcrosby42/tabulator.git
   revision: aa3d14ea734979580dae3c6878a83a6a80643678
   specs:
@@ -23,15 +32,6 @@ GIT
   revision: 77a62c35e4a9bb8d6583ffeadf0073ac92748a91
   specs:
     wkhtmltopdf-binary (0.9.9.3)
-
-GIT
-  remote: git@github.com:circleci/rspec_junit_formatter.git
-  revision: 7b098c8ab2ac5e5f78190b51629ed6d67a9de4d1
-  specs:
-    rspec_junit_formatter (0.2.0)
-      builder (< 4)
-      rspec (>= 2, < 4)
-      rspec-core (!= 2.12.0)
 
 GEM
   remote: https://rubygems.org/

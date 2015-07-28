@@ -26,7 +26,7 @@ Dragonfly.app.configure do
       access_key_id:     Figaro.env.uploads_access_key_id,
       secret_access_key: Figaro.env.uploads_secret_access_key,
       region:            Figaro.env.uploads_region,
-      url_scheme:        "https",
+      url_scheme:        (Figaro.env.deploy_env == "production" || Figaro.env.force_ssl) ? "https" : "http",
       url_host:          Figaro.env.uploads_host,
       headers:           s3_headers
   end
