@@ -1,0 +1,67 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: http://api.tiles.mapbox.com/v3/localorbit.i0ao0akd/geocode/706%202nd%20Ave%20NW%0ACalgary,%20AB%20T2N0E3%20CA.json
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Mozilla/5.0 (compatible; Graticule; http://graticule.rubyforge.org)
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json; charset=utf-8
+      Content-Length:
+      - '388'
+      Connection:
+      - keep-alive
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Expose-Headers:
+      - x-rate-limit-interval,x-rate-limit-limit,x-rate-limit-remaining,x-rate-limit-reset
+      Cache-Control:
+      - max-age=3600
+      Date:
+      - Wed, 22 Jul 2015 20:20:19 GMT
+      Last-Modified:
+      - Wed, 22 Jul 2015 20:20:19 GMT
+      Server:
+      - nginx
+      X-Powered-By:
+      - Express
+      X-Rate-Limit-Interval:
+      - '60'
+      X-Rate-Limit-Limit:
+      - '1200'
+      X-Rate-Limit-Remaining:
+      - '1199'
+      X-Rate-Limit-Reset:
+      - '1437596478'
+      Age:
+      - '1643'
+      Vary:
+      - Accept-Encoding
+      X-Cache:
+      - Hit from cloudfront
+      Via:
+      - 1.1 5482e46f5fc9e0b0cada8e84e8538eec.cloudfront.net (CloudFront)
+      X-Amz-Cf-Id:
+      - XNRdL5F_YPdS8Xn1ulmKtrkBIsuRT_o_SUbEw3q7i9tduQ_ZZYw1AA==
+    body:
+      encoding: UTF-8
+      string: '{"query":["706","2nd","ave","nw","calgary","ab","t2n0e3","ca"],"attribution":{"mapbox-places":"<a
+        href=''https://www.mapbox.com/about/maps/'' target=''_blank''>&copy; Mapbox</a>"},"results":[[{"id":"address.208634006391086","bounds":[-91.02341199999995,42.29672599999998,-91.01547199999999,42.29934699999998],"lon":-91.020315,"lat":42.297411,"name":"706
+        2nd Ave NW","type":"address"},{"id":"mapbox-places.52033","name":"Cascade","type":"city"},{"id":"zipcode.683193781","name":"52033","type":"zipcode"},{"id":"province.3529999094","name":"Iowa","type":"province"},{"id":"country.4150104525","name":"United
+        States","type":"country"}]]}'
+    http_version: 
+  recorded_at: Wed, 22 Jul 2015 20:47:42 GMT
+recorded_with: VCR 2.9.3

@@ -30,3 +30,7 @@ tags
 *.swo
 latest.prod.dump
 cleansed.prod.dump
+
+# IntelliJ
+/.idea
+/localorbit.iml

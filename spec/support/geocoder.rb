@@ -1,7 +1,13 @@
 class Graticule::Geocoder::Canned
+  attr_reader :previous_geocoder
+
   class_attribute :next_response
   self.next_response = nil
   class_attribute :default
+
+  def initialize(previous_geocoder)
+    @previous_geocoder = previous_geocoder
+  end
 
   def locate(address)
     response = next_response || LOCATIONS[address.to_s] || default
@@ -10,7 +16,7 @@ class Graticule::Geocoder::Canned
   end
 end
 
-Geocode.geocoder = Graticule::Geocoder::Canned.new
+Geocode.geocoder = Graticule::Geocoder::Canned.new(Geocode.geocoder)
 
 unless defined?(LOCATIONS)
   LOCATIONS = {}

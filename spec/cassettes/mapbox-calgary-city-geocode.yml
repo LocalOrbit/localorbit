@@ -1,0 +1,63 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: http://api.tiles.mapbox.com/v3/localorbit.i0ao0akd/geocode/Calgary,%20AB%20T2N0E3%20CA.json
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Mozilla/5.0 (compatible; Graticule; http://graticule.rubyforge.org)
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json; charset=utf-8
+      Content-Length:
+      - '314'
+      Connection:
+      - keep-alive
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Expose-Headers:
+      - x-rate-limit-interval,x-rate-limit-limit,x-rate-limit-remaining,x-rate-limit-reset
+      Cache-Control:
+      - max-age=3600
+      Date:
+      - Wed, 22 Jul 2015 20:43:11 GMT
+      Last-Modified:
+      - Wed, 22 Jul 2015 20:43:11 GMT
+      Server:
+      - nginx
+      X-Powered-By:
+      - Express
+      X-Rate-Limit-Interval:
+      - '60'
+      X-Rate-Limit-Limit:
+      - '1200'
+      X-Rate-Limit-Remaining:
+      - '1199'
+      X-Rate-Limit-Reset:
+      - '1437597851'
+      Vary:
+      - Accept-Encoding
+      X-Cache:
+      - Miss from cloudfront
+      Via:
+      - 1.1 5482e46f5fc9e0b0cada8e84e8538eec.cloudfront.net (CloudFront)
+      X-Amz-Cf-Id:
+      - eflqKhMKT6pFnJfo4dRATGl9xltN4de-pgclZPEny0H3XYwBsXJGyQ==
+    body:
+      encoding: UTF-8
+      string: '{"query":["calgary","ab","t2n0e3","ca"],"attribution":{"mapbox-places":"<a
+        href=''https://www.mapbox.com/about/maps/'' target=''_blank''>&copy; Mapbox</a>"},"results":[[{"id":"mapbox-places.8775","bounds":[-114.361832,50.843616,-113.87432099999998,51.21752899999999],"lon":-114.109431,"lat":51.029654,"name":"Calgary","type":"city"},{"id":"province.2553712403","name":"Alberta","type":"province"},{"id":"country.1833980151","name":"Canada","type":"country"}]]}'
+    http_version: 
+  recorded_at: Wed, 22 Jul 2015 20:43:11 GMT
+recorded_with: VCR 2.9.3
