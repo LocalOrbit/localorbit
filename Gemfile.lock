@@ -685,6 +685,3 @@ DEPENDENCIES
   webmock
   wkhtmltopdf-binary!
   wysihtml5-rails
-
-BUNDLED WITH
-   1.10.4

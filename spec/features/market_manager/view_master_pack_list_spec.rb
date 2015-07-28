@@ -1,6 +1,6 @@
 require "spec_helper"
 
-describe "Master Pack List", :js do
+describe "Master Pack List" do
   let!(:market)             { create(:market) }
   let!(:deleted_address)    { create(:market_address, market: market, address: "123 Main", city: "Holland", state: "MI", zip: "49423", phone: "(321) 456-3456", deleted_at: Time.parse("May 1, 2014")) }
   let!(:address)            { create(:market_address, market: market, address: "321 Main", city: "Holland", state: "MI", zip: "49423", phone: "(321) 456-3456") }

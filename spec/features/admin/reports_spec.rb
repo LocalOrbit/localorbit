@@ -196,8 +196,8 @@ feature "Reports" do
         expect(item_rows_for_order("LO-03-234-4567890-2").count).to eq(1)
       end
 
-      scenario "does not show a product code" do
-        expect(page).to_not have_content("product-code-1")
+      scenario "shows a product code" do # This is for an admin user
+        expect(page).to have_content("product-code-1")
       end
 
       scenario "displays the appropriate filters" do
@@ -466,8 +466,8 @@ feature "Reports" do
     context "as an Admin" do
       let!(:user) { create(:user, :admin) }
 
-      scenario "does not show a product code" do
-        expect(page).to_not have_content("product-code-1")
+      scenario "shows a product code" do
+        expect(page).to have_content("product-code-1")
       end
 
       it "shows the appropriate order items" do
