@@ -1,0 +1,67 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: http://api.tiles.mapbox.com/v3/localorbit.i0ao0akd/geocode/206%20S%205th%20Ave%20%23200%0AAnn%20Arbor,%20MI%2048104%20US.json
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Mozilla/5.0 (compatible; Graticule; http://graticule.rubyforge.org)
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json; charset=utf-8
+      Content-Length:
+      - '392'
+      Connection:
+      - keep-alive
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Expose-Headers:
+      - x-rate-limit-interval,x-rate-limit-limit,x-rate-limit-remaining,x-rate-limit-reset
+      Cache-Control:
+      - max-age=3600
+      Date:
+      - Wed, 22 Jul 2015 20:13:33 GMT
+      Last-Modified:
+      - Wed, 22 Jul 2015 20:13:33 GMT
+      Server:
+      - nginx
+      X-Powered-By:
+      - Express
+      X-Rate-Limit-Interval:
+      - '60'
+      X-Rate-Limit-Limit:
+      - '1200'
+      X-Rate-Limit-Remaining:
+      - '1199'
+      X-Rate-Limit-Reset:
+      - '1437596073'
+      Age:
+      - '1778'
+      Vary:
+      - Accept-Encoding
+      X-Cache:
+      - Hit from cloudfront
+      Via:
+      - 1.1 4fd1184da5a553658f5af3fc9d4f0577.cloudfront.net (CloudFront)
+      X-Amz-Cf-Id:
+      - kyU65v4esyjYvrp75LyKZNbTQdIkjUQHv7jofxyDaPFmOUrhnnYfTg==
+    body:
+      encoding: UTF-8
+      string: '{"query":["206","s","5th","ave","200","ann","arbor","mi","48104","us"],"attribution":{"mapbox-places":"<a
+        href=''https://www.mapbox.com/about/maps/'' target=''_blank''>&copy; Mapbox</a>"},"results":[[{"id":"address.14115714019531","bounds":[-83.74654199999998,42.271722999999994,-83.74598999999996,42.28134999999999],"lon":-83.746037,"lat":42.28042,"name":"200
+        S 5th Ave","type":"address"},{"id":"mapbox-places.48103","name":"Ann Arbor","type":"city"},{"id":"zipcode.3324410980","name":"48104","type":"zipcode"},{"id":"province.696512852","name":"Michigan","type":"province"},{"id":"country.4150104525","name":"United
+        States","type":"country"}]]}'
+    http_version: 
+  recorded_at: Wed, 22 Jul 2015 20:43:11 GMT
+recorded_with: VCR 2.9.3
