@@ -52,7 +52,6 @@ describe "Master Pack List" do
 
         it "shows a packing slip for the buyer" do
           expect(page).to have_content("Packing Slip")
-
           pack_list = Dom::Admin::PackList.first
           expect(pack_list.order_number).to eq(order1.order_number)
           expect(pack_list.note).to eq("1 of 1")
