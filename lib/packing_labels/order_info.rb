@@ -33,7 +33,8 @@ module PackingLabels
           unit_desc: order_item.unit,
           quantity: order_item.quantity,
           lot_desc: lot_desc,
-          producer_name: order_item.seller_name
+          producer_name: order_item.seller_name,
+          product_code: order_item.product.code
         }
       end
     end
