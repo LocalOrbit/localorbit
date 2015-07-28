@@ -40,6 +40,13 @@
 </div>
 
 <div class="field">
+  <%= f.label :code, "Product Code" %>
+  <span class="tooltip pull-right" data-tooltip="Optional product code"></span>
+  <br>
+  <%= f.text_field :code, class: "column column--full" %>
+</div>
+
+<div class="field">
   <%= f.label :short_description %>
   <span class="hint">Up to 50 characters</span>
   <span class="tooltip pull-right" data-tooltip="This is the first opportunity for a Buyer to learn about the product. Include additional explanation about the quantity, size or unit here, if needed."></span>
