@@ -45,8 +45,12 @@
               <div class="order-number">Order #:<%= order.order_number %></div>
             </th>
             <% first_item = items.shift %>
-            <td><%= first_item.name %></td>
-            <td><%= first_item.product.code %></td>
+            <td>
+              <% if first_item.product.code.present? %>
+                <%= first_item.product.code %><br>
+              <% end %>
+              <%= first_item.name %>
+            </td>
             <td><%= first_item.unit %></td>
               <td><%= first_item.quantity %></td>
               <td><%= number_to_currency first_item.seller_net_total %></td>
