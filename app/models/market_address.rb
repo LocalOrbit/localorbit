@@ -6,7 +6,7 @@ class MarketAddress < ActiveRecord::Base
 
   validates :address, :city, :state, :zip, :market, :country, presence: true
 
-  acts_as_geocodable address: {street: :address, locality: :city, region: :state, postal_code: :zip}
+  acts_as_geocodable address: {street: :address, locality: :city, region: :state, postal_code: :zip, country: :country}
 
   before_save :ensure_single_default
   before_save :ensure_single_billing

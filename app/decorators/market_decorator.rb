@@ -36,11 +36,7 @@ class MarketDecorator < Draper::Decorator
       seller.shipping_location.geocode if seller.shipping_location
     end.compact
 
-    if (center = default_address.try(:geocode))
-      static_map(addresses, center, w, h)
-    else
-      ""
-    end
+    static_map(addresses, default_address.try(:geocode), w, h)
   end
 
   def has_address?
