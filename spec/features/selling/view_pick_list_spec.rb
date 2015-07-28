@@ -4,10 +4,10 @@ describe "Pick list" do
   let!(:market)                   { create(:market) }
   let!(:seller)                   { create(:organization, :seller, :single_location, markets: [market], name: "First Seller") }
   let!(:seller2)                  { create(:organization, :seller, :single_location, markets: [market], name: "Second Seller") }
-  let!(:seller_product)           { create(:product, :sellable, name: "Beans", organization: seller) }
-  let!(:seller_product2)          { create(:product, :sellable, name: "Avocado", organization: seller) }
-  let!(:delivered_product)        { create(:product, :sellable, organization: seller) }
-  let!(:seller2_product)          { create(:product, :sellable, name: "Sprouts", organization: seller2) }
+  let!(:seller_product)           { create(:product, :sellable, name: "Beans", organization: seller, code: "nifty-product-code") }
+  let!(:seller_product2)          { create(:product, :sellable, name: "Avocado", organization: seller, code: "nifty-product-code") }
+  let!(:delivered_product)        { create(:product, :sellable, organization: seller, code: "nifty-product-code") }
+  let!(:seller2_product)          { create(:product, :sellable, name: "Sprouts", organization: seller2, code: "nifty-product-code") }
 
   let!(:friday_delivery_schedule) { create(:delivery_schedule, market: market, day: 5) }
   let!(:friday_delivery)          { create(:delivery, delivery_schedule: friday_delivery_schedule, deliver_on: Date.parse("May 9, 2014"), cutoff_time: Date.parse("May 8, 2014")) }
@@ -38,6 +38,11 @@ describe "Pick list" do
 
   context "as a market manager" do
     let!(:user) { create(:user, :market_manager, managed_markets: [market]) }
+
+    it "shows a product code" do
+      visit admin_delivery_tools_pick_list_path(friday_delivery.id)
+      expect(page).to have_content("nifty-product-code")
+    end
 
     # This should be visible to the market manager
     let!(:seller_no_longer)            { create(:organization, :seller, :single_location, name: "Seller No Longer In Market") }

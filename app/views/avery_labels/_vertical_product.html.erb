@@ -16,7 +16,11 @@
   </div>
   <div class="label-row">
     <span class="small-text">Product</span><br/>
-    <%= product[:product_name] %> <br/>
+    <%= product[:product_name] %>
+    <% if product[:product_code].present? %>
+      | <%= product[:product_code] %>
+    <% end %>
+    <br/>
     <span style="font-size:80%">
       <%= "#{product[:quantity]} #{product[:unit_desc]}" %>
       <%= "| #{product[:lot_desc]}" if product[:lot_desc] %>

@@ -11,10 +11,11 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150717174829) do
+ActiveRecord::Schema.define(version: 20150728173133) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+  enable_extension "pg_stat_statements"
 
   create_table "audits", force: true do |t|
     t.integer  "auditable_id"
@@ -681,6 +682,7 @@ ActiveRecord::Schema.define(version: 20150717174829) do
     t.string   "unit_description"
     t.string   "thumb_uid"
     t.integer  "second_level_category_id"
+    t.string   "code"
   end
 
   add_index "products", ["category_id"], name: "index_products_on_category_id", using: :btree

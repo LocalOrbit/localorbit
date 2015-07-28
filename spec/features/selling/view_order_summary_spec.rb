@@ -9,7 +9,7 @@ describe "Order summary" do
   let!(:others) { create(:organization, :seller, :single_location, markets: [market]) }
   let!(:sellers_product1) { create(:product, :sellable, organization: sellers) }
   let!(:sellers_product2) { create(:product, :sellable, organization: sellers) }
-  let!(:sellers_product3) { create(:product, :sellable, organization: sellers) }
+  let!(:sellers_product3) { create(:product, :sellable, organization: sellers, code: "fancy-product-code") }
   let!(:others_product) { create(:product, :sellable, organization: others) }
 
   let!(:buyer1) { create(:organization, :buyer, :single_location, markets: [market]) }
@@ -60,6 +60,7 @@ describe "Order summary" do
       expect(page).to have_content(sellers_order1.order_number)
       expect(page).to have_content(sellers_order1_item1.name)
       expect(page).to have_content(sellers_order1_item2.name)
+      expect(page).to have_content(sellers_order1_item2.product.code)
 
       expect(page).to have_content(buyer2.name)
       expect(page).to have_content(sellers_order2.order_number)

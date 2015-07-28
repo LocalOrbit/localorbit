@@ -22,7 +22,8 @@
       <thead>
         <tr>
           <th>Buyer</th>
-          <th>Items</th>
+          <th>Item</th>
+          <th>Code</th>
           <th>Units</th>
           <th>Qty</th>
           <th>Item Total Price</th>
@@ -45,6 +46,13 @@
             </th>
             <% first_item = items.shift %>
             <td><%= first_item.name %></td>
+            <td>
+              <% if first_item.product.code.present? %>
+                <%= first_item.product.code %><br>
+              <% else %>
+                -
+              <% end %>
+            </td>
             <td><%= first_item.unit %></td>
               <td><%= first_item.quantity %></td>
               <td><%= number_to_currency first_item.seller_net_total %></td>
@@ -54,6 +62,7 @@
             <% items.each do |item| %>
               <tr>
                 <td><%= item.name %></td>
+                <td><%= item.product.code || "-" %></td>
                 <td><%= item.unit %></td>
                 <td><%= item.quantity %></td>
                 <td><%= number_to_currency item.seller_net_total %></td>
@@ -63,6 +72,7 @@
 
             <% (min_rowspan - (items.size + 1)).times do %>
               <tr>
+                <td></td>
                 <td></td>
                 <td></td>
                 <td></td>
