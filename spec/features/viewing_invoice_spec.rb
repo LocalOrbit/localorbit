@@ -13,7 +13,7 @@ feature "Viewing invoices" do
   let!(:buyer2) { create(:organization, :buyer,  name: "Money Satchels", markets: [market]) }
 
   let!(:product1) { create(:product, :sellable, organization: seller) }
-  let!(:product2) { create(:product, :sellable, organization: seller) }
+  let!(:product2) { create(:product, :sellable, organization: seller, code: "productCode") }
 
   let!(:order_item1) { create(:order_item, product: product1, unit_price: 210.00) }
   let!(:order_item2) { create(:order_item, product: product2, unit_price: 95.00, quantity: 2, quantity_delivered: 2, delivery_status: "delivered") }
@@ -76,6 +76,13 @@ feature "Viewing invoices" do
       expect(page).to have_content(invoice.billing_zip)
       expect(page).to have_content(invoice.billing_phone)
     end
+  end
+
+  it "shows a product code" do
+    switch_to_subdomain(market.subdomain)
+    sign_in_as(market_manager)
+    visit peek_admin_invoice_path(order.id)
+    expect(page).to have_content(product2.code)
   end
 
   context "no market address" do
