@@ -12,13 +12,13 @@
     <h1>Pick List</h1>
     <div class="upcoming-delivery">
 
-      <h2 class="heading heading-delivery-tool">Seller Delivery</h2>
+      <h2 class="heading heading-delivery-tool">Supplier Delivery</h2>
       <div class="upcoming-delivery-date"><%= @delivery.seller_display_date %> <%= @delivery.seller_time_range %></div>
       <% if @delivery.available_to_order? %>
         <p class="note">Ordering has not yet closed for this delivery</p>
       <% end %>
 
-      <h2 class="heading heading-delivery-tool">Seller</h2>
+      <h2 class="heading heading-delivery-tool">Supplier</h2>
       <div class="vcard vcard--seller">
         <h3 class="fn org"><%= pick_list.seller_name %></h3>
         <%= pick_list.seller_ship_from_address %>
