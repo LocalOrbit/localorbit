@@ -8,7 +8,6 @@ module Admin
       else
         generate_production_pdf
       end
-      redirect_to action: :await_pdf
     end
 
     def generate_development_pdf
@@ -16,6 +15,7 @@ module Admin
       GenerateInvoicePdf.perform(order: @order,
                                  pre_invoice: true,
                                  request: RequestUrlPresenter.new(request))
+      redirect_to action: :await_pdf
     end
 
     def generate_production_pdf
@@ -25,6 +25,7 @@ module Admin
         GenerateInvoicePdf.delay.perform(order: @order,
                                          pre_invoice: true,
                                          request: RequestUrlPresenter.new(request))
+        redirect_to action: :await_pdf
       end
     end
 
