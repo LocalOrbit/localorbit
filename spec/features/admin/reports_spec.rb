@@ -664,7 +664,7 @@ feature "Reports" do
             expect(totals.market_fees).to eq("$0.00")
             expect(totals.lo_fees).to eq("$0.00")
             expect(totals.processing_fees).to eq("$0.00")
-            expect(totals).to_not have_content("Delivery Fees")
+            expect(totals).to_not have_content("Delivery Fee")
             #expect(totals.discounts).to eq("$0.00")
             expect(totals.discounts).to eq("$0.00")
             expect(totals.net_sales).to eq("$6.99")
@@ -705,7 +705,7 @@ feature "Reports" do
             expect(totals.lo_fees).to eq("$0.00")
             expect(totals.processing_fees).to eq("$0.00")
             expect(totals.discounts).to eq("$0.00")
-            expect(totals).to_not have_content("Delivery Fees")
+            expect(totals).to_not have_content("Delivery Fee")
             expect(totals.net_sales).to eq("$6.99")
           end
 
@@ -751,8 +751,8 @@ feature "Reports" do
           totals = Dom::Admin::TotalSales.first
           expect(totals.discounted_total).to eq("$110.00") # TODO add tests with real discounts
           expect(page).to have_content("Total Purchase")
-          expect(page).not_to have_content("Market Fees")
-          expect(page).not_to have_content("Delivery Fees")
+          expect(page).not_to have_content("Market Fee")
+          expect(page).not_to have_content("Delivery Fee")
         end
 
         scenario "filters by category" do
@@ -802,8 +802,8 @@ feature "Reports" do
           totals = Dom::Admin::TotalSales.first
           expect(totals.discounted_total).to eq("$110.00")
           expect(page).to have_content("Total Purchase")
-          expect(page).not_to have_content("Market Fees")
-          expect(page).not_to have_content("Delivery Fees")
+          expect(page).not_to have_content("Market Fee")
+          expect(page).not_to have_content("Delivery Fee")
         end
 
         # https://www.pivotaltracker.com/story/show/78823306

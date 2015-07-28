@@ -39,7 +39,7 @@
         <td><%= number_to_currency invoice.discount %></td>
       </tr>
       <tr class="delivery">
-        <th scope="row" colspan="6" class="ar">Delivery Fees</th>
+        <th scope="row" colspan="6" class="ar"><%= invoice.delivery.delivery_schedule.fee_label %></th>
         <td><%= number_to_currency invoice.delivery_fees %></td>
       </tr>
       <tr class="total">
