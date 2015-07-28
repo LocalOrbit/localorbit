@@ -52,7 +52,6 @@
 
           <% if field == :product_name %>
             <td class="product">
-              <% # If/when procurement manager role is added, change line below to allow procurement managers to see product code %>
               <% if item.product.code.present? and (current_user.seller? or current_user.market_manager? or current_user.admin?) %>
                 <%= item.product.code %><br>
               <% end %>
