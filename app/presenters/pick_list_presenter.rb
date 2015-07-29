@@ -39,6 +39,10 @@ class PickListPresenter
       @product = @items.first.product
     end
 
+    def code
+      (@product.code.present?) ? @product.code : "-"
+    end
+
     def name
       @product.name
     end

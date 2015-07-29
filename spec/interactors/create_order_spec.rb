@@ -15,6 +15,17 @@ describe CreateOrder do
 
   subject { CreateOrder.perform(payment_provider: payment_provider, order_params: params, cart: cart, buyer: buyer).order }
 
+  before do
+    # In trying to expose a bug relating to calling Order#destroy on an unpersisted order,
+    # I found I couldn't repro the issue without record auditing activated.
+    # (It's normally de-activated for tests, see spec/support/audited.rb)
+    # I think the ROOT cause of the exception being raised in the first place is a bug in
+    # the Audited rubygem: https://github.com/collectiveidea/audited
+    # 
+    # Enabling auditing helps expose the bug that busted us in production. crosby - 2015-07-20
+    Order.enable_auditing
+  end
+
   context "purchase order" do
     let(:params) { {payment_method: "purchase order", payment_note: "1234"} }
 
@@ -45,7 +56,7 @@ describe CreateOrder do
 
   context "when an exception occurs when creating cart items", truncate: true do
     let(:problem_product) { cart.items[1].product }
-    subject { expect { CreateOrder.perform(payment_provider: payment_provider, order_params: params, cart: cart, buyer: buyer) }.to raise_exception }
+    subject { CreateOrder.perform(payment_provider: payment_provider, order_params: params, cart: cart, buyer: buyer) }
 
     before do
       expect(problem_product).to receive(:lots_by_expiration).and_raise
@@ -57,6 +68,12 @@ describe CreateOrder do
       }.not_to change {
         OrderItem.count
       }
+    end
+
+    it "will not increment order number" do
+      expect(OrderNumber.new(market).id.rpartition('-').last.to_i).to eq(1)
+      subject
+      expect(OrderNumber.new(market).id.rpartition('-').last.to_i).to eq(2)
     end
 
     it "will not consume inventory" do

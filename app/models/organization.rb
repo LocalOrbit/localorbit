@@ -123,7 +123,7 @@ class Organization < ActiveRecord::Base
   end
 
   def original_market
-    (markets.empty? ? cross_sells : markets).order("market_organizations.id ASC").first
+    (markets.includes(:markets).empty? ? cross_sells : markets).order("market_organizations.id ASC").first
   end
 
   def cross_selling?(from: nil, to: nil)
@@ -155,8 +155,8 @@ class Organization < ActiveRecord::Base
   private
 
   def reject_location(attributed)
-    attributed["name"].blank? ||
-      attributed["address"].blank? ||
+    #attributed["name"].blank? ||
+    attributed["address"].blank? ||
       attributed["city"].blank? ||
       attributed["state"].blank? ||
       attributed["zip"].blank?

@@ -106,7 +106,7 @@ module Admin
         :allow_credit_cards,
         :allow_ach,
         :active,
-        locations_attributes: [:name, :address, :city, :state, :zip, :phone, :fax]
+        locations_attributes: [:name, :address, :city, :state, :zip, :phone, :fax, :country]
       )
     end
 

@@ -8,7 +8,7 @@ describe "Admin Managing Markets" do
     switch_to_subdomain(market.subdomain)
   end
 
-  describe "visiting the admin path without loggin in" do
+  describe "visiting the admin path without logging in" do
     it "redirects a user to the login pages" do
       visit admin_market_addresses_path(market)
 
@@ -32,6 +32,7 @@ describe "Admin Managing Markets" do
   describe "as a market manager" do
     let!(:user) { create(:user, role: "user") }
     let!(:address1) { create(:market_address, market: market) }
+    #let!(:address2) { create(:market_address, market: market, default:true)} # here creates 44 e 8th st default
 
     before do
       user.managed_markets << market
@@ -45,6 +46,7 @@ describe "Admin Managing Markets" do
       expect(page).to have_text(address1.city)
       expect(page).to have_text(address1.state)
       expect(page).to have_text(address1.zip)
+      expect(page).to have_text(address1.country)
     end
 
     it "I can delete an address from the index" do
@@ -67,6 +69,7 @@ describe "Admin Managing Markets" do
       fill_in "Zip", with: "49423"
       fill_in "Phone", with: "616-123-4567"
       fill_in "Fax", with: "616-321-3214"
+      select "Canada", from: "Country"
 
       click_button "Add Address"
 
@@ -76,12 +79,16 @@ describe "Admin Managing Markets" do
       expect(page).to have_text("MI")
       expect(page).to have_text("49423")
       expect(page).to have_text("616-123-4567")
+      expect(page).to have_text("CA")
     end
 
     it "I can edit an existing address" do
       expect(page).to have_text(address1.name)
 
       click_link address1.name
+
+      expect(page).to have_text("default")
+      expect(page).to have_text("billing")
 
       fill_in "Address Label", with: "Edited Address"
 
@@ -100,22 +107,100 @@ describe "Admin Managing Markets" do
       expect(page).to_not have_text(address1.name)
     end
 
-    it "displays errors when trying to create a new address" do
-      click_link "Add Address"
-
-      click_button "Add Address"
-
-      expect(page).to have_text("Name can't be blank")
-    end
-
-    it "displays errors when trying to create a new address" do
+    it "handles empty labels when trying to create a new address" do
       click_link address1.name
 
       fill_in "Address Label", with: ""
 
       click_button "Update Address"
+      expect(page).to have_text("Default Address")
+    end
 
-      expect(page).to have_text("Name can't be blank")
+    it "deals with default address properly" do
+      expect(page).to have_text "Add Address"
+
+      click_link "Add Address"
+
+      fill_in "Address Label", with: "New Address"
+      fill_in "Address", with: "123 Apple"
+      fill_in "City", with: "Holland"
+      select "Michigan", from: "State"
+      fill_in "Zip", with: "49423"
+      fill_in "Phone", with: "616-123-4567"
+      fill_in "Fax", with: "616-321-3214"
+      check('default')
+      check('billing')
+      click_button "Add Address"
+      # add another
+      click_link "Add Address"
+      fill_in "Address Label", with: "New Address2"
+      fill_in "Address", with: "123 Apple2"
+      fill_in "City", with: "Albion"
+      select "Michigan", from: "State"
+      fill_in "Zip", with: "49423"
+      fill_in "Phone", with: "616-123-4566"
+      fill_in "Fax", with: "616-321-3215"
+      check('default')
+      check('billing')
+      click_button "Add Address"
+
+      expect(market.addresses.visible.select{|mkt| mkt if mkt.default}.first.address).to eq("123 Apple2")
+      expect(market.addresses.visible.select{|mkt| mkt if mkt.default}.length).to eq(1)
+    end
+
+    it "deals with billing address properly" do
+      # have billing, submit new billing, check there's only one
+      expect(page).to have_text "Add Address"
+
+      click_link "Add Address"
+
+      fill_in "Address Label", with: "New Address3"
+      fill_in "Address", with: "123 Apple3"
+      fill_in "City", with: "Holland"
+      select "Michigan", from: "State"
+      fill_in "Zip", with: "49423"
+      fill_in "Phone", with: "616-123-4567"
+      fill_in "Fax", with: "616-321-3214"
+      check('billing')
+      click_button "Add Address"
+      # add another
+      click_link "Add Address"
+      fill_in "Address Label", with: "New Address4"
+      fill_in "Address", with: "123 Apple4"
+      fill_in "City", with: "Albion"
+      select "Michigan", from: "State"
+      fill_in "Zip", with: "49423"
+      fill_in "Phone", with: "616-123-4566"
+      fill_in "Fax", with: "616-321-3215"
+      check('billing')
+      click_button "Add Address"
+
+      expect(market.reload.addresses.visible.select{|mktadr| mktadr if mktadr.billing}.first.address).to eq("123 Apple4")
+      expect(market.reload.addresses.visible.select{|mktadr| mktadr if mktadr.billing}.length).to eq(1)
+    end
+
+    it "keeps correct boxes checked" do
+      click_link "Add Address"
+
+      fill_in "Address Label", with: "New Address"
+      fill_in "Address", with: "123 Apple"
+      fill_in "City", with: "Holland"
+      select "Michigan", from: "State"
+      fill_in "Zip", with: "49423"
+      fill_in "Phone", with: "616-123-4567"
+      fill_in "Fax", with: "616-321-3214"
+      check('default')
+      click_button "Add Address"
+      click_link "New Address" # click on the label for address just added
+
+      expect(find('#market_address_default')).to be_checked
+      expect(find('#market_address_billing')).to_not be_checked
+    end
+
+    it "does not access soft-deleted default addresses as default" do
+      subject = create(:market_address, name: "test", market: market, default: true, deleted_at: 1.day.ago)
+      new_default = create(:market_address, name: "test2", market: market, default: true)
+      expect(market.addresses.visible.select{|mkt| mkt if mkt.default}.first).to eq(new_default)
     end
 
     it "provides some Canadian province choices" do

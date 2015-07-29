@@ -12,7 +12,7 @@ describe "Checking Out via Purchase Order", :js, :vcr do
 
   let(:market_manager) { create(:user) }
 
-  let(:market) { create(:market, :with_addresses, 
+  let(:market) { create(:market, :with_addresses,
                         payment_provider: PaymentProvider::Stripe.id,
                         organizations: [buyer, fulton_farms, ada_farms], managers: [market_manager]) }
 
@@ -27,20 +27,20 @@ describe "Checking Out via Purchase Order", :js, :vcr do
   end
 
   # Fulton St. Farms
-  let!(:bananas) { create(:product, :sellable, name: "Bananas", organization: fulton_farms) }
+  let!(:bananas) { create(:product, name: "Bananas", organization: fulton_farms) }
   let!(:bananas_lot) { create(:lot, product: bananas, quantity: 100) }
   let!(:bananas_price_buyer_base) do
-    create(:price, market: market, product: bananas, min_quantity: 1, organization: buyer, sale_price: 0.50)
+    create(:price, :past_price, market: market, product: bananas, min_quantity: 1, organization: buyer, sale_price: 0.50)
   end
 
   let!(:kale) { create(:product, :sellable, name: "Kale", organization: fulton_farms) }
   let!(:kale_lot) { kale.lots.first.update_attribute(:quantity, 100) }
   let!(:kale_price_tier1) do
-    create(:price, market: market, product: kale, min_quantity: 4, sale_price: 2.50)
+    create(:price, :past_price, market: market, product: kale, min_quantity: 4, sale_price: 2.50)
   end
 
   let!(:kale_price_tier2) do
-    create(:price, market: market, product: kale, min_quantity: 6, sale_price: 1.00)
+    create(:price, :past_price, market: market, product: kale, min_quantity: 6, sale_price: 1.00)
   end
 
   # Ada Farms
@@ -114,7 +114,7 @@ describe "Checking Out via Purchase Order", :js, :vcr do
 
         # Find the current order:
         order = if page.find("a.review-order")["href"] =~ /\/orders\/(\d+)/
-                  order_id = $1 
+                  order_id = $1
                   order = Order.find(order_id)
                 else
                   raise "Couldn't extract order id from 'Review Order' button"

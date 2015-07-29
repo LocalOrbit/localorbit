@@ -46,7 +46,10 @@ class Admin::MarketAddressesController < AdminController
       :state,
       :zip,
       :phone,
-      :fax
+      :fax,
+      :default,
+      :billing,
+      :country
     )
   end
 

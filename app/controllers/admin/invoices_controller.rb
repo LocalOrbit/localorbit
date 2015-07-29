@@ -3,6 +3,22 @@ module Admin
     before_action :fetch_order
 
     def show
+      if Rails.env == "development"
+        generate_development_pdf
+      else
+        generate_production_pdf
+      end
+    end
+
+    def generate_development_pdf
+      ClearInvoicePdf.perform(order: @order)
+      GenerateInvoicePdf.perform(order: @order,
+                                 pre_invoice: true,
+                                 request: RequestUrlPresenter.new(request))
+      redirect_to action: :await_pdf
+    end
+
+    def generate_production_pdf
       if @order.invoice_pdf.present?
         redirect_to @order.invoice_pdf.remote_url
       else
@@ -26,15 +42,15 @@ module Admin
         end
       end
     end
-    
+
     # Secret: peek at an HTML version of the Invoice
     def peek
       @invoice = BuyerOrder.new(@order)
       @market  = @invoice.market.decorate
       @needs_js = true
-      render "show", layout: false, locals: { invoice: @invoice, user: current_user }
-    end
 
+      render "show", layout: false, locals: { invoice: @invoice, market: @market, user: current_user }
+    end
 
     private
 

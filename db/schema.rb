@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150605170153) do
+ActiveRecord::Schema.define(version: 20150728194123) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -279,6 +279,7 @@ ActiveRecord::Schema.define(version: 20150605170153) do
     t.string   "phone"
     t.string   "fax"
     t.integer  "legacy_id"
+    t.string   "country",          default: "US",  null: false
   end
 
   add_index "locations", ["deleted_at"], name: "index_locations_on_deleted_at", using: :btree
@@ -314,18 +315,21 @@ ActiveRecord::Schema.define(version: 20150605170153) do
   add_index "managed_markets", ["user_id"], name: "index_managed_markets_on_user_id", using: :btree
 
   create_table "market_addresses", force: true do |t|
-    t.string   "name",       null: false
-    t.string   "address",    null: false
-    t.string   "city",       null: false
-    t.string   "state",      null: false
-    t.string   "zip",        null: false
-    t.integer  "market_id",  null: false
+    t.string   "name",                       null: false
+    t.string   "address",                    null: false
+    t.string   "city",                       null: false
+    t.string   "state",                      null: false
+    t.string   "zip",                        null: false
+    t.integer  "market_id",                  null: false
     t.datetime "created_at"
     t.datetime "updated_at"
     t.datetime "deleted_at"
     t.string   "phone"
     t.string   "fax"
     t.integer  "legacy_id"
+    t.boolean  "default",    default: false
+    t.boolean  "billing",    default: false
+    t.string   "country",    default: "US",  null: false
   end
 
   add_index "market_addresses", ["market_id", "deleted_at"], name: "index_market_addresses_on_market_id_and_deleted_at", using: :btree
@@ -407,6 +411,7 @@ ActiveRecord::Schema.define(version: 20150605170153) do
     t.string   "stripe_customer_id"
     t.string   "stripe_account_id"
     t.string   "payment_provider"
+    t.string   "country",                                               default: "US",  null: false
   end
 
   add_index "markets", ["name"], name: "index_markets_on_name", using: :btree
@@ -616,18 +621,19 @@ ActiveRecord::Schema.define(version: 20150605170153) do
 
   create_table "plans", force: true do |t|
     t.string   "name"
-    t.boolean  "discount_codes",      default: false
-    t.boolean  "cross_selling",       default: false
-    t.boolean  "custom_branding",     default: false
-    t.boolean  "automatic_payments",  default: false
+    t.boolean  "discount_codes",           default: false
+    t.boolean  "cross_selling",            default: false
+    t.boolean  "custom_branding",          default: false
+    t.boolean  "automatic_payments",       default: false
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.boolean  "promotions",          default: false, null: false
-    t.boolean  "advanced_pricing",    default: false, null: false
-    t.boolean  "advanced_inventory",  default: false, null: false
-    t.boolean  "order_printables",    default: false, null: false
-    t.boolean  "packing_labels",      default: false, null: false
-    t.boolean  "sellers_edit_orders", default: false, null: false
+    t.boolean  "promotions",               default: false, null: false
+    t.boolean  "advanced_pricing",         default: false, null: false
+    t.boolean  "advanced_inventory",       default: false, null: false
+    t.boolean  "order_printables",         default: false, null: false
+    t.boolean  "packing_labels",           default: false, null: false
+    t.boolean  "sellers_edit_orders",      default: false, null: false
+    t.boolean  "has_procurement_managers", default: false, null: false
   end
 
   create_table "prices", force: true do |t|
@@ -639,6 +645,7 @@ ActiveRecord::Schema.define(version: 20150605170153) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "legacy_id"
+    t.datetime "deleted_at"
   end
 
   add_index "prices", ["market_id"], name: "index_prices_on_market_id", using: :btree
@@ -676,6 +683,7 @@ ActiveRecord::Schema.define(version: 20150605170153) do
     t.string   "unit_description"
     t.string   "thumb_uid"
     t.integer  "second_level_category_id"
+    t.string   "code"
   end
 
   add_index "products", ["category_id"], name: "index_products_on_category_id", using: :btree

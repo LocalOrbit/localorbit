@@ -11,7 +11,7 @@
 </div>
 
 <div class="row row--field">
-  <div class="field column column--half column--guttered">
+  <div class="field column column--fourth column--guttered">
     <%= form.label :city %><br>
     <%= form.text_field :city, class: "column--full" %>
   </div
@@ -22,7 +22,10 @@
   ><div class="field column column--fourth column--guttered">
     <%= form.label :zip, "Postal Code" %><br>
     <%= form.text_field :zip, size: 10, class: "column--full"  %>
-  </div>
+  </div
+  ><div class="field column column--fourth column--guttered">
+    <%= form.label :country, "Country" %><br>
+    <%= form.select :country, options_for_select(Market.possible_countries) %>
 </div>
 
 <div class="row row--field">

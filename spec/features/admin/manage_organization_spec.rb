@@ -177,7 +177,6 @@ describe "admin manange organization", :vcr do
     select "Market 2", from: "Market"
     click_button "Add Organization"
 
-    expect(page).to have_content("Name can't be blank")
     expect(find_field("Market").value).to eq(market2.id.to_s)
   end
 
@@ -223,6 +222,7 @@ describe "admin manange organization", :vcr do
         fill_in "Postal Code",   with: "34599"
         fill_in "Phone", with: "616-555-9983"
         fill_in "Fax", with: "616-555-9984"
+        select  "Canada",      from: "Country"
 
         click_button "Add Address"
 
@@ -230,7 +230,7 @@ describe "admin manange organization", :vcr do
 
         expect(locations.size).to eq(1)
         expect(locations.first.name_and_address).to include("University of Michigan")
-        expect(locations.first.name_and_address).to include("500 S. State Street, Ann Arbor, MI 34599")
+        expect(locations.first.name_and_address).to include("500 S. State Street, Ann Arbor, MI 34599 CA")
         expect(locations.first.default_billing).to be_checked
         expect(locations.first.default_shipping).to be_checked
 
@@ -247,7 +247,6 @@ describe "admin manange organization", :vcr do
 
           click_button "Add Address"
 
-          expect(page).to have_content("Location name can't be blank")
           expect(page).to have_content("Address can't be blank")
           expect(page).to have_content("City can't be blank")
           expect(page).to have_content("State can't be blank")

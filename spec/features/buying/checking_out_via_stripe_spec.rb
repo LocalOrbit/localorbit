@@ -24,20 +24,20 @@ describe "Checking Out using Stripe payment provider", :js do
   end
 
   # Fulton St. Farms
-  let!(:bananas) { create(:product, :sellable, name: "Bananas", organization: fulton_farms) }
+  let!(:bananas) { create(:product, name: "Bananas", organization: fulton_farms) }
   let!(:bananas_lot) { create(:lot, product: bananas, quantity: 100) }
   let!(:bananas_price_buyer_base) do
-    create(:price, market: market, product: bananas, min_quantity: 1, organization: buyer, sale_price: 0.50)
+    create(:price, :past_price, market: market, product: bananas, min_quantity: 1, organization: buyer, sale_price: 0.50)
   end
 
   let!(:kale) { create(:product, :sellable, name: "Kale", organization: fulton_farms) }
   let!(:kale_lot) { kale.lots.first.update_attribute(:quantity, 100) }
   let!(:kale_price_tier1) do
-    create(:price, market: market, product: kale, min_quantity: 4, sale_price: 2.50)
+    create(:price, :past_price, market: market, product: kale, min_quantity: 4, sale_price: 2.50)
   end
 
   let!(:kale_price_tier2) do
-    create(:price, market: market, product: kale, min_quantity: 6, sale_price: 1.00)
+    create(:price, :past_price, market: market, product: kale, min_quantity: 6, sale_price: 1.00)
   end
 
   # Ada Farms
@@ -85,22 +85,22 @@ describe "Checking Out using Stripe payment provider", :js do
   end
 
   context "via credit card" do
-    
+
     let!(:stripe_customer) { Stripe::Customer.create(
         description: buyer.name,
         metadata: {
           "lo.entity_id" => buyer.id,
           "lo.entity_type" => 'organization'
         }
-      ) 
+      )
     }
 
     let!(:stripe_card_token) { create_stripe_token() }
 
     let!(:stripe_card) { stripe_customer.sources.create(source: stripe_card_token.id) }
 
-    let!(:stripe_account) { 
-      get_or_create_stripe_account_for_market(market) 
+    let!(:stripe_account) {
+      get_or_create_stripe_account_for_market(market)
     }
 
     before do

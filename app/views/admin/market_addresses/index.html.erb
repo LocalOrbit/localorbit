@@ -19,7 +19,7 @@
           <tr class="address <%= cycle "odd", "even" %>">
             <td>
               <div><%= link_to address.name, edit_admin_market_address_path(@market, address) %></div>
-              <div><%= address.address %>, <%= address.city %>, <%= address.state %> <%= address.zip %></div>
+              <div><%= address.address %>, <%= address.city %>, <%= address.state %> <%= address.zip %> <%= address.country %></div>
             </td>
             <td>
               <%= address.phone %>

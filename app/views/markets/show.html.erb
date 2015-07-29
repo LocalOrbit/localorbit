@@ -52,13 +52,13 @@
       <div class="vcard">
         <% if @market.contact_name.present? %><strong class="fn"><%= @market.contact_name %></strong><br><% end %>
         <% if @market.contact_email.present? %><%= mail_to(@market.contact_email, @market.contact_email, {class:"email"}) %></a><br><% end %>
-        <% if @market.first_address %>
+        <% if @market.default_address %>
         <p class="adr">
-          <span class="street-address"><%= @market.first_address.address %></span><br>
-          <span class="locality"><%= @market.first_address.city %></span>, <span class="region"><%=@market.first_address.state %></span> <span class="postal-code"><%= @market.first_address.zip %></span>
+          <span class="street-address"><%= @market.default_address.address %></span><br>
+          <span class="locality"><%= @market.default_address.city %></span>, <span class="region"><%=@market.default_address.state %></span> <span class="postal-code"><%= @market.default_address.zip %></span>
         </p>
         <% end %>
-        <% if @market.contact_phone.present? %><span class="tel"><%= @market.contact_phone %></span><% end %>
+        <% if @market.default_address_phone_number.present? %><span class="tel"><%= @market.default_address_phone_number %></span><% end %>
       </div>
     </div>
 

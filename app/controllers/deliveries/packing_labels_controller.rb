@@ -7,13 +7,18 @@ class Deliveries::PackingLabelsController < ApplicationController
   def index
     delivery =  Delivery.find(params[:delivery_id])
     printable = PackingLabelsPrintable.create!(user: current_user, delivery: delivery)
-    ProcessPackingLabelsPrintable.delay.perform(
-      packing_labels_printable_id: printable.id, 
-      request: RequestUrlPresenter.new(request)
-    )
-
+    if Rails.env == "development"
+      ProcessPackingLabelsPrintable.perform(
+        packing_labels_printable_id: printable.id, 
+        request: RequestUrlPresenter.new(request)
+      )
+    else
+      ProcessPackingLabelsPrintable.delay.perform(
+        packing_labels_printable_id: printable.id, 
+        request: RequestUrlPresenter.new(request)
+      )
+    end
     track_event EventTracker::DownloadedPackingLabels.name
-
     redirect_to action: :show, delivery_id: delivery.id, id: printable.id
   end
 

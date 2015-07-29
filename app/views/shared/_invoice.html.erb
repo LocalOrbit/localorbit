@@ -1,66 +1,5 @@
-<div class="invoices-wrapper">
+
   <%= link_to "Return to Invoices", admin_financials_invoices_path, class: "no-print" if user %>
-
-  <div class="row">
-    <div class="column column--two-thirds">
-      <h1>Invoice</h1>
-    </div><div class="column column--third">
-    </div>
-  </div>
-  <div class="row invoice-basics">
-    <div class="column column--two-thirds">
-      <h2>Invoice Number</h2>
-      <p class="invoice-num"><%= invoice.order_number %></p><br>
-      <%= "<h2>Purchase Order Number</h2><p class=\"po-num\">#{invoice.payment_note}</p><br>".html_safe if invoice.payment_note.present? %>
-    </div><div class="column column--third">
-      <div class="due-date">
-        <h2>Due Date</h2>
-        <%= (invoice.invoice_due_date || market.po_payment_term.to_i.days.from_now).strftime("%-m/%-d/%Y") %>
-      </div>
-      <h2 class="inline">Invoice Date</h2>
-      <span class="date">
-        <%= (invoice.invoiced_at || Date.current).strftime("%-m/%-d/%Y") %>
-      </span>
-    </div>
-  </div>
-
-  <%=
-  if market.logo_stored?
-    image_tag(ensure_full_url(market.logo.thumb('200x150>').url), alt: "#{market.name} logo", class: "logo")
-  elsif @logo_path
-    image_tag(ensure_full_url(@logo_path), alt: "Local Orbit logo", class: "logo")
-  else
-    image_tag(ensure_full_url(asset_url("logo.png")), alt: "Local Orbit logo", class: "logo")
-  end
-  %>
-  <div class="row invoice-parties">
-    <div class="market-info column column--half">
-      <div class="vcard">
-        <h2>From</h2>
-        <h3 class="fn org org-from"><%= invoice.market.name %></h3>
-        <% if market.has_address? %>
-          <div>
-            <%= market.street_address %><br>
-            <%= market.city_state_zip %><br>
-            <%= market.display_contact_phone %><br>
-            <%= market.contact_email %>
-          </div>
-        <% end %>
-      </div>
-    </div
-    ><div class="column column--half">
-      <div class="vcard vcard-buyer">
-        <h2>To</h2>
-        <h3 class="fn org buyer-name"><%= invoice.billing_organization_name %></h3>
-        <div>
-          <%= invoice.billing_address %><br>
-          <%= invoice.billing_city %>,
-          <%= invoice.billing_state %>
-          <%= invoice.billing_zip %>
-        </div>
-      </div>
-    </div>
-  </div>
   <table>
     <caption>Order Detail</caption>
     <thead>
@@ -76,7 +15,12 @@
     </thead>
     <% invoice.items.each do |item| %>
     <tr class="line-item">
-      <td class="al"><%= item.name %></td>
+      <td class="al">
+        <% if item.product.code.present? %>
+          <%= item.product.code %><br>
+        <% end %>
+        <%= item.name %>
+      </td>
       <td><%= item.unit %></td>
       <td><%= item.quantity %></td>
       <td><%= item.quantity_delivered || item.delivery_status.try(:titleize) %></td>
@@ -105,6 +49,5 @@
       </tr>
     </tbody>
   </table>
-</div>
-
+  
 <%= javascript_include_tag "application" if @needs_js %>

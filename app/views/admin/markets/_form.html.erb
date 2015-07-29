@@ -42,6 +42,10 @@
     <%= f.text_field :tagline, maxlength: 60, class: "column--full" %>
   </div>
   <div class="field">
+    <%= f.label :market_country, "Country" %><br>
+    <%= f.select :country, options_for_select(Market.possible_countries, @market.country) %>
+  </div>
+  <div class="field">
     <%= f.label :timezone, "Time zone" %><br>
     <%= f.time_zone_select :timezone, ActiveSupport::TimeZone.us_zones, default: "Pacific Time (US & Canada)" %>
   </div>

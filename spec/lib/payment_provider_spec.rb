@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe PaymentProvider do
-  # subject { described_class } 
+  # subject { described_class }
 
   describe ".for_new_markets" do
     it "returns Stripe" do
@@ -54,6 +54,13 @@ describe PaymentProvider do
   ].each do |provider_name|
     provider_object = PaymentProvider.for(provider_name)
 
+    describe ".default_currency_for_country" do
+      it "calls the default_currency_for_country method on the payment provider" do
+        country = "US"
+        expect(provider_object).to receive(:default_currency_for_country).with(country)
+        PaymentProvider.default_currency_for_country(provider_name, country)
+      end
+    end
 
     describe ".supports_payment_method?" do
       it "checks the provider for supported payment methods and returns true or false" do
@@ -77,9 +84,9 @@ describe PaymentProvider do
 
     describe ".place_order" do
       let(:params) {
-        { buyer_organization: 'the buyer', 
-          user: 'the user', 
-          order_params: 'the order', 
+        { buyer_organization: 'the buyer',
+          user: 'the user',
+          order_params: 'the order',
           cart: 'the cart' }
       }
       it "delegates to #{provider_object.name}.place_order" do
@@ -90,8 +97,8 @@ describe PaymentProvider do
 
     describe ".translate_status" do
       let(:params) {
-        { charge: 'the charge', 
-          payment_method: 'the payment method', 
+        { charge: 'the charge',
+          payment_method: 'the payment method',
           amount: 'the amount' }
       }
       it "delegates to #{provider_object.name}.translate_status" do
@@ -106,8 +113,8 @@ describe PaymentProvider do
 
     describe ".charge_for_order" do
       let(:params) {
-        { amount: 'the amount', 
-          bank_account: 'the bank account', 
+        { amount: 'the amount',
+          bank_account: 'the bank account',
           market: 'the market',
           order: 'the order',
           buyer_organization: 'the buyer organization' }
@@ -120,7 +127,7 @@ describe PaymentProvider do
 
     describe ".fully_refund" do
       let(:params) {
-        { charge: 'the charge', 
+        { charge: 'the charge',
           order: 'the order',
           payment: 'the payment' }
       }
@@ -128,7 +135,7 @@ describe PaymentProvider do
         expect(provider_object).to receive(:fully_refund).with(params)
         PaymentProvider.fully_refund provider_name, params
       end
-      
+
       it "defaults :charge to nil if omitted" do
         expected = params.dup
         expected[:charge] = nil
@@ -150,8 +157,8 @@ describe PaymentProvider do
     end
 
     describe ".create_order_payment" do
-      let(:params) { 
-        { 
+      let(:params) {
+        {
           charge: 'the charge',
           market_id: 'the market_id',
           bank_account: 'the bank_account',
@@ -160,7 +167,7 @@ describe PaymentProvider do
           amount: 'the amount',
           order: 'the order',
           status: 'the status'
-        } 
+        }
       }
 
       it "delegates to #{provider_object.name}.create_order_payment" do
@@ -170,8 +177,8 @@ describe PaymentProvider do
     end
 
     describe ".create_refund_payment" do
-      let(:params) { 
-        { 
+      let(:params) {
+        {
           charge: 'the charge',
           market_id: 'the market_id',
           bank_account: 'the bank_account',
@@ -182,7 +189,7 @@ describe PaymentProvider do
           status: 'the status',
           refund: 'the refund',
           parent_payment: 'the parent payment'
-        } 
+        }
       }
 
       it "delegates to #{provider_object.name}.create_refund_payment" do
@@ -192,10 +199,10 @@ describe PaymentProvider do
     end
 
     describe ".find_charge" do
-      let(:params) { 
-        { 
+      let(:params) {
+        {
           payment: 'the payment'
-        } 
+        }
       }
 
       it "delegates to #{provider_object.name}.find_charge" do
@@ -205,12 +212,12 @@ describe PaymentProvider do
     end
 
     describe ".refund_charge" do
-      let(:params) { 
-        { 
+      let(:params) {
+        {
           charge: 'the charge',
           amount: 'the amount',
           order: 'the order'
-        } 
+        }
       }
 
       it "delegates to #{provider_object.name}.refund_charge" do
@@ -221,9 +228,9 @@ describe PaymentProvider do
 
     describe ".add_payment_method" do
       let(:params) {
-        { type: 'the type', 
-          entity: 'the entity', 
-          bank_account_params: 'the bank acct params', 
+        { type: 'the type',
+          entity: 'the entity',
+          bank_account_params: 'the bank acct params',
           representative_params: 'the rep params' }
       }
       it "delegates to #{provider_object.name}.add_payment_method" do
@@ -234,8 +241,8 @@ describe PaymentProvider do
 
     describe ".add_deposit_account" do
       let(:params) {
-        { type: 'the type', 
-          entity: 'the entity', 
+        { type: 'the type',
+          entity: 'the entity',
           bank_account_params: 'the bank acct params'}
       }
       it "delegates to #{provider_object.name}.add_deposit_account" do

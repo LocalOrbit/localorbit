@@ -87,9 +87,9 @@ feature "Viewing products" do
 
   scenario "a product with less inventory than required to purchase" do
     org1_product.prices.first.update(min_quantity: 200) # there are only 150
-    org1_product.prices << create(:price, min_quantity: 300) # current scope is summing total available quantity once for each price that exists.
-    org1_product.prices << create(:price, market_id: market.id,          min_quantity: 200, sale_price: 2.50)
-    org1_product.prices << create(:price, organization_id: buyer_org.id, min_quantity: 200, sale_price: 2.40)
+    org1_product.prices << create(:price, :past_price, min_quantity: 300) # current scope is summing total available quantity once for each price that exists.
+    org1_product.prices << create(:price, :past_price, market_id: market.id,          min_quantity: 200, sale_price: 2.50)
+    org1_product.prices << create(:price, :past_price, organization_id: buyer_org.id, min_quantity: 200, sale_price: 2.40)
     sign_in_as(user)
 
     expect(Dom::Product.all.count).to eql(1)
@@ -98,10 +98,10 @@ feature "Viewing products" do
   end
 
   scenario "a product with just enough inventory required to purchase" do
-    org1_product.prices.first.update(min_quantity: 150) # there are only 150
-    org1_product.prices << create(:price, min_quantity: 150) # current scope is summing total available quantity once for each price that exists.
-    org1_product.prices << create(:price, market_id: market.id,          min_quantity: 150, sale_price: 2.50)
-    org1_product.prices << create(:price, organization_id: buyer_org.id, min_quantity: 150, sale_price: 2.40)
+    org1_product.prices.first.update_column(:min_quantity, 150) # there are only 150
+    org1_product.prices << create(:price, :past_price, min_quantity: 150) # current scope is summing total available quantity once for each price that exists.
+    org1_product.prices << create(:price, :past_price, market_id: market.id,          min_quantity: 150, sale_price: 2.50)
+    org1_product.prices << create(:price, :past_price, organization_id: buyer_org.id, min_quantity: 150, sale_price: 2.40)
     sign_in_as(user)
 
     expect(Dom::Product.all.count).to eql(2)
@@ -123,9 +123,9 @@ feature "Viewing products" do
     org2_product.save!
 
     org1_product.prices.first.update(min_quantity: 200) # there are only 150
-    org1_product.prices << create(:price, min_quantity: 300) # current scope is summing total available quantity once for each price that exists.
-    org1_product.prices << create(:price, market_id: market.id,          min_quantity: 200, sale_price: 2.50)
-    org1_product.prices << create(:price, organization_id: buyer_org.id, min_quantity: 200, sale_price: 2.40)
+    org1_product.prices << create(:price, :past_price, min_quantity: 300) # current scope is summing total available quantity once for each price that exists.
+    org1_product.prices << create(:price, :past_price, market_id: market.id,          min_quantity: 200, sale_price: 2.50)
+    org1_product.prices << create(:price, :past_price, organization_id: buyer_org.id, min_quantity: 200, sale_price: 2.40)
     sign_in_as(user)
 
     choose_delivery "Between 12:00PM and 2:00PM"
@@ -156,7 +156,7 @@ feature "Viewing products" do
 
   scenario "changing the quantity for a listed product", :js, :shaky do
     skip "shaky test"
-    create(:price, product: org1_product, sale_price: 1.50, min_quantity: 5)
+    create(:price, :past_price, product: org1_product, sale_price: 1.50, min_quantity: 5)
 
     sign_in_as(user)
 
@@ -576,8 +576,8 @@ feature "Viewing products" do
 
   context "organization specific pricing" do
     let!(:everyone_price_1) { org1_product.prices.first.update(sale_price: 10.00) }
-    let!(:everyone_price_2) { create(:price, product: org1_product, sale_price: 8.00, min_quantity: 5) }
-    let!(:org_price_1)      { create(:price, product: org1_product, organization: buyer_org, sale_price: 5.00, min_quantity: 5) }
+    let!(:everyone_price_2) { create(:price, :past_price, product: org1_product, sale_price: 8.00, min_quantity: 5) }
+    let!(:org_price_1)      { create(:price, :past_price, product: org1_product, organization: buyer_org, sale_price: 5.00, min_quantity: 5) }
 
     scenario "organization only sees pricing relavent to them" do
       sign_in_as(user)

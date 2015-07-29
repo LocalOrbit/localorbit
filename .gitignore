@@ -23,6 +23,8 @@ dragonfly.log
 /dragonfly
 public/system/dragonfly/development
 
+.DS_Store
+
 tags
 *.swp
 *.swo
@@ -30,5 +32,8 @@ latest.prod.dump
 cleansed.prod.dump
 
 .DS_Store
-
 ~*.xlsx
+
+# IntelliJ
+/.idea
+/localorbit.iml

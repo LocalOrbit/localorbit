@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe PaymentProvider::Stripe do
-  subject { described_class } 
+  subject { described_class }
 
   before :all do VCR.turn_off! end
   after :all do VCR.turn_on! end
@@ -12,13 +12,21 @@ describe PaymentProvider::Stripe do
     end
   end
 
+  describe ".default_currency_for_country(country)" do
+    it "returns the correct currency" do
+      expect(subject.default_currency_for_country('US')).to eq 'USD'
+      expect(subject.default_currency_for_country('CA')).to eq 'CAD'
+      expect { subject.default_currency_for_country('Gondor')}.to raise_error(ArgumentError, "Gondor is not a supported country.")
+    end
+  end
+
   describe ".place_order" do
     let(:params) {
-      { 
+      {
         buyer_organization: "the buyer org",
         user: "the user",
         order_params: "the order params",
-        cart: "the cart" 
+        cart: "the cart"
       }
     }
 
@@ -60,7 +68,7 @@ describe PaymentProvider::Stripe do
       context "...and amount is 0 and payment_method is 'credit card'" do
         it "returns 'paid' for nil charge" do
           # This is part of the hokey dance of pretending 0-amount payments are paid.  See AttemptPurchase to
-          # understand the context for this odd interpretation.  
+          # understand the context for this odd interpretation.
           translated = subject.translate_status(charge: nil, amount:"0".to_d, payment_method:"credit card")
           expect(translated).to eq('paid')
         end
@@ -72,18 +80,18 @@ describe PaymentProvider::Stripe do
     include_context "the mini market"
 
     let(:cart)      { create(:cart, organization: buyer_organization) }
-    
-    let!(:credit_card) { 
-      bank_account = create(:bank_account, :credit_card) 
+
+    let!(:credit_card) {
+      bank_account = create(:bank_account, :credit_card)
       create_stripe_credit_card(stripe_customer: stripe_customer, bank_account: bank_account)
-      
-      # Make sure Barry has the credit card 
+
+      # Make sure Barry has the credit card
       buyer_organization.bank_accounts << bank_account
 
       bank_account
     }
     let(:order) { mm_order1 } # from mini market
-    
+
     let(:payment_method) { "credit card" }
     let(:amount) { "100.00".to_d }
 
@@ -229,7 +237,7 @@ describe PaymentProvider::Stripe do
       let(:charge) { double "the charge", refunds: refund_list }
       let(:refund_list) { double "the list of refunds" }
       let(:new_refund) { double "the new refund" }
-      
+
       it "creates a refund on the given charge" do
         expect(refund_list).to receive(:create).with(
           refund_application_fee: true,
@@ -286,7 +294,7 @@ describe PaymentProvider::Stripe do
     end
 
     # order1 now has 2 items:
-    #   order1_item1 amounts to 6.99 
+    #   order1_item1 amounts to 6.99
     #   order1_item2 amounts to 19.00
     #   total 25.99
     #   payment fees: 1.35
@@ -403,7 +411,7 @@ describe PaymentProvider::Stripe do
     def create_refund_payment
       subject.create_refund_payment(params)
     end
-      
+
 
     it "stores a Payment record corresponding to a refund on a charge, parented to the original Payment instance" do
       expect(Stripe::ApplicationFee).to receive(:retrieve).with(charge.application_fee).and_return(app_fee)
@@ -504,7 +512,7 @@ describe PaymentProvider::Stripe do
       status: 'the status',
       amount: "12.34".to_d
     }}
-      
+
     it "creates and returns a Payment record to track the Stripe transfer and the involved Orders" do
       payment = subject.create_market_payment(params)
       expect(payment).to be
@@ -544,7 +552,7 @@ describe PaymentProvider::Stripe do
       )
       expect(credit_card).to be
     end
-    
+
   end
 
   describe ".add_payment_method" do
@@ -559,7 +567,7 @@ describe PaymentProvider::Stripe do
 
     it "invokes AddStripeCreditCardToEntity" do
       expect(AddStripeCreditCardToEntity).to receive(:perform).with(params)
-      subject.add_payment_method(params.merge(type: "card"))  
+      subject.add_payment_method(params.merge(type: "card"))
     end
 
     it "raises error for type not equal card" do
@@ -581,7 +589,7 @@ describe PaymentProvider::Stripe do
 
     it "invokes AddStripeCreditCardToEntity" do
       expect(AddStripeDepositAccountToMarket).to receive(:perform).with(params)
-      subject.add_deposit_account(params.merge(type: "checking"))  
+      subject.add_deposit_account(params.merge(type: "checking"))
     end
 
     it "raises error for type not equal 'checking'" do
@@ -612,7 +620,7 @@ describe PaymentProvider::Stripe do
 end
 
 describe PaymentProvider::Stripe, vcr: true do
-  subject { described_class } 
+  subject { described_class }
 
   describe '.order_ids_for_market_payout_transfer' do
     it "returns lo order ids from a transaction's payments" do
