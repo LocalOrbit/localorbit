@@ -323,9 +323,11 @@ describe "Managing Markets" do
         expect(page).to have_content("Allow credit cards")
       end
 
-      it "can modify payment options" do
+      it "can modify payment options", :js do
         within("#allowed-payment-options") do
+          expect(page).to have_content "Require purchase order"
           uncheck "Allow purchase orders"
+          expect(page).to_not have_content "Require purchase order"
         end
 
         within("#default-payment-options") do

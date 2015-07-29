@@ -78,6 +78,7 @@ class Admin::MarketsController < AdminController
       columns.concat([
         :active,
         :allow_purchase_orders,
+        :require_purchase_orders,
         :allow_credit_cards,
         :allow_ach,
         :default_allow_purchase_orders,
