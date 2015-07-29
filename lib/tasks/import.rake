@@ -77,8 +77,9 @@ namespace :import do
   desc "imports products for Zynga marketplaces"
   task zynga_products: [:environment] do
     products_file = ENV["FILE"]
-    raise "must specifcy FILE=path/to/products.csv" unless products_file
+    raise "must specify FILE=path/to/products.csv" unless products_file
     require 'csv'
+    require 'product_import/categories.rb'
     data = open(products_file).read
     products = CSV.parse(data, headers: true)
 
@@ -91,11 +92,16 @@ namespace :import do
         puts "Validating product #{row.inspect}"
 
         seller_name,
+        product_name,
+        category_name,
         category_id,
         unit_id,
-        price = row.values_at('Seller Name', 'Category ID', 'Unit ID', 'Price');
+        price = row.values_at('Seller Name', 'Product Name',
+                              'Category Name', 'Category ID',
+                              'Unit ID', 'Price')
 
         seller_id = sellers[seller_name]
+        category_id = PREDEFINED_CATEGORY[category_name]
 
         raise "no Category ID" unless category_id
         raise "no Unit ID" unless unit_id
@@ -105,14 +111,20 @@ namespace :import do
 
       products.each do |row|
         seller_name, product_name,
-        category_id, short_description,
+        category_name, category_id,
+        code,
+        short_description,
         long_description, unit_id,
         unit_description,
         price = row.values_at('Seller Name', 'Product Name',
-                              'Category ID', 'Short Description',
+                              'Category Name', 'Category ID',
+                              'Supplier Product Number',
+                              'Short Description',
                               'Long Description', 'Unit ID',
                               'Unit Description (optional)',
                               'Price')
+
+        category_id = PREDEFINED_CATEGORY[category_name]
 
         seller_id = sellers[seller_name]
 
@@ -123,6 +135,7 @@ namespace :import do
           organization_id: seller_id,
           unit_id: unit_id,
           category_id: category_id,
+          code: code,
           short_description: short_description,
           long_description: long_description,
           unit_description: unit_description
