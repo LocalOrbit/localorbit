@@ -49,9 +49,11 @@ class ProductImport::Transforms::ConvertUnitOfMeasure < ProductImport::Framework
         return nil
       else
         row['qty_per_case'] = cnt
+        return cnt
       end
     else
         row['qty_per_case'] = 1
+        return 1
     end
   end
 
@@ -81,7 +83,7 @@ class ProductImport::Transforms::ConvertUnitOfMeasure < ProductImport::Framework
       else
         weight = cnt * unit_multiplier
         row['lbs_per_item'] = weight
-        weight
+        return weight
       end
 
     else
