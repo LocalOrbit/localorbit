@@ -15,8 +15,10 @@ class ProductImport::Transforms::FromTableGroupedByCategory < ProductImport::Fra
 
   def transform_step(row)
     if opts[:header_row_pattern].zip(row).all?{|pat, actual| !pat || pat === actual}
+
       @last_category = @last_row[category_column]
       @last_header_row = row
+
     elsif @last_category
 
       hash = Hash[@last_header_row.zip(row)]
@@ -27,7 +29,6 @@ class ProductImport::Transforms::FromTableGroupedByCategory < ProductImport::Fra
       else
         hash['category'] = @last_category
         continue hash
-
       end
 
     end

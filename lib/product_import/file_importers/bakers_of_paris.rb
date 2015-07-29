@@ -31,8 +31,6 @@ module ProductImport
         s.transform :validate_keys_are_present,
           keys: REQUIRED_HEADERS
 
-        # TODO: Add your transforms here
-
         # provide default values and validate that we've generated
         # canonical data.
         s.transform :ensure_canonical_data
