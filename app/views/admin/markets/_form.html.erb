@@ -131,12 +131,16 @@
   <% end %>
 
 
-  <% if current_user.admin? %>
+  <% if current_user.can_manage_market?(@market) %>
     <div class="row row--field">
       <div class="field column column--half column--guttered" id="allowed-payment-options">
         <label>Allowed payment methods</label><br>
         <%= f.check_box :allow_purchase_orders %>
         <%= f.label :allow_purchase_orders %><br>
+        <span id="market_require_purchase_orders_span" style="<%= "display:none" unless @market.allow_purchase_orders %>">
+          <%= f.check_box :require_purchase_orders %>
+          <%= f.label :require_purchase_orders, "Require purchase order number" %><br>
+        </span>
         <% if PaymentProvider.supports_payment_method?(@market.payment_provider, 'credit card') %>
           <%= f.check_box :allow_credit_cards %>
           <%= f.label :allow_credit_cards %><br>

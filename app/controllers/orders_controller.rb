@@ -17,11 +17,13 @@ class OrdersController < ApplicationController
       @apply_discount = ApplyDiscountToCart.perform(cart: current_cart, code: params[:discount_code])
       flash[:discount_message] = @apply_discount.context[:message]
       redirect_to cart_path
+    elsif order_number_missing?
+      reject_order "Your order cannot be completed without a purchase order number."
     else
-       @placed_order = PaymentProvider.place_order(current_market.payment_provider, 
+       @placed_order = PaymentProvider.place_order(current_market.payment_provider,
                                                    buyer_organization: current_cart.organization,
-                                                   user: current_user, 
-                                                   order_params: order_params, 
+                                                   user: current_user,
+                                                   order_params: order_params,
                                                    cart: current_cart)
 
       if @placed_order.context.key?(:order)
@@ -32,19 +34,28 @@ class OrdersController < ApplicationController
         session.delete(:cart_id)
         @grouped_items = @order.items.for_checkout
       else
-        @grouped_items = current_cart.items.for_checkout
-
         if @placed_order.context.key?(:cart_is_empty)
+          @grouped_items = current_cart.items.for_checkout
           redirect_to [:products], alert: @placed_order.message
         else
-          flash.now[:alert] = "Your order could not be completed."
-          render "carts/show"
+          reject_order "Your order could not be completed."
         end
       end
     end
   end
 
+
   protected
+
+  def order_number_missing?
+    order_params[:payment_method] == "purchase order" && order_params[:payment_note] == "" && current_market.require_purchase_orders
+  end
+
+  def reject_order(message)
+    @grouped_items = current_cart.items.for_checkout
+    flash.now[:alert] = message
+    render "carts/show"
+  end
 
   def order_params
     params.require(:order).permit(
