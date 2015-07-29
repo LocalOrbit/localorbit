@@ -70,14 +70,26 @@ describe "Managing Markets" do
       expect(page).to_not have_field("Plan")
     end
 
-    it "I cannot see payment options" do
+    it "I can see and edit payment options", :js do
       visit admin_market_path(market1)
 
-      expect(page).to_not have_content("Allowed payment methods")
-      expect(page).to_not have_content("Default organization payment methods")
+      within("#allowed-payment-options") do
+        expect(page).to have_content "Require purchase order"
+        uncheck "Allow purchase orders"
+        expect(page).to_not have_content "Require purchase order"
+      end
 
-      expect(page).to_not have_content("Allow purchase orders")
-      expect(page).to_not have_content("Allow credit cards")
+      within("#default-payment-options") do
+        check "Allow purchase orders"
+      end
+
+      click_button "Update Market"
+
+      expect(find("#market_allow_purchase_orders")).to_not be_checked
+      expect(find("#market_allow_credit_cards")).to be_checked
+
+      expect(find("#market_default_allow_purchase_orders")).to be_checked
+      expect(find("#market_default_allow_credit_cards")).to be_checked
     end
 
     it "I can not add a market" do
