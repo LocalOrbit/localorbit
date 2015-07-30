@@ -4,8 +4,8 @@
   <meta charset="utf-8">
   <meta name="pdfkit-print_media_type" content="true">
   <meta name="pdfkit-header_html" content="<%= request.base_url.gsub(/:3000/, ':3500') + pdf_view_header_path + "?order_number=" + invoice.order_number  %>">
-  <meta name="pdfkit-margin_top" content="0.78in">
-  <meta name="pdfkit-margin_bottom" content="0.25in">
+  <meta name="pdfkit-header_spacing" content="20">
+  <meta name="pdfkit-footer_spacing" content="20">
   <meta name="pdfkit-header_font_size" content="10">
   <title>Local Orbit</title>
   <%= render 'shared/print_opensanscondensed_bold' %>
@@ -21,7 +21,7 @@
       font-family:Arial;
       font-weight:bold;
       font-size:14px;
-      height:60px;
+      margin-top:60px;
     }
 
     .invoices-wrapper {
@@ -167,19 +167,31 @@
     }
 
     .invoices-wrapper tr, .invoices-wrapper td, .invoices-wrapper th {
-        page-break-inside: avoid
+        page-break-inside: avoid;
+    }
+
+    .invoices-wrapper td:first-child {
+        padding-left:8px;
+    }
+
+    .invoices-wrapper td:last-child {
+        padding-right:8px;
     }
 
     .invoices-wrapper th {
-        padding: 10px;
+        padding: 4px;
         color: #666;
         font-size: 12px;
         text-align: left;
-        vertical-align: top
+        vertical-align: top;
+    }
+
+    .invoices-wrapper .pseudopod th {
+        vertical-align: middle;
     }
 
     .invoices-wrapper td {
-        padding: 10px;
+        padding: 10px 3px 10px 3px;
         font-size: 12px
     }
 
@@ -187,15 +199,8 @@
         background: #f9f9f9
     }
 
-    .invoices-wrapper .pseudopod {
-        padding: 10px 0 0
-    }
-
-    .invoices-wrapper .pseudopod td {
-        padding: 5px 10px
-    }
-
     .invoices-wrapper .pseudopod th {
+        padding-right:10px;
         font-size: 12px;
         font-weight: normal
     }
@@ -243,13 +248,13 @@
         font-weight: bold
     }
 
-    .invoices-wrapper .due-date {
-        width:150px;
-        clear: right;
-        padding: 17px;
+    .invoices-wrapper .gray-box {
+        width:112px;
+        display:inline-block;
+        padding: 5px;
         border: solid 2px #C7C7C7;
         background: #f9f9f9;
-        font: bold 25px Arial
+        font: bold 22px Arial
     }
 
     .invoices-wrapper .inline {
@@ -302,13 +307,6 @@
         word-wrap: break-word;
     }
 
-    .invoices-wrapper .signature {
-        width:45%;
-        color:#666;
-        border-top:1px solid #666;
-        margin-top:60px;
-    }
-
     @media print {
         .controller-invoices .l-app-header, .controller-invoices .l-app-footer,
         .controller-invoices .btn--save, .controller-invoices .logo-link,
@@ -341,7 +339,7 @@
   </style>
 </head>
 
-<body class="controller-invoices">
+<body class="controller-invoices" style="margin:0px;padding:50px;">
   <% @logo_path = asset_url("logo.png") # needed if market doesn't have a logo %>
   <div class="invoices-wrapper">
     <div class="row">
@@ -393,9 +391,13 @@
         <%= "<span class=\"inline-block\" style=\"margin-left:15px;\"><h2>Purchase Order #</h2><p class=\"po-num\">#{invoice.payment_note}</p></span>".html_safe if invoice.payment_note.present? %>
         <br><br>
         <div class="invoice-basics">
-          <div class="due-date">
+          <div class="gray-box">
             <h2>Due Date</h2>
             <%= (invoice.invoice_due_date || market.po_payment_term.to_i.days.from_now).strftime("%-m/%-d/%Y") %>
+          </div>
+          <div class="gray-box">
+            <h2>Total</h2>
+            <%= number_to_currency invoice.total_cost %>
           </div>
           <h2 class="inline">Invoice Date&nbsp;&nbsp;</h2>
           <span class="date">
@@ -405,7 +407,7 @@
       </div>
     </div>
     <%= render "shared/invoice", { market: invoice.market.decorate, invoice: invoice, user: user } %>
-    <div style="page-break-inside: never;page-break-after: never;">
+    <div style="page-break-inside:never;page-break-after:never;width:7in;">
       <br>
       <div class="signature" style="float:left">Signature</div><div class="signature" style="float:right;">Signature</div>
     </div>
