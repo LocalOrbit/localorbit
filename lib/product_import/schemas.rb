@@ -17,7 +17,7 @@ module ProductImport::Schemas
 
     _?('short_description') => String,
     _?('long_description') => String,
-    _?('source_data') => hash_of(either(Numeric,String) => maybe(either(String, Numeric))),
+    _?('source_data') => Hash,
   }}
 
 

@@ -2,12 +2,12 @@ require 'spec_helper'
 
 describe ProductImport::Transforms::ConvertUnitOfMeasure do
 
-  def test_uom(price:, uom:, package:, expect_price:, **rest)
+  def test_uom(price:, uom:, unit:, expect_price:, **rest)
     expect_lbs = rest[:expect_lbs]
     expect_qty = rest[:expect_qty]
 
     data = [
-      {"uom" => uom, "package" => package, "price" => price},
+      {"uom" => uom, "unit" => unit, "price" => price},
     ]
 
     successes, failures = subject.transform_enum(data)
@@ -18,7 +18,7 @@ describe ProductImport::Transforms::ConvertUnitOfMeasure do
     value = successes[0]
 
     expect(value["uom"]).to eq(uom)
-    expect(value["package"]).to eq(package)
+    expect(value["unit"]).to eq(unit)
 
     if expect_qty
       expect(value['qty_per_case']).to eq(expect_qty)
@@ -35,7 +35,7 @@ describe ProductImport::Transforms::ConvertUnitOfMeasure do
 
   describe "when UOM is 'case'" do
     it "handles various formats" do
-      test_uom(price:"1.03", uom: "case", package: "6/6 LB LOAVES", 
+      test_uom(price:"1.03", uom: "case", unit: "6/6 LB LOAVES", 
           expect_price: '1.03')
     end
 
@@ -43,19 +43,19 @@ describe ProductImport::Transforms::ConvertUnitOfMeasure do
 
   describe "when UOM is 'piece'" do
     it "handles various formats" do
-      test_uom(price:"1.03", uom: "piece", package: "6/6 LB LOAVES", 
+      test_uom(price:"1.03", uom: "piece", unit: "6/6 LB LOAVES", 
           expect_qty: 6, expect_price: '6.18')
 
-      test_uom(price:"1.03", uom: "piece", package: "3# AVG",
+      test_uom(price:"1.03", uom: "piece", unit: "3# AVG",
           expect_qty: 1, expect_price: '1.03')
 
-      test_uom(price:"1.03", uom: "piece", package: "1/9 LBS",
+      test_uom(price:"1.03", uom: "piece", unit: "1/9 LBS",
           expect_qty: 1, expect_price: '1.03')
 
-      test_uom(price:"1.03", uom: "piece", package: "lb",
+      test_uom(price:"1.03", uom: "piece", unit: "lb",
           expect_qty: 1, expect_price: '1.03')
 
-      test_uom(price:"1.03", uom: "piece", package: "lb",
+      test_uom(price:"1.03", uom: "piece", unit: "lb",
           expect_qty: 1, expect_price: '1.03')
 
     end
@@ -64,35 +64,35 @@ describe ProductImport::Transforms::ConvertUnitOfMeasure do
 
   describe "When UOM is 'pound'" do
     it "handles various formats" do
-      test_uom(price:"1.03", uom: "pound", package: "6/6 LB LOAVES", 
+      test_uom(price:"1.03", uom: "pound", unit: "6/6 LB LOAVES", 
           expect_qty: 6, expect_lbs: 6.0, expect_price: '37.08')
 
-      test_uom(price:"1.03", uom: "pound", package: "3# AVG",
+      test_uom(price:"1.03", uom: "pound", unit: "3# AVG",
           expect_qty: 1, expect_lbs: 3.0, expect_price: '3.09')
 
-      test_uom(price:"1.03", uom: "pound", package: "1/9 LBS",
+      test_uom(price:"1.03", uom: "pound", unit: "1/9 LBS",
           expect_qty: 1, expect_lbs: 9.0, expect_price: '9.27')
 
-      test_uom(price:"1.03", uom: "pound", package: "lb",
+      test_uom(price:"1.03", uom: "pound", unit: "lb",
           expect_qty: 1, expect_lbs: 1, expect_price: '1.03')
 
-      test_uom(price:"1.03", uom: "pound", package: "lb",
+      test_uom(price:"1.03", uom: "pound", unit: "lb",
           expect_qty: 1, expect_lbs: 1, expect_price: '1.03')
 
-      test_uom(price:"1.03", uom: "pound", package: "5 LB BLOCK 2 /",
+      test_uom(price:"1.03", uom: "pound", unit: "5 LB BLOCK 2 /",
           expect_qty: 2, expect_lbs: 5.0, expect_price: '10.30')
 
     end
 
     it "supports kgs" do
 
-      test_uom(price:"1.03", uom: "pound", package: "6/3 KG BC",
+      test_uom(price:"1.03", uom: "pound", unit: "6/3 KG BC",
           expect_qty: 6, expect_lbs: 6.6, expect_price: '40.79')
 
     end
 
     it "supports oz" do
-      test_uom(price:"1.03", uom: "pound", package: "6/3 OZ BC",
+      test_uom(price:"1.03", uom: "pound", unit: "6/3 OZ BC",
           expect_qty: 6, expect_lbs: 0.1875, expect_price: '1.16')
     end
   end

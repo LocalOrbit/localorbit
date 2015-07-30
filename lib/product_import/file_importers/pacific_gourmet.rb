@@ -30,7 +30,7 @@ module ProductImport
           with: " - ",
           into: "name"
 
-        s.transform :map_category,
+        s.transform :dump_category,
           filename: "pacific_gourmet.csv",
           input_key: "ITEM CATEGORY"
 

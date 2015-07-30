@@ -1,19 +1,21 @@
 
 class ProductImport::Transforms::ConvertUnitOfMeasure < ProductImport::Framework::Transform
-  SUPPORTED_UOMS = %(piece case pound)
+  PIECE_UOMS = %w(piece pc)
+  POUND_UOMS = %w(pound lb)
+  CASE_UOMS = %w(case cs)
+  SUPPORTED_UOMS = [PIECE_UOMS, POUND_UOMS, CASE_UOMS].flatten
 
 
   def transform_step(row)
     # Use continue to pass the transformed data onto the next stage.
-    uom = row['uom']
+    uom = row['uom'].downcase
 
     if SUPPORTED_UOMS.include?(uom)
-      case uom
-      when 'case'
+      if CASE_UOMS.include?(uom)
         multiply_price(row, by: 1)
         continue row
 
-      when 'piece'
+      elsif PIECE_UOMS.include?(uom)
         count = fill_count(row)
 
         if count
@@ -21,7 +23,7 @@ class ProductImport::Transforms::ConvertUnitOfMeasure < ProductImport::Framework
           continue row
         end
 
-      when 'pound'
+      elsif POUND_UOMS.include?(uom)
         count = fill_count(row)
         lbs = fill_pounds(row)
 
@@ -29,7 +31,7 @@ class ProductImport::Transforms::ConvertUnitOfMeasure < ProductImport::Framework
           multiply_price(row, by: count * lbs)
           continue row
         else
-          reject "Didn't know how to interpret package line #{row['package']}. Got count: #{count}, lbs: #{lbs}"
+          reject "Didn't know how to interpret unit line #{row['unit']}. Got count: #{count}, lbs: #{lbs}"
         end
       end
 
@@ -42,7 +44,7 @@ class ProductImport::Transforms::ConvertUnitOfMeasure < ProductImport::Framework
   end
 
   def fill_count(row)
-    pkg = row['package']
+    pkg = row['unit']
     if pkg =~ %r{(\d+)\s*[/xX]}
       cnt = $1.to_i
       if cnt.zero?
@@ -60,7 +62,7 @@ class ProductImport::Transforms::ConvertUnitOfMeasure < ProductImport::Framework
 
 
   def fill_pounds(row)
-    pkg = row['package']
+    pkg = row['unit']
     if pkg =~ %r{((?:\d+\.)?\d+)?\s*(#|lb|kg|oz|ounce)}i
       unit = $2
       case unit.downcase

@@ -1,12 +1,12 @@
 module ProductImport
   module FileImporters
-    class BakersOfParis < Framework::FileImporter
+    class BaronsSpecialtyFoods < Framework::FileImporter
 
       # if any of these are missing, don't even try to process the file
-      REQUIRED_HEADERS = %w(CODE PRODUCTS PRICE)
+      REQUIRED_HEADERS = ["Item", "Item #", "Price/cs."]
 
       # See lib/product_import/formats for supported formats
-      format :xlsx
+      format :xls
 
       # This stage is responsible for transforming raw data from
       # the format reader into basic sequence of hashes.
@@ -15,9 +15,9 @@ module ProductImport
       # be rejected
       stage :extract do |s|
 
-        s.transform  :from_table_grouped_by_category,
-          category_column: 2,
-          header_row_pattern: [nil, "CODE", "PRODUCTS", nil, nil, "PRICE"],
+        s.transform :from_table_grouped_by_category,
+          category_column: 0,
+          header_row_pattern: ["Item", "Item #", "Package Size", /Price/, "Price/cs.", nil, nil],
           required_headers: REQUIRED_HEADERS
 
       end
@@ -26,24 +26,23 @@ module ProductImport
       # into the canonical format. Any rejected row is not imported
       # and saved for processing/triage.
       stage :canonicalize do |s|
-
         # Reject any rows which have blank required fields
         s.transform :validate_keys_are_present,
           keys: REQUIRED_HEADERS
 
         s.transform :alias_keys, key_map: {
-          "CODE" => "product_code",
-          "PRODUCTS" => "name",
-          "PRICE" => 'price',
-        }
-
-        s.transform :set_keys, map: {
-          "unit" => "Each"
+          "Item #" => "product_code",
+          "Item" => "name",
+          "Package Size" => "unit",
+          "Price/cs." => "price"
         }
 
         s.transform :map_category,
-          filename: "bakers_specialty_foods.csv",
+          filename: "barons_specialty_foods.csv",
           input_key: "category"
+
+
+        # TODO: Add your transforms here
 
         # provide default values and validate that we've generated
         # canonical data.

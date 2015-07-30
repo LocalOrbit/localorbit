@@ -1,9 +1,9 @@
 module ProductImport
   module FileImporters
-    class BakersOfParis < Framework::FileImporter
+    class ChefsWarehouse < Framework::FileImporter
 
       # if any of these are missing, don't even try to process the file
-      REQUIRED_HEADERS = %w(CODE PRODUCTS PRICE)
+      REQUIRED_HEADERS = ['CLASS -SUBCLASS', 'ITEM', 'DESCRIPTION', 'PACK', 'UOM','LASTPRICE']
 
       # See lib/product_import/formats for supported formats
       format :xlsx
@@ -15,9 +15,8 @@ module ProductImport
       # be rejected
       stage :extract do |s|
 
-        s.transform  :from_table_grouped_by_category,
-          category_column: 2,
-          header_row_pattern: [nil, "CODE", "PRODUCTS", nil, nil, "PRICE"],
+        s.transform :from_flat_table,
+          headers: true,
           required_headers: REQUIRED_HEADERS
 
       end
@@ -31,18 +30,21 @@ module ProductImport
         s.transform :validate_keys_are_present,
           keys: REQUIRED_HEADERS
 
+        # TODO: Add your transforms here
         s.transform :alias_keys, key_map: {
-          "CODE" => "product_code",
-          "PRODUCTS" => "name",
-          "PRICE" => 'price',
+          "ITEM" => "product_code",
+          "PACK" => "unit",
+          'LASTPRICE' => 'price',
+          "UOM" => 'uom',
+          "CLASS -SUBCLASS" => "category",
+          'DESCRIPTION' => 'name',
         }
 
-        s.transform :set_keys, map: {
-          "unit" => "Each"
-        }
+
+        s.transform :convert_unit_of_measure
 
         s.transform :map_category,
-          filename: "bakers_specialty_foods.csv",
+          filename: "chefs_warehouse.csv",
           input_key: "category"
 
         # provide default values and validate that we've generated
@@ -52,4 +54,3 @@ module ProductImport
     end
   end
 end
-

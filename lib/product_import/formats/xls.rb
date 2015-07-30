@@ -10,7 +10,15 @@ module ProductImport
           worksheet = workbook.worksheet 0
 
           worksheet.each do |row|
-            values = (0...row.size).map{|i| row[i]}
+            values = (0...row.size).map{|i| 
+              contents = row[i]
+              if contents.respond_to? :value
+                # a Formula
+                contents.value
+              else
+                contents
+              end
+            }
             yielder << values
           end
         end
