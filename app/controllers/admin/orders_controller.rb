@@ -16,7 +16,7 @@ class Admin::OrdersController < AdminController
     results = Order.includes(:organization, :items).orders_for_seller(current_user).uniq.search(search.query)
     results.sorts = "placed_at desc" if results.sorts.empty?
 
-    if current_user.seller? && !current_user.admin?
+    if !current_user.admin?
       order_ids = results.result.map(&:id)
       order_items = OrderItem.includes(:product, :order).joins(:product).where(:order_id => order_ids, "products.organization_id" => current_user.managed_organization_ids_including_deleted)
       totals = OrderTotals.new(order_items)
