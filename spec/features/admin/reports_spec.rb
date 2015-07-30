@@ -265,17 +265,25 @@ feature "Reports" do
 
         expect(csv.count).to eq(items.count)
 
-        # Ensure we see the same columns and order in HTML and CSV
+        # Ensure all columns in HTML are in CSV
         expect(html_headers - csv.headers).to be_empty
-
         # For all fields defined for the current report, ensure we have
         # corresponding values in our CSV file. Fields for a given report
         # are defined in ReportPresenter.
         field_headers = ReportPresenter.field_headers_for_report(report)
         items.each_with_index do |item, i|
           field_headers.each_pair do |field, display_name|
-            if !["Actual Discount", "Actual Discounts"].include? display_name # We're hiding the discounts column in the html view
+            if ["Actual Discount", "Actual Discounts"].include? display_name # We're hiding the discounts column in the html view
+              next
+            elsif display_name == "Product Code" # The product name and product code columns are merged in the html view
+              next
+            else
               expect(item.send(field)).to include(csv[i][display_name])
+              if display_name == "Product"
+                expect(item.send(field)).to include(csv[i]["Product Code"])
+              elsif display_name == "Placed On"
+                expect(item.send(field)).to include(csv[i]["Order Number"])
+              end
             end
           end
         end
@@ -534,7 +542,7 @@ feature "Reports" do
 
       it "provides the Admin link to Products" do
         product_name = Dom::Report::ItemRow.first.product_name
-        product_name = product_name.split("product-code-4 ").last
+        product_name = product_name.split(" product-code-4").first
         see_admin_product_link product: Product.find_by(name: product_name)
       end
 
