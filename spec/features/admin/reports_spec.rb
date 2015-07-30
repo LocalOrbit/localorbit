@@ -536,6 +536,19 @@ feature "Reports" do
         expect(item_rows_for_order("LO-01-234-4567890-4").count).to eq(1)
       end
 
+      it "displays total sales" do
+        totals = Dom::Admin::TotalSales.first
+
+        expect(totals.gross_sales).to eq("$110.00")
+        expect(totals.market_fees).to eq("$2.50")
+        expect(totals.lo_fees).to eq("$7.50")
+        expect(totals.processing_fees).to eq("$6.25")
+        expect(totals.delivery_fees).to eq("$5.00")
+        expect(totals.discount_seller).to eq("$0.00")
+        expect(totals.discount_market).to eq("$0.00")
+        expect(totals.net_sales).to eq("$93.75")
+      end
+
       it "provides the admin link to Orders" do
         follow_admin_order_link order_number: "LO-01-234-4567890-0"
       end
@@ -703,7 +716,7 @@ feature "Reports" do
       scenario "does not show a product code" do
         expect(page).to_not have_content("product-code-1")
       end
-      
+
       context "Purchases by Product report" do
         let!(:report) { :purchases_by_product }
 
@@ -715,6 +728,14 @@ feature "Reports" do
           expect(page).to have_field("Placed on or before")
           expect(page).to have_select("Category")
           expect(page).to have_select("Product")
+        end
+
+        scenario "displays total sales" do
+          totals = Dom::Admin::TotalSales.first
+          expect(totals.discounted_total).to eq("$110.00") # TODO add tests with real discounts
+          expect(page).to have_content("Total Purchase")
+          expect(page).not_to have_content("Market Fees")
+          expect(page).not_to have_content("Delivery Fees")
         end
 
         scenario "filters by category" do
@@ -758,6 +779,14 @@ feature "Reports" do
           expect(page).to have_field("Search")
           expect(page).to have_field("Placed on or after")
           expect(page).to have_field("Placed on or before")
+        end
+
+        scenario "displays total sales" do
+          totals = Dom::Admin::TotalSales.first
+          expect(totals.discounted_total).to eq("$110.00")
+          expect(page).to have_content("Total Purchase")
+          expect(page).not_to have_content("Market Fees")
+          expect(page).not_to have_content("Delivery Fees")
         end
 
         # https://www.pivotaltracker.com/story/show/78823306

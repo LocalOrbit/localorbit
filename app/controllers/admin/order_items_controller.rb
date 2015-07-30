@@ -39,17 +39,9 @@ module Admin
     end
 
     def perform_search_and_calculate_totals(items, search)
-      query = items.search(search)
+      query = items.includes(:product, :order).search(search)
       query.sorts = ["order_placed_at desc", "name"] if query.sorts.empty?
-
-      if current_user.seller? && !current_user.admin?
-        order_ids = query.result.map(&:id)
-        order_items = OrderItem.includes(:product, :order).joins(:product).where(:order_id => order_ids, "products.organization_id" => current_user.managed_organization_ids_including_deleted)
-        totals = OrderTotals.new(order_items)
-      else
-        totals = OrderTotals.new(OrderItem.where("1 = 0"))
-      end
-      [query, totals]
+      [query, OrderTotals.new(query.result)]
     end
 
     def fetch_order_items
