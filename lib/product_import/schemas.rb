@@ -14,6 +14,7 @@ module ProductImport::Schemas
     # e.g. 12.34
 
     'unit' => String,
+    _?('uom') => String,
 
     _?('short_description') => String,
     _?('long_description') => String,

@@ -170,7 +170,7 @@ module ProductImport
                   headers = payload.keys
                   if payload.key? 'source_data'
                     headers.delete 'source_data'
-                    # headers.concat payload['source_data'].keys
+                    headers.concat payload['source_data'].keys
                   end
                   csv << headers
                 end
