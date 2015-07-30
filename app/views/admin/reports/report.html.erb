@@ -8,6 +8,7 @@
       <thead>
         <tr>
           <% @presenter.fields.each do |field| %>
+            <% next if (field == :product_code) %>
             <% filter_map = ReportPresenter::FIELD_MAP[field] || {} %>
             <th class="<%= filter_map[:sort] unless @presenter.report == "discount_code_use" %>">
               <% if filter_map[:sort] %>
@@ -52,14 +53,14 @@
 
           <% if field == :product_name %>
             <td class="product">
-              <% if item.product.code.present? and (current_user.seller? or current_user.market_manager? or current_user.admin?) %>
-                <%= item.product.code %><br>
-              <% end %>
               <%- if current_user.buyer_only? %>
                 <%= link_to item.product_name , item.product %>
               <%- else %>
                 <%= link_to item.product_name, [:admin, item.product] %>
               <%- end %>
+              <% if item.product.code.present? and (current_user.seller? or current_user.market_manager? or current_user.admin?) %>
+                <br><%= item.product.code %>
+              <% end %>
             </td>
           <% end %>
 

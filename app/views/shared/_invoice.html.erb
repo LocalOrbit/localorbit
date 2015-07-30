@@ -16,10 +16,10 @@
     <% invoice.items.each do |item| %>
     <tr class="line-item">
       <td class="al">
-        <% if item.product.code.present? %>
-          <%= item.product.code %><br>
-        <% end %>
         <%= item.name %>
+        <% if item.product.code.present? %>
+          <br><%= item.product.code %>
+        <% end %>
       </td>
       <td><%= item.unit %></td>
       <td><%= item.quantity %></td>

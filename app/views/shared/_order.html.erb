@@ -87,6 +87,7 @@
     <table class="current-sales-table odd order-table-1">
       <thead>
         <tr>
+          <th>Product Name</th>
           <th>Product Code</th>
           <th>Quantity</th>
           <th>Price</th>
@@ -106,11 +107,15 @@
           <% user_order_item_context = UserOrderItemContext.build(user: current_user, order_item: item.object) %>
         <tr class="order-item-row">
           <td class="name">
-            <% if item.object.product.code.present? %>
-              <span><%= item.object.product.code %></span> <br />
-            <% end %>
             <span class="product-ordered"><%= item.object.name %></span> <br />
             <span class="seller-name">from <%= item.object.product.organization.name %></span>
+          </td>
+          <td>
+            <% if item.object.product.code.present? %>
+              <span><%= item.object.product.code %></span> <br />
+            <% else %>
+              -
+            <% end %>
           </td>
           <td class="quantity">
             <%# if (current_user.admin? || current_user.market_manager?) && item.object.delivery_status == 'pending' %>
