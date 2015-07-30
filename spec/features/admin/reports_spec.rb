@@ -55,6 +55,7 @@ feature "Reports" do
                        organization: buyer,
                        delivery_fees: 1,
                        payment_method: ["purchase order", "purchase order", "purchase order", "ach", "ach", "credit card"][i],
+                       payment_note: ["PURCHASE-0-foo", "PURCHASE-1-foo", nil, nil, nil, nil][i],
                        payment_status: "paid",
                        order_number: "LO-01-234-4567890-#{i}")
         create(:payment,
@@ -225,6 +226,22 @@ feature "Reports" do
 
         expect(Dom::Report::ItemRow.all.count).to eq(1)
         expect(item_rows_for_order("LO-03-234-4567890-1").count).to eq(1)
+      end
+
+      scenario "searches by purchase order number" do
+        expect(Dom::Report::ItemRow.all.count).to eq(11)
+
+        fill_in "Search", with: "PURCHASE-0"
+        click_button "Search"
+
+        expect(Dom::Report::ItemRow.all.count).to eq(1)
+        expect(item_rows_for_order("LO-01-234-4567890-0").count).to eq(1)
+
+        fill_in "Search", with: "PURCHASE-1"
+        click_button "Search"
+
+        expect(Dom::Report::ItemRow.all.count).to eq(1)
+        expect(item_rows_for_order("LO-01-234-4567890-1").count).to eq(1)
       end
 
       scenario "filters by market" do
