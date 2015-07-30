@@ -3,7 +3,7 @@ module ProductImport
     class Birite < Framework::FileImporter
 
       # if any of these are missing, don't even try to process the file
-      REQUIRED_HEADERS = ['', 
+      REQUIRED_HEADERS = ['Distributor Item#', 'Brand', 'Product Description', 'Category', 'Pack', 'Size', 'Priced by Pound', 'Weight', 'Price']
 
       # See lib/product_import/formats for supported formats
       format :csv
@@ -28,24 +28,31 @@ module ProductImport
 
         # Reject any rows which have blank required fields
         s.transform :validate_keys_are_present,
-          keys: %w(more headers or just REQUIRED_HEADERS)
+          keys: REQUIRED_HEADERS - ['Brand', 'Size']
 
-      s.transform :translate_keys, map: {
-        "Distributor Item#" => "product_code",
-        "Size" => "unit",
-        "Price" => "price",
-      }
+        s.transform :alias_keys, key_map: {
+          "Distributor Item#" => "product_code",
+          "Price" => "price",
+        }
 
-      s.transform :join_keys,
-        into: "name",
-        keys: ["Brand", "Product Description"]
+        s.transform :join_keys,
+          into: "name",
+          keys: ["Brand", "Product Description"]
 
-      s.transform :join_keys,
-        into: "name",
-        keys: ["Pack", "Size"],
-        join_with: " / "
+        s.transform :join_keys,
+          into: "unit",
+          keys: ["Pack", "Size"],
+          with: " / "
 
-      s.transform :ensure_canonical_data
+        s.transform :convert_priced_by_weight_items,
+          flag_key: 'Priced by Pound',
+          multiplier_key: 'Weight'
+
+        s.transform :map_category,
+          filename: "birite.csv",
+          input_key: "Category"
+
+        s.transform :ensure_canonical_data
       end
     end
   end
