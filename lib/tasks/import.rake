@@ -73,4 +73,66 @@ namespace :import do
       puts "DONE!"
     end
   end
+
+  desc "imports products for Zynga marketplaces"
+  task zynga_products: [:environment] do
+    products_file = ENV["FILE"]
+    raise "must specifcy FILE=path/to/products.csv" unless products_file
+    require 'csv'
+    data = open(products_file).read
+    products = CSV.parse(data, headers: true)
+
+    Product.transaction do
+      sellers = {
+        "The Chef's Warehouse" => 4941
+      }
+
+      products.each do |row|
+        puts "Validating product #{row.inspect}"
+
+        seller_name,
+        category_id,
+        unit_id,
+        price = row.values_at('Seller Name', 'Category ID', 'Unit ID', 'Price');
+
+        seller_id = sellers[seller_name]
+
+        raise "no Category ID" unless category_id
+        raise "no Unit ID" unless unit_id
+        raise "no Price" unless price
+        raise "unknown Seller ID" unless seller_id
+      end
+
+      products.each do |row|
+        seller_name, product_name,
+        category_id, short_description,
+        long_description, unit_id,
+        unit_description,
+        price = row.values_at('Seller Name', 'Product Name',
+                              'Category ID', 'Short Description',
+                              'Long Description', 'Unit ID',
+                              'Unit Description (optional)',
+                              'Price')
+
+        seller_id = sellers[seller_name]
+
+        puts "Importing #{product_name} - #{short_description} - #{seller_name}"
+
+        prod = Product.create!(
+          name: product_name,
+          organization_id: seller_id,
+          unit_id: unit_id,
+          category_id: category_id,
+          short_description: short_description,
+          long_description: long_description,
+          unit_description: unit_description
+        )
+
+        prod.lots.create!(quantity: 999_999)
+        prod.prices.create!(sale_price: price, min_quantity: 1)
+
+      end
+      puts "DONE!"
+    end
+  end
 end

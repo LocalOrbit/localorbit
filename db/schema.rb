@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150728194123) do
+ActiveRecord::Schema.define(version: 20150728203823) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -412,6 +412,7 @@ ActiveRecord::Schema.define(version: 20150728194123) do
     t.string   "stripe_account_id"
     t.string   "payment_provider"
     t.string   "country",                                               default: "US",  null: false
+    t.boolean  "require_purchase_orders",                               default: false, null: false
   end
 
   add_index "markets", ["name"], name: "index_markets_on_name", using: :btree

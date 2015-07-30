@@ -96,6 +96,29 @@ describe "Checking Out via Purchase Order", :js, :vcr do
     expect(page).to have_content("If you have any questions, please let us know")
   end
 
+  context "the market requires a PO number" do
+    before do
+      market.require_purchase_orders = true
+      market.save
+      visit current_path
+    end
+
+    it "does not allow purches without a PO number" do
+      choose "Pay by Purchase Order"
+      checkout
+      expect(page).to have_content("Your order cannot be completed without a purchase order number.")
+      expect(page).to_not have_content("Thank you for your order!")
+    end
+
+    it "allows purchases with a PO number" do
+      choose "Pay by Purchase Order"
+      fill_in "PO Number", with: "12345"
+      checkout
+      expect(page).to_not have_content("Your order cannot be completed without a purchase order number.")
+      expect(page).to have_content("Thank you for your order!")
+    end
+  end
+
   context "reviewing the order after checkout" do
     it "links to the order to review" do
       checkout

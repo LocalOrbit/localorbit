@@ -31,6 +31,9 @@ tags
 latest.prod.dump
 cleansed.prod.dump
 
+.DS_Store
+~*.xlsx
+
 # IntelliJ
 /.idea
 /localorbit.iml
