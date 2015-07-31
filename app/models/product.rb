@@ -16,6 +16,7 @@ class Product < ActiveRecord::Base
   belongs_to :location
   belongs_to :unit
   belongs_to :external_product, inverse_of: :product
+  belongs_to :general_product
 
   has_many :lots, -> { order("created_at") }, inverse_of: :product, autosave: true, dependent: :destroy
   has_many :lots_by_expiration, -> { order("expires_at, good_from, created_at") }, class_name: Lot, foreign_key: :product_id
