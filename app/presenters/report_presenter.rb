@@ -24,49 +24,50 @@ class ReportPresenter
     fulfillment_day:        {sort: :order_delivery_delivery_schedule_buyer_day, display_name: "Week Day"},
     fulfillment_type:       {sort: nil,                      display_name: "Fulfillment Type"},
     discount_code:          {sort: nil,                      display_name: "Discount Code"},
-    discount_amount:        {sort: nil,                      display_name: "Discount Amount"}
+    discount_amount:        {sort: nil,                      display_name: "Discount Amount"},
+    product_code:           {sort: :code,                    display_name: "Product Code"}
   }.with_indifferent_access
 
   REPORT_MAP = {
     total_sales: {
       filters: [:placed_at, :order_number, :market_name],
       fields: [
-        :placed_at, :product_name, :seller_name, :quantity, :unit_price, :discount,
+        :placed_at, :product_name, :product_code, :seller_name, :quantity, :unit_price, :discount,
         :row_total, :net_sale, :delivery_status, :buyer_payment_status, :seller_payment_status
       ]
     },
     sales_by_seller: {
       filters: [:placed_at, :order_number, :market_name, :seller_name],
       fields: [
-        :placed_at, :category_name, :product_name, :seller_name, :quantity, :unit_price, :discount,
+        :placed_at, :category_name, :product_name, :product_code, :seller_name, :quantity, :unit_price, :discount,
         :row_total, :net_sale, :delivery_status, :buyer_payment_status, :seller_payment_status
       ]
     },
     sales_by_buyer: {
       filters: [:placed_at, :order_number, :market_name, :buyer_name],
       fields: [
-        :placed_at, :buyer_name, :product_name, :seller_name, :quantity, :unit_price, :discount,
+        :placed_at, :buyer_name, :product_name, :product_code, :seller_name, :quantity, :unit_price, :discount,
         :row_total, :net_sale, :delivery_status, :buyer_payment_status, :seller_payment_status
       ]
     },
     sales_by_product: {
       filters: [:placed_at, :order_number, :market_name, :category_name, :product_name],
       fields: [
-        :placed_at, :category_name, :product_name, :seller_name, :quantity, :unit_price, :discount,
+        :placed_at, :category_name, :product_name, :product_code, :seller_name, :quantity, :unit_price, :discount,
         :row_total, :net_sale, :delivery_status, :buyer_payment_status, :seller_payment_status
       ]
     },
     sales_by_payment_method: {
       filters: [:placed_at, :order_number, :market_name, :payment_method],
       fields: [
-        :placed_at, :buyer_name, :product_name, :seller_name, :quantity, :unit_price, :discount,
+        :placed_at, :buyer_name, :product_name, :product_code, :seller_name, :quantity, :unit_price, :discount,
         :row_total, :net_sale, :payment_method, :delivery_status, :buyer_payment_status, :seller_payment_status
       ]
     },
     purchases_by_product: {
       filters: [:placed_at, :order_number, :market_name, :category_name, :product_name],
       fields: [
-        :placed_at, :category_name, :product_name, :seller_name, :quantity, :unit_price, :discount,
+        :placed_at, :category_name, :product_name, :product_code, :seller_name, :quantity, :unit_price, :discount,
         :row_total, :delivery_status, :buyer_payment_status
       ],
       buyer_only: true
@@ -74,7 +75,7 @@ class ReportPresenter
     total_purchases: {
       filters: [:placed_at, :order_number, :market_name],
       fields: [
-        :placed_at, :product_name, :seller_name, :quantity, :unit_price, :discount,
+        :placed_at, :product_name, :product_code, :seller_name, :quantity, :unit_price, :discount,
         :row_total, :delivery_status, :buyer_payment_status
       ],
       buyer_only: true
@@ -82,7 +83,7 @@ class ReportPresenter
     sales_by_fulfillment: {
       filters: [:placed_at, :market_name, :buyer_name, :fulfillment_day, :fulfillment_type],
       fields: [
-        :placed_at, :fulfillment_day, :fulfillment_type, :buyer_name, :product_name, :seller_name,
+        :placed_at, :fulfillment_day, :fulfillment_type, :buyer_name, :product_name, :product_code, :seller_name,
         :quantity, :unit_price, :discount, :row_total, :net_sale, :delivery_status,
         :buyer_payment_status, :seller_payment_status
       ]

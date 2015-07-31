@@ -180,6 +180,34 @@ context "Viewing sold items" do
       expect(sold_items.map(&:buyer_payment_status)).to eql(["Refunded", "Refunded", "Paid"])
     end
 
+    it "displays sales totals for all pages of filtered results" do
+      expect(page).to have_content("Total Sales")
+      totals = Dom::Admin::TotalSales.first
+
+      expect(totals.gross_sales).to eq("$74.00")
+      expect(totals.market_fees).to eq("$0.00")
+      expect(totals.lo_fees).to eq("$4.00")
+      expect(totals.processing_fees).to eq("$1.20")
+      #expect(totals.discounts).to eq("$0.00")
+      expect(totals.discount_seller).to eq("$0.00")
+      expect(totals.discount_market).to eq("$0.00")
+      expect(totals.net_sales).to eq("$68.80")
+
+      select seller.name, from: "q_product_organization_id_eq"
+      click_button "Filter"
+
+      totals = Dom::Admin::TotalSales.first
+
+      expect(totals.gross_sales).to eq("$50.00")
+      expect(totals.market_fees).to eq("$0.00")
+      expect(totals.lo_fees).to eq("$0.00")
+      expect(totals.processing_fees).to eq("$1.20")
+      #expect(totals.discounts).to eq("$0.00")
+      expect(totals.discount_seller).to eq("$0.00")
+      expect(totals.discount_market).to eq("$0.00")
+      expect(totals.net_sales).to eq("$48.80")
+    end
+
     it "sets item delivery status" do
       expect(UpdatePurchase).to receive(:perform).twice.and_return(double("interactor", success?: true))
 
@@ -217,6 +245,34 @@ context "Viewing sold items" do
       expect(sold_items[0].delivery_status).to eq("Canceled")
       expect(sold_items[1].delivery_status).to eq("Canceled")
       expect(sold_items[2].delivery_status).to eq("Pending")
+    end
+
+    it "displays sales totals for all pages of filtered results" do
+      expect(page).to have_content("Total Sales")
+      totals = Dom::Admin::TotalSales.first
+
+      expect(totals.gross_sales).to eq("$74.00")
+      expect(totals.market_fees).to eq("$0.00")
+      expect(totals.lo_fees).to eq("$4.00")
+      expect(totals.processing_fees).to eq("$1.20")
+      #expect(totals.discounts).to eq("$0.00")
+      expect(totals.discount_seller).to eq("$0.00")
+      expect(totals.discount_market).to eq("$0.00")
+      expect(totals.net_sales).to eq("$68.80")
+
+      select seller.name, from: "q_product_organization_id_eq"
+      click_button "Filter"
+
+      totals = Dom::Admin::TotalSales.first
+
+      expect(totals.gross_sales).to eq("$50.00")
+      expect(totals.market_fees).to eq("$0.00")
+      expect(totals.lo_fees).to eq("$0.00")
+      expect(totals.processing_fees).to eq("$1.20")
+      #expect(totals.discounts).to eq("$0.00")
+      expect(totals.discount_seller).to eq("$0.00")
+      expect(totals.discount_market).to eq("$0.00")
+      expect(totals.net_sales).to eq("$48.80")
     end
   end
 
