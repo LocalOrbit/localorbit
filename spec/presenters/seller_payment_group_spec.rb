@@ -46,7 +46,6 @@ describe SellerPaymentGroup do
   describe ".for_scope" do
     it "contains the right set of order information" do
       sellers = SellerPaymentGroup.for_scope(scope)
-
       # only 3 sellers are payable
       expect(sellers.size).to eq(3)
 
@@ -60,13 +59,13 @@ describe SellerPaymentGroup do
 
       seller = sellers[1]
       # Betterest Farms is payable for:
-      expect(seller.orders.map(&:order_number)).to eq(["LO-002", "LO-007"])
-      expect(seller.owed).to eq(97.86)
+      expect(seller.orders.map(&:order_number)).to eq(["LO-002", "LO-007", "LO-009"])
+      expect(seller.owed).to eq(146.79)
 
       seller = sellers[2]
       # Great Farms is payable for:
-      expect(seller.orders.map(&:order_number)).to eq(["LO-002", "LO-003", "LO-004"])
-      expect(seller.owed).to eq(223.68)
+      expect(seller.orders.map(&:order_number)).to eq(["LO-002", "LO-003", "LO-004", "LO-008", "LO-009"])
+      expect(seller.owed).to eq(419.40)
     end
 
     describe "for multi market manager" do
@@ -105,14 +104,14 @@ describe SellerPaymentGroup do
 
         seller = sellers[2]
         # Betterest Farms is payable for:
-        expect(seller.orders.map(&:order_number)).to eq(["LO-002", "LO-007"])
-        expect(seller.owed).to eq(97.86)
+        expect(seller.orders.map(&:order_number)).to eq(["LO-002", "LO-007", "LO-009"])
+        expect(seller.owed).to eq(146.79)
 
         seller = sellers[3]
         # Great Farms in market 1 is payable for:
         expect(seller.market_name).to eq("Lower Foods")
-        expect(seller.orders.map(&:order_number)).to eq(["LO-002", "LO-003"])
-        expect(seller.owed).to eq(62.91)
+        expect(seller.orders.map(&:order_number)).to eq(["LO-002", "LO-003", "LO-008", "LO-009"])
+        expect(seller.owed).to eq(258.63)
 
         seller = sellers[4]
         # Great Farms in market 2 is payable for:

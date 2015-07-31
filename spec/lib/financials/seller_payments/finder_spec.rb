@@ -35,7 +35,7 @@ describe Financials::SellerPayments::Finder do
   describe ".payable_automate_orders" do
     context "in general" do
       let(:results) { finder.payable_automate_orders(as_of: now_time) }
-      let(:expected_orders) { m1[:orders] + m2[:orders] }
+      let(:expected_orders) { m1[:orders] + m2[:orders] + m3[:orders] }
 
       it "gets all the payable orders on the Automate plan" do
         expect(results).to contain_exactly(*expected_orders)
@@ -73,7 +73,7 @@ describe Financials::SellerPayments::Finder do
     let(:results) { finder.find_payable_seller_orders(as_of: now_time) }
 
     it "returns a list of SellerOrders based on payable orders" do
-      expect(results).to have(6).items
+      expect(results).to have(8).items
       expect(results.map { |r| r.class }.uniq).to eq [SellerOrder]
 
       (m1[:orders] + m2[:orders]).each do |order|
@@ -120,7 +120,7 @@ describe Financials::SellerPayments::Finder do
     end
 
     context "(state-based test)" do
-      let(:sellers) { (m1[:seller_organizations] + m2[:seller_organizations]).sort_by(&:name) }
+      let(:sellers) { (m1[:seller_organizations] + m2[:seller_organizations] + m3[:seller_organizations]).sort_by(&:name) }
       let(:results) { finder.find_seller_payment_sections(as_of: now_time) }
 
       it "creates an array of SellerSections for each Seller based on their payable orders" do
