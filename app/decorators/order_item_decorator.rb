@@ -4,12 +4,12 @@ class OrderItemDecorator < Draper::Decorator
   delegate_all
 
   def quantity_with_unit
-    "#{object.quantity} #{unit}"
+    "#{Format.quantity(object.quantity)} #{unit}"
   end
 
   def previous_quantity_with_unit
     previous_quantity = previous_value_for("quantity")
-    "#{previous_quantity} #{unit}" if previous_quantity
+    "#{Format.quantity(previous_quantity)} #{unit}" if previous_quantity
   end
 
   def price_per_unit
