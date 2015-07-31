@@ -35,7 +35,7 @@ describe Financials::SellerPayments::Finder do
   describe ".payable_automate_orders" do
     context "in general" do
       let(:results) { finder.payable_automate_orders(as_of: now_time) }
-      let(:expected_orders) { m1[:orders] + m2[:orders] }
+      let(:expected_orders) { m1[:orders] + m2[:orders] + m3[:orders] }
 
       it "gets all the payable orders on the Automate plan" do
         expect(results).to contain_exactly(*expected_orders)
