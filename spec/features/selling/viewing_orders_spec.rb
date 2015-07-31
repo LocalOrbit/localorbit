@@ -98,7 +98,7 @@ feature "Viewing orders" do
 
       item = Dom::Order::ItemRow.first
       expect(item.name).to have_content(market1_order_item1.name)
-      expect(item.quantity).to have_content(market1_order_item1.quantity.to_s)
+      expect(item.quantity).to have_content(Format.quantity(market1_order_item1.quantity.to_s))
       expect(item.price).to eq("$#{market1_order_item1.unit_price}")
       expect(item.has_discount?).to be false
       expect(item.total).to eq("$9.98")
