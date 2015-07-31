@@ -100,14 +100,10 @@ class Order < ActiveRecord::Base
   end
 
   def self.payable(current_time:nil)
-    current_time ||= Time.current
     # This is a slightly fuzzy match right now.
     # TODO: Implement delivery_end on deliveries for greater accuracy
-    
-    deliver_on = Delivery.arel_table[:deliver_on]
     buyer_deliver_on = Delivery.arel_table[:buyer_deliver_on]
-    joins(:delivery).where(
-      buyer_deliver_on.not_eq(nil))
+    joins(:delivery).where(buyer_deliver_on.not_eq(nil))
   end
 
   def self.payment_status(status)

@@ -35,7 +35,7 @@ describe Financials::MarketPayments::Finder do
   describe ".find_orders_with_payable_market_fees" do
     context "in general" do
       let(:results) { finder.find_orders_with_payable_market_fees(as_of: now_time) }
-      let(:expected_orders) { m1[:orders] + m2[:orders] }
+      let(:expected_orders) { m1[:orders] + m2[:orders] + m3[:orders] }
 
       it "gets all the payable orders on the Automate plan" do
         expect(results).to contain_exactly(*expected_orders)
@@ -48,11 +48,13 @@ describe Financials::MarketPayments::Finder do
         m1[:orders][2], 
         m2[:orders][0],
         m2[:orders][1],
+        m3[:orders][0]
       ]}
 
       let(:included_orders) {[
         m1[:orders][1],
-        m1[:orders][3], 
+        m1[:orders][3],
+        m3[:orders][1] 
       ]}
 
       let(:results) { finder.find_orders_with_payable_market_fees(as_of: now_time) }
@@ -141,7 +143,7 @@ describe Financials::MarketPayments::Finder do
     end
 
     context "(state-based test)" do
-      let(:markets) { [m1[:market], m2[:market]] }
+      let(:markets) { [m1[:market], m2[:market], m3[:market]] }
       let(:results) { finder.find_market_payment_sections(as_of: now_time) }
 
       it "creates an array of MarketSections for each Market based on their payable orders" do
