@@ -78,6 +78,7 @@ describe "Individual pack slips" do
         expect(page).to have_content(buyer1.name)
 
         expect(Dom::Admin::IndividualPackListItem.count).to eql(1)
+        expect(Dom::Admin::PackListTotals.first.total_price).to eq(Dom::Admin::IndividualPackListItem.first.total_price) 
 
         line = Dom::Admin::IndividualPackListItem.find_by_name(sellers_product.name)
         expect(line.total_sold).to have_content(1)
