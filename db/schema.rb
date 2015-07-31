@@ -11,10 +11,11 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150717174829) do
+ActiveRecord::Schema.define(version: 20150728203823) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+  enable_extension "pg_stat_statements"
 
   create_table "audits", force: true do |t|
     t.integer  "auditable_id"
@@ -411,6 +412,7 @@ ActiveRecord::Schema.define(version: 20150717174829) do
     t.string   "stripe_account_id"
     t.string   "payment_provider"
     t.string   "country",                                               default: "US",  null: false
+    t.boolean  "require_purchase_orders",                               default: false, null: false
   end
 
   add_index "markets", ["name"], name: "index_markets_on_name", using: :btree
@@ -620,18 +622,19 @@ ActiveRecord::Schema.define(version: 20150717174829) do
 
   create_table "plans", force: true do |t|
     t.string   "name"
-    t.boolean  "discount_codes",      default: false
-    t.boolean  "cross_selling",       default: false
-    t.boolean  "custom_branding",     default: false
-    t.boolean  "automatic_payments",  default: false
+    t.boolean  "discount_codes",           default: false
+    t.boolean  "cross_selling",            default: false
+    t.boolean  "custom_branding",          default: false
+    t.boolean  "automatic_payments",       default: false
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.boolean  "promotions",          default: false, null: false
-    t.boolean  "advanced_pricing",    default: false, null: false
-    t.boolean  "advanced_inventory",  default: false, null: false
-    t.boolean  "order_printables",    default: false, null: false
-    t.boolean  "packing_labels",      default: false, null: false
-    t.boolean  "sellers_edit_orders", default: false, null: false
+    t.boolean  "promotions",               default: false, null: false
+    t.boolean  "advanced_pricing",         default: false, null: false
+    t.boolean  "advanced_inventory",       default: false, null: false
+    t.boolean  "order_printables",         default: false, null: false
+    t.boolean  "packing_labels",           default: false, null: false
+    t.boolean  "sellers_edit_orders",      default: false, null: false
+    t.boolean  "has_procurement_managers", default: false, null: false
   end
 
   create_table "prices", force: true do |t|
@@ -681,6 +684,7 @@ ActiveRecord::Schema.define(version: 20150717174829) do
     t.string   "unit_description"
     t.string   "thumb_uid"
     t.integer  "second_level_category_id"
+    t.string   "code"
   end
 
   add_index "products", ["category_id"], name: "index_products_on_category_id", using: :btree

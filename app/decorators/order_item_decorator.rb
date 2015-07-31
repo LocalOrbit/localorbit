@@ -89,6 +89,10 @@ class OrderItemDecorator < Draper::Decorator
     object.seller_payment_status.to_s.titleize
   end
 
+  def product_code
+    object.product.code
+  end
+
   def canceled?
     object.delivery_status == "canceled"
   end

@@ -15,7 +15,12 @@
     </thead>
     <% invoice.items.each do |item| %>
     <tr class="line-item">
-      <td class="al"><%= item.name %></td>
+      <td class="al">
+        <%= item.name %>
+        <% if item.product.code.present? %>
+          <br><%= item.product.code %>
+        <% end %>
+      </td>
       <td><%= item.unit %></td>
       <td><%= item.quantity %></td>
       <td><%= item.quantity_delivered || item.delivery_status.try(:titleize) %></td>

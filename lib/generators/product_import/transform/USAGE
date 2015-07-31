@@ -1,0 +1,9 @@
+Description:
+    Generate a transform that can be used in the definition of produce FileImporters
+
+Example:
+    rails generate product_import_transform Thing
+
+    This will create:
+        lib/product_import/transforms/thing.rb
+        spec/lib/product_import/transforms/thing_spec.rb

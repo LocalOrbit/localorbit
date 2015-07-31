@@ -111,7 +111,13 @@
           <%= link_to order_item.order.organization.name, [:admin, order_item.order.organization], class: "buyer" %><br>
           <%= content_tag "span", order_item.order.market.name, class: "market" %>
         </td>
-        <td class="order-product"><%= link_to order_item.name, [:admin, order_item.product], class: "product" %></td>
+        <td class="order-product">
+          <% if order_item.product.code.present? %>
+            <%= order_item.product.code %>
+            <br>
+          <% end %>
+          <span class="app-product-name"><%= link_to order_item.name, [:admin, order_item.product], class: "product" %></span>
+        </td>
         <td class="quantity"><%= order_item.quantity %></td>
         <td class="order-total-price">
           <%= content_tag "span", number_to_currency(order_item.gross_total), class: "total-price" %><br>

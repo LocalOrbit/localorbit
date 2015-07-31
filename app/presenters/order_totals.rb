@@ -1,19 +1,18 @@
 class OrderTotals
   include TotalsPresenter
 
-  attr_reader :items, :gross_totals
+  attr_reader :items
 
   def initialize(items)
     @items = items
-    @gross_totals = calculate_gross_totals(items)
   end
 
-  def calculate_gross_totals(items)
-    gross_totals = []
-    items.each do |item|
-      gross_totals[item.order_id] ||= 0
-      gross_totals[item.order_id] += item.gross_total
+  def filtered_gross_total(order)
+    filtered_order_items = @items.where(order: order)
+    if filtered_order_items.size == order.items.size
+      order.gross_total
+    else
+      filtered_order_items.map(&:gross_total).sum
     end
-    gross_totals
   end
 end

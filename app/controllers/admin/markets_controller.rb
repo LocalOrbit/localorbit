@@ -74,15 +74,20 @@ class Admin::MarketsController < AdminController
       :sellers_edit_orders,
       :country
     ]
-    if current_user.admin?
+    if current_user.can_manage_market?(@market)
       columns.concat([
-        :active,
         :allow_purchase_orders,
+        :require_purchase_orders,
         :allow_credit_cards,
         :allow_ach,
         :default_allow_purchase_orders,
         :default_allow_credit_cards,
         :default_allow_ach,
+      ])
+    end
+    if current_user.admin?
+      columns.concat([
+        :active
       ])
     end
     params.require(:market).permit(columns)

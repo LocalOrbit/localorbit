@@ -74,3 +74,5 @@ RSpec.configure do |config|
     ActionMailer::Base.deliveries.clear
   end
 end
+
+

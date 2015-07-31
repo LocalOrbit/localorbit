@@ -8,3 +8,4 @@ else
 end
   
 require 'rschema_ext/either'
+require 'rschema_ext/regexp'

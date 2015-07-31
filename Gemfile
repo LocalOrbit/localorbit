@@ -72,6 +72,12 @@ gem "rschema", github: "tomdalling/rschema"
 # gem "wkhtmltopdf-binary"
 gem "wkhtmltopdf-binary", github: "zakird/wkhtmltopdf_binary_gem"
 
+# Product import/export
+gem 'rubyXL', require: false # XLSX
+gem 'spreadsheet', require: false # XLS
+gem 'slop', '~> 3.0', require: false # option parsing
+gem 'dedent'
+
 group :doc do
   gem "sdoc", require: false
 end
