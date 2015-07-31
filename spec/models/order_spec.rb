@@ -559,8 +559,8 @@ describe Order do
     let!(:order3) { create_order_with_delivery_times(deliver_on: forty_seven_hours_ago, buyer_deliver_on: forty_nine_hours_ago) }
     let!(:order4) { create_order_with_delivery_times(deliver_on: forty_seven_hours_ago, buyer_deliver_on: forty_seven_hours_ago) }
 
-    it "includes orders which have been delivered for 48 hours" do
-      expect(Order.payable).to contain_exactly(order1, order2, order3)
+    it "includes all orders" do
+      expect(Order.payable).to contain_exactly(order1, order2, order3, order4)
     end
 
     def create_order_with_delivery_times(both:nil,buyer_deliver_on: nil, deliver_on: nil)
@@ -600,21 +600,6 @@ describe Order do
 
     let(:expected_order_ids) { m1[:orders].map(&:id) }
 
-    describe ".payable" do
-      def payable_order_ids(*args)
-        Order.payable(*args).map(&:id)
-      end
-
-      it "considers the given time a 48 hours cutoff for payability" do
-        expect(payable_order_ids(current_time: deliver_time)).to be_empty
-        expect(payable_order_ids(current_time: deliver_time+2.days)).to be_empty
-        expect(payable_order_ids(current_time: deliver_time+2.days+1.hour)).to contain_exactly(*expected_order_ids)
-        expect(payable_order_ids).to contain_exactly(*expected_order_ids)
-        expect(payable_order_ids(current_time: now_time)).to contain_exactly(*expected_order_ids)
-        expect(payable_order_ids(current_time: nil)).to contain_exactly(*expected_order_ids)
-      end
-    end
-
     describe ".payable_to_sellers and .payable_to_automate_sellers" do
       def payable_order_ids(*args)
         Order.payable_to_sellers(*args).map(&:id)
@@ -622,21 +607,6 @@ describe Order do
 
       def payable_automate_order_ids(*args)
         Order.payable_to_automate_sellers(*args).map(&:id)
-      end
-
-      it "considers the given time a 48 hours cutoff for payability" do
-        expect(payable_order_ids(current_time: deliver_time)).to be_empty
-        expect(payable_order_ids(current_time: deliver_time+2.days)).to be_empty
-        expect(payable_order_ids(current_time: deliver_time+2.days+1.hour)).to contain_exactly(*expected_order_ids)
-        expect(payable_order_ids).to contain_exactly(*expected_order_ids)
-        expect(payable_order_ids(current_time: now_time)).to contain_exactly(*expected_order_ids)
-
-        # .payable_to_automate_sellers works the same way:
-        expect(payable_automate_order_ids(current_time: deliver_time)).to be_empty
-        expect(payable_automate_order_ids(current_time: deliver_time+2.days)).to be_empty
-        expect(payable_automate_order_ids(current_time: deliver_time+2.days+1.hour)).to contain_exactly(*expected_order_ids)
-        expect(payable_automate_order_ids).to contain_exactly(*expected_order_ids)
-        expect(payable_automate_order_ids(current_time: now_time)).to contain_exactly(*expected_order_ids)
       end
 
       it "filters results based on optional seller id" do
