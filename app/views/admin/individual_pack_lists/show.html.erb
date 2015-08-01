@@ -18,7 +18,7 @@
           <div class="city-state-zip"><%= order.decorate.display_delivery_city_state_zip %></div>
           <div class="tel"><%= number_to_phone order.decorate.display_delivery_phone %></div>
         </div><div class="column column--half vcard vcard--seller">
-          <h2 class="heading heading-delivery-tool">From Seller</h2>
+          <h2 class="heading heading-delivery-tool">From Supplier</h2>
           <h3 class="fn org"><%= seller.name %></h3>
           <div class="street-address"><%= seller.decorate.shipping_address %></div>
           <div class="city-state-zip"><%= seller.decorate.shipping_city_state_zip %></div>
@@ -29,7 +29,7 @@
 
       <div class="row">
         <div class="column column--half">
-          <h2 class="heading heading-delivery-tool">Seller Delivers to <%= @delivery.display_dropoff_location_type %> on</h2>
+          <h2 class="heading heading-delivery-tool">Supplier Delivers to <%= @delivery.display_dropoff_location_type %> on</h2>
           <span class="upcoming-delivery-date"><%= @delivery.seller_display_date %> <%= @delivery.fulfillment_time_range %></span>
           <% if @delivery.buyer_pickup? %>
           <p class="note">For pick up on <%= @delivery.buyer_display_date %> <%= @delivery.buyer_time_range %></p>

@@ -303,13 +303,13 @@ feature "Payments to vendors" do
       seller_rows = Dom::Admin::Financials::VendorPaymentRow.all
       expect(seller_rows.map {|r| r.name.text }).to eq(["Best Farms", "Better Farms", "Betterest Farms", "Fruit Farms", "Great Farms", "Vegetable Farms"])
 
-      select market1_seller1.name, from: "Seller"
+      select market1_seller1.name, from: "Supplier"
       click_button "Filter"
 
       seller_rows = Dom::Admin::Financials::VendorPaymentRow.all
       expect(seller_rows.map {|r| r.name.text }).to eq(["Better Farms"])
 
-      select market1_seller3.name, from: "Seller"
+      select market1_seller3.name, from: "Supplier"
       click_button "Filter"
 
       seller_rows = Dom::Admin::Financials::VendorPaymentRow.all

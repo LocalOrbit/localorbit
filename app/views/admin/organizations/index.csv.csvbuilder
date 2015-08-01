@@ -20,7 +20,7 @@ end
     organization.name,
     organization.markets.first.name,
     organization.created_at.strftime("%d-%B-%y"),
-    (organization.can_sell? ? "Seller" : "Buyer"),
+    (organization.can_sell? ? "Supplier" : "Buyer"),
     full_address(organization.shipping_location),
     organization.shipping_location.try(:phone),
     full_address(organization.billing_location),
