@@ -48,6 +48,53 @@ describe Product do
     end
   end
 
+  describe "update" do
+    let(:org) { create(:organization) }
+    let(:unit) { create(:unit) }
+    let(:top_level) { create(:category, parent: Category.root) }
+    let!(:category) { create(:category, parent: top_level) }
+    let!(:product) { create(:product, organization: org) }
+    it "modifies the GeneralProduct" do
+      expect(GeneralProduct.count).to eq(1)
+      attributes = {
+        organization: org,
+        category: category,
+        unit: unit,
+        name: "asdf",
+        who_story: "asdf",
+        how_story: "asdf",
+        location_id: Location.create!(
+          address: "asdf",
+          city: "asdf",
+          state: "MI",
+          zip: "48014",
+          organization: org
+        ).id,
+        image_uid: "asdf",
+        top_level_category_id: top_level.id,
+        short_description: "asdf",
+        long_description: "asdf",
+        use_all_deliveries: false,
+        thumb_uid: "asdf",
+        second_level_category_id: category.id
+      }
+      product.update!(attributes)
+      general_product = GeneralProduct.first
+      expect(general_product.name).to eq(attributes[:name])
+      expect(general_product.who_story).to eq(attributes[:who_story])
+      expect(general_product.how_story).to eq(attributes[:how_story])
+      expect(general_product.location_id).to eq(attributes[:location_id])
+      expect(general_product.image_uid).to eq(attributes[:image_uid])
+      expect(general_product.top_level_category_id).to eq(attributes[:top_level_category_id])
+      expect(general_product.short_description).to eq(attributes[:short_description])
+      expect(general_product.long_description).to eq(attributes[:long_description])
+      expect(general_product.use_all_deliveries).to eq(attributes[:use_all_deliveries])
+      expect(general_product.thumb_uid).to eq(attributes[:thumb_uid])
+      expect(general_product.second_level_category_id).to eq(attributes[:second_level_category_id])
+    end
+
+  end
+
   describe "default values" do
     describe "#top_level_category_id" do
       let(:org) { create(:organization) }
