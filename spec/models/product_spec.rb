@@ -33,6 +33,21 @@ describe Product do
     end
   end
 
+  describe "creation" do
+    let(:org) { create(:organization) }
+    let(:unit) { create(:unit) }
+    let(:top_level) { create(:category, parent: Category.root) }
+    let!(:category) { create(:category, parent: top_level) }
+    
+    it "creates and belongs to a new GeneralProduct upon creation" do
+      expect(GeneralProduct.count).to eq(0)
+      newProduct = Product.create!(short_description: "desc", name: "New Product", organization: org, category: category, unit: unit)
+      expect(GeneralProduct.count).to eq(1)
+      general_product = GeneralProduct.first
+      expect(newProduct.general_product).to eq(general_product)
+    end
+  end
+
   describe "default values" do
     describe "#top_level_category_id" do
       let(:org) { create(:organization) }
