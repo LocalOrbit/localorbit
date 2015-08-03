@@ -160,7 +160,7 @@ describe "Checking Out via Purchase Order", :js, :vcr do
           { name: "Bananas from Fulton St. Farms", quantity_ordered_readonly: "10", quantity_delivered_readonly: "12.25", total: "$6.13"  },
         ], find_by: :name)
 
-        expect(page).to have_content("Delivery Fees: $9.86")
+        expect(page).to have_content("Delivery Fee: $9.86")
         expect(page).to have_content("Grand Total: $49.28")
       end
     end
@@ -366,7 +366,7 @@ describe "Checking Out via Purchase Order", :js, :vcr do
           within(".pseudopod") do
             expect(page).to have_content("Item Subtotal $40.00")
             expect(page).to have_content("Discount $15.00")
-            expect(page).to have_content("Delivery Fees $10.00")
+            expect(page).to have_content("Delivery Fee $10.00")
             expect(page).to have_content("Order Total $35.00")
           end
         end
@@ -385,7 +385,7 @@ describe "Checking Out via Purchase Order", :js, :vcr do
           within(".pseudopod") do
             expect(page).to have_content("Item Subtotal $40.00")
             expect(page).to have_content("Discount $40.00")
-            expect(page).to have_content("Delivery Fees $10.00")
+            expect(page).to have_content("Delivery Fee $10.00")
             expect(page).to have_content("Order Total $10.00")
           end
         end
@@ -406,7 +406,7 @@ describe "Checking Out via Purchase Order", :js, :vcr do
         within(".pseudopod") do
           expect(page).to have_content("Item Subtotal $40.00")
           expect(page).to have_content("Discount $7.50")
-          expect(page).to have_content("Delivery Fees $10.00")
+          expect(page).to have_content("Delivery Fee $10.00")
           expect(page).to have_content("Order Total $42.50")
         end
       end

@@ -65,7 +65,7 @@
     <% if order.display_delivery_fees?(current_user) %>
       <tbody>
         <tr>
-          <th scope="row">Delivery Fees:</th>
+          <th scope="row"><%= order.delivery.delivery_schedule.fee_label %>:</th>
           <td><%= number_to_currency order.delivery_fees %></td>
         </tr>
       </tbody>
@@ -210,13 +210,13 @@
             <% if current_user.can_manage_market?(order.market) %>
             <th>Discount (by Market)</th>
             <th>Discount (by Seller)</th>
-            <th>Delivery Fees</th>
+            <th><%= order.delivery.delivery_schedule.fee_label %></th>
             <% elsif current_user.seller? %>
             <th>Discount</th>
             <% end %>
-            <th>Market Fees</th>
-            <th>Transaction Fees</th>
-            <th>Payment Processing Fees</th>
+            <th>Market Fee</th>
+            <th>Transaction Fee</th>
+            <th>Payment Processing Fee</th>
             <th>Net Sale</th>
           </tr>
         </thead>
