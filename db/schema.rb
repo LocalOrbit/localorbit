@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150731142946) do
+ActiveRecord::Schema.define(version: 20150731212200) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -178,7 +178,7 @@ ActiveRecord::Schema.define(version: 20150731142946) do
     t.integer  "day"
     t.decimal  "fee"
     t.string   "fee_type"
-    t.integer  "order_cutoff",                   default: 24, null: false
+    t.integer  "order_cutoff",                   default: 24,             null: false
     t.boolean  "require_delivery"
     t.boolean  "require_cross_sell_delivery"
     t.integer  "seller_fulfillment_location_id"
@@ -193,6 +193,7 @@ ActiveRecord::Schema.define(version: 20150731142946) do
     t.datetime "deleted_at"
     t.integer  "legacy_id"
     t.integer  "buyer_day"
+    t.string   "fee_label",                      default: "Delivery Fee"
   end
 
   add_index "delivery_schedules", ["deleted_at"], name: "index_delivery_schedules_on_deleted_at", using: :btree
@@ -232,6 +233,23 @@ ActiveRecord::Schema.define(version: 20150731142946) do
   end
 
   add_index "fresh_sheets", ["market_id", "user_id"], name: "index_fresh_sheets_on_market_id_and_user_id", using: :btree
+
+  create_table "general_products", force: true do |t|
+    t.text     "name"
+    t.text     "who_story"
+    t.text     "how_story"
+    t.integer  "location_id"
+    t.string   "image_uid"
+    t.integer  "top_level_category_id"
+    t.datetime "deleted_at"
+    t.text     "short_description"
+    t.text     "long_description"
+    t.boolean  "use_all_deliveries",       default: true
+    t.string   "thumb_uid"
+    t.integer  "second_level_category_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "geocodes", force: true do |t|
     t.decimal "latitude",    precision: 15, scale: 12

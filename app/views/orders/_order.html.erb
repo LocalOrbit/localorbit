@@ -37,7 +37,7 @@
           </tr>
 
           <tr class="cart_total">
-            <th scope="row" colspan="3">Delivery Fees</th>
+            <th scope="row" colspan="3"><%= @order.delivery.delivery_schedule.fee_label %></th>
             <td class="delivery-fees"><%= number_to_currency @order.delivery_fees %></td>
             <td></td>
           </tr>
