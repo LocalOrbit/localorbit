@@ -11,6 +11,7 @@ module ProductImport::Schemas
     # e.g. Grandparent > Parent > Brothers & Sisters
 
     'price' => either(Numeric, /^(?:\d+\.)?\d+$/),
+    'contrived_key' => String,
     # e.g. 12.34
 
     'unit' => either(Integer,String),

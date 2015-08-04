@@ -227,7 +227,17 @@ module ProductImport
         end
         subclass.stage :extract
         subclass.stage :canonicalize
-        subclass.stage :resolve
+        subclass.stage :resolve do |s|
+          _setup_resolve_stage(s)
+        end
+      end
+
+      def self._setup_resolve_stage(s)
+        # Default resolve stage implementation
+
+        s.transform :validate_keys_are_present,
+          keys: %w(organization_id market_id category_id)
+
       end
 
     end

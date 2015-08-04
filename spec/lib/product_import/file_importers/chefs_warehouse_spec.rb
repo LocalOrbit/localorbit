@@ -22,6 +22,7 @@ describe ProductImport::FileImporters::ChefsWarehouse do
         "price" => "222.65",
         "product_code" => "GB880",
         "uom"=>"CS",
+        "contrived_key" => ExternalProduct.contrive_key(['GB880']),
         "source_data" => {"CLASS -SUBCLASS"=>"Baking products - DÉCOR", "ITEM"=>"GB880", "DESCRIPTION"=>"AGRIMONTANA CANDIED LEMON", "PACK"=>"2/2.5 KG", "UOM"=>"CS", "LASTPURCHASED"=>20141211, "LASTPRICE"=>222.65, "original_price"=>222.65},
         "unit" => "2/2.5 KG",
       })

@@ -1,8 +1,8 @@
 class ExternalProduct < ActiveRecord::Base
 
-  def self.contrive_key(organization_id, fields)
-    raise ArgumentError if organization_id.nil? || fields.empty?
+  def self.contrive_key(fields)
+    raise ArgumentError if fields.empty?
 
-    Digest::SHA1.base64digest([organization_id, *fields].join("--")).chomp("=")
+    Digest::SHA1.base64digest(fields.join("--")).chomp("=")
   end
 end

@@ -10,7 +10,7 @@ describe ProductImport::FileImporters::StandardTemplate do
       success, fail = subject.run_through_stage(:canonicalize, filename: file)
 
       expect(fail.first).to eq(nil)
-      expect(success.size).to eq(8438)
+      expect(success.size).to eq(100)
       expect(success).to be_array_compliant_with_schema(ProductImport::Schemas::CANONICAL)
 
       expect(success[0]).to eq({
@@ -18,6 +18,7 @@ describe ProductImport::FileImporters::StandardTemplate do
         "name" => "SARA LEE BAGEL PLAIN PRESLICED",
         "price" => 24.03,
         "product_code" => 10300,
+        "contrived_key" => ExternalProduct.contrive_key(['10300']),
         "source_data" => {
           "Seller Name"=>"Bi-Rite",
           "Product Name"=>"SARA LEE BAGEL PLAIN PRESLICED",

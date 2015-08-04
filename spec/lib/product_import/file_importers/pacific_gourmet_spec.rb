@@ -87,6 +87,7 @@ describe ProductImport::FileImporters::PacificGourmet do
         "category"=>"Pasta > Dried Pasta > Asian Noodles",
         "price"=>1.21,
         "unit"=>"30/1 lb",
+        "contrived_key" => ExternalProduct.contrive_key(['ASN01']),
         "source_data"=>{
           "SKU"=>"ASN01",
           "DESCRIPTION"=>"MEI-FUN RICE STICK NOODLES, CHINA",
