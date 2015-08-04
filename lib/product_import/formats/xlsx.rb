@@ -14,6 +14,7 @@ module ProductImport
             row = worksheet[i]
             if row
               values = (0...row.size).map{|i| row[i] && row[i].value}
+              # binding.pry
               yielder << values
             end
           end

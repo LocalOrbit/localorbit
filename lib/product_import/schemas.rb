@@ -4,7 +4,7 @@ module ProductImport::Schemas
 
 
   CANONICAL = RSchema.schema {{
-    'product_code' => String,
+    'product_code' => either(Integer,String),
     'name' => String,
 
     'category' => %r{^([a-z,/0-9&_ -]*>)*[a-z,/0-9&_ -]*$}i,
@@ -13,7 +13,7 @@ module ProductImport::Schemas
     'price' => either(Numeric, /^(?:\d+\.)?\d+$/),
     # e.g. 12.34
 
-    'unit' => String,
+    'unit' => either(Integer,String),
     _?('uom') => String,
 
     _?('short_description') => String,

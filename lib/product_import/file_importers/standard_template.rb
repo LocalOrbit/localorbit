@@ -1,12 +1,19 @@
 module ProductImport
   module FileImporters
-    class FromEric < Framework::FileImporter
+    class StandardTemplate < Framework::FileImporter
 
       # if any of these are missing, don't even try to process the file
-      REQUIRED_HEADERS = ['Product Name', 'Category Name', 'Short Description', 'Supplier Product Number', 'Unit Name', 'Unit ID', 'Price']
+      REQUIRED_HEADERS = [
+        'Product Name',
+        'Category Name',
+        'Unit Name',
+        'Unit Description (optional)',
+        'Supplier Product Number',
+        'Price'
+      ]
 
       # See lib/product_import/formats for supported formats
-      format :csv
+      format :xlsx
 
       # This stage is responsible for transforming raw data from
       # the format reader into basic sequence of hashes.
@@ -27,7 +34,7 @@ module ProductImport
       stage :canonicalize do |s|
 
         s.transform :map_category,
-          filename: "chefs_warehouse.csv",
+          filename: "birite.csv",
           input_key: "Customer Category"
 
 
@@ -36,7 +43,8 @@ module ProductImport
             "Product Name" => "name",
             "Supplier Product Number" => "product_code",
             "Price" => "price",
-            "Short Description" => "unit",
+            "Unit Description (optional)" => "unit",
+            "Unit Name" => "uom",
           }
 
 
