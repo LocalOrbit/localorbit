@@ -70,24 +70,11 @@ describe ProductImport::FileImporters::BaronsSpecialtyFoods do
       file = test_file("barons_specialty_foods.xls")
 
       success, fail = subject.run_through_stage(:canonicalize, filename: file)
-      expect(fail).to eq([])
+      expect(fail.size).to eq(1)
 
-      expect(success.size).to eq(1)
+      expect(success.size).to eq(28)
       expect(success).to be_array_compliant_with_schema(ProductImport::Schemas::CANONICAL)
 
-    end
-
-    it "stashes extra fields in the source_data field" do
-      pending
-      file = test_file("lodex_with_extra_fields.csv")
-
-      success,failure = subject.run_through_stage(:canonicalize, filename: file)
-
-      expect(success.size).to eq(2)
-
-      expect(success[0]["source_data"]).to eq({
-        # ...
-      })
     end
   end
 

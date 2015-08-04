@@ -59,39 +59,6 @@ describe ProductImport::FileImporters::BakersOfParis do
       expect(success.length).to eq(10)
     end
 
-    described_class::REQUIRED_HEADERS.each do |required_key|
-      it "rejects if required field #{required_key} is missing" do
-        idx = data[0].index(required_key)
-        bad_data = data.deep_dup
-        bad_data.first[idx] = 'wrong'
-
-        success, fail = subject.transform_enum(bad_data)
-        expect(success.length).to eq(0)
-        expect(fail.length).to eq(1)
-      end
-    end
-  end
-
-
-  describe "the canonicalize stage" do
-    subject { described_class.new.transform_for_stages(:canonicalize) }
-
-    it "produces data in the canonical format" do
-      pending
-
-      data = [
-        {
-          'product_code' => 'abc123',
-          'name' => 'Tomatoes',
-        }
-      ]
-
-      success, fail = subject.transform_enum(data)
-
-      expect(success).to be_array_compliant_with_schema(ProductImport::Schemas::CANONICAL)
-      expect(success.length).to eq(1)
-      expect(fail.length).to eq(data.length - success.length - 1)
-    end
   end
 
 
@@ -99,41 +66,18 @@ describe ProductImport::FileImporters::BakersOfParis do
 
   describe "Processing a file" do
     it "parses and canonicalizes a bakers_of_paris file" do
-      pending
-
-      file = test_file("bakers_of_paris.xlsx")
+      file = test_file("bakers.xlsx")
 
       success, fail = subject.run_through_stage(:canonicalize, filename: file)
-      expect(success.size).to eq(1)
+      expect(success.size).to eq(99)
       expect(success).to be_array_compliant_with_schema(ProductImport::Schemas::CANONICAL)
 
-      expect(fail.size).to eq(2)
-    end
-
-    it "bails out on spreadsheet missing required columns" do
-      pending
-
-      file = test_file("an incomplete file")
-
-      expect { subject.run_through_stage(:canonicalize, filename: file) }.to raise_error(ArgumentError)
+      expect(fail.size).to eq(0)
     end
 
     it "bails out if the file is empty" do
       file = test_file("empty")
       expect { subject.run_through_stage(:canonicalize, filename: file) }.to raise_error(ArgumentError)
-    end
-
-    it "stashes extra fields in the source_data field" do
-      pending
-      file = test_file("lodex_with_extra_fields.csv")
-
-      success,failure = subject.run_through_stage(:canonicalize, filename: file)
-
-      expect(success.size).to eq(2)
-
-      expect(success[0]["source_data"]).to eq({
-        # ...
-      })
     end
   end
 
