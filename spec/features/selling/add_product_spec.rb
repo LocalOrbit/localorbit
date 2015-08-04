@@ -398,7 +398,7 @@ describe "Adding a product", chosen_js: true do
         expect(page).to have_content("Name can't be blank")
         expect(page).to have_content("Category can't be blank")
         expect(page).to_not have_content("Current inventory")
-        expect(page).to have_checked_field("Use Seller info from my account.")
+        expect(page).to have_checked_field("Use Supplier info from my account.")
 
         within(".tabs") do
           expect(page).to have_content("Inventory")
@@ -441,7 +441,7 @@ describe "Adding a product", chosen_js: true do
       visit "/admin/products/new"
     end
 
-    it "is prevented from unchecking 'Use seller info from my account' until organization is selected", js: true do
+    it "is prevented from unchecking 'Use supplier info from my account' until organization is selected", js: true do
       expect(page).not_to have_field("seller_info")
 
       select org2.name, from: "Supplier Organization"
@@ -452,7 +452,7 @@ describe "Adding a product", chosen_js: true do
       expect(page).to have_checked_field(tuesday_schedule_description, disabled: true)
     end
 
-    context "Uncheck 'use seller info'", js: true do
+    context "Uncheck 'use supplier info'", js: true do
       before do
         select org2.name, from: "Supplier Organization"
         uncheck "seller_info"
@@ -487,7 +487,7 @@ describe "Adding a product", chosen_js: true do
         expect(page).to have_checked_field(tuesday_schedule_description, disabled: true)
       end
 
-      it "selecting the blank organization option disables seller info" do
+      it "selecting the blank organization option disables supplier info" do
         expect(page).to have_field("seller_info")
 
         select "Select an organization", from: "Supplier Organization"
@@ -560,7 +560,7 @@ describe "Adding a product", chosen_js: true do
       end
 
       # Maintains organization selection
-      expect(page).to have_checked_field("Use Seller info from my account.")
+      expect(page).to have_checked_field("Use Supplier info from my account.")
       expect(page).not_to have_content("No Organization Selected")
     end
   end

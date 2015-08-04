@@ -409,17 +409,17 @@ describe "Managing Markets" do
       visit "/admin/markets/#{market.id}"
       click_link "Fees"
 
-      fill_in "Local Orbit % paid by Seller",   with: "2.0"
+      fill_in "Local Orbit % paid by Supplier", with: "2.0"
       fill_in "Local Orbit % paid by market",   with: "4.0"
-      fill_in "Market % paid by Seller",        with: "3.0"
+      fill_in "Market % paid by Supplier",      with: "3.0"
       fill_in "PO Payment Terms",               with: "18"
 
       click_button "Update Fees"
 
       expect(page).to have_content("#{market.name} fees successfully updated")
-      expect(find_field("Local Orbit % paid by Seller").value).to eq("2.000")
+      expect(find_field("Local Orbit % paid by Supplier").value).to eq("2.000")
       expect(find_field("Local Orbit % paid by market").value).to eq("4.000")
-      expect(find_field("Market % paid by Seller").value).to eq("3.000")
+      expect(find_field("Market % paid by Supplier").value).to eq("3.000")
       expect(find_field("PO Payment Terms").value).to eq("18")
     end
 
@@ -432,11 +432,11 @@ describe "Managing Markets" do
         visit "/admin/markets/#{market.id}"
         click_link "Fees"
 
-        fill_in "Local Orbit % paid by Seller",   with: "2.0"
+        fill_in "Local Orbit % paid by Supplier", with: "2.0"
         fill_in "Local Orbit % paid by market",   with: "4.0"
-        fill_in "Market % paid by Seller",        with: "3.0"
+        fill_in "Market % paid by Supplier",      with: "3.0"
 
-        ["Credit Card fee paid by Seller",
+        ["Credit Card fee paid by Supplier",
           "Credit Card fee paid by market",
         ].each do |field_label|
           expect(page.all(:field, field_label).count).to eq(0), "Field '#{field_label}' should NOT be present!"
@@ -461,9 +461,9 @@ describe "Managing Markets" do
         click_button "Update Fees"
 
         expect(page).to have_content("#{market.name} fees successfully updated")
-        expect(find_field("Local Orbit % paid by Seller").value).to eq("2.000")
+        expect(find_field("Local Orbit % paid by Supplier").value).to eq("2.000")
         expect(find_field("Local Orbit % paid by market").value).to eq("4.000")
-        expect(find_field("Market % paid by Seller").value).to eq("3.000")
+        expect(find_field("Market % paid by Supplier").value).to eq("3.000")
         expect(find_field("PO Payment Terms").value).to eq("18")
 
         current_payer = find_field(fee_payer_fname, checked: true)

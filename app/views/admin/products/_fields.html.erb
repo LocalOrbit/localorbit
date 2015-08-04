@@ -82,7 +82,7 @@
   <legend>Inventory</legend>
   <div id="inventory">
     <% if @organizations.count > 1 && @product.organization.blank? %>
-      <h3 class="heading-conditionals">No selling organization selected</h3>
+      <h3 class="heading-conditionals">No supplier organization selected</h3>
     <% else %>
       <% if organization_can_access?(@product.organization, :advanced_inventory) %>
         <%= f.check_box :use_simple_inventory, disabled: !@product.can_use_simple_inventory? %>
@@ -105,8 +105,8 @@
 <fieldset class="conditional">
   <legend>More product info (Where, Who, How)</legend>
   <%= check_box_tag :seller_info, "", !@product.has_custom_seller_info? %>
-  <%= label_tag :seller_info, "Use Seller info from my account." %>
-  <span class="hint">Uncheck this to customize your Seller information for this product.</span>
+  <%= label_tag :seller_info, "Use Supplier info from my account." %>
+  <span class="hint">Uncheck this to customize your Supplier information for this product.</span>
 
   <div class="hidden seller_info_fields">
     <div class="field">
