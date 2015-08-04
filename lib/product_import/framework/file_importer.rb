@@ -235,6 +235,14 @@ module ProductImport
       def self._setup_resolve_stage(s)
         # Default resolve stage implementation
 
+        s.transform :look_up_category
+
+        s.transform :set_keys_to_importer_option_values, map: {
+          "market_id" => :market_id
+        }
+
+        s.transform :look_up_organization
+
         s.transform :validate_keys_are_present,
           keys: %w(organization_id market_id category_id)
 

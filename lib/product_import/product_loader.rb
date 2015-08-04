@@ -14,7 +14,6 @@ module ProductImport
 
       # soft delete all products whose external product batch_updated_at wasn't updated
       # and whose organization id is an organization that was seen
-
       ep_ids = ExternalProduct.where("organization_id IN (?) AND (batch_updated_at <> ? OR batch_updated_at is NULL)",
        org_ids, batch_update_time).
        pluck(:id)
