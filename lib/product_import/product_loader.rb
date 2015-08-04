@@ -19,7 +19,7 @@ module ProductImport
         eps = find_or_create_external_products product_batch
         ep_by_org_and_key = eps.index_by{|ep| [ep.organization_id, ep.contrived_key]}
 
-        products_to_update = Product.where(external_product_id: eps.map(&:id)).to_a.
+        products_to_update = Product.where(external_product_id: eps.map(&:id)).
           includes(:prices, :lots).
           to_a
         products_by_ep_id = products_to_update.index_by(&:external_product_id)
@@ -50,6 +50,7 @@ module ProductImport
           reinfinity! product.lots.first
 
           product.save!
+          product
         }
 
         ExternalProduct.where(id: eps.map(&:id)).
@@ -76,7 +77,7 @@ module ProductImport
       product_batch.each do |p|
         org_id = p['organization_id']
         contrived_key = p['contrived_key']
-        unless ep_index[[org_id, contrived_key]]
+        unless ep_by_org_and_key[[org_id, contrived_key]]
           eps << ExternalProduct.create!(
             organization_id: p['organization_id'],
             contrived_key: p['contrived_key'],
