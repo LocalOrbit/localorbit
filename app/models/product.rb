@@ -305,7 +305,7 @@ class Product < ActiveRecord::Base
   end
 
   def make_general_product
-    gp = GeneralProduct.new(
+    gp = GeneralProduct.create!(
       name: self.name,
       who_story: self.who_story,
       how_story: self.how_story,
@@ -318,8 +318,7 @@ class Product < ActiveRecord::Base
       thumb_uid: self.thumb_uid,
       second_level_category_id: self.second_level_category_id,
     )
-    gp.product << self
-    gp.save!
+    self.general_product = gp
   end
 
 end

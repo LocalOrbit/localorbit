@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150803182658) do
+ActiveRecord::Schema.define(version: 20150804153254) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -249,10 +249,7 @@ ActiveRecord::Schema.define(version: 20150803182658) do
     t.integer  "second_level_category_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "general_product_id"
   end
-
-  add_index "general_products", ["general_product_id"], name: "index_general_products_on_general_product_id", using: :btree
 
   create_table "geocodes", force: true do |t|
     t.decimal "latitude",    precision: 15, scale: 12
@@ -710,6 +707,7 @@ ActiveRecord::Schema.define(version: 20150803182658) do
   end
 
   add_index "products", ["category_id"], name: "index_products_on_category_id", using: :btree
+  add_index "products", ["general_product_id"], name: "index_products_on_general_product_id", using: :btree
   add_index "products", ["location_id"], name: "index_products_on_location_id", using: :btree
   add_index "products", ["organization_id"], name: "index_products_on_organization_id", using: :btree
   add_index "products", ["top_level_category_id"], name: "index_products_on_top_level_category_id", using: :btree

@@ -8,7 +8,7 @@ describe "Edit quantity ordered" do
   let!(:product_lot)     { create(:lot, quantity: 145) }
   let!(:product)         { create(:product, :sellable, organization: seller, lots: [product_lot]) }
 
-  let!(:product2)         { create(:product, :sellable, organization: seller) }
+  let!(:product2)        { create(:product, :sellable, organization: seller) }
 
   let!(:buyer)          { create(:organization, :buyer, markets: [market]) }
 
