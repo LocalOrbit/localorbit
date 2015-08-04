@@ -10,4 +10,5 @@ class ExternalProduct < ActiveRecord::Base
 
     Digest::SHA1.base64digest([organization_id, *fields].join("--")).chomp("=")
   end
+
 end

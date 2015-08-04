@@ -3,13 +3,22 @@ module ProductImport
   class ProductLoader
     def update(products_enum)
       batch_update_time = Time.now
+      org_ids = Set.new
 
-      products_enum.each_slice(50) do |batch|
-        products = upsert_products(batch, batch_updated_at: batch_updated_at)
+      products_enum.each_slice(50).flat_map do |batch|
+        products = upsert_products(batch, batch_updated_at: batch_update_time)
+        products.each do |p|
+          org_ids << p.organization_id
+        end
       end
 
       # soft delete all products whose external product batch_updated_at wasn't updated
       # and whose organization id is an organization that was seen
+
+      ep_ids = ExternalProduct.where("organization_id IN (?) AND (batch_updated_at <> ? OR batch_updated_at is NULL)",
+       org_ids, batch_update_time).
+       pluck(:id)
+      Product.where(external_product_id: ep_ids).update_all(deleted_at: batch_update_time)
     end
 
     def upsert_products(product_batch, batch_updated_at: Time.now)

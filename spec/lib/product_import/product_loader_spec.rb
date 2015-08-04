@@ -20,13 +20,11 @@ describe ProductImport::ProductLoader do
 				"source_data" => {"foo"=>"bar"}
 			}]
 
-		res = subject.upsert_products(data,batch_updated_at:upsert_time)
-		first_product = res.first
+		subject.update(data)
+		first_product = seller_org.products.first
 		price_prod = first_product.prices.first
 		lot_prod = first_product.lots.first
 		external_product = first_product.external_product # TODO create association
-
-		expect(res.length).to eq(1)
 
 		expect(first_product).to be_a(Product)
 		expect(first_product.name).to eq("BrandNewProductTest")
@@ -43,6 +41,7 @@ describe ProductImport::ProductLoader do
 		expect(external_product.contrived_key).to eq("anactualsha1")
 		expect(external_product.organization_id).to eq(seller_org.id)
 		expect(external_product.source_data).to eq({"foo"=>"bar"})
+		expect(external_product.batch_updated_at).to be_within(10.seconds).of(Time.now)
 		expect(external_product).to be_persisted
 		
 	end
@@ -63,13 +62,11 @@ describe ProductImport::ProductLoader do
 				"source_data" => {"foo"=>"bar"}
 			}]
 
-		res = subject.upsert_products(data,batch_updated_at:upsert_time)
-		first_product = res.first
+		subject.update(data)
+		first_product = original_ep.product.reload
 		price_prod = first_product.prices.first
 		lot_prod = first_product.lots.first
 		external_product = first_product.external_product # TODO create association
-
-		expect(res.length).to eq(1)
 
 		expect(first_product).to be_a(Product)
 		expect(first_product.id).to eq(original_ep.product.id)
@@ -89,6 +86,7 @@ describe ProductImport::ProductLoader do
 		expect(external_product.contrived_key).to eq("anactualsha1")
 		expect(external_product.organization_id).to eq(original_ep.organization_id)
 		expect(external_product.source_data).to eq({"foo"=>"bar"})
+		expect(external_product.batch_updated_at).to be_within(10.seconds).of(Time.now)
 		expect(external_product).to be_persisted
 
 	end
@@ -113,13 +111,13 @@ describe ProductImport::ProductLoader do
 				"source_data" => {"foo"=>"bar"}
 			}]
 
-		res = subject.upsert_products(data,batch_updated_at:upsert_time)
-		first_product = res.first
+		subject.update(data)
+		first_product = original_ep.product.reload
 		price_prod = first_product.prices.first
 		lot_prod = first_product.lots.first
 		external_product = first_product.external_product # TODO create association
 
-		expect(res.length).to eq(1)
+		expect(external_product.batch_updated_at).to be_within(10.seconds).of(Time.now)
 
 		expect(price_prod.sale_price).to eq(BigDecimal.new("25.24"))
 		expect(price_prod.min_quantity).to eq(1)
@@ -127,6 +125,29 @@ describe ProductImport::ProductLoader do
 
 		expect(lot_prod.quantity).to eq(999999)
 		expect(lot_prod).to be_persisted
+
+	end
+
+	it "should soft delete products that no longer exist" do
+	
+		dropped_ep = create :external_product, contrived_key: "anotheractualsha1"
+		puts dropped_ep.id
+		data = [{
+				"category_id" => cat1.id,
+				"organization_id" => dropped_ep.organization_id,
+				"unit_id" => unit1.id,
+				"name" => "BrandNewProductTest2",
+				"price" => "25.24", # string or number
+				"product_code" => "abc12345",
+				"short_description" => "Test short",
+				"long_description" => "Test long",
+				"contrived_key" => "anewactualsha1",
+				"source_data" => {"foo"=>"baz"}
+			}]
+
+		subject.update(data)
+		expect(dropped_ep.product.reload.deleted_at).to_not be_nil
+		expect(dropped_ep.product.reload.deleted_at).to be_within(10.seconds).of(Time.now)
 
 	end
 
