@@ -226,7 +226,7 @@ ActiveRecord::Schema.define(version: 20150804113346) do
   create_table "external_products", force: true do |t|
     t.string   "contrived_key",    null: false
     t.integer  "organization_id",  null: false
-    t.text     "source_data_json"
+    t.text     "source_data"
     t.datetime "batch_updated_at"
     t.datetime "created_at"
     t.datetime "updated_at"
