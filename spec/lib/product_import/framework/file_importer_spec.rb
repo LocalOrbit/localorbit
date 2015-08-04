@@ -124,8 +124,8 @@ describe ProductImport::Framework::FileImporter do
         expect(fail.length).to eq(0)
 
         expect(success_row['market_id']).to eq(market1.id)
-        expect(success_row['category_id']).to_not be_nil # for now
-        expect(success_row['organization_id']).to be 
+        expect(success_row['category_id']).to eq(47) # Tropical & Specialty id
+        expect(success_row['organization_id']).to eq(org1.id)
 
       end
     end

@@ -149,6 +149,20 @@ module ProductImport
         transform.transform_enum(source_enum)
       end
 
+      def load_products(format_args=nil)
+        format_args ||= opts
+
+        check_format_validity!(format_args)
+
+        source_enum = format.enum_for(format_args)
+        transform = transform_for_stages(ALLOWED_STAGES)
+        successes, failures = transform.transform_enum(source_enum)
+
+        product_loader = ProductLoader.new
+        product_loader.update successes
+      end
+
+
       def write_to_lodex(io, format_args=nil)
         format_args ||= opts
 

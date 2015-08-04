@@ -2,6 +2,13 @@ module ProductImport
 
   class ProductLoader
     def update(products_enum)
+      products_enum.each do |product| 
+        update_product product
+      end
+    end
+
+    def update_product(product)
+
       batch_update_time = Time.now
       org_ids = Set.new
 
