@@ -81,7 +81,7 @@ module ProductImport
           eps << ExternalProduct.create!(
             organization_id: p['organization_id'],
             contrived_key: p['contrived_key'],
-            source_data_json: p['source_data'].to_json,
+            source_data: p['source_data'],
           )
         end
       end

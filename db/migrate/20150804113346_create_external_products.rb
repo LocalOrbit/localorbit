@@ -5,7 +5,7 @@ class CreateExternalProducts < ActiveRecord::Migration
       t.string :contrived_key, length: 27, null: false
       t.integer :organization_id, null: false
 
-      t.text :source_data_json
+      t.text :source_data
       t.datetime :batch_updated_at
 
       t.timestamps

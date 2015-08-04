@@ -12,7 +12,7 @@ describe ProductImport::ProductLoader do
 				"organization_id" => seller_org.id,
 				"unit_id" => unit1.id,
 				"name" => "BrandNewProductTest",
-				"price" => "25.24",
+				"price" => "25.24", # string or number
 				"product_code" => "abc1234",
 				"short_description" => "Test short",
 				"long_description" => "Test long",
@@ -22,11 +22,29 @@ describe ProductImport::ProductLoader do
 
 		res = subject.upsert_products(data,batch_updated_at:upsert_time)
 		first_product = res.first
+		price_prod = first_product.prices.first
+		lot_prod = first_product.lots.first
+		external_product = first_product.external_product # TODO create association
 
 		expect(res.length).to eq(1)
+
 		expect(first_product).to be_a(Product)
 		expect(first_product.name).to eq("BrandNewProductTest")
+		expect(first_product.organization_id).to eq(seller_org.id)
 		expect(first_product).to be_persisted
+
+		expect(price_prod.sale_price).to eq(BigDecimal.new("25.24"))
+		expect(price_prod.min_quantity).to eq(1)
+		expect(price_prod).to be_persisted
+
+		expect(lot_prod.quantity).to eq(999999)
+		expect(lot_prod).to be_persisted
+
+		expect(external_product.contrived_key).to eq("anactualsha1")
+		expect(external_product.organization_id).to eq(seller_org.id)
+		expect(external_product.source_data).to eq({"foo"=>"bar"})
+		expect(external_product).to be_persisted
+		
 	end
 
 
