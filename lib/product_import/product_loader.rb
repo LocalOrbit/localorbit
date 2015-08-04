@@ -30,7 +30,13 @@ module ProductImport
 
           unless product = products_by_ep_id[ep_id]
             product = Product.new
+          end
+
+          unless product.prices.any?
             product.prices.build
+          end
+
+          unless product.lots.any?
             product.lots.build
           end
 
@@ -77,13 +83,18 @@ module ProductImport
       product_batch.each do |p|
         org_id = p['organization_id']
         contrived_key = p['contrived_key']
-        unless ep_by_org_and_key[[org_id, contrived_key]]
+        if ep = ep_by_org_and_key[[org_id, contrived_key]]
+          ep.update_attribute(:source_data, p['source_data'])
+        else
           eps << ExternalProduct.create!(
             organization_id: p['organization_id'],
             contrived_key: p['contrived_key'],
             source_data: p['source_data'],
           )
         end
+
+
+
       end
 
       eps

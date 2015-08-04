@@ -464,6 +464,12 @@ FactoryGirl.define do
     end
   end
 
+  factory :external_product do
+    product { create(:product, :sellable) }
+    organization { product.organization }
+    sequence(:contrived_key) {|n| "contrivedkey#{n}"}
+  end
+
   factory :promotion do
     market
     product
