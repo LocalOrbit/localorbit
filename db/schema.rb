@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150728194123) do
+ActiveRecord::Schema.define(version: 20150804113346) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -223,6 +223,18 @@ ActiveRecord::Schema.define(version: 20150728194123) do
 
   add_index "discounts", ["code"], name: "index_discounts_on_code", using: :btree
 
+  create_table "external_products", force: true do |t|
+    t.string   "contrived_key",    null: false
+    t.integer  "organization_id",  null: false
+    t.text     "source_data_json"
+    t.datetime "batch_updated_at"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "external_products", ["contrived_key", "organization_id"], name: "index_external_products_on_contrived_key_and_organization_id", unique: true, using: :btree
+  add_index "external_products", ["organization_id", "batch_updated_at"], name: "index_external_products_on_organization_id_and_batch_updated_at", using: :btree
+
   create_table "fresh_sheets", force: true do |t|
     t.integer  "market_id"
     t.integer  "user_id"
@@ -412,6 +424,7 @@ ActiveRecord::Schema.define(version: 20150728194123) do
     t.string   "stripe_account_id"
     t.string   "payment_provider"
     t.string   "country",                                               default: "US",  null: false
+    t.boolean  "require_purchase_orders",                               default: false, null: false
   end
 
   add_index "markets", ["name"], name: "index_markets_on_name", using: :btree
@@ -684,6 +697,7 @@ ActiveRecord::Schema.define(version: 20150728194123) do
     t.string   "thumb_uid"
     t.integer  "second_level_category_id"
     t.string   "code"
+    t.integer  "external_product_id"
   end
 
   add_index "products", ["category_id"], name: "index_products_on_category_id", using: :btree

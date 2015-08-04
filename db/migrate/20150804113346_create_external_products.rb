@@ -13,6 +13,6 @@ class CreateExternalProducts < ActiveRecord::Migration
 
     add_index :external_products, [:contrived_key, :organization_id], unique: true
     add_index :external_products, [:organization_id, :batch_updated_at]
-    add_column :products, :external_product_id, unique: true, index: true
+    add_column :products, :external_product_id, :integer, unique: true, index: true
   end
 end
