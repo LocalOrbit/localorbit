@@ -62,6 +62,8 @@ GEM
       activemodel (= 4.1.6.rc2)
       activesupport (= 4.1.6.rc2)
       arel (~> 5.0.0)
+    activerecord-import (0.10.0)
+      activerecord (>= 3.0)
     activesupport (4.1.6.rc2)
       i18n (~> 0.6, >= 0.6.9)
       json (~> 1.7, >= 1.7.7)
@@ -602,6 +604,7 @@ DEPENDENCIES
   accountingjs-rails
   active_model_serializers
   active_record_union
+  activerecord-import
   acts_as_geocodable
   audited-activerecord
   awesome_nested_set
@@ -696,3 +699,6 @@ DEPENDENCIES
   webmock
   wkhtmltopdf-binary!
   wysihtml5-rails
+
+BUNDLED WITH
+   1.10.5

@@ -42,8 +42,6 @@ module ProductImport
           input_key: "category"
 
 
-        # TODO: Add your transforms here
-
         # provide default values and validate that we've generated
         # canonical data.
         s.transform :ensure_canonical_data
