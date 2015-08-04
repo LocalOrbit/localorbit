@@ -1,0 +1,21 @@
+#!/usr/bin/env ruby
+
+require File.expand_path(File.join(File.dirname(__FILE__), '..', 'config', 'environment'))
+
+require 'slop'
+
+opts = Slop.parse do |o|
+  o.on '-f', '--filename=', 'the file to import'
+  o.on '-m', '--market_id=', 'the market id these products are imported to'
+end
+
+if ARGV.empty?
+  puts "USAGE: import_products import_type [options] 2> errors.yml > out.lodex.csv"
+  exit 1
+end
+
+import_type = ARGV.first
+importer = ProductImport::FileImporters.instantiate(import_type, opts.to_hash)
+
+importer.load_products
+

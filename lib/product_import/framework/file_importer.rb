@@ -160,6 +160,10 @@ module ProductImport
 
         product_loader = ProductLoader.new
         product_loader.update successes
+
+        _each_success_redirecting_failures(source_enum, transform) do |payload|
+          product_loader.update_product payload
+        end
       end
 
 
@@ -173,33 +177,40 @@ module ProductImport
 
         CSV(io) do |csv|
 
-          seen_error = false
           headers = nil
 
-          source_enum.each do |row|
-            transform.transform_value(row) do |status, payload|
-              case status
-              when :success
-                unless headers
-                  headers = payload.keys
-                  if payload.key? 'source_data'
-                    headers.delete 'source_data'
-                    headers.concat payload['source_data'].keys
-                  end
-                  csv << headers
-                end
-                csv << headers.map{|h| payload[h] || payload['source_data'][h] }
-              else
-                unless seen_error
-                  type = self.class.name.underscore
-                  $stderr.puts "# This file contains details about failures to convert data to lodex"
-                  $stderr.puts "# The source file importer type was #{type}"
-                  $stderr.puts "# You can fix the extract stage and rerun against the source data"
-                  $stderr.puts "# or fix the canonicalize stage and run against the raw values below"
-                  seen_error = true
-                end
-                $stderr.puts payload.to_yaml
+          _each_success_redirecting_failures(source_enum, transform) do |payload|
+            unless headers
+              headers = payload.keys
+              if payload.key? 'source_data'
+                headers.delete 'source_data'
+                headers.concat payload['source_data'].keys
               end
+              csv << headers
+            end
+            csv << headers.map{|h| payload[h] || payload['source_data'][h] }
+          end
+        end
+      end
+
+      def _each_success_redirecting_failures(source_enum, transform)
+        seen_error = false
+
+        source_enum.each do |row|
+          transform.transform_value(row) do |status, payload|
+            case status
+            when :success
+              yield payload
+            else
+              unless seen_error
+                type = self.class.name.underscore
+                $stderr.puts "# This file contains details about failures to convert data to lodex"
+                $stderr.puts "# The source file importer type was #{type}"
+                $stderr.puts "# You can fix the extract stage and rerun against the source data"
+                $stderr.puts "# or fix the canonicalize stage and run against the raw values below"
+                seen_error = true
+              end
+              $stderr.puts payload.to_yaml
             end
           end
         end

@@ -8,7 +8,7 @@ describe ProductImport::Transforms::ContriveKey do
     
     it "Contrives a key from the specified fields" do
       data = [
-        {"foo" => "bar", "baz" = "qux"},
+        {"foo" => "bar", "baz" => "qux"},
       ]
 
       successes, failures = subject.transform_enum(data)
