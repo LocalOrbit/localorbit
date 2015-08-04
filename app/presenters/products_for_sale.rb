@@ -8,10 +8,30 @@ class ProductsForSale
     @market   = cart.market
   end
 
+  def current_page
+    (@filters[:page] || 1).to_i
+  end
+
+  def total_pages
+    # The relation is grouped, so I can't just do a .count. This is faster than
+    # getting a .length on unpaged_products.all would be.
+    @total_results ||= unpaged_products.count.keys.length
+    @total_results / limit_value
+  end
+
+  def limit_value
+    (@filters[:per_page] || 10).to_i
+  end
+
   def each_category_with_products
+    # products.pluck(:category).unique.each do |category|
+    #   yield(category, product_groups[category.id])
+    # end
     Category.nested_set_scope.where(id: product_groups.keys).each do |category|
       yield(category, product_groups[category.id])
     end
+    # first_category = products.first.category
+    # yield(first_category, product_groups[first_category.id])
   end
 
   def product_groups
@@ -44,8 +64,12 @@ class ProductsForSale
 
   protected
 
+  def unpaged_products
+    @delivery.products_available_for_sale(@buyer).order(:name)
+  end
+
   def base_products_scope
-    scope = @delivery.products_available_for_sale(@buyer).includes(:unit, :category, :prices, :lots).order(:name)
+    scope = unpaged_products.page(current_page).per(limit_value).includes(:unit, [:prices=>:organization], :lots)
 
     if @options[:seller]
       scope.where(organization_id: @options[:seller])
@@ -59,9 +83,10 @@ class ProductsForSale
   end
 
   def with_enough_inventory(products)
-    products.select do |product|
-      inventory = product.available_inventory(@delivery.deliver_on)
-      product.prices.any? {|price| price.for_market_and_organization?(@market, @buyer) && price.min_quantity <= inventory }
-    end
+    products
+    # products.select do |product|
+    #   inventory = product.available_inventory(@delivery.deliver_on)
+    #   product.prices.any? {|price| price.for_market_and_organization?(@market, @buyer) && price.min_quantity <= inventory }
+    # end
   end
 end
