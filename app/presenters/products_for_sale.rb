@@ -8,9 +8,10 @@ class ProductsForSale
     @market   = cart.market
   end
 
+
   def each_category_with_products
     Category.nested_set_scope.where(id: product_groups.keys).each do |category|
-      yield(category, product_groups[category.id])
+      yield(category, group_by_general_product(product_groups[category.id]))
     end
   end
 
@@ -43,6 +44,10 @@ class ProductsForSale
   end
 
   protected
+
+  def group_by_general_product(product_group)
+    product_group.group_by {|p| p.general_product_id }
+  end
 
   def base_products_scope
     scope = @delivery.products_available_for_sale(@buyer).includes(:unit, :category, :prices, :lots).order(:name)

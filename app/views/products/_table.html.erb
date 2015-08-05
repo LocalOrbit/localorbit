@@ -12,80 +12,81 @@
   </thead>
   <tbody>
 
-  <% products.each do |product| %>
-    <tr class="product product-row cart_item" data-cart-item="<%= product.cart_item.to_json %>">
+  <% products.each do |general_product_id, products_for_general_product| %>
+    <% first_product = products_for_general_product.first %> 
+    <tr class="general-product product-row">
       <td class="info">
       <div class="product-image">
-      <% if product.thumb_stored? %>
-        <%= image_tag product.thumb.url, alt: "" %>
-      <% elsif product.image_stored? %>
-        <%= image_tag product.image.thumb("150x150>").url, alt: "" %>
+      <% if first_product.thumb_stored? %>
+        <%= image_tag first_product.thumb.url, alt: "" %>
+      <% elsif first_product.image_stored? %>
+        <%= image_tag first_product.image.thumb("150x150>").url, alt: "" %>
       <% else %>
         <%= image_tag 'default-product-image.png', alt: "" %>
       <% end %>
       </div>
-        <h3 class="name"><%= link_to product.name, product, tabindex: -1 %></h3>
+        <h3 class="name"><%= link_to first_product.name, first_product, tabindex: -1 %></h3>
         <div class="short_description">
 
-          <% if product.long_description.present? %>
+          <% if first_product.long_description.present? %>
             <p>
-              <%= product.short_description %>
-              <%= link_to raw('<i class="font-icon icon-plus-circle"> </i>'), "#product-#{product.id}-long-description", {class: "popup-toggle", tabindex: "-1"} %>
+              <%= first_product.short_description %>
+              <%= link_to raw('<i class="font-icon icon-plus-circle"> </i>'), "#product-#{first_product.id}-long-description", {class: "popup-toggle", tabindex: "-1"} %>
             </p>
-            <div class="long-description-info is-hidden with-anchor top-anchor popup" id="product-<%= product.id %>-long-description">
+            <div class="long-description-info is-hidden with-anchor top-anchor popup" id="product-<%= first_product.id %>-long-description">
               <div class="popup-header">
                 Details <button class="close"><i class="font-icon icon-close"></i></button>
               </div>
               <div class="popup-body">
-                <%= simple_format product.long_description %>
+                <%= simple_format first_product.long_description %>
               </div>
             </div>
           <% else %>
-            <%= simple_format product.short_description  %>
+            <%= simple_format first_product.short_description  %>
           <% end %>
         </div>
 
         <ul class="meta list-naked l-inline-list clear-before">
           <li class="organization-name">
-            <%= link_to raw("<i class=\"font-icon icon-credit\"></i> #{product.organization_name}"), "#product-#{product.id}-who", class: "popup-toggle", tabindex: -1 %>
-            <div class="who-info is-hidden with-anchor top-anchor popup" id="product-<%= product.id %>-who">
+            <%= link_to raw("<i class=\"font-icon icon-credit\"></i> #{first_product.organization_name}"), "#product-#{first_product.id}-who", class: "popup-toggle", tabindex: -1 %>
+            <div class="who-info is-hidden with-anchor top-anchor popup" id="product-<%= first_product.id %>-who">
               <div class="popup-header">
                 Who <button class="close"><i class="font-icon icon-close"></i></button>
               </div>
               <div class="popup-body">
-                <%= product.who_story %>
+                <%= first_product.who_story %>
               </div>
             </div>
           </li>
           <li class="how-story">
-            <%= link_to raw('<i class="font-icon icon-archive"></i> How'), "#product-#{product.id}-how", class: "popup-toggle", tabindex: -1 %>
-            <div class="how-info is-hidden with-anchor top-anchor popup" id="product-<%= product.id %>-how">
+            <%= link_to raw('<i class="font-icon icon-archive"></i> How'), "#product-#{first_product.id}-how", class: "popup-toggle", tabindex: -1 %>
+            <div class="how-info is-hidden with-anchor top-anchor popup" id="product-<%= first_product.id %>-how">
               <div class="popup-header">
                 How <button class="close"><i class="font-icon icon-close"></i></button>
               </div>
               <div class="popup-body">
-                <%= product.how_story %>
+                <%= first_product.how_story %>
               </div>
             </div>
           </li>
           <li class="where">
-            <%= link_to raw('<i class="font-icon icon-direction"></i> Where'), "#product-#{product.id}-where", class: "popup-toggle", tabindex: -1 %>
-            <div class="where-info is-hidden with-anchor top-anchor popup" id="product-<%= product.id %>-where">
+            <%= link_to raw('<i class="font-icon icon-direction"></i> Where'), "#product-#{first_product.id}-where", class: "popup-toggle", tabindex: -1 %>
+            <div class="where-info is-hidden with-anchor top-anchor popup" id="product-<%= first_product.id %>-where">
               <div class="popup-header">
-                <%= product.location_label %>     <button class="close"><i class="font-icon icon-close"></i></button>
+                <%= first_product.location_label %>     <button class="close"><i class="font-icon icon-close"></i></button>
               </div>
-              <img class="location-map" alt="" src="" data-src="<%= product.location_map 310, 225 %>">
+              <img class="location-map" alt="" src="" data-src="<%= first_product.location_map 310, 225 %>">
             </div>
           </li>
           <li class="mobile-only product-image-alt">
-            <%= link_to raw('<i class="font-icon icon-picture"></i> Product Image'), "#product-#{product.id}-image", class: "popup-toggle", tabindex: -1 %>
-            <div class="image-info is-hidden with-anchor top-anchor popup" id="product-<%= product.id %>-image">
+            <%= link_to raw('<i class="font-icon icon-picture"></i> Product Image'), "#product-#{first_product.id}-image", class: "popup-toggle", tabindex: -1 %>
+            <div class="image-info is-hidden with-anchor top-anchor popup" id="product-<%= first_product.id %>-image">
               <div class="popup-header">
-                 <%= product.name %> <button class="close"><i class="font-icon icon-close"></i></button>
+                 <%= first_product.name %> <button class="close"><i class="font-icon icon-close"></i></button>
               </div>
-              <% if product.thumb_stored? %>
-                <%= image_tag product.thumb.url, alt: "" %>
-              <% elsif product.image_stored? %>
+              <% if first_product.thumb_stored? %>
+                <%= image_tag first_product.thumb.url, alt: "" %>
+              <% elsif first_product.image_stored? %>
                 <%= image_tag product.image.thumb("200x200>").url, alt: "" %>
               <% else %>
                 <%= image_tag 'default-product-image.png', alt: "" %>
@@ -94,26 +95,34 @@
           </li>
         </ul>
       </td>
-      <td class="pricing">
-        <ul class="tiers">
-          <% product.prices_for_market_and_organization(current_market, current_organization).each do |price| %>
-            <% price = price.decorate %>
-            <% if price.organization_id.present? %>
-              <li class="negotiated"><span class="unit-price"><%= number_to_currency(price.sale_price)%></span> <span class="tier"><%= price.formatted_units %></span><span class="tooltip tooltip--naked tooltip--notice" data-tooltip="This is a negotiated price specific to you!"><i class="font-icon" data-icon="&#xe01f;"></i></span></li>
-            <% else %>
-              <li><span class="unit-price"><%= number_to_currency(price.sale_price)%></span> <span class="tier"><%= price.formatted_units %></span></li>
-            <% end %>
+      <td>
+        <table class="product-unit">
+          <% products_for_general_product.each do |product| %>
+          <tr class="product cart_item" data-cart-item="<%= product.cart_item.to_json %>">
+            <td class="pricing">
+              <ul class="tiers">
+                <% product.prices_for_market_and_organization(current_market, current_organization).each do |price| %>
+                  <% price = price.decorate %>
+                  <% if price.organization_id.present? %>
+                    <li class="negotiated"><span class="unit-price"><%= number_to_currency(price.sale_price)%></span> <span class="tier"><%= price.formatted_units %></span><span class="tooltip tooltip--naked tooltip--notice" data-tooltip="This is a negotiated price specific to you!"><i class="font-icon" data-icon="&#xe01f;"></i></span></li>
+                  <% else %>
+                    <li><span class="unit-price"><%= number_to_currency(price.sale_price)%></span> <span class="tier"><%= price.formatted_units %></span></li>
+                  <% end %>
+                <% end %>
+              </ul>
+            </td>
+            <td class="quantity">
+              <span>
+                <input name="quantity" type="number" size="3" min="0" value="<%= product.cart_item.quantity > 0 ? product.cart_item.quantity : '' %>" max="<%= product.available_inventory(current_delivery.deliver_on) %>"><br>
+                <span class="price-for-quantity"><%= number_to_currency(product.cart_item.unit_price.sale_price) %></span>
+              </span>
+            </td>
+            <td class="total price"><%= product.cart_item.decorate.display_total_price %></td>
+            <td class="product-clear"><%= link_to "", "#", class: "font-icon icon-clear #{' is-hidden' unless product.cart_item.persisted?}", tabindex: -1%></td>
+          </tr>
           <% end %>
-        </ul>
+        </table>
       </td>
-      <td class="quantity">
-        <span>
-          <input name="quantity" type="number" size="3" min="0" value="<%= product.cart_item.quantity > 0 ? product.cart_item.quantity : '' %>" max="<%= product.available_inventory(current_delivery.deliver_on) %>"><br>
-          <span class="price-for-quantity"><%= number_to_currency(product.cart_item.unit_price.sale_price) %></span>
-        </span>
-      </td>
-      <td class="total price"><%= product.cart_item.decorate.display_total_price %></td>
-      <td class="product-clear"><%= link_to "", "#", class: "font-icon icon-clear #{' is-hidden' unless product.cart_item.persisted?}", tabindex: -1%></td>
     </tr>
   <% end %>
   </tbody>

@@ -1,3 +1,4 @@
+
 //= depend_on_asset "sort.png"
 //= depend_on_asset "sort@2x.png"
 
@@ -1120,6 +1121,22 @@ th {
     height: auto;
     border: 0;
     background: transparent;
+  }
+}
+
+table.product-unit {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  outline: 0;
+  caption, tbody, tfoot, thead, tr, th, td {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    outline: 0;
+  }
+  tr {
+    background: transparent!important;
   }
 }
 

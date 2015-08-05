@@ -999,8 +999,8 @@ module Dom
     end
   end
 
-  class Product < Domino
-    selector ".product"
+  class GeneralProduct < Domino
+    selector ".general-product"
 
     attribute :name
     attribute :organization_name
@@ -1020,6 +1020,14 @@ module Dom
         tier.find(".unit-price").text
       end
     end
+
+  end
+
+  class Product < Domino
+    selector ".product"
+
+    attribute :pricing
+    attribute :quantity
   end
 
   class ProductFilter < Domino

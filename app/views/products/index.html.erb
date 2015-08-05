@@ -41,7 +41,6 @@
         <% if @products_for_sale.featured_promotion.present? %>
           <%= render "featured", { featured: @products_for_sale.featured_promotion } %>
         <% end %>
-
         <% @products_for_sale.each_category_with_products do |category, products| %>
           <%= render "table", products: products, category: category %>
         <% end %>
