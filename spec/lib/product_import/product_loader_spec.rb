@@ -123,6 +123,8 @@ describe ProductImport::ProductLoader do
     expect(price_prod.min_quantity).to eq(1)
     expect(price_prod).to be_persisted
 
+    flunk "TODO: Update price history when the price changes. Leave it if the price hasn't changed"
+
     expect(lot_prod.quantity).to eq(999999)
     expect(lot_prod).to be_persisted
 
@@ -151,5 +153,28 @@ describe ProductImport::ProductLoader do
 
   end
 
+
+  it "should undelete products that no longer exist" do
+  
+    product = create :product, deleted_at: Time.now
+    dropped_ep = create :external_product, contrived_key: "anactualsha1", product: product
+
+    data = [{
+        "category_id" => cat1.id,
+        "organization_id" => dropped_ep.organization_id,
+        "unit_id" => unit1.id,
+        "name" => "BrandNewProductTest2",
+        "price" => "25.24", # string or number
+        "product_code" => "abc12345",
+        "short_description" => "Test short",
+        "long_description" => "Test long",
+        "contrived_key" => "anactualsha1",
+        "source_data" => {"foo"=>"baz"}
+      }]
+
+    subject.update(data)
+    expect(dropped_ep.product.reload.deleted_at).to be_nil
+
+  end
 
 end

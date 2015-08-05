@@ -82,6 +82,7 @@ module ProductImport
             long_description: p['long_description'],
             unit_description: p['unit_description'],
             external_product_id: ep_id,
+            deleted_at: nil
           )
 
           product.prices.first.assign_attributes(sale_price: p['price'], min_quantity: 1)
