@@ -1,15 +1,43 @@
-<h1>Alternative Product Page</h1>
+<div class="mobile-panes-wrapper">
+  <div class="row mobile-panes" data-panes="3">
+    <div class="column column--fourth secondary-panes" data-panes="2">
 
-<div class="column--full column--guttered" style="margin-bottom:50px;">
-  <input id="product-order-search" class="typeahead" style="width:100%;" />
+      <div class="mobile-pane" id="delivery_details">
+        <div class="vacuus"></div>
+        <a href="#delivery_products" class="pane-toggle mobile-only btn">Return to Shop</a>
+        <%= render "selected_delivery" %>
+      </div
+      ><div class="mobile-pane" id="delivery_filters">
+        <div class="vacuus"></div>
+        <a href="#delivery_products" class="pane-toggle mobile-only btn">Return to Shop</a>
+      </div
+    ></div
+    ><div class="column column--three-fourths mobile-pane" id="delivery_products">
+      <div class="vacuus"></div>
+      <a href="#delivery_details" class="pane-toggle mobile-only btn">Delivery Information</a>
+      <div class="products--user">
+        <h2 class="table-heading">Products Available on <%= current_delivery.buyer_display_date %></h2>
+        <p class="table-summary">
+          Please complete your order by <%= current_delivery.cutoff_time.strftime("%B %-d at %l%p") %>.<br>
+          <%= current_delivery.selected_type.capitalize %> is <%= current_delivery.buyer_display_date %> <%= current_delivery.buyer_time_range %>.
+        </p>
+
+        <h1>Search for Products</h1>
+
+        <div class="column--full column--guttered" style="margin-bottom:50px;">
+          <input id="product-order-search" class="typeahead" style="width:100%;" placeholder="Try 'orange + fruit'" />
+        </div>
+
+        <table id="product-search-table" class="product-table product-table--user cart_items" data-cart-url="<%= cart_path %>">
+          <thead></thead>
+          <tbody>
+            <% current_cart.items.order(:created_at).each do |item| %>
+              <%= render "table_row", product: item.product.decorate(context: {current_cart: current_cart}) %>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
 </div>
-
-<table id="product-search-table" class="product-table product-table--user cart_items" data-cart-url="<%= cart_path %>">
-  <thead></thead>
-  <tbody>
-    <% current_cart.items.order(:created_at).each do |item| %>
-      <%= render "table_row", product: item.product.decorate(context: {current_cart: current_cart}) %>
-    <% end %>
-  </tbody>
-</table>
 

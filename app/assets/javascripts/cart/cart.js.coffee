@@ -235,7 +235,7 @@ $ ->
       datumTokenizer: Bloodhound.tokenizers.obj.whitespace('value'),
       queryTokenizer: Bloodhound.tokenizers.whitespace,
       remote: {
-        url: '/products/search?q=%QUERY',
+        url: "/products/search?q=%QUERY&#{window.location.search.replace('?', '')}",
         wildcard: '%QUERY',
         transform: (response) ->
           response.products
@@ -245,10 +245,10 @@ $ ->
     searchBox = $("#product-order-search")
 
     searchBox.typeahead({hint: false}, {
-      name: 'best-pictures',
+      name: 'products',
       display: 'name',
       source: products,
-      limit: 50,
+      limit: 101,
       templates: {
         suggestion: (data) ->
           "
@@ -258,6 +258,12 @@ $ ->
               <p class='tt-product-price'><small>#{data.pricing}</small></p>
             </div>
           "
+        empty: (data) ->
+          if data.query.length < 3
+            message = 'Please enter a search term at least four characters long.'
+          else
+            message = 'No matches were found for this search.'
+          "<div style='padding-left:10px;'><p>#{message}</p></div>"
       }
     });
 

@@ -1,6 +1,7 @@
 class ProductsController < ApplicationController
   include ActiveSupport::NumberHelper
   before_action :before_actions, only: [:index, :show]
+  before_action :load_sellers, only: [:index, :search]
   skip_before_action :set_intercom_attributes, :masquerade_user!, only: [:search]
 
   def before_actions
@@ -17,8 +18,7 @@ class ProductsController < ApplicationController
   def index
     if current_market.alternative_order_page
       render 'alternative_order_page'
-    else
-      render 'index'
+      return
     end
   end
 
@@ -35,16 +35,15 @@ class ProductsController < ApplicationController
 
   def search
     search = params[:q]
+    org_filter = params[:organization] || @sellers.pluck(:id)
     if search.length > 3
-      @sellers ||= current_market.organizations.where(can_sell: true, active: true).pluck(:id)
-
       matching_and_available_products = current_delivery
         .object
         .delivery_schedule
         .products
         .with_available_inventory(current_delivery.deliver_on)
         .priced_for_market_and_buyer(current_market, current_organization)
-        .where(organization_id: @sellers)
+        .where(organization_id: org_filter)
         .search_by_text(search)
         .limit(50)
         .includes(:organization, :second_level_category, :prices, :unit)
@@ -79,6 +78,10 @@ class ProductsController < ApplicationController
       :pricing => formatted_prices,
       :unit_with_description => product.unit_with_description(:plural)
     }
+  end
+
+  def load_sellers
+    @sellers ||= current_market.organizations.where(can_sell: true, active: true)
   end
 
   def load_products
