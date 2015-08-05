@@ -7,6 +7,7 @@ require 'slop'
 opts = Slop.parse do |o|
   o.on '-f', '--filename=', 'the file to import'
   o.on '-m', '--market_id=', 'the market id these products are imported to'
+  o.on '-o', '--organization_id=', 'the organization to associate the products with'
 end
 
 if ARGV.empty?

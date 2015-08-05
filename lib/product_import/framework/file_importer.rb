@@ -152,17 +152,24 @@ module ProductImport
       def load_products(format_args=nil)
         format_args ||= opts
 
+        puts "Checking file validity..."
         check_format_validity!(format_args)
 
+        puts "Setting up transforms"
         source_enum = format.enum_for(format_args)
-        transform = transform_for_stages(ALLOWED_STAGES)
-        successes, failures = transform.transform_enum(source_enum)
+        transform = transform_for_stages(*ALLOWED_STAGES)
 
         product_loader = ProductLoader.new
-        product_loader.update successes
 
-        _each_success_redirecting_failures(source_enum, transform) do |payload|
-          product_loader.update_product payload
+        count = 0
+        begin
+          _each_success_redirecting_failures(source_enum, transform) do |payload|
+            count += 1
+            puts "Loaded #{count} products..." if count % 50 == 0
+            product_loader.update_product payload
+          end
+        ensure
+          product_loader.commit
         end
       end
 
@@ -260,16 +267,27 @@ module ProductImport
       def self._setup_resolve_stage(s)
         # Default resolve stage implementation
 
-        s.transform :look_up_category
-
-        s.transform :set_keys_to_importer_option_values, map: {
-          "market_id" => :market_id
+        s.transform :alias_keys, skip_if_present: true, key_map: {
+          "unit" => "short_description",
         }
 
+        s.transform :set_keys_to_importer_option_values, map: {
+          "market_id" => :market_id,
+          "organization_id" => :organization_id,
+        }
+
+        s.transform :look_up_category
         s.transform :look_up_organization
+        s.transform :look_up_unit
 
         s.transform :validate_keys_are_present,
           keys: %w(organization_id market_id category_id)
+
+        s.transform :coerce_keys, map: {
+          "organization_id" => :to_i,
+          "category_id" => :to_i,
+          "market_id" => :to_i,
+        }
 
       end
 

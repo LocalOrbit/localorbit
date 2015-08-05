@@ -37,13 +37,15 @@ module ProductImport
           filename: "birite.csv",
           input_key: "Customer Category"
 
+        s.transform :set_keys, map: { "unit" => "Each" }
 
         s.transform :alias_keys,
           key_map: {
             "Product Name" => "name",
+            "Seller Name" => "organization",
             "Supplier Product Number" => "product_code",
             "Price" => "price",
-            "Unit Description (optional)" => "unit",
+            "Unit Description (optional)" => "unit_description",
             "Unit Name" => "uom",
           }
 

@@ -2,12 +2,12 @@
 class ProductImport::Transforms::LookUpCategory < ProductImport::Framework::Transform
   def transform_step(row)
 
-  	if category_map.key? row['category']
-  		row['category_id'] = category_map[row['category']]
-  		continue row
-  	else
-  		reject "Could not find category with name #{row['category']}"
-  	end
+    if category_map.key? row['category']
+      row['category_id'] = category_map[row['category']]
+      continue row
+    else
+      reject "Could not find category with name #{row['category']}"
+    end
 
   end
 

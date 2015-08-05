@@ -17,6 +17,7 @@ module ProductImport::Schemas
     'unit' => either(Integer,String),
     _?('uom') => String,
 
+    _?('unit_description') => String,
     _?('short_description') => String,
     _?('long_description') => String,
     _?('organization') => String,
