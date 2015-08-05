@@ -13,6 +13,7 @@ class ProductsController < ApplicationController
     require_cart
     hide_admin_navigation
     load_products
+    load_sellers
   end
 
   def index
@@ -34,7 +35,7 @@ class ProductsController < ApplicationController
   end
 
   def search
-    search = params[:q]
+    search = params[:q].gsub(' ', '+')
     org_filter = params[:organization] || @sellers.pluck(:id)
     if search.length > 3
       matching_and_available_products = current_delivery
@@ -81,7 +82,7 @@ class ProductsController < ApplicationController
   end
 
   def load_sellers
-    @sellers ||= current_market.organizations.where(can_sell: true, active: true)
+    @sellers ||= current_market.organizations.where(can_sell: true, active: true).order(:name)
   end
 
   def load_products

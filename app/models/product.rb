@@ -56,7 +56,8 @@ class Product < ActiveRecord::Base
   pg_search_scope :search_by_text,
     :against => :name,
     :associated_against => {
-      :second_level_category => :name
+      :second_level_category => :name,
+      :organization => :name
     },
     :using => {
       :tsearch => {prefix: true}
