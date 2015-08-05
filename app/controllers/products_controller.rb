@@ -9,6 +9,11 @@ class ProductsController < ApplicationController
   before_action :load_products
 
   def index
+    if current_market.alternative_order_page
+      render 'alternative_order_page'
+    else
+      render 'index'
+    end
   end
 
   def show
