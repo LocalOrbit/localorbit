@@ -40,6 +40,17 @@ class ProductsController < ApplicationController
     render :json => matching_and_available_products.map {|p| {:id=>p.id, :name=>p.name} }
   end
 
+  def render_product_row
+    product = Product.find(params[:product_id])
+    if product
+      render :json => {
+        html: render_to_string("_table_row", :locals => {
+          product: product.decorate(context: {current_cart: current_cart})
+        }, :layout => false)
+      }
+    end
+  end
+
   private
 
   def load_products

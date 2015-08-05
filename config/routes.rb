@@ -173,7 +173,9 @@ Rails.application.routes.draw do
   end
 
   get '/products/search' => "products#search"
-  resources :products, only: [:index, :show]
+  resources :products, only: [:index, :show] do
+    get '/row' => "products#render_product_row"
+  end
   resources :organizations, only: :index
   resource  :market, only: [:show]
   resources :sellers, only: [:index, :show]

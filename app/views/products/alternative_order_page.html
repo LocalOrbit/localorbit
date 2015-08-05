@@ -1,1 +1,10 @@
 <h1>Alternative Product Page</h1>
+
+<table class="product-table product-table--user cart_items" data-cart-url="<%= cart_path %>">
+  <thead></thead>
+  <tbody>
+    <% current_cart.items.each do |item| %>
+      <%= render "table_row", product: item.product.decorate(context: {current_cart: current_cart}) %>
+    <% end %>
+  </tbody>
+</table>
