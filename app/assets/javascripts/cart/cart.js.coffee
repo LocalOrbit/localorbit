@@ -248,6 +248,17 @@ $ ->
       name: 'best-pictures',
       display: 'name',
       source: products,
+      limit: 50,
+      templates: {
+        suggestion: (data) ->
+          "
+            <div>
+              <p><strong>#{data.name}</strong>  (#{data.unit_with_description})</p>
+              <p><small><em>#{data.seller_name}, #{data.second_level_category_name}</em></small></p>
+              <p class='tt-product-price'><small>#{data.pricing}</small></p>
+            </div>
+          "
+      }
     });
 
     searchBox.on "typeahead:select", insertEntry
