@@ -1002,7 +1002,7 @@ module Dom
   class GeneralProduct < Domino
     selector ".general-product"
 
-    attribute :name
+    attribute :gpname
     attribute :organization_name
     attribute :pricing
     attribute :quantity
@@ -1026,6 +1026,7 @@ module Dom
   class Product < Domino
     selector ".product"
 
+    attribute :name
     attribute :pricing
     attribute :quantity
   end

@@ -25,7 +25,7 @@
         <%= image_tag 'default-product-image.png', alt: "" %>
       <% end %>
       </div>
-        <h3 class="name"><%= link_to first_product.name, first_product, tabindex: -1 %></h3>
+        <h3 class="gpname"><%= link_to first_product.name, first_product, tabindex: -1 %></h3>
         <div class="short_description">
 
           <% if first_product.long_description.present? %>
@@ -98,8 +98,10 @@
       <td>
         <table class="product-unit">
           <% products_for_general_product.each do |product| %>
-          <tr class="product cart_item" data-cart-item="<%= product.cart_item.to_json %>">
+          <tr class="cart_item product" data-cart-item="<%= product.cart_item.to_json %>">
             <td class="pricing">
+              <span class="name"><%= product.name %></span>
+              <% puts "NAME: #{product.name} %>
               <ul class="tiers">
                 <% product.prices_for_market_and_organization(current_market, current_organization).each do |price| %>
                   <% price = price.decorate %>

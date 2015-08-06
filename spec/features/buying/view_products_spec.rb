@@ -53,10 +53,10 @@ feature "Viewing products" do
     end
 
     expect(products).to have(2).products
-    expect(general_products.map(&:name)).to match_array(available_products.map(&:name))
+    expect(products.map(&:name)).to match_array(available_products.map(&:name))
 
     product = available_products.first
-    dom_general_product = Dom::GeneralProduct.find_by_name(product.name)
+    dom_general_product = Dom::GeneralProduct.find_by_gpname(product.name)
 
     expect(dom_general_product.organization_name).to have_text(product.organization_name)
     expected_price = "$%.2f" % product.prices.first.sale_price
@@ -77,7 +77,7 @@ feature "Viewing products" do
     expect(products.map(&:name)).to match_array([available_products.first.name])
 
     product = available_products.first
-    dom_product = Dom::GeneralProduct.find_by_name(product.name)
+    dom_product = Dom::GeneralProduct.find_by_gpname(product.name)
 
     expect(dom_product.organization_name).to have_text(product.organization_name)
     expected_price = "$%.2f" % product.prices.first.sale_price
@@ -93,8 +93,8 @@ feature "Viewing products" do
     sign_in_as(user)
 
     expect(Dom::Product.all.count).to eql(1)
-    expect(Dom::GeneralProduct.find_by_name(org1_product.name)).to be_nil
-    expect(Dom::GeneralProduct.find_by_name(org2_product.name)).to_not be_nil
+    expect(Dom::GeneralProduct.find_by_gpname(org1_product.name)).to be_nil
+    expect(Dom::GeneralProduct.find_by_gpname(org2_product.name)).to_not be_nil
   end
 
   scenario "a product with just enough inventory required to purchase" do
@@ -105,8 +105,8 @@ feature "Viewing products" do
     sign_in_as(user)
 
     expect(Dom::Product.all.count).to eql(2)
-    expect(Dom::GeneralProduct.find_by_name(org1_product.name)).to_not be_nil
-    expect(Dom::GeneralProduct.find_by_name(org2_product.name)).to_not be_nil
+    expect(Dom::GeneralProduct.find_by_gpname(org1_product.name)).to_not be_nil
+    expect(Dom::GeneralProduct.find_by_gpname(org2_product.name)).to_not be_nil
   end
 
   scenario "a product with less inventory than required to purchase that is cross-sold in multiple markets" do
@@ -131,8 +131,8 @@ feature "Viewing products" do
     choose_delivery "Between 12:00PM and 2:00PM"
 
     expect(Dom::Product.all.count).to eql(1)
-    expect(Dom::GeneralProduct.find_by_name(org1_product.name)).to be_nil
-    expect(Dom::GeneralProduct.find_by_name(org2_product.name)).to_not be_nil
+    expect(Dom::GeneralProduct.find_by_gpname(org1_product.name)).to be_nil
+    expect(Dom::GeneralProduct.find_by_gpname(org2_product.name)).to_not be_nil
   end
 
   scenario "a product with inventory that expires before the delivery" do
@@ -143,8 +143,8 @@ feature "Viewing products" do
     sign_in_as(user)
 
     expect(Dom::Product.all.count).to eql(1)
-    expect(Dom::GeneralProduct.find_by_name(org1_product.name)).to be_nil
-    expect(Dom::GeneralProduct.find_by_name(org2_product.name)).to_not be_nil
+    expect(Dom::GeneralProduct.find_by_gpname(org1_product.name)).to be_nil
+    expect(Dom::GeneralProduct.find_by_gpname(org2_product.name)).to_not be_nil
   end
 
   scenario "an individual product" do
@@ -582,7 +582,7 @@ feature "Viewing products" do
     scenario "organization only sees pricing relavent to them" do
       sign_in_as(user)
 
-      product = Dom::GeneralProduct.find_by_name(org1_product.name)
+      product = Dom::GeneralProduct.find_by_gpname(org1_product.name)
       expect(product.prices).to include("$10.00", "$5.00")
       expect(product.prices).to_not include("$8.00")
     end

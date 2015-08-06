@@ -27,14 +27,14 @@ feature "View a products story", js: true do
 
   context "fall through to organization stories" do
     scenario "view the 'who' story" do
-      product = Dom::Product.find_by_name(product1.name)
+      product = Dom::GeneralProduct.find_by_gpname(product1.name)
       product.open_who_story
 
       expect(page).to have_text(org1.who_story)
     end
 
     scenario "view the 'how' story" do
-      product = Dom::Product.find_by_name(product1.name)
+      product = Dom::GeneralProduct.find_by_gpname(product1.name)
       product.open_how_story
 
       expect(page).to have_text(org1.how_story)
@@ -43,14 +43,14 @@ feature "View a products story", js: true do
 
   context "show product stories" do
     scenario "view the 'who' story" do
-      product = Dom::Product.find_by_name(product2.name)
+      product = Dom::GeneralProduct.find_by_gpname(product2.name)
       product.open_who_story
 
       expect(page).to have_text(product2.who_story)
     end
 
     scenario "view the 'how' story" do
-      product = Dom::Product.find_by_name(product2.name)
+      product = Dom::GeneralProduct.find_by_gpname(product2.name)
       product.open_how_story
 
       expect(page).to have_text(product2.how_story)

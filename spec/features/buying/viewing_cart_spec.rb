@@ -82,6 +82,7 @@ describe "Viewing the cart", js:true do
     # NOTE: the behavior of clicking the cart link will change
     # once the cart preview has been built. See
     # https://www.pivotaltracker.com/story/show/67553382
+    binding.pry
     cart_link.node.click # This behavior will change once the cart preview is implemented
     expect(page).to have_content("Your Order")
   end
@@ -389,7 +390,7 @@ describe "Viewing the cart", js:true do
         expect(page).to have_content("Discount applied")
 
         click_link "Order"
-
+        binding.pry
         kale_item.set_quantity(1)
         bananas_item.quantity_field.click
         expect(Dom::CartLink.first).to have_content("Quantity updated!")

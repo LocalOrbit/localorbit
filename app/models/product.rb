@@ -319,7 +319,6 @@ class Product < ActiveRecord::Base
       second_level_category_id: self.second_level_category_id,
     )
     self.general_product = gp
-    self.save!
   end
 
 end
