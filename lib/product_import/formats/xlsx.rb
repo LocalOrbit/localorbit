@@ -1,11 +1,15 @@
 module ProductImport
   module Formats
     class Xlsx
-      def enum_for(filename:)
+      def enum_for(filename:, **rest)
         Enumerator.new do |yielder|
           require 'rubyXL'
 
-          workbook = RubyXL::Parser.parse(filename)
+          begin
+            workbook = RubyXL::Parser.parse(filename)
+          rescue Zip::Error
+            raise ArgumentError, "Invalid xlsx files"
+          end
           raise ArgumentError, "No worksheets found in this workbook" if workbook.count < 1
 
           worksheet = workbook[0]
@@ -14,6 +18,7 @@ module ProductImport
             row = worksheet[i]
             if row
               values = (0...row.size).map{|i| row[i] && row[i].value}
+              # binding.pry
               yielder << values
             end
           end

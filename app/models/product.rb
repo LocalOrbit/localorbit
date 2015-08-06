@@ -15,6 +15,7 @@ class Product < ActiveRecord::Base
   belongs_to :organization, inverse_of: :products
   belongs_to :location
   belongs_to :unit
+  belongs_to :external_product, inverse_of: :product
 
   has_many :lots, -> { order("created_at") }, inverse_of: :product, autosave: true, dependent: :destroy
   has_many :lots_by_expiration, -> { order("expires_at, good_from, created_at") }, class_name: Lot, foreign_key: :product_id
@@ -52,6 +53,16 @@ class Product < ActiveRecord::Base
   scope_accessible :search, method: :for_search, ignore_blank: true
 
   pg_search_scope :search_by_name, against: :name, using: {tsearch: {prefix: true}}
+
+  pg_search_scope :search_by_text,
+    :against => :name,
+    :associated_against => {
+      :second_level_category => :name,
+      :organization => :name
+    },
+    :using => {
+      :tsearch => {prefix: true}
+    }
 
   def self.available_for_market(market)
     return none unless market

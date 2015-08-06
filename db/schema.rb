@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150728203823) do
+ActiveRecord::Schema.define(version: 20150805123456) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -178,7 +178,7 @@ ActiveRecord::Schema.define(version: 20150728203823) do
     t.integer  "day"
     t.decimal  "fee"
     t.string   "fee_type"
-    t.integer  "order_cutoff",                   default: 24, null: false
+    t.integer  "order_cutoff",                   default: 24,             null: false
     t.boolean  "require_delivery"
     t.boolean  "require_cross_sell_delivery"
     t.integer  "seller_fulfillment_location_id"
@@ -193,6 +193,7 @@ ActiveRecord::Schema.define(version: 20150728203823) do
     t.datetime "deleted_at"
     t.integer  "legacy_id"
     t.integer  "buyer_day"
+    t.string   "fee_label",                      default: "Delivery Fee"
   end
 
   add_index "delivery_schedules", ["deleted_at"], name: "index_delivery_schedules_on_deleted_at", using: :btree
@@ -222,6 +223,18 @@ ActiveRecord::Schema.define(version: 20150728203823) do
   end
 
   add_index "discounts", ["code"], name: "index_discounts_on_code", using: :btree
+
+  create_table "external_products", force: true do |t|
+    t.string   "contrived_key",    null: false
+    t.integer  "organization_id",  null: false
+    t.text     "source_data"
+    t.datetime "batch_updated_at"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "external_products", ["contrived_key", "organization_id"], name: "index_external_products_on_contrived_key_and_organization_id", unique: true, using: :btree
+  add_index "external_products", ["organization_id", "batch_updated_at"], name: "index_external_products_on_organization_id_and_batch_updated_at", using: :btree
 
   create_table "fresh_sheets", force: true do |t|
     t.integer  "market_id"
@@ -413,6 +426,7 @@ ActiveRecord::Schema.define(version: 20150728203823) do
     t.string   "payment_provider"
     t.string   "country",                                               default: "US",  null: false
     t.boolean  "require_purchase_orders",                               default: false, null: false
+    t.boolean  "alternative_order_page",                                default: false, null: false
   end
 
   add_index "markets", ["name"], name: "index_markets_on_name", using: :btree
@@ -467,7 +481,7 @@ ActiveRecord::Schema.define(version: 20150728203823) do
     t.integer  "product_id"
     t.string   "name"
     t.string   "seller_name"
-    t.integer  "quantity"
+    t.decimal  "quantity",               precision: 10, scale: 2
     t.string   "unit"
     t.decimal  "discount_seller",        precision: 10, scale: 2, default: 0.0,      null: false
     t.decimal  "market_seller_fee",      precision: 10, scale: 2, default: 0.0,      null: false
@@ -685,6 +699,7 @@ ActiveRecord::Schema.define(version: 20150728203823) do
     t.string   "thumb_uid"
     t.integer  "second_level_category_id"
     t.string   "code"
+    t.integer  "external_product_id"
   end
 
   add_index "products", ["category_id"], name: "index_products_on_category_id", using: :btree

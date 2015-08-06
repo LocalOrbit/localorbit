@@ -1,6 +1,6 @@
 class AddLocaleyesPlan < ActiveRecord::Migration
   def up
-    Plan.create(name: "LocalEyes", cross_selling: true, discount_codes: true, custom_branding: true, order_printables: true, has_procurement_managers: true)
+    Plan.create(name: "LocalEyes", cross_selling: true, discount_codes: true, custom_branding: true, order_printables: true, has_procurement_managers: true, packing_labels: true)
   end
 
   def down

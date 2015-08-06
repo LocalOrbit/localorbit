@@ -91,14 +91,14 @@ feature "Viewing orders" do
       expect(page).to have_content("$9.98")
       expect(page).to have_content("Purchase Order")
       expect(page).to have_content("Delivery Status: Delivered")
-      expect(page).to_not have_content("Delivery Fees: $7.12")
+      expect(page).to_not have_content("Delivery Fee: $7.12")
 
       items = Dom::Order::ItemRow.all
       expect(items.count).to eq(1)
 
       item = Dom::Order::ItemRow.first
       expect(item.name).to have_content(market1_order_item1.name)
-      expect(item.quantity).to have_content(market1_order_item1.quantity.to_s)
+      expect(item.quantity).to have_content(Format.quantity(market1_order_item1.quantity.to_s))
       expect(item.price).to eq("$#{market1_order_item1.unit_price}")
       expect(item.has_discount?).to be false
       expect(item.total).to eq("$9.98")
@@ -110,7 +110,7 @@ feature "Viewing orders" do
       expect(summary.market_fees).to eq("$0.50")
       expect(summary.transaction_fees).to eq("$0.40")
       expect(summary.payment_processing).to eq("$0.00")
-      expect(summary).to_not have_content "Delivery Fees"
+      expect(summary).to_not have_content "Delivery Fee"
       expect(summary.net_sale).to eq("$#{9.08-discount_seller}")
     end
   end
@@ -171,7 +171,7 @@ feature "Viewing orders" do
       expect(page).to have_content(market1_order1.organization.name)
       expect(page).to have_content("$9.98")
       expect(page).to have_content("Purchase Order")
-      expect(page).to have_content("Delivery Fees: $7.12")
+      expect(page).to have_content("Delivery Fee: $7.12")
 
       items = Dom::Order::ItemRow.all
       expect(items.count).to eq(2)
@@ -217,7 +217,7 @@ feature "Viewing orders" do
         expect(page).to have_content(market1_order1.organization.name)
         expect(page).to have_content("$9.98")
         expect(page).to have_content("Purchase Order")
-        expect(page).to have_content("Delivery Fees: $7.12")
+        expect(page).to have_content("Delivery Fee: $7.12")
 
         items = Dom::Order::ItemRow.all
         expect(items.count).to eq(2)
@@ -474,7 +474,7 @@ feature "Viewing orders" do
       expect(page).to have_content(market1_order1.organization.name)
       expect(page).to have_content("$9.98")
       expect(page).to have_content("Purchase Order")
-      expect(page).to have_content("Delivery Fees: $7.12")
+      expect(page).to have_content("Delivery Fee: $7.12")
 
       items = Dom::Order::ItemRow.all
       expect(items.count).to eq(2)
