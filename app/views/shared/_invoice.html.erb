@@ -1,25 +1,25 @@
-
+<body style="margin:0; padding:0;">
   <%= link_to "Return to Invoices", admin_financials_invoices_path, class: "no-print" if user %>
   <table>
     <caption>Order Detail</caption>
     <thead>
       <tr>
-        <th class="al">Item</th>
+        <th style="min-width:200px">Item</th>
         <th>Unit</th>
-        <th>Quantity<br>Ordered</th>
-        <th>Quantity<br>Delivered</th>
+        <th>Qty.<br>Ordered</th>
+        <th>Qty.<br>Delivered</th>
         <th>Unit Price</th>
-        <th>Seller</th>
-        <th>Item Total<br>Price</th>
+        <th style="min-width:200px">Seller</th>
+        <th>Item<br>Total</th>
       </tr>
     </thead>
     <% invoice.items.each do |item| %>
     <tr class="line-item">
       <td class="al">
-        <% if item.product.code.present? %>
-          <%= item.product.code %><br>
-        <% end %>
         <%= item.name %>
+        <% if item.product.code.present? %>
+          <br><%= item.product.code %>
+        <% end %>
       </td>
       <td><%= item.unit %></td>
       <td><%= item.quantity %></td>
@@ -39,15 +39,15 @@
         <td><%= number_to_currency invoice.discount %></td>
       </tr>
       <tr class="delivery">
-        <th scope="row" colspan="6" class="ar">Delivery Fees</th>
+        <th scope="row" colspan="6" class="ar"><%= invoice.delivery.delivery_schedule.fee_label %></th>
         <td><%= number_to_currency invoice.delivery_fees %></td>
       </tr>
       <tr class="total">
         <td colspan="4">Thank you for your business.</td>
-        <th colspan="2" scope="row" class="ar">Total</th>
-        <td class="amount"><%= number_to_currency invoice.total_cost %></td>
+        <th colspan="3" class="ar"><span>Total</span> <span class="amount app-total"><%= number_to_currency invoice.total_cost %></span></td>
       </tr>
     </tbody>
   </table>
   
 <%= javascript_include_tag "application" if @needs_js %>
+</body>

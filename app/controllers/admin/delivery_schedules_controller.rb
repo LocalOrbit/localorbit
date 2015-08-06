@@ -55,6 +55,7 @@ module Admin
         :day,
         :buyer_day,
         :fee,
+        :fee_label,
         :fee_type,
         :order_cutoff,
         :require_delivery,

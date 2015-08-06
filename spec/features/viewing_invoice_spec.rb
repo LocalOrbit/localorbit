@@ -181,13 +181,13 @@ feature "Viewing invoices" do
 
 
           expect(page).to have_content("Subtotal $427.96")
-          expect(page).to have_content("Total $440.91")
-
+          expect(find(".app-total")).to have_content("$440.91")
+          expect(find(".app-header-total")).to have_content("$440.91")
+          
           # There should be 3 line items
           expect(all(".line-item").size).to eq(3)
 
           # Line items total
-          expect(find("tr:last-child td:last-child")).to have_content("$440.91")
           expect_invoice_header_content
           expect_addresses
         end

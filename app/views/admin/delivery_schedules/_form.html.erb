@@ -11,10 +11,15 @@
     <%= f.select :buyer_day, weekday_options %>
   </div>
 
-  <div class="field">
-    <%= f.label :fee, 'Delivery fee' %>
+  <div class="field" style="display:inline-block">
+    <%= f.label :fee, 'Fee' %>
     <br>
     <%= f.number_field :fee, min: 0, step: "0.01", size: 4 %>
+  </div>
+
+  <div class="field" style="display:inline-block">
+    <%= f.label :fee_label, 'Fee label' %><br>
+    <%= f.select :fee_label, ['Delivery Fee', 'Service Fee', 'No Fee'] %>
   </div
   ><div class="field">
     <%= f.label :fee_type %><br>

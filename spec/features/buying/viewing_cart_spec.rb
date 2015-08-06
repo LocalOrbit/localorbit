@@ -12,7 +12,7 @@ describe "Viewing the cart", js:true do
   let!(:ada_farms)        { create(:organization, :seller, :single_location, name: "Ada Farms") }
 
   let(:market)            { create(:market, :with_addresses, organizations: [buyer, fulton_farms, ada_farms]) }
-  let(:delivery_schedule) { create(:delivery_schedule, :percent_fee,  market: market, day: 5) }
+  let(:delivery_schedule) { create(:delivery_schedule, :percent_fee,  market: market, day: 5, fee_label: "Service Fee") }
   let(:delivery_day) { DateTime.parse("May 16, 2014, 11:00:00") }
   let(:delivery) do
     create(:delivery,
@@ -84,6 +84,10 @@ describe "Viewing the cart", js:true do
     # https://www.pivotaltracker.com/story/show/67553382
     cart_link.node.click # This behavior will change once the cart preview is implemented
     expect(page).to have_content("Your Order")
+  end
+
+  it "uses correct delivery fee label" do
+    expect(page).to have_content(delivery_schedule.fee_label)
   end
 
   it "lists products grouped by organization" do

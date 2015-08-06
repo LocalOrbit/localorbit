@@ -55,6 +55,7 @@ feature "Reports" do
                        organization: buyer,
                        delivery_fees: 1,
                        payment_method: ["purchase order", "purchase order", "purchase order", "ach", "ach", "credit card"][i],
+                       payment_note: ["PURCHASE-0-foo", "PURCHASE-1-foo", nil, nil, nil, nil][i],
                        payment_status: "paid",
                        order_number: "LO-01-234-4567890-#{i}")
         create(:payment,
@@ -227,6 +228,22 @@ feature "Reports" do
         expect(item_rows_for_order("LO-03-234-4567890-1").count).to eq(1)
       end
 
+      scenario "searches by purchase order number" do
+        expect(Dom::Report::ItemRow.all.count).to eq(11)
+
+        fill_in "Search", with: "PURCHASE-0"
+        click_button "Search"
+
+        expect(Dom::Report::ItemRow.all.count).to eq(1)
+        expect(item_rows_for_order("LO-01-234-4567890-0").count).to eq(1)
+
+        fill_in "Search", with: "PURCHASE-1"
+        click_button "Search"
+
+        expect(Dom::Report::ItemRow.all.count).to eq(1)
+        expect(item_rows_for_order("LO-01-234-4567890-1").count).to eq(1)
+      end
+
       scenario "filters by market" do
         expect(Dom::Report::ItemRow.all.count).to eq(11)
 
@@ -265,17 +282,25 @@ feature "Reports" do
 
         expect(csv.count).to eq(items.count)
 
-        # Ensure we see the same columns and order in HTML and CSV
+        # Ensure all columns in HTML are in CSV
         expect(html_headers - csv.headers).to be_empty
-
         # For all fields defined for the current report, ensure we have
         # corresponding values in our CSV file. Fields for a given report
         # are defined in ReportPresenter.
         field_headers = ReportPresenter.field_headers_for_report(report)
         items.each_with_index do |item, i|
           field_headers.each_pair do |field, display_name|
-            if !["Actual Discount", "Actual Discounts"].include? display_name # We're hiding the discounts column in the html view
+            if ["Actual Discount", "Actual Discounts"].include? display_name # We're hiding the discounts column in the html view
+              next
+            elsif display_name == "Product Code" # The product name and product code columns are merged in the html view
+              next
+            else
               expect(item.send(field)).to include(csv[i][display_name])
+              if display_name == "Product"
+                expect(item.send(field)).to include(csv[i]["Product Code"])
+              elsif display_name == "Placed On"
+                expect(item.send(field)).to include(csv[i]["Order Number"])
+              end
             end
           end
         end
@@ -528,13 +553,26 @@ feature "Reports" do
         expect(item_rows_for_order("LO-01-234-4567890-4").count).to eq(1)
       end
 
+      it "displays total sales" do
+        totals = Dom::Admin::TotalSales.first
+
+        expect(totals.gross_sales).to eq("$110.00")
+        expect(totals.market_fees).to eq("$2.50")
+        expect(totals.lo_fees).to eq("$7.50")
+        expect(totals.processing_fees).to eq("$6.25")
+        expect(totals.delivery_fees).to eq("$5.00")
+        expect(totals.discount_seller).to eq("$0.00")
+        expect(totals.discount_market).to eq("$0.00")
+        expect(totals.net_sales).to eq("$93.75")
+      end
+
       it "provides the admin link to Orders" do
         follow_admin_order_link order_number: "LO-01-234-4567890-0"
       end
 
       it "provides the Admin link to Products" do
         product_name = Dom::Report::ItemRow.first.product_name
-        product_name = product_name.split("product-code-4 ").last
+        product_name = product_name.split(" product-code-4").first
         see_admin_product_link product: Product.find_by(name: product_name)
       end
 
@@ -626,7 +664,7 @@ feature "Reports" do
             expect(totals.market_fees).to eq("$0.00")
             expect(totals.lo_fees).to eq("$0.00")
             expect(totals.processing_fees).to eq("$0.00")
-            expect(totals).to_not have_content("Delivery Fees")
+            expect(totals).to_not have_content("Delivery Fee")
             #expect(totals.discounts).to eq("$0.00")
             expect(totals.discounts).to eq("$0.00")
             expect(totals.net_sales).to eq("$6.99")
@@ -667,7 +705,7 @@ feature "Reports" do
             expect(totals.lo_fees).to eq("$0.00")
             expect(totals.processing_fees).to eq("$0.00")
             expect(totals.discounts).to eq("$0.00")
-            expect(totals).to_not have_content("Delivery Fees")
+            expect(totals).to_not have_content("Delivery Fee")
             expect(totals.net_sales).to eq("$6.99")
           end
 
@@ -695,7 +733,7 @@ feature "Reports" do
       scenario "does not show a product code" do
         expect(page).to_not have_content("product-code-1")
       end
-      
+
       context "Purchases by Product report" do
         let!(:report) { :purchases_by_product }
 
@@ -707,6 +745,14 @@ feature "Reports" do
           expect(page).to have_field("Placed on or before")
           expect(page).to have_select("Category")
           expect(page).to have_select("Product")
+        end
+
+        scenario "displays total sales" do
+          totals = Dom::Admin::TotalSales.first
+          expect(totals.discounted_total).to eq("$110.00") # TODO add tests with real discounts
+          expect(page).to have_content("Total Purchase")
+          expect(page).not_to have_content("Market Fee")
+          expect(page).not_to have_content("Delivery Fee")
         end
 
         scenario "filters by category" do
@@ -750,6 +796,14 @@ feature "Reports" do
           expect(page).to have_field("Search")
           expect(page).to have_field("Placed on or after")
           expect(page).to have_field("Placed on or before")
+        end
+
+        scenario "displays total sales" do
+          totals = Dom::Admin::TotalSales.first
+          expect(totals.discounted_total).to eq("$110.00")
+          expect(page).to have_content("Total Purchase")
+          expect(page).not_to have_content("Market Fee")
+          expect(page).not_to have_content("Delivery Fee")
         end
 
         # https://www.pivotaltracker.com/story/show/78823306

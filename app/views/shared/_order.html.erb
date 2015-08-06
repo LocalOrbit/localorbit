@@ -65,7 +65,7 @@
     <% if order.display_delivery_fees?(current_user) %>
       <tbody>
         <tr>
-          <th scope="row">Delivery Fees:</th>
+          <th scope="row"><%= order.delivery.delivery_schedule.fee_label %>:</th>
           <td><%= number_to_currency order.delivery_fees %></td>
         </tr>
       </tbody>
@@ -87,6 +87,7 @@
     <table class="current-sales-table odd order-table-1">
       <thead>
         <tr>
+          <th>Product Name</th>
           <th>Product Code</th>
           <th>Quantity</th>
           <th>Price</th>
@@ -106,18 +107,22 @@
           <% user_order_item_context = UserOrderItemContext.build(user: current_user, order_item: item.object) %>
         <tr class="order-item-row">
           <td class="name">
-            <% if item.object.product.code.present? %>
-              <span><%= item.object.product.code %></span> <br />
-            <% end %>
             <span class="product-ordered"><%= item.object.name %></span> <br />
             <span class="seller-name">from <%= item.object.product.organization.name %></span>
+          </td>
+          <td>
+            <% if item.object.product.code.present? %>
+              <span><%= item.object.product.code %></span> <br />
+            <% else %>
+              -
+            <% end %>
           </td>
           <td class="quantity">
             <%# if (current_user.admin? || current_user.market_manager?) && item.object.delivery_status == 'pending' %>
             <% if FeatureAccess.edit_ordered_quantity?(user_order_item_context: user_order_item_context) %>
-              <%= item.text_field :quantity, class: 'quantity-ordered' %>
+              <%= item.text_field :quantity, value: Format.quantity(item.object.quantity), class: 'quantity-ordered' %>
             <% else %>
-              <span class="quantity-ordered-ro"><%= item.object.quantity %></span>
+              <span class="quantity-ordered-ro"><%= Format.quantity(item.object.quantity) %></span>
             <% end %> <%= item.object.unit %> (Ordered)<br />
 
             <% if FeatureAccess.edit_delivered_quantity?(user_order_item_context: user_order_item_context) %>
@@ -205,13 +210,13 @@
             <% if current_user.can_manage_market?(order.market) %>
             <th>Discount (by Market)</th>
             <th>Discount (by Seller)</th>
-            <th>Delivery Fees</th>
+            <th><%= order.delivery.delivery_schedule.fee_label %></th>
             <% elsif current_user.seller? %>
             <th>Discount</th>
             <% end %>
-            <th>Market Fees</th>
-            <th>Transaction Fees</th>
-            <th>Payment Processing Fees</th>
+            <th>Market Fee</th>
+            <th>Transaction Fee</th>
+            <th>Payment Processing Fee</th>
             <th>Net Sale</th>
           </tr>
         </thead>

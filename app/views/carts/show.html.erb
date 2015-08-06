@@ -43,7 +43,7 @@
               </tr>
 
               <tr class="cart_total">
-                <th scope="row" colspan="3">Delivery Fees</th>
+                <th scope="row" colspan="3"><%= current_cart.delivery.delivery_schedule.fee_label %></th>
                 <td class="delivery_fees"><%= current_cart.display_delivery_fees%></td>
                 <td></td>
               </tr>

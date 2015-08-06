@@ -96,6 +96,29 @@ describe "Checking Out via Purchase Order", :js, :vcr do
     expect(page).to have_content("If you have any questions, please let us know")
   end
 
+  context "the market requires a PO number" do
+    before do
+      market.require_purchase_orders = true
+      market.save
+      visit current_path
+    end
+
+    it "does not allow purches without a PO number" do
+      choose "Pay by Purchase Order"
+      checkout
+      expect(page).to have_content("Your order cannot be completed without a purchase order number.")
+      expect(page).to_not have_content("Thank you for your order!")
+    end
+
+    it "allows purchases with a PO number" do
+      choose "Pay by Purchase Order"
+      fill_in "PO Number", with: "12345"
+      checkout
+      expect(page).to_not have_content("Your order cannot be completed without a purchase order number.")
+      expect(page).to have_content("Thank you for your order!")
+    end
+  end
+
   context "reviewing the order after checkout" do
     it "links to the order to review" do
       checkout
@@ -137,7 +160,7 @@ describe "Checking Out via Purchase Order", :js, :vcr do
           { name: "Bananas from Fulton St. Farms", quantity_ordered_readonly: "10", quantity_delivered_readonly: "12.25", total: "$6.13"  },
         ], find_by: :name)
 
-        expect(page).to have_content("Delivery Fees: $9.86")
+        expect(page).to have_content("Delivery Fee: $9.86")
         expect(page).to have_content("Grand Total: $49.28")
       end
     end
@@ -343,7 +366,7 @@ describe "Checking Out via Purchase Order", :js, :vcr do
           within(".pseudopod") do
             expect(page).to have_content("Item Subtotal $40.00")
             expect(page).to have_content("Discount $15.00")
-            expect(page).to have_content("Delivery Fees $10.00")
+            expect(page).to have_content("Delivery Fee $10.00")
             expect(page).to have_content("Order Total $35.00")
           end
         end
@@ -362,7 +385,7 @@ describe "Checking Out via Purchase Order", :js, :vcr do
           within(".pseudopod") do
             expect(page).to have_content("Item Subtotal $40.00")
             expect(page).to have_content("Discount $40.00")
-            expect(page).to have_content("Delivery Fees $10.00")
+            expect(page).to have_content("Delivery Fee $10.00")
             expect(page).to have_content("Order Total $10.00")
           end
         end
@@ -383,7 +406,7 @@ describe "Checking Out via Purchase Order", :js, :vcr do
         within(".pseudopod") do
           expect(page).to have_content("Item Subtotal $40.00")
           expect(page).to have_content("Discount $7.50")
-          expect(page).to have_content("Delivery Fees $10.00")
+          expect(page).to have_content("Delivery Fee $10.00")
           expect(page).to have_content("Order Total $42.50")
         end
       end

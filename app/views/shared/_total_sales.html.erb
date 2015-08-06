@@ -1,4 +1,4 @@
-<% if current_user.seller? && !current_user.admin? %>
+<% if !current_user.admin? %>
   <div class="totals-table">
     <% if buyer_only %>
       <h2>Totals</h2>
