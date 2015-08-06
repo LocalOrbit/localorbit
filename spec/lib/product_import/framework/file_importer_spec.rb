@@ -44,7 +44,7 @@ describe ProductImport::Framework::FileImporter do
 
     describe "#stage_named" do
 
-      it "Doesn't respont to unknown stages" do
+      it "Doesn't respond to unknown stages" do
         expect{ subject.stage_named(:fuh) }.to raise_error(ArgumentError)
       end
 
@@ -77,6 +77,59 @@ describe ProductImport::Framework::FileImporter do
           subject.stage_named(k)}
 
         expect(subject.stages).to eq(expected)
+      end
+    end
+
+    describe "resolve stage" do
+      let!(:market1) { create(:market) }
+      let!(:org1) { create(:organization, :seller) }
+      subject { described_class.new(market_id:market1.id).stage_named(:resolve) }
+
+      before do 
+        market1.organizations << org1 
+        market1.save
+      end
+
+      it "adds in market id, org id, and category id" do
+        create :unit, plural: "Each"
+
+        data = [{
+        "category" => "Tropical & Specialty", # this is included in the extant categories in test
+        "name" => "SARA LEE BAGEL PLAIN PRESLICED",
+        "price" => 24.03,
+        "product_code" => 10300,
+        "organization" => org1.name,
+        "contrived_key" => ExternalProduct.contrive_key(['10300']),
+        "source_data" => {
+          "Seller Name"=>"Bi-Rite",
+          "Product Name"=>"SARA LEE BAGEL PLAIN PRESLICED",
+          "Category Name"=>"Miscellaneous",
+          "Short Description"=>"72 / 3 OZ",
+          "Supplier Product Number"=>10300,
+          "Unit Name"=>"Each",
+          "Unit Description (optional)"=>"72 / 3 OZ",
+          "Price"=>24.03,
+          "Customer Category"=>"BAKED GOODS",
+          "Customer Unit of Measure"=>"3 OZ",
+          "Customer Original Price"=>24.03,
+          12=>1},
+
+        "unit_description" => "72 / 3 OZ",
+        "unit" => "Each",
+        }]
+
+        success, fail = subject.transform.transform_enum(data)
+
+        success_row = success.first
+
+        expect(fail).to eq([])
+        expect(success.length).to eq(1)
+        expect(fail.length).to eq(0)
+
+        expect(success_row['market_id']).to eq(market1.id)
+        expect(success_row['category_id']).to eq(47) # Tropical & Specialty id
+        expect(success_row['organization_id']).to eq(org1.id)
+
       end
     end
 

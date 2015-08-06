@@ -7,38 +7,6 @@
 
 module Import
 
-  class Bakers < Framework::FileImporter
-
-    format :xlsx
-
-    stage :extract do |s|
-      s.transform  :from_table_grouped_by_category,
-        category_column: 2,
-        heading_columns: [nil, "CODE", "PRODUCTS", "Reorder Cycle", nil, "PRICE"],
-      # Assume that the output of this step is hashes. Keys are entries in heading_columns (if non-nil)
-      # or column number (if nil). This last point to support getting values which don't have labels
-
-      s.transform  validate_keys_are_present,
-        keys: ['CODE', 'PRODUCTS', 'Reorder Cycle', 'PRICE', 
-          # Created by from_table_grouped_by_category
-          "category"]
-    end
-
-    stage :canonicalize do |s|
-      s.transform :translate_keys, map: {
-        "CODE" => "product_code",
-        "PRODUCTS" => "name",
-
-        4 => "size",
-        "PRICE" => 'price',
-      }
-
-      s.transform :ensure_canonical_data
-    end
-
-
-  end
-
   class Barons < Framework::FileImporter
 
     format :xls
@@ -70,69 +38,6 @@ module Import
 
   end
 
-  # CSV
-  class BiRite < Framework::FileImporter
-
-    format :csv
-
-    stage :extract do |s|
-      s.transform :from_flat_table,
-        headers: true
-    end
-
-
-    stage :canonicalize do |s|
-      # Question: Does distributor name need to be in here? Is Order Guide# important?
-      s.transform :contrive_key, from: ["Order Guide#", "Distributor Item#"]
-
-      s.transform :translate_keys, map: {
-        "Distributor Item#" => "product_code",
-        "Size" => "unit",
-        "Price" => "price",
-      }
-
-      s.transform :join_keys,
-        into: "name",
-        keys: ["Brand", "Product Description"]
-
-      s.transform :join_keys,
-        into: "name",
-        keys: ["Pack", "Size"],
-        join_with: " / "
-
-      s.transform :ensure_canonical_data
-    end
-
-  end
-
-  class ChefsWarehouse < Framework::FileImporter
-
-    format :xlsx
-
-    stage :extract do |s|
-      s.transform :from_flat_table,
-        headers: true
-    end
-  
-    stage :canonicalize do |s|
-      s.transform :translate_keys, map: {
-        "ITEM" => "product_code",
-        "PACK" => "unit",
-        "CLASS -SUBCLASS" => "category"
-      }
-
-      s.transform :convert_uom_price,
-        uom_key: "UOM",
-        price_key: "LASTPRICE"
-
-      s.transform :join_keys,
-        into: "name",
-        keys: ["Brand", "Product Description"]
-
-      s.transform :ensure_canonical_data
-    end
-
-  end
 
   class PacificGourmet < Framework::FileImporter
 

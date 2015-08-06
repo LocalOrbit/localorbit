@@ -44,7 +44,7 @@ module ProductImport
           when :success
             yield status, payload
           when :failure
-            yield status, payload.merge(raw: value)
+            yield status, payload.reverse_merge(raw: value)
           else
             # we got the return value of the block - We're done.
             break

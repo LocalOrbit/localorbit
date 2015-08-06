@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe ProductImport::Formats::Xls do
   it "should be able to read a xls file" do
-    file = test_file("barons.xls")
+    file = test_file("barons_specialty_foods.xls")
     enum = subject.enum_for(filename: file)
 
     # The barons file is wretched.

@@ -149,6 +149,31 @@ module ProductImport
         transform.transform_enum(source_enum)
       end
 
+      def load_products(format_args=nil)
+        format_args ||= opts
+
+        puts "Checking file validity..."
+        check_format_validity!(format_args)
+
+        puts "Setting up transforms"
+        source_enum = format.enum_for(format_args)
+        transform = transform_for_stages(*ALLOWED_STAGES)
+
+        product_loader = ProductLoader.new
+
+        count = 0
+        begin
+          _each_success_redirecting_failures(source_enum, transform) do |payload|
+            count += 1
+            puts "Loaded #{count} products..." if count % 50 == 0
+            product_loader.update_product payload
+          end
+        ensure
+          product_loader.commit
+        end
+      end
+
+
       def write_to_lodex(io, format_args=nil)
         format_args ||= opts
 
@@ -159,33 +184,40 @@ module ProductImport
 
         CSV(io) do |csv|
 
-          seen_error = false
           headers = nil
 
-          source_enum.each do |row|
-            transform.transform_value(row) do |status, payload|
-              case status
-              when :success
-                unless headers
-                  headers = payload.keys
-                  if payload.key? 'source_data'
-                    headers.delete 'source_data'
-                    headers.concat payload['source_data'].keys
-                  end
-                  csv << headers
-                end
-                csv << payload.values_at(*headers)
-              else
-                unless seen_error
-                  type = self.class.name.underscore
-                  $stderr.puts "# This file contains details about failures to convert data to lodex"
-                  $stderr.puts "# The source file importer type was #{type}"
-                  $stderr.puts "# You can fix the extract stage and rerun against the source data"
-                  $stderr.puts "# or fix the canonicalize stage and run against the raw values below"
-                  seen_error = true
-                end
-                $stderr.puts payload.to_yaml
+          _each_success_redirecting_failures(source_enum, transform) do |payload|
+            unless headers
+              headers = payload.keys
+              if payload.key? 'source_data'
+                headers.delete 'source_data'
+                headers.concat payload['source_data'].keys
               end
+              csv << headers
+            end
+            csv << headers.map{|h| payload[h] || payload['source_data'][h] }
+          end
+        end
+      end
+
+      def _each_success_redirecting_failures(source_enum, transform)
+        seen_error = false
+
+        source_enum.each do |row|
+          transform.transform_value(row) do |status, payload|
+            case status
+            when :success
+              yield payload
+            else
+              unless seen_error
+                type = self.class.name.underscore
+                $stderr.puts "# This file contains details about failures to convert data to lodex"
+                $stderr.puts "# The source file importer type was #{type}"
+                $stderr.puts "# You can fix the extract stage and rerun against the source data"
+                $stderr.puts "# or fix the canonicalize stage and run against the raw values below"
+                seen_error = true
+              end
+              $stderr.puts payload.to_yaml
             end
           end
         end
@@ -227,7 +259,36 @@ module ProductImport
         end
         subclass.stage :extract
         subclass.stage :canonicalize
-        subclass.stage :resolve
+        subclass.stage :resolve do |s|
+          _setup_resolve_stage(s)
+        end
+      end
+
+      def self._setup_resolve_stage(s)
+        # Default resolve stage implementation
+
+        s.transform :alias_keys, skip_if_present: true, key_map: {
+          "unit" => "short_description",
+        }
+
+        s.transform :set_keys_to_importer_option_values, map: {
+          "market_id" => :market_id,
+          "organization_id" => :organization_id,
+        }
+
+        s.transform :look_up_category
+        s.transform :look_up_organization
+        s.transform :look_up_unit
+
+        s.transform :validate_keys_are_present,
+          keys: %w(organization_id market_id category_id)
+
+        s.transform :coerce_keys, map: {
+          "organization_id" => :to_i,
+          "category_id" => :to_i,
+          "market_id" => :to_i,
+        }
+
       end
 
     end
