@@ -54,8 +54,48 @@
 
 .tt-suggestion {
   padding: 3px 20px;
-  font-size: 18px;
-  line-height: 24px;
+  border-bottom:1px solid #E0E0E0 ;
+  height: 70px;
+
+  .heading-row {
+    margin-top: 5px;
+  }
+  .metadata-column-half {
+    width: 45%;
+  }
+  .metadata-column-full {
+    width: 95%;
+  }
+  .text-div {
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+  }
+  .product-name {
+    font-family: "Open Sans Condensed";
+    font-size: 14px;
+    color: #0C2F87 ;
+    line-height: 19px;
+  }
+  .unit {
+    font-family: OpenSans;
+    font-size: 10px;
+    color: #6D6B6B ;
+    line-height: 14px;
+    margin-left: 7px;
+  }
+  .metadata-label {
+    font-family: OpenSans-Bold;
+    font-size: 11px;
+    color: #B0B0B0 ;
+    line-height: 15px;
+  }
+  .metadata-text {
+    font-family: OpenSans-Bold;
+    font-size: 11px;
+    color: #6D6B6B ;
+    line-height: 15px;
+  }
 }
 
 .tt-suggestion:hover {

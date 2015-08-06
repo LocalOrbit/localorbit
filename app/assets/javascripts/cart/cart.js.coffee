@@ -252,10 +252,23 @@ $ ->
       templates: {
         suggestion: (data) ->
           "
-            <div>
-              <p><strong>#{data.name}</strong>  (#{data.unit_with_description})</p>
-              <p><small><em>#{data.seller_name}, #{data.second_level_category_name}</em></small></p>
-              <p class='tt-product-price'><small>#{data.pricing}</small></p>
+            <div class='tt-suggestion column--full clearfix text-div'>
+              <div class='heading-row metadata-column-full text-div'>
+                <span class='product-name'><strong>#{data.name}</strong></span>
+                <span class='unit'>(#{data.unit_with_description})</span>
+              </div>
+              <div class='metadata-column-half pull-left text-div'>
+                <span class='metadata-label'>Category:</span>
+                <span class='metadata-text'>#{data.second_level_category_name}</span>
+              </div>
+              <div class='metadata-column-half pull-left text-div'>
+                <span class='metadata-label'>Supplier:</span>
+                <span class='metadata-text'>#{data.seller_name}</span>
+              </div>
+              <div class='metadata-column-full text-div'>
+                <span class='metadata-label'>Price:</span>
+                <span class='metadata-text'>#{data.pricing}</span>
+              </div>
             </div>
           "
         empty: (data) ->

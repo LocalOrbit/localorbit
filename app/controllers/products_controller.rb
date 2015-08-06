@@ -35,7 +35,7 @@ class ProductsController < ApplicationController
   end
 
   def search
-    search = params[:q].gsub(' ', '+')
+    search = params[:q].gsub(/\W+/, '+')
     org_filter = params[:organization] || @sellers.pluck(:id)
     if search.length > 3
       matching_and_available_products = current_delivery
