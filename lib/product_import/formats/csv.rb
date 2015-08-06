@@ -1,7 +1,7 @@
 module ProductImport
   module Formats
     class Csv
-      def enum_for(filename:)
+      def enum_for(filename:, **rest)
         Enumerator.new do |yielder|
           require 'csv'
 
