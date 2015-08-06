@@ -1,5 +1,4 @@
 $ ->
-  console.log "length = ", $(".cart_item, #product-search-table").length
   return unless $(".cart_item, #product-search-table").length
   selector = $('.cart_item')
 
@@ -297,7 +296,6 @@ $ ->
 
   $(document.body).on 'cart.inputFinished', ".cart_item .quantity input", ->
     data = $(this).closest(".cart_item").data("cart-item")
-    console.log data
 
     if this.value.length > 0
       quantity = parseInt($(this).val())

@@ -72,26 +72,26 @@
     overflow: hidden;
   }
   .product-name {
-    font-family: "Open Sans Condensed";
+    font-family: "Open Sans Condensed", OpenSans-Condensed, "Open Sans", OpenSans, sans-serif;
     font-size: 14px;
     color: #0C2F87 ;
     line-height: 19px;
   }
   .unit {
-    font-family: OpenSans;
+    font-family: OpenSans, "Open Sans", Geneva, sans-serif;
     font-size: 10px;
     color: #6D6B6B ;
     line-height: 14px;
     margin-left: 7px;
   }
   .metadata-label {
-    font-family: OpenSans-Bold;
+    font-family: OpenSans-Bold, OpenSans, "Open Sans", Geneva, sans-serif;
     font-size: 11px;
     color: #B0B0B0 ;
     line-height: 15px;
   }
   .metadata-text {
-    font-family: OpenSans-Bold;
+    font-family: OpenSans-Bold, OpenSans, "Open Sans", Geneva, sans-serif;
     font-size: 11px;
     color: #6D6B6B ;
     line-height: 15px;
