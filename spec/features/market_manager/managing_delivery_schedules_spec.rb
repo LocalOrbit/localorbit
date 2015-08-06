@@ -25,9 +25,9 @@ describe "Market Manager managing delivery schedules" do
     select "Tuesday", from: "Day"
     fill_in "Order cutoff", with: "6"
     select "Direct to customer", from: "Fulfillment method"
-    select "Tuesday", from: "Supplier delivery day"
-    select "7:15 AM", from: "Delivery start"
-    select "11:30 AM", from: "Delivery end"
+    select "Tuesday", from: "Seller delivery day"
+    select "7:15 AM", from: "Seller delivery start"
+    select "11:30 AM", from: "Seller delivery end"
 
     click_button "Save Delivery"
 
@@ -54,12 +54,12 @@ describe "Market Manager managing delivery schedules" do
     select "Tuesday", from: "Day"
     fill_in "Order cutoff", with: "6"
     select address.name, from: "Fulfillment method"
-    select "Monday", from: "Supplier delivery day"
-    select "8:00 PM", from: "Delivery start"
-    select "10:00 PM", from: "Delivery end"
+    select "Monday", from: "Seller delivery day"
+    select "8:00 PM", from: "Seller delivery start"
+    select "10:00 PM", from: "Seller delivery end"
 
     expect(page).to have_content("Buyer pick up/delivery start")
-    expect(page).to have_content("Market will pick up from supplier location")
+    expect(page).to have_content("Market will pick up from seller location")
 
     select "11:00 AM", from: "Buyer pick up/delivery start"
     select "2:00 PM", from: "Buyer pick up/delivery end"
@@ -137,7 +137,7 @@ describe "Market Manager managing delivery schedules" do
 
       click_link delivery1.weekday
 
-      select "3:00 AM", from: "Delivery start"
+      select "3:00 AM", from: "Seller delivery start"
 
       click_button "Save Delivery"
 
@@ -155,8 +155,8 @@ describe "Market Manager managing delivery schedules" do
 
       click_link delivery1.weekday
       select address.name, from: "Fulfillment method"
-      select "3:00 AM", from: "Delivery start"
-      select "4:00 AM", from: "Delivery end"
+      select "3:00 AM", from: "Seller delivery start"
+      select "4:00 AM", from: "Seller delivery end"
       select "6:00 AM", from: "Buyer pick up/delivery start"
       select "7:00 AM", from: "Buyer pick up/delivery end"
 

@@ -3,7 +3,7 @@
 <div class="row row--partial">
   <div class="column column--three-fourths">
     <p>You can invite other Market Managers by sending them an invitation to become a Market Manager.</p>
-    <p>Send an invitation to individuals who you want to manage your market. If you want to invite buyers or suppliers, go to Organizations and send invites from the Users tab.</p>
+    <p>Send an invitation to individuals who you want to manage your market. If you want to invite buyers or sellers, go to Organizations and send invites from the Users tab.</p>
     <div class="l-page-header">
       <%= form_for admin_market_managers_path(@market), html: { class: "form-actions" } do |f|%>
         <%= email_field_tag :email, nil, placeholder: "Email address", class: "email-field" %>

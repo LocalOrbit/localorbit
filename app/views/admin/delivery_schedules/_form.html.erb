@@ -29,26 +29,26 @@
 
   <div class="field">
     <%= f.label :order_cutoff %>
-    <span class="tooltip" data-tooltip="The order cutoff is the latest time a Buyer can place an order for that delivery cycle. The time is based on the start of the Supplier delivery.  If you have a 24 hour cut off, orders would stop being accepted at 5:59am on Tuesday for a 6am Supplier delivery start on Wednesday."></span>
+    <span class="tooltip" data-tooltip="The order cutoff is the latest time a Buyer can place an order for that delivery cycle. The time is based on the start of the Seller delivery.  If you have a 24 hour cut off, orders would stop being accepted at 5:59am on Tuesday for a 6am Seller delivery start on Wednesday."></span>
     <br>
     <%= f.number_field :order_cutoff, min: 6, max: 504, size: 4 %> hours before delivery
   </div>
 
   <div class="field conditional">
     <%= f.check_box :require_delivery %>
-    <%= f.label :require_delivery, 'All products from Suppliers on this market will deliver on this cycle.' %>
+    <%= f.label :require_delivery, 'All products from Sellers on this market will deliver on this cycle.' %>
     <span class="tooltip" data-tooltip="Check this box to add this delivery option to all existing products."></span>
   </div>
 
   <div class="field conditional">
     <%= f.check_box :require_cross_sell_delivery %>
-    <%= f.label :require_cross_sell_delivery, 'All cross-sell products from Suppliers on this market will deliver on this cycle.' %>
+    <%= f.label :require_cross_sell_delivery, 'All cross-sell products from Sellers on this market will deliver on this cycle.' %>
     <span class="tooltip" data-tooltip="Check this box to add this delivery option to all existing products."></span>
   </div>
 </fieldset>
 
 <fieldset>
-  <legend>Supplier drop off or delivery info</legend>
+  <legend>Seller drop off or delivery info</legend>
 
   <div class="field">
     <%= f.label :seller_fulfillment_location_id %><br>
@@ -57,7 +57,7 @@
 
   <div class="field conditional<%= ' is-hidden' unless f.object.seller_fulfillment_location %>" id="market_pickup_option">
     <%= f.check_box :market_pickup %>
-    <%= f.label :market_pickup, 'Market will pick up from supplier location.' %>
+    <%= f.label :market_pickup, 'Market will pick up from seller location.' %>
   </div>
 
   <div class="row row--field">
@@ -66,11 +66,11 @@
       <%= f.select :day, weekday_options %>
     </div
     ><div class="field column column--third column--guttered">
-      <%= f.label :seller_delivery_start, "Delivery start" %><br>
+      <%= f.label :seller_delivery_start %><br>
       <%= f.select :seller_delivery_start, quarter_hour_select_options %>
     </div
     ><div class="field column column--third column--guttered">
-      <%= f.label :seller_delivery_end, "Delivery end" %><br>
+      <%= f.label :seller_delivery_end %><br>
       <%= f.select :seller_delivery_end, quarter_hour_select_options %>
     </div>
   </div>

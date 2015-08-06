@@ -122,8 +122,8 @@
           class="field column column--half column--guttered">
             <label>Deliveries</label><br>
             <%= f.check_box :sellers_edit_orders, id: "app-sellers-edit-orders-input" %>
-            <%= f.label :sellers_edit_orders, "Suppliers can edit orders" %>
-            <span class="tooltip" data-tooltip="Check this box if you want suppliers to be able to modify their orders."></span>
+            <%= f.label :sellers_edit_orders, "Sellers can edit orders" %>
+            <span class="tooltip" data-tooltip="Check this box if you want sellers to be able to modify their orders."></span>
           </div>
         <% else %>>  <%# This strange angle brace is to terminate the frogsnacks we start up on line 117. It's really important that no whitespace at all be allowed between these left-to-right divs.  :( %>
       <% end %>
