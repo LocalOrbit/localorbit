@@ -33,10 +33,6 @@ module ProductImport
       # and saved for processing/triage.
       stage :canonicalize do |s|
 
-        s.transform :map_category,
-          filename: "birite.csv",
-          input_key: "Customer Category"
-
         s.transform :set_keys, map: { "unit" => "Each" }
 
         s.transform :alias_keys,
@@ -47,6 +43,7 @@ module ProductImport
             "Price" => "price",
             "Unit Description (optional)" => "unit_description",
             "Unit Name" => "unit",
+            "Category Name" => "category",
           }
 
 
