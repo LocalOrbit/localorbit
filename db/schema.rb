@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150731212200) do
+ActiveRecord::Schema.define(version: 20150805123456) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -234,23 +234,6 @@ ActiveRecord::Schema.define(version: 20150731212200) do
 
   add_index "fresh_sheets", ["market_id", "user_id"], name: "index_fresh_sheets_on_market_id_and_user_id", using: :btree
 
-  create_table "general_products", force: true do |t|
-    t.text     "name"
-    t.text     "who_story"
-    t.text     "how_story"
-    t.integer  "location_id"
-    t.string   "image_uid"
-    t.integer  "top_level_category_id"
-    t.datetime "deleted_at"
-    t.text     "short_description"
-    t.text     "long_description"
-    t.boolean  "use_all_deliveries",       default: true
-    t.string   "thumb_uid"
-    t.integer  "second_level_category_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
   create_table "geocodes", force: true do |t|
     t.decimal "latitude",    precision: 15, scale: 12
     t.decimal "longitude",   precision: 15, scale: 12
@@ -431,6 +414,7 @@ ActiveRecord::Schema.define(version: 20150731212200) do
     t.string   "payment_provider"
     t.string   "country",                                               default: "US",  null: false
     t.boolean  "require_purchase_orders",                               default: false, null: false
+    t.boolean  "alternative_order_page",                                default: false, null: false
   end
 
   add_index "markets", ["name"], name: "index_markets_on_name", using: :btree

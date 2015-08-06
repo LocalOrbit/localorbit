@@ -1,0 +1,115 @@
+.twitter-typeahead {
+  width: 100% !important;
+}
+
+.typeahead,
+.tt-query,
+.tt-hint {
+  width: 100%;
+  height: 30px;
+  padding: 8px 12px;
+  font-size: 24px;
+  line-height: 30px;
+  border: 2px solid #ccc;
+  -webkit-border-radius: 8px;
+     -moz-border-radius: 8px;
+          border-radius: 8px;
+  outline: none;
+}
+
+.typeahead {
+  background-color: #fff;
+}
+
+.typeahead:focus {
+  border: 2px solid #0097cf;
+}
+
+.tt-query {
+  -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+     -moz-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+          box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+}
+
+.tt-hint {
+  color: #999
+}
+
+.tt-menu {
+  width: 100%;
+  margin: 12px 0;
+  padding: 8px 0;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  max-height: 500px;
+  overflow: auto;
+  -webkit-border-radius: 8px;
+     -moz-border-radius: 8px;
+          border-radius: 8px;
+  -webkit-box-shadow: 0 5px 10px rgba(0,0,0,.2);
+     -moz-box-shadow: 0 5px 10px rgba(0,0,0,.2);
+          box-shadow: 0 5px 10px rgba(0,0,0,.2);
+}
+
+.tt-suggestion {
+  padding: 3px 20px;
+  border-bottom:1px solid #E0E0E0 ;
+  height: 70px;
+
+  .heading-row {
+    margin-top: 5px;
+  }
+  .metadata-column-half {
+    width: 45%;
+  }
+  .metadata-column-full {
+    width: 95%;
+  }
+  .text-div {
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+  }
+  .product-name {
+    font-family: "Open Sans Condensed", OpenSans-Condensed, "Open Sans", OpenSans, sans-serif;
+    font-size: 14px;
+    color: #0C2F87 ;
+    line-height: 19px;
+  }
+  .unit {
+    font-family: OpenSans, "Open Sans", Geneva, sans-serif;
+    font-size: 10px;
+    color: #6D6B6B ;
+    line-height: 14px;
+    margin-left: 7px;
+  }
+  .metadata-label {
+    font-family: OpenSans-Bold, OpenSans, "Open Sans", Geneva, sans-serif;
+    font-size: 11px;
+    color: #B0B0B0 ;
+    line-height: 15px;
+  }
+  .metadata-text {
+    font-family: OpenSans-Bold, OpenSans, "Open Sans", Geneva, sans-serif;
+    font-size: 11px;
+    color: #6D6B6B ;
+    line-height: 15px;
+  }
+}
+
+.tt-suggestion:hover {
+  cursor: pointer;
+  color: #fff;
+  background-color: #0097cf;
+}
+
+.tt-suggestion.tt-cursor {
+  color: #fff;
+  background-color: #0097cf;
+
+}
+
+.tt-suggestion p {
+  margin: 0;
+}

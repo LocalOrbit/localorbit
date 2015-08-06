@@ -1,5 +1,5 @@
 $ ->
-  return unless $(".cart_item").length
+  return unless $(".cart_item, #product-search-table").length
   selector = $('.cart_item')
 
   window.CartNotificationDuration = 2000
@@ -219,26 +219,94 @@ $ ->
     counter: $("header a.cart")
 
   model = new CartModel
-    url: selector.closest(".cart_items").data("cart-url")
+    url: $(".cart_items").data("cart-url")
     view: view
     items: $(".cart_item")
 
+  setupAlternateOrderPage = () ->
+    return if $("#product-order-search").length == 0
+
+    setupProductSearch()
+
+
+  setupProductSearch = ->
+    products = new Bloodhound({
+      datumTokenizer: Bloodhound.tokenizers.obj.whitespace('value'),
+      queryTokenizer: Bloodhound.tokenizers.whitespace,
+      remote: {
+        url: "/products/search?q=%QUERY&#{window.location.search.replace('?', '')}",
+        wildcard: '%QUERY',
+        transform: (response) ->
+          response.products
+      }
+    })
+
+    searchBox = $("#product-order-search")
+
+    searchBox.typeahead({hint: false}, {
+      name: 'products',
+      display: 'name',
+      source: products,
+      limit: 101,
+      templates: {
+        suggestion: (data) ->
+          "
+            <div class='tt-suggestion column--full clearfix text-div'>
+              <div class='heading-row metadata-column-full text-div'>
+                <span class='product-name'><strong>#{data.name}</strong></span>
+                <span class='unit'>(#{data.unit_with_description})</span>
+              </div>
+              <div class='metadata-column-half pull-left text-div'>
+                <span class='metadata-label'>Category:</span>
+                <span class='metadata-text'>#{data.second_level_category_name}</span>
+              </div>
+              <div class='metadata-column-half pull-left text-div'>
+                <span class='metadata-label'>Supplier:</span>
+                <span class='metadata-text'>#{data.seller_name}</span>
+              </div>
+              <div class='metadata-column-full text-div'>
+                <span class='metadata-label'>Price:</span>
+                <span class='metadata-text'>#{data.pricing}</span>
+              </div>
+            </div>
+          "
+        empty: (data) ->
+          if data.query.length < 3
+            message = 'Please enter a search term at least four characters long.'
+          else
+            message = 'No matches were found for this search.'
+          "<div style='padding-left:10px;'><p>#{message}</p></div>"
+      }
+    });
+
+    searchBox.on "typeahead:select", insertEntry
+
+  fetchRenderedRow = (id) ->
+    $.getJSON("/products/#{id}/row")
+
+  insertEntry = (event, productData) ->
+    fetchRenderedRow(productData.id).then (response) ->
+      el = $(response.html)
+      $("#product-search-table tbody").append(el)
+      model.updateOrAddItem el.data("cart-item"), el
+
 
   view.updateCounter()
+  setupAlternateOrderPage()
 
-  $(".cart_item .quantity input").on 'cart.inputFinished', ->
+  $(document.body).on 'cart.inputFinished', ".cart_item .quantity input", ->
     data = $(this).closest(".cart_item").data("cart-item")
 
     if this.value.length > 0
       quantity = parseInt($(this).val())
       model.saveItem(data.product_id, quantity, this)
 
-  $(".cart_item .icon-clear").click (e)->
+  $(document.body).on 'click', ".cart_item .icon-clear", (e)->
     e.preventDefault()
     data = $(this).closest(".cart_item").data("cart-item")
     model.saveItem(data.product_id, 0)
 
-  $("input[type=radio]").click (e)->
+  $(document.body).on 'click', "input[type=radio]", (e)->
     $(".payment-fields").addClass("is-hidden")
     $paymentFields = $(this).parents(".field").find(".payment-fields")
     $paymentFields.removeClass("is-hidden")
@@ -246,13 +314,13 @@ $ ->
     buttonState = !$paymentFields.data('available') == true
     $("#place-order-button").attr("disabled", buttonState)
 
-  $("#provider_card_number").keyup (e) ->
+  $(document.body).on 'keyup', "#provider_card_number", (e) ->
     if $(this).val() != ''
       $("#place-order-button").attr("disabled", false)
     else
       $("#place-order-button").attr("disabled", true)
 
-  $("#place-order-button").click (e)->
+  $(document.body).on 'click', "#place-order-button", (e)->
     e.preventDefault()
     $(this).prop("disabled", true)
 
@@ -292,12 +360,12 @@ $ ->
       $(".quantity input").prop("readonly", true)
       $("#order-form").submit()
 
-  $("#apply-discount").click (e)->
+  $(document.body).on 'click', "#apply-discount", (e)->
     e.preventDefault()
     if $("#discount_code").val() != $("#prev_discount_code").val()
       $(this).parents('form').submit()
 
-  $("#clear-discount").click (e)->
+  $(document.body).on 'click', "#clear-discount", (e)->
     e.preventDefault()
     if $("#discount_code").val() != ""
       $("#discount_code").val("")
