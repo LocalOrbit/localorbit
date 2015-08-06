@@ -1,6 +1,30 @@
 module ProductImport
   module FileImporters
     class StandardTemplate < Framework::FileImporter
+      PROFILES = {
+        "birite" => {
+          market_id: 130,
+          # product_code_required: true,
+        },
+        "greenleaf" => {
+          market_id: 125,
+          # product_code_required: true,
+        },
+      }
+
+      def initialize(opts={})
+        super
+
+        profile_name = opts[:profile]
+        if profile_name.present?
+          if PROFILES.key?(profile_name)
+            opts.reverse_merge! PROFILES[profile_name]
+          else
+            raise ArgumentError, "Didn't know of a market profile called #{profile_name}. Add it to PROFILES in this file."
+          end
+        end
+
+      end
 
       # if any of these are missing, don't even try to process the file
       REQUIRED_HEADERS = [
