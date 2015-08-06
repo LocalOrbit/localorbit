@@ -462,6 +462,7 @@ FactoryGirl.define do
         create(:lot, product: product) if product.lots.empty?
       end
     end
+
   end
 
   factory :promotion do

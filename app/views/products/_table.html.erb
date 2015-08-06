@@ -99,9 +99,8 @@
         <table class="product-unit">
           <% products_for_general_product.each do |product| %>
           <tr class="cart_item product" data-cart-item="<%= product.cart_item.to_json %>">
+            <span class="name"><%= product.name %></span>
             <td class="pricing">
-              <span class="name"><%= product.name %></span>
-              <% puts "NAME: #{product.name} %>
               <ul class="tiers">
                 <% product.prices_for_market_and_organization(current_market, current_organization).each do |price| %>
                   <% price = price.decorate %>

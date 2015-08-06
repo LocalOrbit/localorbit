@@ -6,7 +6,7 @@ class Product < ActiveRecord::Base
 
   before_save :update_cached_categories
   before_save :update_delivery_schedules
-  after_save :update_general_product
+  #after_save :update_general_product
   after_create :make_general_product
   audited allow_mass_assignment: true, associated_with: :organization
 
@@ -217,6 +217,7 @@ class Product < ActiveRecord::Base
     end
   end
 
+
   private
 
   def self.order_by_name(direction)
@@ -284,6 +285,24 @@ class Product < ActiveRecord::Base
     end
   end
 
+  def make_general_product
+    gp = GeneralProduct.create!(
+      name: self.name,
+      who_story: self.who_story,
+      how_story: self.how_story,
+      location_id: self.location_id,
+      image_uid: self.image_uid,
+      top_level_category_id: self.top_level_category_id,
+      short_description: self.short_description,
+      long_description: self.long_description,
+      use_all_deliveries: self.use_all_deliveries,
+      thumb_uid: self.thumb_uid,
+      second_level_category_id: self.second_level_category_id,
+    )
+    self.general_product = gp
+    self.save!
+  end
+  
   def update_general_product
     if !self.general_product
       make_general_product
@@ -302,23 +321,6 @@ class Product < ActiveRecord::Base
         second_level_category_id: self.second_level_category_id,
       )
     end
-  end
-
-  def make_general_product
-    gp = GeneralProduct.create!(
-      name: self.name,
-      who_story: self.who_story,
-      how_story: self.how_story,
-      location_id: self.location_id,
-      image_uid: self.image_uid,
-      top_level_category_id: self.top_level_category_id,
-      short_description: self.short_description,
-      long_description: self.long_description,
-      use_all_deliveries: self.use_all_deliveries,
-      thumb_uid: self.thumb_uid,
-      second_level_category_id: self.second_level_category_id,
-    )
-    self.general_product = gp
   end
 
 end
