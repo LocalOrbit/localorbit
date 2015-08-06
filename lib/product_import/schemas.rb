@@ -10,7 +10,7 @@ module ProductImport::Schemas
     'category' => %r{^([a-z,/0-9&_ -]*>)*[a-z,/0-9&_ -]*$}i,
     # e.g. Grandparent > Parent > Brothers & Sisters
 
-    'price' => either(Numeric, /^(?:\d+\.)?\d+$/),
+    'price' => predicate("valid price"){|p| p && p.to_f > 0},
     'contrived_key' => String,
     # e.g. 12.34
 

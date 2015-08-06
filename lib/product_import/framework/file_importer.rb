@@ -271,10 +271,6 @@ module ProductImport
           "unit" => "short_description",
         }
 
-        s.transform :set_keys, skip_if_present: true, map: {
-          "unit_description" => "",
-        }
-
         s.transform :set_keys_to_importer_option_values, map: {
           "market_id" => :market_id,
           "organization_id" => :organization_id,
