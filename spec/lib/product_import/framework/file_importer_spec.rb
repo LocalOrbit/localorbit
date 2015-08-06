@@ -91,6 +91,8 @@ describe ProductImport::Framework::FileImporter do
       end
 
       it "adds in market id, org id, and category id" do
+        create :unit, plural: "Each"
+
         data = [{
         "category" => "Tropical & Specialty", # this is included in the extant categories in test
         "name" => "SARA LEE BAGEL PLAIN PRESLICED",
@@ -112,14 +114,15 @@ describe ProductImport::Framework::FileImporter do
           "Customer Original Price"=>24.03,
           12=>1},
 
-        "unit" => "72 / 3 OZ",
-        "uom" => "Each",
+        "unit_description" => "72 / 3 OZ",
+        "unit" => "Each",
         }]
 
         success, fail = subject.transform.transform_enum(data)
 
         success_row = success.first
 
+        expect(fail).to eq([])
         expect(success.length).to eq(1)
         expect(fail.length).to eq(0)
 

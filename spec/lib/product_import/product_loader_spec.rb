@@ -24,7 +24,7 @@ describe ProductImport::ProductLoader do
     first_product = seller_org.products.first
     price_prod = first_product.prices.first
     lot_prod = first_product.lots.first
-    external_product = first_product.external_product # TODO create association
+    external_product = first_product.external_product
 
     expect(first_product).to be_a(Product)
     expect(first_product.name).to eq("BrandNewProductTest")
@@ -66,7 +66,7 @@ describe ProductImport::ProductLoader do
     first_product = original_ep.product.reload
     price_prod = first_product.prices.first
     lot_prod = first_product.lots.first
-    external_product = first_product.external_product # TODO create association
+    external_product = first_product.external_product
 
     expect(first_product).to be_a(Product)
     expect(first_product.id).to eq(original_ep.product.id)
@@ -115,15 +115,13 @@ describe ProductImport::ProductLoader do
     first_product = original_ep.product.reload
     price_prod = first_product.prices.first
     lot_prod = first_product.lots.first
-    external_product = first_product.external_product # TODO create association
+    external_product = first_product.external_product 
 
     expect(external_product.batch_updated_at).to be_within(10.seconds).of(Time.now)
 
     expect(price_prod.sale_price).to eq(BigDecimal.new("25.24"))
     expect(price_prod.min_quantity).to eq(1)
     expect(price_prod).to be_persisted
-
-    flunk "TODO: Update price history when the price changes. Leave it if the price hasn't changed"
 
     expect(lot_prod.quantity).to eq(999999)
     expect(lot_prod).to be_persisted

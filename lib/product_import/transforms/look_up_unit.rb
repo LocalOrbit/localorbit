@@ -12,7 +12,7 @@ class ProductImport::Transforms::LookUpUnit < ProductImport::Framework::Transfor
 
   def unit_map
     @unit_map ||= Hash.new do |h,k|
-      u = Unit.find_by_singular(k)
+      u = Unit.find_by_plural(k)
       h[k] = u && u.id
     end
   end

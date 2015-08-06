@@ -46,7 +46,7 @@ module ProductImport
             "Supplier Product Number" => "product_code",
             "Price" => "price",
             "Unit Description (optional)" => "unit_description",
-            "Unit Name" => "uom",
+            "Unit Name" => "unit",
           }
 
 

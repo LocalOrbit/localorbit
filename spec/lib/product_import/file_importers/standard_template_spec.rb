@@ -18,6 +18,7 @@ describe ProductImport::FileImporters::StandardTemplate do
         "name" => "SARA LEE BAGEL PLAIN PRESLICED",
         "price" => 24.03,
         "product_code" => 10300,
+        "organization" => "Bi-Rite",
         "contrived_key" => ExternalProduct.contrive_key(['10300']),
         "source_data" => {
           "Seller Name"=>"Bi-Rite",
@@ -33,8 +34,8 @@ describe ProductImport::FileImporters::StandardTemplate do
           "Customer Original Price"=>24.03,
           12=>1},
 
-        "unit" => "72 / 3 OZ",
-        "uom" => "Each",
+        "unit_description" => "72 / 3 OZ",
+        "unit" => "Each",
       })
     end
 
