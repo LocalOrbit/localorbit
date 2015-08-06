@@ -3,7 +3,7 @@
     <td class="name"><%= link_to organization.name, [:admin, organization] %></td>
     <td class="market"><%= organization.original_market.name %></td>
     <td class="registered"><%= organization.created_at.strftime("%b, %d %Y") %></td>
-    <td class="can-sell"><%= organization.can_sell? ? "Supplier" : "Buyer" %></td>
+    <td class="can-sell"><%= organization.can_sell? ? "Seller" : "Buyer" %></td>
     <td class="action">
       <% if current_user.admin? || current_user.can_manage_market?(current_market) %>
       <%= toggle_active_button(organization) %>
@@ -21,6 +21,6 @@
     <td class="name"><%= organization.name %></td>
     <td class="market"><%= organization.original_market.name %></td>
     <td class="registered"><%= organization.created_at.strftime("%b, %d %Y") %></td>
-    <td class="can-sell"><%= organization.can_sell? ? "Supplier" : "Buyer" %></td>
+    <td class="can-sell"><%= organization.can_sell? ? "Seller" : "Buyer" %></td>
   </tr>
 <% end %>

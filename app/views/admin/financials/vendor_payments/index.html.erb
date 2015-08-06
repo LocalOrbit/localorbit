@@ -1,11 +1,11 @@
 <%= render "admin/financials/header" %>
 <div class="sub-header stickable">
   <div class="l-constraint">
-    <h1>Record Payments to Suppliers</h1>
+    <h1>Record Payments to Vendors</h1>
     <% if current_market.try(:plan) == Plan.find_by_name("Automate") %>
-      <p>This is all money that Local Orbit owes to your Suppliers. You can view upcoming payments in the next weekly billing cycle.</p>
+      <p>This is all money that Local Orbit owes to your Sellers. You can view upcoming payments in the next weekly billing cycle.</p>
     <% else %>
-      <p>This is all money that you owe to your Suppliers. You can record offline payments made to them.</p>
+      <p>This is all money that you owe to your Sellers. You can record offline payments made to them.</p>
     <% end %>
     <%= render "admin/financials/vendor_payments/filters", url: admin_financials_vendor_payments_path %>
   </div>

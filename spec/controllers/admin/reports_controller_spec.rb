@@ -8,7 +8,7 @@ describe Admin::ReportsController do
   end
 
   it_behaves_like "an action that prevents access to buyers", lambda { get :show, id: "total-sales" }
-  it_behaves_like "an action that prevents access to buyers", lambda { get :show, id: "sales-by-supplier" }
+  it_behaves_like "an action that prevents access to buyers", lambda { get :show, id: "sales-by-seller" }
   it_behaves_like "an action that prevents access to buyers", lambda { get :show, id: "sales-by-product" }
   it_behaves_like "an action that prevents access to buyers", lambda { get :show, id: "sales-by-payment-method" }
   it_behaves_like "an action that prevents access to buyers", lambda { get :show, id: "sales-by-fulfillment" }

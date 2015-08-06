@@ -73,7 +73,7 @@ describe "Export Products CSV"  do
     expect(page.response_headers["Content-Disposition"]).to eq('attachment; filename="products.csv"')
     rows = CSV.parse(page.body)
     header_row = rows.shift
-    expect(header_row).to eq(%w{Supplier Market Name Pricing Available})
+    expect(header_row).to eq(%w{Seller Market Name Pricing Available})
     rows
   end
 
@@ -91,7 +91,7 @@ describe "Export Products CSV"  do
     prefix = "Product CSV row #{i}"
     seller,market,name,pricing,available = row
 
-    compare_product_val_to_csv_cell(i, "Supplier", seller, product.organization_name)
+    compare_product_val_to_csv_cell(i, "Seller", seller, product.organization_name)
     compare_product_val_to_csv_cell(i, "Market", market, product.market_name)
     compare_product_val_to_csv_cell(i, "Name", name, product.name_and_unit)
     compare_product_val_to_csv_cell(i, "Pricing", pricing, product.prices.view_sorted.decorate.map(&:quick_info).join(", "))

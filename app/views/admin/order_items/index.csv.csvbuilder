@@ -1,4 +1,4 @@
-csv << ["Order Date", "Order #", "Market", "Supplier", "Buyer", "Product", "Price", "Qty", "Total", "Delivery", "Buyer $", "Supplier $"]
+csv << ["Order Date", "Order #", "Market", "Seller", "Buyer", "Product", "Price", "Qty", "Total", "Delivery", "Buyer $", "Seller $"]
 
 @order_items.decorate.each do |order_item|
   csv << [
