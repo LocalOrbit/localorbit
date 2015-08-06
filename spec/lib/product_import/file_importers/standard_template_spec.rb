@@ -23,7 +23,7 @@ describe ProductImport::FileImporters::StandardTemplate do
         "source_data" => {
           "Seller Name"=>"Bi-Rite",
           "Product Name"=>"SARA LEE BAGEL PLAIN PRESLICED",
-          "Category Name"=>"Miscellaneous",
+          "Category Name"=>"Breads & Baked Goods",
           "Short Description"=>"72 / 3 OZ",
           "Supplier Product Number"=>10300,
           "Unit Name"=>"Each",
