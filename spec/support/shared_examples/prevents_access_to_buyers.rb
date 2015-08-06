@@ -52,7 +52,7 @@ shared_examples "an action that prevents access to buyers" do |action|
     expect(response).to meet_expected_expectation
   end
 
-  it "grants access to suppliers" do
+  it "grants access to sellers" do
     sign_in market_seller
 
     instance_exec(&action)

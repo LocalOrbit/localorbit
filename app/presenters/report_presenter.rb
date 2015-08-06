@@ -9,7 +9,7 @@ class ReportPresenter
     placed_at:              {sort: :created_at,              display_name: "Placed On"},
     category_name:          {sort: :product_category_name,   display_name: "Category"},
     product_name:           {sort: :name,                    display_name: "Product"},
-    seller_name:            {sort: :seller_name,             display_name: "Supplier"},
+    seller_name:            {sort: :seller_name,             display_name: "Seller"},
     buyer_name:             {sort: :order_organization_name, display_name: "Buyer"},
     market_name:            {sort: :order_market_name,       display_name: "Market"},
     quantity:               {sort: :quantity,                display_name: "Quantity"},
@@ -20,7 +20,7 @@ class ReportPresenter
     payment_method:         {sort: :order_payment_method,    display_name: "Payment Method"},
     delivery_status:        {sort: :delivery_status,         display_name: "Delivery"},
     buyer_payment_status:   {sort: nil,                      display_name: "Buyer Payment Status"},
-    seller_payment_status:  {sort: nil,                      display_name: "Supplier Payment Status"},
+    seller_payment_status:  {sort: nil,                      display_name: "Seller Payment Status"},
     fulfillment_day:        {sort: :order_delivery_delivery_schedule_buyer_day, display_name: "Week Day"},
     fulfillment_type:       {sort: nil,                      display_name: "Fulfillment Type"},
     discount_code:          {sort: nil,                      display_name: "Discount Code"},
@@ -36,7 +36,7 @@ class ReportPresenter
         :row_total, :net_sale, :delivery_status, :buyer_payment_status, :seller_payment_status
       ]
     },
-    sales_by_supplier: {
+    sales_by_seller: {
       filters: [:placed_at, :order_number, :market_name, :seller_name],
       fields: [
         :placed_at, :category_name, :product_name, :product_code, :seller_name, :quantity, :unit_price, :discount,

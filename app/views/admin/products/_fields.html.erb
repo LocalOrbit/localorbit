@@ -2,14 +2,14 @@
 
 <% if @product.persisted? %>
     <label>
-      Supplier Organization<br>
+      Seller Organization<br>
       <%= link_to @product.organization.name, [:admin, @product.organization] %>
     </label>
     <%= f.hidden_field :organization_id %>
 <% else %>
   <% if @organizations.count > 1 %>
     <div class="field">
-      <%= f.label :organization_id, "Supplier Organization" %><br>
+      <%= f.label :organization_id, "Seller Organization" %><br>
       <%= f.select :organization_id, market_organization_select(@organizations), {include_blank: "Select an organization"}, class: "column--full" %>
     </div>
   <% else %>

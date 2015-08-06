@@ -30,7 +30,7 @@ describe "A Market Manager managing Newsletters" do
         fill_in "Headline", with: "Some really exciting stuff"
         fill_in "Body", with: "bla bla bla"
         check "Buyers"
-        check "Suppliers"
+        check "Sellers"
         check "Market Managers"
         attach_file "Image", "app/assets/images/logo.png"
         click_button "Add Newsletter"

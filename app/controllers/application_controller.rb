@@ -49,15 +49,17 @@ class ApplicationController < ActionController::Base
   end
 
   def current_organization
-    if @current_organization && @current_organization.all_markets.include?(current_market)
+    if @current_organization && (@last_organization_market == current_market || @current_organization.all_markets.include?(current_market))
+      @last_organization_market = current_market
       return @current_organization
     end
 
+    @last_organization_market = current_market
     @current_organization = find_current_organization
   end
 
   def find_current_organization
-    return nil unless current_market 
+    return nil unless current_market
     return nil unless current_user
 
     current_user.managed_organizations_within_market(current_market)
