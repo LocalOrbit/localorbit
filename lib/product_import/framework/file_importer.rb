@@ -269,6 +269,9 @@ module ProductImport
 
         s.transform :alias_keys, skip_if_present: true, key_map: {
           "unit" => "short_description",
+        }
+
+        s.transform :set_keys, skip_if_present: true, map: {
           "unit_description" => "",
         }
 
