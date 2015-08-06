@@ -271,11 +271,11 @@ $ ->
             </div>
           "
         empty: (data) ->
-          if data.query.length < 3
+          if data.query.length <= 3
             message = 'Please enter a search term at least four characters long.'
           else
             message = 'No matches were found for this search.'
-          "<div style='padding-left:10px;'><p>#{message}</p></div>"
+          "<div style='padding-left:10px;'><p><strong>#{message}</srong></p></div>"
       }
     });
 

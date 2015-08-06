@@ -4,7 +4,7 @@ $ ->
   # data-popup attribute on the link.
   find_scrolly  = ->
     if window.pageYOffset != undefined
-      return window.pageYOffset 
+      return window.pageYOffset
     else
       return (document.documentElement || document.body.parentNode || document.body).scrollTop
 
@@ -25,7 +25,7 @@ $ ->
     if $element.outerHeight() + 54 + find_scrolly() >= screen.height
       $('body').css('min-height', $element.outerHeight() + 74 + find_scrolly())
       styles.position = 'absolute'
-      styles.top = find_scrolly() + 74 
+      styles.top = find_scrolly() + 74
     $element.css(styles).insertAfter('.overlay')
 
   load_map = ($element) ->
@@ -41,7 +41,7 @@ $ ->
     if right >= window.innerWidth
       $element.addClass('rtl')
 
-  $('.popup-toggle').click (e) ->
+  $(document.body).on 'click', '.popup-toggle', (e) ->
     e.preventDefault()
     $element = $(this.hash)
     $element.toggleClass('is-hidden')
@@ -57,7 +57,7 @@ $ ->
     clone_popup($element, e.target)
 
 
-  $('.modal-toggle').click ->
+  $(document.body).on 'click', '.modal-toggle', ->
     if this.tagName == "A"
       destination = this.hash
     else
@@ -69,7 +69,7 @@ $ ->
     if $element.hasClass('clonable')
       clone_popup($element, this)
 
-  $('.remote-modal-toggle').click (event)->
+  $(document.body).on 'click', '.remote-modal-toggle', (event)->
     event.preventDefault()
     href = this.href
     destination = $(this).data('modal')
@@ -80,12 +80,12 @@ $ ->
     $.get href, (response) =>
       $element.find(".popup-body").html(response)
 
-  $('.popup button.close').on "click touchend", (e) ->
+  $(document.body).on "click touchend", '.popup button.close', (e) ->
     $popup = $(this).closest('.popup')
     $popup.addClass('is-hidden').css({'left': '', 'top': '', 'position': ''}).insertAfter('.popup-toggle[href="#' + $popup.attr('id') + '"]')
     $('.overlay').removeClass('is-open is-dark is-dim is-modal is-editable mobile-dim')
     $('body').css('min-height', '0')
 
-  $('.popup form[data-remote]').on 'ajax:success', (event, xhr, status) ->
+  $(document.body).on 'ajax:success', '.popup form[data-remote]', (event, xhr, status) ->
     $(this).closest('.popup').addClass('is-hidden')
     $('.overlay').removeClass('is-open is-dark is-dim is-modal is-editable mobile-dim')
