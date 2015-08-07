@@ -9,7 +9,7 @@ module Admin
     def index
       visible_markets = find_markets
 
-      base_scope = Discount.visible.where(market_id: visible_markets.map(&:id))
+      base_scope = Discount.includes(:market).visible.where(market_id: visible_markets.map(&:id))
 
       # For use by the Markets filter pulldown:
       @markets   = base_scope.map(&:market).uniq
@@ -58,7 +58,7 @@ module Admin
         Market.all
       else
         current_user.managed_markets
-      end.order(:name).select {|m| if(m.plan) then m.plan.discount_codes else nil end }
+      end.order(:name).includes(:plan).select {|m| if(m.plan) then m.plan.discount_codes else nil end }
     end
 
     private
@@ -95,10 +95,12 @@ module Admin
       @market_select_options = {}
 
       org_ids = @markets.map {|m| m.organization_ids }.flatten
+
       @products = Product.
         joins(:organization).
         where(organization_id: org_ids).
         order("organizations.name, products.name").
+        limit(0).
         map {|p| ["#{p.organization.name}: #{p.name}", p.id] }
     end
 

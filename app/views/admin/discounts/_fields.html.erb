@@ -44,10 +44,10 @@
   <%= f.select :payer, [["Market", "market"], ["Seller", "seller"]], {}, class: "column--full" %>
 </div>
 
-<div class="field">
-  <%= f.label :product_id, "Restrict to Product" %><br>
-  <%= f.select :product_id, @products, {include_blank: "Any Product"}, class: "column--full" %>
-</div>
+<!--<div class="field">
+  <%#= f.label :product_id, "Restrict to Product" %><br>
+  <%#= f.select :product_id, @products, {include_blank: "Any Product"}, class: "column--full" %>
+</div>-->
 
 <div class="field">
   <%= f.label :category_id, "Restrict to Category" %><br>
