@@ -74,6 +74,10 @@
             <td class="notes"></td>
           </tr>
         <% end %>
+        <tr class="totals">
+          <th colspan="5" style="text-align: right">Total:</th>
+          <th class="total-price"><%= number_to_currency Financials::Orders::Calc.gross_item_total(items:order.items.undelivered) %></th>
+        </tr>
       </table>
     </div>
   </div>

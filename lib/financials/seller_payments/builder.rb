@@ -50,8 +50,8 @@ module Financials
 
         def build_order_row(order)
           totals = build_order_totals(order.items)
-          delivery_status = Orders::DeliveryStatusLogic.overall_status_for_order(order)
-          nice_delivery_status = Orders::DeliveryStatusLogic.human_readable(delivery_status)
+          delivery_status = ::Orders::DeliveryStatusLogic.overall_status_for_order(order)
+          nice_delivery_status = ::Orders::DeliveryStatusLogic.human_readable(delivery_status)
 
           order_row = {
             order_id: order.id,
