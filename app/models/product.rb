@@ -54,6 +54,23 @@ class Product < ActiveRecord::Base
 
   pg_search_scope :search_by_name, against: :name, using: {tsearch: {prefix: true}}
 
+  def create
+    gp = GeneralProduct.create!(
+      name: self.name,
+      who_story: self.who_story,
+      how_story: self.how_story,
+      location_id: self.location_id,
+      image_uid: self.image_uid,
+      top_level_category_id: self.top_level_category_id,
+      short_description: self.short_description,
+      long_description: self.long_description,
+      use_all_deliveries: self.use_all_deliveries,
+      thumb_uid: self.thumb_uid,
+      second_level_category_id: self.second_level_category_id
+    )
+    self.general_product = gp
+  end
+
   def self.available_for_market(market)
     return none unless market
 
@@ -282,4 +299,5 @@ class Product < ActiveRecord::Base
       self.delivery_schedules = delivery_schedules.select {|ds| ids.include?(ds.market.id) }
     end
   end
+
 end
