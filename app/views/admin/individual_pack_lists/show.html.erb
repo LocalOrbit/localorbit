@@ -48,9 +48,10 @@
             <tr>
               <th>Product Code</th>
               <th>Item</th>
-              <th>Total Sold</th>
               <th>Lot #</th>
+              <th>Quantity</th>
               <th>Units</th>
+              <th>Item Total Price</th>
               <th>Delivery</th>
               <th>Initials</th>
               <th>Notes</th>
@@ -60,16 +61,21 @@
             <tr class="individual-pack-list-item">
               <td><%= item.product.code || "-" %></td>
               <td class="name"><%= item.product.name %></td>
-              <td class="total-sold"><%= item.quantity %></td>
               <td class="lot">
                 <%= item.lots.map {|lot| lot.number }.join(', ') if !item.product.use_simple_inventory and item.lots.any? %>
               </td>
+              <td class="total-sold"><%= item.quantity %></td>
               <td class="units"><%= item.unit %></td>
+              <td class="total-price"><%= number_to_currency item.gross_total %></td>
               <td class="delivery"></td>
               <td class="initials"></td>
               <td class="notes"></td>
             </tr>
           <% end %>
+          <tr class="totals">
+            <th colspan="4" style="text-align: right">Total:</th>
+            <th class="total-price"><%= number_to_currency Financials::Orders::Calc.gross_item_total(items: items) %></th>
+          </tr>
         </table>
       </div>
     </div>
