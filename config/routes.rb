@@ -29,6 +29,12 @@ Rails.application.routes.draw do
     end
   end
 
+  namespace :api do
+    namespace :v1 do
+      resources :products, only: [:index]
+    end
+  end
+
   namespace :admin do
     resources :markets, concerns: [:bank_account, :activatable], except: [:edit] do
       resources :market_addresses,   as: :addresses,  path: :addresses
