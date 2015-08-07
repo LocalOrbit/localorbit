@@ -821,6 +821,17 @@ module Dom
       attribute :total_sold
       attribute :units
       attribute :delivery
+      attribute :total_price
+
+    end
+
+    class PackListTotals < Domino
+      selector ".totals"
+
+      def total_price
+        node.find(".total-price").text
+      end
+
     end
 
     class ProductForm < Domino
