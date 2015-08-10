@@ -1,15 +1,19 @@
 module ProductImport
   module FileImporters
     class StandardTemplate < Framework::FileImporter
-      PROFILES = {
-        "birite" => {
-          market_id: 130,
-          # product_code_required: true,
-        },
-        "greenleaf" => {
-          market_id: 125,
-          # product_code_required: true,
-        },
+      PROFILES = { # TODO: replace this profiles hash with a query to subdomains for mkt id in profile argument
+      'bakersofparis' => { market_id: 120 },
+      'baronsspecialtyfoods' => { market_id: 123 },
+      'pacgourmet' => { market_id: 118 },
+      'greenleaf' => { market_id: 125 },
+      'birite' => { market_id: 130 },
+      'cookscompany' => { market_id: 127 },
+      'aliveandhealing' => { market_id: 116 },
+      'chefswarehouse' => { market_id: 119 },
+      'challengedairy' => { market_id: 126 },
+      'alohaseafood' => { market_id: 135 },
+      'newportfishco' => { market_id: 141 },
+      'semifreddis' => { market_id: 121 },
       }
 
       def initialize(opts={})
