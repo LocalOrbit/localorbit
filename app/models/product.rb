@@ -6,7 +6,7 @@ class Product < ActiveRecord::Base
 
   before_save :update_cached_categories
   before_save :update_delivery_schedules
-  after_create :make_general_product
+  after_save :update_general_product
   audited allow_mass_assignment: true, associated_with: :organization
 
   belongs_to :category
@@ -294,22 +294,38 @@ class Product < ActiveRecord::Base
     end
   end
 
-  def make_general_product
-    gp = GeneralProduct.new(
-      name: self.name,
-      who_story: self.who_story,
-      how_story: self.how_story,
-      location_id: self.location_id,
-      image_uid: self.image_uid,
-      top_level_category_id: self.top_level_category_id,
-      short_description: self.short_description,
-      long_description: self.long_description,
-      use_all_deliveries: self.use_all_deliveries,
-      thumb_uid: self.thumb_uid,
-      second_level_category_id: self.second_level_category_id,
-    )
-    gp.product << self
-    gp.save!
+  def update_general_product
+    if self.general_product.present?
+      self.general_product.update!(
+        name: self.name,
+        who_story: self.who_story,
+        how_story: self.how_story,
+        location_id: self.location_id,
+        image_uid: self.image_uid,
+        top_level_category_id: self.top_level_category_id,
+        short_description: self.short_description,
+        long_description: self.long_description,
+        use_all_deliveries: self.use_all_deliveries,
+        thumb_uid: self.thumb_uid,
+        second_level_category_id: self.second_level_category_id
+      )
+    else
+      gp = GeneralProduct.new(
+        name: self.name,
+        who_story: self.who_story,
+        how_story: self.how_story,
+        location_id: self.location_id,
+        image_uid: self.image_uid,
+        top_level_category_id: self.top_level_category_id,
+        short_description: self.short_description,
+        long_description: self.long_description,
+        use_all_deliveries: self.use_all_deliveries,
+        thumb_uid: self.thumb_uid,
+        second_level_category_id: self.second_level_category_id
+      )
+      gp.product << self
+      gp.save!
+    end
   end
 
 end

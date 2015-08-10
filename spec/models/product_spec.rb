@@ -33,7 +33,7 @@ describe Product do
     end
   end
 
-  describe "creation" do
+  describe "general products" do
     let(:org) { create(:organization) }
     let(:unit) { create(:unit) }
     let(:top_level) { create(:category, parent: Category.root) }
@@ -45,6 +45,39 @@ describe Product do
       expect(GeneralProduct.count).to eq(1)
       general_product = GeneralProduct.first
       expect(newProduct.general_product).to eq(general_product)
+    end
+
+    it "updates GeneralProduct when updated" do
+      newProduct = FactoryGirl.create(:product)
+      newLocation = FactoryGirl.create(:location)
+      params = {
+        name:                     "test_name",
+        who_story:                "test_who_story",
+        how_story:                "test_how_story",
+        image_uid:                "image_uid",
+        short_description:        "test_short_description",
+        long_description:         "test_long_description",
+        thumb_uid:                "thumb_uid",
+        location_id:              newLocation.id,
+        top_level_category_id:    top_level.id,
+        second_level_category_id: category.id,
+        use_all_deliveries:       false
+      }
+      newProduct.update!(**params)
+      gp = newProduct.general_product
+      expect({
+        name: gp.name,
+        who_story: gp.who_story,
+        how_story: gp.how_story,
+        image_uid: gp.image_uid,
+        short_description: gp.short_description,
+        long_description: gp.long_description,
+        thumb_uid: gp.thumb_uid,
+        location_id: gp.location_id,
+        top_level_category_id: gp.top_level_category_id,
+        second_level_category_id: gp.second_level_category_id,
+        use_all_deliveries: gp.use_all_deliveries
+      }).to eq(params)
     end
   end
 
