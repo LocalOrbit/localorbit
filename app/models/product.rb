@@ -17,6 +17,7 @@ class Product < ActiveRecord::Base
   belongs_to :unit
   belongs_to :external_product, inverse_of: :product
   belongs_to :general_product
+  default_scope { includes(:general_product) }
 
   has_many :lots, -> { order("created_at") }, inverse_of: :product, autosave: true, dependent: :destroy
   has_many :lots_by_expiration, -> { order("expires_at, good_from, created_at") }, class_name: Lot, foreign_key: :product_id
@@ -54,6 +55,112 @@ class Product < ActiveRecord::Base
   scope_accessible :search, method: :for_search, ignore_blank: true
 
   pg_search_scope :search_by_name, against: :name, using: {tsearch: {prefix: true}}
+
+
+  ### GETTERS ###
+  def name
+    @general_product ||= GeneralProduct.new
+    @general_product.name
+  end
+  def who_story
+    @general_product ||= GeneralProduct.new
+    @general_product.who_story
+  end
+  def how_story
+    @general_product ||= GeneralProduct.new
+    @general_product.how_story
+  end
+  def location_id
+    @general_product ||= GeneralProduct.new
+    @general_product.location_id
+  end
+  def image_uid
+    @general_product ||= GeneralProduct.new
+    @general_product.image_uid
+  end
+  def top_level_category_id
+    @general_product ||= GeneralProduct.new
+    @general_product.top_level_category_id
+  end
+  def short_description
+    @general_product ||= GeneralProduct.new
+    @general_product.short_description
+  end
+  def long_description
+    @general_product ||= GeneralProduct.new
+    @general_product.long_description
+  end
+  def use_all_deliveries
+    @general_product ||= GeneralProduct.new
+    @general_product.use_all_deliveries
+  end
+  def thumb_uid
+    @general_product ||= GeneralProduct.new
+    @general_product.thumb_uid
+  end
+  def second_level_category_id
+    @general_product ||= GeneralProduct.new
+    @general_product.second_level_category_id
+  end
+
+  ### SETTERS ###
+  def name=(input)
+    write_attribute(:name, input)
+    @general_product ||= GeneralProduct.new
+    @general_product.name = input
+  end
+  def who_story=(input)
+    write_attribute(:who_story, input)
+    @general_product ||= GeneralProduct.new
+    @general_product.who_story = input
+  end
+  def how_story=(input)
+    write_attribute(:how_story, input)
+    @general_product ||= GeneralProduct.new
+    @general_product.how_story = input
+  end
+  def location_id=(input)
+    write_attribute(:location_id, input)
+    @general_product ||= GeneralProduct.new
+    @general_product.location_id = input
+  end
+  def image_uid=(input)
+    write_attribute(:image_uid, input)
+    @general_product ||= GeneralProduct.new
+    @general_product.image_uid = input
+  end
+  def top_level_category_id=(input)
+    write_attribute(:top_level_category_id, input)
+    @general_product ||= GeneralProduct.new
+    @general_product.top_level_category_id = input
+  end
+  def short_description=(input)
+    write_attribute(:short_description, input)
+    @general_product ||= GeneralProduct.new
+    @general_product.short_description = input
+  end
+  def long_description=(input)
+    write_attribute(:long_description, input)
+    @general_product ||= GeneralProduct.new
+    @general_product.long_description = input
+  end
+  def use_all_deliveries=(input)
+    write_attribute(:use_all_deliveries, input)
+    @general_product ||= GeneralProduct.new
+    @general_product.use_all_deliveries = input
+  end
+  def thumb_uid=(input)
+    write_attribute(:thumb_uid, input)
+    @general_product ||= GeneralProduct.new
+    @general_product.thumb_uid = input
+  end
+  def second_level_category_id=(input)
+    write_attribute(:second_level_category_id, input)
+    @general_product ||= GeneralProduct.new
+    @general_product.second_level_category_id = input
+  end
+
+
 
   pg_search_scope :search_by_text,
     :against => :name,
@@ -227,6 +334,42 @@ class Product < ActiveRecord::Base
     end
   end
 
+  def update_general_product
+    if self.general_product.present?
+      self.general_product.update!(
+        name: self.name,
+        who_story: self.who_story,
+        how_story: self.how_story,
+        location_id: self.location_id,
+        image_uid: self.image_uid,
+        top_level_category_id: self.top_level_category_id,
+        short_description: self.short_description,
+        long_description: self.long_description,
+        use_all_deliveries: self.use_all_deliveries,
+        thumb_uid: self.thumb_uid,
+        second_level_category_id: self.second_level_category_id
+      )
+    else
+      @general_product.product << self
+      @general_product.save!
+      #gp = GeneralProduct.new(
+      #  name: self.name,
+      #  who_story: self.who_story,
+      #  how_story: self.how_story,
+      #  location_id: self.location_id,
+      #  image_uid: self.image_uid,
+      #  top_level_category_id: self.top_level_category_id,
+      #  short_description: self.short_description,
+      #  long_description: self.long_description,
+      #  use_all_deliveries: self.use_all_deliveries,
+      #  thumb_uid: self.thumb_uid,
+      #  second_level_category_id: self.second_level_category_id
+      #)
+      #gp.product << self
+      #gp.save!
+    end
+  end
+
   private
 
   def self.order_by_name(direction)
@@ -294,38 +437,6 @@ class Product < ActiveRecord::Base
     end
   end
 
-  def update_general_product
-    if self.general_product.present?
-      self.general_product.update!(
-        name: self.name,
-        who_story: self.who_story,
-        how_story: self.how_story,
-        location_id: self.location_id,
-        image_uid: self.image_uid,
-        top_level_category_id: self.top_level_category_id,
-        short_description: self.short_description,
-        long_description: self.long_description,
-        use_all_deliveries: self.use_all_deliveries,
-        thumb_uid: self.thumb_uid,
-        second_level_category_id: self.second_level_category_id
-      )
-    else
-      gp = GeneralProduct.new(
-        name: self.name,
-        who_story: self.who_story,
-        how_story: self.how_story,
-        location_id: self.location_id,
-        image_uid: self.image_uid,
-        top_level_category_id: self.top_level_category_id,
-        short_description: self.short_description,
-        long_description: self.long_description,
-        use_all_deliveries: self.use_all_deliveries,
-        thumb_uid: self.thumb_uid,
-        second_level_category_id: self.second_level_category_id
-      )
-      gp.product << self
-      gp.save!
-    end
-  end
+
 
 end
