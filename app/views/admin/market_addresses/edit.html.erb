@@ -8,6 +8,12 @@
   <%= render 'shared/errors', { resource: @address } %>
     <%= render 'form', {f: f} %>
     <div class="form-actions">
+    	<% if @address.billing %>
+    		<% f.check_box('billing') %>
+    	<% end %>
+    	<% if @address.default %>
+    		<% f.check_box('default') %>
+    	<% end %>
       <%= link_to "Delete Address", admin_market_address_path(@market, @address), method: :delete, class: "btn pull-left destructive" %>
       <%= f.submit "Update Address" %>
     </div>
