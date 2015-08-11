@@ -44,7 +44,7 @@ describe Product do
       newProduct = Product.create!(short_description: "desc", name: "New Product", organization: org, category: category, unit: unit)
       expect(GeneralProduct.count).to eq(1)
       general_product = GeneralProduct.first
-      expect(newProduct.general_product).to eq(general_product)
+      expect(GeneralProduct.find(newProduct.general_product_id)).to eq(general_product)
     end
 
     it "updates GeneralProduct when updated" do
@@ -64,7 +64,7 @@ describe Product do
         use_all_deliveries:       false
       }
       newProduct.update!(**params)
-      gp = newProduct.general_product
+      gp = GeneralProduct.find(newProduct.general_product_id)
       expect({
         name: gp.name,
         who_story: gp.who_story,

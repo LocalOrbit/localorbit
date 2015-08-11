@@ -71,7 +71,6 @@ describe "Add item to cart", js: true do
       sign_in_as(user)
 
       expect(page).to have_content("Filter")
-      binding.pry
       expect(page).to have_content("Bananas")
       expect(page).to have_content("Kale")
 
