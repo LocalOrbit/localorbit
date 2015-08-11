@@ -8,7 +8,7 @@ opts = Slop.parse do |o|
   o.on '-f', '--filename=', 'the file to import'
   o.on '-p', '--profile=', 'the market profile to use. '
 
-  # Use profile instead of these. Profile is e.g. birite OR greenleaf OR ...
+  # Use profile instead of these. Profile is the market subdomain name (e.g. birite, greenleaf)
 
   # o.on '-m', '--market_id=', 'the market id these products are imported to'
   # o.on '-o', '--organization_id=', 'the organization to associate the products with'
