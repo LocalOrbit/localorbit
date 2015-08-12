@@ -79,6 +79,38 @@ describe Product do
         use_all_deliveries: gp.use_all_deliveries
       }).to eq(params)
     end
+    it 'uses GeneralProduct attributes' do
+      newLocation = FactoryGirl.create(:location)
+      params = {
+        name:                     "test_name",
+        who_story:                "test_who_story",
+        how_story:                "test_how_story",
+        image_uid:                "image_uid",
+        short_description:        "test_short_description",
+        long_description:         "test_long_description",
+        thumb_uid:                "thumb_uid",
+        location_id:              newLocation.id,
+        top_level_category_id:    top_level.id,
+        second_level_category_id: category.id,
+        use_all_deliveries:       false
+      }
+
+      newProduct = Product.create!(short_description: "desc", name: "New Product", organization: org, category: category, unit: unit)
+      newProduct.general_product.update!(**params)
+      expect({
+        name: newProduct.name,
+        who_story: newProduct.who_story,
+        how_story: newProduct.how_story,
+        image_uid: newProduct.image_uid,
+        short_description: newProduct.short_description,
+        long_description: newProduct.long_description,
+        thumb_uid: newProduct.thumb_uid,
+        location_id: newProduct.location_id,
+        top_level_category_id: newProduct.top_level_category_id,
+        second_level_category_id: newProduct.second_level_category_id,
+        use_all_deliveries: newProduct.use_all_deliveries
+      }).to eq(params)
+    end
   end
 
   describe "default values" do

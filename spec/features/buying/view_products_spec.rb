@@ -45,7 +45,7 @@ feature "Viewing products" do
 
   scenario "list of products" do
     sign_in_as(user)
-
+    
     products = Dom::Product.all
 
     within(".table-summary") do

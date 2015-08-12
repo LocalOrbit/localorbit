@@ -82,7 +82,11 @@ class Product < ActiveRecord::Base
     self.general_product && self.general_product.long_description
   end
   def use_all_deliveries
-    self.general_product && self.general_product.use_all_deliveries
+    if self.general_product
+      self.general_product.use_all_deliveries
+    else
+      true # Default
+    end
   end
   def thumb_uid
     self.general_product && self.general_product.thumb_uid
@@ -94,10 +98,7 @@ class Product < ActiveRecord::Base
   ### SETTERS ###
   def name=(input)
     write_attribute(:name, input)
-    unless self.general_product.present?
-      self.general_product = GeneralProduct.new
-      self.general_product.product << self
-    end
+    get_general_product
     self.general_product.name = input
     input
   end
@@ -116,6 +117,15 @@ class Product < ActiveRecord::Base
     get_general_product
     self.general_product.location_id = input
   end
+  def location=(input)
+    get_general_product
+    self.general_product.location_id = if input.present?
+      input.id
+    else
+      nil
+    end
+    association(:location).writer(input)
+  end
   def image_uid=(input)
     write_attribute(:image_uid, input)
     get_general_product
@@ -125,6 +135,15 @@ class Product < ActiveRecord::Base
     write_attribute(:top_level_category_id, input)
     get_general_product
     self.general_product.top_level_category_id = input
+  end
+  def top_level_category=(input)
+    get_general_product
+    self.general_product.top_level_category_id = if input.present?
+      input.id
+    else
+      nil
+    end
+    association(:top_level_category).writer(input)
   end
   def short_description=(input)
     write_attribute(:short_description, input)
@@ -150,6 +169,15 @@ class Product < ActiveRecord::Base
     write_attribute(:second_level_category_id, input)
     get_general_product
     self.general_product.second_level_category_id = input
+  end
+  def second_level_category=(input)
+    get_general_product
+    self.general_product.second_level_category_id = if input.present?
+      input.id
+    else
+      nil
+    end
+    association(:second_level_category).writer(input) 
   end
 
 
@@ -331,6 +359,7 @@ class Product < ActiveRecord::Base
   def get_general_product
     unless self.general_product
       self.general_product = GeneralProduct.new
+      self.general_product.use_all_deliveries = true
       self.general_product.product << self
     end
   end
@@ -338,6 +367,7 @@ class Product < ActiveRecord::Base
   def update_general_product
     unless self.general_product.present?
       self.general_product = GeneralProduct.new
+      self.general_product.use_all_deliveries = true
       self.general_product.product << self
     end
     self.general_product.save!
@@ -398,7 +428,7 @@ class Product < ActiveRecord::Base
   def update_delivery_schedules
     markets = organization.all_markets.excluding_deleted
 
-    if use_all_deliveries?
+    if self.use_all_deliveries?
       self.delivery_schedule_ids = markets.map do |market|
         market.delivery_schedules.visible.map(&:id)
       end.flatten
