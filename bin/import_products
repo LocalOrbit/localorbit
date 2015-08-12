@@ -8,18 +8,31 @@ opts = Slop.parse do |o|
   o.on '-f', '--filename=', 'the file to import'
   o.on '-p', '--profile=', 'the market profile to use. '
 
-  # Use profile instead of these.
+  # Use profile instead of these. Profile is the market subdomain name (e.g. birite, greenleaf)
+
   # o.on '-m', '--market_id=', 'the market id these products are imported to'
   # o.on '-o', '--organization_id=', 'the organization to associate the products with'
 end
+
+opts = opts.to_hash
+vendor_file = "/tmp/temp_vendor_data_#{opts[:profile]}"
 
 if ARGV.empty?
   puts "USAGE: import_products import_type [options] 2> errors.yml > out.lodex.csv"
   exit 1
 end
 
+if opts[:filename] =~/^(http)/
+	if system("curl -L -o #{vendor_file} '#{opts[:filename]}' ")
+		opts[:filename] = vendor_file
+	else
+		puts "This file upload failed."
+		exit 1
+	end
+end
+
 import_type = ARGV.first
-importer = ProductImport::FileImporters.instantiate(import_type, opts.to_hash)
+importer = ProductImport::FileImporters.instantiate(import_type, opts)
 
 importer.load_products
 
