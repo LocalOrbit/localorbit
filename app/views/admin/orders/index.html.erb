@@ -24,7 +24,7 @@
           <%= link_to order.order_number, admin_order_path(order) %>
         </td>
         <td class="order-date"><%= order.placed_at.strftime("%m/%d/%Y") %></td>
-        <td class="amount-owed"><%= @totals.items.length > 0 ? number_to_currency(@totals.filtered_gross_total(order)) : number_to_currency(order.gross_total) %></td>
+        <td class="amount-owed"><%= number_to_currency(order.gross_total) %></td>
         <td class="buyer-name"><%= order.organization.name %></td>
         <td class="delivery-status"><%= order.delivery_status_for_user(current_user).titleize %></td>
         <td class="buyer-status"><%= order.payment_status.titleize %></td>
