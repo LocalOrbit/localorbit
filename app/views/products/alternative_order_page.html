@@ -28,14 +28,7 @@
           <input id="product-order-search" class="typeahead" style="width:100%;" placeholder="Try 'orange fruit'" />
         </div>
 
-        <table id="product-search-table" class="product-table product-table--user cart_items" data-cart-url="<%= cart_path %>">
-          <thead></thead>
-          <tbody>
-            <% current_cart.items.order(:created_at).each do |item| %>
-              <%= render "table_row", product: item.product.decorate(context: {current_cart: current_cart}) %>
-            <% end %>
-          </tbody>
-        </table>
+        <%= react_component('ProductCatalog', {baseUrl: request.base_url, cartUrl: cart_path}, {prerender: false}) %>
       </div>
     </div>
   </div>

@@ -10,13 +10,17 @@ module Api
 
       def index
         @start = params[:start] || 0
+        products = self.products(0)
+        render :json => products
+      end
 
+      def products(start)
         products = available_products
           .offset(@start)
-          .limit(50)
+          .limit(10)
           .includes(:organization, :second_level_category, :prices, :unit)
           .uniq
-        render :json => products.map {|p| output_hash(p)}
+        products.map {|p| output_hash(p)}
       end
 
       private
@@ -32,15 +36,47 @@ module Api
       end
 
       def output_hash(product)
+        product = product.decorate(context: {current_cart: current_cart})
         prices = product.prices_for_market_and_organization(current_market, current_organization)
-        formatted_prices = prices.map {|price| "#{number_to_currency(price.sale_price)} for #{price.min_quantity}+"}.join(', ')
         {
           :id=> product.id,
           :name=> product.name,
           :second_level_category_name => product.second_level_category.name,
           :seller_name => product.organization.name,
-          :pricing => formatted_prices,
-          :unit_with_description => product.unit_with_description(:plural)
+          :unit_with_description => product.unit_with_description(:plural),
+          :short_description => product.short_description,
+          :long_description => product.long_description,
+          :cart_item => product.cart_item,
+          :cart_item_quantity => product.cart_item.quantity,
+          :max_available => product.available_inventory(current_delivery.deliver_on),
+          :price_for_quantity => number_to_currency(product.cart_item.unit_price.sale_price),
+          :total_price => product.cart_item.decorate.display_total_price,
+          :cart_item_persisted => product.cart_item.persisted?,
+          :image_url => get_image_url(product.object),
+          :who_story => product.organization.who_story,
+          :how_story => product.organization.how_story,
+          :location_label => product.location_label,
+          :location_map_url => product.location_map(310, 225),
+          :prices => product.prices_for_market_and_organization(current_market, current_organization).map {|price| format_price(price) }
+        }
+      end
+
+      def get_image_url(product)
+        if(product.thumb_stored?)
+          view_context.image_url(product.thumb.url)
+        elsif product.image_stored?
+          view_context.image_url(product.image.thumb("150x150").url)
+        else
+          view_context.image_url('default-product-image.png')
+        end
+      end
+
+      def format_price(price)
+        price = price.decorate
+        {
+          :sale_price => number_to_currency(price.sale_price),
+          :organization_id => price.organization_id,
+          :formatted_units => price.formatted_units
         }
       end
     end
