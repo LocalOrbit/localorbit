@@ -179,8 +179,19 @@ class Product < ActiveRecord::Base
     end
     association(:second_level_category).writer(input) 
   end
-
-
+  def general_product_id=(input)
+    gp = GeneralProduct.find(input)
+    if gp
+      self.general_product = gp
+    else
+      self.general_product.id = input
+      write_attribute(:general_product_id, input)
+    end
+  end
+  def general_product=(input)
+    association(:general_product).writer(input)
+    self.general_product.assign_attributes(input.as_json)
+  end
 
   pg_search_scope :search_by_text,
     :against => :name,

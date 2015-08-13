@@ -33,7 +33,7 @@ describe Product do
     end
   end
 
-  describe "general products" do
+  context "general products" do
     let(:org) { create(:organization) }
     let(:unit) { create(:unit) }
     let(:top_level) { create(:category, parent: Category.root) }
@@ -79,6 +79,7 @@ describe Product do
         use_all_deliveries: gp.use_all_deliveries
       }).to eq(params)
     end
+
     it 'uses GeneralProduct attributes' do
       newLocation = FactoryGirl.create(:location)
       params = {
@@ -110,6 +111,24 @@ describe Product do
         second_level_category_id: newProduct.second_level_category_id,
         use_all_deliveries: newProduct.use_all_deliveries
       }).to eq(params)
+    end
+
+    it "can be added to an existing GeneralProduct during creation" do
+      expect(GeneralProduct.count).to eq(0)
+      product1 = Product.create!(short_description: "desc", name: "New Product", organization: org, category: category, unit: unit)
+      expect(GeneralProduct.count).to eq(1)
+      product2 = Product.create!(general_product: product1.general_product, short_description: "desc", name: "New Product", organization: org, category: category, unit: unit)
+      expect(GeneralProduct.count).to eq(1)
+      expect(product2.general_product_id).to eq(product1.general_product_id)
+      expect(product2.general_product.id).to eq(product1.general_product_id)
+    end
+
+    it "can be added to an existing GeneralProduct after creation" do
+      product1 = Product.create!(short_description: "desc", name: "New Product", organization: org, category: category, unit: unit)
+      product2 = Product.create!(short_description: "desc", name: "New Product", organization: org, category: category, unit: unit)
+      product2.general_product = product1.general_product
+      product2.save!
+      expect(product1.general_product.product.count).to eq(2)
     end
   end
 
