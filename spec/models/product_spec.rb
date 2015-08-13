@@ -52,6 +52,8 @@ describe Product do
       newLocation = FactoryGirl.create(:location)
       params = {
         name:                     "test_name",
+        category_id:              category.id,
+        organization_id:          Organization.first.id,
         who_story:                "test_who_story",
         how_story:                "test_how_story",
         image_uid:                "image_uid",
@@ -67,6 +69,8 @@ describe Product do
       gp = GeneralProduct.find(newProduct.general_product_id)
       expect({
         name: gp.name,
+        category_id: gp.category_id,
+        organization_id: gp.organization_id,
         who_story: gp.who_story,
         how_story: gp.how_story,
         image_uid: gp.image_uid,
@@ -84,6 +88,8 @@ describe Product do
       newLocation = FactoryGirl.create(:location)
       params = {
         name:                     "test_name",
+        category_id:              category.id,
+        organization_id:          Organization.first.id,
         who_story:                "test_who_story",
         how_story:                "test_how_story",
         image_uid:                "image_uid",
@@ -100,6 +106,8 @@ describe Product do
       newProduct.general_product.update!(**params)
       expect({
         name: newProduct.name,
+        category_id: newProduct.category_id,
+        organization_id: newProduct.organization_id,
         who_story: newProduct.who_story,
         how_story: newProduct.how_story,
         image_uid: newProduct.image_uid,

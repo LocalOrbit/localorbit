@@ -2,6 +2,8 @@ class CreateGeneralProducts < ActiveRecord::Migration
   def change
     create_table :general_products do |t|
       t.text :name
+      t.integer :category_id
+      t.integer :organization_id
       t.text :who_story
       t.text :how_story
       t.integer :location_id, index: true

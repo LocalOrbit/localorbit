@@ -60,6 +60,12 @@ class Product < ActiveRecord::Base
   def name
     self.general_product && self.general_product.name
   end
+  def category_id
+    self.general_product && self.general_product.category_id
+  end
+  def organization_id
+    self.general_product && self.general_product.organization_id
+  end
   def who_story
     self.general_product && self.general_product.who_story
   end
@@ -98,27 +104,55 @@ class Product < ActiveRecord::Base
   ### SETTERS ###
   def name=(input)
     write_attribute(:name, input)
-    get_general_product
+    ensure_product_has_a_general_product
     self.general_product.name = input
     input
   end
+  def category_id=(input)
+    write_attribute(:category_id, input)
+    ensure_product_has_a_general_product
+    self.general_product.category_id = input
+  end
+  def category=(input)
+    ensure_product_has_a_general_product
+    self.general_product.category_id = if input.present?
+      input.id
+    else
+      nil
+    end
+    association(:category).writer(input)
+  end
+  def organization_id=(input)
+    write_attribute(:organization_id, input)
+    ensure_product_has_a_general_product
+    self.general_product.organization_id = input
+  end
+  def organization=(input)
+    ensure_product_has_a_general_product
+    self.general_product.organization_id = if input.present?
+      input.id
+    else
+      nil
+    end
+    association(:organization).writer(input)
+  end
   def who_story=(input)
     write_attribute(:who_story, input)
-    get_general_product
+    ensure_product_has_a_general_product
     self.general_product.who_story = input
   end
   def how_story=(input)
     write_attribute(:how_story, input)
-    get_general_product
+    ensure_product_has_a_general_product
     self.general_product.how_story = input
   end
   def location_id=(input)
     write_attribute(:location_id, input)
-    get_general_product
+    ensure_product_has_a_general_product
     self.general_product.location_id = input
   end
   def location=(input)
-    get_general_product
+    ensure_product_has_a_general_product
     self.general_product.location_id = if input.present?
       input.id
     else
@@ -128,16 +162,16 @@ class Product < ActiveRecord::Base
   end
   def image_uid=(input)
     write_attribute(:image_uid, input)
-    get_general_product
+    ensure_product_has_a_general_product
     self.general_product.image_uid = input
   end
   def top_level_category_id=(input)
     write_attribute(:top_level_category_id, input)
-    get_general_product
+    ensure_product_has_a_general_product
     self.general_product.top_level_category_id = input
   end
   def top_level_category=(input)
-    get_general_product
+    ensure_product_has_a_general_product
     self.general_product.top_level_category_id = if input.present?
       input.id
     else
@@ -147,31 +181,31 @@ class Product < ActiveRecord::Base
   end
   def short_description=(input)
     write_attribute(:short_description, input)
-    get_general_product
+    ensure_product_has_a_general_product
     self.general_product.short_description = input
   end
   def long_description=(input)
     write_attribute(:long_description, input)
-    get_general_product
+    ensure_product_has_a_general_product
     self.general_product.long_description = input
   end
   def use_all_deliveries=(input)
     write_attribute(:use_all_deliveries, input)
-    get_general_product
+    ensure_product_has_a_general_product
     self.general_product.use_all_deliveries = input
   end
   def thumb_uid=(input)
     write_attribute(:thumb_uid, input)
-    get_general_product
+    ensure_product_has_a_general_product
     self.general_product.thumb_uid = input
   end
   def second_level_category_id=(input)
     write_attribute(:second_level_category_id, input)
-    get_general_product
+    ensure_product_has_a_general_product
     self.general_product.second_level_category_id = input
   end
   def second_level_category=(input)
-    get_general_product
+    ensure_product_has_a_general_product
     self.general_product.second_level_category_id = if input.present?
       input.id
     else
@@ -367,7 +401,7 @@ class Product < ActiveRecord::Base
 
   private
 
-  def get_general_product
+  def ensure_product_has_a_general_product
     unless self.general_product
       self.general_product = GeneralProduct.new
       self.general_product.use_all_deliveries = true
@@ -376,11 +410,7 @@ class Product < ActiveRecord::Base
   end
 
   def update_general_product
-    unless self.general_product.present?
-      self.general_product = GeneralProduct.new
-      self.general_product.use_all_deliveries = true
-      self.general_product.product << self
-    end
+    ensure_product_has_a_general_product
     self.general_product.save!
   end
   
