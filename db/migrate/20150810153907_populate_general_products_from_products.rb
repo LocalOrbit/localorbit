@@ -3,8 +3,10 @@ class PopulateGeneralProductsFromProducts < ActiveRecord::Migration
   def up
     execute "
       INSERT INTO general_products(
-        id, 
-        name, 
+        id,
+        name,
+        category_id,
+        organization_id,
         who_story, 
         how_story, 
         location_id, 
@@ -21,6 +23,8 @@ class PopulateGeneralProductsFromProducts < ActiveRecord::Migration
         SELECT
           p.id,
           p.name,
+          p.category_id,
+          p.organization_id,
           p.who_story,
           p.how_story,
           p.location_id,

@@ -60,6 +60,12 @@ class Product < ActiveRecord::Base
   def name
     self.general_product && self.general_product.name
   end
+  def category_id
+    self.general_product && self.general_product.category_id
+  end
+  def organization_id
+    self.general_product && self.general_product.organization_id
+  end
   def who_story
     self.general_product && self.general_product.who_story
   end
@@ -101,6 +107,34 @@ class Product < ActiveRecord::Base
     get_general_product
     self.general_product.name = input
     input
+  end
+  def category_id=(input)
+    write_attribute(:category_id, input)
+    get_general_product
+    self.general_product.category_id = input
+  end
+  def category=(input)
+    get_general_product
+    self.general_product.category_id = if input.present?
+      input.id
+    else
+      nil
+    end
+    association(:category).writer(input)
+  end
+  def organization_id=(input)
+    write_attribute(:organization_id, input)
+    get_general_product
+    self.general_product.organization_id = input
+  end
+  def organization=(input)
+    get_general_product
+    self.general_product.organization_id = if input.present?
+      input.id
+    else
+      nil
+    end
+    association(:organization).writer(input)
   end
   def who_story=(input)
     write_attribute(:who_story, input)
