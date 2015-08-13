@@ -168,6 +168,7 @@ module ProductImport
             puts "Loaded #{count} products..." if count % 50 == 0
             product_loader.update_product payload
           end
+          puts "Loaded #{count} products!"
         ensure
           product_loader.commit
         end
