@@ -8,7 +8,7 @@ class ProductImport::Transforms::ContriveKey < ProductImport::Framework::Transfo
 
     parts = row.values_at(*opts[:from])
 
-    if parts.any?(&:blank?)
+    if parts[1..].any?(&:blank?)
       reject "Couldn't contrive a key, some fields are blank."
     else
       row['contrived_key'] = ExternalProduct.contrive_key(parts)
