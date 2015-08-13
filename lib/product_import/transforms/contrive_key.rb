@@ -7,7 +7,6 @@ class ProductImport::Transforms::ContriveKey < ProductImport::Framework::Transfo
     end
 
     parts = row.values_at(*opts[:from])
-    puts parts
     if parts[1..-1].any?(&:blank?)
       reject "Couldn't contrive a key, some fields are blank." # don't care if product code is blank, we can solve that problem.
     elsif parts[0].blank?
