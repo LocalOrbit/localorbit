@@ -10,6 +10,9 @@ class ProductImport::Transforms::ContriveKey < ProductImport::Framework::Transfo
 
     if parts[1..].any?(&:blank?)
       reject "Couldn't contrive a key, some fields are blank."
+    elsif parts[0](&:blank?)
+      row['contrived_key'] = ExternalProduct.contrive_key(parts[1..])
+      continue row # TODO test
     else
       row['contrived_key'] = ExternalProduct.contrive_key(parts)
       continue row
