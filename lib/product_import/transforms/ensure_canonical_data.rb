@@ -6,7 +6,7 @@ class ProductImport::Transforms::EnsureCanonicalData < ProductImport::Framework:
     keys: %w(product_code organization name category price unit)
 
   transform :contrive_key,
-    from: %w(product_code organization name),
+    from: %w(product_code organization name unit),
     skip_if_present: true
 
   transform :move_non_canonical_fields_to_source_data
