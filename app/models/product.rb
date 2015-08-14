@@ -72,6 +72,9 @@ class Product < ActiveRecord::Base
   def how_story
     self.general_product && self.general_product.how_story
   end
+  def location
+    self.general_product && Location.find(self.general_product.location_id)
+  end
   def location_id
     self.general_product && self.general_product.location_id
   end
@@ -87,12 +90,15 @@ class Product < ActiveRecord::Base
   def long_description
     self.general_product && self.general_product.long_description
   end
-  def use_all_deliveries
+  def use_all_deliveries?
     if self.general_product
-      self.general_product.use_all_deliveries
+      self.general_product.use_all_deliveries?
     else
       true # Default
     end
+  end
+  def use_all_deliveries
+    self.use_all_deliveries?
   end
   def thumb_uid
     self.general_product && self.general_product.thumb_uid
@@ -103,13 +109,11 @@ class Product < ActiveRecord::Base
 
   ### SETTERS ###
   def name=(input)
-    write_attribute(:name, input)
     get_general_product
     self.general_product.name = input
     input
   end
   def category_id=(input)
-    write_attribute(:category_id, input)
     get_general_product
     self.general_product.category_id = input
   end
@@ -123,7 +127,6 @@ class Product < ActiveRecord::Base
     association(:category).writer(input)
   end
   def organization_id=(input)
-    write_attribute(:organization_id, input)
     get_general_product
     self.general_product.organization_id = input
   end
@@ -137,17 +140,14 @@ class Product < ActiveRecord::Base
     association(:organization).writer(input)
   end
   def who_story=(input)
-    write_attribute(:who_story, input)
     get_general_product
     self.general_product.who_story = input
   end
   def how_story=(input)
-    write_attribute(:how_story, input)
     get_general_product
     self.general_product.how_story = input
   end
   def location_id=(input)
-    write_attribute(:location_id, input)
     get_general_product
     self.general_product.location_id = input
   end
@@ -161,12 +161,10 @@ class Product < ActiveRecord::Base
     association(:location).writer(input)
   end
   def image_uid=(input)
-    write_attribute(:image_uid, input)
     get_general_product
     self.general_product.image_uid = input
   end
   def top_level_category_id=(input)
-    write_attribute(:top_level_category_id, input)
     get_general_product
     self.general_product.top_level_category_id = input
   end
@@ -180,27 +178,22 @@ class Product < ActiveRecord::Base
     association(:top_level_category).writer(input)
   end
   def short_description=(input)
-    write_attribute(:short_description, input)
     get_general_product
     self.general_product.short_description = input
   end
   def long_description=(input)
-    write_attribute(:long_description, input)
     get_general_product
     self.general_product.long_description = input
   end
   def use_all_deliveries=(input)
-    write_attribute(:use_all_deliveries, input)
     get_general_product
     self.general_product.use_all_deliveries = input
   end
   def thumb_uid=(input)
-    write_attribute(:thumb_uid, input)
     get_general_product
     self.general_product.thumb_uid = input
   end
   def second_level_category_id=(input)
-    write_attribute(:second_level_category_id, input)
     get_general_product
     self.general_product.second_level_category_id = input
   end
@@ -219,7 +212,6 @@ class Product < ActiveRecord::Base
       self.general_product = gp
     else
       self.general_product.id = input
-      write_attribute(:general_product_id, input)
     end
   end
   def general_product=(input)
@@ -431,7 +423,7 @@ class Product < ActiveRecord::Base
   end
 
   def self.order_by_stock(direction)
-    direction == "asc" ? order("stock asc nulls first, name asc") : order("stock desc nulls last, name desc")
+    direction == "asc" ? order("stock asc nulls first, general_products.name asc") : order("stock desc nulls last, name desc")
   end
 
   def self.order_by_price(direction)
@@ -448,9 +440,12 @@ class Product < ActiveRecord::Base
     lot = Lot.arel_table
     expires_condition = lot[:expires_at].gt(Time.current).or(lot[:expires_at].eq(nil))
     good_from = lot[:good_from].lt(Time.current).or(lot[:good_from].eq(nil))
-    joins("LEFT OUTER JOIN lots ON products.id = lots.product_id AND #{expires_condition.and(good_from).to_sql}").
-      select("products.*, SUM(lots.quantity) as stock").
-      group("products.id").order_by_stock(direction)
+
+    joins("LEFT OUTER JOIN general_products ON general_products.id = products.id
+      LEFT OUTER JOIN lots ON products.id = lots.product_id
+      AND #{expires_condition.and(good_from).to_sql}").
+      select("products.*, general_products.name, SUM(lots.quantity) as stock").
+      group("products.id, general_products.name").order_by_stock(direction)
   end
 
   def ensure_organization_can_sell

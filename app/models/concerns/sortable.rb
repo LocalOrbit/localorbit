@@ -9,6 +9,7 @@ module Sortable
     end
 
     def for_sort(order)
+      puts "FOR SORT\nFOR SORT\nFOR SORT"
       column_name, direction = column_and_direction(order)
       arel_column = arel_column_for_sort(column_name)
       direction == "asc" ? order(arel_column.asc) : order(arel_column.desc)
