@@ -1,8 +1,8 @@
-class ExternalProduct < ActiveRecord::Base
+class ExternalProduct < ActiveRecord::Base # should associate these with general products TODO
 
 	serialize :source_data, JSON
 
-	has_one :product
+	has_one :product # but the product has a general product id 
 	belongs_to :organization 
 
   def self.contrive_key(fields)

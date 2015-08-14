@@ -61,7 +61,7 @@ module ProductImport
           ep_id = ep.id
 
           unless product = products_by_ep_id[ep_id]
-            product = Product.new
+            product = Product.new 
           end
 
           unless product.prices.any?
@@ -81,9 +81,9 @@ module ProductImport
             short_description: p['short_description'],
             long_description: p['long_description'],
             unit_description: p['unit_description'],
-            external_product_id: ep_id,
+            external_product_id: ep_id, # this is associated with General Product?
             deleted_at: nil
-          )
+          ) # No, here is where the general product id should be assigned.
 
           product.prices.first.assign_attributes(sale_price: p['price'], min_quantity: 1)
           reinfinity! product.lots.first
@@ -116,14 +116,14 @@ module ProductImport
       product_batch.each do |p|
         org_id = p['organization_id']
         contrived_key = p['contrived_key']
-        if ep = ep_by_org_and_key[[org_id, contrived_key]]
-          ep.update_attribute(:source_data, p['source_data'])
+        if ep = ep_by_org_and_key[[org_id, contrived_key]] # I mean actually contrived key is not unique per product, it's theoretically unique per org.
+          ep.update_attribute(:source_data, p['source_data']) # Source data is an OK thing to keep around. Even good.
         else
           eps << ExternalProduct.create!(
             organization_id: p['organization_id'],
             contrived_key: p['contrived_key'],
             source_data: p['source_data'],
-          )
+          ) # How do ExternalProducts interact with the real GeneralProducts
         end
 
 
