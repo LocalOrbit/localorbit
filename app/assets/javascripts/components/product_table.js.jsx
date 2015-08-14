@@ -1,14 +1,26 @@
+//= require react-infinite-scroll.min
+
 var ProductTable = React.createClass({
+  propTypes: {
+    products: React.PropTypes.array.isRequired
+  },
+
   render: function() {
-    var rows = [];
-    console.log
-    this.props.products.forEach(function(product) {
-      rows.push ( <ProductRow key={product.id} product={product} /> )
+    var rows = this.props.products.map(function(product) {
+      return ( <ProductRow product={product} /> )
     });
+
     return (
       <table id="product-search-table" className="product-table product-table--user cart_items" data-cart-url={this.props.cartUrl}>
-        <thead></thead>
-        <tbody>{rows}</tbody>
+          <InfiniteScroll
+            pageStart={0}
+            hasMore={true}
+            threshold={150}
+            loadMore={this.props.onInfiniteLoad}
+            loader={(<th>Loading products....</th>)}
+          >
+            {rows}
+          </InfiniteScroll>
       </table>
     );
   }

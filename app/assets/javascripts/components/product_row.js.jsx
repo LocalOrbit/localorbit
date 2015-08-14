@@ -1,4 +1,27 @@
 var ProductRow = React.createClass({
+  propTypes: {
+    product: React.PropTypes.shape({
+      id: React.PropTypes.number.isRequired,
+      name: React.PropTypes.string.isRequired,
+      second_level_category_name: React.PropTypes.string,
+      unit_with_description: React.PropTypes.string,
+      short_description: React.PropTypes.string,
+      long_description: React.PropTypes.string,
+      cart_item: React.PropTypes.object,
+      cart_item_quantity: React.PropTypes.number,
+      max_available: React.PropTypes.number,
+      price_for_quantity: React.PropTypes.string,
+      total_price: React.PropTypes.string,
+      cart_item_persisted: React.PropTypes.bool,
+      image_url: React.PropTypes.string,
+      who_story: React.PropTypes.string,
+      how_story: React.PropTypes.string,
+      location_label: React.PropTypes.string,
+      location_map_url: React.PropTypes.string,
+      prices: React.PropTypes.array
+    })
+  },
+
   getInitialState: function() {
     return {
       cartItemQuantity: this.props.product.cart_item_quantity
@@ -35,10 +58,10 @@ var ProductRow = React.createClass({
     }
     prices = product.prices.map(function(price) {
       if(price.organization_id) {
-        return <li key={price.id} className="negotiated"><span className="unit-price">{price.sale_price}</span> <span className="tier">{ price.formatted_units }</span><span className="tooltip tooltip--naked tooltip--notice" data-tooltip="This is a negotiated price specific to you!"><i className="font-icon" data-icon="&#xe01f;"></i></span></li>
+        return <li className="negotiated"><span className="unit-price">{price.sale_price}</span> <span className="tier">{ price.formatted_units }</span><span className="tooltip tooltip--naked tooltip--notice" data-tooltip="This is a negotiated price specific to you!"><i className="font-icon" data-icon="&#xe01f;"></i></span></li>
       }
       else {
-        return <li key={price.id}><span className="unit-price">{price.sale_price}</span> <span className="tier">{ price.formatted_units }</span></li>
+        return <li><span className="unit-price">{price.sale_price}</span> <span className="tier">{ price.formatted_units }</span></li>
       }
     });
 

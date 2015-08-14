@@ -9,16 +9,16 @@ module Api
       before_action :require_current_delivery
 
       def index
-        @start = params[:start] || 0
-        products = self.products(0)
+        @offset = (params[:offset] || 0).to_i
+        @limit = (params[:limit] || 10).to_i
+        @query = params[:query] || nil
         render :json => products
       end
 
-      def products(start)
+      def products
         products = available_products
-          .offset(@start)
-          .limit(10)
-          .includes(:organization, :second_level_category, :prices, :unit)
+          .offset(@offset)
+          .limit(@limit)
           .uniq
         products.map {|p| output_hash(p)}
       end
@@ -30,6 +30,7 @@ module Api
           .object
           .delivery_schedule
           .products
+          .includes(:organization, :second_level_category, :prices, :unit)
           .with_available_inventory(current_delivery.deliver_on)
           .priced_for_market_and_buyer(current_market, current_organization)
           .order(:name)

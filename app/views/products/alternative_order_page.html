@@ -21,14 +21,7 @@
           Please complete your order by <%= current_delivery.cutoff_time.strftime("%B %-d at %l%p") %>.<br>
           <%= current_delivery.selected_type.capitalize %> is <%= current_delivery.buyer_display_date %> <%= current_delivery.buyer_time_range %>.
         </p>
-
-        <h1>Search for Products</h1>
-
-        <div class="column--full column--guttered" style="margin-bottom:50px;">
-          <input id="product-order-search" class="typeahead" style="width:100%;" placeholder="Try 'orange fruit'" />
-        </div>
-
-        <%= react_component('ProductCatalog', {baseUrl: request.base_url, cartUrl: cart_path}, {prerender: false}) %>
+        <%= react_component('ProductCatalog', {baseUrl: request.base_url, cartUrl: cart_path, limit: 10}, {prerender: true}) %>
       </div>
     </div>
   </div>
