@@ -36,7 +36,7 @@ describe ProductImport::Transforms::ContriveKey do
 
       expect(successes.size).to eq(1)
 
-      expected_key = "2NHVLjTcY+l5rCaqy09j+6W6vuU" # == ExternalProduct.contrive_key(["qux","quack","baa"])
+      expected_key = "09gRZ45j3+YRI8ZkNjvIx74AVVw" # == ExternalProduct.contrive_key(["qux","quack","baa"]) 
 
       expect(successes[0]).to eq({"foo" => "", "baz" => "qux", "moo" => "quack","cluck" => "baa","contrived_key" => expected_key})
 
