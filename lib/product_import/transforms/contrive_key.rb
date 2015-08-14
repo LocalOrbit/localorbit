@@ -10,7 +10,7 @@ class ProductImport::Transforms::ContriveKey < ProductImport::Framework::Transfo
     if parts[1..-1].any?(&:blank?)
       reject "Couldn't contrive a key, some fields are blank." # don't care if product code is blank, we can solve that problem.
     elsif parts[0].blank?
-      row['contrived_key'] = ExternalProduct.contrive_key(parts[1..-1])
+      row['contrived_key'] = ExternalProduct.contrive_key(parts[1..-1].map! {|p| p.upcase}) # control for case so that won't differentiate names of products
       continue row 
       # The problem here is only that if a supplier suddenly starts using a product code and putting it into the filled templates they give LO, the updates for that supplier won't work right
       # So we'll have to ultimately check for, if in the database, is there a product code? To decide whether to do this. (Not ideal)
