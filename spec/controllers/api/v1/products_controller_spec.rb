@@ -56,5 +56,18 @@ describe Api::V1::ProductsController do
       products = get_products(offset: 0)
       expect(products).to eq([@banana_result, @banana2_result, @kale_result])
     end
+
+    it "searches by text" do
+      products = get_products(offset: 0, query: "kale")
+      expect(products).to eq([@kale_result])
+      products = get_products(offset: 0, query: "xxxx")
+      expect(products).to eq([])
+      products = get_products(offset: 0, query: "Apple")
+      expect(products).to eq([@banana_result, @banana2_result, @kale_result])
+      products = get_products(offset: 1, query: "Apple")
+      expect(products).to eq([@banana2_result, @kale_result])
+      products = get_products(offset: 0, query: "First S")
+      expect(products).to eq([@banana_result, @kale_result])
+    end
   end
 end

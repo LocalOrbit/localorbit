@@ -11,16 +11,20 @@ module Api
       def index
         @offset = (params[:offset] || 0).to_i
         @limit = (params[:limit] || 10).to_i
-        @query = params[:query] || nil
+        @query = (params[:query] || '').gsub(/\W+/, '+') || ''
         render :json => products
       end
 
       def products
-        products = available_products
+        output = available_products
+        if(@query.length > 2)
+          output = output.search_by_text(@query)
+        end
+        output = output
           .offset(@offset)
           .limit(@limit)
           .uniq
-        products.map {|p| output_hash(p)}
+        output.map {|p| output_hash(p)}
       end
 
       private

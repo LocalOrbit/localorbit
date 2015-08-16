@@ -7,7 +7,6 @@ var ProductCatalog = React.createClass({
 
   getInitialState: function() {
     return {
-      query: '',
       products: []
     };
   },
@@ -16,35 +15,62 @@ var ProductCatalog = React.createClass({
 
   isLoading: false,
 
+  query: '',
+
   componentDidMount: function() {
-    this.getProducts();
+    this.getMoreProducts();
   },
 
-  getProducts: function() {
-    this.isLoading = true;
-    var url = this.props.baseUrl + '/api/v1/products.json';
-    var parameters = {offset: this.offset, limit: this.props.limit};
+  newSearch: function(event) {
+    this.offset = 0;
+    this.query = event.target.value;
+    this.filterProducts();
+  },
 
-    $.getJSON(url, parameters, function(res) {
+  getMoreProducts: function() {
+    this.getProducts()
+      .done(function(res) {
         var newProducts = this.state.products.concat(res.products);
         this.isLoading = false;
         this.setState({products: newProducts});
       }.bind(this));
   },
 
+  filterProducts: function() {
+    this.getProducts()
+      .done(function(res) {
+        this.isLoading = false;
+        this.setState({products: res.products});
+      }.bind(this));
+  },
+
+  getProducts: function() {
+    var deferred = $.Deferred();
+    this.isLoading = true;
+    var url = this.props.baseUrl + '/api/v1/products.json';
+    var parameters = {
+      offset: this.offset,
+      limit: this.props.limit,
+      query: this.query
+    };
+
+    $.getJSON(url, parameters, deferred.resolve, deferred.reject);
+
+    return deferred.promise();
+  },
+
   onInfiniteLoad: function() {
     if (this.isLoading) return;
     this.offset += 10;
-    this.getProducts();
+    this.getMoreProducts();
   },
 
   render: function() {
     return (
       <div>
         <h1>Filter Products</h1>
-
         <div className="column--full column--guttered" style={{marginBottom: "50px"}}>
-          <input className="typeahead" placeholder="Try 'orange fruit'" />
+          <input className="typeahead" placeholder="Try 'orange fruit'" onKeyUp={this.newSearch} />
         </div>
         <ProductTable
           limit={10}
