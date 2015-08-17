@@ -22,19 +22,34 @@ class MarketAddress < ActiveRecord::Base
   	end
   end
 
-  def ensure_single_default
-    if self.default # if the about to be saved market address is default
-      unless market.addresses.select{|mkt| mkt if mkt.default == true}.empty?
-        MarketAddress.where( default:true ).update_all( default:false)
+  # Helper methods for before_save-s to ensure a single default/billing address per market.
+  def falsify_all_others_default(mkt_addr_id)
+    MarketAddress.where( default:true ).where(market_id:"#{mkt_addr_id}".to_i).each do |ma|
+      if ma.id != self.id
+        ma.default = false
+        ma.save!
       end
     end
   end
 
-  def ensure_single_billing
-    if self.billing # if the about to be saved mkt address is billing
-      unless market.addresses.select{|mkt| mkt if mkt.billing == true}.empty?
-        MarketAddress.where( billing:true ).update_all( billing:false)
+  def falsify_all_others_billing(mkt_addr_id)
+    MarketAddress.where( billing:true ).where(market_id:"#{mkt_addr_id}".to_i).each do |ma| 
+      if ma.id != self.id
+        ma.billing = false
+        ma.save!
       end
+    end
+  end
+
+  def ensure_single_default
+    if self.default # if the about to be saved market address is default
+      falsify_all_others_default(self.market_id)
+    end
+  end
+
+  def ensure_single_billing
+    if self.billing 
+      falsify_all_others_billing(self.market_id)
     end
   end
 
