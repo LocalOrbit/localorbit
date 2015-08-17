@@ -10,6 +10,7 @@ class Admin::ReportsController < AdminController
   def show
     @presenter = ReportPresenter.report_for(
       report: params[:id].to_s.underscore,
+      market: current_market,
       user: current_user,
       search: @query_params[:q],
       paginate: {

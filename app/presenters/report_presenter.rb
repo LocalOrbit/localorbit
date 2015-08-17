@@ -104,7 +104,7 @@ class ReportPresenter
     REPORT_MAP.keys.reject {|k| REPORT_MAP[k][:buyer_only] }
   end
 
-  def initialize(report:, user:, search: {}, paginate: {})
+  def initialize(report:, market:, user:, search: {}, paginate: {})
     search ||= {}
 
     @report = report
@@ -113,10 +113,12 @@ class ReportPresenter
 
     # Set our initial scope and lookup any applicable filter data
     items = if self.class.buyer_reports.include?(report)
-      OrderItem.for_user_purchases(user)
-    else
-      OrderItem.for_user(user)
-    end.joins(:order).uniq
+              OrderItem.for_user_purchases(user)
+            elsif FeatureAccess.has_procurement_managers?(market: market)
+              OrderItem.joins(:product).where(products: {organization_id:user.managed_markets.map {|m| m.organizations.pluck(:id)}.flatten})
+            else
+              OrderItem.for_user(user)
+            end.joins(:order).uniq
 
     # Filter items by discount for the Discount Code report
     items = items.joins(order: :discount) if report == "discount_code_use"
@@ -143,12 +145,12 @@ class ReportPresenter
     @items = include_associations(items)
   end
 
-  def self.report_for(report:, user:, search: {}, paginate: {})
+  def self.report_for(report:, market:, user:, search: {}, paginate: {})
     return nil unless user && reports_for_user(user).include?(report)
 
     valid = !user.buyer_only? || reports_for_user(user).include?(report)
 
-    new(report: report, user: user, search: search, paginate: paginate) if valid
+    new(report: report, market: market, user: user, search: search, paginate: paginate) if valid
   end
 
   def self.reports_for_user(user)
