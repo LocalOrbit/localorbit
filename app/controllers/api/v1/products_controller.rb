@@ -12,15 +12,11 @@ module Api
         @offset = (params[:offset] || 0).to_i
         @limit = (params[:limit] || 10).to_i
         @query = (params[:query] || '').gsub(/\W+/, '+') || ''
-        render :json => products
+        render :json => {products: products, product_total: available_products.count(:all)}
       end
 
       def products
         output = available_products
-        if(@query.length > 2)
-          output = output.search_by_text(@query)
-        end
-        output = output
           .offset(@offset)
           .limit(@limit)
           .uniq
@@ -30,19 +26,22 @@ module Api
       private
 
       def available_products
-        current_delivery
+        available_products = current_delivery
           .object
           .delivery_schedule
           .products
           .includes(:organization, :second_level_category, :prices, :unit)
           .with_available_inventory(current_delivery.deliver_on)
           .priced_for_market_and_buyer(current_market, current_organization)
-          .order(:name)
+        if(@query.length > 2)
+          available_products.search_by_text(@query).order(:name)
+        else
+          available_products.order(:name)
+        end
       end
 
       def output_hash(product)
         product = product.decorate(context: {current_cart: current_cart})
-        prices = product.prices_for_market_and_organization(current_market, current_organization)
         {
           :id=> product.id,
           :name=> product.name,

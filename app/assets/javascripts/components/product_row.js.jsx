@@ -30,6 +30,9 @@ var ProductRow = React.createClass({
   updateQuantity: function(event) {
     this.setState({cartItemQuantity: event.target.value});
   },
+  componentDidMount: function() {
+    window.insertCartItemEntry($(this.getDOMNode()));
+  },
   render: function() {
     var description, prices;
     var product = this.props.product;

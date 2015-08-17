@@ -22,14 +22,14 @@ $ ->
         data: $(el).data("cart-item")
         el: $(el)
 
-    update: (data)->
-      if (this.data.quantity == 0) && (data.quantity > 0)
+    update: (data, silent)->
+      if (this.data.quantity == 0) && (data.quantity > 0) && (silent != true)
         CartLink.showMessage("Added to cart!")
 
-      if (this.data.quantity > 0) && (data.quantity == 0)
+      if (this.data.quantity > 0) && (data.quantity == 0) && (silent != true)
         CartLink.showMessage("Removed from cart!")
 
-      if (this.data.quantity > 0) && (data.quantity > 0)
+      if (this.data.quantity > 0) && (data.quantity > 0) && (silent != true)
         CartLink.showMessage("Quantity updated!")
 
       @data = data
@@ -44,7 +44,7 @@ $ ->
         if @data.quantity
           @el.find(".icon-clear").removeClass("is-hidden")
 
-        if !@data["valid?"] && !@data["destroyed?"]
+        if (!@data["valid?"] && @data["id"] != null) && !@data["destroyed?"]
           @showError()
         else
           @clearError()
@@ -144,11 +144,11 @@ $ ->
       _.find @items, (item)->
         item.data.product_id == id
 
-    updateOrAddItem: (data, element)->
+    updateOrAddItem: (data, element, silent)->
       item = @itemAt(data.product_id)
 
       if item?
-        item.update(data)
+        item.update(data, silent)
 
       else
         item = new CartItem(data: data, el: element)
@@ -279,16 +279,11 @@ $ ->
       }
     });
 
-    searchBox.on "typeahead:select", insertEntry
-
   fetchRenderedRow = (id) ->
     $.getJSON("/products/#{id}/row")
 
-  insertEntry = (event, productData) ->
-    fetchRenderedRow(productData.id).then (response) ->
-      el = $(response.html)
-      $("#product-search-table tbody").append(el)
-      model.updateOrAddItem el.data("cart-item"), el
+  window.insertCartItemEntry = (el) ->
+      model.updateOrAddItem el.data("cart-item"), el, true
 
 
   view.updateCounter()
