@@ -220,10 +220,10 @@ class Product < ActiveRecord::Base
   end
 
   pg_search_scope :search_by_text,
-    :against => :name,
     :associated_against => {
       :second_level_category => :name,
-      :organization => :name
+      :organization => :name,
+      :general_product => :name
     },
     :using => {
       :tsearch => {prefix: true}
