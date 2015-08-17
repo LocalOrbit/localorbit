@@ -26,7 +26,7 @@ class Order < ActiveRecord::Base
 
   has_many :items, inverse_of: :order, class: OrderItem, autosave: true, dependent: :destroy do
     def for_checkout
-      eager_load(product: [:organization, :prices]).order("organizations.name, products.name").group_by do |item|
+      eager_load(product: [:organization, :prices, :general_product]).order("organizations.name, general_products.name").group_by do |item|
         item.product.organization.name
       end
     end

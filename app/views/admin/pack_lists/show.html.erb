@@ -58,7 +58,7 @@
             <th>Notes</th>
           </tr>
         </thead>
-        <% order.items.undelivered.includes(:product => :organization).order('products.name').each do |item| %>
+        <% order.items.undelivered.includes(:product => :organization, :general_product).order('general_products.name').each do |item| %>
           <tr class="pack-list-item">
             <td><%= item.product.code || "-" %></td>
             <td class="name"><%= item.product.name %></td>
