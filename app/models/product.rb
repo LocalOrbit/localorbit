@@ -411,7 +411,7 @@ class Product < ActiveRecord::Base
   end
   
   def self.order_by_name(direction)
-    direction == "asc" ? order(name: :asc) : order(name: :desc)
+    direction == "asc" ? order("general_products.name asc") : order("general_products.name desc")
   end
 
   def self.order_by_market_name(direction)
@@ -423,7 +423,7 @@ class Product < ActiveRecord::Base
   end
 
   def self.order_by_stock(direction)
-    direction == "asc" ? order("stock asc nulls first, general_products.name asc") : order("stock desc nulls last, name desc")
+    direction == "asc" ? order("stock asc nulls first, general_products.name asc") : order("stock desc nulls last, general_products.name desc")
   end
 
   def self.order_by_price(direction)
