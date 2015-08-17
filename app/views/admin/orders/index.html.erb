@@ -15,7 +15,6 @@
       <%= content_tag :th, sort_link(@q, :organization, "Buyer") %>
       <th>Delivery</th>
       <%= content_tag :th, sort_link(@q, :payment_status, "Buyer") %>
-      <th>Seller</th>
     </thead>
     <tbody>
       <% @orders.each do |order| %>
@@ -28,7 +27,6 @@
         <td class="buyer-name"><%= order.organization.name %></td>
         <td class="delivery-status"><%= order.delivery_status_for_user(current_user).titleize %></td>
         <td class="buyer-status"><%= order.payment_status.titleize %></td>
-        <td class="seller-status"></td>
       </tr>
       <% end %>
     </tbody>
