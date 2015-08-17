@@ -72,7 +72,8 @@ module ProductImport
             product.lots.build
           end
 
-          # todo check
+          # todo check - these call getter and thus will each create a GeneralProduct
+          # todo - need auditing s.t. they don't double up genprods unnecessarily?
           product.name = p.name
           product.organization_id = p.organization_id 
           product.unit_id = p.unit_id
@@ -83,21 +84,8 @@ module ProductImport
           product.unit_description = p.unit_description
           product.external_product_id = p.external_product_id
           product.deleted_at = nil
-          # this will need to assign the correct attributes
-          # product.assign_attributes(
-          #   name: p['name'], # p -> p.name and assign the value rather than assigning attributes, so it'll call the getter
-          #   organization_id: p['organization_id'],
-          #   unit_id: p['unit_id'],
-          #   category_id: p['category_id'],
-          #   code: p['product_code'],
-          #   short_description: p['short_description'],
-          #   long_description: p['long_description'],
-          #   unit_description: p['unit_description'],
-          #   external_product_id: ep_id, # this is associated with General Product?
-          #   deleted_at: nil
-          # ) # No, here is where the general product id should be assigned.
 
-          product.prices.first.assign_attributes(sale_price: p['price'], min_quantity: 1) # still ok update b/c reinfinity-ifying
+          product.prices.first.assign_attributes(sale_price: p['price'], min_quantity: 1) # still ok update b/c reinfinity-ifying (?)
           reinfinity! product.lots.first
 
           product.save!
@@ -135,7 +123,7 @@ module ProductImport
             organization_id: p['organization_id'],
             contrived_key: p['contrived_key'],
             source_data: p['source_data'],
-          ) # How do ExternalProducts interact with the real GeneralProducts
+          ) # will this create any bad weird situations probably not (??)
         end
 
 
