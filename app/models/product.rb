@@ -67,6 +67,7 @@ class Product < ActiveRecord::Base
     self.general_product && self.general_product.organization_id
   end
   def who_story
+    puts "PRODUCT WHO STORY"
     self.general_product && self.general_product.who_story
   end
   def how_story
@@ -462,7 +463,7 @@ class Product < ActiveRecord::Base
   end
 
   def overrides_organization?
-    who_story.present? || how_story.present?
+    self.general_product.who_story.present? || self.general_product.how_story.present?
   end
 
   def update_delivery_schedules

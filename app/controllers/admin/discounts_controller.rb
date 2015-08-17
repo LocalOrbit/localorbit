@@ -99,7 +99,7 @@ module Admin
       @products = Product.
         joins(:organization).
         where(organization_id: org_ids).
-        order("organizations.name, general_products.name").
+        order("organizations.name, name").
         limit(0).
         map {|p| ["#{p.organization.name}: #{p.name}", p.id] }
     end
