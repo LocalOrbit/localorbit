@@ -11,6 +11,8 @@ describe FeatureAccess do
   let(:user)                   { create(:user, organizations: [buyer]) }
   let(:admin)                  { create(:user, :admin) }
   let(:market_manager)         { create(:user, managed_markets: [market]) }
+  let(:localeyes_plan)         { create(:plan, :localeyes) }
+  let(:localeyes_market)       { create(:market, :with_delivery_schedule, :with_address, plan: localeyes_plan) }
 
   before do
     user.markets << market
@@ -660,6 +662,30 @@ describe FeatureAccess do
       end
       it "returns false" do
         expect(subject.sellers_edit_orders_feature_available?(market: market)).to eq false
+      end
+    end
+
+  end
+
+  describe ".has_procurement_managers?" do
+    context "Market has no Plan" do
+      before do
+        market.update_column :plan_id, nil
+      end
+      it "returns false" do
+        expect(subject.has_procurement_managers?(market: market)).to eq false
+      end
+    end
+
+    context "Grow Plan" do
+      it "returns false" do
+        expect(subject.has_procurement_managers?(market: market)).to eq false
+      end
+    end
+
+    context "LocalEyes Plan" do
+      it "returns true" do
+        expect(subject.has_procurement_managers?(market: localeyes_market)).to eq true
       end
     end
 
