@@ -463,7 +463,11 @@ class Product < ActiveRecord::Base
   end
 
   def overrides_organization?
-    self.general_product.who_story.present? || self.general_product.how_story.present?
+    if self.general_product
+      self.general_product[:who_story].present? || self.general_product[:how_story].present?
+    else
+      false
+    end
   end
 
   def update_delivery_schedules
