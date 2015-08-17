@@ -425,6 +425,21 @@ FactoryGirl.define do
       packing_labels     true
       sellers_edit_orders     true
     end
+
+    trait :localeyes do
+      name "LocalEyes"
+      discount_codes     true
+      cross_selling      true
+      custom_branding    true
+      automatic_payments false
+      advanced_pricing   false
+      advanced_inventory false
+      promotions         false
+      order_printables   true
+      packing_labels     true
+      sellers_edit_orders     false
+      has_procurement_managers true
+    end
   end
 
   factory :price do
