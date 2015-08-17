@@ -526,9 +526,9 @@ describe "Viewing the cart", js:true do
           end
 
           expect(cart_totals.subtotal).to have_content("$40.00")
-          expect(cart_totals.discount).to have_content("$7.50")
+          expect(cart_totals.discount).to have_content("$12.50")
           expect(cart_totals.delivery_fees).to have_content("$10.00")
-          expect(cart_totals.total).to have_content("$42.50")
+          expect(cart_totals.total).to have_content("$37.50")
         end
       end
     end
