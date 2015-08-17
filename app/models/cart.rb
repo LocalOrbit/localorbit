@@ -37,13 +37,13 @@ class Cart < ActiveRecord::Base
   end
 
   def discount_amount
-    item_total = if discount.try(:seller_organization_id).present?
-      items.joins(:product).where(products: {organization_id: discount.seller_organization_id}).each.sum(&:total_price)
+    order_total = if discount.try(:seller_organization_id).present?
+      delivery_fees + items.joins(:product).where(products: {organization_id: discount.seller_organization_id}).each.sum(&:total_price)
     else
-      subtotal
+      delivery_fees + subtotal
     end
 
-    @discount_amount ||= discount.try(:valid_for_cart?, self) ? discount.value_for(item_total) : 0
+    @discount_amount ||= discount.try(:valid_for_cart?, self) ? discount.value_for(order_total) : 0
   end
 
   def discount_code
