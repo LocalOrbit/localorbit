@@ -82,10 +82,10 @@ module ProductImport
           product.short_description = p['short_description'] # will check what happens
           product.long_description = p['long_description']
           product.unit_description = p['unit_description']
-          product.external_product_id = p['external_product_id']
+          product.external_product_id = ep_id
           product.deleted_at = nil
 
-          product.prices.first.assign_attributes(sale_price: p['price'], min_quantity: 1) # still ok update b/c reinfinity-ifying (?)
+          product.prices.first.assign_attributes(sale_price: p['price'], min_quantity: 1) # still ok update b/c reinfinity-ifying
           reinfinity! product.lots.first
 
           product.save!
