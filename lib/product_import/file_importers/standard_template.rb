@@ -15,6 +15,7 @@ module ProductImport
       'newportfishco' => { market_id: 141 },
       'semifreddis' => { market_id: 121 },
       'panorama' => {market_id: 144},
+      'odwalla' => {market_id: 129},
       }
 
       def initialize(opts={})
