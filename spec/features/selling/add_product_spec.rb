@@ -192,7 +192,6 @@ describe "Adding a product", chosen_js: true do
     it "attaching an image uploads an image when provided" do
       fill_in "Product Name", with: "Red Grapes"
       attach_file("Photo", "app/assets/images/backgrounds/lentils.jpg")
-
       click_button "Save and Continue"
       expect(page).to have_css("img[alt='Red Grapes']")
     end
@@ -541,7 +540,6 @@ describe "Adding a product", chosen_js: true do
 
     it "does not save a product with invalid product info", js: true do
       select org2.name, from: "Seller Organization"
-
       expect(page).to have_content("Current inventory")
       uncheck "Use simple inventory management"
       expect(page).not_to have_content("Current inventory")
@@ -558,7 +556,7 @@ describe "Adding a product", chosen_js: true do
       within(".tabs") do
         expect(page).to have_content("Inventory")
       end
-
+      sleep(5)
       # Maintains organization selection
       expect(page).to have_checked_field("Use Seller info from my account.")
       expect(page).not_to have_content("No Organization Selected")

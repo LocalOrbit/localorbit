@@ -4,7 +4,11 @@ class ProductDecorator < Draper::Decorator
   delegate_all
 
   def has_custom_seller_info?
-    self[:location_id].present? || self[:who_story].present? || self[:how_story].present?
+    if self.general_product
+      self.general_product[:location_id].present? || self.general_product[:who_story].present? || self.general_product[:how_story].present?
+    else
+      false
+    end
   end
 
   def location_options_for_select
@@ -17,11 +21,19 @@ class ProductDecorator < Draper::Decorator
   end
 
   def who_story
-    self[:who_story].presence || (organization ? organization.who_story : nil)
+    if self.general_product
+      self.general_product[:who_story].presence || (organization ? organization.who_story : nil)
+    else
+      nil || (organization ? organization.who_story : nil)
+    end
   end
 
   def how_story
-    self[:how_story].presence || (organization ? organization.how_story : nil)
+    if self.general_product
+      self.general_product[:how_story].presence || (organization ? organization.how_story : nil)
+    else
+      nil || (organization ? organization.how_story : nil)
+    end
   end
 
   def location

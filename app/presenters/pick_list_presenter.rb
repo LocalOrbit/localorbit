@@ -1,8 +1,8 @@
 class PickListPresenter
   def self.build(current_user, delivery)
     order_items = OrderItem.where(delivery_status: "pending", orders: {delivery_id: delivery.id}).
-      eager_load(:order, product: :organization).
-      order("organizations.name, products.name").
+      eager_load(:order, product: [:organization, :general_product]).
+      order("organizations.name, general_products.name").
       preload(order: :organization)
 
     # Limit the scope unless the current user is an admin

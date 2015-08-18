@@ -12,9 +12,9 @@ class Cart < ActiveRecord::Base
   validates :user, presence: true
   validates :delivery, presence: true
 
-  has_many :items, -> { includes(product: [:prices, :organization]) }, class_name: :CartItem, inverse_of: :cart do
+  has_many :items, -> { includes(product: [:prices, :organization, :general_product]) }, class_name: :CartItem, inverse_of: :cart do
     def for_checkout
-      eager_load(product: [:organization, :prices]).order("organizations.name, products.name").group_by do |item|
+      eager_load(product: [:organization, :prices, :general_product]).order("organizations.name, general_products.name").group_by do |item|
         item.product.organization.name
       end
     end

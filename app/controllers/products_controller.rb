@@ -1,4 +1,4 @@
-class ProductsController < ApplicationController
+  class ProductsController < ApplicationController
   include ActiveSupport::NumberHelper
   before_action :require_selected_market
   before_action :require_market_open
@@ -41,7 +41,7 @@ class ProductsController < ApplicationController
         .where(organization_id: org_filter)
         .search_by_text(search)
         .limit(50)
-        .includes(:organization, :second_level_category, :prices, :unit)
+        .includes(:organization, :second_level_category, :prices, :unit, :general_product)
         .uniq
       render :json => matching_and_available_products.map {|p| search_hash(p)}
     else

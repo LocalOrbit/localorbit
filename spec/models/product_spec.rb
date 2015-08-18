@@ -33,6 +33,113 @@ describe Product do
     end
   end
 
+  context "general products" do
+    let(:org) { create(:organization) }
+    let(:unit) { create(:unit) }
+    let(:top_level) { create(:category, parent: Category.root) }
+    let!(:category) { create(:category, parent: top_level) }
+    
+    it "creates and belongs to a new GeneralProduct upon creation" do
+      expect(GeneralProduct.count).to eq(0)
+      newProduct = Product.create!(short_description: "desc", name: "New Product", organization: org, category: category, unit: unit)
+      expect(GeneralProduct.count).to eq(1)
+      general_product = GeneralProduct.first
+      expect(GeneralProduct.find(newProduct.general_product_id)).to eq(general_product)
+    end
+
+    it "updates GeneralProduct when updated" do
+      newProduct = FactoryGirl.create(:product)
+      newLocation = FactoryGirl.create(:location)
+      params = {
+        name:                     "test_name",
+        category_id:              category.id,
+        organization_id:          Organization.first.id,
+        who_story:                "test_who_story",
+        how_story:                "test_how_story",
+        image_uid:                "image_uid",
+        short_description:        "test_short_description",
+        long_description:         "test_long_description",
+        thumb_uid:                "thumb_uid",
+        location_id:              newLocation.id,
+        top_level_category_id:    top_level.id,
+        second_level_category_id: category.id,
+        use_all_deliveries:       false
+      }
+      newProduct.update!(**params)
+      gp = GeneralProduct.find(newProduct.general_product_id)
+      expect({
+        name: gp.name,
+        category_id: gp.category_id,
+        organization_id: gp.organization_id,
+        who_story: gp.who_story,
+        how_story: gp.how_story,
+        image_uid: gp.image_uid,
+        short_description: gp.short_description,
+        long_description: gp.long_description,
+        thumb_uid: gp.thumb_uid,
+        location_id: gp.location_id,
+        top_level_category_id: gp.top_level_category_id,
+        second_level_category_id: gp.second_level_category_id,
+        use_all_deliveries: gp.use_all_deliveries
+      }).to eq(params)
+    end
+
+    it 'uses GeneralProduct attributes' do
+      newLocation = FactoryGirl.create(:location)
+      params = {
+        name:                     "test_name",
+        category_id:              category.id,
+        organization_id:          Organization.first.id,
+        who_story:                "test_who_story",
+        how_story:                "test_how_story",
+        image_uid:                "image_uid",
+        short_description:        "test_short_description",
+        long_description:         "test_long_description",
+        thumb_uid:                "thumb_uid",
+        location_id:              newLocation.id,
+        top_level_category_id:    top_level.id,
+        second_level_category_id: category.id,
+        use_all_deliveries:       false
+      }
+
+      newProduct = Product.create!(short_description: "desc", name: "New Product", organization: org, category: category, unit: unit)
+      newProduct.general_product.update!(**params)
+      expect({
+        name: newProduct.name,
+        category_id: newProduct.category_id,
+        organization_id: newProduct.organization_id,
+        who_story: newProduct.who_story,
+        how_story: newProduct.how_story,
+        image_uid: newProduct.image_uid,
+        short_description: newProduct.short_description,
+        long_description: newProduct.long_description,
+        thumb_uid: newProduct.thumb_uid,
+        location_id: newProduct.location_id,
+        top_level_category_id: newProduct.top_level_category_id,
+        second_level_category_id: newProduct.second_level_category_id,
+        use_all_deliveries: newProduct.use_all_deliveries
+      }).to eq(params)
+    end
+
+    it "can be added to an existing GeneralProduct during creation" do
+      expect(GeneralProduct.count).to eq(0)
+      product1 = Product.create!(short_description: "desc", name: "New Product", organization: org, category: category, unit: unit)
+      expect(GeneralProduct.count).to eq(1)
+      product2 = Product.create!(general_product: product1.general_product, short_description: "desc", name: "New Product", organization: org, category: category, unit: unit)
+      expect(GeneralProduct.count).to eq(1)
+      expect(product2.general_product_id).to eq(product1.general_product_id)
+      expect(product2.general_product.id).to eq(product1.general_product_id)
+    end
+
+    it "can be added to an existing GeneralProduct after creation" do
+      product1 = Product.create!(short_description: "desc", name: "New Product", organization: org, category: category, unit: unit)
+      product2 = Product.create!(short_description: "desc", name: "New Product", organization: org, category: category, unit: unit)
+      product2.general_product = product1.general_product
+      product2.save!
+      expect(product1.general_product.product.count).to eq(2)
+    end
+  end
+
   describe "default values" do
     describe "#top_level_category_id" do
       let(:org) { create(:organization) }

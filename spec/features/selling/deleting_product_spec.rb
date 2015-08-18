@@ -22,6 +22,6 @@ feature "Deleting a product from the product list" do
 
     expect(Dom::ProductRow.count).to eq(1)
     expect(page).to have_content("Successfully deleted #{product.name}")
-    expect(Product.find_by(name: product.name).deleted_at).to_not be_nil
+    expect(GeneralProduct.find_by(name: product.name).product.first.deleted_at).to_not be_nil
   end
 end

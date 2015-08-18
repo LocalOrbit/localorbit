@@ -573,7 +573,7 @@ feature "Reports" do
       it "provides the Admin link to Products" do
         product_name = Dom::Report::ItemRow.first.product_name
         product_name = product_name.split(" product-code-4").first
-        see_admin_product_link product: Product.find_by(name: product_name)
+        see_admin_product_link product: GeneralProduct.find_by(name: product_name)
       end
 
       it "provides the Admin link to Sellers" do
@@ -677,7 +677,7 @@ feature "Reports" do
 
           it "provides the Admin link to Products" do
             product_name = Dom::Report::ItemRow.first.product_name
-            see_admin_product_link product: Product.find_by(name: product_name)
+            see_admin_product_link product: GeneralProduct.find_by(name: product_name)
           end
 
           it "provides the Admin link to Sellers" do
@@ -716,7 +716,7 @@ feature "Reports" do
 
           it "provides the Admin link to Products" do
             product_name = Dom::Report::ItemRow.first.product_name
-            see_admin_product_link product: Product.find_by(name: product_name)
+            see_admin_product_link product: GeneralProduct.find_by(name: product_name)
           end
 
           it "provides the Admin link to Sellers" do
@@ -778,7 +778,7 @@ feature "Reports" do
 
         scenario "provides the Buyer link to Products" do
           product_name = Dom::Report::ItemRow.first.product_name
-          see_buyer_product_link product: Product.find_by(name: product_name)
+          see_buyer_product_link product: GeneralProduct.find_by(name: product_name)
         end
 
         scenario "provides the Buyer link to Sellers" do
@@ -813,7 +813,7 @@ feature "Reports" do
 
         scenario "provides the Buyer link to Products" do
           product_name = Dom::Report::ItemRow.first.product_name
-          see_buyer_product_link product: Product.find_by(name: product_name)
+          see_buyer_product_link product: GeneralProduct.find_by(name: product_name)
         end
 
         scenario "provides the Buyer link to Sellers" do
