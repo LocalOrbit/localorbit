@@ -131,7 +131,6 @@ describe ProductImport::ProductLoader do
   it "should soft delete products that no longer exist" do
   
     dropped_ep = create :external_product, contrived_key: "anotheractualsha1"
-    puts dropped_ep.id
     data = [{
         "category_id" => cat1.id,
         "organization_id" => dropped_ep.organization_id,
@@ -144,7 +143,6 @@ describe ProductImport::ProductLoader do
         "contrived_key" => "anewactualsha1",
         "source_data" => {"foo"=>"baz"}
       }]
-
     subject.update(data)
     expect(dropped_ep.product.reload.deleted_at).to_not be_nil
     expect(dropped_ep.product.reload.deleted_at).to be_within(10.seconds).of(Time.now)

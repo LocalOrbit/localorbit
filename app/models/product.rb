@@ -67,7 +67,6 @@ class Product < ActiveRecord::Base
     self.general_product && self.general_product.organization_id
   end
   def who_story
-    puts "PRODUCT WHO STORY"
     self.general_product && self.general_product.who_story
   end
   def how_story
@@ -128,6 +127,7 @@ class Product < ActiveRecord::Base
     association(:category).writer(input)
   end
   def organization_id=(input)
+    association(:organization).writer(Organization.find(input))
     get_general_product
     self.general_product.organization_id = input
   end
