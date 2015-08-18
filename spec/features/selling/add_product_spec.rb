@@ -192,7 +192,6 @@ describe "Adding a product", chosen_js: true do
     it "attaching an image uploads an image when provided" do
       fill_in "Product Name", with: "Red Grapes"
       attach_file("Photo", "app/assets/images/backgrounds/lentils.jpg")
-      binding.pry
       click_button "Save and Continue"
       expect(page).to have_css("img[alt='Red Grapes']")
     end
