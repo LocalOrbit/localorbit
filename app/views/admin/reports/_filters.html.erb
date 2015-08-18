@@ -22,7 +22,7 @@
 
         <% if filter == :seller_name %>
           <span class="preserve-alignment mobile-block">
-            <%= f.label :product_organization_id_eq, "Seller" %><br>
+            <%= f.label :product_organization_id_eq, "Supplier" %><br>
             <%= f.select :product_organization_id_eq, options_from_collection_for_select(presenter.sellers, :id, :name, presenter.q.product_organization_id_eq), { include_blank: "All" }, { class: "filter-input" } %>
           </span>
         <% end %>

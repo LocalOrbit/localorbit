@@ -31,7 +31,7 @@
     <% end %>
 
     <span class="preserve-alignment">
-      <label for="filtered_organization_id">Sellers</label><br>
+      <label for="filtered_organization_id">Suppliers</label><br>
       <%= select_tag :filtered_organization_id, options_from_collection_for_select(@search_presenter.seller_organizations, :id, :name, selected: @search_presenter.organization_id), {prompt: "All", class: "filter-input"} %>
     </span>
 

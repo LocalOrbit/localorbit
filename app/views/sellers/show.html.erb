@@ -11,7 +11,7 @@
         <div class="vacuus"></div>
         <a href="#seller-info" class="pane-toggle mobile-only btn">Return to the Seller</a>
         <% unless @sellers.empty? %>
-          <h2 class="heading heading--sidebar">Sellers</h2>
+          <h2 class="heading heading--sidebar">Suppliers</h2>
           <ul class="list-naked">
             <% @sellers.each do |seller| %>
               <%= content_tag :li, link_to(seller.name, seller_path(seller)) %>

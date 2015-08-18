@@ -9,7 +9,7 @@
       <legend>Local Orbit Fees</legend>
       <div class="row row--field">
         <div class="field column column--half column--guttered">
-          <%= f.label :local_orbit_seller_fee, "Local Orbit % paid by Seller" %><br>
+          <%= f.label :local_orbit_seller_fee, "Local Orbit % paid by Supplier" %><br>
           <%= f.number_field :local_orbit_seller_fee, min: 0, max: 99.999, step: "0.001", size: 6 %>%
         </div
         ><div class="field column column--half column--guttered">
@@ -22,7 +22,7 @@
     <fieldset>
       <legend>Market Fees</legend>
       <div class="field">
-        <%= f.label :market_seller_fee, "Market % paid by Seller" %><br>
+        <%= f.label :market_seller_fee, "Market % paid by Supplier" %><br>
         <%= f.number_field :market_seller_fee, min: 0, max: 99.999, step: "0.001", size: 6 %>%
       </div>
     </fieldset>
@@ -32,7 +32,7 @@
         <legend>Credit Card Fees</legend>
         <div class="row row--field">
           <div class="field column column--half column--guttered">
-            <%= f.label :credit_card_seller_fee, "Credit Card fee paid by Seller" %><br>
+            <%= f.label :credit_card_seller_fee, "Credit Card fee paid by Supplier" %><br>
             <%= f.number_field :credit_card_seller_fee, min: 0, max: 99.999, step: "0.001", size: 6 %>%
           </div
           ><div class="field column column--half column--guttered">
@@ -46,7 +46,7 @@
         <legend>ACH Fees</legend>
         <div class="row row--field">
           <div class="field column column--half column--guttered">
-            <%= f.label :ach_seller_fee, "ACH fee paid by Seller" %><br>
+            <%= f.label :ach_seller_fee, "ACH fee paid by Supplier" %><br>
             <%= f.number_field :ach_seller_fee, min: 0, max: 99.999, step: "0.001", size: 6 %>%
           </div
           ><div class="field column column--half column--guttered">
@@ -66,7 +66,7 @@
         <div class="row row--field">
           <div class="field column column--half column--guttered">
             Payment processing fees to be paid by:<br/>
-            <input type="radio" name="market[payment_fees_paid_by]" value="seller" <%= 'checked="checked"' if @market.credit_card_payment_fee_payer == 'seller' %>><label for="payment_fees">Seller</label><br>
+            <input type="radio" name="market[payment_fees_paid_by]" value="seller" <%= 'checked="checked"' if @market.credit_card_payment_fee_payer == 'seller' %>><label for="payment_fees">Supplier</label><br>
             <input type="radio" name="market[payment_fees_paid_by]" value="market" <%= 'checked="checked"' if @market.credit_card_payment_fee_payer == 'market' %>><label for="payment_fees">Market</label><br>
           </div>
         </div>

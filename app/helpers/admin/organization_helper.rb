@@ -4,7 +4,7 @@ module Admin
       [
         ["Any", nil],
         ["Buyer", 0],
-        ["Seller", 1]
+        ["Supplier", 1]
 
       ]
     end

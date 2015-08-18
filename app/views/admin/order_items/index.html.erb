@@ -26,7 +26,7 @@
             </span>
 
             <span class="preserve-alignment">
-              <%= f.label :product_organization_id_eq, "Seller" %><br>
+              <%= f.label :product_organization_id_eq, "Supplier" %><br>
               <%= f.select :product_organization_id_eq, options_from_collection_for_select(@sellers, :id, :name, @q.product_organization_id_eq), { include_blank: "All" }, { class: "filter-input" } %>
             </span>
 
@@ -88,14 +88,14 @@
         <tr>
           <th><input class="select-all" type="checkbox"></th>
           <th><%= sort_link @q, :created_at, "Order #" %></th>
-          <th><%= sort_link @q, :product_organization_name, "Seller" %></th>
+          <th><%= sort_link @q, :product_organization_name, "Supplier" %></th>
           <th><%= sort_link @q, :order_organization_name, "Buyer" %></th>
           <th><%= sort_link @q, :product_name, "Product" %></th>
           <th><%= sort_link @q, :quantity, "Qty" %></th>
           <th>Total</th>
           <th><%= sort_link @q, :delivery_status, "Delivery" %></th>
           <th><%= sort_link @q, :order_payment_status, "Buyer $" %></th>
-          <th>Seller $</th>
+          <th>Supplier $</th>
         </tr>
       </thead>
 
