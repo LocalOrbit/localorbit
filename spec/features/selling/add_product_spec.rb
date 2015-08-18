@@ -556,7 +556,6 @@ describe "Adding a product", chosen_js: true do
       within(".tabs") do
         expect(page).to have_content("Inventory")
       end
-      sleep(5)
       # Maintains organization selection
       expect(page).to have_checked_field("Use Seller info from my account.")
       expect(page).not_to have_content("No Organization Selected")
