@@ -127,7 +127,10 @@ class Product < ActiveRecord::Base
     association(:category).writer(input)
   end
   def organization_id=(input)
-    association(:organization).writer(Organization.find(input))
+    #if Organization.find(input)
+    #  association(:organization).writer(Organization.find(input))
+    #end
+    write_attribute :organization_id, input
     get_general_product
     self.general_product.organization_id = input
   end
@@ -424,7 +427,7 @@ class Product < ActiveRecord::Base
   end
 
   def self.order_by_stock(direction)
-    direction == "asc" ? order("stock asc nulls first, general_products.name asc") : order("stock desc nulls last, general_products.name desc")
+    direction == "asc" ? order("stock asc nulls first, general_products.name asc") : order("stock desc nulls last2, general_products.name desc")
   end
 
   def self.order_by_price(direction)
