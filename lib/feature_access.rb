@@ -44,6 +44,10 @@ class FeatureAccess
       !!market.plan.try(:sellers_edit_orders?)
     end
 
+    def has_procurement_managers?(market:)
+      !!market.plan.try(:has_procurement_managers?)
+    end
+
     private
     def edit_order_stuff?(context)
       return true if context.is_admin
