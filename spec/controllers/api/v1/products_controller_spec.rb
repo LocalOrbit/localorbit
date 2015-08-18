@@ -36,38 +36,35 @@ describe Api::V1::ProductsController do
       switch_to_subdomain market.subdomain
       sign_in user
       session[:cart_id] = Cart.first.id
-
-      @banana_result = {"id"=>bananas.id, "name"=>"Bananas", "second_level_category_name"=>"Apples", "seller_name"=>"First Seller", "unit_with_description"=>"boxes", "short_description"=>"Empire state of mind", "long_description"=>nil, "cart_item"=>{"id"=>bananas.decorate({context: {current_cart: cart}}).cart_item.id, "cart_id"=>cart.id, "product_id"=>bananas.id, "quantity"=>0, "created_at"=>nil, "updated_at"=>nil, "total_price"=>0.0, "unit_sale_price"=>"3.0", "valid?"=>false, "destroyed?"=>false}, "cart_item_quantity"=>0, "max_available"=>150, "price_for_quantity"=>"$3.00", "total_price"=>"$0.00", "cart_item_persisted"=>false, "image_url"=>"http://#{market.subdomain}.localtest.me/assets/default-product-image.png", "who_story"=>nil, "how_story"=>nil, "location_label"=>"Ann Arbor, MI", "location_map_url"=>"//api.tiles.mapbox.com/v3/localorbit.i0ao0akd/pin-s-circle(-86.109469,42.767645)/-86.109469,42.767645,9/310x225@2x.png", "prices"=>[{"sale_price"=>"$3.00", "organization_id"=>buyer.id, "formatted_units"=>"per box"}]}
-      @banana2_result = {"id"=>bananas2.id, "name"=>"Bananas", "second_level_category_name"=>"Apples", "seller_name"=>"Second Seller", "unit_with_description"=>"boxes", "short_description"=>"Empire state of mind", "long_description"=>nil, "cart_item"=>{"id"=>bananas2.decorate({context: {current_cart: cart}}).cart_item.id, "cart_id"=>cart.id, "product_id"=>bananas2.id, "quantity"=>0, "created_at"=>nil, "updated_at"=>nil, "total_price"=>0.0, "unit_sale_price"=>"3.0", "valid?"=>false, "destroyed?"=>false}, "cart_item_quantity"=>0, "max_available"=>150, "price_for_quantity"=>"$3.00", "total_price"=>"$0.00", "cart_item_persisted"=>false, "image_url"=>"http://#{market.subdomain}.localtest.me/assets/default-product-image.png", "who_story"=>nil, "how_story"=>nil, "location_label"=>"Ann Arbor, MI", "location_map_url"=>"//api.tiles.mapbox.com/v3/localorbit.i0ao0akd/pin-s-circle(-86.109469,42.767645)/-86.109469,42.767645,9/310x225@2x.png", "prices"=>[{"sale_price"=>"$3.00", "organization_id"=>buyer.id, "formatted_units"=>"per box"}]}
-      @kale_result = {"id"=>kale.id, "name"=>"Kale", "second_level_category_name"=>"Apples", "seller_name"=>"First Seller", "unit_with_description"=>"boxes", "short_description"=>"Empire state of mind", "long_description"=>nil, "cart_item"=>{"id"=>kale.decorate({context: {current_cart: cart}}).cart_item.id, "cart_id"=>cart.id, "product_id"=>kale.id, "quantity"=>0, "created_at"=>nil, "updated_at"=>nil, "total_price"=>0.0, "unit_sale_price"=>"3.0", "valid?"=>false, "destroyed?"=>false}, "cart_item_quantity"=>0, "max_available"=>150, "price_for_quantity"=>"$3.00", "total_price"=>"$0.00", "cart_item_persisted"=>false, "image_url"=>"http://#{market.subdomain}.localtest.me/assets/default-product-image.png", "who_story"=>nil, "how_story"=>nil, "location_label"=>"Ann Arbor, MI", "location_map_url"=>"//api.tiles.mapbox.com/v3/localorbit.i0ao0akd/pin-s-circle(-86.109469,42.767645)/-86.109469,42.767645,9/310x225@2x.png", "prices"=>[{"sale_price"=>"$3.00", "organization_id"=>nil, "formatted_units"=>"per box"}, {"sale_price"=>"$1.75", "organization_id"=>nil, "formatted_units"=>" 10+ boxes"}]}
     end
 
     def get_products(params)
       get :index, params
-      JSON.parse(response.body)["products"]
+      products = JSON.parse(response.body)["products"]
+      products.map { |product| product["id"] }
     end
 
 
     it "returns a paginated list of products" do
       products = get_products(offset: 2)
-      expect(products).to eq([@kale_result])
+      expect(products).to eq([kale.id])
       products = get_products(offset: 1)
-      expect(products).to eq([@banana2_result, @kale_result])
+      expect(products).to eq([bananas2.id, kale.id])
       products = get_products(offset: 0)
-      expect(products).to eq([@banana_result, @banana2_result, @kale_result])
+      expect(products).to eq([bananas.id, bananas2.id, kale.id])
     end
 
     it "searches by text" do
       products = get_products(offset: 0, query: "kale")
-      expect(products).to eq([@kale_result])
+      expect(products).to eq([kale.id])
       products = get_products(offset: 0, query: "xxxx")
       expect(products).to eq([])
       products = get_products(offset: 0, query: "Apple")
-      expect(products).to eq([@banana_result, @banana2_result, @kale_result])
+      expect(products).to eq([bananas.id, bananas2.id, kale.id])
       products = get_products(offset: 1, query: "Apple")
-      expect(products).to eq([@banana2_result, @kale_result])
+      expect(products).to eq([bananas2.id, kale.id])
       products = get_products(offset: 0, query: "First S")
-      expect(products).to eq([@banana_result, @kale_result])
+      expect(products).to eq([bananas.id, kale.id])
     end
   end
 end

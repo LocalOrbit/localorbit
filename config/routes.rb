@@ -29,6 +29,9 @@ Rails.application.routes.draw do
     end
   end
 
+
+  # Hoping that this is the embryo of a RESTful API for future development in
+  # the app, especially LocalEyes features.
   namespace :api do
     namespace :v1 do
       resources :products, only: [:index]
