@@ -60,7 +60,7 @@ describe "Filter organizations", :js do
       end
 
       it "shows organizations that can sell" do
-        select "Seller", from: "filter_can_sell"
+        select "Supplier", from: "filter_can_sell"
 
         expect(page).to have_content(org1.name)
         expect(page).to have_content(org3.name)
@@ -156,7 +156,7 @@ describe "Filter organizations", :js do
       end
 
       it "shows organizations that can sell" do
-        select "Seller", from: "filter_can_sell"
+        select "Supplier", from: "filter_can_sell"
 
         expect(page).to have_content(org1.name)
         expect(page).to have_content(org5.name)

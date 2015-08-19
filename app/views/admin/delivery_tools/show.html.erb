@@ -9,7 +9,7 @@
       <% @upcoming_deliveries.each do |delivery| %>
         <div class="upcoming-delivery">
           <span class="market"><%= delivery.delivery_schedule.market.name %></span><br><br>
-          <span>Seller Delivery Begins:</span><br>
+          <span>Supplier Delivery Begins:</span><br>
           <h2 class="upcoming-delivery-date"><%= delivery.upcoming_delivery_date_heading %></h2>
           Deliver to:
           <%= content_tag :div, delivery.deliver_to_name, class: "location-name" if delivery.deliver_to_name.present? %>
@@ -27,7 +27,7 @@
             <% if access_master_packing_slips %>
               <div class="tool"><%= link_to "Master Packing Slips <span class='note'>for aggregation</span>".html_safe, admin_delivery_tools_pack_list_path(delivery) %></div>
             <% end %>
-            <div class="tool"><%= link_to "Individual Packing Slips <span class='note'>per Seller</span>".html_safe, admin_delivery_tools_individual_pack_list_path(delivery) %></div>
+            <div class="tool"><%= link_to "Individual Packing Slips <span class='note'>per Supplier</span>".html_safe, admin_delivery_tools_individual_pack_list_path(delivery) %></div>
             <div class="tool"><%= link_to "Order Summary", admin_delivery_tools_order_summary_path(delivery)%></div>
             <% if access_packing_labels %>
               <% target = if Rails.env.test? then "" else "_blank" end %>

@@ -29,6 +29,15 @@ Rails.application.routes.draw do
     end
   end
 
+
+  # Hoping that this is the embryo of a RESTful API for future development in
+  # the app, especially LocalEyes features.
+  namespace :api do
+    namespace :v1 do
+      resources :products, only: [:index]
+    end
+  end
+
   namespace :admin do
     resources :markets, concerns: [:bank_account, :activatable], except: [:edit] do
       resources :market_addresses,   as: :addresses,  path: :addresses
