@@ -1,4 +1,4 @@
-csv << ["Seller", "Market", "Name", "Pricing", "Available"]
+csv << ["Supplier", "Market", "Name", "Pricing", "Available"]
 
 @products.decorate.each do |product|
   csv << [

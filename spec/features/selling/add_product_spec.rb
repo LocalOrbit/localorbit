@@ -91,7 +91,7 @@ describe "Adding a product", chosen_js: true do
     expect(page).to have_field("Product Name")
   end
 
-  describe "as a seller belonging to one organization" do
+  describe "as a supplier belonging to one organization" do
     before do
       org.users << user
 
@@ -398,7 +398,7 @@ describe "Adding a product", chosen_js: true do
         expect(page).to have_content("Name can't be blank")
         expect(page).to have_content("Category can't be blank")
         expect(page).to_not have_content("Current inventory")
-        expect(page).to have_checked_field("Use Seller info from my account.")
+        expect(page).to have_checked_field("Use Supplier info from my account.")
 
         within(".tabs") do
           expect(page).to have_content("Inventory")
@@ -441,10 +441,10 @@ describe "Adding a product", chosen_js: true do
       visit "/admin/products/new"
     end
 
-    it "is prevented from unchecking 'Use seller info from my account' until organization is selected", js: true do
+    it "is prevented from unchecking 'Use supplier info from my account' until organization is selected", js: true do
       expect(page).not_to have_field("seller_info")
 
-      select org2.name, from: "Seller Organization"
+      select org2.name, from: "Supplier Organization"
 
       expect(page).to have_field("seller_info")
 
@@ -452,9 +452,9 @@ describe "Adding a product", chosen_js: true do
       expect(page).to have_checked_field(tuesday_schedule_description, disabled: true)
     end
 
-    context "Uncheck 'use seller info'", js: true do
+    context "Uncheck 'use supplier info'", js: true do
       before do
-        select org2.name, from: "Seller Organization"
+        select org2.name, from: "Supplier Organization"
         uncheck "seller_info"
 
         # Wait for delivery schedule load to finish
@@ -477,7 +477,7 @@ describe "Adding a product", chosen_js: true do
         select org2.locations.first.name, from: "product_location_id"
         expect(page).not_to have_content("No Organization Selected")
         expect(Dom::Admin::ProductForm.first.selected_location).to eql(org2.locations.first.id.to_s)
-        select org.name, from: "Seller Organization"
+        select org.name, from: "Supplier Organization"
 
         product_form = Dom::Admin::ProductForm.first
         expect(product_form.locations).to include(*org.locations.map(&:name))
@@ -487,10 +487,10 @@ describe "Adding a product", chosen_js: true do
         expect(page).to have_checked_field(tuesday_schedule_description, disabled: true)
       end
 
-      it "selecting the blank organization option disables seller info" do
+      it "selecting the blank organization option disables supplier info" do
         expect(page).to have_field("seller_info")
 
-        select "Select an organization", from: "Seller Organization"
+        select "Select an organization", from: "Supplier Organization"
 
         expect(page).not_to have_field("seller_info")
       end
@@ -498,7 +498,7 @@ describe "Adding a product", chosen_js: true do
 
     it "maintains delivery schedule changes on error", :js, :shaky do
       skip "shaky test"
-      select org2.name, from: "Seller Organization"
+      select org2.name, from: "Supplier Organization"
       expect(page).to have_checked_field(tuesday_schedule_description, disabled: true)
 
       uncheck "Make product available on all market delivery dates"
@@ -521,7 +521,7 @@ describe "Adding a product", chosen_js: true do
     it "makes the user choose an organization to add the product to" do
       expect(page).to_not have_content(stub_warning_both)
 
-      select org2.name, from: "Seller Organization"
+      select org2.name, from: "Supplier Organization"
       fill_in_required_fields
 
       click_button "Save and Continue"
@@ -540,7 +540,7 @@ describe "Adding a product", chosen_js: true do
     end
 
     it "does not save a product with invalid product info", js: true do
-      select org2.name, from: "Seller Organization"
+      select org2.name, from: "Supplier Organization"
 
       expect(page).to have_content("Current inventory")
       uncheck "Use simple inventory management"
@@ -560,7 +560,7 @@ describe "Adding a product", chosen_js: true do
       end
 
       # Maintains organization selection
-      expect(page).to have_checked_field("Use Seller info from my account.")
+      expect(page).to have_checked_field("Use Supplier info from my account.")
       expect(page).not_to have_content("No Organization Selected")
     end
   end
@@ -575,7 +575,7 @@ describe "Adding a product", chosen_js: true do
     end
 
     it "makes the user choose an organization to add the product for", js: true do
-      select org2.name, from: "Seller Organization"
+      select org2.name, from: "Supplier Organization"
 
       fill_in_required_fields(:with_chosen)
 
@@ -591,7 +591,7 @@ describe "Adding a product", chosen_js: true do
 
     it "alerts user that product will not appear in the Shop until price/inventory are added" do
       expect(page).to_not have_content(stub_warning_both)
-      select org2.name, from: "Seller Organization"
+      select org2.name, from: "Supplier Organization"
 
       # Wait for delivery schedule load to finish
       expect(page).to have_checked_field(tuesday_schedule_description, disabled: true)
