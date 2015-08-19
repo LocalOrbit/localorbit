@@ -111,11 +111,11 @@ class Product < ActiveRecord::Base
   def name=(input)
     get_general_product
     self.general_product.name = input
-    input
   end
   def category_id=(input)
     get_general_product
     self.general_product.category_id = input
+    super(input)
   end
   def category=(input)
     get_general_product
@@ -124,15 +124,12 @@ class Product < ActiveRecord::Base
     else
       nil
     end
-    association(:category).writer(input)
+    super(input)
   end
   def organization_id=(input)
-    #if Organization.find(input)
-    #  association(:organization).writer(Organization.find(input))
-    #end
-    write_attribute :organization_id, input
     get_general_product
     self.general_product.organization_id = input
+    super(input)
   end
   def organization=(input)
     get_general_product
@@ -154,6 +151,7 @@ class Product < ActiveRecord::Base
   def location_id=(input)
     get_general_product
     self.general_product.location_id = input
+    super(input)
   end
   def location=(input)
     get_general_product
@@ -162,7 +160,7 @@ class Product < ActiveRecord::Base
     else
       nil
     end
-    association(:location).writer(input)
+    super(input)
   end
   def image_uid=(input)
     get_general_product
@@ -171,6 +169,7 @@ class Product < ActiveRecord::Base
   def top_level_category_id=(input)
     get_general_product
     self.general_product.top_level_category_id = input
+    super(input)
   end
   def top_level_category=(input)
     get_general_product
@@ -179,7 +178,7 @@ class Product < ActiveRecord::Base
     else
       nil
     end
-    association(:top_level_category).writer(input)
+    super(input)
   end
   def short_description=(input)
     get_general_product
@@ -200,6 +199,7 @@ class Product < ActiveRecord::Base
   def second_level_category_id=(input)
     get_general_product
     self.general_product.second_level_category_id = input
+    super(input)
   end
   def second_level_category=(input)
     get_general_product
@@ -208,7 +208,7 @@ class Product < ActiveRecord::Base
     else
       nil
     end
-    association(:second_level_category).writer(input) 
+    super(input)
   end
   def general_product_id=(input)
     gp = GeneralProduct.find(input)
@@ -217,10 +217,12 @@ class Product < ActiveRecord::Base
     else
       self.general_product.id = input
     end
+    super(input)
   end
   def general_product=(input)
-    association(:general_product).writer(input)
+    get_general_product
     self.general_product.assign_attributes(input.as_json)
+    super(input)
   end
 
   pg_search_scope :search_by_text,
