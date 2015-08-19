@@ -61,6 +61,7 @@ gem "rack-canonical-host"
 gem "ransack"
 gem "simpleidn"
 gem "stripe_event"
+gem 'react-rails', '~> 1.0'
 
 gem "constructor"
 gem "tabulator", github: "dcrosby42/tabulator"

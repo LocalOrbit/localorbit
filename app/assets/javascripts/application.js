@@ -25,4 +25,6 @@
 //= require bootstrap_knockout_modules
 //= stub balanced
 //= stub stripe
+//= require react
+//= require react_ujs
 //= require_tree .
