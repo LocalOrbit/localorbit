@@ -333,21 +333,21 @@ feature "Reports" do
         expect(csv.count).to eq(31) # 11 + 20
       end
 
-      context "Sales by Seller report" do
-        let!(:report) { :sales_by_seller }
+      context "Sales by Supplier report" do
+        let!(:report) { :sales_by_supplier }
 
         scenario "displays the appropriate filters" do
           expect(page).to have_field("Search")
           expect(page).to have_field("Placed on or after")
           expect(page).to have_field("Placed on or before")
           expect(page).to have_select("Market")
-          expect(page).to have_select("Seller")
+          expect(page).to have_select("Supplier")
         end
 
-        scenario "filters by seller" do
+        scenario "filters by supplier" do
           expect(Dom::Report::ItemRow.all.count).to eq(11)
 
-          select seller.name, from: "Seller"
+          select seller.name, from: "Supplier"
           click_button "Filter"
 
           expect(Dom::Report::ItemRow.all.count).to eq(5)
@@ -357,7 +357,7 @@ feature "Reports" do
           expect(item_rows_for_order("LO-01-234-4567890-3").count).to eq(1)
           expect(item_rows_for_order("LO-01-234-4567890-4").count).to eq(1)
 
-          select seller2.name, from: "Seller"
+          select seller2.name, from: "Supplier"
           click_button "Filter"
 
           expect(Dom::Report::ItemRow.all.count).to eq(5)
@@ -781,7 +781,7 @@ feature "Reports" do
           see_buyer_product_link product: Product.find_by(name: product_name)
         end
 
-        scenario "provides the Buyer link to Sellers" do
+        scenario "provides the Buyer link to Suppliers" do
           seller_name = Dom::Report::ItemRow.first.seller_name
           see_buyer_seller_link seller: Organization.selling.find_by(name: seller_name)
         end

@@ -110,7 +110,7 @@ feature "viewing and managing users" do
       user_row = Dom::Admin::UserRow.find_by_email(user.email)
 
       expect(manager_row.affiliations).to eql("Test Market, Market Manager")
-      expect(user_row.affiliations).to eql("Test Market: Test Org 1, Seller Test Market: Test Org 2, Seller")
+      expect(user_row.affiliations).to eql("Test Market: Test Org 1, Supplier Test Market: Test Org 2, Supplier")
     end
 
     context "managing a user" do
@@ -177,7 +177,7 @@ feature "viewing and managing users" do
       user_row = Dom::Admin::UserRow.find_by_email(user.email)
 
       expect(manager_row.affiliations).to eql("Test Market, Market Manager")
-      expect(user_row.affiliations).to eql("Test Market: Test Org 2, Seller")
+      expect(user_row.affiliations).to eql("Test Market: Test Org 2, Supplier")
     end
 
     scenario "Suspending a user from an organization", :suspend_user do
