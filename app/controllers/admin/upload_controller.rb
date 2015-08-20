@@ -17,6 +17,13 @@ class Admin::UploadController < AdminController
   # end
 
   def index
+  	sql = "select subdomain, id from markets where id in (select destination_market_id from market_cross_sells where source_market_id=112);"
+  	records = ActiveRecord::Base.connection.execute(sql)
+  	@suppliers_available = Hash.new
+  	records.each do |r|
+  		#p r
+  		@suppliers_available[r['subdomain']] = {'market_id'=>r['id']}
+  	end
   end
 
   def check

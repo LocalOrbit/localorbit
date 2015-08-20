@@ -7,7 +7,7 @@ Here's a very not designed thing to import products. FUN FUN FUN! Only admins ca
   <%= file_field_tag 'datafile' %>
   <br></br>
   <p>Please select the market supplier for which you are uploading data.</p>
-	 <%= select_tag 'profile',  options_for_select([ "greenleaf", "bi-rite", "challengedairy", "PLEASE SELECT"], "PLEASE SELECT") %> <!--this is not a good long term solution :( -->
+	 <%= select_tag 'profile',  options_for_select(@suppliers_available) %> <!-- not an ideal long-term solution; this looks at zynga crosslisted markets only -->
 	<br>
 	<br>
   <%= submit_tag "Import" %>
