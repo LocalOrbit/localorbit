@@ -99,7 +99,7 @@ describe ProductImport::Framework::FileImporter do
         "price" => 24.03,
         "product_code" => 10300,
         "organization" => org1.name,
-        "contrived_key" => ExternalProduct.contrive_key(['10300']),
+        "contrived_key" => ExternalProduct.contrive_key(['10300','bi-rite','sara lee bagel plain presliced', 'Each']),
         "source_data" => {
           "Seller Name"=>"Bi-Rite",
           "Product Name"=>"SARA LEE BAGEL PLAIN PRESLICED",
@@ -131,6 +131,7 @@ describe ProductImport::Framework::FileImporter do
         expect(success_row['organization_id']).to eq(org1.id)
 
       end
+
     end
 
   end
