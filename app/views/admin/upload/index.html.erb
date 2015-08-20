@@ -1,0 +1,14 @@
+Here's a very not designed thing to import products. FUN FUN FUN! Only admins can see this.
+<br>
+<br>
+
+<h2>Import Products</h2>
+<%= form_tag({action: :upload}, multipart: true) do %>
+  <%= file_field_tag 'datafile' %>
+  <br></br>
+  <p>Please select the market supplier for which you are uploading data.</p>
+	 <%= select_tag 'profile',  options_for_select([ "greenleaf", "bi-rite", "challengedairy", "PLEASE SELECT"], "PLEASE SELECT") %> <!--this is not a good long term solution :( -->
+	<br>
+	<br>
+  <%= submit_tag "Import" %>
+<% end %>
