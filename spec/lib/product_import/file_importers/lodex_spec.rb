@@ -51,8 +51,8 @@ describe ProductImport::FileImporters::Lodex do
 
     it "produces data in the canonical format" do
       data = [
-        ["product_code", "name", "category", "price", 'unit'],
-        ["abc123", "St. John's Wart", "Herbs", "1.23", '2/3 lb tub'],
+        ["product_code", "organization","name", "category", "price", 'unit'],
+        ["abc123", "orgname","St. John's Wart", "Herbs", "1.23", '2/3 lb tub'],
 
         # Rejects blanks
         ["      ", "St. John's Wart", "Herbs", "1.23", '2/3 lb tub'],
