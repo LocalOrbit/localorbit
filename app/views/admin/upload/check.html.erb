@@ -3,11 +3,13 @@ Here's a very not designed thing to import products. FUN FUN FUN! Only admins ca
 <br>
 <strong>Successfully gotten:</strong>
 
-<%= "#{@total_products} products uploaded!" %>
-
+<%= "#{@total_products_msg}" %>
+<br>
 <strong>Errors encountered:</strong>
+<br>
 
 <%= @errors.each do |er| %>
+	<%= er %>
 <% end %>
-
+<br>
 <a href="/admin/upload">Return to upload form</a>
