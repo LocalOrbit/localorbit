@@ -3,7 +3,7 @@
 class ProductImport::Transforms::EnsureCanonicalData < ProductImport::Framework::TransformPipeline
 
   transform :validate_keys_are_present,
-    keys: %w(product_code organization name category price unit)
+    keys: %w(organization name category price unit)
 
   transform :contrive_key,
     from: %w(product_code organization name unit),
