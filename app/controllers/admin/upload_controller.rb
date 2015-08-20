@@ -3,8 +3,9 @@ class Admin::UploadController < AdminController
   include ProductImport
 
   def upload
+  	uploaded = params[:datafile] # gets the xlsx data (or should) from form upload post req
+
   	filepath = Rails.root.join('tempfiles',uploaded.original_filename)
-	  uploaded = params[:datafile] # gets the xlsx data (or should) from form upload post req
 	  File.open(filepath, 'wb') do |file|
 	  	file.write(uploaded.read) # writes that data to the open filestream in the tempfiles fldr
 	  end
@@ -27,19 +28,29 @@ class Admin::UploadController < AdminController
 
   def check
   	if params.has_key?(:datafile)
+  		filepath_partial = params[:datafile].original_filename
+  		filepath = './tempfiles' + filepath_partial.to_s
   		# would be nice to audit contents here, a la
-			## contents = params[:datafile].read.split("\r\n")
-			## render :text => contents
+			#contents = params[:datafile].read.split("\r\n")
+			#render :text => contents
 			# BUT need to parse xlsx files for that, and meh. right now let's run it as is ,
 			#  "try to import" using the same old process, and
 			#  spit out the errors pretty and have that be that.
+			upload
+			#file_contents = params[:datafile]
+			profile = params[:profile] # todo: make sure profiles possible are generated and available in form from controller instead of typed into the template
 
-			
+			# k, now go access the stuff we saved 
+
+			value = %x( ./bin/import_products standard_template -p #{profile} -f #{filepath} 2> veryuniquefile_errors.yml)
+			# todo: make sure this is properly running the right file
+			# todo: capture the errors in the yml format and make em pretty so you can scroll and see em, maybe iframe maybe not
+
+
 
     	# now want to open it and look at it for audit
 
     	# then (maybe in another method) try to import it from the location and render errors + how many have been uploaded!
-
     	return
 		end
   end

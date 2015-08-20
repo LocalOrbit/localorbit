@@ -15,7 +15,8 @@ opts = Slop.parse do |o|
 end
 
 opts = opts.to_hash
-vendor_file = "/tmp/temp_vendor_data_#{opts[:profile]}"
+#vendor_file = "/tmp/temp_vendor_data_#{opts[:profile]}"
+vendor_file = "#{opts[:filename]}"
 
 if ARGV.empty?
   puts "USAGE: import_products import_type [options] 2> errors.yml > out.lodex.csv"
