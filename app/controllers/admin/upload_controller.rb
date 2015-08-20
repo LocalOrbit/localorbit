@@ -26,7 +26,7 @@ class Admin::UploadController < AdminController
   		# would be nice to audit contents here (like headers). right now let's run it as we were doing before.
 			upload # call the upload method to write file to tempfiles
 			profile = params[:profile] # todo: make sure profiles possible are generated and available in form from controller instead of typed into the template
-			test = system( "./bin/import_products standard_template -p #{profile} -f '#{filepath}' 2> systemtesterrors1.yml") 
+			test = system( "./bin/import_products standard_template -p #{profile} -f '#{filepath}' 2> #{profile}_errors_#{DateTime.now}.yml") 
     	# then (maybe in another method) try to import it from the location and render errors + how many have been uploaded
     	return
 		end
