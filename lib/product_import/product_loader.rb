@@ -72,18 +72,18 @@ module ProductImport
             product.lots.build
           end
 
-          # todo check - these call getter and thus will each create a GeneralProduct
-          # todo - need auditing s.t. they don't double up genprods unnecessarily?
-          product.name = p['name']
-          product.organization_id = p['organization_id']
-          product.unit_id = p['unit_id']
-          product.category_id = p['category_id']
-          product.code = p['code']
-          product.short_description = p['short_description'] # will check what happens
-          product.long_description = p['long_description']
-          product.unit_description = p['unit_description']
-          product.external_product_id = ep_id
-          product.deleted_at = nil
+          product.assign_attributes(
+            name: p['name'],
+            organization_id: p['organization_id'],
+            unit_id: p['unit_id'],
+            category_id: p['category_id'],
+            code: p['product_code'], 
+            short_description: p['short_description'],
+            long_description: p['long_description'],
+            unit_description: p['unit_description'],
+            external_product_id: ep_id,
+            deleted_at: nil
+          )
 
           product.prices.first.assign_attributes(sale_price: p['price'], min_quantity: 1) # still ok update b/c reinfinity-ifying
           reinfinity! product.lots.first
