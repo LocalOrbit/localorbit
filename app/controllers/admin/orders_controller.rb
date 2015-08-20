@@ -9,11 +9,11 @@ class Admin::OrdersController < AdminController
     @search_presenter = OrderSearchPresenter.new(@query_params, current_user, "placed_at")
     @q, @totals = search_and_calculate_totals(@search_presenter)
 
-    @orders = @q.result.page(params[:page]).per(@query_params[:per_page])
+    @orders = @q.result(distinct: true).page(params[:page]).per(@query_params[:per_page])
   end
 
   def search_and_calculate_totals(search)
-    results = Order.includes(:organization, :items).orders_for_seller(current_user).uniq.search(search.query)
+    results = Order.includes(:organization, :items, :delivery).orders_for_seller(current_user).search(search.query)
     results.sorts = "placed_at desc" if results.sorts.empty?
 
     if !current_user.admin?

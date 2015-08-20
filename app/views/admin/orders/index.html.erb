@@ -11,6 +11,7 @@
     <thead class="stickable">
       <%= content_tag :th, sort_link(@q, :order_number, "Order #") %>
       <%= content_tag :th, sort_link(@q, :placed_at, "Order Date") %>
+      <%= content_tag :th, sort_link(@q, :delivery_deliver_on, "Delivery") %>
       <%= content_tag :th, sort_link(@q, :total_cost, "Amount") %>
       <%= content_tag :th, sort_link(@q, :organization, "Buyer") %>
       <th>Delivery</th>
@@ -23,6 +24,7 @@
           <%= link_to order.order_number, admin_order_path(order) %>
         </td>
         <td class="order-date"><%= order.placed_at.strftime("%m/%d/%Y") %></td>
+        <td class="deliver-on"><%= order.delivery.deliver_on.strftime("%m/%d/%Y") %></td>
         <td class="amount-owed"><%= number_to_currency(order.gross_total) %></td>
         <td class="buyer-name"><%= order.organization.name %></td>
         <td class="delivery-status"><%= order.delivery_status_for_user(current_user).titleize %></td>
