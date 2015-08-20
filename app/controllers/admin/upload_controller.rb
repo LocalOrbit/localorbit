@@ -27,13 +27,18 @@ class Admin::UploadController < AdminController
   end
 
   def check
+  	@errors = []
+  	@total_products_msg = "Loaded 0 products." # tmp, add later
   	if params.has_key?(:datafile)
   		filepath_partial = params[:datafile].original_filename
   		filepath = './tempfiles/' + filepath_partial.to_s
   		# would be nice to audit contents here (like headers). right now let's run it as we were doing before.
 			upload # call the upload method to write file to tempfiles
 			profile = params[:profile] # todo: make sure profiles possible are generated and available in form from controller instead of typed into the template
-			test = system( "./bin/import_products standard_template -p #{profile} -f '#{filepath}' 2> #{profile}_errors_#{DateTime.now}.yml") 
+			cli_call = `./bin/import_products standard_template -p #{profile} -f '#{filepath}'` #{}2> #{profile}_errors_#{DateTime.now}.yml` # saves a YAML file of errors which needs to be parsed and rendered
+    	@errors = cli_call.split("---")
+    	@total_products_msg = cli_call.scan(/(Loaded %d+ products!)/)
+    	#ryan_string.scan(/(^.*)(:)(.*)/i)
     	# then (maybe in another method) try to import it from the location and render errors + how many have been uploaded
     	return
 		end
