@@ -17,11 +17,6 @@ class ProductImport::Transforms::ContriveKey < ProductImport::Framework::Transfo
       row['contrived_key'] = nil
     elsif parts[0].blank?
       row['contrived_key'] = ExternalProduct.contrive_key(parts[1..-1].map! {|p| p.upcase}) # control for case so that won't differentiate names of products
-      # The problem here is only that if a supplier suddenly starts using a product code and putting it into the filled templates they give LO, the updates for that supplier won't work right
-      # So we'll have to ultimately check for, if in the database, is there a product code? To decide whether to do this. (Not ideal)
-      # If not, v dependent on humans --
-      # But if ever a serious issue, probably correctable with (add'l) humans who know SQL/ActiveRecord.
-      # We'll have to be careful as always about what we assume -- but we already do because we're importing data.
     else
       row['contrived_key'] = ExternalProduct.contrive_key([parts[0]]) # Use only the product code if they provide it (because we started doing that and want to maintain the history). It expects an array.
     end
