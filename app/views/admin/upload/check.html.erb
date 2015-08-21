@@ -2,14 +2,20 @@ Here's a very not designed thing to import products. FUN FUN FUN! Only admins ca
 <br>
 <br>
 <strong>Successfully gotten:</strong>
-
 <%= "#{@total_products_msg}" %>
 <br>
 <strong>Errors encountered:</strong>
 <br>
-
-<%= @errors.each do |er| %>
-	<%= er %>
+<% if @errors %>
+	<% @error_display.each do |er| %>
+		
+		<%= "#{er['name']}" %> 
+		<%= "#{er['reason']}" %>
+		<br><br>
+	<% end %>
+<% else %>
+	<%= "#{@no_errors}" %>
 <% end %>
+
 <br>
-<a href="/admin/upload">Return to upload form</a>
+<strong><a href="/admin/upload">Return to upload form</a></strong>

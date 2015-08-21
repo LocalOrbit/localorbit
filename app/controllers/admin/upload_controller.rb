@@ -9,19 +9,12 @@ class Admin::UploadController < AdminController
 	  end
 	end
 
-  # def create 
-  # 	if params
-  # 		filepath = Rails.root.join('tempfiles', params[:datafile])['filename']
-		#   IO.read(filepath)
-		# end
-  # end
-
   def index
+  	# TODO more general SQL such that you can reasonably select a domain...
   	sql = "select subdomain, id from markets where id in (select destination_market_id from market_cross_sells where source_market_id=112);"
   	records = ActiveRecord::Base.connection.execute(sql)
   	@suppliers_available = Hash.new
   	records.each do |r|
-  		#p r
   		@suppliers_available[r['subdomain']] = {'market_id'=>r['id']}
   	end
   end
@@ -30,14 +23,33 @@ class Admin::UploadController < AdminController
   	@errors = []
   	@total_products_msg = "Loaded 0 products." # tmp, add later
   	if params.has_key?(:datafile)
+  		profile = params[:profile]
   		filepath_partial = params[:datafile].original_filename
   		filepath = './tempfiles/' + filepath_partial.to_s
+  		error_file = "./tempfiles/#{profile}_errors_#{Date.today}.yml" # will cause file errors if run around midnight, TODO fix
   		# would be nice to audit contents here (like headers). right now let's run it as we were doing before.
 			upload # call the upload method to write file to tempfiles
-			profile = params[:profile] # todo: make sure profiles possible are generated and available in form from controller instead of typed into the template
-			cli_call = `./bin/import_products standard_template -p #{profile} -f '#{filepath}'` #{}2> #{profile}_errors_#{DateTime.now}.yml` # saves a YAML file of errors which needs to be parsed and rendered
-    	@errors = cli_call.split("---")
-    	@total_products_msg = cli_call.scan(/(Loaded %d+ products!)/)
+			 # todo: make sure profiles possible are generated and available in form from controller instead of typed into the template
+			cli_call_result = `./bin/import_products standard_template -p #{profile} -f '#{filepath}' 2>&1` # 2> error_file`#{}2> #{profile}_errors_#{DateTime.now}.yml` # saves a YAML file of errors which needs to be parsed and rendered
+    	#@total_products_msg = cli_call_result
+
+
+    	if cli_call_result.include?("---")
+				@errors = cli_call_result.split("---")[1..-1]
+				# split, 2 and -3 indexes
+				@error_display = []
+				@errors.each do |er|
+					er_data = er.split("\n")
+					@error_display << {'name' => er_data[3] ,'reason' => er_data[-3]} # Product name, error reason (do we want other things)
+				end # last one is a problem with the -3, have to fix so it says reason and not stage
+				# this is why regex and indexing like this are bad bad ideas, no error catching, not evident
+				# TODO make this better
+    		@total_products_msg = cli_call_result.scan(/(Loaded %d+ products!)/) # todo fix this
+    	else
+    		@no_errors = "No errors! Hooray!"
+    		@total_products_msg = cli_call_result.split("---").first
+    	end
+    	#.scan(/(Loaded %d+ products!)/)
     	#ryan_string.scan(/(^.*)(:)(.*)/i)
     	# then (maybe in another method) try to import it from the location and render errors + how many have been uploaded
     	return
