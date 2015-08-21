@@ -19,7 +19,7 @@ class DeliverySchedule < ActiveRecord::Base
 
   validates :day,                            WeekdayValidation
   validates :buyer_day,                      WeekdayValidation
-  validates :order_cutoff, presence: true, numericality: {greater_than_or_equal_to: 6, less_than_or_equal_to: 504, allow_nil: true}
+  validates :order_cutoff, presence: true, numericality: {greater_than_or_equal_to: 0, less_than_or_equal_to: 504, allow_nil: true}
   validates :seller_fulfillment_location_id, presence: true
   validates :seller_delivery_start,          presence: true
   validates :seller_delivery_end,            presence: true

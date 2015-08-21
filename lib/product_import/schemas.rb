@@ -4,7 +4,7 @@ module ProductImport::Schemas
 
 
   CANONICAL = RSchema.schema {{
-    'product_code' => either(Integer,String),
+    'product_code' => maybe(either(Integer,String)),
     'name' => String,
 
     'category' => %r{^([a-z,/0-9&_ -]*>)*[a-z,/0-9&_ -]*$}i,

@@ -39,8 +39,8 @@ describe DeliverySchedule do
         expect(subject).to have(1).error_on(:order_cutoff)
       end
 
-      it "is greater than or equal to 6" do
-        subject.order_cutoff = 5
+      it "is greater than or equal to 0" do
+        subject.order_cutoff = -1
         expect(subject).to have(1).error_on(:order_cutoff)
       end
 
@@ -157,7 +157,7 @@ describe DeliverySchedule do
     end
   end
 
-  describe "buyer_day and day fields cross-default" do 
+  describe "buyer_day and day fields cross-default" do
     it "copies 'day' to 'buyer_day' if 'buyer_day' is not set" do
       subject.buyer_day = nil
       subject.day = 5
@@ -178,11 +178,11 @@ describe DeliverySchedule do
   describe "#next_delivery" do
     let(:market) { create(:market, :with_addresses, timezone: "US/Eastern") }
 
-    let(:base_schedule) { { market: market, order_cutoff: 8, 
-                        day: 4, 
-                        seller_delivery_start: "6:00 am", 
+    let(:base_schedule) { { market: market, order_cutoff: 8,
+                        day: 4,
+                        seller_delivery_start: "6:00 am",
                         seller_delivery_end: "10:00 am",
-                        buyer_pickup_start: "9:00 am", 
+                        buyer_pickup_start: "9:00 am",
                         buyer_pickup_end: "11:00 am"} }
 
     let(:schedule) { create(:delivery_schedule, base_schedule) }
@@ -267,14 +267,14 @@ describe DeliverySchedule do
     context "when we're beyond the cutoff as calculated from the seller dropoff time, but BEFORE the cutoff as (incorrectly) calculated based on buyer pickup time" do
 
       let(:delivery_schedule) { create(:delivery_schedule, :buyer_pickup,
-                                       market: market, 
-                                       order_cutoff: 96, 
-                                       day: 2, 
-                                       seller_delivery_start: "9:00 AM", 
+                                       market: market,
+                                       order_cutoff: 96,
+                                       day: 2,
+                                       seller_delivery_start: "9:00 AM",
                                        seller_delivery_end: "11:00 AM",
                                        buyer_day: 2,
-                                       buyer_pickup_start: "4:00 PM", 
-                                       buyer_pickup_end: "6:00 PM") } 
+                                       buyer_pickup_start: "4:00 PM",
+                                       buyer_pickup_end: "6:00 PM") }
 
       before do
         Timecop.freeze(Time.parse "Oct 3, 2014 13:37") # srlsy, this is when Anna found the bug
@@ -293,11 +293,11 @@ describe DeliverySchedule do
     end
 
     context "when buyer_pickup_start is nil" do
-      let(:delivery_schedule) { create(:delivery_schedule, 
-                                       market: market, 
+      let(:delivery_schedule) { create(:delivery_schedule,
+                                       market: market,
                                        day: 3) }
       before do
-        Timecop.travel(DateTime.parse "Oct 7, 2014") 
+        Timecop.travel(DateTime.parse "Oct 7, 2014")
       end
 
       after do
@@ -318,7 +318,7 @@ describe DeliverySchedule do
                                        seller_delivery_end: "8:00 AM",
                                        day: 0) }
       before do
-        Timecop.travel(DateTime.parse "Oct 6, 2014 11:35AM") 
+        Timecop.travel(DateTime.parse "Oct 6, 2014 11:35AM")
       end
 
       after do
@@ -332,7 +332,7 @@ describe DeliverySchedule do
         expect(nd.cutoff_time).to eq(Time.zone.parse("Oct 12 2014, 12:00 AM")) # 6 hrs before 6am
       end
     end
-    
+
 
   end
 
