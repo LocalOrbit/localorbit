@@ -31,7 +31,7 @@
     <%= f.label :order_cutoff %>
     <span class="tooltip" data-tooltip="The order cutoff is the latest time a Buyer can place an order for that delivery cycle. The time is based on the start of the Supplier delivery.  If you have a 24 hour cut off, orders would stop being accepted at 5:59am on Tuesday for a 6am Supplier delivery start on Wednesday."></span>
     <br>
-    <%= f.number_field :order_cutoff, min: 6, max: 504, size: 4 %> hours before delivery
+    <%= f.number_field :order_cutoff, min: 0, max: 504, size: 4 %> hours before delivery
   </div>
 
   <div class="field conditional">
