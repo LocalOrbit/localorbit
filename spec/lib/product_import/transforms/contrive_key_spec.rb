@@ -12,7 +12,7 @@ describe ProductImport::Transforms::ContriveKey do
     it "Contrives a key from the specified fields" do
       data = [
         {"foo" => "bar", "baz" => "qux", "moo" => "quack","cluck" => "baa"},
-        {"bad" => true }
+        {"bad" => true}
       ]
 
       successes, failures = subject.transform_enum(data)
@@ -24,13 +24,13 @@ describe ProductImport::Transforms::ContriveKey do
       expect(successes[0]).to eq({"foo" => "bar", "baz" => "qux", "moo" => "quack","cluck" => "baa","contrived_key" => expected_key})
 
       expect(failures.size).to eq(1)
-      expect(failures[0][:raw]).to eq({ "bad" => true })
+      expect(failures[0][:raw]).to eq({ "bad" => true, "contrived_key" => nil })
     end
 
     it "Correctly manages products with no product code" do
       data = [
           {"foo" => "", "baz" => "qux", "moo" => "quack", "cluck" => "baa"},
-          {"bad" => true }
+          {"bad" => true, "contrived_key" => nil}
         ]
       successes, failures = subject.transform_enum(data)
 
@@ -41,7 +41,7 @@ describe ProductImport::Transforms::ContriveKey do
       expect(successes[0]).to eq({"foo" => "", "baz" => "qux", "moo" => "quack","cluck" => "baa","contrived_key" => expected_key})
 
       expect(failures.size).to eq(1)
-      expect(failures[0][:raw]).to eq({ "bad" => true })
+      expect(failures[0][:raw]).to eq({ "bad" => true, "contrived_key" => nil })
 
     end
   end
