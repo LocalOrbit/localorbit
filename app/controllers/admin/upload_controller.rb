@@ -40,11 +40,13 @@ class Admin::UploadController < AdminController
 				@error_display = []
 				@errors.each do |er|
 					er_data = er.split("\n")
-					@error_display << {'name' => er_data[3] ,'reason' => er_data[-3]} # Product name, error reason (do we want other things)
-				end # last one is a problem with the -3, have to fix so it says reason and not stage
-				# this is why regex and indexing like this are bad bad ideas, no error catching, not evident
-				# TODO make this better
-    		@total_products_msg = cli_call_result.scan(/(Loaded %d+ products!)/) # todo fix this
+					reason = er_data.select{|ln| ln.start_with?(":reason:")} 
+					reason ||= "Unspecified reason for error."
+					name = er_data.select{|ln| ln.include?(" name:")}
+					name ||= "Could not find product name/line with error. Check data file."
+					@error_display << {'name' => name.first[8..-1] ,'reason' => reason.first[8..-1]} # Product name, error reason (do we want other things)
+				end # this actually doesn't work depending on the errors. have to do actual validation of the rows by chars, which is better anyway. prod name col, reason? other things? todo decide, pick name and reason initially
+    		@total_products_msg = cli_call_result.split("Loaded").last#.scan(/(Loaded %d+ products!)/) # todo fix this
     	else
     		@no_errors = "No errors! Hooray!"
     		@total_products_msg = cli_call_result.split("---").first

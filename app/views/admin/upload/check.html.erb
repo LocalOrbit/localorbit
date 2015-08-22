@@ -1,17 +1,22 @@
 Here's a very not designed thing to import products. FUN FUN FUN! Only admins can see this.
 <br>
+<strong><a href="/admin/upload">Return to upload form</a></strong>
+
+<br>
 <br>
 <strong>Successfully gotten:</strong>
-<%= "#{@total_products_msg}" %>
-<br>
+<%= "Loaded #{@total_products_msg}" %>
+<br><br> <br>
 <strong>Errors encountered:</strong>
 <br>
 <% if @errors %>
 	<% @error_display.each do |er| %>
-		
-		<%= "#{er['name']}" %> 
+		<strong>product name:</strong>
+		<%= "#{er['name']}" %>
+		<br/>
+		<strong>error:</strong>
 		<%= "#{er['reason']}" %>
-		<br><br>
+		<br></br>
 	<% end %>
 <% else %>
 	<%= "#{@no_errors}" %>
