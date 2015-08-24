@@ -8,25 +8,26 @@ describe Admin::UploadController do
 	it "accepts a file and saves it to tempfiles directory" do
 		test_filename = "admin_upload_template_withPC_good.xlsx"
 		test_file = test_file(test_filename)
-		subject.upload(test_file)
-		expect(`ls #{Rails.root + "tempfiles"}`.split("\n")).to include(test_filename) # hmm
+
+		pending("Incomplete test")
+		#expect(`ls #{Rails.root + "tempfiles"}`.split("\n")).to include(test_filename) # hmm
 	
 		it "handles upload messages" do
-
+			pending("Incomplete test")
 			# go to path 
 
-			# check for "no errors!"
+			# check for "No errors! Hooray!"
 		end
 
 		it "renders errors to user for bad headers" do
-
+			pending("Incomplete test")
 			# upload a file with bad headers
 			# expect to see the Bad File error on loaded page
-			
+
 		end
 
 		it "renders correct errors to user for missing fields" do
-
+			pending("Incomplete test")
 			# upload a bad file with known errors
 			# expect to see the errors on the loaded page
 

@@ -1,20 +1,12 @@
 class Admin::UploadController < AdminController
 	require 'rubyXL'
 
-  def upload(test_file=nil)
-  	if not test_file
-	  	uploaded = params[:datafile] # Gets the xlsx data from form upload post request
-	  	filepath = Rails.root.join('tempfiles',uploaded.original_filename)
-		  File.open(filepath, 'wb') do |file|
-		  	file.write(uploaded.read) # Writes that data to the open filestream in the tempfiles fldr
-		  end
-		else # This seems...bad.
-			uploaded = File.open(test_file)
-			filepath = Rails.root.join('tempfiles',test_file)
-		  File.open(filepath, 'wb') do |file|
-		  	file.write(uploaded.read)
-		  end
-		end
+  def upload
+  	uploaded = params[:datafile] # Gets the xlsx data from form upload post request
+  	filepath = Rails.root.join('tempfiles',uploaded.original_filename)
+	  File.open(filepath, 'wb') do |file|
+	  	file.write(uploaded.read) # Writes that data to the open filestream in the tempfiles fldr
+	  end
 	end
 
   def index
