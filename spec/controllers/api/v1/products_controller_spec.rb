@@ -66,5 +66,18 @@ describe Api::V1::ProductsController do
       products = get_products(offset: 0, query: "First S")
       expect(products).to eq([bananas.id, kale.id])
     end
+
+    it "filters results by category and seller" do
+      products = get_products(offset: 0, query: "Apple", category_ids: [-1, -2])
+      expect(products).to eq ([])
+      products = get_products(offset: 0, query: "Apple", seller_ids: [-1])
+      expect(products).to eq ([])
+      products = get_products(offset: 0, query: "kale", seller_ids: [kale.organization_id, bananas2.organization_id], category_ids: [kale.category_id])
+      expect(products).to eq ([kale.id])
+      products = get_products(offset: 0, query: "kale", seller_ids: [kale.organization_id, bananas2.organization_id], category_ids: [kale.top_level_category_id])
+      expect(products).to eq ([kale.id])
+      products = get_products(offset: 0, query: "kale", seller_ids: [kale.organization_id, bananas2.organization_id], category_ids: [kale.second_level_category_id])
+      expect(products).to eq ([kale.id])
+    end
   end
 end

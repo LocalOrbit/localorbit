@@ -12,6 +12,8 @@ module Api
         @offset = (params[:offset] || 0).to_i
         @limit = (params[:limit] || 10).to_i
         @query = (params[:query] || '').gsub(/\W+/, '+') || ''
+        @category_ids = (params[:category_ids] || false)
+        @seller_ids = (params[:seller_ids] || false)
         render :json => {products: products, product_total: available_products.count(:all)}
       end
 
@@ -33,11 +35,26 @@ module Api
           .includes(:organization, :second_level_category, :prices, :unit)
           .with_available_inventory(current_delivery.deliver_on)
           .priced_for_market_and_buyer(current_market, current_organization)
+        available_products = apply_filters(available_products)
+        available_products.order(:name)
+      end
+
+      def apply_filters(available_products)
         if(@query.length > 2)
-          available_products.search_by_text(@query).order(:name)
-        else
-          available_products.order(:name)
+          available_products = available_products.search_by_text(@query)
         end
+        if(@category_ids)
+          available_products = available_products.where("
+          (
+            products.category_id IN (?)
+            OR products.top_level_category_id IN (?)
+            OR products.second_level_category_id in (?)
+          )", @category_ids, @category_ids, @category_ids)
+        end
+        if(@seller_ids)
+          available_products = available_products.where(organization: @seller_ids)
+        end
+        available_products
       end
 
       def output_hash(product)
