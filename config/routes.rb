@@ -36,6 +36,7 @@ Rails.application.routes.draw do
     namespace :v1 do
       resources :products, only: [:index]
       resources :sellers, only: [:index]
+      resources :categories, only: [:index]
     end
   end
 
