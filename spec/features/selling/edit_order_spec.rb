@@ -42,6 +42,26 @@ describe "Editing an order" do
       end
     end
 
+    context "as a localeyes buyer" do
+      let(:user) {create(:user)}
+      user.organizations.markets.map!{|m| m.plan_id = 4}
+
+      it "allows editing" do
+        visit admin_order_path(order)
+
+
+        expect(UpdatePurchase).to receive(:perform).and_return(double("interactor", "success?" => true))
+        expect(Dom::Order::ItemRow.count).to eq(2)
+        expect(Dom::Order::ItemRow.all.map(&:name)).to include(long_name(order_item), long_name(order_item2))
+
+        first_order_item.click_delete
+
+        expect(page).to have_content("Order successfully updated")
+        expect(Dom::Order::ItemRow.count).to eq(1)
+        expect(Dom::Order::ItemRow.all.map(&:name)).to eql([long_name(order_item2)])
+      end
+    end
+
     context "multiple order items" do
       let!(:order_item2) { create(:order_item, product: product2, quantity: 10, unit_price: 3.00) }
 
