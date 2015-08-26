@@ -238,7 +238,7 @@ class User < ActiveRecord::Base
     seller? && Order.where(organization_id: organization_ids).exists?
   end
 
-  def is_localeyes_buyer?
+  def is_localeyes_buyer? # this really aligns with procurement_manager role and should probably be refactored when that is complete.
     intersect = []
     localeyes_mkts = markets.select {|m| m.plan_id == 4} # all LE mkts, localeyes plan is id 4
     intersect = managed_organizations.select{|o| o.can_sell? == false} & localeyes_mkts.flat_map{|lm| lm.organizations}
