@@ -238,6 +238,13 @@ class User < ActiveRecord::Base
     seller? && Order.where(organization_id: organization_ids).exists?
   end
 
+  def is_localeyes_buyer?
+    intersect = []
+    localeyes_mkts = markets.select {|m| m.plan_id == 4} # all LE mkts, localeyes plan is id 4
+    intersect = managed_organizations.select{|o| o.can_sell? == false} & localeyes_mkts.flat_map{|lm| lm.organizations}
+    return intersect.any?
+  end
+
   def managed_organizations(opts={})
     defaults = {include_suspended: false}
     opts = defaults.merge!(opts)
