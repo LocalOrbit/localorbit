@@ -1,10 +1,12 @@
 //= require underscore
+//= require moment.min
 
 var ProductCatalog = React.createClass({
   propTypes: {
     cartUrl: React.PropTypes.string.isRequired,
     baseUrl: React.PropTypes.string.isRequired,
-    limit: React.PropTypes.number.isRequired
+    limit: React.PropTypes.number.isRequired,
+    deliveryDate: React.PropTypes.string.isRequired
   },
 
   getInitialState: function() {
@@ -13,7 +15,8 @@ var ProductCatalog = React.createClass({
       productTotal: 0,
       query: '',
       offset: 0,
-      loading: true
+      loading: true,
+      deliveryDate: moment(this.props.deliveryDate)
     };
   },
 
@@ -87,9 +90,24 @@ var ProductCatalog = React.createClass({
 
     return (
       <div>
-        <h1>Filter Products</h1>
-        <div className="column--full column--guttered" style={{marginBottom: "30px"}}>
-          <input id="app-search" className="typeahead" placeholder="Try 'orange fruit'" onChange={this.newSearch} />
+        <div className="row catalog-search-container">
+          <div className="catalog-search column column--half pull-left">
+            <input className="" type="text" placeholder="Search..."/>
+            <a href className="btn--secondary btn pull-right">Filter</a>
+            <div className="filter-tags pull-left">
+              <span className="filter-tags-title">Filtering by: </span>
+              <a href>Berries & Cherries<i className="font-icon icon-close"></i></a>
+              <a href>Apples<i className="font-icon icon-close"></i></a>
+              <a href>Dried Fruits<i className="font-icon icon-close"></i></a>
+              <a href>Nuts & Seeds<i className="font-icon icon-close"></i></a>
+            </div>
+          </div>
+          <div className="order-information-container column column--half pull-left">
+            Delivery date: <strong>{this.state.deliveryDate.format('dddd, MMM. D, YYYY')}</strong><br/>
+            Time left to order: <strong>{this.state.deliveryDate.fromNow(true)}</strong><br/>
+            <a href="/sessions/deliveries/new?redirect_back_to=%2Fproducts">Change delivery options</a>
+          </div>
+          <div style={{clear:"both"}}></div>
         </div>
         <p style={{display: (this.state.loading) ? 'none' : 'block', minHeight: '20px'}}><strong>{matchingText}</strong></p>
         <ProductTable

@@ -16,17 +16,18 @@ var ProductTable = React.createClass({
     var hasMore = (10 + this.props.offset < this.props.productTotal) || this.props.loading
 
     return (
-      <table id="product-search-table" className="product-table product-table--user cart_items" data-cart-url={this.props.cartUrl}>
-          <InfiniteScroll
-            pageStart={0}
-            hasMore={hasMore}
-            threshold={50}
-            loadMore={this.props.onInfiniteLoad}
-            loader={(<th>Loading products....</th>)}
-          >
-            {rows}
-          </InfiniteScroll>
-      </table>
+      <div className="product-list" style={{padding: "20px"}} data-cart-url={this.props.cartUrl}>
+        <InfiniteScroll
+          pageStart={0}
+          hasMore={hasMore}
+          threshold={50}
+          loadMore={this.props.onInfiniteLoad}
+          loader={(<p>Loading products....</p>)}
+        >
+          <div className="product-images-link row pull-right"> <a className="" href=""><i className="font-icon" data-icon=""></i> Hide Product Images</a> </div>
+          {rows}
+        </InfiniteScroll>
+      </div>
     );
   }
 });

@@ -64,7 +64,7 @@ module Api
           :name=> product.name,
           :second_level_category_name => product.second_level_category.name,
           :seller_name => product.organization.name,
-          :unit_with_description => product.unit_with_description(:plural),
+          :seller_id => product.organization.id,
           :short_description => product.short_description,
           :long_description => product.long_description,
           :cart_item => product.cart_item,
@@ -78,6 +78,7 @@ module Api
           :how_story => product.organization.how_story,
           :location_label => product.location_label,
           :location_map_url => product.location_map(310, 225),
+          :unit => product.unit.plural,
           :prices => product.prices_for_market_and_organization(current_market, current_organization).map {|price| format_price(price) }
         }
       end
@@ -96,8 +97,7 @@ module Api
         price = price.decorate
         {
           :sale_price => number_to_currency(price.sale_price),
-          :organization_id => price.organization_id,
-          :formatted_units => price.formatted_units
+          :min_quantity => price.min_quantity
         }
       end
     end

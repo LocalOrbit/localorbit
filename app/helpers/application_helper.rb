@@ -14,7 +14,7 @@ module ApplicationHelper
   end
 
   def pdf_asset_url(asset)
-    path = asset_path(asset) 
+    path = asset_path(asset)
     "#{Figaro.env.pdf_asset_host}#{path}"
   end
 
@@ -82,7 +82,8 @@ module ApplicationHelper
       else
         html_options[:class] = "current"
       end
-      content_tag(:span, name, html_options, &block)
+      tag = html_options[:tag] || :span
+      content_tag(tag, name, html_options, &block)
     else
       link_to name, options, html_options, &block
     end

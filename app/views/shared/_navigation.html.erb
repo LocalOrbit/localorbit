@@ -5,19 +5,27 @@ else
   logo = image_tag(asset_path('logo.png'), alt: "Local Orbit logo", class: "vertical-centerer logo")
 end
 %>
-<%= link_to_or_span logo, signed_in_root_path(current_user), class: "logo-link vc-wrapper pull-left" %>
 
 <% if current_market %>
-  <% if current_user %>
-    <div class="nav nav--main pull-right">
-      <%= link_to_or_span "Order", products_path, class: "" %>
-      <%= link_to_or_span "Suppliers", sellers_path, class: "" %>
-      <%= link_to_or_span "About", market_path, class: "" %>
-    </div>
-  <% end %>
 
-  <%= content_tag :span, "#{current_market.tagline}", class: "tagline" if current_market.tagline.present? && (@show_nav_tagline or current_user) %>
-<% end %>
+  <div class="catalog-header">
+    <div class="column--full">
+      <div class="row">
+        <div class="branding-container column column--half">
+          <%= link_to_or_span logo, signed_in_root_path(current_user), class: "logo-link vc-wrapper pull-left" %>
+          <%= content_tag :span, "#{current_market.tagline}", class: "tagline" if current_market && current_market.tagline.present? && (@show_nav_tagline or current_user) %>
+        </div>
+        <% if current_user %>
+          <div class="nav nav--main column column--half pull-right" style="text-align: center">
+            <%= link_to_or_span "Orders", products_path, class: "", tag: :a %>
+            <%= link_to_or_span "Suppliers", sellers_path, class: "", tag: :a %>
+            <%= link_to_or_span "About", market_path, class: "", tag: :a %>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+
 
 <% if current_user %>
   <ul id="admin-nav" class="l-inline-list nav nav--admin clear-before <%= "mobile-only" if @hide_admin_nav %>">
@@ -110,4 +118,6 @@ end
     <li class="mobile-only"><%= link_to_or_span "Sellers", sellers_path, class: "" %></li>
     <li class="mobile-only"><%= link_to_or_span "About", market_path, class: "" %></li>
   </ul>
+<% end %>
+
 <% end %>
