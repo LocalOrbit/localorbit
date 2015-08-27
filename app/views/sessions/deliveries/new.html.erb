@@ -8,6 +8,8 @@
       <h1 class="clear-before">Welcome to <%= current_market.name %></h1>
       <p class="faux-label">Please choose a pick up or delivery date.</p>
 
+    <% if not current_user.is_localeyes_buyer? %>
+
       <div class="row"><% @deliveries.each do |d| -%><div class="column column--guttered column--half">
           <div class="conditional field vcard delivery">
             <%= radio_button_tag "delivery_id", d.id %>
@@ -30,6 +32,31 @@
           </div>
         </div><%= cycle '', raw('</div><div class="row">') if d != @deliveries.last -%><%- end -%>
       </div>
+
+    <% else %>
+
+      <div class="l-main ">
+        <section class="calendar" style="display: table;">
+            <header style="display: table-row;">
+              <div class="cal-date">S</div> <!-- never disabled -->
+              <div class="cal-date">M</div>
+              <div class="cal-date">T</div>
+              <div class="cal-date">W</div>
+              <div class="cal-date">T</div>
+              <div class="cal-date">F</div>
+              <div class="cal-date">S</div>
+            </header>
+          <% delivery_weeks.each do |w| %> <!-- the weeks included in the-->
+            <div style="display: table-row;">
+            <% week_days.each do |d| %>
+              <div class="cal-date"><%= d.day_number %></div> <!-- check enabledness? -->
+            <% end %>
+            </div>
+          <% end %>
+        </section>
+      </div>
+
+    <% end %>
 
       <div class="form-actions">
         <%= submit_tag "Start Ordering", class: "mobile-block" %>
