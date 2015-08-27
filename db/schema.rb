@@ -718,8 +718,8 @@ ActiveRecord::Schema.define(version: 20150810153907) do
     t.string   "thumb_uid"
     t.integer  "second_level_category_id"
     t.string   "code"
-    t.integer  "general_product_id"
     t.integer  "external_product_id"
+    t.integer  "general_product_id"
   end
 
   add_index "products", ["category_id"], name: "index_products_on_category_id", using: :btree

@@ -89,7 +89,7 @@ var ProductCatalog = React.createClass({
       <div>
         <h1>Filter Products</h1>
         <div className="column--full column--guttered" style={{marginBottom: "30px"}}>
-          <input className="typeahead" placeholder="Try 'orange fruit'" onChange={this.newSearch} />
+          <input id="app-search" className="typeahead" placeholder="Try 'orange fruit'" onChange={this.newSearch} />
         </div>
         <p style={{display: (this.state.loading) ? 'none' : 'block', minHeight: '20px'}}><strong>{matchingText}</strong></p>
         <ProductTable
