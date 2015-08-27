@@ -244,7 +244,7 @@ class Product < ActiveRecord::Base
   end
 
   # Does not explicitly scope to the market. Use in conjunction with available_for_market.
-  def self.available_for_sale(market, buyer=nil, deliver_on_date=Time.current)
+  def self.available_for_sale(market, buyer=nil, deliver_on_date=Time.current.end_of_minute)
     visible.seller_can_sell.
       with_available_inventory(deliver_on_date).
       priced_for_market_and_buyer(market, buyer).
@@ -306,7 +306,7 @@ class Product < ActiveRecord::Base
     search_by_name(query)
   end
 
-  def self.with_available_inventory(deliver_on_date=Time.current)
+  def self.with_available_inventory(deliver_on_date=Time.current.end_of_minute)
     lot_table = Lot.arel_table
     on_cond = arel_table[:id].eq(lot_table[:product_id]).
               and(lot_table[:good_from].eq(nil).or(lot_table[:good_from].lt(deliver_on_date))).
@@ -318,7 +318,7 @@ class Product < ActiveRecord::Base
   end
 
   def can_use_simple_inventory?
-    use_simple_inventory? || !lots.where("(expires_at IS NULL OR expires_at > ?) AND quantity > 0", Time.current).exists?
+    use_simple_inventory? || !lots.where("(expires_at IS NULL OR expires_at > ?) AND quantity > 0", Time.current.end_of_minute).exists?
   end
 
   def simple_inventory
@@ -333,7 +333,7 @@ class Product < ActiveRecord::Base
     lot.quantity = val
   end
 
-  def available_inventory(deliver_on_date=DateTime.current)
+  def available_inventory(deliver_on_date=Time.current.end_of_minute)
     if lots.loaded?
       lots.to_a.sum {|l| l.available?(deliver_on_date) ? l.quantity : 0 }
     else
@@ -442,8 +442,8 @@ class Product < ActiveRecord::Base
 
   def self.for_sort_by_stock(direction)
     lot = Lot.arel_table
-    expires_condition = lot[:expires_at].gt(Time.current).or(lot[:expires_at].eq(nil))
-    good_from = lot[:good_from].lt(Time.current).or(lot[:good_from].eq(nil))
+    expires_condition = lot[:expires_at].gt(Time.current.end_of_minute).or(lot[:expires_at].eq(nil))
+    good_from = lot[:good_from].lt(Time.current.end_of_minute).or(lot[:good_from].eq(nil))
     joins("LEFT OUTER JOIN lots ON products.id = lots.product_id AND #{expires_condition.and(good_from).to_sql}").
       select("products.*, SUM(lots.quantity) as stock").
       group("products.id").order_by_stock(direction)

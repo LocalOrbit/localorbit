@@ -2,6 +2,7 @@ require "spec_helper"
 
 describe "Editing an order" do
   let!(:market)          { create(:market, :with_addresses, market_seller_fee: 5, local_orbit_seller_fee: 4) }
+  let!(:marketLE)        { create(:market, :with_addresses, plan_id:4) }
   let!(:monday_delivery) { create(:delivery_schedule, day: 1) }
   let!(:seller)          { create(:organization, :seller, markets: [market]) }
   let!(:product_lot)     { create(:lot, quantity: 145) }

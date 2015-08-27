@@ -25,7 +25,7 @@ module SoftDelete
     end
 
     def visible_conditional
-      arel_table[:deleted_at].eq(nil).or(arel_table[:deleted_at].gt(Time.current))
+      arel_table[:deleted_at].eq(nil).or(arel_table[:deleted_at].gt(Time.current.end_of_minute))
     end
   end
 end

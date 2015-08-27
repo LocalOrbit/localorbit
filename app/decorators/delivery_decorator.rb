@@ -106,7 +106,7 @@ class DeliveryDecorator < Draper::Decorator
   end
 
   def available_to_order?
-    Time.current < cutoff_time
+    Time.current.end_of_minute < cutoff_time
   end
 
   def format_time_range(start_time, end_time)

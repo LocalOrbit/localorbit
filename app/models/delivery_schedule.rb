@@ -46,7 +46,7 @@ class DeliverySchedule < ActiveRecord::Base
     )
   end
 
-  def products_available_for_sale(organization, deliver_on_date=Time.current)
+  def products_available_for_sale(organization, deliver_on_date=Time.current.end_of_minute)
     participating_products.available_for_sale(market, organization, deliver_on_date)
   end
 
@@ -196,7 +196,7 @@ class DeliverySchedule < ActiveRecord::Base
   # day, seller_delivery_start
   def calc_next_delivery_date
     Time.use_zone timezone do
-      current_time = Time.current
+      current_time = Time.current.end_of_minute
       beginning = current_time.beginning_of_week(:sunday) - 1.week
       date = (beginning + day.days).to_date
       d = Time.zone.parse("#{date} #{seller_delivery_start}")
@@ -212,7 +212,7 @@ class DeliverySchedule < ActiveRecord::Base
                     seller_delivery_start
                   end
     Time.use_zone timezone do
-      current_time = Time.current
+      current_time = Time.current.end_of_minute
       beginning = current_time.beginning_of_week(:sunday) - 1.week
       date = (beginning + buyer_day.days).to_date
       d = Time.zone.parse("#{date} #{time_of_day}")
