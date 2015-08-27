@@ -92,6 +92,7 @@ group :development do
   gem "rubocop", require: false
   gem "quiet_assets"
   gem "aws-sdk"
+  gem "rails_view_annotator"
 end
 
 group :development, :test do
