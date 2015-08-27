@@ -11,7 +11,7 @@ class CartItem < ActiveRecord::Base
   validate :quantity_is_available, unless: "errors.has_key? :quantity"
 
   def unit_price
-    Orders::UnitPriceLogic.unit_price(product, cart.market, cart.organization, DateTime.now, quantity)
+    Orders::UnitPriceLogic.unit_price(product, cart.market, cart.organization, Time.current.end_of_minute, quantity)
   end
 
   def total_price

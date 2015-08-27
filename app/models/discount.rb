@@ -39,7 +39,8 @@ class Discount < ActiveRecord::Base
   end
 
   def active?
-    (start_date.nil? || start_date < Time.current) && (end_date.nil? || end_date > Time.current)
+    time_now = Time.current.end_of_minute
+    (start_date.nil? || start_date < time_now) && (end_date.nil? || end_date > time_now)
   end
 
   def valid_for_cart?(cart)
@@ -90,7 +91,7 @@ class Discount < ActiveRecord::Base
   private
 
   def future_end_date
-    errors.add(:end_date, "must be in the future") if end_date && (!persisted? || end_date_changed?) && end_date < Time.current
+    errors.add(:end_date, "must be in the future") if end_date && (!persisted? || end_date_changed?) && end_date < Time.current.end_of_minute
   end
 
   def starts_before_it_ends
