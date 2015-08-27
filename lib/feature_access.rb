@@ -53,6 +53,7 @@ class FeatureAccess
       return true if context.is_admin
       return true if context.is_market_manager
       return true if context.is_seller && context.sellers_edit_orders_feature
+      return true if context.is_localeyes_buyer
       false
     end
   end
