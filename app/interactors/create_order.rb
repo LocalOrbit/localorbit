@@ -42,7 +42,7 @@ class CreateOrder
       payment_note: params[:payment_note],
       delivery_fees: cart.delivery_fees,
       total_cost: cart.total,
-      placed_at: DateTime.current
+      placed_at: Time.current
     )
 
     order.apply_delivery_address(cart.delivery_location)

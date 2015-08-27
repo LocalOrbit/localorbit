@@ -3,9 +3,9 @@ class Delivery < ActiveRecord::Base
   belongs_to :delivery_schedule
   has_many :orders, inverse_of: :delivery
 
-  scope :upcoming, -> { where("deliveries.cutoff_time > ?", Time.current) }
-  scope :future, -> { where("deliveries.buyer_deliver_on >= ?", Time.current.midnight) }
-  scope :recent, -> { where(deliver_on: (4.weeks.ago..Time.current)) }
+  scope :upcoming, -> { where("deliveries.cutoff_time > ?", Time.current.end_of_minute) }
+  scope :future, -> { where("deliveries.buyer_deliver_on >= ?", Time.current.midnight) } # FIXME: current.midnight is in the past
+  scope :recent, -> { where(deliver_on: (4.weeks.ago..Time.current.end_of_minute)) }
   scope :with_undelivered_orders, -> { joins(orders: {items: :product}).where(order_items: {delivery_status: "pending"}).group("deliveries.id") }
   scope :with_undelivered_orders_for_user, lambda {|user| with_undelivered_orders.where(products: {organization_id: user.organization_ids}) }
   scope :active, -> { joins(:delivery_schedule).where(DeliverySchedule.visible_conditional) }
@@ -39,6 +39,6 @@ class Delivery < ActiveRecord::Base
   end
 
   def can_accept_orders?
-    cutoff_time > Time.current
+    cutoff_time > Time.current.end_of_minute
   end
 end
