@@ -21,7 +21,6 @@ module Api
         output = available_products
           .offset(@offset)
           .limit(@limit)
-          .uniq
         output.map {|p| output_hash(p)}
       end
 
@@ -36,7 +35,7 @@ module Api
           .with_available_inventory(current_delivery.deliver_on)
           .priced_for_market_and_buyer(current_market, current_organization)
         available_products = apply_filters(available_products)
-        available_products.order(:name)
+        available_products.order(:name).uniq
       end
 
       def apply_filters(available_products)

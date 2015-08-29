@@ -10,6 +10,7 @@
 // Read Sprockets README (https://github.com/sstephenson/sprockets#sprockets-directives) for details
 // about supported directives.
 //
+//= require es5-shim.min
 //= require jquery
 //= require jquery_ujs
 //= require jquery-ui/datepicker
@@ -27,4 +28,5 @@
 //= stub stripe
 //= require react
 //= require react_ujs
+//= require reflux.min
 //= require_tree .
