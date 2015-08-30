@@ -3,46 +3,57 @@
 
 (function() {
   var ProductActions = Reflux.createActions([
+    "setBaseUrl",
     "loadProducts",
-    "loadMoreProducts"
+    "loadMoreProducts",
+    "newQuery"
   ]);
 
   var ProductStore = Reflux.createStore({
     init: function() {
-      this.data = {
+      this.catalog = {
         products: [],
         hasMore: true
       };
+      this.url = window.location.protocol + "//" + window.location.host + "/api/v1/products";
+      this.parameters = {};
       this.loading = false;
       this.listenTo(ProductActions.loadProducts, this.loadProducts);
       this.listenTo(ProductActions.loadMoreProducts, this.loadMoreProducts);
+      this.listenTo(ProductActions.newQuery, this.newQuery);
     },
 
-    loadProducts: function(url, parameters) {
+    newQuery: function(query) {
+      this.parameters.query = query;
+      console.log('got new query', query);
+      ProductActions.loadProducts();
+    },
+
+    loadProducts: function() {
       if(this.loading) return;
       this.loading = true;
-      parameters.offset = 0;
-      $.getJSON(url, parameters, this.onLoad, this.onLoadError);
+      this.parameters.offset = 0;
+      $.getJSON(this.url, this.parameters, this.onLoad, this.onLoadError);
     },
 
     onLoad: function(res) {
-      this.data.products = res.products;
-      this.data.hasMore = (this.data.products.length < res.product_total);
-      this.trigger(this.data);
+      this.catalog.products = res.products;
+      this.catalog.hasMore = (this.catalog.products.length < res.product_total);
+      this.trigger(this.catalog);
       this.loading = false;
     },
 
-    loadMoreProducts: function(url, parameters) {
-      if(this.loading || !this.data.hasMore) return;
+    loadMoreProducts: function() {
+      if(this.loading || !this.catalog.hasMore) return;
       this.loading = true;
-      parameters.offset = this.data.products.length;
-      $.getJSON(url, parameters, this.onLoadMore, this.onLoadError);
+      this.parameters.offset = this.catalog.products.length;
+      $.getJSON(this.url, this.parameters, this.onLoadMore, this.onLoadError);
     },
 
     onLoadMore: function(res) {
-      this.data.products = this.data.products.concat(res.products);
-      this.data.hasMore = (this.data.products.length < res.product_total);
-      this.trigger(this.data);
+      this.catalog.products = this.catalog.products.concat(res.products);
+      this.catalog.hasMore = (this.catalog.products.length < res.product_total);
+      this.trigger(this.catalog);
       this.loading = false;
     },
 

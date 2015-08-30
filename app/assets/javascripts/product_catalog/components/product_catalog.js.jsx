@@ -23,25 +23,9 @@
     render: function() {
       return (
         <div>
-          <div className="row catalog-search-container">
-            <div className="catalog-search column column--half pull-left">
-              <input className="" type="text" placeholder="Search..."/>
-              <a href className="btn--secondary btn pull-right">Filter</a>
-              <div className="filter-tags pull-left">
-                <span className="filter-tags-title">Filtering by: </span>
-                <a href>Berries & Cherries<i className="font-icon icon-close"></i></a>
-                <a href>Apples<i className="font-icon icon-close"></i></a>
-                <a href>Dried Fruits<i className="font-icon icon-close"></i></a>
-                <a href>Nuts & Seeds<i className="font-icon icon-close"></i></a>
-              </div>
-            </div>
-            <div className="order-information-container column column--half pull-left">
-              Delivery date: <strong>{this.state.deliveryDate.format('dddd, MMM. D, YYYY')}</strong><br/>
-              Time left to order: <strong>{this.state.deliveryDate.fromNow(true)}</strong><br/>
-              <a href="/sessions/deliveries/new?redirect_back_to=%2Fproducts">Change delivery options</a>
-            </div>
-            <div style={{clear:"both"}}></div>
-          </div>
+          <lo.ProductFilter
+            deliveryDate={this.props.deliveryDate}
+          />
           <lo.ProductTable
             limit={10}
             filter={null}

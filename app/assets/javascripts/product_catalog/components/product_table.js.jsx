@@ -8,18 +8,17 @@
       return {
         hideImages: false,
         hasMore: false,
-        parameters: {},
         products: []
       };
     },
 
     componentWillMount: function() {
       window.lo.ProductStore.listen(this.onProductsChange);
-      window.lo.ProductActions.loadProducts(this.props.url, this.state.parameters);
+      window.lo.ProductActions.loadProducts(this.props.url);
     },
 
     loadMore: function() {
-      window.lo.ProductActions.loadMoreProducts(this.props.url, this.state.parameters);
+      window.lo.ProductActions.loadMoreProducts(this.props.url);
     },
 
     onProductsChange: function(res) {
