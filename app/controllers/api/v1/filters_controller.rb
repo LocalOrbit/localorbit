@@ -1,6 +1,6 @@
 module Api
   module V1
-    class CategoriesController < ApplicationController
+    class FiltersController < ApplicationController
       before_action :require_selected_market
       before_action :require_market_open
 
@@ -17,18 +17,32 @@ module Api
         # This is a compromise between accuracy and speed: all of the products listed for
         # a market, but without checking pricing and inventory data.
 
-        categories = Category.where("id in (#{category_ids_subquery.to_sql})")
-        if(params[:parent_id])
-          categories = categories.where(parent_id: params[:parent_id])
+        if(params[:parent_id] && params[:parent_id] === "suppliers")
+          filters = current_market
+            .organizations
+            .where(can_sell: true, active: true)
+        elsif(params[:parent_id])
+          filters = Category
+            .where("id in (#{secondary_subquery.to_sql})")
+            .where(parent_id: params[:parent_id])
+        else
+          filters = Category.where("id in (#{top_level_subquery.to_sql})")
         end
-        render :json => {categories: categories.select(:name, :id)}
+        render :json => {filters: filters.order(:name).select(:name, :id)}
       end
 
       private
 
-      def category_ids_subquery
+      def secondary_subquery
         Product
-          .select(:category_id)
+          .select(:second_level_category_id)
+          .where(organization: current_market.organizations.select(:id).to_a)
+          .uniq
+      end
+
+      def top_level_subquery
+        Product
+          .select(:top_level_category_id)
           .where(organization: current_market.organizations.select(:id).to_a)
           .uniq
       end

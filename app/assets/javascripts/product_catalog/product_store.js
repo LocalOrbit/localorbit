@@ -6,7 +6,8 @@
     "setBaseUrl",
     "loadProducts",
     "loadMoreProducts",
-    "newQuery"
+    "newQuery",
+    "newFilters"
   ]);
 
   var ProductStore = Reflux.createStore({
@@ -16,16 +17,26 @@
         hasMore: true
       };
       this.url = window.location.protocol + "//" + window.location.host + "/api/v1/products";
-      this.parameters = {};
+      this.parameters = {
+        offset: 0,
+        category_ids: [],
+        seller_ids: []
+      };
       this.loading = false;
       this.listenTo(ProductActions.loadProducts, this.loadProducts);
       this.listenTo(ProductActions.loadMoreProducts, this.loadMoreProducts);
       this.listenTo(ProductActions.newQuery, this.newQuery);
+      this.listenTo(ProductActions.newFilters, this.newFilters);
+    },
+
+    newFilters: function(category_ids, seller_ids) {
+      this.parameters.category_ids = category_ids;
+      this.parameters.seller_ids = seller_ids;
+      this.loadProducts();
     },
 
     newQuery: function(query) {
       this.parameters.query = query;
-      console.log('got new query', query);
       ProductActions.loadProducts();
     },
 

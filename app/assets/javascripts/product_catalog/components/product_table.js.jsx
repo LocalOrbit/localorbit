@@ -1,5 +1,5 @@
 //= require react-infinite-scroll.min
-//= require product_catalog/store
+//= require product_catalog/product_store
 
 (function() {
 

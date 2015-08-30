@@ -12,8 +12,8 @@ module Api
         @offset = (params[:offset] || 0).to_i
         @limit = (params[:limit] || 10).to_i
         @query = (params[:query] || '').gsub(/\W+/, '+') || ''
-        @category_ids = (params[:category_ids] || false)
-        @seller_ids = (params[:seller_ids] || false)
+        @category_ids = (params[:category_ids] || [])
+        @seller_ids = (params[:seller_ids] || [])
         render :json => {products: products, product_total: available_products.count(:all)}
       end
 
@@ -42,7 +42,7 @@ module Api
         if(@query.length > 2)
           available_products = available_products.search_by_text(@query)
         end
-        if(@category_ids)
+        if(@category_ids.length > 0)
           available_products = available_products.where("
           (
             products.category_id IN (?)
@@ -50,7 +50,7 @@ module Api
             OR products.second_level_category_id in (?)
           )", @category_ids, @category_ids, @category_ids)
         end
-        if(@seller_ids)
+        if(@seller_ids.length > 0)
           available_products = available_products.where(organization: @seller_ids)
         end
         available_products

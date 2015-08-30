@@ -1,6 +1,6 @@
 //= require underscore
 //= require moment.min
-//= require product_catalog/store
+//= require product_catalog/product_store
 
 (function() {
   window.lo = window.lo || {};
