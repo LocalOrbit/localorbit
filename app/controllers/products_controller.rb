@@ -11,10 +11,6 @@ class ProductsController < ApplicationController
   before_action :load_sellers, only: [:search]
 
   def index
-    if current_market.alternative_order_page
-      render 'alternative_order_page'
-      return
-    end
   end
 
   def show
