@@ -7,7 +7,7 @@
     getInitialState: function() {
       return {
         hideImages: false,
-        hasMore: false,
+        hasMore: true,
         products: []
       };
     },
@@ -36,6 +36,10 @@
       var rows = this.state.products.map(function(product) {
         return ( <lo.ProductRow key={product.id} product={product} hideImages={this.state.hideImages} /> )
       }.bind(this));
+
+      if(rows.length === 0 && this.state.hasMore === false) {
+        rows = (<p>No products found. Try broadening your search, removing any filters, or changing your delivery date to see more results.</p>)
+      }
 
       return (
         <div className="product-list cart_items" style={{padding: "20px"}} data-cart-url={this.props.cartUrl}>

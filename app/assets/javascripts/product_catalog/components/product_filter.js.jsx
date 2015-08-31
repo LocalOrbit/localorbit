@@ -102,7 +102,7 @@
       }.bind(this));
 
       return (
-        <div>
+        <div style={{borderTop:"1px solid rgb(222, 222, 222)", marginTop: "-2px"}}>
           <div className="row catalog-search-container">
             <div className="catalog-search column column--half pull-left">
               <input className="" type="text" onChange={this.inputChanged} value={this.state.query} placeholder="Search..."/>

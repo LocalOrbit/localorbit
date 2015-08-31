@@ -41,7 +41,6 @@
     },
 
     loadProducts: function() {
-      if(this.loading) return;
       this.loading = true;
       this.parameters.offset = 0;
       $.getJSON(this.url, this.parameters, this.onLoad, this.onLoadError);

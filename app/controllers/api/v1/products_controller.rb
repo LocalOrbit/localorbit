@@ -42,15 +42,22 @@ module Api
         if(@query.length > 2)
           available_products = available_products.search_by_text(@query)
         end
-        if(@category_ids.length > 0)
+        if(@category_ids.length > 0 && @seller_ids.length > 0)
+          available_products = available_products.where("
+          (
+            products.category_id IN (?)
+            OR products.top_level_category_id IN (?)
+            OR products.second_level_category_id in (?)
+            OR products.organization_id in (?)
+          )", @category_ids, @category_ids, @category_ids, @seller_ids)
+        elsif(@category_ids.length > 0)
           available_products = available_products.where("
           (
             products.category_id IN (?)
             OR products.top_level_category_id IN (?)
             OR products.second_level_category_id in (?)
           )", @category_ids, @category_ids, @category_ids)
-        end
-        if(@seller_ids.length > 0)
+        elsif(@seller_ids.length > 0)
           available_products = available_products.where(organization: @seller_ids)
         end
         available_products
