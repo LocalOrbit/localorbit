@@ -30,17 +30,14 @@
         cartItemQuantity: this.props.product.cart_item_quantity
       };
     },
-    updateQuantity: function(event) {
-      this.setState({cartItemQuantity: event.target.value});
+    componentDidMount: function() {
+      window.insertCartItemEntry($(this.getDOMNode()));
     },
-    // componentDidMount: function() {
-    //   window.insertCartItemEntry($(this.getDOMNode()));
-    // },
     render: function() {
       var product = this.props.product;
 
       return (
-        <div className="row product-listing" data-cart-item={JSON.stringify(product.cart_item)}>
+        <div className="row product-listing cart_item" data-cart-item={JSON.stringify(product.cart_item)}>
           <div className="product-details-container column column--five-twelfths">
             <img style={{display: (this.props.hideImages) ? "none" : ""}} className="product-image" src={product.image_url}/>
             <div className="product-details">

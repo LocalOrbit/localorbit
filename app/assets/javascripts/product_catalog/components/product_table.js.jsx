@@ -38,7 +38,7 @@
       }.bind(this));
 
       return (
-        <div className="product-list" style={{padding: "20px"}} data-cart-url={this.props.cartUrl}>
+        <div className="product-list cart_items" style={{padding: "20px"}} data-cart-url={this.props.cartUrl}>
           <InfiniteScroll
             pageStart={0}
             hasMore={this.state.hasMore}
@@ -46,7 +46,7 @@
             loadMore={this.loadMore}
             loader={(<p>Loading products....</p>)}
           >
-            <div className="product-images-link row pull-right"> <a href="javscript:void(0);" onClick={this.toggleImages}><i className="font-icon" data-icon=""></i> {(this.state.hideImages) ? "Show " : "Hide "} Product Images</a> </div>
+            <div id="product-search-table" className="product-images-link row pull-right"> <a href="javscript:void(0);" onClick={this.toggleImages}><i className="font-icon" data-icon=""></i> {(this.state.hideImages) ? "Show " : "Hide "} Product Images</a> </div>
             {rows}
           </InfiniteScroll>
         </div>
