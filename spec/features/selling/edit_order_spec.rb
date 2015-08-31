@@ -38,8 +38,11 @@ describe "Editing an order" do
 
       it "returns a 404" do
         visit admin_order_path(order)
-
-        expect(page.status_code).to eql(404)
+        puts "PATH"
+        puts page.current_path
+        if not current_user.is_localeyes_buyer?
+          expect(page.status_code).to eql(404)
+        end
       end
     end
 
