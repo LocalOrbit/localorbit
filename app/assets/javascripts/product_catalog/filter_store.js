@@ -26,17 +26,17 @@
 
     loadChildFilters: function(id) {
       if(this.cachedChildren[id]) {
-        this.onLoadChildFilters(id, this.cachedChildren[id]);
+        this.onLoadChildFilters(this.cachedChildren[id]);
       }
       else {
         $.getJSON(this.url, {parent_id: id}, function(res) {
           this.cachedChildren[id] = res.filters;
-          this.onLoadChildFilters(id, res.filters);
+          this.onLoadChildFilters(res.filters);
         }.bind(this), this.onLoadError);
       }
     },
 
-    onLoadChildFilters: function(id, childFilters) {
+    onLoadChildFilters: function(childFilters) {
       this.filters.children = childFilters;
       this.trigger(this.filters);
     },

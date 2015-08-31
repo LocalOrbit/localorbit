@@ -9,15 +9,7 @@
     propTypes: {
       cartUrl: React.PropTypes.string.isRequired,
       baseUrl: React.PropTypes.string.isRequired,
-      limit: React.PropTypes.number.isRequired,
-      products: React.PropTypes.array,
       deliveryDate: React.PropTypes.string.isRequired
-    },
-
-    getInitialState: function() {
-      return {
-        deliveryDate: moment(this.props.deliveryDate)
-      };
     },
 
     render: function() {
@@ -31,7 +23,6 @@
             filter={null}
             cartUrl={this.props.cartUrl}
             url={this.props.baseUrl}
-            onInfiniteLoad={function() {}}
           />
         </div>
       );

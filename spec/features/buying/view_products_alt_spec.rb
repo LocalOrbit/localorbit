@@ -47,7 +47,7 @@ feature "Viewing products" do
     sign_in_as(user)
     expect(page).to have_content("celery")
     expect(page).to have_content(org2_product.name)
-    page.find_field("app-search").set("celery")
+    fill_in("app-search", with: "celery")
     expect(page).to have_content("celery")
     expect(page).not_to have_content(org2_product.name)
   end

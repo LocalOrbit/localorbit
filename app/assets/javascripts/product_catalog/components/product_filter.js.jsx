@@ -11,7 +11,6 @@
       deliveryDate: React.PropTypes.string.isRequired
     },
 
-
     getInitialState: function() {
       return {
         deliveryDate: moment(this.props.deliveryDate),
@@ -105,7 +104,7 @@
         <div style={{borderTop:"1px solid rgb(222, 222, 222)", marginTop: "-2px"}}>
           <div className="row catalog-search-container">
             <div className="catalog-search column column--half pull-left">
-              <input className="" type="text" onChange={this.inputChanged} value={this.state.query} placeholder="Search..."/>
+              <input className="app-search" name="app-search" type="text" onChange={this.inputChanged} value={this.state.query} placeholder="Search..."/>
               <a href="javascript:void(0);" onClick={this.toggleShowFilter} className="btn--secondary btn pull-right">Filter</a>
               <div className="filter-tags pull-left" style={{display: (activeFilters.length === 0) ? "none" : ""}}>
                 <span className="filter-tags-title">Filtering by: </span>
@@ -137,12 +136,6 @@
       );
     }
   });
-            // <div className="filter-level-2">
-            //   <span><i className="font-icon icon-close hidden"></i>Vegetables</span>
-            //   <ul>
-            //     <li><a href="javascript:void(0);">All Vegetables <i className="font-icon icon-close hidden"></i></a></li>
-            //   </ul>
-            // </div>
 
   window.lo.ProductFilter = ProductFilter;
 }).call(this);

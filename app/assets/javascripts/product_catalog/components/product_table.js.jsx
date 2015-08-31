@@ -4,6 +4,11 @@
 (function() {
 
   var ProductTable = React.createClass({
+    propTypes: {
+      url: React.PropTypes.string.isRequired,
+      cartUrl: React.PropTypes.string.isRequired
+    },
+
     getInitialState: function() {
       return {
         hideImages: false,
