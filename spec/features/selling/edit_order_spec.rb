@@ -40,7 +40,7 @@ describe "Editing an order" do
         visit admin_order_path(order)
         puts "PATH"
         puts page.current_path
-        if not current_user.is_localeyes_buyer?
+        if not user.is_localeyes_buyer?
           expect(page.status_code).to eql(404)
         end
       end
@@ -196,7 +196,7 @@ describe "Editing an order" do
           first_order_item.click_delete
 
           expect(page).to have_content("Order successfully updated")
-          expect(page.current_path).to eql(admin_orders_path)
+          expect(page.current_path).to eq(admin_orders_path)
         end
 
         it "soft deletes the order" do
@@ -235,7 +235,7 @@ describe "Editing an order" do
           first_order_item.click_delete
 
           expect(page).to have_content("Order successfully updated")
-          expect(page.current_path).to eql(admin_orders_path)
+          expect(page.current_path).to eq(admin_orders_path)
         end
 
         it "soft deletes the order" do
