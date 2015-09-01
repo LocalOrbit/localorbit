@@ -109,12 +109,14 @@ class Admin::OrdersController < AdminController
   def perform_order_update(order, params)
     updates = UpdateOrder.perform(payment_provider: order.payment_provider, order: order, order_params: params)
     if updates.success?
-      if order.reload.items.any?
-        redirect_to admin_order_path(order), notice: "Order successfully updated."
+      came_from_admin = request.referer.include?("/admin/")
+      next_url = if order.reload.items.any?
+        came_from_admin ? admin_order_path(order) : order_path(order)
       else
         order.soft_delete
-        redirect_to admin_orders_path, notice: "Order successfully updated"
+        came_from_admin ? admin_orders_path(order) : orders_path(order)
       end
+      redirect_to next_url, notice: "Order successfully updated."
     else
       order = updates.context[:order]
       order.errors.add(:payment_processor, "failed to update your payment") if updates.context[:status] == "failed"

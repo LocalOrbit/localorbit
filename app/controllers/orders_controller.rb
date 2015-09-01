@@ -44,31 +44,6 @@ class OrdersController < ApplicationController
     end
   end
 
-  # add this here so it's not just the admin path
-  # TODO make sure that a LE buyer's edit directs to a page we can see
-  def update
-    if current_user.is_localeyes_buyer?
-      order = Order.find(params[:id])
-      setup_deliveries(order)
-
-      if params["items_to_add"]
-        return unless perform_add_items(order)
-      elsif params[:commit] == "Add Items"
-        show_add_items_form(order)
-        return
-      elsif params[:commit] == "Change Delivery"
-        update_delivery(order)
-        return
-      end
-
-      # TODO: Change an order items delivery status to 'removed' or something rather then deleting them
-      perform_order_update(order, order_params)
-    else
-      render_404
-    end
-  end
-
-
   protected
 
   def order_number_missing?
