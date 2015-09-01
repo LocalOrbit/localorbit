@@ -196,7 +196,7 @@ describe "Editing an order" do
           first_order_item.click_delete
 
           expect(page).to have_content("Order successfully updated")
-          expect(page.current_path).should include(admin_orders_path)
+          expect(page.current_path).to match(/#{admin_orders_path}/)
         end
 
         it "soft deletes the order" do
@@ -235,7 +235,7 @@ describe "Editing an order" do
           first_order_item.click_delete
 
           expect(page).to have_content("Order successfully updated")
-          expect(page.current_path).should include(admin_orders_path)
+          expect(page.current_path).to match(/#{admin_orders_path}/)
         end
 
         it "soft deletes the order" do
