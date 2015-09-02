@@ -32,39 +32,52 @@
       </div>
 
     <% else %>
+			  <%
+				 first_delivery = @deliveries.first.buyer_deliver_on
+				 last_delivery = first_delivery + 30.days
+				 valid_day = @deliveries.each_with_object({}) { |d,map| map[d.buyer_deliver_on.wday] = true }
 
-      <% delivery_weeks = [1,2,3,4] # always four weeks of arrays, just maybe different numbers%>
-      <% week_days = [0,1,2,3,4,5,6] %> <!-- Sunday through Saturday -->
+				 now = DateTime.now
+				 calendar_start = now - now.wday
+				 calendar_end = last_delivery + (6 - last_delivery.wday)
 
-      <% start = @deliveries.first.buyer_deliver_on.wday %>
-      <% last = @deliveries.first.buyer_deliver_on + 1.month %>
-      <%= @deliveries.length %> <!-- to test -->
-      <% first_week = Array.new(week_days.length) # don't actually want index, want day %>
-      <% first_week.fill(0,start,start-6) %> <!-- won't (shouldn't) do anything if Sunday start -->
-      <% first_week.fill(6-start, @deliveries.first.buyer_deliver_on.day, 1) # day, sequence by 1... this won't work %>
-      <% delivery_weeks.fill(first_week) # temp, so all of them are the same as this first week will be. %>
-      <% # divvy up the following remainder of the start till last into 7-day (0-6) arrays so delivery_weeks is the correct overall iterable (arr) %>
+				 delivery_weeks = [ [] ]
 
-      <div class="l-main ">
-        <section class="calendar" style="display: table;">
-            <header style="display: table-row;">
-              <div class="cal-date">S</div> <!-- never disabled -->
-              <div class="cal-date">M</div>
-              <div class="cal-date">T</div>
-              <div class="cal-date">W</div>
-              <div class="cal-date">T</div>
-              <div class="cal-date">F</div>
-              <div class="cal-date">S</div>
-            </header>
-          <% delivery_weeks.each do |w| %> <!-- the weeks included in the-->
-            <div style="display: table-row;">
-            <% w.each do |d| %>
-              <div class="cal-date"><%= d %></div> <!-- should be d.day_number, check enabledness? -->
-            <% end %>
-            </div>
-          <% end %>
-        </section>
-      </div>
+				 (calendar_start..calendar_end).each { |day|
+				   css_class = if day < first_delivery || last_delivery < day
+								 "cal-date disabled"
+							   elsif valid_day[day.wday]
+								 "cal-date"
+							   else
+								 "cal-date disabled"
+							   end
+				   if delivery_weeks[-1].length == 7
+					 delivery_weeks.push [ ]
+				   end
+				   delivery_weeks[-1].push({ day: day, css_class: css_class })
+				 }
+			  %>
+
+	<div class="l-main ">
+	  <table class="calendar">
+		  <tr>
+			  <th class="cal-date">S</th>
+			  <th class="cal-date">M</th>
+			  <th class="cal-date">T</th>
+			  <th class="cal-date">W</th>
+			  <th class="cal-date">T</th>
+			  <th class="cal-date">F</th>
+			  <th class="cal-date">S</th>
+		  </tr>
+		  <% delivery_weeks.each do |w| %>
+			  <tr>
+				  <% w.each do |d| %>
+					  <td class="<%= d[:css_class] %>"><%= d[:day].day %></td>
+				  <% end %>
+			  </tr>
+		  <% end %>
+	  </table>
+	</div>
 
     <% end %>
 
