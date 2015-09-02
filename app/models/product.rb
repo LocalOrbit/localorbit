@@ -6,7 +6,7 @@ class Product < ActiveRecord::Base
 
   before_save :update_cached_categories
   before_save :update_delivery_schedules
-
+  before_save :update_general_product
   audited allow_mass_assignment: true, associated_with: :organization
 
   belongs_to :category
@@ -16,6 +16,8 @@ class Product < ActiveRecord::Base
   belongs_to :location
   belongs_to :unit
   belongs_to :external_product, inverse_of: :product
+  belongs_to :general_product
+  default_scope { includes(:general_product) }
 
   has_many :lots, -> { order("created_at") }, inverse_of: :product, autosave: true, dependent: :destroy
   has_many :lots_by_expiration, -> { order("expires_at, good_from, created_at") }, class_name: Lot, foreign_key: :product_id
@@ -54,6 +56,177 @@ class Product < ActiveRecord::Base
 
   pg_search_scope :search_by_name, against: :name, using: {tsearch: {prefix: true}}
 
+  ### GETTERS ###
+  def name
+    self.general_product && self.general_product.name
+  end
+  def category_id
+    self.general_product && self.general_product.category_id
+  end
+  def organization_id
+    self.general_product && self.general_product.organization_id
+  end
+  def who_story
+    self.general_product && self.general_product.who_story
+  end
+  def how_story
+    self.general_product && self.general_product.how_story
+  end
+  def location_id
+    self.general_product && self.general_product.location_id
+  end
+  def image_uid
+    self.general_product && self.general_product.image_uid
+  end
+  def top_level_category_id
+    self.general_product && self.general_product.top_level_category_id
+  end
+  def short_description
+    self.general_product && self.general_product.short_description
+  end
+  def long_description
+    self.general_product && self.general_product.long_description
+  end
+  def use_all_deliveries
+    if self.general_product
+      self.general_product.use_all_deliveries
+    else
+      true # Default
+    end
+  end
+  def thumb_uid
+    self.general_product && self.general_product.thumb_uid
+  end
+  def second_level_category_id
+    self.general_product && self.general_product.second_level_category_id
+  end
+
+  ### SETTERS ###
+  def name=(input)
+    write_attribute(:name, input)
+    ensure_product_has_a_general_product
+    self.general_product.name = input
+    input
+  end
+  def category_id=(input)
+    write_attribute(:category_id, input)
+    ensure_product_has_a_general_product
+    self.general_product.category_id = input
+  end
+  def category=(input)
+    ensure_product_has_a_general_product
+    self.general_product.category_id = if input.present?
+      input.id
+    else
+      nil
+    end
+    association(:category).writer(input)
+  end
+  def organization_id=(input)
+    write_attribute(:organization_id, input)
+    ensure_product_has_a_general_product
+    self.general_product.organization_id = input
+  end
+  def organization=(input)
+    ensure_product_has_a_general_product
+    self.general_product.organization_id = if input.present?
+      input.id
+    else
+      nil
+    end
+    association(:organization).writer(input)
+  end
+  def who_story=(input)
+    write_attribute(:who_story, input)
+    ensure_product_has_a_general_product
+    self.general_product.who_story = input
+  end
+  def how_story=(input)
+    write_attribute(:how_story, input)
+    ensure_product_has_a_general_product
+    self.general_product.how_story = input
+  end
+  def location_id=(input)
+    write_attribute(:location_id, input)
+    ensure_product_has_a_general_product
+    self.general_product.location_id = input
+  end
+  def location=(input)
+    ensure_product_has_a_general_product
+    self.general_product.location_id = if input.present?
+      input.id
+    else
+      nil
+    end
+    association(:location).writer(input)
+  end
+  def image_uid=(input)
+    write_attribute(:image_uid, input)
+    ensure_product_has_a_general_product
+    self.general_product.image_uid = input
+  end
+  def top_level_category_id=(input)
+    write_attribute(:top_level_category_id, input)
+    ensure_product_has_a_general_product
+    self.general_product.top_level_category_id = input
+  end
+  def top_level_category=(input)
+    ensure_product_has_a_general_product
+    self.general_product.top_level_category_id = if input.present?
+      input.id
+    else
+      nil
+    end
+    association(:top_level_category).writer(input)
+  end
+  def short_description=(input)
+    write_attribute(:short_description, input)
+    ensure_product_has_a_general_product
+    self.general_product.short_description = input
+  end
+  def long_description=(input)
+    write_attribute(:long_description, input)
+    ensure_product_has_a_general_product
+    self.general_product.long_description = input
+  end
+  def use_all_deliveries=(input)
+    write_attribute(:use_all_deliveries, input)
+    ensure_product_has_a_general_product
+    self.general_product.use_all_deliveries = input
+  end
+  def thumb_uid=(input)
+    write_attribute(:thumb_uid, input)
+    ensure_product_has_a_general_product
+    self.general_product.thumb_uid = input
+  end
+  def second_level_category_id=(input)
+    write_attribute(:second_level_category_id, input)
+    ensure_product_has_a_general_product
+    self.general_product.second_level_category_id = input
+  end
+  def second_level_category=(input)
+    ensure_product_has_a_general_product
+    self.general_product.second_level_category_id = if input.present?
+      input.id
+    else
+      nil
+    end
+    association(:second_level_category).writer(input) 
+  end
+  def general_product_id=(input)
+    gp = GeneralProduct.find(input)
+    if gp
+      self.general_product = gp
+    else
+      self.general_product.id = input
+      write_attribute(:general_product_id, input)
+    end
+  end
+  def general_product=(input)
+    association(:general_product).writer(input)
+    self.general_product.assign_attributes(input.as_json)
+  end
+
   pg_search_scope :search_by_text,
     :against => :name,
     :associated_against => {
@@ -71,7 +244,7 @@ class Product < ActiveRecord::Base
   end
 
   # Does not explicitly scope to the market. Use in conjunction with available_for_market.
-  def self.available_for_sale(market, buyer=nil, deliver_on_date=Time.current)
+  def self.available_for_sale(market, buyer=nil, deliver_on_date=Time.current.end_of_minute)
     visible.seller_can_sell.
       with_available_inventory(deliver_on_date).
       priced_for_market_and_buyer(market, buyer).
@@ -133,7 +306,7 @@ class Product < ActiveRecord::Base
     search_by_name(query)
   end
 
-  def self.with_available_inventory(deliver_on_date=Time.current)
+  def self.with_available_inventory(deliver_on_date=Time.current.end_of_minute)
     lot_table = Lot.arel_table
     on_cond = arel_table[:id].eq(lot_table[:product_id]).
               and(lot_table[:good_from].eq(nil).or(lot_table[:good_from].lt(deliver_on_date))).
@@ -145,7 +318,7 @@ class Product < ActiveRecord::Base
   end
 
   def can_use_simple_inventory?
-    use_simple_inventory? || !lots.where("(expires_at IS NULL OR expires_at > ?) AND quantity > 0", Time.current).exists?
+    use_simple_inventory? || !lots.where("(expires_at IS NULL OR expires_at > ?) AND quantity > 0", Time.current.end_of_minute).exists?
   end
 
   def simple_inventory
@@ -160,7 +333,7 @@ class Product < ActiveRecord::Base
     lot.quantity = val
   end
 
-  def available_inventory(deliver_on_date=DateTime.current)
+  def available_inventory(deliver_on_date=Time.current.end_of_minute)
     if lots.loaded?
       lots.to_a.sum {|l| l.available?(deliver_on_date) ? l.quantity : 0 }
     else
@@ -228,6 +401,19 @@ class Product < ActiveRecord::Base
 
   private
 
+  def ensure_product_has_a_general_product
+    unless self.general_product
+      self.general_product = GeneralProduct.new
+      self.general_product.use_all_deliveries = true
+      self.general_product.product << self
+    end
+  end
+
+  def update_general_product
+    ensure_product_has_a_general_product
+    self.general_product.save!
+  end
+  
   def self.order_by_name(direction)
     direction == "asc" ? order(name: :asc) : order(name: :desc)
   end
@@ -256,8 +442,8 @@ class Product < ActiveRecord::Base
 
   def self.for_sort_by_stock(direction)
     lot = Lot.arel_table
-    expires_condition = lot[:expires_at].gt(Time.current).or(lot[:expires_at].eq(nil))
-    good_from = lot[:good_from].lt(Time.current).or(lot[:good_from].eq(nil))
+    expires_condition = lot[:expires_at].gt(Time.current.end_of_minute).or(lot[:expires_at].eq(nil))
+    good_from = lot[:good_from].lt(Time.current.end_of_minute).or(lot[:good_from].eq(nil))
     joins("LEFT OUTER JOIN lots ON products.id = lots.product_id AND #{expires_condition.and(good_from).to_sql}").
       select("products.*, SUM(lots.quantity) as stock").
       group("products.id").order_by_stock(direction)
@@ -283,7 +469,7 @@ class Product < ActiveRecord::Base
   def update_delivery_schedules
     markets = organization.all_markets.excluding_deleted
 
-    if use_all_deliveries?
+    if self.use_all_deliveries?
       self.delivery_schedule_ids = markets.map do |market|
         market.delivery_schedules.visible.map(&:id)
       end.flatten
@@ -292,4 +478,5 @@ class Product < ActiveRecord::Base
       self.delivery_schedules = delivery_schedules.select {|ds| ids.include?(ds.market.id) }
     end
   end
+
 end

@@ -56,7 +56,7 @@ class Order < ActiveRecord::Base
   validates :total_cost, presence: true
 
   scope :recent, -> { visible.order("created_at DESC").limit(15) }
-  scope :upcoming_delivery, -> { visible.joins(:delivery).where("deliveries.deliver_on > ?", Time.current) }
+  scope :upcoming_delivery, -> { visible.joins(:delivery).where("deliveries.deliver_on > ?", Time.current.end_of_minute) }
   scope :uninvoiced, -> { visible.purchase_orders.where(invoiced_at: nil) }
   scope :invoiced, -> { visible.purchase_orders.where.not(invoiced_at: nil) }
   scope :unpaid, -> { visible.where(payment_status: "unpaid") }
@@ -151,7 +151,7 @@ class Order < ActiveRecord::Base
     where("NOT EXISTS(#{payments_to_sellers_subselect})")
   end
 
-  def self.payable_to_sellers(current_time:Time.current, seller_organization_id:nil)
+  def self.payable_to_sellers(current_time:Time.current.end_of_minute, seller_organization_id:nil)
     res = select("orders.*, products.organization_id as seller_id").
       fully_delivered.
       payable(current_time: current_time).
@@ -167,7 +167,7 @@ class Order < ActiveRecord::Base
     res
   end
 
-  def self.payable_to_automate_sellers(current_time:Time.current, seller_organization_id:nil)
+  def self.payable_to_automate_sellers(current_time:Time.current.end_of_minute, seller_organization_id:nil)
     balanced.payable_to_sellers(
       current_time: current_time, 
       seller_organization_id: seller_organization_id
@@ -183,12 +183,12 @@ class Order < ActiveRecord::Base
   # Orders with payable market fees.
   # Options:
   #   current_time: Delivery must be earlier than 48 hrs before this time. 
-  #                 Default: Time.current
+  #                 Default: Time.current.end_of_minute
   #   market_id: If present, narrow the results based on one or more Market ids.  
   #              Default: nil (include all Markets on Automate)
   #   order_id: If present, narrow the results to one or more specific Order ids.  
   #             Default: nil (nil all matching orders).
-  def self.payable_market_fees(current_time: Time.current, market_id: nil, order_id: nil)
+  def self.payable_market_fees(current_time: Time.current.end_of_minute, market_id: nil, order_id: nil)
     res = balanced.clean_payment_records.
       on_automate_plan.
       fully_delivered.

@@ -44,7 +44,6 @@ class OrdersController < ApplicationController
     end
   end
 
-
   protected
 
   def order_number_missing?

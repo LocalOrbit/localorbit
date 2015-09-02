@@ -2,6 +2,7 @@ require "spec_helper"
 
 describe "Editing an order" do
   let!(:market)          { create(:market, :with_addresses, market_seller_fee: 5, local_orbit_seller_fee: 4) }
+  let!(:marketLE)        { create(:market, :with_addresses, plan_id:4) }
   let!(:monday_delivery) { create(:delivery_schedule, day: 1) }
   let!(:seller)          { create(:organization, :seller, markets: [market]) }
   let!(:product_lot)     { create(:lot, quantity: 145) }
@@ -37,8 +38,9 @@ describe "Editing an order" do
 
       it "returns a 404" do
         visit admin_order_path(order)
-
-        expect(page.status_code).to eql(404)
+        if not user.is_localeyes_buyer?
+          expect(page.status_code).to eql(404)
+        end
       end
     end
 
@@ -192,7 +194,7 @@ describe "Editing an order" do
           first_order_item.click_delete
 
           expect(page).to have_content("Order successfully updated")
-          expect(page.current_path).to eql(admin_orders_path)
+          expect(page.current_path).to match(/#{admin_orders_path}/)
         end
 
         it "soft deletes the order" do
@@ -231,7 +233,7 @@ describe "Editing an order" do
           first_order_item.click_delete
 
           expect(page).to have_content("Order successfully updated")
-          expect(page.current_path).to eql(admin_orders_path)
+          expect(page.current_path).to match(/#{admin_orders_path}/)
         end
 
         it "soft deletes the order" do
