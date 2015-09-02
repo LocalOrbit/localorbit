@@ -45,17 +45,19 @@
 		 delivery_weeks = [ [] ]
 
 		 (calendar_start..calendar_end).each { |day|
-		   css_class = if day < first_delivery || last_delivery < day
-						 "cal-date disabled"
-					   elsif delivery_for_day[day.wday]
-						 "cal-date"
-					   else
-						 "cal-date disabled"
-					   end
+      onclick = nil
+		  css_class = if day < first_delivery || last_delivery < day
+  					 "cal-date disabled"
+  				   elsif delivery_for_day[day.wday]
+              onclick = "setDelivery(this,'#{day}',#{delivery_for_day[day.wday].id})"
+  					 "cal-date"
+  				   else
+  					 "cal-date disabled"
+  				   end
 		   if delivery_weeks[-1].length == 7
 			 delivery_weeks.push [ ]
 		   end
-		   delivery_weeks[-1].push({ day: day, css_class: css_class, delivery: delivery_for_day[day.wday] })
+		   delivery_weeks[-1].push({ day: day, css_class: css_class, onclick: onclick })
 		 }
 	  %>
 
@@ -75,12 +77,30 @@
 		  <% delivery_weeks.each do |w| %>
 			  <tr>
 				<% w.each do |d| %>
-					<td class="<%= d[:css_class] %>"><%= d[:day].day %></td>
+          <% if d[:onclick] %>
+					  <td onclick="<%= d[:onclick] %>" class="<%= d[:css_class] %>"><%= d[:day].day %></td>
+          <% else %>
+            <td class="<%= d[:css_class] %>"><%= d[:day].day %></td>
+          <% end %>
 				<% end %>
 			  </tr>
 		  <% end %>
 		</table>
 	  </div>
+
+      <script type="text/javascript">
+        var prevTD;
+        function setDelivery(td,date,id){
+          $('input:hidden[name=delivery_id]').val(id);
+          $('input:hidden[name=delivery_day]').val(date);
+          if(prevTD) {
+            $(prevTD).removeClass("active");
+          }
+          $(td).addClass("active");
+          prevTD = td;
+          
+        }
+      </script>
 
 	<% end %>
 
