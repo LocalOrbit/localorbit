@@ -12,6 +12,8 @@ module Api
         @offset = (params[:offset] || 0).to_i
         @limit = (params[:limit] || 10).to_i
         @query = (params[:query] || '').gsub(/\W+/, '+') || ''
+        @category_ids = (params[:category_ids] || [])
+        @seller_ids = (params[:seller_ids] || [])
         render :json => {products: products, product_total: available_products.count(:all)}
       end
 
@@ -19,7 +21,6 @@ module Api
         output = available_products
           .offset(@offset)
           .limit(@limit)
-          .uniq
         output.map {|p| output_hash(p)}
       end
 
@@ -33,11 +34,33 @@ module Api
           .includes(:organization, :second_level_category, :prices, :unit)
           .with_available_inventory(current_delivery.deliver_on)
           .priced_for_market_and_buyer(current_market, current_organization)
+        available_products = apply_filters(available_products)
+        available_products.order(:name).uniq
+      end
+
+      def apply_filters(available_products)
         if(@query.length > 2)
-          available_products.search_by_text(@query).order(:name)
-        else
-          available_products.order(:name)
+          available_products = available_products.search_by_text(@query)
         end
+        if(@category_ids.length > 0 && @seller_ids.length > 0)
+          available_products = available_products.where("
+          (
+            products.category_id IN (?)
+            OR products.top_level_category_id IN (?)
+            OR products.second_level_category_id in (?)
+            OR products.organization_id in (?)
+          )", @category_ids, @category_ids, @category_ids, @seller_ids)
+        elsif(@category_ids.length > 0)
+          available_products = available_products.where("
+          (
+            products.category_id IN (?)
+            OR products.top_level_category_id IN (?)
+            OR products.second_level_category_id in (?)
+          )", @category_ids, @category_ids, @category_ids)
+        elsif(@seller_ids.length > 0)
+          available_products = available_products.where(organization: @seller_ids)
+        end
+        available_products
       end
 
       def output_hash(product)
@@ -47,7 +70,7 @@ module Api
           :name=> product.name,
           :second_level_category_name => product.second_level_category.name,
           :seller_name => product.organization.name,
-          :unit_with_description => product.unit_with_description(:plural),
+          :seller_id => product.organization.id,
           :short_description => product.short_description,
           :long_description => product.long_description,
           :cart_item => product.cart_item,
@@ -61,6 +84,7 @@ module Api
           :how_story => product.organization.how_story,
           :location_label => product.location_label,
           :location_map_url => product.location_map(310, 225),
+          :unit => product.unit.plural,
           :prices => product.prices_for_market_and_organization(current_market, current_organization).map {|price| format_price(price) }
         }
       end
@@ -79,8 +103,7 @@ module Api
         price = price.decorate
         {
           :sale_price => number_to_currency(price.sale_price),
-          :organization_id => price.organization_id,
-          :formatted_units => price.formatted_units
+          :min_quantity => price.min_quantity
         }
       end
     end
