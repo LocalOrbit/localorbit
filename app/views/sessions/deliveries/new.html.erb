@@ -32,54 +32,57 @@
       </div>
 
     <% else %>
-			  <%
-				 first_delivery = @deliveries.first.buyer_deliver_on
-				 last_delivery = first_delivery + 30.days
-				 valid_day = @deliveries.each_with_object({}) { |d,map| map[d.buyer_deliver_on.wday] = true }
 
-				 now = DateTime.now
-				 calendar_start = now - now.wday
-				 calendar_end = last_delivery + (6 - last_delivery.wday)
+	  <%
+		 first_delivery = @deliveries.first.buyer_deliver_on
+		 last_delivery = first_delivery + 30.days
+		 delivery_for_day = @deliveries.each_with_object({}) { |d,map| map[d.buyer_deliver_on.wday] ||= d }
 
-				 delivery_weeks = [ [] ]
+		 now = DateTime.now
+		 calendar_start = now - now.wday
+		 calendar_end = last_delivery + (6 - last_delivery.wday)
 
-				 (calendar_start..calendar_end).each { |day|
-				   css_class = if day < first_delivery || last_delivery < day
-								 "cal-date disabled"
-							   elsif valid_day[day.wday]
-								 "cal-date"
-							   else
-								 "cal-date disabled"
-							   end
-				   if delivery_weeks[-1].length == 7
-					 delivery_weeks.push [ ]
-				   end
-				   delivery_weeks[-1].push({ day: day, css_class: css_class })
-				 }
-			  %>
+		 delivery_weeks = [ [] ]
 
-	<div class="l-main ">
-	  <table class="calendar">
+		 (calendar_start..calendar_end).each { |day|
+		   css_class = if day < first_delivery || last_delivery < day
+						 "cal-date disabled"
+					   elsif delivery_for_day[day.wday]
+						 "cal-date"
+					   else
+						 "cal-date disabled"
+					   end
+		   if delivery_weeks[-1].length == 7
+			 delivery_weeks.push [ ]
+		   end
+		   delivery_weeks[-1].push({ day: day, css_class: css_class, delivery: delivery_for_day[day.wday] })
+		 }
+	  %>
+
+	  <div class="l-main">
+		<%= hidden_field_tag :delivery_id %>
+		<%= hidden_field_tag :delivery_day %>
+		<table class="calendar">
 		  <tr>
-			  <th class="cal-date">S</th>
-			  <th class="cal-date">M</th>
-			  <th class="cal-date">T</th>
-			  <th class="cal-date">W</th>
-			  <th class="cal-date">T</th>
-			  <th class="cal-date">F</th>
-			  <th class="cal-date">S</th>
+			<th>S</th>
+			<th>M</th>
+			<th>T</th>
+			<th>W</th>
+			<th>T</th>
+			<th>F</th>
+			<th>S</th>
 		  </tr>
 		  <% delivery_weeks.each do |w| %>
 			  <tr>
-				  <% w.each do |d| %>
-					  <td class="<%= d[:css_class] %>"><%= d[:day].day %></td>
-				  <% end %>
+				<% w.each do |d| %>
+					<td class="<%= d[:css_class] %>"><%= d[:day].day %></td>
+				<% end %>
 			  </tr>
 		  <% end %>
-	  </table>
-	</div>
+		</table>
+	  </div>
 
-    <% end %>
+	<% end %>
 
       <div class="form-actions">
         <%= submit_tag "Start Ordering", class: "mobile-block" %>
