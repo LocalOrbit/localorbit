@@ -136,11 +136,26 @@ class ApplicationController < ActionController::Base
   end
 
   def find_or_build_current_delivery
-    if selected = Delivery.current_selected(current_market, session[:current_delivery_id])
-      selected
-    elsif only_delivery = current_market.only_delivery
-      session[:current_delivery_id] = only_delivery.id
-      only_delivery
+    if session[:current_delivery_day]
+      delivery_day = DateTime.parse(session[:current_delivery_day])
+      delivery_id = session[:current_delivery_id]
+      delivery = Delivery.find(delivery_id)
+      if delivery
+        if delivery.buyer_deliver_on.day == delivery_day.day
+          delivery
+        else
+          # todo fix me
+          # create new delivery and return it
+        end
+      end
+    else
+      if selected = Delivery.current_selected(current_market, session[:current_delivery_id]) # inspect -- does it have side effects? since we aren't calling it in the if anymore
+        # maybe: fix it and then drop through to this other current selected business instead of just returning the delivery
+        selected
+      elsif only_delivery = current_market.only_delivery
+        session[:current_delivery_id] = only_delivery.id
+        only_delivery
+      end 
     end
   end
 

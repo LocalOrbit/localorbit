@@ -14,6 +14,7 @@ module Sessions
     end
 
     def create
+      session[:current_delivery_day] = params[:delivery_day]
       session[:current_delivery_id] = params[:delivery_id].to_i
       return invalid_delivery_selection if current_delivery.nil?
 
