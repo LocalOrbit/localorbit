@@ -38,8 +38,9 @@ describe "Editing an order" do
 
       it "returns a 404" do
         visit admin_order_path(order)
-
-        expect(page.status_code).to eql(404)
+        if not user.is_localeyes_buyer?
+          expect(page.status_code).to eql(404)
+        end
       end
     end
 
@@ -193,7 +194,7 @@ describe "Editing an order" do
           first_order_item.click_delete
 
           expect(page).to have_content("Order successfully updated")
-          expect(page.current_path).to eql(admin_orders_path)
+          expect(page.current_path).to match(/#{admin_orders_path}/)
         end
 
         it "soft deletes the order" do
@@ -232,7 +233,7 @@ describe "Editing an order" do
           first_order_item.click_delete
 
           expect(page).to have_content("Order successfully updated")
-          expect(page.current_path).to eql(admin_orders_path)
+          expect(page.current_path).to match(/#{admin_orders_path}/)
         end
 
         it "soft deletes the order" do
