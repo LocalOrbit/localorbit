@@ -136,12 +136,20 @@ class ApplicationController < ActionController::Base
   end
 
   def find_or_build_current_delivery
-    if selected = Delivery.current_selected(current_market, session[:current_delivery_id])
+    if session[:current_delivery_day]
+      delivery_day = DateTime.parse(session[:current_delivery_day])
+      delivery = Delivery.find(session[:current_delivery_id])
+      if not delivery.buyer_deliver_on.day == delivery_day.day
+        new_delivery = DeliverySchedule.find(delivery.delivery_schedule_id).next_delivery_for_date(delivery_day) 
+        session[:current_delivery_id] = new_delivery.id
+      end
+    end
+    if selected = Delivery.current_selected(current_market, session[:current_delivery_id]) 
       selected
     elsif only_delivery = current_market.only_delivery
       session[:current_delivery_id] = only_delivery.id
       only_delivery
-    end
+    end 
   end
 
   def selected_organization_location
