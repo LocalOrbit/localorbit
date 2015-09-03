@@ -7,8 +7,8 @@ module ProductImport
 
           begin
             workbook = RubyXL::Parser.parse(filename)
-          rescue Zip::Error
-            raise ArgumentError, "Invalid xlsx files"
+          rescue Zip::Error => e
+            raise e, "XLSX file format error: #{e}", e.backtrace
           end
           raise ArgumentError, "No worksheets found in this workbook" if workbook.count < 1
 
