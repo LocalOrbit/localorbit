@@ -53,6 +53,10 @@ Rails.application.routes.draw do
 
     resources :labels, only: [:index, :show]
 
+    get "upload" => "upload#index"
+    post "upload" => "upload#check"
+    post "upload" => "upload#upload" 
+
     get "financials" => "financials#index"
     namespace :financials do
       resource  :overview, only: [:show]
