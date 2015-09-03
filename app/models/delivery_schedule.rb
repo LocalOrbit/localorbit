@@ -137,6 +137,15 @@ class DeliverySchedule < ActiveRecord::Base
     )
   end
 
+  def next_delivery_for_date(date)
+    #correct_date = date.change(hour: Time.parse(buyer_pickup_end).hour, min: 0, sec: 0)
+    deliveries.create!(
+      deliver_on: date.change(hour:17,min:0,sec:0),
+      buyer_deliver_on: date.change(hour:6,min:0,sec:0),#date.change(hour: Time.parse(buyer_pickup_start).hour, min: 0, sec: 0),
+      cutoff_time: date.change(hour:3,min:0,sec:0)
+    )
+  end
+
   def find_next_delivery
     deliveries.find_by(deliver_on: next_delivery_date)
   end
