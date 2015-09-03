@@ -140,17 +140,18 @@ class ApplicationController < ActionController::Base
       delivery_day = DateTime.parse(session[:current_delivery_day])
       delivery_id = session[:current_delivery_id]
       delivery = Delivery.find(delivery_id)
-      if delivery
-        if delivery.buyer_deliver_on.day == delivery_day.day
-          delivery
-        else
-          # todo fix me
-          # create new delivery and return it
-        end
+      # if delivery.buyer_deliver_on.day == delivery_day.day
+      #     selected = Delivery.current_selected(current_market, session[:current_delivery_id])
+      #     selected
+      # else
+      if not delivery.buyer_deliver_on.day == delivery_day.day
+        new_delivery = Delivery.create!(deliver_on:delivery_day.change({ hour: 13 }),buyer_deliver_on:delivery_day.change({ hour: 13 }),cutoff_time:delivery_day.change({ hour: 7 }),delivery_schedule_id:delivery.delivery_schedule_id,created_at:DateTime.now,updated_at:DateTime.now)
+        delivery_id = new_delivery.id
       end
+      selected = Delivery.current_selected(current_market, delivery_id)
+      selected
     else
-      if selected = Delivery.current_selected(current_market, session[:current_delivery_id]) # inspect -- does it have side effects? since we aren't calling it in the if anymore
-        # maybe: fix it and then drop through to this other current selected business instead of just returning the delivery
+      if selected = Delivery.current_selected(current_market, session[:current_delivery_id]) 
         selected
       elsif only_delivery = current_market.only_delivery
         session[:current_delivery_id] = only_delivery.id
