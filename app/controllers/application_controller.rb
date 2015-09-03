@@ -143,6 +143,7 @@ class ApplicationController < ActionController::Base
         new_delivery = DeliverySchedule.find(delivery.delivery_schedule_id).next_delivery_for_date(delivery_day) 
         session[:current_delivery_id] = new_delivery.id
       end
+      session[:current_delivery_day] = nil
     end
     if selected = Delivery.current_selected(current_market, session[:current_delivery_id]) 
       selected
