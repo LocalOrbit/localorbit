@@ -65,7 +65,7 @@
         <%= hidden_field_tag :delivery_id %>
         <%= hidden_field_tag :delivery_day %>
         <table class="calendar">
-          <tr><th>S</th><th>M</th><th>T</th><th>W</th><th>T</th><th>F</th><th>S</th></tr>
+          <tr><th class="cal-header">S</th><th class="cal-header">M</th><th class="cal-header">T</th><th class="cal-header">W</th><th class="cal-header">T</th><th class="cal-header">F</th><th class="cal-header">S</th></tr>
           <% delivery_weeks.each do |w| %>
               <tr>
                 <% w.each do |d| %>
