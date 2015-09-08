@@ -240,7 +240,7 @@ class User < ActiveRecord::Base
 
   def is_localeyes_buyer? # this really aligns with procurement_manager role and should probably be refactored when that is complete.
     intersect = []
-    localeyes_mkts = markets.select {|m| m.plan_id == 4} # all LE mkts, localeyes plan is id 4
+    localeyes_mkts = markets.joins(:plan).where("has_procurement_managers = 't'").all
     intersect = managed_organizations.select{|o| o.can_sell? == false} & localeyes_mkts.flat_map{|lm| lm.organizations}
     return intersect.any?
   end

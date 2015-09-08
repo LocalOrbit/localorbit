@@ -152,10 +152,10 @@ module ProductImport
       def load_products(format_args=nil)
         format_args ||= opts
 
-        puts "Checking file validity..."
+        #puts "Checking file validity..."
         check_format_validity!(format_args)
 
-        puts "Setting up transforms"
+        #puts "Setting up transforms"
         source_enum = format.enum_for(format_args)
         transform = transform_for_stages(*ALLOWED_STAGES)
 
@@ -165,7 +165,7 @@ module ProductImport
         begin
           _each_success_redirecting_failures(source_enum, transform) do |payload|
             count += 1
-            puts "Loaded #{count} products..." if count % 50 == 0
+            #puts "Loaded #{count} products..." if count % 50 == 0
             product_loader.update_product payload
           end
           puts "Loaded #{count} products!"

@@ -1,0 +1,26 @@
+
+.calendar{
+  margin: auto;
+  text-align: center;
+  width: 60%;
+
+  .cal-header{
+    text-align: center;
+    padding:3%;
+    border: 0px;
+    background: none;
+  }
+  
+  .cal-date{
+    display: table-cell;
+    padding:3%;
+    background:#eee;
+    border: 1px solid #fff;
+    transition-duration:.18s;
+    cursor:pointer;
+    
+    &.active{background: #0a4399; color: white;}
+    &.disabled{background: #f9f9f9; font-style: italic; color: #a3a3a3;}
+  }
+  header .cal-date{background:#fff;}
+}

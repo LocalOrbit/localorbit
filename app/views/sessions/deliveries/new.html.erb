@@ -1,6 +1,5 @@
 
 <div class="row row--partial">
-
   <div class="column column--seven-twelfths">
     <%= form_tag [:sessions, :deliveries], method: :post, id: "deliveries" do |f| %>
       <%= hidden_field_tag :redirect_back_to, params[:redirect_back_to] %>
@@ -8,6 +7,7 @@
       <h1 class="clear-before">Welcome to <%= current_market.name %></h1>
       <p class="faux-label">Please choose a pick up or delivery date.</p>
 
+    <% if not current_user.is_localeyes_buyer? %>
       <div class="row"><% @deliveries.each do |d| -%><div class="column column--guttered column--half">
           <div class="conditional field vcard delivery">
             <%= radio_button_tag "delivery_id", d.id %>
@@ -31,6 +31,64 @@
         </div><%= cycle '', raw('</div><div class="row">') if d != @deliveries.last -%><%- end -%>
       </div>
 
+    <% else %>
+
+	  <%
+         first_delivery = @deliveries.first.buyer_deliver_on
+         last_delivery = first_delivery + 30.days
+         delivery_for_day = @deliveries.each_with_object({}) { |d,map| map[d.buyer_deliver_on.wday] ||= d }
+
+         now = DateTime.now
+         calendar_start = now - now.wday
+         calendar_end = last_delivery + (6 - last_delivery.wday)
+
+         delivery_weeks = [ [] ]
+
+         (calendar_start..calendar_end).each { |day|
+           delivery_id = nil
+           css_class = if day < first_delivery || last_delivery < day
+                         "cal-date disabled"
+                       elsif delivery_for_day[day.wday]
+                         delivery_id = delivery_for_day[day.wday].id
+                         "cal-date"
+                       else
+                         "cal-date disabled"
+                       end
+           if delivery_weeks[-1].length == 7
+             delivery_weeks.push [ ]
+           end
+           delivery_weeks[-1].push({ day: day, css_class: css_class, delivery_id: delivery_id })
+         }
+      %>
+
+      <div>
+        <%= hidden_field_tag :delivery_id %>
+        <%= hidden_field_tag :delivery_day %>
+        <table class="calendar">
+          <tr><th class="cal-header">S</th><th class="cal-header">M</th><th class="cal-header">T</th><th class="cal-header">W</th><th class="cal-header">T</th><th class="cal-header">F</th><th class="cal-header">S</th></tr>
+          <% delivery_weeks.each do |w| %>
+              <tr>
+                <% w.each do |d| %>
+                    <% if d[:delivery_id] %>
+                        <td onclick="setDelivery(this,'<%= d[:day] %>',<%= d[:delivery_id] %>)"
+                            class="<%= d[:css_class] %>"><%= d[:day].day %></td>
+                    <% else %>
+                        <td class="<%= d[:css_class] %>"><%= d[:day].day %></td>
+                    <% end %>
+                <% end %>
+              </tr>
+          <% end %>
+        </table>
+        <script type="text/javascript">
+            function setDelivery(td,day,id){
+                $('input:hidden[name=delivery_id]').val(id);
+                $('input:hidden[name=delivery_day]').val(day);
+                $('.cal-date').removeClass("active");
+                $(td).addClass("active");
+            }
+        </script>
+      </div>
+	<% end %>
       <div class="form-actions">
         <%= submit_tag "Start Ordering", class: "mobile-block" %>
       </div>

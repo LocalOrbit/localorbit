@@ -35,6 +35,7 @@ Rails.application.routes.draw do
   namespace :api do
     namespace :v1 do
       resources :products, only: [:index]
+      resources :filters, only: [:index]
     end
   end
 
@@ -51,6 +52,10 @@ Rails.application.routes.draw do
     end
 
     resources :labels, only: [:index, :show]
+
+    get "upload" => "upload#index"
+    post "upload" => "upload#check"
+    post "upload" => "upload#upload" 
 
     get "financials" => "financials#index"
     namespace :financials do
