@@ -75,9 +75,9 @@ class Product < ActiveRecord::Base
   def location_id
     self.general_product && self.general_product.location_id
   end
-  def image_uid
-    self.general_product && self.general_product.image_uid
-  end
+  # def image_uid
+  #   self.general_product && self.general_product.image_uid
+  # end
   def top_level_category_id
     self.general_product && self.general_product.top_level_category_id
   end
@@ -160,11 +160,11 @@ class Product < ActiveRecord::Base
     end
     association(:location).writer(input)
   end
-  def image_uid=(input)
-    write_attribute(:image_uid, input)
-    ensure_product_has_a_general_product
-    self.general_product.image_uid = input
-  end
+  # def image_uid=(input)
+  #   write_attribute(:image_uid, input)
+  #   ensure_product_has_a_general_product
+  #   self.general_product.image_uid = input
+  # end
   def top_level_category_id=(input)
     write_attribute(:top_level_category_id, input)
     ensure_product_has_a_general_product
