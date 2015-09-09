@@ -45,10 +45,12 @@ module Api
         if(@category_ids.length > 0 && @seller_ids.length > 0)
           available_products = available_products.where("
           (
-            products.category_id IN (?)
-            OR products.top_level_category_id IN (?)
-            OR products.second_level_category_id in (?)
-            OR products.organization_id in (?)
+            (
+              products.category_id IN (?)
+              OR products.top_level_category_id IN (?)
+              OR products.second_level_category_id in (?)
+            )
+            AND products.organization_id in (?)
           )", @category_ids, @category_ids, @category_ids, @seller_ids)
         elsif(@category_ids.length > 0)
           available_products = available_products.where("
