@@ -71,7 +71,8 @@
                   <a className="popup-toggle" href={'#product-'+product.id+'-where'} tabIndex="-1"><i className="font-icon icon-direction"></i> Where</a>
                   <div className="where-info is-hidden with-anchor top-anchor popup" id={'product-'+product.id+'-where'}>
                     <div className="popup-header">
-                      Durand, MI     <button className="close"><i className="font-icon icon-close"></i></button>
+                      {product.location_label}
+                      <button className="close"><i className="font-icon icon-close"></i></button>
                     </div>
                     <img className="location-map" alt="" src="" data-src={product.location_map_url}/>
                   </div>
