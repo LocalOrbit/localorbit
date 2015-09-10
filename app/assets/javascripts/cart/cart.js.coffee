@@ -40,7 +40,6 @@ $ ->
       if @el?
         @el.find(".price-for-quantity").text(accounting.formatMoney(@data.unit_sale_price))
         @el.find(".price").text(accounting.formatMoney(@data.total_price))
-        @el.find(".quantity input").val(@data.quantity)
         if @data.quantity
           @el.find(".icon-clear").removeClass("is-hidden")
 
