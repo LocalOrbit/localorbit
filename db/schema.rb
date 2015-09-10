@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150810153907) do
+ActiveRecord::Schema.define(version: 20150910170915) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -541,6 +541,21 @@ ActiveRecord::Schema.define(version: 20150810153907) do
     t.string   "printable_type"
     t.string   "pdf_uid"
     t.string   "pdf_name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "order_template_items", force: true do |t|
+    t.integer  "order_template_id", null: false
+    t.integer  "product_id",        null: false
+    t.integer  "quantity",          null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "order_templates", force: true do |t|
+    t.string   "name",       null: false
+    t.integer  "market_id",  null: false
     t.datetime "created_at"
     t.datetime "updated_at"
   end
