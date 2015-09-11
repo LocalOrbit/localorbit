@@ -28,11 +28,11 @@ module ProductImport
 
         # Reject any rows which have blank required fields
         s.transform :validate_keys_are_present,
-          keys: REQUIRED_HEADERS - ['Brand', 'Size']
+          keys: REQUIRED_HEADERS - ['Brand', 'Size'] # TODO need to change any for general product?
 
         s.transform :alias_keys, key_map: {
           "Distributor Item#" => "product_code",
-          "Price" => "price",
+          "Price" => "price", # TODO will need to alias another key as unit/description, figure out how to deal with the different-pack-sizes
         }
 
         s.transform :join_keys,
