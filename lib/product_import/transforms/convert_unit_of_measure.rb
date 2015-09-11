@@ -3,7 +3,7 @@ class ProductImport::Transforms::ConvertUnitOfMeasure < ProductImport::Framework
   PIECE_UOMS = %w(piece pc)
   POUND_UOMS = %w(pound lb)
   CASE_UOMS = %w(case cs)
-  SUPPORTED_UOMS = [PIECE_UOMS, POUND_UOMS, CASE_UOMS].flatten
+  SUPPORTED_UOMS = [PIECE_UOMS, POUND_UOMS, CASE_UOMS].flatten # TODO this will need to be more adaptable for true multi-unit
 
 
   def transform_step(row)

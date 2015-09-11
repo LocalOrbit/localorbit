@@ -51,6 +51,9 @@ module ProductImport
         eps = find_or_create_external_products product_batch
         ep_by_org_and_key = eps.index_by{|ep| [ep.organization_id, ep.contrived_key]}
 
+        # genprod adaptation
+        #ep_by_gen_product = product_batch.collect({|prod| }) # .collect - Returns a new array with the results of running block once for every element in enum.
+
         products_to_update = Product.where(external_product_id: eps.map(&:id)).
           includes(:prices, :lots).
           to_a
@@ -61,7 +64,7 @@ module ProductImport
           ep_id = ep.id
 
           unless product = products_by_ep_id[ep_id]
-            product = Product.new 
+            product = Product.new # here, a new general product always gets created, when it shouldn't NECESSARILY
           end
 
           unless product.prices.any?
@@ -82,6 +85,7 @@ module ProductImport
             long_description: p['long_description'],
             unit_description: p['unit_description'],
             external_product_id: ep_id,
+            general_product_id: # TODO
             deleted_at: nil
           )
 
@@ -118,12 +122,17 @@ module ProductImport
         contrived_key = p['contrived_key']
         if ep = ep_by_org_and_key[[org_id, contrived_key]] # I mean actually contrived key is not unique per product, it's theoretically unique per org.
           ep.update_attribute(:source_data, p['source_data']) # Source data is an OK thing to keep around. Even good.
+          # in this case update the same attr, it will obvs have same genprod (check: when this is created, genprod is automaticall created?)
+          # TODO just need to be sure that not TOO MANY general products are created
         else
           eps << ExternalProduct.create!(
             organization_id: p['organization_id'],
             contrived_key: p['contrived_key'],
             source_data: p['source_data'],
           ) # How do ExternalProducts interact with the real GeneralProducts
+          # Check general product requnique fields (method for this??)
+          # If so, create external product with that general product id
+          # and thus (?), product with that general product id
         end
 
 
