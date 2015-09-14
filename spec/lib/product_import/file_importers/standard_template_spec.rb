@@ -19,7 +19,7 @@ describe ProductImport::FileImporters::StandardTemplate do
         "price" => 24.03,
         "product_code" => 10300,
         "organization" => "Bi-Rite",
-        "contrived_key" => ExternalProduct.contrive_key(['10300']),
+        "contrived_key" => ExternalProduct.contrive_key(["BI-RITE","SARA LEE BAGEL PLAIN PRESLICED","EACH","72 / 3 OZ"]),#ExternalProduct.contrive_key(['10300']),
         "source_data" => {
           "Seller Name"=>"Bi-Rite",
           "Product Name"=>"SARA LEE BAGEL PLAIN PRESLICED",

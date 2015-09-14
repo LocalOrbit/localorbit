@@ -5,7 +5,7 @@ describe ProductImport::Transforms::ContriveKey do
   describe "with a single from key" do
     subject do
       described_class.new(
-        from: ["baz","moo","cluck","desc"]
+        from: ["baz","moo","cluck","desc"] # mimic: organization name category unit unit_description
       )
     end
     
@@ -18,7 +18,8 @@ describe ProductImport::Transforms::ContriveKey do
       successes, failures = subject.transform_enum(data)
 
       expect(successes.size).to eq(1)
-      expected_key = "cxOyvwVOOjlA6OQ7xiwr1J8eZ24" # == ExternalProduct.contrive_key(list_of_correct_data)
+      #binding.pry
+      expected_key = ExternalProduct.contrive_key(["QUX","QUACK","BAA","TOO"])
 
       expect(successes[0]).to eq({"foo" => "bar", "baz" => "qux", "moo" => "quack","cluck" => "baa", "desc" => "too","contrived_key" => expected_key})
 

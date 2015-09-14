@@ -6,7 +6,7 @@ class ProductImport::Transforms::EnsureCanonicalData < ProductImport::Framework:
     keys: %w(organization name category price unit unit_description)
 
   transform :contrive_key,
-    from: %w(product_code organization name unit unit_description),
+    from: %w(organization name unit unit_description), # don't need to validate product code anymore
     skip_if_present: true
 
   transform :move_non_canonical_fields_to_source_data
