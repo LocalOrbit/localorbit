@@ -67,7 +67,6 @@ describe ProductImport::FileImporters::Lodex do
       ]
 
       success, fail = subject.transform_enum(data)
-      binding.pry
       expect(success).to be_array_compliant_with_schema(ProductImport::Schemas::CANONICAL)
       expect(success.length).to eq(2)
       expect(fail.length).to eq(data.length - success.length - 1)
