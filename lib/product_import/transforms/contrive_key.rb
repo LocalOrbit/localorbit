@@ -12,13 +12,14 @@ class ProductImport::Transforms::ContriveKey < ProductImport::Framework::Transfo
       return
     end
 
-    parts = row.values_at(*opts[:from])
+    parts = row.values_at(*opts[:from]) # TODO write up scenarios (distributor, product code, along for ride, break case feature. We are making choice to bring prodcodes along for the ride. Products with diff units might have same product code, which is not the current situation. Or might have same product with diff unit that get diff product codes (required), but we don't care. WE care about 3 lbs vs 6 lbs.)
     if parts[1..-1].any?(&:blank?)
       row['contrived_key'] = nil
-    elsif parts[0].blank?
-      row['contrived_key'] = ExternalProduct.contrive_key(parts[1..-1].map! {|p| p.upcase}) # control for case so that won't differentiate names of products
-    else
-      row['contrived_key'] = ExternalProduct.contrive_key([parts[0]]) # Use only the product code if they provide it (because we started doing that and want to maintain the history). It expects an array.
+    else #parts[0].blank?
+      row['contrived_key'] = ExternalProduct.contrive_key(parts.map! {|p| p.to_s.upcase}) # control for case so that won't differentiate names of products
+    # TODO: regenerate contrived key column before making this change in order to keep from getting product duplicates.
+    # else
+    #   row['contrived_key'] = ExternalProduct.contrive_key([parts[0]]) # Use only the product code if they provide it (because we started doing that and want to maintain the history). It expects an array.
     end
 
     if row['contrived_key']
