@@ -6,8 +6,8 @@ describe ProductImport::Formats::Csv do
     enum = subject.enum_for(filename: file)
 
     expect(enum.take(2)).to eq([
-      ["product_code", "organization","name", "category", "price", 'unit'],
-      ["abc123", "bi-rite", "St. John's Wart", "Herbs", "1.23", '2/3 lb tub'],
+      ["product_code", "organization","name", "category", "price", 'unit', 'unit_description'],
+      ["abc123", "bi-rite", "St. John's Wart", "Herbs", "1.23", 'Each', '2/3 lb tub'],
     ])
   end
 
