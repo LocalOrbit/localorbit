@@ -1,5 +1,6 @@
 class Admin::UploadController < AdminController
 	require 'rubyXL'
+  require 'open3'
 
   def upload
   	uploaded = params[:datafile] # Gets the xlsx data from form upload post request
@@ -25,8 +26,20 @@ class Admin::UploadController < AdminController
   		profile = params[:profile]
   		filepath = './tempfiles/' + params[:datafile].original_filename.to_s
 			upload # call the upload method to write file to tempfiles
-			cli_call_result = `./bin/import_products standard_template -p #{profile} -f '#{filepath}' 2>&1` # Run CLI script with correct options, include STDERR with STDOUT, to parse both.
+			#cli_call_result = `./bin/import_products standard_template -p #{profile} -f '#{filepath}' 2>&1` # Run CLI script with correct options, include STDERR with STDOUT, to parse both.
+      #result = system("&./bin/import_products standard_template -p #{profile} -f '#{filepath}' 2>&1")
+      # audits around here, see slack notes
+      stdin, stdout, stderr, status = Open3.capture3("./bin/import_products standard_template -p #{profile} -f '#{filepath}'")
+      ##p stdout.read
+      #binding.pry
+      result = stdout # redirected stderr to stdout str
+      get_output(result) # have to make sure this is not doing the web request, which it shouldn't be...
+    end
+  end
 
+
+  def get_output(cli_call_result)
+    if params.has_key?(:datafile)
     	@error_display = [] # initial
     	if cli_call_result.include?("Assuming file is invalid and bailing out")
     		@errors = [":reason: Invalid file. No upload. Check your data file headers."] # array in case we want to add more information, easier
@@ -37,19 +50,22 @@ class Admin::UploadController < AdminController
     		@total_products_msg = "0 products." # 0 products have been uploaded if the file has bad headers. Could be factored out TODO.
     	elsif cli_call_result.include?("---")
 				@errors = cli_call_result.split("---")[1..-1]
+        #p @errors
 				@errors.each do |er|
 					er_data = er.split("\n") # Pull apart YAML in the huge text string we now have.
-					reason = er_data.select{|ln| ln.start_with?(":reason:")} 
+					#p er_data
+          reason = er_data.select{|ln| ln.start_with?(":reason:")} 
+          #puts reason, "HERE IS THE REASON!"
 					if reason.empty?
 						reason = ["        No identifiable reason for error. Check your data file."] # 8 spaces for standard placement of text.
 					end
 					name = er_data.select{|ln| ln.include?(" name:")}
 					@error_display << {'name' => name.first[8..-1] ,'reason' => reason.first[8..-1]} # Product name, error reason (do we want other things, line number is more effort for moment). 8..-1 because apparent standard char# inward for text from process.
 				end 
-	    	@total_products_msg = cli_call_result.split("Loaded").last # could be factored out TODO
+	    	@total_products_msg = "some products up! Working on this number thing." #cli_call_result.split("Loaded").last # could be factored out TODO
     	else
     		@no_errors = "No errors! Hooray!"
-    		@total_products_msg = cli_call_result.split("Loaded").last
+    		@total_products_msg = "some products up! Working on this number thing." #cli_call_result.split("Loaded").last
     	end
 			return
 		end
