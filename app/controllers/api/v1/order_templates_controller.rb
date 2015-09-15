@@ -2,7 +2,7 @@ module Api
   module V1
     class OrderTemplatesController < ApplicationController
       def index
-        render json: {templates: OrderTemplate.where(market: current_market)}
+        render json: {templates: OrderTemplate.where(market: current_market).as_json({include: :items})}
       end
 
       def destroy
