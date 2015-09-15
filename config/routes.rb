@@ -36,6 +36,7 @@ Rails.application.routes.draw do
     namespace :v1 do
       resources :products, only: [:index]
       resources :filters, only: [:index]
+      resources :order_templates, only: [:index, :create, :destroy]
     end
   end
 
@@ -55,7 +56,7 @@ Rails.application.routes.draw do
 
     get "upload" => "upload#index"
     post "upload" => "upload#check"
-    post "upload" => "upload#upload" 
+    post "upload" => "upload#upload"
 
     get "financials" => "financials#index"
     namespace :financials do
@@ -184,6 +185,10 @@ Rails.application.routes.draw do
   resource :subscriptions do
     get "unsubscribe" => "subscriptions#unsubscribe"
     get "confirm_unsubscribe" => "subscriptions#confirm_unsubscribe"
+  end
+
+  resources :templates, :index do
+    get '/new' => "templates#new"
   end
 
   get '/products/search' => "products#search"

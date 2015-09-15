@@ -1,0 +1,21 @@
+<%= react_component('lo.NewOrderTemplate', {
+  baseUrl: "#{request.base_url}/api/v1/",
+  cart: current_cart.as_json({
+    only: :id,
+    include: {
+      items: {
+        only: :quantity,
+        include: {
+          product: {
+            only: [:name],
+            include: {
+              unit: {
+                only: [:plural]
+              }
+            }
+          }
+        }
+      }
+    }
+  })
+}) %>

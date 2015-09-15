@@ -3,4 +3,12 @@ class OrderTemplate < ActiveRecord::Base
   belongs_to :market
 
   validates :market, :name, presence: true
+
+  def self.create_from_cart!(cart, name)
+    template = OrderTemplate.create!(name: name, market: cart.market)
+    cart.items.each do |item|
+      OrderTemplateItem.create!(product: item.product, quantity: item.quantity, order_template: template)
+    end
+    template
+  end
 end
