@@ -21,24 +21,32 @@ class Admin::UploadController < AdminController
   end
 
   def check
-  	@total_products_msg = "0 products." # initial
+  	@total_products_msg = "Loaded 0 products." # initial
   	if params.has_key?(:datafile)
   		profile = params[:profile]
   		filepath = './tempfiles/' + params[:datafile].original_filename.to_s
 			upload # call the upload method to write file to tempfiles
-			#cli_call_result = `./bin/import_products standard_template -p #{profile} -f '#{filepath}' 2>&1` # Run CLI script with correct options, include STDERR with STDOUT, to parse both.
-      #result = system("&./bin/import_products standard_template -p #{profile} -f '#{filepath}' 2>&1")
-      # audits around here, see slack notes
-      stdin, stdout, stderr, status = Open3.capture3("./bin/import_products standard_template -p #{profile} -f '#{filepath}'")
-      ##p stdout.read
-      #binding.pry
-      result = stdout # redirected stderr to stdout str
-      get_output(result) # have to make sure this is not doing the web request, which it shouldn't be...
+
+      # this takes a long time, so let's force it to a background job
+      # make sure to create an audit for import/completion (probably too much audit creation.. workign too hard?)
+      
+      Audit.create(user_id:current_user.id,auditable_type:"import",comment:"START") # need to write status there...
+      stdout, stderr, status = Open3.capture3("./bin/import_products standard_template -p #{profile} -f '#{filepath}' &")
+      Audit.create(user_id:current_user.id,auditable_type:"import",comment:status.to_s) # need to write status there...
+
+      #aud.comment = status.to_s # need to know for url return
+      aud.save!
+      # want the status business to be AT... upload/get_output ...
+
+      # for now:
+      get_output(stderr, stdout) # have to make sure this is not doing the web request, which it shouldn't be...
     end
   end
 
 
-  def get_output(cli_call_result)
+  def get_output(cli_call_result, products_loaded)
+    # while getting error, get url_with_import, throw that to cli_call_result
+    #cli_call_result = "" # the result of url_with_import string
     if params.has_key?(:datafile)
     	@error_display = [] # initial
     	if cli_call_result.include?("Assuming file is invalid and bailing out")
@@ -50,22 +58,19 @@ class Admin::UploadController < AdminController
     		@total_products_msg = "0 products." # 0 products have been uploaded if the file has bad headers. Could be factored out TODO.
     	elsif cli_call_result.include?("---")
 				@errors = cli_call_result.split("---")[1..-1]
-        #p @errors
 				@errors.each do |er|
 					er_data = er.split("\n") # Pull apart YAML in the huge text string we now have.
-					#p er_data
           reason = er_data.select{|ln| ln.start_with?(":reason:")} 
-          #puts reason, "HERE IS THE REASON!"
 					if reason.empty?
 						reason = ["        No identifiable reason for error. Check your data file."] # 8 spaces for standard placement of text.
 					end
 					name = er_data.select{|ln| ln.include?(" name:")}
 					@error_display << {'name' => name.first[8..-1] ,'reason' => reason.first[8..-1]} # Product name, error reason (do we want other things, line number is more effort for moment). 8..-1 because apparent standard char# inward for text from process.
 				end 
-	    	@total_products_msg = "some products up! Working on this number thing." #cli_call_result.split("Loaded").last # could be factored out TODO
+	    	@total_products_msg = "#{products_loaded}" #cli_call_result.split("Loaded").last # could be factored out TODO
     	else
     		@no_errors = "No errors! Hooray!"
-    		@total_products_msg = "some products up! Working on this number thing." #cli_call_result.split("Loaded").last
+    		@total_products_msg = "#{products_loaded}" #cli_call_result.split("Loaded").last
     	end
 			return
 		end
