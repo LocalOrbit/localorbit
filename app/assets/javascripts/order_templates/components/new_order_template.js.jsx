@@ -62,11 +62,11 @@
           <div className="row" style={{marginTop: "50px"}}>
             <div className="column column--half">
               <label>Template name</label>
-              <input value={this.state.name} onChange={this.newName} type="text" style={{width: "100%"}}/>
+              <input value={this.state.name} onChange={this.newName} type="text" style={{width: "100%"}} className="app-template-name"/>
             </div>
             <div className="column column--half">
               <br/>
-              <button type="button" disabled={this.inputDisabled()} className="btn--save pull-right" onClick={this.save}>Save</button>
+              <button type="button" disabled={this.inputDisabled()} className="btn--save pull-right app-save-template" onClick={this.save}>Save</button>
               <a href="/cart" className="btn pull-right" style={{marginRight: "20px"}}>Cancel</a>
             </div>
           </div>

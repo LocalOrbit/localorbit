@@ -81,7 +81,7 @@
           <td colSpan="2">
             <div style={{float:"left", background:"#F7F7F7", width:"100%", borderRadius: "4px", border:"1px solid #D1D1D1", padding: "4px 0"}}>
               <div className="quantity" style={{float:"left", width:"50%", textAlign:"center"}}>
-                <input style={{width: "75px"}} type="number" value={this.state.cartItemQuantity} className="redesigned" onChange={this.updateQuantity}/>
+                <input style={{width: "75px"}} type="number" value={this.state.cartItemQuantity} className="redesigned app-product-input" onChange={this.updateQuantity}/>
               </div>
               <div style={{float:"left", width:"50%", textAlign:"center", padding: "10px 0"}}>
                 <span className="price">{this.props.total_price}</span>

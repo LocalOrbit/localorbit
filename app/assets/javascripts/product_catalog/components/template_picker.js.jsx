@@ -57,7 +57,7 @@
           <tr>
             <td>{template.name}</td>
             <td>
-              <button className="btn btn--primary" onClick={self.applyTemplate.bind(this, template)}>Apply</button>
+              <button className="btn btn--primary app-apply-template-btn" onClick={self.applyTemplate.bind(this, template)}>Apply</button>
             </td>
           </tr>
         );
