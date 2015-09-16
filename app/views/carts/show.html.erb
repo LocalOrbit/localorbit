@@ -2,6 +2,11 @@
   <h1 class="heading-cart"><i class="font-icon icon-cart"></i> Cart</h1>
   <%= form_for :order, url: [:orders], html: {id: "order-form"} do |f| %>
     <%= render "shared/errors", {resource: @order} if @order %>
+    <% if flash[:error] && current_market.plan.name == "LocalEyes" %>
+      <div class="flash flash--warning">
+        <p><%= flash[:error] %></p>
+      </div>
+    <% end %>
     <div class="row">
       <div class="column column--half column--guttered">
         <div class="cart_items" data-cart-url="<%= cart_path %>">

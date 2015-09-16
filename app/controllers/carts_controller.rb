@@ -39,7 +39,7 @@ class CartsController < ApplicationController
       @item.product = product
 
       if @item.quantity && @item.quantity > 0 && @item.quantity > product.available_inventory(delivery_date)
-        @error = "Quantity available for purchase: #{product.available_inventory(delivery_date)}"
+        @error = "Quantity of #{product.name} available for purchase: #{product.available_inventory(delivery_date)}"
         @item.quantity = product.available_inventory(delivery_date)
       end
 
@@ -49,6 +49,7 @@ class CartsController < ApplicationController
       @item.destroy
     end
 
+    flash[:error] = @error unless !@error
     @apply_discount = current_cart.discount ? ApplyDiscountToCart.perform(cart: current_cart, code: current_cart.discount.code) : nil
   end
 

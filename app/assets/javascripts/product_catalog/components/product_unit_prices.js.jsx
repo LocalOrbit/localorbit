@@ -5,8 +5,8 @@
       unit: React.PropTypes.string.isRequired,
       prices: React.PropTypes.array.isRequired,
       cart_item_quantity: React.PropTypes.number.isRequired,
-      max_available: React.PropTypes.string.isRequired,
-      total_price: React.PropTypes.number.isRequired
+      max_available: React.PropTypes.number.isRequired,
+      total_price: React.PropTypes.string.isRequired
     },
 
     getInitialState: function() {

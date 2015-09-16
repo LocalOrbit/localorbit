@@ -3,8 +3,7 @@
 
   var NewOrderTemplate = React.createClass({
     propTypes: {
-      baseUrl: React.PropTypes.string.isRequired,
-      cart: React.PropTypes.shape.isRequired
+      baseUrl: React.PropTypes.string.isRequired
     },
 
     getInitialState: function() {

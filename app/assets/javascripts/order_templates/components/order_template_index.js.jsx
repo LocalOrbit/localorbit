@@ -36,7 +36,6 @@
             <td>{template.name}</td>
             <td>{moment(template.created_at).format('L')}</td>
             <td>
-              <a href className="btn">Edit</a>
               <a href="javascript:void(0);" onClick={self.deleteTemplate.bind(this, template.id)} className="pull-right" style={{marginTop:"9px"}}>Delete</a>
             </td>
           </tr>
@@ -48,7 +47,7 @@
           <div className="sub-header stickable js-positioned">
           <div className="l-constraint">
             <div className="l-page-header admin-markets-header">
-              <h1><i className="font-icon" data-icon=""></i>&nbsp; Order Templates</h1>
+              <h1><i className="font-icon" data-icon=""></i>&nbsp; Order Templates</h1>
             </div>
           </div>
         </div>

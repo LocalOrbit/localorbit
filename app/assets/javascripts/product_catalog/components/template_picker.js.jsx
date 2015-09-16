@@ -44,8 +44,8 @@
       var promises = _.map(template.items, function(item) {
         return self.addProduct(item.product_id, item.quantity);
       });
-      Q.all(promises)
-        .done(function() {
+      Q.allSettled(promises)
+        .done(function(res) {
           window.location = '/cart';
         });
     },
