@@ -47,10 +47,8 @@
     },
 
     onLoad: function(res) {
-      this.catalog.products = res.products;
-      this.catalog.hasMore = (this.catalog.products.length < res.product_total);
-      this.trigger(this.catalog);
-      this.loading = false;
+      this.catalog.products = [];
+      this.onLoadMore(res);
     },
 
     loadMoreProducts: function() {
@@ -61,10 +59,22 @@
     },
 
     onLoadMore: function(res) {
-      this.catalog.products = this.catalog.products.concat(res.products);
+      this.catalog.products = this.catalog.products.concat(this.unpackProducts(res));
       this.catalog.hasMore = (this.catalog.products.length < res.product_total);
       this.trigger(this.catalog);
       this.loading = false;
+    },
+
+    unpackProducts: function(res) {
+      var sellers = res.sellers || {};
+      return _.map(res.products, function(general_product) {
+        var products = general_product.available || [];
+        // TODO: convert ProductRow to take a general product with multiple available products
+        // then change the mapping function here to convert to its expected view model
+        return _.extend(_.omit(general_product, "available"),
+                        products[0],
+                        sellers[general_product.seller_id]);
+      });
     },
 
     onLoadError: function(err) {
