@@ -67,6 +67,7 @@ module Api
                        .sort_by { |product_info| product_info["unit"] }
 
         {
+            :id => general_product.id,
             :name => general_product.name,
             :seller_id => general_product.organization.id,
             :short_description => general_product.short_description,

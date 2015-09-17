@@ -2,6 +2,7 @@
 //= require jquery
 
 (function() {
+
   var ProductActions = Reflux.createActions([
     "setBaseUrl",
     "loadProducts",
@@ -68,12 +69,10 @@
     unpackProducts: function(res) {
       var sellers = res.sellers || {};
       return _.map(res.products, function(general_product) {
-        var products = general_product.available || [];
-        // TODO: convert ProductRow to take a general product with multiple available products
-        // then change the mapping function here to convert to its expected view model
-        return _.extend(_.omit(general_product, "available"),
-                        products[0],
-                        sellers[general_product.seller_id]);
+        if (!general_product.available) {
+          general_product.available = [];
+        }
+        return _.extend(general_product, sellers[general_product.seller_id]);
       });
     },
 

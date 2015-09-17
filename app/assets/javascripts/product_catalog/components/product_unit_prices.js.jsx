@@ -2,18 +2,27 @@
 
   var ProductUnitPrices = React.createClass({
     propTypes: {
-      unit: React.PropTypes.string.isRequired,
-      prices: React.PropTypes.array.isRequired,
-      cart_item_quantity: React.PropTypes.number.isRequired,
-      max_available: React.PropTypes.number.isRequired,
-      total_price: React.PropTypes.string.isRequired
+      product: React.PropTypes.shape({
+        id: React.PropTypes.number.isRequired,
+        unit: React.PropTypes.string.isRequired,
+        unit_description: React.PropTypes.string,
+        prices: React.PropTypes.array.isRequired,
+        total_price: React.PropTypes.string.isRequired,
+        max_available: React.PropTypes.number.isRequired,
+        cart_item_quantity: React.PropTypes.number.isRequired,
+        cart_item: React.PropTypes.object.isRequired
+      }).isRequired
     },
 
     getInitialState: function() {
       return {
         showAll: false,
-        cartItemQuantity: this.props.cart_item_quantity
+        cartItemQuantity: this.props.product.cart_item_quantity
       };
+    },
+
+    componentDidMount: function() {
+      window.insertCartItemEntry($(this.getDOMNode()));
     },
 
     fullPricingRow: function(prices, showCaret) {
@@ -35,7 +44,7 @@
     },
 
     fullPricing: function() {
-      var groupedPrices = _.toArray(_.groupBy(this.props.prices, function(element, index){
+      var groupedPrices = _.toArray(_.groupBy(this.props.product.prices, function(element, index){
         return Math.floor(index/3);
       }));
       return _.map(groupedPrices, function(priceGroup, index) {
@@ -45,7 +54,7 @@
     },
 
     abbreviatedPricing: function() {
-      var prices = this.props.prices;
+      var prices = this.props.product.prices;
       return (
         <tr>
           <td colSpan="3">
@@ -66,13 +75,13 @@
     },
 
     render: function() {
-      var pricing = (this.props.prices.length <= 3 || this.state.showAll) ? this.fullPricing() : this.abbreviatedPricing();
+      var pricing = (this.props.product.prices.length <= 3 || this.state.showAll) ? this.fullPricing() : this.abbreviatedPricing();
 
       return (
-        <tr>
+        <tr className="cart_item" data-keep-when-zero="yes" data-cart-item={JSON.stringify(this.props.product.cart_item)}>
           <th>
-            {this.props.unit} <br/>
-            <span style={{fontSize:"11px", color:"#737373"}}>{this.props.max_available} Avail.</span>
+            <a href={"/products/" + this.props.product.id}>{this.props.product.unit_description || this.props.product.unit}</a><br/>
+            <span style={{fontSize:"11px", color:"#737373"}}>{this.props.product.max_available} Avail.</span>
           </th>
           <td>
             <table>
@@ -85,7 +94,7 @@
                 <input style={{width: "75px"}} type="number" value={this.state.cartItemQuantity} className="redesigned app-product-input" onChange={this.updateQuantity}/>
               </div>
               <div style={{float:"left", width:"50%", textAlign:"center", padding: "10px 0"}}>
-                <span className="price">{this.props.total_price}</span>
+                <span className="price">{this.props.product.total_price}</span>
                 <a style={{display: "none"}} className="font-icon icon-clear" href="javascript:void(0);"></a>
               </div>
             </div>
