@@ -14,7 +14,7 @@ describe AddBankAccountToManagedStripeAccount do
   }}
 
   it "creates a new Stripe Account Bank Account and links it to the given BankAccount" do
-    expect(bank_accounts_proxy).to receive(:create).with(bank_account: "a stripe token").and_return(stripe_bank_account)
+    expect(bank_accounts_proxy).to receive(:create).with(bank_account: "a stripe token", default_for_currency: true).and_return(stripe_bank_account)
     expect(bank_account).to receive(:update).with(stripe_id: 'saba id', account_role: 'deposit')
 
     result = subject.perform(params)
