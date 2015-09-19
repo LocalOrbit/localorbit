@@ -6,6 +6,7 @@ describe AddBankAccountToManagedStripeAccount do
   let(:stripe_account) { double "stripe account", bank_accounts: bank_accounts_proxy }
   let(:bank_account) { double "bank account" }
   let(:bank_account_params) { HashWithIndifferentAccess.new(stripe_tok: "a stripe token") }
+  let(:account) { double "stripe account" }
 
   let(:params) {{
     stripe_account: stripe_account,
