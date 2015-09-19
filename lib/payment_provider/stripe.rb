@@ -317,7 +317,7 @@ module PaymentProvider
 
       def remove_unused_bank_accounts(stripe_account)
         account = ::Stripe::Account.retrieve(stripe_account.id)
-        bank_accounts = account.external_accounts
+        bank_accounts = account.bank_accounts
         bank_accounts.each do |a|
           if !a.default_for_currency
             del_result = a.delete
