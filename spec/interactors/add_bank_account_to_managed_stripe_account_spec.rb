@@ -17,6 +17,9 @@ describe AddBankAccountToManagedStripeAccount do
     expect(bank_accounts_proxy).to receive(:create).with(bank_account: "a stripe token", default_for_currency: true).and_return(stripe_bank_account)
     expect(bank_account).to receive(:update).with(stripe_id: 'saba id', account_role: 'deposit')
 
+    expect(account).to receive(stripe_account)
+    expect(bank_account).to receive(bank_account.external_accounts)
+
     result = subject.perform(params)
     expect(result.success?).to be true
   end
