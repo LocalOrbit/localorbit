@@ -315,6 +315,16 @@ module PaymentProvider
         bank_accounts.reject do |ba| ba.stripe_id.nil? end
       end
 
+      def remove_unused_bank_accounts(stripe_account)
+        account = ::Stripe::Account.retrieve(stripe_account.id)
+        bank_accounts = account.external_accounts
+        bank_accounts.each do |a|
+          if !a.default_for_currency
+            del_result = a.delete
+          end
+        end
+      end
+
       private
 
       def enumerate_transfer_transactions(transfer_id:, stripe_account_id:)

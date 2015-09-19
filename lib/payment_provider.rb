@@ -150,5 +150,9 @@ module PaymentProvider
     def select_usable_bank_accounts(payment_provider, bank_accounts)
       PaymentProvider.for(payment_provider).select_usable_bank_accounts(bank_accounts)
     end
+
+    def remove_unused_bank_accounts(payment_provider, account)
+      PaymentProvider.for(payment_provider).remove_unused_bank_accounts(account)
+    end
   end
 end
