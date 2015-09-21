@@ -1,4 +1,4 @@
-csv << ["Name", "Market", "Registered On", "Role", "Shipping Address", "Shipping Phone", "Billing Address", "Billing Phone", "Users", "User Emails"]
+csv << ["Name", "Market", "Registered On", "Role", "Shipping Address", "Shipping Phone", "Billing Address", "Billing Phone", "User Emails"]
 
 def full_address(address)
   if address.present?
@@ -29,7 +29,6 @@ end
     organization.shipping_location.try(:phone),
     full_address(organization.billing_location),
     organization.billing_location.try(:phone),
-    users_list(organization),
     users_emails(organization)
   ]
 end
