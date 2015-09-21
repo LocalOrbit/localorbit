@@ -72,12 +72,25 @@
               <td class="notes"></td>
             </tr>
           <% end %>
-          <tr class="totals">
-            <th colspan="4" style="text-align: right">Total:</th>
-            <th class="total-price"><%= number_to_currency Financials::Orders::Calc.gross_item_total(items: items) %></th>
-            <th colspan="4" style="text-align:left">Delivery Fees:</th>
-            <th class="total-price"><%= number_to_currency order.calculate_delivery_fees %></th>
-          </tr>
+          <% if not order.delivery_fees > 0.00 %>
+            <tr class="totals">
+              <th colspan="5" style="text-align: right">Total:</th>
+              <th class="total-price"><%= number_to_currency Financials::Orders::Calc.gross_item_total(items: items) %></th>
+            </tr>
+          <% else %> 
+            <tr class="totals">
+              <th colspan="5" style="text-align: right">Subtotal:</th>
+              <th class="total-price"><%= number_to_currency Financials::Orders::Calc.gross_item_total(items: items) - order.delivery_fees %></th>
+            </tr>
+            <tr class="totals">
+              <th colspan="5" style="text-align:right">Delivery Fees:</th>
+              <th class="total-price"><%= number_to_currency order.delivery_fees %></th>
+            </tr>
+            <tr class="totals">
+              <th colspan="5" style="text-align:right">Total:</th>
+              <th class="total-price"><%= number_to_currency Financials::Orders::Calc.gross_item_total(items: items) - order.delivery_fees %>
+            </tr>
+          <% end %>
         </table>
       </div>
     </div>
