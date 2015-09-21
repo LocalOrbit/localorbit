@@ -5,7 +5,7 @@ require File.expand_path(File.join(File.dirname(__FILE__), '..', 'config', 'envi
 require 'slop'
 
 if ARGV.empty?
-	puts "USAGE: import_products import_type [options] 2> errors.yml > out.lodex.csv"
+	puts "USAGE: import_wrapper {job_id} 2> errors.yml"
   exit 1
 else
 	job_id = ARGV.first 
