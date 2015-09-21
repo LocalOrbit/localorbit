@@ -1,26 +1,52 @@
-Here's a very not designed thing to import products. FUN FUN FUN! Only admins can see this.
+
+<script>
+
+	var interval = setInterval(findJob,10000);
+
+	function findJob() { 
+		$.ajax('#/admin/newjob', {
+			method: 'post',
+			data: {
+				'job_id': "#{@job_id}"
+			},
+			success: function(data, status) {
+				clearInterval(interval);
+				console.log('success');
+				console.log(this.data);
+			},
+			error: function(xhr, status) {
+				// It failed, you may not know why, but probably because it wasn't there yet
+				console.log("that did not work");
+			}
+		});
+	}
+</script>
+
+
+
+Here's a very not designed thing to import products. FUN FUN FUN! Only admins can see this. Also, <%= @test %>
 <br>
 <strong><a href="/admin/upload">Return to upload form</a></strong>
 
 <br>
 <br>
-<strong>Successfully gotten:</strong>
-<%= "#{@total_products_msg}" %>
-<br><br> <br>
-<strong>Errors encountered:</strong>
-<br>
-<% if @errors %>
-	<% @error_display.each do |er| %>
-		<strong>product name:</strong>
-		<%= "#{er['name']}" %>
-		<br/>
-		<strong>error:</strong>
-		<%= "#{er['reason']}" %>
-		<br></br>
+	<strong>Successfully gotten:</strong>
+	<%= "#{@total_products_msg}" %>
+	<br><br> <br>
+	<strong>Errors encountered:</strong>
+	<br>
+	<% if @errors %>
+		<% @error_display.each do |er| %>
+			<strong>product name:</strong>
+			<%= "#{er['name']}" %>
+			<br/>
+			<strong>error:</strong>
+			<%= "#{er['reason']}" %>
+			<br></br>
+		<% end %>
+	<% else %>
+		<%= "#{@no_errors}" %>
 	<% end %>
-<% else %>
-	<%= "#{@no_errors}" %>
-<% end %>
 
 <br><br>
 <strong><a href="/admin/upload">Return to upload form</a></strong>

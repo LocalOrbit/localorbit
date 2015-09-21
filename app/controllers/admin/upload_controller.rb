@@ -20,24 +20,30 @@ class Admin::UploadController < AdminController
   	end
   end
 
-  def check
-  	@total_products_msg = "Loaded 0 products." # initial
-  	if params.has_key?(:datafile)
-  		profile = params[:profile]
-  		filepath = './tempfiles/' + params[:datafile].original_filename.to_s
-			upload # call the upload method to write file to tempfiles
+  
+def check
+    @total_products_msg = "Loading not completed." # initial
+    if params.has_key?(:datafile)
+      profile = params[:profile]
+      filepath = './tempfiles/' + params[:datafile].original_filename.to_s
+      upload # call the upload method to write file to tempfiles
 
-      # this takes a long time, so let's force it to a background job
-      # make sure to create an audit for import/completion (probably too much audit creation.. workign too hard?)
-      
-      # creating audits again because the offloading isn't working correctly
-      Audit.create(user_id:current_user.id,auditable_type:"import",comment:"START") # need to write status there...
-      stdout, stderr, status = Open3.capture3("./bin/import_products standard_template -p #{profile} -f '#{filepath}' &")
-      Audit.create(user_id:current_user.id,auditable_type:"import",comment:status.to_s) # need to write status there...
+      @job_id = Time.now.to_i #send this to the audit
 
-      # for now:
-      redirect_to get_output(stderr, stdout) # have to make sure this is not doing the web request, which it shouldn't be...
+      # system calls the wrapper, run in the background, passing through the job_id
+      system("./bin/import_wrapper #{@job_id} &") # first arg for import_wrapper
     end
+  end
+
+  def newjob
+    @job_id = params[:job_id] # access this from the post
+    # try to find audit with job id
+    aud = Audit.where(associated_id:@job_id)
+    binding.pry
+    content = aud['comment'].split("|*|")
+    error_text = content.first
+    products_loaded = content.last
+    get_output(error_text,products_loaded)
   end
 
 

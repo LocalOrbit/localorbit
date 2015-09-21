@@ -1,0 +1,14 @@
+#!/usr/bin/env ruby
+
+require File.expand_path(File.join(File.dirname(__FILE__), '..', 'config', 'environment'))
+
+require 'slop'
+
+if ARGV.empty?
+	puts "USAGE: import_products import_type [options] 2> errors.yml > out.lodex.csv"
+  exit 1
+else
+	job_id = ARGV.first 
+	stdout, stderr, status = Open3.capture3("./bin/import_products standard_template -p #{profile} -f '#{filepath}' &")
+	Audit.create(user_id:current_user.id,auditable_type:"product_import", comment:stderr + "|*|" + stdout,associated_id:job_id)
+end
