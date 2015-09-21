@@ -54,8 +54,8 @@ class User < ActiveRecord::Base
 
   scope :buyers, -> { joins(:organizations).merge(Organization.buying) }
   scope :sellers, -> { joins(:organizations).merge(Organization.selling) }
-  
-  scope :in_market, ->(market) { 
+
+  scope :in_market, ->(market) {
     market_id = case market
                 when Market
                   market.id
@@ -78,7 +78,7 @@ class User < ActiveRecord::Base
   #   joins(:managed_markets).
   #   where(managed_markets: {market_id: market_id})
   # }
- 
+
   scope :subscribed_to, ->(subscription) {
     where_opts = case subscription
              when SubscriptionType
@@ -277,6 +277,14 @@ class User < ActiveRecord::Base
 
   def managed_organization_ids_including_deleted
     managed_organizations_including_deleted.map(&:id)
+  end
+
+  def managed_organizations_within_market_including_crossellers(market)
+    if admin? || managed_markets.include?(market)
+      market.organizations.extending(MarketOrganization::AssociationScopes).excluding_deleted.mo_join_market_id(market.id)
+    else
+      organizations.extending(MarketOrganization::AssociationScopes).joins(:market_organizations).excluding_deleted.mo_join_market_id(market.id)
+    end
   end
 
   def managed_organizations_within_market(market)

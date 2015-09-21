@@ -14,7 +14,7 @@ module Search
 
     def buyer_organizations
       if @filtered_market.present?
-        @user.managed_organizations_within_market(@filtered_market)
+        @user.managed_organizations_within_market_including_crossellers(@filtered_market)
       else
         @user.managed_organizations
       end.order(:name)
