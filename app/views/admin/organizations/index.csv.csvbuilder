@@ -1,4 +1,4 @@
-csv << ["Name", "Market", "Registered On", "Role", "Shipping Address", "Shipping Phone", "Billing Address", "Billing Phone", "User Emails"]
+csv << ["Name", "Market", "Registered On", "Role", "Shipping Address", "Shipping Phone", "Billing Address", "Billing Phone", "Users"]
 
 def full_address(address)
   if address.present?
@@ -15,10 +15,6 @@ def users_list(org)
   org.users.map{|u| u.name.nil? ? "User ID #{u.id.to_s}" : u.name }.join(", ")
 end
 
-def users_emails(org)
-  org.users.map{|u| u.email.nil? ? "None" : u.email}.join(", ")
-end
-
 @organizations.each do |organization|
   csv << [
     organization.name,
@@ -29,6 +25,6 @@ end
     organization.shipping_location.try(:phone),
     full_address(organization.billing_location),
     organization.billing_location.try(:phone),
-    users_emails(organization)
+    users_list(organization)
   ]
 end
