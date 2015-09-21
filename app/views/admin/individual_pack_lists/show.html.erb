@@ -75,6 +75,8 @@
           <tr class="totals">
             <th colspan="4" style="text-align: right">Total:</th>
             <th class="total-price"><%= number_to_currency Financials::Orders::Calc.gross_item_total(items: items) %></th>
+            <th colspan="4" style="text-align:left">Delivery Fees:</th>
+            <th class="total-price"><%= number_to_currency order.calculate_delivery_fees %></th>
           </tr>
         </table>
       </div>
