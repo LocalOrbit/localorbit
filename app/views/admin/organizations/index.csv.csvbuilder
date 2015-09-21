@@ -16,7 +16,7 @@ def users_list(org)
 end
 
 def users_emails(org)
-  org.users.map{|u| u.email.nil ? "" : u.email}.join(", ")
+  org.users.map{|u| u.email.nil? ? "None" : u.email}.join(", ")
 end
 
 @organizations.each do |organization|
