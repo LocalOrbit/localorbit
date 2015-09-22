@@ -22,6 +22,7 @@ class Organization < ActiveRecord::Base
   has_many :orders, inverse_of: :organization
 
   has_many :products, inverse_of: :organization, autosave: true, dependent: :destroy
+  has_many :general_products, inverse_of: :organization, autosave: true, dependent: :destroy
   has_many :carts
 
   has_many :locations, inverse_of: :organization, dependent: :destroy
@@ -135,7 +136,7 @@ class Organization < ActiveRecord::Base
   end
 
   def primary_payment_provider
-    if m = markets.first 
+    if m = markets.first
       m.primary_payment_provider
     else
       nil
