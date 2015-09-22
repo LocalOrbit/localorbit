@@ -30,9 +30,9 @@ def check
 
       @job_id = Time.now.to_i #send this to the audit
       @user = current_user.id
-      #p @job_id, "JOB ID!"
+
       # system calls the wrapper, run in the background, passing through the job_id
-      system("./bin/import_wrapper #{@job_id} #{profile} #{filepath} #{user} &") # first arg for import_wrapper
+      system("./bin/import_wrapper #{@job_id} #{profile} #{filepath} #{@user} &") # first arg for import_wrapper
     end
   end
 
