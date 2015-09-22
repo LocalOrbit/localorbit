@@ -27,20 +27,22 @@
 
     fullPricingRow: function(prices, showCaret) {
       var priceCells = [];
-      var caret = (showCaret) ? (<th><i onClick={this.toggleView} style={{cursor: "pointer"}} className="caretted"/></th>) : "";
+      var caret = (showCaret) ? (<i onClick={this.toggleView} style={{cursor: "pointer"}} className="caretted"/>) : "";
       for(var i = 0; i < 3; i++) {
         if(prices[i]) {
           priceCells.unshift(
-            <td style={{textAlign: "center"}}>
-              {prices[i].sale_price}<br/><span style={{fontSize:"11px", color:"#737373"}}>Min. {prices[i].min_quantity}</span>
+            <td style={{textAlign: "right"}}>
+              {prices[i].sale_price}{caret}<br/>
+              <span style={{fontSize:"11px", color:"#737373"}}>Min. {prices[i].min_quantity}</span>
             </td>
           );
+          caret = "";
         }
         else {
           priceCells.unshift(<td></td>);
         }
       }
-      return (<tr>{priceCells}{caret}</tr>);
+      return (<tr>{priceCells}</tr>);
     },
 
     fullPricing: function() {
@@ -57,9 +59,10 @@
       var prices = this.props.product.prices;
       return (
         <tr>
-          <td colSpan="3">
+          <td colSpan="3" style={{textAlign: "right"}}>
             {prices[prices.length - 1].sale_price} - {prices[0].sale_price}
-            <i onClick={this.toggleView} style={{cursor: "pointer"}} className="caretted"/>
+            <i onClick={this.toggleView} style={{cursor: "pointer"}} className="caretted"/><br/>
+            <span style={{fontSize:"11px", color:"#737373"}}>&nbsp;</span>
           </td>
         </tr>
       );
@@ -76,12 +79,13 @@
 
     render: function() {
       var pricing = (this.props.product.prices.length <= 3 || this.state.showAll) ? this.fullPricing() : this.abbreviatedPricing();
+      var quantity = this.props.product.max_available < 500000 ? this.props.product.max_available + " Avail." : "";
 
       return (
         <tr className="cart_item" data-keep-when-zero="yes" data-cart-item={JSON.stringify(this.props.product.cart_item)}>
           <th>
             <a href={"/products/" + this.props.product.id}>{this.props.product.unit_description || this.props.product.unit}</a><br/>
-            <span style={{fontSize:"11px", color:"#737373"}}>{this.props.product.max_available} Avail.</span>
+            <span style={{fontSize:"11px", color:"#737373"}}>{quantity}&nbsp;</span>
           </th>
           <td>
             <table>
