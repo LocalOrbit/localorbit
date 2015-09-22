@@ -11,8 +11,9 @@ class Admin::UploadController < AdminController
 	end
 
   def index
-  	# TODO more general SQL such that you can reasonably select a domain
-  	sql = "select subdomain, id from markets where id in (select destination_market_id from market_cross_sells where source_market_id=112);"
+    @plan = current_market.plan.name # check if LocalEyes plan on market
+    current_mkt_id = current_market.id
+  	sql = "select subdomain, id from markets where id in (select destination_market_id from market_cross_sells where source_market_id=#{current_mkt_id});"
   	records = ActiveRecord::Base.connection.execute(sql)
   	@suppliers_available = Hash.new
   	records.each do |r|
@@ -32,7 +33,7 @@ def check
       @user = current_user.id
 
       # system calls the wrapper, run in the background, passing through the job_id
-      system("./bin/import_wrapper #{@job_id} #{profile} #{filepath} #{@user} &") # first arg for import_wrapper
+      system("./bin/import_wrapper" + " tryingsomething" + " #{profile} #{filepath} #{@user} &") # first arg for import_wrapper
     end
   end
 

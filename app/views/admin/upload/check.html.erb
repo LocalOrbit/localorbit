@@ -4,10 +4,11 @@
 	var interval = setInterval(findJob,10000);
 
 	function findJob() { 
-		$.ajax('#/admin/newjob', {
+		$.ajax('#/admin/newjob', { // need to access the audit and post for it
 			method: 'post',
 			data: {
-				'job_id': "#{@job_id}"
+				'job_id': "job_id_goes_here"
+				'test': "test goes here"
 			},
 			success: function(data, status) {
 				clearInterval(interval);

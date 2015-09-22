@@ -3,12 +3,21 @@ Here's a very not designed thing to import products. FUN FUN FUN! Only admins ca
 <br>
 
 <h2>Import Products</h2>
-<%= form_tag({action: :upload}, multipart: true) do %>
-  <%= file_field_tag 'datafile' %>
-  <br></br>
-  <p>Please select the market supplier for which you are uploading data.</p>
-	 <%= select_tag 'profile',  options_for_select(@suppliers_available) %> <!-- not an ideal long-term solution; this looks at zynga crosslisted markets only -->
-	<br>
-	<br>
-  <%= submit_tag "Import" %>
+
+<% if @plan == "LocalEyes" %>
+	<strong>Make sure you are on the CORRECT site for uploading or you will not be able to upload your products.</strong>
+	<%= form_tag({action: :upload}, multipart: true) do %>
+	  <%= file_field_tag 'datafile' %>
+	  <br></br>
+	  <p>Please select the market supplier for which you are uploading data.</p>
+		 <%= select_tag 'profile',  options_for_select(@suppliers_available) %> <!-- not an ideal long-term solution; this looks at zynga crosslisted markets only -->
+		<br>
+		<br>
+	  <%= submit_tag "Import" %>
+	<% end %>
+
+<% else %>
+
+	<p>This feature is not available for your current plan.</p>
+
 <% end %>
