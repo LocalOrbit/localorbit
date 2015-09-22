@@ -52,7 +52,7 @@ module ProductImport
             name: product_info['name'],
             organization_id: product_info['organization_id'],
             category_id: product_info['category_id'],
-            short_description: product_info['short_description'],
+            short_description: product_info['short_description'].blank? ? "No description available." : product_info['short description'],
             long_description: product_info['long_description'],
             deleted_at: nil
           )
@@ -87,6 +87,10 @@ module ProductImport
 
           unless product.lots.any?
             product.lots.build
+          end
+
+          if p['unit'] == p['short_description']
+            p['short_description'] = "No description available."
           end
 
           product.assign_attributes(
