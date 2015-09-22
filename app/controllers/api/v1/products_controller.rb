@@ -81,16 +81,22 @@ module Api
       def format_product_for_catalog(product)
         product = product.decorate(context: {current_cart: current_cart})
 
+        available_inventory = product.available_inventory(current_delivery.deliver_on)
+
         prices = product.prices_for_market_and_organization(current_market, current_organization).map { |price|
           format_price_for_catalog(price)
         }
 
-        if prices && prices.length > 0
+        # TODO There's a brief window where prices and inventory may change after
+        # the general products are found, but before the response is fully generated.
+        # If all products become ineligible on a general product, it will appear in
+        # the catalog without any prices or units available.
+        if prices && prices.length > 0 && available_inventory && available_inventory > 0
           cart_item = product.cart_item.decorate
 
           {
               :id => product.id,
-              :max_available => product.available_inventory(current_delivery.deliver_on),
+              :max_available => available_inventory,
               :unit => product.unit.plural,
               :unit_description => product.unit_description,
               :prices => prices,
