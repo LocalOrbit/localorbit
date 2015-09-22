@@ -12,7 +12,7 @@ def full_address(address)
 end
 
 def users_list(org)
-  org.users.map{|u| u.name.nil? ? "User ID #{u.id.to_s}" : u.name }.join(", ")
+  org.users.map{|u| u.name.nil? ? "No name entered" : u.name }.join(", ")
 end
 
 @organizations.each do |organization|
