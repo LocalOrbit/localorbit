@@ -18,6 +18,13 @@ describe FeatureAccess do
     user.markets << market
   end
 
+  describe ".order_templates?" do
+    it "only returns true if the market belongs to the localeyes plan" do
+      expect(FeatureAccess.order_templates?(market: market)).to eq false
+      expect(FeatureAccess.order_templates?(market: localeyes_market)).to eq true
+    end
+  end
+
   describe ".order_printables?" do
     it "returns false if the user does not belong to the order's market" do
       order.market = wrong_market

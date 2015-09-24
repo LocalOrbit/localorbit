@@ -1,6 +1,10 @@
 
 class FeatureAccess
   class << self
+    def order_templates?(market:)
+      market.plan.name == "LocalEyes"
+    end
+
     def order_printables?(user:, order:)
       market = order.market
       user_belongs_to_market = user.markets.include?(market)
