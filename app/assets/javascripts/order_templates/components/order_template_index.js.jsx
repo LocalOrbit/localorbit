@@ -35,8 +35,9 @@
           <tr className="app-template">
             <td className="app-template-name">{template.name}</td>
             <td>{moment(template.created_at).format('L')}</td>
+            <td>{moment(template.updated_at).format('L')}</td>
             <td>
-              <a href="javascript:void(0);" onClick={self.deleteTemplate.bind(this, template.id)} className="pull-right app-delete-template" style={{marginTop:"9px"}}>Delete</a>
+              <a href="javascript:void(0);" onClick={self.deleteTemplate.bind(this, template.id)} className="pull-right app-delete-template">Delete</a>
             </td>
           </tr>
         );
@@ -56,7 +57,8 @@
               <tr>
                 <th>Name</th>
                 <th>Date Created</th>
-                <th>Actions</th>
+                <th>Date Modified</th>
+                <th></th>
               </tr>
             </thead>
             <tbody>

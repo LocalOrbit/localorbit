@@ -8,7 +8,8 @@
 
     getInitialState: function() {
       return {
-        name: ""
+        name: "",
+        error: false
       };
     },
 
@@ -21,6 +22,8 @@
     },
 
     save: function() {
+      var self = this;
+      self.setState({error: false});
       $.ajax({
         type: 'POST',
         url: this.props.baseUrl + 'order_templates',
@@ -32,7 +35,7 @@
           window.location = res.url;
         },
         error: function(err) {
-          console.error('error!', err);
+          self.setState({error: true});
         }
       });
     },
@@ -46,6 +49,8 @@
           </tr>
         );
       });
+
+      var error = (this.state.error) ? <div className="flash flash--warning"><p>There was an issue saving your new template. Please make sure that your template's name is unique.</p></div> : null;
 
       return (
         <div>
@@ -70,6 +75,7 @@
               <a href="/cart" className="btn pull-right" style={{marginRight: "20px"}}>Cancel</a>
             </div>
           </div>
+          {error}
         </div>
       );
     }
