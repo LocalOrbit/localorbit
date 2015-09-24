@@ -3,6 +3,7 @@ class OrderTemplate < ActiveRecord::Base
   belongs_to :market
 
   validates :market, :name, presence: true
+  validates :name, uniqueness: {scope: :market}
 
   def self.create_from_cart!(cart, name)
     template = OrderTemplate.create!(name: name, market: cart.market)

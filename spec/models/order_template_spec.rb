@@ -8,6 +8,16 @@ describe OrderTemplate do
     expect(template).to have(1).error_on(:market)
   end
 
+  it "cannot have duplicate names within the same market" do
+    market1 = create(:market)
+    market2 = create(:market)
+    original_template = OrderTemplate.create(market: market1, name: "dup")
+    template2 = OrderTemplate.new(market: market1, name: "dup")
+    expect(template2).to_not be_valid
+    template3 = OrderTemplate.new(market: market2, name: "dup")
+    expect(template3).to be_valid
+  end
+
   describe "create_from_cart" do
     let(:cart) { create(:cart) }
     let!(:cart_item1) { create(:cart_item, cart: cart, quantity: 1) }
