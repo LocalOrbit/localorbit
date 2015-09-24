@@ -60,7 +60,9 @@
               </tr>
             </tbody>
           </table>
-          <p class="pull-right"><a href="/templates/new" class="app-create-template-link">Create an order template from this cart</a></p>
+          <% if FeatureAccess.order_templates?(market: current_market) %>
+            <p class="pull-right"><a href="/templates/new" class="app-create-template-link">Create an order template from this cart</a></p>
+          <% end %>
         </div>
       </div
       ><div class="column column--half column--guttered">
