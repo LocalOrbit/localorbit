@@ -29,7 +29,7 @@ describe SendOrderEmails do
 
     it "sends no emails to the buying organization" do
       expect {
-        SendOrderEmails.perform(order: order, seller: seller)
+        SendOrderEmails.perform(request: request, order: order, seller: seller)
       }.not_to raise_error
 
       expect(ActionMailer::Base.deliveries.count).to eql(2)
@@ -41,7 +41,7 @@ describe SendOrderEmails do
 
     it "sends no emails to the market managers" do
       expect {
-        SendOrderEmails.perform(order: order, seller: seller)
+        SendOrderEmails.perform(request: request, order: order, seller: seller)
       }.not_to raise_error
 
       expect(ActionMailer::Base.deliveries.count).to eql(2)
