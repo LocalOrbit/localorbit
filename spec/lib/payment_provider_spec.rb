@@ -91,7 +91,7 @@ describe PaymentProvider do
       }
       it "delegates to #{provider_object.name}.place_order" do
         expect(provider_object).to receive(:place_order).with(params)
-        PaymentProvider.place_order provider_name, params
+        PaymentProvider.place_order provider_name, params, request
       end
     end
 

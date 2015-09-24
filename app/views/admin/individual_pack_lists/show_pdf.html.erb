@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<head>
+  <meta charset="utf-8">
+  <meta name="pdfkit-print_media_type" content="true">
+  <meta name="pdfkit-header_html" content="<%= request.base_url.gsub(/:3000/, ':3500') + pdf_view_header_path  %>">
+  <meta name="pdfkit-header_spacing" content="10">
+  <meta name="pdfkit-footer_spacing" content="10">
+  <meta name="pdfkit-header_font_size" content="10">
+  <title>Local Orbit</title>
+  <%= render 'shared/print_opensanscondensed_bold' %>
+  <%= render 'shared/print_opensans' %>
+  <%= render 'shared/print_opensans_bold' %>
+  <style type="text/css">
+
+      .signature {
+          display:inline-block;
+          width:45%;
+          color:#666;
+          border-top:1px solid #666;
+          font-family:Arial;
+          font-weight:bold;
+          font-size:14px;
+          margin-top:60px;
+      }
+
+      .packslip-wrapper {
+          font-size: 14px;
+          font-family: OpenSans, "Open Sans", Geneva, Arial, sans-serif;
+      }
+
+      .packslip-wrapper .btn {
+          display: inline-block;
+          padding: 12px 18px;
+          border: solid 1px #b0b0b0;
+          -webkit-border-radius: 3px;
+          -moz-border-radius: 3px;
+          border-radius: 3px;
+          background-image: -moz-linear-gradient(top, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.2));
+          background-image: -webkit-linear-gradient(top, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.2));
+          background-image: -o-linear-gradient(top, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.2));
+          background-image: -ms-linear-gradient(top, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.2));
+          background-image: linear-gradient(top, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.2));
+          margin-bottom: .5em;
+          color: #fff;
+          background-color: #43639F;
+          font-family: inherit;
+          font-size: 17px;
+          text-decoration: none;
+          -webkit-appearance: none;
+          -webkit-font-smoothing: antialiased
+      }
+
+      .packslip-wrapper .btn:hover {
+          background-image: none;
+          text-decoration: none
+      }
+
+      .packslip-wrapper .btn:disabled, .packslip-wrapper .btn.disabled {
+          opacity: 0.15;
+          cursor: default;
+          cursor: not-allowed
+      }
+
+      .packslip-wrapper .btn:active {
+          -webkit-box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.5);
+          -moz-box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.5);
+          box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.5);
+          background-image: -moz-linear-gradient(top, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.3));
+          background-image: -webkit-linear-gradient(top, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.3));
+          background-image: -o-linear-gradient(top, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.3));
+          background-image: -ms-linear-gradient(top, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.3));
+          background-image: linear-gradient(top, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.3))
+      }
+
+      .packslip-wrapper .btn:focus {
+          outline: none
+      }
+
+      .packslip-wrapper .btn:first-child {
+          margin-bottom: 1em
+      }
+
+      .packslip-wrapper .btn:last-child {
+          margin-right: 0
+      }
+
+      .packslip-wrapper .btn.btn--small {
+          padding: 4px 18px;
+          font-size: 14px
+      }
+
+      .packslip-wrapper .column, .packslip-wrapper .row {
+          position: relative;
+          -webkit-box-sizing: border-box;
+          -moz-box-sizing: border-box;
+          box-sizing: border-box
+      }
+
+      .packslip-wrapper .column {
+          display: inline-block;
+          padding: 0 10px 0 0;
+          text-align: left;
+          vertical-align: top
+      }
+
+      .packslip-wrapper .column:last-child {
+          padding-right: 0
+      }
+
+      .packslip-wrapper .column--three-fourths {
+          width: 75%
+      }
+
+      .packslip-wrapper .column--two-thirds {
+          width: 66%
+      }
+
+      .packslip-wrapper .column--half {
+          width: 50%
+      }
+
+      .packslip-wrapper .column--third {
+          width: 33%
+      }
+
+      .packslip-wrapper .column--fourth {
+          width: 25%
+      }
+
+      .packslip-wrapper .ar {
+          text-align: right
+      }
+
+      .packslip-wrapper .al {
+          text-align: left
+      }
+
+      .packslip-wrapper .ac {
+          text-align: center
+      }
+
+      .packslip-wrapper .left-padded {
+          padding-left: 20px
+      }
+
+      .packslip-wrapper h1 {
+          margin: 0 0 .5em;
+          font: bold 25px Arial
+      }
+
+      .packslip-wrapper h2 {
+          margin: 0;
+          color: #666;
+          font: bold 14px Arial
+      }
+
+      .packslip-wrapper table {
+          width: 100%;
+          border-collapse: collapse
+      }
+
+      .packslip-wrapper caption {
+          color: #000;
+          font: bold 14px Arial;
+          text-align: left
+      }
+
+      .packslip-wrapper tr, .packslip-wrapper td, .packslip-wrapper th {
+          page-break-inside: avoid;
+      }
+
+      .packslip-wrapper td:first-child {
+          padding-left:8px;
+      }
+
+      .packslip-wrapper td:last-child {
+          padding-right:8px;
+      }
+
+      .packslip-wrapper th {
+          padding: 4px;
+          color: #666;
+          font-size: 12px;
+          text-align: left;
+          vertical-align: top;
+      }
+
+      .packslip-wrapper .pseudopod th {
+          vertical-align: middle;
+      }
+
+      .packslip-wrapper td {
+          padding: 10px 3px 10px 3px;
+          font-size: 12px
+      }
+
+      .packslip-wrapper tbody tr:nth-child(odd) {
+          background: #f9f9f9
+      }
+
+      .packslip-wrapper .pseudopod th {
+          padding-right:10px;
+          font-size: 12px;
+          font-weight: normal
+      }
+
+      .packslip-wrapper .canceled>span {
+          text-decoration: line-through
+      }
+
+      .packslip-wrapper .canceled:after {
+          color: #911;
+          content: " Cancelled";
+          text-decoration: none
+      }
+
+      .packslip-wrapper .discounts th, .packslip-wrapper .discounts td {
+          padding: 10px 10px 2px
+      }
+
+      .packslip-wrapper .delivery th, .packslip-wrapper .delivery td {
+          padding: 2px 10px 10px
+      }
+
+      .packslip-wrapper .total {
+          border-top: solid 1px #ccc;
+          color: #666
+      }
+
+      .packslip-wrapper .total .amount {
+          padding-left: 10px;
+          color: #000;
+          font: bold 24px Arial
+      }
+
+      .packslip-wrapper .total td, .packslip-wrapper .total th {
+          padding-left: 0;
+          font-size: 18px
+      }
+
+      .packslip-wrapper .total td:first-child {
+          font-style: italic
+      }
+
+      .packslip-wrapper .date {
+          font-family: Arial;
+          font-weight: bold
+      }
+
+      .packslip-wrapper .gray-box {
+          width:112px;
+          display:inline-block;
+          padding: 5px;
+          border: solid 2px #C7C7C7;
+          background: #f9f9f9;
+          font: bold 22px Arial
+      }
+
+      .packslip-wrapper .inline {
+          display: inline
+      }
+
+      .packslip-wrapper .invoice-basics {
+          margin-bottom: 1em
+      }
+
+      .packslip-wrapper .invoice-parties {
+          margin-bottom: 1em
+      }
+
+      .packslip-wrapper .logo {
+          max-width: 1in;
+      }
+      .packslip-wrapper .logo img, .packslip-wrapper .logo-column { width: 1in; }
+
+      .packslip-wrapper .inline-block {
+          display: inline-block;
+      }
+
+      .packslip-wrapper .left {
+          float:left;
+      }
+
+      .packslip-wrapper .right {
+          float:right;
+      }
+
+      .packslip-wrapper .vcard {
+          overflow: hidden
+      word-break: break-all;
+          word-wrap: break-word;
+      }
+
+      .packslip-wrapper .vcard-buyer {
+          margin-bottom: 25px
+      }
+
+      .packslip-wrapper .buyer-name, .packslip-wrapper .org-from, .packslip-wrapper .invoice-num,
+      .packslip-wrapper .po-num, .packslip-wrapper .delivery-date {
+          margin: 0;
+          font: bold 16px Arial
+      }
+
+      .packslip-wrapper .invoice-num, .packslip-wrapper .buyer-name, .packslip-wrapper .org-from {
+          word-break: break-all;
+          word-wrap: break-word;
+      }
+
+      @media print {
+          .controller-packslip .l-app-header, .controller-packslip .l-app-footer,
+          .controller-packslip .btn--save, .controller-packslip .logo-link,
+          .controller-packslip .nav--main, .controller-packslip .nav--admin,
+          .controller-packslip .tab-header, .controller-packslip .teflon, .controller-packslip .no-print {
+              display: none
+          }
+
+          .controller-packslip .logo {
+              display: block
+          }
+      }
+
+      @media screen {
+          body>.packslip-wrapper {
+              width: 7.5in;
+              min-height: 9in;
+              padding: 0 .5in 1in;
+              margin: 0 auto;
+              background: #fff
+          }
+
+          body>.packslip-wrapper .btn--save {
+              float: right
+          }
+      }
+
+      body.os-android .print-button{display:none}
+
+
+  </style>
+</head>
+
+<body class="controller-packslip" style="margin:0px;">
+<% logo_path = asset_url("logo.png") # needed if market doesn't have a logo %>
+
+<div class="packslip-wrapper">
+  <div class="column logo-column" style="width:1.1in">
+    <br>
+  </div>
+<% pack_lists.sellers.each_with_index do |(seller, orders), org_index| %>
+  <% orders.each_with_index do |(order, items), index| %>
+    <% if index != 0 or org_index != 0 %>
+      <div class="pdf-page-break"></div>
+    <% end %>
+    <div class="upcoming-delivery">
+      <div class="row">
+        <div class="column column--half">
+            <h1>Packing Slip</h1>
+        </div>
+        <div class="column column--half">
+            <h2 class="heading heading-delivery-tool">Generated On: <%= Time.now.to_s(:long) %></h2>
+        </div>
+      </div>
+      <div style="border-top: 1px dotted #CCC"></div>
+      <br/><br/>
+      <div class="row">
+        <div class="column column--half vcard vcard--buyer">
+          <h2 class="heading heading-delivery-tool">To Buyer</h2>
+          <h3 class="fn org"><%= order.organization.name %></h3>
+          <div class="street-address"><%= order.decorate.display_delivery_street %></div>
+          <div class="city-state-zip"><%= order.decorate.display_delivery_city_state_zip %></div>
+          <div class="tel"><%= number_to_phone order.decorate.display_delivery_phone %></div>
+        </div><div class="column column--half vcard vcard--seller">
+          <h2 class="heading heading-delivery-tool">From Supplier</h2>
+          <h3 class="fn org"><%= seller.name %></h3>
+          <div class="street-address"><%= seller.decorate.shipping_address %></div>
+          <div class="city-state-zip"><%= seller.decorate.shipping_city_state_zip %></div>
+          <div class="tel"><%= number_to_phone seller.decorate.shipping_phone %></div>
+
+        </div>
+      </div>
+        <br/><br/>
+      <div class="row">
+        <div class="column column--half">
+          <h2 class="heading heading-delivery-tool">Supplier Delivers to <%= delivery.display_dropoff_location_type %> on</h2>
+          <span class="upcoming-delivery-date"><%= delivery.seller_display_date %> <%= delivery.fulfillment_time_range %></span>
+          <% if delivery.buyer_pickup? %>
+          <p class="note">For pick up on <%= delivery.buyer_display_date %> <%= delivery.buyer_time_range %></p>
+          <% end %>
+        </div><div class="column column--half">
+
+          <h2 class="heading heading-delivery-tool">Order Number</h2>
+          <span class="upcoming-delivery-order"><%= order.order_number %></span>
+
+        </div>
+      </div>
+
+      <div class="table-wrapper">
+        <table class="delivery-tools">
+          <thead>
+            <tr>
+              <th>Product Code</th>
+              <th>Item</th>
+              <th>Lot #</th>
+              <th>Quantity</th>
+              <th>Units</th>
+              <th>Item Total Price</th>
+              <th>Delivery</th>
+              <th>Initials</th>
+              <th>Notes</th>
+            </tr>
+          </thead>
+          <% items.each do |item| %>
+            <tr class="individual-pack-list-item">
+              <td><%= item.product.code || "-" %></td>
+              <td class="name"><%= item.product.name %></td>
+              <td class="lot">
+                <%= item.lots.map {|lot| lot.number }.join(', ') if !item.product.use_simple_inventory and item.lots.any? %>
+              </td>
+              <td class="total-sold"><%= item.quantity %></td>
+              <td class="units"><%= item.unit %></td>
+              <td class="total-price" style="text-align:right"><%= number_to_currency item.gross_total %></td>
+              <td class="delivery"></td>
+              <td class="initials"></td>
+              <td class="notes"></td>
+            </tr>
+          <% end %>
+          <tr class="totals">
+            <th colspan="5" style="text-align: right">Total:</th>
+            <th class="total-price" style="text-align:right"><%= number_to_currency Financials::Orders::Calc.gross_item_total(items: items) %></th>
+            <th colspan="3">&nbsp;</th>
+          </tr>
+        </table>
+      </div>
+    </div>
+  <% end %>
+<% end %>
+</div>
+</body>

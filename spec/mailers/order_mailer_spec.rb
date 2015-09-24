@@ -195,7 +195,7 @@ describe OrderMailer do
         Order.disable_auditing
 
         Audit.all.update_all(request_uuid: SecureRandom.uuid)
-        @notification = OrderMailer.seller_order_updated(order.reload, seller1)
+        @notification = OrderMailer.seller_order_updated(order.reload, seller1, pdf)
       end
 
       it "has a subject indicating it is an update" do
@@ -245,7 +245,7 @@ describe OrderMailer do
         Order.disable_auditing
 
         Audit.all.update_all(request_uuid: SecureRandom.uuid)
-        @notification = OrderMailer.seller_order_updated(order.reload, seller1)
+        @notification = OrderMailer.seller_order_updated(order.reload, seller1, pdf)
       end
 
       it "does not show the refund section" do

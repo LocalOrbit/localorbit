@@ -50,19 +50,19 @@ describe SendUpdateEmails do
     it "sends an email to users in the organization" do
       expect_any_instance_of(OrderMailer).to receive(:buyer_order_updated).with(order)
 
-      SendUpdateEmails.perform(order: order)
+      SendUpdateEmails.perform(order: order, request: request)
     end
 
     it "sends an email to sellers whose items have been updated" do
       expect_any_instance_of(OrderMailer).to receive(:seller_order_updated).with(order, seller1)
 
-      SendUpdateEmails.perform(order: order)
+      SendUpdateEmails.perform(order: order, request: request)
     end
 
     it "does not send an email to sellers whose items have not been updated" do
       expect_any_instance_of(OrderMailer).to_not receive(:seller_order_updated).with(order, seller2)
 
-      SendUpdateEmails.perform(order: order)
+      SendUpdateEmails.perform(order: order, request: request)
     end
   end
 
@@ -82,7 +82,7 @@ describe SendUpdateEmails do
     it "sends an email to users in the organization" do
       expect_any_instance_of(OrderMailer).to receive(:buyer_order_updated).with(order)
       expect {
-        SendUpdateEmails.perform(order: order)
+        SendUpdateEmails.perform(order: order, request: request)
       }.to_not raise_error
     end
   end
