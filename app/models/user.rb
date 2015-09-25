@@ -261,6 +261,22 @@ class User < ActiveRecord::Base
       distinct
   end
 
+  def managed_organizations_including_cross_sellers(opts={})
+    defaults = {include_suspended: false}
+    opts = defaults.merge!(opts)
+
+    org_membership_scope = opts[:include_suspended] ? organizations_including_suspended : organizations
+
+    @managed_organizations_including_cross_sellers ||= {include_suspended: {true => nil, false => nil}}
+
+    @managed_organizations_including_cross_sellers[:include_suspended][opts[:include_suspended]] ||= Organization.all_for_market_ids(ids_for_managed_organizations).
+      where(market_organizations: {deleted_at: nil}).
+      where.not(market_organizations: {id: nil}).
+      union(org_membership_scope).
+      joins(:market_organizations).
+      distinct
+  end
+
   def managed_organizations_including_deleted
     if admin?
       Organization.all

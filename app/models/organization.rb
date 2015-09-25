@@ -86,6 +86,12 @@ class Organization < ActiveRecord::Base
     where(market_organizations: {cross_sell_origin_market_id: nil})
   end
 
+  def self.all_for_market_ids(market_ids)
+    select("organizations.*").
+    joins(:market_organizations).
+    where(market_organizations: {market_id: market_ids})
+  end
+
   def shipping_location
     locations.visible.default_shipping
   end
