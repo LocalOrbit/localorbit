@@ -48,19 +48,28 @@ describe SendUpdateEmails do
     end
 
     it "sends an email to users in the organization" do
+      request = @request
       expect_any_instance_of(OrderMailer).to receive(:buyer_order_updated).with(order)
 
       SendUpdateEmails.perform(order: order, request: request)
     end
 
     it "sends an email to sellers whose items have been updated" do
-      expect_any_instance_of(OrderMailer).to receive(:seller_order_updated).with(order, seller1)
+      request = @request
+      pdf = PdfResult.new(data: "data", path: "/")
+      csv = ""
+
+      expect_any_instance_of(OrderMailer).to receive(:seller_order_updated).with(order, seller1, pdf, csv)
 
       SendUpdateEmails.perform(order: order, request: request)
     end
 
     it "does not send an email to sellers whose items have not been updated" do
-      expect_any_instance_of(OrderMailer).to_not receive(:seller_order_updated).with(order, seller2)
+      request = @request
+      pdf = PdfResult.new(data: "data", path: "/")
+      csv = ""
+
+      expect_any_instance_of(OrderMailer).to_not receive(:seller_order_updated).with(order, seller2, pdf, csv)
 
       SendUpdateEmails.perform(order: order, request: request)
     end
@@ -81,6 +90,8 @@ describe SendUpdateEmails do
 
     it "sends an email to users in the organization" do
       expect_any_instance_of(OrderMailer).to receive(:buyer_order_updated).with(order)
+      request = @request
+
       expect {
         SendUpdateEmails.perform(order: order, request: request)
       }.to_not raise_error
@@ -101,15 +112,17 @@ describe SendUpdateEmails do
     end
 
     it "does not send an email to users in the organization" do
+      request = @request
       expect_any_instance_of(OrderMailer).not_to receive(:buyer_order_updated)
 
-      SendUpdateEmails.perform(order: order)
+      SendUpdateEmails.perform(request: request, order: order)
     end
 
     it "does not send an email to sellers whose items have not been updated" do
+      request = @request
       expect_any_instance_of(OrderMailer).not_to receive(:seller_order_updated)
 
-      SendUpdateEmails.perform(order: order)
+      SendUpdateEmails.perform(request: request, order: order)
     end
   end
 end
