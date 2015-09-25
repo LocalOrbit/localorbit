@@ -73,8 +73,10 @@ class OrderMailer < BaseMailer
     @order = SellerOrder.new(order, seller) # Selling users organizations only see
     @seller = seller
 
-    attachments["packing_list.pdf"] = {mime_type: "application/pdf", content: pdf.data}
-    attachments["packing_list.csv"] = {mime_type: "application/csv", content: csv}
+    if pdf
+      attachments["packing_list.pdf"] = {mime_type: "application/pdf", content: pdf.data}
+      attachments["packing_list.csv"] = {mime_type: "application/csv", content: csv}
+    end
 
     mail(
       to: seller.users.map(&:pretty_email),
