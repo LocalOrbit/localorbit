@@ -255,7 +255,7 @@ describe "Viewing the cart", js:true do
         bananas_item.quantity_field.click
         expect(Dom::CartLink.first).to have_content("Quantity updated!")
         expect(Dom::CartLink.first).to_not have_content("Quantity updated!")
-        expect(page).to have_content("Quantity available for purchase: 100")
+        expect(page).to have_content("Quantity of Kale available for purchase: 100")
       end
 
       it "resets the quantity to the entire available quantity" do

@@ -37,6 +37,11 @@
         <%= f.label :organization_id_eq, "Buyer" %><br>
         <%= f.collection_select :organization_id_eq, @search_presenter.buyer_organizations, :id, :name, {include_blank: "All"}, {class: "filter-input"} %>
       </span>
+
+      <span class="preserve-alignment mobile-block">
+        <%= f.label :products_organization_id_eq, "Supplier" %><br>
+        <%= f.collection_select :products_organization_id_eq, @search_presenter.seller_organizations, :id, :name, {include_blank: "All"}, {class: "filter-input"} %>
+      </span>
     </div>
   <% end %>
 <% end %>

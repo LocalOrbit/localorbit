@@ -9,7 +9,18 @@ class Admin::OrdersController < AdminController
     @search_presenter = OrderSearchPresenter.new(@query_params, current_user, "placed_at")
     @q, @totals = search_and_calculate_totals(@search_presenter)
 
-    @orders = @q.result(distinct: true).page(params[:page]).per(@query_params[:per_page])
+    @orders = @q.result(distinct: true)
+
+    respond_to do |format|
+      format.html do
+        @orders = @orders.page(params[:page]).per(@query_params[:per_page])
+      end
+      format.csv do
+        @order_items = find_order_items(@orders.map(&:id))
+        @abort_mission = @order_items.count > 2999
+        @filename = "orders.csv"
+      end
+    end
   end
 
   def search_and_calculate_totals(search)
@@ -18,7 +29,7 @@ class Admin::OrdersController < AdminController
 
     if !current_user.admin?
       order_ids = results.result.map(&:id)
-      order_items = OrderItem.includes(:product, :order).joins(:product).where(:order_id => order_ids, "products.organization_id" => current_user.managed_organization_ids_including_deleted)
+      order_items = find_order_items(order_ids)
       totals = OrderTotals.new(order_items)
     else
       totals = OrderTotals.new(OrderItem.where("1 = 0"))
@@ -56,6 +67,11 @@ class Admin::OrdersController < AdminController
   end
 
   protected
+
+  def find_order_items(order_ids)
+    order_items = OrderItem.includes({product: [{general_product: :organization}, :organization]}, {order: :delivery}).joins(:product).where(:order_id => order_ids)
+    order_items
+  end
 
   def order_params
     params[:order].delete(:delivery_id) # Remove the parameter so it doesn't conflict
@@ -114,7 +130,7 @@ class Admin::OrdersController < AdminController
         came_from_admin ? admin_order_path(order) : order_path(order)
       else
         order.soft_delete
-        came_from_admin ? admin_orders_path(order) : orders_path(order)
+        came_from_admin ? admin_orders_path : orders_path
       end
       redirect_to next_url, notice: "Order successfully updated."
     else

@@ -1,0 +1,4 @@
+<%= react_component('lo.OrderTemplateIndex', {
+  baseUrl: "#{request.base_url}/api/v1/order_templates/",
+  templates: OrderTemplate.where(market: current_market).as_json
+}, prerender: false) %>

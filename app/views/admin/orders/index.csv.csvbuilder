@@ -1,0 +1,33 @@
+csv << [
+  "LO Order Number",
+  "Order Date",
+  "Delivery Date",
+  "Buyer",
+  "PO Number",
+  "Delivery Status",
+  "Product Code",
+  "Product",
+  "Supplier",
+  "Product Price",
+  "Order Total"
+]
+
+if(@abort_mission)
+  csv << ["There are too many results to load. Please refine your query and try again."]
+else
+  @order_items.each do |order_item|
+    csv << [
+      order_item.order.order_number,
+      order_item.order.placed_at.strftime("%m/%d/%Y"),
+      order_item.order.delivery && order_item.order.delivery.deliver_on.strftime("%m/%d/%Y"),
+      order_item.order.organization.name,
+      order_item.order.payment_note,
+      order_item.delivery_status.titleize,
+      order_item.product.name,
+      order_item.product.code,
+      order_item.product.organization.name,
+      order_item.gross_total,
+      number_to_currency(order_item.order.gross_total)
+    ]
+  end
+end

@@ -16,6 +16,7 @@
 //= require jquery-ui/datepicker
 //= require chosen-jquery
 //= require typeahead-0.11.1
+//= require q
 //= require parser_rules/advanced
 //= require wysihtml5
 //= require underscore

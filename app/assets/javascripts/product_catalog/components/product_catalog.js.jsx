@@ -15,6 +15,10 @@
     render: function() {
       return (
         <div>
+          <lo.TemplatePicker
+            baseUrl={this.props.baseUrl}
+            cartUrl={this.props.cartUrl}
+          />
           <lo.ProductFilter
             deliveryDate={this.props.deliveryDate}
           />
@@ -22,7 +26,7 @@
             limit={10}
             filter={null}
             cartUrl={this.props.cartUrl}
-            url={this.props.baseUrl}
+            url={this.props.baseUrl + '/products'}
           />
         </div>
       );

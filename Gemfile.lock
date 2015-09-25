@@ -575,7 +575,7 @@ GEM
       actionpack (>= 3.0)
       activesupport (>= 3.0)
       sprockets (~> 2.8)
-    stripe (1.21.0)
+    stripe (1.27.0)
       json (~> 1.8.1)
       rest-client (~> 1.4)
     stripe_event (1.5.0)

@@ -47,6 +47,17 @@ FactoryGirl.define do
     end
   end
 
+  factory :order_template do
+    sequence(:name) {|n| "Cart #{n}"}
+    market
+  end
+
+  factory :order_template_item do
+    product { create(:product, :sellable) }
+    order_template
+    quantity 1
+  end
+
   factory :cart_item do
     product { create(:product, :sellable) }
     cart
