@@ -16,7 +16,7 @@ module Search
       if @filtered_market.present?
         @user.managed_organizations_within_market_including_crossellers(@filtered_market)
       else
-        @user.managed_organizations
+        @user.managed_organizations_including_cross_sellers
       end.order(:name)
     end
 
