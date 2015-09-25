@@ -47,6 +47,13 @@ FactoryGirl.define do
     end
   end
 
+  factory :credit do
+    order
+    user
+    percentage_or_fixed "fixed"
+    amount 1.50
+  end
+
   factory :order_template do
     sequence(:name) {|n| "Cart #{n}"}
     market
