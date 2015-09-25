@@ -69,11 +69,8 @@ class Admin::OrdersController < AdminController
   protected
 
   def find_order_items(order_ids)
-    if(@order_items)
-      return @order_items
-    end
-    @order_items = OrderItem.includes({product: [{general_product: :organization}, :organization]}, {order: :delivery}).joins(:product).where(:order_id => order_ids, "products.organization_id" => current_user.managed_organization_ids_including_deleted)
-    @order_items
+    order_items = OrderItem.includes({product: [{general_product: :organization}, :organization]}, {order: :delivery}).joins(:product).where(:order_id => order_ids)
+    order_items
   end
 
   def order_params
