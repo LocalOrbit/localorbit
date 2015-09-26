@@ -18,7 +18,7 @@ feature "Downloading table tents or posters", js:true do
     expect(page).to have_text 'Table Tents (4" x 6")'
     expect(page).to have_text 'Why use table tents?'
     click_on "Download the PDF"
-    expect(page).to have_text "Generating"
+    #expect(page).to have_text "Generating"
 
     # EGAD
     patiently do
@@ -38,7 +38,7 @@ feature "Downloading table tents or posters", js:true do
     expect(page).to have_text 'Posters (8.5" x 11")'
     expect(page).to have_text 'Why use posters?'
     click_on "Download the PDF"
-    expect(page).to have_text "Generating"
+    #expect(page).to have_text "Generating"
 
     # EGAD.
     # We were having MAJRO TRUBL getting the PDF to actually fully render.  Dragonfly URL hell yall.

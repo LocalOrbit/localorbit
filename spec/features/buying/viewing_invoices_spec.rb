@@ -77,7 +77,7 @@ describe "Buyer invoices" do
       click_link invoiced_order.order_number
 
       patiently do
-        expect(page).to have_text("Generating invoice for #{invoiced_order.order_number}...")
+        #expect(page).to have_text("Generating invoice for #{invoiced_order.order_number}...")
       end
 
       patiently do
