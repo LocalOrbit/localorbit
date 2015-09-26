@@ -65,7 +65,7 @@ describe SendUpdateEmails do
     it "does not send an email to sellers whose items have not been updated" do
       request = @request
 
-      expect_any_instance_of(OrderMailer).to_not receive(:seller_order_updated).with(order, seller2, pdf, csv)
+      expect_any_instance_of(OrderMailer).to_not receive(:seller_order_updated) #.with(order, seller2, pdf, csv)
 
       SendUpdateEmails.perform(order: order, request: request)
     end
