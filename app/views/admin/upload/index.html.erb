@@ -11,7 +11,7 @@ This is an admin interface for product import.
 	  <br></br>
 	  <input type="hidden" id="job_id" name="job_id" value="<%=@job_id%>" />
 	  <p>Please select the market supplier for which you are uploading data.</p>
-		 <%= select_tag 'profile',  options_for_select(@suppliers_available) %> 
+		 <%= select_tag 'profile',  options_for_select(@suppliers_available) %>
 		<br>
 		<br>
 	  <%= submit_tag "Import" %>
