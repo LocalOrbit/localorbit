@@ -14,7 +14,7 @@ else
 	job_id = ARGV.first 
 	profile = ARGV.second
 	filepath = ARGV[2] # perhaps there is an easier way to pass these through, this is pretty hack-y.
-	user_id = ARGV[3]
+	user_id = ARGV[3] # no current_user context here; for now pass through
 	stdout, stderr, status = Open3.capture3("./bin/import_products standard_template -p #{profile} -f '#{filepath}' &")
-	Audit.create(user_id:user_id, auditable_type:"import", comment:"#{stderr} |*| #{stdout}",associated_id:job_id) # TODO access current user context for user id
+	Audit.create(user_id:user_id, auditable_type:"import", comment:"#{stderr} |*| #{stdout}",associated_id:job_id) 
 end
