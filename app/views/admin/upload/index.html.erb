@@ -1,4 +1,4 @@
-Here's a very not designed thing to import products. FUN FUN FUN! Only admins can see this.
+This is an admin interface for product import.
 <br>
 <br>
 
@@ -9,8 +9,9 @@ Here's a very not designed thing to import products. FUN FUN FUN! Only admins ca
 	<%= form_tag({action: :upload}, multipart: true) do %>
 	  <%= file_field_tag 'datafile' %>
 	  <br></br>
+	  <input type="hidden" id="job_id" name="job_id" value="<%=@job_id%>" />
 	  <p>Please select the market supplier for which you are uploading data.</p>
-		 <%= select_tag 'profile',  options_for_select(@suppliers_available) %> <!-- not an ideal long-term solution; this looks at zynga crosslisted markets only -->
+		 <%= select_tag 'profile',  options_for_select(@suppliers_available) %> 
 		<br>
 		<br>
 	  <%= submit_tag "Import" %>
@@ -18,6 +19,6 @@ Here's a very not designed thing to import products. FUN FUN FUN! Only admins ca
 
 <% else %>
 
-	<p>This feature is not available for your current plan.</p>
+	<p>This feature is not available for this market's current plan.</p>
 
 <% end %>

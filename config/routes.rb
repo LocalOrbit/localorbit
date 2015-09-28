@@ -56,7 +56,8 @@ Rails.application.routes.draw do
 
     get "upload" => "upload#index"
     post "upload" => "upload#upload"
-    get "newjob" => "upload#newjob" 
+    
+    post "upload/newjob" => "upload#newjob" 
 
     get "financials" => "financials#index"
     namespace :financials do

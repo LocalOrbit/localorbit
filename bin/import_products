@@ -25,7 +25,6 @@ if ARGV.empty?
 end
 
 if opts[:filename] =~/^(http)/
-  #puts system("curl -L -o #{vendor_file} '#{opts[:filename]}' ")
 	if system("curl -L -o #{vendor_file} '#{opts[:filename]}' ")
 		opts[:filename] = vendor_file
 	else

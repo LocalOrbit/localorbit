@@ -2,19 +2,20 @@ class Admin::UploadController < AdminController
 	require 'rubyXL'
   require 'open3'
 
-  def upload
-  	uploaded = params[:datafile] # Gets the xlsx data from form upload post request
-  	filepath = Rails.root.join('tempfiles',uploaded.original_filename)
-	  File.open(filepath, 'wb') do |file|
-	  	file.write(uploaded.read) # Writes that data to the open filestream in the tempfiles fldr
-	  end
-	end
+ #  def upload
+ #  	uploaded = params[:datafile] # Gets the xlsx data from form upload post request
+ #    filepath = Rails.root.join('tempfiles',uploaded.original_filename)
+	#   File.open(filepath, 'wb') do |file|
+	#   	file.write(uploaded.read) # Writes that data to the open filestream in the tempfiles fldr
+	#   end
+	# end
 
   def index
     @plan = current_market.plan.name # check if LocalEyes plan on market
-    current_mkt_id = current_market.id
+    current_mkt_id = current_market.id # ensures that current market sub-site matters for where upload occurs
   	sql = "select subdomain, id from markets where id in (select destination_market_id from market_cross_sells where source_market_id=#{current_mkt_id});"
   	records = ActiveRecord::Base.connection.execute(sql)
+    @job_id = Time.now.to_i # send this to the audit
   	@suppliers_available = Hash.new
   	records.each do |r|
   		@suppliers_available[r['subdomain']] = {'market_id'=>r['id']}
@@ -22,35 +23,44 @@ class Admin::UploadController < AdminController
   end
 
   
-def check
+def upload
     @total_products_msg = "Loading not completed." # initial
+    # TODO: render different based on whether that loading is complete.
     if params.has_key?(:datafile)
       profile = params[:profile]
       filepath = './tempfiles/' + params[:datafile].original_filename.to_s
-      upload # call the upload method to write file to tempfiles
-
-      @job_id = Time.now.to_i #send this to the audit
+      @job_id = params[:job_id]
       @user = current_user.id
+      
+      uploaded = params[:datafile] # Gets the xlsx data from form upload post request
+      filepath = Rails.root.join('tempfiles',uploaded.original_filename)
+      File.open(filepath, 'wb') do |file|
+        file.write(uploaded.read) # Writes that data to the open filestream in the tempfiles fldr
+      end
 
       # system calls the wrapper, run in the background, passing through the job_id
-      system("./bin/import_wrapper" + " tryingsomething" + " #{profile} #{filepath} #{@user} &") # first arg for import_wrapper
+      system("./bin/import_wrapper #{@job_id} #{profile} #{filepath} #{@user} &") # first arg for import_wrapper
     end
   end
 
   def newjob
     @job_id = params[:job_id] # access this from the post
-    # try to find audit with job id
+    # now try to find audit with job id
     aud = Audit.where(associated_id:@job_id)
-    #binding.pry
-    content = aud['comment'].split("|*|")
+    if not aud.first
+      #render :status => 404
+      raise ActiveRecord::RecordNotFound
+    end
+    content = aud.first['comment'].split("|*|")
     error_text = content.first
     products_loaded = content.last
-    get_output(error_text,products_loaded)
+    get_output(error_text,products_loaded) # when this is complete, should render errors on check tpl page
+    render(:layout => false)
   end
 
 
   def get_output(cli_call_result, products_loaded)
-    #if params.has_key?(:datafile) # this is now handled elsewhere TBC
+    #if params.has_key?(:datafile) # this is now handled elsewhere
   	@error_display = [] # initial
   	if cli_call_result.include?("Assuming file is invalid and bailing out")
   		@errors = [":reason: Invalid file. No upload. Check your data file headers."] # array in case we want to add more information, easier
