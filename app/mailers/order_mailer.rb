@@ -9,15 +9,19 @@ class OrderMailer < BaseMailer
     )
   end
 
-  def seller_confirmation(order, seller)
+  def seller_confirmation(order, seller, pdf, csv)
     @market = order.market
     @order = SellerOrder.new(order, seller) # Selling users organizations only see
     @seller = seller
+
+    attachments["packing_list.pdf"] = {mime_type: "application/pdf", content: pdf.data}
+    attachments["packing_list.csv"] = {mime_type: "application/csv", content: csv}
 
     mail(
       to: seller.users.map(&:pretty_email),
       subject: "New order on #{@market.name}"
     )
+
   end
 
   def market_manager_confirmation(order)
@@ -48,19 +52,35 @@ class OrderMailer < BaseMailer
 
     mail(
       to: order.organization.users.map(&:pretty_email),
-      subject: "#{@market.name}: Order #{order.order_number} updated",
+      subject: "#{@market.name}: Order #{order.order_number} Updated",
       template_name: "order_updated"
     )
   end
 
-  def seller_order_updated(order, seller)
+  def buyer_order_removed(order)
+    @market = order.market
+    @order = BuyerOrder.new(order) # Market Managers should see all items
+
+    mail(
+        to: order.organization.users.map(&:pretty_email),
+        subject: "#{@market.name}: Order #{order.order_number} Updated - Item Removed",
+        template_name: "order_updated"
+    )
+  end
+
+  def seller_order_updated(order, seller, pdf, csv)
     @market = order.market
     @order = SellerOrder.new(order, seller) # Selling users organizations only see
     @seller = seller
 
+    if pdf
+      attachments["packing_list.pdf"] = {mime_type: "application/pdf", content: pdf.data}
+      attachments["packing_list.csv"] = {mime_type: "application/csv", content: csv}
+    end
+
     mail(
       to: seller.users.map(&:pretty_email),
-      subject: "#{@market.name}: Order #{order.order_number} updated",
+      subject: "#{@market.name}: Order #{order.order_number} Updated",
       template_name: "order_updated"
     )
   end
@@ -71,8 +91,26 @@ class OrderMailer < BaseMailer
 
     mail(
       to: order.market.managers.map(&:pretty_email),
-      subject: "#{@market.name}: Order #{order.order_number} updated",
+      subject: "#{@market.name}: Order #{order.order_number} Updated",
       template_name: "order_updated"
     )
   end
+
+  def seller_order_item_removal(order, seller, pdf, csv)
+    @market = order.market
+    @order = SellerOrder.new(order, seller) # Selling users organizations only see
+    @seller = seller
+
+    if pdf
+      attachments["packing_list.pdf"] = {mime_type: "application/pdf", content: pdf.data}
+      attachments["packing_list.csv"] = {mime_type: "application/csv", content: csv}
+    end
+
+    mail(
+        to: seller.users.map(&:pretty_email),
+        subject: "#{@market.name}: Order #{order.order_number} Updated - Item Removed",
+        template_name: "order_updated"
+    )
+  end
+
 end

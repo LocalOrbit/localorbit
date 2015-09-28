@@ -14,8 +14,9 @@ describe SendOrderEmails do
     let(:seller) { create(:organization, :seller) }
 
     it "sends no emails to the selling organization" do
+      request = @request
       expect {
-        SendOrderEmails.perform(order: order, seller: seller)
+        SendOrderEmails.perform(request: request, order: order, seller: seller)
       }.not_to raise_error
 
       expect(ActionMailer::Base.deliveries.count).to eql(2)
@@ -28,8 +29,9 @@ describe SendOrderEmails do
     let(:order)  { create(:order, placed_by: market_manager, delivery: delivery, items: [create(:order_item, product: product)], market: market, organization: buyer) }
 
     it "sends no emails to the buying organization" do
+      request = @request
       expect {
-        SendOrderEmails.perform(order: order, seller: seller)
+        SendOrderEmails.perform(request: request, order: order, seller: seller)
       }.not_to raise_error
 
       expect(ActionMailer::Base.deliveries.count).to eql(2)
@@ -40,8 +42,9 @@ describe SendOrderEmails do
     let(:market) { create(:market) }
 
     it "sends no emails to the market managers" do
+      request = @request
       expect {
-        SendOrderEmails.perform(order: order, seller: seller)
+        SendOrderEmails.perform(request: request, order: order, seller: seller)
       }.not_to raise_error
 
       expect(ActionMailer::Base.deliveries.count).to eql(2)
