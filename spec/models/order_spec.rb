@@ -482,6 +482,15 @@ describe Order do
 
       expect(order.reload.total_cost.to_f).to eql(0.0)
     end
+
+    it "takes credits into account" do
+      credit = create(:credit, order: order, user: user, amount: 1.00)
+      expect(order.reload.total_cost.to_f).to eql(7.74)
+      credit.amount = 0.5
+      credit.percentage_or_fixed = Credit::PERCENTAGE
+      credit.save
+      expect(order.reload.total_cost.to_f).to eql(5.24)
+    end
   end
 
   describe "payable to market" do
@@ -552,9 +561,9 @@ describe Order do
   describe ".payable scope" do
     #              -48 ago                         NOW
     # ---------------|------------------------------|
-    # o1             |                              
-    # o2.do o2.bdo   |                              
-    #       o3.bdo   |  o3.do             
+    # o1             |
+    # o2.do o2.bdo   |
+    #       o3.bdo   |  o3.do
     #                |  o4
     let(:now) { Time.current }
     let(:forty_nine_hours_ago) { now - 49.hours }
@@ -599,7 +608,7 @@ describe Order do
 
 
     let!(:m1) { Generate.market_with_orders(
-                  order_time: order_time, 
+                  order_time: order_time,
                   deliver_time: deliver_time,
                   paid_with: "credit card",
                   delivered: "delivered",

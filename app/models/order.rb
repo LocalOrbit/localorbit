@@ -10,7 +10,7 @@ class Order < ActiveRecord::Base
   before_save :cache_delivery_status
   before_update :update_order_item_payment_status
   before_update :update_total_cost
-  
+
   audited allow_mass_assignment: true
   has_associated_audits
 
@@ -35,6 +35,7 @@ class Order < ActiveRecord::Base
   has_many :order_payments, inverse_of: :order
   has_many :payments, through: :order_payments, inverse_of: :orders
   has_many :products, through: :items
+  has_one :credit, autosave: false
 
   validates :billing_address, presence: true
   validates :billing_city, presence: true
@@ -141,12 +142,12 @@ class Order < ActiveRecord::Base
       WHERE payments.payee_type = 'Organization' AND payments.payee_id = products.organization_id|
   end
 
-  def self.with_payments_made_to_sellers 
+  def self.with_payments_made_to_sellers
     joins(items: :product).
     where("EXISTS(#{payments_to_sellers_subselect})")
   end
 
-  def self.without_payments_made_to_sellers 
+  def self.without_payments_made_to_sellers
     joins(items: :product).
     where("NOT EXISTS(#{payments_to_sellers_subselect})")
   end
@@ -156,7 +157,7 @@ class Order < ActiveRecord::Base
       fully_delivered.
       payable(current_time: current_time).
       without_payments_made_to_sellers.
-      group("seller_id"). 
+      group("seller_id").
       order(:order_number).
       includes(:market)
 
@@ -169,7 +170,7 @@ class Order < ActiveRecord::Base
 
   def self.payable_to_automate_sellers(current_time:Time.current.end_of_minute, seller_organization_id:nil)
     balanced.payable_to_sellers(
-      current_time: current_time, 
+      current_time: current_time,
       seller_organization_id: seller_organization_id
     ).not_paid_for("market payment")
   end
@@ -178,15 +179,15 @@ class Order < ActiveRecord::Base
     balanced.fully_delivered.purchase_orders.payable.not_paid_for("lo fee", :payer)
   end
 
-  # 
-  # Scope: For Markets on Automate plan, get all 
+  #
+  # Scope: For Markets on Automate plan, get all
   # Orders with payable market fees.
   # Options:
-  #   current_time: Delivery must be earlier than 48 hrs before this time. 
+  #   current_time: Delivery must be earlier than 48 hrs before this time.
   #                 Default: Time.current.end_of_minute
-  #   market_id: If present, narrow the results based on one or more Market ids.  
+  #   market_id: If present, narrow the results based on one or more Market ids.
   #              Default: nil (include all Markets on Automate)
-  #   order_id: If present, narrow the results to one or more specific Order ids.  
+  #   order_id: If present, narrow the results to one or more specific Order ids.
   #             Default: nil (nil all matching orders).
   def self.payable_market_fees(current_time: Time.current.end_of_minute, market_id: nil, order_id: nil)
     res = balanced.clean_payment_records.
@@ -379,6 +380,14 @@ class Order < ActiveRecord::Base
     usable_items.sum(&:gross_total)
   end
 
+  def credit_amount
+    if credit
+      credit.calculated_amount
+    else
+      0
+    end
+  end
+
   private
 
   def update_paid_at
@@ -412,7 +421,7 @@ class Order < ActiveRecord::Base
 
   def calculate_total_cost(gross)
     if gross > 0.0
-      gross + delivery_fees - discount_amount
+      gross + delivery_fees - discount_amount - credit_amount
     else
       0
     end
