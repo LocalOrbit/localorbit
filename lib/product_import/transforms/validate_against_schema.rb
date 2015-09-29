@@ -4,6 +4,7 @@ class ProductImport::Transforms::ValidateAgainstSchema < ProductImport::Framewor
     begin
       RSchema.validate!(opts[:schema], row)
       continue row
+      # poss: here validate and copy
     rescue => e
       reject "Failed schema validation (#{e.message})"
     end
