@@ -5,6 +5,9 @@ class Market < ActiveRecord::Base
   audited allow_mass_assignment: true
   extend DragonflyBackgroundResize
   include Sortable
+  include Util::TrimText
+
+  trimmed_fields :contact_email
 
   validates :name, :subdomain, presence: true, uniqueness: true, length: {maximum: 255, allow_blank: true}
   validates :subdomain, exclusion: {in: %w(app www mail ftp smtp imap docs calendar community knowledge service support)}

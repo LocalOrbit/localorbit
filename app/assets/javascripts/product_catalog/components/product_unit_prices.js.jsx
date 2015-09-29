@@ -61,7 +61,8 @@
     },
 
     updateQuantity: function(event) {
-      this.setState({cartItemQuantity: event.target.value});
+        s = event.target.value.replace(/^0+/, '');
+        this.setState({cartItemQuantity: s});
     },
 
     render: function() {
