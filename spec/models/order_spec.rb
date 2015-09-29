@@ -491,6 +491,13 @@ describe Order do
       credit.save
       expect(order.reload.total_cost.to_f).to eql(5.24)
     end
+
+    it "does not use invalid credits" do
+      credit = create(:credit, order: order, user: user, amount: 1.00)
+      order.payment_method = "credit card"
+      order.save
+      expect(order.reload.total_cost.to_f).to eql(8.74)
+    end
   end
 
   describe "payable to market" do

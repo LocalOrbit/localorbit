@@ -381,7 +381,7 @@ class Order < ActiveRecord::Base
   end
 
   def credit_amount
-    if credit
+    if credit && credit.valid?
       credit.calculated_amount
     else
       0
