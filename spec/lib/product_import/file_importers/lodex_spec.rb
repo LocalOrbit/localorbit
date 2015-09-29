@@ -7,8 +7,8 @@ describe ProductImport::FileImporters::Lodex do
 
     it "turns a table into hashes" do
       data = [
-        ["product_code", "name", "category", "price", "unit"],
-        ["abc123", "St. John's Wart", "Herbs", "1.23", "lbs"],
+        ["product_code", "name", "category", "price", "unit", "unit_description","break_case"],
+        ["abc123", "St. John's Wart", "Herbs", "1.23", "lbs","pounds","N"],
       ]
       success, fail = subject.transform.transform_enum(data)
 
@@ -19,6 +19,8 @@ describe ProductImport::FileImporters::Lodex do
           "category" => "Herbs",
           "price" => "1.23",
           "unit" => "lbs",
+          "unit_description" => "pounds",
+          "break_case" => "N"
         },
       ])
       expect(fail.length).to eq(0)
@@ -51,19 +53,19 @@ describe ProductImport::FileImporters::Lodex do
 
     it "produces data in the canonical format" do
       data = [
-        ["product_code", "organization","name", "category", "price", 'unit', 'unit_description'],
-        ["abc123", "orgname","St. John's Wart", "Herbs", "1.23", 'Each','1/72 oz'],
-        [" ", "orgname","St. John's Wort", "Herbs", "1.23", 'Each','1/72 oz'], # product code blank OK: name must be different because otherwise same fields in same list, won't be written
+        ["product_code", "organization","name", "category", "price", 'unit', 'unit_description','break_case'],
+        ["abc123", "orgname","St. John's Wart", "Herbs", "1.23", 'Each','1/72 oz','N'],
+        [" ", "orgname","St. John's Wort", "Herbs", "1.23", 'Each','1/72 oz','N'], # product code blank OK: name must be different because otherwise same fields in same list, won't be written
         # Rejects blanks appropriately
-        ["abc123","  ", "St. John's Wart", "Herbs", "1.23", 'Each','1/72 oz'], 
-        ["abc123", "orgname","               ", "Herbs", "1.23", 'Each','1/72 oz'],
-        ["abc123", "orgname","St. John's Wart", "     ", "1.23", 'Each','1/72 oz'],
-        ["abc123", "orgname","St. John's Wart", "Herbs", "    ", 'Each','1/72 oz'],
-        ["abc123", "orgname","St. John's Wart", "Herbs", "1.23", '          ','1/72 oz'],
-        ["abc123", "orgname","St. John's Wart", "Herbs", "1.23", 'Each',''],
+        ["abc123","  ", "St. John's Wart", "Herbs", "1.23", 'Each','1/72 oz','N'], 
+        ["abc123", "orgname","               ", "Herbs", "1.23", 'Each','1/72 oz','N'],
+        ["abc123", "orgname","St. John's Wart", "     ", "1.23", 'Each','1/72 oz','N'],
+        ["abc123", "orgname","St. John's Wart", "Herbs", "    ", 'Each','1/72 oz','N'],
+        ["abc123", "orgname","St. John's Wart", "Herbs", "1.23", '          ','1/72 oz','N'],
+        ["abc123", "orgname","St. John's Wart", "Herbs", "1.23", 'Each','','N'],
 
         # Catches invalid price
-        ["abc123", "St. John's Wart", "Herbs", "dolla", '2/3 lb tub'],
+        ["abc123", "St. John's Wart", "Herbs", "dolla", '2/3 lb tub','','N'],
       ]
 
       success, fail = subject.transform_enum(data)
@@ -78,10 +80,9 @@ describe ProductImport::FileImporters::Lodex do
       file = test_file("lodex_good_and_bad.csv")
 
       success, fail = subject.run_through_stage(:canonicalize, filename: file)
-      expect(success.size).to eq(1)
+      expect(success.size).to eq(2)
       expect(success).to be_array_compliant_with_schema(ProductImport::Schemas::CANONICAL)
-
-      expect(fail.size).to eq(5)
+      expect(fail.size).to eq(6)
     end
 
     it "bails out on csvs missing required columns" do
