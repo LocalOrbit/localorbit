@@ -87,7 +87,10 @@ module ProductImport
             "Unit Description (optional)" => "unit_description",
             "Unit Name" => "unit",
             "Category Name" => "category",
-            "Break Case" => "break_case"
+            "Break Case" => "break_case",
+            "Break Case Unit" => "break_case_unit",
+            "Break Case Unit Description" => "break_case_unit_description",
+            "Break Case Price" => "break_case_price"
           }
 
 
