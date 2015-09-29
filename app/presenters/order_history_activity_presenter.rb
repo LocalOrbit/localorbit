@@ -13,10 +13,10 @@ class OrderHistoryActivityPresenter
   def who
     output = ""
     if metadata.masquerader
-      output += link_to_if(metadata.masquerader, metadata.masquerader_username, admin_user_path(metadata.masquerader))
+      output += metadata.masquerader ? metadata.masquerader_username : admin_user_path(metadata.masquerader)
       output += "<br>impersonating<br>"
     end
-    output += link_to_if(metadata.user, metadata.user_name_or_email, admin_user_path(metadata.user))
+    output += metadata.user ? metadata.user_name_or_email : admin_user_path(metadata.user)
     output.html_safe
   end
 
