@@ -1,10 +1,15 @@
 require "spec_helper"
+require "stripe_mock"
 
 feature "Adding deposit account to a market", :js, :vcr do
   let!(:market) { create(:market, name: "Neomarket", 
                          payment_provider: 'stripe',
                          contact_email: "misteranderson@example.com") 
   }
+
+  let(:stripe_helper) { StripeMock.create_test_helper }
+  before { StripeMock.start }
+  after { StripeMock.stop }
 
   before do
     switch_to_subdomain(market.subdomain)
