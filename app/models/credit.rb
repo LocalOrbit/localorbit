@@ -1,20 +1,25 @@
 class Credit < ActiveRecord::Base
   belongs_to :order, autosave: false
   belongs_to :user
+  belongs_to :paying_org, class: Organization
   after_save :update_order
+
   PERCENTAGE = "percentage"
   FIXED = "fixed"
+  MARKET = "market"
+  ORGANIZATION = "organization"
 
-  validates :order, :user, :percentage_or_fixed, :amount, presence: true
-  validates :percentage_or_fixed, inclusion: {in: [PERCENTAGE, FIXED], message: "Not a valid credit type."}
+  validates :order, :user, :amount_type, :amount, presence: true
+  validates :amount_type, inclusion: {in: [PERCENTAGE, FIXED], message: "Not a valid credit type."}
+  validates :payer_type, inclusion: {in: [MARKET, ORGANIZATION], message: "Not a valid payer type."}
   validates :amount, numericality: {greater_than_or_equal_to: 0}
   validate :amount_cannot_exceed_gross_total, :order_must_be_paid_by_po
 
   def calculated_amount
     total = order.gross_total
-    if percentage_or_fixed == Credit::PERCENTAGE
+    if amount_type == Credit::PERCENTAGE
       (total * amount).round 2
-    elsif percentage_or_fixed == Credit::FIXED
+    elsif amount_type == Credit::FIXED
       amount.round 2
     end
   end
@@ -38,10 +43,10 @@ class Credit < ActiveRecord::Base
   end
 
   def percentage_amount_too_high
-    amount != nil && percentage_or_fixed == Credit::PERCENTAGE && amount > 1
+    amount != nil && amount_type == Credit::PERCENTAGE && amount > 1
   end
 
   def fixed_amount_too_high
-    amount != nil && order != nil && percentage_or_fixed == Credit::FIXED && amount > order.gross_total
+    amount != nil && order != nil && amount_type == Credit::FIXED && amount > order.gross_total
   end
 end

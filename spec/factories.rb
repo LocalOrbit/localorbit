@@ -50,8 +50,10 @@ FactoryGirl.define do
   factory :credit do
     order
     user
-    percentage_or_fixed "fixed"
+    amount_type "fixed"
     amount 1.50
+    payer_type "market"
+    paying_org_id nil
   end
 
   factory :order_template do
