@@ -51,7 +51,8 @@ module ProductImport
         'Unit Name',
         'Unit Description (optional)',
         'Supplier Product Number',
-        'Price'
+        'Price',
+        'Break Case'
       ]
 
       # See lib/product_import/formats for supported formats
@@ -86,6 +87,7 @@ module ProductImport
             "Unit Description (optional)" => "unit_description",
             "Unit Name" => "unit",
             "Category Name" => "category",
+            "Break Case" => "break_case"
           }
 
 

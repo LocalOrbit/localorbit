@@ -6,7 +6,7 @@ module ProductImport
       stage :extract do |s|
         s.transform :from_flat_table,
           headers: true,
-          required_headers: %w(product_code name category price unit)
+          required_headers: %w(product_code name category price unit break_case)
       end
 
       stage :canonicalize do |s|

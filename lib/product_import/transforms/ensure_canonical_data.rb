@@ -3,7 +3,7 @@
 class ProductImport::Transforms::EnsureCanonicalData < ProductImport::Framework::TransformPipeline
 
   transform :validate_keys_are_present,
-    keys: %w(organization name category price unit unit_description) # require category even though it may change in future, prod to upload must have one
+    keys: %w(organization name category price unit unit_description break_case) # require category even though it may change in future, prod to upload must have one
 
   transform :contrive_key,
     from: %w(organization name unit unit_description), # don't need to validate product code now
