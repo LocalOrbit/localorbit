@@ -1,0 +1,709 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.stripe.com/v1/accounts
+    body:
+      encoding: US-ASCII
+      string: managed=true&business_name=Neomarket&email=misteranderson%40example.com&country=US&debit_negative_balances=true&transfer_schedule[delay_days]=5&transfer_schedule[interval]=weekly&transfer_schedule[weekly_anchor]=wednesday&metadata[lo.market_id]=1
+    headers:
+      Accept:
+      - "*/*; q=0.5, application/xml"
+      Accept-Encoding:
+      - gzip, deflate
+      User-Agent:
+      - Stripe/v1 RubyBindings/1.27.2
+      Authorization:
+      - Bearer sk_test_XTLCfIQMwKblsxIF1N4i7y1G
+      Content-Type:
+      - application/x-www-form-urlencoded
+      X-Stripe-Client-User-Agent:
+      - '{"bindings_version":"1.27.2","lang":"ruby","lang_version":"2.1.2 p95 (2014-05-08)","platform":"x86_64-darwin14.0","engine":"ruby","publisher":"stripe","uname":"Darwin
+        Andys-MBP 14.5.0 Darwin Kernel Version 14.5.0: Wed Jul 29 02:26:53 PDT 2015;
+        root:xnu-2782.40.9~1/RELEASE_X86_64 x86_64","hostname":"Andys-MBP"}'
+      Content-Length:
+      - '246'
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx
+      Date:
+      - Tue, 29 Sep 2015 14:24:29 GMT
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '3954'
+      Connection:
+      - keep-alive
+      Access-Control-Allow-Credentials:
+      - 'true'
+      Access-Control-Allow-Methods:
+      - GET, POST, HEAD, OPTIONS, DELETE
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Max-Age:
+      - '300'
+      Cache-Control:
+      - no-cache, no-store
+      Request-Id:
+      - req_74Y8SrWlmMPV13
+      Stripe-Version:
+      - '2015-04-07'
+      Strict-Transport-Security:
+      - max-age=31556926; includeSubDomains
+    body:
+      encoding: UTF-8
+      string: |
+        {
+          "id": "acct_16qP1sGMNXqj3zxZ",
+          "email": "misteranderson@example.com",
+          "statement_descriptor": null,
+          "display_name": null,
+          "timezone": "Etc/UTC",
+          "details_submitted": false,
+          "charges_enabled": true,
+          "transfers_enabled": false,
+          "currencies_supported": [
+            "usd",
+            "aed",
+            "afn",
+            "all",
+            "amd",
+            "ang",
+            "aoa",
+            "ars",
+            "aud",
+            "awg",
+            "azn",
+            "bam",
+            "bbd",
+            "bdt",
+            "bgn",
+            "bif",
+            "bmd",
+            "bnd",
+            "bob",
+            "brl",
+            "bsd",
+            "bwp",
+            "bzd",
+            "cad",
+            "cdf",
+            "chf",
+            "clp",
+            "cny",
+            "cop",
+            "crc",
+            "cve",
+            "czk",
+            "djf",
+            "dkk",
+            "dop",
+            "dzd",
+            "egp",
+            "etb",
+            "eur",
+            "fjd",
+            "fkp",
+            "gbp",
+            "gel",
+            "gip",
+            "gmd",
+            "gnf",
+            "gtq",
+            "gyd",
+            "hkd",
+            "hnl",
+            "hrk",
+            "htg",
+            "huf",
+            "idr",
+            "ils",
+            "inr",
+            "isk",
+            "jmd",
+            "jpy",
+            "kes",
+            "kgs",
+            "khr",
+            "kmf",
+            "krw",
+            "kyd",
+            "kzt",
+            "lak",
+            "lbp",
+            "lkr",
+            "lrd",
+            "lsl",
+            "ltl",
+            "mad",
+            "mdl",
+            "mga",
+            "mkd",
+            "mnt",
+            "mop",
+            "mro",
+            "mur",
+            "mvr",
+            "mwk",
+            "mxn",
+            "myr",
+            "mzn",
+            "nad",
+            "ngn",
+            "nio",
+            "nok",
+            "npr",
+            "nzd",
+            "pab",
+            "pen",
+            "pgk",
+            "php",
+            "pkr",
+            "pln",
+            "pyg",
+            "qar",
+            "ron",
+            "rsd",
+            "rub",
+            "rwf",
+            "sar",
+            "sbd",
+            "scr",
+            "sek",
+            "sgd",
+            "shp",
+            "sll",
+            "sos",
+            "srd",
+            "std",
+            "svc",
+            "szl",
+            "thb",
+            "tjs",
+            "top",
+            "try",
+            "ttd",
+            "twd",
+            "tzs",
+            "uah",
+            "ugx",
+            "uyu",
+            "uzs",
+            "vnd",
+            "vuv",
+            "wst",
+            "xaf",
+            "xcd",
+            "xof",
+            "xpf",
+            "yer",
+            "zar",
+            "zmw"
+          ],
+          "default_currency": "usd",
+          "country": "US",
+          "object": "account",
+          "business_name": "Neomarket",
+          "business_url": null,
+          "support_phone": null,
+          "business_logo": null,
+          "metadata": {
+            "lo.market_id": "1"
+          },
+          "managed": true,
+          "product_description": null,
+          "debit_negative_balances": true,
+          "bank_accounts": {
+            "object": "list",
+            "total_count": 0,
+            "has_more": false,
+            "url": "/v1/accounts/acct_16qP1sGMNXqj3zxZ/bank_accounts",
+            "data": []
+          },
+          "external_accounts": {
+            "object": "list",
+            "total_count": 0,
+            "has_more": false,
+            "url": "/v1/accounts/acct_16qP1sGMNXqj3zxZ/external_accounts",
+            "data": []
+          },
+          "verification": {
+            "fields_needed": [
+              "bank_account",
+              "legal_entity.dob.day",
+              "legal_entity.dob.month",
+              "legal_entity.dob.year",
+              "legal_entity.first_name",
+              "legal_entity.last_name",
+              "legal_entity.type",
+              "tos_acceptance.date",
+              "tos_acceptance.ip"
+            ],
+            "due_by": null,
+            "disabled_reason": "fields_needed",
+            "contacted": false
+          },
+          "transfer_schedule": {
+            "delay_days": 5,
+            "interval": "weekly",
+            "weekly_anchor": "wednesday"
+          },
+          "decline_charge_on": {
+            "cvc_failure": false,
+            "avs_failure": false
+          },
+          "tos_acceptance": {
+            "ip": null,
+            "date": null,
+            "user_agent": null
+          },
+          "legal_entity": {
+            "type": null,
+            "business_name": null,
+            "address": {
+              "line1": null,
+              "line2": null,
+              "city": null,
+              "state": null,
+              "postal_code": null,
+              "country": "US"
+            },
+            "first_name": null,
+            "last_name": null,
+            "personal_address": {
+              "line1": null,
+              "line2": null,
+              "city": null,
+              "state": null,
+              "postal_code": null,
+              "country": null
+            },
+            "dob": {
+              "day": null,
+              "month": null,
+              "year": null
+            },
+            "additional_owners": null,
+            "verification": {
+              "status": "unverified",
+              "document": null,
+              "details": null
+            },
+            "personal_id_number_provided": false,
+            "ssn_last_4_provided": false
+          },
+          "keys": {
+            "secret": "sk_test_6ZySQpCFDximsqpLwGYUGY7W",
+            "publishable": "pk_test_Jr2zTIGs4XFfM4LvVwhOhuvB"
+          }
+        }
+    http_version: 
+  recorded_at: Tue, 29 Sep 2015 14:24:29 GMT
+- request:
+    method: post
+    uri: https://api.stripe.com/v1/accounts/acct_16qP1sGMNXqj3zxZ/bank_accounts
+    body:
+      encoding: US-ASCII
+      string: bank_account=btok_74Y8gyZagEOwqQ&default_for_currency=true
+    headers:
+      Accept:
+      - "*/*; q=0.5, application/xml"
+      Accept-Encoding:
+      - gzip, deflate
+      User-Agent:
+      - Stripe/v1 RubyBindings/1.27.2
+      Authorization:
+      - Bearer sk_test_XTLCfIQMwKblsxIF1N4i7y1G
+      Content-Type:
+      - application/x-www-form-urlencoded
+      X-Stripe-Client-User-Agent:
+      - '{"bindings_version":"1.27.2","lang":"ruby","lang_version":"2.1.2 p95 (2014-05-08)","platform":"x86_64-darwin14.0","engine":"ruby","publisher":"stripe","uname":"Darwin
+        Andys-MBP 14.5.0 Darwin Kernel Version 14.5.0: Wed Jul 29 02:26:53 PDT 2015;
+        root:xnu-2782.40.9~1/RELEASE_X86_64 x86_64","hostname":"Andys-MBP"}'
+      Content-Length:
+      - '58'
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx
+      Date:
+      - Tue, 29 Sep 2015 14:24:30 GMT
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '341'
+      Connection:
+      - keep-alive
+      Access-Control-Allow-Credentials:
+      - 'true'
+      Access-Control-Allow-Methods:
+      - GET, POST, HEAD, OPTIONS, DELETE
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Max-Age:
+      - '300'
+      Cache-Control:
+      - no-cache, no-store
+      Request-Id:
+      - req_74Y87HNVDqz2sz
+      Stripe-Account:
+      - acct_16qP1sGMNXqj3zxZ
+      Stripe-Version:
+      - '2015-04-07'
+      Strict-Transport-Security:
+      - max-age=31556926; includeSubDomains
+    body:
+      encoding: UTF-8
+      string: |
+        {
+          "object": "bank_account",
+          "id": "ba_16qP1tGMNXqj3zxZ6wKrnKPJ",
+          "last4": "6789",
+          "country": "US",
+          "currency": "usd",
+          "status": "new",
+          "fingerprint": "FmLiL9AMS99oOKG4",
+          "routing_number": "110000000",
+          "bank_name": "STRIPE TEST BANK",
+          "account": "acct_16qP1sGMNXqj3zxZ",
+          "default_for_currency": true,
+          "metadata": {}
+        }
+    http_version: 
+  recorded_at: Tue, 29 Sep 2015 14:24:30 GMT
+- request:
+    method: get
+    uri: https://api.stripe.com/v1/accounts/acct_16qP1sGMNXqj3zxZ
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept:
+      - "*/*; q=0.5, application/xml"
+      Accept-Encoding:
+      - gzip, deflate
+      User-Agent:
+      - Stripe/v1 RubyBindings/1.27.2
+      Authorization:
+      - Bearer sk_test_XTLCfIQMwKblsxIF1N4i7y1G
+      Content-Type:
+      - application/x-www-form-urlencoded
+      X-Stripe-Client-User-Agent:
+      - '{"bindings_version":"1.27.2","lang":"ruby","lang_version":"2.1.2 p95 (2014-05-08)","platform":"x86_64-darwin14.0","engine":"ruby","publisher":"stripe","uname":"Darwin
+        Andys-MBP 14.5.0 Darwin Kernel Version 14.5.0: Wed Jul 29 02:26:53 PDT 2015;
+        root:xnu-2782.40.9~1/RELEASE_X86_64 x86_64","hostname":"Andys-MBP"}'
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx
+      Date:
+      - Tue, 29 Sep 2015 14:24:30 GMT
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '4671'
+      Connection:
+      - keep-alive
+      Access-Control-Allow-Credentials:
+      - 'true'
+      Access-Control-Allow-Methods:
+      - GET, POST, HEAD, OPTIONS, DELETE
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Max-Age:
+      - '300'
+      Cache-Control:
+      - no-cache, no-store
+      Request-Id:
+      - req_74Y8HWYWE7G0Mo
+      Stripe-Account:
+      - acct_16qP1sGMNXqj3zxZ
+      Stripe-Version:
+      - '2015-04-07'
+      Strict-Transport-Security:
+      - max-age=31556926; includeSubDomains
+    body:
+      encoding: UTF-8
+      string: |
+        {
+          "id": "acct_16qP1sGMNXqj3zxZ",
+          "email": "misteranderson@example.com",
+          "statement_descriptor": null,
+          "display_name": null,
+          "timezone": "Etc/UTC",
+          "details_submitted": false,
+          "charges_enabled": true,
+          "transfers_enabled": false,
+          "currencies_supported": [
+            "usd",
+            "aed",
+            "afn",
+            "all",
+            "amd",
+            "ang",
+            "aoa",
+            "ars",
+            "aud",
+            "awg",
+            "azn",
+            "bam",
+            "bbd",
+            "bdt",
+            "bgn",
+            "bif",
+            "bmd",
+            "bnd",
+            "bob",
+            "brl",
+            "bsd",
+            "bwp",
+            "bzd",
+            "cad",
+            "cdf",
+            "chf",
+            "clp",
+            "cny",
+            "cop",
+            "crc",
+            "cve",
+            "czk",
+            "djf",
+            "dkk",
+            "dop",
+            "dzd",
+            "egp",
+            "etb",
+            "eur",
+            "fjd",
+            "fkp",
+            "gbp",
+            "gel",
+            "gip",
+            "gmd",
+            "gnf",
+            "gtq",
+            "gyd",
+            "hkd",
+            "hnl",
+            "hrk",
+            "htg",
+            "huf",
+            "idr",
+            "ils",
+            "inr",
+            "isk",
+            "jmd",
+            "jpy",
+            "kes",
+            "kgs",
+            "khr",
+            "kmf",
+            "krw",
+            "kyd",
+            "kzt",
+            "lak",
+            "lbp",
+            "lkr",
+            "lrd",
+            "lsl",
+            "ltl",
+            "mad",
+            "mdl",
+            "mga",
+            "mkd",
+            "mnt",
+            "mop",
+            "mro",
+            "mur",
+            "mvr",
+            "mwk",
+            "mxn",
+            "myr",
+            "mzn",
+            "nad",
+            "ngn",
+            "nio",
+            "nok",
+            "npr",
+            "nzd",
+            "pab",
+            "pen",
+            "pgk",
+            "php",
+            "pkr",
+            "pln",
+            "pyg",
+            "qar",
+            "ron",
+            "rsd",
+            "rub",
+            "rwf",
+            "sar",
+            "sbd",
+            "scr",
+            "sek",
+            "sgd",
+            "shp",
+            "sll",
+            "sos",
+            "srd",
+            "std",
+            "svc",
+            "szl",
+            "thb",
+            "tjs",
+            "top",
+            "try",
+            "ttd",
+            "twd",
+            "tzs",
+            "uah",
+            "ugx",
+            "uyu",
+            "uzs",
+            "vnd",
+            "vuv",
+            "wst",
+            "xaf",
+            "xcd",
+            "xof",
+            "xpf",
+            "yer",
+            "zar",
+            "zmw"
+          ],
+          "default_currency": "usd",
+          "country": "US",
+          "object": "account",
+          "business_name": "Neomarket",
+          "business_url": null,
+          "support_phone": null,
+          "business_logo": null,
+          "metadata": {
+            "lo.market_id": "1"
+          },
+          "managed": true,
+          "product_description": null,
+          "debit_negative_balances": true,
+          "bank_accounts": {
+            "object": "list",
+            "total_count": 1,
+            "has_more": false,
+            "url": "/v1/accounts/acct_16qP1sGMNXqj3zxZ/bank_accounts",
+            "data": [
+              {
+                "object": "bank_account",
+                "id": "ba_16qP1tGMNXqj3zxZ6wKrnKPJ",
+                "last4": "6789",
+                "country": "US",
+                "currency": "usd",
+                "status": "new",
+                "fingerprint": "FmLiL9AMS99oOKG4",
+                "routing_number": "110000000",
+                "bank_name": "STRIPE TEST BANK",
+                "account": "acct_16qP1sGMNXqj3zxZ",
+                "default_for_currency": true,
+                "metadata": {}
+              }
+            ]
+          },
+          "external_accounts": {
+            "object": "list",
+            "total_count": 1,
+            "has_more": false,
+            "url": "/v1/accounts/acct_16qP1sGMNXqj3zxZ/external_accounts",
+            "data": [
+              {
+                "object": "bank_account",
+                "id": "ba_16qP1tGMNXqj3zxZ6wKrnKPJ",
+                "last4": "6789",
+                "country": "US",
+                "currency": "usd",
+                "status": "new",
+                "fingerprint": "FmLiL9AMS99oOKG4",
+                "routing_number": "110000000",
+                "bank_name": "STRIPE TEST BANK",
+                "account": "acct_16qP1sGMNXqj3zxZ",
+                "default_for_currency": true,
+                "metadata": {}
+              }
+            ]
+          },
+          "verification": {
+            "fields_needed": [
+              "legal_entity.dob.day",
+              "legal_entity.dob.month",
+              "legal_entity.dob.year",
+              "legal_entity.first_name",
+              "legal_entity.last_name",
+              "legal_entity.type",
+              "tos_acceptance.date",
+              "tos_acceptance.ip"
+            ],
+            "due_by": null,
+            "disabled_reason": "fields_needed",
+            "contacted": false
+          },
+          "transfer_schedule": {
+            "delay_days": 5,
+            "interval": "weekly",
+            "weekly_anchor": "wednesday"
+          },
+          "decline_charge_on": {
+            "cvc_failure": false,
+            "avs_failure": false
+          },
+          "tos_acceptance": {
+            "ip": null,
+            "date": null,
+            "user_agent": null
+          },
+          "legal_entity": {
+            "type": null,
+            "business_name": null,
+            "address": {
+              "line1": null,
+              "line2": null,
+              "city": null,
+              "state": null,
+              "postal_code": null,
+              "country": "US"
+            },
+            "first_name": null,
+            "last_name": null,
+            "personal_address": {
+              "line1": null,
+              "line2": null,
+              "city": null,
+              "state": null,
+              "postal_code": null,
+              "country": null
+            },
+            "dob": {
+              "day": null,
+              "month": null,
+              "year": null
+            },
+            "additional_owners": null,
+            "verification": {
+              "status": "unverified",
+              "document": null,
+              "details": null
+            },
+            "personal_id_number_provided": false,
+            "ssn_last_4_provided": false
+          }
+        }
+    http_version: 
+  recorded_at: Tue, 29 Sep 2015 14:24:30 GMT
+recorded_with: VCR 2.9.3
