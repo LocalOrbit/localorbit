@@ -292,9 +292,6 @@ module ProductImport
           "market_id" => :to_i,
         }
 
-        s.transform :handle_break_case 
-        # If this works correctly, rows with Y break case create 2 product rows properly, pre-validated by the other transforms
-
       end
 
     end
