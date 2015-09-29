@@ -8,7 +8,7 @@ Dragonfly.app.configure do
   secret "c8583e781acd7fdbb14323520b44d98d1b29c345cfcbcb0003078a6bc4da670b"
 
   url_host   Figaro.env.dragonfly_host
-  url_format "/media/:job/:name.:ext"
+  url_format "/media/:job/:name"
 
   s3_headers = {
     "x-amz-acl"     => "public-read",
