@@ -1,5 +1,4 @@
 require "spec_helper"
-require "stripe_mock"
 
 feature "Adding deposit account to a market", :js, :vcr do
   let!(:market) { create(:market, name: "Neomarket", 
