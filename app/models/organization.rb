@@ -21,6 +21,7 @@ class Organization < ActiveRecord::Base
 
   has_many :orders, inverse_of: :organization
 
+  has_many :general_products, inverse_of: :organization, autosave: true, dependent: :destroy
   has_many :products, inverse_of: :organization, autosave: true, dependent: :destroy
   has_many :general_products, inverse_of: :organization, autosave: true, dependent: :destroy
   has_many :carts
