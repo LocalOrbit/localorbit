@@ -22,7 +22,7 @@ class ProductImport::Transforms::ContriveKey < ProductImport::Framework::Transfo
     #   row['contrived_key'] = ExternalProduct.contrive_key([parts[0]]) # Use only the product code if they provide it (because we started doing that and want to maintain the history). It expects an array.
     end
 
-    if row['break_case'].upcase == "Y" 
+    if row['break_case'] and row['break_case'].upcase == "Y" 
       if not row['break_case_unit'] and row['break_case_unit_description'] and row['break_case_price']
         reject "Missing break case unit information. Check rows."
       elsif row['break_case_unit'] == row['unit'] and row['break_case_unit_description'] == row['unit_description']
