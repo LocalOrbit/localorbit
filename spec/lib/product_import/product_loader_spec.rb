@@ -168,9 +168,6 @@ describe ProductImport::ProductLoader do
     expect(first_product.general_product).to eq(second_product.general_product)
   end
 
-  it "should handle break case pricing on a single row correctly" do # TODO ADD TEST
-  end
-
   it "should create a price and lot for an existing product without them" do
     product = create :product
 
