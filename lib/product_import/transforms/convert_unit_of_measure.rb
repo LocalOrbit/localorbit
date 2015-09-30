@@ -3,14 +3,14 @@ class ProductImport::Transforms::ConvertUnitOfMeasure < ProductImport::Framework
   PIECE_UOMS = %w(piece pc)
   POUND_UOMS = %w(pound lb)
   CASE_UOMS = %w(case cs)
-  SUPPORTED_UOMS = [PIECE_UOMS, POUND_UOMS, CASE_UOMS].flatten
+  SUPPORTED_UOMS = [PIECE_UOMS, POUND_UOMS, CASE_UOMS].flatten # TODO this will need to be more adaptable for true multi-unit - TODO expand unit options. Error for wrong one (wrong plural, etc)
 
 
   def transform_step(row)
     # Use continue to pass the transformed data onto the next stage.
     uom = row['uom'].downcase
 
-    if SUPPORTED_UOMS.include?(uom)
+    if SUPPORTED_UOMS.include?(uom) # TODO will need to change supported uoms, possibly to method to check.
       if CASE_UOMS.include?(uom)
         multiply_price(row, by: 1)
         continue row

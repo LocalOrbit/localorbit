@@ -51,24 +51,24 @@ describe ProductImport::FileImporters::Lodex do
 
     it "produces data in the canonical format" do
       data = [
-        ["product_code", "organization","name", "category", "price", 'unit'],
-        ["abc123", "orgname","St. John's Wart", "Herbs", "1.23", '2/3 lb tub'],
-
-        # Rejects blanks
-        ["      ", "St. John's Wart", "Herbs", "1.23", '2/3 lb tub'],
-        ["abc123", "               ", "Herbs", "1.23", '2/3 lb tub'],
-        ["abc123", "St. John's Wart", "     ", "1.23", '2/3 lb tub'],
-        ["abc123", "St. John's Wart", "Herbs", "    ", '2/3 lb tub'],
-        ["abc123", "St. John's Wart", "Herbs", "1.23", '          '],
+        ["product_code", "organization","name", "category", "price", 'unit', 'unit_description'],
+        ["abc123", "orgname","St. John's Wart", "Herbs", "1.23", 'Each','1/72 oz'],
+        [" ", "orgname","St. John's Wort", "Herbs", "1.23", 'Each','1/72 oz'], # product code blank OK: name must be different because otherwise same fields in same list, won't be written
+        # Rejects blanks appropriately
+        ["abc123","  ", "St. John's Wart", "Herbs", "1.23", 'Each','1/72 oz'], 
+        ["abc123", "orgname","               ", "Herbs", "1.23", 'Each','1/72 oz'],
+        ["abc123", "orgname","St. John's Wart", "     ", "1.23", 'Each','1/72 oz'],
+        ["abc123", "orgname","St. John's Wart", "Herbs", "    ", 'Each','1/72 oz'],
+        ["abc123", "orgname","St. John's Wart", "Herbs", "1.23", '          ','1/72 oz'],
+        ["abc123", "orgname","St. John's Wart", "Herbs", "1.23", 'Each',''],
 
         # Catches invalid price
         ["abc123", "St. John's Wart", "Herbs", "dolla", '2/3 lb tub'],
       ]
 
       success, fail = subject.transform_enum(data)
-
       expect(success).to be_array_compliant_with_schema(ProductImport::Schemas::CANONICAL)
-      expect(success.length).to eq(1)
+      expect(success.length).to eq(2)
       expect(fail.length).to eq(data.length - success.length - 1)
     end
   end
@@ -78,7 +78,7 @@ describe ProductImport::FileImporters::Lodex do
       file = test_file("lodex_good_and_bad.csv")
 
       success, fail = subject.run_through_stage(:canonicalize, filename: file)
-      expect(success.size).to eq(2)
+      expect(success.size).to eq(1)
       expect(success).to be_array_compliant_with_schema(ProductImport::Schemas::CANONICAL)
 
       expect(fail.size).to eq(5)
