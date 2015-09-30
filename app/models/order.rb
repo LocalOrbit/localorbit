@@ -35,6 +35,7 @@ class Order < ActiveRecord::Base
   has_many :order_payments, inverse_of: :order
   has_many :payments, through: :order_payments, inverse_of: :orders
   has_many :products, through: :items
+  has_many :sellers, through: :products, class_name: Organization
   has_one :credit, autosave: false
 
   validates :billing_address, presence: true

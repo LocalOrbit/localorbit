@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150925192601) do
+ActiveRecord::Schema.define(version: 20150929150255) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -144,13 +144,15 @@ ActiveRecord::Schema.define(version: 20150925192601) do
   add_index "categories", ["rgt"], name: "index_categories_on_rgt", using: :btree
 
   create_table "credits", force: true do |t|
-    t.integer  "order_id",            null: false
-    t.integer  "user_id",             null: false
-    t.string   "percentage_or_fixed", null: false
-    t.decimal  "amount",              null: false
+    t.integer  "order_id",      null: false
+    t.integer  "user_id",       null: false
+    t.string   "amount_type",   null: false
+    t.decimal  "amount",        null: false
     t.text     "notes"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "payer_type",    null: false
+    t.integer  "paying_org_id"
   end
 
   create_table "delayed_jobs", force: true do |t|

@@ -3,7 +3,7 @@ class BuyerOrder
   include OrderPresenter
   include DeliveryStatus
 
-  delegate :display_delivery_or_pickup, :display_delivery_address, :delivery_id, :organization_id, :invoice_pdf, to: :@order
+  delegate :display_delivery_or_pickup, :display_delivery_address, :delivery_id, :organization_id, :invoice_pdf, :credit, :sellers, to: :@order
 
   def initialize(order)
     @order = order.decorate
@@ -26,8 +26,12 @@ class BuyerOrder
   def delivery_date
     @order.delivery_date
   end
-  
+
   def gross_total
     @order.gross_total
+  end
+
+  def credit_amount
+    @order.credit_amount
   end
 end

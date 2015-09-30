@@ -9,16 +9,19 @@ class Credit < ActiveRecord::Base
   MARKET = "market"
   ORGANIZATION = "organization"
 
+  AMOUNT_TYPES = [PERCENTAGE, FIXED]
+  PAYER_TYPES = [MARKET, ORGANIZATION]
+
   validates :order, :user, :amount_type, :amount, presence: true
-  validates :amount_type, inclusion: {in: [PERCENTAGE, FIXED], message: "Not a valid credit type."}
-  validates :payer_type, inclusion: {in: [MARKET, ORGANIZATION], message: "Not a valid payer type."}
+  validates :amount_type, inclusion: {in: AMOUNT_TYPES, message: "Not a valid credit type."}
+  validates :payer_type, inclusion: {in: PAYER_TYPES, message: "Not a valid payer type."}
   validates :amount, numericality: {greater_than_or_equal_to: 0}
   validate :amount_cannot_exceed_gross_total, :order_must_be_paid_by_po
 
   def calculated_amount
     total = order.gross_total
     if amount_type == Credit::PERCENTAGE
-      (total * amount).round 2
+      (total * (amount / 100)).round 2
     elsif amount_type == Credit::FIXED
       amount.round 2
     end
@@ -43,7 +46,7 @@ class Credit < ActiveRecord::Base
   end
 
   def percentage_amount_too_high
-    amount != nil && amount_type == Credit::PERCENTAGE && amount > 1
+    amount != nil && amount_type == Credit::PERCENTAGE && amount > 100
   end
 
   def fixed_amount_too_high

@@ -61,11 +61,12 @@ describe Credit do
 
   describe "amount" do
     it "cannot exceed the order total" do
-      credit.amount = 100
+      order.update_column(:total_cost, 200)
+      credit.amount = 210
       expect(credit).to_not be_valid
       expect(credit).to have(1).error_on(:amount)
       credit.amount_type = Credit::PERCENTAGE
-      credit.amount = 1.2
+      credit.amount = 120
       expect(credit).to_not be_valid
       expect(credit).to have(1).error_on(:amount)
     end
@@ -82,9 +83,9 @@ describe Credit do
       expect(order.gross_total).to eql 6.99
       expect(credit.calculated_amount).to eql 1
       credit.amount_type = Credit::PERCENTAGE
-      credit.amount = 0.25
+      credit.amount = 25
       expect(credit.calculated_amount).to eql 1.75
-      credit.amount = 0.75
+      credit.amount = 75
       expect(credit.calculated_amount).to eql 5.24
     end
   end
