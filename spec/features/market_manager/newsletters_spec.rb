@@ -31,7 +31,7 @@ describe "A Market Manager managing Newsletters" do
         fill_in "Body", with: "bla bla bla"
         check "Buyers"
         check "Suppliers"
-        check "Market Managers"
+        check "Manager"
         attach_file "Image", "app/assets/images/logo.png"
         click_button "Add Newsletter"
         expect(page).to have_content("Big News")
@@ -119,11 +119,11 @@ describe "A Market Manager managing Newsletters" do
     end
 
     describe "to groups" do
-      it "sends to Market Managers" do
+      it "sends to Manager" do
         newsletter.market_managers=true
         mmtoken = market_manager.unsubscribe_token(subscription_type: SubscriptionType.find_by(keyword:SubscriptionType::Keywords::Newsletter))
         expect_send_newsletter_mail(newsletter:newsletter, market:market, to:market_manager.pretty_email,unsubscribe_token:mmtoken)
-        check "Market Managers"
+        check "Manager"
         click_button "Send Now"
         expect(page).to have_content("Successfully sent this Newsletter")
       end

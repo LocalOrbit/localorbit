@@ -34,35 +34,40 @@ class ReportPresenter
       fields: [
         :placed_at, :product_name, :product_code, :seller_name, :quantity, :unit_price, :discount,
         :row_total, :net_sale, :delivery_status, :buyer_payment_status, :seller_payment_status
-      ]
+      ],
+      seller_only: true
     },
     sales_by_supplier: {
       filters: [:placed_at, :order_number, :market_name, :seller_name],
       fields: [
         :placed_at, :category_name, :product_name, :product_code, :seller_name, :quantity, :unit_price, :discount,
         :row_total, :net_sale, :delivery_status, :buyer_payment_status, :seller_payment_status
-      ]
+      ],
+      seller_only: true
     },
     sales_by_buyer: {
       filters: [:placed_at, :order_number, :market_name, :buyer_name],
       fields: [
         :placed_at, :buyer_name, :product_name, :product_code, :seller_name, :quantity, :unit_price, :discount,
         :row_total, :net_sale, :delivery_status, :buyer_payment_status, :seller_payment_status
-      ]
+      ],
+      seller_only: true
     },
     sales_by_product: {
       filters: [:placed_at, :order_number, :market_name, :category_name, :product_name],
       fields: [
         :placed_at, :category_name, :product_name, :product_code, :seller_name, :quantity, :unit_price, :discount,
         :row_total, :net_sale, :delivery_status, :buyer_payment_status, :seller_payment_status
-      ]
+      ],
+      seller_only: true
     },
     sales_by_payment_method: {
       filters: [:placed_at, :order_number, :market_name, :payment_method],
       fields: [
         :placed_at, :buyer_name, :product_name, :product_code, :seller_name, :quantity, :unit_price, :discount,
         :row_total, :net_sale, :payment_method, :delivery_status, :buyer_payment_status, :seller_payment_status
-      ]
+      ],
+      seller_only: true
     },
     purchases_by_product: {
       filters: [:placed_at, :order_number, :market_name, :category_name, :product_name],
@@ -86,13 +91,15 @@ class ReportPresenter
         :placed_at, :fulfillment_day, :fulfillment_type, :buyer_name, :product_name, :product_code, :seller_name,
         :quantity, :unit_price, :discount, :row_total, :net_sale, :delivery_status,
         :buyer_payment_status, :seller_payment_status
-      ]
+      ],
+      mm_only: true
     },
     discount_code_use: {
       filters: [:placed_at, :order_number, :market_name],
       fields: [
         :placed_at, :buyer_name, :discount_code, :discount_amount, :discount, :net_sale
-      ]
+      ],
+      mm_only: true
     }
   }.with_indifferent_access
 
@@ -101,7 +108,11 @@ class ReportPresenter
   end
 
   def self.seller_reports
-    REPORT_MAP.keys.reject {|k| REPORT_MAP[k][:buyer_only] }
+    REPORT_MAP.keys.select {|k| REPORT_MAP[k][:seller_only]}
+  end
+
+  def self.mm_reports
+    REPORT_MAP.keys.select {|k| REPORT_MAP[k][:mm_only]}
   end
 
   def initialize(report:, market:, user:, search: {}, paginate: {})
@@ -158,6 +169,8 @@ class ReportPresenter
       seller_reports + buyer_reports
     elsif user.buyer_only?
       buyer_reports
+    elsif user.market_manager?
+      seller_reports + mm_reports
     else
       seller_reports
     end

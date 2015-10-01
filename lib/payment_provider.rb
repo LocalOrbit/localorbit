@@ -53,12 +53,12 @@ module PaymentProvider
     # Common PaymentProvide interface:
     #
 
-    def place_order(payment_provider, buyer_organization:, user:, order_params:, cart:)
+    def place_order(payment_provider, buyer_organization:, user:, order_params:, cart:, request:)
       PaymentProvider.for(payment_provider).place_order(
         buyer_organization: buyer_organization,
         user: user,
         order_params: order_params,
-        cart: cart)
+        cart: cart, request: request)
     end
 
     def translate_status(payment_provider, charge:, amount:nil, payment_method:nil)

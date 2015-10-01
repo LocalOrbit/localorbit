@@ -123,7 +123,7 @@ class Admin::OrdersController < AdminController
   end
 
   def perform_order_update(order, params)
-    updates = UpdateOrder.perform(payment_provider: order.payment_provider, order: order, order_params: params)
+    updates = UpdateOrder.perform(payment_provider: order.payment_provider, order: order, order_params: params, request: request)
     if updates.success?
       came_from_admin = request.referer.include?("/admin/")
       next_url = if order.reload.items.any?

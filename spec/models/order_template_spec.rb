@@ -26,11 +26,13 @@ describe OrderTemplate do
     it "creates and persists a new order template from a cart, given a name" do
       name = "Template #{Time.now}"
       template = OrderTemplate.create_from_cart!(cart, name)
-      expect(template.name).to eq name
-      expect(template.items.length).to eq 2
+      template_items = template.items.sort { |a,b| a.quantity <=> b.quantity }
 
-      item1 = template.items.first
-      item2 = template.items.second
+      expect(template.name).to eq name
+      expect(template_items.length).to eq 2
+
+      item1 = template_items.first
+      item2 = template_items.second
 
       expect(item1.product).to eq cart_item1.product
       expect(item1.quantity).to eq 1

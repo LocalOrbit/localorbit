@@ -87,7 +87,8 @@ describe PaymentProvider do
         { buyer_organization: 'the buyer',
           user: 'the user',
           order_params: 'the order',
-          cart: 'the cart' }
+          cart: 'the cart',
+          request: 'the request'}
       }
       it "delegates to #{provider_object.name}.place_order" do
         expect(provider_object).to receive(:place_order).with(params)

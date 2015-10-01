@@ -52,7 +52,7 @@ $ ->
     remove: ->
       @el.find(".icon-clear").addClass("is-hidden")
       @showUpdate()
-      unless @el.hasClass("product-row")
+      unless @el.hasClass("product-row") || @el.data("keep-when-zero")
         @el.remove()
 
     showError: ->

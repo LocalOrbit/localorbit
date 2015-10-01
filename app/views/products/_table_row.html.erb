@@ -93,7 +93,7 @@
   </td>
   <td class="quantity">
     <span>
-      <input name="quantity" type="number" size="3" min="0" value="<%= product.cart_item.quantity > 0 ? product.cart_item.quantity : '' %>" max="<%= product.available_inventory(current_delivery.deliver_on) %>"><br>
+      <input name="quantity" type="number" size="3" min="0" autocomplete="off" value="<%= product.cart_item.quantity > 0 ? product.cart_item.quantity : '' %>" max="<%= product.available_inventory(current_delivery.deliver_on) %>"><br>
       <span class="price-for-quantity"><%= number_to_currency(product.cart_item.unit_price.sale_price) %></span>
     </span>
   </td>

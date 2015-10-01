@@ -98,7 +98,7 @@ end
 group :development, :test do
   gem "rspec-rails", "~> 3.0"
   gem "rspec-collection_matchers"
-  gem 'rspec_junit_formatter', :git => 'git@github.com:circleci/rspec_junit_formatter.git'
+  gem 'rspec_junit_formatter', :git => 'https://github.com/circleci/rspec_junit_formatter'
   gem "pry-rails"
   gem "pry-remote"
   gem "byebug"
@@ -111,6 +111,7 @@ group :development, :test do
   gem "konacha-chai-matchers"
   gem "poltergeist"
   gem "webmock"
+  gem 'stripe-ruby-mock', '~> 2.2.0', :require => 'stripe_mock'
 end
 
 group :test do
