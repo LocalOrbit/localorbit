@@ -20,7 +20,7 @@ module PackingLists
 
       def generate_csv(pack_lists:)
 
-        headers = ['Order ID', 'Code', 'Name', 'Lots', 'Quantity', 'Unit', 'Unit Price']
+        headers = ['Buyer', 'Delivery Date', 'Order ID', 'Code', 'Name', 'Lots', 'Quantity', 'Unit', 'Unit Price']
 
         CSV.generate do |csv|
           csv << headers
@@ -28,7 +28,7 @@ module PackingLists
             orders.each_with_index do |(order, items), index|
               items.each do |item|
                 lots = item.lots.map {|lot| lot.number }.join(', ') if !item.product.use_simple_inventory and item.lots.any?
-                csv << [order.order_number, item.product.code, item.product.name, lots, item.quantity, item.unit, item.gross_total]
+                csv << [order.organization.name, order.delivery.deliver_on, order.order_number, item.product.code, item.product.name, lots, item.quantity, item.unit, item.gross_total]
               end
             end
           end

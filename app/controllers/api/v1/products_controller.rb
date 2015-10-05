@@ -14,99 +14,120 @@ module Api
         @query = (params[:query] || '').gsub(/\W+/, '+') || ''
         @category_ids = (params[:category_ids] || [])
         @seller_ids = (params[:seller_ids] || [])
-        render :json => {products: products, product_total: available_products.count(:all)}
-      end
 
-      def products
-        output = available_products
-          .offset(@offset)
-          .limit(@limit)
-        output.map {|p| output_hash(p)}
+        products = filtered_available_products(@query, @category_ids, @seller_ids)
+        sellers = {}
+        page_of_products = products
+                               .offset(@offset)
+                               .limit(@limit)
+                               .map { |p| format_general_product_for_catalog(p, sellers) }
+        render :json => {
+                   product_total: products.count(:all),
+                   products: page_of_products,
+                   sellers: sellers
+               }
       end
 
       private
 
-      def available_products
-        available_products = current_delivery
-          .object
-          .delivery_schedule
-          .products
-          .includes(:organization, :second_level_category, :prices, :unit)
-          .with_available_inventory(current_delivery.deliver_on)
-          .priced_for_market_and_buyer(current_market, current_organization)
-        available_products = apply_filters(available_products)
-        available_products.order(:name).uniq
+      def filtered_available_products(query, category_ids, seller_ids)
+        p_sql = Product.connection.unprepared_statement do
+          current_delivery
+              .object
+              .delivery_schedule
+              .products
+              .with_available_inventory(current_delivery.deliver_on)
+              .priced_for_market_and_buyer(current_market, current_organization)
+              .select(:general_product_id)
+              .to_sql
+        end
+
+        GeneralProduct.joins("JOIN (#{p_sql}) p_child ON general_products.id=p_child.general_product_id")
+            .filter_by_name(query)
+            .filter_by_categories(category_ids)
+            .filter_by_suppliers(seller_ids)
+            .order(:name)
+            .uniq
       end
 
-      def apply_filters(available_products)
-        if(@query.length > 2)
-          available_products = available_products.search_by_text(@query)
-        end
-        if(@category_ids.length > 0 && @seller_ids.length > 0)
-          available_products = available_products.where("
-          (
-            (
-              products.category_id IN (?)
-              OR products.top_level_category_id IN (?)
-              OR products.second_level_category_id in (?)
-            )
-            AND products.organization_id in (?)
-          )", @category_ids, @category_ids, @category_ids, @seller_ids)
-        elsif(@category_ids.length > 0)
-          available_products = available_products.where("
-          (
-            products.category_id IN (?)
-            OR products.top_level_category_id IN (?)
-            OR products.second_level_category_id in (?)
-          )", @category_ids, @category_ids, @category_ids)
-        elsif(@seller_ids.length > 0)
-          available_products = available_products.where(organization: @seller_ids)
-        end
-        available_products
-      end
+      def format_general_product_for_catalog(general_product, sellers)
+        general_product = general_product.decorate
 
-      def output_hash(product)
-        product = product.decorate(context: {current_cart: current_cart})
+        sellers[general_product.organization.id] ||= {
+            :seller_name => general_product.organization.name,
+            :who_story => general_product.organization.who_story,
+            :how_story => general_product.organization.how_story,
+            :location_label => general_product.location_label,
+            :location_map_url => general_product.location_map(310, 225)
+        }
+
+        products = general_product.product
+                       .map { |product| format_product_for_catalog(product) }
+                       .compact
+                       .sort_by { |product_info| product_info["unit"] }
+
         {
-          :id=> product.id,
-          :name=> product.name,
-          :second_level_category_name => product.second_level_category.name,
-          :seller_name => product.organization.name,
-          :seller_id => product.organization.id,
-          :short_description => product.short_description,
-          :long_description => product.long_description,
-          :cart_item => product.cart_item,
-          :cart_item_quantity => product.cart_item.quantity,
-          :max_available => product.available_inventory(current_delivery.deliver_on),
-          :price_for_quantity => number_to_currency(product.cart_item.unit_price.sale_price),
-          :total_price => product.cart_item.decorate.display_total_price,
-          :cart_item_persisted => product.cart_item.persisted?,
-          :image_url => get_image_url(product.object),
-          :who_story => product.organization.who_story,
-          :how_story => product.organization.how_story,
-          :location_label => product.location_label,
-          :location_map_url => product.location_map(310, 225),
-          :unit => product.unit.plural,
-          :prices => product.prices_for_market_and_organization(current_market, current_organization).map {|price| format_price(price) }
+            :id => general_product.id,
+            :name => general_product.name,
+            :seller_id => general_product.organization.id,
+            :short_description => general_product.short_description,
+            :long_description => general_product.long_description,
+            :second_level_category_name => general_product.second_level_category.name,
+            :image_url => get_image_url(general_product),
+            :available => products
+        }
+      end
+
+      def format_product_for_catalog(product)
+        product = product.decorate(context: {current_cart: current_cart})
+
+        available_inventory = product.available_inventory(current_delivery.deliver_on)
+
+        prices = product.prices_for_market_and_organization(current_market, current_organization).map { |price|
+          format_price_for_catalog(price)
+        }
+
+        # TODO There's a brief window where prices and inventory may change after
+        # the general products are found, but before the response is fully generated.
+        # If all products become ineligible on a general product, it will appear in
+        # the catalog without any prices or units available.
+        if prices && prices.length > 0 && available_inventory && available_inventory > 0
+          cart_item = product.cart_item.decorate
+
+          {
+              :id => product.id,
+              :max_available => available_inventory,
+              :unit => product.unit.plural,
+              :unit_description => product.unit_description,
+              :prices => prices,
+              :cart_item => cart_item.object,
+              :cart_item_persisted => cart_item.persisted?,
+              :cart_item_quantity => cart_item.quantity,
+              :price_for_quantity => number_to_currency(cart_item.unit_price.sale_price),
+              :total_price => cart_item.display_total_price
+          }
+        else
+          nil
+        end
+      end
+
+      def format_price_for_catalog(price)
+        price = price.decorate
+
+        {
+            :sale_price => number_to_currency(price.sale_price),
+            :min_quantity => price.min_quantity
         }
       end
 
       def get_image_url(product)
-        if(product.thumb_stored?)
+        if product.thumb_stored?
           view_context.image_url(product.thumb.url)
         elsif product.image_stored?
           view_context.image_url(product.image.thumb("150x150").url)
         else
           view_context.image_url('default-product-image.png')
         end
-      end
-
-      def format_price(price)
-        price = price.decorate
-        {
-          :sale_price => number_to_currency(price.sale_price),
-          :min_quantity => price.min_quantity
-        }
       end
     end
   end

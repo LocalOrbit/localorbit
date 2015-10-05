@@ -10,17 +10,29 @@ describe Api::V1::ProductsController do
     let(:market) { create(:market, :with_addresses, organizations: [buyer, seller, second_seller]) }
     let!(:delivery) { create(:delivery_schedule, market: market) }
 
+    let(:market2) { create(:market, :with_addresses, organizations: [buyer, seller, second_seller]) }
+    let!(:delivery2) { create(:delivery_schedule, market: market2) }
+
     # Products
-    let!(:bananas) { create(:product, name: "Bananas", organization: seller, delivery_schedules: [delivery]) }
+    let!(:pound) { create(:unit, singular: "pound", plural: "pounds") }
+    let!(:bananas) { create(:product, name: "Bananas", organization: seller, delivery_schedules: [delivery], unit: pound) }
     let!(:bananas_lot) { create(:lot, product: bananas) }
     let!(:bananas_price_buyer_base) do
       create(:price, :past_price, market: market, product: bananas, min_quantity: 1, organization: buyer)
     end
 
-    let!(:bananas2) { create(:product, name: "Bananas", organization: second_seller, delivery_schedules: [delivery]) }
+    let!(:bananas2) { create(:product, name: "Bananas", organization: second_seller, delivery_schedules: [delivery], unit: pound) }
     let!(:bananas2_lot) { create(:lot, product: bananas2) }
     let!(:bananas2_price_buyer_base) do
       create(:price, :past_price, market: market, product: bananas2, min_quantity: 1, organization: buyer)
+    end
+
+    let!(:crate) { create(:unit, singular: "crate", plural: "crates") }
+    let!(:bananas3) { create(:product, name: "Bananas", organization: second_seller, delivery_schedules: [delivery],
+                             unit: crate, general_product: bananas2.general_product) }
+    let!(:bananas3_lot) { create(:lot, product: bananas3) }
+    let!(:bananas3_price_buyer_base) do
+      create(:price, :past_price, market: market, product: bananas3, min_quantity: 1, organization: buyer)
     end
 
     let!(:kale) { create(:product, name: "Kale", organization: seller, delivery_schedules: [delivery]) }
@@ -30,7 +42,21 @@ describe Api::V1::ProductsController do
       create(:price, :past_price, market: market, product: kale, min_quantity: 10, sale_price: 1.75)
     end
 
-    let!(:cart)      { create(:cart, market: market, organization: buyer, user: user, delivery: delivery.next_delivery) }
+    let!(:cart) { create(:cart, market: market, organization: buyer, user: user, delivery: delivery.next_delivery) }
+
+    # products without inventory should not appear in search results
+    let!(:bananas4) { create(:product, name: "Bananas", organization: second_seller, delivery_schedules: [delivery], unit: pound) }
+    let!(:bananas4_lot) { create(:lot, product: bananas4, quantity: 0) }
+    let!(:bananas4_price_buyer_base) do
+      create(:price, :past_price, market: market, product: bananas4, min_quantity: 1, organization: buyer)
+    end
+
+    # products for another market should not appear in search results
+    let!(:bananas5) { create(:product, name: "Bananas", organization: second_seller, delivery_schedules: [delivery], unit: pound) }
+    let!(:bananas5_lot) { create(:lot, product: bananas5) }
+    let!(:bananas5_price_buyer_base) do
+      create(:price, :past_price, market: market2, product: bananas5, min_quantity: 1, organization: buyer)
+    end
 
     before do
       switch_to_subdomain market.subdomain
@@ -41,7 +67,7 @@ describe Api::V1::ProductsController do
     def get_products(params)
       get :index, params
       products = JSON.parse(response.body)["products"]
-      products.map { |product| product["id"] }
+      products.map { |general_product| general_product["available"].map { |product| product["id"] } }
     end
 
 
@@ -62,15 +88,28 @@ describe Api::V1::ProductsController do
 
     it "searches by text" do
       products = get_products(offset: 0, query: "kale")
-      expect(products).to eq([kale.id])
+      expect(products).to eq([[kale.id]])
       products = get_products(offset: 0, query: "xxxx")
       expect(products).to eq([])
       products = get_products(offset: 0, query: "Apple")
-      expect(products).to eq([bananas.id, bananas2.id, kale.id])
+      expect(products).to eq([[bananas.id], [bananas3.id, bananas2.id], [kale.id]])
       products = get_products(offset: 1, query: "Apple")
-      expect(products).to eq([bananas2.id, kale.id])
-      products = get_products(offset: 0, query: "First S")
-      expect(products).to eq([bananas.id, kale.id])
+      expect(products).to eq([[bananas3.id, bananas2.id], [kale.id]])
+      products = get_products(offset: 0, query: "First Seller")
+      expect(products).to eq([[bananas.id], [kale.id]])
+      products = get_products(offset: 0, query: "second s")
+      expect(products).to eq([[bananas3.id, bananas2.id]])
+    end
+
+    it "filters results by seller" do
+      products = get_products(offset: 0, query: "banana", seller_ids: [])
+      expect(products).to eq ([[bananas.id], [bananas3.id, bananas2.id]])
+      products = get_products(offset: 0, query: "banana", seller_ids: [bananas.organization_id])
+      expect(products).to eq ([[bananas.id]])
+      products = get_products(offset: 0, query: "banana", seller_ids: [bananas2.organization_id])
+      expect(products).to eq ([[bananas3.id, bananas2.id]])
+      products = get_products(offset: 0, query: "banana", seller_ids: [bananas.organization_id, bananas2.organization_id])
+      expect(products).to eq ([[bananas.id], [bananas3.id, bananas2.id]])
     end
 
     it "filters results by category and seller" do
@@ -79,11 +118,11 @@ describe Api::V1::ProductsController do
       products = get_products(offset: 0, query: "Apple", seller_ids: [-1])
       expect(products).to eq ([])
       products = get_products(offset: 0, query: "kale", seller_ids: [kale.organization_id, bananas2.organization_id], category_ids: [kale.category_id])
-      expect(products).to eq ([kale.id])
+      expect(products).to eq ([[kale.id]])
       products = get_products(offset: 0, query: "kale", seller_ids: [kale.organization_id, bananas2.organization_id], category_ids: [kale.top_level_category_id])
-      expect(products).to eq ([kale.id])
+      expect(products).to eq ([[kale.id]])
       products = get_products(offset: 0, query: "kale", seller_ids: [kale.organization_id, bananas2.organization_id], category_ids: [kale.second_level_category_id])
-      expect(products).to eq ([kale.id])
+      expect(products).to eq ([[kale.id]])
     end
   end
 end
