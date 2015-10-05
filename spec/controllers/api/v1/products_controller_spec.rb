@@ -73,7 +73,7 @@ describe Api::V1::ProductsController do
 
     it "returns a paginated list of products", flaky: true do
       products = get_products(offset: 2)
-      expect(products).to eq([kale.id])
+      expect(products).to eq([[kale.id]])
       products = get_products(offset: 1)
       expect(products).to eq([bananas2.id, kale.id])
       products = get_products(offset: 0)
