@@ -46,12 +46,18 @@ describe Api::V1::ProductsController do
 
 
     it "returns a paginated list of products" do
+      # products = get_products(offset: 2)
+      # expect(products).to eq([kale.id])
+      # products = get_products(offset: 1)
+      # expect(products).to eq([bananas2.id, kale.id])
+      # products = get_products(offset: 0)
+      # expect(products).to eq([bananas.id, bananas2.id, kale.id])
       products = get_products(offset: 2)
       expect(Set.new(products)).to eq(Set.new([kale.id]))
       products = get_products(offset: 1)
       expect(Set.new(products)).to eq(Set.new([bananas2.id, kale.id]))
       products = get_products(offset: 0)
-      expect(Set.new(products)).to eq(Set.new([bananas.id, bananas2.id, kale.id])) # sets because of varying order, poss fix.
+      expect(Set.new(products)).to eq(Set.new([bananas.id, bananas2.id, kale.id])) # sets because of varying order,
     end
 
     it "searches by text" do
