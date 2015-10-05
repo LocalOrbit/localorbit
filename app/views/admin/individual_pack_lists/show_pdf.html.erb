@@ -357,7 +357,7 @@
             <h1>Packing Slip</h1>
         </div>
         <div class="column column--half">
-            <h2 class="heading heading-delivery-tool">Generated On: <%= Time.now.to_s(:long) %></h2>
+            <h2 class="heading heading-delivery-tool">Generated On: <%= Time.now.in_time_zone(order.market.timezone).strftime("%m/%d/%Y %I:%M %p") %></h2>
         </div>
       </div>
       <div style="border-top: 1px dotted #CCC"></div>

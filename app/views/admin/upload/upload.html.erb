@@ -1,0 +1,37 @@
+
+<script>
+
+	var interval = setInterval(findJob,2000);
+
+	function findJob() { 
+		$.ajax('upload/newjob', {
+			method: 'post',
+			data: {
+				job_id: <%= @job_id %>
+			},
+			success: function(data, status) {
+				clearInterval(interval);
+				console.log('success');
+				//console.log(data);
+				$("#results").html(data)
+
+			},
+			error: function(xhr, status) {
+				// It failed, cos it wasn't there yet.
+				if(xhr.status == 404) {
+					$("#results").append(".")
+				}
+			}
+		});
+	}
+</script>
+
+
+
+This is an admin interface for product import.
+<br>
+<strong><a href="/admin/upload">Return to upload form</a></strong>
+
+<br>
+<br>
+<div id="results">Waiting for results...</div>

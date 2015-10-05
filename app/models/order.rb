@@ -398,8 +398,8 @@ class Order < ActiveRecord::Base
   def update_total_cost
     cost = gross_total
 
-    self.delivery_fees = calculate_delivery_fees(cost)
-    self.total_cost    = calculate_total_cost(cost)
+    self.delivery_fees = calculate_delivery_fees(cost).round(2)
+    self.total_cost    = calculate_total_cost(cost).round(2)
   end
 
   def calculate_delivery_fees(gross)
