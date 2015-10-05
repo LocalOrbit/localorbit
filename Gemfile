@@ -93,6 +93,7 @@ group :development do
   gem "quiet_assets"
   gem "aws-sdk"
   gem "rails_view_annotator"
+  gem "unicorn"
 end
 
 group :development, :test do
@@ -111,7 +112,6 @@ group :development, :test do
   gem "konacha-chai-matchers"
   gem "poltergeist"
   gem "webmock"
-  gem 'stripe-ruby-mock', '~> 2.2.0', :require => 'stripe_mock'
 end
 
 group :test do

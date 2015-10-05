@@ -7,14 +7,18 @@ module Admin
     before_action :find_sticky_params, only: :index
 
     def index
-      visible_markets = find_markets
+      if params["clear"]
+        redirect_to url_for(params.except(:clear))
+      else
+        visible_markets = find_markets
 
-      base_scope = Discount.includes(:market).visible.where(market_id: visible_markets.map(&:id))
+        base_scope = Discount.includes(:market).visible.where(market_id: visible_markets.map(&:id))
 
-      # For use by the Markets filter pulldown:
-      @markets   = base_scope.map(&:market).uniq
-      @q         = base_scope.search(@query_params["q"])
-      @discounts = @q.result.page(params[:page]).per(@query_params[:per_page])
+        # For use by the Markets filter pulldown:
+        @markets   = base_scope.map(&:market).uniq
+        @q         = base_scope.search(@query_params["q"])
+        @discounts = @q.result.page(params[:page]).per(@query_params[:per_page])
+      end
     end
 
     def new
