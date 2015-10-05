@@ -7,12 +7,16 @@ module Admin
     before_action :find_sticky_params, only: :index
 
     def index
-      @organizations = current_user.managed_organizations.periscope(@query_params)
-      find_selling_markets
+      if params["clear"]
+        redirect_to url_for(params.except(:clear))
+      else
+        @organizations = current_user.managed_organizations.periscope(@query_params)
+        find_selling_markets
 
-      respond_to do |format|
-        format.html { @organizations = @organizations.page(params[:page]).per(@query_params[:per_page]) }
-        format.csv  { @filename = "organizations.csv" }
+        respond_to do |format|
+          format.html { @organizations = @organizations.page(params[:page]).per(@query_params[:per_page]) }
+          format.csv  { @filename = "organizations.csv" }
+        end
       end
     end
 

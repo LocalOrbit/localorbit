@@ -6,12 +6,16 @@ class Admin::PromotionsController < AdminController
   before_action :find_sticky_params, only: :index
 
   def index
-    base_scope = Promotion.promotions_for_user(current_user)
+    if params["clear"]
+      redirect_to url_for(params.except(:clear))
+    else
+      base_scope = Promotion.promotions_for_user(current_user)
 
-    @markets = base_scope.map(&:market).uniq
+      @markets = base_scope.map(&:market).uniq
 
-    @q = base_scope.search(@query_params["q"])
-    @promotions = @q.result.page(params[:page]).per(@query_params[:per_page])
+      @q = base_scope.search(@query_params["q"])
+      @promotions = @q.result.page(params[:page]).per(@query_params[:per_page])
+    end
   end
 
   def new

@@ -8,7 +8,11 @@ module Admin
     before_action :find_sticky_params, only: :index
 
     def index
-      @users = @users.periscope(@query_params).page(params[:page]).per(@query_params[:per_page])
+      if params["clear"]
+        redirect_to url_for(params.except(:clear))
+      else
+        @users = @users.periscope(@query_params).page(params[:page]).per(@query_params[:per_page])
+      end
     end
 
     def edit
@@ -48,6 +52,24 @@ module Admin
       else
         redirect_to :back, alert: "Unable to update all affiliations for #{@user.decorate.display_name}"
       end
+    end
+
+    def confirm
+      user = User.find(params[:user_id])
+      user.accept_invitation!
+      user.confirm!
+      user.save
+
+      redirect_to [:admin, :users], notice: "User #{user.decorate.display_name} Confirmed"
+    end
+
+    def invite
+      user = User.find(params[:user_id])
+      user.invite!
+      user.save
+
+      redirect_to [:admin, :users], notice: "User #{user.decorate.display_name} Re-Invited"
+
     end
 
     private
