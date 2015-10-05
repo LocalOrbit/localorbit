@@ -135,6 +135,8 @@ Rails.application.routes.draw do
 
     resources :users, only: [:index, :edit, :update] do
       patch :update_enabled, on: :member
+      get :confirm
+      get :invite
     end
 
     resources :promotions do

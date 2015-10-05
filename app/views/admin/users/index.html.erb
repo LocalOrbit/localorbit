@@ -29,6 +29,12 @@
             <td class="action">
 			  <%= user.global_toggle_enabled_button %>
               <%= link_to "Log In", user_masquerade_url(user, host: user.markets.first.try(:domain) || Figaro.env.domain), class: "btn btn--small btn--save" %>
+              <% if user.is_invited? %>
+                  <%= link_to "Re-Invite", admin_user_invite_path(user), class: "btn btn--small btn--save" %>
+              <% end %>
+              <% if !user.is_confirmed? && current_user.admin? %>
+                <%= link_to "Confirm", admin_user_verify_path(user), class: "btn btn--small btn--save" %>
+              <% end %>
             </td>
           <% end %>
         </tr>

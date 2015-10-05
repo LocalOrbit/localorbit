@@ -8,7 +8,7 @@ class User < ActiveRecord::Base
   # :lockable, :timeoutable and :omniauthable
   devise :invitable, :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable,
-         :confirmable, :masqueradable
+         :confirmable, :masqueradable, :timeoutable, :timeout_in => 30.minutes
 
   trimmed_fields :email
 
@@ -48,6 +48,7 @@ class User < ActiveRecord::Base
   attr_accessor :terms_of_service
 
   validates :terms_of_service, acceptance: true, on: :create
+  validates :name, presence: true, if: -> { name.present? }
 
   pg_search_scope :search_by_name_and_email,
                   against: {name: "A", email: "B"},
@@ -390,6 +391,21 @@ class User < ActiveRecord::Base
     else
       markets.first
     end
+  end
+
+  def is_confirmed?
+    confirmed_at != nil
+  end
+
+  def is_invited?
+    invitation_token != nil && confirmed_at == nil
+  end
+
+  def attempt_set_password(params)
+    p = {}
+    p[:password] = params[:password]
+    p[:password_confirmation] = params[:password_confirmation]
+    update_attributes(p)
   end
 
   private
