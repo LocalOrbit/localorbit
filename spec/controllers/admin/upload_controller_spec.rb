@@ -6,7 +6,7 @@ describe Admin::UploadController do
 	let!(:seller_org) {create(:organization, name:"bi-rite") }
 
 	it "exists as a layer on top of the product import" do
-		expect(subject.index).to be 
+		expect(subject).to be 
 	end
 
 end
