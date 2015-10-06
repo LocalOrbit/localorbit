@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150925190744) do
+ActiveRecord::Schema.define(version: 20151006174218) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -119,6 +119,7 @@ ActiveRecord::Schema.define(version: 20150925190744) do
     t.datetime "updated_at"
     t.integer  "user_id"
     t.integer  "discount_id"
+    t.integer  "delivery_notes",  array: true
   end
 
   add_index "carts", ["delivery_id"], name: "index_carts_on_delivery_id", using: :btree
@@ -173,6 +174,15 @@ ActiveRecord::Schema.define(version: 20150925190744) do
   add_index "deliveries", ["deliver_on"], name: "index_deliveries_on_deliver_on", using: :btree
   add_index "deliveries", ["delivery_schedule_id"], name: "index_deliveries_on_delivery_schedule_id", using: :btree
 
+  create_table "delivery_notes", force: true do |t|
+    t.text     "note"
+    t.integer  "user_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.datetime "deleted_at"
+    t.integer  "supplier_org_id"
+  end
+
   create_table "delivery_schedules", force: true do |t|
     t.integer  "market_id"
     t.integer  "day"
@@ -194,7 +204,6 @@ ActiveRecord::Schema.define(version: 20150925190744) do
     t.integer  "legacy_id"
     t.integer  "buyer_day"
     t.string   "fee_label",                      default: "Delivery Fee"
-    t.boolean  "toggle_on",                      default: true
   end
 
   add_index "delivery_schedules", ["deleted_at"], name: "index_delivery_schedules_on_deleted_at", using: :btree
@@ -599,6 +608,7 @@ ActiveRecord::Schema.define(version: 20150925190744) do
     t.string   "invoice_pdf_uid"
     t.string   "invoice_pdf_name"
     t.string   "payment_provider"
+    t.integer  "delivery_notes",                                     array: true
   end
 
   add_index "orders", ["delivery_id"], name: "index_orders_on_delivery_id", using: :btree
