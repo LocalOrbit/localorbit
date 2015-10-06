@@ -93,12 +93,13 @@ group :development do
   gem "quiet_assets"
   gem "aws-sdk"
   gem "rails_view_annotator"
+  gem "unicorn"
 end
 
 group :development, :test do
   gem "rspec-rails", "~> 3.0"
   gem "rspec-collection_matchers"
-  gem 'rspec_junit_formatter', :git => 'git@github.com:circleci/rspec_junit_formatter.git'
+  gem 'rspec_junit_formatter', :git => 'https://github.com/circleci/rspec_junit_formatter'
   gem "pry-rails"
   gem "pry-remote"
   gem "byebug"

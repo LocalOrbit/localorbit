@@ -307,7 +307,22 @@ class Order < ActiveRecord::Base
 
     if uuid
       Audit.where(request_uuid: uuid, auditable_type: "OrderItem").map do |audit|
-        if audit.audited_changes["quantity"]
+        if audit.audited_changes["quantity"] && audit.audited_changes["quantity"].second >0 && audit.action != :destroy
+          # If auditable is there, use the seller, or else find it from the product in the changes
+          audit.try(:auditable).try(:seller) || Product.find_by(id: audit.audited_changes["product_id"]).try(:organization)
+        end
+      end.compact.uniq
+    else
+      []
+    end
+  end
+
+  def sellers_with_cancel
+    uuid = audits.last.try(:request_uuid)
+
+    if uuid
+      Audit.where(request_uuid: uuid, auditable_type: "OrderItem").map do |audit|
+        if (audit.audited_changes["quantity"] && audit.audited_changes["quantity"].second == 0) || audit.action == :destroy
           # If auditable is there, use the seller, or else find it from the product in the changes
           audit.try(:auditable).try(:seller) || Product.find_by(id: audit.audited_changes["product_id"]).try(:organization)
         end
@@ -383,8 +398,8 @@ class Order < ActiveRecord::Base
   def update_total_cost
     cost = gross_total
 
-    self.delivery_fees = calculate_delivery_fees(cost)
-    self.total_cost    = calculate_total_cost(cost)
+    self.delivery_fees = calculate_delivery_fees(cost).round(2)
+    self.total_cost    = calculate_total_cost(cost).round(2)
   end
 
   def calculate_delivery_fees(gross)

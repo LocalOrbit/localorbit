@@ -1,0 +1,20 @@
+<strong>Successfully gotten:</strong>
+	<%= "#{@total_products_msg}" %>
+	<br><br> <br>
+	<strong>Errors encountered:</strong>
+	<br>
+	<% if @errors %>
+		<% @error_display.each do |er| %>
+			<strong>product name:</strong>
+			<%= "#{er['name']}" %>
+			<br/>
+			<strong>error:</strong>
+			<%= "#{er['reason']}" %>
+			<br></br>
+		<% end %>
+	<% else %>
+		<%= "#{@no_errors}" %>
+	<% end %>
+
+<br><br>
+<strong><a href="/admin/upload">Return to upload form</a></strong>

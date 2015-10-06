@@ -161,7 +161,7 @@ describe "Checking Out via Purchase Order", :js, :vcr do
         ], find_by: :name)
 
         expect(page).to have_content("Delivery Fee: $9.86")
-        expect(page).to have_content("Grand Total: $49.28")
+        expect(page).to have_content("Grand Total: $49.29")
       end
     end
   end
@@ -196,7 +196,7 @@ describe "Checking Out via Purchase Order", :js, :vcr do
       open_email(seller_user.email)
 
       expect(current_email).to have_subject("New order on #{market.name}")
-      expect(current_email.body).to have_content("You have a new order!")
+      expect(current_email.default_part_body).to have_content("You have a new order!")
       # It does not include content from other sellers
       expect(current_email).to have_body_text("Kale")
       expect(current_email).to have_body_text("Bananas")
@@ -206,7 +206,7 @@ describe "Checking Out via Purchase Order", :js, :vcr do
       expect(current_email).not_to have_body_text("Delivery Fee")
       expect(current_email).not_to have_body_text("Discount")
 
-      expect(current_email.body).to have_content("An order was just placed by #{buyer.name}")
+      expect(current_email.default_part_body).to have_content("An order was just placed by #{buyer.name}")
 
       visit_in_email "Check Order Status"
       expect(page).to have_content("Order info")
@@ -219,7 +219,7 @@ describe "Checking Out via Purchase Order", :js, :vcr do
       open_email(seller_user.email)
 
       expect(current_email).to have_subject("New order on #{market.name}")
-      expect(current_email.body).to have_content("You have a new order!")
+      expect(current_email.default_part_body).to have_content("You have a new order!")
       # It does not include content from other sellers
       expect(current_email).not_to have_body_text("Kale")
       expect(current_email).not_to have_body_text("Bananas")
@@ -229,7 +229,7 @@ describe "Checking Out via Purchase Order", :js, :vcr do
       expect(current_email).not_to have_body_text("Delivery Fee")
       expect(current_email).not_to have_body_text("Discount")
 
-      expect(current_email.body).to have_content("An order was just placed by #{buyer.name}")
+      expect(current_email.default_part_body).to have_content("An order was just placed by #{buyer.name}")
 
       visit_in_email "Check Order Status"
       expect(page).to have_content("Order info")

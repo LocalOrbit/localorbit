@@ -27,13 +27,13 @@ describe Financials::MarketPayments::Calc do
 
   describe ".market_delivery_fee" do
     it "returns the market's share of the delivery fees on the order" do
-      expect(calc.market_delivery_fee(order)).to eq "1.81104".to_d
+      expect(calc.market_delivery_fee(order)).to eq "1.813".to_d
     end
   end
 
   describe ".fee_owed_to_market" do
     it "adds the delivery and market fees together as a convenience" do
-      expect(calc.fee_owed_to_market(order)).to eq "2.11104".to_d
+      expect(calc.fee_owed_to_market(order)).to eq "2.113".to_d
     end
   end
 end

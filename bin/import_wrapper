@@ -1,0 +1,20 @@
+#!/usr/bin/env ruby
+
+require File.expand_path(File.join(File.dirname(__FILE__), '..', 'config', 'environment'))
+
+require 'slop'
+
+if ARGV.empty?
+	puts "USAGE: import_wrapper {job_id} 2> errors.yml"
+  exit 1
+elsif ARGV.length < 3
+	puts "Usage requires job id generation, correct profile name, and valid filepath as arguments. Something is missing."
+	exit 1
+else
+	job_id = ARGV.first 
+	profile = ARGV.second
+	filepath = ARGV[2] # perhaps there is an easier way to pass these through, this is pretty hack-y.
+	user_id = ARGV[3] # no current_user context here; for now pass through
+	stdout, stderr, status = Open3.capture3("./bin/import_products standard_template -p #{profile} -f '#{filepath}'")
+	Audit.create(user_id:user_id, auditable_type:"import", comment:"#{stderr} |*| #{stdout}",associated_id:job_id) 
+end

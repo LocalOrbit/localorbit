@@ -2,11 +2,15 @@ class User < ActiveRecord::Base
   audited allow_mass_assignment: true
   include PgSearch
   include Sortable
+  include Util::TrimText
+
   # Include default devise modules. Others available are:
   # :lockable, :timeoutable and :omniauthable
   devise :invitable, :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable,
          :confirmable, :masqueradable
+
+  trimmed_fields :email
 
   has_many :managed_markets_join, class_name: "ManagedMarket"
 

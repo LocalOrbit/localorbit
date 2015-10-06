@@ -7,6 +7,7 @@ require 'slop'
 opts = Slop.parse do |o|
   o.on '-f', '--filename=', 'the file to import'
   o.on '-p', '--profile=', 'the market profile to use. '
+  #o.on '-e', '--error_audit=', 'the file to which the errors will be directed'
 
   # Use profile instead of these. Profile is the market subdomain name (e.g. birite, greenleaf)
 
@@ -24,7 +25,6 @@ if ARGV.empty?
 end
 
 if opts[:filename] =~/^(http)/
-  #puts system("curl -L -o #{vendor_file} '#{opts[:filename]}' ")
 	if system("curl -L -o #{vendor_file} '#{opts[:filename]}' ")
 		opts[:filename] = vendor_file
 	else

@@ -12,15 +12,15 @@ http_interactions:
       Accept-Encoding:
       - gzip, deflate
       User-Agent:
-      - Stripe/v1 RubyBindings/1.21.0
+      - Stripe/v1 RubyBindings/1.27.2
       Authorization:
       - Bearer sk_test_XTLCfIQMwKblsxIF1N4i7y1G
       Content-Type:
       - application/x-www-form-urlencoded
       X-Stripe-Client-User-Agent:
-      - '{"bindings_version":"1.21.0","lang":"ruby","lang_version":"2.1.2 p95 (2014-05-08)","platform":"x86_64-darwin13.0","engine":"ruby","publisher":"stripe","uname":"Darwin
-        XandersBeatBox.local 13.4.0 Darwin Kernel Version 13.4.0: Wed Dec 17 19:05:52
-        PST 2014; root:xnu-2422.115.10~1/RELEASE_X86_64 x86_64","hostname":"XandersBeatBox.local"}'
+      - '{"bindings_version":"1.27.2","lang":"ruby","lang_version":"2.1.2 p95 (2014-05-08)","platform":"x86_64-darwin14.0","engine":"ruby","publisher":"stripe","uname":"Darwin
+        Andys-MBP 14.5.0 Darwin Kernel Version 14.5.0: Wed Jul 29 02:26:53 PDT 2015;
+        root:xnu-2782.40.9~1/RELEASE_X86_64 x86_64","hostname":"Andys-MBP"}'
       Content-Length:
       - '246'
   response:
@@ -31,11 +31,11 @@ http_interactions:
       Server:
       - nginx
       Date:
-      - Mon, 01 Jun 2015 16:13:17 GMT
+      - Tue, 29 Sep 2015 14:26:50 GMT
       Content-Type:
       - application/json
       Content-Length:
-      - '3656'
+      - '3954'
       Connection:
       - keep-alive
       Access-Control-Allow-Credentials:
@@ -49,7 +49,7 @@ http_interactions:
       Cache-Control:
       - no-cache, no-store
       Request-Id:
-      - req_BMoAicyY24IV3YMW
+      - req_74YA912Swp5iYr
       Stripe-Version:
       - '2015-04-07'
       Strict-Transport-Security:
@@ -58,7 +58,7 @@ http_interactions:
       encoding: UTF-8
       string: |
         {
-          "id": "acct_168vXKAVAvpP5glj",
+          "id": "acct_16qP49Hjqb1mH62f",
           "email": "misteranderson@example.com",
           "statement_descriptor": null,
           "display_name": null,
@@ -103,7 +103,6 @@ http_interactions:
             "dkk",
             "dop",
             "dzd",
-            "eek",
             "egp",
             "etb",
             "eur",
@@ -140,7 +139,6 @@ http_interactions:
             "lrd",
             "lsl",
             "ltl",
-            "lvl",
             "mad",
             "mdl",
             "mga",
@@ -212,6 +210,7 @@ http_interactions:
           "business_name": "Neomarket",
           "business_url": null,
           "support_phone": null,
+          "business_logo": null,
           "metadata": {
             "lo.market_id": "1"
           },
@@ -222,22 +221,30 @@ http_interactions:
             "object": "list",
             "total_count": 0,
             "has_more": false,
-            "url": "/v1/accounts/acct_168vXKAVAvpP5glj/bank_accounts",
+            "url": "/v1/accounts/acct_16qP49Hjqb1mH62f/bank_accounts",
+            "data": []
+          },
+          "external_accounts": {
+            "object": "list",
+            "total_count": 0,
+            "has_more": false,
+            "url": "/v1/accounts/acct_16qP49Hjqb1mH62f/external_accounts",
             "data": []
           },
           "verification": {
             "fields_needed": [
-              "legal_entity.first_name",
-              "legal_entity.last_name",
+              "bank_account",
               "legal_entity.dob.day",
               "legal_entity.dob.month",
               "legal_entity.dob.year",
+              "legal_entity.first_name",
+              "legal_entity.last_name",
               "legal_entity.type",
-              "bank_account",
-              "tos_acceptance.ip",
-              "tos_acceptance.date"
+              "tos_acceptance.date",
+              "tos_acceptance.ip"
             ],
             "due_by": null,
+            "disabled_reason": "fields_needed",
             "contacted": false
           },
           "transfer_schedule": {
@@ -285,38 +292,40 @@ http_interactions:
               "status": "unverified",
               "document": null,
               "details": null
-            }
+            },
+            "personal_id_number_provided": false,
+            "ssn_last_4_provided": false
           },
           "keys": {
-            "secret": "sk_test_S0fHKPPbNFbsr01D9CgKVl6n",
-            "publishable": "pk_test_NRjczYD01PvRs8JeEeysyFyf"
+            "secret": "sk_test_Y53SWz7dLn0fcZ8PP9rUAQ85",
+            "publishable": "pk_test_V0OD7O4aMAlXVCWLNUKSoB4n"
           }
         }
     http_version: 
-  recorded_at: Mon, 01 Jun 2015 16:13:17 GMT
+  recorded_at: Tue, 29 Sep 2015 14:26:50 GMT
 - request:
     method: post
-    uri: https://api.stripe.com/v1/accounts/acct_168vXKAVAvpP5glj/bank_accounts
+    uri: https://api.stripe.com/v1/accounts/acct_16qP49Hjqb1mH62f/bank_accounts
     body:
       encoding: US-ASCII
-      string: bank_account=btok_6Lco9WnNBEKsHG
+      string: bank_account=btok_74YABtCPRT4z8H&default_for_currency=true
     headers:
       Accept:
       - "*/*; q=0.5, application/xml"
       Accept-Encoding:
       - gzip, deflate
       User-Agent:
-      - Stripe/v1 RubyBindings/1.21.0
+      - Stripe/v1 RubyBindings/1.27.2
       Authorization:
       - Bearer sk_test_XTLCfIQMwKblsxIF1N4i7y1G
       Content-Type:
       - application/x-www-form-urlencoded
       X-Stripe-Client-User-Agent:
-      - '{"bindings_version":"1.21.0","lang":"ruby","lang_version":"2.1.2 p95 (2014-05-08)","platform":"x86_64-darwin13.0","engine":"ruby","publisher":"stripe","uname":"Darwin
-        XandersBeatBox.local 13.4.0 Darwin Kernel Version 13.4.0: Wed Dec 17 19:05:52
-        PST 2014; root:xnu-2422.115.10~1/RELEASE_X86_64 x86_64","hostname":"XandersBeatBox.local"}'
+      - '{"bindings_version":"1.27.2","lang":"ruby","lang_version":"2.1.2 p95 (2014-05-08)","platform":"x86_64-darwin14.0","engine":"ruby","publisher":"stripe","uname":"Darwin
+        Andys-MBP 14.5.0 Darwin Kernel Version 14.5.0: Wed Jul 29 02:26:53 PDT 2015;
+        root:xnu-2782.40.9~1/RELEASE_X86_64 x86_64","hostname":"Andys-MBP"}'
       Content-Length:
-      - '32'
+      - '58'
   response:
     status:
       code: 200
@@ -325,11 +334,11 @@ http_interactions:
       Server:
       - nginx
       Date:
-      - Mon, 01 Jun 2015 16:15:01 GMT
+      - Tue, 29 Sep 2015 14:26:51 GMT
       Content-Type:
       - application/json
       Content-Length:
-      - '324'
+      - '341'
       Connection:
       - keep-alive
       Access-Control-Allow-Credentials:
@@ -343,7 +352,9 @@ http_interactions:
       Cache-Control:
       - no-cache, no-store
       Request-Id:
-      - req_1IgzhPN7jRLrWDA1
+      - req_74YA3dUmkhyrzj
+      Stripe-Account:
+      - acct_16qP49Hjqb1mH62f
       Stripe-Version:
       - '2015-04-07'
       Strict-Transport-Security:
@@ -353,22 +364,23 @@ http_interactions:
       string: |
         {
           "object": "bank_account",
-          "id": "ba_168vZ2AVAvpP5gljp0nb4qPN",
+          "id": "ba_16qP4AHjqb1mH62foOyP3sy2",
           "last4": "6789",
           "country": "US",
           "currency": "usd",
           "status": "new",
-          "fingerprint": "XeS17LDFFk13wPbj",
+          "fingerprint": "gIxHX4Bko1pyDlGo",
           "routing_number": "110000000",
           "bank_name": "STRIPE TEST BANK",
-          "account": "acct_168vXKAVAvpP5glj",
-          "default_for_currency": false
+          "account": "acct_16qP49Hjqb1mH62f",
+          "default_for_currency": true,
+          "metadata": {}
         }
     http_version: 
-  recorded_at: Mon, 01 Jun 2015 16:15:01 GMT
+  recorded_at: Tue, 29 Sep 2015 14:26:51 GMT
 - request:
     method: get
-    uri: https://api.stripe.com/v1/accounts/acct_168vXKAVAvpP5glj
+    uri: https://api.stripe.com/v1/accounts/acct_16qP49Hjqb1mH62f
     body:
       encoding: US-ASCII
       string: ''
@@ -378,15 +390,15 @@ http_interactions:
       Accept-Encoding:
       - gzip, deflate
       User-Agent:
-      - Stripe/v1 RubyBindings/1.21.0
+      - Stripe/v1 RubyBindings/1.27.2
       Authorization:
       - Bearer sk_test_XTLCfIQMwKblsxIF1N4i7y1G
       Content-Type:
       - application/x-www-form-urlencoded
       X-Stripe-Client-User-Agent:
-      - '{"bindings_version":"1.21.0","lang":"ruby","lang_version":"2.1.2 p95 (2014-05-08)","platform":"x86_64-darwin13.0","engine":"ruby","publisher":"stripe","uname":"Darwin
-        XandersBeatBox.local 13.4.0 Darwin Kernel Version 13.4.0: Wed Dec 17 19:05:52
-        PST 2014; root:xnu-2422.115.10~1/RELEASE_X86_64 x86_64","hostname":"XandersBeatBox.local"}'
+      - '{"bindings_version":"1.27.2","lang":"ruby","lang_version":"2.1.2 p95 (2014-05-08)","platform":"x86_64-darwin14.0","engine":"ruby","publisher":"stripe","uname":"Darwin
+        Andys-MBP 14.5.0 Darwin Kernel Version 14.5.0: Wed Jul 29 02:26:53 PDT 2015;
+        root:xnu-2782.40.9~1/RELEASE_X86_64 x86_64","hostname":"Andys-MBP"}'
   response:
     status:
       code: 200
@@ -395,11 +407,11 @@ http_interactions:
       Server:
       - nginx
       Date:
-      - Mon, 01 Jun 2015 16:22:04 GMT
+      - Tue, 29 Sep 2015 14:26:51 GMT
       Content-Type:
       - application/json
       Content-Length:
-      - '4321'
+      - '4671'
       Connection:
       - keep-alive
       Access-Control-Allow-Credentials:
@@ -413,7 +425,9 @@ http_interactions:
       Cache-Control:
       - no-cache, no-store
       Request-Id:
-      - req_RYYnByCotzycK08C
+      - req_74YAgA6r4clgak
+      Stripe-Account:
+      - acct_16qP49Hjqb1mH62f
       Stripe-Version:
       - '2015-04-07'
       Strict-Transport-Security:
@@ -422,14 +436,14 @@ http_interactions:
       encoding: UTF-8
       string: |
         {
-          "id": "acct_168vXKAVAvpP5glj",
+          "id": "acct_16qP49Hjqb1mH62f",
           "email": "misteranderson@example.com",
           "statement_descriptor": null,
           "display_name": null,
           "timezone": "Etc/UTC",
           "details_submitted": false,
           "charges_enabled": true,
-          "transfers_enabled": true,
+          "transfers_enabled": false,
           "currencies_supported": [
             "usd",
             "aed",
@@ -467,7 +481,6 @@ http_interactions:
             "dkk",
             "dop",
             "dzd",
-            "eek",
             "egp",
             "etb",
             "eur",
@@ -504,7 +517,6 @@ http_interactions:
             "lrd",
             "lsl",
             "ltl",
-            "lvl",
             "mad",
             "mdl",
             "mga",
@@ -576,6 +588,7 @@ http_interactions:
           "business_name": "Neomarket",
           "business_url": null,
           "support_phone": null,
+          "business_logo": null,
           "metadata": {
             "lo.market_id": "1"
           },
@@ -584,50 +597,61 @@ http_interactions:
           "debit_negative_balances": true,
           "bank_accounts": {
             "object": "list",
-            "total_count": 2,
+            "total_count": 1,
             "has_more": false,
-            "url": "/v1/accounts/acct_168vXKAVAvpP5glj/bank_accounts",
+            "url": "/v1/accounts/acct_16qP49Hjqb1mH62f/bank_accounts",
             "data": [
               {
                 "object": "bank_account",
-                "id": "ba_168vZ2AVAvpP5gljp0nb4qPN",
+                "id": "ba_16qP4AHjqb1mH62foOyP3sy2",
                 "last4": "6789",
                 "country": "US",
                 "currency": "usd",
                 "status": "new",
-                "fingerprint": "XeS17LDFFk13wPbj",
+                "fingerprint": "gIxHX4Bko1pyDlGo",
                 "routing_number": "110000000",
                 "bank_name": "STRIPE TEST BANK",
-                "account": "acct_168vXKAVAvpP5glj",
-                "default_for_currency": false
-              },
+                "account": "acct_16qP49Hjqb1mH62f",
+                "default_for_currency": true,
+                "metadata": {}
+              }
+            ]
+          },
+          "external_accounts": {
+            "object": "list",
+            "total_count": 1,
+            "has_more": false,
+            "url": "/v1/accounts/acct_16qP49Hjqb1mH62f/external_accounts",
+            "data": [
               {
                 "object": "bank_account",
-                "id": "ba_168vXQAVAvpP5gljq388PxQ8",
+                "id": "ba_16qP4AHjqb1mH62foOyP3sy2",
                 "last4": "6789",
                 "country": "US",
                 "currency": "usd",
                 "status": "new",
-                "fingerprint": "XeS17LDFFk13wPbj",
+                "fingerprint": "gIxHX4Bko1pyDlGo",
                 "routing_number": "110000000",
                 "bank_name": "STRIPE TEST BANK",
-                "account": "acct_168vXKAVAvpP5glj",
-                "default_for_currency": true
+                "account": "acct_16qP49Hjqb1mH62f",
+                "default_for_currency": true,
+                "metadata": {}
               }
             ]
           },
           "verification": {
             "fields_needed": [
-              "legal_entity.first_name",
-              "legal_entity.last_name",
               "legal_entity.dob.day",
               "legal_entity.dob.month",
               "legal_entity.dob.year",
+              "legal_entity.first_name",
+              "legal_entity.last_name",
               "legal_entity.type",
-              "tos_acceptance.ip",
-              "tos_acceptance.date"
+              "tos_acceptance.date",
+              "tos_acceptance.ip"
             ],
             "due_by": null,
+            "disabled_reason": "fields_needed",
             "contacted": false
           },
           "transfer_schedule": {
@@ -675,9 +699,11 @@ http_interactions:
               "status": "unverified",
               "document": null,
               "details": null
-            }
+            },
+            "personal_id_number_provided": false,
+            "ssn_last_4_provided": false
           }
         }
     http_version: 
-  recorded_at: Mon, 01 Jun 2015 16:22:04 GMT
+  recorded_at: Tue, 29 Sep 2015 14:26:51 GMT
 recorded_with: VCR 2.9.3

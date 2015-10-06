@@ -24,7 +24,7 @@ class OrdersController < ApplicationController
                                                    buyer_organization: current_cart.organization,
                                                    user: current_user,
                                                    order_params: order_params,
-                                                   cart: current_cart)
+                                                   cart: current_cart, request: request)
 
       if @placed_order.context.key?(:order)
         @order = @placed_order.order.decorate

@@ -8,19 +8,23 @@ module Admin
     before_action :find_sticky_params, only: :index
 
     def index
-      products = current_user.managed_products.periscope(@query_params).includes(:lots, :unit, :prices=>[:market], :organization => [:all_markets])
-      respond_to do |format|
-        format.html do
-          @products = products.page(params[:page]).per(@query_params[:per_page])
-          find_organizations_for_filtering
-          find_markets_for_filtering
+      if params["clear"]
+        redirect_to url_for(params.except(:clear))
+      else
+        products = current_user.managed_products.periscope(@query_params).includes(:lots, :unit, :prices=>[:market], :organization => [:all_markets])
+        respond_to do |format|
+          format.html do
+            @products = products.page(params[:page]).per(@query_params[:per_page])
+            find_organizations_for_filtering
+            find_markets_for_filtering
 
-          markets = @products.flat_map {|prod| prod.organization.all_markets }
-          @net_percents_by_market_id = ::Financials::Pricing.seller_net_percents_by_market(markets)
-        end
-        format.csv do
-          @filename = 'products.csv'
-          @products = products
+            markets = @products.flat_map {|prod| prod.organization.all_markets }
+            @net_percents_by_market_id = ::Financials::Pricing.seller_net_percents_by_market(markets)
+          end
+          format.csv do
+            @filename = 'products.csv'
+            @products = products
+          end
         end
       end
     end

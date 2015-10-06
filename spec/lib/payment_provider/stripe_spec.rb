@@ -26,7 +26,8 @@ describe PaymentProvider::Stripe do
         buyer_organization: "the buyer org",
         user: "the user",
         order_params: "the order params",
-        cart: "the cart"
+        cart: "the cart",
+        request: "the request"
       }
     }
 
@@ -36,7 +37,8 @@ describe PaymentProvider::Stripe do
         entity: params[:buyer_organization],
         buyer: params[:user],
         order_params: params[:order_params],
-        cart: params[:cart]
+        cart: params[:cart],
+        request: params[:request]
       )
 
       subject.place_order(params)
