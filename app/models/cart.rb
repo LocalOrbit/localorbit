@@ -29,7 +29,7 @@ class Cart < ActiveRecord::Base
   end
 
   def subtotal
-    @subtotal ||= items.each.sum(&:total_price)
+    (@subtotal ||= items.each.sum(&:total_price)).round(2)
   end
 
   def has_valid_discount?
@@ -43,7 +43,7 @@ class Cart < ActiveRecord::Base
       delivery_fees + subtotal
     end
 
-    @discount_amount ||= discount.try(:valid_for_cart?, self) ? discount.value_for(order_total) : 0
+    (@discount_amount ||= discount.try(:valid_for_cart?, self) ? discount.value_for(order_total) : 0).round(2)
   end
 
   def discount_code
@@ -51,10 +51,10 @@ class Cart < ActiveRecord::Base
   end
 
   def delivery_fees
-    delivery.delivery_schedule.fees_for_amount(subtotal)
+    delivery.delivery_schedule.fees_for_amount(subtotal).round(2)
   end
 
   def total
-    subtotal + delivery_fees - discount_amount
+    (subtotal + delivery_fees - discount_amount).round(2)
   end
 end
