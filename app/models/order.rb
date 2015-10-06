@@ -313,12 +313,12 @@ class Order < ActiveRecord::Base
           sellers << audit.try(:auditable).try(:seller) || Product.find_by(id: audit.audited_changes["product_id"]).try(:organization)
         end
       end
+      if sellers
+        sellers.compact.uniq
+      end
     else
       []
     end
-
-    sellers.compact.uniq
-    sellers
   end
 
   def sellers_with_cancel
@@ -332,12 +332,12 @@ class Order < ActiveRecord::Base
           sellers << audit.try(:auditable).try(:seller) || Product.find_by(id: audit.audited_changes["product_id"]).try(:organization)
         end
       end
+      if sellers
+        sellers.compact.uniq
+      end
     else
       []
     end
-
-    sellers.compact.uniq
-    sellers
   end
 
   def subtotal

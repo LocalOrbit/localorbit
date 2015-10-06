@@ -405,7 +405,8 @@ describe Order do
           },
           "2" => {
             id: order_item3.id,
-            _destroy: "true"
+            quantity: 0
+            #_destroy: "true"
           }
         }
       }
@@ -421,10 +422,16 @@ describe Order do
       Audit.all.update_all(request_uuid: SecureRandom.uuid)
     end
 
-    it "returns sellers where the item quantity has changed or the item has been deleted" do
-      sellers = order.reload.sellers_with_changes
+    it "returns sellers where the item quantity has changed" do
+      sellers_with_change = order.reload.sellers_with_changes
 
-      expect(sellers).to eql([seller1, seller3])
+      expect(sellers_with_change).to eql([seller1])
+    end
+
+    it "returns sellers where the item has been deleted" do
+      sellers_with_remove = order.reload.sellers_with_cancel
+
+      expect(sellers_with_remove).to eql([seller3])
     end
   end
 
