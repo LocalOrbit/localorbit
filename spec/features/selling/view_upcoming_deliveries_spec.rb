@@ -56,6 +56,7 @@ describe "Upcoming Deliveries" do
 
       it "shows a delivery until 11:59 the day of the delivery" do
         Timecop.travel("May 8, 2014 11:30 PM") do
+          sign_in_as(user)
           visit admin_delivery_tools_path
 
           expect(page).to have_content("Upcoming Deliveries")
