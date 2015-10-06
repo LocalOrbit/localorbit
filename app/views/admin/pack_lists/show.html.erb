@@ -1,6 +1,6 @@
 <%= link_to "< Back to Upcoming Deliveries", admin_delivery_tools_path, class: 'back-button' %>
 <button class="btn btn--action btn--small pull-right print-button" id="print-button">Print</button>
-
+<div class="print-page">
 <% @orders.decorate.each_with_index do |order, index| %>
   <% if index != 0 %>
     <div class="pdf-page-break"></div>
@@ -12,15 +12,21 @@
 
     <% @logo_path = asset_url("logo.png") # needed if market doesn't have a logo %>
 
-    <div class="print-logo" style="content: url('<%=
-        if order.market.logo_stored?
-          ensure_full_url((order.market.logo_stored?) ? order.market.logo.thumb('200x150').url : nil)
-        elsif @logo_path
-          ensure_full_url(@logo_path)
-        else
-          ensure_full_url(asset_url("logo.png"))
-        end
-        %>')">
+    <div class="container">
+      <div class="outer">
+        <div class="inner">
+          <div class="print-logo" style="width: 80%; content: url('<%=
+          if order.market.logo_stored?
+            ensure_full_url((order.market.logo_stored?) ? order.market.logo.thumb('100x75').url : nil)
+          elsif @logo_path
+            ensure_full_url(@logo_path)
+          else
+            ensure_full_url(asset_url("logo.png"))
+          end
+          %>')">
+          </div>
+        </div>
+      </div>
     </div>
     <div class="row">
       <div class="column column--half vcard vcard--buyer">
@@ -94,3 +100,4 @@
     </div>
   </div>
 <% end %>
+</div>
