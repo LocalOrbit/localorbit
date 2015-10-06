@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150925190744) do
+ActiveRecord::Schema.define(version: 20150924211007) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -194,7 +194,6 @@ ActiveRecord::Schema.define(version: 20150925190744) do
     t.integer  "legacy_id"
     t.integer  "buyer_day"
     t.string   "fee_label",                      default: "Delivery Fee"
-    t.boolean  "toggle_on",                      default: true
   end
 
   add_index "delivery_schedules", ["deleted_at"], name: "index_delivery_schedules_on_deleted_at", using: :btree
