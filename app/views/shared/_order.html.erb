@@ -50,9 +50,11 @@
       <th scope="row">Buyer Payment:</th>
       <td><%= order.buyer_payment_status.titleize %></td>
     </tr>
-    <tr>
-      <td><a href="#creditEdit" class="btn btn--primary modal-toggle">Add/Modify Credit</button></td>
-    </tr>
+    <% if FeatureAccess.can_edit_order?(user: current_user, order: order) %>
+      <tr>
+        <td><a href="#creditEdit" class="btn btn--primary modal-toggle app-edit-credit-modal-button">Modify Credit</button></td>
+      </tr>
+    <% end %>
   </table>
   <table class="order-info-total">
     <tbody>
@@ -303,12 +305,14 @@
   <%= render :partial=>"table_tents_and_posters/ad", locals: { order: order } %>
 <% end %>
 
-<%= react_component('lo.ModifyCreditModal', {
-  baseUrl: "#{request.base_url}/api/v1/",
-  credit: order.credit,
-  grossTotal: order.gross_total.to_f,
-  amountTypes: Credit::AMOUNT_TYPES,
-  payerTypes: Credit::PAYER_TYPES,
-  sellers: order.sellers,
-  orderId: order.id
-}) %>
+<% if FeatureAccess.can_edit_order?(user: current_user, order: order) %>
+  <%= react_component('lo.ModifyCreditModal', {
+    baseUrl: "#{request.base_url}/api/v1/",
+    credit: order.credit,
+    grossTotal: order.gross_total.to_f,
+    amountTypes: Credit::AMOUNT_TYPES,
+    payerTypes: Credit::PAYER_TYPES,
+    sellers: order.sellers,
+    orderId: order.id
+  }) %>
+<% end %>

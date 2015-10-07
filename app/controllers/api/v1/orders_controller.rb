@@ -6,10 +6,9 @@ module Api
       private
 
       def can_edit_order
-        return if current_user.admin?
         id = params.require(:order_id)
         order = Order.find id
-        return if current_user.managed_markets.include?(order.market)
+        return if FeatureAccess.can_edit_order?(user: current_user, order: order)
       end
     end
   end

@@ -39,7 +39,7 @@
         url: self.props.baseUrl + 'orders/' + self.props.orderId + '/credits',
         method: 'POST',
         data: {
-          credit: self.state.credit
+          credit: _.pick(self.state.credit, ['id', 'amount', 'payer_type', 'amount_type', 'paying_org_id', 'notes'])
         },
         success: function(res) {
           location.reload();
@@ -68,9 +68,9 @@
         });
         sellerOptions.unshift(<option key={null} value={null}>All</option>);
         var sellerSelect = (
-          <div className="field">
+          <div className='field'>
             <label>Paying Organization</label><br/>
-            <select defaultValue={credit.paying_org_id} onChange={self.setAttributeValue.bind(this, 'paying_org_id')} className="column--full">
+            <select defaultValue={credit.paying_org_id} onChange={self.setAttributeValue.bind(this, 'paying_org_id')} className='column--full'>
               {sellerOptions}
             </select>
           </div>
@@ -80,38 +80,43 @@
         var sellerOptions = null;
       }
 
-      var errors = (self.state.errors) ? <p className="alert alert--warning">{self.state.errors}</p> : null;
+      var errors = (self.state.errors) ? <p className='alert alert--warning'>{self.state.errors}</p> : null;
 
       return (
-        <div id="creditEdit" className="popup modal is-hidden" style={{background: "white", position: "fixed", padding: "20px", width: "50%", borderRadius: "5px"}}>
+        <div id='creditEdit' className='popup modal is-hidden app-edit-credit-modal' style={{background: 'white', position: 'fixed', padding: '20px', width: '50%', borderRadius: '5px'}}>
           <h1>Modify Order Credit</h1>
           <div>
             {errors}
-            <div className="row row--field">
-              <div className="field column column--half column--guttered">
+            <div className='row row--field'>
+              <div className='field column column--half column--guttered'>
                 <label>Type</label><br/>
-                <select onChange={self.setAttributeValue.bind(this, 'amount_type')} defaultValue={credit.amount_type}>
+                <select onChange={self.setAttributeValue.bind(this, 'amount_type')} defaultValue={credit.amount_type} name='amount-type'>
                   {amountTypeOptions}
                 </select>
               </div>
-              <div className="field column column--half column--guttered">
+              <div className='field column column--half column--guttered'>
                 <label>Amount</label><br/>
-                <input type="text" value={credit.amount} onChange={self.setAttributeValue.bind(this, 'amount')}/>
+                <input type='text' value={credit.amount} onChange={self.setAttributeValue.bind(this, 'amount')} name='amount'/>
               </div>
             </div>
 
-            <div className="field">
+            <div className='field'>
               <label>Credit paid by</label><br/>
-              <select defaultValue={credit.payer_type} onChange={self.setAttributeValue.bind(this, 'payer_type')} className="column--full">
+              <select defaultValue={credit.payer_type} onChange={self.setAttributeValue.bind(this, 'payer_type')} className='column--full'>
                 {payerTypeOptions}
               </select>
             </div>
 
             {sellerSelect}
 
-            <div className="row">
-              <button className="btn pull-right" style={{marginLeft: "20px"}}>Cancel</button>
-              <button onClick={self.save} className="btn btn--primary pull-right">Save</button>
+            <div className='row row--field'>
+              <label>Notes (Optional)</label>
+              <textarea name='notes' value={credit.notes} onChange={self.setAttributeValue.bind(this, 'notes')} className='column--full'/>
+            </div>
+
+            <div className='row'>
+              <button className='btn pull-right' style={{marginLeft: '20px'}}>Cancel</button>
+              <button onClick={self.save} className='btn btn--primary pull-right app-save-credit'>Save</button>
             </div>
           </div>
         </div>

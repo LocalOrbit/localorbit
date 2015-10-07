@@ -54,6 +54,7 @@ FactoryGirl.define do
     amount 1.50
     payer_type "market"
     paying_org_id nil
+    notes "Bad on delivery."
   end
 
   factory :order_template do

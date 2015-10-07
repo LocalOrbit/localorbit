@@ -19,12 +19,16 @@ class Credit < ActiveRecord::Base
   validate :amount_cannot_exceed_gross_total, :order_must_be_paid_by_po
 
   def calculated_amount
-    total = order.gross_total
     if amount_type == Credit::PERCENTAGE
+      total = order.gross_total
       (total * (amount / 100)).round 2
     elsif amount_type == Credit::FIXED
-      amount.round 2
+      amount
     end
+  end
+
+  def amount=(value)
+    write_attribute(:amount, value && value.to_f.round(2))
   end
 
   private

@@ -16,7 +16,7 @@ module Api
       end
 
       def credit_parameter
-        params.require(:credit).permit(:id, :amount, :payer_type, :amount_type, :paying_org_id)
+        params.require(:credit).permit(:id, :amount, :payer_type, :amount_type, :paying_org_id, :notes)
       end
     end
   end

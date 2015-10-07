@@ -486,8 +486,8 @@ describe Order do
     it "takes credits into account" do
       credit = create(:credit, order: order, user: user, amount: 1.00)
       expect(order.reload.total_cost.to_f).to eql(7.74)
-      credit.amount = 0.5
-      credit.percentage_or_fixed = Credit::PERCENTAGE
+      credit.amount = 50
+      credit.amount_type = Credit::PERCENTAGE
       credit.save
       expect(order.reload.total_cost.to_f).to eql(5.24)
     end

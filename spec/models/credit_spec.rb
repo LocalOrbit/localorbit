@@ -76,6 +76,12 @@ describe Credit do
       expect(credit).to_not be_valid
       expect(credit).to have(1).error_on(:amount)
     end
+
+    it "is automatically rounded to 2 decimal places" do
+      credit.amount = 2.345
+      credit.save
+      expect(credit.amount).to eql 2.35
+    end
   end
 
   describe ".calculated_amount" do
