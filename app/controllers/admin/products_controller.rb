@@ -109,7 +109,7 @@ module Admin
     def after_create_page
       if params[:after_save]
         params[:after_save]
-      elsif @product.use_simple_inventory?
+      elsif @product.lots.count > 0
         [:admin, @product, :prices]
       else
         [:admin, @product, :lots]

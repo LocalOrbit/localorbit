@@ -1,116 +1,139 @@
 <%= render "admin/products/header" %>
+<%= centered_column('column--three-fourths') do %>
+  <%= product_listing_disclaimer %>
 
-<%= form_for [:admin, @product, @lot], html: { class: "inventory-form row row--partial" } do |f| %>
+  <h2>Add Inventory</h2>
 
-<div class="column column--three-fourths">
-<%= product_listing_disclaimer %>
+  <%= form_for [:admin, @product, @lot], html: {class: "inventory-form row row--partial"} do |f| %>
+    <%= render "shared/errors", {resource: @lot} %>
+    <%= render "shared/errors", {resource: @lot_with_errors} if @lot_with_errors %>
 
-<%= render "shared/errors", {resource: @lot} %>
-
-<%= render "shared/errors", {resource: @lot_with_errors} if @lot_with_errors %>
-
-<%= link_to "Add Lot", '#add-lot', class: @product.lots.count > 0 ? 'pull-right btn btn--add-mobile btn--add btn--small   add-toggle' : 'is-hidden'  %>
-<h2>Add Inventory</h2>
-
-<% if @product.lots.select { |lot| lot.persisted? }.empty? %>
-  <p>You don't have any inventory yet! Get started by adding your first lot.</p>
-<% end %>
-
-<div class="table-wrapper">
-  <%= content_tag :table, id: 'inventory_table', data: edit_table_error_payload(@lot_with_errors), class: "sortable" do %>
-    <thead>
-      <tr>
-        <th>Date Added</th>
-        <th>Lot #</th>
-        <th>Good From</th>
-        <th>Expires On</th>
-        <th>Quantity</th>
-        <th></th>
-      </tr>
-
-      <tr class="lot add-row <%= @product.lots.count > 0 ? 'is-hidden' : 'editing' %>" id="add-row">
-        <td class="edit-cell"><div><%= Time.current.strftime('%m/%d/%Y') %></div></td>
-        <td class="edit-cell"><div><%= f.text_field :number, size: 8  %></div></td>
-        <td class="edit-cell">
-          <div>
-            <%= f.datetime_field :good_from, size: 8, class: "alt-datepicker" %><a href="#lot_good_from" class="btn btn--end calendar-toggle" title="Select a date"><i class="font-icon icon-calendar"></i></a>
-            <div class="datepicker" data-input="lot_good_from"></div>
-          </div>
-        </td>
-        <td class="edit-cell">
-          <div>
-            <%= f.datetime_field :expires_at, size: 8, class: "alt-datepicker", data: {'min-date' => 0} %><a href="#lot_expires_at" class="btn btn--end calendar-toggle" title="Select a date"><i class="font-icon icon-calendar"></i></a>
-            <div class="datepicker" data-input="lot_expires_at"></div>
-          </div>
-        </td>
-        <td class="edit-cell"><div><%= f.number_field :quantity, min: 0, size: 3 %></div></td>
-        <td class="edit-cell">
-          <button class="cancel">Cancel</button>
-          <%= f.submit "Add", class: "btn--small" %>
-        </td>
-      </tr>
-    </thead>
-
-    <tbody>
-    <% @product.lots.select(&:persisted?).each do |lot| %>
-      <%= content_tag_for :tr, lot, {class: 'lot', data: {"form-url" => url_for([:admin, lot.product, lot]) }, rel: "lot_#{lot.id}"} do %>
-        <%= fields_for :lot, lot, index: lot.id do |lot_in_table| %>
-          <td class="created_at">
-            <div class="edit-trigger">
-              <%= lot.created_at.strftime('%m/%d/%Y') %>
-            </div>
-          </td>
-          <td class="number">
-            <div class="edit-trigger view-cell">
-              <%= lot.number %>
-            </div>
-            <div class="edit-cell">
-              <%= lot_in_table.text_field :number, size: 8 %>
-            </div>
-          </td>
-          <td class="good_from">
-            <div class="edit-trigger view-cell">
-              <%= lot.good_from.try(:strftime, '%d %b %Y') %>
-            </div>
-            <div class="edit-cell">
-              <%= lot_in_table.datetime_field :good_from, size: 8, class: 'alt-datepicker' %><a href="#lot_<%= lot.id %>_good_from" class="btn btn--end calendar-toggle" title="Select a date"><i class="font-icon icon-calendar"></i></a>
-              <div class="datepicker" data-input="lot_<%= lot.id %>_good_from"></div>
-             </div>
-          </td>
-          <td class="expires_at">
-            <div class="edit-trigger view-cell">
-              <%= lot.expires_at.try(:strftime, '%d %b %Y') %>
-            </div>
-            <div class="edit-cell">
-              <%= lot_in_table.datetime_field :expires_at, size: 8, class: 'alt-datepicker', data: {'min-date' => 0} %><a href="#lot_<%= lot.id %>_expires_at" class="btn btn--end calendar-toggle" title="Select a date"><i class="font-icon icon-calendar"></i></a>
-              <div class="datepicker" data-input="lot_<%= lot.id %>_expires_at"></div>
-            </div>
-          </td>
-          <td class="quantity">
-            <div class="edit-trigger view-cell">
-              <%= lot.quantity %>
-            </div>
-            <div class="edit-cell">
-              <%= lot_in_table.number_field :quantity, min: 0, size: 3 %>
-            </div>
-          </td>
-          <td>
-            <div class="view-cell edit-trigger">
-              <%= link_to raw('<i class="font-icon" data-icon="&#xe002;"></i> Edit</span>'), "#lot_#{lot.id}", class: "edit-price" %>
-            </div>
-            <div class="edit-cell">
-              <button class="cancel">Cancel</button><%= f.submit "Save", class: "btn--small" %>
-            </div>
-          </td>
-        <% end %>
-      <% end %>
+    <% if @product.lots.select { |lot| lot.persisted? }.empty? %>
+      <p>You don't have any inventory yet! Get started by adding your first lot.</p>
     <% end %>
-    </tbody>
-  <% end # table %>
-</div>
 
-<div class="form-actions">
-    <p class="action-helper">When all inventory is added <%= link_to "Continue to Pricing", [:admin, @product, :prices], class: "btn btn--save" %></p>
-</div>
-</div>
-<% end # form %>
+    <div class="table-wrapper">
+      <%= content_tag :table, id: 'inventory_table',
+                      data: edit_table_error_payload(@lot_with_errors),
+                      class: "sortable" do %>
+        <thead>
+        <tr>
+          <th>Date Added</th>
+          <th>Lot #</th>
+          <th>Good From</th>
+          <th>Expires On</th>
+          <th>Quantity</th>
+          <th></th>
+        </tr>
+        </thead>
+
+        <tbody>
+        <% @product.lots.select(&:persisted?).each do |lot| %>
+          <%= content_tag_for :tr, lot, {class: 'lot',
+                                         data: {"form-url" => url_for([:admin, lot.product, lot])},
+                                         rel: "lot_#{lot.id}"} do %>
+
+            <%= fields_for :lot, lot, index: lot.id do |lot_in_table| %>
+              <td class="created_at">
+                <div class="edit-trigger">
+                  <%= lot.created_at.strftime('%m/%d/%Y') %>
+                </div>
+              </td>
+              <td class="number">
+                <div class="edit-trigger view-cell">
+                  <%= lot.number %>
+                </div>
+                <div class="edit-cell">
+                  <%= lot_in_table.text_field :number, size: 8 %>
+                </div>
+              </td>
+              <td class="good_from">
+                <div class="edit-trigger view-cell">
+                  <%= lot.good_from.try(:strftime, '%d %b %Y') %>
+                </div>
+                <div class="edit-cell">
+                  <%= lot_in_table.datetime_field :good_from, size: 8, class: 'alt-datepicker' %>
+                  <a href="#lot_<%= lot.id %>_good_from" class="btn btn--end calendar-toggle" title="Select a date">
+                    <i class="font-icon icon-calendar"></i></a>
+                  <div class="datepicker" data-input="lot_<%= lot.id %>_good_from"></div>
+                </div>
+              </td>
+              <td class="expires_at">
+                <div class="edit-trigger view-cell">
+                  <%= lot.expires_at.try(:strftime, '%d %b %Y') %>
+                </div>
+                <div class="edit-cell">
+                  <%= lot_in_table.datetime_field :expires_at, size: 8, class: 'alt-datepicker', data: {'min-date' => 0} %>
+                  <a href="#lot_<%= lot.id %>_expires_at" class="btn btn--end calendar-toggle" title="Select a date">
+                    <i class="font-icon icon-calendar"></i></a>
+                  <div class="datepicker" data-input="lot_<%= lot.id %>_expires_at"></div>
+                </div>
+              </td>
+              <td class="quantity">
+                <div class="edit-trigger view-cell">
+                  <%= lot.quantity %>
+                </div>
+                <div class="edit-cell">
+                  <%= lot_in_table.number_field :quantity, min: 0, size: 3 %>
+                </div>
+              </td>
+              <td>
+                <div class="view-cell edit-trigger">
+                  <%= link_to raw('<i class="font-icon" data-icon="&#xe002;"></i> Edit</span>'), "#lot_#{lot.id}", class: "edit-price" %>
+                </div>
+                <div class="edit-cell">
+                  <button class="cancel">Cancel</button>&nbsp;<%= f.submit "Save", class: "btn--small" %>
+                </div>
+              </td>
+            <% end %>
+          <% end %>
+        <% end %>
+
+        <tr class="lot add-row <%= @product.lots.count > 0 ? 'is-hidden' : 'editing' %>" id="add-row">
+          <td class="edit-cell"><div><%= Time.current.strftime('%m/%d/%Y') %></div></td>
+          <td class="edit-cell"><div><%= f.text_field :number, size: 8  %></div></td>
+          <td class="edit-cell">
+            <div>
+              <%= f.datetime_field :good_from, size: 8, class: "alt-datepicker" %>
+              <a href="#lot_good_from" class="btn btn--end calendar-toggle" title="Select a date">
+                <i class="font-icon icon-calendar"></i></a>
+              <div class="datepicker" data-input="lot_good_from"></div>
+            </div>
+          </td>
+          <td class="edit-cell">
+            <div>
+              <%= f.datetime_field :expires_at, size: 8, class: "alt-datepicker", data: {'min-date' => 0} %>
+              <a href="#lot_expires_at" class="btn btn--end calendar-toggle" title="Select a date">
+                <i class="font-icon icon-calendar"></i></a>
+              <div class="datepicker" data-input="lot_expires_at"></div>
+            </div>
+          </td>
+          <td class="edit-cell"><div><%= f.number_field :quantity, min: 0, size: 3 %></div></td>
+          <td class="edit-cell">
+            <button class="cancel">Cancel</button>&nbsp;<%= f.submit "Add", class: "btn--small" %>
+          </td>
+        </tr>
+
+        <% if organization_can_access?(@product.organization, :advanced_inventory) && @product.lots.count > 0 %>
+          <tr class="add-toggle last-row">
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td><%= link_to "Add Lot", '#add-lot', class: 'add-toggle' %></td>
+          </tr>
+        <% end %>
+        </tbody>
+
+      <% end # table %>
+    </div>
+  <% end # form %>
+
+  <div class="form-actions">
+    <p class="action-helper">
+      When all inventory is added <%= link_to "Continue to Pricing", [:admin, @product, :prices],
+                                              class: "btn btn--save" %>
+    </p>
+  </div>
+<% end %>

@@ -1,6 +1,6 @@
 require "spec_helper"
 
-describe "Editing a product" do
+describe "Editing a product", :js do
   let(:user) { create(:user) }
   let(:stub_warning) { "Your product will not appear in the Shop until all of these actions are complete" }
   let(:organization_label) { "Product Organization" }
@@ -22,12 +22,12 @@ describe "Editing a product" do
       click_link "Canned Pears"
     end
 
-    context "when the product information is valid", :js do
-      it "saves the product and advances to the prices page" do
+    context "when the product information is valid" do
+      it "saves the product and advances to the inventory page" do
         fill_in "Product Name", with: "Canned Peaches"
         click_button "Save and Continue"
         expect(page).to have_content("Saved Canned Peaches")
-        expect(page).to have_content("Add Prices")
+        expect(page).to have_content("Add Inventory")
       end
 
       it "saves the product and goes back to the products list" do
@@ -50,38 +50,6 @@ describe "Editing a product" do
         click_button "Save and Continue"
 
         expect(page).to have_content("Name can't be blank")
-      end
-    end
-
-    context "and switching to simple inventory management", :js do
-      let(:product) { create(:product, name: "Canned Pears", use_simple_inventory: false) }
-
-      context "with available inventory" do
-        before do
-          product.lots.create!(quantity: 42)
-          visit admin_product_path(product)
-        end
-
-        it "user sees a warning message" do
-          expect(page).to have_content("To use simple inventory management you must clear out your current available inventory")
-        end
-
-        it "user can't check simple inventory" do
-          expect(page).to have_css("#product_use_simple_inventory[disabled]")
-        end
-      end
-
-      context "with no available inventory", js: true do
-        it "user can select simple inventory and set a simple inventory value" do
-          expect(page).to_not have_content("Current inventory")
-
-          check "Use simple inventory"
-          fill_in "Current inventory", with: "42"
-          click_button "Save and Continue"
-
-          expect(page).to have_content("Saved Canned Pears")
-          expect(page).to have_content("Your product will not appear in the Shop until you add pricing")
-        end
       end
     end
   end
@@ -112,7 +80,7 @@ describe "Editing a product" do
         fill_in "Additional Notes", with: "See more notes"
         click_button "Request Unit"
 
-        expect(page).to have_content("Add Product")
+        expect(page).to have_content("Update Canned Pears")
       end
 
       it "does not refresh the page", js: true do
@@ -142,7 +110,7 @@ describe "Editing a product" do
         fill_in "Product Category", with: "Goop"
         click_button "Request Category"
 
-        expect(page).to have_content("Add Product")
+        expect(page).to have_content("Update Canned Pears")
       end
 
       it "does not refresh the page", js: true do

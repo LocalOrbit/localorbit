@@ -1,141 +1,159 @@
 <%= render "admin/products/header" %>
-
-<%= form_for [:admin, @product, @price], html: { class: "row row--partial price-form", novalidate: "novalidate" } do |f| %>
-
+<%= centered_column('column--three-fourths') do %>
   <%= product_listing_disclaimer %>
+  <h2>Add Prices</h2>
+  <p>You can set a universal price or individual prices for specific Markets, Buyers and quantities.</p>
 
-  <div class="column column--three-fourths">
+  <% unless @product.prices.view_sorted.any? %>
+    <p>
+      You don't have any prices yet! We've gone ahead and started the entry for you. When you enter a Sale Price,
+      the Net Price will automatically update. You can adjust these numbers to arrive at the Net Price that you want
+      to receive per unit.
+    </p>
+  <% end %>
+
+  <%= form_for [:admin, @product, @price], html: {class: "row row--partial price-form", novalidate: "novalidate"} do |f| %>
     <%= render "shared/errors", {resource: @price} %>
     <%= render "shared/errors", {resource: @price_with_errors} if @price_with_errors %>
 
-    <% if @product.prices.view_sorted.any? %>
+    <p class="delete-check-mobile">
+      <%= button_tag "SAVE", class: "btn is-invisible prevent-delete" %>
       <% if organization_can_access?(@product.organization, :advanced_pricing) %>
-        <%= link_to "Add Price", "#add-row", class: "btn btn--add-mobile btn--add btn--small pull-right   add-toggle#{" is-hidden" if @price.errors.any?}" %>
+        <%= button_tag "Delete Selected Prices", class: "btn delete delete-selected is-invisible" %>
       <% end %>
-      <h2 class="clear-after">Add Prices</h2>
-      <p>You can set a universal price or individual prices for specific Markets, Buyers and quantities.</p>
-      <p class="delete-check-mobile">
-        <%= button_tag "SAVE", class: "btn is-invisible prevent-delete" %>
-        <% if organization_can_access?(@product.organization, :advanced_pricing) %>
-          <%= button_tag "Delete Selected Prices", class: "btn delete delete-selected is-invisible" %>
-        <% end %>
-      </p>
-    <% else %>
-      <h2>Add Prices</h2>
-      <p>You don't have any prices yet! We've gone ahead and started the entry for you. When you enter a Sale Price,
-        the Net Price will automatically update. You can adjust these numbers to arrive at the Net Price that you want
-        to receive per unit.
-      </p>
-    <% end %>
+    </p>
 
     <div class="table-wrapper">
-    <%= content_tag :table, border: 0, id: 'pricing_table', data: edit_table_error_payload(@price_with_errors), class: "sortable pricing-table" do %>
-      <thead>
+      <%= content_tag :table, border: 0, id: 'pricing_table',
+                      data: edit_table_error_payload(@price_with_errors),
+                      class: "sortable pricing-table" do %>
+        <thead>
         <tr>
           <%= content_tag :th, raw('<input type="checkbox" class="select-all">'), class: "delete-check-mobile" if @product.prices.view_sorted.any? %>
           <%= content_tag(:th, 'Market') if current_user.multi_market_membership? %>
           <th>Buyer</th>
           <th>
-            Min Qty
-            <span class="tooltip" data-tooltip="This is the minimum quantity available for sale of this product."></span>
+            Min Qty <span class="tooltip" data-tooltip="This is the minimum quantity available for sale of this product."></span>
           </th>
           <th>
-            Estimated Net Price
-            <span class="tooltip tool-tip-test" data-tooltip="The Net Price is the amount that the seller will receive. This amount is an estimate, calculated by subtracting the market fee and any applicable payment processing fees from the Sale Price. "></span>
+            Estimated Net Price <span class="tooltip tool-tip-test" data-tooltip="The Net Price is the amount that
+              the seller will receive. This amount is an estimate, calculated by subtracting the market fee and any
+              applicable payment processing fees from the Sale Price."></span>
           </th>
           <th>
-            Sale Price
-            <span class="tooltip" data-tooltip="This is the sale price that the Buyer will see. The net price will adjust when you enter a sale price."></span>
+            Sale Price <span class="tooltip" data-tooltip="This is the sale price that the Buyer will see. The net
+              price will adjust when you enter a sale price."></span>
           </th>
           <th></th>
         </tr>
+        </thead>
 
-        <tr class="add-price price even <%= @product.prices.view_sorted.any? && @price.errors.none? ? "is-hidden" : "open-row" %>" id="add-row">
-          <%= render 'form_row', f: f %>
-        </tr>
-      </thead>
-      <tbody>
+        <tbody>
+        <% @product.prices.view_sorted.decorate.each do |price| %>
+          <%= content_tag_for :tr, price, {data: {"form-url" => url_for([:admin, @product, price])},
+                                           rel: "price_#{price.id}"} do %>
 
-      <% @product.prices.view_sorted.decorate.each do |price| %>
-        <%= content_tag_for :tr, price, rel: "price_#{price.id}", data: {"form-url" => url_for([:admin, @product, price]) } do %>
-          <%= fields_for :price, price, index: price.id do |f| %>
-            <td class="delete delete-check-mobile">
-              <input type="checkbox" name="id[]" value="<%= price.id %>">
-            </td>
-            <% if current_user.multi_market_membership? %>
-            <td class="market">
-              <div class="edit-trigger view-cell">
-                <%= price.market_name %>
-              </div>
-              <div class="edit-cell">
-                <% if organization_can_access?(@product.organization, :advanced_pricing) %>
-                <%= f.select :market_id, @product.organization.all_markets_for_select, {include_blank: 'All Markets'}, {class: "price_market_id"} %>
-                <% else %>
-                  <%= price.market_name %>
-                <% end %>
-              </div>
-            </td>
-            <% end %>
-            <td class="buyer">
-              <div class="edit-trigger view-cell">
-                <%= price.organization_name %>
-              </div>
-              <div class="edit-cell">
-                <% if organization_can_access?(@product.organization, :advanced_pricing) %>
-                  <%= f.select :organization_id, current_user.buyers_for_select, {include_blank: 'All Buyers'}, {class: "price_buyer_id"} %>
-                <% else %>
+            <%= fields_for :price, price, index: price.id do |f| %>
+              <td class="delete delete-check-mobile">
+                <input type="checkbox" name="id[]" value="<%= price.id %>">
+              </td>
+              <% if current_user.multi_market_membership? %>
+                <td class="market">
+                  <div class="edit-trigger view-cell">
+                    <%= price.market_name %>
+                  </div>
+                  <div class="edit-cell">
+                    <% if organization_can_access?(@product.organization, :advanced_pricing) %>
+                      <%= f.select :market_id, @product.organization.all_markets_for_select,
+                                   {include_blank: 'All Markets'}, {class: "price_market_id"} %>
+                    <% else %>
+                      <%= price.market_name %>
+                    <% end %>
+                  </div>
+                </td>
+              <% end %>
+              <td class="buyer">
+                <div class="edit-trigger view-cell">
                   <%= price.organization_name %>
-                <% end %>
-              </div>
-            </td>
-            <td class="min-qty">
-              <div class="edit-trigger view-cell">
-                <%= price.min_quantity %>
-              </div>
-              <div class="edit-cell">
-                <% if organization_can_access?(@product.organization, :advanced_pricing) %>
-                  <%= f.number_field :min_quantity, min: 0, size: 4 %>
-                <% else %>
+                </div>
+                <div class="edit-cell">
+                  <% if organization_can_access?(@product.organization, :advanced_pricing) %>
+                    <%= f.select :organization_id, current_user.buyers_for_select,
+                                 {include_blank: 'All Buyers'}, {class: "price_buyer_id"} %>
+                  <% else %>
+                    <%= price.organization_name %>
+                  <% end %>
+                </div>
+              </td>
+              <td class="min-qty">
+                <div class="edit-trigger view-cell">
                   <%= price.min_quantity %>
-                <% end %>
-              </div>
-            </td>
-            <td class="net-price">
-              <div class="edit-trigger view-cell">
-                <%= number_to_currency price.net_price %>
-              </div>
-              <div class="edit-cell">
-                <%= f.number_field :net_price,    min: 0, step: 0.01, size: 4, class: 'net-price', data:{"net-percents-by-market-id" => json_escape(@net_percents_by_market_id.to_json)} %>
-              </div>
-            </td>
-            <td class="sale-price">
-              <div class="edit-trigger view-cell">
-                <%= number_to_currency price.sale_price %>
-              </div>
-              <div class="edit-cell">
-                <%= f.number_field :sale_price,   min: 0, step: 0.01, size: 4, class: 'sale-price' %>
-              </div>
-            </td>
-            <td class="edit">
-              <div class="edit-trigger view-cell">
-                <%= link_to raw('<i class="font-icon" data-icon="&#xe002;"></i> Edit</span>'), "#fields_price_#{price.id}", class: "edit-trigger edit-price" %>
-                <%= link_to raw('&#57418;'), [:admin, @product, price], method: :delete, data: {confirm: 'Are you sure you want to delete this price'}, class: "delete font-icon", title: "Delete" %>
-              </div>
-              <div class="edit-cell">
-                <%= content_tag(:button, "Cancel", class: "cancel") if @product.prices.view_sorted.any? %>
-                <%= f.submit f.object.new_record? ? "Add" : "Save", class: "btn--small" %>
-              </div>
-            </td>
+                </div>
+                <div class="edit-cell">
+                  <% if organization_can_access?(@product.organization, :advanced_pricing) %>
+                    <%= f.number_field :min_quantity, min: 0, size: 4 %>
+                  <% else %>
+                    <%= price.min_quantity %>
+                  <% end %>
+                </div>
+              </td>
+              <td class="net-price">
+                <div class="edit-trigger view-cell">
+                  <%= number_to_currency price.net_price %>
+                </div>
+                <div class="edit-cell">
+                  <%= f.number_field :net_price, min: 0, step: 0.01, size: 4, class: 'net-price',
+                                     data:{"net-percents-by-market-id" => json_escape(@net_percents_by_market_id.to_json)} %>
+                </div>
+              </td>
+              <td class="sale-price">
+                <div class="edit-trigger view-cell">
+                  <%= number_to_currency price.sale_price %>
+                </div>
+                <div class="edit-cell">
+                  <%= f.number_field :sale_price,   min: 0, step: 0.01, size: 4, class: 'sale-price' %>
+                </div>
+              </td>
+              <td class="edit">
+                <div class="edit-trigger view-cell">
+                  <%= link_to raw('<i class="font-icon" data-icon="&#xe002;"></i> Edit</span>'), "#fields_price_#{price.id}",
+                              class: "edit-trigger edit-price" %>
+                  <%= link_to raw('&#57418;'), [:admin, @product, price], method: :delete,
+                              data: {confirm: 'Are you sure you want to delete this price?'},
+                              class: "delete font-icon", title: "Delete" %>
+                </div>
+                <div class="edit-cell">
+                  <%= content_tag(:button, "Cancel", class: "cancel") if @product.prices.view_sorted.any? %>
+                  <%= f.submit f.object.new_record? ? "Add" : "Save", class: "btn--small" %>
+                </div>
+              </td>
+            <% end %>
           <% end %>
         <% end %>
-      <% end %>
-      </tbody>
-    <% end # table %>
-    </div>
 
-    <div class="form-actions">
-      <p class="action-helper">Now that pricing is complete <%= link_to "return to product list", admin_products_path %> or <%= link_to "Add Another Product", new_admin_product_path, class: "btn btn--add" %></p>
-    </div>
+        <tr class="add-price price <%= @product.prices.view_sorted.any? && @price.errors.none? ? "is-hidden" : "open-row" %>" id="add-row">
+          <%= render 'form_row', f: f %>
+        </tr>
 
+        <% if organization_can_access?(@product.organization, :advanced_pricing) && @product.prices.view_sorted.any? %>
+          <tr class="add-toggle last-row">
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td><%= link_to "Add Price", '#add-row', class: 'add-toggle' %></td>
+          </tr>
+        <% end %>
+        </tbody>
+      <% end #table %>
+    </div>
+  <% end # form %>
+
+  <div class="form-actions">
+    <p class="action-helper">
+      Now that pricing is complete <%= link_to "return to product list", admin_products_path %>
+      or <%= link_to "Add Another Product", new_admin_product_path, class: "btn btn--add" %>
+    </p>
   </div>
-<% end # form %>
+<% end %>

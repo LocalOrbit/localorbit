@@ -148,15 +148,15 @@ describe "Editing advanced pricing", js: true do
   end
 
   describe "deleting a price" do
-    it "allows the user to delete multiple prices" do
-      Dom::PricingRow.all.each {|p| p.check_delete }
-      click_button "Delete Selected Prices"
+    it "allows the user to delete one of multiple prices" do
+      expect(Dom::PricingRow.count).to be(2)
+      first(".view-cell .delete").click
 
-      expect(page).to have_content("Successfully removed prices")
-      expect(Dom::PricingRow.all).to be_empty
+      expect(page).to have_content("Successfully removed price")
+      expect(Dom::PricingRow.count).to be(1)
     end
 
-    it "selecting all prices" do
+    it "allows the user to delete all prices" do
       find(".select-all").click
 
       all("td:first-child input").each do |field|
@@ -166,11 +166,13 @@ describe "Editing advanced pricing", js: true do
       click_button "Delete Selected Prices"
 
       expect(page).to have_content("Successfully removed prices")
-      expect(Dom::PricingRow.all).to be_empty
+      # verify the pricing row remaining is an edit row, not an actual price
+      expect(Dom::PricingRow.count).to be(1)
+      expect(Dom::PricingRow.all.map { |r| r.id }).to eq(["#add-row"])
     end
   end
 
-  describe "with different fees", js: true do
+  describe "with different fees" do
     let(:market) { create(:market, local_orbit_seller_fee: 4, market_seller_fee: 6) }
     # total fees: CC seller fee as default, plus this 10 %, so 12.9%
     it "shows updated net sale information" do
@@ -190,9 +192,6 @@ describe "Editing advanced pricing", js: true do
     end
   end
 end
-
-
-
 
 describe "price estimator", js: true do
   let!(:market1) {create(:market, local_orbit_seller_fee:3, market_seller_fee:2, allow_cross_sell:true)}
@@ -215,7 +214,6 @@ describe "price estimator", js: true do
     click_link product1.name
     click_link "Pricing"
   end
-
 
   it "allows price adding and editing properly in both markets" do
     # Pricing adding tests

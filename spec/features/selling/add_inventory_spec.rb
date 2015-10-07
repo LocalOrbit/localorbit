@@ -60,7 +60,7 @@ describe "Adding advanced inventory" do
       expect(page).to have_content("Could not save lot")
       expect(page).to have_content("Quantity is not a number")
 
-      expect(Dom::LotRow.first).to be_nil
+      expect(Dom::LotRow.all.map { |r| r.id }).to eq(["#add-row"])
     end
 
     it "shows an error when adding an expired lot" do

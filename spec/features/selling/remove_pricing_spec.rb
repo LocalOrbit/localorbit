@@ -22,13 +22,13 @@ describe "Remove advanced pricing" do
   describe "clicking the delete link on a row" do
 
     it "removes the price from the product" do
-      expect(Dom::PricingRow.count).to eq(2)
+      expect(Dom::PricingRow.count).to eq(3)
 
       price = Dom::PricingRow.first
       price.click_delete
 
-      expect(Dom::PricingRow.count).to eq(1)
       expect(page).to have_content("Successfully removed price")
+      expect(Dom::PricingRow.all.map { |r| r.id }).to eq(["#price_#{price2.id}", "#add-row"])
     end
   end
 end

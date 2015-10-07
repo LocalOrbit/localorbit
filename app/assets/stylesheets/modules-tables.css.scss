@@ -252,7 +252,7 @@ tbody {
     border-top: 1px solid #DDD;
     border-bottom: 1px solid #DDD;
 
-    &:nth-child(odd) {
+    &:nth-child(odd), &.last-row {
       background: #f9f9f9;
       background: rgba(0,0,0,0.025);
     }

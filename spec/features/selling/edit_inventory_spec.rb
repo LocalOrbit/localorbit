@@ -1,6 +1,6 @@
 require "spec_helper"
 
-describe "Editing advanced inventory" do
+describe "Editing inventory" do
   let(:user) { create(:user) }
   let(:product) { create(:product, use_simple_inventory: false) }
   let!(:lot) { create(:lot, product: product, quantity: 93) }

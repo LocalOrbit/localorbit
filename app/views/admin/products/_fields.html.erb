@@ -1,11 +1,11 @@
 <%= render "shared/errors", {resource: @product} %>
 
 <% if @product.persisted? %>
-    <label>
-      Supplier Organization<br>
-      <%= link_to @product.organization.name, [:admin, @product.organization] %>
-    </label>
-    <%= f.hidden_field :organization_id %>
+  <label>
+    Supplier Organization<br>
+    <%= link_to @product.organization.name, [:admin, @product.organization] %>
+  </label>
+  <%= f.hidden_field :organization_id %>
 <% else %>
   <% if @organizations.count > 1 %>
     <div class="field">
@@ -62,7 +62,6 @@
   <%= f.text_area :long_description, rows: 4 %>
 </div>
 
-
 <div class="field">
   <%= f.label :unit_id %>
   <br>
@@ -76,31 +75,6 @@
   <br>
   <%= f.text_field :unit_description, size: 20, maxlength: 20, class: "column column--full" %>
 </div>
-
-
-<fieldset class="conditional">
-  <legend>Inventory</legend>
-  <div id="inventory">
-    <% if @organizations.count > 1 && @product.organization.blank? %>
-      <h3 class="heading-conditionals">No supplier organization selected</h3>
-    <% else %>
-      <% if organization_can_access?(@product.organization, :advanced_inventory) %>
-        <%= f.check_box :use_simple_inventory, disabled: !@product.can_use_simple_inventory? %>
-        <%= f.label :use_simple_inventory, 'Use simple inventory management.' %>
-        <% if @product.can_use_simple_inventory? %>
-        <span class="hint">Uncheck this to use advanced inventory tracking with lot numbers and expiration dates.</span>
-        <% else%>
-        <span class="warning">To use simple inventory management you must clear out your current available inventory.</span>
-        <% end %>
-      <% end %>
-
-      <%= content_tag :div, id: "simple-inventory", class: should_show_simple_inventory? ? nil : 'is-hidden' do %>
-        <%= f.text_field :simple_inventory, size: 4 %>
-        <%= f.label :simple_inventory, 'Current inventory' %>
-      <% end %>
-    <% end %>
-  </div>
-</fieldset>
 
 <fieldset class="conditional">
   <legend>More product info (Where, Who, How)</legend>
@@ -145,13 +119,16 @@
     <% if @organizations.count > 1 && @product.organization.blank? %>
       <h3 class="heading-conditionals">No Organization Selected</h3>
     <% else %>
-      <%= render partial: "admin/organizations/delivery_schedules", locals: {delivery_schedules: @delivery_schedules, selected_ids: @selected_delivery_schedule_ids, product: @product, organization: @product.organization} %>
+      <%= render partial: "admin/organizations/delivery_schedules",
+                 locals: { delivery_schedules: @delivery_schedules,
+                           selected_ids: @selected_delivery_schedule_ids,
+                           product: @product, organization: @product.organization } %>
     <% end %>
   </div>
 </fieldset>
 
 <% if @product.lots.count < 1 %>
-<p class="form-footer">
-  At this point your product is complete but won't be listed until you have added inventory and set pricing.
-</p>
+  <p class="form-footer">
+    At this point your product is complete but won't be listed until you have added inventory and set pricing.
+  </p>
 <% end %>

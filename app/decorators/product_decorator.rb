@@ -5,11 +5,8 @@ class ProductDecorator < OrganizationItemDecorator
     @cart_item ||= begin
       return unless context[:current_cart]
 
-      if i = context[:current_cart].items.detect {|i| i.product_id == id }
-        i
-      else
-        CartItem.new(product: object, quantity: 0, cart: context[:current_cart])
-      end
+      i = context[:current_cart].items.detect {|i| i.product_id == id }
+      i || CartItem.new(product: object, quantity: 0, cart: context[:current_cart])
     end
   end
 
