@@ -304,14 +304,18 @@ class Order < ActiveRecord::Base
 
   def sellers_with_changes
     uuid = audits.last.try(:request_uuid)
+    sellers = []
 
     if uuid
       Audit.where(request_uuid: uuid, auditable_type: "OrderItem").map do |audit|
         if audit.audited_changes["quantity"] && audit.audited_changes["quantity"].second >0 && audit.action != :destroy
           # If auditable is there, use the seller, or else find it from the product in the changes
-          audit.try(:auditable).try(:seller) || Product.find_by(id: audit.audited_changes["product_id"]).try(:organization)
+          sellers << audit.try(:auditable).try(:seller) || Product.find_by(id: audit.audited_changes["product_id"]).try(:organization)
         end
-      end.compact.uniq
+      end
+      if sellers
+        sellers.compact.uniq
+      end
     else
       []
     end
@@ -320,13 +324,17 @@ class Order < ActiveRecord::Base
   def sellers_with_cancel
     uuid = audits.last.try(:request_uuid)
 
+    sellers = []
     if uuid
       Audit.where(request_uuid: uuid, auditable_type: "OrderItem").map do |audit|
         if (audit.audited_changes["quantity"] && audit.audited_changes["quantity"].second == 0) || audit.action == :destroy
           # If auditable is there, use the seller, or else find it from the product in the changes
-          audit.try(:auditable).try(:seller) || Product.find_by(id: audit.audited_changes["product_id"]).try(:organization)
+          sellers << audit.try(:auditable).try(:seller) || Product.find_by(id: audit.audited_changes["product_id"]).try(:organization)
         end
-      end.compact.uniq
+      end
+      if sellers
+        sellers.compact.uniq
+      end
     else
       []
     end

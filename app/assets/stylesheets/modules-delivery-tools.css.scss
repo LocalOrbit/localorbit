@@ -5,30 +5,44 @@
 }
 
 @media print {
+  .print-page {
+    margin-top: -100px;
+  }
   .upcoming-delivery {
     h1 {
       font-size: 24px;
     }
-     h1, h1 + .note {
+    h1, h1 + .note {
       display: inline-block;
       margin-bottom: .1in;
-     }
-     h3,
-     .order-summary-total,
-     .upcoming-delivery-date,
-     .upcoming-delivery-order {
-       font-size: 18px;
-     }
-     .heading-delivery-tool {
-       margin-top: 1em;
-       + .org {
-         margin-bottom: .5em;
-       }
-     }
+    }
+    h3,
+    .order-summary-total,
+    .upcoming-delivery-date,
+    .upcoming-delivery-order {
+      font-size: 18px;
+    }
+    .heading-delivery-tool {
+      margin-top: 1em;
+      + .org {
+        margin-bottom: .5em;
+      }
+    }
   }
 
-  .print-logo {
-    display: block;
+  .container {
+    width: 100px; /* pick whatever width you want */
+    .outer {
+      width: 100%;
+      padding-top: 75%; /* defines aspect ratio */
+      position: relative;
+      .inner {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+      }
+    }
   }
-
 }
