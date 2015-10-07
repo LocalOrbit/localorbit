@@ -4,6 +4,7 @@ describe ProductImport::ProductLoader do
   let!(:seller_org) { create(:organization, :seller) }
   let!(:cat1) {create(:category)}
   let!(:unit1) {create(:unit)}
+  let!(:unit2) {create(:unit)}
   let!(:upsert_time) { Time.now }
 
   it "should create products with prices and lots" do
@@ -43,10 +44,55 @@ describe ProductImport::ProductLoader do
     expect(external_product.source_data).to eq({"foo"=>"bar"})
     expect(external_product.batch_updated_at).to be_within(10.seconds).of(Time.now)
     expect(external_product).to be_persisted
+    expect(first_product.name).to eq(first_product.general_product.name)
     
   end
 
   it "updates products properly" do
+    data = [{
+        "category_id" => cat1.id,
+        "organization_id" => seller_org.id,
+        "unit_id" => unit1.id,
+        "name" => "BrandNewProductTest",
+        "price" => "25.24", # string or number
+        "product_code" => "abc1234",
+        "short_description" => "Test short",
+        "long_description" => "Test long",
+        "contrived_key" => "anactualsha1",
+        "source_data" => {"foo"=>"bar"}
+      }]
+
+      subject.update(data)
+
+      original_product_code = seller_org.products.first.code
+      original_product_name = seller_org.products.first.name
+      original_product_gp = seller_org.products.first.general_product
+
+      data2 = [{
+        "category_id" => cat1.id,
+        "organization_id" => seller_org.id,
+        "unit_id" => unit1.id,
+        "name" => "SecondProductTest",
+        "price" => "26.26", # string or number
+        "product_code" => "abc1234",
+        "short_description" => "Test short",
+        "long_description" => "Test long",
+        "contrived_key" => "anactualsha1",
+        "source_data" => {"foo"=>"bar"}
+      }]
+
+      subject.update(data2)
+
+      updated_product_code = seller_org.products.first.code
+      updated_product_name = seller_org.products.first.name
+      updated_product_gp = seller_org.products.first.general_product
+
+      expect(original_product_code).to eq(updated_product_code)
+      expect(original_product_name).not_to eq(updated_product_name)
+      expect(original_product_gp).not_to eq(updated_product_gp)
+  end
+
+  it "creates missing products when external products are updated" do
     original_ep = create :external_product, contrived_key: "anactualsha1"
 
     data = [{
@@ -91,6 +137,37 @@ describe ProductImport::ProductLoader do
 
   end
 
+  it "should link to an existing general product" do
+    data = [{
+        "category_id" => cat1.id,
+        "organization_id" => seller_org.id,
+        "unit_id" => unit1.id,
+        "name" => "BrandNewProductTest",
+        "price" => "25.24", # string or number
+        "product_code" => "abc1234",
+        "short_description" => "Test short",
+        "long_description" => "Test long",
+        "contrived_key" => "anactualsha1",
+        "source_data" => {"foo"=>"bar"},
+      }, 
+      { "category_id" => cat1.id,
+        "organization_id" => seller_org.id,
+        "unit_id" => unit2.id,
+        "name" => "BrandNewProductTest",
+        "price" => "16.24", # string or number
+        "product_code" => "abc12345",
+        "short_description" => "Test short",
+        "long_description" => "Test long",
+        "contrived_key" => "anactualsha12",
+        "source_data" => {"foo"=>"bar"}}
+    ]
+
+    subject.update(data)
+    first_product = seller_org.products.first
+    second_product = seller_org.products.second
+    expect(first_product.general_product).to eq(second_product.general_product)
+  end
+
   it "should create a price and lot for an existing product without them" do
     product = create :product
 
@@ -131,7 +208,6 @@ describe ProductImport::ProductLoader do
   it "should soft delete products that no longer exist" do
   
     dropped_ep = create :external_product, contrived_key: "anotheractualsha1"
-    puts dropped_ep.id
     data = [{
         "category_id" => cat1.id,
         "organization_id" => dropped_ep.organization_id,

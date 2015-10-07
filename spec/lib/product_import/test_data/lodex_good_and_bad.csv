@@ -1,8 +1,9 @@
-product_code,organization,name,category,price,unit
-abc123,bi-rite,St. John's Wart,Herbs,1.23,2/3 lb tub
-      ,bi-rite,St. John's Wart,Herbs,1.23,2/3 lb tub
-abc123,bi-rite,               ,Herbs,1.23,2/3 lb tub
-abc123,bi-rite,St. John's Wart,     ,1.23,2/3 lb tub
-abc123,bi-rite,St. John's Wart,Herbs,    ,2/3 lb tub
-abc123,bi-rite,St. John's Wart,Herbs,1.23,
-abc123,bi-rite,St. John's Wart,Herbs,dolla,2/3 lb tub
+product_code,organization,name,category,price,unit,unit_description,break_case
+abc123,bi-rite,St. John's Wart,Herbs,1.23,Each,2/3 lb tub,N
+abc124,bi-rite,               ,Herbs,1.23,Each,2/3 lb tub,N
+abc125,bi-rite,St. John's Wart,     ,1.23,Each,2/3 lb tub,N
+abc126,bi-rite,St. John's Wart,Herbs,    ,Each,2/3 lb tub,N 
+abc127,bi-rite,St. John's Wart,Herbs,1.23,	,2/3 lb tub,N
+abc128,bi-rite,St. John's Wart,Herbs,dolla,Each,2/3 lb tub,N
+abc129,bi-rite,St. John's Wert,Herbs,1.23,Each,2/3 lb tub,N
+abc130,bi-rite,St. John's Wyrt,Herbs,1.23,Each,2/3 lb tub,
