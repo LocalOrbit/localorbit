@@ -21,9 +21,10 @@ class SendUpdateEmails
       end
     end
 
+
+=begin
     order.sellers_with_cancel.each do |seller|
       unless seller.users.empty?
-
         @pack_lists = OrdersBySellerPresenter.new(order.items, seller)
         @delivery = Delivery.find(order.delivery.id).decorate
 
@@ -33,6 +34,7 @@ class SendUpdateEmails
         OrderMailer.delay.seller_order_item_removal(order, seller, pdf, csv)
       end
     end
+=end
 
     #unless order.market.managers.empty?
     #  OrderMailer.delay.market_manager_order_updated(order)

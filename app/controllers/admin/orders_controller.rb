@@ -62,15 +62,6 @@ class Admin::OrdersController < AdminController
       return
     end
 
-    # If an item is being removed, set its quantity to 0
-    items = params["order"]["items_attributes"].to_a
-    items.each do |item|
-      if item[1]["_destroy"] == "true"
-        item[1]["quantity"] = "0"
-        item[1]["_destroy"] = ""
-      end
-    end
-
     # TODO: Change an order items delivery status to 'removed' or something rather then deleting them
     perform_order_update(order, order_params)
   end

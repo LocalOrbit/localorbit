@@ -323,7 +323,7 @@ class Order < ActiveRecord::Base
     sellers = []
     if uuid
       Audit.where(request_uuid: uuid, auditable_type: "OrderItem").map do |audit|
-        if audit.audited_changes["quantity"] && audit.audited_changes["quantity"].second == 0
+        if (audit.audited_changes["quantity"] && audit.audited_changes["quantity"].second == 0) || audit.action == "destroy"
           # If auditable is there, use the seller, or else find it from the product in the changes
           sellers << audit.try(:auditable).try(:seller) || Product.find_by(id: audit.audited_changes["product_id"]).try(:organization)
         end
