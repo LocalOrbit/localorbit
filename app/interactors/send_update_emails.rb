@@ -4,9 +4,9 @@ class SendUpdateEmails
   def perform
     #return if Rails.env.production?
 
-    if users_should_be_updated?
-      OrderMailer.delay.buyer_order_updated(order)
-    end
+    #if users_should_be_updated?
+    #  OrderMailer.delay.buyer_order_updated(order)
+    #end
 
     order.sellers_with_changes.each do |seller|
       unless seller.users.empty?
@@ -34,9 +34,9 @@ class SendUpdateEmails
       end
     end
 
-    unless order.market.managers.empty?
-      OrderMailer.delay.market_manager_order_updated(order)
-    end
+    #unless order.market.managers.empty?
+    #  OrderMailer.delay.market_manager_order_updated(order)
+    #end
   end
 
   def users_should_be_updated?
