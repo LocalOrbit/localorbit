@@ -308,17 +308,13 @@ class Order < ActiveRecord::Base
 
     if uuid
       Audit.where(request_uuid: uuid, auditable_type: "OrderItem").map do |audit|
-        if audit.audited_changes["quantity"] && audit.audited_changes["quantity"].second >0 && audit.action != :destroy
+        if audit.audited_changes["quantity"] && audit.audited_changes["quantity"].second >0 && audit.action != "destroy"
           # If auditable is there, use the seller, or else find it from the product in the changes
           sellers << audit.try(:auditable).try(:seller) || Product.find_by(id: audit.audited_changes["product_id"]).try(:organization)
         end
       end
-      if sellers
-        sellers.compact.uniq
-      end
-    else
-      []
     end
+    sellers.compact.uniq
   end
 
   def sellers_with_cancel
@@ -327,17 +323,13 @@ class Order < ActiveRecord::Base
     sellers = []
     if uuid
       Audit.where(request_uuid: uuid, auditable_type: "OrderItem").map do |audit|
-        if (audit.audited_changes["quantity"] && audit.audited_changes["quantity"].second == 0) || audit.action == :destroy
+        if (audit.audited_changes["quantity"] && audit.audited_changes["quantity"].second == 0)
           # If auditable is there, use the seller, or else find it from the product in the changes
           sellers << audit.try(:auditable).try(:seller) || Product.find_by(id: audit.audited_changes["product_id"]).try(:organization)
         end
       end
-      if sellers
-        sellers.compact.uniq
-      end
-    else
-      []
     end
+    sellers.compact.uniq
   end
 
   def subtotal

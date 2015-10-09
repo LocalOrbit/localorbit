@@ -73,8 +73,11 @@
     },
 
     updateQuantity: function(event) {
-        s = event.target.value.replace(/^0+/, '');
-        this.setState({cartItemQuantity: s});
+      s = event.target.value.replace(/^0+(?=[0-9])/, '');
+      if (s === '') {
+          s = '0';
+      }
+      this.setState({cartItemQuantity: s});
     },
 
     render: function() {
