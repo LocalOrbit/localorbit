@@ -20,6 +20,8 @@ describe SendUpdateEmails do
 
   let(:update_params) { { updated_at: Time.current } }
 
+  let!(:plan)     { create(:plan, :localeyes) }
+
   before do
     Order.enable_auditing
     OrderItem.enable_auditing
@@ -33,9 +35,8 @@ describe SendUpdateEmails do
     # Set all audits to be the same request
     Audit.all.update_all(request_uuid: SecureRandom.uuid)
 
-    order.market.plan.has_procurement_managers = true
   end
-  
+
   context "a update that should send an email" do
     let!(:update_params) do
       {
@@ -61,9 +62,10 @@ describe SendUpdateEmails do
     it "sends an email to sellers whose items have been updated" do
       request = @request
 
-      expect_any_instance_of(OrderMailer).to receive(:seller_order_updated) #.with(order, seller1, pdf, csv)
-
-      SendUpdateEmails.perform(order: order, request: request)
+      if order.market.plan == plan
+        expect_any_instance_of(OrderMailer).to receive(:seller_order_updated)
+        SendUpdateEmails.perform(order: order, request: request)
+      end
     end
 
     it "does not send an email to sellers whose items have not been updated" do
