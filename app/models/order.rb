@@ -379,6 +379,10 @@ class Order < ActiveRecord::Base
     usable_items.sum(&:gross_total)
   end
 
+  def is_localeyes_order?
+    market.plan.has_procurement_managers
+  end
+
   private
 
   def update_paid_at

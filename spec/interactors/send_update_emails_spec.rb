@@ -32,8 +32,10 @@ describe SendUpdateEmails do
 
     # Set all audits to be the same request
     Audit.all.update_all(request_uuid: SecureRandom.uuid)
-  end
 
+    order.market.plan.has_procurement_managers = true
+  end
+  
   context "a update that should send an email" do
     let!(:update_params) do
       {
