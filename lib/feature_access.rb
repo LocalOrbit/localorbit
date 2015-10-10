@@ -5,6 +5,10 @@ class FeatureAccess
       market.plan.name == "LocalEyes"
     end
 
+    def can_edit_order?(user:, order:)
+      return (user.admin? || user.managed_markets.include?(order.market))
+    end
+
     def order_printables?(user:, order:)
       market = order.market
       user_belongs_to_market = user.markets.include?(market)

@@ -3,7 +3,16 @@ class SellerOrder
   include DeliveryStatus
   include OrderPresenter
 
-  delegate :display_delivery_or_pickup, :display_delivery_address, :delivery_id, :delivery_status, :organization_id, to: :@order
+  delegate :display_delivery_or_pickup,
+    :display_delivery_address,
+    :delivery_id,
+    :delivery_status,
+    :organization_id,
+    :credit,
+    :credit_amount,
+    :sellers,
+    :errors,
+    to: :@order
 
   attr_reader :seller
 
@@ -24,10 +33,6 @@ class SellerOrder
 
   def total_cost
     gross_total - discount
-  end
-
-  def errors
-    @order.errors
   end
 
   def items_attributes=(_)
