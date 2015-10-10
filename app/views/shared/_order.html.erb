@@ -267,7 +267,7 @@
     </div>
   <% end %>
 
-  <% if current_user.can_manage_market?(order.market) %>
+  <% if current_user.can_manage_market?(order.market) || current_user.is_localeyes_buyer? %>
   <div>
     <div class="table-wrapper">
       <h2>Order History</h2>
