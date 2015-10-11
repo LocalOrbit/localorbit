@@ -1,6 +1,6 @@
 <%= link_to "< Back to Upcoming Deliveries", admin_delivery_tools_path, class: 'back-button' %>
 <button class="btn btn--action btn--small pull-right print-button" id="print-button">Print</button>
-
+<div class="print-page">
 <% @pack_lists.sellers.each_with_index do |(seller, orders), org_index| %>
   <% orders.each_with_index do |(order, items), index| %>
     <% if index != 0 or org_index != 0 %>
@@ -96,3 +96,4 @@
     </div>
   <% end %>
 <% end %>
+</div>

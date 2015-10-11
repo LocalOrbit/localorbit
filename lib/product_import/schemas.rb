@@ -21,6 +21,7 @@ module ProductImport::Schemas
     _?('short_description') => String,
     _?('long_description') => String,
     _?('organization') => String,
+    _?('break_case') => String,
     _?('source_data') => Hash,
   }}
 

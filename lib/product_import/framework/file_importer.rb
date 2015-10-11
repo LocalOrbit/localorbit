@@ -267,10 +267,12 @@ module ProductImport
 
       def self._setup_resolve_stage(s)
         # Default resolve stage implementation
+        # TODO: Below transform may be a problem. Pay att'n to merges/conflicts.
 
         s.transform :alias_keys, skip_if_present: true, key_map: {
           "unit" => "short_description",
         }
+
 
         s.transform :set_keys_to_importer_option_values, map: {
           "market_id" => :market_id,

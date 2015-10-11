@@ -51,7 +51,8 @@ module ProductImport
         'Unit Name',
         'Unit Description (optional)',
         'Supplier Product Number',
-        'Price'
+        'Price',
+        'Break Case'
       ]
 
       # See lib/product_import/formats for supported formats
@@ -86,12 +87,19 @@ module ProductImport
             "Unit Description (optional)" => "unit_description",
             "Unit Name" => "unit",
             "Category Name" => "category",
+            "Break Case" => "break_case",
+            "Break Case Unit" => "break_case_unit",
+            "Break Case Unit Description" => "break_case_unit_description",
+            "Break Case Price" => "break_case_price"
           }
 
 
         # provide default values and validate that we've generated
         # canonical data.
         s.transform :ensure_canonical_data
+
+        # s.transform :handle_break_case
+        # If this works correctly, rows with Y break case create 2 product rows properly, pre-validated by the other transforms 
 
       end
     end

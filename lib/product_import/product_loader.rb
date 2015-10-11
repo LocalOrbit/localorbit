@@ -44,6 +44,21 @@ module ProductImport
       Product.where(external_product_id: ep_ids).update_all(deleted_at: @batch_update_time)
     end
 
+    def find_or_create_general_product(product_info)
+      GeneralProduct.where(organization_id:product_info['organization_id'], 
+                            name:product_info['name'], 
+                            category_id:product_info['category_id']).first_or_create do |gp|
+        gp.assign_attributes(
+            name: product_info['name'],
+            organization_id: product_info['organization_id'],
+            category_id: product_info['category_id'],
+            short_description: product_info['short_description'].blank? ? "No description available." : product_info['short description'],
+            long_description: product_info['long_description'],
+            deleted_at: nil
+          )
+      end
+    end
+
     def upsert_products(product_batch, batch_updated_at: Time.now)
 
       Product.transaction do
@@ -61,8 +76,10 @@ module ProductImport
           ep_id = ep.id
 
           unless product = products_by_ep_id[ep_id]
-            product = Product.new 
+            product = Product.new
           end
+
+          product.general_product = find_or_create_general_product(p)
 
           unless product.prices.any?
             product.prices.build
@@ -70,6 +87,10 @@ module ProductImport
 
           unless product.lots.any?
             product.lots.build
+          end
+
+          if p['unit'] == p['short_description']
+            p['short_description'] = "No description available."
           end
 
           product.assign_attributes(
@@ -85,7 +106,7 @@ module ProductImport
             deleted_at: nil
           )
 
-          product.prices.first.assign_attributes(sale_price: p['price'], min_quantity: 1) # still ok update b/c reinfinity-ifying
+          product.prices.first.assign_attributes(sale_price: p['price'], min_quantity: 1)
           reinfinity! product.lots.first
 
           product.save!
@@ -123,13 +144,9 @@ module ProductImport
             organization_id: p['organization_id'],
             contrived_key: p['contrived_key'],
             source_data: p['source_data'],
-          ) # How do ExternalProducts interact with the real GeneralProducts
+          )
         end
-
-
-
       end
-
       eps
     end
   end

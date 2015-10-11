@@ -74,7 +74,6 @@ describe "Checking Out", :js, :vcr do
       # Travel to a few minutes after the cutoff
       Timecop.travel((Delivery.last.cutoff_time + 8.minutes).to_s)
       sign_in_as(user)
-      visit cart_path
 
       choose "Pay by Purchase Order"
       fill_in "PO Number", with: "12345"

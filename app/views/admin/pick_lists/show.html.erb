@@ -1,6 +1,6 @@
 <%= link_to "< Back to Upcoming Deliveries", admin_delivery_tools_path, class: 'back-button' %>
 <button class="btn btn--action btn--small pull-right print-button" id="print-button">Print</button>
-
+<div class="print-page">
 <% @pick_lists.each_with_index do |pick_list, index| %>
 
   <% if index != 0 %>
@@ -85,3 +85,4 @@
     </div>
   </div>
 <% end %>
+</div>

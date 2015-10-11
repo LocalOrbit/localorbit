@@ -405,7 +405,8 @@ describe Order do
           },
           "2" => {
             id: order_item3.id,
-            _destroy: "true"
+            quantity: 0
+            #_destroy: "true"
           }
         }
       }
@@ -421,10 +422,16 @@ describe Order do
       Audit.all.update_all(request_uuid: SecureRandom.uuid)
     end
 
-    it "returns sellers where the item quantity has changed or the item has been deleted" do
-      sellers = order.reload.sellers_with_changes
+    it "returns sellers where the item quantity has changed" do
+      sellers_with_change = order.reload.sellers_with_changes
 
-      expect(sellers).to eql([seller1, seller3])
+      expect(sellers_with_change).to eql([seller1])
+    end
+
+    it "returns sellers where the item has been deleted" do
+      sellers_with_remove = order.reload.sellers_with_cancel
+
+      expect(sellers_with_remove).to eql([seller3])
     end
   end
 
@@ -474,6 +481,22 @@ describe Order do
       order.save!
 
       expect(order.reload.total_cost.to_f).to eql(0.0)
+    end
+
+    it "takes credits into account" do
+      credit = create(:credit, order: order, user: user, amount: 1.00)
+      expect(order.reload.total_cost.to_f).to eql(7.74)
+      credit.amount = 50
+      credit.amount_type = Credit::PERCENTAGE
+      credit.save
+      expect(order.reload.total_cost.to_f).to eql(5.24)
+    end
+
+    it "does not use invalid credits" do
+      credit = create(:credit, order: order, user: user, amount: 1.00)
+      order.payment_method = "credit card"
+      order.save
+      expect(order.reload.total_cost.to_f).to eql(8.74)
     end
   end
 
@@ -545,9 +568,9 @@ describe Order do
   describe ".payable scope" do
     #              -48 ago                         NOW
     # ---------------|------------------------------|
-    # o1             |                              
-    # o2.do o2.bdo   |                              
-    #       o3.bdo   |  o3.do             
+    # o1             |
+    # o2.do o2.bdo   |
+    #       o3.bdo   |  o3.do
     #                |  o4
     let(:now) { Time.current }
     let(:forty_nine_hours_ago) { now - 49.hours }
@@ -592,7 +615,7 @@ describe Order do
 
 
     let!(:m1) { Generate.market_with_orders(
-                  order_time: order_time, 
+                  order_time: order_time,
                   deliver_time: deliver_time,
                   paid_with: "credit card",
                   delivered: "delivered",
