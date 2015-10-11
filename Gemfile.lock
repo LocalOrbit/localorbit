@@ -297,6 +297,8 @@ GEM
     fog-xml (0.1.2)
       fog-core
       nokogiri (~> 1.5, >= 1.5.11)
+    font-awesome-rails (4.4.0.0)
+      railties (>= 3.2, < 5.0)
     font_assets (0.1.11)
       rack
     formatador (0.2.5)
@@ -386,7 +388,7 @@ GEM
     method_source (0.8.2)
     mime-types (2.6.2)
     mini_portile (0.6.2)
-    minitest (5.8.0)
+    minitest (5.8.1)
     multi_json (1.11.2)
     multipart-post (1.2.0)
     nenv (0.2.0)
@@ -616,6 +618,9 @@ GEM
     websocket-extensions (0.1.2)
     wysihtml5-rails (0.0.4)
       railties (>= 3.1.0)
+    wysiwyg-rails (1.2.8)
+      font-awesome-rails (>= 4.3.0.0)
+      railties (>= 3.2, < 5.0)
     xpath (2.0.0)
       nokogiri (~> 1.3)
 
@@ -657,6 +662,7 @@ DEPENDENCIES
   factory_girl_rails
   figaro (~> 1.0.0.rc1)
   fire_poll (= 1.2.0)
+  font-awesome-rails
   font_assets
   graticule
   groupdate!
@@ -724,3 +730,7 @@ DEPENDENCIES
   webmock
   wkhtmltopdf-binary!
   wysihtml5-rails
+  wysiwyg-rails
+
+BUNDLED WITH
+   1.10.6

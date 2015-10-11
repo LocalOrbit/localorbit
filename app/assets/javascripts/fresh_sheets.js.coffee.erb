@@ -1,9 +1,8 @@
 $ ->
   $('.wysihtml5-textarea').editable({inlineMode: false, buttons: ['bold', 'italic', 'underline', 'sep', 'fontFamily', 'fontSize', 'color', 'sep', 'table', 'formatBlock', 'align', 'insertOrderedList', 'insertUnorderedList', 'outdent', 'indent', 'selectAll', 'createLink', 'insertImage', 'undo']})
 
-###
-  return unless $(".wysihtml5-textarea").length
-    editor = new wysihtml5.Editor(document.querySelector('.wysihtml5-textarea'), {
-        toolbar: document.querySelector('.wys-toolbar'),
-        parserRules:  wysihtml5ParserRules
-    })###
+###  return unless $(".wysihtml5-textarea").length
+  editor = new wysihtml5.Editor(document.querySelector('.wysihtml5-textarea'), {
+      toolbar: document.querySelector('.wys-toolbar'),
+      parserRules:  wysihtml5ParserRules
+  })###

@@ -15,14 +15,15 @@
         <br>
         <a href="#fresh-sheet-note" class="btn btn--small btn--add toggle-slide">Add Note</a>
       </div>
-
+        <br/>
       <div class="is-up slide" id="fresh-sheet-note">
         <div class="slide-content">
-          <%= text_area_tag "note", @note, size: "100x10", placeholder: "Fresh Sheet Note" %>
+          <%= text_area_tag "note", @note, size: "100x15", class: "wysihtml5-textarea", placeholder: "Fresh Sheet Note" %>
+          <br/>
           <%= submit_tag "Add Note", class: "btn btn--small pull-right" %>
-          <% end %>
         </div>
       </div>
+      <% end %>
 
       <iframe width="600" height="1000" src="<%= preview_admin_fresh_sheet_path %>"></iframe>
   </div>
