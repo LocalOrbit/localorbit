@@ -1,6 +1,6 @@
 class DeliveryNotesController < ApplicationController
 
-	before_action :find_cart # what is this
+	before_action :find_cart
 
 	def index
 		#@delivery_notes = @cart.delivery_notes.visible.alphabetical_by_supplier_org
@@ -40,9 +40,16 @@ class DeliveryNotesController < ApplicationController
 	private
 
 	def delivery_note_params
+		params.require("delivery_note").permit(
+      :supplier_org,
+      :buyer_org,
+      :note,
+      :cart_id
+    )
 	end
 
 	def find_cart
+		@cart = current_cart # this exists, right?
 	end
 
 end
