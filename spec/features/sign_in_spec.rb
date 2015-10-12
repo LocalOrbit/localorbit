@@ -22,7 +22,7 @@ feature "User signing in" do
     visit "/"
     fill_in "Email", with: admin.email
     fill_in "Password", with: "password"
-    check "Keep me signed in."
+    check "Remember Me"
     click_button "Sign In"
 
     delete_cookie session_cookie_name
