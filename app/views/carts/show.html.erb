@@ -21,7 +21,7 @@
                 <td class="product-clear"></td>
               </tr>
               <tr>
-                <th colspan="5" class="seller"><%= seller_name %></th>
+                <th colspan="5" class="seller"><%= seller_name %> <%= link_to "{note}", new_delivery_note_path(:supplier => seller_name)%> </th> 
               </tr>
               <% items.each do |item| %>
                 <%= content_tag_for(:tr, item, id: "cart_item_#", class: "product", data: {id: item.product.id, :"cart-item" => item.to_json}) do %>
