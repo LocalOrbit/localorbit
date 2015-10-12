@@ -4,39 +4,42 @@ class SendUpdateEmails
   def perform
     #return if Rails.env.production?
 
-    if users_should_be_updated?
-      OrderMailer.delay.buyer_order_updated(order)
-    end
+    #if users_should_be_updated?
+    #  OrderMailer.delay.buyer_order_updated(order)
+    #end
 
-    order.sellers_with_changes.each do |seller|
-      unless seller.users.empty?
+    if order.is_localeyes_order?
 
-        @pack_lists = OrdersBySellerPresenter.new(order.items, seller)
-        @delivery = Delivery.find(order.delivery.id).decorate
+      order.sellers_with_changes.each do |seller|
+        unless seller.users.empty?
 
-        pdf = PackingLists::Generator.generate_pdf(request: request, pack_lists: @pack_lists, delivery: @delivery)
-        csv = PackingLists::Generator.generate_csv(pack_lists: @pack_lists)
+          @pack_lists = OrdersBySellerPresenter.new(order.items, seller)
+          @delivery = Delivery.find(order.delivery.id).decorate
 
-        OrderMailer.delay.seller_order_updated(order, seller, pdf, csv)
+          pdf = PackingLists::Generator.generate_pdf(request: request, pack_lists: @pack_lists, delivery: @delivery)
+          csv = PackingLists::Generator.generate_csv(pack_lists: @pack_lists)
+
+          OrderMailer.delay.seller_order_updated(order, seller, pdf, csv)
+        end
       end
-    end
 
-    order.sellers_with_cancel.each do |seller|
-      unless seller.users.empty?
+      order.sellers_with_cancel.each do |seller|
+        unless seller.users.empty?
+          @pack_lists = OrdersBySellerPresenter.new(order.items, seller)
+          @delivery = Delivery.find(order.delivery.id).decorate
 
-        @pack_lists = OrdersBySellerPresenter.new(order.items, seller)
-        @delivery = Delivery.find(order.delivery.id).decorate
+          pdf = PackingLists::Generator.generate_pdf(request: request, pack_lists: @pack_lists, delivery: @delivery) if !@pack_lists.sellers.empty?
+          csv = PackingLists::Generator.generate_csv(pack_lists: @pack_lists) if !@pack_lists.sellers.empty?
 
-        pdf = PackingLists::Generator.generate_pdf(request: request, pack_lists: @pack_lists, delivery: @delivery) if !@pack_lists.sellers.empty?
-        csv = PackingLists::Generator.generate_csv(pack_lists: @pack_lists) if !@pack_lists.sellers.empty?
-
-        OrderMailer.delay.seller_order_item_removal(order, seller, pdf, csv)
+          OrderMailer.delay.seller_order_item_removal(order, seller, pdf, csv)
+        end
       end
+
     end
 
-    unless order.market.managers.empty?
-      OrderMailer.delay.market_manager_order_updated(order)
-    end
+    #unless order.market.managers.empty?
+    #  OrderMailer.delay.market_manager_order_updated(order)
+    #end
   end
 
   def users_should_be_updated?

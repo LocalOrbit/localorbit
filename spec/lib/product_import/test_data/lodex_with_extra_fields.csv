@@ -1,3 +1,3 @@
-product_code,organization,name,category,price,unit,catalog_id,smell
-abc123,bi-rite,St. John's Wart,Herbs,1.23,2/3 lb tub,32,strong
-abc432,bi-rite,Water,Herbs,1.23,Liter,32,
+product_code,organization,name,category,price,unit,unit_description,break_case,catalog_id,smell
+abc123,bi-rite,St. John's Wart,Herbs,1.23,Each,2/3 lb tub,N,32,strong
+abc432,bi-rite,Water,Herbs,1.23,Liter,2/3 lb tub,N,32,

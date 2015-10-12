@@ -73,13 +73,21 @@
     },
 
     updateQuantity: function(event) {
-        s = event.target.value.replace(/^0+/, '');
-        this.setState({cartItemQuantity: s});
+      s = event.target.value.replace(/^0+(?=[0-9])/, '');
+      if (s === '') {
+          s = '0';
+      }
+      this.setState({cartItemQuantity: s});
+    },
+
+    deleteQuantity: function() {
+      this.setState({cartItemQuantity: 0});
     },
 
     render: function() {
       var pricing = (this.props.product.prices.length <= 3 || this.state.showAll) ? this.fullPricing() : this.abbreviatedPricing();
       var quantity = this.props.product.max_available < 500000 ? this.props.product.max_available + " Avail." : "";
+      var deleteButton = this.state.cartItemQuantity > 0 ? (<a href="javascript:void(0)" onClick={this.deleteQuantity} className="font-icon icon-clear" style={{marginLeft: "15px"}}></a>) : null;
 
       return (
         <tr className="cart_item" data-keep-when-zero="yes" data-cart-item={JSON.stringify(this.props.product.cart_item)}>
@@ -99,7 +107,7 @@
               </div>
               <div style={{float:"left", width:"50%", textAlign:"center", padding: "10px 0"}}>
                 <span className="price">{this.props.product.total_price}</span>
-                <a style={{display: "none"}} className="font-icon icon-clear" href="javascript:void(0);"></a>
+                {deleteButton}
               </div>
             </div>
           </td>
