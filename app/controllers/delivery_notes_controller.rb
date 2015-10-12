@@ -3,6 +3,7 @@ class DeliveryNotesController < ApplicationController
 	before_action :find_cart
 
 	def index
+		# TODO decide if there is an indexed display, and if so where
 		#@delivery_notes = @cart.delivery_notes.visible.alphabetical_by_supplier_org
 	end
 

@@ -18,6 +18,10 @@ class CartDecorator < Draper::Decorator
     number_to_currency discount_amount
   end
 
+  def delivery_notes
+    DeliveryNote.where(cart_id:id)
+  end
+
   def display_delivery_fees
     return "Free!" if delivery.delivery_schedule.free_delivery?
 
