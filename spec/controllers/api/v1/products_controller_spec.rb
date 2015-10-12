@@ -45,17 +45,17 @@ describe Api::V1::ProductsController do
     let!(:cart) { create(:cart, market: market, organization: buyer, user: user, delivery: delivery.next_delivery) }
 
     # products without inventory should not appear in search results
-    let!(:bananas4) { create(:product, name: "Bananas", organization: second_seller, delivery_schedules: [delivery], unit: pound) }
-    let!(:bananas4_lot) { create(:lot, product: bananas4, quantity: 0) }
-    let!(:bananas4_price_buyer_base) do
-      create(:price, :past_price, market: market, product: bananas4, min_quantity: 1, organization: buyer)
+    let!(:beans) { create(:product, name: "Beans", organization: second_seller, delivery_schedules: [delivery], unit: pound) }
+    let!(:beans_lot) { create(:lot, product: beans, quantity: 0) }
+    let!(:beans_price_buyer_base) do
+      create(:price, :past_price, market: market, product: beans, min_quantity: 1, organization: buyer)
     end
 
     # products for another market should not appear in search results
-    let!(:bananas5) { create(:product, name: "Bananas", organization: second_seller, delivery_schedules: [delivery], unit: pound) }
-    let!(:bananas5_lot) { create(:lot, product: bananas5) }
-    let!(:bananas5_price_buyer_base) do
-      create(:price, :past_price, market: market2, product: bananas5, min_quantity: 1, organization: buyer)
+    let!(:peanuts) { create(:product, name: "Peanuts", organization: second_seller, delivery_schedules: [delivery], unit: pound) }
+    let!(:peanuts_lot) { create(:lot, product: peanuts) }
+    let!(:peanuts_price_buyer_base) do
+      create(:price, :past_price, market: market2, product: peanuts, min_quantity: 1, organization: buyer)
     end
 
     before do
@@ -70,17 +70,19 @@ describe Api::V1::ProductsController do
       products.map { |general_product| general_product["available"].map { |product| product["id"] } }
     end
 
+    it "returns a paginated list of products" do
+      products = get_products({ })
+      expected_products = [[bananas.id], [bananas3.id, bananas2.id], [kale.id]]
+      expect(products).to eq(expected_products)
+      products = get_products(offset: 0)
+      expect(products).to eq(expected_products)
 
-    it "returns a paginated list of products", flaky: true do
       products = get_products(offset: 2)
-      # expect(products).to eq([[kale.id]])
-      # products = get_products(offset: 1)
-      # expect(products).to eq([bananas2.id, kale.id])
-      # products = get_products(offset: 0)
-      # expect(products).to eq([bananas.id, bananas2.id, kale.id])
-      expect(products).to be
+      expect(products).to eq(expected_products.slice(2,1))
+
+      products = get_products(offset: 1)
+      expect(products).to eq(expected_products.slice(1,2))
     end
-    # TODO: fix flakiness at later date.
 
     it "searches by text" do
       products = get_products(offset: 0, query: "kale")
