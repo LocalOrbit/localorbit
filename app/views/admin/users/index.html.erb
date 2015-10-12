@@ -33,7 +33,7 @@
                   <%= link_to "Re-Invite", admin_user_invite_path(user), class: "btn btn--small btn--save" %>
               <% end %>
               <% if !user.is_confirmed? && current_user.admin? %>
-                <%= link_to "Confirm", admin_user_verify_path(user), class: "btn btn--small btn--save" %>
+                <%= link_to "Confirm", admin_user_confirm_path(user), class: "btn btn--small btn--save" %>
               <% end %>
             </td>
           <% end %>
