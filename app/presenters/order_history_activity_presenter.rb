@@ -13,7 +13,7 @@ class OrderHistoryActivityPresenter
   def who
     output = ""
     if metadata.masquerader
-      output += User.find(metadata.masquerader).name
+      output += User.find(metadata.masquerader.id).email
       output += "<br>impersonating<br>"
     end
     output += metadata.user_name_or_email
