@@ -35,8 +35,6 @@ class Order < ActiveRecord::Base
   has_many :order_payments, inverse_of: :order
   has_many :payments, through: :order_payments, inverse_of: :orders
   has_many :products, through: :items
-  has_many :sellers, through: :products, class_name: Organization
-  has_one :credit, autosave: false
 
   validates :billing_address, presence: true
   validates :billing_city, presence: true
@@ -381,14 +379,6 @@ class Order < ActiveRecord::Base
     usable_items.sum(&:gross_total)
   end
 
-  def credit_amount
-    if credit && credit.valid?
-      credit.calculated_amount
-    else
-      0
-    end
-  end
-
   def is_localeyes_order?
     market.plan.has_procurement_managers
   end
@@ -426,7 +416,7 @@ class Order < ActiveRecord::Base
 
   def calculate_total_cost(gross)
     if gross > 0.0
-      gross + delivery_fees - discount_amount - credit_amount
+      gross + delivery_fees - discount_amount
     else
       0
     end
