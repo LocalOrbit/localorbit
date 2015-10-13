@@ -24,23 +24,23 @@
       <td><%= item.unit %></td>
       <td><%= item.quantity %></td>
       <td><%= item.quantity_delivered || item.delivery_status.try(:titleize) %></td>
-      <td><%= number_to_currency item.unit_price %></td>
+      <td class="invoice-amount"><%= number_to_currency item.unit_price %></td>
       <td><%= item.seller_name %></td>
-      <td class="<%= item.delivery_status %>"><span class="amount"><%= number_to_currency item.gross_total %></span></td>
+      <td class="invoice-amount <%= item.delivery_status %>"><%= number_to_currency item.gross_total %></td>
     </tr>
     <% end %>
     <tbody class="pseudopod">
-      <tr class="subtotal">
+      <tr>
         <th scope="row" colspan="6" class="ar">Subtotal</th>
-        <td><%= number_to_currency invoice.gross_total %></td>
+        <td class="invoice-amount"><%= number_to_currency invoice.gross_total %></td>
       </tr>
-      <tr class="discounts">
+      <tr>
         <th scope="row" colspan="6" class="ar">Discounts</th>
-        <td><%= number_to_currency invoice.discount %></td>
+        <td class="invoice-amount"><%= number_to_currency invoice.discount %></td>
       </tr>
-      <tr class="delivery">
+      <tr>
         <th scope="row" colspan="6" class="ar"><%= invoice.delivery.delivery_schedule.fee_label %></th>
-        <td><%= number_to_currency invoice.delivery_fees %></td>
+        <td class="invoice-amount"><%= number_to_currency invoice.delivery_fees %></td>
       </tr>
       <tr class="total">
         <td colspan="4">Thank you for your business.</td>
