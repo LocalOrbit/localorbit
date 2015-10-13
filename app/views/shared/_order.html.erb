@@ -50,11 +50,6 @@
       <th scope="row">Buyer Payment:</th>
       <td><%= order.buyer_payment_status.titleize %></td>
     </tr>
-    <% if FeatureAccess.can_edit_order?(user: current_user, order: order) %>
-      <tr>
-        <td><a href="#creditEdit" class="btn btn--primary modal-toggle app-edit-credit-modal-button">Modify Credit</a></td>
-      </tr>
-    <% end %>
   </table>
   <table class="order-info-total">
     <tbody>
@@ -75,26 +70,12 @@
         </tr>
       </tbody>
     <% end %>
-    <tbody>
-      <tr>
-          <th scope="row">Credit:</th>
-          <td><%= number_to_currency order.credit_amount %></td>
-      </tr>
-    </tbody>
     <tbody class="pseudopod">
       <tr>
         <th scope="row">Grand Total:</th>
         <td><%= number_to_currency order.total_cost %></td>
       </tr>
     </tbody>
-    <% if order.credit && order.credit.notes %>
-      <tbody>
-        <tr>
-          <th scope="row">Credit Notes:</th>
-          <td><%= order.credit.notes %></td>
-        </tr>
-      </tbody>
-    <% end %>
   </table>
   </div>
   <div class="order-data">
@@ -303,16 +284,4 @@
 
 <% if FeatureAccess.order_printables?(user: current_user, order: order) %>
   <%= render :partial=>"table_tents_and_posters/ad", locals: { order: order } %>
-<% end %>
-
-<% if FeatureAccess.can_edit_order?(user: current_user, order: order) %>
-  <%= react_component('lo.ModifyCreditModal', {
-    baseUrl: "#{request.base_url}/api/v1/",
-    credit: order.credit,
-    grossTotal: order.gross_total.to_f,
-    amountTypes: Credit::AMOUNT_TYPES,
-    payerTypes: Credit::PAYER_TYPES,
-    sellers: order.sellers,
-    orderId: order.id
-  }) %>
 <% end %>

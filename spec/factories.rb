@@ -47,16 +47,6 @@ FactoryGirl.define do
     end
   end
 
-  factory :credit do
-    order
-    user
-    amount_type "fixed"
-    amount 1.50
-    payer_type "market"
-    paying_org_id nil
-    notes "Bad on delivery."
-  end
-
   factory :order_template do
     sequence(:name) {|n| "Cart #{n}"}
     market

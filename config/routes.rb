@@ -34,9 +34,6 @@ Rails.application.routes.draw do
   # the app, especially LocalEyes features.
   namespace :api do
     namespace :v1 do
-      resources :orders, only: [] do
-        resources :credits, only: [:create]
-      end
       resources :products, only: [:index]
       resources :filters, only: [:index]
       resources :order_templates, only: [:index, :create, :destroy]
@@ -59,8 +56,8 @@ Rails.application.routes.draw do
 
     get "upload" => "upload#index"
     post "upload" => "upload#upload"
-
-    post "upload/newjob" => "upload#newjob"
+    
+    post "upload/newjob" => "upload#newjob" 
 
     get "financials" => "financials#index"
     namespace :financials do
