@@ -8,12 +8,14 @@ class DeliveryNotesController < ApplicationController
 	end
 
 	def new
-		@delivery_note = DeliveryNote.new(cart_id: @cart.id)
+		@delivery_note = DeliveryNote.new(cart_id: find_cart)
 	end
 
 	def create
-		@delivery_note = @cart.delivery_notes.build(delivery_note_params)
-
+		@cart = Cart.find(find_cart)
+		@buyer_org = current_organization
+		#@delivery_note = @cart.delivery_notes.build(delivery_note_params)
+		@delivery_note = DeliveryNote.build(delivery_note_params)
 		if @delivery_note.save
 			redirect_to cart_path(@cart) # hm
 		else
@@ -50,7 +52,7 @@ class DeliveryNotesController < ApplicationController
 	end
 
 	def find_cart
-		@cart = current_cart # this exists, right?
+		@cart_id = current_cart.id # this exists, right?
 	end
 
 end
