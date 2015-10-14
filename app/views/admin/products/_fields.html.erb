@@ -62,19 +62,31 @@
   <%= f.text_area :long_description, rows: 4 %>
 </div>
 
-<div class="field">
-  <%= f.label :unit_id %>
-  <br>
-  <%= f.select :unit_id, Unit.for_display.map { |u| [u.plural, u.id] } , {include_blank: ""}, {data: {placeholder: "Click and type to search for a Unit"}, class: "chosen column--full"} %>
-  <span class="hint">Not seeing what you need? <%= link_to "Request a New Unit", "#request-new-unit", class: "modal-toggle" %></span>
-</div>
-
-<div class="field">
-  <%= f.label :unit_description %>
-  <span class="hint">Up to 20 characters</span>
-  <br>
-  <%= f.text_field :unit_description, size: 20, maxlength: 20, class: "column column--full" %>
-</div>
+<table>
+  <thead>
+  <tr>
+    <td><%= f.label :unit_id %></td>
+    <td><%= f.label :unit_description %> <span class="hint">Up to 20 characters</span></td>
+  </tr>
+  </thead>
+  <tbody>
+  <tr>
+    <td class="field">
+      <%= f.select :unit_id, Unit.for_display.map { |u| [u.plural, u.id] } , {include_blank: ""}, {data: {placeholder: "Click and type to search for a Unit"}, class: "chosen column--full"} %>
+    </td>
+    <td class="field">
+      <%= f.text_field :unit_description, size: 20, maxlength: 20, class: "column column--full" %>
+    </td>
+  </tr>
+  </tbody>
+  <tfoot>
+  <tr>
+    <td colspan="2">
+      <span class="hint">Not seeing what you need? <%= link_to "Request a New Unit", "#request-new-unit", class: "modal-toggle" %></span>
+    </td>
+  </tr>
+  </tfoot>
+</table>
 
 <fieldset class="conditional">
   <legend>More product info (Where, Who, How)</legend>
