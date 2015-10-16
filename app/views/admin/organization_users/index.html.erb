@@ -29,7 +29,7 @@
           </td>
           <td>
             <% if user.is_invited? %>
-                <%= link_to "Re-Invite", admin_user_invite_path(user), class: "btn btn--small btn--save" %>
+                <%= link_to "Re-Invite", admin_organization_user_invite_path(@organization, user), class: "btn btn--small btn--save" %>
             <% end %>
           </td>
           <td class="delete">

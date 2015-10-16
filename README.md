@@ -2,6 +2,7 @@
 
 * **[Staging Deploy (Preview)](https://github.com/LocalOrbit/localorbit/compare/staging...master)**
 * **[Production Deploy (Preview)](https://github.com/LocalOrbit/localorbit/compare/production...staging)**
+* **[Production Fix Deploy (Preview)](https://github.com/LocalOrbit/localorbit/compare/production...fix)**
 
 See the `docs/` directory for more documentation.
 
