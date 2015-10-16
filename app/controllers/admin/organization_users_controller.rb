@@ -42,6 +42,15 @@ module Admin
       redirect_to [:admin, @organization, :users], notice: "Successfully removed #{@user.email}."
     end
 
+    def invite
+      user = @organization.users.find(params[:user_id])
+      user.invite!
+      user.save
+
+      redirect_to [:admin, @organization, :users], notice: "User #{user.decorate.display_name} Re-Invited"
+
+    end
+
     private
 
     def user_params
