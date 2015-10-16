@@ -45,6 +45,7 @@ describe "Checking Out", :js, :vcr do
 
   before do
     Timecop.travel(DateTime.now - delivery_schedule.order_cutoff - 25.hours)
+    sign_in_as(user)
   end
 
   after do
