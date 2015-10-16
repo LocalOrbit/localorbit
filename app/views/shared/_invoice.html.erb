@@ -38,6 +38,13 @@
         <th scope="row" colspan="6" class="ar">Discounts</th>
         <td class="invoice-amount"><%= number_to_currency invoice.discount %></td>
       </tr>
+      <% if invoice.credit_amount > 0 %>
+        <tr>
+          <th><%= invoice.credit.notes.length > 0 ? "Note: #{invoice.credit.notes}" : "" %>
+          <th scope="row" colspan="5" class="ar">Credits</th>
+          <td class="invoice-amount"><%= number_to_currency invoice.credit_amount %></td>
+        </tr>
+      <% end %>
       <tr>
         <th scope="row" colspan="6" class="ar"><%= invoice.delivery.delivery_schedule.fee_label %></th>
         <td class="invoice-amount"><%= number_to_currency invoice.delivery_fees %></td>
@@ -48,6 +55,6 @@
       </tr>
     </tbody>
   </table>
-  
+
 <%= javascript_include_tag "application" if @needs_js %>
 </body>
