@@ -36,6 +36,8 @@ class Registration
       # to the confirmation email
       self.user = User.find_by(email: email) || User.new(user_params)
       user.organizations << organization
+      user.attempt_set_password(user_params)
+      user.invitation_token=nil
       user.save!
     else
       false

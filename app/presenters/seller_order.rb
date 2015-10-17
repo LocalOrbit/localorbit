@@ -9,7 +9,6 @@ class SellerOrder
     :delivery_status,
     :organization_id,
     :credit,
-    :credit_amount,
     :sellers,
     :errors,
     to: :@order
@@ -31,8 +30,20 @@ class SellerOrder
     new(order, seller)
   end
 
+  def credit_amount
+    credit_amount = 0
+    if credit_paid_by_sellers?
+      if credit.paying_org == nil
+        credit_amount = (@order.credit_amount / (@order.sellers.count || 1)).round 2
+      elsif credit.paying_org == @seller
+        credit_amount = @order.credit_amount
+      end
+    end
+    return credit_amount
+  end
+
   def total_cost
-    gross_total - discount
+    gross_total - discount - credit_amount
   end
 
   def items_attributes=(_)
@@ -44,5 +55,14 @@ class SellerOrder
 
   def seller_id
     @seller.id
+  end
+
+  private
+
+  def credit_paid_by_sellers?
+    @order.credit_amount > 0 && credit.payer_type == Credit::ORGANIZATION
+  end
+
+  def share_of_credit
   end
 end

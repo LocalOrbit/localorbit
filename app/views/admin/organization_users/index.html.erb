@@ -15,16 +15,23 @@
             <th>Registered On</th>
             <th></th>
             <th></th>
+            <th></th>
           </tr>
         </thead>
         <% @organization.users.decorate(context: {org: @organization}).each do |user| %>
         <tr class="user-row <%= cycle "odd", "even" %>">
           <td class="name"><%= link_to (user.name || "Edit"), edit_admin_organization_user_path(@organization, user) %></td>
           <td class="email"><%= user.email %></td>
-          <td><%= user.invitation_accepted_at.present? ? user.invitation_accepted_at.strftime("%b %-d, %Y") : "" %>
+          <td><%= user.invitation_accepted_at.present? ? user.invitation_accepted_at.strftime("%b %-d, %Y") : user.confirmed_at.present? ? user.confirmed_at.strftime("%b %-d, %Y") : '' %>
 
-          <td><%= user.toggle_enabled_button %></td>
-
+          <td>
+            <%= user.toggle_enabled_button %>
+          </td>
+          <td>
+            <% if user.is_invited? %>
+                <%= link_to "Re-Invite", admin_organization_user_invite_path(@organization, user), class: "btn btn--small btn--save" %>
+            <% end %>
+          </td>
           <td class="delete">
             <%= button_to admin_organization_user_path(@organization, user), {method: :delete, class: "delete font-icon", data: {confirm: "Are you sure you want to delete #{user.email} from #{@organization.name}?"}, title: "Delete"} do%>
               &#57418;

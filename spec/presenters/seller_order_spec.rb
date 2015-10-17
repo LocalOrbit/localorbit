@@ -119,4 +119,32 @@ describe SellerOrder do
     end
   end
 
+  describe "#credit_amount" do
+    it "returns 0 when there is no credit" do
+      expect(SellerOrder.new(order, seller1).credit_amount).to eq 0
+    end
+
+    it "returns 0 when the credit is paid by the market" do
+      create(:credit, order: order, payer_type: Credit::MARKET, amount_type: Credit::FIXED, amount: 1)
+      expect(SellerOrder.new(order, seller1).credit_amount).to eq 0
+    end
+
+    it "returns an amount proportional to the number of sellers when the credit is paid by sellers in general" do
+      create(:credit, order: order, payer_type: Credit::ORGANIZATION, paying_org: nil, amount_type: Credit::FIXED, amount: 1)
+      expect(SellerOrder.new(order, seller1).credit_amount).to eq 0.50
+    end
+
+    it "returns the full credited amount when the current seller is responsible for the credit" do
+      create(:credit, order: order, payer_type: Credit::ORGANIZATION, paying_org: seller1, amount_type: Credit::FIXED, amount: 1)
+      expect(SellerOrder.new(order, seller1).credit_amount).to eq 1
+    end
+  end
+
+  describe "#total_cost" do
+    it "takes the credit amount the seller is responsible for into account" do
+      expect(SellerOrder.new(order, seller1).total_cost).to eq 20.97
+      create(:credit, order: order, payer_type: Credit::ORGANIZATION, paying_org: seller1, amount_type: Credit::FIXED, amount: 1)
+      expect(SellerOrder.new(order, seller1).total_cost).to eq 19.97
+    end
+  end
 end

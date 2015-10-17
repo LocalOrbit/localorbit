@@ -46,7 +46,7 @@ module Api
             .filter_by_name(query)
             .filter_by_categories(category_ids)
             .filter_by_suppliers(seller_ids)
-            .order(:name)
+            .order(:name, :id)
             .uniq
       end
 
@@ -64,7 +64,7 @@ module Api
         products = general_product.product
                        .map { |product| format_product_for_catalog(product) }
                        .compact
-                       .sort_by { |product_info| product_info["unit"] }
+                       .sort { |a, b| a[:unit] <=> b[:unit] }
 
         {
             :id => general_product.id,

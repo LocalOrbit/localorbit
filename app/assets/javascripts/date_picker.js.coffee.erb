@@ -7,6 +7,7 @@ class @DatePicker
     options.minDate = field.data('min-date')
     options.maxDate = field.data('max-date')
     options.showOn = "both"
+    options.constrainInput = false
 #options.buttonText = "\ue013"
     options.buttonImage = "<%= asset_path 'icons/calendar@2x.png' %>"
     preParseDate = (val) ->
