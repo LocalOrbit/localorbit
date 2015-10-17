@@ -3,7 +3,10 @@
    for <%= @delivery.cart_type %> <%= @delivery.buyer_display_date %> <%= @delivery.buyer_time_range %>.</p>
 
 <% if @note %>
+<div style="border-top:1px solid #222"></div>
 <p><%= @note %></p>
+<div style="border-bottom:1px solid #222"></div>
+<br/>
 <% end %>
 
 <% @products_for_sale.each_category_with_products do |category, products| %>
