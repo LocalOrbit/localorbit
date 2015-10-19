@@ -1,5 +1,5 @@
 $ ->
-  $('.wysihtml5-textarea').editable({inlineMode: false, buttons: ['bold', 'italic', 'underline', 'sep', 'fontFamily', 'fontSize', 'color', 'sep', 'table', 'formatBlock', 'align', 'insertOrderedList', 'insertUnorderedList', 'outdent', 'indent', 'selectAll', 'createLink', 'insertImage', 'undo']})
+  $('.wysihtml5-textarea').editable({key: '<%= Figaro.env.froala_key %>', inlineMode: false, buttons: ['bold', 'italic', 'underline', 'sep', 'fontFamily', 'fontSize', 'color', 'sep', 'table', 'formatBlock', 'align', 'insertOrderedList', 'insertUnorderedList', 'outdent', 'indent', 'selectAll', 'createLink', 'insertImage', 'undo']})
 
 ###  return unless $(".wysihtml5-textarea").length
   editor = new wysihtml5.Editor(document.querySelector('.wysihtml5-textarea'), {
