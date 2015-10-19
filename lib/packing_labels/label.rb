@@ -2,18 +2,23 @@ module PackingLabels
   class Label
     OrderTemplate = "avery_labels/order"
     ProductTemplate = "avery_labels/vertical_product"
+    OrderProductTemplate = "avery_labels/vertical_order_product"
     class << self
 
-      def make_labels(order_infos)
-        order_infos.flat_map{|order_info| make_order_labels(order_info)}
+      def make_labels(order_infos, product_labels_only)
+        order_infos.flat_map{|order_info| make_order_labels(order_info, product_labels_only)}
       end
 
-      def make_order_labels(order_info)
+      def make_order_labels(order_info, product_labels_only)
         labels = []
         order = order_info.dup
         products = order.delete :products
-        labels << make_label(OrderTemplate, {order: order})
-        labels << products.map{|product_info| make_label(ProductTemplate, {order: order, product: product_info}) }
+        if product_labels_only != "true"
+          labels << make_label(OrderTemplate, {order: order})
+          labels << products.map{|product_info| make_label(OrderProductTemplate, {order: order, product: product_info}) }
+        else
+          labels << products.map{|product_info| make_label(ProductTemplate, {order: order, product: product_info}) }
+        end
         labels.flatten
       end
 
