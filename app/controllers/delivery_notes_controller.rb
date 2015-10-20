@@ -16,14 +16,13 @@ class DeliveryNotesController < ApplicationController
 	def create
 		@cart = Cart.find(find_cart)
 		@buyer_org = current_organization
-		@supplier = params[:supplier_org] # hmmmm
-		params.require(:delivery_note).permit(:note) # tmp
-
-		@delivery_note = DeliveryNote.new(:note => params[:delivery_note][:note])
+		@delivery_note = DeliveryNote.new(delivery_note_params)
+		# accurately gettin hash, not saving paramers in object correctly; TODO
 		if @delivery_note.save
 			redirect_to "/cart" # tmp for cart path
 		else
-			render :new
+			render :new # need to pass the correct parameters here
+			# with error flash
 		end
 
 	end
