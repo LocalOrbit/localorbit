@@ -271,7 +271,7 @@ describe "Adding a product", chosen_js: true do
 
         expect(current_path).to eql(admin_product_lots_path(Product.last))
 
-        expect(Dom::LotRow.all.map { |r| r.id }).to eq(["#add-row"])
+        expect(Dom::LotRow.all_classes).to eq(["lot add-row editing"])
       end
 
       it "selects all delivery schedules by default" do
@@ -532,8 +532,8 @@ describe "Adding a product", chosen_js: true do
         click_link "Continue to Pricing"
 
         expect(page).to have_content(stub_warning_both)
-        fill_in "price_net_price", with: "3.00"
-        fill_in "price_sale_price", with: "2.00"
+        fill_in "price[net_price]", with: "3.00"
+        fill_in "price[sale_price]", with: "2.00"
         click_button "Add"
         expect(page).to have_content(stub_warning_inventory)
       end
@@ -541,7 +541,7 @@ describe "Adding a product", chosen_js: true do
       it "until prices are added" do
         expect(page).to have_content(stub_warning_both)
 
-        fill_in "lot_quantity", with: "42"
+        fill_in "lot[quantity]", with: "42"
         click_button "Add"
         expect(page).to have_content(stub_warning_pricing)
       end

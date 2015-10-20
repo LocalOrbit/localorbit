@@ -10,7 +10,7 @@ Capybara.register_driver :poltergeist do |app|
 end
 
 Capybara.javascript_driver = :poltergeist
-Capybara.default_max_wait_time = (ENV["CAPYBARA_WAIT_TIME"] || 10).to_i
+Capybara.default_max_wait_time = (ENV["CAPYBARA_WAIT_TIME"] || 20).to_i
 
 # hidden elements are ignored by default
 # Capybara.ignore_hidden_elements = true

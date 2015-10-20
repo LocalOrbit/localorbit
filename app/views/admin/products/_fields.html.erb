@@ -62,30 +62,80 @@
   <%= f.text_area :long_description, rows: 4 %>
 </div>
 
-<table>
-  <thead>
-  <tr>
+<table id="units_table">
+  <thead><tr>
     <td><%= f.label :unit_id %></td>
     <td><%= f.label :unit_description %> <span class="hint">Up to 20 characters</span></td>
-  </tr>
-  </thead>
+    <td></td>
+  </tr></thead>
+
   <tbody>
   <tr>
     <td class="field">
-      <%= f.select :unit_id, Unit.for_display.map { |u| [u.plural, u.id] } , {include_blank: ""}, {data: {placeholder: "Click and type to search for a Unit"}, class: "chosen column--full"} %>
+      <%= f.select :unit_id, Unit.for_display.map { |u| [u.plural, u.id] }, {include_blank: ""},
+                   {data: {placeholder: "Choose a Unit"},
+                    class: "chosen column--full"} %>
     </td>
     <td class="field">
       <%= f.text_field :unit_description, size: 20, maxlength: 20, class: "column column--full" %>
     </td>
+    <td></td>
   </tr>
-  </tbody>
-  <tfoot>
-  <tr>
-    <td colspan="2">
-      <span class="hint">Not seeing what you need? <%= link_to "Request a New Unit", "#request-new-unit", class: "modal-toggle" %></span>
+
+  <% @sibling_units.each do |sibling| %>
+    <tr>
+      <td class="field">
+        <%= f.hidden_field :sibling_id, multiple: true, value: sibling.id %>
+        <%= f.select :sibling_unit_id, Unit.for_display.map { |u| [u.plural, u.id] },
+                     {include_blank: "",
+                      selected: sibling.unit_id},
+                     {data: {placeholder: "Choose a Unit"},
+                      class: "chosen column--full",
+                      name: 'product[sibling_unit_id][]'} %>
+      </td>
+      <td class="field">
+        <%= f.text_field :sibling_unit_description,
+                         value: sibling.unit_description,
+                         multiple: true,
+                         size: 20, maxlength: 20, class: "column column--full" %>
+      </td>
+      <td></td>
+    </tr>
+  <% end %>
+
+  <tr class="unit add-row is-hidden" id="add-row">
+    <td class="edit-cell">
+      <%= f.hidden_field :sibling_id, multiple: true, value: 0 %>
+      <%= f.select :sibling_unit_id, Unit.for_display.map { |u| [u.plural, u.id] },
+                   {include_blank: "",
+                    selected: nil},
+                   {data: {placeholder: "Choose a Unit"},
+                    class: "chosen column--full",
+                    name: 'product[sibling_unit_id][]'} %>
+    </td>
+    <td class="edit-cell">
+      <%= f.text_field :sibling_unit_description,
+                       value: "",
+                       multiple: true,
+                       size: 20, maxlength: 20, class: "column column--full" %>
+    </td>
+    <td class="edit-cell">
+      <button class="cancel">Cancel</button>&nbsp;<%= link_to "Add", '#add-unit', class: 'add-copy' %></td>
     </td>
   </tr>
-  </tfoot>
+
+  <tr class="add-toggle last-row">
+    <td></td>
+    <td></td>
+    <td><%= link_to "Add Unit", '#add-unit', class: 'add-toggle' %></td>
+  </tr>
+  </tbody>
+
+  <tfoot><tr>
+    <td colspan="3">
+      <span class="hint">Not seeing what you need? <%= link_to "Request a New Unit", "#request-new-unit", class: "modal-toggle" %></span>
+    </td>
+  </tr></tfoot>
 </table>
 
 <fieldset class="conditional">

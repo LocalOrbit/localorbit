@@ -40,6 +40,7 @@ module Admin
       @product.organization = @organizations.detect {|o| o.id == @product.organization_id }
 
       if @product.save
+        update_sibling_units(@product)
         redirect_to after_create_page, notice: "Added #{@product.name}"
       else
         setup_new_form
@@ -52,10 +53,14 @@ module Admin
 
       find_delivery_schedules(@product)
       find_selected_delivery_schedule_ids(@product)
+      find_sibling_units(@product)
     end
 
     def update
       updated = update_product
+      update_sibling_units(@product)
+
+      find_sibling_units(@product)
 
       message = updated ? "Saved #{@product.name}" : nil
       respond_to do |format|
@@ -92,7 +97,10 @@ module Admin
         :who_story, :how_story,
         :use_simple_inventory, :simple_inventory, :use_all_deliveries,
         :unit_description,
-        delivery_schedule_ids: []
+        delivery_schedule_ids: [],
+        sibling_id: [],
+        sibling_unit_id: [],
+        sibling_unit_description: []
       )
 
       unless results.count == 1 && results["simple_inventory"].present?
@@ -127,8 +135,7 @@ module Admin
     end
 
     def find_organizations_for_filtering
-      orgs = current_user.managed_organizations.selling.periscope(request.query_parameters).
-        order(:name)
+      orgs = current_user.managed_organizations.selling.periscope(request.query_parameters).order(:name)
       @selling_organizations = orgs.inject([]) do |result, org|
         result << [org.name, org.id]
       end
@@ -166,7 +173,39 @@ module Admin
       end
     end
 
+    def find_sibling_units(product)
+      @sibling_units = []
+      if product && product.general_product
+        @sibling_units = product.general_product.product.visible.all
+                           .reject { |sibling| sibling.id == product.id }
+                           .sort { |a, b| a.unit.plural <=> b.unit.plural }
+      end
+    end
+
+    def update_sibling_units(product)
+      if product && product.sibling_id
+        product.sibling_id.each_with_index do |sibling_id, i|
+          sibling_unit_id = product.sibling_unit_id[i]
+          sibling_unit_description = product.sibling_unit_description[i]
+          if sibling_id == "0"
+            if sibling_unit_id && sibling_unit_id != ""
+              sibling = product.model.dup
+              sibling.unit_id = sibling_unit_id
+              sibling.unit_description = sibling_unit_description
+              sibling.save
+            end
+          else
+            sibling = Product.find_by(id: sibling_id)
+            if sibling
+              sibling.update(unit_id: sibling_unit_id, unit_description: sibling_unit_description)
+            end
+          end
+        end
+      end
+    end
+
     def setup_new_form
+      @sibling_units ||= []
       find_selling_organizations
       if !@product.persisted? && @organizations.size == 1
         @product.organization = @organizations.first

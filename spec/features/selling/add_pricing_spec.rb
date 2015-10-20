@@ -22,7 +22,7 @@ describe "Adding advanced pricing" do
   end
 
   it "completes successfully given valid information" do
-    fill_in "price_sale_price", with: "1.90" # 5.9% fees
+    fill_in "price[sale_price]", with: "1.90" # 5.9% fees
     click_button "Add"
 
     record = Dom::PricingRow.first
@@ -37,8 +37,8 @@ describe "Adding advanced pricing" do
 
   describe "invalid input" do 
     before do
-      fill_in "price_sale_price", with: "0"
-      fill_in "price_min_quantity", with: "0"
+      fill_in "price[sale_price]", with: "0"
+      fill_in "price[min_quantity]", with: "0"
       click_button "Add"
     end
 
@@ -48,7 +48,7 @@ describe "Adding advanced pricing" do
     end
 
     it "re-enables the net pricing calculator for the new form", js: true do
-      fill_in "price_sale_price", with: "12"
+      fill_in "price[sale_price]", with: "12"
       new_price_form = Dom::NewPricingForm.first
       expect(new_price_form.net_price.value).to eq("11.29") # 5.9% fees subtracted
     end
@@ -56,25 +56,25 @@ describe "Adding advanced pricing" do
 
   describe "entering duplicate pricing" do
     it "shows an error" do
-      fill_in "price_min_quantity", with: "2"
-      fill_in "price_sale_price", with: "1.99"
+      fill_in "price[min_quantity]", with: "2"
+      fill_in "price[sale_price]", with: "1.99"
       click_button "Add"
 
-      fill_in "price_min_quantity", with: "2"
-      fill_in "price_sale_price", with: "1.50"
+      fill_in "price[min_quantity]", with: "2"
+      fill_in "price[sale_price]", with: "1.50"
       click_button "Add"
 
       expect(page).to have_content("Minimum quantity must be unique")
     end
 
     it "allowed for different buyers" do
-      fill_in "price_min_quantity", with: "2"
-      fill_in "price_sale_price", with: "1.99"
+      fill_in "price[min_quantity]", with: "2"
+      fill_in "price[sale_price]", with: "1.99"
       click_button "Add"
 
-      select organization.name, from: "price_organization_id"
-      fill_in "price_min_quantity", with: "2"
-      fill_in "price_sale_price", with: "1.50"
+      select organization.name, from: "price[organization_id]"
+      fill_in "price[min_quantity]", with: "2"
+      fill_in "price[sale_price]", with: "1.50"
       click_button "Add"
 
       expect(page).to_not have_content("Minimum quantity must be unique")
@@ -82,13 +82,13 @@ describe "Adding advanced pricing" do
     end
 
     it "allowed for different markets" do
-      fill_in "price_min_quantity", with: "2"
-      fill_in "price_sale_price", with: "1.99"
+      fill_in "price[min_quantity]", with: "2"
+      fill_in "price[sale_price]", with: "1.99"
       click_button "Add"
 
-      select market2.name, from: "price_market_id"
-      fill_in "price_min_quantity", with: "2"
-      fill_in "price_sale_price", with: "1.50"
+      select market2.name, from: "price[market_id]"
+      fill_in "price[min_quantity]", with: "2"
+      fill_in "price[sale_price]", with: "1.50"
       click_button "Add"
 
       expect(page).to_not have_content("Minimum quantity must be unique")
@@ -98,8 +98,8 @@ describe "Adding advanced pricing" do
 
   describe "pricing for a specific buyer" do
     it "saves the buyer" do
-      fill_in "price_sale_price", with: "1.99"
-      select organization.name, from: "price_organization_id"
+      fill_in "price[sale_price]", with: "1.99"
+      select organization.name, from: "price[organization_id]"
       click_button "Add"
 
       record = Dom::PricingRow.first
@@ -112,26 +112,26 @@ describe "Adding advanced pricing" do
   end
 
   it "canceling adding a price", js: true do
-    fill_in "price_min_quantity", with: "2"
-    fill_in "price_sale_price", with: "1.99"
+    fill_in "price[min_quantity]", with: "2"
+    fill_in "price[sale_price]", with: "1.99"
     click_button "Add"
 
     click_link "Add Price"
-    fill_in "price_sale_price", with: "1.90"
+    fill_in "price[sale_price]", with: "1.90"
     click_button "Cancel"
 
     click_link "Add Price"
-    expect(find_field("price_sale_price").value).to eq("")
+    expect(find_field("price[sale_price]").value).to eq("")
   end
 
   it "hides the new form if you start editing a price but retains entered values", js: true do
-    fill_in "price_min_quantity", with: "2"
-    fill_in "price_sale_price", with: "1.99"
+    fill_in "price[min_quantity]", with: "2"
+    fill_in "price[sale_price]", with: "1.99"
     click_button "Add"
 
     click_link "Add Price"
     expect(Dom::NewPricingForm.first).not_to be_nil
-    fill_in "price_sale_price", with: "1.90"
+    fill_in "price[sale_price]", with: "1.90"
     Dom::PricingRow.first.click_edit
 
     expect(Dom::NewPricingForm.first).to be_nil
@@ -139,15 +139,15 @@ describe "Adding advanced pricing" do
     click_button "Cancel"
     click_link "Add Price"
     expect(Dom::NewPricingForm.first).not_to be_nil
-    expect(find_field("price_sale_price").value).to eq("1.90")
+    expect(find_field("price[sale_price]").value).to eq("1.90")
   end
 
   describe "with different fees", js: true do
     let(:market) { create(:market, local_orbit_seller_fee: 4, market_seller_fee: 6) }
 
     it "shows updated net sale information" do
-      fill_in "price_sale_price", with: "12.90"
-      expect(find_field("price_net_price").value).to eq("11.24") # 12.9% fees subtracted
+      fill_in "price[sale_price]", with: "12.90"
+      expect(find_field("price[net_price]").value).to eq("11.24") # 12.9% fees subtracted
       click_button "Add"
 
       expect(page).to have_content("Successfully added a new price")

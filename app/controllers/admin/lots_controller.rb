@@ -2,6 +2,7 @@ class Admin::LotsController < AdminController
   include ProductLookup
 
   before_action :ensure_product_organization
+  before_action :ensure_child_units
 
   def index
     @lot = @product.lots.build
@@ -87,6 +88,18 @@ class Admin::LotsController < AdminController
   def ensure_product_organization
     unless @organizations
       @organizations = [@product.organization]
+    end
+  end
+
+  def ensure_child_units
+    @child_units = []
+    if @product
+      @child_units << @product
+      if @product && @product.general_product
+        @child_units.concat(@product.general_product.product.visible.all
+                              .reject { |sibling| sibling.id == @product.id }
+                              .sort { |a, b| a.unit.plural <=> b.unit.plural })
+      end
     end
   end
 end
