@@ -199,7 +199,9 @@ Rails.application.routes.draw do
     get '/new' => "templates#new"
   end
 
-  resources :delivery_notes
+  resources :delivery_notes 
+
+  post '/delivery_notes/new' => "delivery_notes#create"
 
   get '/products/search' => "products#search"
   resources :products, only: [:index, :show] do
