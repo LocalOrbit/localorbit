@@ -1,4 +1,3 @@
-<% if current_user.admin? || current_user.market_manager? %>
   <%= search_form_for @q, url: admin_orders_path, html: { class: "order_search clear-after" } do |f| %>
     <div class="pull-left order-search-widget">
       <span class="preserve-alignment">
@@ -38,10 +37,11 @@
         <%= f.collection_select :organization_id_eq, @search_presenter.buyer_organizations, :id, :name, {include_blank: "All"}, {class: "filter-input"} %>
       </span>
 
+      <% if current_user.admin? || current_user.market_manager? %>
       <span class="preserve-alignment mobile-block">
         <%= f.label :products_organization_id_eq, "Supplier" %><br>
         <%= f.collection_select :products_organization_id_eq, @search_presenter.seller_organizations, :id, :name, {include_blank: "All"}, {class: "filter-input"} %>
       </span>
+      <% end %>
     </div>
   <% end %>
-<% end %>
