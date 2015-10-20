@@ -24,7 +24,6 @@ describe "A Market Manager managing Newsletters" do
       click_link "Add Newsletter"
     end
 
-=begin
     context "with valid information" do
       it "creates a newsletter" do
         fill_in "Subject", with: "Big News"
@@ -50,7 +49,6 @@ describe "A Market Manager managing Newsletters" do
         expect(page).to have_content("Subject can't be blank")
       end
     end
-=end
   end
 
   describe "Editing a newsletter" do
@@ -61,7 +59,6 @@ describe "A Market Manager managing Newsletters" do
       click_link newsletter.subject
     end
 
-=begin
     context "with valid information" do
       it "saves the newsletter" do
         fill_in "Subject", with: "Big News"
@@ -84,7 +81,6 @@ describe "A Market Manager managing Newsletters" do
         expect(page).to have_content("Subject can't be blank")
       end
     end
-=end
   end
 
 
