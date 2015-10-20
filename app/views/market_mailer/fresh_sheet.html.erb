@@ -4,7 +4,7 @@
 
 <% if !@note.to_s.empty? %>
 <div style="border-top:1px solid #222"></div>
-<p><%= @note %></p>
+<p><%= @note.html_safe %></p>
 <div style="border-bottom:1px solid #222"></div>
 <br/>
 <% end %>

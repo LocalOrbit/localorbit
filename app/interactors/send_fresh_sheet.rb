@@ -17,7 +17,7 @@ class SendFreshSheet
   private
 
   def send_test_email
-    MarketMailer.delay.fresh_sheet(market: market, to: email, note: note.html_safe, unsubscribe_token: "XYZ987", port: get_port)
+    MarketMailer.delay.fresh_sheet(market: market, to: email, note: note, unsubscribe_token: "XYZ987", port: get_port)
     context[:notice] = "Successfully sent a test to #{email}"
   end
 
@@ -31,7 +31,7 @@ class SendFreshSheet
         token = user.unsubscribe_token(subscription_type: fresh_sheet_type)
         MarketMailer.delay.fresh_sheet(market: market, 
                                        to: user.pretty_email, 
-                                       note: note.html_safe,
+                                       note: note,
                                        unsubscribe_token: token,
                                        port: get_port)
       end
