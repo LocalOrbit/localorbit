@@ -3,7 +3,7 @@ require "capybara/rails"
 require "capybara/poltergeist"
 
 Capybara.register_driver :poltergeist do |app|
-  Capybara::Poltergeist::Driver.new(app, timeout: 180.seconds, inspector: true, phantomjs_options: ['--ssl-protocol=tlsv1'])
+  Capybara::Poltergeist::Driver.new(app, timeout: 60.seconds, inspector: true, phantomjs_options: ['--ssl-protocol=tlsv1'])
 end
 
 Capybara.javascript_driver = :poltergeist
