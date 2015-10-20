@@ -28,7 +28,8 @@ describe "A Market Manager managing Newsletters" do
       it "creates a newsletter" do
         fill_in "Subject", with: "Big News"
         fill_in "Headline", with: "Some really exciting stuff"
-        fill_in "Body", with: "bla bla bla"
+        find("#newsletter_body",:visible=>false).set "bla bla bla"
+        #fill_in "Body", with: "bla bla bla"
         check "Buyers"
         check "Suppliers"
         check "Manager"
@@ -42,7 +43,8 @@ describe "A Market Manager managing Newsletters" do
       it "creates a newsletter" do
         fill_in "Subject", with: ""
         fill_in "Headline", with: ""
-        fill_in "Body", with: ""
+        find("#newsletter_body",:visible=>false).set ""
+        #fill_in "Body", with: ""
         click_button "Add Newsletter"
         expect(page).to have_content("Subject can't be blank")
       end
@@ -61,7 +63,8 @@ describe "A Market Manager managing Newsletters" do
       it "saves the newsletter" do
         fill_in "Subject", with: "Big News"
         fill_in "Headline", with: "Some really exciting stuff"
-        fill_in "Body", with: "bla bla bla"
+        find("#newsletter_body",:visible=>false).set "bla bla bla"
+        #fill_in "Body", with: "bla bla bla"
         attach_file "Image", "app/assets/images/logo.png"
         click_button "Save Newsletter"
         expect(page).to have_content("Big News")
@@ -72,12 +75,14 @@ describe "A Market Manager managing Newsletters" do
       it "creates a newsletter" do
         fill_in "Subject", with: ""
         fill_in "Headline", with: ""
-        fill_in "Body", with: ""
+        find("#newsletter_body",:visible=>false).set ""
+        #fill_in "body", with: ""
         click_button "Save Newsletter"
         expect(page).to have_content("Subject can't be blank")
       end
     end
   end
+
 
   describe "Deleting a newsletter" do
     let!(:newsletter) { create :newsletter, market: market }
