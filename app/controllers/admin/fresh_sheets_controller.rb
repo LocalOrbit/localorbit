@@ -28,7 +28,7 @@ class Admin::FreshSheetsController < AdminController
     email = MarketMailer.fresh_sheet(
       market: current_market, 
       to: current_user.email, 
-      note: @note.to_s.html_safe,
+      note: @note.html_safe,
       preview: true, 
       unsubscribe_token: "XYZ987XYZ987XYZ987",
       port: request.port
