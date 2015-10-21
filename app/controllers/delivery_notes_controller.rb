@@ -16,9 +16,11 @@ class DeliveryNotesController < ApplicationController
 	def create
 		@cart = Cart.find(find_cart)
 		@buyer_org = current_organization
-		@delivery_note = DeliveryNote.new(delivery_note_params)
+
+		dn = DeliveryNote.new(delivery_note_params)
+		@delivery_note = dn.dup
 		# accurately gettin hash, not saving paramers in object correctly; TODO
-		if @delivery_note.save
+		if @delivery_note.save#.save
 			redirect_to "/cart" # tmp for cart path
 		else
 			render :new # need to pass the correct parameters here
