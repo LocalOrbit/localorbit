@@ -7,10 +7,11 @@ class DeliveryNote < ActiveRecord::Base
 	validates :note, :supplier_org, :buyer_org, presence: true
 	# validate for uniqueness on cart + supplier TODO
 
-	attr_accessor :note
-	attr_accessor :supplier_org
-	attr_accessor :buyer_org
-	attr_accessor :cart_id
+	#attr_accessible :note,:supplier_org,:buyer_org,:cart_id
+	# attr_accessor :note
+	# attr_accessor :supplier_org
+	# attr_accessor :buyer_org
+	# attr_accessor :cart_id
 
 	def self.alphabetical_by_supplier_org
 		order(supplier_org: :asc)

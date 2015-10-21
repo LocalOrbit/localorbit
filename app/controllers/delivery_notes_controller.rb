@@ -8,19 +8,20 @@ class DeliveryNotesController < ApplicationController
 	end
 
 	def new
-		#@delivery_note = DeliveryNote.new#(cart_id: find_cart)
-		# back and forth between parameter posting and stack level somewhere
-
+		dn = DeliveryNote.where(cart_id:find_cart,supplier_org:params[:supplier])
+		if dn.any?
+			render "/:#{dn.first.id}/edit/"
+		end
 	end
 
 	def create
 		@cart = Cart.find(find_cart)
 		@buyer_org = current_organization
 
-		dn = DeliveryNote.new(delivery_note_params)
-		@delivery_note = dn.dup
+		#@dn 
+		@delivery_note = DeliveryNote.create(delivery_note_params)#dn.dup
 		# accurately gettin hash, not saving paramers in object correctly; TODO
-		if @delivery_note.save#.save
+		if @delivery_note.persisted?#.save
 			redirect_to "/cart" # tmp for cart path
 		else
 			render :new # need to pass the correct parameters here
@@ -35,7 +36,7 @@ class DeliveryNotesController < ApplicationController
 	def update
 		if @delivery_note.update_attributes(delivery_note_params) # does that exist here
 			redirect_to delivery_notes_path(@cart.id) # each cart has only one buyer org. this could be a problem though, not set upu for it anymore
-		else
+		else # probably instead here shoudl be updating the attrs
 			render :edit # hm, may not use this ultimately
 		end
 	end
