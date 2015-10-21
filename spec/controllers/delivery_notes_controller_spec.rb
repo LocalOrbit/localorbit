@@ -4,11 +4,14 @@ describe DeliveryNotesController do
 	let!(:market)   { create(:market, :with_address, :with_delivery_schedule) }
   let!(:delivery) { market.delivery_schedules.first.next_delivery }
   let!(:seller)   { create(:organization, :seller, :single_location, markets: [market]) }
+  let!(:seller2)   { create(:organization, :seller, :single_location, markets: [market]) }
+
   let!(:product)  { create(:product, :sellable, organization: seller) }
 
   let!(:buyer)    { create(:organization, :buyer, :single_location, markets: [market]) }
   let!(:user)     { create(:user, organizations: [buyer]) }
-
+  let!(:seller_user) {create(:user, organizations: [seller])}
+  let!(:other_seller_user) {create(:user, organizations: [seller2])}
   let!(:cart)     { create(:cart, market: market, organization: buyer, delivery: delivery, location: buyer.locations.first, user: user) }
 
   before do
