@@ -367,6 +367,7 @@ GEM
       actionpack (>= 3.0.0)
       activesupport (>= 3.0.0)
     kgio (2.10.0)
+    kiba (0.6.1)
     konacha (3.5.1)
       actionpack (>= 3.1, < 5)
       capybara
@@ -679,6 +680,7 @@ DEPENDENCIES
   jquery-ui-rails
   jwt
   kaminari
+  kiba
   konacha
   konacha-chai-matchers
   launchy
