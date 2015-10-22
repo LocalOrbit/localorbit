@@ -22,15 +22,20 @@ $ ->
         data: $(el).data("cart-item")
         el: $(el)
 
-    update: (data, silent)->
-      if (this.data.quantity == 0) && (data.quantity > 0) && (silent != true)
-        CartLink.showMessage("Added to cart!")
+    update: (data, silent) ->
+      msg = ""
 
-      if (this.data.quantity > 0) && (data.quantity == 0) && (silent != true)
-        CartLink.showMessage("Removed from cart!")
+      if (silent != true)
+        if (this.data.quantity == 0) && (data.quantity > 0)
+          msg = "Added to cart!"
 
-      if (this.data.quantity > 0) && (data.quantity > 0) && (silent != true)
-        CartLink.showMessage("Quantity updated!")
+        else if (this.data.quantity > 0) && (data.quantity == 0)
+          msg = "Removed from cart!"
+
+        else if (this.data.quantity > 0) && (data.quantity > 0)
+          msg = "Quantity updated!"
+
+      CartLink.deferredUpdateMessage(msg)
 
       @data = data
       @updateView()
@@ -85,6 +90,12 @@ $ ->
           counter.attr("data-count", count.toString())
           counter.find(".counter").text(count.toString())
           counter.data('count', count)
+
+          msg = counter.data('message')
+          if msg
+            CartLink.showMessage(msg)
+            counter.data('message', '')
+
           if count > 0
             $('#review_cart').removeClass('is-hidden')
           else

@@ -6,53 +6,64 @@
   </div>
 </div>
 
+<table class="product-table product-table--admin sortable">
+  <thead class="stickable">
+  <tr>
+    <%= content_tag(:th, 'Supplier', data: {column: 'seller'},
+                    class: "hidden-mobile #{column_sort_classes("seller")}") if current_user.multi_organization_membership? %>
+    <%= content_tag(:th, 'Market', data: {column: 'market'},
+                    class: "hidden-mobile #{column_sort_classes("market")}") if current_user.multi_market_membership? %>
+    <th data-column="name" class="<%= column_sort_classes("name") %>">Name</th>
+    <th data-column="price" class="<%= column_sort_classes("price") %>">Pricing</th>
+    <th data-column="stock" class="<%= column_sort_classes("stock") %>">Available</th>
+    <th>&nbsp;</th>
+  </tr>
+  </thead>
 
-  <table class="product-table product-table--admin sortable">
-    <thead class="stickable">
-      <tr>
-        <%= content_tag(:th, 'Supplier', data: {column: 'seller'}, class: "hidden-mobile #{column_sort_classes("seller")}") if current_user.multi_organization_membership? %>
-        <%= content_tag(:th, 'Market', data: {column: 'market'}, class: "hidden-mobile #{column_sort_classes("market")}") if current_user.multi_market_membership? %>
-        <th data-column="name" class="<%= column_sort_classes("name") %>">Name</th>
-        <th data-column="price" class="<%= column_sort_classes("price") %>">Pricing</th>
-        <th data-column="stock" class="<%= column_sort_classes("stock") %>">Available</th>
-        <th>&nbsp;</th>
-      </tr>
-    </thead>
-    <% @products.decorate.each do |product| %>
+  <% @products.decorate.each do |product| %>
       <tr class="product-row <%= cycle "odd", "even" %>">
-        <%= content_tag(:td, link_to(product.organization_name, [:admin, product.organization]), class: 'seller hidden-mobile') if current_user.multi_organization_membership? %>
-        <%= content_tag(:td, link_to(product.market_name, [:admin, product.organization.original_market]), class: 'market hidden-mobile') if current_user.multi_market_membership? %>
-        <td class="name product-name"><%= link_to product.name_and_unit, [:admin, product] %></td>
+        <%= content_tag(:td, link_to(product.organization_name, [:admin, product.organization]),
+                        class: 'seller hidden-mobile') if current_user.multi_organization_membership? %>
+        <%= content_tag(:td, link_to(product.market_name, [:admin, product.organization.original_market]),
+                        class: 'market hidden-mobile') if current_user.multi_market_membership? %>
+        <td class="name product-name">
+          <%= link_to product.name_and_unit, [:admin, product] %>
+        </td>
         <td class="pricing">
           <ul class="l-inline-list">
             <% product.prices.view_sorted.decorate.each do |price| %>
-            <li>
-              <%= link_to price.quick_info, "#edit_price_#{price.id}", class: 'edit-toggle popup-toggle' %>
-              <%= render partial: "edit_price_advanced", locals: { price: price } %>
-            </li>
+                <li>
+                  <%= link_to price.quick_info, "#edit_price_#{price.id}", class: 'edit-toggle popup-toggle' %>
+                  <%= render partial: "edit_price_advanced", locals: { price: price } %>
+                </li>
             <% end %>
           </ul>
         </td>
         <td class="stock">
           <% if product.use_simple_inventory? %>
-            <%= link_to product.available_inventory, "#edit_product_#{product.id}", class: "edit-toggle popup-toggle" %>
-            <%= render partial: "edit_lot", locals: { product: product } %>
+              <%= link_to product.available_inventory, "#edit_product_#{product.id}",
+                          class: "edit-toggle popup-toggle" %>
+              <%= render partial: "edit_lot", locals: { product: product } %>
           <% else %>
-            <%= link_to product.available_inventory, "#add_inventory_product_#{product.id}", class: "edit-toggle popup-toggle" %>
-            <%= render partial: "edit_lot_advanced", locals: { product: product } %>
+              <%= link_to product.available_inventory, "#add_inventory_product_#{product.id}",
+                          class: "edit-toggle popup-toggle" %>
+              <%= render partial: "edit_lot_advanced", locals: { product: product } %>
           <% end %>
         </td>
-        <td class="delete action-link"><%= link_to raw('&#57418;'), [:admin, product], method: :delete, data: { confirm: "Are you sure you want to delete this product?" }, title: "Delete", class: "font-icon" %></td>
+        <td class="delete action-link">
+          <%= link_to raw('&#57418;'), [:admin, product], method: :delete,
+                      data: { confirm: "Are you sure you want to delete this product?" },
+                      title: "Delete", class: "font-icon" %>
+        </td>
       </tr>
-    <% end %>
-  </table>
-
+  <% end %>
+</table>
 
 <%= paginate @products %>
 
 <% if @products.none? %>
-  <div class="info-note">
-    <h2>No Results</h2>
-    This table is empty, either because there is no data, or because the filter you've applied is hiding it.
-  </div>
+    <div class="info-note">
+      <h2>No Results</h2>
+      This table is empty, either because there is no data, or because the filter you've applied is hiding it.
+    </div>
 <% end %>

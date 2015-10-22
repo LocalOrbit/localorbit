@@ -114,6 +114,7 @@ group :development, :test do
   gem "konacha-chai-matchers"
   gem "poltergeist"
   gem "webmock"
+  gem 'capybara-slow_finder_errors'
 end
 
 group :test do

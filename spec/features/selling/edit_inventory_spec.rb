@@ -1,11 +1,13 @@
 require "spec_helper"
 
-describe "Editing advanced inventory" do
+describe "Editing inventory" do
   let(:user) { create(:user) }
   let(:product) { create(:product, use_simple_inventory: false) }
   let!(:lot) { create(:lot, product: product, quantity: 93) }
   let!(:lot2) { create(:lot, product: product, quantity: 88) }
   let(:market)  { create(:market, organizations: [product.organization]) }
+
+  let(:new_lot_form_id) { "#p#{product.id}_new_lot" }
 
   before do
     switch_to_subdomain(market.subdomain)
@@ -19,12 +21,11 @@ describe "Editing advanced inventory" do
   end
 
   describe "displays the new lot form", js: true do
-
     it "by clicking the add lot button" do
-      within "#new_lot" do
+      within new_lot_form_id do
         click_link "Add Lot"
       end
-      expect("#add-row.open-row").to be
+      expect(".add-row").to be
     end
   end
 
@@ -34,7 +35,7 @@ describe "Editing advanced inventory" do
     end
 
     it "disables the new_lot form fields" do
-      expect("#add-lot.is-hidden").to be
+      expect(".add-row.is-hidden").to be
     end
 
     it "opens the clicked on lot row to editing" do
@@ -44,7 +45,7 @@ describe "Editing advanced inventory" do
     end
 
     it "changes the action and method for the form" do
-      form = page.find("#new_lot")
+      form = page.find(new_lot_form_id)
       hidden_method = page.find("[name=_method]", visible: false)
 
       expect(form["action"]).to eql("/admin/products/#{product.id}/lots/#{lot.id}")
@@ -77,7 +78,7 @@ describe "Editing advanced inventory" do
       end
 
       it "sets the form url back" do
-        form = page.find("#new_lot")
+        form = page.find(new_lot_form_id)
         expect(form["action"]).to eql("/admin/products/#{product.id}/lots")
         expect(form["method"]).to eql("post")
       end
@@ -121,7 +122,7 @@ describe "Editing advanced inventory" do
         end
 
         it "does not show the new lot form" do
-          expect("#add-row.is-hidden").to be
+          expect(".add-row.is-hidden").to be
         end
       end
 

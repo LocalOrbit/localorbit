@@ -120,20 +120,6 @@ describe "Plan Limits" do
         end
       end
 
-      context "from the product detail page", :js do
-        before do
-          visit admin_product_path(product)
-        end
-
-        it "is not allowed to use advanced inventory" do
-          within(".tabs") do
-            expect(page).to_not have_content("Inventory")
-          end
-
-          expect(page).to_not have_content("Use simple inventory management")
-        end
-      end
-
       context "from product price page with existing prices", :js do
         before do
           visit admin_product_prices_path(product)

@@ -72,7 +72,7 @@ module Dom
   end
 
   class LotRow < EditableTableRow
-    selector "#inventory_table tbody tr.lot"
+    selector ".inventory-table tbody tr.lot"
 
     def click_number
       node.find(".number .edit-trigger").trigger(:click)
@@ -93,6 +93,10 @@ module Dom
     def quantity
       node.find(".quantity").text
     end
+
+    def self.all_classes
+      Dom::LotRow.all.map { |r| r.node[:class] }
+    end
   end
 
   class MarketSellers < Domino
@@ -104,20 +108,18 @@ module Dom
   end
 
   class NewLotForm < LotRow
-    selector "#inventory_table thead tr.lot"
-
     def quantity
-      node.find("#lot_quantity")
+      node.find("input[name='lot[quantity]']")
     end
 
     def expires_at
-      node.find("#lot_expires_at")
+      node.find("input[name='lot[expires_at]']")
     end
   end
 
   class PricingRow < EditableTableRow
     include Dom::Deletable
-    selector "#pricing_table tbody tr.price"
+    selector ".pricing-table tbody tr.price"
 
     def click_buyer
       node.find(".buyer").click
@@ -150,21 +152,25 @@ module Dom
     def click_edit
       node.find_link("Edit").click
     end
+
+    def self.all_classes
+      Dom::PricingRow.all.map { |r| r.node[:class] }
+    end
   end
 
   class NewPricingForm < PricingRow
     selector ".add-price"
 
     def min_quantity
-      node.find("#price_min_quantity")
+      node.find("input[name='price[min_quantity]']")
     end
 
     def sale_price
-      node.find("#price_sale_price")
+      node.find("input[name='price[sale_price]']")
     end
 
     def net_price
-      node.find("#price_net_price")
+      node.find("input[name='price[net_price]']")
     end
   end
 

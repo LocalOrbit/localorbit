@@ -3,31 +3,33 @@
     Request a New Unit <button class="close"><i class="font-icon icon-close"></i></button>
   </div>
   <div class="popup-body">
-    <p>Adding new units to the system requires
-    approval. Please enter the unit you'd like to
-    have added. We'll have it added for you
-    within 24 hours.</p>
+    <p>
+      Adding new units to the system requires
+      approval. Please enter the unit you'd like to
+      have added. We'll have it added for you
+      within 24 hours.
+    </p>
 
     <%= form_tag admin_unit_request_path, remote: true do %>
       <% fields_for :unit do |f| %>
-      <div class="field">
-        <%= f.label :singular %><br>
-        <%= f.text_field "singular", class: "column--full" %>
-      </div>
+        <div class="field">
+          <%= f.label :singular %><br>
+          <%= f.text_field "singular", class: "column--full" %>
+        </div>
 
-      <div class="field">
-        <%= f.label :plural %><br>
-        <%= f.text_field "plural", class: "column--full" %>
-      </div>
+        <div class="field">
+          <%= f.label :plural %><br>
+          <%= f.text_field "plural", class: "column--full" %>
+        </div>
 
-      <div>
-        <%= f.label :additional_notes, "Additional Notes" %><br>
-        <%= f.text_area "additional_notes",  size: 2 %>
-      </div>
+        <div>
+          <%= f.label :additional_notes, "Additional Notes" %><br>
+          <%= f.text_area "additional_notes",  size: 2 %>
+        </div>
 
-      <div class="form-actions">
-        <%= submit_tag "Request Unit" %>
-      </div>
+        <div class="form-actions">
+          <%= submit_tag "Request Unit" %>
+        </div>
       <% end %>
     <% end %>
   </div>
