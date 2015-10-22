@@ -111,6 +111,8 @@ GEM
       rack (>= 1.0.0)
       rack-test (>= 0.5.4)
       xpath (~> 2.0)
+    capybara-slow_finder_errors (0.1.2)
+      capybara (~> 2.0)
     celluloid (0.16.0)
       timers (~> 4.0.0)
     chunky_png (1.3.1)
@@ -641,6 +643,7 @@ DEPENDENCIES
   bullet
   byebug
   capybara
+  capybara-slow_finder_errors
   codeclimate-test-reporter
   coffee-rails (~> 4.0.0)
   color

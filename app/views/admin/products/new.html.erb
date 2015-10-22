@@ -1,6 +1,9 @@
 <%= render "header" %>
+
 <div class="row row--partial">
-  <%= form_for [:admin, @product], html: { class: "product column column--half", data: { organizations: @organizations.to_json(include: :locations), type: 'new'}} do |f| %>
+  <%= form_for [:admin, @product], html: { class: "product column column--half",
+                                           data: { organizations: @organizations.to_json(include: :locations),
+                                                   type: 'new'} } do |f| %>
     <%= render "fields", {f: f} %>
 
     <div class="row form-actions">

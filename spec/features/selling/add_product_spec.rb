@@ -99,14 +99,6 @@ describe "Adding a product", chosen_js: true do
       visit "/admin/products/new"
     end
 
-    it "defaults to simple inventory" do
-      simple_inventory_checkbox = page.find_field("Use simple inventory management")
-      inventory_quantity = page.find_field("Current inventory")
-
-      expect(simple_inventory_checkbox).to be_checked
-      expect(inventory_quantity.value).to eql("0")
-    end
-
     it "defaults to using all delivery schedules" do
       expect(find_field("Make product available on all market delivery dates")).to be_checked
     end
@@ -197,35 +189,6 @@ describe "Adding a product", chosen_js: true do
       expect(page).to have_css("img[alt='Red Grapes']")
     end
 
-    it "adding simple inventory for the first time creates a new lot for the product", js: true do
-      fill_in_required_fields(:with_chosen)
-      select_from_chosen "Pounds", from: "Unit"
-      fill_in("Current inventory", with: 33)
-
-      click_button "Save and Continue"
-      expect(page).to have_content("Added Red Grapes")
-
-      click_link "Product Info"
-
-      expect(page).to have_checked_field("Use simple inventory management")
-      expect(page.find_field("Current inventory").value).to eql("33")
-
-      expect(page).to have_content("Uncheck this to use advanced inventory tracking with lot numbers and expiration dates.")
-      expect(page).to have_content("Pounds")
-
-      within(".tabs") do
-        expect(page).to_not have_content("Inventory")
-      end
-    end
-
-    it "adding a product with advanced inventory hides the simple inventory field", :js do
-      expect(page).to have_content("Current inventory")
-
-      uncheck "Use simple inventory management"
-
-      expect(page).to_not have_content("Current inventory")
-    end
-
     context "using the choose category typeahead", js: true do
       let(:category_select) { Dom::CategorySelect.first }
 
@@ -293,9 +256,6 @@ describe "Adding a product", chosen_js: true do
         fill_in "Unit description", with: "48 lbs"
         fill_in "Long description", with: "There are many kinds of apples."
 
-        fill_in "Current inventory", with: "12"
-        uncheck "Use simple inventory management"
-
         uncheck :seller_info
 
         select loc1.name, from: "Where"
@@ -311,8 +271,7 @@ describe "Adding a product", chosen_js: true do
 
         expect(current_path).to eql(admin_product_lots_path(Product.last))
 
-        lot_rows = Dom::LotRow.all
-        expect(lot_rows.count).to eq(0)
+        expect(Dom::LotRow.all_classes).to eq(["lot add-row editing"])
       end
 
       it "selects all delivery schedules by default" do
@@ -324,8 +283,6 @@ describe "Adding a product", chosen_js: true do
         select_from_chosen "Bushels", from: "Unit"
         fill_in "Unit description", with: "48 lbs"
         fill_in "Long description", with: "There are many kinds of apples."
-
-        fill_in "Current inventory", with: "12"
 
         click_button "Save and Continue"
 
@@ -354,8 +311,6 @@ describe "Adding a product", chosen_js: true do
         select_from_chosen "Bushels", from: "Unit"
         fill_in "Long description", with: "There are many kinds of apples."
 
-        fill_in "Current inventory", with: "12"
-
         uncheck "Make product available on all market delivery dates"
         Dom::Admin::ProductDelivery.find_by_weekday("Tuesdays").uncheck!
 
@@ -382,8 +337,6 @@ describe "Adding a product", chosen_js: true do
         select_from_chosen "Bushels", from: "Unit"
         fill_in "Long description", with: "There are many kinds of apples."
 
-        fill_in "Current inventory", with: "12"
-
         uncheck "Make product available on all market delivery dates"
         expect(Dom::Admin::ProductDelivery.find_by_weekday("Mondays").node.find("input")).to be_disabled
       end
@@ -391,13 +344,9 @@ describe "Adding a product", chosen_js: true do
 
     context "when the product information is invalid", js: true do
       it "does not create the product" do
-        expect(page).to have_content("Current inventory")
-        uncheck "Use simple inventory management"
-
         click_button "Save and Continue"
         expect(page).to have_content("Name can't be blank")
         expect(page).to have_content("Category can't be blank")
-        expect(page).to_not have_content("Current inventory")
         expect(page).to have_checked_field("Use Supplier info from my account.")
 
         within(".tabs") do
@@ -414,19 +363,6 @@ describe "Adding a product", chosen_js: true do
         expect(Dom::Admin::ProductDelivery.find_by_weekday("Mondays")).to be_checked
         expect(Dom::Admin::ProductDelivery.find_by_weekday("Tuesdays")).to_not be_checked
       end
-    end
-
-    it "organization in multiple markets defaults to simple inventory" do
-      org.markets << create(:market, :with_addresses)
-
-      # Refresh to grab the new market
-      visit "/admin/products/new"
-
-      simple_inventory_checkbox = page.find_field("Use simple inventory management")
-      inventory_quantity = page.find_field("Current inventory")
-
-      expect(simple_inventory_checkbox).to be_checked
-      expect(inventory_quantity.value).to eql("0")
     end
   end
 
@@ -541,10 +477,7 @@ describe "Adding a product", chosen_js: true do
 
     it "does not save a product with invalid product info", js: true do
       select org2.name, from: "Supplier Organization"
-
-      expect(page).to have_content("Current inventory")
-      uncheck "Use simple inventory management"
-      expect(page).not_to have_content("Current inventory")
+      uncheck 'seller_info'
 
       click_button "Save and Continue"
 
@@ -552,15 +485,8 @@ describe "Adding a product", chosen_js: true do
       expect(page).to have_content("Name can't be blank")
       expect(page).to have_content("Category can't be blank")
 
-      # Maintains inventory selections
-      expect(page).not_to have_content("Current inventory")
-      expect(page).to have_unchecked_field("Use simple inventory management")
-      within(".tabs") do
-        expect(page).to have_content("Inventory")
-      end
-
       # Maintains organization selection
-      expect(page).to have_checked_field("Use Supplier info from my account.")
+      expect(page).not_to have_checked_field("Use Supplier info from my account.")
       expect(page).not_to have_content("No Organization Selected")
     end
   end
@@ -574,36 +500,51 @@ describe "Adding a product", chosen_js: true do
       visit "/admin/products/new"
     end
 
-    it "makes the user choose an organization to add the product for", js: true do
+    it "makes the user choose an organization to add the product for" do
       select org2.name, from: "Supplier Organization"
 
       fill_in_required_fields(:with_chosen)
-
-      fill_in "product_simple_inventory", with: "30"
 
       click_button "Save and Continue"
 
       expect(page).to have_content("Added Red Grapes")
 
-      expect(page).to have_content(stub_warning_pricing)
+      expect(page).to have_content(stub_warning_both)
       expect(Product.last.organization).to eql(org2)
     end
 
-    it "alerts user that product will not appear in the Shop until price/inventory are added" do
-      expect(page).to_not have_content(stub_warning_both)
-      select org2.name, from: "Supplier Organization"
+    describe "alerts user that product will not appear in the Shop" do
+      before do
+        expect(page).to_not have_content(stub_warning_both)
+        select org2.name, from: "Supplier Organization"
 
-      # Wait for delivery schedule load to finish
-      expect(page).to have_checked_field(tuesday_schedule_description, disabled: true)
+        # Wait for delivery schedule load to finish
+        expect(page).to have_checked_field(tuesday_schedule_description, disabled: true)
 
-      fill_in_required_fields(:with_chosen)
+        fill_in_required_fields(:with_chosen)
 
-      click_button "Save and Continue"
+        click_button "Save and Continue"
+      end
 
-      fill_in "price_net_price", with: "3.00"
-      fill_in "price_sale_price", with: "2.00"
-      click_button "Add"
-      expect(page).to have_content(stub_warning_inventory)
+      it "until inventory are added" do
+        expect(page).to have_content(stub_warning_both)
+
+        click_link "Continue to Pricing"
+
+        expect(page).to have_content(stub_warning_both)
+        fill_in "price[net_price]", with: "3.00"
+        fill_in "price[sale_price]", with: "2.00"
+        click_button "Add"
+        expect(page).to have_content(stub_warning_inventory)
+      end
+
+      it "until prices are added" do
+        expect(page).to have_content(stub_warning_both)
+
+        fill_in "lot[quantity]", with: "42"
+        click_button "Add"
+        expect(page).to have_content(stub_warning_pricing)
+      end
     end
   end
 
