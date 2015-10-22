@@ -1,39 +1,41 @@
-<div class="label-heading">
-  PRODUCT
-</div>
 <div class="label-content">
-  <div>
-    <div class="left-code">
-      <div class="label-row">
-        <span class="small-text">For delivery on:</span><br/>
-        <%= order[:deliver_on] %>
+  <div class="label-row">
+    <div>
+      <div class="left-code">
+        <span class="small-label">For delivery on:</span><br/>
+        <span class="small-text"><%= order[:deliver_on] %></span>
       </div>
-      <div class="label-row">
-        <span class="small-text">Order #:</span><br/>
-        <%= order[:order_number] %>
-      </div>
-      <div class="label-row">
-        <span class="small-text">Buyer</span><br/>
-        <%= order[:buyer_name] %>
-      </div>
-      <div class="label-row">
-        <span class="small-text">Product</span><br/>
-        <%= product[:product_name] %>
-        <% if product[:product_code].present? %>
-            | <%= product[:product_code] %>
-        <% end %>
-        <br/>
-        <span style="font-size:80%">
-          <%= "#{product[:quantity]} #{product[:unit_desc]}" %>
-          <%= "| #{product[:lot_desc]}" if product[:lot_desc] %>
-        </span>
-      </div>
-      <div class="label-row">
-        <span class="small-text">Supplier</span><br/>
-        <%= product[:producer_name] %>
+      <div class="right-code">
+        <span class="small-label">Order #:</span><br/>
+        <span class="small-text"><%= order[:order_number] %></span>
       </div>
     </div>
-    <div class="right-code">
+  </div>
+  <div class="label-row">
+    <span class="small-label">Buyer</span><br/>
+    <%= order[:buyer_name] %>
+  </div>
+  <div>
+    <div class="label-row">
+    <span class="small-label">Product</span><br/>
+    <span class="small-text"><%= product[:product_name] %>
+    <% if product[:product_code].present? %>
+        | <%= product[:product_code] %>
+    <% end %>
+    </span>
+    <br/>
+    <span style="font-size:80%">
+        <span class="small-text"><%= "#{product[:quantity]} #{product[:unit_desc]}" %></span>
+        <span class="small-text"><%= "| #{product[:lot_desc]}" if product[:lot_desc] %></span>
+    </span>
+    </div>
+    <div class="left-code-qr">
+      <div class="label-row">
+        <span class="small-label">Supplier</span><br/>
+        <span class="small-text"><%= product[:producer_name] %></span>
+      </div>
+    </div>
+    <div class="right-code-qr">
       <%= image_tag ensure_full_url(order[:qr_code_url]), :class=>"qr-code" %><br/>
       <% if order[:market_logo_url] %>
           <%= image_tag ensure_full_url(order[:market_logo_url]) %>
@@ -41,3 +43,4 @@
     </div>
   </div>
 </div>
+

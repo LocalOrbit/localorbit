@@ -12,13 +12,14 @@
       page-break-after: always;
       font-family: "Open Sans Condensed";
       line-height: 110%;
-      margin:0;
-      padding:0;
+      margin-left: .25in;
+      margin-top: 50px;
+      padding-top:50px;
       font-size: 16px;
-      min-height: 1030px;
-      max-height: 1030px;
-      min-width: 795px;
-      max-width: 795px;
+      min-height: 11in;
+      max-height: 11in;
+      min-width: 8.5in;
+      max-width: 8.5in;
       position: relative;
       overflow:hidden;
       white-space: nowrap;
@@ -31,13 +32,15 @@
       overflow: hidden;
       float: left;
     }
-    .page-sixth {
-        min-width: 395px;
-        max-width: 395px;
-        min-height: 350px;
-        max-height: 350px;
+    .page-fifteenth {
+        min-width: 2.625in;
+        max-width: 2.625in;
+        min-height: 2in;
+        max-height: 2in;
         overflow: hidden;
         float: left;
+        border: 1px solid #EEE;
+        margin-right: .125in;
     }
     .label-box {
       min-width: 375px;
@@ -70,7 +73,8 @@
       float: left;
     }
     .label-content {
-      padding: 10%;
+
+      padding: 1%;
       font-weight: 700;
     }
     .label-heading {
@@ -87,12 +91,15 @@
     }
     .label-row {
       width: 100%;
-      margin-bottom: 8px;
+      margin-bottom: 4px;
       float: left;
     }
-    .small-text {
+    .small-label {
       font-size: 80%;
       font-weight: 400;
+    }
+    .small-text {
+        font-size: 80%;
     }
     .footer-row {
       margin-top: 10px;
@@ -103,52 +110,119 @@
     }
     .left-code {
       float: left;
-        width: 50%
+        width: 1.1in;
+    }
+    .left-code-qr {
+        float: left;
+        width: 1.9in;
     }
     .right-code {
-      float: right;
+      float: left;
+        margin-left: 5px;
+        border-left: 1px solid #CCC;
+        padding-left: 5px;
+        width: 1.5in;
     }
-    .right-code img {
-        max-width: 90px;
-        max-height: 90px;
+    .right-code-qr {
+        float: left;
+        width: 1.4in;
+    }
+    .right-code-qr img {
+        max-width: 50px;
+        max-height: 50px;
     }
     .qr-code {
-      float: right;
     }
   </style>
   <% params[:pages].each do |page| %>
     <div class="page">
-        <div class="page-sixth">
-          <div class="label-box upper-label left-label">
+      <div class="label-row">
+        <div class="page-fifteenth">
+          <div class="label-box">
             <%= render partial: page[:a][:template], locals: page[:a][:data] if page[:a] %>
           </div>
         </div>
-      <div class="page-sixth">
-        <div class="label-box upper-label right-label">
-          <%= render partial: page[:b][:template], locals: page[:b][:data] if page[:b] %>
+        <div class="page-fifteenth">
+            <div class="label-box">
+              <%= render partial: page[:b][:template], locals: page[:b][:data] if page[:b] %>
+            </div>
+        </div>
+        <div class="page-fifteenth">
+            <div class="label-box">
+              <%= render partial: page[:c][:template], locals: page[:c][:data] if page[:c] %>
+            </div>
         </div>
       </div>
-      <div class="page-sixth">
-        <div class="label-box middle-label left-label">
-          <%= render partial: page[:c][:template], locals: page[:c][:data] if page[:c] %>
+      <div class="label-row">
+        <div class="page-fifteenth">
+            <div class="label-box">
+              <%= render partial: page[:d][:template], locals: page[:d][:data] if page[:d] %>
+            </div>
+        </div>
+        <div class="page-fifteenth">
+          <div class="label-box">
+            <%= render partial: page[:e][:template], locals: page[:e][:data] if page[:e] %>
+          </div>
+        </div>
+        <div class="page-fifteenth">
+          <div class="label-box">
+            <%= render partial: page[:f][:template], locals: page[:f][:data] if page[:f] %>
+          </div>
         </div>
       </div>
-      <div class="page-sixth">
-        <div class="label-box middle-label right-label">
-          <%= render partial: page[:d][:template], locals: page[:d][:data] if page[:d] %>
+      <div class="label-row">
+        <div class="page-fifteenth">
+          <div class="label-box">
+            <%= render partial: page[:g][:template], locals: page[:g][:data] if page[:g] %>
+          </div>
+        </div>
+        <div class="page-fifteenth">
+          <div class="label-box">
+            <%= render partial: page[:h][:template], locals: page[:h][:data] if page[:h] %>
+          </div>
+        </div>
+        <div class="page-fifteenth">
+          <div class="label-box">
+            <%= render partial: page[:i][:template], locals: page[:i][:data] if page[:i] %>
+          </div>
         </div>
       </div>
-      <div class="page-sixth">
-        <div class="label-box lower-label left-label">
-          <%= render partial: page[:c][:template], locals: page[:e][:data] if page[:e] %>
+      <div class="label-row">
+        <div class="page-fifteenth">
+          <div class="label-box">
+            <%= render partial: page[:aj][:template], locals: page[:j][:data] if page[:j] %>
+          </div>
+        </div>
+        <div class="page-fifteenth">
+          <div class="label-box">
+            <%= render partial: page[:k][:template], locals: page[:k][:data] if page[:k] %>
+          </div>
+        </div>
+        <div class="page-fifteenth">
+          <div class="label-box">
+            <%= render partial: page[:l][:template], locals: page[:l][:data] if page[:l] %>
+          </div>
         </div>
       </div>
-      <div class="page-sixth">
-        <div class="label-box lower-label right-label">
-          <%= render partial: page[:d][:template], locals: page[:f][:data] if page[:f] %>
+      <div class="label-row">
+        <div class="page-fifteenth">
+          <div class="label-box">
+            <%= render partial: page[:m][:template], locals: page[:m][:data] if page[:m] %>
+          </div>
+        </div>
+        <div class="page-fifteenth">
+          <div class="label-box">
+            <%= render partial: page[:n][:template], locals: page[:n][:data] if page[:n] %>
+          </div>
+        </div>
+        <div class="page-fifteenth">
+          <div class="label-box">
+            <%= render partial: page[:o][:template], locals: page[:o][:data] if page[:o] %>
+          </div>
         </div>
       </div>
     </div>
+  </div>
   <% end %>
 </body>
 </html>
