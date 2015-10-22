@@ -3,7 +3,7 @@ module PackingLabels
     class << self
       def make_pages(labels, product_labels_only)
         if product_labels_only == "true"
-          labels.each_slice(15).map do |(a,b,c,d,e,f,g,h,i,j,k,l,m,n,o)|
+          labels.each_slice(15).map do |(a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p)|
             {
                 a: a,
                 b: b,
@@ -19,7 +19,8 @@ module PackingLabels
                 l: l,
                 m: m,
                 n: n,
-                o: o
+                o: o,
+                p: p
             }
             end
         else
