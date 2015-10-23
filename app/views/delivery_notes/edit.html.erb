@@ -1,0 +1,15 @@
+
+<div class="row row--partial">
+  <div class="column column--three-fourths">
+    <legend>Update Delivery Note for <%= Organization.find(DeliveryNote.find(params[:id]).supplier_org).name %></legend>
+
+
+    <%= form_for :delivery_note, :url => {:action => "update"}, :method => "post" do |f| %>
+      <%= render 'form', {f: f} %>
+      <div class="form-actions">
+        <%= link_to "Cancel", cart_path(@cart), class: "btn cancel" %>
+        <%= f.submit "Update Note" %>
+      </div>
+    <% end %>
+  </div>
+</div>

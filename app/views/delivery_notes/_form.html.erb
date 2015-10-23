@@ -1,0 +1,20 @@
+<div class="row row--field">
+  <div class="field column column--half column--guttered">
+    <%= f.label :note, "Note Text" %>
+    <span class="tooltip pull-right" data-tooltip="Write here what you want this supplier to know about your order."></span>
+    <br>
+    <%= f.text_field :note, class: "column--full" %>
+  </div>
+</div>
+
+<div>
+  <%= f.hidden_field :supplier_org, value: params[:supplier] %>
+</div>
+
+<div>
+  <%= f.hidden_field :buyer_org, value: params[:buyer] %>
+</div>
+
+<div>
+  <%= f.hidden_field :cart_id, value: params[:current_cart] %>
+</div>
