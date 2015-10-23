@@ -34,7 +34,7 @@ class DeliveryNotesController < ApplicationController
 
 	def update
 		@delivery_note = DeliveryNote.find(params[:id])
-		if @delivery_note.update_attributes!(delivery_note_params) # does that exist here
+		if @delivery_note.update_attributes(note:params[:delivery_note][:note]) # does that exist here
 			redirect_to "/cart"#delivery_notes_path(@cart.id) # each cart has only one buyer org. 
 		else 
 			#render :edit # hm
