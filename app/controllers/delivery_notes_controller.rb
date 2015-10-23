@@ -34,16 +34,19 @@ class DeliveryNotesController < ApplicationController
 
 	def update
 		@delivery_note = DeliveryNote.find(params[:id])
-		if @delivery_note.update_attributes(delivery_note_params) # does that exist here
-			redirect_to delivery_notes_path(@cart.id) # each cart has only one buyer org. this could be a problem though, not set upu for it anymore
-		else # probably instead here shoudl be updating the attrs
-			render :edit # hm, may not use this ultimately
+		if @delivery_note.update_attributes!(delivery_note_params) # does that exist here
+			redirect_to "/cart"#delivery_notes_path(@cart.id) # each cart has only one buyer org. 
+		else 
+			#render :edit # hm
+			#redirect_to edit_delivery_note_path(dn.first.id) # with error flash
+			redirect_to "/delivery_notes" # hmmm test
 		end
 	end
 
 	def destroy
-		DeliveryNote.soft_delete(params[:id])
-		redirect_to delivery_notes_path(@cart.id)
+		DeliveryNote.soft_delete(params[:id]) # TODO warning flash?
+		#redirect_to delivery_notes_path(@cart.id)
+		redirect_to "/cart"
 	end
 
 	private
