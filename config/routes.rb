@@ -200,7 +200,6 @@ Rails.application.routes.draw do
   end
 
   resources :delivery_notes 
-
   post '/delivery_notes/new' => "delivery_notes#create"
 
   get '/products/search' => "products#search"
