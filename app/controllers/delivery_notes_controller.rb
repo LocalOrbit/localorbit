@@ -10,7 +10,7 @@ class DeliveryNotesController < ApplicationController
 	def new
 		dn = DeliveryNote.where(cart_id:find_cart,supplier_org:params[:supplier])
 		if dn.any?
-			render "/:#{dn.first.id}/edit/"
+			redirect_to edit_delivery_note_path(dn.first.id)
 		end
 	end
 
@@ -18,11 +18,9 @@ class DeliveryNotesController < ApplicationController
 		@cart = Cart.find(find_cart)
 		@buyer_org = current_organization
 
-		#@dn 
-		@delivery_note = DeliveryNote.create(delivery_note_params)#dn.dup
-		# accurately gettin hash, not saving paramers in object correctly; TODO
-		if @delivery_note.persisted?#.save
-			redirect_to "/cart" # tmp for cart path
+		@delivery_note = DeliveryNote.create(delivery_note_params)
+		if @delivery_note.persisted?
+			redirect_to "/cart" # cart path
 		else
 			render :new # need to pass the correct parameters here
 			# with error flash
@@ -31,9 +29,11 @@ class DeliveryNotesController < ApplicationController
 	end
 
 	def edit
+		@delivery_note = DeliveryNote.find(params[:id])
 	end
 
 	def update
+		@delivery_note = DeliveryNote.find(params[:id])
 		if @delivery_note.update_attributes(delivery_note_params) # does that exist here
 			redirect_to delivery_notes_path(@cart.id) # each cart has only one buyer org. this could be a problem though, not set upu for it anymore
 		else # probably instead here shoudl be updating the attrs
