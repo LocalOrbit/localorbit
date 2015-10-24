@@ -9,12 +9,10 @@
   <body style='margin: 0; padding: 0;'>
   <style>
     .page{
-      page-break-after: always;
       font-family: "Open Sans Condensed";
       line-height: 110%;
-      margin-left: .25in;
-      margin-top: 50px;
-      padding-top:50px;
+      padding-left: 0.36in;
+      padding-top: 0.41in;
       font-size: 12px;
       min-height: 11in;
       max-height: 11in;
@@ -23,14 +21,6 @@
       position: relative;
       overflow:hidden;
     }
-    .page-quarter {
-      min-width: 395px;
-      max-width: 395px;
-      min-height: 510px;
-      max-height: 510px;
-      overflow: hidden;
-      float: left;
-    }
     .page-sixteenth {
         min-width: 1.9in;
         max-width: 1.9in;
@@ -38,14 +28,16 @@
         max-height: 2.5in;
         float: left;
         border: 1px solid #EEE;
-        margin-right: .125in;
+        border-radius: 5px;
+        margin-right: .0625in;
+        margin-bottom: .0625in;
         overflow: hidden;
     }
     .label-box {
-      min-width: 1.9in;
-      max-width: 1.9in;
-      min-height: 2.5in;
-      max-height: 2.5in;
+        min-width: 1.9in;
+        max-width: 1.9in;
+        min-height: 2.5in;
+        max-height: 2.5in;
     }
     .upper-label { padding-top:  45px; }
     .middle-label { padding-top:  8px; }
@@ -55,19 +47,18 @@
 
     .horizontal {
       -webkit-transform: rotate(-90deg);
-      margin-left: -50px;
-      margin-top: 60px;
-      width: 462px;
-      height: 365px;
+      margin-left: -30px;
+      margin-top: 30px;
+      width: 2.5in;
+      height: 1.9in;
+      overflow: hidden;
     }
     .horizontal .label-row {
       width: 100%;
-      margin-bottom: 2px;
       float: left;
     }
     .order-row {
       width: 100%;
-      padding-bottom: 15px;
       float: left;
     }
     .label-content {
@@ -88,7 +79,6 @@
     }
     .label-row {
       width: 100%;
-      margin-bottom: 4px;
       float: left;
     }
     .small-label {
@@ -123,8 +113,8 @@
         width: .95in;
     }
     .right-code-qr {
-        float: left;
-        margin-left: 10px;
+        float: right;
+        margin-right: 5px;
     }
     .right-code-qr img {
         max-width: 45px;
@@ -224,7 +214,6 @@
         </div>
       </div>
     </div>
-  </div>
   <% end %>
 </body>
 </html>

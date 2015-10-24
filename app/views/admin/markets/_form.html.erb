@@ -130,6 +130,14 @@
     </div>
   <% end %>
 
+  <div class="field">
+    <%= f.label :product_label_format %>
+    <span class="tooltip" data-tooltip="This option defines which density is used on delivery labels"></span>
+    <br>
+    <%= f.radio_button :product_label_format, '4', :checked => true %>&nbsp;4-up&nbsp;&nbsp;
+    <%= f.radio_button :product_label_format, '10' %>&nbsp;10-up&nbsp;&nbsp;
+    <%= f.radio_button :product_label_format, '16' %>&nbsp;16-up&nbsp;&nbsp;
+  </div>
 
   <% if current_user.can_manage_market?(@market) %>
     <div class="row row--field">

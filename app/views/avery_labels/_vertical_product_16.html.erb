@@ -17,11 +17,7 @@
   <div>
     <div class="label-row" style="word-wrap: break-word">
     <span class="small-label">Product</span><br/>
-    <span class="small-text"><%= product[:product_name] %>
-    <% if product[:product_code].present? %>
-        | <%= product[:product_code] %>
-    <% end %>
-    </span>
+    <span class="small-text"><%= product[:product_name] %></span>
     <br/>
     <span style="font-size:80%">
         <span class="small-text"><%= "#{product[:quantity]} #{product[:unit_desc]}" %></span>
@@ -37,6 +33,7 @@
           <% if order[:market_logo_url] %>
               <%= image_tag ensure_full_url(order[:market_logo_url]) %>
           <% end %>
+          &nbsp;
         </div>
         <div class="right-code-qr">
           <%= image_tag ensure_full_url(order[:qr_code_url]), :class=>"qr-code" %><br/>

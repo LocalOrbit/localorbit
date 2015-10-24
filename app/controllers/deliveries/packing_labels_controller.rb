@@ -13,13 +13,15 @@ class Deliveries::PackingLabelsController < ApplicationController
       ProcessPackingLabelsPrintable.perform(
         packing_labels_printable_id: printable.id, 
         request: RequestUrlPresenter.new(request),
-        product_labels_only: product_only
+        product_labels_only: product_only,
+        product_label_format: current_market.product_label_format
       )
     else
       ProcessPackingLabelsPrintable.delay.perform(
         packing_labels_printable_id: printable.id, 
         request: RequestUrlPresenter.new(request),
-        product_labels_only: product_only
+        product_labels_only: product_only,
+        product_label_format: current_market.product_label_format
       )
     end
     track_event EventTracker::DownloadedPackingLabels.name
