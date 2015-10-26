@@ -127,9 +127,9 @@ module CloneProductionHelper
         database: "HEROKU_POSTGRESQL_RED"
       },
       demo: {
-        app: "localorbit-demo",
-        env: "demo",
-        bucket: "localorbit-demo",
+        app: "localorbit-fix",
+        env: "fix",
+        bucket: "localorbit-fixx",
         database: "HEROKU_POSTGRESQL_IVORY"
       },
       # dev1: {
