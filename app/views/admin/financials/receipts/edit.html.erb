@@ -8,7 +8,7 @@
       <%= fields_for @payment do |f| %>
         <div class="field column--half">
           <%= f.label :payment_method, "Payment Method" %><br>
-          <%= f.select :payment_method, [['Cash', 'cash'], ['Check', 'check']], class: "column column--full" %>
+          <%= f.select :payment_method, [['Cash', 'cash'], ['Check', 'check'], ['ACH', 'ach']], class: "column column--full" %>
         </div>
         <div class="field column--half">
           <%= f.label :amount %><br>
