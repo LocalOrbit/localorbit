@@ -41,6 +41,7 @@
       var rows = this.state.products.map(function(product) {
         return ( <lo.ProductRow key={product.id} product={product} hideImages={this.state.hideImages} /> )
       }.bind(this));
+      var self = this;
 
       if(rows.length === 0 && this.state.hasMore === false) {
         rows = (<p>No products found. Try broadening your search, removing any filters, or changing your delivery date to see more results.</p>)
@@ -50,12 +51,12 @@
         <div className="product-list cart_items" style={{padding: "20px"}} data-cart-url={this.props.cartUrl}>
           <InfiniteScroll
             pageStart={0}
-            hasMore={this.state.hasMore}
+            hasMore={self.state.hasMore}
             threshold={50}
-            loadMore={this.loadMore}
+            loadMore={self.loadMore}
             loader={(<p>Loading products....</p>)}
           >
-            <div id="product-search-table" className="product-images-link row pull-right"> <a href="javscript:void(0);" onClick={this.toggleImages}><i className="font-icon" data-icon=""></i> {(this.state.hideImages) ? "Show " : "Hide "} Product Images</a> </div>
+            <div id="product-search-table" className="product-images-link row pull-right"> <a href="javscript:void(0);" onClick={self.toggleImages}><i className="font-icon" data-icon=""></i> {(self.state.hideImages) ? "Show " : "Hide "} Product Images</a> </div>
             {rows}
           </InfiniteScroll>
         </div>

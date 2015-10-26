@@ -30,77 +30,137 @@
       })
     },
 
+    componentWillMount: function() {
+      this.updateDimensions();
+    },
+
+    componentDidMount: function() {
+      window.addEventListener('resize', this.updateDimensions);
+    },
+
+    componentWillUnmount: function() {
+      window.removeEventListener('resize', this.updateDimensions);
+    },
+
+    updateDimensions: function() {
+      this.setState({width: $(window).width()});
+    },
+
     render: function() {
       var gp = this.props.product;
-      var unit_prices = _.map(gp.available, function(p) {
-        return <lo.ProductUnitPrices product={p} />
-      });
 
-      return (
-        <div className="row product-listing">
-          <div className="product-details-container column column--five-twelfths">
-            <img style={{display: (this.props.hideImages) ? "none" : ""}} className="product-image" src={gp.image_url}/>
-            <div className="product-details">
-              <h3>{gp.name}</h3>
-              <h5>From: <a href={"/sellers/" + gp.seller_id}>{gp.seller_name}</a></h5>
-              <p>{gp.short_description}</p>
-              <ul className="meta list-naked l-inline-list clear-before">
-                <li className="organization-name">
-                  <a className="popup-toggle" href={'#product-'+gp.id+'-who'} tabIndex="-1"><i className="font-icon icon-credit"></i>&nbsp;Who</a>
-                  <div className="who-info is-hidden with-anchor top-anchor popup" id={'product-'+gp.id+'-who'}>
-                    <div className="popup-header">
-                      Who <button className="close"><i className="font-icon icon-close"></i></button>
+      var MOBILE_WIDTH = 480;
+
+      if(this.state.width >= MOBILE_WIDTH) {
+        var unit_prices = _.map(gp.available, function(p) {
+          return <lo.ProductUnitPrices product={p} />
+        });
+
+        return (
+          <div className="row product-listing">
+            <div className="product-details-container column column--five-twelfths">
+              <img style={{display: (this.props.hideImages) ? "none" : ""}} className="product-image" src={gp.image_url}/>
+              <div className="product-details">
+                <h3>{gp.name}</h3>
+                <h5>From: <a href={"/sellers/" + gp.seller_id}>{gp.seller_name}</a></h5>
+                <p>{gp.short_description}</p>
+                <ul className="meta list-naked l-inline-list clear-before">
+                  <li className="organization-name">
+                    <a className="popup-toggle" href={'#product-'+gp.id+'-who'} tabIndex="-1"><i className="font-icon icon-credit"></i>&nbsp;Who</a>
+                    <div className="who-info is-hidden with-anchor top-anchor popup" id={'product-'+gp.id+'-who'}>
+                      <div className="popup-header">
+                        Who <button className="close"><i className="font-icon icon-close"></i></button>
+                      </div>
+                      <div className="popup-body">
+                        {gp.who_story}
+                      </div>
                     </div>
-                    <div className="popup-body">
-                      {gp.who_story}
+                  </li>
+                  <li className="how-story">
+                    <a className="popup-toggle" href={'#product-'+gp.id+'-how'} tabIndex="-1"><i className="font-icon icon-archive"></i> How</a>
+                    <div className="how-info is-hidden with-anchor top-anchor popup" id={'product-'+gp.id+'-how'}>
+                      <div className="popup-header">
+                        How <button className="close"><i className="font-icon icon-close"></i></button>
+                      </div>
+                      <div className="popup-body">
+                        {gp.how_story}
+                      </div>
                     </div>
-                  </div>
-                </li>
-                <li className="how-story">
-                  <a className="popup-toggle" href={'#product-'+gp.id+'-how'} tabIndex="-1"><i className="font-icon icon-archive"></i> How</a>
-                  <div className="how-info is-hidden with-anchor top-anchor popup" id={'product-'+gp.id+'-how'}>
-                    <div className="popup-header">
-                      How <button className="close"><i className="font-icon icon-close"></i></button>
+                  </li>
+                  <li className="where">
+                    <a className="popup-toggle" href={'#product-'+gp.id+'-where'} tabIndex="-1"><i className="font-icon icon-direction"></i> Where</a>
+                    <div className="where-info is-hidden with-anchor top-anchor popup" id={'product-'+gp.id+'-where'}>
+                      <div className="popup-header">
+                        {gp.location_label}
+                        <button className="close"><i className="font-icon icon-close"></i></button>
+                      </div>
+                      <img className="location-map" alt="" src="" data-src={gp.location_map_url}/>
                     </div>
-                    <div className="popup-body">
-                      {gp.how_story}
-                    </div>
-                  </div>
-                </li>
-                <li className="where">
-                  <a className="popup-toggle" href={'#product-'+gp.id+'-where'} tabIndex="-1"><i className="font-icon icon-direction"></i> Where</a>
-                  <div className="where-info is-hidden with-anchor top-anchor popup" id={'product-'+gp.id+'-where'}>
-                    <div className="popup-header">
-                      {gp.location_label}
-                      <button className="close"><i className="font-icon icon-close"></i></button>
-                    </div>
-                    <img className="location-map" alt="" src="" data-src={gp.location_map_url}/>
-                  </div>
-                </li>
-              </ul>
+                  </li>
+                </ul>
+              </div>
             </div>
+            <div className="product-details-spacer"> </div>
+            <div className="product-pricing column column--seven-twelfths">
+              <table>
+                <thead>
+                  <th></th>
+                  <th></th>
+                  <th style={{textAlign: "center", color:"#727070", textTransform:"uppercase", fontWeight: "bold", fontSize: "11px"}}>
+                    Order QTY
+                  </th>
+                  <th style={{textAlign: "center", color:"#727070", textTransform:"uppercase", fontWeight: "bold", fontSize: "11px"}}>
+                    Total Cost
+                  </th>
+                </thead>
+                <tbody>
+                  {unit_prices}
+                </tbody>
+              </table>
+            </div>
+            <div style={{clear:"both"}}></div>
           </div>
-          <div className="product-details-spacer"> </div>
-          <div className="product-pricing column column--seven-twelfths">
-            <table>
-              <thead>
-                <th></th>
-                <th></th>
-                <th style={{textAlign: "center", color:"#727070", textTransform:"uppercase", fontWeight: "bold", fontSize: "11px"}}>
-                  Order QTY
-                </th>
-                <th style={{textAlign: "center", color:"#727070", textTransform:"uppercase", fontWeight: "bold", fontSize: "11px"}}>
-                  Total Cost
-                </th>
-              </thead>
-              <tbody>
-                {unit_prices}
-              </tbody>
-            </table>
+        );
+      }
+      else {
+        var unitPrices = _.map(gp.available, function(p) {
+          return <lo.MobileProductUnitPrices product={p} />
+        });
+
+        var inputs = _.map(gp.available, function(p) {
+          return <lo.MobileProductInput product={p} />
+        });
+
+        return (
+          <div className="row product-listing mobile">
+            <div className="product-listing-header">
+              <div className="column--three-fourths pull-left">
+                <h3><a href={"/products/" + gp.id}>{gp.name}</a></h3>
+                <h5>From: <span style={{fontStyle: "italic"}}>{gp.seller_name}</span></h5>
+              </div>
+              <div className="column--fourth pull-left">
+                <a className="btn btn--info btn--small pull-right" style={{padding: "4px 10px", fontSize: "14px"}}><i className="font-icon icon-plus-circle"></i> Info</a>
+              </div>
+            </div>
+            <div style={{clear: "both"}}></div>
+            <div style={{marginTop: "26px"}}>
+              <table className="pricing-table-mobile">
+                <thead>
+                  <tr><th colSpan="4">
+                    PRICING PER UNIT
+                  </th>
+                </tr></thead>
+                <tbody>
+                  {unitPrices}
+                </tbody>
+              </table>
+              <br/>
+            </div>
+            {inputs}
+            <div style={{clear:"both"}}></div>
           </div>
-          <div style={{clear:"both"}}></div>
-        </div>
       );
+      }
     }
   });
 

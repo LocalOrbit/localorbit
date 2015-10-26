@@ -49,8 +49,7 @@
     background: #F2F2F2;
     border-color: #E7E2E2;
     display: inline;
-    width: 60%;
-    margin-left: 30px;
+    width: 65%;
   }
   .btn{ display: inline; margin-top:4px}
   .order-information-container{
@@ -233,7 +232,7 @@
   }
 }
 .product-listing.mobile{
-  display:none !important;
+  // display:none !important;
 }
 
 .featured-product{
@@ -290,7 +289,7 @@
 
   .catalog-search-container{
     padding: 24px 20px;
-    .catalog-search input{width:70%;}
+    .catalog-search input{width:55%;}
   }
   .nav.nav--main a{font-size: 17px;}
   .nav.nav--main a.current::after{ bottom: -16px; }
@@ -472,7 +471,7 @@
   }
 
   .product-listing{
-    // display:none !important;
+    display:none !important;
     &.mobile{
       display:block !important;
     }

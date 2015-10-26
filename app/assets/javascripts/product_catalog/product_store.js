@@ -7,6 +7,7 @@
     "setBaseUrl",
     "loadProducts",
     "loadMoreProducts",
+    "updateProduct",
     "newQuery",
     "newFilters"
   ]);
@@ -28,6 +29,7 @@
       this.listenTo(ProductActions.loadMoreProducts, this.loadMoreProducts);
       this.listenTo(ProductActions.newQuery, this.newQuery);
       this.listenTo(ProductActions.newFilters, this.newFilters);
+      this.listenTo(ProductActions.updateProduct, this.updateProduct);
     },
 
     newFilters: function(category_ids, seller_ids) {
@@ -74,6 +76,17 @@
         }
         return _.extend(general_product, sellers[general_product.seller_id]);
       });
+    },
+
+    updateProduct: function(productId, quantity, totalPrice) {
+      // I can pull out a non-general product from our catalog, edit it, and automatically alter the catalog
+      // itself because JS always passes objects by reference.
+      //
+      // Thanks, Javascript!
+      var product = _.find(_.flatten(_.pluck(this.catalog.products, 'available')), {id: productId});
+      product.cart_item_quantity = quantity;
+      product.total_price = totalPrice;
+      this.trigger(this.catalog);
     },
 
     onLoadError: function(err) {
