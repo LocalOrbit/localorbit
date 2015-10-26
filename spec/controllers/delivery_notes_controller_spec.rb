@@ -12,18 +12,25 @@ describe DeliveryNotesController do
   let!(:user)     { create(:user, organizations: [buyer]) }
   let!(:seller_user) {create(:user, organizations: [seller])}
   let!(:other_seller_user) {create(:user, organizations: [seller2])}
-  let!(:cart)     { create(:cart, market: market, organization: buyer, delivery: delivery, location: buyer.locations.first, user: user) }
+  let!(:cart)     { create(:cart, :with_items, market: market, organization: buyer, delivery: delivery, location: buyer.locations.first, user: user) }
 
   before do
     sign_in(user)
     switch_to_subdomain(market.subdomain)
   end
 
-  it "allows user to add note" do
-  	# buyer user fills in cart (?)
-  	# buyer user can click on link for note on cart page
-  	# buyer user sees "add note" text or whatever on note page and clicks save
-  	# there is a new record in the database with the new temp note text (and the right ids)
+  # it "allows user to add note" do
+  # 	# buyer user fills in cart (?)- with items
+  #   visit cart_path
+  #   expect(page).to have_content("{note}") # todo note icon
+
+  #   click_link "{note}"
+  #   expect(page).to have_content("Add Note")
+  #   # add note, save
+  #   # expect there to exist a note
+  # end
+
+  it "allows user to add note" do 
   end
 
   it "allows user to edit note" do

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150929150255) do
+ActiveRecord::Schema.define(version: 20151026140601) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -184,6 +184,20 @@ ActiveRecord::Schema.define(version: 20150929150255) do
   add_index "deliveries", ["cutoff_time"], name: "index_deliveries_on_cutoff_time", using: :btree
   add_index "deliveries", ["deliver_on"], name: "index_deliveries_on_deliver_on", using: :btree
   add_index "deliveries", ["delivery_schedule_id"], name: "index_deliveries_on_delivery_schedule_id", using: :btree
+
+  create_table "delivery_notes", force: true do |t|
+    t.datetime "updated_at"
+    t.datetime "created_at"
+    t.datetime "deleted_at"
+    t.integer  "supplier_org"
+    t.integer  "buyer_org"
+    t.integer  "cart_id"
+    t.text     "note"
+    t.integer  "order_id"
+  end
+
+  add_index "delivery_notes", ["cart_id", "supplier_org"], name: "index_delivery_notes_on_cart_id_and_supplier_org", unique: true, using: :btree
+  add_index "delivery_notes", ["cart_id"], name: "index_delivery_notes_on_cart_id", using: :btree
 
   create_table "delivery_schedules", force: true do |t|
     t.integer  "market_id"
