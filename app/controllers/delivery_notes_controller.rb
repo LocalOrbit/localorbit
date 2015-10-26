@@ -22,8 +22,8 @@ class DeliveryNotesController < ApplicationController
 		if @delivery_note.persisted?
 			redirect_to "/cart" # cart path
 		else
-			render :new # need to pass the correct parameters here
-			# with error flash
+			render :new 
+			# with error flash? This should never happen.
 		end
 
 	end
@@ -34,18 +34,15 @@ class DeliveryNotesController < ApplicationController
 
 	def update
 		@delivery_note = DeliveryNote.find(params[:id])
-		if @delivery_note.update_attributes(note:params[:delivery_note][:note]) # does that exist here
-			redirect_to "/cart"#delivery_notes_path(@cart.id) # each cart has only one buyer org. 
-		else 
-			#render :edit # hm
-			#redirect_to edit_delivery_note_path(dn.first.id) # with error flash
-			redirect_to "/delivery_notes" # hmmm test
+		if @delivery_note.update_attributes(note:params[:delivery_note][:note])
+			redirect_to "/cart" # Each cart has only one buyer org. This is fine.
+		# else 
+		# 	redirect_to "/delivery_notes" # Should not happen.
 		end
 	end
 
 	def destroy
 		DeliveryNote.soft_delete(params[:id]) # TODO warning flash?
-		#redirect_to delivery_notes_path(@cart.id)
 		redirect_to "/cart"
 	end
 
@@ -56,6 +53,6 @@ class DeliveryNotesController < ApplicationController
 	end
 
 	def find_cart
-		@cart_id = current_cart.id # this should exist in valid session for notes
+		@cart_id = current_cart.id # this should exist in valid session for notes.
 	end
 end
