@@ -265,11 +265,15 @@ class Order < ActiveRecord::Base
     arel_table[:market_id].in(ManagedMarket.where(user_id: user.id).select(:market_id).arel)
   end
 
-  def self.add_notes_reference(notes_arr) # TODO check aeren
-    org = current_organization
-    binding.pry
-    self.delivery_notes = notes_arr.select{|n| n if n.supplier_org == org.id}
-  end
+  # def self.add_notes_reference(notes_arr) # TODO check aeren
+  #   #org = current_organization
+  #   #binding.pry
+  #   self.delivery_notes = notes_arr.select{|n| n if n.supplier_org == current_organization.id}
+  # end
+
+  # def delivery_notes
+  #   self.delivery_notes
+  # end
 
   def add_cart_items(cart_items, deliver_on)
     cart_items.each do |cart_item|

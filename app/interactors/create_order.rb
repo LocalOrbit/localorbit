@@ -22,7 +22,6 @@ class CreateOrder
   def create_order_from_cart(params, cart, buyer)
 
     billing = cart.organization.locations.default_billing
-
     order = Order.new(
       payment_provider: payment_provider,
       placed_by: buyer,
@@ -42,10 +41,15 @@ class CreateOrder
       payment_note: params[:payment_note],
       delivery_fees: cart.delivery_fees,
       total_cost: cart.total,
-      placed_at: Time.current
+      placed_at: Time.current,
     )
 
     order.apply_delivery_address(cart.delivery_location)
+
+    DeliveryNote.where(cart_id:cart.id).each do |dn|
+      #binding.pry # there is no id available yet, it's not created
+      dn.update_attributes(order_id:order.id)
+    end
 
     success = false
     ActiveRecord::Base.transaction do
@@ -62,7 +66,9 @@ class CreateOrder
     unless success
       rollback_order(order)
     end
-
+    DeliveryNote.where(cart_id:cart.id).each do |dn|
+      dn.update_attributes(order_id:order.id)
+    end
     order
   end
 
