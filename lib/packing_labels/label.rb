@@ -25,7 +25,7 @@ module PackingLabels
         labels = []
         order = order_info.dup
         products = order.delete :products
-        num_to_shift = product_label_format - (1 + products.length)
+        num_to_shift = product_label_format - (2+products.length)
         if product_labels_only != "true"
           labels << make_label(order_template, {order: order})
           labels << products.map{|product_info| make_label(product_template, {order: order, product: product_info}) }
@@ -36,6 +36,7 @@ module PackingLabels
         else
           labels << products.map{|product_info| make_label(product_template, {order: order, product: product_info}) }
         end
+        labels << reset_page
         labels.flatten
       end
 
@@ -49,6 +50,12 @@ module PackingLabels
       def page_break
         {
             template: "avery_labels/page_break",
+            data: nil
+        }
+      end
+      def reset_page
+        {
+            template: "avery_labels/reset_page",
             data: nil
         }
       end
