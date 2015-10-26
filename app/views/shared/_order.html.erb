@@ -304,14 +304,12 @@
 <% end %>
 
 <div> <br>
-  <% if !current_user.buyer_only? %>
-    
+  <% if !current_user.buyer_only? # TODO move this logic? Order view... %>
     <% if !current_user.can_manage_market?(current_market) %>
      <h2>Delivery Note</h2>
       <% DeliveryNote.where(order_id:order.id,supplier_org:current_organization).each do |n| %>
         <%= n.note %><br>
       <% end %>
-
     <% else  # all of them - admin powers %>
       <h2>Delivery Notes</h2>
         <% DeliveryNote.where(order_id:order.id).each do |n| %>
@@ -319,7 +317,6 @@
           <%= n.note %> <br><br>
         <% end %>
     <% end %>
-
   <% end %>
 </div>
 
