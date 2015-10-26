@@ -303,6 +303,26 @@
 </div>
 <% end %>
 
+<div> <br>
+  <% if !current_user.buyer_only? %>
+    
+    <% if !current_user.can_manage_market?(current_market) %>
+     <h2>Delivery Note</h2>
+      <% DeliveryNote.where(order_id:order.id,supplier_org:current_organization).each do |n| %>
+        <%= n.note %><br>
+      <% end %>
+
+    <% else  # all of them - admin powers %>
+      <h2>Delivery Notes</h2>
+        <% DeliveryNote.where(order_id:order.id).each do |n| %>
+          <strong> For <%= Organization.where(id:n.supplier_org).first.name %>:</strong>
+          <%= n.note %> <br><br>
+        <% end %>
+    <% end %>
+
+  <% end %>
+</div>
+
 <% if FeatureAccess.order_printables?(user: current_user, order: order) %>
   <%= render :partial=>"table_tents_and_posters/ad", locals: { order: order } %>
 <% end %>
