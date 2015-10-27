@@ -1,3 +1,5 @@
+//= require product_catalog/mixins/product_row_mixin.js
+
 (function() {
 
   var MobileProductRow = React.createClass({

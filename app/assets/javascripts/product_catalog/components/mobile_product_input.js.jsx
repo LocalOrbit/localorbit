@@ -7,7 +7,7 @@
 
     render: function() {
       return (
-        <section style={{display: "table", textAlign: "center", width: "100%"}} className="order-table-mobile cart_item" data-cart-item={JSON.stringify(this.props.product.cart_item)}>
+        <section style={{display: "table", textAlign: "center", width: "100%"}} className="order-table-mobile cart_item" data-cart-item={JSON.stringify(this.props.product.cart_item)} data-keep-when-zero="true">
           <header style={{display: "table-row"}}>
             <div style={{display: "table-cell", width: "50%"}}>ORDER QTY</div>
             <div style={{display: "table-cell", width: "50%"}}>TOTAL COST</div>

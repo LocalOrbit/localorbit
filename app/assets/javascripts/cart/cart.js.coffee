@@ -8,19 +8,21 @@ $ ->
     constructor: (opts)->
       {@data, @el} = opts
       @timer = null
-
-
-      $(opts.el).find(".quantity input").keyup ->
-        window.clearTimeout(@timer)
-
-        @timer = window.setTimeout =>
-          $(this).trigger("cart.inputFinished")
-        , 250
+      @setElement(@el)
 
     @buildWithElement: (el)->
       new CartItem
         data: $(el).data("cart-item")
         el: $(el)
+
+    setElement: (el) ->
+      @el = el
+      $(@el).find(".quantity input").keyup ->
+        window.clearTimeout(@timer)
+
+        @timer = window.setTimeout =>
+          $(this).trigger("cart.inputFinished")
+        , 250
 
     update: (data, silent) ->
       msg = ""
@@ -155,11 +157,13 @@ $ ->
       _.find @items, (item)->
         item.data.product_id == id
 
-    updateOrAddItem: (data, element, silent)->
+    updateOrAddItem: (data, element, silent, newElement)->
       item = @itemAt(data.product_id)
 
       if item?
         item.update(data, silent)
+        if newElement?
+          item.setElement(element)
 
       else
         item = new CartItem(data: data, el: element)
@@ -295,7 +299,7 @@ $ ->
     $.getJSON("/products/#{id}/row")
 
   window.insertCartItemEntry = (el) ->
-      model.updateOrAddItem el.data("cart-item"), el, true
+      model.updateOrAddItem el.data("cart-item"), el, true, true
 
 
   view.updateCounter()
