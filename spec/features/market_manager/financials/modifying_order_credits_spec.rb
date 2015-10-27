@@ -51,10 +51,14 @@ feature "modifying order credits", :js do
         fill_in "amount", with: "2.25"
         fill_in "notes", with: "New notes."
         click_button "Save"
-        patiently do
+
+        using_wait_time(20) do
           expect(page).to have_selector(".app-edit-credit-modal", visible: false)
           expect(page).to have_text "Credit: $2.25"
           expect(page).to have_text "New notes."
+        end
+
+        patiently(10) do
           credit = order.reload.credit
           expect(credit.amount_type).to eql "fixed"
           expect(credit.amount).to eql 2.25
@@ -76,10 +80,14 @@ feature "modifying order credits", :js do
         fill_in "amount", with: "2.25"
         fill_in "notes", with: "New notes."
         click_button "Save"
-        patiently(10) do
+
+        using_wait_time(20) do
           expect(page).to have_selector(".app-edit-credit-modal", visible: false)
           expect(page).to have_text "Credit: $2.25"
           expect(page).to have_text "New notes."
+        end
+
+        patiently(10) do
           credit = order.reload.credit
           expect(credit.amount_type).to eql "fixed"
           expect(credit.amount).to eql 2.25
