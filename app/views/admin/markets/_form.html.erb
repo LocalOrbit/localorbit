@@ -130,14 +130,21 @@
     </div>
   <% end %>
 
-  <div class="field">
-    <%= f.label :product_label_format %>
-    <span class="tooltip" data-tooltip="This option defines which density is used on delivery labels"></span>
-    <br>
-    <%= f.radio_button :product_label_format, '4', :checked => true %>&nbsp;4-up&nbsp;&nbsp;
-    <%= f.radio_button :product_label_format, '16' %>&nbsp;16-up&nbsp;&nbsp;
+  <div class="row row--field">
+    <div class="field column column--half column--guttered">
+        <label>Product Label Layout</label>
+        <span class="tooltip" data-tooltip="This option defines which density is used on delivery labels"></span>
+        <br>
+        <%= f.radio_button :product_label_format, '4', :checked => true %>&nbsp;4-up&nbsp;&nbsp;
+        <%= f.radio_button :product_label_format, '16' %>&nbsp;16-up&nbsp;&nbsp;
+    </div
+    ><div class="field column column--half column--guttered">
+        <label>Label Options</label>
+        <span class="tooltip" data-tooltip="This option prints a label for each quantity of an item"></span>
+        <br>
+        <%= f.check_box :print_multiple_labels_per_item %>&nbsp;Print Multiple Labels Per Item
+    </div>
   </div>
-
   <% if current_user.can_manage_market?(@market) %>
     <div class="row row--field">
       <div class="field column column--half column--guttered" id="allowed-payment-options">

@@ -1,14 +1,14 @@
 module PackingLabels
   class Generator
     class << self
-      def generate(orders:,request:,product_labels_only:,product_label_format:)
+      def generate(orders:,request:,product_labels_only:,product_label_format:,print_multiple_labels_per_item:)
         order_infos = PackingLabels::OrderInfo.make_order_infos(orders:orders, host: request.base_url)
         # [ 
         #   { order_number: .... }
         #   { order_number: .... }
         #   { order_number: .... }
         # ]
-        labels = PackingLabels::Label.make_labels(order_infos, product_labels_only, product_label_format)
+        labels = PackingLabels::Label.make_labels(order_infos, product_labels_only, product_label_format, print_multiple_labels_per_item)
         # [
         #   { template: "...", data: { ... } }
         #   { template: "...", data: { ... } }

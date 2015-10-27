@@ -2,13 +2,13 @@ module PackingLabels
   class Label
     class << self
 
-      def make_labels(order_infos, product_labels_only, product_label_format)
+      def make_labels(order_infos, product_labels_only, product_label_format, print_multiple_labels_per_item)
         order_infos.flat_map do |order_info|
-          make_order_labels(order_info, product_labels_only, product_label_format, order_infos)
+          make_order_labels(order_info, product_labels_only, product_label_format, print_multiple_labels_per_item, order_infos)
         end
       end
 
-      def make_order_labels(order_info, product_labels_only, product_label_format, orders)
+      def make_order_labels(order_info, product_labels_only, product_label_format, print_multiple_labels_per_item, orders)
 
         if product_label_format == 4
           product_template = 'avery_labels/vertical_product_4'
@@ -25,10 +25,22 @@ module PackingLabels
         labels = []
         order = order_info.dup
         products = order.delete :products
-        num_to_shift = product_label_format - (2+products.length)
+        num_to_shift = product_label_format - (2 + products.length)
         if product_labels_only != "true"
           labels << make_label(order_template, {order: order})
-          labels << products.map{|product_info| make_label(product_template, {order: order, product: product_info}) }
+          products.map do |product_info|
+              j = 0
+              if print_multiple_labels_per_item
+                k = product_info[:quantity].round
+              else
+                k = 1
+              end
+              while j < k
+                labels << make_label(product_template, {order: order, product: product_info})
+                j = j + 1
+                i = i + 1
+              end
+          end
           while i < num_to_shift do
             labels << page_break
             i = i + 1
