@@ -84,6 +84,7 @@
       //
       // Thanks, Javascript!
       var product = _.find(_.flatten(_.pluck(this.catalog.products, 'available')), {id: productId});
+      if(!product) return;
       product.cart_item_quantity = quantity;
       product.total_price = totalPrice;
       this.trigger(this.catalog);
