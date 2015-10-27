@@ -647,6 +647,14 @@ module Dom
       def pickup_time
         node.find(".pickup-time").text
       end
+
+      def click_activate
+        node.find_link("Activate").click
+      end
+
+      def click_deactivate
+        node.find_link("Deactivate").click
+      end
     end
 
     class OrganizationForm < Domino

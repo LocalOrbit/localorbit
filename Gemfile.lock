@@ -734,6 +734,3 @@ DEPENDENCIES
   wkhtmltopdf-binary!
   wysihtml5-rails
   wysiwyg-rails
-
-BUNDLED WITH
-   1.10.6

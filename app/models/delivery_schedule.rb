@@ -65,6 +65,10 @@ class DeliverySchedule < ActiveRecord::Base
     scope.for_market_id(market_id)
   end
 
+  def active?
+    deleted_at == nil
+  end
+
   def buyer_pickup?
     has_seller_fulfillment_location? and has_buyer_pickup_location?
   end
@@ -118,30 +122,21 @@ class DeliverySchedule < ActiveRecord::Base
   end
 
   def next_delivery
-    preexisting = find_next_delivery
-    return preexisting if preexisting
-    #
-    # deliver_on = next_delivery_date
-    # cutoff_time = next_order_cutoff_time
-    # buyer_deliver_on = calc_next_date2(buyer_day, buyer_pickup_start, cutoff_time)
-    #
-    # deliveries.create!(
-    #   deliver_on: deliver_on,
-    #   buyer_deliver_on: buyer_deliver_on,
-    #   cutoff_time: cutoff_time
-    # )
-    find_next_delivery || deliveries.create!(
-      deliver_on: next_delivery_date,
-      buyer_deliver_on: next_buyer_delivery_date,
-      cutoff_time: next_order_cutoff_time
-    )
+    delivery = find_next_delivery
+    unless delivery
+      delivery = deliveries.create!(
+        deliver_on: next_delivery_date,
+        buyer_deliver_on: next_buyer_delivery_date,
+        cutoff_time: next_order_cutoff_time
+      )
+    end
+    delivery
   end
 
   def next_delivery_for_date(date)
-    #correct_date = date.change(hour: Time.parse(buyer_pickup_end).hour, min: 0, sec: 0)
     deliveries.create!(
       deliver_on: date.change(hour:17,min:0,sec:0),
-      buyer_deliver_on: date.change(hour:6,min:0,sec:0),#date.change(hour: Time.parse(buyer_pickup_start).hour, min: 0, sec: 0),
+      buyer_deliver_on: date.change(hour:6,min:0,sec:0),
       cutoff_time: date.change(hour:3,min:0,sec:0)
     )
   end
@@ -168,7 +163,7 @@ class DeliverySchedule < ActiveRecord::Base
     when "fixed"
       fee || 0
     when "percent"
-      (amount * ((fee || 0) / 100))
+      amount * ((fee || 0) / 100)
     else
       0.0
     end
@@ -225,11 +220,9 @@ class DeliverySchedule < ActiveRecord::Base
       beginning = current_time.beginning_of_week(:sunday) - 1.week
       date = (beginning + buyer_day.days).to_date
       d = Time.zone.parse("#{date} #{time_of_day}")
-      # d = Time.zone.parse("#{date} #{buyer_pickup_start || seller_delivery_start}")
       d += 1.week while d < delivery_time
       return d
     end
   end
-
 
 end
