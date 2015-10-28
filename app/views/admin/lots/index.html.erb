@@ -5,7 +5,7 @@
   <h2>Add Inventory</h2>
 
   <% if @product.lots.select { |lot| lot.persisted? }.empty? %>
-    <p>You don't have any inventory yet! Get started by adding your first lot.</p>
+    <p>You don't have any Inventory for <%= @product.plural_units_with_name %> yet! Get started by adding your first lot.</p>
   <% end %>
 
   <%= render "shared/errors", {resource: @lot} %>

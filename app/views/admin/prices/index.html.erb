@@ -10,7 +10,7 @@
 
   <% unless @product.prices.view_sorted.any? %>
     <p>
-      You don't have any prices yet! We've gone ahead and started the entry for you. When you enter a Sale Price,
+      You don't have any Prices for <%= @product.plural_units_with_name %> yet! We've gone ahead and started the entry for you. When you enter a Sale Price,
       the Net Price will automatically update. You can adjust these numbers to arrive at the Net Price that you want
       to receive per unit.
     </p>

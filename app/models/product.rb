@@ -360,6 +360,10 @@ class Product < ActiveRecord::Base
     organization.try(:name)
   end
 
+  def plural_units_with_name
+    unit.plural ? "#{unit.plural} of #{name}" : name
+  end
+
   def unit_plural
     unit_with_description(:plural)
   end
