@@ -61,7 +61,7 @@ module Api
             :location_map_url => general_product.location_map(310, 225)
         }
 
-        products = general_product.product
+        products = general_product.product.visible
                        .map { |product| format_product_for_catalog(product) }
                        .compact
                        .sort { |a, b| a[:unit] <=> b[:unit] }
