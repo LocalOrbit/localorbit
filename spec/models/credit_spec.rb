@@ -71,6 +71,19 @@ describe Credit do
       expect(credit).to have(1).error_on(:amount)
     end
 
+    it "cannot exceed the total for any specific supplier" do
+      random_product = create(:product, :sellable)
+      create(:order_item, order: order, product: random_product)
+      order.reload
+      credit.reload
+      credit.amount = order.total_cost
+      expect(order).to be_valid
+      credit.payer_type = Credit::ORGANIZATION
+      expect(order).to be_valid
+      credit.paying_org = order.sellers.first
+      expect(credit).to_not be_valid
+    end
+
     it "cannot be negative" do
       credit.amount = -1
       expect(credit).to_not be_valid
