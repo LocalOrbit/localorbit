@@ -999,13 +999,28 @@ td.delete {
   select {
     min-width: 7em;
   }
-  .market,
-  .buyer {
+  .market, .buyer {
     width: 135px;
+    text-align: left;
+  }
+  .min-qty, .net-price, .sale-price {
+    text-align: center;
   }
   .price_market_id,
   .price_buyer_id {
     width: 100%;
+  }
+}
+
+.inventory-table {
+  .created_at {
+    text-align: left;
+  }
+  .number, .good_from, .expires_at {
+    text-align: center;
+  }
+  .quantity {
+    text-align: right;
   }
 }
 

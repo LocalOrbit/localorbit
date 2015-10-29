@@ -16,18 +16,18 @@
                  namespace: "p#{unit_product.id}",
                  html: {class: "inventory-form row row--partial"} do |f| %>
 
-      <h2 style="text-align: left"><%= unit_product.unit_plural %></h2>
+      <h3 class="unit-name"><%= unit_product.unit_plural %></h3>
       <div class="table-wrapper">
         <%= content_tag :table,
                         data: edit_table_error_payload(@lot_with_errors),
                         class: "sortable inventory-table" do %>
           <thead>
           <tr>
-            <th>Date Added</th>
-            <th>Lot #</th>
-            <th>Good From</th>
-            <th>Expires On</th>
-            <th>Quantity</th>
+            <th class="created_at">Date Added</th>
+            <th class="number">Lot #</th>
+            <th class="good_from">Good From</th>
+            <th class="expires_at">Expires On</th>
+            <th class="quantity">Quantity</th>
             <th></th>
           </tr>
           </thead>
