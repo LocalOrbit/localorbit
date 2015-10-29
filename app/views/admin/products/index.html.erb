@@ -20,42 +20,51 @@
   </tr>
   </thead>
 
+  <% general_product = nil; row_style = nil; continued_product = false %>
   <% @products.decorate.each do |product| %>
-      <tr class="product-row <%= cycle "odd", "even" %>">
-        <%= content_tag(:td, link_to(product.organization_name, [:admin, product.organization]),
-                        class: 'seller hidden-mobile') if current_user.multi_organization_membership? %>
-        <%= content_tag(:td, link_to(product.market_name, [:admin, product.organization.original_market]),
-                        class: 'market hidden-mobile') if current_user.multi_market_membership? %>
-        <td class="name product-name">
-          <%= link_to product.name_and_unit, [:admin, product] %>
-        </td>
-        <td class="pricing">
-          <ul class="l-inline-list">
-            <% product.prices.view_sorted.decorate.each do |price| %>
-                <li>
-                  <%= link_to price.quick_info, "#edit_price_#{price.id}", class: 'edit-toggle popup-toggle' %>
-                  <%= render partial: "edit_price_advanced", locals: { price: price } %>
-                </li>
-            <% end %>
-          </ul>
-        </td>
-        <td class="stock">
-          <% if product.use_simple_inventory? %>
-              <%= link_to product.available_inventory, "#edit_product_#{product.id}",
-                          class: "edit-toggle popup-toggle" %>
-              <%= render partial: "edit_lot", locals: { product: product } %>
-          <% else %>
-              <%= link_to product.available_inventory, "#add_inventory_product_#{product.id}",
-                          class: "edit-toggle popup-toggle" %>
-              <%= render partial: "edit_lot_advanced", locals: { product: product } %>
+    <% if !general_product || general_product != product.general_product %>
+      <% general_product = product.general_product %>
+      <% row_style = cycle "odd", "even" %>
+      <% continued_product = false %>
+    <% else %>
+      <% continued_product = true %>
+    <% end %>
+
+    <tr class="product-row <%= row_style %>">
+      <%= content_tag(:td, continued_product ? "" : link_to(product.organization_name, [:admin, product.organization]),
+                      class: 'seller hidden-mobile') if current_user.multi_organization_membership? %>
+      <%= content_tag(:td, continued_product ? "" : link_to(product.market_name, [:admin, product.organization.original_market]),
+                      class: 'market hidden-mobile') if current_user.multi_market_membership? %>
+      <td class="name product-name">
+        <%= link_to "#{continued_product ? "" : ""}#{product.name_and_unit}", [:admin, product] %>
+      </td>
+      <td class="pricing">
+        <ul class="l-inline-list">
+          <% product.prices.view_sorted.decorate.each do |price| %>
+            <li>
+              <%= link_to price.quick_info, "#edit_price_#{price.id}", class: 'edit-toggle popup-toggle' %>
+              <%= render partial: "edit_price_advanced", locals: { price: price } %>
+            </li>
           <% end %>
-        </td>
-        <td class="delete action-link">
-          <%= link_to raw('&#57418;'), [:admin, product], method: :delete,
-                      data: { confirm: "Are you sure you want to permanently delete #{product.plural_units_with_name}?" },
-                      title: "Delete", class: "font-icon" %>
-        </td>
-      </tr>
+        </ul>
+      </td>
+      <td class="stock">
+        <% if product.use_simple_inventory? %>
+          <%= link_to product.available_inventory, "#edit_product_#{product.id}",
+                      class: "edit-toggle popup-toggle" %>
+          <%= render partial: "edit_lot", locals: { product: product } %>
+        <% else %>
+          <%= link_to product.available_inventory, "#add_inventory_product_#{product.id}",
+                      class: "edit-toggle popup-toggle" %>
+          <%= render partial: "edit_lot_advanced", locals: { product: product } %>
+        <% end %>
+      </td>
+      <td class="delete action-link">
+        <%= link_to raw('&#57418;'), [:admin, product], method: :delete,
+                    data: { confirm: "Are you sure you want to permanently delete #{product.plural_units_with_name}?" },
+                    title: "Delete", class: "font-icon" %>
+      </td>
+    </tr>
   <% end %>
 </table>
 

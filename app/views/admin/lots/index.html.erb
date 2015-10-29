@@ -32,7 +32,7 @@
           </tr>
           </thead>
 
-          <tbody>
+          <tbody class="zebra-stripes">
           <% unit_product.lots.select(&:persisted?).each do |lot| %>
             <%= content_tag_for :tr, lot, {class: 'lot',
                                            data: {"form-url" => url_for([:admin, lot.product, lot])},

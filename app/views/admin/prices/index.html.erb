@@ -50,7 +50,7 @@
           </tr>
           </thead>
 
-          <tbody>
+          <tbody class="zebra-stripes">
           <% unit_product.prices.view_sorted.decorate.each do |price| %>
             <%= content_tag_for :tr, price, {data: {"form-url" => url_for([:admin, unit_product, price])},
                                              rel: "price_#{price.id}"} do %>
