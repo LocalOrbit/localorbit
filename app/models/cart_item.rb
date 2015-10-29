@@ -1,4 +1,6 @@
 class CartItem < ActiveRecord::Base
+  include ActiveSupport::NumberHelper
+
   audited allow_mass_assignment: true, associated_with: :cart
   belongs_to :cart, inverse_of: :items
   belongs_to :product
@@ -19,13 +21,17 @@ class CartItem < ActiveRecord::Base
     unit_price.sale_price * quantity
   end
 
+  def formatted_total_price
+    number_to_currency total_price
+  end
+
   def unit_sale_price
     return 0.0 unless unit_price
     unit_price.sale_price
   end
 
   def as_json(_opts=nil)
-    super(methods: [:total_price, :unit_sale_price, :valid?, :destroyed?])
+    super(methods: [:total_price, :unit_sale_price, :valid?, :destroyed?, :formatted_total_price])
   end
 
   def unit
