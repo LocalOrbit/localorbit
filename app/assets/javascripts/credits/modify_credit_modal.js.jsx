@@ -113,9 +113,8 @@
               <label>Notes (Optional)</label>
               <textarea name='notes' value={credit.notes} onChange={self.setAttributeValue.bind(this, 'notes')} className='column--full'/>
             </div>
-
             <div className='row'>
-              <button className='btn pull-right' style={{marginLeft: '20px'}}>Cancel</button>
+              <button className='btn pull-right' style={{marginLeft: '20px', float: 'right', display: "inline-block", padding: "6px 14px", border: "solid 1px #a6a6a6", borderRadius: "5px", background: "#a6a6a6", color: "#ffffff", fontSize: "16px", textAlign: "center"}} className="close" onClick={self.cancel}>Cancel</button>
               <button onClick={self.save} className='btn btn--primary pull-right app-save-credit'>Save</button>
             </div>
           </div>
