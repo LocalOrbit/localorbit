@@ -35,6 +35,7 @@
 
     deleteQuantity: function() {
       this.setState({cartItemQuantity: 0});
+      $(this.getDOMNode()).keyup();
     }
   };
 

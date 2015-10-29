@@ -218,10 +218,10 @@ $ ->
 
             error = data.error
 
+            window.lo.ProductActions.updateProduct(data.item.product_id, data.item.quantity, data.item.formatted_total_price)
             if data.item["destroyed?"]
               @removeItem(data.item)
             else
-              window.lo.ProductActions.updateProduct(data.item.product_id, data.item.quantity, data.total)
               @updateOrAddItem(data.item)
 
             @updateTotals(data)
