@@ -2,9 +2,15 @@ require 'pg'
 
 class OrderDestination
   # connect_url should look like;
-  #  mysql://user:pass@localhost/dbname
   def initialize(connect_url)
-    @conn = PG.connect(connect_url)
+    db_parts = connect_url.split(/\/|:|@/)
+    username = db_parts[3]
+    password = db_parts[4]
+    host = db_parts[5]
+    db = db_parts[7]
+    @conn = PGconn.open(:host =>  host, :dbname => db, :user=> username, :password=> password)
+
+    #@conn = PG.connect(connect_url)
     @conn.prepare('check_order', 'SELECT 1 order_exists FROM dw_orders WHERE order_item_id = $1')
     @conn.prepare('insert_order', 'INSERT INTO dw_orders
     (order_item_id,
