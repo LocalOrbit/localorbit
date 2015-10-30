@@ -7,7 +7,7 @@ require 'order_source'
 require 'order_destination'
 
 #trans_url = 'dbname=local_orbit_development user=andyb password=i81u812 host=localhost port=5432'
-trans_etl = ENV['trans_db_url']
+trans_url = ENV['trans_db_url']
 
 source OrderSource, trans_url
 
