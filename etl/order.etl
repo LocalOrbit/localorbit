@@ -5,9 +5,9 @@ $:.unshift "#{File.dirname(__FILE__)}"
 
 require 'order_source'
 require 'order_destination'
-
-#trans_url = 'dbname=local_orbit_development user=andyb password=i81u812 host=localhost port=5432'
-trans_url = ENV['trans_db_url']
+# postgres://tlvtkosncfcgav:3PU-1SH15kb7a_0G6TZ-BazZgS@ec2-54-83-201-54.compute-1.amazonaws.com:5432/d4f6vsl9eg8nia
+#trans_url = 'dbname=d4f6vsl9eg8nia user=tlvtkosncfcgav password=3PU-1SH15kb7a_0G6TZ-BazZgS host=ec2-54-83-201-54.compute-1.amazonaws.com port=5432'
+trans_url = ENV['TRANS_DB_URL']
 
 source OrderSource, trans_url
 
@@ -71,7 +71,7 @@ post_process do
   puts "*** Rows Processed: #{num_rows}"
 end
 
-dw_url = ENV['dw_db_url']
+dw_url = ENV['DW_DB_URL']
 #dw_url = 'dbname=local_orbit_development_dw user=andyb password=i81u812 host=localhost port=5432'
 
 destination OrderDestination, dw_url
