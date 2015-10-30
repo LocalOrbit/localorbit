@@ -5,7 +5,7 @@ class OrderSource
   # connect_url should look like;
   #  mysql://user:pass@localhost/dbname
 
-  OrderQuery = '
+  Order_Query = '
     select
     oi.id order_item_id,
     m.name market,
@@ -66,15 +66,22 @@ class OrderSource
     and sa.organization_id = seller.id and sa.default_shipping = true
     and o.delivery_id = d.id
     and d.delivery_schedule_id = ds.id
-    and o.updated_at > current_date - integer \'' + ENV['ETL_DAYS'] + '\'
+    and o.updated_at > current_date - integer \'' + ENV['ETL_DAYS'].to_s + '\'
     order by o.id'
 
   def initialize(connect_url)
-    @conn = PG.connect(connect_url)
+    #@conn = PG.connect(connect_url)
+    db_parts = connect_url.split(/\/|:|@/)
+    username = db_parts[3]
+    password = db_parts[4]
+    host = db_parts[5]
+    db = db_parts[7]
+    @conn = PGconn.open(:host =>  host, :dbname => db, :user=> username, :password=> password)
+
   end
 
   def each
-    results = @conn.query(OrderQuery)
+    results = @conn.query(Order_Query)
 
     results.each do |row|
       r = transform_keys_to_symbols(row)
