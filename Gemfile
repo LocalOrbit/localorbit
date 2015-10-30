@@ -64,6 +64,7 @@ gem "stripe_event"
 gem 'react-rails', '~> 1.0'
 gem "font-awesome-rails"
 gem "wysiwyg-rails"
+gem "kiba"
 
 gem "constructor"
 gem "tabulator", github: "dcrosby42/tabulator"
