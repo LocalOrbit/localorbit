@@ -1,10 +1,10 @@
 #!/usr/bin/env ruby
-require '../config/environment'
+#require '../config/environment'
 
-$:.unshift "#{File.dirname(__FILE__)}/etl"
+$:.unshift "#{File.dirname(__FILE__)}"
 
-require './order_source'
-require './order_destination'
+require 'order_source'
+require 'order_destination'
 
 trans_url = 'dbname=local_orbit_development user=andyb password=i81u812 host=localhost port=5432'
 #trans_url = 'postgres://andyb:i81u812@127.0.0.1/local_orbit_development'

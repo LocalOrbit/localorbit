@@ -66,7 +66,7 @@ class OrderSource
     and sa.organization_id = seller.id and sa.default_shipping = true
     and o.delivery_id = d.id
     and d.delivery_schedule_id = ds.id
-    and o.updated_at > current_date - integer \'1\'
+    and o.updated_at > current_date - integer \'' + ENV['ETL_DAYS'] + '\'
     order by o.id'
 
   def initialize(connect_url)
