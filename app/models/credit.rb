@@ -16,7 +16,7 @@ class Credit < ActiveRecord::Base
   validates :amount_type, inclusion: {in: AMOUNT_TYPES, message: "Not a valid credit type."}
   validates :payer_type, inclusion: {in: PAYER_TYPES, message: "Not a valid payer type."}
   validates :amount, numericality: {greater_than_or_equal_to: 0}
-  validate :amount_cannot_exceed_gross_total, :order_must_be_paid_by_po
+  validate :amount_cannot_exceed_gross_total, :order_must_be_paid_by_po, :amount_cannot_exceed_paying_org_total
 
   def calculated_amount
     if amount_type == Credit::PERCENTAGE
@@ -36,6 +36,16 @@ class Credit < ActiveRecord::Base
   def amount_cannot_exceed_gross_total
     if percentage_amount_too_high || fixed_amount_too_high
       errors.add(:amount, "can't exceed the order's gross total")
+    end
+  end
+
+  def amount_cannot_exceed_paying_org_total
+    if amount != nil && payer_type == Credit::ORGANIZATION && paying_org != nil
+      seller_items = order.items.select {|i| i.seller == paying_org }
+      seller_total = seller_items.sum(&:seller_net_total)
+      if calculated_amount > seller_total
+        errors.add(:amount, "total cannot exceed the net profit of the organization responsible for it")
+      end
     end
   end
 

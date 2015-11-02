@@ -45,6 +45,13 @@ class SellerPaymentGroup
 
   def owed
     # .each.sum forces the use of ruby sum instead of a sql sum
-    @owed ||= @orders.sum {|o| o.items.each.sum(&:seller_net_total) }
+    if(@owed)
+      return @owed
+    end
+    @owed = @orders.sum do |o|
+      total = o.items.each.sum(&:seller_net_total)
+      total += o.credit_amount
+      total
+    end
   end
 end

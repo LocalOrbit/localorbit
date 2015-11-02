@@ -1,10 +1,11 @@
 class @EditTable
-  @build: (selector, opts={})->
-    table = new EditTable(selector, opts)
-    table.bindActions()
-    table
+  @build: (selector, opts={}) ->
+    $(selector).map (i, e) ->
+      table = new EditTable(e, opts)
+      table.bindActions()
+      table
 
-  constructor: (selector, opts)->
+  constructor: (selector, opts) ->
     @form  = $(selector)
     @table = @form.find("table")
     @applyErrorValuesCallback = opts.applyErrorValuesCallback
@@ -19,26 +20,26 @@ class @EditTable
       @applyErrorValues(row, @errorPayload)
 
   # Lookups
-  hiddenFormMethod: (method)->
+  hiddenFormMethod: (method) ->
     $("<input name=\"_method\" type=\"hidden\" value=\"#{method}\">")
 
-  headerFieldsRow: ()->
+  headerFieldsRow: () ->
     @form.find("table thead tr")
 
-  relatedRow: (el)->
+  relatedRow: (el) ->
     idFromRel = $(el).attr("rel")
     $("#"+idFromRel)
 
   # Helpers
-  disableFields: (el)->
-    $(el).find("input,select").each ()->
+  disableFields: (el) ->
+    $(el).find("input,select").each () ->
       $(this).attr("readonly", true).attr("disabled", true)
 
-  enableFields: (el)->
-    $(el).find("input,select").each ()->
+  enableFields: (el) ->
+    $(el).find("input,select").each () ->
       $(this).removeAttr("readonly").removeAttr("disabled")
 
-  setFormActionAndMethod: (action, method)->
+  setFormActionAndMethod: (action, method) ->
     @form.attr("action", action)
 
     if method.toLowerCase() != "get" && method.toLowerCase() != "post"
@@ -46,7 +47,7 @@ class @EditTable
     else
       @form.children("[name=_method]").remove()
 
-  restoreOriginalValues: (fieldsRow)->
+  restoreOriginalValues: (fieldsRow) ->
     $(fieldsRow).find("input").each ->
       field = $(this)
       field.val(field.attr("value"))
@@ -55,10 +56,10 @@ class @EditTable
       field = $(this)
       field.val(field.find('option[selected=selected]').attr('value'))
 
-  applyErrorValues: (el, data)->
+  applyErrorValues: (el, data) ->
     fieldsRow = @relatedRow(el)
 
-    $.each data, (item)=>
+    $.each data, (item) =>
       field = $(fieldsRow).find($("input[name$='[#{item}]']"))
       $(field).val(data[item])
 
@@ -70,7 +71,7 @@ class @EditTable
         @applyErrorValuesCallback(field)
 
   # Main actions
-  openEditRow: ($row)->
+  openEditRow: ($row) ->
     @closeEditRow(@form.find('.editing'), false)
 
     action = $row.data("form-url")
@@ -80,35 +81,57 @@ class @EditTable
     @enableFields($row)
 
     $row.addClass('editing')
-    $('.add-toggle').addClass('is-hidden')
+    @form.find('.add-toggle').addClass('is-hidden')
     $('.form-actions .btn--save, .form-actions input[type=submit]').prop('disabled', 'disabled').addClass('disabled').on 'click', (e) ->
       e.preventDefault()
     $row.parents('.table-wrapper').trigger "scroll"
 
-  openAddRow: ()->
+  openAddRow: () ->
     @closeEditRow(@form.find('.editing'), false)
 
-    fieldsRow = $("#add-row")
-
+    fieldsRow = @form.find(".add-row")
+    fieldsRow.removeClass('is-hidden').addClass('editing')
     @enableFields(fieldsRow)
 
-    fieldsRow.removeClass('is-hidden').addClass('editing')
-    $('.add-toggle').addClass('is-hidden')
+    @form.find('.add-toggle').addClass('is-hidden')
     $('.form-actions .btn--save, .form-actions input[type=submit]').prop('disabled', 'disabled').addClass('disabled').on 'click', (e) ->
       e.preventDefault()
     fieldsRow.parents('.table-wrapper').trigger "scroll"
 
-  closeEditRow: ($row, cancel)->
+  copyOpenAddRow: () ->
+    selected = @form.find('.add-row select').val()
+
+    fieldsRow = @form.find('.add-row').clone(false)
+    fieldsRow.removeClass().removeAttr('id')
+    fieldsRow.children().removeClass().addClass('field')
+    fieldsRow.children().last().html('')
+    fieldsRow.find('.chosen-container').remove()
+    fieldsRow.find('select').data('chosen', undefined).removeAttr('style').removeAttr('id')
+    fieldsRow.find("select option[value=#{selected}]").attr('selected', 'selected')
+    @enableFields(fieldsRow)
+
+    fieldsRow.insertBefore(@form.find('.add-row'))
+
+    fieldsRow.find('select').chosen({
+      search_contains: true
+      group_search: true
+      enable_split_word_search: true
+      allow_single_deselect: true
+      no_results_text: 'No results matched'
+      width: '100%'
+    })
+
+  closeEditRow: ($row, cancel) ->
     return if $row.length == 0
 
     @disableFields($row)
     $row.removeClass('editing')
-    if $row.attr('id') == "add-row"
+    if $row.hasClass('add-row')
       $row.addClass('is-hidden')
     $row.parents('.table-wrapper').first().scrollLeft(0)
     $row.parents('.table-wrapper').trigger "scroll"
 
-    $(".add-toggle").removeClass('is-hidden')
+    @form.find(".add-toggle").removeClass('is-hidden')
     $('.form-actions .btn--save, .form-actions input[type=submit]').prop('disabled', null).removeClass('disabled').off 'click'
 
     @restoreOriginalValues($row) if cancel
@@ -120,21 +143,35 @@ class @EditTable
     @hiddenRow.show() if @hiddenRow != null
     @hiddenRow = null
 
-  bindActions: ()->
+  clearAndCloseEditRow: ($row) ->
+    chosen = @form.find('.add-row select.chosen').data('chosen')
+    if chosen
+      chosen.results_reset()
+
+    @form.find(".add-row #product_sibling_unit_id").val("")
+    @form.find(".add-row #product_sibling_unit_description").val("")
+
+    @closeEditRow($row, true)
+
+  bindActions: () ->
     context = this
-    @form.on "click", ".edit-trigger", (e)->
+    @form.on "click", ".edit-trigger", (e) ->
       e.preventDefault()
       context.openEditRow($(this).parents("tr"))
 
-    @form.on "click", "tr .cancel", (e)->
+    @form.on "click", "tr .cancel", (e) ->
       e.preventDefault()
-      $row = $(this).parents("tr")
-      context.closeEditRow($row, true)
+      context.clearAndCloseEditRow($(this).parents("tr"))
 
     @form.on "click", ".add-toggle", (e) ->
       e.preventDefault()
       $(this).addClass('is-hidden')
       context.openAddRow()
+
+    @form.on "click", ".add-copy", (e) ->
+      e.preventDefault()
+      context.copyOpenAddRow()
+      context.clearAndCloseEditRow($(this).parents("tr"))
 
     @form.on "click", ".delete-selected", (e) ->
       e.preventDefault()

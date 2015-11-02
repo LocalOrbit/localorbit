@@ -70,6 +70,9 @@ end
           <% end %>
           <li><%= link_to_or_span raw('<i class="font-icon" data-icon="&#xe022;"></i> Upcoming Deliveries'), admin_delivery_tools_path %></li>
           <li><%= link_to_or_span raw('<i class="font-icon" data-icon="&#xe02d;"></i> Sold Items'), admin_order_items_path %></li>
+          <% if current_market && current_user.market_manager? %>
+            <li><%= link_to_or_span raw('<i class="font-icon" data-icon="&#xe013;"></i> Delivery Schedules'), "/admin/markets/#{current_market.id}/deliveries" %></li>
+          <% end %>
         </ul>
       </li>
     <% end %>

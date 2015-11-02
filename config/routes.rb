@@ -47,7 +47,7 @@ Rails.application.routes.draw do
     resources :markets, concerns: [:bank_account, :activatable], except: [:edit] do
       resources :market_addresses,   as: :addresses,  path: :addresses
       resources :market_managers,    as: :managers,   path: :managers
-      resources :delivery_schedules, path: :deliveries
+      resources :delivery_schedules, path: :deliveries, concerns: [:activatable]
       resource  :fees, only: [:show, :update]
       resource  :style_chooser, controller: :style_chooser, only: [:show, :update]
       resource  :cross_sell, controller: :market_cross_sells, only: [:show, :update]
@@ -95,7 +95,9 @@ Rails.application.routes.draw do
     end
 
     resources :organizations, concerns: [:bank_account, :activatable] do
-      resources :organization_users, as: :users, path: :users
+      resources :organization_users, as: :users, path: :users do
+        get :invite
+      end
       resource :cross_sell, controller: :organization_cross_sells, only: [:show, :update]
       resources :locations, except: :destroy do
         collection do
@@ -138,6 +140,8 @@ Rails.application.routes.draw do
 
     resources :users, only: [:index, :edit, :update] do
       patch :update_enabled, on: :member
+      get :confirm
+      get :invite
     end
 
     resources :promotions do

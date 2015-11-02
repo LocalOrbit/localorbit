@@ -52,7 +52,7 @@
     </tr>
     <% if FeatureAccess.can_edit_order?(user: current_user, order: order) %>
       <tr>
-        <td><a href="#creditEdit" class="btn btn--primary modal-toggle app-edit-credit-modal-button">Modify Credit</a></td>
+        <td><a href="#creditEdit" class="btn btn--primary modal-toggle app-edit-credit-modal-button"><%= order.credit_amount > 0 ? "Modify" : "Add" %> Credit</a></td>
       </tr>
     <% end %>
   </table>
@@ -75,19 +75,21 @@
         </tr>
       </tbody>
     <% end %>
-    <tbody>
-      <tr>
-          <th scope="row">Credit:</th>
-          <td><%= number_to_currency order.credit_amount %></td>
-      </tr>
-    </tbody>
+    <% if order.credit_amount > 0 %>
+      <tbody>
+        <tr>
+            <th scope="row">Credit:</th>
+            <td><%= number_to_currency order.credit_amount %></td>
+        </tr>
+      </tbody>
+    <% end %>
     <tbody class="pseudopod">
       <tr>
         <th scope="row">Grand Total:</th>
         <td><%= number_to_currency order.total_cost %></td>
       </tr>
     </tbody>
-    <% if order.credit && order.credit.notes %>
+    <% if order.credit_amount > 0 && order.credit.notes %>
       <tbody>
         <tr>
           <th scope="row">Credit Notes:</th>

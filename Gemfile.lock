@@ -111,6 +111,8 @@ GEM
       rack (>= 1.0.0)
       rack-test (>= 0.5.4)
       xpath (~> 2.0)
+    capybara-slow_finder_errors (0.1.2)
+      capybara (~> 2.0)
     celluloid (0.16.0)
       timers (~> 4.0.0)
     chunky_png (1.3.1)
@@ -299,6 +301,8 @@ GEM
     fog-xml (0.1.2)
       fog-core
       nokogiri (~> 1.5, >= 1.5.11)
+    font-awesome-rails (4.4.0.0)
+      railties (>= 3.2, < 5.0)
     font_assets (0.1.11)
       rack
     formatador (0.2.5)
@@ -367,6 +371,7 @@ GEM
       actionpack (>= 3.0.0)
       activesupport (>= 3.0.0)
     kgio (2.10.0)
+    kiba (0.6.1)
     konacha (3.5.1)
       actionpack (>= 3.1, < 5)
       capybara
@@ -640,6 +645,9 @@ GEM
     websocket-extensions (0.1.2)
     wysihtml5-rails (0.0.4)
       railties (>= 3.1.0)
+    wysiwyg-rails (1.2.8)
+      font-awesome-rails (>= 4.3.0.0)
+      railties (>= 3.2, < 5.0)
     xpath (2.0.0)
       nokogiri (~> 1.3)
 
@@ -660,6 +668,7 @@ DEPENDENCIES
   bullet
   byebug
   capybara
+  capybara-slow_finder_errors
   codeclimate-test-reporter
   coffee-rails (~> 4.0.0)
   color
@@ -681,6 +690,7 @@ DEPENDENCIES
   factory_girl_rails
   figaro (~> 1.0.0.rc1)
   fire_poll (= 1.2.0)
+  font-awesome-rails
   font_assets
   graticule
   groupdate!
@@ -697,6 +707,7 @@ DEPENDENCIES
   jquery-ui-rails
   jwt
   kaminari
+  kiba
   konacha
   konacha-chai-matchers
   launchy
@@ -749,6 +760,7 @@ DEPENDENCIES
   webmock
   wkhtmltopdf-binary!
   wysihtml5-rails
+  wysiwyg-rails
 
 BUNDLED WITH
    1.10.6

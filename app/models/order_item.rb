@@ -31,6 +31,8 @@ class OrderItem < ActiveRecord::Base
   scope :delivered,    -> { where(delivery_status: "delivered") }
   scope :undelivered,  -> { where(delivery_status: "pending") }
 
+  has_one :seller, through: :product, class_name: Organization
+
   def self.for_delivery(delivery)
     joins(order: :delivery).where(orders: {delivery_id: delivery.id})
   end

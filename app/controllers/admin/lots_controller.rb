@@ -1,13 +1,16 @@
 class Admin::LotsController < AdminController
   include ProductLookup
 
-  before_action :redirect_simple_inventory
+  before_action :ensure_product_organization
+  before_action :ensure_child_units
 
   def index
     @lot = @product.lots.build
   end
 
   def create
+    auto_upgrade_product_to_advanced_inventory(lot_params, @product.lots.count > 0)
+
     @lot = @product.lots.create(lot_params)
 
     flash.now[:alert] = "Could not save lot" unless @lot.persisted?
@@ -20,6 +23,8 @@ class Admin::LotsController < AdminController
   def update
     @lot = @product.lots.find(params[:id])
     params[:lot] = params[:lot][@lot.id.to_s]
+
+    auto_upgrade_product_to_advanced_inventory(lot_params, @product.lots.count > 1)
 
     updated = @lot.update(lot_params)
 
@@ -37,16 +42,22 @@ class Admin::LotsController < AdminController
 
   private
 
+  def auto_upgrade_product_to_advanced_inventory(params, has_multiple_lots)
+    if @product.use_simple_inventory
+      lot_number = params[:number] && params[:number] != ""
+      expires_at = params[:expires_at] && params[:expires_at] != ""
+      if has_multiple_lots || lot_number || expires_at
+        @product.update(use_simple_inventory: false)
+      end
+    end
+  end
+
   def lot_params
     params.require(:lot).permit(:number, :good_from, :expires_at, :quantity)
   end
 
   def query_params
     params.fetch(:query_params, {})
-  end
-
-  def redirect_simple_inventory
-    redirect_to [:admin, @product] if @product.use_simple_inventory?
   end
 
   def html_for_action(updated, message)
@@ -72,5 +83,23 @@ class Admin::LotsController < AdminController
 
     status_code = updated ? 200 : 422
     render json: @data, status: status_code
+  end
+
+  def ensure_product_organization
+    unless @organizations
+      @organizations = [@product.organization]
+    end
+  end
+
+  def ensure_child_units
+    @child_units = []
+    if @product
+      @child_units << @product
+      if @product && @product.general_product
+        @child_units.concat(@product.general_product.product.visible.all
+                              .reject { |sibling| sibling.id == @product.id }
+                              .sort { |a, b| a.unit.plural <=> b.unit.plural })
+      end
+    end
   end
 end

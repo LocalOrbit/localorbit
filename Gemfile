@@ -62,6 +62,9 @@ gem "ransack"
 gem "simpleidn"
 gem "stripe_event"
 gem 'react-rails', '~> 1.0'
+gem "font-awesome-rails"
+gem "wysiwyg-rails"
+gem "kiba"
 
 gem "constructor"
 gem "tabulator", github: "dcrosby42/tabulator"
@@ -113,6 +116,7 @@ group :development, :test do
   gem "konacha-chai-matchers"
   gem "poltergeist"
   gem "webmock"
+  gem 'capybara-slow_finder_errors'
 end
 
 group :test do

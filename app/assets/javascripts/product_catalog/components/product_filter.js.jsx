@@ -101,11 +101,11 @@
       }.bind(this));
 
       return (
-        <div style={{borderTop:"1px solid rgb(222, 222, 222)", marginTop: "-2px"}}>
+        <div style={{borderTop:"1px solid rgb(222, 222, 222)"}}>
           <div className="row catalog-search-container">
             <div className="catalog-search column column--half pull-left">
-              <a href="javascript:void(0);" onClick={this.toggleShowFilter} className="btn--secondary btn">Select Filters</a>
               <input className="app-search" name="app-search" type="text" onChange={this.inputChanged} value={this.state.query} placeholder="Search..."/>
+              <a href="javascript:void(0);" onClick={this.toggleShowFilter} className="btn--secondary btn pull-right">Select Filters</a>
               <div className="filter-tags pull-left" style={{display: (activeFilters.length === 0) ? "none" : ""}}>
                 <span className="filter-tags-title">Filtering by: </span>
                 {activeFilters}

@@ -180,5 +180,21 @@ describe "Market Manager managing delivery schedules" do
       expect(page).to have_content("Deleted delivery schedule.")
       expect(page).to_not have_content(delivery1.weekday)
     end
+
+    it "temporarily deactivates a delivery schedule" do
+      click_link "Deliveries"
+
+      schedule = Dom::Admin::DeliverySchedule.first
+      schedule.click_deactivate
+
+      expect(page).to have_content("Deactivated delivery schedule.")
+      expect(page).to have_content(delivery1.weekday)
+
+      schedule = Dom::Admin::DeliverySchedule.first
+      schedule.click_activate
+
+      expect(page).to have_content("Activated delivery schedule.")
+      expect(page).to have_content(delivery1.weekday)
+    end
   end
 end
