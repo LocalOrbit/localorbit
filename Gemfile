@@ -66,6 +66,10 @@ gem "font-awesome-rails"
 gem "wysiwyg-rails"
 gem "kiba"
 
+gem 'browserify-rails', '~> 0.9.1'
+
+gem 'chartkick'
+
 gem "constructor"
 gem "tabulator", github: "dcrosby42/tabulator"
 gem "rschema", github: "tomdalling/rschema"
