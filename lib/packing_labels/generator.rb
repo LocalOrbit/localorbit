@@ -22,8 +22,6 @@ module PackingLabels
 
         if product_label_format == 4
           label_template = 'avery_labels/labels_4'
-        elsif product_label_format == 10
-          label_template = 'avery_labels/labels_10'
         elsif product_label_format == 16
           label_template = 'avery_labels/labels_16'
         end
