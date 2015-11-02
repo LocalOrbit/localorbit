@@ -97,6 +97,7 @@ group :development do
   gem "aws-sdk"
   gem "rails_view_annotator"
   gem "unicorn"
+  gem "mailcatcher"
 end
 
 group :development, :test do
