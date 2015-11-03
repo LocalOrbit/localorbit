@@ -9,5 +9,13 @@ module Admin::Financials
         format.csv { @filename = "payments.csv" }
       end
     end
+
+    def update
+      @delivery_note = DeliveryNote.find(params[:id])
+      if @delivery_note.update_attributes(payment_method:params[:payment][:payment_method
+        ], note:params[:payment][:note], amount:BigDecimal(params[:payment][:amount]))
+        redirect_to payment_history_path # well - the same path as the payments are shown on
+    end
+    end
   end
 end

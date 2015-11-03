@@ -87,6 +87,8 @@
             <td class="to"><%= payment.to %></td>
           <% end %>
           <td class="amount"><%= payment.display_amount %></td>
+          <% binding.pry %>
+          <td><%=link_to "Update Payment" %></td>
         </tr>
       <% end %>
     </tbody>
