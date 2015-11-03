@@ -2,7 +2,7 @@ require "spec_helper"
 
 context "Downloading packing labels", js:true do
   let(:plan_with_packing_labels) { create(:plan, :nothing, packing_labels: true) }
-  let(:market) { create(:market, plan: plan_with_packing_labels) }
+  let(:market) { create(:market, name: 'Market Label', plan: plan_with_packing_labels) }
   let!(:market_manager) { create(:user, :market_manager, name: "Marky Mark", managed_markets: [market]) }
 
   let!(:buyer_org) { create(:organization, :buyer, name: "Big Money", markets: [market]) }
@@ -23,6 +23,7 @@ context "Downloading packing labels", js:true do
   end
 
   let!(:order) { create(:order, items: order_items, organization: buyer_org, market: market, delivery: delivery, order_number: "LO-ADA-0000001", total_cost: order_items.sum(&:gross_total)) }
+  let!(:product_labels_only) { false }
 
   def generate_packing_labels(title)
     click_on title

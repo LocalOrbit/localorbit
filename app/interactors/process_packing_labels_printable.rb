@@ -2,7 +2,7 @@ class ProcessPackingLabelsPrintable
   include Interactor
 
   def perform
-    packing_labels_printable, request, product_labels_only, product_label_format = require_in_context(:packing_labels_printable_id, :request, :product_labels_only, :product_label_format, :print_multiple_labels_per_item)
+    packing_labels_printable_id, request, product_labels_only, product_label_format, print_multiple_labels_per_item = require_in_context(:packing_labels_printable_id, :request, :product_labels_only, :product_label_format, :print_multiple_labels_per_item)
     delivery_printable = PackingLabelsPrintable.find packing_labels_printable_id
     delivery = delivery_printable.delivery
     user = delivery_printable.user
