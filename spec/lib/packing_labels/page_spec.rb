@@ -6,9 +6,10 @@ describe PackingLabels::Page do
   describe ".make_pages" do
     context "4 labels" do
       let(:labels) { %w|label1 label2 label3 label4| }
+      let(:product_label_format) { 4 }
 
       it "a single page is produced including the 4 labels" do
-        expect(subject.make_pages(labels)).to eq([{
+        expect(subject.make_pages(labels, product_label_format)).to eq([{
           a: "label1",
           b: "label2",
           c: "label3",
@@ -19,9 +20,10 @@ describe PackingLabels::Page do
 
     context "eight labels" do
       let(:labels) { (1..8).to_a.map do |i| "label#{i}" end }
+      let(:product_label_format) { 4 }
 
       it "returns 2 pages" do
-        expect(subject.make_pages(labels)).to eq([{
+        expect(subject.make_pages(labels, product_label_format)).to eq([{
           a: "label1",
           b: "label2",
           c: "label3",
@@ -37,9 +39,10 @@ describe PackingLabels::Page do
 
     context "labels not divisible by 4" do
       let(:labels) { (1..6).to_a.map do |i| "label#{i}" end }
+      let(:product_label_format) { 4 }
 
       it "returns 2 pages with nil quadrants" do
-        expect(subject.make_pages(labels)).to eq([{
+        expect(subject.make_pages(labels, product_label_format)).to eq([{
           a: "label1",
           b: "label2",
           c: "label3",
@@ -54,8 +57,10 @@ describe PackingLabels::Page do
     end
 
     context "no labels" do
+      let(:product_label_format) { 4 }
+
       it "returns a blank page" do
-        expect(subject.make_pages([])).to eq([])
+        expect(subject.make_pages([], product_label_format)).to eq([])
       end
     end
   end

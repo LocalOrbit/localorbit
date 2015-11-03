@@ -51,14 +51,14 @@ context "Downloading packing labels", js:true do
     it "can generate packing labels from the Dashboard", pdf: true do
       visit dashboard_path
       expect(page).to have_text "Upcoming Deliveries"
-      expect(page).to have_text "Labels"
+      expect(page).to have_text "Master Labels"
       generate_packing_labels
     end
 
     it "can generate packing labels on the Delivery Tools screen", pdf: true do
       visit admin_delivery_tools_path
       expect(page).to have_text "Upcoming Deliveries"
-      expect(page).to have_text "Labels"
+      expect(page).to have_text "Master Labels"
       generate_packing_labels
     end
 
@@ -70,11 +70,11 @@ context "Downloading packing labels", js:true do
       it "can't see Labels feature", pdf: true do
         visit dashboard_path
         expect(page).to have_text "Upcoming Deliveries"
-        expect(page).to_not have_text "Labels"
+        expect(page).to_not have_text "Master Labels"
 
         visit admin_delivery_tools_path
         expect(page).to have_text "Upcoming Deliveries"
-        expect(page).to_not have_text "Labels"
+        expect(page).to_not have_text "Master Labels"
       end
     end
   end
@@ -87,7 +87,7 @@ context "Downloading packing labels", js:true do
     it "can generate packing labels on the Delivery Tools screen", pdf: true do
       visit admin_delivery_tools_path
       expect(page).to have_text "Upcoming Deliveries"
-      expect(page).to have_text "Labels"
+      expect(page).to have_text "Master Labels"
       generate_packing_labels
     end
 
@@ -99,7 +99,7 @@ context "Downloading packing labels", js:true do
       it "can't see Labels feature", pdf: true do
         visit admin_delivery_tools_path
         expect(page).to have_text "Upcoming Deliveries"
-        expect(page).to_not have_text "Labels"
+        expect(page).to_not have_text "Master Labels"
       end
     end
   end
