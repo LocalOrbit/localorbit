@@ -30,7 +30,7 @@ describe "Editing advanced pricing", js: true do
     end
 
     it "changes the action and method for the form" do
-      form = page.find("#new_price")
+      form = page.find("#p#{product.id}_new_price")
       hidden_method = page.find("[name=_method]", visible: false)
 
       expect(form["action"]).to eql("/admin/products/#{product.id}/prices/#{price.id}")
@@ -63,7 +63,7 @@ describe "Editing advanced pricing", js: true do
       end
 
       it "sets the form url back" do
-        form = page.find("#new_price")
+        form = page.find("#p#{product.id}_new_price")
         expect(form["action"]).to eql("/admin/products/#{product.id}/prices")
         expect(form["method"]).to eql("post")
       end
@@ -148,15 +148,17 @@ describe "Editing advanced pricing", js: true do
   end
 
   describe "deleting a price" do
-    it "allows the user to delete multiple prices" do
-      Dom::PricingRow.all.each {|p| p.check_delete }
-      click_button "Delete Selected Prices"
+    it "allows the user to delete one of multiple prices" do
+      expect(Dom::PricingRow.count).to be(2)
+      first(".view-cell .delete").click
 
-      expect(page).to have_content("Successfully removed prices")
-      expect(Dom::PricingRow.all).to be_empty
+      expect(page).to have_content("Successfully removed price")
+      expect(Dom::PricingRow.count).to be(1)
     end
 
-    it "selecting all prices" do
+    it "allows the user to delete all prices" do
+      pending "a new design is needed for deleting all prices"
+
       find(".select-all").click
 
       all("td:first-child input").each do |field|
@@ -166,11 +168,13 @@ describe "Editing advanced pricing", js: true do
       click_button "Delete Selected Prices"
 
       expect(page).to have_content("Successfully removed prices")
-      expect(Dom::PricingRow.all).to be_empty
+      # verify the pricing row remaining is an edit row, not an actual price
+      expect(Dom::PricingRow.count).to be(1)
+      expect(Dom::PricingRow.all_classes).to eq(["add-price add-row price"])
     end
   end
 
-  describe "with different fees", js: true do
+  describe "with different fees" do
     let(:market) { create(:market, local_orbit_seller_fee: 4, market_seller_fee: 6) }
     # total fees: CC seller fee as default, plus this 10 %, so 12.9%
     it "shows updated net sale information" do
@@ -190,9 +194,6 @@ describe "Editing advanced pricing", js: true do
     end
   end
 end
-
-
-
 
 describe "price estimator", js: true do
   let!(:market1) {create(:market, local_orbit_seller_fee:3, market_seller_fee:2, allow_cross_sell:true)}
@@ -216,14 +217,13 @@ describe "price estimator", js: true do
     click_link "Pricing"
   end
 
-
   it "allows price adding and editing properly in both markets" do
     # Pricing adding tests
     form = Dom::NewPricingForm.first
     # DO NOT click btn add here -- there is a row already open
     within form.node do
       find("select.price_market_id").find("option[value='#{market1.id}']").select_option
-      fill_in "price_sale_price", with: "12.90"
+      fill_in "price[sale_price]", with: "12.90"
       click_button "Add"
     end
     price_row = Dom::PricingRow.first
@@ -233,15 +233,15 @@ describe "price estimator", js: true do
     price_row.click_edit
 
     within price_row.node do
-      find(".price_market_id").find("option[value='#{market1.id}']").select_option
+      find("select.price_market_id").find("option[value='#{market1.id}']").select_option
       price_row.node.find("input.sale-price").set("16.80")
       expect(price_row.node.find("input.net-price").value).to eq("15.47")
 
-      find(".price_market_id").find("option[value='#{market2.id}']").select_option
+      find("select.price_market_id").find("option[value='#{market2.id}']").select_option
       price_row.node.find("input.sale-price").set("16.80")
       expect(price_row.node.find("input.net-price").value).to eq("13.79")
 
-      find(".price_market_id").select("All Markets")
+      find("select.price_market_id").select("All Markets")
       price_row.node.find("input.sale-price").set("16.80")
       expect(price_row.node.find("input.net-price").value).to eq("13.79")
 

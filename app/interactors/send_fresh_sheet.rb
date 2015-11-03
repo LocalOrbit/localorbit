@@ -31,7 +31,7 @@ class SendFreshSheet
         token = user.unsubscribe_token(subscription_type: fresh_sheet_type)
         MarketMailer.delay.fresh_sheet(market: market, 
                                        to: user.pretty_email, 
-                                       note: note, 
+                                       note: note,
                                        unsubscribe_token: token,
                                        port: get_port)
       end

@@ -10,9 +10,9 @@
           <%= f.label :number, "Lot #" %><br>
           <%= f.text_field :number, size: 8  %>
         </div><div class="column column--half">
-          <%= f.label :quantity %><br>
-          <%= f.number_field :quantity, min: 0, size: 3 %>
-        </div>
+        <%= f.label :quantity %><br>
+        <%= f.number_field :quantity, min: 0, size: 3 %>
+      </div>
       </div>
 
       <div class="row">
@@ -20,7 +20,8 @@
           <label for="lot_<%= product.id %>_good_from">Good From</label>
           <%= f.datetime_field :good_from, size: 8, class: 'alt-datepicker', id: "lot_#{product.id}_good_from" %><a href="#lot_<%= product.id %>_good_from" class="btn btn--end calendar-toggle" title="Select a date"><i class="font-icon icon-calendar"></i></a>
           <div class="datepicker" data-input="lot_<%= product.id %>_good_from"></div>
-        </div><div class="column column--half">
+        </div>
+        <div class="column column--half">
           <label for="lot_<%= product.id %>_expires_at">Expires On</label>
           <%= f.datetime_field :expires_at, size: 8, class: 'alt-datepicker', id: "lot_#{product.id}_expires_at", data: {'min-date' => 0} %><a href="#lot_<%= product.id %>_expires_at" class="btn btn--end calendar-toggle" title="Select a date"><i class="font-icon icon-calendar"></i></a>
           <div class="datepicker" data-input="lot_<%= product.id %>_expires_at"></div>

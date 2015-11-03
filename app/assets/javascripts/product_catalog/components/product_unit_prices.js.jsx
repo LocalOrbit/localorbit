@@ -1,29 +1,7 @@
 (function() {
 
   var ProductUnitPrices = React.createClass({
-    propTypes: {
-      product: React.PropTypes.shape({
-        id: React.PropTypes.number.isRequired,
-        unit: React.PropTypes.string.isRequired,
-        unit_description: React.PropTypes.string,
-        prices: React.PropTypes.array.isRequired,
-        total_price: React.PropTypes.string.isRequired,
-        max_available: React.PropTypes.number.isRequired,
-        cart_item_quantity: React.PropTypes.number.isRequired,
-        cart_item: React.PropTypes.object.isRequired
-      }).isRequired
-    },
-
-    getInitialState: function() {
-      return {
-        showAll: false,
-        cartItemQuantity: this.props.product.cart_item_quantity
-      };
-    },
-
-    componentDidMount: function() {
-      window.insertCartItemEntry($(this.getDOMNode()));
-    },
+    mixins: [window.lo.ProductInputMixin],
 
     fullPricingRow: function(prices, showCaret) {
       var priceCells = [];
@@ -72,18 +50,6 @@
       this.setState({showAll: !this.state.showAll});
     },
 
-    updateQuantity: function(event) {
-      s = event.target.value.replace(/^0+(?=[0-9])/, '');
-      if (s === '') {
-          s = '0';
-      }
-      this.setState({cartItemQuantity: s});
-    },
-
-    deleteQuantity: function() {
-      this.setState({cartItemQuantity: 0});
-    },
-
     render: function() {
       var pricing = (this.props.product.prices.length <= 3 || this.state.showAll) ? this.fullPricing() : this.abbreviatedPricing();
       var quantity = this.props.product.max_available < 500000 ? this.props.product.max_available + " Avail." : "";
@@ -92,7 +58,7 @@
       return (
         <tr className="cart_item" data-keep-when-zero="yes" data-cart-item={JSON.stringify(this.props.product.cart_item)}>
           <th>
-            <a href={"/products/" + this.props.product.id}>{this.props.product.unit_description || this.props.product.unit}</a><br/>
+            <a href={"/products/" + this.props.product.id}>{this.props.product.unit_description}</a><br/>
             <span style={{fontSize:"11px", color:"#737373"}}>{quantity}&nbsp;</span>
           </th>
           <td>

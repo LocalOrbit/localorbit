@@ -45,24 +45,22 @@ describe "Add item to cart", js: true do
     Timecop.return
   end
 
-  it "enables/disbales the ability depending on how many items are in your cart" do
+  it "enables/disables the ability depending on how many items are in your cart" do
     switch_to_subdomain(market.subdomain)
     sign_in_as(user)
 
-    # Empty cart
     expect(cart_link.node).to have_content("0")
 
     cart_link.node.click
     expect(page).to have_content("Your cart is empty")
     page.find(".overlay").click
-    expect(page).not_to have_content("Your cart is empty")
 
     bananas_row.set_quantity(12)
     expect(page).to have_content("Added to cart!")
-    expect(page).to_not have_content("Added to cart!")
 
     cart_link.node.click
-    expect(page).not_to have_content("Your cart is empty")
+    expect(page).to have_content("Your Order")
+    expect(page).to have_content("Bananas")
   end
 
   context "with an empty cart" do
@@ -79,7 +77,6 @@ describe "Add item to cart", js: true do
 
       expect(Dom::CartLink.first.count).to have_content("0")
       expect(page).not_to have_content("Review Cart")
-
     end
 
     it "updates the item count" do
@@ -87,6 +84,7 @@ describe "Add item to cart", js: true do
 
       expect(page).to have_content("Added to cart!")
       expect(Dom::CartLink.first.count).to have_content("1")
+
       expect(page).to have_content("Review Cart")
 
       kale_row.set_quantity(9)

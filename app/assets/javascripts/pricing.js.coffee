@@ -1,10 +1,10 @@
 $ ->
-  return unless $("#pricing_table").length || $(".product-table").length
+  return unless $(".pricing-table").length || $(".product-table").length
 
-  formatFieldAsMoney = (field)->
+  formatFieldAsMoney = (field) ->
     field.val(parseFloat(field.val()).toFixed(2))
 
-  bindCalculator = (el)->
+  bindCalculator = (el) ->
     salePrice = $(el)
     netPrice = salePrice.parents('tr').first().find('input.net-price')
     selectedMarket = salePrice.parents('tr').first().find('select.price_market_id')
@@ -75,8 +75,8 @@ $ ->
   $('input.edit-price').each ->
     bindCalculator(this)
 
-  EditTable.build "#new_price",
-    applyErrorValuesCallback: (field)->
+  EditTable.build ".price-form",
+    applyErrorValuesCallback: (field) ->
       val = $(field).val()
       if val? && (field.hasClass('sale-price') || field.hasClass('net-price'))
         formatFieldAsMoney($(field))

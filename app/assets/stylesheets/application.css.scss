@@ -11,9 +11,16 @@
  *= require_self
  *= require jquery-ui/datepicker
  *= require mapbox
- *= require_tree .
  *= require chosen
+ *= require froala_content.min.css
+ *= require froala_editor.min.css
+ *= require froala_style.min.css
+ *= require font-awesome
+ //
+ *= require_tree .
  */
+
+@import "font-awesome";
 
 //= depend_on_asset "backgrounds/brown-paper.jpg"
 @charset "utf-8";
@@ -72,6 +79,12 @@ h2 {
 
 h3 {
   font: bold 24px "Open Sans Condensed", OpenSans-Condensed, "Open Sans", OpenSans, sans-serif;
+}
+
+h3.unit-name {
+  margin: 30px 0 2px 0;
+  text-align: left;
+  font: lighter 24px "Open Sans Condensed", OpenSans-Condensed, "Open Sans", OpenSans, sans-serif;
 }
 
 hr {

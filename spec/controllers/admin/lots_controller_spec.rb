@@ -26,19 +26,6 @@ describe Admin::LotsController do
         expect(response).to be_not_found
       end
     end
-
-    context "a product using simple inventory" do
-      let(:product) { create(:product, use_simple_inventory: true) }
-
-      before do
-        sign_in(user)
-      end
-
-      it "redirects to the product page" do
-        get :index, product_id: product.id
-        expect(response).to redirect_to [:admin, product]
-      end
-    end
   end
 
   describe "/create" do

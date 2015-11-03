@@ -19,6 +19,9 @@ class Product < ActiveRecord::Base
   belongs_to :general_product
   default_scope { includes(:general_product) }
 
+  # transient properties for conveniently adding sibling (product) units
+  attr_accessor :sibling_id, :sibling_unit_id, :sibling_unit_description
+
   has_many :lots, -> { order("created_at") }, inverse_of: :product, autosave: true, dependent: :destroy
   has_many :lots_by_expiration, -> { order("expires_at, good_from, created_at") }, class_name: Lot, foreign_key: :product_id
 
@@ -355,6 +358,10 @@ class Product < ActiveRecord::Base
 
   def organization_name
     organization.try(:name)
+  end
+
+  def plural_units_with_name
+    unit.plural ? "#{unit.plural} of #{name}" : name
   end
 
   def unit_plural

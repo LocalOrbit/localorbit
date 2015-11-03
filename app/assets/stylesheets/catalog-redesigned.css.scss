@@ -49,14 +49,16 @@
     background: #F2F2F2;
     border-color: #E7E2E2;
     display: inline;
-    width: 60%;
-    margin-left: 30px;
+    width: 65%;
   }
   .btn{ display: inline; margin-top:4px}
   .order-information-container{
     text-align: right;
     font-size: 13px;
-    a{ font-size: 12px; }
+    a {
+      font-size: 12px;
+      text-decoration: underline;
+    }
     strong{color: #434343;}
   }
 }
@@ -81,11 +83,12 @@
       font-style: italic;
       font-weight: 600;
       font-size: 15px;
+      margin-bottom: 20px;
     }
     ul{
       background:#414141;
-      font-size:16px;
-      line-height: 30px;
+      font-size:14px;
+      line-height: 24px;
       -webkit-column-count: 3; /* Chrome, Safari, Opera */
          -moz-column-count: 3; /* Firefox */
               column-count: 3;
@@ -170,6 +173,7 @@
     width: 40%;
     border-radius: 4px;
     float: left;
+    margin: 0;
   }
   .product-details-container{
     display: table-cell;
@@ -193,8 +197,8 @@
   h3{
     margin: 0;
     color: #0a4399;
-    font-size: 21px;
-    line-height: 24px;
+    font-size: 18px;
+    line-height: 18px;
   }
   h5{ margin:0; }
   p{
@@ -233,7 +237,7 @@
   }
 }
 .product-listing.mobile{
-  display:none !important;
+  // display:none !important;
 }
 
 .featured-product{
@@ -290,7 +294,7 @@
 
   .catalog-search-container{
     padding: 24px 20px;
-    .catalog-search input{width:70%;}
+    .catalog-search input{width:55%;}
   }
   .nav.nav--main a{font-size: 17px;}
   .nav.nav--main a.current::after{ bottom: -16px; }
@@ -320,6 +324,7 @@
   .product-images-link{display:none;}
   .product-listing .product-details-mobile{
     margin-top: 20px;
+    width: 100%;
 
     ul{
       margin:0;
@@ -374,7 +379,7 @@
     h5{font-size: 10px;}
     .btn--info{
       background:#FAFAFA; border:1px solid #B3B2B2; color:#0C2F87; font-size: 12px;font-weight: 700;
-      &.active{background:#0C2F86; border-color:#0A266E; color:#fff;.icon-plus-circle{
+      &.active{background:#0C2F86; border-color:#0A266E;.icon-plus-circle{
             transform:rotateX(40deg);
           }}
     }
@@ -472,7 +477,7 @@
   }
 
   .product-listing{
-    // display:none !important;
+    display:none !important;
     &.mobile{
       display:block !important;
     }

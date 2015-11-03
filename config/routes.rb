@@ -47,7 +47,7 @@ Rails.application.routes.draw do
     resources :markets, concerns: [:bank_account, :activatable], except: [:edit] do
       resources :market_addresses,   as: :addresses,  path: :addresses
       resources :market_managers,    as: :managers,   path: :managers
-      resources :delivery_schedules, path: :deliveries
+      resources :delivery_schedules, path: :deliveries, concerns: [:activatable]
       resource  :fees, only: [:show, :update]
       resource  :style_chooser, controller: :style_chooser, only: [:show, :update]
       resource  :cross_sell, controller: :market_cross_sells, only: [:show, :update]
@@ -199,6 +199,9 @@ Rails.application.routes.draw do
   resources :templates, :index do
     get '/new' => "templates#new"
   end
+
+  resources :delivery_notes, only: [:new, :update, :edit, :show, :create, :destroy]
+  post '/delivery_notes/new' => "delivery_notes#create"
 
   get '/products/search' => "products#search"
   resources :products, only: [:index, :show] do

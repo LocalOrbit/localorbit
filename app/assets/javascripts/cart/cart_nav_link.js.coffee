@@ -14,6 +14,9 @@ $ ->
       @messageContainer = $("<div>").addClass('is-hidden').addClass('message')
       @el.append(@messageContainer)
 
+    deferredUpdateMessage: (message) ->
+      @el.data('message', message)
+
     showMessage: (message)->
       if @timer
         window.clearTimeout(@timer)

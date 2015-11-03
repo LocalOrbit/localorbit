@@ -4,8 +4,10 @@ describe "Adding advanced inventory" do
   let(:user) { create(:user) }
   let(:product) { create(:product, use_simple_inventory: false) }
 
-  let(:empty_inventory_message) { "You don't have any inventory" }
+  let(:empty_inventory_message) { "You don't have any Inventory" }
   let(:market)  { create(:market, organizations: [product.organization]) }
+
+  let(:new_lot_form_id) { "#p#{product.id}_new_lot" }
 
   before do
     switch_to_subdomain(market.subdomain)
@@ -30,11 +32,11 @@ describe "Adding advanced inventory" do
     it "adds the inventory lot to the table" do
       expect(page).to have_content(empty_inventory_message)
 
-      within("#new_lot") do
-        fill_in "lot_number", with: "3"
-        fill_in "lot_good_from", with: "Tue, 25 Feb 2014"
-        fill_in "lot_expires_at", with: "Wed, 10 Dec 2014"
-        fill_in "lot_quantity", with: "12"
+      within(new_lot_form_id) do
+        fill_in "lot[number]", with: "3"
+        fill_in "lot[good_from]", with: "Tue, 25 Feb 2014"
+        fill_in "lot[expires_at]", with: "Wed, 10 Dec 2014"
+        fill_in "lot[quantity]", with: "12"
         click_button "Add"
       end
 
@@ -47,28 +49,28 @@ describe "Adding advanced inventory" do
       expect(lot_row.good_from).to eql("25 Feb 2014")
       expect(lot_row.expires_at).to eql("10 Dec 2014")
       expect(lot_row.quantity).to eql("12")
-      expect("#add-row.is-hidden").to be
+      expect(".add-row.is-hidden").to be
     end
 
     it "shows an error when adding incomplete information" do
-      within("#new_lot") do
-        fill_in "lot_number", with: ""
-        fill_in "lot_quantity", with: ""
+      within(new_lot_form_id) do
+        fill_in "lot[number]", with: ""
+        fill_in "lot[quantity]", with: ""
         click_button "Add"
       end
 
       expect(page).to have_content("Could not save lot")
       expect(page).to have_content("Quantity is not a number")
 
-      expect(Dom::LotRow.first).to be_nil
+      expect(Dom::LotRow.all.map { |r| r.node[:class] }).to eq(["lot add-row editing"])
     end
 
     it "shows an error when adding an expired lot" do
-      within("#new_lot") do
-        fill_in "lot_number", with: "3"
-        fill_in "lot_good_from", with: "Tue, 25 Feb 2014"
-        fill_in "lot_expires_at", with: "Wed, 10 Dec 2012"
-        fill_in "lot_quantity", with: "12"
+      within(new_lot_form_id) do
+        fill_in "lot[number]", with: "3"
+        fill_in "lot[good_from]", with: "Tue, 25 Feb 2014"
+        fill_in "lot[expires_at]", with: "Wed, 10 Dec 2012"
+        fill_in "lot[quantity]", with: "12"
         click_button "Add"
       end
 
@@ -76,11 +78,11 @@ describe "Adding advanced inventory" do
     end
 
     it "shows an error when the good from date is beyond the expires on date" do
-      within("#new_lot") do
-        fill_in "lot_number", with: "3"
-        fill_in "lot_good_from", with: "Tue, 25 Feb 2015"
-        fill_in "lot_expires_at", with: "Tue, 25 Dec 2012"
-        fill_in "lot_quantity", with: "12"
+      within(new_lot_form_id) do
+        fill_in "lot[number]", with: "3"
+        fill_in "lot[good_from]", with: "Tue, 25 Feb 2015"
+        fill_in "lot[expires_at]", with: "Tue, 25 Dec 2012"
+        fill_in "lot[quantity]", with: "12"
         click_button "Add"
       end
 
@@ -88,7 +90,6 @@ describe "Adding advanced inventory" do
     end
 
     it "user can navigate back to product from the inventory page" do
-
       click_link "Product Info"
       product_form = Dom::Admin::ProductForm.first
       expect(product_form).to have_link(product.organization.name)
@@ -111,16 +112,16 @@ describe "Adding advanced inventory" do
 
     it "populates the correct date on validation errors" do
       expected_date = 1.month.from_now.change(day: 15).strftime("%d %b %Y")
-      datepicker = Dom::InlineDatePicker.open("lot_expires_at")
+      datepicker = Dom::InlineDatePicker.open("lot[expires_at]")
       datepicker.click_next
       datepicker.click_day("15")
 
-      expect(find_field("lot_expires_at").value).to eq(expected_date)
+      expect(find_field("lot[expires_at]").value).to eq(expected_date)
 
       click_button "Add"
 
       expect(page).to have_content("Lot # can't be blank when 'Expiration Date' is present")
-      expect(find_field("lot_expires_at").value).to eq(expected_date)
+      expect(find_field("lot[expires_at]").value).to eq(expected_date)
     end
   end
 end

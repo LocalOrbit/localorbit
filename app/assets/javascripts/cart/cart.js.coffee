@@ -8,29 +8,36 @@ $ ->
     constructor: (opts)->
       {@data, @el} = opts
       @timer = null
-
-
-      $(opts.el).find(".quantity input").keyup ->
-        window.clearTimeout(@timer)
-
-        @timer = window.setTimeout =>
-          $(this).trigger("cart.inputFinished")
-        , 250
+      @setElement(@el)
 
     @buildWithElement: (el)->
       new CartItem
         data: $(el).data("cart-item")
         el: $(el)
 
-    update: (data, silent)->
-      if (this.data.quantity == 0) && (data.quantity > 0) && (silent != true)
-        CartLink.showMessage("Added to cart!")
+    setElement: (el) ->
+      @el = el
+      $(@el).find(".quantity input").keyup ->
+        window.clearTimeout(@timer)
 
-      if (this.data.quantity > 0) && (data.quantity == 0) && (silent != true)
-        CartLink.showMessage("Removed from cart!")
+        @timer = window.setTimeout =>
+          $(this).trigger("cart.inputFinished")
+        , 250
 
-      if (this.data.quantity > 0) && (data.quantity > 0) && (silent != true)
-        CartLink.showMessage("Quantity updated!")
+    update: (data, silent) ->
+      msg = ""
+
+      if (silent != true)
+        if (this.data.quantity == 0) && (data.quantity > 0)
+          msg = "Added to cart!"
+
+        else if (this.data.quantity > 0) && (data.quantity == 0)
+          msg = "Removed from cart!"
+
+        else if (this.data.quantity > 0) && (data.quantity > 0)
+          msg = "Quantity updated!"
+
+      CartLink.deferredUpdateMessage(msg)
 
       @data = data
       @updateView()
@@ -85,6 +92,12 @@ $ ->
           counter.attr("data-count", count.toString())
           counter.find(".counter").text(count.toString())
           counter.data('count', count)
+
+          msg = counter.data('message')
+          if msg
+            CartLink.showMessage(msg)
+            counter.data('message', '')
+
           if count > 0
             $('#review_cart').removeClass('is-hidden')
           else
@@ -144,11 +157,13 @@ $ ->
       _.find @items, (item)->
         item.data.product_id == id
 
-    updateOrAddItem: (data, element, silent)->
+    updateOrAddItem: (data, element, silent, newElement)->
       item = @itemAt(data.product_id)
 
       if item?
         item.update(data, silent)
+        if newElement?
+          item.setElement(element)
 
       else
         item = new CartItem(data: data, el: element)
@@ -203,6 +218,7 @@ $ ->
 
             error = data.error
 
+            window.lo.ProductActions.updateProduct(data.item.product_id, data.item.quantity, data.item.formatted_total_price)
             if data.item["destroyed?"]
               @removeItem(data.item)
             else
@@ -283,7 +299,7 @@ $ ->
     $.getJSON("/products/#{id}/row")
 
   window.insertCartItemEntry = (el) ->
-      model.updateOrAddItem el.data("cart-item"), el, true
+      model.updateOrAddItem el.data("cart-item"), el, true, true
 
 
   view.updateCounter()

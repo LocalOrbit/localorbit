@@ -4,12 +4,12 @@
 
       <div class="mobile-pane" id="delivery-information">
         <div class="vacuus"></div>
-        <a href="#seller-info" class="pane-toggle mobile-only btn">Return to the Seller</a>
+        <a href="#seller-info" class="pane-toggle mobile-only btn">Return to the Supplier</a>
         <%= render "products/selected_delivery" %>
       </div
       ><div class="mobile-pane" id="sellers">
         <div class="vacuus"></div>
-        <a href="#seller-info" class="pane-toggle mobile-only btn">Return to the Seller</a>
+        <a href="#seller-info" class="pane-toggle mobile-only btn">Return to the Supplier</a>
         <% unless @sellers.empty? %>
           <h2 class="heading heading--sidebar">Suppliers</h2>
           <ul class="list-naked">
@@ -21,7 +21,7 @@
       </div
       ><div class="mobile-pane" id="social">
         <div class="vacuus"></div>
-        <a href="#seller-info" class="pane-toggle mobile-only btn">Return to the Seller</a>
+        <a href="#seller-info" class="pane-toggle mobile-only btn">Return to the Supplier</a>
         <% if @current_seller.try(:display_twitter) %>
           <div class="social-widget">
             <a class="twitter-timeline" href="https://twitter.com/<%= @current_seller.twitter %>" data-widget-id="<%= Figaro.env.twitter_widget_id %>" data-screen-name="<%= @current_seller.twitter %>"></a>
@@ -57,7 +57,7 @@
           <% if @current_seller.try(:display_facebook) or @current_seller.try(:display_twitter) %>
             <a href="#social" class="pane-toggle mobile-only btn">Social</a>
           <% end %>
-          <a href="#sellers" class="pane-toggle mobile-only btn">Sellers</a>
+          <a href="#sellers" class="pane-toggle mobile-only btn">Suppliers</a>
         </div>
 
         <div class="row">

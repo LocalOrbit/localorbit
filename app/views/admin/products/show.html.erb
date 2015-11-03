@@ -2,14 +2,16 @@
 
 <div class="row row--partial">
   <%= product_listing_disclaimer %>
-  <%= form_for [:admin, @product], html: { class: "product product-form column column--half", data: { organizations: @organizations.to_json(include: :locations), type: "edit"}} do |f| %>
-
-
+  <%= form_for [:admin, @product], html: { class: "product product-form column column--three-fourths",
+                                           data: { organizations: @organizations.to_json(include: :locations),
+                                                   type: "edit"} } do |f| %>
     <%= render "fields", {f: f} %>
 
     <div class="form-actions">
       <p class="action-helper">When you're finished <%= f.submit "Save and Continue" %></p>
-      <p class="return-list">or <%= link_to "Save & Go to the Product List", admin_product_path(@product, after_save: admin_products_path), id: "product-save-and-return"  %></p>
+      <p class="return-list">or <%= link_to "Save & Go to the Product List",
+                                            admin_product_path(@product, after_save: admin_products_path),
+                                            id: "product-save-and-return"  %></p>
     </div>
   <% end %>
 </div>

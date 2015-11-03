@@ -4,7 +4,7 @@ module Admin
     before_action :find_market
 
     def index
-      @delivery_schedules = @market.delivery_schedules.visible.order(:day)
+      @delivery_schedules = @market.delivery_schedules.where("deleted_at is null or is_recoverable='t'").order(:day)
     end
 
     def new
@@ -23,28 +23,42 @@ module Admin
     end
 
     def edit
-      @delivery_schedule = @market.delivery_schedules.visible.find(params[:id])
+      @delivery_schedule = @market.delivery_schedules.find(params[:id])
       render :new
     end
 
     def update
-      delivery_schedule = @market.delivery_schedules.visible.find(params[:id])
+      @delivery_schedule = @market.delivery_schedules.find(params[:id])
 
-      interactor = UpdateDeliveryScheduleAndCurrentDelivery.perform(
-        params: delivery_schedule_params,
-        delivery_schedule: delivery_schedule
-      )
-
+      interactor = UpdateDeliveryScheduleAndCurrentDelivery.perform(params: delivery_schedule_params,
+                                                                    delivery_schedule: @delivery_schedule)
       if interactor.success?
         redirect_to [:admin, @market, :delivery_schedules], notice: "Saved delivery schedule."
       else
-        @delivery_schedule = interactor.delivery_schedule
         render :new
       end
     end
 
+    def update_active
+      @delivery_schedule = @market.delivery_schedules.find(params[:id])
+      message = nil
+
+      if params[:active] == "false"
+        if @delivery_schedule.update_attributes(is_recoverable: true, deleted_at: Time.current)
+          message = "Deactivated delivery schedule."
+        end
+      else
+        if @delivery_schedule.update_attributes(is_recoverable: true, deleted_at: nil)
+          message = "Activated delivery schedule."
+        end
+      end
+
+      redirect_to [:admin, @market, :delivery_schedules], notice: message
+    end
+
     def destroy
-      @market.delivery_schedules.soft_delete(params[:id])
+      @delivery_schedule = @market.delivery_schedules.find(params[:id])
+      @delivery_schedule.update_attributes(is_recoverable: false, deleted_at: Time.current)
       redirect_to [:admin, @market, :delivery_schedules], notice: "Deleted delivery schedule."
     end
 

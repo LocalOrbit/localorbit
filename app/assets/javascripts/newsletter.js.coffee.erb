@@ -1,7 +1,9 @@
 $ ->
-  return unless $("#wysihtml5-textarea").length
-  editor = new wysihtml5.Editor "wysihtml5-textarea", {
-    toolbar:      "wysihtml5-toolbar",
-    stylesheets:  "<%= stylesheet_path('wysiwyg') %>",
-    parserRules:  wysihtml5ParserRules
-  }
+  $('.wysihtml5-textarea').editable({key: '<%= Figaro.env.froala_key %>', imageUpload: false, inlineMode: false, buttons: ['bold', 'italic', 'underline', 'sep', 'fontFamily', 'fontSize', 'color', 'sep', 'table', 'formatBlock', 'align', 'insertOrderedList', 'insertUnorderedList', 'outdent', 'indent', 'selectAll', 'createLink', 'insertImage', 'undo']})
+
+###
+  return unless $(".wysihtml5-textarea").length
+    editor = new wysihtml5.Editor(document.querySelector('.wysihtml5-textarea'), {
+        toolbar: document.querySelector('.wys-toolbar'),
+        parserRules:  wysihtml5ParserRules
+    })###
