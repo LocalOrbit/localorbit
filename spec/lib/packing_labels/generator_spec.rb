@@ -12,7 +12,7 @@ module PackingLabels
       let(:labels)      { double "A list of labels"  }
       let(:pages)       { double "A list of pages"  }
       let(:pdf_result)  { "the pdf result" }
-      let(:product_labels_only) { false }
+      let(:product_labels_only) { true }
       let(:product_label_format) { 4 }
       let(:print_multiple_labels_per_item) { false }
 
