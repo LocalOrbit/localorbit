@@ -46,7 +46,7 @@ feature "modifying order credits", :js do
         expect(page).to have_selector(".app-edit-credit-modal", visible: true)
       end
 
-      it "works for fixed credits" do
+      xit "works for fixed credits", :shaky do
         select "Fixed", from: "amount-type"
         fill_in "amount", with: "2.25"
         fill_in "notes", with: "New notes."
@@ -75,7 +75,7 @@ feature "modifying order credits", :js do
         expect(page).to have_selector(".app-edit-credit-modal", visible: true)
       end
 
-      it "works for fixed credits" do
+      xit "works for fixed credits", :shaky do
         select "Fixed", from: "amount-type"
         fill_in "amount", with: "2.25"
         fill_in "notes", with: "New notes."
