@@ -57,6 +57,10 @@ describe ProcessPackingLabelsPrintable do
 
   ####
 
+  let(:product_labels_only) { false }
+  let(:product_label_format) { 4 }
+  let(:print_multiple_labels_per_item) { false }
+
   # Fake stuff
   let(:context) { double("result context", pdf_result: double("Pdf result", data: "the pdf data"))}
   let(:request) { double "a request" }

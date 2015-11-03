@@ -24,8 +24,8 @@ context "Downloading packing labels", js:true do
 
   let!(:order) { create(:order, items: order_items, organization: buyer_org, market: market, delivery: delivery, order_number: "LO-ADA-0000001", total_cost: order_items.sum(&:gross_total)) }
 
-  def generate_packing_labels
-    click_on "Labels"
+  def generate_packing_labels(title)
+    click_on title
     patiently do
       #expect(page).to have_text("Generating packing labels...")
     end
@@ -51,15 +51,15 @@ context "Downloading packing labels", js:true do
     it "can generate packing labels from the Dashboard", pdf: true do
       visit dashboard_path
       expect(page).to have_text "Upcoming Deliveries"
-      expect(page).to have_text "Master Labels"
-      generate_packing_labels
+      expect(page).to have_text "Order Labels"
+      generate_packing_labels("Order Labels")
     end
 
     it "can generate packing labels on the Delivery Tools screen", pdf: true do
       visit admin_delivery_tools_path
       expect(page).to have_text "Upcoming Deliveries"
       expect(page).to have_text "Master Labels"
-      generate_packing_labels
+      generate_packing_labels("Master Labels")
     end
 
     context "without packing_labels enabled in the Plan" do
@@ -70,11 +70,11 @@ context "Downloading packing labels", js:true do
       it "can't see Labels feature", pdf: true do
         visit dashboard_path
         expect(page).to have_text "Upcoming Deliveries"
-        expect(page).to_not have_text "Master Labels"
+        expect(page).to_not have_text "Order Labels"
 
         visit admin_delivery_tools_path
         expect(page).to have_text "Upcoming Deliveries"
-        expect(page).to_not have_text "Master Labels"
+        expect(page).to_not have_text "Order Labels"
       end
     end
   end
@@ -88,7 +88,7 @@ context "Downloading packing labels", js:true do
       visit admin_delivery_tools_path
       expect(page).to have_text "Upcoming Deliveries"
       expect(page).to have_text "Master Labels"
-      generate_packing_labels
+      generate_packing_labels("Master Labels")
     end
 
     context "without packing_labels enabled in the Plan" do
