@@ -3,7 +3,7 @@
   <div class="column column--three-fourths">
     <legend>Update Payment</legend>
 
-    <%= form_for :payment, :url => {:action => "update"}, :method => "patch" do |f| %>
+    <%= form_for @payment, :url => {:action => "update", :id => @payment.id}, :method => "patch" do |f| %>
       <%= render 'form', {f: f} %>
       <div class="form-actions">
         <%= link_to "Cancel", cart_path(@cart), class: "btn cancel" %>
