@@ -89,9 +89,9 @@ module ProductImport
             product.lots.build
           end
 
-          # if p['unit'] == p['short_description']
-          #   p['short_description'] = "No description available."
-          # end
+          if p['unit'] == p['short_description']
+            p['short_description'] = ""
+          end
 
           product.assign_attributes(
             name: p['name'],
