@@ -98,7 +98,7 @@ module Api
               :id => product.id,
               :max_available => available_inventory,
               :unit => product.unit.plural,
-              :unit_description => product.unit_description,
+              :unit_description => product.unit_plural,
               :prices => prices,
               :cart_item => cart_item.object,
               :cart_item_persisted => cart_item.persisted?,

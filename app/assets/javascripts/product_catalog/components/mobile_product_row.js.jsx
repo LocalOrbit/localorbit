@@ -92,7 +92,7 @@
               <h5>From: <span style={{fontStyle: "italic"}}>{gp.seller_name}</span></h5>
             </div>
             <div className="column--fourth pull-left">
-              <a className="btn btn--info btn--small pull-right" style={{padding: "4px 10px", fontSize: "14px"}} onClick={this.infoClickHandler}><i className="font-icon icon-plus-circle"></i> Info</a>
+              <a className="btn btn--info btn--small pull-right" style={{padding: "4px 10px", fontSize: "14px", color: "#0C2F87"}} onClick={this.infoClickHandler}><i className="font-icon icon-plus-circle"></i> Info</a>
             </div>
           </div>
           <div style={{clear: "both"}}></div>

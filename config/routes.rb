@@ -120,6 +120,7 @@ Rails.application.routes.draw do
       resources :order_summaries, only: :show
       resources :deliveries do
         resources :packing_labels, :controller=>"/deliveries/packing_labels", only: [:show, :index]
+        resources :individual_packing_labels, :controller=>"/deliveries/packing_labels", only: [:show, :index]
       end
     end
 
@@ -198,6 +199,9 @@ Rails.application.routes.draw do
   resources :templates, :index do
     get '/new' => "templates#new"
   end
+
+  resources :delivery_notes, only: [:new, :update, :edit, :show, :create, :destroy]
+  post '/delivery_notes/new' => "delivery_notes#create"
 
   get '/products/search' => "products#search"
   resources :products, only: [:index, :show] do

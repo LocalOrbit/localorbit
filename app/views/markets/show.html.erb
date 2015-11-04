@@ -51,7 +51,7 @@
       <h2 class="story-header">Contact Us</h2>
       <div class="vcard">
         <% if @market.contact_name.present? %><strong class="fn"><%= @market.contact_name %></strong><br><% end %>
-        <% if @market.contact_email.present? %><%= mail_to(@market.contact_email, @market.contact_email, {class:"email"}) %></a><br><% end %>
+        <% if @market.contact_email.present? %><%= mail_to(@market.contact_email, @market.contact_email, {class:"email"}) %><br><% end %>
         <% if @market.default_address %>
         <p class="adr">
           <span class="street-address"><%= @market.default_address.address %></span><br>

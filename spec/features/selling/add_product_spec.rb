@@ -19,9 +19,9 @@ describe "Adding a product", chosen_js: true do
   let!(:market)                { create(:market, :with_addresses) }
   let!(:aggregation_point)     { create(:market_address, market: market, name: "Aggregation Point", address: "1123 Grand Rd.", city: "Appleton", state: "WI", zip: "83992") }
   let!(:org)                   { create(:organization, :seller, :single_location, markets: [market], who_story: "We sell products", how_story: "We sell products very carefully") }
-  let(:stub_warning_pricing)   { "Your product will not appear in the Shop until you add pricing" }
-  let(:stub_warning_inventory) { "Your product will not appear in the Shop until you add inventory" }
-  let(:stub_warning_both)      { "Your product will not appear in the Shop until you add inventory, and add pricing" }
+  let(:stub_warning_pricing)   { "will not appear in the shop until you add Pricing" }
+  let(:stub_warning_inventory) { "will not appear in the shop until you add Inventory" }
+  let(:stub_warning_both)      { "will not appear in the shop until you add Inventory and add Pricing" }
   let(:organization_label)     { "Product Organization" }
 
   let!(:inactive_seller) { create(:organization, :seller, markets: [market], active: false) }
@@ -268,6 +268,7 @@ describe "Adding a product", chosen_js: true do
         expect(page).to have_content("Added Red Grapes")
 
         expect(page).to have_content(stub_warning_both)
+        expect(page).to have_content("for Bushels of Red Grapes yet!")
 
         expect(current_path).to eql(admin_product_lots_path(Product.last))
 
