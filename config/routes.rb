@@ -66,7 +66,7 @@ Rails.application.routes.draw do
     namespace :financials do
       resource  :overview, only: [:show]
       resource  :offline_payment, only: [:show, :create]
-      resources :payments, only: [:index, :update]
+      resources :payments, only: [:index, :update, :edit]
       resources :invoices do
         collection do
           post :resend

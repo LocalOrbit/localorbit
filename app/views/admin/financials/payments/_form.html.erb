@@ -2,7 +2,10 @@
   <div class="field column column--half column--guttered">
     <%= f.label :payment_method, "Update Payment Method:" %>
     <br>
-    <%= f.text_field :payment_method, class: "column--full" %>
+    <%= f.select :payment_method do %>
+      <%= content_tag(:option, "cash", value: "cash") %>
+      <%= content_tag(:option, "check", value: "check") %>    
+    <% end %>
   </div>
 </div>
 

@@ -1,13 +1,13 @@
 
 <div class="row row--partial">
   <div class="column column--three-fourths">
-    <legend>Update Payment %></legend>
+    <legend>Update Payment</legend>
 
     <%= form_for :payment, :url => {:action => "update"}, :method => "patch" do |f| %>
       <%= render 'form', {f: f} %>
       <div class="form-actions">
         <%= link_to "Cancel", cart_path(@cart), class: "btn cancel" %>
-        <%= f.submit "Update Note" %>
+        <%= f.submit "Update Payment" %>
       </div>
     <% end %>
   </div>
