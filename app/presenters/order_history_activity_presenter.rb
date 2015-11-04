@@ -43,14 +43,16 @@ class OrderHistoryActivityPresenter
   def process(list)
     list.map do |item|
       case item.auditable_type
-      when "Order"
-        process_order(item)
-      when "OrderItem"
-        process_order_item(item)
-      when "Payment"
-        process_payment(item)
-      else
-        nil
+        when "Order"
+          process_order(item)
+        when "OrderItem"
+          process_order_item(item)
+        when "Payment"
+          process_payment(item)
+        when "Credit"
+          process_credit(item)
+        else
+          nil
       end
     end
   end
@@ -99,6 +101,18 @@ class OrderHistoryActivityPresenter
       "Seller Payment Status: #{last_value_for_change(item, "status")} (#{payee_name})"
     elsif payment_type == "order refund"
       "Refunded #{payment_method.humanize.capitalize} #{number_to_currency(item.auditable.amount)}"
+    end
+  end
+
+  def process_credit(item)
+    amount = last_value_for_change(item, "amount")
+    if amount
+      amount = number_to_currency(amount)
+      if item.action == "create"
+        "Credit Added: #{amount}"
+      elsif item.action == "update"
+        "Credit Changed: #{amount}"
+      end
     end
   end
 
