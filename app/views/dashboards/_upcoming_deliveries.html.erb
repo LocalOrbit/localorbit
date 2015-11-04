@@ -29,7 +29,8 @@
           <div class="tool-mini <%=summary_last%>" ><%= link_to "Order Summary", admin_delivery_tools_order_summary_path(delivery) %></div>
           <% if access_packing_labels %>
             <% target = if Rails.env.test? then "" else "_blank" end %>
-            <div class="tool-mini <%=labels_last%>"><%= link_to "Labels", admin_delivery_tools_delivery_packing_labels_path(delivery_id: delivery), class: "app-labels-link", target: target %></div>
+              <div class="tool-mini"><%= link_to "Order Labels", admin_delivery_tools_delivery_packing_labels_path(delivery_id: delivery, product_only: false), class: "app-labels-link", target: target %></div>
+              <div class="tool-mini <%=labels_last%>"><%= link_to "Product Labels", admin_delivery_tools_delivery_packing_labels_path(delivery_id: delivery, product_only: true), class: "app-labels-link", target: target %></div>
           <% end %>
         </div>
       </div>

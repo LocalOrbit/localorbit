@@ -31,6 +31,14 @@
       overflow: hidden;
       float: left;
     }
+    .page-sixth {
+        min-width: 395px;
+        max-width: 395px;
+        min-height: 400px;
+        max-height: 400px;
+        overflow: hidden;
+        float: left;
+    }
     .label-box {
       min-width: 375px;
       max-width: 375px;
@@ -66,10 +74,10 @@
     }
     .label-heading {
       text-align: center;
-      background-color: black;
-      color: white;
+      background-color: #EEE;
+      color: #222;
       padding: 8px;
-      padding-top: 20px;
+      padding-top: 10px;
       font-weight: 800;
       font-size: 14px;
       width: 100%;
@@ -92,6 +100,17 @@
       max-height: 110px;
       max-width: 110px;
     }
+    .left-code {
+      float: left;
+        width: 50%
+    }
+    .right-code {
+      float: right;
+    }
+    .right-code img {
+        max-width: 100px;
+        max-height: 100px;
+    }
     .qr-code {
       float: right;
     }
@@ -103,7 +122,6 @@
             <%= render partial: page[:a][:template], locals: page[:a][:data] if page[:a] %>
           </div>
         </div>
-
       <div class="page-quarter">
         <div class="label-box upper-label right-label">
           <%= render partial: page[:b][:template], locals: page[:b][:data] if page[:b] %>

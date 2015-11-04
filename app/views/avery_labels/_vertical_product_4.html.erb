@@ -18,7 +18,7 @@
     <span class="small-text">Product</span><br/>
     <%= product[:product_name] %>
     <% if product[:product_code].present? %>
-      | <%= product[:product_code] %>
+        | <%= product[:product_code] %>
     <% end %>
     <br/>
     <span style="font-size:80%">
@@ -34,7 +34,7 @@
     <div class="footer-row">
       <%= image_tag ensure_full_url(order[:qr_code_url]), :class=>"qr-code" %>
       <% if order[:market_logo_url] %>
-        <%= image_tag ensure_full_url(order[:market_logo_url]) %>
+          <%= image_tag ensure_full_url(order[:market_logo_url]) %>
       <% end %>
     </div>
   </div>
