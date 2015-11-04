@@ -44,7 +44,7 @@ def upload
     end
     content = aud.first['comment'].split("|*|")
     error_text = content.first
-    products_loaded = content.last.match(/(Loaded \d products!)/).captures.first
+    products_loaded = content.last.match(/(Loaded \d+ products!)/).captures.first
     get_output(error_text,products_loaded) # when this is complete, should render errors on check tpl page
     render(:layout => false)
   end
