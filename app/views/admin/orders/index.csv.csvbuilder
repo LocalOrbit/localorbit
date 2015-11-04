@@ -8,8 +8,9 @@ csv << [
   "Product Code",
   "Product",
   "Supplier",
-  "Product Price",
-  "Order Total"
+  "Product Total",
+  "Product Unit Price",
+  "Product Quantity",
 ]
 
 if(@abort_mission)
@@ -27,7 +28,8 @@ else
       order_item.product.code,
       order_item.product.organization.name,
       order_item.gross_total,
-      number_to_currency(order_item.order.gross_total)
+      order_item.unit_price,
+      order_item.quantity
     ]
   end
 end
