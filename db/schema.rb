@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151102140601) do
+ActiveRecord::Schema.define(version: 20151104165931) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -473,8 +473,8 @@ ActiveRecord::Schema.define(version: 20151102140601) do
     t.string   "country",                                                default: "US",  null: false
     t.boolean  "require_purchase_orders",                                default: false, null: false
     t.boolean  "alternative_order_page",                                 default: false, null: false
-    t.integer  "product_label_format"
-    t.boolean  "print_multiple_labels_per_item"
+    t.integer  "product_label_format",                                   default: 4
+    t.boolean  "print_multiple_labels_per_item",                         default: false
   end
 
   add_index "markets", ["name"], name: "index_markets_on_name", using: :btree
