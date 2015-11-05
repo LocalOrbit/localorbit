@@ -20,33 +20,28 @@ module FinancialOverview
     end
 
     def money_in_today
-      #orders = @po_orders.invoiced.unpaid.due_between(today)
-      #sum_order_total(orders)
-      @po_orders.invoiced.unpaid.due_between(today).sum(:total_cost)
+      orders = @po_orders.invoiced.unpaid.due_between(today)
+      sum_order_total(orders)
     end
 
     def money_in_next_seven
-      #orders = @po_orders.invoiced.unpaid.due_between(next_seven_days)
-      #sum_order_total(orders)
-      @po_orders.invoiced.unpaid.due_between(next_seven_days).sum(:total_cost)
+      orders = @po_orders.invoiced.unpaid.due_between(next_seven_days)
+      sum_order_total(orders)
     end
 
     def money_in_next_thirty
-      #orders = @po_orders.invoiced.unpaid.due_between(next_thirty_days)
-      #sum_order_total(orders)
-      @po_orders.invoiced.unpaid.due_between(next_thirty_days).sum(:total_cost)
+      orders = @po_orders.invoiced.unpaid.due_between(next_thirty_days)
+      sum_order_total(orders)
     end
 
     def money_in_purchase_orders
-      #orders = @po_orders.uninvoiced
-      #sum_order_total(orders)
-      @po_orders.uninvoiced.sum(:total_cost)
+      orders = @po_orders.uninvoiced
+      sum_order_total(orders)
     end
 
     def lo_fees_next_seven_days
-      #orders = @po_orders.paid_between(next_seven_days(offset: -7))
-      #sum_local_orbit_fees(orders)
-      @po_orders.paid_between(next_seven_days(offset: -7)).sum(:local_orbit_market_fee)
+      orders = @po_orders.paid_between(next_seven_days(offset: -7))
+      sum_local_orbit_fees(orders)
     end
 
     private

@@ -6,12 +6,12 @@
         Overdue
       </td>
       <td class="amount"><%= number_to_currency @overview.overdue %>
-        <span class="tooltip" data-tooltip="Delivered, unpaid orders where the invoice due date is < today"></span>
+        <span class="tooltip" data-tooltip="Delivered, unpaid orders where the invoice due date is before today"></span>
       </td>
     </tr>
     <tr>
       <td class="title">
-        Today
+        Due Today
       </td>
       <td class="amount"><%= number_to_currency @overview.money_in_today %>
         <span class="tooltip" data-tooltip="Invoiced, unpaid orders due today"></span>
@@ -19,7 +19,7 @@
     </tr>
     <tr>
       <td class="title">
-        Next 7 Days
+        Due In Next 7 Days
       </td>
       <td class="amount"><%= number_to_currency @overview.money_in_next_seven %>
         <span class="tooltip" data-tooltip="Invoiced, unpaid orders due within the next 7 days"></span>
@@ -29,7 +29,7 @@
     <% if current_user.can_manage_market?(current_market) %>
       <tr>
         <td class="title">
-          Next 30 Days
+          Due In Next 30 Days
         </td>
         <td class="amount"><%= number_to_currency @overview.money_in_next_thirty %>
           <span class="tooltip" data-tooltip="Invoiced, unpaid orders due within the next 30 days"></span>

@@ -42,7 +42,7 @@ module FinancialOverview
     end
 
     def overdue
-      sum_seller_items(@po_orders.delivered.where("invoice_due_date < ?", @time.beginning_of_day))
+      sum_seller_items(@po_orders.delivered.unpaid.where("invoice_due_date < ?", @time.beginning_of_day))
     end
 
     private
