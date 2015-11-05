@@ -52,7 +52,7 @@ class Credit < ActiveRecord::Base
   end
 
   def order_must_be_paid_by_po
-    if(order && order.payment_method != "purchase order")
+    if order && order.payment_method != "purchase order"
       errors.add(:order, "must be paid for by purchase order")
     end
   end

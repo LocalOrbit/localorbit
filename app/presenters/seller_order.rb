@@ -30,16 +30,25 @@ class SellerOrder
     new(order, seller)
   end
 
-  def credit_amount
-    credit_amount = 0
-    if credit_paid_by_sellers?
-      if credit.paying_org == nil
-        credit_amount = (@order.credit_amount / (@order.sellers.count || 1)).round 2
-      elsif credit.paying_org == @seller
-        credit_amount = @order.credit_amount
-      end
+  def credit_amount_visible_to_current_seller
+    if credit.paying_org == nil
+      (@order.credit_amount / (@order.sellers.count || 1)).round 2
+    elsif credit.paying_org == @seller || (@seller.is_a?(User) && @seller.member_of_organization?(credit.paying_org))
+      # When a user belongs to more than one organization that are on the order,
+      # the display will be confusing because they won't know which organization
+      # is paying the credit.
+      @order.credit_amount
+    else
+      0
     end
-    return credit_amount
+  end
+
+  def credit_amount
+    if credit_paid_by_sellers?
+      credit_amount_visible_to_current_seller
+    else
+      0
+    end
   end
 
   def total_cost
