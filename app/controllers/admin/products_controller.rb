@@ -100,7 +100,8 @@ module Admin
         delivery_schedule_ids: [],
         sibling_id: [],
         sibling_unit_id: [],
-        sibling_unit_description: []
+        sibling_unit_description: [],
+        sibling_product_code: []
       )
 
       unless results.count == 1 && results["simple_inventory"].present?
@@ -187,17 +188,20 @@ module Admin
         product.sibling_id.each_with_index do |sibling_id, i|
           sibling_unit_id = product.sibling_unit_id[i]
           sibling_unit_description = product.sibling_unit_description[i]
+          sibling_product_code = product.sibling_product_code[i]
           if sibling_id == "0"
             if sibling_unit_id && sibling_unit_id != ""
               sibling = product.model.dup
               sibling.unit_id = sibling_unit_id
               sibling.unit_description = sibling_unit_description
+              sibling.code = sibling_product_code
               sibling.save
             end
           else
             sibling = Product.find_by(id: sibling_id)
             if sibling
-              sibling.update(unit_id: sibling_unit_id, unit_description: sibling_unit_description)
+              sibling.update(unit_id: sibling_unit_id, unit_description: sibling_unit_description,
+                             code: sibling_product_code)
             end
           end
         end

@@ -96,7 +96,12 @@
                          multiple: true,
                          size: 20, maxlength: 20, class: "column column--full" %>
       </td>
-      <td></td>
+      <td class="field">
+        <%= f.text_field :sibling_product_code,
+                         value: sibling.code,
+                         multiple: true,
+                         class: "column column--full" %>
+      </td>
       <td></td>
     </tr>
   <% end %>
@@ -117,9 +122,14 @@
                        multiple: true,
                        size: 20, maxlength: 20, class: "column column--full" %>
     </td>
-    <td></td>
     <td class="edit-cell">
-      <button class="cancel">Cancel</button>&nbsp;<%= link_to "Add", '#add-unit', class: 'add-copy' %>
+      <%= f.text_field :sibling_product_code,
+                       value: "",
+                       multiple: true,
+                       class: "column column--full" %>
+    </td>
+    <td class="edit-cell">
+      <button class="cancel">Cancel</button>&nbsp;/&nbsp;<%= link_to "Add", '#add-unit', class: 'add-copy' %>
     </td>
   </tr>
 
