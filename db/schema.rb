@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151102140601) do
+ActiveRecord::Schema.define(version: 20151104165931) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -422,7 +422,7 @@ ActiveRecord::Schema.define(version: 20151102140601) do
     t.string   "name"
     t.string   "subdomain"
     t.string   "timezone"
-    t.boolean  "active",                                                default: false, null: false
+    t.boolean  "active",                                                 default: false, null: false
     t.string   "contact_name"
     t.string   "contact_email"
     t.string   "contact_phone"
@@ -436,43 +436,45 @@ ActiveRecord::Schema.define(version: 20151102140601) do
     t.string   "tagline"
     t.string   "background_image"
     t.string   "balanced_customer_uri"
-    t.boolean  "balanced_underwritten",                                 default: false, null: false
-    t.decimal  "local_orbit_seller_fee",        precision: 5, scale: 3, default: 0.0,   null: false
-    t.decimal  "local_orbit_market_fee",        precision: 5, scale: 3, default: 0.0,   null: false
-    t.decimal  "market_seller_fee",             precision: 5, scale: 3, default: 0.0,   null: false
-    t.decimal  "credit_card_seller_fee",        precision: 5, scale: 3, default: 0.0,   null: false
-    t.decimal  "credit_card_market_fee",        precision: 5, scale: 3, default: 0.0,   null: false
-    t.decimal  "ach_seller_fee",                precision: 5, scale: 3, default: 0.0,   null: false
-    t.decimal  "ach_market_fee",                precision: 5, scale: 3, default: 0.0,   null: false
-    t.decimal  "ach_fee_cap",                   precision: 6, scale: 2, default: 8.0,   null: false
-    t.integer  "po_payment_term",                                       default: 14,    null: false
+    t.boolean  "balanced_underwritten",                                  default: false, null: false
+    t.decimal  "local_orbit_seller_fee",         precision: 5, scale: 3, default: 0.0,   null: false
+    t.decimal  "local_orbit_market_fee",         precision: 5, scale: 3, default: 0.0,   null: false
+    t.decimal  "market_seller_fee",              precision: 5, scale: 3, default: 0.0,   null: false
+    t.decimal  "credit_card_seller_fee",         precision: 5, scale: 3, default: 0.0,   null: false
+    t.decimal  "credit_card_market_fee",         precision: 5, scale: 3, default: 0.0,   null: false
+    t.decimal  "ach_seller_fee",                 precision: 5, scale: 3, default: 0.0,   null: false
+    t.decimal  "ach_market_fee",                 precision: 5, scale: 3, default: 0.0,   null: false
+    t.decimal  "ach_fee_cap",                    precision: 6, scale: 2, default: 8.0,   null: false
+    t.integer  "po_payment_term",                                        default: 14,    null: false
     t.string   "photo_uid"
-    t.boolean  "allow_credit_cards",                                    default: true
-    t.boolean  "allow_purchase_orders",                                 default: true
-    t.boolean  "allow_ach",                                             default: true
-    t.boolean  "default_allow_purchase_orders",                         default: false
-    t.boolean  "default_allow_credit_cards",                            default: true
-    t.boolean  "default_allow_ach",                                     default: true
+    t.boolean  "allow_credit_cards",                                     default: true
+    t.boolean  "allow_purchase_orders",                                  default: true
+    t.boolean  "allow_ach",                                              default: true
+    t.boolean  "default_allow_purchase_orders",                          default: false
+    t.boolean  "default_allow_credit_cards",                             default: true
+    t.boolean  "default_allow_ach",                                      default: true
     t.integer  "legacy_id"
     t.string   "background_color"
     t.string   "text_color"
-    t.boolean  "allow_cross_sell",                                      default: false
-    t.boolean  "auto_activate_organizations",                           default: false
+    t.boolean  "allow_cross_sell",                                       default: false
+    t.boolean  "auto_activate_organizations",                            default: false
     t.integer  "plan_id"
-    t.boolean  "closed",                                                default: false
-    t.boolean  "demo",                                                  default: false
+    t.boolean  "closed",                                                 default: false
+    t.boolean  "demo",                                                   default: false
     t.datetime "plan_start_at"
-    t.integer  "plan_interval",                                         default: 1,     null: false
-    t.decimal  "plan_fee",                      precision: 7, scale: 2, default: 0.0,   null: false
+    t.integer  "plan_interval",                                          default: 1,     null: false
+    t.decimal  "plan_fee",                       precision: 7, scale: 2, default: 0.0,   null: false
     t.integer  "plan_bank_account_id"
     t.text     "store_closed_note"
-    t.boolean  "sellers_edit_orders",                                   default: false, null: false
+    t.boolean  "sellers_edit_orders",                                    default: false, null: false
     t.string   "stripe_customer_id"
     t.string   "stripe_account_id"
     t.string   "payment_provider"
-    t.string   "country",                                               default: "US",  null: false
-    t.boolean  "require_purchase_orders",                               default: false, null: false
-    t.boolean  "alternative_order_page",                                default: false, null: false
+    t.string   "country",                                                default: "US",  null: false
+    t.boolean  "require_purchase_orders",                                default: false, null: false
+    t.boolean  "alternative_order_page",                                 default: false, null: false
+    t.integer  "product_label_format",                                   default: 4
+    t.boolean  "print_multiple_labels_per_item",                         default: false
   end
 
   add_index "markets", ["name"], name: "index_markets_on_name", using: :btree

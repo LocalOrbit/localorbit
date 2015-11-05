@@ -57,6 +57,10 @@ describe ProcessPackingLabelsPrintable do
 
   ####
 
+  let(:product_labels_only) { false }
+  let(:product_label_format) { 4 }
+  let(:print_multiple_labels_per_item) { false }
+
   # Fake stuff
   let(:context) { double("result context", pdf_result: double("Pdf result", data: "the pdf data"))}
   let(:request) { double "a request" }
@@ -95,7 +99,7 @@ describe ProcessPackingLabelsPrintable do
     it "loads an PackingLabelsPrintable and generates the corresponding PDF document, stores that PDF as an attachment" do
       expect_generate_packing_labels_for_orders(all_orders, admin_user)
 
-      subject.perform(packing_labels_printable_id: admin_printable.id, request: request)
+      subject.perform(packing_labels_printable_id: admin_printable.id, request: request, product_labels_only: product_labels_only, product_label_format: product_label_format, print_multiple_labels_per_item: print_multiple_labels_per_item)
 
       verify_pdf_generated_on admin_printable
     end
@@ -105,7 +109,7 @@ describe ProcessPackingLabelsPrintable do
     it "only includes orders for the specific seller" do
       expect_generate_packing_labels_for_orders(seller_orders,seller_user)
 
-      subject.perform(packing_labels_printable_id: seller_printable.id, request: request)
+      subject.perform(packing_labels_printable_id: seller_printable.id, request: request, product_labels_only: product_labels_only, product_label_format: product_label_format, print_multiple_labels_per_item: print_multiple_labels_per_item)
 
       verify_pdf_generated_on seller_printable
     end
@@ -115,7 +119,7 @@ describe ProcessPackingLabelsPrintable do
     it "only includes orders for the specific seller" do
       expect_generate_packing_labels_for_orders(seller2_orders, seller_user2)
 
-      subject.perform(packing_labels_printable_id: seller2_printable.id, request: request)
+      subject.perform(packing_labels_printable_id: seller2_printable.id, request: request, product_labels_only: product_labels_only, product_label_format: product_label_format, print_multiple_labels_per_item: print_multiple_labels_per_item)
 
       verify_pdf_generated_on seller2_printable
     end
@@ -125,7 +129,7 @@ describe ProcessPackingLabelsPrintable do
     it "includes all orders" do
       expect_generate_packing_labels_for_orders(all_orders, manager)
 
-      subject.perform(packing_labels_printable_id: manager_printable.id, request: request)
+      subject.perform(packing_labels_printable_id: manager_printable.id, request: request, product_labels_only: product_labels_only, product_label_format: product_label_format, print_multiple_labels_per_item: print_multiple_labels_per_item)
 
       verify_pdf_generated_on manager_printable
     end

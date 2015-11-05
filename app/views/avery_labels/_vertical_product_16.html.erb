@@ -1,0 +1,43 @@
+<div class="label-content" style="font-size:125%">
+  <div class="label-row">
+    <div class="left-code">
+      <span class="small-label">For delivery on:</span><br/>
+      <span class="small-text"><%= order[:deliver_on] %></span>
+    </div>
+    <div class="label-heading">PRODUCT</div>
+  </div>
+  <div class="label-row">
+    <span class="small-label">Order #:</span><br/>
+    <span class="small-text"><%= order[:order_number] %></span>
+  </div>
+  <div class="label-row" style="word-wrap: break-word">
+    <span class="small-label">Buyer</span><br/>
+    <%= order[:buyer_name] %>
+  </div>
+  <div>
+    <div class="label-row" style="word-wrap: break-word">
+    <span class="small-label">Product</span><br/>
+    <span class="small-text"><%= product[:product_name] %></span>
+    <br/>
+    <span style="font-size:80%">
+        <span class="small-text"><%= "#{product[:quantity]} #{product[:unit_desc]}" %></span>
+        <span class="small-text"><%= "| #{product[:lot_desc]}" if product[:lot_desc] %></span>
+    </span>
+    </div>
+    <div class="label-row">
+        <span class="small-label">Supplier</span><br/>
+        <span class="small-text"><%= product[:producer_name] %></span>
+    </div>
+    <div class="label-row">
+        <div class="left-code-qr">
+          <% if order[:market_logo_url] %>
+              <%= image_tag ensure_full_url(order[:market_logo_url]) %>
+          <% end %>
+          &nbsp;
+        </div>
+        <div class="right-code-qr">
+          <%= image_tag ensure_full_url(order[:qr_code_url]), :class=>"qr-code" %><br/>
+        </div>
+    </div>
+  </div>
+</div>

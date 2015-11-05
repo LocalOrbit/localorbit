@@ -18,7 +18,7 @@ describe "Adding advanced pricing" do
   end
 
   it "shows there are no prices for the selected product" do
-    expect(page).to have_content("You don't have any prices yet!")
+    expect(page).to have_content("You don't have any Prices for boxes of #{product.name} yet!")
   end
 
   it "completes successfully given valid information" do
@@ -32,7 +32,7 @@ describe "Adding advanced pricing" do
     expect(record.net_price).to eq("$1.79") # 1.90 - (5.9% of 1.90)
     expect(record.sale_price).to eq("$1.90")
 
-    expect(page).to_not have_content("You don't have any prices yet!")
+    expect(page).to_not have_content("You don't have any Prices yet!")
   end
 
   describe "invalid input" do 

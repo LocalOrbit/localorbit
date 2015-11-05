@@ -120,6 +120,7 @@ Rails.application.routes.draw do
       resources :order_summaries, only: :show
       resources :deliveries do
         resources :packing_labels, :controller=>"/deliveries/packing_labels", only: [:show, :index]
+        resources :individual_packing_labels, :controller=>"/deliveries/packing_labels", only: [:show, :index]
       end
     end
 

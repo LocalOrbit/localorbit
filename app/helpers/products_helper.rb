@@ -18,19 +18,19 @@ module ProductsHelper
   def product_listing_disclaimer
     condition = []
     if @product.available_inventory == 0
-      condition.push link_to_unless_current "add inventory", [:admin, @product, :lots]
+      condition.push link_to_unless_current "add Inventory", [:admin, @product, :lots]
     end
 
     if @product.prices.count < 1
-      condition.push link_to_unless_current "add pricing", [:admin, @product, :prices]
+      condition.push link_to_unless_current "add Pricing", [:admin, @product, :prices]
     end
 
     if @product.errors.full_messages.present?
-      condition.push "fix the following errors:"
+      condition.push "fix the following Errors:"
     end
 
     if condition.length > 0
-      content_tag(:div, "Your product will not appear in the Shop until you #{condition.join(", and ")}".html_safe, class: "product-status-alert")
+      content_tag(:div, "#{@product.plural_units_with_name} will not appear in the shop until you #{condition.join(" and ")}".html_safe, class: "product-status-alert")
     end
   end
 

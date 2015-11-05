@@ -10,7 +10,7 @@
 
   <% unless @product.prices.view_sorted.any? %>
     <p>
-      You don't have any prices yet! We've gone ahead and started the entry for you. When you enter a Sale Price,
+      You don't have any Prices for <%= @product.plural_units_with_name %> yet! We've gone ahead and started the entry for you. When you enter a Sale Price,
       the Net Price will automatically update. You can adjust these numbers to arrive at the Net Price that you want
       to receive per unit.
     </p>
@@ -20,7 +20,7 @@
   <%= render "shared/errors", {resource: @price_with_errors} if @price_with_errors %>
 
   <% @child_units.each do |unit_product| %>
-    <h2 style="text-align: left"><%= unit_product.unit_plural %></h2>
+    <h3 class="unit-name"><%= unit_product.unit_plural %></h3>
     <%= form_for [:admin, unit_product, @price],
                  namespace: "p#{unit_product.id}",
                  html: {class: "row row--partial price-form",
@@ -32,17 +32,19 @@
                         class: "sortable pricing-table" do %>
           <thead>
           <tr>
-            <%= content_tag(:th, 'Market') if current_user.multi_market_membership? %>
-            <th>Buyer</th>
-            <th>
+            <% if current_user.multi_market_membership? %>
+              <th class="market">Market</th>
+            <% end %>
+            <th class="buyer">Buyer</th>
+            <th class="min-qty">
               Min Qty <span class="tooltip" data-tooltip="This is the minimum quantity available for sale of this product."></span>
             </th>
-            <th>
-              Estimated Net Price <span class="tooltip tool-tip-test" data-tooltip="The Net Price is the amount that
+            <th class="net-price">
+              <div style="float: left">Estimated<br>Net Price</div><span class="tooltip tool-tip-test" data-tooltip="The Net Price is the amount that
               the seller will receive. This amount is an estimate, calculated by subtracting the market fee and any
               applicable payment processing fees from the Sale Price."></span>
             </th>
-            <th>
+            <th class="sale-price">
               Sale Price <span class="tooltip" data-tooltip="This is the sale price that the Buyer will see. The net
               price will adjust when you enter a sale price."></span>
             </th>
@@ -50,7 +52,7 @@
           </tr>
           </thead>
 
-          <tbody>
+          <tbody class="zebra-stripes">
           <% unit_product.prices.view_sorted.decorate.each do |price| %>
             <%= content_tag_for :tr, price, {data: {"form-url" => url_for([:admin, unit_product, price])},
                                              rel: "price_#{price.id}"} do %>
@@ -136,6 +138,9 @@
 
           <% if organization_can_access?(unit_product.organization, :advanced_pricing) && unit_product.prices.view_sorted.any? %>
             <tr class="add-toggle last-row">
+              <% if current_user.multi_market_membership? %>
+                <td></td>
+              <% end %>
               <td></td>
               <td></td>
               <td></td>
