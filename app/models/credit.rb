@@ -4,6 +4,8 @@ class Credit < ActiveRecord::Base
   belongs_to :paying_org, class: Organization
   after_save :update_order
 
+  audited associated_with: :order
+
   PERCENTAGE = "percentage"
   FIXED = "fixed"
   MARKET = "market"
