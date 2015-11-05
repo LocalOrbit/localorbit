@@ -2,26 +2,46 @@
   <h2>Money In</h2>
   <table>
     <tr>
-      <td class="title">Overdue</td>
-      <td class="amount"><%= number_to_currency @overview.overdue %></td>
+      <td class="title">
+        Overdue
+      </td>
+      <td class="amount"><%= number_to_currency @overview.overdue %>
+        <span class="tooltip" data-tooltip="Delivered, unpaid orders where the invoice due date is < today"></span>
+      </td>
     </tr>
     <tr>
-      <td class="title">Today</td>
-      <td class="amount"><%= number_to_currency @overview.money_in_today %></td>
+      <td class="title">
+        Today
+      </td>
+      <td class="amount"><%= number_to_currency @overview.money_in_today %>
+        <span class="tooltip" data-tooltip="Invoiced, unpaid orders due today"></span>
+      </td>
     </tr>
     <tr>
-      <td class="title">Next 7 Days</td>
-      <td class="amount"><%= number_to_currency @overview.money_in_next_seven %></td>
+      <td class="title">
+        Next 7 Days
+      </td>
+      <td class="amount"><%= number_to_currency @overview.money_in_next_seven %>
+        <span class="tooltip" data-tooltip="Invoiced, unpaid orders due within the next 7 days"></span>
+      </td>
     </tr>
 
     <% if current_user.can_manage_market?(current_market) %>
       <tr>
-        <td class="title">Next 30 Days</td>
-        <td class="amount"><%= number_to_currency @overview.money_in_next_thirty %></td>
+        <td class="title">
+          Next 30 Days
+        </td>
+        <td class="amount"><%= number_to_currency @overview.money_in_next_thirty %>
+          <span class="tooltip" data-tooltip="Invoiced, unpaid orders due within the next 30 days"></span>
+        </td>
       </tr>
       <tr>
-        <td class="title">Purchase Orders</td>
-        <td class="amount"><%= number_to_currency @overview.money_in_purchase_orders %></td>
+        <td class="title">
+          Purchase Orders
+        </td>
+        <td class="amount"><%= number_to_currency @overview.money_in_purchase_orders %>
+          <span class="tooltip" data-tooltip="Un-invoiced orders"></span>
+        </td>
       </tr>
     <% end %>
   </table>

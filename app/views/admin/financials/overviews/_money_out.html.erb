@@ -2,15 +2,20 @@
   <h2>Money Out</h2>
   <table>
     <tr>
-      <td class="title">Next 7 Days</td>
-      <td class="amount"><%= number_to_currency @overview.money_out_next_seven %></td>
+      <td class="title">
+        Next 7 Days
+      </td>
+      <td class="amount"><%= number_to_currency @overview.money_out_next_seven %>
+        <span class="tooltip" data-tooltip="Delivered orders that are paid within the next seven days (from today)"></span>
+      </td>
     </tr>
     <tr>
       <td class="title">
-        LO Fees
-        <span class="tooltip" data-tooltip="These fees are applied for purchases not made with credit cards or ACH."></span>
+        Local Orbit Market Fees
       </td>
-      <td class="amount"><%= number_to_currency @overview.lo_fees_next_seven_days %></td>
+      <td class="amount"><%= number_to_currency @overview.lo_fees_next_seven_days %>
+        <span class="tooltip" data-tooltip="These fees are applied for purchases not made with credit cards or ACH"></span>
+      </td>
     </tr>
   </table>
   <%= link_to "Record Payments", admin_financials_vendor_payments_path, class: "btn btn--small btn--primary mobile-block" %>
