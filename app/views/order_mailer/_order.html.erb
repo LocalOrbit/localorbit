@@ -34,11 +34,13 @@
     <% end %>
     <% if @order.delivery_fees > 0 %>
     <tr>
-      <th colspan="3">Delivery Fee</th>
+      <th colspan="3"><%= @order.delivery.delivery_schedule.fee_label %></th>
       <td class="lo_currency"><%= number_to_currency @order.delivery_fees %></td>
       <td></td>
     </tr>
     <% end %>
+
+
     <tr>
       <th colspan="3">Total</th>
       <td class="lo_currency"><%= number_to_currency @order.total_cost %></td>
