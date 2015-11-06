@@ -130,13 +130,13 @@ feature "Viewing orders" do
       expect(orders.count).to eq(6)
 
       order = Dom::Admin::OrderRow.find_by_order_number(market1_order1.order_number)
-      expect(order.amount_owed).to eq("$27.96")
+      expect(order.amount_owed).to eq("$35.08")
       expect(order.delivery_status).to eq("Partially Delivered")
       expect(order.buyer_name).to eql(market1_buyer_org1.name)
       expect(order.buyer_status).to eq("Unpaid")
 
       order = Dom::Admin::OrderRow.find_by_order_number(market1_order2.order_number)
-      expect(order.amount_owed).to eq("$41.95")
+      expect(order.amount_owed).to eq("$49.07")
       expect(order.delivery_status).to eq("Pending")
       expect(order.buyer_name).to eql(market1_buyer_org2.name)
       expect(order.buyer_status).to eq("Unpaid")
@@ -152,12 +152,12 @@ feature "Viewing orders" do
       expect(orders.count).to eq(6)
 
       order = Dom::Admin::OrderRow.find_by_order_number(market1_order1.order_number)
-      expect(order.amount_owed).to eq("$27.96")
+      expect(order.amount_owed).to eq("$35.08")
       expect(order.delivery_status).to eq("Partially Delivered")
       expect(order.buyer_status).to eq("Unpaid")
 
       order = Dom::Admin::OrderRow.find_by_order_number(market1_order2.order_number)
-      expect(order.amount_owed).to eq("$41.95")
+      expect(order.amount_owed).to eq("$49.07")
       expect(order.delivery_status).to eq("Pending")
       expect(order.buyer_status).to eq("Unpaid")
     end

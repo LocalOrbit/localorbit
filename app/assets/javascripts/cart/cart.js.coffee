@@ -381,3 +381,11 @@ $ ->
     if $("#discount_code").val() != ""
       $("#discount_code").val("")
       $(this).parents('form').submit()
+
+  numItems = $('.payment-method').length
+  if (numItems == 1)
+    $('.payment-method').click()
+
+  if ($('#order_credit_card_id option').size() == 2)
+    $('#order_credit_card_id option:last').attr("selected","selected");
+

@@ -2,14 +2,6 @@ class Admin::UploadController < AdminController
 	require 'rubyXL'
   require 'open3'
 
- #  def upload
- #  	uploaded = params[:datafile] # Gets the xlsx data from form upload post request
- #    filepath = Rails.root.join('tempfiles',uploaded.original_filename)
-	#   File.open(filepath, 'wb') do |file|
-	#   	file.write(uploaded.read) # Writes that data to the open filestream in the tempfiles fldr
-	#   end
-	# end
-
   def index
     @plan = current_market.plan.name # check if LocalEyes plan on market
     current_mkt_id = current_market.id # ensures that current market sub-site matters for where upload occurs
@@ -25,7 +17,7 @@ class Admin::UploadController < AdminController
   
 def upload
     @total_products_msg = "Loading not completed." # initial
-    # TODO: render different based on whether that loading is complete.
+
     if params.has_key?(:datafile)
       profile = params[:profile]
       filepath = './tempfiles/' + params[:datafile].original_filename.to_s
@@ -48,12 +40,11 @@ def upload
     # now try to find audit with job id
     aud = Audit.where(associated_id:@job_id)
     if not aud.first
-      #render :status => 404
       raise ActiveRecord::RecordNotFound
     end
     content = aud.first['comment'].split("|*|")
     error_text = content.first
-    products_loaded = content.last
+    products_loaded = content.last.match(/(Loaded \d+ products!)/).captures.first
     get_output(error_text,products_loaded) # when this is complete, should render errors on check tpl page
     render(:layout => false)
   end

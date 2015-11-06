@@ -107,7 +107,7 @@
               <% if allow_payment_option?(:purchase_order, current_market, current_organization) %>
                 <div class="field">
                   <label>
-                    <%= f.radio_button :payment_method, "purchase order" %>
+                    <%= f.radio_button :payment_method, "purchase order", :class=>"payment-method" %>
                     Pay by Purchase Order
                   </label>
                   <fieldset id="purchase-order-fields" class="payment-fields is-hidden" data-available="true">
@@ -122,7 +122,7 @@
               <% if allow_payment_option?(:credit_card, current_market, current_organization) %>
                 <div class="field">
                   <label>
-                    <%= f.radio_button :payment_method, "credit card" %>
+                    <%= f.radio_button :payment_method, "credit card", :class=>"payment-method" %>
                     Pay by Credit Card
                   </label>
                   <fieldset id="credit-card-fields" class="payment-fields is-hidden" data-available="<%= current_organization.decorate.credit_cards_available? %>">
@@ -181,7 +181,7 @@
               <% if allow_payment_option?(:ach, current_market, current_organization) %>
                 <div class="field">
                   <label>
-                    <%= f.radio_button :payment_method, "ach" %>
+                    <%= f.radio_button :payment_method, "ach", :class=>"payment-method" %>
                     Pay by ACH
                   </label>
                   <fieldset id="ach-fields" class="payment-fields is-hidden" data-available="<%= current_organization.decorate.ach_available? %>">

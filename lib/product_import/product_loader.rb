@@ -90,7 +90,7 @@ module ProductImport
           end
 
           if p['unit'] == p['short_description']
-            p['short_description'] = "No description available."
+            p['short_description'] = ""
           end
 
           product.assign_attributes(

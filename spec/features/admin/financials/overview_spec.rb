@@ -104,8 +104,8 @@ feature "Seller Financial Overview" do
     expect(Dom::Admin::Financials::MoneyOut.all).to be_empty
 
     expect(money_in_row("Overdue").amount).to eql("$63.88")
-    expect(money_in_row("Today").amount).to eql("$103.81")
-    expect(money_in_row("Next 7 Days").amount).to eql("$1,212.23")
+    expect(money_in_row("Due Today").amount).to eql("$103.81")
+    expect(money_in_row("Due In Next 7 Days").amount).to eql("$1,212.23")
   end
 
   scenario "Seller navigates to their financial overview" do
