@@ -2,10 +2,10 @@
   <div class="field column column--half column--guttered">
     <%= f.label :payment_method, "Update Payment Method:" %>
     <br>
-    <%= f.select :payment_method do %>
-      <%= content_tag(:option, "cash", value: "cash") %>
-      <%= content_tag(:option, "check", value: "check") %>    
-    <% end %>
+    <%= f.radio_button :payment_method, 'cash' %>
+    <%= label :paymentmethod_cash, 'Cash' %>
+    <%= f.radio_button :payment_method, 'check' %>
+    <%= label :paymentmethod_check, 'Check' %>
   </div>
 </div>
 
