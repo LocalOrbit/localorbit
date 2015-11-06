@@ -191,6 +191,8 @@ describe "Checking Out using Stripe payment provider", :js do
     context "unsaved credit card" do
       it "uses the card as a one off transaction" do
         choose "Pay by Credit Card"
+        select "Select a Stored Credit Card", from: "Saved credit cards"
+
         fill_in "Name", with: "John Doe"
         fill_in "Card Number", with: "4000000000000077"
         select "12", from: "Month"
@@ -212,6 +214,8 @@ describe "Checking Out using Stripe payment provider", :js do
         expect(buyer.bank_accounts.visible.count).to eql(2)
 
         choose "Pay by Credit Card"
+        select "Select a Stored Credit Card", from: "Saved credit cards"
+
         fill_in "Name", with: "John Doe"
         fill_in "Card Number", with: "4000000000000077"
         select "12", from: "Month"
@@ -237,6 +241,8 @@ describe "Checking Out using Stripe payment provider", :js do
           num_orders = Order.count
 
           choose "Pay by Credit Card"
+          select "Select a Stored Credit Card", from: "Saved credit cards"
+
           fill_in "Name", with: "John Doe"
           fill_in "Card Number", with: "4242424242424247"
           select "12", from: "Month"
@@ -253,6 +259,8 @@ describe "Checking Out using Stripe payment provider", :js do
           num_orders = Order.count
 
           choose "Pay by Credit Card"
+          select "Select a Stored Credit Card", from: "Saved credit cards"
+
           fill_in "Name", with: "John Doe"
           fill_in "Card Number", with: "4242424242424242"
           select "12", from: "Month"
@@ -275,6 +283,8 @@ describe "Checking Out using Stripe payment provider", :js do
         expect(buyer.bank_accounts.visible.count).to eql(2)
 
         choose "Pay by Credit Card"
+        select "Select a Stored Credit Card", from: "Saved credit cards"
+
         fill_in "Name", with: credit_card.name
         fill_in "Card Number", with: "5105105105105100"
         select "12", from: "Month"
