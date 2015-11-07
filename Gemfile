@@ -97,7 +97,6 @@ group :development do
   gem "rails_view_annotator"
   gem "unicorn"
   gem "mailcatcher"
-  gem "wkhtmltopdf-binary", github: "zakird/wkhtmltopdf_binary_gem"
 end
 
 group :development, :test do
@@ -117,6 +116,7 @@ group :development, :test do
   gem "poltergeist"
   gem "webmock"
   gem 'capybara-slow_finder_errors'
+  gem "wkhtmltopdf-binary", github: "zakird/wkhtmltopdf_binary_gem"
 end
 
 group :test do
