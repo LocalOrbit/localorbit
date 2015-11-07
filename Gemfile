@@ -74,7 +74,7 @@ gem "rschema", github: "tomdalling/rschema"
 # See https://github.com/zakird/wkhtmltopdf_binary_gem/issues/13
 # The github version is massive and makes the Heroku slug huge
 # gem "wkhtmltopdf-binary"
-gem "wkhtmltopdf-binary", github: "zakird/wkhtmltopdf_binary_gem"
+#gem "wkhtmltopdf-binary", github: "zakird/wkhtmltopdf_binary_gem"
 
 # Product import/export
 gem 'rubyXL', require: false # XLSX
@@ -117,6 +117,7 @@ group :development, :test do
   gem "poltergeist"
   gem "webmock"
   gem 'capybara-slow_finder_errors'
+  gem "wkhtmltopdf-binary", github: "zakird/wkhtmltopdf_binary_gem"
 end
 
 group :test do
@@ -138,4 +139,5 @@ group :production, :staging do
   gem "rails_12factor"
   gem "pgbackups-archive"
   gem "heroku-api"
+  gem 'wkhtmltopdf-heroku'
 end

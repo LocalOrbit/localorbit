@@ -87,7 +87,7 @@ describe "Viewing the cart", js:true do
   end
 
   it "allows buyer to add note" do
-    expect(page).to have_content("{note}")
+    expect(page).to have_content("Note")
   end
 
   it "uses correct delivery fee label" do
