@@ -124,7 +124,7 @@
     </td>
     <td class="edit-cell">
       <%= f.text_field :sibling_product_code,
-                       value: "",
+                       value: @product.code || "",
                        multiple: true,
                        class: "column column--full" %>
     </td>
