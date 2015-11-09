@@ -37,3 +37,4 @@ cleansed.prod.dump
 # IntelliJ
 /.idea
 /localorbit.iml
+node_modules/

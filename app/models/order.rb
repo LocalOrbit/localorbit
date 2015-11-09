@@ -80,6 +80,8 @@ class Order < ActiveRecord::Base
   scope :stripe,       -> { where(payment_provider: PaymentProvider::Stripe.id.to_s) }
   scope :not_stripe,   -> { where.not(payment_provider: PaymentProvider::Stripe.id.to_s) }
 
+  scope :placed_between, lambda {|range| visible.where(placed_at: range) }
+
   scope_accessible :sort, method: :for_sort, ignore_blank: true
   scope_accessible :payment_status
 

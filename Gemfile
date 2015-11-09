@@ -61,14 +61,13 @@ gem "rack-canonical-host"
 gem "ransack"
 gem "simpleidn"
 gem "stripe_event"
-gem 'react-rails', '~> 1.0'
+#gem 'react-rails', '~> 1.0'
 gem "font-awesome-rails"
 gem "wysiwyg-rails"
 gem "kiba"
 
 gem 'browserify-rails', '~> 0.9.1'
-
-gem 'chartkick'
+gem 'react-rails', '~> 1.4.0'
 
 gem "constructor"
 gem "tabulator", github: "dcrosby42/tabulator"
