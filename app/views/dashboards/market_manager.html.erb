@@ -1,33 +1,7 @@
-<%= javascript_include_tag "//www.google.com/jsapi", "chartkick" %>
-
 <h1>Dashboard</h1>
 
-<div class="row">
-    <div class="column column--half">
-        <div style="float: right">
-          <span>$1234</span><br/>
-          <span>Total Cost</span>
-        </div>
-        <%= line_chart Order.group_by_month(:created_at).sum(:total_cost), vAxis: { gridlines: { color: 'transparent' }}, colors: ["gray", "#999"] %>
-    </div>
-
-    <div class="column column--half">
-      <div style="float: right">
-        <span>$1234</span><br/>
-        <span>Total Orders</span>
-      </div>
-      <%= column_chart Order.group_by_month(:created_at).count %>
-    </div>
-
-    <div class="column column--half">
-      <div style="float: right">
-        <span>$1234</span><br/>
-        <span>Total Orders</span>
-      </div>
-      <%= react_component('sales_widget') %>
-      <canvas id="deliveries-widget"></canvas>
-    </div>
-</div>
+<%= react_component('lo.dashboard', {
+    baseUrl: "#{request.base_url}/api/v1/"}) %>
 
 <h2 class="dashboard-titles">Current Orders</h2>
 <span class="supporting-text">Displaying the 15 most recent orders.</span>

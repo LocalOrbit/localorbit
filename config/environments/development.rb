@@ -37,4 +37,6 @@ Rails.application.configure do
 
   Delayed::Worker.delay_jobs = false
 
+  config.react.variant = :development
+
 end

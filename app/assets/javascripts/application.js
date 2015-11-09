@@ -10,6 +10,7 @@
 // Read Sprockets README (https://github.com/sstephenson/sprockets#sprockets-directives) for details
 // about supported directives.
 //
+
 //= require es5-shim.min
 //= require jquery
 //= require jquery_ujs
@@ -27,8 +28,8 @@
 //= require bootstrap_knockout_modules
 //= stub balanced
 //= stub stripe
-//= require react
-//= require react_ujs
+
+//= require components
 //= require reflux.min
 //= require froala_editor.min.js
 //

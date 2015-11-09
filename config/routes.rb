@@ -40,6 +40,7 @@ Rails.application.routes.draw do
       resources :products, only: [:index]
       resources :filters, only: [:index]
       resources :order_templates, only: [:index, :create, :destroy]
+      resources :dashboards, only: [:index]
     end
   end
 
