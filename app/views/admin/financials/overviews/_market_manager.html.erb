@@ -1,6 +1,18 @@
 <div class="overview-intro">
   <p>This is a list of all money currently owed to your organization and that you owe to other organizations.</p>
 </div>
+<div class="manager-filters pull-left">
+  <div class="pull-left">
+    <%= search_form_for @q, url: admin_financials_overview_path, html: { class: "invoice_search clear-after" } do |f| %>
+    <% if current_user.multi_market_membership? %>
+      <span class="preserve-alignment">
+        <%= f.label :market_id_eq, "Market" %><br>
+        <%= f.collection_select :market_id_eq, @search_presenter.selling_markets, :id, :name, {include_blank: "All"}, {class: "filter-input"} %>
+      </span>
+    <% end %>
+  <% end %>
 
+  </div>
+</div>
 <%= render "money_in" %>
 <%= render "money_out" %>
