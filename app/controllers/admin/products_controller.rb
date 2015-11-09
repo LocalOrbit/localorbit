@@ -189,19 +189,19 @@ module Admin
           sibling_unit_id = product.sibling_unit_id[i]
           sibling_unit_description = product.sibling_unit_description[i]
           sibling_product_code = product.sibling_product_code[i]
-          if sibling_id == "0"
-            if sibling_unit_id && sibling_unit_id != ""
+          if sibling_unit_id && sibling_unit_id != ""
+            if sibling_id == "0"
               sibling = product.model.dup
               sibling.unit_id = sibling_unit_id
               sibling.unit_description = sibling_unit_description
               sibling.code = sibling_product_code
               sibling.save
-            end
-          else
-            sibling = Product.find_by(id: sibling_id)
-            if sibling
-              sibling.update(unit_id: sibling_unit_id, unit_description: sibling_unit_description,
-                             code: sibling_product_code)
+            else
+              sibling = Product.find_by(id: sibling_id)
+              if sibling
+                sibling.update(unit_id: sibling_unit_id, unit_description: sibling_unit_description,
+                               code: sibling_product_code)
+              end
             end
           end
         end
