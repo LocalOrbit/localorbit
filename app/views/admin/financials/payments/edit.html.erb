@@ -1,7 +1,7 @@
 
 <div class="row row--partial">
   <div class="column column--three-fourths">
-    <legend>Update Payment</legend>
+    <legend>Update Payment Note</legend>
 
     <%= form_for @payment, :url => {:action => "update", :id => @payment.id}, :method => "patch" do |f| %>
       <%= render 'form', {f: f} %>
