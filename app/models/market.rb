@@ -46,8 +46,8 @@ class Market < ActiveRecord::Base
   dragonfly_accessor :photo
   define_after_upload_resize(:logo, 1200, 1200)
   define_after_upload_resize(:photo, 1800, 1800)
-  validates_property :format, of: :logo,  in: %w(jpeg png gif)
-  validates_property :format, of: :photo, in: %w(jpeg png gif)
+  validates_property :format, of: :logo,  in: %w(jpg jpeg png gif)
+  validates_property :format, of: :photo, in: %w(jpg jpeg png gif)
 
   scope_accessible :sort, method: :for_sort, ignore_blank: true
 
