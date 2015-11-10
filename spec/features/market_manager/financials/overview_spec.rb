@@ -54,7 +54,6 @@ feature "Market Manager Financial Overview" do
     # Purchase order
     # (3 + 7+ 7)*6.99 = 118.83
     # Money to Seller: 118.83 - 26 = 92.83
-    order = nil
 
     Timecop.travel(Time.current - 30.days) do
       order = create(:order, delivery: delivery, payment_method: "purchase order", market: market, total_cost: 27.96, items: [
@@ -66,19 +65,18 @@ feature "Market Manager Financial Overview" do
       order.save!
     end
 
-    #pay_order(order)
-
+    po_order = nil
     Timecop.travel(Time.current - 30.days) do
-      order = create(:order, delivery: delivery, payment_method: "purchase order", market: market, total_cost: 27.30, items: [
+      po_order = create(:order, delivery: delivery, payment_method: "purchase order", market: market, total_cost: 27.30, items: [
           create(:order_item, quantity: 1, unit_price: 27.30, product: peas, payment_seller_fee: 1.00, local_orbit_market_fee: 10.00)
       ])
 
-      deliver_order(order)
-      order.invoice
-      order.save!
+      deliver_order(po_order)
+      po_order.invoice
+      po_order.save!
     end
 
-    pay_order(order)
+    pay_order(po_order)
 
     # Orders for the Next 7
     # (3*6.99) - 99
