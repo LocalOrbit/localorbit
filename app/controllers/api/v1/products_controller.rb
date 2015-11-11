@@ -36,6 +36,7 @@ module Api
               .object
               .delivery_schedule
               .products
+              .visible
               .with_available_inventory(current_delivery.deliver_on)
               .priced_for_market_and_buyer(current_market, current_organization)
               .select(:general_product_id)
