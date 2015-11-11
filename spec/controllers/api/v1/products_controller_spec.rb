@@ -122,5 +122,15 @@ describe Api::V1::ProductsController do
       products = get_products(offset: 0, query: "kale", seller_ids: [kale.organization_id, bananas2.organization_id], category_ids: [kale.second_level_category_id])
       expect(products).to eq ([[kale.id]])
     end
+
+    it "removes products when soft deleted" do
+      products = get_products(offset: 0, query: "kale", category_ids: [kale.category_id])
+      expect(products).to eq ([[kale.id]])
+
+      kale.soft_delete
+
+      products = get_products(offset: 0, query: "kale", category_ids: [kale.category_id])
+      expect(products).to eq ([])
+    end
   end
 end

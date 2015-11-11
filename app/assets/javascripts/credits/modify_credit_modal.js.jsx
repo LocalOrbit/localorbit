@@ -62,14 +62,14 @@
         return (<option key={type} value={type}>{type[0].toUpperCase() + type.substring(1)}</option>);
       });
 
-      if(credit.payer_type === 'organization') {
+      if(credit.payer_type === 'supplier organization') {
         var sellerOptions = _.map(self.props.sellers, function(seller) {
           return (<option key={seller.id} value={seller.id}>{seller.name}</option>)
         });
         sellerOptions.unshift(<option key={null} value={null}>All</option>);
         var sellerSelect = (
           <div className='field'>
-            <label>Paying Organization</label><br/>
+            <label>Supplier Organization</label><br/>
             <select defaultValue={credit.paying_org_id} onChange={self.setAttributeValue.bind(this, 'paying_org_id')} className='column--full'>
               {sellerOptions}
             </select>
@@ -101,7 +101,7 @@
             </div>
 
             <div className='field'>
-              <label>Credit paid by</label><br/>
+              <label>Credit Paid By</label><br/>
               <select defaultValue={credit.payer_type} onChange={self.setAttributeValue.bind(this, 'payer_type')} className='column--full'>
                 {payerTypeOptions}
               </select>
