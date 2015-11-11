@@ -114,7 +114,7 @@
             <div className="order-information-container column column--half pull-left">
               Delivery date: <strong>{this.state.deliveryDate.format('dddd, MMM. D, YYYY')}</strong><br/>
               Time left to order: <strong>{this.state.deliveryDate.fromNow(true)}</strong><br/>
-              <a href="/sessions/deliveries/new?redirect_back_to=%2Fproducts">Change delivery options</a><br/>
+              <a href="/sessions/organizations/new?redirect_back_to=%2Fproducts">Change delivery options</a><br/>
               <a href="#templatePicker" className="app-apply-template modal-toggle">Apply an order template to the cart</a>
             </div>
             <div style={{clear:"both"}}></div>

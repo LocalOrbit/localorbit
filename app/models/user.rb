@@ -110,6 +110,10 @@ class User < ActiveRecord::Base
     end
   end
 
+  def member_of_organization?(target)
+    target && user_organizations.find { |o| o.organization_id == target.id } != nil
+  end
+
   def active_subscriptions
     subscriptions.visible
   end

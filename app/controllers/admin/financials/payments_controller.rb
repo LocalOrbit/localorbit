@@ -9,5 +9,16 @@ module Admin::Financials
         format.csv { @filename = "payments.csv" }
       end
     end
+
+    def update
+      @payment = Payment.find(params[:id])
+      if @payment.update_attributes(payment_method:params[:payment][:payment_method], note:params[:payment][:note], amount:BigDecimal(params[:payment][:amount]))
+        redirect_to "/admin/financials/payments"
+      end
+    end
+
+    def edit
+      @payment = Payment.find(params[:id].to_i)
+    end
   end
 end

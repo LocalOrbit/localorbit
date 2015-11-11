@@ -1,5 +1,5 @@
 module FinancialOverview
-  def self.build(user, market)
+  def self.build(user, market, orders)
     klass = if user.can_manage_market?(market)
       MarketManager
     elsif user.buyer_only?
@@ -8,7 +8,7 @@ module FinancialOverview
       Seller
     end
 
-    klass.new(user: user, market: market)
+    klass.new(user: user, market: market, orders: orders)
   end
 
   class Base
@@ -17,6 +17,8 @@ module FinancialOverview
     def initialize(opts={})
       @user = opts[:user]
       @market = opts[:market]
+      @orders = opts[:orders]
+
       @time = Time.current
     end
 

@@ -40,13 +40,6 @@
 </div>
 
 <div class="field">
-  <%= f.label :code, "Product Code" %>
-  <span class="tooltip pull-right" data-tooltip="Optional product code"></span>
-  <br>
-  <%= f.text_field :code, class: "column column--full" %>
-</div>
-
-<div class="field">
   <%= f.label :short_description %>
   <span class="hint">Up to 50 characters</span>
   <span class="tooltip pull-right" data-tooltip="This is the first opportunity for a Buyer to learn about the product. Include additional explanation about the quantity, size or unit here, if needed."></span>
@@ -66,6 +59,7 @@
   <thead><tr>
     <td><%= f.label :unit_id %></td>
     <td><%= f.label :unit_description %> <span class="hint">Up to 20 characters</span></td>
+    <td><%= f.label :code, "Product Code" %> <span class="tooltip" data-tooltip="Optional product code"></span></td>
     <td></td>
   </tr></thead>
 
@@ -78,6 +72,9 @@
     </td>
     <td class="field">
       <%= f.text_field :unit_description, size: 20, maxlength: 20, class: "column column--full" %>
+    </td>
+    <td class="field">
+      <%= f.text_field :code, class: "column column--full" %>
     </td>
     <td></td>
   </tr>
@@ -98,6 +95,12 @@
                          value: sibling.unit_description,
                          multiple: true,
                          size: 20, maxlength: 20, class: "column column--full" %>
+      </td>
+      <td class="field">
+        <%= f.text_field :sibling_product_code,
+                         value: sibling.code,
+                         multiple: true,
+                         class: "column column--full" %>
       </td>
       <td></td>
     </tr>
@@ -120,11 +123,18 @@
                        size: 20, maxlength: 20, class: "column column--full" %>
     </td>
     <td class="edit-cell">
-      <button class="cancel">Cancel</button>&nbsp;<%= link_to "Add", '#add-unit', class: 'add-copy' %></td>
+      <%= f.text_field :sibling_product_code,
+                       value: @product.code || "",
+                       multiple: true,
+                       class: "column column--full" %>
+    </td>
+    <td class="edit-cell">
+      <button class="cancel">Cancel</button>&nbsp;/&nbsp;<%= link_to "Add", '#add-unit', class: 'add-copy' %>
     </td>
   </tr>
 
   <tr class="add-toggle last-row">
+    <td></td>
     <td></td>
     <td></td>
     <td><%= link_to "Add Unit", '#add-unit', class: 'add-toggle' %></td>
@@ -132,7 +142,7 @@
   </tbody>
 
   <tfoot><tr>
-    <td colspan="3">
+    <td colspan="4">
       <span class="hint">Not seeing what you need? <%= link_to "Request a New Unit", "#request-new-unit", class: "modal-toggle" %></span>
     </td>
   </tr></tfoot>
