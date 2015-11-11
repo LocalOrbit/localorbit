@@ -9,7 +9,7 @@ class Credit < ActiveRecord::Base
   PERCENTAGE = "percentage"
   FIXED = "fixed"
   MARKET = "market"
-  ORGANIZATION = "organization"
+  ORGANIZATION = "supplier organization"
 
   AMOUNT_TYPES = [PERCENTAGE, FIXED]
   PAYER_TYPES = [MARKET, ORGANIZATION]
