@@ -1,6 +1,6 @@
 source "https://rubygems.org"
 
-ruby "2.1.2"
+ruby "2.1.5"
 
 gem "rails", "~> 4.1.6.rc1"
 
@@ -96,7 +96,6 @@ group :development do
   gem "quiet_assets"
   gem "aws-sdk"
   gem "rails_view_annotator"
-  gem "unicorn"
   gem "mailcatcher"
 end
 
@@ -140,4 +139,16 @@ group :production, :staging do
   gem "pgbackups-archive"
   gem "heroku-api"
   gem 'wkhtmltopdf-heroku'
+end
+
+platforms :ruby do # linux
+  gem 'unicorn', :group => :development
+end
+
+
+platforms :mingw, :mswin, :x64_mingw do
+	gem 'tzinfo-data' 
+	gem 'tzinfo'
+	gem 'bcrypt', '~> 3.1.9'
+	gem 'coffee-script-source', '1.8.0'
 end
