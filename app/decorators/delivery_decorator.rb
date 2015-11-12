@@ -23,8 +23,9 @@ class DeliveryDecorator < Draper::Decorator
   alias_method :display_date, :seller_display_date
 
   def buyer_display_date
-    if date = get_buyer_deliver_on
-      date.strftime("%A %B %e, %Y") if date
+    date = get_buyer_deliver_on
+    if date
+      date.strftime("%A %B %e, %Y")
     else
       nil
     end
@@ -113,7 +114,7 @@ class DeliveryDecorator < Draper::Decorator
     start_str = start_time.nil? ? "?" : start_time.gsub(" ", "")
     end_str = end_time.nil? ? "?" : end_time.gsub(" ", "")
 
-    "between #{start_str} and #{end_str}"
+    "between #{start_str} and #{end_str}"
   end
 
   def delivery_expired_notice

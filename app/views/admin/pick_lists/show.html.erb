@@ -1,5 +1,13 @@
-<%= link_to "< Back to Upcoming Deliveries", admin_delivery_tools_path, class: 'back-button' %>
-<button class="btn btn--action btn--small pull-right print-button" id="print-button">Print</button>
+<div class="no-print">
+  <%= link_to "< Back to Upcoming Deliveries", admin_delivery_tools_path, class: 'back-button' %>
+  <span class="pull-right">
+    <% if @very_important_person %>
+      <%= link_to "Export CSV", url_for(format: :csv) %>
+    <% end %>
+    <button class="btn btn--action btn--small print-button" id="print-button">Print</button>
+  </span>
+</div>
+
 <div class="print-page">
 <% @pick_lists.each_with_index do |pick_list, index| %>
 
@@ -47,16 +55,7 @@
             <td class="total-sold"><%= product.total_sold %></td>
             <td class="units"><%= product.unit %></td>
             <td class="buyer"><%= product.first_buyer.name %></td>
-            <td class="breakdown">
-              <%= product.first_buyer.quantity %>
-              <% if product.first_buyer.lots.present? %>
-                <ul>
-                  <% product.first_buyer.lots.each do |lot| %>
-                    <li>Lot #<%= lot.lot.number %>: <%= lot.quantity %></li>
-                  <% end %>
-                </ul>
-              <% end %>
-            </td>
+            <td class="breakdown"><%= product.breakdown(product.first_buyer) %></td>
             <td class="initials"></td>
             <td class="notes"></td>
           </tr>
@@ -67,15 +66,7 @@
               <td></td>
               <td></td>
               <td class="buyer"><%= buyer.name %></td>
-              <td class="breakdown"><%= buyer.quantity %>
-              <% if buyer.lots.present? %>
-                <ul>
-                  <% buyer.lots.each do |lot| %>
-                    <li>Lot #<%= lot.lot.number %>: <%= lot.quantity %></li>
-                  <% end %>
-                </ul>
-              <% end %>
-              </td>
+              <td class="breakdown"><%= product.breakdown(buyer) %></td>
               <td></td>
               <td></td>
             </tr>
