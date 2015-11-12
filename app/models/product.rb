@@ -78,9 +78,9 @@ class Product < ActiveRecord::Base
   def location_id
     self.general_product && self.general_product.location_id
   end
-  # def image_uid
-  #   self.general_product && self.general_product.image_uid
-  # end
+  def image_uid
+    self.general_product && self.general_product.image_uid
+  end
   def top_level_category_id
     self.general_product && self.general_product.top_level_category_id
   end
