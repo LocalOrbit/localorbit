@@ -46,7 +46,7 @@
     unitCell: function(totalRows) {
       var product = this.props.product;
       var max_available = product.max_available ? +product.max_available : 0;
-      var max_available_description = max_available < 500000 ? max_available + " Avail." : "";
+      var max_available_description = max_available < 500000 ? max_available + " Available" : "";
       return (
         <th rowSpan={totalRows}>
           {product.unit_description}
