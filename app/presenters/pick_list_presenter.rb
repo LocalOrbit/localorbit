@@ -1,46 +1,21 @@
 class PickListPresenter
-  def self.build(current_user, delivery)
-    order_items = OrderItem.where(delivery_status: "pending", orders: {delivery_id: delivery.id}).
-      eager_load(:order, product: :organization).
-      order("organizations.name, products.name").
-      preload(order: :organization)
+  attr_reader :products, :seller_name, :seller_ship_from_address
 
-    # Limit the scope unless the current user is an admin
-    # or manages the market for this delivery
-    if !(current_user.admin? || current_user.managed_market_ids.include?(delivery.delivery_schedule.market_id))
-      order_items = order_items.where(products: {organization_id: current_user.organization_ids})
-    end
-
-    order_items.group_by {|item| item.product.organization_id }.map do |_, items|
-      new(items)
-    end
-  end
-
-  def initialize(items)
-    @items  = items
-    @seller = items.first.product.organization
-  end
-
-  def products
-    @products ||= @items.group_by(&:product_id).map {|_, items| PickListProduct.new(items) }
-  end
-
-  def seller_name
-    @seller.name
-  end
-
-  def seller_ship_from_address
-    @seller_ship_from_address ||= @seller.decorate.ship_from_address
+  def initialize(all_items)
+    @products = all_items.group_by(&:product_id).map {|_, items| PickListProduct.new(items) }
+    seller = all_items.first.product.organization.decorate
+    @seller_name = seller.name
+    @seller_ship_from_address = seller.ship_from_address
   end
 
   class PickListProduct
     def initialize(items)
-      @items   = items
+      @items = items
       @product = @items.first.product
     end
 
     def code
-      (@product.code.present?) ? @product.code : "-"
+      @product.code.present? ? @product.code : "-"
     end
 
     def name
@@ -48,20 +23,39 @@ class PickListPresenter
     end
 
     def total_sold
-      @total_sold ||= @items.sum(&:quantity)
+      @total_sold ||= @items.sum(&:quantity).to_i
     end
 
     def unit
       @unit ||= total_sold == 1 ? @product.unit_singular : @product.unit_plural
     end
 
+    def breakdown(buyer, sep = "<br/>")
+      text = ""
+      if buyer.lots.present?
+        lots_shown = 0
+        quantity_shown = 0
+        line_sep = ""
+        buyer.lots.each do |lot|
+          text << "#{line_sep}Lot ##{ERB::Util.html_escape lot.lot.number.to_s}: #{lot.quantity.to_i}"
+          lots_shown += 1
+          quantity_shown += lot.quantity
+          line_sep = sep
+        end
+        if quantity_shown < buyer.quantity || lots_shown > 1
+          text << "#{line_sep}Buyer Total: #{buyer.quantity.to_i}"
+        end
+      else
+        text << buyer.quantity.to_i.to_s
+      end
+      text.html_safe
+    end
+
     def buyers
       @buyers ||= @items.sort {|a, b| a.order.organization.name.casecmp(b.order.organization.name) }.map do |item|
-        OpenStruct.new(
-          name:     item.order.organization.name,
-          quantity: item.quantity,
-          lots:     item.lots.select {|lot| lot.number.present? }
-        )
+        OpenStruct.new(name: item.order.organization.name,
+                       quantity: item.quantity,
+                       lots: item.lots.select {|lot| lot.number.present? })
       end
     end
 
