@@ -78,8 +78,6 @@
 
     render: function() {
 
-      var buyerObject = JSON.parse(this.props.buyerInfo);
-
       var activeFilters = _.map(this.state.activeFilters, function(filter, index) {
         return (
           <a href="javascript:void(0);" key={filter.id}>{filter.name}
@@ -123,7 +121,7 @@
               </div>
             </div>
             <div className="order-information-container column column--half pull-left">
-              Buyer: <strong>{buyerObject.name}</strong><br/>
+              Buyer: <strong>{this.props.buyerInfo}</strong><br/>
               Delivery date: <strong>{this.state.deliveryDate.format('dddd, MMM. D, YYYY')}</strong><br/>
               Time left to order: <strong>{this.state.deliveryDate.fromNow(true)}</strong><br/>
               <a href="/sessions/organizations/new?redirect_back_to=%2Fsessions/deliveries/new?redirect_back_to=%2Fproducts">Change delivery options</a><br/>

@@ -35,8 +35,8 @@ class Product < ActiveRecord::Base
   dragonfly_accessor :image
   dragonfly_accessor :thumb
   define_after_upload_resize(:image, 1200, 1200, thumb: {width: 150, height: 150})
-  validates_property :format, of: :image, in: %w(jpeg png gif)
-  validates_property :format, of: :thumb, in: %w(jpeg png gif)
+  validates_property :format, of: :image, in: %w(jpg jpeg png gif)
+  validates_property :format, of: :thumb, in: %w(jpg jpeg png gif)
 
   validates :name, presence: true
   validates :unit, presence: true
@@ -163,11 +163,11 @@ class Product < ActiveRecord::Base
     end
     association(:location).writer(input)
   end
-  # def image_uid=(input)
-  #   write_attribute(:image_uid, input)
-  #   ensure_product_has_a_general_product
-  #   self.general_product.image_uid = input
-  # end
+  def image_uid=(input)
+    write_attribute(:image_uid, input)
+    ensure_product_has_a_general_product
+    self.general_product.image_uid = input
+  end
   def top_level_category_id=(input)
     write_attribute(:top_level_category_id, input)
     ensure_product_has_a_general_product

@@ -52,7 +52,7 @@
 
     render: function() {
       var pricing = (this.props.product.prices.length <= 3 || this.state.showAll) ? this.fullPricing() : this.abbreviatedPricing();
-      var quantity = this.props.product.max_available < 500000 ? this.props.product.max_available + " Avail." : "";
+      var quantity = this.props.product.max_available < 500000 ? this.props.product.max_available + " Available" : "";
       var deleteButton = this.state.cartItemQuantity > 0 ? (<a href="javascript:void(0)" onClick={this.deleteQuantity} className="font-icon icon-clear" style={{marginLeft: "15px"}}></a>) : null;
 
       return (
