@@ -1,5 +1,7 @@
 # Circle CI config
 machine:
+  ruby:
+    version: 2.1.5
   environment:
     CAPYBARA_WAIT_TIME: 30
 dependencies:
