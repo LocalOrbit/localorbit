@@ -38,11 +38,9 @@ module Admin
       @product = Product.new(product_params).decorate
       find_selling_organizations
       @product.organization = @organizations.detect {|o| o.id == @product.organization_id }
-
       if @product.save
         update_sibling_units(@product)
-        @product.general_product.thumb_uid = @product.thumb_uid
-        @product.save
+        @product.general_product.update_columns(image_uid: @product.image_uid, thumb_uid: @product.thumb_uid)
         redirect_to after_create_page, notice: "Added #{@product.name}"
       else
         setup_new_form
@@ -60,6 +58,7 @@ module Admin
 
     def update
       updated = update_product
+      @product.general_product.image_uid = @product.image_uid
       @product.general_product.thumb_uid = @product.thumb_uid
       @product.save
 
