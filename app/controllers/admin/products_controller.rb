@@ -58,6 +58,9 @@ module Admin
 
     def update
       updated = update_product
+      @product.general_product.thumb_uid = @product.thumb_uid
+      @product.save
+
       update_sibling_units(@product)
 
       find_sibling_units(@product)
