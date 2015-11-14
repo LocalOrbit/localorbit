@@ -11,11 +11,13 @@ class GeneralProduct < ActiveRecord::Base
 
   has_many :product
 
-  dragonfly_accessor :image
-  dragonfly_accessor :thumb
-  define_after_upload_resize(:image, 1200, 1200, thumb: {width: 150, height: 150})
-  validates_property :format, of: :image, in: %w(jpg jpeg png gif)
-  validates_property :format, of: :thumb, in: %w(jpg jpeg png gif)
+  #dragonfly_accessor :image do
+  #  copy_to(:thumb){|a| a.thumb('150x150#') }
+  #end
+  #dragonfly_accessor :thumb
+  #define_after_upload_resize(:image, 1200, 1200, thumb: {width: 150, height: 150})
+  #validates_property :format, of: :image, in: %w(jpg jpeg png gif)
+  #validates_property :format, of: :thumb, in: %w(jpg jpeg png gif)
 
   pg_search_scope :search_by_text,
                   :against => :name,
