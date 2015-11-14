@@ -41,6 +41,8 @@ module Admin
 
       if @product.save
         update_sibling_units(@product)
+        @product.general_product.thumb_uid = @product.thumb_uid
+        @product.save
         redirect_to after_create_page, notice: "Added #{@product.name}"
       else
         setup_new_form
