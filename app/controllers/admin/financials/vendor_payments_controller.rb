@@ -7,8 +7,8 @@ module Admin
       before_action :require_admin_or_market_manager
 
       def index
-        @search_presenter = PaymentSearchPresenter.new(user: current_user, @query_params)
-        @finder = Search::SellerPaymentGroupFinder.new(user: current_user, @query_params, current_market: current_market)
+        @search_presenter = PaymentSearchPresenter.new(user: current_user, query: @query_params)
+        @finder = Search::SellerPaymentGroupFinder.new(user: current_user, query: @query_params, current_market: current_market)
         @sellers = @finder.payment_groups
       end
 
