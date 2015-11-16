@@ -52,21 +52,21 @@ describe "Buyer viewing dashboard" do
 
       order = orders[0]
       expect(order.order_number).to eq(order3.order_number)
-      expect(order.order_date).to eq(Time.now.strftime("%m/%d/%Y"))
+      expect(order.order_date).to eq(Time.zone.now.strftime("%m/%d/%Y"))
       expect(order.delivery_status).to eq("Pending")
       expect(order.payment_status).to eq("Unpaid")
       expect(order.total).to eq("$#{order3.total_cost}")
 
       order = orders[1]
       expect(order.order_number).to eq(order2.order_number)
-      expect(order.order_date).to eq(Time.now.strftime("%m/%d/%Y"))
+      expect(order.order_date).to eq(Time.zone.now.strftime("%m/%d/%Y"))
       expect(order.delivery_status).to eq("Pending")
       expect(order.payment_status).to eq("Unpaid")
       expect(order.total).to eq("$#{order3.total_cost}")
 
       order = orders[2]
       expect(order.order_number).to eq(order1.order_number)
-      expect(order.order_date).to eq(Time.now.strftime("%m/%d/%Y"))
+      expect(order.order_date).to eq(Time.zone.now.strftime("%m/%d/%Y"))
       expect(order.delivery_status).to eq("Pending")
       expect(order.payment_status).to eq("Unpaid")
       expect(order.total).to eq("$#{order3.total_cost}")
