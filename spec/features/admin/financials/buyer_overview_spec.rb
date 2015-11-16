@@ -114,9 +114,9 @@ feature "Buyer Financial Overview" do
     click_link "Financials"
     click_link "Purchase Orders"
 
-    expect(page).not_to have_content(@due_order.order_number)
-    expect(page).not_to have_content(@overdue_order1.order_number)
-    expect(page).not_to have_content(@overdue_order2.order_number)
+    expect(page).to have_content(@due_order.order_number)
+    expect(page).to have_content(@overdue_order1.order_number)
+    expect(page).to have_content(@overdue_order2.order_number)
     expect(page).to have_content(@uninvoiced1.order_number)
     expect(page).to have_content(@uninvoiced2.order_number)
   end
@@ -183,9 +183,9 @@ feature "Buyer Financial Overview" do
     click_link "Financials"
     click_link "Purchase Orders"
 
-    expect(page).not_to have_content(@due_order.order_number)
-    expect(page).not_to have_content(@overdue_order1.order_number)
-    expect(page).not_to have_content(@overdue_order2.order_number)
+    expect(page).to have_content(@due_order.order_number)
+    expect(page).to have_content(@overdue_order1.order_number)
+    expect(page).to have_content(@overdue_order2.order_number)
     expect(page).to have_content(@uninvoiced1.order_number)
     expect(page).to have_content(@uninvoiced2.order_number)
 
