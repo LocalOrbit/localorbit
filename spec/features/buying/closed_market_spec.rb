@@ -39,7 +39,7 @@ feature "When a Market is closed" do
       let!(:delivery_schedule) { create(:delivery_schedule) }
       let!(:delivery)    { delivery_schedule.next_delivery }
       let!(:order_item1) { create(:order_item, product: products[0]) }
-      let!(:order1)      { create(:order, delivery: delivery, items: [order_item1], organization: buyer, placed_at: Time.zone.parse("2014-04-02")) }
+      let!(:order1)      { create(:order, delivery: delivery, items: [order_item1], organization: buyer) }
 
       scenario "the Buyer may view her Orders" do
         click_link "Dashboard", match: :first
