@@ -133,6 +133,7 @@
     </td>
   </tr>
 
+<% if @product.persisted? %>
   <tr class="add-toggle last-row">
     <td></td>
     <td></td>
@@ -140,6 +141,7 @@
     <td><%= link_to "Add Unit", '#add-unit', class: 'add-toggle' %></td>
   </tr>
   </tbody>
+<% end %>
 
   <tfoot><tr>
     <td colspan="4">
