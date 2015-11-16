@@ -33,6 +33,10 @@ describe "Buyer viewing dashboard" do
     let!(:order_item4) { create(:order_item, product: potatoes) }
     let!(:order4)      { create(:order, delivery: delivery, items: [order_item4], organization: buyer2) }
 
+    before do
+      Time.zone = "Eastern Time (US & Canada)"
+    end
+
     it "shows their order history" do
       switch_to_subdomain(market.subdomain)
       sign_in_as(user)
