@@ -52,4 +52,8 @@ class GeneralProduct < ActiveRecord::Base
       all
     end
   end
+
+  def self.filter_by_active_org
+    where("supplier.active = 'true'")
+  end
 end
