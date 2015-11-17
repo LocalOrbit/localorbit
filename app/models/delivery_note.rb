@@ -8,7 +8,5 @@ class DeliveryNote < ActiveRecord::Base
 		order(supplier_org: :asc)
 	end
 
-	def destroy
-	end
 
 end

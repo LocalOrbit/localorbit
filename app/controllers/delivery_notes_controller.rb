@@ -35,10 +35,10 @@ class DeliveryNotesController < ApplicationController
 	def update
 		@delivery_note = DeliveryNote.find(params[:id])
 		if @delivery_note.update_attributes(note:params[:delivery_note][:note])
+			if @delivery_note.note == ""
+				@delivery_note.destroy
+			end
 			redirect_to "/cart" # Each cart has only one buyer org. This is fine.
-		else 
-		# 	redirect_to "/delivery_notes" # Should not happen as is.
-			redirect_to "/cart"
 		end
 	end
 
