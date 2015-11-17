@@ -22,16 +22,20 @@ describe "Buyer viewing dashboard" do
 
   context "with orders" do
     let!(:order_item1) { create(:order_item, product: bananas) }
-    let!(:order1)      { create(:order, delivery: delivery, items: [order_item1], organization: buyer, placed_at: Time.zone.parse("2014-04-02")) }
+    let!(:order1)      { create(:order, delivery: delivery, items: [order_item1], organization: buyer) }
 
     let!(:order_item2) { create(:order_item, product: kale) }
-    let!(:order2)      { create(:order, delivery: delivery, items: [order_item2], organization: buyer, placed_at: Time.zone.parse("2014-04-03")) }
+    let!(:order2)      { create(:order, delivery: delivery, items: [order_item2], organization: buyer) }
 
     let!(:order_item3) { create(:order_item, product: potatoes) }
-    let!(:order3)      { create(:order, delivery: delivery, items: [order_item3], organization: buyer, placed_at: Time.zone.parse("2014-04-04")) }
+    let!(:order3)      { create(:order, delivery: delivery, items: [order_item3], organization: buyer) }
 
     let!(:order_item4) { create(:order_item, product: potatoes) }
-    let!(:order4)      { create(:order, delivery: delivery, items: [order_item4], organization: buyer2, placed_at: Time.zone.parse("2014-04-03")) }
+    let!(:order4)      { create(:order, delivery: delivery, items: [order_item4], organization: buyer2) }
+
+    before do
+      Time.zone = "Eastern Time (US & Canada)"
+    end
 
     it "shows their order history" do
       switch_to_subdomain(market.subdomain)
@@ -48,21 +52,21 @@ describe "Buyer viewing dashboard" do
 
       order = orders[0]
       expect(order.order_number).to eq(order3.order_number)
-      expect(order.order_date).to eq("04/04/2014")
+      expect(order.order_date).to eq(Time.zone.now.strftime("%m/%d/%Y"))
       expect(order.delivery_status).to eq("Pending")
       expect(order.payment_status).to eq("Unpaid")
       expect(order.total).to eq("$#{order3.total_cost}")
 
       order = orders[1]
       expect(order.order_number).to eq(order2.order_number)
-      expect(order.order_date).to eq("04/03/2014")
+      expect(order.order_date).to eq(Time.zone.now.strftime("%m/%d/%Y"))
       expect(order.delivery_status).to eq("Pending")
       expect(order.payment_status).to eq("Unpaid")
       expect(order.total).to eq("$#{order3.total_cost}")
 
       order = orders[2]
       expect(order.order_number).to eq(order1.order_number)
-      expect(order.order_date).to eq("04/02/2014")
+      expect(order.order_date).to eq(Time.zone.now.strftime("%m/%d/%Y"))
       expect(order.delivery_status).to eq("Pending")
       expect(order.payment_status).to eq("Unpaid")
       expect(order.total).to eq("$#{order3.total_cost}")

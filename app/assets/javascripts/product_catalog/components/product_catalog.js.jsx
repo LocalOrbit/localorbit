@@ -9,18 +9,26 @@
     propTypes: {
       cartUrl: React.PropTypes.string.isRequired,
       baseUrl: React.PropTypes.string.isRequired,
-      deliveryDate: React.PropTypes.string.isRequired
+      deliveryDate: React.PropTypes.string.isRequired,
+      buyerInfo: React.PropTypes.string.isRequired,
+      useTemplates: React.PropTypes.bool.isRequired
     },
 
-    render: function() {
-      return (
+      render: function() {
+
+        var orderTemplates;
+        if(this.props.useTemplates)
+            orderTemplates = (<lo.TemplatePicker baseUrl={this.props.baseUrl} cartUrl={this.props.cartUrl} />);
+        else
+            orderTemplates = ('');
+
+        return (
         <div>
-          <lo.TemplatePicker
-            baseUrl={this.props.baseUrl}
-            cartUrl={this.props.cartUrl}
-          />
+          {orderTemplates}
           <lo.ProductFilter
             deliveryDate={this.props.deliveryDate}
+            buyerInfo={this.props.buyerInfo}
+            useTemplates={this.props.useTemplates}
           />
           <lo.ProductTable
             limit={10}

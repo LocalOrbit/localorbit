@@ -1,8 +1,16 @@
 class DashboardPresenter
-  def initialize(user, market, request_params={})
+  include Search::DateFormat
+  include Search::MarketAndOrganization
+
+  attr_reader :start_date, :end_date, :query
+  def initialize(user, market, request_params={}, query=nil)
     @user   = user
     @market = market
     @request_params = request_params
+    @query = Search::QueryDefaults.new(query[:q] || {}, 'placed_at').query
+
+    @start_date = format_date(@query["placed_at_date_gteq".to_s])
+    @end_date = format_date(@query["placed_at_date_lteq".to_s])
   end
 
   def template
@@ -15,10 +23,6 @@ class DashboardPresenter
     else
       "buyer"
     end
-  end
-
-  def buyer_orders
-    @buyer_orders ||= Order.orders_for_buyer(@user).periscope(@request_params).order("placed_at DESC").limit(25)
   end
 
   def pending_orders

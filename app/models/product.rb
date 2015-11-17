@@ -32,11 +32,13 @@ class Product < ActiveRecord::Base
   has_many :prices, -> {visible},  autosave: true, inverse_of: :product, dependent: :destroy
   has_many :promotions, inverse_of: :product
 
-  dragonfly_accessor :image
+  dragonfly_accessor :image do
+    copy_to(:thumb){|a| a.thumb('150x150#') }
+  end
   dragonfly_accessor :thumb
-  define_after_upload_resize(:image, 1200, 1200, thumb: {width: 150, height: 150})
-  validates_property :format, of: :image, in: %w(jpeg png gif)
-  validates_property :format, of: :thumb, in: %w(jpeg png gif)
+  #define_after_upload_resize(:image, 1200, 1200, thumb: {width: 150, height: 150})
+  validates_property :format, of: :image, in: %w(jpg jpeg png gif)
+  validates_property :format, of: :thumb, in: %w(jpg jpeg png gif)
 
   validates :name, presence: true
   validates :unit, presence: true
@@ -78,9 +80,9 @@ class Product < ActiveRecord::Base
   def location_id
     self.general_product && self.general_product.location_id
   end
-  # def image_uid
-  #   self.general_product && self.general_product.image_uid
-  # end
+  def image_uid
+    self.general_product && self.general_product.image_uid
+  end
   def top_level_category_id
     self.general_product && self.general_product.top_level_category_id
   end
@@ -163,11 +165,11 @@ class Product < ActiveRecord::Base
     end
     association(:location).writer(input)
   end
-  # def image_uid=(input)
-  #   write_attribute(:image_uid, input)
-  #   ensure_product_has_a_general_product
-  #   self.general_product.image_uid = input
-  # end
+  def image_uid=(input)
+    write_attribute(:image_uid, input)
+    ensure_product_has_a_general_product
+    self.general_product.image_uid = input
+  end
   def top_level_category_id=(input)
     write_attribute(:top_level_category_id, input)
     ensure_product_has_a_general_product
