@@ -19,7 +19,7 @@ class CartDecorator < Draper::Decorator
   end
 
   def delivery_notes
-    DeliveryNote.where(cart_id:id)
+    DeliveryNote.where(cart_id:id).visible
   end
 
   def display_delivery_fees
