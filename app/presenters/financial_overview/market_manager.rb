@@ -12,7 +12,7 @@ module FinancialOverview
     end
 
     def overdue
-      orders = @po_orders.delivered.where("invoice_due_date < ?", @time.beginning_of_day)
+      orders = @po_orders.delivered.payment_overdue
       sum_order_total(orders)
     end
 
