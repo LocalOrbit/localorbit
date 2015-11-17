@@ -6,7 +6,6 @@
         id: React.PropTypes.number.isRequired,
         unit: React.PropTypes.string.isRequired,
         unit_description: React.PropTypes.string,
-        below_min: React.PropTypes.bool,
         prices: React.PropTypes.array.isRequired,
         total_price: React.PropTypes.string.isRequired,
         max_available: React.PropTypes.number.isRequired,
@@ -28,14 +27,11 @@
     },
 
     updateQuantity: function(event) {
-      below_min = false;
       s = event.target.value.replace(/^0+(?=[0-9])/, '');
       if (s === '') {
           s = '0';
       }
-      if (s != 0 && s < this.props.product.min_available) {
-        // raise error
-        below_min = true;
+      if (s != '0' && s < this.props.product.min_available) {
         s = '0';
       }
       this.setState({cartItemQuantity: s});
