@@ -43,7 +43,10 @@ module Api
               .to_sql
         end
 
-        GeneralProduct.joins("JOIN (#{p_sql}) p_child ON general_products.id=p_child.general_product_id JOIN organizations supplier ON general_products.organization_id=supplier.id")
+        GeneralProduct.joins("JOIN (#{p_sql}) p_child ON general_products.id=p_child.general_product_id
+                              JOIN organizations supplier ON general_products.organization_id=supplier.id
+                              JOIN market_organizations ON general_products.organization_id = market_organizations.organization_id
+                              AND market_organizations.market_id = #{current_market.id}")
             .filter_by_name(query)
             .filter_by_categories(category_ids)
             .filter_by_suppliers(seller_ids)
