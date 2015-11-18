@@ -54,6 +54,6 @@ class GeneralProduct < ActiveRecord::Base
   end
 
   def self.filter_by_active_org
-    where("supplier.active = 'true'")
+    where("supplier.active = 'true' AND market_organizations.deleted_at IS NULL")
   end
 end
