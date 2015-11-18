@@ -24,7 +24,7 @@
                 <th colspan="5" supplier="<%= seller_name.gsub(" ","") %>" class="seller"> <%= seller_name %> <%= link_to "Note", new_delivery_note_path(:supplier => Organization.where(name:seller_name).first.id, :current_cart => current_cart, :buyer => current_organization.id) %> </th> 
               </tr>
               <% items.each do |item| %>
-                <%= content_tag_for(:tr, item, id: "cart_item_#", supplier: seller_name.gsub(" ",""), class: "product supplier-#{seller_name.gsub(" ","")}", data: {id: item.product.id, :"cart-item" => item.to_json}) do %>
+                <%= content_tag_for(:tr, item, id: "cart_item_#", supplier: seller_name.gsub(/[^a-zA-Z]/, ''), class: "product supplier-#{seller_name.gsub(/[^a-zA-Z]/, '')}", data: {id: item.product.id, :"cart-item" => item.to_json}) do %>
                   <td class="name"><%= item.product.name %> (<%= item.product.unit_plural %>)</td>
                   <td class="quantity math="><input class="cart-input in-cart" name="quantity" type="text" size="3" autocomplete="off" min="0" value="<%= item.quantity %>" max="<%= item.product.available_inventory %>"></td>
                   <td class="price-for-quantity math"><%= number_to_currency(item.unit_price.sale_price) %></td>
