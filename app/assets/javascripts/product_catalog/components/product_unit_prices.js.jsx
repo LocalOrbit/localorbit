@@ -5,13 +5,24 @@
 
     fullPricingRow: function(prices, showCaret) {
       var priceCells = [];
+      var priceDisplay, qtyDisplay;
       var caret = (showCaret) ? (<i onClick={this.toggleView} style={{cursor: "pointer"}} className="caretted"/>) : "";
       for(var i = 0; i < 3; i++) {
         if(prices[i]) {
-          priceCells.unshift(
+            if (prices[i].organization_id)
+                priceDisplay=(<span style={{ color: "#3E8212", fontWeight: "bold" }}>{prices[i].sale_price}{caret}&nbsp;<span className="tooltip tooltip--naked tooltip--notice" data-tooltip="This is a negotiated price specific to you!"><i className="fa fa-question-circle"></i></span></span>);
+            else
+                priceDisplay=(<span>{prices[i].sale_price}{caret}</span>);
+
+            if (prices[i].min_quantity == 1)
+                qtyDisplay = (<span style={{fontSize:"11px", color:"#737373"}}>&nbsp;</span>)
+            else
+                qtyDisplay = (<span style={{fontSize:"11px", color:"#737373"}}>Min. {prices[i].min_quantity}</span>);
+
+        priceCells.unshift(
             <td style={{textAlign: "right"}}>
-              {prices[i].sale_price}{caret}<br/>
-              <span style={{fontSize:"11px", color:"#737373"}}>Min. {prices[i].min_quantity}</span>
+              {priceDisplay}<br/>
+              {qtyDisplay}
             </td>
           );
           caret = "";
