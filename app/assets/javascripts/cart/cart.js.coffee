@@ -35,6 +35,7 @@ $ ->
         else if (this.data.quantity > 0) && (data.quantity == 0)
           msg = "Removed from cart!"
 
+          
         else if (this.data.quantity > 0) && (data.quantity > 0)
           msg = "Quantity updated!"
 
@@ -67,15 +68,24 @@ $ ->
           @clearError()
 
     remove: ->
+      if @el?
+        tbody_ref = @el.parent()
+        supplier = @el[0].getAttribute("supplier")
+        num = tbody_ref.find("[supplier="+supplier+"]").length
+        if (num == 2)
+          tbody_ref.find(".seller").addClass("is-hidden")
+        # if this is the last one, remove all and redirect to products page
+        if (tbody_ref.find(".is-hidden").length == tbody_ref.length)
+          location.reload(false)
       @el.find(".icon-clear").addClass("is-hidden")
-
-      if @el.find(".quantity input").hasClass("promo")
-        $(".promo").parent().parent().find(".icon-clear").addClass("is-hidden")
-        $(".promo").parent().parent().find(".quantity input").val('')
 
       @showUpdate()
       unless @el.hasClass("product-row") || @el.data("keep-when-zero")
         @el.remove()
+
+      if @el.find(".quantity input").hasClass("promo")
+        $(".promo").parent().parent().find(".icon-clear").addClass("is-hidden")
+        $(".promo").parent().parent().find(".quantity input").val('')
 
     showError: ->
       @el.find(".quantity").addClass("field_with_errors")
