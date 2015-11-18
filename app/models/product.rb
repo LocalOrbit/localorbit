@@ -272,6 +272,10 @@ class Product < ActiveRecord::Base
     joins(price_join)
   end
 
+  def self.with_visible_pricing
+    where("prices.deleted_at IS NULL")
+  end
+
   def self.seller_can_sell
     joins(:organization).where(organizations: {can_sell: true, active: true})
   end
