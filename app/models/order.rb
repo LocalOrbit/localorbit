@@ -403,6 +403,17 @@ class Order < ActiveRecord::Base
     market.plan.has_procurement_managers
   end
 
+  def update_total_cost
+
+    cost = gross_total
+
+    if credit && credit.apply_to == "subtotal"
+      cost = gross_total - credit_amount
+    end
+    self.delivery_fees = calculate_delivery_fees(cost).round(2)
+    self.total_cost    = calculate_total_cost(cost).round(2)
+  end
+
   private
 
   def update_paid_at
@@ -419,13 +430,6 @@ class Order < ActiveRecord::Base
     items.where(payment_status: ["pending", "unpaid"]).update_all(payment_status: payment_status)
   end
 
-  def update_total_cost
-    cost = gross_total
-
-    self.delivery_fees = calculate_delivery_fees(cost).round(2)
-    self.total_cost    = calculate_total_cost(cost).round(2)
-  end
-
   def calculate_delivery_fees(gross)
     if gross > 0.0
       delivery.delivery_schedule.fees_for_amount(gross)
@@ -436,7 +440,11 @@ class Order < ActiveRecord::Base
 
   def calculate_total_cost(gross)
     if gross > 0.0
-      gross + delivery_fees - discount_amount - credit_amount
+      if credit.apply_to == "subtotal"
+        gross + delivery_fees - discount_amount
+      else
+        gross + delivery_fees - discount_amount - credit_amount
+      end
     else
       0
     end

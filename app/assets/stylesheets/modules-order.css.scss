@@ -92,6 +92,27 @@
   min-width: 100px;
   font-size: 14px;
 }
+.order-totals-table {
+  width: 275px;
+  margin-top: 15px;
+  border-spacing: 0;
+  border-collapse: unset;
+  min-width: unset;
+  th {
+    font-weight: bold;
+  }
+  td {
+    text-align: right;
+  }
+  .total-line {
+    border-top: 1px solid #CCC;
+  }
+}
+.math-symbol {
+  width: 10px;
+  font-size: 24px;
+  text-align: center;
+}
 @media screen and (max-width: 960px) {
   .order-buyer,
   .order-info-total,
