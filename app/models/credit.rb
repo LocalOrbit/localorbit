@@ -8,11 +8,14 @@ class Credit < ActiveRecord::Base
 
   PERCENTAGE = "percentage"
   FIXED = "fixed"
+  TOTAL = "total"
+  SUBTOTAL = "subtotal"
   MARKET = "market"
   ORGANIZATION = "supplier organization"
 
   AMOUNT_TYPES = [PERCENTAGE, FIXED]
   PAYER_TYPES = [MARKET, ORGANIZATION]
+  APPLY_TO_TYPES = [TOTAL, SUBTOTAL]
 
   validates :order, :user, :amount_type, :amount, presence: true
   validates :amount_type, inclusion: {in: AMOUNT_TYPES, message: "Not a valid credit type."}
@@ -21,8 +24,13 @@ class Credit < ActiveRecord::Base
   validate :amount_cannot_exceed_gross_total, :order_must_be_paid_by_po, :amount_cannot_exceed_paying_org_total
 
   def calculated_amount
+    if apply_to == Credit::TOTAL
+      total = order.total_cost
+    else
+      total = order.subtotal
+    end
+
     if amount_type == Credit::PERCENTAGE
-      total = order.gross_total
       (total * (amount / 100)).round 2
     elsif amount_type == Credit::FIXED
       amount
@@ -31,6 +39,10 @@ class Credit < ActiveRecord::Base
 
   def amount=(value)
     write_attribute(:amount, value && value.to_f.round(2))
+  end
+
+  def update_order_total
+    order.update_total_cost
   end
 
   private

@@ -60,6 +60,12 @@ class Admin::OrdersController < AdminController
     elsif params[:commit] == "Change Delivery"
       update_delivery(order)
       return
+    elsif params["order"][:delivery_clear]
+      remove_delivery_fee(order)
+      return
+    elsif params["order"][:credit_clear]
+      remove_credit(order)
+      return
     end
 
     # TODO: Change an order items delivery status to 'removed' or something rather then deleting them
@@ -78,6 +84,17 @@ class Admin::OrdersController < AdminController
     params.require(:order).permit(:notes, items_attributes: [
       :id, :quantity, :quantity_delivered, :delivery_status, :_destroy
     ])
+  end
+
+  def remove_delivery_fee(order)
+    order.delivery_fees=0
+    order.save
+
+    redirect_to admin_order_path(order), notice: "Delivery Fee successfully removed."
+  end
+
+  def remove_credit(order)
+
   end
 
   def update_delivery(order)

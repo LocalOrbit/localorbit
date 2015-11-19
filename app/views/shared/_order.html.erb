@@ -66,37 +66,55 @@
           <th scope="row">Payment Reference #:</th>
           <td><%= order.payment_note %></td>
       </tr>
-    </tbody>
-    <% if order.display_delivery_fees?(current_user) %>
+    <table class="order-totals-table">
       <tbody>
+        <% if order.credit_amount > 0 || order.display_delivery_fees?(current_user) %>
         <tr>
-          <th scope="row"><%= order.delivery.delivery_schedule.fee_label %>:</th>
+          <th class="math-symbol"></th>
+          <th>Gross Total:</th>
+          <td><%= number_to_currency order.gross_total %></td>
+        </tr>
+        <% if order.credit_amount > 0 && order.credit.apply_to == "subtotal" %>
+        <tr>
+          <th class="math-symbol">-</th>
+          <th>Credit:</th>
+          <td><%= number_to_currency order.credit_amount %></td>
+          <td class="credit-clear"><%= link_to "", "#", class: "font-icon icon-clear" %></td>
+          <%= f.hidden_field :credit_clear, :value=>nil %>
+        </tr>
+        <% end %>
+        <% if order.display_delivery_fees?(current_user) %>
+        <tr>
+          <th class="math-symbol">+</th>
+          <th><%= order.delivery.delivery_schedule.fee_label %>:</th>
           <td><%= number_to_currency order.delivery_fees %></td>
+          <td class="delivery-clear"><%= link_to "", "#", class: "font-icon icon-clear" %></td>
+          <%= f.hidden_field :delivery_clear, :value=>nil %>
         </tr>
-      </tbody>
-    <% end %>
-    <% if order.credit_amount > 0 %>
-      <tbody>
+        <% end %>
+        <% if order.credit_amount > 0 && order.credit.apply_to == "total" %>
         <tr>
-            <th scope="row">Credit:</th>
-            <td><%= number_to_currency order.credit_amount %></td>
+          <th class="math-symbol">-</th>
+          <th>Credit:</th>
+          <td><%= number_to_currency order.credit_amount %></td>
+          <td class="credit-clear"><%= link_to "", "#", class: "font-icon icon-clear" %></td>
+          <%= f.hidden_field :credit_clear, :value=>nil %>
         </tr>
-      </tbody>
-    <% end %>
-    <tbody class="pseudopod">
-      <tr>
-        <th scope="row">Grand Total:</th>
-        <td><%= number_to_currency order.total_cost %></td>
-      </tr>
+        <% end %>
+        <% end %>
+        <tr>
+          <th class="math-symbol total-line">=</th>
+          <th class="total-line">Grand Total:</th>
+          <td class="total-line"><%= number_to_currency order.total_cost %></td>
+        </tr>
+        <% if order.credit_amount > 0 && order.credit.notes %>
+        <tr>
+          <th colspan="2">Credit Notes:</th>
+          <td style="text-align: left"><%= order.credit.notes %></td>
+        </tr>
+        <% end %>
+    </table>
     </tbody>
-    <% if order.credit_amount > 0 && order.credit.notes %>
-      <tbody>
-        <tr>
-          <th scope="row">Credit Notes:</th>
-          <td><%= order.credit.notes %></td>
-        </tr>
-      </tbody>
-    <% end %>
   </table>
   </div>
   <div class="order-data">
@@ -331,6 +349,7 @@
     grossTotal: order.gross_total.to_f,
     amountTypes: Credit::AMOUNT_TYPES,
     payerTypes: Credit::PAYER_TYPES,
+    applyTo: Credit::APPLY_TO_TYPES,
     sellers: order.sellers,
     orderId: order.id
   }) %>

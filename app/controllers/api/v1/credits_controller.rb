@@ -8,6 +8,7 @@ module Api
         credit.order_id = params[:order_id]
         begin
           credit.save!
+          credit.update_order_total
           render :json => {credit: credit.reload}
         rescue
           errors = credit.errors.full_messages.join '. '
@@ -16,7 +17,7 @@ module Api
       end
 
       def credit_parameter
-        params.require(:credit).permit(:id, :amount, :payer_type, :amount_type, :paying_org_id, :notes)
+        params.require(:credit).permit(:id, :amount, :payer_type, :amount_type, :apply_to, :paying_org_id, :notes)
       end
     end
   end
