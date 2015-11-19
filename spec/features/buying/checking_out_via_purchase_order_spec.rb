@@ -336,7 +336,7 @@ describe "Checking Out via Purchase Order", :js, :vcr do
     expect(page).to have_content("Unfortunately, there are only 1 Kale available")
   end
 
-  it "clearing the cart during checkout preview" do
+  it "clearing the cart during checkout preview", :shaky do
     Dom::Cart::Item.all.each do |item|
       item.remove!
     end
