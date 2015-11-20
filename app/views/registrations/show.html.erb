@@ -34,14 +34,17 @@
 
     <div class="row row--field">
       <div class="field column column--quarter column--guttered">
-
         <%= f.label :password, "Password" %><br>
         <%= f.password_field :password  %>
-      </div
-      ><div class="field column column--quarter column--guttered">
-
+      </div>
+      
+      <div class="field column column--quarter column--guttered">
         <%= f.label :password_confirmation, "Retype Password" %><br>
         <%= f.password_field :password_confirmation %>
+      </div>
+      
+      <div class="column column--half column--guttered">
+      	<p>Passwords must be at least 8 characters long and<br />may be a mix of numbers, letters, and symbols</p>
       </div>
     </div>
 
