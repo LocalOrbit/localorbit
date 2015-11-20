@@ -343,7 +343,7 @@ describe "Checking Out via Purchase Order", :js, :vcr do
 
     # NOTE: This is a good test, but timeouts are not helped by shaky marking.
     # It fairly reliably times out on circle, so it being verifiable with QA, is commented out temporarily. TODO fix.
-    #expect(Dom::CartLink.first).to have_content("Removed from cart!")
+    expect(Dom::CartLink.first).to have_content("Removed from cart!")
 
     expect do
       click_button "Place Order"
