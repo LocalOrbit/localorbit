@@ -18,7 +18,7 @@
                 <td class="cart-quantity-column">Quantity</td>
                 <td class="cart-price-column">Price</td>
                 <td class="cart-total-column">Total</td>
-                <td class="product-clear"></td> <!-- If no items, goodbye note -->
+                <td class="product-clear"></td>
               </tr>
               <tr>
                 <th colspan="5" supplier="<%= seller_name.gsub(" ","") %>" class="seller"> <%= seller_name %> <%= link_to "Note", new_delivery_note_path(:supplier => Organization.where(name:seller_name).first.id, :current_cart => current_cart, :buyer => current_organization.id) %> </th> 
