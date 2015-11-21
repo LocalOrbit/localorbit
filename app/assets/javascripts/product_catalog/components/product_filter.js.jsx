@@ -9,6 +9,7 @@
   var ProductFilter = React.createClass({
     propTypes: {
       deliveryDate: React.PropTypes.string.isRequired,
+      selectedType: React.PropTypes.string.isRequired,
       orderCutoff: React.PropTypes.string.isRequired,
       buyerInfo: React.PropTypes.string.isRequired,
       useTemplates: React.PropTypes.bool.isRequired
@@ -124,7 +125,7 @@
             </div>
             <div className="order-information-container column column--half pull-left">
               Buyer: <strong>{this.props.buyerInfo}</strong><br/>
-              Delivery date: <strong>{this.state.deliveryDate.format('dddd, MMM. D, YYYY')}</strong><br/>
+              {this.props.selectedType} date: <strong>{this.state.deliveryDate.format('dddd, MMM. D, YYYY')}</strong><br/>
               Time left to order: <strong>{this.state.orderCutoff.fromNow(true)}</strong><br/>
               <a href="/sessions/organizations/new?redirect_back_to=%2Fsessions/deliveries/new?redirect_back_to=%2Fproducts">Change delivery options</a><br/>
               {orderTemplates}

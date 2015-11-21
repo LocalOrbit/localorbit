@@ -2,6 +2,7 @@
   baseUrl: "#{request.base_url}/api/v1/",
   cartUrl: cart_path,
   deliveryDate: current_delivery.buyer_deliver_on,
+  selectedType: current_delivery.selected_type.capitalize,
   orderCutoff: current_delivery.cutoff_time,
   buyerInfo: current_organization.name,
   limit: 10,
