@@ -36,7 +36,7 @@ class Order < ActiveRecord::Base
   has_many :payments, through: :order_payments, inverse_of: :orders
   has_many :products, through: :items
   has_many :sellers, through: :products, class_name: Organization
-  has_one :credit, autosave: false
+  has_one :credit, -> {visible}, autosave: false
 
   validates :billing_address, presence: true
   validates :billing_city, presence: true
@@ -410,7 +410,7 @@ class Order < ActiveRecord::Base
     if credit && credit.apply_to == "subtotal"
       cost = gross_total - credit_amount
     end
-    self.delivery_fees = calculate_delivery_fees(cost).round(2)
+    self.delivery_fees = calculate_delivery_fees(cost).round(2) unless delivery_fees == 0
     self.total_cost    = calculate_total_cost(cost).round(2)
   end
 
@@ -440,7 +440,7 @@ class Order < ActiveRecord::Base
 
   def calculate_total_cost(gross)
     if gross > 0.0
-      if credit.apply_to == "subtotal"
+      if credit && credit.apply_to == "subtotal"
         gross + delivery_fees - discount_amount
       else
         gross + delivery_fees - discount_amount - credit_amount
