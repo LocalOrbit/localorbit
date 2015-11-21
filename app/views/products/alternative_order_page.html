@@ -1,7 +1,7 @@
 <%= react_component('lo.ProductCatalog', {
   baseUrl: "#{request.base_url}/api/v1/",
   cartUrl: cart_path,
-  deliveryDate: current_delivery.deliver_on,
+  deliveryDate: current_delivery.buyer_deliver_on,
   orderCutoff: current_delivery.cutoff_time,
   buyerInfo: current_organization.name,
   limit: 10,
