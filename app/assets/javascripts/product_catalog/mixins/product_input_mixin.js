@@ -9,6 +9,7 @@
         prices: React.PropTypes.array.isRequired,
         total_price: React.PropTypes.string.isRequired,
         max_available: React.PropTypes.number.isRequired,
+        min_available: React.PropTypes.number.isRequired,
         cart_item_quantity: React.PropTypes.number.isRequired,
         cart_item: React.PropTypes.object.isRequired
       }).isRequired
@@ -27,9 +28,19 @@
 
     updateQuantity: function(event) {
       s = event.target.value.replace(/^0+(?=[0-9])/, '');
+      setTimeout(500);
+
       if (s === '') {
           s = '0';
       }
+      if (s != '0' && s < this.props.product.min_available) {
+        $("#product-"+this.props.product.id).html("Must order more than minimum quantity.");
+        s = '0';
+      }
+      if (s >= this.props.product.min_available) {
+        $("#product-"+this.props.product.id).html("");
+      }
+
       this.setState({cartItemQuantity: s});
     },
 

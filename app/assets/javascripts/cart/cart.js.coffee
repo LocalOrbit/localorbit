@@ -28,6 +28,7 @@ $ ->
       msg = ""
 
       if (silent != true)
+
         if (this.data.quantity == 0) && (data.quantity > 0)
           msg = "Added to cart!"
 

@@ -12,66 +12,66 @@ end
     <div class="column--full">
       <div class="row">
         <div class="branding-container column column--half">
-          <%= link_to_or_span logo, signed_in_root_path(current_user), class: "logo-link vc-wrapper pull-left" %>
+          <%= link_to logo, signed_in_root_path(current_user), class: "logo-link vc-wrapper pull-left" %>
           <%= content_tag :span, "#{current_market.tagline}", class: "tagline" if current_market && current_market.tagline.present? && (@show_nav_tagline or current_user) %>
         </div>
         <% if current_user %>
           <div class="nav nav--main column column--half pull-right" style="text-align: center">
-            <%= link_to_or_span "Order", products_path, class: "", tag: :a %>
-            <%= link_to_or_span "Suppliers", sellers_path, class: "", tag: :a %>
-            <%= link_to_or_span "About", market_path, class: "", tag: :a %>
+            <%= link_to "Order", products_path, class: "", tag: :a %>
+            <%= link_to "Suppliers", sellers_path, class: "", tag: :a %>
+            <%= link_to "About", market_path, class: "", tag: :a %>
           </div>
         <% end %>
       </div>
     </div>
   </div>
 <% else %>
-  <%= link_to_or_span logo, signed_in_root_path(current_user), class: "logo-link vc-wrapper pull-left" %>
+  <%= link_to logo, signed_in_root_path(current_user), class: "logo-link vc-wrapper pull-left" %>
   <%= content_tag :span, "#{current_market.tagline}", class: "tagline" if current_market && current_market.tagline.present? && (@show_nav_tagline or current_user) %>
 <% end %>
 
 
 <% if current_user %>
   <ul id="admin-nav" class="l-inline-list nav nav--admin clear-before <%= "mobile-only" if @hide_admin_nav %>">
-    <li class="mobile-only"><%= link_to_or_span 'Dashboard', dashboard_path %></li>
+    <li class="mobile-only"><%= link_to 'Dashboard', dashboard_path %></li>
     <% if current_user.buyer_only? %>
-      <li><%= link_to_or_span raw('<i class="font-icon" data-icon="&#xe00c;"></i> Purchase History'), dashboard_path %></li>
+      <li><%= link_to raw('<i class="font-icon" data-icon="&#xe00c;"></i> Purchase History'), dashboard_path %></li>
     <% end %>
 
     <% if current_user.admin? || current_user.market_manager? %>
       <li>
         <a href="#market-dropdown" class="caretted"><i class="font-icon" data-icon="&#xe054;"></i>Market Admin</a>
         <ul class="dropdown with-anchor top-anchor" id="market-dropdown">
-          <li><%= link_to_or_span raw('<i class="font-icon" data-icon="&#xe000;"></i> Markets'), admin_markets_path(sort: "name-asc") %></li>
-          <li><%= link_to_or_span raw('<i class="font-icon" data-icon="&#xe027;"></i> Organizations'), admin_organizations_path(sort: "name-asc") %></li>
-          <li><%= link_to_or_span raw('<i class="font-icon" data-icon="&#xe017;"></i> All Users'), admin_users_path(sort: "name-asc")  %></li>
+          <li><%= link_to raw('<i class="font-icon" data-icon="&#xe000;"></i> Markets'), admin_markets_path(sort: "name-asc") %></li>
+          <li><%= link_to raw('<i class="font-icon" data-icon="&#xe027;"></i> Organizations'), admin_organizations_path(sort: "name-asc") %></li>
+          <li><%= link_to raw('<i class="font-icon" data-icon="&#xe017;"></i> All Users'), admin_users_path(sort: "name-asc")  %></li>
           <% if current_user.admin? %>
-            <li><%= link_to_or_span raw('<i class="font-icon" data-icon="&#xe035;"></i> Units'), coming_soon_dashboard_path %></li>
-            <li><%= link_to_or_span raw('<i class="font-icon" data-icon="&#xe025;"></i> User Event Log'), admin_activities_path %></li>
-            <li><%= link_to_or_span raw('<i class="font-icon" data-icon="&#xe023;"></i> Product Taxonomy'), admin_categories_path %></li>
-            <li><%= link_to_or_span raw('<i class="font-icon" data-icon="&#xe00f;"></i> Admin Financials'), admin_financials_market_payments_path %></li>
+            <li><%= link_to raw('<i class="font-icon" data-icon="&#xe035;"></i> Units'), coming_soon_dashboard_path %></li>
+            <li><%= link_to raw('<i class="font-icon" data-icon="&#xe025;"></i> User Event Log'), admin_activities_path %></li>
+            <li><%= link_to raw('<i class="font-icon" data-icon="&#xe023;"></i> Product Taxonomy'), admin_categories_path %></li>
+            <li><%= link_to raw('<i class="font-icon" data-icon="&#xe00f;"></i> Admin Financials'), admin_financials_market_payments_path %></li>
           <% end %>
         </ul>
       </li>
-      <li><%= link_to_or_span raw('<i class="font-icon" data-icon="&#xe00f;"></i>Financials'), admin_financials_path %></li>
+      <li><%= link_to raw('<i class="font-icon" data-icon="&#xe00f;"></i>Financials'), admin_financials_path %></li>
     <% elsif current_user.seller? %>
-      <li><%= link_to_or_span raw('<i class="font-icon" data-icon="&#xe00f;"></i> Financials'), admin_financials_path %></li>
+      <li><%= link_to raw('<i class="font-icon" data-icon="&#xe00f;"></i> Financials'), admin_financials_path %></li>
     <% elsif show_financials? current_user, current_market %>
-      <li><%= link_to_or_span raw('<i class="font-icon" data-icon="&#xe00f;"></i> Financials'), admin_financials_path %></li>
+      <li><%= link_to raw('<i class="font-icon" data-icon="&#xe00f;"></i> Financials'), admin_financials_path %></li>
     <% end %>
 
     <% if !current_user.buyer_only? %>
       <li>
         <a href="#orders-dropdown" class="caretted"><i class="font-icon" data-icon="&#xe024;"></i>Orders &amp; Delivery</a>
         <ul class="dropdown with-anchor top-anchor" id="orders-dropdown">
-          <li><%= link_to_or_span raw('<i class="font-icon" data-icon="&#xe025;"></i> Orders'), admin_orders_path %></li>
+          <li><%= link_to raw('<i class="font-icon" data-icon="&#xe025;"></i> Orders'), admin_orders_path %></li>
           <% if current_market && FeatureAccess.order_templates?(market: current_market) %>
-            <li><%= link_to_or_span raw('<i class="font-icon" data-icon="&#xe024;"></i> Order Templates'), templates_path %></li>
+            <li><%= link_to raw('<i class="font-icon" data-icon="&#xe024;"></i> Order Templates'), templates_path %></li>
           <% end %>
-          <li><%= link_to_or_span raw('<i class="font-icon" data-icon="&#xe022;"></i> Upcoming Deliveries'), admin_delivery_tools_path %></li>
-          <li><%= link_to_or_span raw('<i class="font-icon" data-icon="&#xe02d;"></i> Sold Items'), admin_order_items_path %></li>
+          <li><%= link_to raw('<i class="font-icon" data-icon="&#xe022;"></i> Upcoming Deliveries'), admin_delivery_tools_path %></li>
+          <li><%= link_to raw('<i class="font-icon" data-icon="&#xe02d;"></i> Sold Items'), admin_order_items_path %></li>
           <% if current_market && current_user.market_manager? %>
-            <li><%= link_to_or_span raw('<i class="font-icon" data-icon="&#xe013;"></i> Delivery Schedules'), "/admin/markets/#{current_market.id}/deliveries" %></li>
+            <li><%= link_to raw('<i class="font-icon" data-icon="&#xe013;"></i> Delivery Schedules'), "/admin/markets/#{current_market.id}/deliveries" %></li>
           <% end %>
         </ul>
       </li>
@@ -79,7 +79,7 @@ end
 
     <% if current_user.admin? || current_user.market_manager? || current_user.seller? %>
       <li>
-        <%= link_to_or_span raw('<i class="font-icon" data-icon="&#xe01f;"></i> Products'), admin_products_path(sort: "name-asc") %>
+        <%= link_to raw('<i class="font-icon" data-icon="&#xe01f;"></i> Products'), admin_products_path(sort: "name-asc") %>
       </li>
     <% end %>
 
@@ -87,19 +87,19 @@ end
       <li>
         <a href="#marketing-dropdown" class="caretted"><i class="font-icon" data-icon="&#xe005;"></i> Marketing</a>
         <ul class="dropdown with-anchor top-anchor" id="marketing-dropdown">
-          <li><%= link_to_or_span raw('<i class="font-icon" data-icon="&#xe023;"></i> Fresh Sheet'), [:admin, :fresh_sheet] %></li>
-          <li><%= link_to_or_span raw('<i class="font-icon" data-icon="&#xe00a;"></i> Newsletters'), [:admin, :newsletters] %></li>
+          <li><%= link_to raw('<i class="font-icon" data-icon="&#xe023;"></i> Fresh Sheet'), [:admin, :fresh_sheet] %></li>
+          <li><%= link_to raw('<i class="font-icon" data-icon="&#xe00a;"></i> Newsletters'), [:admin, :newsletters] %></li>
 
           <% if can_access?(:promotions) %>
-            <li><%= link_to_or_span raw('<i class="font-icon" data-icon="&#xe005;"></i> Featured Promotions'), [:admin, :promotions] %></li>
+            <li><%= link_to raw('<i class="font-icon" data-icon="&#xe005;"></i> Featured Promotions'), [:admin, :promotions] %></li>
           <% end %>
 
           <% if can_access?(:discount_codes) %>
-            <li><%= link_to_or_span raw('<i class="font-icon" data-icon="&#xe00b;"></i> Discount Codes'), [:admin, :discounts] %></li>
+            <li><%= link_to raw('<i class="font-icon" data-icon="&#xe00b;"></i> Discount Codes'), [:admin, :discounts] %></li>
           <% end %>
           <% if current_user.admin? %>
-            <li><%= link_to_or_span raw('<i class="font-icon" data-icon="&#xe012;"></i> Sent Emails'), coming_soon_dashboard_path %></li>
-            <li><%= link_to_or_span raw('<i class="font-icon" data-icon="&#xe051;"></i> Email Testing'), coming_soon_dashboard_path %></li>
+            <li><%= link_to raw('<i class="font-icon" data-icon="&#xe012;"></i> Sent Emails'), coming_soon_dashboard_path %></li>
+            <li><%= link_to raw('<i class="font-icon" data-icon="&#xe051;"></i> Email Testing'), coming_soon_dashboard_path %></li>
           <% end %>
         </ul>
       </li>
@@ -108,10 +108,10 @@ end
     <li>
       <a href="#reports-dropdown" class="caretted"><i class="font-icon" data-icon="&#xe01e;"></i> Reports</a>
       <ul class="dropdown with-anchor top-anchor" id="reports-dropdown">
-        <li><%= link_to_or_span raw('<i class="font-icon" data-icon="&#xe006;"></i> Reports'), admin_reports_path %></li>
+        <li><%= link_to raw('<i class="font-icon" data-icon="&#xe006;"></i> Reports'), admin_reports_path %></li>
         <% if current_user.admin? %>
-          <li><%= link_to_or_span raw('<i class="font-icon" data-icon="&#xe04f;"></i> Referrals'), coming_soon_dashboard_path %></li>
-          <li><%= link_to_or_span raw('<i class="font-icon" data-icon="&#xe01e;"></i> Metrics'), admin_metrics_path %></li>
+          <li><%= link_to raw('<i class="font-icon" data-icon="&#xe04f;"></i> Referrals'), coming_soon_dashboard_path %></li>
+          <li><%= link_to raw('<i class="font-icon" data-icon="&#xe01e;"></i> Metrics'), admin_metrics_path %></li>
         <% end %>
       </ul>
     </li>
@@ -119,14 +119,14 @@ end
     <li>
       <a href="#account-dropdown" class="caretted"><i class="font-icon" data-icon="&#xe011;"></i>Account</a>
       <ul class="dropdown with-anchor top-anchor" id="account-dropdown">
-        <li><%= link_to_or_span raw('<i class="font-icon" data-icon="&#xe018;"></i> E-mail &amp; Password'), edit_user_registration_path %></li>
+        <li><%= link_to raw('<i class="font-icon" data-icon="&#xe018;"></i> E-mail &amp; Password'), edit_user_registration_path %></li>
         <li><%= link_to_my_organization %></li>
-        <li><%= link_to_or_span raw('<i class="font-icon" data-icon="&#xe024;"></i> Terms of Service'), TermsOfService.url %></li>
+        <li><%= link_to raw('<i class="font-icon" data-icon="&#xe024;"></i> Terms of Service'), TermsOfService.url %></li>
       </ul>
     </li>
-    <li class="mobile-only"><%= link_to_or_span "Order", products_path, class: "" %></li>
-    <li class="mobile-only"><%= link_to_or_span "Sellers", sellers_path, class: "" %></li>
-    <li class="mobile-only"><%= link_to_or_span "About", market_path, class: "" %></li>
+    <li class="mobile-only"><%= link_to "Order", products_path, class: "" %></li>
+    <li class="mobile-only"><%= link_to "Sellers", sellers_path, class: "" %></li>
+    <li class="mobile-only"><%= link_to "About", market_path, class: "" %></li>
   </ul>
 <% end %>
 

@@ -103,6 +103,7 @@ module Api
           {
               :id => product.id,
               :max_available => available_inventory,
+              :min_available => product.minimum_quantity_for_purchase({market:current_market,organization:current_organization}),
               :unit => product.unit.plural,
               :unit_description => product.unit_plural,
               :prices => prices,

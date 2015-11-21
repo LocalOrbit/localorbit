@@ -72,6 +72,7 @@
                 {unit_prices}
               </tbody>
             </table>
+            <div class="errormsg" id={'product-'+gp.id} style={{textAlign:"right", color:"red"}}></div>
           </div>
           <div style={{clear:"both"}}></div>
         </div>
