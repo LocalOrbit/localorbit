@@ -1,4 +1,6 @@
 class Credit < ActiveRecord::Base
+  include SoftDelete
+
   belongs_to :order, autosave: false
   belongs_to :user
   belongs_to :paying_org, class: Organization
