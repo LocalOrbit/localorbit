@@ -60,10 +60,10 @@ class Admin::OrdersController < AdminController
     elsif params[:commit] == "Change Delivery"
       update_delivery(order)
       return
-    elsif params["order"][:delivery_clear]
+    elsif params["order"][:delivery_clear] == "true"
       remove_delivery_fee(order)
       return
-    elsif params["order"][:credit_clear]
+    elsif params["order"][:credit_clear] == "true"
       remove_credit(order)
       return
     end
@@ -87,14 +87,13 @@ class Admin::OrdersController < AdminController
   end
 
   def remove_delivery_fee(order)
-    order.delivery_fees=0
-    order.save
-
-    redirect_to admin_order_path(order), notice: "Delivery Fee successfully removed."
+    RemoveDeliveryFee.perform(order: order)
+    redirect_to admin_order_path(order), notice: order.delivery.delivery_schedule.fee_label + " successfully removed."
   end
 
   def remove_credit(order)
-
+    RemoveCredit.perform(order: order)
+    redirect_to admin_order_path(order), notice: "Credit successfully removed."
   end
 
   def update_delivery(order)
@@ -133,8 +132,8 @@ class Admin::OrdersController < AdminController
   # Builds a list of deliveries for potential changes
   # Some from the past, some from future, and the order's actual one.
   def setup_deliveries(order)
-    recent_deliveries = order.market.deliveries.recent
-    future_deliveries = order.market.deliveries.future.active
+    recent_deliveries = order.market.deliveries.recent.active.uniq
+    future_deliveries = order.market.deliveries.future.active.uniq
 
     @deliveries = recent_deliveries | future_deliveries | [order.delivery]
   end
