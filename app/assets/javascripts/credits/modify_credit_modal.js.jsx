@@ -89,7 +89,7 @@
       var errors = (self.state.errors) ? <p className='alert alert--warning'>{self.state.errors}</p> : null;
 
       return (
-        <div id='creditEdit' className='popup modal is-hidden app-edit-credit-modal' style={{background: 'white', position: 'fixed', padding: '20px', width: '50%', borderRadius: '5px'}}>
+        <div id='creditEdit' className='popup modal is-hidden app-edit-credit-modal' style={{background: 'white', padding: '20px', borderRadius: '5px'}}>
           <h1>Modify Order Credit</h1>
           <div>
             {errors}
