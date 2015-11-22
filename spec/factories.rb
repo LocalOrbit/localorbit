@@ -52,6 +52,7 @@ FactoryGirl.define do
     user
     amount_type "fixed"
     amount 1.50
+    apply_to "total"
     payer_type "market"
     paying_org_id nil
     notes "Bad on delivery."
