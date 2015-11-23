@@ -313,6 +313,9 @@ $ ->
       quantity = parseInt($(this).val())
       model.saveItem(data.product_id, quantity, this)
 
+    if this.value.length == 0
+      model.saveItem(data.product_id, 0, this)
+
   $(document.body).on 'click', ".cart_item .icon-clear", (e)->
     e.preventDefault()
     data = $(this).closest(".cart_item").data("cart-item")

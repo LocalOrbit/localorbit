@@ -37,9 +37,13 @@
         var target = event.target;
 
         clearTimeout(typingTimer);
-        if (event.keyCode == 8 || event.keyCode == 46 ) {
+        if (event.keyCode == 8 || event.keyCode == 46) {
             $("#product-" + prodId).html("");
             $(target).removeClass('invalid-value');
+            in_str = '';
+            $(target).val('');
+            context.setState({cartItemQuantity: null});
+            $(target).trigger("cart.inputFinished");
         }
         else {
             in_str = in_str + String.fromCharCode(event.keyCode);
@@ -47,10 +51,20 @@
             typingTimer = setTimeout(function(){
                 //do stuff here e.g ajax call etc....
 
-                if (in_str != '0' && minAvail > 0 && in_str < minAvail) {
-                    $("#product-" + prodId).html("Must order more than minimum quantity.");
+                if (in_str == '0') {
+                    $("#product-" + prodId).html("");
+                    $(target).removeClass('invalid-value');
                     in_str = '';
+                    $(target).val('');
+                    context.setState({cartItemQuantity: null});
+                    $(target).trigger("cart.inputFinished");
+
+                }
+                else if (minAvail > 0 && in_str < minAvail) {
+                    $("#product-" + prodId).html("Must order more than minimum quantity.");
                     $(target).addClass('invalid-value');
+                    in_str = '';
+                    $(target).val('');
                 }
                 else if (!minAvail || (in_str >= minAvail && in_str != context.state.cartItemQuantity)) {
                     $("#product-" + prodId).html("");
