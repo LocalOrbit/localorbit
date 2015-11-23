@@ -17,7 +17,7 @@ $ ->
 
     setElement: (el) ->
       @el = el
-      $(@el).find(".quantity input").keyup ->
+      $(@el).find(".quantity input.cart-input").keyup ->
         window.clearTimeout(@timer)
 
         @timer = window.setTimeout =>
@@ -309,7 +309,7 @@ $ ->
   $(document.body).on 'cart.inputFinished', ".cart_item .quantity input", ->
     data = $(this).closest(".cart_item").data("cart-item")
 
-    if this.value.length > 0
+    if this.value.length > 0 && !$(this).hasClass('invalid-input')
       quantity = parseInt($(this).val())
       model.saveItem(data.product_id, quantity, this)
 

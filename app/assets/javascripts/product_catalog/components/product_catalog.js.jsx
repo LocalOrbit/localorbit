@@ -35,7 +35,7 @@
             useTemplates={this.props.useTemplates}
           />
           <lo.ProductTable
-            limit={10}
+            limit={30}
             filter={null}
             cartUrl={this.props.cartUrl}
             url={this.props.baseUrl + '/products'}

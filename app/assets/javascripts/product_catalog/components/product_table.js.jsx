@@ -2,6 +2,8 @@
 //= require product_catalog/product_store
 
 (function() {
+  var current_top_level_category = null, previous_top_level_category = null;
+  var isFirst = true;
 
   var ProductTable = React.createClass({
     propTypes: {
@@ -45,6 +47,7 @@
         products: res.products,
         hasMore: res.hasMore
       });
+      isFirst = true;
     },
 
     toggleImages: function() {
@@ -52,12 +55,25 @@
     },
 
     buildRow: function(product, isMobile) {
-      if(isMobile) {
-        return ( <lo.MobileProductRow key={product.id} product={product} hideImages={this.state.hideImages} /> );
-      }
-      else {
-        return ( <lo.ProductRow key={product.id} product={product} hideImages={this.state.hideImages} /> );
-      }
+        var addCategory=null;
+        current_top_level_category = product.top_level_category_name;
+        if (previous_top_level_category != current_top_level_category || isFirst) {
+            previous_top_level_category = current_top_level_category;
+
+            if (isFirst) {
+                addCategory = (<lo.ProductCategoryRow category={current_top_level_category}/>);
+                isFirst = false;
+            }
+            else
+                return (<lo.ProductCategoryRow category={current_top_level_category} />);
+        }
+
+        if(isMobile) {
+            return ( <div> {addCategory} <lo.MobileProductRow key={product.id} product={product} hideImages={this.state.hideImages} /> </div> );
+        }
+        else {
+            return ( <div> {addCategory} <lo.ProductRow key={product.id} product={product} hideImages={this.state.hideImages} /> </div> );
+        }
     },
 
     render: function() {
@@ -77,7 +93,7 @@
           <InfiniteScroll
             pageStart={0}
             hasMore={self.state.hasMore}
-            threshold={50}
+            threshold={300}
             loadMore={self.loadMore}
             loader={(<p>Loading products....</p>)}
           >
