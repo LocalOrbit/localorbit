@@ -65,15 +65,6 @@
 
             addTopCategory = (<lo.ProductCategoryRow category={current_top_level_category}/>);
             isFirstTopCategory = false;
-
-            /*
-            if (isFirstTopCategory) {
-                addTopCategory = (<lo.ProductCategoryRow category={current_top_level_category}/>);
-                isFirstTopCategory = false;
-            }
-            else
-                return (<lo.ProductCategoryRow category={current_top_level_category} />);
-            */
         }
         else
             addTopCategory = null;
