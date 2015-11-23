@@ -14,7 +14,7 @@ module Api
         @query = (params[:query] || '').gsub(/\W+/, '+') || ''
         @category_ids = (params[:category_ids] || [])
         @seller_ids = (params[:seller_ids] || [])
-        @sort_by = (params[:sort_by] || "top_level_category.name, general_products.name")
+        @sort_by = (params[:sort_by] || "top_level_category.lft, second_level_category.lft, general_products.name")
 
         products = filtered_available_products(@query, @category_ids, @seller_ids)
         sellers = {}
@@ -47,6 +47,7 @@ module Api
 
         GeneralProduct.joins("JOIN (#{p_sql}) p_child ON general_products.id=p_child.general_product_id
                               JOIN categories top_level_category ON general_products.top_level_category_id = top_level_category.id
+                              JOIN categories second_level_category ON general_products.second_level_category_id = second_level_category.id
                               JOIN organizations supplier ON general_products.organization_id=supplier.id
                               JOIN market_organizations ON general_products.organization_id = market_organizations.organization_id
                               AND market_organizations.market_id = #{current_market.id}")
@@ -54,7 +55,7 @@ module Api
             .filter_by_categories(category_ids)
             .filter_by_suppliers(seller_ids)
             .filter_by_active_org
-            .select("top_level_category.name, general_products.*")
+            .select("top_level_category.lft, top_level_category.name, second_level_category.lft, second_level_category.name, general_products.*")
             .order(@sort_by)
             .uniq
       end
