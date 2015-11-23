@@ -3,7 +3,8 @@
 
 (function() {
   var current_top_level_category = null, previous_top_level_category = null;
-  var isFirst = true;
+  var current_second_level_category = null, previous_second_level_category = null;
+  var isFirstTopCategory = true, isFirstSecondCategory = true;
 
   var ProductTable = React.createClass({
     propTypes: {
@@ -55,24 +56,49 @@
     },
 
     buildRow: function(product, isMobile) {
-        var addCategory=null;
+        var addTopCategory=null, addSecondCategory=null;
         current_top_level_category = product.top_level_category_name;
-        if (previous_top_level_category != current_top_level_category || isFirst) {
+        if (previous_top_level_category != current_top_level_category || isFirstTopCategory) {
             previous_top_level_category = current_top_level_category;
 
-            if (isFirst) {
-                addCategory = (<lo.ProductCategoryRow category={current_top_level_category}/>);
-                isFirst = false;
+            addTopCategory = (<lo.ProductCategoryRow category={current_top_level_category}/>);
+            isFirstTopCategory = false;
+
+            /*
+            if (isFirstTopCategory) {
+                addTopCategory = (<lo.ProductCategoryRow category={current_top_level_category}/>);
+                isFirstTopCategory = false;
             }
             else
                 return (<lo.ProductCategoryRow category={current_top_level_category} />);
+            */
         }
+        else
+            addTopCategory = null;
 
-        if(isMobile) {
-            return ( <div> {addCategory} <lo.MobileProductRow key={product.id} product={product} hideImages={this.state.hideImages} /> </div> );
+        current_second_level_category = product.second_level_category_name;
+        if (previous_second_level_category != current_second_level_category || isFirstSecondCategory) {
+            previous_second_level_category = current_second_level_category;
+
+            addSecondCategory = (<lo.ProductSecondCategoryRow category={current_second_level_category}/>);
+            isFirstSecondCategory = false;
+        }
+        else
+            addSecondCategory = null;
+
+        if (isMobile) {
+            return (<div>
+                {addTopCategory}
+                {addSecondCategory}
+                <lo.MobileProductRow key={product.id} product={product} hideImages={this.state.hideImages}/>
+            </div> );
         }
         else {
-            return ( <div> {addCategory} <lo.ProductRow key={product.id} product={product} hideImages={this.state.hideImages} /> </div> );
+            return (<div>
+                {addTopCategory}
+                {addSecondCategory}
+                <lo.ProductRow key={product.id} product={product} hideImages={this.state.hideImages}/>
+            </div> );
         }
     },
 
