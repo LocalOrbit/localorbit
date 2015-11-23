@@ -14,7 +14,6 @@ module Api
         @query = (params[:query] || '').gsub(/\W+/, '+') || ''
         @category_ids = (params[:category_ids] || [])
         @seller_ids = (params[:seller_ids] || [])
-        @sort_by = (params[:sort_by] || "top_level_category.name, general_products.name")
         @sort_by = (params[:sort_by] || "top_level_category.lft, second_level_category.lft, general_products.name")
 
         featured_promotion = current_market.featured_promotion(current_organization)
