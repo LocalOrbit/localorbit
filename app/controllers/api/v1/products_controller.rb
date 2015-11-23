@@ -16,6 +16,7 @@ module Api
         @seller_ids = (params[:seller_ids] || [])
         @sort_by = (params[:sort_by] || "top_level_category.lft, second_level_category.lft, general_products.name")
 
+        featured_promotion = current_market.featured_promotion(current_organization)
         products = filtered_available_products(@query, @category_ids, @seller_ids)
         sellers = {}
         page_of_products = products
@@ -24,6 +25,7 @@ module Api
                                .map { |p| format_general_product_for_catalog(p, sellers) }
         render :json => {
                    product_total: products.count(:all),
+                   featured_promotion: { :details => featured_promotion, :product => format_general_product_for_catalog(featured_promotion.product.general_product, sellers) },
                    products: page_of_products,
                    sellers: sellers
                }
