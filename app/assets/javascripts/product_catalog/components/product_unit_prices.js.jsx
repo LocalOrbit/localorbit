@@ -47,7 +47,7 @@
     abbreviatedPricing: function() {
       var prices = this.props.product.prices;
       return (
-        <tr key={this.props.product.unit}>
+        <tr>
           <td colSpan="3" style={{textAlign: "right"}}>
             {prices[prices.length - 1].sale_price} - {prices[0].sale_price}
             <i onClick={this.toggleView} style={{cursor: "pointer"}} className="caretted"/><br/>
@@ -80,8 +80,10 @@
             </table>
           </td>
           <td colSpan="2">
+            <div style={{float:"left", background:"#F7F7F7", width:"100%", minWidth: "200px", borderRadius: "4px", border:"1px solid #D1D1D1", padding: "4px 0"}}>
             <div style={{float:"right", background:"#F7F7F7", width:"100%", minWidth: 200, maxWidth: 200, borderRadius: "4px", border:"1px solid #D1D1D1", padding: "4px 0"}}>
               <div className="quantity" style={{float:"left", width:"50%", textAlign:"center"}}>
+                <input style={{width: "75px"}} type="number" placeholder="0" value={this.state.cartItemQuantity} className="redesigned app-product-input" onKeyDown={this.updateQuantity}/>
                 <input style={{width: "75px"}} type="number" placeholder="0" defaultValue={this.state.cartItemQuantity} className="redesigned app-product-input" onKeyDown={this.clearField} onChange={this.updateQuantity}/>
               </div>
               <div style={{float:"left", width:"50%", textAlign:"center", padding: "10px 0"}}>

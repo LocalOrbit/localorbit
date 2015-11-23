@@ -6,6 +6,7 @@
       product: React.PropTypes.shape({
         id: React.PropTypes.number.isRequired,
         name: React.PropTypes.string.isRequired,
+        top_level_category_name: React.PropTypes.string,
         second_level_category_name: React.PropTypes.string,
         short_description: React.PropTypes.string,
         long_description: React.PropTypes.string,
