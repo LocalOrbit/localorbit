@@ -16,6 +16,7 @@
       return {
         hideImages: false,
         hasMore: true,
+        featuredPromotion: null,
         products: []
       };
     },
@@ -45,6 +46,7 @@
 
     onProductsChange: function(res) {
       this.setState({
+        featuredPromotion: res.featuredPromotion,
         products: res.products,
         hasMore: res.hasMore
       });
@@ -105,7 +107,13 @@
     render: function() {
       var MOBILE_WIDTH = 480;
       var self = this;
+
       var isMobile = self.state.width <= MOBILE_WIDTH;
+      var promo = null;
+      if (this.state.featuredPromotion != null) {
+          promo = (<lo.ProductFeaturedPromotion hideImages={this.state.hideImages} promo={this.state.featuredPromotion} />)
+      }
+      //var featured_promotion = this.state.featuredPromotion ? (<lo.ProductFeaturedPromotion promotion={this.state.featuredPromotion} />) : null;
       var rows = self.state.products.map(function(product) {
         return self.buildRow(product, isMobile);
       });
@@ -123,8 +131,9 @@
             loadMore={self.loadMore}
             loader={(<p>Loading products....</p>)}
           >
-            <div id="product-search-table" className="product-images-link row pull-right"> <a href="javscript:void(0);" onClick={self.toggleImages}><i className="font-icon" data-icon="">&nbsp;</i> {(self.state.hideImages) ? "Show " : "Hide "} Product Images</a> </div>
-            {rows}
+            <div id="product-search-table" className="product-images-link row pull-right"> <a href="javscript:void(0);" onClick={self.toggleImages}><i className="font-icon" data-icon=""></i> {(self.state.hideImages) ? "Show " : "Hide "} Product Images</a> </div>
+              {promo}
+              {rows}
           </InfiniteScroll>
         </div>
       );
