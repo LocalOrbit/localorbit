@@ -37,7 +37,7 @@
       </div
       ><div class="field column column--half column--guttered">
         <label for="provider_account_type">Account Type</label><br>
-        <%= select_tag :type, account_type_options(@bank_account), prompt: 'Select an account type', id: 'provider_account_type', class: 'column--full' %>
+        <%= select_tag :type, account_type_options(@bank_account), id: 'provider_account_type', class: 'column--full' %>
       </div>
     </div>
 
@@ -60,7 +60,7 @@
       </div>
     </fieldset>
 
-    <fieldset id="credit-card-fields" <%= raw 'class="is-hidden" disabled' unless @bank_account.account_type.present? && is_credit_card?(@bank_account) %>>
+    <fieldset id="credit-card-fields" <%# = raw 'class="is-hidden" disabled' unless @bank_account.account_type.present? && is_credit_card?(@bank_account) %>>
       <div class="row">
         <div class="field column column--half column--guttered">
           <label for="provider_card_number">Card Number</label><br>
