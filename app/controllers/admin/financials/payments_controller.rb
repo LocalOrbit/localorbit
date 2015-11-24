@@ -12,13 +12,19 @@ module Admin::Financials
 
     def update
       @payment = Payment.find(params[:id])
-      if @payment.update_attributes(payment_method:params[:payment][:payment_method], note:params[:payment][:note], amount:BigDecimal(params[:payment][:amount]))
-        redirect_to "/admin/financials/payments"
-      end
+      #if @payment.payment_method != params[:payment][:payment_method]
+      #if 
+      @payment.update_attributes!(payment_method:params[:payment][:payment_method], note:params[:payment][:note])#, amount:BigDecimal(params[:payment][:amount]))
+      #  redirect_to "/admin/financials/payments"
+      #elsif @payment.update_attributes()
+      #end
+      #end
+      redirect_to "/admin/financials/payments"
     end
 
     def edit
       @payment = Payment.find(params[:id].to_i)
+
     end
   end
 end
