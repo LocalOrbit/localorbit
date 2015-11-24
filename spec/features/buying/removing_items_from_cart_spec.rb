@@ -142,7 +142,7 @@ describe "Removing items" do
       expect(Dom::CartLink.first).to have_content("Removed from cart!")
       expect(Dom::CartLink.first).to_not have_content("Removed from cart!")
 
-      expect(kale_item.quantity_field.value).to eq("")
+      expect(kale_item.quantity_field.value).to eq("0")
       expect(cart_link.count).to have_content("2")
     end
   end

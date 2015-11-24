@@ -13,6 +13,7 @@ feature "Viewing products" do
 
   let!(:org1) { create(:organization, :seller, markets: [market]) }
   let!(:org1_product) { create(:product, :sellable, name: "celery", organization: org1, delivery_schedules: [delivery_schedule1]) }
+  let!(:promotion) { create(:promotion, :active, product: org1_product, market: market, body: "Big savings!") }
 
   let!(:org2) { create(:organization, :seller, markets: [market]) }
   let!(:org2_product) { create(:product, :sellable, organization: org2, delivery_schedules: [delivery_schedule1]) }
