@@ -75,7 +75,7 @@
           <% if order.credit_amount > 0 && order.credit.apply_to == "total" %>
           <tr>
             <th class="math-symbol">-</th>
-            <th>Credit: <% if order.credit_amount > 0 && order.credit.notes %><span class="tooltip tooltip--naked" data-tooltip="Notes: <%= order.credit.notes %>"><i class="fa fa-file-text--o"></i></span><% end %></th>
+            <th>Credit: <% if order.credit_amount > 0 && order.credit.notes %><span class="tooltip tooltip--naked" data-tooltip="Notes: <%= order.credit.notes %>"><i class="fa fa-file-text-o"></i></span><% end %></th>
             <td><%= number_to_currency order.credit_amount %></td>
             <td class="credit-clear"><%= link_to "", "#", class: "font-icon icon-clear" %></td>
             <%= f.hidden_field :credit_clear, :value=>nil %>
@@ -84,7 +84,7 @@
           <% end %>
           <tr>
             <th class="math-symbol total-line">=</th>
-            <th class="total-line">Grand Total:</th>
+            <th class="total-line">Order Total:</th>
             <td class="total-line"><%= number_to_currency order.total_cost %></td>
           </tr>
          </tbody>
@@ -257,7 +257,6 @@
             <th>Market Fee</th>
             <th>Transaction Fee</th>
             <th>Payment Processing Fee</th>
-            <th>Net Sale</th>
           </tr>
         </thead>
         <tbody>
@@ -273,7 +272,6 @@
             <td class="market-fees"><%= number_to_currency order.market_fees %></td>
             <td class="transaction-fees"><%= number_to_currency order.transaction_fees %></td>
             <td class="payment-processing"><%= number_to_currency order.payment_fees %></td>
-            <td class="net-sale"><%= number_to_currency order.net_total %></td>
           </tr>
         </tbody>
       </table>
