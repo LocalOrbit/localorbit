@@ -494,6 +494,7 @@ describe Order do
 
     it "does not use invalid credits" do
       credit = create(:credit, order: order, user: user, amount: 1.00)
+      order.credit = credit
       order.payment_method = "credit card"
       order.save
       expect(order.reload.total_cost.to_f).to eql(8.74)
