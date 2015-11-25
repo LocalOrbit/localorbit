@@ -5,10 +5,11 @@
     mixins: [window.lo.ProductRowMixin],
 
     render: function() {
+      var self = this;
       var gp = this.props.product;
 
       var unit_prices = _.map(gp.available, function(p) {
-        return <lo.ProductUnitPrices key={p.id} product={p} />
+        return <lo.ProductUnitPrices key={p.id} product={p} promo={self.props.promo}/>
       });
 
       return (
