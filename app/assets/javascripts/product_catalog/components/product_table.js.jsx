@@ -2,9 +2,9 @@
 //= require product_catalog/product_store
 
 (function() {
+  var isFirstTopCategory = true, isFirstSecondCategory = true;
   var current_top_level_category = null, previous_top_level_category = null;
   var current_second_level_category = null, previous_second_level_category = null;
-  var isFirstTopCategory = true, isFirstSecondCategory = true;
 
   var ProductTable = React.createClass({
     propTypes: {
@@ -59,7 +59,6 @@
 
     buildRow: function(product, isMobile, promo) {
         var addTopCategory=null, addSecondCategory=null;
-        var is_promo = null;
         current_top_level_category = product.top_level_category_name;
         if (previous_top_level_category != current_top_level_category || isFirstTopCategory) {
             previous_top_level_category = current_top_level_category;
@@ -80,10 +79,7 @@
         else
             addSecondCategory = null;
 
-        if (promo == product.id)
-            is_promo = true;
-        else
-            is_promo = false;
+        is_promo = (promo == product.id)
 
         if (isMobile) {
             return (<div>
@@ -104,6 +100,8 @@
     render: function() {
       var MOBILE_WIDTH = 480;
       var self = this;
+
+      isFirstTopCategory = true, isFirstSecondCategory = true;
 
       var isMobile = self.state.width <= MOBILE_WIDTH;
       var promo = null;
