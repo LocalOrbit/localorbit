@@ -61,10 +61,10 @@
               <thead>
                 <th></th>
                 <th></th>
-                <th style={{textAlign: "center", color:"#727070", textTransform:"uppercase", fontWeight: "bold", fontSize: "11px"}}>
+                <th style={{width: 100, textAlign: "center", color:"#727070", textTransform:"uppercase", fontWeight: "bold", fontSize: "11px"}}>
                   Order QTY
                 </th>
-                <th style={{textAlign: "center", color:"#727070", textTransform:"uppercase", fontWeight: "bold", fontSize: "11px"}}>
+                <th style={{width: 100, textAlign: "center", color:"#727070", textTransform:"uppercase", fontWeight: "bold", fontSize: "11px"}}>
                   Total Cost
                 </th>
               </thead>
@@ -72,7 +72,7 @@
                 {unit_prices}
               </tbody>
             </table>
-            <div class="errormsg" id={'product-'+gp.id} style={{textAlign:"right", color:"red"}}></div>
+            <div class="errormsg" id={'product-'+gp.id} style={{ fontSize: 11, textAlign:"right", color:"red"}}></div>
           </div>
           <div style={{clear:"both"}}></div>
         </div>
