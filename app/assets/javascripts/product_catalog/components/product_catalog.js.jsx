@@ -10,6 +10,7 @@
       cartUrl: React.PropTypes.string.isRequired,
       baseUrl: React.PropTypes.string.isRequired,
       deliveryDate: React.PropTypes.string.isRequired,
+      selectedType: React.PropTypes.string.isRequired,
       orderCutoff: React.PropTypes.string.isRequired,
       buyerInfo: React.PropTypes.string.isRequired,
       useTemplates: React.PropTypes.bool.isRequired
@@ -28,6 +29,7 @@
           {orderTemplates}
           <lo.ProductFilter
             deliveryDate={this.props.deliveryDate}
+            selectedType={this.props.selectedType}
             orderCutoff={this.props.orderCutoff}
             buyerInfo={this.props.buyerInfo}
             useTemplates={this.props.useTemplates}
