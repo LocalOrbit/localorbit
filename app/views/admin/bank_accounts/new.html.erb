@@ -60,7 +60,7 @@
       </div>
     </fieldset>
 
-    <fieldset id="credit-card-fields" <%# = raw 'class="is-hidden" disabled' unless @bank_account.account_type.present? && is_credit_card?(@bank_account) %>>
+    <fieldset id="credit-card-fields" <%= raw 'class="is-hidden" disabled' unless @bank_account.account_type.present? && is_credit_card?(@bank_account) %>>
       <div class="row">
         <div class="field column column--half column--guttered">
           <label for="provider_card_number">Card Number</label><br>
