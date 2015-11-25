@@ -17,6 +17,7 @@
           prices: React.PropTypes.array,
           total_price: React.PropTypes.string,
           max_available: React.PropTypes.number,
+          min_available: React.PropTypes.number,
           price_for_quantity: React.PropTypes.string,
           cart_item_persisted: React.PropTypes.bool,
           cart_item_quantity: React.PropTypes.number,

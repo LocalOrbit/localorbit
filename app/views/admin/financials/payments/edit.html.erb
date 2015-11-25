@@ -1,14 +1,14 @@
 
 <div class="row row--partial">
   <div class="column column--three-fourths">
-    <legend>Update Payment Note</legend>
+    <legend>Update Payment</legend>
 
     <%= form_for @payment, :url => {:action => "update", :id => @payment.id}, :method => "patch" do |f| %>
       <%= render 'form', {f: f} %>
-      <div class="form-actions">
-        <%= link_to "Cancel", cart_path(@cart), class: "btn cancel" %>
-        <%= f.submit "Update Payment" %>
-      </div>
+        <div class="form-actions">
+          <%= link_to "Cancel", request.env['HTTP_REFERER'], class: "btn cancel" %>
+          <%= f.submit "Update Payment" %>
+        </div>
     <% end %>
   </div>
 </div>
