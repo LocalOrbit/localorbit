@@ -6,20 +6,48 @@
             promo: React.PropTypes.object.isRequired
         },
 
-        render: function() {
+        componentWillMount: function() {
+            this.updateDimensions();
+        },
 
+        componentDidMount: function() {
+            window.addEventListener('resize', this.updateDimensions);
+        },
+
+        componentWillUnmount: function() {
+            window.removeEventListener('resize', this.updateDimensions);
+        },
+
+        updateDimensions: function() {
+            this.setState({width: $(window).width()});
+        },
+
+        render: function() {
+            var productRow;
             var gp = this.props.promo.product;
             var unit_prices = _.map(gp.available, function(p) {
                 return <lo.ProductUnitPrices product={p} />
             });
 
-            return (
-            <div className="product-promotion">
+            var MOBILE_WIDTH = 480;
+            var isMobile = this.state.width <= MOBILE_WIDTH;
+
+            if (isMobile)
+                productRow = (<lo.MobileProductRow key={gp.id} product={gp} hideImages={this.props.hideImages} promo={true}/>);
+            else
+                productRow = (<lo.ProductRow key={gp.id} product={gp} hideImages={this.props.hideImages} promo={true} />);
+
+                return (
+            <div className="products-featured">
                 <h3 className="featured-heading">Featured: {this.props.promo.details.title}</h3>
-                <div className="featured-description">
-                    <div dangerouslySetInnerHTML={{__html: this.props.promo.details.body }} />
-                </div><br/>
-                <lo.ProductRow key={gp.id} product={gp} hideImages={this.props.hideImages}/>
+                <div class="slide featured-table-slide" id="featured-table">
+                    <div class="slide-content">
+                        <div className="featured-description">
+                            <div dangerouslySetInnerHTML={{__html: this.props.promo.details.body }}></div>
+                        </div>
+                        {productRow}
+                    </div>
+                </div>
             </div>
             );
         }

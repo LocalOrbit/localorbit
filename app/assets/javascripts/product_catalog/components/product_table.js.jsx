@@ -57,8 +57,9 @@
       this.setState({hideImages: !this.state.hideImages});
     },
 
-    buildRow: function(product, isMobile) {
+    buildRow: function(product, isMobile, promo) {
         var addTopCategory=null, addSecondCategory=null;
+        var is_promo = null;
         current_top_level_category = product.top_level_category_name;
         if (previous_top_level_category != current_top_level_category || isFirstTopCategory) {
             previous_top_level_category = current_top_level_category;
@@ -79,18 +80,23 @@
         else
             addSecondCategory = null;
 
+        if (promo == product.id)
+            is_promo = true;
+        else
+            is_promo = false;
+
         if (isMobile) {
             return (<div>
                 {addTopCategory}
                 {addSecondCategory}
-                <lo.MobileProductRow key={product.id} product={product} hideImages={this.state.hideImages}/>
+                <lo.MobileProductRow key={product.id} product={product} hideImages={this.state.hideImages} promo={is_promo}/>
             </div> );
         }
         else {
             return (<div>
                 {addTopCategory}
                 {addSecondCategory}
-                <lo.ProductRow key={product.id} product={product} hideImages={this.state.hideImages}/>
+                <lo.ProductRow key={product.id} product={product} hideImages={this.state.hideImages} promo={is_promo}/>
             </div> );
         }
     },
@@ -102,11 +108,10 @@
       var isMobile = self.state.width <= MOBILE_WIDTH;
       var promo = null;
       if (this.state.featuredPromotion != null) {
-          promo = (<lo.ProductFeaturedPromotion hideImages={this.state.hideImages} promo={this.state.featuredPromotion} />)
+          promo = (<lo.ProductFeaturedPromotion hideImages={this.state.hideImages} promo={self.state.featuredPromotion} />)
       }
-      //var featured_promotion = this.state.featuredPromotion ? (<lo.ProductFeaturedPromotion promotion={this.state.featuredPromotion} />) : null;
       var rows = self.state.products.map(function(product) {
-        return self.buildRow(product, isMobile);
+        return self.buildRow(product, isMobile, promo ? self.state.featuredPromotion.product.id : false);
       });
 
       if(rows.length === 0 && this.state.hasMore === false) {

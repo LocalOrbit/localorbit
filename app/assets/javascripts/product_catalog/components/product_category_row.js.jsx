@@ -7,7 +7,7 @@
 
         render: function() {
             return (
-                <div className="product-catalog-category">{this.props.category}</div>
+                <div className="product-catalog-category product-category-divider">{this.props.category}</div>
             );
         }
     });
