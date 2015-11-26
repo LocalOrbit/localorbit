@@ -1,7 +1,13 @@
 <%= render "shared/errors", { resource: order } %>
 
 <%= form_for order, url: admin_order_path(order.id), as: :order, method: :put do |f| %>
-  <% user_order_context = UserOrderContext.build(user:current_user, order:order) %>
+<%  user_order_context = UserOrderContext.build(user:current_user, order:order)
+    if current_user.market_manager? || current_user.buyer_only?
+      credit_sign = '-'
+    else
+      credit_sign = '+'
+    end
+%>
 <div class="order-info">
   <h1>Order info for <%= order.order_number %></h1>
   <div class="order-info-date">Placed On: <strong><%= order.placed_at.strftime "%m/%d/%Y at %l:%M%p" %></strong></div>
@@ -43,7 +49,7 @@
       </div>
     </div>
     <div style="float: left; margin-right: 50px">
-      <h2>Payment Summary</h2>
+      <h2>Financial Summary</h2>
       <table class="order-totals-table">
         <tbody>
           <% if order.credit_amount > 0 || order.display_delivery_fees?(current_user) %>
@@ -54,10 +60,12 @@
           </tr>
           <% if order.credit_amount > 0 && order.credit.apply_to == "subtotal" %>
           <tr>
-            <th class="math-symbol">-</th>
+            <th class="math-symbol"><%= credit_sign %></th>
             <th>Credit: <% if order.credit_amount > 0 && order.credit.notes %><span class="tooltip tooltip--naked" data-tooltip="Notes: <%= order.credit.notes %>"><i class="fa fa-file-text-o"></i></span><% end %></th>
             <td><%= number_to_currency order.credit_amount %></td>
+            <% if order.payment_status == "unpaid" %>
             <td class="credit-clear"><%= link_to "", "#", class: "font-icon icon-clear" %></td>
+            <% end %>
             <%= f.hidden_field :credit_clear, :value=>nil %>
           </tr>
           <% end %>
@@ -68,16 +76,18 @@
             <td><%= number_to_currency order.delivery_fees %></td>
             <% if order.payment_method=="purchase order" && order.delivery_fees  > 0 && order.payment_status == "unpaid" %>
             <td class="delivery-clear"><%= link_to "", "#", class: "font-icon icon-clear" %></td>
-            <%= f.hidden_field :delivery_clear, :value=>nil %>
             <% end %>
+            <%= f.hidden_field :delivery_clear, :value=>nil %>
           </tr>
           <% end %>
           <% if order.credit_amount > 0 && order.credit.apply_to == "total" %>
           <tr>
-            <th class="math-symbol">-</th>
+            <th class="math-symbol"><%= credit_sign %></th>
             <th>Credit: <% if order.credit_amount > 0 && order.credit.notes %><span class="tooltip tooltip--naked" data-tooltip="Notes: <%= order.credit.notes %>"><i class="fa fa-file-text-o"></i></span><% end %></th>
             <td><%= number_to_currency order.credit_amount %></td>
+            <% if order.payment_status == "unpaid" %>
             <td class="credit-clear"><%= link_to "", "#", class: "font-icon icon-clear" %></td>
+            <% end %>
             <%= f.hidden_field :credit_clear, :value=>nil %>
           </tr>
           <% end %>
@@ -101,10 +111,12 @@
           <th scope="row">Payment Method: </th>
           <td><%= order.payment_method.titleize %></td>
         </tr>
+        <% if order.payment_method == "purchase order" && order.payment_note.length > 0 %>
         <tr>
           <th scope="row">Payment Ref. #: </th>
           <td><%= order.payment_note %></td>
         </tr>
+        <% end %>
         <tr>
           <th scope="row">Delivery Status: </th>
           <td><%= order.delivery_status_for_user(current_user).titleize %></td>
@@ -158,7 +170,6 @@
             <% end %>
           </td>
           <td class="quantity">
-            <%# if (current_user.admin? || current_user.market_manager?) && item.object.delivery_status == 'pending' %>
             <% if FeatureAccess.edit_ordered_quantity?(user_order_item_context: user_order_item_context) %>
               <%= item.text_field :quantity, :autocomplete => :off, value: Format.quantity(item.object.quantity), class: 'quantity-ordered' %>
             <% else %>
@@ -257,6 +268,7 @@
             <th>Market Fee</th>
             <th>Transaction Fee</th>
             <th>Payment Processing Fee</th>
+            <th>Net Sale</th>
           </tr>
         </thead>
         <tbody>
@@ -272,6 +284,7 @@
             <td class="market-fees"><%= number_to_currency order.market_fees %></td>
             <td class="transaction-fees"><%= number_to_currency order.transaction_fees %></td>
             <td class="payment-processing"><%= number_to_currency order.payment_fees %></td>
+            <td class="net-sale"><%= number_to_currency order.net_total %></td>
           </tr>
         </tbody>
       </table>
