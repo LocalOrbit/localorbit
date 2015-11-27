@@ -1,23 +1,5 @@
-<h1>Dashboard</h1>
+<script type="text/javascript" src="https://cdn.plot.ly/plotly-latest.min.js"></script>
 
 <%= react_component('lo.dashboard', {
     baseUrl: "#{request.base_url}/api/v1/"}) %>
 
-<h2 class="dashboard-titles">Current Orders</h2>
-<span class="supporting-text">Displaying the 15 most recent orders.</span>
-<span class="dashboard-link"><%= link_to "View All Orders", admin_orders_path %></span>
-<% if current_market.orders.visible.present? %>
-  <%= render "current_sales" %>
-<% else %>
-  No orders have yet been created
-<% end %>
-
-<h2 class="products-dashboard dashboard-titles">Products</h2>
-<span class="supporting-text">Displaying the 10 most recently updated products.</span>
-<span class="dashboard-link"><%= link_to "View All Products", admin_products_path %></span>
-<% @products = Product.available_for_market(current_market) %>
-<% if @products.any? %>
-  <%= render "products" %>
-<% else %>
-  No products have yet been created
-<% end %>
