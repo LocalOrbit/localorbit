@@ -8,7 +8,7 @@
       var gp = this.props.product;
 
       var unit_prices = _.map(gp.available, function(p) {
-        return <lo.ProductUnitPrices product={p} />
+        return <lo.ProductUnitPrices key={p.id} product={p} />
       });
 
       return (
@@ -59,20 +59,22 @@
           <div className="product-pricing column column--seven-twelfths">
             <table>
               <thead>
-                <th></th>
-                <th></th>
-                <th style={{width: 100, textAlign: "center", color:"#727070", textTransform:"uppercase", fontWeight: "bold", fontSize: "11px"}}>
-                  Order QTY
-                </th>
-                <th style={{width: 100, textAlign: "center", color:"#727070", textTransform:"uppercase", fontWeight: "bold", fontSize: "11px"}}>
-                  Total Cost
-                </th>
+                <tr>
+                    <th>&nbsp;</th>
+                    <th>&nbsp;</th>
+                    <th style={{width: 100, textAlign: "center", color:"#727070", textTransform:"uppercase", fontWeight: "bold", fontSize: "11px"}}>
+                      Order QTY
+                    </th>
+                    <th style={{width: 100, textAlign: "center", color:"#727070", textTransform:"uppercase", fontWeight: "bold", fontSize: "11px"}}>
+                      Total Cost
+                    </th>
+                </tr>
               </thead>
               <tbody>
                 {unit_prices}
               </tbody>
             </table>
-            <div class="errormsg" id={'product-'+gp.id} style={{ fontSize: 11, textAlign:"right", color:"red"}}></div>
+            <div className="errormsg" id={'product-'+gp.id} style={{ fontSize: 11, textAlign:"right", color:"red"}}></div>
           </div>
           <div style={{clear:"both"}}></div>
         </div>
