@@ -75,7 +75,4 @@ class SellerOrder
   def credit_paid_by_sellers?
     @order.credit_amount > 0 && credit.payer_type == Credit::ORGANIZATION
   end
-
-  def share_of_credit
-  end
 end

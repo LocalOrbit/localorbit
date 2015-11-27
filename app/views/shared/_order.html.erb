@@ -58,6 +58,13 @@
             <th>Product Total:</th>
             <td><%= number_to_currency order.gross_total %></td>
           </tr>
+          <% if order.discount > 0 %>
+          <tr>
+            <th class="math-symbol">-</th>
+            <th>Discount:</th>
+            <td><%= number_to_currency order.discount %></td>
+          </tr>
+          <% end %>
           <% if order.credit_amount > 0 && order.credit.apply_to == "subtotal" %>
           <tr>
             <th class="math-symbol"><%= credit_sign %></th>
