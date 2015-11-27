@@ -313,7 +313,7 @@ $ ->
       quantity = parseInt($(this).val())
       model.saveItem(data.product_id, quantity, this)
 
-    if this.value.length == 0
+    if this.value.length == 0 && !$(this).hasClass("in-cart")
       model.saveItem(data.product_id, 0, this)
 
   $(document.body).on 'click', ".cart_item .icon-clear", (e)->
