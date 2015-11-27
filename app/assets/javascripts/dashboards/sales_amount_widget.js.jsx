@@ -1,7 +1,7 @@
 (function() {
     window.lo = window.lo || {};
 
-    //require('chart.js')
+    const Plotly = require('react-plotlyjs');
 
     var sales_amount_widget = React.createClass({
         propTypes: {
@@ -21,65 +21,59 @@
                 });
             }
 
-            var data1 = {
-                labels: labels,
-                series: [
-                    data_points
-                ]
-            };
-
-            var lineChartOptions = {
-                low: 0,
-                showArea: true
-            };
-
-            //var data1 = {
-            //    labels: labels,
-            //    datasets: [
-            //        {
-            //            label: "My First dataset",
-            //            fillColor: "rgba(151,187,205,0.2)",
-            //            strokeColor: "rgba(151,187,205,1)",
-            //            pointColor: "rgba(151,187,205,1)",
-            //            pointStrokeColor: "#fff",
-            //           pointHighlightFill: "#fff",
-            //            pointHighlightStroke: "rgba(151,187,205,1)",
-            //            data: data_points
-            //        }
-            //    ]
-            //};
-
-            var data2 = {
-                labels: ["1","2","3"],
-                datasets: [
-                    {
-                        label: "My First dataset",
-                        fillColor: "rgba(151,187,205,0.2)",
-                        strokeColor: "rgba(151,187,205,1)",
-                        pointColor: "rgba(151,187,205,1)",
-                        pointStrokeColor: "#fff",
-                        pointHighlightFill: "#fff",
-                        pointHighlightStroke: "rgba(151,187,205,1)",
-                        data: [20.34,10.05,30.56]
+            let data = [
+                {
+                    type: 'scatter',
+                    fill: 'tozeroy',
+                    x: labels,
+                    y: data_points,
+                    line:{
+                        shape:"spline"
                     }
-                ]
+                }
+            ];
+            let layout = {
+                autosize: true,
+                width: 300,
+                height: 400,
+                margin: {
+                    l: 15,
+                    r: 15,
+                    t: 20,
+                    b: 35,
+                    autoexpand: true
+                },
+                yaxis:{
+                    autorange:true,
+                    showticklabels:false,
+                    showgrid:false,
+                    zeroline:false
+                },
+                xaxis:{
+                    autorange:true,
+                    showticklabels:false,
+                    showgrid:false,
+                    zeroline:false
+                }
+            };
+            let config = {
+                displayModeBar: false
             };
 
             return (
                 <div>
                     <div style={{fontSize: 36, textAlign: 'right'}}>
-                        Total Sales
-                    </div>
-                    <div style={{fontSize: 24, textAlign: 'right'}}>
                         {this.props.totalSalesAmount}
                     </div>
-                    <ChartistGraph data={data1} options={lineChartOptions} type={'Line'}/>
+                    <div style={{fontSize: 24, textAlign: 'right'}}>
+                        Total Count
+                    </div>
+                    <Plotly className="SalesAmount" data={data} layout={layout} config={config}/>
                     <div style={{borderTop: '1px solid #EEE', padding: 3}}>
                         <span style={{textTransform: 'uppercase', fontSize: 12, fontWeight: 'bold'}}>View More ></span>
                     </div>
                 </div>
-            )
-        }
+            );        }
     });
 
     window.lo.sales_amount_widget = sales_amount_widget;
