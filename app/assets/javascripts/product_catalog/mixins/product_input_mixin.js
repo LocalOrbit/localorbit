@@ -27,7 +27,7 @@
     },
 
     componentDidMount: function() {
-      window.insertCartItemEntry($(ReactDOM.findDOMNode(this)));
+      window.insertCartItemEntry($(this.getDOMNode()));
     },
 
     resetField: function(prodId, target, context, in_str) {
