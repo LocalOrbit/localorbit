@@ -31,11 +31,11 @@
             ];
             let layout = {
                 autosize: true,
-                width: 300,
+                width: 290,
                 height: 400,
                 margin: {
-                    l: 15,
-                    r: 15,
+                    l: 5,
+                    r: 5,
                     t: 20,
                     b: 25,
                     autoexpand: true
@@ -58,11 +58,11 @@
             };
 
             return (
-                <div>
-                    <div style={{fontSize: 36, textAlign: 'right'}}>
+                <div className="dashboard-widget large-widget">
+                    <div className="widget-value">
                         {this.props.totalOrderCount}
                     </div>
-                    <div style={{fontSize: 24, textAlign: 'right'}}>
+                    <div className="widget-label">
                         Total Count
                     </div>
                     <Plotly className="SalesCount" data={data} layout={layout} config={config}/>

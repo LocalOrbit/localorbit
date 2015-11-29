@@ -8,18 +8,31 @@
 
         getInitialState: function() {
             return {
-                dashboard: []
+                dashboard: {}
             };
         },
 
         componentWillMount: function() {
-            this.getData();
+            this.updateDimensions();
+            window.lo.DashboardStore.listen(this.onDashboardChange);
+            window.lo.DashboardActions.loadDashboard(this.props.baseUrl);
         },
 
-        getData: function() {
-            var self = this;
-            $.getJSON(self.props.baseUrl + 'dashboards', function(res) {
-                self.setState({dashboard: res.dashboard});
+        componentDidMount: function() {
+            window.addEventListener('resize', this.updateDimensions);
+        },
+
+        componentWillUnmount: function() {
+            window.removeEventListener('resize', this.updateDimensions);
+        },
+
+        updateDimensions: function() {
+            this.setState({width: $(window).width()});
+        },
+
+        onDashboardChange: function(res) {
+            this.setState({
+                dashboard: res.dashboard
             });
         },
 
@@ -37,21 +50,35 @@
                          </div>
                      </div>
                      <div className="row row--partial dashboard" style={{background: '#EEE', padding: 2}}>
-                        <div className="column column--one-third" style={{background: '#FFF', marginRight: 1, padding: 2}}>
+                        <div className="column column--one-third" style={{background: '#FFF', padding: 2}}>
                             <lo.delivery_calendar_widget />
                         </div>
-                        <div className="column column--one-third" style={{backgroundColor: '#FFF', marginRight: 1, padding: 2}}>
-                            <lo.sales_amount_widget
-                                totalSalesAmount={parseInt(self.state.dashboard.totalSalesAmount)}
-                                totalSalesAmountGraph={self.state.dashboard.totalSalesAmountGraph}
-                            />
+                        <div className="column column--one-third" style={{margin: 5, padding: 2}}>
+                            <div>
+                                <lo.sales_amount_widget
+                                    totalSalesAmount={self.state.dashboard.totalSalesAmount}
+                                    totalSalesAmountGraph={self.state.dashboard.totalSalesAmountGraph}
+                                />
+                            </div>
+                            <div>
+                                <lo.sales_avg_amount_widget
+                                    avgSalesAmount={self.state.dashboard.avgSalesAmount}
+                                />
+                            </div>
                         </div>
-                         <div className="column column--one-third" style={{backgroundColor: '#FFF', padding: 2}}>
-                             <lo.sales_count_widget
-                                 totalOrderCount={parseInt(self.state.dashboard.totalOrderCount)}
-                                 totalOrderCountGraph={self.state.dashboard.totalOrderCountGraph}
-                             />
-                         </div>
+                        <div className="column column--one-third" style={{margin: 5, padding: 2}}>
+                            <div>
+                                 <lo.sales_count_widget
+                                     totalOrderCount={parseInt(self.state.dashboard.totalOrderCount)}
+                                     totalOrderCountGraph={self.state.dashboard.totalOrderCountGraph}
+                                 />
+                            </div>
+                            <div>
+                                 <lo.payments_due_widget
+                                     paymentsDueAmount={self.state.dashboard.paymentsDueAmount}
+                                 />
+                            </div>
+                        </div>
                      </div>
                 </div>
             );

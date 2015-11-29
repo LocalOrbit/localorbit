@@ -24,15 +24,13 @@
 
             var weekRow = '';
             return (
-                <div style={{background: "#888", color: "#FFF", width: 300, height: 400}}>
-                    <div style={{fontSize: 24, textAlign: 'left'}}>
+                <div style={{background: "#666", color: "#FFF", width: 300, height: 500}}>
+                    <div style={{fontSize: 24, textAlign: 'left', padding: 10}}>
                         Upcoming Deliveries
-
-                        <table class="calendar">
-                            {weekRow}
-                        </table>
-
                     </div>
+                    <table className="calendar">
+                        {weekRow}
+                    </table>
                 </div>
             );
         }
