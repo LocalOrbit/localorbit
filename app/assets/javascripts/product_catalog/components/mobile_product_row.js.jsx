@@ -75,11 +75,11 @@
     render: function() {
       var gp = this.props.product;
       var unitPrices = _.map(gp.available, function(p) {
-        return <lo.MobileProductUnitPrices product={p} />
+        return <lo.MobileProductUnitPrices key={p.id} product={p} />
       });
 
       var inputs = _.map(gp.available, function(p) {
-        return <lo.MobileProductInput product={p} />
+        return <lo.MobileProductInput key={p.id} product={p} />
       });
 
       var info = this.generateInfo();
@@ -101,13 +101,13 @@
           <div style={{marginTop: "26px"}}>
             <table className="pricing-table-mobile">
               <thead>
-                <tr><th colSpan="4">
-                  PRICING PER UNIT
-                </th>
-              </tr></thead>
-              <tbody>
+                <tr>
+                    <th colSpan="4">
+                    PRICING PER UNIT
+                    </th>
+                </tr>
+              </thead>
                 {unitPrices}
-              </tbody>
             </table>
             <br/>
           </div>
