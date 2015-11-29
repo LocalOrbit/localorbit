@@ -49,6 +49,7 @@
         if (event.keyCode == 8 || event.keyCode == 46 || (event.keyCode == 48 && in_str.length == 0)) {
             this.resetField(prodId, target, context, in_str);
         }
+        else if (event.keycode == 13) {}
         else {
             in_str = in_str + String.fromCharCode(event.keyCode);
             $("#product-" + prodId).html("");
@@ -68,24 +69,6 @@
                 }
             }, doneTypingInterval);
         }
-
-      /*
-      s = event.target.value.replace(/^0+(?=[0-9])/, '');
-      setTimeout(500);
-
-      if (s === '') {
-          s = '0';
-      }
-      if (s != '0' && s < this.props.product.min_available) {
-        $("#product-"+this.props.product.id).html("Must order more than minimum quantity.");
-        s = '0';
-      }
-      if (s >= this.props.product.min_available) {
-        $("#product-"+this.props.product.id).html("");
-      }
-
-      this.setState({cartItemQuantity: s});
-      */
     },
 
     deleteQuantity: function() {
