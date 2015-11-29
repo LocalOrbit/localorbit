@@ -5,7 +5,7 @@
 
     var sales_amount_widget = React.createClass({
         propTypes: {
-            totalSalesAmount: React.PropTypes.number.isRequired,
+            totalSalesAmount: React.PropTypes.string.isRequired,
             totalSalesAmountGraph: React.PropTypes.object.isRequired
         },
 
@@ -16,15 +16,14 @@
             if (j) {
                 $.each(j, function (i,v)
                 {
-                    labels.push(i);
-                    data_points.push(parseFloat(v));
+                    labels.push(i > 0 ? i : 'None');
+                    data_points.push(v > 0 ? parseFloat(v) : 'None');
                 });
             }
 
             let data = [
                 {
                     type: 'scatter',
-                    fill: 'tozeroy',
                     x: labels,
                     y: data_points,
                     line:{
@@ -34,11 +33,11 @@
             ];
             let layout = {
                 autosize: true,
-                width: 300,
+                width: 290,
                 height: 400,
                 margin: {
-                    l: 15,
-                    r: 15,
+                    l: 5,
+                    r: 5,
                     t: 20,
                     b: 35,
                     autoexpand: true
@@ -61,12 +60,12 @@
             };
 
             return (
-                <div>
-                    <div style={{fontSize: 36, textAlign: 'right'}}>
+                <div className="dashboard-widget large-widget">
+                    <div className="widget-value">
                         {this.props.totalSalesAmount}
                     </div>
-                    <div style={{fontSize: 24, textAlign: 'right'}}>
-                        Total Count
+                    <div className="widget-label">
+                        Total Spend
                     </div>
                     <Plotly className="SalesAmount" data={data} layout={layout} config={config}/>
                     <div style={{borderTop: '1px solid #EEE', padding: 3}}>

@@ -1,19 +1,38 @@
 (function() {
     window.lo = window.lo || {};
 
+    var SegmentedControl = require('react-segmented-control');
+
     var timeframe_picker = React.createClass({
         propTypes: {
         },
 
-        render: function () {
+        getInitialState: function() {
+            return {
+                interval: "1"
+            }
+        },
 
+        intervalUpdated: function(value) {
+            this.setState({
+                interval: value
+            });
+            window.lo.DashboardActions.newQuery(value)
+        },
+
+        render: function () {
             return (
-                <ul class="buttonGroup">
-                    <li>1D</li>
-                    <li class="selected">7D</li>
-                    <li>MTD</li>
-                    <li>YTD</li>
-                </ul>
+                <div className="timeframe">
+                    <SegmentedControl
+                        onChange={this.intervalUpdated}
+                        value={this.state.interval}
+                        name="interval">
+                        <span value="0">1D</span>
+                        <span value="1">7D</span>
+                        <span value="2">MTD</span>
+                        <span value="3">YTD</span>
+                    </SegmentedControl>
+                </div>
             );
         }
     });

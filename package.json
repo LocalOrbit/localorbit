@@ -28,6 +28,7 @@
     "react-chartjs": "^0.6.0",
     "react-dom": "^0.14.3",
     "react-plotlyjs": "^0.1.2",
+    "react-segmented-control": "^0.1.0",
     "reactify": "^1.1.1"
   }
 }
