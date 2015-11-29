@@ -61,11 +61,18 @@
 
             return (
                 <div className="dashboard-widget large-widget">
-                    <div className="widget-value">
-                        {this.props.totalSalesAmount}
-                    </div>
-                    <div className="widget-label">
-                        Total Spend
+                    <div style={{display: "inline-block"}}>
+                        <div style={{float: "left"}}>
+                            <i className="font-icon dashboard-icon" data-icon={String.fromCharCode(parseInt('ea0a', 16))}/>
+                        </div>
+                        <div style={{float: "right"}}>
+                            <div className="widget-value">
+                                {this.props.totalSalesAmount}
+                            </div>
+                            <div className="widget-label">
+                                Total Spend
+                            </div>
+                        </div>
                     </div>
                     <Plotly className="SalesAmount" data={data} layout={layout} config={config}/>
                     <div style={{borderTop: '1px solid #EEE', padding: 3}}>
