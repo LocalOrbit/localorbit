@@ -14,7 +14,7 @@
           </header>
           <div style={{display: "table-row"}}>
             <div className="quantity" style={{display: "table-cell",}}>
-              <input type="number" placeholder="0" value={this.state.cartItemQuantity} onKeyDown={this.updateQuantity} style={{width:  "90px"}}/>
+              <input type="number" value={this.state.cartItemQuantity} onKeyDown={this.clearField} onChange={this.updateQuantity} style={{width: 90}}/>
               <span style={{display: "block", fontSize: "11px", color: "#999", fontWeight: "600"}}>{this.props.product.unit}</span></div>
             <div style={{display: "table-cell", fontWeight: "600"}}>
               {this.props.product.total_price} <a href="javascript:void(0)" onClick={this.deleteQuantity} className="font-icon icon-clear"></a>

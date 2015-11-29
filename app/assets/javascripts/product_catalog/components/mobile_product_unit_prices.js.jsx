@@ -40,7 +40,7 @@
           priceCells.unshift(<td><span style={{visibility: "hidden"}}>_____</span></td>);
         }
       }
-      return ({priceCells});
+      return ( <div>{priceCells}</div> );
     },
 
     unitCell: function(totalRows) {
@@ -70,7 +70,7 @@
           </tr>
         );
       });
-      return (<div>{pricingRows}</div>);
+      return (<tbody>{pricingRows}</tbody>);
     }
   });
 

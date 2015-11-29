@@ -39,42 +39,47 @@
         in_str = '';
     },
 
+    clearField: function(event) {
+        var prodId = this.props.product.id;
+        var context = this;
+        var target = event.target;
+
+        if (event.keyCode == 8 || event.keyCode == 46 || (event.keyCode == 48 && target.length == 0)) {
+            this.resetField(prodId, target, context, in_str);
+        }
+    },
+
     updateQuantity: function(event) {
         var minAvail = this.props.product.min_available;
         var prodId = this.props.product.id;
         var context = this;
         var target = event.target;
+        var in_str = event.target.value;
 
         clearTimeout(typingTimer);
-        if (event.keyCode == 8 || event.keyCode == 46 || (event.keyCode == 48 && in_str.length == 0)) {
-            this.resetField(prodId, target, context, in_str);
-        }
-        else if (event.keycode == 13) {}
-        else {
-            in_str = in_str + String.fromCharCode(event.keyCode);
-            $("#product-" + prodId).html("");
-            typingTimer = setTimeout(function(){
-                if (minAvail > 0 && in_str < minAvail) {
-                    $("#product-" + prodId).html("Must order more than minimum quantity.");
-                    $(target).addClass('invalid-value');
-                    in_str = '';
-                    $(target).val('');
-                }
-                else if (!minAvail || (in_str >= minAvail && in_str != context.state.cartItemQuantity)) {
-                    $("#product-" + prodId).html("");
-                    $(target).removeClass('invalid-value');
-                    context.setState({cartItemQuantity: in_str});
-                    in_str = '';
-                    $(target).trigger("cart.inputFinished");
-                }
-            }, doneTypingInterval);
-        }
+        $("#product-" + prodId).html("");
+        typingTimer = setTimeout(function () {
+            if (minAvail > 0 && in_str < minAvail) {
+                $("#product-" + prodId).html("Must order more than minimum quantity.");
+                $(target).addClass('invalid-value');
+                in_str = '';
+                $(target).val('');
+            }
+            else if (!minAvail || (in_str >= minAvail && in_str != context.state.cartItemQuantity)) {
+                $("#product-" + prodId).html("");
+                $(target).removeClass('invalid-value');
+                context.setState({cartItemQuantity: in_str});
+                in_str = '';
+                $(target).trigger("cart.inputFinished");
+            }
+        }, doneTypingInterval);
     },
 
     deleteQuantity: function() {
       var prodId = this.props.product.id;
       $("#product-" + prodId).html("");
       this.setState({cartItemQuantity: null});
+      $(this.getDOMNode()).find('input').val('');
       $(this.getDOMNode()).keyup();
     }
   };
