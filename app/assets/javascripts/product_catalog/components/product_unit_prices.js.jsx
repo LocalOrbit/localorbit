@@ -47,7 +47,7 @@
     abbreviatedPricing: function() {
       var prices = this.props.product.prices;
       return (
-        <tr key={this.props.product.unit}>
+        <tr>
           <td colSpan="3" style={{textAlign: "right"}}>
             {prices[prices.length - 1].sale_price} - {prices[0].sale_price}
             <i onClick={this.toggleView} style={{cursor: "pointer"}} className="caretted"/><br/>
@@ -65,6 +65,9 @@
       var pricing = (this.props.product.prices.length <= 3 || this.state.showAll) ? this.fullPricing() : this.abbreviatedPricing();
       var quantity = this.props.product.max_available < 500000 ? this.props.product.max_available + " Available" : "";
       var deleteButton = this.state.cartItemQuantity > 0 ? (<a href="javascript:void(0)" onClick={this.deleteQuantity} className="font-icon icon-clear" style={{marginLeft: "10px"}}></a>) : null;
+      var inputClass = "redesigned app-product-input";
+      if (this.props.promo)
+        inputClass = "redesigned app-product-input promo";
 
       return (
         <tr className="cart_item" data-keep-when-zero="yes" data-cart-item={JSON.stringify(this.props.product.cart_item)}>
