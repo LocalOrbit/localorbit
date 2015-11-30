@@ -26,7 +26,7 @@
             var productRow;
             var gp = this.props.promo.product;
             var unit_prices = _.map(gp.available, function(p) {
-                return <lo.ProductUnitPrices product={p} />
+                return <lo.ProductUnitPrices key={gp.id} product={p} />
             });
 
             var MOBILE_WIDTH = 480;
@@ -40,8 +40,8 @@
                 return (
             <div className="products-featured">
                 <h3 className="featured-heading">Featured: {this.props.promo.details.title}</h3>
-                <div class="slide featured-table-slide" id="featured-table">
-                    <div class="slide-content">
+                <div className="slide featured-table-slide" id="featured-table">
+                    <div className="slide-content">
                         <div className="featured-description">
                             <div dangerouslySetInnerHTML={{__html: this.props.promo.details.body }}></div>
                         </div>
