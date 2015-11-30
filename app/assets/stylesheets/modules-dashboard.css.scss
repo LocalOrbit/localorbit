@@ -8,7 +8,7 @@
 .segmented-control .label {
   text-align: center;
   transition: all 0.2s ease-out;
-  background-color: #fff !important;
+  background-color: #fff;
 }
 .segmented-control .label label {
   display: block;
@@ -24,22 +24,27 @@
 }
 .segmented-control .label {
   width: 50px;
-  height: 30px;
-  padding-top: 15px;
+  height: 25px;
+  padding-top: 10px;
   float: left;
-  background-color: #fff !important;
+  background-color: #fff;
 }
-.segmented-control .label.selected {
-  width: 50px;
-  height: 30px;
-  padding-top: 15px;
-  float: left;
-  color: #fff !important;
+
+.segmented-control input[type=radio] ~ label {
+  color: unset;
+  .selected {
+    color: #FFF;
+  }
 }
 
 .dashboard-widget {
   background-color: #FFF;
   margin-bottom: 10px;
+  &.deliveries {
+    background-color: #666;
+    width: 300px;
+    padding: 1px;
+  }
   .small-widget {
     width: 100%;
     height: 100px;
@@ -52,22 +57,66 @@
 .dashboard-widget {
   .widget-label {
     font-size: 24px;
-    font-weight: bold;
-    padding-bottom: 10px;
-    border-bottom: 1px solid #CCC;
+    font-weight: normal;
     text-align: right;
     padding-right: 5px;
+    &.deliveries {
+      color: #FFF;
+      text-align: left;
+      padding-left: 5px;
+    }
   }
   .widget-value {
     font-size: 48px;
     font-weight: bold;
     text-align: right;
     padding-right: 5px;
+    &.deliveries {
+      color: #FFF;
+      text-align: left;
+      padding-left: 5px;
+    }
   }
 }
 
-.font-icon .dashboard-icon {
-  color: #DDD;
-  font-size: 60px;
-  padding: 10px;
+.dashboard-widget {
+  .top-section {
+    display: inline-block;
+    width: 100%;
+  }
+  .bottom-border {
+    width: 90%;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #DDD;
+    height: 100px;
+    margin: 0 auto;
+    &.deliveries {
+      border-bottom: 1px solid #444;
+      height:auto;
+    }
+  }
+}
+
+.dashboard-widget {
+  .font-icon {
+    color: #DDD;
+    font-size: 55px;
+    padding: 15px;
+    &.deliveries {
+      color: #444;
+    }
+  }
+}
+
+.dashboard-widget .calendar .cal-date {
+    color: #FFF;
+    font-style: italic;
+    border-color: #666;
+    &.disabled {
+      background-color: #444;
+    }
+    &.blank {
+      background-color: #666;
+      border-color: #666;
+    }
 }

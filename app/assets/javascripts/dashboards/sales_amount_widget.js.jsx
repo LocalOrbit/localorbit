@@ -61,9 +61,9 @@
 
             return (
                 <div className="dashboard-widget large-widget">
-                    <div style={{display: "inline-block"}}>
+                    <div className="top-section">
                         <div style={{float: "left"}}>
-                            <i className="font-icon dashboard-icon" data-icon={String.fromCharCode(parseInt('ea0a', 16))}/>
+                            <div className="font-icon icon-coins"></div>
                         </div>
                         <div style={{float: "right"}}>
                             <div className="widget-value">
@@ -73,6 +73,7 @@
                                 Total Spend
                             </div>
                         </div>
+                        <div className="bottom-border"></div>
                     </div>
                     <Plotly className="SalesAmount" data={data} layout={layout} config={config}/>
                     <div style={{borderTop: '1px solid #EEE', padding: 3}}>

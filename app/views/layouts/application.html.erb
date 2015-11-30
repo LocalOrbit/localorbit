@@ -58,7 +58,6 @@
       .btn--primary,
       .btn--add,
       .btn--save,
-      .segmented-control .label.selected,
       input[type=submit],
       input[type=button].btn {
         background-color: <%= current_market.text_color -%>;
@@ -68,6 +67,16 @@
       .segmented-control {
         color: <%= current_market.text_color -%>;
         border-color: <%= current_market.text_color -%>;
+      }
+
+      .segmented-control .label.selected {
+        background-color: <%= current_market.text_color -%>;
+        border-color: <%= current_market.text_color -%>;
+        color: #FFF;
+      }
+
+      .dashboard-widget .calendar .cal-date {
+        background-color: <%= current_market.text_color -%>;
       }
 
       .btn--secondary,
