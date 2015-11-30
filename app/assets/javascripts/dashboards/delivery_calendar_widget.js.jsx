@@ -80,7 +80,7 @@
                     <div style={{margin: "0 auto", width: 165}}>
                         <a href="#" className="btn btn--primary" style={{textAlign: "center"}}>View All Deliveries</a>
                     </div>
-                    <br/><br/>
+                    <br/>
                 </div>
             );
         }

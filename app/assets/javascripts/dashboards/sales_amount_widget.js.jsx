@@ -16,8 +16,10 @@
             if (j) {
                 $.each(j, function (i,v)
                 {
-                    labels.push(i > 0 ? i : 'None');
-                    data_points.push(v > 0 ? parseFloat(v) : 'None');
+                    //labels.push(i > 0 ? i : 'None');
+                    //data_points.push(v > 0 ? parseFloat(v) : 'None');
+                    labels.push(i);
+                    data_points.push(parseFloat(v));
                 });
             }
 
@@ -28,6 +30,9 @@
                     y: data_points,
                     line:{
                         shape:"spline"
+                    },
+                    marker:{
+                        color:"rgb(235, 235, 235)"
                     }
                 }
             ];
@@ -46,7 +51,8 @@
                     autorange:true,
                     showticklabels:false,
                     showgrid:false,
-                    zeroline:false
+                    zeroline:false,
+                    hoverformat: '.2f'
                 },
                 xaxis:{
                     autorange:true,
@@ -56,7 +62,6 @@
                 }
             };
             let config = {
-                displayModeBar: false
             };
 
             return (

@@ -24,9 +24,12 @@
 
             let data = [
                 {
-                    type: 'bar',      // all "bar" chart attributes: #bar
-                    x: labels,     // more about "x": #bar-x
-                    y: data_points    // #bar-y
+                    type: 'bar',
+                    x: labels,
+                    y: data_points,
+                    marker:{
+                        color:"rgb(235, 235, 235)"
+                    }
                 }
             ];
             let layout = {
@@ -44,7 +47,8 @@
                     autorange:true,
                     showticklabels:false,
                     showgrid:false,
-                    zeroline:false
+                    zeroline:false,
+                    hoverformat: '.2f'
                 },
                 xaxis:{
                     autorange:true,
