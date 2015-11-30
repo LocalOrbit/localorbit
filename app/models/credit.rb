@@ -27,7 +27,7 @@ class Credit < ActiveRecord::Base
 
   def calculated_amount
     if apply_to == Credit::TOTAL
-      total = order.gross_total
+      total = order.gross_total + order.delivery_fees
     else
       total = order.subtotal
     end
