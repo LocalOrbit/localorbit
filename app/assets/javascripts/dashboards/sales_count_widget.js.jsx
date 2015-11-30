@@ -59,11 +59,19 @@
 
             return (
                 <div className="dashboard-widget large-widget">
-                    <div className="widget-value">
-                        {this.props.totalOrderCount}
-                    </div>
-                    <div className="widget-label">
-                        Total Count
+                    <div className="top-section">
+                        <div style={{float: "left"}}>
+                            <div className="font-icon icon-stack-checkmark"></div>
+                        </div>
+                        <div style={{float: "right"}}>
+                            <div className="widget-value">
+                                {this.props.totalOrderCount}
+                            </div>
+                            <div className="widget-label">
+                                Total Orders
+                            </div>
+                        </div>
+                        <div className="bottom-border"></div>
                     </div>
                     <Plotly className="SalesCount" data={data} layout={layout} config={config}/>
                     <div style={{borderTop: '1px solid #EEE', padding: 3}}>

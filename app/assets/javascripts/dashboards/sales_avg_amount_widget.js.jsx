@@ -11,11 +11,18 @@
 
             return (
                 <div className="dashboard-widget small-widget">
-                    <div className="widget-value">
-                        {this.props.avgSalesAmount}
-                    </div>
-                    <div className="widget-label">
-                        Average Spend
+                    <div className="top-section">
+                        <div style={{float: "left"}}>
+                            <div className="font-icon icon-money"></div>
+                        </div>
+                        <div style={{float: "right"}}>
+                            <div className="widget-value">
+                                {this.props.avgSalesAmount}
+                            </div>
+                            <div className="widget-label">
+                                Average Spend
+                            </div>
+                        </div>
                     </div>
                     <div style={{borderTop: '1px solid #EEE', padding: 3}}>
                         <span style={{textTransform: 'uppercase', fontSize: 12, fontWeight: 'bold'}}>View More ></span>

@@ -37,7 +37,7 @@ module Api
           total_order_count_graph = orders.placed_between(interval).group_by_day(:created_at, format: "%d").count.as_json
         end
 
-        deliveries = upcoming_deliveries
+        dlvr = upcoming_deliveries
 
         total_sales_amount = number_to_currency(orders.placed_between(interval).sum(:total_cost), precision:0)
         average_sales_amount = number_to_currency(orders.placed_between(interval).average(:total_cost), precision:0)
@@ -45,7 +45,7 @@ module Api
         payments_due_amount = number_to_currency(sum_money_to_sellers(payments_orders), precision:0)
         total_order_count = orders.placed_between(interval).count
 
-        render json: {dashboard: {deliveries: deliveries, totalSalesAmount: total_sales_amount, totalSalesAmountGraph: total_sales_amount_graph, totalOrderCount: total_order_count, totalOrderCountGraph: total_order_count_graph, avgSalesAmount: average_sales_amount, paymentsDueAMount: payments_due_amount}}
+        render json: {dashboard: {deliveries: dlvr, totalSalesAmount: total_sales_amount, totalSalesAmountGraph: total_sales_amount_graph, totalOrderCount: total_order_count, totalOrderCountGraph: total_order_count_graph, avgSalesAmount: average_sales_amount, paymentsDueAmount: payments_due_amount}}
       end
 
       private
@@ -80,6 +80,7 @@ module Api
           end
           delivery_weeks[-1].push({ day: day, css_class: css_class, delivery_id: delivery_id })
         }
+        delivery_weeks
       end
 
       def sum_money_to_sellers(orders)

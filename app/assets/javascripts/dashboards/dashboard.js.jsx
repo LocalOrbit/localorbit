@@ -50,8 +50,8 @@
                          </div>
                      </div>
                      <div className="row row--partial dashboard" style={{background: '#EEE', padding: 2}}>
-                        <div className="column column--one-third" style={{background: '#FFF', padding: 2}}>
-                            <lo.delivery_calendar_widget />
+                        <div className="column column--one-third" style={{padding: 2}}>
+                            <lo.delivery_calendar_widget deliveries={self.state.dashboard.deliveries}/>
                         </div>
                         <div className="column column--one-third" style={{margin: 5, padding: 2}}>
                             <div>
