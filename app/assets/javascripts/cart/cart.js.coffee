@@ -46,11 +46,20 @@ $ ->
 
     updateView: ->
       if @el?
+
+        totalPrice = accounting.formatMoney(@data.total_price)
+
         @el.find(".price-for-quantity").text(accounting.formatMoney(@data.unit_sale_price))
-        @el.find(".price").text(accounting.formatMoney(@data.total_price))
+        @el.find(".price").text(totalPrice)
         @el.find(".quantity input:not(.redesigned)").val(@data.quantity)
+
+        if @el.find(".quantity input").hasClass("promo")
+          $(".promo").val(@data.quantity)
+          $(".promo").parent().parent().find(".price").text(totalPrice)
+
         if @data.quantity
           @el.find(".icon-clear").removeClass("is-hidden")
+          $(".promo").parent().parent().find(".icon-clear").removeClass("is-hidden")
 
         if (!@data["valid?"] && @data["id"] != null) && !@data["destroyed?"]
           @showError()
@@ -59,6 +68,11 @@ $ ->
 
     remove: ->
       @el.find(".icon-clear").addClass("is-hidden")
+
+      if @el.find(".quantity input").hasClass("promo")
+        $(".promo").parent().parent().find(".icon-clear").addClass("is-hidden")
+        $(".promo").parent().parent().find(".quantity input").val('')
+
       @showUpdate()
       unless @el.hasClass("product-row") || @el.data("keep-when-zero")
         @el.remove()
@@ -78,6 +92,7 @@ $ ->
       window.setTimeout =>
         @el.find(".quantity").removeClass("updated").removeClass("finished")
       , (window.CartNotificationDuration + 200)
+      $(".promo").parent().parent().find(".updated").removeClass("updated")
 
 
   class CartView
