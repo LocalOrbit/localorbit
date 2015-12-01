@@ -1,111 +1,149 @@
 <%= render "shared/errors", { resource: order } %>
 
 <%= form_for order, url: admin_order_path(order.id), as: :order, method: :put do |f| %>
-  <% user_order_context = UserOrderContext.build(user:current_user, order:order) %>
+<%  user_order_context = UserOrderContext.build(user:current_user, order:order)
+    if current_user.market_manager? || current_user.buyer_only?
+      credit_sign = '-'
+    else
+      credit_sign = '+'
+    end
+%>
 <div class="order-info">
   <h1>Order info for <%= order.order_number %></h1>
   <div class="order-info-date">Placed On: <strong><%= order.placed_at.strftime "%m/%d/%Y at %l:%M%p" %></strong></div>
 
-  <div class="order-buyer">
-    <div>Buyer: <strong><%= order.organization.name %></strong></div>
+  <div class="row">
+    <div class="order-buyer">
+      <div>Buyer: <strong><%= order.organization.name %></strong></div>
 
-    <h2 class="order-address">Billing Address:</h2>
-    <p class="vcard">
-      <span class="street-address"><%= order.billing_address %></span><br>
-      <span class="locality"><%= order.billing_city %></span>,
-      <span class="region"><%= order.billing_state %></span> <span class="postal-code"><%= order.billing_zip %></span><br>
-      <%= content_tag :span, order.billing_phone, class: "tel" if order.billing_phone.present? %>
-    </p>
-    <h2 class="order-address"><%= order.display_delivery_or_pickup.titleize %></h2>
-    <div>
+      <h2 class="order-address">Billing Address:</h2>
       <p class="vcard">
-        <%= order.display_delivery_address %><br>
+        <span class="street-address"><%= order.billing_address %></span><br>
+        <span class="locality"><%= order.billing_city %></span>,
+        <span class="region"><%= order.billing_state %></span> <span class="postal-code"><%= order.billing_zip %></span><br>
+        <%= content_tag :span, order.billing_phone, class: "tel" if order.billing_phone.present? %>
       </p>
-      <p class="delivery-time">
-        <%= order.delivery.decorate.human_delivery_date %>
-      </p>
+      <h2 class="order-address"><%= order.display_delivery_or_pickup.titleize %></h2>
+      <div>
+        <p class="vcard">
+          <%= order.display_delivery_address %><br>
+        </p>
+        <p class="delivery-time">
+          <%= order.delivery.decorate.human_delivery_date %>
+        </p>
 
-      <% if @deliveries && can_change_delivery_on_placed_order?(order) %>
-        <div id="delivery-changer">
-          <span class="change-delivery">
-            <%= link_to "Change Delivery", "#", class: "reset btn" %>
-          </span>
-          <div class="fields is-hidden">
-            <%= f.select :delivery_id, @deliveries.
-                        map {|d| d.decorate(context: {current_organization: current_organization}) }.
-                        sort_by {|d| d.get_buyer_deliver_on }.map{|d| ["#{d.type} - #{d.buyer_display_date} #{d.buyer_time_range}", d.id] } %>
-            <br>
-            <%= f.submit "Change Delivery", class: "btn btn--small" %>
+        <% if @deliveries && can_change_delivery_on_placed_order?(order) %>
+          <div id="delivery-changer">
+            <span class="change-delivery">
+              <%= link_to "Change Delivery", "#", class: "reset btn" %>
+            </span>
+            <div class="fields is-hidden">
+              <%= f.select :delivery_id, @deliveries.
+                          map {|d| d.decorate(context: {current_organization: current_organization}) }.
+                          sort_by {|d| d.get_buyer_deliver_on }.map{|d| ["#{d.type} - #{d.buyer_display_date} #{d.buyer_time_range}", d.id] } %>
+              <br/><br/>
+              <%= f.submit "Change Delivery", class: "btn btn--small" %>
+            </div>
           </div>
-        </div>
+        <% end %>
+      </div>
+    </div>
+    <div style="float: left; margin-right: 50px">
+      <h2>Financial Summary</h2>
+      <table class="order-totals-table">
+        <tbody>
+          <% if order.credit_amount > 0 || order.display_delivery_fees?(current_user) %>
+          <tr>
+            <th class="math-symbol"></th>
+            <th>Product Total:</th>
+            <td><%= number_to_currency order.gross_total %></td>
+          </tr>
+          <% if order.discount > 0 %>
+          <tr>
+            <th class="math-symbol">-</th>
+            <th>Discount:</th>
+            <td><%= number_to_currency order.discount %></td>
+          </tr>
+          <% end %>
+          <% if order.credit_amount > 0 && order.credit.apply_to == "subtotal" %>
+          <tr>
+            <th class="math-symbol"><%= credit_sign %></th>
+            <th>Credit: <% if order.credit_amount > 0 && order.credit.notes %><span class="tooltip tooltip--naked" data-tooltip="Notes: <%= order.credit.notes %>"><i class="fa fa-file-text-o"></i></span><% end %></th>
+            <td><%= number_to_currency order.credit_amount %></td>
+            <% if order.payment_status == "unpaid" %>
+            <td class="credit-clear"><%= link_to "", "#", class: "font-icon icon-clear" %></td>
+            <% end %>
+            <%= f.hidden_field :credit_clear, :value=>nil %>
+          </tr>
+          <% end %>
+          <% if order.display_delivery_fees?(current_user) %>
+          <tr>
+            <th class="math-symbol">+</th>
+            <th><%= order.delivery.delivery_schedule.fee_label %>:</th>
+            <td><%= number_to_currency order.delivery_fees %></td>
+            <% if order.payment_method=="purchase order" && order.delivery_fees  > 0 && order.payment_status == "unpaid" %>
+            <td class="delivery-clear"><%= link_to "", "#", class: "font-icon icon-clear" %></td>
+            <% end %>
+            <%= f.hidden_field :delivery_clear, :value=>nil %>
+          </tr>
+          <% end %>
+          <% if order.credit_amount > 0 && order.credit.apply_to == "total" %>
+          <tr>
+            <th class="math-symbol"><%= credit_sign %></th>
+            <th>Credit: <% if order.credit_amount > 0 && order.credit.notes %><span class="tooltip tooltip--naked" data-tooltip="Notes: <%= order.credit.notes %>"><i class="fa fa-file-text-o"></i></span><% end %></th>
+            <td><%= number_to_currency order.credit_amount %></td>
+            <% if order.payment_status == "unpaid" %>
+            <td class="credit-clear"><%= link_to "", "#", class: "font-icon icon-clear" %></td>
+            <% end %>
+            <%= f.hidden_field :credit_clear, :value=>nil %>
+          </tr>
+          <% end %>
+          <% end %>
+          <tr>
+            <th class="math-symbol total-line">=</th>
+            <th class="total-line">Order Total:</th>
+            <td class="total-line"><%= number_to_currency order.total_cost %></td>
+          </tr>
+         </tbody>
+      </table>
+      <% if FeatureAccess.can_edit_order?(user: current_user, order: order) && order.payment_method=="purchase order" %>
+          <a href="#creditEdit" class="btn btn--small btn--primary modal-toggle app-edit-credit-modal-button"><%= order.credit_amount > 0 ? "Modify" : "Add" %> Credit</a></td>
       <% end %>
     </div>
-  </div>
-  <table class="order-info-status">
-    <tr>
-      <th scope="row">Delivery Status:</th>
-      <td><%= order.delivery_status_for_user(current_user).titleize %></td>
-    </tr>
-    <tr>
-      <th scope="row">Buyer Payment:</th>
-      <td><%= order.buyer_payment_status.titleize %></td>
-    </tr>
-    <% if FeatureAccess.can_edit_order?(user: current_user, order: order) && order.payment_method=="purchase order" %>
-      <tr>
-        <td><a href="#creditEdit" class="btn btn--small btn--primary modal-toggle app-edit-credit-modal-button"><%= order.credit_amount > 0 ? "Modify" : "Add" %> Credit</a></td>
-      </tr>
-    <% end %>
-  </table>
-  <table class="order-info-total">
-    <tbody>
-      <tr>
-          <th scope="row">Payment Method:</th>
+    <div class="order-info-status-section" style="float: left">
+      <h2>Payment Status</h2>
+      <table class="order-info-status">
+        <tbody>
+        <tr>
+          <th scope="row">Payment Method: </th>
           <td><%= order.payment_method.titleize %></td>
-      </tr>
-      <tr>
-          <th scope="row">Payment Reference #:</th>
+        </tr>
+        <% if order.payment_method == "purchase order" && order.payment_note %>
+        <tr>
+          <th scope="row">Payment Ref. #: </th>
           <td><%= order.payment_note %></td>
-      </tr>
-    </tbody>
-    <% if order.display_delivery_fees?(current_user) %>
-      <tbody>
-        <tr>
-          <th scope="row"><%= order.delivery.delivery_schedule.fee_label %>:</th>
-          <td><%= number_to_currency order.delivery_fees %></td>
         </tr>
-      </tbody>
-    <% end %>
-    <% if order.credit_amount > 0 %>
-      <tbody>
+        <% end %>
         <tr>
-            <th scope="row">Credit:</th>
-            <td><%= number_to_currency order.credit_amount %></td>
+          <th scope="row">Delivery Status: </th>
+          <td><%= order.delivery_status_for_user(current_user).titleize %></td>
         </tr>
-      </tbody>
-    <% end %>
-    <tbody class="pseudopod">
-      <tr>
-        <th scope="row">Grand Total:</th>
-        <td><%= number_to_currency order.total_cost %></td>
-      </tr>
-    </tbody>
-    <% if order.credit_amount > 0 && order.credit.notes %>
-      <tbody>
         <tr>
-          <th scope="row">Credit Notes:</th>
-          <td><%= order.credit.notes %></td>
+          <th scope="row">Buyer Payment: </th>
+          <td><%= order.buyer_payment_status.titleize %></td>
         </tr>
-      </tbody>
-    <% end %>
-  </table>
+        </tbody>
+      </table>
+    </div>
   </div>
-  <div class="order-data">
+  <div class="row order-data">
+    <br/><br/>
     <h2 class="pull-left">Items for Delivery</h2>
     <% if !current_user.buyer_only? && order.undelivered_for_user?(current_user) %>
       <%= button_tag "Mark all delivered", class: 'pull-right btn btn--small btn--primary mobile-block', id: 'mark-all-delivered', type: 'button' %>
     <% end %>
-  <div class="table-wrapper">
-    <table class="current-sales-table odd order-table-1">
+    <div class="table-wrapper">
+      <table class="current-sales-table odd order-table-1">
       <thead>
         <tr>
           <th>Product Name</th>
@@ -211,15 +249,15 @@
         </tbody>
       <% end %>
     </table>
+    </div>
+
+    <% if FeatureAccess.order_action_links?(user_order_context: user_order_context) %>
+      <%= f.submit @show_add_items_form ? "Add items and Update quantities" : "Update quantities", class: 'pull-right btn btn--small mobile-block' %>
+    <% end %>
+    <% if can_add_products_to_order?(order, user_order_context) && !@show_add_items_form %>
+      <%= f.submit "Add Items", class: 'pull-right btn btn--small mobile-block' %>
+    <% end %>
   </div>
-
-  <% if FeatureAccess.order_action_links?(user_order_context: user_order_context) %>
-    <%= f.submit @show_add_items_form ? "Add items and Update quantities" : "Update quantities", class: 'pull-right btn btn--small mobile-block' %>
-  <% end %>
-  <% if can_add_products_to_order?(order, user_order_context) && !@show_add_items_form %>
-    <%= f.submit "Add Items", class: 'pull-right btn btn--small mobile-block' %>
-  <% end %>
-
   <% if !current_user.buyer_only? %>
   <div class="order-totals">
     <div class="table-wrapper">
@@ -227,7 +265,7 @@
       <table class="current-sales-table odd">
         <thead>
           <tr>
-            <th>Gross Total</th>
+            <th>Product Total</th>
             <% if current_user.can_manage_market?(order.market) %>
             <th>Discount (by Market)</th>
             <th>Discount (by Seller)</th>
@@ -268,8 +306,8 @@
       <%= f.submit "Save Notes", class: 'btn btn--small mobile-block' %>
     </div>
   <% end %>
-
   <% if current_user.can_manage_market?(order.market) || current_user.is_localeyes_buyer? %>
+  <br/><br/>
   <div>
     <div class="table-wrapper">
       <h2>Order History</h2>
@@ -331,6 +369,7 @@
     grossTotal: order.gross_total.to_f,
     amountTypes: Credit::AMOUNT_TYPES,
     payerTypes: Credit::PAYER_TYPES,
+    applyTo: Credit::APPLY_TO_TYPES,
     sellers: order.sellers,
     orderId: order.id
   }) %>

@@ -52,6 +52,7 @@ FactoryGirl.define do
     user
     amount_type "fixed"
     amount 1.50
+    apply_to "total"
     payer_type "market"
     paying_org_id nil
     notes "Bad on delivery."
@@ -283,7 +284,7 @@ FactoryGirl.define do
     delivery_zip     "49423"
     delivery_phone   "(616) 555-1222"
 
-    delivery_fees    0.00
+    delivery_fees    0.001
 
     payment_method   "purchase order"
     payment_status   "unpaid"

@@ -73,6 +73,10 @@ class OrderHistoryActivityPresenter
       data << "Order #{delivery_status.humanize.capitalize}"
     end
 
+    if last_value_for_change(item, "delivery_fees").present?
+      data << "Delivery Fee Removed"
+    end
+
     data
   end
 
@@ -106,12 +110,22 @@ class OrderHistoryActivityPresenter
 
   def process_credit(item)
     amount = last_value_for_change(item, "amount")
-    if amount
-      amount = number_to_currency(amount)
-      if item.action == "create"
-        "Credit Added: #{amount}"
-      elsif item.action == "update"
-        "Credit Changed: #{amount}"
+    amount_type = last_value_for_change(item, "amount_type")
+    deleted = last_value_for_change(item, "deleted_at")
+    if item.action == "update" && deleted.present?
+    "Credit Removed"
+    else
+      if amount
+        if amount_type == "fixed"
+          amount = number_to_currency(amount)
+        else
+          amount = number_to_percentage(amount, precision: 2)
+        end
+        if item.action == "create"
+          "Credit Added: #{amount}"
+        elsif item.action == "update"
+          "Credit Changed: #{amount}"
+        end
       end
     end
   end

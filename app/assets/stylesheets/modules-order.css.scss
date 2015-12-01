@@ -87,20 +87,34 @@
   }
 }
 .order-info-status {
-  float: right;
-  width: 26%;
-  min-width: 100px;
+  pointer-events:none;
+  min-width: 200px;
   font-size: 14px;
+}
+.order-totals-table {
+  border-spacing: 0;
+  border-collapse: unset;
+  min-width: 225px;
+  td {
+    text-align: right;
+  }
+  .total-line {
+    border-top: 1px solid #CCC;
+  }
+}
+.math-symbol {
+  width: 10px;
+  font-size: 24px;
+  text-align: center;
 }
 @media screen and (max-width: 960px) {
   .order-buyer,
-  .order-info-total,
-  .order-info-status {
+  .order-info-total {
     width: 45%;
-    th {
+    }
+  th {
       min-width: 50%;
       width: 50%;
-    }
   }
   .order-info-total {
     clear: right;
@@ -112,14 +126,14 @@
 
 @media screen and (max-width: $mobile_break) {
   .order-buyer,
-  .order-info-total,
-  .order-info-status  {
+  .order-info-total {
     width: 95%;
   }
   .order-info-total,
   .order-info-status {
     float: left;
   }
+
 }
 .order-address {
   margin-top: 20px;

@@ -60,6 +60,12 @@ class Admin::OrdersController < AdminController
     elsif params[:commit] == "Change Delivery"
       update_delivery(order)
       return
+    elsif params["order"][:delivery_clear] == "true"
+      remove_delivery_fee(order)
+      return
+    elsif params["order"][:credit_clear] == "true"
+      remove_credit(order)
+      return
     end
 
     # TODO: Change an order items delivery status to 'removed' or something rather then deleting them
@@ -75,9 +81,21 @@ class Admin::OrdersController < AdminController
 
   def order_params
     params[:order].delete(:delivery_id) # Remove the parameter so it doesn't conflict
-    params.require(:order).permit(:notes, items_attributes: [
+    params[:order].delete(:delivery_clear) # Remove the parameter so it doesn't conflict
+    params[:order].delete(:credit_clear) # Remove the parameter so it doesn't conflict
+    params.require(:order).permit(:delivery_clear, :notes, items_attributes: [
       :id, :quantity, :quantity_delivered, :delivery_status, :_destroy
     ])
+  end
+
+  def remove_delivery_fee(order)
+    RemoveDeliveryFee.perform(order: order)
+    redirect_to admin_order_path(order), notice: order.delivery.delivery_schedule.fee_label + " successfully removed."
+  end
+
+  def remove_credit(order)
+    RemoveCredit.perform(order: order)
+    redirect_to admin_order_path(order), notice: "Credit successfully removed."
   end
 
   def update_delivery(order)
@@ -116,8 +134,8 @@ class Admin::OrdersController < AdminController
   # Builds a list of deliveries for potential changes
   # Some from the past, some from future, and the order's actual one.
   def setup_deliveries(order)
-    recent_deliveries = order.market.deliveries.recent
-    future_deliveries = order.market.deliveries.future.active
+    recent_deliveries = order.market.deliveries.recent.active.uniq
+    future_deliveries = order.market.deliveries.future.active.uniq
 
     @deliveries = recent_deliveries | future_deliveries | [order.delivery]
   end

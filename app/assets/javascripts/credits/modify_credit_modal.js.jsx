@@ -7,6 +7,7 @@
       grossTotal: React.PropTypes.number.isRequired,
       amountTypes: React.PropTypes.array.isRequired,
       payerTypes: React.PropTypes.array.isRequired,
+      applyTo: React.PropTypes.array.isRequired,
       sellers: React.PropTypes.array.isRequired,
       orderId: React.PropTypes.number.isRequired
     },
@@ -18,6 +19,7 @@
           amount_type: 'fixed',
           amount: null,
           payer_type: 'market',
+          apply_to: 'total',
           paying_org_id: null
         },
         loading: false,
@@ -39,7 +41,7 @@
         url: self.props.baseUrl + 'orders/' + self.props.orderId + '/credits',
         method: 'POST',
         data: {
-          credit: _.pick(self.state.credit, ['id', 'amount', 'payer_type', 'amount_type', 'paying_org_id', 'notes'])
+          credit: _.pick(self.state.credit, ['id', 'amount', 'payer_type', 'amount_type', 'apply_to', 'paying_org_id', 'notes'])
         },
         success: function(res) {
           location.reload();
@@ -52,17 +54,21 @@
     },
 
     render: function() {
-      var self = this;
-      var credit = this.state.credit;
-      var amountTypeOptions = _.map(self.props.amountTypes, function(type) {
-        return (<option key={type} value={type}>{type[0].toUpperCase() + type.substring(1)}</option>);
-      });
+        var self = this;
+        var credit = this.state.credit;
+        var amountTypeOptions = _.map(self.props.amountTypes, function(type) {
+            return (<option key={type} value={type}>{type[0].toUpperCase() + type.substring(1)}</option>);
+        });
 
-      var payerTypeOptions = _.map(self.props.payerTypes, function(type) {
-        return (<option key={type} value={type}>{type[0].toUpperCase() + type.substring(1)}</option>);
-      });
+        var payerTypeOptions = _.map(self.props.payerTypes, function(type) {
+            return (<option key={type} value={type}>{type[0].toUpperCase() + type.substring(1)}</option>);
+        });
 
-      if(credit.payer_type === 'supplier organization') {
+        var applyCreditLocationOptions = _.map(self.props.applyTo, function(type) {
+            return (<option key={type} value={type}>{type[0].toUpperCase() + type.substring(1)}</option>);
+        });
+
+        if(credit.payer_type === 'supplier organization') {
         var sellerOptions = _.map(self.props.sellers, function(seller) {
           return (<option key={seller.id} value={seller.id}>{seller.name}</option>)
         });
@@ -83,7 +89,7 @@
       var errors = (self.state.errors) ? <p className='alert alert--warning'>{self.state.errors}</p> : null;
 
       return (
-        <div id='creditEdit' className='popup modal is-hidden app-edit-credit-modal' style={{background: 'white', position: 'fixed', padding: '20px', width: '50%', borderRadius: '5px'}}>
+        <div id='creditEdit' className='popup modal is-hidden app-edit-credit-modal' style={{background: 'white', padding: '20px', borderRadius: '5px'}}>
           <h1>Modify Order Credit</h1>
           <div>
             {errors}
@@ -104,6 +110,13 @@
               <label>Credit Paid By</label><br/>
               <select defaultValue={credit.payer_type} onChange={self.setAttributeValue.bind(this, 'payer_type')} className='column--full'>
                 {payerTypeOptions}
+              </select>
+            </div>
+
+            <div className='field'>
+              <label>Credit Applied To</label><br/>
+              <select defaultValue={credit.apply_to} onChange={self.setAttributeValue.bind(this, 'apply_to')} className='column--full'>
+                  {applyCreditLocationOptions}
               </select>
             </div>
 
