@@ -489,7 +489,7 @@ describe Order do
       credit.amount = 50
       credit.amount_type = Credit::PERCENTAGE
       credit.save
-      expect(order.reload.total_cost.to_f).to eql(5.24)
+      expect(order.reload.total_cost.to_f).to eql(4.37)
     end
 
     it "does not use invalid credits" do

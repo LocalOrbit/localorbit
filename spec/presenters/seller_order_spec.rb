@@ -146,7 +146,7 @@ describe SellerOrder do
       credit = create(:credit, order: order, payer_type: Credit::ORGANIZATION, paying_org: seller1, amount_type: Credit::FIXED, amount: 1)
       order.credit = credit
       order.save
-      expect(SellerOrder.new(order, seller1).total_cost).to eq 19.97
+      expect(SellerOrder.new(order, seller1).total_cost).to eq 21.97
     end
   end
 end

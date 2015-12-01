@@ -133,12 +133,12 @@ describe "Editing an order" do
           it "updates the order total" do
             expect(UpdatePurchase).to receive(:perform).and_return(double("interactor", "success?" => true))
 
-            expect(page).to have_content("Grand Total: $45.00")
+            expect(page).to have_content("Order Total: $45.00")
 
             first_order_item.click_delete
 
             expect(page).to have_content("Order successfully updated")
-            expect(page).to have_content("Grand Total: $30.00")
+            expect(page).to have_content("Order Total: $30.00")
           end
 
           it "updates the order summary totals" do
