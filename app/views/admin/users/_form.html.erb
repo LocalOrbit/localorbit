@@ -1,4 +1,4 @@
-<%= form_for(@user, url: url, html: { class: "column column--two-thirds" }) do |f| %>
+<%= form_for(@user, url: url, html: { class: "column column--three-quarters" }) do |f| %>
   <h1><i class="font-icon" data-icon="&#xe018;"></i>&nbsp; Editing User<%= ": #{@user.name}" if @user.name.present? %></h1>
 
   <div class="field">
@@ -14,13 +14,18 @@
   </div>
 
   <div class="row row--field">
-    <div class="field column column--half column--guttered">
+    <div class="field column column--quarter column--guttered">
       <%= f.label :password, "New Password" %><br>
       <%= f.password_field :password, :autocomplete => "off", class: "column--full" %>
-    </div
-    ><div class="field column column--half column--guttered">
+    </div>
+    
+    <div class="field column column--quarter column--guttered">
       <%= f.label :password_confirmation, "Confirm Password" %><br>
       <%= f.password_field :password_confirmation, class: "column--full" %>
+    </div>
+    
+	<div class="column column--quarter column--guttered">
+      <p>Passwords must be at least 8 characters long and<br />may be a mix of numbers, letters, and symbols</p>
     </div>
   </div>
   <div class="table-wrapper">
