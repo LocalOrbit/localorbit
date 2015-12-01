@@ -102,6 +102,7 @@ describe Credit do
       expect(order.gross_total).to eql 6.99
       expect(credit.calculated_amount).to eql 1
       credit.amount_type = Credit::PERCENTAGE
+      credit.apply_to = Credit::TOTAL
       credit.amount = 25
       expect(credit.calculated_amount).to eql 1.75
       credit.amount = 75

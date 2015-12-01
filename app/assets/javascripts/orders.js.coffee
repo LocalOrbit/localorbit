@@ -18,3 +18,16 @@ $ ->
     e.preventDefault()
     $("#delivery-changer .fields").toggleClass('is-hidden')
     $("#delivery-changer a").toggleClass('is-hidden')
+
+  $(".delivery-clear").click (e) ->
+    e.preventDefault()
+    if confirm("Are you sure you want to remove the fee?")
+      $(this).parent().find("input").val("true")
+      $(this).closest("form").submit()
+
+
+  $(".credit-clear").click (e) ->
+    e.preventDefault()
+    if confirm("Are you sure you want to remove the credit?")
+      $(this).parent().find("input").val("true")
+      $(this).closest("form").submit()

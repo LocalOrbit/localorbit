@@ -52,7 +52,11 @@ class SellerOrder
   end
 
   def total_cost
-    gross_total - discount - credit_amount
+    if credit_amount > 0
+      gross_total - discount + credit_amount
+    else
+      gross_total - discount
+    end
   end
 
   def items_attributes=(_)
@@ -70,8 +74,5 @@ class SellerOrder
 
   def credit_paid_by_sellers?
     @order.credit_amount > 0 && credit.payer_type == Credit::ORGANIZATION
-  end
-
-  def share_of_credit
   end
 end

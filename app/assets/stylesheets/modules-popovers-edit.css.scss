@@ -6,7 +6,7 @@
 .popup {
   position: absolute;
   z-index: 100;
-  width: 276px;
+  /*width: 276px;*/
   border: 1px solid #ccc;
   text-shadow: none;
   color: #000;
@@ -205,10 +205,10 @@
 
 
 .modal {
-  top: 10em;
-  left: 29%;
-  width: 400px;
-  margin: 0 auto;
+  top: 30%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 500px;
   z-index: 100;
 
   .form-actions {
@@ -221,10 +221,8 @@
 }
 .modal--extended {
   @include transform(translateX(0));
-  left: 20.5%;
-  width: 58%;
-  position: fixed;
-  
+  left: 50%;
+
   .popup-body {
     max-height: 400px;
     overflow-y: auto;

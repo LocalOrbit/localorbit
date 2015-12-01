@@ -82,12 +82,12 @@ describe "Editing an order" do
           it "updates the order total" do
             expect(UpdatePurchase).to receive(:perform).and_return(double("interactor", "success?" => true))
 
-            expect(page).to have_content("Grand Total: $45.00")
+            expect(page).to have_content("Order Total: $45.00")
 
             first_order_item.click_delete
 
             expect(page).to have_content("Order successfully updated")
-            expect(page).to have_content("Grand Total: $30.00")
+            expect(page).to have_content("Order Total: $30.00")
           end
 
           it "updates the order summary totals" do
@@ -133,12 +133,12 @@ describe "Editing an order" do
           it "updates the order total" do
             expect(UpdatePurchase).to receive(:perform).and_return(double("interactor", "success?" => true))
 
-            expect(page).to have_content("Grand Total: $45.00")
+            expect(page).to have_content("Order Total: $45.00")
 
             first_order_item.click_delete
 
             expect(page).to have_content("Order successfully updated")
-            expect(page).to have_content("Grand Total: $30.00")
+            expect(page).to have_content("Order Total: $30.00")
           end
 
           it "updates the order summary totals" do
@@ -418,7 +418,7 @@ describe "Editing an order" do
 
           expect(item.total).to have_content("$6.00")
 
-          expect(page).to have_content("Grand Total: $6.00")
+          expect(page).to have_content("Order Total: $6.00")
 
           expect(Dom::Admin::OrderSummaryRow.first.gross_total).to eql("$6.00")
           expect(Dom::Admin::OrderSummaryRow.first.market_fees).to eql("$0.30")
@@ -473,7 +473,7 @@ describe "Editing an order" do
 
           expect(item.total).to have_content("$6.90")
 
-          expect(page).to have_content("Grand Total: $6.90")
+          expect(page).to have_content("Order Total: $6.90")
 
           expect(Dom::Admin::OrderSummaryRow.first.gross_total).to eql("$6.90")
           expect(Dom::Admin::OrderSummaryRow.first.market_fees).to eql("$0.35")
@@ -509,7 +509,7 @@ describe "Editing an order" do
         it "updates the grand total for the order" do
           subject
 
-          expect(page).to have_content("Grand Total: $21.00")
+          expect(page).to have_content("Order Total: $21.00")
         end
 
         it "updates the fees for the order" do
@@ -627,7 +627,7 @@ describe "Editing an order" do
         it "updates the grand total for the order" do
           subject
 
-          expect(page).to have_content("Grand Total: $6.00")
+          expect(page).to have_content("Order Total: $6.00")
         end
 
         it "updates the fees for the order" do
@@ -687,7 +687,7 @@ describe "Editing an order" do
         it "updates the grand total for the order" do
           subject
 
-          expect(page).to have_content("Grand Total: $21.00")
+          expect(page).to have_content("Order Total: $21.00")
         end
 
         it "updates the fees for the order" do

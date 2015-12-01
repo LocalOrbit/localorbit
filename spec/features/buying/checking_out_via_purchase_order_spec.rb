@@ -161,7 +161,7 @@ describe "Checking Out via Purchase Order", :js, :vcr do
         ], find_by: :name)
 
         expect(page).to have_content("Delivery Fee: $9.86")
-        expect(page).to have_content("Grand Total: $49.29")
+        expect(page).to have_content("Order Total: $49.29")
       end
     end
   end

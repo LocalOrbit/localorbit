@@ -291,7 +291,7 @@
     }
 
     .invoices-wrapper .vcard {
-        overflow: hidden
+        overflow: hidden;
         word-break: break-all;
         word-wrap: break-word;
     }
@@ -411,7 +411,7 @@
       </div>
     </div>
     <%= render "shared/invoice", { market: invoice.market.decorate, invoice: invoice, user: user } %>
-    <div style="page-break-inside:never;page-break-after:never;width:7in;">
+    <div style="page-break-inside:unset;page-break-after:unset;width:7in;">
       <br>
       <div class="signature" style="float:left">Signature</div><div class="signature" style="float:right;">Signature</div>
     </div>

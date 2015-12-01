@@ -73,7 +73,7 @@ class OrderItem < ActiveRecord::Base
   end
 
   def seller_net_total
-    gross_total - market_seller_fee - local_orbit_seller_fee - payment_seller_fee - discount_seller
+    gross_total - market_seller_fee - local_orbit_seller_fee - payment_seller_fee - discount_seller + share_of_credit
   end
 
   def gross_total
@@ -127,9 +127,9 @@ class OrderItem < ActiveRecord::Base
   end
 
   def update_unit_price
-    if(order && order.market && order.organization)
+    if order && order.market && order.organization
       new_price = Orders::UnitPriceLogic.unit_price(product, order.market, order.organization, order.created_at, quantity)
-      if(new_price != nil)
+      if new_price != nil
         self.unit_price = new_price.sale_price
       end
     end
@@ -204,5 +204,13 @@ class OrderItem < ActiveRecord::Base
 
   def refundable?
     ["pending", "paid"].include?(payment_status)
+  end
+
+  def share_of_credit
+    if order.credit && order.credit.amount > 0  && order.credit.payer_type == "supplier organization"
+      gross_total / order.gross_total * order.credit.amount
+    else
+      0
+    end
   end
 end
