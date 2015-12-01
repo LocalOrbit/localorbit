@@ -73,7 +73,7 @@ class OrderItem < ActiveRecord::Base
   end
 
   def seller_net_total
-    gross_total - market_seller_fee - local_orbit_seller_fee - payment_seller_fee - discount_seller + share_of_credit
+    gross_total - market_seller_fee - local_orbit_seller_fee - payment_seller_fee - discount_seller - share_of_credit
   end
 
   def gross_total
@@ -207,10 +207,28 @@ class OrderItem < ActiveRecord::Base
   end
 
   def share_of_credit
-    if order.credit && order.credit.amount > 0  && order.credit.payer_type == "supplier organization"
-      gross_total / order.gross_total * order.credit.amount
+    seller = find_applicable_seller
+    if order.credit && order.credit.paying_org == nil
+      (order.credit_amount / (order.sellers.count || 1)).round 2
+    elsif seller && order.credit.paying_org == seller
+      # When a user belongs to more than one organization that are on the order,
+      # the display will be confusing because they won't know which organization
+      # is paying the credit.
+      order.credit_amount
     else
       0
     end
+  end
+
+  def find_applicable_seller
+    if order.credit && order.credit.paying_org
+      order.sellers.each do |s|
+        if s.id == order.credit.paying_org.id
+          s
+        end
+      end
+      nil
+    end
+    nil
   end
 end

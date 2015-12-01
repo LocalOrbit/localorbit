@@ -53,7 +53,7 @@ class SellerOrder
 
   def total_cost
     if credit_amount > 0
-      gross_total - discount + credit_amount
+      gross_total - discount - credit_amount
     else
       gross_total - discount
     end
