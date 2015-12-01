@@ -105,7 +105,7 @@
 
       var isMobile = self.state.width <= MOBILE_WIDTH;
       var promo = null;
-      if (this.state.featuredPromotion != null) {
+      if (this.state.featuredPromotion && this.state.featuredPromotion.details != null) {
           promo = (<lo.ProductFeaturedPromotion hideImages={this.state.hideImages} promo={self.state.featuredPromotion} />)
       }
       var rows = self.state.products.map(function(product) {
@@ -121,7 +121,7 @@
           <InfiniteScroll
             pageStart={0}
             hasMore={self.state.hasMore}
-            threshold={300}
+            threshold={500}
             loadMore={self.loadMore}
             loader={(<p>Loading products....</p>)}
           >
