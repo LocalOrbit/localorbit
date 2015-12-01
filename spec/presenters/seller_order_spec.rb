@@ -135,7 +135,9 @@ describe SellerOrder do
     end
 
     it "returns the full credited amount when the current seller is responsible for the credit" do
-      create(:credit, order: order, payer_type: Credit::ORGANIZATION, paying_org: seller1, amount_type: Credit::FIXED, amount: 1)
+      credit = create(:credit, order: order, payer_type: Credit::ORGANIZATION, paying_org: seller1, amount_type: Credit::FIXED, amount: 1)
+      order.credit = credit
+      order.save
       expect(SellerOrder.new(order, seller1).credit_amount).to eq 1
     end
   end
