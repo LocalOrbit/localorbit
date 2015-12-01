@@ -81,7 +81,9 @@ class Admin::OrdersController < AdminController
 
   def order_params
     params[:order].delete(:delivery_id) # Remove the parameter so it doesn't conflict
-    params.require(:order).permit(:notes, items_attributes: [
+    params[:order].delete(:delivery_clear) # Remove the parameter so it doesn't conflict
+    params[:order].delete(:credit_clear) # Remove the parameter so it doesn't conflict
+    params.require(:order).permit(:delivery_clear, :notes, items_attributes: [
       :id, :quantity, :quantity_delivered, :delivery_status, :_destroy
     ])
   end
