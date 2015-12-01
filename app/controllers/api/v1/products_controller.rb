@@ -25,7 +25,7 @@ module Api
                                .map { |p| format_general_product_for_catalog(p, sellers) }
         render :json => {
                    product_total: products.count(:all),
-                   featured_promotion: { :details => featured_promotion, :product => format_general_product_for_catalog(featured_promotion.product.general_product, sellers) },
+                   featured_promotion: { :details => featured_promotion, :product => featured_promotion ? format_general_product_for_catalog(featured_promotion.product.general_product, sellers) : nil },
                    products: page_of_products,
                    sellers: sellers
                }
