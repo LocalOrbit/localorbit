@@ -338,9 +338,12 @@ form.form-actions {
 .warning {
   font-size: 12px;
 }
-  label {
-    margin-right: 10px;
+label {
+  margin-right: 10px;
+  &.required:after{
+    content: " *";
   }
+}
 .warning {
   color: #a16161;
   font-style: italic;

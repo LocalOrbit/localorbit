@@ -3,7 +3,7 @@ class DeliveryNotesController < ApplicationController
 	before_action :find_cart
 
 	def index
-		# TODO decide if there is an indexed display, and if so where (at first no)
+		# TODO decide if there is an indexed display, and if so where (initally no). If so,
 		#@delivery_notes = @cart.delivery_notes.visible.alphabetical_by_supplier_org
 	end
 
@@ -23,7 +23,7 @@ class DeliveryNotesController < ApplicationController
 			redirect_to "/cart" # cart path
 		else
 			render :new 
-			# with error flash? This should never happen.
+			# This should never happen.
 		end
 
 	end
@@ -35,15 +35,20 @@ class DeliveryNotesController < ApplicationController
 	def update
 		@delivery_note = DeliveryNote.find(params[:id])
 		if @delivery_note.update_attributes(note:params[:delivery_note][:note])
+			if @delivery_note.note == ""
+				@delivery_note.destroy
+			end
 			redirect_to "/cart" # Each cart has only one buyer org. This is fine.
-		# else 
-		# 	redirect_to "/delivery_notes" # Should not happen.
 		end
 	end
 
 	def destroy
-		DeliveryNote.soft_delete(params[:id]) # TODO warning flash?
-		redirect_to "/cart"
+		DeliveryNote.soft_delete(params[:id])
+		if current_cart 
+			redirect_to "/cart"
+		else
+			redirect_to [:products]
+		end
 	end
 
 	private
