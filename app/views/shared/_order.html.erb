@@ -2,11 +2,7 @@
 
 <%= form_for order, url: admin_order_path(order.id), as: :order, method: :put do |f| %>
 <%  user_order_context = UserOrderContext.build(user:current_user, order:order)
-    if current_user.market_manager? || current_user.buyer_only?
       credit_sign = '-'
-    else
-      credit_sign = '+'
-    end
 %>
 <div class="order-info">
   <h1>Order info for <%= order.order_number %></h1>
@@ -70,7 +66,7 @@
             <th class="math-symbol"><%= credit_sign %></th>
             <th>Credit: <% if order.credit_amount > 0 && order.credit.notes %><span class="tooltip tooltip--naked" data-tooltip="Notes: <%= order.credit.notes %>"><i class="fa fa-file-text-o"></i></span><% end %></th>
             <td><%= number_to_currency order.credit_amount %></td>
-            <% if order.payment_status == "unpaid" %>
+            <% if order.payment_status == "unpaid" && current_user.buyer_or_mm? %>
             <td class="credit-clear"><%= link_to "", "#", class: "font-icon icon-clear" %></td>
             <% end %>
             <%= f.hidden_field :credit_clear, :value=>nil %>
@@ -92,7 +88,7 @@
             <th class="math-symbol"><%= credit_sign %></th>
             <th>Credit: <% if order.credit_amount > 0 && order.credit.notes %><span class="tooltip tooltip--naked" data-tooltip="Notes: <%= order.credit.notes %>"><i class="fa fa-file-text-o"></i></span><% end %></th>
             <td><%= number_to_currency order.credit_amount %></td>
-            <% if order.payment_status == "unpaid" %>
+            <% if order.payment_status == "unpaid" && current_user.buyer_or_mm? %>
             <td class="credit-clear"><%= link_to "", "#", class: "font-icon icon-clear" %></td>
             <% end %>
             <%= f.hidden_field :credit_clear, :value=>nil %>
