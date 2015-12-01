@@ -3,7 +3,7 @@ class ApplyDiscountToCart
 
   def perform
     if context[:code].present?
-      discount = Discount.where(code: code).first
+      discount = Discount.where(Discount.arel_table[:code].matches(code)).first
 
       if can_use_discount?(discount) && discount_is_valid?(discount)
         cart.discount = discount
