@@ -239,8 +239,8 @@ class User < ActiveRecord::Base
     organizations.selling.any?
   end
 
-  def buyer_or_mm?
-    market_manager? || admin? || !seller?
+  def admin_or_mm?
+    market_manager? || admin?
   end
 
   def buyer_only?
