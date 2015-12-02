@@ -73,7 +73,8 @@ class OrderHistoryActivityPresenter
       data << "Order #{delivery_status.humanize.capitalize}"
     end
 
-    if last_value_for_change(item, "delivery_fees").present?
+    delivery_fees = last_value_for_change(item, "delivery_fees")
+    if delivery_fees == 0
       data << "Delivery Fee Removed"
     end
 
