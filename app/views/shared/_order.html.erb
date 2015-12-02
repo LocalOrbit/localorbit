@@ -77,7 +77,7 @@
             <th class="math-symbol">+</th>
             <th><%= order.delivery.delivery_schedule.fee_label %>:</th>
             <td><%= number_to_currency order.delivery_fees %></td>
-            <% if order.payment_method=="purchase order" && order.delivery_fees  > 0 && order.payment_status == "unpaid" %>
+            <% if order.payment_method=="purchase order" && order.delivery_fees  > 0 && order.payment_status == "unpaid" && current_user.admin_or_mm? %>
             <td class="delivery-clear"><%= link_to "", "#", class: "font-icon icon-clear" %></td>
             <% end %>
             <%= f.hidden_field :delivery_clear, :value=>nil %>
