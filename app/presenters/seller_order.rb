@@ -32,7 +32,11 @@ class SellerOrder
 
   def credit_amount_visible_to_current_seller
     if credit.paying_org == nil
-      (@order.credit_amount / (@order.sellers.count || 1)).round 2
+      if credit.amount_type == "fixed"
+        (@order.credit_amount / (@order.sellers.count || 1)).round 2
+      else
+        (gross_total / @order.gross_total * @order.credit_amount).round 2
+      end
     elsif credit.paying_org == @seller || (@seller.is_a?(User) && @seller.member_of_organization?(credit.paying_org))
       # When a user belongs to more than one organization that are on the order,
       # the display will be confusing because they won't know which organization
