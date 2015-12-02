@@ -19,7 +19,8 @@ class Credit < ActiveRecord::Base
   PAYER_TYPES = [MARKET, ORGANIZATION]
   APPLY_TO_TYPES = [TOTAL, SUBTOTAL]
 
-  validates :order, :user, :amount_type, :amount, presence: true
+  #validates :order, :user, :amount_type, :amount, presence: true
+  validates :user, :amount_type, :amount, presence: true
   validates :amount_type, inclusion: {in: AMOUNT_TYPES, message: "Not a valid credit type."}
   validates :payer_type, inclusion: {in: PAYER_TYPES, message: "Not a valid payer type."}
   validates :amount, numericality: {greater_than_or_equal_to: 0}
