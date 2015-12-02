@@ -209,8 +209,12 @@ class OrderItem < ActiveRecord::Base
   def share_of_credit
     seller = find_applicable_seller
     if order.credit && order.credit.paying_org == nil
-      (order.credit_amount / (order.sellers.count || 1)).round 2
-    elsif seller && order.credit.paying_org == seller
+      if order.credit.amount_type == "fixed"
+        (order.credit_amount / (order.sellers.count || 1)).round 2
+      else
+        (gross_total / order.gross_total * order.credit_amount).round 2
+      end
+    elsif seller.nil? || order.credit.paying_org.id == seller.id
       # When a user belongs to more than one organization that are on the order,
       # the display will be confusing because they won't know which organization
       # is paying the credit.
