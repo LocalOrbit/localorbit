@@ -36,12 +36,13 @@
           <td class="action">
             <ul>
               <li><%= link_to 'Send Invoice', admin_financials_invoices_path(order_id: order.id, invoice_list_batch_action: "send-selected-invoices"), method: :post, class: 'action-link font-icon icon-mail-send' %></li>
-              <% if current_user.admin? || current_user.market_manager? %></li>
+              <% if current_user.admin? || current_user.market_manager? %>
                 <li><%= link_to 'Preview', admin_invoice_path(order.id), 
                   target: (Rails.env.test? ? "" : "_blank"),
                   class: 'action-link font-icon icon-preview' %></li>
                 <li><%= link_to 'Mark Invoiced', admin_financials_invoices_path(order_id: order.id, invoice_list_batch_action: "mark-selected-invoiced"), method: :post, class: 'action-link font-icon icon-stack-checkmark-rightpad' %></li>
-            <% end %>
+              <% end %>
+            </ul>
           </td>
         </tr>
         <% end %>
