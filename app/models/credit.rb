@@ -19,8 +19,7 @@ class Credit < ActiveRecord::Base
   PAYER_TYPES = [MARKET, ORGANIZATION]
   APPLY_TO_TYPES = [TOTAL, SUBTOTAL]
 
-  #validates :order, :user, :amount_type, :amount, presence: true
-  validates :user, :amount_type, :amount, presence: true
+  validates :order, :user, :amount_type, :amount, presence: true
   validates :amount_type, inclusion: {in: AMOUNT_TYPES, message: "Not a valid credit type."}
   validates :payer_type, inclusion: {in: PAYER_TYPES, message: "Not a valid payer type."}
   validates :amount, numericality: {greater_than_or_equal_to: 0}
@@ -59,7 +58,7 @@ class Credit < ActiveRecord::Base
   def amount_cannot_exceed_paying_org_total
     if amount != nil && payer_type == Credit::ORGANIZATION && paying_org != nil
       seller_items = order.items.select {|i| i.seller == paying_org }
-      seller_total = seller_items.sum(&:seller_net_total)
+      seller_total = seller_items.sum(&:seller_net_total_no_credit)
       if calculated_amount > seller_total
         errors.add(:amount, "total cannot exceed the net profit of the organization responsible for it")
       end
