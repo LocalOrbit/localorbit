@@ -42,6 +42,8 @@ describe Api::V1::ProductsController do
       create(:price, :past_price, market: market, product: kale, min_quantity: 10, sale_price: 1.75)
     end
 
+    let!(:promotion) { create(:promotion, :active, product: bananas, market: market, body: "Big savings!") }
+
     let!(:cart) { create(:cart, market: market, organization: buyer, user: user, delivery: delivery.next_delivery) }
 
     # products without inventory should not appear in search results
@@ -93,9 +95,9 @@ describe Api::V1::ProductsController do
       expect(products).to eq([[bananas.id], [bananas3.id, bananas2.id], [kale.id]])
       products = get_products(offset: 1, query: "Apple")
       expect(products).to eq([[bananas3.id, bananas2.id], [kale.id]])
-      products = get_products(offset: 0, query: "First Seller")
+      products = get_products(offset: 0, query: "First")
       expect(products).to eq([[bananas.id], [kale.id]])
-      products = get_products(offset: 0, query: "second s")
+      products = get_products(offset: 0, query: "second")
       expect(products).to eq([[bananas3.id, bananas2.id]])
     end
 

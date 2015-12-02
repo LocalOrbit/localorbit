@@ -1,4 +1,6 @@
 class Credit < ActiveRecord::Base
+  include SoftDelete
+
   belongs_to :order, autosave: false
   belongs_to :user
   belongs_to :paying_org, class: Organization
@@ -8,11 +10,14 @@ class Credit < ActiveRecord::Base
 
   PERCENTAGE = "percentage"
   FIXED = "fixed"
+  TOTAL = "total"
+  SUBTOTAL = "subtotal"
   MARKET = "market"
   ORGANIZATION = "supplier organization"
 
   AMOUNT_TYPES = [PERCENTAGE, FIXED]
   PAYER_TYPES = [MARKET, ORGANIZATION]
+  APPLY_TO_TYPES = [TOTAL, SUBTOTAL]
 
   validates :order, :user, :amount_type, :amount, presence: true
   validates :amount_type, inclusion: {in: AMOUNT_TYPES, message: "Not a valid credit type."}
@@ -21,8 +26,13 @@ class Credit < ActiveRecord::Base
   validate :amount_cannot_exceed_gross_total, :order_must_be_paid_by_po, :amount_cannot_exceed_paying_org_total
 
   def calculated_amount
+    if apply_to == Credit::TOTAL
+      total = order.gross_total + order.delivery_fees
+    else
+      total = order.subtotal
+    end
+
     if amount_type == Credit::PERCENTAGE
-      total = order.gross_total
       (total * (amount / 100)).round 2
     elsif amount_type == Credit::FIXED
       amount
@@ -31,6 +41,10 @@ class Credit < ActiveRecord::Base
 
   def amount=(value)
     write_attribute(:amount, value && value.to_f.round(2))
+  end
+
+  def update_order_total
+    order.update_total_cost
   end
 
   private
@@ -44,7 +58,7 @@ class Credit < ActiveRecord::Base
   def amount_cannot_exceed_paying_org_total
     if amount != nil && payer_type == Credit::ORGANIZATION && paying_org != nil
       seller_items = order.items.select {|i| i.seller == paying_org }
-      seller_total = seller_items.sum(&:seller_net_total)
+      seller_total = seller_items.sum(&:seller_net_total_no_credit)
       if calculated_amount > seller_total
         errors.add(:amount, "total cannot exceed the net profit of the organization responsible for it")
       end

@@ -114,7 +114,7 @@ describe "Edit quantity ordered" do
       it "updates the grand total for the order" do
         subject
 
-        expect(page).to have_content("Grand Total: $6.00")
+        expect(page).to have_content("Order Total: $6.00")
       end
 
       it "updates the fees for the order" do
@@ -165,7 +165,7 @@ describe "Edit quantity ordered" do
       it "updates the grand total for the order" do
         subject
 
-        expect(page).to have_content("Grand Total: $21.00")
+        expect(page).to have_content("Order Total: $21.00")
       end
 
       it "updates the fees for the order" do
@@ -267,7 +267,7 @@ describe "Edit quantity ordered" do
       it "updates the grand total for the order" do
         subject
 
-        expect(page).to have_content("Grand Total: $6.00")
+        expect(page).to have_content("Order Total: $6.00")
       end
 
       it "updates the fees for the order" do
@@ -318,7 +318,7 @@ describe "Edit quantity ordered" do
       it "updates the grand total for the order" do
         subject
 
-        expect(page).to have_content("Grand Total: $21.00")
+        expect(page).to have_content("Order Total: $21.00")
       end
 
       it "updates the fees for the order" do

@@ -36,6 +36,8 @@ describe "Using order templates", :js do
     create(:price, :past_price, market: market, product: kale, min_quantity: 4, sale_price: 2.50)
   end
 
+  let!(:promotion) { create(:promotion, :active, product: bananas, market: market, body: "Big savings!") }
+
   let!(:kale_price_tier2) do
     create(:price, :past_price, market: market, product: kale, min_quantity: 6, sale_price: 1.00)
   end

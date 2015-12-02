@@ -73,6 +73,10 @@ class OrderItem < ActiveRecord::Base
   end
 
   def seller_net_total
+    gross_total - market_seller_fee - local_orbit_seller_fee - payment_seller_fee - discount_seller - share_of_credit
+  end
+
+  def seller_net_total_no_credit
     gross_total - market_seller_fee - local_orbit_seller_fee - payment_seller_fee - discount_seller
   end
 
@@ -127,9 +131,9 @@ class OrderItem < ActiveRecord::Base
   end
 
   def update_unit_price
-    if(order && order.market && order.organization)
+    if order && order.market && order.organization
       new_price = Orders::UnitPriceLogic.unit_price(product, order.market, order.organization, order.created_at, quantity)
-      if(new_price != nil)
+      if new_price != nil
         self.unit_price = new_price.sale_price
       end
     end
@@ -204,5 +208,35 @@ class OrderItem < ActiveRecord::Base
 
   def refundable?
     ["pending", "paid"].include?(payment_status)
+  end
+
+  def share_of_credit
+    seller = find_applicable_seller
+    if order.credit && order.credit.paying_org == nil
+      if order.credit.amount_type == "fixed"
+        (order.credit_amount / (order.sellers.count || 1)).round 2
+      else
+        (gross_total / order.gross_total * order.credit_amount).round 2
+      end
+    elsif seller.nil? || order.credit.paying_org.id == seller.id
+      # When a user belongs to more than one organization that are on the order,
+      # the display will be confusing because they won't know which organization
+      # is paying the credit.
+      order.credit_amount
+    else
+      0
+    end
+  end
+
+  def find_applicable_seller
+    if order.credit && order.credit.paying_org
+      order.sellers.each do |s|
+        if s.id == order.credit.paying_org.id
+          s
+        end
+      end
+      nil
+    end
+    nil
   end
 end

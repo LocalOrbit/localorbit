@@ -7,8 +7,9 @@ class OrderDestination
     username = db_parts[3]
     password = db_parts[4]
     host = db_parts[5]
+    port = db_part[6]
     db = db_parts[7]
-    @conn = PGconn.open(:host =>  host, :dbname => db, :user=> username, :password=> password)
+    @conn = PGconn.open(:host =>  host, :port => port, :dbname => db, :user=> username, :password=> password)
 
     #@conn = PG.connect(connect_url)
     @conn.prepare('check_order', 'SELECT 1 order_exists FROM dw_orders WHERE order_item_id = $1')

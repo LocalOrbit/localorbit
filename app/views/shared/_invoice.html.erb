@@ -40,7 +40,7 @@
       </tr>
       <% if invoice.credit_amount > 0 %>
         <tr>
-          <th><%= invoice.credit.notes.length > 0 ? "Note: #{invoice.credit.notes}" : "" %>
+          <th><%if invoice.credit.notes %><%= invoice.credit.notes.length > 0 ? "Note: #{invoice.credit.notes}" : "" %><% end %></th>
           <th scope="row" colspan="5" class="ar">Credits</th>
           <td class="invoice-amount"><%= number_to_currency invoice.credit_amount %></td>
         </tr>
@@ -51,7 +51,7 @@
       </tr>
       <tr class="total">
         <td colspan="4">Thank you for your business.</td>
-        <th colspan="3" class="ar"><span>Total</span> <span class="amount app-total"><%= number_to_currency invoice.total_cost %></span></td>
+        <th colspan="3" class="ar"><span>Total</span> <span class="amount app-total"><%= number_to_currency invoice.total_cost %></span></th>
       </tr>
     </tbody>
   </table>

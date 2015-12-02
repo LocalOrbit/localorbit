@@ -1,4 +1,5 @@
 <h1>Registration: Step One</h1>
+<p>Fields marked with an asterisk (*) are required</p>
 <%= form_for @registration, url: registration_path do |f| %>
 
   <%= render "shared/errors", { resource: @registration } %>
@@ -18,30 +19,34 @@
 
     <div class="field column--half">
       <span class="tooltip pull-right" data-tooltip="If you are not part of an organization, please type in your name."></span>
-      <%= f.label :name, "Organization Name" %><br>
+      <%# TODO Pull out the manually-added 'required' class and implement a validator-aware solution (system wide, bro... system wide) %>
+      <%= f.label :name, "Organization Name", class: 'required' %><br>
       <%= f.text_field :name, class: "column column--full", placeholder: "If you are not part of an organization, please type in your name." %>
     </div>
 
     <div class="field column--half">
-      <%= f.label :contact_name, "Contact Name" %><br>
+      <%= f.label :contact_name, "Contact Name", class: 'required' %><br>
       <%= f.text_field :contact_name, class: "column column--full" %>
     </div>
 
     <div class="field column--half">
-      <%= f.label :email, "Contact Email" %><br>
+      <%= f.label :email, "Contact Email", class: 'required' %><br>
       <%= f.email_field :email, class: "column column--full" %>
     </div>
 
     <div class="row row--field">
       <div class="field column column--quarter column--guttered">
-
-        <%= f.label :password, "Password" %><br>
+        <%= f.label :password, "Password", class: 'required' %><br>
         <%= f.password_field :password  %>
       </div
       ><div class="field column column--quarter column--guttered">
 
-        <%= f.label :password_confirmation, "Retype Password" %><br>
+        <%= f.label :password_confirmation, "Retype Password", class: 'required' %><br>
         <%= f.password_field :password_confirmation %>
+      </div>
+      
+      <div class="column column--half column--guttered">
+      	<p>Passwords must be at least 8 characters long and<br />may be a mix of numbers, letters, and symbols</p>
       </div>
     </div>
 
@@ -52,10 +57,10 @@
     <div class="row row--field">
       <div class="field column column--half column--guttered">
         <%= f.label :address_label, "Address Label" %><br>
-        <%= f.text_field :address_label, placeholder: "Give your organization a location name", class: "column column--full" %>
+        <%= f.text_field :address_label, placeholder: "Give your organization a location name (For Businesses Only)", class: "column column--full" %>
       </div
       ><div class="field column column--half column--guttered">
-        <%= f.label :address %><br>
+        <%= f.label :address, class: 'required' %><br>
         <%= f.text_field :address, class: "column column--full" %>
       </div>
 
@@ -63,22 +68,22 @@
 
     <div class="row row--field">
       <div class="field column column--half column--guttered">
-        <%= f.label :city %><br>
+        <%= f.label :city, class: 'required' %><br>
         <%= f.text_field :city, class: "column--full" %>
       </div
       ><div class="field column column--fourth column--guttered">
-        <%= f.label :state %><br>
+        <%= f.label :state, class: 'required' %><br>
         <%= f.select :state, options_for_state_select, {include_blank: true}, class: "column--full" %>
       </div
       ><div class="field column column--fourth column--guttered">
-        <%= f.label :zip, "Postal Code" %><br>
+        <%= f.label :zip, "Postal Code", class: 'required' %><br>
         <%= f.text_field :zip, size: 10, class: "column--full"  %>
       </div>
     </div>
 
     <div class="row row--field">
       <div class="field column column--guttered column--half">
-        <%= f.label :phone %><br>
+        <%= f.label :phone, class: 'required' %><br>
         <%= f.text_field :phone, maxlength: 18, size: 18, class: "column--full" %>
       </div
       ><div class="field column column--guttered column--half">
@@ -93,7 +98,7 @@
     <div class="row row--field">
       <div class="field column column--half column--guttered">
         <%= f.check_box :terms_of_service %>
-        <%= f.label :terms_of_service, ("I have read and agree to the #{ link_to "terms of service", TermsOfService.url, class: "tos-link", target: "_blank" }").html_safe %>
+        <%= f.label :terms_of_service, ("I have read and agree to the #{ link_to "terms of service", TermsOfService.url, class: "tos-link", target: "_blank" }").html_safe, class: 'required'%>
       </div>
     </div>
   </fieldset>

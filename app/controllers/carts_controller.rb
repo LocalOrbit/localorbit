@@ -53,7 +53,11 @@ class CartsController < ApplicationController
     @apply_discount = current_cart.discount ? ApplyDiscountToCart.perform(cart: current_cart, code: current_cart.discount.code) : nil
   end
 
+  # add Delivery Note deletion to cart's destroy
   def destroy
+    DeliveryNote.where(cart_id:current_cart.id).each do |dn|
+      DeliveryNote.soft_delete(dn.id) 
+    end
     current_cart.destroy
     session.delete(:cart_id)
     redirect_to [:products]

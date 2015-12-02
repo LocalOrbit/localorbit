@@ -35,6 +35,7 @@ $ ->
         else if (this.data.quantity > 0) && (data.quantity == 0)
           msg = "Removed from cart!"
 
+          
         else if (this.data.quantity > 0) && (data.quantity > 0)
           msg = "Quantity updated!"
 
@@ -46,11 +47,20 @@ $ ->
 
     updateView: ->
       if @el?
+
+        totalPrice = accounting.formatMoney(@data.total_price)
+
         @el.find(".price-for-quantity").text(accounting.formatMoney(@data.unit_sale_price))
-        @el.find(".price").text(accounting.formatMoney(@data.total_price))
+        @el.find(".price").text(totalPrice)
         @el.find(".quantity input:not(.redesigned)").val(@data.quantity)
+
+        if @el.find(".quantity input").hasClass("promo")
+          $(".promo").val(@data.quantity)
+          $(".promo").parent().parent().find(".price").text(totalPrice)
+
         if @data.quantity
           @el.find(".icon-clear").removeClass("is-hidden")
+          $(".promo").parent().parent().find(".icon-clear").removeClass("is-hidden")
 
         if (!@data["valid?"] && @data["id"] != null) && !@data["destroyed?"]
           @showError()
@@ -58,10 +68,24 @@ $ ->
           @clearError()
 
     remove: ->
+      if @el?
+        tbody_ref = @el.parent()
+        supplier = @el[0].getAttribute("supplier")
+        num = tbody_ref.find("[supplier="+supplier+"]").length
+        if (num == 2)
+          tbody_ref.find(".seller").addClass("is-hidden")
+        # if this is the last one, remove all and redirect to products page
+        if (tbody_ref.find(".is-hidden").length == tbody_ref.length)
+          location.reload(false)
       @el.find(".icon-clear").addClass("is-hidden")
+
       @showUpdate()
       unless @el.hasClass("product-row") || @el.data("keep-when-zero")
         @el.remove()
+
+      if @el.find(".quantity input").hasClass("promo")
+        $(".promo").parent().parent().find(".icon-clear").addClass("is-hidden")
+        $(".promo").parent().parent().find(".quantity input").val('')
 
     showError: ->
       @el.find(".quantity").addClass("field_with_errors")
@@ -78,6 +102,7 @@ $ ->
       window.setTimeout =>
         @el.find(".quantity").removeClass("updated").removeClass("finished")
       , (window.CartNotificationDuration + 200)
+      $(".promo").parent().parent().find(".updated").removeClass("updated")
 
 
   class CartView

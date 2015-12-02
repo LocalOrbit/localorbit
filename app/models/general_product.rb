@@ -27,9 +27,10 @@ class GeneralProduct < ActiveRecord::Base
                       :tsearch => {prefix: true}
                   }
 
-  def self.filter_by_name(name)
+  def self.filter_by_name_or_category_or_supplier(name)
     if name && name.length > 2
-      search_by_text(name)
+      where("upper(general_products.name) LIKE ? OR upper(top_level_category.name) LIKE ? OR upper(second_level_category.name) LIKE ? OR upper(supplier.name) LIKE ?", "%#{name.upcase}%", "%#{name.upcase}%", "%#{name.upcase}%", "%#{name.upcase}%")
+      #search_by_text(name)
     else
        all
     end

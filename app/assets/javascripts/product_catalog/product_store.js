@@ -15,6 +15,7 @@
   var ProductStore = Reflux.createStore({
     init: function() {
       this.catalog = {
+        featuredPromotion: null,
         products: [],
         hasMore: true
       };
@@ -62,6 +63,7 @@
     },
 
     onLoadMore: function(res) {
+      this.catalog.featuredPromotion = res.featured_promotion;
       this.catalog.products = this.catalog.products.concat(this.unpackProducts(res));
       this.catalog.hasMore = (this.catalog.products.length < res.product_total);
       this.trigger(this.catalog);

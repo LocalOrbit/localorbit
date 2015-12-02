@@ -10,11 +10,13 @@ module Api
 
       def index
         @offset = (params[:offset] || 0).to_i
-        @limit = (params[:limit] || 10).to_i
+        @limit = (params[:limit] || 30).to_i
         @query = (params[:query] || '').gsub(/\W+/, '+') || ''
         @category_ids = (params[:category_ids] || [])
         @seller_ids = (params[:seller_ids] || [])
+        @sort_by = (params[:sort_by] || "top_level_category.lft, second_level_category.lft, general_products.name")
 
+        featured_promotion = current_market.featured_promotion(current_organization)
         products = filtered_available_products(@query, @category_ids, @seller_ids)
         sellers = {}
         page_of_products = products
@@ -23,6 +25,7 @@ module Api
                                .map { |p| format_general_product_for_catalog(p, sellers) }
         render :json => {
                    product_total: products.count(:all),
+                   featured_promotion: { :details => featured_promotion, :product => featured_promotion ? format_general_product_for_catalog(featured_promotion.product.general_product, sellers) : nil },
                    products: page_of_products,
                    sellers: sellers
                }
@@ -45,14 +48,17 @@ module Api
         end
 
         GeneralProduct.joins("JOIN (#{p_sql}) p_child ON general_products.id=p_child.general_product_id
+                              JOIN categories top_level_category ON general_products.top_level_category_id = top_level_category.id
+                              JOIN categories second_level_category ON general_products.second_level_category_id = second_level_category.id
                               JOIN organizations supplier ON general_products.organization_id=supplier.id
                               JOIN market_organizations ON general_products.organization_id = market_organizations.organization_id
                               AND market_organizations.market_id = #{current_market.id}")
-            .filter_by_name(query)
+            .filter_by_name_or_category_or_supplier(query)
             .filter_by_categories(category_ids)
             .filter_by_suppliers(seller_ids)
             .filter_by_active_org
-            .order(:name, :id)
+            .select("top_level_category.lft, top_level_category.name, second_level_category.lft, second_level_category.name, general_products.*")
+            .order(@sort_by)
             .uniq
       end
 
@@ -78,6 +84,7 @@ module Api
             :seller_id => general_product.organization.id,
             :short_description => general_product.short_description,
             :long_description => general_product.long_description,
+            :top_level_category_name => general_product.top_level_category.name,
             :second_level_category_name => general_product.second_level_category.name,
             :image_url => get_image_url(general_product),
             :available => products
