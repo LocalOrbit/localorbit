@@ -33,6 +33,11 @@ module Admin
       redirect_to action: :index
     end
 
+    def update
+      #items = fetch_order_items
+      @order_item = OrderItem.find(id)
+    end
+
     private
 
     def find_search_date_range(search)
