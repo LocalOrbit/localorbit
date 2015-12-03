@@ -7,7 +7,7 @@ class OrderDestination
     username = db_parts[3]
     password = db_parts[4]
     host = db_parts[5]
-    port = db_part[6]
+    port = db_parts[6]
     db = db_parts[7]
     @conn = PGconn.open(:host =>  host, :port => port, :dbname => db, :user=> username, :password=> password)
 
