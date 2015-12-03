@@ -73,7 +73,7 @@ describe "Export Products CSV"  do
     expect(page.response_headers["Content-Disposition"]).to eq('attachment; filename="products.csv"')
     rows = CSV.parse(page.body)
     header_row = rows.shift
-    expect(header_row).to eq(%w{Supplier Market Name Pricing Available})
+    expect(header_row).to eq(%w{Supplier Market Name Pricing Available Code})
     rows
   end
 
