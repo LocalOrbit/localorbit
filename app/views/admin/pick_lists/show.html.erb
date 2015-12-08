@@ -34,10 +34,12 @@
         <% if !pick_list.notes.empty? 
           # Only include this section if it, you know, *contains* anything..
         %>
+        <div>
         <h3>Delivery Notes</h3>
           <% pick_list.notes.each do |note| %>
           <p><span class="buyer-name"><%= note.buyer.name %></span>: <%= note.note %></p>
           <% end %>
+        </div>
         <% end %>
         
       </div>
