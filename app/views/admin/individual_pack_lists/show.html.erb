@@ -93,12 +93,16 @@
           <% end %>
         </table>
       </div>
+      
+      <% if @delivery_notes.where(supplier_org: seller.id, buyer_org: order.organization.id).exists? %>
       <div class="delivery-notes">
         <h2>Delivery Notes</h2>
-        <% @delivery_notes.each do |note| %>
-        <p><%= "#{note.buyer.name}: #{note.note}" if note.supplier_org == seller.id && note.buyer_org == order.organization.id%></p>
+        <% @delivery_notes.where(supplier_org: seller.id, buyer_org: order.organization.id).each do |note| %>
+        <p><%= "#{note.buyer.name}: #{note.note}" %></p>
         <% end %>
       </div>
+      <% end %>
+      
     </div>
   <% end %>
 <% end %>
