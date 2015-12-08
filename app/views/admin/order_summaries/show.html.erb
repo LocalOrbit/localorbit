@@ -43,6 +43,15 @@
                 <div class="tel">T: <%= number_to_phone order.decorate.display_delivery_phone %></div>
               <% end %>
               <div class="order-number">Order #:<%= order.order_number %></div>
+              
+              <% if @delivery_notes.where(supplier_org: seller.id, buyer_org: order.organization.id).exists? %>
+              <div>
+                  <h3 class="fn org">Delivery Notes</h3>
+                  <% @delivery_notes.where(supplier_org: seller.id, buyer_org: order.organization.id).each do |note| %>
+                    <p><%= note.note %></p>
+                  <% end %>
+              </div>
+              <% end %>
             </th>
             <% first_item = items.shift %>
             <td><%= first_item.name %></td>
@@ -70,7 +79,10 @@
               </tr>
             <% end %>
 
-            <% (min_rowspan - (items.size + 1)).times do %>
+            <% (min_rowspan - (items.size + 1)).times do
+            # Wow... what a trainwreck.  There *must* be a reason for this symantic 
+            # nightmare... Ah, well - this is for another day... 
+            %>
               <tr>
                 <td></td>
                 <td></td>
