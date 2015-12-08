@@ -9,7 +9,9 @@
 
     var delivery_calendar_widget = React.createClass({
         propTypes: {
-            deliveries: React.PropTypes.array.isRequired
+            deliveries: React.PropTypes.array.isRequired,
+            numPendingDeliveries: React.PropTypes.number.isRequired,
+            pendingDeliveryAmount: React.PropTypes.string.isRequired
         },
 
         isLastDay: function(dt) {
@@ -56,24 +58,16 @@
             return (
                 <div className="dashboard-widget large-widget deliveries">
                     <div style={{fontSize: 24, textAlign: 'left', padding: 10, color: "#FFF"}}>
-                        Upcoming Deliveries
+                        {this.props.numPendingDeliveries} Upcoming Deliveries
                     </div>
                     <div className="bottom-border deliveries"></div>
                     <br/><br/>
                     {weeks}
                     <div className="bottom-border deliveries"></div>
                     <div className="top-section">
-                        <div style={{float: "left"}}>
-                            <div className="widget-value deliveries">
-                                $111.22
-                            </div>
-                            <div className="widget-label deliveries">
-                                Pending Dlvy
-                            </div>
-                        </div>
-                        <div style={{float: "right"}}>
-                            <div className="font-icon deliveries icon-truck"></div>
-                        </div>
+                        <lo.pending_delivery
+                            pendingDeliveryAmount={this.props.pendingDeliveryAmount}
+                        />
                     </div>
                     <div className="bottom-border deliveries"></div>
                     <br/><br/>

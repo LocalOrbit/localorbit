@@ -17,7 +17,8 @@
             this.setState({
                 interval: value
             });
-            window.lo.DashboardActions.newQuery(value)
+            this.props.callbackParent(value); // hey parent, I've changed!
+            window.lo.DashboardActions.newIntervalQuery(value);
         },
 
         render: function () {

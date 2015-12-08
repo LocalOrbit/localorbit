@@ -6,28 +6,40 @@
             baseUrl: React.PropTypes.string.isRequired
         },
 
-        getInitialState: function() {
+        getInitialState: function () {
             return {
-                dashboard: {}
+                dashboard: {},
+                interval: "1",
+                selectedEntity: "B"
             };
         },
 
-        componentWillMount: function() {
+        componentWillMount: function () {
             this.updateDimensions();
             window.lo.DashboardStore.listen(this.onDashboardChange);
             window.lo.DashboardActions.loadDashboard(this.props.baseUrl);
         },
 
-        componentDidMount: function() {
+        componentDidMount: function () {
             window.addEventListener('resize', this.updateDimensions);
         },
 
-        componentWillUnmount: function() {
+        componentWillUnmount: function () {
             window.removeEventListener('resize', this.updateDimensions);
         },
 
-        updateDimensions: function() {
+        updateDimensions: function () {
             this.setState({width: $(window).width()});
+        },
+
+        onIntervalChanged: function (value) {
+            window.lo.DashboardStore.interval = value;
+            this.setState({interval:value});
+        },
+
+        onSelectedEntityChanged: function (value) {
+            window.lo.DashboardStore.selectedEntity = value;
+            this.setState({selectedEntity:value});
         },
 
         onDashboardChange: function(res) {
@@ -38,20 +50,40 @@
 
         render: function () {
             var self = this;
+            var buyer_supplier_picker;
+            var paymentWidget;
 
-             return (
+            if (this.state.dashboard.showEntityPicker)
+                buyer_supplier_picker = (<lo.buyer_supplier_picker callbackParent={this.onSelectedEntityChanged}/>);
+            else
+                buyer_supplier_picker = ('');
+
+            if ((self.state.dashboard.showEntityPicker && self.state.selectedEntity == "S" ) || self.state.dashboard.user_type == "S"){
+                paymentWidget = (<lo.payments_due_widget paymentsDueAmount={self.state.dashboard.paymentsDueAmount} />)
+            }
+            else
+                paymentWidget = (<lo.payments_overdue_widget paymentsOverDueAmount={self.state.dashboard.paymentsOverDueAmount} />)
+
+            return (
                  <div>
                      <div>
                          <div style={{float: 'left'}}>
                              <h1>Dashboard</h1>
                          </div>
                          <div style={{float: 'right'}}>
-                             <lo.timeframe_picker />
+                             <lo.timeframe_picker callbackParent={this.onIntervalChanged}/>
+                         </div>
+                         <div style={{float: 'right', marginRight: 15}}>
+                             {buyer_supplier_picker}
                          </div>
                      </div>
                      <div className="row row--partial dashboard" style={{background: '#EEE', padding: 2}}>
                         <div className="column column--one-third" style={{padding: 2}}>
-                            <lo.delivery_calendar_widget deliveries={self.state.dashboard.deliveries}/>
+                            <lo.delivery_calendar_widget
+                                deliveries={self.state.dashboard.deliveries}
+                                numPendingDeliveries={self.state.dashboard.numPendingDeliveries}
+                                pendingDeliveryAmount={self.state.dashboard.pendingDeliveryAmount}
+                            />
                         </div>
                         <div className="column column--one-third" style={{margin: 5, padding: 2}}>
                             <div>
@@ -74,9 +106,7 @@
                                  />
                             </div>
                             <div>
-                                 <lo.payments_due_widget
-                                     paymentsDueAmount={self.state.dashboard.paymentsDueAmount}
-                                 />
+                                {paymentWidget}
                             </div>
                         </div>
                      </div>

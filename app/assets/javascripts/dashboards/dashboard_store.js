@@ -6,25 +6,37 @@
   var DashboardActions = Reflux.createActions([
     "setBaseUrl",
     "loadDashboard",
-    "newQuery",
+    "newIntervalQuery",
+    "newEntityQuery",
     "updateDashboard"
   ]);
 
   var DashboardStore = Reflux.createStore({
     init: function() {
       this.dashboard = {};
+        this.interval = "1";
+        this.selectedEntity = "B";
       this.url = window.location.protocol + "//" + window.location.host + "/api/v1/dashboards";
       this.parameters = {
-        dateRange: "1"
+        dateRange: "1",
+        viewAs: "B"
       };
       this.loading = false;
       this.listenTo(DashboardActions.loadDashboard, this.loadDashboard);
-      this.listenTo(DashboardActions.newQuery, this.newQuery);
+      this.listenTo(DashboardActions.newIntervalQuery, this.newIntervalQuery);
+      this.listenTo(DashboardActions.newEntityQuery, this.newEntityQuery);
       this.listenTo(DashboardActions.updateDashboard, this.updateDashboard);
     },
 
-    newQuery: function(query) {
+    newIntervalQuery: function(query) {
       this.parameters.dateRange = query;
+      this.parameters.viewAs = this.selectedEntity;
+      DashboardActions.loadDashboard();
+    },
+
+    newEntityQuery: function(view_as) {
+      this.parameters.dateRange = this.interval;
+      this.parameters.viewAs = view_as;
       DashboardActions.loadDashboard();
     },
 

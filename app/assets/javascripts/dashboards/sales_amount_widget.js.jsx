@@ -33,13 +33,18 @@
                     },
                     marker:{
                         color:"rgb(235, 235, 235)"
-                    }
+                    },
+                    fill:"tonexty",
+                    mode:"lines",
+                    uid:"ab9b77",
+                    connectgaps:true,
+                    fillcolor:"rgb(204, 204, 204)"
                 }
             ];
             let layout = {
                 autosize: true,
                 width: 290,
-                height: 400,
+                height: 300,
                 margin: {
                     l: 5,
                     r: 5,
@@ -52,16 +57,19 @@
                     showticklabels:false,
                     showgrid:false,
                     zeroline:false,
-                    hoverformat: '.2f'
+                    exponentformat:"none",
+                    showexponent:"none",
+                    tickprefix:"$"
                 },
                 xaxis:{
                     autorange:true,
                     showticklabels:false,
                     showgrid:false,
-                    zeroline:false
+                    zeroline:false,
                 }
             };
             let config = {
+                displayModeBar: false
             };
 
             return (

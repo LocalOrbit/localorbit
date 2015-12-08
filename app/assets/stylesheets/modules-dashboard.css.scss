@@ -23,7 +23,7 @@
   overflow: hidden;
 }
 .segmented-control .label {
-  width: 50px;
+  min-width: 50px;
   height: 25px;
   padding-top: 9px;
   float: left;
@@ -42,15 +42,13 @@
   margin-bottom: 10px;
   &.deliveries {
     background-color: #666;
-    width: 300px;
+    min-width: 300px;
     padding: 1px;
   }
   .small-widget {
-    width: 100%;
     height: 100px;
   }
   .large-widget {
-    width: 100%;
   }
 }
 

@@ -35,7 +35,7 @@
             let layout = {
                 autosize: true,
                 width: 290,
-                height: 400,
+                height: 300,
                 margin: {
                     l: 5,
                     r: 5,
@@ -44,17 +44,21 @@
                     autoexpand: true
                 },
                 yaxis:{
+                    type:"linear",
                     autorange:true,
                     showticklabels:false,
                     showgrid:false,
                     zeroline:false,
-                    hoverformat: '.2f'
+                    exponentformat:"none",
+                    showexponent:"all"
                 },
                 xaxis:{
                     autorange:true,
                     showticklabels:false,
                     showgrid:false,
-                    zeroline:false
+                    zeroline:false,
+                    exponentformat:"none",
+                    showexponent:"all"
                 }
             };
             let config = {
