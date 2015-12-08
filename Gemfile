@@ -88,6 +88,7 @@ gem 'spreadsheet', require: false # XLS
 gem 'slop', '~> 3.0', require: false # option parsing
 gem 'dedent', require: false
 gem 'activerecord-import', require: false
+gem 'grape'
 
 group :doc do
   gem "sdoc", require: false
