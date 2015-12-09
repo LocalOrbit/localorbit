@@ -16,17 +16,18 @@
                  namespace: "p#{unit_product.id}",
                  html: {class: "inventory-form row row--partial"} do |f| %>
 
-      <h3 class="unit-name"><%= unit_product.unit_plural %></h3>
+      <h3 class="unit-name"><%= unit_product.unit_plural %></h3><br/>
+      <%= check_box_tag 'adv_inventory', '', !unit_product.use_simple_inventory, class: 'adv_inventory' %>&nbsp;Show Advanced Inventory Options&nbsp;<span class="tooltip" data-tooltip="Enable Lot#, Good From Date, Expiration Date"></span><br/>
       <div class="table-wrapper">
         <%= content_tag :table,
                         data: edit_table_error_payload(@lot_with_errors),
                         class: "sortable inventory-table" do %>
           <thead>
           <tr>
-            <th class="created_at">Date Added</th>
-            <th class="number">Lot #</th>
-            <th class="good_from">Good From</th>
-            <th class="expires_at">Expires On</th>
+            <th class="created_at adv_option" style="display: none">Date Added</th>
+            <th class="number adv_option" style="display: none">Lot #</th>
+            <th class="good_from adv_option" style="display: none">Good From</th>
+            <th class="expires_at adv_option" style="display: none">Expires On</th>
             <th class="quantity">Quantity</th>
             <th></th>
           </tr>
@@ -39,12 +40,12 @@
                                            rel: "lot_#{lot.id}"} do %>
 
               <%= fields_for :lot, lot, index: lot.id do |lot_in_table| %>
-                <td class="created_at">
+                <td class="created_at adv_option" style="display: none">
                   <div class="edit-trigger">
                     <%= lot.created_at.strftime('%m/%d/%Y') %>
                   </div>
                 </td>
-                <td class="number">
+                <td class="number adv_option" style="display: none">
                   <div class="edit-trigger view-cell">
                     <%= lot.number %>
                   </div>
@@ -52,7 +53,7 @@
                     <%= lot_in_table.text_field :number, size: 8 %>
                   </div>
                 </td>
-                <td class="good_from">
+                <td class="good_from adv_option" style="display: none">
                   <div class="edit-trigger view-cell">
                     <%= lot.good_from.try(:strftime, '%d %b %Y') %>
                   </div>
@@ -63,7 +64,7 @@
                     <div class="datepicker" data-input="lot_<%= lot.id %>_good_from"></div>
                   </div>
                 </td>
-                <td class="expires_at">
+                <td class="expires_at adv_option" style="display: none">
                   <div class="edit-trigger view-cell">
                     <%= lot.expires_at.try(:strftime, '%d %b %Y') %>
                   </div>
@@ -95,9 +96,9 @@
           <% end %>
 
           <tr class="lot add-row <%= unit_product.lots.count > 0 ? 'is-hidden' : 'editing' %>">
-            <td class="edit-cell"><div><%= Time.current.strftime('%m/%d/%Y') %></div></td>
-            <td class="edit-cell"><div><%= f.text_field :number, size: 8  %></div></td>
-            <td class="edit-cell">
+            <td class="edit-cell adv_option" style="display: none"><div><%= Time.current.strftime('%m/%d/%Y') %></div></td>
+            <td class="edit-cell adv_option" style="display: none"><div><%= f.text_field :number, size: 8  %></div></td>
+            <td class="edit-cell adv_option" style="display: none">
               <div>
                 <%= f.datetime_field :good_from, size: 8, class: "alt-datepicker" %>
                 <a href="#<%= unit_product.id %>_lot_good_from" class="btn btn--end calendar-toggle" title="Select a date">
@@ -105,7 +106,7 @@
                 <div class="datepicker" data-input="p<%= unit_product.id %>_lot_good_from"></div>
               </div>
             </td>
-            <td class="edit-cell">
+            <td class="edit-cell adv_option" style="display: none">
               <div>
                 <%= f.datetime_field :expires_at, size: 8, class: "alt-datepicker", data: {'min-date' => 0} %>
                 <a href="#<%= unit_product.id %>_lot_expires_at" class="btn btn--end calendar-toggle" title="Select a date">
@@ -115,16 +116,16 @@
             </td>
             <td class="edit-cell"><div><%= f.number_field :quantity, min: 0, size: 3 %></div></td>
             <td class="edit-cell">
-              <button class="cancel">Cancel</button>&nbsp;<%= f.submit "Add", class: "btn--small" %>
+              <% if unit_product.lots.count > 0 %><button class="cancel">Cancel</button>&nbsp;<% end %><%= f.submit "Add", class: "btn--small" %>
             </td>
           </tr>
 
           <% if organization_can_access?(unit_product.organization, :advanced_inventory) && unit_product.lots.count > 0 %>
             <tr class="add-toggle last-row">
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
+              <td class="adv_option" style="display: none"></td>
+              <td class="adv_option" style="display: none"></td>
+              <td class="adv_option" style="display: none"></td>
+              <td class="adv_option" style="display: none"></td>
               <td></td>
               <td><%= link_to "Add Lot", '#add-lot', class: 'add-toggle' %></td>
             </tr>

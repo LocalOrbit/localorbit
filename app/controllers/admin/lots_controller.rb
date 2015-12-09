@@ -11,7 +11,12 @@ class Admin::LotsController < AdminController
   def create
     auto_upgrade_product_to_advanced_inventory(lot_params, @product.lots.count > 0)
 
-    @lot = @product.lots.create(lot_params)
+    lp = lot_params
+    if lot_params['number'].empty? && !lot_params['quantity'].empty?
+      lp = lot_params.slice('quantity')
+    end
+
+    @lot = @product.lots.create(lp)
 
     flash.now[:alert] = "Could not save lot" unless @lot.persisted?
     respond_to do |format|
@@ -26,7 +31,12 @@ class Admin::LotsController < AdminController
 
     auto_upgrade_product_to_advanced_inventory(lot_params, @product.lots.count > 1)
 
-    updated = @lot.update(lot_params)
+    lp = lot_params
+    if lot_params['number'].empty? && !lot_params['quantity'].empty?
+      lp = lot_params.slice('quantity')
+    end
+
+    updated = @lot.update(lp)
 
     if !updated
       @lot_with_errors = @lot

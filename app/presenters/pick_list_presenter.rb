@@ -1,11 +1,13 @@
 class PickListPresenter
-  attr_reader :products, :seller_name, :seller_ship_from_address
+  attr_reader :products, :seller_name, :seller_ship_from_address, :notes
 
-  def initialize(all_items)
+  def initialize(all_items, delivery_notes)
     @products = all_items.group_by(&:product_id).map {|_, items| PickListProduct.new(items) }
     seller = all_items.first.product.organization.decorate
     @seller_name = seller.name
     @seller_ship_from_address = seller.ship_from_address
+    
+    @notes = delivery_notes.where(supplier_org:  seller.id)
   end
 
   class PickListProduct
@@ -21,7 +23,7 @@ class PickListPresenter
     def name
       @product.name
     end
-
+    
     def total_sold
       @total_sold ||= @items.sum(&:quantity).to_i
     end
@@ -29,7 +31,7 @@ class PickListPresenter
     def unit
       @unit ||= total_sold == 1 ? @product.unit_singular : @product.unit_plural
     end
-
+    
     def breakdown(buyer, sep = "<br/>")
       text = ""
       if buyer.lots.present?

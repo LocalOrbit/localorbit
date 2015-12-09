@@ -47,6 +47,10 @@ module Admin
     end
 
     def update
+      if @organization.can_sell && !params[:can_sell]
+        disable_supplier_inventory
+      end
+
       if @organization.update_attributes(organization_params)
         redirect_to [:admin, @organization], notice: "Saved #{@organization.name}"
       else
@@ -124,6 +128,20 @@ module Admin
 
     def find_selling_markets
       @selling_markets = Market.managed_by(current_user).order(:name).inject([["All", 0]]) {|result, market| result << [market.name, market.id] }
+    end
+
+    def disable_supplier_inventory
+      supplier_org = find_organization
+      products = supplier_org.products
+      products.each do |product|
+        lots = product.lots
+        lots.each do |lot|
+          lot.quantity = 0
+          lot.good_from = nil
+          lot.expires_at = nil
+          lot.save
+        end
+      end
     end
   end
 end

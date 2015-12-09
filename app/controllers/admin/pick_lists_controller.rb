@@ -8,12 +8,14 @@ class Admin::PickListsController < AdminController
                     .order("organizations.name, products.name")
                     .preload(order: :organization)
 
+    @delivery_notes = DeliveryNote.joins(:order).where(orders: {delivery_id: @delivery.id})
+    
     unless @very_important_person
       order_items = order_items.where(products: {organization_id: current_user.organization_ids})
     end
 
     @pick_lists = order_items.group_by {|item| item.product.organization_id }.map do |_, items|
-      PickListPresenter.new(items)
+      PickListPresenter.new(items, @delivery_notes)
     end
 
     if @pick_lists.empty?

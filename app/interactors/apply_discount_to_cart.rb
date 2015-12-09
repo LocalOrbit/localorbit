@@ -3,7 +3,9 @@ class ApplyDiscountToCart
 
   def perform
     if context[:code].present?
-      discount = Discount.where(code: code).first
+      # The Arel predicate 'matches' will use the ILIKE operator for Postgres, and LIKE for 
+      # everything else...  Hey, look!  Portablility!  Damn, I love Google!
+      discount = Discount.where(Discount.arel_table[:code].matches(code)).first
 
       if can_use_discount?(discount) && discount_is_valid?(discount)
         cart.discount = discount
