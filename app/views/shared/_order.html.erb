@@ -186,7 +186,7 @@
               <span class="quantity-delivered-ro"><%= Format.quantity item.object.quantity_delivered %></span>
             <% end %> <%= item.object.unit %> (Delivered)
           </td>
-          <td class="price"><%= number_to_currency item.object.unit_price %><br> <span> <%= link_to "EDIT", "?item_id=#{item.object.id}&item_name=#{item.object.name}#edit-unit-price", class: "modal-toggle" %></span> <!-- click on a button for a modal, get a modal form that posts here, accesses this unit_price, and changes it for this order (and this order item) only -->
+          <td class="price"><%= number_to_currency item.object.unit_price %><br> <span> <%= link_to "EDIT", "?item_id=#{item.object.id}#edit-unit-price", class: "modal-toggle" %></span> <!-- click on a button for a modal, get a modal form that posts here, accesses this unit_price, and changes it for this order (and this order item) only -->
           <td class="total"><%= number_to_currency item.object.gross_total %></td>
           <td class="delivery-status">
             <%= item.hidden_field :delivery_status %>

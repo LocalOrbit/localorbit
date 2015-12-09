@@ -31,7 +31,7 @@ module Admin
 
     def update
       #items = fetch_order_items
-      @order_item = OrderItem.find(id)
+      @order_item = OrderItem.find(params[:item_id])
     end
 
     private

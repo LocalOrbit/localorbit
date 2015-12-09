@@ -1,9 +1,8 @@
 <div class="is-hidden modal popup" id="edit-unit-price">
   <div class="popup-header">
-    Edit Unit Price of ORDER ITEM NAME HERE <button class="close"><i class="font-icon icon-close"></i></button>
+    Edit Unit Price of <%= OrderItem.find(params[:item_id]).name %> <button class="close"><i class="font-icon icon-close"></i></button>
   </div>
   <div class="popup-body">
-    
     <%= form_for :order_item, :method => "patch", remote: true do |f| %>
       
       <% fields_for :order_item do |f| %>
