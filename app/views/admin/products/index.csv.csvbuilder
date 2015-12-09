@@ -1,4 +1,4 @@
-csv << ["Supplier", "Market", "Name", "Pricing", "Available"]
+csv << ["Supplier", "Market", "Name", "Pricing", "Available", "Code"]
 
 @products.decorate.each do |product|
   csv << [
@@ -6,6 +6,7 @@ csv << ["Supplier", "Market", "Name", "Pricing", "Available"]
     product.market_name,
     product.name_and_unit,
     product.prices.view_sorted.decorate.map(&:quick_info).join(", "),
-    product.available_inventory
+    product.available_inventory,
+    product.code
   ]
 end
