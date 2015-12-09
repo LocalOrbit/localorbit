@@ -17,7 +17,7 @@
                  html: {class: "inventory-form row row--partial"} do |f| %>
 
       <h3 class="unit-name"><%= unit_product.unit_plural %></h3><br/>
-      <input type="checkbox" class="adv_inventory" <%= !unit_product.use_simple_inventory ? 'checked' : '' %>/>&nbsp;Show Advanced Inventory Options&nbsp;<span class="tooltip" data-tooltip="Enable Lot#, Good From Date, Expiration Date"></span><br/>
+      <%= check_box_tag 'adv_inventory', '', !unit_product.use_simple_inventory, class: 'adv_inventory' %>&nbsp;Show Advanced Inventory Options&nbsp;<span class="tooltip" data-tooltip="Enable Lot#, Good From Date, Expiration Date"></span><br/>
       <div class="table-wrapper">
         <%= content_tag :table,
                         data: edit_table_error_payload(@lot_with_errors),
