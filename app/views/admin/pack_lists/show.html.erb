@@ -30,35 +30,32 @@
     </div>
     <div class="row">
       <div class="column column--half vcard vcard--buyer">
-
         <h2 class="heading heading-delivery-tool">To Buyer</h2>
         <h3 class="fn org"><%= order.organization.name %></h3>
         <div class="street"><%= order.display_delivery_street %></div>
         <div class="city-state-zip"><%= order.display_delivery_city_state_zip %></div>
         <div class="phone"><%= number_to_phone order.display_delivery_phone %></div>
-      </div><div class="column column--half vcard vcard--seller">
-
+      </div>
+      
+      <div class="column column--half vcard vcard--seller">
         <h2 class="heading heading-delivery-tool">From Market</h2>
         <h3 class="fn org"><%= order.market.name %></h3>
         <div class="street"><%= order.display_market_street %></div>
         <div class="city-state-zip"><%= order.display_market_city_state_zip %></div>
         <div class="phone"><%= number_to_phone order.display_market_phone %></div>
-
       </div>
     </div>
 
 
     <div class="row">
       <div class="column column--half">
-
         <h2 class="heading heading-delivery-tool delivery-message"><%= order.display_fulfillment_info %></h2>
         <span class="upcoming-delivery-date"><%= @delivery.buyer_display_date %> <%= @delivery.buyer_time_range %></span>
-
-      </div><div class="column column--half">
-
+      </div>
+      
+      <div class="column column--half">
         <h2 class="heading heading-delivery-tool">Order Number</h2>
         <span class="upcoming-delivery-order order-number"><%= order.order_number %></span>
-
       </div>
     </div>
 
@@ -98,6 +95,16 @@
         </tr>
       </table>
     </div>
+    
+    <% if @delivery_notes.where(buyer_org: order.organization.id).exists? %>
+    <div class="delivery-notes">
+      <h2>Delivery Notes</h2>
+      <% @delivery_notes.where(buyer_org: order.organization.id).each do |note| %>
+      <p><%= "To #{note.supplier.name}: #{note.note}" %></p>
+      <% end %>
+    </div> <!-- end delivery-notes -->
+    <% end %>
+    
   </div>
 <% end %>
 </div>
