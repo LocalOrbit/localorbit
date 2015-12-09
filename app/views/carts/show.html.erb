@@ -200,12 +200,12 @@
           </fieldset>
         </div>
         <div class="form-actions">
+          <%= f.submit "Place Order", class: 'btn btn btn--money', id: 'place-order-button', disabled: true, data: {disable_with: "Please wait..."} %>
           <span class="pull-left cancel-link">
-            <%= link_to "Cancel Order", [:cart], data: {method: :delete, confirm: "Are you sure you want to clear the cart?"}, class: "btn btn--small destructive" %>
+            <%= link_to "Cancel Order", [:cart], data: {method: :delete, confirm: "Are you sure you want to clear the cart?"}, class: "btn btn--small destructive", id: "cancel-button" %>
             <span class="note">(Clear Cart)</span>
           </span>
           <%= link_to "Continue Ordering", products_path, class: "continue-shop" %>  
-          <%= f.submit "Place Order", class: 'btn btn btn--money', id: 'place-order-button', disabled: true, data: {disable_with: "Please wait..."} %>
         </div>
       </div>
     </div>
