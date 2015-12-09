@@ -114,7 +114,7 @@
           <th scope="row">Payment Method: </th>
           <td><%= order.payment_method.titleize %></td>
         </tr>
-        <% if order.payment_method == "purchase order" && order.payment_note %>
+        <% if order.payment_method == "purchase order" && order.payment_note.length > 0 %>
         <tr>
           <th scope="row">Payment Ref. #: </th>
           <td><%= order.payment_note %></td>
