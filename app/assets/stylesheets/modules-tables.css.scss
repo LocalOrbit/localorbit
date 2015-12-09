@@ -549,7 +549,9 @@ span.price-for-quantity {
 }
 
 .delivery-tools {
-  margin: 30px 0 100px 0;
+  /* KXM - This may prove problematic... */
+  /*margin: 30px 0 100px 0;*/
+  margin: 30px 0;
 }
 .delivery-tools tr.totals {
   border: 0px;

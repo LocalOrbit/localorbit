@@ -47,6 +47,14 @@ input[type=submit] {
     padding: 4px 10px;
     font-size: 14px;
   }
+  
+  &#cancel-button {
+    display:inline;
+    a {
+      padding:none;
+     }
+  }
+  
   &.alert {
     border-color: $alert_text;
     color: $alert_text;
@@ -62,6 +70,12 @@ input[type=submit] {
     color: $warning_text;
     background-color: $warning_bg;
   }
+  
+  &#place-order-button{
+    width:100%;
+    margin:20px 0 30px;
+  }
+
   @media screen and (max-width: $mobile_break) {
     &.mobile-block {
       text-align: center;
@@ -352,7 +366,6 @@ li .suspended-indicator {
   }
   .continue-shop {
     display: inline-block;
-    margin-top: 28px;
   }
   .fresh-sheet-test {
     width: 100%;
