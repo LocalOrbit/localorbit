@@ -1,3 +1,4 @@
+@import "mixins";
 
 .calendar{
   margin: auto;
@@ -23,4 +24,9 @@
     &.disabled{background: #f9f9f9; font-style: italic; color: #a3a3a3;}
   }
   header .cal-date{background:#fff;}
+  
+  th{
+    min-width: inherit;
+    width:inherit;
+  }
 }
