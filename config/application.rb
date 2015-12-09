@@ -41,5 +41,32 @@ module LocalOrbit
     config.font_assets.origin = "*"
 
     config.middleware.use PDFKit::Middleware, {}, only: [%r[/admin/invoices], %r[/admin/labels]]
+  
+    # add material for Grape RESTful API
+    config.middleware.use Rack::Cors do
+      allow do
+        origins "*"
+        resource "*", headers: :any, methods: [:get, 
+            :post, :put, :delete, :options]
+      end
+    end
+    # config.active_record.raise_in_transactional_callbacks = true
+    config.paths.add "app/api", glob: "**/*.rb"
+    config.autoload_paths += Dir["#{Rails.root}/app/api/*"]
+
   end
 end
+
+# TODO Q: is this correct, or does the stuff beneath Rails::App go inside the stuff above?
+# module API 
+#   class Application < Rails::Application
+#     config.middleware.use Rack::Cors do
+#       allow do
+#         origins "*"
+#         resource "*", headers: :any, methods: [:get, 
+#             :post, :put, :delete, :options]
+#       end
+#     end
+#     config.active_record.raise_in_transactional_callbacks = true
+#   end
+# end
