@@ -2,6 +2,8 @@ Rails.application.routes.draw do
 
   mount StripeEvent::Engine, at: '/webhooks/stripe'
 
+  mount API::Base, at: "/" # hm
+
   get 'style_guide/index'
 
   get '*path', constraints: NonMarketDomain.new, format: false,

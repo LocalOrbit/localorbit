@@ -1,7 +1,10 @@
-module Api	
+module API	
 	module V2
 		class Base < Grape::API
-			mount API::V2::Products
+			version 'v2'
+			mount Products
+			#mount Api::V2::Products
+			#mount Products
 			# mount API::V2::AnotherResource
 		end
 	end
