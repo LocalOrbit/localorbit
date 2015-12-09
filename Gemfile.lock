@@ -331,6 +331,9 @@ GEM
       rack-accept
       rack-mount
       virtus (>= 1.0.0)
+    grape-active_model_serializers (1.3.2)
+      active_model_serializers (>= 0.9.0)
+      grape
     graticule (2.5.0)
       activesupport
       i18n
@@ -522,6 +525,7 @@ GEM
     rack-canonical-host (0.1.0)
       addressable
       rack (~> 1.0)
+    rack-cors (0.4.0)
     rack-mount (0.8.3)
       rack (>= 1.0.0)
     rack-protection (1.5.3)
@@ -752,6 +756,7 @@ DEPENDENCIES
   font-awesome-rails
   font_assets
   grape
+  grape-active_model_serializers
   graticule
   groupdate!
   guard-konacha-rails
@@ -791,6 +796,7 @@ DEPENDENCIES
   quiet_assets
   rack-cache
   rack-canonical-host
+  rack-cors
   rails (~> 4.1.6.rc1)
   rails_12factor
   rails_view_annotator
