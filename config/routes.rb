@@ -43,6 +43,9 @@ Rails.application.routes.draw do
       resources :filters, only: [:index]
       resources :order_templates, only: [:index, :create, :destroy]
     end
+    # namespace :v2 do 
+    #   resources :products
+    # end
   end
 
   namespace :admin do
