@@ -22,9 +22,17 @@ module API
 					requires :name, type: String, desc: "Name of the product"
 				end
 				get ":name", root: "product" do 
-					Product.where(name: permitted_params[:name])
+					Product.where(name: permitted_params[:name]) # all that come up with that name search
 				end
 
+				desc "Return products by category"
+				params do 
+					requires :category, type: String, desc: "Name of category"
+				end
+				get ":category", root: "product" do # This one does not really work that well, eg category "carrots" gets all the cat "Vegetables", TODO examine priorities
+					category_id = Category.find_by_name(permitted_params[:category]).id
+					Product.where(category_id: category_id)
+				end
 
 			end
 
