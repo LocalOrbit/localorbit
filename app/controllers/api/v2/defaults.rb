@@ -9,11 +9,12 @@ module API
 				default_format :json
 				format :json
 				formatter :json,
-					Grape::Formatter::ActiveModeSerializers 
+					Grape::Formatter::ActiveModelSerializers 
 
 				helpers do 
 					def permitted_params
-						# TODO fill in
+						@permitted_params ||= declared(params, 
+               include_missing: false)
 					end
 
 					def logger
