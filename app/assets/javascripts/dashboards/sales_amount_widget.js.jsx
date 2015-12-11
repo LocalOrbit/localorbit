@@ -5,12 +5,14 @@
 
     var sales_amount_widget = React.createClass({
         propTypes: {
+            userType: React.PropTypes.string.isRequired,
             totalSalesAmount: React.PropTypes.string.isRequired,
             totalSalesAmountGraph: React.PropTypes.object.isRequired
         },
 
         render: function () {
             var self = this;
+            var label_text;
             var labels=[], data_points=[];
             var j = this.props.totalSalesAmountGraph;
             if (j) {
@@ -34,10 +36,10 @@
                     marker:{
                         color:"rgb(235, 235, 235)"
                     },
-                    fill:"tonexty",
-                    mode:"lines",
+                    //fill:"tonexty",
+                    mode:"lines+markers",
                     uid:"ab9b77",
-                    connectgaps:true,
+                    connectgaps:false,
                     fillcolor:"rgb(204, 204, 204)"
                 }
             ];
@@ -46,7 +48,7 @@
                 width: 290,
                 height: 300,
                 margin: {
-                    l: 5,
+                    l: 40,
                     r: 5,
                     t: 20,
                     b: 35,
@@ -54,23 +56,31 @@
                 },
                 yaxis:{
                     autorange:true,
-                    showticklabels:false,
+                    showticklabels:true,
                     showgrid:false,
                     zeroline:false,
-                    exponentformat:"none",
-                    showexponent:"none",
-                    tickprefix:"$"
+                    exponentformat:"B",
+                    showexponent:"all",
+                    tickprefix:"$",
+                    tickfont:{
+                        size:10
+                    }
                 },
                 xaxis:{
                     autorange:true,
                     showticklabels:false,
                     showgrid:false,
-                    zeroline:false,
+                    zeroline:false
                 }
             };
             let config = {
                 displayModeBar: false
             };
+
+            if (this.props.userType == "S" || this.props.userType == "M")
+                label_text = 'Total Sales';
+            else
+                label_text = 'Total Spend';
 
             return (
                 <div className="dashboard-widget large-widget">
@@ -83,14 +93,14 @@
                                 {this.props.totalSalesAmount}
                             </div>
                             <div className="widget-label">
-                                Total Spend
+                                {label_text}
                             </div>
                         </div>
                         <div className="bottom-border"></div>
                     </div>
                     <Plotly className="SalesAmount" data={data} layout={layout} config={config}/>
                     <div style={{borderTop: '1px solid #EEE', padding: 3}}>
-                        <span style={{textTransform: 'uppercase', fontSize: 12, fontWeight: 'bold'}}>View More ></span>
+                        <a href="/admin/orders"><span style={{textTransform: 'uppercase', fontSize: 12, fontWeight: 'bold'}}>View More ></span></a>
                     </div>
                 </div>
             );        }

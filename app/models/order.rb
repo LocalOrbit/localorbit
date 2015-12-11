@@ -64,6 +64,7 @@ class Order < ActiveRecord::Base
 
   scope :recent, -> { visible.order("created_at DESC").limit(15) }
   scope :upcoming_delivery, -> { visible.joins(:delivery).where("deliveries.deliver_on > ?", Time.current.end_of_minute) }
+  scope :upcoming_buyer_delivery, -> { visible.joins(:delivery).where("deliveries.buyer_deliver_on > ?", Time.current.end_of_minute) }
   scope :uninvoiced, -> { visible.purchase_orders.where(invoiced_at: nil) }
   scope :invoiced, -> { visible.purchase_orders.where.not(invoiced_at: nil) }
   scope :unpaid, -> { visible.where(payment_status: "unpaid") }
@@ -243,6 +244,14 @@ class Order < ActiveRecord::Base
       all
     else
       where(buyer_orders_arel(user).or(manager_orders_arel(user))).uniq
+    end
+  end
+
+  def self.dashboard_orders_for_buyer(user)
+    if user.admin?
+      all
+    else
+      joins(:items).where(buyer_orders_arel(user).or(manager_orders_arel(user))).uniq
     end
   end
 

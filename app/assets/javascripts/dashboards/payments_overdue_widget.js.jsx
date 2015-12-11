@@ -3,7 +3,7 @@
 
     var payments_overdue_widget = React.createClass({
         propTypes: {
-            paymentsOverDueAmount: React.PropTypes.string.isRequired
+            paymentsOverdueAmount: React.PropTypes.string.isRequired
         },
 
         render: function () {
@@ -17,7 +17,7 @@
                         </div>
                         <div style={{float: "right"}}>
                             <div className="widget-value">
-                                {this.props.paymentsOverDueAmount}
+                                {this.props.paymentsOverdueAmount}
                             </div>
                             <div className="widget-label">
                                 Overdue
@@ -25,7 +25,7 @@
                         </div>
                     </div>
                     <div style={{borderTop: '1px solid #EEE', padding: 3}}>
-                        <span style={{textTransform: 'uppercase', fontSize: 12, fontWeight: 'bold'}}>View More ></span>
+                        <a href="/admin/financials"><span style={{textTransform: 'uppercase', fontSize: 12, fontWeight: 'bold'}}>View More ></span></a>
                     </div>
                 </div>
             );        }

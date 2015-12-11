@@ -1,17 +1,29 @@
 module Dashboards
 
-  def upcoming_deliveries
-    @deliveries = current_market.deliveries.upcoming_for_seller(current_user).
-        sort_by {|d| d.deliver_on }
+  def upcoming_deliveries(user_type)
+    if user_type == "B" || user_type == "M"
+      @deliveries = Order.orders_for_buyer(current_user).upcoming_buyer_delivery.select('deliveries.*').
+          sort_by {|d| d.buyer_deliver_on }
+      use_date = :buyer_deliver_on
+
+      pending_amount = Order.orders_for_buyer(current_user).where(:delivery => @deliveries.map(&:id)).sum(:total_cost)
+    else
+      @deliveries = Order.orders_for_seller(current_user).upcoming_delivery.select('deliveries.*').
+          sort_by {|d| d.deliver_on }
+      use_date = :deliver_on
+
+      pending_amount_raw = Order.orders_for_seller(current_user).where(:delivery => @deliveries.map(&:id))
+      pending_amount = sum_money_to_sellers(pending_amount_raw)
+    end
 
     if @deliveries.length > 0
-      first_delivery = @deliveries.first.deliver_on
+      first_delivery = @deliveries.first.send(use_date)
     else
       first_delivery = Date.today
     end
 
     last_delivery = first_delivery + 20.days
-    delivery_for_day = @deliveries.each_with_object({}) { |d,map| map[d.deliver_on.yday] ||= d }
+    delivery_for_day = @deliveries.each_with_object({}) { |d,map| map[d.send(use_date).yday] ||= d }
 
     now = DateTime.now
     calendar_start = now - now.wday
@@ -21,9 +33,7 @@ module Dashboards
 
     (calendar_start..calendar_end).each { |day|
       delivery_id = nil
-      css_class = if day < first_delivery || last_delivery < day
-                    "cal-date disabled"
-                  elsif delivery_for_day[day.yday]
+      css_class = if delivery_for_day[day.yday]
                     delivery_id = delivery_for_day[day.yday].id
                     "cal-date"
                   else
@@ -34,7 +44,8 @@ module Dashboards
       end
       delivery_weeks[-1].push({ day: day, css_class: css_class, delivery_id: delivery_id })
     }
-    {:numPendingDeliveries => @deliveries.length, :deliveries => delivery_weeks}
+
+    {:numPendingDeliveries => @deliveries.length, :deliveries => delivery_weeks, :pendingDeliveryAmount => number_to_currency(pending_amount, precision: 0)}
   end
 
   def group_to_sellers(orders, group_by)
@@ -53,6 +64,35 @@ module Dashboards
 
       total[grp] = total[grp] + order.items.map(&:seller_net_total).reduce(:+)
       count[grp] = count[grp] + 1
+    end
+    {:count => count.to_a, :total => total.to_a}
+  end
+
+  def group_to_buyers(orders, group_by)
+    total = Array.new
+    count = Array.new
+    prev_grp = orders.length > 0 ? orders[0].created_at.send(group_by) - 1 : 0
+
+    orders.inject(0) do |t, order|
+      grp = order.created_at.send(group_by)
+
+      if total[grp].nil?
+        total[grp] = BigDecimal(0)
+      end
+
+      if count[grp].nil?
+        count[grp] = BigDecimal(0)
+      end
+
+      #if prev_grp + 1 != grp
+      # grp = prev_grp + 1
+      #  total[grp+1] = 0
+      #else
+        total[grp] = total[grp] + order.total_cost
+        count[grp] = count[grp] + 1
+      #end
+      prev_grp = grp
+
     end
     {:count => count.to_a, :total => total.to_a}
   end

@@ -9,6 +9,7 @@
 
     var delivery_calendar_widget = React.createClass({
         propTypes: {
+            userType: React.PropTypes.string.isRequired,
             deliveries: React.PropTypes.array.isRequired,
             numPendingDeliveries: React.PropTypes.number.isRequired,
             pendingDeliveryAmount: React.PropTypes.string.isRequired
@@ -54,6 +55,12 @@
 
             var delivery_weeks = this.props.deliveries;
             var weeks = this.generateWeeks(delivery_weeks);
+            var view_deliveries_link;
+
+            if (this.props.userType == "S")
+                view_deliveries_link = "/admin/orders"
+            else
+                view_deliveries_link = "/admin/delivery_tools"
 
             return (
                 <div className="dashboard-widget large-widget deliveries">
@@ -72,7 +79,7 @@
                     <div className="bottom-border deliveries"></div>
                     <br/><br/>
                     <div style={{margin: "0 auto", width: 165}}>
-                        <a href="#" className="btn btn--primary" style={{textAlign: "center"}}>View All Deliveries</a>
+                        <a href={view_deliveries_link} className="btn btn--primary" style={{textAlign: "center"}}>View All Deliveries</a>
                     </div>
                     <br/>
                 </div>

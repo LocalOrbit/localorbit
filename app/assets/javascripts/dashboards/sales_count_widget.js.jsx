@@ -83,7 +83,7 @@
                     </div>
                     <Plotly className="SalesCount" data={data} layout={layout} config={config}/>
                     <div style={{borderTop: '1px solid #EEE', padding: 3}}>
-                        <span style={{textTransform: 'uppercase', fontSize: 12, fontWeight: 'bold'}}>View More ></span>
+                        <a href="/admin/orders"><span style={{textTransform: 'uppercase', fontSize: 12, fontWeight: 'bold'}}>View More ></span></a>
                     </div>
                 </div>
             );

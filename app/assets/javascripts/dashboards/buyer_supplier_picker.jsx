@@ -9,7 +9,7 @@
 
         getInitialState: function() {
             return {
-                selectedEntity: "B"
+                selectedEntity: "S"
             }
         },
 

@@ -1,4 +1,4 @@
-class DashboardPresenter
+class BuyerOrderPresenter
   include Search::DateFormat
   include Search::MarketAndOrganization
 

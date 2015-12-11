@@ -2,46 +2,57 @@ class Api::DashboardBuyerPresenter
   include Dashboards
   include ActiveSupport::NumberHelper
 
-  def initialize(orders, order_items, date_param)
+  def initialize(orders, order_items, interval)
     @orders = orders
     @order_items = order_items
-    @date_param = date_param
+    @interval = interval
   end
 
   def generate
 
-      case @date_param
+    total_sales_amount_orders = @orders
+
+    case @date_param
         when "0"
-          interval = Date.today.at_beginning_of_day..Date.today.at_end_of_day
-          total_sales_amount_graph = @orders.placed_between(interval).group_by_hour('orders.created_at', format: "%H").order('hour').sum(:total_cost).as_json
-          total_order_count_graph = @orders.placed_between(interval).group_by_hour('orders.created_at', format: "%H").count.as_json
+          #total_sales_amount_graph = @orders.group_by_hour_of_day('orders.created_at', format: "%H").order('hour').sum(:total_cost).as_json
+          #total_order_count_graph = @orders.group_by_hour_of_day('orders.created_at', format: "%H").count.as_json
+
+          total_sales_grouped = group_to_buyers(total_sales_amount_orders, 'hour')
         when "1"
-          interval = Date.today.at_beginning_of_day - 7..Date.today.at_end_of_day
-          total_sales_amount_graph = @orders.placed_between(interval).group_by_day('orders.created_at', format: "%d").order('day').sum(:total_cost).as_json
-          total_order_count_graph = @orders.placed_between(interval).group_by_day('orders.created_at', format: "%d").count.as_json
+          #total_sales_amount_graph = @orders.group_by_day('orders.created_at', format: "%d").sum(:total_cost).as_json
+          #total_order_count_graph = @orders.group_by_day('orders.created_at', format: "%d").count.as_json
+
+          total_sales_grouped = group_to_buyers(total_sales_amount_orders, 'day')
         when "2"
-          interval = Date.new(Date.current.year,Date.current.month,1).at_beginning_of_day..Date.today.at_end_of_day
-          total_sales_amount_graph = @orders.placed_between(interval).group_by_day('orders.created_at', format: "%d").order('day').sum(:total_cost).as_json
-          total_order_count_graph = @orders.placed_between(interval).group_by_day('orders.created_at', format: "%d").count.as_json
+          #total_sales_amount_graph = @orders.group_by_day('orders.created_at', format: "%d").order('day').sum(:total_cost).as_json
+          #total_order_count_graph = @orders.group_by_day('orders.created_at', format: "%d").count.as_json
+
+          total_sales_grouped = group_to_buyers(total_sales_amount_orders, 'day')
         when "3"
-          interval = Date.new(Date.current.year,1,1).at_beginning_of_day..Date.today.at_end_of_day
-          total_sales_amount_graph = @orders.placed_between(interval).group_by_month('orders.created_at', format: "%b").order('month').sum(:total_cost).as_json
-          total_order_count_graph = @orders.placed_between(interval).group_by_month('orders.created_at', format: "%b").count.as_json
+          #total_sales_amount_graph = @orders.group_by_month('orders.created_at', format: "%b").order('month').sum(:total_cost).as_json
+          #total_order_count_graph = @orders.group_by_month('orders.created_at', format: "%b").count.as_json
+
+          total_sales_grouped = group_to_buyers(total_sales_amount_orders, 'month')
         else
-          interval = Date.new(Date.current.year,Date.current.month,1).at_beginning_of_day..Date.today.at_end_of_day
-          total_sales_amount_graph = @orders.placed_between(interval).group_by_day('orders.created_at', format: "%d").order('day').sum(:total_cost).as_json
-          total_order_count_graph = @orders.placed_between(interval).group_by_day('orders.created_at', format: "%d").count.as_json
+          #total_sales_amount_graph = @orders.group_by_day('orders.created_at', format: "%d").order('day').sum(:total_cost).as_json
+          #total_order_count_graph = @orders.group_by_day('orders.created_at', format: "%d").count.as_json
+
+          total_sales_grouped = group_to_buyers(total_sales_amount_orders, 'day')
       end
 
-      total_sales_amount_raw = @orders.placed_between(interval).sum(:total_cost)
+      total_sales_amount_graph = total_sales_grouped[:total].as_json
+      total_order_count_graph = total_sales_grouped[:count].as_json
+
+      total_sales_amount_raw = @orders.sum(:total_cost)
       total_sales_amount = number_to_currency(total_sales_amount_raw, precision:0)
-      total_order_count = @orders.placed_between(interval).count
+      total_order_count = @orders.count
 
-      average_sales_amount = number_to_currency(total_sales_amount_raw/total_order_count || 0, precision:0)
+      average_sales_amount = total_order_count > 0 ? number_to_currency(total_sales_amount_raw/total_order_count || 0, precision:0) : '$0'
 
-      payments_overdue_orders = @orders.paid_with("purchase order").placed_between(interval).delivered.payment_overdue
-      #payments_overdue_amount = number_to_currency(sum_order_total(payments_overdue_orders), precision:0)
-      payments_overdue_amount = 0
+      payments_overdue_orders = @orders.paid_with("purchase order").payment_overdue
+
+      payments_overdue_amount_raw = sum_order_total(payments_overdue_orders)
+      payments_overdue_amount = payments_overdue_amount_raw > 0 ? number_to_currency(payments_overdue_amount_raw, precision:0) : '$0'
 
     {
       :total_sales_amount_graph => total_sales_amount_graph,
