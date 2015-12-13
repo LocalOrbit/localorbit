@@ -2,13 +2,13 @@ module Dashboards
 
   def upcoming_deliveries(user_type)
     if user_type == "B" || user_type == "M"
-      @deliveries = Order.orders_for_buyer(current_user).upcoming_buyer_delivery.select('deliveries.*').
+      @deliveries = Order.orders_for_buyer(current_user).upcoming_buyer_delivery.joins(:items).where(order_items: {delivery_status: "pending"}).select('deliveries.*').
           sort_by {|d| d.buyer_deliver_on }
       use_date = :buyer_deliver_on
 
       pending_amount = Order.orders_for_buyer(current_user).where(:delivery => @deliveries.map(&:id)).sum(:total_cost)
     else
-      @deliveries = Order.orders_for_seller(current_user).upcoming_delivery.select('deliveries.*').
+      @deliveries = Order.orders_for_seller(current_user).upcoming_delivery.where(order_items: {delivery_status: "pending"}).select('deliveries.*').
           sort_by {|d| d.deliver_on }
       use_date = :deliver_on
 

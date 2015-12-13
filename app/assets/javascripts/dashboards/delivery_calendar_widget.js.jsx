@@ -28,6 +28,7 @@
             var month_day, dow;
             var self = this;
             var i;
+            var dlvr_href;
 
             if (delivery_weeks) {
                 $.each(delivery_weeks, function (k1, week) {
@@ -36,7 +37,11 @@
                         process_date = new Date(day['day']);
                         month_day = process_date.getDate();
                         dow = process_date.getDay() + 1;
-                        wks = wks + '<td class="' + day['css_class'] + '">' + month_day  + '</td>';
+                        if (day['css_class'] == "cal-date")
+                            dlvr_href="/admin/delivery_tools";
+                        else
+                            dlvr_href='#';
+                        wks = wks + '<td class="' + day['css_class'] + '"><a style="color: white" href=' + dlvr_href + '>' + month_day  + '</a></td>';
                         last_day_of_month = self.isLastDay(process_date);
                         if (last_day_of_month) {
                             wks = wks + '</tr><tr><td colspan="7" class="cal-date blank"></td></tr><tr>';

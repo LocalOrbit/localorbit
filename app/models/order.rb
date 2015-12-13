@@ -70,6 +70,7 @@ class Order < ActiveRecord::Base
   scope :unpaid, -> { visible.where(payment_status: "unpaid") }
   scope :paid, -> { visible.where(payment_status: "paid") }
   scope :delivered, -> { visible.where("order_items.delivery_status = ?", "delivered").group("orders.id") }
+  scope :undelivered, -> { visible.where("order_items.delivery_status = ?", "pending").group("orders.id") }
   scope :paid_with, lambda {|method| visible.where(payment_method: method) }
   scope :purchase_orders, -> { where(payment_method: "purchase order") }
   scope :payment_overdue, -> { unpaid.where("invoice_due_date < ?", (Time.current - 1.day).end_of_day) }
