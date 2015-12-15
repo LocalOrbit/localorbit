@@ -50,8 +50,8 @@ class @DatePicker
         e.preventDefault()
         $('div.datepicker').not(field).slideUp()
         field.slideDown().addClass('is-open')
-      input.prop('readonly', true)
-    field.prop('readonly', true)
+      input.prop('readonly', false)
+    field.prop('readonly', false)
     input.change (e) ->
       field.datepicker('setDate', new Date(input.val()))
 
