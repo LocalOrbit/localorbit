@@ -334,6 +334,12 @@ GEM
     grape-active_model_serializers (1.3.2)
       active_model_serializers (>= 0.9.0)
       grape
+    grape-entity (0.4.8)
+      activesupport
+      multi_json (>= 1.3.2)
+    grape-swagger (0.10.4)
+      grape (>= 0.8.0)
+      grape-entity (< 0.5.0)
     graticule (2.5.0)
       activesupport
       i18n
@@ -739,6 +745,7 @@ DEPENDENCIES
   font_assets
   grape
   grape-active_model_serializers
+  grape-swagger
   graticule
   groupdate!
   guard-konacha-rails
