@@ -50,9 +50,10 @@
 <div class="field">
   <%= f.label :long_description %>
   <span class="hint">Up to 500 characters</span>
+  <div><span class="hint" id="countdown"></span></div>
   <span class="tooltip pull-right" data-tooltip="Buyers want to know how you grow or prepare your products. Tell them how you do it!"></span>
   <span class="warning pull-right">(Recommended)</span>
-  <%= f.text_area :long_description, rows: 4 %>
+  <%= f.text_area :long_description, :id => "long-desc-message", rows: 4 %>
 </div>
 
 <table id="units_table">
