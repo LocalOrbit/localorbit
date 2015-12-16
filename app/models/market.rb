@@ -1,4 +1,5 @@
 class Market < ActiveRecord::Base
+
   before_update :process_cross_sells_change, if: :allow_cross_sell_changed?
   before_update :process_plan_change, if: :plan_id_changed?
 
@@ -6,6 +7,7 @@ class Market < ActiveRecord::Base
   extend DragonflyBackgroundResize
   include Sortable
   include Util::TrimText
+  include PgSearch
 
   paginates_per 50
 
@@ -52,6 +54,9 @@ class Market < ActiveRecord::Base
   validates_property :format, of: :photo, in: %w(jpg jpeg png gif)
 
   scope_accessible :sort, method: :for_sort, ignore_blank: true
+  scope_accessible :search, method: :for_search, ignore_blank: true
+
+  pg_search_scope :search_by_name, against: :name, using: {tsearch: {prefix: true}}
 
   scope :active, -> { where(active: true) }
   scope :managed_by, lambda { |user|
@@ -61,6 +66,10 @@ class Market < ActiveRecord::Base
       where(id: user.managed_markets.pluck(:id))
     end
   }
+
+  def self.for_search(query)
+    search_by_name(query)
+  end
 
   def self.possible_countries
     [['United States', 'US'], ['Canada', 'CA']]
