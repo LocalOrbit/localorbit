@@ -7,6 +7,8 @@ class Market < ActiveRecord::Base
   include Sortable
   include Util::TrimText
 
+  paginates_per 50
+
   trimmed_fields :contact_email
 
   validates :name, :subdomain, presence: true, uniqueness: true, length: {maximum: 255, allow_blank: true}
