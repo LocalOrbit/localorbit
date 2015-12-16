@@ -243,19 +243,49 @@ $ ->
     )
 
   $("#long-desc-message").change ->
-    remaining = 501 - $("#long-desc-message").val().length
+    remaining = 500 - $("#long-desc-message").val().length
     if (remaining < 0)
       $('#countdown').css('color', 'red') 
     else 
       $('#countdown').css('color', 'black')
     $('#countdown').text(remaining + ' characters remaining.')
   $("#long-desc-message").keyup ->
-    remaining = 501 - $("#long-desc-message").val().length
+    remaining = 500 - $("#long-desc-message").val().length
     if (remaining < 0)
-      $('#countdown').css('color', 'red') 
+      $('#countdown-ld').css('color', 'red') 
     else 
-      $('#countdown').css('color', 'black')
-    $("#countdown").text(remaining + ' characters remaining.')
+      $('#countdown-ld').css('color', 'black')
+    $("#countdown-ld").text(remaining + ' characters remaining.')
+
+  $("#short-desc-message").change ->
+    remaining = 50 - $("#short-desc-message").val().length
+    if (remaining < 0)
+      $('#countdown-sd').css('color', 'red') 
+    else 
+      $('#countdown-sd').css('color', 'black')
+    $('#countdown-sd').text(remaining + ' characters remaining.')
+  $("#short-desc-message").keyup ->
+    remaining = 50 - $("#short-desc-message").val().length
+    if (remaining < 0)
+      $('#countdown-sd').css('color', 'red') 
+    else 
+      $('#countdown-sd').css('color', 'black')
+    $("#countdown-sd").text(remaining + ' characters remaining.')
+
+  $("#unit-desc-message").change ->
+    remaining = 20 - $("#long-desc-message").val().length
+    if (remaining < 0)
+      $('#countdown-ud').css('color', 'red') 
+    else 
+      $('#countdown-ud').css('color', 'black')
+    $('#countdown-ud').text(remaining + ' characters remaining.')
+  $("#unit-desc-message").keyup ->
+    remaining = 20 - $("#unit-desc-message").val().length
+    if (remaining < 0)
+      $('#countdown-ud').css('color', 'red') 
+    else 
+      $('#countdown-ud').css('color', 'black')
+    $("#countdown-ud").text(remaining + ' characters remaining.')
 
   $(document).on "change", '#product_use_simple_inventory', ->
     $('#simple-inventory').toggleClass('is-hidden')

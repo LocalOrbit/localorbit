@@ -42,15 +42,16 @@
 <div class="field">
   <%= f.label :short_description %>
   <span class="hint">Up to 50 characters</span>
+  <div><span class="hint" id="countdown-sd"></span></div>
   <span class="tooltip pull-right" data-tooltip="This is the first opportunity for a Buyer to learn about the product. Include additional explanation about the quantity, size or unit here, if needed."></span>
   <br>
-  <%= f.text_field :short_description, size: 50, maxlength: 50, class: "column column--full" %>
+  <%= f.text_field :short_description, :id => "short-desc-message", size: 50, maxlength: 50, class: "column column--full" %>
 </div>
 
 <div class="field">
   <%= f.label :long_description %>
   <span class="hint">Up to 500 characters</span>
-  <div><span class="hint" id="countdown"></span></div>
+  <div><span class="hint" id="countdown-ld"></span></div>
   <span class="tooltip pull-right" data-tooltip="Buyers want to know how you grow or prepare your products. Tell them how you do it!"></span>
   <span class="warning pull-right">(Recommended)</span>
   <%= f.text_area :long_description, :id => "long-desc-message", rows: 4 %>
@@ -59,7 +60,8 @@
 <table id="units_table">
   <thead><tr>
     <td><%= f.label :unit_id %></td>
-    <td><%= f.label :unit_description %> <span class="hint">Up to 20 characters</span></td>
+    <td><%= f.label :unit_description, :id => "unit-desc-message"%> <span class="hint">Up to 20 characters</span></td>
+    <div><span class="hint" id="countdown-ud"></span></div>
     <td><%= f.label :code, "Product Code" %> <span class="tooltip" data-tooltip="Optional product code"></span></td>
     <td></td>
   </tr></thead>
