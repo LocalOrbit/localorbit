@@ -51,6 +51,21 @@ module ApplicationHelper
   def can_reset?(params)
     params.any? {|key, _| key != "sort" && key != "page" }
   end
+  
+  def deep_hash( obj, key )
+    if obj.respond_to?(:key?) && obj.key?(key)
+      obj[key]
+    elsif obj.respond_to?(:each)
+      r = nil
+      obj.find{ |*a| r = deep_hash( a.last,key ) }
+      r
+    end
+  end
+  
+  def append_sticky_class(search_key, class_string)
+    search_result = deep_hash(session[:sticky_parameters], search_key)
+    class_string = (search_result != '' && !!search_result ) ? class_string += ' set_filter' : class_string
+  end
 
   def filter_list(collection, param_name)
     params = request.query_parameters
