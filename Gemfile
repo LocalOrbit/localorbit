@@ -85,6 +85,7 @@ gem 'activerecord-import', require: false
 gem 'grape' # API v2
 gem 'grape-active_model_serializers' # API v2
 gem 'rack-cors', :require => 'rack/cors' # API v2
+gem 'grape-swagger' # API V2, documentation
 
 group :doc do
   gem "sdoc", require: false
