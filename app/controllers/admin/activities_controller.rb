@@ -25,7 +25,7 @@ class Admin::ActivitiesController < AdminController
   private
 
   def find_base_scope_and_date_filter_attribute
-    [Audit.reorder("created_at DESC"), :created_at]
+    [Audit.includes(:user, :masquerader, :associated).reorder("created_at DESC"), :created_at]
   end
 
   def filter_and_search_orders(scope, params, presenter)
