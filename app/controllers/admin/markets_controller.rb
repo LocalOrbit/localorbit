@@ -1,14 +1,27 @@
 class Admin::MarketsController < AdminController
+  include StickyFilters
+
   before_action :require_admin, only: [:new, :create]
   before_action :require_admin_or_market_manager, except: [:new, :create]
   before_action :find_scoped_market, only: [:show, :update, :payment_options, :update_active]
+  before_action :find_sticky_params, only: :index
 
   def index
-    @markets = market_scope.periscope(request.query_parameters)
+    if params["clear"]
+      redirect_to url_for(params.except(:clear))
+    else
+      if @query_params.empty?
+        @query_params = {:q => { :active_eq => true}}
+      end
+      @search_presenter = MarketSearchPresenter.new(@query_params, current_user)
+      @q = search(@search_presenter)
 
-    respond_to do |format|
-      format.html { @markets = @markets.page(params[:page]).per(params[:per_page]) }
-      format.csv { @filename = "markets.csv" }
+      @markets = @q.result(distinct: true).periscope(request.query_parameters)
+
+      respond_to do |format|
+        format.html { @markets = @markets.page(params[:page]).per(params[:per_page]) }
+        format.csv { @filename = "markets.csv" }
+      end
     end
   end
 
@@ -101,5 +114,11 @@ class Admin::MarketsController < AdminController
 
   def find_scoped_market
     @market = market_scope.find(params[:id] || params[:market_id])
+  end
+
+  def search(search)
+    results = market_scope.search(search.query)
+
+    results
   end
 end
