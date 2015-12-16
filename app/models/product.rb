@@ -4,6 +4,8 @@ class Product < ActiveRecord::Base
   include PgSearch
   include Sortable
 
+  paginates_per 50
+
   before_save :update_cached_categories
   before_save :update_delivery_schedules
   before_save :update_general_product
