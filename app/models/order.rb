@@ -5,6 +5,8 @@ class Order < ActiveRecord::Base
 
   INVOICE_STATUSES = %w(due overdue).freeze
 
+  paginates_per 50
+
   before_save :update_paid_at
   before_save :update_payment_status
   before_save :cache_delivery_status
@@ -15,6 +17,8 @@ class Order < ActiveRecord::Base
   has_associated_audits
 
   dragonfly_accessor :invoice_pdf
+
+
 
   attr_accessor :credit_card, :bank_account
 
