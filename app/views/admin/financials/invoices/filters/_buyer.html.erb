@@ -12,11 +12,11 @@
   <div class="pull-right date-filters">
     <span class="preserve-alignment">
       <label for="q_invoice_due_date_date_gteq">Filter by Date</label><br>
-      <%= datetime_field_tag "q[invoice_due_date_date_gteq]", @search_presenter.start_date, class: 'datepicker' %>
+      <%= datetime_field_tag "q[invoice_due_date_date_gteq]", @search_presenter.start_date, class: append_sticky_class('invoice_due_date_date_gteq', 'datepicker', [1.months.ago.to_date.to_s]) %>
     </span>
     <span class="preserve-alignment">
       <label for="q_invoice_due_date_date_lteq" class="is-invisible">End Date</label><br>
-      <%= datetime_field_tag "q[invoice_due_date_date_lteq]", @search_presenter.end_date, class: 'datepicker' %>
+      <%= datetime_field_tag "q[invoice_due_date_date_lteq]", @search_presenter.end_date, class: append_sticky_class('invoice_due_date_date_lteq', 'datepicker', [Date.today.to_s]) %>
     </span>
     <span class="preserve-alignment">
       <%# This <br> makes me sad, but it is the easiest/fastest way to achieve this %>
@@ -28,7 +28,7 @@
   <div class="manager-filters">
     <span class="preserve-alignment">
       <%= label :payment_status, "Payment Status" %><br>
-      <%= select_tag :payment_status, options_from_collection_for_select(Order::INVOICE_STATUSES, :to_s, :titleize, selected: request.query_parameters[:payment_status]), { prompt: "All", class: "filter-input" } %>
+      <%= select_tag :payment_status, options_from_collection_for_select(Order::INVOICE_STATUSES, :to_s, :titleize, selected: request.query_parameters[:payment_status]), { prompt: "All", class: append_sticky_class(:payment_status, "filter-input") } %>
     </span>
   </div>
 <% end %>
