@@ -3,7 +3,7 @@
     <span class="preserve-alignment">
       <%= f.label :order_number_or_payment_note_cont, "Search Invoices" %><br>
       <%# NOTE: Do not change the whitespace on the following line %>
-      <%= f.search_field :order_number_or_payment_note_cont, placeholder: "Order # or PO #" -%><%= f.submit "Search", class: "btn--end" %>
+      <%= f.search_field :order_number_or_payment_note_cont, placeholder: "Order # or PO #", class: append_sticky_class(:order_number_or_payment_note_cont) -%><%= f.submit "Search", class: "btn--end" %>
     </span>
   </div>
 
