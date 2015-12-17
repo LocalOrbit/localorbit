@@ -13,7 +13,7 @@
 //= require es5-shim.min
 //= require jquery
 //= require jquery_ujs
-//= require jquery-ui/datepicker
+//= require jquery-ui
 //= require chosen-jquery
 //= require typeahead-0.11.1
 //= require q
@@ -31,8 +31,7 @@
 //= require react_ujs
 //= require reflux.min
 //= require froala_editor.min.js
-//= require jquery.multiselect.min
-//= require jquery.multiselect.filter.min
+//= require jquery.multiselect
 //
 //= require plugins/block_styles.min.js
 //= require plugins/colors.min.js

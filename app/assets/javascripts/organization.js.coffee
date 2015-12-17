@@ -1,6 +1,4 @@
 $ ->
-  $('.multiselect').multiselect()
-
   updateSellerFields = (orgCanSell)->
     if orgCanSell
       $(".organization_name").removeClass('column--full').addClass('column--half')
