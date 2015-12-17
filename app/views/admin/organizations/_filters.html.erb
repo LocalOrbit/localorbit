@@ -6,7 +6,7 @@
 
   <div class="column product-filters">
     <div class="product-search search-widget">
-      <input type="search" id="search" value="<%= @query_params["search"] %>" placeholder="Organization Name"><button type="submit" id="search-btn" class="btn btn--end">Search</button>
+      <input type="search" id="search" value="<%= @query_params["search"] %>" placeholder="Organization Name" class="<%= append_sticky_class('search') %>" ><button type="submit" id="search-btn" class="btn btn--end">Search</button>
     </div>
   </div>
 

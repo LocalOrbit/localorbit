@@ -14,7 +14,7 @@
         <div class="pull-left sold-item-search-widget">
           <span class="preserve-alignment">
             <%= f.label :order_order_number_cont, "Search by order #" %><br>
-            <%= f.search_field :order_order_number_cont, placeholder: "Order #" -%><%= f.submit "Search", class: "btn--end" %>
+            <%= f.search_field :order_order_number_cont, placeholder: "Order #", class: append_sticky_class(:order_order_number_cont) -%><%= f.submit "Search", class: "btn--end" %>
           </span>
         </div>
         <a href="#items-filter" class="mobile-only mobile-block btn mobile-toggle">Show Filters</a>
