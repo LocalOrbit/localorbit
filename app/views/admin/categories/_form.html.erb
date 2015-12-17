@@ -8,7 +8,7 @@
     </div
     ><div class="field column column--half column--guttered">
       <%= form.label :parent_id %><br>
-      <%= form.select :parent_id, nested_set_options(Category, @category) {|i| "#{'-' * i.level} #{i.name}" }, class: "column column--full" %>
+      <%= form.select :parent_id, Category.for_select, {include_blank: ""}, {data: {placeholder: "Click and type to select a parent category"}, class: "chosen"} %>
     </div>
   </div>
 
@@ -17,4 +17,3 @@
     <%= form.submit "#{@category.new_record? ? 'Add' : 'Save'} Category" %>
   </div>
 <% end %>
-
