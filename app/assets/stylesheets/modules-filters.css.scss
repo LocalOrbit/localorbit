@@ -301,6 +301,6 @@
 }
 
 .set_filter{
-  border:1px solid red;
-  background-color:#FFE8E8;
+  border:1px solid $alert_text;
+  background-color: $alert_bg;
 }
