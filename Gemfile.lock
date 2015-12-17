@@ -763,6 +763,3 @@ DEPENDENCIES
   wkhtmltopdf-heroku
   wysihtml5-rails
   wysiwyg-rails
-
-BUNDLED WITH
-   1.10.6
