@@ -7,7 +7,7 @@
     <% if current_user.multi_market_membership? %>
       <span class="preserve-alignment">
         <%= f.label :market_id_eq, "Market" %><br>
-        <%= f.collection_select :market_id_eq, @search_presenter.selling_markets, :id, :name, {include_blank: "All"}, {class: "filter-input"} %>
+        <%= f.collection_select :market_id_eq, @search_presenter.selling_markets, :id, :name, {include_blank: "All"}, {class: append_sticky_class(:market_id_eq, "filter-input") } %>
       </span>
     <% end %>
   <% end %>
