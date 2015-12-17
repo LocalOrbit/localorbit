@@ -62,9 +62,34 @@ module ApplicationHelper
     end
   end
   
-  def append_sticky_class(search_key, class_string)
-    search_result = deep_hash(session[:sticky_parameters], search_key)
-    class_string = (search_result != '' && !!search_result ) ? class_string += ' set_filter' : class_string
+  def append_sticky_class(search_key, class_string = '', defaults = {})
+    # Start and end dates (among others) are in q, but also (and incorrectly) higher up...
+    # limit the initial scope to account for this duality
+    # request.path provides the initial context
+    search_result = deep_hash(session[:sticky_parameters][request.path]['q'], search_key)
+    
+    if search_result == nil 
+      search_result = deep_hash(session[:sticky_parameters][request.path], search_key)
+    end
+    
+    # Having searched, check if a filter is set...
+    if search_result != '' && !!search_result
+      # ...and further filter any defaults
+      if !defaults.empty?
+        defaults.each do |default|
+          # This currently only applies to dates, and this code makes 
+          # the comparison more robust
+          if search_result.to_date.to_s == default.to_date.to_s  
+            # Explicit return here short circuits the call as soon as 
+            # a fail condition is met.  That's what we want.
+            return class_string
+          end
+        end
+      end
+      class_string = class_string == '' ? 'set_filter' : class_string += ' set_filter'
+    else 
+      class_string
+    end
   end
 
   def filter_list(collection, param_name)
