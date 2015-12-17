@@ -158,11 +158,13 @@ describe "Managing Markets" do
       expect(page).to have_text(@market2.name)
     end
 
-    it "can toggle a market's active status" do
+    it "can toggle a market's active status", :js do
       visit admin_markets_path
 
       click_link "Deactivate"
       expect(page).to have_content("Updated #{market.name}")
+
+      select "All", from: "q[active_eq]"
 
       click_link("Activate")
       expect(page).to have_content("Updated #{market.name}")
