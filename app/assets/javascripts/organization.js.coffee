@@ -1,5 +1,5 @@
 $ ->
-  $('.multiselect').chosen()
+  $('.multiselect').multiselect()
 
   updateSellerFields = (orgCanSell)->
     if orgCanSell
