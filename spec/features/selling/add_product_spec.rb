@@ -28,7 +28,7 @@ describe "Adding a product", chosen_js: true do
 
   let!(:mondays_schedule) { create(:delivery_schedule, market: market, day: 1, require_delivery: true) }
   let(:monday_schedule_description) { "Mondays from 7:00 AM to 11:00 AM direct to customer. (required)" }
-  # This is the schedule we'll model after the Appleton bug
+  # This is the schedule we'll model after the Appleton bug ??
   # Seller fulfillment location is what will show for the seller
   let!(:tuesdays_schedule) do
     create(:delivery_schedule, :hub_to_buyer,
@@ -367,7 +367,7 @@ describe "Adding a product", chosen_js: true do
     end
   end
 
-  describe "a seller belonging to multiple organizations" do
+  describe "a seller belonging to multiple organizations", js: true do
     let!(:org2) { create(:organization, :single_location, markets: [market], who_story: "who org2", how_story: "how org2") }
     let!(:buying_org) { create(:organization, :buyer) }
 
