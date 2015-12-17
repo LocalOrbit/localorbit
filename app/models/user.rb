@@ -13,6 +13,7 @@ class User < ActiveRecord::Base
   trimmed_fields :email
 
   has_many :managed_markets_join, class_name: "ManagedMarket"
+  #has_many :audits
 
   before_create do |user|
     if user.subscription_types.empty?
