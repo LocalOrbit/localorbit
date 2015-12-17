@@ -1,8 +1,14 @@
-csv << ["Name", "Subdomain", "Contact Name", "Contact Phone"]
+csv << ["Name", "Cross Selling With", "Subdomain", "Contact Name", "Contact Phone"]
 
 @markets.each do |market|
+    cross_sells = ''
+    market.cross_sells.each do |cross_sell|
+        cross_sells = cross_sells + cross_sell.name + '; '
+    end
+
   csv << [
     market.name,
+    cross_sells,
     market.subdomain,
     market.contact_name,
     market.contact_phone
