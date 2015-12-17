@@ -14,7 +14,7 @@
         <div class="pull-left sold-item-search-widget">
           <span class="preserve-alignment">
             <%= f.label :order_order_number_cont, "Search by order #" %><br>
-            <%= f.search_field :order_order_number_cont, placeholder: "Order #" -%><%= f.submit "Search", class: "btn--end" %>
+            <%= f.search_field :order_order_number_cont, placeholder: "Order #", class: append_sticky_class(:order_order_number_cont) -%><%= f.submit "Search", class: "btn--end" %>
           </span>
         </div>
         <a href="#items-filter" class="mobile-only mobile-block btn mobile-toggle">Show Filters</a>
@@ -22,27 +22,27 @@
           <div class="filter-row">
             <span class="preserve-alignment">
               <%= f.label :order_market_id_eq, "Market" %><br>
-              <%= f.select :order_market_id_eq, options_from_collection_for_select(@markets, :id, :name, @q.order_market_id_eq), { include_blank: "All" }, { class: "filter-input" } %>
+              <%= f.select :order_market_id_eq, options_from_collection_for_select(@markets, :id, :name, @q.order_market_id_eq), { include_blank: "All" }, { class: append_sticky_class(:order_market_id_eq, "filter-input") } %>
             </span>
 
             <span class="preserve-alignment">
               <%= f.label :product_organization_id_eq, "Supplier" %><br>
-              <%= f.select :product_organization_id_eq, options_from_collection_for_select(@sellers, :id, :name, @q.product_organization_id_eq), { include_blank: "All" }, { class: "filter-input" } %>
+              <%= f.select :product_organization_id_eq, options_from_collection_for_select(@sellers, :id, :name, @q.product_organization_id_eq), { include_blank: "All" }, { class: append_sticky_class(:product_organization_id_eq, "filter-input") } %>
             </span>
 
             <span class="preserve-alignment">
               <%= f.label :order_organization_id_eq, "Buyer" %><br>
-              <%= f.select :order_organization_id_eq, options_from_collection_for_select(@buyers, :id, :name, @q.order_organization_id_eq), { include_blank: "All" }, { class: "filter-input" } %>
+              <%= f.select :order_organization_id_eq, options_from_collection_for_select(@buyers, :id, :name, @q.order_organization_id_eq), { include_blank: "All" }, { class: append_sticky_class(:order_organization_id_eq, "filter-input") } %>
             </span>
 
             <span class="preserve-alignment">
               <%= f.label :delivery_status_eq, "Delivery Status" %><br>
-              <%= f.select :delivery_status_eq, options_from_collection_for_select(@delivery_statuses, :to_s, :titleize, @q.delivery_status_eq), { include_blank: "All" }, { class: "filter-input" } %>
+              <%= f.select :delivery_status_eq, options_from_collection_for_select(@delivery_statuses, :to_s, :titleize, @q.delivery_status_eq), { include_blank: "All" }, { class: append_sticky_class(:delivery_status_eq, "filter-input") } %>
             </span>
 
             <span class="preserve-alignment">
               <%= f.label :order_payment_status_eq, "Buyer Payment Status" %><br>
-              <%= f.select :order_payment_status_eq, options_from_collection_for_select(@buyer_payment_statuses, :to_s, :titleize, @q.order_payment_status_eq), { include_blank: "All" }, { class: "filter-input" } %>
+              <%= f.select :order_payment_status_eq, options_from_collection_for_select(@buyer_payment_statuses, :to_s, :titleize, @q.order_payment_status_eq), { include_blank: "All" }, { class: append_sticky_class(:order_payment_status_eq, "filter-input") } %>
             </span>
 
             <%# <span class="preserve-alignment"> %>
@@ -54,11 +54,11 @@
           <div class="date-filters">
             <span class="preserve-alignment">
               <label for="order_placed_at_date_gteq">Placed on or after</label><br>
-              <%= datetime_field_tag "q[order_placed_at_date_gteq]", @start_date, class: 'datepicker' %>
+              <%= datetime_field_tag "q[order_placed_at_date_gteq]", @start_date, class: append_sticky_class('order_placed_at_date_gteq', 'datepicker', [1.months.ago.to_date.to_s]) %>
             </span>
             <span class="preserve-alignment">
               <label for="order_placed_at_date_lteq">Placed on or before</label><br>
-              <%= datetime_field_tag "q[order_placed_at_date_lteq]", @end_date, class: 'datepicker' %>
+              <%= datetime_field_tag "q[order_placed_at_date_lteq]", @end_date, class: append_sticky_class('order_placed_at_date_lteq', 'datepicker', [Date.today.to_s]) %>
             </span>
             <span class="preserve-alignment">
               <br>
