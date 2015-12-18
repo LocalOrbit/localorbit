@@ -2,6 +2,11 @@
   <tr>
     <td class="name"><%= link_to organization.name, [:admin, organization] %></td>
     <td class="market"><%= organization.original_market.name %></td>
+    <% if organization.users.first.nil? %>
+    <td class="contact"></td>
+    <% else %>
+    <td class="contact"><%= link_to organization.users.first.name.nil? ? truncate(organization.users.first.email,length:20) : organization.users.first.name, user_masquerade_url(id: organization.users.first.id, host: organization.original_market.try(:domain) || Figaro.env.domain), class: "contact" %></td>
+    <% end %>
     <td class="registered"><%= organization.created_at.strftime("%b, %d %Y") %></td>
     <td class="can-sell"><%= organization.can_sell? ? "Supplier" : "Buyer" %></td>
     <td class="action">
@@ -20,6 +25,7 @@
   <tr>
     <td class="name"><%= organization.name %></td>
     <td class="market"><%= organization.original_market.name %></td>
+    <td class="contact"></td>
     <td class="registered"><%= organization.created_at.strftime("%b, %d %Y") %></td>
     <td class="can-sell"><%= organization.can_sell? ? "Supplier" : "Buyer" %></td>
   </tr>
