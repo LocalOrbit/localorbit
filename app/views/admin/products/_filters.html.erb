@@ -1,19 +1,19 @@
 <div class="row product-header filter-group">
   <div class="column product-filters" id="product-filter">
     <div class="product-search search-widget">
-      <input type="search" id="search" value="<%= @query_params["search"] %>"><button type="submit" id="search-btn" class="btn btn--end">Search</button>
+      <input type="search" id="search" value="<%= @query_params["search"] %>" class="<%= append_sticky_class('search') %>" ><button type="submit" id="search-btn" class="btn btn--end">Search</button>
     </div>
     <% if current_user.multi_market_membership? %>
     <span class="preserve-alignment">
       <label for="product-filter-market">Market</label>
-      <%= select_tag :filter_market, options_for_select(@selling_markets, selected: @query_params["market"]), prompt: "All Markets", class: 'filter-dropdown', id: "product-filter-market", data: { parameter: "market"} %>
+      <%= select_tag :filter_market, options_for_select(@selling_markets, selected: @query_params["market"]), prompt: "All Markets", class: append_sticky_class('market', 'filter-dropdown'), id: "product-filter-market", data: { parameter: "market"} %>
     </span>
     <% end %>
 
     <% if current_user.multi_organization_membership? %>
     <span class="preserve-alignment">
       <label for="filter_market">Organization</label>
-      <%= select_tag :filter_organization, options_for_select(@selling_organizations, selected: @query_params["organization"]), prompt: "All Organizations", class: 'filter-dropdown', id: "product-filter-organization", data: { parameter: "organization"} %>
+      <%= select_tag :filter_organization, options_for_select(@selling_organizations, selected: @query_params["organization"]), prompt: "All Organizations", class: append_sticky_class('organization', 'filter-dropdown'), id: "product-filter-organization", data: { parameter: "organization"} %>
     </span>
     <% end %>
     <%= link_to "Reset", admin_products_path(clear: '', sort: @query_params["sort"]), class: 'btn reset' if can_reset?(@query_params) %>

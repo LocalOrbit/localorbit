@@ -48,6 +48,10 @@ textarea {
     border-width: 1px;
     margin: 0;
   }
+  &.set_filter{
+    border:1px solid $alert_text;
+    background-color: $alert_bg;
+  }
 }
 
 @media screen and (max-width: $mobile_break) {
