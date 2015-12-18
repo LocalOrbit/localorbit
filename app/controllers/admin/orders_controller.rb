@@ -4,21 +4,25 @@ class Admin::OrdersController < AdminController
   before_action :find_sticky_params, only: :index
 
   def index
-    @query_params["placed_at_date_gteq"] ||= 7.days.ago.to_date.to_s
-    @query_params["placed_at_date_lteq"] ||= Date.today.to_s
-    @search_presenter = OrderSearchPresenter.new(@query_params, current_user, "placed_at")
-    @q, @totals = search_and_calculate_totals(@search_presenter)
+    if params["clear"]
+      redirect_to url_for(params.except(:clear))
+    else
+      @query_params["placed_at_date_gteq"] ||= 7.days.ago.to_date.to_s
+      @query_params["placed_at_date_lteq"] ||= Date.today.to_s
+      @search_presenter = OrderSearchPresenter.new(@query_params, current_user, "placed_at")
+      @q, @totals = search_and_calculate_totals(@search_presenter)
 
-    @orders = @q.result(distinct: true)
+      @orders = @q.result(distinct: true)
 
-    respond_to do |format|
-      format.html do
-        @orders = @orders.page(params[:page]).per(@query_params[:per_page])
-      end
-      format.csv do
-        @order_items = find_order_items(@orders.map(&:id))
-        @abort_mission = @order_items.count > 2999
-        @filename = "orders.csv"
+      respond_to do |format|
+        format.html do
+          @orders = @orders.page(params[:page]).per(@query_params[:per_page])
+        end
+        format.csv do
+          @order_items = find_order_items(@orders.map(&:id))
+          @abort_mission = @order_items.count > 2999
+          @filename = "orders.csv"
+        end
       end
     end
   end
