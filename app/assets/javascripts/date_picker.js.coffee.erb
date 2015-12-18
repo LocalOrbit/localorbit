@@ -52,10 +52,14 @@ class @DatePicker
         field.slideDown().addClass('is-open')
       input.prop('readonly', false)
     field.prop('readonly', false)
+
+    input.focus (e) ->
+      input.select()
+
     input.change (e) ->
       field.datepicker('setDate', new Date(input.val()))
 
-    @appendClearLink(field)
+    #@appendClearLink(field)
 
 
 
