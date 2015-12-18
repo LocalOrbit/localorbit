@@ -1,4 +1,4 @@
-csv << ["Name", "Market", "Registered On", "Role", "Shipping Address", "Shipping Phone", "Billing Address", "Billing Phone", "Users", "User Emails"]
+csv << ["Name", "Market", "Contact", "Registered On", "Role", "Shipping Address", "Shipping Phone", "Billing Address", "Billing Phone", "Users", "User Emails"]
 
 def full_address(address)
   if address.present?
