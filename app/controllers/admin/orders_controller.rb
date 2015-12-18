@@ -24,7 +24,7 @@ class Admin::OrdersController < AdminController
   end
 
   def search_and_calculate_totals(search)
-    results = Order.includes(:organization, :items, :delivery).orders_for_seller(current_user).search(search.query)
+    results = Order.includes(:organization, :items, :delivery, :credit).orders_for_seller(current_user).search(search.query)
     results.sorts = "placed_at desc" if results.sorts.empty?
 
     if !current_user.admin?
@@ -75,8 +75,7 @@ class Admin::OrdersController < AdminController
   protected
 
   def find_order_items(order_ids)
-    order_items = OrderItem.includes({product: [{general_product: :organization}, :organization]}, {order: :delivery}).joins(:product).where(:order_id => order_ids)
-    order_items
+    OrderItem.includes({product: [:organization]}, {order: :delivery}).joins(:product).where(:order_id => order_ids)
   end
 
   def order_params
