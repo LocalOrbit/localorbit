@@ -19,14 +19,11 @@ module Admin
     end
 
     def generate_production_pdf
-      if @order.invoice_pdf.present?
-        redirect_to @order.invoice_pdf.remote_url
-      else
-        GenerateInvoicePdf.delay.perform(order: @order,
-                                         pre_invoice: true,
-                                         request: RequestUrlPresenter.new(request))
-        redirect_to action: :await_pdf
-      end
+      ClearInvoicePdf.perform(order: @order)
+      GenerateInvoicePdf.delay.perform(order: @order,
+                                       pre_invoice: true,
+                                       request: RequestUrlPresenter.new(request))
+      redirect_to action: :await_pdf
     end
 
     def await_pdf
