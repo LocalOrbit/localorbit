@@ -43,5 +43,6 @@
         <%= f.collection_select :products_organization_id_eq, @search_presenter.seller_organizations, :id, :name, {include_blank: "All"}, {class: append_sticky_class(:products_organization_id_eq, "filter-input")} %>
       </span>
       <% end %>
+      <%= link_to "Reset", admin_orders_path(clear: ''), class: 'btn reset' if can_reset?(@query_params) %>
     </div>
   <% end %>
