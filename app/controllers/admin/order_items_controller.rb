@@ -3,23 +3,27 @@ module Admin
     include Search::DateFormat
     include StickyFilters
 
-    before_action :find_sticky_params
+    before_action :find_sticky_params, only: :index
 
     def index
-      items = fetch_order_items
-      prepare_filter_data(items)
+      if params["clear"]
+        redirect_to url_for(params.except(:clear))
+      else
+        items = fetch_order_items
+        prepare_filter_data(items)
 
-      # initialize ransack and search
-      search = Search::QueryDefaults.new(@query_params[:q], :order_placed_at).query
+        # initialize ransack and search
+        search = Search::QueryDefaults.new(@query_params[:q], :order_placed_at).query
 
-      @q, @totals = perform_search_and_calculate_totals(items, search)
-      @start_date, @end_date = find_search_date_range(search)
+        @q, @totals = perform_search_and_calculate_totals(items, search)
+        @start_date, @end_date = find_search_date_range(search)
 
-      respond_to do |format|
-        format.html { @order_items = @q.result.page(params[:page]).per(@query_params[:per_page]) }
-        format.csv do
-          @order_items = @q.result
-          @filename = "sold_items.csv"
+        respond_to do |format|
+          format.html { @order_items = @q.result.page(params[:page]).per(@query_params[:per_page]) }
+          format.csv do
+            @order_items = @q.result
+            @filename = "sold_items.csv"
+          end
         end
       end
     end

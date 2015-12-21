@@ -3,18 +3,22 @@ module Admin::Financials
     include StickyFilters
 
     before_action :find_orders_for_invoicing, only: [:create, :resend]
-    before_action :find_sticky_params, only: [:index]
+    before_action :find_sticky_params, only: :index
 
 
     def index
-      base_scope, date_filter_attr = find_base_scope_and_date_filter_attribute
+      if params["clear"]
+        redirect_to url_for(params.except(:clear))
+      else
+        base_scope, date_filter_attr = find_base_scope_and_date_filter_attribute
 
-      @search_presenter = OrderSearchPresenter.new(@query_params, current_user, date_filter_attr)
-      @q = filter_and_search_orders(base_scope, @query_params, @search_presenter)
+        @search_presenter = OrderSearchPresenter.new(@query_params, current_user, date_filter_attr)
+        @q = filter_and_search_orders(base_scope, @query_params, @search_presenter)
 
-      @orders = @q.result.page(params[:page]).per(@query_params[:per_page])
-      
-      track_event EventTracker::ViewedInvoices.name
+        @orders = @q.result.page(params[:page]).per(@query_params[:per_page])
+
+        track_event EventTracker::ViewedInvoices.name
+      end
     end
 
     def show
