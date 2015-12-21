@@ -1,4 +1,4 @@
 <span class="preserve-alignment payment-search-container">
-  <%= f.label :payment_method_eq, "Payment Method" %><br>
-  <%= f.select :payment_method_eq, Payment::PAYMENT_METHODS.map { |pm| [pm[1], pm[0]] }, { include_blank: "All" }, { class: "filter-input" } %>
+  <%= f.label :payment_method_in, "Payment Method" %><br>
+  <%= f.select :payment_method_in, Payment::PAYMENT_METHODS.map { |pm| [pm[1], pm[0]] }, { include_blank: nil }, { multiple: true, class: "multiselect filter-input" } %>
 </span>

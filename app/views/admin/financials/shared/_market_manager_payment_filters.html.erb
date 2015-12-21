@@ -11,18 +11,18 @@
   <div class="manager-filters">
     <% if current_user.multi_market_membership? %>
     <span class="preserve-alignment">
-      <%= f.label :payer_type_id_nil_eq, "Received From" %><br>
-      <%= f.select :payer_type_id_nil_eq, payment_history.payers, { include_blank: "All" }, { class: "filter-input" } %>
+      <%= f.label :payer_type_id_nil_in, "Received From" %><br>
+      <%= f.select :payer_type_id_nil_in, payment_history.payers, { include_blank: nil }, { multiple: true, class: "multiselect filter-input" } %>
     </span>
     <% end %>
 
     <span class="preserve-alignment">
-      <%= f.label :payee_type_id_nil_eq, "Paid To" %><br>
-      <%= f.select :payee_type_id_nil_eq, payment_history.payees, { include_blank: "All" }, { class: "filter-input" } %>
+      <%= f.label :payee_type_id_nil_in, "Paid To" %><br>
+      <%= f.select :payee_type_id_nil_in, payment_history.payees, { include_blank: nil }, { multiple: true, class: "multiselect filter-input" } %>
     </span>
     <span class="preserve-alignment">
-      <%= f.label :payment_type_eq, "Payment Type" %><br>
-      <%= f.select :payment_type_eq, Payment::PAYMENT_TYPES.map { |pm| [pm[1], pm[0]] }, { include_blank: "All" }, { class: "filter-input" } %>
+      <%= f.label :payment_type_in, "Payment Type" %><br>
+      <%= f.select :payment_type_in, Payment::PAYMENT_TYPES.map { |pm| [pm[1], pm[0]] }, { include_blank: nil }, { multiple: true, class: "multiselect filter-input" } %>
     </span>
     <%= render "admin/financials/shared/payment_filters_payment_method", { f: f } %>
   </div>
