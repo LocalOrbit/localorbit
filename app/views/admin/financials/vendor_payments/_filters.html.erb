@@ -26,18 +26,18 @@
     <% if current_user.multi_market_membership? %>
     <span class="preserve-alignment">
       <%= f.label :market_id_in, "Market" %><br>
-      <%= f.collection_select :market_id_in, @search_presenter.selling_markets, :id, :name, {include_blank: nil}, {multiple: true, class: [append_sticky_class(:market_id_in, ""),'multiselect']} %>
+      <%= f.collection_select :market_id_in, @search_presenter.selling_markets, :id, :name, {include_blank: nil}, {multiple: true, class: [append_sticky_class(:market_id_in, "filter-input"),'multiselect']} %>
     </span>
     <% end %>
 
     <span class="preserve-alignment">
-      <label for="filtered_organization_id_in">Suppliers</label><br>
-      <%= select_tag :filtered_organization_id_in, options_from_collection_for_select(@search_presenter.seller_organizations, :id, :name, selected: @search_presenter.organization_id), {multiple: true, prompt: nil, class: [append_sticky_class(:filtered_organization_id_in, ""),'multiselect']} %>
+      <label for="organization_id_in">Suppliers</label><br>
+      <%= select_tag :organization_id_in, options_from_collection_for_select(@search_presenter.seller_organizations, :id, :name, selected: @search_presenter.organization_id), {multiple: true, prompt: nil, class: [append_sticky_class(:organization_id_in, "filter-input"),'multiselect']} %>
     </span>
 
     <span class="preserve-alignment">
       <%= f.label :payment_status_in, "Payment Status" %><br>
-      <%= f.select :payment_status_in, @search_presenter.payment_statuses, {include_blank: nil}, {multiple: true, class: [append_sticky_class(:payment_status_in, ""),'multiselect']} %>
+      <%= f.select :payment_status_in, @search_presenter.payment_statuses, {include_blank: nil}, {multiple: true, class: [append_sticky_class(:payment_status_in, "filter-input"),'multiselect']} %>
     </span>
     <%= link_to "Reset", admin_financials_vendor_payments_path(clear: '', sort: @query_params["sort"]), class: 'btn reset' if can_reset?(@query_params) %>
 
