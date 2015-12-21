@@ -1,5 +1,6 @@
 <div class="row product-header filter-group">
   <div class="header-actions pull-right">
+    <%= link_to "#{svg_icon} Export CSV".html_safe, url_for(format: :csv), class: "export" %>
     <%= link_to 'Add Organization', new_admin_organization_path, class: "btn btn--add btn--small" if current_user.admin? || current_user.market_manager? %>
   </div>
 
