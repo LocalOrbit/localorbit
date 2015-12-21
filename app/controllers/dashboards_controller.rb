@@ -4,16 +4,19 @@ class DashboardsController < ApplicationController
   before_action :find_sticky_params, only: :show
 
   def show
-    @query_params["placed_at_date_gteq"] ||= 7.days.ago.to_date.to_s
-    @query_params["placed_at_date_lteq"] ||= Date.today.to_s
-    @presenter = BuyerOrderPresenter.new(current_user, current_market, request.query_parameters, @query_params)
-    @q = search_and_calculate_totals(@presenter)
+    if params["clear"]
+      redirect_to url_for(params.except(:clear))
+    else
+      @query_params["placed_at_date_gteq"] ||= 7.days.ago.to_date.to_s
+      @query_params["placed_at_date_lteq"] ||= Date.today.to_s
+      @presenter = DashboardPresenter.new(current_user, current_market, request.query_parameters, @query_params)
+      @q = search_and_calculate_totals(@presenter)
 
-    @buyer_orders ||= @q.result
-    @buyer_orders = @buyer_orders.page(params[:page]).per(@query_params[:per_page])
+      @buyer_orders ||= @q.result
+      @buyer_orders = @buyer_orders.page(params[:page]).per(@query_params[:per_page])
 
-    render @presenter.template
-
+      render @presenter.template
+    end
   end
 
   def coming_soon

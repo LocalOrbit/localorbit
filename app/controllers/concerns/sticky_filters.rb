@@ -29,7 +29,7 @@ module StickyFilters
       if value.is_a?(Hash)
         hash[key] = deep_remove_blank_keys(value)
       else
-        hash.delete(key) if value.blank?
+        hash.delete(key) if value.blank? || (value.length == 1 && value[0] == "") || key.to_s =~ /.+%.+/
       end
     end
   end

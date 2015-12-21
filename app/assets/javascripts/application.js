@@ -10,7 +10,6 @@
 // Read Sprockets README (https://github.com/sstephenson/sprockets#sprockets-directives) for details
 // about supported directives.
 //
-
 //= require es5-shim.min
 //= require jquery
 //= require jquery_ujs
@@ -29,9 +28,9 @@
 //= stub balanced
 //= stub stripe
 
-//= require components
 //= require reflux.min
 //= require froala_editor.min.js
+//= require fSelect
 //
 //= require plugins/block_styles.min.js
 //= require plugins/colors.min.js
