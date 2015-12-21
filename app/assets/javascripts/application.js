@@ -32,6 +32,7 @@
 //= require reflux.min
 //= require froala_editor.min.js
 //= require jquery.multiselect
+//= require fSelect
 //
 //= require plugins/block_styles.min.js
 //= require plugins/colors.min.js

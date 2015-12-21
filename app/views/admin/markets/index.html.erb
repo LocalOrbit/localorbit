@@ -1,6 +1,7 @@
 <div class="sub-header stickable">
   <div class="l-constraint">
     <div class="l-page-header admin-markets-header">
+      <%= link_to "#{svg_icon} Export CSV".html_safe, url_for(format: :csv), class: "export todo pull-right" %>
       <h1><i class="font-icon" data-icon="&#xe000;"></i>&nbsp; Markets</h1>
       <br/><br/>
       <%= search_form_for @q, url: admin_markets_path do |f| %>
@@ -8,7 +9,6 @@
         <%= f.search_field :name_cont, placeholder: "Market Name" -%><%= f.submit "Search", class: "btn--end" %>
       </div>
       <div class="pull-right" style="font-size:14px">
-        <%= link_to "#{svg_icon} Export CSV".html_safe, url_for(format: :csv), class: "export" %>
         <%= link_to 'Add Market', new_admin_market_url, class: "btn btn--add btn--small" if current_user.admin? %>
       </div>
       <div class="manager-filters unjustify">

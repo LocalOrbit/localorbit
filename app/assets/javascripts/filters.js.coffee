@@ -1,5 +1,5 @@
 $ ->
-  $('.multiselect').multiselect({search: true, selectAll: true })
+  $('.multiselect').fSelect({placeholder: 'Select Options', numDisplayed:1})
 
   $('.mobile-toggle').click (e) ->
     $('.mobile-toggle[href="' + e.target.hash + '"]').toggleClass('is-hidden')

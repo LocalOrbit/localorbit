@@ -26,20 +26,22 @@
     <div class="pull-left">
       <% if current_user.multi_market_membership? %>
       <span class="preserve-alignment">
-        <%= f.label :market_id_eq, "Market" %><br>
-        <%= f.collection_select :market_id_eq, @search_presenter.selling_markets, :id, :name, {include_blank: "All"}, {class: append_sticky_class(:market_id_eq, "filter-input")} %>
+        <%= f.label :market_id_in, "Market" %><br>
+        <%= f.collection_select :market_id_in, @search_presenter.selling_markets, :id, :name, {include_blank: nil}, {multiple: true, class: [append_sticky_class(:market_id_in, "filter-input"),'multiselect']} %>
       </span>
       <% end %>
 
       <span class="preserve-alignment">
-        <%= f.label :organization_id_eq, "Buyer" %><br>
-        <%= f.collection_select :organization_id_eq, @search_presenter.buyer_organizations, :id, :name, {include_blank: "All"}, {class: append_sticky_class(:organization_id_eq, "filter-input")} %>
+        <%= f.label :organization_id_in, "Buyer" %><br>
+        <%= f.collection_select :organization_id_in, @search_presenter.buyer_organizations, :id, :name, {include_blank: nil}, {multiple: true, class: [append_sticky_class(:organization_id_in, "filter-input"),'multiselect']} %>
       </span>
+      <%= link_to "Reset", admin_financials_invoices_path(clear: '', sort: @query_params["sort"]), class: 'btn reset' if can_reset?(@query_params) %>
+
     </div>
     <div class="pull-right">
-      <input type="button" value="Send Selected" id="submit_send_selected" class="btn btn--small btn--save mobile-block">
-      <input type="button" value="Preview Selected" id="submit_preview_selected" class="btn btn--small btn--save mobile-block">
-      <input type="button" value="Mark Selected Invoiced" id="submit_mark_selected_invoiced" class="btn btn--small btn--save mobile-block">
+      <input type="button" value="Send Selected" id="submit_send_selected" class="btn btn--save mobile-block">
+      <input type="button" value="Preview Selected" id="submit_preview_selected" class="btn btn--save mobile-block">
+      <input type="button" value="Mark Selected Invoiced" id="submit_mark_selected_invoiced" class="btn btn--save mobile-block">
     </div>
   </div>
   

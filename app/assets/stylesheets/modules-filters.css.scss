@@ -113,7 +113,7 @@
     .pull-left[data-filter-count="6"] {
       width: 100%;
       .preserve-alignment {
-        width: 24%;
+        width: 30%;
       }
     }
   }
@@ -206,6 +206,7 @@
   .mobile-block {
     float: none;
     display: block;
+    margin-bottom: 20px;
     @include box-sizing(border-box);
     width: 100%;
 
