@@ -375,7 +375,6 @@ describe "Adding a product", chosen_js: true do
       user.organizations << [org, org2]
 
       sign_in_as(user)
-      wait_for_ajax
       visit "/admin/products/new"
     end
 
