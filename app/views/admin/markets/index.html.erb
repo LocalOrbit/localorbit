@@ -49,7 +49,7 @@
           </table>
         </td>
         <td class="subdomain"><%= link_to market.subdomain, root_url(host: market.domain) %></td>
-        <% if market.managers.first.nil? %>
+        <% if market.managers.first.nil?  || !current_user.admin? %>
         <td class="contact"><%= market.contact_name %></td>
         <% else %>
         <td class="contact"><%= link_to market.contact_name, user_masquerade_url(id: market.managers.first.id, host: market.try(:domain) || Figaro.env.domain), class: "contact" %></td>

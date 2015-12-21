@@ -15,12 +15,12 @@
     <% if current_user.admin? || current_user.multi_market_membership? %>
     <span class="preserve-alignment pull-left mobile-block">
       <label for="filter_maket">Market</label><br>
-      <%= select_tag :filter_market, options_for_select(@selling_markets, selected: @query_params["market"]), multiple: true, class: append_sticky_class('market', 'filter-dropdown'), :style => 'width: 300px', data: { parameter: "market"} %>
+      <%= select_tag :filter_market, options_for_select(@selling_markets, selected: @query_params["market"]), class: append_sticky_class('market', 'filter-dropdown'), data: { parameter: "market"} %>
     </span>
     <% end %>
     <span class="preserve-alignment pull-left mobile-block">
       <label for="filter_can_sell">Role</label><br>
-      <%= select_tag :filter_can_sell, options_for_select(seller_status_options, selected: @query_params["can_sell"]), multiple: true, class: append_sticky_class('can_sell', 'filter-dropdown'), :style => 'width: 300px', data: { parameter: "can_sell"} %>
+      <%= select_tag :filter_can_sell, options_for_select(seller_status_options, selected: @query_params["can_sell"]), class: append_sticky_class('can_sell', 'filter-dropdown'), data: { parameter: "can_sell"} %>
     </span>
     <%= link_to "Reset", admin_organizations_path(clear: '', sort: @query_params["sort"]), class: 'btn reset' if can_reset?(@query_params) %>
 
