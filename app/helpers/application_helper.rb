@@ -79,7 +79,8 @@ module ApplicationHelper
         defaults.each do |default|
           # This currently only applies to dates, and this code makes 
           # the comparison more robust
-          if search_result.to_date.to_s == default.to_date.to_s  
+          converted = Time.parse(search_result)
+          if converted.strftime('%Y-%m-%d').to_date.to_s == default.to_date.to_s
             # Explicit return here short circuits the call as soon as 
             # a fail condition is met.  That's what we want.
             return class_string
