@@ -7,8 +7,8 @@ class OrderSearchPresenter
     @query = Search::QueryDefaults.new(query[:q] || {}, date_search_attr).query
     @user = user
 
-    if @query[:market_id_eq].present?
-      @filtered_market = @user.markets.find(@query[:market_id_eq])
+    if @query[:market_id_in].present?
+      @filtered_market = @user.markets.find(@query[:market_id_in])
     end
 
     @start_date = format_date(@query["#{date_search_attr}_date_gteq".to_s])
