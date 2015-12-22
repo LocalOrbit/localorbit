@@ -13,7 +13,7 @@
 //= require es5-shim.min
 //= require jquery
 //= require jquery_ujs
-//= require jquery-ui/datepicker
+//= require jquery-ui
 //= require chosen-jquery
 //= require typeahead-0.11.1
 //= require q
