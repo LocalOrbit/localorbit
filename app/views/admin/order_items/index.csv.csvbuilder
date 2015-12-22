@@ -13,6 +13,6 @@ csv << ["Order Date", "Order #", "Market", "Supplier", "Buyer", "Product", "Pric
     number_to_currency(order_item.gross_total),
     order_item.delivery_status.titleize,
     order_item.order.payment_status.titleize,
-    "Unpaid (WIP)"
+    order_item.seller_payment_status
   ]
 end

@@ -61,7 +61,20 @@
         background-color: <%= current_market.text_color -%>;
         border-color: <%= current_market.text_color -%>;
       }
-      
+      .set_filter,
+      input[type=date].set_filter,
+      input[type=datetime].set_filter,
+      input[type=email].set_filter,
+      input[type=search].set_filter,
+      input[type=tel].set_filter,
+      input[type=text].set_filter,
+      input[type=number].set_filter,
+      input[type=url].set_filter,
+      input[type=password].set_filter,
+      textarea.set_filter {
+        background: <%= hex_to_rgba(current_market.text_color,0.2) %>;
+        border: 1px solid <%=current_market.text_color%>;
+      }
       .btn--secondary,
       input[type=submit].btn--secondary {
          background:<%= color_mix current_market.text_color, 14 %>;

@@ -1,0 +1,30 @@
+<div class="tab-header stickable">
+  <div class="l-constraint">
+    <div class="l-page-header">
+      <h1><i class="font-icon" data-icon="&#xe017;"></i>&nbsp; Users</h1>
+    </div>
+
+    <%= search_form_for @q, url: admin_activities_path, html: { class: "order_search clear-after" } do |f| %>
+      <div class="pull-left">
+        <br/><input type="search" id="search" value="<%= @query_params["search"] %>"><button type="submit" id="search-btn" class="btn btn--end">Search</button>
+        <%= link_to "Reset", admin_activities_path(clear: '', sort: @query_params["sort"]), class: 'btn reset' if can_reset?(@query_params) %>
+      </div>
+      <div class="pull-right date-filters">
+        <span class="preserve-alignment">
+          <label for="q_placed_at_date_gteq">Filter by Date</label><br>
+          <%=  datetime_field_tag "q[placed_at_date_gteq]", @search_presenter.start_date, class: 'datepicker filter-input' %>
+        </span>
+
+        <span class="preserve-alignment">
+          <label for="q_placed_at_date_lteq" class="is-invisible">End Date</label><br>
+          <%=  datetime_field_tag "q[placed_at_date_lteq]", @search_presenter.end_date, class: 'datepicker filter-input' %>
+        </span>
+
+        <span class="preserve-alignment">
+          <br>
+          <%= f.submit "Filter", class: "btn--small" %>
+        </span>
+      </div>
+    <% end %>
+  </div>
+</div>

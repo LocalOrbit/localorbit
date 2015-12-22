@@ -143,8 +143,8 @@
       <thead>
         <tr>
           <th>Product Name</th>
-          <th>Product Code</th>
           <th>Quantity</th>
+          <th>Product Code</th>
           <th>Price</th>
           <th>Total</th>
           <th>Delivery</th>
@@ -165,13 +165,6 @@
             <span class="product-ordered"><%= item.object.name %></span> <br />
             <span class="seller-name">from <%= item.object.product.organization.name %></span>
           </td>
-          <td>
-            <% if item.object.product.code.present? %>
-              <span><%= item.object.product.code %></span> <br />
-            <% else %>
-              -
-            <% end %>
-          </td>
           <td class="quantity">
             <%# if (current_user.admin? || current_user.market_manager?) && item.object.delivery_status == 'pending' %>
             <% if FeatureAccess.edit_ordered_quantity?(user_order_item_context: user_order_item_context) %>
@@ -185,6 +178,13 @@
             <% else %>
               <span class="quantity-delivered-ro"><%= Format.quantity item.object.quantity_delivered %></span>
             <% end %> <%= item.object.unit %> (Delivered)
+          </td>
+          <td>
+            <% if item.object.product.code.present? %>
+              <span><%= item.object.product.code %></span> <br />
+            <% else %>
+              -
+            <% end %>
           </td>
           <td class="price"><%= number_to_currency item.object.unit_price %></td>
           <td class="total"><%= number_to_currency item.object.gross_total %></td>

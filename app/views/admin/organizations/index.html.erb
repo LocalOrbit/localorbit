@@ -1,5 +1,6 @@
 <div class="sub-header stickable">
   <div class="l-constraint">
+    <%= link_to "#{svg_icon} Export CSV".html_safe, url_for(format: :csv), class: "export todo pull-right" %>
       <h1><i class="font-icon" data-icon="&#xe027;"></i>&nbsp; Organizations</h1>
       <p>An organization is a Buyer or Supplier who is invited to use your market. An organization can be a Buyer, a Supplier or both.</p>
       <%= render "filters" %>
@@ -14,6 +15,7 @@
       <tr>
         <th data-column="name" class="<%= column_sort_classes("name")%>">Name</th>
         <th>Market</th>
+        <th>Contact</th>
         <th data-column="registered" class="<%= column_sort_classes("registered")%>">Registered On</th>
         <th data-column="can_sell" class="<%= column_sort_classes("can_sell")%>">Role</th>
         <th></th>

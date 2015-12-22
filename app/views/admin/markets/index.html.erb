@@ -1,11 +1,24 @@
-<div class="sub-header stickable">
+<div>
   <div class="l-constraint">
     <div class="l-page-header admin-markets-header">
+      <%= link_to "#{svg_icon} Export CSV".html_safe, url_for(format: :csv), class: "export todo pull-right" %>
       <h1><i class="font-icon" data-icon="&#xe000;"></i>&nbsp; Markets</h1>
-      <div class="header-actions">
-        <%= link_to "#{svg_icon} Export CSV".html_safe, url_for(format: :csv), class: "export" %>
+      <br/><br/>
+      <%= search_form_for @q, url: admin_markets_path do |f| %>
+      <div class="pull-left header-actions">
+        <%= f.search_field :name_cont, placeholder: "Market Name" -%><%= f.submit "Search", class: "btn--end" %>
+      </div>
+      <div class="pull-right" style="font-size:14px">
         <%= link_to 'Add Market', new_admin_market_url, class: "btn btn--add btn--small" if current_user.admin? %>
       </div>
+      <div class="manager-filters unjustify">
+        <span class="preserve-alignment mobile-block">
+          <%= f.label :active_eq, "Status" %><br>
+          <%= f.select :active_eq, [["Active", true], ["Inactive", false]], {selected: @query_params[:q].nil? ? "Active" : @query_params[:q][:active_eq], include_blank: "All"}, {class: "filter-input"} %>
+        </span>
+        <%= link_to "Reset", admin_markets_path(clear: ''), class: 'btn reset' if can_reset?(@query_params) %>
+      </div>
+      <% end %>
     </div>
   </div>
 </div>
@@ -14,6 +27,7 @@
     <thead class="stickable">
       <tr>
         <th data-column="name" class="<%= column_sort_classes("name")%>">Name</th>
+        <th data-column="cross-sell">Cross Selling With</th>
         <th data-column="subdomain" class="<%= column_sort_classes("subdomain")%>">Subdomain</th>
         <th data-column="contact" class="<%= column_sort_classes("contact")%>">Contact Name</th>
         <th>Contact Phone</th>
@@ -25,8 +39,21 @@
     <% @markets.each do |market| %>
       <tr class="<%= cycle "odd", "even" %> vcard">
         <td class="name fn"><%= link_to market.name, [:admin, market] %></td>
+        <td class="cross_selling_with">
+          <table>
+          <% market.cross_sells.each do |cross_sell| %>
+            <tr style="border: none">
+              <td><%= cross_sell.name %></td>
+            </tr>
+          <% end %>
+          </table>
+        </td>
         <td class="subdomain"><%= link_to market.subdomain, root_url(host: market.domain) %></td>
+        <% if market.managers.first.nil?  || !current_user.admin? %>
         <td class="contact"><%= market.contact_name %></td>
+        <% else %>
+        <td class="contact"><%= link_to market.contact_name, user_masquerade_url(id: market.managers.first.id, host: market.try(:domain) || Figaro.env.domain), class: "contact" %></td>
+        <% end %>
         <td><%= market.contact_phone %></td>
         <% if current_user.admin? %>
         <td>
