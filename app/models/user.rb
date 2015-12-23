@@ -311,9 +311,9 @@ class User < ActiveRecord::Base
 
   def managed_organizations_within_market_including_crossellers(market)
     if admin? || managed_markets.include?(market)
-      market.organizations.extending(MarketOrganization::AssociationScopes).excluding_deleted.mo_join_market_id(market.id)
+      market.organizations.extending(MarketOrganization::AssociationScopes).excluding_deleted.mo_join_market_id(market)
     else
-      organizations.extending(MarketOrganization::AssociationScopes).joins(:market_organizations).excluding_deleted.mo_join_market_id(market.id)
+      organizations.extending(MarketOrganization::AssociationScopes).joins(:market_organizations).excluding_deleted.mo_join_market_id(market)
     end
   end
 
