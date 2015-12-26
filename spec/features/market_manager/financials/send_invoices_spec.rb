@@ -184,12 +184,12 @@ feature "sending invoices" do
       sign_in_as market_manager
       visit admin_financials_invoices_path
 
-      within("#q_market_id_eq") do
+      within("#q_market_id_in") do
         expect(page).to have_content(market1.name)
         expect(page).to have_content(market2.name)
       end
 
-      within("#q_organization_id_eq") do
+      within("#q_organization_id_in") do
         expect(page).to have_content(market1_buyer1.name)
         expect(page).to have_content(market1_buyer2.name)
         expect(page).to have_content(market2_buyer2.name)
@@ -210,7 +210,7 @@ feature "sending invoices" do
       expect(page).to have_content(market2_order5.order_number)
       expect(page).to have_content(market2_order6.order_number)
 
-      select market1.name, from: "q_market_id_eq"
+      select market1.name, from: "q_market_id_in"
       click_button "Filter"
 
       expect(page).to have_content(market1_order1.order_number)
@@ -228,7 +228,7 @@ feature "sending invoices" do
       expect(page).not_to have_content(market2_order6.order_number)
       expect(page).not_to have_content(market2_order7.order_number)
 
-      within("#q_organization_id_eq") do
+      within("#q_organization_id_in") do
         expect(page).to have_content(market1_buyer1.name)
         expect(page).to have_content(market1_buyer2.name)
         expect(page).not_to have_content(market2_buyer2.name)
@@ -241,7 +241,7 @@ feature "sending invoices" do
       sign_in_as market_manager
       visit admin_financials_invoices_path
 
-      select market1_buyer2.name, from: "q_organization_id_eq"
+      select market1_buyer2.name, from: "q_organization_id_in"
       click_button "Filter"
 
       expect(page).not_to have_content(market1_order1.order_number)

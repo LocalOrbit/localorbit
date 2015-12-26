@@ -5,12 +5,12 @@ module Search
     def initialize(user: user, query: query, current_market: current_market)
       scope = Order.payable_to_sellers
 
-      @seller_id = query[:filtered_organization_id]
-      @seller_id = @seller_id.to_i if @seller_id.present?
+      @seller_id = query[:filtered_organization_id_in]
+      @seller_id = @seller_id.to_a if @seller_id.present?
 
       if user.admin?
         query[:q] ||= {}.with_indifferent_access
-        query[:q][:market_id_eq] ||= current_market.try(:id) || Market.order(:name).first.id
+        query[:q][:market_id_in] ||= current_market.try(:id) || Market.order(:name).first.id
       else
         scope = scope.where(market_id: user.managed_markets.map(&:id))
       end
