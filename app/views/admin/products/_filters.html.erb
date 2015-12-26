@@ -4,20 +4,23 @@
       <input type="search" id="search" value="<%= @query_params["search"] %>" class="<%= append_sticky_class('search') %>" ><button type="submit" id="search-btn" class="btn btn--end">Search</button>
     </div>
 
-    <% if current_user.multi_organization_membership? %>
-    <span class="preserve-alignment">
-      <label for="product_filter_organization">Supplier</label>
-      <%= select_tag :product_filter_organization, options_for_select(@selling_organizations, selected: @query_params["organization"]), multiple: true, prompt: nil, class: [append_sticky_class('organization', 'filter-dropdown'),'multiselect'], id: "product-filter-organization", data: { parameter: "organization"} %>
-    </span>
-    <% end %>
+    <div class="manager-filters unjustify mobile-block">
+      <% if current_user.multi_organization_membership? %>
+      <span class="preserve-alignment mobile-block">
+        <label for="product_filter_organization">Supplier</label>
+        <%= select_tag :product_filter_organization, options_for_select(@selling_organizations, selected: @query_params["organization"]), multiple: true, prompt: nil, class: [append_sticky_class('organization', 'filter-dropdown'),'multiselect'], id: "product-filter-organization", data: { parameter: "organization"} %>
+      </span>
 
-    <% if current_user.multi_market_membership? %>
-    <span class="preserve-alignment">
-      <label for="product_filter_market">Market</label>
-      <%= select_tag :product_filter_market, options_for_select(@selling_markets, selected: @query_params["market"]), multiple: true, prompt: nil, class: [append_sticky_class('market', 'filter-dropdown'),'multiselect'], id: "product-filter-market", data: { parameter: "market"} %>
-    </span>
-    <% end %>
-    <%= link_to "Reset", admin_products_path(clear: '', sort: @query_params["sort"]), class: 'btn reset' if can_reset?(@query_params) %>
+      <% if current_user.multi_market_membership? %>
+      <span class="preserve-alignment mobile-block">
+        <label for="product_filter_market">Market</label>
+        <%= select_tag :product_filter_market, options_for_select(@selling_markets, selected: @query_params["market"]), multiple: true, prompt: nil, class: [append_sticky_class('market', 'filter-dropdown'),'multiselect'], id: "product-filter-market", data: { parameter: "market"} %>
+      </span>
+      <% end %>
+
+      <% end %>
+      <%= link_to "Reset", admin_products_path(clear: '', sort: @query_params["sort"]), class: 'btn reset' if can_reset?(@query_params) %>
+    </div>
   </div>
   <%= link_to "Add New Product", new_admin_product_path, class: "btn btn--add btn--small pull-right" %>
 </div>
