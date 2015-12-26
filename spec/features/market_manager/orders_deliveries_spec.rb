@@ -193,7 +193,7 @@ context "Viewing sold items" do
       expect(totals.discount_market).to eq("$0.00")
       expect(totals.net_sales).to eq("$68.80")
 
-      select seller.name, from: "q_product_organization_id_eq"
+      select seller.name, from: "q_product_organization_id_in"
       click_button "Filter"
 
       totals = Dom::Admin::TotalSales.first
@@ -260,7 +260,7 @@ context "Viewing sold items" do
       expect(totals.discount_market).to eq("$0.00")
       expect(totals.net_sales).to eq("$68.80")
 
-      select seller.name, from: "q_product_organization_id_eq"
+      select seller.name, from: "q_product_organization_id_in"
       click_button "Filter"
 
       totals = Dom::Admin::TotalSales.first

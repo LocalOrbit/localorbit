@@ -14,14 +14,24 @@ module Search
 
     def buyer_organizations
       if @filtered_market.present?
-        @user.managed_organizations_within_market_including_crossellers(@filtered_market)
+        result = @user.managed_organizations_within_market_including_crossellers(@filtered_market)
       else
-        @user.managed_organizations_including_cross_sellers
-      end.order(:name)
+        result = @user.managed_organizations_including_cross_sellers
+      end
+      if !result.is_a?(Array)
+        result.order(:name)
+      end
+      result
     end
 
     def seller_organizations
-      buyer_organizations.where(can_sell: true)
+      if @filtered_organization.present?
+        buyer_organizations.where(@filtered_organization)
+      elsif buyer_organizations.nil?
+        buyer_organizations.where(can_sell: true)
+      else
+        @user.managed_organizations.where(id: buyer_organizations.map(&:id))
+      end
     end
   end
 end

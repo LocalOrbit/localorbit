@@ -9,10 +9,14 @@ class PaymentSearchPresenter
     @query = Search::QueryDefaults.new(query[:q] || {}, date_search_attr).query
     @user = user
 
-    @organization_id = query[:filtered_organization_id].to_s
+    @organization_id = query[:filtered_organization_id_in].to_a
 
-    if @query[:market_id_eq].present?
-      @filtered_market = @user.markets.find(@query[:market_id_eq])
+    if @query[:filtered_organization_id_in].present?
+      @filtered_organization = @user.managed_organizations.find(@query[:filtered_organization_id_in])
+    end
+
+    if @query[:market_id_in].present?
+      @filtered_market = @user.markets.find(@query[:market_id_in])
     end
 
     @start_date = format_date(@query["#{date_search_attr}_date_gteq".to_s])
