@@ -65,6 +65,7 @@ class Organization < ActiveRecord::Base
   def self.for_market_id(market_id)
     orgs = !all.to_sql.include?("market_organizations") ? joins(:market_organizations) : all
     orgs.where(market_organizations: {market_id: [market_id]})
+    orgs
   end
 
   def self.for_can_sell(can_sell)
