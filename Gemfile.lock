@@ -445,7 +445,7 @@ GEM
       fog-aws
       heroku (>= 3.28.6, <= 3.32)
       rake
-    poltergeist (1.6.0)
+    poltergeist (1.8.1)
       capybara (~> 2.1)
       cliver (~> 0.3.1)
       multi_json (~> 1.0)
@@ -642,7 +642,7 @@ GEM
     webmock (1.18.0)
       addressable (>= 2.3.6)
       crack (>= 0.3.2)
-    websocket-driver (0.6.2)
+    websocket-driver (0.6.3)
       websocket-extensions (>= 0.1.0)
     websocket-extensions (0.1.2)
     wkhtmltopdf-heroku (2.12.2.4)

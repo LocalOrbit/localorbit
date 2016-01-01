@@ -42,11 +42,11 @@ module Api
           if view_as == "B" || user_type == "B" || user_type == "M"
             orders = Order.placed_between(interval).dashboard_orders_for_buyer(current_user).order(:created_at)
             order_items = nil
-            @presenter = DashboardBuyerPresenter.new(orders, order_items, interval).generate
+            @presenter = DashboardBuyerPresenter.new(orders, order_items, date_param).generate
           else
             orders = Order.placed_between(interval).orders_for_seller(current_user).order(:id)
             order_items = nil
-            @presenter = DashboardSellerPresenter.new(orders, order_items, interval).generate
+            @presenter = DashboardSellerPresenter.new(orders, order_items, interval, date_param).generate
           end
 
           num_pending_buyers = 0
@@ -56,7 +56,7 @@ module Api
 
           upcoming_dlvr = upcoming_deliveries(user_type)
 
-          render json: {dashboard: {userType: user_type, showEntityPicker: show_entity_picker, deliveries: upcoming_dlvr[:deliveries], numPendingDeliveries: upcoming_dlvr[:numPendingDeliveries], pendingDeliveryAmount: upcoming_dlvr[:pendingDeliveryAmount], totalSalesAmount: @presenter[:total_sales_amount], totalSalesAmountGraph: @presenter[:total_sales_amount_graph], totalOrderCount: @presenter[:total_order_count], totalOrderCountGraph: @presenter[:total_order_count_graph], avgSalesAmount: @presenter[:average_sales_amount], paymentsDueAmount: @presenter[:payments_due_amount], paymentsOverdueAmount: @presenter[:payments_overdue_amount], numPendingBuyers: num_pending_buyers}}
+          render json: {dashboard: {userType: user_type, showEntityPicker: show_entity_picker, deliveries: upcoming_dlvr[:deliveries], numPendingDeliveries: upcoming_dlvr[:numPendingDeliveries], pendingDeliveryAmount: upcoming_dlvr[:pendingDeliveryAmount], totalSalesAmount: @presenter[:total_sales_amount], totalSalesAmountGraph: @presenter[:total_sales_amount_graph], totalOrderCount: @presenter[:total_order_count], totalOrderCountGraph: @presenter[:total_order_count_graph], avgSalesAmount: @presenter[:average_sales_amount], paymentsDueAmount: @presenter[:payments_due_amount], numPendingBuyers: num_pending_buyers}}
       end
 
       def timezone

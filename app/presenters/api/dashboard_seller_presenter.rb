@@ -2,10 +2,11 @@ class Api::DashboardSellerPresenter
   include Dashboards
   include ActiveSupport::NumberHelper
 
-  def initialize(orders, order_items, interval)
+  def initialize(orders, order_items, interval, date_param)
     @orders = orders
     @order_items = order_items
     @interval = interval
+    @date_param = date_param
   end
 
   def generate

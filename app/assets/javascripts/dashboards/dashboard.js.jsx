@@ -59,10 +59,8 @@
             else
                 buyer_supplier_picker = ('');
 
-            if ((self.state.dashboard.showEntityPicker && self.state.selectedEntity == "S" ) || self.state.dashboard.userType == "S")
+            if ((self.state.dashboard.showEntityPicker && (self.state.selectedEntity == "S" ) || self.state.dashboard.userType == "S" || (self.state.selectedEntity == "B" ) || self.state.dashboard.userType == "B"))
                 bottomRightWidget = (<lo.payments_due_widget paymentsDueAmount={self.state.dashboard.paymentsDueAmount} />);
-            else if ((self.state.dashboard.showEntityPicker && self.state.selectedEntity == "B" ) || self.state.dashboard.userType == "B")
-                bottomRightWidget = (<lo.payments_overdue_widget paymentsOverdueAmount={self.state.dashboard.paymentsOverdueAmount} />);
             else if (self.state.dashboard.userType == "M")
                 bottomRightWidget = (<lo.pending_signups_widget numPendingBuyers={self.state.dashboard.numPendingBuyers} />);
             else

@@ -2,10 +2,10 @@ class Api::DashboardBuyerPresenter
   include Dashboards
   include ActiveSupport::NumberHelper
 
-  def initialize(orders, order_items, interval)
+  def initialize(orders, order_items, date_param)
     @orders = orders
     @order_items = order_items
-    @interval = interval
+    @date_param = date_param
   end
 
   def generate
@@ -14,29 +14,14 @@ class Api::DashboardBuyerPresenter
 
     case @date_param
         when "0"
-          #total_sales_amount_graph = @orders.group_by_hour_of_day('orders.created_at', format: "%H").order('hour').sum(:total_cost).as_json
-          #total_order_count_graph = @orders.group_by_hour_of_day('orders.created_at', format: "%H").count.as_json
-
           total_sales_grouped = group_to_buyers(total_sales_amount_orders, 'hour')
         when "1"
-          #total_sales_amount_graph = @orders.group_by_day('orders.created_at', format: "%d").sum(:total_cost).as_json
-          #total_order_count_graph = @orders.group_by_day('orders.created_at', format: "%d").count.as_json
-
           total_sales_grouped = group_to_buyers(total_sales_amount_orders, 'day')
         when "2"
-          #total_sales_amount_graph = @orders.group_by_day('orders.created_at', format: "%d").order('day').sum(:total_cost).as_json
-          #total_order_count_graph = @orders.group_by_day('orders.created_at', format: "%d").count.as_json
-
           total_sales_grouped = group_to_buyers(total_sales_amount_orders, 'day')
         when "3"
-          #total_sales_amount_graph = @orders.group_by_month('orders.created_at', format: "%b").order('month').sum(:total_cost).as_json
-          #total_order_count_graph = @orders.group_by_month('orders.created_at', format: "%b").count.as_json
-
           total_sales_grouped = group_to_buyers(total_sales_amount_orders, 'month')
         else
-          #total_sales_amount_graph = @orders.group_by_day('orders.created_at', format: "%d").order('day').sum(:total_cost).as_json
-          #total_order_count_graph = @orders.group_by_day('orders.created_at', format: "%d").count.as_json
-
           total_sales_grouped = group_to_buyers(total_sales_amount_orders, 'day')
       end
 
@@ -49,10 +34,10 @@ class Api::DashboardBuyerPresenter
 
       average_sales_amount = total_order_count > 0 ? number_to_currency(total_sales_amount_raw/total_order_count || 0, precision:0) : '$0'
 
-      payments_overdue_orders = @orders.paid_with("purchase order").payment_overdue
+      payments_due_orders = @orders.paid_with("purchase order").payment_due
 
-      payments_overdue_amount_raw = sum_order_total(payments_overdue_orders)
-      payments_overdue_amount = payments_overdue_amount_raw > 0 ? number_to_currency(payments_overdue_amount_raw, precision:0) : '$0'
+      payments_due_amount_raw = sum_order_total(payments_due_orders)
+      payments_due_amount = payments_due_amount_raw > 0 ? number_to_currency(payments_due_amount_raw, precision:0) : '$0'
 
     {
       :total_sales_amount_graph => total_sales_amount_graph,
@@ -60,7 +45,7 @@ class Api::DashboardBuyerPresenter
       :total_order_count_graph => total_order_count_graph,
       :total_order_count => total_order_count,
       :average_sales_amount => average_sales_amount,
-      :payments_overdue_amount => payments_overdue_amount
+      :payments_due_amount => payments_due_amount
     }
   end
 

@@ -16,7 +16,7 @@
                             <div className="font-icon icon-picture"></div>
                         </div>
                         <div style={{float: "right"}}>
-                            <div className="widget-value">
+                            <div className="widget-value" id="numPendingBuyers">
                                 {this.props.numPendingBuyers}
                             </div>
                             <div className="widget-label">

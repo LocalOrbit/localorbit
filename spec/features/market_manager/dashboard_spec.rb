@@ -1,18 +1,50 @@
 require "spec_helper"
 
 feature "a market manager viewing their dashboard" do
-  let!(:user) { create(:user, :market_manager) }
-  let!(:market) { user.managed_markets.first }
+  let!(:user) { create(:user) }
+  let!(:buyer) { create(:organization, :single_location, :buyer, users: [user]) }
+  let!(:market) { create(:market, :with_addresses, organizations: [buyer]) }
+  let!(:market_manager) { create(:user, :market_manager, managed_markets: [market]) }
 
   let!(:delivery_schedule) { create(:delivery_schedule) }
   let!(:delivery)    { delivery_schedule.next_delivery }
 
-  before do
-    market.update_attributes(subdomain: "ada")
-    switch_to_subdomain(market.subdomain)
+  let!(:order_item1) { create(:order_item, unit_price: 10.00, quantity: 2) }
+  let!(:order1) { create(:order, delivery: delivery, items: [order_item1], total_cost: 20.00, order_number: "LO-14-TEST-1", market: market) }
 
-    sign_in_as user
+  Timecop.travel(DateTime.now + 1.day)
+
+  let!(:order_item2) { create(:order_item, unit_price: 10.00, quantity: 1) }
+  let!(:order2) { create(:order, delivery: delivery, items: [order_item2], total_cost: 10.00, order_number: "LO-14-TEST-2", market: market) }
+
+  Timecop.return
+
+  def login
+    switch_to_subdomain(market.subdomain)
+    sign_in_as(market_manager)
   end
+
+  before do
+    login
+    visit dashboard_path
+  end
+
+  it "market_manager views dashboard - 7D", js: true do
+    expect(page).to have_selector("#totalSalesAmount", text: '$30')
+    expect(page).to have_selector("#totalOrderCount", text: '2')
+    expect(page).to have_selector("#averageSalesAmount", text: '$15')
+  end
+
+  it "market_manager views dashboard - 1D", js: true do
+    choose('1D')
+    expect(page).to have_selector("#totalSalesAmount", text: '$20')
+    expect(page).to have_selector("#totalOrderCount", text: '1')
+    expect(page).to have_selector("#averageSalesAmount", text: '$10')
+  end
+
+end
+
+=begin
 
   describe "Current Orders tables" do
     it "lists all sales for the currently managed market ordered by creation date" do
@@ -81,4 +113,4 @@ feature "a market manager viewing their dashboard" do
       expect(page).to have_content("No products have yet been created")
     end
   end
-end
+=end

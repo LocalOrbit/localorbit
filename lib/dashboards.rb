@@ -2,13 +2,13 @@ module Dashboards
 
   def upcoming_deliveries(user_type)
     if user_type == "B" || user_type == "M"
-      @deliveries = Order.orders_for_buyer(current_user).upcoming_buyer_delivery.joins(:items).where(order_items: {delivery_status: "pending"}).select('deliveries.*').
+      @deliveries = Order.orders_for_buyer(current_user).upcoming_buyer_delivery.joins(:items).where(order_items: {delivery_status: "pending"}).select('orders.id AS order_id','deliveries.*').
           sort_by {|d| d.buyer_deliver_on }
       use_date = :buyer_deliver_on
 
       pending_amount = Order.orders_for_buyer(current_user).where(:delivery => @deliveries.map(&:id)).sum(:total_cost)
     else
-      @deliveries = Order.orders_for_seller(current_user).upcoming_delivery.where(order_items: {delivery_status: "pending"}).select('deliveries.*').
+      @deliveries = Order.orders_for_seller(current_user).upcoming_delivery.where(order_items: {delivery_status: "pending"}).select('orders.id AS order_id','deliveries.*').
           sort_by {|d| d.deliver_on }
       use_date = :deliver_on
 
@@ -35,6 +35,7 @@ module Dashboards
       delivery_id = nil
       css_class = if delivery_for_day[day.yday]
                     delivery_id = delivery_for_day[day.yday].id
+                    order_id = delivery_for_day[day.yday].order_id
                     "cal-date"
                   else
                     "cal-date disabled"
@@ -42,7 +43,7 @@ module Dashboards
       if delivery_weeks[-1].length == 7
         delivery_weeks.push [ ]
       end
-      delivery_weeks[-1].push({ day: day, css_class: css_class, delivery_id: delivery_id })
+      delivery_weeks[-1].push({ day: day, css_class: css_class, delivery_id: delivery_id, order_id: order_id })
     }
 
     {:numPendingDeliveries => @deliveries.length, :deliveries => delivery_weeks, :pendingDeliveryAmount => number_to_currency(pending_amount, precision: 0)}

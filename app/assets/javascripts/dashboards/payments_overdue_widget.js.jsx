@@ -16,7 +16,7 @@
                             <div className="font-icon icon-stack-list"></div>
                         </div>
                         <div style={{float: "right"}}>
-                            <div className="widget-value">
+                            <div className="widget-value" id="paymentsOverdueAmount">
                                 {this.props.paymentsOverdueAmount}
                             </div>
                             <div className="widget-label">

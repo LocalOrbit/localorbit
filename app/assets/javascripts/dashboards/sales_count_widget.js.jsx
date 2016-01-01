@@ -72,7 +72,7 @@
                             <div className="font-icon icon-stack-checkmark"></div>
                         </div>
                         <div style={{float: "right"}}>
-                            <div className="widget-value">
+                            <div className="widget-value" id="totalOrderCount">
                                 {this.props.totalOrderCount}
                             </div>
                             <div className="widget-label">

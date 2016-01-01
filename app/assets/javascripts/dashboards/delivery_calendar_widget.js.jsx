@@ -7,6 +7,14 @@
         return test.getDate() === 1;
     }
 
+    function generateDeliveryLink(delivery_day, user_type) {
+        if (user_type == "B")
+            view_deliveries_link = "/orders/" + delivery_day['order_id'];
+        else
+            view_deliveries_link = "/admin/delivery_tools/pick_lists/" + delivery_day['delivery_id'];
+        return view_deliveries_link;
+    }
+
     var delivery_calendar_widget = React.createClass({
         propTypes: {
             userType: React.PropTypes.string.isRequired,
@@ -21,7 +29,7 @@
             return test.getDate() === 1;
         },
 
-        generateWeeks: function(delivery_weeks) {
+        generateWeeks: function(delivery_weeks, user_type) {
             var wks = '';
             var process_date;
             var last_day_of_month;
@@ -38,7 +46,7 @@
                         month_day = process_date.getDate();
                         dow = process_date.getDay() + 1;
                         if (day['css_class'] == "cal-date")
-                            dlvr_href="/admin/delivery_tools";
+                            dlvr_href=generateDeliveryLink(day, user_type);
                         else
                             dlvr_href='#';
                         wks = wks + '<td class="' + day['css_class'] + '"><a style="color: white" href=' + dlvr_href + '>' + month_day  + '</a></td>';
@@ -59,13 +67,14 @@
         render: function () {
 
             var delivery_weeks = this.props.deliveries;
-            var weeks = this.generateWeeks(delivery_weeks);
             var view_deliveries_link;
 
-            if (this.props.userType == "S")
-                view_deliveries_link = "/admin/orders"
+            if (this.props.userType == "B")
+                view_deliveries_link = "/orders"
             else
                 view_deliveries_link = "/admin/delivery_tools"
+
+            var weeks = this.generateWeeks(delivery_weeks, this.props.userType);
 
             return (
                 <div className="dashboard-widget large-widget deliveries">
