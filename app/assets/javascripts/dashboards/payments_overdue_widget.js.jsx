@@ -3,7 +3,7 @@
 
     var payments_overdue_widget = React.createClass({
         propTypes: {
-            paymentsOverdueAmount: React.PropTypes.string.isRequired
+            paymentsOverdueAmount: React.PropTypes.string
         },
 
         render: function () {

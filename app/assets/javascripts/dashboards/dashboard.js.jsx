@@ -67,12 +67,12 @@
                 bottomRightWidget = ('');
 
             if (self.state.dashboard.userType)
-                uType = self.state.dashboard.userType
+                uType = self.state.dashboard.userType;
             else
                 if (self.state.selectedEntity == "S")
-                    uType = "S"
+                    uType = "S";
                 else
-                    uType = "B"
+                    uType = "B";
 
             return (
                  <div>

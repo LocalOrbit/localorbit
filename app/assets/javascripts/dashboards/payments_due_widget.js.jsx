@@ -3,7 +3,7 @@
 
     var payments_due_widget = React.createClass({
         propTypes: {
-            paymentsDueAmount: React.PropTypes.string.isRequired
+            paymentsDueAmount: React.PropTypes.string
         },
 
         render: function () {

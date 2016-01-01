@@ -3,7 +3,7 @@
 
     var pending_delivery = React.createClass({
         propTypes: {
-            pendingDeliveryAmount: React.PropTypes.string.isRequired
+            pendingDeliveryAmount: React.PropTypes.string
         },
 
         render: function () {

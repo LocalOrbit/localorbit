@@ -5,8 +5,8 @@
 
     var sales_count_widget = React.createClass({
         propTypes: {
-            totalOrderCount: React.PropTypes.number.isRequired,
-            totalOrderCountGraph: React.PropTypes.object.isRequired
+            totalOrderCount: React.PropTypes.number,
+            totalOrderCountGraph: React.PropTypes.array
         },
 
         render: function () {

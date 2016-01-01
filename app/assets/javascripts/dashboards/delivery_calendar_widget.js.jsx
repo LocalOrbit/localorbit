@@ -17,10 +17,10 @@
 
     var delivery_calendar_widget = React.createClass({
         propTypes: {
-            userType: React.PropTypes.string.isRequired,
-            deliveries: React.PropTypes.array.isRequired,
-            numPendingDeliveries: React.PropTypes.number.isRequired,
-            pendingDeliveryAmount: React.PropTypes.string.isRequired
+            userType: React.PropTypes.string,
+            deliveries: React.PropTypes.array,
+            numPendingDeliveries: React.PropTypes.number,
+            pendingDeliveryAmount: React.PropTypes.string
         },
 
         isLastDay: function(dt) {

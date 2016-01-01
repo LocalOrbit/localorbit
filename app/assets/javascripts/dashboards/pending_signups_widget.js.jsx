@@ -3,7 +3,7 @@
 
     var pending_signups_widget = React.createClass({
         propTypes: {
-            numPendingBuyers: React.PropTypes.string.isRequired
+            numPendingBuyers: React.PropTypes.string
         },
 
         render: function () {

@@ -3,7 +3,7 @@
 
     var sales_avg_amount_widget = React.createClass({
         propTypes: {
-            avgSalesAmount: React.PropTypes.string.isRequired
+            avgSalesAmount: React.PropTypes.string
         },
 
         render: function () {

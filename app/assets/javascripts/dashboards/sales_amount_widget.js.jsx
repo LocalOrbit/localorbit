@@ -5,9 +5,9 @@
 
     var sales_amount_widget = React.createClass({
         propTypes: {
-            userType: React.PropTypes.string.isRequired,
-            totalSalesAmount: React.PropTypes.string.isRequired,
-            totalSalesAmountGraph: React.PropTypes.object.isRequired
+            userType: React.PropTypes.string,
+            totalSalesAmount: React.PropTypes.string,
+            totalSalesAmountGraph: React.PropTypes.array
         },
 
         render: function () {
