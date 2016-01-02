@@ -128,6 +128,5 @@
     });
 
     window.lo.dashboard = dashboard;
-    module.exports = dashboard;
 
 }).call(this);

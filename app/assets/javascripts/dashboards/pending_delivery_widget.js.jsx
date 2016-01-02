@@ -30,6 +30,5 @@
     });
 
     window.lo.pending_delivery = pending_delivery;
-    module.exports = pending_delivery;
 
 }).call(this);

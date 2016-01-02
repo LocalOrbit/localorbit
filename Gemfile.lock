@@ -749,7 +749,7 @@ DEPENDENCIES
   rails_12factor
   rails_view_annotator
   ransack
-  react-rails (~> 1.4.0)
+  react-rails (~> 1.0)
   rschema!
   rspec-collection_matchers
   rspec-rails (~> 3.0)

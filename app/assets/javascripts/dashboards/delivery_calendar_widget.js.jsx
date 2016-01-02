@@ -102,6 +102,5 @@
     });
 
     window.lo.delivery_calendar_widget = delivery_calendar_widget;
-    module.exports = delivery_calendar_widget;
 
 }).call(this);

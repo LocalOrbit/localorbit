@@ -37,6 +37,5 @@
     });
 
     window.lo.buyer_supplier_picker = buyer_supplier_picker;
-    module.exports = buyer_supplier_picker;
 
 }).call(this);

@@ -39,6 +39,5 @@
     });
 
     window.lo.timeframe_picker = timeframe_picker;
-    module.exports = timeframe_picker;
 
 }).call(this);

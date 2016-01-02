@@ -33,6 +33,5 @@
     });
 
     window.lo.pending_signups_widget = pending_signups_widget;
-    module.exports = pending_signups_widget;
 
 }).call(this);

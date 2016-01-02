@@ -32,6 +32,5 @@
     });
 
     window.lo.payments_overdue_widget = payments_overdue_widget;
-    module.exports = payments_overdue_widget;
 
 }).call(this);

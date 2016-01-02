@@ -91,6 +91,5 @@
     });
 
     window.lo.sales_count_widget = sales_count_widget;
-    module.exports = sales_count_widget;
 
 }).call(this);

@@ -32,6 +32,5 @@
     });
 
     window.lo.sales_avg_amount_widget = sales_avg_amount_widget;
-    module.exports = sales_avg_amount_widget;
 
 }).call(this);
