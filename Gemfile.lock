@@ -120,6 +120,8 @@ GEM
       json
     celluloid (0.16.0)
       timers (~> 4.0.0)
+    childprocess (0.5.8)
+      ffi (~> 1.0, >= 1.0.11)
     chunky_png (1.3.1)
     cliver (0.3.2)
     codeclimate-test-reporter (0.4.0)
@@ -577,6 +579,11 @@ GEM
     sdoc (0.4.1)
       json (~> 1.7, >= 1.7.7)
       rdoc (~> 4.0)
+    selenium-webdriver (2.48.1)
+      childprocess (~> 0.5)
+      multi_json (~> 1.0)
+      rubyzip (~> 1.0)
+      websocket (~> 1.0)
     shellany (0.0.1)
     simplecov (0.9.0)
       docile (~> 1.1.0)
@@ -645,6 +652,7 @@ GEM
     webmock (1.18.0)
       addressable (>= 2.3.6)
       crack (>= 0.3.2)
+    websocket (1.2.2)
     websocket-driver (0.6.3)
       websocket-extensions (>= 0.1.0)
     websocket-extensions (0.1.2)
@@ -750,6 +758,7 @@ DEPENDENCIES
   rubyXL
   sass-rails (~> 4.0.0)
   sdoc
+  selenium-webdriver
   simplecov
   simpleidn
   slop (~> 3.0)

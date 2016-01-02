@@ -1,5 +1,4 @@
 //= require_self
-//= require es5-shim.min
 //= require react_ujs
 
 React = require('react');

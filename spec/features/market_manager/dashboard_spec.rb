@@ -29,13 +29,14 @@ feature "a market manager viewing their dashboard" do
     visit dashboard_path
   end
 
-  it "market_manager views dashboard - 7D", js: true do
+  it "market_manager views dashboard - 7D", :js => true do
+
     expect(page).to have_selector("#totalSalesAmount", text: '$30')
     expect(page).to have_selector("#totalOrderCount", text: '2')
     expect(page).to have_selector("#averageSalesAmount", text: '$15')
   end
 
-  it "market_manager views dashboard - 1D", js: true do
+  it "market_manager views dashboard - 1D", :js => true do
     choose('1D')
     expect(page).to have_selector("#totalSalesAmount", text: '$20')
     expect(page).to have_selector("#totalOrderCount", text: '1')
