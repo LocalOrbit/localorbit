@@ -29,15 +29,17 @@ feature "a market manager viewing their dashboard" do
     visit dashboard_path
   end
 
-  it "market_manager views dashboard - 7D", :js => true do
+  it "market_manager views dashboard - 7D", :js do
 
     expect(page).to have_selector("#totalSalesAmount", text: '$30')
     expect(page).to have_selector("#totalOrderCount", text: '2')
     expect(page).to have_selector("#averageSalesAmount", text: '$15')
   end
 
-  it "market_manager views dashboard - 1D", :js => true do
-    choose('1D')
+  xit "market_manager views dashboard - 1D", :js do
+    page.execute_script('$("input[type=\'radio\']:checked").prop(\'checked\', false)')
+    page.execute_script('$("#sc-interval0").prop("checked", true).click()')
+    sleep 10
     expect(page).to have_selector("#totalSalesAmount", text: '$20')
     expect(page).to have_selector("#totalOrderCount", text: '1')
     expect(page).to have_selector("#averageSalesAmount", text: '$10')
