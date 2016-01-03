@@ -20,7 +20,6 @@ require "capybara-webkit"
 #Capybara.javascript_driver = :selenium
 
 Capybara::Webkit.configure do |config|
-  config.debug = true
   config.allow_unknown_urls
 end
 
