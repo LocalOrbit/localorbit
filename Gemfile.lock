@@ -679,7 +679,7 @@ DEPENDENCIES
   awesome_print
   aws-sdk
   balanced (~> 0.7)
-  browserify-rails (~> 0.9.1)
+  browserify-rails
   bullet
   byebug
   capybara
@@ -749,7 +749,7 @@ DEPENDENCIES
   rails_12factor
   rails_view_annotator
   ransack
-  react-rails (~> 1.4.0)
+  react-rails
   rschema!
   rspec-collection_matchers
   rspec-rails (~> 3.0)
