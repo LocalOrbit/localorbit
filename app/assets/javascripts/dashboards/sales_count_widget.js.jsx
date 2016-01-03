@@ -91,5 +91,6 @@
     });
 
     window.lo.sales_count_widget = sales_count_widget;
+    window.require = require;
 
 }).call(this);

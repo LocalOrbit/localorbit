@@ -66,8 +66,7 @@ gem "wysiwyg-rails"
 gem "kiba"
 
 gem 'browserify-rails', '~> 0.9.1'
-gem 'react-rails', '~> 1.0'
-#gem 'react-rails', '~> 1.4.0'
+gem 'react-rails', '~> 1.4.0'
 
 gem "constructor"
 gem "tabulator", github: "dcrosby42/tabulator"

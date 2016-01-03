@@ -102,5 +102,6 @@
     });
 
     window.lo.delivery_calendar_widget = delivery_calendar_widget;
+    window.require = require;
 
 }).call(this);

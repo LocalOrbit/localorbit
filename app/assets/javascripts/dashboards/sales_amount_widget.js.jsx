@@ -107,5 +107,6 @@
     });
 
     window.lo.sales_amount_widget = sales_amount_widget;
+    window.require = require;
 
 }).call(this);

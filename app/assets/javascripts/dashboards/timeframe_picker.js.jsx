@@ -39,5 +39,6 @@
     });
 
     window.lo.timeframe_picker = timeframe_picker;
+    window.require = require;
 
 }).call(this);

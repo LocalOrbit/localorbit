@@ -37,5 +37,6 @@
     });
 
     window.lo.buyer_supplier_picker = buyer_supplier_picker;
+    window.require = require;
 
 }).call(this);

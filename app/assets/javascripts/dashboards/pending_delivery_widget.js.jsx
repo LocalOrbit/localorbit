@@ -30,5 +30,6 @@
     });
 
     window.lo.pending_delivery = pending_delivery;
+    window.require = require;
 
 }).call(this);

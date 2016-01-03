@@ -28,6 +28,7 @@
 //= require bootstrap_knockout_modules
 //= stub balanced
 //= stub stripe
+//= require react_ujs
 
 //= require components
 //= require reflux.min

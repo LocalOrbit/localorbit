@@ -5,7 +5,7 @@ require "selenium-webdriver"
 
 Capybara.register_driver :poltergeist do |app|
   Capybara::Poltergeist::Driver.new(app,
-                                    timeout: 60,
+                                    timeout: 20,
                                     inspector: true,
                                     phantomjs_options: ['--ssl-protocol=tlsv1'])
 end
@@ -16,7 +16,7 @@ Capybara.javascript_driver = :poltergeist
 #  Capybara::Selenium::Driver.new(app)
 #end
 
-#Capybara.javascript_driver = :selenium
+#Capybara.javascript_driver = :;poltergeist
 
 Capybara.default_max_wait_time = (ENV["CAPYBARA_WAIT_TIME"] || 20).to_i
 

@@ -32,5 +32,6 @@
     });
 
     window.lo.payments_due_widget = payments_due_widget;
+    window.require = require;
 
 }).call(this);
