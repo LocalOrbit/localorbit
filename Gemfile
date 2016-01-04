@@ -129,6 +129,8 @@ end
 group :test do
   gem "codeclimate-test-reporter", require: false
   gem "simplecov", require: false
+  gem "capybara"
+  gem "capybara-webkit"
   gem "domino"
   gem "factory_girl_rails"
   gem "email_spec"
