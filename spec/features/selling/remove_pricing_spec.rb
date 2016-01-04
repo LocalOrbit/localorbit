@@ -13,6 +13,7 @@ describe "Remove advanced pricing" do
     switch_to_subdomain(market.subdomain)
     sign_in_as(user)
     within "#admin-nav" do
+      sleep 3
       click_link "Products"
     end
     click_link product.name

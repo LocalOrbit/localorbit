@@ -212,6 +212,7 @@ describe "price estimator", js: true do
     switch_to_subdomain(market1.subdomain)
     sign_in_as(user)
     within "#admin-nav" do
+      sleep 3
       click_link "Products"
     end
     click_link product1.name

@@ -34,6 +34,7 @@ describe "Viewing products" do
 
     it "shows a list of products which the owner manages" do
       within "#admin-nav" do
+        sleep 3
         click_link "Products"
       end
 
@@ -60,6 +61,7 @@ describe "Viewing products" do
       sign_in_as(market_manager)
 
       within "#admin-nav" do
+        sleep 3
         click_link "Products"
       end
     end

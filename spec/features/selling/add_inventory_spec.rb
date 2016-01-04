@@ -107,6 +107,7 @@ describe "Adding advanced inventory" do
       product.organization.users << user
       sign_in_as(user)
       within "#admin-nav" do
+        sleep 3
         click_link "Products"
       end
       click_link product.name

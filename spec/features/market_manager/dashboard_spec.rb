@@ -9,17 +9,28 @@ feature "a market manager viewing their dashboard" do
   let!(:delivery_schedule) { create(:delivery_schedule) }
   let!(:delivery)    { delivery_schedule.next_delivery }
 
-  let!(:order_item1) { create(:order_item, unit_price: 10.00, quantity: 2) }
-  let!(:order1) { create(:order, delivery: delivery, items: [order_item1], total_cost: 20.00, order_number: "LO-14-TEST-1", market: market) }
+  before do
+    Timecop.travel("January 15, 2016") do
+      order_item = create(:order_item, unit_price: 10, quantity: 1)
+      order = create(:order, delivery: delivery, items: [order_item], payment_method: "purchase order", market: market, total_cost: 10)
+      order.save!
+    end
 
-  Timecop.travel(DateTime.now + 1.day)
+    Timecop.travel("January 13, 2016") do
+      order_item = create(:order_item, unit_price: 10, quantity: 1)
+      order = create(:order, delivery: delivery, items: [order_item], payment_method: "purchase order", market: market, total_cost: 10)
+      order.save!
+    end
 
-  let!(:order_item2) { create(:order_item, unit_price: 10.00, quantity: 1) }
-  let!(:order2) { create(:order, delivery: delivery, items: [order_item2], total_cost: 10.00, order_number: "LO-14-TEST-2", market: market) }
-
-  Timecop.return
+    Timecop.travel("January 5, 2016") do
+      order_item = create(:order_item, unit_price: 10, quantity: 1)
+      order = create(:order, delivery: delivery, items: [order_item], payment_method: "purchase order", market: market, total_cost: 10)
+      order.save!
+    end
+  end
 
   def login
+    Timecop.travel("January 15, 2016")
     switch_to_subdomain(market.subdomain)
     sign_in_as(market_manager)
   end
@@ -30,21 +41,28 @@ feature "a market manager viewing their dashboard" do
   end
 
   it "market_manager views dashboard - 7D", :js do
-
-    expect(page).to have_selector("#totalSalesAmount", text: '$30')
+    page.execute_script('$("input[type=\'radio\']:checked").prop(\'checked\', false)')
+    page.execute_script('$("#sc-interval1").prop("checked", true).click()')
+    expect(page).to have_selector("#totalSalesAmount", text: '$20')
     expect(page).to have_selector("#totalOrderCount", text: '2')
-    expect(page).to have_selector("#averageSalesAmount", text: '$15')
+    expect(page).to have_selector("#averageSalesAmount", text: '$10')
   end
 
-  xit "market_manager views dashboard - 1D", :js do
+  it "market_manager views dashboard - 1D", :js do
     page.execute_script('$("input[type=\'radio\']:checked").prop(\'checked\', false)')
     page.execute_script('$("#sc-interval0").prop("checked", true).click()')
-    sleep 10
-    expect(page).to have_selector("#totalSalesAmount", text: '$20')
+    expect(page).to have_selector("#totalSalesAmount", text: '$10')
     expect(page).to have_selector("#totalOrderCount", text: '1')
     expect(page).to have_selector("#averageSalesAmount", text: '$10')
   end
 
+  it "market_manager views dashboard - MTD", :js do
+    page.execute_script('$("input[type=\'radio\']:checked").prop(\'checked\', false)')
+    page.execute_script('$("#sc-interval2").prop("checked", true).click()')
+    expect(page).to have_selector("#totalSalesAmount", text: '$30')
+    expect(page).to have_selector("#totalOrderCount", text: '3')
+    expect(page).to have_selector("#averageSalesAmount", text: '$10')
+  end
 end
 
 =begin
