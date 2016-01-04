@@ -2,34 +2,34 @@ module SocialMediaHelper
   
   def facebook_like(facebook_handle) 
     if !(facebook_handle == '' || facebook_handle == nil) then 
-      if facebook_handle.index('facebook.com/') == nil then
-        massaged_handle = facebook_handle
-      else
-        massaged_handle = facebook_handle.slice(facebook_handle.index('facebook.com/')+13..-1) 
-      end
-      
+      massaged_handle = strip_detritus(facebook_handle, 'facebook.com/')
       prepared_url = "https://www.facebook.com/#{massaged_handle}"
       
-      if check_link(prepared_url) != 404 then
-        render partial: "shared/facebook", locals: { f: prepared_url }
-      end 
+      render partial: "shared/facebook", locals: { f: prepared_url }
       
     else 
       # If facebook_handle is null or blank then skip it... 
     end 
   end 
   
-  private
-  
-  def check_link(prepared_url)
-    if false then 
-      uri = URI(prepared_url)
-      request = Net::HTTP.new uri.host
-      response= request.request_head uri.path
-      return response.code.to_i    
-    else
-      # this isn't working (at least locally), but I like the idea of a confirmation
-      200
+  def twitter_button(twitter_handle)
+    if !(twitter_handle == '' || twitter_handle == nil) then 
+      massaged_handle = strip_detritus(twitter_handle, 'twitter')
+      prepared_url = "https://www.twitter.com/#{massaged_handle}"
+      
+      render partial: "shared/twitter", locals: { f: twitter_handle }
     end
   end
+  
+  private
+  
+  def strip_detritus(source, fulcrum)
+    if source.index(fulcrum) != nil
+      remove_fulcrum = fulcrum.length.to_int
+      source.slice(source.index(fulcrum)+remove_fulcrum..-1)
+    else
+      source
+    end
+  end
+  
 end
