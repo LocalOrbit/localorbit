@@ -35,27 +35,27 @@ module API
 					Product.where(category_id: category_id)
 				end
 
-				# post requests
+				# # post requests
 
-				desc "Create a product"
-				params do
-					requires :name, :unit, :category_id, :unit_description,
-				end
+				# desc "Create a product"
+				# params do
+				# 	requires :name, :unit, :category_id, :unit_description,
+				# end
 
-				# singular in post request
-				post '/add-product' do
-					product = Product.create(params(:go,:here))
-				end
+				# # singular in post request
+				# post '/add-product' do
+				# 	product = Product.create(params(:go,:here))
+				# end
 
-				desc "Upload json"
-				params do
-					requires :param1, :param2
-				end
-				post '/add-products' do
-					# do stuff with posted json file here
-					# should be normal way of parsing it and then it will add by row
-					# sending responses in the order with the route redirections as mentioned in plan
-				end
+				# desc "Upload json"
+				# params do
+				# 	requires :param1, :param2
+				# end
+				# post '/add-products' do
+				# 	# do stuff with posted json file here
+				# 	# should be normal way of parsing it and then it will add by row
+				# 	# sending responses in the order with the route redirections as mentioned in plan
+				# end
 
 
 			end
