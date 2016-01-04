@@ -94,6 +94,7 @@ feature "Buyer Financial Overview" do
     end
 
     click_link "Dashboard", match: :first
+    save_and_open_page
     click_link "Financials"
     click_link "Due"
 

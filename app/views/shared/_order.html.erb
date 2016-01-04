@@ -200,7 +200,7 @@
             <td class="action-link">
               <% if FeatureAccess.delete_order_item?(user_order_item_context: user_order_item_context) %>
                 <%= item.hidden_field :_destroy %>
-                <%= link_to raw('<i class="font-icon icon-delete"></i>'), "#delete" %>
+                <%= link_to raw('<i class="fa fa-trash-o">&nbsp;</i>'), "#delete" %>
               <% end %>
             </td>
           <% end %>

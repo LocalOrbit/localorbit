@@ -13,7 +13,7 @@
     </td>
     <td class="notes"><%= bank_account.notes %></td>
     <td class="delete">
-      <%= link_to raw("&#57418;"), admin_market_deposit_account_path(market_id: bank_account.bankable_id, id: bank_account.id), {method: :delete, title: "Delete", class: "font-icon"} %>
+      <%= link_to raw('<i class="fa fa-trash-o">&nbsp;</i>'), admin_market_deposit_account_path(market_id: bank_account.bankable_id, id: bank_account.id), {method: :delete, title: "Delete", class: "font-icon"} %>
     </td>
   </tr>
 

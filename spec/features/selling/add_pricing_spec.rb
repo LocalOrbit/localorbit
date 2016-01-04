@@ -120,6 +120,7 @@ describe "Adding advanced pricing" do
     fill_in "price[sale_price]", with: "1.90"
     click_button "Cancel"
 
+    sleep 3
     click_link "Add Price"
     expect(find_field("price[sale_price]").value).to eq("")
   end
