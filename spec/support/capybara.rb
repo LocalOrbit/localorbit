@@ -11,28 +11,10 @@ Capybara.register_driver :poltergeist do |app|
                                     phantomjs_options: ['--debug=false', '--ssl-protocol=any'])
 end
 
-Capybara.javascript_driver = :poltergeist
 
-#Capybara.register_driver :selenium do |app|
-#  Capybara::Selenium::Driver.new(app, :browser => :chrome)
-#end
+Capybara.javascript_driver = :webkit
+Capybara.default_max_wait_time = (ENV["CAPYBARA_WAIT_TIME"] || 20).to_i
 
-#Capybara.javascript_driver = :selenium
-
-#Capybara::Webkit.configure do |config|
-#  config.allow_unknown_urls
-#end
-
-#Capybara.javascript_driver = :webkit
-
-
-#Capybara.register_driver :selenium do |app|
-#  Capybara::Selenium::Driver.new(app)
-#end
-
-#Capybara.javascript_driver = :selenium
-
-Capybara.default_max_wait_time = (ENV["CAPYBARA_WAIT_TIME"] || 180).to_i
 
 # hidden elements are ignored by default
 # Capybara.ignore_hidden_elements = true
