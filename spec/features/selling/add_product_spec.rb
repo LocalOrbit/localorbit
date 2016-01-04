@@ -71,7 +71,7 @@ describe "Adding a product", chosen_js: true do
     sign_in_as(user)
 
     within "#admin-nav" do
-      sleep 6
+      sleep 10
       click_link "Products"
     end
     click_link "Add New Product"
@@ -85,7 +85,7 @@ describe "Adding a product", chosen_js: true do
     sign_in_as(user)
 
     within "#admin-nav" do
-      sleep 6
+      sleep 10
       click_link "Products"
     end
     click_link "Add New Product"

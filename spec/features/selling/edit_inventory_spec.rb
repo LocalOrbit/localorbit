@@ -14,7 +14,7 @@ describe "Editing inventory" do
     product.organization.users << user
     sign_in_as(user)
     within "#admin-nav" do
-      sleep 6
+      sleep 10
       click_link "Products"
     end
     click_link product.name

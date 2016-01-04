@@ -12,7 +12,7 @@ describe "Editing advanced pricing", js: true do
     switch_to_subdomain(market.subdomain)
     sign_in_as(user)
     within "#admin-nav" do
-      sleep 6
+      sleep 10
       click_link "Products"
     end
     click_link product.name
@@ -212,7 +212,7 @@ describe "price estimator", js: true do
     switch_to_subdomain(market1.subdomain)
     sign_in_as(user)
     within "#admin-nav" do
-      sleep 6
+      sleep 10
       click_link "Products"
     end
     click_link product1.name

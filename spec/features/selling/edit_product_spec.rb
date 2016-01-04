@@ -17,7 +17,7 @@ describe "Editing a product", :js do
       product.organization.users << user
       sign_in_as(user)
       within "#admin-nav" do
-        sleep 6
+        sleep 10
         click_link "Products"
       end
       click_link "Canned Pears"
@@ -61,7 +61,7 @@ describe "Editing a product", :js do
       sign_in_as(user)
 
       within "#admin-nav" do
-        sleep 6
+        sleep 10
         click_link "Products"
       end
       click_link "Canned Pears"
@@ -152,7 +152,7 @@ describe "Editing a product", :js do
 
         sign_in_as(user)
         within "#admin-nav" do
-          sleep 6
+          sleep 10
           click_link "Products"
         end
         click_link "Canned Pears"
@@ -214,7 +214,7 @@ describe "Editing a product", :js do
 
         sign_in_as(user)
         within "#admin-nav" do
-          sleep 6
+          sleep 10
           click_link "Products"
         end
         click_link "Canned Pears"

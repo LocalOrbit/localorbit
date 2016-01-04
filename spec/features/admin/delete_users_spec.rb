@@ -34,7 +34,7 @@ describe "Deleting a user", :js do
       click_link "Your Organization"
       click_link "Users"
 
-      sleep 6
+      sleep 10
       user_row = Dom::Admin::UserRow.find_by_email(user2.email)
       user_row.remove!
 
