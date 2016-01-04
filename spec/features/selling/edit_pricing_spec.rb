@@ -12,6 +12,7 @@ describe "Editing advanced pricing", js: true do
     switch_to_subdomain(market.subdomain)
     sign_in_as(user)
     within "#admin-nav" do
+      sleep 3
       click_link "Products"
     end
     click_link product.name
@@ -73,8 +74,8 @@ describe "Editing advanced pricing", js: true do
         price_row.click_buyer
 
         price_row.inputs.each do |input|
-          expect(input["disabled"]).to be_false
-          expect(input["readonly"]).to be_false
+          expect(input["disabled"]).to be_falsey
+          expect(input["readonly"]).to be_falsey
         end
 
         fill_in("price_#{price.id}_sale_price", with: 55)

@@ -14,6 +14,7 @@ describe "Editing inventory" do
     product.organization.users << user
     sign_in_as(user)
     within "#admin-nav" do
+      sleep 3
       click_link "Products"
     end
     click_link product.name
@@ -90,8 +91,8 @@ describe "Editing inventory" do
         lot_row.click_number
 
         lot_row.inputs.each do |input|
-          expect(input["disabled"]).to be_nil
-          expect(input["readonly"]).to be_nil
+          expect(input["disabled"]).to be_falsey
+          expect(input["readonly"]).to be_falsey
         end
 
         fill_in("lot_#{lot.id}_number", with: 55)
