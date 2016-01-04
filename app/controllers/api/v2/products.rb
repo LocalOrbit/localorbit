@@ -41,6 +41,8 @@ module API
 				params do
 					requires :name, :unit, :category_id, :unit_description,
 				end
+
+				# singular in post request
 				post '/add-product' do
 					product = Product.create(params(:go,:here))
 				end
