@@ -72,6 +72,8 @@ gem "constructor"
 gem "tabulator", github: "dcrosby42/tabulator"
 gem "rschema", github: "tomdalling/rschema"
 
+gem "turbolinks"
+
 # wkhtmltopdf versions are a mess. 0.12.1 is stable but not well supported by gems
 # See https://github.com/zakird/wkhtmltopdf_binary_gem/issues/13
 # The github version is massive and makes the Heroku slug huge
@@ -122,8 +124,6 @@ group :development, :test do
   #gem 'wkhtmltopdf-binary-edge', '~> 0.12.2.1'
   gem "wkhtmltopdf-binary", github: "zakird/wkhtmltopdf_binary_gem"
   gem "capybara"
-  gem "capybara-webkit"
-  gem 'selenium-webdriver'
 end
 
 group :test do

@@ -30,11 +30,13 @@ describe "Deleting a user", :js do
     it "removes a user from an organization" do
       switch_to_subdomain(market.subdomain)
       sign_in_as(user)
+
+      sleep 10
+
       click_link "Account"
       click_link "Your Organization"
       click_link "Users"
 
-      sleep 10
       user_row = Dom::Admin::UserRow.find_by_email(user2.email)
       user_row.remove!
 

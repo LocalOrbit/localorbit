@@ -46,3 +46,7 @@
 //= require plugins/urls.min.js
 //
 //= require_tree .
+
+React = window.React = require('react');
+ReactDOM= window.ReactDOM = require('react-dom');
+
