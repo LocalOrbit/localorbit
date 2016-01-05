@@ -1,11 +1,19 @@
-<div
-><a href="https://twitter.com/<%= f %>" class="twitter-follow-button" data-show-count="false">Follow @<%= f %></a></div>
-<script>!function(d,s,id){
-  var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';
-  if(!d.getElementById(id)){
-    js=d.createElement(s);
-    js.id=id;js.src=p+'://platform.twitter.com/widgets.js';
-    fjs.parentNode.insertBefore(js,fjs);
-  }
-}(document, 'script', 'twitter-wjs');
-</script>
+<div class="social-widget">
+  <a 
+    class="twitter-timeline"  
+    href="<%= f %>" 
+    data-screen-name="<%= f %>" 
+    data-widget-id="684422983289536512">
+    Tweets by @<%= f %>
+  </a>
+  
+  <script>!function(d,s,id){
+    var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';
+    if(!d.getElementById(id)){
+      js=d.createElement(s);
+      js.id=id;js.src=p+'://platform.twitter.com/widgets.js';
+      fjs.parentNode.insertBefore(js,fjs);
+    }
+  }(document, 'script', 'twitter-wjs');
+  </script>
+</div>
