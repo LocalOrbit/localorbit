@@ -3,13 +3,11 @@ require "capybara/rails"
 require "capybara/poltergeist"
 #require "selenium-webdriver"
 #require "capybara-webkit"
-#require "terminus"
 
-#Capybara.current_driver = :terminus
 
 Capybara.register_driver :poltergeist do |app|
   Capybara::Poltergeist::Driver.new(app,
-                                    timeout: 120,
+                                    timeout: 60,
                                     inspector: false,
                                     debug: false,
                                     js_errors: false,
@@ -35,7 +33,7 @@ Capybara.javascript_driver = :poltergeist
 #  Capybara::Selenium::Driver.new(app)
 #end
 
-#Capybara.javascript_driver = :;poltergeist
+#Capybara.javascript_driver = :selenium
 
 Capybara.default_max_wait_time = (ENV["CAPYBARA_WAIT_TIME"] || 120).to_i
 

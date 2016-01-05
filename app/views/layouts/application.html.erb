@@ -136,6 +136,8 @@
     <% end %>
     </style>
   <% end %>
+  <%= javascript_include_tag "https://cdnjs.cloudflare.com/ajax/libs/es5-shim/4.4.1/es5-shim.js", "data-turbolinks-track" => true %>
+  <%= javascript_include_tag "plotly-latest.min.js", "data-turbolinks-track" => true %>
 </head>
 
 <body class="controller-<%= controller.controller_name %> <%= current_user.present? ? "" : "signed-out" %> <%= "request-desktop" if cookies[:request_desktop] && cookies[:request_desktop] == "true"  %>">
