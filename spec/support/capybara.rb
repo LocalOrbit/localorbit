@@ -11,7 +11,7 @@ Capybara.register_driver :poltergeist do |app|
                                     inspector: true,
                                     debug: false,
                                     js_errors: false,
-                                    phantomjs_options: ['--debug=true', '--ssl-protocol=any'])
+                                    phantomjs_options: ['--debug=false', '--ssl-protocol=any'])
 end
 
 Capybara.javascript_driver = :poltergeist
@@ -35,7 +35,7 @@ Capybara.javascript_driver = :poltergeist
 
 #Capybara.javascript_driver = :selenium
 
-Capybara.default_max_wait_time = (ENV["CAPYBARA_WAIT_TIME"] || 120).to_i
+Capybara.default_max_wait_time = (ENV["CAPYBARA_WAIT_TIME"] || 180).to_i
 
 # hidden elements are ignored by default
 # Capybara.ignore_hidden_elements = true

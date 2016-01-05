@@ -1,7 +1,7 @@
 # Circle CI config
 machine:
   environment:
-    CAPYBARA_WAIT_TIME: 30
+    CAPYBARA_WAIT_TIME: 180
 dependencies:
   pre:
     - sudo apt-get install libjpeg62; sudo apt-get install ghostscript

@@ -1,6 +1,6 @@
 require "spec_helper"
 
-feature "a market manager viewing their dashboard" do
+feature "a market manager viewing their dashboard", :js do
   let!(:user) { create(:user) }
   let!(:buyer) { create(:organization, :single_location, :buyer, users: [user]) }
   let!(:market) { create(:market, :with_addresses, organizations: [buyer]) }
@@ -40,7 +40,7 @@ feature "a market manager viewing their dashboard" do
     visit dashboard_path
   end
 
-  it "market_manager views dashboard - 7D", :js do
+  it "market_manager views dashboard - 7D" do
     page.execute_script('$("input[type=\'radio\']:checked").prop(\'checked\', false)')
     page.execute_script('$("#sc-interval1").prop("checked", true).click()')
     expect(page).to have_selector("#totalSalesAmount", text: '$20')
@@ -48,7 +48,7 @@ feature "a market manager viewing their dashboard" do
     expect(page).to have_selector("#averageSalesAmount", text: '$10')
   end
 
-  it "market_manager views dashboard - 1D", :js do
+  it "market_manager views dashboard - 1D" do
     page.execute_script('$("input[type=\'radio\']:checked").prop(\'checked\', false)')
     page.execute_script('$("#sc-interval0").prop("checked", true).click()')
     expect(page).to have_selector("#totalSalesAmount", text: '$10')
@@ -56,7 +56,7 @@ feature "a market manager viewing their dashboard" do
     expect(page).to have_selector("#averageSalesAmount", text: '$10')
   end
 
-  it "market_manager views dashboard - MTD", :js do
+  it "market_manager views dashboard - MTD" do
     page.execute_script('$("input[type=\'radio\']:checked").prop(\'checked\', false)')
     page.execute_script('$("#sc-interval2").prop("checked", true).click()')
     expect(page).to have_selector("#totalSalesAmount", text: '$30')
