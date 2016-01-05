@@ -11,7 +11,7 @@ Capybara.register_driver :poltergeist do |app|
                                     inspector: true,
                                     debug: false,
                                     js_errors: false,
-                                    phantomjs_options: ['--debug=false', '--ssl-protocol=any'])
+                                    phantomjs_options: ['--debug=true', '--ssl-protocol=any'])
 end
 
 Capybara.javascript_driver = :poltergeist

@@ -65,7 +65,8 @@ describe "Editing advanced pricing", js: true do
 
       it "sets the form url back" do
         form = page.find("#p#{product.id}_new_price")
-        expect(form["action"]).to eql("/admin/products/#{product.id}/prices")
+        uri = URI.parse(form["action"])
+        expect(uri.path).to eql("/admin/products/#{product.id}/prices")
         expect(form["method"]).to eql("post")
       end
 

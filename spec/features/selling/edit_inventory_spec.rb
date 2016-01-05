@@ -50,7 +50,8 @@ describe "Editing inventory" do
       form = page.find(new_lot_form_id)
       hidden_method = page.find("[name=_method]", visible: false)
 
-      expect(form["action"]).to eql("/admin/products/#{product.id}/lots/#{lot.id}")
+      uri = URI.parse(form["action"])
+      expect(uri.path).to eql("/admin/products/#{product.id}/lots/#{lot.id}")
       expect(hidden_method.value).to eql("put")
     end
 
@@ -81,7 +82,8 @@ describe "Editing inventory" do
 
       it "sets the form url back" do
         form = page.find(new_lot_form_id)
-        expect(form["action"]).to eql("/admin/products/#{product.id}/lots")
+        uri = URI.parse(form["action"])
+        expect(uri.path).to eql("/admin/products/#{product.id}/lots")
         expect(form["method"]).to eql("post")
       end
 

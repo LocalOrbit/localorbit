@@ -16,7 +16,7 @@
 
     <tr>
       <td class="title">
-        <%= link_to "Purchase Orders", dashboard_path(payment_status: "uninvoiced") %>
+        <%= link_to "Purchase Orders", orders_path(payment_status: "uninvoiced") %>
       </td>
       <td class="amount"><%= number_to_currency @overview.purchase_orders %></td>
     </tr>
