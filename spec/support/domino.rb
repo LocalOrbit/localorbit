@@ -999,7 +999,7 @@ module Dom
 
       def set_quantity(n)
         quantity_field.set("")
-        quantity_field.set(n.to_s)
+        quantity_field.native.send_keys(n.to_s)
       end
 
       def remove_link

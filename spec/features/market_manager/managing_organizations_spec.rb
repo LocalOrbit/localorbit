@@ -30,7 +30,7 @@ describe "A Market Manager", :vcr do
 
         check "Allow purchase orders"
 
-        attach_file "Profile photo", "app/assets/images/logo.png"
+        #attach_file "Profile photo", "app/assets/images/logo.png"
 
         click_button "Add Organization"
 

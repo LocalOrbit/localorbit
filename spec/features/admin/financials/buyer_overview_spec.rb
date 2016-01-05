@@ -167,8 +167,6 @@ feature "Buyer Financial Overview" do
     click_link "Financials"
     click_link "Due"
 
-    save_and_open_page
-
     fill_in "q_invoice_due_date_date_lteq", with: 30.days.from_now.to_date.to_s
     click_button "Filter"
 
@@ -184,8 +182,6 @@ feature "Buyer Financial Overview" do
 
     click_link "Financials"
     click_link "Purchase Orders"
-
-    save_and_open_page
 
     expect(page).to have_content(@due_order.order_number)
     expect(page).to have_content(@overdue_order1.order_number)

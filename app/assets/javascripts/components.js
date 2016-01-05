@@ -1,5 +1,3 @@
-//= require react_ujs
-
 React = require('react');
 ReactDOM = require('react-dom');
 
