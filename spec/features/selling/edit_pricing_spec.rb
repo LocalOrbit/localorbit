@@ -34,7 +34,8 @@ describe "Editing advanced pricing", js: true do
       form = page.find("#p#{product.id}_new_price")
       hidden_method = page.find("[name=_method]", visible: false)
 
-      expect(form["action"]).to eql("/admin/products/#{product.id}/prices/#{price.id}")
+      uri=URI.parse(form["action"])
+      expect(uri.path).to eql("/admin/products/#{product.id}/prices/#{price.id}")
       expect(hidden_method.value).to eql("put")
     end
 

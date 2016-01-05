@@ -11,7 +11,7 @@ module Dom
 
   module Deletable
     def click_delete
-      node.find('.fa-trash-o').click
+      node.find("[title=Delete]").click
     end
   end
 
@@ -1095,7 +1095,7 @@ module Dom
     end
 
     def click_delete
-      node.find(".fa-trash-o").trigger(:click)
+      node.click_link("123")
     end
 
     def click_pricing
