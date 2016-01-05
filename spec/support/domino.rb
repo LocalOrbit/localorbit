@@ -1095,7 +1095,7 @@ module Dom
     end
 
     def click_delete
-      node.click_link("123")
+      node.find(".fa-trash-o").click
     end
 
     def click_pricing
