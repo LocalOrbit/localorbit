@@ -1,6 +1,6 @@
 require "spec_helper"
 
-feature "a market manager viewing their dashboard", :js do
+feature "a market manager viewing their dashboard" do
   let!(:user) { create(:user) }
   let!(:buyer) { create(:organization, :single_location, :buyer, users: [user]) }
   let!(:market) { create(:market, :with_addresses, organizations: [buyer]) }
