@@ -44,7 +44,7 @@
         <td class="available"><%= discount.available_uses %></td>
         <td class="links">
           &#160;
-          <%= link_to raw("&#57418;"), admin_discount_path(discount), method: :delete, data: { confirm: "Are you sure you want to delete this discount?" }, title: "Delete", class: "font-icon" %>
+          <%= link_to raw('<i class="fa fa-trash-o">&nbsp;</i>'), admin_discount_path(discount), method: :delete, data: { confirm: "Are you sure you want to delete this discount?" }, title: "Delete", class: "font-icon" %>
         </td>
       </tr>
       <% end %>

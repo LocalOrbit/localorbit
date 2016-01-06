@@ -1,9 +1,2 @@
-<h1>Dashboard</h1>
-<div class="row dashboard">
-  <div class="column column--half column--guttered">
-    <%= render "pending_orders" %>
-  </div
-  ><div class="column column--half column--guttered">
-    <%= render "upcoming_deliveries" %>
-  </div>
-</div>
+<%= react_component('lo.dashboard', {
+    baseUrl: "#{request.base_url}/api/v1/dashboards"}) %>

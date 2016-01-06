@@ -17,6 +17,7 @@ describe "Editing a product", :js do
       product.organization.users << user
       sign_in_as(user)
       within "#admin-nav" do
+
         click_link "Products"
       end
       click_link "Canned Pears"
@@ -60,6 +61,7 @@ describe "Editing a product", :js do
       sign_in_as(user)
 
       within "#admin-nav" do
+
         click_link "Products"
       end
       click_link "Canned Pears"
@@ -150,6 +152,7 @@ describe "Editing a product", :js do
 
         sign_in_as(user)
         within "#admin-nav" do
+
           click_link "Products"
         end
         click_link "Canned Pears"
@@ -211,6 +214,7 @@ describe "Editing a product", :js do
 
         sign_in_as(user)
         within "#admin-nav" do
+
           click_link "Products"
         end
         click_link "Canned Pears"

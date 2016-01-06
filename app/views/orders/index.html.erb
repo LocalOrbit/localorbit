@@ -1,0 +1,61 @@
+<h1>Purchase History</h1>
+<%= search_form_for @q, url: orders_path, html: { class: "order_search clear-after" } do |f| %>
+    <div class="pull-left order-search-widget">
+      <span class="preserve-alignment">
+        <%= f.label :order_number_or_organization_name_or_items_seller_name_cont, "Search Orders" %><br>
+        <%# NOTE: Do not change the whitespace on the following line %>
+        <%= f.search_field :order_number_or_organization_name_or_items_seller_name_cont, placeholder: "Order #, Buyer, etc." -%><%= f.submit "Search", class: "btn--end" %>
+      </span>
+    </div>
+
+    <div class="pull-right date-filters">
+      <span class="preserve-alignment">
+        <label for="q_placed_at_date_gteq">Filter by Date</label><br>
+        <%=  datetime_field_tag "q[placed_at_date_gteq]", @presenter.start_date, class: 'datepicker filter-input' %>
+      </span>
+
+      <span class="preserve-alignment">
+        <label for="q_placed_at_date_lteq" class="is-invisible">End Date</label><br>
+        <%=  datetime_field_tag "q[placed_at_date_lteq]", @presenter.end_date, class: 'datepicker filter-input' %>
+      </span>
+
+      <span class="preserve-alignment">
+        <br>
+        <%= f.submit "Filter", class: "btn--small" %>
+      </span>
+    </div>
+<% end %>
+
+<div class="table-wrapper">
+  <table class="sortable">
+    <thead class="stickable">
+    <tr>
+      <%= content_tag :th, sort_link(@q, :order_number, "Order #") %>
+      <%= content_tag :th, sort_link(@q, :placed_at, "Order Date") %>
+      <%= content_tag :th, sort_link(@q, :delivery_deliver_on, "Delivery Date") %>
+      <%= content_tag :th, sort_link(@q, :payment_status, "Payment") %>
+      <%= content_tag :th, sort_link(@q, :total_cost, "Amount Owed") %>
+    </tr>
+    </thead>
+    <tbody>
+    <% @buyer_orders.each do |order| %>
+        <tr class="order-row">
+          <td class="order-number"><%= link_to order.order_number, order_path(order.id) %></td>
+          <td class="order-date"><%= order.placed_at.strftime("%m/%d/%Y") %></td>
+          <td class="delivery-status"><%= order.delivery_status_for_user(current_user).titleize %></td>
+          <td class="payment-status"><%= order.payment_status.titleize %></td>
+          <td class="total"><%= number_to_currency(order.total_cost) %></td>
+        </tr>
+    <% end %>
+    </tbody>
+  </table>
+</div>
+
+<%= paginate @buyer_orders %>
+
+<% if @buyer_orders.none? %>
+    <div class="info-note">
+      <h2>No Results</h2>
+      This table is empty, either because there is no data, or because the filter you've applied is hiding it.
+    </div>
+<% end %>

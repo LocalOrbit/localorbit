@@ -33,7 +33,7 @@
             </td>
             <td class="delete">
               <%= toggle_active_button(delivery, parent: @market) %>
-              <%= link_to raw("&#57418;"), [:admin, @market, delivery],
+              <%= link_to raw('<i class="fa fa-trash-o">&nbsp;</i>'), [:admin, @market, delivery],
                           data: {method: :delete,
                                  confirm: 'Are you sure you want to delete this delivery?'},
                           title: "Delete", class: "font-icon" %>

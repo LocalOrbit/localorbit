@@ -12,6 +12,7 @@ describe "Editing advanced pricing", js: true do
     switch_to_subdomain(market.subdomain)
     sign_in_as(user)
     within "#admin-nav" do
+
       click_link "Products"
     end
     click_link product.name
@@ -33,7 +34,8 @@ describe "Editing advanced pricing", js: true do
       form = page.find("#p#{product.id}_new_price")
       hidden_method = page.find("[name=_method]", visible: false)
 
-      expect(form["action"]).to eql("/admin/products/#{product.id}/prices/#{price.id}")
+      uri=URI.parse(form["action"])
+      expect(uri.path).to eql("/admin/products/#{product.id}/prices/#{price.id}")
       expect(hidden_method.value).to eql("put")
     end
 
@@ -64,7 +66,8 @@ describe "Editing advanced pricing", js: true do
 
       it "sets the form url back" do
         form = page.find("#p#{product.id}_new_price")
-        expect(form["action"]).to eql("/admin/products/#{product.id}/prices")
+        uri = URI.parse(form["action"])
+        expect(uri.path).to eql("/admin/products/#{product.id}/prices")
         expect(form["method"]).to eql("post")
       end
 
@@ -73,8 +76,8 @@ describe "Editing advanced pricing", js: true do
         price_row.click_buyer
 
         price_row.inputs.each do |input|
-          expect(input["disabled"]).to be_nil
-          expect(input["readonly"]).to be_nil
+          expect(input["disabled"]).to be_falsey
+          expect(input["readonly"]).to be_falsey
         end
 
         fill_in("price_#{price.id}_sale_price", with: 55)
@@ -211,6 +214,7 @@ describe "price estimator", js: true do
     switch_to_subdomain(market1.subdomain)
     sign_in_as(user)
     within "#admin-nav" do
+
       click_link "Products"
     end
     click_link product1.name

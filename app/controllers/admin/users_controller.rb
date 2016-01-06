@@ -1,6 +1,7 @@
 module Admin
   class UsersController < AdminController
     include StickyFilters
+    include Users
 
     before_action :require_admin_or_market_manager
     before_action :lookup_manageable_user, only: [:edit, :update, :update_enabled]
@@ -82,6 +83,7 @@ module Admin
       params.require(:user).permit(:name, :email, :password, :password_confirmation).reject {|_, v| v.empty? }
     end
 
+=begin
     def find_users
       scope = if current_user.admin?
         User.all
@@ -92,5 +94,6 @@ module Admin
       end
       @users = scope.includes(:managed_markets)
     end
+=end
   end
 end

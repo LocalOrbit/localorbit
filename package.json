@@ -1,0 +1,17 @@
+{
+  "name": "localorbit",
+  "dependencies": {
+    "browserify": "^10.2.6",
+    "browserify-incremental": "^3.0.1",
+    "react": "^0.14.5",
+    "react-dom": "^0.14.3",
+    "react-plotlyjs": "^0.1.2",
+    "react-segmented-control": "^0.1.0",
+    "react-server": "0.0.1",
+    "reactify": "^1.1.1"
+  },
+  "license": "MIT",
+  "engines": {
+    "node": ">= 0.10"
+  }
+}

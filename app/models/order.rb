@@ -64,11 +64,13 @@ class Order < ActiveRecord::Base
 
   scope :recent, -> { visible.order("created_at DESC").limit(15) }
   scope :upcoming_delivery, -> { visible.joins(:delivery).where("deliveries.deliver_on > ?", Time.current.end_of_minute) }
+  scope :upcoming_buyer_delivery, -> { visible.joins(:delivery).where("deliveries.buyer_deliver_on > ?", Time.current.end_of_minute) }
   scope :uninvoiced, -> { visible.purchase_orders.where(invoiced_at: nil) }
   scope :invoiced, -> { visible.purchase_orders.where.not(invoiced_at: nil) }
   scope :unpaid, -> { visible.where(payment_status: "unpaid") }
   scope :paid, -> { visible.where(payment_status: "paid") }
   scope :delivered, -> { visible.where("order_items.delivery_status = ?", "delivered").group("orders.id") }
+  scope :undelivered, -> { visible.where("order_items.delivery_status = ?", "pending").group("orders.id") }
   scope :paid_with, lambda {|method| visible.where(payment_method: method) }
   scope :purchase_orders, -> { where(payment_method: "purchase order") }
   scope :payment_overdue, -> { unpaid.where("invoice_due_date < ?", (Time.current - 1.day).end_of_day) }
@@ -84,6 +86,8 @@ class Order < ActiveRecord::Base
   scope :not_balanced, -> { where.not(payment_provider: PaymentProvider::Balanced.id.to_s) }
   scope :stripe,       -> { where(payment_provider: PaymentProvider::Stripe.id.to_s) }
   scope :not_stripe,   -> { where.not(payment_provider: PaymentProvider::Stripe.id.to_s) }
+
+  scope :placed_between, lambda {|range| visible.where(placed_at: range) }
 
   scope_accessible :sort, method: :for_sort, ignore_blank: true
   scope_accessible :payment_status
@@ -241,6 +245,14 @@ class Order < ActiveRecord::Base
       all
     else
       where(buyer_orders_arel(user).or(manager_orders_arel(user))).uniq
+    end
+  end
+
+  def self.dashboard_orders_for_buyer(user)
+    if user.admin?
+      all
+    else
+      joins(:items).where(buyer_orders_arel(user).or(manager_orders_arel(user))).uniq
     end
   end
 

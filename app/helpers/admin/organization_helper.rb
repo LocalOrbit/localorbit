@@ -5,7 +5,14 @@ module Admin
         ["Any", nil],
         ["Buyer", 0],
         ["Supplier", 1]
+      ]
+    end
 
+    def org_status_options
+      [
+          ["Any", nil],
+          ["Enabled", 1],
+          ["Disabled", 0]
       ]
     end
 

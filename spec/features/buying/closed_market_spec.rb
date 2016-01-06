@@ -42,7 +42,7 @@ feature "When a Market is closed" do
       let!(:order1)      { create(:order, delivery: delivery, items: [order_item1], organization: buyer) }
 
       scenario "the Buyer may view her Orders" do
-        click_link "Dashboard", match: :first
+        click_link "Purchase History"
         follow_buyer_order_link order: order1
       end
     end

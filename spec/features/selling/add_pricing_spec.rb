@@ -11,6 +11,7 @@ describe "Adding advanced pricing" do
     switch_to_subdomain(market.subdomain)
     sign_in_as(user)
     within "#admin-nav" do
+
       click_link "Products"
     end
     click_link product.name
@@ -119,6 +120,7 @@ describe "Adding advanced pricing" do
     click_link "Add Price"
     fill_in "price[sale_price]", with: "1.90"
     click_button "Cancel"
+
 
     click_link "Add Price"
     expect(find_field("price[sale_price]").value).to eq("")

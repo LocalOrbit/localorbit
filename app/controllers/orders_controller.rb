@@ -1,4 +1,6 @@
 class OrdersController < ApplicationController
+  include StickyFilters
+
   before_action :require_selected_market
   before_action :require_market_open,            only: :create
   before_action :require_current_organization,   only: :create
@@ -6,6 +8,17 @@ class OrdersController < ApplicationController
   before_action :require_current_delivery,       only: :create
   before_action :require_cart,                   only: :create
   before_action :hide_admin_navigation,          only: :create
+  before_action :find_sticky_params, only: :index
+
+  def index
+    @query_params["placed_at_date_gteq"] ||= 7.days.ago.to_date.to_s
+    @query_params["placed_at_date_lteq"] ||= Date.today.to_s
+    @presenter = BuyerOrderPresenter.new(current_user, current_market, request.query_parameters, @query_params)
+    @q = search_and_calculate_totals(@presenter)
+
+    @buyer_orders ||= @q.result
+    @buyer_orders = @buyer_orders.page(params[:page]).per(@query_params[:per_page])
+  end
 
   def show
     @order = BuyerOrder.find(current_user, params[:id])
@@ -76,5 +89,12 @@ class OrdersController < ApplicationController
         :notes
       ]
     )
+  end
+
+  def search_and_calculate_totals(query)
+    results = Order.includes(:organization, :items, :delivery).orders_for_buyer(current_user).search(query.query)
+    results.sorts = "placed_at desc" if results.sorts.empty?
+
+    results
   end
 end

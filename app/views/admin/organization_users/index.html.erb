@@ -34,7 +34,7 @@
           </td>
           <td class="delete">
             <%= button_to admin_organization_user_path(@organization, user), {method: :delete, class: "delete font-icon", data: {confirm: "Are you sure you want to delete #{user.email} from #{@organization.name}?"}, title: "Delete"} do%>
-              &#57418;
+              <i class="fa fa-trash-o">&nbsp;</i>
             <% end %>
           </td>
         </tr>

@@ -110,7 +110,7 @@ describe "Using order templates", :js do
     expect(page).to_not have_content "Loading products"
     find(".app-apply-template").click
     expect(page).to have_content "Order Templates"
-    find_all(".app-apply-template-btn").first.click
+    click_button("Apply")
 
     expect(page).to have_content("Your Order")
     expect(page).to have_content("Bananas")
