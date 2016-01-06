@@ -1,9 +1,6 @@
 require "capybara/rspec"
 require "capybara/rails"
 require "capybara/poltergeist"
-#require "selenium-webdriver"
-#require "capybara-webkit"
-
 
 Capybara.register_driver :poltergeist do |app|
   Capybara::Poltergeist::Driver.new(app,
@@ -40,8 +37,8 @@ Capybara.default_max_wait_time = (ENV["CAPYBARA_WAIT_TIME"] || 180).to_i
 # hidden elements are ignored by default
 # Capybara.ignore_hidden_elements = true
 
-RSpec.configure do |config|
-  config.before(:each, js: true) do
+#RSpec.configure do |config|
+#  config.before(:each, js: true) do
     # page.driver.browser.url_blacklist = ['intercom.io']
-  end
-end
+#  end
+#end

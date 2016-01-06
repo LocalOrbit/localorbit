@@ -35,32 +35,43 @@ feature "a market manager viewing their dashboard", :js do
     sign_in_as(market_manager)
   end
 
-  before do
-    login
-    visit dashboard_path
-  end
+  context "view various timeframes" do
 
-  it "market_manager views dashboard - 7D" do
-    page.execute_script('$("input[type=\'radio\']:checked").prop(\'checked\', false)')
-    page.execute_script('$("#sc-interval1").prop("checked", true).click()')
-    expect(page).to have_selector("#totalSalesAmount", text: '$20')
-    expect(page).to have_selector("#totalOrderCount", text: '2')
-    expect(page).to have_selector("#averageSalesAmount", text: '$10')
-  end
+    before do
+      login
+      visit dashboard_path
+    end
 
-  it "market_manager views dashboard - 1D" do
-    page.execute_script('$("input[type=\'radio\']:checked").prop(\'checked\', false)')
-    page.execute_script('$("#sc-interval0").prop("checked", true).click()')
-    expect(page).to have_selector("#totalSalesAmount", text: '$10')
-    expect(page).to have_selector("#totalOrderCount", text: '1')
-    expect(page).to have_selector("#averageSalesAmount", text: '$10')
-  end
+    it "market_manager views dashboard - 1D" do
+      page.execute_script('$("input[type=\'radio\']:checked").prop(\'checked\', false)')
+      page.execute_script('$("#sc-interval0").prop("checked", true).click()')
+      expect(page).to have_selector("#totalSalesAmount", text: '$10')
+      expect(page).to have_selector("#totalOrderCount", text: '1')
+      expect(page).to have_selector("#averageSalesAmount", text: '$10')
+    end
 
-  it "market_manager views dashboard - MTD" do
-    page.execute_script('$("input[type=\'radio\']:checked").prop(\'checked\', false)')
-    page.execute_script('$("#sc-interval2").prop("checked", true).click()')
-    expect(page).to have_selector("#totalSalesAmount", text: '$30')
-    expect(page).to have_selector("#totalOrderCount", text: '3')
-    expect(page).to have_selector("#averageSalesAmount", text: '$10')
+    it "market_manager views dashboard - 7D" do
+      page.execute_script('$("input[type=\'radio\']:checked").prop(\'checked\', false)')
+      page.execute_script('$("#sc-interval1").prop("checked", true).click()')
+      expect(page).to have_selector("#totalSalesAmount", text: '$20')
+      expect(page).to have_selector("#totalOrderCount", text: '2')
+      expect(page).to have_selector("#averageSalesAmount", text: '$10')
+    end
+
+    it "market_manager views dashboard - MTD" do
+      page.execute_script('$("input[type=\'radio\']:checked").prop(\'checked\', false)')
+      page.execute_script('$("#sc-interval2").prop("checked", true).click()')
+      expect(page).to have_selector("#totalSalesAmount", text: '$30')
+      expect(page).to have_selector("#totalOrderCount", text: '3')
+      expect(page).to have_selector("#averageSalesAmount", text: '$10')
+    end
+
+    it "market_manager views dashboard - YTD" do
+      page.execute_script('$("input[type=\'radio\']:checked").prop(\'checked\', false)')
+      page.execute_script('$("#sc-interval2").prop("checked", true).click()')
+      expect(page).to have_selector("#totalSalesAmount", text: '$30')
+      expect(page).to have_selector("#totalOrderCount", text: '3')
+      expect(page).to have_selector("#averageSalesAmount", text: '$10')
+    end
   end
 end
