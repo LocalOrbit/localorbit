@@ -28,7 +28,6 @@
 //= require bootstrap_knockout_modules
 //= stub balanced
 //= stub stripe
-//= require react_ujs
 
 //= require components
 //= require reflux.min
@@ -46,7 +45,3 @@
 //= require plugins/urls.min.js
 //
 //= require_tree .
-
-React = window.React = require('react');
-ReactDOM= window.ReactDOM = require('react-dom');
-

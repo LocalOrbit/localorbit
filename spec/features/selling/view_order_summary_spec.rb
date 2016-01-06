@@ -41,7 +41,6 @@ describe "Order summary" do
       switch_to_subdomain(market.subdomain)
       sign_in_as(user)
 
-      save_and_open_page
       click_link "Order Summary"
       expect(page).to have_content("Order Summary")
     end
