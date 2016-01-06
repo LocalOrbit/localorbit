@@ -34,6 +34,7 @@ describe "Viewing products" do
 
     it "shows a list of products which the owner manages" do
       within "#admin-nav" do
+
         click_link "Products"
       end
 
@@ -60,6 +61,7 @@ describe "Viewing products" do
       sign_in_as(market_manager)
 
       within "#admin-nav" do
+
         click_link "Products"
       end
     end
@@ -82,8 +84,9 @@ describe "Viewing products" do
       visit admin_products_path(per_page: 2)
 
       select "County Park", from: "product-filter-organization"
-      # I know, I know, but I can't find another way to make Capybara wait :/
       sleep 3
+      # I know, I know, but I can't find another way to make Capybara wait :/
+
       expect(Dom::ProductRow.count).to eq(2)
 
       select "Show 500 rows", from: "per_page"

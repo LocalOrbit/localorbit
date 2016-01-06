@@ -30,6 +30,7 @@ describe "Deleting a user", :js do
     it "removes a user from an organization" do
       switch_to_subdomain(market.subdomain)
       sign_in_as(user)
+
       click_link "Account"
       click_link "Your Organization"
       click_link "Users"

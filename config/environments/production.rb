@@ -101,4 +101,7 @@ Rails.application.configure do
     end
     config.action_mailer.default_url_options = {protocol: 'https', host: Figaro.env.domain}
   end
+
+  config.react.variant = :production
+
 end

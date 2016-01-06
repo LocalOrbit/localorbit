@@ -588,7 +588,7 @@ module Dom
       attribute :name
 
       def remove!
-        node.click_button "Delete"
+        node.find('.fa-trash-o').click
       end
 
       def affiliations
@@ -1095,7 +1095,7 @@ module Dom
     end
 
     def click_delete
-      node.click_link "\uE04A"
+      node.click_link("Delete")
     end
 
     def click_pricing
@@ -1227,7 +1227,7 @@ module Dom
       end
 
       def click_delete
-        node.first(".action-link > a").trigger("click")
+        node.find('.fa-trash-o').click
       end
 
     end

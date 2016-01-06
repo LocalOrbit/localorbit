@@ -119,7 +119,7 @@
                   <div class="edit-trigger view-cell">
                     <%= link_to raw('<i class="font-icon" data-icon="&#xe002;"></i> Edit</span>'), "#fields_price_#{price.id}",
                                 class: "edit-trigger edit-price" %>
-                    <%= link_to raw('&#57418;'), [:admin, unit_product, price], method: :delete,
+                    <%= link_to raw('<i class="fa fa-trash-o">&nbsp;</i>'), [:admin, unit_product, price], method: :delete,
                                 data: {confirm: 'Are you sure you want to delete this price?'},
                                 class: "delete font-icon", title: "Delete" %>
                   </div>

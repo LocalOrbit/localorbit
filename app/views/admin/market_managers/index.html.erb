@@ -24,7 +24,7 @@
         <td class="email"><%= user.email %></td>
         <td class="delete">
           <%= button_to admin_market_manager_path(@market, user), {method: :delete, class: "delete", title: "Delete", data: {confirm: "Are you sure you want to delete #{user.email} from #{@market.name}?"}} do%>
-            <i class="font-icon icon-delete"></i>
+            <i class="fa fa-trash-o">&nbsp;</i>
           <% end %>
         </td>
       </tr>

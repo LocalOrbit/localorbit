@@ -6,7 +6,7 @@ class DashboardsController < ApplicationController
   def show
     @query_params["placed_at_date_gteq"] ||= 7.days.ago.to_date.to_s
     @query_params["placed_at_date_lteq"] ||= Date.today.to_s
-    @presenter = DashboardPresenter.new(current_user, current_market, request.query_parameters, @query_params)
+    @presenter = BuyerOrderPresenter.new(current_user, current_market, request.query_parameters, @query_params)
     @q = search_and_calculate_totals(@presenter)
 
     @buyer_orders ||= @q.result

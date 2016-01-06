@@ -30,13 +30,13 @@ describe "A Market Manager", :vcr do
 
         check "Allow purchase orders"
 
-        attach_file "Profile photo", "app/assets/images/logo.png"
+        #attach_file "Profile photo", "app/assets/images/logo.png"
 
         click_button "Add Organization"
 
         expect(page).to have_content("Famous Farm has been created")
 
-        expect(page).to have_css("img[alt='Profile photo']")
+        #expect(page).to have_css("img[alt='Profile photo']")
 
         expect(find_field("Organization is active")).not_to be_checked
 

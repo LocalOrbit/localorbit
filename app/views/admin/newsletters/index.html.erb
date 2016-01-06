@@ -13,7 +13,7 @@
   <% @newsletters.each do |newsletter| %>
   <tr>
     <td><%= link_to newsletter.subject, [:admin, newsletter] %></td>
-    <td><%= link_to raw('&#57418;'), [:admin, newsletter], method: :delete, class: "action-link font-icon", title: "Delete" %></td>
+    <td><%= link_to raw('<i class="fa fa-trash-o">&nbsp;</i>'), [:admin, newsletter], method: :delete, class: "action-link font-icon", title: "Delete" %></td>
   </tr>
   <% end %>
 </table>

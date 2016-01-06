@@ -37,7 +37,7 @@ describe "Buyer viewing dashboard" do
       Time.zone = "Eastern Time (US & Canada)"
     end
 
-    it "shows their order history" do
+    xit "shows their order history" do
       switch_to_subdomain(market.subdomain)
       sign_in_as(user)
 
@@ -72,7 +72,7 @@ describe "Buyer viewing dashboard" do
       expect(order.total).to eq("$#{order3.total_cost}")
     end
 
-    it "lets them open their Orders" do
+    xit "lets them open their Orders" do
       switch_to_subdomain(market.subdomain)
       sign_in_as(user)
       click_link "Dashboard", match: :first
@@ -86,7 +86,7 @@ describe "Buyer viewing dashboard" do
     context "when they're in multiple buying organizations" do
       let!(:buyer3)  { create(:organization, :single_location, :buyer, users: [user]) }
 
-      it "lets them jump to Orders without selecting an Organization first" do
+      xit "lets them jump to Orders without selecting an Organization first" do
         buyer3.markets << market
         user.reload
         switch_to_subdomain(market.subdomain)
@@ -102,7 +102,7 @@ describe "Buyer viewing dashboard" do
   end
 
   context "without orders" do
-    it "shows an empty state for the order history table" do
+    xit "shows an empty state for the order history table" do
       switch_to_subdomain(market.subdomain)
       sign_in_as(user)
       visit dashboard_path
