@@ -40,6 +40,7 @@ feature "a market manager viewing their dashboard", :js do
     before do
       login
       visit dashboard_path
+      sleep 10
     end
 
     it "market_manager views dashboard - 1D" do
