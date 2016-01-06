@@ -2,17 +2,17 @@ module Dashboards
 
   def upcoming_deliveries(user_type)
     if user_type == "B" || user_type == "M"
-      @deliveries = Order.orders_for_buyer(current_user).upcoming_buyer_delivery.joins(:items).where(order_items: {delivery_status: "pending"}).select('orders.id AS order_id','deliveries.*').
+      @deliveries = Order.orders_for_buyer(current_user).upcoming_buyer_delivery.joins(:items).where(order_items: {delivery_status: "pending"}, market: current_market).select('orders.id AS order_id','deliveries.*').
           sort_by {|d| d.buyer_deliver_on }
       use_date = :buyer_deliver_on
 
-      pending_amount = Order.orders_for_buyer(current_user).where(:delivery => @deliveries.map(&:id)).sum(:total_cost)
+      pending_amount = Order.orders_for_buyer(current_user).where(:delivery => @deliveries.map(&:id), market: current_market).sum(:total_cost)
     else
-      @deliveries = Order.orders_for_seller(current_user).upcoming_delivery.where(order_items: {delivery_status: "pending"}).select('orders.id AS order_id','deliveries.*').
+      @deliveries = Order.orders_for_seller(current_user).upcoming_delivery.where(order_items: {delivery_status: "pending"}, market: current_market).select('orders.id AS order_id','deliveries.*').
           sort_by {|d| d.deliver_on }
       use_date = :deliver_on
 
-      pending_amount_raw = Order.orders_for_seller(current_user).where(:delivery => @deliveries.map(&:id))
+      pending_amount_raw = Order.orders_for_seller(current_user).where(:delivery => @deliveries.map(&:id), market: current_market)
       pending_amount = sum_money_to_sellers(pending_amount_raw)
     end
 

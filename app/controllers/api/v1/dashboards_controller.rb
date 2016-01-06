@@ -40,11 +40,11 @@ module Api
           end
 
           if view_as == "B" || user_type == "B" || user_type == "M"
-            orders = Order.placed_between(interval).orders_for_buyer(current_user).order(:created_at)
+            orders = Order.placed_between(interval).orders_for_buyer(current_user).where(market: current_market).order(:created_at)
             order_items = nil
             @presenter = DashboardBuyerPresenter.new(orders, order_items, date_param).generate
           else
-            orders = Order.placed_between(interval).orders_for_seller(current_user).order(:id)
+            orders = Order.placed_between(interval).orders_for_seller(current_user).where(market: current_market).order(:id)
             order_items = nil
             @presenter = DashboardSellerPresenter.new(orders, order_items, interval, date_param).generate
           end
