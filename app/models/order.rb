@@ -252,7 +252,7 @@ class Order < ActiveRecord::Base
     if user.admin?
       all
     else
-      joins(:items).where(buyer_orders_arel(user).or(manager_orders_arel(user))).uniq
+      where(buyer_orders_arel(user).or(manager_orders_arel(user))).uniq
     end
   end
 

@@ -10,13 +10,19 @@ feature "a market manager viewing their dashboard", :js do
   let!(:delivery)    { delivery_schedule.next_delivery }
 
   before do
-    Timecop.travel("January 15, 2016") do
+    Timecop.travel("February 15, 2016") do
       order_item = create(:order_item, unit_price: 10, quantity: 1)
       order = create(:order, delivery: delivery, items: [order_item], payment_method: "purchase order", market: market, total_cost: 10)
       order.save!
     end
 
-    Timecop.travel("January 13, 2016") do
+    Timecop.travel("February 13, 2016") do
+      order_item = create(:order_item, unit_price: 10, quantity: 1)
+      order = create(:order, delivery: delivery, items: [order_item], payment_method: "purchase order", market: market, total_cost: 10)
+      order.save!
+    end
+
+    Timecop.travel("February 5, 2016") do
       order_item = create(:order_item, unit_price: 10, quantity: 1)
       order = create(:order, delivery: delivery, items: [order_item], payment_method: "purchase order", market: market, total_cost: 10)
       order.save!
@@ -30,7 +36,7 @@ feature "a market manager viewing their dashboard", :js do
   end
 
   def login
-    Timecop.travel("January 15, 2016")
+    Timecop.travel("February 15, 2016")
     switch_to_subdomain(market.subdomain)
     sign_in_as(market_manager)
   end
@@ -69,9 +75,9 @@ feature "a market manager viewing their dashboard", :js do
 
     it "market_manager views dashboard - YTD" do
       page.execute_script('$("input[type=\'radio\']:checked").prop(\'checked\', false)')
-      page.execute_script('$("#sc-interval2").prop("checked", true).click()')
-      expect(page).to have_selector("#totalSalesAmount", text: '$30')
-      expect(page).to have_selector("#totalOrderCount", text: '3')
+      page.execute_script('$("#sc-interval3").prop("checked", true).click()')
+      expect(page).to have_selector("#totalSalesAmount", text: '$40')
+      expect(page).to have_selector("#totalOrderCount", text: '4')
       expect(page).to have_selector("#averageSalesAmount", text: '$10')
     end
   end
