@@ -31,9 +31,13 @@ class Admin::OrdersController < AdminController
     results = Order.includes(:organization, :items, :delivery).orders_for_seller(current_user).search(search.query)
     results.sorts = "placed_at desc" if results.sorts.empty?
 
-    if !current_user.admin?
+    if !current_user.admin? && current_user.buyer_only?
       order_ids = results.result.map(&:id)
       order_items = find_order_items(order_ids)
+      totals = OrderTotals.new(order_items)
+    elsif current_user.seller?
+      order_ids = results.result.map(&:id)
+      order_items = Orders::SellerItems.items_for_seller(order_ids, current_user)
       totals = OrderTotals.new(order_items)
     else
       totals = OrderTotals.new(OrderItem.where("1 = 0"))

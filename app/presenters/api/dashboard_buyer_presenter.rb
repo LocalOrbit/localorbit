@@ -41,11 +41,11 @@ class Api::DashboardBuyerPresenter
 
     {
       :total_sales_amount_graph => total_sales_amount_graph,
-      :total_sales_amount => total_sales_amount,
+      :total_sales_amount => total_sales_amount ? total_sales_amount : '$0',
       :total_order_count_graph => total_order_count_graph,
-      :total_order_count => total_order_count,
-      :average_sales_amount => average_sales_amount,
-      :payments_due_amount => payments_due_amount
+      :total_order_count => total_order_count ? total_order_count : '0',
+      :average_sales_amount => average_sales_amount ? average_sales_amount : '$0',
+      :payments_due_amount => payments_due_amount ? payments_due_amount : '$0'
     }
   end
 

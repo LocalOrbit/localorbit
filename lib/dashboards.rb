@@ -12,8 +12,10 @@ module Dashboards
           sort_by {|d| d.deliver_on }
       use_date = :deliver_on
 
-      pending_amount_raw = Order.orders_for_seller(current_user).where(:delivery => @deliveries.map(&:id), market: current_market)
-      pending_amount = sum_money_to_sellers(pending_amount_raw)
+      pending_orders = Order.orders_for_seller(current_user).where(:delivery => @deliveries.map(&:id), market: current_market)
+      order_items = Orders::SellerItems.items_for_seller(pending_orders, current_user)
+
+      pending_amount = sum_money_to_sellers(order_items)
     end
 
     if @deliveries.length > 0
@@ -98,10 +100,8 @@ module Dashboards
     {:count => count.to_a, :total => total.to_a}
   end
 
-  def sum_money_to_sellers(orders)
-    orders.inject(0) do |total, order|
-      total + order.items.map(&:seller_net_total).reduce(:+)
-    end
+  def sum_money_to_sellers(items)
+      items.map(&:seller_net_total).reduce(:+)
   end
 
   def sum_order_total(orders)

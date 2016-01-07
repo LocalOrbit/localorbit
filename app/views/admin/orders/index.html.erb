@@ -19,8 +19,9 @@
       <%= content_tag :th, sort_link(@q, :payment_status, "Buyer") %>
     </thead>
     <tbody>
-      <% @orders.each do |order|
-          items = order.items
+      <%
+        @orders.each do |order|
+          items = Orders::SellerItems.items_for_seller(order, current_user)
       %>
       <tr class="order-row">
         <td class="order-number">
