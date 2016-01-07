@@ -12,20 +12,22 @@ module Api
 
           show_entity_picker = !current_user.admin_or_mm? && current_user.seller?
 
-          if show_entity_picker
-            user_type = nil
-          else
-              if current_user.admin_or_mm?
-                view_as = nil
-                user_type = "M"
-              elsif current_user.seller?
-                view_as = nil
-                user_type = "S"
-              elsif !current_user.admin_or_mm?
-                view_as = nil
-                user_type = "B"
-              end
+          if current_user.admin_or_mm?
+            user_type = "M"
+          elsif current_user.seller?
+            user_type = "S"
+          elsif !current_user.admin_or_mm? && current_user.buyer_only?
+            user_type = "B"
           end
+
+          if show_entity_picker
+            if view_as == "B"
+              user_type = "B"
+            else
+              user_type = "S"
+            end
+          end
+
           case date_param
             when "0"
               interval = Date.today.at_beginning_of_day..Date.today.at_end_of_day
@@ -39,14 +41,14 @@ module Api
               interval = Date.new(Date.current.year,Date.current.month,1).at_beginning_of_day..Date.today.at_end_of_day
           end
 
-          if view_as == "B" || user_type == "B" || user_type == "M"
+          if user_type == "B" || user_type == "M"
             orders = Order.placed_between(interval).orders_for_buyer(current_user).where(market: current_market).order(:created_at)
             order_items = nil
             @presenter = DashboardBuyerPresenter.new(orders, order_items, date_param).generate
           else
             orders = Order.placed_between(interval).orders_for_seller(current_user).where(market: current_market).order(:id)
-            order_items = nil
-            @presenter = DashboardSellerPresenter.new(orders, order_items, interval, date_param).generate
+            order_items = Orders::SellerItems.items_for_seller(orders, current_user)
+            @presenter = DashboardSellerPresenter.new(orders, order_items, interval, date_param, current_user).generate
           end
 
           num_pending_buyers = 0
