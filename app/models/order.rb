@@ -248,14 +248,6 @@ class Order < ActiveRecord::Base
     end
   end
 
-  def self.dashboard_orders_for_buyer(user)
-    if user.admin?
-      all
-    else
-      where(buyer_orders_arel(user).or(manager_orders_arel(user))).uniq
-    end
-  end
-
   def self.orders_for_seller(user)
     if user.admin?
       all
