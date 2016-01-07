@@ -84,6 +84,19 @@ module API
 
 					# will need some of the helper functions here
 
+					# in upload route we'll want to get the posted file and convert it to json.
+					# assuming you just GET properly formatted json (which, whatever), THAT's what gets passed in to this route.
+
+					# iterate over list in jsonfile["products"]
+					# each one is a ruby-hash-from-json that reps one product
+					# basically want to call the create product route on it
+					# but it's probably better to create a method that creates a product from the json file, in terms of efficiency, rather than going to get another route or something.
+					def self.create_product_from_hash
+						# here is where the method to determine uniqueness and assign to GP OR make a new GP has to happen, so that needs to be filled in around this
+						product = Product.create!
+					end
+
+
 				end
 
 
