@@ -2,9 +2,10 @@
   <%= link_to "< Back to Upcoming Deliveries", admin_delivery_tools_path, class: 'back-button' %>
   <span class="pull-right">
     <% if @very_important_person %>
-      <%= link_to "Export CSV", url_for(format: :csv) %>
+      <%= link_to "#{svg_icon} Export CSV".html_safe, url_for(format: :csv), class: 'export' %>
+
     <% end %>
-    <button class="btn btn--action btn--small print-button" id="print-button">Print</button>
+    <button class="btn btn--primary btn--small print-button" id="print-button">Print</button>
   </span>
 </div>
 
