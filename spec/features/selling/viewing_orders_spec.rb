@@ -288,7 +288,7 @@ feature "Viewing orders" do
         expect(page).not_to have_content(market2_buyer_org.name)
       end
 
-      expect(find(:css, "#q_market_id_in").value).to eql(market1.id.to_s)
+      expect(find(:css, "#q_market_id_in").value).to eql([market1.id.to_s])
     end
 
     scenario "filtering list of orders by buyer" do

@@ -505,9 +505,8 @@ describe Order do
     let(:order_item1) { create(:order_item, delivery_status: "pending",   unit_price: "12.23", quantity: 1, market_seller_fee: "2.10", local_orbit_seller_fee: "3.20", local_orbit_market_fee: "2.40", payment_seller_fee: "1.30", payment_market_fee: "0.20") }
     let(:order_item2) { create(:order_item, delivery_status: "canceled",  unit_price: "17.13", quantity: 2, market_seller_fee: "0.00", local_orbit_seller_fee: "0.00", local_orbit_market_fee: "0.00", payment_seller_fee: "0.00", payment_market_fee: "0.00") }
     let(:order_item3) { create(:order_item, delivery_status: "delivered", unit_price: "13.27", quantity: 4, market_seller_fee: "3.87", local_orbit_seller_fee: "4.39", local_orbit_market_fee: "3.76", payment_seller_fee: "2.32", payment_market_fee: "1.30", discount_market: 5.00) }
-    let(:order_item4) { create(:order_item, delivery_status: "contested", unit_price: "14.75", quantity: 2, market_seller_fee: "1.56", local_orbit_seller_fee: "2.80", local_orbit_market_fee: "3.10", payment_seller_fee: "2.10", payment_market_fee: "1.50") }
     let(:order_item5) { create(:order_item, delivery_status: "delivered", unit_price: "10.83", quantity: 3, market_seller_fee: "2.87", local_orbit_seller_fee: "3.39", local_orbit_market_fee: "2.76", payment_seller_fee: "1.32", payment_market_fee: "0.30", discount_market: 5.00) }
-    let(:order) { create(:order, delivery_fees: "11", total_cost: "138.30", items: [order_item1, order_item2, order_item3, order_item4, order_item5]) }
+    let(:order) { create(:order, delivery_fees: "11", total_cost: "138.30", items: [order_item1, order_item2, order_item3, order_item5]) }
 
     context "no discount" do
       it "payable_to_market returns the appropriate value" do
@@ -535,7 +534,7 @@ describe Order do
 
     context "with discount" do
       let!(:discount) { create(:discount, type: "fixed", payer: "market", discount: 10.00) }
-      let!(:order) { create(:order, delivery_fees: "11", total_cost: "138.30", items: [order_item1, order_item2, order_item3, order_item4, order_item5], discount: discount) }
+      let!(:order) { create(:order, delivery_fees: "11", total_cost: "138.30", items: [order_item1, order_item2, order_item3, order_item5], discount: discount) }
 
       it "payable_to_market returns the appropriate value" do
         # delivered item subtotal + delivery fee - local orbit fees - payment fees - discount
