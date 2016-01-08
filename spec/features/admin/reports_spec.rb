@@ -256,6 +256,7 @@ feature "Reports" do
         expect(item_rows_for_order("LO-01-234-4567890-2").count).to eq(1)
         expect(item_rows_for_order("LO-01-234-4567890-3").count).to eq(1)
         expect(item_rows_for_order("LO-01-234-4567890-4").count).to eq(1)
+        unselect market.name, from: "Market"
 
         select market2.name, from: "Market"
         click_button "Filter"
@@ -266,6 +267,8 @@ feature "Reports" do
         expect(item_rows_for_order("LO-02-234-4567890-2").count).to eq(1)
         expect(item_rows_for_order("LO-02-234-4567890-3").count).to eq(1)
         expect(item_rows_for_order("LO-02-234-4567890-4").count).to eq(1)
+        unselect market2.name, from: "Market"
+
       end
 
       scenario "can download a CSV of report" do
@@ -356,6 +359,8 @@ feature "Reports" do
           expect(item_rows_for_order("LO-01-234-4567890-2").count).to eq(1)
           expect(item_rows_for_order("LO-01-234-4567890-3").count).to eq(1)
           expect(item_rows_for_order("LO-01-234-4567890-4").count).to eq(1)
+          unselect seller.name, from: "Supplier"
+
 
           select seller2.name, from: "Supplier"
           click_button "Filter"
@@ -366,6 +371,8 @@ feature "Reports" do
           expect(item_rows_for_order("LO-02-234-4567890-2").count).to eq(1)
           expect(item_rows_for_order("LO-02-234-4567890-3").count).to eq(1)
           expect(item_rows_for_order("LO-02-234-4567890-4").count).to eq(1)
+          unselect seller2.name, from: "Supplier"
+
         end
       end
 
@@ -391,6 +398,7 @@ feature "Reports" do
           expect(item_rows_for_order("LO-01-234-4567890-2").count).to eq(1)
           expect(item_rows_for_order("LO-01-234-4567890-3").count).to eq(1)
           expect(item_rows_for_order("LO-01-234-4567890-4").count).to eq(1)
+          unselect buyer.name, from: "Buyer"
 
           select buyer2.name, from: "Buyer"
           click_button "Filter"
@@ -401,6 +409,8 @@ feature "Reports" do
           expect(item_rows_for_order("LO-02-234-4567890-2").count).to eq(1)
           expect(item_rows_for_order("LO-02-234-4567890-3").count).to eq(1)
           expect(item_rows_for_order("LO-02-234-4567890-4").count).to eq(1)
+          unselect buyer2.name, from: "Buyer"
+
         end
       end
 
@@ -424,12 +434,16 @@ feature "Reports" do
 
           expect(Dom::Report::ItemRow.all.count).to eq(1)
           expect(item_rows_for_order("LO-01-234-4567890-0").count).to eq(1)
+          unselect "Category-01-0", from: "Category"
+
 
           select "Category-01-1", from: "Category"
           click_button "Filter"
 
           expect(Dom::Report::ItemRow.all.count).to eq(1)
           expect(item_rows_for_order("LO-01-234-4567890-1").count).to eq(1)
+          unselect "Category-01-1", from: "Category"
+
         end
 
         scenario "filters by product" do
@@ -441,6 +455,8 @@ feature "Reports" do
           expect(Dom::Report::ItemRow.all.count).to eq(2)
           expect(item_rows_for_order("LO-01-234-4567890-0").count).to eq(1)
           expect(item_rows_for_order("LO-02-234-4567890-0").count).to eq(1)
+          unselect "Product0", from: "Product"
+
 
           select "Product1", from: "Product"
           click_button "Filter"
@@ -448,6 +464,8 @@ feature "Reports" do
           expect(Dom::Report::ItemRow.all.count).to eq(2)
           expect(item_rows_for_order("LO-01-234-4567890-1").count).to eq(1)
           expect(item_rows_for_order("LO-02-234-4567890-1").count).to eq(1)
+          unselect "Product1", from: "Product"
+
         end
       end
 
@@ -473,6 +491,8 @@ feature "Reports" do
           expect(item_rows_for_order("LO-02-234-4567890-3").count).to eq(1)
           expect(item_rows_for_order("LO-01-234-4567890-4").count).to eq(1)
           expect(item_rows_for_order("LO-02-234-4567890-4").count).to eq(1)
+          unselect "ACH", from: "Payment Method"
+
 
           select "Purchase Order", from: "Payment Method"
           click_button "Filter"
@@ -484,6 +504,8 @@ feature "Reports" do
           expect(item_rows_for_order("LO-02-234-4567890-1").count).to eq(1)
           expect(item_rows_for_order("LO-01-234-4567890-2").count).to eq(1)
           expect(item_rows_for_order("LO-02-234-4567890-2").count).to eq(1)
+          unselect "Purchase Order", from: "Payment Method"
+
         end
       end
     end
@@ -763,12 +785,16 @@ feature "Reports" do
 
           expect(Dom::Report::ItemRow.all.count).to eq(1)
           expect(item_rows_for_order("LO-01-234-4567890-0").count).to eq(1)
+          unselect "Category-01-0", from: "Category"
+
 
           select "Category-01-1", from: "Category"
           click_button "Filter"
 
           expect(Dom::Report::ItemRow.all.count).to eq(1)
           expect(item_rows_for_order("LO-01-234-4567890-1").count).to eq(1)
+          unselect "Category-01-1", from: "Category"
+
         end
 
         # https://www.pivotaltracker.com/story/show/78823306
