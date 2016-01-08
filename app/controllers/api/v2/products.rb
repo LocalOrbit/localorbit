@@ -53,7 +53,7 @@ module API
 					if permitted_params[:code]
 						product_code = permitted_params[:code]
 					end
-
+					## TODO here there also must be a determination of uniqueness and assignment of general product id OR creation of new general product and assignment of that id on this product
 					product = Product.create!(
 						        name: product_name,
 						        organization_id: supplier_id,
@@ -91,17 +91,29 @@ module API
 					# each one is a ruby-hash-from-json that reps one product
 					# basically want to call the create product route on it
 					# but it's probably better to create a method that creates a product from the json file, in terms of efficiency, rather than going to get another route or something.
-					def self.create_product_from_hash
-						# here is where the method to determine uniqueness and assign to GP OR make a new GP has to happen, so that needs to be filled in around this
-						product = Product.create!
-					end
+					def self.create_product_from_hash(prod_hash)
+						##TODO must be a determination of uniqueness and assignment of general product id OR creation of new general product and assignment of that id on this product.
+						## In the old upload process, this is handled by continue. 
+						## I should probably look at this old continue business and see if it can be helpful for iteration -- treat something as a different type of iterator?? Worth looking into. TODO TODO TODO.
+						product = Product.create!(
+						        name: prod_hash["product_name"],
+						        organization_id: prod_hash[""], # is it really org id that it looks at?
+						        market_name: permitted_params[:market_name], # TODO check, will this relationship hold up? see: where p is a Product,
+						    		## p.organization.markets.include?(Market.find_by_name(p.market_name))
+										## => true
 
+						        unit_id: unit_id,
+						        category_id: category_id,
+						        code: product_code,
+						        short_description: permitted_params[:short_description],
+						        long_description: permitted_params[:long_description],
+						        unit_description: permitted_params[:unit_description]
+						      	)
+					end # end def.self_create_product_from_hash
 
-				end
-
+				end # end /post add-products (json)
 
 			end
-
 
 		end
 	end
