@@ -24,11 +24,6 @@ describe "Filter products", :js do
     end
 
     context "by market" do
-      it "shows an empty state" do
-        select empty_market.name, from: "filter_market"
-
-        expect(page).to have_content("No Result")
-      end
 
       it "shows all products when unfiltered" do
         expect(page).to have_content(org1_product.name)
@@ -44,6 +39,9 @@ describe "Filter products", :js do
         expect(page).to have_content(org2_product.name)
         expect(page).to_not have_content(org3_product.name)
         expect(page).to_not have_content(org4_product.name)
+
+        unselect market1.name, from: "filter_market"
+
       end
     end
 
@@ -67,6 +65,9 @@ describe "Filter products", :js do
         expect(page).to_not have_content(org2_product.name)
         expect(page).to_not have_content(org3_product.name)
         expect(page).to_not have_content(org4_product.name)
+
+        unselect org1.name, from: "filter_organization"
+
       end
     end
   end
@@ -81,12 +82,6 @@ describe "Filter products", :js do
     end
 
     context "by market" do
-      it "shows an empty state" do
-        select empty_market.name, from: "filter_market"
-
-        expect(page).to have_content("No Result")
-      end
-
       it "shows all products when unfiltered" do
         expect(page).to have_content(org1_product.name)
         expect(page).to have_content(org2_product.name)
@@ -102,6 +97,9 @@ describe "Filter products", :js do
 
         expect(page).to_not have_content(org3_product.name)
         expect(page).to_not have_content(org4_product.name)
+
+        unselect market1.name, from: "filter_market"
+
       end
     end
 
@@ -121,6 +119,9 @@ describe "Filter products", :js do
         expect(page).to_not have_content(org2_product.name)
         expect(page).to_not have_content(org3_product.name)
         expect(page).to_not have_content(org4_product.name)
+
+        unselect org1.name, from: "filter_organization"
+
       end
     end
   end
@@ -153,6 +154,9 @@ describe "Filter products", :js do
         expect(page).to have_content(org1_product.name)
 
         expect(page).to_not have_content(org2_product.name)
+
+        unselect org1.name, from: "filter_organization"
+
       end
     end
   end
@@ -187,6 +191,9 @@ describe "Filter products", :js do
         expect(page).to have_content(org1_product.name)
 
         expect(page).to_not have_content(org2_product.name)
+
+        unselect org1.name, from: "filter_organization"
+
       end
     end
   end
