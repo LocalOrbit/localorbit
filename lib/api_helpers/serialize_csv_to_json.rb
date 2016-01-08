@@ -101,6 +101,10 @@ module API
 				okay_flag = false
 				error_hash["Errors"]["Missing or invalid price for additional pack size"] = "Check price validity for #{product_row[@required_headers.last}. Must be a valid decimal > 0."
 			end
+			if product_row[@required_headers[-4]].upcase != "Y" and [product_row[@required_headers[-3]],product_row[@required_headers[-2]],product_row[@required_headers.last]] == [product_row["Unit Name"],product_row["Unit Description"],product_row["Unit Price"]]
+				okay_flag = false
+				error_hash["Errors"]["Identical units for same product"] = "Your additional unit and original unit for this project are the same. Try again with different information in the last three columns OR do not submit additional unit information"
+			end
 			row_errors["#{error_hash["Row number"]}"] = error_hash
 			return okay_flag # boolean as to whether there are any errors
 
