@@ -622,11 +622,14 @@ feature "Payment history", :truncate_after_all do
       click_button "Filter"
       get_results(30)
       expect(Dom::Admin::Financials::PaymentRow.all.count).to eq(23)
+      unselect "Order", from: "Payment Type"
 
       select "Service Fee", from: "Payment Type"
       click_button "Filter"
 
       expect(Dom::Admin::Financials::PaymentRow.all.count).to eq(1)
+      unselect "Service Fee", from: "Payment Type"
+
     end
 
     scenario "can filter purchase history by payer" do
@@ -636,11 +639,14 @@ feature "Payment history", :truncate_after_all do
       click_button "Filter"
 
       expect(Dom::Admin::Financials::PaymentRow.all.count).to eq(7)
+      unselect @market.name, from: "Received From"
 
       select "Buyer", from: "Received From"
       click_button "Filter"
 
       expect(Dom::Admin::Financials::PaymentRow.all.count).to eq(5)
+      unselect "Buyer", from: "Received From"
+
     end
 
     scenario "can filter purchase history by payee" do
@@ -650,22 +656,27 @@ feature "Payment history", :truncate_after_all do
       click_button "Filter"
 
       expect(Dom::Admin::Financials::PaymentRow.all.count).to eq(5)
+      unselect @market.name, from: "Paid To"
 
       select @seller.name, from: "Paid To"
       click_button "Filter"
 
       expect(Dom::Admin::Financials::PaymentRow.all.count).to eq(7)
+      unselect @seller.name, from: "Paid To"
 
-      select @market2.name, from: "Paid To"
-      click_button "Filter"
+      #select @market2.name, from: "Paid To"
+      #click_button "Filter"
 
-      expect(Dom::Admin::Financials::PaymentRow.all.count).to eq(6)
+      #expect(Dom::Admin::Financials::PaymentRow.all.count).to eq(6)
+      #unselect @market2.name, from: "Paid To"
 
       select "Local Orbit", from: "Paid To"
       click_button "Filter"
 
       # Service Fee + ACH Buyer Payment
       expect(Dom::Admin::Financials::PaymentRow.all.count).to eq(3)
+      unselect "Local Orbit", from: "Paid To"
+
     end
 
     # https://www.pivotaltracker.com/story/show/78823306

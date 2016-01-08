@@ -260,7 +260,7 @@ feature "Payments to vendors" do
         expect(page).not_to have_content(market3.name)
       end
 
-      select market1.name, from: "q_market_id_eq"
+      select market1.name, from: "q_market_id_in"
       click_button "Filter"
 
       seller_rows = Dom::Admin::Financials::VendorPaymentRow.all

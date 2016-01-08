@@ -104,18 +104,12 @@ describe SellerOrder do
       it { should eq("partially delivered") }
     end
 
-    context "when any item is contested" do
-      before { item1.update_attributes(delivery_status: "contested") }
-      it { should eq("contested") }
-    end
-
-    context "when at least one item is contested, delivered, and pending" do
+    context "when at least one item is delivered and pending" do
       before do
-        item1.update_attributes(delivery_status: "contested")
         item3.update_attributes(delivery_status: "delivered")
       end
 
-      it { should eq("contested, partially delivered") }
+      it { should eq("partially delivered") }
     end
   end
 
