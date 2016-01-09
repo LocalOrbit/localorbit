@@ -38,6 +38,7 @@ describe "Viewing products" do
         click_link "Products"
       end
 
+      save_and_open_page
       product = Dom::ProductRow.first
       expect(product.name).to have_content(apples.name)
       expect(product.stock).to have_content(apples.lots.map(&:quantity).join(" "))
@@ -74,7 +75,7 @@ describe "Viewing products" do
       expect(product.stock).to have_content(apples.lots.map(&:quantity).join(" "))
     end
 
-    it "limits the number of rows based on user's choice", js: true do
+    it "limits the number of rows based on user's choice" do
       peppers = create(:product, created_at: 1.week.ago, organization: org2, name: "Peppers", unit: create(:unit, singular: "Tube", plural: "Tubes"))
       create(:price, product: peppers, sale_price: 5.00, min_quantity: 1)
       create(:lot, product: peppers, quantity: 1)
@@ -87,12 +88,14 @@ describe "Viewing products" do
       # I know, I know, but I can't find another way to make Capybara wait :/
 
       expect(Dom::ProductRow.count).to eq(2)
-      unselect "County Park", from: "filter_organization"
 
       select "Show 500 rows", from: "per_page"
+
+      save_and_open_page
       expect(page).to have_content("Grapes")
       expect(Dom::ProductRow.count).to eq(3)
 
+      unselect "County Park", from: "filter_organization"
       #select "All Organization", from: "product-filter-organization"
       expect(page).to have_content("Peppers")
       expect(Dom::ProductRow.count).to eq(4)
@@ -173,9 +176,7 @@ describe "Viewing products" do
 
       expect(page).to have_content(market.name)
 
-      save_and_open_page
-
-      select "Market 1", from: "filter_market"
+      select market.name, from: "filter_market"
 
       expect(page).to have_content(/Reset/i)
 
