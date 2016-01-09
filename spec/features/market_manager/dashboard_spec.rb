@@ -60,6 +60,7 @@ feature "a market manager viewing their dashboard", :js do
     end
 
     it "market_manager views dashboard - 1D" do
+      #choose "1D", from: 'sc-interval', visible: false
       page.execute_script('$("input[type=\'radio\']:checked").prop(\'checked\', false)')
       page.execute_script('$("#sc-interval0").prop("checked", true).click()')
       expect(page).to have_selector("#totalSalesAmount", text: '$10')

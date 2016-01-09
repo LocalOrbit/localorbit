@@ -82,7 +82,7 @@ describe "Viewing products" do
 
       visit admin_products_path(per_page: 2)
 
-      select "County Park", from: "filter_organization"
+      select "County Park", from: "filter_organization", visible: false
 
       sleep 3
       # I know, I know, but I can't find another way to make Capybara wait :/
@@ -95,7 +95,7 @@ describe "Viewing products" do
       expect(page).to have_content("Grapes")
       expect(Dom::ProductRow.count).to eq(3)
 
-      unselect "County Park", from: "filter_organization"
+      unselect "County Park", from: "filter_organization", visible: false
       #select "All Organization", from: "product-filter-organization"
       expect(page).to have_content("Peppers")
       expect(Dom::ProductRow.count).to eq(4)
@@ -176,7 +176,7 @@ describe "Viewing products" do
 
       expect(page).to have_content(market.name)
 
-      select market.name, from: "filter_market"
+      select market.name, from: "filter_market", visible: false
 
       expect(page).to have_content(/Reset/i)
 
