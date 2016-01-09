@@ -22,13 +22,6 @@ describe "Filter organizations", :js do
         visit admin_organizations_path
       end
 
-      #it "shows an empty state" do
-      #  save_and_open_page
-      #  select empty_market.name, from: "filter_market"
-      #
-      #  expect(page).to have_content("No Results")
-      #end
-
       it "shows all markets when unfiltered" do
         expect(page).to have_content(org1.name)
         expect(page).to have_content(org2.name)
@@ -44,6 +37,8 @@ describe "Filter organizations", :js do
 
         expect(page).to_not have_content(org3.name)
         expect(page).to_not have_content(org4.name)
+        unselect market1.name, from: "filter_market"
+
       end
     end
 
@@ -67,6 +62,8 @@ describe "Filter organizations", :js do
         expect(page).to have_content(org3.name)
         expect(page).to_not have_content(org2.name)
         expect(page).to_not have_content(org4.name)
+        unselect "Supplier", from: "filter_can_sell"
+
       end
     end
 
@@ -114,12 +111,6 @@ describe "Filter organizations", :js do
           visit admin_organizations_path
         end
 
-        it "shows an empty state" do
-          select empty_market.name, from: "filter_market"
-
-          expect(page).to have_content("No Results")
-        end
-
         it "shows all managed markets when unfiltered" do
           expect(page).to have_content(org1.name)
           expect(page).to have_content(org2.name)
@@ -137,6 +128,8 @@ describe "Filter organizations", :js do
           expect(page).to_not have_content(org2.name)
           expect(page).to_not have_content(org3.name)
           expect(page).to_not have_content(org4.name)
+          unselect market3.name, from: "filter_market"
+
         end
       end
     end
@@ -164,6 +157,8 @@ describe "Filter organizations", :js do
         expect(page).to_not have_content(org2.name)
         expect(page).to_not have_content(org3.name)
         expect(page).to_not have_content(org4.name)
+        unselect "Supplier", from: "filter_can_sell"
+
       end
     end
   end
