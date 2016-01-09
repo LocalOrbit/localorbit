@@ -33,14 +33,14 @@ describe "Filter products", :js do
       end
 
       it "shows products for only the selected market" do
-        select market1.name, from: "filter_market"
+        select market1.name, from: "filter_market", visible: false
 
         expect(page).to have_content(org1_product.name)
         expect(page).to have_content(org2_product.name)
         expect(page).to_not have_content(org3_product.name)
         expect(page).to_not have_content(org4_product.name)
 
-        unselect market1.name, from: "filter_market"
+        unselect market1.name, from: "filter_market", visible: false
 
       end
     end
@@ -58,7 +58,7 @@ describe "Filter products", :js do
       end
 
       it "shows products for only the selected organization" do
-        select org1.name, from: "filter_organization"
+        select org1.name, from: "filter_organization", visible: false
 
         expect(page).to have_content(org1_product.name)
 
@@ -66,7 +66,7 @@ describe "Filter products", :js do
         expect(page).to_not have_content(org3_product.name)
         expect(page).to_not have_content(org4_product.name)
 
-        unselect org1.name, from: "filter_organization"
+        unselect org1.name, from: "filter_organization", visible: false
 
       end
     end
@@ -90,7 +90,7 @@ describe "Filter products", :js do
       end
 
       it "shows products for only the selected market" do
-        select market1.name, from: "filter_market"
+        select market1.name, from: "filter_market", visible: false
 
         expect(page).to have_content(org1_product.name)
         expect(page).to have_content(org2_product.name)
@@ -98,7 +98,7 @@ describe "Filter products", :js do
         expect(page).to_not have_content(org3_product.name)
         expect(page).to_not have_content(org4_product.name)
 
-        unselect market1.name, from: "filter_market"
+        unselect market1.name, from: "filter_market", visible: false
 
       end
     end
@@ -112,7 +112,7 @@ describe "Filter products", :js do
       end
 
       it "shows products for only the selected organization" do
-        select org1.name, from: "filter_organization"
+        select org1.name, from: "filter_organization", visible: false
 
         expect(page).to have_content(org1_product.name)
 
@@ -120,7 +120,7 @@ describe "Filter products", :js do
         expect(page).to_not have_content(org3_product.name)
         expect(page).to_not have_content(org4_product.name)
 
-        unselect org1.name, from: "filter_organization"
+        unselect org1.name, from: "filter_organization", visible: false
 
       end
     end
@@ -149,13 +149,13 @@ describe "Filter products", :js do
       end
 
       it "shows products for only the selected organization" do
-        select org1.name, from: "filter_organization"
+        select org1.name, from: "filter_organization", visible: false
 
         expect(page).to have_content(org1_product.name)
 
         expect(page).to_not have_content(org2_product.name)
 
-        unselect org1.name, from: "filter_organization"
+        unselect org1.name, from: "filter_organization", visible: false
 
       end
     end
@@ -186,13 +186,13 @@ describe "Filter products", :js do
       end
 
       it "shows products for only the selected organization" do
-        select org1.name, from: "filter_organization"
+        select org1.name, from: "filter_organization", visible: false
 
         expect(page).to have_content(org1_product.name)
 
         expect(page).to_not have_content(org2_product.name)
 
-        unselect org1.name, from: "filter_organization"
+        unselect org1.name, from: "filter_organization", visible: false
 
       end
     end
