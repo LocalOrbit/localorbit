@@ -173,7 +173,9 @@ describe "Viewing products" do
 
       expect(page).to have_content(market.name)
 
-      select market.name, from: "filter_market"
+      save_and_open_page
+
+      select "Market 1", from: "filter_market"
 
       expect(page).to have_content(/Reset/i)
 
