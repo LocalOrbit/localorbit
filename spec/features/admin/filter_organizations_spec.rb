@@ -37,13 +37,15 @@ describe "Filter organizations", :js do
       end
 
       it "shows organizations for only the selected market" do
-        select market1.name, from: "filter_market"
+        select market1.name, from: "filter_market", visible: false
 
         expect(page).to have_content(org1.name)
         expect(page).to have_content(org2.name)
 
         expect(page).to_not have_content(org3.name)
         expect(page).to_not have_content(org4.name)
+        unselect market1.name, from: "filter_market", visible: false
+
       end
     end
 
@@ -61,12 +63,14 @@ describe "Filter organizations", :js do
       end
 
       it "shows organizations that can sell" do
-        select "Supplier", from: "filter_can_sell"
+        select "Supplier", from: "filter_can_sell", visible: false
 
         expect(page).to have_content(org1.name)
         expect(page).to have_content(org3.name)
         expect(page).to_not have_content(org2.name)
         expect(page).to_not have_content(org4.name)
+        unselect "Supplier", from: "filter_can_sell", visible: false
+
       end
     end
 
