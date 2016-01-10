@@ -211,6 +211,8 @@ Rails.application.routes.draw do
   end
   resources :organizations, only: :index
   resource  :market, only: [:show]
+  # KXM This will likely be reigned in a bit.  Open until we have a sucessful end-to-end test
+  resources :markets
   resources :sellers, only: [:index, :show]
   resource :cart, only: [:update, :show, :destroy]
   resources :orders, only: [:index, :show, :create] do

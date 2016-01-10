@@ -1,0 +1,229 @@
+<%= render 'shared/errors', resource: @market %>
+<%# KXM the kxm div only exists to over-ride the default JQuery-UI styling.  Prolly a better way to do that... %>
+<div id="kxm">
+<div id="tabs">
+  <!-- nuh uh -->
+  <ul id="kxm-tab-list">
+    <li><a href="#form-contact-info">Contact Info</a></li>
+    <li><a href="#form-market-info">Market Info</a></li>
+    <li><a href="#form-misc">Misc Info</a></li>
+  </ul>
+
+  <div id="form-contact-info">
+    <fieldset>
+      <legend>Market Contact Information</legend>
+      <div class="field">
+        <%= f.label :contact_name %><br>
+        <%= f.text_field :contact_name, class: "column--full"  %>
+      </div>
+      <div class="row row--field">
+        <div class="field column column--half column--guttered">
+          <%= f.label :contact_email %><br>
+          <%= f.text_field :contact_email, class: "column--full" %>
+        </div
+        ><div class="field column column--half column--guttered">
+          <%= f.label :contact_phone %><br>
+          <%= f.text_field :contact_phone, size: 18, class: "column--full" %>
+        </div>
+      </div>
+    </fieldset>
+  </div>
+
+  <div id="form-market-info">
+    <fieldset>
+      <legend>Market Information</legend>
+      <div class="row row--field">
+        <div class="field column column--half column--guttered">
+          <%= f.label :name %>
+          <span class="tooltip pull-right" data-tooltip="This is the primary name of your market.  Don't forget to double check your spelling."></span>
+          <br>
+          <%= f.text_field :name, class: "column--full" %>
+        </div
+        ><div class="field column column--half column--guttered">
+          <%= f.label :subdomain %>
+          <span class="tooltip pull-right" data-tooltip="This is your unique text for your Local Orbit URL."></span>
+          <br>
+          <%= f.text_field :subdomain, class: "column--full" %>
+        </div>
+      </div>
+    </fieldset>
+  </div>
+
+  <div id="form-misc">
+  <%# KXM Obvs this all has to be fleshed out, though it is subject to some process flow clarification, dig? %>
+  <fieldset>
+    <legend>Terms of Service</legend>
+
+  </fieldset>
+
+  <fieldset>
+    <legend>Review Purchase</legend>
+  </fieldset>
+
+    <div class="form-actions">
+      <%= link_to "Cancel", admin_markets_path, class: "btn cancel" %>
+      <%= f.submit "Add Market" %>
+    </div>
+  </div>
+</div>
+
+<%# KXM Detritus from the original form... some may end up being useful, however, so here it stays (for now.... MUAHAHAHAHAAA) %>
+<!-- 
+<fieldset>
+  <div class="row row--field">
+    <div class="field column column--half column--guttered">
+      <%= f.label :logo %>
+      <span class="tooltip pull-right" data-tooltip="This logo appears in the header of every page and email."></span>
+      <br>
+      <%= image_tag @market.logo.remote_url, class: "market-logo" if @market.logo_stored? %>
+      <%= f.file_field :logo, class: "photo-button" %><br>
+      <div><small>Drag and drop your logo anywhere in the "Choose File" area and it will be uploaded when you save.</small></div>
+    </div
+    ><div class="field column column--half column--guttered">
+      <%= f.label :photo %>
+      <span class="tooltip pull-right" data-tooltip="This photo appears on the Market Info page."></span>
+      <br>
+      <%= image_tag @market.photo.remote_url, class: "market-photo" if @market.photo_stored? %>
+      <%= f.file_field :photo, class: "photo-button" %><br>
+      <div><small>Drag and drop your photo anywhere in the "Choose File" area and it will be uploaded when you save.</small></div>
+    </div>
+  </div>
+</fieldset>
+
+<fieldset>
+  <div class="field">
+    <%= f.label :tagline %>
+    <span class="tooltip pull-right" data-tooltip="Located directly below the logo at the top of the page."></span>
+    <br>
+    <%= f.text_field :tagline, maxlength: 60, class: "column--full" %>
+  </div>
+  <div class="field">
+    <%= f.label :market_country, "Country" %><br>
+    <%= f.select :country, options_for_select(Market.possible_countries, @market.country) %>
+  </div>
+  <div class="field">
+    <%= f.label :timezone, "Time zone" %><br>
+    <%= f.time_zone_select :timezone, ActiveSupport::TimeZone.us_zones, default: "Pacific Time (US & Canada)" %>
+  </div>
+</fieldset>
+
+<fieldset>
+  <div class="field field--inline">
+    <%= f.label :facebook %>
+    <div class="combo-input">
+      <span class="btn btn--start">facebook.com/</span><%= f.text_field :facebook %>
+    </div>
+  </div
+  ><div class="field field--inline">
+    <%= f.label :twitter %>
+    <div class="combo-input">
+      <span class="btn btn--start">@</span><%= f.text_field :twitter, maxlength: 15, size: 15 %>
+    </div>
+  </div>
+
+  <div class="field">
+    <%= f.label :profile %>
+    <span class="tooltip pull-right" data-tooltip="Here is your opportunity to tell your market's story. Why is your market the best source for local food? What makes your market unique?"></span>
+    <br>
+    <%= f.text_area :profile, rows: 4, class: "column--full" %>
+  </div>
+  <div class="field">
+    <%= f.label :policies %>
+    <span class="tooltip pull-right" data-tooltip="This information appears on the Market info page."></span>
+    <br>
+    <%= f.text_area :policies, rows: 4, class: "column--full"  %>
+  </div>
+  <div class="row row--field">
+    <div class="field column column--half column--guttered">
+      <label>Open or Closed</label><br>
+      <%= f.check_box :closed, {checked: !f.object.closed?}, 0, 1 %>
+      <%= f.label :closed, "This market is open" %>
+      <span class="tooltip" data-tooltip="Please contact your administrator if you want to change this status."></span>
+    </div
+    ><div class="field column column--half column--guttered">
+      <label>Organization registration</label><br>
+      <%= f.check_box :auto_activate_organizations %>
+      <%= f.label :auto_activate_organizations, "Auto-activate organizations" %>
+      <span class="tooltip" data-tooltip="Check this box if you want organizations to be automatically activated upon registration."></span>
+    </div>
+  </div>
+
+  <div class="field">
+    <%= f.label :store_closed_note %>
+    <span class="tooltip pull-right" data-tooltip="This information will appear on the Market Closed page"></span>
+    <br>
+    <%= f.text_area :store_closed_note, rows: 2, class: "column--full"  %>
+  </div>
+
+  <% if @market.new_record? || @market.plan.try(:cross_selling?) %>
+    <div class="row row--field">
+      <div class="field column column--half column--guttered">
+        <label>Cross Selling</label><br>
+        <%= f.check_box :allow_cross_sell %>
+        <%= f.label :allow_cross_sell, "Allow Cross Selling" %>
+        <span class="tooltip" data-tooltip="This feature applies to the Grow and Automate plans.  Check this box to allow cross selling between your markets."></span>
+          </div<%- if @market.new_record? or FeatureAccess.sellers_edit_orders_feature_available?(market: @market) %>><div
+          class="field column column--half column--guttered">
+            <label>Deliveries</label><br>
+            <%= f.check_box :sellers_edit_orders, id: "app-sellers-edit-orders-input" %>
+            <%= f.label :sellers_edit_orders, "Suppliers can edit orders" %>
+            <span class="tooltip" data-tooltip="Check this box if you want suppliers to be able to modify their orders."></span>
+          </div>
+        <% else %>>  <%# This strange angle brace is to terminate the frogsnacks we start up on line 117. It's really important that no whitespace at all be allowed between these left-to-right divs.  :( %>
+      <% end %>
+    </div>
+  <% end %>
+
+  <div class="row row--field">
+    <div class="field column column--half column--guttered">
+        <label>Product Label Layout</label>
+        <span class="tooltip" data-tooltip="This option defines which density is used on delivery labels"></span>
+        <br>
+        <div style="float: left"><%= f.radio_button :product_label_format, '4', :checked => true %>&nbsp;4-up&nbsp;&nbsp;<br/><a href="http://www.avery.com/avery/en_us/Products/Labels/Shipping-Labels/Print_to_the_Edge-Labels_06878.htm" target="_blank"><small>Buy Labels</small></a></div>
+        <div style="float: left; margin-left: 25px"><%= f.radio_button :product_label_format, '16' %>&nbsp;16-up&nbsp;&nbsp;<br/><a href="http://www.onlinelabels.com/OL5051.htm?src=dlc-49" target="_blank"><small>Buy Labels</small></a></div>
+    </div
+    ><div class="field column column--half column--guttered">
+        <label>Label Options</label>
+        <span class="tooltip" data-tooltip="This option prints a label for each quantity of an item"></span>
+        <br>
+        <%= f.check_box :print_multiple_labels_per_item %>&nbsp;Print Multiple Labels Per Item
+    </div>
+  </div>
+  <% if current_user.can_manage_market?(@market) %>
+    <div class="row row--field">
+      <div class="field column column--half column--guttered" id="allowed-payment-options">
+        <label>Allowed payment methods</label><br>
+        <%= f.check_box :allow_purchase_orders %>
+        <%= f.label :allow_purchase_orders %><br>
+        <span id="market_require_purchase_orders_span" style="<%= "display:none" unless @market.allow_purchase_orders %>">
+          <%= f.check_box :require_purchase_orders %>
+          <%= f.label :require_purchase_orders, "Require purchase order number" %><br>
+        </span>
+        <% if PaymentProvider.supports_payment_method?(@market.payment_provider, 'credit card') %>
+          <%= f.check_box :allow_credit_cards %>
+          <%= f.label :allow_credit_cards %><br>
+        <% end %>
+        <% if PaymentProvider.supports_payment_method?(@market.payment_provider, 'ach') %>
+          <%= f.check_box :allow_ach %>
+          <%= f.label :allow_ach, "Allow ACH" %><br>
+        <% end %>
+      </div
+      ><div class="field column column--half column--guttered" id="default-payment-options">
+        <label>Default organization payment methods</label><br>
+        <%= f.check_box :default_allow_purchase_orders %>
+        <%= f.label :default_allow_purchase_orders, "Allow purchase orders" %><br>
+        <% if PaymentProvider.supports_payment_method?(@market.payment_provider, 'credit card') %>
+          <%= f.check_box :default_allow_credit_cards %>
+          <%= f.label :default_allow_credit_cards, "Allow credit cards" %><br>
+        <% end %>
+        <% if PaymentProvider.supports_payment_method?(@market.payment_provider, 'ach') %>
+          <%= f.check_box :default_allow_ach %>
+          <%= f.label :default_allow_ach, "Allow ACH" %><br>
+        <% end %>
+      </div>
+    </div>
+  <% end %>
+
+</fieldset>
+-->
+</div>

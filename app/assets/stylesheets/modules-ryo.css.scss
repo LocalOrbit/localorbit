@@ -1,0 +1,20 @@
+@import "mixins.css.scss";
+
+/* # KXM Subject to change once the structure settles down */
+div#kxm{
+	.ui-widget-content {
+	  border: 0 !important;
+	}
+
+	#kxm-tab-list{
+		li{
+			display: inline-block;
+			margin-right: .4em;
+			a{
+				display: block;
+				line-height: 2em;
+				padding: .4em 1em .6em .6em;
+			}
+		}
+	}
+} 
