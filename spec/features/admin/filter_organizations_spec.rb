@@ -23,7 +23,6 @@ describe "Filter organizations", :js do
       end
 
       #it "shows an empty state" do
-      #  save_and_open_page
       #  select empty_market.name, from: "filter_market"
       #
       #  expect(page).to have_content("No Results")

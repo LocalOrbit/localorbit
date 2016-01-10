@@ -34,11 +34,9 @@ describe "Viewing products" do
 
     it "shows a list of products which the owner manages" do
       within "#admin-nav" do
-
         click_link "Products"
       end
 
-      save_and_open_page
       product = Dom::ProductRow.first
       expect(product.name).to have_content(apples.name)
       expect(product.stock).to have_content(apples.lots.map(&:quantity).join(" "))
@@ -62,12 +60,13 @@ describe "Viewing products" do
       sign_in_as(market_manager)
 
       within "#admin-nav" do
-
         click_link "Products"
       end
     end
 
     it "shows a list of products which the owner manages" do
+      expect(page).to have_select("Market")
+
       product = Dom::ProductRow.first
       expect(product.name).to have_content(apples.name)
       expect(product.seller).to have_content(org1.name)
@@ -75,7 +74,7 @@ describe "Viewing products" do
       expect(product.stock).to have_content(apples.lots.map(&:quantity).join(" "))
     end
 
-    it "limits the number of rows based on user's choice" do
+    it "limits the number of rows based on user's choice", js: true do
       peppers = create(:product, created_at: 1.week.ago, organization: org2, name: "Peppers", unit: create(:unit, singular: "Tube", plural: "Tubes"))
       create(:price, product: peppers, sale_price: 5.00, min_quantity: 1)
       create(:lot, product: peppers, quantity: 1)
@@ -83,20 +82,16 @@ describe "Viewing products" do
       visit admin_products_path(per_page: 2)
 
       select "County Park", from: "filter_organization", visible: false
-
-      sleep 3
       # I know, I know, but I can't find another way to make Capybara wait :/
-
+      sleep 3
       expect(Dom::ProductRow.count).to eq(2)
 
       select "Show 500 rows", from: "per_page"
-
-      save_and_open_page
       expect(page).to have_content("Grapes")
       expect(Dom::ProductRow.count).to eq(3)
 
       unselect "County Park", from: "filter_organization", visible: false
-      #select "All Organization", from: "product-filter-organization"
+
       expect(page).to have_content("Peppers")
       expect(Dom::ProductRow.count).to eq(4)
     end
@@ -190,7 +185,9 @@ describe "Viewing products" do
 
       expect(page).to_not have_content("Edit Inventory")
 
-      expect(page.find("#filter_market").find("option[selected=selected]").text).to eq(market.name)
+      #expect(page.find("#filter_market").find("option[selected=selected]").text).to eq(market.name)
+      unselect market.name, from: "filter_market", visible: false
+
     end
 
     it "updates simple inventory" do

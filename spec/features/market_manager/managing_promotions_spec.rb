@@ -218,7 +218,7 @@ describe "Managing featured promotions" do
       it "filters by market" do
         visit admin_promotions_path
 
-        select second_market.name, from: "q_market_id_nil_eq"
+        select second_market.name, from: "q_market_id_nil_in"
         sleep(1)
 
         expect(Dom::Admin::FeaturedPromotionRow.all.count).to eql(1)
