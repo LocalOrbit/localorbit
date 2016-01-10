@@ -684,12 +684,10 @@ feature "Payment history", :truncate_after_all do
       #get_results(30)
 
       #expect(Dom::Admin::Financials::PaymentRow.all.count).to eq(26)
-      save_and_open_page
 
       select "Local Orbit", from: "Paid To", visible: false
       #click_button "Filter"
 
-      save_and_open_page
 
       # Service Fee + ACH Buyer Payment
       expect(Dom::Admin::Financials::PaymentRow.all.count).to eq(3)
