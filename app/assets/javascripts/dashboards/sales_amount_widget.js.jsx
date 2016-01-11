@@ -7,7 +7,10 @@
         propTypes: {
             userType: React.PropTypes.string,
             totalSalesAmount: React.PropTypes.string,
-            totalSalesAmountGraph: React.PropTypes.array
+            totalSalesAmountGraph: React.PropTypes.array,
+            lineColor: React.PropTypes.string,
+            fillColor: React.PropTypes.string,
+            axisTitle: React.PropTypes.string
         },
 
         render: function () {
@@ -15,11 +18,14 @@
             var label_text;
             var labels=[], data_points=[];
             var j = this.props.totalSalesAmountGraph;
+            var lineColor = this.props.lineColor;
+            var fillColor = this.props.fillColor;
+            var axisTitle = this.props.axisTitle;
+            var totalSalesAmount;
+
             if (j) {
                 $.each(j, function (i,v)
                 {
-                    //labels.push(i > 0 ? i : 'None');
-                    //data_points.push(v > 0 ? parseFloat(v) : 'None');
                     labels.push(i);
                     data_points.push(parseFloat(v));
                 });
@@ -34,13 +40,12 @@
                         shape:"spline"
                     },
                     marker:{
-                        color:"rgb(235, 235, 235)"
+                        color: lineColor
                     },
-                    //fill:"tonexty",
                     mode:"lines+markers",
                     uid:"ab9b77",
                     connectgaps:false,
-                    fillcolor:"rgb(204, 204, 204)"
+                    fillcolor: fillColor
                 }
             ];
             let layout = {
@@ -51,15 +56,15 @@
                     l: 40,
                     r: 5,
                     t: 20,
-                    b: 35,
+                    b: 40,
                     autoexpand: true
                 },
                 yaxis:{
                     autorange:true,
-                    showticklabels:true,
                     showgrid:false,
                     zeroline:false,
-                    exponentformat:"B",
+                    autotick: false,
+                    hoverformat: ".2f",
                     showexponent:"all",
                     tickprefix:"$",
                     tickfont:{
@@ -67,10 +72,16 @@
                     }
                 },
                 xaxis:{
-                    autorange:true,
-                    showticklabels:false,
+                    autorange: true,
                     showgrid:false,
-                    zeroline:false
+                    zeroline:false,
+                    autotick: false,
+                    title: axisTitle,
+                    tickmode: 'linear',
+                    rangemode: 'range',
+                    range: [1,],
+                    dtick: 1,
+                    tick0: 1
                 }
             };
             let config = {
@@ -82,6 +93,11 @@
             else
                 label_text = 'Total Spend';
 
+            if (this.props.totalSalesAmount)
+                totalSalesAmount = this.props.totalSalesAmount;
+            else
+                totalSalesAmount = '$0';
+
             return (
                 <div className="dashboard-widget large-widget">
                     <div className="top-section">
@@ -90,7 +106,7 @@
                         </div>
                         <div style={{float: "right"}}>
                             <div className="widget-value" id="totalSalesAmount">
-                                {this.props.totalSalesAmount}
+                                {totalSalesAmount}
                             </div>
                             <div className="widget-label">
                                 {label_text}
@@ -100,7 +116,8 @@
                     </div>
                     <Plotly className="SalesAmount" data={data} layout={layout} config={config}/>
                     <div style={{borderTop: '1px solid #EEE', padding: 3}}>
-                        <a href="/admin/orders"><span style={{textTransform: 'uppercase', fontSize: 12, fontWeight: 'bold'}}>View More ></span></a>
+                        <a href="/admin/orders"><span style={{textTransform: 'uppercase', fontSize: 12, fontWeight: 'bold'}}>View Details ></span></a>
+                        <span class="tooltip pull-right" data-tooltip="This number represents the total sales amount for the selected period.">&nbsp;</span>
                     </div>
                 </div>
             );        }

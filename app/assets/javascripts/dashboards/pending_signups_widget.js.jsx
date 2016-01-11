@@ -25,7 +25,7 @@
                         </div>
                     </div>
                     <div style={{borderTop: '1px solid #EEE', padding: 3}}>
-                        <a href="/admin/organizations"><span style={{textTransform: 'uppercase', fontSize: 12, fontWeight: 'bold'}}>View More ></span></a>
+                        <a href="/admin/organizations"><span style={{textTransform: 'uppercase', fontSize: 12, fontWeight: 'bold'}}>View Details ></span></a>
                     </div>
                 </div>
             );
