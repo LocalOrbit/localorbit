@@ -13,9 +13,7 @@ Ransack.configure do |config|
 
   config.add_predicate "nil_in",
     arel_predicate: "in",
-    formatter: proc { |v|
-      v == "-1" ? push(nil) : push(v)
-    },
+    formatter: proc { |v| v == "-1" ? nil : v },
     validator: proc { |v| v.present? },
     type: :array
 end
