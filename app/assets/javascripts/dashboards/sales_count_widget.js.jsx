@@ -6,7 +6,10 @@
     var sales_count_widget = React.createClass({
         propTypes: {
             totalOrderCount: React.PropTypes.number,
-            totalOrderCountGraph: React.PropTypes.array
+            totalOrderCountGraph: React.PropTypes.array,
+            lineColor: React.PropTypes.string,
+            fillColor: React.PropTypes.string,
+            axisTitle: React.PropTypes.string
         },
 
         render: function () {
@@ -14,6 +17,10 @@
             var self = this;
             var labels=[], data_points=[];
             var j = this.props.totalOrderCountGraph;
+            var lineColor = this.props.lineColor;
+            var fillColor = this.props.fillColor;
+            var axisTitle = this.props.axisTitle;
+            var totalOrderCount;
             if (j) {
                 $.each(j, function (i,v)
                 {
@@ -28,8 +35,9 @@
                     x: labels,
                     y: data_points,
                     marker:{
-                        color:"rgb(235, 235, 235)"
-                    }
+                        color: fillColor
+                    },
+                    fillcolor: fillColor
                 }
             ];
             let layout = {
@@ -37,33 +45,43 @@
                 width: 290,
                 height: 300,
                 margin: {
-                    l: 5,
-                    r: 5,
+                    l: 25,
+                    r: 15,
                     t: 20,
-                    b: 25,
+                    b: 40,
                     autoexpand: true
                 },
                 yaxis:{
-                    type:"linear",
-                    autorange:true,
-                    showticklabels:false,
-                    showgrid:false,
+                    autorange: true,
                     zeroline:false,
-                    exponentformat:"none",
-                    showexponent:"all"
+                    showgrid:false,
+                    autotick: false,
+                    rangemode: 'range',
+                    range: [1,],
+                    type:"linear",
+                    dtick: 1
                 },
                 xaxis:{
-                    autorange:true,
-                    showticklabels:false,
+                    autorange: true,
                     showgrid:false,
                     zeroline:false,
-                    exponentformat:"none",
-                    showexponent:"all"
+                    autotick: false,
+                    title: axisTitle,
+                    tickmode: 'linear',
+                    rangemode: 'range',
+                    range: [1,],
+                    dtick: 1,
+                    tick0: 1
                 }
             };
             let config = {
                 displayModeBar: false
             };
+
+            if (this.props.totalOrderCount)
+                totalOrderCount = this.props.totalOrderCount;
+            else
+                totalOrderCount = '0';
 
             return (
                 <div className="dashboard-widget large-widget">
@@ -73,17 +91,17 @@
                         </div>
                         <div style={{float: "right"}}>
                             <div className="widget-value" id="totalOrderCount">
-                                {this.props.totalOrderCount}
+                                {totalOrderCount}
                             </div>
                             <div className="widget-label">
-                                Total Orders
+                                Orders Created
                             </div>
                         </div>
                         <div className="bottom-border"></div>
                     </div>
                     <Plotly className="SalesCount" data={data} layout={layout} config={config}/>
                     <div style={{borderTop: '1px solid #EEE', padding: 3}}>
-                        <a href="/admin/orders"><span style={{textTransform: 'uppercase', fontSize: 12, fontWeight: 'bold'}}>View More ></span></a>
+                        <a href="/admin/orders"><span style={{textTransform: 'uppercase', fontSize: 12, fontWeight: 'bold'}}>View Details ></span></a>
                     </div>
                 </div>
             );

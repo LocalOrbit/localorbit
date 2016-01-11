@@ -20,12 +20,12 @@
                                 {this.props.avgSalesAmount}
                             </div>
                             <div className="widget-label">
-                                Average Spend
+                                Avg Order Size
                             </div>
                         </div>
                     </div>
                     <div style={{borderTop: '1px solid #EEE', padding: 3}}>
-                        <a href="/admin/orders"><span style={{textTransform: 'uppercase', fontSize: 12, fontWeight: 'bold'}}>View More ></span></a>
+                        <a href="/admin/orders"><span style={{textTransform: 'uppercase', fontSize: 12, fontWeight: 'bold'}}>View Details ></span></a>
                     </div>
                 </div>
             );        }

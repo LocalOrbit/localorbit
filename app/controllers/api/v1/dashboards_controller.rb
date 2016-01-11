@@ -4,6 +4,7 @@ module Api
       include ActiveSupport::NumberHelper
       include Dashboards
       include Users
+      include ApplicationHelper
 
       def index
 
@@ -31,14 +32,19 @@ module Api
           case date_param
             when "0"
               interval = Date.today.at_beginning_of_day..Date.today.at_end_of_day
+              axisTitle = 'Hour of Day'
             when "1"
               interval = Date.today.at_beginning_of_day - 7.day..Date.today.at_end_of_day
+              axisTitle = 'Day of Month'
             when "2"
               interval = Date.new(Date.current.year,Date.current.month,1).at_beginning_of_day..Date.today.at_end_of_day
+              axisTitle = 'Day of Month'
             when "3"
               interval = Date.new(Date.current.year,1,1).at_beginning_of_day..Date.today.at_end_of_day
+              axisTitle = 'Month of Year'
             else
               interval = Date.new(Date.current.year,Date.current.month,1).at_beginning_of_day..Date.today.at_end_of_day
+              axisTitle = 'Day of Month'
           end
 
           if user_type == "B" || user_type == "M"
@@ -58,7 +64,10 @@ module Api
 
           upcoming_dlvr = upcoming_deliveries(user_type)
 
-          render json: {dashboard: {userType: user_type, showEntityPicker: show_entity_picker, deliveries: upcoming_dlvr[:deliveries], numPendingDeliveries: upcoming_dlvr[:numPendingDeliveries], pendingDeliveryAmount: upcoming_dlvr[:pendingDeliveryAmount], totalSalesAmount: @presenter[:total_sales_amount], totalSalesAmountGraph: @presenter[:total_sales_amount_graph], totalOrderCount: @presenter[:total_order_count], totalOrderCountGraph: @presenter[:total_order_count_graph], avgSalesAmount: @presenter[:average_sales_amount], paymentsDueAmount: @presenter[:payments_due_amount], numPendingBuyers: num_pending_buyers}}
+          fillColor = hex_to_rgba(current_market.text_color,0.2)
+          lineColor = hex_to_rgba(current_market.text_color,1)
+
+          render json: {dashboard: {userType: user_type, axisTitle: axisTitle, fillColor: fillColor, lineColor: lineColor, showEntityPicker: show_entity_picker, deliveries: upcoming_dlvr[:deliveries], numPendingDeliveries: upcoming_dlvr[:numPendingDeliveries], pendingDeliveryAmount: upcoming_dlvr[:pendingDeliveryAmount], totalSalesAmount: @presenter[:total_sales_amount], totalSalesAmountGraph: @presenter[:total_sales_amount_graph], totalOrderCount: @presenter[:total_order_count], totalOrderCountGraph: @presenter[:total_order_count_graph], avgSalesAmount: @presenter[:average_sales_amount], paymentsDueAmount: @presenter[:payments_due_amount], numPendingBuyers: num_pending_buyers}}
       end
 
       def timezone

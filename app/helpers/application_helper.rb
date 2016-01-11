@@ -144,9 +144,11 @@ module ApplicationHelper
   end
 
   def hex_to_rgba(color, opacity=1)
-    color = color.sub(/^#/, "")
-    c = Color::RGB.by_hex(color)
-    "rgba(#{c.red.round},#{c.green.round},#{c.blue.round},#{opacity})"
+    if color
+      color = color.sub(/^#/, "")
+      c = Color::RGB.by_hex(color)
+      "rgba(#{c.red.round},#{c.green.round},#{c.blue.round},#{opacity})"
+    end
   end
 
   def hex_to_hsl(color)
