@@ -17,6 +17,31 @@ class PaymentHistoryPresenter
 
       market_ids = user.managed_market_ids
 
+      if search[:payee_type_id_in] && search[:payee_type_id_in].include?("-1")
+        Payment.joins(
+            payment_table.join(order_payment_table, Arel::Nodes::OuterJoin).
+                on(order_payment_table[:payment_id].eq(payment_table[:id])).join_sources
+        ).joins(
+            order_payment_table.join(order_table, Arel::Nodes::OuterJoin).
+                on(order_payment_table[:order_id].eq(order_table[:id])).join_sources
+        ).where(order_table[:market_id].in(market_ids).
+            and(payment_table[:payee_type].eq(nil)
+            )
+        ).uniq
+
+      elsif search[:payer_type_id_nil_in] && search[:payer_type_id_nil_in].include?("-1")
+        Payment.joins(
+            payment_table.join(order_payment_table, Arel::Nodes::OuterJoin).
+                on(order_payment_table[:payment_id].eq(payment_table[:id])).join_sources
+        ).joins(
+            order_payment_table.join(order_table, Arel::Nodes::OuterJoin).
+                on(order_payment_table[:order_id].eq(order_table[:id])).join_sources
+        ).where(order_table[:market_id].in(market_ids).
+            and(payment_table[:payer_type].eq(nil)
+            )
+        ).uniq
+
+      else
       Payment.joins(
         payment_table.join(order_payment_table, Arel::Nodes::OuterJoin).
           on(order_payment_table[:payment_id].eq(payment_table[:id])).join_sources
@@ -32,6 +57,7 @@ class PaymentHistoryPresenter
           payment_table[:payee_type].eq("Market").
           and(payment_table[:payee_id].in(market_ids)))
       ).uniq
+      end
     elsif user.buyer_only?
       Payment.
         joins(:orders).
