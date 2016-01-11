@@ -1,229 +1,84 @@
 <%= render 'shared/errors', resource: @market %>
-<%# KXM the kxm div only exists to over-ride the default JQuery-UI styling.  Prolly a better way to do that... %>
-<div id="kxm">
-<div id="tabs">
-  <!-- nuh uh -->
-  <ul id="kxm-tab-list">
-    <li><a href="#form-contact-info">Contact Info</a></li>
-    <li><a href="#form-market-info">Market Info</a></li>
-    <li><a href="#form-misc">Misc Info</a></li>
-  </ul>
+<%# KXM the market-creation div only exists to over-ride the default JQuery-UI styling... there's prolly a better way to do that (or, at least, a better *place* to do that...) %>
+<div id="market-creation">
+  <div id="tabs">
+    <ul id="market-tab-list">
+      <li><a href="#form-contact-info">Contact Info</a></li>
+      <!--li><a href="#form-market-info">Market Info</a></li-->
+      <li><a href="#form-terms">Terms of Service</a></li>
+    </ul>
 
-  <div id="form-contact-info">
-    <fieldset>
-      <legend>Market Contact Information</legend>
-      <div class="field">
-        <%= f.label :contact_name %><br>
-        <%= f.text_field :contact_name, class: "column--full"  %>
-      </div>
-      <div class="row row--field">
-        <div class="field column column--half column--guttered">
-          <%= f.label :contact_email %><br>
-          <%= f.text_field :contact_email, class: "column--full" %>
-        </div
-        ><div class="field column column--half column--guttered">
-          <%= f.label :contact_phone %><br>
-          <%= f.text_field :contact_phone, size: 18, class: "column--full" %>
+    <div id="form-contact-info">
+      <fieldset id="fields-contact-info">
+        <legend>Market Contact Information</legend>
+        <div class="field">
+          <%= f.label :contact_name %><br>
+          <%= f.text_field :contact_name, class: "column--full"  %>
         </div>
-      </div>
-    </fieldset>
-  </div>
-
-  <div id="form-market-info">
-    <fieldset>
-      <legend>Market Information</legend>
-      <div class="row row--field">
-        <div class="field column column--half column--guttered">
-          <%= f.label :name %>
-          <span class="tooltip pull-right" data-tooltip="This is the primary name of your market.  Don't forget to double check your spelling."></span>
-          <br>
-          <%= f.text_field :name, class: "column--full" %>
-        </div
-        ><div class="field column column--half column--guttered">
-          <%= f.label :subdomain %>
-          <span class="tooltip pull-right" data-tooltip="This is your unique text for your Local Orbit URL."></span>
-          <br>
-          <%= f.text_field :subdomain, class: "column--full" %>
-        </div>
-      </div>
-    </fieldset>
-  </div>
-
-  <div id="form-misc">
-  <%# KXM Obvs this all has to be fleshed out, though it is subject to some process flow clarification, dig? %>
-  <fieldset>
-    <legend>Terms of Service</legend>
-
-  </fieldset>
-
-  <fieldset>
-    <legend>Review Purchase</legend>
-  </fieldset>
-
-    <div class="form-actions">
-      <%= link_to "Cancel", admin_markets_path, class: "btn cancel" %>
-      <%= f.submit "Add Market" %>
-    </div>
-  </div>
-</div>
-
-<%# KXM Detritus from the original form... some may end up being useful, however, so here it stays (for now.... MUAHAHAHAHAAA) %>
-<!-- 
-<fieldset>
-  <div class="row row--field">
-    <div class="field column column--half column--guttered">
-      <%= f.label :logo %>
-      <span class="tooltip pull-right" data-tooltip="This logo appears in the header of every page and email."></span>
-      <br>
-      <%= image_tag @market.logo.remote_url, class: "market-logo" if @market.logo_stored? %>
-      <%= f.file_field :logo, class: "photo-button" %><br>
-      <div><small>Drag and drop your logo anywhere in the "Choose File" area and it will be uploaded when you save.</small></div>
-    </div
-    ><div class="field column column--half column--guttered">
-      <%= f.label :photo %>
-      <span class="tooltip pull-right" data-tooltip="This photo appears on the Market Info page."></span>
-      <br>
-      <%= image_tag @market.photo.remote_url, class: "market-photo" if @market.photo_stored? %>
-      <%= f.file_field :photo, class: "photo-button" %><br>
-      <div><small>Drag and drop your photo anywhere in the "Choose File" area and it will be uploaded when you save.</small></div>
-    </div>
-  </div>
-</fieldset>
-
-<fieldset>
-  <div class="field">
-    <%= f.label :tagline %>
-    <span class="tooltip pull-right" data-tooltip="Located directly below the logo at the top of the page."></span>
-    <br>
-    <%= f.text_field :tagline, maxlength: 60, class: "column--full" %>
-  </div>
-  <div class="field">
-    <%= f.label :market_country, "Country" %><br>
-    <%= f.select :country, options_for_select(Market.possible_countries, @market.country) %>
-  </div>
-  <div class="field">
-    <%= f.label :timezone, "Time zone" %><br>
-    <%= f.time_zone_select :timezone, ActiveSupport::TimeZone.us_zones, default: "Pacific Time (US & Canada)" %>
-  </div>
-</fieldset>
-
-<fieldset>
-  <div class="field field--inline">
-    <%= f.label :facebook %>
-    <div class="combo-input">
-      <span class="btn btn--start">facebook.com/</span><%= f.text_field :facebook %>
-    </div>
-  </div
-  ><div class="field field--inline">
-    <%= f.label :twitter %>
-    <div class="combo-input">
-      <span class="btn btn--start">@</span><%= f.text_field :twitter, maxlength: 15, size: 15 %>
-    </div>
-  </div>
-
-  <div class="field">
-    <%= f.label :profile %>
-    <span class="tooltip pull-right" data-tooltip="Here is your opportunity to tell your market's story. Why is your market the best source for local food? What makes your market unique?"></span>
-    <br>
-    <%= f.text_area :profile, rows: 4, class: "column--full" %>
-  </div>
-  <div class="field">
-    <%= f.label :policies %>
-    <span class="tooltip pull-right" data-tooltip="This information appears on the Market info page."></span>
-    <br>
-    <%= f.text_area :policies, rows: 4, class: "column--full"  %>
-  </div>
-  <div class="row row--field">
-    <div class="field column column--half column--guttered">
-      <label>Open or Closed</label><br>
-      <%= f.check_box :closed, {checked: !f.object.closed?}, 0, 1 %>
-      <%= f.label :closed, "This market is open" %>
-      <span class="tooltip" data-tooltip="Please contact your administrator if you want to change this status."></span>
-    </div
-    ><div class="field column column--half column--guttered">
-      <label>Organization registration</label><br>
-      <%= f.check_box :auto_activate_organizations %>
-      <%= f.label :auto_activate_organizations, "Auto-activate organizations" %>
-      <span class="tooltip" data-tooltip="Check this box if you want organizations to be automatically activated upon registration."></span>
-    </div>
-  </div>
-
-  <div class="field">
-    <%= f.label :store_closed_note %>
-    <span class="tooltip pull-right" data-tooltip="This information will appear on the Market Closed page"></span>
-    <br>
-    <%= f.text_area :store_closed_note, rows: 2, class: "column--full"  %>
-  </div>
-
-  <% if @market.new_record? || @market.plan.try(:cross_selling?) %>
-    <div class="row row--field">
-      <div class="field column column--half column--guttered">
-        <label>Cross Selling</label><br>
-        <%= f.check_box :allow_cross_sell %>
-        <%= f.label :allow_cross_sell, "Allow Cross Selling" %>
-        <span class="tooltip" data-tooltip="This feature applies to the Grow and Automate plans.  Check this box to allow cross selling between your markets."></span>
-          </div<%- if @market.new_record? or FeatureAccess.sellers_edit_orders_feature_available?(market: @market) %>><div
-          class="field column column--half column--guttered">
-            <label>Deliveries</label><br>
-            <%= f.check_box :sellers_edit_orders, id: "app-sellers-edit-orders-input" %>
-            <%= f.label :sellers_edit_orders, "Suppliers can edit orders" %>
-            <span class="tooltip" data-tooltip="Check this box if you want suppliers to be able to modify their orders."></span>
+        <div class="row row--field">
+          <div class="field column column--half column--guttered">
+            <%= f.label :contact_email %><br>
+            <%= f.text_field :contact_email, class: "column--full" %>
+          </div
+          ><div class="field column column--half column--guttered">
+            <%= f.label :contact_phone %><br>
+            <%= f.text_field :contact_phone, size: 18, class: "column--full" %>
           </div>
-        <% else %>>  <%# This strange angle brace is to terminate the frogsnacks we start up on line 117. It's really important that no whitespace at all be allowed between these left-to-right divs.  :( %>
+        </div>
+      </fieldset>
+
+      <fieldset id="fields-market-info">
+        <legend>Market Information</legend>
+        <div class="row row--field">
+          <div class="field column column--half column--guttered">
+            <%= f.label :name %>
+            <span class="tooltip pull-right" data-tooltip="This is the primary name of your market.  Don't forget to double check your spelling."></span>
+            <br>
+            <%= f.text_field :name, class: "column--full" %>
+          </div
+          ><div class="field column column--half column--guttered">
+            <%= f.label :subdomain %>
+            <span class="tooltip pull-right" data-tooltip="This is your unique text for your Local Orbit URL."></span>
+            <br>
+            <%= f.text_field :subdomain, class: "column--full" %>
+          </div>
+        </div>
+      </fieldset>
+
+      <!-- # KXM This will end up being implemented via a helper (like the social media work) -->
+      <% if params[:plan].present? && params[:plan] == 'grow' then %>
+        <div id="form-repeat">
+          <p>Found it, yo</p>l
+        </div>
       <% end %>
-    </div>
-  <% end %>
+    </div> <!-- end form-contact-info -->
 
-  <div class="row row--field">
-    <div class="field column column--half column--guttered">
-        <label>Product Label Layout</label>
-        <span class="tooltip" data-tooltip="This option defines which density is used on delivery labels"></span>
-        <br>
-        <div style="float: left"><%= f.radio_button :product_label_format, '4', :checked => true %>&nbsp;4-up&nbsp;&nbsp;<br/><a href="http://www.avery.com/avery/en_us/Products/Labels/Shipping-Labels/Print_to_the_Edge-Labels_06878.htm" target="_blank"><small>Buy Labels</small></a></div>
-        <div style="float: left; margin-left: 25px"><%= f.radio_button :product_label_format, '16' %>&nbsp;16-up&nbsp;&nbsp;<br/><a href="http://www.onlinelabels.com/OL5051.htm?src=dlc-49" target="_blank"><small>Buy Labels</small></a></div>
-    </div
-    ><div class="field column column--half column--guttered">
-        <label>Label Options</label>
-        <span class="tooltip" data-tooltip="This option prints a label for each quantity of an item"></span>
-        <br>
-        <%= f.check_box :print_multiple_labels_per_item %>&nbsp;Print Multiple Labels Per Item
-    </div>
+    <%# KXM Obvs this all has to be fleshed out, though it is subject to some process flow clarification, dig? %>
+    <div id="form-terms">
+      <fieldset>
+        <legend>Terms of Service</legend>
+        <div id="terms-of-service">
+          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris facilisis vulputate consectetur. Integer vulputate leo lectus. Mauris non eros urna. Etiam interdum semper nibh et tincidunt. Maecenas rhoncus euismod felis. Sed eu nulla pellentesque, condimentum nunc nec, commodo neque. Donec ut turpis nec massa imperdiet mollis. Nullam rhoncus ipsum ac pharetra commodo. Vivamus auctor sem eget auctor commodo. In vitae enim vitae nunc luctus aliquam vel non arcu. Vivamus luctus sapien at tortor commodo vulputate. Nullam convallis placerat lectus, ut egestas purus varius id. Cras consectetur consectetur hendrerit. Nunc et augue pharetra, malesuada lacus vitae, condimentum nisi. Etiam pulvinar vel orci sed egestas.</p>
+
+          <p>Vestibulum vitae dapibus odio. Quisque vitae risus vel dolor scelerisque laoreet eu eget risus. Mauris ac lectus vitae est pellentesque rhoncus. Donec quam tellus, viverra quis elit sed, accumsan tempor leo. Suspendisse sagittis eget dui sagittis varius. Interdum et malesuada fames ac ante ipsum primis in faucibus. Etiam eget posuere risus. Nunc elementum condimentum nisl quis porta. Quisque metus sapien, consectetur eget tellus at, molestie maximus velit. Integer ultrices nibh ac ipsum elementum, id tincidunt mauris accumsan. Pellentesque ac ipsum nec diam tempor sodales. Cras malesuada lorem id dolor suscipit, sed pulvinar libero dapibus. Etiam luctus magna eros, eget bibendum ex consectetur euismod. Morbi pulvinar ac lorem quis interdum.</p>
+
+          <p>Donec luctus, velit in tristique feugiat, ex eros blandit nunc, at porta nunc arcu nec mi. Quisque felis nisl, consequat vel imperdiet quis, volutpat ut metus. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Curabitur non nisl eget mi interdum pretium egestas quis nibh. Curabitur finibus leo eget ligula pulvinar sodales. Vivamus semper tristique nunc, ac lacinia magna. Aliquam sed scelerisque mi. Etiam diam tortor, pretium id magna commodo, mattis venenatis quam. Morbi porta, libero nec condimentum consequat, ex ligula elementum nunc, vitae consectetur dui massa vel diam. In hac habitasse platea dictumst. Curabitur et volutpat est, nec tincidunt leo. Fusce dictum ipsum nisl, congue congue massa efficitur varius. Fusce imperdiet diam vitae elementum ornare. Maecenas efficitur erat sem, ac suscipit nisi tincidunt nec. Ut luctus, tellus in elementum condimentum, velit neque tincidunt tortor, quis vulputate mi metus vitae tellus. Pellentesque lacinia nunc magna, porttitor gravida tortor commodo vel.</p>
+
+          <p>Donec justo nunc, placerat nec blandit id, porttitor eu est. Ut volutpat eros sed purus dignissim, quis efficitur augue feugiat. Nam ut condimentum massa. Vestibulum sagittis in orci quis feugiat. Vestibulum risus mauris, aliquam a justo lacinia, fringilla suscipit justo. Integer vel gravida urna. Donec efficitur felis quis maximus dignissim. In hac habitasse platea dictumst. In volutpat imperdiet risus ac accumsan. Nunc id blandit felis. Phasellus non erat ut nunc convallis euismod nec et urna. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Sed nec risus at purus lobortis interdum vitae vel metus.</p>
+
+          <p>Cras molestie elit suscipit massa consectetur, vel vulputate lectus porttitor. Fusce eleifend blandit eros, eget eleifend diam aliquet quis. Nulla facilisi. Nulla facilisi. Aliquam erat volutpat. Vestibulum sagittis orci mollis ornare accumsan. Suspendisse potenti. Donec et cursus justo. Vestibulum accumsan tincidunt elit eget rhoncus. Pellentesque egestas faucibus velit id accumsan.</p> 
+        </div>
+
+        <div id="accept-terms-of-service" class="pull-right">
+          <%= check_box_tag("accept-terms-of-service", value: "1", checked: false) %> <label for="accept-terms-of-service">Yes, I agree</label>
+        </div>
+
+        <div class="form-actions">
+          <%= link_to "Cancel", admin_markets_path, class: "btn cancel" %>
+          <%= f.submit "Add Market" %>
+        </div>
+      </fieldset>
+    </div> <!-- end form-terms -->
   </div>
-  <% if current_user.can_manage_market?(@market) %>
-    <div class="row row--field">
-      <div class="field column column--half column--guttered" id="allowed-payment-options">
-        <label>Allowed payment methods</label><br>
-        <%= f.check_box :allow_purchase_orders %>
-        <%= f.label :allow_purchase_orders %><br>
-        <span id="market_require_purchase_orders_span" style="<%= "display:none" unless @market.allow_purchase_orders %>">
-          <%= f.check_box :require_purchase_orders %>
-          <%= f.label :require_purchase_orders, "Require purchase order number" %><br>
-        </span>
-        <% if PaymentProvider.supports_payment_method?(@market.payment_provider, 'credit card') %>
-          <%= f.check_box :allow_credit_cards %>
-          <%= f.label :allow_credit_cards %><br>
-        <% end %>
-        <% if PaymentProvider.supports_payment_method?(@market.payment_provider, 'ach') %>
-          <%= f.check_box :allow_ach %>
-          <%= f.label :allow_ach, "Allow ACH" %><br>
-        <% end %>
-      </div
-      ><div class="field column column--half column--guttered" id="default-payment-options">
-        <label>Default organization payment methods</label><br>
-        <%= f.check_box :default_allow_purchase_orders %>
-        <%= f.label :default_allow_purchase_orders, "Allow purchase orders" %><br>
-        <% if PaymentProvider.supports_payment_method?(@market.payment_provider, 'credit card') %>
-          <%= f.check_box :default_allow_credit_cards %>
-          <%= f.label :default_allow_credit_cards, "Allow credit cards" %><br>
-        <% end %>
-        <% if PaymentProvider.supports_payment_method?(@market.payment_provider, 'ach') %>
-          <%= f.check_box :default_allow_ach %>
-          <%= f.label :default_allow_ach, "Allow ACH" %><br>
-        <% end %>
-      </div>
-    </div>
-  <% end %>
-
-</fieldset>
--->
 </div>
+
