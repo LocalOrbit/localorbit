@@ -13,10 +13,9 @@ module SocialMediaHelper
   
   def twitter_feed(twitter_handle, display = true)
     if display == true && !(twitter_handle == '' || twitter_handle == nil) then 
-      massaged_handle = strip_detritus(twitter_handle, 'twitter')
-      prepared_url = "https://www.twitter.com/#{massaged_handle}"
+      massaged_handle = strip_detritus(twitter_handle, 'twitter.com/')
       
-      render partial: "shared/twitter", locals: { f: twitter_handle }
+      render partial: "shared/twitter", locals: { f: massaged_handle }
     end
   end
   
