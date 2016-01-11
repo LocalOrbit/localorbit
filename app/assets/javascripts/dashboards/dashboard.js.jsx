@@ -102,6 +102,9 @@
                                     userType={uType}
                                     totalSalesAmount={self.state.dashboard.totalSalesAmount}
                                     totalSalesAmountGraph={self.state.dashboard.totalSalesAmountGraph}
+                                    lineColor={self.state.dashboard.lineColor}
+                                    fillColor={self.state.dashboard.fillColor}
+                                    axisTitle={self.state.dashboard.axisTitle}
                                 />
                             </div>
                             <div>
@@ -115,6 +118,9 @@
                                  <lo.sales_count_widget
                                      totalOrderCount={parseInt(self.state.dashboard.totalOrderCount)}
                                      totalOrderCountGraph={self.state.dashboard.totalOrderCountGraph}
+                                     lineColor={self.state.dashboard.lineColor}
+                                     fillColor={self.state.dashboard.fillColor}
+                                     axisTitle={self.state.dashboard.axisTitle}
                                  />
                             </div>
                             <div>
