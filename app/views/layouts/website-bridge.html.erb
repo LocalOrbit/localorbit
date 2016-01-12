@@ -44,9 +44,6 @@
       input[type=submit].close,
       input[type=submit].delete,
       .seller-map-toggle,
-      .segmented-control .label,
-      .widget-value,
-      .widget-label,
       .tagline,
       .nav--sidebar a {
         color: <%= current_market.text_color -%>;
@@ -59,36 +56,11 @@
       .btn--primary,
       .btn--add,
       .btn--save,
-      .segmented-control .label.selected,
       input[type=submit],
       input[type=button].btn {
         background-color: <%= current_market.text_color -%>;
         border-color: <%= current_market.text_color -%>;
       }
-
-      #checkout-button {
-        background-color: <%= current_market.text_color -%>;
-      }
-
-      .segmented-control {
-        color: <%= current_market.text_color -%>;
-        border-color: <%= current_market.text_color -%>;
-      }
-
-      .segmented-control .label div {
-        color: <%= current_market.text_color -%>;
-      }
-
-      .segmented-control .label.selected div {
-        background-color: <%= current_market.text_color -%>;
-        border-color: <%= current_market.text_color -%>;
-        color: #FFF;
-      }
-
-      .dashboard-widget .calendar .cal-date {
-        background-color: <%= current_market.text_color -%>;
-      }
-
       .set_filter,
       input[type=date].set_filter,
       input[type=datetime].set_filter,
@@ -144,29 +116,16 @@
     <% end %>
     </style>
   <% end %>
-  <%= javascript_include_tag "https://cdnjs.cloudflare.com/ajax/libs/es5-shim/4.4.1/es5-shim.js", "data-turbolinks-track" => true %>
-  <%= javascript_include_tag "https://cdn.plot.ly/plotly-latest.min.js", "data-turbolinks-track" => true %>
 </head>
 
-<body class="controller-<%= controller.controller_name %> <%= current_user.present? ? "" : "signed-out" %> <%= "request-desktop" if cookies[:request_desktop] && cookies[:request_desktop] == "true"  %>">
+<body id="boo" class="controller-<%= controller.controller_name %> <%= current_user.present? ? "" : "signed-out" %> <%= "request-desktop" if cookies[:request_desktop] && cookies[:request_desktop] == "true"  %>">
   <%= render "shared/analytics" %>
 
   <div class="page-content">
     <header class="l-app-header stickable" id="top">
       <div class="l-constraint">
-        <% if current_user %>
-        <p class="header header--welcome">
-          <% if current_market %>
-            <%= current_market.name %>
-          <% else %>
-            Local Orbit
-          <% end %>
-          <% if user_masquerade? %>
-            <span class="welcome-user">Impersonating <%= current_user.name.present? ? current_user.name : current_user.email %> <%= link_to raw("<i class='font-icon icon-close'></i>"), back_user_masquerade_index_path, id: 'exit-masquerade' %></span>
-          <% else %>
-            <span class="welcome-user">Welcome <%= current_user.name.present? ? current_user.name : current_user.email %></span>
-          <% end %>
-        </p>
+        <p class="header header--welcome">Local Orbit</p>
+        <% if current_user && 1==0 %>
         <a href="#admin-nav" class="nav-admin-toggle"><%= image_tag asset_path('hamburger.png'), alt: "Toggle Navigation", height: 20 %></a>
         <ul class="l-inline-list nav nav--app">
           <li><%= link_to 'Dashboard', dashboard_path, class: (current_page?(dashboard_path) ? "current hidden-mobile" : "hidden-mobile") %></li
@@ -178,6 +137,7 @@
         <div class="clearfix"></div>
       </div>
     </header>
+
     <div class="l-constraint l-main">
       <div id="flash-messages">
         <% if notice %>
@@ -189,9 +149,13 @@
         <% end %>
       </div>
 
-      <%= render 'shared/navigation' %>
+      <%# KXM Shared navigation will likely be superceded by the website nav and so the code remains here (but commented out) until the determination is made %>
+      <%#= render 'shared/navigation' %>
+
+      <p><%= (__FILE__).inspect.split("/").last.gsub('.html.erb',nil.to_s) %></p>
 
       <%= yield %>
+
     </div>
     <footer class="l-app-footer">
       <div class="l-constraint">
@@ -229,5 +193,16 @@
   <script type="text/javascript" src="https://js.stripe.com/v2/"></script>
   <%= javascript_include_tag 'stripe' %>
   <% end %>
+
+  <%# KXM This script tag is only here to get things working. Put your toys away when your done with them, Keetie %>
+  <script type="text/javascript">
+    $(document).ready(function () {
+      //your code here
+      $(function() {
+        $( "#tabs" ).tabs();
+      });
+    });
+  </script>
+
 </body>
 </html>
