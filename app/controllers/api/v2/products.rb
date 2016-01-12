@@ -3,11 +3,11 @@ module API
 		class Products < Grape::API 
 			include API::V2::Defaults
 
-			resource :products do # TODO Q: Should we allow this endpoint?
+			resource :products do 
 				# get requests
 				desc "Return all products"
 				get "", root: :products do 
-					GeneralProduct.all # if you're actually looking for all products, this is what you want (how will it deal with units?)
+					GeneralProduct.all # if you're actually looking for all products, this is what you want (TODO address: how will it deal with units?)
 				end
 
 				desc "Return a product"
@@ -54,23 +54,44 @@ module API
 						product_code = permitted_params[:code]
 					end
 					## TODO here there also must be a determination of uniqueness and assignment of general product id OR creation of new general product and assignment of that id on this product
-					product = Product.create!(
-						        name: product_name,
-						        organization_id: supplier_id,
-						        market_name: permitted_params[:market_name], # TODO check, will this relationship hold up? see: where p is a Product,
-						    		## p.organization.markets.include?(Market.find_by_name(p.market_name))
-										## => true
+					gp_id_or_false = identify_product_uniqueness(permitted_params)
+					if !gp_id_or_false
+						product = Product.create!(
+							        name: product_name,
+							        organization_id: supplier_id,
+							        market_name: permitted_params[:market_name], # TODO check, will this relationship hold up? see: where p is a Product,
+							    		## p.organization.markets.include?(Market.find_by_name(p.market_name))
+											## => true
 
-						        unit_id: unit_id,
-						        category_id: category_id,
-						        code: product_code,
-						        short_description: permitted_params[:short_description],
-						        long_description: permitted_params[:long_description],
-						        unit_description: permitted_params[:unit_description]
-						      	)
-					## To create inventory and price(s). TODO: probably no inventory, yes 1 sale price
-					# product.lots.create!(quantity: 999_999)
-     			product.prices.create!(sale_price: price, min_quantity: 1) ## TODO: min quantity default or option?
+							        unit_id: unit_id,
+							        category_id: category_id,
+							        code: product_code,
+							        short_description: permitted_params[:short_description],
+							        long_description: permitted_params[:long_description],
+							        unit_description: permitted_params[:unit_description]
+							      	)
+						## To create inventory and price(s). -- probably no inventory, yes 1 sale price, yes?
+						# product.lots.create!(quantity: 999_999)
+	     			product.prices.create!(sale_price: price, min_quantity: 1) ## TODO: Should we add min quantity default or option
+	     		else
+	     			product = Product.create!(
+							        name: product_name,
+							        organization_id: supplier_id,
+							        market_name: permitted_params[:market_name], # TODO check, will this relationship hold up? see: where p is a Product,
+							    		## p.organization.markets.include?(Market.find_by_name(p.market_name))
+											## => true
+
+							        unit_id: unit_id,
+							        category_id: category_id,
+							        code: product_code,
+							        short_description: permitted_params[:short_description],
+							        long_description: permitted_params[:long_description],
+							        unit_description: permitted_params[:unit_description],
+							        general_product_id: gp_id_or_false
+							      	)
+						## To create inventory and price(s). probably no inventory, yes 1 sale price
+						# product.lots.create!(quantity: 999_999)
+	     			product.prices.create!(sale_price: price, min_quantity: 1) ## TODO: min quantity default or option?
 				end
 
 				desc "Upload json"
@@ -91,24 +112,53 @@ module API
 					# each one is a ruby-hash-from-json that reps one product
 					# basically want to call the create product route on it
 					# but it's probably better to create a method that creates a product from the json file, in terms of efficiency, rather than going to get another route or something.
-					def self.create_product_from_hash(prod_hash)
-						##TODO must be a determination of uniqueness and assignment of general product id OR creation of new general product and assignment of that id on this product.
-						## In the old upload process, this is handled by continue. 
-						## I should probably look at this old continue business and see if it can be helpful for iteration -- treat something as a different type of iterator?? Worth looking into. TODO TODO TODO.
-						product = Product.create!(
-						        name: prod_hash["product_name"],
-						        organization_id: prod_hash[""], # is it really org id that it looks at?
-						        market_name: permitted_params[:market_name], # TODO check, will this relationship hold up? see: where p is a Product,
-						    		## p.organization.markets.include?(Market.find_by_name(p.market_name))
-										## => true
 
-						        unit_id: unit_id,
-						        category_id: category_id,
-						        code: product_code,
-						        short_description: permitted_params[:short_description],
-						        long_description: permitted_params[:long_description],
-						        unit_description: permitted_params[:unit_description]
-						      	)
+					 # ["Organization","Market","Product Name","Category","Short Description","Product Code","Unit Name","Unit Description","Price" "Multiple Pack Sizes","MPS Unit","MPS Unit Description","MPS Price"]
+
+
+					def self.create_product_from_hash(prod_hash)
+						gp_id_or_false = identify_product_uniqueness(prod_hash)
+						if !gp_id_or_false
+							product = Product.create!(
+							        name: prod_hash["Product Name"],
+							        organization_id: get_organization_id_from_name(prod_hash["Organization"]),
+							        market_name: prod_hash["Market"]
+							        unit_id: get_unit_id_from_name(prod_hash["Unit"]),
+							        category_id: get_category_id_from_name(prod_hash["Category"],
+							        code: prod_hash["Product Code"],
+							        short_description: prod_hash["Short Description"],
+							        long_description: prod_hash["Long Description"],
+							        unit_description: prod_hash["Unit Description"]
+							      	)
+							if !prod_hash[@required_headers[-4]].empty? # TODO not loving the repetition, this should be factored out for sure, but for now.
+								newprod = product.dup 
+								newprod.unit_id = get_unit_id_from_name(prod_hash[@required_headers[-3]])
+								newprod.unit_description = prod_hash[@required_headers[-2]]
+								newprod.prices.create!(sale_price: price, min_quantity: 1)
+								newprod.save! # for id to be created in db
+							end
+						else
+							product = Product.create!(
+							        name: prod_hash["Product Name"],
+							        organization_id: get_organization_id_from_name(prod_hash["Organization"]),
+							        market_name: prod_hash["Market"]
+							        unit_id: get_unit_id_from_name(prod_hash["Unit"]),
+							        category_id: get_category_id_from_name(prod_hash["Category"],
+							        code: prod_hash["Product Code"],
+							        short_description: prod_hash["Short Description"],
+							        long_description: prod_hash["Long Description"],
+							        unit_description: prod_hash["Unit Description"],
+							        general_product_id: gp_id_or_false
+							      	)
+							if !prod_hash[@required_headers[-4]].empty? # TODO not loving the repetition, but for now.
+								newprod = product.dup 
+								newprod.unit_id = get_unit_id_from_name(prod_hash[@required_headers[-3]])
+								newprod.unit_description = prod_hash[@required_headers[-2]]
+								#newprod.price = prod_hash[@required_headers.last] # no, prices need build on lots
+								newprod.prices.create!(sale_price: price, min_quantity: 1)
+								newprod.save! # for id to be created in db
+							end
+						end
 					end # end def.self_create_product_from_hash
 
 				end # end /post add-products (json)
