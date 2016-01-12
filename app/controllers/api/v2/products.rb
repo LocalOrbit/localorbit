@@ -106,17 +106,17 @@ module API
 						gp_id_or_false = identify_product_uniqueness(prod_hash)
 						if !gp_id_or_false
 							product = Product.create!(
-							        name: prod_hash["Product Name"],
+											name: prod_hash["Product Name"],
 							        organization_id: get_organization_id_from_name(prod_hash["Organization"]),
-							        market_name: prod_hash["Market"]
+							        market_name: prod_hash["Market"],
 							        unit_id: get_unit_id_from_name(prod_hash["Unit"]),
-							        category_id: get_category_id_from_name(prod_hash["Category"],
+							        category_id: get_category_id_from_name(prod_hash["Category"]),
 							        code: prod_hash["Product Code"],
 							        short_description: prod_hash["Short Description"],
 							        long_description: prod_hash["Long Description"],
 							        unit_description: prod_hash["Unit Description"]
 							      	)
-							if !prod_hash[@required_headers[-4]].empty? # TODO not loving the repetition, this should be factored out for sure, but for now.
+							unless prod_hash[@required_headers[-4]].empty? # TODO not loving the repetition, this should be factored out for sure, but for now.
 								newprod = product.dup 
 								newprod.unit_id = get_unit_id_from_name(prod_hash[@required_headers[-3]])
 								newprod.unit_description = prod_hash[@required_headers[-2]]
@@ -127,16 +127,16 @@ module API
 							product = Product.create!(
 							        name: prod_hash["Product Name"],
 							        organization_id: get_organization_id_from_name(prod_hash["Organization"]),
-							        market_name: prod_hash["Market"]
+							        market_name: prod_hash["Market"],
 							        unit_id: get_unit_id_from_name(prod_hash["Unit"]),
-							        category_id: get_category_id_from_name(prod_hash["Category"],
+							        category_id: get_category_id_from_name(prod_hash["Category"]),
 							        code: prod_hash["Product Code"],
 							        short_description: prod_hash["Short Description"],
 							        long_description: prod_hash["Long Description"],
 							        unit_description: prod_hash["Unit Description"],
 							        general_product_id: gp_id_or_false
 							      	)
-							if !prod_hash[@required_headers[-4]].empty? # TODO not loving the repetition, but for now.
+							unless prod_hash[@required_headers[-4]].empty? # TODO not loving the repetition, but for now.
 								newprod = product.dup 
 								newprod.unit_id = get_unit_id_from_name(prod_hash[@required_headers[-3]])
 								newprod.unit_description = prod_hash[@required_headers[-2]]
@@ -145,6 +145,7 @@ module API
 								newprod.save! # for id to be created in db
 							end
 						end
+
 					end # end def.self_create_product_from_hash
 
 				end # end /post add-products (json)
@@ -154,3 +155,4 @@ module API
 		end
 	end
 end
+end # why what did I get wrong
