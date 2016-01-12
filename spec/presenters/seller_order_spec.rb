@@ -145,10 +145,12 @@ describe SellerOrder do
   describe "#total_cost" do
     it "takes the credit amount the seller is responsible for into account" do
       expect(SellerOrder.new(order, seller1).total_cost).to eq 20.97
+      expect(SellerOrder.new(order, seller2).total_cost).to eq 6.99
       credit = create(:credit, order: order, payer_type: Credit::ORGANIZATION, paying_org: seller1, amount_type: Credit::FIXED, amount: 1)
       order.credit = credit
       order.save
       expect(SellerOrder.new(order, seller1).total_cost).to eq 19.97
+      expect(SellerOrder.new(order, seller2).total_cost).to eq 6.99
     end
   end
 end

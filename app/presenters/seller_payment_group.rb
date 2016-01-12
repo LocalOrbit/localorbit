@@ -50,7 +50,7 @@ class SellerPaymentGroup
     end
     @owed = @orders.sum do |o|
       total = o.items.each.sum(&:seller_net_total)
-      total += o.credit_amount
+      #total += o.credit_amount
       total
     end
   end
