@@ -101,21 +101,7 @@ module API
 				post '/add-products' do
 					# do stuff with posted json file here
 					# should be normal way of parsing it and then it will add by row
-					# sending responses in the order with the route redirections as mentioned in plan
-
-					# will need some of the helper functions here
-
-					# in upload route we'll want to get the posted file and convert it to json.
-					# assuming you just GET properly formatted json (which, whatever), THAT's what gets passed in to this route.
-
-					# iterate over list in jsonfile["products"]
-					# each one is a ruby-hash-from-json that reps one product
-					# basically want to call the create product route on it
-					# but it's probably better to create a method that creates a product from the json file, in terms of efficiency, rather than going to get another route or something.
-
-					 # ["Organization","Market","Product Name","Category","Short Description","Product Code","Unit Name","Unit Description","Price" "Multiple Pack Sizes","MPS Unit","MPS Unit Description","MPS Price"]
-
-
+					
 					def self.create_product_from_hash(prod_hash)
 						gp_id_or_false = identify_product_uniqueness(prod_hash)
 						if !gp_id_or_false
