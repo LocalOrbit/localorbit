@@ -73,10 +73,6 @@ class OrderItem < ActiveRecord::Base
   end
 
   def seller_net_total
-    gross_total - market_seller_fee - local_orbit_seller_fee - payment_seller_fee - discount_seller - share_of_credit
-  end
-
-  def seller_net_total_no_credit
     gross_total - market_seller_fee - local_orbit_seller_fee - payment_seller_fee - discount_seller
   end
 
