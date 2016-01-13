@@ -34,7 +34,7 @@ module Api
               interval = Date.today.at_beginning_of_day..Date.today.at_end_of_day
               axisTitle = 'Hour of Day'
             when "1"
-              interval = Date.today.at_beginning_of_day - 7.day..Date.today.at_end_of_day
+              interval = Date.today.at_beginning_of_day - 6.day..Date.today.at_end_of_day
               axisTitle = 'Day of Month'
             when "2"
               interval = Date.new(Date.current.year,Date.current.month,1).at_beginning_of_day..Date.today.at_end_of_day
