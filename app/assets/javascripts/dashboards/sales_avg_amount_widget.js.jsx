@@ -26,6 +26,7 @@
                     </div>
                     <div style={{borderTop: '1px solid #EEE', padding: 3}}>
                         <a href="/admin/orders"><span style={{textTransform: 'uppercase', fontSize: 12, fontWeight: 'bold'}}>View Details ></span></a>
+                        <span className="tooltip pull-right" data-tooltip="This number represents the average order size for the selected period.">&nbsp;</span>
                     </div>
                 </div>
             );        }

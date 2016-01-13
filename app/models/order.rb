@@ -73,8 +73,8 @@ class Order < ActiveRecord::Base
   scope :undelivered, -> { visible.where("order_items.delivery_status = ?", "pending").group("orders.id") }
   scope :paid_with, lambda {|method| visible.where(payment_method: method) }
   scope :purchase_orders, -> { where(payment_method: "purchase order") }
-  scope :payment_overdue, -> { unpaid.where("invoice_due_date < ?", (Time.current - 1.day).end_of_day) }
-  scope :payment_due, -> { unpaid.where("invoice_due_date >= ?", (Time.current - 1.day).end_of_day) }
+  scope :payment_overdue, -> { unpaid.where("invoice_due_date < ?", (Time.current - 0.day).end_of_day) }
+  scope :payment_due, -> { unpaid.where("invoice_due_date >= ?", (Time.current - 0.day).end_of_day) }
   scope :paid_between, lambda {|range| paid.where(paid_at: range) }
   scope :due_between, lambda {|range| invoiced.where(invoice_due_date: range) }
   scope :clean_payment_records, -> { where(arel_table[:placed_at].gt(Time.parse("2014-01-01"))) }

@@ -26,6 +26,7 @@
                     </div>
                     <div style={{borderTop: '1px solid #EEE', padding: 3}}>
                         <a href="/admin/financials"> <span style={{textTransform: 'uppercase', fontSize: 12, fontWeight: 'bold'}}>View Details ></span></a>
+                        <span className="tooltip pull-right" data-tooltip="This number represents the current amount due to be paid to the market.">&nbsp;</span>
                     </div>
                 </div>
             );        }
