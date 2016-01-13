@@ -26,6 +26,7 @@
                     </div>
                     <div style={{borderTop: '1px solid #EEE', padding: 3}}>
                         <a href="/admin/organizations"><span style={{textTransform: 'uppercase', fontSize: 12, fontWeight: 'bold'}}>View Details ></span></a>
+                        <span className="tooltip pull-right" data-tooltip="This number represents the number of pending buyer signups.">&nbsp;</span>
                     </div>
                 </div>
             );

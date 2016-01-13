@@ -22,6 +22,8 @@
             var fillColor = this.props.fillColor;
             var axisTitle = this.props.axisTitle;
             var totalSalesAmount;
+            var salesAmountGraph;
+            var rangeSetting;
 
             if (j) {
                 $.each(j, function (i,v)
@@ -44,10 +46,19 @@
                     },
                     mode:"lines+markers",
                     uid:"ab9b77",
-                    connectgaps:false,
+                    connectgaps:true,
                     fillcolor: fillColor
                 }
             ];
+
+            rangeSetting = '[1,]';
+            if (axisTitle == 'Hour of Day')
+                rangeSetting = '[0,23]';
+            else if (axisTitle == 'Month of Year')
+                rangeSetting = '[1,12]';
+            else if (axisTitle == 'Day of Month')
+                rangeSetting == '[1,31]';
+
             let layout = {
                 autosize: true,
                 width: 290,
@@ -77,11 +88,7 @@
                     zeroline:false,
                     autotick: false,
                     title: axisTitle,
-                    tickmode: 'linear',
-                    rangemode: 'range',
-                    range: [1,],
-                    dtick: 1,
-                    tick0: 1
+                    dtick: 3
                 }
             };
             let config = {
@@ -97,6 +104,19 @@
                 totalSalesAmount = this.props.totalSalesAmount;
             else
                 totalSalesAmount = '$0';
+
+            if (this.props.totalSalesAmount && this.props.totalSalesAmount != '$0') {
+            salesAmountGraph = (
+                <div>
+                    <Plotly className="SalesAmount" data={data} layout={layout} config={config}/>
+                    <div style={{borderTop: '1px solid #EEE', padding: 3}}>
+                        <a href="/admin/orders"><span style={{textTransform: 'uppercase', fontSize: 12, fontWeight: 'bold'}}>View Details ></span></a>
+                        <span className="tooltip pull-right" data-tooltip="This number represents the total sales amount for the selected period.">&nbsp;</span>
+                    </div>
+                </div>);
+            }
+            else
+            salesAmountGraph = (<div style={{height: '300px', width: '290px', lineHeight: '300px', verticalAlign: 'middle', color: '#AAA', background: '#FFF', fontSize: '24px', textAlign: 'center'}}>No Data Available</div>);
 
             return (
                 <div className="dashboard-widget large-widget">
@@ -114,11 +134,7 @@
                         </div>
                         <div className="bottom-border"></div>
                     </div>
-                    <Plotly className="SalesAmount" data={data} layout={layout} config={config}/>
-                    <div style={{borderTop: '1px solid #EEE', padding: 3}}>
-                        <a href="/admin/orders"><span style={{textTransform: 'uppercase', fontSize: 12, fontWeight: 'bold'}}>View Details ></span></a>
-                        <span class="tooltip pull-right" data-tooltip="This number represents the total sales amount for the selected period.">&nbsp;</span>
-                    </div>
+                    {salesAmountGraph}
                 </div>
             );        }
     });
