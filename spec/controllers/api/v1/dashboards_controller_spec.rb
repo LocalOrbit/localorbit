@@ -56,7 +56,7 @@ describe Api::V1::DashboardsController do
         end
       end
 
-      describe "viewing dashboard" do
+      describe "viewing dashboard", :shaky do
         it "creates proper JSON - 1D" do
           login
           get :index, ({dateRange: 0, viewAs: 'B'})
@@ -64,21 +64,21 @@ describe Api::V1::DashboardsController do
           expect(JSON.parse(response.body)["dashboard"]["totalSalesAmount"]).to eql '$10'
         end
 
-        it "creates proper JSON - 7D" do
+        it "creates proper JSON - 7D", :shaky do
           login
           get :index, ({dateRange: 1, viewAs: 'B'})
           expect(response.status).to eql 200
           expect(JSON.parse(response.body)["dashboard"]["totalSalesAmount"]).to eql '$20'
         end
 
-        it "creates proper JSON - MTD" do
+        it "creates proper JSON - MTD", :shaky do
           login
           get :index, ({dateRange: 2, viewAs: 'B'})
           expect(response.status).to eql 200
           expect(JSON.parse(response.body)["dashboard"]["totalSalesAmount"]).to eql '$30'
         end
 
-        it "creates proper JSON - YTD" do
+        it "creates proper JSON - YTD", :shaky do
           login
           get :index, ({dateRange: 3, viewAs: 'B'})
           expect(response.status).to eql 200
