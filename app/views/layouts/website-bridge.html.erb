@@ -118,7 +118,7 @@
   <% end %>
 </head>
 
-<body id="boo" class="controller-<%= controller.controller_name %> <%= current_user.present? ? "" : "signed-out" %> <%= "request-desktop" if cookies[:request_desktop] && cookies[:request_desktop] == "true"  %>">
+<body id="website-bridge" class="controller-<%= controller.controller_name %> <%= current_user.present? ? "" : "signed-out" %> <%= "request-desktop" if cookies[:request_desktop] && cookies[:request_desktop] == "true"  %>">
   <%= render "shared/analytics" %>
 
   <div class="page-content">
@@ -149,10 +149,8 @@
         <% end %>
       </div>
 
-      <%# KXM Shared navigation will likely be superceded by the website nav and so the code remains here (but commented out) until the determination is made %>
+      <%# KXM Shared navigation here will likely be the website nav.  The the code remains here (but commented out) until I know what that means %>
       <%#= render 'shared/navigation' %>
-
-      <p><%= (__FILE__).inspect.split("/").last.gsub('.html.erb',nil.to_s) %></p>
 
       <%= yield %>
 
@@ -197,9 +195,42 @@
   <%# KXM This script tag is only here to get things working. Put your toys away when your done with them, Keetie %>
   <script type="text/javascript">
     $(document).ready(function () {
-      //your code here
       $(function() {
         $( "#tabs" ).tabs();
+      });
+
+      $('input').change(function(){
+        // Initialize the default condition
+        var pass = true;
+
+        ancestor_div = $(this).closest('div[id^="form-"]')
+        ancestor_div_id = ancestor_div.prop('id');
+
+        decendent_inputs = ancestor_div.find('input')
+
+        // Cycle through them, cheing for failure conditions
+        decendent_inputs.each(function(index){
+          input_value = $(this).val();
+          // # KXM This could (should) be a method call for validation of some kind.  For now it confirms that *something* has been entered
+          if( input_value == '' || input_value == null ){
+            // If found, fail passage
+            pass = false;
+          }
+        });
+
+        // If everything is good...
+        if( pass == true ){
+          // ...then add the appropriate class to the correct list item
+          target_anchor = $('a[href^="#'+ancestor_div_id+'"]')
+          target_li = target_anchor.closest('li');
+          target_li.addClass('pass');
+
+        } else {
+          // Otherwise, make sure it isn't there
+          target_li.removeClass('pass');
+        }
+
+
       });
     });
   </script>

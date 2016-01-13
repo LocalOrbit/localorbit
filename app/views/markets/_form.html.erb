@@ -3,9 +3,11 @@
 <div id="market-creation">
   <div id="tabs">
     <ul id="market-tab-list">
+      <li class="pass"><span class="anchor">Plan Selection</span></li>
       <li><a href="#form-contact-info">Contact Info</a></li>
       <!--li><a href="#form-market-info">Market Info</a></li-->
-      <li><a href="#form-terms">Terms of Service</a></li>
+      <li><a href="#form-terms">Service Agreement</a></li>
+      <li><a href="#form-payment">Payment</a></li>
     </ul>
 
     <div id="form-contact-info">
@@ -25,9 +27,9 @@
             <%= f.text_field :contact_phone, size: 18, class: "column--full" %>
           </div>
         </div>
-      </fieldset>
+      <!--/fieldset>
 
-      <fieldset id="fields-market-info">
+      <fieldset id="fields-market-info"-->
         <legend>Market Information</legend>
         <div class="row row--field">
           <div class="field column column--half column--guttered">
@@ -45,10 +47,10 @@
         </div>
       </fieldset>
 
-      <!-- # KXM This will end up being implemented via a helper (like the social media work) -->
+      <%# # KXM This may end up being implemented via a helper (like the social media work) the better to eliminate the conditional %>
       <% if params[:plan].present? && params[:plan] == 'grow' then %>
         <div id="form-repeat">
-          <p>Found it, yo</p>l
+          <button id="add_market">Add Market</button> &nbsp; &nbsp; <span class="market-count">You may add up to 4 more markets</span>
         </div>
       <% end %>
     </div> <!-- end form-contact-info -->
@@ -70,7 +72,7 @@
         </div>
 
         <div id="accept-terms-of-service" class="pull-right">
-          <%= check_box_tag("accept-terms-of-service", value: "1", checked: false) %> <label for="accept-terms-of-service">Yes, I agree</label>
+          <%= check_box_tag("accept-terms-of-service", value: 1, checked: false) %> <label for="accept-terms-of-service">Yes, I agree</label>
         </div>
 
         <div class="form-actions">
@@ -79,6 +81,13 @@
         </div>
       </fieldset>
     </div> <!-- end form-terms -->
+
+    <div id="form-payment">
+      <fieldset>
+        <legend>Payment Options</legend>
+        <p>Here are some things...</p>
+      </fieldset>
+    </div>
   </div>
 </div>
 

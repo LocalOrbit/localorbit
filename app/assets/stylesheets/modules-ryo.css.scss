@@ -2,6 +2,10 @@
 
 /* # KXM Subject to change once the structure settles down */
 div#market-creation{
+	fieldset{
+		margin: 2em 0 3em;
+	}
+
 	.ui-widget-content {
 	  border: 0 !important;
 	}
@@ -11,13 +15,33 @@ div#market-creation{
 	}
 
 	#market-tab-list{
+		position: absolute;
+		top: 1em;
+		right: 0px;
+		font-size: .92em;
+
 		li{
 			display: inline-block;
 			margin-right: .4em;
-			a{
+			height: 1.8em;
+			border: none;
+			background: none;
+			padding: .4em 1em .6em;
+
+			&.ui-state-active{
+				/* # KXM Background images should be hung from at least two places to account for both active state navigation and form completion indicators.  Make sure to update the relative DOM manipulation in the JavaScript routines When that's done. */
+				background: asset_url('icons/up.png') no-repeat bottom center;
+			}
+
+			&.pass{
+				height: 2em;
+				background: asset_url('icons/check.png') no-repeat bottom center;
+			}
+
+			a, .anchor{
+				vertical-align: top;
 				display: block;
-				line-height: 2em;
-				padding: .4em 1em .6em .6em;
+				line-height: 100%;
 			}
 		}
 	}
