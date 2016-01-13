@@ -52,6 +52,10 @@ module TotalsPresenter
       @totals[:net]         += item.seller_net_total
     end
 
+    if self.instance_of?(SellerOrder)
+      @totals[:net] = @totals[:net] - credit_amount
+    end
+
     @totals[:discount_seller] = non_cancelled_items.sum(:discount_seller)
     @totals[:discount_market] = non_cancelled_items.sum(:discount_market)
     @totals[:transaction] = non_cancelled_items.sum(:local_orbit_seller_fee)
