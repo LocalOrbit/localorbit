@@ -88,7 +88,10 @@
                     zeroline:false,
                     autotick: false,
                     title: axisTitle,
-                    dtick: 3
+                    dtick: 3,
+                    tickfont:{
+                        size:10
+                    }
                 }
             };
             let config = {
@@ -109,7 +112,7 @@
             salesAmountGraph = (
                 <div>
                     <Plotly className="SalesAmount" data={data} layout={layout} config={config}/>
-                    <div style={{borderTop: '1px solid #EEE', padding: 3}}>
+                    <div style={{borderTop: '1px solid #EEE', padding: 3, marginTop: 15}}>
                         <a href="/admin/orders"><span style={{textTransform: 'uppercase', fontSize: 12, fontWeight: 'bold'}}>View Details ></span></a>
                         <span className="tooltip pull-right" data-tooltip="This number represents the total sales amount for the selected period.">&nbsp;</span>
                     </div>
@@ -124,7 +127,7 @@
                         <div style={{float: "left"}}>
                             <div className="font-icon icon-coins"></div>
                         </div>
-                        <div style={{float: "right"}}>
+                        <div style={{float: "right", paddingRight:10}}>
                             <div className="widget-value" id="totalSalesAmount">
                                 {totalSalesAmount}
                             </div>

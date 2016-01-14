@@ -71,7 +71,11 @@
         border-color: <%= current_market.text_color -%>;
       }
 
-      .segmented-control .label.selected {
+      .segmented-control .label div {
+        color: <%= current_market.text_color -%>;
+      }
+
+      .segmented-control .label.selected div {
         background-color: <%= current_market.text_color -%>;
         border-color: <%= current_market.text_color -%>;
         color: #FFF;

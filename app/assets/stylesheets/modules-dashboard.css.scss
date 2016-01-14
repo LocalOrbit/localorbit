@@ -5,29 +5,29 @@
 .segmented-control input {
   display: none;
 }
-.segmented-control .label {
-  text-align: center;
-  transition: all 0.2s ease-out;
-  background-color: #fff;
-}
-.segmented-control .label label {
-  display: block;
-  width: 100%;
-  height: 100%;
-  cursor: pointer;
-}
+
 
 .segmented-control {
   border: 1px solid #DDD;
   border-radius: 5px;
   overflow: hidden;
-}
-.segmented-control .label {
-  min-width: 50px;
-  height: 25px;
-  padding-top: 9px;
-  float: left;
-  background-color: #fff;
+  .label {
+    text-align: center;
+    transition: all 0.2s ease-out;
+    min-width: 50px;
+    height: 30px;
+    float: left;
+    background-color: #fff;
+    div {
+      margin-top: 6px;
+    }
+    label {
+      display: block;
+      width: 100%;
+      height: 35px;
+      cursor: pointer;
+    }
+  }
 }
 
 .segmented-control input[type=radio] ~ label {
@@ -37,13 +37,16 @@
   }
 }
 
+.row--partial {
+  text-align: left;
+}
+
 .dashboard-widget {
   background-color: #FFF;
-  margin-bottom: 10px;
   &.deliveries {
     background-color: #666;
     min-width: 300px;
-    padding: 1px;
+    max-width: 300px;
   }
   .small-widget {
     height: 100px;
@@ -54,7 +57,7 @@
 
 .dashboard-widget {
   .widget-label {
-    font-size: 24px;
+    font-size: 22px;
     font-weight: normal;
     text-align: right;
     padding-right: 5px;
@@ -65,7 +68,7 @@
     }
   }
   .widget-value {
-    font-size: 3.2vmax;
+    font-size: 3.0vmax;
     font-weight: bold;
     text-align: right;
     padding-right: 5px;
@@ -97,7 +100,7 @@
 
 .dashboard-widget {
   .font-icon {
-    color: #999;
+    color: #CCC;
     font-size: 55px;
     padding: 15px;
     &.deliveries {
@@ -108,13 +111,16 @@
 
 .dashboard-widget .calendar .cal-date {
     color: #FFF;
-    font-style: italic;
+    font-weight: bold;
+    font-style: normal;
     border-color: #666;
+    cursor: pointer;
     &.disabled {
       background-color: #444;
     }
     &.blank {
       background-color: #666;
       border-color: #666;
+      cursor: none;
     }
 }

@@ -48,13 +48,12 @@ module Api
           end
 
           if user_type == "B" || user_type == "M"
-            orders = Order.placed_between(interval).orders_for_buyer(current_user).where(market: current_market).order(:created_at)
+            orders = Order.orders_for_buyer(current_user).where(market: current_market).order(:created_at)
             order_items = nil
-            @presenter = DashboardBuyerPresenter.new(orders, order_items, date_param).generate
+            @presenter = DashboardBuyerPresenter.new(orders, order_items, date_param, interval).generate
           else
-            orders = Order.placed_between(interval).orders_for_seller(current_user).where(market: current_market).order(:id)
-            order_items = Orders::SellerItems.items_for_seller(orders, current_user)
-            @presenter = DashboardSellerPresenter.new(orders, order_items, interval, date_param, current_user).generate
+            orders = Order.orders_for_seller(current_user).where(market: current_market).order(:id)
+            @presenter = DashboardSellerPresenter.new(orders, interval, date_param, current_user).generate
           end
 
           num_pending_buyers = 0
