@@ -1,9 +1,45 @@
 module API
 	module V2
 		#extend self
+
+		class ProductHelpers
+
+			def self.identify_product_uniqueness(product_params) # takes hash of params
+				# goes with an existing general product if it has the same name and category as another product --> then it gets that genprod's g_p_id
+				# if unit and/OR unit description different -- but that's taken care of in original data, isn't it? 
+				# I guess it isn't taken care of when you post straight JSON. TODO fix concern.
+				identity_params_hash = {product_name:product_params[:name],category_id:get_category_id_from_name(product_params[:category])}
+				gps = GeneralProduct.where(name:identity_params_hash[:product_name]).where(category_id:identity_params_hash[:category_id])#.empty? # TODO check 
+				if !(gps.empty?)
+					gps.first.id
+				else
+					false
+				end
+			end
+
+			# TODO: limitations?? this will be somewhat better when it is limited but perhaps should limit to a depth like in original prod upload
+			def self.get_category_id_from_name(category_name)
+				id = Category.find_by_name(category_name).id # first?
+				# return nil if no possible one
+				id
+			end
+
+			def self.get_organization_id_from_name(organization_name)
+				org = Organization.find_by_name(organization_name).id # first?
+				org
+			end
+
+			def self.get_unit_id_from_name(unit_name) # assuming name is singular
+				unit = Unit.find_by_singular(unit_name).id
+				unit
+			end
+			
+		end
+
 		class Products < Grape::API 
 			include API::V2::Defaults
-			include API::V2::ProductHelpers
+			#include API::V2::ProductHelpers
+			#extend ProductHelpers
 
 			resource :products do 
 				# get requests
@@ -34,21 +70,21 @@ module API
 				end
 				get ":category", root: "product" do # This one does not really work that well, eg category "carrots" gets all the cat "Vegetables", TODO examine priorities
 					category_id = Category.find_by_name(permitted_params[:category]).id
-					GeneralProduct.where(category_id: category_id) # I think this should be genprod, y/n
+					GeneralProduct.where(category_id: category_id) # I think this should be genprod, since that's ~products~ as we generally represent, so for now it is.
 				end
 
-				### post requests
+				### POST ROUTES
 
 				desc "Create a product"
 				params do
-					requires :name, :organization_name, :market_name, :unit, :category, :unit_description, :short_description, :long_description, :price
+					requires :name, :organization_name, :unit, :category, :unit_description, :short_description, :long_description, :price
 				end
 
 				# singular in post request
 				post '/add-product' do
 					product_name = permitted_params[:name]
 					possible_org = Organization.find_by_name(permitted_params[:organization_name])
-					supplier_id = possible_org
+					supplier_id = possible_org.id
 					unit_id = Unit.find_by_singular(permitted_params[:unit]).id
 					category_id = Category.find_by_name(permitted_params[:category]).id
 					product_code = ""
@@ -56,15 +92,15 @@ module API
 						product_code = permitted_params[:code]
 					end
 					## TODO here there also must be a determination of uniqueness and assignment of general product id OR creation of new general product and assignment of that id on this product
-					gp_id_or_false = V2.identify_product_uniqueness(permitted_params)
+					gp_id_or_false = ProductHelpers.identify_product_uniqueness(permitted_params)
 					if !gp_id_or_false
 						product = Product.create!(
 							        name: product_name,
 							        organization_id: supplier_id,
-							        market_name: permitted_params[:market_name], # TODO check, will this relationship hold up? see: where p is a Product,
+							        #market_name: permitted_params[:market_name], # TODO check, will this relationship hold up? see: where p is a Product,
 							    		## p.organization.markets.include?(Market.find_by_name(p.market_name))
 											## => true
-
+											### but also apparently,  -- market name not a prod attr?? TODO fix
 							        unit_id: unit_id,
 							        category_id: category_id,
 							        code: product_code,
@@ -74,12 +110,12 @@ module API
 							      	)
 						## To create inventory and price(s). -- probably no inventory, yes 1 sale price, yes?
 						# product.lots.create!(quantity: 999_999)
-	     			product.prices.create!(sale_price: price, min_quantity: 1) ## TODO: Should we add min quantity default or option
+	     			product.prices.create!(sale_price: permitted_params[:price], min_quantity: 1) ## TODO: Should we add min quantity default or option
 	     		else
 	     			product = Product.create!(
 							        name: product_name,
 							        organization_id: supplier_id,
-							        market_name: permitted_params[:market_name], # TODO check, will this relationship hold up? see: where p is a Product,
+							        #market_name: permitted_params[:market_name], # TODO check, will this relationship hold up? see: where p is a Product,
 							    		## p.organization.markets.include?(Market.find_by_name(p.market_name))
 											## => true
 
@@ -93,9 +129,9 @@ module API
 							      	)
 						## To create inventory and price(s). probably no inventory, yes 1 sale price
 						# product.lots.create!(quantity: 999_999)
-	     			product.prices.create!(sale_price: price, min_quantity: 1) ## TODO: min quantity default or option?
+	     			product.prices.create!(sale_price: permitted_params[:price], min_quantity: 1) ## TODO: min quantity default or option?
 	     		end
-	     		{result:"success?"}
+	     		{"result"=>"success?"}
 				end
 
 				desc "Upload json"
@@ -151,7 +187,7 @@ module API
 						end
 
 					end # end def.self_create_product_from_hash
-					{result:"success?"}
+					{"result"=>"success?"}
 				end # end /post add-products (json)
 
 			end
