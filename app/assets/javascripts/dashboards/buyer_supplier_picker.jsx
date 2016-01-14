@@ -28,8 +28,8 @@
                         onChange={this.viewEntityUpdated}
                         value={this.state.selectedEntity}
                         name="selectedEntity">
-                        <span value="B">Buyer</span>
-                        <span value="S">Supplier</span>
+                        <div value="B">Buyer</div>
+                        <div value="S">Supplier</div>
                     </SegmentedControl>
                 </div>
             );

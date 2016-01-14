@@ -56,8 +56,8 @@ describe Api::V1::DashboardsController do
         end
       end
 
-      describe "viewing dashboard", :shaky do
-        it "creates proper JSON - 1D" do
+      describe "viewing dashboard" do
+        it "creates proper JSON - 1D", :shaky do
           login
           get :index, ({dateRange: 0, viewAs: 'B'})
           expect(response.status).to eql 200
