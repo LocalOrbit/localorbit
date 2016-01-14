@@ -15,7 +15,7 @@
                         <div style={{float: "left"}}>
                             <div className="font-icon icon-picture"></div>
                         </div>
-                        <div style={{float: "right"}}>
+                        <div style={{float: "right", paddingRight:10}}>
                             <div className="widget-value" id="numPendingBuyers">
                                 {this.props.numPendingBuyers}
                             </div>

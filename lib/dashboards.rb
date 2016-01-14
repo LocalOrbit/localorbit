@@ -48,7 +48,7 @@ module Dashboards
       delivery_weeks[-1].push({ day: day, css_class: css_class, delivery_id: delivery_id, order_id: order_id })
     }
 
-    {:numPendingDeliveries => @deliveries.length, :deliveries => delivery_weeks, :pendingDeliveryAmount => number_to_currency(pending_amount, precision: 0)}
+    {:numPendingDeliveries => @deliveries.length, :deliveries => delivery_weeks, :pendingDeliveryAmount => pending_amount ? number_to_currency(pending_amount, precision: 0) : '$0'}
   end
 
   def group_to_sellers(orders, group_by)

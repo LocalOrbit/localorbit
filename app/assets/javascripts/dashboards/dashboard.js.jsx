@@ -87,8 +87,8 @@
                              {buyer_supplier_picker}
                          </div>
                      </div>
-                     <div className="row row--partial dashboard" style={{background: '#EEE', padding: 2}}>
-                        <div className="column column--one-third" style={{padding: 2}}>
+                     <div className="row row--partial dashboard" style={{background: '#EEE'}}>
+                        <div className="column column--one-third">
                             <lo.delivery_calendar_widget
                                 userType={uType}
                                 deliveries={self.state.dashboard.deliveries}
@@ -96,8 +96,8 @@
                                 pendingDeliveryAmount={self.state.dashboard.pendingDeliveryAmount}
                             />
                         </div>
-                        <div className="column column--one-third" style={{margin: 5, padding: 2}}>
-                            <div>
+                        <div className="column column--one-third" style={{margin: "5px 0px 0px 5px", minWidth:302, maxWidth: 302}}>
+                            <div style={{marginBottom: "5px"}}>
                                 <lo.sales_amount_widget
                                     userType={uType}
                                     totalSalesAmount={self.state.dashboard.totalSalesAmount}
@@ -113,8 +113,8 @@
                                 />
                             </div>
                         </div>
-                        <div className="column column--one-third" style={{margin: 5, padding: 2}}>
-                            <div>
+                        <div className="column column--one-third" style={{margin: "5px 0px 0px 5px", minWidth:302, maxWidth: 302}}>
+                            <div style={{marginBottom: "5px"}}>
                                  <lo.sales_count_widget
                                      totalOrderCount={parseInt(self.state.dashboard.totalOrderCount)}
                                      totalOrderCountGraph={self.state.dashboard.totalOrderCountGraph}

@@ -12,7 +12,7 @@
             return (
                 <div className="dashboard-widget small-widget deliveries">
                     <div className="top-section">
-                        <div style={{float: "left"}}>
+                        <div style={{float: "left", paddingLeft:10}}>
                             <div className="widget-value deliveries" id="pendingDeliveryAmount">
                                 {this.props.pendingDeliveryAmount}
                             </div>

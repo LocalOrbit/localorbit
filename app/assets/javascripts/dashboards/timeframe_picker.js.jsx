@@ -28,10 +28,10 @@
                         onChange={this.intervalUpdated}
                         value={this.state.interval}
                         name="interval">
-                        <span value="0">1D</span>
-                        <span value="1">7D</span>
-                        <span value="2">MTD</span>
-                        <span value="3">YTD</span>
+                        <div value="0">1D</div>
+                        <div value="1">7D</div>
+                        <div value="2">MTD</div>
+                        <div value="3">YTD</div>
                     </SegmentedControl>
                 </div>
             );
