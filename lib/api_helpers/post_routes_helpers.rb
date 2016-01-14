@@ -1,12 +1,12 @@
-module API
-	module V2
+# module API
+# 	module V2
 		extend self
 
 		# PRODUCT HELPERS
 
 		# Determines whether this product needs a new GenProd or belongs to an existing one
 		# Returns false if new GenProd is necessary, returns GenProd id if there exists one (binary, for useful control statements)
-		module ProductHelpers
+		class ProductHelpers
 
 			def identify_product_uniqueness(product_params) # takes hash of params
 				# goes with an existing general product if it has the same name and category as another product --> then it gets that genprod's g_p_id
@@ -44,5 +44,5 @@ module API
 			
 		end
 
-	end
-end
+# 	end
+# end
