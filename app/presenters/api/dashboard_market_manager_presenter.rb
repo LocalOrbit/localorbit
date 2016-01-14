@@ -1,4 +1,4 @@
-class Api::DashboardBuyerPresenter
+class Api::DashboardMarketManagerPresenter
   include Dashboards
   include ActiveSupport::NumberHelper
 
