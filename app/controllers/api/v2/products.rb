@@ -1,7 +1,9 @@
 module API
 	module V2
+		#extend self
 		class Products < Grape::API 
 			include API::V2::Defaults
+			include API::V2::ProductHelpers
 
 			resource :products do 
 				# get requests
@@ -32,7 +34,7 @@ module API
 				end
 				get ":category", root: "product" do # This one does not really work that well, eg category "carrots" gets all the cat "Vegetables", TODO examine priorities
 					category_id = Category.find_by_name(permitted_params[:category]).id
-					Product.where(category_id: category_id) # possible this should be genprod
+					GeneralProduct.where(category_id: category_id) # I think this should be genprod, y/n
 				end
 
 				### post requests
@@ -45,16 +47,16 @@ module API
 				# singular in post request
 				post '/add-product' do
 					product_name = permitted_params[:name]
-					possible_orgs = Organization.find_by_name(permitted_params[:organization_name])
-					supplier_id = possible_orgs.first.id # TODO better accuracy
-					unit_id = Unit.find_by_name(permitted_params[:unit]).first.id
-					category_id = get_category_id_from_name(permitted_params[:category])
+					possible_org = Organization.find_by_name(permitted_params[:organization_name])
+					supplier_id = possible_org
+					unit_id = Unit.find_by_singular(permitted_params[:unit]).id
+					category_id = Category.find_by_name(permitted_params[:category]).id
 					product_code = ""
 					if permitted_params[:code]
 						product_code = permitted_params[:code]
 					end
 					## TODO here there also must be a determination of uniqueness and assignment of general product id OR creation of new general product and assignment of that id on this product
-					gp_id_or_false = identify_product_uniqueness(permitted_params)
+					gp_id_or_false = V2.identify_product_uniqueness(permitted_params)
 					if !gp_id_or_false
 						product = Product.create!(
 							        name: product_name,
@@ -92,6 +94,8 @@ module API
 						## To create inventory and price(s). probably no inventory, yes 1 sale price
 						# product.lots.create!(quantity: 999_999)
 	     			product.prices.create!(sale_price: price, min_quantity: 1) ## TODO: min quantity default or option?
+	     		end
+	     		{result:"success?"}
 				end
 
 				desc "Upload json"
@@ -147,7 +151,7 @@ module API
 						end
 
 					end # end def.self_create_product_from_hash
-
+					{result:"success?"}
 				end # end /post add-products (json)
 
 			end
@@ -155,4 +159,4 @@ module API
 		end
 	end
 end
-end # why what did I get wrong
+
