@@ -5,56 +5,57 @@
     <ul id="market-tab-list">
       <li class="pass"><span class="anchor">Plan Selection</span></li>
       <li><a href="#form-contact-info">Contact Info</a></li>
-      <!--li><a href="#form-market-info">Market Info</a></li-->
       <li><a href="#form-terms">Service Agreement</a></li>
-      <li><a href="#form-payment">Payment</a></li>
+      <li><a href="#form-billing">Billing</a></li>
+      <li><a href="#form-review">Review</a></li>
     </ul>
 
+    <%# ==== Form tab break ==========================================================%>
     <div id="form-contact-info">
       <fieldset id="fields-contact-info">
         <legend>Market Contact Information</legend>
         <div class="field">
-          <%= f.label :contact_name %><br>
-          <%= f.text_field :contact_name, class: "column--full"  %>
+          <%= f.text_field :contact_name, class: "column--full", placeholder: 'Contact Name' %>
         </div>
         <div class="row row--field">
           <div class="field column column--half column--guttered">
-            <%= f.label :contact_email %><br>
-            <%= f.text_field :contact_email, class: "column--full" %>
+            <%= f.text_field :contact_email, class: "column--full", placeholder: 'Email' %>
           </div
           ><div class="field column column--half column--guttered">
-            <%= f.label :contact_phone %><br>
-            <%= f.text_field :contact_phone, size: 18, class: "column--full" %>
+            <%= f.text_field :contact_phone, size: 18, class: "column--full", placeholder: 'Phone' %>
           </div>
         </div>
-      <!--/fieldset>
 
-      <fieldset id="fields-market-info"-->
         <legend>Market Information</legend>
         <div class="row row--field">
           <div class="field column column--half column--guttered">
-            <%= f.label :name %>
+            <%#= f.label :name %>
             <span class="tooltip pull-right" data-tooltip="This is the primary name of your market.  Don't forget to double check your spelling."></span>
             <br>
-            <%= f.text_field :name, class: "column--full" %>
+            <%= f.text_field :name, class: "column--full", placeholder: 'Market Name' %>
           </div
           ><div class="field column column--half column--guttered">
-            <%= f.label :subdomain %>
+            <%#= f.label :subdomain %>
             <span class="tooltip pull-right" data-tooltip="This is your unique text for your Local Orbit URL."></span>
             <br>
-            <%= f.text_field :subdomain, class: "column--full" %>
+            <%= f.text_field :subdomain, class: "column--full", placeholder: 'Subdomain' %>
           </div>
         </div>
       </fieldset>
 
       <%# # KXM This may end up being implemented via a helper (like the social media work) the better to eliminate the conditional %>
-      <% if params[:plan].present? && params[:plan] == 'grow' then %>
-        <div id="form-repeat">
+      <% plan = (params[:plan] || 'start'); if plan == 'grow' then %>
+        <div id="market-repeat">
           <button id="add_market">Add Market</button> &nbsp; &nbsp; <span class="market-count">You may add up to 4 more markets</span>
         </div>
       <% end %>
+
+      <div class="wizard_nav">
+        <a href="#form-terms">Next</a>
+      </div>
     </div> <!-- end form-contact-info -->
 
+    <%# ==== Form tab break ==========================================================%>
     <%# KXM Obvs this all has to be fleshed out, though it is subject to some process flow clarification, dig? %>
     <div id="form-terms">
       <fieldset>
@@ -72,21 +73,103 @@
         </div>
 
         <div id="accept-terms-of-service" class="pull-right">
-          <%= check_box_tag("accept-terms-of-service", value: 1, checked: false) %> <label for="accept-terms-of-service">Yes, I agree</label>
+          <%= check_box_tag("accept-terms-of-service", value = "1", checked = false ) %> <label for="accept-terms-of-service">Yes, I agree</label>
         </div>
 
-        <div class="form-actions">
-          <%= link_to "Cancel", admin_markets_path, class: "btn cancel" %>
-          <%= f.submit "Add Market" %>
-        </div>
       </fieldset>
+
+      <div class="wizard_nav">
+        <a href="#form-contact-info">Previous</a>
+        <a href="#form-billing">Next</a>
+      </div>
+
     </div> <!-- end form-terms -->
 
-    <div id="form-payment">
+    <%# ==== Form tab break ==========================================================%>
+    <div id="form-billing">
       <fieldset>
-        <legend>Payment Options</legend>
-        <p>Here are some things...</p>
+        <legend>Billing Address</legend>
+        <div class="row">
+          <div class="field column column--half column--guttered">
+            <%= text_field(:billing, :address, placeholder: 'Address', class: "column--full") %>
+          </div
+          ><div class="field column column--half column--guttered">
+            <%= text_field(:billing, :city, placeholder: 'City', class: "column--full") %>
+          </div>
+        </div>
+
+        <div class="row row--field">
+          <div class="field column column--half column--guttered">
+            <%= text_field(:billing, :state, placeholder: 'State', class: "column--full") %>
+          </div
+          ><div class="field column column--half column--guttered">
+            <%= text_field(:billing, :zip, placeholder: 'Zip', class: "column--full") %> 
+          </div>
+        </div>
+
+        <div class="row row--field">
+          <div class="field column column--half column--guttered">
+            <%= text_field(:billing, :phone, placeholder: 'Phone', ) %> 
+          </div>
+        </div>
       </fieldset>
+
+      <div class="wizard_nav">
+        <a href="#form-terms">Previous</a>
+        <a href="#form-review">Next</a>
+      </div>
+    </div>
+
+    <%# ==== Form tab break ==========================================================%>
+    <div id="form-review">
+      <fieldset>
+        <legend>Billing Address</legend>
+        <div class="row">
+          <div class="field column column--half column--guttered">
+            <%= text_field(:purchase, :plan, class: "column--full", value: plan, disabled: true) %>
+          </div
+          ><div class="field column column--half column--guttered">
+            <%= text_field(:purchase, :code, class: "column--full", placeholder: 'Discount Code') %>
+          </div>
+        </div>
+        <button id="apply_discount" class="pull-right">Apply Discount</button>
+      </fieldset>
+
+      <fieldset>
+        <legend>Payment Information</legend>
+        <div class="row row--field">
+          <div class="field column column--half column--guttered">
+            <%= text_field(:purchase, :name, placeholder: 'Name', class: "column--full") %>
+          </div
+          ><div class="field column column--half column--guttered">
+            <%= text_field(:purchase, :credit_card, placeholder: 'Credit Card #', class: "column--full") %> 
+          </div>
+        </div>
+
+        <div class="row row--field">
+          <div class="field column column--half column--guttered">
+            <div class="column column--half column--guttered">
+              <%= text_field(:purchase, :month, placeholder: 'Month', class: "column--full") %> 
+            </div
+            ><div class="column column--half column--guttered">
+              <%= text_field(:purchase, :year, placeholder: 'Year', class: "column--full") %> 
+            </div>
+          </div
+          ><div class="field column column--half column--guttered">
+            <%= text_field(:purchase, :security_code, placeholder: 'Security Code', class: "column--full") %> 
+          </div>
+        </div>
+      </fieldset>
+
+      <div class="wizard_nav">
+        <a href="#form-billing">Previous</a>
+      </div>
+
+
+      <div class="form-actions">
+        <%#= link_to "Cancel", admin_markets_path, class: "btn cancel" %>
+        <%= f.submit "Submit Payment" %>
+      </div>
     </div>
   </div>
 </div>

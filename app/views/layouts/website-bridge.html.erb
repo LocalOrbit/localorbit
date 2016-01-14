@@ -199,30 +199,74 @@
         $( "#tabs" ).tabs();
       });
 
+      // The presence of JavaScript means that the form is tabbed.  Show the form navigation
+      $(".wizard_nav").show();
+
+      // Bind a given form nav click to the corresponding tab nav click
+      $(".wizard_nav").find('a').click(function(){
+        // The clicked form nav anchor
+        var clicked_form_nav = $(this);
+
+        // Its corresponding JQuery tabs anchor
+        var target_tab_nav = $('#market-tab-list').find('a[href="'+clicked_form_nav.attr('href')+'"]');
+
+        // Trigger the click
+        target_tab_nav.trigger('click');
+      });
+
+      //  These are placeholders...
+      $("#add_market").click(function(e){
+        e.preventDefault();
+        alert("This button will:\nAdd an entry to a table of pending markets, creating the table if necessary\nSpawn another market data entry form")
+      });
+
+      $("#apply_discount").click(function(e){
+        e.preventDefault();
+        alert("This button will:\nApply a discount to the payment total\nPresumably validate the discount?\nPerform some UI manipulation?")
+      });
+
+      // Validate a completed section and set the tab nav UI elements accordingly 
       $('input').change(function(){
         // Initialize the default condition
         var pass = true;
 
+        // The containing div subject to show/hide...
         ancestor_div = $(this).closest('div[id^="form-"]')
+
+        // ...and it's id...
         ancestor_div_id = ancestor_div.prop('id');
+        //alert('Containing div, ID: '+ancestor_div_id)
+
+        // ... so we can find the appropriate anchor...
+        target_anchor = $('a[href^="#'+ancestor_div_id+'"]')
+
+        // ... and *it's* containing list item (which we may class later)
+        target_li = target_anchor.closest('li');
+        //alert("Corresponding list item contents\n--------------------------------------------\n"+target_li.html()) if test
 
         decendent_inputs = ancestor_div.find('input')
 
-        // Cycle through them, cheing for failure conditions
+        // Cycle through them, checking for failure conditions
         decendent_inputs.each(function(index){
-          input_value = $(this).val();
+          input_element = $(this);
+          input_value   = input_element.val();
+          //alert("Input item value: "+input_value)
           // # KXM This could (should) be a method call for validation of some kind.  For now it confirms that *something* has been entered
           if( input_value == '' || input_value == null ){
             // If found, fail passage
             pass = false;
           }
+
+          if( input_element.prop('type') == 'checkbox' && !input_element.is(':checked') ){
+            // If found, fail passage
+            pass = false;
+          }
         });
 
-        // If everything is good...
+        // # KXM Confirm what constitutes a test here and abstract to a validation class
+        // If the tests pass...
         if( pass == true ){
           // ...then add the appropriate class to the correct list item
-          target_anchor = $('a[href^="#'+ancestor_div_id+'"]')
-          target_li = target_anchor.closest('li');
           target_li.addClass('pass');
 
         } else {
