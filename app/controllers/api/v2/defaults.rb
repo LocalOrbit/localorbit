@@ -30,6 +30,16 @@ module API
           error_response(message: e.message, status: 422)
         end
 
+	      # global exception handler, used for error notifications
+	      rescue_from :all do |e|
+	        if Rails.env.development?
+	          raise e
+	        else
+	          Raven.capture_exception(e)
+	          error_response(message: "Internal server error", status: 500)
+	        end
+	      end
+
 			end
 		end
 	end
