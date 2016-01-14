@@ -47,12 +47,16 @@ module Api
               axisTitle = 'Day of Month'
           end
 
-          if user_type == "B" || user_type == "M"
+          orders = Order.orders_for_seller(current_user).where(market: current_market).order(:created_at)
+
+          if user_type == "M"
+            orders = Order.orders_for_seller(current_user).where(market: current_market).order(:created_at)
+            @presenter = DashboardMarketManagerPresenter.new(orders, date_param, interval).generate
+          elsif user_type == "B"
             orders = Order.orders_for_buyer(current_user).where(market: current_market).order(:created_at)
-            order_items = nil
-            @presenter = DashboardBuyerPresenter.new(orders, order_items, date_param, interval).generate
+            @presenter = DashboardBuyerPresenter.new(orders, date_param, interval).generate
           else
-            orders = Order.orders_for_seller(current_user).where(market: current_market).order(:id)
+            orders = Order.orders_for_seller(current_user).where(market: current_market).order(:created_at)
             @presenter = DashboardSellerPresenter.new(orders, interval, date_param, current_user).generate
           end
 

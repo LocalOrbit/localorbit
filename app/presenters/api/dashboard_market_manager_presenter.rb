@@ -1,4 +1,4 @@
-class Api::DashboardBuyerPresenter
+class Api::DashboardMarketManagerPresenter
   include Dashboards
   include ActiveSupport::NumberHelper
 
@@ -35,7 +35,7 @@ class Api::DashboardBuyerPresenter
 
       average_sales_amount = total_order_count > 0 ? number_to_currency(total_sales_amount_raw/total_order_count || 0, precision:0) : '$0'
 
-      payments_due_orders = @orders.paid_with("purchase order").payment_overdue + @orders.paid_with("purchase order").payment_due
+      payments_due_orders = @orders.paid_with("purchase order").delivered.payment_overdue + @orders.paid_with("purchase order").invoiced.unpaid.payment_due
 
       payments_due_amount_raw = sum_order_total(payments_due_orders)
       payments_due_amount = payments_due_amount_raw > 0 ? number_to_currency(payments_due_amount_raw, precision:0) : '$0'
