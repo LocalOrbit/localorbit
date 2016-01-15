@@ -322,7 +322,7 @@ class User < ActiveRecord::Base
       end
       @r.uniq.sort_by{|e| e[:name]}
     else
-      organizations.extending(MarketOrganization::AssociationScopes).joins(:market_organizations).excluding_deleted.mo_join_market_id(market.id)
+      organizations.extending(MarketOrganization::AssociationScopes).joins(:market_organizations).excluding_deleted.mo_join_market_id(market)
     end
   end
 
