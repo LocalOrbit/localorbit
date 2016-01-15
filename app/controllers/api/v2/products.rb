@@ -90,6 +90,8 @@ module API
 				true
 			end
 
+		end
+
 
 		# 	## PROBLEM: Current code has global relative dependency on errors hash and that's gross. 
 		# 	## TODO abstract this process into a class (within the module? another class right here?) so that it is less gross.
