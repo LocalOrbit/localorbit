@@ -1,7 +1,7 @@
 module Search
   module MarketAndOrganization
     def market_id
-      @query[:market_id_eq].to_s
+      @query[:market_id_in].to_a
     end
 
     def selling_markets
@@ -9,7 +9,7 @@ module Search
     end
 
     def organization_id
-      @query[:organization_id_eq].to_s
+      @query[:organization_id_in].to_a
     end
 
     def buyer_organizations
