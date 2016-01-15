@@ -29,7 +29,7 @@ class PaymentHistoryPresenter
             )
         ).uniq
 
-      elsif search[:payer_type_id_nil_in] && search[:payer_type_id_nil_in].include?("-1")
+      elsif search[:payer_type_id_in] && search[:payer_type_id_in].include?("-1")
         Payment.joins(
             payment_table.join(order_payment_table, Arel::Nodes::OuterJoin).
                 on(order_payment_table[:payment_id].eq(payment_table[:id])).join_sources
