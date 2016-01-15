@@ -52,7 +52,8 @@
   <span class="hint">Up to 500 characters</span>
   <span class="tooltip pull-right" data-tooltip="Buyers want to know how you grow or prepare your products. Tell them how you do it!"></span>
   <span class="warning pull-right">(Recommended)</span>
-  <%= f.text_area :long_description, rows: 4 %>
+  <%= f.text_area :long_description, rows: 4, id: 'long-desc-message' %>
+  <div><span class="hint" id="countdown-ld"></span></div>
 </div>
 
 <table id="units_table">

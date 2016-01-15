@@ -2,7 +2,6 @@ $ ->
   $('.product-table--admin .delete > a').hover (e) ->
     $(this).closest('tr').toggleClass('destructive')
 
-
   return unless $("form.product").length
 
   formView =
@@ -241,6 +240,14 @@ $ ->
     formModel.update(
       location: $("#product_location_id").val()
     )
+
+  $("#long-desc-message").keyup ->
+    remaining = 500 - $("#long-desc-message").val().length
+    if (remaining < 0)
+      $('#countdown-ld').css('color', 'red')
+    else
+      $('#countdown-ld').css('color', 'black')
+    $('#countdown-ld').text(remaining + ' characters remaining.')
 
   $(document).on "change", '#product_use_simple_inventory', ->
     $('#simple-inventory').toggleClass('is-hidden')
