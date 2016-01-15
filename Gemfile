@@ -124,7 +124,6 @@ group :development, :test do
   #gem 'wkhtmltopdf-binary-edge', '~> 0.12.2.1'
   gem "wkhtmltopdf-binary", github: "zakird/wkhtmltopdf_binary_gem"
   gem "capybara"
-  gem "rspec-wait"
 end
 
 group :test do

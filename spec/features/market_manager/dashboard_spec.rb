@@ -62,33 +62,33 @@ feature "a market manager viewing their dashboard", :js, :shaky do
     it "market_manager views dashboard - 1D" do
       page.execute_script('$("input[type=\'radio\']:checked").prop(\'checked\', false)')
       page.execute_script('$("#sc-interval0").prop("checked", true).click()')
-      wait_for(page).to have_selector("#totalSalesAmount", text: '$10')
-      wait_for(page).to have_selector("#totalOrderCount", text: '1')
-      wait_for(page).to have_selector("#averageSalesAmount", text: '$10')
+      expect(page).to have_selector("#totalSalesAmount", text: '$10')
+      expect(page).to have_selector("#totalOrderCount", text: '1')
+      expect(page).to have_selector("#averageSalesAmount", text: '$10')
     end
 
     it "market_manager views dashboard - 7D" do
       page.execute_script('$("input[type=\'radio\']:checked").prop(\'checked\', false)')
       page.execute_script('$("#sc-interval1").prop("checked", true).click()')
-      wait_for(page).to have_selector("#totalSalesAmount", text: '$20')
-      wait_for(page).to have_selector("#totalOrderCount", text: '2')
-      wait_for(page).to have_selector("#averageSalesAmount", text: '$10')
+      expect(page).to have_selector("#totalSalesAmount", text: '$20')
+      expect(page).to have_selector("#totalOrderCount", text: '2')
+      expect(page).to have_selector("#averageSalesAmount", text: '$10')
     end
 
     it "market_manager views dashboard - MTD" do
       page.execute_script('$("input[type=\'radio\']:checked").prop(\'checked\', false)')
       page.execute_script('$("#sc-interval2").prop("checked", true).click()')
-      wait_for(page).to have_selector("#totalSalesAmount", text: '$30')
-      wait_for(page).to have_selector("#totalOrderCount", text: '3')
-      wait_for(page).to have_selector("#averageSalesAmount", text: '$10')
+      expect(page).to have_selector("#totalSalesAmount", text: '$30')
+      expect(page).to have_selector("#totalOrderCount", text: '3')
+      expect(page).to have_selector("#averageSalesAmount", text: '$10')
     end
 
     it "market_manager views dashboard - YTD" do
       page.execute_script('$("input[type=\'radio\']:checked").prop(\'checked\', false)')
       page.execute_script('$("#sc-interval3").prop("checked", true).click()')
-      wait_for(page).to have_selector("#totalSalesAmount", text: '$40')
-      wait_for(page).to have_selector("#totalOrderCount", text: '4')
-      wait_for(page).to have_selector("#averageSalesAmount", text: '$10')
+      expect(page).to have_selector("#totalSalesAmount", text: '$40')
+      expect(page).to have_selector("#totalOrderCount", text: '4')
+      expect(page).to have_selector("#averageSalesAmount", text: '$10')
     end
   end
 end

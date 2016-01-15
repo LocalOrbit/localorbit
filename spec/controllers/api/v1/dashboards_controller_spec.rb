@@ -57,32 +57,32 @@ describe Api::V1::DashboardsController do
       end
 
       describe "viewing dashboard" do
-        it "creates proper JSON - 1D", :shaky do
+        it "creates proper JSON - 1D" do
           login
           get :index, ({dateRange: 0, viewAs: 'B'})
           expect(response.status).to eql 200
-          wait_for(JSON.parse(response.body)["dashboard"]["totalSalesAmount"]).to eql '$10'
+          expect(JSON.parse(response.body)["dashboard"]["totalSalesAmount"]).to eql '$10'
         end
 
-        it "creates proper JSON - 7D", :shaky do
+        it "creates proper JSON - 7D" do
           login
           get :index, ({dateRange: 1, viewAs: 'B'})
           expect(response.status).to eql 200
-          wait_for(JSON.parse(response.body)["dashboard"]["totalSalesAmount"]).to eql '$20'
+          expect(JSON.parse(response.body)["dashboard"]["totalSalesAmount"]).to eql '$20'
         end
 
-        it "creates proper JSON - MTD", :shaky do
+        it "creates proper JSON - MTD" do
           login
           get :index, ({dateRange: 2, viewAs: 'B'})
           expect(response.status).to eql 200
-          wait_for(JSON.parse(response.body)["dashboard"]["totalSalesAmount"]).to eql '$30'
+          expect(JSON.parse(response.body)["dashboard"]["totalSalesAmount"]).to eql '$30'
         end
 
-        it "creates proper JSON - YTD", :shaky do
+        it "creates proper JSON - YTD" do
           login
           get :index, ({dateRange: 3, viewAs: 'B'})
           expect(response.status).to eql 200
-          wait_for(JSON.parse(response.body)["dashboard"]["totalSalesAmount"]).to eql '$40'
+          expect(JSON.parse(response.body)["dashboard"]["totalSalesAmount"]).to eql '$40'
         end
       end
     end
