@@ -55,4 +55,33 @@ div#market-creation{
 		margin-top: .8em;
 		margin-bottom: 1.2em;
 	}
-} 
+	.form-action{
+		border-radius: 78px;
+		background-color: white;
+		font-family: SourceSansPro-Semibold, sans-serif;
+		font-size: 14px;
+		color: #7EBEC5;
+		line-height: 18px;
+	}
+
+	div.wizard_nav{
+		margin-top: 2em;
+		display: none;
+		float: right;
+		.form-nav{
+			background: #7EBEC5;
+			border-radius: 100px;
+			border-width: 0;
+			height: 54px;
+			font-family: FrancoisOne-Regular, sans-serif;
+			font-size: 22.73px;
+			color: white;
+			line-height: 31px;
+			margin-left: 2em;
+
+			&:hover, &:active{
+				background-color: #689DA5;
+			}
+		}
+	}
+}

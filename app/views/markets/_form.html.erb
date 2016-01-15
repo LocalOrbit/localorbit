@@ -29,13 +29,11 @@
         <legend>Market Information</legend>
         <div class="row row--field">
           <div class="field column column--half column--guttered">
-            <%#= f.label :name %>
             <span class="tooltip pull-right" data-tooltip="This is the primary name of your market.  Don't forget to double check your spelling."></span>
             <br>
             <%= f.text_field :name, class: "column--full", placeholder: 'Market Name' %>
           </div
           ><div class="field column column--half column--guttered">
-            <%#= f.label :subdomain %>
             <span class="tooltip pull-right" data-tooltip="This is your unique text for your Local Orbit URL."></span>
             <br>
             <%= f.text_field :subdomain, class: "column--full", placeholder: 'Subdomain' %>
@@ -46,12 +44,12 @@
       <%# # KXM This may end up being implemented via a helper (like the social media work) the better to eliminate the conditional %>
       <% plan = (params[:plan] || 'start'); if plan == 'grow' then %>
         <div id="market-repeat">
-          <button id="add_market">Add Market</button> &nbsp; &nbsp; <span class="market-count">You may add up to 4 more markets</span>
+          <button class="form-action" id="add_market">Add Market</button> &nbsp; &nbsp; <span class="market-count">You may add up to 4 more markets</span>
         </div>
       <% end %>
 
       <div class="wizard_nav">
-        <a href="#form-terms">Next</a>
+        <button class="form-nav" target="#form-terms">Continue</button>
       </div>
     </div> <!-- end form-contact-info -->
 
@@ -79,8 +77,8 @@
       </fieldset>
 
       <div class="wizard_nav">
-        <a href="#form-contact-info">Previous</a>
-        <a href="#form-billing">Next</a>
+        <button class="form-nav" target="#form-contact-info">Previous</button>
+        <button class="form-nav" target="#form-billing">Continue</button>
       </div>
 
     </div> <!-- end form-terms -->
@@ -115,8 +113,8 @@
       </fieldset>
 
       <div class="wizard_nav">
-        <a href="#form-terms">Previous</a>
-        <a href="#form-review">Next</a>
+        <button class="form-nav" target="#form-terms">Previous</button>
+        <button class="form-nav" target="#form-review">Continue</button>
       </div>
     </div>
 
@@ -132,7 +130,7 @@
             <%= text_field(:purchase, :code, class: "column--full", placeholder: 'Discount Code') %>
           </div>
         </div>
-        <button id="apply_discount" class="pull-right">Apply Discount</button>
+        <button id="apply_discount" class="pull-right form-action">Apply Discount</button>
       </fieldset>
 
       <fieldset>
@@ -162,13 +160,13 @@
       </fieldset>
 
       <div class="wizard_nav">
-        <a href="#form-billing">Previous</a>
+        <button class="form-nav" target="#form-billing">Previous</button>
       </div>
 
 
       <div class="form-actions">
         <%#= link_to "Cancel", admin_markets_path, class: "btn cancel" %>
-        <%= f.submit "Submit Payment" %>
+        <%= f.submit "Submit Payment", class: "form-nav" %>
       </div>
     </div>
   </div>
