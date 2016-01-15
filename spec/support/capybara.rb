@@ -7,7 +7,7 @@ Capybara.register_driver :poltergeist do |app|
                                     timeout: 180,
                                     inspector: true,
                                     debug: false,
-                                    js_errors: false,
+                                    js_errors: true,
                                     phantomjs_options: ['--debug=false', '--ssl-protocol=any'])
 end
 

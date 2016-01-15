@@ -4,6 +4,8 @@ describe "Adding a product", chosen_js: true do
   def fill_in_required_fields(select=:without_chosen)
     fill_in "Product Name", with: "Red Grapes"
     fill_in "Short description", with: "Grapes are yummy!"
+    fill_in "long-desc-message", with: "There are many kinds of apples."
+
 
     case select
     when :without_chosen
@@ -256,7 +258,6 @@ describe "Adding a product", chosen_js: true do
 
         select_from_chosen "Bushels", from: "Unit"
         fill_in "Unit description", with: "48 lbs"
-        fill_in "Long description", with: "There are many kinds of apples."
 
         uncheck :seller_info
 
@@ -285,7 +286,6 @@ describe "Adding a product", chosen_js: true do
 
         select_from_chosen "Bushels", from: "Unit"
         fill_in "Unit description", with: "48 lbs"
-        fill_in "Long description", with: "There are many kinds of apples."
 
         click_button "Save and Continue"
 
@@ -312,7 +312,6 @@ describe "Adding a product", chosen_js: true do
         fill_in_required_fields(:with_chosen)
 
         select_from_chosen "Bushels", from: "Unit"
-        fill_in "Long description", with: "There are many kinds of apples."
 
         uncheck "Make product available on all market delivery dates"
         Dom::Admin::ProductDelivery.find_by_weekday("Tuesdays").uncheck!
@@ -338,7 +337,6 @@ describe "Adding a product", chosen_js: true do
         fill_in_required_fields(:with_chosen)
 
         select_from_chosen "Bushels", from: "Unit"
-        fill_in "Long description", with: "There are many kinds of apples."
 
         uncheck "Make product available on all market delivery dates"
         expect(Dom::Admin::ProductDelivery.find_by_weekday("Mondays").node.find("input")).to be_disabled
