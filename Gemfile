@@ -123,7 +123,6 @@ group :development, :test do
   gem 'capybara-slow_finder_errors'
   #gem 'wkhtmltopdf-binary-edge', '~> 0.12.2.1'
   gem "wkhtmltopdf-binary", github: "zakird/wkhtmltopdf_binary_gem"
-  gem "capybara"
 end
 
 group :test do
