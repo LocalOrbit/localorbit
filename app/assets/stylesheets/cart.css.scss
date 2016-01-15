@@ -1,5 +1,19 @@
 @import "mixins";
 
+#checkout-button {
+  position: fixed;
+  top: 335px;
+  right: 10px;
+  background-color: #00A000;
+  color: #FFF;
+  font-size: 18px;
+  font-weight: bold;
+  padding: 10px;
+  text-align: center;
+  vertical-align: middle;
+  border-radius: 5px;
+}
+
 .updated input {
   background-color: #bfd9ad;
   @include transition(background-color 0.1s ease-in);
