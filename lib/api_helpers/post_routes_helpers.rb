@@ -1,6 +1,6 @@
 # module API
 # 	module V2
-		extend self
+		#extend self
 
 		# PRODUCT HELPERS
 
