@@ -10,8 +10,9 @@
   <input type="hidden" name="invoice_list_batch_action" id="invoice_list_batch_action">
   <div class="clearfix sub-header-whitespace"></div>
   <div class="table-wrapper">
-    <table class="sortable">
-      <thead class="stickable">
+    <%# ToDo sticky-headers.js.coffee was picking up 'sortable' and 'stickable' before select-all.js.coffee could do its thing.  Changing the class was an easy way to supress that, but didn't seem to have any deleterious effect, suggesting that the table behaviors (sticky sorting, filters, etc) are handled elsewhere.  Do we need stick-headers.js.coffee (or at least the block on lines 70-94) anymore? %>
+    <table class="sort-able">
+      <thead class="stick-able">
         <tr>
           <th><input type="checkbox" class="select-all"></th>
           <th> <%= sort_link(@q, :order_number, "Order Number") %></th>
