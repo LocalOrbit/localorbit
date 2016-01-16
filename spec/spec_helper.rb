@@ -65,6 +65,8 @@ RSpec.configure do |config|
   config.include CapybaraApp, webhook: true
   config.include Rack::Test::Methods, webhook: true
 
+  config.use_transactional_fixtures = false
+
   config.before(:suite) do
     DatabaseCleaner.clean_with(:truncation)
     ImportLegacyTaxonomy.run(Rails.root.join("db/taxonomy_truncated.csv"))
