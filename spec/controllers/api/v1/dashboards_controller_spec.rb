@@ -21,7 +21,6 @@ describe Api::V1::DashboardsController do
     context 'market manager' do
 
       def login
-        Timecop.travel("February 15, 2016")
         switch_to_subdomain market.subdomain
         sign_in market_manager
       end
@@ -54,32 +53,32 @@ describe Api::V1::DashboardsController do
           order = create(:order, delivery: delivery, items: [order_item1, order_item2], payment_method: "purchase order", market: market, total_cost: 10)
           order.save!
         end
+
+        Timecop.travel("February 15, 2016")
+
+        login
       end
 
       describe "viewing dashboard" do
-        it "creates proper JSON - 1D" do
-          login
-          get :index, ({dateRange: 0})
-          expect(response.status).to eql 200
-          expect(JSON.parse(response.body)["dashboard"]["totalSalesAmount"]).to eql '$10'
-        end
-
         it "creates proper JSON - 7D" do
-          login
           get :index, ({dateRange: 1})
           expect(response.status).to eql 200
           expect(JSON.parse(response.body)["dashboard"]["totalSalesAmount"]).to eql '$20'
         end
 
+        it "creates proper JSON - 1D" do
+          get :index, ({dateRange: 0})
+          expect(response.status).to eql 200
+          expect(JSON.parse(response.body)["dashboard"]["totalSalesAmount"]).to eql '$10'
+        end
+
         it "creates proper JSON - MTD" do
-          login
           get :index, ({dateRange: 2})
           expect(response.status).to eql 200
           expect(JSON.parse(response.body)["dashboard"]["totalSalesAmount"]).to eql '$30'
         end
 
         it "creates proper JSON - YTD" do
-          login
           get :index, ({dateRange: 3})
           expect(response.status).to eql 200
           expect(JSON.parse(response.body)["dashboard"]["totalSalesAmount"]).to eql '$40'
