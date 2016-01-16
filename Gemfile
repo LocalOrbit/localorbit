@@ -136,6 +136,7 @@ group :test do
   gem "timecop"
   gem "vcr"
   gem 'fire_poll', '1.2.0'
+  gem 'capybara-screenshot'
 end
 
 group :production, :staging do
