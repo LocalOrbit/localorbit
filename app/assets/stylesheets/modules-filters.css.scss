@@ -113,7 +113,7 @@
     .pull-left[data-filter-count="6"] {
       width: 100%;
       .preserve-alignment {
-        width: 24%;
+        width: 30%;
       }
     }
   }
@@ -184,6 +184,17 @@
   }
 
   .product-filters {
+    clear: both;
+    display: inline-block;
+    width: 100%;
+    margin: 10px 0;
+    font-size: 0.1px;
+    text-align: justify;
+    &:after {
+      display: inline-block;
+      width: 100%;
+      content: '';
+    }
     label {
       display: none;
     }
@@ -206,6 +217,7 @@
   .mobile-block {
     float: none;
     display: block;
+    margin-bottom: 20px;
     @include box-sizing(border-box);
     width: 100%;
 

@@ -1,5 +1,5 @@
   <%= search_form_for @q, url: admin_orders_path, html: { class: "order_search clear-after" } do |f| %>
-    <div class="pull-left order-search-widget">
+    <div class="pull-left order-search-widget mobile-block">
       <span class="preserve-alignment">
         <%= f.label :order_number_or_organization_name_or_items_seller_name_cont, "Search Orders" %><br>
         <%# NOTE: Do not change the whitespace on the following line %>
@@ -7,15 +7,15 @@
       </span>
     </div>
 
-    <div class="pull-right date-filters">
+    <div class="pull-right date-filters mobile-block">
       <span class="preserve-alignment">
         <label for="q_placed_at_date_gteq">Filter by Date</label><br>
-        <%=  datetime_field_tag "q[placed_at_date_gteq]", @search_presenter.start_date, class: append_sticky_class("placed_at_date_gteq", "datepicker filter-input", [30.days.ago.to_date.to_s]) %>
+        <%=  datetime_field_tag "q[placed_at_date_gteq]", @search_presenter.start_date, class: append_sticky_class("placed_at_date_gteq", "datepicker", [30.days.ago.to_date.to_s]) %>
       </span>
 
       <span class="preserve-alignment">
         <label for="q_placed_at_date_lteq" class="is-invisible">End Date</label><br>
-        <%=  datetime_field_tag "q[placed_at_date_lteq]", @search_presenter.end_date, class: append_sticky_class("placed_at_date_lteq", "datepicker filter-input", [Date.today.to_s]) %>
+        <%=  datetime_field_tag "q[placed_at_date_lteq]", @search_presenter.end_date, class: append_sticky_class("placed_at_date_lteq", "datepicker", [Date.today.to_s]) %>
       </span>
 
       <span class="preserve-alignment">
@@ -24,23 +24,23 @@
       </span>
     </div>
 
-    <div class="manager-filters unjustify">
+    <div class="manager-filters unjustify mobile-block">
       <% if current_user.multi_market_membership? %>
       <span class="preserve-alignment mobile-block">
-        <%= f.label :market_id_eq, "Market" %><br>
-        <%= f.collection_select :market_id_eq, @search_presenter.selling_markets, :id, :name, {include_blank: "All"}, {class: append_sticky_class(:market_id_eq, "filter-input")} %>
+        <%= f.label :market_id_in, "Market" %><br>
+        <%= f.collection_select :market_id_in, @search_presenter.selling_markets, :id, :name, {include_blank: nil}, {multiple: true, class: [append_sticky_class(:market_id_in, "filter-input"),'multiselect']} %>
       </span>
       <% end %>
 
       <span class="preserve-alignment mobile-block">
-        <%= f.label :organization_id_eq, "Buyer" %><br>
-        <%= f.collection_select :organization_id_eq, @search_presenter.buyer_organizations, :id, :name, {include_blank: "All"}, {class: append_sticky_class(:organization_id_eq, "filter-input")} %>
+        <%= f.label :organization_id_in, "Buyer" %><br>
+        <%= f.collection_select :organization_id_in, @search_presenter.buyer_organizations, :id, :name, {include_blank: nil}, {multiple: true, class: [append_sticky_class(:organization_id_in, "filter-input"),'multiselect']} %>
       </span>
 
       <% if current_user.admin? || current_user.market_manager? %>
       <span class="preserve-alignment mobile-block">
-        <%= f.label :products_organization_id_eq, "Supplier" %><br>
-        <%= f.collection_select :products_organization_id_eq, @search_presenter.seller_organizations, :id, :name, {include_blank: "All"}, {class: append_sticky_class(:products_organization_id_eq, "filter-input")} %>
+        <%= f.label :products_organization_id_in, "Supplier" %><br>
+        <%= f.collection_select :products_organization_id_in, @search_presenter.seller_organizations, :id, :name, {include_blank: nil}, {multiple: true, class: [append_sticky_class(:products_organization_id_in, "filter-input"),'multiselect']} %>
       </span>
       <% end %>
       <%= link_to "Reset", admin_orders_path(clear: ''), class: 'btn reset' if can_reset?(@query_params) %>

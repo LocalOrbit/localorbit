@@ -28,8 +28,10 @@ module StickyFilters
     hash.each_with_object(hash) do |(key, value), hash|
       if value.is_a?(Hash)
         hash[key] = deep_remove_blank_keys(value)
+      elsif value.is_a?(Array) && value.length > 1
+        hash[key] = value.reject!(&:blank?)
       else
-        hash.delete(key) if value.blank?
+        hash.delete(key) if value.blank? || (value.length == 1 && value[0] == "") || key.to_s =~ /.+%.+/
       end
     end
   end

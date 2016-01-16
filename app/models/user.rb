@@ -288,7 +288,8 @@ class User < ActiveRecord::Base
       where.not(market_organizations: {id: nil}).
       union(org_membership_scope).
       joins(:market_organizations).
-      distinct
+      distinct.
+      order(:name)
   end
 
   def managed_organizations_including_deleted
@@ -310,10 +311,18 @@ class User < ActiveRecord::Base
   end
 
   def managed_organizations_within_market_including_crossellers(market)
-    if admin? || managed_markets.include?(market)
-      market.organizations.extending(MarketOrganization::AssociationScopes).excluding_deleted.mo_join_market_id(market.id)
+    if admin? || market.length > 0
+      market.each do |m|
+        result = m.organizations.extending(MarketOrganization::AssociationScopes).excluding_deleted.mo_join_market_id(m)
+        if @r
+          @r = @r + result
+        else
+          @r = result
+        end
+      end
+      @r.uniq.sort_by{|e| e[:name]}
     else
-      organizations.extending(MarketOrganization::AssociationScopes).joins(:market_organizations).excluding_deleted.mo_join_market_id(market.id)
+      organizations.extending(MarketOrganization::AssociationScopes).joins(:market_organizations).excluding_deleted.mo_join_market_id(market)
     end
   end
 
