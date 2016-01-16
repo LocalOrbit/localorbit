@@ -61,6 +61,10 @@ describe Api::V1::DashboardsController do
           login
           get :index, ({dateRange: 0, viewAs: 'B'})
           expect(response.status).to eql 200
+          expect(JSON.parse(response.body)["dashboard"]["totalSalesAmount"]).to eql '$0'
+
+          get :index, ({dateRange: 0, viewAs: 'B'})
+          expect(response.status).to eql 200
           expect(JSON.parse(response.body)["dashboard"]["totalSalesAmount"]).to eql '$10'
         end
 
