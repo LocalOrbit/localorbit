@@ -73,7 +73,7 @@ RSpec.configure do |config|
   config.before(:each) do
     ActionMailer::Base.deliveries.clear
   end
-  
+
   def save_timestamped_screenshot(page, meta)
     filename = File.basename(meta[:file_path])
     line_number = meta[:line_number]
