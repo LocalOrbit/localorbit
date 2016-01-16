@@ -643,7 +643,7 @@ feature "Payment history", :truncate_after_all do
     scenario "can filter purchase history by payer" do
       expect(Dom::Admin::Financials::PaymentRow.all.count).to eq(26)
 
-      select "Market 2", from: "Received From", visible: false
+      select @market.name, from: "Received From", visible: false
       click_button "Filter"
 
       expect(Dom::Admin::Financials::PaymentRow.all.count).to eq(7)
