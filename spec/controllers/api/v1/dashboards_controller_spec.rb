@@ -60,10 +60,7 @@ describe Api::V1::DashboardsController do
         it "creates proper JSON - 1D" do
           login
           get :index, ({dateRange: 0, viewAs: 'B'})
-          expect(response.status).to eql 200
-          expect(JSON.parse(response.body)["dashboard"]["totalSalesAmount"]).to eql '$0'
-
-          get :index, ({dateRange: 0, viewAs: 'B'})
+          sleep 5
           expect(response.status).to eql 200
           expect(JSON.parse(response.body)["dashboard"]["totalSalesAmount"]).to eql '$10'
         end

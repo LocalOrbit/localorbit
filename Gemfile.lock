@@ -113,6 +113,9 @@ GEM
       rack (>= 1.0.0)
       rack-test (>= 0.5.4)
       xpath (~> 2.0)
+    capybara-screenshot (1.0.11)
+      capybara (>= 1.0, < 3)
+      launchy
     capybara-slow_finder_errors (0.1.2)
       capybara (~> 2.0)
     celluloid (0.16.0)
@@ -674,6 +677,7 @@ DEPENDENCIES
   bullet
   byebug
   capybara
+  capybara-screenshot
   capybara-slow_finder_errors
   codeclimate-test-reporter
   coffee-rails (~> 4.0.0)
