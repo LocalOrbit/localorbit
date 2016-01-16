@@ -4,20 +4,20 @@ require "capybara/poltergeist"
 
 Capybara.register_driver :poltergeist do |app|
   Capybara::Poltergeist::Driver.new(app,
-                                    timeout: 180,
-                                    inspector: true,
+                                    timeout: 120,
+                                    inspector: false,
                                     debug: false,
                                     js_errors: false,
-                                    phantomjs_options: ['--debug=false', '--ssl-protocol=any'])
+                                    phantomjs_options: ['--debug=false', '--ssl-protocol=TLSv1'])
 end
 
 Capybara.javascript_driver = :poltergeist
 
-#Capybara.register_driver :selenium do |app|
+#Capybara.register_driver :chrome do |app|
 #  Capybara::Selenium::Driver.new(app, :browser => :chrome)
 #end
 
-#Capybara.javascript_driver = :selenium
+#Capybara.javascript_driver = :chrome
 
 #Capybara::Webkit.configure do |config|
 #  config.allow_unknown_urls

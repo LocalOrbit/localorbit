@@ -6,11 +6,15 @@ module Admin
       before_action :find_sticky_params, only: :index
 
       def index
-        @search_presenter = OrderSearchPresenter.new(@query_params, current_user, :placed_at)
+        if params["clear"]
+          redirect_to url_for(params.except(:clear))
+        else
+          @search_presenter = OrderSearchPresenter.new(@query_params, current_user, :placed_at)
 
-        @q = for_receipts.order("orders.invoice_due_date").search(@search_presenter.query)
-        @q.sorts = ["invoice_due_date"] if @q.sorts.empty?
-        @orders = @q.result.page(params[:page]).per(@query_params[:per_page])
+          @q = for_receipts.order("orders.invoice_due_date").search(@search_presenter.query)
+          @q.sorts = ["invoice_due_date"] if @q.sorts.empty?
+          @orders = @q.result.page(params[:page]).per(@query_params[:per_page])
+        end
       end
 
       def edit

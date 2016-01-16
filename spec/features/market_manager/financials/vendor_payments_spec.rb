@@ -254,19 +254,19 @@ feature "Payments to vendors" do
       seller_rows = Dom::Admin::Financials::VendorPaymentRow.all
       expect(seller_rows.map {|r| r.name.text }).to eq(["Best Farms", "Better Farms", "Betterest Farms", "Fruit Farms", "Great Farms", "Vegetable Farms"])
 
-      within("#q_market_id_eq") do
+      within("#q_market_id_in") do
         expect(page).to have_content(market1.name)
         expect(page).to have_content(market2.name)
         expect(page).not_to have_content(market3.name)
       end
 
-      select market1.name, from: "q_market_id_eq"
+      select market1.name, from: "q_market_id_in"
       click_button "Filter"
 
       seller_rows = Dom::Admin::Financials::VendorPaymentRow.all
       expect(seller_rows.map {|r| r.name.text }).to eq(["Better Farms", "Betterest Farms", "Great Farms"])
 
-      within("#filtered_organization_id") do
+      within("#filtered_organization_id_in") do
         expect(page).to have_content(market1_seller1.name)
         expect(page).to have_content(market1_seller2.name)
         expect(page).to have_content(market1_seller3.name)
@@ -277,13 +277,14 @@ feature "Payments to vendors" do
         expect(page).not_to have_content(market2_seller4.name)
       end
 
-      select market2.name, from: "q_market_id_eq"
+      unselect market1.name, from: "q_market_id_in"
+      select market2.name, from: "q_market_id_in"
       click_button "Filter"
 
       seller_rows = Dom::Admin::Financials::VendorPaymentRow.all
       expect(seller_rows.map {|r| r.name.text }).to eq(["Best Farms", "Fruit Farms", "Vegetable Farms"])
 
-      within("#filtered_organization_id") do
+      within("#filtered_organization_id_in") do
         expect(page).not_to have_content(market1_seller1.name)
         expect(page).not_to have_content(market1_seller2.name)
         expect(page).not_to have_content(market1_seller3.name)
@@ -309,6 +310,7 @@ feature "Payments to vendors" do
       seller_rows = Dom::Admin::Financials::VendorPaymentRow.all
       expect(seller_rows.map {|r| r.name.text }).to eq(["Better Farms"])
 
+      unselect market1_seller1.name, from: "Supplier"
       select market1_seller3.name, from: "Supplier"
       click_button "Filter"
 

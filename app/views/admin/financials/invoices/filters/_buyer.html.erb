@@ -23,12 +23,13 @@
       <br>
       <%= f.submit "Filter", class: "btn--small mobile-block" %>
     </span>
+    <%= link_to "Reset", admin_financials_invoices_path(clear: '', sort: @query_params["sort"]), class: 'btn reset' if can_reset?(@query_params) %>
   </div>
 
   <div class="manager-filters">
     <span class="preserve-alignment">
-      <%= label :payment_status, "Payment Status" %><br>
-      <%= select_tag :payment_status, options_from_collection_for_select(Order::INVOICE_STATUSES, :to_s, :titleize, selected: request.query_parameters[:payment_status]), { prompt: "All", class: append_sticky_class(:payment_status, "filter-input") } %>
+      <%= f.label :payment_status_in, "Payment Status" %><br>
+      <%= f.collection_select :payment_status_in, Order::INVOICE_STATUSES, :to_s, :titleize, {include_blank: nil}, {id: 'payment_status', multiple: true, class: [append_sticky_class(:payment_status_in, "filter-input"),'multiselect']} %>
     </span>
   </div>
 <% end %>

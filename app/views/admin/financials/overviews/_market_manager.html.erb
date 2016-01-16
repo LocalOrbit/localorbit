@@ -6,10 +6,11 @@
     <%= search_form_for @q, url: admin_financials_overview_path, html: { class: "invoice_search clear-after" } do |f| %>
     <% if current_user.multi_market_membership? %>
       <span class="preserve-alignment">
-        <%= f.label :market_id_eq, "Market" %><br>
-        <%= f.collection_select :market_id_eq, @search_presenter.selling_markets, :id, :name, {include_blank: "All"}, {class: append_sticky_class(:market_id_eq, "filter-input") } %>
+        <%= f.label :market_id_in, "Market" %><br>
+        <%= f.collection_select :market_id_in, @search_presenter.selling_markets, :id, :name, {include_blank: nil}, {multiple: true, class: [append_sticky_class(:market_id_in, "filter-input"),'multiselect'] } %>
       </span>
-    <% end %>
+      <%= link_to "Reset", admin_financials_overview_path(clear: ''), class: 'btn reset' if can_reset?(@query_params) %>
+  <% end %>
   <% end %>
 
   </div>

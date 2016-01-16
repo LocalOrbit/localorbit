@@ -3,13 +3,17 @@ module Admin
     class VendorPaymentsController < AdminController
       include StickyFilters
       
-      before_action :find_sticky_params, only: [:index]
+      before_action :find_sticky_params, only: :index
       before_action :require_admin_or_market_manager
 
       def index
-        @search_presenter = PaymentSearchPresenter.new(user: current_user, query: @query_params)
-        @finder = Search::SellerPaymentGroupFinder.new(user: current_user, query: @query_params, current_market: current_market)
-        @sellers = @finder.payment_groups
+        if params["clear"]
+          redirect_to url_for(params.except(:clear))
+        else
+          @search_presenter = PaymentSearchPresenter.new(user: current_user, query: @query_params)
+          @finder = Search::SellerPaymentGroupFinder.new(user: current_user, query: @query_params, current_market: current_market)
+          @sellers = @finder.payment_groups
+        end
       end
 
       def create

@@ -52,14 +52,6 @@ describe OrderItem do
       expect(subject.reload.payment_status).to eql("unpaid")
     end
 
-    it "does not override 'contested'" do
-      subject.delivery_status = "contested"
-      subject.quantity = 3
-      subject.save!
-
-      expect(subject.reload.delivery_status).to eql("contested")
-    end
-
     it "updates the unit_price when the quantity is updated" do
       subject.quantity = 5
       subject.save!
@@ -117,14 +109,6 @@ describe OrderItem do
       subject.save!
 
       expect(subject.reload.payment_status).to eql("unpaid")
-    end
-
-    it "does not override 'contested'" do
-      subject.delivery_status = "contested"
-      subject.quantity_delivered = 9
-      subject.save!
-
-      expect(subject.reload.delivery_status).to eql("contested")
     end
 
     it "overrides concurrent delivery status changes" do
