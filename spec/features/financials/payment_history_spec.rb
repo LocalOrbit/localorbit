@@ -615,23 +615,28 @@ feature "Payment history", :truncate_after_all do
       expect(payment_row("$345.00")).not_to be_nil
 
       unselect "ACH", from: "Payment Method", visible: false
+      click_button "Filter"
 
     end
 
     scenario "can filter purchase history by payment type" do
       expect(Dom::Admin::Financials::PaymentRow.all.count).to eq(26)
 
+      save_and_open_page
       select "Order", from: "Payment Type", visible: false
       click_button "Filter"
       get_results(30)
+
       expect(Dom::Admin::Financials::PaymentRow.all.count).to eq(23)
       unselect "Order", from: "Payment Type", visible: false
+      click_button "Filter"
 
       select "Service Fee", from: "Payment Type", visible: false
       click_button "Filter"
 
       expect(Dom::Admin::Financials::PaymentRow.all.count).to eq(1)
       unselect "Service Fee", from: "Payment Type", visible: false
+      click_button "Filter"
 
     end
 
@@ -639,16 +644,18 @@ feature "Payment history", :truncate_after_all do
       expect(Dom::Admin::Financials::PaymentRow.all.count).to eq(26)
 
       select "Market 2", from: "Received From", visible: false
-      #click_button "Filter"
+      click_button "Filter"
 
       expect(Dom::Admin::Financials::PaymentRow.all.count).to eq(7)
       unselect @market.name, from: "Received From", visible: false
+      click_button "Filter"
 
       select "Buyer", from: "Received From", visible: false
-      #click_button "Filter"
+      click_button "Filter"
 
       expect(Dom::Admin::Financials::PaymentRow.all.count).to eq(5)
       unselect "Buyer", from: "Received From", visible: false
+      click_button "Filter"
 
     end
 
@@ -656,46 +663,33 @@ feature "Payment history", :truncate_after_all do
       expect(Dom::Admin::Financials::PaymentRow.all.count).to eq(26)
 
       select @market.name, from: "Paid To", visible: false
-      #click_button "Filter"
+      click_button "Filter"
 
       expect(Dom::Admin::Financials::PaymentRow.all.count).to eq(5)
       unselect @market.name, from: "Paid To", visible: false
-      #click_button "Filter"
-      #get_results(30)
-
-      #expect(Dom::Admin::Financials::PaymentRow.all.count).to eq(26)
+      click_button "Filter"
 
       select @seller.name, from: "Paid To", visible: false
-      #click_button "Filter"
+      click_button "Filter"
 
       expect(Dom::Admin::Financials::PaymentRow.all.count).to eq(7)
       unselect @seller.name, from: "Paid To", visible: false
-      #click_button "Filter"
-      #get_results(30)
-
-      #expect(Dom::Admin::Financials::PaymentRow.all.count).to eq(26)
+      click_button "Filter"
 
       select @market2.name, from: "Paid To", visible: false
-      #click_button "Filter"
+      click_button "Filter"
 
       expect(Dom::Admin::Financials::PaymentRow.all.count).to eq(6)
       unselect @market2.name, from: "Paid To", visible: false
+      click_button "Filter"
+
+      #select "Local Orbit", from: "Paid To", visible: false
       #click_button "Filter"
-      #get_results(30)
-
-      #expect(Dom::Admin::Financials::PaymentRow.all.count).to eq(26)
-
-      select "Local Orbit", from: "Paid To", visible: false
-      #click_button "Filter"
-
 
       # Service Fee + ACH Buyer Payment
-      expect(Dom::Admin::Financials::PaymentRow.all.count).to eq(3)
-      unselect "Local Orbit", from: "Paid To", visible: false
+      #expect(Dom::Admin::Financials::PaymentRow.all.count).to eq(3)
+      #unselect "Local Orbit", from: "Paid To", visible: false
       #click_button "Filter"
-      #get_results(30)
-
-      #expect(Dom::Admin::Financials::PaymentRow.all.count).to eq(26)
 
     end
 
