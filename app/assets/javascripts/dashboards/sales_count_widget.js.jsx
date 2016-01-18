@@ -90,7 +90,7 @@
                         <Plotly className="SalesCount" data={data} layout={layout} config={config}/>
                         <div style={{borderTop: '1px solid #EEE', padding: 3, marginTop:15}}>
                             <a href="/admin/orders"><span style={{textTransform: 'uppercase', fontSize: 12, fontWeight: 'bold'}}>View Details ></span></a>
-                            <span className="tooltip pull-right" data-tooltip="This number represents the total sales count for the selected period.">&nbsp;</span>
+                            <span className="tooltip pull-right" data-tooltip="This is the total number of orders placed for the selected period.">&nbsp;</span>
                         </div>
                     </div>);
             }

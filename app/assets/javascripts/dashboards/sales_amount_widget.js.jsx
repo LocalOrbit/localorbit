@@ -42,7 +42,8 @@
                         shape:"spline"
                     },
                     marker:{
-                        color: lineColor
+                        color: lineColor,
+                        size:10
                     },
                     mode:"lines+markers",
                     uid:"ab9b77",
