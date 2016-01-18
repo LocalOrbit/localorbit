@@ -6,8 +6,8 @@
   <%= search_form_for @q, url: admin_discounts_path, html: { class: "payment_search clear-after" } do |f| %>
     <div class="manager-filters featured-discount-filter">
       <span class="preserve-alignment">
-        <%= f.label :market_id_nil_in, "Market" %><br>
-        <%= f.select :market_id_nil_in, @markets.compact.map {|m| [m.name, m.id] }, { include_blank: "All" }, { class: append_sticky_class(:market_id_nil_in, "filter-input") } %>
+        <%= f.label :market_id_nil_eq, "Market" %><br>
+        <%= f.select :market_id_nil_eq, @markets.compact.map {|m| [m.name, m.id] }, { include_blank: "All" }, { class: append_sticky_class(:market_id_nil_eq, "filter-input") } %>
       </span>
       <%= link_to "Reset", admin_discounts_path(clear: '', sort: @query_params["s"]), class: 'btn reset' if can_reset?(@query_params) %>
     </div>
