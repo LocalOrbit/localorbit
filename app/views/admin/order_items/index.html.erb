@@ -35,27 +35,27 @@
           <div class="manager-filters">
             <span class="preserve-alignment mobile-block">
               <%= f.label :order_market_id_in, "Market" %><br>
-              <%= f.select :order_market_id_in, options_from_collection_for_select(@markets, :id, :name, @q.order_market_id_in), { include_blank: nil }, { multiple: true, class: [append_sticky_class(:order_market_id_in, "filter-input"),'multiselect'] } %>
+              <%= f.select :order_market_id_in, options_from_collection_for_select(@markets, :id, :name, @q.order_market_id_in), { include_blank: nil }, { multiple: true, class: [append_sticky_class(:order_market_id_in, ""),'multiselect'] } %>
             </span>
 
             <span class="preserve-alignment mobile-block">
               <%= f.label :product_organization_id_in, "Supplier" %><br>
-              <%= f.select :product_organization_id_in, options_from_collection_for_select(@sellers, :id, :name, @q.product_organization_id_in), { include_blank: nil }, { multiple: true, class: [append_sticky_class(:product_organization_id_in, "filter-input"),'multiselect'] } %>
+              <%= f.select :product_organization_id_in, options_from_collection_for_select(@sellers, :id, :name, @q.product_organization_id_in), { include_blank: nil }, { multiple: true, class: [append_sticky_class(:product_organization_id_in, ""),'multiselect'] } %>
             </span>
 
             <span class="preserve-alignment mobile-block">
               <%= f.label :order_organization_id_in, "Buyer" %><br>
-              <%= f.select :order_organization_id_in, options_from_collection_for_select(@buyers, :id, :name, @q.order_organization_id_in), { include_blank: nil }, { multiple: true, class: [append_sticky_class(:order_organization_id_in, "filter-input"),'multiselect'] } %>
+              <%= f.select :order_organization_id_in, options_from_collection_for_select(@buyers, :id, :name, @q.order_organization_id_in), { include_blank: nil }, { multiple: true, class: [append_sticky_class(:order_organization_id_in, ""),'multiselect'] } %>
             </span>
 
             <span class="preserve-alignment mobile-block">
               <%= f.label :delivery_status_in, "Delivery Status" %><br>
-              <%= f.select :delivery_status_in, options_from_collection_for_select(@delivery_statuses, :to_s, :titleize, @q.delivery_status_in), { include_blank: nil }, { multiple: true, class: [append_sticky_class(:delivery_status_in, "filter-input"),'multiselect'] } %>
+              <%= f.select :delivery_status_in, options_from_collection_for_select(@delivery_statuses, :to_s, :titleize, @q.delivery_status_in), { include_blank: nil }, { multiple: true, class: [append_sticky_class(:delivery_status_in, ""),'multiselect'] } %>
             </span>
 
             <span class="preserve-alignment mobile-block">
               <%= f.label :order_payment_status_in, "Buyer Payment Status" %><br>
-              <%= f.select :order_payment_status_in, options_from_collection_for_select(@buyer_payment_statuses, :to_s, :titleize, @q.order_payment_status_in), { include_blank: nil }, { multiple: true, class: [append_sticky_class(:order_payment_status_in, "filter-input"),'multiselect'] } %>
+              <%= f.select :order_payment_status_in, options_from_collection_for_select(@buyer_payment_statuses, :to_s, :titleize, @q.order_payment_status_in), { include_blank: nil }, { multiple: true, class: [append_sticky_class(:order_payment_status_in, ""),'multiselect'] } %>
             </span>
 
             <%# <span class="preserve-alignment"> %>

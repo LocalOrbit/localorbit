@@ -7,7 +7,7 @@
     <% if current_user.multi_market_membership? %>
       <span class="preserve-alignment">
         <%= f.label :market_id_in, "Market" %><br>
-        <%= f.collection_select :market_id_in, @search_presenter.selling_markets, :id, :name, {include_blank: nil}, {multiple: true, class: [append_sticky_class(:market_id_in, "filter-input"),'multiselect'] } %>
+        <%= f.collection_select :market_id_in, @search_presenter.selling_markets, :id, :name, {include_blank: nil}, {multiple: true, class: [append_sticky_class(:market_id_in, ""),'multiselect'] } %>
       </span>
       <%= link_to "Reset", admin_financials_overview_path(clear: ''), class: 'btn reset' if can_reset?(@query_params) %>
   <% end %>
