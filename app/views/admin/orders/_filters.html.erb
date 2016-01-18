@@ -28,19 +28,19 @@
       <% if current_user.multi_market_membership? %>
       <span class="preserve-alignment mobile-block">
         <%= f.label :market_id_in, "Market" %><br>
-        <%= f.collection_select :market_id_in, @search_presenter.selling_markets, :id, :name, {include_blank: nil}, {multiple: true, class: [append_sticky_class(:market_id_in, "filter-input"),'multiselect']} %>
+        <%= f.collection_select :market_id_in, @search_presenter.selling_markets, :id, :name, {include_blank: nil}, {multiple: true, class: [append_sticky_class(:market_id_in, ""),'multiselect']} %>
       </span>
       <% end %>
 
       <span class="preserve-alignment mobile-block">
         <%= f.label :organization_id_in, "Buyer" %><br>
-        <%= f.collection_select :organization_id_in, @search_presenter.buyer_organizations, :id, :name, {include_blank: nil}, {multiple: true, class: [append_sticky_class(:organization_id_in, "filter-input"),'multiselect']} %>
+        <%= f.collection_select :organization_id_in, @search_presenter.buyer_organizations, :id, :name, {include_blank: nil}, {multiple: true, class: [append_sticky_class(:organization_id_in, ""),'multiselect']} %>
       </span>
 
       <% if current_user.admin? || current_user.market_manager? %>
       <span class="preserve-alignment mobile-block">
         <%= f.label :products_organization_id_in, "Supplier" %><br>
-        <%= f.collection_select :products_organization_id_in, @search_presenter.seller_organizations, :id, :name, {include_blank: nil}, {multiple: true, class: [append_sticky_class(:products_organization_id_in, "filter-input"),'multiselect']} %>
+        <%= f.collection_select :products_organization_id_in, @search_presenter.seller_organizations, :id, :name, {include_blank: nil}, {multiple: true, class: [append_sticky_class(:products_organization_id_in, ""),'multiselect']} %>
       </span>
       <% end %>
       <%= link_to "Reset", admin_orders_path(clear: ''), class: 'btn reset' if can_reset?(@query_params) %>

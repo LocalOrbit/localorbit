@@ -16,6 +16,12 @@ Ransack.configure do |config|
     formatter: proc { |v| v },
     validator: proc { |v| v.present? },
     type: :array
+
+  config.add_predicate "nil_eq",
+    arel_predicate: "eq",
+    formatter: proc { |v| v == "-1" ? nil : v },
+    validator: proc { |v| v.present? },
+    type: :string
 end
 
 # Removes the sort indicator from ransack sort links.

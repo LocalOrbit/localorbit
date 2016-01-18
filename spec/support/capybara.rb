@@ -1,6 +1,7 @@
 require "capybara/rspec"
 require "capybara/rails"
 require "capybara/poltergeist"
+require 'capybara-screenshot/rspec'
 
 Capybara.register_driver :poltergeist do |app|
   Capybara::Poltergeist::Driver.new(app,
