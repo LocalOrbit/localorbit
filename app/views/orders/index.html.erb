@@ -11,12 +11,12 @@
     <div class="pull-right date-filters">
       <span class="preserve-alignment">
         <label for="q_placed_at_date_gteq">Filter by Date</label><br>
-        <%=  datetime_field_tag "q[placed_at_date_gteq]", @presenter.start_date, class: 'datepicker filter-input' %>
+        <%=  datetime_field_tag "q[placed_at_date_gteq]", @presenter.start_date, class: 'datepicker' %>
       </span>
 
       <span class="preserve-alignment">
         <label for="q_placed_at_date_lteq" class="is-invisible">End Date</label><br>
-        <%=  datetime_field_tag "q[placed_at_date_lteq]", @presenter.end_date, class: 'datepicker filter-input' %>
+        <%=  datetime_field_tag "q[placed_at_date_lteq]", @presenter.end_date, class: 'datepicker' %>
       </span>
 
       <span class="preserve-alignment">
