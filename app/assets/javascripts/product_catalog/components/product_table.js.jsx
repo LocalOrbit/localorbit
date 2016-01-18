@@ -79,7 +79,7 @@
         else
             addSecondCategory = null;
 
-        is_promo = (promo == product.id)
+        is_promo = (promo == product.id);
 
         if (isMobile) {
             return (<div>
@@ -92,7 +92,7 @@
             return (<div>
                 {addTopCategory}
                 {addSecondCategory}
-                <lo.ProductRow key={product.id} product={product} hideImages={this.state.hideImages} promo={is_promo}/>
+                <lo.ProductRow key={product.id} product={product} hideImages={this.state.hideImages} promo={is_promo} supplierOnly={this.props.supplierOnly}/>
             </div> );
         }
     },
@@ -105,7 +105,7 @@
 
       var isMobile = self.state.width <= MOBILE_WIDTH;
       var promo = null;
-      if (this.state.featuredPromotion && this.state.featuredPromotion.details != null) {
+      if (this.state.featuredPromotion && this.state.featuredPromotion.details != null && !this.props.supplierOnly) {
           promo = (<lo.ProductFeaturedPromotion hideImages={this.state.hideImages} promo={self.state.featuredPromotion} />)
       }
       var rows = self.state.products.map(function(product) {
