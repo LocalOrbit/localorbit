@@ -3,8 +3,9 @@
     display: inline-block;
     width: 100%;
     min-width: 125px;
-    font-size: 12px;
+    font-size: 14px;
     line-height: 1;
+    background-color: #FFF;
     /*border-radius:5px;*/
 }
 
