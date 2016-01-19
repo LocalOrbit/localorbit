@@ -106,6 +106,8 @@ class MarketDecorator < Draper::Decorator
   # TODO: remove repetion.
 
   def default_address_phone_number
+    # The 'try' here bypasses an erroneous thrown error if there's no default_address
+    # KXM Does the non-existance of a default_address expose a problem with the RYO code?
     if default_address.try(:phone)
       number = default_address.phone.to_s
     else

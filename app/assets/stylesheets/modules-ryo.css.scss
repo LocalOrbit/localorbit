@@ -2,16 +2,8 @@
 
 /* # KXM Subject to change once the structure settles down */
 div#market-creation{
-	fieldset{
-		margin: 2em 0 3em;
-	}
-
-	.ui-widget-content {
-	  border: 0 !important;
-	}
-
-	.form-actions{
-		clear: right;
+	h1{
+		margin-top: 3em;
 	}
 
 	#market-tab-list{
@@ -46,6 +38,24 @@ div#market-creation{
 		}
 	}
 
+	fieldset{
+		margin: 2em 0 3em;
+
+		h2{
+			text-align: center;
+
+			margin: 1.6em auto 0;
+			font-family: FrancoisOne-Regular, sans-serif;
+			font-size: 28px;
+			color: #262626;
+			line-height: 32px;
+		}
+	}
+
+	.ui-widget-content {
+	  border: 0 !important;
+	}
+
 	#terms-of-service{
 		height: 20em;
 		overflow: scroll;
@@ -55,6 +65,26 @@ div#market-creation{
 		margin-top: .8em;
 		margin-bottom: 1.2em;
 	}
+
+	input[type="text"]{
+		background: #EEEEEE;
+		height: 44px;
+		font-family: SourceSansPro-Regular, sans-serif;
+		font-size: 14px;
+		color: #999999;
+		line-height: 18px;
+		border-width:0;
+	}
+
+	.help-text{
+		font-family: SourceSansPro-lt, sans-serif;
+		font-size: 14px;
+		font-style: italic;
+		color: #606060;
+		line-height: 18px;
+	}
+
+	/* Form buttons that aren't wizard navigation */
 	.form-action{
 		border-radius: 78px;
 		background-color: white;
@@ -64,11 +94,13 @@ div#market-creation{
 		line-height: 18px;
 	}
 
-	div.wizard_nav{
-		margin-top: 2em;
-		display: none;
+	/* Wizard navigation buttons... */
+	div.wizard_nav_div{
 		float: right;
-		.form-nav{
+
+		.form-nav, .wizard_nav{
+			// KXM Hide that... what?  CHICKEN BUTT!  Woot!  (Jackie dared me to put that comment in the code some-a-whars.  Done it.)
+			display: none;
 			background: #7EBEC5;
 			border-radius: 100px;
 			border-width: 0;
@@ -77,11 +109,16 @@ div#market-creation{
 			font-size: 22.73px;
 			color: white;
 			line-height: 31px;
-			margin-left: 2em;
+			margin-left: 1.2em;
 
 			&:hover, &:active{
 				background-color: #689DA5;
 			}
+		}
+
+		/* ...including the submit button, which should be displayed regardless, but should otherwise look the same as wizard navigation */
+		.form-nav{
+			display: inline-block;
 		}
 	}
 }

@@ -149,7 +149,7 @@
         <% end %>
       </div>
 
-      <%# KXM Shared navigation here will likely be the website nav.  The the code remains here (but commented out) until I know what that means %>
+      <%# KXM Shared navigation here will likely be the website nav.  The render code remains here (but commented out) until I know what that means %>
       <%#= render 'shared/navigation' %>
 
       <%= yield %>
@@ -203,7 +203,8 @@
       $(".wizard_nav").show();
 
       // Bind a given form nav click to the corresponding tab nav click
-      $(".wizard_nav").find('button').click(function(e){
+      //$(".wizard_nav").find('button').click(function(e){
+      $("button.wizard_nav").click(function(e){
         // The buttons shouldn't submit the form... that would be stupid
         e.preventDefault();
 
@@ -217,7 +218,7 @@
         target_tab_nav.trigger('click');
       });
 
-      //  These are placeholders...
+      //  KXM Placeholder methods for buttons that don't yet work...
       $("#add_market").click(function(e){
         e.preventDefault();
         alert("This button will:\nAdd an entry to a table of pending markets, creating the table if necessary\nSpawn another market data entry form")
@@ -233,6 +234,7 @@
         // Initialize the default condition
         var pass = true;
 
+        // KXM The meat of this method must be pulled out so it may be called on page load.  Otherwise, the wizard navigation backgrounds won't correctly indicate the status unless an input element is changed (triggering this)
         // Get the containing div subject to show/hide...
         ancestor_div = $(this).closest('div[id^="form-"]')
         ancestor_div_id = ancestor_div.prop('id');

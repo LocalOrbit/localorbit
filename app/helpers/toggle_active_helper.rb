@@ -1,6 +1,7 @@
 module ToggleActiveHelper
   def toggle_active_button(resource, parent: nil)
 =begin
+    # KXM Delete this code upon acceptance
     return unless resource.respond_to?(:active?)
 
     title = resource.active? ? "Deactivate" : "Activate"
@@ -31,7 +32,7 @@ module ToggleActiveHelper
 
     if( resource.pending? )
       title = "Confirm"
-      # KXM Couldn't get this working like the one below it. Any idea why?
+      # KXM Couldn't get this path working like the one below it. Any idea why?
       path = "/admin/markets/#{resource.id}/confirm_pending?pending=false"
       #path = [:confirm_pending, :admin]
       if parent

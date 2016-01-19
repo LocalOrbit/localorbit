@@ -2,7 +2,10 @@
   <%#= KXM See the admin registration view for original 'new' view content. Realistically this view only need exist if we're going to refactor the registration process (we will), and that is only if we should share similar partials between these two substantially similar processes (we should), this view then serving to include only those partials we want to expose... %>
 
   <%= form_for @market, html: { class: "column column--full" } do |f| %>
+<%# KXM the market-creation div only exists to give me a hook for overriding JQuery-UI styling... there's prolly a better place to do that %>
+	<div id="market-creation">
     <h1>New Market Registration</h1>
     <%= render 'form', {f: f} %>
+	</div>
   <% end %>
 </div>

@@ -1,174 +1,166 @@
 <%= render 'shared/errors', resource: @market %>
-<%# KXM the market-creation div only exists to over-ride the default JQuery-UI styling... there's prolly a better way to do that (or, at least, a better *place* to do that...) %>
-<div id="market-creation">
-  <div id="tabs">
-    <ul id="market-tab-list">
-      <li class="pass"><span class="anchor">Plan Selection</span></li>
-      <li><a href="#form-contact-info">Contact Info</a></li>
-      <li><a href="#form-terms">Service Agreement</a></li>
-      <li><a href="#form-billing">Billing</a></li>
-      <li><a href="#form-review">Review</a></li>
-    </ul>
+<div id="tabs">
+  <ul id="market-tab-list">
+    <li class="pass"><span class="anchor">Plan Selection</span></li>
+    <li><a href="#form-contact-info">Contact Info</a></li>
+    <li><a href="#form-terms">Service Agreement</a></li>
+    <li><a href="#form-billing">Billing</a></li>
+    <li><a href="#form-review">Review</a></li>
+  </ul>
 
-    <%# ==== Form tab break ==========================================================%>
-    <div id="form-contact-info">
-      <fieldset id="fields-contact-info">
-        <legend>Market Contact Information</legend>
-        <div class="field">
-          <%= f.text_field :contact_name, class: "column--full", placeholder: 'Contact Name' %>
-        </div>
-        <div class="row row--field">
-          <div class="field column column--half column--guttered">
-            <%= f.text_field :contact_email, class: "column--full", placeholder: 'Email' %>
-          </div
-          ><div class="field column column--half column--guttered">
-            <%= f.text_field :contact_phone, size: 18, class: "column--full", placeholder: 'Phone' %>
-          </div>
-        </div>
-
-        <legend>Market Information</legend>
-        <div class="row row--field">
-          <div class="field column column--half column--guttered">
-            <span class="tooltip pull-right" data-tooltip="This is the primary name of your market.  Don't forget to double check your spelling."></span>
-            <br>
-            <%= f.text_field :name, class: "column--full", placeholder: 'Market Name' %>
-          </div
-          ><div class="field column column--half column--guttered">
-            <span class="tooltip pull-right" data-tooltip="This is your unique text for your Local Orbit URL."></span>
-            <br>
-            <%= f.text_field :subdomain, class: "column--full", placeholder: 'Subdomain' %>
-          </div>
-        </div>
-      </fieldset>
-
-      <%# # KXM This may end up being implemented via a helper (like the social media work) the better to eliminate the conditional %>
-      <% plan = (params[:plan] || 'start'); if plan == 'grow' then %>
-        <div id="market-repeat">
-          <button class="form-action" id="add_market">Add Market</button> &nbsp; &nbsp; <span class="market-count">You may add up to 4 more markets</span>
-        </div>
-      <% end %>
-
-      <div class="wizard_nav">
-        <button class="form-nav" target="#form-terms">Continue</button>
+  <!--==== Form tab break ==========================================================-->
+  <div id="form-contact-info">
+    <fieldset id="fields-contact-info">
+      <h2>Market Contact Information</h2>
+      <div class="field">
+        <%= f.text_field :contact_name, class: "column--full", placeholder: 'Contact Name' %>
       </div>
-    </div> <!-- end form-contact-info -->
-
-    <%# ==== Form tab break ==========================================================%>
-    <%# KXM Obvs this all has to be fleshed out, though it is subject to some process flow clarification, dig? %>
-    <div id="form-terms">
-      <fieldset>
-        <legend>Terms of Service</legend>
-        <div id="terms-of-service">
-          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris facilisis vulputate consectetur. Integer vulputate leo lectus. Mauris non eros urna. Etiam interdum semper nibh et tincidunt. Maecenas rhoncus euismod felis. Sed eu nulla pellentesque, condimentum nunc nec, commodo neque. Donec ut turpis nec massa imperdiet mollis. Nullam rhoncus ipsum ac pharetra commodo. Vivamus auctor sem eget auctor commodo. In vitae enim vitae nunc luctus aliquam vel non arcu. Vivamus luctus sapien at tortor commodo vulputate. Nullam convallis placerat lectus, ut egestas purus varius id. Cras consectetur consectetur hendrerit. Nunc et augue pharetra, malesuada lacus vitae, condimentum nisi. Etiam pulvinar vel orci sed egestas.</p>
-
-          <p>Vestibulum vitae dapibus odio. Quisque vitae risus vel dolor scelerisque laoreet eu eget risus. Mauris ac lectus vitae est pellentesque rhoncus. Donec quam tellus, viverra quis elit sed, accumsan tempor leo. Suspendisse sagittis eget dui sagittis varius. Interdum et malesuada fames ac ante ipsum primis in faucibus. Etiam eget posuere risus. Nunc elementum condimentum nisl quis porta. Quisque metus sapien, consectetur eget tellus at, molestie maximus velit. Integer ultrices nibh ac ipsum elementum, id tincidunt mauris accumsan. Pellentesque ac ipsum nec diam tempor sodales. Cras malesuada lorem id dolor suscipit, sed pulvinar libero dapibus. Etiam luctus magna eros, eget bibendum ex consectetur euismod. Morbi pulvinar ac lorem quis interdum.</p>
-
-          <p>Donec luctus, velit in tristique feugiat, ex eros blandit nunc, at porta nunc arcu nec mi. Quisque felis nisl, consequat vel imperdiet quis, volutpat ut metus. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Curabitur non nisl eget mi interdum pretium egestas quis nibh. Curabitur finibus leo eget ligula pulvinar sodales. Vivamus semper tristique nunc, ac lacinia magna. Aliquam sed scelerisque mi. Etiam diam tortor, pretium id magna commodo, mattis venenatis quam. Morbi porta, libero nec condimentum consequat, ex ligula elementum nunc, vitae consectetur dui massa vel diam. In hac habitasse platea dictumst. Curabitur et volutpat est, nec tincidunt leo. Fusce dictum ipsum nisl, congue congue massa efficitur varius. Fusce imperdiet diam vitae elementum ornare. Maecenas efficitur erat sem, ac suscipit nisi tincidunt nec. Ut luctus, tellus in elementum condimentum, velit neque tincidunt tortor, quis vulputate mi metus vitae tellus. Pellentesque lacinia nunc magna, porttitor gravida tortor commodo vel.</p>
-
-          <p>Donec justo nunc, placerat nec blandit id, porttitor eu est. Ut volutpat eros sed purus dignissim, quis efficitur augue feugiat. Nam ut condimentum massa. Vestibulum sagittis in orci quis feugiat. Vestibulum risus mauris, aliquam a justo lacinia, fringilla suscipit justo. Integer vel gravida urna. Donec efficitur felis quis maximus dignissim. In hac habitasse platea dictumst. In volutpat imperdiet risus ac accumsan. Nunc id blandit felis. Phasellus non erat ut nunc convallis euismod nec et urna. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Sed nec risus at purus lobortis interdum vitae vel metus.</p>
-
-          <p>Cras molestie elit suscipit massa consectetur, vel vulputate lectus porttitor. Fusce eleifend blandit eros, eget eleifend diam aliquet quis. Nulla facilisi. Nulla facilisi. Aliquam erat volutpat. Vestibulum sagittis orci mollis ornare accumsan. Suspendisse potenti. Donec et cursus justo. Vestibulum accumsan tincidunt elit eget rhoncus. Pellentesque egestas faucibus velit id accumsan.</p> 
+      <div class="row row--field">
+        <div class="field column column--half column--guttered">
+          <%= f.text_field :contact_email, class: "column--full", placeholder: 'Email' %>
+        </div
+        ><div class="field column column--half column--guttered">
+          <%= f.text_field :contact_phone, size: 18, class: "column--full", placeholder: 'Phone' %>
         </div>
-
-        <div id="accept-terms-of-service" class="pull-right">
-          <%= check_box_tag("accept-terms-of-service", value = "1", checked = false ) %> <label for="accept-terms-of-service">Yes, I agree</label>
-        </div>
-
-      </fieldset>
-
-      <div class="wizard_nav">
-        <button class="form-nav" target="#form-contact-info">Previous</button>
-        <button class="form-nav" target="#form-billing">Continue</button>
       </div>
 
-    </div> <!-- end form-terms -->
-
-    <%# ==== Form tab break ==========================================================%>
-    <div id="form-billing">
-      <fieldset>
-        <legend>Billing Address</legend>
-        <div class="row">
-          <div class="field column column--half column--guttered">
-            <%= text_field(:billing, :address, placeholder: 'Address', class: "column--full") %>
-          </div
-          ><div class="field column column--half column--guttered">
-            <%= text_field(:billing, :city, placeholder: 'City', class: "column--full") %>
-          </div>
+      <h2>Market Information</h2>
+      <div class="row row--field">
+        <div class="field column column--half column--guttered">
+          <!--span class="tooltip pull-right" data-tooltip="This is the primary name of your market.  Don't forget to double check your spelling."></span-->
+          <span class="help-text">This is the primary name of your market.<br />Don't forget to double check your spelling.</span>
+          <br>
+          <%= f.text_field :name, class: "column--full", placeholder: 'Market Name' %>
+        </div
+        ><div class="field column column--half column--guttered">
+          <!--span class="tooltip pull-right" data-tooltip="This is your unique text for your Local Orbit URL."></span-->
+          <span class="help-text">This is the unique text for your subdomain<br />on the Local Orbit platform.</span>
+          <br>
+          <%= f.text_field :subdomain, class: "column--full", placeholder: 'Subdomain' %>
         </div>
-
-        <div class="row row--field">
-          <div class="field column column--half column--guttered">
-            <%= text_field(:billing, :state, placeholder: 'State', class: "column--full") %>
-          </div
-          ><div class="field column column--half column--guttered">
-            <%= text_field(:billing, :zip, placeholder: 'Zip', class: "column--full") %> 
-          </div>
-        </div>
-
-        <div class="row row--field">
-          <div class="field column column--half column--guttered">
-            <%= text_field(:billing, :phone, placeholder: 'Phone', ) %> 
-          </div>
-        </div>
-      </fieldset>
-
-      <div class="wizard_nav">
-        <button class="form-nav" target="#form-terms">Previous</button>
-        <button class="form-nav" target="#form-review">Continue</button>
       </div>
+    </fieldset>
+
+    <%# # KXM Plan assignment/display may end up as a helper, the better to tie into an actual plan and eliminate the conditional below %>
+    <% plan = (params[:plan] || 'start'); if plan == 'grow' then %>
+      <div id="market-repeat">
+        <button class="form-action" id="add_market">Add Market</button> &nbsp; &nbsp; <span class="market-count">You may add up to 4 more markets</span>
+      </div>
+    <% end %>
+
+    <div class="wizard_nav_div">
+      <button class="wizard_nav" target="#form-terms">Continue</button>
+    </div>
+  </div> <!-- end form-contact-info -->
+
+  <!--==== Form tab break ==========================================================-->
+  <%# KXM The Lorem text will be replaced (obviously), but does it belong at this spot in the process? %>
+  <div id="form-terms">
+    <fieldset>
+      <h2>Terms of Service</h2>
+      <div id="terms-of-service">
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris facilisis vulputate consectetur. Integer vulputate leo lectus. Mauris non eros urna. Etiam interdum semper nibh et tincidunt. Maecenas rhoncus euismod felis. Sed eu nulla pellentesque, condimentum nunc nec, commodo neque. Donec ut turpis nec massa imperdiet mollis. Nullam rhoncus ipsum ac pharetra commodo. Vivamus auctor sem eget auctor commodo. In vitae enim vitae nunc luctus aliquam vel non arcu. Vivamus luctus sapien at tortor commodo vulputate. Nullam convallis placerat lectus, ut egestas purus varius id. Cras consectetur consectetur hendrerit. Nunc et augue pharetra, malesuada lacus vitae, condimentum nisi. Etiam pulvinar vel orci sed egestas.</p>
+
+        <p>Vestibulum vitae dapibus odio. Quisque vitae risus vel dolor scelerisque laoreet eu eget risus. Mauris ac lectus vitae est pellentesque rhoncus. Donec quam tellus, viverra quis elit sed, accumsan tempor leo. Suspendisse sagittis eget dui sagittis varius. Interdum et malesuada fames ac ante ipsum primis in faucibus. Etiam eget posuere risus. Nunc elementum condimentum nisl quis porta. Quisque metus sapien, consectetur eget tellus at, molestie maximus velit. Integer ultrices nibh ac ipsum elementum, id tincidunt mauris accumsan. Pellentesque ac ipsum nec diam tempor sodales. Cras malesuada lorem id dolor suscipit, sed pulvinar libero dapibus. Etiam luctus magna eros, eget bibendum ex consectetur euismod. Morbi pulvinar ac lorem quis interdum.</p>
+
+        <p>Donec luctus, velit in tristique feugiat, ex eros blandit nunc, at porta nunc arcu nec mi. Quisque felis nisl, consequat vel imperdiet quis, volutpat ut metus. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Curabitur non nisl eget mi interdum pretium egestas quis nibh. Curabitur finibus leo eget ligula pulvinar sodales. Vivamus semper tristique nunc, ac lacinia magna. Aliquam sed scelerisque mi. Etiam diam tortor, pretium id magna commodo, mattis venenatis quam. Morbi porta, libero nec condimentum consequat, ex ligula elementum nunc, vitae consectetur dui massa vel diam. In hac habitasse platea dictumst. Curabitur et volutpat est, nec tincidunt leo. Fusce dictum ipsum nisl, congue congue massa efficitur varius. Fusce imperdiet diam vitae elementum ornare. Maecenas efficitur erat sem, ac suscipit nisi tincidunt nec. Ut luctus, tellus in elementum condimentum, velit neque tincidunt tortor, quis vulputate mi metus vitae tellus. Pellentesque lacinia nunc magna, porttitor gravida tortor commodo vel.</p>
+
+        <p>Donec justo nunc, placerat nec blandit id, porttitor eu est. Ut volutpat eros sed purus dignissim, quis efficitur augue feugiat. Nam ut condimentum massa. Vestibulum sagittis in orci quis feugiat. Vestibulum risus mauris, aliquam a justo lacinia, fringilla suscipit justo. Integer vel gravida urna. Donec efficitur felis quis maximus dignissim. In hac habitasse platea dictumst. In volutpat imperdiet risus ac accumsan. Nunc id blandit felis. Phasellus non erat ut nunc convallis euismod nec et urna. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Sed nec risus at purus lobortis interdum vitae vel metus.</p>
+
+        <p>Cras molestie elit suscipit massa consectetur, vel vulputate lectus porttitor. Fusce eleifend blandit eros, eget eleifend diam aliquet quis. Nulla facilisi. Nulla facilisi. Aliquam erat volutpat. Vestibulum sagittis orci mollis ornare accumsan. Suspendisse potenti. Donec et cursus justo. Vestibulum accumsan tincidunt elit eget rhoncus. Pellentesque egestas faucibus velit id accumsan.</p> 
+      </div>
+
+      <div id="accept-terms-of-service" class="pull-right">
+        <%= check_box_tag("accept-terms-of-service", value = "1", checked = false ) %> <label for="accept-terms-of-service">Yes, I agree</label>
+      </div>
+
+    </fieldset>
+
+    <div class="wizard_nav_div">
+      <button class="wizard_nav" target="#form-contact-info">Previous</button>
+      <button class="wizard_nav" target="#form-billing">Continue</button>
     </div>
 
-    <%# ==== Form tab break ==========================================================%>
-    <div id="form-review">
-      <fieldset>
-        <legend>Billing Address</legend>
-        <div class="row">
-          <div class="field column column--half column--guttered">
-            <%= text_field(:purchase, :plan, class: "column--full", value: plan, disabled: true) %>
-          </div
-          ><div class="field column column--half column--guttered">
-            <%= text_field(:purchase, :code, class: "column--full", placeholder: 'Discount Code') %>
-          </div>
-        </div>
-        <button id="apply_discount" class="pull-right form-action">Apply Discount</button>
-      </fieldset>
+  </div> <!-- end form-terms -->
 
-      <fieldset>
-        <legend>Payment Information</legend>
-        <div class="row row--field">
-          <div class="field column column--half column--guttered">
-            <%= text_field(:purchase, :name, placeholder: 'Name', class: "column--full") %>
-          </div
-          ><div class="field column column--half column--guttered">
-            <%= text_field(:purchase, :credit_card, placeholder: 'Credit Card #', class: "column--full") %> 
-          </div>
+  <!--==== Form tab break ==========================================================-->
+  <div id="form-billing">
+    <fieldset>
+      <h2>Billing Address</h2>
+      <div class="row">
+        <div class="field column column--half column--guttered">
+          <%= text_field(:billing, :address, placeholder: 'Address', class: "column--full") %>
+        </div
+        ><div class="field column column--half column--guttered">
+          <%= text_field(:billing, :city, placeholder: 'City', class: "column--full") %>
         </div>
-
-        <div class="row row--field">
-          <div class="field column column--half column--guttered">
-            <div class="column column--half column--guttered">
-              <%= text_field(:purchase, :month, placeholder: 'Month', class: "column--full") %> 
-            </div
-            ><div class="column column--half column--guttered">
-              <%= text_field(:purchase, :year, placeholder: 'Year', class: "column--full") %> 
-            </div>
-          </div
-          ><div class="field column column--half column--guttered">
-            <%= text_field(:purchase, :security_code, placeholder: 'Security Code', class: "column--full") %> 
-          </div>
-        </div>
-      </fieldset>
-
-      <div class="wizard_nav">
-        <button class="form-nav" target="#form-billing">Previous</button>
       </div>
 
-
-      <div class="form-actions">
-        <%#= link_to "Cancel", admin_markets_path, class: "btn cancel" %>
-        <%= f.submit "Submit Payment", class: "form-nav" %>
+      <div class="row row--field">
+        <div class="field column column--half column--guttered">
+          <%= text_field(:billing, :state, placeholder: 'State', class: "column--full") %>
+        </div
+        ><div class="field column column--half column--guttered">
+          <%= text_field(:billing, :zip, placeholder: 'Zip', class: "column--full") %> 
+        </div>
       </div>
+
+      <div class="row row--field">
+        <div class="field column column--half column--guttered">
+          <%= text_field(:billing, :phone, placeholder: 'Phone', ) %> 
+        </div>
+      </div>
+    </fieldset>
+
+    <div class="wizard_nav_div">
+      <button class="wizard_nav" target="#form-terms">Previous</button>
+      <button class="wizard_nav" target="#form-review">Continue</button>
     </div>
-  </div>
+  </div> <!-- end form-billing -->
+
+  <!--==== Form tab break ==========================================================-->
+  <div id="form-review">
+    <fieldset>
+      <h2>Review Purchase</h2>
+      <div class="row">
+        <div class="field column column--half column--guttered">
+          <%= text_field(:purchase, :plan, class: "column--full", value: plan, disabled: true) %>
+        </div
+        ><div class="field column column--half column--guttered">
+          <%= text_field(:purchase, :code, class: "column--full", placeholder: 'Discount Code') %>
+        </div>
+      </div>
+      <button id="apply_discount" class="pull-right form-action">Apply Discount</button>
+
+
+      <h2>Payment Information</h2>
+      <div class="row row--field">
+        <div class="field column column--half column--guttered">
+          <%= text_field(:purchase, :name, placeholder: 'Name', class: "column--full") %>
+        </div
+        ><div class="field column column--half column--guttered">
+          <%= text_field(:purchase, :credit_card, placeholder: 'Credit Card #', class: "column--full") %> 
+        </div>
+      </div>
+
+      <div class="row row--field">
+        <div class="field column column--half column--guttered">
+          <div class="column column--half column--guttered">
+            <%= text_field(:purchase, :month, placeholder: 'Month', class: "column--full") %> 
+          </div
+          ><div class="column column--half column--guttered">
+            <%= text_field(:purchase, :year, placeholder: 'Year', class: "column--full") %> 
+          </div>
+        </div
+        ><div class="field column column--half column--guttered">
+          <%= text_field(:purchase, :security_code, placeholder: 'Security Code', class: "column--full") %> 
+        </div>
+      </div>
+    </fieldset>
+
+    <div class="wizard_nav_div">
+      <button class="wizard_nav" target="#form-billing">Previous</button>
+      <%= f.submit "Submit Payment", class: "form-nav" %>
+    </div>
+  </div> <!-- end form-review -->
 </div>
-
