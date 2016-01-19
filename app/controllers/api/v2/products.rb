@@ -149,9 +149,7 @@ module API
 
 				# Append to row_errors hash the serialized version of the error set if any in current row, and return false.
 			end
-
-			## but this is already done . ^
-			## def process_product_rows() - iterate over the rows, contain error and return serialized errors, use validate_product_row each time, and only call this if validate_csv_catalog_file_format is true
+			
 		end
 
 		## API routes to mount
