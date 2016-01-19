@@ -40,12 +40,14 @@ describe "An organization member" do
     expect(page).to_not have_field("Organization is active")
   end
 
-  describe "A buying organization" do
+  describe "A buying organization", :js do
     let(:org) { create(:organization, users: [member], can_sell: false) }
 
     it "hides profile information" do
       visit admin_organizations_path
       click_link org.name
+
+      save_and_open_page
 
       expect(page).not_to have_content("Facebook")
       expect(page).not_to have_content("Twitter")
