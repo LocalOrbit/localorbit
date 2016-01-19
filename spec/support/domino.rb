@@ -1024,11 +1024,34 @@ module Dom
     end
   end
 
-  class Product < Domino
+  class AlternativeProduct < Domino
     selector ".product-listing"
 
     attribute :name, "H3"
     attribute :organization_name, "H5"
+    attribute :pricing
+    attribute :quantity
+
+    def open_who_story
+      node.click_link organization_name
+    end
+
+    def open_how_story
+      node.click_link "How"
+    end
+
+    def prices
+      node.all(".tiers li").map do |tier|
+        tier.find(".unit-price").text
+      end
+    end
+  end
+
+  class Product < Domino
+    selector ".product"
+
+    attribute :name
+    attribute :organization_name
     attribute :pricing
     attribute :quantity
 
