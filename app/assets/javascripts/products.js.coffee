@@ -245,6 +245,7 @@ $ ->
   $(document).on "change", '#product_use_simple_inventory', ->
     $('#simple-inventory').toggleClass('is-hidden')
     $('#product-inventory-nav').toggleClass('is-hidden pulsed')
+    $('.last-row').toggleClass('is-hidden')
 
   $('#product-save-and-return').click (e) ->
     e.preventDefault()

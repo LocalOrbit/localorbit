@@ -1,5 +1,7 @@
 module Admin
   class OrganizationUsersController < AdminController
+    include Users
+
     before_action :find_organization
     before_action :lookup_manageable_user, only: [:edit, :update]
 
@@ -44,8 +46,7 @@ module Admin
 
     def invite
       user = @organization.users.find(params[:user_id])
-      user.invite!
-      user.save
+      invite_user(user)
 
       redirect_to [:admin, @organization, :users], notice: "User #{user.decorate.display_name} Re-Invited"
 

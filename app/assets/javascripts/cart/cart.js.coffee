@@ -54,13 +54,13 @@ $ ->
         @el.find(".price").text(totalPrice)
         @el.find(".quantity input:not(.redesigned)").val(@data.quantity)
 
-        if @el.find(".quantity input").hasClass("promo")
+        if @el.find(".quantity input").hasClass("promo") && @data.quantity > 0
           $(".promo").val(@data.quantity)
           $(".promo").parent().parent().find(".price").text(totalPrice)
 
-        if @data.quantity
+        if @data.quantity && @data.quantity > 0
           @el.find(".icon-clear").removeClass("is-hidden")
-          $(".promo").parent().parent().find(".icon-clear").removeClass("is-hidden")
+          @el.parent().parent().parent().parent().parent().parent().parent().find(".promo").parent().parent().find(".icon-clear").removeClass("is-hidden")
 
         if (!@data["valid?"] && @data["id"] != null) && !@data["destroyed?"]
           @showError()
@@ -84,8 +84,10 @@ $ ->
         @el.remove()
 
       if @el.find(".quantity input").hasClass("promo")
+        totalPrice = accounting.formatMoney(@data.total_price)
         $(".promo").parent().parent().find(".icon-clear").addClass("is-hidden")
         $(".promo").parent().parent().find(".quantity input").val('')
+        $(".promo").parent().parent().find(".price").text(totalPrice)
 
     showError: ->
       @el.find(".quantity").addClass("field_with_errors")
@@ -412,7 +414,7 @@ $ ->
       $(this).parents('form').submit()
 
   numItems = $('.payment-method').length
-  if (numItems == 1)
+  if numItems == 1
     $('.payment-method').click()
 
   if ($('#order_credit_card_id option').size() == 2)

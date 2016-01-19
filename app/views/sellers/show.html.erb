@@ -95,10 +95,20 @@
 
         <% if !current_market.closed? && !@products_for_sale.product_groups.empty?  %>
           <h2 class="heading-section">Currently Selling</h2>
-          <% @products_for_sale.each_category_with_products do |category, products| %>
-            <%= render "products/table", products: products, category: category %>
-          <% end %>
+          <%= react_component('lo.ProductCatalog', {
+              baseUrl: "#{request.base_url}/api/v1/",
+              cartUrl: cart_path,
+              deliveryDate: current_delivery.buyer_deliver_on,
+              selectedType: current_delivery.selected_type.capitalize,
+              orderCutoff: current_delivery.cutoff_time,
+              buyerInfo: current_organization.name,
+              limit: 10,
+              useTemplates: FeatureAccess.order_templates?(market: current_market),
+              supplierId: @current_seller.id,
+          })
+          %>
         <% end %>
+        <br/><br/>
         <% hide_cart = current_cart.present? && current_cart.items.count > 0 ? "" : "is-hidden" %>
         <%= link_to "Review Cart", cart_path, id: "review_cart", class: "btn btn--small pull-right add-toggle mobile-block #{hide_cart}" %>
       <% end %>
