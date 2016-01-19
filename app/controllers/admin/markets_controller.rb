@@ -3,7 +3,7 @@ class Admin::MarketsController < AdminController
 
   before_action :require_admin, only: [:new, :create]
   before_action :require_admin_or_market_manager, except: [:new, :create]
-  before_action :find_scoped_market, only: [:show, :update, :payment_options, :update_active]
+  before_action :find_scoped_market, only: [:show, :update, :payment_options, :update_active, :confirm_pending]
   before_action :find_sticky_params, only: :index
 
   def index
@@ -56,6 +56,12 @@ class Admin::MarketsController < AdminController
   def update_active
     @market.update_attribute(:active, params[:active])
     redirect_to :back, notice: "Updated #{@market.name}"
+  end
+
+  def confirm_pending
+    @market.update_attribute(:pending, params[:pending])
+    redirect_to :back, notice: "Updated #{@market.name}"
+    # KXM RYO - This should carry on with alla the rest of the pending release: (1) Notification to Market Owner (including Account confirmation email with link back to account setup form), (2) Activating of Market.  All that is subject to confirmation...
   end
 
   def payment_options

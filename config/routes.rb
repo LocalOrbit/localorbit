@@ -29,7 +29,6 @@ Rails.application.routes.draw do
     end
   end
 
-
   # Hoping that this is the embryo of a RESTful API for future development in
   # the app, especially LocalEyes features.
   namespace :api do
@@ -54,6 +53,7 @@ Rails.application.routes.draw do
       resource  :cross_sell, controller: :market_cross_sells, only: [:show, :update]
       resources :deposit_accounts, only: [:index, :new, :create, :destroy]
       get :payment_options
+      patch :confirm_pending
     end
 
     resources :labels, only: [:index, :show]
