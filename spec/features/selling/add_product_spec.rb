@@ -544,6 +544,8 @@ describe "Adding a product", chosen_js: true do
       it "until prices are added" do
         expect(page).to have_content(stub_warning_both)
 
+        find(:css, ".adv_inventory").click
+
         fill_in "lot[quantity]", with: "42"
         click_button "Add"
         expect(page).to have_content(stub_warning_pricing)
