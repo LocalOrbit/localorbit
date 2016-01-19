@@ -1,11 +1,11 @@
 <div class="row">
-  <div class="photo-header" <%= "style=\"background-image: url(#{@market.photo.url});\"".html_safe if @market.photo_stored? %>>
+  <div class="photo-header" <%#= "style=\"background-image: url(#{@market.photo.url});\"".html_safe if @market.photo_stored? %>>
     <h1 class="photo-header-txt vc-wrapper">
       <span class="vertical-centerer">
-        <span class="fn org"><%= @market.name %></span>
-        <% if @market.default_address.present? %>
-          <span class="adr"><span class="locality"><%= @market.default_address.city %></span>, <span class="region"><%= @market.default_address.state %></span></span>
-        <% end %>
+        <span class="fn org"><%#= @market.name %></span>
+        <%# if @market.default_address.present? %>
+          <span class="adr"><span class="locality"><%#= @market.default_address.city %></span>, <span class="region"><%#= @market.default_address.state %></span></span>
+        <%# end %>
 
       </span>
     </h1>

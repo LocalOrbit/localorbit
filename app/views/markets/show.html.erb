@@ -1,4 +1,4 @@
-<%= render 'market_header' %>
+<%#= render 'market_header' %>
 
 <div class="row three-fourths-rule">
   <div class="column column--three-fourths column--guttered">
@@ -52,10 +52,10 @@
       <div class="vcard">
         <% if @market.contact_name.present? %><strong class="fn"><%= @market.contact_name %></strong><br><% end %>
         <% if @market.contact_email.present? %><%= mail_to(@market.contact_email, @market.contact_email, {class:"email"}) %><br><% end %>
-        <% if @market.default_address %>
+        <% if @market.try(:default_address) %>
         <p class="adr">
-          <span class="street-address"><%= @market.default_address.address %></span><br>
-          <span class="locality"><%= @market.default_address.city %></span>, <span class="region"><%=@market.default_address.state %></span> <span class="postal-code"><%= @market.default_address.zip %></span>
+          <span class="street-address"><%= @market.try(:default_address).try(:address) %></span><br>
+          <span class="locality"><%= @market.default_address.city %></span>, <span class="region"><%=@market.try(:default_address).try(:state) %></span> <span class="postal-code"><%= @market.try(:default_address).try(:zip) %></span>
         </p>
         <% end %>
         <% if @market.default_address_phone_number.present? %><span class="tel"><%= @market.default_address_phone_number %></span><% end %>
