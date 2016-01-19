@@ -1025,10 +1025,10 @@ module Dom
   end
 
   class Product < Domino
-    selector ".product"
+    selector ".product-listing"
 
-    attribute :name
-    attribute :organization_name
+    attribute :name, "H3"
+    attribute :organization_name, "H5"
     attribute :pricing
     attribute :quantity
 

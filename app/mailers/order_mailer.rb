@@ -88,7 +88,7 @@ class OrderMailer < BaseMailer
       attachments["packing_list.csv"] = {mime_type: "application/csv", content: csv}
     end
 
-    to_list = seller.users.map { |u| u.enabled_for_organization?(seller.users) ? u.pretty_email : nil}
+    to_list = seller.users.map { |u| u.enabled_for_organization?(seller) ? u.pretty_email : nil}
 
     mail(
       to: to_list,
