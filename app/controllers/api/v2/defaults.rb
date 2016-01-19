@@ -35,7 +35,7 @@ module API
 	        if Rails.env.development?
 	          raise e
 	        else
-	          Raven.capture_exception(e)
+	          #Raven.capture_exception(e)
 	          error_response(message: "Internal server error", status: 500)
 	        end
 	      end
