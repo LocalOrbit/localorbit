@@ -87,7 +87,7 @@
                              {buyer_supplier_picker}
                          </div>
                      </div>
-                     <div className="row row--partial dashboard" style={{background: '#EEE'}}>
+                     <div className="row dashboard" style={{background: '#EEE', textAlign: 'left'}}>
                         <div className="column column--one-third">
                             <lo.delivery_calendar_widget
                                 userType={uType}
