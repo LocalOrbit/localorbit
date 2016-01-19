@@ -188,10 +188,16 @@
   display: table;
 
   .product-image{
-    width: 40%;
+    width:75px;
+    height:75px;
+    overflow:hidden;
     border-radius: 4px;
     float: left;
     margin: 0;
+    img {
+      width:75px;
+      height: auto;
+    }
   }
   .product-details-container{
     display: table-cell;
