@@ -18,7 +18,7 @@
           <div className="product-details-container column column--five-twelfths">
             <img style={{display: (this.props.hideImages) ? "none" : ""}} className="product-image" src={gp.image_url}/>
             <div className="product-details" style={{ width: (this.props.supplierOnly) ? "unset" : "", marginTop: (this.props.supplierOnly) ? "10px" : "" }}>
-              <h3>{gp.name}</h3>
+              <a href={"/products/" + gp.id}><h3>{gp.name}</h3></a>
               <h5>From: <a href={"/sellers/" + gp.seller_id}>{gp.seller_name}</a></h5>
               <p>{gp.short_description}</p>
               <ul className="meta list-naked l-inline-list clear-before">

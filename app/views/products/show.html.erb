@@ -14,8 +14,7 @@
         <a href="#product-information" class="pane-toggle mobile-only btn">Return to Product</a>
         <ul class="list-naked nav nav--sidebar">
           <li><%= link_to "Continue Ordering",  products_path %></li>
-          <li><%= link_to "More Products from this Seller", seller_path(@product.organization) %></li>
-          <li><%= link_to "More Products in #{@breadcrumbs.first.name}", "#{products_path}?category=#{@breadcrumbs.first.id}" %></li>
+          <li><%= link_to "More Products from this Supplier", seller_path(@product.organization) %></li>
         </ul>
       </div>
 
@@ -46,7 +45,7 @@
               </td>
               <td class="quantity">
                 <span>
-                  <input name="quantity" type="number" size="3" min="0" value="<%= @product.cart_item.quantity > 0 ? @product.cart_item.quantity : "" %>" max="<%= @product.available_inventory %>"><br>
+                  <input class="cart-input" name="quantity" type="number" size="3" min="0" value="<%= @product.cart_item.quantity > 0 ? @product.cart_item.quantity : "" %>" max="<%= @product.available_inventory %>"><br>
                   <span class="price-for-quantity"><%= number_to_currency(@product.cart_item.unit_price.sale_price) %></span>
                 </span>
               </td>
