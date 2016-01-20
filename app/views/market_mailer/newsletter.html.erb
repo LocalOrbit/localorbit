@@ -4,4 +4,4 @@
   <div style="text-align: center;"><%= image_tag @newsletter.image.thumb('600x300>').url %></div><br>
 <% end %>
 
-<%= @newsletter.body.html_safe %>
+<%= CGI::unescapeHTML(@newsletter.body).html_safe %>
