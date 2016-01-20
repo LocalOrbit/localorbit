@@ -66,7 +66,9 @@ div#market-creation{
 		margin-bottom: 1.2em;
 	}
 
-	input[type="text"]{
+	// Input types are explicitly declared to prevent unintended styling (think checkboxes).  Others may be added if need be.
+	input[type="text"],
+	input[type="email"]{
 		background: #EEEEEE;
 		height: 44px;
 		font-family: SourceSansPro-Regular, sans-serif;
@@ -99,7 +101,7 @@ div#market-creation{
 		float: right;
 
 		.form-nav, .wizard_nav{
-			// KXM Hide that... what?  CHICKEN BUTT!  Woot!  (Jackie dared me to put that comment in the code some-a-whars.  Done it.)
+			// KXM Hide that... what?  CHICKEN BUTT!  Woot!  (In what may be the easiest dare ever, Jackie dared me to put 'chicken butt' in the code some-a-whars.  Done it.)
 			display: none;
 			background: #7EBEC5;
 			border-radius: 100px;
@@ -116,7 +118,7 @@ div#market-creation{
 			}
 		}
 
-		/* ...including the submit button, which should be displayed regardless, but should otherwise look the same as wizard navigation */
+		/* The submit button should be displayed in all cases, but should otherwise look the same as wizard navigation */
 		.form-nav{
 			display: inline-block;
 		}
