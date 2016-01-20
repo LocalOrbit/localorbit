@@ -9,4 +9,15 @@ module Users
             end
     @users = scope.includes(:managed_markets)
   end
+
+  def confirm_user(user)
+    user.accept_invitation!
+    user.confirm!
+    user.save
+  end
+
+  def invite_user(user)
+    user.invite!
+    user.save
+  end
 end

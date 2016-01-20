@@ -114,20 +114,20 @@
                 <div class="datepicker" data-input="p<%= unit_product.id %>_lot_expires_at"></div>
               </div>
             </td>
-            <td class="edit-cell"><div><%= f.number_field :quantity, min: 0, size: 3 %></div></td>
-            <td class="edit-cell">
+            <td class="edit-cell adv_option" style="display: none"><div><%= f.number_field :quantity, min: 0, size: 3 %></div></td>
+            <td class="edit-cell adv_option" style="display: none">
               <% if unit_product.lots.count > 0 %><button class="cancel">Cancel</button>&nbsp;<% end %><%= f.submit "Add", class: "btn--small" %>
             </td>
           </tr>
 
           <% if organization_can_access?(unit_product.organization, :advanced_inventory) && unit_product.lots.count > 0 %>
-            <tr class="add-toggle last-row">
+            <tr class="add-toggle last-row adv_option" style="display: none">
               <td class="adv_option" style="display: none"></td>
               <td class="adv_option" style="display: none"></td>
               <td class="adv_option" style="display: none"></td>
               <td class="adv_option" style="display: none"></td>
-              <td></td>
-              <td><%= link_to "Add Lot", '#add-lot', class: 'add-toggle' %></td>
+              <td class="adv_option" style="display: none"></td>
+              <td class="adv_option" style="display: none"><%= link_to "Add Lot", '#add-lot', class: 'add-toggle' %></td>
             </tr>
           <% end %>
           </tbody>
