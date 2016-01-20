@@ -73,13 +73,14 @@
     },
 
     render: function() {
-      var gp = this.props.product;
+      var self = this;
+      var gp = self.props.product;
       var unitPrices = _.map(gp.available, function(p) {
         return <lo.MobileProductUnitPrices key={p.id} product={p} />
       });
 
       var inputs = _.map(gp.available, function(p) {
-        return <lo.MobileProductInput key={p.id} product={p} />
+        return <lo.MobileProductInput key={p.id} product={p} promo={self.props.promo}/>
       });
 
       var info = this.generateInfo();
