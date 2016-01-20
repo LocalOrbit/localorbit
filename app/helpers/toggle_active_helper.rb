@@ -1,3 +1,4 @@
+# KXM This helper is leveraged by market and organization resources.  It may be that orgs eventually get a pending status, but until then (and likely subject to further discussion) all reference to 'pending' should be tried, and all everything should be abstracted.  Perhaps a different method?  Or a call to a traffic cop method that does a little intellegent branching?  Does it make sense to split out the 'pending' check to a different helper entirely (this, of course, would require modifications to any view that may leverage the 'pending' check)
 module ToggleActiveHelper
   def toggle_active_button(resource, parent: nil)
 =begin
