@@ -31,7 +31,7 @@
         </th>
         <td>
           <span class="lo_availability"><%= product.available_inventory %> Available</span><br>
-          <%= link_to "Add to Order", product_path(product), class: "lo_add_link" %>
+          <%= link_to "Add to Order", product_url(product), class: "lo_add_link" %>
           <% if @preview %>
             <br>
             <%= link_to "Edit", admin_product_url(product), target: '_top', class: 'lo_button' %>

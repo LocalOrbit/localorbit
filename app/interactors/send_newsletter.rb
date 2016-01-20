@@ -2,9 +2,6 @@ class SendNewsletter
   include Interactor
 
   def perform
-    body = CGI::unescapeHTML(newsletter.body)
-    newsletter.body = body
-
     if commit == "Send Test"
       MarketMailer.delay.newsletter(newsletter: newsletter, market: market, to: email, port: get_port, unsubscribe_token: "XYZ-test-unsub-newsletter-0986")
       context[:notice] = "Successfully sent a test to #{email}"
