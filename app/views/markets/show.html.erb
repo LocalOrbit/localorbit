@@ -35,7 +35,7 @@
           <a href="#seller-map" class="toggle-slide seller-map-toggle" data-toggle-open="Hide Map" data-toggle-closed="Show Map">Hide Map</a>
         </div>
         <div class="slide seller-map-slide is-down" id="seller-map">
-          <img class="location-map slide-content" alt="" src="<%= @market.seller_locations_map 680, 400 %>" height="400">
+          <img class="location-map slide-content" alt="" src="<%#= @market.seller_locations_map 680, 400 %>" height="400">
         </div>
 
         <ul class="l-inline-list seller-list">
@@ -58,7 +58,7 @@
           <span class="locality"><%= @market.default_address.city %></span>, <span class="region"><%=@market.try(:default_address).try(:state) %></span> <span class="postal-code"><%= @market.try(:default_address).try(:zip) %></span>
         </p>
         <% end %>
-        <% if @market.default_address_phone_number.present? %><span class="tel"><%= @market.default_address_phone_number %></span><% end %>
+        <%# if @market.default_address_phone_number.present? %><span class="tel"><%#= @market.default_address_phone_number %></span><%# end %>
       </div>
     </div>
 
