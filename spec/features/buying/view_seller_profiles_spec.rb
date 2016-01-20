@@ -110,7 +110,7 @@ feature "View Seller Profiles" do
 
       expect(page).to have_content ("Currently Selling")
 
-      products = Dom::AlternativeProduct.all
+      products = Dom::Product.all
       expect(products.count).to eq(1)
       expect(products.map(&:name)).to match_array([product1.name])
     end
@@ -128,7 +128,7 @@ feature "View Seller Profiles" do
       expect(page).to have_content(seller1.who_story)
       expect(page).to have_content(seller1.how_story)
 
-      products = Dom::AlternativeProduct.all
+      products = Dom::Product.all
       expect(products.count).to eq(1)
       expect(products.map(&:name)).to match_array([product1.name])
     end
@@ -153,7 +153,7 @@ feature "View Seller Profiles" do
       sleep 10
       expect(page).to have_content ("Currently Selling")
 
-      products = Dom::AlternativeProduct.all
+      products = Dom::Product.all
       expect(products.count).to eq(3)
       # two inner headers (apples/bananas)
       expect(page).to have_content ("Apples")
