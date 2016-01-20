@@ -24,7 +24,7 @@ let!(:product2) { create(:product, name:"Test Product 2") }
 	describe "POST /api/v2/add-product" do
 
 		it "posts one product correctly with 201 response" do # todo market name problem - in controller
-			post "api/v2/products/add-product", '{"name"=>"Very Unusual Name","organization_name"=>"Boettcher Farm","price"=>"2.34","unit"=>"Case","category"=>"Fruits","code"=>"hmmm","short_description"=>"short","long_description"=>"GOES ON FOREVER long long long","unit_description"=>"unit description with new unit same product"}', {content_type:'text/html'}
+			post "api/v2/products/add-product", {name:"Very Unusual Name",organization_name:"Boettcher Farm",price:2.34,unit:"Case",category:"Fruits",code:"hmmm-abc",short_description:"short",long_description:"GOES ON FOREVER long long long",unit_description:"unit description with new unit same product"}.to_json, {"Content-Type"=>"application/json"}
 			#expect(response.status).to eq(201)
 			expect(JSON.parse(response.body)).to eq("hi")
 		end
@@ -33,8 +33,11 @@ let!(:product2) { create(:product, name:"Test Product 2") }
 			# remove product name and make sure it gives error
 		end
 
-		it "returns a bad request response on malformed request data (no organization name)" do
+		it "returns a bad request response on malformed request data (no org name)" do
+			# same for correct single product request with no org name
 		end
+
+		# TODO: test for mkt name behavior when route is adequately supported for markets
 
 	end
 
