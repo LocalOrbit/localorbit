@@ -19,15 +19,18 @@ div#market-creation{
 			border: none;
 			background: none;
 			padding: .4em 1em .6em;
+			color: #262626;
 
 			&.ui-state-active{
 				/* # KXM Background images should be hung from at least two places to account for both active state navigation and form completion indicators.  Make sure to update the relative DOM manipulation in the JavaScript routines When that's done. */
 				background: asset_url('icons/up.png') no-repeat bottom center;
+				color: #8A7777;
 			}
 
 			&.pass{
 				height: 2em;
 				background: asset_url('icons/check.png') no-repeat bottom center;
+				color: #8A7777;
 			}
 
 			a, .anchor{
@@ -39,13 +42,13 @@ div#market-creation{
 	}
 
 	fieldset{
-		margin: 2em 0 3em;
+		margin: 0 0 2.6em;
 
 		h2{
 			text-align: center;
 
 			margin: 1.6em auto 0;
-			font-family: FrancoisOne-Regular, sans-serif;
+			font-family: 'Francois One', sans-serif;
 			font-size: 28px;
 			color: #262626;
 			line-height: 32px;
@@ -71,7 +74,7 @@ div#market-creation{
 	input[type="email"]{
 		background: #EEEEEE;
 		height: 44px;
-		font-family: SourceSansPro-Regular, sans-serif;
+		font-family: 'Source Sans Pro', sans-serif;
 		font-size: 14px;
 		color: #999999;
 		line-height: 18px;
@@ -79,8 +82,9 @@ div#market-creation{
 	}
 
 	.help-text{
-		font-family: SourceSansPro-lt, sans-serif;
+		font-family: 'Source Sans Pro', sans-serif;
 		font-size: 14px;
+		font-weight: 300;
 		font-style: italic;
 		color: #606060;
 		line-height: 18px;
@@ -90,7 +94,8 @@ div#market-creation{
 	.form-action{
 		border-radius: 78px;
 		background-color: white;
-		font-family: SourceSansPro-Semibold, sans-serif;
+		font-family: 'Source Sans Pro', sans-serif;
+		font-weight: 600;
 		font-size: 14px;
 		color: #7EBEC5;
 		line-height: 18px;
@@ -107,7 +112,7 @@ div#market-creation{
 			border-radius: 100px;
 			border-width: 0;
 			height: 54px;
-			font-family: FrancoisOne-Regular, sans-serif;
+			font-family: 'Francois One', sans-serif;
 			font-size: 22.73px;
 			color: white;
 			line-height: 31px;
