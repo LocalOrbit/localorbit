@@ -127,7 +127,7 @@ module Admin
     end
 
     def find_selling_markets
-      @selling_markets = Market.managed_by(current_user).order(:name).inject([["All", 0]]) {|result, market| result << [market.name, market.id] }
+      @selling_markets = Market.managed_by(current_user).order(:name).inject([]) {|result, market| result << [market.name, market.id] }
     end
 
     def disable_supplier_inventory

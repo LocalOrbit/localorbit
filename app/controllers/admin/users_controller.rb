@@ -1,6 +1,7 @@
 module Admin
   class UsersController < AdminController
     include StickyFilters
+    include Users
 
     before_action :require_admin_or_market_manager
     before_action :lookup_manageable_user, only: [:edit, :update, :update_enabled]
@@ -56,17 +57,14 @@ module Admin
 
     def confirm
       user = User.find(params[:user_id])
-      user.accept_invitation!
-      user.confirm!
-      user.save
+      confirm_user(user)
 
       redirect_to [:admin, :users], notice: "User #{user.decorate.display_name} Confirmed"
     end
 
     def invite
       user = User.find(params[:user_id])
-      user.invite!
-      user.save
+      invite_user(user)
 
       redirect_to [:admin, :users], notice: "User #{user.decorate.display_name} Re-Invited"
 
@@ -80,17 +78,6 @@ module Admin
 
     def user_params
       params.require(:user).permit(:name, :email, :password, :password_confirmation).reject {|_, v| v.empty? }
-    end
-
-    def find_users
-      scope = if current_user.admin?
-        User.all
-      else
-        ids = current_user.managed_markets.map {|m| m.manager_ids }.flatten |
-          current_user.managed_organizations.map {|o| o.user_ids }.flatten
-        User.where(id: ids)
-      end
-      @users = scope.includes(:managed_markets)
     end
   end
 end

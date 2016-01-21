@@ -95,10 +95,11 @@
 
         <% if !current_market.closed? && !@products_for_sale.product_groups.empty?  %>
           <h2 class="heading-section">Currently Selling</h2>
-          <% @products_for_sale.each_category_with_products do |category, products| %>
-            <%= render "products/table", products: products, category: category %>
-          <% end %>
+            <% @products_for_sale.each_category_with_products do |category, products| %>
+                <%= render "products/table", products: products, category: category %>
+            <% end %>
         <% end %>
+        <br/><br/>
         <% hide_cart = current_cart.present? && current_cart.items.count > 0 ? "" : "is-hidden" %>
         <%= link_to "Review Cart", cart_path, id: "review_cart", class: "btn btn--small pull-right add-toggle mobile-block #{hide_cart}" %>
       <% end %>

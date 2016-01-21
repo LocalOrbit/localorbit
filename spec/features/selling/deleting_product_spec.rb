@@ -18,6 +18,7 @@ feature "Deleting a product from the product list" do
     visit admin_products_path
 
     product = Dom::ProductRow.first
+    #page.execute_script("$('.fa-trash-o').first().click()")
     product.click_delete
 
     expect(Dom::ProductRow.count).to eq(1)

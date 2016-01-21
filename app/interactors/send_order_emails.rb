@@ -7,7 +7,7 @@ class SendOrderEmails
     end
 
     order.sellers.each do |seller|
-      unless seller.users.empty?
+      unless seller.users.empty? || !seller.active?
 
         @pack_lists = OrdersBySellerPresenter.new(order.items, seller)
         @delivery = Delivery.find(order.delivery.id).decorate

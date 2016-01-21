@@ -3,8 +3,10 @@ class OrderMailer < BaseMailer
     @market = order.market
     @order = BuyerOrder.new(order)
 
+    to_list =  order.organization.users.map { |u| u.enabled_for_organization?(order.organization) ? u.pretty_email : nil}
+
     mail(
-      to: order.organization.users.map(&:pretty_email),
+      to: to_list,
       subject: "Thank you for your order"
     )
   end
@@ -17,8 +19,10 @@ class OrderMailer < BaseMailer
     attachments["packing_list.pdf"] = {mime_type: "application/pdf", content: pdf.data}
     attachments["packing_list.csv"] = {mime_type: "application/csv", content: csv}
 
+    to_list = seller.users.map { |u| u.enabled_for_organization?(seller) ? u.pretty_email : nil}
+
     mail(
-      to: seller.users.map(&:pretty_email),
+      to: to_list,
       subject: "New order on #{@market.name}"
     )
 
@@ -40,8 +44,10 @@ class OrderMailer < BaseMailer
 
     attachments["invoice.pdf"] = {mime_type: "application/pdf", content: @order.invoice_pdf.try(:data)}
 
+    to_list = @order.organization.users.map { |u| u.enabled_for_organization?(@order.organization) ? u.pretty_email : nil}
+
     result = mail(
-      to: @order.organization.users.map(&:pretty_email),
+      to: to_list,
       subject: "New Invoice"
     )
   end
@@ -50,8 +56,10 @@ class OrderMailer < BaseMailer
     @market = order.market
     @order = BuyerOrder.new(order) # Market Managers should see all items
 
+    to_list = order.organization.users.map { |u| u.enabled_for_organization?(order.organization) ? u.pretty_email : nil}
+
     mail(
-      to: order.organization.users.map(&:pretty_email),
+      to: to_list,
       subject: "#{@market.name}: Order #{order.order_number} Updated",
       template_name: "order_updated"
     )
@@ -61,8 +69,10 @@ class OrderMailer < BaseMailer
     @market = order.market
     @order = BuyerOrder.new(order) # Market Managers should see all items
 
+    to_list = order.organization.users.map { |u| u.enabled_for_organization?(order.organization) ? u.pretty_email : nil}
+
     mail(
-        to: order.organization.users.map(&:pretty_email),
+        to: to_list,
         subject: "#{@market.name}: Order #{order.order_number} Updated - Item Removed",
         template_name: "order_updated"
     )
@@ -78,8 +88,10 @@ class OrderMailer < BaseMailer
       attachments["packing_list.csv"] = {mime_type: "application/csv", content: csv}
     end
 
+    to_list = seller.users.map { |u| u.enabled_for_organization?(seller) ? u.pretty_email : nil}
+
     mail(
-      to: seller.users.map(&:pretty_email),
+      to: to_list,
       subject: "#{@market.name}: Order #{order.order_number} Updated",
       template_name: "order_updated"
     )

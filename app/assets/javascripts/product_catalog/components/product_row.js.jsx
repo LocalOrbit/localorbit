@@ -7,6 +7,7 @@
     render: function() {
       var self = this;
       var gp = this.props.product;
+      var supplierStyle;
 
       var unit_prices = _.map(gp.available, function(p) {
         return <lo.ProductUnitPrices key={p.id} product={p} promo={self.props.promo}/>
@@ -16,7 +17,7 @@
         <div className="row product-listing">
           <div className="product-details-container column column--five-twelfths">
             <img style={{display: (this.props.hideImages) ? "none" : ""}} className="product-image" src={gp.image_url}/>
-            <div className="product-details">
+            <div className="product-details" style={{ width: (this.props.supplierOnly) ? "unset" : "", marginTop: (this.props.supplierOnly) ? "10px" : "" }}>
               <h3>{gp.name}</h3>
               <h5>From: <a href={"/sellers/" + gp.seller_id}>{gp.seller_name}</a></h5>
               <p>{gp.short_description}</p>

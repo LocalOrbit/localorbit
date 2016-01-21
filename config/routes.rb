@@ -40,6 +40,7 @@ Rails.application.routes.draw do
       resources :products, only: [:index]
       resources :filters, only: [:index]
       resources :order_templates, only: [:index, :create, :destroy]
+      resources :dashboards, only: [:index]
     end
   end
 
@@ -211,7 +212,7 @@ Rails.application.routes.draw do
   resource  :market, only: [:show]
   resources :sellers, only: [:index, :show]
   resource :cart, only: [:update, :show, :destroy]
-  resources :orders, only: [:show, :create] do
+  resources :orders, only: [:index, :show, :create] do
     resources :table_tents_and_posters, :controller=>"table_tents_and_posters", only: [:index, :show, :create]
   end
   resource :registration, only: [:show, :create]

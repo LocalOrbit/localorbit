@@ -79,8 +79,7 @@ module ApplicationHelper
         defaults.each do |default|
           # This currently only applies to dates, and this code makes 
           # the comparison more robust
-          converted = Time.parse(search_result)
-          if converted.strftime('%Y-%m-%d').to_date.to_s == default.to_date.to_s
+          if search_result.to_date.to_s == default.to_date.to_s
             # Explicit return here short circuits the call as soon as 
             # a fail condition is met.  That's what we want.
             return class_string
@@ -144,9 +143,11 @@ module ApplicationHelper
   end
 
   def hex_to_rgba(color, opacity=1)
-    color = color.sub(/^#/, "")
-    c = Color::RGB.by_hex(color)
-    "rgba(#{c.red.round},#{c.green.round},#{c.blue.round},#{opacity})"
+    if color
+      color = color.sub(/^#/, "")
+      c = Color::RGB.by_hex(color)
+      "rgba(#{c.red.round},#{c.green.round},#{c.blue.round},#{opacity})"
+    end
   end
 
   def hex_to_hsl(color)

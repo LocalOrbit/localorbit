@@ -35,7 +35,7 @@ end
   <ul id="admin-nav" class="l-inline-list nav nav--admin clear-before <%= "mobile-only" if @hide_admin_nav %>">
     <li class="mobile-only"><%= link_to 'Dashboard', dashboard_path %></li>
     <% if current_user.buyer_only? %>
-      <li><%= link_to raw('<i class="font-icon" data-icon="&#xe00c;"></i> Purchase History'), dashboard_path %></li>
+      <li><%= link_to raw('<i class="font-icon" data-icon="&#xe00c;"></i> Purchase History'), orders_path %></li>
     <% end %>
 
     <% if current_user.admin? || current_user.market_manager? %>

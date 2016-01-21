@@ -1,0 +1,122 @@
+@import "mixins.css.scss";
+
+.segmented-control {
+}
+.segmented-control input {
+  display: none;
+}
+
+
+.segmented-control {
+  border: 1px solid #DDD;
+  border-radius: 5px;
+  overflow: hidden;
+  .label {
+    text-align: center;
+    transition: all 0.2s ease-out;
+    min-width: 50px;
+    height: 30px;
+    float: left;
+    background-color: #fff;
+    div {
+      margin-top: 6px;
+    }
+    label {
+      display: block;
+      width: 100%;
+      height: 35px;
+      cursor: pointer;
+    }
+  }
+}
+
+.segmented-control input[type=radio] ~ label {
+  color: unset;
+  .selected {
+    color: #FFF;
+  }
+}
+
+.dashboard-widget {
+  background-color: #FFF;
+  &.deliveries {
+    background-color: #666;
+    min-width: 300px;
+    max-width: 300px;
+  }
+  .small-widget {
+    height: 100px;
+  }
+  .large-widget {
+  }
+}
+
+.dashboard-widget {
+  .widget-label {
+    font-size: 22px;
+    font-weight: normal;
+    text-align: right;
+    padding-right: 5px;
+    &.deliveries {
+      color: #FFF;
+      text-align: left;
+      padding-left: 5px;
+    }
+  }
+  .widget-value {
+    font-size: 3.0vmax;
+    font-weight: bold;
+    text-align: right;
+    padding-right: 5px;
+    &.deliveries {
+      color: #FFF;
+      text-align: left;
+      padding-left: 5px;
+    }
+  }
+}
+
+.dashboard-widget {
+  .top-section {
+    display: inline-block;
+    width: 100%;
+  }
+  .bottom-border {
+    width: 90%;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #DDD;
+    height: 100px;
+    margin: 0 auto;
+    &.deliveries {
+      border-bottom: 1px solid #444;
+      height:auto;
+    }
+  }
+}
+
+.dashboard-widget {
+  .font-icon {
+    color: #CCC;
+    font-size: 55px;
+    padding: 15px;
+    &.deliveries {
+      color: #444;
+    }
+  }
+}
+
+.dashboard-widget .calendar .cal-date {
+    color: #FFF;
+    font-weight: bold;
+    font-style: normal;
+    border-color: #666;
+    cursor: pointer;
+    &.disabled {
+      background-color: #444;
+    }
+    &.blank {
+      background-color: #666;
+      border-color: #666;
+      cursor: none;
+    }
+}

@@ -410,8 +410,8 @@ th {
   }
   .product-image {
     float: left;
-    width: 75px;
-    height: 75px;
+    max-width: 75px;
+    max-height: 75px;
     padding-right: 0;
     margin: 0 10px 0 0;
 

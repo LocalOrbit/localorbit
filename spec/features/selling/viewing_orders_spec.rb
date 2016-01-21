@@ -259,7 +259,7 @@ feature "Viewing orders" do
 
       expect(page).to have_select("Market")
 
-      within("#q_organization_id_eq") do
+      within("#q_organization_id_in") do
         expect(page).to have_content(market1_buyer_org1.name)
         expect(page).to have_content(market1_buyer_org2.name)
         expect(page).to have_content(market2_buyer_org.name)
@@ -272,8 +272,8 @@ feature "Viewing orders" do
       expect(page).to have_content(market2_order2.order_number)
       expect(page).to have_content(market2_order3.order_number)
 
-      select market1.name, from: "q_market_id_eq"
-      click_button "Filter"
+      select market1.name, from: "q_market_id_in"
+      click_button "Search"
 
       expect(page).to have_content(market1_order1.order_number)
       expect(page).to have_content(market1_order2.order_number)
@@ -282,13 +282,13 @@ feature "Viewing orders" do
       expect(page).not_to have_content(market2_order2.order_number)
       expect(page).not_to have_content(market2_order3.order_number)
 
-      within("#q_organization_id_eq") do
+      within("#q_organization_id_in") do
         expect(page).to have_content(market1_buyer_org1.name)
         expect(page).to have_content(market1_buyer_org2.name)
         expect(page).not_to have_content(market2_buyer_org.name)
       end
 
-      expect(find(:css, "#q_market_id_eq").value).to eql(market1.id.to_s)
+      expect(find(:css, "#q_market_id_in").value).to eql([market1.id.to_s])
     end
 
     scenario "filtering list of orders by buyer" do
@@ -301,8 +301,8 @@ feature "Viewing orders" do
       expect(page).to have_content(market2_order2.order_number)
       expect(page).to have_content(market2_order3.order_number)
 
-      select market1_buyer_org1.name, from: "q_organization_id_eq"
-      click_button "Filter"
+      select market1_buyer_org1.name, from: "q_organization_id_in"
+      click_button "Search"
 
       expect(page).to have_content(market1_order1.order_number)
       expect(page).not_to have_content(market1_order2.order_number)
@@ -328,7 +328,7 @@ feature "Viewing orders" do
 
       fill_in "q_placed_at_date_gteq", with: 7.weeks.ago.to_date.to_s
       fill_in "q_placed_at_date_lteq", with: 5.weeks.ago.to_date.to_s
-      click_button "Filter"
+      click_button "Search"
 
       expect(page).not_to have_content(market1_order1.order_number)
       expect(page).not_to have_content(market1_order2.order_number)
@@ -338,7 +338,7 @@ feature "Viewing orders" do
       expect(page).to have_content(market2_order3.order_number)
 
       fill_in "q_placed_at_date_lteq", with: 6.weeks.ago.to_date.to_s
-      click_button "Filter"
+      click_button "Search"
 
       expect(page).not_to have_content(market1_order1.order_number)
       expect(page).not_to have_content(market1_order2.order_number)
@@ -359,7 +359,7 @@ feature "Viewing orders" do
       expect(page).to have_content(market2_order3.order_number)
 
       fill_in "q_order_number_or_organization_name_or_items_seller_name_cont", with: market1_order3.order_number
-      click_button "Filter"
+      click_button "Search"
 
       expect(page).not_to have_content(market1_order1.order_number)
       expect(page).not_to have_content(market1_order2.order_number)
@@ -380,7 +380,7 @@ feature "Viewing orders" do
       expect(page).to have_content(market2_order3.order_number)
 
       fill_in "q_order_number_or_organization_name_or_items_seller_name_cont", with: market1_buyer_org1.name
-      click_button "Filter"
+      click_button "Search"
 
       expect(page).to have_content(market1_order1.order_number)
       expect(page).not_to have_content(market1_order2.order_number)
@@ -401,7 +401,7 @@ feature "Viewing orders" do
       expect(page).to have_content(market2_order3.order_number)
 
       fill_in "q_order_number_or_organization_name_or_items_seller_name_cont", with: market1_seller_org1.name
-      click_button "Filter"
+      click_button "Search"
 
       expect(page).to have_content(market1_order1.order_number)
       expect(page).to have_content(market1_order2.order_number)
@@ -425,8 +425,8 @@ feature "Viewing orders" do
       expect(totals.discount_seller).to eq("$#{discount_seller}")
       expect(totals.discount_market).to eq("$#{discount_market}")
       expect(totals.net_sales).to eq("$#{140.70.to_d - discount_seller}")
-      select market1_buyer_org1.name, from: "q_organization_id_eq"
-      click_button "Filter"
+      select market1_buyer_org1.name, from: "q_organization_id_in"
+      click_button "Search"
       totals = Dom::Admin::TotalSales.first
 
       expect(totals.gross_sales).to eq("$34.95")

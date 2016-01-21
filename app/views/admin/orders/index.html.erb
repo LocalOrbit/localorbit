@@ -1,9 +1,8 @@
-<div class="tab-header stickable">
+<div>
   <div class="l-constraint">
     <%= link_to "#{svg_icon} Export CSV".html_safe, url_for(q: params[:q], format: :csv), class: 'export todo pull-right', style: 'margin-bottom: 20px' %>
     <h1><i class="font-icon" data-icon="&#xe025;"></i>&nbsp; Review Orders</h1>
     <p>This is a list of all orders made in your market.</p>
-
     <%= render "filters" %>
   </div>
 </div>
@@ -19,14 +18,21 @@
       <%= content_tag :th, sort_link(@q, :payment_status, "Buyer") %>
     </thead>
     <tbody>
-      <% @orders.each do |order| %>
+      <%
+        @orders.each do |order|
+          items = Orders::SellerItems.items_for_seller(order, current_user)
+      %>
       <tr class="order-row">
         <td class="order-number">
           <%= link_to order.order_number, admin_order_path(order) %>
         </td>
         <td class="order-date"><%= order.placed_at.strftime("%m/%d/%Y") %></td>
         <td class="deliver-on"><%= order.delivery.deliver_on.strftime("%m/%d/%Y") %></td>
+        <% if current_user.admin? || current_user.market_manager? || current_user.buyer_only? %>
         <td class="amount-owed"><%= number_to_currency(order.total_cost) %></td>
+        <% else %>
+        <td class="amount-owed"><%= number_to_currency(items.map(&:seller_net_total).reduce(:+)||0) %></td>
+        <% end %>
         <td class="buyer-name"><%= order.organization.name %></td>
         <td class="delivery-status"><%= order.delivery_status_for_user(current_user).titleize %></td>
         <td class="buyer-status"><%= order.payment_status.titleize %></td>

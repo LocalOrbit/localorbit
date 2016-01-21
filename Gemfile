@@ -61,14 +61,18 @@ gem "rack-canonical-host"
 gem "ransack"
 gem "simpleidn"
 gem "stripe_event"
-gem 'react-rails', '~> 1.0'
 gem "font-awesome-rails"
 gem "wysiwyg-rails"
 gem "kiba"
 
+gem 'browserify-rails'
+gem 'react-rails'
+
 gem "constructor"
 gem "tabulator", github: "dcrosby42/tabulator"
 gem "rschema", github: "tomdalling/rschema"
+
+gem "turbolinks"
 
 # wkhtmltopdf versions are a mess. 0.12.1 is stable but not well supported by gems
 # See https://github.com/zakird/wkhtmltopdf_binary_gem/issues/13
@@ -119,12 +123,12 @@ group :development, :test do
   gem 'capybara-slow_finder_errors'
   #gem 'wkhtmltopdf-binary-edge', '~> 0.12.2.1'
   gem "wkhtmltopdf-binary", github: "zakird/wkhtmltopdf_binary_gem"
+  gem "capybara"
 end
 
 group :test do
   gem "codeclimate-test-reporter", require: false
   gem "simplecov", require: false
-  gem "capybara"
   gem "domino"
   gem "factory_girl_rails"
   gem "email_spec"
@@ -132,6 +136,7 @@ group :test do
   gem "timecop"
   gem "vcr"
   gem 'fire_poll', '1.2.0'
+  gem 'capybara-screenshot'
 end
 
 group :production, :staging do

@@ -1,4 +1,4 @@
-<div class="tab-header stickable">
+<div>
   <div class="l-constraint">
     <%= link_to "#{svg_icon} Export CSV".html_safe, url_for(format: :csv), class: 'export pull-right ' %>
     <h1><i class="font-icon" data-icon="&#xe01f;"></i>&nbsp; Products</h1>
@@ -60,9 +60,9 @@
         <% end %>
       </td>
       <td class="delete action-link">
-        <%= link_to raw('&#57418;'), [:admin, product], method: :delete,
+        <%= link_to raw('<i class="fa fa-trash-o">&nbsp;</i>'), [:admin, product], method: :delete,
                     data: { confirm: "Are you sure you want to permanently delete #{product.plural_units_with_name}?" },
-                    title: "Delete", class: "font-icon" %>
+                    title: "Delete", class: "del-link font-icon" %>
       </td>
     </tr>
   <% end %>

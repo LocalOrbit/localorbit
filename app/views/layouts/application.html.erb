@@ -44,6 +44,9 @@
       input[type=submit].close,
       input[type=submit].delete,
       .seller-map-toggle,
+      .segmented-control .label,
+      .widget-value,
+      .widget-label,
       .tagline,
       .nav--sidebar a {
         color: <%= current_market.text_color -%>;
@@ -56,11 +59,32 @@
       .btn--primary,
       .btn--add,
       .btn--save,
+      .segmented-control .label.selected,
       input[type=submit],
       input[type=button].btn {
         background-color: <%= current_market.text_color -%>;
         border-color: <%= current_market.text_color -%>;
       }
+
+      .segmented-control {
+        color: <%= current_market.text_color -%>;
+        border-color: <%= current_market.text_color -%>;
+      }
+
+      .segmented-control .label div {
+        color: <%= current_market.text_color -%>;
+      }
+
+      .segmented-control .label.selected div {
+        background-color: <%= current_market.text_color -%>;
+        border-color: <%= current_market.text_color -%>;
+        color: #FFF;
+      }
+
+      .dashboard-widget .calendar .cal-date {
+        background-color: <%= current_market.text_color -%>;
+      }
+
       .set_filter,
       input[type=date].set_filter,
       input[type=datetime].set_filter,
@@ -116,6 +140,8 @@
     <% end %>
     </style>
   <% end %>
+  <%= javascript_include_tag "https://cdnjs.cloudflare.com/ajax/libs/es5-shim/4.4.1/es5-shim.js", "data-turbolinks-track" => true %>
+  <%= javascript_include_tag "https://cdn.plot.ly/plotly-latest.min.js", "data-turbolinks-track" => true %>
 </head>
 
 <body class="controller-<%= controller.controller_name %> <%= current_user.present? ? "" : "signed-out" %> <%= "request-desktop" if cookies[:request_desktop] && cookies[:request_desktop] == "true"  %>">

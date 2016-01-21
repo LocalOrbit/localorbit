@@ -15,60 +15,61 @@
 
         <% if filter == :market_name && current_user.multi_market_membership? %>
           <span class="preserve-alignment mobile-block">
-            <%= f.label :order_market_id_eq, "Market" %><br>
-            <%= f.select :order_market_id_eq, options_from_collection_for_select(presenter.markets, :id, :name, presenter.q.order_market_id_eq), { include_blank: "All" }, { class: append_sticky_class(:order_market_id_eq, "filter-input") } %>
+            <%= f.label :order_market_id_in, "Market" %><br>
+            <%= f.select :order_market_id_in, options_from_collection_for_select(presenter.markets, :id, :name, presenter.q.order_market_id_in), { include_blank: nil }, { multiple: true, class: [append_sticky_class(:order_market_id_in, ""),'multiselect'] } %>
           </span>
         <% end %>
 
         <% if filter == :seller_name %>
           <span class="preserve-alignment mobile-block">
-            <%= f.label :product_organization_id_eq, "Supplier" %><br>
-            <%= f.select :product_organization_id_eq, options_from_collection_for_select(presenter.sellers, :id, :name, presenter.q.product_organization_id_eq), { include_blank: "All" }, { class: append_sticky_class(:product_organization_id_eq, "filter-input") } %>
+            <%= f.label :product_organization_id_in, "Supplier" %><br>
+            <%= f.select :product_organization_id_in, options_from_collection_for_select(presenter.sellers, :id, :name, presenter.q.product_organization_id_in), { include_blank: nil }, { multiple: true, class: [append_sticky_class(:product_organization_id_in, ""),'multiselect'] } %>
           </span>
         <% end %>
 
         <% if filter == :buyer_name %>
           <span class="preserve-alignment mobile-block">
-            <%= f.label :order_organization_id_eq, "Buyer" %><br>
-            <%= f.select :order_organization_id_eq, options_from_collection_for_select(presenter.buyers, :id, :name, presenter.q.order_organization_id_eq), { include_blank: "All" }, { class: append_sticky_class(:order_organization_id_eq, "filter-input") } %>
+            <%= f.label :order_organization_id_in, "Buyer" %><br>
+            <%= f.select :order_organization_id_in, options_from_collection_for_select(presenter.buyers, :id, :name, presenter.q.order_organization_id_in), { include_blank: nil }, { multiple: true, class: [append_sticky_class(:order_organization_id_in, ""),'multiselect'] } %>
           </span>
         <% end %>
 
         <% if filter == :fulfillment_day %>
           <span class="preserve-alignment mobile-block">
-            <%= f.label :order_delivery_delivery_schedule_buyer_day_eq, "Fulfillment Day" %><br>
-            <%= f.select :order_delivery_delivery_schedule_buyer_day_eq, options_from_collection_for_select(presenter.fulfillment_days, :first, :last, presenter.q.order_delivery_delivery_schedule_day_eq), { include_blank: "All" }, { class: append_sticky_class(:order_delivery_delivery_schedule_buyer_day_eq, "filter-input") } %>
+            <%= f.label :order_delivery_delivery_schedule_buyer_day_in, "Fulfillment Day" %><br>
+            <%= f.select :order_delivery_delivery_schedule_buyer_day_in, options_from_collection_for_select(presenter.fulfillment_days, :first, :last, presenter.q.order_delivery_delivery_schedule_day_in), { include_blank: nil }, { multiple: true, class: [append_sticky_class(:order_delivery_delivery_schedule_buyer_day_in, ""),'multiselect'] } %>
           </span>
         <% end %>
 
         <% if filter == :fulfillment_type %>
           <span class="preserve-alignment mobile-block">
-            <%= f.label :order_delivery_delivery_schedule_fulfillment_type_eq, "Fulfillment Type" %><br>
-            <%= f.select :order_delivery_delivery_schedule_fulfillment_type_eq, options_from_collection_for_select(presenter.fulfillment_types, :first, :last, presenter.q.order_delivery_delivery_schedule_fulfillment_type_eq), { include_blank: "All" }, { class: append_sticky_class(:order_delivery_delivery_schedule_fulfillment_type_eq, "filter-input") } %>
+            <%= f.label :order_delivery_delivery_schedule_fulfillment_type_in, "Fulfillment Type" %><br>
+            <%= f.select :order_delivery_delivery_schedule_fulfillment_type_in, options_from_collection_for_select(presenter.fulfillment_types, :first, :last, presenter.q.order_delivery_delivery_schedule_fulfillment_type_in), { include_blank: nil }, { multiple: true, class: [append_sticky_class(:order_delivery_delivery_schedule_fulfillment_type_in, ""),'multiselect'] } %>
           </span>
         <% end %>
 
         <% if filter == :category_name %>
           <span class="preserve-alignment mobile-block">
-            <%= f.label :product_category_id_eq, "Category" %><br>
-            <%= f.select :product_category_id_eq, options_from_collection_for_select(presenter.categories, :id, :name, presenter.q.product_category_id_eq), { include_blank: "All" }, { class: append_sticky_class(:product_category_id_eq, "filter-input") } %>
+            <%= f.label :product_category_id_in, "Category" %><br>
+            <%= f.select :product_category_id_in, options_from_collection_for_select(presenter.categories, :id, :name, presenter.q.product_category_id_in), { include_blank: nil }, { multiple: true, class: [append_sticky_class(:product_category_id_in, ""),'multiselect'] } %>
           </span>
         <% end %>
 
         <% if filter == :product_name %>
           <span class="preserve-alignment mobile-block">
-            <%= f.label :name_eq, "Product" %><br>
-            <%= f.select :name_eq, options_from_collection_for_select(presenter.products, :to_s, :to_s, presenter.q.name_eq), { include_blank: "All" }, { class: append_sticky_class(:name_eq, "filter-input") } %>
+            <%= f.label :name_in, "Product" %><br>
+            <%= f.select :name_in, options_from_collection_for_select(presenter.products, :to_s, :to_s, presenter.q.name_in), { include_blank: nil }, { multiple: true, class: [append_sticky_class(:name_in, ""),'multiselect'] } %>
           </span>
         <% end %>
 
         <% if filter == :payment_method %>
           <span class="preserve-alignment mobile-block">
-            <%= f.label :order_payment_method_eq, "Payment Method" %><br>
-            <%= f.select :order_payment_method_eq, options_from_collection_for_select(presenter.payment_methods, :to_s, :titleize, presenter.q.order_payment_method_eq), { include_blank: "All" }, { class: append_sticky_class(:order_payment_method_eq, "filter-input") } %>
+            <%= f.label :order_payment_method_in, "Payment Method" %><br>
+            <%= f.select :order_payment_method_in, options_from_collection_for_select(presenter.payment_methods, :to_s, :titleize, presenter.q.order_payment_method_in), { include_blank: nil }, { multiple: true, class: [append_sticky_class(:order_payment_method_in, ""),'multiselect'] } %>
           </span>
         <% end %>
       <% end %>
+      <%= link_to "Reset", admin_report_path(clear: '', sort: @query_params["sort"]), class: 'btn reset' if can_reset?(@query_params) %>
     </div>
 
     <% if presenter.filters.include?(:placed_at) %>

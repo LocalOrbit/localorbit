@@ -1,6 +1,6 @@
 <%= render "admin/financials/header" %>
 
-<div class="sub-header stickable">
+<div>
   <div class="l-constraint">
     <h1>Enter Receipts</h1>
     <p>This is a list of all outstanding invoices. You can record payments received offline.</p>
@@ -32,17 +32,18 @@
       <div class="manager-filters pull-left">
         <% if current_user.multi_market_membership? %>
         <span class="preserve-alignment pull-left">
-          <%= f.label :market_id_eq, "Market" %><br>
-          <%= f.collection_select :market_id_eq, @search_presenter.selling_markets, :id, :name, {include_blank: "All"}, {class: append_sticky_class(:market_id_eq, "filter-input")} %>
+          <%= f.label :market_id_in, "Market" %><br>
+          <%= f.collection_select :market_id_in, @search_presenter.selling_markets, :id, :name, {include_blank: nil}, {multiple: true, class: [append_sticky_class(:market_id_in, ""),'multiselect']} %>
         </span>
         <% end %>
 
         <span class="preserve-alignment pull-left">
-          <%= f.label :organization_id_eq, "Buyer" %><br>
-          <%= f.collection_select :organization_id_eq, @search_presenter.buyer_organizations, :id, :name, {include_blank: "All"}, {class: append_sticky_class(:organization_id_eq, "filter-input")} %>
+          <%= f.label :organization_id_in, "Buyer" %><br>
+          <%= f.collection_select :organization_id_in, @search_presenter.buyer_organizations, :id, :name, {include_blank: nil}, {multiple: true, class: [append_sticky_class(:organization_id_in, ""),'multiselect']} %>
         </span>
+        <%= link_to "Reset", admin_financials_receipts_path(clear: '', sort: @query_params["sort"]), class: 'btn reset' if can_reset?(@query_params) %>
       </div>
-    <% end %>
+  <% end %>
     <% if current_user.admin? %>
       <%= link_to "Enter Offline Payment", admin_financials_offline_payment_path, class: "btn btn--save btn--small" %>
     <% end %>

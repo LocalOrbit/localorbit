@@ -588,7 +588,7 @@ module Dom
       attribute :name
 
       def remove!
-        node.click_button "Delete"
+        node.find('.fa-trash-o').click
       end
 
       def affiliations
@@ -1024,6 +1024,29 @@ module Dom
     end
   end
 
+  class AlternativeProduct < Domino
+    selector ".product-listing"
+
+    attribute :name, "H3"
+    attribute :organization_name, "H5"
+    attribute :pricing
+    attribute :quantity
+
+    def open_who_story
+      node.click_link organization_name
+    end
+
+    def open_how_story
+      node.click_link "How"
+    end
+
+    def prices
+      node.all(".tiers li").map do |tier|
+        tier.find(".unit-price").text
+      end
+    end
+  end
+
   class Product < Domino
     selector ".product"
 
@@ -1095,7 +1118,7 @@ module Dom
     end
 
     def click_delete
-      node.click_link "\uE04A"
+      node.click_link("Delete")
     end
 
     def click_pricing
@@ -1227,7 +1250,7 @@ module Dom
       end
 
       def click_delete
-        node.first(".action-link > a").trigger("click")
+        node.find('.fa-trash-o').click
       end
 
     end

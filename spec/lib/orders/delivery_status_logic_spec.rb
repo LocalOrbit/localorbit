@@ -52,30 +52,12 @@ describe Orders::DeliveryStatusLogic do
       end
     end
 
-    context "is 'contested'" do
-      scenario "when at least one item is 'contested'" do
-        expect(logic.overall_status(%w{contested})).to eq "contested"
-        expect(logic.overall_status(%w{delivered delivered contested})).to eq "contested"
-        expect(logic.overall_status(%w{delivered canceled delivered contested canceled})).to eq "contested"
-        expect(logic.overall_status(%w{canceled pending contested pending canceled})).to eq "contested"
-      end
-
-      context "is 'contested, partially delivered'" do
-        scenario "when at least one item is 'contested' AND at least one is 'delivered' AND at least one is 'pending'" do
-          expect(logic.overall_status(%w{delivered contested pending})).to eq "contested, partially delivered"
-          expect(logic.overall_status(%w{delivered delivered contested canceled pending})).to eq "contested, partially delivered"
-        end
-      end
-    end
-
     context "disregards unrecognized statuses" do
       scenario "when strange status strings mixed with knowns" do
         expect(logic.overall_status(%w{canceled such stat delivered wow canceled})).to eq "delivered"
         expect(logic.overall_status(%w{canceled much pending canceled})).to eq "pending"
         expect(logic.overall_status(%w{canceled very canceled})).to eq "canceled"
         expect(logic.overall_status(%w{delivered pending whoa canceled canceled})).to eq "partially delivered"
-        expect(logic.overall_status(%w{canceled pending very contested pending such weather canceled})).to eq "contested"
-        expect(logic.overall_status(%w{delivered much delivered contested canceled pending})).to eq "contested, partially delivered"
       end
     end
   end

@@ -50,7 +50,7 @@ feature "seller views their dashboard" do
     Timecop.return
   end
 
-  it "displays all recent orders" do
+  xit "displays all recent orders" do
     visit dashboard_path
 
     expect(page).to have_content("Recent Orders")
@@ -74,7 +74,7 @@ feature "seller views their dashboard" do
     expect(second_row.total).to eq("$6.99")
   end
 
-  it "displays a list of upcoming deliveries with information" do
+  xit "displays a list of upcoming deliveries with information" do
     market.addresses.first.update_attributes(name: "Idea Market")
     create(:order_item, product: create(:product, :sellable, organization: organization), order: order, delivery_status: "pending")
     create(:order_item, product: product, order: extra_order, delivery_status: "pending")

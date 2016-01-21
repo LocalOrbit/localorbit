@@ -49,13 +49,6 @@ context "Downloading packing labels", js:true do
       sign_in_as seller
     end
 
-    it "can generate packing labels from the Dashboard", pdf: true do
-      visit dashboard_path
-      expect(page).to have_text "Upcoming Deliveries"
-      expect(page).to have_text "Order Labels"
-      generate_packing_labels("Order Labels")
-    end
-
     it "can generate packing labels on the Delivery Tools screen", pdf: true do
       visit admin_delivery_tools_path
       expect(page).to have_text "Upcoming Deliveries"

@@ -11,6 +11,12 @@ Ransack.configure do |config|
     validator: proc { |v| v.present? },
     type: :string
 
+  config.add_predicate "nil_in",
+    arel_predicate: "in",
+    formatter: proc { |v| v },
+    validator: proc { |v| v.present? },
+    type: :array
+
   config.add_predicate "nil_eq",
     arel_predicate: "eq",
     formatter: proc { |v| v == "-1" ? nil : v },

@@ -193,6 +193,15 @@ select,
   }
 }
 
+/* Category parent selection dropbox with type-ahead */
+#new_category .chosen-container{
+  font-size:14px;
+  .chosen-single{
+    height: 34px;
+    line-height: 34px;
+  }
+}
+
 textarea {
   display: block;
   width: 100%;
@@ -417,8 +426,7 @@ label {
 .payment_search,
 .reports-filters,
 .order_search {
-  padding: 0 0 1em;
-
+  padding: 1em;
   input,
   .preserve-alignment {
     vertical-align: middle;
@@ -431,6 +439,12 @@ label {
     }
   }
 }
+
+.order_search {
+  background-color: #F9F9F9;
+  border-radius: 5px;
+}
+
 .wys-toolbar {
   margin-top: 5px;
 }

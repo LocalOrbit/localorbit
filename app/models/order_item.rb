@@ -1,5 +1,5 @@
 class OrderItem < ActiveRecord::Base
-  DELIVERY_STATUSES = %w(pending canceled delivered contested)
+  DELIVERY_STATUSES = %w(pending canceled delivered)
 
   before_create :consume_inventory
   before_save :update_quantity_ordered
