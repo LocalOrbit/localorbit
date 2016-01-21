@@ -23,6 +23,8 @@
               <th>Discounts (by Seller)</th>
             <% elsif !buyer_only %>
               <th>Discounts</th>
+            <% end %>
+            <% if !buyer_only %>
               <th>Net Sales</th>
             <% end %>
           </tr>
