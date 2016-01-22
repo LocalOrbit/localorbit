@@ -39,9 +39,11 @@ module Admin
 
     def update
       @order_item = OrderItem.find(params[:id])
+      @order = Order.find(params[:order_id])
       if params[:order_item][:unit_price]
         @order_item.unit_price = params[:order_item][:unit_price]
         @order_item.save!
+        @order.save!
       end
       redirect_to admin_order_path(params[:order_id])
     end
