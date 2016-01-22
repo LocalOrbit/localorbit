@@ -35,20 +35,15 @@ module Admin
 
     def show
       @order_item = OrderItem.find(params[:id])
-      puts params
-      #render 'orders/_edit_unit_price_modal.html.erb'
     end
 
     def update
-      # update order item with new price 
-      #puts params
       @order_item = OrderItem.find(params[:id])
       if params[:order_item][:unit_price]
-        # p "got unit price? #{params[:unit_price]}"
         @order_item.unit_price = params[:order_item][:unit_price]
         @order_item.save!
       end
-      redirect_to admin_orders_path
+      redirect_to admin_order_path(params[:order_id])
     end
 
     private
