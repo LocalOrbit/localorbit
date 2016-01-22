@@ -363,16 +363,23 @@
           </div><div class="column invoice-parties" style="width:2.6in">
             <div class="vcard app-remit-contact-info">
               <h2>Remit To:</h2>
-              <h3 class="fn org org-from"><%= market.name %></h3>
-              <% if market.has_address? %>
+              <% if market.has_remit_to_address? %>
+                <h3 class="fn org org-from"><%= market.remit_to_name %></h3>
                 <div>
-                  <%= (market.has_address?) ? market.billing_street_address : nil %><br>
-                  <%= (market.has_address?) ? market.billing_city_state_zip : nil %><br>
-                  <%= (market.billing_address) ? market.billing_address_phone_number : nil %><br>
+                  <%= (market.has_remit_to_address?) ? market.remit_to_street_address : nil %><br>
+                  <%= (market.has_remit_to_address?) ? market.remit_to_city_state_zip : nil %><br>
+                  <%= (market.remit_to_address) ? market.remit_to_phone_number : nil %><br>
                   <%= market.contact_email %>
                 </div>
-              <% end %>
-            </div>
+              <% elsif market.has_address? %>
+                  <h3 class="fn org org-from"><%= market.name %></h3>
+                  <div>
+                    <%= (market.has_address?) ? market.billing_street_address : nil %><br>
+                    <%= (market.has_address?) ? market.billing_city_state_zip : nil %><br>
+                    <%= (market.billing_address) ? market.billing_address_phone_number : nil %><br>
+                    <%= market.contact_email %>
+                  </div>
+              <% end %>            </div>
             <br>
             <div class="vcard vcard-buyer">
               <h2>Bill To:</h2>
