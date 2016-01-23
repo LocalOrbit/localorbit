@@ -22,7 +22,7 @@ class MarketsController < ApplicationController
   end
 
   def create
-    results = RollYourOwnMarket.perform({:market_params => market_params, :billing_params => billing_params})
+    results = RollYourOwnMarket.perform({:market_params => market_params, :billing_params => billing_params[:billing]})
 
     if results.success?
       @market = results.market

@@ -1,5 +1,3 @@
-
-
 $ ->
   # KXM This is wrong... what is it really?
   Stripe.setPublishableKey('pk_test_FzWkzLlW04mRRs7iJ4GK2Tfi')
