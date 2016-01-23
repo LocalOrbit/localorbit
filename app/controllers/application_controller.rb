@@ -18,11 +18,25 @@ class ApplicationController < ActionController::Base
   helper_method :redirect_to_url
   helper_method :signed_in_root_path
 
+  # Includes Authorization mechanism
+  include Pundit
+
   # Prevent CSRF attacks by raising an exception.
   # For APIs, you may want to use :null_session instead.
   protect_from_forgery with: :exception
 
   rescue_from ActiveRecord::RecordNotFound, with: :render_404
+
+  # Globally rescue Authorization Errors in controller.
+  # Returning 403 Forbidden if permission is denied
+  rescue_from Pundit::NotAuthorizedError, with: :render_404
+
+  # Enforces access right checks for individuals resources
+  #after_filter :verify_authorized, :except => :index
+
+  # Enforces access right checks for collections
+  #after_filter :verify_policy_scoped, :only => :index
+
 
   def track_event(event, metadata={})
     EventTracker.track_event_for_user current_user, event, metadata if current_user

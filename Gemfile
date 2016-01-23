@@ -65,8 +65,10 @@ gem "font-awesome-rails"
 gem "wysiwyg-rails"
 gem "kiba"
 
-gem 'browserify-rails'
-gem 'react-rails'
+gem "browserify-rails"
+gem "react-rails"
+
+gem "pundit"
 
 gem 'httparty'
 
