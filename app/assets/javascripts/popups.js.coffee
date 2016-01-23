@@ -21,12 +21,13 @@ $ ->
         left: $element.offset().left,
         top:  $element.offset().top,
         bottom: "auto",
-        maxWidth: "300px"
+        maxWidth: "250px"
       }
-    #if $element.outerHeight() + 54 + find_scrolly() >= screen.height
-    #  $('body').css('min-height', $element.outerHeight() + 74 + find_scrolly())
-    #  styles.position = 'absolute'
-    #  styles.top = find_scrolly() + 74
+    if $element.outerHeight() + 54 + find_scrolly() >= screen.height && $('.l-main').outerWidth() <= 640
+      $('body').css('min-height', $element.outerHeight() + 74 + find_scrolly())
+      styles.position = 'absolute'
+      styles.top = find_scrolly() + 74
+      styles.left = 15
     $element.css(styles).insertAfter('.overlay')
 
   load_map = ($element) ->
