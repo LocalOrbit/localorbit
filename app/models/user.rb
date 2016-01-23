@@ -12,6 +12,8 @@ class User < ActiveRecord::Base
 
   trimmed_fields :email
 
+  has_and_belongs_to_many :roles
+
   has_many :managed_markets_join, class_name: "ManagedMarket"
   #has_many :audits
 
@@ -202,7 +204,8 @@ class User < ActiveRecord::Base
   end
 
   def admin?
-    role == "admin"
+    #role == "admin"
+    user_organizations[0].organization.org_type == "A"
   end
 
   def can_manage?(resource)
@@ -226,18 +229,19 @@ class User < ActiveRecord::Base
   end
 
   def suspended_from_all_orgs?(market)
-    # return if organizations.nil?
     return if market.nil?
 
     (market.organizations & organizations).empty? && !(market.organizations & suspended_organizations).empty?
   end
 
   def market_manager?
-    managed_markets.any?
+    #managed_markets.any?
+    self.user_organizations[0].organization.org_type == "M"
   end
 
   def seller?
-    organizations.selling.any?
+    #organizations.selling.any?
+    self.user_organizations[0].organization.org_type == "S"
   end
 
   def admin_or_mm?
@@ -245,7 +249,8 @@ class User < ActiveRecord::Base
   end
 
   def buyer_only?
-    !admin? && !market_manager? && !seller?
+    #!admin? && !market_manager? && !seller?
+    self.user_organizations[0].organization.org_type == "B"
   end
 
   def is_seller_with_purchase?
