@@ -26,7 +26,7 @@ new_market =
   handleStripeResponse: (status, response) ->
     if status == 200
       $('#market_stripe_card_token').val(response.id)
-      $('#new_subscription')[0].submit()
+      $('#new_market_registration')[0].submit()
     else
       # KXM This should populate the error div
       alert("Status: "+ status + "\nError message: " + response.error.message)
