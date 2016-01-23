@@ -46,7 +46,6 @@ class MarketsController < ApplicationController
   	)
   end
 
-  # KXM Presumably this will become a market address, subject to change once the market is confirmed and the user is authorized.  In fact, lemme just do that right now...
   def billing_params
     params.permit(
       billing: [
