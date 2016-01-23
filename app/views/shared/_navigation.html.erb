@@ -64,7 +64,7 @@ end
       <li>
         <a href="#orders-dropdown" class="caretted"><i class="font-icon" data-icon="&#xe024;"></i>Orders &amp; Delivery</a>
         <ul class="dropdown with-anchor top-anchor" id="orders-dropdown">
-          <li><%= link_to raw('<i class="font-icon" data-icon="&#xe025;"></i> Orders'), admin_orders_path %></li>
+          <% if policy(:order).index? %><li><%= link_to raw('<i class="font-icon" data-icon="&#xe025;"></i> Orders'), admin_orders_path %></li><% end %>
           <% if current_market && FeatureAccess.order_templates?(market: current_market) %>
             <li><%= link_to raw('<i class="font-icon" data-icon="&#xe024;"></i> Order Templates'), templates_path %></li>
           <% end %>
