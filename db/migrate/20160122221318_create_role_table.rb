@@ -2,7 +2,6 @@ class CreateRoleTable < ActiveRecord::Migration
   def change
     create_table :roles do |t|
       t.string :name
-      t.string :type
       t.string :activities, array: true, length: 30, using: 'gin', default: '{}'
       t.timestamps
     end

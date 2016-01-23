@@ -797,7 +797,6 @@ ActiveRecord::Schema.define(version: 20160123001839) do
 
   create_table "roles", force: true do |t|
     t.string   "name"
-    t.string   "type"
     t.string   "activities", default: [], array: true
     t.datetime "created_at"
     t.datetime "updated_at"

@@ -12,7 +12,7 @@ class User < ActiveRecord::Base
 
   trimmed_fields :email
 
-  has_and_belongs_to_many :roles
+  has_and_belongs_to_many :roles, :join_table => :users_roles
 
   has_many :managed_markets_join, class_name: "ManagedMarket"
   #has_many :audits
