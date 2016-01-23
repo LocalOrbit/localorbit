@@ -1,6 +1,6 @@
 class MarketsController < ApplicationController
   before_action :hide_admin_navigation
-  #before_action :require_selected_market
+  skip_before_action :require_selected_market, only: [:new]
   skip_before_action :authenticate_user!
   skip_before_action :ensure_market_affiliation
   skip_before_action :ensure_active_organization
@@ -11,26 +11,22 @@ class MarketsController < ApplicationController
   end
 
   def new
-  	# KXM This will likely be similar to the admin/registration piece, with a create action feeding the new action (or the other way around - cut me some slack, it's Sunday evening).
+    # KXM Copied from admin version.
     @market = Market.new(payment_provider: PaymentProvider.for_new_markets.id)
     @market.pending = true;
 
-    # KXM The hard-coded value is brittle, as is the expectation that the supplied parameter will match a plan
+    # KXM The hard-coded value is brittle, as is the expectation that the supplied parameter will match a plan. Perhaps a default flag in the plan table and a corresponding class method that recalls the associated record? 
     plan = Plan.find_by name: params[:plan] || "Start Up"
     @market.plan_id = plan.id
-    #binding.pry
-  	render layout: "website-bridge"
+    render layout: "website-bridge"
   end
 
   def create
-    #results = RegisterStripeMarket.perform({:market_params => market_params, :billing_params => billing_params, :plan_params => plan_params})
-    results = CreateMarket.perform({:market_params => market_params, :billing_params => billing_params, :plan_params => plan_params})
+    results = RollYourOwnMarket.perform({:market_params => market_params, :billing_params => billing_params})
 
     if results.success?
-      #redirect_to [:admin, results.market]
-  	#if true
       @market = results.market
-  	  render :show
+      render :success, layout: "website-bridge"
     else
       flash.now.alert = "Could not create market"
       @market = results.market
@@ -50,24 +46,15 @@ class MarketsController < ApplicationController
   	)
   end
 
-  # KXM Included here for reference until I know better what to do with it
-  # KXM "Wrong number of arguments"... probably the same for plan_params below.  It looks like it's choking on the array.... it's probably supposed to be a hash
+  # KXM Presumably this will become a market address, subject to change once the market is confirmed and the user is authorized.  In fact, lemme just do that right now...
   def billing_params
     params.permit(
-      billing: [ :address, :city, :state, :zip, :phone ]
-    )
-  end
-
-  # KXM Included here for reference until I know better what to do with it
-  def plan_params
-    params.permit(
-      purchase: [
-        :code,
-        :name,
-        :credit_card,
-        :month,
-        :year,
-        :security_code
+      billing: [
+        :address, 
+        :city, 
+        :state, 
+        :zip, 
+        :phone 
       ]
     )
   end

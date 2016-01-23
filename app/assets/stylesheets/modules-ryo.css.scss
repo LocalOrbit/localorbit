@@ -1,6 +1,5 @@
 @import "mixins.css.scss";
 
-/* # KXM Subject to change once the structure settles down */
 div#market-creation{
 	h1{
 		margin-top: 3em;
@@ -22,7 +21,6 @@ div#market-creation{
 			color: #262626;
 
 			&.ui-state-active{
-				/* # KXM Background images should be hung from at least two places to account for both active state navigation and form completion indicators.  Make sure to update the relative DOM manipulation in the JavaScript routines When that's done. */
 				background: asset_url('icons/up.png') no-repeat bottom center;
 				color: #8A7777;
 			}
@@ -90,7 +88,7 @@ div#market-creation{
 		line-height: 18px;
 	}
 
-	/* Form buttons that aren't wizard navigation */
+	// Form buttons that aren't wizard navigation (AKA the submit button)
 	.form-action{
 		border-radius: 78px;
 		background-color: white;
@@ -101,12 +99,14 @@ div#market-creation{
 		line-height: 18px;
 	}
 
-	/* Wizard navigation buttons... */
+	// Wizard navigation buttons...
 	div.wizard_nav_div{
 		float: right;
 
 		.form-nav, .wizard_nav{
-			// KXM Hide that... what?  CHICKEN BUTT!  Woot!  (In what may be the easiest dare ever, Jackie dared me to put 'chicken butt' in the code some-a-whars.  Done it.)
+			// KXM Hide that... what?  CHICKEN BUTT!  Woot!  (In what may 
+			// be the easiest dare ever, Jackie dared me to put 'chicken 
+			// butt' in a code comment some-a-whars.  Done it.)
 			display: none;
 			background: #7EBEC5;
 			border-radius: 100px;
@@ -123,7 +123,8 @@ div#market-creation{
 			}
 		}
 
-		/* The submit button should be displayed in all cases, but should otherwise look the same as wizard navigation */
+		// The submit button should be displayed in all cases, but
+		// should otherwise look the same as wizard navigation
 		.form-nav{
 			display: inline-block;
 		}

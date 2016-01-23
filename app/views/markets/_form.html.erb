@@ -3,6 +3,7 @@
     <!-- Preset market values --> 
     <%= f.hidden_field :plan_id %>
     <%= f.hidden_field :pending %>
+    <%= f.hidden_field :stripe_card_token %>
 
     <div id="tabs">
       <ul id="market-tab-list">
@@ -45,7 +46,7 @@
           
         </fieldset>
 
-        <%# # KXM Plan assignment/display may end up as a helper, the better to tie into an actual plan and eliminate the conditional below %>
+        <%# # KXM Plan assignment/display may end up as a helper and a partial view, the better to tie into the plan model, display whatever market data already exists, and eliminate the conditional below %>
         <% if @market.try(:plan).try(:name) == 'Grow' then %>
           <div id="market-repeat">
             <button class="form-action" id="add_market">Add Market</button> &nbsp; &nbsp; <span class="market-count">You may add up to 4 more markets</span>
@@ -58,7 +59,6 @@
       </div> <!-- end form-contact-info -->
 
       <!--==== Form tab break ==========================================================-->
-      <%# KXM The Lorem text will be replaced (obviously), but does it belong at this spot in the process? %>
       <div id="form-terms">
         <fieldset>
           <h2>Terms of Service</h2>
@@ -129,7 +129,6 @@
           <div class="row">
             <div class="field column column--half column--guttered">
               <%= text_field(:purchase, :plan, class: "column--full", value: "#{@market.try(:plan).try(:name)}", disabled: true) %>
-              <%#= text_field(:purchase, :plan, class: "column--full", disabled: true) %>
             </div
             ><div class="field column column--half column--guttered">
               <%= text_field(:purchase, :code, class: "column--full", placeholder: 'Discount Code') %>
@@ -137,30 +136,33 @@
           </div>
           <button id="apply_discount" class="pull-right form-action">Apply Discount</button>
 
-
           <h2>Payment Information</h2>
-          <div class="row row--field">
-            <div class="field column column--half column--guttered">
-              <%= text_field(:purchase, :name, placeholder: 'Name', class: "column--full") %>
-            </div
-            ><div class="field column column--half column--guttered">
-              <%= text_field(:purchase, :credit_card, placeholder: 'Credit Card #', class: "column--full") %> 
-            </div>
-          </div>
-
-          <div class="row row--field">
-            <div class="field column column--half column--guttered">
-              <div class="column column--half column--guttered">
-                <%= text_field(:purchase, :month, placeholder: 'Month', class: "column--full") %> 
+          <% if @market.stripe_card_token.present? %>
+            <p>Credit card information has been provided, thank you.</p>
+          <% else %>
+            <div class="row row--field">
+              <div class="field column column--half column--guttered">
+                <%= text_field_tag(:card_name, nil, placeholder: 'Name', class: "column--full", name: nil) %>
               </div
-              ><div class="column column--half column--guttered">
-                <%= text_field(:purchase, :year, placeholder: 'Year', class: "column--full") %> 
+              ><div class="field column column--half column--guttered">
+                <%= text_field_tag(:card_number, nil, placeholder: 'Credit Card #', class: "column--full", name: nil) %> 
               </div>
-            </div
-            ><div class="field column column--half column--guttered">
-              <%= text_field(:purchase, :security_code, placeholder: 'Security Code', class: "column--full") %> 
             </div>
-          </div>
+
+            <div class="row row--field">
+              <div class="field column column--half column--guttered">
+                <div class="column column--half column--guttered">
+                  <%= text_field_tag(:expiration_month, nil, placeholder: 'Month', class: "column--full", name: nil) %> 
+                </div
+                ><div class="column column--half column--guttered">
+                  <%= text_field_tag(:expiration_year, nil, placeholder: 'Year', class: "column--full", name: nil) %> 
+                </div>
+              </div
+              ><div class="field column column--half column--guttered">
+                <%= text_field_tag(:security_code, nil, placeholder: 'Security Code', class: "column--full", name: nil) %>
+              </div>
+            </div>
+          <% end %>
         </fieldset>
 
         <div class="wizard_nav_div">

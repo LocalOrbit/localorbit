@@ -31,7 +31,7 @@ module ToggleActiveHelper
       class: "btn btn--small btn--save"
     }
 
-    if( resource.pending? )
+    if( resource.try(:pending) )
       title = "Confirm"
       # KXM Couldn't get this path working like the one below it. Any idea why?
       path = "/admin/markets/#{resource.id}/confirm_pending?pending=false"

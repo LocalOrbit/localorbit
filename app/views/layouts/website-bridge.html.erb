@@ -5,8 +5,11 @@
   <title>Local Orbit</title>
   <meta name="viewport" content="width=device-width, initial-scale = 1.0" id="viewport">
   <link href='//fonts.googleapis.com/css?family=Open+Sans:400,700,300|Open+Sans+Condensed:700,300' rel='stylesheet' type='text/css'>
+
+  <!-- specified in design documentation -->
   <link href='//fonts.googleapis.com/css?family=Francois+One' rel='stylesheet' type='text/css'>
   <link href='//fonts.googleapis.com/css?family=Source+Sans+Pro:400,600,300italic' rel='stylesheet' type='text/css'>
+
   <%= stylesheet_link_tag "application", media: "all" %>
   <%= csrf_meta_tags %>
   <style id="viewport-declarations">
@@ -193,31 +196,75 @@
   <script type="text/javascript" src="https://js.stripe.com/v2/"></script>
   <%= javascript_include_tag 'stripe' %>
   <% end %>
+  <%# KXM Stripe scripts included manually because I don't yet know what to do with the PaymentProvider stuff... delete when refactored %>
+  <script type="text/javascript" src="https://js.stripe.com/v2/"></script>
+  <%= javascript_include_tag 'stripe' %>
 
-  <%# KXM This script tag is only here to get things working. Put your toys away when your done with them, Keetie %>
+  <%# KXM This script tag is only here to get things working. Put your toys away when your done with them, Keetie.  In all likelihood this will end up in the roll_your_own_market.js.coffee script %>
   <script type="text/javascript">
     $(document).ready(function () {
       $(function() {
         $( "#tabs" ).tabs();
       });
 
+      $('div[id^="form-"]').each(function(){
+        manage_section_state($(this));
+      });
+
       // The presence of JavaScript means that the form is tabbed.  Show the form navigation
       $(".wizard_nav").show();
 
-      // Bind a given form nav click to the corresponding tab nav click
-      //$(".wizard_nav").find('button').click(function(e){
-      $("button.wizard_nav").click(function(e){
-        // The buttons shouldn't submit the form... that would be stupid
-        e.preventDefault();
-
-        // The clicked form nav button
-        var clicked_form_nav = $(this);
-
-        // Its corresponding JQuery tabs anchor
+      /**
+       * wizard_nav
+       * Coordinates the 'Previous' and 'Continue' button clicks with the corresponding tab interface actions
+       **/
+      function wizard_nav(button){
+        var clicked_form_nav = button;
         var target_tab_nav = $('#market-tab-list').find('a[href="'+clicked_form_nav.attr('target')+'"]');
-
-        // Trigger the click
         target_tab_nav.trigger('click');
+      }
+
+      /**
+       * manage_section_state
+       * Manages the tab classes on page load and on input change 
+       **/
+      function manage_section_state(form_section){
+        var pass = true;
+
+        form_section_id = form_section.prop('id');
+
+        target_anchor = $('a[href^="#'+form_section_id+'"]')
+        target_li = target_anchor.closest('li');
+
+        form_section.find('input').each(function(index){
+          // # KXM This could (should) be a method call for validation of some kind.  For now it confirms that *something* has been entered
+          if( $(this).val() == '' || $(this).val() == null ){
+            pass = false;
+          }
+
+          if( $(this).prop('type') == 'checkbox' && !$(this).is(':checked') ){
+            pass = false;
+          }
+        });
+
+        // # KXM Confirm what constitutes a test here and abstract to a validation class
+        if( pass == true ){
+          target_li.addClass('pass');
+        } else {
+          target_li.removeClass('pass');
+        }
+      };
+
+      // Trigger section management whenever input changes
+      $('input').change(function(){
+        ancestor_div = $(this).closest('div[id^="form-"]');
+        manage_section_state(ancestor_div);
+      })
+
+      // Bind a given form nav click to the corresponding tab nav click
+      $("button.wizard_nav").click(function(e){
+        e.preventDefault();
+        wizard_nav($(this));
       });
 
       //  KXM Placeholder methods for buttons that don't yet work...
@@ -231,51 +278,6 @@
         alert("This button will:\nApply a discount to the payment total\nPresumably validate the discount?\nPerform some UI manipulation?")
       });
 
-      // Validate a completed section and set the tab nav UI elements accordingly 
-      $('input').change(function(){
-        // Initialize the default condition
-        var pass = true;
-
-        // KXM The meat of this method must be pulled out so it may be called on page load.  Otherwise, the wizard navigation backgrounds won't correctly indicate the status unless an input element is changed (triggering this)
-        // Get the containing div subject to show/hide...
-        ancestor_div = $(this).closest('div[id^="form-"]')
-        ancestor_div_id = ancestor_div.prop('id');
-
-        // ... so we can find the appropriate anchor...
-        target_anchor = $('a[href^="#'+ancestor_div_id+'"]')
-        target_li = target_anchor.closest('li');
-
-        
-        // Cycle through the decendent inputs, checking for failure conditions
-        ancestor_div.find('input').each(function(index){
-          input_element = $(this);
-          input_value   = input_element.val();
-
-          // # KXM This could (should) be a method call for validation of some kind.  For now it confirms that *something* has been entered
-          if( input_value == '' || input_value == null ){
-            // If found, fail passage
-            pass = false;
-          }
-
-          if( input_element.prop('type') == 'checkbox' && !input_element.is(':checked') ){
-            // If found, fail passage
-            pass = false;
-          }
-        });
-
-        // # KXM Confirm what constitutes a test here and abstract to a validation class
-        // If the tests pass...
-        if( pass == true ){
-          // ...then add the appropriate class to the correct list item
-          target_li.addClass('pass');
-
-        } else {
-          // Otherwise, make sure it isn't there
-          target_li.removeClass('pass');
-        }
-
-
-      });
     });
   </script>
 

@@ -1,4 +1,5 @@
 class Market < ActiveRecord::Base
+  attr_accessor :stripe_card_token
 
   before_update :process_cross_sells_change, if: :allow_cross_sell_changed?
   before_update :process_plan_change, if: :plan_id_changed?
