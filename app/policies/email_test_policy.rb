@@ -1,0 +1,3 @@
+class EmailTestPolicy < ApplicationPolicy
+
+end

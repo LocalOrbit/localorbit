@@ -1,0 +1,3 @@
+class DeliverySchedulePolicy < ApplicationPolicy
+
+end

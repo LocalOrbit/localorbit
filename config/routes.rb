@@ -56,6 +56,8 @@ Rails.application.routes.draw do
       get :payment_options
     end
 
+    resources :roles
+
     resources :labels, only: [:index, :show]
 
     get "upload" => "upload#index"

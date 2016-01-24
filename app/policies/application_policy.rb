@@ -7,11 +7,11 @@ class ApplicationPolicy
   end
 
   def user_activities
-    @user.roles.select(:activities).distinct.map(&:activities).flatten
+    @user.roles.select(:activities).where(org_type: @user.user_organizations[0].organization.org_type).distinct.map(&:activities).flatten
   end
 
   def inferred_activity(method)
-    "#{@record.class.name.downcase}:#{method.to_s}"
+    "#{@record.to_s.downcase}:#{method.to_s}"
   end
 
   def method_missing(name,*args)
@@ -21,7 +21,6 @@ class ApplicationPolicy
       super
     end
   end
-
 
   def scope
     Pundit.policy_scope!(user, record.class)

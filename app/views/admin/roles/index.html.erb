@@ -1,0 +1,32 @@
+<div>
+  <div class="l-constraint">
+    <%= link_to 'Add Role', new_admin_role_url, class: "pull-right btn btn--add btn--small" %>
+    <h1><i class="font-icon" data-icon="&#xe027;"></i>&nbsp; Roles</h1>
+    <p>An role defines what capabilities a group of users has in the system.</p>
+
+    <div class="clearfix"></div>
+  </div>
+</div>
+
+<div class="table-wrapper">
+  <table class="sortable role-table market-org-list">
+    <thead class="stickable">
+    <tr>
+      <th data-column="name" class="<%= column_sort_classes("name")%>">Name</th>
+      <th>Action</th>
+      <th></th>
+    </tr>
+    </thead>
+    <tbody>
+    <%= render @roles %>
+    </tbody>
+  </table>
+</div>
+
+<% if @roles.none? %>
+    <div class="info-note">
+      <h2>No Results</h2>
+      This table is empty, either because there is no data, or because the filter you've applied is hiding it.
+    </div>
+<% end %>
+

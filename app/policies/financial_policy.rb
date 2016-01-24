@@ -1,0 +1,3 @@
+class FinancialPolicy < ApplicationPolicy
+
+end
