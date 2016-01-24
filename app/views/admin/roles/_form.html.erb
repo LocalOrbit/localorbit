@@ -1,0 +1,16 @@
+<%= form_for [:admin, @role], html: {class: "role column column--full"} do |f| %>
+
+    <%= render "shared/errors", { resource: @role } %>
+
+    <fieldset class="role-info">
+
+      <div class="field">
+        <%= f.label :name %>
+        <span class="tooltip" data-tooltip="This is the name of the role"></span>
+        <br>
+        <%= f.text_field :name %>
+      </div>
+
+    </fieldset>
+
+<% end %>

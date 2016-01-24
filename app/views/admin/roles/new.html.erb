@@ -1,0 +1,11 @@
+<div class="row row--partial">
+  <%= form_for [:admin, @role], html: { class: "column column--two-thirds" } do |f| %>
+      <h1>Add Role</h1>
+      <%= render 'form', {f: f} %>
+
+      <div class="form-actions">
+        <%= link_to "Cancel", admin_roles_path, class: "btn cancel" %>
+        <%= f.submit "Add Role" %>
+      </div>
+  <% end %>
+</div>

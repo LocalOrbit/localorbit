@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160123001839) do
+ActiveRecord::Schema.define(version: 20160123195225) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -659,8 +659,8 @@ ActiveRecord::Schema.define(version: 20160123001839) do
     t.boolean  "active",                       default: false
     t.boolean  "needs_activated_notification", default: true
     t.string   "stripe_customer_id"
-    t.integer  "role_id"
     t.integer  "plan_id"
+    t.string   "org_type"
   end
 
   add_index "organizations", ["name"], name: "index_organizations_on_name", using: :btree
@@ -795,8 +795,17 @@ ActiveRecord::Schema.define(version: 20160123001839) do
   add_index "promotions", ["market_id"], name: "index_promotions_on_market_id", using: :btree
   add_index "promotions", ["product_id"], name: "index_promotions_on_product_id", using: :btree
 
+  create_table "role_actions", force: true do |t|
+    t.string "description"
+    t.string "org_type"
+    t.string "section"
+    t.string "action"
+  end
+
   create_table "roles", force: true do |t|
     t.string   "name"
+    t.string  "org_type"
+    t.integer "organization_id"
     t.string   "activities", default: [], array: true
     t.datetime "created_at"
     t.datetime "updated_at"
