@@ -13,4 +13,9 @@
 
     </fieldset>
 
+    <% fields_for :activity, f.activities do |p| %>
+        <%= p.check_box "activity", nil, :value => p.object.id  %>
+        <b><%= p.object.name %></b><br/>
+    <% end %>
+
 <% end %>

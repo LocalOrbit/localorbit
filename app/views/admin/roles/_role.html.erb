@@ -1,7 +1,6 @@
 <tr>
-  <td class="name"><%= role.name %></td>
+  <td class="name"><%= link_to role.name, [:admin, role] %></td>
   <td class="action">
-    <%= link_to raw('Edit'), admin_roles_path(role), class: "btn btn-primary" %>
   </td>
 </tr>
 
