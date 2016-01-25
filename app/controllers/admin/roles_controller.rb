@@ -4,6 +4,9 @@ class Admin::RolesController < AdminController
     @roles = Role.all
   end
 
+  def show
+  end
+
   def new
     @role = Role.new
     @role_actions = RoleAction.all
