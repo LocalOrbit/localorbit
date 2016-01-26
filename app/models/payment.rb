@@ -7,7 +7,7 @@ class Payment < ActiveRecord::Base
     "market payment" => "Market Payment",
     "order" => "Order",
     "order refund" => "Order Refund",
-    "seller payment" => "Seller Payment",
+    "seller payment" => "Supplier Payment",
     "service" => "Service Fee",
     "service refund" => "Service Refund"
   }.freeze
