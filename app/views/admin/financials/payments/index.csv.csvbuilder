@@ -12,7 +12,7 @@ csv << ["Payment Date", "Description", "Payment Method", "Amount", "Order Number
     description,
     payment.display_payment_method,
     number_to_currency(payment.amount),
-    payment.orders.map{|po| po.order_number.to_s + " " + po.total_cost.to_s}
+    payment.orders.map{|po| po.order_number.to_s + " -- " + po.total_cost.to_s}
 .join(',')
   ]
 end

@@ -46,7 +46,7 @@
                   </div>
                   <div class="all-order-numbers">
                     <% payment.orders.each do |order| %>
-                      <p><%= link_to order.order_number, admin_order_path(order) %></p>
+                      <p><%= link_to order.order_number + " -- " + order.total_cost.to_s, admin_order_path(order) %></p>
                     <% end %>
                   </div>
                   <div class="clearfix"></div>
