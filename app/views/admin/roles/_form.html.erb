@@ -1,21 +1,22 @@
-<%= form_for [:admin, @role], html: {class: "role column column--full"} do |f| %>
-
-    <%= render "shared/errors", { resource: @role } %>
-
+<%= form_for @role, url: [:admin, @role], html: { class: "column column--two-thirds" } do |f| %>
     <fieldset class="role-info">
-
       <div class="field">
         <%= f.label :name %>
-        <span class="tooltip" data-tooltip="This is the name of the role"></span>
         <br>
         <%= f.text_field :name %>
       </div>
-
     </fieldset>
 
-    <% fields_for :activity, f.activities do |p| %>
-        <%= p.check_box "activity", nil, :value => p.object.id  %>
-        <b><%= p.object.name %></b><br/>
-    <% end %>
+    <fieldset class="role-info">
+      <div class="field">
+        <%= f.label :activities %>
+        <br>
+        <%= f.collection_select :activities, @role_actions, :id, :description, { multiple: true } %>
+      </div>
+    </fieldset>
 
+    <div class="form-actions">
+      <%= link_to "Cancel", admin_roles_path, class: "btn cancel" %>
+      <%= f.submit "Add Role" %>
+    </div>
 <% end %>

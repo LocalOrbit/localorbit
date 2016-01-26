@@ -1,0 +1,3 @@
+class TemplatePolicy < ApplicationPolicy
+
+end
