@@ -35,13 +35,14 @@ end
     <li class="mobile-only"><%= link_to 'Dashboard', dashboard_path %></li>
     <% if policy(:purchase_history).index? %><li><%= link_to raw('<i class="font-icon" data-icon="&#xe00c;"></i> Purchase History'), orders_path %></li><% end %>
     <!-- admin or market_manager -->
+    <% if policy(:market).index? || policy(:organization).index? || policy(:user).index? || policy(:role).index? || policy(:unit).index? || policy(:event).index? || policy(:taxonomy).index? || policy(:internal_financial).index? %>
     <li>
       <a href="#market-dropdown" class="caretted"><i class="font-icon" data-icon="&#xe054;"></i>Market Admin</a>
       <ul class="dropdown with-anchor top-anchor" id="market-dropdown">
         <% if policy(:market).index? %><li><%= link_to raw('<i class="font-icon" data-icon="&#xe000;"></i> Markets'), admin_markets_path(sort: "name-asc") %></li><% end %>
         <% if policy(:organization).index? %><li><%= link_to raw('<i class="font-icon" data-icon="&#xe027;"></i> Organizations'), admin_organizations_path(sort: "name-asc") %></li><% end %>
-        <% if policy(:user).index? %><li><%= link_to raw('<i class="font-icon" data-icon="&#xe017;"></i> All Users'), admin_users_path(sort: "name-asc")  %></li><% end %>
         <!-- admin -->
+        <% if policy(:user).index? %><li><%= link_to raw('<i class="font-icon" data-icon="&#xe017;"></i> All Users'), admin_users_path(sort: "name-asc")  %></li><% end %>
         <% if policy(:role).index? %><li><%= link_to raw('<i class="font-icon" data-icon="&#xe035;"></i> Roles'), admin_roles_path %></li><% end %>
         <% if policy(:unit).index? %><li><%= link_to raw('<i class="font-icon" data-icon="&#xe035;"></i> Units'), coming_soon_dashboard_path %></li><% end %>
         <% if policy(:event).index? %><li><%= link_to raw('<i class="font-icon" data-icon="&#xe025;"></i> User Event Log'), admin_activities_path %></li><% end %>
@@ -49,13 +50,11 @@ end
         <% if policy(:internal_financial).index? %><li><%= link_to raw('<i class="font-icon" data-icon="&#xe00f;"></i> Admin Financials'), admin_financials_market_payments_path %></li><% end %>
       </ul>
     </li>
+    <% end %>
     <% if policy(:financial).index? %><li><%= link_to raw('<i class="font-icon" data-icon="&#xe00f;"></i>Financials'), admin_financials_path %></li><% end %>
-    <!-- seller -->
-    <!--<li><%= link_to raw('<i class="font-icon" data-icon="&#xe00f;"></i> Financials'), admin_financials_path %></li>-->
-    <!-- show_financials -->
-    <!--<li><%= link_to raw('<i class="font-icon" data-icon="&#xe00f;"></i> Financials'), admin_financials_path %></li>-->
 
     <!-- buyer -->
+    <% if policy(:order).index? || policy(:template).index? || policy(:delivery).index? || policy(:order_item).index? || policy(:delivery_schedule).index? %>
     <li>
       <a href="#orders-dropdown" class="caretted"><i class="font-icon" data-icon="&#xe024;"></i>Orders &amp; Delivery</a>
       <ul class="dropdown with-anchor top-anchor" id="orders-dropdown">
@@ -70,11 +69,13 @@ end
         <% end %>
       </ul>
     </li>
+    <% end %>
 
     <!-- admin, market_manager, seller -->
     <% if policy(:product).index? %><li><%= link_to raw('<i class="font-icon" data-icon="&#xe01f;"></i> Products'), admin_products_path(sort: "name-asc") %></li><% end %>
 
     <!-- admin, market_manager -->
+    <% if policy(:fresh_sheet).index? || policy(:newsletter).index? || policy(:promotion).index? || policy(:discount_code).index? || policy(:sent_email).index? || policy(:email_test).index? %>
     <li>
       <a href="#marketing-dropdown" class="caretted"><i class="font-icon" data-icon="&#xe005;"></i> Marketing</a>
       <ul class="dropdown with-anchor top-anchor" id="marketing-dropdown">
@@ -88,7 +89,9 @@ end
         <% if policy(:email_test).index? %><li><%= link_to raw('<i class="font-icon" data-icon="&#xe051;"></i> Email Testing'), coming_soon_dashboard_path %></li><% end %>
       </ul>
     </li>
+    <% end %>
 
+    <% if policy(:report).index? || policy(:referral).index? || policy(:metric).index? %>
     <li>
       <a href="#reports-dropdown" class="caretted"><i class="font-icon" data-icon="&#xe01e;"></i> Reports</a>
       <ul class="dropdown with-anchor top-anchor" id="reports-dropdown">
@@ -98,6 +101,7 @@ end
         <% if policy(:metric).index? %><li><%= link_to raw('<i class="font-icon" data-icon="&#xe01e;"></i> Metrics'), admin_metrics_path %></li><% end %>
       </ul>
     </li>
+    <% end %>
 
     <li>
       <a href="#account-dropdown" class="caretted"><i class="font-icon" data-icon="&#xe011;"></i>Account</a>

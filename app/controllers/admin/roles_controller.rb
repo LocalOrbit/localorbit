@@ -5,6 +5,8 @@ class Admin::RolesController < AdminController
   end
 
   def show
+    @role = Role.find(params[:id])
+    @role_actions = RoleAction.all
   end
 
   def new
@@ -14,6 +16,18 @@ class Admin::RolesController < AdminController
 
   def create
     @role = Role.create(role_params)
+  end
+
+  def edit
+    @role = Role.find(params[:id])
+  end
+
+  def update
+    if @role.update_attributes(role_params)
+      redirect_to [:admin, @role, :role], notice: "Role updated"
+    else
+      redirect_to [:admin, @role, :role], alert: error
+    end
   end
 
   private
