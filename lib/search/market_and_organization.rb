@@ -30,7 +30,7 @@ module Search
       elsif buyer_organizations.nil?
         buyer_organizations.where(can_sell: true)
       else
-        @user.managed_organizations.where(id: buyer_organizations.map(&:id))
+        @user.managed_organizations.where(id: buyer_organizations.map(&:id), can_sell:true)
       end
     end
   end

@@ -1,26 +1,30 @@
+<%= search_form_for @q, url: admin_products_path, html: { class: "product_search clear-after" } do |f| %>
 <div class="row product-header filter-group">
   <div class="column product-filters" id="product-filter">
-    <div class="product-search search-widget">
-      <input type="search" id="search" value="<%= @query_params["search"] %>" class="<%= append_sticky_class('search') %>" ><button type="submit" id="search-btn" class="btn btn--end">Search</button>
-    </div>
+    <span class="preserve-alignment">
+      <%= f.label :name_or_organization_name_cont, "Search Products" %><br>
+      <%# NOTE: Do not change the whitespace on the following line %>
+      <%= f.search_field :name_or_organization_name_cont, placeholder: "Product, Supplier, etc.", class: append_sticky_class(:name_or_organization_name_cont) -%>
+    </span>
 
     <div class="manager-filters unjustify mobile-block">
       <% if current_user.multi_market_membership? %>
-      <span class="preserve-alignment mobile-block">
-        <label for="filter_market">Market</label>
-        <%= select_tag :filter_market, options_for_select(@selling_markets, selected: @query_params["market"]), multiple: true, prompt: nil, class: [append_sticky_class('market', 'filter-dropdown'),'multiselect'], id: "filter_market", data: { parameter: "market"} %>
-      </span>
+
       <% end %>
 
       <% if current_user.multi_organization_membership? %>
       <span class="preserve-alignment mobile-block">
-        <label for="filter_organization">Supplier</label>
-        <%= select_tag :filter_organization, options_for_select(@selling_organizations, selected: @query_params["organization"]), multiple: true, prompt: nil, class: [append_sticky_class('organization', 'filter-dropdown'),'multiselect'], id: "filter_organization", data: { parameter: "organization"} %>
+        <%= f.label :organization_id_in, "Supplier" %><br>
+        <%= f.collection_select :organization_id_in, @search_presenter.seller_organizations, :id, :name, {include_blank: nil}, {multiple: true, class: [append_sticky_class(:organization_id_in, ""),'multiselect']} %>
       </span>
       <% end %>
 
-      <%= link_to "Reset", admin_products_path(clear: '', sort: @query_params["sort"]), class: 'btn reset' if can_reset?(@query_params) %>
+      <div class="pull-right">
+        <%= f.submit "Search", class: "btn--small" %>
+        <%= link_to "Reset", admin_products_path(clear: '', sort: @query_params["sort"]), class: 'btn reset' if can_reset?(@query_params) %>
+      </div>
     </div>
   </div>
   <%= link_to "Add New Product", new_admin_product_path, class: "btn btn--add btn--small pull-right" %>
 </div>
+<% end %>

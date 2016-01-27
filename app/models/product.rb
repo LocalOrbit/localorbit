@@ -55,24 +55,27 @@ class Product < ActiveRecord::Base
 
   delegate :name, to: :organization, prefix: true
 
-  scope_accessible :market, method: :for_market_id, ignore_blank: true
-  scope_accessible :organization, method: :for_organization_id, ignore_blank: true
+  #scope_accessible :market, method: :for_market_id, ignore_blank: true
+  #scope_accessible :organization, method: :for_organization_id, ignore_blank: true
   scope_accessible :category, method: :for_category_id, ignore_blank: true
-  scope_accessible :sort, method: :for_sort, ignore_blank: true
-  scope_accessible :search, method: :for_search, ignore_blank: true
+  #scope_accessible :sort, method: :for_sort, ignore_blank: true
+  #scope_accessible :search, method: :for_search, ignore_blank: true
 
   pg_search_scope :search_by_name, against: :name, using: {tsearch: {prefix: true}}
 
   ### GETTERS ###
+  def market_id
+    self.product.organization.market_organization.market.market_id
+  end
   def name
     self.general_product && self.general_product.name
   end
   def category_id
     self.general_product && self.general_product.category_id
   end
-  def organization_id
-    self.general_product && self.general_product.organization_id
-  end
+  #def organization_id
+  #  self.general_product && self.general_product.organization_id
+  #end
   def who_story
     self.general_product && self.general_product.who_story
   end
