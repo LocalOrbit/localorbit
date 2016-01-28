@@ -61,9 +61,7 @@ class Admin::MarketsController < AdminController
   def confirm_pending
     @market.update_attribute(:pending, params[:pending])
     redirect_to :back, notice: "Updated #{@market.name}"
-    # KXM RYO - Confirm pending should carry on with alla the rest of the pending release:
-    #   (1) Notification to Market manager as an account confirmation email (with link back to account setup form),
-    #   (2) Activating of Market.
+    # KXM Send Market manager an account confirmation email (with link back to account setup form (this will go through Devise.  Check documentation for run time redirect targets))
  end
 
   def payment_options
