@@ -148,14 +148,15 @@ feature "Viewing orders" do
 
         items = Dom::Order::ItemRow.all
         item = Dom::Order::ItemRow.find_by_name("#{market1_order_item1.name} from #{market1_seller_org1.name}")
-        first(:link,"EDIT").click
-        # fill_in 'course_group_courses_attributes_2_name', :with => 'some text'
+        first(:link,"EDIT").click # next one at this pt is the one clicked
         fill_in "order_item[unit_price]", :with => '20.00'
         click_button "Edit Price"
+        item2 = Dom::Order::ItemRow.find_by_name("#{market1_order_item2.name} from #{market1_seller_org2.name}")
+        expect(item2.price).to have_content('20.00')
+        totals = Dom::Order
         binding.pry
-        item2 = Dom::Order::ItemRow.find_by_name("#{market1_order_item2.name} from #{market1_seller_org1.name}")
+        #expect(totals.gross_sales).to eq("hi") # added 20 to 153.80 let's see
         #binding.pry
-        expect(item2.price).to have_content('20.00') 
     end
 
 
