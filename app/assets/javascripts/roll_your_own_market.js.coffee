@@ -1,6 +1,7 @@
 (->
   new_market = undefined
   $ ->
+    # KXM - This is throwing an error - there should be some conditional prior to the assignment that validates the need for the script at all
     Stripe.setPublishableKey($('meta[name="stripe-key"]').attr('content'))
     new_market.setupForm()
 
