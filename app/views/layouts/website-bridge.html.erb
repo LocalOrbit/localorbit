@@ -10,6 +10,8 @@
   <link href='//fonts.googleapis.com/css?family=Francois+One' rel='stylesheet' type='text/css'>
   <link href='//fonts.googleapis.com/css?family=Source+Sans+Pro:400,600,300italic' rel='stylesheet' type='text/css'>
 
+  <%= tag :meta, :name => "stripe-key", :content => Rails.configuration.stripe[:publishable_key] %>
+
   <%= stylesheet_link_tag "application", media: "all" %>
   <%= csrf_meta_tags %>
   <style id="viewport-declarations">

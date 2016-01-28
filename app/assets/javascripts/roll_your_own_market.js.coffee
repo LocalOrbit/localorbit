@@ -1,8 +1,7 @@
 (->
   new_market = undefined
   $ ->
-    # KXM This isn't right... so what is it really?
-    Stripe.setPublishableKey 'pk_test_FzWkzLlW04mRRs7iJ4GK2Tfi'
+    Stripe.setPublishableKey($('meta[name="stripe-key"]').attr('content'))
     new_market.setupForm()
 
   new_market =
