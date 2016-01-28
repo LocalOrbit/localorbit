@@ -11,7 +11,6 @@ class MarketsController < ApplicationController
   end
 
   def new
-    # KXM Copied from admin version.
     @market = Market.new(payment_provider: PaymentProvider.for_new_markets.id)
     @market.pending = true;
 

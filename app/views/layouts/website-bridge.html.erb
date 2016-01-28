@@ -122,7 +122,7 @@
     </style>
   <% end %>
 </head>
-
+<%# KXM The HTML structure derives from the existing website.  Copy it there or use here (tweaked as need be) %>
 <body id="website-bridge" class="controller-<%= controller.controller_name %> <%= current_user.present? ? "" : "signed-out" %> <%= "request-desktop" if cookies[:request_desktop] && cookies[:request_desktop] == "true"  %>">
   <%= render "shared/analytics" %>
 
@@ -154,7 +154,6 @@
         <% end %>
       </div>
 
-      <%# KXM Shared navigation here will likely be the website nav.  The render code remains here (but commented out) until I know what that means %>
       <%#= render 'shared/navigation' %>
 
       <%= yield %>

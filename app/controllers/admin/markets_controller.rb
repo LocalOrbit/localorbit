@@ -64,9 +64,7 @@ class Admin::MarketsController < AdminController
     # KXM RYO - Confirm pending should carry on with alla the rest of the pending release:
     #   (1) Notification to Market manager as an account confirmation email (with link back to account setup form),
     #   (2) Activating of Market.
-    #
-    # Of course, all that is subject to confirmation...
-  end
+ end
 
   def payment_options
     @markets = Market.where(id: @market.id)
