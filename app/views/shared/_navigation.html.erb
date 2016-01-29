@@ -79,7 +79,7 @@ end
 
     <% if current_user.admin? || current_user.market_manager? || current_user.seller? %>
       <li>
-        <%= link_to raw('<i class="font-icon" data-icon="&#xe01f;"></i> Products'), admin_products_path(sort: "name-asc") %>
+        <%= link_to raw('<i class="font-icon" data-icon="&#xe01f;"></i> Products'), admin_products_path('q[s]'=> "name") %>
       </li>
     <% end %>
 

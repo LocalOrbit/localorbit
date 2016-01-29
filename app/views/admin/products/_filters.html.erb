@@ -9,7 +9,10 @@
 
     <div class="manager-filters unjustify mobile-block">
       <% if current_user.multi_market_membership? %>
-
+      <span class="preserve-alignment mobile-block">
+        <%= f.label :markets_id_in, "Market" %><br>
+        <%= f.collection_select :markets_id_in, @search_presenter.selling_markets, :id, :name, {include_blank: nil}, {multiple: true, class: [append_sticky_class(:markets_id_in, ""),'multiselect']} %>
+      </span>
       <% end %>
 
       <% if current_user.multi_organization_membership? %>
@@ -21,7 +24,7 @@
 
       <div class="pull-right">
         <%= f.submit "Search", class: "btn--small" %>
-        <%= link_to "Reset", admin_products_path(clear: '', sort: @query_params["sort"]), class: 'btn reset' if can_reset?(@query_params) %>
+        <%= link_to "Reset", admin_products_path(clear: ''), class: 'btn reset' if can_reset?(@query_params) %>
       </div>
     </div>
   </div>

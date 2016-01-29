@@ -33,6 +33,7 @@ class Product < ActiveRecord::Base
   has_many :orders, through: :order_items
   has_many :prices, -> {visible},  autosave: true, inverse_of: :product, dependent: :destroy
   has_many :promotions, inverse_of: :product
+  has_many :markets, through: :organization
 
   dragonfly_accessor :image do
     copy_to(:thumb){|a| a.thumb('150x150#') }
@@ -64,9 +65,6 @@ class Product < ActiveRecord::Base
   pg_search_scope :search_by_name, against: :name, using: {tsearch: {prefix: true}}
 
   ### GETTERS ###
-  def market_id
-    self.product.organization.market_organization.market.market_id
-  end
   def name
     self.general_product && self.general_product.name
   end
