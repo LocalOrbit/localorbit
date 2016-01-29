@@ -124,7 +124,7 @@
     </style>
   <% end %>
 </head>
-<%# KXM The HTML structure derives from the existing website.  Copy it there or use here (tweaked as need be) %>
+
 <body id="website-bridge" class="controller-<%= controller.controller_name %> <%= current_user.present? ? "" : "signed-out" %> <%= "request-desktop" if cookies[:request_desktop] && cookies[:request_desktop] == "true"  %>">
   <%= render "shared/analytics" %>
 
@@ -242,7 +242,6 @@
   <script type="text/javascript" src="https://js.stripe.com/v2/"></script>
   <%= javascript_include_tag 'stripe' %>
   <% end %>
-  <%# KXM Stripe scripts included manually because I don't yet know what to do with the PaymentProvider stuff... delete when refactored %>
   <script type="text/javascript" src="https://js.stripe.com/v2/"></script>
   <%= javascript_include_tag 'stripe' %>
 </body>
