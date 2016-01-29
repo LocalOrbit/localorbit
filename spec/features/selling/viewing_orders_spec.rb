@@ -153,10 +153,6 @@ feature "Viewing orders" do
         click_button "Edit Price"
         item2 = Dom::Order::ItemRow.find_by_name("#{market1_order_item2.name} from #{market1_seller_org2.name}")
         expect(item2.price).to have_content('20.00')
-        totals = Dom::Order
-        binding.pry
-        #expect(totals.gross_sales).to eq("hi") # added 20 to 153.80 let's see
-        #binding.pry
     end
 
 
