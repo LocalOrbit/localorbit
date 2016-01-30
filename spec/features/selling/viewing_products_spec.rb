@@ -82,8 +82,7 @@ describe "Viewing products" do
       visit admin_products_path(per_page: 2)
 
       select "County Park", from: "q[organization_id_in][]", visible: false
-      click_button "Search
-"
+      click_button "Search"
       # I know, I know, but I can't find another way to make Capybara wait :/
       sleep 3
       expect(Dom::ProductRow.count).to eq(2)
