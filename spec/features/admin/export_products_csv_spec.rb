@@ -32,7 +32,7 @@ describe "Export Products CSV"  do
     end
 
     it "export products for a selected Market" do
-      visit admin_products_path(q:{markets_id_in: market2.id})
+      visit admin_products_path(q:{markets_id_in: market2.id, s: 'name desc'})
       rows = download_products_csv
 
       products = user.managed_products.preload(:prices,:lots,:organization).search({markets_id_in: market2.id}).result
