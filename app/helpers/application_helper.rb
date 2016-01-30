@@ -49,7 +49,7 @@ module ApplicationHelper
   end
 
   def can_reset?(params)
-    params.any? {|key, _| key != "sort" && key != "page" }
+    params.any? {|key, _| key != "sort" && key != "page"  && key != "q"}
   end
   
   def deep_hash( obj, key )

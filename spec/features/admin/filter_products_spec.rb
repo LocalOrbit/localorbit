@@ -33,21 +33,22 @@ describe "Filter products", :js do
       end
 
       it "shows products for only the selected market" do
-        select market1.name, from: "filter_market", visible: false
+        select market1.name, from: "q[markets_id_in][]", visible: false
+        click_button "Search"
 
         expect(page).to have_content(org1_product.name)
         expect(page).to have_content(org2_product.name)
         expect(page).to_not have_content(org3_product.name)
         expect(page).to_not have_content(org4_product.name)
 
-        unselect market1.name, from: "filter_market", visible: false
+        unselect market1.name, from: "q[markets_id_in][]", visible: false
 
       end
     end
 
     context "by organization" do
       it "only show sellers for filtering" do
-        expect(page).to_not have_select("filter_organization", with_options: [org5.name])
+        expect(page).to_not have_select("q[organization_id_in][]", with_options: [org5.name])
       end
 
       it "shows all products when unfiltered" do
@@ -58,7 +59,8 @@ describe "Filter products", :js do
       end
 
       it "shows products for only the selected organization" do
-        select org1.name, from: "filter_organization", visible: false
+        select org1.name, from: "q[organization_id_in][]", visible: false
+        click_button "Search"
 
         expect(page).to have_content(org1_product.name)
 
@@ -66,13 +68,13 @@ describe "Filter products", :js do
         expect(page).to_not have_content(org3_product.name)
         expect(page).to_not have_content(org4_product.name)
 
-        unselect org1.name, from: "filter_organization", visible: false
+        unselect org1.name, from: "q[organization_id_in][]", visible: false
 
       end
     end
   end
 
-  context "as multi-market manager" do
+  context "as multi-market manager", :js do
     let!(:user) { create(:user, role: "user", managed_markets: [market1, market2, empty_market]) }
 
     before do
@@ -90,7 +92,8 @@ describe "Filter products", :js do
       end
 
       it "shows products for only the selected market" do
-        select market1.name, from: "filter_market", visible: false
+        select market1.name, from: "q[markets_id_in][]", visible: false
+        click_button "Search"
 
         expect(page).to have_content(org1_product.name)
         expect(page).to have_content(org2_product.name)
@@ -98,7 +101,7 @@ describe "Filter products", :js do
         expect(page).to_not have_content(org3_product.name)
         expect(page).to_not have_content(org4_product.name)
 
-        unselect market1.name, from: "filter_market", visible: false
+        unselect market1.name, from: "q[markets_id_in][]", visible: false
 
       end
     end
@@ -112,7 +115,8 @@ describe "Filter products", :js do
       end
 
       it "shows products for only the selected organization" do
-        select org1.name, from: "filter_organization", visible: false
+        select org1.name, from: "q[organization_id_in][]", visible: false
+        click_button "Search"
 
         expect(page).to have_content(org1_product.name)
 
@@ -120,13 +124,13 @@ describe "Filter products", :js do
         expect(page).to_not have_content(org3_product.name)
         expect(page).to_not have_content(org4_product.name)
 
-        unselect org1.name, from: "filter_organization", visible: false
+        unselect org1.name, from: "q[organization_id_in][]", visible: false
 
       end
     end
   end
 
-  context "as single market manager" do
+  context "as single market manager", :js do
     let!(:user) { create(:user, managed_markets: [market1]) }
 
     before do
@@ -149,13 +153,14 @@ describe "Filter products", :js do
       end
 
       it "shows products for only the selected organization" do
-        select org1.name, from: "filter_organization", visible: false
+        select org1.name, from: "q[organization_id_in][]", visible: false
+        click_button "Search"
 
         expect(page).to have_content(org1_product.name)
 
         expect(page).to_not have_content(org2_product.name)
 
-        unselect org1.name, from: "filter_organization", visible: false
+        unselect org1.name, from: "q[organization_id_in][]", visible: false
 
       end
     end
@@ -186,13 +191,14 @@ describe "Filter products", :js do
       end
 
       it "shows products for only the selected organization" do
-        select org1.name, from: "filter_organization", visible: false
+        select org1.name, from: "q[organization_id_in][]", visible: false
+        click_button "Search"
 
         expect(page).to have_content(org1_product.name)
 
         expect(page).to_not have_content(org2_product.name)
 
-        unselect org1.name, from: "filter_organization", visible: false
+        unselect org1.name, from: "q[organization_id_in][]", visible: false
 
       end
     end
@@ -211,13 +217,13 @@ describe "Filter products", :js do
 
     context "by market" do
       it "does not show a market filter dropdown" do
-        expect(page).to_not have_field("filter_market")
+        expect(page).to_not have_field("q[markets_id_in][]")
       end
     end
 
     context "by organization" do
       it "does not show a organization filter dropdown" do
-        expect(page).to_not have_field("filter_organization")
+        expect(page).to_not have_field("q[organization_id_in][]")
       end
     end
   end

@@ -11,14 +11,14 @@
       <% if current_user.multi_market_membership? %>
       <span class="preserve-alignment mobile-block">
         <%= f.label :markets_id_in, "Market" %><br>
-        <%= f.collection_select :markets_id_in, @search_presenter.selling_markets, :id, :name, {include_blank: nil}, {multiple: true, class: [append_sticky_class(:markets_id_in, ""),'multiselect']} %>
+        <%= f.collection_select :markets_id_in, @search_presenter.selling_markets, :id, :name, {include_blank: nil}, {id: 'filter_market', multiple: true, class: [append_sticky_class(:markets_id_in, ""),'multiselect']} %>
       </span>
       <% end %>
 
       <% if current_user.multi_organization_membership? %>
       <span class="preserve-alignment mobile-block">
         <%= f.label :organization_id_in, "Supplier" %><br>
-        <%= f.collection_select :organization_id_in, @search_presenter.seller_organizations, :id, :name, {include_blank: nil}, {multiple: true, class: [append_sticky_class(:organization_id_in, ""),'multiselect']} %>
+        <%= f.collection_select :organization_id_in, @search_presenter.seller_organizations, :id, :name, {include_blank: nil}, {id: 'filter_organization', multiple: true, class: [append_sticky_class(:organization_id_in, ""),'multiselect']} %>
       </span>
       <% end %>
 

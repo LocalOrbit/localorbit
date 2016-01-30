@@ -27,39 +27,39 @@ describe "Export Products CSV"  do
       visit admin_products_path
       rows = download_products_csv
 
-      products = user.managed_products.preload(:prices,:lots,:organization)
+      products = user.managed_products.preload(:prices,:lots,:organization).order('organizations.name asc')
       see_products_in_csv products: products.decorate, rows: rows
     end
 
     it "export products for a selected Market" do
-      visit admin_products_path(market:market2.id)
+      visit admin_products_path(q:{markets_id_in: market2.id})
       rows = download_products_csv
 
-      products = user.managed_products.preload(:prices,:lots,:organization).periscope(market:market2.id)
+      products = user.managed_products.preload(:prices,:lots,:organization).search({markets_id_in: market2.id}).result
       expect(products.count).to eq(2) # should only be 2 results when filtered down
       see_products_in_csv products: products.decorate, rows: rows
     end
 
     it "export products for a selected Organization" do
-      visit admin_products_path(organization:org1.id)
+      visit admin_products_path(q:{organization_id_in:org1.id})
       rows = download_products_csv
-      products = user.managed_products.preload(:prices,:lots,:organization).periscope(organization: org1.id)
+      products = user.managed_products.preload(:prices,:lots,:organization).search({organization_id_in: org1.id}).result
       expect(products.count).to eq(1) 
       see_products_in_csv products: products.decorate, rows: rows
     end
 
     it "apply sorting to the export" do
       # Sort name descending:
-      visit admin_products_path(sort: "name-desc", market: market1.id)
+      visit admin_products_path(q:{markets_id_in: market1.id, s: 'name desc'})
       rows = download_products_csv
-      products = user.managed_products.preload(:prices,:lots,:organization).periscope(market:market1.id, sort:"name-desc")
+      products = user.managed_products.preload(:prices,:lots,:organization).order('name desc').search({markets_id_in: market1.id}).result
       expect(products.count).to eq(2) # should only be 2 results when filtered down
       see_products_in_csv products: products.decorate, rows: rows
 
       # Sort name ascending:
-      visit admin_products_path(sort: "name-asc", market: market1.id)
+      visit admin_products_path(q:{markets_id_in: market1.id, s: 'name asc'})
       rows = download_products_csv
-      products = user.managed_products.preload(:prices,:lots,:organization).periscope(market:market1.id, sort:"name-asc")
+      products = user.managed_products.preload(:prices,:lots,:organization).order('name asc').search({markets_id_in: market1.id}).result
       expect(products.count).to eq(2) # should only be 2 results when filtered down
       see_products_in_csv products: products.decorate, rows: rows
     end

@@ -27,14 +27,16 @@ module Admin
           end
           format.csv do
             @filename = 'products.csv'
-            @products = products
+            @products = @products
           end
         end
       end
     end
 
     def search_products(search)
-      current_user.managed_products.includes(:lots, :unit, :prices=>[:market], :organization => [:all_markets]).search(search.query)
+      results = current_user.managed_products.includes(:lots, :unit, :prices=>[:market], :organization => [:all_markets]).search(search.query)
+      results.sorts = "name asc" if results.sorts.empty?
+      results
     end
 
     def new
