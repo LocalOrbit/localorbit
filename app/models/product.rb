@@ -71,9 +71,9 @@ class Product < ActiveRecord::Base
   def category_id
     self.general_product && self.general_product.category_id
   end
-  #def organization_id
-  #  self.general_product && self.general_product.organization_id
-  #end
+  def organization_id
+    self.general_product && self.general_product.organization_id
+  end
   def who_story
     self.general_product && self.general_product.who_story
   end
