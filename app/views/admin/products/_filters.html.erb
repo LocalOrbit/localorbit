@@ -2,9 +2,9 @@
 <div class="row product-header filter-group">
   <div class="column product-filters" id="product-filter">
     <span class="preserve-alignment">
-      <%= f.label :name_or_organization_name_cont, "Search Products" %><br>
+      <%= f.label :name_cont, "Search Products" %><br>
       <%# NOTE: Do not change the whitespace on the following line %>
-      <%= f.search_field :name_or_organization_name_cont, placeholder: "Product, Supplier, etc.", class: append_sticky_class(:name_or_organization_name_cont) -%>
+      <%= f.search_field :name_cont, class: append_sticky_class(:name_cont) -%>
     </span>
 
     <div class="manager-filters unjustify mobile-block">
