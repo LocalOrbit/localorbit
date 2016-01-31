@@ -44,7 +44,9 @@ class DeliveryDecorator < Draper::Decorator
   end
 
   def display_cutoff_time
-    cutoff_time.in_time_zone(delivery_schedule.market.timezone).strftime("%B %-d at %l%p")
+    if !delivery_schedule.market.timezone.nil?
+      cutoff_time.in_time_zone(delivery_schedule.market.timezone).strftime("%B %-d at %l%p")
+    end
   end
 
   def buyer_time_range
