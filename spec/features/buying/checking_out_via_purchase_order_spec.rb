@@ -59,6 +59,7 @@ describe "Checking Out via Purchase Order", :js, :vcr do
   end
 
   before do
+    sleep 30
     Timecop.travel("May 5, 2014")
   end
 
