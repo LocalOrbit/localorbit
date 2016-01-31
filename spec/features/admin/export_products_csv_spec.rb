@@ -43,7 +43,7 @@ describe "Export Products CSV"  do
     it "export products for a selected Organization" do
       visit admin_products_path(q:{organization_id_in:org1.id})
       rows = download_products_csv
-      products = user.managed_products.preload(:prices,:lots,:organization)..order('name asc').search({organization_id_in: org1.id}).result
+      products = user.managed_products.preload(:prices,:lots,:organization).order('name asc').search({organization_id_in: org1.id}).result
       expect(products.count).to eq(1) 
       see_products_in_csv products: products.decorate, rows: rows
     end
