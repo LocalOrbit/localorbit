@@ -33,7 +33,8 @@ class Product < ActiveRecord::Base
   has_many :orders, through: :order_items
   has_many :prices, -> {visible},  autosave: true, inverse_of: :product, dependent: :destroy
   has_many :promotions, inverse_of: :product
-  has_many :markets, through: :organization
+  has_many :market_organizations, through: :organization, class_name: MarketOrganization
+  has_many :markets, through: :market_organizations, class_name: Market
 
   dragonfly_accessor :image do
     copy_to(:thumb){|a| a.thumb('150x150#') }
