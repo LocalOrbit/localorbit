@@ -13,3 +13,11 @@ dependencies:
 checkout:
   post:
     - cp config/application.yml{.example,}
+
+test:
+  override:
+    - bundle exec rspec:
+        parallel: true
+        files:
+          - spec/unit/sample.rb   # can be a direct path to file
+          - spec/**/*.rb          # or a glob (ruby globs)
