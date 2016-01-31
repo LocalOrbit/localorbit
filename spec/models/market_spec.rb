@@ -428,7 +428,7 @@ describe Market do
 
       it "returns plan_start_at when payments were made before the plan start" do
         create(:payment, :service, market: subject, payer: subject, created_at: 1.year.ago)
-        subject.plan_start_at = Time.current
+        subject.plan_start_at = Time.current.change(:sec => 0)
         expect(subject.next_service_payment_at).to eq(subject.plan_start_at)
       end
 
@@ -465,7 +465,7 @@ describe Market do
 
       it "returns plan_start_at when payments were made before the plan start" do
         create(:payment, :service, market: subject, payer: subject, created_at: 1.week.ago)
-        subject.plan_start_at = Time.current
+        subject.plan_start_at = Time.current.change(:sec => 0)
         expect(subject.next_service_payment_at).to eq(subject.plan_start_at)
       end
 
