@@ -422,7 +422,7 @@ describe Market do
       end
 
       it "returns plan_start_at when no payments have been made" do
-        subject.plan_start_at = 1.minute.ago
+        subject.plan_start_at = 1.minute.ago.change(:sec => 0)
         expect(subject.next_service_payment_at).to eq(subject.plan_start_at)
       end
 
@@ -454,12 +454,12 @@ describe Market do
       subject { create(:market, plan_interval: 12) }
 
       it "returns plan_start_at when plan starts in the future" do
-        subject.plan_start_at = 1.day.from_now
+        subject.plan_start_at = 1.day.from_now.change(:sec => 0)
         expect(subject.next_service_payment_at).to eq(subject.plan_start_at)
       end
 
       it "returns plan_start_at when no payments have been made" do
-        subject.plan_start_at = 1.minute.ago
+        subject.plan_start_at = 1.minute.ago.change(:sec => 0)
         expect(subject.next_service_payment_at).to eq(subject.plan_start_at)
       end
 
