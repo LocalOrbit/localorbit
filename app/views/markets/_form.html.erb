@@ -38,7 +38,8 @@
               <%= f.text_field :name, class: "column--full", placeholder: 'Market Name' %>
             </div
             ><div class="field column column--half column--guttered">
-              <span class="help-text">This is the unique text for your subdomain<br />on the Local Orbit platform.</span>
+              <span class="help-text">This will be your site's web address<br />ex. yourbusiness.localorbit.com</span>
+              <span class="tooltip pull-right" data-tooltip="Your site URL must be all lower case, with no spaces or special characters">&nbsp;</span>
               <br>
               <%= f.text_field :subdomain, class: "column--full", placeholder: 'Subdomain' %>
             </div>
@@ -120,7 +121,8 @@
           <h2>Review Plan Selection</h2>
           <div class="row">
             <div class="field column column--half column--guttered">
-              <%= select_tag("purchase[plan]", options_for_select([['Start up', 1],['Grow',2]],2), class: "column--full" ) %>
+              <%= select_tag("purchase[plan]", options_for_select([['Start up', 1],['Grow',2]],2), class: "column--full" ) %><br />
+              <span class="help-text">You will be billed annually for your<br />Local Orbit Service Plan</span>
             </div
             ><div class="field column column--half column--guttered">
               <%= text_field(:purchase, :code, class: "column--full", placeholder: 'Discount Code') %>
@@ -134,9 +136,11 @@
           <% else %>
             <div class="row row--field">
               <div class="field column column--half column--guttered">
+                <span>&nbsp;</span><br />
                 <%= text_field_tag(:card_name, nil, placeholder: 'Name', class: "column--full", name: nil) %>
               </div
               ><div class="field column column--half column--guttered">
+                <span>&nbsp;</span><span class="tooltip pull-right" data-tooltip="We offer no-questions-asked refunds to all customers within 30 days of your purchase. If you are not satisfied with our product, then simply send us an email and we will refund your purchase right away. The refunded amount will include the annual service fees, minus any payment processing fees, (If you process any actual, rather than test, transactions).">&nbsp;</span>
                 <%= text_field_tag(:card_number, nil, placeholder: 'Credit Card #', class: "column--full", name: nil) %> 
               </div>
             </div>
