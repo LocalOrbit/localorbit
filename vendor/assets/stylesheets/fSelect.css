@@ -7,6 +7,7 @@
     line-height: 1;
     background-color: #FFF;
     /*border-radius:5px;*/
+    cursor:pointer;
 }
 
 .fs-label-wrap {
@@ -43,7 +44,7 @@
     height: 0;
     border-left: 6px solid transparent;
     border-right: 6px solid transparent;
-    border-top: 6px solid #FFF;
+    border-top: 6px solid transparent;
     position: absolute;
     top: 0;
     right: 5px;
@@ -57,7 +58,7 @@
     border: 1px solid #ccc;
     margin-top: 5px;
     /*width:100%;*/
-    z-index: 1000;
+    z-index: 5000;
 }
 
 .fs-dropdown .fs-options {
