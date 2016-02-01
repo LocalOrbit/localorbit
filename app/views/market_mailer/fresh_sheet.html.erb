@@ -22,15 +22,25 @@
   <table class="lo_fresh_sheet">
     <% products.each do |product| %>
       <tr class="<%= cycle('odd', 'even') %>">
-        <th scope="row">
+        <td>
+          <div>
+            <% if product.image_stored? %>
+                <%= image_tag product.image.thumb("150x150>").url, class: "product-image", alt: "" %>
+            <% else %>
+                <%= image_tag 'default-product-image.png', alt: "" %>
+            <% end %>
+          </div>
+        </td>
+        <th>
           <dl>
-            <dt><%= product.name %></dt>
-            <dd><%= product.unit_singular %></dd>
-            <dd>&nbsp;&nbsp;&nbsp;&nbsp;<em><%= product.organization_name %></em></dd>
-          </dl>
+            <dt><%= product.name %></dt><dd> from <em><%= product.organization_name %></em></dd><br/>
+          </dl><br/>
+          <span class="lo_availability"><%= product.available_inventory %> Available</span><br/>
         </th>
         <td>
-          <span class="lo_availability"><%= product.available_inventory %> Available</span><br>
+          <dl>
+            <dt>Unit:&nbsp;<%= product.unit_singular %></dt>
+          </dl>
           <%= link_to "Add to Order", product_url(product), class: "lo_add_link" %>
           <% if @preview %>
             <br>
