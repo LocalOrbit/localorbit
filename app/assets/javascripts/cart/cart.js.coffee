@@ -27,11 +27,6 @@ $ ->
     update: (data, silent) ->
       msg = ""
 
-      if (data.quantity > 0)
-        $("#checkout-button").show();
-      else
-        $("#checkout-button").hide();
-
       if (silent != true)
 
         if (this.data.quantity == 0) && (data.quantity > 0)
@@ -130,8 +125,10 @@ $ ->
             counter.data('message', '')
 
           if count > 0
+            $("#checkout-button").show();
             $('#review_cart').removeClass('is-hidden')
           else
+            $("#checkout-button").hide();
             $('#review_cart').addClass('is-hidden')
       )
 
