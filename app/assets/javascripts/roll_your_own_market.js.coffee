@@ -1,9 +1,10 @@
 (->
   new_market = undefined
   $ ->
-    # KXM - This is throwing an error - there should be some conditional prior to the assignment that validates the need for the script at all
-    Stripe.setPublishableKey($('meta[name="stripe-key"]').attr('content'))
-    new_market.setupForm()
+    strip_key_flag = $('meta[name="stripe-key"]').attr('content')
+    if strip_key_flag?
+      Stripe.setPublishableKey($('meta[name="stripe-key"]').attr('content'))
+      new_market.setupForm()
 
   new_market =
     setupForm: ->
@@ -65,10 +66,8 @@
         target_li.removeClass 'pass'
       return
 
-    $ ->
-      # Make tabs IDed ul be, you know, TABS...
-      $('#tabs').tabs()
-      return
+    # Make tabs IDed ul be, you know, TABS...
+    $('#tabs').tabs()
 
     # The presence of JavaScript means that the form is tabbed.  Show the form navigation
     $('.wizard_nav').show()

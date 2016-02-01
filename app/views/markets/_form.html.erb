@@ -17,7 +17,7 @@
       <!--==== Form tab break ==========================================================-->
       <div id="form-contact-info">
         <fieldset id="fields-contact-info">
-          <h2>Market Contact Information</h2>
+          <h2>Contact Information</h2>
           <div class="field">
             <%= f.text_field :contact_name, class: "column--full", placeholder: 'Contact Name' %>
           </div>
@@ -43,15 +43,7 @@
               <%= f.text_field :subdomain, class: "column--full", placeholder: 'Subdomain' %>
             </div>
           </div>
-          
         </fieldset>
-
-        <%# # KXM Plan assignment/display may end up as a helper and a partial view, the better to tie into the plan model, display whatever market data already exists, and eliminate the conditional below %>
-        <% if @market.try(:plan).try(:name) == 'Grow' then %>
-          <div id="market-repeat">
-            <button class="form-action" id="add_market">Add Market</button> &nbsp; &nbsp; <span class="market-count">You may add up to 4 more markets</span>
-          </div>
-        <% end %>
 
         <div class="wizard_nav_div">
           <button class="wizard_nav" target="#form-terms">Continue</button>
@@ -61,7 +53,7 @@
       <!--==== Form tab break ==========================================================-->
       <div id="form-terms">
         <fieldset>
-          <h2>Terms of Service</h2>
+          <h2>Service Agreement</h2>
           <div id="terms-of-service">
             <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris facilisis vulputate consectetur. Integer vulputate leo lectus. Mauris non eros urna. Etiam interdum semper nibh et tincidunt. Maecenas rhoncus euismod felis. Sed eu nulla pellentesque, condimentum nunc nec, commodo neque. Donec ut turpis nec massa imperdiet mollis. Nullam rhoncus ipsum ac pharetra commodo. Vivamus auctor sem eget auctor commodo. In vitae enim vitae nunc luctus aliquam vel non arcu. Vivamus luctus sapien at tortor commodo vulputate. Nullam convallis placerat lectus, ut egestas purus varius id. Cras consectetur consectetur hendrerit. Nunc et augue pharetra, malesuada lacus vitae, condimentum nisi. Etiam pulvinar vel orci sed egestas.</p>
 
@@ -90,7 +82,7 @@
       <!--==== Form tab break ==========================================================-->
       <div id="form-billing">
         <fieldset>
-          <h2>Billing Address</h2>
+          <h2>Billing</h2>
           <div class="row">
             <div class="field column column--half column--guttered">
               <%= text_field(:billing, :address, placeholder: 'Address', class: "column--full") %>
@@ -125,10 +117,10 @@
       <!--==== Form tab break ==========================================================-->
       <div id="form-review">
         <fieldset>
-          <h2>Review Purchase</h2>
+          <h2>Review Plan Selection</h2>
           <div class="row">
             <div class="field column column--half column--guttered">
-              <%= text_field(:purchase, :plan, class: "column--full", value: "#{@market.try(:plan).try(:name)}", disabled: true) %>
+              <%= select_tag("purchase[plan]", options_for_select([['Start up', 1],['Grow',2]],2), class: "column--full" ) %>
             </div
             ><div class="field column column--half column--guttered">
               <%= text_field(:purchase, :code, class: "column--full", placeholder: 'Discount Code') %>
