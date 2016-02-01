@@ -1,9 +1,8 @@
 <div class="row row--partial">
-  <%= form_for @market, html: { :id => "new_market_registration", class: "column column--full" } do |f| %>
 	<div id="market-creation">
-    <!--h1>New Market Registration</h1-->
-		<hr />
-    <%= render 'form', {f: f} %>
+  	<%= form_for @market, html: { :id => "new_market_registration", class: "column column--full" } do |f| %>
+			<hr />
+	    <%= render 'form', {f: f} %>
+  	<% end %>
 	</div>
-  <% end %>
 </div>
