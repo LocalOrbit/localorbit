@@ -46,3 +46,4 @@
 //= require plugins/urls.min.js
 //
 //= require_tree .
+//= stub sticky-headers

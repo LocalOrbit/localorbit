@@ -221,6 +221,7 @@
   <script>DEPLOY_ENV = '<%= Figaro.env.deploy_env %>';</script>
   <script>DEBUG = <%= Figaro.env.debug == 'ON' ? "true" : "false" %>;</script>
   <%= javascript_include_tag "application" %>
+  <%= javascript_include_tag "sticky-headers" %>
   <!-- TODO: use payment provider constants -->
   <% case @payment_provider %>
   <% when 'balanced' %>
