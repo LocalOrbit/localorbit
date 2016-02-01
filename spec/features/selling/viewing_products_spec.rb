@@ -92,6 +92,7 @@ describe "Viewing products" do
       expect(Dom::ProductRow.count).to eq(3)
 
       unselect "County Park", from: "q[organization_id_in][]", visible: false
+      click_button "Search"
 
       expect(page).to have_content("Peppers")
       expect(Dom::ProductRow.count).to eq(4)
