@@ -32,9 +32,8 @@
         fSelect.prototype = {
             create: function() {
                 var multiple = this.$select.is('[multiple]') ? ' multiple' : '';
-                var filter_applied = this.$select.hasClass('set_filter') ? ' set_filter' : '';
-                this.$select.wrap('<div class="fs-wrap' + multiple + filter_applied + '"></div>');
-                this.$select.before('<div class="fs-label-wrap"><div class="fs-label">' + this.settings.placeholder + '</div></div>');
+                this.$select.wrap('<div class="fs-wrap' + multiple + '"></div>');
+                this.$select.before('<div class="fs-label-wrap"><div class="fs-label">' + this.settings.placeholder + '</div><span class="fs-arrow"></span></div>');
                 this.$select.before('<div class="fs-dropdown hidden"><div class="fs-options"></div></div>');
                 this.$select.addClass('hidden');
                 this.$wrap = this.$select.closest('.fs-wrap');

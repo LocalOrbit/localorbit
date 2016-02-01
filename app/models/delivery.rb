@@ -35,7 +35,7 @@ class Delivery < ActiveRecord::Base
   end
 
   def requires_location?
-    !delivery_schedule.buyer_pickup?
+    delivery_schedule && !delivery_schedule.buyer_pickup?
   end
 
   def can_accept_orders?
