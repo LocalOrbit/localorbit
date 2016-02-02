@@ -1,5 +1,6 @@
 @import "mixins.css.scss";
 
+/* Reset existing or legacy classes, ids, and elements */
 #kxm-main-header{
 	//position: fixed;
 }
@@ -13,6 +14,7 @@
 	padding-top: 40px !important;
 }
 
+/* Roll Your Own form */
 div#market-creation{
 	position: relative;
 	max-width: 1080px;
@@ -93,7 +95,10 @@ div#market-creation{
 		margin-bottom: 1.2em;
 	}
 
-	// Input types are explicitly declared to prevent unintended styling (think checkboxes).  Others may be added if need be.
+	/* 
+		Input types are explicitly declared to prevent unintended styling 
+		(think checkboxes).  Others may be added if need be.
+	*/
 	select,
 	input[type="text"],
 	input[type="email"]{
@@ -159,7 +164,8 @@ div#market-creation{
 
 }
 
-.success{
+/* Success page (and derivatives) */
+div#success{
 	max-width: 100% !important;
 	width: 100% !important;
 	background: #7EBEC5;
@@ -200,19 +206,19 @@ div#market-creation{
 	}
 
 	#change{
-		background: asset_url('smiley-sm.gif') no-repeat top center;
+		background: asset_url('icon-gear.png') no-repeat top center;
 		@media screen and (max-width: $mobile_break) {
 			background: none;
 		}
 	}
 	#tools{
-		background: asset_url('smiley-sm.gif') no-repeat top center;
+		background: asset_url('icon-tools.png') no-repeat top center;
 		@media screen and (max-width: $mobile_break) {
 			background: none;
 		}
 	}
 	#software{
-		background: asset_url('smiley-sm.gif') no-repeat top center;
+		background: asset_url('icon-cloud.png') no-repeat top center;
 		@media screen and (max-width: $mobile_break) {
 			background: none;
 		}
