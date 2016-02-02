@@ -9,13 +9,11 @@
 <table class="product-table product-table--admin sortable">
   <thead class="stickable">
   <tr>
-    <%= content_tag(:th, 'Supplier', data: {column: 'seller'},
-                    class: "hidden-mobile #{column_sort_classes("seller")}") if current_user.multi_organization_membership? %>
-    <%= content_tag(:th, 'Market', data: {column: 'market'},
-                    class: "hidden-mobile #{column_sort_classes("market")}") if current_user.multi_market_membership? %>
-    <th data-column="name" class="<%= column_sort_classes("name") %>">Name</th>
-    <th data-column="price" class="<%= column_sort_classes("price") %>">Pricing</th>
-    <th data-column="stock" class="<%= column_sort_classes("stock") %>">Available</th>
+    <%= content_tag :th, sort_link(@q, :organization_name, "Supplier"), {"data-column"=>"supplier"}, class: "hidden-mobile" if current_user.multi_organization_membership? %>
+    <%= content_tag :th, sort_link(@q, :markets_name, "Market"), {"data-column"=>"market"}, class: "hidden-mobile" if current_user.multi_market_membership? %>
+    <%= content_tag :th, sort_link(@q, :name, "Name"), {"data-column"=>"name"} %>
+    <%= content_tag :th, sort_link(@q, :prices_sale_price, "Price"), {"data-column"=>"price"} %>
+    <%= content_tag :th, sort_link(@q, :lots_quantity, "Stock"), {"data-column"=>"stock"} %>
     <th>&nbsp;</th>
   </tr>
   </thead>
