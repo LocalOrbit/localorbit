@@ -210,9 +210,10 @@ Rails.application.routes.draw do
     get '/row' => "products#render_product_row"
   end
   resources :organizations, only: :index
-  resource  :market, only: [:show]
-  # KXM This will likely be reigned in a bit.  Open until we have a sucessful end-to-end test
+
+  get '/markets/success(/:id)' => 'markets#success'
   resources :markets
+
   resources :sellers, only: [:index, :show]
   resource :cart, only: [:update, :show, :destroy]
   resources :orders, only: [:index, :show, :create] do

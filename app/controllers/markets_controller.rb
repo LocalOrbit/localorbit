@@ -20,16 +20,34 @@ class MarketsController < ApplicationController
     render layout: "website-bridge"
   end
 
-  def create
-    results = RollYourOwnMarket.perform({:market_params => market_params, :billing_params => billing_params[:billing]})
+  def success
+    # Give preference to the current_market
+    if( current_market )
+      @market = current_market
+    else
+      # Otherwise load it based on the id (if present)
+      if( params[:id] )
+        @market = Market.find(params[:id])
+      end
+    end
+    # The question is "Do I really need the market here"
+    render layout: "website-bridge"
+  end
 
-    if results.success?
-      @market = results.market
+  def create
+    if(false)
       render :success, layout: "website-bridge"
     else
-      flash.now.alert = "Could not create market"
-      @market = results.market
-      render :new
+      results = RollYourOwnMarket.perform({:market_params => market_params, :billing_params => billing_params[:billing]})
+
+      if results.success?
+        @market = results.market
+        redirect_to :action => 'success', :id => @market
+      else
+        flash.now.alert = "Could not create market"
+        @market = results.market
+        render :new
+      end
     end
   end
 
