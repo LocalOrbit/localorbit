@@ -211,6 +211,7 @@ Rails.application.routes.draw do
   end
   resources :organizations, only: :index
 
+  resource  :market, only: [:show]
   get '/markets/success(/:id)' => 'markets#success'
   resources :markets
 
