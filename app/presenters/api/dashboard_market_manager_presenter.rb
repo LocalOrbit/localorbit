@@ -20,7 +20,7 @@ class Api::DashboardMarketManagerPresenter
         when "1"
           total_sales_grouped = group_to_buyers(total_sales_amount_orders, 'day')
         when "2"
-          total_sales_grouped = group_to_buyers(total_sales_amount_orders, 'day')
+          total_sales_grouped = group_to_buyers(total_sales_amount_orders, 'day', 'mtd')
         when "3"
           total_sales_grouped = group_to_buyers(total_sales_amount_orders, 'month')
         else

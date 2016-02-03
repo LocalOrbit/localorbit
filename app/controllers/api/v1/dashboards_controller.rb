@@ -35,7 +35,7 @@ module Api
               axisTitle = 'Hour of Day'
             when "1"
               interval = Date.today.at_beginning_of_day - 6.day..Date.today.at_end_of_day
-              axisTitle = 'Day of Month'
+              axisTitle = 'Last 7 Days'
             when "2"
               interval = Date.new(Date.current.year,Date.current.month,1).at_beginning_of_day..Date.today.at_end_of_day
               axisTitle = 'Day of Month'

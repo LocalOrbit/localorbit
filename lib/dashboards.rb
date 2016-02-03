@@ -50,43 +50,21 @@ module Dashboards
     {:numPendingDeliveries => @deliveries.length, :deliveries => delivery_weeks, :pendingDeliveryAmount => pending_amount ? number_to_currency(pending_amount, precision: 0) : '$0'}
   end
 
-  def group_to_sellers(orders, group_by)
-    total = Array.new
-    count = Array.new
-    orders.inject(0) do |t, order|
-      grp = order.created_at.send(group_by)
-
-      if total[grp].nil?
-        total[grp] = BigDecimal(0)
-      end
-
-      if count[grp].nil?
-        count[grp] = BigDecimal(0)
-      end
-
-      total[grp] = total[grp] + order.items.map(&:seller_net_total).reduce(:+)
-      count[grp] = count[grp] + 1
-    end
-    {:count => count.to_a, :total => total.to_a}
-  end
-
-  def group_to_buyers(orders, group_by)
+  def group_to_sellers(orders, group_by, period=nil)
     grp = Array.new
     total = Array.new
     count = Array.new
-    #if group_by == "day"
-    #  prev_grp = orders.length > 0 ? orders[0].created_at.strftime("%Y%m%d").to_i - 1 : 0
-    #else
-    #  prev_grp = orders.length > 0 ? orders[0].created_at.send(group_by) - 1 : 0
-    #end
 
     orders.inject(0) do |t, order|
       g = order.created_at.send(group_by)
 
-      if group_by == "day"
-        grp[g] = order.created_at.strftime("%Y-%m-%d")
+      if group_by == "hour" || group_by == "month" || (group_by == "day" && period == "mtd")
+        grp[g] = g
       else
-        grp[g] = order.created_at.send(group_by)
+        t = Time.now.yday
+        g = order.created_at.yday
+        i = -t+g+6
+        grp[i] = order.created_at.strftime("%Y-%m-%d")
       end
 
       if total[g].nil?
@@ -97,14 +75,40 @@ module Dashboards
         count[g] = BigDecimal(0)
       end
 
-      #if prev_grp + 1 != grp
-      # grp = prev_grp + 1
-      #  total[grp+1] = 0
-      #else
-        total[g] = total[g] + order.total_cost
-        count[g] = count[g] + 1
-      #end
-      prev_grp = grp
+      total[g] = total[g] + order.items.map(&:seller_net_total).reduce(:+)
+      count[g] = count[g] + 1
+    end
+    {:grp => grp.to_a, :count => count.to_a, :total => total.to_a}
+  end
+
+  def group_to_buyers(orders, group_by, period=nil)
+    grp = Array.new
+    total = Array.new
+    count = Array.new
+
+    orders.inject(0) do |t, order|
+
+      g = order.created_at.send(group_by)
+
+      if group_by == "hour" || group_by == "month" || (group_by == "day" && period == "mtd")
+        grp[g] = g
+      else
+        t = Time.now.yday
+        g = order.created_at.yday
+        i = -t+g+6
+        grp[i] = order.created_at.strftime("%Y-%m-%d")
+      end
+
+      if total[g].nil?
+        total[g] = BigDecimal(0)
+      end
+
+      if count[g].nil?
+        count[g] = BigDecimal(0)
+      end
+
+      total[g] = total[g] + order.total_cost
+      count[g] = count[g] + 1
 
     end
     {:grp =>grp.to_a, :count => count.to_a, :total => total.to_a}

@@ -25,29 +25,38 @@
             var totalOrderCount;
             var orderCountGraph;
             var tickFormat;
+            var axisType;
+            var dTick;
 
             if (l) {
-                $.each(l, function (i,v)
-                {
-                    labels.push(v);
+                $.each(l, function (i,v) {
+                    if (v)
+                        labels.push(v);
                 });
             }
 
             if (j) {
-                $.each(j, function (i,v)
-                {
-                    data_points.push(parseFloat(v));
+                $.each(j, function (i,v) {
+                    if (v)
+                        data_points.push(parseFloat(v));
                 });
             }
 
             if (axisTitle == 'Hour of Day') {
-                tickFormat = '%H'
+                axisType = '-';
+                dTick = 2;
             }
             else if (axisTitle == 'Month of Year') {
-                tickFormat = '%m'
+                axisType = '-';
+                dTick = 1;
             }
             else if (axisTitle == 'Day of Month') {
+                axisType = '-';
+                dTick = 1;
+            }
+            else if (axisTitle == 'Last 7 Days') {
                 tickFormat = '%d';
+                axisType = 'date';
             }
 
             let data = [
@@ -87,9 +96,10 @@
                     showgrid:false,
                     zeroline:false,
                     autotick: false,
-                    type:"date",
+                    type: axisType,
                     tickformat: tickFormat,
                     title: axisTitle,
+                    dtick: dTick,
                     tickfont:{
                         size:10
                     }

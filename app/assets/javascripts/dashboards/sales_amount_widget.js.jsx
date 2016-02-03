@@ -27,16 +27,20 @@
             var salesAmountGraph;
             var rangeSetting;
             var tickFormat;
+            var axisType;
+            var dTick;
 
             if (l) {
                 $.each(l, function (i, v) {
-                    labels.push(v);
+                    if (v)
+                        labels.push(v);
                 });
             }
 
             if (j) {
                 $.each(j, function (i, v) {
-                    data_points.push(parseFloat(v));
+                    if (v)
+                        data_points.push(parseFloat(v));
                 });
             }
 
@@ -59,18 +63,21 @@
                 }
             ];
 
-            rangeSetting = '[1,]';
             if (axisTitle == 'Hour of Day') {
-                rangeSetting = '[0,23]';
-                tickFormat = '%H'
+                axisType = '-';
+                dTick = 2;
             }
             else if (axisTitle == 'Month of Year') {
-                rangeSetting = '[1,12]';
-                tickFormat = '%m'
+                axisType = '-';
+                dTick = 1;
             }
             else if (axisTitle == 'Day of Month') {
-                rangeSetting = '[1,31]';
+                axisType = '-';
+                dTick = 1;
+            }
+            else if (axisTitle == 'Last 7 Days') {
                 tickFormat = '%d';
+                axisType = 'date';
             }
 
             let layout = {
@@ -101,9 +108,10 @@
                     showgrid:false,
                     zeroline:false,
                     autotick: false,
-                    type:"date",
+                    type: axisType,
                     tickformat:tickFormat,
                     title: axisTitle,
+                    dtick: dTick,
                     tickfont:{
                         size:10
                     }
