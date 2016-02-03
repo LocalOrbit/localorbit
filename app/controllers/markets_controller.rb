@@ -14,9 +14,19 @@ class MarketsController < ApplicationController
     @market = Market.new(payment_provider: PaymentProvider.for_new_markets.id)
     @market.pending = true;
 
-    # KXM The hard-coded value is brittle, as is the expectation that the supplied parameter will match a plan. Perhaps a default flag in the plan table and a corresponding class method that recalls the associated record? 
-    plan = Plan.find_by name: params[:plan] || "Start Up"
-    @market.plan_id = plan.id
+    require "stripe"
+    Stripe.api_key = Rails.configuration.stripe[:secret_key]
+
+    plans = Stripe::Plan.all
+    @plan_options = plans.data
+
+    requested_plan = params[:plan] || "Start"
+    @stripe_plan = Stripe::Plan.retrieve(requested_plan.upcase)
+
+    # KXM The expectation that the supplied parameter will match a plan makes for brittle code.  Further, the internal plan has to map to an existing Stripe plan to make sense here 
+    # KXM REPLACE THIS HARD_CODED VALUE, DUDE
+    plan = Plan.find_by name: requested_plan
+    @market.plan_id = 1 #plan.id
     render layout: "website-bridge"
   end
 
