@@ -1,5 +1,7 @@
 
-.calendar{
+table.calendar{
+  border-collapse: collapse;
+  border:1px solid #222;
   margin: auto;
   text-align: center;
   width: 60%;
@@ -13,7 +15,7 @@
   
   .cal-date{
     display: table-cell;
-    padding:3%;
+    padding:2%;
     background:#eee;
     border: 1px solid #fff;
     transition-duration:.18s;
