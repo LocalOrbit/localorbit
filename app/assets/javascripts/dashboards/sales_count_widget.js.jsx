@@ -5,6 +5,7 @@
 
     var sales_count_widget = React.createClass({
         propTypes: {
+            graphLabels: React.PropTypes.array,
             totalOrderCount: React.PropTypes.number,
             totalOrderCountGraph: React.PropTypes.array,
             lineColor: React.PropTypes.string,
@@ -16,19 +17,37 @@
 
             var self = this;
             var labels=[], data_points=[];
+            var l = this.props.graphLabels;
             var j = this.props.totalOrderCountGraph;
             var lineColor = this.props.lineColor;
             var fillColor = this.props.fillColor;
             var axisTitle = this.props.axisTitle;
             var totalOrderCount;
             var orderCountGraph;
+            var tickFormat;
+
+            if (l) {
+                $.each(l, function (i,v)
+                {
+                    labels.push(v);
+                });
+            }
 
             if (j) {
                 $.each(j, function (i,v)
                 {
-                    labels.push(i);
                     data_points.push(parseFloat(v));
                 });
+            }
+
+            if (axisTitle == 'Hour of Day') {
+                tickFormat = '%H'
+            }
+            else if (axisTitle == 'Month of Year') {
+                tickFormat = '%m'
+            }
+            else if (axisTitle == 'Day of Month') {
+                tickFormat = '%d';
             }
 
             let data = [
@@ -68,8 +87,9 @@
                     showgrid:false,
                     zeroline:false,
                     autotick: false,
+                    type:"date",
+                    tickformat: tickFormat,
                     title: axisTitle,
-                    dtick: 3,
                     tickfont:{
                         size:10
                     }

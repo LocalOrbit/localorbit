@@ -70,7 +70,7 @@ module Api
           fillColor = hex_to_rgba(current_market.text_color,0.2)
           lineColor = hex_to_rgba(current_market.text_color,1)
 
-          render json: {dashboard: {userType: user_type, axisTitle: axisTitle, fillColor: fillColor, lineColor: lineColor, showEntityPicker: show_entity_picker, deliveries: upcoming_dlvr[:deliveries], numPendingDeliveries: upcoming_dlvr[:numPendingDeliveries], pendingDeliveryAmount: upcoming_dlvr[:pendingDeliveryAmount], totalSalesAmount: @presenter[:total_sales_amount], totalSalesAmountGraph: @presenter[:total_sales_amount_graph], totalOrderCount: @presenter[:total_order_count], totalOrderCountGraph: @presenter[:total_order_count_graph], avgSalesAmount: @presenter[:average_sales_amount], paymentsDueAmount: @presenter[:payments_due_amount], numPendingBuyers: num_pending_buyers}}
+          render json: {dashboard: {userType: user_type, axisTitle: axisTitle, fillColor: fillColor, lineColor: lineColor, showEntityPicker: show_entity_picker, deliveries: upcoming_dlvr[:deliveries], numPendingDeliveries: upcoming_dlvr[:numPendingDeliveries], pendingDeliveryAmount: upcoming_dlvr[:pendingDeliveryAmount], totalSalesAmount: @presenter[:total_sales_amount], graphLabels: @presenter[:graph_labels], totalSalesAmountGraph: @presenter[:total_sales_amount_graph], totalOrderCount: @presenter[:total_order_count], totalOrderCountGraph: @presenter[:total_order_count_graph], avgSalesAmount: @presenter[:average_sales_amount], paymentsDueAmount: @presenter[:payments_due_amount], numPendingBuyers: num_pending_buyers}}
       end
 
       def timezone

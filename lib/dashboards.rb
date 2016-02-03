@@ -71,32 +71,43 @@ module Dashboards
   end
 
   def group_to_buyers(orders, group_by)
+    grp = Array.new
     total = Array.new
     count = Array.new
-    prev_grp = orders.length > 0 ? orders[0].created_at.send(group_by) - 1 : 0
+    #if group_by == "day"
+    #  prev_grp = orders.length > 0 ? orders[0].created_at.strftime("%Y%m%d").to_i - 1 : 0
+    #else
+    #  prev_grp = orders.length > 0 ? orders[0].created_at.send(group_by) - 1 : 0
+    #end
 
     orders.inject(0) do |t, order|
-      grp = order.created_at.send(group_by)
+      g = order.created_at.send(group_by)
 
-      if total[grp].nil?
-        total[grp] = BigDecimal(0)
+      if group_by == "day"
+        grp[g] = order.created_at.strftime("%Y-%m-%d")
+      else
+        grp[g] = order.created_at.send(group_by)
       end
 
-      if count[grp].nil?
-        count[grp] = BigDecimal(0)
+      if total[g].nil?
+        total[g] = BigDecimal(0)
+      end
+
+      if count[g].nil?
+        count[g] = BigDecimal(0)
       end
 
       #if prev_grp + 1 != grp
       # grp = prev_grp + 1
       #  total[grp+1] = 0
       #else
-        total[grp] = total[grp] + order.total_cost
-        count[grp] = count[grp] + 1
+        total[g] = total[g] + order.total_cost
+        count[g] = count[g] + 1
       #end
       prev_grp = grp
 
     end
-    {:count => count.to_a, :total => total.to_a}
+    {:grp =>grp.to_a, :count => count.to_a, :total => total.to_a}
   end
 
   #def sum_money_to_sellers(items)
