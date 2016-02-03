@@ -5,6 +5,7 @@
 
     var sales_count_widget = React.createClass({
         propTypes: {
+            graphLabels: React.PropTypes.array,
             totalOrderCount: React.PropTypes.number,
             totalOrderCountGraph: React.PropTypes.array,
             lineColor: React.PropTypes.string,
@@ -16,19 +17,46 @@
 
             var self = this;
             var labels=[], data_points=[];
+            var l = this.props.graphLabels;
             var j = this.props.totalOrderCountGraph;
             var lineColor = this.props.lineColor;
             var fillColor = this.props.fillColor;
             var axisTitle = this.props.axisTitle;
             var totalOrderCount;
             var orderCountGraph;
+            var tickFormat;
+            var axisType;
+            var dTick;
+
+            if (l) {
+                $.each(l, function (i,v) {
+                    if (v)
+                        labels.push(v);
+                });
+            }
 
             if (j) {
-                $.each(j, function (i,v)
-                {
-                    labels.push(i);
-                    data_points.push(parseFloat(v));
+                $.each(j, function (i,v) {
+                    if (v)
+                        data_points.push(parseFloat(v));
                 });
+            }
+
+            if (axisTitle == 'Hour of Day') {
+                axisType = '-';
+                dTick = 2;
+            }
+            else if (axisTitle == 'Month of Year') {
+                axisType = '-';
+                dTick = 1;
+            }
+            else if (axisTitle == 'Day of Month') {
+                axisType = '-';
+                dTick = 1;
+            }
+            else if (axisTitle == 'Last 7 Days') {
+                tickFormat = '%d';
+                axisType = 'date';
             }
 
             let data = [
@@ -68,8 +96,10 @@
                     showgrid:false,
                     zeroline:false,
                     autotick: false,
+                    type: axisType,
+                    tickformat: tickFormat,
                     title: axisTitle,
-                    dtick: 3,
+                    dtick: dTick,
                     tickfont:{
                         size:10
                     }
