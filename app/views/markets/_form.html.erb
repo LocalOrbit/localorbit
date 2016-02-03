@@ -121,9 +121,9 @@
           <h2>Review Plan Selection</h2>
           <div class="row">
             <div class="field column column--half column--guttered">
-            <%# KXM This will reference the to-be-created Stripe Plan ID column (but where will it live?  markets (subsuming plan_id or a new column)? or plans(a new column)?) %>
-              <%= select(:plan, nil, @plan_options.each.map {|plan| [plan[:name], plan[:id]] }, {selected: @stripe_plan.id }, { class: "column--full" } ) %><br />
+              <%= select(:plan, nil, @plan_data.each.map {|plan| [plan[:name], plan[:id]] }, {selected: @stripe_plan.try(:id) }, { class: "column--full" } ) %><br />
               <span class="help-text">You will be billed annually for your<br />Local Orbit Service Plan</span>
+              <!--span class="help-text">You will be billed <%#= number_to_currency(@stripe_plan.amount/100) %> every <%#= pluralize(@stripe_plan.interval_count, @stripe_plan.interval) %> for your<br />Local Orbit Service Plan</span-->
             </div
             ><div class="field column column--half column--guttered">
               <%= text_field(:purchase, :code, class: "column--full", placeholder: 'Discount Code') %>

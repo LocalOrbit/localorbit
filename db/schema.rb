@@ -730,6 +730,7 @@ ActiveRecord::Schema.define(version: 20160227174245) do
     t.boolean  "packing_labels",           default: false, null: false
     t.boolean  "sellers_edit_orders",      default: false, null: false
     t.boolean  "has_procurement_managers", default: false, null: false
+    t.string   "stripe_id"
   end
 
   create_table "prices", force: true do |t|
