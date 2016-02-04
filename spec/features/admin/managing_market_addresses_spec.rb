@@ -87,8 +87,9 @@ describe "Admin Managing Markets" do
 
       click_link address1.name
 
-      expect(page).to have_text("default")
-      expect(page).to have_text("billing")
+      expect(page).to have_text("Default")
+      expect(page).to have_text("Billing")
+      expect(page).to have_text("Remit-to")
 
       fill_in "Address Label", with: "Edited Address"
 
@@ -128,8 +129,9 @@ describe "Admin Managing Markets" do
       fill_in "Zip", with: "49423"
       fill_in "Phone", with: "616-123-4567"
       fill_in "Fax", with: "616-321-3214"
-      check('default')
-      check('billing')
+      check('market_address_default')
+      check('market_address_billing')
+      check('market_address_remit_to')
       click_button "Add Address"
       # add another
       click_link "Add Address"
@@ -140,8 +142,9 @@ describe "Admin Managing Markets" do
       fill_in "Zip", with: "49423"
       fill_in "Phone", with: "616-123-4566"
       fill_in "Fax", with: "616-321-3215"
-      check('default')
-      check('billing')
+      check('market_address_default')
+      check('market_address_billing')
+      check('market_address_remit_to')
       click_button "Add Address"
 
       expect(market.addresses.visible.select{|mkt| mkt if mkt.default}.first.address).to eq("123 Apple2")
@@ -161,7 +164,7 @@ describe "Admin Managing Markets" do
       fill_in "Zip", with: "49423"
       fill_in "Phone", with: "616-123-4567"
       fill_in "Fax", with: "616-321-3214"
-      check('billing')
+      check('market_address_billing')
       click_button "Add Address"
       # add another
       click_link "Add Address"
@@ -172,11 +175,42 @@ describe "Admin Managing Markets" do
       fill_in "Zip", with: "49423"
       fill_in "Phone", with: "616-123-4566"
       fill_in "Fax", with: "616-321-3215"
-      check('billing')
+      check('market_address_billing')
       click_button "Add Address"
 
       expect(market.reload.addresses.visible.select{|mktadr| mktadr if mktadr.billing}.first.address).to eq("123 Apple4")
       expect(market.reload.addresses.visible.select{|mktadr| mktadr if mktadr.billing}.length).to eq(1)
+    end
+
+    it "deals with remit-to address properly" do
+      # have billing, submit new billing, check there's only one
+      expect(page).to have_text "Add Address"
+
+      click_link "Add Address"
+
+      fill_in "Address Label", with: "New Address3"
+      fill_in "Address", with: "123 Apple3"
+      fill_in "City", with: "Holland"
+      select "Michigan", from: "State"
+      fill_in "Zip", with: "49423"
+      fill_in "Phone", with: "616-123-4567"
+      fill_in "Fax", with: "616-321-3214"
+      check('market_address_remit_to')
+      click_button "Add Address"
+      # add another
+      click_link "Add Address"
+      fill_in "Address Label", with: "New Address4"
+      fill_in "Address", with: "123 Apple4"
+      fill_in "City", with: "Albion"
+      select "Michigan", from: "State"
+      fill_in "Zip", with: "49423"
+      fill_in "Phone", with: "616-123-4566"
+      fill_in "Fax", with: "616-321-3215"
+      check('market_address_remit_to')
+      click_button "Add Address"
+
+      expect(market.reload.addresses.visible.select{|mktadr| mktadr if mktadr.remit_to}.first.address).to eq("123 Apple4")
+      expect(market.reload.addresses.visible.select{|mktadr| mktadr if mktadr.remit_to}.length).to eq(1)
     end
 
     it "keeps correct boxes checked" do
@@ -189,7 +223,8 @@ describe "Admin Managing Markets" do
       fill_in "Zip", with: "49423"
       fill_in "Phone", with: "616-123-4567"
       fill_in "Fax", with: "616-321-3214"
-      check('default')
+      save_and_open_page
+      check('market_address_default')
       click_button "Add Address"
       click_link "New Address" # click on the label for address just added
 
