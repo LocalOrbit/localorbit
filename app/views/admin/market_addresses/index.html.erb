@@ -11,6 +11,7 @@
           <tr>
             <th>Address</th>
             <th>Phone</th>
+            <th>Type</th>
             <th></th>
           </tr>
         </thead>
@@ -23,6 +24,9 @@
             </td>
             <td>
               <%= address.phone %>
+            </td>
+            <td>
+              <%= address.address_type %>
             </td>
             <td class="delete">
               <a href="<%= admin_market_address_path(@market, address) %>" data-method="delete" class="delete-address"><i class="font-icon icon-delete"></i></a>
