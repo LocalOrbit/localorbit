@@ -201,10 +201,14 @@ module API
 				# singular in post request
 				post '/add-product' do
 					product_name = permitted_params[:name]
+					#binding.pry
 					possible_org = Organization.find_by_name(permitted_params[:organization_name])
+					#binding.pry
 					supplier_id = possible_org.id
 					unit_id = Unit.find_by_singular(permitted_params[:unit]).id
+					#binding.pry
 					category_id = Category.find_by_name(permitted_params[:category]).id
+					#binding.pry
 					product_code = ""
 					if permitted_params[:code]
 						product_code = permitted_params[:code]
@@ -249,7 +253,7 @@ module API
 						# product.lots.create!(quantity: 999_999)
 	     			product.prices.create!(sale_price: permitted_params[:price], min_quantity: 1) ## TODO: min quantity default or option?
 	     		end
-	     		{"result"=>"success?"} # TODO what should this actually be though
+	     		{"result"=>"product successfully created"} # TODO what should this actually be though
 				end
 
 				desc "Upload json"
@@ -259,10 +263,11 @@ module API
 				post '/add-products' do
 					# do stuff with posted json file here
 					# should be normal way of parsing it and then it will add by row
-					
+					p "starting post"
 					def self.create_product_from_hash(prod_hash)
 						gp_id_or_false = ProductHelpers.identify_product_uniqueness(prod_hash)
 						if !gp_id_or_false
+							p "CREATING with", prod_hash["Product Name"]
 							product = Product.create!(
 											name: prod_hash["Product Name"],
 							        organization_id: get_organization_id_from_name(prod_hash["Organization"]),
@@ -274,6 +279,7 @@ module API
 							        long_description: prod_hash["Long Description"],
 							        unit_description: prod_hash["Unit Description"]
 							      	)
+							p "hi there done creating", prod_hash["Product Name"]
 							unless prod_hash[@required_headers[-4]].empty? # TODO not loving the repetition, this should be factored out for sure, but for now.
 								newprod = product.dup 
 								newprod.unit_id = get_unit_id_from_name(prod_hash[@required_headers[-3]])
@@ -282,6 +288,7 @@ module API
 								newprod.save! # for id to be created in db
 							end
 						else
+							p "CREATING with", prod_hash["Product Name"]
 							product = Product.create!(
 							        name: prod_hash["Product Name"],
 							        organization_id: get_organization_id_from_name(prod_hash["Organization"]),
@@ -294,6 +301,7 @@ module API
 							        unit_description: prod_hash["Unit Description"],
 							        general_product_id: gp_id_or_false
 							      	)
+							p "hi there done creating**", prod_hash["Product Name"]
 							unless prod_hash[@required_headers[-4]].empty? # TODO not loving the repetition, but for now.
 								newprod = product.dup 
 								newprod.unit_id = get_unit_id_from_name(prod_hash[@required_headers[-3]])
@@ -305,7 +313,7 @@ module API
 						end
 
 					end # end def.self_create_product_from_hash
-					{"result"=>"success?"} # TODO what should this actually be though
+					{"result"=>"products successfully created"} # TODO what should this actually be though
 				end # end /post add-products (json)
 
 			end
