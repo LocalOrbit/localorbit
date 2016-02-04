@@ -31,6 +31,13 @@ class MarketDecorator < Draper::Decorator
     end
   end
 
+  def remit_to_address
+    remit_to_addrs = addresses.visible.select{|addr| addr if addr.remit_to? } # should be just one again
+    unless remit_to_addrs.empty?
+      remit_to_addrs.first
+    end
+  end
+
   def seller_locations_map(w=400, h=400)
     addresses = organizations.selling.map do |seller|
       seller.shipping_location.geocode if seller.shipping_location
@@ -43,17 +50,47 @@ class MarketDecorator < Draper::Decorator
     addresses.visible.any?
   end
 
+  def has_remit_to_address?
+    remit_to_address
+  end
+
+  def remit_to_name
+    remit_to_address.name
+  end
+
   def billing_street_address
     billing_address.address
+  end
+
+  def remit_to_street_address
+    remit_to_address.address
   end
 
   def billing_city_state_zip
     "#{billing_address.city}, #{billing_address.state} #{billing_address.zip}"
   end
 
+  def remit_to_city_state_zip
+    "#{remit_to_address.city}, #{remit_to_address.state} #{remit_to_address.zip}"
+  end
+
   def billing_address_phone_number
     if billing_address.phone
       number = billing_address.phone.to_s
+    else
+      number = contact_phone.to_s
+    end
+    formatted_num = number.gsub(/[^0-9]/, "")
+    if formatted_num.length == 10
+      number_to_phone(formatted_num, area_code: true)
+    else
+      number.to_s
+    end
+  end
+
+  def remit_to_phone_number
+    if remit_to_address.phone
+      number = remit_to_address.phone.to_s
     else
       number = contact_phone.to_s
     end

@@ -10,6 +10,7 @@ class MarketAddress < ActiveRecord::Base
 
   before_save :ensure_single_default
   before_save :ensure_single_billing
+  before_save :ensure_single_remit_to
   before_save :ensure_default_address_label
 
   def self.alphabetical_by_name
@@ -41,6 +42,15 @@ class MarketAddress < ActiveRecord::Base
     end
   end
 
+  def falsify_all_others_remit_to(mkt_addr_id)
+    MarketAddress.where( remit_to:true ).where(market_id:"#{mkt_addr_id}".to_i).each do |ma|
+      if ma.id != self.id
+        ma.remit_to = false
+        ma.save!
+      end
+    end
+  end
+
   def ensure_single_default
     if self.default # if the about to be saved market address is default
       falsify_all_others_default(self.market_id)
@@ -50,6 +60,12 @@ class MarketAddress < ActiveRecord::Base
   def ensure_single_billing
     if self.billing 
       falsify_all_others_billing(self.market_id)
+    end
+  end
+
+  def ensure_single_remit_to
+    if self.remit_to
+      falsify_all_others_remit_to(self.market_id)
     end
   end
 
