@@ -23,7 +23,7 @@ module API
 				end
 
 				rescue_from ActiveRecord::RecordNotFound do |e|
-          error_response(message: e.message, status: 404)
+          error_response(message: e.message, status: 400)
         end
 
         rescue_from ActiveRecord::RecordInvalid do |e|
@@ -31,14 +31,14 @@ module API
         end
 
 	      # global exception handler, used for error notifications
-	      rescue_from :all do |e|
-	        if Rails.env.development?
-	          raise e
-	        else
-	          #Raven.capture_exception(e)
-	          error_response(message: "Internal server error", status: 500)
-	        end
-	      end
+	      # rescue_from :all do |e|
+	      #   if Rails.env.development?
+	      #     raise e
+	      #   else
+	      #     #Raven.capture_exception(e)
+	      #     error_response(message: "Internal server error", status: 500)
+	      #   end
+	      # end
 
 			end
 		end
