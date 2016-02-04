@@ -215,6 +215,11 @@ Rails.application.routes.draw do
   get '/markets/success(/:id)' => 'markets#success'
   resources :markets
 
+  resource :roll_your_own_market, only: [] do
+    post :get_stripe_coupon
+    post :get_stripe_plans
+  end
+
   resources :sellers, only: [:index, :show]
   resource :cart, only: [:update, :show, :destroy]
   resources :orders, only: [:index, :show, :create] do

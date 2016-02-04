@@ -3,7 +3,7 @@
   $ ->
     strip_key_flag = $('meta[name="stripe-key"]').attr('content')
     if strip_key_flag?
-      Stripe.setPublishableKey($('meta[name="stripe-key"]').attr('content'))
+      Stripe.setPublishableKey(strip_key_flag)
       new_market.setupForm()
 
   new_market =
@@ -89,17 +89,6 @@
       wizard_nav $(this)
       return
 
-    #  KXM Placeholder method for button that will likely be removed...
-    $('#add_market').click (e) ->
-      e.preventDefault()
-      alert 'This button will:\nAdd an entry to a table of pending markets, creating the table if necessary\nSpawn another market data entry form'
-      return
-      
-    #  KXM Placeholder method for button that don't yet work...
-    $('#apply_discount').click (e) ->
-      e.preventDefault()
-      alert 'This button will:\nApply a discount to the payment total\nPresumably validate the discount?\nPerform some UI manipulation?'
-      return
     return
   return
 ).call this

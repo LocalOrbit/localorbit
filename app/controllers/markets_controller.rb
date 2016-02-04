@@ -11,9 +11,6 @@ class MarketsController < ApplicationController
   end
 
   def new
-    @market = Market.new(payment_provider: PaymentProvider.for_new_markets.id)
-    @market.pending = true;
-
     Stripe.api_key = Rails.configuration.stripe[:secret_key]
 
     plans = Stripe::Plan.all
@@ -23,11 +20,18 @@ class MarketsController < ApplicationController
     @stripe_plan = Stripe::Plan.retrieve(requested_plan.upcase)
 
     plan = Plan.find_by stripe_id: requested_plan.upcase
-    @market.plan_id = plan.id
+
+    @market = Market.new do |m|
+      m.payment_provider = PaymentProvider.for_new_markets.id
+      m.pending = true
+      m.plan_id = plan.id
+    end
+
     render layout: "website-bridge"
   end
 
   def success
+    # KXM I feel like this conditional exposes an underlying route misunderstanding...
     # Give preference to the current_market
     if( current_market )
       @market = current_market
@@ -37,24 +41,21 @@ class MarketsController < ApplicationController
         @market = Market.find(params[:id])
       end
     end
-    # The question is "Do I really need the market here"
+
+    # KXM The question is: "Do I really need the market for the success page?"
     render layout: "website-bridge"
   end
 
   def create
-    if(false)
-      render :success, layout: "website-bridge"
-    else
-      results = RollYourOwnMarket.perform({:market_params => market_params, :billing_params => billing_params[:billing]})
+    results = RollYourOwnMarket.perform({:market_params => market_params, :billing_params => billing_params[:billing]})
 
-      if results.success?
-        @market = results.market
-        redirect_to :action => 'success', :id => @market
-      else
-        flash.now.alert = "Could not create market"
-        @market = results.market
-        render :new
-      end
+    if results.success?
+      @market = results.market
+      redirect_to :action => 'success', :id => @market
+    else
+      flash.now.alert = "Could not create market"
+      @market = results.market
+      render :new
     end
   end
 

@@ -327,6 +327,69 @@
   <%# KXM Stripe scripts included manually because I don't yet know what to do with the PaymentProvider stuff... delete when refactored %>
   <script type="text/javascript" src="https://js.stripe.com/v2/"></script>
   <%= javascript_include_tag 'stripe' %>
+
+  <script type="text/javascript">
+  	$( document ).ready(function(){
+  		
+  		$("#plan_").change(function(){
+  			plan_id = $(this).val();
+	      url = '/roll_your_own_market/get_stripe_plans'
+
+  			$.ajax({
+  				type: 'POST',
+  				url: url,
+  				data: {"plan":plan_id},
+  				success: function(results){
+          	// # KXM This needs to be pulled into a proper response function
+  					$("#price_").val(results.amount/100)
+  				}
+  			});
+	    })
+
+	    $('#apply_discount').click(function(e){
+	      e.preventDefault()
+
+	      coupon = $('#discount_').val()
+	      original_price = $("#price_").val()
+	      new_price = 0
+
+	      if(original_price == ''){
+	      	// This should never be true, but it's so during dev
+	      	alert("Please select a plan")
+
+	      } else {
+		      if(coupon != ''){
+			      url = '/roll_your_own_market/get_stripe_coupon'
+			      $.ajax({
+		          type: 'POST',
+		          url: url,
+		          data: {"coupon":coupon},
+		          success: function(response){
+		          	// # KXM This needs to be pulled into a proper response function
+	            	$("#price_").prop('disabled', false)
+
+		            if(response.percent_off > 0){
+		            	new_price = original_price - (original_price * (response.percent_off/100))
+		            	$("#price_").val(new_price)
+		            } else {
+		            	new_price = original_price - response.amount_off
+		            	$("#price_").val(new_price)
+		            }
+
+	            	$("#price_").prop('disabled', true)
+		          },
+		          error: function(response){
+		          	alert(response.responseJSON.error.message)
+		          }
+		        });
+
+		      } else {
+		      	alert("Please enter a discount code")
+		      }
+	      }
+  		})
+  	})
+  </script>
  
 </body>
 </html>
