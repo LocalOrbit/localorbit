@@ -2,8 +2,10 @@ require "spec_helper"
 
 describe API::V2::Products, :type => :request do
 
+let!(:org) { create(:organization, name: "Organization 1") }
 let!(:product1) { create(:product, name:"Test Product 1") }
 let!(:product2) { create(:product, name:"Test Product 2") }
+
 
 	describe "GET /api/v2/products" do
 		it "returns a product when identified by name with correct info" do
@@ -29,27 +31,31 @@ let!(:product2) { create(:product, name:"Test Product 2") }
 	describe "POST /api/v2/add-product" do
 
 		it "posts one product correctly with 201 response" do # todo market name problem - in controller
-			post "api/v2/products/add-product", {name:"Very Unusual Name",organization_name:"Boettcher Farm",price:2.34,unit:"Case",category:"Fruits",code:"hmmm-abc",short_description:"short",long_description:"GOES ON FOREVER long long long",unit_description:"unit description with new unit same product"}.to_json, {"Content-Type"=>"application/json"}
+			post "api/v2/products/add-product", {name:"Super Unusual Name",organization_name:"Organization 1",price:2.34,unit:"box",category:"Fruits",code:"hmmm-abc",short_description:"short",long_description:"GOES ON FOREVER long long long",unit_description:"unit description with new unit same product"}.to_json, {"Content-Type"=>"application/json"}
+			# TODO fix problem: 500 b/c failing on lookup, should be 400 Bad Request
+			# this is... relevant to the next tests
 
-			#{}?organization_name=Boettcher+Farm&category=Fruits&code=hmmm-abc&name=Very+Unusual+Name&short_description=short&price=2.34&long_description=GOES+ON+FOREVER+long+long+long&unit=Case&unit_description=unit+description+with+new+unit+same+product"
-
-			#, {name:"Very Unusual Name",organization_name:"Boettcher Farm",price:2.34,unit:"Case",category:"Fruits",code:"hmmm-abc",short_description:"short",long_description:"GOES ON FOREVER long long long",unit_description:"unit description with new unit same product"}.to_json, {"Content-Type"=>"application/json"}
-			#expect(response.status).to eq(201)
-			#binding.pry
-			expect(JSON.parse(response.body)).to eq("hi")
+			expect(response.status).to eq(201)
+			expect(JSON.parse(response.body)).to eq({"result" => "product successfully created"})
 		end
 
-	# 	it "returns a bad request response on malformed request data (no product name)" do
-	# 		# remove product name and make sure it gives error
-	# 	end
+		it "returns a bad request response on malformed request data (no product name)" do
+			post "api/v2/products/add-product", {organization_name:"Organization 1",price:2.34,unit:"box",category:"Fruits",code:"hmmm-abc",short_description:"short",long_description:"GOES ON FOREVER long long long",unit_description:"unit description with new unit same product"}.to_json, {"Content-Type"=>"application/json"}
 
-	# 	it "returns a bad request response on malformed request data (no org name)" do
-	# 		# same for correct single product request with no org name
-	# 	end
+			expect(response.status).not_to eq(201)
+			expect(response.status).to eq(400)
+		end
 
-	# 	# TODO: test for mkt name behavior when route is adequately supported for markets
+		it "returns a bad request response on malformed request data (no org name)" do
+			post "api/v2/products/add-product", {name:"Super Unusual Name",price:2.34,unit:"box",category:"Fruits",code:"hmmm-abc",short_description:"short",long_description:"GOES ON FOREVER long long long",unit_description:"unit description with new unit same product"}.to_json, {"Content-Type"=>"application/json"}
 
-	# end
+			expect(response.status).not_to eq(201)
+			expect(response.status).to eq(400)
+		end
+
+		# TODO: test for mkt name behavior when route is adequately supported for markets
+
+	end
 
 	# describe "POST /api/v2/add-products" do
 
