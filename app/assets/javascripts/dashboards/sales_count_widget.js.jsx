@@ -55,8 +55,14 @@
                 dTick = 1;
             }
             else if (axisTitle == 'Last 7 Days') {
-                tickFormat = '%d';
-                axisType = 'date';
+                if (labels.length > 1) {
+                    tickFormat = '%e';
+                    axisType = 'date';
+                }
+                else {
+                    axisType = 'category';
+                    labels[0] = new Date(labels[0]).getUTCDay();
+                }
             }
 
             let data = [
@@ -86,7 +92,6 @@
                     zeroline:false,
                     showgrid:false,
                     autotick: false,
-                    dtick: 1,
                     tickfont:{
                         size:10
                     }
