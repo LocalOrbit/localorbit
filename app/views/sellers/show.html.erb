@@ -22,26 +22,10 @@
       ><div class="mobile-pane" id="social">
         <div class="vacuus"></div>
         <a href="#seller-info" class="pane-toggle mobile-only btn">Return to the Supplier</a>
-        <% if @current_seller.try(:display_twitter) %>
-          <div class="social-widget">
-            <a class="twitter-timeline" href="https://twitter.com/<%= @current_seller.twitter %>" data-widget-id="<%= Figaro.env.twitter_widget_id %>" data-screen-name="<%= @current_seller.twitter %>"></a>
-            <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
-          </div>
-        <% end %>
-
-        <% if @current_seller.try(:display_facebook) %>
-          <div class="social-widget">
-            <div class="fb-like-box" data-href="https://www.facebook.com/<%= @current_seller.facebook %>" data-width="220" data-colorscheme="light" data-show-faces="false" data-header="false" data-stream="true" data-show-border="true"></div>
-            <div id="fb-root"></div>
-            <script>(function(d, s, id) {
-              var js, fjs = d.getElementsByTagName(s)[0];
-              if (d.getElementById(id)) return;
-              js = d.createElement(s); js.id = id;
-              js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&appId=371089202914911&version=v2.0";
-              fjs.parentNode.insertBefore(js, fjs);
-            }(document, 'script', 'facebook-jssdk'));</script>
-          </div>
-        <% end %>
+        
+        <%= twitter_feed(@current_seller.try(:twitter), @current_seller.try(:display_twitter)) %>
+        <%= facebook_feed(@current_seller.try(:facebook), @current_seller.try(:display_facebook)) %>
+        
       </div>
 
     </aside

@@ -74,5 +74,13 @@
       <% end %>
       </ul>
     </div>
+    
+    <div class="mobile-entab" data-tabbox="#market-tab-box">
+      <h2 class="story-header">Social Media</h2>
+      
+      <%= twitter_feed(@market.twitter) %>
+      <%= facebook_feed(@market.facebook) %>
+      
+    </div>
   </aside>
 </div>
