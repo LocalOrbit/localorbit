@@ -13,7 +13,7 @@
     <%= content_tag(:th, "Market", class: "hidden-mobile") if current_user.multi_market_membership? %>
     <%= content_tag :th, sort_link(@q, :name, "Name"), data: {column: 'name'} %>
     <%= content_tag :th, sort_link(@q, :prices_sale_price, "Price"), data: {column: 'price'} %>
-    <%= content_tag :th, sort_link(@q, :lots_quantity, "Stock"), data: {column: 'stock'} %>
+    <%= content_tag :th, sort_link(@q, :lots_quantity, "Available"), data: {column: 'stock'} %>
     <th>&nbsp;</th>
   </tr>
   </thead>
