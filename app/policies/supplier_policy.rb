@@ -1,0 +1,3 @@
+class SupplierPolicy < ApplicationPolicy
+
+end

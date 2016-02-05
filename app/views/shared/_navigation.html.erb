@@ -17,7 +17,7 @@ end
         <% if current_user %>
           <div class="nav nav--main column column--half pull-right" style="text-align: center">
             <%= link_to "Order", products_path, class: "", tag: :a %>
-            <%= link_to "Suppliers", sellers_path, class: "", tag: :a %>
+            <% if policy(:supplier).index? %><%= link_to "Suppliers", sellers_path, class: "", tag: :a %><% end %>
             <%= link_to "About", market_path, class: "", tag: :a %>
           </div>
         <% end %>
