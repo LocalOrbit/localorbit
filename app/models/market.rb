@@ -23,6 +23,7 @@ class Market < ActiveRecord::Base
 
   validate :require_payment_method
 
+  has_one  :organization
   has_many :managed_markets
   has_many :managers, through: :managed_markets, source: :user
 

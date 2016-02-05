@@ -205,7 +205,9 @@ class User < ActiveRecord::Base
 
   def admin?
     #role == "admin"
-    user_organizations[0].organization.org_type == "A"
+    if !user_organizations[0].nil? && !user_organizations[0].organization.nil?
+      user_organizations[0].organization.org_type == "A"
+    end
   end
 
   def can_manage?(resource)
@@ -236,12 +238,16 @@ class User < ActiveRecord::Base
 
   def market_manager?
     #managed_markets.any?
-    self.user_organizations[0].organization.org_type == "M"
+    if !user_organizations[0].nil? && !user_organizations[0].organization.nil?
+      self.user_organizations[0].organization.org_type == "M"
+    end
   end
 
   def seller?
     #organizations.selling.any?
-    self.user_organizations[0].organization.org_type == "S"
+    if !user_organizations[0].nil? && !user_organizations[0].organization.nil?
+      self.user_organizations[0].organization.org_type == "S"
+    end
   end
 
   def admin_or_mm?
@@ -250,7 +256,9 @@ class User < ActiveRecord::Base
 
   def buyer_only?
     #!admin? && !market_manager? && !seller?
-    self.user_organizations[0].organization.org_type == "B"
+    if !user_organizations[0].nil? && !user_organizations[0].organization.nil?
+      self.user_organizations[0].organization.org_type == "B"
+    end
   end
 
   def is_seller_with_purchase?
