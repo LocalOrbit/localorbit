@@ -20,13 +20,14 @@ class Api::DashboardMarketManagerPresenter
         when "1"
           total_sales_grouped = group_to_buyers(total_sales_amount_orders, 'day')
         when "2"
-          total_sales_grouped = group_to_buyers(total_sales_amount_orders, 'day')
+          total_sales_grouped = group_to_buyers(total_sales_amount_orders, 'day', 'mtd')
         when "3"
           total_sales_grouped = group_to_buyers(total_sales_amount_orders, 'month')
         else
           total_sales_grouped = group_to_buyers(total_sales_amount_orders, 'day')
       end
 
+      graph_labels = total_sales_grouped[:grp].as_json
       total_sales_amount_graph = total_sales_grouped[:total].as_json
       total_order_count_graph = total_sales_grouped[:count].as_json
 
@@ -40,6 +41,7 @@ class Api::DashboardMarketManagerPresenter
       payments_due_amount = payments_due_amount_raw > 0 ? number_to_currency(payments_due_amount_raw, precision:0) : '$0'
 
     {
+      :graph_labels => graph_labels,
       :total_sales_amount_graph => total_sales_amount_graph,
       :total_sales_amount => total_sales_amount ? total_sales_amount : '$0',
       :total_order_count_graph => total_order_count_graph,

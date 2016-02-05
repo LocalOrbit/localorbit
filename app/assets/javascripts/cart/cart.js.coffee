@@ -127,8 +127,10 @@ $ ->
             counter.data('message', '')
 
           if count > 0
+            $("#checkout-button").show();
             $('#review_cart').removeClass('is-hidden')
           else
+            $("#checkout-button").hide();
             $('#review_cart').addClass('is-hidden')
       )
 

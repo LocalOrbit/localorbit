@@ -4,7 +4,7 @@ class Admin::MarketAddressesController < AdminController
   before_action :find_address, only: [:edit, :update, :destroy]
 
   def index
-    @addresses = @market.addresses.visible.alphabetical_by_name
+    @addresses = @market.addresses.visible.alphabetical_by_name.decorate
   end
 
   def new
@@ -49,6 +49,7 @@ class Admin::MarketAddressesController < AdminController
       :fax,
       :default,
       :billing,
+      :remit_to,
       :country
     )
   end

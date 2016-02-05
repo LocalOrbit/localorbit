@@ -100,6 +100,7 @@
                             <div style={{marginBottom: "5px"}}>
                                 <lo.sales_amount_widget
                                     userType={uType}
+                                    graphLabels={self.state.dashboard.graphLabels}
                                     totalSalesAmount={self.state.dashboard.totalSalesAmount}
                                     totalSalesAmountGraph={self.state.dashboard.totalSalesAmountGraph}
                                     lineColor={self.state.dashboard.lineColor}
@@ -116,6 +117,7 @@
                         <div className="column column--one-third" style={{margin: "5px 0px 0px 5px", minWidth:302, maxWidth: 302}}>
                             <div style={{marginBottom: "5px"}}>
                                  <lo.sales_count_widget
+                                     graphLabels={self.state.dashboard.graphLabels}
                                      totalOrderCount={parseInt(self.state.dashboard.totalOrderCount)}
                                      totalOrderCountGraph={self.state.dashboard.totalOrderCountGraph}
                                      lineColor={self.state.dashboard.lineColor}

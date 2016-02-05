@@ -1,5 +1,48 @@
 @import "mixins";
 
+@media (min-width: 1150px) {
+  #checkout-button {
+    position: fixed;
+    top: 50%;
+    right: 20px;
+    background-color: #AAA;
+    color: #FFF;
+    border: 1px solid #FFF;
+    font-size: 18px;
+    padding: 10px;
+    text-align: center;
+    vertical-align: middle;
+    border-radius: 5px;
+    z-index:1000;
+  }
+}
+
+@media (max-width: 1149px) {
+  #checkout-button {
+    position: fixed;
+    top: 50%;
+    right: 20px;
+    background-color: #AAA;
+    color: #FFF;
+    border: 1px solid #FFF;
+    font-size: 18px;
+    padding: 10px;
+    text-align: center;
+    vertical-align: middle;
+    border-radius: 5px;
+    a {
+      span {
+        display: none;
+      }
+      &:after {
+        content: '\f0a9';
+        font-family: FontAwesome;
+      }
+    }
+    z-index:1000;
+  }
+}
+
 .updated input {
   background-color: #bfd9ad;
   @include transition(background-color 0.1s ease-in);

@@ -6,6 +6,7 @@
     var sales_amount_widget = React.createClass({
         propTypes: {
             userType: React.PropTypes.string,
+            graphLabels: React.PropTypes.array,
             totalSalesAmount: React.PropTypes.string,
             totalSalesAmountGraph: React.PropTypes.array,
             lineColor: React.PropTypes.string,
@@ -16,7 +17,8 @@
         render: function () {
             var self = this;
             var label_text;
-            var labels=[], data_points=[];
+            var labels = [], data_points = [];
+            var l = this.props.graphLabels;
             var j = this.props.totalSalesAmountGraph;
             var lineColor = this.props.lineColor;
             var fillColor = this.props.fillColor;
@@ -24,12 +26,21 @@
             var totalSalesAmount;
             var salesAmountGraph;
             var rangeSetting;
+            var tickFormat;
+            var axisType;
+            var dTick;
+
+            if (l) {
+                $.each(l, function (i, v) {
+                    if (v)
+                        labels.push(v);
+                });
+            }
 
             if (j) {
-                $.each(j, function (i,v)
-                {
-                    labels.push(i);
-                    data_points.push(parseFloat(v));
+                $.each(j, function (i, v) {
+                    if (v)
+                        data_points.push(parseFloat(v));
                 });
             }
 
@@ -38,27 +49,42 @@
                     type: 'scatter',
                     x: labels,
                     y: data_points,
-                    line:{
-                        shape:"spline"
+                    line: {
+                        shape: "spline"
                     },
-                    marker:{
+                    marker: {
                         color: lineColor,
-                        size:10
+                        size: 10
                     },
-                    mode:"lines+markers",
-                    uid:"ab9b77",
-                    connectgaps:true,
+                    mode: "lines+markers",
+                    uid: "ab9b77",
+                    connectgaps: true,
                     fillcolor: fillColor
                 }
             ];
 
-            rangeSetting = '[1,]';
-            if (axisTitle == 'Hour of Day')
-                rangeSetting = '[0,23]';
-            else if (axisTitle == 'Month of Year')
-                rangeSetting = '[1,12]';
-            else if (axisTitle == 'Day of Month')
-                rangeSetting == '[1,31]';
+            if (axisTitle == 'Hour of Day') {
+                axisType = '-';
+                dTick = 2;
+            }
+            else if (axisTitle == 'Month of Year') {
+                axisType = '-';
+                dTick = 1;
+            }
+            else if (axisTitle == 'Day of Month') {
+                axisType = '-';
+                dTick = 1;
+            }
+            else if (axisTitle == 'Last 7 Days') {
+                if (labels.length > 1) {
+                    tickFormat = '%e';
+                    axisType = 'date';
+                }
+                else {
+                    axisType = 'category'
+                    labels[0] = new Date(labels[0]).getUTCDay()
+                }
+            }
 
             let layout = {
                 autosize: true,
@@ -88,8 +114,10 @@
                     showgrid:false,
                     zeroline:false,
                     autotick: false,
+                    type: axisType,
+                    tickformat:tickFormat,
                     title: axisTitle,
-                    dtick: 3,
+                    dtick: dTick,
                     tickfont:{
                         size:10
                     }
