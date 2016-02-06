@@ -330,62 +330,73 @@
 
   <script type="text/javascript">
   	$( document ).ready(function(){
-  		
+
+  		function change_price(modifier){
+  			price_box = $("#price_");
+  			new_price = 0
+  			original_price = price_box.val()
+
+  			price_box.prop('disabled', false)
+
+  			switch (modifier.object){
+  				case "plan":
+	  				price_box.val(modifier.amount/100)
+  					break;
+
+  				case "coupon":
+  				default:
+	          if(modifier.percent_off > 0){
+	          	new_price = original_price - (original_price * (modifier.percent_off/100))
+	          } else {
+	          	new_price = original_price - modifier.amount_off
+	          }
+	        	price_box.val(new_price)
+  					break;
+  			}
+  			
+  			price_box.prop('disabled', true)
+  		}
+
   		$("#plan_").change(function(){
   			plan_id = $(this).val();
-	      url = '/roll_your_own_market/get_stripe_plans'
+	      target  = '/roll_your_own_market/get_stripe_plans'
 
-  			$.ajax({
-  				type: 'POST',
-  				url: url,
-  				data: {"plan":plan_id},
-  				success: function(results){
-          	// # KXM This needs to be pulled into a proper response function
-  					$("#price_").val(results.amount/100)
-  				}
+  			retrieved_plan = $.post(target, {"plan":plan_id});
+
+  			retrieved_plan.success(function(response){
+					change_price(response)
+					$('#apply_discount').prop('disabled', false)
+  			});
+
+  			retrieved_plan.fail(function(response){
+  				alert("There was an error processing the selection")
   			});
 	    })
 
 	    $('#apply_discount').click(function(e){
+	    	$(this).prop('disabled', true)
 	      e.preventDefault()
 
-	      coupon = $('#discount_').val()
-	      original_price = $("#price_").val()
-	      new_price = 0
+	      discount_box = $('#discount_')
+	      coupon = discount_box.val()
 
-	      if(original_price == ''){
-	      	// This should never be true, but it's so during dev
-	      	alert("Please select a plan")
+	      if(coupon != ''){
+		      target = '/roll_your_own_market/get_stripe_coupon'
+
+		      retrieved_coupon = $.post(target, {"coupon":coupon});
+
+		      retrieved_coupon.success(function(response){
+		      	change_price(response)
+		      });
+
+		      retrieved_coupon.fail(function(response){
+	      		discount_box.val('')
+          	alert(response.responseText)
+			    	$(this).prop('disabled', false)
+		      });
 
 	      } else {
-		      if(coupon != ''){
-			      url = '/roll_your_own_market/get_stripe_coupon'
-			      $.ajax({
-		          type: 'POST',
-		          url: url,
-		          data: {"coupon":coupon},
-		          success: function(response){
-		          	// # KXM This needs to be pulled into a proper response function
-	            	$("#price_").prop('disabled', false)
-
-		            if(response.percent_off > 0){
-		            	new_price = original_price - (original_price * (response.percent_off/100))
-		            	$("#price_").val(new_price)
-		            } else {
-		            	new_price = original_price - response.amount_off
-		            	$("#price_").val(new_price)
-		            }
-
-	            	$("#price_").prop('disabled', true)
-		          },
-		          error: function(response){
-		          	alert(response.responseJSON.error.message)
-		          }
-		        });
-
-		      } else {
-		      	alert("Please enter a discount code")
-		      }
+	      	alert("Please enter a discount code")
 	      }
   		})
   	})
