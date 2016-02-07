@@ -366,6 +366,7 @@
   			retrieved_plan.success(function(response){
 					change_price(response)
 					$('#apply_discount').prop('disabled', false)
+					$('#discount_').prop('disabled', false)
   			});
 
   			retrieved_plan.fail(function(response){
@@ -374,29 +375,52 @@
 	    })
 
 	    $('#apply_discount').click(function(e){
-	    	$(this).prop('disabled', true)
+	    	// Prevent the form submission.
 	      e.preventDefault()
+	      
+	    	// Disable the button
+	    	$(this).prop('disabled', true)
 
+	      // get the submitted discount code
 	      discount_box = $('#discount_')
 	      coupon = discount_box.val()
 
+	      // If the submitted code isn't empty then...
 	      if(coupon != ''){
-		      target = '/roll_your_own_market/get_stripe_coupon'
+		      // show the progress bar...
+		    	$("#progress-bar").removeClass('is-hidden')
 
+		      // ...and look for the code.
+		      target = '/roll_your_own_market/get_stripe_coupon'
 		      retrieved_coupon = $.post(target, {"coupon":coupon});
 
+		      // If found, then...
 		      retrieved_coupon.success(function(response){
+		      	// ...calculate the discount and update the price...
 		      	change_price(response)
+		      	// ...disable further interaction with the discount box... 
+	      		discount_box.prop('disabled', true)
+	    			// ...and hide the progress bar.
+			    	$("#progress-bar").addClass('is-hidden')
 		      });
 
+		      // if NOT found, then...
 		      retrieved_coupon.fail(function(response){
+		      	// ...clear the box...
+	      		discount_box.prop('disabled', false)
 	      		discount_box.val('')
+	      		// ...inform the user...
           	alert(response.responseText)
-			    	$(this).prop('disabled', false)
+          	// ...re-enable the button...
+	    			$('#apply_discount').prop('disabled', false)
+	    			// ...and hide the progress bar.
+			    	$("#progress-bar").addClass('is-hidden')
 		      });
 
+	      // If it is blank then alert the error
 	      } else {
 	      	alert("Please enter a discount code")
+		    	$(this).prop('disabled', false)
 	      }
   		})
   	})

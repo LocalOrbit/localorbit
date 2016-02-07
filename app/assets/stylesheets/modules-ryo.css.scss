@@ -86,13 +86,62 @@ div#market-creation{
 	}
 
 	#terms-of-service{
-		height: 20em;
+		padding: 20px 0;
+		height: 24em;
 		overflow: scroll;
+		border: solid #CCCCCC;
+		border-width: 1px 0 0 0;
+
+		// All the following terms-of-service styles are to mimic the website version of the terms
+		text-align: left;
+		color: #666;
+	
+		h1, h2, h3, h4, h5{
+			color: #333;
+			margin: 0;
+			font-family: "Francois One",Helvetica,Arial,Lucida,sans-serif;
+		}
+		h1{
+			font-size: 30px;
+		}
+		h2{
+			text-align: left;
+			font-size: 26px;
+		}
+		h4{
+			font-size: 18px;
+		}
+		p{
+			font-size: 18px;
+			font-family: "Source Sans Pro",Helvetica,Arial,Lucida,sans-serif;
+			line-height: 1.5em;
+			padding-bottom: 1em;
+		}
+		ul{
+			line-height: 26px;
+			list-style-type: disc;
+			padding: 0 0 23px 16px;
+		}
+		a{
+			color: #7EBEC5;
+		}
 	}
 
 	#accept-terms-of-service{
 		margin-top: .8em;
 		margin-bottom: 1.2em;
+	}
+
+	#form-review{
+		#progress-span{
+			display: block;
+			#progress-bar{
+				display: block;
+				margin-top: .6em;
+				margin-right: auto;
+				margin-left: auto;
+			}
+		}
 	}
 
 	/* 
