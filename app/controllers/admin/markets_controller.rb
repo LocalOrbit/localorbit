@@ -33,6 +33,7 @@ class Admin::MarketsController < AdminController
   end
 
   def create
+    # Merge role_id, org_type
     results = RegisterStripeMarket.perform(market_params: market_params)
 
     if results.success?
@@ -87,7 +88,8 @@ class Admin::MarketsController < AdminController
       :sellers_edit_orders,
       :country,
       :product_label_format,
-      :print_multiple_labels_per_item
+      :print_multiple_labels_per_item,
+      :organization_id
     ]
     if current_user.can_manage_market?(@market)
       columns.concat([

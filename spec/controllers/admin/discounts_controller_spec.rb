@@ -13,7 +13,7 @@ describe Admin::DiscountsController do
   describe "#find_markets" do
     it "gracefully handles markets without plans" do
       market = mm.managed_markets.first
-      Plan.delete market.plan
+      Plan.delete market.organization.plan
       expect(controller.find_markets).to eq []
     end
   end

@@ -58,7 +58,7 @@ context "Downloading packing labels", js:true do
 
     context "without packing_labels enabled in the Plan" do
       before do
-        market.plan.update(packing_labels:false)
+        market.organization.plan.update(packing_labels:false)
       end
 
       it "can't see Labels feature", pdf: true do
@@ -87,7 +87,7 @@ context "Downloading packing labels", js:true do
 
     context "without packing_labels enabled in the Plan" do
       before do
-        market.plan.update(packing_labels:false)
+        market.organization.plan.update(packing_labels:false)
       end
 
       it "can't see Labels feature", pdf: true do

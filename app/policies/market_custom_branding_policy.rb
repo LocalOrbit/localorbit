@@ -1,0 +1,3 @@
+class MarketCustomBrandingPolicy < ApplicationPolicy
+
+end

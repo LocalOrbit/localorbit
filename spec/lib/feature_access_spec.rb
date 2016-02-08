@@ -34,7 +34,7 @@ describe FeatureAccess do
 
     it "returns false for start up markets" do
       plan = create(:plan, :start_up)
-      market.plan = plan
+      market.organization.plan = plan
       market.save
       expect(FeatureAccess.order_printables?(user: user, order: order)).to eq false
     end
@@ -51,7 +51,7 @@ describe FeatureAccess do
 
     it "always returns true for admins" do
       plan = create(:plan, :start_up)
-      market.plan = plan
+      market.organization.plan = plan
       market.save
       user.role = "admin"
       user.save

@@ -111,7 +111,7 @@
     <%= f.text_area :store_closed_note, rows: 2, class: "column--full"  %>
   </div>
 
-  <% if @market.new_record? || @market.plan.try(:cross_selling?) %>
+  <% if @market.new_record? || policy(:market_cross_selling).index? %>
     <div class="row row--field">
       <div class="field column column--half column--guttered">
         <label>Cross Selling</label><br>

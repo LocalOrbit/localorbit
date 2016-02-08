@@ -40,7 +40,7 @@ class CreateMarket
     defaults = {
       payment_provider: PaymentProvider.for_new_markets.id
     }
-    market = Market.create(defaults.merge(market_params))
+    market = Market.create(defaults.merge(market_params).merge({:organization_id => context[:organization][:id]}))
     context[:market] = market
     context.fail! if market.errors.any?
   end
