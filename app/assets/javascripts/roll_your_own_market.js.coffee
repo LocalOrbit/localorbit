@@ -33,6 +33,32 @@
 
   $(document).ready ->
 
+    change_price = (modifier) ->
+      # Initialize
+      price_box = $('#price_')
+      new_price = 0
+      original_price = price_box.val()
+      # Enable the price box...
+      price_box.prop 'disabled', false
+      # ...and process the supplied object:
+      switch modifier.object
+        # Plans represent a wholesale replacement
+        when 'plan'
+          price_box.val modifier.amount / 100
+        # Coupons require some mathing
+        else
+          # Two cases: percent off...
+          if modifier.percent_off > 0
+            new_price = original_price - (original_price * modifier.percent_off / 100)
+          else
+            # ...and amount off
+            new_price = original_price - (modifier.amount_off)
+          price_box.val new_price
+          break
+      # Re-disable the price box.
+      price_box.prop 'disabled', true
+      return
+
     ###*
     # wizard_nav
     # Coordinates the 'Previous' and 'Continue' button clicks with the corresponding tab interface actions
@@ -87,6 +113,65 @@
     $('button.wizard_nav').click (e) ->
       e.preventDefault()
       wizard_nav $(this)
+      return
+
+    # Bind the plan dropdown to an AJAX call to Stripe for plan data
+    $('#plan_').change ->
+      # Initialize
+      plan_id = $(this).val()
+      target = '/roll_your_own_market/get_stripe_plans'
+      retrieved_plan = $.post(target, 'plan': plan_id)
+      retrieved_plan.success (response) ->
+        change_price response
+        $('#apply_discount').prop 'disabled', false
+        $('#discount_').prop 'disabled', false
+        return
+      retrieved_plan.fail (response) ->
+        alert 'There was an error processing the selection'
+        return
+      return
+      
+    # Process a discount
+    $('#apply_discount').click (e) ->
+      # Prevent the form submission.
+      e.preventDefault()
+      # Disable the button
+      $(this).prop 'disabled', true
+      # get the submitted discount code
+      discount_box = $('#discount_')
+      coupon = discount_box.val()
+      # If the submitted code isn't empty then...
+      if coupon != ''
+        # show the progress bar...
+        $('#progress-bar').removeClass 'is-hidden'
+        # ...and look for the code.
+        target = '/roll_your_own_market/get_stripe_coupon'
+        retrieved_coupon = $.post(target, 'coupon': coupon)
+        # If found, then...
+        retrieved_coupon.success (response) ->
+          # ...calculate the discount and update the price...
+          change_price response
+          # ...disable further interaction with the discount box... 
+          discount_box.prop 'disabled', true
+          # ...and hide the progress bar.
+          $('#progress-bar').addClass 'is-hidden'
+          return
+        # if NOT found, then...
+        retrieved_coupon.fail (response) ->
+          # ...clear the box...
+          discount_box.prop 'disabled', false
+          discount_box.val ''
+          # ...inform the user...
+          alert response.responseText
+          # ...re-enable the button...
+          $('#apply_discount').prop 'disabled', false
+          # ...and hide the progress bar.
+          $('#progress-bar').addClass 'is-hidden'
+          return
+        # If it is blank then alert the error
+      else
+        alert 'Please enter a discount code'
+        $(this).prop 'disabled', false
       return
 
     return

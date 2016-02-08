@@ -5,7 +5,6 @@ class MarketsController < ApplicationController
   skip_before_action :ensure_market_affiliation
   skip_before_action :ensure_active_organization
   skip_before_action :ensure_user_not_suspended
-
   def show
     @market = current_market.decorate
   end
@@ -31,7 +30,6 @@ class MarketsController < ApplicationController
   end
 
   def success
-    # KXM I feel like this conditional exposes an underlying route misunderstanding...
     # Give preference to the current_market
     if( current_market )
       @market = current_market
@@ -42,7 +40,6 @@ class MarketsController < ApplicationController
       end
     end
 
-    # KXM The question is: "Do I really need the market for the success page?"
     render layout: "website-bridge"
   end
 

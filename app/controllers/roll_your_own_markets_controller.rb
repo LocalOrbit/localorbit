@@ -16,26 +16,34 @@ class RollYourOwnMarketsController < ApplicationController
 
     requested_plan = params[:plan]
 
-    begin  	
+    begin
+    	# If no plan is sent...
 	    if(requested_plan == nil)
 	    	if(@_plans)
+	    		# ...then return the cached plan list...
 	    		return @_plans
 
 	    	else
+	    		# ...or get them from Stripe
 			    @_plans = Stripe::Plan.all
 					render json: @_plans
 				end
 
 	    else
+	    	# If a plan is sent...
 	    	if(@_plan)
+	    		# ...then return the cached plan
 	    		return @_plan
 
 	    	else
+	    		# ...or get it from Stripe
 			    @_plan = Stripe::Plan.retrieve(requested_plan)
 					render json: @_plan
 		    end
 	    end
+
     rescue Exception => e
+    	# Pass on any errors
 			err = e.json_body[:error]
 		  render :status => e.http_status, :text => err[:message]
     end
