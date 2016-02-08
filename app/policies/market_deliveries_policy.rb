@@ -1,0 +1,3 @@
+class MarketDeliveriesPolicy < ApplicationPolicy
+
+end

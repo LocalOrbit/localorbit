@@ -3,7 +3,7 @@ class Admin::UploadController < AdminController
   require 'open3'
 
   def index
-    @plan = current_market.plan.name # check if LocalEyes plan on market
+    @plan = current_market.organization.plan.name # check if LocalEyes plan on market
     current_mkt_id = current_market.id # ensures that current market sub-site matters for where upload occurs
   	sql = "select subdomain, id from markets where id in (select destination_market_id from market_cross_sells where source_market_id=#{current_mkt_id});"
   	records = ActiveRecord::Base.connection.execute(sql)

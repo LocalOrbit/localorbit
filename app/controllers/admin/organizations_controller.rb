@@ -114,6 +114,8 @@ module Admin
         :allow_credit_cards,
         :allow_ach,
         :active,
+        :org_type,
+        :plan_id,
         locations_attributes: [:name, :address, :city, :state, :zip, :phone, :fax, :country]
       )
     end

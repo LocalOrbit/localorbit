@@ -41,8 +41,8 @@ class Market < ActiveRecord::Base
   has_many :promotions, inverse_of: :market
   has_many :order_templates
   belongs_to :organization
-  belongs_to :plan, inverse_of: :markets
-  belongs_to :plan_bank_account, class_name: "BankAccount"
+  #belongs_to :plan, inverse_of: :markets
+  #belongs_to :plan_bank_account, class_name: "BankAccount"
 
   has_many :bank_accounts, as: :bankable
 
@@ -209,24 +209,6 @@ class Market < ActiveRecord::Base
     update!(closed: false)
   end
 
-  def next_service_payment_at
-    return nil unless plan_start_at && plan_interval
-    return plan_start_at if plan_start_at > Time.now
-
-    @next_service_payment_at ||= begin
-      plan_payments = Payment.successful.not_refunded.made_after(plan_start_at).where(payer: self, payment_type: "service")
-      (plan_interval * plan_payments.count).months.from_now(plan_start_at)
-    end
-  end
-
-  def last_service_payment_at
-    Payment.successful.not_refunded.where(payer: self, payment_type: "service").order("created_at DESC").first.try(:created_at)
-  end
-
-  def plan_payable?
-    plan_fee && plan_fee > 0 && plan_bank_account.try(:usable_for?, :debit)
-  end
-
   def on_statement_as
     name.sub(/[^0-9a-zA-Z\.\-_ \^\`\|]/, '')[0, 22]
   end
@@ -252,8 +234,8 @@ class Market < ActiveRecord::Base
   end
 
   def process_plan_change
-    remove_cross_selling_from_market unless plan.cross_selling
-    products.each {|p| p.disable_advanced_inventory(self) } unless plan.advanced_inventory
+    remove_cross_selling_from_market unless organization.plan.cross_selling
+    products.each {|p| p.disable_advanced_inventory(self) } unless organization.plan.advanced_inventory
   end
 
   def remove_cross_selling_from_market

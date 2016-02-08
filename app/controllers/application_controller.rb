@@ -90,6 +90,10 @@ class ApplicationController < ActionController::Base
     @current_market ||= market_for_current_subdomain
   end
 
+  def current_plan
+    @current_plan ||= current_organization.plan.name
+  end
+
   # a before_action to ensure the current_user is affiliated with the market in
   # some capacity. 404 if not.
   def ensure_market_affiliation

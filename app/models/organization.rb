@@ -30,6 +30,9 @@ class Organization < ActiveRecord::Base
 
   has_many :bank_accounts, as: :bankable, dependent: :destroy
 
+  belongs_to :plan, inverse_of: :organizations
+  belongs_to :plan_bank_account, class_name: "BankAccount"
+
   validates :name, presence: true, length: {maximum: 255, allow_blank: true}
   validate :require_payment_method
 
@@ -101,9 +104,9 @@ class Organization < ActiveRecord::Base
     locations.visible.default_billing
   end
 
-  def can_cross_sell?
-    can_sell? && markets.joins(:plan).where(allow_cross_sell: true, plans: {cross_selling: true}).any?
-  end
+  #def can_cross_sell?
+  #  can_sell? && markets.organization.joins(:plan).where(allow_cross_sell: true, plans: {cross_selling: true}).any?
+  #end
 
   def update_product_delivery_schedules
     reload.products.each(&:save) if persisted?
@@ -175,4 +178,23 @@ class Organization < ActiveRecord::Base
       errors.add(:payment_method, "At least one payment method is required for the organization")
     end
   end
+
+  def plan_payable?
+    plan_fee && plan_fee > 0 && plan_bank_account.try(:usable_for?, :debit)
+  end
+
+  def next_service_payment_at
+    return nil unless plan_start_at && plan_interval
+    return plan_start_at if plan_start_at > Time.now
+
+    @next_service_payment_at ||= begin
+      plan_payments = Payment.successful.not_refunded.made_after(plan_start_at).where(payer: self, payment_type: "service")
+      (plan_interval * plan_payments.count).months.from_now(plan_start_at)
+    end
+  end
+
+  def last_service_payment_at
+    Payment.successful.not_refunded.where(payer: self, payment_type: "service").order("created_at DESC").first.try(:created_at)
+  end
+
 end

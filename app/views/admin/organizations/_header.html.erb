@@ -16,7 +16,7 @@
         <%= content_tag(:li, link_to_or_span("Users", [:admin, @organization, :users]), class: 'tab') %>
         <%= content_tag(:li, link_to_or_span("Addresses", [:admin, @organization, :locations]), class: 'tab')%>
         <%= content_tag(:li, link_to_or_span("Payment Methods", [:admin, @organization, :bank_accounts]), class: 'tab')%>
-        <%= content_tag(:li, link_to_or_span("Cross Sell", admin_organization_cross_sell_path(@organization)), class: 'tab') if @organization.can_cross_sell? %>
+        <%= content_tag(:li, link_to_or_span("Cross Sell", admin_organization_cross_sell_path(@organization)), class: 'tab') if policy(:organization_cross_sell).index? %>
       </ul>
     </div>
   </div>

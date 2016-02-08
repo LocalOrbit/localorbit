@@ -62,7 +62,7 @@ describe SendUpdateEmails do
     it "sends an email to sellers whose items have been updated" do
       request = @request
 
-      if order.market.plan == plan
+      if order.market.organization.plan == plan
         expect_any_instance_of(OrderMailer).to receive(:seller_order_updated)
         SendUpdateEmails.perform(order: order, request: request)
       end

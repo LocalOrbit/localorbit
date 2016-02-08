@@ -4,12 +4,12 @@ module ApplicationHelper
   end
 
   def can_access?(flag)
-    current_user.admin? || current_user.managed_markets.any? {|m| m.plan[flag.to_sym] }
+    current_user.admin? || current_user.managed_markets.any? {|m| m.organization.plan[flag.to_sym] }
   end
 
   def organization_can_access?(organization, flag)
     if organization
-      organization.markets.any? {|m| m.plan[flag.to_sym]}
+      organization.markets.any? {|m| m.organization.plan[flag.to_sym]}
     end
   end
 

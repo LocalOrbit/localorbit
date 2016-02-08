@@ -409,7 +409,7 @@ class Order < ActiveRecord::Base
   end
 
   def is_localeyes_order?
-    market.plan.has_procurement_managers
+    market.organization.plan.has_procurement_managers
   end
 
   def update_total_cost
