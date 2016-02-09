@@ -1,6 +1,6 @@
 <div class="row row--partial">
   <div class="column column--three-fourths">
-    <legend>Edit Unit Price of <%= @order_item.name %> from <% @order_item.seller_name %></legend>
+    <legend>Edit Unit Price of <%= @order_item.name %></legend>
   </div>
     
     <%= form_for @order_item, :url => { :action => "update" }, :method => "patch" do |f| %>
