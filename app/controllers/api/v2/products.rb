@@ -4,13 +4,15 @@ module API
 
 		class ProductHelpers
 
+			# This has to work for an individual hash, so it has to be for EACH PRODUCT in the all-products
 			def self.identify_product_uniqueness(product_params) # takes hash of params
 				# goes with an existing general product if it has the same name and category as another product --> then it gets that genprod's g_p_id
 				# if unit and/OR unit description different -- but that's taken care of in original data, isn't it? 
 				# I guess it isn't taken care of when you post straight JSON. TODO fix concern.
-				#binding.pry
-				identity_params_hash = {product_name:product_params[:name],category_id:get_category_id_from_name(product_params[:category])}
-				gps = GeneralProduct.where(name:identity_params_hash[:product_name]).where(category_id:identity_params_hash[:category_id])#.empty? # TODO check 
+				# binding.pry
+				identity_params_hash = {product_name:product_params["Product Name"],category_id:get_category_id_from_name(product_params["Category"])}
+				# binding.pry
+				gps = GeneralProduct.where(name:identity_params_hash[:product_name]).where(category_id:identity_params_hash[:category_id])#.empty? # TODO check
 				if !(gps.empty?)
 					gps.first.id
 				else
@@ -20,6 +22,7 @@ module API
 
 			# TODO: limitations?? this will be somewhat better when it is limited but perhaps should limit to a depth like in original prod upload
 			def self.get_category_id_from_name(category_name)
+				# binding.pry
 				id = Category.find_by_name(category_name).id # first?
 				# return nil if no possible one
 				id
@@ -31,6 +34,7 @@ module API
 			end
 
 			def self.get_unit_id_from_name(unit_name) # assuming name is singular
+				# binding.pry
 				unit = Unit.find_by_singular(unit_name).id
 				unit
 			end
@@ -40,7 +44,12 @@ module API
 		class SerializeProducts
 			require 'csv'
 			#extend self
-			@required_headers = ["Organization","Product Name","Category","Short Description","Product Code","Unit Name","Unit Description","Price" "Multiple Pack Sizes","MPS Unit","MPS Unit Description","MPS Price"] # TODO figure out accurate naming for multi-unit/break-case stuff
+			@required_headers = ["Organization","Product Name","Category","Short Description","Product Code","Unit Name","Unit Description","Price", "Multiple Pack Sizes","MPS Unit","MPS Unit Description","MPS Price"] # TODO figure out accurate naming for multi-unit/break-case stuff
+
+			# TODO should this be a diff kind of accessor? later.
+			def self.required_headers
+				@required_headers
+			end
 
 			# takes a file (CSV, properly formatted re: headers, row data may or may not be invalid) returns JSON data (to be passed to a post route)
 			def self.get_json_data(csvfile) # from - params[:filewhatever] from upload form, right?
@@ -264,24 +273,25 @@ module API
 				post '/add-products' do
 					#binding.pry
 					def self.create_product_from_hash(prod_hash)
-						gp_id_or_false = ProductHelpers.identify_product_uniqueness(prod_hash) # this won't work because params are body. how do we fix this?
+						gp_id_or_false = ProductHelpers.identify_product_uniqueness(prod_hash)#(prod_hash["products"]) 
+						# binding.pry
 						if !gp_id_or_false
-							#binding.pry
+							# binding.pry
 							product = Product.create!(
 											name: prod_hash["Product Name"],
-							        organization_id: get_organization_id_from_name(prod_hash["Organization"]),
+							        organization_id: ProductHelpers.get_organization_id_from_name(prod_hash["Organization"]),
 							        #market_name: prod_hash["Market"],
-							        unit_id: get_unit_id_from_name(prod_hash["Unit"]),
-							        category_id: get_category_id_from_name(prod_hash["Category"]),
+							        unit_id: ProductHelpers.get_unit_id_from_name(prod_hash["Unit"]),
+							        category_id: ProductHelpers.get_category_id_from_name(prod_hash["Category"]),
 							        code: prod_hash["Product Code"],
 							        short_description: prod_hash["Short Description"],
 							        long_description: prod_hash["Long Description"],
 							        unit_description: prod_hash["Unit Description"]
 							      	)
-							unless prod_hash[@required_headers[-4]].empty? # TODO not loving the repetition, this should be factored out for sure, but for now.
+							unless prod_hash[SerializeProducts.required_headers[-4]] == "N" # TODO not loving the repetition, this should be factored out for sure, but for now.
 								newprod = product.dup 
-								newprod.unit_id = get_unit_id_from_name(prod_hash[@required_headers[-3]])
-								newprod.unit_description = prod_hash[@required_headers[-2]]
+								newprod.unit_id = ProductHelpers.get_unit_id_from_name(prod_hash[SerializeProducts.required_headers[-3]])
+								newprod.unit_description = prod_hash[SerializeProducts.required_headers[-2]]
 								newprod.prices.create!(sale_price: price, min_quantity: 1)
 								newprod.save! # for id to be created in db
 							end
@@ -289,20 +299,22 @@ module API
 							#binding.pry
 							product = Product.create!(
 							        name: prod_hash["Product Name"],
-							        organization_id: get_organization_id_from_name(prod_hash["Organization"]),
+							        organization_id: ProductHelpers.get_organization_id_from_name(prod_hash["Organization"]),
 							        #market_name: prod_hash["Market"],
-							        unit_id: get_unit_id_from_name(prod_hash["Unit"]),
-							        category_id: get_category_id_from_name(prod_hash["Category"]),
+							        unit_id: ProductHelpers.get_unit_id_from_name(prod_hash["Unit"]),
+							        category_id: ProductHelpers.get_category_id_from_name(prod_hash["Category"]),
 							        code: prod_hash["Product Code"],
 							        short_description: prod_hash["Short Description"],
 							        long_description: prod_hash["Long Description"],
 							        unit_description: prod_hash["Unit Description"],
 							        general_product_id: gp_id_or_false
 							      	)
-							unless prod_hash[@required_headers[-4]].empty? # TODO not loving the repetition, but for now.
+								# binding.pry
+							unless prod_hash[SerializeProducts.required_headers[-4]] == "N"#.empty? # TODO not loving the repetition, but for now.
 								newprod = product.dup 
-								newprod.unit_id = get_unit_id_from_name(prod_hash[@required_headers[-3]])
-								newprod.unit_description = prod_hash[@required_headers[-2]]
+								# binding.pry
+								newprod.unit_id = ProductHelpers.get_unit_id_from_name(prod_hash[SerializeProducts.required_headers[-3]])
+								newprod.unit_description = prod_hash[SerializeProducts.required_headers[-2]]
 								#newprod.price = prod_hash[@required_headers.last] # no, prices need build on lots
 								newprod.prices.create!(sale_price: price, min_quantity: 1)
 								newprod.save! # for id to be created in db
@@ -313,8 +325,12 @@ module API
 					#f = File.open(params[:file],'rb')
 					# binding.pry
 					#f.close
-					#binding.pry
-					self.create_product_from_hash(JSON.parse(File.read(params[:body][:tempfile]))) # File.open(filepath, 'wb')
+					# binding.pry
+					prod_hashes = JSON.parse(File.read(params[:body][:tempfile]))["products"]
+					# binding.pry
+					prod_hashes.each do |p|
+						self.create_product_from_hash(p)
+					end
 					{"result"=>"products successfully created"} # TODO what should this actually be though
 				end # end /post add-products (json)
 
