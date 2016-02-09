@@ -322,18 +322,15 @@ module API
 						end
 
 					end # end def.self_create_product_from_hash
-					#f = File.open(params[:file],'rb')
-					# binding.pry
-					#f.close
-					# binding.pry
-					prod_hashes = JSON.parse(File.read(params[:body][:tempfile]))["products"]
-					# binding.pry
-					prod_hashes.each do |p|
+
+					prod_hashes = JSON.parse(File.read(params[:body][:tempfile]))
+
+					prod_hashes["products"].each do |p|
 						self.create_product_from_hash(p)
 					end
-					{"result"=>"products successfully created"} # TODO what should this actually be though
-				end # end /post add-products (json)
-
+					{"result"=>"#{prod_hashes["products_total"]} products successfully created"} 
+				end 
+				# TODO fix: not upserting, just adding another, which seems like a problem.
 			end
 
 		end
