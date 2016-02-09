@@ -8,12 +8,20 @@ module API
 			def self.identify_product_uniqueness(product_params) # takes hash of params
 				# goes with an existing general product if it has the same name and category as another product --> then it gets that genprod's g_p_id
 				# if unit and/OR unit description different -- but that's taken care of in original data, isn't it? 
+				# TODO add - if unit and/OR unit description different.
+				# otherwise, don't update.
 				# I guess it isn't taken care of when you post straight JSON. TODO fix concern.
 				# binding.pry
 				identity_params_hash = {product_name:product_params["Product Name"],category_id:get_category_id_from_name(product_params["Category"])}
 				# binding.pry
+				product_unit_identity_hash = {unit_name:product_params["Unit"],unit_description:product_params["Unit Description"]}
 				gps = GeneralProduct.where(name:identity_params_hash[:product_name]).where(category_id:identity_params_hash[:category_id])#.empty? # TODO check
+
 				if !(gps.empty?)
+					# if there is a product under that genprod with the same unit name AND description then update that one.
+					# TODO how will this handle uploading a product that totally changes?
+					# needs to update eg price, maybe descriptions
+					# also should it update or should it delete all...?
 					gps.first.id
 				else
 					false
@@ -102,12 +110,12 @@ module API
 
 			## PROBLEM: Current code has global relative dependency on errors hash and that's gross. 
 			## TODO abstract this process into a class (within the module? another class right here?) so that it is less gross.
-			## TODO this would be prettier in lib the way it did before but then it broke stuff. Change later.
+			## TODO maybe abstract helpers properly to lib and include modules.
 			def self.validate_product_row(product_row)
 				okay_flag = true
 				error_hash = {}
-				## TODO: is there any reasons this would be a problem for API process? Don't think so, this shouldn't be needed for anything outside verifying CSV files uploaded.
-				error_hash["Row number"] = "TMP" # need the row number to identify where the problem is
+				## This shouldn't be needed for anything outside verifying CSV files uploaded.
+				error_hash["Row number"] = "TMP" # need the row number to identify where the problem is, is it an attr on the row or otherwise easy to create/find?
 				error_hash["Errors"] = {}
 				if [product_row["Organization"], product_row["Product Name"],product_row["Category"],product_row["Short Description"],product_row["Unit Name"],product_row["Unit Description"],product_row["Price"],product_row[@required_headers[-4]]].any? {|obj| obj.blank?}
 					okay_flag = false
@@ -173,7 +181,7 @@ module API
 				# get requests
 				desc "Return all products"
 				get "", root: :products do 
-					GeneralProduct.all # if you're actually looking for all products, this is what you want (TODO address: how will it deal with units?)
+					GeneralProduct.all # if you're actually looking for all products, this is what you want (TODO address issue: how should this GET deal with units?)
 				end
 
 				desc "Return a product"
@@ -223,16 +231,13 @@ module API
 					if permitted_params[:code]
 						product_code = permitted_params[:code]
 					end
-					## TODO here there also must be a determination of uniqueness and assignment of general product id OR creation of new general product and assignment of that id on this product
+					
 					gp_id_or_false = ProductHelpers.identify_product_uniqueness(permitted_params)
 					if !gp_id_or_false
 						product = Product.create!(
 							        name: product_name,
 							        organization_id: supplier_id,
-							        #market_name: permitted_params[:market_name], # TODO check, will this relationship hold up? see: where p is a Product,
-							    		## p.organization.markets.include?(Market.find_by_name(p.market_name))
-											## => true
-											### but also apparently,  -- market name not a prod attr?? TODO fix
+							        #TODO check: is market association being handled via organization? how should it be?
 							        unit_id: unit_id,
 							        category_id: category_id,
 							        code: product_code,
@@ -242,15 +247,12 @@ module API
 							      	)
 						## To create inventory and price(s). -- probably no inventory, yes 1 sale price, yes?
 						# product.lots.create!(quantity: 999_999)
-	     			product.prices.create!(sale_price: permitted_params[:price], min_quantity: 1) ## TODO: Should we add min quantity default or option
+	     			product.prices.create!(sale_price: permitted_params[:price], min_quantity: 1) ## TODO: Should we add min quantity default or option?
 	     		else
 	     			product = Product.create!(
 							        name:product_name,
 							        organization_id:supplier_id,
-							        #market_name: permitted_params[:market_name], # TODO check, will this relationship hold up? see: where p is a Product,
-							    		## p.organization.markets.include?(Market.find_by_name(p.market_name))
-											## => true
-
+							        #Same mkt assoc question, market name attr?
 							        unit_id:unit_id,
 							        category_id:category_id,
 							        code:product_code,
@@ -273,10 +275,8 @@ module API
 				post '/add-products' do
 					#binding.pry
 					def self.create_product_from_hash(prod_hash)
-						gp_id_or_false = ProductHelpers.identify_product_uniqueness(prod_hash)#(prod_hash["products"]) 
-						# binding.pry
+						gp_id_or_false = ProductHelpers.identify_product_uniqueness(prod_hash)
 						if !gp_id_or_false
-							# binding.pry
 							product = Product.create!(
 											name: prod_hash["Product Name"],
 							        organization_id: ProductHelpers.get_organization_id_from_name(prod_hash["Organization"]),
@@ -288,15 +288,14 @@ module API
 							        long_description: prod_hash["Long Description"],
 							        unit_description: prod_hash["Unit Description"]
 							      	)
-							unless prod_hash[SerializeProducts.required_headers[-4]] == "N" # TODO not loving the repetition, this should be factored out for sure, but for now.
+							unless prod_hash[SerializeProducts.required_headers[-4]] == "N" # TODO not loving the repetition, this should be factored out, but for now.
 								newprod = product.dup 
 								newprod.unit_id = ProductHelpers.get_unit_id_from_name(prod_hash[SerializeProducts.required_headers[-3]])
 								newprod.unit_description = prod_hash[SerializeProducts.required_headers[-2]]
 								newprod.prices.create!(sale_price: price, min_quantity: 1)
-								newprod.save! # for id to be created in db
+								newprod.save! # for id to be created in db. TODO this may be affected by uniqueness constraints tba.
 							end
 						else
-							#binding.pry
 							product = Product.create!(
 							        name: prod_hash["Product Name"],
 							        organization_id: ProductHelpers.get_organization_id_from_name(prod_hash["Organization"]),
@@ -309,10 +308,8 @@ module API
 							        unit_description: prod_hash["Unit Description"],
 							        general_product_id: gp_id_or_false
 							      	)
-								# binding.pry
-							unless prod_hash[SerializeProducts.required_headers[-4]] == "N"#.empty? # TODO not loving the repetition, but for now.
+							unless prod_hash[SerializeProducts.required_headers[-4]] == "N" # TODO not loving the repetition, but for now.
 								newprod = product.dup 
-								# binding.pry
 								newprod.unit_id = ProductHelpers.get_unit_id_from_name(prod_hash[SerializeProducts.required_headers[-3]])
 								newprod.unit_description = prod_hash[SerializeProducts.required_headers[-2]]
 								#newprod.price = prod_hash[@required_headers.last] # no, prices need build on lots
@@ -331,6 +328,7 @@ module API
 					{"result"=>"#{prod_hashes["products_total"]} products successfully created"} 
 				end 
 				# TODO fix: not upserting, just adding another, which seems like a problem.
+				# TODO see potential - unit description/name uniqueness identifier in ProductHelpers, maybe within id_product_uniqueness, maybe call within from a separate method on the class. ?
 			end
 
 		end
