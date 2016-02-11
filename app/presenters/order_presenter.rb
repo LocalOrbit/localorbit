@@ -19,6 +19,25 @@ module OrderPresenter
     end
   end
 
+  # todo add method to determine what order item id is THE order item
+  # then controller will do the order item find
+  # save it in an instance variable in the show route so it can be rendered
+  # inst variable that can be passed into that view
+  # which should then be renderable in the modal
+
+  # hitting order item controller edit method
+  # in that controller, there would be a method to 
+
+  # call the show in the orderitems controller with that id that you get via edit link
+  # add show -- that does find by id
+  # basically puts in @order_item that would be used in the view for rendering the modal form
+  # so basically that edit link calls the route for the show in order_item
+  # maybe write an edit also? can show edit them? it should go to the modal
+
+  # define a custom order_edit route 
+  # is in routes -- orders/order_items
+  # should be able to validate this route with a view renderable in orders that references the order_item route when modal form is rendered
+
   def display_delivery_fees?(user)
     user.admin? || user.market_manager? || user.buyer_only?
   end
