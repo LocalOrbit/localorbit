@@ -186,7 +186,10 @@
               -
             <% end %>
           </td>
-          <td class="price"><%= number_to_currency item.object.unit_price %></td>
+          <td class="price"><%= number_to_currency item.object.unit_price %><br> <% if FeatureAccess.can_edit_order?(user: current_user, order: order) %>
+            <span> <%= link_to "EDIT", "/admin/orders/#{order.id}/order_items/#{item.object.id}" %></span> 
+            <% end %>
+          </td>
           <td class="total"><%= number_to_currency item.object.gross_total %></td>
           <td class="delivery-status">
             <%= item.hidden_field :delivery_status %>
@@ -340,7 +343,7 @@
 <div> <br>
   <% if !current_user.buyer_only? # TODO move this logic? Order view... %>
     <% if !current_user.can_manage_market?(current_market) %>
-     <h2>Delivery Note</h2>
+     <h2>Delivery Note</h2>d
       <% DeliveryNote.where(order_id:order.id,supplier_org:current_organization).visible.each do |n| %>
         <%= n.note %><br>
       <% end %>

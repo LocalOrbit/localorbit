@@ -94,6 +94,8 @@ class OrderHistoryActivityPresenter
       "Item Added: #{item_name}"
     elsif item.audited_changes["quantity"].present?
       "Item Quantity Updated: #{item_name} (#{last_value_for_change(item, "quantity")})"
+    elsif item.audited_changes["unit_price"].present?
+      "Item Unit Price Updated: #{item_name} (#{last_value_for_change(item, "unit price")}"
     end
   end
 
