@@ -189,6 +189,10 @@ class Order < ActiveRecord::Base
     balanced.fully_delivered.purchase_orders.payable.not_paid_for("lo fee", :payer)
   end
 
+  def self.among_user_current_markets
+    user.markets.include?(order.market) # returns True or False
+  end
+
   #
   # Scope: For Markets on Automate plan, get all
   # Orders with payable market fees.
@@ -244,7 +248,8 @@ class Order < ActiveRecord::Base
     if user.admin?
       all
     else
-      where(buyer_orders_arel(user).or(manager_orders_arel(user))).uniq
+      where(buyer_orders_arel(user).or(manager_orders_arel(user)).and(user_market_orders_arel(user))).uniq
+      # also, filter over that set where the orders' markets are inside the set of the user's current markets
     end
   end
 
@@ -252,7 +257,7 @@ class Order < ActiveRecord::Base
     if user.admin?
       all
     else
-      joins(:products).where(seller_orders_arel(user).or(manager_orders_arel(user))).uniq
+      joins(:products).where(seller_orders_arel(user).or(manager_orders_arel(user)).and(user_market_orders_arel(user))).uniq
     end
   end
 
@@ -272,6 +277,10 @@ class Order < ActiveRecord::Base
 
   def self.manager_orders_arel(user)
     arel_table[:market_id].in(ManagedMarket.where(user_id: user.id).select(:market_id).arel)
+  end
+
+  def self.user_market_orders_arel(user)
+    arel_table[:market_id].in(user.markets).select(:market_id).arel
   end
 
   # def self.add_notes_reference(notes_arr) # TODO check aeren
