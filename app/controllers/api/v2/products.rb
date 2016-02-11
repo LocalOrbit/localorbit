@@ -64,11 +64,11 @@ module API
 				if self.validate_csv_catalog_file_format(csvfile)
 					# somewhere need to ensure valid row
 					product_rows = {}
-					row_errors = {} # Collect errors here
+					row_errors = {} # Collect errors here (see comment inside validate row fxn for expl of row_errors format, for now.)
 					product_rows["products_total"] = csvfile.readlines.size # should be the number of lines of the file - TODO take a look at managing the file types in the pass to this method and using the CSV module
 					product_rows["products"] = []
 					CSV.foreach(csvfile.path, headers:true) do |row|
-						if validate_product_row(row)
+						if validate_product_row(row, row.lineno)
 							product_row_hash = {}
 							@required_headers[0..-4].each do |rh|
 								product_row_hash[rh] = row[rh]
@@ -84,15 +84,20 @@ module API
 							end
 							product_rows["products"] << product_row_hash
 						else
-
+							pass # this is what happens if a row is invalid but the general format of the file is correct.
+							# which should be... ?
 						end
+						# What this returns exactly, as opposed to what it ought to
+						# TODO clarify let's test.
 					end
+					return product_rows,row_errors # array of these hashes
 				end
+				# TODO error handling - should handle if the csv format is invalid somehow, break out of the process neatly. Return a msg and just a redirect?
 			end
 
 			# takes a csvfile -- returns true if valid, false if invalid
 			def self.validate_csv_catalog_file_format(csvfile)
-				# check for CSV not XLS ## in upload form, use: file_field_tag :file, accept: '.csv'
+				# check for CSV not XLS ## in upload form, use: file_field_tag :file, accept: '.csv' TODO add to upload form to take effect
 				# check for 2 (1? probably 2) or more rows (see below)
 				# check for correct headers (see below)
 				# Need to put file errors somewhere on upload page response. TODO!
@@ -111,11 +116,15 @@ module API
 			## PROBLEM: Current code has global relative dependency on errors hash and that's gross. 
 			## TODO abstract this process into a class (within the module? another class right here?) so that it is less gross.
 			## TODO maybe abstract helpers properly to lib and include modules.
-			def self.validate_product_row(product_row)
+			def self.validate_product_row(product_row, line_num)
 				okay_flag = true
 				error_hash = {}
 				## This shouldn't be needed for anything outside verifying CSV files uploaded.
-				error_hash["Row number"] = "TMP" # need the row number to identify where the problem is, is it an attr on the row or otherwise easy to create/find?
+				error_hash["Row number"] = line_num.to_s 
+				# Below comments about line number: theoretically achieved! TODO test.
+				# need the row number to identify where the problem is, is it an attr on the row or otherwise easy to create/find?
+				# .lineno is an attr on csv file (the last row # read from this file)
+				# TODO how to use that most neatly here?
 				error_hash["Errors"] = {}
 				if [product_row["Organization"], product_row["Product Name"],product_row["Category"],product_row["Short Description"],product_row["Unit Name"],product_row["Unit Description"],product_row["Price"],product_row[@required_headers[-4]]].any? {|obj| obj.blank?}
 					okay_flag = false
@@ -160,12 +169,16 @@ module API
 					okay_flag = false
 					error_hash["Errors"]["Identical units for same product"] = "Your additional unit and original unit for this project are the same. Try again with different information in the last three columns OR do not submit additional unit information"
 				end
-				row_errors["#{error_hash["Row number"]}"] = error_hash
-				return okay_flag # boolean as to whether there are any errors
+				row_errors["#{error_hash['Row number']}"] = error_hash
+				# as a result of this, e.g, row_errors["2"] evals to a hash of key-value simpledescr-detaileddescr of all errors from THAT ROW 
+				# so row_errors contains keys of all the rows in the csv that have errors
+				# and vals assoc with those keys that are structured info about what errors are happening.
+				# depends, as stated above, on row_errors existing in the correct scope. (so this ain't great but it should work initially and can then refactor.)
+				return okay_flag # boolean as to whether there are any errors.
 
-				# Return true if checks all pass.
+				# Will/should return true if checks all pass.
 
-				# Append to row_errors hash the serialized version of the error set if any in current row, and return false.
+				# Should add to row_errors hash (under key of row number, when that's set up ideally) the serialized version of the error set if any in current row, and return false.
 			end
 			
 		end
