@@ -14,26 +14,33 @@ class Admin::UploadController < AdminController
   	end
   end
 
-  
+
 def upload
-    @total_products_msg = "Loading not completed." # initial
-
-    if params.has_key?(:datafile)
-      profile = params[:profile]
-      filepath = './tempfiles/' + params[:datafile].original_filename.to_s
-      @job_id = params[:job_id]
-      @user = current_user.id
-      
-      uploaded = params[:datafile] # Gets the xlsx data from form upload post request
-      filepath = Rails.root.join('tempfiles',uploaded.original_filename)
-      File.open(filepath, 'wb') do |file|
-        file.write(uploaded.read) # Writes that data to the open filestream in the tempfiles fldr
-      end
-
-      # system calls the wrapper, run in the background, passing through the job_id
-      system("./bin/import_wrapper #{@job_id} #{profile} #{filepath} #{@user} &") # first arg for import_wrapper
-    end
+  if params.has_key?(:datafile)
+    binding.pry
   end
+end
+
+  
+# def upload
+#     @total_products_msg = "Loading not completed." # initial
+
+#     if params.has_key?(:datafile)
+#       profile = params[:profile]
+#       filepath = './tempfiles/' + params[:datafile].original_filename.to_s
+#       @job_id = params[:job_id]
+#       @user = current_user.id
+      
+#       uploaded = params[:datafile] # Gets the xlsx data from form upload post request
+#       filepath = Rails.root.join('tempfiles',uploaded.original_filename)
+#       File.open(filepath, 'wb') do |file|
+#         file.write(uploaded.read) # Writes that data to the open filestream in the tempfiles fldr
+#       end
+
+#       # system calls the wrapper, run in the background, passing through the job_id
+#       system("./bin/import_wrapper #{@job_id} #{profile} #{filepath} #{@user} &") # first arg for import_wrapper
+#     end
+#   end
 
   def newjob
     @job_id = params[:job_id] # access this from the post
