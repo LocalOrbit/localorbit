@@ -101,6 +101,9 @@ module API
 				# check for 2 (1? probably 2) or more rows (see below)
 				# check for correct headers (see below)
 				# Need to put file errors somewhere on upload page response. TODO!
+
+				# TODO problem -- you get file as is, so the format will be like
+				# CSV.read("path/to/file") - so need to save that file obj in a variable thing and pass it in here, I think
 				headers = CSV.open(csvfile, 'r') { |csv| csv.first }
 				if csvfile.readlines.size < 2
 					return false
