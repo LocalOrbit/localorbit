@@ -244,7 +244,7 @@ class Order < ActiveRecord::Base
     if user.admin?
       all
     else
-      where(buyer_orders_arel(user).or(manager_orders_arel(user))).uniq
+      where(buyer_orders_arel(user).or(manager_orders_arel(user))).uniq.where(market_id: user.markets)
     end
   end
 
@@ -252,7 +252,7 @@ class Order < ActiveRecord::Base
     if user.admin?
       all
     else
-      joins(:products).where(seller_orders_arel(user).or(manager_orders_arel(user))).uniq
+      joins(:products).where(seller_orders_arel(user).or(manager_orders_arel(user))).uniq.where(market_id: user.markets)
     end
   end
 
