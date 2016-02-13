@@ -17,7 +17,7 @@ describe "Admin Managing Markets" do
   end
 
   describe "as a normal user" do
-    let!(:normal_user) { create(:user, role: "user") }
+    let!(:normal_user) { create(:user) }
     let!(:org) { create(:organization, markets: [market], users: [normal_user]) }
 
     it "users can not manage addresses" do
@@ -30,7 +30,7 @@ describe "Admin Managing Markets" do
   end
 
   describe "as a market manager" do
-    let!(:user) { create(:user, role: "user") }
+    let!(:user) { create(:user, :market_manager) }
     let!(:address1) { create(:market_address, market: market) }
     #let!(:address2) { create(:market_address, market: market, default:true)} # here creates 44 e 8th st default
 

@@ -4,11 +4,11 @@ shared_examples "an action that prevents access to buyers" do |action|
   let(:organization)              { create(:organization, :buyer, markets: [market]) }
   let(:seller_organization)       { create(:organization, :seller, markets: [market]) }
   let(:admin)                     { create(:user, :admin) }
-  let(:market_manager_member)     { create(:user, managed_markets: [market]) }
-  let(:market_manager_non_member) { create(:user, managed_markets: [market2]) }
+  let(:market_manager_member)     { create(:user, :market_manager, managed_markets: [market]) }
+  let(:market_manager_non_member) { create(:user, :market_manager, managed_markets: [market2]) }
   let(:member)                    { create(:user, organizations: [organization]) }
   let(:non_member)                { create(:user) }
-  let(:market_seller)             { create(:user, organizations: [seller_organization]) }
+  let(:market_seller)             { create(:user, :supplier, organizations: [seller_organization]) }
 
   def meet_expected_expectation
     %w(show).include?(controller.action_name) ? be_a_success : be_a_redirect

@@ -42,19 +42,19 @@ describe SellerOrder do
     end
 
     it "loads the right items for seller 1 user" do
-      seller_order = SellerOrder.new(order, create(:user, organizations: [seller1]))
+      seller_order = SellerOrder.new(order, create(:user, :supplier, organizations: [seller1]))
 
       expect(seller_order.items).to eq([item1, item3, item4])
     end
 
     it "loads the right items for seller 2 user" do
-      seller_order = SellerOrder.new(order, create(:user, organizations: [seller2]))
+      seller_order = SellerOrder.new(order, create(:user, :supplier, organizations: [seller2]))
 
       expect(seller_order.items).to eq([item2])
     end
 
     it "loads all items for a market manager" do
-      seller_order = SellerOrder.new(order, create(:user, managed_markets: [market]))
+      seller_order = SellerOrder.new(order, create(:user, :market_manager, managed_markets: [market]))
 
       expect(seller_order.items).to eq([item1, item2, item3, item4])
     end

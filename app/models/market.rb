@@ -1,7 +1,6 @@
 class Market < ActiveRecord::Base
 
   before_update :process_cross_sells_change, if: :allow_cross_sell_changed?
-  before_update :process_plan_change, if: :plan_id_changed?
 
   audited allow_mass_assignment: true
   extend DragonflyBackgroundResize
@@ -23,7 +22,6 @@ class Market < ActiveRecord::Base
 
   validate :require_payment_method
 
-  has_one  :organization
   has_many :managed_markets
   has_many :managers, through: :managed_markets, source: :user
 
@@ -88,21 +86,6 @@ class Market < ActiveRecord::Base
 
   def self.for_order_items(order_items)
     joins(:orders).where(orders: {id: order_items.map(&:order_id)}).uniq
-  end
-
-  # Called as the last in a scope chain
-  def self.sort_service_payment
-    all.sort do |a,b|
-      if a.next_service_payment_at && b.next_service_payment_at
-        a.next_service_payment_at <=> b.next_service_payment_at
-      elsif a.next_service_payment_at.nil? && b.next_service_payment_at.nil?
-        a.name.downcase <=> b.name.downcase
-      elsif a.next_service_payment_at.nil?
-        -1 # Means order is wrong
-      else
-        1 # Means order is correct
-      end
-    end
   end
 
   #
@@ -221,6 +204,21 @@ class Market < ActiveRecord::Base
     self.bank_accounts.visible.deposit_accounts.first
   end
 
+  def remove_cross_selling_from_market
+    update_column(:allow_cross_sell, false)
+
+    MarketOrganization.
+        where(cross_sell_origin_market_id: id).
+        each(&:soft_delete)
+
+    MarketOrganization.
+        where.not(cross_sell_origin_market_id: nil).
+        where(market_id: id).
+        each(&:soft_delete)
+
+    MarketCrossSells.where(source_market_id: id).destroy_all
+  end
+
   private
 
   def require_payment_method
@@ -233,23 +231,5 @@ class Market < ActiveRecord::Base
     remove_cross_selling_from_market unless allow_cross_sell?
   end
 
-  def process_plan_change
-    remove_cross_selling_from_market unless organization.plan.cross_selling
-    products.each {|p| p.disable_advanced_inventory(self) } unless organization.plan.advanced_inventory
-  end
 
-  def remove_cross_selling_from_market
-    update_column(:allow_cross_sell, false)
-
-    MarketOrganization.
-      where(cross_sell_origin_market_id: id).
-      each(&:soft_delete)
-
-    MarketOrganization.
-      where.not(cross_sell_origin_market_id: nil).
-      where(market_id: id).
-      each(&:soft_delete)
-
-    MarketCrossSells.where(source_market_id: id).destroy_all
-  end
 end

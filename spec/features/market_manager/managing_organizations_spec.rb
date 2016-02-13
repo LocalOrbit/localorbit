@@ -274,7 +274,7 @@ describe "A Market Manager", :vcr do
       let!(:seller) { create(:organization, :seller, name: "Holland Farms", markets: [market]) }
       let!(:product) { create(:product, :sellable, organization: seller) }
       let!(:promotion) { create(:promotion, :active, market: market, product: product) }
-      let!(:buyer) { create(:organization, :single_location, name: "Hudsonville Restraunt", markets: [market]) }
+      let!(:buyer) { create(:organization, :single_location, name: "Hudsonville Restaurant", markets: [market]) }
 
       before do
         market_manager.managed_markets << market2

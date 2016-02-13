@@ -46,7 +46,7 @@ feature "Viewing orders" do
   let!(:market2_order3)      { create(:order, items: [market2_order_item5], organization: market2_buyer_org, market: market2, total_cost: market2_order_item5.gross_total, delivery: market2_delivery) }
 
   context "as a seller" do
-    let!(:user) { create(:user, organizations: [market1_seller_org1]) }
+    let!(:user) { create(:user, :supplier, organizations: [market1_seller_org1]) }
 
     before do
       switch_to_subdomain(market1.subdomain)
@@ -116,7 +116,7 @@ feature "Viewing orders" do
   end
 
   context "as a market_manager" do
-    let!(:user) { create(:user, managed_markets: [market1, market2]) }
+    let!(:user) { create(:user, :market_manager, managed_markets: [market1, market2]) }
 
     before do
       switch_to_subdomain(market1.subdomain)
@@ -454,7 +454,7 @@ feature "Viewing orders" do
   end
 
   context "as an admin" do
-    let(:user) { create(:user, role: "admin") }
+    let(:user) { create(:user, :admin) }
 
     before do
       switch_to_subdomain(market1.subdomain)

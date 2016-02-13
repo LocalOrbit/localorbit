@@ -6,7 +6,7 @@ feature "View Seller Profiles" do
   let!(:seller2) { create(:organization, :seller, :single_location) }
   let!(:inactive_seller) { create(:organization, :seller, :single_location, active: false) }
   let!(:hidden_seller) { create(:organization, :seller, :single_location, show_profile: false) }
-  let!(:user)    { create(:user, organizations: [buyer]) }
+  let!(:user)    { create(:user, :buyer, organizations: [buyer]) }
   let!(:market)  { create(:market, :with_addresses, organizations: [buyer, seller1, seller2, hidden_seller]) }
   let!(:delivery_schedule) { create(:delivery_schedule, market: market) }
 

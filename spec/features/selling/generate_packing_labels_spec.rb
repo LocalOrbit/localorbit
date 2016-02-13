@@ -7,7 +7,7 @@ context "Downloading packing labels", js:true do
 
   let!(:buyer_org) { create(:organization, :buyer, name: "Big Money", markets: [market]) }
   let!(:seller_org) { create(:organization, :seller, name: "Good foodz", markets: [market]) }
-  let(:seller) { create(:user, organizations: [seller_org])}
+  let(:seller) { create(:user, :supplier, organizations: [seller_org])}
   let!(:seller_org2) { create(:organization, :seller, name: "Better foodz", markets: [market]) }
   let!(:product1) { create(:product, :sellable, name: "Green things", organization: seller_org) }
   let!(:product2) { create(:product, :sellable, name: "Purple cucumbers", organization: seller_org) }

@@ -460,6 +460,8 @@ class User < ActiveRecord::Base
   end
 
   def current_plan
-    self.user_organizations[0].organization.plan.name
+    if self.user_organizations[0].organization.plan
+      self.user_organizations[0].organization.plan.name
+    end
   end
 end

@@ -28,7 +28,7 @@ feature "Filtering Products List" do
   let!(:price4)   { create(:price, product: product4) }
   let!(:lot4)     { create(:lot, product: product4) }
 
-  let!(:user) { create(:user, organizations: [buyer_org]) }
+  let!(:user) { create(:user, :buyer, organizations: [buyer_org]) }
 
   before do
     switch_to_subdomain market.subdomain

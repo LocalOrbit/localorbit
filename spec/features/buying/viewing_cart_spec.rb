@@ -107,7 +107,7 @@ describe "Viewing the cart", js:true do
   end
 
   context "scoped to users" do
-    let!(:other_user)      { create(:user, organizations: [buyer]) }
+    let!(:other_user)      { create(:user, :buyer, organizations: [buyer]) }
     let!(:other_cart)      { create(:cart, market: market, organization: buyer, user: other_user, location: buyer.locations.first, delivery: delivery) }
     let!(:other_cart_kale) { create(:cart_item, cart: other_cart, product: kale, quantity: 6) }
 

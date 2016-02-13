@@ -169,7 +169,6 @@ FactoryGirl.define do
   end
 
   factory :market do
-    plan
     payment_provider       'stripe'
     active               true
     sequence(:name)      {|n| "Market #{n}" }
@@ -196,7 +195,7 @@ FactoryGirl.define do
     auto_activate_organizations   false
     product_label_format 4
     print_multiple_labels_per_item false
-
+    organization           {create(:organization, :market)}
 
     trait :with_address do
       after(:create) {|m| create(:market_address, market: m) }
@@ -329,12 +328,24 @@ FactoryGirl.define do
     display_facebook      false
     active                true
 
+
+    trait :admin do
+      org_type 'A'
+    end
+
+    trait :market do
+      plan
+      org_type 'M'
+    end
+
     trait :seller do
       can_sell true
+      org_type 'S'
     end
 
     trait :buyer do
       can_sell false
+      org_type 'B'
     end
 
     trait :single_location do
@@ -352,7 +363,7 @@ FactoryGirl.define do
   end
 
   factory :payment do
-    payee          { Market.first }
+    payee          { Organization.first }
     payment_type   "order"
     payment_method "purchase order"
     amount         199.99
@@ -532,42 +543,91 @@ FactoryGirl.define do
     plural   "boxes"
   end
 
+  factory :role do
+
+    trait :admin do
+      org_type 'A' # Admin
+      name 'Admin'
+      activities '{user:index,role:index,market_cross_selling:index,order:index,metric:index,unit:index,event:index,taxonomy:index,internal_financial:index,financial:index,market_profile:index,market_manager:index,delivery:index,order_item:index,market_address:index,market_deliveries:index,market_payment_methods:index,market_deposit_accounts:index,market_fees:index,template:index,market_custom_branding:index,market:index,send_invoices:index,payment_history:index,organization:index,delivery_schedule:index,enter_receipts:index,record_payments:index,product:index,fresh_sheet:index,newsletter:index,promotion:index,discount_code:index,sent_email:index,dashboard:index,email_test:index,report:index,referral:index,}'
+    end
+
+    trait :market_manager do
+      org_type 'M'
+      name 'Market Manager'
+      activities '{market_cross_selling:index,order:index,financial:index,market_profile:index,market_manager:index,delivery:index,order_item:index,market_address:index,market_deliveries:index,market_payment_methods:index,market_deposit_accounts:index,template:index,market_custom_branding:index,market:index,send_invoices:index,payment_history:index,organization:index,delivery_schedule:index,financial_overview:index,enter_receipts:index,record_payments:index,product:index,fresh_sheet:index,newsletter:index,promotion:index,all_supplier:index,discount_code:index,dashboard:index,report:index}'
+    end
+
+    trait :buyer do
+      org_type 'B'
+      name 'Buyer'
+      activities '{payment_history:index,purchase_history:index,financial:index,market:index,financial_overview:index,all_supplier:index,dashboard:index,review_invoices:index,report:index}'
+    end
+
+    trait :supplier do
+      org_type 'S'
+      name 'Supplier'
+      activities '{organization_cross_selling:index,payment_history:index,delivery_schedule:index,product:index,dashboard:index,financial:index,order:index,delivery:index,order_item:index,fresh_sheet:index,newsletter:index,promotion:index,discount_code:index,report:index}'
+    end
+
+  end
+
   factory :user do
     sequence(:email) {|n| "user#{n}@example.com" }
     password "password"
     password_confirmation "password"
-    role "user"
+    #role "user"
     confirmed_at { Time.current }
 
     trait :market_manager do
-      role "user"
+      #role "user"
+      roles {[FactoryGirl.create(:role, :market_manager)]}
+
       after(:create) do |user|
+        o = create(:organization, :market)
         if user.managed_markets.empty?
-          m = create(:market)
+          m = create(:market, organization: o)
           user.managed_markets << m
         end
+        user.organizations << o
       end
     end
 
     trait :admin do
-      role "admin"
+      #role "admin"
+      roles {[FactoryGirl.create(:role, :admin)]}
+      after(:create) do |user|
+        o = create(:organization, :admin)
+        user.organizations << o
+      end
     end
 
-    trait :seller do
+    trait :supplier do
+      roles {[FactoryGirl.create(:role, :supplier)]}
       after(:create) do |user|
-        m = create(:market)
-        o = create(:organization, :seller, markets: [m])
+        o = create(:organization, :seller)
+        if user.managed_markets.empty?
+          m = create(:market, organization: o)
+          user.managed_markets << m
+        end
         user.organizations << o
       end
     end
 
     trait :buyer do
+      roles {[FactoryGirl.create(:role, :buyer)]}
       after(:create) do |user|
-        m = create :market
-        o = create(:organization, :buyer, markets: [m])
+        o = create(:organization, :buyer)
+        if user.managed_markets.empty?
+          m = create(:market, organization: o)
+          user.managed_markets << m
+        end
         user.organizations << o
       end
     end
+  end
+
+  factory :user_with_role, :parent => :user do
+    role {[FactoryGirl.create(:role, :market_manager)]}
   end
 
   factory :subscription do

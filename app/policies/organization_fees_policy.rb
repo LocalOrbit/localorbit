@@ -1,0 +1,3 @@
+class OrganizationFeesPolicy < ApplicationPolicy
+
+end

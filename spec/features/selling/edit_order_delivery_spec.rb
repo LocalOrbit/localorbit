@@ -21,7 +21,7 @@ describe "Edit order delivery date" do
   let!(:payment)        { create(:payment, :checking, bank_account: bank_account, orders: [order], amount: 15.00) }
 
   context "as a buyer" do
-    let!(:user) { create(:user, organizations: [buyer]) }
+    let!(:user) { create(:user, :buyer, organizations: [buyer]) }
 
     before do
       switch_to_subdomain(market.subdomain)
@@ -35,7 +35,7 @@ describe "Edit order delivery date" do
   end
 
   context "as a seller" do
-    let!(:user) { create(:user, organizations: [seller]) }
+    let!(:user) { create(:user, :supplier, organizations: [seller]) }
 
     before do
       switch_to_subdomain(market.subdomain)

@@ -130,16 +130,6 @@ class MarketDecorator < Draper::Decorator
     end
   end
 
-  def display_plan_interval
-    if plan_interval == 1
-      "Monthly"
-    elsif plan_interval == 12
-      "Yearly"
-    else
-      "Not Set"
-    end
-  end
-
   def header
     if name.blank?
       changes[:name].first

@@ -7,7 +7,7 @@ feature "Deleting a product from the product list" do
   let!(:org1) { create(:organization, markets: [market]) }
   let!(:product1) { create(:product, organization: org1) }
   let!(:product2) { create(:product, organization: org1) }
-  let!(:user) { create(:user, organizations: [org1]) }
+  let!(:user) { create(:user, :supplier, organizations: [org1]) }
 
   before do
     switch_to_subdomain(market.subdomain)

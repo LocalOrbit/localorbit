@@ -3,16 +3,19 @@ require "spec_helper"
 describe FeatureAccess do
   subject { described_class }
   let(:plan)                   { create(:plan, :grow) }
-  let!(:market)                { create(:market, :with_delivery_schedule, :with_address, plan: plan) }
-  let!(:wrong_market)          { create(:market, :with_delivery_schedule, :with_address, plan: plan) }
+  let!(:market_org)            { create(:organization, :market, plan: plan)}
+  let!(:market)                { create(:market, :with_delivery_schedule, :with_address, organization: market_org) }
+  let!(:wrong_market_org)      { create(:organization, :market, plan: plan)}
+  let!(:wrong_market)          { create(:market, :with_delivery_schedule, :with_address, organization: wrong_market_org) }
   let!(:buyer)                 { create(:organization, :buyer, markets: [market]) }
   let!(:wrong_organization)    { create(:organization, :buyer, markets: [market]) }
   let(:order)                  { create :order, :with_items, organization: buyer, market: market }
-  let(:user)                   { create(:user, organizations: [buyer]) }
+  let(:user)                   { create(:user, :buyer, organizations: [buyer]) }
   let(:admin)                  { create(:user, :admin) }
   let(:market_manager)         { create(:user, managed_markets: [market]) }
   let(:localeyes_plan)         { create(:plan, :localeyes) }
-  let(:localeyes_market)       { create(:market, :with_delivery_schedule, :with_address, plan: localeyes_plan) }
+  let(:localeyes_market_org)   { create(:organization, :market, plan: localeyes_plan)}
+  let(:localeyes_market)       { create(:market, :with_delivery_schedule, :with_address, organization: localeyes_market_org) }
 
   before do
     user.markets << market
@@ -51,10 +54,10 @@ describe FeatureAccess do
 
     it "always returns true for admins" do
       plan = create(:plan, :start_up)
+      user = create(:user, :admin)
       market.organization.plan = plan
+      market.organization.org_type = "A"
       market.save
-      user.role = "admin"
-      user.save
       expect(subject.order_printables?(user: user, order: order)).to eq true
     end
   end
@@ -647,10 +650,10 @@ describe FeatureAccess do
   describe ".sellers_edit_orders_feature_available?" do
     context "Market has no Plan" do
       before do
-        market.update_column :plan_id, nil
+        market_org.update_column :plan_id, nil
       end
       it "returns false" do
-        expect(subject.sellers_edit_orders_feature_available?(market: market)).to eq false
+        expect(subject.sellers_edit_orders_feature_available?(market: market)).to eq nil
       end
     end
 

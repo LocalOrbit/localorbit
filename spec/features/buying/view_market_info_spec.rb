@@ -4,7 +4,7 @@ feature "Viewing Market Info" do
   let!(:buyer) { create(:organization, :buyer) }
   let!(:seller1) { create(:organization, :seller) }
   let!(:seller2) { create(:organization, :seller) }
-  let!(:user) { create(:user, organizations: [buyer]) }
+  let!(:user) { create(:user, :buyer, organizations: [buyer]) }
   let!(:market) { create(:market, :with_addresses, organizations: [buyer, seller1, seller2]) }
 
   before do

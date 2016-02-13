@@ -1,14 +1,15 @@
 shared_context "the fresh market" do
-  let!(:fresh_market) { create(:market, name: "Fresh Market") }
+  let!(:fresh_market_org) { create(:organization, :market)}
+  let!(:fresh_market) { create(:market, name: "Fresh Market", organization: fresh_market_org) }
   let!(:mary) { create(:user, :market_manager, name: "Mary", managed_markets: [fresh_market]) }
   let!(:marvin) { create(:user, :market_manager, name: "Marvin", managed_markets: [fresh_market]) }
-  let!(:bill) { create(:user, name:"Bill") }
-  let!(:barry) { create(:user, name:"Barry") }
-  let!(:basil) { create(:user, name:"Basil") }
-  let!(:steve) { create(:user, name:"Steve") }
-  let!(:sol) { create(:user, name:"Sol") }
-  let!(:scarbro) { create(:user, name:"Scarbro") }
-  let!(:clarence) { create(:user, name:"Clarence") }
+  let!(:bill) { create(:user, :buyer, name:"Bill") }
+  let!(:barry) { create(:user, :buyer, name:"Barry") }
+  let!(:basil) { create(:user, :buyer, name:"Basil") }
+  let!(:steve) { create(:user, :supplier, name:"Steve") }
+  let!(:sol) { create(:user, :supplier, name:"Sol") }
+  let!(:scarbro) { create(:user, :supplier, name:"Scarbro") }
+  let!(:clarence) { create(:user, :buyer, name:"Clarence") }
   let!(:b1) { create(:organization, :buyer, users:[bill,barry], markets:[fresh_market]) }
   let!(:b2) { create(:organization, :buyer, users:[barry,basil], markets:[fresh_market]) }
   let!(:b3) { create(:organization, :buyer, users:[clarence], markets:[fresh_market]) }
@@ -17,7 +18,7 @@ shared_context "the fresh market" do
 
   let!(:other_market) { create(:market, name: "Other Market") }
   let!(:marcus) { create(:user, :market_manager, name: "Marcus", managed_markets: [other_market]) }
-  let!(:craig) { create(:user, name:"Craig") }
+  let!(:craig) { create(:user, :buyer, name:"Craig") }
   let!(:b4) { create(:organization, :buyer, users:[craig], markets:[other_market]) }
   let!(:s3) { create(:organization, :seller, users: [scarbro], markets:[other_market]) }
 

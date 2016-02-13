@@ -19,10 +19,11 @@ module Generate
     # Market
     #
     plan = FactoryGirl.create(:plan, plan_sym)
+    organization = FactoryGirl.create(:organization, :market, plan: plan)
     if market_name
-      market = FactoryGirl.create(:market, plan: plan, name: market_name)
+      market = FactoryGirl.create(:market, organization: organization, name: market_name)
     else
-      market = FactoryGirl.create(:market, plan: plan)
+      market = FactoryGirl.create(:market, organization: organization)
     end
     num_market_bank_accounts.times do 
       FactoryGirl.create(:bank_account, :checking, :verified,

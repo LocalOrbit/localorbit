@@ -19,22 +19,22 @@
         <th></th>
       </tr>
     </thead>
-    <% @markets.each do |market| %>
-      <tr class="<%= cycle "odd", "even" %> vcard" id="<%= dom_id(market) %>">
-        <td class="name fn"><%= link_to market.name, [:admin, market] %></td>
-        <td class="plan"><%= market.organization.plan.try(:name) %></td>
-        <td class="interval"><%= market.display_plan_interval %></td>
-        <td class="fee"><%= number_to_currency(market.organization.plan_fee) %></td>
-        <td class="last-payment-date"><%= market.organization.last_service_payment_at.try(:strftime, "%m/%d/%Y") || "N/A" %></td>
-        <td class="next-payment-date"><%= market.organization.next_service_payment_at.try(:strftime, "%m/%d/%Y") || 'Not Configured' %></td>
+    <% @organizations.each do |organization| %>
+      <tr class="<%= cycle "odd", "even" %> vcard" id="<%= dom_id(organization) %>">
+        <td class="name fn"><%= link_to organization.name, [:admin, organization] %></td>
+        <td class="plan"><%= organization.plan.try(:name) %></td>
+        <td class="interval"><%= organization.display_plan_interval %></td>
+        <td class="fee"><%= number_to_currency(organization.organization.plan_fee) %></td>
+        <td class="last-payment-date"><%= organization.last_service_payment_at.try(:strftime, "%m/%d/%Y") || "N/A" %></td>
+        <td class="next-payment-date"><%= organization.next_service_payment_at.try(:strftime, "%m/%d/%Y") || 'Not Configured' %></td>
         <td>
           <%= form_tag admin_financials_service_payments_path do %>
-            <%= link_to [:admin, market, :fees] do %>
+            <%= link_to [:admin, organization, :fees] do %>
               <i class="font-icon" data-icon="&#xe002;"></i> Edit
             <% end %>
 
-            <%= hidden_field_tag :market_id, market.id %>
-            <%= submit_tag "Run Now", class: "btn btn--small", data: {disable_with: "Running..."} if market.organization.plan_payable? %>
+            <%= hidden_field_tag :organization_id, organization.id %>
+            <%= submit_tag "Run Now", class: "btn btn--small", data: {disable_with: "Running..."} if organization.plan_payable? %>
           <% end %>
         </td>
       </tr>

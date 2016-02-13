@@ -16,7 +16,7 @@ describe "Filter products", :js do
   let!(:org5)         { create(:organization, :buyer, markets: [market2]) }
 
   context "as admin" do
-    let!(:user) { create(:user, role: "admin") }
+    let!(:user) { create(:user, :admin) }
 
     before do
       sign_in_as(user)
@@ -75,7 +75,7 @@ describe "Filter products", :js do
   end
 
   context "as multi-market manager", :js do
-    let!(:user) { create(:user, role: "user", managed_markets: [market1, market2, empty_market]) }
+    let!(:user) { create(:user, :market_manager, managed_markets: [market1, market2, empty_market]) }
 
     before do
       switch_to_subdomain(market1.subdomain)
@@ -131,7 +131,7 @@ describe "Filter products", :js do
   end
 
   context "as single market manager", :js do
-    let!(:user) { create(:user, managed_markets: [market1]) }
+    let!(:user) { create(:user, :market_manager, managed_markets: [market1]) }
 
     before do
       switch_to_subdomain(market1.subdomain)

@@ -72,10 +72,24 @@ class OrganizationDecorator < Draper::Decorator
   end
 
   def can_use_advanced_inventory?
-    markets.any? {|m| m.plan.advanced_inventory }
+    markets.any? {|m| m.organization.plan.advanced_inventory }
   end
 
   def can_use_advanced_pricing?
-    markets.any? {|m| m.plan.advanced_pricing }
+    markets.any? {|m| m.organization.plan.advanced_pricing }
+  end
+
+  def display_plan_interval
+    if plan_interval == 1
+      "Monthly"
+    elsif plan_interval == 12
+      "Yearly"
+    else
+      "Not Set"
+    end
+  end
+
+  def plan_payable?
+    plan_fee && plan_fee > 0 && plan_bank_account.try(:usable_for?, :debit)
   end
 end

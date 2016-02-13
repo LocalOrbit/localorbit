@@ -3,10 +3,11 @@ require "spec_helper"
 describe Admin::ProductsController do
   let(:product1) { create(:product) }
   let(:product2) { create(:product) }
-  let(:market) { create(:market, organizations: [product1.organization]) }
-  let(:user) { create(:user, organizations: [product1.organization]) }
-  let(:org1) { create(:organization) }
-  let(:org2) { create(:organization) }
+  let(:market_org) { create(:organization, :market)}
+  let(:market) { create(:market, organization: market_org, organizations: [product1.organization]) }
+  let(:user) { create(:user, :supplier, organizations: [product1.organization]) }
+  let(:org1) { create(:organization, :seller) }
+  let(:org2) { create(:organization, :seller) }
 
   before do
     switch_to_subdomain market.subdomain

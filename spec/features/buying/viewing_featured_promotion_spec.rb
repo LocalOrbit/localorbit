@@ -7,7 +7,7 @@ describe "Viewing featured promotion" do
   let!(:promotion) { create(:promotion, :active, product: product, market: market, body: "Big savings!") }
 
   let!(:buyer) { create(:organization, :buyer, :single_location, markets: [market]) }
-  let!(:user) { create(:user, organizations: [buyer]) }
+  let!(:user) { create(:user, :buyer, organizations: [buyer]) }
 
   context "with inventory" do
     before do

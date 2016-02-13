@@ -62,7 +62,7 @@ module Admin
         Market.all
       else
         current_user.managed_markets
-      end.order(:name).includes(:plan).select {|m| if(m.plan) then m.plan.discount_codes else nil end }
+      end.order(:name).includes(organization: [:plan]).select {|m| if(m.organization.plan) then m.organization.plan.discount_codes else nil end }
     end
 
     private

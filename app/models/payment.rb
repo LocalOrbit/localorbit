@@ -22,7 +22,8 @@ class Payment < ActiveRecord::Base
 
   belongs_to :payee, polymorphic: true
   belongs_to :payer, polymorphic: true
-  belongs_to :market
+  belongs_to :market # Market replaced with Organization
+  belongs_to :organization
   belongs_to :bank_account
   belongs_to :parent, class_name: "Payment"
 

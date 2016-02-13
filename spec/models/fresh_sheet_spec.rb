@@ -2,7 +2,8 @@ require 'spec_helper'
 
 describe FreshSheet, :type => :model do
   let(:user) { create(:user) }
-  let(:market) { create(:market) }
+  let(:market_org) {create(:organization)}
+  let(:market) { create(:market, organization: market_org) }
   let(:note) { create(:market) }
 
   subject { create(:fresh_sheet, user: user, market: market, note: note) }

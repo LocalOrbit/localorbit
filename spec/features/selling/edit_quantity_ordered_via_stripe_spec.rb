@@ -20,7 +20,7 @@ describe "Edit quantity ordered" do
   let!(:payment)        { create(:payment, :checking, bank_account: bank_account, orders: [order], amount: 15.00) }
 
   context "as a buyer" do
-    let!(:user) { create(:user, organizations: [buyer]) }
+    let!(:user) { create(:user, :buyer, organizations: [buyer]) }
 
     before do
       switch_to_subdomain(market.subdomain)
@@ -34,7 +34,7 @@ describe "Edit quantity ordered" do
   end
 
   context "as a seller" do
-    let!(:user) { create(:user, organizations: [seller]) }
+    let!(:user) { create(:user, :supplier, organizations: [seller]) }
 
     before do
       market.update sellers_edit_orders: true
@@ -54,7 +54,7 @@ describe "Edit quantity ordered" do
   end
 
   context "as a market manager" do
-    let!(:user) { create(:user, managed_markets: [market]) }
+    let!(:user) { create(:user, :market_manager, managed_markets: [market]) }
 
     before do
       switch_to_subdomain(market.subdomain)
