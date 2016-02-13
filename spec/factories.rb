@@ -548,7 +548,7 @@ FactoryGirl.define do
     trait :admin do
       org_type 'A' # Admin
       name 'Admin'
-      activities '{user:index,role:index,market_cross_selling:index,order:index,metric:index,unit:index,event:index,taxonomy:index,internal_financial:index,financial:index,market_profile:index,market_manager:index,delivery:index,order_item:index,market_address:index,market_deliveries:index,market_payment_methods:index,market_deposit_accounts:index,market_fees:index,template:index,market_custom_branding:index,market:index,send_invoices:index,payment_history:index,organization:index,delivery_schedule:index,enter_receipts:index,record_payments:index,product:index,fresh_sheet:index,newsletter:index,promotion:index,discount_code:index,sent_email:index,dashboard:index,email_test:index,report:index,referral:index,}'
+      activities '{organization_cross_selling:index,user:index,role:index,market_cross_selling:index,order:index,metric:index,unit:index,event:index,taxonomy:index,internal_financial:index,financial:index,market_profile:index,market_manager:index,delivery:index,order_item:index,market_address:index,market_deliveries:index,market_payment_methods:index,market_deposit_accounts:index,market_fees:index,template:index,market_custom_branding:index,market:index,send_invoices:index,payment_history:index,organization:index,delivery_schedule:index,enter_receipts:index,record_payments:index,product:index,fresh_sheet:index,newsletter:index,promotion:index,discount_code:index,sent_email:index,dashboard:index,email_test:index,report:index,referral:index,}'
     end
 
     trait :market_manager do
@@ -560,7 +560,7 @@ FactoryGirl.define do
     trait :buyer do
       org_type 'B'
       name 'Buyer'
-      activities '{payment_history:index,purchase_history:index,financial:index,market:index,financial_overview:index,all_supplier:index,dashboard:index,review_invoices:index,report:index}'
+      activities '{purchase_history:index,purchase_history:index,financial:index,market:index,financial_overview:index,all_supplier:index,dashboard:index,review_invoices:index,report:index}'
     end
 
     trait :supplier do
