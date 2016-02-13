@@ -35,11 +35,11 @@
 
     change_price = (modifier) ->
       # Initialize
-      price_box = $('#price_')
+      price_box = $('#post_price')
       new_price = 0
       original_price = price_box.val()
       # Enable the price box...
-      price_box.prop 'disabled', false
+      price_box.prop 'readonly', false
       # ...and process the supplied object:
       switch modifier.object
         # Plans represent a wholesale replacement
@@ -56,7 +56,7 @@
           price_box.val new_price
           break
       # Re-disable the price box.
-      price_box.prop 'disabled', true
+      price_box.prop 'readonly', true
       return
 
     ###*
@@ -116,7 +116,7 @@
       return
 
     # Bind the plan dropdown to an AJAX call to Stripe for plan data
-    $('#plan_').change ->
+    $('#post_plan').change ->
       # Initialize
       plan_id = $(this).val()
       target = '/roll_your_own_market/get_stripe_plans'
@@ -124,7 +124,7 @@
       retrieved_plan.success (response) ->
         change_price response
         $('#apply_discount').prop 'disabled', false
-        $('#discount_').prop 'disabled', false
+        $('#post_coupon').prop 'readonly', false
         return
       retrieved_plan.fail (response) ->
         alert 'There was an error processing the selection'
@@ -138,7 +138,7 @@
       # Disable the button
       $(this).prop 'disabled', true
       # get the submitted discount code
-      discount_box = $('#discount_')
+      discount_box = $('#post_coupon')
       coupon = discount_box.val()
       # If the submitted code isn't empty then...
       if coupon != ''
@@ -152,19 +152,19 @@
           # ...calculate the discount and update the price...
           change_price response
           # ...disable further interaction with the discount box... 
-          discount_box.prop 'disabled', true
+          discount_box.prop 'readonly', true
           # ...and hide the progress bar.
           $('#progress-bar').addClass 'is-hidden'
           return
         # if NOT found, then...
         retrieved_coupon.fail (response) ->
           # ...clear the box...
-          discount_box.prop 'disabled', false
+          discount_box.prop 'readonly', false
           discount_box.val ''
           # ...inform the user...
           alert response.responseText
           # ...re-enable the button...
-          $('#apply_discount').prop 'disabled', false
+          $(this).prop 'disabled', false
           # ...and hide the progress bar.
           $('#progress-bar').addClass 'is-hidden'
           return

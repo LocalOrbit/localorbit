@@ -10,6 +10,7 @@ class MarketsController < ApplicationController
   end
 
   def new
+    # /roll_your_own_market/get_stripe_plans
     Stripe.api_key = Rails.configuration.stripe[:secret_key]
 
     plans = Stripe::Plan.all
@@ -44,27 +45,38 @@ class MarketsController < ApplicationController
   end
 
   def create
-    results = RollYourOwnMarket.perform({:market_params => market_params, :billing_params => billing_params[:billing]})
+    binding.pry
+    results = RollYourOwnMarket.perform({
+        :market_params => market_params, 
+        :billing_params => billing_params[:billing], 
+        :subscription_params => subscription_params[:post]})
 
     if results.success?
       @market = results.market
-      redirect_to :action => 'success', :id => @market
+      # KXM Flash alerts aren't working.  Maybe this is due to the redirect or maybe I just suck at programming.  FML.
+      # KXM For that matter, flash notices aren't working either, but I suspect it's due to a lack of suitable (read 'any') destination container
+      # flash.alert = "Your new market request has been received!  A Local Orbit representative will process your request shortly."
+      flash[:notice] = "Your new market request has been received!  A Local Orbit representative will process your request shortly."
+      redirect_to :action => 'success', :id => @market, :notice => "Updated #{@market.name}"
     else
-      flash.now.alert = "Could not create market"
+      #flash.alert = "Could not create market"
+      flash[:err] = "Could not create market"
       @market = results.market
-      render :new
+      redirect_to :action => 'new', :id => @market
     end
   end
 
   def market_params
     params.require(:market).permit(
+      :stripe_card_token,
 			:contact_name,
 			:contact_email,
 			:contact_phone,
 			:name,
 			:subdomain,
       :pending,
-      :plan_id
+      :plan,
+      :coupon
   	)
   end
 
@@ -76,6 +88,18 @@ class MarketsController < ApplicationController
         :state, 
         :zip, 
         :phone 
+      ]
+    )
+  end
+
+  def subscription_params
+    params.permit(
+      post: [
+      :plan,
+      :price,
+      :coupon,
+      # KXM I think this isn't working because it doesn't exist in the 'post' bucket.  Look more closely at this whole structure so you know better what to do, OK?  It gets old just sitting here, watching it fail over and over...
+      :stripe_card_token
       ]
     )
   end

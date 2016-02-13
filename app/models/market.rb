@@ -1,5 +1,7 @@
 class Market < ActiveRecord::Base
+  # KXM These are the same thing, separated by understanding, process flow, and grammer
   attr_accessor :stripe_card_token
+  attr_accessor :source
 
   before_update :process_cross_sells_change, if: :allow_cross_sell_changed?
   before_update :process_plan_change, if: :plan_id_changed?
