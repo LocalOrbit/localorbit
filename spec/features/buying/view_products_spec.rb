@@ -24,9 +24,9 @@ feature "Viewing products" do
   let!(:other_org) { create(:organization, :seller) }
   let!(:other_products) { create_list(:product, 3, :sellable, organization: other_org) }
 
-  let!(:buyer_org) { create(:organization, :single_location, :buyer, markets: [market]) }
-  let(:user) { create(:user, organizations: [buyer_org]) }
-  let(:market_manager) { create(:user, managed_markets: [market]) }
+  let!(:buyer_org) { create(:organization, :buyer, :single_location, :buyer, markets: [market]) }
+  let(:user) { create(:user, :buyer, organizations: [buyer_org]) }
+  let(:market_manager) { create(:user, :market_manager, managed_markets: [market]) }
 
   let(:available_products) { [org1_product, org2_product] }
 
@@ -331,7 +331,7 @@ feature "Viewing products" do
     end
 
     context "as a market manager" do
-      let(:user) { create(:user, managed_markets: [market]) }
+      let(:user) { create(:user, :market_manager, managed_markets: [market]) }
       before do
         sign_in_as(user)
       end

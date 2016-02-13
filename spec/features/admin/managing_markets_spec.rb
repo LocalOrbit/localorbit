@@ -6,7 +6,7 @@ describe "Managing Markets" do
   describe "as a market manager" do
     let!(:market1) { create(:market) }
     let!(:market2) { create(:market) }
-    let!(:user) { create(:user, role: "user", managed_markets: [market1, market2]) }
+    let!(:user) { create(:user, :market_manager, managed_markets: [market1, market2]) }
 
     before do
       switch_to_subdomain market1.subdomain

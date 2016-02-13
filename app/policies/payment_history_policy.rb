@@ -1,0 +1,3 @@
+class PaymentHistoryPolicy < ApplicationPolicy
+
+end

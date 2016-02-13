@@ -4,15 +4,18 @@ describe "Manage Discount Codes" do
   let!(:startup_plan)        { create(:plan, discount_codes: false) }
   let!(:grow_plan)           { create(:plan, discount_codes: true) }
 
-  let!(:market)              { create(:market, plan: grow_plan) }
-  let!(:market2)             { create(:market, plan: startup_plan) }
-  let!(:market3)             { create(:market, plan: grow_plan) }
+  let!(:market_org1)         { create(:organization,:market, plan: grow_plan)}
+  let!(:market)              { create(:market, organization: market_org1) }
+  let!(:market_org2)         { create(:organization,:market, plan: startup_plan)}
+  let!(:market2)             { create(:market, organization: market_org2) }
+  let!(:market_org3)         { create(:organization,:market, plan: grow_plan)}
+  let!(:market3)             { create(:market, organization: market_org3) }
 
   let!(:discount_fixed)      { create(:discount, market: market, name: "fixed discount", type: "fixed", discount: 5.00) }
   let!(:discount_percentage) { create(:discount, market: market, name: "percentage discount", type: "percentage", discount: 10, maximum_uses: 10) }
-  let!(:discount_percentage2) { create(:discount, market: market3, name: "another percentage discount", type: "percentage", discount: 25, maximum_uses: 5) }
+  let!(:discount_percentage2){ create(:discount, market: market3, name: "another percentage discount", type: "percentage", discount: 25, maximum_uses: 5) }
 
-  let(:organization)         { create(:organization, :buyer, markets: [market]) }
+  let(:organization)         { create(:organization, :seller, markets: [market]) }
   let!(:order)               { create(:order, discount: discount_percentage) }
 
   before do
@@ -21,7 +24,7 @@ describe "Manage Discount Codes" do
   end
 
   context "organization users" do
-    let!(:user) { create(:user, organizations: [organization]) }
+    let!(:user) { create(:user, :supplier, organizations: [organization]) }
 
     it "gives a 404 page" do
       visit admin_discounts_path
@@ -30,10 +33,11 @@ describe "Manage Discount Codes" do
   end
 
   context "market managers" do
-    let!(:user) { create(:user, managed_markets: [market, market2]) }
+    let!(:user) { create(:user, :market_manager, managed_markets: [market, market2]) }
 
     context "plan does not allow discount codes" do
-      let!(:market) { create(:market, plan: create(:plan, discount_codes: false)) }
+      let!(:market_org)         { create(:organization, :market, plan: create(:plan, discount_codes: false))}
+      let!(:market) { create(:market, organization: market_org) }
 
       it "does not see Discount Codes in the menu" do
         within "#admin-nav" do

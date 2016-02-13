@@ -13,7 +13,7 @@ describe "Enter Offline Payment" do
   end
 
   context "as an admin" do
-    let(:user) { create(:user, role: "admin") }
+    let(:user) { create(:user, :admin) }
 
     it "does show the button to enter an offline payment" do
       visit admin_financials_receipts_path

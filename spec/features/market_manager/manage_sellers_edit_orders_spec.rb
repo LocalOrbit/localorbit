@@ -1,7 +1,7 @@
 require "spec_helper"
 
 describe "Manage sellers edit orders" do
-  let!(:user) { create(:user, role: "user") }
+  let!(:user) { create(:user) }
   let(:grow_plan) {create(:plan, :grow)}
   let(:start_up_plan) {create(:plan, :start_up)}
 

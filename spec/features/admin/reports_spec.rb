@@ -14,10 +14,10 @@ feature "Reports" do
   let!(:market)    { create(:market, name: "Foo Market", po_payment_term: 30, timezone: "Eastern Time (US & Canada)") }
   let!(:market2)   { create(:market, name: "Bar Market", po_payment_term: 30, timezone: "Eastern Time (US & Canada)") }
   let!(:market3)   { create(:market, name: "Baz Market", po_payment_term: 30, timezone: "Eastern Time (US & Canada)") }
-  let!(:buyer)     { create(:organization, name: "Foo Buyer", markets: [market], can_sell: false) }
-  let!(:buyer2)    { create(:organization, name: "Bar Buyer", markets: [market2], can_sell: false) }
-  let!(:seller)    { create(:organization, name: "Foo Seller", markets: [market], can_sell: true) }
-  let!(:seller2)   { create(:organization, name: "Bar Seller", markets: [market2], can_sell: true) }
+  let!(:buyer)     { create(:organization, :buyer, name: "Foo Buyer", markets: [market], can_sell: false) }
+  let!(:buyer2)    { create(:organization, :buyer, name: "Bar Buyer", markets: [market2], can_sell: false) }
+  let!(:seller)    { create(:organization, :seller, name: "Foo Seller", markets: [market], can_sell: true) }
+  let!(:seller2)   { create(:organization, :seller, name: "Bar Seller", markets: [market2], can_sell: true) }
   let!(:subdomain) { market.subdomain }
   let!(:report)    { :total_sales }
   let!(:delivery_schedule) { create(:delivery_schedule, market: market) }
@@ -28,7 +28,7 @@ feature "Reports" do
     delivery_schedule2 = create(:delivery_schedule, market: market2)
     delivery2 = delivery_schedule2.next_delivery
 
-    buyer3  = create(:organization, name: "Baz Buyer", markets: [market3], can_sell: false)
+    buyer3  = create(:organization, :buyer, name: "Baz Buyer", markets: [market3], can_sell: false)
 
     5.times do |i|
       this_date = order_date + i.days
@@ -147,7 +147,7 @@ feature "Reports" do
     end
 
     context "as any user" do
-      let!(:user)   { create(:user, :admin) }
+      let!(:user)   { create(:user, :market_manager) }
       let!(:report) { :total_sales }
 
       scenario "date range defaults to last 30 days and can filter results" do
@@ -550,7 +550,7 @@ feature "Reports" do
     end
 
     context "as a Market Manager" do
-      let!(:user) { create(:user, managed_markets: [market]) }
+      let!(:user) { create(:user, :market_manager, managed_markets: [market]) }
 
       scenario "displays a product code" do
         expect(page).to have_content("product-code-1")
@@ -633,7 +633,7 @@ feature "Reports" do
     end
 
     context "as a Seller" do
-      let!(:user)      { create(:user, organizations: [seller2]) }
+      let!(:user)      { create(:user, :supplier, organizations: [seller2]) }
       let!(:subdomain) { market2.subdomain }
 
       scenario "displays a product code" do
@@ -743,14 +743,14 @@ feature "Reports" do
 
           it "provides the Admin link to Sellers" do
             seller_name = Dom::Report::ItemRow.first.seller_name
-            see_admin_seller_link seller: Organization.selling.find_by(name: seller_name)
+            see_admin_seller_link seller: seller
           end
         end
       end
     end
 
     context "as a Buyer" do
-      let!(:user) { create(:user, organizations: [buyer]) }
+      let!(:user) { create(:user, :buyer, organizations: [buyer]) }
 
       scenario "does not show a product code" do
         expect(page).to_not have_content("product-code-1")

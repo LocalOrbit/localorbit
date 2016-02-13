@@ -1,0 +1,3 @@
+class SendInvoicesPolicy < ApplicationPolicy
+
+end

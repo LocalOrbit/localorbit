@@ -4,6 +4,9 @@ class Organization < ActiveRecord::Base
   include Sortable
   include PgSearch
 
+  before_update :process_plan_change, if: :plan_id_changed?
+
+  has_one  :market
   has_many :market_organizations
   has_many :user_organizations
 
@@ -37,8 +40,8 @@ class Organization < ActiveRecord::Base
   validate :require_payment_method
 
   scope :active,  -> { where(active: true) }
-  scope :selling, -> { where(can_sell: true) }
-  scope :buying,  -> { where(can_sell: false) } # needs a new boolean
+  scope :selling, -> { where(org_type: "S") }
+  scope :buying,  -> { where(org_type: "B") } # needs a new boolean
   scope :visible, -> { where(show_profile: true) }
   scope :with_products, -> { joins(:products).select("DISTINCT organizations.*").order(name: :asc) }
   scope :buyers_for_orders, lambda {|orders| joins(:orders).where(orders: {id: orders}).uniq }
@@ -104,9 +107,9 @@ class Organization < ActiveRecord::Base
     locations.visible.default_billing
   end
 
-  #def can_cross_sell?
-  #  can_sell? && markets.organization.joins(:plan).where(allow_cross_sell: true, plans: {cross_selling: true}).any?
-  #end
+  def can_cross_sell?
+    can_sell? && markets.joins(:organization => [:plan]).where(allow_cross_sell: true, plans: {cross_selling: true}).any?
+  end
 
   def update_product_delivery_schedules
     reload.products.each(&:save) if persisted?
@@ -163,6 +166,35 @@ class Organization < ActiveRecord::Base
     end
   end
 
+  def next_service_payment_at
+    return nil unless plan_start_at && plan_interval
+    return plan_start_at if plan_start_at > Time.now
+
+    @next_service_payment_at ||= begin
+      plan_payments = Payment.successful.not_refunded.made_after(plan_start_at).where(payer: self, payment_type: "service")
+      (plan_interval * plan_payments.count).months.from_now(plan_start_at)
+    end
+  end
+
+  def last_service_payment_at
+    Payment.successful.not_refunded.where(payer: self, payment_type: "service").order("created_at DESC").first.try(:created_at)
+  end
+
+  # Called as the last in a scope chain
+  def self.sort_service_payment
+    all.sort do |a,b|
+      if a.next_service_payment_at && b.next_service_payment_at
+        a.next_service_payment_at <=> b.next_service_payment_at
+      elsif a.next_service_payment_at.nil? && b.next_service_payment_at.nil?
+        a.name.downcase <=> b.name.downcase
+      elsif a.next_service_payment_at.nil?
+        -1 # Means order is wrong
+      else
+        1 # Means order is correct
+      end
+    end
+  end
+
   private
 
   def reject_location(attributed)
@@ -179,22 +211,9 @@ class Organization < ActiveRecord::Base
     end
   end
 
-  def plan_payable?
-    plan_fee && plan_fee > 0 && plan_bank_account.try(:usable_for?, :debit)
-  end
-
-  def next_service_payment_at
-    return nil unless plan_start_at && plan_interval
-    return plan_start_at if plan_start_at > Time.now
-
-    @next_service_payment_at ||= begin
-      plan_payments = Payment.successful.not_refunded.made_after(plan_start_at).where(payer: self, payment_type: "service")
-      (plan_interval * plan_payments.count).months.from_now(plan_start_at)
-    end
-  end
-
-  def last_service_payment_at
-    Payment.successful.not_refunded.where(payer: self, payment_type: "service").order("created_at DESC").first.try(:created_at)
+  def process_plan_change
+    market.remove_cross_selling_from_market unless plan.cross_selling
+    market.products.each {|p| p.disable_advanced_inventory(self.market) } unless plan.advanced_inventory
   end
 
 end

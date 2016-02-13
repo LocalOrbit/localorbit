@@ -79,8 +79,8 @@ class Order < ActiveRecord::Base
   scope :due_between, lambda {|range| invoiced.where(invoice_due_date: range) }
   scope :clean_payment_records, -> { where(arel_table[:placed_at].gt(Time.parse("2014-01-01"))) }
   scope :for_seller, -> (user) { orders_for_seller(user) }
-  scope :on_automate_plan, -> { joins(market: :plan).where(plans: {name: 'Automate'}) }
-  scope :not_on_automate_plan, -> { joins(market: :plan).where.not(plans: {name: 'Automate'}) }
+  scope :on_automate_plan, -> { joins(market: [organization: :plan]).where(plans: {name: 'Automate'}) }
+  scope :not_on_automate_plan, -> { joins(market: [organization: :plan]).where.not(plans: {name: 'Automate'}) }
 
   scope :balanced,     -> { where(payment_provider: PaymentProvider::Balanced.id.to_s) }
   scope :not_balanced, -> { where.not(payment_provider: PaymentProvider::Balanced.id.to_s) }

@@ -292,7 +292,7 @@ feature "Payment history", :truncate_after_all do
   end
 
   context "Any User" do
-    let!(:user) { create(:user, organizations: [@buyer]) }
+    let!(:user) { create(:user, :buyer, organizations: [@buyer]) }
 
     before do
       within("table thead") do
@@ -622,7 +622,6 @@ feature "Payment history", :truncate_after_all do
     scenario "can filter purchase history by payment type" do
       expect(Dom::Admin::Financials::PaymentRow.all.count).to eq(26)
 
-      save_and_open_page
       select "Order", from: "Payment Type", visible: false
       click_button "Filter"
       get_results(30)
@@ -708,8 +707,8 @@ feature "Payment history", :truncate_after_all do
   end
 
   context "Buyers" do
-    let!(:user) { create(:user, organizations: [@buyer]) }
-    let!(:market_manager) { create(:user, managed_markets: [@market]) }
+    let!(:user) { create(:user, :buyer, organizations: [@buyer]) }
+    let!(:market_manager) { create(:user, :market_manager, managed_markets: [@market]) }
 
     scenario "can view their purchase history" do
       expect(Dom::Admin::Financials::PaymentRow.all.count).to eq(5)
@@ -821,7 +820,7 @@ feature "Payment history", :truncate_after_all do
 
     context "user belongs to multiple organizations" do
       let!(:buyer3) { create(:organization, :buyer, name: "Buyer 3", markets: [@market]) }
-      let!(:user)   { create(:user, organizations: [@buyer, buyer3]) }
+      let!(:user)   { create(:user, :buyer, organizations: [@buyer, buyer3]) }
 
       scenario "cannot view purchases in an organization they've been suspended from", :suspend_user do
         # suspend the user
@@ -837,7 +836,7 @@ feature "Payment history", :truncate_after_all do
   end
 
   context "Sellers" do
-    let!(:user) { create(:user, organizations: [@seller]) }
+    let!(:user) { create(:user, :supplier, organizations: [@seller]) }
 
     scenario "can view their payment history" do
       expect(Dom::Admin::Financials::PaymentRow.all.count).to eq(7)

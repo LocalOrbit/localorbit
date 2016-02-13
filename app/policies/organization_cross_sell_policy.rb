@@ -1,3 +1,0 @@
-class OrganizationCrossSellPolicy < ApplicationPolicy
-
-end

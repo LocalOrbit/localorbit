@@ -408,7 +408,7 @@ describe "admin manange organization", :vcr do
   context "user management" do
     let!(:market) { create(:market) }
     let!(:admin) { create(:user, :admin) }
-    let!(:user) { create(:user, name: "Design Dude") }
+    let!(:user) { create(:user, :market_manager, name: "Design Dude") }
     let!(:organization) do
       create(:organization, name: "University of Michigan Farmers", markets: [market], users: [user])
     end
@@ -547,7 +547,7 @@ describe "admin manange organization", :vcr do
 
     context "single market membership" do
       let!(:seller) { create(:organization, :seller, name: "Holland Farms", markets: [market]) }
-      let!(:buyer) { create(:organization, name: "Hudsonville Restraunt", markets: [market]) }
+      let!(:buyer) { create(:organization, :buyer, name: "Hudsonville Restaurant", markets: [market]) }
 
       it "removes the organization from the organizations list" do
         visit admin_organizations_path
@@ -637,7 +637,7 @@ describe "admin manange organization", :vcr do
       let!(:market2) { create(:market) }
 
       let!(:seller) { create(:organization, :seller, name: "Holland Farms", markets: [market, market2]) }
-      let!(:buyer) { create(:organization, name: "Hudsonville Restraunt", markets: [market]) }
+      let!(:buyer) { create(:organization, :buyer, name: "Hudsonville Restaurant", markets: [market]) }
 
       before do
         visit admin_organizations_path

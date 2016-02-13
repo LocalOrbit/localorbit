@@ -66,7 +66,7 @@ feature "Suspend/enable a user", :suspend_user do
   end
 
   context "as an admin" do
-    let!(:admin) { create(:user, role: "admin") }
+    let!(:admin) { create(:user, :admin) }
 
     scenario "Suspending a user" do
       globally_suspend_user(as: admin)

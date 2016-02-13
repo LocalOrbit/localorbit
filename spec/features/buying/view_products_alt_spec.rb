@@ -26,8 +26,8 @@ feature "Viewing products" do
   let!(:other_products) { create_list(:product, 3, :sellable, organization: other_org) }
 
   let!(:buyer_org) { create(:organization, :single_location, :buyer, markets: [market]) }
-  let(:user) { create(:user, organizations: [buyer_org]) }
-  let(:market_manager) { create(:user, managed_markets: [market]) }
+  let(:user) { create(:user, :buyer, organizations: [buyer_org]) }
+  let(:market_manager) { create(:user, :market_manager, managed_markets: [market]) }
 
   let(:available_products) { [org1_product, org2_product] }
 

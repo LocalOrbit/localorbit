@@ -6,7 +6,7 @@ describe "Viewing buyer financials" do
 
     context "organization not allowed to use purchase orders" do
       let!(:organization) { create(:organization, :buyer, markets: [market], allow_purchase_orders: false) }
-      let!(:user)         { create(:user, organizations: [organization]) }
+      let!(:user)         { create(:user, :buyer, organizations: [organization]) }
 
       before do
         switch_to_subdomain(market.subdomain)
@@ -22,7 +22,7 @@ describe "Viewing buyer financials" do
 
     context "organization is allowed to use purchase orders" do
       let!(:organization) { create(:organization, :buyer, markets: [market], allow_purchase_orders: true) }
-      let!(:user)         { create(:user, organizations: [organization]) }
+      let!(:user)         { create(:user, :buyer, organizations: [organization]) }
 
       before do
         switch_to_subdomain(market.subdomain)
@@ -42,7 +42,7 @@ describe "Viewing buyer financials" do
 
     context "organization not allowed to use purchase orders" do
       let!(:organization) { create(:organization, :buyer, markets: [market], allow_purchase_orders: false) }
-      let!(:user)         { create(:user, organizations: [organization]) }
+      let!(:user)         { create(:user, :buyer, organizations: [organization]) }
 
       before do
         switch_to_subdomain(market.subdomain)
@@ -58,7 +58,7 @@ describe "Viewing buyer financials" do
 
     context "organization is allowed to use purchase orders" do
       let!(:organization) { create(:organization, :buyer, markets: [market], allow_purchase_orders: true) }
-      let!(:user)         { create(:user, organizations: [organization]) }
+      let!(:user)         { create(:user, :buyer, organizations: [organization]) }
 
       before do
         switch_to_subdomain(market.subdomain)

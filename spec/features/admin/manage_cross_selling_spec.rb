@@ -1,7 +1,7 @@
 require "spec_helper"
 
 describe "Manage cross selling" do
-  let!(:user) { create(:user, role: "admin") }
+  let!(:user) { create(:user, :admin) }
 
   let!(:cross_selling_market)     { create(:market, allow_cross_sell: true) }
   let!(:not_cross_selling_market) { create(:market) }

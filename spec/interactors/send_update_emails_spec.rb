@@ -5,14 +5,14 @@ describe SendUpdateEmails do
 
   let!(:seller1) { create(:organization, :seller, markets: [market]) }
   let!(:product1) { create(:product, :sellable, organization: seller1) }
-  let!(:seller_user1)    { create(:user, organizations: [seller1]) }
+  let!(:seller_user1)    { create(:user, :supplier, organizations: [seller1]) }
 
   let!(:seller2) { create(:organization, :seller, markets: [market]) }
   let!(:product2) { create(:product, :sellable, organization: seller2) }
-  let!(:seller_user2) { create(:user, organizations: [seller2]) }
+  let!(:seller_user2) { create(:user, :supplier, organizations: [seller2]) }
 
   let!(:buyer) { create(:organization, :buyer, markets: [market]) }
-  let!(:buyer_user) { create(:user, organizations: [buyer]) }
+  let!(:buyer_user) { create(:user, :buyer, organizations: [buyer]) }
 
   let!(:order)    { create(:order, market: market, organization: buyer) }
   let!(:item1)    { create(:order_item, product: product1, unit_price: 2.00, quantity: 4, order: order) }

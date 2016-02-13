@@ -4,7 +4,7 @@ feature "viewing and managing users" do
   let!(:admin)          { create(:user, :admin) }
   let!(:market)         { create(:market, name: "Test Market") }
   let!(:market2)        { create(:market) }
-  let!(:market_manager) { create(:user, managed_markets: [market]) }
+  let!(:market_manager) { create(:user, :market_manager, managed_markets: [market]) }
 
   let!(:organization)   { create(:organization, name: "Test Org 1", markets: [market]) }
   let!(:organization2)  { create(:organization, name: "Test Org 2", markets: [market]) }

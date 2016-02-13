@@ -1,0 +1,3 @@
+class RecordPaymentsPolicy < ApplicationPolicy
+
+end

@@ -49,7 +49,9 @@ class FeatureAccess
     end
 
     def sellers_edit_orders_feature_available?(market:)
-      !!market.organization.plan.try(:sellers_edit_orders?)
+      if !market.organization.plan.nil?
+        !!market.organization.plan.try(:sellers_edit_orders?)
+      end
     end
 
     def has_procurement_managers?(market:)

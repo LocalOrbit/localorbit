@@ -9,7 +9,8 @@ describe Api::V1::OrderTemplatesController do
 
     let(:market) { create(:market, :with_addresses, organizations: [buyer, seller]) }
     let(:plan) {create(:plan, :localeyes)}
-    let(:le_market) { create(:market, :with_addresses, organizations: [buyer, seller], plan: plan) }
+    let(:le_market_org) {create(:organization, :market, plan: plan)}
+    let(:le_market) { create(:market, :with_addresses, organization: le_market_org, organizations: [buyer, seller]) }
     let!(:template2) {create(:order_template, market: market)}
     let!(:template) {create(:order_template, market: le_market)}
 

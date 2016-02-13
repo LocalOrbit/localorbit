@@ -3,7 +3,7 @@ require "spec_helper"
 describe "Editing advanced pricing", js: true do
   let!(:market)       { create(:market) }
   let!(:organization) { create(:organization, markets: [market]) }
-  let!(:user)         { create(:user, organizations: [organization]) }
+  let!(:user)         { create(:user, :supplier, organizations: [organization]) }
   let!(:product)      { create(:product, organization: organization) }
   let!(:price)        { create(:price, product: product, sale_price: 3) }
   let!(:price2)       { create(:price, product: product, sale_price: 2, min_quantity: 100) }
@@ -11,10 +11,11 @@ describe "Editing advanced pricing", js: true do
   before do
     switch_to_subdomain(market.subdomain)
     sign_in_as(user)
-    within "#admin-nav" do
+    #within "#admin-nav" do
 
       click_link "Products"
-    end
+    #end
+    save_and_open_page
     click_link product.name
     click_link "Pricing"
   end
@@ -207,7 +208,7 @@ describe "price estimator", js: true do
     org.update_cross_sells!(from_market:market1,to_ids:[market2.id])
     org
   }
-  let!(:user) { create(:user, organizations: [org_cross_sell]) }
+  let!(:user) { create(:user, :supplier, organizations: [org_cross_sell]) }
   let!(:product1) {create(:product,organization:org_cross_sell) }
 
   before do

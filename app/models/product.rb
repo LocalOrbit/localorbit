@@ -407,7 +407,7 @@ class Product < ActiveRecord::Base
   end
 
   def disable_advanced_inventory(market)
-    advanced_inventory = organization.markets.reject{|m| m == market }.any? {|m| m.reload.plan.advanced_inventory }
+    advanced_inventory = organization.markets.reject{|m| m == market }.any? {|m| m.reload.organization.plan.advanced_inventory }
     if !advanced_inventory && lots.count > 1
       update_column(:use_simple_inventory, true)
       current_available_inventory = available_inventory

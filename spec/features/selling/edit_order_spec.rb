@@ -34,7 +34,7 @@ describe "Editing an order" do
     end
 
     context "as a buyer" do
-      let(:user) { create(:user, organizations: [buyer]) }
+      let(:user) { create(:user, :buyer, organizations: [buyer]) }
 
       it "returns a 404" do
         visit admin_order_path(order)
@@ -55,7 +55,7 @@ describe "Editing an order" do
       end
 
       context "as a seller" do
-        let!(:user) { create(:user, organizations: [seller]) }
+        let!(:user) { create(:user, :supplier, organizations: [seller]) }
 
         it "should not allow removing items" do
           expect(page).to_not have_link "Delete"
@@ -171,7 +171,7 @@ describe "Editing an order" do
       end
 
       context "as a seller" do
-        let!(:user) { create(:user, organizations: [seller]) }
+        let!(:user) { create(:user, :supplier, organizations: [seller]) }
 
         it "should not allow removing items" do
           expect(page).to_not have_link "Delete"
@@ -179,7 +179,7 @@ describe "Editing an order" do
       end
 
       context "as a market manager" do
-        let!(:user) { create(:user, managed_markets: [market]) }
+        let!(:user) { create(:user, :market_manager, managed_markets: [market]) }
 
         it "is not allowed to delete a delivered item" do
           order_item.update(delivery_status: "delivered")
@@ -259,7 +259,7 @@ describe "Editing an order" do
   end
 
   context "mark order delivered", :js do
-    let(:user) { create(:user, organizations: [buyer]) }
+    let(:user) { create(:user, :buyer, organizations: [buyer]) }
 
     before do
       switch_to_subdomain(market.subdomain)
@@ -274,7 +274,7 @@ describe "Editing an order" do
     end
 
     context "as a seller" do
-      let!(:user) { create(:user, organizations: [seller]) }
+      let!(:user) { create(:user, :supplier, organizations: [seller]) }
 
       it "marks all items delivered" do
         expect(Dom::Order::ItemRow.first.delivery_status).to eql("Pending")
@@ -287,7 +287,7 @@ describe "Editing an order" do
     end
 
     context "as a market manager" do
-      let!(:user) { create(:user, managed_markets: [market]) }
+      let!(:user) { create(:user, :market_manager, managed_markets: [market]) }
 
       it "marks all items delivered" do
         expect(Dom::Order::ItemRow.first.delivery_status).to eql("Pending")
@@ -339,7 +339,7 @@ describe "Editing an order" do
 
   context "quantity delivered" do
     context "as a buyer" do
-      let!(:user) { create(:user, organizations: [buyer]) }
+      let!(:user) { create(:user, :buyer, organizations: [buyer]) }
 
       before do
         switch_to_subdomain(market.subdomain)
@@ -353,7 +353,7 @@ describe "Editing an order" do
     end
 
     context "as a seller" do
-      let!(:user) { create(:user, organizations: [seller]) }
+      let!(:user) { create(:user, :supplier, organizations: [seller]) }
 
       before do
         market.update(sellers_edit_orders:true)
@@ -372,7 +372,7 @@ describe "Editing an order" do
     end
 
     context "as a market manager" do
-      let!(:user) { create(:user, managed_markets: [market]) }
+      let!(:user) { create(:user, :market_manager, managed_markets: [market]) }
 
       before do
         switch_to_subdomain(market.subdomain)
@@ -764,7 +764,7 @@ describe "Editing an order" do
 
   context "order notes" do
     context "buyer" do
-      let!(:user)       { create(:user, organizations: [buyer]) }
+      let!(:user)       { create(:user, :buyer, organizations: [buyer]) }
 
       before do
         switch_to_subdomain(market.subdomain)
@@ -778,7 +778,7 @@ describe "Editing an order" do
     end
 
     context "seller" do
-      let!(:user)       { create(:user, organizations: [seller]) }
+      let!(:user)       { create(:user, :supplier, organizations: [seller]) }
 
       before do
         switch_to_subdomain(market.subdomain)
@@ -792,7 +792,7 @@ describe "Editing an order" do
     end
 
     context "market manager" do
-      let!(:user)       { create(:user, managed_markets: [market]) }
+      let!(:user)       { create(:user, :market_manager, managed_markets: [market]) }
 
       before do
         switch_to_subdomain(market.subdomain)

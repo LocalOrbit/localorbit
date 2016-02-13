@@ -17,7 +17,7 @@ describe "Export Products CSV"  do
   let!(:org5)         { create(:organization, :buyer, markets: [market2]) }
 
   context "as admin" do
-    let!(:user) { create(:user, role: "admin") }
+    let!(:user) { create(:user, :admin) }
 
     before do
       sign_in_as(user)

@@ -13,7 +13,7 @@ feature "A Market Manager sending a weekly Fresh Sheet" do
   # Intentionally not let! changing that will break tests
   let(:buyer_org) { create(:organization, :buyer, markets: [market]) }
   let(:buyer_user) { 
-    jack = create(:user, organizations: [buyer_org], name: "Jack Stevens")
+    jack = create(:user, :buyer, organizations: [buyer_org], name: "Jack Stevens")
     jack.subscribe_to(SubscriptionType::Keywords::FreshSheet)
     jack 
   }
