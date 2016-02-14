@@ -10,7 +10,7 @@ feature "Viewing admin/organizations list" do
   let!(:org4) { create(:organization, markets: [market2]) }
 
   let!(:user) { create(:user, organizations: [org1, org2]) }
-  let!(:market_manager) { create(:user) }
+  let!(:market_manager) { create(:user, :market_manager) }
 
   context "as an organization member", :suspend_user do
     before do

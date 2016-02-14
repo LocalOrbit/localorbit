@@ -2,7 +2,7 @@ require "spec_helper"
 
 describe ChargeTransactionFees do
   let!(:market)            { create(:market) }
-  let!(:market_manager)    { create(:user, managed_markets: [market]) }
+  let!(:market_manager)    { create(:user, :market_manager, managed_markets: [market]) }
   let!(:delivery_schedule) { create(:delivery_schedule, market: market) }
   let!(:delivery)          { delivery_schedule.next_delivery }
   let!(:bank_account)      { create(:bank_account, :checking, :verified, bankable: market, balanced_uri: "/bank-account-1") }

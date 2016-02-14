@@ -15,7 +15,7 @@ describe "Buyer invoices" do
   let!(:buyers)    { create(:organization, :buyer, markets: [market]) }
 
   let!(:others)     { create(:organization, :buyer, markets: [market]) }
-  let!(:other_user) { create(:user, organizations: [others]) }
+  let!(:other_user) { create(:user, :buyer, organizations: [others]) }
 
   let!(:ordered_apples1) { create(:order_item, product: apples) }
   let!(:ordered_grapes1) { create(:order_item, product: grapes) }

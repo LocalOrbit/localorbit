@@ -159,19 +159,19 @@ describe User do
 
     it 'admin? returns true if role is "admin"' do
       user = build(:user)
-      user.role = "admin"
+      #user.role = "admin"
       expect(user.admin?).to be true
     end
 
     it 'admin? returns false if role is not "admin"' do
       user = build(:user)
-      user.role = "user"
+      #user.role = "user"
       expect(user.admin?).to be false
 
-      user.role = "manager"
+      #user.role = "manager"
       expect(user.admin?).to be false
 
-      user.role = "something else"
+      #user.role = "something else"
       expect(user.admin?).to be false
     end
 
@@ -180,12 +180,12 @@ describe User do
         market_org = create(:organization, :market)
         market = create(:market, organization: market_org)
         org = create(:organization, :seller, can_sell: true, markets: [market])
-        user = create(:user, organizations: [org])
+        user = create(:user, :supplier, organizations: [org])
         expect(user).to be_seller
       end
 
       it "returns false if the user is not a member of any selling organizations" do
-        user = create(:user, organizations: [create(:organization, can_sell: false)])
+        user = create(:user, :buyer, organizations: [create(:organization, can_sell: false)])
         expect(user).not_to be_seller
       end
     end
@@ -360,7 +360,7 @@ describe User do
     end
 
     context "for a market manager" do
-      let(:user) { create(:user, managed_markets: [market1, market2], organizations: [org4, org5]) }
+      let(:user) { create(:user, :market_manager, managed_markets: [market1, market2], organizations: [org4, org5]) }
 
       it "returns a chainable scope" do
         expect(user.managed_organizations_within_market(market1)).to be_a_kind_of(ActiveRecord::Relation)

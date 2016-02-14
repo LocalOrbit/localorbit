@@ -5,8 +5,8 @@ describe AttemptBalancedPurchase do
   let!(:delivery_schedule) { create(:delivery_schedule) }
   let!(:delivery)    { delivery_schedule.next_delivery }
 
-  let!(:user)        { create(:user) }
-  let!(:buyer)       { create(:organization) }
+  let!(:user)        { create(:user, :buyer) }
+  let!(:buyer)       { create(:organization, :buyer) }
   let!(:product)     { create(:product, :sellable, organization: buyer) }
   let!(:bank_account) { create(:bank_account, :checking, bankable: buyer, balanced_uri: "/balanced-card-uri") }
   let!(:credit_card) { create(:bank_account, :credit_card, bankable: buyer, balanced_uri: "/balanced-credit-card-uri") }

@@ -4,9 +4,9 @@ feature "Viewing invoices" do
   let(:market) { create(:market, po_payment_term: 14, contact_phone: "1234567890") }
   let!(:delivery_schedule) { create(:delivery_schedule, fee_type: "fixed", fee: "12.95") }
   let!(:delivery)    { delivery_schedule.next_delivery }
-  let!(:market_manager) { create :user, managed_markets: [market] }
+  let!(:market_manager) { create :user, :market_manager, managed_markets: [market] }
 
-  let!(:buyer_user) { create :user }
+  let!(:buyer_user) { create :user, :buyer }
 
   let!(:seller) { create(:organization, :seller, name: "Better Farms",   markets: [market]) }
   let!(:buyer)  { create(:organization, :buyer,  name: "Money Bags",     markets: [market], users: [buyer_user]) }

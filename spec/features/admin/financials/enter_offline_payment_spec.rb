@@ -52,7 +52,7 @@ describe "Enter Offline Payment" do
   end
 
   context "as a market manager" do
-    let(:user) { create(:user, managed_markets: [market]) }
+    let(:user) { create(:user, :market_manager, managed_markets: [market]) }
 
     it "does not show the button to enter an offline payment" do
       visit admin_financials_receipts_path
@@ -62,7 +62,7 @@ describe "Enter Offline Payment" do
   end
 
   context "as a seller" do
-    let!(:user)    { create(:user) }
+    let!(:user)    { create(:user, :supplier) }
     it "does not show the button to enter an offline payment" do
       visit admin_financials_receipts_path
 

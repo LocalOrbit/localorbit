@@ -3,7 +3,7 @@ require "spec_helper"
 feature "Removing a credit card from an organization" do
   let!(:market)    { create(:market) }
   let!(:org)        { create(:organization, can_sell: true, markets: [market]) }
-  let!(:member)     { create(:user, organizations: [org]) }
+  let!(:member)     { create(:user, :buyer, organizations: [org]) }
   let!(:non_member) { create(:user) }
 
   let!(:account)    { create(:bank_account, :credit_card, name: "Org Bank Account", bankable: org) }

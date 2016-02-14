@@ -6,7 +6,7 @@ feature "Payments to vendors" do
   let(:market1) { create(:market, name: "Baskerville Co-op", po_payment_term: 14) }
   let!(:market1_delivery_schedule) { create(:delivery_schedule, market: market1, day: (today - 3.day).wday) }
   let!(:market1_delivery) { Timecop.freeze(today - 5.days) { market1_delivery_schedule.next_delivery } }
-  let!(:market_manager) { create :user, managed_markets: [market1] }
+  let!(:market_manager) { create :user, :market_manager, managed_markets: [market1] }
 
   let!(:market1_seller1) { create(:organization, :seller, name: "Better Farms", markets: [market1]) }
   let!(:market1_seller2) { create(:organization, :seller, name: "Great Farms", markets: [market1]) }
@@ -195,7 +195,7 @@ feature "Payments to vendors" do
 
     let!(:market1_delivery_schedule) { create(:delivery_schedule, market: market2, day: (today - 3.days).wday) }
     let!(:market2_delivery) { Timecop.freeze(today - 5.days) { market1_delivery_schedule.next_delivery } }
-    let!(:market_manager) { create :user, managed_markets: [market1, market2] }
+    let!(:market_manager) { create :user, :market_manager, managed_markets: [market1, market2] }
 
     let!(:market2_seller1) { create(:organization, :seller, name: "Best Farms", markets: [market2]) }
     let!(:market2_seller2) { create(:organization, :seller, name: "Fruit Farms", markets: [market2]) }
@@ -233,7 +233,7 @@ feature "Payments to vendors" do
     let!(:market3_order4) { create(:order, items: [create(:order_item, :delivered, product: market3_product2, quantity: 9), create(:order_item, :delivered, product: market3_product3, quantity: 14)], market: market3, organization: market3_buyer, delivery: market3_delivery, payment_method: "purchase order", order_number: "LO-082", total_cost: 160.77, placed_at: today - 3.days) }
 
     context "market manager who has only 1 market" do
-      let!(:market_manager) { create :user, managed_markets: [market1] }
+      let!(:market_manager) { create :user, :market_manager, managed_markets: [market1] }
 
       scenario "will not see market as a filter option" do
         switch_to_subdomain(market1.subdomain)

@@ -28,7 +28,7 @@ context "Viewing sold items" do
   end
 
   context "as a market manager" do
-    let(:market_manager) { create :user, managed_markets: [market] }
+    let(:market_manager) { create :user, :market_manager, managed_markets: [market] }
 
     before do
       sign_in_as market_manager

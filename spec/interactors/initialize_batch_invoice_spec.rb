@@ -1,7 +1,7 @@
 require "spec_helper"
 
 describe InitializeBatchInvoice do
-  let!(:user) { create(:user) }
+  let!(:user) { create(:user, :buyer) }
   let!(:orders) { [create(:order),create(:order)] }
 
   subject { described_class }

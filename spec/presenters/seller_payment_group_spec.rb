@@ -6,7 +6,7 @@ describe SellerPaymentGroup do
   let!(:delivery)                 { Timecop.freeze(5.days.ago) { delivery_schedule.next_delivery } }
   let!(:recent_delivery_schedule) { create(:delivery_schedule, market: market1, day: 1.day.ago.wday) }
   let!(:recent_delivery)          { Timecop.freeze(4.days.ago) { recent_delivery_schedule.next_delivery } }
-  let!(:market_manager)           { create :user, managed_markets: [market1] }
+  let!(:market_manager)           { create :user, :market_manager, managed_markets: [market1] }
 
   let!(:seller1) { create(:organization, :seller, name: "Better Farms",    markets: [market1]) }
   let!(:seller2) { create(:organization, :seller, name: "Great Farms",     markets: [market1]) }
@@ -70,7 +70,7 @@ describe SellerPaymentGroup do
 
     describe "for multi market manager" do
       let!(:market2) { create(:market, :with_delivery_schedule, name: "Upper Foods", po_payment_term: 14) }
-      let!(:market_manager)           { create :user, managed_markets: [market1, market2] }
+      let!(:market_manager)           { create :user, :market_manager, managed_markets: [market1, market2] }
       let!(:delivery2) { Timecop.freeze(14.days.ago) { market2.delivery_schedules.first.next_delivery } }
 
       let!(:seller1) { create(:organization, :seller, name: "Better Farms", markets: [market1, market2]) }

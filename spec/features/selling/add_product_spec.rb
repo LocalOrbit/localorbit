@@ -495,7 +495,7 @@ describe "Adding a product", chosen_js: true do
   end
 
   describe "as a market manager", js: true do
-    let!(:user) { create(:user, managed_markets: [market]) }
+    let!(:user) { create(:user, :market_manager, managed_markets: [market]) }
     let!(:org2) { create(:organization, :seller, markets: [market]) }
 
     before do

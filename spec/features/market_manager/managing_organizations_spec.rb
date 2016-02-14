@@ -274,7 +274,7 @@ describe "A Market Manager", :vcr do
       let!(:seller) { create(:organization, :seller, name: "Holland Farms", markets: [market]) }
       let!(:product) { create(:product, :sellable, organization: seller) }
       let!(:promotion) { create(:promotion, :active, market: market, product: product) }
-      let!(:buyer) { create(:organization, :single_location, name: "Hudsonville Restaurant", markets: [market]) }
+      let!(:buyer) { create(:organization, :buyer, :single_location, name: "Hudsonville Restaurant", markets: [market]) }
 
       before do
         market_manager.managed_markets << market2
@@ -303,7 +303,7 @@ describe "A Market Manager", :vcr do
       end
 
       context "and the market manager belongs to multiple markets" do
-        let!(:market_manager) { create(:user, managed_markets: [market, market2]) }
+        let!(:market_manager) { create(:user, :market_manager, managed_markets: [market, market2]) }
 
         it "deletes the organization from the only market it's associated with" do
           expect(page).to have_content("Removed #{seller.name} from #{market.name}")
@@ -325,7 +325,7 @@ describe "A Market Manager", :vcr do
       end
 
       context "and the market manager only manages one of the markets" do
-        let!(:market_manager) { create(:user, managed_markets: [market]) }
+        let!(:market_manager) { create(:user, :market_manager, managed_markets: [market]) }
 
         it "will not prompt to select a market" do
           expect(page).to have_content("Removed Holland Farms from #{market.name}")
@@ -340,7 +340,7 @@ describe "A Market Manager", :vcr do
         let!(:market3) { create(:market, name: "Market 3") }
 
         let!(:seller)  { create(:organization, :seller, name: "Holland Farms", markets: [market2, market, market3]) }
-        let!(:market_manager) { create(:user, managed_markets: [market, market3]) }
+        let!(:market_manager) { create(:user, :market_manager, managed_markets: [market, market3]) }
 
         it "allows the market manager to delete an organization from a one or more markets" do
           seller_row = Dom::Admin::OrganizationRow.find_by_name("Holland Farms")

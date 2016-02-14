@@ -169,7 +169,7 @@ feature "User signing in" do
   end
 
   context "As a market manager logging into a market that they do not manage" do
-    let!(:market_manager) { create(:user, managed_markets: [market1]) }
+    let!(:market_manager) { create(:user, :market_manager, managed_markets: [market1]) }
     let!(:market1) { create(:market) }
     let!(:market2) { create(:market) }
 
@@ -184,9 +184,9 @@ feature "User signing in" do
 
   context "Signing into a deactivated market" do
     let!(:market) { create(:market, active: false) }
-    let!(:market_manager) { create(:user, managed_markets: [market]) }
+    let!(:market_manager) { create(:user, :market_manager, managed_markets: [market]) }
     let!(:org) { create(:organization, markets: [market]) }
-    let!(:buyer) { create(:user, organizations: [org]) }
+    let!(:buyer) { create(:user, :buyer, organizations: [org]) }
 
     scenario "as a market manager" do
       switch_to_subdomain(market.subdomain)

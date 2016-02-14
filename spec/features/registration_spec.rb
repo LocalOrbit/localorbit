@@ -2,7 +2,7 @@ require "spec_helper"
 
 describe "Register" do
   context "a new organization for a market" do
-    let!(:manager) { create(:user, email: "fake@example.com") }
+    let!(:manager) { create(:user, :buyer) }
 
     context "automatically activated" do
       let!(:market) { create(:market, managers: [manager], auto_activate_organizations: true) }
@@ -60,7 +60,7 @@ describe "Register" do
       end
 
       context "happy path with an existing email" do
-        let!(:user) { create(:user) }
+        let!(:user) { create(:user, :buyer) }
 
         before do
           switch_to_subdomain market.subdomain

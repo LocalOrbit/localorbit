@@ -22,7 +22,7 @@ feature "seller views their dashboard" do
   let!(:delivery2)    { delivery_schedule2.next_delivery }
 
   let!(:organization) { create(:organization, :seller, markets: [market]) }
-  let!(:user) { create(:user, organizations: [organization]) }
+  let!(:user) { create(:user, :supplier, organizations: [organization]) }
 
   let!(:product) { create(:product, :sellable, organization: organization) }
   let!(:order_item) { create(:order_item, product: product, delivery_status: "delivered") }
