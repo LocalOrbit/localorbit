@@ -3,7 +3,7 @@ require "spec_helper"
 describe SendOrderEmails do
   let(:buyer)  { create(:organization, :buyer, users: [create(:user)]) }
   let(:seller) { create(:organization, :seller, users: [create(:user)]) }
-  let(:market) { create(:market, managers: [create(:user)]) }
+  let(:market) { create(:market, managers: [create(:user, :market_manager)]) }
 
   let(:product) { create(:product, :sellable, organization: seller) }
   let!(:delivery_schedule) { create(:delivery_schedule) }
@@ -24,7 +24,7 @@ describe SendOrderEmails do
   end
 
   context "when a market manager shops for an organizatgion with no users" do
-    let(:market_manager) { create(:user, managed_markets: [market]) }
+    let(:market_manager) { create(:user, :market_manager, managed_markets: [market]) }
     let(:buyer) { create(:organization, :buyer) }
     let(:order)  { create(:order, placed_by: market_manager, delivery: delivery, items: [create(:order_item, product: product)], market: market, organization: buyer) }
 

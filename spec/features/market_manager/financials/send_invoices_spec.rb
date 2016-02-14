@@ -2,7 +2,7 @@ require "spec_helper"
 
 feature "sending invoices" do
   let(:market1)            { create(:market, subdomain: "betterest", po_payment_term: 14) }
-  let!(:market_manager)    { create :user, managed_markets: [market1] }
+  let!(:market_manager)    { create :user, :market_manager, managed_markets: [market1] }
   let!(:delivery_schedule) { create(:delivery_schedule) }
   let!(:delivery)          { delivery_schedule.next_delivery }
 
@@ -166,8 +166,8 @@ feature "sending invoices" do
     let!(:market2) { create(:market, subdomain: "betterest2", po_payment_term: 14) }
     let!(:delivery_schedule2) { create(:delivery_schedule) }
     let!(:delivery2) { delivery_schedule.next_delivery }
-    let!(:market_manager) { create :user, managed_markets: [market1, market2] }
-    let!(:buyer_user2) { create :user }
+    let!(:market_manager) { create :user, :market_manager, managed_markets: [market1, market2] }
+    let!(:buyer_user2) { create :user, :buyer }
     let!(:market2_seller1) { create(:organization, :seller, name: "Better Farms", markets: [market2]) }
     let!(:market2_buyer1)  { create(:organization, :buyer, name: "Buyer for Market2 1", markets: [market2], users: [buyer_user2]) }
     let!(:market2_buyer2) { create(:organization, :buyer, name: "Buyer for Market 2 1", markets: [market2]) }
@@ -342,7 +342,7 @@ feature "sending invoices" do
     end
 
     context "users who have only 1 market" do
-      let!(:market_manager) { create :user, managed_markets: [market1] }
+      let!(:market_manager) { create :user, :market_manager, managed_markets: [market1] }
 
       scenario "won't see the option to filter by market" do
         switch_to_subdomain(market1.subdomain)

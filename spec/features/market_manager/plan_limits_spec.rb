@@ -39,7 +39,7 @@ describe "Plan Limits" do
   end
 
   context "as a buyer" do
-    let!(:user) { create(:user, managed_markets: [], organizations: [buyer])}
+    let!(:user) { create(:user, :buyer, managed_markets: [], organizations: [buyer])}
 
     context "on a grow plan" do
       let!(:plan) { create(:plan, :grow) }

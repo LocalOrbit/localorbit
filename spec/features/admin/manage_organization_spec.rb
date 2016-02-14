@@ -412,7 +412,7 @@ describe "admin manange organization", :vcr do
     let!(:organization) do
       create(:organization, name: "University of Michigan Farmers", markets: [market], users: [user])
     end
-    let!(:user2) { create(:user, organizations: [organization]) }
+    let!(:user2) { create(:user, :supplier, organizations: [organization]) }
 
     before do
       switch_to_subdomain(market.subdomain)
@@ -676,7 +676,7 @@ describe "admin manange organization", :vcr do
     end
 
     context "trying to mess with market you can't manage" do
-      let!(:user)    { create(:user, managed_markets: [market]) }
+      let!(:user)    { create(:user, :market_manager, managed_markets: [market]) }
       let!(:market2) { create(:market) }
 
       let!(:seller) { create(:organization, :seller, name: "Holland Farms", markets: [market, market2]) }

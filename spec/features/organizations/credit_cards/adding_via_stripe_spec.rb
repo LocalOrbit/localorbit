@@ -4,7 +4,7 @@ feature "Adding a credit card to an organization", :js, :vcr do
   let(:payment_provider) { PaymentProvider::Stripe.id }
   let!(:market)         { create(:market, name: "Fake Market", payment_provider: payment_provider) }
   let!(:org)            { create(:organization, name: "Fake Organization", markets: [market]) }
-  let!(:member)         { create(:user, organizations: [org]) }
+  let!(:member)         { create(:user, :buyer, organizations: [org]) }
 
   context "as an organization member" do
     before do

@@ -32,7 +32,7 @@ describe "Adding items to an order" do
   end
 
   context "as a market manager" do
-    let!(:user) { create(:user, managed_markets: [market]) }
+    let!(:user) { create(:user, :market_manager, managed_markets: [market]) }
 
     before do
       switch_to_subdomain(market.subdomain)

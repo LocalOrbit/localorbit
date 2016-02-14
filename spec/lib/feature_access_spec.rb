@@ -12,7 +12,7 @@ describe FeatureAccess do
   let(:order)                  { create :order, :with_items, organization: buyer, market: market }
   let(:user)                   { create(:user, :buyer, organizations: [buyer]) }
   let(:admin)                  { create(:user, :admin) }
-  let(:market_manager)         { create(:user, managed_markets: [market]) }
+  let(:market_manager)         { create(:user, :market_manager, managed_markets: [market]) }
   let(:localeyes_plan)         { create(:plan, :localeyes) }
   let(:localeyes_market_org)   { create(:organization, :market, plan: localeyes_plan)}
   let(:localeyes_market)       { create(:market, :with_delivery_schedule, :with_address, organization: localeyes_market_org) }

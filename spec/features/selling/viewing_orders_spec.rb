@@ -214,7 +214,7 @@ feature "Viewing orders" do
     end
 
     context "market manager deletes an organization" do
-      let!(:market_manager) { create(:user, managed_markets: [market1]) }
+      let!(:market_manager) { create(:user, :market_manager, managed_markets: [market1]) }
       before do
         switch_user(market_manager) do
           delete_organization(market1_seller_org1)
@@ -260,7 +260,7 @@ feature "Viewing orders" do
     end
 
     context "when a user only has one market" do
-      let!(:user) { create(:user, managed_markets: [market1]) }
+      let!(:user) { create(:user, :market_manager, managed_markets: [market1]) }
 
       scenario "they don't see an option to filter by a market" do
         visit admin_orders_path

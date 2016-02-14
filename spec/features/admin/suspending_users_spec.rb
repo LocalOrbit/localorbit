@@ -92,7 +92,7 @@ feature "Suspend/enable a user", :suspend_user do
 
   context "as a market manager" do
     # NOTE: Currently, we're allowing Market managers to suspend a user throughout the
-    let!(:market_manager) { create(:user, managed_markets: [market1]) }
+    let!(:market_manager) { create(:user, :market_manager, managed_markets: [market1]) }
 
     scenario "Suspending a user" do
       globally_suspend_user(as: market_manager)

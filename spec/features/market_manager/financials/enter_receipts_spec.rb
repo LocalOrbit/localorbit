@@ -5,7 +5,7 @@ feature "entering receipts" do
   let!(:delivery_schedule) { create(:delivery_schedule) }
   let!(:delivery)    { delivery_schedule.next_delivery }
 
-  let!(:market_manager) { create :user, managed_markets: [market] }
+  let!(:market_manager) { create :user, :market_manager, managed_markets: [market] }
 
   let!(:buyer_user) { create :user }
 

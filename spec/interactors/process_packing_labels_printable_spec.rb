@@ -11,8 +11,8 @@ describe ProcessPackingLabelsPrintable do
   let(:manager) { create(:user, :market_manager, name: "The Manatee", managed_markets: [market]) }
 
   let!(:buyer) { create(:organization, :buyer, name: "Big Money", markets: [market]) }
-  let!(:seller_user) { create(:user, name: "The Seller") }
-  let!(:seller42_user) { create(:user, name: "Marvin") }
+  let!(:seller_user) { create(:user, :supplier, name: "The Seller") }
+  let!(:seller42_user) { create(:user, :supplier, name: "Marvin") }
   let!(:seller) { create(:organization, :seller, name: "Good foodz", markets: [market], users: [seller_user]) }
   let!(:seller42) { create(:organization, :seller, name: "Marvin Gardens", markets: [market], users: [seller42_user]) }
   let!(:product1) { create(:product, :sellable, name: "Giant Carrots", organization: seller) }
@@ -31,7 +31,7 @@ describe ProcessPackingLabelsPrintable do
   let!(:order) { create(:order, items: order_items, organization: buyer, market: market, delivery: delivery, order_number: order_number, total_cost: order_items.sum(&:gross_total)) }
 
 
-  let!(:seller_user2) { create(:user, name: "The OTHER Seller") }
+  let!(:seller_user2) { create(:user, :supplier, name: "The OTHER Seller") }
   let!(:seller2) { create(:organization, :seller, name: "Other Farm", markets: [market], users: [seller_user2]) }
   let!(:buyer2) { create(:organization, :buyer, name: "Small Timer", markets: [market]) }
   let!(:product3) { create(:product, :sellable, name: "Flat Chikkens", organization: seller2) }

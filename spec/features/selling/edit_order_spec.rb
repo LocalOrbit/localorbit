@@ -63,7 +63,7 @@ describe "Editing an order" do
       end
 
       context "as a market manager" do
-        let!(:user) { create(:user, managed_markets: [market]) }
+        let!(:user) { create(:user, :market_manager, managed_markets: [market]) }
 
         context "removes an item" do
           it "removes an item" do
