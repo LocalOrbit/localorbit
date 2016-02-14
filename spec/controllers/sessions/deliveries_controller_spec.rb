@@ -7,7 +7,7 @@ describe Sessions::DeliveriesController do
             order_cutoff: 6, seller_delivery_start: "6:00 am", seller_delivery_end: "10:00 am", day: 4)
   end
 
-  let!(:user) { create(:user) }
+  let!(:user) { create(:user, :buyer) }
   let!(:org)  { create(:organization, :multiple_locations, markets: [current_market], users: [user]) }
 
   before do

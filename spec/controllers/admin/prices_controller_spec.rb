@@ -1,9 +1,10 @@
 require "spec_helper"
 
 describe Admin::PricesController do
-  let!(:product) { create(:product) }
-  let!(:user)  { create(:user, organizations: [product.organization]) }
-  let!(:user2) { create(:user) }
+  let!(:seller) { create(:organization, :seller)}
+  let!(:product) { create(:product, organization: seller) }
+  let!(:user)  { create(:user, :supplier, organizations: [seller]) }
+  let!(:user2) { create(:user, :supplier) }
 
   describe "/index" do
     context "a user who is not logged in" do
