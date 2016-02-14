@@ -147,7 +147,7 @@ feature "Reports" do
     end
 
     context "as any user" do
-      let!(:user)   { create(:user, :market_manager) }
+      let!(:user)   { create(:user, :market_manager, managed_markets: [market,market2,market3]) }
       let!(:report) { :total_sales }
 
       scenario "date range defaults to last 30 days and can filter results" do
@@ -229,6 +229,7 @@ feature "Reports" do
       end
 
       scenario "searches by purchase order number" do
+        save_and_open_page
         expect(Dom::Report::ItemRow.all.count).to eq(11)
 
         fill_in "Search", with: "PURCHASE-0"

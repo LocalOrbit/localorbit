@@ -15,7 +15,7 @@ describe "Adding a product", chosen_js: true do
     end
   end
 
-  let!(:user)                  { create(:user) }
+  let!(:user)                  { create(:user, :supplier) }
   let!(:market)                { create(:market, :with_addresses) }
   let!(:aggregation_point)     { create(:market_address, market: market, name: "Aggregation Point", address: "1123 Grand Rd.", city: "Appleton", state: "WI", zip: "83992") }
   let!(:org)                   { create(:organization, :seller, :single_location, markets: [market], who_story: "We sell products", how_story: "We sell products very carefully") }
@@ -70,10 +70,10 @@ describe "Adding a product", chosen_js: true do
 
     sign_in_as(user)
 
-    within "#admin-nav" do
+    #within "#admin-nav" do
 
       click_link "Products"
-    end
+    #end
     click_link "Add New Product"
     # ^ This will fail in a case where having no specific markets is not handled
     expect(page).to have_field("Product Name")
