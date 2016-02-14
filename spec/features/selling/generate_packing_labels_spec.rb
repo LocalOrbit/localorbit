@@ -2,7 +2,8 @@ require "spec_helper"
 
 context "Downloading packing labels", js:true do
   let(:plan_with_packing_labels) { create(:plan, :nothing, packing_labels: true) }
-  let(:market) { create(:market, name: 'Market Label', plan: plan_with_packing_labels) }
+  let(:market_org) { create(:organization, :market, plan: plan_with_packing_labels)}
+  let(:market) { create(:market, name: 'Market Label', organization: market_org) }
   let!(:market_manager) { create(:user, :market_manager, name: "Marky Mark", managed_markets: [market]) }
 
   let!(:buyer_org) { create(:organization, :buyer, name: "Big Money", markets: [market]) }

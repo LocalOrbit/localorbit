@@ -370,7 +370,7 @@ describe "Adding a product", chosen_js: true do
   end
 
   describe "a seller belonging to multiple organizations" do
-    let!(:org2) { create(:organization, :single_location, markets: [market], who_story: "who org2", how_story: "how org2") }
+    let!(:org2) { create(:organization, :seller, :single_location, markets: [market], who_story: "who org2", how_story: "how org2") }
     let!(:buying_org) { create(:organization, :buyer) }
 
     before do
