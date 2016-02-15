@@ -229,7 +229,6 @@ feature "Reports" do
       end
 
       scenario "searches by purchase order number" do
-        save_and_open_page
         expect(Dom::Report::ItemRow.all.count).to eq(11)
 
         fill_in "Search", with: "PURCHASE-0"
@@ -744,7 +743,7 @@ feature "Reports" do
 
           it "provides the Admin link to Sellers" do
             seller_name = Dom::Report::ItemRow.first.seller_name
-            see_admin_seller_link seller: seller
+            see_admin_seller_link seller: Organization.selling.find_by(name: seller_name)
           end
         end
       end

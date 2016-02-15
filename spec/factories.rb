@@ -334,7 +334,7 @@ FactoryGirl.define do
     end
 
     trait :market do
-      plan
+      plan                { create(:plan) }
       org_type 'M'
     end
 
@@ -560,7 +560,7 @@ FactoryGirl.define do
     trait :buyer do
       org_type 'B'
       name 'Buyer'
-      activities '{purchase_history:index,purchase_history:index,financial:index,market:index,financial_overview:index,all_supplier:index,dashboard:index,review_invoices:index,report:index}'
+      activities '{payment_history:index, purchase_history:index,purchase_history:index,financial:index,market:index,financial_overview:index,all_supplier:index,dashboard:index,review_invoices:index,report:index}'
     end
 
     trait :supplier do
@@ -583,46 +583,46 @@ FactoryGirl.define do
       roles {[FactoryGirl.create(:role, :market_manager)]}
 
       after(:create) do |user|
-        o = create(:organization, :market)
-        if user.managed_markets.empty?
-          m = create(:market, organization: o)
-          user.managed_markets << m
-        end
-        user.organizations << o
+        #o = create(:organization, :market)
+        #if user.managed_markets.empty?
+        #  m = create(:market, organization: o)
+        #  user.managed_markets << m
+        #end
+        #user.organizations << o
       end
     end
 
     trait :admin do
       #role "admin"
       roles {[FactoryGirl.create(:role, :admin)]}
-      after(:create) do |user|
-        o = create(:organization, :admin)
-        user.organizations << o
-      end
+      #after(:create) do |user|
+      #  o = create(:organization, :admin)
+      #  user.organizations << o
+      #end
     end
 
     trait :supplier do
       roles {[FactoryGirl.create(:role, :supplier)]}
-      after(:create) do |user|
-        o = create(:organization, :seller)
-        if user.managed_markets.empty?
-          m = create(:market, organization: o)
-          user.managed_markets << m
-        end
-        user.organizations << o
-      end
+      #after(:create) do |user|
+        #o = create(:organization, :seller)
+        #if user.managed_markets.empty?
+        #  m = create(:market, organization: o)
+        #  user.managed_markets << m
+        #end
+        #user.organizations << o
+      #end
     end
 
     trait :buyer do
       roles {[FactoryGirl.create(:role, :buyer)]}
-      after(:create) do |user|
-        o = create(:organization, :buyer)
-        if user.managed_markets.empty?
-          m = create(:market, organization: o)
-          user.managed_markets << m
-        end
-        user.organizations << o
-      end
+      #after(:create) do |user|
+        #o = create(:organization, :buyer)
+        #if user.managed_markets.empty?
+        #  m = create(:market, organization: o)
+        #  user.managed_markets << m
+        #end
+        #user.organizations << o
+      #end
     end
   end
 
