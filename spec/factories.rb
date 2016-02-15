@@ -588,7 +588,9 @@ FactoryGirl.define do
           m = create(:market, organization: o)
           user.managed_markets << m
         end
-        user.organizations << o
+        if user.organizations.empty?
+          user.organizations << o
+        end
       end
     end
 
@@ -597,7 +599,9 @@ FactoryGirl.define do
       roles {[FactoryGirl.create(:role, :admin)]}
       after(:create) do |user|
         o = create(:organization, :admin)
-        user.organizations << o
+        if user.organizations.empty?
+          user.organizations << o
+        end
       end
     end
 
@@ -606,7 +610,9 @@ FactoryGirl.define do
       after(:create) do |user|
         m = create(:market)
         o = create(:organization, :seller, markets: [m])
-        user.organizations << o
+        if user.organizations.empty?
+          user.organizations << o
+        end
       end
     end
 
@@ -615,7 +621,9 @@ FactoryGirl.define do
       after(:create) do |user|
         m = create :market
         o = create(:organization, :buyer, markets: [m])
-        user.organizations << o
+        if user.organizations.empty?
+          user.organizations << o
+        end
       end
     end
   end
