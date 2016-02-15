@@ -8,8 +8,8 @@ describe "Admin Managing Market Managers" do
   end
 
   describe "as a normal user" do
-    let!(:normal_user) { create(:user) }
-    let!(:org) { create(:organization, markets: [market], users: [normal_user]) }
+    let!(:org) { create(:organization, markets: [market]) }
+    let!(:normal_user) { create(:user, organizations: [org]) }
 
     it "I can not manage market managers" do
       sign_in_as normal_user
