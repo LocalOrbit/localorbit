@@ -2,7 +2,7 @@ require "spec_helper"
 
 describe "Register" do
   context "a new organization for a market" do
-    let!(:manager) { create(:user, :buyer) }
+    let!(:manager) { create(:user, :market_manager) }
 
     context "automatically activated" do
       let!(:market) { create(:market, managers: [manager], auto_activate_organizations: true) }

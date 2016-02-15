@@ -1,19 +1,21 @@
 require "spec_helper"
 
 describe "Viewing products" do
-  let!(:market) { create(:market) }
-  let!(:market2) { create(:market) }
+  let!(:market_org)   { create(:organization, :market)}
+  let!(:market)       { create(:market, organization: market_org) }
+  let!(:market_org2)  { create(:organization, :market)}
+  let!(:market2)      { create(:market, organization: market_org2) }
 
-  let!(:org1) { create(:organization, :seller, name: "County Park", markets: [market]) }
-  let!(:org2) { create(:organization, :seller, markets: [market]) }
+  let!(:org1)         { create(:organization, :seller, name: "County Park", markets: [market]) }
+  let!(:org2)         { create(:organization, :seller, markets: [market]) }
 
   let!(:apples)       { create(:product, organization: org1, name: "Apples") }
   let!(:apples_price) { create(:price, product: apples, sale_price: 10.00, min_quantity: 1) }
   let!(:apples_lot)   { create(:lot, product: apples, quantity: 10) }
 
-  let!(:bananas)       { create(:product, organization: org1, name: "Bananas") }
-  let!(:bananas_price) { create(:price, product: bananas, sale_price: 1.00, min_quantity: 1) }
-  let!(:bananas_lot)   { create(:lot, product: bananas, quantity: 100) }
+  let!(:bananas)      { create(:product, organization: org1, name: "Bananas") }
+  let!(:bananas_price){ create(:price, product: bananas, sale_price: 1.00, min_quantity: 1) }
+  let!(:bananas_lot)  { create(:lot, product: bananas, quantity: 100) }
 
   let!(:grapes)       { create(:product, organization: org1, name: "Grapes", unit: create(:unit, singular: "Tube", plural: "Tubes")) }
   let!(:grapes_price) { create(:price, product: grapes, sale_price: 5.00, min_quantity: 1) }

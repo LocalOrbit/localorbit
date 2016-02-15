@@ -2,20 +2,20 @@ require "spec_helper"
 
 describe "Editing advanced pricing", js: true do
   let!(:market)       { create(:market) }
-  let!(:organization) { create(:organization, markets: [market]) }
+  let!(:organization) { create(:organization, :seller, markets: [market]) }
   let!(:user)         { create(:user, :supplier, organizations: [organization]) }
   let!(:product)      { create(:product, organization: organization) }
   let!(:price)        { create(:price, product: product, sale_price: 3) }
   let!(:price2)       { create(:price, product: product, sale_price: 2, min_quantity: 100) }
 
   before do
+    user.managed_markets << market
     switch_to_subdomain(market.subdomain)
     sign_in_as(user)
     #within "#admin-nav" do
 
       click_link "Products"
     #end
-    save_and_open_page
     click_link product.name
     click_link "Pricing"
   end
@@ -204,12 +204,12 @@ describe "price estimator", js: true do
   let!(:market2) {create(:market, local_orbit_seller_fee:5,market_seller_fee:10,allow_cross_sell:true)}
 
   let!(:org_cross_sell) {
-    org = create(:organization, markets:[market1])
+    org = create(:organization, :seller, markets:[market1])
     org.update_cross_sells!(from_market:market1,to_ids:[market2.id])
     org
   }
   let!(:user) { create(:user, :supplier, organizations: [org_cross_sell]) }
-  let!(:product1) {create(:product,organization:org_cross_sell) }
+  let!(:product1) {create(:product, organization:org_cross_sell) }
 
   before do
     switch_to_subdomain(market1.subdomain)
