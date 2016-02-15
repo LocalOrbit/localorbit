@@ -3,7 +3,7 @@ require "spec_helper"
 feature "Removing a credit card from a market" do
   let!(:market)          { create(:market) }
   let!(:market_manager)  { create(:user, :market_manager, managed_markets: [market]) }
-  let!(:non_member)      { create(:user) }
+  let!(:non_member)      { create(:user, :market_manager) }
 
   let!(:account)         { create(:bank_account, :credit_card, name: "Org Bank Account", bankable: market) }
 
