@@ -1,15 +1,15 @@
 require "spec_helper"
 
-describe "admin manange organization", :vcr do
+describe "admin manange organization" do
   let(:user) { create(:user, :admin) }
 
-  it "create new organization with multiple markets available", js: true do
+  it "create new organization with multiple markets available", :js do
     market1 = create(:market, name: "Market 1", default_allow_purchase_orders: true, default_allow_credit_cards: true)
     market2 = create(:market, name: "Market 2", allow_purchase_orders: false, default_allow_purchase_orders: false, default_allow_credit_cards: true)
 
     switch_to_subdomain(market1.subdomain)
     sign_in_as(user)
-    visit "/admin/organizations"
+    visit new_admin_organization_path
     click_link "Add Organization"
 
     check "Can sell products"
@@ -50,56 +50,7 @@ describe "admin manange organization", :vcr do
     expect(find_field("Organization is active")).not_to be_checked
   end
 
-  it "create new organization with multiple markets available (Balanced)", js: true do
-    market1 = create(:market, name: "Market 1", payment_provider: 'balanced', default_allow_purchase_orders: true, default_allow_credit_cards: true, default_allow_ach: true)
-    market2 = create(:market, name: "Market 2", payment_provider: 'balanced', allow_purchase_orders: false, default_allow_purchase_orders: false, default_allow_credit_cards: true, default_allow_ach: false)
-
-    switch_to_subdomain(market1.subdomain)
-    sign_in_as(user)
-    visit "/admin/organizations"
-    click_link "Add Organization"
-
-    check "Can sell products"
-    expect(page).to have_content("Who")
-    expect(page).to have_content("How")
-
-    expect(page).to have_content("Select a market to see payment options")
-
-    select "Market 1", from: "Market"
-
-    expect(find_field("Allow purchase orders")).to be_checked
-    expect(find_field("Allow credit cards")).to be_checked
-    expect(find_field("Allow ACH")).to be_checked
-
-    select "Market 2", from: "Market"
-
-    check "Can sell products"
-    expect(page).to have_content("Who")
-    expect(page).to have_content("How")
-
-    fill_in "Name", with: "University of Michigan Farmers"
-    fill_in "Who",  with: "Who Story"
-    fill_in "How",  with: "How Story"
-
-    fill_in "Address Label", with: "Warehouse 1"
-    fill_in "Address", with: "1021 Burton St."
-    fill_in "City", with: "Orleans Twp."
-    select "Michigan", from: "State"
-    fill_in "Postal Code", with: "49883"
-    fill_in "Phone", with: "616-555-9983"
-    fill_in "Fax", with: "616-555-9984"
-
-    expect(page).to_not have_field("Allow purchase orders")
-    expect(find_field("Allow credit cards")).to be_checked
-    expect(find_field("Allow ACH")).to_not be_checked
-
-    click_button "Add Organization"
-
-    expect(page).to have_content("University of Michigan Farmers has been created")
-    expect(find_field("Organization is active")).not_to be_checked
-  end
-
-  it "should not see payment types that are disabled for the market", js: true do
+  it "should not see payment types that are disabled for the market", :js do
     market = create(:market, name: "Market 1", allow_purchase_orders: false, allow_credit_cards: true)
 
     switch_to_subdomain(market.subdomain)
@@ -113,23 +64,6 @@ describe "admin manange organization", :vcr do
 
     expect(page).to_not have_field("Allow purchase orders")
     expect(page).to have_field("Allow credit cards")
-  end
-
-  it "should not see payment types that are disabled for the market (Balanced)", js: true do
-    market = create(:market, name: "Market 1", payment_provider: 'balanced', allow_purchase_orders: false, allow_credit_cards: true, allow_ach: true)
-
-    switch_to_subdomain(market.subdomain)
-    sign_in_as(user)
-    visit "/admin/organizations"
-    click_link "Add Organization"
-
-    check "Can sell products"
-    expect(page).to have_content("Who")
-    expect(page).to have_content("How")
-
-    expect(page).to_not have_field("Allow purchase orders")
-    expect(page).to have_field("Allow credit cards")
-    expect(page).to have_field("Allow ACH")
   end
 
   it "create new organization", js: true do

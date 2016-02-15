@@ -15,7 +15,6 @@ describe "Adding a product", chosen_js: true do
     end
   end
 
-  let!(:user)                  { create(:user, :supplier) }
   let!(:market)                { create(:market, :with_addresses) }
   let!(:aggregation_point)     { create(:market_address, market: market, name: "Aggregation Point", address: "1123 Grand Rd.", city: "Appleton", state: "WI", zip: "83992") }
   let!(:org)                   { create(:organization, :seller, :single_location, markets: [market], who_story: "We sell products", how_story: "We sell products very carefully") }
@@ -23,6 +22,7 @@ describe "Adding a product", chosen_js: true do
   let(:stub_warning_inventory) { "will not appear in the shop until you add Inventory" }
   let(:stub_warning_both)      { "will not appear in the shop until you add Inventory and add Pricing" }
   let(:organization_label)     { "Product Organization" }
+  let!(:user)                  { create(:user, :supplier, organizations: [org]) }
 
   let!(:inactive_seller) { create(:organization, :seller, markets: [market], active: false) }
 
@@ -80,14 +80,14 @@ describe "Adding a product", chosen_js: true do
   end
 
   it "navigating to form as an admin user", js: true do
-    user.update_attribute(:role, "admin")
+    user.roles << create(:role, :admin)
 
     sign_in_as(user)
 
-    within "#admin-nav" do
+    #within "#admin-nav" do
 
       click_link "Products"
-    end
+    #end
     click_link "Add New Product"
 
     expect(page).to have_field("Product Name")
