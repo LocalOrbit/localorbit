@@ -35,7 +35,7 @@
 
     change_price = (modifier) ->
       # Initialize
-      price_box = $('#post_price')
+      price_box = $('#details_price')
       new_price = 0
       original_price = price_box.val()
       # Enable the price box...
@@ -79,20 +79,19 @@
       target_anchor = $('a[href^="#' + form_section_id + '"]')
       target_li = target_anchor.closest('li')
       form_section.find('input').each (index) ->
-        # # KXM This could (should) be a method call for validation of some kind.  For now it confirms that *something* has been entered
+        # KXM Everything from here to the end of the method should be abstracted to a validation class.
         if $(this).val() == '' or $(this).val() == null
           pass = false
         if $(this).prop('type') == 'checkbox' and !$(this).is(':checked')
           pass = false
         return
-      # # KXM Confirm what constitutes a test here and abstract to a validation class
       if pass == true
         target_li.addClass 'pass'
       else
         target_li.removeClass 'pass'
       return
 
-    # Make tabs IDed ul be, you know, TABS...
+    # Make tabs-IDed ul be, you know, TABS...
     $('#tabs').tabs()
 
     # The presence of JavaScript means that the form is tabbed.  Show the form navigation
@@ -116,7 +115,7 @@
       return
 
     # Bind the plan dropdown to an AJAX call to Stripe for plan data
-    $('#post_plan').change ->
+    $('#details_plan').change ->
       # Initialize
       plan_id = $(this).val()
       target = '/roll_your_own_market/get_stripe_plans'
@@ -124,7 +123,7 @@
       retrieved_plan.success (response) ->
         change_price response
         $('#apply_discount').prop 'disabled', false
-        $('#post_coupon').prop 'readonly', false
+        $('#details_coupon').prop 'readonly', false
         return
       retrieved_plan.fail (response) ->
         alert 'There was an error processing the selection'
@@ -138,7 +137,7 @@
       # Disable the button
       $(this).prop 'disabled', true
       # get the submitted discount code
-      discount_box = $('#post_coupon')
+      discount_box = $('#details_coupon')
       coupon = discount_box.val()
       # If the submitted code isn't empty then...
       if coupon != ''

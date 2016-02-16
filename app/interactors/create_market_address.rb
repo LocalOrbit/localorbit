@@ -6,4 +6,8 @@ class CreateMarketAddress
     context[:billing_address] = address
     context.fail! if address.errors.any?
   end
+
+  def rollback
+  	context[:billing_address].destroy
+  end
 end

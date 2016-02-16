@@ -1,7 +1,48 @@
 class CreateMarket
   include Interactor
-  
-# {"utf8"=>"✓", "authenticity_token"=>"S/X6xzq2q9UpL9OHvH9kopt8Uv5HMyUjeEAgECi2mEY=", "market"=>{"name"=>"Daves Market", "subdomain"=>"davesmarket", "tagline"=>"The world's best tagline", "timezone"=>"Eastern Time (US & Canada)", "contact_name"=>"Dave Crosby", "contact_email"=>"c+market@atomicobject.com", "contact_phone"=>"616 821 9214", "facebook"=>"davesmarket", "twitter"=>"davesmarket", "profile"=>"The profile of Daves Market", "policies"=>"The policies of Daves Market", "closed"=>"0", "auto_activate_organizations"=>"1", "store_closed_note"=>"We am closed sry.", "allow_cross_sell"=>"0", "sellers_edit_orders"=>"0", "allow_purchase_orders"=>"1", "allow_credit_cards"=>"1", "allow_ach"=>"1", "default_allow_purchase_orders"=>"0", "default_allow_credit_cards"=>"1", "default_allow_ach"=>"1"}, "commit"=>"Add Market"}
+
+  def perform
+    defaults = {
+      payment_provider: PaymentProvider.for_new_markets.id
+    }
+    market = Market.create(defaults.merge(market_params))
+    context[:market] = market
+    context.fail! if market.errors.any?
+  end
+
+  def rollback
+    context[:market].destroy
+  end
+
+# post data  
+# {
+    # "utf8"=>"✓", 
+    # "authenticity_token"=>"S/X6xzq2q9UpL9OHvH9kopt8Uv5HMyUjeEAgECi2mEY=", 
+    # "market"=>{
+    #     "name"=>"Daves Market", 
+    #     "subdomain"=>"davesmarket", 
+    #     "tagline"=>"The world's best tagline", 
+    #     "timezone"=>"Eastern Time (US & Canada)", 
+    #     "contact_name"=>"Dave Crosby", 
+    #     "contact_email"=>"c+market@atomicobject.com", 
+    #     "contact_phone"=>"616 821 9214", 
+    #     "facebook"=>"davesmarket", 
+    #     "twitter"=>"davesmarket", 
+    #     "profile"=>"The profile of Daves Market", 
+    #     "policies"=>"The policies of Daves Market", 
+    #     "closed"=>"0", 
+    #     "auto_activate_organizations"=>"1", 
+    #     "store_closed_note"=>"We am closed sry.", 
+    #     "allow_cross_sell"=>"0", 
+    #     "sellers_edit_orders"=>"0", 
+    #     "allow_purchase_orders"=>"1", 
+    #     "allow_credit_cards"=>"1", 
+    #     "allow_ach"=>"1", 
+    #     "default_allow_purchase_orders"=>"0", 
+    #     "default_allow_credit_cards"=>"1", 
+    #     "default_allow_ach"=>"1"}, 
+    #     "commit"=>"Add Market"
+    # }
 
     # columns = [
     #   :name,
@@ -35,13 +76,4 @@ class CreateMarket
     #   ])
     # end
     # params.require(:market).permit(columns)
-
-  def perform
-    defaults = {
-      payment_provider: PaymentProvider.for_new_markets.id
-    }
-    market = Market.create(defaults.merge(market_params))
-    context[:market] = market
-    context.fail! if market.errors.any?
-  end
 end

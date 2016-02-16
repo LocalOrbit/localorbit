@@ -3,27 +3,21 @@ class CreateStripeSubscriptionForEntity
 
   def perform
     # Initialize
-    found_flag = false
-    local_customer = context[:stripe_customer]
     subscription_params = context[:subscription_params]
-
     entity = context[:entity]
-
-    customer = Stripe::Customer.retrieve(local_customer.id)
-    customer.source = market_params[:stripe_card_token]
-    customer.save
+    customer = Stripe::Customer.retrieve(context[:stripe_customer].id)
 
     # If the customer has any subscriptions...
     if customer.subscriptions.data.any?
-      # ...cycle through the subscriptions
+      # ...cycle through them
       customer.subscriptions.data.each do |sub|
         # If any match the current data...
         if sub.plan.id = subscription_params[:plan]
           # ...then update the subscription...
           subscription        = customer.subscriptions.retrieve(sub.id)
           subscription.plan   = subscription_params[:plan]
-          subscription.coupon = subscription_params[:coupon]
-          subscription.source = subscription_params[:source]
+          subscription.source = subscription_params[:stripe_card_token]
+          subscription.coupon = subscription_params[:coupon] if !subscription_params[:coupon].blank?
           subscription.save
 
         else
@@ -39,17 +33,24 @@ class CreateStripeSubscriptionForEntity
     end
 
     context[:subscription] = subscription
+  rescue => e
+    flash.alert = e.message
+    context.fail!
   end
 
   def stripe_subscription_info
-    {
+    ret_val = {
       plan: subscription_params[:plan],
-      coupon: subscription_params[:coupon],
-      source: subscription_params[:stripe_card_token],
+      source: market_params[:stripe_card_token],
+      # KXM Any other metadata needed here?
       metadata: {
         "lo.entity_id" => entity.id,
         "lo.entity_type" => entity.class.name.underscore
       }
     }
+    # Stripe complains if you pass an empty coupon.  Only add it if it exists 
+    ret_val.tap do |r|
+      r[:coupon] = subscription_params[:coupon] if !subscription_params[:coupon].blank?
+    end
   end
 end

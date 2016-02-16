@@ -11,14 +11,14 @@ class RollYourOwnMarketsController < ApplicationController
 	@_coupon = {}
 
 	def get_stripe_plans
-		# Set secret key
+		# Set secret key (done once here to avoid having one each for the branches below)
     Stripe.api_key = Rails.configuration.stripe[:secret_key]
 
     requested_plan = params[:plan]
 
   	# If no plan is sent...
     if(requested_plan == nil)
-    	# ...then return the cached plan list...
+    	# ...then return the cached plans...
     	@_plans ||= 
 	    begin
     		# ...or get them from Stripe
@@ -46,19 +46,19 @@ class RollYourOwnMarketsController < ApplicationController
 			  render :status => e.http_status, :text => err[:message]
 	    end
     end
-	  #render :status => 500, :text => "There was a problem retrieving results"
 	end
 
 	def get_stripe_coupon
+		# Return the cached coupon...
 		@_coupon ||= 
 		begin
-			# Set secret key
+  		# ...or get it from Stripe
 	    Stripe.api_key = Rails.configuration.stripe[:secret_key]
-
 	    @_coupon = Stripe::Coupon.retrieve(params[:coupon])
 			render json: @_coupon
 			
 		rescue Exception => e
+    	# Pass on any errors
 			err = e.json_body[:error]
 		  render :status => e.http_status, :text => err[:message]
     end

@@ -269,6 +269,27 @@
 
 		<div id="et-main-area">
 			<div id="main-content">
+
+		    <%# KXM This message reporting block is ripe for consolidation %>
+		    <% if flash[:error].present? %>
+		      <div id="error_explanation">
+		        <p><%= flash[:error] %></p>
+		      </div>
+		    <% end %>
+		    
+		    <div id="flash-messages">
+		      <% if notice %>
+		        <div class="flash flash--notice"><p><%= notice %></p></div>
+		      <% end %>
+
+		      <% if alert.present? %>
+		        <div class="flash flash--alert"><p><%= alert %></div>
+		      <% end %>
+		    </div>
+
+		    <%# KXM I don't know that this is needed at all... %>
+		    <%#= render 'shared/errors', resource: @market %>
+
 				<article class="page type-page status-publish hentry">
 
           <%# === Content rendered here === %> 

@@ -1,5 +1,3 @@
-    <%= render 'shared/errors', resource: @market %>
-
     <!-- Preset market values --> 
     <%= f.hidden_field :plan_id %>
     <%= f.hidden_field :pending %>
@@ -19,14 +17,14 @@
         <fieldset id="fields-contact-info">
           <h2>Contact Information</h2>
           <div class="field">
-            <%= f.text_field :contact_name, class: "column--full", placeholder: 'Contact Name', value: "Stu DeBaker" %>
+            <%= f.text_field :contact_name, class: "column--full", placeholder: 'Contact Name' %>
           </div>
           <div class="row row--field">
             <div class="field column column--half column--guttered">
-              <%= f.email_field :contact_email, class: "column--full", placeholder: 'Email', value: "stud@example.com" %>
+              <%= f.email_field :contact_email, class: "column--full", placeholder: 'Email' %>
             </div
             ><div class="field column column--half column--guttered">
-              <%= f.text_field :contact_phone, size: 18, class: "column--full", placeholder: 'Phone', value: "313-454-1023" %>
+              <%= f.text_field :contact_phone, size: 18, class: "column--full", placeholder: 'Phone' %>
             </div>
           </div>
 
@@ -35,13 +33,13 @@
             <div class="field column column--half column--guttered">
               <span class="help-text">This is the primary name of your market.<br />Don't forget to double check your spelling.</span>
               <br>
-              <%= f.text_field :name, class: "column--full", placeholder: 'Market Name', value: "Bread by DeBaker" %>
+              <%= f.text_field :name, class: "column--full", placeholder: 'Market Name' %>
             </div
             ><div class="field column column--half column--guttered">
               <span class="help-text">This will be your site's web address<br />ex. yourbusiness.localorbit.com</span>
               <span class="tooltip pull-right" data-tooltip="Your site URL must be all lower case, with no spaces or special characters">&nbsp;</span>
               <br>
-              <%= f.text_field :subdomain, class: "column--full", placeholder: 'Subdomain', value: "debaker" %>
+              <%= f.text_field :subdomain, class: "column--full", placeholder: 'Subdomain' %>
             </div>
           </div>
         </fieldset>
@@ -172,25 +170,25 @@
           <h2>Billing</h2>
           <div class="row">
             <div class="field column column--half column--guttered">
-              <%= text_field(:billing, :address, placeholder: 'Address', class: "column--full", value: "123 Main Street") %>
+              <%= text_field(:billing, :address, placeholder: 'Address', class: "column--full") %>
             </div
             ><div class="field column column--half column--guttered">
-              <%= text_field(:billing, :city, placeholder: 'City', class: "column--full", value: "Grass Lake") %>
+              <%= text_field(:billing, :city, placeholder: 'City', class: "column--full") %>
             </div>
           </div>
 
           <div class="row row--field">
             <div class="field column column--half column--guttered">
-              <%= text_field(:billing, :state, placeholder: 'State', class: "column--full", value: "MI") %>
+              <%= text_field(:billing, :state, placeholder: 'State', class: "column--full") %>
             </div
             ><div class="field column column--half column--guttered">
-              <%= text_field(:billing, :zip, placeholder: 'Zip', class: "column--full", value: "49240") %> 
+              <%= text_field(:billing, :zip, placeholder: 'Zip', class: "column--full") %> 
             </div>
           </div>
 
           <div class="row row--field">
             <div class="field column column--half column--guttered">
-              <%= text_field(:billing, :phone, placeholder: 'Phone', value: "313-454-1023") %> 
+              <%= text_field(:billing, :phone, placeholder: 'Phone') %> 
             </div>
           </div>
         </fieldset>
@@ -207,16 +205,16 @@
           <h2>Review Plan Selection</h2>
           <div class="row">
             <div class="field column column--third column--guttered">
-              <%= select(:post, :plan, @plan_data.each.map {|plan| [plan[:name], plan[:id]] }, {selected: @stripe_plan.try(:id) }, { class: "column--full" } ) %><br />
+              <%= select(:details, :plan, @plan_data.each.map {|plan| [plan[:name], plan[:id]] }, {selected: @stripe_plan.try(:id) }, { class: "column--full" } ) %><br />
               <span class="help-text">You will be billed annually for your<br />Local Orbit Service Plan</span>
               <%# KXM This remains for its potential: <span class="help-text">You will be billed <%= number_to_currency(@stripe_plan.amount/100) % > every <%= pluralize(@stripe_plan.interval_count, @stripe_plan.interval) % > for your<br />Local Orbit Service Plan</span> %>
             </div
             ><div class="field column column--third">
-              <%= text_field(:post, :price, placeholder: 'Price', class: "column--full", disabled: "disabled", value: @stripe_plan.try(:amount)/100) %><br />
+              <%= text_field(:details, :price, placeholder: 'Price', class: "column--full", disabled: "disabled", name: nil, value: @stripe_plan.try(:amount)/100) %><br />
               <span id='progress-span'><%= image_tag asset_path('progressbar.gif'), class: 'is-hidden', id: 'progress-bar' %></span>
             </div
             ><div class="field column column--third column--guttered">
-              <%= text_field(:post, :coupon, placeholder: 'Discount Code', class: "column--full") %>
+              <%= text_field(:details, :coupon, placeholder: 'Discount Code', class: "column--full") %>
               <button id="apply_discount" class="pull-right form-action">Apply Discount</button>
             </div>
           </div>
@@ -228,25 +226,25 @@
             <div class="row row--field">
               <div class="field column column--half column--guttered">
                 <span>&nbsp;</span><br />
-                <%= text_field_tag(:card_name, nil, placeholder: 'Name', class: "column--full", name: nil, value: "John Doe") %>
+                <%= text_field_tag(:card_name, nil, placeholder: 'Name', class: "column--full", name: nil) %>
               </div
               ><div class="field column column--half column--guttered">
                 <span>&nbsp;</span><span class="tooltip pull-right" data-tooltip="We offer no-questions-asked refunds to all customers within 30 days of your purchase. If you are not satisfied with our product, then simply send us an email and we will refund your purchase right away. The refunded amount will include the annual service fees, minus any payment processing fees, (If you process any actual, rather than test, transactions).">&nbsp;</span>
-                <%= text_field_tag(:card_number, nil, placeholder: 'Credit Card #', class: "column--full", name: nil, value: "4242424242424242") %> 
+                <%= text_field_tag(:card_number, nil, placeholder: 'Credit Card #', class: "column--full", name: nil) %> 
               </div>
             </div>
 
             <div class="row row--field">
               <div class="field column column--half column--guttered">
                 <div class="column column--half column--guttered">
-                  <%= text_field_tag(:expiration_month, nil, placeholder: 'Month', class: "column--full", name: nil, value: "10") %> 
+                  <%= text_field_tag(:expiration_month, nil, placeholder: 'Month', class: "column--full", name: nil) %> 
                 </div
                 ><div class="column column--half column--guttered">
-                  <%= text_field_tag(:expiration_year, nil, placeholder: 'Year', class: "column--full", name: nil, value: "2018") %> 
+                  <%= text_field_tag(:expiration_year, nil, placeholder: 'Year', class: "column--full", name: nil) %> 
                 </div>
               </div
               ><div class="field column column--half column--guttered">
-                <%= text_field_tag(:security_code, nil, placeholder: 'Security Code', class: "column--full", name: nil, value: "123") %>
+                <%= text_field_tag(:security_code, nil, placeholder: 'Security Code', class: "column--full", name: nil) %>
               </div>
             </div>
           <% end %>
