@@ -583,13 +583,13 @@ FactoryGirl.define do
       roles {[FactoryGirl.create(:role, :market_manager)]}
 
       after(:create) do |user|
-        o = create(:organization, :market)
         if user.managed_markets.empty?
+          user.organizations << o
           m = create(:market, organization: o)
           user.managed_markets << m
         end
         if user.organizations.empty?
-          user.organizations << o
+          o = create(:organization, :market)
         end
       end
     end
@@ -598,8 +598,8 @@ FactoryGirl.define do
       #role "admin"
       roles {[FactoryGirl.create(:role, :admin)]}
       after(:create) do |user|
-        o = create(:organization, :admin)
         if user.organizations.empty?
+          o = create(:organization, :admin)
           user.organizations << o
         end
       end
@@ -608,9 +608,9 @@ FactoryGirl.define do
     trait :supplier do
       roles {[FactoryGirl.create(:role, :supplier)]}
       after(:create) do |user|
-        m = create(:market)
-        o = create(:organization, :seller, markets: [m])
+        #m = create(:market)
         if user.organizations.empty?
+          o = create(:organization, :seller)
           user.organizations << o
         end
       end
@@ -619,9 +619,9 @@ FactoryGirl.define do
     trait :buyer do
       roles {[FactoryGirl.create(:role, :buyer)]}
       after(:create) do |user|
-        m = create :market
-        o = create(:organization, :buyer, markets: [m])
+        #m = create :market
         if user.organizations.empty?
+          o = create(:organization, :buyer)
           user.organizations << o
         end
       end
