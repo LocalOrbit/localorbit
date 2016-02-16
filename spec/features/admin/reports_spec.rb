@@ -147,7 +147,7 @@ feature "Reports" do
     end
 
     context "as any user" do
-      let!(:user)   { create(:user, :market_manager, managed_markets: [market,market2,market3]) }
+      let!(:user)   { create(:user, :market_manager, managed_markets: [market,market2]) }
       let!(:report) { :total_sales }
 
       scenario "date range defaults to last 30 days and can filter results" do
@@ -660,7 +660,7 @@ feature "Reports" do
       end
 
       context "with purchases" do
-        let!(:order)     { create(:order, :with_items, organization: seller2) }
+        let!(:order)     { create(:order, :with_items, market: market2, organization: seller2) }
 
         before do
           visit_report_view
@@ -750,7 +750,7 @@ feature "Reports" do
     end
 
     context "as a Buyer" do
-      let!(:user) { create(:user, :buyer, organizations: [buyer]) }
+      let!(:user) { create(:user, :buyer, managed_markets: [market], organizations: [buyer]) }
 
       scenario "does not show a product code" do
         expect(page).to_not have_content("product-code-1")

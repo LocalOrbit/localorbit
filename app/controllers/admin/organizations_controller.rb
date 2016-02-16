@@ -47,7 +47,7 @@ module Admin
     end
 
     def update
-      if @organization.can_sell && !params[:can_sell]
+      if @organization.can_sell && organization_params[:can_sell]=="0" && (current_user.admin? || current_user.market_manager?)
         disable_supplier_inventory
       end
 
