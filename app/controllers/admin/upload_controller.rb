@@ -1,6 +1,7 @@
 class Admin::UploadController < AdminController
 	require 'rubyXL'
   require 'open3'
+  include API::V2 # hm
 
   def index
     @plan = current_market.plan.name # check if LocalEyes plan on market
@@ -15,11 +16,15 @@ class Admin::UploadController < AdminController
   end
 
 
-def upload
-  if params.has_key?(:datafile)
-    binding.pry
+  def upload
+    if params.has_key?(:datafile)
+      # pass the datafile to the method with the csv file
+      #sp = API::V2::SerializeProducts.new
+      jsn = API::V2::SerializeProducts.get_json_data(params[:datafile])
+      # problem here is that the method opens a file that's already open -- deal with in SerializeProducts
+      binding.pry 
+    end
   end
-end
 
   
 # def upload
@@ -56,7 +61,10 @@ end
     render(:layout => false)
   end
 
+  # todo will need a new get_output function that handles the errors stuff
+  # and things
 
+  
   def get_output(cli_call_result, products_loaded)
     #if params.has_key?(:datafile) # this is now handled elsewhere
   	@error_display = [] # initial
