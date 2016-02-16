@@ -288,7 +288,7 @@
             <% elsif current_user.seller? %>
               <td class="discount"><%= number_to_currency order.discount_seller %></td>
             <% end %>
-            <td class="market-fees"><%= number_to_currency order.market_fees %></td>
+            <td class="market-fees"><%= number_to_currency order.market_fees %><% binding.pry %></td>
             <td class="transaction-fees"><%= number_to_currency order.transaction_fees %></td>
             <td class="payment-processing"><%= number_to_currency order.payment_fees %></td>
             <td class="net-sale"><%= number_to_currency order.net_total %></td>
