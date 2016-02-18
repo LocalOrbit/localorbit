@@ -44,7 +44,8 @@ module Admin
         @order_item.unit_price = params[:order_item][:unit_price]
         sof = StoreOrderFees.new
         sof.update_accounting_fees_for(@order_item)
-  
+        # TODO: is this the only specific update that's needed?
+        # There may be a more general/prettier way to do this, updating the order totals overall.
         @order_item.save!
         @order.save!
       end

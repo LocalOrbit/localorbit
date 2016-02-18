@@ -186,8 +186,8 @@
               -
             <% end %>
           </td>
-          <td class="price"><%= number_to_currency item.object.unit_price %><br> <% if FeatureAccess.can_edit_order?(user: current_user, order: order) %>
-            <span> <%= link_to "EDIT", "/admin/orders/#{order.id}/order_items/#{item.object.id}" %></span> 
+          <td class="price"> <% if FeatureAccess.can_edit_order?(user: current_user, order: order) %>
+           <%= link_to "#{number_to_currency item.object.unit_price}", "/admin/orders/#{order.id}/order_items/#{item.object.id}" %><% else %> number_to_currency item.object.unit_price 
             <% end %>
           </td>
           <td class="total"><%= number_to_currency item.object.gross_total %></td>
