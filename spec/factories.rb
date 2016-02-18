@@ -584,12 +584,12 @@ FactoryGirl.define do
 
       after(:create) do |user|
         if user.managed_markets.empty?
-          user.organizations << o
-          m = create(:market, organization: o)
+          m = create(:market)
           user.managed_markets << m
         end
         if user.organizations.empty?
           o = create(:organization, :market)
+          user.organizations << o
         end
       end
     end

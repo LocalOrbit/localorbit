@@ -40,7 +40,8 @@ class Admin::MarketsController < AdminController
       redirect_to [:admin, results.market]
     else
       flash.now.alert = "Could not create market"
-      @market = results.market
+      @market = Market.new(payment_provider: PaymentProvider.for_new_markets.id)
+      #@market = results.market
       render :new
     end
   end

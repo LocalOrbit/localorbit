@@ -113,4 +113,8 @@ class MarketDecorator < Draper::Decorator
       [bank_account.display_name, bank_account.id]
     end.compact
   end
+
+  def plan_id
+    organization.plan_id
+  end
 end

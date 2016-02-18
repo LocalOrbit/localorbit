@@ -116,7 +116,7 @@ feature "Viewing orders" do
   end
 
   context "as a market_manager" do
-    let!(:user) { create(:user, :market_manager, managed_markets: [market1, market2]) }
+    let!(:user) { create(:user, :market_manager, organizations: [market1_seller_org1, market1_seller_org2, market1_buyer_org1, market1_buyer_org2, market2_seller_org1, market2_seller_org2, market2_buyer_org], managed_markets: [market1, market2]) }
 
     before do
       switch_to_subdomain(market1.subdomain)

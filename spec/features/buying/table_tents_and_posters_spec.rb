@@ -2,13 +2,12 @@ require "spec_helper"
 
 feature "Downloading table tents or posters", js:true do
   let(:user) {create :user, :buyer}
-  let(:organization) {user.organizations.first}
-  let(:market_org) { create(:organization, :market)}
-  let(:market) {user.markets.first}
+  let(:organization) {create :organization, :buyer}
+  let(:market) {create :market, organizations: [organization]}
   let(:order) {create :order, :with_items, organization: organization, market: market}
 
   before do
-    market.organization = market_org
+    user.organizations << organization
     switch_to_subdomain(market.subdomain)
     sign_in_as(user)
   end
