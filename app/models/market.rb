@@ -219,6 +219,21 @@ class Market < ActiveRecord::Base
     MarketCrossSells.where(source_market_id: id).destroy_all
   end
 
+  # Called as the last in a scope chain
+  def self.sort_service_payment
+    all.sort do |a,b|
+      if a.organization.next_service_payment_at && b.organization.next_service_payment_at
+        a.organization.next_service_payment_at <=> b.organization.next_service_payment_at
+      elsif a.organization.next_service_payment_at.nil? && b.organization.next_service_payment_at.nil?
+        a.name.downcase <=> b.name.downcase
+      elsif a.organization.next_service_payment_at.nil?
+        -1 # Means order is wrong
+      else
+        1 # Means order is correct
+      end
+    end
+  end
+
   private
 
   def require_payment_method

@@ -79,17 +79,4 @@ class OrganizationDecorator < Draper::Decorator
     markets.any? {|m| m.organization.plan.advanced_pricing }
   end
 
-  def display_plan_interval
-    if plan_interval == 1
-      "Monthly"
-    elsif plan_interval == 12
-      "Yearly"
-    else
-      "Not Set"
-    end
-  end
-
-  def plan_payable?
-    plan_fee && plan_fee > 0 && plan_bank_account.try(:usable_for?, :debit)
-  end
 end
