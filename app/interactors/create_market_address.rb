@@ -8,6 +8,7 @@ class CreateMarketAddress
   end
 
   def rollback
+    address.destroy
   	context[:billing_address].destroy
   end
 end

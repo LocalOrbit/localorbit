@@ -67,7 +67,7 @@ class MarketsController < ApplicationController
 
   def market_params
     params.require(:market).permit(
-      :stripe_card_token,
+      :stripe_tok,
 			:contact_name,
 			:contact_email,
 			:contact_phone,
@@ -75,6 +75,7 @@ class MarketsController < ApplicationController
 			:subdomain,
       :pending,
       :plan,
+      :plan_id,
       :coupon
   	)
   end

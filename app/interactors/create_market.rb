@@ -11,6 +11,7 @@ class CreateMarket
   end
 
   def rollback
+    market.destroy
     context[:market].destroy
   end
 

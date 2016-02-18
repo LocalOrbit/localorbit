@@ -16,7 +16,7 @@ class CreateStripeSubscriptionForEntity
           # ...then update the subscription...
           subscription        = customer.subscriptions.retrieve(sub.id)
           subscription.plan   = subscription_params[:plan]
-          subscription.source = subscription_params[:stripe_card_token]
+          subscription.source = subscription_params[:stripe_tok]
           subscription.coupon = subscription_params[:coupon] if !subscription_params[:coupon].blank?
           subscription.save
 
@@ -41,7 +41,7 @@ class CreateStripeSubscriptionForEntity
   def stripe_subscription_info
     ret_val = {
       plan: subscription_params[:plan],
-      source: market_params[:stripe_card_token],
+      source: market_params[:stripe_tok],
       # KXM Any other metadata needed here?
       metadata: {
         "lo.entity_id" => entity.id,

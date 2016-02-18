@@ -25,7 +25,7 @@
       Stripe.createToken card, new_market.handleStripeResponse
     handleStripeResponse: (status, response) ->
       if status == 200
-        $('#market_stripe_card_token').val response.id
+        $('#market_stripe_tok').val response.id
         $('#new_market_registration')[0].submit()
       else
         alert 'Status: ' + status + '\nError message: ' + response.error.message
