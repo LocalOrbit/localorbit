@@ -134,7 +134,6 @@ class OrderHistoryActivityPresenter
   end
 
   def last_value_for_change(item, key)
-    # binding.pry
     Array(item.audited_changes[key]).last
   end
 
