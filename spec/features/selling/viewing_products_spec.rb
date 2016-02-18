@@ -1,10 +1,8 @@
 require "spec_helper"
 
 describe "Viewing products" do
-  let!(:market_org)   { create(:organization, :market)}
-  let!(:market)       { create(:market, organization: market_org) }
-  let!(:market_org2)  { create(:organization, :market)}
-  let!(:market2)      { create(:market, organization: market_org2) }
+  let!(:market)       { create(:market) }
+  let!(:market2)      { create(:market) }
 
   let!(:org1)         { create(:organization, :seller, name: "County Park", markets: [market]) }
   let!(:org2)         { create(:organization, :seller, markets: [market]) }
@@ -21,7 +19,7 @@ describe "Viewing products" do
   let!(:grapes_price) { create(:price, product: grapes, sale_price: 5.00, min_quantity: 1) }
   let!(:grapes_lot)   { create(:lot, product: grapes, quantity: 1) }
 
-  let!(:market_manager) { create(:user, :market_manager, managed_markets: [market, market2]) }
+  let!(:market_manager) { create(:user, :market_manager, organizations: [org1, org2], managed_markets: [market, market2]) }
 
   before do
     switch_to_subdomain(market.subdomain)

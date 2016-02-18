@@ -2,13 +2,12 @@ class CreateOrganization
   include Interactor
 
   def perform
-    if organization_params(:can_sell)
-      org_type = "S"
-    else
-      org_type = "B"
-    end
-
     if respond_to?(:market_id) && market_id.blank?
+      if organization_params(:can_sell)
+        org_type = "S"
+      else
+        org_type = "B"
+      end
       context[:organization] = Organization.new(organization_params.merge({:org_type => org_type}))
       organization.valid?
       organization.errors.add(:markets, :blank)

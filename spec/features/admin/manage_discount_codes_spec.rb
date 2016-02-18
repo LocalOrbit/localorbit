@@ -39,6 +39,10 @@ describe "Manage Discount Codes" do
       let!(:market_org)         { create(:organization, :market, plan: create(:plan, discount_codes: false))}
       let!(:market) { create(:market, organization: market_org) }
 
+      before do
+        user.roles[0].activities.slice("discount_code:index")
+      end
+
       it "does not see Discount Codes in the menu" do
         within "#admin-nav" do
           click_link "Marketing"

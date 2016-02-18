@@ -51,6 +51,7 @@ Rails.application.routes.draw do
       resources :delivery_schedules, path: :deliveries, concerns: [:activatable]
       resource  :style_chooser, controller: :style_chooser, only: [:show, :update]
       resource  :cross_sell, controller: :market_cross_sells, only: [:show, :update]
+      resource  :fees, only: [:show, :update]
       resources :deposit_accounts, only: [:index, :new, :create, :destroy]
       get :payment_options
     end
@@ -98,7 +99,6 @@ Rails.application.routes.draw do
     end
 
     resources :organizations, concerns: [:bank_account, :activatable] do
-      resource  :fees, only: [:show, :update]
       resources :organization_users, as: :users, path: :users do
         get :invite
       end

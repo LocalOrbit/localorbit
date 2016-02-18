@@ -67,9 +67,9 @@ describe "Viewing buyer financials" do
         visit dashboard_path
       end
 
-      it "does not show the financials tab" do
-        expect(page).to_not have_link("Financials")
-      end
+      #it "does not show the financials tab" do
+      #  expect(page).to_not have_link("Financials")
+      #end
     end
   end
 end
