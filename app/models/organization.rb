@@ -180,21 +180,6 @@ class Organization < ActiveRecord::Base
     Payment.successful.not_refunded.where(payer: self, payment_type: "service").order("created_at DESC").first.try(:created_at)
   end
 
-  # Called as the last in a scope chain
-  def self.sort_service_payment
-    all.sort do |a,b|
-      if a.next_service_payment_at && b.next_service_payment_at
-        a.next_service_payment_at <=> b.next_service_payment_at
-      elsif a.next_service_payment_at.nil? && b.next_service_payment_at.nil?
-        a.name.downcase <=> b.name.downcase
-      elsif a.next_service_payment_at.nil?
-        -1 # Means order is wrong
-      else
-        1 # Means order is correct
-      end
-    end
-  end
-
   private
 
   def reject_location(attributed)
