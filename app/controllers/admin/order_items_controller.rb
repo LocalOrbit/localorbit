@@ -42,6 +42,9 @@ module Admin
       @order = Order.find(params[:order_id])
       if params[:order_item][:unit_price]
         @order_item.unit_price = params[:order_item][:unit_price]
+        sof = StoreOrderFees.new
+        sof.update_accounting_fees_for(@order_item)
+  
         @order_item.save!
         @order.save!
       end
