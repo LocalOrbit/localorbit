@@ -47,6 +47,7 @@ module Admin
         # TODO: is this the only specific update that's needed?
         # There may be a more general/prettier way to do this, updating the order totals overall.
         @order_item.save!
+        @order.update_total_cost
         @order.save!
       end
       redirect_to admin_order_path(params[:order_id])
