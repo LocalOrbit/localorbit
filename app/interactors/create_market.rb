@@ -7,12 +7,16 @@ class CreateMarket
     }
     market = Market.create(defaults.merge(market_params))
     context[:market] = market
-    context.fail! if market.errors.any?
+
+    unless market.valid? && market.errors.empty?
+      context.fail!(error: "Could not create Market")
+    end
   end
 
   def rollback
-    market.destroy
-    context[:market].destroy
+    if context_market = context[:market]
+        context_market.destroy
+    end
   end
 
 # post data  

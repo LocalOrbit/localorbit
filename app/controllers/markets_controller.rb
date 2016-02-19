@@ -12,10 +12,7 @@ class MarketsController < ApplicationController
   def new
     # /roll_your_own_market/get_stripe_plans
     # KXM The Stripe calls here should probably be rolled into the RollYourOwnMarkets controller (the name of which should change), but how to make an API call to the local endpoint?  Google suggests the HTTParty gem, but I'm not crazy about rolling in that kind of heavy weight solution just to facilitate a minor code refactoring
-    Stripe.api_key ||= Rails.configuration.stripe[:secret_key]
-
-    #plans = Stripe::Plan.all
-    #@plan_data = plans.data
+    Stripe.api_key = Rails.configuration.stripe[:secret_key]
 
     @plan_data ||= Stripe::Plan.all.data
 
@@ -38,14 +35,16 @@ class MarketsController < ApplicationController
         :market_params => market_params, 
         :billing_params => billing_params, 
         :subscription_params => subscription_params,
+        :bank_account_params => bank_account_params,
+        :amount => subscription_params[:plan_price], # For 'create_service_payment' interactor
         :flash => flash})
 
     if results.success?
       @market = results.market
-      flash.notice = "Your new market request has will be processed shortly."
+      flash.notice = "Your request for a new Market will be processed shortly."
       redirect_to :action => 'success', :id => @market
     else
-      flash.alert = "Could not create market"
+      flash.alert = results.context[:error] || "Could not create market"
       @market = results.market
       redirect_to :action => 'new', :id => @market
     end
@@ -93,7 +92,14 @@ class MarketsController < ApplicationController
   def subscription_params
     params.require(:details).permit(
       :plan,
+      :plan_price,
       :coupon,
+    )
+  end
+
+  def bank_account_params
+    params.require(:market).permit(
+      :stripe_tok
     )
   end
 end

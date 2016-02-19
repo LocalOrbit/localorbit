@@ -34,7 +34,7 @@ class CreateStripeSubscriptionForEntity
 
     context[:subscription] = subscription
   rescue => e
-    flash.alert = e.message
+    flash.error = e.message
     context.fail!
   end
 

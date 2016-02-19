@@ -15,10 +15,8 @@ class CreateStripeCustomerForEntity
       context[:stripe_customer] = Stripe::Customer.retrieve(entity.stripe_customer_id)
     end
 
-    #binding.pry
   rescue => e
-    flash.alert = e.message
-    context.fail!
+    context.fail!(error: e.message)
   end
 
   def stripe_customer_info

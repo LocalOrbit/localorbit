@@ -35,7 +35,7 @@
 
     change_price = (modifier) ->
       # Initialize
-      price_box = $('#details_price')
+      price_box = $('#details_plan_price')
       new_price = 0
       original_price = price_box.val()
       # Enable the price box...

@@ -4,11 +4,15 @@ class CreateMarketAddress
     market = context[:market]
     address = MarketAddress.create(billing_params.merge(market_id: market.id, name: market.name, billing: true))
     context[:billing_address] = address
-    context.fail! if address.errors.any?
+
+    unless address.valid? && address.errors.empty?
+      context.fail!(error: "Could not create Market address")
+    end
   end
 
   def rollback
-    address.destroy
-  	context[:billing_address].destroy
+    if context_address = context[:billing_address]
+      context_address.destroy
+    end
   end
 end

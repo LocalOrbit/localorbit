@@ -210,7 +210,7 @@
               <%# KXM This remains for its potential: <span class="help-text">You will be billed <%= number_to_currency(@stripe_plan.amount/100) % > every <%= pluralize(@stripe_plan.interval_count, @stripe_plan.interval) % > for your<br />Local Orbit Service Plan</span> %>
             </div
             ><div class="field column column--third">
-              <%= text_field(:details, :price, placeholder: 'Price', class: "column--full", disabled: "disabled", name: nil, value: @stripe_plan.try(:amount)/100) %><br />
+              <%= text_field(:details, :plan_price, placeholder: 'Price', class: "column--full", readonly: "readonly", value: @stripe_plan.try(:amount)/100) %><br />
               <span id='progress-span'><%= image_tag asset_path('progressbar.gif'), class: 'is-hidden', id: 'progress-bar' %></span>
             </div
             ><div class="field column column--third column--guttered">

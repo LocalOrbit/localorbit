@@ -15,9 +15,6 @@
 	<meta charset="UTF-8" />
 	<title>New Market Creation - Local Orbit</title>
   
-  <%# KXM Required for resolution.js... Look into ways to selectively include js files... %>
-  <meta name="viewport" content="width=device-width, initial-scale = 1.0" id="viewport">
-  
   <link rel="pingback" href="http://localorbit.com/xmlrpc.php" />
 
   <!--[if lt IE 9]>
@@ -270,11 +267,8 @@
 		<div id="et-main-area">
 			<div id="main-content">
 
-		    <%# KXM This message reporting block is ripe for consolidation %>
 		    <% if flash[:error].present? %>
-		      <div id="error_explanation">
-		        <p><%= flash[:error] %></p>
-		      </div>
+		      <div id="error_explanation"><p><%= flash[:error] %></p></div>
 		    <% end %>
 		    
 		    <div id="flash-messages">
@@ -287,7 +281,7 @@
 		      <% end %>
 		    </div>
 
-		    <%# KXM I don't know that this is needed at all... %>
+		    <%# KXM Error reporting ambiguity - this seems related to an AJAX response... is it needed here? %>
 		    <%#= render 'shared/errors', resource: @market %>
 
 				<article class="page type-page status-publish hentry">
@@ -336,17 +330,7 @@
   <script>DEPLOY_ENV = '<%= Figaro.env.deploy_env %>';</script>
   <script>DEBUG = <%= Figaro.env.debug == 'ON' ? "true" : "false" %>;</script>
   <%= javascript_include_tag "application" %>
-  <!-- TODO: use payment provider constants -->
-  <% case @payment_provider %>
-  <% when 'balanced' %>
-  <%= javascript_include_tag 'balanced' %>
-  <% when 'stripe' %>
-  <script type="text/javascript" src="https://js.stripe.com/v2/"></script>
-  <%= javascript_include_tag 'stripe' %>
-  <% end %>
-  
-  <%# KXM Stripe scripts included manually because I don't yet know what to do with the PaymentProvider stuff... delete when refactored %>
-  <script type="text/javascript" src="https://js.stripe.com/v2/"></script>
-  <%= javascript_include_tag 'stripe' %>
+
+  <%= include_payment_provider_scripts(@market.payment_provider) %>
 </body>
 </html>

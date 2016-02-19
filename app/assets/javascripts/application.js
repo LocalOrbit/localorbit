@@ -47,3 +47,4 @@
 //
 //= require_tree .
 //= stub sticky-headers
+//= stub resolution
