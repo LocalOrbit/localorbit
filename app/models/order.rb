@@ -240,11 +240,21 @@ class Order < ActiveRecord::Base
     end
   end
 
+  # def self.filter_by_user_markets(user, orders)
+  #   result = []
+  #   orders.each do |o|
+  #     if user.markets.include?(o.market)
+  #       result << o
+  #     end
+  #   end
+  #   result
+  # end
+
   def self.orders_for_buyer(user)
     if user.admin?
       all
     else
-      where(buyer_orders_arel(user).or(manager_orders_arel(user))).uniq
+      where(buyer_orders_arel(user).or(manager_orders_arel(user))).uniq.where(market_id: user.markets)
     end
   end
 
@@ -252,7 +262,7 @@ class Order < ActiveRecord::Base
     if user.admin?
       all
     else
-      joins(:products).where(seller_orders_arel(user).or(manager_orders_arel(user))).uniq
+      joins(:products).where(seller_orders_arel(user).or(manager_orders_arel(user))).uniq.where(market_id: user.markets)
     end
   end
 
@@ -397,6 +407,7 @@ class Order < ActiveRecord::Base
   end
 
   def gross_total
+    # binding.pry
     usable_items.sum(&:gross_total)
   end
 
@@ -413,9 +424,7 @@ class Order < ActiveRecord::Base
   end
 
   def update_total_cost
-
     cost = gross_total
-
     if credit && credit.apply_to == "subtotal"
       cost = gross_total - credit_amount
     end
