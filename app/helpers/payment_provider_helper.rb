@@ -8,6 +8,8 @@ module PaymentProviderHelper
 			javascript_include_tag('stripe')
 		else
 			# AKA 'when nil' (AKA whenever @market is undefined)
+		  javascript_include_tag("https://js.stripe.com/v2/") +
+			javascript_include_tag('stripe')
   	end
   end
 end

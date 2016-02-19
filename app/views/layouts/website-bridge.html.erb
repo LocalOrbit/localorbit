@@ -331,6 +331,6 @@
   <script>DEBUG = <%= Figaro.env.debug == 'ON' ? "true" : "false" %>;</script>
   <%= javascript_include_tag "application" %>
 
-  <%= include_payment_provider_scripts(@market.payment_provider) %>
+  <%= include_payment_provider_scripts(@market.payment_provider || 'stripe') %>
 </body>
 </html>
