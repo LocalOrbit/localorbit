@@ -11,13 +11,17 @@ end
 
 
 feature "Reports" do
-  let!(:market)    { create(:market, name: "Foo Market", po_payment_term: 30, timezone: "Eastern Time (US & Canada)") }
-  let!(:market2)   { create(:market, name: "Bar Market", po_payment_term: 30, timezone: "Eastern Time (US & Canada)") }
-  let!(:market3)   { create(:market, name: "Baz Market", po_payment_term: 30, timezone: "Eastern Time (US & Canada)") }
-  let!(:buyer)     { create(:organization, :buyer, name: "Foo Buyer", markets: [market], can_sell: false) }
-  let!(:buyer2)    { create(:organization, :buyer, name: "Bar Buyer", markets: [market2], can_sell: false) }
-  let!(:seller)    { create(:organization, :seller, name: "Foo Seller", markets: [market], can_sell: true) }
-  let!(:seller2)   { create(:organization, :seller, name: "Bar Seller", markets: [market2], can_sell: true) }
+  let!(:buyer)     { create(:organization, :buyer, name: "Foo Buyer", can_sell: false) }
+  let!(:buyer2)    { create(:organization, :buyer, name: "Bar Buyer", can_sell: false) }
+  let!(:seller)    { create(:organization, :seller, name: "Foo Seller", can_sell: true) }
+  let!(:seller2)   { create(:organization, :seller, name: "Bar Seller", can_sell: true) }
+  let!(:buyer3)    { create(:organization, :buyer, name: "Baz Buyer", can_sell: false) }
+  let!(:seller3)   { create(:organization, :seller, name: "Baz Seller", can_sell: true) }
+
+  let!(:market)    { create(:market, name: "Foo Market", organizations: [buyer, seller], po_payment_term: 30, timezone: "Eastern Time (US & Canada)") }
+  let!(:market2)   { create(:market, name: "Bar Market", organizations: [buyer2, seller2], po_payment_term: 30, timezone: "Eastern Time (US & Canada)") }
+  let!(:market3)   { create(:market, name: "Baz Market", organizations: [buyer3, seller3], po_payment_term: 30, timezone: "Eastern Time (US & Canada)") }
+
   let!(:subdomain) { market.subdomain }
   let!(:report)    { :total_sales }
   let!(:delivery_schedule) { create(:delivery_schedule, market: market) }
@@ -27,8 +31,6 @@ feature "Reports" do
   before do
     delivery_schedule2 = create(:delivery_schedule, market: market2)
     delivery2 = delivery_schedule2.next_delivery
-
-    buyer3  = create(:organization, :buyer, name: "Baz Buyer", markets: [market3], can_sell: false)
 
     5.times do |i|
       this_date = order_date + i.days
@@ -88,11 +90,19 @@ feature "Reports" do
     end
 
     this_date = order_date - 1.day
+    category = create(:category, name: "Category-03-01")
+    product = create(:product,
+                     :sellable,
+                     name: "Product-Market-03-01",
+                     category: category,
+                     organization: seller3)
     order_item = create(:order_item,
                         created_at: this_date,
-                        seller_name: "Seller-03-1",
+                        product: product,
+                        seller_name: "Seller-03-01",
                         unit_price: 301, quantity: 1)
     create(:order,
+           market_id: market3.id,
            placed_at: this_date,
            delivery: delivery,
            items: [order_item],
@@ -103,10 +113,22 @@ feature "Reports" do
 
     # Order outside of default date range
     older_date = 5.weeks.ago
+    category = create(:category, name: "Category-03-02")
+    product = create(:product,
+                     :sellable,
+                     name: "Product-Market-03-02",
+                     category: category,
+                     organization: seller3)
+    order_item = create(:order_item,
+                        created_at: this_date,
+                        product: product,
+                        seller_name: "Seller-03-02",
+                        unit_price: 301, quantity: 1)
     create(:order,
+           market_id: market3.id,
            placed_at: older_date,
            delivery: delivery,
-           items: [create(:order_item, created_at: older_date)],
+           items: [order_item],
            organization: buyer3,
            payment_method: "credit card",
            payment_status: "unpaid",
@@ -136,7 +158,7 @@ feature "Reports" do
 
   context "for all reports" do
     context "as a user in only 1 market" do
-      let!(:user) { create(:user, :market_manager, managed_markets: [market]) }
+      let!(:user) { create(:user, :market_manager, organizations: [buyer,seller], managed_markets: [market]) }
 
       scenario "does not display the market filter" do
         expect(page).to have_field("Search")
@@ -147,7 +169,7 @@ feature "Reports" do
     end
 
     context "as any user" do
-      let!(:user)   { create(:user, :market_manager, managed_markets: [market,market2]) }
+      let!(:user)   { create(:user, :market_manager, organizations: [buyer,buyer2,buyer3,seller,seller2,seller3], managed_markets: [market,market2,market3]) }
       let!(:report) { :total_sales }
 
       scenario "date range defaults to last 30 days and can filter results" do
@@ -750,7 +772,7 @@ feature "Reports" do
     end
 
     context "as a Buyer" do
-      let!(:user) { create(:user, :buyer, managed_markets: [market], organizations: [buyer]) }
+      let!(:user) { create(:user, :buyer, organizations: [buyer]) }
 
       scenario "does not show a product code" do
         expect(page).to_not have_content("product-code-1")
