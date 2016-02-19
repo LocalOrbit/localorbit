@@ -148,7 +148,7 @@ feature "Viewing orders" do
 
         items = Dom::Order::ItemRow.all
         item = Dom::Order::ItemRow.find_by_name("#{market1_order_item1.name} from #{market1_seller_org1.name}")
-        first(:link,"EDIT").click # next one at this pt is the one clicked
+        first(:link,"$8.99").click # next one at this pt is the one clicked
         fill_in "order_item[unit_price]", :with => '20.00'
         click_button "Edit Price"
         item2 = Dom::Order::ItemRow.find_by_name("#{market1_order_item2.name} from #{market1_seller_org2.name}")

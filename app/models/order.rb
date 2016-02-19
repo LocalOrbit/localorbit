@@ -407,6 +407,7 @@ class Order < ActiveRecord::Base
   end
 
   def gross_total
+    # binding.pry
     usable_items.sum(&:gross_total)
   end
 
@@ -423,9 +424,7 @@ class Order < ActiveRecord::Base
   end
 
   def update_total_cost
-
     cost = gross_total
-
     if credit && credit.apply_to == "subtotal"
       cost = gross_total - credit_amount
     end
