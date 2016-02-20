@@ -9,7 +9,10 @@ module PackingLabels
 
       def make_order_labels(order_info, product_labels_only, product_label_format, print_multiple_labels_per_item, orders)
 
-        if product_label_format == 4
+        if product_label_format == 1
+          product_template = 'avery_labels/vertical_product_1'
+          order_template = "avery_labels/vertical_order_1"
+        elsif product_label_format == 4
           product_template = 'avery_labels/vertical_product_4'
           order_template = "avery_labels/vertical_order_4"
         elsif product_label_format == 16
@@ -25,13 +28,14 @@ module PackingLabels
         if product_labels_only != "true"
           labels << make_label(order_template, {order: order})
           i = add_product_labels(labels, order, products, product_template, i, print_multiple_labels_per_item)
-          while i < num_to_shift do
-            labels << page_break
-            i = i + 1
+          if product_label_format > 1
+            while i < num_to_shift do
+              labels << page_break
+              i = i + 1
+            end
+            labels << reset_page
           end
-          labels << reset_page
         else
-          #labels << products.map{|product_info| make_label(product_template, {order: order, product: product_info}) }
           add_product_labels(labels, order, products, product_template, i, print_multiple_labels_per_item)
         end
         labels.flatten

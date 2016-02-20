@@ -31,11 +31,13 @@ class Deliveries::PackingLabelsController < ApplicationController
   end
 
   def show
-    printable = PackingLabelsPrintable.for_user(current_user).find params[:id]
+    @printable = PackingLabelsPrintable.for_user(current_user).find params[:id]
+    @image = HTTParty.post('http://api.labelary.com/v1/printers/12dpmm/labels/3x5/0/', :body => @printable.zpl)
+    
     respond_to do |format|
       format.html {}
       format.json do 
-        output = if printable.pdf then {pdf_url: printable.pdf.remote_url} else {pdf_url: nil} end
+        output = if @printable.pdf then {pdf_url: @printable.pdf.remote_url} else {pdf_url: nil} end
         render json: output
       end
     end
