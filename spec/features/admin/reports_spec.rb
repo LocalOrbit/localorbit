@@ -682,16 +682,7 @@ feature "Reports" do
       end
 
       context "with purchases" do
-        let(:order) {create(:order,
-               market_id: market2.id,
-               delivery: delivery2,
-               items: [order_item],
-               organization: buyer2,
-               payment_method: ["purchase order", "purchase order", "purchase order", "ach", "ach", "credit card"][i],
-               payment_status: "paid",
-               order_number: "LO-02-234-4567890-#{i}")}
-
-        #let!(:order)     { create(:order, :with_items, market: market2, organization: seller2) }
+        let!(:order)     { create(:order, :with_items, market: market2, organization: buyer2) }
 
         before do
           visit_report_view
