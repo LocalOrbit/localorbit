@@ -13,29 +13,44 @@ module PackingLabels
         #   { template: "...", data: { ... } }
         #   { template: "...", data: { ... } }
         # ]
-        pages = PackingLabels::Page.make_pages(labels, product_label_format)
-        # [ 
-        #   {a: {label} b: {label} ... }
-        #   {a: {label} b: {label} ... }
-        #   {a: {label} b: {label} ... }
-        # ]
 
-        if product_label_format == 4
+        pages = PackingLabels::Page.make_pages(labels, product_label_format)
+          # [
+          #   {a: {label} b: {label} ... }
+          #   {a: {label} b: {label} ... }
+          #   {a: {label} b: {label} ... }
+          # ]
+
+        if product_label_format == 1
+          label_template = 'avery_labels/labels_1'
+        elsif product_label_format == 4
           label_template = 'avery_labels/labels_4'
         elsif product_label_format == 16
           label_template = 'avery_labels/labels_16'
         end
 
-        TemplatedPdfGenerator.generate_pdf(
-          request: request,
-          template: label_template,
-          pdf_settings: TemplatedPdfGenerator::ZeroMargins.merge(page_size: "letter"),
-          locals: {
-            params: {
-              pages: pages
+        if product_label_format > 1
+          TemplatedPdfGenerator.generate_pdf(
+            request: request,
+            template: label_template,
+            pdf_settings: TemplatedPdfGenerator::ZeroMargins.merge(page_size: "letter"),
+            locals: {
+              params: {
+                pages: pages
+              }
             }
-          }
-        )
+          )
+        else
+          HtmlTemplateRenderer.generate_html(
+            request: request,
+            template: label_template,
+            locals: {
+              params: {
+                pages: pages
+              }
+            }
+          )
+        end
       end
     end
   end

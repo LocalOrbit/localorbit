@@ -1,9 +1,15 @@
+<% if @printable.zpl %>
+    <%= ('<img width="300" src="data:image/png;base64,%s">' % Base64.encode64(@image.body)).html_safe %>
+    <%= link_to "Print Labels", class: 'btn btn-small' %>
+<% else %>
 <div data-ko-module="download_packing_labels" align="center">
   <h1>Generating packing labels...</h1>
-  <%= image_tag "loading-progress.gif", data: { bind: "visible: !pdfUri()" } %>
+
+  <%= image_tag "loading-progress.gif", data: { bind: "visible: !pdfUri()" } %>.z
   <div style="display:none;" data-bind="visible: pdfUri">
     <p>
       <a class="btn btn--save btn--small mobile-block" data-bind="attr: { href: pdfUri }">Download Packing Labels PDF</a>
     </p>
   </div>
 </div>
+<% end %>
