@@ -2,16 +2,14 @@ class CreateBankAccount
   include Interactor
 
   def setup
-    # Out of the original intent, this interactor fails at entity.bank_accounts.create(params) without this setup
+    # Out of the original context and without this setup, the interactor fails at entity.bank_accounts.create(params)
     context[:entity] ||= context[:market] || context[:organization]
   end
 
   def perform
-    # 'context[:bank_account_params]'' is defined in markets_controller for Roll Your Own.  It is an add-on 
-    # and is drastically under-populated compared to the pre-existing 'bank_account_params.dup'In this 
-    # context, the created bank account contains no actual data.  That seems weird, but then so does our 
-    # storing of the account data... 
-    params = context[:bank_account_params] || bank_account_params.dup
+    params = bank_account_params.dup
+
+    # KXM Why is the token deleted here?
     params.delete(:stripe_tok)
     context[:bank_account] = entity.bank_accounts.create(params)
 

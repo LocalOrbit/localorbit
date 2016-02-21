@@ -1,12 +1,14 @@
 class MarketsController < ApplicationController
   before_action :hide_admin_navigation
   skip_before_action :require_selected_market, only: [:new]
-  skip_before_action :authenticate_user!
-  skip_before_action :ensure_market_affiliation
+  skip_before_action :authenticate_user!, except: [:show]
+  skip_before_action :ensure_market_affiliation, except: [:show]
   skip_before_action :ensure_active_organization
   skip_before_action :ensure_user_not_suspended
+
   def show
-    @market = current_market.decorate
+    @market = current_market || Market.find(params[:id])
+    @market.try(:decorate)
   end
 
   def new
