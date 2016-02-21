@@ -22,10 +22,6 @@ module ToggleActiveHelper
 =end
     return unless resource.respond_to?(:active?)
     
-    if resource.name == 'KXM Market'
-      debug = true && false
-    end
-    
     link_to_opts = {
       method: :patch,
       class: "btn btn--small btn--save"
@@ -53,8 +49,6 @@ module ToggleActiveHelper
       end
       path.concat([resource, active: !resource.active?])
     end
-
-    binding.pry if debug
 
     link_to(title, path, link_to_opts)
   end
