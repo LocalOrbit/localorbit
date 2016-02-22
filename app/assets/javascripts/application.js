@@ -33,6 +33,9 @@
 //= require reflux.min
 //= require froala_editor.min.js
 //= require fSelect
+//= require qz-tray.js
+//= require rsvp-3.1.0.min.js
+//= require sha-256.min.js
 //
 //= require plugins/block_styles.min.js
 //= require plugins/colors.min.js

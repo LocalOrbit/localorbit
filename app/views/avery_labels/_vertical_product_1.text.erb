@@ -1,40 +1,28 @@
+<%
+  logo = save_to_var(ensure_full_url(order[:market_logo_url]))
+  #order_url = Rails.application.routes.url_helpers.qr_code_url(host: host, id: order.id)
+
+  #zpl_logo_raw = HTTParty.post('http://api.labelary.com/v1/graphics/', :body => logo)
+  #zpl_logo = '^FO50,50^GFA,' + zpl_logo_raw.totalBytes + ',' + zpl_logo_raw.totalBytes + ',' + zpl_logo_raw.rowBytes + ',' + zpl_logo_raw.data + '^FS\n'
+%>
 ^XA
 
 ^FX Top section with company logo, name and address.
-^CF0,60
-^FO50,50^GB100,100,100^FS
-^FO75,75^FR^GB100,100,100^FS
-^FO88,88^GB50,50,50^FS
-^FO220,50^FD<%= product[:product_name] %><% if product[:product_code].present? %>
-        | <%= product[:product_code] %><% end %>^FS
-^CF0,40
-^FO220,100^FD1000 Shipping Lane^FS
-^FO220,135^FDShelbyville TN 38102^FS
-^FO220,170^FDUnited States (USA)^FS
-^FO50,250^GB700,1,3^FS
+^CF0,70
+^FO50,50^FD<%= product[:product_name] %>^FS
+^CF0,55
+^FO50,105^FD<%= product[:product_code] %>^FS
+^FO50,175^FD<%= product[:producer_name] %>^FS
 
 ^FX Second section with recipient address and permit information.
-^CFA,30
+^CF0,55
 ^FO50,300^FD<%= order[:deliver_on] %>^FS
-^FO50,340^FD<%= order[:order_number] %>^FS
-^FO50,380^FD<%= order[:buyer_name] %>^FS
-^CFA,15
-^FO600,300^GB150,150,3^FS
-^FO638,340^FD<%= product[:producer_name] %>^FS
-^FO50,500^GB700,1,3^FS
+^FO50,345^FD<%= order[:order_number] %>^FS
+^FO50,385^FD<%= order[:buyer_name] %>^FS
+^FO50,250^GB600,1,3^FS
+^FO50,500^GB600,1,3^FS
 
 ^FX Third section with barcode.
-^BY5,2,270
-^FO175,550^BC^FD1234567890^FS
-
-^FX Fourth section (the two boxes on the bottom).
-^FO50,900^GB700,250,3^FS
-^FO400,900^GB1,250,3^FS
-^CF0,40
-^FO100,960^FDShipping Ctr. X34B-1^FS
-^FO100,1010^FDREF1 F00B47^FS
-^FO100,1060^FDREF2 BL4H8^FS
-^CF0,190
-^FO485,965^FDCA^FS
+^FO175,650^BXN,20,250^FDABC123^FS
 
 ^XZ
