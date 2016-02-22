@@ -1,0 +1,19 @@
+
+KnockoutModules.register "download_packing_labels",
+  viewModel: (ko,el) ->
+    PdfUriPoller.viewModel(ko,el)
+
+$("#print-btn").click (e) ->
+  zpl = $("#print-btn").data('zpl')
+  qz.websocket.connect().then(->
+    qz.printers.find ''
+  # Pass the printer name into the next Promise
+  ).then((printer) ->
+    config = qz.configs.create(printer)
+    # Create a default config for the found printer
+    data = [zpl]
+    # Raw ZPL
+    qz.print config, data
+  ).catch (e) ->
+    console.error e
+    return
