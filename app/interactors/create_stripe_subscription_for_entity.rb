@@ -13,7 +13,7 @@ class CreateStripeSubscriptionForEntity
       customer.subscriptions.data.each do |sub|
         # If any match the current data...
         if sub.plan.id = subscription_params[:plan]
-          # ...then update the subscription...
+          # ...then update the subscription:
           subscription        = customer.subscriptions.retrieve(sub.id)
           subscription.plan   = subscription_params[:plan]
           subscription.source = subscription_params[:stripe_tok]
@@ -21,8 +21,8 @@ class CreateStripeSubscriptionForEntity
           subscription.save
 
         else
-          # KXM Wouldn't a new subscription require deleting ALL old subscriptions?  In our use, aren't plans mutually exclusive?  If so then uncomment the following line which deletes the non-matching subscription
-          # customer.subscriptions.retrieve(sub.id).delete
+          # ...otherwise, delete the plan:
+          customer.subscriptions.retrieve(sub.id).delete
         end
       end
 
@@ -33,6 +33,8 @@ class CreateStripeSubscriptionForEntity
     end
 
     context[:subscription] = subscription
+    invoices = Stripe::Invoice.retrieve(:customer => subscription.customer) 
+    context[:invoice] = invoices.data[0]
   rescue => e
     flash.error = e.message
     context.fail!

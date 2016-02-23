@@ -42,8 +42,25 @@ class MarketsController < ApplicationController
         :flash => flash})
 
     if results.success?
-      @market = results.market
       flash.notice = "Your request for a new Market will be processed shortly."
+
+      binding.pry
+
+      @market = results.market
+      @subscription_params = results.subscription_params
+      @invoice = results.invoice
+
+      @user ||= User.new do |u|
+        u.name  = market_params[:contact_name]
+        u.email = market_params[:contact_email]
+      end
+
+      # Email us about their request
+      ZendeskMailer.delay.request_market(@user, @market, @subscription_params)
+
+      # Email them confirmation of their request
+      UserMailer.delay.market_request_confirmation(@user, @market, @invoice)
+
       redirect_to :action => 'success', :id => @market
     else
       flash.alert = results.context[:error] || "Could not create market"
