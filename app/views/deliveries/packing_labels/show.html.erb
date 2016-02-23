@@ -7,7 +7,7 @@
 
     <div style="text-align:center">
       <%= ('<img width="300" src="data:image/png;base64,%s">' % Base64.encode64(@image.body)).html_safe %><br/>
-      <a href="#" id="print-btn" class="btn btn-action" data-zpl="<%= @printable.zpl.squish %>">Print Labels</a>
+      <a href="#" id="print-btn" class="btn btn-action" data-zpl="<%= @printable.zpl.to_json %>">Print Labels</a>
     </div>
 <% else %>
 <div data-ko-module="download_packing_labels" align="center">

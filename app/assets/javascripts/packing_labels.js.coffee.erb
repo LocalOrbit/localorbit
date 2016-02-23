@@ -11,9 +11,9 @@ $("#print-btn").click (e) ->
   ).then((printer) ->
     config = qz.configs.create(printer)
     # Create a default config for the found printer
-    data = [zpl]
-    # Raw ZPL
-    qz.print config, data
+    data = zpl
+    data.forEach (s) ->
+      qz.print config, s
   ).catch (e) ->
     console.error e
     return

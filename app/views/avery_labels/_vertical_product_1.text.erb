@@ -1,28 +1,2 @@
-<%
-  logo = save_to_var(ensure_full_url(order[:market_logo_url]))
-  #order_url = Rails.application.routes.url_helpers.qr_code_url(host: host, id: order.id)
 
-  #zpl_logo_raw = HTTParty.post('http://api.labelary.com/v1/graphics/', :body => logo)
-  #zpl_logo = '^FO50,50^GFA,' + zpl_logo_raw.totalBytes + ',' + zpl_logo_raw.totalBytes + ',' + zpl_logo_raw.rowBytes + ',' + zpl_logo_raw.data + '^FS\n'
-%>
-^XA
-
-^FX Top section with company logo, name and address.
-^CF0,70
-^FO50,50^FD<%= product[:product_name] %>^FS
-^CF0,55
-^FO50,105^FD<%= product[:product_code] %>^FS
-^FO50,175^FD<%= product[:producer_name] %>^FS
-
-^FX Second section with recipient address and permit information.
-^CF0,55
-^FO50,300^FD<%= order[:deliver_on] %>^FS
-^FO50,345^FD<%= order[:order_number] %>^FS
-^FO50,385^FD<%= order[:buyer_name] %>^FS
-^FO50,250^GB600,1,3^FS
-^FO50,500^GB600,1,3^FS
-
-^FX Third section with barcode.
-^FO175,650^BXN,20,250^FDABC123^FS
-
-^XZ
+[^XA^FX^CF0,70^FO50,50^FD<%= product[:product_name] %>^FS^CF0,55^FO50,105^FD<%= product[:product_code] %>^FS^FO50,175^FD<%= product[:producer_name] %>^FS^FX^CF0,55^FO50,300^FD<%= order[:deliver_on] %>^FS^FO50,345^FD<%= order[:order_number] %>^FS^FO50,385^FD<%= order[:buyer_name] %>^FS^FO50,250^GB600,1,3^FS^FO50,500^GB600,1,3^FS^FX^FO300,550^BQN,20,250^FDABC123^FS^XZ]
