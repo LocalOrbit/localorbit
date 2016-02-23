@@ -1,8 +1,8 @@
 require "spec_helper"
 
 describe "Manage Discount Codes" do
-  let!(:startup_plan)        { create(:plan, discount_codes: false) }
-  let!(:grow_plan)           { create(:plan, discount_codes: true) }
+  let!(:startup_plan)        { create(:plan, :start_up, discount_codes: false) }
+  let!(:grow_plan)           { create(:plan, :grow, discount_codes: true) }
 
   let(:supplier)         { create(:organization, :seller) }
 
