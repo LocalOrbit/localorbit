@@ -1,13 +1,13 @@
 require "spec_helper"
 
 describe Admin::ProductsController do
-  let(:product1) { create(:product) }
+  let(:supplier) { create(:organization, :seller)}
+  let(:product1) { create(:product, organization: supplier) }
   let(:product2) { create(:product) }
-  let(:market_org) { create(:organization, :market)}
-  let(:market) { create(:market, organization: market_org, organizations: [product1.organization]) }
-  let(:user) { create(:user, :supplier, organizations: [product1.organization]) }
+  let(:market) { create(:market, organizations: [supplier]) }
   let(:org1) { create(:organization, :seller) }
   let(:org2) { create(:organization, :seller) }
+  let(:user) { create(:user, :supplier, organizations:[supplier]) }
 
   before do
     switch_to_subdomain market.subdomain
@@ -35,7 +35,6 @@ describe Admin::ProductsController do
 
   describe "/create" do
     before do
-      org1.users << user
       sign_in(user)
     end
 
@@ -77,17 +76,14 @@ describe Admin::ProductsController do
   end
 
   describe "destroy" do
-    let(:product)                   { create(:product, organization: product1.organization) }
+    let(:seller)                    { create(:organization, :seller)}
+    let(:product)                   { create(:product, organization: seller) }
     let(:admin)                     { create(:user, :admin) }
-    let(:non_member)                { create(:user) }
+    let(:non_member)                { create(:user, :supplier) }
     let(:market_manager_non_member) { create(:user, :market_manager) }
-    let(:member)                    { create(:user, organizations: [product1.organization]) }
-
-    let(:market_manager_member) do
-      create(:user, :market_manager, managed_markets: [market]).tap do |market_manager|
-        market_manager.organizations << product1.organization
-      end
-    end
+    let(:organization_member)       { create(:user, :supplier, organizations:[seller]) }
+    let(:market_manager_member)     { create(:user, :market_manager, organizations: [seller]) }
+    let(:market)                    { create(:market, organizations:[seller])}
 
     it_behaves_like "an action restricted to admin, market manager, member", lambda { delete :destroy, id: product.id }
   end
