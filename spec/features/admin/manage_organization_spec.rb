@@ -10,7 +10,7 @@ describe "admin manange organization" do
     switch_to_subdomain(market1.subdomain)
     sign_in_as(user)
     visit new_admin_organization_path
-    click_link "Add Organization"
+    #click_link "Add Organization"
 
     check "Can sell products"
     expect(page).to have_content("Who")
@@ -66,7 +66,7 @@ describe "admin manange organization" do
     expect(page).to have_field("Allow credit cards")
   end
 
-  it "create new organization", js: true do
+  it "create new organization" do
     market = create(:market, name: "Market 1", default_allow_purchase_orders: true, default_allow_credit_cards: false, default_allow_ach: false)
 
     switch_to_subdomain(market.subdomain)
