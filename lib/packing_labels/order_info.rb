@@ -12,6 +12,7 @@ module PackingLabels
           return nil
         end
         order_info = {
+          id: order.id,
           deliver_on: order.delivery.deliver_on.strftime("%B %e, %Y"),
           order_number: order.order_number,
           buyer_name: order.organization.name,
