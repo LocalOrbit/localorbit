@@ -1,11 +1,12 @@
 require "spec_helper"
 
 describe "Viewing products" do
-  let!(:market)       { create(:market) }
   let!(:market2)      { create(:market) }
 
-  let!(:org1)         { create(:organization, :seller, name: "County Park", markets: [market]) }
-  let!(:org2)         { create(:organization, :seller, markets: [market]) }
+  let!(:org1)         { create(:organization, :seller, name: "County Park") }
+  let!(:org2)         { create(:organization, :seller) }
+
+  let!(:market)       { create(:market, organizations: [org1,org2]) }
 
   let!(:apples)       { create(:product, organization: org1, name: "Apples") }
   let!(:apples_price) { create(:price, product: apples, sale_price: 10.00, min_quantity: 1) }
@@ -19,7 +20,7 @@ describe "Viewing products" do
   let!(:grapes_price) { create(:price, product: grapes, sale_price: 5.00, min_quantity: 1) }
   let!(:grapes_lot)   { create(:lot, product: grapes, quantity: 1) }
 
-  let!(:market_manager) { create(:user, :market_manager, organizations: [org1, org2], managed_markets: [market, market2]) }
+  let!(:market_manager) { create(:user, :market_manager, organizations: [org1, org2]) }
 
   before do
     switch_to_subdomain(market.subdomain)
@@ -33,9 +34,9 @@ describe "Viewing products" do
     end
 
     it "shows a list of products which the owner manages" do
-      within "#admin-nav" do
+      #within "#admin-nav" do
         click_link "Products"
-      end
+      #end
 
       product = Dom::ProductRow.first
       expect(product.name).to have_content(apples.name)

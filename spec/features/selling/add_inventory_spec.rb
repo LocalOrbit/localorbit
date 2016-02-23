@@ -1,7 +1,7 @@
 require "spec_helper"
 
 describe "Adding advanced inventory" do
-  let(:user) { create(:user) }
+  let(:user) { create(:user, :market_manager) }
   let(:product) { create(:product, use_simple_inventory: false) }
 
   let(:empty_inventory_message) { "You don't have any Inventory" }

@@ -1,8 +1,8 @@
 require "spec_helper"
 
 describe "Remove advanced pricing" do
-  let(:market)        { create(:market) }
-  let!(:organization) { create(:organization, markets: [market]) }
+  let!(:organization) { create(:organization, :seller) }
+  let(:market)        { create(:market, organizations: [organization]) }
   let!(:user)         { create(:user, organizations: [organization]) }
   let!(:product)      { create(:product, organization: organization) }
 
