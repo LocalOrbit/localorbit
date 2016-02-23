@@ -3,18 +3,18 @@ require 'csv'
 
 describe "Export Products CSV"  do
   let!(:empty_market) { create(:market) }
-  let!(:market1)      { create(:market) }
-  let!(:org1)         { create(:organization, :seller, markets: [market1]) }
+  let!(:org1)         { create(:organization, :seller) }
   let!(:org1_product) { create(:product, :sellable, organization: org1) }
-  let!(:org2)         { create(:organization, :seller, markets: [market1]) }
+  let!(:org2)         { create(:organization, :seller) }
   let!(:org2_product) { create(:product, :sellable, organization: org2) }
+  let!(:market1)      { create(:market, organizations: [org1, org2]) }
 
-  let!(:market2)      { create(:market) }
-  let!(:org3)         { create(:organization, :seller, markets: [market2]) }
+  let!(:org3)         { create(:organization, :seller) }
   let!(:org3_product) { create(:product, :sellable, organization: org3) }
-  let!(:org4)         { create(:organization, :seller, markets: [market2]) }
+  let!(:org4)         { create(:organization, :seller) }
   let!(:org4_product) { create(:product, :sellable, organization: org4) }
-  let!(:org5)         { create(:organization, :buyer, markets: [market2]) }
+  let!(:org5)         { create(:organization, :buyer) }
+  let!(:market2)      { create(:market, organizations:[org3,org4]) }
 
   context "as admin" do
     let!(:user) { create(:user, :admin) }

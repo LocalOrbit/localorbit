@@ -158,7 +158,7 @@ feature "Reports" do
 
   context "for all reports" do
     context "as a user in only 1 market" do
-      let!(:user) { create(:user, :market_manager, organizations: [buyer,seller], managed_markets: [market]) }
+      let!(:user) { create(:user, :market_manager, managed_markets: [market]) }
 
       scenario "does not display the market filter" do
         expect(page).to have_field("Search")
@@ -169,7 +169,7 @@ feature "Reports" do
     end
 
     context "as any user" do
-      let!(:user)   { create(:user, :market_manager, organizations: [buyer,buyer2,buyer3,seller,seller2,seller3], managed_markets: [market,market2,market3]) }
+      let!(:user)   { create(:user, :market_manager, managed_markets: [market,market2,market3]) }
       let!(:report) { :total_sales }
 
       scenario "date range defaults to last 30 days and can filter results" do
@@ -655,7 +655,7 @@ feature "Reports" do
     end
 
     context "as a Seller" do
-      let!(:user)      { create(:user, :supplier, organizations: [seller2]) }
+      let!(:user)      { create(:user, :supplier, organizations:[seller2]) }
       let!(:subdomain) { market2.subdomain }
 
       scenario "displays a product code" do
