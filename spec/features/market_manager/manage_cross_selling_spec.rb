@@ -1,7 +1,7 @@
 require "spec_helper"
 
 describe "Manage cross selling" do
-  let!(:user) { create(:user) }
+  let!(:user) { create(:user, :market_manager) }
 
   let!(:cross_selling_market)     { create(:market, managers: [user], allow_cross_sell: true) }
   let!(:not_cross_selling_market) { create(:market, managers: [user]) }
@@ -64,7 +64,7 @@ describe "Manage cross selling" do
   end
 
   context "view organization cross sells" do
-    let!(:organization) { create(:organization, markets: [cross_selling_market]) }
+    let!(:organization) { create(:organization, :seller, markets: [cross_selling_market]) }
 
     before do
       switch_to_subdomain(cross_selling_market.subdomain)

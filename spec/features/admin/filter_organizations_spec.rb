@@ -11,7 +11,7 @@ describe "Filter organizations", :js do
   let!(:org3)         { create(:organization, :seller) }
   let!(:org3_product) { create(:product, :sellable, organization: org3) }
   let!(:org4)         { create(:organization, :buyer) }
-  let!(:market2)      { create(:market, organiztions:[org3,org4]) }
+  let!(:market2)      { create(:market, organizations:[org3,org4]) }
 
   context "as an admin" do
     let!(:user) { create(:user, :admin) }

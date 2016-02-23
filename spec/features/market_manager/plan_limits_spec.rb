@@ -1,7 +1,7 @@
 require "spec_helper"
 
 describe "Plan Limits" do
-  let(:plan)      { create(:plan) }
+  let(:plan)      { create(:plan, :grow) }
   let!(:market_org) { create(:organization, :market, plan: plan)}
   let!(:market)   { create(:market, :with_delivery_schedule, :with_address, organization: market_org) }
   let!(:seller)   { create(:organization, :seller, markets: [market]) }
