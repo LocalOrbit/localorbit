@@ -44,8 +44,6 @@ class MarketsController < ApplicationController
     if results.success?
       flash.notice = "Your request for a new Market will be processed shortly."
 
-      binding.pry
-
       @market = results.market
       @subscription_params = results.subscription_params
       @invoice = results.invoice
@@ -56,7 +54,7 @@ class MarketsController < ApplicationController
       end
 
       # Email us about their request
-      ZendeskMailer.delay.request_market(@user, @market, @subscription_params)
+      ZendeskMailer.delay.request_market(@user, @market)
 
       # Email them confirmation of their request
       UserMailer.delay.market_request_confirmation(@user, @market, @invoice)

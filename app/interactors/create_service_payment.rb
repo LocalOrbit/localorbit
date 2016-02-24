@@ -25,8 +25,6 @@ class CreateServicePayment
       payment.destroy
     end
 
-    if recipients = context[:recipients]
-      recipients.destroy
-    end
+    # FYI context[:recipients] exist only in the context and, therefore, are not subject to rollback
   end
 end

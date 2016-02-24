@@ -33,11 +33,11 @@ class CreateStripeSubscriptionForEntity
     end
 
     context[:subscription] = subscription
-    invoices = Stripe::Invoice.retrieve(:customer => subscription.customer) 
+    invoices = Stripe::Invoice.all(:customer => subscription.customer) 
     context[:invoice] = invoices.data[0]
+    
   rescue => e
-    flash.error = e.message
-    context.fail!
+    context.fail!(error: e.message)
   end
 
   def stripe_subscription_info

@@ -14,8 +14,8 @@
 
 <table>
 	<tr><th>Local Orbit Service Plan:</th><td><%= @invoice['lines']['data'][0]['plan']['name'] %></td></tr>
-	<tr><th>Plan Start Date:</th><td><%= (Time.at(@invoice['date']).to_datetime).to_formatted_s(:db) %></td></tr>
-	<tr><th>Plan Renewal Date:</th><td><%= (Time.at(@invoice['date']).to_datetime).to_formatted_s(:db) %></td></tr>
+	<tr><th>Plan Start Date:</th><td><%= (Time.at(@invoice['date'])).strftime("%B %e, %Y") %></td></tr>
+	<tr><th>Plan Renewal Date:</th><td><%= (Time.at(@invoice['date'])).strftime("Annually thereafter on %B %e") %></td></tr>
 	<tr><th>Amount Paid in Full:</th><td><%= number_to_currency(@invoice['total']/100) %></td></tr>
 	<tr><th>Payment Reference Number:</th><td><%= @invoice['id'] %></td></tr>
 </table>
