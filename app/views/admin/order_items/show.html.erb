@@ -7,11 +7,12 @@
 
         <div class="field">
           <%= f.label :unit_price %><br>
-          <%= f.text_field :unit_price, { class: "column--one-fourth" } %>
+          <%= f.text_field :unit_price, { style: 'text-align:right; width: 100px', class: "column--one-eighth" } %>
         </div>
 
         <div class="form-actions">
           <%= f.submit "Edit Price" %>
+          <%= link_to "Cancel", :back, class: 'btn btn-action' %>
         </div>
 
 
