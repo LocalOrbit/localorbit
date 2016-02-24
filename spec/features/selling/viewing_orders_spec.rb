@@ -99,7 +99,7 @@ feature "Viewing orders" do
       item = Dom::Order::ItemRow.first
       expect(item.name).to have_content(market1_order_item1.name)
       expect(item.quantity).to have_content(Format.quantity(market1_order_item1.quantity.to_s))
-      expect(item.price).to eq("$#{market1_order_item1.unit_price}")
+      expect(item.price).to have_content("$#{market1_order_item1.unit_price}")
       expect(item.has_discount?).to be false
       expect(item.total).to eq("$9.98")
       expect(item.payment_status).to eq("Unpaid")
@@ -142,6 +142,20 @@ feature "Viewing orders" do
       expect(order.buyer_status).to eq("Unpaid")
     end
 
+    scenario "editing order item unit price" do
+        visit admin_orders_path
+        click_link market1_order1.order_number
+
+        items = Dom::Order::ItemRow.all
+        item = Dom::Order::ItemRow.find_by_name("#{market1_order_item1.name} from #{market1_seller_org1.name}")
+        first(:link,"$8.99").click # next one at this pt is the one clicked
+        fill_in "order_item[unit_price]", :with => '20.00'
+        click_button "Edit Price"
+        item2 = Dom::Order::ItemRow.find_by_name("#{market1_order_item2.name} from #{market1_seller_org2.name}")
+        expect(item2.price).to have_content('20.00')
+    end
+
+
     scenario "list of orders after the market manager deletes an organization" do
       delete_organization(market1_seller_org1)
       delete_organization(market1_seller_org2)
@@ -177,13 +191,13 @@ feature "Viewing orders" do
       expect(items.count).to eq(2)
 
       item = Dom::Order::ItemRow.find_by_name("#{market1_order_item1.name} from #{market1_seller_org1.name}")
-      expect(item.price).to eq("$#{market1_order_item1.unit_price}")
+      expect(item.price).to have_content("$#{market1_order_item1.unit_price}")
       expect(item.has_discount?).to be false
       expect(item.total).to eq("$9.98")
       expect(item.payment_status).to eq("Unpaid")
 
       item = Dom::Order::ItemRow.find_by_name("#{market1_order_item2.name} from #{market1_seller_org2.name}")
-      expect(item.price).to eq("$#{market1_order_item2.unit_price}")
+      expect(item.price).to have_content("$#{market1_order_item2.unit_price}")
       expect(item.has_discount?).to be false
       expect(item.total).to eq("$17.98")
       expect(item.payment_status).to eq("Unpaid")
@@ -223,13 +237,13 @@ feature "Viewing orders" do
         expect(items.count).to eq(2)
 
         item = Dom::Order::ItemRow.find_by_name("#{market1_order_item1.name} from #{market1_seller_org1.name}")
-        expect(item.price).to eq("$#{market1_order_item1.unit_price}")
+        expect(item.price).to have_content("$#{market1_order_item1.unit_price}")
         expect(item.has_discount?).to be false
         expect(item.total).to eq("$9.98")
         expect(item.payment_status).to eq("Unpaid")
 
         item = Dom::Order::ItemRow.find_by_name("#{market1_order_item2.name} from #{market1_seller_org2.name}")
-        expect(item.price).to eq("$#{market1_order_item2.unit_price}")
+        expect(item.price).to have_content("$#{market1_order_item2.unit_price}")
         expect(item.has_discount?).to be false
         expect(item.total).to eq("$17.98")
         expect(item.payment_status).to eq("Unpaid")
@@ -480,13 +494,13 @@ feature "Viewing orders" do
       expect(items.count).to eq(2)
 
       item = Dom::Order::ItemRow.find_by_name("#{market1_order_item1.name} from #{market1_seller_org1.name}")
-      expect(item.price).to eq("$#{market1_order_item1.unit_price}")
+      expect(item.price).to have_content("$#{market1_order_item1.unit_price}")
       expect(item.has_discount?).to be false
       expect(item.total).to eq("$9.98")
       expect(item.payment_status).to eq("Unpaid")
 
       item = Dom::Order::ItemRow.find_by_name("#{market1_order_item2.name} from #{market1_seller_org2.name}")
-      expect(item.price).to eq("$#{market1_order_item2.unit_price}")
+      expect(item.price).to have_content("$#{market1_order_item2.unit_price}")
       expect(item.has_discount?).to be false
       expect(item.total).to eq("$17.98")
       expect(item.payment_status).to eq("Unpaid")

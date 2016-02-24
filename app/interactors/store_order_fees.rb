@@ -7,7 +7,7 @@ class StoreOrderFees
     order.items.each(&:save!)
   end
 
-  protected
+#  protected
 
   def update_accounting_fees_for(item)
     calc = Financials::OrderItemFeeCalculator

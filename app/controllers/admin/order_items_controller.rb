@@ -33,6 +33,26 @@ module Admin
       redirect_to action: :index
     end
 
+    def show
+      @order_item = OrderItem.find(params[:id])
+    end
+
+    def update
+      @order_item = OrderItem.find(params[:id])
+      @order = Order.find(params[:order_id])
+      if params[:order_item][:unit_price]
+        @order_item.unit_price = params[:order_item][:unit_price]
+        sof = StoreOrderFees.new
+        sof.update_accounting_fees_for(@order_item)
+        # TODO: is this the only specific update that's needed?
+        # There may be a more general/prettier way to do this, updating the order totals overall.
+        @order_item.save!
+        @order.update_total_cost
+        @order.save!
+      end
+      redirect_to admin_order_path(params[:order_id])
+    end
+
     private
 
     def find_search_date_range(search)

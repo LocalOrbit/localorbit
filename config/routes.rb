@@ -93,6 +93,7 @@ Rails.application.routes.draw do
 
     resources :orders, only: [:index, :show, :update] do
       resources :table_tents_and_posters, :controller=>"/table_tents_and_posters", only: [:index, :show, :create]
+      resources :order_items, only: [:show, :update] # for order price editing
     end
 
     resources :organizations, concerns: [:bank_account, :activatable] do
@@ -134,7 +135,7 @@ Rails.application.routes.draw do
       end
     end
 
-    resources :order_items, only: :index, path: :sold_items do
+    resources :order_items, only: [:index, :update], path: :sold_items do
       collection do
         post :set_status
       end

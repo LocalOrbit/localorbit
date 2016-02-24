@@ -102,7 +102,7 @@
           </tr>
          </tbody>
       </table>
-      <% if FeatureAccess.can_edit_order?(user: current_user, order: order) && order.payment_method=="purchase order" && order.payment_status == "unpaid" %>
+      <% if FeatureAccess.can_edit_order?(user: current_user, order: order) && order.payment_method=="purchase order" && order.payment_status == "unpaid" # is this how it should be for quantities too? %> 
           <a href="#creditEdit" class="btn btn--small btn--primary modal-toggle app-edit-credit-modal-button"><%= order.credit_amount > 0 ? "Modify" : "Add" %> Credit</a></td>
       <% end %>
     </div>
@@ -186,7 +186,10 @@
               -
             <% end %>
           </td>
-          <td class="price"><%= number_to_currency item.object.unit_price %></td>
+          <td class="price"> <% if FeatureAccess.can_edit_order?(user: current_user, order: order) and order.payment_status == "unpaid" %>
+           <%= link_to "#{number_to_currency item.object.unit_price}", "/admin/orders/#{order.id}/order_items/#{item.object.id}", class: 'edit-toggle' %><% else %> <%= number_to_currency item.object.unit_price %>
+            <% end %>
+          </td>
           <td class="total"><%= number_to_currency item.object.gross_total %></td>
           <td class="delivery-status">
             <%= item.hidden_field :delivery_status %>
@@ -247,7 +250,7 @@
     </table>
     </div>
 
-    <% if FeatureAccess.order_action_links?(user_order_context: user_order_context) %>
+    <% if FeatureAccess.order_action_links?(user_order_context: user_order_context)  %>
       <%= f.submit @show_add_items_form ? "Add items and Update quantities" : "Update quantities", class: 'pull-right btn btn--small mobile-block' %>
     <% end %>
     <% if can_add_products_to_order?(order, user_order_context) && !@show_add_items_form %>
@@ -340,7 +343,7 @@
 <div> <br>
   <% if !current_user.buyer_only? # TODO move this logic? Order view... %>
     <% if !current_user.can_manage_market?(current_market) %>
-     <h2>Delivery Note</h2>
+     <h2>Delivery Note</h2>d
       <% DeliveryNote.where(order_id:order.id,supplier_org:current_organization).visible.each do |n| %>
         <%= n.note %><br>
       <% end %>

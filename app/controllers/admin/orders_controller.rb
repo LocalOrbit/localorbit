@@ -148,7 +148,7 @@ class Admin::OrdersController < AdminController
     @deliveries = recent_deliveries | future_deliveries | [order.delivery]
   end
 
-  def perform_order_update(order, params)
+  def perform_order_update(order, params) # TODO this needs to handle price edits
     updates = UpdateOrder.perform(payment_provider: order.payment_provider, order: order, order_params: params, request: request)
     if updates.success?
       came_from_admin = request.referer.include?("/admin/")

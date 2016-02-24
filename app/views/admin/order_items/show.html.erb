@@ -1,0 +1,22 @@
+<div class="row row--partial">
+  <div class="column column--three-fourths">
+    <legend>Edit Unit Price of <%= @order_item.name %></legend>
+  </div>
+    
+    <%= form_for @order_item, :url => { :action => "update" }, :method => "patch" do |f| %>
+
+        <div class="field">
+          <%= f.label :unit_price %><br>
+          <%= f.text_field :unit_price, { style: 'text-align:right; width: 100px', class: "column--one-eighth" } %>
+        </div>
+
+        <div class="form-actions">
+          <%= f.submit "Edit Price" %>
+          <%= link_to "Cancel", :back, class: 'btn btn-action' %>
+        </div>
+
+
+    <% end %>
+
+</div>
+
