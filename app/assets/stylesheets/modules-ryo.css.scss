@@ -225,20 +225,45 @@ div#success{
 			padding-top: 10px;
 		}
 	}
+	p{
+		font-size: 24px;
+		@media screen and (max-width: $mobile_break) {
+			font-size: 16px;
+		}
+	}
+	.register{
+		background: white;
+		color: #7EBEC5;
+		border-radius: 100px;
+		border-width: 0;
+		height: 54px;
+		font-family: 'Francois One', sans-serif;
+		font-size: 22.73px;
+		line-height: 31px;
+		margin-left: 1.2em;
 
+		&:hover, &:active{
+			background-color: #777;
+			color: white;
+		}
+	}
 	div{
 		font-family: 'Francois One', sans-serif;
 		font-size: 28px;
 		line-height: 160%;
 		text-align: center;
 		font-weight: 300;
-		padding: 180px 40px 60px;
+		padding: 40px 40px 60px;
 
 		&.row{
 			padding:20px;
 			@media screen and (max-width: $mobile_break) {
 				padding: 5px;
 			}
+		}
+
+		p{
+			font-size: 100%;
 		}
 
 		@media screen and (max-width: $mobile_break) {
@@ -249,6 +274,7 @@ div#success{
 		}
 	}
 
+	/*
 	#change{
 		background: asset_url('icon-gear.png') no-repeat top center;
 		@media screen and (max-width: $mobile_break) {
@@ -267,4 +293,5 @@ div#success{
 			background: none;
 		}
 	}
+	*/
 }
