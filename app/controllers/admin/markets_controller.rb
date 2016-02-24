@@ -59,9 +59,20 @@ class Admin::MarketsController < AdminController
   end
 
   def confirm_pending
+    # Activate the market
     @market.update_attribute(:pending, params[:pending])
+    @market.update_attribute(:active, true)
+
+    # Define a temporary user for purposes of invitation
+    @user = User.new do |u|
+      u.name = @market.contact_name
+      u.email = @market.contact_email
+    end
+
+    # Send Market manager an account confirmation email
+    UserMailer.delay.market_welcome(@user, @market)
+
     redirect_to :back, notice: "Updated #{@market.name}"
-    # KXM Send Market manager an account confirmation email (with link back to account setup form (this will go through Devise.  Check documentation for run time redirect targets))
  end
 
   def payment_options
