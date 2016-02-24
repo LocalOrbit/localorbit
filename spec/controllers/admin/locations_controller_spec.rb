@@ -2,22 +2,28 @@ require "spec_helper"
 
 module Admin
   describe LocationsController do
-    let(:organization)              { create(:organization, :seller) }
-    let(:location)                  { create(:location, organization: organization) }
-    let(:market)                    { create(:market, organizations: [organization]) }
+    let(:org)                       { create(:organization, :buyer) }
+    let(:location)                  { create(:location, organization: org) }
+    let(:market)                    { create(:market, organizations: [org]) }
     let(:admin)                     { create(:user, :admin) }
-    let(:non_member)                { create(:user) }
+    let(:non_member)                { create(:user, :market_manager) }
     let(:market_manager_non_member) { create(:user, :market_manager) }
 
+    let(:organization) do
+      create(:user, :buyer).tap do |user|
+        user.organizations << org
+      end
+    end
+
     let(:member) do
-      create(:user).tap do |user|
-        user.organizations << organization
+      create(:user, :buyer).tap do |user|
+        user.organizations << org
       end
     end
 
     let(:market_manager_member) do
       create(:user, :market_manager).tap do |market_manager|
-        market_manager.organizations << organization
+        market_manager.organizations << org
       end
     end
 
@@ -27,13 +33,13 @@ module Admin
 
     describe "#index" do
       it_behaves_like "an action restricted to admin, market manager, member", lambda {
-        get :index, organization_id: organization.id
+        get :index, organization_id: org.id
       }
     end
 
     describe "#new" do
       it_behaves_like "an action restricted to admin, market manager, member", lambda {
-        get :new, organization_id: organization.id
+        get :new, organization_id: org.id
       }
     end
 
@@ -44,7 +50,7 @@ module Admin
       end
 
       it_behaves_like "an action restricted to admin, market manager, member", lambda {
-        post :create, organization_id: organization.id
+        post :create, organization_id: org.id
       }
     end
 
@@ -56,7 +62,7 @@ module Admin
       end
 
       it "renders the new page" do
-        post :create, organization_id: organization.id
+        post :create, organization_id: org.id
         expect(response).to be_success
         expect(flash[:alert]).to eq("Could not save address")
       end
@@ -64,7 +70,7 @@ module Admin
 
     describe "#edit" do
       it_behaves_like "an action restricted to admin, market manager, member", lambda {
-        get :edit, organization_id: organization.id, id: location.id
+        get :edit, organization_id: org.id, id: location.id
       }
     end
 
@@ -75,7 +81,7 @@ module Admin
       end
 
       it_behaves_like "an action restricted to admin, market manager, member", lambda {
-        patch :update, organization_id: organization.id, id: location.id
+        patch :update, organization_id: org.id, id: location.id
       }
     end
 
@@ -87,7 +93,7 @@ module Admin
       end
 
       it "renders the new page" do
-        patch :update, organization_id: organization.id, id: location.id
+        patch :update, organization_id: org.id, id: location.id
         expect(response).to be_success
         expect(flash[:alert]).to eq("Could not update address")
       end
@@ -96,7 +102,7 @@ module Admin
     describe "#update_defaults" do
       it_behaves_like "an action restricted to admin, market manager, member", lambda {
         put :update_default,
-          organization_id: organization.id,
+          organization_id: org.id,
           default_billing_id: location.id,
           default_shipping_id: location.id
       }
@@ -104,7 +110,7 @@ module Admin
 
     describe "#destroy" do
       it_behaves_like "an action restricted to admin, market manager, member", lambda {
-        delete :destroy, organization_id: organization.id, location_ids: []
+        delete :destroy, organization_id: org.id, location_ids: []
       }
     end
   end
