@@ -187,7 +187,7 @@
             <% end %>
           </td>
           <td class="price"> <% if FeatureAccess.can_edit_order?(user: current_user, order: order) and order.payment_status == "unpaid" %>
-           <%= link_to "#{number_to_currency item.object.unit_price}", "/admin/orders/#{order.id}/order_items/#{item.object.id}" %><% else %> <%= number_to_currency item.object.unit_price %>
+           <%= link_to "#{number_to_currency item.object.unit_price}", "/admin/orders/#{order.id}/order_items/#{item.object.id}", class: 'edit-toggle' %><% else %> <%= number_to_currency item.object.unit_price %>
             <% end %>
           </td>
           <td class="total"><%= number_to_currency item.object.gross_total %></td>
