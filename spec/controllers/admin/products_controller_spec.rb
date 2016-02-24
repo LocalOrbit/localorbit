@@ -81,7 +81,7 @@ describe Admin::ProductsController do
     let(:admin)                     { create(:user, :admin) }
     let(:non_member)                { create(:user, :supplier) }
     let(:market_manager_non_member) { create(:user, :market_manager) }
-    let(:organization_member)       { create(:user, :supplier, organizations:[seller]) }
+    let(:organization)              { create(:user, :supplier, organizations:[seller]) }
     let(:market_manager_member)     { create(:user, :market_manager, organizations: [seller]) }
     let(:market)                    { create(:market, organizations:[seller])}
 

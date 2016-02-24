@@ -26,7 +26,7 @@ shared_examples "an action restricted to admin, market manager, member" do |acti
   end
 
   it "grants access to organization members" do
-    sign_in organization_member
+    sign_in organization
 
     instance_exec(&action)
 

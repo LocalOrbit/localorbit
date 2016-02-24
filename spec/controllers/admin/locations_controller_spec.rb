@@ -2,7 +2,7 @@ require "spec_helper"
 
 module Admin
   describe LocationsController do
-    let(:organization)              { create(:organization) }
+    let(:organization)              { create(:organization, :seller) }
     let(:location)                  { create(:location, organization: organization) }
     let(:market)                    { create(:market, organizations: [organization]) }
     let(:admin)                     { create(:user, :admin) }
