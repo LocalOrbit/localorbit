@@ -59,20 +59,31 @@ class Admin::MarketsController < AdminController
   end
 
   def confirm_pending
-    # Activate the market
-    @market.update_attribute(:pending, params[:pending])
-    @market.update_attribute(:active, true)
+    # Invite the market requester to be a Market Manager
+    results = AddMarketManager.perform(market: @market, email: @market.contact_email, inviter: current_user)
 
-    # Define a temporary user for purposes of invitation
-    @user = User.new do |u|
-      u.name = @market.contact_name
-      u.email = @market.contact_email
+    # If successful, then
+    if results.success?
+      # activate the market...
+      @market.update_attribute(:pending, params[:pending])
+      @market.update_attribute(:active, true)
+
+      # ...define a temporary user for purposes of the welcome email...
+      @user = User.new do |u|
+        u.name = @market.contact_name
+        u.email = @market.contact_email
+      end
+
+      # ...send market requester a welcome email...
+      UserMailer.delay.market_welcome(@user, @market)
+
+      # ...and redirect with a notification message
+      redirect_to :back, notice: "Updated #{@market.name}"
+
+    else
+      # Otherwise, redirect with the error message
+      redirect_to :back, alert: "Could not update #{@market.name}"
     end
-
-    # Send Market manager an account confirmation email
-    UserMailer.delay.market_welcome(@user, @market)
-
-    redirect_to :back, notice: "Updated #{@market.name}"
  end
 
   def payment_options
