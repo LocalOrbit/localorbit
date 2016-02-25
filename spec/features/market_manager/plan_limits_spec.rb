@@ -3,9 +3,9 @@ require "spec_helper"
 describe "Plan Limits" do
   let(:plan)      { create(:plan, :grow) }
   let!(:market_org) { create(:organization, :market, plan: plan)}
-  let!(:market)   { create(:market, :with_delivery_schedule, :with_address, organization: market_org) }
-  let!(:seller)   { create(:organization, :seller, markets: [market]) }
-  let!(:buyer)    { create(:organization, :buyer, markets: [market]) }
+  let!(:market)   { create(:market, :with_delivery_schedule, :with_address, organization: market_org, organizations: [buyer,seller]) }
+  let!(:seller)   { create(:organization, :seller) }
+  let!(:buyer)    { create(:organization, :buyer) }
   let!(:product)  { create(:product, :sellable, organization: seller) }
   let!(:order_item) {create(:order_item, order: order, product: product)}
   let(:order)     { create :order, :with_items, organization: buyer, market: market }
@@ -56,6 +56,13 @@ describe "Plan Limits" do
   context "as a market manager" do
     context "on a grow plan" do
       let!(:plan) { create(:plan, :grow) }
+      let!(:role) { create(:role, :grow_plan)}
+
+      before do
+        user.roles = []
+        user.roles << role
+        visit "/"
+      end
 
       it "is allowed to view table tents or posters" do
         user.organizations << buyer
@@ -68,6 +75,13 @@ describe "Plan Limits" do
 
     context "on the startup plan" do
       let!(:plan) { create(:plan, :start_up) }
+      let!(:role) { create(:role, :start_up_plan)}
+
+      before do
+        user.roles = []
+        user.roles << role
+        visit "/"
+      end
 
       it "is not allowed to manage discount codes" do
         within("#admin-nav") do
