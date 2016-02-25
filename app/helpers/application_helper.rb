@@ -33,7 +33,7 @@ module ApplicationHelper
   end
 
   def show_financials?(user, market)
-    user.buyer_only? && user.managed_organizations.where(allow_purchase_orders: true).any? && market.try(:allow_purchase_orders?)
+    user.admin? || user.market_manager? || user.seller? || (user.buyer_only? && user.managed_organizations.where(allow_purchase_orders: true).any? && market.try(:allow_purchase_orders?))
   end
 
   def column_sort_classes(column)

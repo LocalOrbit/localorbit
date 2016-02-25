@@ -5,7 +5,7 @@ describe "Viewing the cart", js:true do
     Timecop.travel("May 12, 2014")
   end
 
-  let!(:user)             { create(:user) }
+  let!(:user)             { create(:user, :buyer) }
   let!(:buyer)            { create(:organization, :single_location, :buyer, users: [user]) }
 
   let!(:fulton_farms)     { create(:organization, :seller, :single_location, name: "Fulton St. Farms") }

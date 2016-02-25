@@ -1,12 +1,15 @@
 require "spec_helper"
 
 describe "Manage sellers edit orders" do
-  let!(:user) { create(:user) }
+  let!(:user) { create(:user, :market_manager) }
   let(:grow_plan) {create(:plan, :grow)}
   let(:start_up_plan) {create(:plan, :start_up)}
 
-  let!(:sellers_edit_orders_market)     { create(:market, plan: grow_plan, managers: [user], sellers_edit_orders: false) }
-  let!(:not_sellers_edit_orders_market) { create(:market, plan: start_up_plan, managers: [user], sellers_edit_orders: false) }
+  let!(:sellers_org)                    { create(:organization, :market, plan: grow_plan)}
+  let!(:sellers_edit_orders_market)     { create(:market, organization: sellers_org, managers: [user], sellers_edit_orders: false) }
+
+  let!(:not_sellers_org)                { create(:organization, :market, plan: start_up_plan)}
+  let!(:not_sellers_edit_orders_market) { create(:market, organization: not_sellers_org, managers: [user], sellers_edit_orders: false) }
 
   context "for a non-sellers edit orders plan" do
 

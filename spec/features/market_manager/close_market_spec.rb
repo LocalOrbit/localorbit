@@ -1,13 +1,13 @@
 require "spec_helper"
 
 feature "Opening and closing a market:" do
-  let!(:seller)         { create(:organization, :seller, :single_location, markets: [market]) }
-  let!(:buyer)          { create(:organization, :buyer, :single_location, markets: [market]) }
+  let!(:seller)         { create(:organization, :seller, :single_location) }
+  let!(:buyer)          { create(:organization, :buyer, :single_location) }
   let!(:products)       { create_list(:product, 5, :sellable, organization: seller) }
-  let!(:market_manager) { create(:user, :market_manager, organizations: [buyer], managed_markets: [market]) }
+  let!(:market)         { create(:market, :with_addresses, :with_delivery_schedule, organizations: [buyer,seller]) }
+  let!(:market_manager) { create(:user, :market_manager, managed_markets: [market]) }
 
   context "when a market is open" do
-    let!(:market) { create(:market, :with_addresses, :with_delivery_schedule) }
 
     scenario "a market manager can close a market" do
       switch_to_subdomain market.subdomain
@@ -33,7 +33,6 @@ feature "Opening and closing a market:" do
   end
 
   context "when the market is already closed" do
-    let!(:market)         { create(:market, :with_addresses, :with_delivery_schedule) }
     scenario "a market manager can open a market" do
       switch_to_subdomain market.subdomain
       sign_in_as(market_manager)
