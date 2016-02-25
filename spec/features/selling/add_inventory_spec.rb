@@ -1,11 +1,12 @@
 require "spec_helper"
 
 describe "Adding advanced inventory" do
-  let(:user) { create(:user, :market_manager) }
-  let(:product) { create(:product, use_simple_inventory: false) }
+  let(:user) { create(:user, :supplier) }
+  let(:seller) { create(:organization, :seller)}
+  let(:product) { create(:product, organization: seller, use_simple_inventory: false) }
 
   let(:empty_inventory_message) { "You don't have any Inventory" }
-  let(:market)  { create(:market, organizations: [product.organization]) }
+  let(:market)  { create(:market, organizations: [seller]) }
 
   let(:new_lot_form_id) { "#p#{product.id}_new_lot" }
 
@@ -104,7 +105,7 @@ describe "Adding advanced inventory" do
 
   context "with js", js: true do
     before do
-      product.organization.users << user
+      seller.users << user
       sign_in_as(user)
       within "#admin-nav" do
 

@@ -15,16 +15,16 @@ describe "Adding a product", chosen_js: true do
     end
   end
 
-  let!(:market)                { create(:market, :with_addresses) }
   let!(:aggregation_point)     { create(:market_address, market: market, name: "Aggregation Point", address: "1123 Grand Rd.", city: "Appleton", state: "WI", zip: "83992") }
-  let!(:org)                   { create(:organization, :seller, :single_location, markets: [market], who_story: "We sell products", how_story: "We sell products very carefully") }
+  let!(:org)                   { create(:organization, :seller, :single_location, who_story: "We sell products", how_story: "We sell products very carefully") }
   let(:stub_warning_pricing)   { "will not appear in the shop until you add Pricing" }
   let(:stub_warning_inventory) { "will not appear in the shop until you add Inventory" }
   let(:stub_warning_both)      { "will not appear in the shop until you add Inventory and add Pricing" }
   let(:organization_label)     { "Product Organization" }
   let!(:user)                  { create(:user, :supplier, organizations: [org]) }
+  let!(:market)                { create(:market, :with_addresses, organizations: [org]) }
 
-  let!(:inactive_seller) { create(:organization, :seller, markets: [market], active: false) }
+  let!(:inactive_seller) { create(:organization, :seller, active: false) }
 
   let!(:mondays_schedule) { create(:delivery_schedule, market: market, day: 1, require_delivery: true) }
   let(:monday_schedule_description) { "Mondays from 7:00 AM to 11:00 AM direct to customer. (required)" }
