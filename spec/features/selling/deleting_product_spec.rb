@@ -4,7 +4,7 @@ feature "Deleting a product from the product list" do
 
   let!(:market_manager) { create(:user, :market_manager) }
   let!(:market) { market_manager.managed_markets.first }
-  let!(:org1) { create(:organization, markets: [market]) }
+  let!(:org1) { create(:organization, :seller, markets: [market]) }
   let!(:product1) { create(:product, organization: org1) }
   let!(:product2) { create(:product, organization: org1) }
   let!(:user) { create(:user, :supplier, organizations: [org1]) }
