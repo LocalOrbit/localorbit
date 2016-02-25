@@ -1,16 +1,17 @@
 require "spec_helper"
 
 feature "Viewing orders" do
-  let!(:market1)                   { create(:market, market_seller_fee: 5, local_orbit_seller_fee: 4) }
   let!(:market1_delivery_schedule) { create(:delivery_schedule, market: market1, day: 2, fee: 7.12, fee_type: "fixed") }
-  let!(:market1_delivery)          { market1.delivery_schedules.first.next_delivery }
+  let!(:market1_delivery)    { market1.delivery_schedules.first.next_delivery }
 
-  let!(:market1_seller_org1) { create(:organization, :seller, markets: [market1]) }
-  let!(:market1_seller_org2) { create(:organization, :seller, markets: [market1]) }
-  let!(:market1_buyer_org1)  { create(:organization, :buyer,  markets: [market1]) }
-  let!(:market1_buyer_org2)  { create(:organization, :buyer,  markets: [market1]) }
+  let!(:market1_seller_org1) { create(:organization, :seller) }
+  let!(:market1_seller_org2) { create(:organization, :seller) }
+  let!(:market1_buyer_org1)  { create(:organization, :buyer) }
+  let!(:market1_buyer_org2)  { create(:organization, :buyer) }
   let!(:market1_product1)    { create(:product, :sellable, organization: market1_seller_org1) }
   let!(:market1_product2)    { create(:product, :sellable, organization: market1_seller_org2) }
+
+  let!(:market1)             { create(:market, organizations: [market1_seller_org1,market1_seller_org2,market1_buyer_org1,market1_buyer_org2], market_seller_fee: 5, local_orbit_seller_fee: 4) }
 
   let(:discount_seller) { "2.51".to_d }
   let(:discount_market) { "1.05".to_d }
@@ -25,14 +26,15 @@ feature "Viewing orders" do
   let!(:market1_order_item5) { create(:order_item, seller_name: market1_seller_org2, product: market1_product2) }
   let!(:market1_order3)      { create(:order, items: [market1_order_item5], organization: market1_buyer_org1, market: market1, total_cost: market1_order_item5.gross_total + 7.12, delivery_fees: 7.12, delivery: market1_delivery) }
 
-  let!(:market2)          { create(:market, :with_delivery_schedule, market_seller_fee: 5, local_orbit_seller_fee: 4) }
-  let!(:market2_delivery) { market2.delivery_schedules.first.next_delivery }
+  let!(:market2_delivery)    { market2.delivery_schedules.first.next_delivery }
 
-  let!(:market2_seller_org1) { create(:organization, :seller, markets: [market2]) }
-  let!(:market2_seller_org2) { create(:organization, :seller, markets: [market2]) }
-  let!(:market2_buyer_org)   { create(:organization, :buyer,  markets: [market2]) }
+  let!(:market2_seller_org1) { create(:organization, :seller) }
+  let!(:market2_seller_org2) { create(:organization, :seller) }
+  let!(:market2_buyer_org)   { create(:organization, :buyer) }
   let!(:market2_product1)    { create(:product, :sellable, organization: market2_seller_org1) }
   let!(:market2_product2)    { create(:product, :sellable, organization: market2_seller_org2) }
+
+  let!(:market2)             { create(:market, :with_delivery_schedule, organizations: [market2_seller_org1,market2_seller_org2,market2_buyer_org], market_seller_fee: 5, local_orbit_seller_fee: 4) }
 
   let!(:market2_order_item1) { create(:order_item, seller_name: market2_seller_org1.name, product: market2_product1, quantity: 2, unit_price: 4.99, market_seller_fee: 0.50, local_orbit_seller_fee: 0.40) }
   let!(:market2_order_item2) { create(:order_item, seller_name: market2_seller_org2.name, product: market2_product2, quantity: 2, unit_price: 8.99, market_seller_fee: 0.90, local_orbit_seller_fee: 0.72) }
@@ -116,7 +118,7 @@ feature "Viewing orders" do
   end
 
   context "as a market_manager" do
-    let!(:user) { create(:user, :market_manager, organizations: [market1_seller_org1, market1_seller_org2, market1_buyer_org1, market1_buyer_org2, market2_seller_org1, market2_seller_org2, market2_buyer_org], managed_markets: [market1, market2]) }
+    let!(:user) { create(:user, :market_manager, managed_markets: [market1, market2]) }
 
     before do
       switch_to_subdomain(market1.subdomain)

@@ -3,7 +3,7 @@ require "spec_helper"
 describe "A Market Manager", :vcr do
   let!(:market)  { create(:market, :with_delivery_schedule) }
   let!(:market2) { create(:market) }
-  let!(:market_manager) { create :user, :market_manager, managed_markets: [market] }
+  let!(:market_manager) { create :user, :market_manager, managed_markets: [market, market2] }
 
   before(:each) do
     switch_to_subdomain(market.subdomain)
