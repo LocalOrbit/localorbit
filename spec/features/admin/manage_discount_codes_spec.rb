@@ -4,7 +4,7 @@ describe "Manage Discount Codes" do
   let!(:startup_plan)        { create(:plan, :start_up, discount_codes: false) }
   let!(:grow_plan)           { create(:plan, :grow, discount_codes: true) }
 
-  let(:supplier)         { create(:organization, :seller) }
+  let(:supplier)             { create(:organization, :seller) }
 
   let!(:market_org1)         { create(:organization,:market, plan: grow_plan)}
   let!(:market)              { create(:market, organization: market_org1, organizations:[supplier]) }
