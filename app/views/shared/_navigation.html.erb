@@ -51,7 +51,7 @@ end
       </ul>
     </li>
     <% end %>
-    <% if policy(:financial).index? %><li><%= link_to raw('<i class="font-icon" data-icon="&#xe00f;"></i>Financials'), admin_financials_path %></li><% end %>
+    <% if policy(:financial).index? && show_financials?(current_user, current_market) %><li><%= link_to raw('<i class="font-icon" data-icon="&#xe00f;"></i>Financials'), admin_financials_path %></li><% end %>
 
     <!-- buyer -->
     <% if policy(:order).index? || policy(:template).index? || policy(:delivery).index? || policy(:order_item).index? || policy(:delivery_schedule).index? %>
