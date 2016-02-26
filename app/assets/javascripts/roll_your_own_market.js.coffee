@@ -1,37 +1,40 @@
 (->
-  new_market = undefined
-  $ ->
-    strip_key_flag = $('meta[name="stripe-key"]').attr('content')
-    if strip_key_flag?
-      Stripe.setPublishableKey(strip_key_flag)
-      new_market.setupForm()
-
-  new_market =
-    setupForm: ->
-      $('#new_market_registration').submit ->
-        $('input[type=submit]').attr 'disabled', true
-        if $('#card_number').length
-          new_market.processCard()
-          false
-        else
-          true
-    processCard: ->
-      card = undefined
-      card =
-        number: $('#card_number').val()
-        cvc: $('#security_code').val()
-        expMonth: $('#expiration_month').val()
-        expYear: $('#expiration_year').val()
-      Stripe.createToken card, new_market.handleStripeResponse
-    handleStripeResponse: (status, response) ->
-      if status == 200
-        $('#market_stripe_tok').val response.id
-        $('#new_market_registration')[0].submit()
-      else
-        alert 'Status: ' + status + '\nError message: ' + response.error.message
-        $('input[type=submit]').attr 'disabled', false
-
   $(document).ready ->
+    validateForm = (form) ->
+      ret_val = form.validate(
+        rules:
+          'market[contact_name]': required: true
+          'market[contact_email]':
+            required: true
+            email: true
+          'market[contact_phone]': required: true
+          'market[name]': required: true
+          'market[subdomain]':
+            required: true
+            lowercase: true
+            remote:
+              url: '/roll_your_own_market/unique_subdomain'
+              type: 'post'
+          'accept-terms-of-service': required: true
+          'billing[address]': required: true
+          'billing[city]': required: true
+          'billing[state]': required: true
+          'billing[zip]': required: true
+          'billing[phone]': required: true
+          'details[plan]': required: true
+          'details[plan_price]': required: true
+          'details[coupon]': required: false
+        messages: 'market[subdomain]':
+          remote: 'Subdomain already in use'
+          lowercase: 'The subdomain may only contain lower case letters')
+      ret_val
+
+    # New and overridden validation methods
+    $.validator.methods.lowercase = (value, element) ->
+      @optional(element) or /^[a-z]+$/.test(value)
+
+    $.validator.methods.email = (value, element) ->
+      @optional(element) or /[a-z]+@[a-z]+\.[a-z][a-z]+/.test(value)
 
     change_price = (modifier) ->
       # Initialize
@@ -64,11 +67,13 @@
     # Coordinates the 'Previous' and 'Continue' button clicks with the corresponding tab interface actions
     ###
     wizard_nav = (button) ->
-      clicked_form_nav = button
-      target_tab_nav = $('#market-tab-list').find('a[href="' + clicked_form_nav.attr('target') + '"]')
-      target_tab_nav.trigger 'click'
+      validateForm $('#new_market_registration')
+      if $('#new_market_registration').valid()
+        clicked_form_nav = button
+        target_tab_nav = $('#market-tab-list').find('a[href="' + clicked_form_nav.attr('target') + '"]')
+        target_tab_nav.trigger 'click'
       return
-
+  
     ###*
     # manage_section_state
     # Manages the tab classes on page load and on input change 
@@ -135,7 +140,8 @@
       # Prevent the form submission.
       e.preventDefault()
       # Disable the button
-      $(this).prop 'disabled', true
+      button = $(this)
+      button.prop 'disabled', true
       # get the submitted discount code
       discount_box = $('#details_coupon')
       coupon = discount_box.val()
@@ -163,16 +169,52 @@
           # ...inform the user...
           alert response.responseText
           # ...re-enable the button...
-          $(this).prop 'disabled', false
+          button.prop 'disabled', false
           # ...and hide the progress bar.
           $('#progress-bar').addClass 'is-hidden'
           return
         # If it is blank then alert the error
       else
         alert 'Please enter a discount code'
-        $(this).prop 'disabled', false
+        button.prop 'disabled', false
       return
 
     return
   return
+  
+  new_market = undefined
+  $ ->
+    strip_key_flag = $('meta[name="stripe-key"]').attr('content')
+    if strip_key_flag?
+      Stripe.setPublishableKey(strip_key_flag)
+      new_market.setupForm()
+
+  new_market =
+    setupForm: ->
+      $('#new_market_registration').submit ->
+        $('input[type=submit]').attr 'disabled', true
+        validateForm $('#new_market_registration')
+        if $('#new_market_registration').valid()
+          if $('#card_number').length
+            new_market.processCard()
+            false
+          else
+            true
+        else
+          false
+    processCard: ->
+      card = undefined
+      card =
+        number: $('#card_number').val()
+        cvc: $('#security_code').val()
+        expMonth: $('#expiration_month').val()
+        expYear: $('#expiration_year').val()
+      Stripe.createToken card, new_market.handleStripeResponse
+    handleStripeResponse: (status, response) ->
+      if status == 200
+        $('#market_stripe_tok').val response.id
+        $('#new_market_registration')[0].submit()
+      else
+        alert 'Status: ' + status + '\nError message: ' + response.error.message
+        $('input[type=submit]').attr 'disabled', false
 ).call this

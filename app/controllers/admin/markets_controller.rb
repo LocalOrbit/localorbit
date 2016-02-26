@@ -62,7 +62,7 @@ class Admin::MarketsController < AdminController
     # Invite the market requester to be a Market Manager
     results = AddMarketManager.perform(market: @market, email: @market.contact_email, inviter: current_user)
 
-    # If successful, then
+    # If invitation sent successfully, then
     if results.success?
       # activate the market...
       @market.update_attribute(:pending, params[:pending])

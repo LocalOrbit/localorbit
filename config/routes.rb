@@ -218,6 +218,7 @@ Rails.application.routes.draw do
   resource :roll_your_own_market, only: [] do
     post :get_stripe_coupon
     post :get_stripe_plans
+    post :unique_subdomain
   end
 
   resources :sellers, only: [:index, :show]

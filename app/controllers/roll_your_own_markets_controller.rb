@@ -63,4 +63,14 @@ class RollYourOwnMarketsController < ApplicationController
 		  render :status => e.http_status, :text => err[:message]
     end
 	end
+
+	def unique_subdomain
+			market = Market.where("subdomain = :subdomain", { subdomain: params['market']['subdomain'] }).first
+
+			if market.nil?
+				render json: true
+			else
+				render json: false
+			end
+	end
 end
