@@ -39,8 +39,12 @@ describe "Manage Discount Codes" do
     context "plan does not allow discount codes" do
       let!(:market_org)         { create(:organization, :market, plan: startup_plan)}
       let!(:market) { create(:market, organization: market_org) }
+      let!(:role) { create(:role, :start_up_plan)}
 
       it "does not see Discount Codes in the menu" do
+        user.roles = []
+        user.roles << role
+        visit "/"
         within "#admin-nav" do
           click_link "Marketing"
         end
