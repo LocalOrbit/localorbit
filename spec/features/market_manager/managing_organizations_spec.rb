@@ -3,7 +3,7 @@ require "spec_helper"
 describe "A Market Manager", :vcr do
   let!(:market)  { create(:market, :with_delivery_schedule) }
   let!(:market2) { create(:market) }
-  let!(:market_manager) { create :user, :market_manager, managed_markets: [market,market2] }
+  let!(:market_manager) { create :user, :market_manager, managed_markets: [market] }
 
   before(:each) do
     switch_to_subdomain(market.subdomain)
@@ -16,8 +16,6 @@ describe "A Market Manager", :vcr do
       it "creates the organization" do
         visit "/admin/organizations"
         click_link "Add Organization"
-
-        select market.name from: "Markets"
 
         check "Can sell products"
         #expect(page).to have_content("Profile photo")
