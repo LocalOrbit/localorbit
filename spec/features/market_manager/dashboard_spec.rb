@@ -1,8 +1,8 @@
 require "spec_helper"
 
 feature "a market manager viewing their dashboard", :js, :shaky do
-  let!(:user) { create(:user) }
-  let!(:buyer) { create(:organization, :single_location, :buyer, users: [user]) }
+  let!(:user) { create(:user, :market_manager) }
+  let!(:buyer) { create(:organization, :single_location, :buyer) }
   let!(:market) { create(:market, :with_addresses, organizations: [buyer]) }
   let!(:market_manager) { create(:user, :market_manager, managed_markets: [market]) }
   let(:zaphod_farms) {create(:organization, :seller, :single_location, name: "Zaphod")}

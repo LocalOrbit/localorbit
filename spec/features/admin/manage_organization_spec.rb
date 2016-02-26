@@ -1,6 +1,6 @@
 require "spec_helper"
 
-describe "admin manange organization" do
+describe "admin manange organization", :vcr do
   let(:user) { create(:user, :admin) }
 
   it "create new organization with multiple markets available", :js do
@@ -9,8 +9,8 @@ describe "admin manange organization" do
 
     switch_to_subdomain(market1.subdomain)
     sign_in_as(user)
-    visit new_admin_organization_path
-    #click_link "Add Organization"
+    visit "/admin/organizations"
+    click_link "Add Organization"
 
     check "Can sell products"
     expect(page).to have_content("Who")
@@ -50,7 +50,7 @@ describe "admin manange organization" do
     expect(find_field("Organization is active")).not_to be_checked
   end
 
-  it "should not see payment types that are disabled for the market", :js do
+  it "should not see payment types that are disabled for the market" do
     market = create(:market, name: "Market 1", allow_purchase_orders: false, allow_credit_cards: true)
 
     switch_to_subdomain(market.subdomain)
@@ -320,8 +320,8 @@ describe "admin manange organization" do
   context "CSV export" do
     let!(:market)        { create(:market) }
     let!(:market2)       { create(:market) }
-    let!(:organization)  { create(:organization, name: "University of Michigan Farmers", markets: [market]) }
-    let!(:organization2) { create(:organization, name: "Other organization", markets: [market2]) }
+    let!(:organization)  { create(:organization, :seller, name: "University of Michigan Farmers", markets: [market]) }
+    let!(:organization2) { create(:organization, :seller, name: "Other organization", markets: [market2]) }
     let!(:admin)         { create(:user, :admin) }
 
     it "can see a list of organizations" do
@@ -342,9 +342,9 @@ describe "admin manange organization" do
   context "user management" do
     let!(:market) { create(:market) }
     let!(:admin) { create(:user, :admin) }
-    let!(:user) { create(:user, :market_manager, name: "Design Dude") }
+    let!(:user) { create(:user, :supplier, name: "Design Dude") }
     let!(:organization) do
-      create(:organization, name: "University of Michigan Farmers", markets: [market], users: [user])
+      create(:organization, :seller, name: "University of Michigan Farmers", markets: [market], users: [user])
     end
     let!(:user2) { create(:user, :supplier, organizations: [organization]) }
 
@@ -410,10 +410,10 @@ describe "admin manange organization" do
   end
 
   context "sorting", :js do
-    let!(:market)         { create(:market) }
-    let!(:organization_a) { create(:organization, markets: [market], name: "A Organization", can_sell: false, created_at: "2014-01-01") }
-    let!(:organization_b) { create(:organization, markets: [market], name: "B Organization", can_sell: true, created_at: "2013-01-01") }
-    let!(:organization_c) { create(:organization, markets: [market], name: "C Organization", can_sell: false, created_at: "2012-01-01") }
+    let!(:organization_a) { create(:organization, :buyer, name: "A Organization", can_sell: false, created_at: "2014-01-01") }
+    let!(:organization_b) { create(:organization, :seller, name: "B Organization", can_sell: true, created_at: "2013-01-01") }
+    let!(:organization_c) { create(:organization, :buyer, name: "C Organization", can_sell: false, created_at: "2012-01-01") }
+    let!(:market)         { create(:market, organizations: [organization_a,organization_b,organization_c]) }
 
     before do
       switch_to_subdomain(market.subdomain)
@@ -481,6 +481,7 @@ describe "admin manange organization" do
 
     context "single market membership" do
       let!(:seller) { create(:organization, :seller, name: "Holland Farms", markets: [market]) }
+      let!(:seller2) { create(:organization, :seller, name: "Other Seller", markets: [market]) }
       let!(:buyer) { create(:organization, :buyer, name: "Hudsonville Restaurant", markets: [market]) }
 
       it "removes the organization from the organizations list" do

@@ -31,7 +31,15 @@ module Admin
     end
 
     def create
-      result = RegisterStripeOrganization.perform(organization_params: organization_params, user: current_user, market_id: params[:initial_market_id])
+      org_type = nil
+      if organization_params[:can_sell]
+        if organization_params[:can_sell]=="1"
+          org_type = "S"
+        else
+          org_type = "B"
+        end
+      end
+      result = RegisterStripeOrganization.perform(organization_params: organization_params.merge({:org_type => org_type}), user: current_user, market_id: params[:initial_market_id])
 
       if result.success?
         organization = result.organization
