@@ -11,16 +11,14 @@ end
 
 
 feature "Reports" do
-  let!(:buyer)     { create(:organization, :buyer, name: "Foo Buyer", can_sell: false) }
-  let!(:buyer2)    { create(:organization, :buyer, name: "Bar Buyer", can_sell: false) }
-  let!(:seller)    { create(:organization, :seller, name: "Foo Seller", can_sell: true) }
-  let!(:seller2)   { create(:organization, :seller, name: "Bar Seller", can_sell: true) }
-  let!(:buyer3)    { create(:organization, :buyer, name: "Baz Buyer", can_sell: false) }
-  let!(:seller3)   { create(:organization, :seller, name: "Baz Seller", can_sell: true) }
+  let!(:market)    { create(:market, name: "Foo Market", po_payment_term: 30, timezone: "Eastern Time (US & Canada)") }
+  let!(:market2)   { create(:market, name: "Bar Market", po_payment_term: 30, timezone: "Eastern Time (US & Canada)") }
+  let!(:market3)   { create(:market, name: "Baz Market", po_payment_term: 30, timezone: "Eastern Time (US & Canada)") }
 
-  let!(:market)    { create(:market, name: "Foo Market", organizations: [buyer, seller], po_payment_term: 30, timezone: "Eastern Time (US & Canada)") }
-  let!(:market2)   { create(:market, name: "Bar Market", organizations: [buyer2, seller2], po_payment_term: 30, timezone: "Eastern Time (US & Canada)") }
-  let!(:market3)   { create(:market, name: "Baz Market", organizations: [buyer3, seller3], po_payment_term: 30, timezone: "Eastern Time (US & Canada)") }
+  let!(:buyer)     { create(:organization, :buyer, markets: [market], name: "Foo Buyer", can_sell: false) }
+  let!(:buyer2)    { create(:organization, :buyer, markets: [market2], name: "Bar Buyer", can_sell: false) }
+  let!(:seller)    { create(:organization, :seller, markets: [market], name: "Foo Seller", can_sell: true) }
+  let!(:seller2)   { create(:organization, :seller, markets: [market2], name: "Bar Seller", can_sell: true) }
 
   let!(:subdomain) { market.subdomain }
   let!(:report)    { :total_sales }
@@ -31,6 +29,9 @@ feature "Reports" do
   before do
     delivery_schedule2 = create(:delivery_schedule, market: market2)
     delivery2 = delivery_schedule2.next_delivery
+
+    buyer3  = create(:organization, :buyer, name: "Baz Buyer", markets: [market3], can_sell: false)
+    seller3  = create(:organization, :seller, name: "Baz Seller", markets: [market3], can_sell: true)
 
     5.times do |i|
       this_date = order_date + i.days
@@ -49,7 +50,7 @@ feature "Reports" do
                             market_seller_fee: 0.50,
                             payment_seller_fee: 1.25,
                             local_orbit_seller_fee: 1.50
-                           )
+        )
         order = create(:order,
                        market_id: market.id,
                        delivery: delivery,
@@ -90,19 +91,12 @@ feature "Reports" do
     end
 
     this_date = order_date - 1.day
-    category = create(:category, name: "Category-03-01")
-    product = create(:product,
-                     :sellable,
-                     name: "Product-Market-03-01",
-                     category: category,
-                     organization: seller3)
     order_item = create(:order_item,
+                        product: create(:product, :sellable, organization: seller3),
                         created_at: this_date,
-                        product: product,
-                        seller_name: "Seller-03-01",
+                        seller_name: "Seller-03-1",
                         unit_price: 301, quantity: 1)
     create(:order,
-           market_id: market3.id,
            placed_at: this_date,
            delivery: delivery,
            items: [order_item],
@@ -113,22 +107,10 @@ feature "Reports" do
 
     # Order outside of default date range
     older_date = 5.weeks.ago
-    category = create(:category, name: "Category-03-02")
-    product = create(:product,
-                     :sellable,
-                     name: "Product-Market-03-02",
-                     category: category,
-                     organization: seller3)
-    order_item = create(:order_item,
-                        created_at: this_date,
-                        product: product,
-                        seller_name: "Seller-03-02",
-                        unit_price: 301, quantity: 1)
     create(:order,
-           market_id: market3.id,
            placed_at: older_date,
            delivery: delivery,
-           items: [order_item],
+           items: [create(:order_item, product: create(:product, :sellable, organization: seller3), created_at: older_date)],
            organization: buyer3,
            payment_method: "credit card",
            payment_status: "unpaid",
@@ -169,7 +151,7 @@ feature "Reports" do
     end
 
     context "as any user" do
-      let!(:user)   { create(:user, :market_manager, managed_markets: [market,market2,market3]) }
+      let!(:user)   { create(:user, :admin) }
       let!(:report) { :total_sales }
 
       scenario "date range defaults to last 30 days and can filter results" do
@@ -682,14 +664,14 @@ feature "Reports" do
       end
 
       context "with purchases" do
-        let!(:order)     { create(:order, :with_items, market: market2, organization: buyer2) }
+        let!(:order)     { create(:order, items: [create(:order_item, product: create(:product, :sellable, organization: seller2))], market: market2, organization: buyer2) }
 
         before do
           visit_report_view
         end
 
-        context "Purchases by Product report" do
-          let!(:report) { :purchases_by_product }
+        context "Sales by Product report" do
+          let!(:report) { :sales_by_product }
 
           # Filters are reused from other reports so we just need to ensure
           # the right ones show on the page.
@@ -704,14 +686,13 @@ feature "Reports" do
           scenario "displays total sales" do
             totals = Dom::Admin::TotalSales.first
 
-            expect(totals.gross_sales).to eq("$6.99")
+            expect(totals.gross_sales).to eq("$116.99")
             expect(totals.market_fees).to eq("$0.00")
             expect(totals.lo_fees).to eq("$0.00")
             expect(totals.processing_fees).to eq("$0.00")
             expect(totals).to_not have_content("Delivery Fee")
-            #expect(totals.discounts).to eq("$0.00")
             expect(totals.discounts).to eq("$0.00")
-            expect(totals.net_sales).to eq("$6.99")
+            expect(totals.net_sales).to eq("$116.99")
           end
 
           it "provides the admin link to Orders" do
@@ -731,7 +712,7 @@ feature "Reports" do
         end
 
         context "Total Purchases report" do
-          let!(:report) { :total_purchases }
+          let!(:report) { :total_sales }
 
           # Filters are reused from other reports so we just need to ensure
           # the right ones show on the page.
@@ -744,13 +725,13 @@ feature "Reports" do
           scenario "displays total sales" do
             totals = Dom::Admin::TotalSales.first
 
-            expect(totals.gross_sales).to eq("$6.99")
+            expect(totals.gross_sales).to eq("$116.99")
             expect(totals.market_fees).to eq("$0.00")
             expect(totals.lo_fees).to eq("$0.00")
             expect(totals.processing_fees).to eq("$0.00")
             expect(totals.discounts).to eq("$0.00")
             expect(totals).to_not have_content("Delivery Fee")
-            expect(totals.net_sales).to eq("$6.99")
+            expect(totals.net_sales).to eq("$116.99")
           end
 
           it "provides the admin link to Orders" do
