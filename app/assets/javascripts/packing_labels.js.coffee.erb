@@ -5,15 +5,27 @@ KnockoutModules.register "download_packing_labels",
 
 $("#print-btn").click (e) ->
   zpl = $("#print-btn").data('zpl')
-  qz.websocket.connect().then(->
-    qz.printers.find ''
-  # Pass the printer name into the next Promise
-  ).then((printer) ->
-    config = qz.configs.create(printer)
+  if !qz.websocket.isActive()
+    qz.websocket.connect().then(->
+      qz.printers.find('')
+    # Pass the printer name into the next Promise
+    ).then((printer) ->
+      config = qz.configs.create(printer)
+      # Create a default config for the found printer
+      data = zpl
+      data.forEach (s) ->
+        qz.print config, s
+    ).catch (e) ->
+      console.error e
+      return
+  else
+    qz.printers.find('').then((printer) ->
+    # Pass the printer name into the next Promise
+      config = qz.configs.create(printer)
     # Create a default config for the found printer
-    data = zpl
-    data.forEach (s) ->
-      qz.print config, s
-  ).catch (e) ->
-    console.error e
-    return
+      data = zpl
+      data.forEach (s) ->
+        qz.print config, s
+    ).catch (e) ->
+      console.error e
+      return
