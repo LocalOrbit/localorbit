@@ -332,6 +332,6 @@
   <%= javascript_include_tag "application" %>
 	<script type="text/javascript" src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.14.0/jquery.validate.min.js"></script>
   <%= include_payment_provider_scripts(@market.payment_provider || 'stripe') %>
-  <%= javascript_include_tag "roll_your_own/roll_your_own_market" %>
+  <%= javascript_include_tag "roll_your_own_market" %>
 </body>
 </html>

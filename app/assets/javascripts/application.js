@@ -48,4 +48,4 @@
 //= require_tree .
 //= stub sticky-headers
 //= stub resolution
-//= stub roll_your_own/roll_your_own_market
+//= stub roll_your_own_market
