@@ -50,7 +50,6 @@ describe "Filter organizations", :js do
 
     context "by can sell" do
       before do
-        user.organizations << [org1,org2,org3,org4]
         sign_in_as(user)
         visit admin_organizations_path
       end
