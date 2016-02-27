@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160220020018) do
+ActiveRecord::Schema.define(version: 20160227174245) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -479,6 +479,7 @@ ActiveRecord::Schema.define(version: 20160220020018) do
     t.integer  "product_label_format",                                   default: 4
     t.boolean  "print_multiple_labels_per_item",                         default: false
     t.integer  "organization_id"
+    t.text     "zpl_logo"
   end
 
   add_index "markets", ["name"], name: "index_markets_on_name", using: :btree
@@ -677,8 +678,8 @@ ActiveRecord::Schema.define(version: 20160220020018) do
     t.string   "pdf_name"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.text     "zpl"
     t.string   "zpl_name"
+    t.json     "zpl"
   end
 
   create_table "payments", force: true do |t|
