@@ -17,6 +17,7 @@ $("#print-btn").click (e) ->
         qz.print config, s
     ).catch (e) ->
       console.error e
+      alert(e)
       return
   else
     qz.printers.find('').then((printer) ->
@@ -28,4 +29,5 @@ $("#print-btn").click (e) ->
         qz.print config, s
     ).catch (e) ->
       console.error e
+      alert(e)
       return

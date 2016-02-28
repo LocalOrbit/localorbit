@@ -39,7 +39,9 @@ module PackingLabels
       context "1-up" do
         let(:product_label_format) { 1 }
 
-        it "works by creating order infos, labels, and then pages for zpl (zebra)" do
+        VCR.use_cassette('labelary', :record => :none) do
+
+          it "works by creating order infos, labels, and then pages for zpl (zebra)", :vcr do
           expect(PackingLabels::OrderInfo).to receive(:make_order_infos).with(orders:orders,host:base_url).and_return(order_infos)
           expect(PackingLabels::Label).to receive(:make_labels).with(order_infos, product_labels_only, product_label_format, print_multiple_labels_per_item).and_return(labels)
           expect(PackingLabels::Page).to receive(:make_pages).with(labels, product_label_format).and_return(pages)
@@ -47,6 +49,7 @@ module PackingLabels
           zpl_result = subject.generate(orders: orders, request: request, product_labels_only: product_labels_only, product_label_format: product_label_format, print_multiple_labels_per_item: print_multiple_labels_per_item) # from HEAD
           expect(zpl_result[0][0]).to include("^XA^FX")
 
+          end
         end
       end
     end
