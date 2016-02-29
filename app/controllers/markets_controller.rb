@@ -8,7 +8,9 @@ class MarketsController < ApplicationController
 
   def show
     @market = current_market || Market.find(params[:id])
-    @market.try(:decorate)
+    if !@market.nil?
+      @market = @market.decorate
+    end
   end
 
   def new
