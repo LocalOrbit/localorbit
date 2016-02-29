@@ -480,6 +480,7 @@ ActiveRecord::Schema.define(version: 20160227174245) do
     t.boolean  "print_multiple_labels_per_item",                         default: false
     t.integer  "organization_id"
     t.text     "zpl_logo"
+    t.string   "zpl_printer"
   end
 
   add_index "markets", ["name"], name: "index_markets_on_name", using: :btree

@@ -32,7 +32,7 @@ class Deliveries::PackingLabelsController < ApplicationController
 
   def show
     @printable = PackingLabelsPrintable.for_user(current_user).find params[:id]
-
+    @zpl_printer = current_market.zpl_printer
     if @printable.zpl
       @image = HTTParty.post('http://api.labelary.com/v1/printers/8dpmm/labels/3x5/0/', :body => @printable.zpl.to_json)
     end
