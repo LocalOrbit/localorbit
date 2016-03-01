@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160204145455) do
+ActiveRecord::Schema.define(version: 20160227174245) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -478,6 +478,9 @@ ActiveRecord::Schema.define(version: 20160204145455) do
     t.boolean  "alternative_order_page",                                 default: false, null: false
     t.integer  "product_label_format",                                   default: 4
     t.boolean  "print_multiple_labels_per_item",                         default: false
+    t.integer  "organization_id"
+    t.text     "zpl_logo"
+    t.string   "zpl_printer"
   end
 
   add_index "markets", ["name"], name: "index_markets_on_name", using: :btree
@@ -646,21 +649,25 @@ ActiveRecord::Schema.define(version: 20160204145455) do
     t.text     "how_story"
     t.string   "photo_uid"
     t.string   "balanced_customer_uri"
-    t.boolean  "balanced_underwritten",        default: false, null: false
+    t.boolean  "balanced_underwritten",                                default: false, null: false
     t.string   "facebook"
     t.string   "twitter"
-    t.boolean  "display_facebook",             default: false
-    t.boolean  "display_twitter",              default: false
+    t.boolean  "display_facebook",                                     default: false
+    t.boolean  "display_twitter",                                      default: false
     t.boolean  "allow_purchase_orders"
     t.boolean  "allow_credit_cards"
     t.boolean  "allow_ach"
     t.integer  "legacy_id"
-    t.boolean  "show_profile",                 default: true
-    t.boolean  "active",                       default: false
-    t.boolean  "needs_activated_notification", default: true
+    t.boolean  "show_profile",                                         default: true
+    t.boolean  "active",                                               default: false
+    t.boolean  "needs_activated_notification",                         default: true
     t.string   "stripe_customer_id"
     t.integer  "plan_id"
     t.string   "org_type"
+    t.datetime "plan_start_at"
+    t.integer  "plan_interval",                                        default: 1,     null: false
+    t.decimal  "plan_fee",                     precision: 7, scale: 2, default: 0.0,   null: false
+    t.integer  "plan_bank_account_id"
   end
 
   add_index "organizations", ["name"], name: "index_organizations_on_name", using: :btree
@@ -672,6 +679,8 @@ ActiveRecord::Schema.define(version: 20160204145455) do
     t.string   "pdf_name"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "zpl_name"
+    t.json     "zpl"
   end
 
   create_table "payments", force: true do |t|
@@ -697,6 +706,7 @@ ActiveRecord::Schema.define(version: 20160204145455) do
     t.decimal  "stripe_payment_fee", precision: 10, scale: 2, default: 0.0,     null: false
     t.string   "stripe_refund_id"
     t.string   "stripe_transfer_id"
+    t.integer  "organization_id"
   end
 
   add_index "payments", ["bank_account_id"], name: "index_payments_on_bank_account_id", using: :btree

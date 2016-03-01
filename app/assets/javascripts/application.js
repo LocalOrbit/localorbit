@@ -31,7 +31,7 @@
 
 //= require components
 //= require reflux.min
-//= require froala_editor.min.js
+//= require froala_editor.min
 //= require fSelect
 //
 //= require plugins/block_styles.min.js

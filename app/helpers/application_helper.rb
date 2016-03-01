@@ -1,3 +1,7 @@
+require 'net/http'
+require 'tempfile'
+require 'uri'
+
 module ApplicationHelper
   def help_path
     "https://localorbit.zendesk.com/home"
@@ -180,6 +184,14 @@ module ApplicationHelper
     else
       request or raise("ensure_full_url requires url_info or request to be set")
       "#{request.base_url}#{path}"
+    end
+  end
+
+  def save_to_var(url)
+    uri = URI.parse(url)
+    Net::HTTP.start(uri.host, uri.port) do |http|
+      resp = http.get(uri.path)
+      resp.body
     end
   end
 end

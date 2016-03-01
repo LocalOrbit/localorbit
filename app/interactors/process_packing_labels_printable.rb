@@ -10,9 +10,15 @@ class ProcessPackingLabelsPrintable
     seller_orders = orders.map do |o| SellerOrder.new(o,user) end
 
     # pdf_result = PackingLabels::Generator.generate(orders: orders, request: request)
-    pdf_result = PackingLabels::Generator.generate(orders: seller_orders, request: request, product_labels_only: product_labels_only, product_label_format: product_label_format, print_multiple_labels_per_item: print_multiple_labels_per_item)
-    delivery_printable.pdf = pdf_result.data
-    delivery_printable.pdf.name = "delivery_labels.pdf"
-    delivery_printable.save!
+    result = PackingLabels::Generator.generate(orders: seller_orders, request: request, product_labels_only: product_labels_only, product_label_format: product_label_format, print_multiple_labels_per_item: print_multiple_labels_per_item)
+    if product_label_format == 1 # Zebra label format
+      delivery_printable.zpl = result
+      delivery_printable.zpl_name = "delivery_labels.zpl"
+      delivery_printable.save!
+    else
+      delivery_printable.pdf = result.data
+      delivery_printable.pdf.name = "delivery_labels.pdf"
+      delivery_printable.save!
+    end
   end
 end
