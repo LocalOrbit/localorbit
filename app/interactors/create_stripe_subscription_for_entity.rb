@@ -5,7 +5,7 @@ class CreateStripeSubscriptionForEntity
     # Initialize
     subscription_params = context[:subscription_params]
     entity = context[:entity]
-    customer = Stripe::Customer.retrieve(context[:stripe_customer].id)
+    customer = PaymentProvider::Stripe.get_stripe_customer(context[:stripe_customer].id)
 
     # If the customer has any subscriptions...
     if customer.subscriptions.data.any?
@@ -33,7 +33,7 @@ class CreateStripeSubscriptionForEntity
     end
 
     context[:subscription] = subscription
-    invoices = Stripe::Invoice.all(:customer => subscription.customer) 
+    invoices = PaymentProvider::Stripe.get_stripe_invoices(:customer => subscription.customer) 
     context[:invoice] = invoices.data[0]
     
   rescue => e
@@ -44,7 +44,6 @@ class CreateStripeSubscriptionForEntity
     ret_val = {
       plan: subscription_params[:plan],
       source: market_params[:stripe_tok],
-      # KXM Any other metadata needed here?
       metadata: {
         "lo.entity_id" => entity.id,
         "lo.entity_type" => entity.class.name.underscore

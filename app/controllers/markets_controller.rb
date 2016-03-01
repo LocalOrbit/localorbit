@@ -14,14 +14,10 @@ class MarketsController < ApplicationController
   end
 
   def new
-    # /roll_your_own_market/get_stripe_plans
-    # KXM The Stripe calls here should probably be rolled into the RollYourOwnMarkets controller (the name of which should change), but how to make an API call to the local endpoint?  Google suggests the HTTParty gem, but I'm not crazy about rolling in that kind of heavy weight solution just to facilitate a minor code refactoring
-    Stripe.api_key = Rails.configuration.stripe[:secret_key]
-
-    @plan_data ||= Stripe::Plan.all.data
+    @plan_data ||= PaymentProvider::Stripe.get_stripe_plans
 
     requested_plan = params[:plan] || "Start"
-    @stripe_plan ||= Stripe::Plan.retrieve(requested_plan.upcase)
+    @stripe_plan ||= PaymentProvider::Stripe.get_stripe_plans(requested_plan.upcase)
 
     plan ||= Plan.find_by stripe_id: requested_plan.upcase
 

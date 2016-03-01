@@ -11,9 +11,6 @@ class RollYourOwnMarketsController < ApplicationController
 	@_coupon = {}
 
 	def get_stripe_plans
-		# Set secret key (done once here to avoid having one each for the branches below)
-    Stripe.api_key = Rails.configuration.stripe[:secret_key]
-
     requested_plan = params[:plan]
 
   	# If no plan is sent...
@@ -22,7 +19,7 @@ class RollYourOwnMarketsController < ApplicationController
     	@_plans ||= 
 	    begin
     		# ...or get them from Stripe
-		    @_plans = Stripe::Plan.all
+		    @_plans = PaymentProvider::Stripe.get_stripe_plans
 				render json: @_plans
 
 	    rescue Exception => e
@@ -37,7 +34,7 @@ class RollYourOwnMarketsController < ApplicationController
     	@_plan ||=
     	begin
     		# ...or get it from Stripe
-		    @_plan = Stripe::Plan.retrieve(requested_plan)
+		    @_plan = PaymentProvider::Stripe.get_stripe_plans(requested_plan)
 				render json: @_plan
 
 	    rescue Exception => e
@@ -53,8 +50,7 @@ class RollYourOwnMarketsController < ApplicationController
 		@_coupon ||= 
 		begin
   		# ...or get it from Stripe
-	    Stripe.api_key = Rails.configuration.stripe[:secret_key]
-	    @_coupon = Stripe::Coupon.retrieve(params[:coupon])
+	    @_coupon = PaymentProvider::Stripe.get_stripe_coupon(params[:coupon])
 			render json: @_coupon
 			
 		rescue Exception => e

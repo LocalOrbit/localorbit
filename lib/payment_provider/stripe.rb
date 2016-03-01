@@ -278,6 +278,13 @@ module PaymentProvider
       # NON-PaymentProvider interface:
       #
       #
+      def create_stripe_customer(customer_data)
+        Stripe::Customer.create(customer_data)
+      end
+
+      def get_stripe_customer(stripe_customer_id)
+        Stripe::Customer.retrieve(stripe_customer_id)
+      end
 
       def create_stripe_card_for_stripe_customer(stripe_customer:nil,stripe_customer_id:nil, stripe_tok:)
         customer = stripe_customer || ::Stripe::Customer.retrieve(stripe_customer_id)
@@ -325,6 +332,26 @@ module PaymentProvider
         end
       end
 
+      #
+      # General Stripe getters
+      #
+      #
+      def get_stripe_plans(plan = nil)
+        if plan.nil?
+          ::Stripe::Plan.all.data
+        else
+          ::Stripe::Plan.retrieve(plan.upcase)
+        end
+      end
+
+      def get_stripe_coupon(coupon)
+        ::Stripe::Coupon.retrieve(coupon)
+      end
+
+      def get_stripe_invoices(customer_filter = nil)
+        Stripe::Invoice.all(customer_filter)
+      end
+
       private
 
       def enumerate_transfer_transactions(transfer_id:, stripe_account_id:)
@@ -359,6 +386,7 @@ module PaymentProvider
           "0".to_d
         end
       end
+
 
     end
 
