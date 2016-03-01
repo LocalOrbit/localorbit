@@ -1,23 +1,25 @@
 
 
-<% if @printable.zpl %>
-    <%= javascript_include_tag 'rsvp-3.1.0.min.js' %>
-    <%= javascript_include_tag 'sha-256.min.js' %>
-    <%= javascript_include_tag 'qz-tray.js' %>
+<% if !@printable.zpl.nil? %>
+  <%= javascript_include_tag 'rsvp-3.1.0.min.js' %>
+  <%= javascript_include_tag 'sha-256.min.js' %>
+  <%= javascript_include_tag 'qz-tray.js' %>
 
-    <div style="text-align:center">
-      <%= ('<img width="300" src="data:image/png;base64,%s">' % Base64.encode64(@image.body)).html_safe %><br/>
-      <a href="#" id="print-btn" class="btn btn-action" data-printer="<%= @zpl_printer %>" data-zpl="<%= @printable.zpl.to_json %>">Print Labels</a>
-    </div>
-<% else %>
-<div data-ko-module="download_packing_labels" align="center">
-  <h1>Generating packing labels...</h1>
-
-  <%= image_tag "loading-progress.gif", data: { bind: "visible: !pdfUri()" } %>
-  <div style="display:none;" data-bind="visible: pdfUri">
-    <p>
-      <a class="btn btn--save btn--small mobile-block" data-bind="attr: { href: pdfUri }">Download Packing Labels PDF</a>
-    </p>
+  <div style="text-align:center">
+    <% if @image.code == 200 %>
+        <%= ('<img width="300" src="data:image/png;base64,%s">' % Base64.encode64(@image.body)).html_safe %><br/>
+    <% end %>
+    <a href="#" id="print-btn" class="btn btn-action" data-printer="<%= @zpl_printer %>" data-zpl="<%= @printable.zpl.to_json %>">Print Labels</a>
   </div>
-</div>
+<% else %>
+  <div data-ko-module="download_packing_labels" align="center">
+    <h1>Generating packing labels...</h1>
+
+    <%= image_tag "loading-progress.gif", data: { bind: "visible: !pdfUri()" } %>
+    <div style="display:none;" data-bind="visible: pdfUri">
+      <p>
+        <a class="btn btn--save btn--small mobile-block" data-bind="attr: { href: pdfUri }">Download Packing Labels PDF</a>
+      </p>
+    </div>
+  </div>
 <% end %>
