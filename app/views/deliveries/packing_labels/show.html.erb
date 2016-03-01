@@ -13,7 +13,7 @@
 <div data-ko-module="download_packing_labels" align="center">
   <h1>Generating packing labels...</h1>
 
-  <%= image_tag "loading-progress.gif", data: { bind: "visible: !pdfUri()" } %>.z
+  <%= image_tag "loading-progress.gif", data: { bind: "visible: !pdfUri()" } %>
   <div style="display:none;" data-bind="visible: pdfUri">
     <p>
       <a class="btn btn--save btn--small mobile-block" data-bind="attr: { href: pdfUri }">Download Packing Labels PDF</a>

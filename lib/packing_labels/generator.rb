@@ -21,9 +21,7 @@ module PackingLabels
           #   {a: {label} b: {label} ... }
           # ]
 
-        if product_label_format == 1
-          label_template = 'avery_labels/labels_1'
-        elsif product_label_format == 4
+        if product_label_format == 4
           label_template = 'avery_labels/labels_4'
         elsif product_label_format == 16
           label_template = 'avery_labels/labels_16'
