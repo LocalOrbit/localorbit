@@ -3,7 +3,13 @@ module PackingLabels
     class << self
       def make_pages(labels, product_label_format)
 
-        if product_label_format == 4
+        if product_label_format == 1
+          labels.each_slice(1).map do |(a)|
+            {
+                a: a
+            }
+          end
+        elsif product_label_format == 4
           labels.each_slice(4).map do |(a,b,c,d)|
             {
                 a: a,
