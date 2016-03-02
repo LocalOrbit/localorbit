@@ -12,6 +12,7 @@ module PackingLabels
         if product_label_format == 1
           product_template = 'avery_labels/vertical_product_1'
           order_template = "avery_labels/vertical_order_1"
+          print_multiple_labels_per_item = false # Override this for zebra labels to let the printer handle it
         elsif product_label_format == 4
           product_template = 'avery_labels/vertical_product_4'
           order_template = "avery_labels/vertical_order_4"
