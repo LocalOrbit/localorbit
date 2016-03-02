@@ -23,17 +23,12 @@ let!(:product2) { create(:product, name:"Test Product 2") }
 
 	end
 
-	## TODO: Testing in Postman, etc -  butcan you test in rspec this way? 
-	## JavaScript tests with jquery 
-
 ############
 
 	describe "POST /api/v2/add-product" do
 
 		it "posts one product correctly with 201 response" do # todo market name problem - in controller
 			post "api/v2/products/add-product", {name:"Super Unusual Name",organization_name:"Organization 1",price:2.34,unit:"box",category:"Fruits",code:"hmmm-abc",short_description:"short",long_description:"GOES ON FOREVER long long long",unit_description:"unit description with new unit same product"}.to_json, {"Content-Type"=>"application/json"}
-			# TODO fix problem: 500 b/c failing on lookup, should be 400 Bad Request
-			# this is... relevant to the next tests
 
 			expect(response.status).to eq(201)
 			expect(JSON.parse(response.body)).to eq({"result" => "product successfully created"})
@@ -53,16 +48,16 @@ let!(:product2) { create(:product, name:"Test Product 2") }
 			expect(response.status).to eq(400)
 		end
 
-		# TODO: test for mkt name behavior when route is adequately supported for markets
+		# TODO: test for mkt name, org name, behavior when route is adequately supported for markets (and orgs)
 
 	end
 
-	# describe "POST /api/v2/add-products" do
+	describe "POST /api/v2/add-products" do
 
-	# 	it "correctly posts products when properly formatted JSON data file is posted" do
-	# 	end
+		it "correctly posts products when properly formatted JSON data file is posted" do
+		end
 
-	# end
+	end
 
 
 end
