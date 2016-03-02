@@ -32,7 +32,6 @@ class Deliveries::PackingLabelsController < ApplicationController
 
   def show
     @printable = PackingLabelsPrintable.for_user(current_user).find params[:id]
-    logger.debug @printable.zpl
     @zpl_printer = current_market.zpl_printer
 
     respond_to do |format|
