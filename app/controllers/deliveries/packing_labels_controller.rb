@@ -9,7 +9,7 @@ class Deliveries::PackingLabelsController < ApplicationController
     delivery =  Delivery.find(params[:delivery_id])
 
     printable = PackingLabelsPrintable.create!(user: current_user, delivery: delivery)
-    if Rails.env == "development"
+    if Rails.env == "development" || current_market.product_label_format == 1 # Print zebra labels directly
       ProcessPackingLabelsPrintable.perform(
         packing_labels_printable_id: printable.id, 
         request: RequestUrlPresenter.new(request),
