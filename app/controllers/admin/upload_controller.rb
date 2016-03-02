@@ -20,9 +20,27 @@ class Admin::UploadController < AdminController
     if params.has_key?(:datafile)
       # pass the datafile to the method with the csv file
       #sp = API::V2::SerializeProducts.new
+      binding.pry
       jsn = API::V2::SerializeProducts.get_json_data(params[:datafile])
+      @num_products_loaded = jsn[0]["products_total"] - jsn[0]["products"].length
+      
+
+      
       # problem here is that the method opens a file that's already open -- deal with in SerializeProducts
-      binding.pry 
+      #binding.pry 
+
+      # For the errors -- want to show:
+      # Number of products loaded: products_total integer minus the length of the list in key "products"
+
+      # For each row number in errors that has a non-empty value of "Errors" key (non-empty hash..)
+      # indent or something after "Row <whatever number" and show each error
+      # TODO: maybe it's easy to add in the info that's found about that one.
+
+      # But we have access to them so can pass them through to the view.
+      # And if it's all set,
+
+      # Regardless -- show number of products loaded and a link back to do whatever.
+
     end
   end
 
