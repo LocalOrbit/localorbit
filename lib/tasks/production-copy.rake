@@ -126,10 +126,10 @@ module CloneProductionHelper
         bucket: "localorbit-uploads-staging",
         database: "HEROKU_POSTGRESQL_RED"
       },
-      fix: {
-        app: "localorbit-fix",
-        env: "fix",
-        bucket: "localorbit-fix",
+      alpha: {
+        app: "localorbit-alpha",
+        env: "alpha",
+        bucket: "localorbit-alpha",
         database: "HEROKU_POSTGRESQL_IVORY"
       },
       # dev1: {
