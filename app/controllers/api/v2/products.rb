@@ -6,33 +6,29 @@ module API
 
 			# This has to work for an individual hash, so it has to be for EACH PRODUCT in the all-products
 			def self.identify_product_uniqueness(product_params) # takes hash of params
-				# goes with an existing general product if it has the same name and category as another product --> then it gets that genprod's g_p_id
-				# if unit and/OR unit description different -- but that's taken care of in original data, isn't it? 
+				# goes with an existing general product if it has the same name and category as another product
 				# TODO add - if unit and/OR unit description different.
 				# otherwise, don't update.
 				# I guess it isn't taken care of when you post straight JSON. TODO fix concern.
-				# binding.pry
 				identity_params_hash = {product_name:product_params["Product Name"],category_id:ProductHelpers.get_category_id_from_name(product_params["Category"])}
-				# binding.pry
 				product_unit_identity_hash = {unit_name:product_params["Unit"],unit_description:product_params["Unit Description"]}
-				gps = GeneralProduct.where(name:identity_params_hash[:product_name]).where(category_id:identity_params_hash[:category_id])#.empty? # TODO check
+				gps = GeneralProduct.where(name:identity_params_hash[:product_name]).where(category_id:identity_params_hash[:category_id])
 
 				if !(gps.empty?)
-					# if there is a product under that genprod with the same unit name AND description then update that one.
 					# TODO how will this handle uploading a product that totally changes?
 					# needs to update eg price, maybe descriptions
-					# also should it update or should it delete all...?
+					# should it update or should it delete all...?
 					gps.first.id
 				else
 					false
 				end
 			end
 
-			# TODO: limitations?? this will be somewhat better when it is limited but perhaps should limit to a depth like in original prod upload
+			# TODO: limitations?? this will be somewhat better when it is limited but perhaps should limit to a depth like in original prod upload.
 			def self.get_category_id_from_name(category_name)
 				# binding.pry
 				begin
-					id = Category.find_by_name(category_name).id # first?
+					id = Category.find_by_name(category_name).id
 					# return nil if no possible one
 					id
 				rescue
@@ -42,7 +38,7 @@ module API
 
 			def self.get_organization_id_from_name(organization_name)
 				begin
-					org = Organization.find_by_name(organization_name).id # first?
+					org = Organization.find_by_name(organization_name).id
 					org
 				rescue
 					return nil
@@ -50,7 +46,6 @@ module API
 			end
 
 			def self.get_unit_id_from_name(unit_name) # assuming name is singular
-				# binding.pry
 				begin
 					unit = Unit.find_by_singular(unit_name).id
 					unit
@@ -63,55 +58,48 @@ module API
 
 		class SerializeProducts
 			require 'csv'
-			#extend self
-			@required_headers = ["Product Name","Category Name","Short Description","Product Code","Unit Name","Unit Description","Price", "Multiple Pack Sizes","MPS Unit","MPS Unit Description","MPS Price"] # TODO figure out accurate naming for multi-unit/break-case stuff
+			@required_headers = ["Product Name","Category Name","Short Description","Product Code","Unit Name","Unit Description","Price", "Multiple Pack Sizes","MPS Unit","MPS Unit Description","MPS Price"] # Required headers for imminent future
 
-			# TODO should this be a diff kind of accessor? later.
+			# TODO should this be a diff kind of accessor? Later, works.
 			def self.required_headers
 				@required_headers
 			end
 
 			# takes a file (CSV, properly formatted re: headers, row data may or may not be invalid) returns JSON data (to be passed to a post route)
-			def self.get_json_data(csvfile) # from - params[:filewhatever] from upload form, right?
-				$product_rows = {} # these are global.., so accessible in both below methods is OK
+			def self.get_json_data(csvfile) # from - params[:filewhatever] from upload form
+				$product_rows = {} # these are global, so accessible in both below methods is OK
 				$row_errors = {} # Collect errors here (see comment inside validate row fxn for expl of $row_errors format, for now.)
-				# binding.pry
 				if self.validate_csv_catalog_file_format(csvfile)
-					# somewhere need to ensure valid row
-					
-					# binding.pry
-					# $product_rows["products_total"] = csvfile.readlines.size # should be the number of lines of the file - TODO take a look at managing the file types in the pass to this method and using the CSV module
 					$product_rows["products"] = []
-					CSV.foreach(csvfile.path, headers:true).each_with_index do |row, i|
-						# binding.pry
-						if validate_product_row(row, i)#row.lineno)
+					CSV.foreach(csvfile.path, headers:true).each_with_index do |row, i| # i is the index of the row in the file
+						if validate_product_row(row, i) # if the row is valid (see method)
+							# then build a hash for it
 							product_row_hash = {}
 							@required_headers[0..-4].each do |rh|
 								product_row_hash[rh] = row[rh]
 							end
-							if row[@required_headers[-4]] == "Y" # TODO need more error checking?
+							if row[@required_headers[-4]] == "Y" # TODO need any more error checking?
 								product_row_hash[@required_headers[-4]] = {}
 								# Make sub-hash with the multi-unit/break case information if extant, based on order of required headers (makes sense for these to always come last, as in array above).
 								product_row_hash[@required_headers[-4]][@required_headers[-3]] = row[@required_headers[-3]]
 								product_row_hash[@required_headers[-4]][@required_headers[-2]] = row[@required_headers[-2]]
 								product_row_hash[@required_headers[-4]][@required_headers.last] = row[@required_headers.last]
 							else
-								product_row_hash[@required_headers[-4]] = {} # Blank hash if there's no multi-unit/break case info
+								product_row_hash[@required_headers[-4]] = {} # Blank hash if there's no multi-unit/break case info.
 							end
 							$product_rows["products"] << product_row_hash
 						else
 							# binding.pry
-							# this is what happens if a row is invalid but the general format of the file is correct.
-							# which should be... ?
-							# right now, nothing happens
+							# This is what happens if a row is invalid but the general format of the file is correct. Which should be... ? 
+							# All rows should be displayed on upload. 
+							# TODO Need errors to be returned in an API response, though.
 						end
-						# What this returns exactly, as opposed to what it ought to
-						# TODO clarify let's test.
+						# TODO clarify return in diff scenarios, need to build out test suite.
 					end
-					# binding.pry
 					return $product_rows,$row_errors # array of these hashes
 				end
-				# TODO error handling - should handle if the csv format is invalid somehow, break out of the process neatly. Return a msg and just a redirect?
+				# TODO error handling - should handle if the csv format is invalid somehow, break out of the process neatly. 
+				# Return a message. What if any redirects?
 			end
 
 			# takes a csvfile -- returns true if valid, false if invalid
@@ -121,20 +109,15 @@ module API
 				# check for correct headers (see below)
 				# Need to put file errors somewhere on upload page response. TODO!
 
-				# TODO problem -- you get file as is, so the format will be like
-				# CSV.read("path/to/file") - so need to save that file obj in a variable thing and pass it in here, I think
-				#binding.pry
-				#headers = CSV.open(csvfile, 'r') { |csv| csv.first }
-				# binding.pry
+				# you get file as is, so the format will be like
+				# CSV.read("path/to/file") - so need to save that file obj in a variable thing and pass it in here
 				csvfile = CSV.parse(open(csvfile),headers:true)
 				$product_rows["products_total"] = csvfile.size
-				# binding.pry
 				headers = csvfile.headers
-				if csvfile.size < 1 # not counting headers
+				if csvfile.size < 1 # not counting headers -- if no data, false
 					return false
 				end
-				# binding.pry
-				@required_headers[0..-4].each do |h|
+				@required_headers[0..-4].each do |h| # if all the required headers aren't here, false
 					unless headers.include?(h)
 						return false
 					end
@@ -142,19 +125,18 @@ module API
 				true
 			end
 
-			## PROBLEM: Current code has global relative dependency on errors hash and that's gross. 
-			## TODO abstract this process into a class (within the module? another class right here?) so that it is less gross.
 			## TODO maybe abstract helpers properly to lib and include modules.
+			## TODO neaten global error hash business? Need to bring them to display.
+
 			def self.validate_product_row(product_row, line_num)
 				okay_flag = true
 				error_hash = {}
 				## This shouldn't be needed for anything outside verifying CSV files uploaded.
 				error_hash["Row number"] = line_num.to_s 
 				error_hash["Errors"] = {}
-				# binding.pry
 				if [product_row["Product Name"],product_row["Category Name"],product_row["Short Description"],product_row["Unit Name"],product_row["Unit Description"],product_row["Price"],product_row[@required_headers[-4]]].any? {|obj| obj.blank?}
 					okay_flag = false
-					#create error and append it
+					#create error and append it (TODO clearer error info for this one?)
 					error_hash["Errors"]["Invalid Data under required headers"] = "Required data is blank."
 				end
 				if product_row[@required_headers[-4]].upcase == "Y" and [product_row[@required_headers[-3]],product_row[@required_headers[-2]],product_row[@required_headers.last]].any? {|obj| obj.blank?}
@@ -182,7 +164,7 @@ module API
 				if ProductHelpers.get_unit_id_from_name(product_row["Unit Name"]).nil?
 					okay_flag = false
 					#create error and append it 
-					error_hash["Errors"]["Missing or invalid Unit name"] = "Check unit of measure validity" # TODO need more information
+					error_hash["Errors"]["Missing or invalid Unit name"] = "Check unit of measure validity" # TODO could use more information.
 				end
 				if !(product_row["Price"].to_f and product_row["Price"].to_f > 0) 
 					okay_flag = false
@@ -199,24 +181,18 @@ module API
 				end
 				$row_errors["#{error_hash['Row number']}"] = error_hash
 				# as a result of this, e.g, $row_errors["2"] evals to a hash of key-value simpledescr-detaileddescr of all errors from THAT ROW 
-				# so $row_errors contains keys of all the rows in the csv that have errors
-				# and vals assoc with those keys that are structured info about what errors are happening.
-				# depends, as stated above, on $row_errors existing in the correct scope. (so this ain't great but it should work initially and can then refactor.)
+				# so $row_errors contains keys of all the rows in the csv w/ data if there are errors
 				return okay_flag # boolean as to whether there are any errors.
-
-				# Will/should return true if checks all pass.
-
-				# Should add to $row_errors hash (under key of row number, when that's set up ideally) the serialized version of the error set if any in current row, and return false.
+				# Should return true if checks all pass.
 			end
 			
 		end
+
 
 		## API routes to mount
 
 		class Products < Grape::API 
 			include API::V2::Defaults
-			#include API::V2::ProductHelpers
-			#extend ProductHelpers
 
 			resource :products do 
 				# get requests
@@ -250,6 +226,7 @@ module API
 					GeneralProduct.where(category_id: category_id) # I think this should be genprod, since that's ~products~ as we generally represent, so for now it is.
 				end
 
+
 				### POST ROUTES
 
 				desc "Create a product"
@@ -260,14 +237,10 @@ module API
 				# singular in post request
 				post '/add-product' do
 					product_name = permitted_params[:name]
-					#binding.pry
 					possible_org = Organization.find_by_name(permitted_params[:organization_name])
-					#binding.pry
-					supplier_id = possible_org.id
+					supplier_id = possible_org.id # TODO what are we doing with organizations in add products, is it the same?
 					unit_id = Unit.find_by_singular(permitted_params[:unit]).id
-					#binding.pry
 					category_id = Category.find_by_name(permitted_params[:category]).id
-					#binding.pry
 					product_code = ""
 					if permitted_params[:code]
 						product_code = permitted_params[:code]
@@ -288,12 +261,12 @@ module API
 							      	)
 						## To create inventory and price(s). -- probably no inventory, yes 1 sale price, yes?
 						# product.lots.create!(quantity: 999_999)
-	     			product.prices.create!(sale_price: permitted_params[:price], min_quantity: 1) ## TODO: Should we add min quantity default or option?
+	     			product.prices.create!(sale_price: permitted_params[:price], min_quantity: 1) ## TODO: Should we add min quantity default or option in API, if so how?
 	     		else
 	     			product = Product.create!(
 							        name:product_name,
 							        organization_id:supplier_id,
-							        #Same mkt assoc question, market name attr?
+							        #Same mkt assoc question, market name attr needed / how?
 							        unit_id:unit_id,
 							        category_id:category_id,
 							        code:product_code,
@@ -314,14 +287,13 @@ module API
 					requires type: JSON # expects properly formatted JSON data
 				end
 				post '/add-products' do
-					#binding.pry
 					def self.create_product_from_hash(prod_hash)
 						gp_id_or_false = ProductHelpers.identify_product_uniqueness(prod_hash)
 						if !gp_id_or_false
 							product = Product.create!(
 											name: prod_hash["Product Name"],
 							        organization_id: ProductHelpers.get_organization_id_from_name(prod_hash["Organization"]),
-							        #market_name: prod_hash["Market"],
+							        #market_name: prod_hash["Market"], # TODO same question
 							        unit_id: ProductHelpers.get_unit_id_from_name(prod_hash["Unit"]),
 							        category_id: ProductHelpers.get_category_id_from_name(prod_hash["Category"]),
 							        code: prod_hash["Product Code"],
@@ -329,18 +301,18 @@ module API
 							        long_description: prod_hash["Long Description"],
 							        unit_description: prod_hash["Unit Description"]
 							      	)
-							unless prod_hash[SerializeProducts.required_headers[-4]] == "N" # TODO not loving the repetition, this should be factored out, but for now.
+							unless prod_hash[SerializeProducts.required_headers[-4]] == "N" # TODO this should be factored out, but later.
 								newprod = product.dup 
 								newprod.unit_id = ProductHelpers.get_unit_id_from_name(prod_hash[SerializeProducts.required_headers[-3]])
 								newprod.unit_description = prod_hash[SerializeProducts.required_headers[-2]]
 								newprod.prices.create!(sale_price: price, min_quantity: 1)
-								newprod.save! # for id to be created in db. TODO this may be affected by uniqueness constraints tba.
+								newprod.save! # for id to be created in db. (TODO this may be affected by uniqueness constraints tba. not yet.)
 							end
 						else
 							product = Product.create!(
 							        name: prod_hash["Product Name"],
 							        organization_id: ProductHelpers.get_organization_id_from_name(prod_hash["Organization"]),
-							        #market_name: prod_hash["Market"],
+							        #market_name: prod_hash["Market"], # TODO same Q as above, mkt assoc
 							        unit_id: ProductHelpers.get_unit_id_from_name(prod_hash["Unit"]),
 							        category_id: ProductHelpers.get_category_id_from_name(prod_hash["Category"]),
 							        code: prod_hash["Product Code"],
@@ -349,7 +321,7 @@ module API
 							        unit_description: prod_hash["Unit Description"],
 							        general_product_id: gp_id_or_false
 							      	)
-							unless prod_hash[SerializeProducts.required_headers[-4]] == "N" # TODO not loving the repetition, but for now.
+							unless prod_hash[SerializeProducts.required_headers[-4]] == "N" # TODO factor out
 								newprod = product.dup 
 								newprod.unit_id = ProductHelpers.get_unit_id_from_name(prod_hash[SerializeProducts.required_headers[-3]])
 								newprod.unit_description = prod_hash[SerializeProducts.required_headers[-2]]
@@ -360,8 +332,13 @@ module API
 						end
 
 					end # end def.self_create_product_from_hash
-
-					prod_hashes = JSON.parse(File.read(params[:body][:tempfile]))
+	
+					if params.has_key?("products")
+						prod_hashes = params
+					else
+						# this should be the 'normal' thing when you post a JSON /file/ as body
+						prod_hashes = JSON.parse(File.read(params[:body][:tempfile]))
+					end
 
 					prod_hashes["products"].each do |p|
 						self.create_product_from_hash(p)

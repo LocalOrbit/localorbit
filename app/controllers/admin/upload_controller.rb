@@ -1,6 +1,9 @@
 class Admin::UploadController < AdminController
 	require 'rubyXL'
   require 'open3'
+  #require 'HTTParty'
+  include HTTParty
+  debug_output $stderr
   include API::V2 # hm
 
   def index
@@ -20,12 +23,22 @@ class Admin::UploadController < AdminController
     if params.has_key?(:datafile)
       # pass the datafile to the method with the csv file
       #sp = API::V2::SerializeProducts.new
-      binding.pry
-      jsn = API::V2::SerializeProducts.get_json_data(params[:datafile])
+      # binding.pry
+      jsn = API::V2::SerializeProducts.get_json_data(params[:datafile]) # product stuff, row errors
       @num_products_loaded = jsn[0]["products_total"] - jsn[0]["products"].length
-      
+      jsn[0]["products"].each do |p|
+        #API::V2::Products.create_product_from_hash(p)
+      end
+      # binding.pry
+      # HTTParty.post("#{request.base_url}/api/v2/products/add-products", :body => jsn[0])
 
-      
+
+      #POST "/api/v2/add-products" # post the jsn[0], + deal with the jsn[1] stuff
+
+      #    example:     @result = HTTParty.post(@urlstring_to_post.to_str, :body => {:subject => 'This is the screen name', :issue_type => 'Application Problem', :status => 'Open', :priority => 'Normal', :description => 'This is the description for the problem'})
+
+
+
       # problem here is that the method opens a file that's already open -- deal with in SerializeProducts
       #binding.pry 
 
