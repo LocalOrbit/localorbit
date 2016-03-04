@@ -10,5 +10,7 @@ class AddMarketManager
     else
       user = User.invite!({email: email, managed_markets: [market]}, inviter)
     end
+    user.organizations << market.organization
+
   end
 end
