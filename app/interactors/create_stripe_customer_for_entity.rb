@@ -8,7 +8,7 @@ class CreateStripeCustomerForEntity
   def perform
     entity = context[:entity]
     if entity.stripe_customer_id.nil?
-      customer = PaymentProvider::Stripe.create_stripe_customer(stripe_customer_info)
+      customer = PaymentProvider::Stripe.create_customer(stripe_customer_info)
       entity.update_attribute(:stripe_customer_id, customer.id)
       context[:stripe_customer] = customer
     else
