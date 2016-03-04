@@ -1,0 +1,21 @@
+<p>Dear <%= @user.name %>,</p>
+
+<p>Success! You have completed the initial setup of your Local Orbit powered site.</p>
+
+<h1>Next Steps:</h1>
+
+<p>A Local Orbit Team Member will activate your site and you’ll receive an email letting you know when your account is active. From there you’ll be guided through the steps to continue setting up your site.</p>
+
+<p><a href="#">Register</a> for your initial onboarding session. (if you already signed up you are all set!)</p>
+
+<p>Many thanks for choosing Local Orbit.  We look forward to helping you grow your business!</p>
+
+<h1>Local Orbit Service Plan Receipt</h1>
+
+<table>
+	<tr><th>Local Orbit Service Plan:</th><td><%= @invoice['lines']['data'][0]['plan']['name'] %></td></tr>
+	<tr><th>Plan Start Date:</th><td><%= (Time.at(@invoice['date'])).strftime("%B %e, %Y") %></td></tr>
+	<tr><th>Plan Renewal Date:</th><td><%= (Time.at(@invoice['date'])).strftime("Annually thereafter on %B %e") %></td></tr>
+	<tr><th>Amount Paid in Full:</th><td><%= number_to_currency(@invoice['total']/100) %></td></tr>
+	<tr><th>Payment Reference Number:</th><td><%= @invoice['id'] %></td></tr>
+</table>

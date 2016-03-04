@@ -46,3 +46,6 @@
 //= require plugins/urls.min.js
 //
 //= require_tree .
+//= stub sticky-headers
+//= stub resolution
+//= stub roll_your_own_market
