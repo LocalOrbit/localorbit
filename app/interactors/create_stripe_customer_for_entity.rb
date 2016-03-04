@@ -8,12 +8,15 @@ class CreateStripeCustomerForEntity
   def perform
     entity = context[:entity]
     if entity.stripe_customer_id.nil?
-      customer = Stripe::Customer.create(stripe_customer_info)
+      customer = PaymentProvider::Stripe.create_customer(stripe_customer_info)
       entity.update_attribute(:stripe_customer_id, customer.id)
       context[:stripe_customer] = customer
     else
-      context[:stripe_customer] = Stripe::Customer.retrieve(entity.stripe_customer_id)
+      context[:stripe_customer] = PaymentProvider::Stripe.get_stripe_customer(entity.stripe_customer_id)
     end
+
+  rescue => e
+    context.fail!(error: e.message)
   end
 
   def stripe_customer_info

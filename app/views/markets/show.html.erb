@@ -35,7 +35,7 @@
           <a href="#seller-map" class="toggle-slide seller-map-toggle" data-toggle-open="Hide Map" data-toggle-closed="Show Map">Hide Map</a>
         </div>
         <div class="slide seller-map-slide is-down" id="seller-map">
-          <img class="location-map slide-content" alt="" src="<%= @market.seller_locations_map 680, 400 %>" height="400">
+          <img class="location-map slide-content" alt="" src="<%#= @market.seller_locations_map 680, 400 %>" height="400">
         </div>
 
         <ul class="l-inline-list seller-list">
@@ -52,7 +52,7 @@
       <div class="vcard">
         <% if @market.contact_name.present? %><strong class="fn"><%= @market.contact_name %></strong><br><% end %>
         <% if @market.contact_email.present? %><%= mail_to(@market.contact_email, @market.contact_email, {class:"email"}) %><br><% end %>
-        <% if @market.default_address %>
+        <% if @market.default_address.present? %>
         <p class="adr">
           <span class="street-address"><%= @market.default_address.address %></span><br>
           <span class="locality"><%= @market.default_address.city %></span>, <span class="region"><%=@market.default_address.state %></span> <span class="postal-code"><%= @market.default_address.zip %></span>
