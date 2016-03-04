@@ -26,9 +26,10 @@ class Admin::UploadController < AdminController
       # binding.pry
       jsn = API::V2::SerializeProducts.get_json_data(params[:datafile]) # product stuff, row errors
       @num_products_loaded = jsn[0]["products_total"] - jsn[0]["products"].length
-      jsn[0]["products"].each do |p|
-        #API::V2::Products.create_product_from_hash(p)
-      end
+      # jsn[0]["products"].each do |p|
+      #   API::V2::Grape.create_product_from_hash(p)
+      # end
+      POST "/api/v2/products/add-products" {:body => jsn[0]["products"]}
       # binding.pry
       # HTTParty.post("#{request.base_url}/api/v2/products/add-products", :body => jsn[0])
 

@@ -288,6 +288,7 @@ module API
 				end
 				post '/add-products' do
 					def self.create_product_from_hash(prod_hash)
+						# binding.pry
 						gp_id_or_false = ProductHelpers.identify_product_uniqueness(prod_hash)
 						if !gp_id_or_false
 							product = Product.create!(
@@ -341,11 +342,14 @@ module API
 					end
 
 					prod_hashes["products"].each do |p|
+						# binding.pry
+						# p self.class, "CLASSNAME"
 						self.create_product_from_hash(p)
 					end
-					{"result"=>"#{prod_hashes["products_total"]} products successfully created"} 
+					binding.pry
+					{"result"=>"#{prod_hashes["products_total"]} products successfully created","errors"=>$row_errors} 
 				end 
-				# TODO fix: not upserting, just adding another, which seems like a problem.
+				# TODO fix: not upserting?, just adding another, which seems like a problem.
 				# TODO see potential - unit description/name uniqueness identifier in ProductHelpers, maybe within id_product_uniqueness, maybe call within from a separate method on the class. ?
 			end
 
