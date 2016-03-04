@@ -278,12 +278,12 @@ module PaymentProvider
       # NON-PaymentProvider interface:
       #
       #
-      def create_stripe_customer(customer_data)
-        Stripe::Customer.create(customer_data)
+      def create_customer(customer_data)
+        ::Stripe::Customer.create(customer_data)
       end
 
       def get_stripe_customer(stripe_customer_id)
-        Stripe::Customer.retrieve(stripe_customer_id)
+        ::Stripe::Customer.retrieve(stripe_customer_id)
       end
 
       def create_stripe_card_for_stripe_customer(stripe_customer:nil,stripe_customer_id:nil, stripe_tok:)
@@ -349,7 +349,7 @@ module PaymentProvider
       end
 
       def get_stripe_invoices(customer_filter = nil)
-        Stripe::Invoice.all(customer_filter)
+        ::Stripe::Invoice.all(customer_filter)
       end
 
       private
