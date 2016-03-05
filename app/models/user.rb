@@ -205,9 +205,10 @@ class User < ActiveRecord::Base
 
   def admin?
     #role == "admin"
-    if !user_organizations[0].nil? && !user_organizations[0].organization.nil?
-      user_organizations[0].organization.org_type == "A"
-    end
+    #if !user_organizations[0].nil? && !user_organizations[0].organization.nil?
+    #  user_organizations[0].organization.org_type == "A"
+    #end
+    user_organizations.map(&:organization).map(&:org_type).include?('A')
   end
 
   def can_manage?(resource)
@@ -238,16 +239,20 @@ class User < ActiveRecord::Base
 
   def market_manager?
     #managed_markets.any?
-    if !user_organizations[0].nil? && !user_organizations[0].organization.nil?
-      self.user_organizations[0].organization.org_type == "M"
-    end
+    #if !user_organizations[0].nil? && !user_organizations[0].organization.nil?
+    #  self.user_organizations[0].organization.org_type == "M"
+    #end
+    !admin? && user_organizations.map(&:organization).map(&:org_type).include?('M')
+
   end
 
   def seller?
     #organizations.selling.any?
-    if !user_organizations[0].nil? && !user_organizations[0].organization.nil?
-      self.user_organizations[0].organization.org_type == "S"
-    end
+    #if !user_organizations[0].nil? && !user_organizations[0].organization.nil?
+    #  self.user_organizations[0].organization.org_type == "S"
+    #end
+    !admin? && !market_manager? && user_organizations.map(&:organization).map(&:org_type).include?('S')
+
   end
 
   def admin_or_mm?
@@ -256,9 +261,11 @@ class User < ActiveRecord::Base
 
   def buyer_only?
     #!admin? && !market_manager? && !seller?
-    if !user_organizations[0].nil? && !user_organizations[0].organization.nil?
-      self.user_organizations[0].organization.org_type == "B"
-    end
+    #if !user_organizations[0].nil? && !user_organizations[0].organization.nil?
+    #  self.user_organizations[0].organization.org_type == "B"
+    #end
+    !admin? && !market_manager? && !seller? && user_organizations.map(&:organization).map(&:org_type).include?('B')
+
   end
 
   def is_seller_with_purchase?
@@ -271,6 +278,18 @@ class User < ActiveRecord::Base
     #intersect = managed_organizations.select{|o| o.can_sell? == false} & localeyes_mkts.flat_map{|lm| lm.organizations}
     #return intersect.any?
     current_plan == "LocalEyes"
+  end
+
+  def primary_user_role
+    if admin?
+      "A"
+    elsif market_manager?
+      "M"
+    elsif seller?
+      "S"
+    elsif buyer_only?
+      "B"
+    end
   end
 
   def managed_organizations(opts={})

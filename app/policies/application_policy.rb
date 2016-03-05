@@ -8,9 +8,9 @@ class ApplicationPolicy
 
   def user_activities
     if @user.roles.count > 0
-      @user.roles.select(:activities).where(org_type: @user.user_organizations[0].organization.org_type).distinct.map(&:activities).flatten
+      @user.roles.select(:activities).where(org_type: @user.primary_user_role).distinct.map(&:activities).flatten
     else
-      RoleAction.select('lower(description) AS description').where("org_type @> '{#{@user.user_organizations[0].organization.org_type}}'::character varying[] AND (plan_ids is null OR plan_ids @> '{#{@user.user_organizations[0].organization.plan_id}}'::character varying[])").distinct.map(&:description).flatten
+      RoleAction.select('lower(description) AS description').where("org_type @> '{#{@user.primary_user_role}}'::character varying[] AND (plan_ids is null OR plan_ids @> '{#{@user.user_organizations.map(&:organization).map(&:plan_id).compact.join(', ')}}'::character varying[])").distinct.map(&:description).flatten
     end
   end
 
