@@ -17,7 +17,10 @@ if ENV['CIRCLE_ARTIFACTS']
   SimpleCov.coverage_dir(dir)
 end
 
-SimpleCov.start
+SimpleCov.start do
+  add_filter "/app/"
+end
+
 require "pundit/rspec"
 
 # Requires supporting ruby files with custom matchers and macros, etc, in
