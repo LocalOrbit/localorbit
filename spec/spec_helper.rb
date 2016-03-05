@@ -18,7 +18,8 @@ if ENV['CIRCLE_ARTIFACTS']
 end
 
 SimpleCov.start do
-  add_filter "/app/"
+  add_filter "spec/"
+  add_filter "vendor/"
 end
 
 require "pundit/rspec"
