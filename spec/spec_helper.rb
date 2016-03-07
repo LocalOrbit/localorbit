@@ -10,12 +10,6 @@ require File.expand_path("../../config/environment", __FILE__)
 require "rspec/rails"
 require "email_spec"
 
-# save to CircleCI's artifacts directory if we're on CircleCI
-if ENV['CIRCLE_ARTIFACTS']
-  dir = File.join(ENV['CIRCLE_ARTIFACTS'], "coverage")
-  SimpleCov.coverage_dir(dir)
-end
-
 require "pundit/rspec"
 
 # Requires supporting ruby files with custom matchers and macros, etc, in
