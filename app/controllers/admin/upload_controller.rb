@@ -29,7 +29,8 @@ class Admin::UploadController < AdminController
       # jsn[0]["products"].each do |p|
       #   API::V2::Grape.create_product_from_hash(p)
       # end
-      POST "/api/v2/products/add-products" {:body => jsn[0]["products"]}
+      # HTTParty.post("#{request.base_url}/api/v2/products/add-products", :body => jsn[0]["products"])
+      
       # binding.pry
       # HTTParty.post("#{request.base_url}/api/v2/products/add-products", :body => jsn[0])
 

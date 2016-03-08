@@ -37,6 +37,7 @@ module API
 			end
 
 			def self.get_organization_id_from_name(organization_name)
+				# binding.pry
 				begin
 					org = Organization.find_by_name(organization_name).id
 					org
@@ -46,6 +47,7 @@ module API
 			end
 
 			def self.get_unit_id_from_name(unit_name) # assuming name is singular
+				# binding.pry
 				begin
 					unit = Unit.find_by_singular(unit_name).id
 					unit
@@ -291,7 +293,7 @@ module API
 						# binding.pry
 						gp_id_or_false = ProductHelpers.identify_product_uniqueness(prod_hash)
 						if !gp_id_or_false
-							product = Product.create!(
+							product = Product.create(
 											name: prod_hash["Product Name"],
 							        organization_id: ProductHelpers.get_organization_id_from_name(prod_hash["Organization"]),
 							        #market_name: prod_hash["Market"], # TODO same question
@@ -302,6 +304,7 @@ module API
 							        long_description: prod_hash["Long Description"],
 							        unit_description: prod_hash["Unit Description"]
 							      	)
+							  product.save!
 							unless prod_hash[SerializeProducts.required_headers[-4]] == "N" # TODO this should be factored out, but later.
 								newprod = product.dup 
 								newprod.unit_id = ProductHelpers.get_unit_id_from_name(prod_hash[SerializeProducts.required_headers[-3]])
@@ -310,7 +313,7 @@ module API
 								newprod.save! # for id to be created in db. (TODO this may be affected by uniqueness constraints tba. not yet.)
 							end
 						else
-							product = Product.create!(
+							product = Product.create(
 							        name: prod_hash["Product Name"],
 							        organization_id: ProductHelpers.get_organization_id_from_name(prod_hash["Organization"]),
 							        #market_name: prod_hash["Market"], # TODO same Q as above, mkt assoc
@@ -322,6 +325,7 @@ module API
 							        unit_description: prod_hash["Unit Description"],
 							        general_product_id: gp_id_or_false
 							      	)
+								product.save!
 							unless prod_hash[SerializeProducts.required_headers[-4]] == "N" # TODO factor out
 								newprod = product.dup 
 								newprod.unit_id = ProductHelpers.get_unit_id_from_name(prod_hash[SerializeProducts.required_headers[-3]])
@@ -339,13 +343,12 @@ module API
 					else
 						# this should be the 'normal' thing when you post a JSON /file/ as body per convention, Rails will put file in tempfile 
 						prod_hashes = JSON.parse(File.read(params[:body][:tempfile]))
-
 					end
 
 					prod_hashes["products"].each do |p|
 						self.create_product_from_hash(p)
 					end
-					binding.pry
+
 					{"result"=>"#{prod_hashes["products_total"]} products successfully created","errors"=>$row_errors} 
 				end 
 				# TODO fix: not upserting?, just adding another, which seems like a problem.
