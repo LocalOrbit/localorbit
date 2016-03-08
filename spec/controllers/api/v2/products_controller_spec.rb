@@ -28,9 +28,9 @@ let!(:product2) { create(:product, name:"Test Product 2") }
 
 	describe "POST /api/v2/add-product" do
 
-		it "posts one product correctly with 201 response" do # todo market name problem - in controller
+		it "posts one product correctly with 201 response" do 
 			post "api/v2/products/add-product", {name:"Super Unusual Name",organization_name:"Organization 1",price:2.34,unit:"box",category:"Fruits",code:"hmmm-abc",short_description:"short",long_description:"GOES ON FOREVER long long long",unit_description:"unit description with new unit same product"}.to_json, {"Content-Type"=>"application/json"}
-
+			binding.pry
 			expect(response.status).to eq(201)
 			expect(JSON.parse(response.body)).to eq({"result" => "product successfully created"})
 		end
@@ -57,12 +57,18 @@ let!(:product2) { create(:product, name:"Test Product 2") }
 
 		it "correctly posts products when properly formatted JSON data file is posted" do
 			post "api/v2/products/add-products", {"products_total"=>2,"products"=> [{"Organization"=>"Organization 1","Category"=>"Fruits","Product Name"=>"Test Product 45","Code"=>"abcdef-code1","Short Description"=>"look how short","Long Description"=>"look how long","Unit"=>"box","Unit Description"=>"5 pound boxcase of something lalala unique","Price"=>2.41,"Multiple Pack Sizes"=>"N"},{"Organization"=>"Organization 2","Category"=>"Fruits","Product Name"=>"Test Product 33","Code"=>"abcdef-code3","Short Description"=>"look how short descr","Long Description"=>"look how long very lengthy","Unit"=>"box","Unit Description"=>"5 pound boxcase more like box of something or something","Price"=>2.45,"Multiple Pack Sizes"=>"N"}]}
-
 			expect(response.status).to eq(201)
 			expect(response.status).not_to eq(403)
 		end
 
-		it "correctly returns an error hash with bad data posted" do
+		it "correctly returns errors with bad data posted" do
+			post "api/v2/products/add-products", {"products_total"=>2,"products"=> [{"Organization"=>"Organization 1","Product Name"=>"Test Product 45","Code"=>"abcdef-code1","Short Description"=>"look how short","Long Description"=>"look how long","Unit"=>"box","Unit Description"=>"5 pound boxcase of something lalala unique","Price"=>2.41,"Multiple Pack Sizes"=>"N"},{"Organization"=>"Organization 2","Category"=>"Fruits","Product Name"=>"Test Product 33","Code"=>"abcdef-code3","Short Description"=>"look how short descr","Long Description"=>"look how long very lengthy","Unit"=>"box","Unit Description"=>"5 pound boxcase more like box of something or something","Price"=>2.45,"Multiple Pack Sizes"=>"N"}]} # does not have a category for first product
+			expect(response.status).to eq(422)
+		end
+
+		it "correctly returns errors with correct headers but bad data in values" do
+			post "api/v2/products/add-products", {"products_total"=>2,"products"=> [{"Organization"=>"Organization 1","Category"=>"Not a real category","Product Name"=>"Test Product 45","Code"=>"abcdef-code1","Short Description"=>"look how short","Long Description"=>"look how long","Unit"=>"Fake unit","Unit Description"=>"5 pound boxcase of something lalala unique","Price"=>2.41,"Multiple Pack Sizes"=>"N"},{"Organization"=>"Organization 2","Category"=>"Fruits","Product Name"=>"Test Product 33","Code"=>"abcdef-code3","Short Description"=>"look how short descr","Long Description"=>"look how long very lengthy","Unit"=>"box","Unit Description"=>"5 pound boxcase more like box of something or something","Price"=>2.45,"Multiple Pack Sizes"=>"N"}]}
+			expect(response.status).to eq(422) # TODO: determine why row_errors returns differently here than in other posted body to add-products route
 		end
 
 	end
