@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160227174245) do
+ActiveRecord::Schema.define(version: 20160308203526) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -475,7 +475,7 @@ ActiveRecord::Schema.define(version: 20160227174245) do
     t.string   "payment_provider"
     t.string   "country",                                                default: "US",  null: false
     t.boolean  "require_purchase_orders",                                default: false, null: false
-    t.boolean  "alternative_order_page",                                 default: false, null: false
+    t.boolean  "alternative_order_page",                                 default: true,  null: false
     t.integer  "product_label_format",                                   default: 4
     t.boolean  "print_multiple_labels_per_item",                         default: false
     t.boolean  "pending",                                                default: false
@@ -673,7 +673,7 @@ ActiveRecord::Schema.define(version: 20160227174245) do
     t.string   "pdf_name"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.text     "zpl"
+    t.json     "zpl"
     t.string   "zpl_name"
   end
 
