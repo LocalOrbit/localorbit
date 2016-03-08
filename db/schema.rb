@@ -475,7 +475,7 @@ ActiveRecord::Schema.define(version: 20160318191640) do
     t.string   "payment_provider"
     t.string   "country",                                                default: "US",  null: false
     t.boolean  "require_purchase_orders",                                default: false, null: false
-    t.boolean  "alternative_order_page",                                 default: false, null: false
+    t.boolean  "alternative_order_page",                                 default: true,  null: false
     t.integer  "product_label_format",                                   default: 4
     t.boolean  "print_multiple_labels_per_item",                         default: false
     t.boolean  "pending",                                                default: false
@@ -652,18 +652,18 @@ ActiveRecord::Schema.define(version: 20160318191640) do
     t.text     "how_story"
     t.string   "photo_uid"
     t.string   "balanced_customer_uri"
-    t.boolean  "balanced_underwritten",                                default: false, null: false
+    t.boolean  "balanced_underwritten",        default: false, null: false
     t.string   "facebook"
     t.string   "twitter"
-    t.boolean  "display_facebook",                                     default: false
-    t.boolean  "display_twitter",                                      default: false
+    t.boolean  "display_facebook",             default: false
+    t.boolean  "display_twitter",              default: false
     t.boolean  "allow_purchase_orders"
     t.boolean  "allow_credit_cards"
     t.boolean  "allow_ach"
     t.integer  "legacy_id"
-    t.boolean  "show_profile",                                         default: true
-    t.boolean  "active",                                               default: false
-    t.boolean  "needs_activated_notification",                         default: true
+    t.boolean  "show_profile",                 default: true
+    t.boolean  "active",                       default: false
+    t.boolean  "needs_activated_notification", default: true
     t.string   "stripe_customer_id"
   end
 
