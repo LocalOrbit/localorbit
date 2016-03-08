@@ -334,16 +334,15 @@ module API
 
 					end # end def.self_create_product_from_hash
 	
-					if params.has_key?("products")
+					if params.class == Hashie::Mash # this should be the alternative case
 						prod_hashes = params
 					else
-						# this should be the 'normal' thing when you post a JSON /file/ as body
+						# this should be the 'normal' thing when you post a JSON /file/ as body per convention, Rails will put file in tempfile 
 						prod_hashes = JSON.parse(File.read(params[:body][:tempfile]))
+
 					end
 
 					prod_hashes["products"].each do |p|
-						# binding.pry
-						# p self.class, "CLASSNAME"
 						self.create_product_from_hash(p)
 					end
 					binding.pry
