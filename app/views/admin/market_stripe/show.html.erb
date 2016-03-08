@@ -1,0 +1,14 @@
+<%= render "admin/markets/header" %>
+
+<%= render 'shared/errors', resource: @market %>
+
+<div class="row row--partial">
+
+  <% if @market.stripe_account_id.nil? %>
+    <%= link_to image_tag('light-on-light.png'), user_omniauth_authorize_path(:stripe_connect, state: current_market.subdomain)  %>
+  <% else %>
+  Recent Transactions
+
+  Recent Transfers
+  <% end %>
+</div>
