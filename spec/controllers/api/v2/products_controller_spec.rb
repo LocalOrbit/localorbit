@@ -3,6 +3,7 @@ require "spec_helper"
 describe API::V2::Products, :type => :request do
 
 let!(:org) { create(:organization, name: "Organization 1") }
+let!(:org) { create(:organization, name: "Organization 2")}
 let!(:product1) { create(:product, name:"Test Product 1") }
 let!(:product2) { create(:product, name:"Test Product 2") }
 
@@ -55,7 +56,13 @@ let!(:product2) { create(:product, name:"Test Product 2") }
 	describe "POST /api/v2/add-products" do
 
 		it "correctly posts products when properly formatted JSON data file is posted" do
-			post "api/v2/products/add-products", {"products_total"=>2,"products"=> [{"Organization"=>"Boettcher Farm","Category"=>"Fruits","Product Name"=>"Test Product 1","Code"=>"abcdef-code1","Short Description"=>"look how short","Long Description"=>"look how long","Unit"=>"Case","Unit Description"=>"5 pound boxcase of something","Price"=>2.41,"Multiple Pack Sizes"=>"N"},{"Organization"=>"Boettcher Farm","Category"=>"Fruits","Product Name"=>"Test Product 33","Code"=>"abcdef-code3","Short Description"=>"look how short here is another thing","Long Description"=>"look how long","Unit"=>"Box","Unit Description"=>"5 pound boxcase more like box of something","Price"=>2.45,"Multiple Pack Sizes"=>"N"}]}
+			post "api/v2/products/add-products", {"products_total"=>2,"products"=> [{"Organization"=>"Organization 1","Category"=>"Fruits","Product Name"=>"Test Product 45","Code"=>"abcdef-code1","Short Description"=>"look how short","Long Description"=>"look how long","Unit"=>"box","Unit Description"=>"5 pound boxcase of something lalala unique","Price"=>2.41,"Multiple Pack Sizes"=>"N"},{"Organization"=>"Organization 2","Category"=>"Fruits","Product Name"=>"Test Product 33","Code"=>"abcdef-code3","Short Description"=>"look how short descr","Long Description"=>"look how long very lengthy","Unit"=>"box","Unit Description"=>"5 pound boxcase more like box of something or something","Price"=>2.45,"Multiple Pack Sizes"=>"N"}]}
+
+			expect(response.status).to eq(201)
+			expect(response.status).not_to eq(403)
+		end
+
+		it "correctly returns an error hash with bad data posted" do
 		end
 
 	end
