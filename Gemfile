@@ -69,6 +69,7 @@ gem 'browserify-rails'
 gem 'react-rails'
 
 gem 'httparty'
+gem 'omniauth-stripe-connect'
 
 gem "constructor"
 gem "tabulator", github: "dcrosby42/tabulator"
