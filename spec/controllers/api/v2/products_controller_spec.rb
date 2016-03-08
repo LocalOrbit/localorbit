@@ -55,6 +55,7 @@ let!(:product2) { create(:product, name:"Test Product 2") }
 	describe "POST /api/v2/add-products" do
 
 		it "correctly posts products when properly formatted JSON data file is posted" do
+			post "api/v2/products/add-products", {"products_total"=>2,"products"=> [{"Organization"=>"Boettcher Farm","Category"=>"Fruits","Product Name"=>"Test Product 1","Code"=>"abcdef-code1","Short Description"=>"look how short","Long Description"=>"look how long","Unit"=>"Case","Unit Description"=>"5 pound boxcase of something","Price"=>2.41,"Multiple Pack Sizes"=>"N"},{"Organization"=>"Boettcher Farm","Category"=>"Fruits","Product Name"=>"Test Product 33","Code"=>"abcdef-code3","Short Description"=>"look how short here is another thing","Long Description"=>"look how long","Unit"=>"Box","Unit Description"=>"5 pound boxcase more like box of something","Price"=>2.45,"Multiple Pack Sizes"=>"N"}]}
 		end
 
 	end
