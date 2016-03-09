@@ -48,4 +48,5 @@
 //= require_tree .
 //= stub sticky-headers
 //= stub resolution
+//= stub synchronousRemote
 //= stub roll_your_own_market
