@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160227174245) do
+ActiveRecord::Schema.define(version: 20160308193100) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -482,6 +482,7 @@ ActiveRecord::Schema.define(version: 20160227174245) do
     t.text     "zpl_logo"
     t.string   "zpl_printer"
     t.boolean  "pending",                                                default: false
+    t.boolean  "stripe_standalone"
   end
 
   add_index "markets", ["name"], name: "index_markets_on_name", using: :btree
