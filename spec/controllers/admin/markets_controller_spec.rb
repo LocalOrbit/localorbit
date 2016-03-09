@@ -2,7 +2,8 @@ require "spec_helper"
 
 describe Admin::MarketsController do
   let(:admin)  { create(:user, :admin) }
-  let(:market) { create(:market) }
+  let(:market) { create(:market, stripe_standalone: false) }
+  let(:market2) { create(:market, stripe_standalone: true) }
 
   describe "#index" do
     it_behaves_like "admin only action", lambda { get :index }
@@ -27,18 +28,18 @@ describe Admin::MarketsController do
         allow(controller).to receive(:market_params)
       end
 
-      context "success" do
+      context "success - standalone" do
         it "redirects to admin market page" do
-          allow(RegisterStripeMarket).to receive(:perform) { double("Results", success?: true, market: market) }
+          allow(RegisterStripeStandaloneMarket).to receive(:perform) { double("Results", success?: true, market: market2) }
 
           post :create
-          expect(response).to redirect_to(admin_market_path(market))
+          expect(response).to redirect_to(admin_market_path(market2))
         end
       end
 
-      context "failure" do
+      context "failure - standalone" do
         it "renders the new page" do
-          allow(RegisterStripeMarket).to receive(:perform) { double("Results", success?: false, market: market) }
+          allow(RegisterStripeStandaloneMarket).to receive(:perform) { double("Results", success?: false, market: market2) }
 
           post :create
           expect(response).to be_success
