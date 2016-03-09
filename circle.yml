@@ -1,8 +1,7 @@
 # Circle CI config
 machine:
   environment:
-    CAPYBARA_WAIT_TIME: 180
-    CODECLIMATE_REPO_TOKEN: d3e658ea8e89ec247b7ce5eb607020cbda140716a7599b4642ee4990f4b70464 bundle exec rake
+    CAPYBARA_WAIT_TIME: 120
 dependencies:
   pre:
     - sudo apt-get install libjpeg62; sudo apt-get install ghostscript
