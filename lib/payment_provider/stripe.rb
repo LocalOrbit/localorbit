@@ -352,6 +352,29 @@ module PaymentProvider
         ::Stripe::Invoice.all(customer_filter)
       end
 
+      def get_stripe_account_status(acct)
+        ::Stripe::Account.retrieve(acct)
+      end
+
+      def get_stripe_balance(acct)
+        ::Stripe::Balance.retrieve(stripe_account: acct)
+      end
+
+      def get_stripe_balance_transactions(acct)
+        response = ::Stripe::BalanceTransaction.all({limit: 10}, {stripe_account: acct})
+        response.data
+      end
+
+      def get_stripe_charge_transactions(acct)
+        response = ::Stripe::Charge.all({limit: 10}, {stripe_account: acct})
+        response.data
+      end
+
+      def get_stripe_transfers(acct)
+        response = ::Stripe::Transfer.all({limit: 10}, {stripe_account: acct})
+        response.data
+      end
+
       private
 
       def enumerate_transfer_transactions(transfer_id:, stripe_account_id:)

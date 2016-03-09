@@ -475,13 +475,14 @@ ActiveRecord::Schema.define(version: 20160318191640) do
     t.string   "payment_provider"
     t.string   "country",                                                default: "US",  null: false
     t.boolean  "require_purchase_orders",                                default: false, null: false
-    t.boolean  "alternative_order_page",                                 default: true,  null: false
+    t.boolean  "alternative_order_page",                                 default: false, null: false
     t.integer  "product_label_format",                                   default: 4
     t.boolean  "print_multiple_labels_per_item",                         default: false
     t.boolean  "pending",                                                default: false
     t.text     "zpl_logo"
     t.string   "zpl_printer"
     t.boolean  "self_directed_creation",                                 default: false
+    t.boolean  "stripe_standalone"
   end
 
   add_index "markets", ["name"], name: "index_markets_on_name", using: :btree
