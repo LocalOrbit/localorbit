@@ -10,8 +10,8 @@
       <div class="row">
         <div>
           <h1>Account Summary</h1>
-          Available: <strong><%= number_to_currency(@account_balance.available[0].amount/100) %></strong>
-          Waiting: <strong><%= number_to_currency(@account_balance.pending[0].amount/100) %></strong>
+          Available: <strong><%= number_to_currency(@account_balance.available[0].amount/100.0) %></strong>
+          Waiting: <strong><%= number_to_currency(@account_balance.pending[0].amount/100.0) %></strong>
         </div>
       </div>
       <br/><br/>
@@ -32,10 +32,10 @@
             <% @account_payments.each do |payment| %>
               <tr>
                 <td><%= Time.at(payment.created).strftime("%m/%d/%Y %H:%M") %></td>
-                <td><%= payment.object.capitalize %></td>
-                <td><%= number_to_currency(payment.amount/100) %></td>
-                <td><%= number_to_currency(payment.fee/100) %></td>
-                <td><%= number_to_currency(payment.net/100) %></td>
+                <td><%= payment.type.gsub('_',' ').capitalize %></td>
+                <td><%= number_to_currency(payment.amount/100.0) %></td>
+                <td><%= number_to_currency(payment.fee/100.0) %></td>
+                <td><%= number_to_currency(payment.net/100.0) %></td>
               </tr>
             <% end %>
             </tbody>
@@ -55,7 +55,7 @@
             <% @account_transfers.each do |transfer| %>
                 <tr>
                   <td><%= Time.at(transfer.created).strftime("%m/%d/%Y") %></td>
-                  <td><%= number_to_currency(transfer.amount/100) %></td>
+                  <td><%= number_to_currency(transfer.amount/100.0) %></td>
                 </tr>
             <% end %>
             </tbody>
