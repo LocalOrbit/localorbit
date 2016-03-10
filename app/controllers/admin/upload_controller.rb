@@ -2,8 +2,8 @@ class Admin::UploadController < AdminController
 	require 'rubyXL'
   require 'open3'
   #require 'HTTParty'
-  include HTTParty
-  debug_output $stderr
+  # include HTTParty
+  # debug_output $stderr
   include API::V2 # hm
 
   def index
@@ -25,10 +25,19 @@ class Admin::UploadController < AdminController
       #sp = API::V2::SerializeProducts.new
       # binding.pry
       jsn = API::V2::SerializeProducts.get_json_data(params[:datafile]) # product stuff, row errors
-      @num_products_loaded = jsn[0]["products_total"] - jsn[0]["products"].length
-      # jsn[0]["products"].each do |p|
-      #   API::V2::Grape.create_product_from_hash(p)
-      # end
+      # @num_products_loaded = jsn[0]["products_total"] - jsn[0]["products"].length
+      # That will not work for number of products loaded, need a better
+      # binding.pry
+      jsn[0]["products"].each do |p|
+        API::V2::ProductHelpers.create_product_from_hash(p)
+      end
+      # this works! yay! now have to handle sending the row errors display to the display, otherwise recustomizing the interface
+
+
+
+
+
+
       # HTTParty.post("#{request.base_url}/api/v2/products/add-products", :body => jsn[0]["products"])
       
       # binding.pry

@@ -3,7 +3,6 @@ module API
 		#extend self
 
 		class ProductHelpers
-
 			# This has to work for an individual hash, so it has to be for EACH PRODUCT in the all-products
 			def self.identify_product_uniqueness(product_params) # takes hash of params
 				# goes with an existing general product if it has the same name and category as another product
@@ -55,12 +54,63 @@ module API
 					return nil
 				end
 			end
-			
+
+			def self.create_product_from_hash(prod_hash)
+				# binding.pry
+				gp_id_or_false = self.identify_product_uniqueness(prod_hash)
+				if !gp_id_or_false
+					# binding.pry
+					product = Product.create(
+									name: prod_hash["Product Name"],
+					        organization_id: self.get_organization_id_from_name(prod_hash["Organization"]),
+					        #market_name: prod_hash["Market"], # TODO same question
+					        unit_id: self.get_unit_id_from_name(prod_hash["Unit Name"]),
+					        category_id: self.get_category_id_from_name(prod_hash["Category Name"]),
+					        code: prod_hash["Product Code"],
+					        short_description: prod_hash["Short Description"],
+					        long_description: prod_hash["Long Description"],
+					        unit_description: prod_hash["Unit Description"]
+					      	)
+					  product.save!
+					unless prod_hash[SerializeProducts.required_headers[-4]].empty? # TODO this should be factored out, but later.
+						newprod = product.dup 
+						newprod.unit_id = self.get_unit_id_from_name(prod_hash[SerializeProducts.required_headers[-3]])
+						newprod.unit_description = prod_hash[SerializeProducts.required_headers[-2]]
+						newprod.save!
+						newprod.prices.create!(sale_price: prod_hash["Price"], min_quantity: 1)
+						#newprod.save! # for id to be created in db. (TODO this may be affected by uniqueness constraints tba. not yet.)
+					end
+				else
+					product = Product.create(
+					        name: prod_hash["Product Name"],
+					        organization_id: self.get_organization_id_from_name(prod_hash["Organization"]),
+					        unit_id: self.get_unit_id_from_name(prod_hash["Unit Name"]),
+					        category_id: self.get_category_id_from_name(prod_hash["Category Name"]),
+					        code: prod_hash["Product Code"],
+					        short_description: prod_hash["Short Description"],
+					        long_description: prod_hash["Long Description"],
+					        unit_description: prod_hash["Unit Description"],
+					        general_product_id: gp_id_or_false
+					      	)
+						product.save!
+					unless prod_hash[SerializeProducts.required_headers[-4]] == "N" # TODO factor out
+						newprod = product.dup 
+						newprod.unit_id = self.get_unit_id_from_name(prod_hash[SerializeProducts.required_headers[-3]])
+						newprod.unit_description = prod_hash[SerializeProducts.required_headers[-2]]
+						newprod.save! # must create id in db before creating prices
+						#newprod.price = prod_hash[@required_headers.last] # no, prices need build on lots
+						newprod.prices.create!(sale_price: prod_hash["Price"], min_quantity: 1)
+						#newprod.save! # for id to be created in db
+					end
+				end
+
+			end # end def.self_create_product_from_hash
+	
 		end
 
 		class SerializeProducts
 			require 'csv'
-			@required_headers = ["Product Name","Category Name","Short Description","Product Code","Unit Name","Unit Description","Price", "Multiple Pack Sizes","MPS Unit","MPS Unit Description","MPS Price"] # Required headers for imminent future
+			@required_headers = ["Organization","Product Name","Category Name","Short Description","Product Code","Unit Name","Unit Description","Price", "Multiple Pack Sizes","MPS Unit","MPS Unit Description","MPS Price"] # Required headers for imminent future
 
 			# TODO should this be a diff kind of accessor? Later, works.
 			def self.required_headers
