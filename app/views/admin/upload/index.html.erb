@@ -4,15 +4,13 @@ This is an admin interface for product import.
 
 <h2>Import Products</h2>
 
-<% if @plan == "LocalEyes" %>
-	<strong>Make sure you are on the CORRECT site for uploading or you will not be able to upload your products.</strong>
+<% if @plan == "LocalEyes" %> <!-- Probably diff plan requirements for uploading. Can upload to any organization... THAT needs to be fixed. TODO authentication. Also, this whole deal should be in roles and permissions anyway. -->
+	
 	<%= form_tag({action: :upload}, multipart: true) do %>
 	  <%= file_field_tag 'datafile' %>
 	  <br></br>
 	  <input type="hidden" id="job_id" name="job_id" value="<%=@job_id%>" />
-	  <p>Please select the market supplier for which you are uploading data.</p>
-		 <%= select_tag 'profile',  options_for_select(@suppliers_available) %>
-		<br>
+	  
 		<br>
 	  <%= submit_tag "Import" %>
 	<% end %>
