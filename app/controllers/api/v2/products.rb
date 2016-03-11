@@ -56,14 +56,11 @@ module API
 			end
 
 			def self.create_product_from_hash(prod_hash)
-				# binding.pry
 				gp_id_or_false = self.identify_product_uniqueness(prod_hash)
 				if !gp_id_or_false
-					# binding.pry
 					product = Product.create(
 									name: prod_hash["Product Name"],
 					        organization_id: self.get_organization_id_from_name(prod_hash["Organization"]),
-					        #market_name: prod_hash["Market"], # TODO same question
 					        unit_id: self.get_unit_id_from_name(prod_hash["Unit Name"]),
 					        category_id: self.get_category_id_from_name(prod_hash["Category Name"]),
 					        code: prod_hash["Product Code"],
@@ -98,9 +95,7 @@ module API
 						newprod.unit_id = self.get_unit_id_from_name(prod_hash[SerializeProducts.required_headers[-3]])
 						newprod.unit_description = prod_hash[SerializeProducts.required_headers[-2]]
 						newprod.save! # must create id in db before creating prices
-						#newprod.price = prod_hash[@required_headers.last] # no, prices need build on lots
 						newprod.prices.create!(sale_price: prod_hash["Price"], min_quantity: 1)
-						#newprod.save! # for id to be created in db
 					end
 				end
 
@@ -141,28 +136,19 @@ module API
 							end
 							$product_rows["products"] << product_row_hash
 						else
-							# binding.pry
 							# This is what happens if a row is invalid but the general format of the file is correct. Which should be... ? 
 							# All rows should be displayed on upload. 
-							# TODO Need errors to be returned in an API response, though.
 						end
-						# TODO clarify return in diff scenarios, need to build out test suite.
+						# TODO clarify return in diff scenarios?
 					end
 					return $product_rows,$row_errors # array of these hashes
 				end
 				# TODO error handling - should handle if the csv format is invalid somehow, break out of the process neatly. 
-				# Return a message. What if any redirects?
+				# Return a message. TODO concern for redirects?
 			end
 
 			# takes a csvfile -- returns true if valid, false if invalid
 			def self.validate_csv_catalog_file_format(csvfile)
-				# check for CSV not XLS ## in upload form, use: file_field_tag :file, accept: '.csv' TODO add to upload form to take effect
-				# check for 2 (1? probably 2) or more rows (see below)
-				# check for correct headers (see below)
-				# Need to put file errors somewhere on upload page response. TODO!
-
-				# you get file as is, so the format will be like
-				# CSV.read("path/to/file") - so need to save that file obj in a variable thing and pass it in here
 				csvfile = CSV.parse(open(csvfile),headers:true)
 				$product_rows["products_total"] = csvfile.size
 				headers = csvfile.headers
@@ -178,12 +164,11 @@ module API
 			end
 
 			## TODO maybe abstract helpers properly to lib and include modules.
-			## TODO neaten global error hash business? Need to bring them to display.
 
 			def self.validate_product_row(product_row, line_num)
 				okay_flag = true
 				error_hash = {}
-				## This shouldn't be needed for anything outside verifying CSV files uploaded.
+				## This shouldn't be needed for anything outside verifying CSV files uploaded. Check w
 				error_hash["Row number"] = line_num.to_s 
 				error_hash["Errors"] = {}
 				if [product_row["Product Name"],product_row["Category Name"],product_row["Short Description"],product_row["Unit Name"],product_row["Unit Description"],product_row["Price"],product_row[@required_headers[-4]]].any? {|obj| obj.blank?}
@@ -208,11 +193,11 @@ module API
 					error_hash["Errors"]["Missing or invalid category"] = "Check category validity." # TODO need more information about category problems
 				end
 				# TODO how to deal with organizations, TODO add back, methods should work the same way
-				# if ProductHelpers.get_organization_id_from_name(product_row["Organization"]).nil?
-				# 	okay_flag = false
-				# 	#create error and append it
-				# 	error_hash["Errors"]["Missing or invalid Organization name"] = "Check organization validity." # TODO need more information
-				# end
+				if ProductHelpers.get_organization_id_from_name(product_row["Organization"]).nil?
+					okay_flag = false
+					#create error and append it
+					error_hash["Errors"]["Missing or invalid Organization name"] = "Check organization validity." # TODO need more information
+				end
 				if ProductHelpers.get_unit_id_from_name(product_row["Unit Name"]).nil?
 					okay_flag = false
 					#create error and append it 
