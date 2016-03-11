@@ -28,10 +28,22 @@
 
 
 
-This is an admin interface for product import.
-<br>
-<strong><a href="/admin/upload">Return to upload form</a></strong>
+<h3>TBA NUMBER</h3> <i>products successfully imported.</i>
+
+(<strong><a href="/admin/upload">Return to upload form</a></strong>)
 
 <br>
 <br>
-<div id="results">Waiting for results...</div>
+<h3>Errors</h3>
+<div id="results">
+	<% @errors.each do |e| %>
+		<% if not e[1]["Errors"].empty? %>
+			<strong><%= "Row #{e[1]["Row number"]}:" %></strong>
+			<br>
+			<% e[1]["Errors"].keys.each do |er| %>
+				&nbsp;&nbsp;&nbsp; <%= " #{er} (#{e[1]['Errors'][er]})" %>
+			<% end %>
+			
+		<% end %>
+	<% end %>
+</div>
