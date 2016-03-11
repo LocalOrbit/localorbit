@@ -32,7 +32,7 @@ class Admin::UploadController < AdminController
         API::V2::ProductHelpers.create_product_from_hash(p)
       end
       # this works! yay! now have to handle sending the row errors display to the display, otherwise recustomizing the interface
-
+      @errors = jsn[1]
 
 
 
