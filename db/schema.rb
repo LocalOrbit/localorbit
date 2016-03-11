@@ -483,6 +483,7 @@ ActiveRecord::Schema.define(version: 20160308203526) do
     t.string   "zpl_printer"
     t.boolean  "pending",                                                default: false
     t.boolean  "stripe_standalone"
+    t.string   "legacy_stripe_account_id"
   end
 
   add_index "markets", ["name"], name: "index_markets_on_name", using: :btree
