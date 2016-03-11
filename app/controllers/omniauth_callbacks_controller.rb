@@ -6,6 +6,10 @@ class OmniauthCallbacksController < Devise::OmniauthCallbacksController
 
     @market = Market.find_by_subdomain(params[:state])
 
+    if @market.legacy_stripe_account_id.nil?
+      @market.legacy_stripe_account_id = @market.stripe_account_id
+    end
+
     @market.stripe_account_id = request.env["omniauth.auth"]["extra"]["extra_info"]["id"]
     @market.save
 
