@@ -50,7 +50,7 @@ module PackingLabels
               else
                 qty_str = nil
               end
-              a << ["^XA^FX^CF0,70^FO50,50^FB500,2,,^FD#{page[:a][:data][:product][:product_name]}^FS^CF0,55^FO50,165^FD#{page[:a][:data][:product][:product_code]}^FS^FO50,220^FB500,3,,^FD#{page[:a][:data][:product][:unit_desc]}, #{page[:a][:data][:product][:lot_desc]}^FS^FO50,370^GB500,1,3^FS^FX^CF0,70^FO50,395^FD#{page[:a][:data][:product][:producer_name]}^FS^FX^CF0,30^FO50,475^FDDeliver On:^FS^CF0,50^FO50,500^FD#{page[:a][:data][:order][:deliver_on]}^FS^CF0,30^FO50,570^FDOrder #:^FS^CF0,50^FO50,595^FB500,2,,^FD#{page[:a][:data][:order][:order_number]}^FS^CF0,30^FO50,685^FDBuyer:^FS^CF0,50^FO50,710^FD#{page[:a][:data][:order][:buyer_name]}^FS^FX^FO400,800^BXN,7,200^FD#{order_url}^FS^FO50,780#{page[:a][:data][:order][:zpl_logo]}^FS#{qty_str}^XZ"]
+              a << ["^XA^FX^CF0,70^FO50,50^FB500,2,,^FD#{page[:a][:data][:product][:product_name]}^FS^CF0,55^FO50,165^FD#{page[:a][:data][:product][:product_code]}^FS^FO50,220^FD#{page[:a][:data][:product][:unit_desc]}^FS ^CF0,45^FO50,275^FD#{page[:a][:data][:product][:lot_desc]}^FS^FO50,330^GB500,1,3^FS^FX^CF0,70^FO50,355^FB500,2,,^FD#{page[:a][:data][:product][:producer_name]}^FS^FX^CF0,30^FO50,475^FDDeliver On:^FS^CF0,40^FO50,500^FD#{page[:a][:data][:order][:deliver_on]}^FS^CF0,30^FO50,555^FDOrder #:^FS^CF0,40^FO50,580^FB500,2,,^FD#{page[:a][:data][:order][:order_number]}^FS^CF0,30^FO50,660^FDBuyer:^FS^CF0,70^FO50,685^FB500,2,,^FD#{page[:a][:data][:order][:buyer_name]}^FS^FX^FO400,805^BXN,7,200^FD#{order_url}^FS^FO50,785#{page[:a][:data][:order][:zpl_logo]}^FS#{qty_str}^XZ"]
             end
           end
           a
