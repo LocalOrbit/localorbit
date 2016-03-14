@@ -1,5 +1,5 @@
 <%= render "admin/products/header" %>
-<%= centered_column('column--three-fourths') do %>
+<%= centered_column('column--eleven-twelfths') do %>
   <%= product_listing_disclaimer %>
 
   <h2>Add Prices</h2>
@@ -33,17 +33,17 @@
           <thead>
           <tr>
             <% if current_user.multi_market_membership? %>
-              <th class="market">Market</th>
+              <th class="market">Market/Buyer</th>
             <% end %>
-            <th class="buyer">Buyer</th>
             <th class="min-qty">
               Min Qty <span class="tooltip" data-tooltip="This is the minimum quantity available for sale of this product."></span>
             </th>
             <th class="net-price">
-              <div style="float: left">Estimated<br>Net Price</div><span class="tooltip tool-tip-test" data-tooltip="The Net Price is the amount that
+              <div style="float: left">Estimated<br/>Net Price</div><span class="tooltip tool-tip-test" data-tooltip="The Net Price is the amount that
               the seller will receive. This amount is an estimate, calculated by subtracting the market fee and any
               applicable payment processing fees from the Sale Price."></span>
             </th>
+            <th>Fee %</th>
             <th class="sale-price">
               Sale Price <span class="tooltip" data-tooltip="This is the sale price that the Buyer will see. The net
               price will adjust when you enter a sale price."></span>
@@ -70,22 +70,20 @@
                       <% else %>
                         <%= price.market_name %>
                       <% end %>
+                    </div><br/>
+                    <div class="edit-trigger view-cell">
+                      <%= price.organization_name %>
+                    </div>
+                    <div class="edit-cell">
+                      <% if organization_can_access?(unit_product.organization, :advanced_pricing) %>
+                          <%= f.select :organization_id, current_user.buyers_for_select,
+                                       {include_blank: 'All Buyers'}, {class: "price_buyer_id"} %>
+                      <% else %>
+                          <%= price.organization_name %>
+                      <% end %>
                     </div>
                   </td>
                 <% end %>
-                <td class="buyer">
-                  <div class="edit-trigger view-cell">
-                    <%= price.organization_name %>
-                  </div>
-                  <div class="edit-cell">
-                    <% if organization_can_access?(unit_product.organization, :advanced_pricing) %>
-                      <%= f.select :organization_id, current_user.buyers_for_select,
-                                   {include_blank: 'All Buyers'}, {class: "price_buyer_id"} %>
-                    <% else %>
-                      <%= price.organization_name %>
-                    <% end %>
-                  </div>
-                </td>
                 <td class="min-qty">
                   <div class="edit-trigger view-cell">
                     <%= price.min_quantity %>
@@ -104,7 +102,23 @@
                   </div>
                   <div class="edit-cell">
                     <%= f.number_field :net_price, min: 0, step: 0.01, size: 4, class: 'net-price',
-                                       data:{"net-percents-by-market-id" => json_escape(@net_percents_by_market_id.to_json)} %>
+                                       data:{"net-percents-by-market-id" => json_escape(@net_percents_by_market_id.to_json), "cc-rate" => @seller_cc_rate} %>
+                  </div>
+                </td>
+                <td class="fee">
+                  <div class="edit-trigger view-cell">
+                    <%= price.product_fee_pct == 0 || price.product_fee_pct.nil? ? "Use Mkt Fee" : number_to_percentage(price.product_fee_pct) %>
+                  </div>
+                  <div class="edit-cell">
+                    <div style="float: left">
+                      <label style="font-size: 10px">Market Fee</label> <input style="float: left" type="radio" value="0" name="fee" class="mkt-fee" checked="checked"/>
+                    </div>
+                    <div style="float: left">
+                      <label style="font-size: 10px">Product Fee</label> <input style="float: left" type="radio" value="1" name="fee" class="product-fee"/>
+                    </div>
+                    <div>
+                      <%= f.number_field :product_fee_pct, min: 0, step: 0.01, size: 2, class: 'fee', style: 'width: 70px; display: none; float: left' %>
+                    </div>
                   </div>
                 </td>
                 <td class="sale-price">

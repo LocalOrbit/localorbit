@@ -106,6 +106,14 @@
             <td class="net-sale"><%= content_tag "span", item.net_sale, class: "total-price" %></td>
           <% end %>
 
+          <% if field == :product_fee_pct %>
+              <td class="fee"><%= content_tag "span", item.product_fee_pct, class: "fee" %></td>
+          <% end %>
+
+          <% if field == :profit %>
+              <td class="profit"><%= content_tag "span", item.profit, class: "profit" %></td>
+          <% end %>
+
           <% if field == :payment_method %>
             <td class="payment-method"><%= item.payment_method %></td>
           <% end %>

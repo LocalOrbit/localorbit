@@ -308,6 +308,7 @@ FactoryGirl.define do
     delivery_status     "pending"
     discount_market     0.0
     discount_seller     0.0
+    product_fee_pct     0.0
 
     trait :delivered do
       delivery_status "delivered"
@@ -471,6 +472,7 @@ FactoryGirl.define do
     product
     min_quantity 1
     sale_price 3.00
+    product_fee_pct 0.0
 
     trait :past_price do
       after(:create) do |price|
