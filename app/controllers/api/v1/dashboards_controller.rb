@@ -14,7 +14,11 @@ module Api
           show_entity_picker = !current_user.admin_or_mm? && current_user.seller?
 
           if current_user.admin_or_mm?
-            user_type = "M"
+            if current_market.plan.name == 'LocalEyes'
+              user_type = "P"
+            else
+              user_type = "M"
+            end
           elsif current_user.seller?
             user_type = "S"
           elsif !current_user.admin_or_mm? && current_user.buyer_only?
