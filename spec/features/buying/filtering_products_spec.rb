@@ -6,7 +6,7 @@ feature "Filtering Products List" do
   let!(:org3) { create(:organization, name: "Abandoned Farm") }
   let!(:buyer_org) { create(:organization, :single_location, :buyer) }
 
-  let!(:market) { create(:market, :with_addresses, :with_delivery_schedule, organizations: [org1, org2, buyer_org]) }
+  let!(:market) { create(:market, :with_addresses, :with_delivery_schedule, organizations: [org1, org2, buyer_org], alternative_order_page: false) }
 
   let!(:delivery_schedule) { market.delivery_schedules.first }
 

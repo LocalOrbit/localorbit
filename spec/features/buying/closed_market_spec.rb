@@ -9,7 +9,7 @@ feature "When a Market is closed" do
     Timecop.return
   end
 
-  let!(:market)   { create(:market, :with_addresses, :with_delivery_schedule, closed: true) }
+  let!(:market)   { create(:market, :with_addresses, :with_delivery_schedule, closed: true, alternative_order_page: false) }
   let!(:seller)   { create(:organization, :seller, :single_location, markets: [market]) }
   let!(:buyer)    { create(:organization, :buyer, :single_location, markets: [market]) }
   let!(:products) { create_list(:product, 5, :sellable, organization: seller) }
