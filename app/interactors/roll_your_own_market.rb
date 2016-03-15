@@ -4,9 +4,9 @@ class RollYourOwnMarket
   organize [
   	CreateMarket, 
   	CreateMarketAddress, 
-  	CreateBankAccount,
-  	CreateServicePayment,
   	CreateStripeCustomerForEntity, 
   	CreateStripeSubscriptionForEntity,
+  	CreateBankAccount,
+  	CreateServicePayment,
   ]
 end

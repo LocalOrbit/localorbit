@@ -7,13 +7,15 @@ class CreateBankAccount
   end
 
   def perform
+    binding.pry
     params = bank_account_params.dup
+    if stripe_cust = context[:stripe_customer]
+      params[:notes] = "Stripe customer id: #{stripe_cust.id}"
+    end
 
-    # KXM Why is the token deleted here?
     params.delete(:stripe_tok)
     context[:bank_account] = entity.bank_accounts.create(params)
 
-    # KXM This is nice and clean, but is there an operation error that is better captured and reported?
     unless context[:bank_account].valid?
       context.fail!(error: "Could not create bank account record in database")
     end
