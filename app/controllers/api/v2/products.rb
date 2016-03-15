@@ -59,13 +59,14 @@ module API
 					  product.save!
 					unless prod_hash[SerializeProducts.required_headers[-4]].empty? # TODO this should be factored out, later.
 						newprod = product.dup 
-						newprod.unit_id = self.get_unit_id_from_name(prod_hash[SerializeProducts.required_headers[-3]])
-						newprod.unit_description = prod_hash[SerializeProducts.required_headers[-2]]
+						newprod.unit_id = self.get_unit_id_from_name(prod_hash["Multiple Pack Sizes"][SerializeProducts.required_headers[-3]])
+						newprod.unit_description = prod_hash["Multiple Pack Sizes"][SerializeProducts.required_headers[-2]]
 						newprod.save!
-						newprod.prices.create!(sale_price: prod_hash["Price"], min_quantity: 1)
+						newprod.prices.create!(sale_price: prod_hash["Multiple Pack Sizes"][SerializeProducts.required_headers[-1]], min_quantity: 1)
 						#newprod.save! # for id to be created in db. (TODO this may be affected by uniqueness constraints tba. not yet.)
 					end
 				else
+					# print "got here got here"
 					product = Product.create(
 					        name: prod_hash["Product Name"],
 					        organization_id: self.get_organization_id_from_name(prod_hash["Organization"]),
@@ -80,10 +81,10 @@ module API
 						product.save!
 					unless prod_hash[SerializeProducts.required_headers[-4]] == "N" # TODO factor out
 						newprod = product.dup 
-						newprod.unit_id = self.get_unit_id_from_name(prod_hash[SerializeProducts.required_headers[-3]])
-						newprod.unit_description = prod_hash[SerializeProducts.required_headers[-2]]
-						newprod.save! # must create id in db before creating prices
-						newprod.prices.create!(sale_price: prod_hash["Price"], min_quantity: 1)
+						newprod.unit_id = self.get_unit_id_from_name(prod_hash["Multiple Pack Sizes"][SerializeProducts.required_headers[-3]])
+						newprod.unit_description = prod_hash["Multiple Pack Sizes"][SerializeProducts.required_headers[-2]]
+						newprod.save!
+						newprod.prices.create!(sale_price: prod_hash["Multiple Pack Sizes"][SerializeProducts.required_headers[-1]], min_quantity: 1)
 					end
 				end
 
