@@ -12,7 +12,7 @@ describe "Using order templates", :js do
 
   let(:market_manager) { create(:user) }
   let(:plan) {create(:plan, :localeyes)}
-  let(:market) { create(:market, :with_addresses, organizations: [buyer, fulton_farms, ada_farms], managers: [market_manager], alternative_order_page: false, plan: plan) }
+  let(:market) { create(:market, :with_addresses, organizations: [buyer, fulton_farms, ada_farms], managers: [market_manager], alternative_order_page: true, plan: plan) }
   let!(:delivery_schedule) { create(:delivery_schedule, :percent_fee,  market: market, day: 5) }
   let!(:delivery_day) { DateTime.parse("May 9, 2014, 11:00:00") }
   let!(:delivery) do

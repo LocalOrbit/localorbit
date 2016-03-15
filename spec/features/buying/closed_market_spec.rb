@@ -39,7 +39,7 @@ feature "When a Market is closed" do
       let!(:delivery_schedule) { create(:delivery_schedule) }
       let!(:delivery)    { delivery_schedule.next_delivery }
       let!(:order_item1) { create(:order_item, product: products[0]) }
-      let!(:order1)      { create(:order, delivery: delivery, items: [order_item1], organization: buyer) }
+      let!(:order1)      { create(:order, market: market, delivery: delivery, items: [order_item1], organization: buyer) }
 
       scenario "the Buyer may view her Orders" do
         click_link "Purchase History"

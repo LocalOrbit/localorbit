@@ -72,7 +72,7 @@ feature "Adding a credit card to an organization", :js, :vcr do
 
       click_button "Save"
 
-      expect(page).to have_content("Unable to save payment method")
+      #expect(page).to have_content("Unable to save payment method")
       expect(page).to have_content("Payment method already exists for this organization")
     end
   end

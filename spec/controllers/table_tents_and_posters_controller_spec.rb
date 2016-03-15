@@ -44,7 +44,7 @@ describe TableTentsAndPostersController do
           end
         end
 
-        let (:order) {create(:order, organization: buyer_organization)}
+        let (:order) {create(:order, market: mini_market, organization: buyer_organization)}
         let (:pdf_result) { double "PDF Result", data: "the pdf data" }
 
         it "inserts an OrderPrintable record per our inputs and starts a delayed job to process the PDF" do
