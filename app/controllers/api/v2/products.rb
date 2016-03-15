@@ -4,31 +4,21 @@ module API
 
 		class ProductHelpers
 			# This has to work for an individual hash, so it has to be for EACH PRODUCT in the all-products
-			def self.identify_product_uniqueness(product_params) # takes hash of params
-				# goes with an existing general product if it has the same name and category as another product
-				# TODO add - if unit and/OR unit description different.
-				# otherwise, don't update.
-				# I guess it isn't taken care of when you post straight JSON. TODO fix concern.
+			def self.identify_product_uniqueness(product_params) 
 				identity_params_hash = {product_name:product_params["Product Name"],category_id:ProductHelpers.get_category_id_from_name(product_params["Category"])}
 				product_unit_identity_hash = {unit_name:product_params["Unit"],unit_description:product_params["Unit Description"]}
 				gps = GeneralProduct.where(name:identity_params_hash[:product_name]).where(category_id:identity_params_hash[:category_id])
 
 				if !(gps.empty?)
-					# TODO how will this handle uploading a product that totally changes?
-					# needs to update eg price, maybe descriptions
-					# should it update or should it delete all...?
 					gps.first.id
 				else
 					false
 				end
 			end
 
-			# TODO: limitations?? this will be somewhat better when it is limited but perhaps should limit to a depth like in original prod upload.
 			def self.get_category_id_from_name(category_name)
-				# binding.pry
 				begin
 					id = Category.find_by_name(category_name).id
-					# return nil if no possible one
 					id
 				rescue
 					return nil
@@ -36,7 +26,6 @@ module API
 			end
 
 			def self.get_organization_id_from_name(organization_name)
-				# binding.pry
 				begin
 					org = Organization.find_by_name(organization_name).id
 					org
@@ -46,7 +35,6 @@ module API
 			end
 
 			def self.get_unit_id_from_name(unit_name) # assuming name is singular
-				# binding.pry
 				begin
 					unit = Unit.find_by_singular(unit_name).id
 					unit
@@ -69,7 +57,7 @@ module API
 					        unit_description: prod_hash["Unit Description"]
 					      	)
 					  product.save!
-					unless prod_hash[SerializeProducts.required_headers[-4]].empty? # TODO this should be factored out, but later.
+					unless prod_hash[SerializeProducts.required_headers[-4]].empty? # TODO this should be factored out, later.
 						newprod = product.dup 
 						newprod.unit_id = self.get_unit_id_from_name(prod_hash[SerializeProducts.required_headers[-3]])
 						newprod.unit_description = prod_hash[SerializeProducts.required_headers[-2]]
@@ -173,7 +161,7 @@ module API
 				error_hash["Errors"] = {}
 				if [product_row["Product Name"],product_row["Category Name"],product_row["Short Description"],product_row["Unit Name"],product_row["Unit Description"],product_row["Price"],product_row[@required_headers[-4]]].any? {|obj| obj.blank?}
 					okay_flag = false
-					#create error and append it (TODO clearer error info for this one?)
+					#create error and append it (TODO could have clearer error info for this one - which is blank)
 					error_hash["Errors"]["Invalid Data under required headers"] = "Required data is blank."
 				end
 				if product_row[@required_headers[-4]].upcase == "Y" and [product_row[@required_headers[-3]],product_row[@required_headers[-2]],product_row[@required_headers.last]].any? {|obj| obj.blank?}
@@ -187,21 +175,19 @@ module API
 					error_hash["Errors"]["Invalid data for #{@required_headers[-4]}"] = "Data must be Y or N"
 				end
 				if ProductHelpers.get_category_id_from_name(product_row["Category Name"]).nil?
-					# binding.pry
 					okay_flag = false
 					#create error and append it
-					error_hash["Errors"]["Missing or invalid category"] = "Check category validity." # TODO need more information about category problems
+					error_hash["Errors"]["Missing or invalid category"] = "Check category validity." # TODO should have more info provided about category problems
 				end
-				# TODO how to deal with organizations, TODO add back, methods should work the same way
 				if ProductHelpers.get_organization_id_from_name(product_row["Organization"]).nil?
 					okay_flag = false
 					#create error and append it
-					error_hash["Errors"]["Missing or invalid Organization name"] = "Check organization validity." # TODO need more information
+					error_hash["Errors"]["Missing or invalid Organization name"] = "Check organization validity." # TODO more info provided?
 				end
 				if ProductHelpers.get_unit_id_from_name(product_row["Unit Name"]).nil?
 					okay_flag = false
 					#create error and append it 
-					error_hash["Errors"]["Missing or invalid Unit name"] = "Check unit of measure validity" # TODO could use more information.
+					error_hash["Errors"]["Missing or invalid Unit name"] = "Check unit of measure validity" # TODO more info provided?
 				end
 				if !(product_row["Price"].to_f and product_row["Price"].to_f > 0) 
 					okay_flag = false
