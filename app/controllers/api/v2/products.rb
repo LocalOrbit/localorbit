@@ -5,10 +5,10 @@ module API
 		class ProductHelpers
 			# This has to work for an individual hash, so it has to be for EACH PRODUCT in the all-products
 			def self.identify_product_uniqueness(product_params) 
-				identity_params_hash = {product_name:product_params["Product Name"],category_id:ProductHelpers.get_category_id_from_name(product_params["Category"])}
-				product_unit_identity_hash = {unit_name:product_params["Unit"],unit_description:product_params["Unit Description"]}
+				identity_params_hash = {product_name:product_params["Product Name"],category_id:ProductHelpers.get_category_id_from_name(product_params["Category Name"])}
+				product_unit_identity_hash = {unit_name:product_params["Unit Name"],unit_description:product_params["Unit Description"]}
 				gps = GeneralProduct.where(name:identity_params_hash[:product_name]).where(category_id:identity_params_hash[:category_id])
-
+				# binding.pry
 				if !(gps.empty?)
 					gps.first.id
 				else
@@ -45,6 +45,7 @@ module API
 
 			def self.create_product_from_hash(prod_hash)
 				gp_id_or_false = self.identify_product_uniqueness(prod_hash)
+				# binding.pry
 				if !gp_id_or_false
 					product = Product.create(
 									name: prod_hash["Product Name"],
@@ -66,23 +67,18 @@ module API
 						#newprod.save! # for id to be created in db. (TODO this may be affected by uniqueness constraints tba. not yet.)
 					end
 				else
-					# print "got here got here"
-					product = Product.create(
-					        name: prod_hash["Product Name"],
-					        organization_id: self.get_organization_id_from_name(prod_hash["Organization"]),
-					        unit_id: self.get_unit_id_from_name(prod_hash["Unit Name"]),
-					        category_id: self.get_category_id_from_name(prod_hash["Category Name"]),
-					        code: prod_hash["Product Code"],
-					        short_description: prod_hash["Short Description"],
-					        long_description: prod_hash["Long Description"],
-					        unit_description: prod_hash["Unit Description"],
-					        general_product_id: gp_id_or_false
-					      	)
-						product.save!
+					product = Product.where(name:prod_hash["Product Name"],category_id: self.get_category_id_from_name(prod_hash["Category Name"]),organization_id: self.get_organization_id_from_name(prod_hash["Organization"]),unit_id: self.get_unit_id_from_name(prod_hash["Unit Name"])).first
+					# binding.pry
+					product.update_attributes!(unit_description: prod_hash["Unit Description"],code: prod_hash["Product Code"],short_description: prod_hash["Short Description"],long_description: prod_hash["Long Description"])
+
+					# weird case: what if the new unit is brand new and not an update?
+					# vs if it is updating the second-unit in-row?
+					# TODO handle now
 					unless prod_hash[SerializeProducts.required_headers[-4]] == "N" # TODO factor out
 						newprod = product.dup 
 						newprod.unit_id = self.get_unit_id_from_name(prod_hash["Multiple Pack Sizes"][SerializeProducts.required_headers[-3]])
 						newprod.unit_description = prod_hash["Multiple Pack Sizes"][SerializeProducts.required_headers[-2]]
+						binding.pry
 						newprod.save!
 						newprod.prices.create!(sale_price: prod_hash["Multiple Pack Sizes"][SerializeProducts.required_headers[-1]], min_quantity: 1)
 					end
