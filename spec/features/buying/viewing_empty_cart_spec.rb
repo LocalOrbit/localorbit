@@ -3,7 +3,7 @@ require "spec_helper"
 describe "Viewing an empty cart" do
   let(:user) { create(:user) }
   let!(:buyer) { create(:organization, :single_location, :buyer, users: [user]) }
-  let(:market) { create(:market, :with_addresses, organizations: [buyer]) }
+  let(:market) { create(:market, :with_addresses, organizations: [buyer], alternative_order_page: false) }
   let!(:market_manager) { create(:user, :market_manager, managed_markets: [market]) }
   let!(:delivery) { create(:delivery_schedule, market: market) }
 
