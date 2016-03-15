@@ -7,7 +7,6 @@ class CreateBankAccount
   end
 
   def perform
-    binding.pry
     params = bank_account_params.dup
     if stripe_cust = context[:stripe_customer]
       params[:notes] = "Stripe customer id: #{stripe_cust.id}"
