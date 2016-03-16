@@ -85,9 +85,11 @@ describe PackingLabels::OrderInfo do
 
         order_info = subject.make_order_info(order,host:host)
         expect(order_info).to eq({
+          id: order.id,
           deliver_on: formatted_delivery_time(deliver_on),
           order_number: order_number,
           buyer_name: buyer.name,
+          zpl_logo: market.zpl_logo,
           market_logo_url: market.logo.url,
           qr_code_url: qr_code,
           products: expected_product_infos
@@ -105,10 +107,12 @@ describe PackingLabels::OrderInfo do
 
         order_info = subject.make_order_info(order,host:host)
         expect(order_info).to eq({
+          id: order.id,
           deliver_on: formatted_delivery_time(deliver_on),
           order_number: order_number,
           buyer_name: buyer.name,
           market_logo_url: nil,
+          zpl_logo: nil,
           qr_code_url: qr_code,
           products: expected_product_infos
         })

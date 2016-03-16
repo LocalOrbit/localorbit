@@ -68,6 +68,8 @@ gem "kiba"
 gem 'browserify-rails'
 gem 'react-rails'
 
+gem 'httparty'
+
 gem "constructor"
 gem "tabulator", github: "dcrosby42/tabulator"
 gem "rschema", github: "tomdalling/rschema"

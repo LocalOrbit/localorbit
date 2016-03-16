@@ -106,7 +106,8 @@ class MarketDecorator < Draper::Decorator
   # TODO: remove repetion.
 
   def default_address_phone_number
-    if default_address.phone
+    # The 'try' here bypasses an erroneous thrown error if there's no default_address
+    if default_address.try(:phone)
       number = default_address.phone.to_s
     else
       number = contact_phone.to_s

@@ -3,7 +3,7 @@ require "spec_helper"
 feature "View a products story", js: true do
   let!(:category1) { Category.find_by!(name: "Corn") }
   let!(:category2) { Category.find_by!(name: "Macintosh Apples") }
-  let!(:market) { create(:market, :with_delivery_schedule) }
+  let!(:market) { create(:market, :with_delivery_schedule, alternative_order_page: false) }
   let!(:delivery_schedule) { market.delivery_schedules.first }
 
   let!(:org1)      { create(:organization, :single_location, markets: [market], name: "Funny Farm", who_story: "Chevy Chase", how_story: "Magic") }

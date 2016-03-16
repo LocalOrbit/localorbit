@@ -9,7 +9,7 @@ class Deliveries::PackingLabelsController < ApplicationController
     delivery =  Delivery.find(params[:delivery_id])
 
     printable = PackingLabelsPrintable.create!(user: current_user, delivery: delivery)
-    if Rails.env == "development"
+    if Rails.env == "development" || current_market.product_label_format == 1 # Print zebra labels directly
       ProcessPackingLabelsPrintable.perform(
         packing_labels_printable_id: printable.id, 
         request: RequestUrlPresenter.new(request),
@@ -31,11 +31,13 @@ class Deliveries::PackingLabelsController < ApplicationController
   end
 
   def show
-    printable = PackingLabelsPrintable.for_user(current_user).find params[:id]
+    @printable = PackingLabelsPrintable.for_user(current_user).find params[:id]
+    @zpl_printer = current_market.zpl_printer
+
     respond_to do |format|
       format.html {}
       format.json do 
-        output = if printable.pdf then {pdf_url: printable.pdf.remote_url} else {pdf_url: nil} end
+        output = if @printable.pdf then {pdf_url: @printable.pdf.remote_url} else {pdf_url: nil} end
         render json: output
       end
     end

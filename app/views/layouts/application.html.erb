@@ -220,14 +220,12 @@
   <script>RAILS_ENV = '<%= Rails.env %>';</script>
   <script>DEPLOY_ENV = '<%= Figaro.env.deploy_env %>';</script>
   <script>DEBUG = <%= Figaro.env.debug == 'ON' ? "true" : "false" %>;</script>
+
   <%= javascript_include_tag "application" %>
-  <!-- TODO: use payment provider constants -->
-  <% case @payment_provider %>
-  <% when 'balanced' %>
-  <%= javascript_include_tag 'balanced' %>
-  <% when 'stripe' %>
-  <script type="text/javascript" src="https://js.stripe.com/v2/"></script>
-  <%= javascript_include_tag 'stripe' %>
-  <% end %>
+  <%# KXM The extra includes below (in conjunction with the same stub-ed in application.js) are to allow supression of same singletons in website-bridge.html.erb  Thoughts? %>
+  <%= javascript_include_tag "sticky-headers" %>
+  <%= javascript_include_tag "resolution" %>
+
+  <%= include_payment_provider_scripts(@market.try(:payment_provider)) %>
 </body>
 </html>

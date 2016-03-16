@@ -31,7 +31,7 @@
 
 //= require components
 //= require reflux.min
-//= require froala_editor.min.js
+//= require froala_editor.min
 //= require fSelect
 //
 //= require plugins/block_styles.min.js
@@ -46,3 +46,7 @@
 //= require plugins/urls.min.js
 //
 //= require_tree .
+//= stub sticky-headers
+//= stub resolution
+//= stub synchronousRemote
+//= stub roll_your_own_market

@@ -21,6 +21,16 @@ class ZendeskMailer < ActionMailer::Base
     )
   end
 
+  def request_market(user, market)
+    @user = user
+    @market = market
+
+    mail(
+      from: user.pretty_email,
+      subject: "A new Market has been requested"
+    )
+  end
+
   def error_intervention(user, title, data)
     @user = user
     @title = title

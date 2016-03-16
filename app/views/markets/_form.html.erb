@@ -1,0 +1,156 @@
+    <!-- Preset market values --> 
+    <% t = 14.months.from_now %>
+    <%= f.hidden_field :plan_id %>
+    <%= f.hidden_field :pending %>
+    <%= f.hidden_field :stripe_tok %>
+
+    <div id="tabs">
+      <ul id="market-tab-list">
+        <li class="pass"><span class="anchor">Plan Selection</span></li>
+        <li><a href="#form-contact-info">Contact Info</a></li>
+        <li><a href="#form-terms">Service Agreement</a></li>
+        <li><a href="#form-billing">Billing</a></li>
+        <li><a href="#form-review">Review</a></li>
+      </ul>
+
+      <!--==== Form tab break ==========================================================-->
+      <div id="form-contact-info">
+        <fieldset id="fields-contact-info">
+          <h2>Contact Information</h2>
+          <div class="field">
+            <%= f.text_field :contact_name, class: "required column--full", placeholder: 'Contact Name' %>
+          </div>
+          <div class="row row--field">
+            <div class="field column column--half column--guttered">
+              <%= f.email_field :contact_email, class: "required column--full", placeholder: 'Email' %>
+            </div
+            ><div class="field column column--half column--guttered">
+              <%= f.text_field :contact_phone, size: 18, class: "required column--full", placeholder: 'Phone' %>
+            </div>
+          </div>
+
+          <h2>Market Information</h2>
+          <div class="row row--field">
+            <div class="field column column--half column--guttered">
+              <span class="help-text">This is the primary name of your market.<br />Don't forget to double check your spelling.</span>
+              <br>
+              <%= f.text_field :name, class: "required column--full", placeholder: 'Market Name' %>
+            </div
+            ><div class="field column column--half column--guttered">
+              <span class="help-text">This will be your site's web address<br />ex. yourbusiness.localorbit.com</span>
+              <span class="tooltip pull-right" data-tooltip="Your site URL must be all lower case, with no spaces or special characters">&nbsp;</span>
+              <br>
+              <%= f.text_field :subdomain, class: "required column--full", placeholder: 'Subdomain' %>
+            </div>
+          </div>
+        </fieldset>
+
+        <div class="wizard_nav_div">
+          <button class="wizard_nav" target="#form-terms">Continue</button>
+        </div>
+      </div> <!-- end form-contact-info -->
+
+      <!--==== Form tab break ==========================================================-->
+      <div id="form-terms">
+        <fieldset>
+          <div id="terms-of-service">
+            <%= render 'shared/terms_of_service' %>
+          </div>
+
+          <div id="accept-terms-of-service" class="pull-right">
+            <%= check_box_tag("accept-terms-of-service", value = "1", checked = false, class: "required" ) %> <label for="accept-terms-of-service">Yes, I agree</label>
+          </div>
+        </fieldset>
+
+        <div class="wizard_nav_div">
+          <button class="wizard_nav" target="#form-contact-info">Previous</button>
+          <button class="wizard_nav" target="#form-billing">Continue</button>
+        </div>
+
+      </div> <!-- end form-terms -->
+
+      <!--==== Form tab break ==========================================================-->
+      <div id="form-billing">
+        <fieldset>
+          <h2>Billing</h2>
+          <div class="row">
+            <div class="field column column--half column--guttered">
+              <%= text_field(:billing, :address, placeholder: 'Address', class: "required column--full") %>
+            </div
+            ><div class="field column column--half column--guttered">
+              <%= text_field(:billing, :city, placeholder: 'City', class: "required column--full") %>
+            </div>
+          </div>
+
+          <div class="row row--field">
+            <div class="field column column--half column--guttered">
+              <%= text_field(:billing, :state, placeholder: 'State', class: "required column--full") %>
+            </div
+            ><div class="field column column--half column--guttered">
+              <%= text_field(:billing, :zip, placeholder: 'Zip', class: "required column--full") %> 
+            </div>
+          </div>
+        </fieldset>
+
+        <div class="wizard_nav_div">
+          <button class="wizard_nav" target="#form-terms">Previous</button>
+          <button class="wizard_nav" target="#form-review">Continue</button>
+        </div>
+      </div> <!-- end form-billing -->
+
+      <!--==== Form tab break ==========================================================-->
+      <div id="form-review">
+        <fieldset>
+          <h2>Review Plan Selection</h2>
+          <div class="row">
+            <div class="field column column--third column--guttered">
+              <%= select(:details, :plan, @plan_data.each.map {|plan| [plan[:name], plan[:id]] }, {selected: @stripe_plan.try(:id) }, { class: "required column--full" } ) %><br />
+              <span class="help-text">You will be billed annually for your<br />Local Orbit Service Plan</span>
+            </div
+            ><div class="field column column--third">
+              <%= text_field(:details, :plan_price, placeholder: 'Price', class: "column--full", readonly: "readonly", value: @stripe_plan.try(:amount)/100) %><br />
+              <span id='progress-span'><%= image_tag asset_path('progressbar.gif'), class: 'is-hidden', id: 'progress-bar' %></span>
+            </div
+            ><div class="field column column--third column--guttered">
+              <%= text_field(:details, :coupon, placeholder: 'Discount Code', class: "column--full") %>
+              <button id="apply_discount" class="pull-right form-action">Apply Discount</button>
+            </div>
+          </div>
+
+          <h2>Payment Information</h2>
+          <% if @market.stripe_tok.present? %>
+            <p>Credit card information has been provided, thank you.</p>
+          <% else %>
+            <div class="row row--field">
+              <div class="field column column--half column--guttered">
+                <span>&nbsp;</span><br />
+                <%= text_field_tag(:card_name, nil, placeholder: 'Name', class: "required column--full", name: nil) %>
+              </div
+              ><div class="field column column--half column--guttered">
+                <span>&nbsp;</span><span class="tooltip pull-right" data-tooltip="We offer no-questions-asked refunds to all customers within 30 days of your purchase. If you are not satisfied with our product, then simply send us an email and we will refund your purchase right away. The refunded amount will include the annual service fees, minus any payment processing fees, (If you process any actual, rather than test, transactions).">&nbsp;</span>
+                <%= text_field_tag(:card_number, nil, placeholder: 'Credit Card #', class: "required card_num column--full", name: nil) %> 
+              </div>
+            </div>
+
+            <div class="row row--field">
+              <div class="field column column--half column--guttered">
+                <div class="column column--half column--guttered">
+                  <%= text_field_tag(:expiration_month, nil, placeholder: "#{t.strftime("%m")}", class: "required card_month column--full", name: nil) %> 
+                </div
+                ><div class="column column--half column--guttered">
+                  <%= text_field_tag(:expiration_year, nil, placeholder: "#{t.strftime("%Y")}", class: "required card_year column--full", name: nil) %> 
+                </div>
+              </div
+              ><div class="field column column--half column--guttered">
+                <%= text_field_tag(:security_code, nil, placeholder: 'Security Code', class: "required card_code column--full", name: nil) %>
+              </div>
+            </div>
+          <% end %>
+        </fieldset>
+
+        <div class="wizard_nav_div">
+          <button class="wizard_nav" target="#form-billing">Previous</button>
+          <%= f.submit "Submit Payment", class: "form-nav" %>
+        </div>
+      </div> <!-- end form-review -->
+    </div>

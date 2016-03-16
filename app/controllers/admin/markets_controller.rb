@@ -3,7 +3,7 @@ class Admin::MarketsController < AdminController
 
   before_action :require_admin, only: [:new, :create]
   before_action :require_admin_or_market_manager, except: [:new, :create]
-  before_action :find_scoped_market, only: [:show, :update, :payment_options, :update_active]
+  before_action :find_scoped_market, only: [:show, :update, :payment_options, :update_active, :confirm_pending]
   before_action :find_sticky_params, only: :index
 
   def index
@@ -57,6 +57,34 @@ class Admin::MarketsController < AdminController
     @market.update_attribute(:active, params[:active])
     redirect_to :back, notice: "Updated #{@market.name}"
   end
+
+  def confirm_pending
+    # Invite the market requester to be a Market Manager
+    results = AddMarketManager.perform(market: @market, email: @market.contact_email, inviter: current_user)
+
+    # If invitation sent successfully, then
+    if results.success?
+      # activate the market...
+      @market.update_attribute(:pending, params[:pending])
+      @market.update_attribute(:active, true)
+
+      # ...define a temporary user for purposes of the welcome email...
+      @user = User.new do |u|
+        u.name = @market.contact_name
+        u.email = @market.contact_email
+      end
+
+      # ...send market requester a welcome email...
+      UserMailer.delay.market_welcome(@user, @market)
+
+      # ...and redirect with a notification message
+      redirect_to :back, notice: "Updated #{@market.name}"
+
+    else
+      # Otherwise, redirect with the error message
+      redirect_to :back, alert: "Could not update #{@market.name}"
+    end
+ end
 
   def payment_options
     @markets = Market.where(id: @market.id)

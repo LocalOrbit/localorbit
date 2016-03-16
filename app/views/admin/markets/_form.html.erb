@@ -135,8 +135,9 @@
         <label>Product Label Layout</label>
         <span class="tooltip" data-tooltip="This option defines which density is used on delivery labels"></span>
         <br>
-        <div style="float: left"><%= f.radio_button :product_label_format, '4', :checked => true %>&nbsp;4-up&nbsp;&nbsp;<br/><a href="http://www.avery.com/avery/en_us/Products/Labels/Shipping-Labels/Print_to_the_Edge-Labels_06878.htm" target="_blank"><small>Buy Labels</small></a></div>
-        <div style="float: left; margin-left: 25px"><%= f.radio_button :product_label_format, '16' %>&nbsp;16-up&nbsp;&nbsp;<br/><a href="http://www.onlinelabels.com/OL5051.htm?src=dlc-49" target="_blank"><small>Buy Labels</small></a></div>
+      <div style="float: left"><%= f.radio_button :product_label_format, '1' %>&nbsp;1-up&nbsp;&nbsp;<br/></div>
+      <div style="float: left"><%= f.radio_button :product_label_format, '4' %>&nbsp;4-up&nbsp;&nbsp;<br/><a href="http://www.avery.com/avery/en_us/Products/Labels/Shipping-Labels/Print_to_the_Edge-Labels_06878.htm" target="_blank"><small>Buy Labels</small></a></div>
+      <div style="float: left; margin-left: 25px"><%= f.radio_button :product_label_format, '16' %>&nbsp;16-up&nbsp;&nbsp;<br/><a href="http://www.onlinelabels.com/OL5051.htm?src=dlc-49" target="_blank"><small>Buy Labels</small></a></div>
     </div
     ><div class="field column column--half column--guttered">
         <label>Label Options</label>
