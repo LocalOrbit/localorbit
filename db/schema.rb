@@ -673,7 +673,7 @@ ActiveRecord::Schema.define(version: 20160308203526) do
     t.string   "pdf_name"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.json     "zpl"
+    t.text     "zpl"
     t.string   "zpl_name"
   end
 
