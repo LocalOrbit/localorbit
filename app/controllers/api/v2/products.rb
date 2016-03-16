@@ -74,11 +74,9 @@ module API
 					# weird case: what if the new unit is brand new and not an update?
 					# vs if it is updating the second-unit in-row?
 					# TODO handle now
-					unless prod_hash[SerializeProducts.required_headers[-4]] == "N" # TODO factor out
-						newprod = product.dup 
-						newprod.unit_id = self.get_unit_id_from_name(prod_hash["Multiple Pack Sizes"][SerializeProducts.required_headers[-3]])
-						newprod.unit_description = prod_hash["Multiple Pack Sizes"][SerializeProducts.required_headers[-2]]
-						binding.pry
+					unless prod_hash[SerializeProducts.required_headers[-4]].empty? # TODO factor out
+						newprod = product.dup
+						newprod.update_attributes(unit_id:self.get_unit_id_from_name(prod_hash["Multiple Pack Sizes"][SerializeProducts.required_headers[-3]]),unit_description: prod_hash["Multiple Pack Sizes"][SerializeProducts.required_headers[-2]])
 						newprod.save!
 						newprod.prices.create!(sale_price: prod_hash["Multiple Pack Sizes"][SerializeProducts.required_headers[-1]], min_quantity: 1)
 					end
@@ -323,7 +321,7 @@ module API
 							        unit_description: prod_hash["Unit Description"]
 							      	)
 							  product.save!
-							unless prod_hash[SerializeProducts.required_headers[-4]] == "N" # TODO this should be factored out, but later.
+							unless prod_hash[SerializeProducts.required_headers[-4]].empty?# == "N" # TODO this should be factored out, but later.
 								newprod = product.dup 
 								newprod.unit_id = ProductHelpers.get_unit_id_from_name(prod_hash[SerializeProducts.required_headers[-3]])
 								newprod.unit_description = prod_hash[SerializeProducts.required_headers[-2]]
