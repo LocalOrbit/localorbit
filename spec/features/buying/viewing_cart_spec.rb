@@ -11,7 +11,7 @@ describe "Viewing the cart", js:true do
   let!(:fulton_farms)     { create(:organization, :seller, :single_location, name: "Fulton St. Farms") }
   let!(:ada_farms)        { create(:organization, :seller, :single_location, name: "Ada Farms") }
 
-  let(:market)            { create(:market, :with_addresses, organizations: [buyer, fulton_farms, ada_farms]) }
+  let(:market)            { create(:market, :with_addresses, organizations: [buyer, fulton_farms, ada_farms], alternative_order_page: false) }
   let(:delivery_schedule) { create(:delivery_schedule, :percent_fee,  market: market, day: 5, fee_label: "Service Fee") }
   let(:delivery_day) { DateTime.parse("May 16, 2014, 11:00:00") }
   let(:delivery) do
@@ -562,7 +562,7 @@ describe "Viewing the cart", js:true do
       end
 
       context "with a valid discount restricted to a different market" do
-        let!(:other_market) { create(:market) }
+        let!(:other_market) { create(:market, alternative_order_page: false) }
         let!(:discount)  { create(:discount, code: "15off", discount: "15", type: "fixed", market_id: other_market.id) }
         let!(:order1)    { create(:order, organization: buyer, discount: discount) }
 

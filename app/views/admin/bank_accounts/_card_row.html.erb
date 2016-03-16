@@ -3,7 +3,7 @@
   <td class="name"><%= card.name %></td>
   <td class="account-number">**** **** **** <%= card.last_four %></td>
   <td class="account-type">Credit Card</td>
-  <td class="expiration">Expires <%= "%02d" % card.expiration_month %>/<%= card.expiration_year %></td>
+  <td class="expiration">Expires <%= "%02d" % card.expiration_month if !card.expiration_month.nil? %>/<%= card.expiration_year %></td-->
   <td class="notes"><%= card.notes %></td>
   <td class="delete"><%= link_to raw('<i class="fa fa-trash-o">&nbsp;</i>'), [:admin, @entity, card], data: { method: :delete }, title: "Delete", class: "font-icon" %></td>
 </tr>

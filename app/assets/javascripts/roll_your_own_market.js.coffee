@@ -1,45 +1,45 @@
 $(document).ready ->
 
+  $.validator.methods.lowercase = (value, element) ->
+    @optional(element) or /^[a-z]+$/.test(value)
+
+  $.validator.methods.email = (value, element) ->
+    @optional(element) or /[a-z]+@[a-z]+\.[a-z][a-z]+/.test(value)
+
   ###*
   # validateForm
   # Defines the terms of JQuery validation
   #
   ###
-
   validateForm = (form) ->
+    # add 'required' to the class of any field to trigger the cRequired validation class
+    $.validator.addMethod 'cRequired', $.validator.methods.required, 'Required field'
+    $.validator.addClassRules 'required', cRequired: true
+
+    
+    $.validator.addMethod 'cMaxLength', $.validator.methods.maxlength, $.validator.format('May not be longer than {0} characters')
+    $.validator.addMethod 'cMaxValue',  $.validator.methods.max, $.validator.format('Must be less that {0}')
+    $.validator.addMethod 'cMinValue',  $.validator.methods.min, $.validator.format('Must be greater than {0}')
+    $.validator.addClassRules "card_num",   cMaxLength: 16
+    $.validator.addClassRules "card_month", cMaxLength: 2, cMinValue: 1, cMaxValue: 12
+    $.validator.addClassRules "card_year",  cMaxLength:  4
+    $.validator.addClassRules "card_code",  cMaxLength:  3
+      
     ret_val = form.validate(
       rules:
-        'market[contact_name]': required: true
         'market[contact_email]':
-          required: true
           email: true
-        'market[contact_phone]': required: true
-        'market[name]': required: true
         'market[subdomain]':
-          required: true
           lowercase: true
           synchronousRemote:
             url: '/roll_your_own_market/unique_subdomain'
             type: 'post'
-        'accept-terms-of-service': required: true
-        'billing[address]': required: true
-        'billing[city]': required: true
-        'billing[state]': required: true
-        'billing[zip]': required: true
-        'billing[phone]': required: true
-        'details[plan]': required: true
-        'details[plan_price]': required: true
         'details[coupon]': required: false
       messages: 'market[subdomain]':
         synchronousRemote: 'Subdomain already in use'
         lowercase: 'The subdomain may only contain lower case letters')
     ret_val
 
-  $.validator.methods.lowercase = (value, element) ->
-    @optional(element) or /^[a-z]+$/.test(value)
-
-  $.validator.methods.email = (value, element) ->
-    @optional(element) or /[a-z]+@[a-z]+\.[a-z][a-z]+/.test(value)
 
   ###*
   # change_price

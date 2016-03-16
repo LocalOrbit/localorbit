@@ -1,7 +1,7 @@
 require "spec_helper"
 
 feature "Viewing products" do
-  let!(:market) { create(:market, :with_addresses) }
+  let!(:market) { create(:market, :with_addresses, alternative_order_page: false) }
   let!(:delivery_schedule1) { create(:delivery_schedule, :buyer_pickup,
                                      market: market,
                                      order_cutoff: 24,

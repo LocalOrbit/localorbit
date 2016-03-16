@@ -7,7 +7,7 @@ describe "Removing items" do
   let!(:fulton_farms) { create(:organization, :seller, :single_location, name: "Fulton St. Farms") }
   let!(:ada_farms) { create(:organization, :seller, :single_location, name: "Ada Farms") }
 
-  let(:market) { create(:market, :with_addresses, organizations: [buyer, fulton_farms, ada_farms]) }
+  let(:market) { create(:market, :with_addresses, organizations: [buyer, fulton_farms, ada_farms], alternative_order_page: false) }
 
   let(:delivery_schedule) { create(:delivery_schedule, :percent_fee,  market: market, day: 5) }
   let(:delivery_day) { DateTime.parse("May 9, 2014, 11:00:00") }
