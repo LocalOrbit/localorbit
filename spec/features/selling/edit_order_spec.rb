@@ -268,8 +268,8 @@ describe "Editing an order" do
     end
 
     context "as a buyer" do
-      it "gives a 404" do
-        expect(page.status_code).to eql(404)
+      it "gives a 200" do
+        expect(page.status_code).to eql(200)
       end
     end
 
