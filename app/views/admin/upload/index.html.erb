@@ -8,9 +8,7 @@ This is an admin interface for product import.
 	
 	<%= form_tag({action: :upload}, multipart: true) do %>
 	  <%= file_field_tag 'datafile' %>
-	  <br></br>
-	  <input type="hidden" id="job_id" name="job_id" value="<%=@job_id%>" />
-	  
+
 		<br>
 	  <%= submit_tag "Import" %>
 	<% end %>
