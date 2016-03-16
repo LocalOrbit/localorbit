@@ -8,9 +8,9 @@ class CreateBankAccount
 
   def perform
     params = bank_account_params.dup
-    if stripe_cust = context[:stripe_customer]
-      params[:notes] = "Stripe customer id: #{stripe_cust.id}"
-    end
+    # if stripe_cust = context[:stripe_customer]
+    #   params[:notes] = "Stripe customer id: #{stripe_cust.id}"
+    # end
 
     params.delete(:stripe_tok)
     context[:bank_account] = entity.bank_accounts.create(params)
