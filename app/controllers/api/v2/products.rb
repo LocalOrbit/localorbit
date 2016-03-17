@@ -67,7 +67,22 @@ module API
 				else
 					product = Product.where(name:prod_hash["Product Name"],category_id: self.get_category_id_from_name(prod_hash["Category Name"]),organization_id: self.get_organization_id_from_name(prod_hash["Organization"]),unit_id: self.get_unit_id_from_name(prod_hash["Unit Name"])).first
 					# binding.pry
-					product.update_attributes!(unit_description: prod_hash["Unit Description"],code: prod_hash["Product Code"],short_description: prod_hash["Short Description"],long_description: prod_hash["Long Description"])
+					if !product.empty?
+						product.update_attributes!(unit_description: prod_hash["Unit Description"],code: prod_hash["Product Code"],short_description: prod_hash["Short Description"],long_description: prod_hash["Long Description"])
+					else
+						product = Product.create(
+									name: prod_hash["Product Name"],
+					        organization_id: self.get_organization_id_from_name(prod_hash["Organization"]),
+					        unit_id: self.get_unit_id_from_name(prod_hash["Unit Name"]),
+					        category_id: self.get_category_id_from_name(prod_hash["Category Name"]),
+					        code: prod_hash["Product Code"],
+					        short_description: prod_hash["Short Description"],
+					        long_description: prod_hash["Long Description"],
+					        unit_description: prod_hash["Unit Description"],
+					        general_product_id: gp_id_or_false
+					      	)
+					  product.save!
+					end
 
 					# weird case: what if the new unit is brand new and not an update?
 					# vs if it is updating the second-unit in-row?
