@@ -8,7 +8,6 @@ module API
 				identity_params_hash = {product_name:product_params["Product Name"],category_id:ProductHelpers.get_category_id_from_name(product_params["Category Name"])}
 				product_unit_identity_hash = {unit_name:product_params["Unit Name"],unit_description:product_params["Unit Description"]}
 				gps = GeneralProduct.where(name:identity_params_hash[:product_name]).where(category_id:identity_params_hash[:category_id])
-				# binding.pry
 				if !(gps.empty?)
 					gps.first.id
 				else
@@ -45,7 +44,6 @@ module API
 
 			def self.create_product_from_hash(prod_hash)
 				gp_id_or_false = self.identify_product_uniqueness(prod_hash)
-				# binding.pry
 				if !gp_id_or_false
 					product = Product.create(
 									name: prod_hash["Product Name"],
