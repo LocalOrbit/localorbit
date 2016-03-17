@@ -86,7 +86,7 @@ module API
 
 					# weird case: what if the new unit is brand new and not an update?
 					# vs if it is updating the second-unit in-row?
-					# TODO handle now
+					# TODO both of these improperly handled for this case
 					unless prod_hash[SerializeProducts.required_headers[-4]].empty? # TODO factor out
 						newprod = product.dup
 						newprod.update_attributes(unit_id:self.get_unit_id_from_name(prod_hash["Multiple Pack Sizes"][SerializeProducts.required_headers[-3]]),unit_description: prod_hash["Multiple Pack Sizes"][SerializeProducts.required_headers[-2]])
