@@ -238,14 +238,13 @@ module PaymentProvider
 
       def refund_charge(charge:, amount:, order:)
         amount_in_cents = ::Financials::MoneyHelpers.amount_to_cents(amount)
-        result = charge.refunds.create(refund_application_fee: true,
+        charge.refunds.create(refund_application_fee: true,
                               reverse_transfer: true,
                               amount: amount_in_cents,
                               metadata: {
                                 'lo.order_id' => order.id,
                                 'lo.order_number' => order.order_number
                               })
-
         # TODO: If refund fails - might be due to trying to apply refund against a standalone account, after conversion from managed. Need to trap and use legacy account instead
 
       end
