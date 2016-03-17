@@ -19,7 +19,6 @@ div#market-creation{
 		color: red;
 	}
 	input.error{
-		//# KXM Error border only works after field has focus... that screams JavaScript to me...
 		border-width: 2px !important;
 		border-color: red !important;
 	}
@@ -210,7 +209,6 @@ div#market-creation{
 			display: inline-block;
 		}
 	}
-
 }
 
 /* Success page (and derivatives) */
@@ -246,6 +244,7 @@ div#success{
 		font-size: 22.73px;
 		line-height: 31px;
 		margin-left: 1.2em;
+		padding: .2em 1.6em;
 
 		&:hover, &:active{
 			background-color: #777;
@@ -278,25 +277,4 @@ div#success{
 			line-height: 140%
 		}
 	}
-
-	/*
-	#change{
-		background: asset_url('icon-gear.png') no-repeat top center;
-		@media screen and (max-width: $mobile_break) {
-			background: none;
-		}
-	}
-	#tools{
-		background: asset_url('icon-tools.png') no-repeat top center;
-		@media screen and (max-width: $mobile_break) {
-			background: none;
-		}
-	}
-	#software{
-		background: asset_url('icon-cloud.png') no-repeat top center;
-		@media screen and (max-width: $mobile_break) {
-			background: none;
-		}
-	}
-	*/
 }
