@@ -83,46 +83,43 @@
 
     <fieldset>
       <legend>Plan Payment Schedule</legend>
-      <% if !@market.stripe_customer_id.present? %>
-        <div class="row row--field">
-          <div class="field column column--half column--guttered">
-            <%= f.label :plan_id %><br>
-            <%= f.select :plan_id, Plan.options_for_select, include_blank: 'Select a plan' %>
-          </div
-          ><div class="field column column--half column--guttered">
-            <%= f.label :plan_interval, "Plan Schedule" %><br>
-            <%= f.select :plan_interval, [["Monthly", 1], ["Yearly", 12]], include_blank: 'Select a schedule' %><br>
-            IMPORTANT: When changing the plan schedule, set the Plan Start Date to be the date the next payment is due.
-          </div>
-        </div>
 
-        <div class="row row--field">
-          <div class="field column column--half column--guttered">
-            <%= f.label :plan_fee %><br>
-            $<%= f.number_field :plan_fee, min: 0, max: 9999.99, step: "0.01", size: 6 %>
-          </div
-          ><div class="field column column--half column--guttered">
-            <%= f.label :plan_start_at, "Plan Start Date" %><br>
-            <%= f.datetime_field :plan_start_at, size: 8, class: "alt-datepicker" %><a href="#market_plan_start_at" class="btn btn--end calendar-toggle" title="Select a date"><i class="font-icon icon-calendar"></i></a>
-            <div class="datepicker" data-input="market_plan_start_at"></div>
-          </div>
+      <div class="row row--field">
+        <div class="field column column--half column--guttered">
+          <%= f.label :plan_id %><br>
+          <%= f.select :plan_id, Plan.options_for_select, include_blank: 'Select a plan' %>
+        </div
+        ><div class="field column column--half column--guttered">
+          <%= f.label :plan_interval, "Plan Schedule" %><br>
+          <%= f.select :plan_interval, [["Monthly", 1], ["Yearly", 12]], include_blank: 'Select a schedule' %><br>
+          IMPORTANT: When changing the plan schedule, set the Plan Start Date to be the date the next payment is due.
         </div>
+      </div>
 
-        <div class="row row--field">
-          <div class="field column column--half column--guttered">
-            <%= f.label :plan_bank_account_id %><br>
-            <%= f.select :plan_bank_account_id, @market.decorate.payment_accounts_for_select, include_blank: 'Select a bank account' %>
-          </div
-          ><div class="field column column--half column--guttered">
-            <% if (payment_date = @market.next_service_payment_at) %>
-            Next Payment Due On:<br>
-            <%= payment_date.strftime("%b %d, %Y") %>
-            <% end %>
-          </div>
+      <div class="row row--field">
+        <div class="field column column--half column--guttered">
+          <%= f.label :plan_fee %><br>
+          $<%= f.number_field :plan_fee, min: 0, max: 9999.99, step: "0.01", size: 6 %>
+        </div
+        ><div class="field column column--half column--guttered">
+          <%= f.label :plan_start_at, "Plan Start Date" %><br>
+          <%= f.datetime_field :plan_start_at, size: 8, class: "alt-datepicker" %><a href="#market_plan_start_at" class="btn btn--end calendar-toggle" title="Select a date"><i class="font-icon icon-calendar"></i></a>
+          <div class="datepicker" data-input="market_plan_start_at"></div>
         </div>
-      <% else %>
-        <p>Plan management for 'Roll Your Own' initiated markets coming soon</p>
-      <% end %>
+      </div>
+
+      <div class="row row--field">
+        <div class="field column column--half column--guttered">
+          <%= f.label :plan_bank_account_id %><br>
+          <%= f.select :plan_bank_account_id, @market.decorate.payment_accounts_for_select, include_blank: 'Select a bank account' %>
+        </div
+        ><div class="field column column--half column--guttered">
+          <% if (payment_date = @market.next_service_payment_at) %>
+          Next Payment Due On:<br>
+          <%= payment_date.strftime("%b %d, %Y") %>
+          <% end %>
+        </div>
+      </div>
     </fieldset>
 
     <div class="form-actions">
