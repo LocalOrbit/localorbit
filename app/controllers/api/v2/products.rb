@@ -2,7 +2,6 @@ module API
 	module V2
 		#extend self
 		class ProductHelpers
-			# This has to work for an individual hash, so it has to be for EACH PRODUCT in the all-products
 			def self.identify_product_uniqueness(product_params) 
 				identity_params_hash = {product_name:product_params["Product Name"],category_id:ProductHelpers.get_category_id_from_name(product_params["Category Name"])}
 				product_unit_identity_hash = {unit_name:product_params["Unit Name"],unit_description:product_params["Unit Description"]}
@@ -61,11 +60,9 @@ module API
 						newprod.unit_description = prod_hash["Multiple Pack Sizes"][SerializeProducts.required_headers[-2]]
 						newprod.save!
 						newprod.prices.create!(sale_price: prod_hash["Multiple Pack Sizes"][SerializeProducts.required_headers[-1]], min_quantity: 1)
-						#newprod.save! # for id to be created in db. (TODO this may be affected by uniqueness constraints tba. not yet.)
 					end
 				else
 					product = Product.where(name:prod_hash["Product Name"],category_id: self.get_category_id_from_name(prod_hash["Category Name"]),organization_id: self.get_organization_id_from_name(prod_hash["Organization"]),unit_id: self.get_unit_id_from_name(prod_hash["Unit Name"])).first
-					# binding.pry
 					if !product.empty?
 						product.update_attributes!(unit_description: prod_hash["Unit Description"],code: prod_hash["Product Code"],short_description: prod_hash["Short Description"],long_description: prod_hash["Long Description"])
 					else
@@ -83,10 +80,9 @@ module API
 					  product.save!
 					end
 
-					# weird case: what if the new unit is brand new and not an update?
-					# vs if it is updating the second-unit in-row?
-					# TODO both of these improperly handled for this case
+					# weird case: what if the new unit is brand new and not an update? TODO properly handle, test check
 					unless prod_hash[SerializeProducts.required_headers[-4]].empty? # TODO factor out
+						# TODO: this should be a hash read/parsing YML, all the required headers stuff
 						newprod = product.dup
 						newprod.update_attributes(unit_id:self.get_unit_id_from_name(prod_hash["Multiple Pack Sizes"][SerializeProducts.required_headers[-3]]),unit_description: prod_hash["Multiple Pack Sizes"][SerializeProducts.required_headers[-2]])
 						newprod.save!
