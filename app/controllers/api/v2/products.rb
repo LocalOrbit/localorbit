@@ -1,13 +1,12 @@
 module API
 	module V2
 		#extend self
-
 		class ProductHelpers
 			# This has to work for an individual hash, so it has to be for EACH PRODUCT in the all-products
 			def self.identify_product_uniqueness(product_params) 
 				identity_params_hash = {product_name:product_params["Product Name"],category_id:ProductHelpers.get_category_id_from_name(product_params["Category Name"])}
 				product_unit_identity_hash = {unit_name:product_params["Unit Name"],unit_description:product_params["Unit Description"]}
-				gps = GeneralProduct.where(name:identity_params_hash[:product_name]).where(category_id:identity_params_hash[:category_id])
+				gps = GeneralProduct.where(category_id:identity_params_hash[:category_id]).where(name:identity_params_hash[:product_name])
 				if !(gps.empty?)
 					gps.first.id
 				else
