@@ -1,6 +1,6 @@
 <%= render "admin/bank_accounts/header" %>
 <div>
-  <%= link_to "Add Payment Method", [:new, :admin, @entity, :bank_account], class: "btn btn--add btn--small pull-right mobile-block" if !@entity.self_directed_creation? %>
+  <%= link_to "Add Payment Method", [:new, :admin, @entity, :bank_account], class: "btn btn--add btn--small pull-right mobile-block" if !@entity.try(:self_directed_creation) == true %>
 </div>
 
 <% if @bank_accounts.empty? %>
@@ -17,7 +17,7 @@
     <P>This payment method will be used to deliver payments from orders.</P>
   <% end %>
 
-  <% if @entity.self_directed_creation? %>
+  <% if @entity.try(:self_directed_creation) == true %>
     <p>Having set up the market yourself, payment method maintenence will occur through the <%= @entity.payment_provider.titleize %> interface (coming soon...)</p>
     
   <% else %>
