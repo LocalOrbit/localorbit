@@ -105,8 +105,8 @@ module API
 
 			# takes a file (CSV, properly formatted re: headers, row data may or may not be invalid) returns JSON data (to be passed to a post route)
 			def self.get_json_data(csvfile) # from - params[:filewhatever] from upload form
-				$product_rows = {} # these are global, so accessible in both below methods is OK
-				$row_errors = {} # Collect errors here (see comment inside validate row fxn for expl of $row_errors format, for now.)
+				$product_rows = {} # these are global
+				$row_errors = {} # Collect errors here
 				if self.validate_csv_catalog_file_format(csvfile)
 					$product_rows["products"] = []
 					CSV.foreach(csvfile.path, headers:true).each_with_index do |row, i| # i is the index of the row in the file
@@ -118,7 +118,7 @@ module API
 							end
 							if row[@required_headers[-4]] == "Y" # TODO need any more error checking?
 								product_row_hash[@required_headers[-4]] = {}
-								# Make sub-hash with the multi-unit/break case information if extant, based on order of required headers (makes sense for these to always come last, as in array above).
+								# Make sub-hash with the multi-unit/break case information if extant, based on order of required headers
 								product_row_hash[@required_headers[-4]][@required_headers[-3]] = row[@required_headers[-3]]
 								product_row_hash[@required_headers[-4]][@required_headers[-2]] = row[@required_headers[-2]]
 								product_row_hash[@required_headers[-4]][@required_headers.last] = row[@required_headers.last]
@@ -127,15 +127,18 @@ module API
 							end
 							$product_rows["products"] << product_row_hash
 						else
-							# This is what happens if a row is invalid but the general format of the file is correct. Which should be... ? 
+							# This is what happens if a row is invalid but the general format of the file is correct.
 							# All rows should be displayed on upload. 
 						end
-						# TODO clarify return in diff scenarios?
+						# TODO clarify return in diff scenarios
 					end
 					return $product_rows,$row_errors # array of these hashes
-				end
-				# TODO error handling - should handle if the csv format is invalid somehow, break out of the process neatly. 
+				else
+				# Error handling
 				# Return a message. TODO concern for redirects?
+				$row_errors["0"] = "File format invalid. Upload requires a CSV with required headers." # TODO make this neater. 
+				# OK that it is row 0 for now. Could be more specific with a "format" tag in yml/whatever and view tpl later.
+				end
 			end
 
 			# takes a csvfile -- returns true if valid, false if invalid
@@ -154,7 +157,7 @@ module API
 				true
 			end
 
-			## TODO maybe abstract helpers properly to lib and include modules.
+			## TODO abstract helpers properly to lib and include modules.
 
 			def self.validate_product_row(product_row, line_num)
 				okay_flag = true
@@ -164,7 +167,7 @@ module API
 				error_hash["Errors"] = {}
 				if [product_row["Product Name"],product_row["Category Name"],product_row["Short Description"],product_row["Unit Name"],product_row["Unit Description"],product_row["Price"],product_row[@required_headers[-4]]].any? {|obj| obj.blank?}
 					okay_flag = false
-					#create error and append it (TODO could have clearer error info for this one - which is blank)
+					#create error and append it (TODO could have clearer error info for this one - which one is blank)
 					error_hash["Errors"]["Invalid Data under required headers"] = "Required data is blank."
 				end
 				if product_row[@required_headers[-4]].upcase == "Y" and [product_row[@required_headers[-3]],product_row[@required_headers[-2]],product_row[@required_headers.last]].any? {|obj| obj.blank?}
