@@ -9,14 +9,13 @@ $ ->
 
   bindCalculator = (el) ->
     salePrice = $(el)
-    fee = salePrice.parents('tr').first().find('input.fee')
+    lock_label = salePrice.parents('tr').first().find('label.lock-label')
     netprice_checkbox = salePrice.parents('tr').first().find('input.lock-field')
-    cc_checkbox = salePrice.parents('tr').first().find('input.includecc-field')
+    fee = salePrice.parents('tr').first().find('input.fee')
     use_mkt_fee = salePrice.parents('tr').first().find('input.mkt-fee')
     use_product_fee = salePrice.parents('tr').first().find('input.product-fee')
     netPrice = salePrice.parents('tr').first().find('input.net-price')
     selectedMarket = salePrice.parents('tr').first().find('select.price_market_id')
-    includeCC = cc_checkbox.prop('checked')
     netPriceLocked = netprice_checkbox.prop('checked')
 
     getNetPriceValue = ->
@@ -41,37 +40,19 @@ $ ->
       marketId = selectedMarket.val() || 'all'
       marketToNetPercentMap = netPrice.data('net-percents-by-market-id')
 
-      if includeCC
-        ccRate = netPrice.data('cc-rate')
-      else
-        ccRate = 0
+      ccRate = netPrice.data('cc-rate')
 
       if marketId == ""
         marketId = "all"
 
       if getFeeValue() > 0
-        return 1-(getFeeValue()/100 + ccRate)
+        return 1 - (getFeeValue()/100 + ccRate)
 
       if marketToNetPercentMap?
         netPercent = marketToNetPercentMap[marketId]
         return netPercent
       else
         return 0.00
-
-#    updateNetPrice = ->
-#      if !netPriceLocked
-#        salePriceValue = getSalePriceValue()
-#        netPercent = getNetPercent()
-#        netPriceValue = salePriceValue * netPercent
-#      else
-#        netPriceValue = getNetPriceValue()
-#      setNetPriceValue(netPriceValue)
-
-#    updateSalePrice = ->
-#      netPriceValue = getNetPriceValue()
-#      netPct = getNetPercent()
-#      y = netPriceValue + (netPriceValue * netPct)
-#      setSalePriceValue(y)
 
     updateFee = ->
       netPriceValue = getNetPriceValue()
@@ -91,33 +72,38 @@ $ ->
 
     #updateNetPrice()
 
-    cc_checkbox.on 'click', ->
-      includeCC = cc_checkbox.prop('checked')
-      updateNetPrice()
-
     netprice_checkbox.on 'click', ->
       netPriceLocked = netprice_checkbox.prop('checked')
+      #if netprice_checkbox.hasClass('fa-lock')
+      #  netprice_checkbox.removeClass('fa-lock').addClass('fa-unlock')
+      #else
+      #  netprice_checkbox.removeClass('fa-unlock').addClass('fa-lock')
+
       if netPriceLocked
-        $(this).parent().parent().find('input.net-price').prop('disabled', true).css('background','#EFEFEF');
+        netPrice.prop('disabled', true).css('background','#EFEFEF');
       else
-        $(this).parent().parent().find('input.net-price').prop('disabled', false).css('background','#FFF');
+        netPrice.prop('disabled', false).css('background','#FFF');
 
       updateSalePrice()
 
     use_mkt_fee.on 'click', ->
       fee.hide()
+      lock_label.hide()
       setFeeValue(0)
+      updateSalePrice()
+      netPrice.prop('disabled', false).css('background','#FFF');
       use_mkt_fee.prop('checked','checked')
 
     use_product_fee.on 'click', ->
       fee.show()
+      lock_label.show()
       use_product_fee.prop('checked','checked')
 
     salePrice.change ->
-      if !netPriceLocked
-        updateNetPrice()
-      else
+      if netPriceLocked
         updateFee()
+      else
+        updateNetPrice()
 
     salePrice.on 'keyup', ->
       $(this).trigger('change')
@@ -149,10 +135,14 @@ $ ->
     selectedMarket.change ->
       updateNetPrice()
 
-    if getFeeValue() > 0
-      use_product_fee.trigger('click')
+    if getFeeValue() && getFeeValue() > 0
+      netPrice.parent().parent().parent().find('input:radio[name=fee]:nth(1)').trigger('click')
+      netPrice.parent().parent().parent().find('input:radio[name=fee]:nth(1)').attr('checked',true)
+      #use_product_fee.trigger('click')
     else
-      use_mkt_fee.trigger('click')
+      netPrice.parent().parent().parent().find('input:radio[name=fee]:nth(0)').trigger('click')
+      netPrice.parent().parent().parent().find('input:radio[name=fee]:nth(0)').attr('checked',true)
+      #use_mkt_fee.trigger('click')
 
   $('input.sale-price').each ->
     bindCalculator(this)

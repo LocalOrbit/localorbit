@@ -741,7 +741,7 @@ ActiveRecord::Schema.define(version: 20160318191640) do
     t.datetime "updated_at"
     t.integer  "legacy_id"
     t.datetime "deleted_at"
-    t.decimal  "product_seller_fee", precision: 5,  scale: 3, default: 0.0, null: false
+    t.decimal  "product_seller_pct", precision: 5,  scale: 3, default: 0.0, null: false
   end
 
   add_index "prices", ["market_id"], name: "index_prices_on_market_id", using: :btree

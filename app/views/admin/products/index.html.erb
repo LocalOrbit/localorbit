@@ -41,7 +41,7 @@
           <% product.prices.view_sorted.decorate.each do |price| %>
             <li>
               <%= link_to price.quick_info, "#edit_price_#{price.id}", class: 'edit-toggle popup-toggle' %>
-              <%= render partial: "edit_price_advanced", locals: { price: price } %>
+              <%= render partial: "edit_price_advanced", locals: { price: price.decorate } %>
             </li>
           <% end %>
         </ul>
