@@ -1,15 +1,44 @@
-This is an admin interface for product import.
+Upload a <strong>.CSV</strong> file of your organization(s)'s products here.
+
+File must include the following headers:
+<ul>
+	<li>Organization</li>
+	<li>Product Name</li>
+	<li>Category Name</li>
+	<li>Short Description ( <50 characters)</li>
+	<li>Product Code</li>
+	<li>Unit Name</li>
+	<li>Unit Description</li>
+	<li>Price</li>
+	<li>Multiple Pack Sizes</li>
+	&nbsp; &nbsp; &nbsp; <i>if you plan to use multiple pack sizing in product uploads, please click <a href="">here</a> to read about how</i>
+</ul>
+<br>
+The following information <strong>must be included</strong> beneath the headers, with valid values for the Local Orbit system:
+<ul>
+	<li>Organization</li>
+	<li>Product Name</li>
+	<li>Category Name</li>
+	<li>Short Description ( <50 characters)</li>
+	<li>Unit Name</li>
+	<li>Unit Description</li>
+	<li>Price</li>
+	<li>Multiple Pack Sizes</li>
+</ul>
+
 <br>
 <br>
 
 <h2>Import Products</h2>
 
 <% if @plan == "LocalEyes" %> <!-- Probably diff plan requirements for uploading. Can upload to any organization... THAT needs to be fixed. TODO authentication. Also, this whole deal should be in roles and permissions anyway. -->
+
+
 	
 	<%= form_tag({action: :upload}, multipart: true) do %>
 	  <%= file_field_tag 'datafile' %>
 
-		<br>
+		<br></br>
 	  <%= submit_tag "Import" %>
 	<% end %>
 

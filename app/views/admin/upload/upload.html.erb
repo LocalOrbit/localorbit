@@ -1,13 +1,15 @@
-<h3>TBA NUMBER</h3> <i>products successfully imported.</i>
-
-(<strong><a href="/admin/upload">Return to upload form</a></strong>)
+<font size="5"><strong><%= @num_products_loaded %></strong> products successfully imported.</font>
+<br></br>
+<strong><a href="/admin/upload">Return to upload form</a></strong>
 
 <br>
 <br>
 <h3>Errors</h3>
 <div id="results">
 	<% @errors.each do |e| %>
-		<% if not e[1]["Errors"].empty? %>
+		<% if @errors.has_key?("File") %>
+			<%= @errors["File"] %>
+		<% elsif not e[1]["Errors"].empty? %>
 			<strong><%= "Row #{e[1]["Row number"]}:" %></strong>
 			<br>
 			<% e[1]["Errors"].keys.each do |er| %>

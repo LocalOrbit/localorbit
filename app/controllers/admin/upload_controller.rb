@@ -20,12 +20,17 @@ class Admin::UploadController < AdminController
     if params.has_key?(:datafile)
       # pass the datafile to the method with the csv file
       jsn = API::V2::SerializeProducts.get_json_data(params[:datafile]) # product stuff, row errors
- 
-      jsn[0]["products"].each do |p|
-        API::V2::ProductHelpers.create_product_from_hash(p)
+      @num_products_loaded = 0
+      unless jsn.include?("invalid")
+        jsn[0]["products"].each do |p|
+          API::V2::ProductHelpers.create_product_from_hash(p)
+          @num_products_loaded += 1
+        end
+        @errors = jsn[1]
+      else
+        @num_products_loaded = 0
+        @errors = {"File"=>jsn}
       end
-      @errors = jsn[1]
-
  
       # interface -> show number of products loaded and a link back to do whatever. plus, file errors and whatever
 

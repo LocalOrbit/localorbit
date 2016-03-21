@@ -63,7 +63,7 @@ module API
 					end
 				else
 					product = Product.where(name:prod_hash["Product Name"],category_id: self.get_category_id_from_name(prod_hash["Category Name"]),organization_id: self.get_organization_id_from_name(prod_hash["Organization"]),unit_id: self.get_unit_id_from_name(prod_hash["Unit Name"])).first
-					if !product.empty?
+					if !product.nil?
 						product.update_attributes!(unit_description: prod_hash["Unit Description"],code: prod_hash["Product Code"],short_description: prod_hash["Short Description"],long_description: prod_hash["Long Description"])
 					else
 						product = Product.create(
@@ -143,18 +143,23 @@ module API
 
 			# takes a csvfile -- returns true if valid, false if invalid
 			def self.validate_csv_catalog_file_format(csvfile)
-				csvfile = CSV.parse(open(csvfile),headers:true)
-				$product_rows["products_total"] = csvfile.size
-				headers = csvfile.headers
-				if csvfile.size < 1 # not counting headers -- if no data, false
-					return false
-				end
-				@required_headers[0..-4].each do |h| # if all the required headers aren't here, false
-					unless headers.include?(h)
+				begin
+					csvfile = CSV.parse(open(csvfile),headers:true)
+					$product_rows["products_total"] = csvfile.size
+					headers = csvfile.headers
+					if csvfile.size < 1 # not counting headers -- if no data, false
 						return false
 					end
+					@required_headers[0..-4].each do |h| # if all the required headers aren't here, false
+						unless headers.include?(h)
+							return false
+						end
+					end
+					true
+				rescue
+					$row_errors["0"] = "Invalid file format. Please try again with a valid .CSV file."
+					return false
 				end
-				true
 			end
 
 			## TODO abstract helpers properly to lib and include modules.
