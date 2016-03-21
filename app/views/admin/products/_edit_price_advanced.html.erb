@@ -10,14 +10,22 @@
 
       <h3>Price for all Buyers</h3>
       <span class="preserve-alignment">
-        <input type="checkbox" name="lockfld" class="lock-field"/>
-        <label for="<%= "price_#{price.id}_net_price" %>">Net Price</label>
+        <label style="float: left" for="<%= "price_#{price.id}_net_price" %>">Net Price</label>
+        <% if price.product_fee_pct > 0 %>
+        <label class="lock-label" for="lockFieldID" style="float: left">
+          <input type="checkbox" id="lockFieldID" class="lock-field"/>
+          <span></span>
+        </label>
+        <% end %>
+        <div style="clear: left"></div>
         <%= f.number_field :net_price, min: 0, step: 0.01, size: 4, class: 'net-price', data: {"net-percents-by-market-id" => json_escape(@net_percents_by_market_id.to_json), "cc-rate" => @seller_cc_rate} %>
       </span>
+      <% if price.product_fee_pct > 0 %>
       <span class="preserve-alignment">
-        <label for="<%= "price_#{price.id}_product_seller_fee" %>">Fee</label>
+        <label for="<%= "price_#{price.id}_product_fee_pct" %>">Fee</label>
         <%= f.number_field :product_fee_pct, min: 0, step: 0.01, size: 4, class: "fee", inputmode: "numeric" %>
       </span>
+      <% end %>
       <span class="preserve-alignment">
         <label for="<%= "price_#{price.id}_sale_price" %>">Sale Price</label>
         <%= f.number_field :sale_price, min: 0, step: 0.01, size: 4, class: "sale-price", inputmode: "numeric" %>

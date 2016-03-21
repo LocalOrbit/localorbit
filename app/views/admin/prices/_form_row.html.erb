@@ -5,16 +5,13 @@
     <% else %>
       All Markets
     <% end %>
-<% end %>
-
-<td>
-  <% if organization_can_access?(@product.organization, :advanced_pricing) %>
+<% end %><br/>
+<% if organization_can_access?(@product.organization, :advanced_pricing) %>
     <%= f.select :organization_id, current_user.buyers_for_select, {include_blank: 'All Buyers'}, {class: "price_buyer_id"} %>
-  <% else %>
+<% else %>
     All Buyers
-  <% end %>
+<% end %>
 </td>
-
 <td>
   <% if organization_can_access?(@product.organization, :advanced_pricing) %>
     <%= f.number_field :min_quantity, min: 0, size: 4 %>
@@ -23,13 +20,24 @@
   <% end %>
 </td>
 <td>
-  <input style="float: left" type="checkbox" name="lock" class="lock-field"/>
-  <input style="float: left" type="checkbox" name="includecc" class="includecc-field"/>
+  <label class="lock-label" for="lockFieldID">
+    <input type="checkbox" id="lockFieldID" class="lock-field"/>
+    <span></span>
+  </label>
   <%= f.number_field :net_price,    min: 0, step: 0.01, size: 4, class: 'net-price',
                      data: {"net-percents-by-market-id" => json_escape(@net_percents_by_market_id.to_json), "cc-rate" => @seller_cc_rate} %>
 </td>
 <td>
-  <%= f.number_field :product_fee_pct, min: 0, step: 0.01, size: 2, class: 'margin' %>
+  <div style="float: left">
+    <div style="float: left">
+      <label style="font-size: 9px">Mkt</label> <input style="float: left" type="radio" value="0" name="fee" class="mkt-fee" checked="checked"/>
+    </div>
+    <div style="clear: left"></div>
+    <div style="float: left">
+      <label style="font-size: 9px">Product</label> <input style="float: left" type="radio" value="1" name="fee" class="product-fee"/>
+    </div>
+  </div>
+  <%= f.number_field :product_fee_pct, min: 0, step: 0.01, size: 4, class: 'fee', style: 'display: none; float: left' %>
 </td>
 <td>
   <%= f.number_field :sale_price,   min: 0, step: 0.01, size: 4, class: 'sale-price' %>
