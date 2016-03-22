@@ -104,6 +104,7 @@ class MarketsController < ApplicationController
       :address, 
       :city, 
       :state, 
+      :country,
       :zip, 
       :phone 
     )
