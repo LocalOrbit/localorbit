@@ -11,7 +11,7 @@ describe "Viewing the cart", js:true do
   let!(:fulton_farms)     { create(:organization, :seller, :single_location, name: "Fulton St. Farms") }
   let!(:ada_farms)        { create(:organization, :seller, :single_location, name: "Ada Farms") }
 
-  let(:market)            { create(:market, :with_addresses, organizations: [buyer, fulton_farms, ada_farms]) }
+  let(:market)            { create(:market, :with_addresses, organizations: [buyer, fulton_farms, ada_farms], alternative_order_page: false) }
   let(:delivery_schedule) { create(:delivery_schedule, :percent_fee,  market: market, day: 5, fee_label: "Service Fee") }
   let(:delivery_day) { DateTime.parse("May 16, 2014, 11:00:00") }
   let(:delivery) do
@@ -42,7 +42,7 @@ describe "Viewing the cart", js:true do
 
   # Ada Farms
   let!(:potatoes) { create(:product, :sellable, name: "Potatoes", organization: ada_farms, delivery_schedules: [delivery_schedule]) }
-  let!(:pototoes_lot) { create(:lot, product: potatoes, quantity: 100) }
+  let!(:potatoes_lot) { create(:lot, product: potatoes, quantity: 100) }
 
   let!(:beans) { create(:product, :sellable, name: "Beans", organization: ada_farms, delivery_schedules: [delivery_schedule]) }
 
