@@ -83,7 +83,8 @@
 
     <fieldset>
       <legend>Plan Payment Schedule</legend>
-
+    <% if !@market.self_directed_creation? %>
+    <%# Markets that have performed self_directed_creation (AKA roll your own) should supress alla this %>
       <div class="row row--field">
         <div class="field column column--half column--guttered">
           <%= f.label :plan_id %><br>
@@ -120,6 +121,9 @@
           <% end %>
         </div>
       </div>
+    <% else %>
+      <p>This is a <span style="border:1px black dotted;border-width:0 0 1px 0"  title="AKA 'Roll Your Own'">self-directed</span> market - plan management will be handled through Stripe...</p>
+    <% end %>
     </fieldset>
 
     <div class="form-actions">
