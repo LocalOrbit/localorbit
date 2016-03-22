@@ -44,7 +44,7 @@ describe ProcessPackingLabelsPrintable do
   let(:order_number2) { "LO-ADA-0000002" }
   let!(:order2) { create(:order, items: order_items2, organization: buyer2, market: market, delivery: delivery, order_number: order_number2, total_cost: order_items2.sum(&:gross_total)) }
 
-  let(:all_orders) { delivery.orders.sort_by(&:id) }
+  let(:all_orders) { delivery.orders.sort_by(&:billing_organization_name) }
   let(:seller_orders) { [ order ] }
   let(:seller2_orders) { [ order2 ] }
 
