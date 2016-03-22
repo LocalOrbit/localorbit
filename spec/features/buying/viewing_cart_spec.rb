@@ -42,7 +42,7 @@ describe "Viewing the cart", js:true do
 
   # Ada Farms
   let!(:potatoes) { create(:product, :sellable, name: "Potatoes", organization: ada_farms, delivery_schedules: [delivery_schedule]) }
-  let!(:pototoes_lot) { create(:lot, product: potatoes, quantity: 100) }
+  let!(:potatoes_lot) { create(:lot, product: potatoes, quantity: 100) }
 
   let!(:beans) { create(:product, :sellable, name: "Beans", organization: ada_farms, delivery_schedules: [delivery_schedule]) }
 
