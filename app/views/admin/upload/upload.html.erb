@@ -13,9 +13,10 @@
 			<strong><%= "Row #{e[1]["Row number"]}:" %></strong>
 			<br>
 			<% e[1]["Errors"].keys.each do |er| %>
-				&nbsp;&nbsp;&nbsp; <%= " #{er} (#{e[1]['Errors'][er]})" %>
+				&nbsp;&nbsp;&nbsp; <%= "- #{er} (#{e[1]['Errors'][er]})" %>
+				<br>
 			<% end %>
-			
 		<% end %>
+		<br></br>
 	<% end %>
 </div>
