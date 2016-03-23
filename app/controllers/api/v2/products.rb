@@ -22,10 +22,21 @@ module API
 				end
 			end
 
-			def self.get_organization_id_from_name(organization_name)
+			def self.get_organization_id_from_name(organization_name,market_subdomain)
 				begin
-					org = Organization.find_by_name(organization_name).id
-					org
+					mkt = Market.find_by_subdomain(market_subdomain)
+					unless current_user.is_admin? || current_user.markets.includes?(mkt)
+						return nil
+					end
+
+					org = Organization.find_by_name(organization_name)
+					if org.is_a?(Array)
+						org = org.where(markets: mkt) # where the mkt is included in the organization's markets
+						if org.empty? # if none such that mkt and org match up
+							return nil
+						end
+					end	
+					org.id # if we get here, return ref to org id (right?)
 				rescue
 					return nil
 				end
@@ -45,7 +56,7 @@ module API
 				if !gp_id_or_false
 					product = Product.create(
 									name: prod_hash["Product Name"],
-					        organization_id: self.get_organization_id_from_name(prod_hash["Organization"]),
+					        organization_id: self.get_organization_id_from_name(prod_hash["Organization"],prod_hash["Market Subdomain"]),
 					        unit_id: self.get_unit_id_from_name(prod_hash["Unit Name"]),
 					        category_id: self.get_category_id_from_name(prod_hash["Category Name"]),
 					        code: prod_hash["Product Code"],
@@ -62,13 +73,13 @@ module API
 						newprod.prices.create!(sale_price: prod_hash["Multiple Pack Sizes"][SerializeProducts.required_headers[-1]], min_quantity: 1)
 					end
 				else
-					product = Product.where(name:prod_hash["Product Name"],category_id: self.get_category_id_from_name(prod_hash["Category Name"]),organization_id: self.get_organization_id_from_name(prod_hash["Organization"]),unit_id: self.get_unit_id_from_name(prod_hash["Unit Name"])).first
+					product = Product.where(name:prod_hash["Product Name"],category_id: self.get_category_id_from_name(prod_hash["Category Name"]),organization_id: self.get_organization_id_from_name(prod_hash["Organization"],prod_hash["Market Subdomain"]),unit_id: self.get_unit_id_from_name(prod_hash["Unit Name"])).first
 					if !product.nil?
 						product.update_attributes!(unit_description: prod_hash["Unit Description"],code: prod_hash["Product Code"],short_description: prod_hash["Short Description"],long_description: prod_hash["Long Description"])
 					else
 						product = Product.create(
 									name: prod_hash["Product Name"],
-					        organization_id: self.get_organization_id_from_name(prod_hash["Organization"]),
+					        organization_id: self.get_organization_id_from_name(prod_hash["Organization"],prod_hash["Market Subdomain"]),
 					        unit_id: self.get_unit_id_from_name(prod_hash["Unit Name"]),
 					        category_id: self.get_category_id_from_name(prod_hash["Category Name"]),
 					        code: prod_hash["Product Code"],
@@ -96,7 +107,7 @@ module API
 
 		class SerializeProducts
 			require 'csv'
-			@required_headers = ["Organization","Product Name","Category Name","Short Description","Product Code","Unit Name","Unit Description","Price", "Multiple Pack Sizes","MPS Unit","MPS Unit Description","MPS Price"] # Required headers for imminent future
+			@required_headers = ["Organization","Market Subdomain","Product Name","Category Name","Short Description","Product Code","Unit Name","Unit Description","Price", "Multiple Pack Sizes","MPS Unit","MPS Unit Description","MPS Price"] # Required headers for imminent future
 
 			# TODO should this be a diff kind of accessor? Later, works.
 			def self.required_headers
@@ -190,10 +201,10 @@ module API
 					#create error and append it
 					error_hash["Errors"]["Missing or invalid category"] = "Check category validity." # TODO should have more info provided about category problems
 				end
-				if ProductHelpers.get_organization_id_from_name(product_row["Organization"]).nil?
+				if ProductHelpers.get_organization_id_from_name(product_row["Organization"], product_row["Market Subdomain"]).nil?
 					okay_flag = false
 					#create error and append it
-					error_hash["Errors"]["Missing or invalid Organization name"] = "Check organization validity." # TODO more info provided?
+					error_hash["Errors"]["Missing or invalid Organization name"] = "Check organization and market validity. Do you have rights to upload to this organization in this market?\nYou input: #{product_row["Organization"]},#{product_row["Market Subdomain"]}" # TODO more info provided?
 				end
 				if ProductHelpers.get_unit_id_from_name(product_row["Unit Name"]).nil?
 					okay_flag = false
@@ -327,7 +338,7 @@ module API
 						if !gp_id_or_false
 							product = Product.create(
 											name: prod_hash["Product Name"],
-							        organization_id: ProductHelpers.get_organization_id_from_name(prod_hash["Organization"]),
+							        organization_id: ProductHelpers.get_organization_id_from_name(prod_hash["Organization"],prod_hash["Market Subdomain"]),
 							        #market_name: prod_hash["Market"], # TODO same question
 							        unit_id: ProductHelpers.get_unit_id_from_name(prod_hash["Unit"]),
 							        category_id: ProductHelpers.get_category_id_from_name(prod_hash["Category"]),
@@ -347,7 +358,7 @@ module API
 						else
 							product = Product.create(
 							        name: prod_hash["Product Name"],
-							        organization_id: ProductHelpers.get_organization_id_from_name(prod_hash["Organization"]),
+							        organization_id: ProductHelpers.get_organization_id_from_name(prod_hash["Organization"],prod_hash["Market Subdomain"]),
 							        #market_name: prod_hash["Market"], # TODO same Q as above, mkt assoc
 							        unit_id: ProductHelpers.get_unit_id_from_name(prod_hash["Unit"]),
 							        category_id: ProductHelpers.get_category_id_from_name(prod_hash["Category"]),
