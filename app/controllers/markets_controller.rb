@@ -13,6 +13,9 @@ class MarketsController < ApplicationController
     end
   end
 
+  ##
+  # markets#new AKA Roll Your Own
+  ##
   def new
     @plan_data ||= PaymentProvider::Stripe.get_stripe_plans
 
@@ -24,6 +27,7 @@ class MarketsController < ApplicationController
     @market ||= Market.new do |m|
       m.payment_provider = PaymentProvider.for_new_markets.id
       m.pending = true
+      m.self_directed_creation = true # This flag says "Yes, I have rolled this myself"
       m.plan_id = plan.id
     end
 
@@ -88,6 +92,7 @@ class MarketsController < ApplicationController
 			:name,
 			:subdomain,
       :pending,
+      :self_directed_creation,
       :plan,
       :plan_id,
       :coupon
@@ -99,6 +104,7 @@ class MarketsController < ApplicationController
       :address, 
       :city, 
       :state, 
+      :country,
       :zip, 
       :phone 
     )
