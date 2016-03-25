@@ -22,6 +22,11 @@
       </span>
       <% end %>
 
+      <span class="preserve-alignment mobile-block">
+        <%= f.label :lots_quantity_true, "View only Items with Inventory" %><br> 
+        <%= f.check_box :lots_quantity_true %>
+      </span>
+
       <div class="pull-right">
         <%= f.submit "Search", class: "btn--small" %>
         <%= link_to "Reset", admin_products_path(clear: ''), class: 'btn reset' if can_reset?(@query_params) %>
