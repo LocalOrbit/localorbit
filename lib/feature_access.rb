@@ -1,6 +1,10 @@
 
 class FeatureAccess
   class << self
+    def stripe_standalone?(market:)
+      market.stripe_standalone
+    end
+
     def order_templates?(market:)
       market.plan.name == "LocalEyes"
     end

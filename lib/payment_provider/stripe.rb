@@ -245,6 +245,8 @@ module PaymentProvider
                                 'lo.order_id' => order.id,
                                 'lo.order_number' => order.order_number
                               })
+        # TODO: If refund fails - might be due to trying to apply refund against a standalone account, after conversion from managed. Need to trap and use legacy account instead
+
       end
 
       def add_payment_method(type:, entity:, bank_account_params:, representative_params:)
@@ -350,6 +352,29 @@ module PaymentProvider
 
       def get_stripe_invoices(customer_filter = nil)
         ::Stripe::Invoice.all(customer_filter)
+      end
+
+      def get_stripe_account_status(acct)
+        ::Stripe::Account.retrieve(acct)
+      end
+
+      def get_stripe_balance(acct)
+        ::Stripe::Balance.retrieve(stripe_account: acct)
+      end
+
+      def get_stripe_balance_transactions(acct)
+        response = ::Stripe::BalanceTransaction.all({limit: 10}, {stripe_account: acct})
+        response.data
+      end
+
+      def get_stripe_charge_transactions(acct)
+        response = ::Stripe::Charge.all({limit: 10}, {stripe_account: acct})
+        response.data
+      end
+
+      def get_stripe_transfers(acct)
+        response = ::Stripe::Transfer.all({limit: 10}, {stripe_account: acct})
+        response.data
       end
 
       private
