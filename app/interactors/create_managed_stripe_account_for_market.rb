@@ -4,7 +4,7 @@ class CreateManagedStripeAccountForMarket
   def perform
     market = context[:market] || context[:entity]
     stripe_account = market.stripe_account
-    if stripe_account.nil?
+    if stripe_account.nil? || market.stripe_standalone
       stripe_account = Stripe::Account.create( stripe_account_info(market) )
       market.update(stripe_account_id: stripe_account.id)
     end
