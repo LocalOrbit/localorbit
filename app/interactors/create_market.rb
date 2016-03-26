@@ -3,7 +3,8 @@ class CreateMarket
 
   def perform
     defaults = {
-      payment_provider: PaymentProvider.for_new_markets.id
+      payment_provider: PaymentProvider.for_new_markets.id,
+      stripe_standalone: ENV["USE_STRIPE_STANDALONE_ACCOUNTS"]
     }
     market = Market.create(defaults.merge(market_params))
     context[:market] = market
