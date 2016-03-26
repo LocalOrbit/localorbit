@@ -7,7 +7,7 @@
       <h1 class="pull-left"><%= @market.decorate.header %></h1>
       <%= form_for [:admin, @market], html: { class: "pull-right" } do |f| %>
         <%= f.hidden_field :active, value: !@market.active? %>
-        <%= f.submit (@market.active? ? 'Deactivate' : 'Activate'), class: "btn--small btn--activate" %>
+        <%= f.submit (@market.active? ? 'Deactivate' : 'Activate'), class: "btn--small btn--activate" %><br/><br/>
       <% end %>
     <% else %>
       <h1><%= @market.decorate.header %></h1>
