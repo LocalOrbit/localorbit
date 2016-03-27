@@ -23,8 +23,8 @@
       <% end %>
 
       <span class="preserve-alignment mobile-block">
-        <%= f.label :lots_quantity_true, "View only Items with Inventory" %><br> 
-        <%= f.check_box :lots_quantity_true %>
+        <%= f.label :lots_sellable_quantity_gt, "Hide items with no inventory" %><br> 
+        <%= f.check_box :lots_sellable_quantity_gt, {}, checked_value = "0", unchecked_value = "-1" %>
       </span>
 
       <div class="pull-right">

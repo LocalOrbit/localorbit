@@ -13,6 +13,29 @@ class Lot < ActiveRecord::Base
     where("(lots.good_from IS NULL OR lots.good_from < :time) AND (lots.expires_at IS NULL OR lots.expires_at > :time) AND quantity > 0", time: time)
   }
 
+  # This ransacker method exposes the functionality of available? and available_quantity to 
+  # the product search filters, as those model method calls are inaccessible in that context
+  ransacker :sellable_quantity do |parent|
+    # Sellable quantity is a function of three fields:
+    Arel.sql(<<-SQL
+      CASE WHEN (
+        -- The actual count...
+        quantity > 0 AND 
+
+        -- ...and the two product viability dates
+        (expires_at IS NULL OR expires_at > CURRENT_DATE) AND
+        ( good_from IS NULL OR  good_from < CURRENT_DATE)) 
+
+      -- If the criteria pass, then return the quantity
+      THEN quantity
+
+      -- Otherwise return zero
+      ELSE 0
+      END
+    SQL
+    )
+  end
+
   def available?(time=Time.current.end_of_minute)
     (expires_at.nil? || expires_at > time) && (good_from.nil? || good_from < time)
   end
