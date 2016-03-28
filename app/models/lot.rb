@@ -23,8 +23,8 @@ class Lot < ActiveRecord::Base
         quantity > 0 AND 
 
         -- ...and the two product viability dates
-        (expires_at IS NULL OR expires_at > CURRENT_DATE) AND
-        ( good_from IS NULL OR  good_from < CURRENT_DATE)) 
+        (expires_at IS NULL OR expires_at  > CURRENT_DATE) AND
+        ( good_from IS NULL OR  good_from <= CURRENT_DATE)) 
 
       -- If the criteria pass, then return the quantity
       THEN quantity
