@@ -16,7 +16,7 @@ class ZendeskMailer < ActionMailer::Base
     @category = category
 
     mail(
-      from: user.pretty_email,
+      from: Figaro.env.zendesk_email,
       subject: "A new category has been requested"
     )
   end
