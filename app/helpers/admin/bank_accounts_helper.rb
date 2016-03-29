@@ -34,6 +34,16 @@ module Admin
       options_for_select(options, selected: selected_type(bank_account))
     end
 
+    def account_holder_type_options(bank_account)
+      options = []
+      if bank_account
+        options << ["Individual", "individual"]
+        options << ["Company", "company"]
+      end
+
+      options_for_select(options, selected: nil)
+    end
+
     def deposit_account_type_options()
       options = []
       options << ["Checking", "checking"]

@@ -48,6 +48,16 @@
       </div>
       <div class="row">
         <div class="field column column--half column--guttered">
+          <label for="account_holder_type">Account Holder Type</label><br>
+          <%= select_tag :account_holder_type, account_holder_type_options(@bank_account), id: 'account_holder_type', class: 'column--full' %>
+        </div
+        ><div class="field column column--half column--guttered">
+        <label for="account_holder_name">Account Holder Name</label><br>
+        <input class="column--full" id="account_holder_name" type="text" name="account_holder_name">
+        </div>
+      </div>
+      <div class="row">
+        <div class="field column column--half column--guttered">
           <label for="bank-account-notes">Notes</label><br>
           <input class="column--full" id="bank-account-notes" type="text" name="notes">
           <input id="bank-account-country" type="hidden" name="country" value="<%= @market.country %>">

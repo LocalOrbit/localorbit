@@ -482,6 +482,8 @@ ActiveRecord::Schema.define(version: 20160318191640) do
     t.text     "zpl_logo"
     t.string   "zpl_printer"
     t.boolean  "self_directed_creation",                                 default: false
+    t.boolean  "stripe_standalone"
+    t.string   "legacy_stripe_account_id"
   end
 
   add_index "markets", ["name"], name: "index_markets_on_name", using: :btree
@@ -674,7 +676,7 @@ ActiveRecord::Schema.define(version: 20160318191640) do
     t.string   "pdf_name"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.text     "zpl"
+    t.json     "zpl"
     t.string   "zpl_name"
   end
 
@@ -701,6 +703,7 @@ ActiveRecord::Schema.define(version: 20160318191640) do
     t.decimal  "stripe_payment_fee", precision: 10, scale: 2, default: 0.0,     null: false
     t.string   "stripe_refund_id"
     t.string   "stripe_transfer_id"
+    t.integer  "organization_id"
   end
 
   add_index "payments", ["bank_account_id"], name: "index_payments_on_bank_account_id", using: :btree
