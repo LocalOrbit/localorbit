@@ -21,12 +21,11 @@ class ZendeskMailer < ActionMailer::Base
     )
   end
 
-  def request_market(user, market)
-    @user = user
+  def request_market(market)
     @market = market
 
     mail(
-      from: user.pretty_email,
+      from: @market.pretty_email,
       subject: "A new Market has been requested"
     )
   end
