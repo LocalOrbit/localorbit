@@ -116,11 +116,11 @@
                   <div class="edit-cell">
                     <div style="float: left">
                       <div style="float: left">
-                        <label style="font-size: 9px">Mkt</label> <input style="float: left" type="radio" value="0" name="fee" class="mkt-fee" checked="checked"/>
+                        <label style="font-size: 9px">Mkt</label> <input style="float: left" type="radio" value="0" name="fee<%=price.id%>" class="mkt-fee" <%= price.product_fee_pct.nil? ? "checked=checked" : "" %> />
                       </div>
                       <div style="clear: left"></div>
                       <div style="float: left">
-                        <label style="font-size: 9px">Product</label> <input style="float: left" type="radio" value="1" name="fee" class="product-fee"/>
+                        <label style="font-size: 9px">Product</label> <input style="float: left" type="radio" value="1" name="fee<%=price.id%>" class="product-fee" <%= price.product_fee_pct > 0 ? "checked=checked" : "" %> />
                       </div>
                     </div>
                     <div style="float: left">

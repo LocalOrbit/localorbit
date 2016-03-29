@@ -135,13 +135,16 @@ $ ->
     selectedMarket.change ->
       updateNetPrice()
 
+    netPrice.parent().parent().parent().find('input:radio[name=fee]:checked').trigger('click')
+
     if getFeeValue() && getFeeValue() > 0
-      netPrice.parent().parent().parent().find('input:radio[name=fee]:nth(1)').trigger('click')
-      netPrice.parent().parent().parent().find('input:radio[name=fee]:nth(1)').attr('checked',true)
+      #netPrice.parent().parent().parent().find('input:radio[name=fee]:checked').trigger('click')
+      #netPrice.parent().parent().parent().find('input:radio[name=fee]:nth(1)').trigger('click')
+      #netPrice.parent().parent().parent().find('input:radio[name=fee]:nth(1)').attr('checked',true)
       #use_product_fee.trigger('click')
     else
-      netPrice.parent().parent().parent().find('input:radio[name=fee]:nth(0)').trigger('click')
-      netPrice.parent().parent().parent().find('input:radio[name=fee]:nth(0)').attr('checked',true)
+      #netPrice.parent().parent().parent().find('input:radio[name=fee]:nth(0)').trigger('click')
+      #netPrice.parent().parent().parent().find('input:radio[name=fee]:nth(0)').attr('checked',true)
       #use_mkt_fee.trigger('click')
 
   $('input.sale-price').each ->
