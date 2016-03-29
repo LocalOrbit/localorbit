@@ -64,18 +64,12 @@ class Admin::MarketsController < AdminController
 
     # If invitation sent successfully, then
     if results.success?
-      # activate the market...
+      # activate the market.
       @market.update_attribute(:pending, params[:pending])
       @market.update_attribute(:active, true)
 
-      # ...define a temporary user for purposes of the welcome email...
-      @user = User.new do |u|
-        u.name = @market.contact_name
-        u.email = @market.contact_email
-      end
-
       # ...send market requester a welcome email...
-      UserMailer.delay.market_welcome(@user, @market)
+      UserMailer.delay.market_welcome(@market)
 
       # ...and redirect with a notification message
       redirect_to :back, notice: "Updated #{@market.name}"

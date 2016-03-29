@@ -1,4 +1,4 @@
-<p>Dear <%= @user.name %>,</p>
+<p>Dear <%= @market.contact_name %>,</p>
 
 <p>We are truly honored to support the work you're doing to rebuild your regional food system and create a healthier community.</p>
 
@@ -10,7 +10,7 @@
 
 <table>
 	<tr><th>Website</th><td><a href="<%= root_url(host: (@market ? @market.domain : "app.#{Figaro.env.domain}")) %>"><%= root_url(host: (@market ? @market.domain : "app.#{Figaro.env.domain}")) %></a></td></tr>
-	<tr><th>Username</th><td><%= @user.email %></td></tr>
+	<tr><th>Username</th><td><%= @market.contact_email %></td></tr>
 </table>
 
 <h1>Step #2: Attend our webinar</h1>

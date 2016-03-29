@@ -50,16 +50,11 @@ class MarketsController < ApplicationController
       @subscription_params = results.subscription_params
       @invoice = results.invoice
 
-      @user ||= User.new do |u|
-        u.name  = market_params[:contact_name]
-        u.email = market_params[:contact_email]
-      end
-
       # Email us about their request
-      ZendeskMailer.delay.request_market(@user, @market)
+      ZendeskMailer.delay.request_market(@market)
 
       # Email them confirmation of their request
-      UserMailer.delay.market_request_confirmation(@user, @market, @invoice)
+      UserMailer.delay.market_request_confirmation(@market, @invoice)
 
       redirect_to :action => 'success', :id => @market
     else
