@@ -24,10 +24,14 @@ module API
 
 			def self.get_organization_id_from_name(organization_name,market_subdomain)
 				begin
+					binding.pry
+					# IDEA: find signed in user in upload controller and send it through to here ??
+					# need to do something like that for csvbuilder catalog products anyway TODO TODO
 					mkt = Market.find_by_subdomain(market_subdomain)
-					unless current_user.is_admin? || current_user.markets.includes?(mkt)
-						return nil
-					end
+					## problem: no current_user in scope for this so have to find who is signed in
+					# unless current_user.admin? || current_user.markets.includes?(mkt)
+					# 	return nil
+					# end
 
 					org = Organization.find_by_name(organization_name)
 					if org.is_a?(Array)
