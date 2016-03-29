@@ -22,6 +22,11 @@
       </span>
       <% end %>
 
+      <span class="preserve-alignment mobile-block">
+        <%= f.label :lots_sellable_quantity_gteq, "Hide items with no inventory" %><br> 
+        <%= f.check_box :lots_sellable_quantity_gteq %>
+      </span>
+
       <div class="pull-right">
         <%= f.submit "Search", class: "btn--small" %>
         <%= link_to "Reset", admin_products_path(clear: ''), class: 'btn reset' if can_reset?(@query_params) %>
