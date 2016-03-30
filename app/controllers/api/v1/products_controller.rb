@@ -104,7 +104,7 @@ module Api
         # the general products are found, but before the response is fully generated.
         # If all products become ineligible on a general product, it will appear in
         # the catalog without any prices or units available.
-        if prices && prices.length > 0 && available_inventory && available_inventory > 0
+        if prices && prices.length > 0 && available_inventory && available_inventory > 0 && !product.cart_item.nil?
           cart_item = product.cart_item.decorate
 
           {

@@ -168,7 +168,7 @@
           <td class="quantity">
             <%# if (current_user.admin? || current_user.market_manager?) && item.object.delivery_status == 'pending' %>
             <% if FeatureAccess.edit_ordered_quantity?(user_order_item_context: user_order_item_context) %>
-              <%= item.text_field :quantity, :autocomplete => :off, value: Format.quantity(item.object.quantity), class: 'quantity-ordered' %>
+              <%= item.text_field :quantity, :autocomplete => :off, value: item.object.quantity, class: 'quantity-ordered' %>
             <% else %>
               <span class="quantity-ordered-ro"><%= Format.quantity(item.object.quantity) %></span>
             <% end %> <%= item.object.unit %> (Ordered)<br />
