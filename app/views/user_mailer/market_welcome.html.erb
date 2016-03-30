@@ -1,19 +1,23 @@
-<p>Dear <%= @user.name %>,</p>
+<p>Dear <%= @market.contact_name %>,</p>
 
 <p>We are truly honored to support the work you're doing to rebuild your regional food system and create a healthier community.</p>
 
 <p>Many thanks for choosing Local Orbit.  We look forward to helping you grow your business.</p>
 
-<h1>Step #1:  Get signed in</h1>
+<h1>Step #1:  Activate your account</h1>
+
+<p>Along with this welcome email, you should have also received an invitation to join and manage your requested Market.  This invitation will guide you through establishing your user account and should be performed first.  When you're done there return here!</p>
+
+<h1>Step #2: Get signed in</h1>
 
 <p>Here's the information you'll need to access your site:</p>
 
 <table>
 	<tr><th>Website</th><td><a href="<%= root_url(host: (@market ? @market.domain : "app.#{Figaro.env.domain}")) %>"><%= root_url(host: (@market ? @market.domain : "app.#{Figaro.env.domain}")) %></a></td></tr>
-	<tr><th>Username</th><td><%= @user.email %></td></tr>
+	<tr><th>Username</th><td><%= @market.contact_email %></td></tr>
 </table>
 
-<h1>Step #2: Attend our webinar</h1>
+<h1>Step #3: Attend our webinar</h1>
 <p>(Already signed up? Skip this step!)</p>
 
 <p><a href="http://localorbit.com/onboarding-calendar/">Sign up</a> to attend a guided tour of the tools available to you. Sessions are offered every Wednesday from 1pm-2pm EST.</p>
@@ -26,7 +30,7 @@
 	<li>A walk through the Shop page and the information your buyers will see. </li>
 </ul></p>
 
-<h1>Step #3: Set up your market</h1>
+<h1>Step #4: Set up your market</h1>
 
 <p>Setting up your Local Orbit powered market a simple process. All you need to do is:<ul>
 	<li>Edit your Market settings (found under Market Administration) </li>
@@ -37,7 +41,7 @@
 </ul></p>
 	
 
-<h1>Step #4: Become an expert</h1>
+<h1>Step #5: Become an expert</h1>
 <p>Make yourself at home. Spend some time reviewing our <a href="https://localorbit.zendesk.com/home">knowledge base</a>, so you'll be prepared to open and run your new market effectively, right off the bat.</p>
 <ul>
 	<li><a href="https://localorbit.zendesk.com/forums/20464733-getting-started-market-managers">Getting Started</a></li>
