@@ -135,7 +135,7 @@ $ ->
     selectedMarket.change ->
       updateNetPrice()
 
-    netPrice.parent().parent().parent().find('input:radio[name=fee]:checked').trigger('click')
+    netPrice.parent().parent().parent().find('input.product-fee:checked').trigger('click')
 
     if getFeeValue() && getFeeValue() > 0
       #netPrice.parent().parent().parent().find('input:radio[name=fee]:checked').trigger('click')
