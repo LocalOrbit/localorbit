@@ -1,5 +1,5 @@
 <%= render "admin/products/header" %>
-<%= centered_column('column--eleven-twelfths') do %>
+<%= centered_column('column--full') do %>
   <%= product_listing_disclaimer %>
 
   <h2>Add Prices</h2>
@@ -101,7 +101,7 @@
                     <%= number_to_currency price.net_price %>
                   </div>
                   <div class="edit-cell">
-                    <label class="lock-label" for="lockFieldID">
+                    <label class="lock-label" for="lockFieldID" style="display: none">
                       <input type="checkbox" id="lockFieldID" class="lock-field"/>
                       <span></span>
                     </label>
@@ -116,7 +116,7 @@
                   <div class="edit-cell">
                     <div style="float: left">
                       <div style="float: left">
-                        <label style="font-size: 9px">Mkt</label> <input style="float: left" type="radio" value="0" name="fee<%=price.id%>" class="mkt-fee" <%= price.product_fee_pct.nil? ? "checked=checked" : "" %> />
+                        <label style="font-size: 9px">Mkt</label> <input style="float: left" type="radio" value="0" name="fee<%=price.id%>" class="mkt-fee" <%= price.product_fee_pct.nil? || price.product_fee_pct == 0 ? "checked=checked" : "" %> />
                       </div>
                       <div style="clear: left"></div>
                       <div style="float: left">
