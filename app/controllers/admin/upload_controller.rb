@@ -6,6 +6,12 @@ class Admin::UploadController < AdminController
   def index
     @plan = current_market.plan.name # check if LocalEyes plan on market
     @current_mkt_id = current_market.id #TODO maybe useful
+    # code for mapping organization and ensuring sign-in authenticated upload
+    @current_user = current_user # for multiple things including getting organizations
+    @org_ids = current_user.organizations.map(&:id)
+
+
+
     # @current_user = current_user # to pass along TODO
     # @products_avail = Product.where(organi
 
