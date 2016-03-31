@@ -9,7 +9,6 @@
 <h2>Import Products</h2>
 Upload a <strong>.CSV</strong> file of your organization(s)'s products here. For more information, see documentation below.
 <% if @plan == "LocalEyes" %> <!-- Probably diff plan requirements for uploading. Can upload to any organization... THAT needs to be fixed. TODO authentication. Also, this whole deal should be in roles and permissions anyway. -->
-
 	<%= form_tag({action: :upload}, multipart: true) do %>
 	  <%= file_field_tag 'datafile' %>
 
@@ -22,7 +21,7 @@ Upload a <strong>.CSV</strong> file of your organization(s)'s products here. For
 	<p>This feature is not available for this market's current plan.</p>
 
 <% end %>
-<br></br>
+
 
 <strong>link to blank template</strong>
 <br>

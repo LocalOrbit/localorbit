@@ -24,6 +24,11 @@ module API
 	      def authenticated
 	      	true # TMP
 	      end
+
+	      def current_user
+		    	@current_user ||= User.authorize!(env)
+		  	end
+		  	
     	end
 
 		end
