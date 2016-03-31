@@ -343,7 +343,7 @@
 <div> <br>
   <% if !current_user.buyer_only? # TODO move this logic? Order view... %>
     <% if !current_user.can_manage_market?(current_market) %>
-     <h2>Delivery Note</h2>d
+     <h2>Delivery Note</h2>
       <% DeliveryNote.where(order_id:order.id,supplier_org:current_organization).visible.each do |n| %>
         <%= n.note %><br>
       <% end %>
