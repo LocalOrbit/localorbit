@@ -1,0 +1,628 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.stripe.com/v1/customers
+    body:
+      encoding: US-ASCII
+      string: description=%5BTest%5D%20Market%202&metadata[lo.entity_id]=3&metadata[lo.entity_type]=organization
+    headers:
+      Accept:
+      - "*/*; q=0.5, application/xml"
+      Accept-Encoding:
+      - gzip, deflate
+      User-Agent:
+      - Stripe/v1 RubyBindings/1.27.2
+      Authorization:
+      - Bearer sk_test_XTLCfIQMwKblsxIF1N4i7y1G
+      Content-Type:
+      - application/x-www-form-urlencoded
+      X-Stripe-Client-User-Agent:
+      - '{"bindings_version":"1.27.2","lang":"ruby","lang_version":"2.1.2 p95 (2014-05-08)","platform":"x86_64-linux","engine":"ruby","publisher":"stripe","uname":"Linux
+        version 3.13.0-83-generic (buildd@lgw01-55) (gcc version 4.8.2 (Ubuntu 4.8.2-19ubuntu1)
+        ) #127-Ubuntu SMP Fri Mar 11 00:25:37 UTC 2016","hostname":"keith-Latitude-E7450"}'
+      Content-Length:
+      - '98'
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx
+      Date:
+      - Fri, 01 Apr 2016 21:29:10 GMT
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '930'
+      Connection:
+      - keep-alive
+      Access-Control-Allow-Credentials:
+      - 'true'
+      Access-Control-Allow-Methods:
+      - GET, POST, HEAD, OPTIONS, DELETE
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Max-Age:
+      - '300'
+      Cache-Control:
+      - no-cache, no-store
+      Request-Id:
+      - req_8BxkWfwbXsMNxo
+      Stripe-Version:
+      - '2015-04-07'
+      Strict-Transport-Security:
+      - max-age=31556926; includeSubDomains
+    body:
+      encoding: UTF-8
+      string: |
+        {
+          "id": "cus_8BxkTt9mvvM2zU",
+          "object": "customer",
+          "account_balance": 0,
+          "bank_accounts": {
+            "object": "list",
+            "data": [],
+            "has_more": false,
+            "total_count": 0,
+            "url": "/v1/customers/cus_8BxkTt9mvvM2zU/bank_accounts"
+          },
+          "created": 1459546150,
+          "currency": null,
+          "default_bank_account": null,
+          "default_source": null,
+          "default_source_type": null,
+          "delinquent": false,
+          "description": "[Test] Market 2",
+          "discount": null,
+          "email": null,
+          "livemode": false,
+          "metadata": {
+            "lo.entity_id": "3",
+            "lo.entity_type": "organization"
+          },
+          "shipping": null,
+          "sources": {
+            "object": "list",
+            "data": [],
+            "has_more": false,
+            "total_count": 0,
+            "url": "/v1/customers/cus_8BxkTt9mvvM2zU/sources"
+          },
+          "subscriptions": {
+            "object": "list",
+            "data": [],
+            "has_more": false,
+            "total_count": 0,
+            "url": "/v1/customers/cus_8BxkTt9mvvM2zU/subscriptions"
+          }
+        }
+    http_version: 
+  recorded_at: Fri, 01 Apr 2016 21:29:10 GMT
+- request:
+    method: post
+    uri: https://api.stripe.com/v1/tokens
+    body:
+      encoding: US-ASCII
+      string: card[number]=4012888888881881&card[exp_month]=5&card[exp_year]=2016&card[cvc]=314
+    headers:
+      Accept:
+      - "*/*; q=0.5, application/xml"
+      Accept-Encoding:
+      - gzip, deflate
+      User-Agent:
+      - Stripe/v1 RubyBindings/1.27.2
+      Authorization:
+      - Bearer sk_test_XTLCfIQMwKblsxIF1N4i7y1G
+      Content-Type:
+      - application/x-www-form-urlencoded
+      X-Stripe-Client-User-Agent:
+      - '{"bindings_version":"1.27.2","lang":"ruby","lang_version":"2.1.2 p95 (2014-05-08)","platform":"x86_64-linux","engine":"ruby","publisher":"stripe","uname":"Linux
+        version 3.13.0-83-generic (buildd@lgw01-55) (gcc version 4.8.2 (Ubuntu 4.8.2-19ubuntu1)
+        ) #127-Ubuntu SMP Fri Mar 11 00:25:37 UTC 2016","hostname":"keith-Latitude-E7450"}'
+      Content-Length:
+      - '81'
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx
+      Date:
+      - Fri, 01 Apr 2016 21:29:10 GMT
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '780'
+      Connection:
+      - keep-alive
+      Access-Control-Allow-Credentials:
+      - 'true'
+      Access-Control-Allow-Methods:
+      - GET, POST, HEAD, OPTIONS, DELETE
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Max-Age:
+      - '300'
+      Cache-Control:
+      - no-cache, no-store
+      Request-Id:
+      - req_8BxkHB17sx8ZgX
+      Stripe-Version:
+      - '2015-04-07'
+      Strict-Transport-Security:
+      - max-age=31556926; includeSubDomains
+    body:
+      encoding: UTF-8
+      string: |
+        {
+          "id": "tok_17vZpK2VpjOYk6TmOGYnQr2H",
+          "object": "token",
+          "card": {
+            "id": "card_17vZpK2VpjOYk6TmmrfLJ0EO",
+            "object": "card",
+            "address_city": null,
+            "address_country": null,
+            "address_line1": null,
+            "address_line1_check": null,
+            "address_line2": null,
+            "address_state": null,
+            "address_zip": null,
+            "address_zip_check": null,
+            "brand": "Visa",
+            "country": "US",
+            "cvc_check": "unchecked",
+            "dynamic_last4": null,
+            "exp_month": 5,
+            "exp_year": 2016,
+            "fingerprint": "q7xiTNu65zbddK8U",
+            "funding": "credit",
+            "last4": "1881",
+            "metadata": {},
+            "name": null,
+            "tokenization_method": null
+          },
+          "client_ip": "50.77.209.166",
+          "created": 1459546150,
+          "livemode": false,
+          "type": "card",
+          "used": false
+        }
+    http_version: 
+  recorded_at: Fri, 01 Apr 2016 21:29:10 GMT
+- request:
+    method: post
+    uri: https://api.stripe.com/v1/customers
+    body:
+      encoding: US-ASCII
+      string: description=Walrus%20Flower&metadata[lo.entity_id]=4&metadata[lo.entity_type]=market
+    headers:
+      Accept:
+      - "*/*; q=0.5, application/xml"
+      Accept-Encoding:
+      - gzip, deflate
+      User-Agent:
+      - Stripe/v1 RubyBindings/1.27.2
+      Authorization:
+      - Bearer sk_test_XTLCfIQMwKblsxIF1N4i7y1G
+      Content-Type:
+      - application/x-www-form-urlencoded
+      X-Stripe-Client-User-Agent:
+      - '{"bindings_version":"1.27.2","lang":"ruby","lang_version":"2.1.2 p95 (2014-05-08)","platform":"x86_64-linux","engine":"ruby","publisher":"stripe","uname":"Linux
+        version 3.13.0-83-generic (buildd@lgw01-55) (gcc version 4.8.2 (Ubuntu 4.8.2-19ubuntu1)
+        ) #127-Ubuntu SMP Fri Mar 11 00:25:37 UTC 2016","hostname":"keith-Latitude-E7450"}'
+      Content-Length:
+      - '84'
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx
+      Date:
+      - Fri, 01 Apr 2016 21:29:11 GMT
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '922'
+      Connection:
+      - keep-alive
+      Access-Control-Allow-Credentials:
+      - 'true'
+      Access-Control-Allow-Methods:
+      - GET, POST, HEAD, OPTIONS, DELETE
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Max-Age:
+      - '300'
+      Cache-Control:
+      - no-cache, no-store
+      Request-Id:
+      - req_8BxkTOXpOICkQy
+      Stripe-Version:
+      - '2015-04-07'
+      Strict-Transport-Security:
+      - max-age=31556926; includeSubDomains
+    body:
+      encoding: UTF-8
+      string: |
+        {
+          "id": "cus_8Bxkdo18xBTUcA",
+          "object": "customer",
+          "account_balance": 0,
+          "bank_accounts": {
+            "object": "list",
+            "data": [],
+            "has_more": false,
+            "total_count": 0,
+            "url": "/v1/customers/cus_8Bxkdo18xBTUcA/bank_accounts"
+          },
+          "created": 1459546151,
+          "currency": null,
+          "default_bank_account": null,
+          "default_source": null,
+          "default_source_type": null,
+          "delinquent": false,
+          "description": "Walrus Flower",
+          "discount": null,
+          "email": null,
+          "livemode": false,
+          "metadata": {
+            "lo.entity_id": "4",
+            "lo.entity_type": "market"
+          },
+          "shipping": null,
+          "sources": {
+            "object": "list",
+            "data": [],
+            "has_more": false,
+            "total_count": 0,
+            "url": "/v1/customers/cus_8Bxkdo18xBTUcA/sources"
+          },
+          "subscriptions": {
+            "object": "list",
+            "data": [],
+            "has_more": false,
+            "total_count": 0,
+            "url": "/v1/customers/cus_8Bxkdo18xBTUcA/subscriptions"
+          }
+        }
+    http_version: 
+  recorded_at: Fri, 01 Apr 2016 21:29:11 GMT
+- request:
+    method: get
+    uri: https://api.stripe.com/v1/customers/cus_8Bxkdo18xBTUcA
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept:
+      - "*/*; q=0.5, application/xml"
+      Accept-Encoding:
+      - gzip, deflate
+      User-Agent:
+      - Stripe/v1 RubyBindings/1.27.2
+      Authorization:
+      - Bearer sk_test_XTLCfIQMwKblsxIF1N4i7y1G
+      Content-Type:
+      - application/x-www-form-urlencoded
+      X-Stripe-Client-User-Agent:
+      - '{"bindings_version":"1.27.2","lang":"ruby","lang_version":"2.1.2 p95 (2014-05-08)","platform":"x86_64-linux","engine":"ruby","publisher":"stripe","uname":"Linux
+        version 3.13.0-83-generic (buildd@lgw01-55) (gcc version 4.8.2 (Ubuntu 4.8.2-19ubuntu1)
+        ) #127-Ubuntu SMP Fri Mar 11 00:25:37 UTC 2016","hostname":"keith-Latitude-E7450"}'
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx
+      Date:
+      - Fri, 01 Apr 2016 21:29:12 GMT
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '922'
+      Connection:
+      - keep-alive
+      Access-Control-Allow-Credentials:
+      - 'true'
+      Access-Control-Allow-Methods:
+      - GET, POST, HEAD, OPTIONS, DELETE
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Max-Age:
+      - '300'
+      Cache-Control:
+      - no-cache, no-store
+      Request-Id:
+      - req_8BxkFyPmbwNTay
+      Stripe-Version:
+      - '2015-04-07'
+      Strict-Transport-Security:
+      - max-age=31556926; includeSubDomains
+    body:
+      encoding: UTF-8
+      string: |
+        {
+          "id": "cus_8Bxkdo18xBTUcA",
+          "object": "customer",
+          "account_balance": 0,
+          "bank_accounts": {
+            "object": "list",
+            "data": [],
+            "has_more": false,
+            "total_count": 0,
+            "url": "/v1/customers/cus_8Bxkdo18xBTUcA/bank_accounts"
+          },
+          "created": 1459546151,
+          "currency": null,
+          "default_bank_account": null,
+          "default_source": null,
+          "default_source_type": null,
+          "delinquent": false,
+          "description": "Walrus Flower",
+          "discount": null,
+          "email": null,
+          "livemode": false,
+          "metadata": {
+            "lo.entity_id": "4",
+            "lo.entity_type": "market"
+          },
+          "shipping": null,
+          "sources": {
+            "object": "list",
+            "data": [],
+            "has_more": false,
+            "total_count": 0,
+            "url": "/v1/customers/cus_8Bxkdo18xBTUcA/sources"
+          },
+          "subscriptions": {
+            "object": "list",
+            "data": [],
+            "has_more": false,
+            "total_count": 0,
+            "url": "/v1/customers/cus_8Bxkdo18xBTUcA/subscriptions"
+          }
+        }
+    http_version: 
+  recorded_at: Fri, 01 Apr 2016 21:29:11 GMT
+- request:
+    method: post
+    uri: https://api.stripe.com/v1/customers/cus_8Bxkdo18xBTUcA/subscriptions
+    body:
+      encoding: US-ASCII
+      string: plan=GROW&source=tok_17vZpK2VpjOYk6TmOGYnQr2H&metadata[lo.entity_id]=4&metadata[lo.entity_type]=market
+    headers:
+      Accept:
+      - "*/*; q=0.5, application/xml"
+      Accept-Encoding:
+      - gzip, deflate
+      User-Agent:
+      - Stripe/v1 RubyBindings/1.27.2
+      Authorization:
+      - Bearer sk_test_XTLCfIQMwKblsxIF1N4i7y1G
+      Content-Type:
+      - application/x-www-form-urlencoded
+      X-Stripe-Client-User-Agent:
+      - '{"bindings_version":"1.27.2","lang":"ruby","lang_version":"2.1.2 p95 (2014-05-08)","platform":"x86_64-linux","engine":"ruby","publisher":"stripe","uname":"Linux
+        version 3.13.0-83-generic (buildd@lgw01-55) (gcc version 4.8.2 (Ubuntu 4.8.2-19ubuntu1)
+        ) #127-Ubuntu SMP Fri Mar 11 00:25:37 UTC 2016","hostname":"keith-Latitude-E7450"}'
+      Content-Length:
+      - '102'
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx
+      Date:
+      - Fri, 01 Apr 2016 21:29:13 GMT
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '829'
+      Connection:
+      - keep-alive
+      Access-Control-Allow-Credentials:
+      - 'true'
+      Access-Control-Allow-Methods:
+      - GET, POST, HEAD, OPTIONS, DELETE
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Max-Age:
+      - '300'
+      Cache-Control:
+      - no-cache, no-store
+      Request-Id:
+      - req_8BxkNE1ByYONmI
+      Stripe-Version:
+      - '2015-04-07'
+      Strict-Transport-Security:
+      - max-age=31556926; includeSubDomains
+    body:
+      encoding: UTF-8
+      string: |
+        {
+          "id": "sub_8BxkIgDbL9DCXB",
+          "object": "subscription",
+          "application_fee_percent": null,
+          "cancel_at_period_end": false,
+          "canceled_at": null,
+          "current_period_end": 1491082152,
+          "current_period_start": 1459546152,
+          "customer": "cus_8Bxkdo18xBTUcA",
+          "discount": null,
+          "ended_at": null,
+          "metadata": {
+            "lo.entity_id": "4",
+            "lo.entity_type": "market"
+          },
+          "plan": {
+            "id": "GROW",
+            "object": "plan",
+            "amount": 79900,
+            "created": 1453489664,
+            "currency": "usd",
+            "interval": "year",
+            "interval_count": 1,
+            "livemode": false,
+            "metadata": {},
+            "name": "Local Orbit Grow Plan",
+            "statement_descriptor": null,
+            "trial_period_days": null
+          },
+          "quantity": 1,
+          "start": 1459546152,
+          "status": "active",
+          "tax_percent": null,
+          "trial_end": null,
+          "trial_start": null
+        }
+    http_version: 
+  recorded_at: Fri, 01 Apr 2016 21:29:13 GMT
+- request:
+    method: get
+    uri: https://api.stripe.com/v1/invoices?customer=cus_8Bxkdo18xBTUcA
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept:
+      - "*/*; q=0.5, application/xml"
+      Accept-Encoding:
+      - gzip, deflate
+      User-Agent:
+      - Stripe/v1 RubyBindings/1.27.2
+      Authorization:
+      - Bearer sk_test_XTLCfIQMwKblsxIF1N4i7y1G
+      Content-Type:
+      - application/x-www-form-urlencoded
+      X-Stripe-Client-User-Agent:
+      - '{"bindings_version":"1.27.2","lang":"ruby","lang_version":"2.1.2 p95 (2014-05-08)","platform":"x86_64-linux","engine":"ruby","publisher":"stripe","uname":"Linux
+        version 3.13.0-83-generic (buildd@lgw01-55) (gcc version 4.8.2 (Ubuntu 4.8.2-19ubuntu1)
+        ) #127-Ubuntu SMP Fri Mar 11 00:25:37 UTC 2016","hostname":"keith-Latitude-E7450"}'
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx
+      Date:
+      - Fri, 01 Apr 2016 21:29:14 GMT
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '2292'
+      Connection:
+      - keep-alive
+      Access-Control-Allow-Credentials:
+      - 'true'
+      Access-Control-Allow-Methods:
+      - GET, POST, HEAD, OPTIONS, DELETE
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Max-Age:
+      - '300'
+      Cache-Control:
+      - no-cache, no-store
+      Request-Id:
+      - req_8BxkqeWC6o2kQK
+      Stripe-Version:
+      - '2015-04-07'
+      Strict-Transport-Security:
+      - max-age=31556926; includeSubDomains
+    body:
+      encoding: UTF-8
+      string: |
+        {
+          "object": "list",
+          "data": [
+            {
+              "id": "in_17vZpM2VpjOYk6TmCHJfHH7d",
+              "object": "invoice",
+              "amount_due": 79900,
+              "application_fee": null,
+              "attempt_count": 1,
+              "attempted": true,
+              "charge": "ch_17vZpM2VpjOYk6TmlzVBCNPC",
+              "closed": true,
+              "currency": "usd",
+              "customer": "cus_8Bxkdo18xBTUcA",
+              "date": 1459546152,
+              "description": null,
+              "discount": null,
+              "ending_balance": 0,
+              "forgiven": false,
+              "lines": {
+                "object": "list",
+                "data": [
+                  {
+                    "id": "sub_8BxkIgDbL9DCXB",
+                    "object": "line_item",
+                    "amount": 79900,
+                    "currency": "usd",
+                    "description": null,
+                    "discountable": true,
+                    "livemode": false,
+                    "metadata": {
+                      "lo.entity_id": "4",
+                      "lo.entity_type": "market"
+                    },
+                    "period": {
+                      "start": 1459546152,
+                      "end": 1491082152
+                    },
+                    "plan": {
+                      "id": "GROW",
+                      "object": "plan",
+                      "amount": 79900,
+                      "created": 1453489664,
+                      "currency": "usd",
+                      "interval": "year",
+                      "interval_count": 1,
+                      "livemode": false,
+                      "metadata": {},
+                      "name": "Local Orbit Grow Plan",
+                      "statement_descriptor": null,
+                      "trial_period_days": null
+                    },
+                    "proration": false,
+                    "quantity": 1,
+                    "subscription": null,
+                    "type": "subscription"
+                  }
+                ],
+                "has_more": false,
+                "total_count": 1,
+                "url": "/v1/invoices/in_17vZpM2VpjOYk6TmCHJfHH7d/lines"
+              },
+              "livemode": false,
+              "metadata": {},
+              "next_payment_attempt": null,
+              "paid": true,
+              "period_end": 1459546152,
+              "period_start": 1459546152,
+              "receipt_number": null,
+              "starting_balance": 0,
+              "statement_descriptor": null,
+              "subscription": "sub_8BxkIgDbL9DCXB",
+              "subtotal": 79900,
+              "tax": null,
+              "tax_percent": null,
+              "total": 79900,
+              "webhooks_delivered_at": null,
+              "payment": "ch_17vZpM2VpjOYk6TmlzVBCNPC"
+            }
+          ],
+          "has_more": false,
+          "url": "/v1/invoices"
+        }
+    http_version: 
+  recorded_at: Fri, 01 Apr 2016 21:29:13 GMT
+recorded_with: VCR 2.9.3
