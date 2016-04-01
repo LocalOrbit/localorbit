@@ -24,8 +24,6 @@ class MarketsController < ApplicationController
 
     plan ||= Plan.find_by stripe_id: requested_plan.upcase
 
-    binding.pry
-
     @market ||= Market.new do |m|
       m.payment_provider = PaymentProvider.for_new_markets.id
       m.pending = true
