@@ -222,7 +222,7 @@
   <script>DEBUG = <%= Figaro.env.debug == 'ON' ? "true" : "false" %>;</script>
 
   <%= javascript_include_tag "application" %>
-  <%# KXM The extra includes below (in conjunction with the same stub-ed in application.js) are to allow supression of same singletons in website-bridge.html.erb  Thoughts? %>
+  <%# FYI The includes below include js stubbed out of application.js and allow supression of same singletons in website-bridge.html.erb %>
   <%= javascript_include_tag "sticky-headers" %>
   <%= javascript_include_tag "resolution" %>
 
