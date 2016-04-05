@@ -15,9 +15,9 @@
                 priceDisplay=(<span>{prices[i].sale_price}{caret}</span>);
 
             if (prices[i].min_quantity == 1)
-                qtyDisplay = (<span style={{fontSize:"11px", color:"#737373"}}>&nbsp;</span>)
+                qtyDisplay = (<span style={{fontSize:"10px", color:"#737373"}}>&nbsp;</span>)
             else
-                qtyDisplay = (<span style={{fontSize:"11px", color:"#737373"}}>Min. {prices[i].min_quantity}</span>);
+                qtyDisplay = (<span style={{fontSize:"10px", color:"#737373"}}>Min {prices[i].min_quantity}</span>);
 
         priceCells.unshift(
             <td style={{textAlign: "right"}}>
