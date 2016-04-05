@@ -1,9 +1,10 @@
 module API
 	module V2
+		include Imports
 		#extend self
 		class ProductHelpers
 			def self.identify_product_uniqueness(product_params) 
-				identity_params_hash = {product_name:product_params["Product Name"],category_id:ProductHelpers.get_category_id_from_name(product_params["Category Name"])}
+				identity_params_hash = {product_name:product_params["Product Name"],category_id:self.get_category_id_from_name(product_params["Category Name"])}
 				product_unit_identity_hash = {unit_name:product_params["Unit Name"],unit_description:product_params["Unit Description"]}
 				gps = GeneralProduct.where(category_id:identity_params_hash[:category_id]).where(name:identity_params_hash[:product_name])
 				if !(gps.empty?)
@@ -29,7 +30,7 @@ module API
 					# need to do something like that for csvbuilder catalog products anyway TODO TODO
 					mkt = Market.find_by_subdomain(market_subdomain)
 					## problem: no current_user in scope for this so have to find who is signed in
-					unless @current_user.admin? || @current_user.markets.includes?(mkt)
+					unless current_user.admin? || current_user.markets.includes?(mkt)
 						return nil
 					end
 
@@ -200,17 +201,17 @@ module API
 					# create error and append it
 					error_hash["Errors"]["Invalid data for #{@required_headers[-4]}"] = "Data must be Y or N"
 				end
-				if ProductHelpers.get_category_id_from_name(product_row["Category Name"]).nil?
+				if ::Imports::ProductHelpers.get_category_id_from_name(product_row["Category Name"]).nil?
 					okay_flag = false
 					#create error and append it
 					error_hash["Errors"]["Missing or invalid category"] = "Check category validity." # TODO should have more info provided about category problems
 				end
-				if ProductHelpers.get_organization_id_from_name(product_row["Organization"], product_row["Market Subdomain"]).nil?
+				if ::Imports::ProductHelpers.get_organization_id_from_name(product_row["Organization"], product_row["Market Subdomain"]).nil?
 					okay_flag = false
 					#create error and append it
 					error_hash["Errors"]["Missing or invalid Organization name"] = "Check organization and market validity. Do you have rights to upload to this organization in this market? You input: #{product_row["Organization"]},#{product_row["Market Subdomain"]}" # TODO more info provided?
 				end
-				if ProductHelpers.get_unit_id_from_name(product_row["Unit Name"]).nil?
+				if ::Imports::ProductHelpers.get_unit_id_from_name(product_row["Unit Name"]).nil?
 					okay_flag = false
 					#create error and append it 
 					error_hash["Errors"]["Missing or invalid Unit name"] = "Check unit of measure validity" # TODO more info provided?
@@ -244,36 +245,38 @@ module API
 			include API::V2::Defaults
 
 			resource :products do 
-				# get requests
-				desc "Return all products"
-				get "", root: :products do 
-					GeneralProduct.all # if you're actually looking for all products, this is what you want (TODO address issue: how should this GET deal with units?)
-				end
+				## get requests
+				## comment out until we determine auth access
 
-				desc "Return a product"
-				params do 
-					requires :id, type: String, desc: "ID of the product"
-				end
-				get ":id", root: "product" do 
-					Product.where(id: permitted_params[:id]).first!
-				end
+				# desc "Return all products"
+				# get "", root: :products do 
+				# 	GeneralProduct.all # if you're actually looking for all products, this is what you want (TODO address issue: how should this GET deal with units?)
+				# end
 
-				desc "Return a product by name"
-				params do 
-					requires :name, type: String, desc: "Name of the product"
-				end
-				get ":name", root: "product" do 
-					Product.where(name: permitted_params[:name]) # all that come up with that name search
-				end
+				# desc "Return a product"
+				# params do 
+				# 	requires :id, type: String, desc: "ID of the product"
+				# end
+				# get ":id", root: "product" do 
+				# 	Product.where(id: permitted_params[:id]).first!
+				# end
 
-				desc "Return products by category"
-				params do 
-					requires :category, type: String, desc: "Name of category"
-				end
-				get ":category", root: "product" do # This one does not really work that well, eg category "carrots" gets all the cat "Vegetables", TODO examine priorities
-					category_id = Category.find_by_name(permitted_params[:category]).id
-					GeneralProduct.where(category_id: category_id) # I think this should be genprod, since that's ~products~ as we generally represent, so for now it is.
-				end
+				# desc "Return a product by name"
+				# params do 
+				# 	requires :name, type: String, desc: "Name of the product"
+				# end
+				# get ":name", root: "product" do 
+				# 	Product.where(name: permitted_params[:name]) # all that come up with that name search
+				# end
+
+				# desc "Return products by category"
+				# params do 
+				# 	requires :category, type: String, desc: "Name of category"
+				# end
+				# get ":category", root: "product" do # This one does not really work that well, eg category "carrots" gets all the cat "Vegetables", TODO examine priorities
+				# 	category_id = Category.find_by_name(permitted_params[:category]).id
+				# 	GeneralProduct.where(category_id: category_id) # I think this should be genprod, since that's ~products~ as we generally represent, so for now it is.
+				# end
 
 
 				### POST ROUTES
@@ -295,7 +298,7 @@ module API
 						product_code = permitted_params[:code]
 					end
 					
-					gp_id_or_false = ProductHelpers.identify_product_uniqueness(permitted_params)
+					gp_id_or_false = ::Imports::ProductHelpers.identify_product_uniqueness(permitted_params)
 					if !gp_id_or_false
 						product = Product.create!(
 							        name: product_name,
@@ -338,14 +341,14 @@ module API
 				post '/add-products' do
 					def self.create_product_from_hash(prod_hash)
 						# binding.pry
-						gp_id_or_false = ProductHelpers.identify_product_uniqueness(prod_hash)
+						gp_id_or_false = ::Imports::ProductHelpers.identify_product_uniqueness(prod_hash)
 						if !gp_id_or_false
 							product = Product.create(
 											name: prod_hash["Product Name"],
-							        organization_id: ProductHelpers.get_organization_id_from_name(prod_hash["Organization"],prod_hash["Market Subdomain"]),
+							        organization_id: ::Imports::ProductHelpers.get_organization_id_from_name(prod_hash["Organization"],prod_hash["Market Subdomain"]),
 							        #market_name: prod_hash["Market"], # TODO same question
-							        unit_id: ProductHelpers.get_unit_id_from_name(prod_hash["Unit"]),
-							        category_id: ProductHelpers.get_category_id_from_name(prod_hash["Category"]),
+							        unit_id: ::Imports::ProductHelpers.get_unit_id_from_name(prod_hash["Unit"]),
+							        category_id: ::Imports::ProductHelpers.get_category_id_from_name(prod_hash["Category"]),
 							        code: prod_hash["Product Code"],
 							        short_description: prod_hash["Short Description"],
 							        long_description: prod_hash["Long Description"],
@@ -354,7 +357,7 @@ module API
 							  product.save!
 							unless prod_hash[SerializeProducts.required_headers[-4]].empty?# == "N" # TODO this should be factored out, but later.
 								newprod = product.dup 
-								newprod.unit_id = ProductHelpers.get_unit_id_from_name(prod_hash[SerializeProducts.required_headers[-3]])
+								newprod.unit_id = ::Imports::ProductHelpers.get_unit_id_from_name(prod_hash[SerializeProducts.required_headers[-3]])
 								newprod.unit_description = prod_hash[SerializeProducts.required_headers[-2]]
 								newprod.prices.create!(sale_price: price, min_quantity: 1)
 								newprod.save! # for id to be created in db. (TODO this may be affected by uniqueness constraints tba. not yet.)
@@ -362,10 +365,10 @@ module API
 						else
 							product = Product.create(
 							        name: prod_hash["Product Name"],
-							        organization_id: ProductHelpers.get_organization_id_from_name(prod_hash["Organization"],prod_hash["Market Subdomain"]),
+							        organization_id: ::Imports::ProductHelpers.get_organization_id_from_name(prod_hash["Organization"],prod_hash["Market Subdomain"]),
 							        #market_name: prod_hash["Market"], # TODO same Q as above, mkt assoc
-							        unit_id: ProductHelpers.get_unit_id_from_name(prod_hash["Unit"]),
-							        category_id: ProductHelpers.get_category_id_from_name(prod_hash["Category"]),
+							        unit_id: ::Imports::ProductHelpers.get_unit_id_from_name(prod_hash["Unit"]),
+							        category_id: ::Imports::ProductHelpers.get_category_id_from_name(prod_hash["Category"]),
 							        code: prod_hash["Product Code"],
 							        short_description: prod_hash["Short Description"],
 							        long_description: prod_hash["Long Description"],
@@ -375,7 +378,7 @@ module API
 								product.save!
 							unless prod_hash[SerializeProducts.required_headers[-4]] == "N" # TODO factor out
 								newprod = product.dup 
-								newprod.unit_id = ProductHelpers.get_unit_id_from_name(prod_hash[SerializeProducts.required_headers[-3]])
+								newprod.unit_id = ::Imports::ProductHelpers.get_unit_id_from_name(prod_hash[SerializeProducts.required_headers[-3]])
 								newprod.unit_description = prod_hash[SerializeProducts.required_headers[-2]]
 								#newprod.price = prod_hash[@required_headers.last] # no, prices need build on lots
 								newprod.prices.create!(sale_price: price, min_quantity: 1)

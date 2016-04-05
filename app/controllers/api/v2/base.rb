@@ -11,6 +11,10 @@ module API
 	      error!("401 Unauthorized", 401) unless authenticated
 	    end
 
+	    before do 
+	    	error!("No current user", 401) unless authenticated
+	    end
+
 	    helpers do
 	      # def authenticated
 	      #   user = User.find_by_email(params[:email])
@@ -26,7 +30,9 @@ module API
 	      end
 
 	      def current_user
-		    	@current_user ||= User.authorize!(env)
+	      	# binding.pry
+		    	# @current_user ||= User.authorize!(env)
+		    	User.authorize!(env)
 		  	end
 		  	
     	end
