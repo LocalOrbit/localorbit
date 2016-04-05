@@ -49,9 +49,6 @@ class UserMailer < BaseMailer
     @market = market
     @invoice = invoice
 
-    # This forces the email template to display the Local Orbit number regardless of the existence of a Market
-    @supress = true
-
     mail(
       to: @market.pretty_email,
       subject: "Your new Market request has been received"
@@ -60,9 +57,6 @@ class UserMailer < BaseMailer
 
   def market_welcome(market)
     @market = market
-
-    # This forces the email template to display the Local Orbit number regardless of the existence of a Market
-    @supress = true
 
     mail(
       to: @market.pretty_email,
