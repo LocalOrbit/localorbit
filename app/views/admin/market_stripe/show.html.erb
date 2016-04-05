@@ -5,7 +5,13 @@
 <div class="row row--partial">
 
   <% if (@market.legacy_stripe_account_id.nil? && @market.stripe_account_id.nil?) || (@market.legacy_stripe_account_id.nil? && !@market.stripe_account_id.nil?) %>
-    <%= link_to image_tag('light-on-light.png'), user_omniauth_authorize_path(:stripe_connect, scope: 'read_write', state: current_market.subdomain)  %>
+    <div class="column column--full">
+      <br/>
+      Stripe is the credit card processing technology that is integrated into the Local Orbit platform and lets you accept credit card payments.<br/><br/>To set up your Stripe account, click the button below and follow the instructions.<br/><br/>Once your account has been created and your information verified, you’ll be able to accept credit card payments on your Local Orbit powered site.<br/><br/>Want to learn more? Check out the <a target="_new" href="https://localorbit.zendesk.com/hc/en-us/articles/217975288
+">Stripe FAQ article.</a>
+      <br/><br/>
+    </div>
+      <%= link_to image_tag('light-on-light.png'), user_omniauth_authorize_path(:stripe_connect, scope: 'read_write', state: current_market.subdomain)  %>
   <% else %>
       <div class="row">
         <div>
