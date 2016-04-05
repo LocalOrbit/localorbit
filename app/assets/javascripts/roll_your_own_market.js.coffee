@@ -104,7 +104,7 @@ $(document).ready ->
       target_li.addClass 'pass'
     else
       target_li.removeClass 'pass'
-    return
+    return is_valid
 
 
   ###* 
@@ -112,7 +112,11 @@ $(document).ready ->
   #
   ###
 
-  $('#tabs').tabs()
+  $('#tabs').tabs beforeActivate: (event, ui) ->
+    is_valid = manage_section_state ui.oldPanel
+    if is_valid != true
+      event.preventDefault()
+    return is_valid
   $('.wizard_nav').show()
   $('div[id^="form-"]').each ->
     manage_section_state $(this)
