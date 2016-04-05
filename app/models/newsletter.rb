@@ -2,7 +2,8 @@ class Newsletter < ActiveRecord::Base
   audited allow_mass_assignment: true, associated_with: :market
   belongs_to :market
 
-  validates :subject, :header, :body, presence: true
+  validates :header, :body, presence: true
+  validates :subject, presence: true, length: {maximum: 50}
 
   dragonfly_accessor :image
   validates_property :format, of: :image,  in: %w(jpeg png gif)
