@@ -2,241 +2,6 @@ module API
 	module V2
 		include Imports
 		#extend self
-		class ProductHelpers
-			def self.identify_product_uniqueness(product_params) 
-				identity_params_hash = {product_name:product_params["Product Name"],category_id:self.get_category_id_from_name(product_params["Category Name"])}
-				product_unit_identity_hash = {unit_name:product_params["Unit Name"],unit_description:product_params["Unit Description"]}
-				gps = GeneralProduct.where(category_id:identity_params_hash[:category_id]).where(name:identity_params_hash[:product_name])
-				if !(gps.empty?)
-					gps.first.id
-				else
-					false
-				end
-			end
-
-			def self.get_category_id_from_name(category_name)
-				begin
-					id = Category.find_by_name(category_name).id
-					id
-				rescue
-					return nil
-				end
-			end
-
-			def self.get_organization_id_from_name(organization_name,market_subdomain)
-				begin
-					# binding.pry
-					# IDEA: find signed in user in upload controller and send it through to here ??
-					# need to do something like that for csvbuilder catalog products anyway TODO TODO
-					mkt = Market.find_by_subdomain(market_subdomain)
-					## problem: no current_user in scope for this so have to find who is signed in
-					unless current_user.admin? || current_user.markets.includes?(mkt)
-						return nil
-					end
-
-					org = Organization.find_by_name(organization_name)
-					if org.is_a?(Array)
-						org = org.where(markets: mkt) # where the mkt is included in the organization's markets
-						if org.empty? # if none such that mkt and org match up
-							return nil
-						end
-					end	
-					org.id # if we get here, return ref to org id (right?)
-				rescue
-					return nil
-				end
-			end
-
-			def self.get_unit_id_from_name(unit_name) # assuming name is singular
-				begin
-					unit = Unit.find_by_singular(unit_name).id
-					unit
-				rescue
-					return nil
-				end
-			end
-
-			def self.create_product_from_hash(prod_hash)
-				gp_id_or_false = self.identify_product_uniqueness(prod_hash)
-				if !gp_id_or_false
-					product = Product.create(
-									name: prod_hash["Product Name"],
-					        organization_id: self.get_organization_id_from_name(prod_hash["Organization"],prod_hash["Market Subdomain"]),
-					        unit_id: self.get_unit_id_from_name(prod_hash["Unit Name"]),
-					        category_id: self.get_category_id_from_name(prod_hash["Category Name"]),
-					        code: prod_hash["Product Code"],
-					        short_description: prod_hash["Short Description"],
-					        long_description: prod_hash["Long Description"],
-					        unit_description: prod_hash["Unit Description"]
-					      	)
-					  product.save!
-					unless prod_hash[SerializeProducts.required_headers[-4]].empty? # TODO this should be factored out, later.
-						newprod = product.dup 
-						newprod.unit_id = self.get_unit_id_from_name(prod_hash["Multiple Pack Sizes"][SerializeProducts.required_headers[-3]])
-						newprod.unit_description = prod_hash["Multiple Pack Sizes"][SerializeProducts.required_headers[-2]]
-						newprod.save!
-						newprod.prices.create!(sale_price: prod_hash["Multiple Pack Sizes"][SerializeProducts.required_headers[-1]], min_quantity: 1)
-					end
-				else
-					product = Product.where(name:prod_hash["Product Name"],category_id: self.get_category_id_from_name(prod_hash["Category Name"]),organization_id: self.get_organization_id_from_name(prod_hash["Organization"],prod_hash["Market Subdomain"]),unit_id: self.get_unit_id_from_name(prod_hash["Unit Name"])).first
-					if !product.nil?
-						product.update_attributes!(unit_description: prod_hash["Unit Description"],code: prod_hash["Product Code"],short_description: prod_hash["Short Description"],long_description: prod_hash["Long Description"])
-					else
-						product = Product.create(
-									name: prod_hash["Product Name"],
-					        organization_id: self.get_organization_id_from_name(prod_hash["Organization"],prod_hash["Market Subdomain"]),
-					        unit_id: self.get_unit_id_from_name(prod_hash["Unit Name"]),
-					        category_id: self.get_category_id_from_name(prod_hash["Category Name"]),
-					        code: prod_hash["Product Code"],
-					        short_description: prod_hash["Short Description"],
-					        long_description: prod_hash["Long Description"],
-					        unit_description: prod_hash["Unit Description"],
-					        general_product_id: gp_id_or_false
-					      	)
-					  product.save!
-					end
-
-					# weird case: what if the new unit is brand new and not an update? TODO properly handle, test check
-					unless prod_hash[SerializeProducts.required_headers[-4]].empty? # TODO factor out
-						# TODO: this should be a hash read/parsing YML, all the required headers stuff
-						newprod = product.dup
-						newprod.update_attributes(unit_id:self.get_unit_id_from_name(prod_hash["Multiple Pack Sizes"][SerializeProducts.required_headers[-3]]),unit_description: prod_hash["Multiple Pack Sizes"][SerializeProducts.required_headers[-2]])
-						newprod.save!
-						newprod.prices.create!(sale_price: prod_hash["Multiple Pack Sizes"][SerializeProducts.required_headers[-1]], min_quantity: 1)
-					end
-				end
-
-			end # end def.self_create_product_from_hash
-	
-		end
-
-		class SerializeProducts
-			require 'csv'
-			@required_headers = ["Organization","Market Subdomain","Product Name","Category Name","Short Description","Product Code","Unit Name","Unit Description","Price", "Multiple Pack Sizes","MPS Unit","MPS Unit Description","MPS Price"] # Required headers for imminent future
-
-			# TODO should this be a diff kind of accessor? Later, works.
-			def self.required_headers
-				@required_headers
-			end
-
-			# takes a file (CSV, properly formatted re: headers, row data may or may not be invalid) returns JSON data (to be passed to a post route)
-			def self.get_json_data(csvfile) # from - params[:filewhatever] from upload form
-				$product_rows = {} # these are global
-				$row_errors = {} # Collect errors here
-				if self.validate_csv_catalog_file_format(csvfile)
-					$product_rows["products"] = []
-					CSV.foreach(csvfile.path, headers:true).each_with_index do |row, i| # i is the index of the row in the file
-						if validate_product_row(row, i) # if the row is valid (see method)
-							# then build a hash for it
-							product_row_hash = {}
-							@required_headers[0..-4].each do |rh|
-								product_row_hash[rh] = row[rh]
-							end
-							if row[@required_headers[-4]] == "Y" # TODO need any more error checking?
-								product_row_hash[@required_headers[-4]] = {}
-								# Make sub-hash with the multi-unit/break case information if extant, based on order of required headers
-								product_row_hash[@required_headers[-4]][@required_headers[-3]] = row[@required_headers[-3]]
-								product_row_hash[@required_headers[-4]][@required_headers[-2]] = row[@required_headers[-2]]
-								product_row_hash[@required_headers[-4]][@required_headers.last] = row[@required_headers.last]
-							else
-								product_row_hash[@required_headers[-4]] = {} # Blank hash if there's no multi-unit/break case info.
-							end
-							$product_rows["products"] << product_row_hash
-						else
-							# This is what happens if a row is invalid but the general format of the file is correct.
-							# All rows should be displayed on upload. 
-						end
-						# TODO clarify return in diff scenarios
-					end
-					return $product_rows,$row_errors # array of these hashes
-				else
-				# Error handling
-				# Return a message. TODO concern for redirects?
-				$row_errors["0"] = "File format invalid. Upload requires a CSV with required headers." # TODO make this neater. 
-				# OK that it is row 0 for now. Could be more specific with a "format" tag in yml/whatever and view tpl later.
-				end
-			end
-
-			# takes a csvfile -- returns true if valid, false if invalid
-			def self.validate_csv_catalog_file_format(csvfile)
-				begin
-					csvfile = CSV.parse(open(csvfile),headers:true)
-					$product_rows["products_total"] = csvfile.size
-					headers = csvfile.headers
-					if csvfile.size < 1 # not counting headers -- if no data, false
-						return false
-					end
-					@required_headers[0..-4].each do |h| # if all the required headers aren't here, false
-						unless headers.include?(h)
-							return false
-						end
-					end
-					true
-				rescue
-					$row_errors["0"] = "Invalid file format. Please try again with a valid .CSV file."
-					return false
-				end
-			end
-
-			## TODO abstract helpers properly to lib and include modules.
-
-			def self.validate_product_row(product_row, line_num)
-				okay_flag = true
-				error_hash = {}
-				## This shouldn't be needed for anything outside verifying CSV files uploaded. Check w
-				error_hash["Row number"] = line_num.to_s 
-				error_hash["Errors"] = {}
-				if [product_row["Product Name"],product_row["Category Name"],product_row["Short Description"],product_row["Unit Name"],product_row["Unit Description"],product_row["Price"],product_row[@required_headers[-4]]].any? {|obj| obj.blank?}
-					okay_flag = false
-					#create error and append it (TODO could have clearer error info for this one - which one is blank)
-					error_hash["Errors"]["Invalid Data under required headers"] = "Required data is blank."
-				end
-				if product_row[@required_headers[-4]].upcase == "Y" and [product_row[@required_headers[-3]],product_row[@required_headers[-2]],product_row[@required_headers.last]].any? {|obj| obj.blank?}
-					okay_flag = false
-					#create error and append it
-					error_hash["Errors"]["Missing multi-unit/break case data"] = "#{@required_headers[-4]} header has data 'Y' but is missing required Unit, Unit description, and/or Price"
-				end
-				if product_row[@required_headers[-4]].upcase != "N" and product_row[@required_headers[-4]].upcase != "Y"
-					okay_flag = false
-					# create error and append it
-					error_hash["Errors"]["Invalid data for #{@required_headers[-4]}"] = "Data must be Y or N"
-				end
-				if ::Imports::ProductHelpers.get_category_id_from_name(product_row["Category Name"]).nil?
-					okay_flag = false
-					#create error and append it
-					error_hash["Errors"]["Missing or invalid category"] = "Check category validity." # TODO should have more info provided about category problems
-				end
-				if ::Imports::ProductHelpers.get_organization_id_from_name(product_row["Organization"], product_row["Market Subdomain"]).nil?
-					okay_flag = false
-					#create error and append it
-					error_hash["Errors"]["Missing or invalid Organization name"] = "Check organization and market validity. Do you have rights to upload to this organization in this market? You input: #{product_row["Organization"]},#{product_row["Market Subdomain"]}" # TODO more info provided?
-				end
-				if ::Imports::ProductHelpers.get_unit_id_from_name(product_row["Unit Name"]).nil?
-					okay_flag = false
-					#create error and append it 
-					error_hash["Errors"]["Missing or invalid Unit name"] = "Check unit of measure validity" # TODO more info provided?
-				end
-				if !(product_row["Price"].to_f and product_row["Price"].to_f > 0) 
-					okay_flag = false
-					#create error and append it
-					error_hash["Errors"]["Missing or invalid price"] = "Check product price validity. Must be a valid decimal > 0."
-				end
-				if product_row[@required_headers[-4]].upcase == "Y" and product_row[@required_headers.last].to_f <= 0
-					okay_flag = false
-					error_hash["Errors"]["Missing or invalid price for additional pack size"] = "Check price validity for #{product_row[@required_headers.last]}. Must be a valid decimal > 0."
-				end
-				if (product_row[@required_headers[-4]].upcase == "Y") and ([product_row[@required_headers[-3]],product_row[@required_headers[-2]],product_row[@required_headers.last]] == [product_row["Unit Name"],product_row["Unit Description"],product_row["Unit Price"]])
-					okay_flag = false
-					error_hash["Errors"]["Identical units for same product"] = "Your additional unit and original unit for this project are the same. Try again with different information in the last three columns OR do not submit additional unit information"
-				end
-				$row_errors["#{error_hash['Row number']}"] = error_hash
-				# as a result of this, e.g, $row_errors["2"] evals to a hash of key-value simpledescr-detaileddescr of all errors from THAT ROW 
-				# so $row_errors contains keys of all the rows in the csv w/ data if there are errors
-				return okay_flag # boolean as to whether there are any errors.
-				# Should return true if checks all pass.
-			end
-			
-		end
 
 
 		## API routes to mount
@@ -339,8 +104,8 @@ module API
 					requires type: JSON # expects properly formatted JSON data
 				end
 				post '/add-products' do
-					def self.create_product_from_hash(prod_hash)
-						# binding.pry
+					def create_product_from_hash(prod_hash)
+						binding.pry
 						gp_id_or_false = ::Imports::ProductHelpers.identify_product_uniqueness(prod_hash)
 						if !gp_id_or_false
 							product = Product.create(
@@ -366,7 +131,6 @@ module API
 							product = Product.create(
 							        name: prod_hash["Product Name"],
 							        organization_id: ::Imports::ProductHelpers.get_organization_id_from_name(prod_hash["Organization"],prod_hash["Market Subdomain"]),
-							        #market_name: prod_hash["Market"], # TODO same Q as above, mkt assoc
 							        unit_id: ::Imports::ProductHelpers.get_unit_id_from_name(prod_hash["Unit"]),
 							        category_id: ::Imports::ProductHelpers.get_category_id_from_name(prod_hash["Category"]),
 							        code: prod_hash["Product Code"],
@@ -378,8 +142,8 @@ module API
 								product.save!
 							unless prod_hash[SerializeProducts.required_headers[-4]] == "N" # TODO factor out
 								newprod = product.dup 
-								newprod.unit_id = ::Imports::ProductHelpers.get_unit_id_from_name(prod_hash[SerializeProducts.required_headers[-3]])
-								newprod.unit_description = prod_hash[SerializeProducts.required_headers[-2]]
+								newprod.unit_id = ::Imports::ProductHelpers.get_unit_id_from_name(prod_hash[::Imports::SerializeProducts.required_headers[-3]])
+								newprod.unit_description = prod_hash[::Imports::SerializeProducts.required_headers[-2]]
 								#newprod.price = prod_hash[@required_headers.last] # no, prices need build on lots
 								newprod.prices.create!(sale_price: price, min_quantity: 1)
 								newprod.save! # for id to be created in db
