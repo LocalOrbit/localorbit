@@ -22,6 +22,11 @@
       </span>
       <% end %>
 
+      <span class="preserve-alignment mobile-block">
+        <%= f.label :category_id_in, "Category" %><br>
+        <%= f.collection_select :category_id_in, @search_presenter.categories(current_user, current_market), :category_id, :name, {include_blank: nil}, {id: 'filter_organization', multiple: true, class: [append_sticky_class(:category_id_in, ""),'multiselect']} %>
+      </span>
+
       <div class="pull-right">
         <%= f.submit "Search", class: "btn--small" %>
         <%= link_to "Reset", admin_products_path(clear: ''), class: 'btn reset' if can_reset?(@query_params) %>
