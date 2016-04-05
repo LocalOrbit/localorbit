@@ -30,12 +30,12 @@ module API
 	      end
 
 	      def current_user
-        	return nil if env['rack.session'][:user_id].nil?
-        	@current_user ||= User.get(env['rack.session'][:user_id])
+        	return nil if ENV['rack.session'][:user_id].nil?
+        	@current_user ||= User.get(ENV['rack.session'][:user_id])
       	end
       
       	def current_user=(user)
-        	env['rack.session'][:user_id] = user.id unless user
+        	ENV['rack.session'][:user_id] = user.id unless user
         	@current_user = user
       	end
 		  	

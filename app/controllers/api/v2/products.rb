@@ -105,13 +105,11 @@ module API
 				end
 				post '/add-products' do
 					def create_product_from_hash(prod_hash)
-						binding.pry
 						gp_id_or_false = ::Imports::ProductHelpers.identify_product_uniqueness(prod_hash)
 						if !gp_id_or_false
 							product = Product.create(
 											name: prod_hash["Product Name"],
 							        organization_id: ::Imports::ProductHelpers.get_organization_id_from_name(prod_hash["Organization"],prod_hash["Market Subdomain"]),
-							        #market_name: prod_hash["Market"], # TODO same question
 							        unit_id: ::Imports::ProductHelpers.get_unit_id_from_name(prod_hash["Unit"]),
 							        category_id: ::Imports::ProductHelpers.get_category_id_from_name(prod_hash["Category"]),
 							        code: prod_hash["Product Code"],
@@ -120,10 +118,10 @@ module API
 							        unit_description: prod_hash["Unit Description"]
 							      	)
 							  product.save!
-							unless prod_hash[SerializeProducts.required_headers[-4]].empty?# == "N" # TODO this should be factored out, but later.
+							unless prod_hash[::Imports::SerializeProducts.required_headers[-4]].empty?# == "N" # TODO this should be factored out, but later.
 								newprod = product.dup 
-								newprod.unit_id = ::Imports::ProductHelpers.get_unit_id_from_name(prod_hash[SerializeProducts.required_headers[-3]])
-								newprod.unit_description = prod_hash[SerializeProducts.required_headers[-2]]
+								newprod.unit_id = ::Imports::ProductHelpers.get_unit_id_from_name(prod_hash[::Imports::SerializeProducts.required_headers[-3]])
+								newprod.unit_description = prod_hash[::Imports::SerializeProducts.required_headers[-2]]
 								newprod.prices.create!(sale_price: price, min_quantity: 1)
 								newprod.save! # for id to be created in db. (TODO this may be affected by uniqueness constraints tba. not yet.)
 							end
@@ -140,7 +138,7 @@ module API
 							        general_product_id: gp_id_or_false
 							      	)
 								product.save!
-							unless prod_hash[SerializeProducts.required_headers[-4]] == "N" # TODO factor out
+							unless prod_hash[::Imports::SerializeProducts.required_headers[-4]] == "N" # TODO factor out
 								newprod = product.dup 
 								newprod.unit_id = ::Imports::ProductHelpers.get_unit_id_from_name(prod_hash[::Imports::SerializeProducts.required_headers[-3]])
 								newprod.unit_description = prod_hash[::Imports::SerializeProducts.required_headers[-2]]
