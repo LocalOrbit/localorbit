@@ -38,12 +38,12 @@ class MarketDecorator < Draper::Decorator
     end
   end
 
-  def seller_locations_map(w=400, h=400)
+  def seller_locations_map(w=400, h=300)
     addresses = organizations.selling.map do |seller|
       seller.shipping_location.geocode if seller.shipping_location
     end.compact
 
-    static_map(addresses, default_address.try(:geocode), w, h)
+    google_static_map(addresses, default_address.try(:geocode), w, h)
   end
 
   def has_address?

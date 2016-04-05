@@ -40,7 +40,7 @@ class GenerateTableTentsOrPosters
   def self.build_seller_map(seller)
     seller_location = seller.shipping_location.geocode if seller.shipping_location
     if seller_location
-      "http:" + static_map([seller_location], seller_location, 320, 200)
+      "http:" + google_static_map([seller_location], seller_location, 320, 200)
     else
       ""
     end
