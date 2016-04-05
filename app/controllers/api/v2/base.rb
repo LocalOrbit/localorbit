@@ -30,10 +30,14 @@ module API
 	      end
 
 	      def current_user
-	      	# binding.pry
-		    	# @current_user ||= User.authorize!(env)
-		    	User.authorize!(env)
-		  	end
+        	return nil if env['rack.session'][:user_id].nil?
+        	@current_user ||= User.get(env['rack.session'][:user_id])
+      	end
+      
+      	def current_user=(user)
+        	env['rack.session'][:user_id] = user.id unless user
+        	@current_user = user
+      	end
 		  	
     	end
 
