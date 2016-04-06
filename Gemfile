@@ -111,10 +111,12 @@ group :development, :test do
   gem "rspec-rails", "~> 3.0"
   gem "rspec-collection_matchers"
   gem 'rspec_junit_formatter', :git => 'https://github.com/circleci/rspec_junit_formatter'
+  gem 'ruby-debug-ide'
+  gem 'debase'
   gem "pry-rails"
   gem "pry-remote"
-  gem "byebug"
-  gem "pry-byebug"
+  #gem "byebug"
+  #gem "pry-byebug"
   gem "launchy"
   gem "guard-rspec"
   gem "guard-konacha-rails"

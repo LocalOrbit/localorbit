@@ -105,8 +105,6 @@ GEM
     bullet (4.14.7)
       activesupport (>= 3.0.0)
       uniform_notifier (~> 1.9.0)
-    byebug (5.0.0)
-      columnize (= 0.9.0)
     capybara (2.5.0)
       mime-types (>= 1.16)
       nokogiri (>= 1.3.3)
@@ -134,7 +132,6 @@ GEM
     coffee-script-source (1.8.0)
     color (1.7.1)
     colorize (0.7.7)
-    columnize (0.9.0)
     compass (0.12.7)
       chunky_png (~> 1.2)
       fssm (>= 0.2.7)
@@ -153,6 +150,9 @@ GEM
     daemon_controller (1.2.0)
     daemons (1.2.3)
     database_cleaner (1.3.0)
+    debase (0.2.1)
+      debase-ruby_core_source
+    debase-ruby_core_source (0.8.2)
     dedent (1.0.1)
     delayed_job (4.0.3)
       activesupport (>= 3.0, < 4.2)
@@ -484,9 +484,6 @@ GEM
       coderay (~> 1.1.0)
       method_source (~> 0.8.1)
       slop (~> 3.4)
-    pry-byebug (3.2.0)
-      byebug (~> 5.0)
-      pry (~> 0.10)
     pry-rails (0.3.2)
       pry (>= 0.9.10)
     pry-remote (0.1.8)
@@ -581,6 +578,8 @@ GEM
       powerpack (~> 0.0.6)
       rainbow (>= 1.99.1, < 3.0)
       ruby-progressbar (~> 1.4)
+    ruby-debug-ide (0.6.1.beta2)
+      rake (>= 0.8.1)
     ruby-ole (1.2.11.8)
     ruby-progressbar (1.5.1)
     rubyXL (3.3.10)
@@ -695,7 +694,6 @@ DEPENDENCIES
   balanced (~> 0.7)
   browserify-rails
   bullet
-  byebug
   capybara
   capybara-screenshot
   capybara-slow_finder_errors
@@ -707,6 +705,7 @@ DEPENDENCIES
   countries
   csv_builder
   database_cleaner
+  debase
   dedent
   delayed_job
   delayed_job_active_record
@@ -755,7 +754,6 @@ DEPENDENCIES
   pgbackups-archive
   poltergeist
   postgres_ext
-  pry-byebug
   pry-rails
   pry-remote
   quiet_assets
@@ -771,6 +769,7 @@ DEPENDENCIES
   rspec-rails (~> 3.0)
   rspec_junit_formatter!
   rubocop
+  ruby-debug-ide
   rubyXL
   sass-rails (~> 4.0.0)
   sdoc
