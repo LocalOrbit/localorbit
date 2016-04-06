@@ -182,7 +182,7 @@
   <% end %>
   <% if current_user.admin? && (!@market.stripe_standalone? || @market.stripe_standalone.nil?) %>
     <div class="row row--field">
-      <div class="field column column--half column--guttered" id="allowed-payment-options">
+      <div class="field column column--half column--guttered">
         <label>Stripe Account Type</label><br>
         <%= f.check_box :stripe_standalone %>
         <%= f.label :stripe_standalone %><br>

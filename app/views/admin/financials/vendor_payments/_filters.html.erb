@@ -10,7 +10,7 @@
   <div class="pull-right date-filters">
     <span class="preserve-alignment">
       <label for="q_placed_at_date_gteq">Filter by Date</label><br>
-      <%= datetime_field_tag "q[placed_at_date_gteq]", @search_presenter.start_date, class: append_sticky_class('placed_at_date_gteq', 'datepicker', [1.months.ago.to_date.to_s]) %>
+      <%= datetime_field_tag "q[placed_at_date_gteq]", @search_presenter.start_date, class: append_sticky_class('placed_at_date_gteq', 'datepicker') %>
     </span>
     <span class="preserve-alignment">
       <label for="q_placed_at_date_lteq" class="is-invisible">End Date</label><br>

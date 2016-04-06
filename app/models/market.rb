@@ -104,6 +104,10 @@ class Market < ActiveRecord::Base
     end
   end
 
+  def pretty_email
+    "#{contact_name.to_s.inspect} <#{contact_email}>"
+  end
+
   #
   # NOTE: We're transitioning from per-market payment fee config to provider-based payment structures.
   # We still need to indicate whether Market or Seller must pay, so for now we're re-using the
