@@ -22,7 +22,7 @@ feature "View Seller Profiles" do
     end
 
     scenario "redirects to organization select page" do
-      click_link "Sellers", match: :first
+      click_link "Suppliers", match: :first
 
       expect(page).to have_content("Select an Organization")
       select buyer.name, from: "org_id"
@@ -37,7 +37,7 @@ feature "View Seller Profiles" do
       end
 
       scenario "does not redirect" do
-        click_link "Sellers", match: :first
+        click_link "Suppliers", match: :first
 
         expect(page).not_to have_content("Select an Organization")
         expect(page).to have_content("Date Change Confirmation")
@@ -54,14 +54,14 @@ feature "View Seller Profiles" do
     scenario "no sellers in market" do
       switch_to_subdomain(market.subdomain)
 
-      click_link "Sellers", match: :first
+      click_link "Suppliers", match: :first
       expect(page).to have_content("#{market.name} has no Sellers at this time.")
     end
 
   end
 
   scenario "view list of sellers" do
-    click_link "Sellers", match: :first
+    click_link "Suppliers", match: :first
 
     expect(page).to have_content(seller1.name)
     expect(page).to have_content(seller2.name)
@@ -72,7 +72,7 @@ feature "View Seller Profiles" do
 
   context "seller profile" do
     scenario "view a sellers profile" do
-      click_link "Sellers", match: :first
+      click_link "Suppliers", match: :first
       click_link seller1.name
 
       expect(page).to have_content(seller1.who_story)
