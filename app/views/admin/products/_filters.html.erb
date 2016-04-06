@@ -25,7 +25,7 @@
 
       <span class="preserve-alignment mobile-block">
         <%= f.label :lots_sellable_quantity_eq, "Product quantity" %><br> 
-        <%= f.select :lots_sellable_quantity_eq, options_for_select([["with inventory", 't'], ["without inventory", 'f']], selected: @q.lots_sellable_quantity_eq), include_blank: "all products", class: [append_sticky_class(:lots_sellable_quantity_eq, "")] %>
+        <%= f.select :lots_sellable_quantity_eq, options_for_select([["with inventory", 't'], ["without inventory", 'f']], selected: @q.lots_sellable_quantity_eq), {include_blank: "all products"}, {class: [append_sticky_class(:lots_sellable_quantity_eq, "vanilla_select")]} %>
       </span>
 
       <div class="pull-right">
