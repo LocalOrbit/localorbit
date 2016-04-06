@@ -27,10 +27,10 @@ class Lot < ActiveRecord::Base
         ( good_from IS NULL OR  good_from <= CURRENT_DATE)) 
 
       -- If the criteria pass, then return the quantity
-      THEN quantity
+      THEN 't'
 
       -- Otherwise return zero
-      ELSE 0
+      ELSE 'f'
       END
     SQL
     )
