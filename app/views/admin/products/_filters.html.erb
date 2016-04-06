@@ -1,5 +1,6 @@
 <%= search_form_for @q, url: admin_products_path, html: { class: "product_search clear-after" } do |f| %>
 <div class="row product-header filter-group">
+  <%= link_to "Add New Product", new_admin_product_path, class: "btn btn--add btn--small pull-right" %>
   <div class="column product-filters" id="product-filter">
     <span class="preserve-alignment">
       <%= f.label :name_cont, "Search Products" %><br>
@@ -23,8 +24,8 @@
       <% end %>
 
       <span class="preserve-alignment mobile-block">
-        <%= f.label :lots_sellable_quantity_gteq, "Hide items with no inventory" %><br> 
-        <%= f.check_box :lots_sellable_quantity_gteq %>
+        <%= f.label :lots_sellable_quantity_eq, "Product availability" %><br> 
+        <%= f.select :lots_sellable_quantity_eq, options_for_select([["Items with inventory", 't'], ["Items without inventory", 'f']], selected: @q.lots_sellable_quantity_eq), {include_blank: "all items"}, {class: [append_sticky_class(:lots_sellable_quantity_eq, "vanilla_select")]} %>
       </span>
 
       <div class="pull-right">
@@ -33,6 +34,5 @@
       </div>
     </div>
   </div>
-  <%= link_to "Add New Product", new_admin_product_path, class: "btn btn--add btn--small pull-right" %>
 </div>
 <% end %>
