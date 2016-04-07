@@ -56,9 +56,9 @@ describe "Buyer invoices" do
 
       invoices = Dom::Admin::Financials::InvoiceRow.all
       dom_order_numbers = invoices.map(&:order_number)
-      invoiced_order_numbers = [invoiced_order, invoiced_order2, invoiced_order3, invoiced_order4].map(&:order_number)
+      invoiced_order_numbers = [invoiced_order, invoiced_order2, invoiced_order3].map(&:order_number)
 
-      expect(invoices.count).to eq(4)
+      expect(invoices.count).to eq(3)
       expect(dom_order_numbers).to match_array(invoiced_order_numbers)
 
       # Ensure no actions are available

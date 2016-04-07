@@ -259,7 +259,7 @@ describe "Editing an order" do
   end
 
   context "mark order delivered", :js do
-    let(:user) { create(:user, organizations: [buyer]) }
+    let(:user) { create(:user, :buyer, organizations: [buyer]) }
 
     before do
       switch_to_subdomain(market.subdomain)
