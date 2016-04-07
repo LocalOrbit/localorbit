@@ -11,7 +11,7 @@ Upload a <strong>.CSV</strong> file of your organization(s)'s products here. For
 <% if @plan == "LocalEyes" %> <!-- Probably diff plan requirements for uploading. Can upload to any organization... THAT needs to be fixed. TODO authentication. Also, this whole deal should be in roles and permissions anyway. -->
 	<%= form_tag({action: :upload}, multipart: true) do %>
 	  <%= file_field_tag 'datafile' %>
-
+	  <%= hidden_field_tag 'curr_user',@curr_user %>
 		<br></br>
 	  <%= submit_tag "Import" %>
 	<% end %>

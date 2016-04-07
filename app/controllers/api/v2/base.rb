@@ -29,15 +29,15 @@ module API
 	      	true # TMP
 	      end
 
-	      def current_user
-        	return nil if ENV['rack.session'][:user_id].nil?
-        	@current_user ||= User.get(ENV['rack.session'][:user_id])
-      	end
+	      # def current_user
+       #  	return nil if ENV['rack.session'][:user_id].nil?
+       #  	@current_user ||= User.get(ENV['rack.session'][:user_id])
+      	# end
       
-      	def current_user=(user)
-        	ENV['rack.session'][:user_id] = user.id unless user
-        	@current_user = user
-      	end
+      	# def current_user=(user)
+       #  	ENV['rack.session'][:user_id] = user.id unless user
+       #  	@current_user = user
+      	# end
 		  	
     	end
 
