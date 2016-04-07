@@ -622,7 +622,6 @@ feature "Payment history", :truncate_after_all do
     scenario "can filter purchase history by payment type" do
       expect(Dom::Admin::Financials::PaymentRow.all.count).to eq(26)
 
-      save_and_open_page
       select "Order", from: "Payment Type", visible: false
       click_button "Filter"
       get_results(30)

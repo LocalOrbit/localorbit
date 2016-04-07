@@ -223,7 +223,6 @@ describe "Admin Managing Markets" do
       fill_in "Zip", with: "49423"
       fill_in "Phone", with: "616-123-4567"
       fill_in "Fax", with: "616-321-3214"
-      save_and_open_page
       check('market_address_default')
       click_button "Add Address"
       click_link "New Address" # click on the label for address just added
