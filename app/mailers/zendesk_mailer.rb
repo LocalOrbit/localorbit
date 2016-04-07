@@ -25,6 +25,7 @@ class ZendeskMailer < ActionMailer::Base
     @market = market
 
     mail(
+      to: "hello@localorbit.com"
       from: @market.pretty_email,
       subject: "A new Market has been requested"
     )
