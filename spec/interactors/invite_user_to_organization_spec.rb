@@ -37,7 +37,7 @@ describe InviteUserToOrganization do
       open_email("frank@example.com")
 
       expect(current_email).to have_subject("You have been invited to #{org.name}")
-      expect(current_email).to have_body_text("You have been invited to join #{org.name} by a member of your organization.")
+      expect(current_email).to have_body_text("You have been invited to join #{org.name}") # Messaging made more generic to account for RYO
     end
 
     it "Fails on an invalid email address" do

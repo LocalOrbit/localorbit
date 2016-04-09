@@ -313,7 +313,7 @@
       <%= yield %>
 
       <p class="lo_note">
-        <em>For customer service please reply to this email or call <%= @market.pending? ? "734.545.8100" : @market.contact_phone %></em>
+        <em>For customer service please reply to this email or call <%= @market.try(:pending) == false ? @market.contact_phone : "734.545.8100" %></em>
       </p>
 
     </div>
