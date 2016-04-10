@@ -19,6 +19,12 @@ GIT
       activesupport (>= 3)
 
 GIT
+  remote: git://github.com/zakird/wkhtmltopdf_binary_gem.git
+  revision: 77a62c35e4a9bb8d6583ffeadf0073ac92748a91
+  specs:
+    wkhtmltopdf-binary (0.9.9.3)
+
+GIT
   remote: https://github.com/circleci/rspec_junit_formatter
   revision: 6885218137afbadf560c922114767866953f8cbf
   specs:
@@ -664,7 +670,7 @@ GEM
     websocket-driver (0.6.3)
       websocket-extensions (>= 0.1.0)
     websocket-extensions (0.1.2)
-    wkhtmltopdf-heroku (2.12.2.4)
+    wkhtmltopdf-heroku (2.12.3.0)
     wysihtml5-rails (0.0.4)
       railties (>= 3.1.0)
     wysiwyg-rails (1.2.8)
@@ -785,6 +791,7 @@ DEPENDENCIES
   unicorn
   vcr
   webmock
+  wkhtmltopdf-binary!
   wkhtmltopdf-heroku
   wysihtml5-rails
   wysiwyg-rails
