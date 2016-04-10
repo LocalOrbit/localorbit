@@ -76,13 +76,11 @@ gem "rschema", github: "tomdalling/rschema"
 
 gem "turbolinks"
 
-gem 'wkhtmltopdf-heroku'
-
 # wkhtmltopdf versions are a mess. 0.12.1 is stable but not well supported by gems
 # See https://github.com/zakird/wkhtmltopdf_binary_gem/issues/13
 # The github version is massive and makes the Heroku slug huge
 # gem "wkhtmltopdf-binary"
-#gem "wkhtmltopdf-binary", github: "zakird/wkhtmltopdf_binary_gem"
+# gem "wkhtmltopdf-binary", github: "zakird/wkhtmltopdf_binary_gem"
 
 # Product import/export
 gem 'rubyXL', require: false # XLSX
@@ -125,8 +123,7 @@ group :development, :test do
   gem "poltergeist"
   gem "webmock"
   gem 'capybara-slow_finder_errors'
-  #gem 'wkhtmltopdf-binary-edge', '~> 0.12.2.1'
-  #gem "wkhtmltopdf-binary", github: "zakird/wkhtmltopdf_binary_gem"
+  gem "wkhtmltopdf-binary", github: "zakird/wkhtmltopdf_binary_gem"
   gem "capybara"
 end
 
@@ -149,5 +146,5 @@ group :production, :staging do
   gem "rails_12factor"
   gem "pgbackups-archive"
   gem "heroku-api"
-  #gem 'wkhtmltopdf-heroku'
+  gem 'wkhtmltopdf-heroku'
 end
