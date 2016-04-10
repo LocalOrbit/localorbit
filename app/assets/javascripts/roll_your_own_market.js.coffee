@@ -26,6 +26,7 @@ $(document).ready ->
     $.validator.addClassRules "card_code",  cMaxLength:  3
       
     ret_val = form.validate(
+      ignore: "[aria-hidden='true'] :input"
       rules:
         'market[contact_email]':
           email: true
@@ -72,8 +73,8 @@ $(document).ready ->
 
   wizard_nav = (button) ->
     validateForm $('#new_market_registration')
-    validation_boolean = $('#new_market_registration').valid()
-    if validation_boolean
+    is_valid = $('#new_market_registration').valid()
+    if is_valid
       clicked_form_nav = button
       target_tab_nav = $('#market-tab-list').find('a[href="' + clicked_form_nav.attr('target') + '"]')
       target_tab_nav.trigger 'click'
@@ -85,39 +86,45 @@ $(document).ready ->
   ###
 
   manage_section_state = (form_section) ->
-    pass = true
+    # Return immediately if the tab is hidden - no sense in doing extra work
+    if form_section.attr('aria-hidden') == "true"
+      return
+
+    # Initialize
     form_section_id = form_section.prop('id')
     target_anchor = $('a[href^="#' + form_section_id + '"]')
     target_li = target_anchor.closest('li')
-    form_section.find('input').each (index) ->
-      if $(this).val() == '' or $(this).val() == null
-        pass = false
-      if $(this).prop('type') == 'checkbox' and !$(this).is(':checked')
-        pass = false
-      return
-    if pass == true
+
+    # Check form validation
+    validateForm $('#new_market_registration')
+    is_valid = $('#new_market_registration').valid()
+
+    # Set the class accordingly
+    if is_valid
       target_li.addClass 'pass'
     else
       target_li.removeClass 'pass'
-    return
+    return is_valid
+
 
   ###* 
   # Page initializers
   #
   ###
 
-  $('#tabs').tabs()
+  $('#tabs').tabs beforeActivate: (event, ui) ->
+    is_valid = manage_section_state ui.oldPanel
+    if is_valid != true
+      event.preventDefault()
+    return is_valid
   $('.wizard_nav').show()
   $('div[id^="form-"]').each ->
     manage_section_state $(this)
     return
-  $('input').change ->
-    ancestor_div = undefined
-    ancestor_div = $(this).closest('div[id^="form-"]')
-    manage_section_state ancestor_div
-    return
   $('button.wizard_nav').click (e) ->
     e.preventDefault()
+    ancestor_div = $(this).closest('div[id^="form-"]')
+    manage_section_state ancestor_div
     wizard_nav $(this)
     return
   $('#details_plan').change ->

@@ -79,7 +79,6 @@ describe "Adding advanced inventory" do
     end
 
     it "shows an error when the good from date is beyond the expires on date" do
-      #save_and_open_page
       within(new_lot_form_id) do
         fill_in "lot[number]", with: "3"
         fill_in "lot[good_from]", with: "Tue, 25 Feb 2015"

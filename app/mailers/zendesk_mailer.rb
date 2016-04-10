@@ -16,17 +16,17 @@ class ZendeskMailer < ActionMailer::Base
     @category = category
 
     mail(
-      from: user.pretty_email,
+      from: Figaro.env.zendesk_email,
       subject: "A new category has been requested"
     )
   end
 
-  def request_market(user, market)
-    @user = user
+  def request_market(market)
     @market = market
 
     mail(
-      from: user.pretty_email,
+      to: "hello@localorbit.com",
+      from: @market.pretty_email,
       subject: "A new Market has been requested"
     )
   end

@@ -197,6 +197,7 @@ FactoryGirl.define do
     product_label_format 4
     print_multiple_labels_per_item false
     alternative_order_page         false
+    stripe_standalone              false
 
 
     trait :with_address do

@@ -107,7 +107,7 @@ describe "Using order templates", :js do
     login
     visit products_path
 
-    expect(page).to_not have_content "Loading products"
+    #expect(page).to_not have_content "Loading products"
     find(".app-apply-template").click
     expect(page).to have_content "Order Templates"
     click_button("Apply")

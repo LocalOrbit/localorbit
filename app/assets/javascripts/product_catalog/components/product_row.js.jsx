@@ -9,6 +9,15 @@
       var gp = this.props.product;
       var supplierStyle;
 
+      // Initialize the convenience variable
+      var product_id = "product-"+gp.id+"-long-description"
+
+      // The 'plus sign' link HTML, keyed to the product id
+      var description_link = <a className="popup-toggle" href={'#'+product_id} tabIndex="-1"><i className="font-icon icon-plus-circle"> </i></a>
+
+      // The long description HTML
+      var long_description = <div className="long-description-info is-hidden with-anchor top-anchor popup" id={product_id}><div className="popup-header">Details <button className="close"><i className="font-icon icon-close"></i></button></div><div className="popup-body">{gp.long_description}</div></div>
+
       var unit_prices = _.map(gp.available, function(p) {
         return <lo.ProductUnitPrices key={p.id} product={p} promo={self.props.promo}/>
       });
@@ -20,7 +29,8 @@
             <div className="product-details" style={{ width: (this.props.supplierOnly) ? "unset" : "", marginTop: (this.props.supplierOnly) ? "10px" : "" }}>
               <h3>{gp.name}</h3>
               <h5>From: <a href={"/sellers/" + gp.seller_id}>{gp.seller_name}</a></h5>
-              <p>{gp.short_description}</p>
+              <p>{gp.short_description} {(gp.long_description) ? description_link : "" }</p>
+              {(gp.long_description) ? long_description : ""}
               <ul className="meta list-naked l-inline-list clear-before">
                 <li className="organization-name">
                   <a className="popup-toggle" href={'#product-'+gp.id+'-who'} tabIndex="-1"><i className="font-icon icon-credit"></i>&nbsp;Who</a>

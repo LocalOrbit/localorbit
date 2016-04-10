@@ -54,6 +54,16 @@
       </div>
       <div class="row">
         <div class="field column column--half column--guttered">
+          <label for="routing_number">Account Holder Type</label><br>
+          <%= select_tag :account_holder_type, account_holder_type_options(@bank_account), id: 'account_holder_type', class: 'column--full' %>
+        </div
+        ><div class="field column column--half column--guttered">
+        <label for="account_holder_name">Account Holder Name</label><br>
+        <input class="column--full" id="account_holder_name" type="text" name="account_holder_name">
+        </div>
+      </div>
+      <div class="row">
+        <div class="field column column--half column--guttered">
           <label for="bank-account-notes">Notes</label><br>
           <input class="column--full" id="bank-account-notes" type="text" name="notes">
         </div>
@@ -102,12 +112,12 @@
           <label for="representative_ein">Organization <abbr title="Employer Identification Number">EIN</abbr></label><br>
           <input class="column--full" id="representative_ein" type="text" name="representative[ein]" size="9">
           <span class="hint">We recommend providing an EIN if it is available.</span>
-        </div
-        ><div class="field column column--half column--guttered">
+         </div
+         ><div class="field column column--half column--guttered">
           <label for="representative_name">Full Legal Name</label><br>
           <input id="representative_name" type="text" name="representative[name]" class="column--full">
+         </div>
         </div>
-
         <div class="row row--field">
           <div class="field column column--half column--guttered">
             <label>Date of Birth</label><br>
@@ -125,13 +135,11 @@
             <label for="representative_address_line1">Street Address (Personal)</label><br>
             <input id="representative_address_line1" type="text" name="representative[address][line1]" class="column--full">
              <span class="hint">This is optional but is strongly recommended.</span>
-
           </div
           ><div class="field column column--half column--guttered">
             <label for="representative_address_postal_code">Zip Code (Personal)</label><br>
             <input id="representative_address_postal_code" type="text" name="representative[address][postal_code]" size="10">
              <span class="hint">This is optional but is strongly recommended.</span>
-
           </div>
         </div>
       </fieldset>

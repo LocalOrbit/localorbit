@@ -26,7 +26,7 @@ feature "When a Market is closed" do
     end
 
     scenario "the Sellers will not display products" do
-      click_link "Sellers", match: :first
+      click_link "Suppliers", match: :first
 
       expect(page).to have_content("Who")
       expect(page).to have_content("When")
@@ -61,7 +61,7 @@ feature "When a Market is closed" do
     end
 
     scenario "the Sellers don't display products" do
-      click_link "Sellers", match: :first
+      click_link "Suppliers", match: :first
 
       choose_delivery "Delivery: Tuesday June 17, 2014 Between 7:00AM and 11:00AM"
 

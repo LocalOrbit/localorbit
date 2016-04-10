@@ -21,7 +21,6 @@ gem "underscore-rails"
 gem "wysihtml5-rails"
 gem "mapbox-rails"
 
-
 gem "active_model_serializers"
 gem "active_record_union"
 gem "acts_as_geocodable"
@@ -69,6 +68,7 @@ gem 'browserify-rails'
 gem 'react-rails'
 
 gem 'httparty'
+gem 'omniauth-stripe-connect'
 
 gem "constructor"
 gem "tabulator", github: "dcrosby42/tabulator"
@@ -80,7 +80,7 @@ gem "turbolinks"
 # See https://github.com/zakird/wkhtmltopdf_binary_gem/issues/13
 # The github version is massive and makes the Heroku slug huge
 # gem "wkhtmltopdf-binary"
-#gem "wkhtmltopdf-binary", github: "zakird/wkhtmltopdf_binary_gem"
+# gem "wkhtmltopdf-binary", github: "zakird/wkhtmltopdf_binary_gem"
 
 # Product import/export
 gem 'rubyXL', require: false # XLSX
@@ -123,7 +123,6 @@ group :development, :test do
   gem "poltergeist"
   gem "webmock"
   gem 'capybara-slow_finder_errors'
-  #gem 'wkhtmltopdf-binary-edge', '~> 0.12.2.1'
   gem "wkhtmltopdf-binary", github: "zakird/wkhtmltopdf_binary_gem"
   gem "capybara"
 end

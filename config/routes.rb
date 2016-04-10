@@ -9,7 +9,7 @@ Rails.application.routes.draw do
       "#{request.protocol}app.#{Figaro.env.domain}/#{params[:path]}"
     }
 
-  devise_for :users, skip: [:registrations]
+  devise_for :users, :controllers => { :omniauth_callbacks => "omniauth_callbacks" }, skip: [:registrations]
   devise_scope :user do
     get "account" => "devise/registrations#edit", as: :edit_user_registration
     put "account" => "devise/registrations#update", as: :user_registration
@@ -52,6 +52,7 @@ Rails.application.routes.draw do
       resource  :style_chooser, controller: :style_chooser, only: [:show, :update]
       resource  :cross_sell, controller: :market_cross_sells, only: [:show, :update]
       resources :deposit_accounts, only: [:index, :new, :create, :destroy]
+      resource  :stripe, controller: :market_stripe, only: [:show]
       get :payment_options
       patch :confirm_pending
     end

@@ -4,7 +4,7 @@ class MarketMailer < BaseMailer
     @preview        = preview
     @note           = note
     @market         = market
-    @delivery       = @market.next_delivery.decorate
+    @delivery       = @market.next_delivery.decorate if !@market.next_delivery.nil?
 
     default_url_options[:host] = @market.domain if @market and @market.domain
     default_url_options[:port] = port if port

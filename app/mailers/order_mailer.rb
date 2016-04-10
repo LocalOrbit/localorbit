@@ -21,10 +21,12 @@ class OrderMailer < BaseMailer
 
     to_list = seller.users.map { |u| u.enabled_for_organization?(seller) ? u.pretty_email : nil}
 
-    mail(
-      to: to_list,
-      subject: "New order on #{@market.name}"
-    )
+    if !to_list.nil?
+      mail(
+        to: to_list,
+        subject: "New order on #{@market.name}"
+      )
+    end
 
   end
 

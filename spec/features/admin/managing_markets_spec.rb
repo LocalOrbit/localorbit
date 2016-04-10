@@ -266,11 +266,6 @@ describe "Managing Markets" do
 
       market = Market.find_by_name('Holland Farmers')
 
-      # See we got setup w Stripe:
-      expect(market.balanced_customer_uri).to be(nil), "should no longer be creating Balanced objects"
-      expect(market.stripe_account_id).to be
-      expect(market.stripe_customer_id).to be
-
       # No point in actually checking the Stripe API since VCR stumped all that
     end
 

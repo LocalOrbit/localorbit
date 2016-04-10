@@ -7,12 +7,37 @@
 
     <div id="tabs">
       <ul id="market-tab-list">
-        <li class="pass"><span class="anchor">Plan Selection</span></li>
+        <li><a href="#form-plan">Plan Selection</a></li>
         <li><a href="#form-contact-info">Contact Info</a></li>
         <li><a href="#form-terms">Service Agreement</a></li>
-        <li><a href="#form-billing">Billing</a></li>
-        <li><a href="#form-review">Review</a></li>
+        <li><a href="#form-billing">Billing Address</a></li>
+        <li><a href="#form-review">Payment Info</a></li>
       </ul>
+
+      <!--==== Form tab break ==========================================================-->
+      <div id="form-plan">
+        <fieldset>
+          <h2>Plan Selection</h2>
+          <div class="row">
+            <div class="field column column--third column--guttered">
+              <%= select(:details, :plan, @plan_data.each.map {|plan| [plan[:name], plan[:id]] }, {selected: @stripe_plan.try(:id) }, { class: "required column--full" } ) %><br />
+              <span class="help-text">You will be billed annually for your<br />Local Orbit Service Plan</span>
+            </div
+            ><div class="field column column--third">
+              <%= text_field(:details, :plan_price, placeholder: 'Price', class: "column--full", readonly: "readonly", value: @stripe_plan.try(:amount)/100) %><br />
+              <span id='progress-span'><%= image_tag asset_path('progressbar.gif'), class: 'is-hidden', id: 'progress-bar' %></span>
+            </div
+            ><div class="field column column--third column--guttered">
+              <%= text_field(:details, :coupon, placeholder: 'Discount Code', class: "column--full") %>
+              <button id="apply_discount" class="pull-right form-action">Apply Discount</button>
+            </div>
+          </div>
+        </fieldset>
+
+        <div class="wizard_nav_div">
+          <button class="wizard_nav" target="#form-contact-info">Continue</button>
+        </div>
+      </div> <!-- end form-review -->
 
       <!--==== Form tab break ==========================================================-->
       <div id="form-contact-info">
@@ -47,6 +72,7 @@
         </fieldset>
 
         <div class="wizard_nav_div">
+          <button class="wizard_nav" target="#form-plan">Previous</button>
           <button class="wizard_nav" target="#form-terms">Continue</button>
         </div>
       </div> <!-- end form-contact-info -->
@@ -73,7 +99,7 @@
       <!--==== Form tab break ==========================================================-->
       <div id="form-billing">
         <fieldset>
-          <h2>Billing</h2>
+          <h2>Billing Address</h2>
           <div class="row">
             <div class="field column column--half column--guttered">
               <%= text_field(:billing, :address, placeholder: 'Address', class: "required column--full") %>
@@ -107,7 +133,7 @@
       <!--==== Form tab break ==========================================================-->
       <div id="form-review">
         <fieldset>
-          <h2>Review Plan Selection</h2>
+          <!--h2>Review Plan Selection</h2>
           <div class="row">
             <div class="field column column--third column--guttered">
               <%= select(:details, :plan, @plan_data.each.map {|plan| [plan[:name], plan[:id]] }, {selected: @stripe_plan.try(:id) }, { class: "required column--full" } ) %><br />
@@ -121,7 +147,7 @@
               <%= text_field(:details, :coupon, placeholder: 'Discount Code', class: "column--full") %>
               <button id="apply_discount" class="pull-right form-action">Apply Discount</button>
             </div>
-          </div>
+          </div-->
 
           <h2>Payment Information</h2>
           <% if @market.stripe_tok.present? %>

@@ -25,6 +25,9 @@ StripeMeta =
       currency:        'currency'
       account_number:  'account_number'
       routing_number:  'routing_number'
+      account_holder_type:  'account_holder_type'
+      account_holder_name:  'account_holder_name'
+
     convertResponse: (response,data={}) ->
       result = {
         stripe_tok:       response.id

@@ -64,6 +64,8 @@
 
     onLoadMore: function(res) {
       this.catalog.featuredPromotion = res.featured_promotion;
+      if (this.catalog.featuredPromotion.product)
+        this.catalog.featuredPromotion.product = Object.assign({}, res.featured_promotion.product, res.sellers[res.featured_promotion.product.seller_id]);
       this.catalog.products = this.catalog.products.concat(this.unpackProducts(res));
       this.catalog.hasMore = (this.catalog.products.length < res.product_total);
       this.trigger(this.catalog);

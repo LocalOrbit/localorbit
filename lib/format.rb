@@ -5,4 +5,8 @@ module Format
   def quantity(value)
     number_with_delimiter(number_with_precision(value, strip_insignificant_zeros:true))
   end
+
+  def quantity_no_delimiter(value)
+    number_with_precision(value, strip_insignificant_zeros:true)
+  end
 end
