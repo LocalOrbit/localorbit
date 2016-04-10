@@ -34,9 +34,9 @@ class Admin::MarketsController < AdminController
 
   def create
     if ENV["USE_STRIPE_STANDALONE_ACCOUNTS"]
-      results = RegisterStripeMarket.perform(market_params: market_params)
-    else
       results = RegisterStripeStandaloneMarket.perform(market_params: market_params)
+    else
+      results = RegisterStripeMarket.perform(market_params: market_params)
     end
     if results.success?
       redirect_to [:admin, results.market]
