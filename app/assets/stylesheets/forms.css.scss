@@ -440,9 +440,15 @@ label {
   }
 }
 
+.product-filters,
+.invoice_search,
+.payment_search,
+.sold_item_search,
+.reports-filters,
 .order_search {
   background-color: #F9F9F9;
   border-radius: 5px;
+  padding: 5px;
 }
 
 .wys-toolbar {

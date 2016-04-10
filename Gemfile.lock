@@ -670,7 +670,7 @@ GEM
     websocket-driver (0.6.3)
       websocket-extensions (>= 0.1.0)
     websocket-extensions (0.1.2)
-    wkhtmltopdf-heroku (2.12.2.4)
+    wkhtmltopdf-heroku (2.12.3.0)
     wysihtml5-rails (0.0.4)
       railties (>= 3.1.0)
     wysiwyg-rails (1.2.8)

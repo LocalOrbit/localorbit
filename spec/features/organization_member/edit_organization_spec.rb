@@ -47,8 +47,6 @@ describe "An organization member" do
       visit admin_organizations_path
       click_link org.name
 
-      save_and_open_page
-
       expect(page).not_to have_content("Facebook")
       expect(page).not_to have_content("Twitter")
       expect(page).not_to have_content("Display Feed on Profile Page")
