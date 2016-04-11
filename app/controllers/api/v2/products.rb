@@ -2,7 +2,6 @@
 
 module API
 	module V2
-		include ::Helpers::Imports
 		#extend self
 
 
@@ -10,6 +9,7 @@ module API
 
 		class Products < Grape::API 
 			include API::V2::Defaults
+			include Imports
 
 			resource :products do 
 				## get requests
