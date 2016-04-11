@@ -66,6 +66,7 @@ Rails.application.routes.draw do
     resources :labels, only: [:index, :show]
 
     get "upload" => "upload#index"
+    get "upload/download" => "upload#download"
     post "upload" => "upload#upload"
 
     post "upload/newjob" => "upload#newjob"
