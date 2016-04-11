@@ -1,7 +1,7 @@
 class Admin::UploadController < AdminController
 	require 'rubyXL'
   require 'open3'
-  include API::V2 
+  # include API::V2 
   include Imports
 
   def index
