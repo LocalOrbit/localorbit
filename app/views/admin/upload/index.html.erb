@@ -23,8 +23,13 @@ Upload a <strong>.CSV</strong> file of your organization(s)'s products here. For
 <% end %>
 
 
+<strong><%= link_to 'Product Upload Documentation', admin_upload_get_documentation_path %></strong>
+<br>
 <strong><%= link_to 'Download Template', admin_upload_download_path %></strong>
-<br>
-<strong>link to pdf page documentation (incl no-inventory, chart, and all the other things)</strong>
-<br>
-<strong>link to page on which you can download your catalog in this format for reupload?</strong> 
+<br><br>
+<h2>Upload Audit Trail</h2>
+<% recent_uploads = Audit.where(action:"Product upload").last(4) %>
+<% recent_uploads.each do |up| %>
+	<%= "#{up.created_at.to_s[0..10]} - upload by #{up.comment}: #{up.audited_changes}" %>
+	<br>
+<% end %>

@@ -67,6 +67,7 @@ Rails.application.routes.draw do
 
     get "upload" => "upload#index"
     get "upload/download" => "upload#download"
+    get "upload/get_documentation" => "upload#get_documentation"
     post "upload" => "upload#upload"
 
     post "upload/newjob" => "upload#newjob"

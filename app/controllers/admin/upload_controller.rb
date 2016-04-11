@@ -32,6 +32,15 @@ class Admin::UploadController < AdminController
     )
   end
 
+  def get_documentation
+    # download pdf or render it in-app? going with download at first because of how browsers work (that's why this is a separate route; it could be combined into download)
+    send_file(
+      "#{Rails.root}/app/assets/docs_files/Documentation_Product_Upload_Apr8-2016.pdf",
+      filename: "Documentation_Product_Upload_Apr8-2016.pdf",
+      type: "application/pdf"
+    )
+  end
+
   def upload
     if params.has_key?(:datafile)
       # pass the datafile to the method with the csv file
@@ -43,6 +52,7 @@ class Admin::UploadController < AdminController
           @num_products_loaded += 1
         end
         @errors = jsn[1]
+        Audit.create!(user_id:current_user.id,action:"Product upload",audited_changes: "#{@num_products_loaded} products updated (or maintained)",comment:"#{User.find(current_user.id).email}")
       else
         @num_products_loaded = 0
         @errors = {"File"=>jsn}
