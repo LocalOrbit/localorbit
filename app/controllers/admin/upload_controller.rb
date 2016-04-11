@@ -24,6 +24,13 @@ class Admin::UploadController < AdminController
   	# end
   end
 
+  def download
+    send_file(
+      "#{Rails.root}/app/assets/download_files/LocalOrbit_product_upload_template.csv",
+      filename: "LocalOrbit_product_upload_template.csv",
+      type: "application/text"
+    )
+  end
 
   def upload
     if params.has_key?(:datafile)
