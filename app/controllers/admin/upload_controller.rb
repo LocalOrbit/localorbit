@@ -6,6 +6,7 @@ class Admin::UploadController < AdminController
 
   def index
     @plan = current_market.plan.name # check if LocalEyes plan on market
+    @sd = current_market.subdomain
     @current_mkt_id = current_market.id #TODO maybe useful
     # code for mapping organization and ensuring sign-in authenticated upload
     @org_ids = current_user.organizations.map(&:id)
@@ -52,7 +53,7 @@ class Admin::UploadController < AdminController
           @num_products_loaded += 1
         end
         @errors = jsn[1]
-        Audit.create!(user_id:current_user.id,action:"Product upload",audited_changes: "#{@num_products_loaded} products updated (or maintained)",comment:"#{User.find(current_user.id).email}")
+        Audit.create!(user_id:current_user.id,action:"Product upload",audited_changes: "#{@num_products_loaded} products updated (or maintained)",associated_type:current_market.subdomain.to_s,comment:"#{User.find(current_user.id).email}")
       else
         @num_products_loaded = 0
         @errors = {"File"=>jsn}
