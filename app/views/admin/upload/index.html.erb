@@ -25,7 +25,7 @@ Upload a <strong>.CSV</strong> file of your organization(s)'s products here. For
 
 <strong><%= link_to 'Product Upload Documentation', admin_upload_get_documentation_path %></strong>
 <br>
-<strong><%= link_to 'Download Template', admin_upload_download_path %></strong>
+<strong><%= link_to 'Download CSV Template for products', admin_upload_download_path %></strong>
 <br><br>
 <h2>Upload Audit Trail</h2>
 <% recent_uploads = Audit.where(action:"Product upload").where(associated_type:@sd).last(4) %>
