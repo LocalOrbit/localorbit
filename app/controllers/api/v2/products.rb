@@ -7,7 +7,7 @@ module API
 
 		class Products < Grape::API 
 			include API::V2::Defaults
-			include ::Imports
+			include Imports 
 
 			resource :products do 
 				## get requests
