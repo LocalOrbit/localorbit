@@ -27,9 +27,16 @@ Upload a <strong>.CSV</strong> file of your organization(s)'s products here. For
 <br>
 <strong><%= link_to 'Download CSV Template for products', admin_upload_download_path %></strong>
 <br><br>
-<h2>Upload Audit Trail</h2>
+
 <% recent_uploads = Audit.where(action:"Product upload").where(associated_type:@sd).last(4) %>
-<% recent_uploads.each do |up| %>
-	<%= "#{up.created_at.to_s[0..10]} - upload by #{up.comment}: #{up.audited_changes}" %>
-	<br>
+<% if !recent_uploads.empty? %>
+	<h2>Upload Audit Trail</h2>
+	<% recent_uploads.each do |up| %>
+		<%= "#{up.created_at.to_s[0..10]} - upload by #{up.comment}: #{up.audited_changes}" %>
+		<br>
+	<% end %>
+<% else %>
+<br><br>
+----
+	No previous imports have occurred on this market.
 <% end %>
