@@ -9,7 +9,7 @@ class Admin::OrdersController < AdminController
     else
       #@query_params["placed_at_date_gteq"] ||= 7.days.ago.to_date.to_s
       #@query_params["placed_at_date_lteq"] ||= Date.today.to_s
-      @search_presenter = OrderSearchPresenter.new(@query_params, current_user, "placed_at")
+      @search_presenter = OrderSearchPresenter.new(@query_params, current_user, :placed_at)
       @q, @totals = search_and_calculate_totals(@search_presenter)
 
       @orders = @q.result(distinct: true)
