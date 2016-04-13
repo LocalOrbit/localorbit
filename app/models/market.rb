@@ -118,7 +118,7 @@ class Market < ActiveRecord::Base
     credit_card_market_fee != 0 ? 'market' : 'seller'
   end
 
-  def order_number_format
+  def number_format
     number_format_numeric
   end
 
