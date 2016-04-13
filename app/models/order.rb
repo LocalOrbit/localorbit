@@ -101,7 +101,7 @@ class Order < ActiveRecord::Base
   end
 
   def self.order_number(number_format)
-    if number_format == 0 # segmented, e.g. not numeric
+    if market.number_format_numeric == 0 # segmented, e.g. not numeric
       order(:order_number) 
     else
       order(:id)
