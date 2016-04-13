@@ -64,6 +64,12 @@
     </div>
   </div>
 
+  <div class="row row--field">
+      <%= f.label :number_format_numeric, "Order number appearance on your market" %><span class="tooltip" data-tooltip="You can pick whether you want orders in your market to appear with a segmented order number, like LO-16-YOURMARKET-0000123, or a strictly numeric unique order number based on its ordinal number in the Local Orbit system, which has no other text indication of your market name or the year, like 23456."></span> <br> 
+      <%= f.radio_button :number_format_numeric, 0 %> Segmented, e.g. <strong>"LO-16- ..."</strong><br>
+      <%= f.radio_button :number_format_numeric, 1 %> Numeric, e.g. <strong>23456</strong>
+  </div> 
+
   <div class="field field--inline">
     <%= f.label :facebook %>
     <div class="combo-input">
