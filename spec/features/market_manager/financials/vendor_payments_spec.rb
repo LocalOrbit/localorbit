@@ -60,8 +60,8 @@ feature "Payments to vendors" do
       expect(seller_rows[1].owed).to have_content("$48.93")
 
       expect(seller_rows[2].name).to have_content("Great Farms")
-      expect(seller_rows[2].order_count).to have_content(/\A4 orders from Baskerville Co-op Review/)
-      expect(seller_rows[2].owed).to have_content("384.45")
+      expect(seller_rows[2].order_count).to have_content(/\A3 orders from Baskerville Co-op Review/)
+      expect(seller_rows[2].owed).to have_content("$223.68")
     end
   end
 
@@ -116,7 +116,7 @@ feature "Payments to vendors" do
 
     orders = Dom::Admin::Financials::VendorPaymentOrderRow.all
 
-    expect(orders.size).to eq(4)
+    expect(orders.size).to eq(3)
     expect(orders[0].order_number).to eq("LO-002")
     expect(orders[0].placed_at).to have_content(market1_order2.placed_at.strftime("%b %d, %Y"))
     expect(orders[0].total).to have_content("$20.97")
@@ -129,15 +129,11 @@ feature "Payments to vendors" do
     expect(orders[2].placed_at).to have_content(market1_order4.placed_at.strftime("%b %d, %Y"))
     expect(orders[2].total).to have_content("$160.77")
 
-    expect(orders[3].order_number).to eq("LO-005")
-    expect(orders[3].placed_at).to have_content(market1_order5.placed_at.strftime("%b %d, %Y"))
-    expect(orders[3].total).to have_content("$160.77")
-
-    expect(seller_row.selected_owed).to have_content("$384.45")
+    expect(seller_row.selected_owed).to have_content("$223.68")
 
     orders[1].click_check
 
-    expect(seller_row.selected_owed).to have_content("$342.51")
+    expect(seller_row.selected_owed).to have_content("$181.74")
   end
 
   scenario "mark all orders for seller paid", :js do
@@ -154,7 +150,7 @@ feature "Payments to vendors" do
       find_button("Record Payment").trigger("click")
     end
 
-    expect(page).to have_content("Payment of $384.45 recorded for Great Farms")
+    expect(page).to have_content("Payment of $223.68 recorded for Great Farms")
 
     # Great Farms should no longer be in the payments list
     seller_rows = Dom::Admin::Financials::VendorPaymentRow.all
@@ -180,7 +176,7 @@ feature "Payments to vendors" do
       click_button "Record Payment"
     end
 
-    expect(page).to have_content("Payment of $342.51 recorded for Great Farms")
+    expect(page).to have_content("Payment of $181.74 recorded for Great Farms")
 
     # Great Farms should still be in the payments list
     seller_rows = Dom::Admin::Financials::VendorPaymentRow.all
