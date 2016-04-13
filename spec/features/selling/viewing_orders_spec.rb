@@ -372,7 +372,7 @@ feature "Viewing orders" do
       expect(page).to have_content(market2_order2.order_number)
       expect(page).to have_content(market2_order3.order_number)
 
-      fill_in "q_id_or_order_number_or_organization_name_or_items_seller_name_cont", with: market1_order3.order_number
+      fill_in "q_order_number_or_organization_name_or_items_seller_name_cont", with: market1_order3.order_number
       click_button "Search"
 
       expect(page).not_to have_content(market1_order1.order_number)
