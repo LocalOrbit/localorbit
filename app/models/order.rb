@@ -100,6 +100,14 @@ class Order < ActiveRecord::Base
       having("MAX(order_items.delivered_at) < ?", range.end)
   end
 
+  def self.order_number(number_format)
+    if number_format == 0 # segmented, e.g. not numeric
+      order(:order_number) 
+    else
+      order(:id)
+    end
+  end
+
   def self.fully_delivered
     joins(:items).
       having("BOOL_AND(order_items.delivery_status IN (?)) AND BOOL_OR(order_items.delivery_status = ?)", ["delivered", "canceled"], "delivered").

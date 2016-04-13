@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160318191640) do
+ActiveRecord::Schema.define(version: 20160413154926) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -484,6 +484,7 @@ ActiveRecord::Schema.define(version: 20160318191640) do
     t.boolean  "self_directed_creation",                                 default: false
     t.boolean  "stripe_standalone"
     t.string   "legacy_stripe_account_id"
+    t.integer  "number_format_numeric"
   end
 
   add_index "markets", ["name"], name: "index_markets_on_name", using: :btree
@@ -703,7 +704,6 @@ ActiveRecord::Schema.define(version: 20160318191640) do
     t.decimal  "stripe_payment_fee", precision: 10, scale: 2, default: 0.0,     null: false
     t.string   "stripe_refund_id"
     t.string   "stripe_transfer_id"
-    t.integer  "organization_id"
   end
 
   add_index "payments", ["bank_account_id"], name: "index_payments_on_bank_account_id", using: :btree

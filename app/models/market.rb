@@ -118,6 +118,10 @@ class Market < ActiveRecord::Base
     credit_card_market_fee != 0 ? 'market' : 'seller'
   end
 
+  def number_format
+    number_format_numeric
+  end
+
   def set_credit_card_payment_fee_payer(payer_string)
     payment_fees = {
       credit_card_market_fee: 0,
