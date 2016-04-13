@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160418132511) do
+ActiveRecord::Schema.define(version: 20160413154926) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -484,7 +484,7 @@ ActiveRecord::Schema.define(version: 20160418132511) do
     t.boolean  "self_directed_creation",                                 default: false
     t.boolean  "stripe_standalone"
     t.string   "legacy_stripe_account_id"
-    t.boolean  "allow_product_fee"
+    t.integer  "number_format_numeric"
   end
 
   add_index "markets", ["name"], name: "index_markets_on_name", using: :btree
@@ -556,7 +556,6 @@ ActiveRecord::Schema.define(version: 20160418132511) do
     t.decimal  "quantity_delivered",     precision: 10, scale: 2
     t.string   "payment_status",                                  default: "unpaid"
     t.decimal  "discount_market",        precision: 10, scale: 2, default: 0.0,      null: false
-    t.decimal  "product_fee_pct",        precision: 5,  scale: 3, default: 0.0,      null: false
   end
 
   add_index "order_items", ["order_id", "product_id"], name: "index_order_items_on_order_id_and_product_id", using: :btree
@@ -734,13 +733,12 @@ ActiveRecord::Schema.define(version: 20160418132511) do
     t.integer  "product_id"
     t.integer  "market_id"
     t.integer  "organization_id"
-    t.integer  "min_quantity",                             default: 1,   null: false
+    t.integer  "min_quantity",                             default: 1, null: false
     t.decimal  "sale_price",      precision: 10, scale: 2
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "legacy_id"
     t.datetime "deleted_at"
-    t.decimal  "product_fee_pct", precision: 5,  scale: 3, default: 0.0, null: false
   end
 
   add_index "prices", ["market_id"], name: "index_prices_on_market_id", using: :btree

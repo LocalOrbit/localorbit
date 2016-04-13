@@ -64,6 +64,12 @@
     </div>
   </div>
 
+  <div class="row row--field">
+      <%= f.label :number_format, "Order number appearance on your market" %><br>
+      <%= f.radio_button :number_format, 0 %> Segmented, e.g. <strong>"LO-16- ..."</strong><br>
+      <%= f.radio_button :number_format, 1 %> Numeric, e.g. <strong>23456</strong>
+  </div> 
+
   <div class="field field--inline">
     <%= f.label :facebook %>
     <div class="combo-input">
