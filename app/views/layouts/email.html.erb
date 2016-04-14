@@ -3,6 +3,7 @@
 <head>
   <meta charset="utf-8">
   <title>Email template</title>
+  <link href='//fonts.googleapis.com/css?family=Open+Sans:400,700,300|Open+Sans+Condensed:700,300' rel='stylesheet' type='text/css'>
 </head>
 <body style="background: #e5e5e5; padding: 0; margin: 0;">
   <style>
@@ -12,20 +13,34 @@
       color: #666;
       background: #e5e5e5;
     }
+
+    h3{
+      margin: 0;
+      color: #0a4399;
+      font-size: 18px;
+      line-height: 18px;
+    }
+    h5{ margin:0; }
+    p{
+      margin-top: 6px;
+      margin-bottom: 8px;
+      font-size:13px;
+    }
+    ul {
+      font-size: 11px;
+    }
+    ul li { padding-right: 10px; }
+
     a {
       color: #6e0206;
       text-decoration: none;
     }
     h1 {
-      font: bolder 22px/1.5 'Helvetica Neue', Helvetica, Arial, sans-serif;
+      font: bolder 22px/1.5 "Open Sans Condensed", Helvetica, Arial, sans-serif;
     }
     h2 {
       margin: 0;
-      font: lighter 24px/1.25 'Helvetica Neue', Helvetica, Arial, sans-serif;
-    }
-    h3 {
-      margin: 0;
-      font: bold 16px/1.875 'Helvetica Neue', Helvetica, Arial, sans-serif;
+      font: lighter 24px/1.25 "Open Sans Condensed", Helvetica, Arial, sans-serif;
     }
     dl {
       margin: 0;
@@ -46,7 +61,7 @@
     th dt {
       display: block;
       color: #6e0206;
-      font: normal 18px/1.666 'Helvetica Neue', Helvetica, Arial, sans-serif;
+      font: normal 18px/1.666 "Open Sans Condensed", Helvetica, Arial, sans-serif;
     }
     th dd {
       display: inline;
@@ -73,11 +88,11 @@
       padding: 0 0 50px;
       color: #666;
       background: #e5e5e5;
-      font: normal 10px 'Helvetica Neue', Helvetica, Arial, sans-serif;
+      font: normal 10px "Open Sans Condensed", Helvetica, Arial, sans-serif;
       text-align: center;
     }
     p.lo_header {
-      font: normal 10px 'Helvetica Neue', Helvetica, Arial, sans-serif;
+      font: normal 10px "Open Sans Condensed", Helvetica, Arial, sans-serif;
     }
     div.lo_content {
       border: solid 20px #fff;
@@ -85,7 +100,7 @@
       margin: 0 auto;
       color: #000;
       background: #fff;
-      font: normal 18px/1.44 'Helvetica Neue', Helvetica, Arial, sans-serif;
+      font: normal 18px/1.44 "Open Sans Condensed", Helvetica, Arial, sans-serif;
       text-align: left;
     }
       a.lo_button {
@@ -254,7 +269,7 @@
         border-radius: 50%;
         color: #c7c7c7;
         background: #fff;
-        font: bold 18px/2em 'Helvetica Neue', Helvetica, Arial, sans-serif;
+        font: bold 18px/2em "Open Sans Condensed", Helvetica, Arial, sans-serif;
         text-align: center;
       }
     td.lo_placed_by {
@@ -277,6 +292,83 @@
         font-size: 12px;
         font-style: italic;
         font-weight: normal;
+    }
+    .product-catalog-category{
+      font-family: "Open Sans Condensed", sans-serif;
+      font-weight: bold;
+      font-size: 24px;
+      color: #FFF;
+      padding: 10px 20px 10px 10px;
+      border-radius: 4px;
+      margin-bottom: 10px;
+    }
+
+    .product-catalog-second-category{
+      font-family: "Open Sans Condensed", sans-serif;
+      font-weight: bold;
+      font-size: 14px;
+      margin-top: 5px;
+      margin-bottom: 5px;
+    }
+
+    .product-category-divider,
+    .btn--primary,
+    .btn--add,
+    .btn--save {
+      background-color: <%= @market.text_color -%>;
+      border-color: <%= @market.text_color -%>;
+    }
+
+    .row {
+      position: relative;
+      -webkit-box-sizing: border-box;
+      -moz-box-sizing: border-box;
+      box-sizing: border-box;
+    }
+
+    .product-listing {
+      background: #fff;
+      padding: 20px;
+      border-radius: 4px;
+      border: 1px solid #E0E0E0;
+      margin-bottom: 16px;
+      display: table;
+      width: 100%
+    }
+
+    .product-listing .product-image {
+      width: 75px;
+      height: 75px;
+      overflow: hidden;
+      border-radius: 4px;
+      float: left;
+      margin: 0;
+    }
+
+    .product-listing img {
+      width:75px;
+      height: auto;
+    }
+
+    .product-details-container{
+      display: table-cell;
+      vertical-align: top;
+      padding-right: 20px;
+      min-width: 350px;
+    }
+
+    .product-details{
+      float: left;
+      width: 57%;
+      padding-left: 3%;
+    }
+
+    .product-details-spacer{
+      display: table-cell;
+      vertical-align: middle;
+      clear: both;
+      padding-left: 20px;
+      border-left: 1px solid #eaeaea;
     }
   </style>
   <div class="lo_body">
