@@ -158,7 +158,7 @@ feature "Payments to vendors" do
     expect(page).to have_content("Payment of $223.68 recorded for Great Farms")
 
     # Great Farms should no longer be in the payments list
-    expect seller_found?("Great Farms").to be_false
+    assert !seller_found?("Great Farms")
   end
 
   scenario "mark selected orders for seller paid", :js do

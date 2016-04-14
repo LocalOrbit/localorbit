@@ -6,7 +6,8 @@ class CreateMarket
       payment_provider: PaymentProvider.for_new_markets.id,
       stripe_standalone: ENV["USE_STRIPE_STANDALONE_ACCOUNTS"]
     }
-    market = Market.create(defaults.merge(market_params))
+    merged_market_data = market_params.nil? ? defaults : defaults.merge(market_params)
+    market = Market.create(merged_market_data)
     context[:market] = market
 
     unless market.valid? && market.errors.empty?
