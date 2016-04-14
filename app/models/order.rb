@@ -104,7 +104,7 @@ class Order < ActiveRecord::Base
     if market.number_format_numeric == 0 # segmented, e.g. not numeric
       order(:order_number) 
     else
-      order(:id)
+      order(:id).to_s
     end
   end
 

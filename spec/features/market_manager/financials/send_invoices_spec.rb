@@ -328,7 +328,7 @@ feature "sending invoices" do
       expect(page).to have_content(market1_order5.order_number)
       expect(page).to have_content(market1_order6.order_number)
 
-      fill_in "q_id_or_order_number_or_payment_note_cont", with: "LO-001"
+      fill_in "q_order_number_or_payment_note_cont", with: "LO-001"
       click_button "Filter"
 
       expect(page).to have_content(market1_order1.order_number)
@@ -338,7 +338,7 @@ feature "sending invoices" do
       expect(page).not_to have_content(market1_order5.order_number)
       expect(page).not_to have_content(market1_order6.order_number)
 
-      expect(page.find("#q_id_or_order_number_or_payment_note_cont").value).to eql("LO-001")
+      expect(page.find("#q_order_number_or_payment_note_cont").value).to eql("LO-001")
     end
 
     context "users who have only 1 market" do
