@@ -197,6 +197,11 @@ class Order < ActiveRecord::Base
     balanced.fully_delivered.purchase_orders.payable.not_paid_for("lo fee", :payer)
   end
 
+  # Ransacker to convert ID to a string to search in orders with numeric order numbers using _cont
+  ransacker :id do
+    Arel.sql("to_char(id, '9999999')")
+  end
+
   #
   # Scope: For Markets on Automate plan, get all
   # Orders with payable market fees.
