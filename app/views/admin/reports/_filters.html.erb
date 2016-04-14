@@ -5,9 +5,9 @@
 
         <% if filter == :order_number %>
           <div>
-            <%= f.label :order_id_or_order_order_number_or_order_payment_note_cont, "Search" %><br>
+            <%= f.label :order_order_number_or_order_payment_note_cont, "Search" %><br>
             <div class="search-widget">
-              <%= f.search_field :order_id_or_order_order_number_or_order_payment_note_cont, placeholder: "Order #", class: append_sticky_class(:order_id_or_order_order_number_or_order_payment_note_cont) -%><%= f.submit "Search", class: "btn--end" %>
+              <%= f.search_field :order_order_number_or_order_payment_note_cont, placeholder: "Order #", class: append_sticky_class(:order_order_number_or_order_payment_note_cont) -%><%= f.submit "Search", class: "btn--end" %>
             </div>
           </div>
           <br>
