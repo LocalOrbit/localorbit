@@ -153,8 +153,11 @@ feature "Payments to vendors" do
     expect(page).to have_content("Payment of $223.68 recorded for Great Farms")
 
     # Great Farms should no longer be in the payments list
-    seller_rows = Dom::Admin::Financials::VendorPaymentRow.all
-    expect(seller_rows.map {|r| r.name.text }).to eq(["Better Farms", "Betterest Farms"])
+    # Current
+    # seller_rows = Dom::Admin::Financials::VendorPaymentRow.all
+    # expect(seller_rows.map {|r| r.name.text }).to eq(["Better Farms", "Betterest Farms"])
+
+    expect (Dom::Admin::Financials::VendorPaymentRow.for_seller("Great Farms")).to be_empty
   end
 
   scenario "mark selected orders for seller paid", :js do
