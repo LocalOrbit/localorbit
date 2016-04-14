@@ -4,8 +4,9 @@ $ ->
 
   $("#mark-all-delivered").click (e) ->
     e.preventDefault()
-    $(".order-item-row .delivery-status > input").val("delivered")
-    $(this).closest("form").submit()
+    if confirm("Are you sure you want to mark all items delivered?")
+      $(".order-item-row .delivery-status > input").val("delivered")
+      $(this).closest("form").submit()
 
   $(".order-item-row .action-link a").click (e) ->
     e.preventDefault()
