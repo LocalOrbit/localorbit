@@ -33,22 +33,31 @@
               <span>From: </span>
               <%= product.organization_name %>
             </h5>
+            <br/>
+            <%= product.short_description %>
           </div>
         </div>
         <div class="product-details-spacer"> </div>
         <div class="product-pricing column column--seven-twelfths" style="width:100px">
           <table width="100%">
             <tbody>
-            <tr class="cart_item" data-keep-when-zero="yes" data-cart-item="{&quot;id&quot;:null,&quot;cart_id&quot;:49293,&quot;product_id&quot;:1184,&quot;quantity&quot;:0,&quot;created_at&quot;:null,&quot;updated_at&quot;:null,&quot;total_price&quot;:0,&quot;unit_sale_price&quot;:&quot;25.97&quot;,&quot;valid?&quot;:false,&quot;destroyed?&quot;:false,&quot;formatted_total_price&quot;:&quot;$0.00&quot;}">
+            <tr class="cart_item">
               <th>
                 <%= product.unit_singular %>
                 <br>
-                <span style="font-size:11px;color:#737373;">
+                <span style="font-size:14px;color:#737373;">
                   <span><%= product.available_inventory %> Available</span>
                   <span>&nbsp;</span>
                 </span>
               </th>
             </tr>
+            <tr><th>
+              <%= link_to "Add to Order", product_url(product), class: "btn btn--add" %>
+              <% if @preview %>
+                  <br/><br/>
+                  <%= link_to "Edit", admin_product_url(product), target: '_top', class: 'btn btn--test' %>
+              <% end %>
+            </th></tr>
             </tbody>
           </table>
         </div>

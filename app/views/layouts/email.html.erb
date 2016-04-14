@@ -294,7 +294,7 @@
         font-weight: normal;
     }
     .product-catalog-category{
-      font-family: "Open Sans Condensed", sans-serif;
+      font-family: "Open Sans Condensed", Helvetica, Arial, sans-serif;;
       font-weight: bold;
       font-size: 24px;
       color: #FFF;
@@ -304,11 +304,29 @@
     }
 
     .product-catalog-second-category{
-      font-family: "Open Sans Condensed", sans-serif;
+      font-family: "Open Sans Condensed", Helvetica, Arial, sans-serif;
       font-weight: bold;
       font-size: 14px;
       margin-top: 5px;
       margin-bottom: 5px;
+    }
+
+    .btn {
+      font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+      display: inline-block;
+      padding: 5px;
+      border: solid 1px #a6a6a6;
+      -webkit-border-radius: 5px;
+      -moz-border-radius: 5px;
+      border-radius: 5px;
+      background: #a6a6a6;
+      color: #ffffff;
+      cursor:pointer;
+      font-size: 12px;
+      text-align: center;
+      -webkit-appearance: none;
+      -webkit-font-smoothing: antialiased;
+      -moz-appearance: none;
     }
 
     .product-category-divider,
@@ -319,6 +337,11 @@
       border-color: <%= @market.text_color -%>;
     }
 
+    .btn .btn--test {
+       background-color: #a6a6a6;
+       border-color: #a6a6a6;
+     }
+
     .row {
       position: relative;
       -webkit-box-sizing: border-box;
@@ -328,7 +351,7 @@
 
     .product-listing {
       background: #fff;
-      padding: 20px;
+      padding: 10px;
       border-radius: 4px;
       border: 1px solid #E0E0E0;
       margin-bottom: 16px;
