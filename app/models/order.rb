@@ -199,10 +199,7 @@ class Order < ActiveRecord::Base
 
   # Ransacker to convert ID to a string to search in orders with numeric order numbers using _cont
   ransacker :id do
-    Arel.sql(
-      "regexp_replace(
-        to_char(\"#{orders}\".\"id\", '9999999'), ' ', '', 'g')"
-    )
+    Arel.sql("to_char(orders.id, '9999999')")
   end
 
   #
