@@ -136,6 +136,11 @@ feature "Payments to vendors" do
     expect(seller_row.selected_owed).to have_content("$181.74")
   end
 
+  def seller_found?(boo)
+    matches = Dom::Admin::Financials::VendorPaymentRow.all.select {|p| p.name.text == boo }
+    matches.size > 0
+  end
+
   scenario "mark all orders for seller paid", :js do
     switch_to_subdomain(market1.subdomain)
     sign_in_as market_manager
@@ -153,11 +158,7 @@ feature "Payments to vendors" do
     expect(page).to have_content("Payment of $223.68 recorded for Great Farms")
 
     # Great Farms should no longer be in the payments list
-    # Current
-    # seller_rows = Dom::Admin::Financials::VendorPaymentRow.all
-    # expect(seller_rows.map {|r| r.name.text }).to eq(["Better Farms", "Betterest Farms"])
-
-    expect (Dom::Admin::Financials::VendorPaymentRow.for_seller("Great Farms")).to be_empty
+    expect seller_found?("Great Farms").to be_false
   end
 
   scenario "mark selected orders for seller paid", :js do
@@ -182,9 +183,9 @@ feature "Payments to vendors" do
     expect(page).to have_content("Payment of $181.74 recorded for Great Farms")
 
     # Great Farms should still be in the payments list
-    seller_rows = Dom::Admin::Financials::VendorPaymentRow.all
-    expect(seller_rows.map {|r| r.name.text }).to eq(["Better Farms", "Betterest Farms", "Great Farms"])
+    assert seller_found?("Great Farms")
 
+    seller_rows = Dom::Admin::Financials::VendorPaymentRow.all
     # With 1 order
     expect(seller_rows[2].name).to have_content("Great Farms")
     expect(seller_rows[2].order_count).to have_content(/\A1 order from Baskerville Co-op Review/)
