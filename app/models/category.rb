@@ -20,8 +20,8 @@ class Category < ActiveRecord::Base
     each_with_level(root.descendants) do |category, depth|
       names[depth] = category.name
 
-      if category.leaf?
-        hash[names[1]] << [names[2..depth].join(" / "), category.id]
+      if category.leaf? && depth < 3
+        hash[names[1]] << [names[2..2].join(" / "), category.id]
       end
     end
     hash
