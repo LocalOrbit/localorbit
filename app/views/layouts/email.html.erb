@@ -328,6 +328,7 @@
       -moz-appearance: none;
     }
 
+    <% if @market %>
     .product-category-divider,
     .btn--primary,
     .btn--add,
@@ -335,6 +336,7 @@
       background-color: <%= @market.text_color -%>;
       border-color: <%= @market.text_color -%>;
     }
+    <% end %>
 
     .btn .btn--test {
        background-color: #a6a6a6;
