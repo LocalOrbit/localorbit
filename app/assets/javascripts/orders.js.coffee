@@ -8,6 +8,12 @@ $ ->
       $(".order-item-row .delivery-status > input").val("delivered")
       $(this).closest("form").submit()
 
+  $("#undo-delivery").click (e) ->
+    e.preventDefault()
+    $(".order-item-row .delivery-status > input").val("pending")
+    $(".order-item-row .quantity .quantity-delivered").val(0)
+    $(this).closest("form").submit()
+
   $(".order-item-row .action-link a").click (e) ->
     e.preventDefault()
     if confirm("Are you sure you want to remove this item?")
