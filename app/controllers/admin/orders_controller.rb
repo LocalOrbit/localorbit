@@ -74,6 +74,8 @@ class Admin::OrdersController < AdminController
     elsif params["order"][:credit_clear] == "true"
       remove_credit(order)
       return
+    elsif params[:commit] == "Undo Mark Delivered"
+      undo_delivery(order)
     end
 
     # TODO: Change an order items delivery status to 'removed' or something rather then deleting them
@@ -114,6 +116,14 @@ class Admin::OrdersController < AdminController
       redirect_to admin_order_path(order), notice: "Delivery successfully updated."
     else
       redirect_to admin_order_path(order), alert: "This order's delivery cannot be changed at this time. Our support team has been notified and will update you with more information."
+    end
+  end
+
+  def undo_delivery(order)
+    order = Order.find(params[:id])
+    update = UndoMarkDelivered.perform(user:current_user,order:order,delivery_id:params.require(:order)[:delivery_id])
+    if update.success?
+      redirect_to admin_order_path(order), notice: "Delivery mark successfully reset."
     end
   end
 
