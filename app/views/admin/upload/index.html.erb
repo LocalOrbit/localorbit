@@ -1,19 +1,18 @@
-This is an admin interface for product import.
-<br>
-<br>
+
+<div class="tabs-wrapper">
+  <ul class="tabs wrapping-tabs">
+    <%= content_tag(:li, link_to_or_span("Products",   [@upload, :admin_upload]), class: 'tab') %>
+ 
+  </ul>
+</div>
 
 <h2>Import Products</h2>
-
-<% if @plan == "LocalEyes" %>
-	<strong>Make sure you are on the CORRECT site for uploading or you will not be able to upload your products.</strong>
+Upload a <strong>.CSV</strong> file of your organization(s)'s products here. For more information, see documentation below.
+<% if @plan == "LocalEyes" %> <!-- Probably diff plan requirements for uploading. Can upload to any organization... THAT needs to be fixed. TODO authentication. Also, this whole deal should be in roles and permissions anyway. -->
 	<%= form_tag({action: :upload}, multipart: true) do %>
 	  <%= file_field_tag 'datafile' %>
-	  <br></br>
-	  <input type="hidden" id="job_id" name="job_id" value="<%=@job_id%>" />
-	  <p>Please select the market supplier for which you are uploading data.</p>
-		 <%= select_tag 'profile',  options_for_select(@suppliers_available) %>
-		<br>
-		<br>
+	  <%= hidden_field_tag 'curr_user',@curr_user %>
+		<br></br>
 	  <%= submit_tag "Import" %>
 	<% end %>
 
@@ -21,4 +20,23 @@ This is an admin interface for product import.
 
 	<p>This feature is not available for this market's current plan.</p>
 
+<% end %>
+
+
+<strong><%= link_to 'Product Upload Documentation', admin_upload_get_documentation_path %></strong>
+<br>
+<strong><%= link_to 'Download CSV Template for products', admin_upload_download_path %></strong>
+<br><br>
+
+<% recent_uploads = Audit.where(action:"Product upload").where(associated_type:@sd).last(4) %>
+<% if !recent_uploads.empty? %>
+	<h2>Upload Audit Trail</h2>
+	<% recent_uploads.each do |up| %>
+		<%= "#{up.created_at.to_s[0..10]} - upload by #{up.comment}: #{up.audited_changes}" %>
+		<br>
+	<% end %>
+<% else %>
+<br><br>
+----
+	No previous imports have occurred on this market.
 <% end %>

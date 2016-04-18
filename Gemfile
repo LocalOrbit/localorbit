@@ -88,6 +88,10 @@ gem 'spreadsheet', require: false # XLS
 gem 'slop', '~> 3.0', require: false # option parsing
 gem 'dedent', require: false
 gem 'activerecord-import', require: false
+gem 'grape' # API v2
+gem 'grape-active_model_serializers' # API v2
+gem 'rack-cors', :require => 'rack/cors' # API v2
+gem 'grape-swagger' # API V2, documentation
 
 group :doc do
   gem "sdoc", require: false
