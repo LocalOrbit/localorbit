@@ -484,7 +484,7 @@ FactoryGirl.define do
 
   factory :product do
     sequence(:name) {|n| "Product #{n}" }
-    category { Category.find_by(name: "Empire Apples") }
+    category { Category.find_by(name: "Apples") }
     short_description "Empire state of mind"
 
     # We need to set this in the factory because FactoryGirl doesn't trigger before_save
