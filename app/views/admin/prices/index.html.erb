@@ -43,7 +43,9 @@
               the seller will receive. This amount is an estimate, calculated by subtracting the market fee and any
               applicable payment processing fees from the Sale Price."></span>
             </th>
+            <% if FeatureAccess.product_level_fee?(market: current_market) %>
             <th class="fee">Fee %</th>
+            <% end %>
             <th class="sale-price">
               Sale Price <span class="tooltip" data-tooltip="This is the sale price that the Buyer will see. The net
               price will adjust when you enter a sale price."></span>
@@ -109,6 +111,7 @@
                                        data:{"net-percents-by-market-id" => json_escape(@net_percents_by_market_id.to_json), "cc-rate" => @seller_cc_rate} %>
                   </div>
                 </td>
+                <% if FeatureAccess.product_level_fee?(market: current_market) %>
                 <td class="fee">
                   <div class="edit-trigger view-cell">
                     <%= price.product_fee_pct == 0 || price.product_fee_pct.nil? ? "Use Mkt Fee" : number_to_percentage(price.product_fee_pct) %>
@@ -128,6 +131,7 @@
                     </div>
                   </div>
                 </td>
+                <% end %>
                 <td class="sale-price">
                   <div class="edit-trigger view-cell">
                     <%= number_to_currency price.sale_price %>
@@ -164,7 +168,9 @@
               <% end %>
               <td></td>
               <td></td>
+              <% if FeatureAccess.product_level_fee?(market: current_market) %>
               <td></td>
+              <% end %>
               <td></td>
               <td><%= link_to "Add Price", '#add-row', class: 'add-toggle' %></td>
             </tr>

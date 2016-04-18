@@ -56,6 +56,10 @@ class FeatureAccess
       !!market.plan.try(:has_procurement_managers?)
     end
 
+    def product_level_fee?(market:)
+      !!market.try(:allow_product_fee?)
+    end
+
     private
     def edit_order_stuff?(context)
       return true if context.is_admin
