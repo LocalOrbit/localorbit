@@ -60,7 +60,7 @@ feature "Payments to vendors" do
       expect(seller_rows[1].owed).to have_content("$48.93")
 
       expect(seller_rows[2].name).to have_content("Great Farms")
-      expect(seller_rows[2].order_count).to have_content(/\A4 orders from Baskerville Co-op Review/)
+      expect(seller_rows[2].order_count).to have_content(/\A3 orders from Baskerville Co-op Review/)
       expect(seller_rows[2].owed).to have_content("384.45")
     end
   end
@@ -116,7 +116,7 @@ feature "Payments to vendors" do
 
     orders = Dom::Admin::Financials::VendorPaymentOrderRow.all
 
-    expect(orders.size).to eq(4)
+    expect(orders.size).to eq(3)
     expect(orders[0].order_number).to eq("LO-002")
     expect(orders[0].placed_at).to have_content(market1_order2.placed_at.strftime("%b %d, %Y"))
     expect(orders[0].total).to have_content("$20.97")

@@ -337,8 +337,8 @@ feature "Viewing orders" do
       expect(page).to have_content(market1_order2.order_number)
       expect(page).to have_content(market1_order3.order_number)
       expect(page).to have_content(market2_order1.order_number)
-      expect(page).to have_content(market2_order2.order_number)
-      expect(page).to have_content(market2_order3.order_number)
+      expect(page).to_not have_content(market2_order2.order_number)
+      expect(page).to_not have_content(market2_order3.order_number)
 
       fill_in "q_placed_at_date_gteq", with: 7.weeks.ago.to_date.to_s
       fill_in "q_placed_at_date_lteq", with: 5.weeks.ago.to_date.to_s
