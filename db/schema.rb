@@ -485,6 +485,8 @@ ActiveRecord::Schema.define(version: 20160318191640) do
     t.boolean  "stripe_standalone"
     t.string   "legacy_stripe_account_id"
     t.boolean  "self_directed_creation",                                 default: false
+    t.integer  "order_number_type",                                      default: 1
+    t.boolean  "allow_product_fee"
   end
 
   add_index "markets", ["name"], name: "index_markets_on_name", using: :btree

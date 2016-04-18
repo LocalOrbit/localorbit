@@ -20,13 +20,14 @@
   <% end %>
 </td>
 <td>
-  <label class="lock-label" for="lockFieldID">
+  <label class="lock-label" for="lockFieldID" style="display: none">
     <input type="checkbox" id="lockFieldID" class="lock-field"/>
     <span></span>
   </label>
   <%= f.number_field :net_price,    min: 0, step: 0.01, size: 4, class: 'net-price',
                      data: {"net-percents-by-market-id" => json_escape(@net_percents_by_market_id.to_json), "cc-rate" => @seller_cc_rate} %>
 </td>
+<% if FeatureAccess.product_level_fee?(market: current_market) %>
 <td>
   <div style="float: left">
     <div style="float: left">
@@ -39,6 +40,7 @@
   </div>
   <%= f.number_field :product_fee_pct, min: 0, step: 0.01, size: 4, class: 'fee', style: 'display: none; float: left' %>
 </td>
+<% end %>
 <td>
   <%= f.number_field :sale_price,   min: 0, step: 0.01, size: 4, class: 'sale-price' %>
 </td>
