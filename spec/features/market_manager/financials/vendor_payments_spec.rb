@@ -186,6 +186,7 @@ feature "Payments to vendors" do
     assert seller_found?("Great Farms")
 
     seller_rows = Dom::Admin::Financials::VendorPaymentRow.all
+
     # With 1 order
     expect(seller_rows[2].name).to have_content("Great Farms")
     expect(seller_rows[2].order_count).to have_content(/\A1 order from Baskerville Co-op Review/)
