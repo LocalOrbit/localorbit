@@ -83,7 +83,11 @@
           <% end %>
 
           <% if field == :unit_price %>
-            <td class="price"><span><%= item.unit_price %> /<br/> <%= item.unit %></span></td>
+            <td class="price"><span><%= item.unit_price %></span></td>
+          <% end %>
+
+          <% if field == :unit %>
+            <td class="unit"><span><%= item.unit %></span></td>
           <% end %>
 
           <% if field == :discount_code %>
