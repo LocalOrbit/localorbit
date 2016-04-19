@@ -51,8 +51,8 @@ end
             <li><%= link_to raw('<i class="font-icon" data-icon="&#xe023;"></i> Product Taxonomy'), admin_categories_path %></li>
             <li><%= link_to raw('<i class="font-icon" data-icon="&#xe00f;"></i> Admin Financials'), admin_financials_market_payments_path %></li>
           <% end %>
-          <% if current_market.plan.name == "LocalEyes" %>
-            <li><%= link_to raw('<i class="font-icon" data-icon="hm"></i> Imports'), admin_upload_path %></li>
+          <% if !current_market.nil? && current_market.plan.name == "LocalEyes" %>
+            <li><%= link_to raw('<i class="font-icon" data-icon="in"></i> Imports'), admin_upload_path %></li>
           <% end %>
         </ul>
       </li>
