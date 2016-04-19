@@ -196,9 +196,9 @@
           <td class="total"><%= number_to_currency item.object.gross_total %></td>
           <td class="delivery-status">
             <%= item.hidden_field :delivery_status %>
-            <% item.hidden_field :delivered_at %>
             <%= item.object.delivery_status.titleize %>
           </td>
+          <td class="delivered-at" style="display:none;"><% item.hidden_field :delivered_at %></td>
           <td class="payment-status"><%= item.object.buyer_payment_status.titleize %></td>
           <% if !current_user.buyer_only? %>
             <td class="seller-status"><%= item.object.seller_payment_status %></td>
