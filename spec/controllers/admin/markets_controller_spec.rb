@@ -14,7 +14,7 @@ describe Admin::MarketsController do
   end
 
   describe "#create" do
-    context "when not signed in" do
+    context "when not signed in", :vcr do
       it_behaves_like "admin only action", lambda {
 
         allow(RegisterStripeStandaloneMarket).to receive(:perform) { double("Results", success?: true, market: market) }
