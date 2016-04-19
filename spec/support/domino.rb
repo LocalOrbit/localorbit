@@ -1304,6 +1304,7 @@ module Dom
       attribute :market_name,   ".market"
       attribute :quantity
       attribute :unit_price,    ".price"
+      attribute :unit
       attribute :discount
       attribute :discount_seller # need to add these?
       attribute :discount_market

@@ -2,6 +2,7 @@
 machine:
   environment:
     CAPYBARA_WAIT_TIME: 120
+    USE_STRIPE_STANDALONE_ACCOUNTS: 'true'
 dependencies:
   pre:
     - sudo apt-get install libjpeg62; sudo apt-get install ghostscript
