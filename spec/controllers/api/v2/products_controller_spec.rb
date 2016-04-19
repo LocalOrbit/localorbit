@@ -1,4 +1,6 @@
+=begin
 require "spec_helper"
+
 
 describe API::V2::Products, :type => :request do
 
@@ -74,3 +76,4 @@ let!(:product2) { create(:product, name:"Test Product 2") }
 
 
 end
+=end
