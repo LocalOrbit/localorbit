@@ -2,7 +2,7 @@ Rails.application.routes.draw do
 
   mount StripeEvent::Engine, at: '/webhooks/stripe'
 
-  mount API::Base, at: "/"
+  # mount API::Base, at: "/"
   # mount API::GrapeSwaggerRails::Engine, at: "/documentation"
 
   get 'style_guide/index'
