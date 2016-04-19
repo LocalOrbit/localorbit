@@ -17,6 +17,8 @@ class UpdateOrderDelivery
       order.apply_delivery_address(address)
     end
 
+    if 
+
     order.delivery_id = delivery_id
     if order.valid?
       order.save
@@ -41,6 +43,12 @@ class UpdateOrderDelivery
   def delivery_location_changed?
     new_delivery.delivery_schedule.buyer_pickup_location_id != order.delivery.delivery_schedule.buyer_pickup_location_id
   end
+
+  # def undo_mark_delivered # make the imp stuff happen
+  #   order.items.map{|i| i.delivery_status = "pending"; i.quantity_delivered = 0.0; i.delivered_at = nil}
+  #   order.items.map{|i| i.save!}
+  #   order.save!
+  # end
 
   def fail_and_notify
     error_data = {order_id: order.id, delivery_id: delivery_id, error_messages: order.errors.full_messages.join(" ")}
