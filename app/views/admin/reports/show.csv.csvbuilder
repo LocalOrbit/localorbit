@@ -18,8 +18,8 @@ csv << headers
     if field == :placed_at
       data << item.placed_at
       data << item.order_number
-    elsif field == :unit_price
-      data << "#{item.unit_price}"
+    #elsif field == :unit_price
+    #  data << "#{item.unit_price}"
     else
       data << item.send(field)
     end
