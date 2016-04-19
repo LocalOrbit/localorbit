@@ -150,7 +150,7 @@ feature "Payments to vendors" do
       find_button("Record Payment").trigger("click")
     end
 
-    expect(page).to have_content("Payment of 223.68 recorded for Great Farms")
+    expect(page).to have_content("Payment of $223.68 recorded for Great Farms")
 
     # Great Farms should no longer be in the payments list
     seller_rows = Dom::Admin::Financials::VendorPaymentRow.all
@@ -176,7 +176,7 @@ feature "Payments to vendors" do
       click_button "Record Payment"
     end
 
-    expect(page).to have_content("Payment of 181.74 recorded for Great Farms")
+    expect(page).to have_content("Payment of $181.74 recorded for Great Farms")
 
     # Great Farms should still be in the payments list
     seller_rows = Dom::Admin::Financials::VendorPaymentRow.all
