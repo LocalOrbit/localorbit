@@ -36,10 +36,10 @@ describe "Editing an order" do
     context "as a buyer" do
       let(:user) { create(:user, organizations: [buyer]) }
 
-      it "returns a 404" do
+      it "returns a 200" do
         visit admin_order_path(order)
         if not user.is_localeyes_buyer?
-          expect(page.status_code).to eql(404)
+          expect(page.status_code).to eql(200)
         end
       end
     end
@@ -259,7 +259,7 @@ describe "Editing an order" do
   end
 
   context "mark order delivered", :js do
-    let(:user) { create(:user, :buyer, organizations: [buyer]) }
+    let(:user) { create(:user, organizations: [buyer]) }
 
     before do
       switch_to_subdomain(market.subdomain)
@@ -268,8 +268,8 @@ describe "Editing an order" do
     end
 
     context "as a buyer" do
-      it "gives a 200" do
-        expect(page.status_code).to eql(200)
+      it "gives a 404" do
+        expect(page.status_code).to eql(404)
       end
     end
 
