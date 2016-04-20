@@ -7,7 +7,7 @@ class CreateMarket
       stripe_standalone: ENV["USE_STRIPE_STANDALONE_ACCOUNTS"],
       # Set market plan defaults
       plan_interval: 12,
-      plan_start_at: Time.current.end_of_minute
+      plan_start_at: Time.current.end_of_minute,
       plan_fee: context[:amount]
     }
     market = Market.create(defaults.merge(market_params))
