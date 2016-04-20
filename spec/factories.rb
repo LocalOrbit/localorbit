@@ -198,6 +198,7 @@ FactoryGirl.define do
     print_multiple_labels_per_item false
     alternative_order_page         false
     stripe_standalone              false
+    number_format_numeric 0
     allow_product_fee              false
 
 
