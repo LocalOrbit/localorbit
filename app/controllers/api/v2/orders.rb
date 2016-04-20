@@ -3,7 +3,7 @@ module API
 		class Orders < Grape::API 
 			include API::V2::Defaults
 
-			resource orders: do 
+			resource :orders do
 				desc "Get all orders"
 
 				desc "Get order by order number"
