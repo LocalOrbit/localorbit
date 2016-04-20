@@ -100,11 +100,11 @@ class Order < ActiveRecord::Base
       having("MAX(order_items.delivered_at) < ?", range.end)
   end
 
-  def self.order_number(number_format)
-    if market.number_format_numeric == 0 # segmented, e.g. not numeric
-      order(:order_number) 
+  def order_number
+    if market.number_format_numeric == 0
+      self[:order_number]
     else
-      order(:id).to_s
+      self[:id].to_s
     end
   end
 
