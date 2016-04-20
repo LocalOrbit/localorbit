@@ -9,9 +9,9 @@ csv << [
   "Product Code",
   "Product",
   "Unit",
-  "Product Total",
   "Product Unit Price",
   "Product Quantity",
+  "Product Total"
 ]
 
 if(@abort_mission)
@@ -29,9 +29,9 @@ else
       order_item.product.code,
       order_item.product.name,
       order_item.product.unit.singular,
-      order_item.gross_total,
       order_item.unit_price,
-      order_item.quantity
+      order_item.quantity,
+      order_item.gross_total
     ]
   end
 end
