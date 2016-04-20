@@ -200,6 +200,7 @@ FactoryGirl.define do
     stripe_standalone              false
     number_format_numeric 0
     allow_product_fee              false
+    number_format_numeric 0
 
 
     trait :with_address do
