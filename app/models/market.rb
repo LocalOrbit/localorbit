@@ -227,7 +227,8 @@ class Market < ActiveRecord::Base
   end
 
   def plan_payable?
-    plan_fee && plan_fee > 0 && plan_bank_account.try(:usable_for?, :debit)
+    # !subscribed
+    !subscribed && plan_fee && plan_fee > 0 && plan_bank_account.try(:usable_for?, :debit)
   end
 
   def on_statement_as
