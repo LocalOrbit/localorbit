@@ -198,7 +198,7 @@ FactoryGirl.define do
     print_multiple_labels_per_item false
     alternative_order_page         false
     stripe_standalone              false
-
+    number_format_numeric 0
 
     trait :with_address do
       after(:create) {|m| create(:market_address, market: m) }
@@ -268,7 +268,7 @@ FactoryGirl.define do
     organization
     market
     delivery
-    payment_provider 'balanced'
+    payment_provider 'stripe'
 
     sequence(:order_number) {|n| "LO-%s-%s-%07d" % [Time.now.strftime("%y"), market.try(:subdomain).to_s.upcase, n] }
     placed_at        { Time.current }
