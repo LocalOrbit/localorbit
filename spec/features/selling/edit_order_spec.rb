@@ -284,6 +284,16 @@ describe "Editing an order" do
         expect(Dom::Order::ItemRow.first.delivery_status).to eql("Delivered")
         expect(page).to_not have_button("Mark all delivered")
       end
+
+      # it "can undo delivery" do
+      #   expect(Dom::Order::ItemRow.first.delivery_status).to eql("Delivered")
+
+      #   click_button "Undo mark delivery"
+
+      #   expect(Dom::Order::ItemRow.first.delivery_status).to eql("Pending")
+      #   expect(page).to have_button("Mark all delivered")
+      # end
+      
     end
 
     context "as a market manager" do
