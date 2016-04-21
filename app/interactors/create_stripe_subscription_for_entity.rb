@@ -7,32 +7,9 @@ class CreateStripeSubscriptionForEntity
     entity = context[:entity]
     customer = PaymentProvider::Stripe.get_stripe_customer(context[:stripe_customer].id)
 
-    # If the customer has any subscriptions...
-    if customer.subscriptions.data.any?
-      # ...cycle through them
-      customer.subscriptions.data.each do |sub|
-        # If any match the current data...
-        if sub.plan.id = subscription_params[:plan]
-          # ...then update the subscription:
-          subscription        = customer.subscriptions.retrieve(sub.id)
-          subscription.plan   = subscription_params[:plan]
-          subscription.source = subscription_params[:stripe_tok]
-          subscription.coupon = subscription_params[:coupon] if !subscription_params[:coupon].blank?
-          subscription.save
-
-        else
-          # ...otherwise, delete the plan:
-          customer.subscriptions.retrieve(sub.id).delete
-        end
-      end
-
-    # Otherwise... 
-    else
-      # ...just create one
-      subscription = customer.subscriptions.create(stripe_subscription_info)
-    end
-
+    subscription = PaymentProvider::Stripe.upsert_subscription(customer, subscription_params)
     context[:subscription] = subscription
+
     invoices = PaymentProvider::Stripe.get_stripe_invoices(:customer => subscription.customer) 
     context[:invoice] = invoices.data[0]
     

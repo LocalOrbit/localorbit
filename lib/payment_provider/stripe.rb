@@ -275,6 +275,47 @@ module PaymentProvider
         CreditCardFeeStructure[:rate] # should be decimal value 0.029, see above
       end
 
+      # Coordinates the creation of a customer subscription
+      def upsert_subscription(customer, subscription_params)
+        # If the customer has any subscriptions...
+        if customer.subscriptions.data.any?
+          # ...cycle through them
+          customer.subscriptions.data.each do |sub|
+            # If any match the current data...
+            if sub.plan.id = subscription_params[:plan]
+              # ...then update the subscription (This would look less stupid (and redundant (see below)) if I could just pass in a hash):
+              subscription        = customer.subscriptions.retrieve(sub.id)
+              subscription.plan   = subscription_params[:plan]
+              subscription.source = subscription_params[:stripe_tok]
+              subscription.coupon = subscription_params[:coupon] if !subscription_params[:coupon].blank?
+              subscription.save
+
+            else
+              # ...otherwise, delete the plan:
+              customer.subscriptions.retrieve(sub.id).delete
+            end
+          end
+
+        # Otherwise...
+        else
+          # ...just create one
+          stripe_subscription_data = {
+            plan: subscription_params[:plan],
+            source: subscription_params[:stripe_tok]
+            metadata: {
+              "lo.entity_id" => entity.id,
+              "lo.entity_type" => entity.class.name.underscore
+            }
+          }
+          # Stripe complains if you pass an empty coupon.  Only add it if it exists
+          stripe_subscription_data[:coupon] = subscription_params[:coupon] if !subscription_params[:coupon].blank?
+
+          subscription = customer.subscriptions.create(stripe_subscription_data)
+        end
+
+        subscription
+      end
+
       #
       #
       # NON-PaymentProvider interface:
