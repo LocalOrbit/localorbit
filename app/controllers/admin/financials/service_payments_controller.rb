@@ -7,6 +7,14 @@ class Admin::Financials::ServicePaymentsController < AdminController
 
   def create
     market = Market.find(params[:market_id])
+    if market.stripe_customer_id?
+      # Retrieve Stripe customer
+      # Retrieve cards
+      # If card exists, then send it as the bank_account
+      # (along with the market and plan info) to ChargeServiceFee
+    else 
+      # Prompt that card needs to be created
+    end
     charge = ChargeServiceFee.perform(market: market, amount: market.plan_fee, bank_account: market.plan_bank_account)
     if charge.success?
       redirect_to admin_financials_service_payments_path, notice: "Payment made for #{market.name}"
