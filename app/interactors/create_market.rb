@@ -8,8 +8,10 @@ class CreateMarket
       # Set market plan defaults
       plan_interval: 12,
       plan_start_at: Time.current.end_of_minute,
-      plan_fee: context[:amount]
     }
+    
+    defaults[:plan_fee] = context[:amount] if context[:amount]
+
     market = Market.create(defaults.merge(market_params))
     context[:market] = market
 
