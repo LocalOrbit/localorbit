@@ -230,6 +230,10 @@ class Market < ActiveRecord::Base
     !subscribed && plan_fee && plan_fee > 0 && plan_bank_account.try(:usable_for?, :debit)
   end
 
+  def subscription_eligible?
+    next_service_payment_at && next_service_payment_at <= Time.now && plan_payable?
+  end
+
   def on_statement_as
     name.sub(/[^0-9a-zA-Z\.\-_ \^\`\|]/, '')[0, 22]
   end

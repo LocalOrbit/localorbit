@@ -301,7 +301,7 @@ module PaymentProvider
           # ...just create one
           stripe_subscription_data = {
             plan: subscription_params[:plan],
-            source: subscription_params[:stripe_tok]
+            source: subscription_params[:stripe_tok],
             metadata: {
               "lo.entity_id" => entity.id,
               "lo.entity_type" => entity.class.name.underscore
