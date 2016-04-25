@@ -61,11 +61,11 @@
 
               <%= fields_for :price, price, index: price.id do |f| %>
                 <% if current_user.multi_market_membership? %>
-                  <td class="market">
-                    <div class="edit-trigger view-cell">
+                  <td>
+                    <div class="edit-trigger market view-cell">
                       <%= price.market_name %>
                     </div>
-                    <div class="edit-cell">
+                    <div class="market edit-cell">
                       <% if organization_can_access?(unit_product.organization, :advanced_pricing) %>
                         <%= f.select :market_id, unit_product.organization.all_markets_for_select,
                                      {include_blank: 'All Markets'}, {class: "price_market_id"} %>
@@ -73,10 +73,10 @@
                         <%= price.market_name %>
                       <% end %>
                     </div><br/>
-                    <div class="edit-trigger view-cell">
+                    <div class="edit-trigger buyer view-cell">
                       <%= price.organization_name %>
                     </div>
-                    <div class="edit-cell">
+                    <div class="buyer edit-cell">
                       <% if organization_can_access?(unit_product.organization, :advanced_pricing) %>
                           <%= f.select :organization_id, current_user.buyers_for_select,
                                        {include_blank: 'All Buyers'}, {class: "price_buyer_id"} %>
@@ -103,8 +103,8 @@
                     <%= number_to_currency price.net_price %>
                   </div>
                   <div class="edit-cell">
-                    <label class="lock-label" for="lockFieldID" style="display: none">
-                      <input type="checkbox" id="lockFieldID" class="lock-field"/>
+                    <label class="lock-label" style="display: none">
+                      <input type="checkbox" class="lock-field"/>
                       <span></span>
                     </label>
                     <%= f.number_field :net_price, min: 0, step: 0.01, size: 4, class: 'net-price',
