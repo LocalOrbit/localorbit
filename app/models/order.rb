@@ -55,7 +55,7 @@ class Order < ActiveRecord::Base
   validates :delivery_state, presence: true
   validates :delivery_zip, presence: true
   validates :market_id, presence: true
-  validates :order_number, presence: true
+  #validates :order_number, presence: true
   validates :organization_id, presence: true
   validates :payment_method, presence: true, inclusion: {in: Payment::PAYMENT_METHODS.keys, allow_blank: true}
   validates :payment_status, presence: true
@@ -106,10 +106,6 @@ class Order < ActiveRecord::Base
     else
       self.read_attribute(:id).to_s
     end
-  end
-
-  def order_number=(order_number)
-    write_attribute(:order_number, order_number)
   end
 
   def self.fully_delivered
