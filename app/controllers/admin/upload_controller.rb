@@ -51,6 +51,10 @@ class Admin::UploadController < AdminController
         jsn[0]["products"].each do |p|
           ::Imports::ProductHelpers.create_product_from_hash(p,params[:curr_user])
           @num_products_loaded += 1
+          # binding.pry
+          if p.has_key?("Multiple Pack Sizes") && !p["Multiple Pack Sizes"].empty?
+            @num_products_loaded += 1
+          end
         end
         @errors = jsn[1]
         Audit.create!(user_id:current_user.id,action:"Product upload",audited_changes: "#{@num_products_loaded} products updated (or maintained)",associated_type:current_market.subdomain.to_s,comment:"#{User.find(current_user.id).email}")
