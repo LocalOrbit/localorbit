@@ -10,7 +10,18 @@
 </div>
 
 <div class="print-page">
-<% @pick_lists.each_with_index do |pick_list, index| %>
+<%
+    @pick_lists.each_with_index do |pick_list, index|
+      if index == 0
+        @orig = "#{pick_list.seller_ship_from_lat_long}"
+        @dest = "#{current_market.addresses[0].geocode.latitude},#{current_market.addresses[0].geocode.longitude}"
+        @wp = ""
+      else
+        @wp = @wp + (index > 0 ? "#{pick_list.seller_ship_from_lat_long}|" : "")
+      end
+
+
+%>
 
   <% if index != 0 %>
     <div class="pdf-page-break"></div>
@@ -89,4 +100,8 @@
     </div>
   </div>
 <% end %>
+  <h1>Routing Plan</h1>
+  <div id="map-container">
+    <div id="map-canvas" data-orig="<%= @orig %>" data-dest="<%= @dest %>" data-wp="<%= @wp %>"></div>
+  </div>
 </div>
