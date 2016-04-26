@@ -391,7 +391,6 @@ ActiveRecord::Schema.define(version: 20160420160440) do
     t.boolean  "default",    default: false
     t.boolean  "billing",    default: false
     t.string   "country",    default: "US",  null: false
-    t.boolean  "remit_to"
   end
 
   add_index "market_addresses", ["market_id", "deleted_at"], name: "index_market_addresses_on_market_id_and_deleted_at", using: :btree
@@ -481,9 +480,9 @@ ActiveRecord::Schema.define(version: 20160420160440) do
     t.boolean  "pending",                                                default: false
     t.text     "zpl_logo"
     t.string   "zpl_printer"
-    t.boolean  "self_directed_creation",                                 default: false
     t.boolean  "stripe_standalone"
     t.string   "legacy_stripe_account_id"
+    t.boolean  "self_directed_creation",                                 default: false
     t.boolean  "subscribed",                                             default: false
   end
 
@@ -677,7 +676,7 @@ ActiveRecord::Schema.define(version: 20160420160440) do
     t.string   "pdf_name"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.text     "zpl"
+    t.json     "zpl"
     t.string   "zpl_name"
   end
 
