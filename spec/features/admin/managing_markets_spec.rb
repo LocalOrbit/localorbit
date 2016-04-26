@@ -6,6 +6,7 @@ describe "Managing Markets" do
   describe "as a market manager" do
     let!(:market1) { create(:market) }
     let!(:market2) { create(:market) }
+    let!(:order1)  { create(:order, market:market1) }
     let!(:user) { create(:user, role: "user", managed_markets: [market1, market2]) }
 
     before do
@@ -90,6 +91,14 @@ describe "Managing Markets" do
 
       expect(find("#market_default_allow_purchase_orders")).to be_checked
       expect(find("#market_default_allow_credit_cards")).to be_checked
+    end
+
+    it "I can choose numeric order numbers correctly" do
+      visit admin_market_path(market1)
+      expect(page).to have_content("Order number appearance")
+      choose("market_number_format_numeric_1")
+      expect(order1.order_number).not_to have_content("LO")
+
     end
 
     it "I can not add a market" do
