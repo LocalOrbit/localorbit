@@ -33,8 +33,9 @@
           <thead>
           <tr>
             <% if current_user.multi_market_membership? %>
-              <th class="market">Market/Buyer</th>
+              <th class="market">Market</th>
             <% end %>
+            <th class="buyer">Buyer</th>
             <th class="min-qty">
               Min Qty <span class="tooltip" data-tooltip="This is the minimum quantity available for sale of this product."></span>
             </th>
@@ -61,22 +62,25 @@
 
               <%= fields_for :price, price, index: price.id do |f| %>
                 <% if current_user.multi_market_membership? %>
-                  <td>
-                    <div class="edit-trigger market view-cell">
+                  <td class="market">
+                    <div class="edit-trigger view-cell">
                       <%= price.market_name %>
                     </div>
-                    <div class="market edit-cell">
+                    <div class="edit-cell">
                       <% if organization_can_access?(unit_product.organization, :advanced_pricing) %>
                         <%= f.select :market_id, unit_product.organization.all_markets_for_select,
                                      {include_blank: 'All Markets'}, {class: "price_market_id"} %>
                       <% else %>
                         <%= price.market_name %>
                       <% end %>
-                    </div><br/>
-                    <div class="edit-trigger buyer view-cell">
+                    </div>
+                  </td>
+                  <% end %>
+                  <td class="buyer">
+                    <div class="edit-trigger view-cell">
                       <%= price.organization_name %>
                     </div>
-                    <div class="buyer edit-cell">
+                    <div class="edit-cell">
                       <% if organization_can_access?(unit_product.organization, :advanced_pricing) %>
                           <%= f.select :organization_id, current_user.buyers_for_select,
                                        {include_blank: 'All Buyers'}, {class: "price_buyer_id"} %>
@@ -85,14 +89,13 @@
                       <% end %>
                     </div>
                   </td>
-                <% end %>
                 <td class="min-qty">
                   <div class="edit-trigger view-cell">
                     <%= price.min_quantity %>
                   </div>
                   <div class="edit-cell">
                     <% if organization_can_access?(unit_product.organization, :advanced_pricing) %>
-                      <%= f.number_field :min_quantity, min: 0, size: 4 %>
+                      <%= f.number_field :min_quantity, min: 0, size: 4, style: 'width: 60px' %>
                     <% else %>
                       <%= price.min_quantity %>
                     <% end %>
@@ -166,6 +169,7 @@
               <% if current_user.multi_market_membership? %>
                 <td></td>
               <% end %>
+              <td></td>
               <td></td>
               <td></td>
               <% if FeatureAccess.product_level_fee?(market: current_market) %>

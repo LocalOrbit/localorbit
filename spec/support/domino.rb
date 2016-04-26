@@ -122,15 +122,15 @@ module Dom
     selector ".pricing-table tbody tr.price"
 
     def click_buyer
-      node.find(".buyer.edit-cell").click
+      node.find(".buyer").click
     end
 
     def market
-      node.find(".market.view-cell").text
+      node.find(".market .view-cell").text
     end
 
     def buyer
-      node.find(".buyer.view-cell").text
+      node.find(".buyer .view-cell").text
     end
 
     def min_quantity
