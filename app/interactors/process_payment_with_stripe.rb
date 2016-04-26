@@ -66,4 +66,4 @@ class ProcessPaymentWithStripe
 #     params[:source_uri] = payment.bank_account.balanced_uri if with_source
 #     params
 #   end
-# end
+end
