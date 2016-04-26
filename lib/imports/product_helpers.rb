@@ -1,6 +1,22 @@
 module Imports
 	module ProductHelpers
 
+		# method to titleize without capitalizing conjunctions
+		def self.titleize_specific(nm)
+			conjs = ["of","and","with","on","to"]
+			nm = nm.titleize 
+			nmb = ""
+			nm.split.each do |w|
+				if conjs.include?(w.downcase)
+					nmb += w.downcase
+				else
+					nmb += w
+				end
+				nmb += " "
+			end
+			nmb
+		end
+
 		def self.identify_product_uniqueness(product_params) 
 
 			identity_params_hash = {product_name:product_params["Product Name"],category_id:ProductHelpers.get_category_id_from_name(product_params["Category Name"])}
@@ -24,13 +40,14 @@ module Imports
 
 		def self.get_organization_id_from_name(organization_name,market_subdomain,current_user)
 			begin
+				# binding.pry
 				mkt = Market.find_by_subdomain(market_subdomain)
 				user = User.find_by_id(current_user)
 				unless user.admin? || user.markets.includes?(mkt)
 					return nil
 				end
 
-				org = Organization.find_by_name(organization_name)
+				org = Organization.find_by_name(self.titleize_specific(organization_name))
 				if org.is_a?(Array)
 					org = org.where(markets: mkt) # where the mkt is included in the organization's markets
 					if org.empty? # if none such that mkt and org match up
