@@ -27,6 +27,13 @@ describe Financials::OrderItemFeeCalculator do
     end
   end
 
+  describe ".product_market_fee_paid_by_seller" do
+    it "discounts an item's gross_total by the seller-paid discount amount and multiplies by product's seller fee rate" do
+      fee = subject.market_fee_paid_by_seller(market: market, order_item: order_item_product_fee)
+      expect(fee).to eq "12.68".to_d
+    end
+  end
+
   describe ".local_orbit_fee_paid_by_seller" do
     # TODO: IS THIS FINANCIALLY CORRECT?  Really discount the gross total by both seller and market share of the discount? This was how it was originally in StoreOrderFees.  crosby 2015-06-02
     it "discounts an item's gross_total by the both discount amounts and multiplies by the rate LO charges the seller" do
