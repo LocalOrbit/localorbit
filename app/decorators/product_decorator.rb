@@ -13,4 +13,8 @@ class ProductDecorator < OrganizationItemDecorator
   def name_and_unit
     "#{name} (#{unit_singular})"
   end
+
+  def updated_at_dte
+    updated_at.strftime("%A %B %e, %Y")
+  end
 end

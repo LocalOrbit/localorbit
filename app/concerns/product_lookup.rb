@@ -7,6 +7,6 @@ module ProductLookup
   end
 
   def find_product
-    @product = current_user.managed_products.find(params[:product_id])
+    @product = current_user.managed_products.includes(:organization, :unit).find(params[:product_id])
   end
 end
