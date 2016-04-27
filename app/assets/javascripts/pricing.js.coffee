@@ -9,7 +9,6 @@ $ ->
     $(this).parent().parent().find('input.net-price').prop('disabled', true);
 
   bindCalculator = (el) ->
-    product_fee = false
     salePrice = $(el)
     lock_label = salePrice.parents('tr').first().find('label.lock-label')
     netprice_checkbox = salePrice.parents('tr').first().find('input.lock-field')
@@ -18,7 +17,6 @@ $ ->
     use_product_fee = salePrice.parents('tr').first().find('input.product-fee')
     netPrice = salePrice.parents('tr').first().find('input.net-price')
     selectedMarket = salePrice.parents('tr').first().find('select.price_market_id')
-    netPriceLocked = netprice_checkbox.prop('checked')
 
     getNetPriceValue = ->
       parseFloat(netPrice.val())
@@ -47,7 +45,7 @@ $ ->
       if marketId == ""
         marketId = "all"
 
-      if product_fee
+      if use_product_fee.prop('checked')
         if getFeeValue() > 0
           return 1 - (getFeeValue()/100 + ccRate)
         else
@@ -76,36 +74,32 @@ $ ->
       setSalePriceValue(y)
 
     netprice_checkbox.on 'click', ->
-      netPriceLocked = netprice_checkbox.prop('checked')
-      #if netprice_checkbox.hasClass('fa-lock')
-      #  netprice_checkbox.removeClass('fa-lock').addClass('fa-unlock')
-      #else
-      #  netprice_checkbox.removeClass('fa-unlock').addClass('fa-lock')
 
-      if netPriceLocked
-        netPrice.prop('disabled', true).css('background','#EFEFEF');
+      if netprice_checkbox.prop('checked')
+        netPrice.prop('disabled', true).css('background','#EFEFEF')
       else
-        netPrice.prop('disabled', false).css('background','#FFF');
+        netPrice.prop('disabled', false).css('background','#FFF')
 
       updateSalePrice()
 
     use_mkt_fee.on 'click', ->
-      product_fee = false
       fee.hide()
       lock_label.hide()
       setFeeValue(0)
       updateSalePrice()
-      netPrice.prop('disabled', false).css('background','#FFF');
+      if netprice_checkbox.prop('checked')
+        lock_label.click()
+
+      netPrice.prop('disabled', false).css('background','#FFF')
       use_mkt_fee.prop('checked','checked')
 
     use_product_fee.on 'click', ->
-      product_fee = true
       fee.show()
       lock_label.show()
       use_product_fee.prop('checked','checked')
 
     salePrice.change ->
-      if netPriceLocked
+      if netprice_checkbox.prop('checked')
         updateFee()
       else
         updateNetPrice()
