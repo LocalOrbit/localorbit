@@ -276,7 +276,7 @@ module PaymentProvider
       end
 
       # Coordinates the creation of a customer subscription
-      def upsert_subscription(customer, subscription_params)
+      def upsert_subscription(entity, customer, subscription_params)
         # If the customer has any subscriptions...
         if customer.subscriptions.data.any?
           # ...cycle through them
@@ -301,7 +301,7 @@ module PaymentProvider
           # ...just create one
           stripe_subscription_data = {
             plan: subscription_params[:plan],
-            source: subscription_params[:stripe_tok],
+            source: subscription_params[:source],
             metadata: {
               "lo.entity_id" => entity.id,
               "lo.entity_type" => entity.class.name.underscore

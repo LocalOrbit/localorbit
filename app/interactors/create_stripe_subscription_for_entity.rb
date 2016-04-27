@@ -7,8 +7,9 @@ class CreateStripeSubscriptionForEntity
     entity = context[:entity]
     customer = PaymentProvider::Stripe.get_stripe_customer(context[:stripe_customer].id)
 
-    subscription = PaymentProvider::Stripe.upsert_subscription(customer, subscription_params)
+    subscription = PaymentProvider::Stripe.upsert_subscription(entity, customer, stripe_subscription_info)
     context[:subscription] = subscription
+    entity.set_subscription(subscription) if entity.respond_to?(:set_subscription)
 
     invoices = PaymentProvider::Stripe.get_stripe_invoices(:customer => subscription.customer) 
     context[:invoice] = invoices.data[0]

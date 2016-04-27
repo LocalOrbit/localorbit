@@ -91,7 +91,7 @@ class MarketsController < ApplicationController
       :plan,
       :plan_id,
       :coupon
-  	)
+    )
   end
 
   def billing_params

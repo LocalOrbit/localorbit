@@ -231,7 +231,16 @@ class Market < ActiveRecord::Base
   end
 
   def subscription_eligible?
-    !subscribed && next_service_payment_at && next_service_payment_at <= Time.now && plan_payable?
+    # KXM Do we need plan_payable?  I think not...
+    # !subscribed && next_service_payment_at && next_service_payment_at <= Time.now && plan_payable?
+    !subscribed && next_service_payment_at && next_service_payment_at <= Time.now
+  end
+
+  def set_subscription(subscription)
+    update_attribute(:plan_interval, 12)
+    update_attribute(:plan_start_at, Time.current.end_of_minute)
+    update_attribute(:subscribed, true)
+    update_attribute(:plan_fee, ::Financials::MoneyHelpers.cents_to_amount(subscription.plan.amount))
   end
 
   def on_statement_as
