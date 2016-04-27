@@ -170,7 +170,7 @@ FactoryGirl.define do
 
   factory :market do
     plan
-    payment_provider       'stripe'
+    payment_provider       'balanced'
     active               true
     sequence(:name)      {|n| "Market #{n}" }
     sequence(:subdomain) {|n| "market#{n}" }
@@ -268,7 +268,7 @@ FactoryGirl.define do
     organization
     market
     delivery
-    payment_provider 'stripe'
+    payment_provider 'balanced'
 
     sequence(:order_number) {|n| "LO-%s-%s-%07d" % [Time.now.strftime("%y"), market.try(:subdomain).to_s.upcase, n] }
     placed_at        { Time.current }
