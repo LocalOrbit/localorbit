@@ -9,8 +9,29 @@ class Admin::Financials::ServicePaymentsController < AdminController
     market = Market.find(params[:market_id])
     if market.stripe_customer_id?
       # Retrieve Stripe customer
-      # Retrieve cards
-      # If card exists, then send it as the bank_account
+      customer = PaymentProvider::Stripe.get_stripe_customer(market.stripe_customer_id)
+
+      # Retrieve card (f card exists)
+      customer.sources.data.each do |source|
+        card = source if source.object = 'card'  
+        break if source.object = 'card'  
+      end
+
+      # ...just create one
+      stripe_subscription_data = {
+        plan: market.plan.strip_id,
+        source: card,
+        metadata: {
+          "lo.entity_id" => market.id,
+          "lo.entity_type" => market.class.name.underscore
+        }
+      }
+      
+      # Stripe complains if you pass an empty coupon.  Only add it if it exists
+      # stripe_subscription_data[:coupon] = subscription_params[:coupon] if !subscription_params[:coupon].blank?
+
+      subscription = customer.subscriptions.create(stripe_subscription_data)
+
       # (along with the market and plan info) to ChargeServiceFee
     else 
       # Prompt that card needs to be created

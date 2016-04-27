@@ -227,11 +227,11 @@ class Market < ActiveRecord::Base
   end
 
   def plan_payable?
-    !subscribed && plan_fee && plan_fee > 0 && plan_bank_account.try(:usable_for?, :debit)
+    plan_fee && plan_fee > 0 && plan_bank_account.try(:usable_for?, :debit)
   end
 
   def subscription_eligible?
-    next_service_payment_at && next_service_payment_at <= Time.now && plan_payable?
+    !subscribed && next_service_payment_at && next_service_payment_at <= Time.now && plan_payable?
   end
 
   def on_statement_as
