@@ -141,6 +141,10 @@ module Dom
       node.find(".net-price .view-cell").text
     end
 
+    def fee
+      node.find(".fee .view-cell").text
+    end
+
     def sale_price
       node.find(".sale-price .view-cell").text
     end

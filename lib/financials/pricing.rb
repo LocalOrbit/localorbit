@@ -1,5 +1,7 @@
 module Financials
 	module Pricing
+		include PaymentProvider
+
 		extend self
 		def seller_net_percents_by_market(markets)
 			result = markets.inject({}) do |res,market|
@@ -18,6 +20,17 @@ module Financials
 		  	result["all"] = 1
 		  end
 	    result
+		end
+
+		def seller_cc_rate(market)
+			if market
+				cc_rate = BigDecimal(PaymentProvider.approximate_credit_card_rate(market.payment_provider))
+				if market.credit_card_payment_fee_payer == 'seller' and market.allow_credit_cards?
+					cc_rate
+				else
+				0
+				end
+			end
 		end
 	end
 end

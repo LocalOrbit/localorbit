@@ -73,6 +73,14 @@ class OrderItemDecorator < Draper::Decorator
     number_to_currency(object.seller_net_total)
   end
 
+  def product_fee_pct
+    object.product_fee_pct > 0 ? number_to_percentage(object.product_fee_pct) : number_to_percentage(order.market.market_seller_fee)
+  end
+
+  def profit
+    number_to_currency(object.gross_total - object.seller_net_total)
+  end
+
   def payment_method
     order.payment_method.to_s.titleize
   end
