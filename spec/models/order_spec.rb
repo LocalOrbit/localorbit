@@ -17,10 +17,10 @@ describe Order do
       expect(subject).to have(1).error_on(:delivery_id)
     end
 
-    it "requires a order number" do
-      expect(subject).to be_invalid
-      expect(subject).to have(1).error_on(:order_number)
-    end
+    #it "requires a order number" do
+    #  expect(subject).to be_invalid
+    #  expect(subject).to have(1).error_on(:order_number)
+    #end
 
     it "requires a placed_at date" do
       expect(subject).to be_invalid
