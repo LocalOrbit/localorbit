@@ -201,7 +201,6 @@ class Order < ActiveRecord::Base
   ransacker :id do
     Arel.sql("to_char(orders.id, '9999999')")
   end
-
   #
   # Scope: For Markets on Automate plan, get all
   # Orders with payable market fees.
