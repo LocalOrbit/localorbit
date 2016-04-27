@@ -101,7 +101,7 @@ class Order < ActiveRecord::Base
   end
 
   def order_number
-    if market.number_format_numeric == 0
+    if market.number_format_numeric == 0 || market.number_format_numeric.nil?
       self.read_attribute(:order_number)
     else
       self.read_attribute(:id).to_s
