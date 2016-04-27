@@ -1,5 +1,5 @@
 class Market < ActiveRecord::Base
-  attr_accessor :stripe_tok
+  attr_accessor :stripe_tok, :number_format_numeric
 
   before_update :process_cross_sells_change, if: :allow_cross_sell_changed?
   before_update :process_plan_change, if: :plan_id_changed?
@@ -116,10 +116,6 @@ class Market < ActiveRecord::Base
   #
   def credit_card_payment_fee_payer
     credit_card_market_fee != 0 ? 'market' : 'seller'
-  end
-
-  def order_number_format
-    number_format_numeric
   end
 
   def set_credit_card_payment_fee_payer(payer_string)
