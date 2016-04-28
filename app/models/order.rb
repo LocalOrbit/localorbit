@@ -82,8 +82,6 @@ class Order < ActiveRecord::Base
   scope :on_automate_plan, -> { joins(market: :plan).where(plans: {name: 'Automate'}) }
   scope :not_on_automate_plan, -> { joins(market: :plan).where.not(plans: {name: 'Automate'}) }
 
-  scope :balanced,     -> { where(payment_provider: PaymentProvider::Balanced.id.to_s) }
-  scope :not_balanced, -> { where.not(payment_provider: PaymentProvider::Balanced.id.to_s) }
   scope :stripe,       -> { where(payment_provider: PaymentProvider::Stripe.id.to_s) }
   scope :not_stripe,   -> { where.not(payment_provider: PaymentProvider::Stripe.id.to_s) }
 
@@ -134,18 +132,6 @@ class Order < ActiveRecord::Base
     where(payment_method: ["credit card", "ach", "paypal"])
   end
 
-  def self.balanced_payable_to_market
-    balanced.
-      paid.
-      fully_delivered.
-      used_lo_payment_processing.
-      not_paid_for("market payment").
-      without_payments_made_to_sellers.
-      clean_payment_records.
-      not_on_automate_plan.
-      preload(:items, :market)
-  end
-
   def self.payments_to_sellers_subselect
     %|SELECT 1 FROM payments
       INNER JOIN order_payments ON order_payments.order_id = orders.id AND order_payments.payment_id = payments.id
@@ -178,17 +164,6 @@ class Order < ActiveRecord::Base
     res
   end
 
-  def self.payable_to_automate_sellers(current_time:Time.current.end_of_minute, seller_organization_id:nil)
-    balanced.payable_to_sellers(
-      current_time: current_time,
-      seller_organization_id: seller_organization_id
-    ).not_paid_for("market payment")
-  end
-
-  def self.payable_lo_fees
-    balanced.fully_delivered.purchase_orders.payable.not_paid_for("lo fee", :payer)
-  end
-
   #
   # Scope: For Markets on Automate plan, get all
   # Orders with payable market fees.
@@ -199,26 +174,6 @@ class Order < ActiveRecord::Base
   #              Default: nil (include all Markets on Automate)
   #   order_id: If present, narrow the results to one or more specific Order ids.
   #             Default: nil (nil all matching orders).
-  def self.payable_market_fees(current_time: Time.current.end_of_minute, market_id: nil, order_id: nil)
-    res = balanced.clean_payment_records.
-      on_automate_plan.
-      fully_delivered.
-      used_lo_payment_processing.
-      payable(current_time: current_time).
-      not_paid_for("hub fee").
-      not_paid_for("market payment").
-      order(:order_number)
-
-    if market_id.present?
-      res = res.where(market_id: market_id)
-    end
-
-    if order_id.present?
-      res = res.where(id: order_id)
-    end
-
-    res
-  end
 
   def self.arel_column_for_sort(column_name)
     case column_name

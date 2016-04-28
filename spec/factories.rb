@@ -268,7 +268,7 @@ FactoryGirl.define do
     organization
     market
     delivery
-    payment_provider 'balanced'
+    payment_provider 'stripe'
 
     sequence(:order_number) {|n| "LO-%s-%s-%07d" % [Time.now.strftime("%y"), market.try(:subdomain).to_s.upcase, n] }
     placed_at        { Time.current }
@@ -359,7 +359,7 @@ FactoryGirl.define do
     payment_method "purchase order"
     amount         199.99
     status         "paid"
-    payment_provider 'balanced'
+    payment_provider 'stripe'
 
     trait :checking do
       payment_type   "order"
