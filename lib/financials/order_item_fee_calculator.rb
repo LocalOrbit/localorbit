@@ -6,7 +6,11 @@ module Financials
         if market.nil? and !order_item.nil?
           market = order_item.order.market
         end # see below
-        rate = market.market_seller_fee / 100
+        if order_item.product_fee_pct > 0
+          rate = order_item.product_fee_pct / 100
+        else
+          rate = market.market_seller_fee / 100
+        end
         return round(rate * (order_item.gross_total - order_item.discount_seller))
       end
       

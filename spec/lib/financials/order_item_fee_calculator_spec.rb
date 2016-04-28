@@ -11,12 +11,26 @@ describe Financials::OrderItemFeeCalculator do
   let(:order_item) { double("an order item", 
                             gross_total: "65.37".to_d, 
                             discount_seller: "1.96".to_d, 
-                            discount_market: "1.63".to_d) }
+                            discount_market: "1.63".to_d,
+                            product_fee_pct: "0.0".to_d) }
+
+  let(:order_item_product_fee) { double("an order item",
+                            gross_total: "65.37".to_d,
+                            discount_seller: "1.96".to_d,
+                            discount_market: "1.63".to_d,
+                            product_fee_pct: "20.0".to_d) }
 
   describe ".market_fee_paid_by_seller" do
     it "discounts an item's gross_total by the seller-paid discount amount and multiplies by market's seller fee rate" do
       fee = subject.market_fee_paid_by_seller(market: market, order_item: order_item)
       expect(fee).to eq "10.57".to_d
+    end
+  end
+
+  describe ".product_market_fee_paid_by_seller" do
+    it "discounts an item's gross_total by the seller-paid discount amount and multiplies by product's seller fee rate" do
+      fee = subject.market_fee_paid_by_seller(market: market, order_item: order_item_product_fee)
+      expect(fee).to eq "12.68".to_d
     end
   end
 
