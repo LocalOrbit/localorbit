@@ -45,10 +45,6 @@ describe PaymentProvider::Handlers::TransferPaid do
              status:'paid', amount: '12.34'.to_d).
         and_return(payment)
 
-      expect(Financials::PaymentNotifier).to receive(:market_payment_received).with(
-        payment: payment,
-        async: false
-      )
       subject.handle(transfer_id: 'transfer id', stripe_account_id: 'account id', 
                      amount_in_cents: '1234')
     end
