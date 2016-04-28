@@ -38,10 +38,6 @@ class Admin::DepositAccountsController < AdminController
     @market = Market.managed_by(current_user).find(params[:market_id])
     @entity = @market
     @payment_provider = @market.payment_provider
-
-    if PaymentProvider.is_balanced?(@payment_provider)
-      redirect_to admin_market_path(id:@market.id)
-    end
   end
 
   def bank_account_params
@@ -54,5 +50,5 @@ class Admin::DepositAccountsController < AdminController
       :notes
     )
   end
-
+  
 end
