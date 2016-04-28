@@ -104,51 +104,51 @@ module API
 					requires type: JSON # expects properly formatted JSON data
 				end
 				post '/add-products' do
-					def create_product_from_hash(prod_hash)
-						gp_id_or_false = ::Imports::ProductHelpers.identify_product_uniqueness(prod_hash)
-						if !gp_id_or_false
-							product = Product.create(
-											name: prod_hash["Product Name"],
-							        organization_id: ::Imports::ProductHelpers.get_organization_id_from_name(prod_hash["Organization"],prod_hash["Market Subdomain"]),
-							        unit_id: ::Imports::ProductHelpers.get_unit_id_from_name(prod_hash["Unit"]),
-							        category_id: ::Imports::ProductHelpers.get_category_id_from_name(prod_hash["Category"]),
-							        code: prod_hash["Product Code"],
-							        short_description: prod_hash["Short Description"],
-							        long_description: prod_hash["Long Description"],
-							        unit_description: prod_hash["Unit Description"]
-							      	)
-							  product.save!
-							unless prod_hash[::Imports::SerializeProducts.required_headers[-4]].empty?# == "N" # TODO this should be factored out, but later.
-								newprod = product.dup 
-								newprod.unit_id = ::Imports::ProductHelpers.get_unit_id_from_name(prod_hash[::Imports::SerializeProducts.required_headers[-3]])
-								newprod.unit_description = prod_hash[::Imports::SerializeProducts.required_headers[-2]]
-								newprod.prices.create!(sale_price: price, min_quantity: 1)
-								newprod.save! # for id to be created in db. (TODO this may be affected by uniqueness constraints tba. not yet.)
-							end
-						else
-							product = Product.create(
-							        name: prod_hash["Product Name"],
-							        organization_id: ::Imports::ProductHelpers.get_organization_id_from_name(prod_hash["Organization"],prod_hash["Market Subdomain"]),
-							        unit_id: ::Imports::ProductHelpers.get_unit_id_from_name(prod_hash["Unit"]),
-							        category_id: ::Imports::ProductHelpers.get_category_id_from_name(prod_hash["Category"]),
-							        code: prod_hash["Product Code"],
-							        short_description: prod_hash["Short Description"],
-							        long_description: prod_hash["Long Description"],
-							        unit_description: prod_hash["Unit Description"],
-							        general_product_id: gp_id_or_false
-							      	)
-								product.save!
-							unless prod_hash[::Imports::SerializeProducts.required_headers[-4]] == "N" # TODO factor out
-								newprod = product.dup 
-								newprod.unit_id = ::Imports::ProductHelpers.get_unit_id_from_name(prod_hash[::Imports::SerializeProducts.required_headers[-3]])
-								newprod.unit_description = prod_hash[::Imports::SerializeProducts.required_headers[-2]]
-								#newprod.price = prod_hash[@required_headers.last] # no, prices need build on lots
-								newprod.prices.create!(sale_price: price, min_quantity: 1)
-								newprod.save! # for id to be created in db
-							end
-						end
+					# def create_product_from_hash(prod_hash)
+					# 	gp_id_or_false = ::Imports::ProductHelpers.identify_product_uniqueness(prod_hash)
+					# 	if !gp_id_or_false
+					# 		product = Product.create(
+					# 						name: prod_hash["Product Name"],
+					# 		        organization_id: ::Imports::ProductHelpers.get_organization_id_from_name(prod_hash["Organization"],prod_hash["Market Subdomain"]),
+					# 		        unit_id: ::Imports::ProductHelpers.get_unit_id_from_name(prod_hash["Unit"]),
+					# 		        category_id: ::Imports::ProductHelpers.get_category_id_from_name(prod_hash["Category"]),
+					# 		        code: prod_hash["Product Code"],
+					# 		        short_description: prod_hash["Short Description"],
+					# 		        long_description: prod_hash["Long Description"],
+					# 		        unit_description: prod_hash["Unit Description"]
+					# 		      	)
+					# 		  product.save!
+					# 		unless prod_hash[::Imports::SerializeProducts.required_headers[-4]].empty?# == "N" # TODO this should be factored out, but later.
+					# 			newprod = product.dup 
+					# 			newprod.unit_id = ::Imports::ProductHelpers.get_unit_id_from_name(prod_hash[::Imports::SerializeProducts.required_headers[-3]])
+					# 			newprod.unit_description = prod_hash[::Imports::SerializeProducts.required_headers[-2]]
+					# 			newprod.prices.create!(sale_price: price, min_quantity: 1)
+					# 			newprod.save! # for id to be created in db. (TODO this may be affected by uniqueness constraints tba. not yet.)
+					# 		end
+					# 	else
+					# 		product = Product.create(
+					# 		        name: prod_hash["Product Name"],
+					# 		        organization_id: ::Imports::ProductHelpers.get_organization_id_from_name(prod_hash["Organization"],prod_hash["Market Subdomain"]),
+					# 		        unit_id: ::Imports::ProductHelpers.get_unit_id_from_name(prod_hash["Unit"]),
+					# 		        category_id: ::Imports::ProductHelpers.get_category_id_from_name(prod_hash["Category"]),
+					# 		        code: prod_hash["Product Code"],
+					# 		        short_description: prod_hash["Short Description"],
+					# 		        long_description: prod_hash["Long Description"],
+					# 		        unit_description: prod_hash["Unit Description"],
+					# 		        general_product_id: gp_id_or_false
+					# 		      	)
+					# 			product.save!
+					# 		unless prod_hash[::Imports::SerializeProducts.required_headers[-4]] == "N" # TODO factor out
+					# 			newprod = product.dup 
+					# 			newprod.unit_id = ::Imports::ProductHelpers.get_unit_id_from_name(prod_hash[::Imports::SerializeProducts.required_headers[-3]])
+					# 			newprod.unit_description = prod_hash[::Imports::SerializeProducts.required_headers[-2]]
+					# 			#newprod.price = prod_hash[@required_headers.last] # no, prices need build on lots
+					# 			newprod.prices.create!(sale_price: price, min_quantity: 1)
+					# 			newprod.save! # for id to be created in db
+					# 		end
+					# 	end
 
-					end # end def.self_create_product_from_hash
+					# end # end def.self_create_product_from_hash
 	
 					if params.class == Hashie::Mash # this should be the alternative case
 						prod_hashes = params
@@ -158,7 +158,8 @@ module API
 					end
 
 					prod_hashes["products"].each do |p|
-						self.create_product_from_hash(p)
+						# self.create_product_from_hash(p)
+						::Imports::ProductHelpers.create_product_from_hash(p,3919) # TODO this is Jackie Admin Acct Id Not OK, need to either pass through user or create API user path TODO TODO TODO
 					end
 
 					{"result"=>"#{prod_hashes["products_total"]} products successfully created","errors"=>$row_errors} 
