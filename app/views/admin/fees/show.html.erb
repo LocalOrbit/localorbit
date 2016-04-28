@@ -5,6 +5,7 @@
 <div class="row row--partial">
   <%= form_for @market, url: [:admin, @market, :fees], html: { class: "column column--two-thirds" } do |f| %>
 
+    <% if current_user.admin? %>
     <fieldset>
       <legend>Local Orbit Fees</legend>
       <div class="row row--field">
@@ -18,7 +19,7 @@
         </div>
       </div>
     </fieldset>
-
+    <% end %>
     <fieldset>
       <legend>Market Fees</legend>
       <div class="field">
@@ -26,7 +27,6 @@
         <%= f.number_field :market_seller_fee, min: 0, max: 99.999, step: "0.001", size: 6 %>%
       </div>
     </fieldset>
-
     <% if PaymentProvider.is_balanced?(@market.payment_provider) %>
       <fieldset>
         <legend>Credit Card Fees</legend>
@@ -88,31 +88,37 @@
       <div class="row row--field">
         <div class="field column column--half column--guttered">
           <%= f.label :plan_id %><br>
-          <%= f.select :plan_id, Plan.options_for_select, include_blank: 'Select a plan' %>
+          <%= f.select :plan_id, Plan.options_for_select, {}, {:disabled => !current_user.admin?, :include_blank => 'Select a plan' } %>
         </div
         ><div class="field column column--half column--guttered">
-          <%= f.label :plan_interval, "Plan Schedule" %><br>
+        <% if current_user.admin? %>
+        <%= f.label :plan_interval, "Plan Schedule" %><br>
           <%= f.select :plan_interval, [["Monthly", 1], ["Yearly", 12]], include_blank: 'Select a schedule' %><br>
           IMPORTANT: When changing the plan schedule, set the Plan Start Date to be the date the next payment is due.
         </div>
+        <% end %>
       </div>
 
       <div class="row row--field">
         <div class="field column column--half column--guttered">
           <%= f.label :plan_fee %><br>
-          $<%= f.number_field :plan_fee, min: 0, max: 9999.99, step: "0.01", size: 6 %>
+          $<%= f.number_field :plan_fee, min: 0, max: 9999.99, step: "0.01", size: 6, :disabled => !current_user.admin? %>
         </div
         ><div class="field column column--half column--guttered">
+          <% if current_user.admin? %>
           <%= f.label :plan_start_at, "Plan Start Date" %><br>
           <%= f.datetime_field :plan_start_at, size: 8, class: "alt-datepicker" %><a href="#market_plan_start_at" class="btn btn--end calendar-toggle" title="Select a date"><i class="font-icon icon-calendar"></i></a>
           <div class="datepicker" data-input="market_plan_start_at"></div>
+          <% end %>
         </div>
       </div>
 
       <div class="row row--field">
         <div class="field column column--half column--guttered">
+          <% if current_user.admin? %>
           <%= f.label :plan_bank_account_id %><br>
-          <%= f.select :plan_bank_account_id, @market.decorate.payment_accounts_for_select, include_blank: 'Select a bank account' %>
+          <%= f.select :plan_bank_account_id, @market.decorate.payment_accounts_for_select, {}, {:disabled => !current_user.admin?, :include_blank => 'Select a bank account'} %>
+          <% end %>
         </div
         ><div class="field column column--half column--guttered">
           <% if (payment_date = @market.next_service_payment_at) %>
@@ -125,9 +131,8 @@
       <p>This is a <span style="border:1px black dotted;border-width:0 0 1px 0"  title="AKA 'Roll Your Own'">self-directed</span> market - plan management will be handled through Stripe...</p>
     <% end %>
     </fieldset>
-
     <div class="form-actions">
-      <%= f.submit "Update Fees", class: "mobile-block" %>
+      <%= f.submit "Update", class: "mobile-block" %>
     </div>
   <% end %>
 </div>

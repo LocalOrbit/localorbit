@@ -22,7 +22,7 @@
         <%= content_tag(:li, link_to_or_span("Deliveries",    [:admin, @market, :delivery_schedules]), class: 'tab') %>
         <%= content_tag(:li, link_to_or_span("Payment Methods", [:admin, @market, :bank_accounts]), class: 'tab') %>
         <%= content_tag(:li, link_to_or_span("Deposit Accounts", [:admin, @market, :deposit_accounts]), class: 'tab') unless PaymentProvider.is_balanced?(@market.payment_provider) || @market.stripe_standalone? %>
-        <%= content_tag(:li, link_to_or_span("Fees",          [:admin, @market, :fees]), class: 'tab') if current_user.admin? %>
+        <%= content_tag(:li, link_to_or_span("Fees",          [:admin, @market, :fees]), class: 'tab') %>
         <%= content_tag(:li, link_to_or_span("Style Chooser", [:admin, @market, :style_chooser]), class: 'tab') if @market.plan.try(:custom_branding?) %>
         <%= content_tag(:li, link_to_or_span("Cross Sell", [:admin, @market, :cross_sell]), class: 'tab') if @market.plan.try(:cross_selling?) && @market.allow_cross_sell  %>
         <%= content_tag(:li, link_to_or_span("Stripe", [:admin, @market, :stripe]), class: 'tab') if FeatureAccess.stripe_standalone?(market: @market) %>
