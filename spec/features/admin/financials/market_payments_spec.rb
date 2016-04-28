@@ -103,10 +103,6 @@ feature "Payment of 'market payments' to Markets on non-Automate plans", :js  do
     expect(acct).to be, "market #{market.name} doesn't have a BankAccount whose display_name matches #{name_matcher.inspect}.  It has names #{market.bank_accounts.map {|ba|ba.display_name}} from #{market.bank_accounts.to_a.inspect}"
     acct
   end
-
-  def captured_payments
-    Financials::PaymentExecutor.previously_captured_payments
-  end
-
+  
 end
 
