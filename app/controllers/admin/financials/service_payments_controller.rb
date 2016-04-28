@@ -7,31 +7,13 @@ class Admin::Financials::ServicePaymentsController < AdminController
 
   def create
     # Retrieve the market
-    market = Market.find(params[:market_id])
-    card = nil
+    market   = Market.find(params[:market_id])
 
     # If the market is a Stripe customer...
-    if customer = market.stripe_customer #PaymentProvider::Stripe.get_stripe_customer(market.stripe_customer_id)
-    # if market.stripe_customer_id?
-      # ...then retrieve Stripe customer
-
-      # Retrieve card (if card exists)
-      # First, capture the default card if it exists
-      card = customer.default_source if customer.try(:default_source)
-
-      # If not, then cycle through the cards...
-      if card.nil?
-        customer.sources.data.each do |source|
-          # ...grabbing the first credit card that exists
-          card = source if source.object = 'card'
-          break if source.object = 'card'
-        end
-      end
-
-      # Build the subscription hash
+    if customer = market.stripe_customer
+      # ...then build the subscription hash...
       stripe_subscription_data = {
         plan: market.plan.stripe_id,
-        source: card,
         metadata: {
           "lo.entity_id" => market.id,
           "lo.entity_type" => market.class.name.underscore
@@ -42,8 +24,12 @@ class Admin::Financials::ServicePaymentsController < AdminController
       # Stripe complains if you pass an empty coupon.  Only add it if it exists
       # stripe_subscription_data[:coupon] = subscription_params[:coupon] if !subscription_params[:coupon].blank?
 
-      # Finally, create the subscription
+      # ...and create the subscription
       subscription = customer.subscriptions.create(stripe_subscription_data)
+
+      # Capture the charge stripe id (for use later)
+      invoices = PaymentProvider::Stripe.get_stripe_invoices(:customer => subscription.customer)
+      invoice = invoices.data.first
 
     else
       # If the market is NOT a Stripe customer then alert accordingly
@@ -53,9 +39,14 @@ class Admin::Financials::ServicePaymentsController < AdminController
 
     if subscription.nil?
       redirect_to admin_financials_service_payments_path, notice: "Failed to create subscription for #{market.name}"
+
     else
+      market.subscribe!
+
       #binding.pry
-      payment = CreateServicePayment.perform(market: market, amount: 500, bank_account: market.bank_accounts.first)
+      amount = ::Financials::MoneyHelpers.cents_to_amount(subscription.plan.amount)
+      # KXM market.bank_accounts.first is clumsy and bad.  Fix it
+      payment = CreateServicePayment.perform(market: market, amount: amount, bank_account: market.bank_accounts.first, invoice: invoice)
       if payment.success?
         redirect_to admin_financials_service_payments_path, notice: "Subscription to #{market.plan.name} created for #{market.name}"
       else

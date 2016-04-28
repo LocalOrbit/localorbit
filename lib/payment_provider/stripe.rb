@@ -286,7 +286,7 @@ module PaymentProvider
               # ...then update the subscription (This would look less stupid (and redundant (see below)) if I could just pass in a hash):
               subscription        = customer.subscriptions.retrieve(sub.id)
               subscription.plan   = subscription_params[:plan]
-              subscription.source = subscription_params[:stripe_tok]
+              subscription.source = subscription_params[:source] if !subscription_params[:source].blank?
               subscription.coupon = subscription_params[:coupon] if !subscription_params[:coupon].blank?
               subscription.save
 
@@ -301,12 +301,14 @@ module PaymentProvider
           # ...just create one
           stripe_subscription_data = {
             plan: subscription_params[:plan],
-            source: subscription_params[:source],
             metadata: {
               "lo.entity_id" => entity.id,
               "lo.entity_type" => entity.class.name.underscore
             }
           }
+          # Stripe uses the default card if one exists, making this value optional
+          stripe_subscription_data[:source] = subscription_params[:source] if !subscription_params[:source].blank?
+
           # Stripe complains if you pass an empty coupon.  Only add it if it exists
           stripe_subscription_data[:coupon] = subscription_params[:coupon] if !subscription_params[:coupon].blank?
 
@@ -321,10 +323,17 @@ module PaymentProvider
       # NON-PaymentProvider interface:
       #
       #
+
+      # create_customer
+      # params customer_data Hash containing description: (entity.name) and metadata: (entity id and class name)
+      # return Stripe customer object
       def create_customer(customer_data)
         ::Stripe::Customer.create(customer_data)
       end
 
+      # get_stripe_customer
+      # params stripe_customer_id String The Stripe customer id for the entity in question
+      # return Stripe customer object
       def get_stripe_customer(stripe_customer_id)
         ::Stripe::Customer.retrieve(stripe_customer_id)
       end

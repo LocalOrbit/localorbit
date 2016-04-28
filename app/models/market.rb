@@ -236,6 +236,10 @@ class Market < ActiveRecord::Base
     !subscribed && next_service_payment_at && next_service_payment_at <= Time.now
   end
 
+  def subscribe!
+    update!(subscribed: true)
+  end
+  
   def set_subscription(subscription)
     update_attribute(:plan_interval, 12)
     update_attribute(:plan_start_at, Time.current.end_of_minute)

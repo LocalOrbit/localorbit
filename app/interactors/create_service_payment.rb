@@ -1,6 +1,10 @@
 class CreateServicePayment
   include Interactor
 
+  def setup
+    invoice ||= context[:invoice]
+  end
+
   def perform
     context[:payment] = Payment.create({
       payment_provider: market.payment_provider,
@@ -8,6 +12,7 @@ class CreateServicePayment
       market:           market,
       payer:            market,
       amount:           amount,
+      stripe_id:        invoice.charge,
       bank_account:     bank_account,
       payment_method:   bank_account.bank_account? ? "ach" : "credit card",
       status:           bank_account.bank_account? ? "pending" : "paid"

@@ -12,8 +12,8 @@ class CreateStripeSubscriptionForEntity
     entity.set_subscription(subscription) if entity.respond_to?(:set_subscription)
 
     invoices = PaymentProvider::Stripe.get_stripe_invoices(:customer => subscription.customer) 
-    context[:invoice] = invoices.data[0]
-    
+    context[:invoice] = invoices.data.first
+
   rescue => e
     context.fail!(error: e.message)
   end
