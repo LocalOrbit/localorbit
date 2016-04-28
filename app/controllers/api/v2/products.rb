@@ -159,7 +159,8 @@ module API
 
 					prod_hashes["products"].each do |p|
 						# self.create_product_from_hash(p)
-						::Imports::ProductHelpers.create_product_from_hash(p,3919) # TODO this is Jackie Admin Acct Id Not OK, need to either pass through user or create API user path TODO TODO TODO
+						# binding.pry
+						::Imports::ProductHelpers.create_product_from_hash(p,User.find(3919)) # TODO this is Jackie Admin Acct Id Not OK, need to either pass through user or create API user path TODO TODO TODO
 					end
 
 					{"result"=>"#{prod_hashes["products_total"]} products successfully created","errors"=>$row_errors} 
