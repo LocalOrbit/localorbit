@@ -481,10 +481,10 @@ ActiveRecord::Schema.define(version: 20160418132511) do
     t.boolean  "pending",                                                default: false
     t.text     "zpl_logo"
     t.string   "zpl_printer"
+    t.boolean  "self_directed_creation",                                 default: false
     t.boolean  "stripe_standalone"
     t.string   "legacy_stripe_account_id"
-    t.boolean  "self_directed_creation",                                 default: false
-    t.integer  "order_number_type",                                      default: 1
+    t.integer  "number_format_numeric",                                  default: 0
     t.boolean  "allow_product_fee"
   end
 
@@ -557,7 +557,7 @@ ActiveRecord::Schema.define(version: 20160418132511) do
     t.decimal  "quantity_delivered",     precision: 10, scale: 2
     t.string   "payment_status",                                  default: "unpaid"
     t.decimal  "discount_market",        precision: 10, scale: 2, default: 0.0,      null: false
-    t.decimal  "product_fee_pct",     precision: 5, scale: 3, default: 0.0,      null: false
+    t.decimal  "product_fee_pct",        precision: 5,  scale: 3, default: 0.0,      null: false
   end
 
   add_index "order_items", ["order_id", "product_id"], name: "index_order_items_on_order_id_and_product_id", using: :btree
@@ -706,7 +706,6 @@ ActiveRecord::Schema.define(version: 20160418132511) do
     t.decimal  "stripe_payment_fee", precision: 10, scale: 2, default: 0.0,     null: false
     t.string   "stripe_refund_id"
     t.string   "stripe_transfer_id"
-    t.integer  "organization_id"
   end
 
   add_index "payments", ["bank_account_id"], name: "index_payments_on_bank_account_id", using: :btree
@@ -736,7 +735,7 @@ ActiveRecord::Schema.define(version: 20160418132511) do
     t.integer  "product_id"
     t.integer  "market_id"
     t.integer  "organization_id"
-    t.integer  "min_quantity",                             default: 1, null: false
+    t.integer  "min_quantity",                             default: 1,   null: false
     t.decimal  "sale_price",      precision: 10, scale: 2
     t.datetime "created_at"
     t.datetime "updated_at"
