@@ -2,28 +2,33 @@ module Imports
 	module ProductHelpers
 
 		# method to titleize without capitalizing conjunctions
-		def self.titleize_specific(nm)
-			conjs = ["of","and","with","on","to"]
-			nm = nm.titleize 
-			nmb = ""
-			nm.split.each do |w|
-				if conjs.include?(w.downcase)
-					nmb += w.downcase
-				else
-					nmb += w
-				end
-				nmb += " "
-			end
-			nmb
-		end
+		# def self.titleize_specific(nm)
+		# 	conjs = ["of","and","with","on","to"]
+		# 	nm = nm.titleize 
+		# 	nmb = ""
+		# 	nm.split.each do |w|
+		# 		if conjs.include?(w.downcase)
+		# 			nmb += w.downcase
+		# 		else
+		# 			nmb += w
+		# 		end
+		# 		nmb += " "
+		# 	end
+		# 	nmb
+		# end
 
-		def self.identify_product_uniqueness(product_params) 
-
-			identity_params_hash = {product_name:product_params["Product Name"],category_id:ProductHelpers.get_category_id_from_name(product_params["Category Name"])}
-			product_unit_identity_hash = {unit_name:product_params["Unit Name"],unit_description:product_params["Unit Description"]}
-			gps = GeneralProduct.where(category_id:identity_params_hash[:category_id]).where(name:identity_params_hash[:product_name])
+		def self.identify_product_uniqueness(product_params)
+			identity_params_hash = {product_name:product_params["Product Name"],category_id:ProductHelpers.get_category_id_from_name(product_params["Category Name"],organization_id:ProductHelpers.get_organization_id_from_name(product_params["Organization"]))}
+			product_unit_identity_hash = {unit_name:product_params["Unit Name"]}#,unit_description:product_params["Unit Description"]} # right now we can't really control for same unit name, diff description; people will just have to bin the units and it's fine.
+			gps = GeneralProduct.where(category_id:identity_params_hash[:category_id]).where(name:identity_params_hash[:product_name]).where(organization_id:identity_params_hash[:organization_id])
 			if !(gps.empty?)
-				gps.first.id
+				prods = Product.where(general_product_id:gps.first).where(unit_id:get_unit_id_from_name(product_unit_identity_hash[:unit_name])) # bit brittle
+				if !(prods.empty?)
+					[gps.first.id,prods.first.id] # return array of general product, product-unit to update
+				else
+					gps.first.id # need a hash of gps and product
+				# update product itself if necessary, otherwise unit to GPS -- that's the part of ID not yet covered
+				end
 			else
 				false
 			end
@@ -90,7 +95,7 @@ module Imports
 					newprod.save!
 					newprod.prices.create!(sale_price: prod_hash["Multiple Pack Sizes"][SerializeProducts.required_headers[-1]], min_quantity: 1)
 				end
-			else
+			elsif !gp_id_or_false.is_a?(Array)
 				product = Product.where(name:prod_hash["Product Name"],category_id: self.get_category_id_from_name(prod_hash["Category Name"]),organization_id: self.get_organization_id_from_name(prod_hash["Organization"],prod_hash["Market Subdomain"],current_user),unit_id: self.get_unit_id_from_name(prod_hash["Unit Name"])).first
 				if !product.nil?
 					product.update_attributes!(unit_description: prod_hash["Unit Description"],code: prod_hash["Product Code"],short_description: prod_hash["Short Description"],long_description: prod_hash["Long Description"])
@@ -107,12 +112,24 @@ module Imports
 				        general_product_id: gp_id_or_false
 				      	)
 				  product.save!
+				else
+					# if there already is such a product, update
+					product = Product.find(gp_id_or_false[1].id)
+					product.price = prod_hash["Price"]
+					product.code = prod_hash["Product Code"]
+					product.short_description = prod_hash["Short Description"]
+					product.long_description = prod_hash["Long Description"]
+					product.unit_description = prod_hash["Unit Description"]
+					product.save!
 				end
 
-				# weird case: what if the new unit is brand new and not an update? TODO test check
 				unless prod_hash[SerializeProducts.required_headers[-4]].empty? # TODO factor out
 					# TODO: this should be a hash read/parsing YML, for all the required headers stuff
-					newprod = product.dup
+					# newprod = product.dup
+					newprod = Product.where(name:newprod.name,unit_id:self.get_unit_id_from_name(prod_hash["Multiple Pack Sizes"][SerializeProducts.required_headers[-3]]))
+					if newprod.empty?
+						newprod = product.dup
+					end
 					newprod.update_attributes(unit_id:self.get_unit_id_from_name(prod_hash["Multiple Pack Sizes"][SerializeProducts.required_headers[-3]]),unit_description: prod_hash["Multiple Pack Sizes"][SerializeProducts.required_headers[-2]])
 					newprod.save!
 					newprod.prices.create!(sale_price: prod_hash["Multiple Pack Sizes"][SerializeProducts.required_headers[-1]], min_quantity: 1)
