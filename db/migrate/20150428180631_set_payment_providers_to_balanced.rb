@@ -8,8 +8,8 @@ class SetPaymentProvidersToBalanced < ActiveRecord::Migration
   end
 
   def up
-    ::SetPaymentProvidersToBalanced::Market.update_all payment_provider: 'balanced'
-    ::SetPaymentProvidersToBalanced::Payment.update_all payment_provider: 'balanced'
-    ::SetPaymentProvidersToBalanced::Order.update_all payment_provider: 'balanced'
+    ::SetPaymentProvidersToBalanced::Market.update_all payment_provider: 'stripe'
+    ::SetPaymentProvidersToBalanced::Payment.update_all payment_provider: 'stripe'
+    ::SetPaymentProvidersToBalanced::Order.update_all payment_provider: 'stripe'
   end
 end

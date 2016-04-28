@@ -83,19 +83,12 @@ describe Financials::PaymentInfoConverter do
       let(:market) { m1[:market] }
       let(:orders) { m1[:orders] }
 
-      let(:market_section) { 
-        Financials::MarketPayments::Builder.build_market_section(
-          market: market,
-          orders: orders
-        )}
-
       let(:bank_account_id) { market_section[:payable_accounts_for_select][0][1] }
       let(:total_amount) { market_section[:market_totals][payment_total_key] }
       let(:order_ids) { market_section[:order_rows].map { |r| r[:order_id] } }
 
       it "loads Payment-relevant data based on the MarketSection and bank acct" do
         payment_info = converter.send(method_sym,
-          market_section: market_section, 
           bank_account_id: bank_account_id
         )
         expect(payment_info[:payee]).to eq(market)
@@ -114,7 +107,6 @@ describe Financials::PaymentInfoConverter do
         it "raises" do
           expect do 
             converter.send(method_sym,
-              market_section: market_section,
               bank_account_id: unverified_bank_account.id)
           end.to raise_error(/not a payable bank account/i)
         end
@@ -125,7 +117,6 @@ describe Financials::PaymentInfoConverter do
         it "raises" do
           expect do 
             converter.send(method_sym,
-              market_section: market_section,
               bank_account_id: other_bank_account.id)
           end.to raise_error(/not a payable bank account/i)
         end

@@ -61,38 +61,6 @@ feature "Payment of 'market payments' to Markets on non-Automate plans", :js  do
   # TODO: this entire test was simply missing from the suite.  Today's focus was just to ensure the proper filtering
   # is in place wrt seller payments, see the spec below which focuses on that.
 
-  it "does NOT include orders whose sellers were paid by other types of payments, eg, from previous Automate plan participation, where some orders may be linked to 'seller payments'" do
-    begin 
-      visit admin_financials_market_payments_path
-      expect(page).to have_content("Make Payments to Markets")
-
-      # Determine which orders we expect to see:
-      market = m1[:market]
-      section = Dom::Admin::Financials::MarketSection.find_by_market_name(market.name)
-      # (m1 has four orders, 
-      #   the first of which should have a 'seller payment' and thus should not be included,
-      #   the second of which has Stripe payment provider and thus should not be included)
-      expected_order_nums = m1[:orders][2..-1].map do |o| o.order_number end
-
-      # What order numbers are showing for this market?
-      order_nums = section.orders.map do |o| o.order_number end
-
-      expect(order_nums).to contain_exactly(*expected_order_nums)
-
-    rescue Exception => e
-      puts ">>>>>> Market Payments SPEC FAILED: #{e.message} <<<<<<<<"
-      puts ">>>>>>BODY:\n#{page.body}"
-      puts ">>>>>> m1:"
-      puts m1.inspect
-      puts ">>>>>> m2:"
-      puts m2.inspect
-      puts ">>>>>> m3:"
-      puts m3.inspect
-
-      raise e
-    end
-  end
-
   #
   # HELPERS
   #

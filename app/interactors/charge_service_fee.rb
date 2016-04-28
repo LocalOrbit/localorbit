@@ -1,5 +1,5 @@
 class ChargeServiceFee
   include Interactor::Organizer
 
-  organize CreateServicePayment, ProcessPaymentWithBalanced, PaymentMadeEmailConfirmation
+  organize CreateServicePayment, PaymentMadeEmailConfirmation
 end
