@@ -160,13 +160,12 @@ module API
 					prod_hashes["products"].each do |p|
 						# self.create_product_from_hash(p)
 						# binding.pry
-						::Imports::ProductHelpers.create_product_from_hash(p,User.find(3919)) # TODO this is Jackie Admin Acct Id Not OK, need to either pass through user or create API user path TODO TODO TODO
+						::Imports::ProductHelpers.create_product_from_hash(p,User.find(3919)) # TODO THIS NEEDS UPDATING
 					end
 
 					{"result"=>"#{prod_hashes["products_total"]} products successfully created","errors"=>$row_errors} 
 				end 
-				# TODO fix: not upserting?, just adding another, which seems like a problem.
-				# TODO see potential - unit description/name uniqueness identifier in ProductHelpers, maybe within id_product_uniqueness, maybe call within from a separate method on the class. ?
+				
 			end
 
 		end
