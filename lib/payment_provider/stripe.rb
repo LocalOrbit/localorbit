@@ -286,8 +286,8 @@ module PaymentProvider
               # ...then update the subscription (This would look less stupid (and redundant (see below)) if I could just pass in a hash):
               subscription        = customer.subscriptions.retrieve(sub.id)
               subscription.plan   = subscription_params[:plan]
-              subscription.source = subscription_params[:source] if !subscription_params[:source].blank?
-              subscription.coupon = subscription_params[:coupon] if !subscription_params[:coupon].blank?
+              subscription.source = subscription_params[:source] if subscription_params[:source].present?
+              subscription.coupon = subscription_params[:coupon] if subscription_params[:coupon].present?
               subscription.save
 
             else
@@ -307,10 +307,10 @@ module PaymentProvider
             }
           }
           # Stripe uses the default card if one exists, making this value optional
-          stripe_subscription_data[:source] = subscription_params[:source] if !subscription_params[:source].blank?
+          stripe_subscription_data[:source] = subscription_params[:source] if subscription_params[:source].present?
 
           # Stripe complains if you pass an empty coupon.  Only add it if it exists
-          stripe_subscription_data[:coupon] = subscription_params[:coupon] if !subscription_params[:coupon].blank?
+          stripe_subscription_data[:coupon] = subscription_params[:coupon] if subscription_params[:coupon].present?
 
           subscription = customer.subscriptions.create(stripe_subscription_data)
         end
