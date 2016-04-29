@@ -58,8 +58,6 @@ module Imports
 				end
 
 				org = Organization.find_by_name(organization_name)
-				p org 
-				p "ORG!!!"
 				if org.is_a?(Array)
 					org = org.where(markets: mkt) # where the mkt is included in the organization's markets
 					if org.empty? # if none such that mkt and org match up
@@ -138,14 +136,21 @@ module Imports
 					# Check if this other unit exists already for the GeneralProduct.
 					# If not, create it. If so, update other info on it.
 					newprod = Product.where(name:prod_hash["Product Name"],unit_id:self.get_unit_id_from_name(prod_hash["Multiple Pack Sizes"][SerializeProducts.required_headers[-3]]),organization_id:self.get_organization_id_from_name(prod_hash["Organization"],prod_hash["Market Subdomain"],current_user))
-					puts newprod
+
 					if newprod.empty?
 						newprod = product.dup
+					else
+						newprod = newprod.first
 					end
-					
 					newprod.update_attributes(unit_id:self.get_unit_id_from_name(prod_hash["Multiple Pack Sizes"][SerializeProducts.required_headers[-3]]),unit_description: prod_hash["Multiple Pack Sizes"][SerializeProducts.required_headers[-2]])
 					newprod.save!
-					newprod.prices.create!(sale_price: prod_hash["Multiple Pack Sizes"][SerializeProducts.required_headers[-1]], min_quantity: 1) # regardless just rebuild the price entered
+
+					newprod.prices.find_or_initialize_by(min_quantity: 1) do |pr|
+						pr.sale_price = prod_hash["Multiple Pack Sizes"][SerializeProducts.required_headers[-1]]
+						pr.save!
+					end
+					# newprod.prices.create!(sale_price: prod_hash["Multiple Pack Sizes"][SerializeProducts.required_headers[-1]], min_quantity: 1) # regardless just rebuild the price entered
+					# apparently you can't rebuild a price with create huh
 				end
 			end # end the major if/else/end 
 			# (update or not, basically, wherein the additional unit/line is handled inside each case in the unless stmts)
