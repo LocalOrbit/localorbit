@@ -50,5 +50,5 @@ class Admin::DepositAccountsController < AdminController
       :notes
     )
   end
-  
+
 end
