@@ -20,21 +20,19 @@ module Imports
 		$current_user = 3919
 
 		def self.identify_product_uniqueness(product_params)
-			# binding.pry
-			p "HERE PARAMS FOR PRODUCT YAY"
-			p product_params
-
 			identity_params_hash = {product_name:product_params["Product Name"],category_id: self.get_category_id_from_name(product_params["Category Name"]),organization_id: self.get_organization_id_from_name(product_params["Organization"],product_params["Market Subdomain"],$current_user)}
 			product_unit_identity_hash = {unit_name:product_params["Unit Name"]}#,unit_description:product_params["Unit Description"]} # right now we can't really control for same unit name, diff description; people will just have to bin the units and it's fine.
 			gps = GeneralProduct.where(category_id:identity_params_hash[:category_id]).where(name:identity_params_hash[:product_name]).where(organization_id:identity_params_hash[:organization_id])
-			if !(gps.empty?)
-				prods = Product.where(general_product_id:gps.first).where(unit_id:get_unit_id_from_name(product_unit_identity_hash[:unit_name])) # bit brittle
-				if !(prods.length > 1)
-					[gps.first.id] + prods # return array of general product, product-unit things to update
-				else
-					gps.first.id # need a hash of gps and product
-				# update product itself if necessary, otherwise unit to GPS -- that's the part of ID not yet covered
-				end
+			# if !(gps.empty?)
+			# 	prods = Product.where(general_product_id:gps.first).where(unit_id:get_unit_id_from_name(product_unit_identity_hash[:unit_name])) # bit brittle
+			# 	if !(prods.length > 1)
+			# 		[gps.first.id] + prods # return array of general product, product-unit things to update
+			# 	else
+			# 		gps.first.id # need a hash of gps and product
+			# 	# update product itself if necessary, otherwise unit to GPS -- that's the part of ID not yet covered
+			# 	end
+			if !gps.empty?
+				gps.first.id
 			else
 				false
 			end
@@ -139,10 +137,12 @@ module Imports
 				unless prod_hash[SerializeProducts.required_headers[-4]].empty? # TODO factor out
 					# Check if this other unit exists already for the GeneralProduct.
 					# If not, create it. If so, update other info on it.
-					newprod = Product.where(name:prod_hash["Product Name"],unit_id:self.get_unit_id_from_name(prod_hash["Multiple Pack Sizes"][SerializeProducts.required_headers[-3]]))
+					newprod = Product.where(name:prod_hash["Product Name"],unit_id:self.get_unit_id_from_name(prod_hash["Multiple Pack Sizes"][SerializeProducts.required_headers[-3]]),organization_id:self.get_organization_id_from_name(prod_hash["Organization"],prod_hash["Market Subdomain"],current_user))
+					puts newprod
 					if newprod.empty?
 						newprod = product.dup
 					end
+					
 					newprod.update_attributes(unit_id:self.get_unit_id_from_name(prod_hash["Multiple Pack Sizes"][SerializeProducts.required_headers[-3]]),unit_description: prod_hash["Multiple Pack Sizes"][SerializeProducts.required_headers[-2]])
 					newprod.save!
 					newprod.prices.create!(sale_price: prod_hash["Multiple Pack Sizes"][SerializeProducts.required_headers[-1]], min_quantity: 1) # regardless just rebuild the price entered
