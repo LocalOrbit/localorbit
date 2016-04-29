@@ -107,6 +107,11 @@ module Imports
 				product = Product.where(name:prod_hash["Product Name"],category_id: self.get_category_id_from_name(prod_hash["Category Name"]),organization_id: self.get_organization_id_from_name(prod_hash["Organization"],prod_hash["Market Subdomain"],current_user),unit_id: self.get_unit_id_from_name(prod_hash["Unit Name"])).first # should be only one in resulting array if any, because this is searching for a product-unit combination
 				if !product.nil? # if there is a product-unit with this name, category, org
 					product.update_attributes!(unit_description: prod_hash["Unit Description"],code: prod_hash["Product Code"],short_description: prod_hash["Short Description"],long_description: prod_hash["Long Description"])
+					# TODO update price 
+					product.prices.find_or_initialize_by(min_quantity: 1) do |pr|
+						pr.sale_price = prod_hash["Price"]
+						pr.save!
+					end
 				else # if there is not such a unit, create a new prod-unit
 					product = Product.create(
 								name: prod_hash["Product Name"],
@@ -120,17 +125,11 @@ module Imports
 				        general_product_id: gp_id_or_false
 				      	)
 					product.save!
+					product.prices.find_or_initialize_by(min_quantity: 1) do |pr|
+						pr.sale_price = prod_hash["Price"]
+						pr.save!
+					end
 				end
-			# else
-			# 	# if there is such a product, update
-			# 	product = Product.find(gp_id_or_false[1].id)
-			# 	product.price = prod_hash["Price"]
-			# 	product.code = prod_hash["Product Code"]
-			# 	product.short_description = prod_hash["Short Description"]
-			# 	product.long_description = prod_hash["Long Description"]
-			# 	product.unit_description = prod_hash["Unit Description"]
-			# 	product.save!
-			# end
 
 				unless prod_hash[SerializeProducts.required_headers[-4]].empty? # TODO factor out
 					# Check if this other unit exists already for the GeneralProduct.
@@ -149,8 +148,7 @@ module Imports
 						pr.sale_price = prod_hash["Multiple Pack Sizes"][SerializeProducts.required_headers[-1]]
 						pr.save!
 					end
-					# newprod.prices.create!(sale_price: prod_hash["Multiple Pack Sizes"][SerializeProducts.required_headers[-1]], min_quantity: 1) # regardless just rebuild the price entered
-					# apparently you can't rebuild a price with create huh
+					
 				end
 			end # end the major if/else/end 
 			# (update or not, basically, wherein the additional unit/line is handled inside each case in the unless stmts)
