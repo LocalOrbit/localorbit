@@ -384,10 +384,35 @@ module PaymentProvider
         end
       end
 
+      def glean_card(stripe_object)
+        case stripe_object.object
+        when "charge"
+          card     = stripe_object.source
+        when "customer"
+         card     = self.get_stripe_card(customer.default_source)
+        when "invoice"
+          charge   = self.get_charge(stripe_object.charge)
+          card     = self.glean_card(charge)
+
+        else
+          # This is a cop-out and means that the returned object must be examined before
+          # using, but it'd better than raising an error at this vestigial stage...
+          stripe_object
+        end
+      end
+
       #
       # General Stripe getters
       #
       #
+      def get_charge(stripe_charge_id)
+        ::Stripe::Charge.retrieve(stripe_charge_id)
+      end
+
+      def get_stripe_card(card_id)
+        ::Stripe::Sources.retrieve(card_id)
+      end
+
       def get_stripe_plans(plan = nil)
         if plan.nil?
           ::Stripe::Plan.all.data
