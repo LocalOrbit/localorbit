@@ -33,12 +33,12 @@ class Admin::Financials::ServicePaymentsController < AdminController
 
     else
       # If the market is NOT a Stripe customer then alert accordingly
-      redirect_to admin_financials_service_payments_path, notice: "#{market.name} is not yet a Stripe customer"
+      redirect_to admin_financials_service_payments_path, notice: "#{market.name} is not yet a Stripe customer" and return
 
     end
 
     if subscription.nil?
-      redirect_to admin_financials_service_payments_path, notice: "Failed to create subscription for #{market.name}"
+      redirect_to admin_financials_service_payments_path, notice: "Failed to create subscription for #{market.name}" and return
 
     else
       market.subscribe!
