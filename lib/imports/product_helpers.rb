@@ -83,8 +83,6 @@ module Imports
 			gp_id_or_false = self.identify_product_uniqueness(prod_hash)
 			# binding.pry
 			if !gp_id_or_false
-				# p self.get_organization_id_from_name(prod_hash["Organization"],prod_hash["Market Subdomain"],current_user)
-				p prod_hash, "PROD HASH IN CREATE PRODUCT"
 				product = Product.create(
 								name: prod_hash["Product Name"],
 				        organization_id: self.get_organization_id_from_name(prod_hash["Organization"],prod_hash["Market Subdomain"],current_user),
@@ -96,6 +94,10 @@ module Imports
 				        unit_description: prod_hash["Unit Description"]
 				      	)
 				  product.save!
+				  product.prices.find_or_initialize_by(min_quantity: 1) do |pr|
+						pr.sale_price = prod_hash["Price"]
+						pr.save!
+					end
 				unless prod_hash[SerializeProducts.required_headers[-4]].empty? # TODO this should be factored out, later.
 					newprod = product.dup 
 					newprod.unit_id = self.get_unit_id_from_name(prod_hash["Multiple Pack Sizes"][SerializeProducts.required_headers[-3]])
