@@ -88,3 +88,41 @@ $ ->
       directionsDisplay.setDirections response
       #Display the directions result
       return
+
+  if $('#map').length
+    google.load("maps", "3", {callback: init, other_params:"key=AIzaSyDIGWmhdUPAIEyt8hlIAgBtTUIsOMhrjCc"});
+
+init = () ->
+  if (google.loader.ClientLocation != null)
+    latLng = new google.maps.LatLng(google.loader.ClientLocation.latitude, google.loader.ClientLocation.longitude);
+    loadAtStart(google.loader.ClientLocation.latitude, google.loader.ClientLocation.longitude, 8);
+  else
+    loadAtStart(37.4419, -122.1419, 8);
+
+  canvas = $('#map')
+
+  orig = canvas.data('orig')
+  dest = canvas.data('dest')
+  wp_raw = canvas.data('wp')
+
+  origlatlng = orig.split(',')
+  destlatlng = dest.split(',')
+  o_ll = new (google.maps.LatLng)(parseFloat(origlatlng[0]),parseFloat(origlatlng[1]))
+  d_ll = new (google.maps.LatLng)(parseFloat(destlatlng[0]),parseFloat(destlatlng[1]))
+
+  addWaypointWithLabel(o_ll,'origin')
+
+  wp = wp_raw.split('|')
+  wp_a = []
+  for w in wp
+    do ->
+      if w.length > 0
+        waylatlong = w.split(',')
+        w_ll = new (google.maps.LatLng)(parseFloat(waylatlong[0]),parseFloat(waylatlong[1]))
+        addWaypointWithLabel(w_ll,'way')
+
+  addWaypointWithLabel(d_ll,'dest')
+  tsp.setAsStop(d_ll)
+  directions(1,false,false)
+
+  return
