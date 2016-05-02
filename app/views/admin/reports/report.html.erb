@@ -51,6 +51,10 @@
             <td class="category"><%= item.category_name %></td>
           <% end %>
 
+          <% if field == :subcategory_name %>
+            <td class="subcategory"><%= item.subcategory_name %></td>
+          <% end %>
+
           <% if field == :product_name %>
             <td class="product">
               <%- if current_user.buyer_only? %>
