@@ -6,22 +6,21 @@ class CreateStripeSubscriptionForEntity
     token       ||= context[:market_params][:stripe_tok]
     sub_params  ||= context[:subscription_params]
     entity      ||= context[:entity]
-    stripe_cust ||= context[:stripe_customer]
 
-    customer = PaymentProvider::Stripe.get_stripe_customer(stripe_cust.id)
+    customer = PaymentProvider::Stripe.get_stripe_customer(entity.try(:stripe_customer_id)
 
-    # Create the subscription
+    # Create the subscription...
     subscription = PaymentProvider::Stripe.upsert_subscription(entity, customer, stripe_subscription_info(sub_params, entity, token))
     context[:subscription] = subscription
-    # Update the entity (if it's a Market)
+    # ...update the entity (if it's a Market)...
     entity.set_subscription(subscription) if entity.respond_to?(:set_subscription)
 
-    # Capture the invoices...
+    # ...and populate the context with resultant data
     invoices = PaymentProvider::Stripe.get_stripe_invoices(:customer => subscription.customer)
-    # ... and grab the most recent one
     context[:invoice] = invoices.data.first
 
-    # Capture the card data for later bank account creation (if necessary)
+    context[:amount] ||= amount = ::Financials::MoneyHelpers.cents_to_amount(subscription.plan.amount)
+
     context[:bank_account_params] = PaymentProvider::Stripe.glean_card(context[:invoice])
 
   rescue => e
@@ -30,6 +29,7 @@ class CreateStripeSubscriptionForEntity
 
   def stripe_subscription_info(sub_params, entity, token)
     ret_val = {
+      # 'plan' here refers to the Stripe plan ID...
       plan: sub_params[:plan],
       metadata: {
         "lo.entity_id" => entity.id,

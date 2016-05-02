@@ -283,7 +283,7 @@ module PaymentProvider
           customer.subscriptions.data.each do |sub|
             # If any match the current data...
             if sub.plan.id = subscription_params[:plan]
-              # ...then update the subscription (This would look less stupid (and redundant (see below)) if I could just pass in a hash):
+              # ...then update the subscription:
               subscription        = customer.subscriptions.retrieve(sub.id)
               subscription.plan   = subscription_params[:plan]
               subscription.source = subscription_params[:source] if subscription_params[:source].present?
@@ -291,7 +291,7 @@ module PaymentProvider
               subscription.save
 
             else
-              # ...otherwise, delete the plan:
+              # Otherwise, delete the plan:
               customer.subscriptions.retrieve(sub.id).delete
             end
           end
