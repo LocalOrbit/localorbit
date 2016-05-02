@@ -113,7 +113,7 @@ module API
 					end
 
 					prod_hashes["products"].each do |p|
-						::Imports::ProductHelpers.create_product_from_hash(p,User.find(3919)) # TODO THIS NEEDS UPDATING this can't persist (Jacct -- needs admin id extant here to be invoked, but this isn't the way)
+						::Imports::ProductHelpers.create_product_from_hash(p,Figaro.env.api_admin_user_id.to_i) 
 					end
 
 					{"result"=>"#{prod_hashes["products_total"]} products successfully created","errors"=>$row_errors} 
