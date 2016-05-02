@@ -484,7 +484,6 @@ ActiveRecord::Schema.define(version: 20160418132511) do
     t.boolean  "self_directed_creation",                                 default: false
     t.boolean  "stripe_standalone"
     t.string   "legacy_stripe_account_id"
-    t.integer  "number_format_numeric",                                  default: 0
     t.boolean  "allow_product_fee"
   end
 
