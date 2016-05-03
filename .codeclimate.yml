@@ -2,6 +2,11 @@
 engines:
   brakeman:
     enabled: true
+    exclude_fingerprints:
+    - 9d0dc93056b702111c70ef3adbc8bcc7412458e434ea8349ed76852d15ca32f8
+    - d2c2c86ebf22542853ed0137047d94682f628b3501e3fe8b5b750911104aeb91
+
+
   bundler-audit:
     enabled: true
   coffeelint:
@@ -38,3 +43,5 @@ exclude_paths:
 - db/
 - spec/
 - vendor/
+- "app/assets/javascripts/bootstrap-colorpicker.js"
+
