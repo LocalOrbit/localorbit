@@ -170,7 +170,7 @@ FactoryGirl.define do
 
   factory :market do
     plan
-    payment_provider       'balanced'
+    payment_provider       'stripe'
     active               true
     sequence(:name)      {|n| "Market #{n}" }
     sequence(:subdomain) {|n| "market#{n}" }
