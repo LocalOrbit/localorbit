@@ -819,6 +819,7 @@ feature "Reports" do
         # Filters are reused from other reports so we just need to ensure
         # the right ones show on the page.
         scenario "displays the appropriate filters" do
+          save_and_open_page
           expect(page).to have_field("Search")
           expect(page).to have_field("Placed on or after")
           expect(page).to have_field("Placed on or before")
