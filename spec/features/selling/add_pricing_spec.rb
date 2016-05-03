@@ -2,9 +2,9 @@ require "spec_helper"
 
 describe "Adding advanced pricing" do
   let(:user)          { create(:user) }
-  let(:market)        { create(:market, payment_provider: 'stripe') }
-  let(:market2)       { create(:market, payment_provider: 'stripe') }
-  let(:market3)       { create(:market, payment_provider: 'stripe', allow_product_fee: true)}
+  let(:market)        { create(:market) }
+  let(:market2)       { create(:market) }
+  let(:market3)       { create(:market, allow_product_fee: true)}
   let!(:organization) { create(:organization, markets: [market, market2], users: [user]) }
   let!(:product)      { create(:product, organization: organization) }
 
@@ -146,7 +146,7 @@ describe "Adding advanced pricing" do
   end
 
   describe "with different fees", js: true do
-    let(:market) { create(:market, payment_provider: 'stripe', local_orbit_seller_fee: 4, market_seller_fee: 6) }
+    let(:market) { create(:market, local_orbit_seller_fee: 4, market_seller_fee: 6) }
 
     it "shows updated net sale information" do
       fill_in "price[sale_price]", with: "12.90"
@@ -165,7 +165,7 @@ describe "Adding advanced pricing" do
   end
 
   describe "with product market fees", js: true do
-    let(:market) { create(:market, payment_provider: 'stripe', allow_product_fee: true) }
+    let(:market) { create(:market, allow_product_fee: true) }
 
     it "shows updated net sale information" do
       find(:field, 'price[fee]', with: '1').click

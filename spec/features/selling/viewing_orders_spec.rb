@@ -176,6 +176,15 @@ feature "Viewing orders" do
       expect(order.buyer_status).to eq("Unpaid")
     end
 
+    context "View by numeric order numbers" do
+      let!(:market1) { create(:market, number_format_numeric: 1, market_seller_fee: 5, local_orbit_seller_fee: 4) }
+
+      it "I can choose numeric order numbers correctly" do
+        visit admin_orders_path
+        expect(market1_order1.order_number).not_to have_content("LO")
+      end
+    end
+
     scenario "order details" do
       visit admin_orders_path
 

@@ -93,14 +93,6 @@ describe "Managing Markets" do
       expect(find("#market_default_allow_credit_cards")).to be_checked
     end
 
-    it "I can choose numeric order numbers correctly" do
-      visit admin_market_path(market1)
-      expect(page).to have_content("Order number appearance")
-      choose("market_number_format_numeric_1")
-      expect(order1.order_number).not_to have_content("LO")
-
-    end
-
     it "I can not add a market" do
       visit "/admin/markets"
 
