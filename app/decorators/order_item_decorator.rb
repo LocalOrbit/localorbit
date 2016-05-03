@@ -29,7 +29,9 @@ class OrderItemDecorator < Draper::Decorator
   end
 
   def subcategory_name
-    product.second_level_category.name.to_s.titleize
+    if !product.second_level_category.nil?
+      product.second_level_category.name.to_s.titleize
+    end
   end
 
   def product_name

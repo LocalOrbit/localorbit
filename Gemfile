@@ -71,8 +71,8 @@ gem 'httparty'
 gem 'omniauth-stripe-connect'
 
 gem 'constructor'
-gem 'tabulator', git: 'https://github.com/dcrosby42/tabulator.git'
-gem 'rschema', git: 'https://github.com/tomdalling/rschema.git'
+gem 'tabulator', :git => 'https://github.com/dcrosby42/tabulator.git'
+gem 'rschema', :git => 'https://github.com/tomdalling/rschema.git'
 
 gem 'turbolinks'
 
@@ -113,7 +113,7 @@ end
 group :development, :test do
   gem 'rspec-rails', '~> 3.0'
   gem 'rspec-collection_matchers'
-  gem 'rspec_junit_formatter', git: 'https://github.com/circleci/rspec_junit_formatter.git'
+  gem 'rspec_junit_formatter', :git => 'https://github.com/circleci/rspec_junit_formatter.git'
   gem 'pry-rails'
   gem 'pry-remote'
   gem 'byebug'
@@ -127,7 +127,7 @@ group :development, :test do
   gem 'poltergeist'
   gem 'webmock'
   gem 'capybara-slow_finder_errors'
-  gem 'wkhtmltopdf-binary', git: 'https://github.com/zakird/wkhtmltopdf_binary_gem.git'
+  gem 'wkhtmltopdf-binary', :git => 'https://github.com/zakird/wkhtmltopdf_binary_gem.git'
   gem 'capybara'
 end
 

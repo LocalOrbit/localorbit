@@ -15,9 +15,9 @@ GIT
 
 GIT
   remote: https://github.com/tomdalling/rschema.git
-  revision: 838669b64f841c3e09ee3e9c8edddf0a4987b340
+  revision: 867ff1524a0791aaee6a0225d3e17b39cd7092ee
   specs:
-    rschema (2.4.0)
+    rschema (0.1.0)
 
 GIT
   remote: https://github.com/trestrantham/groupdate.git
