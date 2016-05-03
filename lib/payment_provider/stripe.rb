@@ -276,43 +276,47 @@ module PaymentProvider
       end
 
       # Coordinates the creation of a customer subscription
-      def upsert_subscription(entity, customer, subscription_params)
-        # If the customer has any subscriptions...
-        if customer.subscriptions.data.any?
-          # ...cycle through them
-          customer.subscriptions.data.each do |sub|
-            # If any match the current data...
-            if sub.plan.id = subscription_params[:plan]
-              # ...then update the subscription:
-              subscription        = customer.subscriptions.retrieve(sub.id)
-              subscription.plan   = subscription_params[:plan]
-              subscription.source = subscription_params[:source] if subscription_params[:source].present?
-              subscription.coupon = subscription_params[:coupon] if subscription_params[:coupon].present?
-              subscription.save
+      def upsert_subscription(entity, subscription_params)
+        # KXM Throw an error here if the stripe_customer_id is null or if the method call returns nil...
+        customer = get_stripe_customer(entity.try(:stripe_customer_id))
 
-            else
-              # Otherwise, delete the plan:
-              customer.subscriptions.retrieve(sub.id).delete
-            end
-          end
+        # Initialize 'subscription not found' state
+        subscription = nil
 
-        # Otherwise...
-        else
-          # ...just create one
-          stripe_subscription_data = {
-            plan: subscription_params[:plan],
-            metadata: {
-              "lo.entity_id" => entity.id,
-              "lo.entity_type" => entity.class.name.underscore
-            }
+        # Gather data
+        submission_data = {
+          plan: subscription_params[:plan],
+          metadata: {
+            "lo.entity_id" => entity.id,
+            "lo.entity_type" => entity.class.name.underscore
           }
-          # Stripe uses the default card if one exists, making this value optional
-          stripe_subscription_data[:source] = subscription_params[:source] if subscription_params[:source].present?
+        }
+        # Stripe uses the default card if one exists, making this value optional
+        submission_data[:source] = subscription_params[:source] if subscription_params[:source].present?
 
-          # Stripe complains if you pass an empty coupon.  Only add it if it exists
-          stripe_subscription_data[:coupon] = subscription_params[:coupon] if subscription_params[:coupon].present?
+        # Stripe complains if you pass an empty coupon.  Only add it if it exists
+        submission_data[:coupon] = subscription_params[:coupon] if subscription_params[:coupon].present?
 
-          subscription = customer.subscriptions.create(stripe_subscription_data)
+        customer.subscriptions.data.each do |sub|
+          # If an existing subscription matches the current data...
+          if sub.plan.id == subscription_params[:plan]
+            # ...then update the subscription:
+            subscription        = customer.subscriptions.retrieve(sub.id)
+            subscription.plan   = submission_data[:plan]
+            subscription.source = submission_data[:source] if submission_data[:source].present?
+            subscription.coupon = submission_data[:coupon] if submission_data[:coupon].present?
+            subscription.save
+
+          else
+            # Otherwise delete it:
+            customer.subscriptions.retrieve(sub.id).delete
+          end
+        end
+
+        # If no matching subscription was found...
+        if subscription.nil?
+          # ...just create one
+          subscription = customer.subscriptions.create(submission_data)
         end
 
         subscription

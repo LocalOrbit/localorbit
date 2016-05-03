@@ -3,14 +3,14 @@ class CreateStripeSubscriptionForEntity
 
   def perform
     # Initialize
-    token       ||= context[:market_params][:stripe_tok]
-    sub_params  ||= context[:subscription_params]
-    entity      ||= context[:entity]
+    market_params ||= context[:market_params]
+    sub_params    ||= context[:subscription_params]
+    entity        ||= context[:entity]
 
-    customer = PaymentProvider::Stripe.get_stripe_customer(entity.try(:stripe_customer_id)
+    token = market_params.try(:stripe_tok)
 
     # Create the subscription...
-    subscription = PaymentProvider::Stripe.upsert_subscription(entity, customer, stripe_subscription_info(sub_params, entity, token))
+    subscription = PaymentProvider::Stripe.upsert_subscription(entity, stripe_subscription_info(sub_params, entity, token))
     context[:subscription] = subscription
     # ...update the entity (if it's a Market)...
     entity.set_subscription(subscription) if entity.respond_to?(:set_subscription)
@@ -18,9 +18,7 @@ class CreateStripeSubscriptionForEntity
     # ...and populate the context with resultant data
     invoices = PaymentProvider::Stripe.get_stripe_invoices(:customer => subscription.customer)
     context[:invoice] = invoices.data.first
-
     context[:amount] ||= amount = ::Financials::MoneyHelpers.cents_to_amount(subscription.plan.amount)
-
     context[:bank_account_params] = PaymentProvider::Stripe.glean_card(context[:invoice])
 
   rescue => e

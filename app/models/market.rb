@@ -241,10 +241,10 @@ class Market < ActiveRecord::Base
   end
   
   def set_subscription(subscription)
+    # update_attribute(:plan_start_at, Time.current.end_of_minute)
     update_attribute(:plan_interval, 12)
-    update_attribute(:plan_start_at, Time.current.end_of_minute)
-    update_attribute(:subscribed, true)
     update_attribute(:plan_fee, ::Financials::MoneyHelpers.cents_to_amount(subscription.plan.amount))
+    update_attribute(:subscribed, true)
   end
 
   def on_statement_as
