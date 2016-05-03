@@ -46,6 +46,7 @@ class OrderItem < ActiveRecord::Base
       quantity: item.quantity,
       unit: item.unit,
       unit_price: item.unit_price.sale_price,
+      product_fee_pct: item.unit_price.product_fee_pct,
       seller_name: item.product.organization.name,
       delivery_status: "pending"
     )

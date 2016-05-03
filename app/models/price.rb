@@ -34,7 +34,9 @@ class Price < ActiveRecord::Base
   end
 
   def net_percent
-    if market
+    if product_fee_pct > 0
+      1 - (product_fee_pct/100 + ::Financials::Pricing.seller_cc_rate(product.organization.all_markets.first))
+    elsif market
       market.seller_net_percent
     else
       product.organization.all_markets.map{|mkt| mkt.seller_net_percent}.min

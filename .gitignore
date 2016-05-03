@@ -38,3 +38,5 @@ cleansed.prod.dump
 /.idea
 /localorbit.iml
 node_modules/
+
+/coverage

@@ -4,6 +4,7 @@ describe "Adding advanced pricing" do
   let(:user)          { create(:user) }
   let(:market)        { create(:market) }
   let(:market2)       { create(:market) }
+  let(:market3)       { create(:market, allow_product_fee: true)}
   let!(:organization) { create(:organization, markets: [market, market2], users: [user]) }
   let!(:product)      { create(:product, organization: organization) }
 
@@ -161,5 +162,51 @@ describe "Adding advanced pricing" do
       expect(record.net_price).to eq("$11.24") # 12.9% fees subtracted
       expect(record.sale_price).to eq("$12.90")
     end
+  end
+
+  describe "with product market fees", js: true do
+    let(:market) { create(:market, allow_product_fee: true) }
+
+    it "shows updated net sale information" do
+      find(:field, 'price[fee]', with: '1').click
+      fill_in "price[product_fee_pct]", with: "20"
+      fill_in "price[sale_price]", with: "12.90"
+
+      expect(find_field("price[net_price]").value).to eq("9.95")
+      click_button "Add"
+
+      expect(page).to have_content("Successfully added a new price")
+
+      record = Dom::PricingRow.first
+      expect(record.market).to eq("All Markets")
+      expect(record.buyer).to eq("All Buyers")
+      expect(record.min_quantity).to eq("1")
+      expect(record.net_price).to eq("$9.95")
+      expect(record.fee).to eq("20.000%")
+      expect(record.sale_price).to eq("$12.90")
+    end
+=begin
+    it "shows updated net sale information" do
+      find(:field, 'price[fee]', with: '1').click
+      fill_in "price[net_price]", with: "9.95"
+
+      check 'price[lock]', visible: false
+      # find(:field, 'price[lock]', visible: false).click
+      fill_in "price[sale_price]", with: "12.90"
+
+      expect(find_field("price[product_fee_pct]").value).to eq("20")
+      click_button "Add"
+
+      expect(page).to have_content("Successfully added a new price")
+
+      record = Dom::PricingRow.first
+      expect(record.market).to eq("All Markets")
+      expect(record.buyer).to eq("All Buyers")
+      expect(record.min_quantity).to eq("1")
+      expect(record.net_price).to eq("$9.95")
+      expect(record.fee).to eq("20.000%")
+      expect(record.sale_price).to eq("$12.90")
+    end
+=end
   end
 end

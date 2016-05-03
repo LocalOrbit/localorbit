@@ -3,7 +3,9 @@
 <strong><a href="/admin/upload">Return to upload form</a></strong>
 
 <br>
+<% if !@errors.has_key?("File") && !@errors.first[1]["Errors"].empty? %>
 <h3>Errors</h3>
+<% end %>
 <div id="results">
 	<% @errors.each do |e| %>
 		<% if @errors.has_key?("File") %>

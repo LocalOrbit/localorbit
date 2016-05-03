@@ -31,7 +31,7 @@ Upload a <strong>.CSV</strong> file of your organization(s)'s products here. For
 <% recent_uploads = Audit.where(action:"Product upload").where(associated_type:@sd).last(4) %>
 <% if !recent_uploads.empty? %>
 	<h2>Upload Audit Trail</h2>
-	<% recent_uploads.each do |up| %>
+	<% recent_uploads.reverse.each do |up| %>
 		<%= "#{up.created_at.to_s[0..10]} - upload by #{up.comment}: #{up.audited_changes}" %>
 		<br>
 	<% end %>

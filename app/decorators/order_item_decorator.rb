@@ -25,7 +25,11 @@ class OrderItemDecorator < Draper::Decorator
   end
 
   def category_name
-    product.category.name.to_s.titleize
+    Category.find(product.top_level_category_id).name.to_s.titleize
+  end
+
+  def subcategory_name
+    product.second_level_category.name.to_s.titleize
   end
 
   def product_name
@@ -71,6 +75,14 @@ class OrderItemDecorator < Draper::Decorator
 
   def net_sale
     number_to_currency(object.seller_net_total)
+  end
+
+  def product_fee_pct
+    object.product_fee_pct > 0 ? number_to_percentage(object.product_fee_pct) : number_to_percentage(order.market.market_seller_fee)
+  end
+
+  def profit
+    number_to_currency(object.gross_total - object.seller_net_total)
   end
 
   def payment_method

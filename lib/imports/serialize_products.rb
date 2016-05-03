@@ -95,7 +95,7 @@ module Imports
 			if ::Imports::ProductHelpers.get_organization_id_from_name(product_row["Organization"], product_row["Market Subdomain"],current_user).nil?
 				okay_flag = false
 				#create error and append it
-				error_hash["Errors"]["Missing or invalid Organization name"] = "Check organization and market validity. Do you have rights to upload to this organization in this market? You input: #{product_row["Organization"]},#{product_row["Market Subdomain"]}" # TODO more info provided?
+				error_hash["Errors"]["Missing or invalid Organization name"] = "Check organization and market validity. Do you have rights to upload to this organization in this market? You input: #{product_row["Organization"]},#{product_row["Market Subdomain"]} as User Id #{current_user}" # TODO more info provided?
 			end
 			if ProductHelpers.get_unit_id_from_name(product_row["Unit Name"]).nil?
 				okay_flag = false

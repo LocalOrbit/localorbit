@@ -1,6 +1,6 @@
 module Admin
   class FeesController < AdminController
-    before_action :require_admin
+    #before_action :require_admin
     before_action :lookup_market
 
     def show

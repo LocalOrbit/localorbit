@@ -10,7 +10,7 @@ class OrderSerializer < ActiveModel::Serializer
 						 :total_cost, 
 						 :delivery_contact,
 						 :billing_contact,
-						 :payment,
+						 :payment_info,
 						 :notes,
 						 :created_at,
 						 :updated_at,
@@ -20,7 +20,7 @@ class OrderSerializer < ActiveModel::Serializer
 						 :deleted_at,
 						 :discount_id,
 						 :delivery_status,
-						 :invioice_pdf_uid,
+						 :invoice_pdf_uid,
 						 :invoice_pdf_name
 end
 
@@ -43,7 +43,7 @@ def billing_contact
 		billing_phone:object.billing_phone}
 end
 
-def payment
+def payment_info
 	{payment_status:object.payment_status, payment_method:object.payment_method, payment_provider:object.payment_provider}
 end
 
