@@ -42,7 +42,7 @@ gem "figaro", "~> 1.0.0.rc1"
 gem "font_assets"
 gem "graticule"
 gem "honeybadger"
-gem "groupdate", github: "trestrantham/groupdate", branch: "custom-calculations" # Waiting on https://github.com/ankane/groupdate/pull/53
+gem "groupdate", git: "https://github.com/trestrantham/groupdate", branch: "custom-calculations" # Waiting on https://github.com/ankane/groupdate/pull/53
 gem "interactor-rails", "< 3.0"
 gem "interactor", "< 3.0" # We are not ready for 3 yet
 gem 'intercom-rails', '~> 0.2.26'
@@ -71,8 +71,8 @@ gem 'httparty'
 gem 'omniauth-stripe-connect'
 
 gem "constructor"
-gem "tabulator", github: "dcrosby42/tabulator"
-gem "rschema", github: "tomdalling/rschema"
+gem "tabulator", git: "https://github.com/dcrosby42/tabulator"
+gem "rschema", git: "https://github.com/tomdalling/rschema"
 
 gem "turbolinks"
 
@@ -127,7 +127,7 @@ group :development, :test do
   gem "poltergeist"
   gem "webmock"
   gem 'capybara-slow_finder_errors'
-  gem "wkhtmltopdf-binary", github: "zakird/wkhtmltopdf_binary_gem"
+  gem "wkhtmltopdf-binary", git: "https://github.com/zakird/wkhtmltopdf_binary_gem"
   gem "capybara"
 end
 
