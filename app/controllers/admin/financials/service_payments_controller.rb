@@ -12,10 +12,14 @@ class Admin::Financials::ServicePaymentsController < AdminController
     if results.success?
       # Mark the market as subscribed...
       market.subscribe!
+      market.set_subscription(results.invoice)
+
+      bank_account = BankAccount.find_by stripe_id: results.bank_account_params.id  if results.bank_account_params.class == Stripe::Card
+      bank_account = market.bank_accounts.first if bank_account.nil?
 
       # ..and create a LO payment record
-      amount = ::Financials::MoneyHelpers.cents_to_amount(results.subscription.plan.amount)
-      payment = CreateServicePayment.perform(market: market, amount: amount, bank_account: market.bank_accounts.first, invoice: results.invoice)
+      amount = ::Financials::MoneyHelpers.cents_to_amount(results.invoice.amount_due)
+      payment = CreateServicePayment.perform(market: market, amount: amount, bank_account: bank_account, invoice: results.invoice)
       if payment.success?
         notice = "Subscription to #{market.plan.name} created for #{market.name}"
       else

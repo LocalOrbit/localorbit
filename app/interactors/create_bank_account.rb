@@ -8,15 +8,14 @@ class CreateBankAccount
   end
 
   def perform
-
     if(
       # If the supplied bank_account_params constitute a Stripe Card...
       bank_account_params.class == Stripe::Card &&
       # ...and the card is for this Stripe customer
-      context[:entity].try(:stripe_customer_id) == params.bank_account_params
+      context[:entity].try(:stripe_customer_id) == bank_account_params.try(:customer)
     )
       # ...then use the card to create the bank account.
-      params = extract_stripe_card_attributes(params)
+      params = extract_stripe_card_attributes(bank_account_params)
 
     else
       # Otherwise, use the supplied hash

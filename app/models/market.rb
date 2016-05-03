@@ -240,10 +240,9 @@ class Market < ActiveRecord::Base
     update!(subscribed: true)
   end
   
-  def set_subscription(subscription)
-    # update_attribute(:plan_start_at, Time.current.end_of_minute)
+  def set_subscription(stripe_invoice)
     update_attribute(:plan_interval, 12)
-    update_attribute(:plan_fee, ::Financials::MoneyHelpers.cents_to_amount(subscription.plan.amount))
+    update_attribute(:plan_fee, ::Financials::MoneyHelpers.cents_to_amount(stripe_invoice.amount_due))
     update_attribute(:subscribed, true)
   end
 
