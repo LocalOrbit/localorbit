@@ -6,6 +6,7 @@ describe "Managing Markets" do
   describe "as a market manager" do
     let!(:market1) { create(:market) }
     let!(:market2) { create(:market) }
+    let!(:order1)  { create(:order, market:market1) }
     let!(:user) { create(:user, role: "user", managed_markets: [market1, market2]) }
 
     before do

@@ -55,7 +55,7 @@ class Order < ActiveRecord::Base
   validates :delivery_state, presence: true
   validates :delivery_zip, presence: true
   validates :market_id, presence: true
-  validates :order_number, presence: true, uniqueness: true
+  #validates :order_number, presence: true
   validates :organization_id, presence: true
   validates :payment_method, presence: true, inclusion: {in: Payment::PAYMENT_METHODS.keys, allow_blank: true}
   validates :payment_status, presence: true
@@ -98,6 +98,14 @@ class Order < ActiveRecord::Base
     delivered.
       having("MAX(order_items.delivered_at) >= ?", range.begin).
       having("MAX(order_items.delivered_at) < ?", range.end)
+  end
+
+  def order_number
+    if market.number_format_numeric.nil? || market.number_format_numeric == 0 # segmented, e.g. not numeric
+      self[:order_number]
+    else
+      self[:id].to_s
+    end
   end
 
   def self.fully_delivered
@@ -189,6 +197,10 @@ class Order < ActiveRecord::Base
     balanced.fully_delivered.purchase_orders.payable.not_paid_for("lo fee", :payer)
   end
 
+  # Ransacker to convert ID to a string to search in orders with numeric order numbers using _cont
+  ransacker :id do
+    Arel.sql("to_char(orders.id, '9999999')")
+  end
   #
   # Scope: For Markets on Automate plan, get all
   # Orders with payable market fees.

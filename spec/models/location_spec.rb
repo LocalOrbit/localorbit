@@ -76,12 +76,12 @@ describe Location do
     describe "handles US addresses" do
       let(:loc) { Location.new({ address: '206 S 5th Ave #200', city: 'Ann Arbor', state: 'MI', zip: '48104' }) }
       before(:each) do
-        VCR.use_cassette('mapbox-ann-arbor-address-geocode', :record => :none) do
+        VCR.use_cassette('mapbox-ann-arbor-address-geocode') do
           loc.send(:attach_geocode)
         end
       end
       it "returns a US coordinate" do
-        expect(loc.geocode.country).to eq("United States")
+        expect(loc.geocode.country).to eq("US")
         expect(loc.geocode.latitude).to be_within(0.001).of(42.2802803)
         expect(loc.geocode.longitude).to be_within(0.001).of(-83.7462621)
       end
@@ -90,13 +90,12 @@ describe Location do
     describe "handles Canadian addresses" do
       let(:loc) { Location.new({ address: '706 2nd Ave NW', city: 'Calgary', state: 'AB', zip: 'T2N0E3', country: 'CA' }) }
       before(:each) do
-        VCR.use_cassette('mapbox-calgary-address-geocode', :record => :none) do
+        VCR.use_cassette('mapbox-calgary-address-geocode') do
           loc.send(:attach_geocode)
         end
       end
       it "returns a Canadian coordinate" do
-        pending("mapbox doesn't handle Canadian addresses")
-        expect(loc.geocode.country).to eq("Canada")
+        expect(loc.geocode.country).to eq("CA")
         expect(loc.geocode.latitude).to be_within(0.001).of(51.0581117)
         expect(loc.geocode.longitude).to be_within(0.001).of(-114.078345)
       end
@@ -105,12 +104,12 @@ describe Location do
     describe "handles Canadian cities" do
       let(:loc) { Location.new({ city: 'Calgary', state: 'AB', zip: 'T2N0E3', country: 'CA' }) }
       before(:each) do
-        VCR.use_cassette('mapbox-calgary-city-geocode', :record => :none) do
+        VCR.use_cassette('mapbox-calgary-city-geocode') do
           loc.send(:attach_geocode)
         end
       end
       it "returns a Canadian coordinate" do
-        expect(loc.geocode.country).to eq("Canada")
+        expect(loc.geocode.country).to eq("CA")
         expect(loc.geocode.latitude).to be_within(0.1).of(51.0579099)
         expect(loc.geocode.longitude).to be_within(0.1).of(-114.0787911)
       end
