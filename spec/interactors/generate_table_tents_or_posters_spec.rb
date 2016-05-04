@@ -73,7 +73,7 @@ describe GenerateTableTentsOrPosters do
 
   describe "#build_seller_map" do
     it "gets a map from the seller's shipping location" do
-      expect(GenerateTableTentsOrPosters.build_seller_map(zaphod_farms).match(/mapbox/)).to_not eq nil
+      expect(GenerateTableTentsOrPosters.build_seller_map(zaphod_farms).match(/google/)).to_not eq nil
       expect(GenerateTableTentsOrPosters.build_seller_map(prefect_farms)).to eq ""
     end
   end
