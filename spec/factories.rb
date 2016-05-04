@@ -199,6 +199,7 @@ FactoryGirl.define do
     alternative_order_page         false
     stripe_standalone              false
     allow_product_fee              false
+    number_format_numeric 0
 
 
     trait :with_address do

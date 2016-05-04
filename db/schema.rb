@@ -481,10 +481,12 @@ ActiveRecord::Schema.define(version: 20160418132511) do
     t.boolean  "pending",                                                default: false
     t.text     "zpl_logo"
     t.string   "zpl_printer"
-    t.boolean  "self_directed_creation",                                 default: false
     t.boolean  "stripe_standalone"
     t.string   "legacy_stripe_account_id"
+    t.boolean  "self_directed_creation",                                 default: false
+    t.integer  "order_number_type",                                      default: 1
     t.boolean  "allow_product_fee"
+    t.integer  "number_format_numeric",                                  default: 0
   end
 
   add_index "markets", ["name"], name: "index_markets_on_name", using: :btree

@@ -1,3 +1,4 @@
+
 require "spec_helper"
 
 feature "entering receipts" do
@@ -116,7 +117,7 @@ feature "entering receipts" do
       expect(page).to have_content(order1.order_number)
       expect(page).to have_content(order3.order_number)
 
-      fill_in "q_order_number_or_payment_note_cont", with: order1.order_number
+      fill_in "q_id_or_order_number_or_payment_note_cont", with: order1.order_number
       click_button "Filter"
 
       expect(page).to have_content(order1.order_number)
