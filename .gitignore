@@ -18,6 +18,10 @@ dragonfly.log
 /log/*.log
 /tmp
 
+# Ignore everything saved in tempfiles folder.
+/tempfiles
+/tempfiles/*
+
 # Ignore application configuration
 /config/application.yml
 /dragonfly
