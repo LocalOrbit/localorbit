@@ -25,7 +25,10 @@ class OrderItemDecorator < Draper::Decorator
   end
 
   def category_name
-    Category.find(product.top_level_category_id).name.to_s.titleize
+    if !product.top_level_category_id.nil?
+      #product.category.name.to_s.titleize
+      Category.find(product.top_level_category_id).name.to_s.titleize
+    end
   end
 
   def subcategory_name
