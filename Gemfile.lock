@@ -1,17 +1,26 @@
 GIT
-  remote: git://github.com/dcrosby42/tabulator.git
+  remote: https://github.com/circleci/rspec_junit_formatter.git
+  revision: 6885218137afbadf560c922114767866953f8cbf
+  specs:
+    rspec_junit_formatter (0.2.0)
+      builder (< 4)
+      rspec (>= 2, < 4)
+      rspec-core (!= 2.12.0)
+
+GIT
+  remote: https://github.com/dcrosby42/tabulator.git
   revision: aa3d14ea734979580dae3c6878a83a6a80643678
   specs:
     tabulator (1.0.0)
 
 GIT
-  remote: git://github.com/tomdalling/rschema.git
+  remote: https://github.com/tomdalling/rschema.git
   revision: 867ff1524a0791aaee6a0225d3e17b39cd7092ee
   specs:
     rschema (0.1.0)
 
 GIT
-  remote: git://github.com/trestrantham/groupdate.git
+  remote: https://github.com/trestrantham/groupdate.git
   revision: ff1ce7de22dcc617993522989747e90c591d2a1c
   branch: custom-calculations
   specs:
@@ -19,19 +28,10 @@ GIT
       activesupport (>= 3)
 
 GIT
-  remote: git://github.com/zakird/wkhtmltopdf_binary_gem.git
+  remote: https://github.com/zakird/wkhtmltopdf_binary_gem.git
   revision: 77a62c35e4a9bb8d6583ffeadf0073ac92748a91
   specs:
     wkhtmltopdf-binary (0.9.9.3)
-
-GIT
-  remote: https://github.com/circleci/rspec_junit_formatter
-  revision: 6885218137afbadf560c922114767866953f8cbf
-  specs:
-    rspec_junit_formatter (0.2.0)
-      builder (< 4)
-      rspec (>= 2, < 4)
-      rspec-core (!= 2.12.0)
 
 GEM
   remote: https://rubygems.org/

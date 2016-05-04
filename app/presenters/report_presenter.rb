@@ -8,7 +8,7 @@ class ReportPresenter
   FIELD_MAP = {
     placed_at:              {sort: :created_at,              display_name: "Placed On"},
     category_name:          {sort: :product_category_name,   display_name: "Category"},
-    subcategory_name:       {sort: :subcategory_name,   display_name: "Subcategory"},
+    subcategory_name:       {sort: :subcategory_name,        display_name: "Subcategory"},
     product_name:           {sort: :name,                    display_name: "Product"},
     seller_name:            {sort: :seller_name,             display_name: "Supplier"},
     buyer_name:             {sort: :order_organization_name, display_name: "Buyer"},
