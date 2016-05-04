@@ -60,4 +60,182 @@ http_interactions:
         href=''https://www.mapbox.com/about/maps/'' target=''_blank''>&copy; Mapbox</a>"},"results":[[{"id":"mapbox-places.8775","bounds":[-114.361832,50.843616,-113.87432099999998,51.21752899999999],"lon":-114.109431,"lat":51.029654,"name":"Calgary","type":"city"},{"id":"province.2553712403","name":"Alberta","type":"province"},{"id":"country.1833980151","name":"Canada","type":"country"}]]}'
     http_version: 
   recorded_at: Wed, 22 Jul 2015 20:43:11 GMT
+- request:
+    method: get
+    uri: http://maps.googleapis.com/maps/api/geocode/json?address=Calgary,%20AB%20T2N0E3%20CA&sensor=false
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Mozilla/5.0 (compatible; Graticule; http://graticule.rubyforge.org)
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json; charset=UTF-8
+      Date:
+      - Wed, 04 May 2016 04:29:42 GMT
+      Expires:
+      - Thu, 05 May 2016 04:29:42 GMT
+      Cache-Control:
+      - public, max-age=86400
+      Access-Control-Allow-Origin:
+      - "*"
+      Server:
+      - mafe
+      X-Xss-Protection:
+      - 1; mode=block
+      X-Frame-Options:
+      - SAMEORIGIN
+      Accept-Ranges:
+      - none
+      Vary:
+      - Accept-Language,Accept-Encoding
+      Transfer-Encoding:
+      - chunked
+    body:
+      encoding: UTF-8
+      string: |
+        {
+           "results" : [
+              {
+                 "address_components" : [
+                    {
+                       "long_name" : "T2N 0E3",
+                       "short_name" : "T2N 0E3",
+                       "types" : [ "postal_code" ]
+                    },
+                    {
+                       "long_name" : "Northwest Calgary",
+                       "short_name" : "Northwest Calgary",
+                       "types" : [ "neighborhood", "political" ]
+                    },
+                    {
+                       "long_name" : "Calgary",
+                       "short_name" : "Calgary",
+                       "types" : [ "locality", "political" ]
+                    },
+                    {
+                       "long_name" : "Division No. 6",
+                       "short_name" : "Division No. 6",
+                       "types" : [ "administrative_area_level_2", "political" ]
+                    },
+                    {
+                       "long_name" : "Alberta",
+                       "short_name" : "AB",
+                       "types" : [ "administrative_area_level_1", "political" ]
+                    },
+                    {
+                       "long_name" : "Canada",
+                       "short_name" : "CA",
+                       "types" : [ "country", "political" ]
+                    }
+                 ],
+                 "formatted_address" : "Calgary, AB T2N 0E3, Canada",
+                 "geometry" : {
+                    "bounds" : {
+                       "northeast" : {
+                          "lat" : 51.05851740000001,
+                          "lng" : -114.0778511
+                       },
+                       "southwest" : {
+                          "lat" : 51.0573139,
+                          "lng" : -114.0798719
+                       }
+                    },
+                    "location" : {
+                       "lat" : 51.0579092,
+                       "lng" : -114.0787912
+                    },
+                    "location_type" : "APPROXIMATE",
+                    "viewport" : {
+                       "northeast" : {
+                          "lat" : 51.0592646302915,
+                          "lng" : -114.0775125197085
+                       },
+                       "southwest" : {
+                          "lat" : 51.0565666697085,
+                          "lng" : -114.0802104802915
+                       }
+                    }
+                 },
+                 "place_id" : "ChIJdfCoI_JvcVMRfw1FzyumSYE",
+                 "types" : [ "postal_code" ]
+              },
+              {
+                 "address_components" : [
+                    {
+                       "long_name" : "T2N",
+                       "short_name" : "T2N",
+                       "types" : [ "postal_code_prefix", "postal_code" ]
+                    },
+                    {
+                       "long_name" : "Northwest Calgary",
+                       "short_name" : "Northwest Calgary",
+                       "types" : [ "neighborhood", "political" ]
+                    },
+                    {
+                       "long_name" : "Calgary",
+                       "short_name" : "Calgary",
+                       "types" : [ "locality", "political" ]
+                    },
+                    {
+                       "long_name" : "Division No. 6",
+                       "short_name" : "Division No. 6",
+                       "types" : [ "administrative_area_level_2", "political" ]
+                    },
+                    {
+                       "long_name" : "Alberta",
+                       "short_name" : "AB",
+                       "types" : [ "administrative_area_level_1", "political" ]
+                    },
+                    {
+                       "long_name" : "Canada",
+                       "short_name" : "CA",
+                       "types" : [ "country", "political" ]
+                    }
+                 ],
+                 "formatted_address" : "Calgary, AB T2N, Canada",
+                 "geometry" : {
+                    "bounds" : {
+                       "northeast" : {
+                          "lat" : 51.0834619,
+                          "lng" : -114.0688079
+                       },
+                       "southwest" : {
+                          "lat" : 51.04749390000001,
+                          "lng" : -114.151626
+                       }
+                    },
+                    "location" : {
+                       "lat" : 51.067252,
+                       "lng" : -114.1350027
+                    },
+                    "location_type" : "APPROXIMATE",
+                    "viewport" : {
+                       "northeast" : {
+                          "lat" : 51.0834619,
+                          "lng" : -114.0688079
+                       },
+                       "southwest" : {
+                          "lat" : 51.04749390000001,
+                          "lng" : -114.151626
+                       }
+                    }
+                 },
+                 "place_id" : "ChIJi_aeGb1vcVMRijnIRgVW-OY",
+                 "types" : [ "postal_code_prefix", "postal_code" ]
+              }
+           ],
+           "status" : "OK"
+        }
+    http_version: 
+  recorded_at: Wed, 04 May 2016 04:29:42 GMT
 recorded_with: VCR 2.9.3
