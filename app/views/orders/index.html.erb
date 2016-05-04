@@ -2,9 +2,9 @@
 <%= search_form_for @q, url: orders_path, html: { class: "order_search clear-after" } do |f| %>
     <div class="pull-left order-search-widget">
       <span class="preserve-alignment">
-        <%= f.label :order_number_or_organization_name_or_items_seller_name_cont, "Search Orders" %><br>
+        <%= f.label :id_or_order_number_or_organization_name_or_items_seller_name_cont, "Search Orders" %><br>
         <%# NOTE: Do not change the whitespace on the following line %>
-        <%= f.search_field :order_number_or_organization_name_or_items_seller_name_cont, placeholder: "Order #, Buyer, etc." -%><%= f.submit "Search", class: "btn--end" %>
+        <%= f.search_field :id_or_order_number_or_organization_name_or_items_seller_name_cont, placeholder: "Order #, Buyer, etc." -%><%= f.submit "Search", class: "btn--end" %>
       </span>
     </div>
 

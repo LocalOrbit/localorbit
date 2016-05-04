@@ -90,7 +90,8 @@ class MarketsController < ApplicationController
       :self_directed_creation,
       :plan,
       :plan_id,
-      :coupon
+      :coupon,
+      :number_format_numeric
   	)
   end
 

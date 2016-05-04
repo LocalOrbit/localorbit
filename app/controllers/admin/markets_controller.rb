@@ -112,7 +112,8 @@ class Admin::MarketsController < AdminController
       :sellers_edit_orders,
       :country,
       :product_label_format,
-      :print_multiple_labels_per_item
+      :print_multiple_labels_per_item,
+      :number_format_numeric
     ]
     if current_user.can_manage_market?(@market)
       columns.concat([
