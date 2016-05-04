@@ -19,7 +19,6 @@ gem 'accountingjs-rails'
 gem 'compass-rails'
 gem 'underscore-rails'
 gem 'wysihtml5-rails'
-gem 'mapbox-rails'
 
 gem 'active_model_serializers'
 gem 'active_record_union'
