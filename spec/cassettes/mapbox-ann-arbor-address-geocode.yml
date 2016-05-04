@@ -2,7 +2,7 @@
 http_interactions:
 - request:
     method: get
-    uri: http://api.tiles.mapbox.com/v3/localorbit.i0ao0akd/geocode/206%20S%205th%20Ave%20%23200%0AAnn%20Arbor,%20MI%2048104%20US.json
+    uri: http://maps.googleapis.com/maps/api/geocode/json?address=706%202nd%20Ave%20NW%0ACalgary,%20AB%20T2N0E3%20CA&sensor=false
     body:
       encoding: US-ASCII
       string: ''
@@ -64,4 +64,123 @@ http_interactions:
         States","type":"country"}]]}'
     http_version: 
   recorded_at: Wed, 22 Jul 2015 20:43:11 GMT
+- request:
+    method: get
+    uri: http://maps.googleapis.com/maps/api/geocode/json?address=206%20S%205th%20Ave%20%23200%0AAnn%20Arbor,%20MI%2048104%20US&sensor=false
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Mozilla/5.0 (compatible; Graticule; http://graticule.rubyforge.org)
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json; charset=UTF-8
+      Date:
+      - Wed, 04 May 2016 04:27:59 GMT
+      Expires:
+      - Thu, 05 May 2016 04:27:59 GMT
+      Cache-Control:
+      - public, max-age=86400
+      Access-Control-Allow-Origin:
+      - "*"
+      Server:
+      - mafe
+      X-Xss-Protection:
+      - 1; mode=block
+      X-Frame-Options:
+      - SAMEORIGIN
+      Accept-Ranges:
+      - none
+      Vary:
+      - Accept-Language,Accept-Encoding
+      Transfer-Encoding:
+      - chunked
+    body:
+      encoding: UTF-8
+      string: |
+        {
+           "results" : [
+              {
+                 "address_components" : [
+                    {
+                       "long_name" : "200",
+                       "short_name" : "200",
+                       "types" : [ "subpremise" ]
+                    },
+                    {
+                       "long_name" : "",
+                       "short_name" : "",
+                       "types" : [ "premise" ]
+                    },
+                    {
+                       "long_name" : "206",
+                       "short_name" : "206",
+                       "types" : [ "street_number" ]
+                    },
+                    {
+                       "long_name" : "South 5th Avenue",
+                       "short_name" : "S 5th Ave",
+                       "types" : [ "route" ]
+                    },
+                    {
+                       "long_name" : "Ann Arbor",
+                       "short_name" : "Ann Arbor",
+                       "types" : [ "locality", "political" ]
+                    },
+                    {
+                       "long_name" : "Washtenaw County",
+                       "short_name" : "Washtenaw County",
+                       "types" : [ "administrative_area_level_2", "political" ]
+                    },
+                    {
+                       "long_name" : "Michigan",
+                       "short_name" : "MI",
+                       "types" : [ "administrative_area_level_1", "political" ]
+                    },
+                    {
+                       "long_name" : "United States",
+                       "short_name" : "US",
+                       "types" : [ "country", "political" ]
+                    },
+                    {
+                       "long_name" : "48104",
+                       "short_name" : "48104",
+                       "types" : [ "postal_code" ]
+                    }
+                 ],
+                 "formatted_address" : "206 S 5th Ave #200, Ann Arbor, MI 48104, USA",
+                 "geometry" : {
+                    "location" : {
+                       "lat" : 42.280213,
+                       "lng" : -83.7463345
+                    },
+                    "location_type" : "ROOFTOP",
+                    "viewport" : {
+                       "northeast" : {
+                          "lat" : 42.2815619802915,
+                          "lng" : -83.74498551970849
+                       },
+                       "southwest" : {
+                          "lat" : 42.2788640197085,
+                          "lng" : -83.74768348029151
+                       }
+                    }
+                 },
+                 "place_id" : "EiwyMDYgUyA1dGggQXZlICMyMDAsIEFubiBBcmJvciwgTUkgNDgxMDQsIFVTQQ",
+                 "types" : [ "subpremise" ]
+              }
+           ],
+           "status" : "OK"
+        }
+    http_version: 
+  recorded_at: Wed, 04 May 2016 04:27:59 GMT
 recorded_with: VCR 2.9.3

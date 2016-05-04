@@ -395,7 +395,11 @@ class User < ActiveRecord::Base
   end
 
   def pretty_email
-    "#{name.to_s.inspect} <#{email}>"
+    if !email.nil?
+      "#{name.to_s.inspect} <#{email}>"
+    else
+      nil
+    end
   end
 
   def default_market
