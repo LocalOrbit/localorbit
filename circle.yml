@@ -17,4 +17,4 @@ checkout:
 
 database:
   pre:
-    - bundle exec rake db:test:prepare
+    - bundle exec rake db:migrate RAILS_ENV=test
