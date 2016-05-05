@@ -94,6 +94,24 @@
   </fieldset>
 
   <fieldset>
+    <legend>Organization Details</legend>
+    <div class="row row--field">
+      <div class="field column column--guttered column--half buyer-fields">
+        <%= f.label :buyer_org_type, 'Buyer Type', class: 'required' %><br>
+        <%= f.select :buyer_org_type, Registration::BUYER_ORG_TYPES, include_blank: true, class: "column--full" %>
+      </div
+      ><div class="field column column--guttered column--half seller-fields is-hidden">
+      <%= f.label :ownership_type, 'Ownership Type', class: 'required' %><br>
+      <%= f.select :ownership_type, Registration::OWNERSHIP_TYPES, include_blank: true, class: "column--full" %><br/><br/>
+      <%= f.label :non_profit, 'Non-profit?', class: 'required' %>
+      <%= f.check_box :non_profit, class: "column--full" %><br/><br/>
+      <%= f.label :professional_organizations, 'Professional Organizations' %><br>
+      <%= f.text_field :professional_organizations, maxlength: 18, size: 18, class: "column--full" %>
+      </div>
+    </div>
+  </fieldset>
+
+  <fieldset>
     <legend>Terms of Service Agreement</legend>
     <div class="row row--field">
       <div class="field column column--half column--guttered">
