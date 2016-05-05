@@ -21,6 +21,8 @@ class OrderMailer < BaseMailer
 
     to_list = seller.users.map { |u| u.enabled_for_organization?(seller) && !u.pretty_email.nil? ? u.pretty_email : nil}
 
+    logger.info "Seller Confirmation To List: #{to_list.inspect}"
+
     if seller.users.length > 0
       mail(
         to: to_list,
