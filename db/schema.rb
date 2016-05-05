@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160420160440) do
+ActiveRecord::Schema.define(version: 20160505152336) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -481,9 +481,9 @@ ActiveRecord::Schema.define(version: 20160420160440) do
     t.boolean  "pending",                                                default: false
     t.text     "zpl_logo"
     t.string   "zpl_printer"
-    t.boolean  "self_directed_creation",                                 default: false
     t.boolean  "stripe_standalone"
     t.string   "legacy_stripe_account_id"
+    t.boolean  "self_directed_creation",                                 default: false
     t.boolean  "allow_product_fee"
     t.integer  "number_format_numeric",                                  default: 0
     t.boolean  "subscribed",                                             default: false
@@ -656,19 +656,23 @@ ActiveRecord::Schema.define(version: 20160420160440) do
     t.text     "how_story"
     t.string   "photo_uid"
     t.string   "balanced_customer_uri"
-    t.boolean  "balanced_underwritten",        default: false, null: false
+    t.boolean  "balanced_underwritten",                                default: false, null: false
     t.string   "facebook"
     t.string   "twitter"
-    t.boolean  "display_facebook",             default: false
-    t.boolean  "display_twitter",              default: false
+    t.boolean  "display_facebook",                                     default: false
+    t.boolean  "display_twitter",                                      default: false
     t.boolean  "allow_purchase_orders"
     t.boolean  "allow_credit_cards"
     t.boolean  "allow_ach"
     t.integer  "legacy_id"
-    t.boolean  "show_profile",                 default: true
-    t.boolean  "active",                       default: false
-    t.boolean  "needs_activated_notification", default: true
+    t.boolean  "show_profile",                                         default: true
+    t.boolean  "active",                                               default: false
+    t.boolean  "needs_activated_notification",                         default: true
     t.string   "stripe_customer_id"
+    t.string   "buyer_org_type"
+    t.string   "ownership_type"
+    t.boolean  "non_profit"
+    t.string   "professional_organizations"
   end
 
   add_index "organizations", ["name"], name: "index_organizations_on_name", using: :btree
