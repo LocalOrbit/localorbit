@@ -21,13 +21,15 @@ class Admin::Financials::ServicePaymentsController < AdminController
       amount = ::Financials::MoneyHelpers.cents_to_amount(results.invoice.amount_due)
       payment = CreateServicePayment.perform(market: market, amount: amount, bank_account: bank_account, invoice: results.invoice)
       if payment.success?
-        notice = "Subscription to #{market.plan.name} created for #{market.name}"
+        notice = "Payment made for #{market.name}"
+        # notice = "Payment made for #{market.name} (now subscribed to #{market.plan.name} plan)"
+        # notice = "Subscription to #{market.plan.name} created for #{market.name}"
       else
         # KXM Should the subscription be revoked if the LO payment isn't created (I'm thinking yes...)?  If so, do it here, if not, then how do we reconcile LO and Stripe
-        notice = "Failed to create payment record for new subscription for #{market.name}"
+        notice = "Payment failed for #{market.name}"
       end
     else
-      notice = "Failed to create subscription to #{market.plan.name} for #{market.name}"
+      notice = "Payment failed for #{market.name}"
     end
 
     redirect_to admin_financials_service_payments_path, notice: notice
