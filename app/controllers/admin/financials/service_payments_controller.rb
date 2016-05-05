@@ -14,9 +14,9 @@ class Admin::Financials::ServicePaymentsController < AdminController
       market.subscribe!
       market.set_subscription(results.invoice)
 
+      PaymentMadeEmailConfirmation.perform(recipients: results.recipients, payment: results.payment)
       notice = "Payment made for #{market.name}"
     else
-      # KXM Should the subscription be revoked if the LO payment isn't created (I'm thinking yes...)?  If so, do it here, if not, then how do we reconcile LO and Stripe
       notice = results.context[:error] || "Payment failed for #{market.name}"
     end
 
