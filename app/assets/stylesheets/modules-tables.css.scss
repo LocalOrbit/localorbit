@@ -992,10 +992,10 @@ td.delete {
   }
   th, td {
     &:first-child {
-      padding-left: 0;
+      padding-left: 5px;
     }
     &:last-child {
-      padding-right: 0;
+      padding-right: 5px;
     }
   }
   select {
@@ -1005,12 +1005,29 @@ td.delete {
     width: 135px;
     text-align: left;
   }
-  .min-qty, .net-price, .sale-price {
+  .min-qty, .net-price, .sale-price, .fee {
     text-align: center;
   }
   .price_market_id,
   .price_buyer_id {
     width: 100%;
+  }
+
+  input[type="checkbox"] {
+    display:none;
+  }
+
+  input[type="checkbox"] + span:before {
+    font-family: 'FontAwesome';
+    font-size: 15px;
+  }
+
+  input[type="checkbox"] + span:before {
+    content: "\f09c";
+  }
+
+  input[type="checkbox"]:checked + span:before {
+    content: "\f023";
   }
 }
 

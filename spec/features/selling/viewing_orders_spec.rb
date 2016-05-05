@@ -176,6 +176,15 @@ feature "Viewing orders" do
       expect(order.buyer_status).to eq("Unpaid")
     end
 
+    context "View by numeric order numbers" do
+      let!(:market1) { create(:market, number_format_numeric: 1, market_seller_fee: 5, local_orbit_seller_fee: 4) }
+
+      it "I can choose numeric order numbers correctly" do
+        visit admin_orders_path
+        expect(market1_order1.order_number).not_to have_content("LO")
+      end
+    end
+
     scenario "order details" do
       visit admin_orders_path
 
@@ -337,8 +346,8 @@ feature "Viewing orders" do
       expect(page).to have_content(market1_order2.order_number)
       expect(page).to have_content(market1_order3.order_number)
       expect(page).to have_content(market2_order1.order_number)
-      expect(page).to have_content(market2_order2.order_number)
-      expect(page).to have_content(market2_order3.order_number)
+      expect(page).not_to have_content(market2_order2.order_number)
+      expect(page).not_to have_content(market2_order3.order_number)
 
       fill_in "q_placed_at_date_gteq", with: 7.weeks.ago.to_date.to_s
       fill_in "q_placed_at_date_lteq", with: 5.weeks.ago.to_date.to_s
@@ -372,7 +381,7 @@ feature "Viewing orders" do
       expect(page).to have_content(market2_order2.order_number)
       expect(page).to have_content(market2_order3.order_number)
 
-      fill_in "q_order_number_or_organization_name_or_items_seller_name_cont", with: market1_order3.order_number
+      fill_in "q_id_or_order_number_or_organization_name_or_items_seller_name_cont", with: market1_order3.order_number
       click_button "Search"
 
       expect(page).not_to have_content(market1_order1.order_number)
@@ -393,7 +402,7 @@ feature "Viewing orders" do
       expect(page).to have_content(market2_order2.order_number)
       expect(page).to have_content(market2_order3.order_number)
 
-      fill_in "q_order_number_or_organization_name_or_items_seller_name_cont", with: market1_buyer_org1.name
+      fill_in "q_id_or_order_number_or_organization_name_or_items_seller_name_cont", with: market1_buyer_org1.name
       click_button "Search"
 
       expect(page).to have_content(market1_order1.order_number)
@@ -414,7 +423,7 @@ feature "Viewing orders" do
       expect(page).to have_content(market2_order2.order_number)
       expect(page).to have_content(market2_order3.order_number)
 
-      fill_in "q_order_number_or_organization_name_or_items_seller_name_cont", with: market1_seller_org1.name
+      fill_in "q_id_or_order_number_or_organization_name_or_items_seller_name_cont", with: market1_seller_org1.name
       click_button "Search"
 
       expect(page).to have_content(market1_order1.order_number)

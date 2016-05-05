@@ -2,6 +2,9 @@ Rails.application.routes.draw do
 
   mount StripeEvent::Engine, at: '/webhooks/stripe'
 
+  # mount API::Base, at: "/"
+  # mount API::GrapeSwaggerRails::Engine, at: "/documentation"
+
   get 'style_guide/index'
 
   get '*path', constraints: NonMarketDomain.new, format: false,
@@ -41,6 +44,9 @@ Rails.application.routes.draw do
       resources :order_templates, only: [:index, :create, :destroy]
       resources :dashboards, only: [:index]
     end
+    # namespace :v2 do 
+    #   resources :products
+    # end
   end
 
   namespace :admin do
@@ -60,6 +66,8 @@ Rails.application.routes.draw do
     resources :labels, only: [:index, :show]
 
     get "upload" => "upload#index"
+    get "upload/download" => "upload#download"
+    get "upload/get_documentation" => "upload#get_documentation"
     post "upload" => "upload#upload"
 
     post "upload/newjob" => "upload#newjob"

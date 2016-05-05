@@ -10,7 +10,6 @@
  *
  *= require_self
  *= require jquery-ui/datepicker
- *= require mapbox
  *= require chosen
  *= require froala_content.min.css
  *= require froala_editor.min.css
@@ -18,6 +17,7 @@
  *= require font-awesome
  *= require fSelect
  *= require_tree .
+ *= stub divi_styles.css
  */
 
 @import "font-awesome";

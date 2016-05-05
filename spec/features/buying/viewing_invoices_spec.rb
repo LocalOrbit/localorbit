@@ -56,9 +56,9 @@ describe "Buyer invoices" do
 
       invoices = Dom::Admin::Financials::InvoiceRow.all
       dom_order_numbers = invoices.map(&:order_number)
-      invoiced_order_numbers = [invoiced_order, invoiced_order2, invoiced_order3, invoiced_order4].map(&:order_number)
+      invoiced_order_numbers = [invoiced_order, invoiced_order2, invoiced_order3].map(&:order_number)
 
-      expect(invoices.count).to eq(4)
+      expect(invoices.count).to eq(3)
       expect(dom_order_numbers).to match_array(invoiced_order_numbers)
 
       # Ensure no actions are available
@@ -121,7 +121,7 @@ describe "Buyer invoices" do
       end
 
       it "by order number" do
-        fill_in "q_order_number_or_payment_note_cont", with: invoiced_order.order_number
+        fill_in "q_id_or_order_number_or_payment_note_cont", with: invoiced_order.order_number
         click_button "Filter"
 
         expect(page).to have_content(invoiced_order.order_number)
@@ -130,14 +130,14 @@ describe "Buyer invoices" do
       end
 
       it "by purchase order" do
-        fill_in "q_order_number_or_payment_note_cont", with: "123456"
+        fill_in "q_id_or_order_number_or_payment_note_cont", with: "123456"
         click_button "Filter"
 
         expect(page).to have_content(invoiced_order.order_number)
         expect(page).not_to have_content(invoiced_order2.order_number)
         expect(page).not_to have_content(invoiced_order3.order_number)
 
-        fill_in "q_order_number_or_payment_note_cont", with: "77839"
+        fill_in "q_id_or_order_number_or_payment_note_cont", with: "77839"
         click_button "Filter"
 
         expect(page).not_to have_content(invoiced_order.order_number)

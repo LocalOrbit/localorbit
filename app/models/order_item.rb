@@ -33,6 +33,10 @@ class OrderItem < ActiveRecord::Base
 
   has_one :seller, through: :product, class_name: Organization
 
+  ransacker :order_id do
+    Arel.sql("to_char(order_items.order_id, '9999999')")
+  end
+
   def self.for_delivery(delivery)
     joins(order: :delivery).where(orders: {delivery_id: delivery.id})
   end
@@ -46,6 +50,7 @@ class OrderItem < ActiveRecord::Base
       quantity: item.quantity,
       unit: item.unit,
       unit_price: item.unit_price.sale_price,
+      product_fee_pct: item.unit_price.product_fee_pct,
       seller_name: item.product.organization.name,
       delivery_status: "pending"
     )

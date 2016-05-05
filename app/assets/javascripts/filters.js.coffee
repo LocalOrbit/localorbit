@@ -52,7 +52,8 @@ $ ->
     submitInvoiceList "preview-selected-invoices", newTab: true
 
   $('#submit_mark_selected_invoiced').click ->
-    submitInvoiceList "mark-selected-invoiced"
+    if confirm("Are you sure you want to mark all items invoiced?")
+      submitInvoiceList "mark-selected-invoiced"
 
   parseSearchString = () ->
     list = window.location.search.substr(1).split("&")

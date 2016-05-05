@@ -1,0 +1,166 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: https://api.stripe.com/v1/plans
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept:
+      - "*/*; q=0.5, application/xml"
+      Accept-Encoding:
+      - gzip, deflate
+      User-Agent:
+      - Stripe/v1 RubyBindings/1.27.2
+      Authorization:
+      - Bearer sk_test_XTLCfIQMwKblsxIF1N4i7y1G
+      Content-Type:
+      - application/x-www-form-urlencoded
+      X-Stripe-Client-User-Agent:
+      - '{"bindings_version":"1.27.2","lang":"ruby","lang_version":"2.1.2 p95 (2014-05-08)","platform":"x86_64-linux","engine":"ruby","publisher":"stripe","uname":"Linux
+        version 3.13.0-83-generic (buildd@lgw01-55) (gcc version 4.8.2 (Ubuntu 4.8.2-19ubuntu1)
+        ) #127-Ubuntu SMP Fri Mar 11 00:25:37 UTC 2016","hostname":"keith-Latitude-E7450"}'
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx
+      Date:
+      - Wed, 16 Mar 2016 16:13:50 GMT
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '766'
+      Connection:
+      - keep-alive
+      Access-Control-Allow-Credentials:
+      - 'true'
+      Access-Control-Allow-Methods:
+      - GET, POST, HEAD, OPTIONS, DELETE
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Max-Age:
+      - '300'
+      Cache-Control:
+      - no-cache, no-store
+      Request-Id:
+      - req_85t3bDKMPNQwbb
+      Stripe-Version:
+      - '2015-04-07'
+      Strict-Transport-Security:
+      - max-age=31556926; includeSubDomains
+    body:
+      encoding: UTF-8
+      string: |
+        {
+          "object": "list",
+          "data": [
+            {
+              "id": "GROW",
+              "object": "plan",
+              "amount": 79900,
+              "created": 1453489664,
+              "currency": "usd",
+              "interval": "year",
+              "interval_count": 1,
+              "livemode": false,
+              "metadata": {},
+              "name": "Local Orbit Grow Plan",
+              "statement_descriptor": null,
+              "trial_period_days": null
+            },
+            {
+              "id": "START",
+              "object": "plan",
+              "amount": 39900,
+              "created": 1453489634,
+              "currency": "usd",
+              "interval": "year",
+              "interval_count": 1,
+              "livemode": false,
+              "metadata": {},
+              "name": "Local Orbit Start Plan",
+              "statement_descriptor": null,
+              "trial_period_days": null
+            }
+          ],
+          "has_more": false,
+          "url": "/v1/plans"
+        }
+    http_version: 
+  recorded_at: Wed, 16 Mar 2016 16:13:50 GMT
+- request:
+    method: get
+    uri: https://api.stripe.com/v1/plans/START
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept:
+      - "*/*; q=0.5, application/xml"
+      Accept-Encoding:
+      - gzip, deflate
+      User-Agent:
+      - Stripe/v1 RubyBindings/1.27.2
+      Authorization:
+      - Bearer sk_test_XTLCfIQMwKblsxIF1N4i7y1G
+      Content-Type:
+      - application/x-www-form-urlencoded
+      X-Stripe-Client-User-Agent:
+      - '{"bindings_version":"1.27.2","lang":"ruby","lang_version":"2.1.2 p95 (2014-05-08)","platform":"x86_64-linux","engine":"ruby","publisher":"stripe","uname":"Linux
+        version 3.13.0-83-generic (buildd@lgw01-55) (gcc version 4.8.2 (Ubuntu 4.8.2-19ubuntu1)
+        ) #127-Ubuntu SMP Fri Mar 11 00:25:37 UTC 2016","hostname":"keith-Latitude-E7450"}'
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx
+      Date:
+      - Wed, 16 Mar 2016 16:13:51 GMT
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '286'
+      Connection:
+      - keep-alive
+      Access-Control-Allow-Credentials:
+      - 'true'
+      Access-Control-Allow-Methods:
+      - GET, POST, HEAD, OPTIONS, DELETE
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Max-Age:
+      - '300'
+      Cache-Control:
+      - no-cache, no-store
+      Request-Id:
+      - req_85t3dyvHrm7Kz9
+      Stripe-Version:
+      - '2015-04-07'
+      Strict-Transport-Security:
+      - max-age=31556926; includeSubDomains
+    body:
+      encoding: UTF-8
+      string: |
+        {
+          "id": "START",
+          "object": "plan",
+          "amount": 39900,
+          "created": 1453489634,
+          "currency": "usd",
+          "interval": "year",
+          "interval_count": 1,
+          "livemode": false,
+          "metadata": {},
+          "name": "Local Orbit Start Plan",
+          "statement_descriptor": null,
+          "trial_period_days": null
+        }
+    http_version: 
+  recorded_at: Wed, 16 Mar 2016 16:13:51 GMT
+recorded_with: VCR 2.9.3

@@ -16,7 +16,8 @@ module Import
         category_column: 0,
         heading_columns: ["Item", "Item #", "Package Size", "Price/#", "Price/cs.", "QTY.", "Container"],
 
-      s.transform :validate_keys_are_present, keys: ["Item", "Item #", "Package Size", "Price/cs."]
+      s.transform => :validate_keys_are_present,
+        keys: ["Item", "Item #", "Package Size", "Price/cs."]
     end
 
     stage :canonicalize do |s|
@@ -60,7 +61,7 @@ module Import
         price_key: "UNIT PRICE",
 
 
-      s.transform :join_keys,
+      s.transform => :join_keys,
         into: "name",
         keys: ["Brand", "Product Description"]
 

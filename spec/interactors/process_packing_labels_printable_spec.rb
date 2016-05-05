@@ -84,7 +84,7 @@ describe ProcessPackingLabelsPrintable do
 
     expect(PackingLabels::Generator).to receive(:generate) do |args|
       expect(args[:request]).to eq request
-      expect(args[:orders]).to eq(orders.map do |o| fake_seller_order_for(o) end)
+      expect(args[:orders]).to match_array(orders.map do |o| fake_seller_order_for(o) end)
       pdf_result
     end
   end

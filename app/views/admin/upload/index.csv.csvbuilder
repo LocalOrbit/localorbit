@@ -1,0 +1,15 @@
+csv << ["Organization","Market Subdomain","Product Name","Category Name","Short Description","Product Code","Unit Name","Unit Description","Price", "Multiple Pack Sizes","MPS Unit","MPS Unit Description","MPS Price"]
+
+
+# need the @products to be passed through via the controller
+
+@products.decorate.each do |product|
+  csv << [
+    product.organization_name,
+    product.market_name,
+    product.name_and_unit,
+    product.prices.view_sorted.decorate.map(&:quick_info).join(", "),
+    product.available_inventory,
+    product.code
+  ]
+end

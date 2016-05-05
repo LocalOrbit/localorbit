@@ -1,0 +1,291 @@
+Searching 2785 files for "items for delivery"
+
+/Users/llyfr/LocalOrbit/localorbit/app/views/shared/_order.html.erb:
+  101    </div>
+  102    <div class="order-data">
+  103:     <h2 class="pull-left">Items for Delivery</h2>
+  104      <% if !current_user.buyer_only? && order.undelivered_for_user?(current_user) %>
+  105        <%= button_tag "Mark all delivered", class: 'pull-right btn btn--small btn--primary mobile-block', id: 'mark-all-delivered', type: 'button' %>
+
+/Users/llyfr/LocalOrbit/localorbit/spec/features/buying/checking_out_via_purchase_order_spec.rb:
+  184        visit_in_email "Review Order"
+  185        expect(page).to have_content("Order info")
+  186:       expect(page).to have_content("Items for Delivery")
+  187      end
+  188    end
+  ...
+  211        visit_in_email "Check Order Status"
+  212        expect(page).to have_content("Order info")
+  213:       expect(page).to have_content("Items for Delivery")
+  214      end
+  215  
+  ...
+  234        visit_in_email "Check Order Status"
+  235        expect(page).to have_content("Order info")
+  236:       expect(page).to have_content("Items for Delivery")
+  237      end
+  238    end
+  ...
+  259      visit_in_email "Check Order Status"
+  260      expect(page).to have_content("Order info")
+  261:     expect(page).to have_content("Items for Delivery")
+  262    end
+  263  
+  ...
+  293        checkout
+  294        expect(page).to have_content("Thank you for your order")
+  295:       expect(page).to have_content("Items for delivery on:")
+  296        expect(page).to have_content("May 9, 2014 between 7:00AM and 11:00AM")
+  297      end
+
+6 matches across 2 files
+
+
+Searching 2785 files for "modify_credit_modal"
+
+0 matches across 0 files
+
+
+Searching 2785 files for "modifycreditmodal"
+
+/Users/llyfr/LocalOrbit/localorbit/app/assets/javascripts/credits/modify_credit_modal.js.jsx:
+    2    window.lo = window.lo || {};
+    3  
+    4:   var ModifyCreditModal = React.createClass({
+    5      propTypes: {
+    6        baseUrl: React.PropTypes.string.isRequired,
+    .
+  124    });
+  125  
+  126:   window.lo.ModifyCreditModal = ModifyCreditModal;
+  127  }).call(this);
+  128  
+
+/Users/llyfr/LocalOrbit/localorbit/app/views/shared/_order.html.erb:
+  326  
+  327  <% if FeatureAccess.can_edit_order?(user: current_user, order: order) %>
+  328:   <%= react_component('lo.ModifyCreditModal', {
+  329      baseUrl: "#{request.base_url}/api/v1/",
+  330      credit: order.credit,
+
+4 matches across 2 files
+
+
+Searching 2785 files for "delete_organization"
+
+/Users/llyfr/LocalOrbit/localorbit/spec/features/admin/managing_users_spec.rb:
+  167  
+  168      scenario "viewing only relevant users after deleting an organization" do
+  169:       delete_organization(organization)
+  170        visit admin_users_path
+  171  
+
+/Users/llyfr/LocalOrbit/localorbit/spec/features/admin/reports_spec.rb:
+  584        context "who deletes an organization" do
+  585          it "shows the appropriate order items" do
+  586:           delete_organization(buyer)
+  587:           delete_organization(seller)
+  588  
+  589            within("#reports-dropdown") do
+
+/Users/llyfr/LocalOrbit/localorbit/spec/features/buying/view_products_spec.rb:
+   68      skip "shaky test"
+   69      switch_user(market_manager) do
+   70:       delete_organization(org2)
+   71      end
+   72  
+
+/Users/llyfr/LocalOrbit/localorbit/spec/features/financials/payment_history_spec.rb:
+  718      scenario "can view their purchase history after market manage deletes an organization" do
+  719        switch_user(market_manager) do
+  720:         delete_organization(@seller)
+  721        end
+  722  
+
+/Users/llyfr/LocalOrbit/localorbit/spec/features/market_manager/financials/enter_receipts_spec.rb:
+   58    context "after a seller has been deleted by the market manager" do
+   59      it "keeps the seller entries in the list" do
+   60:       delete_organization(buyer)
+   61:       delete_organization(seller)
+   62  
+   63        visit admin_financials_receipts_path
+
+/Users/llyfr/LocalOrbit/localorbit/spec/features/market_manager/orders_deliveries_spec.rb:
+   88      context "when the market manager has deleted the seller" do
+   89        before do
+   90:         delete_organization(seller)
+   91:         delete_organization(seller2)
+   92          visit admin_order_items_path
+   93        end
+
+/Users/llyfr/LocalOrbit/localorbit/spec/features/selling/viewing_orders_spec.rb:
+  144  
+  145      scenario "list of orders after the market manager deletes an organization" do
+  146:       delete_organization(market1_seller_org1)
+  147:       delete_organization(market1_seller_org2)
+  148  
+  149        visit admin_orders_path
+  ...
+  204        before do
+  205          switch_user(market_manager) do
+  206:           delete_organization(market1_seller_org1)
+  207:           delete_organization(market1_seller_org2)
+  208          end
+  209        end
+
+/Users/llyfr/LocalOrbit/localorbit/spec/features/viewing_my_organizations_spec.rb:
+   46          sign_out
+   47          sign_in_as(market_manager)
+   48:         delete_organization(org2)
+   49          sign_out
+   50  
+
+/Users/llyfr/LocalOrbit/localorbit/spec/support/organization_delete_helpers.rb:
+    1  module OrganizationHelpers
+    2:   def delete_organization(org)
+    3      visit admin_organizations_path
+    4  
+
+15 matches across 9 files
+
+
+Searching 2786 files for "new_category"
+
+/Users/llyfr/LocalOrbit/localorbit/app/views/admin/products/new.html.erb:
+   15  
+   16  <%= render "new_unit_modal" %>
+   17: <%= render "new_category_modal" %>
+   18  
+
+/Users/llyfr/LocalOrbit/localorbit/app/views/admin/products/show.html.erb:
+   18  
+   19  <%= render "new_unit_modal" %>
+   20: <%= render "new_category_modal" %>
+   21  
+
+2 matches across 2 files
+
+
+Searching 2786 files for "new_unit"
+
+/Users/llyfr/LocalOrbit/localorbit/app/controllers/admin/unit_requests_controller.rb:
+    2    class UnitRequestsController < AdminController
+    3      def create
+    4:       ZendeskMailer.delay.request_unit(current_user, new_unit_params)
+    5  
+    6        redirect_to new_admin_product_path
+    .
+    9      private
+   10  
+   11:     def new_unit_params
+   12        params.require(:unit).permit([
+   13          :singular, :plural, :additional_notes
+
+/Users/llyfr/LocalOrbit/localorbit/app/mailers/zendesk_mailer.rb:
+    2    default to: Figaro.env.zendesk_email
+    3  
+    4:   def request_unit(user, new_unit_params)
+    5      @user = user
+    6:     @unit_params = new_unit_params
+    7  
+    8      mail(
+
+/Users/llyfr/LocalOrbit/localorbit/app/views/admin/products/new.html.erb:
+   14  </div>
+   15  
+   16: <%= render "new_unit_modal" %>
+   17  <%= render "new_category_modal" %>
+   18  
+
+/Users/llyfr/LocalOrbit/localorbit/app/views/admin/products/show.html.erb:
+   17  </div>
+   18  
+   19: <%= render "new_unit_modal" %>
+   20  <%= render "new_category_modal" %>
+   21  
+
+6 matches across 4 files
+
+
+Searching 2786 files for "Add New Unit"
+
+0 matches across 0 files
+
+
+Searching 2786 files for "Add Unit"
+
+/Users/llyfr/LocalOrbit/localorbit/app/views/admin/products/_fields.html.erb:
+  139      <td></td>
+  140      <td></td>
+  141:     <td><%= link_to "Add Unit", '#add-unit', class: 'add-toggle' %></td>
+  142    </tr>
+  143    </tbody>
+
+1 match in 1 file
+
+
+Searching 2786 files for "#addunit"
+
+0 matches across 0 files
+
+
+Searching 2786 files for "addunit"
+
+/Users/llyfr/LocalOrbit/localorbit/db/migrate/20140228213942_add_unit_to_product.rb:
+    1: class AddUnitToProduct < ActiveRecord::Migration
+    2    def change
+    3      add_column :products, :unit_id, :integer
+
+/Users/llyfr/LocalOrbit/localorbit/db/migrate/20140401150441_add_unit_to_products_without_one.rb:
+    1: class AddUnitToProductsWithoutOne < ActiveRecord::Migration
+    2    class Unit < ActiveRecord::Base
+    3    end
+
+/Users/llyfr/LocalOrbit/localorbit/db/migrate/20140627171721_add_unit_description_to_products.rb:
+    1: class AddUnitDescriptionToProducts < ActiveRecord::Migration
+    2    def change
+    3      add_column :products, :unit_description, :string
+
+3 matches across 3 files
+
+
+Searching 2786 files for "add_unit"
+
+0 matches across 0 files
+<td><%= link_to "Add Unit", '#add-unit', class: 'add-toggle' %></td>
+
+Searching 2786 files for "add-unit"
+
+/Users/llyfr/LocalOrbit/localorbit/app/views/admin/products/_fields.html.erb:
+  130      </td>
+  131      <td class="edit-cell">
+  132:       <button class="cancel">Cancel</button>&nbsp;/&nbsp;<%= link_to "Add", '#add-unit', class: 'add-copy' %>
+  133      </td>
+  134    </tr>
+  ...
+  139      <td></td>
+  140      <td></td>
+  141:     <td><%= link_to "Add Unit", '#add-unit', class: 'add-toggle' %></td>
+  142    </tr>
+  143    </tbody>
+
+2 matches in 1 file
+
+
+Searching 2786 files for "update payment note"
+
+/Users/llyfr/LocalOrbit/localorbit/app/views/admin/financials/payments/_form.html.erb:
+   12  <div class="row row--field">
+   13    <div class="field column column--half column--guttered">
+   14:     <%= f.label :note, "If CHECK, update payment note:" %>
+   15      <br>
+   16      <%= f.text_field :note, class: "column--full" %>
+
+/Users/llyfr/LocalOrbit/localorbit/app/views/admin/financials/payments/index.html.erb:
+   88            <% end %>
+   89            <td class="amount"><%= payment.display_amount %></td>
+   90:           <td><%= link_to "Update Payment", edit_admin_financials_payment_path(payment.id) %></td>
+   91          </tr>
+   92        <% end %>
+
+2 matches across 2 files

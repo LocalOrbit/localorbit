@@ -51,6 +51,10 @@
             <td class="category"><%= item.category_name %></td>
           <% end %>
 
+          <% if field == :subcategory_name %>
+            <td class="subcategory"><%= item.subcategory_name %></td>
+          <% end %>
+
           <% if field == :product_name %>
             <td class="product">
               <%- if current_user.buyer_only? %>
@@ -83,7 +87,11 @@
           <% end %>
 
           <% if field == :unit_price %>
-            <td class="price"><span><%= item.unit_price %> /<br/> <%= item.unit %></span></td>
+            <td class="price"><span><%= item.unit_price %></span></td>
+          <% end %>
+
+          <% if field == :unit %>
+            <td class="unit"><span><%= item.unit %></span></td>
           <% end %>
 
           <% if field == :discount_code %>
@@ -104,6 +112,14 @@
 
           <% if field == :net_sale %>
             <td class="net-sale"><%= content_tag "span", item.net_sale, class: "total-price" %></td>
+          <% end %>
+
+          <% if field == :product_fee_pct %>
+              <td class="fee"><%= content_tag "span", item.product_fee_pct, class: "fee" %></td>
+          <% end %>
+
+          <% if field == :profit %>
+              <td class="profit"><%= content_tag "span", item.profit, class: "profit" %></td>
           <% end %>
 
           <% if field == :payment_method %>

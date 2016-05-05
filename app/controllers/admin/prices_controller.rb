@@ -8,6 +8,7 @@ class Admin::PricesController < AdminController
     @price = @product.prices.build.decorate
     markets = @product.organization.all_markets
     @net_percents_by_market_id = ::Financials::Pricing.seller_net_percents_by_market(markets)
+    @seller_cc_rate = ::Financials::Pricing.seller_cc_rate(current_market)
   end
 
   def create
@@ -18,6 +19,7 @@ class Admin::PricesController < AdminController
       @price = @price.decorate
       markets = @product.organization.all_markets
       @net_percents_by_market_id = ::Financials::Pricing.seller_net_percents_by_market(markets)
+      @seller_cc_rate = ::Financials::Pricing.seller_cc_rate(current_market)
       flash.now[:alert] = "Could not save price"
       render :index
     end
@@ -70,7 +72,7 @@ class Admin::PricesController < AdminController
   private
 
   def price_params
-    params.require(:price).slice(:market_id, :organization_id, :min_quantity, :sale_price).permit!
+    params.require(:price).slice(:market_id, :organization_id, :min_quantity, :product_fee_pct, :sale_price).permit!
   end
 
   def query_params

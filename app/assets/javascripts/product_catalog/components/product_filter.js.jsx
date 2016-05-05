@@ -31,7 +31,7 @@
     },
 
     componentWillMount: function() {
-      this.queryUpdated = _.debounce(this.queryUpdated, 300, false);
+      this.queryUpdated = _.debounce(this.queryUpdated, 750, false);
       window.lo.FilterStore.listen(this.onFilterLoad);
       window.lo.FilterActions.loadInitialFilters();
     },

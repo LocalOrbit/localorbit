@@ -141,6 +141,10 @@ module Dom
       node.find(".net-price .view-cell").text
     end
 
+    def fee
+      node.find(".fee .view-cell").text
+    end
+
     def sale_price
       node.find(".sale-price .view-cell").text
     end
@@ -1304,6 +1308,7 @@ module Dom
       attribute :market_name,   ".market"
       attribute :quantity
       attribute :unit_price,    ".price"
+      attribute :unit
       attribute :discount
       attribute :discount_seller # need to add these?
       attribute :discount_market

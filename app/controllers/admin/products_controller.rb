@@ -24,6 +24,7 @@ module Admin
 
             markets = @products.flat_map {|prod| prod.organization.all_markets }
             @net_percents_by_market_id = ::Financials::Pricing.seller_net_percents_by_market(markets)
+            @seller_cc_rate = ::Financials::Pricing.seller_cc_rate(current_market)
           end
           format.csv do
             @filename = 'products.csv'

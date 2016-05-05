@@ -51,6 +51,9 @@ end
             <li><%= link_to raw('<i class="font-icon" data-icon="&#xe023;"></i> Product Taxonomy'), admin_categories_path %></li>
             <li><%= link_to raw('<i class="font-icon" data-icon="&#xe00f;"></i> Admin Financials'), admin_financials_market_payments_path %></li>
           <% end %>
+          <% if !current_market.nil? && current_market.plan.name == "LocalEyes" %>
+            <li><%= link_to raw('<i class="font-icon" data-icon="in"></i> Imports'), admin_upload_path %></li>
+          <% end %>
         </ul>
       </li>
       <li><%= link_to raw('<i class="font-icon" data-icon="&#xe00f;"></i>Financials'), admin_financials_path %></li>
@@ -97,6 +100,7 @@ end
           <% if can_access?(:discount_codes) %>
             <li><%= link_to raw('<i class="font-icon" data-icon="&#xe00b;"></i> Discount Codes'), [:admin, :discounts] %></li>
           <% end %>
+
           <% if current_user.admin? %>
             <li><%= link_to raw('<i class="font-icon" data-icon="&#xe012;"></i> Sent Emails'), coming_soon_dashboard_path %></li>
             <li><%= link_to raw('<i class="font-icon" data-icon="&#xe051;"></i> Email Testing'), coming_soon_dashboard_path %></li>

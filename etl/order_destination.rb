@@ -103,89 +103,9 @@ class OrderDestination
     time = Time.now
     row_exists = @conn.exec_prepared('check_order', [row[:order_item_id]])
     if row_exists.ntuples > 0
-      @conn.exec_prepared('update_order', [
-        row[:order_item_id],
-        row[:market],
-        row[:market_city],
-        row[:market_state],
-        row[:market_zip],
-        row[:market_country],
-        row[:placed_on],
-        row[:order_number],
-        row[:buyer],
-        row[:buyer_city],
-        row[:buyer_state],
-        row[:buyer_zip],
-        row[:buyer_country],
-        row[:product],
-        row[:short_description],
-        row[:product_code],
-        row[:product_category],
-        row[:supplier],
-        row[:supplier_city],
-        row[:supplier_state],
-        row[:supplier_zip],
-        row[:supplier_country],
-        row[:quantity],
-        row[:unit],
-        row[:unit_description],
-        row[:unit_price],
-        row[:gross_price],
-        row[:actual_discount],
-        row[:net_price],
-        row[:delivery_status],
-        row[:delivery_datetime],
-        row[:shipping_terms],
-        row[:delivery_city],
-        row[:delivery_state],
-        row[:delivery_zip],
-        row[:delivery_country],
-        row[:buyer_payment_status],
-        row[:supplier_payment_status],
-        time
-      ])
+      exec_insert_update('update_order')
     else
-      @conn.exec_prepared('insert_order', [
-        row[:order_item_id],
-        row[:market],
-        row[:market_city],
-        row[:market_state],
-        row[:market_zip],
-        row[:market_country],
-        row[:placed_on],
-        row[:order_number],
-        row[:buyer],
-        row[:buyer_city],
-        row[:buyer_state],
-        row[:buyer_zip],
-        row[:buyer_country],
-        row[:product],
-        row[:short_description],
-        row[:product_code],
-        row[:product_category],
-        row[:supplier],
-        row[:supplier_city],
-        row[:supplier_state],
-        row[:supplier_zip],
-        row[:supplier_country],
-        row[:quantity],
-        row[:unit],
-        row[:unit_description],
-        row[:unit_price],
-        row[:gross_price],
-        row[:actual_discount],
-        row[:net_price],
-        row[:delivery_status],
-        row[:delivery_datetime],
-        row[:shipping_terms],
-        row[:delivery_city],
-        row[:delivery_state],
-        row[:delivery_zip],
-        row[:delivery_country],
-        row[:buyer_payment_status],
-        row[:supplier_payment_status],
-        time
-      ])
+      exec_insert_update('insert_order')
     end
   rescue PG::Error => ex
     puts "ERROR for #{row[:order_item_id]}"
@@ -196,5 +116,49 @@ class OrderDestination
   def close
     @conn.close
     @conn = nil
+  end
+
+  def exec_insert_update(type)
+    @conn.exec_prepared(type, [
+        row[:order_item_id],
+        row[:market],
+        row[:market_city],
+        row[:market_state],
+        row[:market_zip],
+        row[:market_country],
+        row[:placed_on],
+        row[:order_number],
+        row[:buyer],
+        row[:buyer_city],
+        row[:buyer_state],
+        row[:buyer_zip],
+        row[:buyer_country],
+        row[:product],
+        row[:short_description],
+        row[:product_code],
+        row[:product_category],
+        row[:supplier],
+        row[:supplier_city],
+        row[:supplier_state],
+        row[:supplier_zip],
+        row[:supplier_country],
+        row[:quantity],
+        row[:unit],
+        row[:unit_description],
+        row[:unit_price],
+        row[:gross_price],
+        row[:actual_discount],
+        row[:net_price],
+        row[:delivery_status],
+        row[:delivery_datetime],
+        row[:shipping_terms],
+        row[:delivery_city],
+        row[:delivery_state],
+        row[:delivery_zip],
+        row[:delivery_country],
+        row[:buyer_payment_status],
+        row[:supplier_payment_status],
+        time
+    ])
   end
 end

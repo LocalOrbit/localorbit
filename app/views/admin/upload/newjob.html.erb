@@ -4,14 +4,7 @@
 	<strong>Errors encountered:</strong>
 	<br>
 	<% if @errors %>
-		<% @error_display.each do |er| %>
-			<strong>product name:</strong>
-			<%= "#{er['name']}" %>
-			<br/>
-			<strong>error:</strong>
-			<%= "#{er['reason']}" %>
-			<br></br>
-		<% end %>
+		<%= @errors %>
 	<% else %>
 		<%= "#{@no_errors}" %>
 	<% end %>

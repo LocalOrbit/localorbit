@@ -277,6 +277,7 @@ describe OrderItem do
         unit: create(:unit),
         order: order,
         product: product,
+        product_fee_pct: 0,
         delivery_status: "pending",
         quantity: 3
       )

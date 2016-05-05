@@ -200,7 +200,7 @@ end
 
 describe "price estimator", js: true do
   let!(:market1) {create(:market, local_orbit_seller_fee:3, market_seller_fee:2, allow_cross_sell:true)}
-  let!(:market2) {create(:market, local_orbit_seller_fee:5,market_seller_fee:10,allow_cross_sell:true)}
+  let!(:market2) {create(:market, local_orbit_seller_fee:5, market_seller_fee:10,allow_cross_sell:true)}
 
   let!(:org_cross_sell) {
     org = create(:organization, markets:[market1])
