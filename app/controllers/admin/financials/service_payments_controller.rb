@@ -26,10 +26,10 @@ class Admin::Financials::ServicePaymentsController < AdminController
         # notice = "Subscription to #{market.plan.name} created for #{market.name}"
       else
         # KXM Should the subscription be revoked if the LO payment isn't created (I'm thinking yes...)?  If so, do it here, if not, then how do we reconcile LO and Stripe
-        notice = "Payment failed for #{market.name}"
+        notice = "Payment failed for #{market.name} (payment record not created)"
       end
     else
-      notice = "Payment failed for #{market.name}"
+      notice = "Payment failed for #{market.name} (subscription record not created)"
     end
 
     redirect_to admin_financials_service_payments_path, notice: notice
