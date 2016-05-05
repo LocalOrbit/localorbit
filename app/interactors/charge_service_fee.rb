@@ -1,5 +1,5 @@
 class ChargeServiceFee
   include Interactor::Organizer
 
-  organize CreateServicePayment, ProcessPaymentWithStripe, PaymentMadeEmailConfirmation
+  organize CreateStripeCustomerForEntity, CreateStripeSubscriptionForEntity, CreateServicePayment, PaymentMadeEmailConfirmation
 end

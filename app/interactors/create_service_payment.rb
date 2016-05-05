@@ -2,10 +2,12 @@ class CreateServicePayment
   include Interactor
 
   def setup
-    invoice ||= context[:invoice]
+    invoice      ||= context[:invoice]
+    bank_account ||= BankAccount.find_by stripe_id: results.bank_account_params.id  if results.bank_account_params.class == Stripe::Card
   end
 
   def perform
+    amount = ::Financials::MoneyHelpers.cents_to_amount(invoice.amount_due)
     context[:payment] = Payment.create({
       payment_provider: market.payment_provider,
       payment_type:     "service",
