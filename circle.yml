@@ -18,5 +18,3 @@ checkout:
 database:
   pre:
     - bundle exec rake db:test:prepare
-
-      
