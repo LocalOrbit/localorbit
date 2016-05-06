@@ -60,7 +60,7 @@ $ ->
     updateFee = ->
       netPriceValue = getNetPriceValue()
       salePriceValue = getSalePriceValue()
-      feeValue = ((salePriceValue - netPriceValue) / netPriceValue) * 100
+      feeValue = (1-netPriceValue/salePriceValue)*100
       setFeeValue(feeValue)
 
     updateNetPrice = ->
