@@ -6,12 +6,20 @@ class Admin::Financials::ServicePaymentsController < AdminController
   end
 
   def create
-    market = Market.find(params[:market_id])
-    charge = ChargeServiceFee.perform(market: market, amount: market.plan_fee, bank_account: market.plan_bank_account)
-    if charge.success?
-      redirect_to admin_financials_service_payments_path, notice: "Payment made for #{market.name}"
+    market  = Market.find(params[:market_id])
+
+    results = ChargeServiceFee.perform(entity: market, subscription_params: {plan: market.plan.stripe_id}, flash: flash)
+
+    if results.success?
+      market.subscribe!
+      market.set_subscription(results.invoice)
+
+      PaymentMadeEmailConfirmation.perform(recipients: results.recipients, payment: results.payment)
+      notice = "Payment made for #{market.name}"
     else
-      redirect_to admin_financials_service_payments_path, notice: "Payment failed for #{market.name}"
+      notice = results.context[:error] || "Payment failed for #{market.name}"
     end
+
+    redirect_to admin_financials_service_payments_path, notice: notice
   end
 end

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160418132511) do
+ActiveRecord::Schema.define(version: 20160420160440) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -481,9 +481,10 @@ ActiveRecord::Schema.define(version: 20160418132511) do
     t.boolean  "pending",                                                default: false
     t.text     "zpl_logo"
     t.string   "zpl_printer"
-    t.boolean  "self_directed_creation",                                 default: false
     t.boolean  "stripe_standalone"
     t.string   "legacy_stripe_account_id"
+    t.boolean  "self_directed_creation",                                 default: false
+    t.boolean  "subscribed",                                             default: false
     t.boolean  "allow_product_fee"
     t.integer  "number_format_numeric",                                  default: 0
   end

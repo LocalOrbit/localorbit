@@ -3,55 +3,46 @@ class CreateStripeSubscriptionForEntity
 
   def perform
     # Initialize
-    subscription_params = context[:subscription_params]
-    entity = context[:entity]
-    customer = PaymentProvider::Stripe.get_stripe_customer(context[:stripe_customer].id)
+    market_params ||= context[:market_params]
+    sub_params    ||= context[:subscription_params]
+    entity        ||= context[:entity]
 
-    # If the customer has any subscriptions...
-    if customer.subscriptions.data.any?
-      # ...cycle through them
-      customer.subscriptions.data.each do |sub|
-        # If any match the current data...
-        if sub.plan.id = subscription_params[:plan]
-          # ...then update the subscription:
-          subscription        = customer.subscriptions.retrieve(sub.id)
-          subscription.plan   = subscription_params[:plan]
-          subscription.source = subscription_params[:stripe_tok]
-          subscription.coupon = subscription_params[:coupon] if !subscription_params[:coupon].blank?
-          subscription.save
+    token = market_params && market_params[:stripe_tok]
 
-        else
-          # ...otherwise, delete the plan:
-          customer.subscriptions.retrieve(sub.id).delete
-        end
-      end
-
-    # Otherwise... 
-    else
-      # ...just create one
-      subscription = customer.subscriptions.create(stripe_subscription_info)
-    end
-
+    # Create the subscription...
+    subscription = PaymentProvider::Stripe.upsert_subscription(entity, stripe_subscription_info(sub_params, entity, token))
     context[:subscription] = subscription
-    invoices = PaymentProvider::Stripe.get_stripe_invoices(:customer => subscription.customer) 
-    context[:invoice] = invoices.data[0]
-    
+
+    # Get the invoice...
+    invoices = PaymentProvider::Stripe.get_stripe_invoices(:customer => subscription.customer)
+    context[:invoice] = invoices.data.first
+    # ...update the entity (if it's a Market)...
+    entity.set_subscription(invoices.data.first) if entity.respond_to?(:set_subscription)
+
+    # ...and populate additional context items
+    context[:amount] ||= amount = ::Financials::MoneyHelpers.cents_to_amount(invoices.data.first.amount_due)
+    context[:bank_account_params] = PaymentProvider::Stripe.glean_card(context[:invoice])
+
   rescue => e
     context.fail!(error: e.message)
   end
 
-  def stripe_subscription_info
+  def stripe_subscription_info(sub_params, entity, token)
     ret_val = {
-      plan: subscription_params[:plan],
-      source: market_params[:stripe_tok],
+      # 'plan' here refers to the Stripe plan ID...
+      plan: sub_params[:plan],
       metadata: {
         "lo.entity_id" => entity.id,
         "lo.entity_type" => entity.class.name.underscore
       }
     }
-    # Stripe complains if you pass an empty coupon.  Only add it if it exists 
-    ret_val.tap do |r|
-      r[:coupon] = subscription_params[:coupon] if !subscription_params[:coupon].blank?
-    end
+    # Stripe uses the default card if one exists, but RYO (at least) will provide the stripe token
+    ret_val[:source] = token if token.present?
+    
+    # Stripe complains if you pass an empty coupon.  Only add it if it exists
+    ret_val[:coupon] = sub_params[:coupon] if sub_params[:coupon].present?
+
+    # Return the return value
+    ret_val
   end
 end
