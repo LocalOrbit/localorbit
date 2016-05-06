@@ -1005,9 +1005,16 @@ td.delete {
     width: 135px;
     text-align: left;
   }
-  .min-qty, .net-price, .sale-price, .fee {
+  .min-qty, .net-price, .sale-price, .fee, {
     text-align: center;
   }
+
+  .markup-pct {
+    text-align: center;
+    font-size: 10px;
+    font-weight: bold;
+  }
+
   .price_market_id,
   .price_buyer_id {
     width: 100%;

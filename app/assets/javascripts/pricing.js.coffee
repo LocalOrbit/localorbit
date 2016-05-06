@@ -13,6 +13,7 @@ $ ->
     lock_label = salePrice.parents('tr').first().find('label.lock-label')
     netprice_checkbox = salePrice.parents('tr').first().find('input.lock-field')
     fee = salePrice.parents('tr').first().find('input.fee')
+    markup_pct = salePrice.parents('tr').first().find('div.markup-pct')
     use_mkt_fee = salePrice.parents('tr').first().find('input.mkt-fee')
     use_product_fee = salePrice.parents('tr').first().find('input.product-fee')
     netPrice = salePrice.parents('tr').first().find('input.net-price')
@@ -29,6 +30,9 @@ $ ->
 
     setFeeValue = (v) ->
       fee.val(v.toFixed(2))
+
+    setMarkupValue = (v) ->
+      markup_pct.html('Markup %: ' + v.toFixed(2))
 
     getSalePriceValue = ->
       parseFloat(salePrice.val())
@@ -56,6 +60,12 @@ $ ->
           return netPercent
         else
           return 0.00
+
+    updateMarkupPct= ->
+      netPriceValue = getNetPriceValue()
+      salePriceValue = getSalePriceValue()
+      feeValue = ((salePriceValue - netPriceValue) / netPriceValue) * 100
+      setMarkupValue(feeValue)
 
     updateFee = ->
       netPriceValue = getNetPriceValue()
@@ -103,6 +113,7 @@ $ ->
         updateFee()
       else
         updateNetPrice()
+      updateMarkupPct()
 
     salePrice.on 'keyup', ->
       $(this).trigger('change')
@@ -114,6 +125,7 @@ $ ->
 
     fee.change ->
       updateSalePrice()
+      updateMarkupPct()
 
     fee.on 'keyup', ->
       $(this).trigger('change')
@@ -133,6 +145,7 @@ $ ->
 
     selectedMarket.change ->
       updateNetPrice()
+      updateMarkupPct()
 
     netPrice.parent().parent().parent().find('input.product-fee:checked').trigger('click')
 
