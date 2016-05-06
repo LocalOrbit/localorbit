@@ -25,7 +25,6 @@ class MarketsController < ApplicationController
     plan ||= Plan.find_by stripe_id: requested_plan.upcase
 
     @market ||= Market.new do |m|
-      m.payment_provider = PaymentProvider.for_new_markets.id
       m.pending = true
       m.self_directed_creation = true # This flag says "Yes, I have rolled this myself"
       m.plan_id = plan.id
@@ -35,13 +34,19 @@ class MarketsController < ApplicationController
   end
 
   def create
+    # This accounts for the new requirement that customers may select their plan on the form.  I hate feature creep.
+    plan = Plan.find_by stripe_id: subscription_params[:plan] if subscription_params[:plan].present?
+    mp = market_params
+    mp[:plan_id] = plan.id
+
     results = RollYourOwnMarket.perform({
-        :market_params => market_params, 
+        :market_params => mp,
         :billing_params => billing_params, 
         :subscription_params => subscription_params,
         :bank_account_params => bank_account_params,
         :amount => subscription_params[:plan_price], # For 'create_service_payment' interactor
-        :flash => flash})
+        :flash => flash,
+        :RYO => true})
 
     if results.success?
       flash.notice = "Your request for a new Market will be processed shortly."

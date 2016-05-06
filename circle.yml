@@ -14,3 +14,9 @@ dependencies:
 checkout:
   post:
     - cp config/application.yml{.example,}
+
+database:
+  override:
+    # replace CircleCI's generated database.yml
+    - cp config/database.yml.kxm config/database.yml
+    - bundle exec rake db:create db:schema:load --trace

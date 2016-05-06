@@ -275,15 +275,69 @@ module PaymentProvider
         CreditCardFeeStructure[:rate] # should be decimal value 0.029, see above
       end
 
+      # Coordinates the creation of a customer subscription
+      def upsert_subscription(entity, subscription_params)
+        # KXM Throw an error here if the stripe_customer_id is null or if the method call returns nil...
+        customer = get_stripe_customer(entity.try(:stripe_customer_id))
+
+        # Initialize 'subscription not found' state
+        subscription = nil
+
+        # Gather data
+        submission_data = {
+          plan: subscription_params[:plan],
+          metadata: {
+            "lo.entity_id" => entity.id,
+            "lo.entity_type" => entity.class.name.underscore
+          }
+        }
+        # Stripe uses the default card if one exists, making this value optional
+        submission_data[:source] = subscription_params[:source] if subscription_params[:source].present?
+
+        # Stripe complains if you pass an empty coupon.  Only add it if it exists
+        submission_data[:coupon] = subscription_params[:coupon] if subscription_params[:coupon].present?
+
+        customer.subscriptions.data.each do |sub|
+          # If an existing subscription matches the current data...
+          if sub.plan.id == subscription_params[:plan]
+            # ...then update the subscription:
+            subscription        = customer.subscriptions.retrieve(sub.id)
+            subscription.plan   = submission_data[:plan]
+            subscription.source = submission_data[:source] if submission_data[:source].present?
+            subscription.coupon = submission_data[:coupon] if submission_data[:coupon].present?
+            subscription.save
+
+          else
+            # Otherwise delete it:
+            customer.subscriptions.retrieve(sub.id).delete
+          end
+        end
+
+        # If no matching subscription was found...
+        if subscription.nil?
+          # ...just create one
+          subscription = customer.subscriptions.create(submission_data)
+        end
+
+        subscription
+      end
+
       #
       #
       # NON-PaymentProvider interface:
       #
       #
+
+      # create_customer
+      # params customer_data Hash containing description: (entity.name) and metadata: (entity id and class name)
+      # return Stripe customer object
       def create_customer(customer_data)
         ::Stripe::Customer.create(customer_data)
       end
 
+      # get_stripe_customer
+      # params stripe_customer_id String The Stripe customer id for the entity in question
+      # return Stripe customer object
       def get_stripe_customer(stripe_customer_id)
         ::Stripe::Customer.retrieve(stripe_customer_id)
       end
@@ -334,10 +388,35 @@ module PaymentProvider
         end
       end
 
+      def glean_card(stripe_object)
+        case stripe_object.object
+        when "charge"
+          card     = stripe_object.source
+        when "customer"
+         card     = self.get_stripe_card(customer.default_source)
+        when "invoice"
+          charge   = self.get_charge(stripe_object.charge)
+          card     = self.glean_card(charge)
+
+        else
+          # This is a cop-out and means that the returned object must be examined before
+          # using, but it'd better than raising an error at this vestigial stage...
+          stripe_object
+        end
+      end
+
       #
       # General Stripe getters
       #
       #
+      def get_charge(stripe_charge_id)
+        ::Stripe::Charge.retrieve(stripe_charge_id)
+      end
+
+      def get_stripe_card(card_id)
+        ::Stripe::Sources.retrieve(card_id)
+      end
+
       def get_stripe_plans(plan = nil)
         if plan.nil?
           ::Stripe::Plan.all.data
