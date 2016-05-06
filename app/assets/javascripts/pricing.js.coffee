@@ -18,6 +18,7 @@ $ ->
     use_product_fee = salePrice.parents('tr').first().find('input.product-fee')
     netPrice = salePrice.parents('tr').first().find('input.net-price')
     selectedMarket = salePrice.parents('tr').first().find('select.price_market_id')
+    has_product_fee = fee.hasClass('has-product-fee')
 
     getNetPriceValue = ->
       parseFloat(netPrice.val())
@@ -45,13 +46,16 @@ $ ->
       marketToNetPercentMap = netPrice.data('net-percents-by-market-id')
 
       ccRate = netPrice.data('cc-rate')
+      productFee = netPrice.data('product-fee')
 
       if marketId == ""
         marketId = "all"
 
-      if use_product_fee.prop('checked')
+      if use_product_fee.prop('checked') || has_product_fee || productFee > 0
         if getFeeValue() > 0
           return 1 - (getFeeValue()/100 + ccRate)
+        else if productFee > 0
+          return 1 - (productFee/100 + ccRate)
         else
           return 0.00
       else

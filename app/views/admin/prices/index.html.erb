@@ -111,7 +111,7 @@
                       <span></span>
                     </label>
                     <%= f.number_field :net_price, min: 0, step: 0.01, size: 4, class: 'net-price',
-                                       data:{"net-percents-by-market-id" => json_escape(@net_percents_by_market_id.to_json), "cc-rate" => @seller_cc_rate} %>
+                                       data:{"product-fee" => json_escape(price.product_fee_pct), "net-percents-by-market-id" => json_escape(@net_percents_by_market_id.to_json), "cc-rate" => @seller_cc_rate} %>
                   </div>
                 </td>
                 <% if FeatureAccess.product_level_fee?(market: current_market) && (current_user.admin? || current_user.market_manager?) %>
