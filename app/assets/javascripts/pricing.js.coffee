@@ -99,6 +99,7 @@ $ ->
     use_mkt_fee.on 'click', ->
       fee.hide()
       lock_label.hide()
+      markup_pct.hide()
       setFeeValue(0)
       updateSalePrice()
       if netprice_checkbox.prop('checked')
@@ -110,6 +111,8 @@ $ ->
     use_product_fee.on 'click', ->
       fee.show()
       lock_label.show()
+      markup_pct.show()
+      updateMarkupPct()
       use_product_fee.prop('checked','checked')
 
     salePrice.change ->
@@ -152,6 +155,8 @@ $ ->
       updateMarkupPct()
 
     netPrice.parent().parent().parent().find('input.product-fee:checked').trigger('click')
+
+    updateMarkupPct()
 
   $('input.sale-price').each ->
     bindCalculator(this)
