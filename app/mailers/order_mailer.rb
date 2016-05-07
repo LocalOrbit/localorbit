@@ -20,10 +20,8 @@ class OrderMailer < BaseMailer
     attachments["packing_list.csv"] = {mime_type: "application/csv", content: csv}
 
     to_list = seller.users.map { |u| u.enabled_for_organization?(seller) && !u.pretty_email.nil? ? u.pretty_email : nil}
-
-    logger.info "Seller Confirmation To List: #{to_list.inspect}"
-
-    if seller.users.length > 0
+    
+    if !to_list.blank?
       mail(
         to: to_list,
         subject: "New order on #{@market.name}"
