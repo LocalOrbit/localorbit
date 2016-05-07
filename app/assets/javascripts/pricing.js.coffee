@@ -155,6 +155,7 @@ $ ->
       updateMarkupPct()
 
     netPrice.parent().parent().parent().find('input.product-fee:checked').trigger('click')
+    netPrice.parent().parent().parent().find('input.mkt-fee:checked').trigger('click')
 
     updateMarkupPct()
 
