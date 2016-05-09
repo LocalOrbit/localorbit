@@ -6,7 +6,7 @@ class ZendeskMailer < ActionMailer::Base
     @unit_params = new_unit_params
 
     mail(
-      from: user.pretty_email,
+      from: Figaro.env.zendesk_email,
       subject: "A new unit has been requested"
     )
   end
@@ -37,7 +37,7 @@ class ZendeskMailer < ActionMailer::Base
     @data = data
 
     mail(
-      from: user.pretty_email,
+      from: Figaro.env.zendesk_email,
       subject: "Requires admin review: #{title}"
     )
   end
