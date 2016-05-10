@@ -7,7 +7,7 @@ class CreateServicePayment
   end
 
   def perform
-    bank_account ||= BankAccount.find_by stripe_id: context[:bank_account_params].id  if context[:bank_account_params].class == Stripe::Card
+    bank_account ||= BankAccount.find_by stripe_id: context[:bank_account_params].id  if context[:bank_account_params].class == Stripe::Card || context[:bank_account_params].class == Stripe::BankAccount
     amount = ::Financials::MoneyHelpers.cents_to_amount(invoice.amount_due)
     context[:payment] = Payment.create({
       payment_provider: market.payment_provider,
