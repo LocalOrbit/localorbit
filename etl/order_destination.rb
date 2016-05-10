@@ -103,9 +103,9 @@ class OrderDestination
     time = Time.now
     row_exists = @conn.exec_prepared('check_order', [row[:order_item_id]])
     if row_exists.ntuples > 0
-      exec_insert_update('update_order')
+      exec_insert_update('update_order', row, time)
     else
-      exec_insert_update('insert_order')
+      exec_insert_update('insert_order', row, time)
     end
   rescue PG::Error => ex
     puts "ERROR for #{row[:order_item_id]}"
@@ -118,7 +118,7 @@ class OrderDestination
     @conn = nil
   end
 
-  def exec_insert_update(type)
+  def exec_insert_update(type, row, time)
     @conn.exec_prepared(type, [
         row[:order_item_id],
         row[:market],
