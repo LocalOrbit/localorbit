@@ -2,7 +2,7 @@ require "spec_helper"
 
 feature "Verifying a market bank account", :js, :vcr do
   let!(:market) { create(:market, name: "Funville") }
-  let!(:market_manager) { create(:user, managed_markets: [market]) }
+  let!(:market_manager) { create(:user, :market_manager, managed_markets: [market]) }
 
   context "as a market manager" do
     before do

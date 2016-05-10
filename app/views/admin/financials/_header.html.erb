@@ -5,22 +5,12 @@
     </div>
     <div class="tabs-wrapper">
       <ul class="tabs">
-        <% unless current_user.admin? %>
-          <%= content_tag(:li, link_to_or_span("Overview", [:admin, :financials, :overview]), class: 'tab') %>
-        <% end %>
-
-        <% if current_user.admin? || current_user.market_manager? %>
-          <%= content_tag(:li, link_to_or_span("Send Invoices", [:admin, :financials, :invoices]), class: 'tab') %>
-          <%= content_tag(:li, link_to_or_span("Enter Receipts", [:admin, :financials, :receipts]), class: 'tab') %>
-          <%= content_tag(:li, link_to_or_span("Record Payments to Suppliers", [:admin, :financials, :vendor_payments]), class: 'tab') %>
-          <%= content_tag(:li, link_to_or_span("Review Payment History", [:admin, :financials, :payments]), class: 'tab') %>
-        <% else %>
-          <% if current_user.buyer_only? %>
-            <%= content_tag(:li, link_to_or_span("Review Invoices", [:admin, :financials, :invoices]), class: 'tab') %>
-          <% end %>
-
-          <%= content_tag(:li, link_to_or_span("Review Payment History", [:admin, :financials, :payments]), class: 'tab') %>
-        <% end %>
+        <% if policy(:financial_overview).index? %><%= content_tag(:li, link_to_or_span("Overview", [:admin, :financials, :overview]), class: 'tab') %><% end %>
+        <% if policy(:send_invoices).index? %><%= content_tag(:li, link_to_or_span("Send Invoices", [:admin, :financials, :invoices]), class: 'tab') %><% end %>
+        <% if policy(:enter_receipts).index? %><%= content_tag(:li, link_to_or_span("Enter Receipts", [:admin, :financials, :receipts]), class: 'tab') %><% end %>
+        <% if policy(:record_payments).index? %><%= content_tag(:li, link_to_or_span("Record Payments to Suppliers", [:admin, :financials, :vendor_payments]), class: 'tab') %><% end %>
+        <% if policy(:payment_history).index? %><%= content_tag(:li, link_to_or_span("Review Payment History", [:admin, :financials, :payments]), class: 'tab') %><% end %>
+        <% if policy(:review_invoices).index? %><%= content_tag(:li, link_to_or_span("Review Invoices", [:admin, :financials, :invoices]), class: 'tab') %><% end %>
       </ul>
     </div>
   </div>

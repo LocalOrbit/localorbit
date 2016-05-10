@@ -3,7 +3,7 @@ require "spec_helper"
 describe Admin::OrganizationsController do
   let(:org) { create(:organization) }
   let(:market) { create(:market, organizations: [org]) }
-  let(:user) { create(:user, role: "user") }
+  let(:user) { create(:user) }
 
   before do
     switch_to_subdomain market.subdomain

@@ -3,9 +3,9 @@ shared_examples "an action that grants access to buyers and sellers only" do |ac
   let(:organization)              { create(:organization, :buyer, markets: [market]) }
   let(:seller_organization)       { create(:organization, :seller, markets: [market]) }
   let(:admin)                     { create(:user, :admin) }
-  let(:market_manager)            { create(:user, managed_markets: [market]) }
-  let(:buyer_only)                { create(:user, organizations: [organization]) }
-  let(:seller)                    { create(:user, organizations: [seller_organization]) }
+  let(:market_manager)            { create(:user, :market_manager, managed_markets: [market]) }
+  let(:buyer_only)                { create(:user, :buyer, organizations: [organization]) }
+  let(:seller)                    { create(:user, :supplier, organizations: [seller_organization]) }
   let!(:order)                    { create(:order, organization: seller_organization) }
 
   def meet_expected_expectation

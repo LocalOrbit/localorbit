@@ -1,0 +1,3 @@
+class EnterReceiptsPolicy < ApplicationPolicy
+
+end

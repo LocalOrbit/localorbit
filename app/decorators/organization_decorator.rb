@@ -72,10 +72,11 @@ class OrganizationDecorator < Draper::Decorator
   end
 
   def can_use_advanced_inventory?
-    markets.any? {|m| m.plan.advanced_inventory }
+    markets.any? {|m| m.organization.plan.advanced_inventory }
   end
 
   def can_use_advanced_pricing?
-    markets.any? {|m| m.plan.advanced_pricing }
+    markets.any? {|m| m.organization.plan.advanced_pricing }
   end
+
 end

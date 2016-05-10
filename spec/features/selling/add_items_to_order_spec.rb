@@ -18,7 +18,7 @@ describe "Adding items to an order" do
   let!(:order)           { create(:order, market: market, organization: buyer, delivery: delivery, items: [order_item], payment_method: "purchase order") }
 
   context "as a seller" do
-    let!(:user) { create(:user, organizations: [seller]) }
+    let!(:user) { create(:user, :supplier, organizations: [seller]) }
 
     before do
       switch_to_subdomain(market.subdomain)
@@ -32,7 +32,7 @@ describe "Adding items to an order" do
   end
 
   context "as a market manager" do
-    let!(:user) { create(:user, managed_markets: [market]) }
+    let!(:user) { create(:user, :market_manager, managed_markets: [market]) }
 
     before do
       switch_to_subdomain(market.subdomain)

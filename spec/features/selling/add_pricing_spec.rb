@@ -1,12 +1,13 @@
 require "spec_helper"
 
 describe "Adding advanced pricing" do
+  let(:user)          { create(:user, :supplier) }
   let(:market)        { create(:market) }
   let(:market2)       { create(:market) }
   let(:market3)       { create(:market, allow_product_fee: true)}
-  let!(:organization) { create(:organization, markets: [market, market2], users: [user]) }
+  let!(:organization) { create(:organization, :seller, markets: [market, market2], users: [user]) }
   let!(:product)      { create(:product, organization: organization) }
-  let!(:user)         { create(:user, :market_manager, managed_markets: [market]) }
+  let!(:user2)         { create(:user, :market_manager, managed_markets: [market]) }
 
   before do
     switch_to_subdomain(market.subdomain)

@@ -25,10 +25,10 @@ describe SendFreshSheet do
                    keyword: SubscriptionType::Keywords::FreshSheet, 
                    name: "Test Fresh!")
 
-    user1 = create(:user)
-    user2 = create(:user)
-    user3 = create(:user)
-    user4 = create(:user)
+    user1 = create(:user, :buyer)
+    user2 = create(:user, :supplier)
+    user3 = create(:user, :buyer)
+    user4 = create(:user, :buyer)
     [user1,user2,user3,user4].each do |u|
       u.subscribe_to(fresh)
     end

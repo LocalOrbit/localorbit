@@ -1,13 +1,14 @@
 require "spec_helper"
 
 feature "Seller Financial Overview" do
-  let!(:market)  { create(:market, po_payment_term: 30, timezone: "Eastern Time (US & Canada)") }
+  let!(:market_org) { create(:organization, :market)}
+  let!(:market)  { create(:market, organization: market_org, po_payment_term: 30, timezone: "Eastern Time (US & Canada)") }
   let!(:delivery_schedule) { create(:delivery_schedule) }
   let!(:delivery)    { delivery_schedule.next_delivery }
-  let!(:seller)  { create(:organization, markets: [market]) }
-  let!(:seller2) { create(:organization, markets: [market]) }
+  let!(:seller)  { create(:organization, :seller, markets: [market]) }
+  let!(:seller2) { create(:organization, :seller, markets: [market]) }
 
-  let!(:user)    { create(:user, organizations: [seller]) }
+  let!(:user)    { create(:user, :supplier, organizations: [seller]) }
 
   let!(:kale) { create(:product, :sellable, organization: seller, name: "Kale") }
   let!(:peas) { create(:product, :sellable, organization: seller, name: "Peas") }

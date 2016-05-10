@@ -142,7 +142,7 @@
           <% end %>
         </div
         ><div class="field column column--half column--guttered">
-          <% if (payment_date = @market.next_service_payment_at) %>
+          <% if (payment_date = @market.organization.next_service_payment_at) %>
           Next Payment Due On:<br>
           <%= payment_date.strftime("%b %d, %Y") %>
           <% end %>

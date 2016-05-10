@@ -8,7 +8,7 @@ shared_examples "an action that is accessible to all roles" do |action|
   let(:market_manager_non_member) { create(:user, managed_markets: [market2]) }
   let(:member)                    { create(:user, organizations: [organization]) }
   let(:non_member)                { create(:user) }
-  let(:market_seller)             { create(:user, organizations: [seller_organization]) }
+  let(:market_seller)             { create(:user, :supplier, organizations: [seller_organization]) }
 
   def meet_expected_expectation
     %w(show).include?(controller.action_name) ? be_a_success : be_a_redirect

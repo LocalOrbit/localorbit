@@ -23,7 +23,7 @@ UserOrderContext = ConstructorStruct.new(
       is_seller = !seller_organization.nil?
       is_admin = user.admin?
       is_localeyes_buyer = user.is_localeyes_buyer?
-      sellers_edit_orders_feature = !!(market.plan.try(:sellers_edit_orders)) && market.sellers_edit_orders
+      sellers_edit_orders_feature = !!(market.organization.plan.try(:sellers_edit_orders)) && market.sellers_edit_orders
 
       return self.new(
         is_market_manager: is_market_manager,

@@ -15,7 +15,7 @@ describe "Buyer invoices" do
   let!(:buyers)    { create(:organization, :buyer, markets: [market]) }
 
   let!(:others)     { create(:organization, :buyer, markets: [market]) }
-  let!(:other_user) { create(:user, organizations: [others]) }
+  let!(:other_user) { create(:user, :buyer, organizations: [others]) }
 
   let!(:ordered_apples1) { create(:order_item, product: apples) }
   let!(:ordered_grapes1) { create(:order_item, product: grapes) }
@@ -37,7 +37,7 @@ describe "Buyer invoices" do
   let!(:others_order)     { create(:order, delivery: delivery, market: market, organization: others, items: [ordered_oranges2], invoiced_at: 2.days.ago, invoice_due_date: 5.days.from_now) }
 
   context "as a buyer" do
-    let!(:user)      { create(:user, organizations: [buyers]) }
+    let!(:user)      { create(:user, :buyer, organizations: [buyers]) }
 
     before do
       switch_to_subdomain(market.subdomain)

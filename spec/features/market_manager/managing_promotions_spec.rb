@@ -2,14 +2,14 @@ require "spec_helper"
 
 describe "Managing featured promotions" do
   let!(:market)  { create(:market) }
-  let!(:seller)  { create(:organization, markets: [market]) }
+  let!(:seller)  { create(:organization, :seller, markets: [market]) }
   let!(:product) { create(:product, :sellable, organization: seller) }
 
   let!(:active_promotion) { create(:promotion, :active, market: market, product: product, name: "Active Promotion", created_at: Time.parse("2011-05-26")) }
   let!(:promotion) { create(:promotion, market: market, product: product, name: "Unactive Promotion", created_at: Time.parse("2014-05-26")) }
 
   context "as a market manager" do
-    let(:user) { create(:user, managed_markets: [market]) }
+    let(:user) { create(:user, :market_manager, managed_markets: [market]) }
 
     before do
       switch_to_subdomain(market.subdomain)
@@ -30,7 +30,7 @@ describe "Managing featured promotions" do
 
     context "multi market membership" do
       let!(:second_market) { create(:market) }
-      let!(:user) { create(:user, managed_markets: [market, second_market]) }
+      let!(:user) { create(:user, :market_manager, managed_markets: [market, second_market]) }
 
       before do
         visit admin_promotions_path
@@ -196,7 +196,7 @@ describe "Managing featured promotions" do
   end
 
   context "filtering", :js do
-    let!(:user) { create(:user, managed_markets: [market]) }
+    let!(:user) { create(:user, :market_manager, managed_markets: [market]) }
 
     before do
       switch_to_subdomain(market.subdomain)

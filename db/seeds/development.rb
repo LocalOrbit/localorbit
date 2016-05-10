@@ -14,7 +14,7 @@ market = Market.find_or_create_by!(name: "Fulton Market") {|m|
   m.contact_phone = '616-222-2222'
   m.closed = false
   m.active = true
-  m.plan = Plan.find_by_name("Grow")
+  m.organization.plan = Plan.find_by_name("Grow")
 }
 
 market_manager = User.find_or_create_by!(email: "mm@example.com") {|mm|

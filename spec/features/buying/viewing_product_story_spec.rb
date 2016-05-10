@@ -17,7 +17,7 @@ feature "View a products story", js: true do
   let!(:lot2)     { create(:lot, product: product2) }
 
   let!(:buyer_org) { create(:organization, :single_location, :buyer, markets: [market]) }
-  let!(:user)      { create(:user, organizations: [buyer_org]) }
+  let!(:user)      { create(:user, :buyer, organizations: [buyer_org]) }
 
   before do
     switch_to_subdomain market.subdomain

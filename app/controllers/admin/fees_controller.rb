@@ -7,11 +7,12 @@ module Admin
     end
 
     def update
-      attrs = fee_params
-      payment_fees_paid_by = attrs.delete('payment_fees_paid_by')
+      market_attrs = fee_params.except(:plan_id, :plan_start_at, :plan_interval, :plan_fee, :plan_bank_account_id)
+      org_attrs = fee_params.slice(:plan_id, :plan_start_at, :plan_interval, :plan_fee, :plan_bank_account_id)
+      payment_fees_paid_by = market_attrs.delete('payment_fees_paid_by')
       @market.set_credit_card_payment_fee_payer(payment_fees_paid_by)
 
-      if @market.update_attributes(attrs)
+      if @market.update_attributes(market_attrs) && @organization.update_attributes(org_attrs)
         redirect_to [:admin, @market, :fees], notice: "#{@market.name} fees successfully updated"
       else
         render :show
@@ -21,7 +22,8 @@ module Admin
     protected
 
     def lookup_market
-      @market = current_user.markets.find(params[:market_id])
+      @market = current_user.markets.find(params[:market_id]).decorate
+      @organization = @market.organization
     end
 
     def fee_params

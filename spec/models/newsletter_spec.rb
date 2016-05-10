@@ -9,10 +9,10 @@ describe Newsletter do
     let!(:newsletter) { create(:newsletter, market: market) }
     let!(:buyer_org) { create(:organization, :buyer, markets: [newsletter.market]) }
     let!(:seller_org) { create(:organization, :seller, markets: [newsletter.market]) }
-    let!(:buyer) { create(:user, email: "buyer@santa.org", organizations: [buyer_org], subscription_types: [newsletter_type] ) }
-    let!(:buyer2) { create(:user, email: "buyer2@santa.org", organizations: [buyer_org]) }
-    let!(:seller) { create(:user, email: "seller@santa.org", organizations: [seller_org], subscription_types: [newsletter_type] ) }
-    let!(:seller2) { create(:user, email: "seller2@santa.org", organizations: [seller_org]) }
+    let!(:buyer) { create(:user, :buyer, email: "buyer@santa.org", organizations: [buyer_org], subscription_types: [newsletter_type] ) }
+    let!(:buyer2) { create(:user, :buyer, email: "buyer2@santa.org", organizations: [buyer_org]) }
+    let!(:seller) { create(:user, :supplier, email: "seller@santa.org", organizations: [seller_org], subscription_types: [newsletter_type] ) }
+    let!(:seller2) { create(:user, :supplier, email: "seller2@santa.org", organizations: [seller_org]) }
 
     before do
       buyer2.unsubscribe_from(newsletter_type)

@@ -1,0 +1,3 @@
+class MarketCrossSellingPolicy < ApplicationPolicy
+
+end

@@ -1,9 +1,9 @@
 require "spec_helper"
 
 describe "Order summary" do
-  let!(:user) { create(:user, organizations: [sellers]) }
+  let!(:user) { create(:user, :supplier, organizations: [sellers]) }
   let!(:admin) { create(:user, :admin) }
-  let!(:market_manager) { create(:user) }
+  let!(:market_manager) { create(:user, :market_manager) }
   let!(:market)  { create(:market, :with_addresses, managers: [market_manager]) }
   let!(:sellers) { create(:organization, :seller, :single_location, markets: [market]) }
   let!(:others) { create(:organization, :seller, :single_location, markets: [market]) }

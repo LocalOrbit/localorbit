@@ -4,8 +4,8 @@ shared_examples "an action that grants access to buyers only" do |action|
   let(:seller_organization)       { create(:organization, :seller, markets: [market]) }
   let(:admin)                     { create(:user, :admin) }
   let(:market_manager)            { create(:user, managed_markets: [market]) }
-  let(:buyer_only)                { create(:user, organizations: [organization]) }
-  let(:seller)                    { create(:user, organizations: [seller_organization]) }
+  let(:buyer_only)                { create(:user, :buyer, organizations: [organization]) }
+  let(:seller)                    { create(:user, :supplier, organizations: [seller_organization]) }
 
   def meet_expected_expectation
     %w(show).include?(controller.action_name) ? be_a_success : be_a_redirect

@@ -1,18 +1,17 @@
 require "spec_helper"
 
 describe "Using order templates", :js do
-  let!(:user) { create(:user) }
-  let!(:other_buying_user) {  create(:user) }
-  let!(:buyer) { create(:organization, :single_location, :buyer, users: [user, other_buying_user]) }
+  let!(:buyer) { create(:organization, :single_location, :buyer) }
   let!(:credit_card)  { create(:bank_account, :credit_card, bankable: buyer, stripe_id: 'fake stripe id') }
   let!(:bank_account) { create(:bank_account, :checking, :verified, bankable: buyer, stripe_id: 'another fake stripe id') }
 
   let!(:fulton_farms) { create(:organization, :seller, :single_location, name: "Fulton St. Farms", users: [create(:user), create(:user)]) }
   let!(:ada_farms) { create(:organization, :seller, :single_location, name: "Ada Farms", users: [create(:user)]) }
 
-  let(:market_manager) { create(:user) }
+  let(:market_manager) { create(:user, :market_manager) }
   let(:plan) {create(:plan, :localeyes)}
-  let(:market) { create(:market, :with_addresses, organizations: [buyer, fulton_farms, ada_farms], managers: [market_manager], alternative_order_page: true, plan: plan) }
+  let(:market_org) { create(:organization, :market, plan: plan)}
+  let(:market) { create(:market, :with_addresses, organization: market_org, organizations: [buyer, fulton_farms, ada_farms], managers: [market_manager], alternative_order_page: true) }
   let!(:delivery_schedule) { create(:delivery_schedule, :percent_fee,  market: market, day: 5) }
   let!(:delivery_day) { DateTime.parse("May 9, 2014, 11:00:00") }
   let!(:delivery) do
@@ -22,6 +21,8 @@ describe "Using order templates", :js do
            cutoff_time: delivery_day - delivery_schedule.order_cutoff.hours
     )
   end
+  let!(:user) { create(:user, :buyer, organizations:[buyer]) }
+  let!(:other_buying_user) {  create(:user, :buyer, organizations:[buyer]) }
 
   # Fulton St. Farms
   let!(:bananas) { create(:product, name: "Bananas", organization: fulton_farms) }

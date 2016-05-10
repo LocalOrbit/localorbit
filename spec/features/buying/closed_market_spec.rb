@@ -13,7 +13,7 @@ feature "When a Market is closed" do
   let!(:seller)   { create(:organization, :seller, :single_location, markets: [market]) }
   let!(:buyer)    { create(:organization, :buyer, :single_location, markets: [market]) }
   let!(:products) { create_list(:product, 5, :sellable, organization: seller) }
-  let!(:user)     { create(:user, organizations: [buyer]) }
+  let!(:user)     { create(:user, :buyer, organizations: [buyer]) }
 
   context "and has one delivery schedule" do
     before do

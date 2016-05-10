@@ -4,6 +4,9 @@ class Organization < ActiveRecord::Base
   include Sortable
   include PgSearch
 
+  before_update :process_plan_change, if: :plan_id_changed?
+
+  has_one  :market
   has_many :market_organizations
   has_many :user_organizations
 
@@ -30,12 +33,15 @@ class Organization < ActiveRecord::Base
 
   has_many :bank_accounts, as: :bankable, dependent: :destroy
 
+  belongs_to :plan, inverse_of: :organizations
+  belongs_to :plan_bank_account, class_name: "BankAccount"
+
   validates :name, presence: true, length: {maximum: 255, allow_blank: true}
   validate :require_payment_method
 
   scope :active,  -> { where(active: true) }
-  scope :selling, -> { where(can_sell: true) }
-  scope :buying,  -> { where(can_sell: false) } # needs a new boolean
+  scope :selling, -> { where(org_type: "S") }
+  scope :buying,  -> { where(org_type: "B") } # needs a new boolean
   scope :visible, -> { where(show_profile: true) }
   scope :with_products, -> { joins(:products).select("DISTINCT organizations.*").order(name: :asc) }
   scope :buyers_for_orders, lambda {|orders| joins(:orders).where(orders: {id: orders}).uniq }
@@ -102,7 +108,7 @@ class Organization < ActiveRecord::Base
   end
 
   def can_cross_sell?
-    can_sell? && markets.joins(:plan).where(allow_cross_sell: true, plans: {cross_selling: true}).any?
+    can_sell? && markets.joins(:organization => [:plan]).where(allow_cross_sell: true, plans: {cross_selling: true}).any?
   end
 
   def update_product_delivery_schedules
@@ -160,6 +166,20 @@ class Organization < ActiveRecord::Base
     end
   end
 
+  def next_service_payment_at
+    return nil unless plan_start_at && plan_interval
+    return plan_start_at if plan_start_at > Time.now
+
+    @next_service_payment_at ||= begin
+      plan_payments = Payment.successful.not_refunded.made_after(plan_start_at).where(payer: self, payment_type: "service")
+      (plan_interval * plan_payments.count).months.from_now(plan_start_at)
+    end
+  end
+
+  def last_service_payment_at
+    Payment.successful.not_refunded.where(payer: self, payment_type: "service").order("created_at DESC").first.try(:created_at)
+  end
+
   private
 
   def reject_location(attributed)
@@ -175,4 +195,10 @@ class Organization < ActiveRecord::Base
       errors.add(:payment_method, "At least one payment method is required for the organization")
     end
   end
+
+  def process_plan_change
+    market.remove_cross_selling_from_market unless plan.cross_selling
+    market.products.each {|p| p.disable_advanced_inventory(self.market) } unless plan.advanced_inventory
+  end
+
 end

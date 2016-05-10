@@ -5,11 +5,11 @@ feature "Buyer Financial Overview" do
   let!(:delivery_schedule) { create(:delivery_schedule) }
   let!(:delivery)    { delivery_schedule.next_delivery }
 
-  let!(:seller)  { create(:organization, markets: [market]) }
-  let!(:seller2) { create(:organization, markets: [market]) }
+  let!(:seller)  { create(:organization, :seller, markets: [market]) }
+  let!(:seller2) { create(:organization, :seller, markets: [market]) }
   let!(:buyer) { create(:organization, :buyer, :single_location, markets: [market]) }
 
-  let!(:user)    { create(:user, organizations: [buyer]) }
+  let!(:user)    { create(:user, :buyer, organizations: [buyer]) }
 
   let!(:kale) { create(:product, :sellable, organization: seller, name: "Kale") }
   let!(:peas) { create(:product, :sellable, organization: seller, name: "Peas") }
@@ -174,6 +174,7 @@ feature "Buyer Financial Overview" do
     expect(page).to have_content(@uninvoiced2.order_number)
 
     click_link "Financials"
+    save_and_open_page
     click_link "Review Payment History"
   end
 end

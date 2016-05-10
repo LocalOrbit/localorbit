@@ -15,7 +15,7 @@ UserOrderItemContext = ConstructorStruct.new(
       is_admin = user.admin?
       is_localeyes_buyer = user.is_localeyes_buyer?
       delivery_pending = order_item.delivery_status == 'pending'
-      sellers_edit_orders_feature = !!(market.plan.try(:sellers_edit_orders)) && market.sellers_edit_orders
+      sellers_edit_orders_feature = !!(market.organization.plan.try(:sellers_edit_orders)) && market.sellers_edit_orders
 
       return self.new(
         is_market_manager: is_market_manager,
