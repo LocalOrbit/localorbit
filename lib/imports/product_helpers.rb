@@ -40,7 +40,9 @@ module Imports
 
 		def self.get_category_id_from_name(category_name)
 			begin
-				id = Category.find_by_name(category_name).id
+				#  Product.first(conditions: [ "lower(name) = ?", name.downcase ]) 
+				# id = Category.find(:first,:conditions => ["lower(name) =?", category_name.downcase])
+				id = Category.find_by_name(category_name).id # works, but case sensitive
 				id
 			rescue
 				return nil
@@ -49,8 +51,6 @@ module Imports
 
 		def self.get_organization_id_from_name(organization_name,market_subdomain,current_user)
 			begin
-				# binding.pry
-				p "START GET ORG"
 				mkt = Market.find_by_subdomain(market_subdomain)
 				user = User.find(current_user.to_i)
 				unless user.admin? || user.markets.includes?(mkt)
@@ -70,7 +70,7 @@ module Imports
 			end
 		end
 
-		def self.get_unit_id_from_name(unit_name) # assuming name is singular
+		def self.get_unit_id_from_name(unit_name) # assuming name is singular - this is input req
 			begin
 				unit = Unit.find_by_singular(unit_name).id
 				unit
@@ -81,7 +81,6 @@ module Imports
 
 		def self.create_product_from_hash(prod_hash,current_user)
 			gp_id_or_false = self.identify_product_uniqueness(prod_hash)
-			# binding.pry
 			if !gp_id_or_false
 				product = Product.create(
 								name: prod_hash["Product Name"],
@@ -105,7 +104,7 @@ module Imports
 					newprod.save!
 					newprod.prices.create!(sale_price: prod_hash["Multiple Pack Sizes"][SerializeProducts.required_headers[-1]], min_quantity: 1)
 				end
-			else #if gp_id_or_false.is_a?(Array) && gp_id_or_false.length > 1
+			else 
 				product = Product.where(name:prod_hash["Product Name"],category_id: self.get_category_id_from_name(prod_hash["Category Name"]),organization_id: self.get_organization_id_from_name(prod_hash["Organization"],prod_hash["Market Subdomain"],current_user),unit_id: self.get_unit_id_from_name(prod_hash["Unit Name"])).first # should be only one in resulting array if any, because this is searching for a product-unit combination
 				if !product.nil? # if there is a product-unit with this name, category, org
 					product.update_attributes!(unit_description: prod_hash["Unit Description"],code: prod_hash["Product Code"],short_description: prod_hash["Short Description"],long_description: prod_hash["Long Description"])
