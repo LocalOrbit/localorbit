@@ -190,9 +190,9 @@ FactoryGirl.define do
     ach_fee_cap            8
     allow_purchase_orders  true
     allow_credit_cards     true
-    default_allow_purchase_orders false
-    default_allow_credit_cards    true
-    auto_activate_organizations   false
+    default_allow_purchase_orders   false
+    default_allow_credit_cards      true
+    auto_activate_organizations     false
     product_label_format 4
     print_multiple_labels_per_item false
     alternative_order_page         false
@@ -324,7 +324,6 @@ FactoryGirl.define do
 
   factory :organization do
     sequence(:name) {|n| "Organization #{n}" }
-    can_sell true
     show_profile true
     allow_purchase_orders true
     allow_credit_cards    true

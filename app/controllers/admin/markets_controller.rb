@@ -114,7 +114,7 @@ class Admin::MarketsController < AdminController
       :country,
       :product_label_format,
       :print_multiple_labels_per_item,
-      :organization_id
+      :organization_id,
       :number_format_numeric
     ]
     if current_user.can_manage_market?(@market)

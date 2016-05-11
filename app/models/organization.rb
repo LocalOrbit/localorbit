@@ -201,4 +201,20 @@ class Organization < ActiveRecord::Base
     market.products.each {|p| p.disable_advanced_inventory(self.market) } unless plan.advanced_inventory
   end
 
+  def subscription_eligible?
+    # KXM Do we need plan_payable?  I think not...
+    # !subscribed && next_service_payment_at && next_service_payment_at <= Time.now && plan_payable?
+    !subscribed && next_service_payment_at && next_service_payment_at <= Time.now
+  end
+
+  def subscribe!
+    update!(subscribed: true)
+  end
+
+  def set_subscription(stripe_invoice)
+    update_attribute(:plan_interval, 12)
+    update_attribute(:plan_fee, ::Financials::MoneyHelpers.cents_to_amount(stripe_invoice.amount_due))
+    update_attribute(:subscribed, true)
+  end
+
 end
