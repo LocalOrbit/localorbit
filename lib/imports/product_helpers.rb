@@ -1,23 +1,7 @@
 module Imports
 	module ProductHelpers
 
-		# method to titleize without capitalizing conjunctions
-		# def self.titleize_specific(nm)
-		# 	conjs = ["of","and","with","on","to"]
-		# 	nm = nm.titleize 
-		# 	nmb = ""
-		# 	nm.split.each do |w|
-		# 		if conjs.include?(w.downcase)
-		# 			nmb += w.downcase
-		# 		else
-		# 			nmb += w
-		# 		end
-		# 		nmb += " "
-		# 	end
-		# 	nmb
-		# end
-
-		$current_user = 3919
+		$current_user = Figaro.env.api_admin_user_id.to_i
 
 		def self.identify_product_uniqueness(product_params)
 			identity_params_hash = {product_name:product_params["Product Name"],category_id: self.get_category_id_from_name(product_params["Category Name"]),organization_id: self.get_organization_id_from_name(product_params["Organization"],product_params["Market Subdomain"],$current_user)}
