@@ -20,7 +20,7 @@ module Imports
 						@required_headers[0..-4].each do |rh|
 							product_row_hash[rh] = row[rh]
 						end
-						if row[@required_headers[-4]] == "Y" # TODO need any more error checking?
+						if row[@required_headers[-4]] and row[@required_headers[-4]].upcase == "Y" # TODO need any more error checking?
 							product_row_hash[@required_headers[-4]] = {}
 							# Make sub-hash with the multi-unit/break case information if extant, based on order of required headers
 							product_row_hash[@required_headers[-4]][@required_headers[-3]] = row[@required_headers[-3]]
@@ -77,7 +77,7 @@ module Imports
 				#create error and append it (TODO could have clearer error info for this one - which one is blank)
 				error_hash["Errors"]["Invalid Data under required headers"] = "Some required data is blank."
 			end
-			if product_row[@required_headers[-4]].upcase == "Y" and [product_row[@required_headers[-3]],product_row[@required_headers[-2]],product_row[@required_headers.last]].any? {|obj| obj.blank?}
+			if product_row[@required_headers[-4]] and product_row[@required_headers[-4]].upcase == "Y" and [product_row[@required_headers[-3]],product_row[@required_headers[-2]],product_row[@required_headers.last]].any? {|obj| obj.blank?}
 				okay_flag = false
 				#create error and append it
 				error_hash["Errors"]["Missing multi-unit/break case data"] = "#{@required_headers[-4]} header has data 'Y' but is missing required Unit, Unit description, and/or Price"
@@ -86,7 +86,7 @@ module Imports
 				okay_flag = false
 				error_hash["Errors"]["Short Description too long"] = "Short description cannot be longer than 50 characters."
 			end
-			if product_row[@required_headers[-4]].upcase != "Y" and [product_row[@required_headers[-3]],product_row[@required_headers[-2]],product_row[@required_headers.last]].any? {|obj| !obj.blank?}
+			if (!product_row[@required_headers[-4]] or product_row[@required_headers[-4]].upcase != "Y") and [product_row[@required_headers[-3]],product_row[@required_headers[-2]],product_row[@required_headers.last]].any? {|obj| !obj.blank?}
 				okay_flag = false
 				# create error and append it
 				error_hash["Errors"]["Invalid data for #{@required_headers[-4]}"] = "Included multiple unit data without Y for #{@required_headers[-4]}"
@@ -111,11 +111,11 @@ module Imports
 				#create error and append it
 				error_hash["Errors"]["Missing or invalid price"] = "Check product price validity. Must be a valid decimal > 0. Input was: #{product_row["Price"]}"
 			end
-			if product_row[@required_headers[-4]].upcase == "Y" and product_row[@required_headers.last].to_f <= 0
+			if product_row[@required_headers[-4]] and product_row[@required_headers[-4]].upcase == "Y" and product_row[@required_headers.last].to_f <= 0
 				okay_flag = false
 				error_hash["Errors"]["Missing or invalid price for additional pack size"] = "Check price validity for #{product_row[@required_headers.last]}. Must be a valid decimal > 0. Input was: #{product_row[@required_headers.last]}"
 			end
-			if (product_row[@required_headers[-4]].upcase == "Y") and ([product_row[@required_headers[-3]],product_row[@required_headers[-2]],product_row[@required_headers.last]] == [product_row["Unit Name"],product_row["Unit Description"],product_row["Unit Price"]])
+			if (product_row[@required_headers[-4]] and product_row[@required_headers[-4]].upcase == "Y") and ([product_row[@required_headers[-3]],product_row[@required_headers[-2]],product_row[@required_headers.last]] == [product_row["Unit Name"],product_row["Unit Description"],product_row["Unit Price"]])
 				okay_flag = false
 				error_hash["Errors"]["Identical units for same product"] = "Your additional unit and original unit for this project are the same. Try again with different information in the last three columns OR do not submit additional unit information."
 			end
