@@ -37,7 +37,6 @@ feature "sending invoices" do
 
     invoice = invoice_rows.first
 
-    save_and_open_page
     expect(invoice.order_number).to eq("LO-001")
     expect(invoice.buyer).to eq("Money Bags")
     expect(invoice.order_date).to eq(1.week.ago.strftime("%m/%d/%Y"))

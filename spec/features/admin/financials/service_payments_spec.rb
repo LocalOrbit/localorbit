@@ -19,7 +19,6 @@ feature "Admin service payments" do
   it "navigating to" do
     click_link "Market Admin"
     click_link "Admin Financials"
-    click_link "Service Payments"
 
     expect(page).to have_content("Market Service Payments")
   end

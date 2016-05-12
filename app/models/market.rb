@@ -40,8 +40,6 @@ class Market < ActiveRecord::Base
   has_many :promotions, inverse_of: :market
   has_many :order_templates
   belongs_to :organization
-  #belongs_to :plan, inverse_of: :markets
-  #belongs_to :plan_bank_account, class_name: "BankAccount"
 
   has_many :bank_accounts, as: :bankable
 

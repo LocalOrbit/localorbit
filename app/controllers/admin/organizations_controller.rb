@@ -129,7 +129,7 @@ module Admin
     end
 
     def find_organization
-      @organization = current_user.managed_organizations.find(params[:id])
+      @organization = current_user.managed_organizations.find_by_id(params[:id])
     end
 
     def find_delivery_schedules

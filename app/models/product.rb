@@ -12,8 +12,8 @@ class Product < ActiveRecord::Base
   audited allow_mass_assignment: true, associated_with: :organization
 
   belongs_to :category
-  belongs_to :top_level_category, class: Category
-  belongs_to :second_level_category, class: Category
+  belongs_to :top_level_category, class_name: Category
+  belongs_to :second_level_category, class_name: Category
   belongs_to :organization, inverse_of: :products
   belongs_to :location
   belongs_to :unit

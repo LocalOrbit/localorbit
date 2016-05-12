@@ -48,18 +48,6 @@ describe BankAccount do
 
       expect(subject).to be_verification_failed
     end
-
-    it "is true if the balanced verification has failed" do
-      expect(subject).to receive(:balanced_verification).twice.and_return(double(Balanced::Verification, state: "failed"))
-
-      expect(subject).to be_verification_failed
-    end
-
-    it "is false if the balanced verification is pending" do
-      expect(subject).to receive(:balanced_verification).twice.and_return(double(Balanced::Verification, state: "pending"))
-
-      expect(subject).not_to be_verification_failed
-    end
   end
 
   describe "soft_delete" do

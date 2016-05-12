@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160505152336) do
+ActiveRecord::Schema.define(version: 20160511202055) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -680,6 +680,7 @@ ActiveRecord::Schema.define(version: 20160505152336) do
     t.string   "ownership_type"
     t.boolean  "non_profit"
     t.string   "professional_organizations"
+    t.boolean  "subscribed"
   end
 
   add_index "organizations", ["name"], name: "index_organizations_on_name", using: :btree
@@ -823,7 +824,7 @@ ActiveRecord::Schema.define(version: 20160505152336) do
     t.string "section"
     t.string "action"
     t.string "description"
-    t.string "org_type",    default: [], array: true
+    t.string "org_types",   default: [], array: true
     t.string "plan_ids",    default: [], array: true
   end
 

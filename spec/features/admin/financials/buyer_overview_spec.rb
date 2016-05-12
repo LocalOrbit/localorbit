@@ -174,7 +174,6 @@ feature "Buyer Financial Overview" do
     expect(page).to have_content(@uninvoiced2.order_number)
 
     click_link "Financials"
-    save_and_open_page
     click_link "Review Payment History"
   end
 end

@@ -25,10 +25,10 @@ class Order < ActiveRecord::Base
   belongs_to :market, inverse_of: :orders
   belongs_to :organization, inverse_of: :orders
   belongs_to :delivery, inverse_of: :orders
-  belongs_to :placed_by, class: User
+  belongs_to :placed_by, class_name: User
   belongs_to :discount
 
-  has_many :items, inverse_of: :order, class: OrderItem, autosave: true, dependent: :destroy do
+  has_many :items, inverse_of: :order, class_name: OrderItem, autosave: true, dependent: :destroy do
     def for_checkout
       eager_load(product: [:organization, :prices]).order("organizations.name, products.name").group_by do |item|
         item.product.organization.name

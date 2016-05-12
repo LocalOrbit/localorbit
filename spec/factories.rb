@@ -324,6 +324,7 @@ FactoryGirl.define do
 
   factory :organization do
     sequence(:name) {|n| "Organization #{n}" }
+    can_sell true
     show_profile true
     allow_purchase_orders true
     allow_credit_cards    true
@@ -331,7 +332,6 @@ FactoryGirl.define do
     display_twitter       false
     display_facebook      false
     active                true
-
 
     trait :admin do
       org_type 'A'

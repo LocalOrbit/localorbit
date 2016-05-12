@@ -14,7 +14,7 @@ module Api
           show_entity_picker = !current_user.admin_or_mm? && current_user.seller?
 
           if current_user.admin_or_mm?
-            if current_market.plan.name == 'LocalEyes'
+            if current_market.organization.plan.name == 'LocalEyes'
               user_type = "P"
             else
               user_type = "M"

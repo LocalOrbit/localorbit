@@ -2,7 +2,7 @@ source 'https://rubygems.org'
 
 ruby '2.1.2'
 
-gem 'rails', '~> 4.1.6.rc1'
+gem 'rails', '~> 4.1.11'
 
 gem 'pg'
 
@@ -25,7 +25,7 @@ gem 'active_record_union'
 gem 'acts_as_geocodable'
 gem 'audited-activerecord'
 gem 'awesome_nested_set'
-gem 'balanced', '~> 0.7'
+#gem 'balanced', '~> 0.7'
 gem 'stripe'
 gem 'color'
 gem 'countries'

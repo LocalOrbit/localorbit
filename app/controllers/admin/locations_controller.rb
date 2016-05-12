@@ -52,7 +52,7 @@ module Admin
     private
 
     def find_organization
-      @organization = current_user.managed_organizations.find(params[:organization_id])
+      @organization = current_user.managed_organizations.find_by_id(params[:organization_id])
     end
 
     def location_params

@@ -53,7 +53,7 @@ class FeatureAccess
     end
 
     def sellers_edit_orders_feature_available?(market:)
-      if !market.organization.plan.nil?
+      if !market.organization.nil? && !market.organization.plan.nil?
         !!market.organization.plan.try(:sellers_edit_orders?)
       end
     end

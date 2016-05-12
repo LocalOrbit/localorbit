@@ -180,6 +180,22 @@ class Organization < ActiveRecord::Base
     Payment.successful.not_refunded.where(payer: self, payment_type: "service").order("created_at DESC").first.try(:created_at)
   end
 
+  def subscription_eligible?
+    # KXM Do we need plan_payable?  I think not...
+    # !subscribed && next_service_payment_at && next_service_payment_at <= Time.now && plan_payable?
+    !subscribed && next_service_payment_at && next_service_payment_at <= Time.now
+  end
+
+  def subscribe!
+    update!(subscribed: true)
+  end
+
+  def set_subscription(stripe_invoice)
+    update_attribute(:plan_interval, 12)
+    update_attribute(:plan_fee, ::Financials::MoneyHelpers.cents_to_amount(stripe_invoice.amount_due))
+    update_attribute(:subscribed, true)
+  end
+
   private
 
   def reject_location(attributed)
@@ -199,22 +215,6 @@ class Organization < ActiveRecord::Base
   def process_plan_change
     market.remove_cross_selling_from_market unless plan.cross_selling
     market.products.each {|p| p.disable_advanced_inventory(self.market) } unless plan.advanced_inventory
-  end
-
-  def subscription_eligible?
-    # KXM Do we need plan_payable?  I think not...
-    # !subscribed && next_service_payment_at && next_service_payment_at <= Time.now && plan_payable?
-    !subscribed && next_service_payment_at && next_service_payment_at <= Time.now
-  end
-
-  def subscribe!
-    update!(subscribed: true)
-  end
-
-  def set_subscription(stripe_invoice)
-    update_attribute(:plan_interval, 12)
-    update_attribute(:plan_fee, ::Financials::MoneyHelpers.cents_to_amount(stripe_invoice.amount_due))
-    update_attribute(:subscribed, true)
   end
 
 end

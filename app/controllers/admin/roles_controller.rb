@@ -33,6 +33,6 @@ class Admin::RolesController < AdminController
   private
 
   def role_params
-    params.require(:role).permit(:name, :activities)
+    params.require(:role).permit(:name, :activities, :org_type)
   end
 end
