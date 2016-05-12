@@ -66,7 +66,7 @@ feature "sending invoices" do
 
     attachment = current_email.attachments.first
     expect(attachment.filename).to eq("invoice.pdf")
-    expect(attachment.content_type).to eq("application/pdf; charset=UTF-8")
+    expect(attachment.content_type).to eq("application/pdf")
   end
 
   scenario "sending an invoice to an organization with no users", pdf: true do
