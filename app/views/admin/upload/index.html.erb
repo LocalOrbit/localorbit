@@ -21,11 +21,13 @@ Upload a <strong>.CSV</strong> file of your organization(s)'s products here. For
 	<p>This feature is not available for this market's current plan.</p>
 
 <% end %>
-
-
-<strong><%= link_to 'Product Upload Documentation', admin_upload_get_documentation_path %></strong>
-<br>
+<br> <br>
+To download <strong>a template</strong> for filling in your product information, please click here:<br>
 <strong><%= link_to 'Download CSV Template for products', admin_upload_download_path %></strong>
+<br><br>
+To download <strong>documentation explaining the Local Orbit product upload</strong>, please click here:<br>
+<strong><%= link_to 'Product Upload Documentation', admin_upload_get_documentation_path %></strong>
+
 <br><br>
 
 <% recent_uploads = Audit.where(action:"Product upload").where(associated_type:@sd).last(4) %>
