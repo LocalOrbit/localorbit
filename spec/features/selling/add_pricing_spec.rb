@@ -167,6 +167,7 @@ describe "Adding advanced pricing" do
 
   describe "with product market fees", js: true do
     let(:market) { create(:market, allow_product_fee: true) }
+    let(:user)   { create(:user, :market_manager) }
 
     it "shows updated net sale information" do
       find(:field, 'price[fee]', with: '1').click

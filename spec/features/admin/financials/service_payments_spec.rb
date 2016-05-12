@@ -50,8 +50,6 @@ feature "Admin service payments" do
   end
 
   it "does not allow a service payment through stripe for markets without a default card", :vcr do
-    market_manager = create(:user, managed_markets: [configured_market])
-
     visit "/admin/financials/admin/service_payments"
 
     expect(page.find("#market_#{configured_market.id} .next-payment-date").text).to eq(1.day.ago.strftime("%m/%d/%Y"))
