@@ -40,9 +40,10 @@ module Imports
 
 		def self.get_category_id_from_name(category_name)
 			begin
-				#  Product.first(conditions: [ "lower(name) = ?", name.downcase ]) 
-				# id = Category.find(:first,:conditions => ["lower(name) =?", category_name.downcase])
-				id = Category.find_by_name(category_name).id # works, but case sensitive
+				t = Category.arel_table
+				id = Category.where(t[:name].matches("#{category_name}%")).first.id # going on first for oldest at moment
+				# TODO Check -- may improve with taxonomy restructure, May16 no category uniqueness by name only -- depends upon taxonomy + varying acceptable depths
+				# id = Category.find_by_name(category_name).id # works, but case sensitive
 				id
 			rescue
 				return nil
@@ -56,15 +57,15 @@ module Imports
 				unless user.admin? || user.markets.includes?(mkt)
 					return nil
 				end
+				t = Organization.arel_table
+				# org = Organization.find_by_name(organization_name)
+				org = Organization.where(t[:name].matches("#{organization_name}%"),t[:market_id].matches(mkt.id),t[:can_sell].matches(true))
 
-				org = Organization.find_by_name(organization_name)
-				if org.is_a?(Array)
-					org = org.where(markets: mkt) # where the mkt is included in the organization's markets
-					if org.empty? # if none such that mkt and org match up
-						return nil
-					end
-				end	
-				org.id # if we get here, return ref to org id
+				if org.empty? # if none such that mkt and org match up
+					return nil
+				end
+				org.first.id # if we get here, return ref to org id that comes up first
+				# TODO check handling non-uniques properly
 			rescue
 				return nil
 			end
@@ -72,8 +73,10 @@ module Imports
 
 		def self.get_unit_id_from_name(unit_name) # assuming name is singular - this is input req
 			begin
-				unit = Unit.find_by_singular(unit_name).id
-				unit
+				t = Unit.arel_table
+				unit = Unit.where(t[:singular].matches("#{unit_name}%"))
+				# unit = Unit.find_by_singular(unit_name).id
+				unit.first.id
 			rescue
 				return nil
 			end

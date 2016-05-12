@@ -83,7 +83,7 @@ module Imports
 				error_hash["Errors"]["Missing multi-unit/break case data"] = "#{@required_headers[-4]} header has data 'Y' but is missing required Unit, Unit description, and/or Price"
 			end
 			if product_row["Short Description"].length > 50
-				error_hash["Errors"]["Short Description too long"] = "Short description cannot be longer than 50 characters, including spaces. Input was:\n product_row["Short Description"]"
+				error_hash["Errors"]["Short Description too long"] = "Short description cannot be longer than 50 characters."
 			end
 			if product_row[@required_headers[-4]].upcase != "Y" and [product_row[@required_headers[-3]],product_row[@required_headers[-2]],product_row[@required_headers.last]].any? {|obj| !obj.blank?}
 				okay_flag = false
@@ -103,7 +103,7 @@ module Imports
 			if ProductHelpers.get_unit_id_from_name(product_row["Unit Name"]).nil?
 				okay_flag = false
 				#create error and append it 
-				error_hash["Errors"]["Missing or invalid Unit name"] = "Check unit of measure validity. (Must be singular and included in LO system!) Input was: #{product_row["Unit Name"]}" # TODO more info provided?
+				error_hash["Errors"]["Missing or invalid Unit name"] = "Check unit of measure validity. Must be singular and included in LO system. Input was: #{product_row["Unit Name"]}" # TODO more info provided?
 			end
 			if !(product_row["Price"].to_f and product_row["Price"].to_f > 0) 
 				okay_flag = false
