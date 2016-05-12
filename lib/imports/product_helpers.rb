@@ -41,8 +41,10 @@ module Imports
 		def self.get_category_id_from_name(category_name)
 			begin
 				t = Category.arel_table
-				id = Category.where(t[:name].matches("#{category_name}%")).first.id # going on first for oldest at moment
-				# TODO Check -- may improve with taxonomy restructure, May16 no category uniqueness by name only -- depends upon taxonomy + varying acceptable depths
+				id = Category.where(t[:name].matches("#{category_name}%")).first.id # going on first, for oldest, at moment -- most likely correct.
+
+				# TODO Check -- may improve with taxonomy restructure, May16 no category uniqueness by name only -- depends upon taxonomy + varying acceptable depths.
+				# Previous sol'n, holding:
 				# id = Category.find_by_name(category_name).id # works, but case sensitive
 				id
 			rescue
