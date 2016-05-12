@@ -1,47 +1,70 @@
 require "spec_helper"
 
-#   context "for a market with no cross sell lists" do
-#     it "shows new list button" do
-#     end
-#   end
-
-#   context "for a market with cross selling lists" do
-#     it "shows a list of cross selling lists" do
-#     end
-#     it "saves changes to cross selling markets" do
-#     end
-#   end
-
-#   context "view organization cross sells" do
-#     it "allows organization to see their cross sells" do
-#     end
-#   end
-
 describe "Manage cross selling lists" do
+  let!(:user) { create(:user, role: "user") }
+
+  let!(:cross_selling_market)     { create(:market, managers: [user], allow_cross_sell: true) }
+  let!(:not_cross_selling_market) { create(:market, managers: [user]) }
+
   # Set up:
   #   Two Markets that cross sell with each other
   #   Supplier Organizations, some associated with Mkt_01, some with Mkt_02, some with both
   #   Organizations have associated products
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
   context "when cross selling is unavailable" do
-    # - Status check? Lack of 'Cross Sell' tab
+    let!(:market) { create(:market, managers: [user]) }
+
+    before do
+      switch_to_subdomain(market.subdomain)
+      sign_in_as user
+      visit admin_market_path(market)
+    end
+
+    it "doesn't show the cross sell tab" do
+      expect(page).to_not have_css(".tabs", text: "Cross Sell")
+    end
   end 
 
   # - (Mkt_01)
   context "when cross selling is available but off" do
+    before do
+      switch_to_subdomain(cross_selling_market.subdomain)
+      sign_in_as user
+      visit admin_market_path(cross_selling_market)
+    end
+
     it "lets you turn it on" do
+      within ".tabs" do
+        click_link "Cross Sell"
+      end
+
       expect(page).to have_content("Turn on Cross Selling")
 
       click_button "Turn on Cross Selling"
 
-      # expect market to now be able to cross sell
+      expect(page).to have_content("Turn off Cross Selling")
     end
 
   end
 
   context "when cross selling is available and on" do
+    before do
+      switch_to_subdomain(cross_selling_market.subdomain)
+      sign_in_as user
+      visit admin_market_path(cross_selling_market)
+    end
+
     it "lets you turn it off" do
+      within ".tabs" do
+        click_link "Cross Sell"
+      end
+
       expect(page).to have_content("Turn off Cross Selling")
+
+      click_button "Turn off Cross Selling"
+
+      expect(page).to have_content("Turn on Cross Selling")
     end
   end
 
@@ -62,7 +85,10 @@ describe "Manage cross selling lists" do
 
       expect(page).to have_content("Your Cross Selling list is Empty")
 
-      fill_in "List Name", with: "Listy McListface" # RIP 'Boaty McBoatface' - democracy is DEAD.  What the hell were they thinking, anyway?  Who asks for the internet's opinion about _anything_?!
+      fill_in "List Name", with: "Listy McListface"
+      # RIP 'Boaty McBoatface' - democracy is DEAD.  What the hell were they thinking,
+      # anyway?  Who asks for the internet's opinion about _anything_?!
+
       select "Subscribing market", from: "List Visibility"
 
       click_button "Create List"
@@ -70,6 +96,10 @@ describe "Manage cross selling lists" do
       # - Check for the newly created list on the resulting index page.  It'll look something like this:
       # lists = Dom::Admin::[list item Dom name].first
       # expect(lists.list_name.value).to eql("Listy McListface")
+    end
+
+    it "adds products by supplier" do
+
     end
   end
 
