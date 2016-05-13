@@ -1,23 +1,7 @@
 module Imports
 	module ProductHelpers
 
-		# method to titleize without capitalizing conjunctions
-		# def self.titleize_specific(nm)
-		# 	conjs = ["of","and","with","on","to"]
-		# 	nm = nm.titleize 
-		# 	nmb = ""
-		# 	nm.split.each do |w|
-		# 		if conjs.include?(w.downcase)
-		# 			nmb += w.downcase
-		# 		else
-		# 			nmb += w
-		# 		end
-		# 		nmb += " "
-		# 	end
-		# 	nmb
-		# end
-
-		$current_user = 3919
+		$current_user = Figaro.env.api_admin_user_id.to_i
 
 		def self.identify_product_uniqueness(product_params)
 			identity_params_hash = {product_name:product_params["Product Name"],category_id: self.get_category_id_from_name(product_params["Category Name"]),organization_id: self.get_organization_id_from_name(product_params["Organization"],product_params["Market Subdomain"],$current_user)}
@@ -40,7 +24,12 @@ module Imports
 
 		def self.get_category_id_from_name(category_name)
 			begin
-				id = Category.find_by_name(category_name).id
+				t = Category.arel_table
+				id = Category.where(t[:name].matches("#{category_name}%")).first.id # going on first, for oldest, at moment -- most likely correct.
+
+				# TODO Check -- may improve with taxonomy restructure, May16 no category uniqueness by name only -- depends upon taxonomy + varying acceptable depths.
+				# Previous sol'n, holding:
+				# id = Category.find_by_name(category_name).id # works, but case sensitive
 				id
 			rescue
 				return nil
@@ -49,31 +38,31 @@ module Imports
 
 		def self.get_organization_id_from_name(organization_name,market_subdomain,current_user)
 			begin
-				# binding.pry
-				p "START GET ORG"
 				mkt = Market.find_by_subdomain(market_subdomain)
 				user = User.find(current_user.to_i)
 				unless user.admin? || user.markets.includes?(mkt)
 					return nil
 				end
+				t = Organization.arel_table
+				# org = Organization.find_by_name(organization_name)
+				org = Organization.where(t[:name].matches("#{organization_name}%"),t[:market_id].matches(mkt.id),t[:can_sell].matches(true))
 
-				org = Organization.find_by_name(organization_name)
-				if org.is_a?(Array)
-					org = org.where(markets: mkt) # where the mkt is included in the organization's markets
-					if org.empty? # if none such that mkt and org match up
-						return nil
-					end
-				end	
-				org.id # if we get here, return ref to org id
+				if org.empty? # if none such that mkt and org match up
+					return nil
+				end
+				org.first.id # if we get here, return ref to org id that comes up first
+				# TODO check handling non-uniques properly
 			rescue
 				return nil
 			end
 		end
 
-		def self.get_unit_id_from_name(unit_name) # assuming name is singular
+		def self.get_unit_id_from_name(unit_name) # assuming name is singular - this is input req
 			begin
-				unit = Unit.find_by_singular(unit_name).id
-				unit
+				t = Unit.arel_table
+				unit = Unit.where(t[:singular].matches("#{unit_name}%"))
+				# unit = Unit.find_by_singular(unit_name).id
+				unit.first.id
 			rescue
 				return nil
 			end
@@ -81,7 +70,6 @@ module Imports
 
 		def self.create_product_from_hash(prod_hash,current_user)
 			gp_id_or_false = self.identify_product_uniqueness(prod_hash)
-			# binding.pry
 			if !gp_id_or_false
 				product = Product.create(
 								name: prod_hash["Product Name"],
@@ -105,7 +93,7 @@ module Imports
 					newprod.save!
 					newprod.prices.create!(sale_price: prod_hash["Multiple Pack Sizes"][SerializeProducts.required_headers[-1]], min_quantity: 1)
 				end
-			else #if gp_id_or_false.is_a?(Array) && gp_id_or_false.length > 1
+			else 
 				product = Product.where(name:prod_hash["Product Name"],category_id: self.get_category_id_from_name(prod_hash["Category Name"]),organization_id: self.get_organization_id_from_name(prod_hash["Organization"],prod_hash["Market Subdomain"],current_user),unit_id: self.get_unit_id_from_name(prod_hash["Unit Name"])).first # should be only one in resulting array if any, because this is searching for a product-unit combination
 				if !product.nil? # if there is a product-unit with this name, category, org
 					product.update_attributes!(unit_description: prod_hash["Unit Description"],code: prod_hash["Product Code"],short_description: prod_hash["Short Description"],long_description: prod_hash["Long Description"])
