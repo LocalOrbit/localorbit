@@ -46,11 +46,11 @@ class CreateBankAccount
         bank_name: params.bank_name,
         name: params.account_holder_name,
         last_four: params.last4,
-        account_type: 'checking',
-        bankable_type: 'Market',
+        account_type: "checking",
+        bankable_type: "Market",
         stripe_id: params.id
       }
-      ret_val[:verified] = true if params.status == 'verified'
+      ret_val[:verified] = true if params.status == "verified"
 
     when "card"
       ret_val = {
@@ -59,7 +59,7 @@ class CreateBankAccount
         last_four: params.last4,
         account_type: params.object,
         verified: true,
-        bankable_type: 'Market',
+        bankable_type: "Market",
         expiration_month: params.exp_month,
         expiration_year: params.exp_year,
         stripe_id: params.id

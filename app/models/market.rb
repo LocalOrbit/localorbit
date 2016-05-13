@@ -243,9 +243,9 @@ class Market < ActiveRecord::Base
   def set_subscription(stripe_invoice)
     # Return the old values in case they need to be rolled back
     ret_val = {
-      plan_interval: self.plan_interval,
-      plan_fee: self.plan_fee,
-      subscribed: self.subscribed
+      plan_interval: plan_interval,
+      plan_fee: plan_fee,
+      subscribed: subscribed
     }
     update_attribute(:plan_interval, 12)
     update_attribute(:plan_fee, ::Financials::MoneyHelpers.cents_to_amount(stripe_invoice.amount_due))
