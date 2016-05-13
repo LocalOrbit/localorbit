@@ -24,8 +24,29 @@
       <legend>Market Fees</legend>
       <div class="field">
         <%= f.label :market_seller_fee, "Market % paid by Supplier" %><br>
-        <%= f.number_field :market_seller_fee, min: 0, max: 99.999, step: "0.001", size: 6 %>%
+        <%= f.number_field :market_seller_fee, min: 0, max: 99.999, step: "0.001", size: 6, class: 'market-seller-fee' %>%
+        <br/><span style="font-weight: bold; font-size: 10px; color: red;">Warning: Changing your Market Fee will affect the net price of all products.</span>
       </div>
+      <br/>
+      <div style="padding: 10px; background-color: #EFEFEF; border-radius: 5px; display:inline-block;">
+        <strong>Sample Price Calculator</strong><br/><br/>
+        Enter a Net Price to see the calculated Sale Price, or enter a Sale Price to see the calculated Net Price - each based upon the Market %. You will also see the equivalent Markup %.<br/><br/>
+        <div style="float:left; margin-right: 15px;">
+          <strong>Net Price:</strong>
+          <span class="tooltip pull-right" data-tooltip="The net price is estimated based on the gross sale price minus the fees deducted (your market fee and any possible other fees such as the 2.9% credit card payment processing fee). The credit card fee is only charged on orders that are paid for with a credit card."></span>
+          <br/>
+          <input type="text" class="net-price" style="width: 75px" />
+        </div>
+        <div style="float:left; margin-right: 15px;">
+          <strong>Sale Price:</strong><br/>
+          <input type="text" class="sale-price" style="width: 75px" />
+        </div>
+        <div style="float:left">
+          <strong>Markup %:</strong><br/>
+          <div class="markup-pct" style="width: 75px; margin-top: 15px;"></div>
+        </div>
+      </div>
+
     </fieldset>
     <% if PaymentProvider.is_balanced?(@market.payment_provider) %>
       <fieldset>
