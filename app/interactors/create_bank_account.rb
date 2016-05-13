@@ -44,6 +44,7 @@ class CreateBankAccount
     when "bank_account"
       ret_val = {
         bank_name: params.bank_name,
+        name: params.account_holder_name,
         last_four: params.last4,
         account_type: 'checking',
         bankable_type: 'Market',
@@ -54,7 +55,7 @@ class CreateBankAccount
     when "card"
       ret_val = {
         bank_name: params.brand,
-        name: params.account_holder_name,
+        name: params.name,
         last_four: params.last4,
         account_type: params.object,
         verified: true,
@@ -65,5 +66,6 @@ class CreateBankAccount
       }
 
       ret_val
+    end
   end
 end
