@@ -9,10 +9,13 @@ class CreateBankAccount
 
   def perform
     if(
-      # If the supplied bank_account_params constitute a Stripe Card...
-      bank_account_params.class == Stripe::Card &&
-      # ...and the card is for this Stripe customer
-      context[:entity].try(:stripe_customer_id) == bank_account_params.try(:customer)
+      # If the supplied bank_account_params identify this Stripe customer...
+      context[:entity].try(:stripe_customer_id) == bank_account_params.try(:customer) &&
+      # ...and constitute an accepted Stripe object...
+      (
+          bank_account_params.class == Stripe::Card ||
+          bank_account_params.class == Stripe::BankAccount
+      )
     )
       # ...then use the card to create the bank account.
       params = extract_stripe_card_attributes(bank_account_params)
@@ -37,15 +40,32 @@ class CreateBankAccount
   end
 
   def extract_stripe_card_attributes(params)
-    ret_val = {
-      bank_name: params.brand,
-      last_four: params.last4,
-      account_type: params.object,
-      verified: true,
-      bankable_type: 'Market',
-      expiration_month: params.exp_month,
-      expiration_year: params.exp_year,
-      stripe_id: params.id
-    }
+    case params.object
+    when "bank_account"
+      ret_val = {
+        bank_name: params.bank_name,
+        name: params.account_holder_name,
+        last_four: params.last4,
+        account_type: "checking",
+        bankable_type: "Market",
+        stripe_id: params.id
+      }
+      ret_val[:verified] = true if params.status == "verified"
+
+    when "card"
+      ret_val = {
+        bank_name: params.brand,
+        name: params.name,
+        last_four: params.last4,
+        account_type: params.object,
+        verified: true,
+        bankable_type: "Market",
+        expiration_month: params.exp_month,
+        expiration_year: params.exp_year,
+        stripe_id: params.id
+      }
+
+      ret_val
+    end
   end
 end
