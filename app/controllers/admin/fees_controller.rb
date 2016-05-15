@@ -4,6 +4,7 @@ module Admin
     before_action :lookup_market
 
     def show
+      @seller_cc_rate = ::Financials::Pricing.seller_cc_rate(current_market)
     end
 
     def update
