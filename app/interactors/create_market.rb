@@ -9,7 +9,7 @@ class CreateMarket
 
     defaults[:plan_fee] = context[:amount] if context[:amount]
 
-    market = Market.create(defaults.merge(market_params))
+    market = Market.create(defaults.merge(market_params).merge({:organization_id => context[:organization][:id]}))
     market.update_attribute(:plan_start_at, Time.current.end_of_minute) if context[:RYO] == true
 
     context[:market] = market

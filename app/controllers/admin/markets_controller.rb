@@ -33,7 +33,7 @@ class Admin::MarketsController < AdminController
   end
 
   def create
-    if ENV["USE_STRIPE_STANDALONE_ACCOUNTS"]
+    if ENV["USE_STRIPE_STANDALONE_ACCOUNTS"] || market_params['stripe_standalone']
       results = RegisterStripeStandaloneMarket.perform(market_params: market_params)
     else
       results = RegisterStripeMarket.perform(market_params: market_params)

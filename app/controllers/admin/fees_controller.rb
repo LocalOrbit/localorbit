@@ -13,6 +13,20 @@ module Admin
       @market.set_credit_card_payment_fee_payer(payment_fees_paid_by)
 
       if @market.update_attributes(market_attrs) && @organization.update_attributes(org_attrs)
+
+        if @market.organization.plan.name == 'Solo Seller'
+          organization_params = {
+              :name => @market.name,
+              :can_sell => true,
+              :org_type => 'S',
+              :active => true,
+              :allow_credit_cards => @market.allow_credit_cards,
+              :allow_purchase_orders => @market.allow_purchase_orders
+          }
+          result = CreateOrganization.perform(organization_params: organization_params, user: current_user, market_id: @market.id)
+          puts result
+        end
+
         redirect_to [:admin, @market, :fees], notice: "#{@market.name} fees successfully updated"
       else
         render :show
