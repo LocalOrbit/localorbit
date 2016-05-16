@@ -36,7 +36,7 @@ class Admin::UploadController < AdminController
   def get_documentation
     # download pdf or render it in-app? going with download at first because of how browsers work (that's why this is a separate route; it could be combined into download)
     send_file(
-      "#{Rails.root}/app/assets/docs_files/Documentation_Product_Upload_Apr8-2016.pdf",
+      "#{Rails.root}/app/assets/docs_files/Documentation_Product_Upload_May2016.pdf",
       filename: "Documentation_Product_Upload_Apr8-2016.pdf",
       type: "application/pdf"
     )

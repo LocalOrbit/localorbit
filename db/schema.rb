@@ -486,7 +486,6 @@ ActiveRecord::Schema.define(version: 20160511202055) do
     t.boolean  "self_directed_creation",                                 default: false
     t.boolean  "allow_product_fee"
     t.integer  "number_format_numeric",                                  default: 0
-    t.boolean  "subscribed",                                             default: false
     t.integer  "organization_id"
   end
 

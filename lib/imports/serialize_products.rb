@@ -20,7 +20,7 @@ module Imports
 						@required_headers[0..-4].each do |rh|
 							product_row_hash[rh] = row[rh]
 						end
-						if row[@required_headers[-4]] == "Y" # TODO need any more error checking?
+						if row[@required_headers[-4]] and row[@required_headers[-4]].upcase == "Y" # TODO need any more error checking?
 							product_row_hash[@required_headers[-4]] = {}
 							# Make sub-hash with the multi-unit/break case information if extant, based on order of required headers
 							product_row_hash[@required_headers[-4]][@required_headers[-3]] = row[@required_headers[-3]]
@@ -72,48 +72,52 @@ module Imports
 			## This shouldn't be needed for anything outside verifying CSV files uploaded. Check w
 			error_hash["Row number"] = line_num.to_s 
 			error_hash["Errors"] = {}
-			if [product_row["Product Name"],product_row["Category Name"],product_row["Short Description"],product_row["Unit Name"],product_row["Unit Description"],product_row["Price"],product_row[@required_headers[-4]]].any? {|obj| obj.blank?}
+			if [product_row["Product Name"],product_row["Category Name"],product_row["Short Description"],product_row["Unit Name"],product_row["Unit Description"],product_row["Price"]].any? {|obj| obj.blank?}
 				okay_flag = false
 				#create error and append it (TODO could have clearer error info for this one - which one is blank)
-				error_hash["Errors"]["Invalid Data under required headers"] = "Required data is blank."
+				error_hash["Errors"]["Invalid Data under required headers"] = "Some required data is blank."
 			end
-			if product_row[@required_headers[-4]].upcase == "Y" and [product_row[@required_headers[-3]],product_row[@required_headers[-2]],product_row[@required_headers.last]].any? {|obj| obj.blank?}
+			if product_row[@required_headers[-4]] and product_row[@required_headers[-4]].upcase == "Y" and [product_row[@required_headers[-3]],product_row[@required_headers[-2]],product_row[@required_headers.last]].any? {|obj| obj.blank?}
 				okay_flag = false
 				#create error and append it
 				error_hash["Errors"]["Missing multi-unit/break case data"] = "#{@required_headers[-4]} header has data 'Y' but is missing required Unit, Unit description, and/or Price"
 			end
-			if product_row[@required_headers[-4]].upcase != "N" and product_row[@required_headers[-4]].upcase != "Y"
+			if product_row["Short Description"].length > 50
+				okay_flag = false
+				error_hash["Errors"]["Short Description too long"] = "Short description cannot be longer than 50 characters."
+			end
+			if (!product_row[@required_headers[-4]] or product_row[@required_headers[-4]].upcase != "Y") and [product_row[@required_headers[-3]],product_row[@required_headers[-2]],product_row[@required_headers.last]].any? {|obj| !obj.blank?}
 				okay_flag = false
 				# create error and append it
-				error_hash["Errors"]["Invalid data for #{@required_headers[-4]}"] = "Data must be Y or N"
+				error_hash["Errors"]["Invalid data for #{@required_headers[-4]}"] = "Included multiple unit data without Y for #{@required_headers[-4]}"
 			end
 			if ::Imports::ProductHelpers.get_category_id_from_name(product_row["Category Name"]).nil?
 				okay_flag = false
 				#create error and append it
-				error_hash["Errors"]["Missing or invalid category"] = "Check category validity." # TODO should have more info provided about category problems
+				error_hash["Errors"]["Missing or invalid category"] = "Check category validity. Input was: #{product_row["Category Name"]}" # TODO should have more info provided about category problems
 			end
 			if ::Imports::ProductHelpers.get_organization_id_from_name(product_row["Organization"], product_row["Market Subdomain"],current_user).nil?
 				okay_flag = false
 				#create error and append it
-				error_hash["Errors"]["Missing or invalid Organization name"] = "Check organization and market validity. Do you have rights to upload to this organization in this market? You input: #{product_row["Organization"]},#{product_row["Market Subdomain"]} as User Id #{current_user}" # TODO more info provided?
+				error_hash["Errors"]["Missing or invalid Organization name"] = "Check organization and market validity. Do you have rights to upload to this organization in this market? Does this organization belong to this market subdomain?\n The organization name input was: #{product_row["Organization"]}\nThe market subdomain input was: #{product_row["Market Subdomain"]} as User Id #{current_user}" # TODO more info provided?
 			end
 			if ProductHelpers.get_unit_id_from_name(product_row["Unit Name"]).nil?
 				okay_flag = false
 				#create error and append it 
-				error_hash["Errors"]["Missing or invalid Unit name"] = "Check unit of measure validity" # TODO more info provided?
+				error_hash["Errors"]["Missing or invalid Unit name"] = "Check unit of measure validity. Must be singular and included in LO system. Input was: #{product_row["Unit Name"]}" # TODO more info provided?
 			end
 			if !(product_row["Price"].to_f and product_row["Price"].to_f > 0) 
 				okay_flag = false
 				#create error and append it
-				error_hash["Errors"]["Missing or invalid price"] = "Check product price validity. Must be a valid decimal > 0."
+				error_hash["Errors"]["Missing or invalid price"] = "Check product price validity. Must be a valid decimal > 0. Input was: #{product_row["Price"]}"
 			end
-			if product_row[@required_headers[-4]].upcase == "Y" and product_row[@required_headers.last].to_f <= 0
+			if product_row[@required_headers[-4]] and product_row[@required_headers[-4]].upcase == "Y" and product_row[@required_headers.last].to_f <= 0
 				okay_flag = false
-				error_hash["Errors"]["Missing or invalid price for additional pack size"] = "Check price validity for #{product_row[@required_headers.last]}. Must be a valid decimal > 0."
+				error_hash["Errors"]["Missing or invalid price for additional pack size"] = "Check price validity for #{product_row[@required_headers.last]}. Must be a valid decimal > 0. Input was: #{product_row[@required_headers.last]}"
 			end
-			if (product_row[@required_headers[-4]].upcase == "Y") and ([product_row[@required_headers[-3]],product_row[@required_headers[-2]],product_row[@required_headers.last]] == [product_row["Unit Name"],product_row["Unit Description"],product_row["Unit Price"]])
+			if (product_row[@required_headers[-4]] and product_row[@required_headers[-4]].upcase == "Y") and ([product_row[@required_headers[-3]],product_row[@required_headers[-2]],product_row[@required_headers.last]] == [product_row["Unit Name"],product_row["Unit Description"],product_row["Unit Price"]])
 				okay_flag = false
-				error_hash["Errors"]["Identical units for same product"] = "Your additional unit and original unit for this project are the same. Try again with different information in the last three columns OR do not submit additional unit information"
+				error_hash["Errors"]["Identical units for same product"] = "Your additional unit and original unit for this project are the same. Try again with different information in the last three columns OR do not submit additional unit information."
 			end
 			$row_errors["#{error_hash['Row number']}"] = error_hash
 

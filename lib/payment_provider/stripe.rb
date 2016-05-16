@@ -277,8 +277,12 @@ module PaymentProvider
 
       # Coordinates the creation of a customer subscription
       def upsert_subscription(entity, subscription_params)
-        # KXM Throw an error here if the stripe_customer_id is null or if the method call returns nil...
+        raise "'#{entity.name}' has no Stripe Account" if entity.stripe_customer_id.blank?
+
         customer = get_stripe_customer(entity.try(:stripe_customer_id))
+        raise "'#{entity.name}' has no Stripe Account" if customer.nil?
+        raise "Stripe account for '#{entity.name}' is deleted" if customer.try(:deleted) == true
+        raise "'#{entity.name}' has no default payment method in Stripe" if customer.try(:default_source).blank? && subscription_params[:source].blank?
 
         # Initialize 'subscription not found' state
         subscription = nil
@@ -340,6 +344,14 @@ module PaymentProvider
       # return Stripe customer object
       def get_stripe_customer(stripe_customer_id)
         ::Stripe::Customer.retrieve(stripe_customer_id)
+      end
+
+      def get_stripe_subscription(subscription_id)
+        ::Stripe::Subscription.retrieve(subscription_id)
+      end
+
+      def delete_stripe_subscription(subscription_id)
+        ::Stripe::Subscription.retrieve(subscription_id).delete
       end
 
       def create_stripe_card_for_stripe_customer(stripe_customer:nil,stripe_customer_id:nil, stripe_tok:)
