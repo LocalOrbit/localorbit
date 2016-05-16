@@ -286,24 +286,6 @@ describe "Editing an order" do
       end
     end
 
-    context "as a seller" do
-      let!(:user) { create(:user, organizations: [seller]) }
-
-      it "can undo delivery" do
-        expect(Dom::Order::ItemRow.first.delivery_status).to eql("Pending")
-
-        click_button "Mark all delivered"
-        
-        expect(Dom::Order::ItemRow.first.delivery_status).to eql("Delivered")
-
-        click_button "Undo mark delivery"
-
-        expect(Dom::Order::ItemRow.first.delivery_status).to eql("Pending")
-        expect(page).to have_button("Mark all delivered")
-      end
-
-    end
-
     context "as a market manager" do
       let!(:user) { create(:user, managed_markets: [market]) }
 
@@ -320,12 +302,25 @@ describe "Editing an order" do
         expect(Dom::Order::ItemRow.first.delivery_status).to eql("Pending")
 
         Dom::Order::ItemRow.first.set_quantity_delivered(0)
-        # click_button "Mark all delivered"
+        click_button "Mark all delivered"
 
         item = Dom::Order::ItemRow.first
         expect(item.delivery_status).to eql("Canceled")
         expect(item.payment_status).to eql("Refunded")
         expect(page).to_not have_button("Mark all delivered")
+      end
+
+      it "can undo delivery" do
+        expect(Dom::Order::ItemRow.first.delivery_status).to eql("Pending")
+
+        click_button "Mark all delivered"
+        
+        expect(Dom::Order::ItemRow.first.delivery_status).to eql("Delivered")
+
+        click_button "Undo mark delivery"
+
+        expect(Dom::Order::ItemRow.first.delivery_status).to eql("Pending")
+        expect(page).to have_button("Mark all delivered")
       end
     end
 
@@ -352,6 +347,20 @@ describe "Editing an order" do
         expect(item.payment_status).to eql("Refunded")
         expect(page).to_not have_button("Mark all delivered")
       end
+
+      it "can undo delivery" do
+        expect(Dom::Order::ItemRow.first.delivery_status).to eql("Pending")
+
+        click_button "Mark all delivered"
+        
+        expect(Dom::Order::ItemRow.first.delivery_status).to eql("Delivered")
+
+        click_button "Undo mark delivery"
+
+        expect(Dom::Order::ItemRow.first.delivery_status).to eql("Pending")
+        expect(page).to have_button("Mark all delivered")
+      end
+
     end
   end
 
