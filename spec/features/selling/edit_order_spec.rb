@@ -320,7 +320,7 @@ describe "Editing an order" do
         expect(Dom::Order::ItemRow.first.delivery_status).to eql("Pending")
 
         Dom::Order::ItemRow.first.set_quantity_delivered(0)
-        click_button "Mark all delivered"
+        # click_button "Mark all delivered"
 
         item = Dom::Order::ItemRow.first
         expect(item.delivery_status).to eql("Canceled")
