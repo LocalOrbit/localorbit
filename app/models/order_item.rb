@@ -129,6 +129,9 @@ class OrderItem < ActiveRecord::Base
     if delivery_status_changed? && delivery_status == "delivered"
       self.delivered_at ||= Time.current
     end
+    if delivery_status_changed? && delivery_status == "pending"
+      self.delivered_at = nil
+    end
   end
 
   def update_unit_price
