@@ -12,10 +12,10 @@ $ ->
 
   $("#undo-delivery").click (e) ->
     e.preventDefault()
-    if confirm("Are you sure you want to UNDO marking these items delivered? They will all be undelivered.")
+    if confirm("Are you sure you want to UNDO marking all of these items delivered?")
       $(".order-item-row .delivery-status > input").val("pending")
       $(".order-item-row .delivered-at > input").val('NULL')
-      $(".order-item-row .quantity .quantity-delivered").val(0)
+      $(".order-item-row .quantity .quantity-delivered").val("")
       $(this).closest("form").submit()
 
   $(".order-item-row .action-link a").click (e) ->
