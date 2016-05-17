@@ -357,8 +357,26 @@ module PaymentProvider
       def create_stripe_card_for_stripe_customer(stripe_customer:nil,stripe_customer_id:nil, stripe_tok:)
         customer = stripe_customer || ::Stripe::Customer.retrieve(stripe_customer_id)
         credit_card = customer.sources.create(source: stripe_tok)
+        set_default_source(customer, credit_card)
         credit_card
       end
+
+      # set_default_source
+      # Update the Stripe customer to reflect a new default source.  By 
+      # default this happens whenever a customer adds a new credit card, 
+      # though we may want to expose this as an option
+      def set_default_source(stripe_customer, stripe_card)
+        # Only credit cards should be set as the default source
+        return unless stripe_card.object == "card"
+
+        customer = ::Stripe::Customer.retrieve(stripe_customer.id)
+
+        customer.default_source = stripe_card.id
+        customer.save
+
+        customer
+      end
+
 
       def order_ids_for_market_payout_transfer(transfer_id:, stripe_account_id:)
 
