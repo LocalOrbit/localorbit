@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160505152336) do
+ActiveRecord::Schema.define(version: 20160518203642) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -559,6 +559,7 @@ ActiveRecord::Schema.define(version: 20160505152336) do
     t.string   "payment_status",                                  default: "unpaid"
     t.decimal  "discount_market",        precision: 10, scale: 2, default: 0.0,      null: false
     t.decimal  "product_fee_pct",        precision: 5,  scale: 3, default: 0.0,      null: false
+    t.decimal  "market_seller_fee_pct",  precision: 5,  scale: 3
   end
 
   add_index "order_items", ["order_id", "product_id"], name: "index_order_items_on_order_id_and_product_id", using: :btree
@@ -811,23 +812,6 @@ ActiveRecord::Schema.define(version: 20160505152336) do
   add_index "promotions", ["market_id"], name: "index_promotions_on_market_id", using: :btree
   add_index "promotions", ["product_id"], name: "index_promotions_on_product_id", using: :btree
 
-  create_table "role_actions", force: true do |t|
-    t.string "section"
-    t.string "action"
-    t.string "description"
-    t.string "org_type",    default: [], array: true
-    t.string "plan_ids",    default: [], array: true
-  end
-
-  create_table "roles", force: true do |t|
-    t.string   "name"
-    t.string   "activities",      limit: 4096, default: [], array: true
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.string   "org_type"
-    t.integer  "organization_id"
-  end
-
   create_table "sequences", force: true do |t|
     t.string  "name"
     t.integer "value", default: 0, null: false
@@ -918,13 +902,5 @@ ActiveRecord::Schema.define(version: 20160505152336) do
   add_index "users", ["invitations_count"], name: "index_users_on_invitations_count", using: :btree
   add_index "users", ["invited_by_id"], name: "index_users_on_invited_by_id", using: :btree
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
-
-  create_table "users_roles", id: false, force: true do |t|
-    t.integer "user_id"
-    t.integer "role_id"
-  end
-
-  add_index "users_roles", ["role_id"], name: "index_users_roles_on_role_id", using: :btree
-  add_index "users_roles", ["user_id"], name: "index_users_roles_on_user_id", using: :btree
 
 end
