@@ -452,9 +452,8 @@ function onSolveCallback(myTsp) {
     var dir = dirRes.routes[0];
     // Print shortest roundtrip data:
     
-    var pathStr = "<p>Trip duration: " + formatTime(getTotalDuration(dir)) + "<br>";
-    pathStr += "Trip length: " + formatLength(getTotalDistance(dir)) + 
-      " (" + formatLengthMiles(getTotalDistance(dir)) + ")</p>";
+    var pathStr = "<p><strong>Trip duration:</strong> " + formatTime(getTotalDuration(dir)) + "<br>";
+    pathStr += "<strong>Trip length:</strong> " + formatLengthMiles(getTotalDistance(dir)) + "</p>";
     document.getElementById("path").innerHTML = pathStr;
     document.getElementById("exportDataButton").innerHTML = "<input id='rawButton' class='calcButton' type='button' value='Toggle raw path output' onClick='toggle(\"exportData\"); document.getElementById(\"outputList\").select();'>";
     var durStr = "<input id='csvButton' class='calcButton' type='button' value='Toggle csv durations matrix' onClick='toggle(\"durationsData\");'>";
