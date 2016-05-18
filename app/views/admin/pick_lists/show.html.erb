@@ -100,6 +100,7 @@
     </div>
   </div>
 <% end %>
+  <% if FeatureAccess.routing_plan?(market: current_market) %>
   <h1>Routing Plan</h1>
   <div id="map-container">
     <div id="map" data-orig="<%= @orig %>" data-dest="<%= @dest %>" data-wp="<%= @wp %>" style="height:100%"></div>
@@ -132,4 +133,5 @@
   <div id="dialogProgress" title="Calculating route...">
     <div id="progressBar"></div>
   </div>
+  <% end %>
 </div>
