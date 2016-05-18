@@ -9,8 +9,14 @@ module Financials
         if order_item.product_fee_pct > 0
           rate = order_item.product_fee_pct / 100
         else
-          rate = market.market_seller_fee / 100
+          # Set market rate based on pct of fee tied to current order_item
+          if order_item.market_seller_fee > 0
+            rate = order_item.market_seller_fee/(order_item.quantity * order_item.unit_price)
+          else
+            rate = market.market_seller_fee / 100
+          end
         end
+
         return round(rate * (order_item.gross_total - order_item.discount_seller))
       end
       
