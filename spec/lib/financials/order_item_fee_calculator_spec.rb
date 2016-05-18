@@ -15,7 +15,8 @@ describe Financials::OrderItemFeeCalculator do
                             product_fee_pct: "0.0".to_d,
                             market_seller_fee: "4.44".to_d,
                             quantity: "4".to_d,
-                            unit_price: "6.66".to_d) }
+                            unit_price: "6.66".to_d,
+                            market_seller_fee_pct: "16.667".to_d) }
 
   let(:order_item_product_fee) { double("an order item",
                             gross_total: "65.37".to_d,
