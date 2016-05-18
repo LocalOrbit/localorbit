@@ -110,7 +110,7 @@ init = () ->
   o_ll = new (google.maps.LatLng)(parseFloat(origlatlng[0]),parseFloat(origlatlng[1]))
   d_ll = new (google.maps.LatLng)(parseFloat(destlatlng[0]),parseFloat(destlatlng[1]))
 
-  addWaypointWithLabel(o_ll,'origin')
+  addWaypointWithLabel(o_ll,'Origin')
 
   wp = wp_raw.split('|')
   wp_a = []
@@ -119,9 +119,9 @@ init = () ->
       if w.length > 0
         waylatlong = w.split(',')
         w_ll = new (google.maps.LatLng)(parseFloat(waylatlong[0]),parseFloat(waylatlong[1]))
-        addWaypointWithLabel(w_ll,'way')
+        addWaypointWithLabel(w_ll,'Stop')
 
-  addWaypointWithLabel(d_ll,'dest')
+  addWaypointWithLabel(d_ll,'Destination')
   tsp.setAsStop(d_ll)
   directions(1,false,false)
 
