@@ -185,7 +185,16 @@ module PaymentProvider
                 else
                   ::Financials::MoneyHelpers.cents_to_amount(fee_cents)
                 end
-          item.update :"payment_#{fee_payer}_fee" => fee
+          if fee_payer == 'market' && item.payment_market_fee == 0 && item.payment_seller_fee == 0
+            item.update :"payment_market_fee" => fee
+          elsif fee_payer == 'seller' && item.payment_market_fee == 0 && item.payment_seller_fee == 0
+            item.update :"payment_seller_fee" => fee
+          elsif item.payment_market_fee > 0
+            item.update :"payment_market_fee" => fee
+          elsif item.payment_seller_fee > 0
+            item.update :"payment_seller_fee" => fee
+          end
+
         end
         nil
       end
