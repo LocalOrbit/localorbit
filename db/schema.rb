@@ -669,12 +669,6 @@ ActiveRecord::Schema.define(version: 20160505152336) do
     t.boolean  "active",                                               default: false
     t.boolean  "needs_activated_notification",                         default: true
     t.string   "stripe_customer_id"
-    t.string   "org_type"
-    t.integer  "plan_id"
-    t.datetime "plan_start_at"
-    t.integer  "plan_interval",                                        default: 1,     null: false
-    t.decimal  "plan_fee",                     precision: 7, scale: 2, default: 0.0,   null: false
-    t.integer  "plan_bank_account_id"
     t.string   "buyer_org_type"
     t.string   "ownership_type"
     t.boolean  "non_profit"
