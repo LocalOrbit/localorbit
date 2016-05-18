@@ -114,7 +114,11 @@ module Admin
         :allow_credit_cards,
         :allow_ach,
         :active,
-        locations_attributes: [:name, :address, :city, :state, :zip, :phone, :fax, :country]
+        :buyer_org_type,
+        :ownership_type,
+        :non_profit,
+        :professional_organizations,
+        locations_attributes: [:name, :address, :city, :state, :zip, :phone, :fax, :country],
       )
     end
 
