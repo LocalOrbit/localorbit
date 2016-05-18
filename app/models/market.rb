@@ -241,9 +241,23 @@ class Market < ActiveRecord::Base
   end
   
   def set_subscription(stripe_invoice)
+    # Return the old values in case they need to be rolled back
+    ret_val = {
+      plan_interval: plan_interval,
+      plan_fee: plan_fee,
+      subscribed: subscribed
+    }
     update_attribute(:plan_interval, 12)
     update_attribute(:plan_fee, ::Financials::MoneyHelpers.cents_to_amount(stripe_invoice.amount_due))
     update_attribute(:subscribed, true)
+
+    ret_val
+  end
+
+  def unset_subscription(old_values_hash)
+    update_attribute(:plan_interval, old_values_hash.plan_interval)
+    update_attribute(:plan_fee, old_values_hash.plan_fee)
+    update_attribute(:subscribed, old_values_hash.subscribed)
   end
 
   def on_statement_as

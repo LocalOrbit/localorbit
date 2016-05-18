@@ -8,6 +8,7 @@ class CreateStripeSubscriptionForEntity
     entity        ||= context[:entity]
 
     token = market_params && market_params[:stripe_tok]
+    old_values = nil
 
     # Create the subscription...
     subscription = PaymentProvider::Stripe.upsert_subscription(entity, stripe_subscription_info(sub_params, entity, token))
@@ -17,7 +18,7 @@ class CreateStripeSubscriptionForEntity
     invoices = PaymentProvider::Stripe.get_stripe_invoices(:customer => subscription.customer)
     context[:invoice] = invoices.data.first
     # ...update the entity (if it's a Market)...
-    entity.set_subscription(invoices.data.first) if entity.respond_to?(:set_subscription)
+    old_values = entity.set_subscription(invoices.data.first) if entity.respond_to?(:set_subscription)
 
     # ...and populate additional context items
     context[:amount] ||= amount = ::Financials::MoneyHelpers.cents_to_amount(invoices.data.first.amount_due)
@@ -25,6 +26,10 @@ class CreateStripeSubscriptionForEntity
 
   rescue => e
     context.fail!(error: e.message)
+
+    # If the context fails then roll back the subscription (if any)
+    PaymentProvider::Stripe.delete_stripe_subscription(subscription.id) if subscription.present?
+    entity.unset_subscription(old_values) if old_values.present? && entity.respond_to?(:unset_subscription)
   end
 
   def stripe_subscription_info(sub_params, entity, token)

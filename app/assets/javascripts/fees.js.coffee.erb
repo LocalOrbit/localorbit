@@ -7,8 +7,8 @@ $ ->
     fee = salePrice.parent().parent().parent().first().find('input.market-seller-fee')
     markup_pct = salePrice.parent().parent().first().find('div.markup-pct')
     netPrice = salePrice.parent().parent().first().find('input.net-price')
-    ccRate = .029
-
+    ccRate = netPrice.data('ccrate')
+    
     getNetPriceValue = ->
       parseFloat(netPrice.val())
 
