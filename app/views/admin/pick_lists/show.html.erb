@@ -12,15 +12,15 @@
 <div class="print-page">
 <%
     @pick_lists.each_with_index do |pick_list, index|
-      if index == 0
-        @orig = "#{pick_list.seller_ship_from_lat_long}"
-        @dest = "#{current_market.addresses[0].geocode.latitude},#{current_market.addresses[0].geocode.longitude}"
-        @wp = ""
-      else
-        @wp = @wp + (index > 0 ? "#{pick_list.seller_ship_from_lat_long}|" : "")
+      if FeatureAccess.routing_plan?(market: current_market)
+        if index == 0
+          @orig = "#{pick_list.seller_ship_from_lat_long}"
+          @dest = "#{current_market.addresses[0].geocode.latitude},#{current_market.addresses[0].geocode.longitude}"
+          @wp = ""
+        else
+          @wp = @wp + (index > 0 ? "#{pick_list.seller_ship_from_lat_long}|" : "")
+        end
       end
-
-
 %>
 
   <% if index != 0 %>
