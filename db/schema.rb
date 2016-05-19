@@ -487,6 +487,7 @@ ActiveRecord::Schema.define(version: 20160518203642) do
     t.boolean  "allow_product_fee"
     t.integer  "number_format_numeric",                                  default: 0
     t.boolean  "subscribed",                                             default: false
+    t.boolean  "routing_plan",                                           default: false
   end
 
   add_index "markets", ["name"], name: "index_markets_on_name", using: :btree

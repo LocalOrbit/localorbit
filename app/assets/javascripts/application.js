@@ -32,6 +32,8 @@
 //= require reflux.min
 //= require froala_editor.min
 //= require fSelect
+//= require BpTspSolver
+//= require tsp
 //
 //= require plugins/block_styles.min.js
 //= require plugins/colors.min.js
