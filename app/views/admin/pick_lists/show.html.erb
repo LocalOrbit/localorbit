@@ -102,12 +102,12 @@
 <% end %>
   <% if FeatureAccess.routing_plan?(market: current_market) %>
   <h1>Routing Plan</h1>
+  <div id="path" class="pathdata"></div>
   <div id="map-container">
     <div id="map" data-orig="<%= @orig %>" data-dest="<%= @dest %>" data-wp="<%= @wp %>" style="height:100%"></div>
   </div>
   <div id="my_textual_div"></div>
 
-  <div id="path" class="pathdata"></div>
 
   <div style="display: none">
     <div id="routeDrag"></div>
