@@ -20,6 +20,14 @@ class OrganizationDecorator < Draper::Decorator
     end
   end
 
+  def ship_from_lat_long
+    if (address = shipping_location)
+      raw "#{address.geocode.latitude},#{address.geocode.longitude}"
+    else
+      ""
+    end
+  end
+
   def delivery_schedules
     all_markets.inject({}) do |result, market|
       result[market] = market.delivery_schedules.visible.order(:day)
