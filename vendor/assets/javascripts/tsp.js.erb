@@ -268,10 +268,11 @@ function removeMarker(marker) {
 
 function drawMarker(latlng, addr, label, num) {
     var icon;
-    //icon = new google.maps.MarkerImage("iconsnew/red" + (num + 1) + ".png");
+    icon = new google.maps.MarkerImage("<%= asset_path('icons/red-pin.png') %>");
     var marker = new google.maps.Marker({ 
-        position: latlng, 
-	map: gebMap });
+        position: latlng,
+        icon: icon,
+	    map: gebMap });
     google.maps.event.addListener(marker, 'click', function(event) {
 	var addrStr = (addr == null) ? "" : addr + "<br>";
 	var labelStr = (label == null) ? "" : "<b>" + label + "</b><br>";
@@ -283,19 +284,7 @@ function drawMarker(latlng, addr, label, num) {
 	    }
 	}
 	var infoWindow = new google.maps.InfoWindow({ 
-	    content: labelStr + addrStr
-		+ "<a href='javascript:setMarkerAsStart(markers[" 
-		+ markerInd + "]"
-		+ ")'>"
-		+ "Set as starting location"
-		+ "</a><br>"
-		+ "<a href='javascript:setMarkerAsStop(markers["
-		+ markerInd + "])'>"
-		+ "Set as ending location"
-		+ "</a><br>"
-		+ "<a href='javascript:removeMarker(markers["
-		+ markerInd + "])'>"
-		+ "Remove location</a>",
+	    content: labelStr + addrStr,
 	    position: marker.getPosition() });
 	marker.infoWindow = infoWindow;
 	infoWindow.open(gebMap);
@@ -504,24 +493,30 @@ function onSolveCallback(myTsp) {
     // Add nice, numbered icons.
     if (mode == 1) {
 	var myPt1 = dir.legs[0].start_location;
-	//var myIcn1 = new google.maps.MarkerImage("iconsnew/black1.png");
+	var myIcn1 = new google.maps.MarkerImage("<%= asset_path('icons/green-pin.png') %>");
 	var marker = new google.maps.Marker({ 
-            position: myPt1, 
-	    map: gebMap });
+        position: myPt1,
+        animation: google.maps.Animation.DROP,
+        icon: myIcn1,
+        map: gebMap });
 	markers.push(marker);
     }
     for (var i = 0; i < dir.legs.length; ++i) {
 	var route = dir.legs[i];
 	var myPt1 = route.end_location;
 	var myIcn1;
-	//if (i == dir.legs.length - 1 && mode == 0) {
-	//    myIcn1 = new google.maps.MarkerImage("iconsnew/black1.png");
-	//} else {
-	//    myIcn1 = new google.maps.MarkerImage("iconsnew/black" + (i+2) + ".png");
-	//}
+	if (i == dir.legs.length - 1 && mode == 0) {
+	    myIcn1 = new google.maps.MarkerImage("<%= asset_path('icons/green-pin.png') %>");
+  } else if (i == dir.legs.length-1) {
+      myIcn1 = new google.maps.MarkerImage("<%= asset_path('icons/red-pin.png') %>");
+  } else {
+	    myIcn1 = new google.maps.MarkerImage("<%= asset_path('icons/black-pin.png') %>");
+	}
 	var marker = new google.maps.Marker({
             position: myPt1,
-	    map: gebMap });
+            animation: google.maps.Animation.DROP,
+            icon: myIcn1,
+	        map: gebMap });
 	markers.push(marker);
     }
     // Clean up old path.
