@@ -18,7 +18,6 @@ module Financials
             rate = order_item.order.market_seller_fee_pct / 100
           else
             rate = market.market_seller_fee / 100
-            order_item.order.market_seller_fee_pct = market.market_seller_fee
           end
         end
 
