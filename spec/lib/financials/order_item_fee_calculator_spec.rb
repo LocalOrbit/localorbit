@@ -8,15 +8,19 @@ describe Financials::OrderItemFeeCalculator do
                         local_orbit_seller_fee: "2".to_d,
                         local_orbit_market_fee: "5".to_d) }
 
-  let(:order_item) { double("an order item", 
-                            gross_total: "65.37".to_d, 
+  let!(:order) { double("and order", market_seller_fee_pct: "16.667".to_d) }
+
+  let(:order_item) { double("an order item",
+                            order: order,
+                            gross_total: "65.37".to_d,
                             discount_seller: "1.96".to_d, 
                             discount_market: "1.63".to_d,
                             product_fee_pct: "0.0".to_d,
                             market_seller_fee: "4.44".to_d,
                             quantity: "4".to_d,
-                            unit_price: "6.66".to_d,
-                            market_seller_fee_pct: "16.667".to_d) }
+                            unit_price: "6.66".to_d
+                            )}
+
 
   let(:order_item_product_fee) { double("an order item",
                             gross_total: "65.37".to_d,
