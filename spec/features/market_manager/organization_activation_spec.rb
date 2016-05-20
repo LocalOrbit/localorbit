@@ -28,6 +28,8 @@ feature "Organization activation" do
     select "Michigan", from: "State"
     fill_in "Postal Code", with: "48809"
     fill_in "Phone", with: "616-717-2929"
+    select "Individual", from: "Buyer Type"
+    select "None", from: "Ownership Type"
 
     check "registration_terms_of_service"
 

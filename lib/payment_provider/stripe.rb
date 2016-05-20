@@ -185,7 +185,16 @@ module PaymentProvider
                 else
                   ::Financials::MoneyHelpers.cents_to_amount(fee_cents)
                 end
-          item.update :"payment_#{fee_payer}_fee" => fee
+          if fee_payer == 'market' && item.payment_market_fee == 0 && item.payment_seller_fee == 0
+            item.update :"payment_market_fee" => fee
+          elsif fee_payer == 'seller' && item.payment_market_fee == 0 && item.payment_seller_fee == 0
+            item.update :"payment_seller_fee" => fee
+          elsif item.payment_market_fee > 0
+            item.update :"payment_market_fee" => fee
+          elsif item.payment_seller_fee > 0
+            item.update :"payment_seller_fee" => fee
+          end
+
         end
         nil
       end
@@ -277,8 +286,12 @@ module PaymentProvider
 
       # Coordinates the creation of a customer subscription
       def upsert_subscription(entity, subscription_params)
-        # KXM Throw an error here if the stripe_customer_id is null or if the method call returns nil...
+        raise "'#{entity.name}' has no Stripe Account" if entity.stripe_customer_id.blank?
+
         customer = get_stripe_customer(entity.try(:stripe_customer_id))
+        raise "'#{entity.name}' has no Stripe Account" if customer.nil?
+        raise "Stripe account for '#{entity.name}' is deleted" if customer.try(:deleted) == true
+        raise "'#{entity.name}' has no default payment method in Stripe" if customer.try(:default_source).blank? && subscription_params[:source].blank?
 
         # Initialize 'subscription not found' state
         subscription = nil
@@ -342,11 +355,37 @@ module PaymentProvider
         ::Stripe::Customer.retrieve(stripe_customer_id)
       end
 
+      def get_stripe_subscription(subscription_id)
+        ::Stripe::Subscription.retrieve(subscription_id)
+      end
+
+      def delete_stripe_subscription(subscription_id)
+        ::Stripe::Subscription.retrieve(subscription_id).delete
+      end
+
       def create_stripe_card_for_stripe_customer(stripe_customer:nil,stripe_customer_id:nil, stripe_tok:)
         customer = stripe_customer || ::Stripe::Customer.retrieve(stripe_customer_id)
         credit_card = customer.sources.create(source: stripe_tok)
+        set_default_source(customer, credit_card)
         credit_card
       end
+
+      # set_default_source
+      # Update the Stripe customer to reflect a new default source.  By 
+      # default this happens whenever a customer adds a new credit card, 
+      # though we may want to expose this as an option
+      def set_default_source(stripe_customer, stripe_card)
+        # Only credit cards should be set as the default source
+        return unless stripe_card.object == "card"
+
+        customer = ::Stripe::Customer.retrieve(stripe_customer.id)
+
+        customer.default_source = stripe_card.id
+        customer.save
+
+        customer
+      end
+
 
       def order_ids_for_market_payout_transfer(transfer_id:, stripe_account_id:)
 

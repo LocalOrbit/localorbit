@@ -10,6 +10,8 @@ class Order < ActiveRecord::Base
   before_save :update_paid_at
   before_save :update_payment_status
   before_save :cache_delivery_status
+  before_create :set_market_fee_pct
+  before_create :update_market_fee_pct
   before_update :update_order_item_payment_status
   before_update :update_total_cost
 
@@ -448,6 +450,16 @@ class Order < ActiveRecord::Base
 
   def update_paid_at
     self.paid_at ||= Time.current if payment_status == "paid"
+  end
+
+  def set_market_fee_pct
+    self.market_seller_fee_pct = market.market_seller_fee
+  end
+
+  def update_market_fee_pct
+    if self.market_seller_fee_pct.nil?
+      self.market_seller_fee_pct = market.market_seller_fee
+    end
   end
 
   def update_payment_status

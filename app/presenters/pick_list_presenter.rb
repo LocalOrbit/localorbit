@@ -1,12 +1,13 @@
 class PickListPresenter
-  attr_reader :products, :seller_name, :seller_ship_from_address, :notes
+  attr_reader :products, :seller_name, :seller_ship_from_address, :seller_ship_from_lat_long, :notes
 
   def initialize(all_items, delivery_notes)
     @products = all_items.group_by(&:product_id).map {|_, items| PickListProduct.new(items) }
     seller = all_items.first.product.organization.decorate
     @seller_name = seller.name
     @seller_ship_from_address = seller.ship_from_address
-    
+    @seller_ship_from_lat_long = seller.ship_from_lat_long
+
     @notes = delivery_notes.where(supplier_org:  seller.id)
   end
 

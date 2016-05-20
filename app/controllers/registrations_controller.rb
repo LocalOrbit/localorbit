@@ -42,7 +42,11 @@ class RegistrationsController < ApplicationController
       :state,
       :zip,
       :phone,
-      :fax
+      :fax,
+      :buyer_org_type,
+      :ownership_type,
+      :non_profit,
+      :professional_organizations,
     )
     results.merge!(market: current_market)
   end
