@@ -261,7 +261,7 @@
       <%= f.submit "Add Items", class: 'pull-right btn btn--small mobile-block' %>
     <% end %>
   </div>
-  <% if !current_user.buyer_only? && ( !@plan == "LocalEyes" && !current_user.can_sell?)%>
+  <% if !current_user.buyer_only? && FeatureAccess.not_LE_market_manager?(user: current_user, market: order.market) %>
   <div class="order-totals">
     <div class="table-wrapper">
       <h2>Order Totals</h2>

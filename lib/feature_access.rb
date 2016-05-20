@@ -17,6 +17,10 @@ class FeatureAccess
       return (user.admin? || user.managed_markets.include?(order.market))
     end
 
+    def not_LE_market_manager?(user:, market:)
+      return ( !market.plan.name == "LocalEyes" ) || ( !user.can_manage_market? )
+    end
+
     def order_printables?(user:, order:)
       market = order.market
       user_belongs_to_market = user.markets.include?(market)
