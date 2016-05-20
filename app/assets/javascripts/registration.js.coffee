@@ -23,3 +23,9 @@ $ ->
   $("#registration_buyer").change (e)->
     orgCanBuy = $(this).prop("checked")
     updateBuyerFields(orgCanBuy)
+
+  orgCanSell = $('#registration_seller').prop("checked")
+  orgCanBuy = $('#registration_buyer').prop("checked")
+
+  updateSellerFields(orgCanSell)
+  updateBuyerFields(orgCanBuy)

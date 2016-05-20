@@ -101,13 +101,16 @@
         <%= f.select :buyer_org_type, Registration::BUYER_ORG_TYPES, include_blank: true, class: "column--full" %>
       </div
       ><div class="field column column--guttered column--half seller-fields is-hidden">
-      <%= f.label :ownership_type, 'Ownership Type' %><br>
+      <%= f.label :ownership_type, 'Ownership Type', class: 'required' %><br>
       <%= f.select :ownership_type, Registration::OWNERSHIP_TYPES, include_blank: true, class: "column--full" %><br/><br/>
       <%= f.label :non_profit, 'Non-profit?' %>
-      <%= f.check_box :non_profit, class: "column--full" %><br/><br/>
-      <%= f.label :professional_organizations, 'Professional Organizations' %><br>
-      <%= f.text_field :professional_organizations, maxlength: 18, size: 18, class: "column--full" %>
+      <%= f.check_box :non_profit %><br/><br/>
       </div>
+    </div>
+    <div class="row row--field">
+      <%= f.label :professional_organizations, 'Professional Organization Membership' %>
+      <span class="tooltip pull-right" data-tooltip="e.g. National Young Farmers Coalition, Woman in Sustainable Agriculture, NACUFS, AASHE, National Restaurant Association, etc. "></span>
+      <%= f.text_field :professional_organizations, maxlength: 255, class: "column--full" %>
     </div>
   </fieldset>
 
