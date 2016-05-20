@@ -11,7 +11,7 @@ class Order < ActiveRecord::Base
   before_save :update_payment_status
   before_save :cache_delivery_status
   before_create :set_market_fee_pct
-  before_create :update_market_fee_pct
+  before_update :update_market_fee_pct
   before_update :update_order_item_payment_status
   before_update :update_total_cost
 

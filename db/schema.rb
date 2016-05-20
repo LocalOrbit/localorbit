@@ -408,6 +408,12 @@ ActiveRecord::Schema.define(version: 20160520023859) do
   add_index "market_cross_sells", ["source_market_id", "destination_market_id"], name: "index_market_cross_sells_on_src_market_id_and_dest_market_id", using: :btree
   add_index "market_cross_sells", ["source_market_id"], name: "index_market_cross_sells_on_source_market_id", using: :btree
 
+  create_table "market_organization_products", force: true do |t|
+    t.integer "market_id"
+    t.integer "organization_id"
+    t.integer "product_id"
+  end
+
   create_table "market_organizations", force: true do |t|
     t.integer  "market_id"
     t.integer  "organization_id"
@@ -484,10 +490,9 @@ ActiveRecord::Schema.define(version: 20160520023859) do
     t.boolean  "stripe_standalone"
     t.string   "legacy_stripe_account_id"
     t.boolean  "self_directed_creation",                                 default: false
+    t.boolean  "subscribed",                                             default: false
     t.boolean  "allow_product_fee"
     t.integer  "number_format_numeric",                                  default: 0
-    t.boolean  "subscribed",                                             default: false
-    t.integer  "organization_id"
     t.boolean  "routing_plan",                                           default: false
   end
 
@@ -660,30 +665,23 @@ ActiveRecord::Schema.define(version: 20160520023859) do
     t.text     "how_story"
     t.string   "photo_uid"
     t.string   "balanced_customer_uri"
-    t.boolean  "balanced_underwritten",                                default: false, null: false
+    t.boolean  "balanced_underwritten",        default: false, null: false
     t.string   "facebook"
     t.string   "twitter"
-    t.boolean  "display_facebook",                                     default: false
-    t.boolean  "display_twitter",                                      default: false
+    t.boolean  "display_facebook",             default: false
+    t.boolean  "display_twitter",              default: false
     t.boolean  "allow_purchase_orders"
     t.boolean  "allow_credit_cards"
     t.boolean  "allow_ach"
     t.integer  "legacy_id"
-    t.boolean  "show_profile",                                         default: true
-    t.boolean  "active",                                               default: false
-    t.boolean  "needs_activated_notification",                         default: true
+    t.boolean  "show_profile",                 default: true
+    t.boolean  "active",                       default: false
+    t.boolean  "needs_activated_notification", default: true
     t.string   "stripe_customer_id"
-    t.string   "org_type"
-    t.integer  "plan_id"
-    t.datetime "plan_start_at"
-    t.integer  "plan_interval",                                        default: 1,     null: false
-    t.decimal  "plan_fee",                     precision: 7, scale: 2, default: 0.0,   null: false
-    t.integer  "plan_bank_account_id"
     t.string   "buyer_org_type"
     t.string   "ownership_type"
     t.boolean  "non_profit"
     t.string   "professional_organizations"
-    t.boolean  "subscribed"
   end
 
   add_index "organizations", ["name"], name: "index_organizations_on_name", using: :btree
@@ -722,7 +720,6 @@ ActiveRecord::Schema.define(version: 20160520023859) do
     t.decimal  "stripe_payment_fee", precision: 10, scale: 2, default: 0.0,     null: false
     t.string   "stripe_refund_id"
     t.string   "stripe_transfer_id"
-    t.integer  "organization_id"
   end
 
   add_index "payments", ["bank_account_id"], name: "index_payments_on_bank_account_id", using: :btree
@@ -759,6 +756,7 @@ ActiveRecord::Schema.define(version: 20160520023859) do
     t.integer  "legacy_id"
     t.datetime "deleted_at"
     t.decimal  "product_fee_pct", precision: 5,  scale: 3, default: 0.0, null: false
+    t.integer  "mop_id"
   end
 
   add_index "prices", ["market_id"], name: "index_prices_on_market_id", using: :btree
@@ -822,23 +820,6 @@ ActiveRecord::Schema.define(version: 20160520023859) do
   add_index "promotions", ["market_id", "product_id"], name: "index_promotions_on_market_id_and_product_id", using: :btree
   add_index "promotions", ["market_id"], name: "index_promotions_on_market_id", using: :btree
   add_index "promotions", ["product_id"], name: "index_promotions_on_product_id", using: :btree
-
-  create_table "role_actions", force: true do |t|
-    t.string "section"
-    t.string "action"
-    t.string "description"
-    t.string "org_types",   default: [], array: true
-    t.string "plan_ids",    default: [], array: true
-  end
-
-  create_table "roles", force: true do |t|
-    t.string   "name"
-    t.string   "activities",      limit: 4096, default: [], array: true
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.string   "org_type"
-    t.integer  "organization_id"
-  end
 
   create_table "sequences", force: true do |t|
     t.string  "name"
@@ -930,13 +911,5 @@ ActiveRecord::Schema.define(version: 20160520023859) do
   add_index "users", ["invitations_count"], name: "index_users_on_invitations_count", using: :btree
   add_index "users", ["invited_by_id"], name: "index_users_on_invited_by_id", using: :btree
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
-
-  create_table "users_roles", id: false, force: true do |t|
-    t.integer "user_id"
-    t.integer "role_id"
-  end
-
-  add_index "users_roles", ["role_id"], name: "index_users_roles_on_role_id", using: :btree
-  add_index "users_roles", ["user_id"], name: "index_users_roles_on_user_id", using: :btree
 
 end
