@@ -11,8 +11,6 @@ module Financials
         else
           if order_item.order.market_seller_fee_pct.nil? #
             rate = market.market_seller_fee / 100
-            order_item.order.market_seller_fee_pct = market.market_seller_fee
-            order_item.order.save!
           else
             rate = order_item.order.market_seller_fee_pct / 100
           end
