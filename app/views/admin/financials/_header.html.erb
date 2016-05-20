@@ -10,7 +10,11 @@
         <% end %>
 
         <% if current_user.admin? || current_user.market_manager? %>
+        <% if FeatureAccess.not_LE_market_manager?(user:current_user,market:current_market) %>
           <%= content_tag(:li, link_to_or_span("Send Invoices", [:admin, :financials, :invoices]), class: 'tab') %>
+        <% else %>
+          <%= content_tag(:li, link_to_or_span("Invoices", [:admin, :financials, :invoices]), class: 'tab') %>
+        <% end %>
           <%= content_tag(:li, link_to_or_span("Enter Receipts", [:admin, :financials, :receipts]), class: 'tab') %>
           <%= content_tag(:li, link_to_or_span("Record Payments to Suppliers", [:admin, :financials, :vendor_payments]), class: 'tab') %>
           <%= content_tag(:li, link_to_or_span("Review Payment History", [:admin, :financials, :payments]), class: 'tab') %>
