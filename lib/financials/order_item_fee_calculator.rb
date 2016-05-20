@@ -9,15 +9,12 @@ module Financials
         if order_item.product_fee_pct > 0
           rate = order_item.product_fee_pct / 100
         else
-          # Set market rate based on pct of fee tied to current order_item
-          if order_item.market_seller_fee > 0 && order_item.order.market_seller_fee_pct.nil?
-            order_item.order.market_seller_fee_pct = market.market_seller_fee
-          end
-
-          if order_item.market_seller_fee > 0
-            rate = order_item.order.market_seller_fee_pct / 100
-          else
+          if order_item.order.market_seller_fee_pct.nil? #
             rate = market.market_seller_fee / 100
+            order_item.order.market_seller_fee_pct = market.market_seller_fee
+            order_item.order.save!
+          else
+            rate = order_item.order.market_seller_fee_pct / 100
           end
         end
 
