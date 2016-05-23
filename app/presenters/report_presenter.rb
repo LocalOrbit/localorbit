@@ -195,6 +195,8 @@ class ReportPresenter
       seller_reports + buyer_reports
     elsif user.buyer_only?
       buyer_reports
+    elsif current_market.plan.name == "LocalEyes" && user.market_manager?
+      le_mm_reports # TODO check acceptability - r&p fix?
     elsif user.market_manager?
       seller_reports + mm_reports
     else
