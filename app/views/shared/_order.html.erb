@@ -138,6 +138,9 @@
     <% if !current_user.buyer_only? && order.undelivered_for_user?(current_user) %>
       <%= button_tag "Mark all delivered", class: 'pull-right btn btn--small btn--primary mobile-block', id: 'mark-all-delivered', type: 'button' %>
     <% end %>
+    <% if current_user.can_manage_market?(order.market) && !order.undelivered_for_user?(current_user) %>
+      <%= button_tag "Undo mark delivery", class: 'pull-right btn btn--small btn--primary mobile-block' , id: 'undo-delivery', type: 'button' %>
+    <% end %>
     <div class="table-wrapper">
       <table class="current-sales-table odd order-table-1">
       <thead>
@@ -195,6 +198,7 @@
             <%= item.hidden_field :delivery_status %>
             <%= item.object.delivery_status.titleize %>
           </td>
+          <td class="delivered-at" style="display:none;"><% item.hidden_field :delivered_at %></td>
           <td class="payment-status"><%= item.object.buyer_payment_status.titleize %></td>
           <% if !current_user.buyer_only? %>
             <td class="seller-status"><%= item.object.seller_payment_status %></td>

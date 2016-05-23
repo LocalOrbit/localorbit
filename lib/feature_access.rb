@@ -5,6 +5,10 @@ class FeatureAccess
       market.stripe_standalone
     end
 
+    def routing_plan?(market:)
+      market.routing_plan
+    end
+
     def order_templates?(market:)
       market.organization.plan.name == "LocalEyes"
     end

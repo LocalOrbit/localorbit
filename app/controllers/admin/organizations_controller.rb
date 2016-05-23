@@ -122,9 +122,13 @@ module Admin
         :allow_credit_cards,
         :allow_ach,
         :active,
+        :buyer_org_type,
+        :ownership_type,
+        :non_profit,
+        :professional_organizations,
+        locations_attributes: [:name, :address, :city, :state, :zip, :phone, :fax, :country],
         :org_type,
         :plan_id,
-        locations_attributes: [:name, :address, :city, :state, :zip, :phone, :fax, :country]
       )
     end
 

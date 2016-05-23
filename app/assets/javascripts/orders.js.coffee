@@ -6,6 +6,16 @@ $ ->
     e.preventDefault()
     if confirm("Are you sure you want to mark all items delivered?")
       $(".order-item-row .delivery-status > input").val("delivered")
+      amt = $(".order-item-row .quantity-ordered-ro").val()
+      $(".order-item-row .quantity .quantity-delivered").val(amt)
+      $(this).closest("form").submit()
+
+  $("#undo-delivery").click (e) ->
+    e.preventDefault()
+    if confirm("Are you sure you want to UNDO marking all of these items delivered?")
+      $(".order-item-row .delivery-status > input").val("pending")
+      $(".order-item-row .delivered-at > input").val('NULL')
+      $(".order-item-row .quantity .quantity-delivered").val("")
       $(this).closest("form").submit()
 
   $(".order-item-row .action-link a").click (e) ->

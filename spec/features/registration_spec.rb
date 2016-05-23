@@ -29,6 +29,7 @@ describe "Register" do
           select "Michigan", from: "State"
           fill_in "Postal Code", with: "49423"
           fill_in "Phone", with: "616-555-1963"
+          select "Individual", from: "Buyer Type"
 
           expect(page).not_to have_content("Local Orbit User Agreement")
           check "registration_terms_of_service"
@@ -83,6 +84,7 @@ describe "Register" do
           select "Michigan", from: "State"
           fill_in "Postal Code", with: "49423"
           fill_in "Phone", with: "616-555-1963"
+          select "Individual", from: "Buyer Type"
 
           check "registration_terms_of_service"
 
@@ -151,6 +153,7 @@ describe "Register" do
           select "Michigan", from: "State"
           fill_in "Postal Code", with: "49423"
           fill_in "Phone", with: "616-555-1963"
+          select "Individual", from: "Buyer Type"
 
           click_button "Sign Up"
 
@@ -187,6 +190,7 @@ describe "Register" do
           select "Michigan", from: "State"
           fill_in "Postal Code", with: "49423"
           fill_in "Phone", with: "616-555-1963"
+          select "Individual", from: "Buyer Type"
 
           check "registration_terms_of_service"
 
@@ -240,6 +244,7 @@ describe "Register" do
           select "Michigan", from: "State"
           fill_in "Postal Code", with: "49423"
           fill_in "Phone", with: "616-555-1963"
+          select "Individual", from: "Buyer Type"
 
           click_button "Sign Up"
 

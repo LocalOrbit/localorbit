@@ -15,3 +15,14 @@ $ ->
   $("#organization_can_sell").change (e)->
     orgCanSell = $(this).prop("checked")
     updateSellerFields(orgCanSell)
+
+  updateBuyerFields = (orgCanBuy)->
+    if orgCanBuy
+      $(".buyer-fields").removeClass('is-hidden')
+    else
+      $(".buyer-fields").addClass('is-hidden')
+
+  $("#organization_can_buy").change (e)->
+    orgCanBuy = $(this).prop("checked")
+    updateBuyerFields(orgCanBuy)
+  
