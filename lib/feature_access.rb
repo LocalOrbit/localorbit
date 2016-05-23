@@ -18,7 +18,7 @@ class FeatureAccess
     end
 
     def not_LE_market_manager?(user:, market:)
-      return ( !market.plan.name == "LocalEyes" ) || ( !user.can_manage_market? )
+      return ( !market.plan.name == "LocalEyes" ) || ( !user.can_manage_market?(:market))
     end
 
     def order_printables?(user:, order:)
