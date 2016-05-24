@@ -11,7 +11,7 @@
           <span class="market"><%= delivery.delivery_schedule.market.name %></span><br><br>
           <span>Supplier Delivery Begins:</span><br>
           <h2 class="upcoming-delivery-date"><%= delivery.upcoming_delivery_date_heading %></h2>
-          <% if FeatureAccess.not_LE_market_manager?(user:current_user,market:current_market) %>
+          <% if FeatureAccess.not_LE_market_manager?(user:current_user) %>
             Deliver to:
             <%= content_tag :div, delivery.deliver_to_name, class: "location-name" if delivery.deliver_to_name.present? %>
             <div class="location"><%= delivery.deliver_to_location %></div>
@@ -25,13 +25,13 @@
              tool_count += 2 if access_packing_labels
           %>
           <div class="seller-tools toolbar" data-tools="<%= tool_count %>">
-            <% if FeatureAccess.not_LE_market_manager?(user:current_user,market:current_market) %>
+            <% if FeatureAccess.not_LE_market_manager?(user:current_user) %>
               <div class="tool"><%= link_to "Pick List", admin_delivery_tools_pick_list_path(delivery) %></div>
             <% end %>
             <% if access_master_packing_slips %>
               <div class="tool"><%= link_to "Master Packing Slips <span class='note'>for aggregation</span>".html_safe, admin_delivery_tools_pack_list_path(delivery) %></div>
             <% end %>
-            <% if FeatureAccess.not_LE_market_manager?(user:current_user,market:current_market) %>
+            <% if FeatureAccess.not_LE_market_manager?(user:current_user) %>
               <div class="tool"><%= link_to "Individual Packing Slips <span class='note'>per Supplier</span>".html_safe, admin_delivery_tools_individual_pack_list_path(delivery) %></div>
             <% end %>
             <div class="tool"><%= link_to "Order Summary", admin_delivery_tools_order_summary_path(delivery)%></div>

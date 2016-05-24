@@ -10,7 +10,7 @@
         <% end %>
 
         <% if current_user.admin? || current_user.market_manager? %>
-        <% if FeatureAccess.not_LE_market_manager?(user:current_user,market:current_market) %>
+        <% if FeatureAccess.not_LE_market_manager?(user:current_user) %>
           <%= content_tag(:li, link_to_or_span("Send Invoices", [:admin, :financials, :invoices]), class: 'tab') %>
         <% else %>
           <%= content_tag(:li, link_to_or_span("Invoices", [:admin, :financials, :invoices]), class: 'tab') %>
