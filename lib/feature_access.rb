@@ -18,7 +18,8 @@ class FeatureAccess
     end
 
     def not_LE_market_manager?(user:)
-      return user.managed_markets.empty? || !user.markets.map(&:plan).map(&:name).include?("LocalEyes") 
+      return true
+      #return user.managed_markets.empty? || !user.markets.map(&:plan).map(&:name).include?("LocalEyes")
       #|| ( !user.can_manage_market?(:market))
     end
 
