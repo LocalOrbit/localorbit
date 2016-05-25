@@ -189,7 +189,7 @@
               -
             <% end %>
           </td>
-          <td class="price"> <% if FeatureAccess.can_edit_order?(user: current_user, order: order) and order.payment_status == "unpaid" %>
+          <td class="price"> <% if FeatureAccess.not_LE_market_manager?(user:current_user) && FeatureAccess.can_edit_order?(user: current_user, order: order) and order.payment_status == "unpaid" %>
            <%= link_to "#{number_to_currency item.object.unit_price}", "/admin/orders/#{order.id}/order_items/#{item.object.id}", class: 'edit-toggle' %><% else %> <%= number_to_currency item.object.unit_price %>
             <% end %>
           </td>
@@ -261,7 +261,7 @@
       <%= f.submit "Add Items", class: 'pull-right btn btn--small mobile-block' %>
     <% end %>
   </div>
-  <% if !current_user.buyer_only? %>
+  <% if !current_user.buyer_only? && FeatureAccess.not_LE_market_manager?(user: current_user) %>
   <div class="order-totals">
     <div class="table-wrapper">
       <h2>Order Totals</h2>
