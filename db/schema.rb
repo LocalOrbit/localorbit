@@ -408,12 +408,6 @@ ActiveRecord::Schema.define(version: 20160520023859) do
   add_index "market_cross_sells", ["source_market_id", "destination_market_id"], name: "index_market_cross_sells_on_src_market_id_and_dest_market_id", using: :btree
   add_index "market_cross_sells", ["source_market_id"], name: "index_market_cross_sells_on_source_market_id", using: :btree
 
-  create_table "market_organization_products", force: true do |t|
-    t.integer "market_id"
-    t.integer "organization_id"
-    t.integer "product_id"
-  end
-
   create_table "market_organizations", force: true do |t|
     t.integer  "market_id"
     t.integer  "organization_id"
@@ -756,7 +750,6 @@ ActiveRecord::Schema.define(version: 20160520023859) do
     t.integer  "legacy_id"
     t.datetime "deleted_at"
     t.decimal  "product_fee_pct", precision: 5,  scale: 3, default: 0.0, null: false
-    t.integer  "mop_id"
   end
 
   add_index "prices", ["market_id"], name: "index_prices_on_market_id", using: :btree

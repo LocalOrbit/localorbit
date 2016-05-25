@@ -24,8 +24,9 @@ $ ->
     orgCanBuy = $(this).prop("checked")
     updateBuyerFields(orgCanBuy)
 
-  orgCanSell = $('#registration_seller').prop("checked")
-  orgCanBuy = $('#registration_buyer').prop("checked")
+  if $('#new_registration').length
+    orgCanSell = $('#registration_seller').prop("checked")
+    orgCanBuy = $('#registration_buyer').prop("checked")
 
-  updateSellerFields(orgCanSell)
-  updateBuyerFields(orgCanBuy)
+    updateSellerFields(orgCanSell)
+    updateBuyerFields(orgCanBuy)
