@@ -126,9 +126,9 @@ module Admin
         :ownership_type,
         :non_profit,
         :professional_organizations,
-        locations_attributes: [:name, :address, :city, :state, :zip, :phone, :fax, :country],
         :org_type,
         :plan_id,
+        locations_attributes: [:name, :address, :city, :state, :zip, :phone, :fax, :country],
       )
     end
 
