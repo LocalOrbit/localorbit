@@ -11,7 +11,7 @@ module MapHelper
     "//api.tiles.mapbox.com/v3/#{Figaro.env.mapbox_api_key}#{markers}/#{center.longitude},#{center.latitude},#{zoom}/#{width}x#{height}@2x.png"
   end
 
-  def google_static_map(geocodes, center, width, height, zoom=11)
+  def google_static_map(geocodes, center, width, height, zoom=9)
     return "" unless center
     markers = "?markers="
     unless geocodes.empty?
@@ -20,6 +20,6 @@ module MapHelper
     width = width > 640 ? 640 : width
     height = height > 640 ? 640 : height
 
-    "//maps.googleapis.com/maps/api/staticmap#{markers}&format=png&style=feature:road.highway|saturation:-100&center=#{center.latitude},#{center.longitude}&zoom=#{zoom}&size=#{width}x#{height}&key=#{Figaro.env.google_maps_key}"
+    "//maps.googleapis.com/maps/api/staticmap#{markers}&format=png&style=feature:road.highway|saturation:-100&center=#{center.latitude},#{center.longitude}&size=#{width}x#{height}&key=#{Figaro.env.google_maps_key}"
   end
 end
