@@ -22,7 +22,7 @@ class OrganizationDecorator < Draper::Decorator
 
   def ship_from_lat_long
     address = shipping_location
-    if !address.nil?
+    if !address.nil? && !address.geocode.nil?
       raw "#{address.geocode.latitude},#{address.geocode.longitude}"
     else
       ""
