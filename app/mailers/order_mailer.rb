@@ -5,6 +5,9 @@ class OrderMailer < BaseMailer
 
     to_list =  order.organization.users.map { |u| u.enabled_for_organization?(order.organization) ? u.pretty_email : nil}
 
+    logger.info "Seller Confirmation User List: #{order.organization.users.map { |u| u.id}}"
+    logger.info "Seller Confirmation EMail List: #{to_list.inspect}"
+
     mail(
       to: to_list,
       subject: "Thank you for your order"
