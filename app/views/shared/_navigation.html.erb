@@ -63,8 +63,8 @@ end
             <% if policy(:template).index? %><li><%= link_to raw('<i class="font-icon" data-icon="&#xe024;"></i> Order Templates'), templates_path %></li><% end %>
         <% end %>
         <% if policy(:delivery).index? %><li><%= link_to raw('<i class="font-icon" data-icon="&#xe022;"></i> Upcoming Deliveries'), admin_delivery_tools_path %></li><% end %>
-        <% if policy(:order_item).index? %><li><%= link_to raw('<i class="font-icon" data-icon="&#xe02d;"></i> Sold Items'), admin_order_items_path %></li><% end %>
-        <% if current_market %>
+        <% if policy(:order_item).index? && FeatureAccess.not_LE_market_manager?(user:current_user) %><li><%= link_to raw('<i class="font-icon" data-icon="&#xe02d;"></i> Sold Items'), admin_order_items_path %></li><% end %>
+        <% if current_market && current_user.market_manager? %>
           <% if policy(:delivery_schedule).index? %><li><%= link_to raw('<i class="font-icon" data-icon="&#xe013;"></i> Delivery Schedules'), "/admin/markets/#{current_market.id}/deliveries" %></li><% end %>
         <% end %>
       </ul>
