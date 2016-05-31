@@ -481,14 +481,14 @@ ActiveRecord::Schema.define(version: 20160520023859) do
     t.boolean  "pending",                                                default: false
     t.text     "zpl_logo"
     t.string   "zpl_printer"
+    t.boolean  "self_directed_creation",                                 default: false
     t.boolean  "stripe_standalone"
     t.string   "legacy_stripe_account_id"
-    t.boolean  "self_directed_creation",                                 default: false
-    t.boolean  "subscribed",                                             default: false
-    t.boolean  "allow_product_fee"
     t.integer  "number_format_numeric",                                  default: 0
-    t.integer  "organization_id"
+    t.boolean  "allow_product_fee"
+    t.boolean  "subscribed",                                             default: false
     t.boolean  "routing_plan",                                           default: false
+    t.integer  "organization_id"
   end
 
   add_index "markets", ["name"], name: "index_markets_on_name", using: :btree
@@ -673,16 +673,16 @@ ActiveRecord::Schema.define(version: 20160520023859) do
     t.boolean  "active",                                               default: false
     t.boolean  "needs_activated_notification",                         default: true
     t.string   "stripe_customer_id"
+    t.string   "buyer_org_type"
+    t.string   "ownership_type"
+    t.boolean  "non_profit"
+    t.string   "professional_organizations"
     t.string   "org_type"
     t.integer  "plan_id"
     t.datetime "plan_start_at"
     t.integer  "plan_interval",                                        default: 1,     null: false
     t.decimal  "plan_fee",                     precision: 7, scale: 2, default: 0.0,   null: false
     t.integer  "plan_bank_account_id"
-    t.string   "buyer_org_type"
-    t.string   "ownership_type"
-    t.boolean  "non_profit"
-    t.string   "professional_organizations"
     t.boolean  "subscribed"
   end
 

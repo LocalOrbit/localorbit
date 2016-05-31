@@ -1,4 +1,5 @@
 class CreateRoleTable < ActiveRecord::Migration
+=begin
   def change
     create_table :roles do |t|
       t.string :name
@@ -13,4 +14,5 @@ class CreateRoleTable < ActiveRecord::Migration
       t.belongs_to :role, index: true
     end
   end
+=end
 end
