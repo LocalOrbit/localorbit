@@ -1,5 +1,4 @@
 class CreateRoleActionsTable < ActiveRecord::Migration
-=begin
   def change
     create_table :role_actions do |t|
       t.string :description
@@ -9,5 +8,4 @@ class CreateRoleActionsTable < ActiveRecord::Migration
       t.string :plan_ids, array: true, using: 'gin', default: '{}'
     end
   end
-=end
 end
