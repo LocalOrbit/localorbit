@@ -8,7 +8,7 @@ class Admin::ReportsController < AdminController
       show_page = admin_report_path("purchases-by-product")
     elsif current_user.market_manager?
       if FeatureAccess.not_LE_market_manager?(user: current_user, market: current_market)
-        show_page = admin_report_path("purchases-by-product")
+        show_page = admin_report_path("total-sales")
       else
         show_page = admin_report_path("total-purchases")
       end
