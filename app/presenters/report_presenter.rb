@@ -183,14 +183,14 @@ class ReportPresenter
   end
 
   def self.report_for(report:, market:, user:, search: {}, paginate: {})
-    return nil unless user && reports_for_user(user).include?(report)
+    return nil unless user && reports_for_user(user, market).include?(report)
 
-    valid = !user.buyer_only? || reports_for_user(user).include?(report)
+    valid = !user.buyer_only? || reports_for_user(user, market).include?(report)
 
     new(report: report, market: market, user: user, search: search, paginate: paginate) if valid
   end
 
-  def self.reports_for_user(user)
+  def self.reports_for_user(user, market)
     if user.is_seller_with_purchase?
       seller_reports + buyer_reports
     elsif user.buyer_only?
@@ -198,7 +198,11 @@ class ReportPresenter
     # elsif user.markets.map(&:plan).map(&:name).include?("LocalEyes") && user.market_manager?
     #   le_mm_reports # TODO check acceptability - r&p fix?
     elsif user.market_manager?
-      seller_reports + mm_reports
+      if FeatureAccess.not_LE_market_manager?(user: user, market: market)
+        seller_reports + mm_reports
+      else
+        seller_reports + mm_reports + le_mm_reports
+      end
     else
       seller_reports
     end
