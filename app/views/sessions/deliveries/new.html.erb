@@ -5,7 +5,7 @@
       <%= hidden_field_tag :redirect_back_to, params[:redirect_back_to] %>
 
       <h1 class="clear-before">Welcome to <%= current_market.name %></h1>
-      <p class="faux-label">Please choose a pick up or delivery date.</p>
+      <p class="faux-label">Please choose a <% if FeatureAccess.not_LE_market_manager?(user:current_user) %>pick up<% end %> or delivery date.</p>
 
     <% if not current_user.is_localeyes_buyer? %>
       <div class="row"><% @deliveries.each do |d| -%><div class="column column--guttered column--half">

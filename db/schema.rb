@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160420160440) do
+ActiveRecord::Schema.define(version: 20160520023859) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -481,12 +481,13 @@ ActiveRecord::Schema.define(version: 20160420160440) do
     t.boolean  "pending",                                                default: false
     t.text     "zpl_logo"
     t.string   "zpl_printer"
-    t.boolean  "self_directed_creation",                                 default: false
     t.boolean  "stripe_standalone"
     t.string   "legacy_stripe_account_id"
+    t.boolean  "self_directed_creation",                                 default: false
+    t.boolean  "subscribed",                                             default: false
     t.boolean  "allow_product_fee"
     t.integer  "number_format_numeric",                                  default: 0
-    t.boolean  "subscribed",                                             default: false
+    t.boolean  "routing_plan",                                           default: false
   end
 
   add_index "markets", ["name"], name: "index_markets_on_name", using: :btree
@@ -559,6 +560,7 @@ ActiveRecord::Schema.define(version: 20160420160440) do
     t.string   "payment_status",                                  default: "unpaid"
     t.decimal  "discount_market",        precision: 10, scale: 2, default: 0.0,      null: false
     t.decimal  "product_fee_pct",        precision: 5,  scale: 3, default: 0.0,      null: false
+    t.decimal  "market_seller_fee_pct",  precision: 5,  scale: 3
   end
 
   add_index "order_items", ["order_id", "product_id"], name: "index_order_items_on_order_id_and_product_id", using: :btree
@@ -640,6 +642,7 @@ ActiveRecord::Schema.define(version: 20160420160440) do
     t.string   "invoice_pdf_uid"
     t.string   "invoice_pdf_name"
     t.string   "payment_provider"
+    t.decimal  "market_seller_fee_pct",     precision: 5,  scale: 3
   end
 
   add_index "orders", ["delivery_id"], name: "index_orders_on_delivery_id", using: :btree
@@ -669,6 +672,10 @@ ActiveRecord::Schema.define(version: 20160420160440) do
     t.boolean  "active",                       default: false
     t.boolean  "needs_activated_notification", default: true
     t.string   "stripe_customer_id"
+    t.string   "buyer_org_type"
+    t.string   "ownership_type"
+    t.boolean  "non_profit"
+    t.string   "professional_organizations"
   end
 
   add_index "organizations", ["name"], name: "index_organizations_on_name", using: :btree

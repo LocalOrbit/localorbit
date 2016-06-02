@@ -9,12 +9,21 @@ class OrganizationDecorator < Draper::Decorator
       location.geocode if location
     end.compact
 
-    google_static_map(addresses, addresses.first, w, h)
+    google_static_map(addresses, addresses.first, w, h, 11)
   end
 
   def ship_from_address
     if (address = shipping_location)
       raw "#{address.address}<br/>#{address.city}, #{address.state} #{address.zip}"
+    else
+      ""
+    end
+  end
+
+  def ship_from_lat_long
+    address = shipping_location
+    if !address.nil? && !address.geocode.nil?
+      raw "#{address.geocode.latitude},#{address.geocode.longitude}"
     else
       ""
     end

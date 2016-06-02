@@ -18,12 +18,30 @@ class Registration
                 :seller,
                 :user,
                 :organization,
-                :terms_of_service
+                :terms_of_service,
+                :buyer_org_type,
+                :ownership_type,
+                :non_profit,
+                :professional_organizations
 
   validates :market, :name, :contact_name, :address,
             :city, :state, :zip, presence: true
 
+  validate :buyer_org_type_and_ownership_type
+
   validates :terms_of_service, acceptance: true
+
+  BUYER_ORG_TYPES = ["Individual", "Restaurant", "K-12 Foodservice", "University Foodservice", "Healthcare Foodservice", "Hotel Foodservice", "Grocery", "Meal Delivery Service", "Corporate Dining (B&I)", "Other"]
+  OWNERSHIP_TYPES = ["None","Women Owned","Minority Owned","Women and Minority Owned","Prefer Not to Answer"]
+
+  def buyer_org_type_and_ownership_type
+    if buyer == "1" && buyer_org_type.empty?
+      errors.add(:buyer_org_type, 'can\'t be blank')
+    end
+    if seller == "1" && ownership_type.empty?
+      errors.add(:ownership_type, 'can\'t be blank')
+    end
+  end
 
   def save
     if valid?
@@ -50,7 +68,11 @@ class Registration
       can_sell: (seller == "1"),
       allow_credit_cards: market.default_allow_credit_cards,
       allow_purchase_orders: market.default_allow_purchase_orders,
-      allow_ach: market.default_allow_ach
+      allow_ach: market.default_allow_ach,
+      buyer_org_type: buyer_org_type,
+      ownership_type: ownership_type,
+      non_profit: non_profit,
+      professional_organizations: professional_organizations
     }
   end
 
