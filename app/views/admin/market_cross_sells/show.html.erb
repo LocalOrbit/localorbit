@@ -33,7 +33,7 @@
         Create a list of products to enable other markets to sell products from your market on your behalf
       </p>
 
-      <%= form_tag [:admin, @market, :cross_sell], method: :put do submit_tag "Add Cross Sell List", style: "float:right; margin:20px" end %>
+      <%= form_tag [:new, :admin, @market, :cross_sell], method: :get do submit_tag "Add Cross Sell List", style: "float:right; margin:20px" end %>
 
     </div>
   <% end %>
