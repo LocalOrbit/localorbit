@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160520023859) do
+ActiveRecord::Schema.define(version: 20160602205033) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -156,6 +156,30 @@ ActiveRecord::Schema.define(version: 20160520023859) do
     t.string   "apply_to"
     t.datetime "deleted_at"
   end
+
+  create_table "cross_selling_list_products", force: true do |t|
+    t.integer "cross_selling_list_id"
+    t.integer "product_id"
+    t.boolean "active",                default: true
+  end
+
+  add_index "cross_selling_list_products", ["cross_selling_list_id"], name: "index_cross_selling_list_products_on_cross_selling_list_id", using: :btree
+  add_index "cross_selling_list_products", ["product_id"], name: "index_cross_selling_list_products_on_product_id", using: :btree
+
+  create_table "cross_selling_lists", force: true do |t|
+    t.string   "name",                           null: false
+    t.integer  "entity_id",                      null: false
+    t.string   "entity_type",                    null: false
+    t.integer  "parent_id"
+    t.boolean  "creator",      default: false
+    t.string   "status",       default: "Draft", null: false
+    t.datetime "published_at"
+    t.datetime "deleted_at"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "cross_selling_lists", ["parent_id"], name: "index_cross_selling_lists_on_parent_id", using: :btree
 
   create_table "delayed_jobs", force: true do |t|
     t.integer  "priority",   default: 0, null: false
@@ -488,6 +512,7 @@ ActiveRecord::Schema.define(version: 20160520023859) do
     t.boolean  "allow_product_fee"
     t.integer  "number_format_numeric",                                  default: 0
     t.boolean  "routing_plan",                                           default: false
+    t.boolean  "market_enabled_cross_sell",                              default: false
   end
 
   add_index "markets", ["name"], name: "index_markets_on_name", using: :btree
