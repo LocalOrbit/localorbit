@@ -6,10 +6,16 @@ class Admin::MarketCrossSellsController < AdminController
     @cross_selling_markets = current_user.markets.where(allow_cross_sell: true).where.not(id: @market.id).order(:name)
   end
 
+  # KXM This controller (Admin::MarketCrossSellsController) will need to be beefed up.  For the time being I'll replace the update function
   def update
-    ids = params[:market].try(:[], :cross_sell_ids) || []
-    @market.cross_sell_ids = ids
+    # KXM Original code to HERE
+    # ids = params[:market].try(:[], :cross_sell_ids) || []
+    # @market.cross_sell_ids = ids
+    # HERE
 
+    @market.toggle!(:market_enabled_cross_sell)
+
+    # KXM This is also original
     redirect_to admin_market_cross_sell_path(@market), notice: "Market Updated Successfully"
   end
 

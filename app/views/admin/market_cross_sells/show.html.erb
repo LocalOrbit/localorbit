@@ -4,6 +4,39 @@
 
 <div class="row row--partial">
   <div class="column column--three-fourths">
+
+  <%# KXM Market may cross sell... %>
+  <% if @market.market_enabled_cross_sell == true %>
+    <!--div class='action_box' --> <!-- This will replace the box below once CSS is in place... -->
+    <p>My Lists Subscriptions</p>
+      <%= form_tag [:admin, @market, :cross_sell], method: :put do %>
+      <%= submit_tag "Turn off Cross Selling", class: "pull-right" %>
+      <% end %>
+    <div style="padding: 10px; background-color: #EFEFEF; border-radius: 5px; display:inline-block;">
+      <p class="messaging"><span class="message">You haven't created a Cross Selling list yet...</span><br />
+      Create a list of products to enable other markets to sell products from your market on your behalf</p>
+
+      <%= form_tag [:admin, @market, :cross_sell], method: :put do %>
+      <%= submit_tag "Add Cross Sell List", class: "pull-right" %>
+      <% end %>
+
+    </div>
+    
+  <%# KXM Market may NOT cross sell... %>
+  <% else %>
+    <!--div class='action_box' --> <!-- This will replace the box below once CSS is in place... -->
+    <div style="padding: 10px; background-color: #EFEFEF; border-radius: 5px; display:inline-block;">
+      <p class="messaging"><span class="message">Cross Selling is Inactive</span><br />
+      Cross Selling allows you to publish and subscribe to lists of products to be sold on other markets</p>
+
+      <%= form_tag [:admin, @market, :cross_sell], method: :put do %>
+      <%= submit_tag "Turn on Cross Selling", class: "pull-right" %>
+      <% end %>
+
+    </div>
+  <% end %>
+
+    <!-- ->
     <h2>Cross Selling with Markets</h2>
     <%= form_tag [:admin, @market, :cross_sell], method: :put do %>
       <table id="cross-sell-with">
@@ -22,5 +55,6 @@
       </table>
       <%= submit_tag "Save Changes", class: "pull-right" %>
     <% end %>
+    <!-- -->
   </div>
 </div>
