@@ -3,8 +3,9 @@ require "spec_helper"
 describe "Manage cross selling lists" do
   let!(:user) { create(:user, role: "user") }
 
-  let!(:cross_selling_market)     { create(:market, managers: [user], allow_cross_sell: true) }
-  let!(:not_cross_selling_market) { create(:market, managers: [user]) }
+  let!(:cross_selling_disallowed_market) { create(:market, managers: [user]) }
+  let!(:cross_selling_is_allowed_market) { create(:market, managers: [user], allow_cross_sell: true) }
+  let!(:cross_selling_is_enabled_market) { create(:market, managers: [user], allow_cross_sell: true, market_enabled_cross_sell: true) }
 
   # Set up:
   #   Two Markets that cross sell with each other
@@ -13,12 +14,10 @@ describe "Manage cross selling lists" do
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   context "when cross selling is unavailable" do
-    let!(:market) { create(:market, managers: [user]) }
-
     before do
-      switch_to_subdomain(market.subdomain)
+      switch_to_subdomain(cross_selling_disallowed_market.subdomain)
       sign_in_as user
-      visit admin_market_path(market)
+      visit admin_market_path(cross_selling_disallowed_market)
     end
 
     it "doesn't show the cross sell tab" do
@@ -26,12 +25,11 @@ describe "Manage cross selling lists" do
     end
   end 
 
-  # - (Mkt_01)
   context "when cross selling is available but off" do
     before do
-      switch_to_subdomain(cross_selling_market.subdomain)
+      switch_to_subdomain(cross_selling_is_allowed_market.subdomain)
       sign_in_as user
-      visit admin_market_path(cross_selling_market)
+      visit admin_market_path(cross_selling_is_allowed_market)
     end
 
     it "lets you turn it on" do
@@ -43,6 +41,7 @@ describe "Manage cross selling lists" do
 
       click_button "Turn on Cross Selling"
 
+      # KXM The design specifies this as a link, but a button is easier for now
       # expect(page).to have_content("Turn off Cross Selling")
       expect(page).to have_button("Turn off Cross Selling")
     end
@@ -51,9 +50,9 @@ describe "Manage cross selling lists" do
 
   context "when cross selling is available and on" do
     before do
-      switch_to_subdomain(cross_selling_market.subdomain)
+      switch_to_subdomain(cross_selling_is_enabled_market.subdomain)
       sign_in_as user
-      visit admin_market_path(cross_selling_market)
+      visit admin_market_path(cross_selling_is_enabled_market)
     end
 
     it "lets you turn it off" do
@@ -61,43 +60,64 @@ describe "Manage cross selling lists" do
         click_link "Cross Sell"
       end
 
+      # KXM The design specifies this as a link, but a button is easier for now
       # expect(page).to have_content("Turn off Cross Selling")
       expect(page).to have_button("Turn off Cross Selling")
 
       click_button "Turn off Cross Selling"
 
-      # expect(page).to have_content("Turn on Cross Selling")
       expect(page).to have_button("Turn on Cross Selling")
     end
   end
 
-  # - No lists
   context "when there are no lists" do
+    before do
+      switch_to_subdomain(cross_selling_is_enabled_market.subdomain)
+      sign_in_as user
+      visit admin_market_path(cross_selling_is_enabled_market)
+
+      within ".tabs" do
+        click_link "Cross Sell"
+      end
+    end
+
     it "lets you know you have zero" do
-      expect(page).to have_content("You haven't created a Cross Selling list yet")
+      expect(page).to have_content("You haven't created any Cross Selling lists yet")
     end
 
     it "displays a button for a new list" do
-      expect(page).to have_content("Add Cross Sell List")
+      expect(page).to have_button("Add Cross Sell List")
     end
 
     it "lets you create a new list" do
       click_button "Add Cross Sell List"
       expect(page).to have_content("List Name")
-      expect(page).to have_content("List Visibility")
-      expect(page).to have_content("Create List")
+      expect(page).to have_content("List Status")
+      expect(page).to have_button("Create List")
     end
   end
 
   context "when creating a new list" do
+    before do
+      switch_to_subdomain(cross_selling_is_enabled_market.subdomain)
+      sign_in_as user
+      visit admin_market_path(cross_selling_is_enabled_market)
+
+      within ".tabs" do
+        click_link "Cross Sell"
+      end
+    end
+
     it "saves changes to a new list" do
       click_button "Add Cross Sell List"
 
-      fill_in "List Name", with: "Listy McListface"
+      fill_in "name", with: "Listy McListface"
       # RIP 'Boaty McBoatface' - democracy is DEAD.  What the hell were they thinking,
       # anyway?  Who asks for the internet's opinion about _anything_?!
 
-      select "Subscribing market", from: "List Visibility"
+      # KXM In due time, this will be a select box... in due time...
+      # select "Active", from: "status"
+      fill_in "status", with: "Active"
 
       click_button "Create List"
 
@@ -109,7 +129,7 @@ describe "Manage cross selling lists" do
       expect(page).to have_content("Listy McListface")
       
       expect(page).to have_content("Your Cross Selling list is Empty")
-      expect(page).to have_content("Add Products")
+      expect(page).to have_button("Add Products")
     end
 
     # it "adds products by supplier" do
