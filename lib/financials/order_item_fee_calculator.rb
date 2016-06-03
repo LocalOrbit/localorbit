@@ -10,7 +10,7 @@ module Financials
         category_fee = order_item.product.category.category_fees.where(market_id: market.id)
 
         if order_item.category_fee_pct > 0
-          rate = order_item.category_fee_pct
+          rate = order_item.category_fee_pct/100
         elsif category_fee.first.fee_pct > 0
           rate = category_fee.first.fee/100
         elsif order_item.product_fee_pct > 0
