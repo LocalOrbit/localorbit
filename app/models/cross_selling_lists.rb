@@ -10,9 +10,9 @@ class CrossSellingLists < ActiveRecord::Base
 
   # Basic validation
   validates :name, presence: true
-  validates :entity_id, presence: true, only_integer: true
+  validates :entity_id, presence: true, numericality: {only_integer: true}
   validates :entity_type, presence: true
-  validates :parent_id, only_integer: true
+  validates :parent_id, numericality: {only_integer: true}
   validates :status, presence: true
 
   def published?
