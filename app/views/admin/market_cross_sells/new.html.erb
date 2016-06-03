@@ -2,11 +2,10 @@
   <div class="column column--three-fourths">
     <legend>Create a New Cross Selling List</legend>
 
-    <%# binding.pry %>
     <%= render 'shared/errors', { resource: @market } %>
 
     <%#= form_for [:admin, @market, :cross_sell], method: :post do |f| %>
-    <form action="/admin/markets/10/cross_sell/new">
+    <form action="/admin/markets/10/cross_sell_lists/new">
       <%#= render 'form', {f: f} %>
       <%= render 'form' %>
       <div class="form-actions">
