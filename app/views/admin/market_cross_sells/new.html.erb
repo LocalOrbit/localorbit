@@ -1,14 +1,19 @@
 <div class="row row--partial">
   <div class="column column--three-fourths">
-    <legend>Add Market Address</legend>
+    <legend>Create a New Cross Selling List</legend>
 
+    <%# binding.pry %>
     <%= render 'shared/errors', { resource: @market } %>
 
-    <%= form_for [:admin, @market, :cross_sell], method: :post do |f| %>
-      <%= render 'form', {f: f} %>
+    <%#= form_for [:admin, @market, :cross_sell], method: :post do |f| %>
+    <form action="/admin/markets/10/cross_sell/new">
+      <%#= render 'form', {f: f} %>
+      <%= render 'form' %>
       <div class="form-actions">
-        <%= f.submit "Create List" %>
+      	<input type="submit" value="Create List">
+        <%#= f.submit "Create List" %>
       </div>
-    <% end %>
+    <%# end %>
+    </form>
   </div>
 </div>
