@@ -182,6 +182,7 @@ Rails.application.routes.draw do
 
     resources :activities, only: :index
     resources :categories, only: [:index, :show, :new, :create], path: :taxonomy
+    resources :category_fees, only: [:index, :new, :create, :destroy]
     resource :unit_request, only: :create
     resource :category_request, only: :create
 

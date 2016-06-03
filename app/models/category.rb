@@ -2,6 +2,7 @@ class Category < ActiveRecord::Base
   audited allow_mass_assignment: true
   acts_as_nested_set order: :name
   has_many :products
+  has_many :category_fees
 
   validates :name, presence: true
 
@@ -20,8 +21,8 @@ class Category < ActiveRecord::Base
     each_with_level(root.descendants) do |category, depth|
       names[depth] = category.name
 
-      if category.leaf?
-        hash[names[1]] << [names[2..depth].join(" / "), category.id]
+      if category.leaf? && depth < 3
+        hash[names[1]] << [names[2..2].join(" / "), category.id]
       end
     end
     hash
