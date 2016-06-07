@@ -1,0 +1,16 @@
+<div style="margin-top: 1.4em; padding: 10px; background-color: #FAFAFA; border-radius: 5px; display:inline-block; border: 1px solid #ECE9E9">
+  <div class="row row--field">
+    <div class="field column column--half column--guttered">
+      <%= f.label :name, "List Name" %>
+      <span class="tooltip pull-right" data-tooltip="This will be the name people will use to identify your list of cross sold items."></span>
+      <br />
+      <%= f.text_field :name, class: "column--full" %>
+    </div
+    ><div class="field column column--half column--guttered">
+      <%= f.label :status %>
+      <span class="tooltip pull-right" data-tooltip="Set the status of your list.  Leave as 'Draft' until you're ready to publish your list."></span>
+      <br />
+      <%= f.text_field :status, class: "column--full" %>
+    </div>
+  </div>
+</div>

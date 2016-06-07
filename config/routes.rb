@@ -57,7 +57,7 @@ Rails.application.routes.draw do
       resource  :fees, only: [:show, :update]
       resource  :style_chooser, controller: :style_chooser, only: [:show, :update]
       resource  :cross_sell, controller: :market_cross_sells, only: [:show, :update]
-      resources :cross_sell_lists
+      resources :cross_selling_lists
       resources :deposit_accounts, only: [:index, :new, :create, :destroy]
       resource  :stripe, controller: :market_stripe, only: [:show]
       get :payment_options

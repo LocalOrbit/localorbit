@@ -1,4 +1,4 @@
-class CrossSellingLists < ActiveRecord::Base
+class CrossSellingList < ActiveRecord::Base
   audited allow_mass_assignment: true
   include SoftDelete
 
@@ -12,7 +12,7 @@ class CrossSellingLists < ActiveRecord::Base
   validates :name, presence: true
   validates :entity_id, presence: true, numericality: {only_integer: true}
   validates :entity_type, presence: true
-  validates :parent_id, numericality: {only_integer: true}
+  # validates :parent_id, numericality: {only_integer: true}
   validates :status, presence: true
 
   def published?

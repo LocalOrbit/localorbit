@@ -1,13 +1,13 @@
-<%= render "admin/markets/header" %>
+<%#= render "admin/markets/header" %>
 
-<%= render "shared/errors", resource: @market %>
+<%= render "shared/errors", resource: @entity %>
 
 <div class="row row--partial">
   <div class="column column--three-fourths">
 
   <%# Market may NOT cross sell... %>
   <%# KXM All the inline styles below will ultimately be rolled into classes in CSS... %>
-  <% if !@market.market_enabled_cross_sell? %>
+  <% if !@entity.market_enabled_cross_sell? %>
     <!--div class='action_box' -->
     <div style="margin-top: 1.4em; padding: 10px; background-color: #FAFAFA; border-radius: 5px; display:inline-block; border: 1px solid #ECE9E9">
       <!--p class="messaging"-->
@@ -17,7 +17,7 @@
         Cross Selling allows you to publish and subscribe to lists of products to be sold on other markets
       </p>
 
-      <%= form_tag [:admin, @market, :cross_sell], method: :put do submit_tag "Turn on Cross Selling", style: "float:right; margin:20px" end %>
+      <%= form_tag [:admin, @entity, :cross_sell], method: :put do submit_tag "Turn on Cross Selling", style: "float:right; margin:20px" end %>
 
     </div>
     
@@ -26,14 +26,14 @@
   <% else %>
     <%# KXM The paragraph tag below will ultimately be navigation to the corresponding index pages %>
     <p style="float:left">My Lists Subscriptions</p>
-    <%= form_tag [:admin, @market, :cross_sell], method: :put do submit_tag "Turn off Cross Selling", style: "float:right; top:0;" end %>
+    <%= form_tag [:admin, @entity, :cross_sell], method: :put do submit_tag "Turn off Cross Selling", style: "float:right; top:0;" end %>
     <div style="margin-top: 1.4em; padding: 10px; background-color: #FAFAFA; border-radius: 5px; display:inline-block; border: 1px solid #ECE9E9">
       <p style="float:left; width:65%; color:#808080">
         <span  style="font-size:1.2em; font-weight:600">You haven't created any Cross Selling lists yet...</span><br />
         Create a list of products to enable other markets to sell products from your market on your behalf
       </p>
 
-      <%= form_tag [:new, :admin, @market, :cross_selling_list], method: :get do submit_tag "Add Cross Sell List", style: "float:right; margin:20px" end %>
+      <%= form_tag [:new, :admin, @entity, :cross_selling_list], method: :get do submit_tag "Add Cross Sell List", style: "float:right; margin:20px" end %>
 
     </div>
   <% end %>
