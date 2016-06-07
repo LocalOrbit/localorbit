@@ -48,13 +48,16 @@ describe RollYourOwnMarket do
     )
   }
 
+  let(:organization)	{create(:market)}
+
   def perform
   	subject.perform(
 			market_params: market_params, 
 			billing_params: billing_params, 
 			subscription_params: subscription_params,
 			bank_account_params: bank_account_params,
-			amount: subscription_params[:plan_price]
+			amount: subscription_params[:plan_price],
+		  organization: organization
   	)
   end
 

@@ -3,7 +3,7 @@ shared_examples "an action that grants access to buyers only" do |action|
   let(:organization)              { create(:organization, :buyer, markets: [market]) }
   let(:seller_organization)       { create(:organization, :seller, markets: [market]) }
   let(:admin)                     { create(:user, :admin) }
-  let(:market_manager)            { create(:user, managed_markets: [market]) }
+  let(:market_manager)            { create(:user, :market_manager, managed_markets: [market]) }
   let(:buyer_only)                { create(:user, :buyer, organizations: [organization]) }
   let(:seller)                    { create(:user, :supplier, organizations: [seller_organization]) }
 

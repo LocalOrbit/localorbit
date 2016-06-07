@@ -197,7 +197,9 @@ class ReportPresenter
   end
 
   def self.reports_for_user(user, market)
-    if user.is_seller_with_purchase?
+    if user.admin?
+      seller_reports + buyer_reports + mm_reports
+    elsif user.is_seller_with_purchase?
       seller_reports + buyer_reports
     elsif user.buyer_only?
       buyer_reports
