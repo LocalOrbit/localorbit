@@ -1,0 +1,9 @@
+    <div>
+      <ul style="float:left; list-style:none;padding:0">
+      	<li><%= link_to_unless_current("My Lists", { action: "index" }) %></li>
+      	<!-- <li><%= link_to_unless_current("My Subscriptions", { action: "index" }) %></li> -->
+      </ul>
+      <%= form_tag [:admin, @entity, :toggle_self_enabled_cross_sell], method: :patch do submit_tag "Turn off Cross Selling", style: "float:right; top:0;" end %>
+    </div>
+    <%# KXM There's a better way to do this, right? %>
+    <hr style="clear:both" />

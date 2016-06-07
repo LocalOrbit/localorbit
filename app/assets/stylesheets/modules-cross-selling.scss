@@ -1,0 +1,19 @@
+@import "mixins.css.scss";
+
+div.action_box{
+  margin-top: 1.4em;
+  padding: 10px;
+  background-color: #FAFAFA;
+  border-radius: 5px;
+  display: inline-block;
+  border: 1px solid #ECE9E9;
+  .messaging{
+    float: left;
+    width: 60%;
+    color: #808080;
+    .message{
+      font-size: 1.2em;
+      font-weight: 600;
+    }
+  }
+}

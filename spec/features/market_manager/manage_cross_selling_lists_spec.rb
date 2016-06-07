@@ -5,7 +5,7 @@ describe "Manage cross selling lists" do
 
   let!(:cross_selling_disallowed_market) { create(:market, managers: [user]) }
   let!(:cross_selling_is_allowed_market) { create(:market, managers: [user], allow_cross_sell: true) }
-  let!(:cross_selling_is_enabled_market) { create(:market, managers: [user], allow_cross_sell: true, market_enabled_cross_sell: true) }
+  let!(:cross_selling_is_enabled_market) { create(:market, managers: [user], allow_cross_sell: true, self_enabled_cross_sell: true) }
 
   # Set up:
   #   Two Markets that cross sell with each other
@@ -111,13 +111,13 @@ describe "Manage cross selling lists" do
     it "saves changes to a new list" do
       click_button "Add Cross Sell List"
 
-      fill_in "name", with: "Listy McListface"
+      fill_in "List Name", with: "Listy McListface"
       # RIP 'Boaty McBoatface' - democracy is DEAD.  What the hell were they thinking,
       # anyway?  Who asks for the internet's opinion about _anything_?!
 
       # KXM In due time, this will be a select box... in due time...
       # select "Active", from: "status"
-      fill_in "status", with: "Active"
+      fill_in "List Status", with: "Active"
 
       click_button "Create List"
 

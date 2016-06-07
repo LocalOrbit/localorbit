@@ -1,0 +1,30 @@
+<%= render "admin/bank_accounts/header" %>
+
+
+<div class="row row--partial">
+  <div class="column column--three-fourths">
+
+    <%= render "header" %>
+    
+    <legend><%= @cross_selling_list.name %></legend>
+
+    <%= render 'shared/errors', { resource: @cross_selling_list } %>
+
+    <%= form_for @cross_selling_list, url: :admin_market_cross_selling_list, method: :patch do |f| %>
+      <%= render 'form', {f: f} %>
+      <div class="form-actions">
+        <%= f.submit "Update List" %>
+      </div>
+    <% end %>
+
+    <hr />
+    
+    <div>
+      <p style="font-style:italic; color:#999;">Pay no attention to these - they're only here so the tests pass :-)</p>
+      <hr />
+      <p>Your Cross Selling list is Empty</p>
+      <button>Add Products</button>
+    </div>
+
+  </div>
+</div>

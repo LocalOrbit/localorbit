@@ -1,18 +1,20 @@
 <%= render "admin/bank_accounts/header" %>
 
+
 <div class="row row--partial">
   <div class="column column--three-fourths">
+
+    <%= render "header" %>
+
     <legend>Create a New Cross Selling List</legend>
 
-    <%= render 'shared/errors', { resource: @cross_sell_list } %>
+    <%= render 'shared/errors', { resource: @cross_selling_list } %>
 
-    <%= form_for @cross_sell_list, url: :admin_market_cross_selling_lists, method: :post do |f| %>
+    <%= form_for @cross_selling_list, url: :admin_market_cross_selling_lists, method: :post do |f| %>
       <%= render 'form', {f: f} %>
       <div class="form-actions">
-      	<!-- <input type="submit" value="Create List"> -->
         <%= f.submit "Create List" %>
       </div>
     <% end %>
-    <!-- </form> -->
   </div>
 </div>

@@ -56,12 +56,13 @@ Rails.application.routes.draw do
       resources :delivery_schedules, path: :deliveries, concerns: [:activatable]
       resource  :fees, only: [:show, :update]
       resource  :style_chooser, controller: :style_chooser, only: [:show, :update]
-      resource  :cross_sell, controller: :market_cross_sells, only: [:show, :update]
+      # resource  :cross_sell, controller: :market_cross_sells, only: [:show, :update]
       resources :cross_selling_lists
       resources :deposit_accounts, only: [:index, :new, :create, :destroy]
       resource  :stripe, controller: :market_stripe, only: [:show]
       get :payment_options
       patch :confirm_pending
+      patch :toggle_self_enabled_cross_sell
     end
 
     resources :labels, only: [:index, :show]

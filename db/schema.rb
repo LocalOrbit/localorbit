@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160602205033) do
+ActiveRecord::Schema.define(version: 20160607173408) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -512,7 +512,7 @@ ActiveRecord::Schema.define(version: 20160602205033) do
     t.boolean  "allow_product_fee"
     t.integer  "number_format_numeric",                                  default: 0
     t.boolean  "routing_plan",                                           default: false
-    t.boolean  "market_enabled_cross_sell",                              default: false
+    t.boolean  "self_enabled_cross_sell",                                default: false
   end
 
   add_index "markets", ["name"], name: "index_markets_on_name", using: :btree
