@@ -1,4 +1,3 @@
-
 KnockoutModules.register "download_packing_labels",
   viewModel: (ko,el) ->
     PdfUriPoller.viewModel(ko,el)
@@ -11,7 +10,7 @@ $("#print-btn").click (e) ->
       qz.printers.find(zpl_printer)
     # Pass the printer name into the next Promise
     ).then((printer) ->
-      config = qz.configs.create(printer)
+      config = qz.configs.create(printer, { endOfDoc : '^XZ' })
       # Create a default config for the found printer
       data = zpl
       data.forEach (s) ->
@@ -23,7 +22,7 @@ $("#print-btn").click (e) ->
   else
     qz.printers.find(zpl_printer).then((printer) ->
     # Pass the printer name into the next Promise
-      config = qz.configs.create(printer)
+      config = qz.configs.create(printer, { endOfDoc : '^XZ' })
     # Create a default config for the found printer
       data = zpl
       data.forEach (s) ->
