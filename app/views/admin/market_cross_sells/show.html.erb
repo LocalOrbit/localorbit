@@ -4,38 +4,23 @@
 
 <div class="row row--partial">
   <div class="column column--three-fourths">
-
-  <%# Market may NOT cross sell... %>
-  <%# KXM All the inline styles below will ultimately be rolled into classes in CSS... %>
-  <% if !@market.market_enabled_cross_sell? %>
-    <!--div class='action_box' -->
-    <div style="margin-top: 1.4em; padding: 10px; background-color: #FAFAFA; border-radius: 5px; display:inline-block; border: 1px solid #ECE9E9">
-      <!--p class="messaging"-->
-      <p style="float:left; width:60%; color:#808080">
-        <!--span class="message">Cross Selling is Inactive</span><br /-->
-        <span style="font-size:1.2em; font-weight:600">Cross Selling is Inactive</span><br />
-        Cross Selling allows you to publish and subscribe to lists of products to be sold on other markets
-      </p>
-
-      <%= form_tag [:admin, @market, :cross_sell], method: :put do submit_tag "Turn on Cross Selling", style: "float:right; margin:20px" end %>
-
-    </div>
-    
-  <%# Market may cross sell... %>
-  <%# KXM All the inline styles below will ultimately be rolled into classes in CSS... %>
-  <% else %>
-    <%# KXM The paragraph tag below will ultimately be navigation to the corresponding index pages %>
-    <p style="float:left">My Lists Subscriptions</p>
-    <%= form_tag [:admin, @market, :cross_sell], method: :put do submit_tag "Turn off Cross Selling", style: "float:right; top:0;" end %>
-    <div style="margin-top: 1.4em; padding: 10px; background-color: #FAFAFA; border-radius: 5px; display:inline-block; border: 1px solid #ECE9E9">
-      <p style="float:left; width:65%; color:#808080">
-        <span  style="font-size:1.2em; font-weight:600">You haven't created any Cross Selling lists yet...</span><br />
-        Create a list of products to enable other markets to sell products from your market on your behalf
-      </p>
-
-      <%= form_tag [:new, :admin, @market, :cross_selling_list], method: :get do submit_tag "Add Cross Sell List", style: "float:right; margin:20px" end %>
-
-    </div>
-  <% end %>
+    <h2>Cross Selling with Markets</h2>
+    <%= form_tag [:admin, @market, :cross_sell], method: :put do %>
+      <table id="cross-sell-with">
+        <thead>
+          <tr>
+            <th>Accept Products</th>
+            <th>Market</th>
+          </tr>
+        </thead>
+        <% @cross_selling_markets.each do |market| %>
+          <tr>
+            <td class="accept-products"><%= check_box_tag("market[cross_sell_ids][]", market.id, @market.cross_sell_ids.include?(market.id)) %></td>
+            <td class="name"><%= market.name %></td>
+          </tr>
+        <% end %>
+      </table>
+      <%= submit_tag "Save Changes", class: "pull-right" %>
+    <% end %>
   </div>
 </div>
