@@ -1,4 +1,4 @@
-<%#= render "admin/markets/header" %>
+<%= render partial: "admin/markets/header", locals: { market: @entity } %>
 
 <%= render "shared/errors", resource: @entity %>
 
