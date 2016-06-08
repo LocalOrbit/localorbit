@@ -392,6 +392,8 @@ describe Market do
   end
 
   describe "#next_service_payment_at" do
+    subject{create(:organization, :market)}
+
     it "returns nil if plan_start_at or plan_interval are not set" do
       subject.plan_start_at = nil
       subject.plan_interval = nil
@@ -414,7 +416,7 @@ describe Market do
     end
 
     context "monthly plan" do
-      subject { create(:market, plan_interval: 1) }
+      subject { create(:organization, plan_interval: 1) }
 
       it "returns plan_start_at when plan starts in the future" do
         subject.plan_start_at = 1.day.from_now
@@ -427,7 +429,7 @@ describe Market do
       end
 
       it "returns plan_start_at when payments were made before the plan start" do
-        create(:payment, :service, market: subject, payer: subject, created_at: 1.year.ago)
+        create(:payment, :service, organization: subject, payer: subject, created_at: 1.year.ago)
         subject.plan_start_at = Time.current.change(:sec => 0)
         expect(subject.next_service_payment_at).to eq(subject.plan_start_at)
       end
@@ -435,8 +437,8 @@ describe Market do
       context "returns the next payment date based on the number of successful plan payments" do
         before do
           subject.plan_start_at = 58.days.ago
-          create(:payment, :service, market: subject, payer: subject, created_at: 58.days.ago, status: "failed")
-          create(:payment, :service, market: subject, payer: subject, created_at: 57.days.ago)
+          create(:payment, :service, organization: subject, payer: subject, created_at: 58.days.ago, status: "failed")
+          create(:payment, :service, organization: subject, payer: subject, created_at: 57.days.ago)
         end
 
         it "with 1 successful payment" do
@@ -444,14 +446,14 @@ describe Market do
         end
 
         it "with 2 successful payments" do
-          create(:payment, :service, market: subject, payer: subject, created_at: 28.days.ago)
+          create(:payment, :service, organization: subject, payer: subject, created_at: 28.days.ago)
           expect(subject.next_service_payment_at).to eq(2.months.from_now(subject.plan_start_at))
         end
       end
     end
 
     context "yearly plan" do
-      subject { create(:market, plan_interval: 12) }
+      subject { create(:organization, :market, plan_interval: 12) }
 
       it "returns plan_start_at when plan starts in the future" do
         subject.plan_start_at = 1.day.from_now.change(:sec => 0)
@@ -464,15 +466,15 @@ describe Market do
       end
 
       it "returns plan_start_at when payments were made before the plan start" do
-        create(:payment, :service, market: subject, payer: subject, created_at: 1.week.ago)
+        create(:payment, :service, organization: subject, payer: subject, created_at: 1.week.ago)
         subject.plan_start_at = Time.current.change(:sec => 0)
         expect(subject.next_service_payment_at).to eq(subject.plan_start_at)
       end
 
       context "returns the next payment date based on the number of successful plan payments" do
         before do
-          create(:payment, :service, market: subject, payer: subject, created_at: 375.days.ago, status: "failed")
-          create(:payment, :service, market: subject, payer: subject, created_at: 374.days.ago)
+          create(:payment, :service, organization: subject, payer: subject, created_at: 375.days.ago, status: "failed")
+          create(:payment, :service, organization: subject, payer: subject, created_at: 374.days.ago)
           subject.plan_start_at = 375.days.ago
         end
 
@@ -481,7 +483,7 @@ describe Market do
         end
 
         it "with 2 successful payments" do
-          create(:payment, :service, market: subject, payer: subject, created_at: 11.days.ago)
+          create(:payment, :service, organization: subject, payer: subject, created_at: 11.days.ago)
           expect(subject.next_service_payment_at).to eq(2.years.from_now(subject.plan_start_at))
         end
       end
@@ -493,9 +495,11 @@ describe Market do
       let!(:old_plan) { create(:plan, cross_selling: true) }
       let!(:new_plan) { create(:plan, cross_selling: false) }
 
-      let!(:market1)  { create(:market, plan: old_plan, allow_cross_sell: true) }
+      let!(:market_org1) {create(:organization, :market, plan: old_plan)}
+      let!(:market1)  { create(:market, organization: market_org1, allow_cross_sell: true) }
       let!(:org1)     { create(:organization, :seller, markets: [market1]) }
-      let!(:market2)  { create(:market) }
+      let!(:market_org2) {create(:organization, :market)}
+      let!(:market2)  { create(:market, organization: market_org2) }
       let!(:org2)     { create(:organization, :seller, markets: [market2]) }
 
       before do
@@ -505,7 +509,7 @@ describe Market do
         # Non-member organization cross-selling on this market
         MarketOrganization.create(market_id: market1.id, organization_id: org2.id, cross_sell_origin_market_id: market2.id)
 
-        market1.update(plan: new_plan)
+        market_org1.update(plan: new_plan)
       end
 
       it "disables other markets from seeing it as a cross selling market" do
@@ -525,7 +529,8 @@ describe Market do
       let!(:old_plan) { create(:plan, advanced_inventory: true) }
       let!(:new_plan) { create(:plan, advanced_inventory: false) }
 
-      let!(:market1)  { create(:market, plan: old_plan, allow_cross_sell: true) }
+      let!(:market_org1) {create(:organization, :market, plan: old_plan)}
+      let!(:market1)  { create(:market, organization: market_org1, allow_cross_sell: true) }
       let!(:org1)     { create(:organization, :seller, markets: [market1]) }
       let!(:product1) { create(:product, organization: org1, use_simple_inventory: false) }
       let!(:lot1)     { create(:lot, product: product1, quantity: 25) }
@@ -534,7 +539,7 @@ describe Market do
       it "updates product inventory for a market downgrading service plan" do
         expect(product1.reload.lots.count).to eql(2)
 
-        market1.update(plan: new_plan)
+        market_org1.update(plan: new_plan)
 
         expect(product1.reload.lots.count).to eql(1)
       end

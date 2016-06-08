@@ -3,7 +3,7 @@ require "spec_helper"
 feature "A user can edit their account" do
   let(:market)       { create(:market) }
   let(:organization) { create(:organization, markets: [market]) }
-  let(:user)         { create(:user, password: "password", organizations: [organization]) }
+  let(:user)         { create(:user, :buyer, password: "password", organizations: [organization]) }
 
   scenario "A user can change their account details" do
     switch_to_subdomain(market.subdomain)

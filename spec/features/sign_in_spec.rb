@@ -98,7 +98,7 @@ feature "User signing in" do
   scenario "After logging in a seller should be on the dashboard" do
     market = create(:market)
     org = create(:organization, :seller, markets: [market])
-    user = create(:user, organizations: [org])
+    user = create(:user, :supplier, organizations: [org])
     visit "/"
 
     fill_in "Email", with: user.email
@@ -111,7 +111,7 @@ feature "User signing in" do
   scenario "After logging in through the products page a seller should be on the products page" do
     market = create(:market)
     org = create(:organization, :seller, markets: [market])
-    user = create(:user, organizations: [org])
+    user = create(:user, :supplier, organizations: [org])
     visit admin_products_path
 
     fill_in "Email", with: user.email
@@ -140,7 +140,7 @@ feature "User signing in" do
     market = create(:market)
     create(:delivery_schedule, market: market)
     org = create(:organization, :buyer, :single_location, markets: [market])
-    user = create(:user, organizations: [org])
+    user = create(:user, :buyer, organizations: [org])
 
     switch_to_subdomain market.subdomain
 
@@ -154,7 +154,7 @@ feature "User signing in" do
   end
 
   context "As a suspended user", :suspend_user do
-    let!(:selling_user) { create(:user, organizations: [org2]) }
+    let!(:selling_user) { create(:user, :supplier, organizations: [org2]) }
 
     before do
       suspend_user(user: selling_user, org: org2)
@@ -169,7 +169,7 @@ feature "User signing in" do
   end
 
   context "As a market manager logging into a market that they do not manage" do
-    let!(:market_manager) { create(:user, managed_markets: [market1]) }
+    let!(:market_manager) { create(:user, :market_manager, managed_markets: [market1]) }
     let!(:market1) { create(:market) }
     let!(:market2) { create(:market) }
 
@@ -184,9 +184,9 @@ feature "User signing in" do
 
   context "Signing into a deactivated market" do
     let!(:market) { create(:market, active: false) }
-    let!(:market_manager) { create(:user, managed_markets: [market]) }
+    let!(:market_manager) { create(:user, :market_manager, managed_markets: [market]) }
     let!(:org) { create(:organization, markets: [market]) }
-    let!(:buyer) { create(:user, organizations: [org]) }
+    let!(:buyer) { create(:user, :buyer, organizations: [org]) }
 
     scenario "as a market manager" do
       switch_to_subdomain(market.subdomain)

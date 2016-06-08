@@ -1,0 +1,3 @@
+class ReviewInvoicesPolicy < ApplicationPolicy
+
+end

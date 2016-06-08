@@ -15,16 +15,16 @@ describe "Adding a product", chosen_js: true do
     end
   end
 
-  let!(:user)                  { create(:user) }
-  let!(:market)                { create(:market, :with_addresses) }
   let!(:aggregation_point)     { create(:market_address, market: market, name: "Aggregation Point", address: "1123 Grand Rd.", city: "Appleton", state: "WI", zip: "83992") }
-  let!(:org)                   { create(:organization, :seller, :single_location, markets: [market], who_story: "We sell products", how_story: "We sell products very carefully") }
+  let!(:org)                   { create(:organization, :seller, :single_location, who_story: "We sell products", how_story: "We sell products very carefully") }
   let(:stub_warning_pricing)   { "will not appear in the shop until you add Pricing" }
   let(:stub_warning_inventory) { "will not appear in the shop until you add Inventory" }
   let(:stub_warning_both)      { "will not appear in the shop until you add Inventory and add Pricing" }
   let(:organization_label)     { "Product Organization" }
+  let!(:user)                  { create(:user, :supplier, organizations: [org]) }
+  let!(:market)                { create(:market, :with_addresses, organizations: [org]) }
 
-  let!(:inactive_seller) { create(:organization, :seller, markets: [market], active: false) }
+  let!(:inactive_seller) { create(:organization, :seller, active: false) }
 
   let!(:mondays_schedule) { create(:delivery_schedule, market: market, day: 1, require_delivery: true) }
   let(:monday_schedule_description) { "Mondays from 7:00 AM to 11:00 AM direct to customer. (required)" }
@@ -70,24 +70,24 @@ describe "Adding a product", chosen_js: true do
 
     sign_in_as(user)
 
-    within "#admin-nav" do
+    #within "#admin-nav" do
 
       click_link "Products"
-    end
+    #end
     click_link "Add New Product"
     # ^ This will fail in a case where having no specific markets is not handled
     expect(page).to have_field("Product Name")
   end
 
   it "navigating to form as an admin user", js: true do
-    user.update_attribute(:role, "admin")
+    user.roles << create(:role, :admin)
 
     sign_in_as(user)
 
-    within "#admin-nav" do
+    #within "#admin-nav" do
 
       click_link "Products"
-    end
+    #end
     click_link "Add New Product"
 
     expect(page).to have_field("Product Name")
@@ -370,7 +370,7 @@ describe "Adding a product", chosen_js: true do
   end
 
   describe "a seller belonging to multiple organizations" do
-    let!(:org2) { create(:organization, :single_location, markets: [market], who_story: "who org2", how_story: "how org2") }
+    let!(:org2) { create(:organization, :seller, :single_location, markets: [market], who_story: "who org2", how_story: "how org2") }
     let!(:buying_org) { create(:organization, :buyer) }
 
     before do
@@ -495,7 +495,7 @@ describe "Adding a product", chosen_js: true do
   end
 
   describe "as a market manager", js: true do
-    let!(:user) { create(:user, managed_markets: [market]) }
+    let!(:user) { create(:user, :market_manager, managed_markets: [market]) }
     let!(:org2) { create(:organization, :seller, markets: [market]) }
 
     before do

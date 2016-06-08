@@ -6,7 +6,7 @@ describe ProductsController do
   let(:product1) { create(:product, :sellable, organization: org2, name: 'apples') }
   let(:product2) { create(:product, :sellable, organization: org2, name: 'beer') }
   let(:market) { create(:market, organizations: [org1, org2]) }
-  let(:user) { create(:user, organizations: [org1]) }
+  let(:user) { create(:user, :market_manager, organizations: [org1]) }
   let!(:location) { create(:location, organization: org1) }
 
   describe "/index" do
@@ -40,7 +40,7 @@ describe ProductsController do
   end
 
   describe "/search" do
-    let(:user) { create(:user) }
+    let(:user) { create(:user, :market_manager) }
     let!(:buyer) { create(:organization, :single_location, :buyer, users: [user]) }
     let!(:seller) { create(:organization, :seller, :single_location, name: 'First Seller') }
     let!(:second_seller) { create(:organization, :seller, :single_location, name: 'Second Seller') }

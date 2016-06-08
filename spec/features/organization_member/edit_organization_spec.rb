@@ -1,7 +1,7 @@
 require "spec_helper"
 
 describe "An organization member" do
-  let(:member) { create(:user, role: "user") }
+  let(:member) { create(:user) }
   let(:org) { create(:organization, users: [member]) }
   let(:market)  { create(:market, organizations: [org]) }
 

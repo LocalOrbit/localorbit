@@ -1,10 +1,11 @@
 require "spec_helper"
 
 describe Admin::LotsController do
-  let(:product) { create(:product, use_simple_inventory: false) }
-  let(:market) { create(:market, organizations: [product.organization]) }
-  let(:user) { create(:user, organizations: [product.organization]) }
-  let(:user2) { create(:user) }
+  let!(:seller) { create(:organization, :seller)}
+  let(:product) { create(:product, use_simple_inventory: false, organization: seller) }
+  let(:market) { create(:market, organizations: [seller]) }
+  let(:user) { create(:user, :supplier, organizations: [seller]) }
+  let(:user2) { create(:user, :supplier) }
 
   before do
     switch_to_subdomain market.subdomain

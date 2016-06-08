@@ -1,15 +1,16 @@
 require "spec_helper"
 
 describe "Plan Limits" do
-  let(:plan)      { create(:plan) }
-  let!(:market)   { create(:market, :with_delivery_schedule, :with_address, plan: plan) }
-  let!(:seller)   { create(:organization, :seller, markets: [market]) }
-  let!(:buyer)    { create(:organization, :buyer, markets: [market]) }
+  let(:plan)      { create(:plan, :grow) }
+  let!(:market_org) { create(:organization, :market, plan: plan)}
+  let!(:market)   { create(:market, :with_delivery_schedule, :with_address, organization: market_org, organizations: [buyer,seller]) }
+  let!(:seller)   { create(:organization, :seller) }
+  let!(:buyer)    { create(:organization, :buyer) }
   let!(:product)  { create(:product, :sellable, organization: seller) }
   let!(:order_item) {create(:order_item, order: order, product: product)}
   let(:order)     { create :order, :with_items, organization: buyer, market: market }
 
-  let(:user)      { create(:user, managed_markets: [market]) }
+  let(:user)      { create(:user, :market_manager, managed_markets: [market]) }
 
   before do
     switch_to_subdomain(market.subdomain)
@@ -26,8 +27,8 @@ describe "Plan Limits" do
     end
   end
 
-  context "as a seller" do
-    let!(:user) {create(:user, organizations:[seller] )}
+  context "as a supplier" do
+    let!(:user) {create(:user, :supplier, organizations:[seller] )}
 
     it "is not allowed to view table tents or posters" do
       visit admin_order_path(order)
@@ -38,7 +39,7 @@ describe "Plan Limits" do
   end
 
   context "as a buyer" do
-    let!(:user) { create(:user, managed_markets: [], organizations: [buyer])}
+    let!(:user) { create(:user, :buyer, managed_markets: [], organizations: [buyer])}
 
     context "on a grow plan" do
       let!(:plan) { create(:plan, :grow) }
@@ -55,6 +56,13 @@ describe "Plan Limits" do
   context "as a market manager" do
     context "on a grow plan" do
       let!(:plan) { create(:plan, :grow) }
+      let!(:role) { create(:role, :grow_plan)}
+
+      before do
+        user.roles = []
+        user.roles << role
+        visit "/"
+      end
 
       it "is allowed to view table tents or posters" do
         user.organizations << buyer
@@ -67,6 +75,13 @@ describe "Plan Limits" do
 
     context "on the startup plan" do
       let!(:plan) { create(:plan, :start_up) }
+      let!(:role) { create(:role, :start_up_plan)}
+
+      before do
+        user.roles = []
+        user.roles << role
+        visit "/"
+      end
 
       it "is not allowed to manage discount codes" do
         within("#admin-nav") do

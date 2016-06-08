@@ -12,6 +12,8 @@ class User < ActiveRecord::Base
 
   trimmed_fields :email
 
+  has_and_belongs_to_many :roles, :join_table => :users_roles
+
   has_many :managed_markets_join, class_name: "ManagedMarket"
   #has_many :audits
 
@@ -202,7 +204,11 @@ class User < ActiveRecord::Base
   end
 
   def admin?
-    role == "admin"
+    #role == "admin"
+    #if !user_organizations[0].nil? && !user_organizations[0].organization.nil?
+    #  user_organizations[0].organization.org_type == "A"
+    #end
+    user_organizations.map(&:organization).map(&:org_type).include?('A')
   end
 
   def can_manage?(resource)
@@ -226,18 +232,27 @@ class User < ActiveRecord::Base
   end
 
   def suspended_from_all_orgs?(market)
-    # return if organizations.nil?
     return if market.nil?
 
     (market.organizations & organizations).empty? && !(market.organizations & suspended_organizations).empty?
   end
 
   def market_manager?
-    managed_markets.any?
+    #managed_markets.any?
+    #if !user_organizations[0].nil? && !user_organizations[0].organization.nil?
+    #  self.user_organizations[0].organization.org_type == "M"
+    #end
+    !admin? && user_organizations.map(&:organization).map(&:org_type).include?('M')
+
   end
 
   def seller?
-    organizations.selling.any?
+    #organizations.selling.any?
+    #if !user_organizations[0].nil? && !user_organizations[0].organization.nil?
+    #  self.user_organizations[0].organization.org_type == "S"
+    #end
+    !admin? && !market_manager? && user_organizations.map(&:organization).map(&:org_type).include?('S')
+
   end
 
   def admin_or_mm?
@@ -245,7 +260,12 @@ class User < ActiveRecord::Base
   end
 
   def buyer_only?
-    !admin? && !market_manager? && !seller?
+    #!admin? && !market_manager? && !seller?
+    #if !user_organizations[0].nil? && !user_organizations[0].organization.nil?
+    #  self.user_organizations[0].organization.org_type == "B"
+    #end
+    !admin? && !market_manager? && !seller? && user_organizations.map(&:organization).map(&:org_type).include?('B')
+
   end
 
   def is_seller_with_purchase?
@@ -253,10 +273,23 @@ class User < ActiveRecord::Base
   end
 
   def is_localeyes_buyer? # this really aligns with procurement_manager role and should probably be refactored when that is complete.
-    intersect = []
-    localeyes_mkts = markets.joins(:plan).where("has_procurement_managers = 't'").all
-    intersect = managed_organizations.select{|o| o.can_sell? == false} & localeyes_mkts.flat_map{|lm| lm.organizations}
-    return intersect.any?
+    #intersect = []
+    #localeyes_mkts = markets.joins(:plan).where("has_procurement_managers = 't'").all
+    #intersect = managed_organizations.select{|o| o.can_sell? == false} & localeyes_mkts.flat_map{|lm| lm.organizations}
+    #return intersect.any?
+    current_plan == "LocalEyes"
+  end
+
+  def primary_user_role
+    if admin?
+      "A"
+    elsif market_manager?
+      "M"
+    elsif seller?
+      "S"
+    elsif buyer_only?
+      "B"
+    end
   end
 
   def managed_organizations(opts={})
@@ -446,6 +479,12 @@ class User < ActiveRecord::Base
       elsif market_manager?
         managed_markets_join.map(&:market_id)
       end
+    end
+  end
+
+  def current_plan
+    if self.user_organizations[0].organization.plan
+      self.user_organizations[0].organization.plan.name
     end
   end
 end

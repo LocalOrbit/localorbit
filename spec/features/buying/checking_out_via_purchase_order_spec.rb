@@ -7,10 +7,10 @@ describe "Checking Out via Purchase Order", :js, :vcr do
   let!(:credit_card)  { create(:bank_account, :credit_card, bankable: buyer) }
   let!(:bank_account) { create(:bank_account, :checking, :verified, bankable: buyer) }
 
-  let!(:fulton_farms) { create(:organization, :seller, :single_location, name: "Fulton St. Farms", users: [create(:user), create(:user)]) }
-  let!(:ada_farms) { create(:organization, :seller, :single_location, name: "Ada Farms", users: [create(:user)]) }
+  let!(:fulton_farms) { create(:organization, :seller, :single_location, name: "Fulton St. Farms", users: [create(:user, :supplier), create(:user, :supplier)]) }
+  let!(:ada_farms) { create(:organization, :seller, :single_location, name: "Ada Farms", users: [create(:user, :supplier)]) }
 
-  let(:market_manager) { create(:user) }
+  let(:market_manager) { create(:user, :market_manager) }
 
   let(:market) { create(:market, :with_addresses,
                         payment_provider: PaymentProvider::Stripe.id,

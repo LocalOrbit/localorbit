@@ -6,9 +6,8 @@ class Admin::Financials::ServicePaymentsController < AdminController
   end
 
   def create
-    market  = Market.find(params[:market_id])
-
-    results = ChargeServiceFee.perform(entity: market, subscription_params: {plan: market.plan.stripe_id}, flash: flash)
+    organization = Organization.find(params[:organization_id])
+    results = ChargeServiceFee.perform(entity: organization, subscription_params: {plan: organization.plan.stripe_id}, flash: flash)
 
     if results.success?
       market.subscribe!

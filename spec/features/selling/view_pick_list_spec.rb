@@ -114,7 +114,7 @@ describe "Pick list" do
   end
 
   context "as a seller" do
-    let!(:user) { create(:user, organizations: [seller]) }
+    let!(:user) { create(:user, :supplier, organizations: [seller]) }
 
     context "before the delivery cutoff" do
       before do

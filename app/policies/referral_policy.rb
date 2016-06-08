@@ -1,0 +1,3 @@
+class ReferralPolicy < ApplicationPolicy
+
+end
