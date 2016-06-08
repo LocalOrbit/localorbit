@@ -56,7 +56,7 @@ feature "Admin service payments" do
 
     click_button payment_button_text
 
-    expect(page).to have_content("'#{configured_market.name}' has no default payment method in Stripe")
+    expect(page).to have_content("'#{configured_market.organization.name}' has no default payment method in Stripe")
 
     expect(ActionMailer::Base.deliveries.size).to eq(0)
   end
