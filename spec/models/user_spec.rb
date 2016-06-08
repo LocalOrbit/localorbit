@@ -25,7 +25,7 @@ describe User do
       let(:org) { create(:organization) }
 
       context "when user is an admin" do
-        let(:user) { create(:user, role: "admin") }
+        let(:user) { create(:user, :admin) }
 
         it "returns true" do
           expect(user.can_manage_organization?(org)).to be true
@@ -54,7 +54,7 @@ describe User do
       end
 
       context "user does not manage any market" do
-        let(:user) { create(:user, role: "user") }
+        let(:user) { create(:user) }
 
         it "returns false" do
           expect(user.can_manage_organization?(org)).to be false
@@ -63,21 +63,21 @@ describe User do
     end
 
     describe "#can_manage_user?" do
-      let!(:org1)   { create(:organization, markets: [market1], users: [user1, user2]) }
-      let!(:org2)   { create(:organization, markets: [market2], users: [user3, user4]) }
-      let!(:org3)   { create(:organization, markets: [market2], users: [user5]) }
+      let!(:org1)   { create(:organization, :seller, markets: [market1], users: [user1, user2]) }
+      let!(:org2)   { create(:organization, :seller, markets: [market2], users: [user3, user4]) }
+      let!(:org3)   { create(:organization, :seller, markets: [market2], users: [user5]) }
 
-      let!(:user1)  { create(:user) }
-      let!(:user2)  { create(:user) }
-      let!(:user3)  { create(:user) }
-      let!(:user4)  { create(:user) }
+      let!(:user1)  { create(:user, :supplier) }
+      let!(:user2)  { create(:user, :supplier) }
+      let!(:user3)  { create(:user, :supplier) }
+      let!(:user4)  { create(:user, :supplier) }
       let!(:user5)  { create(:user) }
 
       let!(:market1) { create(:market) }
       let!(:market2) { create(:market) }
 
       context "admin" do
-        let!(:admin) { create(:user, role: "admin") }
+        let!(:admin) { create(:user, :admin) }
 
         it "is true for everyone" do
           [user1, user2, user3, user4].each do |u|
@@ -87,7 +87,7 @@ describe User do
       end
 
       context "market manager" do
-        let!(:market_manager) { create(:user, managed_markets: [market1]) }
+        let!(:market_manager) { create(:user, :market_manager, managed_markets: [market1]) }
 
         it "can manage users in organizations in their market" do
           expect(market_manager.can_manage_user?(user1)).to be_truthy
@@ -97,7 +97,7 @@ describe User do
         end
 
         context "managing multiple markets" do
-          let!(:market_manager) { create(:user, managed_markets: [market1, market2]) }
+          let!(:market_manager) { create(:user, :market_manager, managed_markets: [market1, market2]) }
 
           it "can manage users in organizations in all their markets" do
             expect(market_manager.can_manage_user?(user1)).to be_truthy
@@ -122,7 +122,7 @@ describe User do
       end
 
       context "buyer/seller" do
-        let!(:buyer) { create(:user, organizations: [org1, org3]) }
+        let!(:buyer) { create(:user, :supplier, organizations: [org1, org3]) }
 
         it "can manage users in organizations they belong to" do
           expect(buyer.can_manage_user?(user1)).to be_truthy
@@ -142,7 +142,7 @@ describe User do
 
       let!(:user) { create(:user, organizations: [organization]) }
       let!(:user2) { create(:user, organizations: [organization2]) }
-      let!(:market_manager) { create(:user, managed_markets: [market]) }
+      let!(:market_manager) { create(:user, :market_manager, managed_markets: [market]) }
 
       it "finds all users for organizations in the market" do
         result = User.with_primary_market(market)
@@ -158,51 +158,60 @@ describe User do
     end
 
     it 'admin? returns true if role is "admin"' do
-      user = build(:user)
-      user.role = "admin"
+      user = build(:user, :admin)
+      org = build(:organization, :admin)
+      user.organizations << org
+
+      #user.role = "admin"
       expect(user.admin?).to be true
     end
 
     it 'admin? returns false if role is not "admin"' do
-      user = build(:user)
-      user.role = "user"
+      user = build(:user, :supplier)
+      org = build(:organization, :seller)
+      user.organizations << org
+
+      #user.role = "user"
       expect(user.admin?).to be false
 
-      user.role = "manager"
+      #user.role = "manager"
       expect(user.admin?).to be false
 
-      user.role = "something else"
+      #user.role = "something else"
       expect(user.admin?).to be false
     end
 
     context "#seller?" do
       it "returns true if the user is a member of any selling organizations" do
-        market = create(:market)
-        org = create(:organization, can_sell: true, markets: [market])
-        user = create(:user, organizations: [org])
+        market_org = create(:organization, :market)
+        market = create(:market, organization: market_org)
+        org = create(:organization, :seller, can_sell: true, markets: [market])
+        user = create(:user, :supplier, organizations: [org])
         expect(user).to be_seller
       end
 
       it "returns false if the user is not a member of any selling organizations" do
-        user = create(:user, organizations: [create(:organization, can_sell: false)])
+        user = create(:user, :buyer, organizations: [create(:organization, can_sell: false)])
         expect(user).not_to be_seller
       end
     end
 
     context "#buyer_only?" do
       it "returns true if the user is only a buyer" do
-        user = build(:user)
+        user = build(:user, :buyer)
+        org = build(:organization, :buyer)
+        user.organizations << org
         expect(user).to be_buyer_only
       end
 
       it "returns false if the user is a seller" do
-        user = build(:user)
+        user = build(:user, :supplier)
         allow(user).to receive(:seller?).and_return(true)
         expect(user).not_to be_buyer_only
       end
 
       it "returns false if the user is a market manager" do
-        user = build(:user)
+        user = build(:user, :market_manager)
         allow(user).to receive(:market_manager?).and_return(true)
         expect(user).not_to be_buyer_only
       end
@@ -219,10 +228,12 @@ describe User do
 
     context "for an admin" do
       let!(:user) { create(:user, :admin) }
-      let!(:market1) { create(:market) }
-      let!(:market2) { create(:market) }
+      let!(:market_org1) { create(:organization, :market) }
+      let!(:market1) { create(:market, organization: market_org1) }
+      let!(:market_org2) { create(:organization, :market) }
+      let!(:market2) { create(:market, organization: market_org2) }
       let!(:org1) { create(:organization, :seller, markets: [market1]) }
-      let!(:org2) { create(:organization, markets: [market2]) }
+      let!(:org2) { create(:organization, :seller, markets: [market2]) }
       let(:result) { user.managed_organizations }
 
       it "returns a scope with all organizations" do
@@ -245,10 +256,7 @@ describe User do
     end
 
     context "for a market manager" do
-      let(:user) { create(:user, :market_manager) }
-      let(:market1) { user.managed_markets.first }
-      let(:market2) { user.managed_markets.create!(attributes_for(:market)) }
-      let(:market3) { create(:market) }
+
 
       let(:org1) { create(:organization, name: "Org 1") }
       let(:org2) { create(:organization, name: "Org 2") }
@@ -258,16 +266,24 @@ describe User do
       let(:org6) { create(:organization, name: "Org 6") }
       let(:org7) { create(:organization, name: "Org 7") }
 
+      let(:market1) { create(:market, organizations:[org1,org5]) }
+      let(:market2) { create(:market, organizations:[org2,org7]) }
+      let(:market3) { create(:market, organizations:[org3,org4,org7]) }
+
+      let(:user) { create(:user, :market_manager) }
+
       before do
-        market1.organizations << org1
-        market1.organizations << org5
-        market2.organizations << org2
-        market2.organizations << org7
-        market3.organizations << org3
-        market3.organizations << org4
-        market3.organizations << org7
-        user.organizations << org4
-        user.organizations << org5
+        #market1.organizations << org1
+        #market1.organizations << org5
+        #market2.organizations << org2
+        #market2.organizations << org7
+        #market3.organizations << org3
+        #market3.organizations << org4
+        #market3.organizations << org7
+        user.managed_organizations << org1
+        user.managed_organizations << org2
+        user.managed_organizations << org4
+        user.managed_organizations << org5
         org6.update_cross_sells!(from_market: market3, to_ids: [market2.id])
         org7.market_organizations.where(market_id: market2).soft_delete_all
       end
@@ -357,7 +373,7 @@ describe User do
     end
 
     context "for a market manager" do
-      let(:user) { create(:user, managed_markets: [market1, market2], organizations: [org4, org5]) }
+      let(:user) { create(:user, :market_manager, managed_markets: [market1, market2], organizations: [org4, org5]) }
 
       it "returns a chainable scope" do
         expect(user.managed_organizations_within_market(market1)).to be_a_kind_of(ActiveRecord::Relation)
@@ -375,7 +391,7 @@ describe User do
     end
 
     context "for a user" do
-      let(:user) { create(:user, role: "user", organizations: [org1, org5]) }
+      let(:user) { create(:user, organizations: [org1, org5]) }
 
       it "returns a scope for the organization memberships within the market" do
         expect(user.managed_organizations_within_market(market1)).to include(org1, org5)
@@ -461,7 +477,7 @@ describe User do
     end
 
     context "user" do
-      let(:user) { create(:user, role: "user") }
+      let(:user) { create(:user) }
       let(:market1) { create(:market) }
       let(:market2) { create(:market) }
       let(:org) { create(:organization) }
@@ -662,11 +678,11 @@ describe User do
     let!(:market) { create(:market) }
     let!(:market2) { create(:market) }
 
-    let!(:user1)  { create(:user) }
-    let!(:user2)  { create(:user) }
-    let!(:user3)  { create(:user) }
+    let!(:user1)  { create(:user, :buyer) }
+    let!(:user2)  { create(:user, :buyer) }
+    let!(:user3)  { create(:user, :supplier) }
     let!(:user4)  { create(:user) }
-    let!(:user5)  { create(:user) }
+    let!(:user5)  { create(:user, :buyer) }
 
     let!(:buyer_org1)   { create(:organization, :buyer, markets: [market], users: [user1]) }
     let!(:buyer_org2)   { create(:organization, :buyer, markets: [market], users: [user2]) }
@@ -691,10 +707,10 @@ describe User do
   end
 
   context "users with subscriptions" do
-    let!(:user1)  { create(:user) }
-    let!(:user2)  { create(:user) }
-    let!(:user3)  { create(:user) }
-    let!(:user4)  { create(:user) }
+    let!(:user1)  { create(:user, :supplier) }
+    let!(:user2)  { create(:user, :supplier) }
+    let!(:user3)  { create(:user, :supplier) }
+    let!(:user4)  { create(:user, :supplier) }
 
     let!(:ads) { create(:subscription_type, name: "Advertisements", keyword: "ads") }
     let!(:notes) { create(:subscription_type, name: "Note Notices", keyword: "notes") }
@@ -861,7 +877,7 @@ describe User do
   describe "#default_market" do
     let(:market0) { create(:market) }
     let(:org1) { create(:organization, markets: [market0]) }
-    let(:user) { create(:user) }
+    let(:user) { create(:user, :admin) }
 
     context "when the user belongs to multiple markets" do
       let!(:market1) { create(:market) }
@@ -880,11 +896,18 @@ describe User do
       end
 
       context "when user is an admin" do
-        let(:user) { create(:user, :admin) }
+        let!(:organization) { create(:organization, :admin) }
+        let!(:user) { create(:user, :admin) }
+
         context "and the 'admin' market exists" do
           let!(:admin_market) { create(:market, subdomain: "admin") }
+
+          before do
+            user.organizations << organization
+          end
+
           it "returns the admin market" do
-            expect(user.default_market).to eq(admin_market)
+             expect(user.default_market).to eq(admin_market)
           end
         end
         context "but the 'admin' market doesn't exist" do

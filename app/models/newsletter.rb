@@ -6,7 +6,7 @@ class Newsletter < ActiveRecord::Base
   validates :subject, presence: true, length: {maximum: 50}
 
   dragonfly_accessor :image
-  validates_property :format, of: :image,  in: %w(jpeg png gif)
+  validates_property :format, of: :image,  in: %w(jpg jpeg png gif)
 
   def recipients
     newsletter_type = SubscriptionType::Keywords::Newsletter

@@ -1,0 +1,3 @@
+class SentEmailPolicy < ApplicationPolicy
+
+end

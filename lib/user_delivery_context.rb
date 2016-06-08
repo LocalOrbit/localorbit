@@ -20,7 +20,7 @@ UserDeliveryContext = ConstructorStruct.new(
       is_localeyes_buyer = user.is_localeyes_buyer?
 
       return self.new(
-        packing_labels_feature: !!(market.plan.packing_labels?),
+        packing_labels_feature: !!(market.organization.plan.packing_labels?),
         is_market_manager: is_market_manager, 
         is_seller: is_seller, 
         is_buyer_only: is_buyer_only, 

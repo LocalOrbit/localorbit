@@ -4,11 +4,11 @@ describe OrderMailer do
   let!(:market)            { create(:market) }
   let!(:delivery_schedule) { create(:delivery_schedule, market: market) }
   let!(:delivery)          { create(:delivery, delivery_schedule: delivery_schedule) }
-  let!(:seller1)           { create(:organization, name: "Grandville Farms", can_sell: true, markets: [market]) }
-  let!(:seller2)           { create(:organization, name: "Zeeland Farms", can_sell: true, markets: [market]) }
-  let!(:buyer)             { create(:organization, name: "Hudsonville Restraunt", can_sell: false, markets: [market]) }
+  let!(:seller1)           { create(:organization, :seller, name: "Grandville Farms", can_sell: true, markets: [market]) }
+  let!(:seller2)           { create(:organization, :seller, name: "Zeeland Farms", can_sell: true, markets: [market]) }
+  let!(:buyer)             { create(:organization, :buyer, name: "Hudsonville Restaurant", can_sell: false, markets: [market]) }
   let!(:users)             { create_list(:user, 2, organizations: [seller1]) }
-  let!(:buyer_user)        { create(:user, organizations: [buyer]) }
+  let!(:buyer_user)        { create(:user, :buyer, organizations: [buyer]) }
 
   let!(:product1)          { create(:product, :sellable, organization: seller1) }
   let!(:product2)          { create(:product, :sellable, organization: seller2) }

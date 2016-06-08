@@ -8,12 +8,12 @@ module ApplicationHelper
   end
 
   def can_access?(flag)
-    current_user.admin? || current_user.managed_markets.any? {|m| m.plan[flag.to_sym] }
+    current_user.admin? || current_user.managed_markets.any? {|m| m.organization.plan[flag.to_sym] }
   end
 
   def organization_can_access?(organization, flag)
     if organization
-      organization.markets.any? {|m| m.plan[flag.to_sym]}
+      organization.markets.any? {|m| m.organization.plan[flag.to_sym]}
     end
   end
 
@@ -37,7 +37,7 @@ module ApplicationHelper
   end
 
   def show_financials?(user, market)
-    user.buyer_only? && user.managed_organizations.where(allow_purchase_orders: true).any? && market.try(:allow_purchase_orders?)
+    user.admin? || user.market_manager? || user.seller? || (user.buyer_only? && user.managed_organizations.where(allow_purchase_orders: true).any? && market.try(:allow_purchase_orders?))
   end
 
   def column_sort_classes(column)

@@ -3,7 +3,7 @@ class Credit < ActiveRecord::Base
 
   belongs_to :order, autosave: false
   belongs_to :user
-  belongs_to :paying_org, class: Organization
+  belongs_to :paying_org, class_name: Organization
   after_save :update_order
 
   audited associated_with: :order

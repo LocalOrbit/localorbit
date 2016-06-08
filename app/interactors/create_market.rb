@@ -6,10 +6,10 @@ class CreateMarket
       payment_provider: PaymentProvider.for_new_markets.id,
       stripe_standalone: ENV["USE_STRIPE_STANDALONE_ACCOUNTS"],
     }
-    
+
     defaults[:plan_fee] = context[:amount] if context[:amount]
 
-    market = Market.create(defaults.merge(market_params))
+    market = Market.create(defaults.merge(market_params).merge({:organization_id => context[:organization][:id]}))
     market.update_attribute(:plan_start_at, Time.current.end_of_minute) if context[:RYO] == true
 
     context[:market] = market
@@ -20,7 +20,7 @@ class CreateMarket
   end
 
   def rollback
-    if context_market = context[:market]
+    if context_market == context[:market]
         context_market.destroy
     end
   end

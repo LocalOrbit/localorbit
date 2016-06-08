@@ -10,24 +10,24 @@ class FeatureAccess
     end
 
     def order_templates?(market:)
-      market.plan.name == "LocalEyes"
+      market.organization.plan.name == "LocalEyes"
     end
 
     def can_edit_order?(user:, order:)
       return (user.admin? || user.managed_markets.include?(order.market))
     end
 
-    def not_LE_market_manager?(user:)
-      return true
-      #return user.managed_markets.empty? || !user.markets.map(&:plan).map(&:name).include?("LocalEyes")
-      #|| ( !user.can_manage_market?(:market))
+    def not_LE_market_manager?(user:, market:)
+      user.managed_markets.empty? || !user.markets.map(&:organization).map(&:plan).map(&:name).include?("LocalEyes") || ( !user.can_manage_market?(market))
+      #return true
+      #return user.managed_markets.empty? || !user.markets.map(&:plan).map(&:name).include?("LocalEyes") || ( !user.can_manage_market?(:market))
     end
 
     def order_printables?(user:, order:)
       market = order.market
       user_belongs_to_market = user.markets.include?(market)
       user_organization_bought_order = user.organizations.include?(order.organization)
-      can_view = (user.admin? or (user_belongs_to_market and market.plan.order_printables and (user.can_manage_market?(market) or user_organization_bought_order)))
+      can_view = (user.admin? or (user_belongs_to_market and market.organization.plan.order_printables and (user.can_manage_market?(market) or user_organization_bought_order)))
     end
 
     def packing_labels?(user_delivery_context:)
@@ -63,11 +63,13 @@ class FeatureAccess
     end
 
     def sellers_edit_orders_feature_available?(market:)
-      !!market.plan.try(:sellers_edit_orders?)
+      if !market.organization.nil? && !market.organization.plan.nil?
+        !!market.organization.plan.try(:sellers_edit_orders?)
+      end
     end
 
     def has_procurement_managers?(market:)
-      !!market.plan.try(:has_procurement_managers?)
+      !!market.organization.plan.try(:has_procurement_managers?)
     end
 
     def product_level_fee?(market:)

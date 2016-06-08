@@ -3,7 +3,7 @@ require "spec_helper"
 feature "A user navagating markets" do
   let(:seller_org) { create(:organization, :seller) }
   let(:buyer_org) { create(:organization, :buyer, :single_location) }
-  let(:user) { create(:user, organizations: [buyer_org]) }
+  let(:user) { create(:user, :buyer, organizations: [buyer_org]) }
 
   context "without a market" do
     scenario "a visitor sees the base domain" do

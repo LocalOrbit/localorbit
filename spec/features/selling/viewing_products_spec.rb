@@ -1,24 +1,24 @@
 require "spec_helper"
 
 describe "Viewing products" do
-  let!(:market) { create(:market) }
-  let!(:market2) { create(:market) }
+  let!(:market2)      { create(:market) }
 
-  let!(:org1) { create(:organization, name: "County Park", markets: [market]) }
-  let!(:org2) { create(:organization, markets: [market]) }
+  let!(:org1)         { create(:organization, :seller, name: "County Park") }
+  let!(:org2)         { create(:organization, :seller) }
 
   let!(:apples)       { create(:product, organization: org1, name: "Apples") }
   let!(:apples_price) { create(:price, product: apples, sale_price: 10.00, min_quantity: 1) }
   let!(:apples_lot)   { create(:lot, product: apples, quantity: 10) }
 
-  let!(:bananas)       { create(:product, organization: org1, name: "Bananas") }
-  let!(:bananas_price) { create(:price, product: bananas, sale_price: 1.00, min_quantity: 1) }
-  let!(:bananas_lot)   { create(:lot, product: bananas, quantity: 100) }
+  let!(:bananas)      { create(:product, organization: org1, name: "Bananas") }
+  let!(:bananas_price){ create(:price, product: bananas, sale_price: 1.00, min_quantity: 1) }
+  let!(:bananas_lot)  { create(:lot, product: bananas, quantity: 100) }
 
   let!(:grapes)       { create(:product, organization: org1, name: "Grapes", unit: create(:unit, singular: "Tube", plural: "Tubes")) }
   let!(:grapes_price) { create(:price, product: grapes, sale_price: 5.00, min_quantity: 1) }
   let!(:grapes_lot)   { create(:lot, product: grapes, quantity: 1) }
 
+  let!(:market)       { create(:market, organizations: [org1,org2]) }
   let!(:market_manager) { create(:user, :market_manager, managed_markets: [market, market2]) }
 
   before do
@@ -26,7 +26,7 @@ describe "Viewing products" do
   end
 
   context "seller" do
-    let!(:user) { create(:user, organizations: [org1]) }
+    let!(:user) { create(:user, :supplier, organizations: [org1]) }
 
     before do
       sign_in_as(user)
@@ -162,7 +162,7 @@ describe "Viewing products" do
   end
 
   context "updating prices and quantities", js: true do
-    let!(:user) { create(:user, organizations: [org1]) }
+    let!(:user) { create(:user, :supplier, organizations: [org1]) }
 
     it "maintains filters when updating updating price or inventory" do
       sign_in_as(market_manager)

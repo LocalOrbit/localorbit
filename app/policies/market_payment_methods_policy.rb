@@ -1,0 +1,3 @@
+class MarketPaymentMethodsPolicy < ApplicationPolicy
+
+end

@@ -8,8 +8,8 @@ describe "Admin Managing Market Managers" do
   end
 
   describe "as a normal user" do
-    let!(:normal_user) { create(:user, role: "user") }
-    let!(:org) { create(:organization, markets: [market], users: [normal_user]) }
+    let!(:org) { create(:organization, markets: [market]) }
+    let!(:normal_user) { create(:user, organizations: [org]) }
 
     it "I can not manage market managers" do
       sign_in_as normal_user
@@ -21,7 +21,7 @@ describe "Admin Managing Market Managers" do
   end
 
   describe "as a market manager" do
-    let(:user) { create(:user, managed_markets: [market]) }
+    let(:user) { create(:user, :market_manager, managed_markets: [market]) }
 
     before do
       sign_in_as user
@@ -62,7 +62,7 @@ describe "Admin Managing Market Managers" do
 
   describe "as an admin" do
     let(:user) { create(:user, :admin) }
-    let(:user2) { create(:user, role: "user") }
+    let(:user2) { create(:user, :market_manager) }
 
     before(:each) do
       sign_in_as user

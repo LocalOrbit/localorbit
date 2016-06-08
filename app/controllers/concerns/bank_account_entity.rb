@@ -16,6 +16,6 @@ module BankAccountEntity
   end
 
   def find_organization
-    current_user.managed_organizations.find(params[:organization_id])
+    current_user.managed_organizations.find_by_id(params[:organization_id])
   end
 end

@@ -5,7 +5,7 @@ describe AddMarketManager do
   let!(:market) { create(:market) }
 
   describe "adding an existing user" do
-    let!(:user) { create(:user, role: "user") }
+    let!(:user) { create(:user) }
 
     it "adds them to the market's managers list" do
       result = AddMarketManager.perform(market: market, email: user.email, inviter: inviter)

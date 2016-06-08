@@ -4,7 +4,18 @@ class Admin::ReportsController < AdminController
   before_action :find_sticky_params, only: :show
 
   def index
-    redirect_to current_user.buyer_only? ? admin_report_path("purchases-by-product") : admin_report_path("total-sales")
+    if current_user.buyer_only?
+      show_page = admin_report_path("purchases-by-product")
+    elsif current_user.market_manager?
+      if FeatureAccess.not_LE_market_manager?(user: current_user, market: current_market)
+        show_page = admin_report_path("total-sales")
+      else
+        show_page = admin_report_path("total-purchases")
+      end
+    else
+      show_page = admin_report_path("total-sales")
+    end
+    redirect_to show_page
   end
 
   def show
