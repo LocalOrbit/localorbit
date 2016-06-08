@@ -6,7 +6,7 @@ shared_examples "an action that prevents access to buyers" do |action|
   let(:admin)                     { create(:user, :admin) }
   let(:market_manager_member)     { create(:user, :market_manager, managed_markets: [market]) }
   let(:market_manager_non_member) { create(:user, :market_manager, managed_markets: [market2]) }
-  let(:member)                    { create(:user, organizations: [organization]) }
+  let(:member)                    { create(:user, :buyer, organizations: [organization]) }
   let(:non_member)                { create(:user) }
   let(:market_seller)             { create(:user, :supplier, organizations: [seller_organization]) }
 
@@ -21,7 +21,7 @@ shared_examples "an action that prevents access to buyers" do |action|
   end
 
   it "renders 404 if logged in user is a buyer only" do
-    sign_in create(:user)
+    sign_in create(:user, :buyer)
 
     instance_exec(&action)
 

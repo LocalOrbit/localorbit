@@ -42,11 +42,11 @@ shared_examples "an action that grants access to buyers and sellers only" do |ac
     expect(response).to meet_expected_expectation
   end
 
-  it "prevents access to admins" do
+  it "grants access to admins" do
     sign_in admin
 
     instance_exec(&action)
 
-    expect(response).to be_not_found
+    expect(response).to meet_expected_expectation
   end
 end

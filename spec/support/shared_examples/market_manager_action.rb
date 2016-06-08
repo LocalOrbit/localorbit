@@ -1,10 +1,10 @@
 shared_examples "an action restricted to admin or market manager" do |action|
   let(:market)                    { create(:market) }
-  let(:organization)              { create(:organization, markets: [market]) }
+  let(:organization)              { create(:organization, :buyer, markets: [market]) }
   let(:admin)                     { create(:user, :admin) }
   let(:market_manager_member)     { create(:user, :market_manager, managed_markets: [market]) }
   let(:market_manager_non_member) { create(:user, :market_manager) }
-  let(:member)                    { create(:user, organizations: [organization]) }
+  let(:member)                    { create(:user, :buyer, organizations: [organization]) }
   let(:non_member)                { create(:user) }
 
   def meet_expected_expectation
