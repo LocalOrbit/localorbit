@@ -57,6 +57,7 @@ Rails.application.routes.draw do
       resource  :style_chooser, controller: :style_chooser, only: [:show, :update]
       resource  :cross_sell, controller: :market_cross_sells, only: [:show, :update]
       resource  :fees, only: [:show, :update]
+      resources :category_fees, only: [:index, :new, :create, :destroy]
       resources :deposit_accounts, only: [:index, :new, :create, :destroy]
       resource  :stripe, controller: :market_stripe, only: [:show]
       get :payment_options
@@ -182,7 +183,6 @@ Rails.application.routes.draw do
 
     resources :activities, only: :index
     resources :categories, only: [:index, :show, :new, :create], path: :taxonomy
-    resources :category_fees, only: [:index, :new, :create, :destroy]
     resource :unit_request, only: :create
     resource :category_request, only: :create
 

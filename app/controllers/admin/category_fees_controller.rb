@@ -1,7 +1,8 @@
 class Admin::CategoryFeesController < AdminController
 
   def index
-    @fees = CategoryFee.includes(:category).where(market_id: current_user.markets.map(&:id))
+    @market = current_user.markets.find(params[:market_id])
+    @fees = CategoryFee.includes(:category).where(market_id: params[:market_id])
     respond_to do |format|
       format.html
     end
@@ -10,7 +11,7 @@ class Admin::CategoryFeesController < AdminController
   def create
     fee = CategoryFee.new(category_fee_params)
     fee.save!
-    redirect_to admin_category_fees_path
+    redirect_to admin_market_category_fees_path
   end
 
   def new
@@ -22,7 +23,7 @@ class Admin::CategoryFeesController < AdminController
   def destroy
     params.require(:id)
     CategoryFee.find(params[:id]).destroy
-    redirect_to admin_category_fees_path
+    redirect_to admin_market_category_fees_path
   end
 
   private
