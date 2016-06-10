@@ -3,22 +3,14 @@
   <tr style="border: 0">
     <td class="field">
       <%= f.label :category_id %>
-      <span class="tooltip pull-right" data-tooltip="Type the product name and select a category."></span>
-      <br>
-      <%= f.select :category_id, Category.for_select, {include_blank: ""}, {data: {placeholder: "Click and type to search for a Category"}, class: "chosen"} %>
+      <span class="tooltip pull-right" data-tooltip="Type the product name and select a category."></span><br/>
+      <%= f.select :category_id, Category.for_fee_select, {include_blank: ""}, {data: {placeholder: "Click and type to search for a Category"}, class: "chosen"} %>
     </td>
 
-    <td class="field">
-      <% if current_user.markets_for_select.count > 1 %>
-          <%= f.label :market_id, "Market" %><br>
-          <%= f.select :market_id, current_user.markets_for_select, {include_blank: "Select an market"}, class: "column--full" %>
-      <% else %>
-          <%= f.hidden_field :market_id %>
-      <% end %>
-    </td>
+    <%= f.hidden_field :market_id, :value => @market.id %>
 
     <td class="field">
-      <%= f.label :fee_pct, 'Market Fee %' %>
+      <%= f.label :fee_pct, 'Market Fee %' %><br/>
       <%= f.text_field :fee_pct, style: 'width: 75px', class: "column column--full" %>
     </td>
 

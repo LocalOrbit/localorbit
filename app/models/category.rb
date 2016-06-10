@@ -28,7 +28,31 @@ class Category < ActiveRecord::Base
     hash
   end
 
+  def self.for_fee_select
+    array = Array.new
+    each_with_level(root.descendants) do |category, depth|
+      if depth < 3
+        array << [category.parent.name + ' / ' + category.name, category.id]
+      end
+    end
+    array
+  end
+
   def top_level_category
     @top_level_category ||= self_and_ancestors.find_by(depth: 1)
+  end
+
+  def level_fee(market, category=nil)
+    if category.nil?
+      cat = self
+    else
+      cat = category
+    end
+
+    if !cat.category_fees.where(market_id: market.id).first.nil? && cat.depth > 0
+      cat.category_fees.first
+    else
+      level_fee(market, cat.parent)
+    end
   end
 end
