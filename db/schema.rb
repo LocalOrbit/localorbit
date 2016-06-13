@@ -508,12 +508,12 @@ ActiveRecord::Schema.define(version: 20160607173408) do
     t.boolean  "self_directed_creation",                                 default: false
     t.boolean  "stripe_standalone"
     t.string   "legacy_stripe_account_id"
-    t.integer  "number_format_numeric",                                  default: 0
     t.boolean  "allow_product_fee"
+    t.integer  "number_format_numeric",                                  default: 0
     t.boolean  "subscribed",                                             default: false
     t.boolean  "routing_plan",                                           default: false
-    t.boolean  "self_enabled_cross_sell",                                default: false
     t.integer  "organization_id"
+    t.boolean  "self_enabled_cross_sell",                                default: false
   end
 
   add_index "markets", ["name"], name: "index_markets_on_name", using: :btree
@@ -708,7 +708,6 @@ ActiveRecord::Schema.define(version: 20160607173408) do
     t.integer  "plan_interval",                                        default: 1,     null: false
     t.decimal  "plan_fee",                     precision: 7, scale: 2, default: 0.0,   null: false
     t.integer  "plan_bank_account_id"
-    t.boolean  "subscribed"
   end
 
   add_index "organizations", ["name"], name: "index_organizations_on_name", using: :btree
@@ -849,20 +848,20 @@ ActiveRecord::Schema.define(version: 20160607173408) do
   add_index "promotions", ["product_id"], name: "index_promotions_on_product_id", using: :btree
 
   create_table "role_actions", force: true do |t|
-    t.string "section"
-    t.string "action"
     t.string "description"
     t.string "org_types",   default: [], array: true
+    t.string "section"
+    t.string "action"
     t.string "plan_ids",    default: [], array: true
   end
 
   create_table "roles", force: true do |t|
     t.string   "name"
-    t.string   "activities",      limit: 4096, default: [], array: true
-    t.datetime "created_at"
-    t.datetime "updated_at"
     t.string   "org_type"
     t.integer  "organization_id"
+    t.string   "activities",      default: [], array: true
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "sequences", force: true do |t|
