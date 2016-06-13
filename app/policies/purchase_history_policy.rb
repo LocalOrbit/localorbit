@@ -1,0 +1,3 @@
+class PurchaseHistoryPolicy < ApplicationPolicy
+
+end

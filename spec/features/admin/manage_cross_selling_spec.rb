@@ -1,7 +1,7 @@
 require "spec_helper"
 
 describe "Manage cross selling" do
-  let!(:user) { create(:user, role: "admin") }
+  let!(:user) { create(:user, :admin) }
 
   let!(:cross_selling_market)     { create(:market, allow_cross_sell: true) }
   let!(:not_cross_selling_market) { create(:market) }
@@ -36,8 +36,8 @@ describe "Manage cross selling" do
   end
 
   context "for a cross selling market" do
-    let!(:market) { create(:market, allow_cross_sell: true) }
-    let!(:organization) { create(:organization, :seller, markets: [market]) }
+    let!(:organization) { create(:organization, :seller) }
+    let!(:market) { create(:market, allow_cross_sell: true, organizations: [organization]) }
 
     context "managing a market" do
       before do

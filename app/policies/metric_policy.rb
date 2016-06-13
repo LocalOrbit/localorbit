@@ -1,0 +1,3 @@
+class MetricPolicy < ApplicationPolicy
+
+end

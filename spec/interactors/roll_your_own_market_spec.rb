@@ -48,9 +48,11 @@ describe RollYourOwnMarket do
     )
   }
 
+  let(:organization)	{create(:market)}
+
   def perform
   	subject.perform(
-			market_params: market_params, 
+			market_params: market_params,
 			billing_params: billing_params, 
 			subscription_params: subscription_params,
 			bank_account_params: bank_account_params,
@@ -59,6 +61,11 @@ describe RollYourOwnMarket do
   end
 
   context "creates new ", vcr: true do
+		it "organization" do
+			results = perform
+			expect(results.organization).to be
+    end
+
 	  it "market" do
 	  	results = perform
 	  	expect(results.market).to be

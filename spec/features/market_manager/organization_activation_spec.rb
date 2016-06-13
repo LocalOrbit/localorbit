@@ -1,7 +1,7 @@
 require "spec_helper"
 
 feature "Organization activation" do
-  given!(:market_manager) { create(:user, managed_markets: [market]) }
+  given!(:market_manager) { create(:user, :market_manager, managed_markets: [market]) }
 
   def expect_registraiton_email_link(org)
     expect(current_email.body).to match(Regexp.new(admin_organization_url(org, host: market.domain)))

@@ -1,0 +1,3 @@
+class OrderItemPolicy < ApplicationPolicy
+
+end

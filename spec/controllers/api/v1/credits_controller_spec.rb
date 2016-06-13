@@ -4,7 +4,7 @@ describe Api::V1::CreditsController do
   describe "/index" do
     let(:user) { create(:user) }
     let(:admin) {create(:user, :admin)}
-    let(:market_manager) {create(:user, managed_markets: [market])}
+    let(:market_manager) {create(:user, :market_manager, managed_markets: [market])}
     let!(:buyer) { create(:organization, :single_location, :buyer, users: [user]) }
     let(:market) { create(:market, :with_addresses, organizations: [buyer]) }
     let(:order) {create(:order, :with_items, market: market)}

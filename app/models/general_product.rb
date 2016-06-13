@@ -4,8 +4,8 @@ class GeneralProduct < ActiveRecord::Base
   include PgSearch
 
   belongs_to :category
-  belongs_to :top_level_category, class: Category
-  belongs_to :second_level_category, class: Category
+  belongs_to :top_level_category, class_name: Category
+  belongs_to :second_level_category, class_name: Category
   belongs_to :organization, inverse_of: :general_products
   belongs_to :location
 

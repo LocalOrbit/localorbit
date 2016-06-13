@@ -33,7 +33,7 @@ class Admin::MarketsController < AdminController
   end
 
   def create
-    if ENV["USE_STRIPE_STANDALONE_ACCOUNTS"]
+    if ENV["USE_STRIPE_STANDALONE_ACCOUNTS"] || market_params['stripe_standalone']
       results = RegisterStripeStandaloneMarket.perform(market_params: market_params)
     else
       results = RegisterStripeMarket.perform(market_params: market_params)
@@ -42,7 +42,8 @@ class Admin::MarketsController < AdminController
       redirect_to [:admin, results.market]
     else
       flash.now.alert = "Could not create market"
-      @market = results.market
+      @market = Market.new(payment_provider: PaymentProvider.for_new_markets.id)
+      #@market = results.market
       render :new
     end
   end
@@ -120,6 +121,7 @@ class Admin::MarketsController < AdminController
       :country,
       :product_label_format,
       :print_multiple_labels_per_item,
+      :organization_id,
       :number_format_numeric
     ]
     if current_user.can_manage_market?(@market)

@@ -27,10 +27,10 @@ class Order < ActiveRecord::Base
   belongs_to :market, inverse_of: :orders
   belongs_to :organization, inverse_of: :orders
   belongs_to :delivery, inverse_of: :orders
-  belongs_to :placed_by, class: User
+  belongs_to :placed_by, class_name: User
   belongs_to :discount
 
-  has_many :items, inverse_of: :order, class: OrderItem, autosave: true, dependent: :destroy do
+  has_many :items, inverse_of: :order, class_name: OrderItem, autosave: true, dependent: :destroy do
     def for_checkout
       eager_load(product: [:organization, :prices]).order("organizations.name, products.name").group_by do |item|
         item.product.organization.name
@@ -81,8 +81,8 @@ class Order < ActiveRecord::Base
   scope :due_between, lambda {|range| invoiced.where(invoice_due_date: range) }
   scope :clean_payment_records, -> { where(arel_table[:placed_at].gt(Time.parse("2014-01-01"))) }
   scope :for_seller, -> (user) { orders_for_seller(user) }
-  scope :on_automate_plan, -> { joins(market: :plan).where(plans: {name: 'Automate'}) }
-  scope :not_on_automate_plan, -> { joins(market: :plan).where.not(plans: {name: 'Automate'}) }
+  scope :on_automate_plan, -> { joins(market: [organization: :plan]).where(plans: {name: 'Automate'}) }
+  scope :not_on_automate_plan, -> { joins(market: [organization: :plan]).where.not(plans: {name: 'Automate'}) }
 
   scope :balanced,     -> { where(payment_provider: PaymentProvider::Balanced.id.to_s) }
   scope :not_balanced, -> { where.not(payment_provider: PaymentProvider::Balanced.id.to_s) }
@@ -434,7 +434,7 @@ class Order < ActiveRecord::Base
   end
 
   def is_localeyes_order?
-    market.plan.has_procurement_managers
+    market.organization.plan.has_procurement_managers
   end
 
   def update_total_cost

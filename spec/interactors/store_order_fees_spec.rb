@@ -1,7 +1,7 @@
 require "spec_helper"
 
 describe StoreOrderFees do
-  let!(:user)              { create(:user) }
+  let!(:user)              { create(:user, :buyer) }
   let!(:market)            { create(:market, :with_address, subdomain: "ada", local_orbit_seller_fee: "1.5", local_orbit_market_fee: "1", market_seller_fee: "10", credit_card_seller_fee: "4", credit_card_market_fee: "4.5", ach_seller_fee: "2", ach_market_fee: "3", ach_fee_cap: "10") }
   let!(:delivery_schedule) { create(:delivery_schedule, market: market) }
   let!(:delivery)          { delivery_schedule.next_delivery }

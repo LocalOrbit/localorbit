@@ -2,9 +2,9 @@ require "spec_helper"
 
 feature "Adding a bank account to an organization" do
   let!(:market)    { create(:market) }
-  let!(:org)        { create(:organization, can_sell: true, markets: [market]) }
-  let!(:member)     { create(:user, organizations: [org]) }
-  let!(:non_member) { create(:user) }
+  let!(:org)        { create(:organization, :buyer, can_sell: true, markets: [market]) }
+  let!(:member)     { create(:user, :buyer, organizations: [org]) }
+  let!(:non_member) { create(:user, :buyer) }
 
   let!(:account)    { create(:bank_account, :checking, name: "Org Bank Account", bankable: org) }
 

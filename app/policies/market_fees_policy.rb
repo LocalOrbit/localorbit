@@ -1,0 +1,3 @@
+class MarketFeesPolicy < ApplicationPolicy
+
+end

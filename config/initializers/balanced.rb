@@ -1,1 +1,1 @@
-Balanced.configure(ENV["BALANCED_API_KEY"])
+#Balanced.configure(ENV["BALANCED_API_KEY"])

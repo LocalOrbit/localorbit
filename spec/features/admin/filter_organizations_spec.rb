@@ -3,18 +3,18 @@ require "spec_helper"
 describe "Filter organizations", :js do
   let!(:empty_market) { create(:market) }
 
-  let!(:market1)      { create(:market) }
-  let!(:org1)         { create(:organization, :seller, markets: [market1]) }
+  let!(:org1)         { create(:organization, :seller) }
   let!(:org1_product) { create(:product, :sellable, organization: org1) }
-  let!(:org2)         { create(:organization, :buyer, markets: [market1]) }
+  let!(:org2)         { create(:organization, :buyer) }
+  let!(:market1)      { create(:market, organizations: [org1, org2]) }
 
-  let!(:market2)      { create(:market) }
-  let!(:org3)         { create(:organization, :seller, markets: [market2]) }
+  let!(:org3)         { create(:organization, :seller) }
   let!(:org3_product) { create(:product, :sellable, organization: org3) }
-  let!(:org4)         { create(:organization, :buyer, markets: [market2]) }
+  let!(:org4)         { create(:organization, :buyer) }
+  let!(:market2)      { create(:market, organizations:[org3,org4]) }
 
-  context "as an admin", :js do
-    let!(:user) { create(:user, role: "admin") }
+  context "as an admin" do
+    let!(:user) { create(:user, :admin) }
 
     context "by market" do
       before do
@@ -93,13 +93,13 @@ describe "Filter organizations", :js do
 
   context "as a market manager" do
     let!(:market3) { create(:market) }
-    let!(:org5) { create(:organization, :seller, markets: [market3]) }
+    let!(:org5) { create(:organization, :buyer, markets: [market3]) }
 
-    let!(:market_manager) { create(:user, role: "user", managed_markets: [market1, market3, empty_market]) }
+    let!(:market_manager) { create(:user, :market_manager, managed_markets: [market1, market3, empty_market]) }
 
     context "by market" do
       context "when the market manager only manages a single organization" do
-        let!(:single_market_manager) { create(:user, role: "user", managed_markets: [market1]) }
+        let!(:single_market_manager) { create(:user, :market_manager, managed_markets: [market1]) }
 
         it "does not show the market filter" do
           switch_to_subdomain(market1.subdomain)

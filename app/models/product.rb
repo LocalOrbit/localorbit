@@ -12,8 +12,8 @@ class Product < ActiveRecord::Base
   audited allow_mass_assignment: true, associated_with: :organization
 
   belongs_to :category
-  belongs_to :top_level_category, class: Category
-  belongs_to :second_level_category, class: Category
+  belongs_to :top_level_category, class_name: Category
+  belongs_to :second_level_category, class_name: Category
   belongs_to :organization, inverse_of: :products
   belongs_to :location
   belongs_to :unit
@@ -407,7 +407,7 @@ class Product < ActiveRecord::Base
   end
 
   def disable_advanced_inventory(market)
-    advanced_inventory = organization.markets.reject{|m| m == market }.any? {|m| m.reload.plan.advanced_inventory }
+    advanced_inventory = organization.markets.reject{|m| m == market }.any? {|m| m.reload.organization.plan.advanced_inventory }
     if !advanced_inventory && lots.count > 1
       update_column(:use_simple_inventory, true)
       current_available_inventory = available_inventory

@@ -2,7 +2,6 @@ class Market < ActiveRecord::Base
   attr_accessor :stripe_tok
 
   before_update :process_cross_sells_change, if: :allow_cross_sell_changed?
-  before_update :process_plan_change, if: :plan_id_changed?
 
   audited allow_mass_assignment: true
   extend DragonflyBackgroundResize
@@ -41,8 +40,7 @@ class Market < ActiveRecord::Base
   has_many :newsletters
   has_many :promotions, inverse_of: :market
   has_many :order_templates
-  belongs_to :plan, inverse_of: :markets
-  belongs_to :plan_bank_account, class_name: "BankAccount"
+  belongs_to :organization
 
   has_many :bank_accounts, as: :bankable
 
@@ -88,21 +86,6 @@ class Market < ActiveRecord::Base
 
   def self.for_order_items(order_items)
     joins(:orders).where(orders: {id: order_items.map(&:order_id)}).uniq
-  end
-
-  # Called as the last in a scope chain
-  def self.sort_service_payment
-    all.sort do |a,b|
-      if a.next_service_payment_at && b.next_service_payment_at
-        a.next_service_payment_at <=> b.next_service_payment_at
-      elsif a.next_service_payment_at.nil? && b.next_service_payment_at.nil?
-        a.name.downcase <=> b.name.downcase
-      elsif a.next_service_payment_at.nil?
-        -1 # Means order is wrong
-      else
-        1 # Means order is correct
-      end
-    end
   end
 
   def pretty_email
@@ -213,54 +196,6 @@ class Market < ActiveRecord::Base
     update!(closed: false)
   end
 
-  def next_service_payment_at
-    return nil unless plan_start_at && plan_interval
-    return plan_start_at if plan_start_at > Time.now
-
-    @next_service_payment_at ||= begin
-      plan_payments = Payment.successful.not_refunded.made_after(plan_start_at).where(payer: self, payment_type: "service")
-      (plan_interval * plan_payments.count).months.from_now(plan_start_at)
-    end
-  end
-
-  def last_service_payment_at
-    Payment.successful.not_refunded.where(payer: self, payment_type: "service").order("created_at DESC").first.try(:created_at)
-  end
-
-  def plan_payable?
-    plan_fee && plan_fee > 0 && plan_bank_account.try(:usable_for?, :debit)
-  end
-
-  def subscription_eligible?
-    # KXM Do we need plan_payable?  I think not...
-    # !subscribed && next_service_payment_at && next_service_payment_at <= Time.now && plan_payable?
-    !subscribed && next_service_payment_at && next_service_payment_at <= Time.now
-  end
-
-  def subscribe!
-    update!(subscribed: true)
-  end
-  
-  def set_subscription(stripe_invoice)
-    # Return the old values in case they need to be rolled back
-    ret_val = {
-      plan_interval: plan_interval,
-      plan_fee: plan_fee,
-      subscribed: subscribed
-    }
-    update_attribute(:plan_interval, 12)
-    update_attribute(:plan_fee, ::Financials::MoneyHelpers.cents_to_amount(stripe_invoice.amount_due))
-    update_attribute(:subscribed, true)
-
-    ret_val
-  end
-
-  def unset_subscription(old_values_hash)
-    update_attribute(:plan_interval, old_values_hash.plan_interval)
-    update_attribute(:plan_fee, old_values_hash.plan_fee)
-    update_attribute(:subscribed, old_values_hash.subscribed)
-  end
-
   def on_statement_as
     name.sub(/[^0-9a-zA-Z\.\-_ \^\`\|]/, '')[0, 22]
   end
@@ -271,6 +206,36 @@ class Market < ActiveRecord::Base
 
   def deposit_account
     self.bank_accounts.visible.deposit_accounts.first
+  end
+
+  def remove_cross_selling_from_market
+    update_column(:allow_cross_sell, false)
+
+    MarketOrganization.
+        where(cross_sell_origin_market_id: id).
+        each(&:soft_delete)
+
+    MarketOrganization.
+        where.not(cross_sell_origin_market_id: nil).
+        where(market_id: id).
+        each(&:soft_delete)
+
+    MarketCrossSells.where(source_market_id: id).destroy_all
+  end
+
+  # Called as the last in a scope chain
+  def self.sort_service_payment
+    all.sort do |a,b|
+      if a.organization.next_service_payment_at && b.organization.next_service_payment_at
+        a.organization.next_service_payment_at <=> b.organization.next_service_payment_at
+      elsif a.organization.next_service_payment_at.nil? && b.organization.next_service_payment_at.nil?
+        a.name.downcase <=> b.name.downcase
+      elsif a.organization.next_service_payment_at.nil?
+        -1 # Means order is wrong
+      else
+        1 # Means order is correct
+      end
+    end
   end
 
   private
@@ -285,23 +250,5 @@ class Market < ActiveRecord::Base
     remove_cross_selling_from_market unless allow_cross_sell?
   end
 
-  def process_plan_change
-    remove_cross_selling_from_market unless plan.cross_selling
-    products.each {|p| p.disable_advanced_inventory(self) } unless plan.advanced_inventory
-  end
 
-  def remove_cross_selling_from_market
-    update_column(:allow_cross_sell, false)
-
-    MarketOrganization.
-      where(cross_sell_origin_market_id: id).
-      each(&:soft_delete)
-
-    MarketOrganization.
-      where.not(cross_sell_origin_market_id: nil).
-      where(market_id: id).
-      each(&:soft_delete)
-
-    MarketCrossSells.where(source_market_id: id).destroy_all
-  end
 end

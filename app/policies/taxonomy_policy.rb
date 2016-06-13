@@ -1,0 +1,3 @@
+class TaxonomyPolicy < ApplicationPolicy
+
+end

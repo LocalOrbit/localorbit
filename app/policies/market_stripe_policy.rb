@@ -1,0 +1,3 @@
+class MarketStripePolicy < ApplicationPolicy
+
+end

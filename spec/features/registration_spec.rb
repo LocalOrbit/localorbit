@@ -2,13 +2,14 @@ require "spec_helper"
 
 describe "Register" do
   context "a new organization for a market" do
-    let!(:manager) { create(:user, email: "fake@example.com") }
+    #let!(:manager) { create(:user, :market_manager) }
 
     context "automatically activated" do
-      let!(:market) { create(:market, managers: [manager], auto_activate_organizations: true) }
+      let!(:market) { create(:market, auto_activate_organizations: true) }
 
       context "happy path", js: true do
         before do
+
           switch_to_subdomain market.subdomain
           visit root_path
 
@@ -42,7 +43,7 @@ describe "Register" do
           expect(page).to have_content("Registration: Step Two")
           expect(page).to have_content("daniel@collectiveidea.com")
 
-          expect(Organization.count).to eql(1)
+          expect(Organization.count).to eql(2)
           expect(Organization.last.name).to eql("Collective Idea")
           expect(Organization.last.active).to eql(true)
           expect(Organization.last.can_sell?).to eql(false)
@@ -93,7 +94,7 @@ describe "Register" do
         it "creates a new organization" do
           expect(page).to have_content("You need to sign in or sign up before continuing.")
 
-          expect(Organization.count).to eql(1)
+          expect(Organization.count).to eql(2)
           expect(Organization.last.name).to eql("Collective Idea")
           expect(Organization.last.active).to eql(true)
           expect(Organization.last.can_sell?).to eql(false)
@@ -160,13 +161,13 @@ describe "Register" do
           expect(page).to have_content("Registration: Step One")
           expect(page).to have_content("Name can't be blank")
 
-          expect(Organization.count).to eql(0)
+          expect(Organization.count).to eql(1)
         end
       end
     end
 
     context "market managed activations" do
-      let!(:market) { create(:market, managers: [manager], auto_activate_organizations: false) }
+      let!(:market) { create(:market, auto_activate_organizations: false) }
 
       context "happy path" do
         before do
@@ -200,7 +201,7 @@ describe "Register" do
           expect(page).to have_content("Registration: Step Two")
           expect(page).to have_content("daniel@collectiveidea.com")
 
-          expect(Organization.count).to eql(1)
+          expect(Organization.count).to eql(2)
           expect(Organization.last.name).to eql("Collective Idea")
         end
 
@@ -211,7 +212,7 @@ describe "Register" do
         end
 
         it "creates a new organization" do
-          expect(Organization.count).to eql(1)
+          expect(Organization.count).to eql(2)
           expect(Organization.last.name).to eql("Collective Idea")
           expect(Organization.last.active).to eql(false)
           expect(Organization.last.markets).to eq([market])
@@ -251,7 +252,7 @@ describe "Register" do
           expect(page).to have_content("Registration: Step One")
           expect(page).to have_content("Name can't be blank")
 
-          expect(Organization.count).to eql(0)
+          expect(Organization.count).to eql(1)
         end
       end
     end

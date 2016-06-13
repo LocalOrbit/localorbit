@@ -5,7 +5,7 @@ describe "Viewing the cart", js:true do
     Timecop.travel("May 12, 2014")
   end
 
-  let!(:user)             { create(:user) }
+  let!(:user)             { create(:user, :buyer) }
   let!(:buyer)            { create(:organization, :single_location, :buyer, users: [user]) }
 
   let!(:fulton_farms)     { create(:organization, :seller, :single_location, name: "Fulton St. Farms") }
@@ -107,7 +107,7 @@ describe "Viewing the cart", js:true do
   end
 
   context "scoped to users" do
-    let!(:other_user)      { create(:user, organizations: [buyer]) }
+    let!(:other_user)      { create(:user, :buyer, organizations: [buyer]) }
     let!(:other_cart)      { create(:cart, market: market, organization: buyer, user: other_user, location: buyer.locations.first, delivery: delivery) }
     let!(:other_cart_kale) { create(:cart_item, cart: other_cart, product: kale, quantity: 6) }
 

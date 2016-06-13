@@ -28,7 +28,7 @@ context "Viewing sold items" do
   end
 
   context "as a market manager" do
-    let(:market_manager) { create :user, managed_markets: [market] }
+    let(:market_manager) { create :user, :market_manager, managed_markets: [market] }
 
     before do
       sign_in_as market_manager
@@ -277,7 +277,7 @@ context "Viewing sold items" do
   end
 
   context "as a seller" do
-    let(:user) { create(:user, organizations: [seller]) }
+    let(:user) { create(:user, :supplier, organizations: [seller]) }
 
     before do
       sign_in_as user
@@ -319,7 +319,7 @@ context "Viewing sold items" do
   end
 
   context "as a seller viewing delivered items" do
-    let(:user) { create(:user, organizations: [seller]) }
+    let(:user) { create(:user, :supplier, organizations: [seller]) }
 
     before do
       order.items.each do |oi| oi.update(delivery_status: "delivered") end

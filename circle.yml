@@ -1,7 +1,8 @@
 # Circle CI config
 machine:
   environment:
-    CAPYBARA_WAIT_TIME: 120
+    CAPYBARA_WAIT_TIME: 180
+    CODECLIMATE_REPO_TOKEN: d3e658ea8e89ec247b7ce5eb607020cbda140716a7599b4642ee4990f4b70464 bundle exec rake
     USE_STRIPE_STANDALONE_ACCOUNTS: 'true'
 dependencies:
   pre:
@@ -18,5 +19,5 @@ checkout:
 database:
   override:
     # replace CircleCI's generated database.yml
-    - cp config/database.yml.kxm config/database.yml
-    - bundle exec rake db:create db:schema:load --trace
+    #- cp config/database.yml.kxm config/database.yml
+    #- bundle exec rake db:create db:schema:load --trace

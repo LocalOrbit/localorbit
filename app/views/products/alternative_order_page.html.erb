@@ -1,0 +1,21 @@
+<%
+  if !policy(:all_supplier).index?
+     supplier_id = current_market.organizations[0].id
+  end
+%>
+<%= react_component('lo.ProductCatalog', {
+  baseUrl: "#{request.base_url}/api/v1/",
+  cartUrl: cart_path,
+  deliveryDate: current_delivery.buyer_deliver_on,
+  selectedType: current_delivery.selected_type.capitalize,
+  orderCutoff: current_delivery.cutoff_time,
+  buyerInfo: current_organization.name,
+  limit: 10,
+  useTemplates: FeatureAccess.order_templates?(market: current_market),
+  supplierId: supplier_id
+}) %>
+<div id="checkout-button" style="display: none">
+    <a href="/cart" style="color: #FFF">
+        <span>Checkout&nbsp;<i class="fa fa-arrow-circle-right"></i></span>
+    </a>
+</div>

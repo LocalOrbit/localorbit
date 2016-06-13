@@ -58,7 +58,7 @@ describe "Individual pack slips" do
     end
 
     context "as a seller" do
-      let!(:user) { create(:user, organizations: [sellers]) }
+      let!(:user) { create(:user, :supplier, organizations: [sellers]) }
 
       before do
         switch_to_subdomain(market.subdomain)
@@ -133,7 +133,7 @@ describe "Individual pack slips" do
     end
 
     context "as a seller" do
-      let!(:user) { create(:user, organizations: [sellers]) }
+      let!(:user) { create(:user, :supplier, organizations: [sellers]) }
 
       before do
         switch_to_subdomain(market.subdomain)

@@ -1,0 +1,3 @@
+class FreshSheetPolicy < ApplicationPolicy
+
+end

@@ -2,8 +2,8 @@ require "spec_helper"
 
 feature "Removing a bank account to a market" do
   let!(:market)         { create(:market) }
-  let!(:market_manager) { create(:user, managed_markets: [market]) }
-  let!(:non_member)     { create(:user) }
+  let!(:market_manager) { create(:user, :market_manager, managed_markets: [market]) }
+  let!(:non_member)     { create(:user, :market_manager) }
 
   let!(:account)        { create(:bank_account, :checking, name: "Org Bank Account", bankable: market) }
 

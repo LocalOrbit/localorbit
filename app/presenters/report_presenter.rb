@@ -33,13 +33,47 @@ class ReportPresenter
   }.with_indifferent_access
 
   REPORT_MAP = {
+    total_purchases: {
+        filters: [:placed_at, :order_number, :market_name],
+        fields: [
+            :placed_at, :product_name, :product_code, :seller_name, :quantity, :unit_price, :unit,
+            :row_total, :delivery_status, :buyer_payment_status, :seller_payment_status
+        ],
+        buyer_only: true,
+        le_mm: true
+    },
+    purchases_by_product: {
+        filters: [:placed_at, :order_number, :market_name, :category_name, :subcategory_name, :product_name],
+        fields: [
+            :placed_at, :category_name, :subcategory_name, :product_name, :product_code, :seller_name, :quantity, :unit_price, :unit, :discount,
+            :row_total, :delivery_status, :buyer_payment_status
+        ],
+        buyer_only: true,
+        le_mm: true
+    },
+    purchases_by_buyer: {
+        filters: [:placed_at, :order_number, :market_name, :buyer_name],
+        fields: [
+            :placed_at, :buyer_name, :product_name, :product_code, :seller_name, :quantity, :unit_price, :unit, :discount,
+            :row_total, :net_sale, :delivery_status, :buyer_payment_status, :seller_payment_status
+        ],
+        le_mm: true
+    },
+    purchases_by_supplier: {
+        filters: [:placed_at, :order_number, :market_name, :seller_name],
+        fields: [
+            :placed_at, :category_name, :subcategory_name, :product_name, :product_code, :seller_name, :quantity, :unit_price, :unit, :discount,
+            :row_total, :net_sale, :delivery_status, :buyer_payment_status, :seller_payment_status
+        ],
+        le_mm: true
+    },
     total_sales: {
-      filters: [:placed_at, :order_number, :market_name],
-      fields: [
-        :placed_at, :product_name, :product_code, :seller_name, :quantity, :unit_price, :unit, :discount,
-        :row_total, :net_sale, :delivery_status, :buyer_payment_status, :seller_payment_status
-      ],
-      seller_only: true
+        filters: [:placed_at, :order_number, :market_name],
+        fields: [
+            :placed_at, :product_name, :product_code, :seller_name, :quantity, :unit_price, :unit, :discount,
+            :row_total, :net_sale, :delivery_status, :buyer_payment_status, :seller_payment_status
+        ],
+        seller_only: true
     },
     sales_by_supplier: {
       filters: [:placed_at, :order_number, :market_name, :seller_name],
@@ -47,15 +81,7 @@ class ReportPresenter
         :placed_at, :category_name, :subcategory_name, :product_name, :product_code, :seller_name, :quantity, :unit_price, :unit, :discount,
         :row_total, :net_sale, :delivery_status, :buyer_payment_status, :seller_payment_status
       ],
-      seller_only: true
-    },
-    purchases_by_supplier: {
-      filters: [:placed_at, :order_number, :market_name, :seller_name],
-      fields: [
-        :placed_at, :category_name, :subcategory_name, :product_name, :product_code, :seller_name, :quantity, :unit_price, :unit, :discount,
-        :row_total, :net_sale, :delivery_status, :buyer_payment_status, :seller_payment_status
-      ],
-      le_mm: true
+      mm_only: true,
     },
     sales_by_buyer: {
       filters: [:placed_at, :order_number, :market_name, :buyer_name],
@@ -64,14 +90,6 @@ class ReportPresenter
         :row_total, :net_sale, :delivery_status, :buyer_payment_status, :seller_payment_status
       ],
       seller_only: true
-    },
-    purchases_by_buyer: {
-      filters: [:placed_at, :order_number, :market_name, :buyer_name],
-      fields: [
-        :placed_at, :buyer_name, :product_name, :product_code, :seller_name, :quantity, :unit_price, :unit, :discount,
-        :row_total, :net_sale, :delivery_status, :buyer_payment_status, :seller_payment_status
-      ],
-      le_mm: true
     },
     sales_by_product: {
       filters: [:placed_at, :order_number, :market_name, :category_name, :subcategory_name, :product_name],
@@ -89,24 +107,6 @@ class ReportPresenter
       ],
       seller_only: true
     },
-    purchases_by_product: {
-      filters: [:placed_at, :order_number, :market_name, :category_name, :subcategory_name, :product_name],
-      fields: [
-        :placed_at, :category_name, :subcategory_name, :product_name, :product_code, :seller_name, :quantity, :unit_price, :unit, :discount,
-        :row_total, :delivery_status, :buyer_payment_status
-      ],
-      buyer_only: true,
-      le_mm: true
-    },
-    total_purchases: {
-      filters: [:placed_at, :order_number, :market_name],
-      fields: [
-        :placed_at, :product_name, :product_code, :seller_name, :quantity, :unit_price, :unit,
-        :row_total, :delivery_status, :buyer_payment_status, :seller_payment_status
-      ],
-      buyer_only: true,
-      le_mm: true
-    },
     sales_by_fulfillment: {
       filters: [:placed_at, :market_name, :buyer_name, :fulfillment_day, :fulfillment_type],
       fields: [
@@ -114,14 +114,16 @@ class ReportPresenter
         :quantity, :unit_price, :unit, :discount, :row_total, :net_sale, :delivery_status,
         :buyer_payment_status, :seller_payment_status
       ],
-      mm_only: true
+      mm_only: true,
+      ex_mm: true
     },
     discount_code_use: {
       filters: [:placed_at, :order_number, :market_name],
       fields: [
         :placed_at, :buyer_name, :discount_code, :discount_amount, :discount, :net_sale
       ],
-      mm_only: true
+      mm_only: true,
+      ex_mm: true
     }
   }.with_indifferent_access
 
@@ -135,6 +137,10 @@ class ReportPresenter
 
   def self.mm_reports
     REPORT_MAP.keys.select {|k| REPORT_MAP[k][:mm_only]}
+  end
+
+  def self.exclude_mm_reports
+    REPORT_MAP.keys.select {|k| REPORT_MAP[k][:ex_mm]}
   end
 
   def self.le_mm_reports
@@ -183,22 +189,27 @@ class ReportPresenter
   end
 
   def self.report_for(report:, market:, user:, search: {}, paginate: {})
-    return nil unless user && reports_for_user(user).include?(report)
+    return nil unless user && reports_for_user(user, market).include?(report)
 
-    valid = !user.buyer_only? || reports_for_user(user).include?(report)
+    valid = !user.buyer_only? || reports_for_user(user, market).include?(report)
 
     new(report: report, market: market, user: user, search: search, paginate: paginate) if valid
   end
 
-  def self.reports_for_user(user)
-    if user.is_seller_with_purchase?
+  def self.reports_for_user(user, market)
+    if user.admin?
+      seller_reports + buyer_reports + mm_reports
+    elsif user.is_seller_with_purchase?
       seller_reports + buyer_reports
     elsif user.buyer_only?
       buyer_reports
-    # elsif user.markets.map(&:plan).map(&:name).include?("LocalEyes") && user.market_manager?
     #   le_mm_reports # TODO check acceptability - r&p fix?
     elsif user.market_manager?
-      seller_reports + mm_reports
+      if FeatureAccess.not_LE_market_manager?(user: user, market: market)
+        seller_reports + mm_reports
+      else
+        mm_reports + le_mm_reports - exclude_mm_reports
+      end
     else
       seller_reports
     end
