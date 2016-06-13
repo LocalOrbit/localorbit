@@ -10,6 +10,14 @@ describe Financials::OrderItemFeeCalculator do
 
   let!(:order) { double("and order", market_seller_fee_pct: "16.667".to_d) }
 
+  let!(:category) { double("a category",
+                            level_fee: 0
+                            )}
+
+  let!(:product) { double("a product",
+                            category: category
+                            )}
+
   let(:order_item) { double("an order item",
                             order: order,
                             gross_total: "65.37".to_d,
@@ -18,7 +26,9 @@ describe Financials::OrderItemFeeCalculator do
                             product_fee_pct: "0.0".to_d,
                             market_seller_fee: "4.44".to_d,
                             quantity: "4".to_d,
-                            unit_price: "6.66".to_d
+                            unit_price: "6.66".to_d,
+                            product: product,
+                            category_fee_pct: 0
                             )}
 
 
@@ -26,7 +36,10 @@ describe Financials::OrderItemFeeCalculator do
                             gross_total: "65.37".to_d,
                             discount_seller: "1.96".to_d,
                             discount_market: "1.63".to_d,
-                            product_fee_pct: "20.0".to_d) }
+                            product_fee_pct: "20.0".to_d,
+                            product: product,
+                            category_fee_pct: 0
+                            )}
 
   describe ".market_fee_paid_by_seller" do
     it "discounts an item's gross_total by the seller-paid discount amount and multiplies by market's seller fee rate" do

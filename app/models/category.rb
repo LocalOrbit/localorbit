@@ -21,7 +21,7 @@ class Category < ActiveRecord::Base
     each_with_level(root.descendants) do |category, depth|
       names[depth] = category.name
 
-      if category.leaf? && depth < 3
+      if depth < 3
         hash[names[1]] << [names[2..2].join(" / "), category.id]
       end
     end
@@ -50,9 +50,11 @@ class Category < ActiveRecord::Base
     end
 
     if !cat.category_fees.where(market_id: market.id).first.nil? && cat.depth > 0
-      cat.category_fees.first
-    else
+      cat.category_fees.first.fee_pct
+    elsif !cat.parent.nil?
       level_fee(market, cat.parent)
+    else
+      0
     end
   end
 end

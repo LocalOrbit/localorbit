@@ -316,7 +316,7 @@ class Order < ActiveRecord::Base
 
   def add_cart_item(cart_item, deliver_on)
     category_fee_pct = cart_item.product.category.level_fee(self.market)
-    items << OrderItem.create_with_order_and_item_and_deliver_on_date(self, cart_item, deliver_on, category_fee_pct.fee_pct)
+    items << OrderItem.create_with_order_and_item_and_deliver_on_date(self, cart_item, deliver_on, category_fee_pct)
   end
 
   def delivered_at
