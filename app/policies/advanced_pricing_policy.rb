@@ -1,0 +1,3 @@
+class AdvancedPricingPolicy < ApplicationPolicy
+
+end

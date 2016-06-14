@@ -78,15 +78,11 @@ end
     <% if policy(:fresh_sheet).index? || policy(:newsletter).index? || policy(:promotion).index? || policy(:discount_code).index? || policy(:sent_email).index? || policy(:email_test).index? %>
     <li>
       <a href="#marketing-dropdown" class="caretted"><i class="font-icon" data-icon="&#xe005;"></i> Marketing</a>
-      <ul class="dropdown with-anchor top-anchor" id="marketing-dropdown">
-        <% if policy(:fresh_sheet).index? %><li><%= link_to raw('<i class="font-icon" data-icon="&#xe023;"></i> Fresh Sheet'), [:admin, :fresh_sheet] %></li><% end %>
-        <% if policy(:newsletter).index? %><li><%= link_to raw('<i class="font-icon" data-icon="&#xe00a;"></i> Newsletters'), [:admin, :newsletters] %></li><% end %>
-        <% if policy(:promotion).index? %><li><%= link_to raw('<i class="font-icon" data-icon="&#xe005;"></i> Featured Promotions'), [:admin, :promotions] %></li><% end %>
-        <% if policy(:discount_code).index? %><li><%= link_to raw('<i class="font-icon" data-icon="&#xe00b;"></i> Discount Codes'), [:admin, :discounts] %></li><% end %>
-
-        <!-- admin -->
-        <% if policy(:sent_email).index? %><li><%= link_to raw('<i class="font-icon" data-icon="&#xe012;"></i> Sent Emails'), coming_soon_dashboard_path %></li><% end %>
-        <% if policy(:email_test).index? %><li><%= link_to raw('<i class="font-icon" data-icon="&#xe051;"></i> Email Testing'), coming_soon_dashboard_path %></li><% end %>
+      <ul class="dropdown with-anchor top-anchor" id="marketing-dropdown" style="min-width: 215px">
+        <li><% if policy(:fresh_sheet).index? %><%= link_to raw('<i class="font-icon" data-icon="&#xe023;"></i> Fresh Sheet'), [:admin, :fresh_sheet] %><% end %></li>
+        <li><% if policy(:newsletter).index? %><%= link_to raw('<i class="font-icon" data-icon="&#xe00a;"></i> Newsletters'), [:admin, :newsletters] %><% end %></li>
+        <li><% if policy(:promotion).index? %><%= link_to raw('<i class="font-icon" data-icon="&#xe005;"></i> Featured Promotions'), [:admin, :promotions], class: 'enabled' %><% else %><a class="disabled"><i class="font-icon" data-icon="&#xe005;"></i> Featured Promotions<span class="tooltip pull-right" data-tooltip="Available in Grow Plan"></span></a><% end %></li>
+        <li><% if policy(:discount_code).index? %><%= link_to raw('<i class="font-icon" data-icon="&#xe00b;"></i> Discount Codes'), [:admin, :discounts], class: 'enabled' %><% else %><a class="disabled"><i class="font-icon" data-icon="&#xe00b;"></i> Discount Codes<span class="tooltip pull-right" data-tooltip="Available in Grow Plan"></span></a><% end %></li>
       </ul>
     </li>
     <% end %>
