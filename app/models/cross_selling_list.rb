@@ -9,11 +9,13 @@ class CrossSellingList < ActiveRecord::Base
   has_many :products, through: :cross_selling_list_products
 
   # Basic validation
-  validates :name, presence: true
+  validates :name, presence: true, length: {maximum: 255}
   validates :entity_id, presence: true, numericality: {only_integer: true}
-  validates :entity_type, presence: true
+  validates :entity_type, presence: true, length: {maximum: 255}
+  validates :status, presence: true, length: {maximum: 255}
+
+  # Can this specify only_integer AND presence: false?
   # validates :parent_id, numericality: {only_integer: true}
-  validates :status, presence: true
 
   def published?
   	status == 'Published' && published_at.past?

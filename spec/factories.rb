@@ -693,4 +693,20 @@ FactoryGirl.define do
     user
     delivery
   end
+
+  factory :cross_selling_list do
+    sequence(:name) {|n| "List #{n}"}
+
+    trait :market do
+      association :entity, factory: :market
+      entity_type "Market"
+    end
+
+    trait :organization do
+      association :entity, factory: :organization
+      entity_type "Organization"
+    end
+
+  end
+
 end
