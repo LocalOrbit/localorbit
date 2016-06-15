@@ -1,21 +1,21 @@
 <% if current_user.multi_market_membership? %>
 <td>
-  <% if organization_can_access?(@product.organization, :advanced_pricing) %>
-      <%= f.select :market_id, @product.organization.all_markets_for_select, {include_blank: 'All Markets'}, {class: "price_market_id"} %>
+  <% if policy(:advanced_pricing).index? || (current_user.seller? && organization_can_access?(@product.organization, :advanced_pricing)) %>
+    <%= f.select :market_id, @product.organization.all_markets_for_select, {include_blank: 'All Markets'}, {class: "price_market_id"} %>
   <% else %>
-      All Markets
+      All Markets&nbsp;<span class="tooltip" data-tooltip="Market Selection Available in Grow Plan"></span>
   <% end %>
 </td>
 <% end %>
 <td>
-  <% if organization_can_access?(@product.organization, :advanced_pricing) %>
+  <% if policy(:advanced_pricing).index? || (current_user.seller? && organization_can_access?(@product.organization, :advanced_pricing)) %>
       <%= f.select :organization_id, current_user.buyers_for_select, {include_blank: 'All Buyers'}, {class: "price_buyer_id"} %>
   <% else %>
-      All Buyers
+      All Buyers&nbsp;<span class="tooltip" data-tooltip="Buyer Selection Available in Grow Plan"></span>
   <% end %>
 </td>
 <td>
-  <% if organization_can_access?(@product.organization, :advanced_pricing) %>
+  <% if policy(:advanced_pricing).index? || (current_user.seller? && organization_can_access?(@product.organization, :advanced_pricing)) %>
     <%= f.number_field :min_quantity, min: 0, size: 4, style: 'width: 60px' %>
   <% else %>
     1
