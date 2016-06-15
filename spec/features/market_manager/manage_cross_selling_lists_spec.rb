@@ -1,17 +1,11 @@
 require "spec_helper"
 
 describe "Manage cross selling lists" do
-  let!(:user) { create(:user, role: "user") }
+  let!(:user) { create(:user, :market_manager) }
 
   let!(:cross_selling_disallowed_market) { create(:market, managers: [user]) }
   let!(:cross_selling_is_allowed_market) { create(:market, managers: [user], allow_cross_sell: true) }
   let!(:cross_selling_is_enabled_market) { create(:market, managers: [user], allow_cross_sell: true, self_enabled_cross_sell: true) }
-
-  # Set up:
-  #   Two Markets that cross sell with each other
-  #   Supplier Organizations, some associated with Mkt_01, some with Mkt_02, some with both
-  #   Organizations have associated products
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   context "when cross selling is unavailable" do
     before do
@@ -30,6 +24,10 @@ describe "Manage cross selling lists" do
       switch_to_subdomain(cross_selling_is_allowed_market.subdomain)
       sign_in_as user
       visit admin_market_path(cross_selling_is_allowed_market)
+    end
+
+    it "shows the cross sell tab" do
+      expect(page).to have_css(".tabs", text: "Cross Sell")
     end
 
     it "lets you turn it on" do
@@ -115,9 +113,8 @@ describe "Manage cross selling lists" do
       # RIP 'Boaty McBoatface' - democracy is DEAD.  What the hell were they thinking,
       # anyway?  Who asks for the internet's opinion about _anything_?!
 
-      # KXM In due time, this will be a select box... in due time...
-      # select "Active", from: "status"
-      fill_in "List Status", with: "Active"
+      select "Active", from: "List Status"
+      # fill_in "List Status", with: "Active"
 
       click_button "Create List"
 

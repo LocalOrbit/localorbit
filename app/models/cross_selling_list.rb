@@ -2,10 +2,14 @@ class CrossSellingList < ActiveRecord::Base
   audited allow_mass_assignment: true
   include SoftDelete
 
+  attr_accessor :shared_with
+
   # Entity may reference a supplier org or a market org
   belongs_to :entity, polymorphic: true
 
-  belongs_to :parent, class_name: "CrossSellingLists", foreign_key: "parent_id"
+  belongs_to :parent, class_name: "CrossSellingList"
+  has_many :children, class_name: "CrossSellingList", foreign_key: "parent_id"
+
   has_many :products, through: :cross_selling_list_products
 
   # Basic validation
@@ -14,11 +18,16 @@ class CrossSellingList < ActiveRecord::Base
   validates :entity_type, presence: true, length: {maximum: 255}
   validates :status, presence: true, length: {maximum: 255}
 
-  # Can this specify only_integer AND presence: false?
+  # Can this specify only_integer without mandating presence: true?
   # validates :parent_id, numericality: {only_integer: true}
 
   def published?
   	status == 'Published' && published_at.past?
+  end
+
+  def publish!(published_date = nil)
+    as_of = published_date ||= Time.now
+    update!(staus: "Published", published_at: as_of)
   end
 
   def is_master_list?
@@ -33,4 +42,7 @@ class CrossSellingList < ActiveRecord::Base
   	true 
   end
 
+  def subscribers
+    children.map{|c| c.entity.name}.join(", ")
+  end
 end

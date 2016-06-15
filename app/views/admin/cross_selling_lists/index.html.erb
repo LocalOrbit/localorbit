@@ -45,15 +45,16 @@
             <th>Name</th>
             <th>Subscribers</th>
             <th>Status</th>
-            <!-- <th></th> -->
+            <!-- <th>Actions</th> -->
           </tr>
         </thead>
         <tbody>
         <% @cross_selling_lists.each do |list| %>
           <tr>
             <td><%= link_to list.name, [:admin, @entity, list] %></td>
-            <td>subscribers</td>
+            <td><%= list.subscribers %></td>
             <td><%= list.status %></td>
+            <!-- <td>Delete, Publish, others?</td> -->
           </tr>
         <% end %>
         </tbody>

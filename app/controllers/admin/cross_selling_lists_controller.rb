@@ -27,6 +27,7 @@ class Admin::CrossSellingListsController < AdminController
     # Further, the subscriber array will have to be addressed after saving the list itself 
     # (the newly created id inserted as the derived list parent).
 
+
     if @cross_selling_list.save
       redirect_to [:admin, @entity, @cross_selling_list], notice: "Successfully created #{@cross_selling_list.name}"
     else
@@ -37,6 +38,7 @@ class Admin::CrossSellingListsController < AdminController
 
   def update
     @cross_selling_list = CrossSellingList.find(params[:id])
+
     if @cross_selling_list.update_attributes(cross_selling_list_params)
       redirect_to [:admin, @entity, @cross_selling_list]
     else
@@ -52,7 +54,8 @@ class Admin::CrossSellingListsController < AdminController
   def cross_selling_list_params
     params.require(:cross_selling_list).permit(
       :name,
-      :status
+      :status,
+      :shared_with => []
     )
   end
 
