@@ -1,0 +1,3 @@
+class AdvancedInventoryPolicy < ApplicationPolicy
+
+end

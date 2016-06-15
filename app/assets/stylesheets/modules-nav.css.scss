@@ -135,7 +135,16 @@
     display: block;
     padding: 1em 1.1538em .93em;
   }
-  a {
+  a.disabled {
+    color: #ccc;
+    cursor: default;
+    &:hover {
+      color: #ccc !important;
+    }
+    &:active {
+    }
+  }
+  a.enabled {
     &:hover {
       background: #e6e6e6;
       @include transition( 0.2s ease 0s);
