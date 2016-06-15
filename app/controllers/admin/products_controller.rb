@@ -35,7 +35,7 @@ module Admin
     end
 
     def search_products(search)
-      results = current_user.managed_products.includes(:lots, :unit, :prices=>[:market], :organization => [:all_markets]).search(search.query)
+      results = current_user.managed_products.search(search.query)
       results.sorts = "name asc" if results.sorts.empty?
       results
     end
