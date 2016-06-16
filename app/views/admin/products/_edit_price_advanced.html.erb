@@ -6,9 +6,12 @@
   </hgroup>
   <%= fields_for :price, price, index: price.id do |f| %>
     <div class="fields">
-      <%= f.select :market_id, price.product.organization.all_markets_for_select, {include_blank: 'All Markets'}, {class: "price_market_id"} %>
-
-      <h3>Price for all Buyers</h3>
+      <% if policy(:advanced_pricing).index? || (current_user.seller? && organization_can_access?(@product.organization, :advanced_pricing)) %>
+        <%= f.select :market_id, price.product.organization.all_markets_for_select, {include_blank: 'All Markets'}, {class: "price_market_id"} %>
+      <% else %>
+          All Markets&nbsp;<span class="tooltip" data-tooltip="Market Selection Available in Grow Plan"></span>
+      <% end %>
+      <h3>Price for All Buyers</h3>
       <span class="preserve-alignment" style="vertical-align: top">
         <label style="float: left" for="<%= "price_#{price.id}_net_price" %>">Net Price</label>
         <% if FeatureAccess.product_level_fee?(market: current_market) && price.product_fee_pct > 0 && (current_user.admin? || current_user.market_manager?) %>
