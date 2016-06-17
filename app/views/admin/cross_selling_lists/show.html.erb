@@ -1,6 +1,5 @@
 <%= render "admin/bank_accounts/header" %>
 
-
 <div class="row row--partial">
   <div class="column column--three-fourths">
 
@@ -19,12 +18,35 @@
 
     <hr />
     
-    <div>
-      <p style="font-style:italic; color:#999;">Pay no attention to these - they're only here so the tests pass :-)</p>
-      <hr />
+    <% if @cross_selling_list.products.empty? %>
+
       <p>Your Cross Selling list is Empty</p>
       <button>Add Products</button>
-    </div>
+    <% else %>
+
+      <div class="table-wrapper">
+        <table class="sortable" id="cross-sell-lists">
+          <thead>
+            <tr>
+              <th>Supplier</th>
+              <th>Category</th>
+              <th>Product</th>
+              <!-- <th>Actions</th> -->
+            </tr>
+          </thead>
+          <tbody>
+          <% @cross_selling_list.products.each do |product| %>
+            <tr>
+              <td><%= product.organization.name %></td>
+              <td><%= product.category.name %></td>
+              <td><%= product.name %></td>
+              <!-- <td>Delete, Publish, others?</td> -->
+            </tr>
+          <% end %>
+          </tbody>
+        </table>
+      </div>
+    <% end %>
 
   </div>
 </div>
