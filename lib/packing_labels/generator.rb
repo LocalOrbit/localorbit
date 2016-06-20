@@ -47,7 +47,7 @@ module PackingLabels
             if page[:a][:data][:product].nil?
               a << ["^XA^FX^CF0,#{buyer_font_size}^FO50,50^FB500,2,,^FD#{page[:a][:data][:order][:buyer_name]}^FS^CF0,30^FO50,150^FDDeliver On:^FS^CF0,60^FO50,175^FD#{page[:a][:data][:order][:deliver_on]}^FS^CF0,30^FO50,250^FDOrder #:^FS^CF0,#{order_num_font_size}^FO50,275^FB500,2,,^FD#{page[:a][:data][:order][:order_number]}^FS^FO50,425^GB500,1,3^FS^FX^FO400,570^BXN,7,200^FD#{order_url}^FS^FO50,550#{page[:a][:data][:order][:zpl_logo]}^FS^XZ"]
             else
-              if print_multiple_labels_per_item
+              if print_multiple_labels_per_item && page[:a][:data][:product][:unit_desc] != 'Pound'
                 qty_str = "^PQ#{page[:a][:data][:product][:quantity].round}"
               else
                 qty_str = nil
