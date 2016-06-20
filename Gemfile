@@ -66,6 +66,8 @@ gem 'kiba'
 gem "browserify-rails"
 gem "react-rails"
 
+gem 'migration_data'
+
 gem "pundit"
 
 gem 'httparty'
