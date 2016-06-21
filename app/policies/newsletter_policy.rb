@@ -1,0 +1,3 @@
+class NewsletterPolicy < ApplicationPolicy
+
+end

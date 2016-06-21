@@ -1,7 +1,7 @@
 require "spec_helper"
 
 describe SetOrderItemsStatus do
-  let!(:user) { create(:user) }
+  let!(:user) { create(:user, :supplier) }
   let!(:market_manager) { create(:user, :market_manager) }
   let!(:market) { market_manager.managed_markets.first }
   let!(:delivery_schedule) { create(:delivery_schedule) }

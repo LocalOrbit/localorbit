@@ -2,9 +2,9 @@ require "spec_helper"
 
 feature "modifying order credits", :js do
   let!(:admin) { create(:user, :admin) }
-  let!(:market_manager) { create :user, managed_markets: [market] }
+  let!(:market_manager) { create :user, :market_manager, managed_markets: [market] }
   let(:user) {create(:user)}
-  let!(:seller) { create(:organization, :single_location, :seller, users: [user]) }
+  let!(:seller) { create(:organization, :seller, :single_location, :seller, users: [user]) }
   let(:market) { create(:market, organizations: [seller]) }
   let!(:order) { create(:order, :with_items, market: market) }
 

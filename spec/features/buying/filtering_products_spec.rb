@@ -1,9 +1,9 @@
 require "spec_helper"
 
 feature "Filtering Products List" do
-  let!(:org1) { create(:organization, name: "Schrute Farms") }
-  let!(:org2) { create(:organization, name: "Funny Farm") }
-  let!(:org3) { create(:organization, name: "Abandoned Farm") }
+  let!(:org1) { create(:organization, :seller, name: "Schrute Farms") }
+  let!(:org2) { create(:organization, :seller, name: "Funny Farm") }
+  let!(:org3) { create(:organization, :seller, name: "Abandoned Farm") }
   let!(:buyer_org) { create(:organization, :single_location, :buyer) }
 
   let!(:market) { create(:market, :with_addresses, :with_delivery_schedule, organizations: [org1, org2, buyer_org], alternative_order_page: false) }
@@ -28,7 +28,7 @@ feature "Filtering Products List" do
   let!(:price4)   { create(:price, product: product4) }
   let!(:lot4)     { create(:lot, product: product4) }
 
-  let!(:user) { create(:user, organizations: [buyer_org]) }
+  let!(:user) { create(:user, :buyer, organizations: [buyer_org]) }
 
   before do
     switch_to_subdomain market.subdomain

@@ -1,0 +1,22 @@
+<%= form_for @role, url: [:admin, @role], html: { class: "column column--two-thirds" } do |f| %>
+    <fieldset class="role-info">
+      <div class="field">
+        <%= f.label :name %>
+        <br>
+        <%= f.text_field :name %>
+      </div>
+    </fieldset>
+
+    <fieldset class="role-info">
+      <div class="field">
+        <%= f.label :activities %>
+        <br>
+        <%= f.collection_select :activities, @role_actions, :id, :description, { multiple: true } %>
+      </div>
+    </fieldset>
+
+    <div class="form-actions">
+      <%= link_to "Cancel", admin_roles_path, class: "btn cancel" %>
+      <%= f.submit "Add Role" %>
+    </div>
+<% end %>

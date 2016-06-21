@@ -663,7 +663,8 @@ describe Product do
 
   describe "#disable_advanced_inventory" do
     let!(:plan)    { create(:plan, advanced_inventory: true) }
-    let!(:market)  { create(:market, plan: plan) }
+    let!(:market_org)  { create(:organization, :market, plan: plan) }
+    let!(:market)  { create(:market, organization: market_org) }
     let!(:org)     { create(:organization, :seller, :single_location, markets: [market]) }
     let!(:product) { create(:product, organization: org) }
     let!(:lot1)    { product.lots.create!(quantity: 10, number: "1") }

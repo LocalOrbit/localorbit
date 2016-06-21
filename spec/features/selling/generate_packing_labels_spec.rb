@@ -2,12 +2,13 @@ require "spec_helper"
 
 context "Downloading packing labels", js:true do
   let(:plan_with_packing_labels) { create(:plan, :nothing, packing_labels: true) }
-  let(:market) { create(:market, name: 'Market Label', plan: plan_with_packing_labels) }
+  let(:market_org) { create(:organization, :market, plan: plan_with_packing_labels)}
+  let(:market) { create(:market, name: 'Market Label', organization: market_org) }
   let!(:market_manager) { create(:user, :market_manager, name: "Marky Mark", managed_markets: [market]) }
 
   let!(:buyer_org) { create(:organization, :buyer, name: "Big Money", markets: [market]) }
   let!(:seller_org) { create(:organization, :seller, name: "Good foodz", markets: [market]) }
-  let(:seller) { create(:user, organizations: [seller_org])}
+  let(:seller) { create(:user, :supplier, organizations: [seller_org])}
   let!(:seller_org2) { create(:organization, :seller, name: "Better foodz", markets: [market]) }
   let!(:product1) { create(:product, :sellable, name: "Green things", organization: seller_org) }
   let!(:product2) { create(:product, :sellable, name: "Purple cucumbers", organization: seller_org) }
@@ -58,7 +59,7 @@ context "Downloading packing labels", js:true do
 
     context "without packing_labels enabled in the Plan" do
       before do
-        market.plan.update(packing_labels:false)
+        market.organization.plan.update(packing_labels:false)
       end
 
       it "can't see Labels feature", pdf: true do
@@ -87,7 +88,7 @@ context "Downloading packing labels", js:true do
 
     context "without packing_labels enabled in the Plan" do
       before do
-        market.plan.update(packing_labels:false)
+        market.organization.plan.update(packing_labels:false)
       end
 
       it "can't see Labels feature", pdf: true do

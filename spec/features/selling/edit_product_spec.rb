@@ -1,12 +1,13 @@
 require "spec_helper"
 
 describe "Editing a product", :js do
-  let(:user) { create(:user) }
+  let(:user) { create(:user, :supplier) }
   let(:stub_warning) { "Your product will not appear in the Shop until all of these actions are complete" }
   let(:organization_label) { "Product Organization" }
-  let(:product) { create(:product, name: "Canned Pears") }
+  let(:seller) { create(:organization, :seller)}
+  let(:product) { create(:product, organization: seller, name: "Canned Pears") }
   let!(:category_id) { product.category.id }
-  let(:market)  { create(:market, :with_addresses, organizations: [product.organization]) }
+  let(:market)  { create(:market, :with_addresses, organizations: [seller]) }
 
   before do
     switch_to_subdomain(market.subdomain)
@@ -14,12 +15,11 @@ describe "Editing a product", :js do
 
   describe "as a seller belonging to one organization" do
     before do
-      product.organization.users << user
+      seller.users << user
       sign_in_as(user)
-      within "#admin-nav" do
-
+      #within "#admin-nav" do
         click_link "Products"
-      end
+      #end
       click_link "Canned Pears"
     end
 

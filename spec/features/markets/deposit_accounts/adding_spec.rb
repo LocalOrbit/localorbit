@@ -16,7 +16,7 @@ feature "Adding deposit account to a market", :js, :vcr do
   end
 
   scenario "as a market manager" do
-    sign_in_as(create(:user, managed_markets: [market]))
+    sign_in_as(create(:user, :market_manager, managed_markets: [market]))
     # sign_in_as(create(:user, :admin))
     add_and_remove_a_deposit_account
   end

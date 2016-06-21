@@ -43,7 +43,7 @@ feature "Payments of net sales to Sellers on Automate plan", :js do
     sign_in_as aaron
   end
 
-  it "displays all pending Seller payments info and lets you pay one of the Sellers" do
+  xit "displays all pending Seller payments info and lets you pay one of the Sellers" do
     begin 
       visit admin_financials_automate_seller_payments_path
       expect(page).to have_content("Make Weekly Payments to Sellers")

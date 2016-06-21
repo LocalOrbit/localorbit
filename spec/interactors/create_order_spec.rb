@@ -1,7 +1,7 @@
 require "spec_helper"
 
 describe CreateOrder do
-  let(:buyer)             { create(:user) }
+  let(:buyer)             { create(:user, :buyer) }
   let(:market)            { create(:market, subdomain: "ada") }
   let(:delivery_location) { create(:location) }
   let(:pickup_location)   { create(:market_address, market: market) }

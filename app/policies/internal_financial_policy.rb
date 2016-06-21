@@ -1,0 +1,3 @@
+class InternalFinancialPolicy < ApplicationPolicy
+
+end

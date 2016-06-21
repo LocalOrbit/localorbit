@@ -2,11 +2,11 @@ require "spec_helper"
 
 feature "sending invoices" do
   let(:market1)            { create(:market, subdomain: "betterest", po_payment_term: 14) }
-  let!(:market_manager)    { create :user, managed_markets: [market1] }
+  let!(:market_manager)    { create :user, :market_manager, managed_markets: [market1] }
   let!(:delivery_schedule) { create(:delivery_schedule) }
   let!(:delivery)          { delivery_schedule.next_delivery }
 
-  let!(:buyer_user) { create :user }
+  let!(:buyer_user) { create :user, :buyer }
 
   let!(:market1_seller1) { create(:organization, :seller, name: "Better Farms", markets: [market1]) }
   let!(:market1_buyer1)  { create(:organization, :buyer, name: "Money Bags", markets: [market1], users: [buyer_user]) }

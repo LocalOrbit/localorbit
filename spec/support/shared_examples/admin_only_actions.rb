@@ -10,7 +10,7 @@ shared_examples "admin only action" do |run_action|
   end
 
   it "renders 404 if logged in user is not an admin" do
-    sign_in create(:user)
+    sign_in create(:user, :market_manager)
 
     instance_exec(&run_action)
 

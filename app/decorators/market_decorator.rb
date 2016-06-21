@@ -131,16 +131,6 @@ class MarketDecorator < Draper::Decorator
     end
   end
 
-  def display_plan_interval
-    if plan_interval == 1
-      "Monthly"
-    elsif plan_interval == 12
-      "Yearly"
-    else
-      "Not Set"
-    end
-  end
-
   def header
     if name.blank?
       changes[:name].first
@@ -160,5 +150,23 @@ class MarketDecorator < Draper::Decorator
       next unless bank_account.usable_for?(:debit)
       [bank_account.display_name, bank_account.id]
     end.compact
+  end
+
+  def plan_id
+    organization.plan_id
+  end
+
+  def display_plan_interval
+    if plan_interval == 1
+      "Monthly"
+    elsif plan_interval == 12
+      "Yearly"
+    else
+      "Not Set"
+    end
+  end
+
+  def plan_payable?
+    organization.plan_fee && organization.plan_fee > 0 && organization.plan_bank_account.try(:usable_for?, :debit)
   end
 end

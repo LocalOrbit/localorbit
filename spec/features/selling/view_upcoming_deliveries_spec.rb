@@ -28,7 +28,7 @@ describe "Upcoming Deliveries" do
   end
 
   context "as a seller" do
-    let!(:user) { create(:user, organizations: [seller]) }
+    let!(:user) { create(:user, :supplier, organizations: [seller]) }
 
     context "with orders" do
       let!(:order_item_for_seller_product) { create(:order_item, product: product, quantity: 1) }

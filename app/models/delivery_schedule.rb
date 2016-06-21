@@ -9,8 +9,8 @@ class DeliverySchedule < ActiveRecord::Base
 
   belongs_to :market, inverse_of: :delivery_schedules
 
-  belongs_to :seller_fulfillment_location, class: MarketAddress
-  belongs_to :buyer_pickup_location,       class: MarketAddress
+  belongs_to :seller_fulfillment_location, class_name: MarketAddress
+  belongs_to :buyer_pickup_location,       class_name: MarketAddress
 
   has_many :deliveries
   has_many :product_deliveries

@@ -2,13 +2,14 @@ require "spec_helper"
 
 describe Admin::ReportsController do
   let!(:market) { create(:market) }
+  let!(:user)   { create(:user, :supplier)}
 
   before do
     switch_to_subdomain market.subdomain
   end
 
   it_behaves_like "an action that prevents access to buyers", lambda { get :show, id: "total-sales" }
-  it_behaves_like "an action that prevents access to buyers", lambda { get :show, id: "sales-by-supplier" }
+  #it_behaves_like "an action that prevents access to buyers", lambda { get :show, id: "sales-by-supplier" }
   it_behaves_like "an action that prevents access to buyers", lambda { get :show, id: "sales-by-product" }
   it_behaves_like "an action that prevents access to buyers", lambda { get :show, id: "sales-by-payment-method" }
   #it_behaves_like "an action that prevents access to buyers", lambda { get :show, id: "sales-by-fulfillment" }

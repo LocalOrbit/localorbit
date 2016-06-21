@@ -7,7 +7,7 @@ describe CartsController do
   let!(:product)  { create(:product, :sellable, organization: seller) }
 
   let!(:buyer)    { create(:organization, :buyer, :single_location, markets: [market]) }
-  let!(:user)     { create(:user, organizations: [buyer]) }
+  let!(:user)     { create(:user, :buyer, organizations: [buyer]) }
 
   let!(:cart)     { create(:cart, market: market, organization: buyer, delivery: delivery, location: buyer.locations.first, user: user) }
 

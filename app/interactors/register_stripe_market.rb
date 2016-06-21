@@ -1,5 +1,5 @@
 class RegisterStripeMarket
   include Interactor::Organizer
 
-  organize CreateMarket, CreateManagedStripeAccountForMarket, CreateStripeCustomerForEntity
+  organize CreateOrganization, CreateMarket, CreateManagedStripeAccountForMarket, CreateStripeCustomerForEntity
 end

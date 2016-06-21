@@ -17,7 +17,13 @@
                  html: {class: "inventory-form row row--partial"} do |f| %>
 
       <h3 class="unit-name"><%= unit_product.unit_plural %></h3><br/>
-      <%= check_box_tag 'adv_inventory', '', !unit_product.use_simple_inventory, class: 'adv_inventory' %>&nbsp;Show Advanced Inventory Options&nbsp;<span class="tooltip" data-tooltip="Enable Lot#, Good From Date, Expiration Date"></span><br/>
+      <% if policy(:advanced_inventory).index? || (!unit_product.use_simple_inventory) %>
+          <%= check_box_tag 'adv_inventory', '', !unit_product.use_simple_inventory, class: 'adv_inventory' %>
+          &nbsp;Show Advanced Inventory Options&nbsp;<span class="tooltip" data-tooltip="Enable Lot#, Good From Date, Expiration Date"></span>
+      <% else %>
+          <span style="color: #CCC"><input class="adv_inventory" type="checkbox" disabled/>Show Advanced Inventory Options</span> <span class="tooltip" data-tooltip="Available in Grow Plan"></span>
+      <% end %>
+      <br/>
       <div class="table-wrapper">
         <%= content_tag :table,
                         data: edit_table_error_payload(@lot_with_errors),

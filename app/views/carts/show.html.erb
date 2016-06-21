@@ -2,7 +2,7 @@
   <h1 class="heading-cart"><i class="font-icon icon-cart"></i> Cart</h1>
   <%= form_for :order, url: [:orders], html: {id: "order-form"} do |f| %>
     <%= render "shared/errors", {resource: @order} if @order %>
-    <% if flash[:error] && current_market.plan.name == "LocalEyes" %>
+    <% if flash[:error] && current_market.organization.plan.name == "LocalEyes" %>
       <div class="flash flash--warning">
         <p><%= flash[:error] %></p>
       </div>
@@ -78,7 +78,7 @@
             </address>
           </div>
 
-          <% if current_market.plan.discount_codes? %>
+          <% if current_market.organization.plan.discount_codes? %>
           <div id="discount-info">
             <h2 class="subheading-cart"><i class="font-icon icon-coins"></i> Discount Information</h2>
           </div>

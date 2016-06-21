@@ -3,15 +3,15 @@ require "spec_helper"
 describe "Impersonating a user" do
   let!(:market1)         { create(:market) }
   let!(:buyer1)          { create(:organization, :buyer, markets: [market1]) }
-  let!(:buyer1_user)     { create(:user, organizations: [buyer1]) }
-  let!(:market_manager1) { create(:user, managed_markets: [market1]) }
+  let!(:buyer1_user)     { create(:user, :buyer, organizations: [buyer1]) }
+  let!(:market_manager1) { create(:user, :market_manager, managed_markets: [market1]) }
 
   let!(:market2)         { create(:market) }
   let!(:buyer2)          { create(:organization, :buyer, markets: [market2]) }
-  let!(:buyer2_user)     { create(:user, organizations: [buyer2]) }
-  let!(:market_manager1) { create(:user, managed_markets: [market2]) }
+  let!(:buyer2_user)     { create(:user, :buyer, organizations: [buyer2]) }
+  let!(:market_manager1) { create(:user, :market_manager, managed_markets: [market2]) }
 
-  let(:user)     { create(:user) }
+  let(:user)     { create(:user, :supplier) }
 
   before do
     switch_to_subdomain(market1.subdomain)
@@ -27,7 +27,7 @@ describe "Impersonating a user" do
   end
 
   context "as a market manager" do
-    let!(:user)  { create(:user, managed_markets: [market1]) }
+    let!(:user)  { create(:user, :market_manager, managed_markets: [market1]) }
 
     before do
       visit admin_users_path
@@ -62,7 +62,7 @@ describe "Impersonating a user" do
   end
 
   context "as an admin" do
-    let!(:user)  { create(:user, role: "admin") }
+    let!(:user)  { create(:user, :admin) }
 
     before do
       visit admin_users_path
