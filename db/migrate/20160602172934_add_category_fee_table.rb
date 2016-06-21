@@ -8,4 +8,8 @@ class AddCategoryFeeTable < ActiveRecord::Migration
         t.timestamps
     end
   end
+
+  def data
+    RoleAction.create("description"=>"Market_Category_Fees:Index", "org_types"=>["A", "M"], "section"=>"market_category_fees", "action"=>"index", "plan_ids"=>["1", "2", "3", "4", "8"])
+  end
 end

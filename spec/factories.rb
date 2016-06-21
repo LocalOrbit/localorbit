@@ -218,6 +218,13 @@ FactoryGirl.define do
     trait :with_logo do
       logo File.open(Rails.root.join("app/assets/images/logo-farm-to-fork.png"))
     end
+
+    trait :with_category_fee do
+      after(:create) do |m|
+        create(:category_fee, market: m)
+      end
+
+    end
   end
 
   factory :market_address do
@@ -233,6 +240,12 @@ FactoryGirl.define do
   factory :market_organization do
     market
     organization
+  end
+
+  factory :category_fee do
+    market
+    category { Category.find_by(name: "Apples") }
+    fee_pct 12
   end
 
   factory :newsletter do
@@ -338,7 +351,7 @@ FactoryGirl.define do
     end
 
     trait :market do
-      plan                { create(:plan) }
+      plan                { create(:plan, :grow) }
       org_type 'M'
     end
 

@@ -21,10 +21,10 @@
               </tr>
               </thead>
               <tbody>
-              <% @fees.each do |fee| %>
+              <% @fees.decorate.each do |fee| %>
                   <tr class="category-fee-row">
                     <td class="category">
-                      <%= fee.category.name %>
+                      <%= fee.category_name %>
                     </td>
                     <td class="fee">
                       <%= fee.fee_pct %>

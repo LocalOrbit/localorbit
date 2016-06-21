@@ -2,7 +2,7 @@ class Admin::CategoryFeesController < AdminController
 
   def index
     @market = current_user.markets.find(params[:market_id])
-    @fees = CategoryFee.includes(:category).where(market_id: params[:market_id])
+    @fees = CategoryFee.joins(:category).where(market_id: params[:market_id]).order('lft')
     respond_to do |format|
       format.html
     end
