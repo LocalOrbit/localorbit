@@ -20,8 +20,8 @@
     
     <% if @cross_selling_list.products.empty? %>
 
-      <p>Your Cross Selling list is Empty</p>
-      <button>Add Products</button>
+      <p><span class="hint">Your Cross Selling list is Empty... <%= link_to "Add products", "#product_management", class: "modal-toggle" %></span></p>
+      <!-- <button>Add Products</button> -->
     <% else %>
 
       <div class="table-wrapper">
@@ -48,5 +48,6 @@
       </div>
     <% end %>
 
+    <%= render "product_management" %>
   </div>
 </div>
