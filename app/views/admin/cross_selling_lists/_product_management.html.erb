@@ -3,6 +3,38 @@
     Add Products to Cross Selling List <button class="close"><i class="font-icon icon-close"></i></button>
   </div>
   <div class="popup-body">
-    <p>Boo!</p>
+    <div class="tabs-wrapper">
+      <ul class="tabs wrapping-tabs">
+        <%# KXM This is an example of the new policy implementation... it may be a useful tool in hiding 'Suppliers' when x-selling functionality is exposed to supplier orgs  %>
+        <%# if policy(:market_profile).index? %><%#= content_tag(:li, link_to_or_span("Market Info",   [:admin, market]), class: 'tab') %><%# end %>
+        <li>Suppliers</li>
+        <li>Categories</li>
+        <li>Products</li>
+      </ul>
+    </div>
+    <div>
+      <table>
+        <thead>
+          <tr><th>Supplier</th><th>Products</th><th>&nbsp;</th></tr>
+        </thead>
+        <tbody>
+
+        <!-- Suppliers - this is working, but changing pages closes the modal window... -->
+        <% @suppliers.each do |s| %>
+          <tr><td><%= s.name %></td><td><%= s.products.count %></td></tr>
+        <% end %>
+        <!-- -->
+
+        <!-- Categories - the counts are messed up... - ->
+        <% @entity.categories.each do |s| %>
+          <tr><td><%= s.name %></td><td><%= s.products.count %></td></tr>
+        <% end %>
+        <!-- -->
+
+        </tbody>
+      </table>
+
+      <%= paginate @suppliers %>
+    </div>
   </div>
 </div>

@@ -18,6 +18,9 @@ class Admin::CrossSellingListsController < AdminController
 
   def show
     @cross_selling_list = CrossSellingList.includes(:active_children, :products).find(params[:id])
+    @suppliers = @entity.suppliers.order(:name).page(params[:page]).per(10)
+    @products = @entity.supplier_products
+    # binding.pry
   end
 
   def new

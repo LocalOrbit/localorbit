@@ -31,6 +31,11 @@ class Market < ActiveRecord::Base
   has_many :cross_selling_lists, -> { where(creator: true) }, as: :entity
   has_many :cross_selling_list_subscriptions, -> { where(creator: false) }, class_name: "CrossSellingList", as: :entity
 
+  # KXM Leverage the existing active, selling, with_products, and with_a_market scopes for this if possible
+  has_many :categories, -> { distinct }, through: :supplier_products
+  has_many :supplier_products, class_name: "Product", through: :suppliers, source: :products
+  has_many :suppliers, -> { where(active: true, can_sell: true) }, class_name: "Organization", through: :market_organizations, source: :organization
+
   has_many :market_organizations
   has_many :organizations, -> { extending(MarketOrganization::AssociationScopes).excluding_deleted }, through: :market_organizations # XXX prefer the merge in the line below to this partially and incorrectly implemened .excluding_deleted scope?
   # TODO has_many :organizations, -> { merge(MarketOrganization.visible) }, through: :market_organizations
