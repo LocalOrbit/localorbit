@@ -25,11 +25,15 @@ module Imports
 		def self.get_category_id_from_name(category_name)
 			begin
 				t = Category.arel_table
-				id = Category.where(t[:name].matches("#{category_name}%")).first.id # going on first, for oldest, at moment -- most likely correct.
+				id = Category.where(depth:2).where(t[:name].matches("#{category_name}%")).first.id # Must be a depth 2 category, where names ought to be unique, so this should be an array of length 1.
+				# TODO: address this problem, perhaps parse recursively?
 
-				# TODO Check -- may improve with taxonomy restructure, May16 no category uniqueness by name only -- depends upon taxonomy + varying acceptable depths.
+				## Before -- to save
+				#first.id # going on first, for oldest, at moment
+
+				# TODO Check -- may improve with taxonomy restructure, May16: no category uniqueness by name only -- depends upon taxonomy + varying acceptable depths.
 				# Previous sol'n, holding:
-				# id = Category.find_by_name(category_name).id # works, but case sensitive
+				# id = Category.find_by_name(category_name).id # works for a given set; case sensitive, which is a problem
 				id
 			rescue
 				return nil

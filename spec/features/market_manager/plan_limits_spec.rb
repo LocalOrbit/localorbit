@@ -85,13 +85,13 @@ describe "Plan Limits" do
 
       it "is not allowed to manage discount codes" do
         within("#admin-nav") do
-          expect(page).to_not have_content("Discount Codes")
+          expect(page).to_not have_content("Grow Plan")
         end
       end
 
       it "is not allowed to use feature promotions" do
         within("#admin-nav") do
-          expect(page).to_not have_content("Featured Promotions")
+          expect(page).to_not have_content("Grow Plan")
         end
       end
 

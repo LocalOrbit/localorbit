@@ -709,6 +709,7 @@ ActiveRecord::Schema.define(version: 20160616202547) do
     t.integer  "plan_interval",                                        default: 1,     null: false
     t.decimal  "plan_fee",                     precision: 7, scale: 2, default: 0.0,   null: false
     t.integer  "plan_bank_account_id"
+    t.boolean  "subscribed",                                           default: false
   end
 
   add_index "organizations", ["name"], name: "index_organizations_on_name", using: :btree
