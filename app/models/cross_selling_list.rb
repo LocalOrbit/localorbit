@@ -41,10 +41,10 @@ class CrossSellingList < ActiveRecord::Base
 
   def active?
   	# Master lists are active if published and not deleted
-    return true if parent_id.blank? && deleted_at.blank? && status = "Published"
+    return true if parent_id.blank? && deleted_at.blank? && status == "Published"
 
   	# Sublists are active if published and not deleted AND master list is active
-    return true if parent_id.present? && deleted_at.blank? && parent.active? && status = "Active"
+    return true if parent_id.present? && deleted_at.blank? && parent.active? && status == "Active"
 
     false
   end
