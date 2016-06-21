@@ -208,7 +208,7 @@ class User < ActiveRecord::Base
     #if !user_organizations[0].nil? && !user_organizations[0].organization.nil?
     #  user_organizations[0].organization.org_type == "A"
     #end
-    user_organizations.map(&:organization).map(&:org_type).include?('A')
+    user_organizations.map(&:organization).compact.map(&:org_type).include?('A')
   end
 
   def can_manage?(resource)
@@ -242,7 +242,7 @@ class User < ActiveRecord::Base
     #if !user_organizations[0].nil? && !user_organizations[0].organization.nil?
     #  self.user_organizations[0].organization.org_type == "M"
     #end
-    !admin? && user_organizations.map(&:organization).map(&:org_type).include?('M')
+    !admin? && user_organizations.map(&:organization).compact.map(&:org_type).include?('M')
 
   end
 
@@ -251,7 +251,7 @@ class User < ActiveRecord::Base
     #if !user_organizations[0].nil? && !user_organizations[0].organization.nil?
     #  self.user_organizations[0].organization.org_type == "S"
     #end
-    !admin? && !market_manager? && user_organizations.map(&:organization).map(&:org_type).include?('S')
+    !admin? && !market_manager? && user_organizations.map(&:organization).compact.map(&:org_type).include?('S')
 
   end
 
@@ -264,7 +264,7 @@ class User < ActiveRecord::Base
     #if !user_organizations[0].nil? && !user_organizations[0].organization.nil?
     #  self.user_organizations[0].organization.org_type == "B"
     #end
-    !admin? && !market_manager? && !seller? && user_organizations.map(&:organization).map(&:org_type).include?('B')
+    !admin? && !market_manager? && !seller? && user_organizations.map(&:organization).compact.map(&:org_type).include?('B')
 
   end
 
