@@ -51,9 +51,9 @@
         <tbody>
         <% @cross_selling_lists.each do |list| %>
           <tr>
-            <td><%= link_to list.name, [:admin, @entity, list] %></td>
-            <td><%= list.subscribers %></td>
-            <td><%= list.status %></td>
+            <td class="cross-sell-list-name"><%= link_to list.name, [:admin, @entity, list] %></td>
+            <td class="cross-sell-list-subscribers"><%= list.subscribers %></td>
+            <td class="cross-sell-list-status"><%= list.status %></td>
             <!-- <td>Delete, Publish, others?</td> -->
           </tr>
         <% end %>

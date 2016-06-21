@@ -9,6 +9,13 @@ class Admin::CrossSellingListsController < AdminController
     @cross_selling_lists = @entity.cross_selling_lists
   end
 
+  def subscriptions
+    # KXM This is throwing a 404, not even making it to the action... permissions?
+    binding.pry
+    @cross_selling_lists = @entity.cross_selling_list_subscriptions
+    render :index
+  end
+
   def show
     @cross_selling_list = CrossSellingList.includes(:active_children, :products).find(params[:id])
   end

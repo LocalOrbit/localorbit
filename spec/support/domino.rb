@@ -623,6 +623,16 @@ module Dom
       end
     end
 
+    class CrossSellList < Domino
+      selector "#cross-sell-lists tr"
+
+      attribute :name
+
+      def list_name
+        node.find(".cross-sell-list-name a").text
+      end
+    end
+
     class DeliverySchedule < Domino
       include Dom::Deletable
 
