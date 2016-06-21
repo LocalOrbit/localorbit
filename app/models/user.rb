@@ -277,7 +277,11 @@ class User < ActiveRecord::Base
     #localeyes_mkts = markets.joins(:plan).where("has_procurement_managers = 't'").all
     #intersect = managed_organizations.select{|o| o.can_sell? == false} & localeyes_mkts.flat_map{|lm| lm.organizations}
     #return intersect.any?
-    current_plan == "LocalEyes"
+
+    #current_plan == "LocalEyes"
+
+    orgs = user_organizations.map(&:organization)
+    orgs.compact.map(&:org_type).include?('M') && orgs.compact.map(&:plan).compact.map(&:name).include?('LocalEyes')
   end
 
   def primary_user_role
@@ -479,12 +483,6 @@ class User < ActiveRecord::Base
       elsif market_manager?
         managed_markets_join.map(&:market_id)
       end
-    end
-  end
-
-  def current_plan
-    if self.user_organizations[0].organization.plan
-      self.user_organizations[0].organization.plan.name
     end
   end
 end
