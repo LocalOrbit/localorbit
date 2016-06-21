@@ -220,6 +220,20 @@ FactoryGirl.define do
     end
   end
 
+  factory :cross_selling_list do
+    sequence(:name) {|n| "List #{n}"}
+
+    trait :market_list do
+      association :entity, factory: :market
+      entity_type "Market"
+    end
+
+    trait :organization_list do
+      association :entity, factory: :organization
+      entity_type "Organization"
+    end
+  end
+
   factory :market_address do
     market
     sequence(:name) {|n| "Market Address #{n}" }
@@ -694,19 +708,5 @@ FactoryGirl.define do
     delivery
   end
 
-  factory :cross_selling_list do
-    sequence(:name) {|n| "List #{n}"}
-
-    trait :market do
-      association :entity, factory: :market
-      entity_type "Market"
-    end
-
-    trait :organization do
-      association :entity, factory: :organization
-      entity_type "Organization"
-    end
-
-  end
 
 end

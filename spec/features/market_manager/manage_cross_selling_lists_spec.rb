@@ -7,7 +7,8 @@ describe "Manage cross selling lists" do
   let!(:cross_selling_is_allowed_market) { create(:market, managers: [user], allow_cross_sell: true) }
   let!(:cross_selling_is_enabled_market) { create(:market, managers: [user], allow_cross_sell: true, self_enabled_cross_sell: true) }
 
-  let!(:cross_selling_list) { create(:cross_selling_list, entity: cross_selling_is_enabled_market, name: "Listy McListface") }
+  let!(:cross_selling_market) { create(:market, managers: [user], allow_cross_sell: true, self_enabled_cross_sell: true) }
+  let!(:cross_sell_list) { cross_selling_market.cross_selling_lists.create(name: "Listy McListface", status: "Active") }
 
   context "when cross selling is unavailable" do
     before do
@@ -99,9 +100,9 @@ describe "Manage cross selling lists" do
 
   context "when there are lists" do
     before do
-      switch_to_subdomain(cross_selling_is_enabled_market.subdomain)
+      switch_to_subdomain(cross_selling_market.subdomain)
       sign_in_as user
-      visit admin_market_path(cross_selling_is_enabled_market)
+      visit admin_market_path(cross_selling_market)
 
       within ".tabs" do
         click_link "Cross Sell"
@@ -113,7 +114,7 @@ describe "Manage cross selling lists" do
       # save_and_open_page
 
       # KXM This isn't working (list_row coming back nil), but I need to get some actual work done now... technical debt incurred
-      list_row = Dom::Admin::CrossSellList.find_by_name(cross_selling_list.name)
+      list_row = Dom::Admin::CrossSellList.find_by_name(cross_sell_list.name)
       expect(list_row.list_name.value).to eql("Listy McListface")
     end
   end
@@ -137,7 +138,6 @@ describe "Manage cross selling lists" do
       # anyway?  Who asks for the internet's opinion about _anything_?!
 
       select "Active", from: "List Status"
-      # fill_in "List Status", with: "Active"
 
       click_button "Create List"
 
@@ -151,9 +151,9 @@ describe "Manage cross selling lists" do
 
   context "when adding items to a list" do
     before do
-      switch_to_subdomain(cross_selling_is_enabled_market.subdomain)
+      switch_to_subdomain(cross_selling_market.subdomain)
       sign_in_as user
-      visit admin_market_path(cross_selling_is_enabled_market)
+      visit admin_market_path(cross_selling_market)
 
       within ".tabs" do
         click_link "Cross Sell"
