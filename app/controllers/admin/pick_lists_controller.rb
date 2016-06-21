@@ -12,6 +12,7 @@ class Admin::PickListsController < AdminController
                     .eager_load(:order, product: :organization)
                     .order("organizations.name, products.name")
                     .preload(order: :organization)
+    # binding.pry
 
     @delivery_notes = DeliveryNote.joins(:order).where(orders: {delivery_id: @delivery.id})
     
@@ -21,7 +22,7 @@ class Admin::PickListsController < AdminController
 
     # want this to be grouped by the unique pieces
 
-    @pick_lists = order_items.group_by {|item| item.product.organization_id }.map do |_, items|
+    @pick_lists = order_items.group_by {|item| item.product.organization_id}.map do |_, items|
       PickListPresenter.new(items, @delivery_notes)
     end
 
