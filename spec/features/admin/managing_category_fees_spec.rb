@@ -6,7 +6,6 @@ describe "Managing Category Fee" do
 
   before do
     switch_to_subdomain market.subdomain
-    save_and_open_page
     sign_in_as user
   end
 
@@ -14,9 +13,26 @@ describe "Managing Category Fee" do
     visit "/admin/markets"
 
     click_link market.name
-    save_and_open_page
     click_link "Fees"
-    expect(page).to have_text(category.name)
-    expect(page).to have_text(category.fee_pct)
+    click_link "Category Fees"
+    expect(page).to have_text("Apples")
+    expect(page).to have_text(12)
+  end
+
+  it "adds an entry" do
+    visit "/admin/markets"
+
+    click_link market.name
+    click_link "Fees"
+    click_link "Category Fees"
+
+    select "All / Fruits", :from => "category_fee[category_id]"
+
+    fill_in "Market Fee %", with: "22"
+
+    click_button "Save"
+
+    expect(page).to have_text("All / Fruits")
+    expect(page).to have_text(22)
   end
 end
