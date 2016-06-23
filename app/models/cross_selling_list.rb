@@ -50,7 +50,7 @@ class CrossSellingList < ActiveRecord::Base
   end
 
   def pending?
-    status = "Pending"
+    status == "Pending"
   end
 
   def subscribers
