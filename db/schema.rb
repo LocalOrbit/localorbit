@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160520023859) do
+ActiveRecord::Schema.define(version: 20160623013035) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -143,6 +143,14 @@ ActiveRecord::Schema.define(version: 20160520023859) do
   add_index "categories", ["parent_id"], name: "index_categories_on_parent_id", using: :btree
   add_index "categories", ["rgt"], name: "index_categories_on_rgt", using: :btree
 
+  create_table "category_fees", force: true do |t|
+    t.integer  "category_id"
+    t.integer  "market_id"
+    t.decimal  "fee_pct",     precision: 5, scale: 3
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "credits", force: true do |t|
     t.integer  "order_id",      null: false
     t.integer  "user_id",       null: false
@@ -223,6 +231,7 @@ ActiveRecord::Schema.define(version: 20160520023859) do
     t.integer  "buyer_day"
     t.string   "fee_label",                      default: "Delivery Fee"
     t.boolean  "is_recoverable"
+    t.datetime "inactive_at"
   end
 
   add_index "delivery_schedules", ["deleted_at"], name: "index_delivery_schedules_on_deleted_at", using: :btree
@@ -562,6 +571,7 @@ ActiveRecord::Schema.define(version: 20160520023859) do
     t.decimal  "discount_market",        precision: 10, scale: 2, default: 0.0,      null: false
     t.decimal  "product_fee_pct",        precision: 5,  scale: 3, default: 0.0,      null: false
     t.decimal  "market_seller_fee_pct",  precision: 5,  scale: 3
+    t.decimal  "category_fee_pct",       precision: 5,  scale: 3
   end
 
   add_index "order_items", ["order_id", "product_id"], name: "index_order_items_on_order_id_and_product_id", using: :btree
