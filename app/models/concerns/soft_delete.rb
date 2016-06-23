@@ -4,6 +4,7 @@ module SoftDelete
   included do
     scope :visible, -> { where(visible_conditional) }
     scope :delivery_visible, -> { where(delivery_visible_conditional) }
+    scope :delivery_not_deleted, -> { where('deleted_at is null') }
   end
 
   def soft_delete
