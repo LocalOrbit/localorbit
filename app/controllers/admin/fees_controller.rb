@@ -15,7 +15,7 @@ module Admin
 
       if @market.update_attributes(market_attrs) && @organization.update_attributes(org_attrs)
 
-        if @market.organization.plan.name == 'Solo Seller'
+        if @market.organization.plan.name == 'Solo Supplier'
           organization_params = {
               :name => @market.name,
               :can_sell => true,
@@ -25,7 +25,7 @@ module Admin
               :allow_purchase_orders => @market.allow_purchase_orders
           }
           result = CreateOrganization.perform(organization_params: organization_params, user: current_user, market_id: @market.id)
-          puts result
+          puts 'Solo Org Result: ' + result
         end
 
         redirect_to [:admin, @market, :fees], notice: "#{@market.name} fees successfully updated"

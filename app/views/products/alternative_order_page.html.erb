@@ -1,6 +1,6 @@
 <%
   if !policy(:all_supplier).index?
-     supplier_id = current_market.organizations[0].id
+     supplier_id = current_market.organizations.where("org_type = 'S'")[0].id
   end
 %>
 <%= react_component('lo.ProductCatalog', {
