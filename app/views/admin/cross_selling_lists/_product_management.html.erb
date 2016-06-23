@@ -1,40 +1,80 @@
 <div class="is-hidden modal popup" id="product_management">
   <div class="popup-header">
-    Add Products to Cross Selling List <button class="close"><i class="font-icon icon-close"></i></button>
+    Add Products to Cross Selling List <button class="close"><i class="font-icon icon-close">Close</i></button>
+    <p>Select products or groups of products to allow other Markets to sell on your behalf.</p>
   </div>
+
   <div class="popup-body">
-    <div class="tabs-wrapper">
-      <ul class="tabs wrapping-tabs">
-        <%# KXM This is an example of the new policy implementation... it may be a useful tool in hiding 'Suppliers' when x-selling functionality is exposed to supplier orgs  %>
+    <div id="tabs" class="tabs-wrapper">
+      <ul id="product-add-tab-list" class="tabs wrapping-tabs">
+        <%# KXM Below is a reference the new policy implementation... it may be a useful tool in hiding 'Suppliers' when x-selling functionality is exposed to supplier orgs  %>
         <%# if policy(:market_profile).index? %><%#= content_tag(:li, link_to_or_span("Market Info",   [:admin, market]), class: 'tab') %><%# end %>
-        <li>Suppliers</li>
-        <li>Categories</li>
-        <li>Products</li>
+        <li><a href="#product-add-suppliers">Suppliers</a></li>
+        <li><a href="#product-add-categories">Categories</a></li>
+        <!-- <li><a href="#product-add-products">Products</a></li> -->
       </ul>
     </div>
-    <div>
+
+    <!-- - ->
+    <div id="product-add-suppliers">
       <table>
         <thead>
-          <tr><th>Supplier</th><th>Products</th><th>&nbsp;</th></tr>
+          <tr>
+            <th>Supplier</th>
+            <th>Products</th>
+            <th>&nbsp;</th>
+          </tr>
         </thead>
         <tbody>
-
-        <!-- Suppliers - this is working, but changing pages closes the modal window... -->
-        <% @suppliers.each do |s| %>
-          <tr><td><%= s.name %></td><td><%= s.products.count %></td></tr>
+        <% @suppliers.each do |supplier| %>
+          <tr>
+            <td><%= supplier.name %></td>
+            <td><%= supplier.products.count %></td>
+            <td><%= check_box_tag("suppliers[]", value="#{supplier.id}", checked=false) %></td>
+          </tr>
         <% end %>
-        <!-- -->
-
-        <!-- Categories - the counts are messed up... - ->
-        <% @entity.categories.each do |s| %>
-          <tr><td><%= s.name %></td><td><%= s.products.count %></td></tr>
-        <% end %>
-        <!-- -->
-
         </tbody>
       </table>
-
       <%= paginate @suppliers %>
+    </div>
+    <!-- -->
+
+    <!-- - ->
+    <div id="product-add-categories">
+      <table>
+        <thead>
+          <tr><th>Category</th><th>Products</th><th>&nbsp;</th></tr>
+        </thead>
+        <tbody>
+        <% @entity.categories.each do |category| %>
+          <tr>
+            <td><%= category.name %></td>
+            <td><%= category.products.count %></td>
+            <td><%= check_box_tag("categories[]", value="#{category.id}", checked=false) %></td>
+          </tr>
+        <% end %>
+        </tbody>
+      </table>
+    </div>
+    <!-- -->
+
+    <div id="product-add-products">
+      <table>
+        <thead>
+          <tr>
+            <th>Products</th>
+            <th>&nbsp;</th></tr>
+        </thead>
+        <tbody>
+          <% @products.each do |product| %>
+          <tr>
+            <td><%= "#{product.name} (#{product.id})" %></td>
+            <td><%= check_box_tag "list[product_ids][]", product.id, list.object.products.include?(product) %></td>
+          </tr>
+          <% end %>
+        </tbody>
+      </table>
+      <%= paginate @products %>
     </div>
   </div>
 </div>
