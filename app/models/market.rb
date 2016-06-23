@@ -31,7 +31,7 @@ class Market < ActiveRecord::Base
   has_many :cross_selling_lists, -> { where(creator: true) }, as: :entity
   has_many :cross_selling_list_subscriptions, -> { where(creator: false) }, class_name: "CrossSellingList", as: :entity
 
-  # KXM Leverage the existing active, selling, with_products, and with_a_market scopes for this if possible
+  # KXM Look into the existing Organization model 'active', 'selling', 'with_products', and 'with_a_market' scopes to replace these
   has_many :categories, -> { distinct }, through: :supplier_products
   has_many :supplier_products, class_name: "Product", through: :suppliers, source: :products
   has_many :suppliers, -> { where(active: true, can_sell: true) }, class_name: "Organization", through: :market_organizations, source: :organization

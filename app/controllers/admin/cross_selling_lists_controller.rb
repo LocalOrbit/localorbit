@@ -18,8 +18,8 @@ class Admin::CrossSellingListsController < AdminController
 
   def show
     @cross_selling_list = CrossSellingList.includes(:active_children, :products).find(params[:id])
-    @suppliers = @entity.suppliers.order(:name).page(params[:page]).per(10)
-    @products = @entity.supplier_products
+    @suppliers = @entity.suppliers.order(:name).page(params[:page]).per(3)
+    @products = @entity.supplier_products.order(:name).page(params[:page]).per(12)
     # binding.pry
   end
 
@@ -47,6 +47,9 @@ class Admin::CrossSellingListsController < AdminController
 
   def update
     @cross_selling_list = CrossSellingList.includes(:children).find(params[:id])
+
+    binding.pry
+    #KXM Check for products array...
 
     if @cross_selling_list.update_attributes(cross_selling_list_params)
 
