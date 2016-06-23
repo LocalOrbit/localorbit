@@ -67,7 +67,7 @@
     <div class="mobile-entab" data-tabbox="#market-tab-box">
       <h2 class="story-header">Pick Ups &amp; Deliveries</h2>
       <ul class="list-naked list-zebra deliveries-list">
-      <% @market.delivery_schedules.visible.order(:day).decorate.each do |delivery| %>
+      <% @market.delivery_schedules.delivery_visible.order(:day).decorate.each do |delivery| %>
         <li>
           <strong class="display-date"><%= delivery.buyer_weekday.pluralize %></strong> —
           <span class="time-range"><%= delivery.buyer_time_window %></span><br>
