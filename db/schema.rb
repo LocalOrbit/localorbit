@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160616202547) do
+ActiveRecord::Schema.define(version: 20160623224510) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -163,6 +163,7 @@ ActiveRecord::Schema.define(version: 20160616202547) do
     t.boolean "active",                default: true
   end
 
+  add_index "cross_selling_list_products", ["cross_selling_list_id", "product_id"], name: "cross_selling_list_product_unique_list_products_ids", unique: true, using: :btree
   add_index "cross_selling_list_products", ["cross_selling_list_id"], name: "index_cross_selling_list_products_on_cross_selling_list_id", using: :btree
   add_index "cross_selling_list_products", ["product_id"], name: "index_cross_selling_list_products_on_product_id", using: :btree
 
