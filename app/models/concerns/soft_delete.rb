@@ -3,6 +3,7 @@ module SoftDelete
 
   included do
     scope :visible, -> { where(visible_conditional) }
+    scope :delivery_visible, -> { where(delivery_visible_conditional) }
   end
 
   def soft_delete
@@ -29,7 +30,7 @@ module SoftDelete
     end
 
     def delivery_visible_conditional
-      arel_table[:inactive_at].eq(nil).or(arel_table[:inactive_at].gt(Time.current.end_of_minute))
+      (arel_table[:deleted_at].eq(nil).or(arel_table[:deleted_at].gt(Time.current.end_of_minute))).and(arel_table[:inactive_at].eq(nil).or(arel_table[:inactive_at].gt(Time.current.end_of_minute)))
     end
   end
 end

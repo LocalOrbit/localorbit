@@ -488,7 +488,7 @@ class Product < ActiveRecord::Base
 
     if self.use_all_deliveries?
       self.delivery_schedule_ids = markets.map do |market|
-        market.delivery_schedules.visible.map(&:id)
+        market.delivery_schedules.delivery_visible.map(&:id)
       end.flatten
     else
       ids = markets.map(&:id)
