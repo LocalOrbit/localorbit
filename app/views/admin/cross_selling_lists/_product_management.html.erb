@@ -1,18 +1,20 @@
 <div class="is-hidden modal popup" id="product_management">
   <div class="popup-header">
-    Add Products to Cross Selling List <button class="close"><i class="font-icon icon-close">Close</i></button>
+    Add Products to Cross Selling List <button class="close"><i class="font-icon icon-close"> Close</i></button>
     <p>Select products or groups of products to allow other Markets to sell on your behalf.</p>
   </div>
 
   <div class="popup-body">
     <div id="tabs" class="tabs-wrapper">
+    <!-- - ->
       <ul id="product-add-tab-list" class="tabs wrapping-tabs">
         <%# KXM Below is a reference the new policy implementation... it may be a useful tool in hiding 'Suppliers' when x-selling functionality is exposed to supplier orgs  %>
         <%# if policy(:market_profile).index? %><%#= content_tag(:li, link_to_or_span("Market Info",   [:admin, market]), class: 'tab') %><%# end %>
         <li><a href="#product-add-suppliers">Suppliers</a></li>
         <li><a href="#product-add-categories">Categories</a></li>
-        <!-- <li><a href="#product-add-products">Products</a></li> -->
+        <li><a href="#product-add-products">Products</a></li>
       </ul>
+    <!-- -->
     </div>
 
     <!-- - ->
@@ -35,7 +37,7 @@
         <% end %>
         </tbody>
       </table>
-      <%= paginate @suppliers %>
+      <%#= paginate @suppliers %>
     </div>
     <!-- -->
 
@@ -69,7 +71,7 @@
           <% @products.each do |product| %>
           <tr>
             <td><%= "#{product.name} (#{product.id})" %></td>
-            <td><%= check_box_tag "list[product_ids][]", product.id, list.object.products.include?(product) %></td>
+            <td><%= check_box_tag "cross_selling_list[product_ids][]", product.id, list.object.products.include?(product) %></td>
           </tr>
           <% end %>
         </tbody>

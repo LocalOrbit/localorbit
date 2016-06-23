@@ -32,10 +32,10 @@ class Admin::CrossSellingListsController < AdminController
     @cross_selling_list.creator = true
 
     if @cross_selling_list.save
-      selected = cross_selling_list_params[:shared_with].select(&:present?).map { |submitted_id| {parent_id: @cross_selling_list.id, entity_id: submitted_id.to_i} }
+      selected_subscribers = cross_selling_list_params[:shared_with].select(&:present?).map { |submitted_id| {parent_id: @cross_selling_list.id, entity_id: submitted_id.to_i} }
 
-      selected.each do |id_hash|
-        create_list(@cross_selling_list, id_hash)
+      selected_subscribers.each do |list_ids|
+        create_list(@cross_selling_list, list_ids)
       end
 
       redirect_to [:admin, @entity, @cross_selling_list], notice: "Successfully created #{@cross_selling_list.name}"
@@ -48,29 +48,29 @@ class Admin::CrossSellingListsController < AdminController
   def update
     @cross_selling_list = CrossSellingList.includes(:children).find(params[:id])
 
-    binding.pry
-    #KXM Check for products array...
+    # This forces a product update when all products are removed via the UI
+    params_with_defaults  = {'product_ids' => []}.merge(cross_selling_list_params || {})
 
-    if @cross_selling_list.update_attributes(cross_selling_list_params)
+    if @cross_selling_list.update_attributes(params_with_defaults)
 
-      # If the edits are saved successfully then cascade through the related lists...
-      existing = @cross_selling_list.active_children.map { |l| {parent_id: l.parent_id, entity_id: l.entity_id} }
-      selected = cross_selling_list_params[:shared_with].select(&:present?).map { |submitted_id| {parent_id: @cross_selling_list.id, entity_id: submitted_id.to_i} }
-      overlap  = existing & selected
+      # If the edits are saved successfully then cascade through the related cross selling lists and products...
+      existing_subscribers = @cross_selling_list.active_children.map { |l| {parent_id: l.parent_id, entity_id: l.entity_id} }
+      selected_subscribers = cross_selling_list_params[:shared_with].select(&:present?).map { |submitted_id| {parent_id: @cross_selling_list.id, entity_id: submitted_id.to_i} }
+       overlap_subscribers = existing_subscribers & selected_subscribers
 
       # Delete those that exist but aren't selected
-      (existing - selected).each do |id_hash|
-        delete_list(@cross_selling_list, id_hash)
+      (existing_subscribers - selected_subscribers).each do |list_ids|
+        delete_list(@cross_selling_list, list_ids)
       end
 
-      # Add those that are selected but don't exist
-      (selected - existing).each do |id_hash|
-        create_list(@cross_selling_list, id_hash)
+      # Add those that are selected_subscribers but don't exist
+      (selected_subscribers - existing_subscribers).each do |list_ids|
+        create_list(@cross_selling_list, list_ids)
       end
 
       # Update those that appear in both
-      overlap.each do |id_hash|
-        update_list(@cross_selling_list, id_hash)
+      overlap_subscribers.each do |list_ids|
+        update_list(@cross_selling_list, list_ids)
       end
 
       redirect_to [:admin, @entity, @cross_selling_list]
@@ -84,7 +84,8 @@ class Admin::CrossSellingListsController < AdminController
     params.require(:cross_selling_list).permit(
       :name,
       :status,
-      :shared_with => []
+      :shared_with => [],
+      :product_ids => []
     )
   end
 
