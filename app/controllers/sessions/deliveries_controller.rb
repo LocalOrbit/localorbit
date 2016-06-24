@@ -8,7 +8,7 @@ module Sessions
     def new
       current_organization.carts.find_by(id: session[:cart_id]).try(:destroy)
 
-      @deliveries = current_market.delivery_schedules.visible.
+      @deliveries = current_market.delivery_schedules.delivery_visible.
                       map {|ds| ds.next_delivery.decorate(context: {current_organization: current_organization}) }.
                       sort_by {|d| d.deliver_on }
     end

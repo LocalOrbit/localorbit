@@ -143,6 +143,14 @@ ActiveRecord::Schema.define(version: 20160623224510) do
   add_index "categories", ["parent_id"], name: "index_categories_on_parent_id", using: :btree
   add_index "categories", ["rgt"], name: "index_categories_on_rgt", using: :btree
 
+  create_table "category_fees", force: true do |t|
+    t.integer  "category_id"
+    t.integer  "market_id"
+    t.decimal  "fee_pct",     precision: 5, scale: 3
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "credits", force: true do |t|
     t.integer  "order_id",      null: false
     t.integer  "user_id",       null: false
@@ -249,6 +257,7 @@ ActiveRecord::Schema.define(version: 20160623224510) do
     t.integer  "buyer_day"
     t.string   "fee_label",                      default: "Delivery Fee"
     t.boolean  "is_recoverable"
+    t.datetime "inactive_at"
   end
 
   add_index "delivery_schedules", ["deleted_at"], name: "index_delivery_schedules_on_deleted_at", using: :btree
@@ -589,6 +598,7 @@ ActiveRecord::Schema.define(version: 20160623224510) do
     t.decimal  "discount_market",        precision: 10, scale: 2, default: 0.0,      null: false
     t.decimal  "product_fee_pct",        precision: 5,  scale: 3, default: 0.0,      null: false
     t.decimal  "market_seller_fee_pct",  precision: 5,  scale: 3
+    t.decimal  "category_fee_pct",       precision: 5,  scale: 3
   end
 
   add_index "order_items", ["order_id", "product_id"], name: "index_order_items_on_order_id_and_product_id", using: :btree
@@ -710,7 +720,7 @@ ActiveRecord::Schema.define(version: 20160623224510) do
     t.integer  "plan_interval",                                        default: 1,     null: false
     t.decimal  "plan_fee",                     precision: 7, scale: 2, default: 0.0,   null: false
     t.integer  "plan_bank_account_id"
-    t.boolean  "subscribed",                                           default: false
+    t.boolean  "subscribed"
   end
 
   add_index "organizations", ["name"], name: "index_organizations_on_name", using: :btree
@@ -786,6 +796,7 @@ ActiveRecord::Schema.define(version: 20160623224510) do
     t.integer  "legacy_id"
     t.datetime "deleted_at"
     t.decimal  "product_fee_pct", precision: 5,  scale: 3, default: 0.0, null: false
+    t.integer  "category_id"
   end
 
   add_index "prices", ["market_id"], name: "index_prices_on_market_id", using: :btree
@@ -851,20 +862,20 @@ ActiveRecord::Schema.define(version: 20160623224510) do
   add_index "promotions", ["product_id"], name: "index_promotions_on_product_id", using: :btree
 
   create_table "role_actions", force: true do |t|
-    t.string "description"
-    t.string "org_types",   default: [], array: true
     t.string "section"
     t.string "action"
+    t.string "description"
+    t.string "org_types",   default: [], array: true
     t.string "plan_ids",    default: [], array: true
   end
 
   create_table "roles", force: true do |t|
     t.string   "name"
-    t.string   "org_type"
-    t.integer  "organization_id"
-    t.string   "activities",      default: [], array: true
+    t.string   "activities",      limit: 4096, default: [], array: true
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "org_type"
+    t.integer  "organization_id"
   end
 
   create_table "sequences", force: true do |t|

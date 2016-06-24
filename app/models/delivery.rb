@@ -8,7 +8,7 @@ class Delivery < ActiveRecord::Base
   scope :recent, -> { where(deliver_on: (4.weeks.ago..Time.current.end_of_minute)) }
   scope :with_undelivered_orders, -> { joins(orders: {items: :product}).where(order_items: {delivery_status: "pending"}).group("deliveries.id") }
   scope :with_undelivered_orders_for_user, lambda {|user| with_undelivered_orders.where(products: {organization_id: user.organization_ids}) }
-  scope :active, -> { joins(:delivery_schedule).where(DeliverySchedule.visible_conditional) }
+  scope :active, -> { joins(:delivery_schedule).where(DeliverySchedule.delivery_visible_conditional) }
 
   def self.current_selected(market, id)
     return nil unless id
