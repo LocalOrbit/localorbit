@@ -220,7 +220,7 @@ describe "Adding a product", chosen_js: true do
 
         click_link "Product Info"
 
-        expect(page).to have_content("Grapes / Red Grapes")
+        expect(page).to have_content("Fruits / Grapes")
       end
 
       it "fuzzy searches across top-level categories" do
@@ -229,7 +229,7 @@ describe "Adding a product", chosen_js: true do
         expect(category_select.visible_options).to have_text("Apples")
         expect(category_select.visible_options).to have_text("Potatoes & Root Vegetables")
 
-        category_select.type_search("fruit apples mac")
+        category_select.type_search("fruit apples")
 
         expect(category_select.visible_options).to_not have_text("Potatoes & Root Vegetables")
         expect(category_select.visible_options).to have_text("Apples")
