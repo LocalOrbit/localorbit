@@ -30,6 +30,7 @@
   <br>
   <%= f.select :category_id, Category.for_select, {include_blank: ""}, {data: {placeholder: "Click and type to search for a Category"}, class: "chosen"} %>
   <span class="hint">Not seeing what you need? <%= link_to "Request a New Category", "#request-new-category", class: "modal-toggle" %></span>
+  <span class="hint">You can also define specific <%= link_to "category-level market fees", admin_market_category_fees_path(current_market), class: "modal-toggle" %></span>
 </div>
 
 <div class="field">

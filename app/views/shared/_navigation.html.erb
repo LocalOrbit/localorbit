@@ -41,8 +41,8 @@ end
       <ul class="dropdown with-anchor top-anchor" id="market-dropdown">
         <% if policy(:market).index? %><li><%= link_to raw('<i class="font-icon" data-icon="&#xe000;"></i> Markets'), admin_markets_path(sort: "name-asc") %></li><% end %>
         <% if policy(:organization).index? %><li><%= link_to raw('<i class="font-icon" data-icon="&#xe027;"></i> Organizations'), admin_organizations_path(sort: "name-asc") %></li><% end %>
-        <!-- admin -->
         <% if policy(:user).index? %><li><%= link_to raw('<i class="font-icon" data-icon="&#xe017;"></i> All Users'), admin_users_path(sort: "name-asc")  %></li><% end %>
+        <!-- admin -->
         <% if policy(:role).index? %><li><%= link_to raw('<i class="font-icon" data-icon="&#xe035;"></i> Roles'), admin_roles_path %></li><% end %>
         <% if policy(:unit).index? %><li><%= link_to raw('<i class="font-icon" data-icon="&#xe035;"></i> Units'), coming_soon_dashboard_path %></li><% end %>
         <% if policy(:event).index? %><li><%= link_to raw('<i class="font-icon" data-icon="&#xe025;"></i> User Event Log'), admin_activities_path %></li><% end %>
