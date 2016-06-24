@@ -3,6 +3,7 @@ class CrossSellingList < ActiveRecord::Base
   include SoftDelete
 
   attr_accessor :shared_with
+  attr_accessor :children_ids
 
   # Entity may reference a supplier org or a market org
   belongs_to :entity, polymorphic: true

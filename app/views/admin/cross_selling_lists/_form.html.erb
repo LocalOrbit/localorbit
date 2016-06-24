@@ -10,7 +10,8 @@
       <%= list_fields.label :shared_with, "List Visibility" %>
       <span class="tooltip pull-right" data-tooltip="Control who may view, subscribe, or sell your products. Contact admin if you don't see who you're looking for."></span>
       <br />
-      <%= list_fields.select :shared_with, options_for_select(current_market.cross_sells.map {|market| [market.name, market.id] }, @cross_selling_list.active_children.map{|list| list.entity_id} ), { :prompt => "Select market(s)" }, { :multiple => true, :class => "column--full" } %>
+      <%#= list_fields.select :shared_with, options_for_select(current_market.cross_sells.map {|market| [market.name, market.id] }, @cross_selling_list.active_children.map{|list| list.entity_id} ), { :prompt => "Select market(s)" }, { :multiple => true, :class => "column--full" } %>
+      <%= list_fields.select :children_ids, options_for_select(current_market.cross_sells.map {|market| [market.name, market.id] }, @cross_selling_list.active_children.map{|list| list.entity_id} ), { :prompt => "Select market(s)" }, { :multiple => true, :class => "column--full" } %>
     </div>
   </div>
   <div class="row row--field">
