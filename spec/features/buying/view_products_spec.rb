@@ -10,6 +10,7 @@ feature "Viewing products" do
                                      buyer_pickup_start: "12:00 PM",
                                      buyer_pickup_end: "2:00 PM") }
   let!(:delivery_schedule2) { create(:delivery_schedule, market: market, day: 3, deleted_at: Time.zone.parse("2013-03-21")) }
+  let!(:delivery_schedule4) { create(:delivery_schedule, market: market, day: 3, is_recoverable: true, inactive_at: Time.zone.parse("2013-03-21")) }
 
   let!(:org1) { create(:organization, :seller, markets: [market]) }
   let!(:org1_product) { create(:product, :sellable, name: "celery", organization: org1, delivery_schedules: [delivery_schedule1]) }
@@ -628,7 +629,7 @@ feature "Viewing products" do
     end
 
     delivery_schedule1.soft_delete
-    delivery_schedule2.update_attribute(:deleted_at, nil)
+    delivery_schedule4.update_attribute(:inactive_at, nil)
 
     click_link "Dashboard", match: :first
     click_link "Order", match: :first

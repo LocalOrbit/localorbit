@@ -66,7 +66,7 @@ class DeliverySchedule < ActiveRecord::Base
   end
 
   def active?
-    deleted_at == nil
+    inactive_at == nil
   end
 
   def buyer_pickup?

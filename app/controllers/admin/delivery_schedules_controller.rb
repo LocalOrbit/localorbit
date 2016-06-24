@@ -44,11 +44,11 @@ module Admin
       message = nil
 
       if params[:active] == "false"
-        if @delivery_schedule.update_attributes(is_recoverable: true, deleted_at: Time.current)
+        if @delivery_schedule.update_attributes(is_recoverable: true, inactive_at: Time.current)
           message = "Deactivated delivery schedule."
         end
       else
-        if @delivery_schedule.update_attributes(is_recoverable: true, deleted_at: nil)
+        if @delivery_schedule.update_attributes(is_recoverable: true, inactive_at: nil)
           message = "Activated delivery schedule."
         end
       end

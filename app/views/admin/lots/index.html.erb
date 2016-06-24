@@ -17,7 +17,7 @@
                  html: {class: "inventory-form row row--partial"} do |f| %>
 
       <h3 class="unit-name"><%= unit_product.unit_plural %></h3><br/>
-      <% if policy(:advanced_inventory).index? || (!unit_product.use_simple_inventory) %>
+      <% if policy(:advanced_inventory).index? || (current_user.seller? && organization_can_access?(@product.organization, :advanced_inventory)) || !unit_product.use_simple_inventory %>
           <%= check_box_tag 'adv_inventory', '', !unit_product.use_simple_inventory, class: 'adv_inventory' %>
           &nbsp;Show Advanced Inventory Options&nbsp;<span class="tooltip" data-tooltip="Enable Lot#, Good From Date, Expiration Date"></span>
       <% else %>
