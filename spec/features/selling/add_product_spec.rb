@@ -7,10 +7,10 @@ describe "Adding a product", chosen_js: true do
 
     case select
     when :without_chosen
-      select "Apples / Macintosh Apples", from: "Category"
+      select "Apples", from: "Category"
       select "Pound", from: "Unit"
     when :with_chosen
-      select_from_chosen "Grapes / Red Grapes", from: "Category"
+      select_from_chosen "Grapes", from: "Category"
       select_from_chosen "Pound", from: "Unit"
     end
   end
@@ -169,7 +169,7 @@ describe "Adding a product", chosen_js: true do
 
       it "it uses a default address if using who/how" do
         fill_in "Product Name", with: "Good food"
-        select_from_chosen "Grapes / Red Grapes", from: "Category"
+        select_from_chosen "Grapes", from: "Category"
         select_from_chosen "Pounds", from: "Unit"
 
         uncheck "seller_info"
@@ -197,19 +197,18 @@ describe "Adding a product", chosen_js: true do
       it "can quickly drill down to a result" do
         category_select.click
 
-        expect(category_select.visible_options).to have_text("Macintosh Apples")
-        expect(category_select.visible_options).to have_text("Turnips")
+        expect(category_select.visible_options).to have_text("Apples")
+        expect(category_select.visible_options).to have_text("Potatoes & Root Vegetables")
 
         category_select.type_search("grapes")
 
-        expect(category_select.visible_options).to have_text("Red Grapes")
-        expect(category_select.visible_options).to have_text("Green Grapes")
-        expect(category_select.visible_options).to_not have_text("Turnips")
-        expect(category_select.visible_options).to_not have_text("Macintosh Apples")
+        expect(category_select.visible_options).to have_text("Grapes")
+        expect(category_select.visible_options).to_not have_text("Potatoes & Root Vegetables")
+        expect(category_select.visible_options).to_not have_text("Apples")
 
-        category_select.visible_option("Grapes / Red Grapes").click
+        category_select.visible_option("Grapes").click
 
-        expect(page).to have_content("Fruits / Grapes / Red Grapes")
+        expect(page).to have_content("Fruits / Grapes")
 
         # Set the product name so we have a valid product
         fill_in "Product Name", with: "Red Grapes"
@@ -221,23 +220,23 @@ describe "Adding a product", chosen_js: true do
 
         click_link "Product Info"
 
-        expect(page).to have_content("Grapes / Red Grapes")
+        expect(page).to have_content("Fruits / Grapes")
       end
 
       it "fuzzy searches across top-level categories" do
         category_select.click
 
-        expect(category_select.visible_options).to have_text("Macintosh Apples")
-        expect(category_select.visible_options).to have_text("Turnips")
+        expect(category_select.visible_options).to have_text("Apples")
+        expect(category_select.visible_options).to have_text("Potatoes & Root Vegetables")
 
-        category_select.type_search("fruit apples mac")
+        category_select.type_search("fruit apples")
 
-        expect(category_select.visible_options).to_not have_text("Turnips")
-        expect(category_select.visible_options).to have_text("Macintosh Apples")
+        expect(category_select.visible_options).to_not have_text("Potatoes & Root Vegetables")
+        expect(category_select.visible_options).to have_text("Apples")
 
-        category_select.visible_option("Apples / Macintosh Apples").click
+        category_select.visible_option("Apples").click
 
-        expect(page).to have_content("Fruits / Apples / Macintosh Apples")
+        expect(page).to have_content("Fruits / Apples")
       end
     end
 
@@ -472,7 +471,7 @@ describe "Adding a product", chosen_js: true do
 
     it "does not create the product when no organization has been chosen" do
       fill_in "Product Name", with: "Macintosh Apples"
-      select "Apples / Macintosh Apples", from: "Category"
+      select "Apples", from: "Category"
 
       click_button "Save and Continue"
       expect(page).to have_content("Organization can't be blank")

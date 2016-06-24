@@ -1,0 +1,13 @@
+<div class="tab-header stickable">
+  <div class="l-constraint">
+
+    <% if policy(:market_fees).index? || policy(:market_category_fees).index? %>
+    <div class="tabs-wrapper">
+      <ul class="tabs">
+        <% if policy(:market_fees).index? %><%= content_tag(:li, link_to_or_span("Fee Setup", admin_market_fees_path(@market.id)), class: 'tab') %><% end %>
+        <% if policy(:market_category_fees).index? %><%= content_tag(:li, link_to_or_span("Category Fees", admin_market_category_fees_path(@market.id)), class: 'tab') %><% end %>
+      </ul>
+    </div>
+    <% end %>
+  </div>
+</div>
