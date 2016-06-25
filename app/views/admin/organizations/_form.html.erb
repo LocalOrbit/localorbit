@@ -22,12 +22,14 @@
 
     <% if @organization.new_record? || current_user.can_manage_market?(current_market) %>
       <div class="row row--field">
+      <% if policy(:all_supplier).index? %>
       <div class="field column column--half column--guttered">
         <%= f.check_box :can_sell %>
         <%= f.label :can_sell, "Can sell products" %>
         <span class="tooltip" data-tooltip="This allows a customer to be a Seller and a Buyer."></span>
       </div
       >
+      <% end %>
       </div>
     <% end %>
 
