@@ -13,9 +13,9 @@
       <%= content_tag :th, sort_link(@q, :placed_at, "Order Date") %>
       <%= content_tag :th, sort_link(@q, :delivery_deliver_on, "Delivery Date") %>
       <%= content_tag :th, sort_link(@q, :total_cost, "Amount Owed") %>
-      <%= content_tag :th, sort_link(@q, :organization, "Buyer") %>
+      <%= content_tag :th, sort_link(@q, :organization_name, "Buyer") %>
       <th>Delivery</th>
-      <%= content_tag :th, sort_link(@q, :payment_status, "Buyer") %>
+      <%= content_tag :th, sort_link(@q, :payment_status, "Payment Status") %>
     </thead>
     <tbody>
       <%
