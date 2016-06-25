@@ -1,4 +1,8 @@
 class OrderDecorator < Draper::Decorator
+  include ActionView::Helpers::NumberHelper
+  include Draper::LazyHelpers
+  include MapHelper
+
   delegate_all
 
   def display_delivery_or_pickup
@@ -23,6 +27,15 @@ class OrderDecorator < Draper::Decorator
 
   def display_delivery_phone
     delivery_phone
+  end
+
+  def delivery_lat_long
+    address = organization.locations.default_shipping
+    if !address.nil? && !address.geocode.nil?
+      raw "#{address.geocode.latitude},#{address.geocode.longitude}"
+    else
+      ""
+    end
   end
 
   def display_market_street

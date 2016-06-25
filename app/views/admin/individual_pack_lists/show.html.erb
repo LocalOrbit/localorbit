@@ -72,13 +72,13 @@
               <td class="notes"></td>
             </tr>
           <% end %>
-          <% if order.delivery_fees > 0.00 %>
+          <% if order.delivery_fees > 0.00 && order.delivery.delivery_schedule.seller_fulfillment_location_id == 0 %>
             <tr class="totals">
               <th colspan="5" style="text-align: right">Subtotal:</th>
               <th class="total-price"><%= number_to_currency Financials::Orders::Calc.gross_item_total(items: items) %></th>
             </tr>
             <tr class="totals">
-              <th colspan="5" style="text-align:right">Delivery Fees:</th>
+              <th colspan="5" style="text-align:right">Delivery Fee:</th>
               <th class="total-price"><%= number_to_currency order.delivery_fees %></th>
             </tr>
             <tr class="totals">
