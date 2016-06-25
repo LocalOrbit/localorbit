@@ -11,16 +11,7 @@
 
 <div class="print-page">
 <%
-    @pick_lists.each_with_index do |pick_list, index|
-      if FeatureAccess.routing_plan?(market: current_market)
-        if index == 0
-          @orig = "#{pick_list.seller_ship_from_lat_long}"
-          @dest = "#{current_market.addresses[0].geocode.latitude},#{current_market.addresses[0].geocode.longitude}"
-          @wp = ""
-        else
-          @wp = @wp + (index > 0 ? "#{pick_list.seller_ship_from_lat_long}|" : "")
-        end
-      end
+  @pick_lists.each_with_index do |pick_list, index|
 %>
 
   <% if index != 0 %>
@@ -100,39 +91,4 @@
     </div>
   </div>
 <% end %>
-  <% if FeatureAccess.routing_plan?(market: current_market) %>
-  <h1>Routing Plan</h1>
-  <div id="path" class="pathdata"></div>
-  <div id="map-container">
-    <div id="map" data-orig="<%= @orig %>" data-dest="<%= @dest %>" data-wp="<%= @wp %>" style="height:100%"></div>
-  </div>
-  <div id="my_textual_div"></div>
-
-
-  <div style="display: none">
-    <div id="routeDrag"></div>
-    <div id="exportGoogle"></div>
-    <div id="exportDataButton"></div>
-    <div id="exportData"></div>
-    <div id="exportLabelButton"></div>
-    <div id="exportLabelData"></div>
-    <div id="exportAddrButton"></div>
-    <div id="exportAddrData"></div>
-    <div id="exportOrderButton"></div>
-    <div id="exportOrderData"></div>
-    <div id="garmin"></div>
-    <div id="tomtom"></div>
-    <div id="durations" class="pathdata"></div>
-    <div id="durationsData"></div>
-    <div id="reverseRoute"></div>
-    <div id="exportData_hidden" style="visibility: hidden;"></div>
-    <div id="exportLabelData_hidden" style="visibility: hidden;"></div>
-    <div id="exportAddrData_hidden" style="visibility: hidden;"></div>
-    <div id="exportOrderData_hidden" style="visibility: hidden;"></div>
-    <div id="durationsData_hidden" style="visibility: hidden;"></div>
-  </div>
-  <div id="dialogProgress" title="Calculating route...">
-    <div id="progressBar"></div>
-  </div>
-  <% end %>
 </div>

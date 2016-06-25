@@ -1,7 +1,18 @@
 <%= link_to "< Back to Upcoming Deliveries", admin_delivery_tools_path, class: 'back-button' %>
 <button class="btn btn--primary btn--small pull-right print-button" id="print-button">Print</button>
 <div class="print-page">
-<% @orders.decorate.each_with_index do |order, index| %>
+<% @orders.decorate.each_with_index do |order, index|
+      mkt = order.market.decorate
+      if FeatureAccess.routing_plan?(market: current_market) && !order.delivery.delivery_schedule.buyer_pickup?
+          if index == 0
+            @orig = "#{current_market.addresses[0].geocode.latitude},#{current_market.addresses[0].geocode.longitude}"
+            #@dest = "#{order.delivery_lat_long}"
+            @dest = @orig
+            @wp = ""
+          end
+          @wp = @wp + "#{order.delivery_lat_long}|"
+      end
+  %>
   <% if index != 0 %>
     <div class="pdf-page-break"></div>
   <% end %>
@@ -39,10 +50,23 @@
       
       ><div class="column column--half vcard vcard--seller">
         <h2 class="heading heading-delivery-tool">From Market</h2>
-        <h3 class="fn org"><%= order.market.name %></h3>
-        <div class="street"><%= order.display_market_street %></div>
-        <div class="city-state-zip"><%= order.display_market_city_state_zip %></div>
-        <div class="phone"><%= number_to_phone order.display_market_phone %></div>
+        <% if mkt.has_remit_to_address? %>
+            <h3 class="fn org"><%= mkt.remit_to_name %></h3>
+            <div>
+              <div class="street"><%= (mkt.has_remit_to_address?) ? mkt.remit_to_street_address : nil %></div>
+              <div class="city-state-zip"><%= (mkt.has_remit_to_address?) ? mkt.remit_to_city_state_zip : nil %></div>
+              <div class="phone"><%= (mkt.remit_to_address) ? mkt.remit_to_phone_number : nil %></div>
+              <%= mkt.contact_email %>
+            </div>
+        <% elsif mkt.has_address? %>
+            <h3 class="fn org"><%= mkt.name %></h3>
+            <div>
+              <div class="street"><%= (mkt.has_address?) ? mkt.billing_street_address : nil %></div>
+              <div class="city-state-zip"><%= (mkt.has_address?) ? mkt.billing_city_state_zip : nil %></div>
+              <div class="phone"><%= (mkt.billing_address) ? mkt.billing_address_phone_number : nil %></div>
+              <%= mkt.contact_email %>
+            </div>
+        <% end %>
       </div>
     </div>
 
@@ -89,10 +113,25 @@
             <td class="notes"></td>
           </tr>
         <% end %>
-        <tr class="totals">
-          <th colspan="5" style="text-align: right">Total:</th>
-          <th class="total-price"><%= number_to_currency Financials::Orders::Calc.gross_item_total(items:order.items.undelivered) %></th>
-        </tr>
+        <% if order.delivery_fees > 0.00 %>
+            <tr class="totals">
+              <th colspan="6" style="text-align: right">Subtotal:</th>
+              <th class="total-price"><%= number_to_currency Financials::Orders::Calc.gross_item_total(items: order.items) %></th>
+            </tr>
+            <tr class="totals">
+              <th colspan="6" style="text-align:right">Delivery Fee:</th>
+              <th class="total-price"><%= number_to_currency order.delivery_fees %></th>
+            </tr>
+            <tr class="totals">
+              <th colspan="6" style="text-align:right">Total:</th>
+              <th class="total-price"><%= number_to_currency Financials::Orders::Calc.gross_item_total(items: order.items) + order.delivery_fees %>
+            </tr>
+        <% else %>
+            <tr class="totals">
+              <th colspan="6" style="text-align: right">Total:</th>
+              <th class="total-price"><%= number_to_currency Financials::Orders::Calc.gross_item_total(items: order.items) %></th>
+            </tr>
+        <% end %>
       </table>
     </div>
     
@@ -106,5 +145,41 @@
     <% end %>
     
   </div>
+<% end %>
+  <div class="pdf-page-break"></div>
+
+  <% if FeatureAccess.routing_plan?(market: current_market) && !@orig.nil? && !@dest.nil? %>
+    <h1>Routing Plan</h1>
+    <div id="path" class="pathdata"></div>
+    <div id="map-container">
+      <div id="map" data-orig="<%= @orig %>" data-dest="<%= @dest %>" data-wp="<%= @wp %>" style="height:100%"></div>
+    </div>
+    <div id="my_textual_div"></div>
+
+    <div style="display: none">
+      <div id="routeDrag"></div>
+      <div id="exportGoogle"></div>
+      <div id="exportDataButton"></div>
+      <div id="exportData"></div>
+      <div id="exportLabelButton"></div>
+      <div id="exportLabelData"></div>
+      <div id="exportAddrButton"></div>
+      <div id="exportAddrData"></div>
+      <div id="exportOrderButton"></div>
+      <div id="exportOrderData"></div>
+      <div id="garmin"></div>
+      <div id="tomtom"></div>
+      <div id="durations" class="pathdata"></div>
+      <div id="durationsData"></div>
+      <div id="reverseRoute"></div>
+      <div id="exportData_hidden" style="visibility: hidden;"></div>
+      <div id="exportLabelData_hidden" style="visibility: hidden;"></div>
+      <div id="exportAddrData_hidden" style="visibility: hidden;"></div>
+      <div id="exportOrderData_hidden" style="visibility: hidden;"></div>
+      <div id="durationsData_hidden" style="visibility: hidden;"></div>
+    </div>
+    <div id="dialogProgress" title="Calculating route...">
+      <div id="progressBar"></div>
+    </div>
 <% end %>
 </div>
