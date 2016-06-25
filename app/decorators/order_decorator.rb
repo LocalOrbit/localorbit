@@ -30,7 +30,7 @@ class OrderDecorator < Draper::Decorator
   end
 
   def delivery_lat_long
-    address = organization.locations[0]
+    address = organization.locations.default_shipping
     if !address.nil? && !address.geocode.nil?
       raw "#{address.geocode.latitude},#{address.geocode.longitude}"
     else
