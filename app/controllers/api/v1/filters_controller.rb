@@ -20,15 +20,16 @@ module Api
         if(params[:parent_id] && params[:parent_id] === "suppliers")
           filters = current_market
             .organizations
-            .where(can_sell: true, active: true)
+            .where(can_sell: true, active: true).order('name')
         elsif(params[:parent_id])
           filters = Category
             .where("id in (#{secondary_subquery.to_sql})")
             .where(parent_id: params[:parent_id])
+            .order('lft')
         else
-          filters = Category.where("id in (#{top_level_subquery.to_sql})")
+          filters = Category.where("id in (#{top_level_subquery.to_sql})").order('lft')
         end
-        render :json => {filters: filters.order(:lft).select(:name, :id)}
+        render :json => {filters: filters.select(:name, :id)}
       end
 
       private
