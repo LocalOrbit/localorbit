@@ -515,7 +515,7 @@ describe "Adding a product", chosen_js: true do
       expect(Product.last.organization).to eql(org2)
     end
 
-    describe "alerts user that product will not appear in the Shop" do
+    describe "alerts user that product will not appear in the Shop", :js do
       before do
         expect(page).to_not have_content(stub_warning_both)
         select org2.name, from: "Supplier Organization", visible: false
