@@ -28,7 +28,7 @@ module Api
         else
           filters = Category.where("id in (#{top_level_subquery.to_sql})")
         end
-        render :json => {filters: filters.order(:name).select(:name, :id)}
+        render :json => {filters: filters.order(:lft).select(:name, :id)}
       end
 
       private

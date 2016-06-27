@@ -15,7 +15,7 @@ module Admin
         base_scope = Discount.includes(:market).visible.where(market_id: visible_markets.map(&:id))
 
         # For use by the Markets filter pulldown:
-        @markets   = base_scope.map(&:market).uniq
+        @markets   = base_scope.map(&:market).sort_by(&:name).uniq
         @q         = base_scope.search(@query_params["q"])
         @discounts = @q.result.page(params[:page]).per(@query_params[:per_page])
       end
