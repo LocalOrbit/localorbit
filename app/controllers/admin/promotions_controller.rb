@@ -11,7 +11,7 @@ class Admin::PromotionsController < AdminController
     else
       base_scope = Promotion.promotions_for_user(current_user)
 
-      @markets = base_scope.map(&:market).uniq
+      @markets = base_scope.map(&:market).sort_by(&:name).uniq
 
       @q = base_scope.search(@query_params["q"])
       @promotions = @q.result.page(params[:page]).per(@query_params[:per_page])

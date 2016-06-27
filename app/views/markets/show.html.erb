@@ -40,7 +40,7 @@
         </div>
 
         <ul class="l-inline-list seller-list">
-        <% @market.organizations.visible.selling.each do |seller| %>
+        <% @market.organizations.visible.active.selling.each do |seller| %>
           <%= content_tag :li, link_to(seller.name, seller_path(seller)), class: "column--fourth" %>
         <% end %>
         </ul>
