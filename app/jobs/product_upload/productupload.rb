@@ -57,17 +57,15 @@ module ProductUpload
 			upload = Audit.find(upload_audit_id) # this is probably not actually what to do though
 			# check the audit for it being completed or something
 
-
-			# TODO raise error here, or no reason to for this?
-			raise StandardError.new("Your upload is not complete") unless upload.status == 'new' # is new a default thing
-			upload.status = 'processing'
-			upload.save!
+			raise StandardError.new("Your upload is not complete") unless upload.status == 'new' # is new a default thing or should this happen elsewhere with update_status
+			job.status = 'processing'
+			job.save!
 		end
 
 		def update_status(status)
-			upload = Audit.find(upload_audit_id)
-			upload.status = status
-			upload.save!
+			job = Audit.find(upload_audit_id)
+			job.status = status
+			job.save!
     end
 
 	end
