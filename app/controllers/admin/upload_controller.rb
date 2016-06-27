@@ -45,8 +45,11 @@ class Admin::UploadController < AdminController
   def upload
     if params.has_key?(:datafile)
       # pass the datafile to the method with the csv file
+
       jsn = ::Imports::SerializeProducts.get_json_data(params[:datafile],params[:curr_user]) # product stuff, row errors
       @num_products_loaded = 0
+      aud = Audit.create!(user_id:current_user.id,action:"Product upload") # the id of this audit is what should trigger the job
+      # TODO: the jsn business above it should also be handled by the worker in the delay
       unless jsn.include?("invalid")
         jsn[0]["products"].each do |p|
           ::Imports::ProductHelpers.create_product_from_hash(p,params[:curr_user])
@@ -57,7 +60,7 @@ class Admin::UploadController < AdminController
           end
         end
         @errors = jsn[1]
-        Audit.create!(user_id:current_user.id,action:"Product upload",audited_changes: "#{@num_products_loaded} products updated (or maintained)",associated_type:current_market.subdomain.to_s,comment:"#{User.find(current_user.id).email}")
+        aud.update_attributes(audited_changes: "#{@num_products_loaded} products updated (or maintained)",associated_type:current_market.subdomain.to_s,comment:"#{User.find(current_user.id).email}") 
       else
         @num_products_loaded = 0
         @errors = {"File"=>jsn}

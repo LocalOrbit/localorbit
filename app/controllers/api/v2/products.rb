@@ -51,11 +51,11 @@ module API
 					requires :name, :organization_name, :unit, :category, :unit_description, :short_description, :long_description, :price
 				end
 
-				# singular in post request
+				# singular
 				post '/add-product' do
 					product_name = permitted_params[:name]
 					possible_org = Organization.find_by_name(permitted_params[:organization_name])
-					supplier_id = possible_org.id # TODO what are we doing with organizations in add products, is it the same?
+					supplier_id = possible_org.id # TODO if we decide to do the same with orgs and add products, potential factor-out of process. for now, MVP or whatever.
 					unit_id = Unit.find_by_singular(permitted_params[:unit]).id
 					category_id = Category.find_by_name(permitted_params[:category]).id
 					product_code = ""
@@ -68,7 +68,7 @@ module API
 						product = Product.create!(
 							        name: product_name,
 							        organization_id: supplier_id,
-							        #TODO check: is market association being handled via organization? how should it be?
+							        #TODO check: market association is being handled via organization -- this system of market+org relationship, probably needs refactoring for R&P, X-selling
 							        unit_id: unit_id,
 							        category_id: category_id,
 							        code: product_code,
@@ -76,9 +76,9 @@ module API
 							        long_description: permitted_params[:long_description],
 							        unit_description: permitted_params[:unit_description]
 							      	)
-						## To create inventory and price(s). -- probably no inventory, yes 1 sale price, yes?
-						# product.lots.create!(quantity: 999_999)
-	     			product.prices.create!(sale_price: permitted_params[:price], min_quantity: 1) ## TODO: Should we add min quantity default or option in API, if so how?
+						## To create inventory and price(s). -- probably no inventory, yes 1 sale price. So, below.
+						# product.lots.create!(quantity: 999_999) # No inventory building, depends on lot systems, etc.
+	     			product.prices.create!(sale_price: permitted_params[:price], min_quantity: 1) ## TODO: Should we add min quantity default or option in API? Since right now this is just a background for the upload, probably not needed for v1.
 	     		else
 	     			product = Product.create!(
 							        name:product_name,
