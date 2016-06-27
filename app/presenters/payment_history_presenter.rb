@@ -101,7 +101,7 @@ class PaymentHistoryPresenter
         else
           [payment.payer.name, "#{payment.payer_type}#{payment.payer_id}"]
         end
-      end.uniq.compact
+      end.sort_by{|k|k[0]}.uniq.compact
     when :payee
       payments.map do |payment|
         if payment.payee.nil?
@@ -109,7 +109,7 @@ class PaymentHistoryPresenter
         else
           [payment.payee.name, "#{payment.payee_type}#{payment.payee_id}"]
         end
-      end.uniq.compact
+      end.sort_by{|k|k[0]}.uniq.compact
     end
   end
 end
