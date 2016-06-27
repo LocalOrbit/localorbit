@@ -227,7 +227,7 @@ describe "price estimator", js: true do
     form = Dom::NewPricingForm.first
     # DO NOT click btn add here -- there is a row already open
     within form.node do
-      find("select.price_market_id").find("option[value='#{market1.id}']").select_option
+      find("select.price_market_id", visible: false).find("option[value='#{market1.id}']", visible: false).select_option
       fill_in "price[sale_price]", with: "12.90"
       click_button "Add"
     end
@@ -238,15 +238,15 @@ describe "price estimator", js: true do
     price_row.click_edit
 
     within price_row.node do
-      find("select.price_market_id").find("option[value='#{market1.id}']").select_option
+      find("select.price_market_id", visible: false).find("option[value='#{market1.id}']", visible: false).select_option
       price_row.node.find("input.sale-price").set("16.80")
       expect(price_row.node.find("input.net-price").value).to eq("15.47")
 
-      find("select.price_market_id").find("option[value='#{market2.id}']").select_option
+      find("select.price_market_id", visible: false).find("option[value='#{market2.id}']", visible: false).select_option
       price_row.node.find("input.sale-price").set("16.80")
       expect(price_row.node.find("input.net-price").value).to eq("13.79")
 
-      find("select.price_market_id").select("All Markets")
+      find("select.price_market_id", visible: false).select("All Markets")
       price_row.node.find("input.sale-price").set("16.80")
       expect(price_row.node.find("input.net-price").value).to eq("13.79")
 

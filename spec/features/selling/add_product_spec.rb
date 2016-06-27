@@ -383,7 +383,7 @@ describe "Adding a product", chosen_js: true do
     it "is prevented from unchecking 'Use supplier info from my account' until organization is selected", js: true do
       expect(page).not_to have_field("seller_info")
 
-      select org2.name, from: "Supplier Organization"
+      select org2.name, from: "Supplier Organization", visible: false
 
       expect(page).to have_field("seller_info")
 
@@ -393,7 +393,7 @@ describe "Adding a product", chosen_js: true do
 
     context "Uncheck 'use supplier info'", js: true do
       before do
-        select org2.name, from: "Supplier Organization"
+        select org2.name, from: "Supplier Organization", visible: false
         uncheck "seller_info"
 
         # Wait for delivery schedule load to finish
@@ -416,7 +416,7 @@ describe "Adding a product", chosen_js: true do
         select org2.locations.first.name, from: "product_location_id"
         expect(page).not_to have_content("No Organization Selected")
         expect(Dom::Admin::ProductForm.first.selected_location).to eql(org2.locations.first.id.to_s)
-        select org.name, from: "Supplier Organization"
+        select org.name, from: "Supplier Organization", visible: false
 
         product_form = Dom::Admin::ProductForm.first
         expect(product_form.locations).to include(*org.locations.map(&:name))
@@ -429,7 +429,7 @@ describe "Adding a product", chosen_js: true do
       it "selecting the blank organization option disables supplier info" do
         expect(page).to have_field("seller_info")
 
-        select "Select an organization", from: "Supplier Organization"
+        select "Select an organization", from: "Supplier Organization", visible: false
 
         expect(page).not_to have_field("seller_info")
       end
@@ -437,7 +437,7 @@ describe "Adding a product", chosen_js: true do
 
     it "maintains delivery schedule changes on error", :js, :shaky do
       skip "shaky test"
-      select org2.name, from: "Supplier Organization"
+      select org2.name, from: "Supplier Organization", visible: false
       expect(page).to have_checked_field(tuesday_schedule_description, disabled: true)
 
       uncheck "Make product available on all market delivery dates"
@@ -460,7 +460,7 @@ describe "Adding a product", chosen_js: true do
     it "makes the user choose an organization to add the product to" do
       expect(page).to_not have_content(stub_warning_both)
 
-      select org2.name, from: "Supplier Organization"
+      select org2.name, from: "Supplier Organization", visible: false
       fill_in_required_fields
 
       click_button "Save and Continue"
@@ -479,7 +479,7 @@ describe "Adding a product", chosen_js: true do
     end
 
     it "does not save a product with invalid product info", js: true do
-      select org2.name, from: "Supplier Organization"
+      select org2.name, from: "Supplier Organization", visible: false
       uncheck 'seller_info'
 
       click_button "Save and Continue"
@@ -504,7 +504,7 @@ describe "Adding a product", chosen_js: true do
     end
 
     it "makes the user choose an organization to add the product for" do
-      select org2.name, from: "Supplier Organization"
+      select org2.name, from: "Supplier Organization", visible: false
 
       fill_in_required_fields(:with_chosen)
 
@@ -519,7 +519,7 @@ describe "Adding a product", chosen_js: true do
     describe "alerts user that product will not appear in the Shop" do
       before do
         expect(page).to_not have_content(stub_warning_both)
-        select org2.name, from: "Supplier Organization"
+        select org2.name, from: "Supplier Organization", visible: false
 
         # Wait for delivery schedule load to finish
         expect(page).to have_checked_field(tuesday_schedule_description, disabled: true)
