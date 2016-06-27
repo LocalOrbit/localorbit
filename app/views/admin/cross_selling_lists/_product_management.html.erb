@@ -67,16 +67,28 @@
             <th>Products</th>
             <th>&nbsp;</th></tr>
         </thead>
-        <tbody>
-          <% @products.each do |product| %>
-          <tr>
-            <td><%= "#{product.name} (#{product.id})" %></td>
-            <td><%= check_box_tag "cross_selling_list[product_ids][]", product.id, list.object.products.include?(product) %></td>
-          </tr>
-          <% end %>
+        <tbody id="cross-sell-products">
+          <%#= render @products %>
+          <%= render "admin/cross_selling_lists/product" %>
         </tbody>
+
+        <!-- tbody>
+          <%# @products.each do |product| %>
+          <tr>
+            <td><%#= "#{product.name} (#{product.id})" %></td>
+            <%# if @cross_selling_list.creator %>
+              <td><%#= check_box_tag "cross_selling_list[product_ids][]", product.id, list.object.products.include?(product) %></td>
+            <%# else %>
+              <td><%#= check_box_tag "cross_selling_list[product_ids][]", product.id, list.object.products.include?(product) %></td>
+            <%# end %>
+          </tr>
+          <%# end %>
+        </tbody -->
+
       </table>
-      <%= paginate @products %>
+      <div id="paginator">
+        <%= paginate @products, :remote => true %>
+      </div>
     </div>
     <%= list.submit "Update List" %>
   </div>

@@ -11,7 +11,7 @@ class Admin::CrossSellingListsController < AdminController
 
   def subscriptions
     # This processing path will be very similar to, but different from index
-    @cross_selling_lists = @entity.cross_selling_list_subscriptions
+    @cross_selling_subscriptions = @entity.cross_selling_list_subscriptions
   end
 
   def show
@@ -47,37 +47,40 @@ class Admin::CrossSellingListsController < AdminController
   def update
     @cross_selling_list = CrossSellingList.includes(:children).find(params[:id])
 
-    # This forces a product update when all products are removed via the UI
+    # The merge here forces a product update when all products are removed via the UI
     params_with_defaults  = {'product_ids' => []}.merge(cross_selling_list_params || {})
+
+    # The merge here does the same but with the extracted product ids only
     submitted_products = {'product_ids' => []}.merge('product_ids' => cross_selling_list_params[:product_ids] || {})
-    # binding.pry
 
     if @cross_selling_list.update_attributes(params_with_defaults)
 
-      # If the edits are saved successfully then cascade through the related cross selling lists and products...
-           all_subscribers = @cross_selling_list.children.map { |l| {parent_id: l.parent_id, entity_id: l.entity_id} }
-      existing_subscribers = @cross_selling_list.active_children.map { |l| {parent_id: l.parent_id, entity_id: l.entity_id} }
-      selected_subscribers = cross_selling_list_params[:children_ids].select(&:present?).map { |submitted_id| {parent_id: @cross_selling_list.id, entity_id: submitted_id.to_i} }
-       overlap_subscribers = existing_subscribers & selected_subscribers
+      if @cross_selling_list.creator
+        # If the edits are saved successfully then cascade through the related cross selling lists and products...
+             all_subscribers = @cross_selling_list.children.map { |l| {parent_id: l.parent_id, entity_id: l.entity_id} }
+        existing_subscribers = @cross_selling_list.active_children.map { |l| {parent_id: l.parent_id, entity_id: l.entity_id} }
+        selected_subscribers = cross_selling_list_params[:children_ids].select(&:present?).map { |submitted_id| {parent_id: @cross_selling_list.id, entity_id: submitted_id.to_i} }
+         overlap_subscribers = existing_subscribers & selected_subscribers
 
-      # Delete those that exist but aren't selected
-      (existing_subscribers - selected_subscribers).each do |list_ids|
-        delete_list(@cross_selling_list, list_ids, submitted_products)
-      end
+        # Delete those that exist but aren't selected
+        (existing_subscribers - selected_subscribers).each do |list_ids|
+          delete_list(@cross_selling_list, list_ids, submitted_products)
+        end
 
-      # Add those that are selected_subscribers but don't exist
-      (selected_subscribers - existing_subscribers).each do |list_ids|
-        create_list(@cross_selling_list, list_ids, submitted_products)
-      end
+        # Add those that are selected_subscribers but don't exist
+        (selected_subscribers - existing_subscribers).each do |list_ids|
+          create_list(@cross_selling_list, list_ids, submitted_products)
+        end
 
-      # Update those that appear in both
-      overlap_subscribers.each do |list_ids|
-        update_list(@cross_selling_list, list_ids, submitted_products)
-      end
+        # Update those that appear in both
+        overlap_subscribers.each do |list_ids|
+          update_list(@cross_selling_list, list_ids, submitted_products)
+        end
 
-      # Also update those that were once existing - gotta keep 'em in line
-      (all_subscribers - existing_subscribers).each do |list_ids|
-        update_list(@cross_selling_list, list_ids, submitted_products)
+        # Also update those that were once existing - gotta keep 'em in line
+        (all_subscribers - existing_subscribers).each do |list_ids|
+          update_list(@cross_selling_list, list_ids, submitted_products)
+        end
       end
 
       redirect_to [:admin, @entity, @cross_selling_list]

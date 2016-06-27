@@ -61,6 +61,9 @@ Rails.application.routes.draw do
           get 'subscriptions' 
         end 
       end
+      # resources :cross_selling_lists do
+      #   resources :subscriptions
+      # end
       resource  :fees, only: [:show, :update]
       resources :deposit_accounts, only: [:index, :new, :create, :destroy]
       resource  :stripe, controller: :market_stripe, only: [:show]
