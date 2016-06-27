@@ -515,7 +515,7 @@ describe "Adding a product", chosen_js: true do
       expect(Product.last.organization).to eql(org2)
     end
 
-    describe "alerts user that product will not appear in the Shop", :js do
+    describe "alerts user that product will not appear in the Shop" do
       before do
         expect(page).to_not have_content(stub_warning_both)
         select org2.name, from: "Supplier Organization", visible: false
@@ -540,7 +540,7 @@ describe "Adding a product", chosen_js: true do
         expect(page).to have_content(stub_warning_inventory)
       end
 
-      it "until prices are added" do
+      it "until prices are added", :js do
         expect(page).to have_content(stub_warning_both)
 
         find(:css, ".adv_inventory").click
