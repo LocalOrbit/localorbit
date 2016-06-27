@@ -27,7 +27,8 @@ class MarketsController < ApplicationController
     @market ||= Market.new do |m|
       m.pending = true
       m.self_directed_creation = true # This flag says "Yes, I have rolled this myself"
-      m.organization.plan_id = plan.id
+      # m.organization.plan_id = plan.id
+      m.plan_id = plan.id
     end
 
     render layout: "website-bridge"
