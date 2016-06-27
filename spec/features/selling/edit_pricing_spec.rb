@@ -246,7 +246,7 @@ describe "price estimator", js: true do
       price_row.node.find("input.sale-price").set("16.80")
       expect(price_row.node.find("input.net-price").value).to eq("13.79")
 
-      find("select.price_market_id", visible: false).select("All Markets")
+      find("select.price_market_id", visible: false).select("All Markets", visible: false)
       price_row.node.find("input.sale-price").set("16.80")
       expect(price_row.node.find("input.net-price").value).to eq("13.79")
 
