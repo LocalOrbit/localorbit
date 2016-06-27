@@ -57,7 +57,7 @@ $ ->
     if !$element.hasClass('is-hidden')
       load_map($element)
     clone_popup($element, e.target)
-
+    $($element).find('input[type=text],input[type=number]').first().focus().select()
 
   $(document.body).on 'click', '.modal-toggle', ->
     if this.tagName == "A"

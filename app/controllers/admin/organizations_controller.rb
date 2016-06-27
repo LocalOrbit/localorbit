@@ -21,7 +21,7 @@ module Admin
     end
 
     def new
-      @markets      = current_user.markets
+      @markets      = current_user.markets.order('name')
       first_market  = @markets.first
 
       @organization = Organization.new(

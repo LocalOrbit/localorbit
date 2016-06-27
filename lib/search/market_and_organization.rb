@@ -14,9 +14,9 @@ module Search
 
     def buyer_organizations
       if @filtered_market.present?
-        result = @user.managed_organizations_within_market_including_crossellers(@filtered_market)
+        result = @user.managed_organizations_within_market_including_crossellers(@filtered_market).sort_by(&:name)
       else
-        result = @user.managed_organizations_including_cross_sellers
+        result = @user.managed_organizations_including_cross_sellers.sort_by(&:name)
       end
       if !result.is_a?(Array)
         result.order(:name)
@@ -28,9 +28,9 @@ module Search
       if @filtered_organization.present?
         buyer_organizations.where(@filtered_organization)
       elsif buyer_organizations.nil?
-        buyer_organizations.where(can_sell: true)
+        buyer_organizations.where(can_sell: true).sort_by(&:name)
       else
-        @user.managed_organizations.where(id: buyer_organizations.map(&:id), can_sell:true)
+        @user.managed_organizations.where(id: buyer_organizations.map(&:id), can_sell:true).sort_by(&:name)
       end
     end
   end
