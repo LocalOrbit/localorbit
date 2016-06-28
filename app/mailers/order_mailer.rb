@@ -23,10 +23,11 @@ class OrderMailer < BaseMailer
     attachments["packing_list.csv"] = {mime_type: "application/csv", content: csv}
 
     to_list = seller.users.map { |u| u.enabled_for_organization?(seller) && !u.pretty_email.nil? ? u.pretty_email : nil}
-    
-    if !to_list.blank?
+    compact_list = to_list.compact
+
+    if !compact_list.blank?
       mail(
-        to: to_list,
+        to: compact_list,
         subject: "New order on #{@market.name}"
       )
     end

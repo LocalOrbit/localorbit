@@ -65,6 +65,7 @@ Rails.application.routes.draw do
       #   resources :subscriptions
       # end
       resource  :fees, only: [:show, :update]
+      resources :category_fees, only: [:index, :new, :create, :destroy]
       resources :deposit_accounts, only: [:index, :new, :create, :destroy]
       resource  :stripe, controller: :market_stripe, only: [:show]
       get :payment_options

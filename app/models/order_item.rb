@@ -41,7 +41,7 @@ class OrderItem < ActiveRecord::Base
     joins(order: :delivery).where(orders: {delivery_id: delivery.id})
   end
 
-  def self.create_with_order_and_item_and_deliver_on_date(order, item, deliver_on_date)
+  def self.create_with_order_and_item_and_deliver_on_date(order, item, deliver_on_date, category_fee_pct)
     new(
       deliver_on_date: deliver_on_date,
       order: order,
@@ -51,6 +51,7 @@ class OrderItem < ActiveRecord::Base
       unit: item.unit,
       unit_price: item.unit_price.sale_price,
       product_fee_pct: item.unit_price.product_fee_pct,
+      category_fee_pct: category_fee_pct,
       seller_name: item.product.organization.name,
       delivery_status: "pending"
     )

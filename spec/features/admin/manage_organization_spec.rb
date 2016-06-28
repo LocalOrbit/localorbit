@@ -18,12 +18,12 @@ describe "admin manange organization", :vcr do
 
     expect(page).to have_content("Select a market to see payment options")
 
-    select "Market 1", from: "Market"
+    select "Market 1", from: "Market", visible: false
 
     expect(find_field("Allow purchase orders")).to be_checked
     expect(find_field("Allow credit cards")).to be_checked
 
-    select "Market 2", from: "Market"
+    select "Market 2", from: "Market", visible: false
 
     check "Can sell products"
     expect(page).to have_content("Who")

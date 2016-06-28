@@ -1,0 +1,3 @@
+class MarketCategoryFeesPolicy < ApplicationPolicy
+
+end

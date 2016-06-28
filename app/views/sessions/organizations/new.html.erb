@@ -8,7 +8,7 @@
 
     <div class="field">
       <%= label_tag :org_id, "Organization" %><br>
-      <%= select_tag(:org_id, options_from_collection_for_select(@organizations, 'id', 'name'), class: "column column--full") %>
+      <%= select_tag(:org_id, options_from_collection_for_select(@organizations, 'id', 'name'), class: "column column--full chosen") %>
     </div>
     <div class="form-actions">
       <%= submit_tag "Select Organization", class: "mobile-block" %>

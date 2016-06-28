@@ -218,6 +218,13 @@ FactoryGirl.define do
     trait :with_logo do
       logo File.open(Rails.root.join("app/assets/images/logo-farm-to-fork.png"))
     end
+
+    trait :with_category_fee do
+      after(:create) do |m|
+        create(:category_fee, market: m)
+      end
+
+    end
   end
 
   factory :cross_selling_list do
@@ -247,6 +254,12 @@ FactoryGirl.define do
   factory :market_organization do
     market
     organization
+  end
+
+  factory :category_fee do
+    market
+    category { Category.find_by(name: "Apples") }
+    fee_pct 12
   end
 
   factory :newsletter do
@@ -352,7 +365,7 @@ FactoryGirl.define do
     end
 
     trait :market do
-      plan                { create(:plan) }
+      plan                { create(:plan, :grow) }
       org_type 'M'
     end
 
@@ -512,8 +525,8 @@ FactoryGirl.define do
 
   factory :product do
     sequence(:name) {|n| "Product #{n}" }
-    category { Category.find_by(name: "Empire Apples") }
-    short_description "Empire state of mind"
+    category { Category.find_by(name: "Apples") }
+    short_description "Apples"
 
     # We need to set this in the factory because FactoryGirl doesn't trigger before_save
     top_level_category { category.top_level_category }
@@ -567,19 +580,19 @@ FactoryGirl.define do
     trait :admin do
       org_type 'A'
       name 'Admin'
-      activities '{product:index,organization_cross_selling:index,user:index,role:index,market_cross_selling:index,order:index,metric:index,unit:index,event:index,taxonomy:index,internal_financial:index,financial:index,market_profile:index,market_manager:index,delivery:index,order_item:index,market_address:index,market_deliveries:index,market_payment_methods:index,market_deposit_accounts:index,market_fees:index,template:index,market_custom_branding:index,market:index,send_invoices:index,payment_history:index,organization:index,delivery_schedule:index,enter_receipts:index,record_payments:index,product:index,fresh_sheet:index,newsletter:index,promotion:index,discount_code:index,sent_email:index,dashboard:index,email_test:index,report:index,referral:index,}'
+      activities '{market_fees:index, market_category_fees:index, organization_cross_selling:index,user:index,role:index,market_cross_selling:index,order:index,metric:index,unit:index,event:index,taxonomy:index,internal_financial:index,financial:index,market_profile:index,market_manager:index,delivery:index,order_item:index,market_address:index,market_deliveries:index,market_payment_methods:index,market_deposit_accounts:index,market_fees:index,template:index,market_custom_branding:index,market:index,send_invoices:index,payment_history:index,organization:index,delivery_schedule:index,enter_receipts:index,record_payments:index,product:index,fresh_sheet:index,newsletter:index,promotion:index,discount_code:index,sent_email:index,dashboard:index,email_test:index,report:index,referral:index,all_supplier:index}'
     end
 
     trait :market_manager do
       org_type 'M'
       name 'Market Manager'
-      activities '{market_cross_selling:index,order:index,financial:index,market_profile:index,market_manager:index,delivery:index,order_item:index,market_address:index,market_deliveries:index,market_payment_methods:index,market_deposit_accounts:index,template:index,market_custom_branding:index,market:index,send_invoices:index,payment_history:index,organization:index,delivery_schedule:index,financial_overview:index,enter_receipts:index,record_payments:index,product:index,fresh_sheet:index,newsletter:index,promotion:index,all_supplier:index,discount_code:index,dashboard:index,report:index}'
+      activities '{market_fees:index,market_category_fees:index,market_cross_selling:index,order:index,financial:index,market_profile:index,market_manager:index,delivery:index,order_item:index,market_address:index,market_deliveries:index,market_payment_methods:index,market_deposit_accounts:index,template:index,market_custom_branding:index,market:index,send_invoices:index,payment_history:index,organization:index,delivery_schedule:index,financial_overview:index,enter_receipts:index,record_payments:index,product:index,fresh_sheet:index,newsletter:index,promotion:index,all_supplier:index,discount_code:index,dashboard:index,report:index}'
     end
 
     trait :buyer do
       org_type 'B'
       name 'Buyer'
-      activities '{payment_history:index, purchase_history:index,purchase_history:index,financial:index,market:index,financial_overview:index,all_supplier:index,dashboard:index,review_invoices:index,report:index}'
+      activities '{payment_history:index,purchase_history:index,purchase_history:index,financial:index,market:index,financial_overview:index,all_supplier:index,dashboard:index,review_invoices:index,report:index}'
     end
 
     trait :supplier do
@@ -597,7 +610,7 @@ FactoryGirl.define do
     trait :grow_plan do
       org_type 'M'
       name 'Market Manager'
-      activities '{market_cross_selling:index,order:index,financial:index,market_profile:index,market_manager:index,delivery:index,order_item:index,market_address:index,market_deliveries:index,market_payment_methods:index,market_deposit_accounts:index,template:index,market_custom_branding:index,market:index,send_invoices:index,payment_history:index,organization:index,delivery_schedule:index,financial_overview:index,enter_receipts:index,record_payments:index,product:index,fresh_sheet:index,newsletter:index,promotion:index,all_supplier:index,discount_code:index,dashboard:index,report:index}'
+      activities '{advanced_pricing:index,advanced_inventory:index,market_fees:index,market_category_fees:index,market_cross_selling:index,order:index,financial:index,market_profile:index,market_manager:index,delivery:index,order_item:index,market_address:index,market_deliveries:index,market_payment_methods:index,market_deposit_accounts:index,template:index,market_custom_branding:index,market:index,send_invoices:index,payment_history:index,organization:index,delivery_schedule:index,financial_overview:index,enter_receipts:index,record_payments:index,product:index,fresh_sheet:index,newsletter:index,promotion:index,all_supplier:index,discount_code:index,dashboard:index,report:index}'
     end
   end
 
