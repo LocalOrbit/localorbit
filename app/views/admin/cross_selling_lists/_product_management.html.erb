@@ -1,4 +1,5 @@
 <div class="is-hidden modal popup" id="product_management">
+<!-- <div id="product_management" style="height:400px; overflow:scroll"> -->
   <div class="popup-header">
     Add Products to Cross Selling List <button class="close"><i class="font-icon icon-close"> Close</i></button>
     <p>Select products or groups of products to allow other Markets to sell on your behalf.</p>
@@ -6,7 +7,7 @@
 
   <div class="popup-body">
     <div id="tabs" class="tabs-wrapper">
-    <!-- - ->
+    <!-- -->
       <ul id="product-add-tab-list" class="tabs wrapping-tabs">
         <%# KXM Below is a reference the new policy implementation... it may be a useful tool in hiding 'Suppliers' when x-selling functionality is exposed to supplier orgs  %>
         <%# if policy(:market_profile).index? %><%#= content_tag(:li, link_to_or_span("Market Info",   [:admin, market]), class: 'tab') %><%# end %>
@@ -17,77 +18,70 @@
     <!-- -->
     </div>
 
-    <!-- - ->
-    <div id="product-add-suppliers">
-      <table>
-        <thead>
-          <tr>
-            <th>Supplier</th>
-            <th>Products</th>
-            <th>&nbsp;</th>
-          </tr>
-        </thead>
-        <tbody>
-        <% @suppliers.each do |supplier| %>
-          <tr>
-            <td><%= supplier.name %></td>
-            <td><%= supplier.products.count %></td>
-            <td><%= check_box_tag("suppliers[]", value="#{supplier.id}", checked=false) %></td>
-          </tr>
-        <% end %>
-        </tbody>
-      </table>
-      <%#= paginate @suppliers %>
-    </div>
-    <!-- -->
-
-    <!-- - ->
-    <div id="product-add-categories">
-      <table>
-        <thead>
-          <tr><th>Category</th><th>Products</th><th>&nbsp;</th></tr>
-        </thead>
-        <tbody>
-        <% @entity.categories.each do |category| %>
-          <tr>
-            <td><%= category.name %></td>
-            <td><%= category.products.count %></td>
-            <td><%= check_box_tag("categories[]", value="#{category.id}", checked=false) %></td>
-          </tr>
-        <% end %>
-        </tbody>
-      </table>
-    </div>
-    <!-- -->
-
-    <div id="product-add-products">
-      <table>
-        <thead>
-          <tr>
-            <th>Products</th>
-            <th>&nbsp;</th></tr>
-        </thead>
-        <tbody id="cross-sell-products">
-          <%#= render @products %>
-          <%= render "admin/cross_selling_lists/product" %>
-        </tbody>
-
-        <!-- tbody>
-          <%# @products.each do |product| %>
-          <tr>
-            <td><%#= "#{product.name} (#{product.id})" %></td>
-            <%# if @cross_selling_list.creator %>
-              <td><%#= check_box_tag "cross_selling_list[product_ids][]", product.id, list.object.products.include?(product) %></td>
-            <%# else %>
-              <td><%#= check_box_tag "cross_selling_list[product_ids][]", product.id, list.object.products.include?(product) %></td>
-            <%# end %>
-          </tr>
+    <div id="popup-meat" style="height:600px; overflow:scroll">
+      <!-- -->
+      <div id="product-add-suppliers">
+        <table>
+          <thead>
+            <tr>
+              <th>Supplier</th>
+              <th>Products</th>
+              <th>&nbsp;</th>
+            </tr>
+          </thead>
+          <tbody>
+          <%# @suppliers.each do |supplier| %>
+            <tr>
+              <td><%#= supplier.name %></td>
+              <td><%#= supplier.products.count %></td>
+              <td><%#= check_box_tag("suppliers[]", value="#{supplier.id}", checked=false) %></td>
+            </tr>
           <%# end %>
-        </tbody -->
+          </tbody>
+        </table>
+        <%#= paginate @suppliers %>
+      </div>
+      <!-- -->
 
-      </table>
-      <div id="paginator">
-        <%= paginate @products, :remote => true %>
+      <!-- -->
+      <div id="product-add-categories">
+        <table>
+          <thead>
+            <tr><th>Category</th><th>Products</th><th>&nbsp;</th></tr>
+          </thead>
+          <tbody>
+          <%# @entity.categories.each do |category| %>
+            <tr>
+              <td><%#= category.name %></td>
+              <td><%#= category.products.count %></td>
+              <td><%#= check_box_tag("categories[]", value="#{category.id}", checked=false) %></td>
+            </tr>
+          <%# end %>
+          </tbody>
+        </table>
+      </div>
+      <!-- -->
+
+      <div id="product-add-products">
+        <table>
+          <thead>
+            <tr>
+              <th>Products</th>
+              <th>&nbsp;</th></tr>
+          </thead>
+          <tbody>
+            <% @products.each do |product| %>
+            <tr>
+              <td><%= "#{product.name} (#{product.id})" %></td>
+              <% if @cross_selling_list.creator %>
+                <td><%= check_box_tag "cross_selling_list[product_ids][]", product.id, list.object.products.include?(product) %></td>
+              <% else %>
+                <td><%= check_box_tag "cross_selling_list[product_ids][]", product.id, list.object.products.include?(product) %></td>
+              <% end %>
+            </tr>
+            <% end %>
+          </tbody>
+        </table>
       </div>
     </div>
     <%= list.submit "Update List" %>
