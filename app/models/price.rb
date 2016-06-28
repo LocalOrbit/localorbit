@@ -29,13 +29,15 @@ class Price < ActiveRecord::Base
   validates :min_quantity, :sale_price, presence: true, numericality: {greater_than: 0, less_than: 1_000_000, allow_blank: true}
   validates :min_quantity, uniqueness: {scope: [:product_id, :market_id, :organization_id, :deleted_at]}
 
-  def net_price
-    ((sale_price || 0) * net_percent).round(2)
+  def net_price(market=nil)
+    ((sale_price || 0) * net_percent(market)).round(2)
   end
 
-  def net_percent
+  def net_percent(market=nil)
     if product_fee_pct > 0
       1 - (product_fee_pct/100 + ::Financials::Pricing.seller_cc_rate(product.organization.all_markets.first))
+    elsif market && product.category.level_fee(market) > 0
+      1 - (product.category.level_fee(market)/100 + ::Financials::Pricing.seller_cc_rate(product.organization.all_markets.first))
     elsif market
       market.seller_net_percent
     else

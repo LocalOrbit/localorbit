@@ -28,8 +28,8 @@
     <input type="checkbox" class="lock-field" name="price[lock]"/>
     <span></span>
   </label>
-  <%= f.number_field :net_price,    min: 0, step: 0.01, size: 4, class: 'net-price',
-                     data: {"net-percents-by-market-id" => json_escape(@net_percents_by_market_id.to_json), "cc-rate" => @seller_cc_rate} %>
+  <%= f.number_field :net_price, min: 0, step: 0.01, size: 4, class: 'net-price',
+                     data: {"category-fee" => category_fee, "net-percents-by-market-id" => json_escape(@net_percents_by_market_id.to_json), "cc-rate" => @seller_cc_rate} %>
 </td>
 <% if FeatureAccess.product_level_fee?(market: current_market) && (current_user.admin? || current_user.market_manager?) %>
 <td>
