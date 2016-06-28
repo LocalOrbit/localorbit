@@ -118,9 +118,9 @@
                 <% if FeatureAccess.product_level_fee?(market: current_market) && (current_user.admin? || current_user.market_manager?) %>
                 <td class="fee">
                   <div class="edit-trigger view-cell">
-                    <%= if category_fee > 0
+                    <%= if category_fee > 0 && price.product_fee_pct == 0
                          "Use Category Fee"
-                       elsif !price.product_fee_pct.nil?
+                       elsif price.product_fee_pct > 0
                          number_to_percentage(price.product_fee_pct)
                        else
                          "Use Mkt Fee"
@@ -131,22 +131,18 @@
                     <div style="float: left">
                     <% if category_fee == 0 %>
                       <div style="float: left">
-                        <label style="font-size: 9px">Mkt</label> <input style="float: left" type="radio" value="0" name="price[<%=price.id%>][fee]" class="mkt-fee" <%= price.product_fee_pct.nil? || price.product_fee_pct == 0 ? "checked=checked" : "" %> />
+                        <label style="font-size: 9px">Mkt</label> <input style="float: left" type="radio" value="0" name="price[<%=price.id%>][fee]" class="mkt-fee" <%= price.product_fee_pct.nil? || price.product_fee_pct == 0 ? "checked" : "" %> />
                       </div>
                       <div style="clear: left"></div>
                     <% else %>
                       <div style="float: left">
-                        <label style="font-size: 9px">Mkt</label> <input style="float: left" type="radio" name="price[<%=price.id%>][fee]" class="mkt-fee" />
-                      </div>
-                      <div style="clear: left"></div>
-                      <div style="float: left">
-                        <label style="font-size: 9px">Category</label> <input style="float: left" type="radio" value="1" name="price[<%=price.id%>][fee]" class="category-fee" <%= category_fee > 0 ? "checked=checked" : "" %> />
+                        <label style="font-size: 9px">Category</label> <input style="float: left" type="radio" value="1" name="price[<%=price.id%>][fee]" class="category-fee" <%= category_fee > 0 ? "checked" : "" %> />
                       </div>
                       <div style="clear: left"></div>
                     <% end %>
                       <div style="clear: left"></div>
                       <div style="float: left">
-                        <label style="font-size: 9px">Product</label> <input style="float: left" type="radio" value="2" name="price[<%=price.id%>][fee]" class="product-fee" <%= price.product_fee_pct > 0 ? "checked=checked" : "" %> />
+                        <label style="font-size: 9px">Product</label> <input style="float: left" type="radio" value="2" name="price[<%=price.id%>][fee]" class="product-fee" <%= price.product_fee_pct > 0 ? "checked" : "" %> />
                       </div>
                     </div>
                     <div style="float: left">
