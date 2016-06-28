@@ -114,8 +114,8 @@
             <td class="net-sale"><%= content_tag "span", item.net_sale, class: "total-price" %></td>
           <% end %>
 
-          <% if field == :product_fee_pct %>
-              <td class="fee"><%= content_tag "span", item.product_fee_pct, class: "fee" %></td>
+          <% if field == :fee_pct %>
+            <td class="fee"><%= content_tag "span", item.fee_pct, class: "fee" %></td>
           <% end %>
 
           <% if field == :profit %>

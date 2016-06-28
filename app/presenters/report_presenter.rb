@@ -18,7 +18,7 @@ class ReportPresenter
     unit:                   {sort: :unit_name,               display_name: "Unit"},
     discount:               {sort: :discount,                display_name: "Actual Discount"},
     row_total:              {sort: nil,                      display_name: "Total"},
-    product_fee_pct:        {sort: nil,                      display_name: "Fee"},
+    fee_pct:                {sort: nil,                      display_name: "Fee"},
     profit:                 {sort: nil,                      display_name: "Profit"},
     net_sale:               {sort: nil,                      display_name: "Net Sale"},
     payment_method:         {sort: :order_payment_method,    display_name: "Payment Method"},
@@ -95,7 +95,7 @@ class ReportPresenter
       filters: [:placed_at, :order_number, :market_name, :category_name, :subcategory_name, :product_name],
       fields: [
         :placed_at, :category_name, :subcategory_name, :product_name, :product_code, :seller_name, :quantity, :unit_price, :unit, :discount,
-        :row_total, :net_sale, :product_fee_pct, :profit, :delivery_status, :buyer_payment_status, :seller_payment_status
+        :row_total, :net_sale, :fee_pct, :profit, :delivery_status, :buyer_payment_status, :seller_payment_status
       ],
       seller_only: true
     },

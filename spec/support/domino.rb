@@ -45,7 +45,7 @@ module Dom
     selector "select"
 
     def has_option?(text)
-      all("option").map(&:text).include?(text)
+      all("option", visible: false).map(&:text).include?(text)
     end
   end
 
