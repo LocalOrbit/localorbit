@@ -15,6 +15,7 @@
 //= require jquery
 //= require jquery_ujs
 //= require jquery-ui
+//= require jquery-readyselector
 //= require chosen-jquery
 //= require typeahead-0.11.1
 //= require q
