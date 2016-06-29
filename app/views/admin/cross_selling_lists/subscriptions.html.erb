@@ -1,21 +1,16 @@
 <%= render partial: "admin/markets/header", locals: { market: @entity } %>
 
-<%#= render "shared/errors", resource: @entity %>
-
 <div class="row row--partial">
   <div class="column column--three-fourths">
-      <%= render "header" %>
+    <%= render "header" %>
+
     <% if @cross_selling_subscriptions.empty? %>
-    <div class='action_box'>
-      <p class="messaging"><span class="message">No one has shared a cross selling list with you yet...</span></p>
-
-        <%#= form_tag [:new, :admin, @entity, :cross_selling_list], method: :get do submit_tag "Add Cross Sell List", style: "float:right; margin:20px" end %>
-
+      <div class='action_box'>
+        <p class="messaging"><span class="message">No one has shared a cross selling list with you yet...</span></p>
       </div>
     <% else %>
       <div style="clear:both; padding-top:1em;">
         <div style="float:left; width:50%;"><input type="text" name="search">&nbsp;<button>Search</button></div>
-        <%#= form_tag [:new, :admin, @entity, :cross_selling_list], method: :get do submit_tag "Add Cross Sell List", style: "float:right" end %>
       </div>
       <hr style="clear:both;" />
     <% end %>
@@ -27,18 +22,16 @@
             <th>Name</th>
             <th>Publisher</th>
             <th>Status</th>
-            <!-- <th>Actions</th> -->
           </tr>
         </thead>
         <tbody>
-        <% @cross_selling_subscriptions.each do |list| %>
+          <% @cross_selling_subscriptions.each do |list| %>
           <tr>
             <td class="cross-sell-list-name"><%= link_to list.name, [:admin, @entity, list] %></td>
             <td class="cross-sell-list-subscribers"><%= list.parent.entity.name %></td>
             <td class="cross-sell-list-status"><%= list.status %></td>
-            <!-- <td>Delete, Publish, others?</td> -->
           </tr>
-        <% end %>
+          <% end %>
         </tbody>
       </table>
     </div>

@@ -11,7 +11,7 @@
         <li class="tab"><a href="#product-add-products">Products</a></li>
       </ul>
 
-    <div id="product-add-suppliers" style="height:600px; overflow:scroll">
+    <div id="product-add-suppliers" class="bound-list">
       <table>
         <thead>
           <tr>
@@ -32,7 +32,7 @@
       </table>
     </div>
 
-    <div id="product-add-categories" style="height:600px; overflow:scroll">
+    <div id="product-add-categories" class="bound-list">
       <table>
         <thead>
           <tr><th>Category</th><th>Products</th><th>&nbsp;</th></tr>
@@ -49,22 +49,19 @@
       </table>
     </div>
 
-    <div id="product-add-products" style="height:600px; overflow:scroll">
+    <div id="product-add-products" class="bound-list">
       <table>
         <thead>
           <tr>
             <th>Products</th>
-            <th>&nbsp;</th></tr>
+            <th>&nbsp;</th>
+          </tr>
         </thead>
         <tbody>
           <% @products.each do |product| %>
           <tr>
             <td><%= "#{product.name} (#{product.id})" %></td>
-            <% if @cross_selling_list.creator %>
-              <td><%= check_box_tag "cross_selling_list[product_ids][]", product.id, list.object.products.include?(product) %></td>
-            <% else %>
-              <td><%= check_box_tag "cross_selling_list[product_ids][]", product.id, list.object.products.include?(product) %></td>
-            <% end %>
+            <td><%= check_box_tag "cross_selling_list[product_ids][]", product.id, list.object.products.include?(product) %></td>
           </tr>
           <% end %>
         </tbody>

@@ -16,11 +16,12 @@ class Admin::CrossSellingListsController < AdminController
 
   def show
     @cross_selling_list = CrossSellingList.includes(:active_children, :products).find(params[:id])
+    # KXM Pagination is a bigger problem than it's really worth, but here is the code that enables it.  Delete this crap once the scales fall from their eyes
     # @suppliers = @entity.suppliers.order(:name).page(params[:page]).per(3)
     # @products = @entity.supplier_products.order(:name).page(params[:page]).per(12)
+
     @suppliers = @entity.suppliers.order(:name)
     @products = @entity.supplier_products.order(:name)
-    # binding.pry
   end
 
   def new

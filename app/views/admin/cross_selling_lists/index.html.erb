@@ -13,7 +13,7 @@
         Cross Selling allows you to publish and subscribe to lists of products to be sold on other markets
       </p>
 
-      <%= form_tag [:admin, @entity, :toggle_self_enabled_cross_sell], method: :patch do submit_tag "Turn on Cross Selling", style: "float:right; margin:20px" end %>
+      <%= form_tag [:admin, @entity, :toggle_self_enabled_cross_sell], method: :patch do submit_tag "Turn on Cross Selling", class: end %>
     </div>
 
 
@@ -27,13 +27,13 @@
           Create a list of products to enable other markets to sell products from your market on your behalf
         </p>
 
-        <%= form_tag [:new, :admin, @entity, :cross_selling_list], method: :get do submit_tag "Add Cross Sell List", style: "float:right; margin:20px" end %>
+        <%= form_tag [:new, :admin, @entity, :cross_selling_list], method: :get do submit_tag "Add Cross Sell List", class: "pull-right" end %>
 
       </div>
     <% else %>
       <div style="clear:both; padding-top:1em;">
         <div style="float:left; width:50%;"><input type="text" name="search">&nbsp;<button>Search</button></div>
-        <%= form_tag [:new, :admin, @entity, :cross_selling_list], method: :get do submit_tag "Add Cross Sell List", style: "float:right" end %>
+        <%= form_tag [:new, :admin, @entity, :cross_selling_list], method: :get do submit_tag "Add Cross Sell List", class: "pull-right" end %>
       </div>
       <hr style="clear:both;" />
     <% end %>
