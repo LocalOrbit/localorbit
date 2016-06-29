@@ -48,6 +48,7 @@ end
         <% if policy(:event).index? %><li><%= link_to raw('<i class="font-icon" data-icon="&#xe025;"></i> User Event Log'), admin_activities_path %></li><% end %>
         <% if policy(:taxonomy).index? %><li><%= link_to raw('<i class="font-icon" data-icon="&#xe023;"></i> Product Taxonomy'), admin_categories_path %></li><% end %>
         <% if policy(:internal_financial).index? %><li><%= link_to raw('<i class="font-icon" data-icon="&#xe00f;"></i> Admin Financials'), admin_financials_service_payments_path %></li><% end %>
+        <% if policy(:import).index? %><li><%= link_to raw('<i class="font-icon" data-icon="in"></i> Imports'), admin_upload_path %></li><% end %>
       </ul>
     </li>
     <% end %>
