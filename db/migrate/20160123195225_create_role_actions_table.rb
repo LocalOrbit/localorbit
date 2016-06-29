@@ -57,5 +57,6 @@ class CreateRoleActionsTable < ActiveRecord::Migration
     RoleAction.create("description"=>"Market_Fees:Index", "org_types"=>["A", "M"], "section"=>"market_fees", "action"=>"index", "plan_ids"=>["2", "3", "4"])
     RoleAction.create("description"=>"Advanced_Inventory:Index", "org_types"=>["A", "M"], "section"=>"advanced_inventory", "action"=>"index", "plan_ids"=>["2", "3", "4"])
     RoleAction.create("description"=>"Advanced_Pricing:Index", "org_types"=>["A", "M"], "section"=>"advanced_pricing", "action"=>"index", "plan_ids"=>["2", "3", "4"])
+    RoleAction.create("description"=>"Import:Index", "org_types"=>["A"], "section"=>"import", "action"=>"index", "plan_ids"=>["8"])
   end
 end

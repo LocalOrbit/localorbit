@@ -33,11 +33,11 @@ class Price < ActiveRecord::Base
     ((sale_price || 0) * net_percent(market)).round(2)
   end
 
-  def net_percent(market=nil)
+  def net_percent(curr_market=nil)
     if product_fee_pct > 0
       1 - (product_fee_pct/100 + ::Financials::Pricing.seller_cc_rate(product.organization.all_markets.first))
-    elsif market && product.category.level_fee(market) > 0
-      1 - (product.category.level_fee(market)/100 + ::Financials::Pricing.seller_cc_rate(product.organization.all_markets.first))
+    elsif curr_market && product.category.level_fee(curr_market) > 0
+      1 - (product.category.level_fee(curr_market)/100 + ::Financials::Pricing.seller_cc_rate(product.organization.all_markets.first))
     elsif market
       market.seller_net_percent
     else

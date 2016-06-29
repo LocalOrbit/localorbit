@@ -165,12 +165,35 @@ describe "Adding advanced pricing" do
     end
   end
 
+  describe "with category market fees", js: true do
+    let(:market) { create(:market, :with_category_fee, allow_product_fee: true) }
+    let(:user)   { create(:user, :market_manager) }
+
+    it "shows updated net sale information - product fee" do
+      find(:field, 'price[fee]', with: '1').click
+      fill_in "price[sale_price]", with: "12.90"
+
+      expect(find_field("price[net_price]").value).to eq("10.98")
+      click_button "Add"
+
+      expect(page).to have_content("Successfully added a new price")
+
+      record = Dom::PricingRow.first
+      expect(record.market).to eq("All Markets")
+      expect(record.buyer).to eq("All Buyers")
+      expect(record.min_quantity).to eq("1")
+      expect(record.net_price).to eq("$10.98")
+      expect(record.fee).to eq("Use Category Fee")
+      expect(record.sale_price).to eq("$12.90")
+    end
+  end
+
   describe "with product market fees", js: true do
     let(:market) { create(:market, allow_product_fee: true) }
     let(:user)   { create(:user, :market_manager) }
 
-    it "shows updated net sale information" do
-      find(:field, 'price[fee]', with: '1').click
+    it "shows updated net sale information - product fee" do
+      find(:field, 'price[fee]', with: '2').click
       fill_in "price[product_fee_pct]", with: "20"
       fill_in "price[sale_price]", with: "12.90"
 
