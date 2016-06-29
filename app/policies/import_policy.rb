@@ -1,0 +1,3 @@
+class ImportPolicy < ApplicationPolicy
+
+end

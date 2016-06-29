@@ -46,6 +46,13 @@ class Registration
   def save
     if valid?
       self.organization = Organization.new(organization_params)
+
+      if organization_params[:can_sell]
+        organization.org_type = "S"
+      else
+        organization.org_type = "B"
+      end
+
       organization.markets = [market]
       organization.locations.build(location_params)
       organization.save!
