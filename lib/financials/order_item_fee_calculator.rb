@@ -7,14 +7,13 @@ module Financials
           market = order_item.order.market
         end # see below
 
+        product_fee = order_item.product_fee_pct
         category_fee = order_item.product.category.level_fee(market)
 
-        if !order_item.category_fee_pct.nil? && order_item.category_fee_pct > 0
-          rate = order_item.category_fee_pct/100
+        if product_fee > 0
+          rate = product_fee / 100
         elsif category_fee > 0
-          rate = category_fee/100
-        elsif order_item.product_fee_pct > 0
-          rate = order_item.product_fee_pct / 100
+          rate = category_fee / 100
         else
           if order_item.order.market_seller_fee_pct.nil? #
             rate = market.market_seller_fee / 100
