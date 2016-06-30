@@ -44,12 +44,24 @@ class Admin::UploadController < AdminController
 
   def upload
     if params.has_key?(:datafile)
-      # pass the datafile to the method with the csv file
-
-      jsn = ::Imports::SerializeProducts.get_json_data(params[:datafile],params[:curr_user]) # product stuff, row errors
-      @num_products_loaded = 0
+      # TODO here: mimic the existing fxn-ality, in a delayed job
       aud = Audit.create!(user_id:current_user.id,action:"Product upload") # the id of this audit is what should trigger the job
+      @num_products_loaded = 0
+      jsn = ::Imports::SerializeProducts.get_json_data(params[:datafile],params[:curr_user]) # product stuff, row 
+
+      Delayed::Job.enqueue(ProductUploadJob.new(jsn, aud.id))
+
+
+      # so this should really enqueue all these things below.
+
+
+
+      # pass the datafile to the method with the csv file
+      # jsn = ::Imports::SerializeProducts.get_json_data(params[:datafile],params[:curr_user]) # product stuff, row errors
+      @num_products_loaded = 0
       # TODO: the jsn business above it should also be handled by the worker in the delay
+
+      ## TODO this bit should be replaced by performing the delayed job
       unless jsn.include?("invalid")
         jsn[0]["products"].each do |p|
           ::Imports::ProductHelpers.create_product_from_hash(p,params[:curr_user])
