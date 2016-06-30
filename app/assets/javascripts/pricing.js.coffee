@@ -54,13 +54,12 @@ $ ->
         marketId = "all"
 
       if use_product_fee.prop('checked')
-        if has_product_fee || productFee > 0
-          if getFeeValue() > 0
-            return 1 - (getFeeValue()/100 + ccRate)
-          else if productFee > 0
-            return 1 - (productFee/100 + ccRate)
-          else
-            return 0.00
+        if getFeeValue() > 0
+          return 1 - (getFeeValue()/100 + ccRate)
+        else if productFee > 0
+          return 1 - (productFee/100 + ccRate)
+        else
+          return 0.00
       else if use_category_fee.prop('checked')
         return 1 - (categoryFee/100 + ccRate)
       else
