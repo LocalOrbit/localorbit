@@ -48,7 +48,8 @@ class Admin::UploadController < AdminController
       aud = Audit.create!(user_id:current_user.id,action:"Product upload") # the id of this audit is what should trigger the job
       @num_products_loaded = 0
       jsn = ::Imports::SerializeProducts.get_json_data(params[:datafile],params[:curr_user]) # product stuff, row 
-
+      @num_products_loaded = 0
+      @errors = nil
       Delayed::Job.enqueue(::ProductUpload::ProductUploadJob.new(jsn, aud.id))
 
 
@@ -58,8 +59,7 @@ class Admin::UploadController < AdminController
 
       # pass the datafile to the method with the csv file
       # jsn = ::Imports::SerializeProducts.get_json_data(params[:datafile],params[:curr_user]) # product stuff, row errors
-      @num_products_loaded = 0
-      @errors = nil
+      
       # TODO: the jsn business above it should also be handled by the worker in the delay
 
       ## TODO this bit should be replaced by performing the delayed job
