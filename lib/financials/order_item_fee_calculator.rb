@@ -11,11 +11,11 @@ module Financials
         category_fee_item_pct = order_item.category_fee_pct
         category_fee_pct = order_item.product.category.level_fee(market)
 
-        if product_fee_item_pct > 0
+        if !product_fee_item_pct.nil? && product_fee_item_pct > 0
           rate = product_fee_item_pct / 100
-        elsif category_fee_item_pct > 0
+        elsif !category_fee_item_pct.nil? && category_fee_item_pct > 0
           rate = category_fee_item_pct / 100
-        elsif category_fee_pct > 0
+        elsif !category_fee_pct.nil? && category_fee_pct > 0
           rate = category_fee_pct / 100
         else
           if order_item.order.market_seller_fee_pct.nil? #
