@@ -4,7 +4,7 @@ class Admin::PickListsController < AdminController
     @delivery = Delivery.find(params[:id]).decorate
     @delivery_schedule = @delivery.delivery_schedule
     # @delivery = @delivery.decorate 
-    unique = {seller_start:@delivery_schedule.seller_delivery_start, seller_loc:@delivery_schedule.seller_fulfillment_location_id} # fulfillment location id should never be 0 if it comes up on a delivery
+    unique = {seller_start:@delivery_schedule.seller_delivery_start, seller_loc:@delivery_schedule.seller_fulfillment_location_id,seller_display_date:@delivery.seller_display_date} # fulfillment location id should never be 0 if it comes up on a delivery
 
     # must be on that delivery schedule
     # so, deliveries on that delivery schedule with a delivery id that 
