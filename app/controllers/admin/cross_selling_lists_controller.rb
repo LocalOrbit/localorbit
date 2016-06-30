@@ -15,13 +15,16 @@ class Admin::CrossSellingListsController < AdminController
   end
 
   def show
-    @cross_selling_list = CrossSellingList.includes(:active_children, :products).find(params[:id])
+    @cross_selling_list = CrossSellingList.includes(:active_children, :products, :cross_selling_list_products).find(params[:id])
     # KXM Pagination is a bigger problem than it's really worth, but here is the code that enables it.  Delete this crap once the scales fall from their eyes
     # @suppliers = @entity.suppliers.order(:name).page(params[:page]).per(3)
     # @products = @entity.supplier_products.order(:name).page(params[:page]).per(12)
 
     @suppliers = @entity.suppliers.order(:name)
-    @products = @entity.supplier_products.order(:name)
+
+    # Creators see all products, subscribers see only those on the list.
+    @products = @cross_selling_list.creator ? @entity.supplier_products.order(:name) : @cross_selling_list.products.order(:name)
+
   end
 
   def new
@@ -50,15 +53,21 @@ class Admin::CrossSellingListsController < AdminController
   def update
     @cross_selling_list = CrossSellingList.includes(:children).find(params[:id])
 
-    # The merge here forces a product update when all products are removed via the UI
-    params_with_defaults  = {'product_ids' => []}.merge(cross_selling_list_params || {})
-
-    # The merge here does the same but with the extracted product ids only
-    submitted_products = {'product_ids' => []}.merge('product_ids' => cross_selling_list_params[:product_ids] || {})
+    if @cross_selling_list.creator
+      # The merge here forces a product update when all products are removed via the UI
+      params_with_defaults = {'product_ids' => []}.merge(cross_selling_list_params || {})
+    else
+      # Subscribers ought not submit products at all... remove 'em just in case they do
+      params_with_defaults = cross_selling_list_params.except(:product_ids)
+    end
 
     if @cross_selling_list.update_attributes(params_with_defaults)
 
       if @cross_selling_list.creator
+
+        # This serves to update all child product lists
+        submitted_products = {'product_ids' => []}.merge('product_ids' => cross_selling_list_params[:product_ids] || {})
+
         # If the edits are saved successfully then cascade through the related cross selling lists and products...
              all_subscribers = @cross_selling_list.children.map { |l| {parent_id: l.parent_id, entity_id: l.entity_id} }
         existing_subscribers = @cross_selling_list.active_children.map { |l| {parent_id: l.parent_id, entity_id: l.entity_id} }
@@ -98,7 +107,8 @@ class Admin::CrossSellingListsController < AdminController
       :name,
       :status,
       :children_ids => [],
-      :product_ids => []
+      :product_ids => [],
+      :cross_selling_list_products_attributes => [:product_id, :active, :id]
     )
   end
 

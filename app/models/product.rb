@@ -36,6 +36,9 @@ class Product < ActiveRecord::Base
   has_many :market_organizations, through: :organization, class_name: MarketOrganization
   has_many :markets, through: :market_organizations, class_name: Market
 
+  has_many :cross_selling_list_products
+  has_many :cross_selling_lists, through: :cross_selling_list_products
+
   dragonfly_accessor :image do
     copy_to(:thumb){|a| a.thumb('150x150#') }
   end

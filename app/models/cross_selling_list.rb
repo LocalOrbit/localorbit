@@ -14,6 +14,7 @@ class CrossSellingList < ActiveRecord::Base
 
   has_many :products, through: :cross_selling_list_products
   has_many :cross_selling_list_products
+  accepts_nested_attributes_for :cross_selling_list_products
 
   # Basic validation
   validates :name, presence: true, length: {maximum: 255}

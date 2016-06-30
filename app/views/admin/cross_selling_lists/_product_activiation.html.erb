@@ -1,0 +1,75 @@
+<div class="is-hidden modal popup" id="product_management">
+  <div class="popup-header">
+    Add Products to Cross Selling List <button class="close"><i class="font-icon icon-close"> Close</i></button>
+    <p>Select products or groups of products to allow other Markets to sell on your behalf.</p>
+  </div>
+
+  <div id="tabs" class="popup-body">
+    <ul id="product-add-tab-list" class="tabs wrapping-tabs">
+      <li class="tab"><a href="#product-add-suppliers">Suppliers</a></li>
+      <li class="tab"><a href="#product-add-categories">Categories</a></li>
+      <li class="tab"><a href="#product-add-products">Products</a></li>
+    </ul>
+
+    <div id="product-add-suppliers" class="bound-list">
+      <table>
+        <thead>
+          <tr>
+            <th>Supplier</th>
+            <th>Products</th>
+            <th>&nbsp;</th>
+          </tr>
+        </thead>
+        <tbody>
+        <% @suppliers.each do |supplier| %>
+          <tr>
+            <td><%= supplier.name %></td>
+            <td><%= supplier.products.count %></td>
+            <td><%= check_box_tag("suppliers[]", value="#{supplier.id}", checked=false) %></td>
+          </tr>
+        <% end %>
+        </tbody>
+      </table>
+    </div>
+
+    <div id="product-add-categories" class="bound-list">
+      <table>
+        <thead>
+          <tr><th>Category</th><th>Products</th><th>&nbsp;</th></tr>
+        </thead>
+        <tbody>
+        <% @entity.categories.each do |category| %>
+          <tr>
+            <td><%= category.name %></td>
+            <td><%= category.products.count %></td>
+            <td><%= check_box_tag("categories[]", value="#{category.id}", checked=false) %></td>
+          </tr>
+        <% end %>
+        </tbody>
+      </table>
+    </div>
+
+    <div id="product-add-products" class="bound-list">
+      <table>
+        <thead>
+          <tr>
+            <th>Products</th>
+            <th>&nbsp;</th>
+          </tr>
+        </thead>
+        <tbody>
+          <%= list.fields_for :cross_selling_list_products do |cslp| %>
+          <tr>
+            <%= cslp.hidden_field :product_id %>
+            <td><%= "#{cslp.object.product.name} (#{cslp.object.product_id})" %></td>
+            <td><%= cslp.check_box :active %></td>
+          </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+
+    <%# end %>
+    <%= list.submit "Update List" %>
+  </div>
+</div>

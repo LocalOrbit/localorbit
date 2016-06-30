@@ -16,11 +16,10 @@
       </div>
 
     <hr />
-    
-    <% if @cross_selling_list.products.empty? %>
 
+    <% if @cross_selling_list.products.empty? %>
       <p><span class="hint">Your Cross Selling list is Empty... <%= link_to "Add products", "#product_management", class: "modal-toggle" %></span></p>
-      <!-- <button>Add Products</button> -->
+
     <% else %>
       <p><span class="hint"><%= link_to "Manage products", "#product_management", class: "modal-toggle" %></span></p>
 
@@ -31,7 +30,7 @@
               <th>Supplier</th>
               <th>Category</th>
               <th>Product</th>
-              <!-- <th>Actions</th> -->
+              <!-- <%# if @cross_selling_list.creator != true %><th>Active?</th><%# end %> -->
             </tr>
           </thead>
           <tbody>
@@ -40,7 +39,7 @@
               <td><%= product.organization.name %></td>
               <td><%= product.category.name %></td>
               <td><%= product.name %></td>
-              <!-- <td>Delete, Publish, others?</td> -->
+              <!-- <%# if @cross_selling_list.creator != true %><th><%#= cslp.active %></th><%# end %> -->
             </tr>
           <% end %>
           </tbody>
@@ -48,7 +47,9 @@
       </div>
     <% end %>
 
-    <%= render "product_management", {list: list} %>
+    <%= product_management_list = @cross_selling_list.creator ? "product_management" : "product_activiation"
+      render product_management_list, {list: list} %>
+
     <% end # End of form... %>
   </div>
 </div>
