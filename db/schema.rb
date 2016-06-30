@@ -693,7 +693,7 @@ ActiveRecord::Schema.define(version: 20160623013035) do
     t.integer  "plan_interval",                                        default: 1,     null: false
     t.decimal  "plan_fee",                     precision: 7, scale: 2, default: 0.0,   null: false
     t.integer  "plan_bank_account_id"
-    t.boolean  "subscribed"
+    t.boolean  "subscribed",                                           default: false
   end
 
   add_index "organizations", ["name"], name: "index_organizations_on_name", using: :btree
@@ -769,7 +769,6 @@ ActiveRecord::Schema.define(version: 20160623013035) do
     t.integer  "legacy_id"
     t.datetime "deleted_at"
     t.decimal  "product_fee_pct", precision: 5,  scale: 3, default: 0.0, null: false
-    t.integer  "category_id"
   end
 
   add_index "prices", ["market_id"], name: "index_prices_on_market_id", using: :btree
@@ -835,20 +834,20 @@ ActiveRecord::Schema.define(version: 20160623013035) do
   add_index "promotions", ["product_id"], name: "index_promotions_on_product_id", using: :btree
 
   create_table "role_actions", force: true do |t|
-    t.string "section"
-    t.string "action"
     t.string "description"
     t.string "org_types",   default: [], array: true
+    t.string "section"
+    t.string "action"
     t.string "plan_ids",    default: [], array: true
   end
 
   create_table "roles", force: true do |t|
     t.string   "name"
-    t.string   "activities",      limit: 4096, default: [], array: true
-    t.datetime "created_at"
-    t.datetime "updated_at"
     t.string   "org_type"
     t.integer  "organization_id"
+    t.string   "activities",      default: [], array: true
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "sequences", force: true do |t|
