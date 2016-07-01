@@ -8,7 +8,7 @@ gem 'pg'
 
 # Assets
 gem 'sass-rails',   '~> 4.0.0'
-gem 'uglifier',     '>= 1.3.0'
+gem 'uglifier',     '>= 2.7.2'
 gem 'coffee-rails', '~> 4.0.0'
 
 # The jQuery update is doing something weird
@@ -62,6 +62,7 @@ gem 'stripe_event'
 gem 'font-awesome-rails'
 gem 'wysiwyg-rails'
 gem 'kiba'
+gem 'nokogiri', '~> 1.6.7.2'
 
 gem "browserify-rails"
 gem "react-rails"
