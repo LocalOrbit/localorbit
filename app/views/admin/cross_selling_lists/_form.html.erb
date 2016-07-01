@@ -1,31 +1,31 @@
+<% # KXM This form needs some wholesale changes around editing - i.e. revoked lists ought to be read only, status should be displayed for Pending and Revoked but those statuses are assigned and therefor not available as options, etc... %>
 <div class="action_box column column--full">
   <div class="row row--field">
     <div class="field column column--half column--guttered">
       <%= list_fields.label :name, "List Name" %>
-      <span class="tooltip pull-right" data-tooltip="This will be the name people will use to identify your list of cross sold items."></span>
-      <br />
+      <span class="help-text">This will be the name people will use to identify your list of cross sold items.</span>
       <%= list_fields.text_field :name, class: "column--full" %>
     </div
     ><div class="field column column--half column--guttered">
+      <%= list_fields.label :status, "List Status" %>
+      <span class="help-text">Set the status of your list.  Items on "Published" lists will appear in your product catalog.</span>
 
-    <% # Only show the subscribers list for list creators...
-    if @cross_selling_list.creator %>
-      <%= list_fields.label :children_ids, "List Visibility" %>
-      <span class="tooltip pull-right" data-tooltip="Control who may view, subscribe, or sell your products. Contact admin if you don't see who you're looking for."></span>
-      <br />
-      <%= list_fields.select :children_ids, options_for_select(current_market.cross_sells.map {|market| [market.name, market.id] }, @cross_selling_list.active_children.map{|list| list.entity_id} ), { :prompt => "Select market(s)" }, { :multiple => true, :class => "column--full" } %>
-    <% end %>
+      <% # Define different options for creators and subscribers
+      select_options = @cross_selling_list.creator ? ['Draft', 'Published', 'Inactive'] : ['Published', 'Inactive', 'Declined'] %>
 
+      <%= list_fields.select :status, select_options, options: { prompt: "Select status..." }, html_options: { class: "column--full" } %>
     </div>
   </div>
   <div class="row row--field">
     <div class="field column column--half column--guttered">
-      <%= list_fields.label :status, "List Status" %>
-      <span class="tooltip pull-right" data-tooltip="Set the status of your list.  Leave as 'Draft' until you're ready to publish your list."></span>
-      <br />
-      <% # Define different options for creators and subscribers
-      select_options = @cross_selling_list.creator ? ['Draft', 'Active'] : ['Pending', 'Active', 'Declined', 'Revoked'] %>
-      <%= list_fields.select :status, select_options, html_options: { class: "column--full" } %>
+
+    <% # Only show the subscribers list for list creators...
+    if @cross_selling_list.creator %>
+      <%= list_fields.label :children_ids, "List Visibility" %>
+      <span class="help-text">Control who may view, subscribe, or sell your products. Contact admin if you don't see who you're looking for.</span>
+      <%= list_fields.select :children_ids, options_for_select(current_market.cross_sells.map {|market| [market.name, market.id] }, @cross_selling_list.active_children.map{|list| list.entity_id} ), { :prompt => "Select market(s)" }, { :multiple => true, :class => "column--full" } %>
+    <% end %>
+
     </div>
   </div>
 </div>
