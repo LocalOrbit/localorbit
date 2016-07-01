@@ -23,9 +23,9 @@
         <tbody>
         <% @suppliers.each do |supplier| %>
           <tr>
-            <td><%= supplier.name %></td>
+            <td><%= "#{supplier.name} (#{supplier.id})" %></td>
             <td><%= supplier.products.count %></td>
-            <td><%= check_box_tag("suppliers[]", value="#{supplier.id}", checked=false) %></td>
+            <td><%= check_box_tag("suppliers[]", supplier.id, @selected_suppliers.include?(supplier.id) ) %></td>
           </tr>
         <% end %>
         </tbody>
@@ -40,9 +40,9 @@
         <tbody>
         <% @entity.categories.each do |category| %>
           <tr>
-            <td><%= category.name %></td>
+            <td><%= "#{category.name} (#{category.id})" %></td>
             <td><%= category.products.count %></td>
-            <td><%= check_box_tag("categories[]", value="#{category.id}", checked=false) %></td>
+            <td><%= check_box_tag("categories[]", category.id, @selected_categories.include?(category.id) ) %></td>
           </tr>
         <% end %>
         </tbody>
@@ -58,7 +58,7 @@
           </tr>
         </thead>
         <tbody>
-          <% @products.each do |product| %>
+          <% @all_products.each do |product| %>
           <tr>
             <td><%= "#{product.name} (#{product.id})" %></td>
             <td><%= check_box_tag "cross_selling_list[product_ids][]", product.id, list.object.products.include?(product) %></td>

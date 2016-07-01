@@ -15,15 +15,32 @@ class Admin::CrossSellingListsController < AdminController
   end
 
   def show
+    # Get the list in question
     @cross_selling_list = CrossSellingList.includes(:active_children, :products, :cross_selling_list_products).find(params[:id])
-    # KXM Pagination is a bigger problem than it's really worth, but here is the code that enables it.  Delete this crap once the scales fall from their eyes
-    # @suppliers = @entity.suppliers.order(:name).page(params[:page]).per(3)
-    # @products = @entity.supplier_products.order(:name).page(params[:page]).per(12)
 
+    # Get all the suppliers for the current entity - this may be a Market Organization (with
+    # potentially many suppliers) or a Supplier Organization (with only one - themselves)
     @suppliers = @entity.suppliers.order(:name)
 
-    # Creators see all products, subscribers see only those on the list.
-    @products = @cross_selling_list.creator ? @entity.supplier_products.order(:name) : @cross_selling_list.products.order(:name)
+    # Get all the categories for all the products for all the suppliers.  Damn, what a mess.
+    @categories = @entity.categories.order(:name)
+
+    # Creators need all products, both need the products on the list.
+         @all_products = @cross_selling_list.creator ? @entity.supplier_products.order(:name) : []
+    @selected_products = @cross_selling_list.products.order(:name)
+
+    # Get the categories and suppliers for which all items are selected
+    @selected_suppliers = []
+    @suppliers.map do |s|
+      @selected_suppliers.push(s.id) if s.products.any? && (s.products - @selected_products).empty?
+    end
+
+    @selected_categories = []
+    @categories.map do |c|
+      @selected_categories.push(c.id) if c.products.any? && (c.products - @selected_products).empty?
+    end
+
+    binding.pry
 
   end
 
@@ -36,11 +53,15 @@ class Admin::CrossSellingListsController < AdminController
     @cross_selling_list.creator = true
 
     if @cross_selling_list.save
-      selected_subscribers = cross_selling_list_params[:children_ids].select(&:present?).map { |submitted_id| {parent_id: @cross_selling_list.id, entity_id: submitted_id.to_i} }
+      @cross_selling_list.manage_publication!(cross_selling_list_params)
 
-      # This creates the child lists, but it'd be cool it rails automagically did so from the supplied array of children_ids
-      selected_subscribers.each do |list_ids|
-        create_list(@cross_selling_list, list_ids)
+      if @cross_selling_list.published? then
+        selected_subscribers = cross_selling_list_params[:children_ids].select(&:present?).map { |submitted_id| {parent_id: @cross_selling_list.id, entity_id: submitted_id.to_i} }
+
+        # This creates the child lists, but it'd be cool it rails automagically did so from the supplied array of children_ids
+        selected_subscribers.each do |list_ids|
+          create_list(@cross_selling_list, list_ids)
+        end
       end
 
       redirect_to [:admin, @entity, @cross_selling_list], notice: "Successfully created #{@cross_selling_list.name}"
@@ -62,6 +83,7 @@ class Admin::CrossSellingListsController < AdminController
     end
 
     if @cross_selling_list.update_attributes(params_with_defaults)
+      @cross_selling_list.manage_publication!(params_with_defaults)
 
       if @cross_selling_list.creator
 
@@ -106,6 +128,7 @@ class Admin::CrossSellingListsController < AdminController
     params.require(:cross_selling_list).permit(
       :name,
       :status,
+      :published_date, # KXM published_date anticipates future publication (not yet implemented)
       :children_ids => [],
       :product_ids => [],
       :cross_selling_list_products_attributes => [:product_id, :active, :id]

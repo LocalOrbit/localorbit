@@ -29,30 +29,47 @@ class CrossSellingList < ActiveRecord::Base
   # validates :parent_id, numericality: {only_integer: true}
 
   def published?
-  	status == 'Published' && published_at.past?
+    status == 'Published' && published_at && published_at.past?
   end
 
   def publish!(published_date = nil)
     as_of = published_date ||= Time.now
-    update!(staus: "Published", published_at: as_of)
+    update!(status: "Published", published_at: as_of)
+  end
+
+  # Triggered by UI action.  Parent unpublish triggers 'Inactive' status in children
+  def unpublish!(status = nil)
+    new_status = status ||= "Unpublished"
+    update!(status: new_status, published_at: nil)
   end
 
   def is_master_list?
   	parent_id.nil?
   end
 
+  # KXM Active? is likely without good use, at least in this implementation
   def active?
   	# Master lists are active if published and not deleted
-    return true if parent_id.blank? && deleted_at.blank? && status == "Published"
+    return parent_id.blank? && deleted_at.blank? && published?
 
   	# Sublists are active if published and not deleted AND master list is active
-    return true if parent_id.present? && deleted_at.blank? && parent.active? && status == "Active"
+    return parent_id.present? && deleted_at.blank? && parent.active? && published?
 
     false
   end
 
   def pending?
     status == "Pending"
+  end
+
+  # KXM Manage publication automatically (after save)?
+  def manage_publication!(params)
+    if published?
+      unpublish!(status) if status != "Published"
+    else
+      published_date = params[:published_date] ||= Time.now
+      publish!(published_date) if status == "Published"
+    end
   end
 
   def subscribers
