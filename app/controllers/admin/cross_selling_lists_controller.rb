@@ -22,7 +22,7 @@ class Admin::CrossSellingListsController < AdminController
     # potentially many suppliers) or a Supplier Organization (with only one - themselves)
     @suppliers = @entity.suppliers.order(:name)
 
-    # Get all the categories for all the products for all the suppliers.  Damn, what a mess.
+    # Get all the categories for all the products for all the suppliers[ for this Market].  Damn, what a mess.
     @categories = @entity.categories.order(:name)
 
     # Creators need all products, both need the products on the list.
@@ -40,7 +40,7 @@ class Admin::CrossSellingListsController < AdminController
       @selected_categories.push(c.id) if c.products.any? && (c.products - @selected_products).empty?
     end
 
-    binding.pry
+    # binding.pry
 
   end
 
@@ -74,18 +74,32 @@ class Admin::CrossSellingListsController < AdminController
   def update
     @cross_selling_list = CrossSellingList.includes(:children).find(params[:id])
 
+    # KXM Supplier products is the easier of the two, but category products will be similar
+    supplier_prods = []
+    supplier_ids = params[:suppliers].map(&:to_i)
+    suppliers = Organization.includes(:products).find(supplier_ids)
+    suppliers.map do |s|
+      supplier_prods = supplier_prods | s.products.map{|p| p.id.to_s}
+    end
+    # product_ids = supplier_prods.map(&:to_s)
+    # supplier_prods.map!(&:to_s)
+
     if @cross_selling_list.creator
       # The merge here forces a product update when all products are removed via the UI
-      params_with_defaults = {'product_ids' => []}.merge(cross_selling_list_params || {})
+      cross_selling_list_params["product_ids"] = (cross_selling_list_params["product_ids"] || []) | supplier_prods
+      params_with_defaults = cross_selling_list_params
+      # params_with_defaults = {'product_ids' => product_ids}.merge(cross_selling_list_params || {})
     else
       # Subscribers ought not submit products at all... remove 'em just in case they do
       params_with_defaults = cross_selling_list_params.except(:product_ids)
     end
+    # binding.pry
 
     if @cross_selling_list.update_attributes(params_with_defaults)
       @cross_selling_list.manage_publication!(params_with_defaults)
 
-      if @cross_selling_list.creator
+      # If this is the master list then upsert any children (including product list)
+      if @cross_selling_list.creator && ( !@cross_selling_list.draft? || @cross_selling_list.children.any? )
 
         # This serves to update all child product lists
         submitted_products = {'product_ids' => []}.merge('product_ids' => cross_selling_list_params[:product_ids] || {})
@@ -125,7 +139,7 @@ class Admin::CrossSellingListsController < AdminController
   end
 
   def cross_selling_list_params
-    params.require(:cross_selling_list).permit(
+    @cross_selling_list_params ||= params.require(:cross_selling_list).permit(
       :name,
       :status,
       :published_date, # KXM published_date anticipates future publication (not yet implemented)

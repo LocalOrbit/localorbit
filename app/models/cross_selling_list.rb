@@ -62,6 +62,10 @@ class CrossSellingList < ActiveRecord::Base
     status == "Pending"
   end
 
+  def draft?
+    status == "Draft"
+  end
+
   # KXM Manage publication automatically (after save)?
   def manage_publication!(params)
     if published?
