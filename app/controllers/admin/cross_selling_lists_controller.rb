@@ -84,7 +84,7 @@ class Admin::CrossSellingListsController < AdminController
       end
 
       # Get all products that belong to the selected categories and are also part of this entities supply chain
-      category_ids = params[:categories].map(&:to_i)
+      category_ids = (params[:categories] ||= []).map(&:to_i)
       supplier_ids = @entity.suppliers.map{|s| s.id}
       category_prods = Product.where(category_id: category_ids, organization_id: supplier_ids).map{|p| p.id.to_s}
 
