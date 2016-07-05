@@ -85,7 +85,7 @@ class Admin::OrdersController < AdminController
   protected
 
   def find_order_items(order_ids)
-    order_items = OrderItem.includes({product: [{general_product: :organization}, :organization]}, {order: :delivery}).joins(:product).where(:order_id => order_ids)
+    order_items = OrderItem.includes({order: :delivery}).joins(:product).where(:order_id => order_ids)
     order_items
   end
 
@@ -152,8 +152,8 @@ class Admin::OrdersController < AdminController
   # Builds a list of deliveries for potential changes
   # Some from the past, some from future, and the order's actual one.
   def setup_deliveries(order)
-    recent_deliveries = order.market.deliveries.recent.active.uniq
-    future_deliveries = order.market.deliveries.future.active.uniq
+    recent_deliveries = order.market.deliveries.includes(:delivery_schedule).recent.active.uniq
+    future_deliveries = order.market.deliveries.includes(:delivery_schedule).future.active.uniq
 
     @deliveries = recent_deliveries | future_deliveries | [order.delivery]
   end

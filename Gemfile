@@ -79,6 +79,8 @@ gem 'rschema', :git => 'https://github.com/tomdalling/rschema.git'
 
 gem 'turbolinks'
 
+gem 'dalli'
+
 # wkhtmltopdf versions are a mess. 0.12.1 is stable but not well supported by gems
 # See https://github.com/zakird/wkhtmltopdf_binary_gem/issues/13
 # The github version is massive and makes the Heroku slug huge
@@ -111,6 +113,10 @@ group :development do
   gem 'rails_view_annotator'
   gem 'unicorn'
   gem 'mailcatcher'
+  gem 'rack-mini-profiler'
+  gem 'flamegraph'
+  gem 'stackprof' # ruby 2.1+ only
+  gem 'memory_profiler'
 end
 
 group :development, :test do
