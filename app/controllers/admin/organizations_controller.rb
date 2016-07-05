@@ -31,14 +31,7 @@ module Admin
     end
 
     def create
-      org_type = nil
-      if organization_params[:can_sell]
-        if organization_params[:can_sell]=="1"
-          org_type = "S"
-        else
-          org_type = "B"
-        end
-      end
+      org_type = update_org_type(params[:can_sell])
       result = RegisterStripeOrganization.perform(organization_params: organization_params.merge({:org_type => org_type}), user: current_user, market_id: params[:initial_market_id])
 
       if result.success?
@@ -59,7 +52,10 @@ module Admin
         disable_supplier_inventory
       end
 
-      if @organization.update_attributes(organization_params)
+      op = organization_params
+      op[:org_type] = update_org_type(params[:organization][:can_sell])
+
+      if @organization.update_attributes(op)
         redirect_to [:admin, @organization], notice: "Saved #{@organization.name}"
       else
         render action: :show
@@ -71,6 +67,14 @@ module Admin
 
       NotifyOrganizationActivated.perform(organization: @organization)
       redirect_to :back, notice: "Updated #{@organization.name}"
+    end
+
+    def update_org_type(can_sell)
+      if can_sell == true || can_sell == "1"
+        "S"
+      else
+        "B"
+      end
     end
 
     def destroy
