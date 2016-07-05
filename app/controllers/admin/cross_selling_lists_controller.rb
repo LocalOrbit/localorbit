@@ -37,11 +37,10 @@ class Admin::CrossSellingListsController < AdminController
 
     @selected_categories = []
     @categories.map do |c|
-      @selected_categories.push(c.id) if c.products.any? && (c.products - @selected_products).empty?
+      category_prods = c.products
+      candidate = (category_prods - ( category_prods - @all_products )) - @selected_products
+      @selected_categories.push(c.id) if candidate.empty?
     end
-
-    # binding.pry
-
   end
 
   def new
@@ -74,26 +73,29 @@ class Admin::CrossSellingListsController < AdminController
   def update
     @cross_selling_list = CrossSellingList.includes(:children).find(params[:id])
 
-    # KXM Supplier products is the easier of the two, but category products will be similar
-    supplier_prods = []
-    supplier_ids = params[:suppliers].map(&:to_i)
-    suppliers = Organization.includes(:products).find(supplier_ids)
-    suppliers.map do |s|
-      supplier_prods = supplier_prods | s.products.map{|p| p.id.to_s}
-    end
-    # product_ids = supplier_prods.map(&:to_s)
-    # supplier_prods.map!(&:to_s)
-
     if @cross_selling_list.creator
-      # The merge here forces a product update when all products are removed via the UI
-      cross_selling_list_params["product_ids"] = (cross_selling_list_params["product_ids"] || []) | supplier_prods
+      supplier_prods = []
+      supplier_ids = params[:suppliers].map(&:to_i)
+      # Get all suppliers in the selected set...
+      suppliers = Organization.includes(:products).find(supplier_ids)
+      suppliers.map do |s|
+        # ...and pull out their products
+        supplier_prods = supplier_prods | s.products.map{|p| p.id.to_s}
+      end
+
+      # Get all products that belong to the selected categories and are also part of this entities supply chain
+      category_ids = params[:categories].map(&:to_i)
+      supplier_ids = @entity.suppliers.map{|s| s.id}
+      category_prods = Product.where(category_id: category_ids, organization_id: supplier_ids).map{|p| p.id.to_s}
+
+      # Modify product_ids to include those implicitly selected via the Suppliers and Categories tabs.
+      cross_selling_list_params["product_ids"] = (cross_selling_list_params["product_ids"] || []) | supplier_prods | category_prods
       params_with_defaults = cross_selling_list_params
-      # params_with_defaults = {'product_ids' => product_ids}.merge(cross_selling_list_params || {})
+
     else
       # Subscribers ought not submit products at all... remove 'em just in case they do
       params_with_defaults = cross_selling_list_params.except(:product_ids)
     end
-    # binding.pry
 
     if @cross_selling_list.update_attributes(params_with_defaults)
       @cross_selling_list.manage_publication!(params_with_defaults)
@@ -102,7 +104,7 @@ class Admin::CrossSellingListsController < AdminController
       if @cross_selling_list.creator && ( !@cross_selling_list.draft? || @cross_selling_list.children.any? )
 
         # This serves to update all child product lists
-        submitted_products = {'product_ids' => []}.merge('product_ids' => cross_selling_list_params[:product_ids] || {})
+        submitted_products = {'product_ids' => cross_selling_list_params[:product_ids]}
 
         # If the edits are saved successfully then cascade through the related cross selling lists and products...
              all_subscribers = @cross_selling_list.children.map { |l| {parent_id: l.parent_id, entity_id: l.entity_id} }
@@ -139,6 +141,7 @@ class Admin::CrossSellingListsController < AdminController
   end
 
   def cross_selling_list_params
+    # This forces lazy caching, allow for the programatic modification of cross_selling_list_params (think product_ids array)
     @cross_selling_list_params ||= params.require(:cross_selling_list).permit(
       :name,
       :status,
@@ -182,7 +185,6 @@ class Admin::CrossSellingListsController < AdminController
   end
 
   def delete_list(parent, id_hash, params)
-    # binding.pry
     target = get_child(parent, id_hash)
     target.update_attribute(:status, "Revoked") if target.status = "Active"
     target.update_attributes(params)

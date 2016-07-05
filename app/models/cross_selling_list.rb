@@ -4,6 +4,8 @@ class CrossSellingList < ActiveRecord::Base
 
   attr_accessor :shared_with
   attr_accessor :children_ids
+  attr_accessor :suppliers
+  attr_accessor :categories
 
   # Entity may reference a supplier org or a market org
   belongs_to :entity, polymorphic: true

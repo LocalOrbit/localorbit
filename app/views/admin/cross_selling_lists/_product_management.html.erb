@@ -35,13 +35,17 @@
     <div id="product-add-categories" class="bound-list">
       <table>
         <thead>
-          <tr><th>Category</th><th>Products</th><th>&nbsp;</th></tr>
+          <tr>
+            <th>Category</th>
+            <!-- <th>Products</th> -->
+            <th>&nbsp;</th>
+          </tr>
         </thead>
         <tbody>
-        <% @entity.categories.each do |category| %>
+        <% @categories.each do |category| %>
           <tr>
             <td><%= "#{category.name} (#{category.id})" %></td>
-            <td><%= category.products.count %></td>
+            <!-- <td><%#= category.products.count %></td> -->
             <td><%= check_box_tag("categories[]", category.id, @selected_categories.include?(category.id) ) %></td>
           </tr>
         <% end %>
