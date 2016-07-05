@@ -75,7 +75,7 @@ class Admin::CrossSellingListsController < AdminController
 
     if @cross_selling_list.creator
       supplier_prods = []
-      supplier_ids = params[:suppliers].map(&:to_i)
+      supplier_ids = (params[:suppliers] ||= []).map(&:to_i)
       # Get all suppliers in the selected set...
       suppliers = Organization.includes(:products).find(supplier_ids)
       suppliers.map do |s|
