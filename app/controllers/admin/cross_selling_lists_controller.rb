@@ -20,10 +20,10 @@ class Admin::CrossSellingListsController < AdminController
 
     # Get all the suppliers for the current entity - this may be a Market Organization (with
     # potentially many suppliers) or a Supplier Organization (with only one - themselves)
-    @suppliers = @entity.suppliers.order(:name)
+    @suppliers = @entity.suppliers.includes(:products).order(:name)
 
     # Get all the categories for all the products for all the suppliers[ for this Market].  Damn, what a mess.
-    @categories = @entity.categories.order(:name)
+    @categories = @entity.categories.includes(:products).order(:name)
 
     # Creators need all products, both need the products on the list.
          @all_products = @cross_selling_list.creator ? @entity.supplier_products.order(:name) : []
@@ -167,6 +167,7 @@ class Admin::CrossSellingListsController < AdminController
       new_list.entity_type = "Market"
       new_list.creator = false
       new_list.status = "Pending"
+      new_list.published_at = nil
       new_list.parent_id = id_hash[:parent_id]
       new_list.save
       new_list.update_attributes(params)
