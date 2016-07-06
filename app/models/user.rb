@@ -171,7 +171,7 @@ class User < ActiveRecord::Base
       collection = []
 
       collection += managed_markets
-      collection += organizations_including_suspended.order(name: :asc).select {|o| o.has_market? }
+      collection += organizations_including_suspended.includes(:markets).order(name: :asc).select {|o| o.has_market? }
 
       collection
     end

@@ -4,7 +4,8 @@ class Admin::PickListsController < AdminController
     @very_important_person = current_user.admin? || current_user.managed_market_ids.include?(@delivery.delivery_schedule.market_id)
 
     order_items = OrderItem.where(delivery_status: "pending", orders: {delivery_id: @delivery.id})
-                    .eager_load(:order, product: :organization)
+                    .includes(:lots)
+                    .eager_load(:order, product: [:organization, :general_product, :unit])
                     .order("organizations.name, products.name")
                     .preload(order: :organization)
 

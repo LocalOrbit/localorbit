@@ -146,7 +146,7 @@ class Admin::MarketsController < AdminController
   end
 
   def search(search)
-    results = market_scope.search(search.query)
+    results = market_scope.includes(:cross_sells).search(search.query)
 
     results
   end

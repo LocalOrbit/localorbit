@@ -4,7 +4,7 @@ module Admin
     before_action :find_market
 
     def index
-      @delivery_schedules = @market.delivery_schedules.where("deleted_at is null or is_recoverable='t'").order(:day)
+      @delivery_schedules = @market.delivery_schedules.includes(:seller_fulfillment_location).where("deleted_at is null or is_recoverable='t'").order(:day)
     end
 
     def new

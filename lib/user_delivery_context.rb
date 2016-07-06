@@ -13,7 +13,7 @@ UserDeliveryContext = ConstructorStruct.new(
       is_market_manager = user.managed_markets.include?(market)
       is_seller = false
       delivery.orders.each do |order|
-        order.items.each{|item| is_seller = true if user.organizations.include?(item.seller)}
+        order.items.includes(product: :organization).each{|item| is_seller = true if user.organizations.include?(item.seller)}
       end
       is_buyer_only = (user.buyer_only?)
       is_admin = user.admin?

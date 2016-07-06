@@ -38,7 +38,7 @@ class OrderItem < ActiveRecord::Base
   end
 
   def self.for_delivery(delivery)
-    joins(order: :delivery).where(orders: {delivery_id: delivery.id})
+    joins(:lots, order: :delivery,).where(orders: {delivery_id: delivery.id})
   end
 
   def self.create_with_order_and_item_and_deliver_on_date(order, item, deliver_on_date, category_fee_pct)
@@ -59,7 +59,7 @@ class OrderItem < ActiveRecord::Base
 
   def self.for_delivery_and_user(delivery, user)
     ids = user.managed_organization_ids_including_deleted
-    OrderItem.for_delivery(delivery).joins(:product).where(products: {organization_id: ids})
+    OrderItem.for_delivery(delivery).includes(:lots, order: [:market, :organization], product: [:organization]).joins(:product).where(products: {organization_id: ids})
   end
 
   def self.for_user_purchases(user)

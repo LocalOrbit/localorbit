@@ -7,7 +7,8 @@ class MarketsController < ApplicationController
   skip_before_action :ensure_user_not_suspended
 
   def show
-    @market = current_market || Market.find(params[:id])
+    subdomain = request.subdomains(Figaro.env.domain.count(".")).first
+    @market = Market.includes(addresses: [:geocoding]).find_by(subdomain: subdomain) || Market.find(params[:id]).includes(addresses: [:geocoding])
     if !@market.nil?
       @market = @market.decorate
     end
