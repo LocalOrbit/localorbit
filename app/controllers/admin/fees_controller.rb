@@ -15,7 +15,7 @@ module Admin
 
       if @market.update_attributes(market_attrs) && @organization.update_attributes(org_attrs)
 
-        if @market.organization.plan.name == 'Solo Supplier' && @market.organization.id.nil?
+        if @market.organization.plan.name == 'Solo Supplier' && @market.organizations.where(org_type: "S").count == 0
           organization_params = {
               :name => @market.name,
               :can_sell => true,
