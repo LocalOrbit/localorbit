@@ -9,7 +9,9 @@
       <thead>
       <tr>
         <th>Schedule</th>
+        <% if policy(:all_supplier).index? %>
         <th>Supplier Delivery</th>
+        <% end %>
         <th>Buyer Pick up/Delivery</th>
         <th></th>
       </tr>
@@ -21,10 +23,12 @@
               <strong><%= link_to "#{delivery.buyer_weekday}, order cutoff #{delivery.order_cutoff} hours before delivery.", [:edit, :admin, @market, delivery] %></strong><br>
               <span class="address">Deliver to: <%= delivery.seller_fulfillment_address %></span>
             </td>
+            <% if policy(:all_supplier).index? %>
             <td class="delivery-time">
               <%= delivery.weekday %><br/>
               <%= delivery.seller_delivery_start %> – <%= delivery.seller_delivery_end %>
             </td>
+            <% end %>
             <td class="pickup-time">
               <% if delivery.seller_fulfillment_location %>
                 <%= delivery.buyer_weekday %><br/>
