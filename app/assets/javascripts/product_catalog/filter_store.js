@@ -42,7 +42,11 @@
     },
 
     onLoadInitialFilters: function(res) {
-      this.filters.topLevel = [{name: "Suppliers", id: "suppliers"}].concat(res.filters);
+      if (this.supplierOnly)
+        this.filters.topLevel = res.filters;
+      else
+        this.filters.topLevel = [{name: "Suppliers", id: "suppliers"}].concat(res.filters);
+
       this.trigger(this.filters);
     },
 

@@ -28,33 +28,25 @@
         else
             orderTemplates = ('');
 
-        if (this.props.supplierId > 0) {
+        if (this.props.supplierId > 0)
             window.lo.ProductActions.newFilters(null, this.props.supplierId);
-            productFilter = ('');
-            productTable = (<lo.ProductTable
-                limit={30}
-                filter={null}
-                cartUrl={this.props.cartUrl}
-                url={this.props.baseUrl + '/products'}
-                supplierOnly={true}
-            />);
-        }
-        else {
-            productFilter = (<lo.ProductFilter
-                deliveryDate={this.props.deliveryDate}
-                selectedType={this.props.selectedType}
-                orderCutoff={this.props.orderCutoff}
-                buyerInfo={this.props.buyerInfo}
-                useTemplates={this.props.useTemplates}
-            />);
-            productTable = (<lo.ProductTable
-                limit={30}
-                filter={null}
-                cartUrl={this.props.cartUrl}
-                url={this.props.baseUrl + '/products'}
-                supplierOnly={false}
-            />);
-        }
+
+        productFilter = (<lo.ProductFilter
+            deliveryDate={this.props.deliveryDate}
+            selectedType={this.props.selectedType}
+            orderCutoff={this.props.orderCutoff}
+            buyerInfo={this.props.buyerInfo}
+            useTemplates={this.props.useTemplates}
+            supplierOnly={this.props.supplierId > 0}
+        />);
+        productTable = (<lo.ProductTable
+            limit={30}
+            filter={null}
+            cartUrl={this.props.cartUrl}
+            url={this.props.baseUrl + '/products'}
+            supplierOnly={this.props.supplierId > 0}
+        />);
+        
         return (
         <div>
           {orderTemplates}

@@ -50,12 +50,13 @@
 </fieldset>
 
 <fieldset>
-  <legend>Supplier drop off or delivery info</legend>
+  <legend>Delivery/Pick-up Info</legend>
 
   <div class="field">
     <%= f.label :seller_fulfillment_location_id %><br>
     <%  if !policy(:all_supplier).index?
-          customer_pu = 'Customer Pick-up'
+          #customer_pu = 'Customer Pick-up'
+          customer_pu = nil
         else
           nil
         end
