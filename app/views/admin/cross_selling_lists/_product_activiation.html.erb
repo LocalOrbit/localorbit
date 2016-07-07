@@ -25,7 +25,7 @@
           <tr>
             <td><%= supplier.name %></td>
             <td><%= supplier.products.count %></td>
-            <td><%= check_box_tag("suppliers[]", value="#{supplier.id}", checked=false) %></td>
+            <td><%= check_box_tag("suppliers[]", supplier.id, @selected_suppliers.include?(supplier.id) ) %></td>
           </tr>
         <% end %>
         </tbody>
@@ -35,14 +35,18 @@
     <div id="product-add-categories" class="bound-list">
       <table>
         <thead>
-          <tr><th>Category</th><th>Products</th><th>&nbsp;</th></tr>
+          <tr>
+            <th>Category</th>
+            <!-- <th>Products</th> -->
+            <th>&nbsp;</th>
+          </tr>
         </thead>
         <tbody>
-        <% @entity.categories.each do |category| %>
+        <% @categories.each do |category| %>
           <tr>
             <td><%= category.name %></td>
-            <td><%= category.products.count %></td>
-            <td><%= check_box_tag("categories[]", value="#{category.id}", checked=false) %></td>
+            <!-- <td><%#= category.products.count %></td> -->
+            <td><%= check_box_tag("categories[]", category.id, @selected_categories.include?(category.id) ) %></td>
           </tr>
         <% end %>
         </tbody>
@@ -61,7 +65,7 @@
           <%= list.fields_for :cross_selling_list_products do |cslp| %>
           <tr>
             <%= cslp.hidden_field :product_id %>
-            <td><%= "#{cslp.object.product.name} (#{cslp.object.product_id})" %></td>
+            <td><%= cslp.object.product.name %></td>
             <td><%= cslp.check_box :active %></td>
           </tr>
           <% end %>
@@ -69,7 +73,6 @@
       </table>
     </div>
 
-    <%# end %>
     <%= list.submit "Update List" %>
   </div>
 </div>

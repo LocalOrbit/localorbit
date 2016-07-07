@@ -22,6 +22,7 @@
             <th>Name</th>
             <th>Publisher</th>
             <th>Status</th>
+            <th># Products</th>
           </tr>
         </thead>
         <tbody>
@@ -30,6 +31,7 @@
             <td class="cross-sell-list-name"><%= link_to list.name, [:admin, @entity, list] %></td>
             <td class="cross-sell-list-subscribers"><%= list.parent.entity.name %></td>
             <td class="cross-sell-list-status"><%= list.status %></td>
+            <td class="cross-sell-list-count"><%= list.products.active.count %></td>
           </tr>
           <% end %>
         </tbody>

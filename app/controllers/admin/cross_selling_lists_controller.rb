@@ -27,7 +27,11 @@ class Admin::CrossSellingListsController < AdminController
 
     # Creators need all products, both need the products on the list.
          @all_products = @cross_selling_list.creator ? @entity.supplier_products.order(:name) : []
+    @selected_list_prods = @cross_selling_list.cross_selling_list_products.includes(product: [:organization, :category])
+    # @selected_products = @cross_selling_list.products.includes(:cross_selling_list_products).order(:name)
     @selected_products = @cross_selling_list.products.order(:name)
+
+    # binding.pry
 
     # Get the categories and suppliers for which all items are selected
     @selected_suppliers = []

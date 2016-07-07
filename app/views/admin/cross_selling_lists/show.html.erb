@@ -17,8 +17,8 @@
 
     <hr />
 
-    <% if @cross_selling_list.products.empty? %>
-      <p><span class="hint">Your Cross Selling list is Empty... <%= link_to "Add products", "#product_management", class: "modal-toggle" %></span></p>
+    <% if @selected_list_prods.empty? %>
+      <p><span class="hint">This Cross Selling list is Empty... <%= link_to "Add products", "#product_management", class: "modal-toggle" if @cross_selling_list.creator %></span></p>
 
     <% else %>
       <p><span class="hint"><%= link_to "Manage products", "#product_management", class: "modal-toggle" %></span></p>
@@ -30,16 +30,16 @@
               <th>Supplier</th>
               <th>Category</th>
               <th>Product</th>
-              <!-- <%# if @cross_selling_list.creator != true %><th>Active?</th><%# end %> -->
+              <% if @cross_selling_list.creator != true %><th>Active?</th><% end %>
             </tr>
           </thead>
           <tbody>
-          <% @cross_selling_list.products.each do |product| %>
+          <% @selected_list_prods.each do |list| %>
             <tr>
-              <td><%= product.organization.name %></td>
-              <td><%= product.category.name %></td>
-              <td><%= product.name %></td>
-              <!-- <%# if @cross_selling_list.creator != true %><th><%#= cslp.active %></th><%# end %> -->
+              <td><%= list.product.organization.name %></td>
+              <td><%= list.product.category.name %></td>
+              <td><%= list.product.name %></td>
+              <% if @cross_selling_list.creator != true %><th><%= "Yes" if list.active %></th><% end %>
             </tr>
           <% end %>
           </tbody>

@@ -14,8 +14,16 @@ class CrossSellingList < ActiveRecord::Base
   has_many :children, class_name: "CrossSellingList", foreign_key: "parent_id"
   has_many :active_children, -> { where(deleted_at: nil) }, class_name: "CrossSellingList", foreign_key: "parent_id"
 
-  has_many :products, through: :cross_selling_list_products
-  has_many :cross_selling_list_products
+  has_many :cross_selling_list_products, inverse_of: :cross_selling_list
+  has_many :products, through: :cross_selling_list_products do
+    def active
+      where("cross_selling_list_products.active = ?", true)
+    end
+  end
+
+  # has_many :active_products, through: :cross_selling_list_products_active
+  # has_many :cross_selling_list_products_active, -> { where(active: true) }, class_name: "CrossSellingListProduct", source: :cross_selling_list
+
   accepts_nested_attributes_for :cross_selling_list_products
 
   # Basic validation

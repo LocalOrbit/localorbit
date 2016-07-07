@@ -5,11 +5,11 @@
   </div>
 
   <div id="tabs" class="popup-body">
-      <ul id="product-add-tab-list" class="tabs wrapping-tabs">
-        <li class="tab"><a href="#product-add-suppliers">Suppliers</a></li>
-        <li class="tab"><a href="#product-add-categories">Categories</a></li>
-        <li class="tab"><a href="#product-add-products">Products</a></li>
-      </ul>
+    <ul id="product-add-tab-list" class="tabs wrapping-tabs">
+      <li class="tab"><a href="#product-add-suppliers">Suppliers</a></li>
+      <li class="tab"><a href="#product-add-categories">Categories</a></li>
+      <li class="tab"><a href="#product-add-products">Products</a></li>
+    </ul>
 
     <div id="product-add-suppliers" class="bound-list">
       <table>
@@ -23,7 +23,7 @@
         <tbody>
         <% @suppliers.each do |supplier| %>
           <tr>
-            <td><%= "#{supplier.name} (#{supplier.id})" %></td>
+            <td><%= supplier.name %></td>
             <td><%= supplier.products.count %></td>
             <td><%= check_box_tag("suppliers[]", supplier.id, @selected_suppliers.include?(supplier.id) ) %></td>
           </tr>
@@ -44,7 +44,7 @@
         <tbody>
         <% @categories.each do |category| %>
           <tr>
-            <td><%= "#{category.name} (#{category.id})" %></td>
+            <td><%= category.name %></td>
             <!-- <td><%#= category.products.count %></td> -->
             <td><%= check_box_tag("categories[]", category.id, @selected_categories.include?(category.id) ) %></td>
           </tr>
@@ -64,7 +64,7 @@
         <tbody>
           <% @all_products.each do |product| %>
           <tr>
-            <td><%= "#{product.name} (#{product.id})" %></td>
+            <td><%= product.name %></td>
             <td><%= check_box_tag "cross_selling_list[product_ids][]", product.id, list.object.products.include?(product) %></td>
           </tr>
           <% end %>
