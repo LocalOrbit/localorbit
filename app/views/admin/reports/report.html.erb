@@ -8,7 +8,7 @@
       <thead>
         <tr>
           <% @presenter.fields.each do |field| %>
-            <% next if (field == :product_code) %>
+            <% next if field == :product_code || (!policy(:all_supplier).index? && field == :seller_payment_status) %>
             <% filter_map = ReportPresenter::FIELD_MAP[field] || {} %>
             <th class="<%= filter_map[:sort] unless @presenter.report == "discount_code_use" %>">
               <% if filter_map[:sort] %>
@@ -134,7 +134,7 @@
             <td class="buyer-payment-status"><%= item.buyer_payment_status %></td>
           <% end %>
 
-          <% if field == :seller_payment_status %>
+          <% if field == :seller_payment_status && policy(:all_supplier).index? %>
             <td class="seller-payment-status"><%= item.seller_payment_status %></td>
           <% end %>
         <% end %>

@@ -38,10 +38,12 @@
               <%= f.select :order_market_id_in, options_from_collection_for_select(@markets, :id, :name, @q.order_market_id_in), { include_blank: nil }, { multiple: true, class: [append_sticky_class(:order_market_id_in, ""),'multiselect'] } %>
             </span>
 
+            <% if policy(:all_supplier).index? %>
             <span class="preserve-alignment mobile-block">
               <%= f.label :product_organization_id_in, "Supplier" %><br>
               <%= f.select :product_organization_id_in, options_from_collection_for_select(@sellers, :id, :name, @q.product_organization_id_in), { include_blank: nil }, { multiple: true, class: [append_sticky_class(:product_organization_id_in, ""),'multiselect'] } %>
             </span>
+            <% end %>
 
             <span class="preserve-alignment mobile-block">
               <%= f.label :order_organization_id_in, "Buyer" %><br>
@@ -94,7 +96,9 @@
           <th>Total</th>
           <th><%= sort_link @q, :delivery_status, "Delivery" %></th>
           <th><%= sort_link @q, :order_payment_status, "Buyer $" %></th>
+          <% if policy(:all_supplier).index? %>
           <th>Supplier $</th>
+          <% end %>
         </tr>
       </thead>
 
@@ -124,7 +128,9 @@
         </td>
         <td class="delivery-status"><%= order_item.delivery_status.titleize %></td>
         <td class="buyer-payment-status"><%= order_item.payment_status.titleize %></td>
+        <% if policy(:all_supplier).index? %>
         <td class="seller-payment-status"><%= order_item.seller_payment_status %></td>
+        <% end %>
       </tr>
       <% end %>
     </table>

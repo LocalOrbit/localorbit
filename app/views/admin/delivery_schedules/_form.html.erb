@@ -72,7 +72,7 @@
   <div class="row row--field">
     <div class="field column column--third column--guttered">
       <%= f.label :day, title: 'Delivery Day' %><br>
-      <%= f.select :day, weekday_options %>
+      <%= f.select :day, weekday_options, {}, :disabled => !policy(:all_supplier).index? %>
     </div
     ><div class="field column column--third column--guttered">
       <%= f.label :seller_delivery_start, "Delivery start" %><br>
