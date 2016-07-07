@@ -1,7 +1,7 @@
 class Payment < ActiveRecord::Base
   audited allow_mass_assignment: true
 
-  PAYMENT_TYPES = {
+    PAYMENT_TYPES = {
     "hub fee" => "Market Fee",
     "lo fee" => "LO Fee",
     "market payment" => "Market Payment",
@@ -10,6 +10,16 @@ class Payment < ActiveRecord::Base
     "seller payment" => "Seller Payment",
     "service" => "Service Fee",
     "service refund" => "Service Refund"
+  }.freeze
+
+  PAYMENT_TYPES_SS = {
+      "hub fee" => "Market Fee",
+      "lo fee" => "LO Fee",
+      "market payment" => "Market Payment",
+      "order" => "Order",
+      "order refund" => "Order Refund",
+      "service" => "Service Fee",
+      "service refund" => "Service Refund"
   }.freeze
 
   PAYMENT_METHODS = {

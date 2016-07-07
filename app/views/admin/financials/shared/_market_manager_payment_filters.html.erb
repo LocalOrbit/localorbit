@@ -22,7 +22,13 @@
     </span>
     <span class="preserve-alignment">
       <%= f.label :payment_type_in, "Payment Type" %><br>
-      <%= f.select :payment_type_in, Payment::PAYMENT_TYPES.map { |pm| [pm[1], pm[0]] }, { include_blank: nil }, { multiple: true, class: "multiselect" } %>
+      <%  if policy(:all_supplier).index?
+            select_list = Payment::PAYMENT_TYPES
+          else
+            select_list = Payment::PAYMENT_TYPES_SS
+          end
+      %>
+      <%= f.select :payment_type_in, select_list.map { |pm| [pm[1], pm[0]] }, { include_blank: nil }, { multiple: true, class: "multiselect" } %>
     </span>
     <%= render "admin/financials/shared/payment_filters_payment_method", { f: f } %>
   </div>
