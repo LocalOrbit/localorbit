@@ -167,7 +167,7 @@ describe "Filter products", :js do
   end
 
   context "as user in multiple organizations" do
-    let!(:user) { create(:user) }
+    let!(:user) { create(:user, :market_manager) }
 
     before do
       user.organizations << org1
