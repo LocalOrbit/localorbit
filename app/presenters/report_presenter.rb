@@ -82,6 +82,7 @@ class ReportPresenter
         :row_total, :net_sale, :delivery_status, :buyer_payment_status, :seller_payment_status
       ],
       mm_only: true,
+      ex_ss: true,
     },
     sales_by_buyer: {
       filters: [:placed_at, :order_number, :market_name, :buyer_name],
@@ -141,6 +142,10 @@ class ReportPresenter
 
   def self.exclude_mm_reports
     REPORT_MAP.keys.select {|k| REPORT_MAP[k][:ex_mm]}
+  end
+
+  def self.exclude_ss_reports
+    REPORT_MAP.keys.select {|k| REPORT_MAP[k][:ex_ss]}
   end
 
   def self.le_mm_reports
@@ -206,7 +211,11 @@ class ReportPresenter
     #   le_mm_reports # TODO check acceptability - r&p fix?
     elsif user.market_manager?
       if FeatureAccess.not_LE_market_manager?(user: user, market: market)
-        seller_reports + mm_reports
+        if !Pundit.policy!(user, :all_supplier).index?
+          seller_reports + mm_reports - exclude_ss_reports
+        else
+          seller_reports + mm_reports
+        end
       else
         mm_reports + le_mm_reports - exclude_mm_reports
       end

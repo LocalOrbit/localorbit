@@ -16,10 +16,12 @@
       <%= f.label :buyers %><br>
     </div>
 
+    <% if policy(:all_supplier).index? %>
     <div class="row">
       <%= f.check_box :sellers %>
       <%= f.label :sellers, "Suppliers" %><br>
     </div>
+    <% end %>
 
     <div class="row">
       <%= f.check_box :market_managers %>
