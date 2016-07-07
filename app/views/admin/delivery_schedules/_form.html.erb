@@ -34,6 +34,7 @@
     <%= f.number_field :order_cutoff, min: 0, max: 504, size: 4 %> hours before delivery
   </div>
 
+  <% if policy(:all_supplier).index? %>
   <div class="field conditional">
     <%= f.check_box :require_delivery %>
     <%= f.label :require_delivery, 'All products from Suppliers on this market will deliver on this cycle.' %>
@@ -45,6 +46,7 @@
     <%= f.label :require_cross_sell_delivery, 'All cross-sell products from Suppliers on this market will deliver on this cycle.' %>
     <span class="tooltip" data-tooltip="Check this box to add this delivery option to all existing products."></span>
   </div>
+  <% end %>
 </fieldset>
 
 <fieldset>
@@ -52,7 +54,13 @@
 
   <div class="field">
     <%= f.label :seller_fulfillment_location_id %><br>
-    <%= f.select :seller_fulfillment_location_id, @market.fulfillment_locations('Direct to customer') %>
+    <%  if !policy(:all_supplier).index?
+          customer_pu = 'Customer Pick-up'
+        else
+          nil
+        end
+    %>
+    <%= f.select :seller_fulfillment_location_id, @market.fulfillment_locations('Direct to customer', customer_pu) %>
   </div>
 
   <div class="field conditional<%= ' is-hidden' unless f.object.seller_fulfillment_location %>" id="market_pickup_option">
@@ -62,7 +70,7 @@
 
   <div class="row row--field">
     <div class="field column column--third column--guttered">
-      <%= f.label :day %><br>
+      <%= f.label :day, title: 'Delivery Day' %><br>
       <%= f.select :day, weekday_options %>
     </div
     ><div class="field column column--third column--guttered">
