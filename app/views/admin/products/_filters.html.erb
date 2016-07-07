@@ -16,7 +16,7 @@
       </span>
       <% end %>
 
-      <% if current_user.multi_organization_membership? %>
+      <% if current_user.multi_organization_membership? && policy(:all_supplier).index? %>
       <span class="preserve-alignment mobile-block">
         <%= f.label :organization_id_in, "Supplier" %><br>
         <%= f.collection_select :organization_id_in, @search_presenter.seller_organizations, :id, :name, {include_blank: nil}, {id: 'filter_organization', multiple: true, class: [append_sticky_class(:organization_id_in, ""),'multiselect']} %>
