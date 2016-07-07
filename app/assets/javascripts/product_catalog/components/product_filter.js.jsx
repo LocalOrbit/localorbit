@@ -12,7 +12,8 @@
       selectedType: React.PropTypes.string.isRequired,
       orderCutoff: React.PropTypes.string.isRequired,
       buyerInfo: React.PropTypes.string.isRequired,
-      useTemplates: React.PropTypes.bool.isRequired
+      useTemplates: React.PropTypes.bool.isRequired,
+      supplierOnly: React.PropTypes.bool.isRequired
     },
 
     getInitialState: function() {
@@ -32,6 +33,7 @@
 
     componentWillMount: function() {
       this.queryUpdated = _.debounce(this.queryUpdated, 750, false);
+      window.lo.FilterStore.supplierOnly = this.props.supplierOnly;
       window.lo.FilterStore.listen(this.onFilterLoad);
       window.lo.FilterActions.loadInitialFilters();
     },
@@ -106,11 +108,16 @@
         )
       }.bind(this));
 
-      var orderTemplates;
+      var orderTemplates, filterText;
       if(this.props.useTemplates)
             orderTemplates = (<a href="#templatePicker" className="app-apply-template modal-toggle">Apply an order template to the cart</a>);
         else
             orderTemplates = ('');
+
+        if (!this.props.supplierOnly)
+            filterText = (' and suppliers');
+        else
+            filterText = ('');
 
         return (
         <div style={{borderTop:"1px solid rgb(222, 222, 222)"}}>
@@ -134,7 +141,7 @@
           </div>
           <div style={{display: (this.state.showFilter) ? "" : "none"}} className="catalog-filter row">
             <div className="filter-level-1">
-              <span>Filter the catalog by product categories and suppliers:</span>
+              <span>Filter the catalog by product categories {filterText}:</span>
               <ul>
                 {parentFilters}
               </ul>
