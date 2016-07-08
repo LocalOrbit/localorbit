@@ -35,7 +35,7 @@
       <td class="market">
         <% if !continued_product && current_user.multi_market_membership?
               product.markets.active.order(:name).each do |m| %>
-                <%= link_to( m.name, [:admin, product.organization.original_market], class: "market") %><br/><br/>
+                <%= link_to( m.name, admin_market_path(m.id), class: "market") %><br/><br/>
               <% end
            end
         %>
