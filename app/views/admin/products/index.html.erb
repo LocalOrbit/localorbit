@@ -32,10 +32,10 @@
     <tr class="product-row <%= row_style %>">
       <%= content_tag(:td, continued_product ? "" : link_to(product.organization_name, [:admin, product.organization]),
                       class: 'seller hidden-mobile') if current_user.multi_organization_membership? %>
-      <td class="market">
+      <td class="market hidden-mobile">
         <% if !continued_product && current_user.multi_market_membership?
               product.markets.active.order(:name).each do |m| %>
-                <%= link_to( m.name, admin_market_path(m.id), class: "market") %><br/><br/>
+                <%= link_to( m.name, admin_market_path(m.id)) %><br/><br/>
               <% end
            end
         %>
