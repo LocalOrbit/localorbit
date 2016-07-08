@@ -16,7 +16,7 @@ class Admin::CrossSellingListsController < AdminController
 
   def show
     # Get the list in question
-    @cross_selling_list = CrossSellingList.includes(:active_children, :products, :cross_selling_list_products).find(params[:id])
+    @cross_selling_list = CrossSellingList.includes(:children, :products, :cross_selling_list_products).find(params[:id])
 
     # Get all the suppliers for the current entity - this may be a Market Organization (with
     # potentially many suppliers) or a Supplier Organization (with only one - themselves)
@@ -26,12 +26,9 @@ class Admin::CrossSellingListsController < AdminController
     @categories = @entity.categories.includes(:products).order(:name)
 
     # Creators need all products, both need the products on the list.
-         @all_products = @cross_selling_list.creator ? @entity.supplier_products.order(:name) : []
+           @all_products = @cross_selling_list.creator ? @entity.supplier_products.order(:name) : []
     @selected_list_prods = @cross_selling_list.cross_selling_list_products.includes(product: [:organization, :category])
-    # @selected_products = @cross_selling_list.products.includes(:cross_selling_list_products).order(:name)
-    @selected_products = @cross_selling_list.products.order(:name)
-
-    # binding.pry
+      @selected_products = @cross_selling_list.products.includes(:cross_selling_list_products).order(:name)
 
     # Get the categories and suppliers for which all items are selected
     @selected_suppliers = []
@@ -112,7 +109,7 @@ class Admin::CrossSellingListsController < AdminController
 
         # If the edits are saved successfully then cascade through the related cross selling lists and products...
              all_subscribers = @cross_selling_list.children.map { |l| {parent_id: l.parent_id, entity_id: l.entity_id} }
-        existing_subscribers = @cross_selling_list.active_children.map { |l| {parent_id: l.parent_id, entity_id: l.entity_id} }
+        existing_subscribers = @cross_selling_list.children.active.map { |l| {parent_id: l.parent_id, entity_id: l.entity_id} }
         selected_subscribers = cross_selling_list_params[:children_ids].select(&:present?).map { |submitted_id| {parent_id: @cross_selling_list.id, entity_id: submitted_id.to_i} }
          overlap_subscribers = existing_subscribers & selected_subscribers
 
