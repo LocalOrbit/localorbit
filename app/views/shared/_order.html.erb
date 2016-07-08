@@ -152,7 +152,7 @@
           <th>Total</th>
           <th>Delivery</th>
           <th>Buyer Payment</th>
-          <% if !current_user.buyer_only? %>
+          <% if !current_user.buyer_only? && policy(:all_supplier).index? %>
             <th>Seller Payment</th>
           <% end %>
           <% if FeatureAccess.order_action_links?(user_order_context: user_order_context) %>
@@ -200,7 +200,7 @@
           </td>
           <td class="delivered-at" style="display:none;"><% item.hidden_field :delivered_at %></td>
           <td class="payment-status"><%= item.object.buyer_payment_status.titleize %></td>
-          <% if !current_user.buyer_only? %>
+          <% if !current_user.buyer_only? && policy(:all_supplier).index? %>
             <td class="seller-status"><%= item.object.seller_payment_status %></td>
           <% end %>
           <% if FeatureAccess.order_action_links?(user_order_context: user_order_context) %>

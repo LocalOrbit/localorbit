@@ -1,5 +1,9 @@
 <%= render 'admin/users/header' %>
+<% if policy(:all_supplier).index? %>
 <p>This is a list of all users in your market, including Market Managers, Suppliers and Buyers.</p>
+<% else %>
+<p>This is a list of all users in your market, including Market Managers and Buyers.</p>
+<% end %>
 <div class="row row--partial">
   <div class="column column--full">
     <div class="table-wrapper">

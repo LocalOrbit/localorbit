@@ -138,8 +138,13 @@ class Market < ActiveRecord::Base
     nil
   end
 
-  def fulfillment_locations(default_name)
-    addresses.visible.order(:name).map {|a| [a.name, a.id] }.unshift([default_name, 0])
+  def fulfillment_locations(default_name, secondary_name=nil)
+    loc = addresses.visible.order(:name).map {|a| [a.name, a.id] }
+    if secondary_name
+      loc.unshift([secondary_name, 0]).unshift([default_name, 0])
+    else
+      loc.unshift([default_name, 0])
+    end
   end
 
   def domain

@@ -136,6 +136,7 @@
     </div>
   <% end %>
 
+  <% if policy(:all_supplier).index? %>
   <div class="row row--field">
     <div class="field column column--half column--guttered">
         <label>Product Label Layout</label>
@@ -152,6 +153,7 @@
         <%= f.check_box :print_multiple_labels_per_item %>&nbsp;Print Multiple Labels Per Item
     </div>
   </div>
+  <% end %>
   <% if current_user.can_manage_market?(@market) %>
     <div class="row row--field">
       <div class="field column column--half column--guttered" id="allowed-payment-options">
