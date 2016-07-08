@@ -6,16 +6,18 @@ class SendOrderEmails
       OrderMailer.delay.buyer_confirmation(order)
     end
 
-    order.sellers.each do |seller|
-      unless seller.users.empty? || !seller.active?
+    if Pundit.policy(context[:buyer], :all_supplier)
+      order.sellers.each do |seller|
+        unless seller.users.empty? || !seller.active?
 
-        @pack_lists = OrdersBySellerPresenter.new(order.items, seller)
-        @delivery = Delivery.find(order.delivery.id).decorate
+          @pack_lists = OrdersBySellerPresenter.new(order.items, seller)
+          @delivery = Delivery.find(order.delivery.id).decorate
 
-        pdf = PackingLists::Generator.generate_pdf(request: request, pack_lists: @pack_lists, delivery: @delivery)
-        csv = PackingLists::Generator.generate_csv(pack_lists: @pack_lists)
+          pdf = PackingLists::Generator.generate_pdf(request: request, pack_lists: @pack_lists, delivery: @delivery)
+          csv = PackingLists::Generator.generate_csv(pack_lists: @pack_lists)
 
-        OrderMailer.delay.seller_confirmation(order, seller, pdf, csv)
+          OrderMailer.delay.seller_confirmation(order, seller, pdf, csv)
+        end
       end
     end
 

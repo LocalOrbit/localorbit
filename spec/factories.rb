@@ -584,7 +584,7 @@ FactoryGirl.define do
     trait :supplier do
       org_type 'S'
       name 'Supplier'
-      activities '{organization_cross_selling:index,payment_history:index,delivery_schedule:index,product:index,dashboard:index,financial:index,order:index,delivery:index,order_item:index,fresh_sheet:index,newsletter:index,promotion:index,discount_code:index,report:index}'
+      activities '{organization_cross_selling:index,payment_history:index,delivery_schedule:index,product:index,dashboard:index,financial:index,order:index,delivery:index,order_item:index,fresh_sheet:index,newsletter:index,promotion:index,discount_code:index,report:index,all_supplier:index}'
     end
 
     trait :start_up_plan do
