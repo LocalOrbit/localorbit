@@ -21,6 +21,7 @@
       </div>
     </fieldset>
     <% end %>
+    <% if policy(:all_supplier).index? %>
     <fieldset>
       <legend>Market Fees</legend>
       <div class="field">
@@ -60,6 +61,7 @@
         </div>
       </div>
     </fieldset>
+    <% end %>
 
     <fieldset>
       <legend>Payment Methods</legend>
