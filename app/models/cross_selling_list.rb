@@ -7,11 +7,17 @@ class CrossSellingList < ActiveRecord::Base
   attr_accessor :suppliers
   attr_accessor :categories
 
+  # KXM This is so February, 2016 - isn't X-Selling exclusively related to Organizations (albeit of types 'M' or 'S')?
   # Entity may reference a supplier org or a market org
   belongs_to :entity, polymorphic: true
 
   belongs_to :parent, class_name: "CrossSellingList"
-  has_many :children, class_name: "CrossSellingList", foreign_key: "parent_id"
+  has_many :children, class_name: "CrossSellingList", foreign_key: "parent_id" do
+    def active
+      where(deleted_at: nil)
+    end
+  end
+
   has_many :active_children, -> { where(deleted_at: nil) }, class_name: "CrossSellingList", foreign_key: "parent_id"
 
   has_many :cross_selling_list_products, inverse_of: :cross_selling_list
@@ -21,9 +27,6 @@ class CrossSellingList < ActiveRecord::Base
     end
   end
 
-  # has_many :active_products, through: :cross_selling_list_products_active
-  # has_many :cross_selling_list_products_active, -> { where(active: true) }, class_name: "CrossSellingListProduct", source: :cross_selling_list
-
   accepts_nested_attributes_for :cross_selling_list_products
 
   # Basic validation
@@ -31,6 +34,9 @@ class CrossSellingList < ActiveRecord::Base
   validates :entity_id, presence: true, numericality: {only_integer: true}
   validates :entity_type, presence: true, length: {maximum: 255}
   validates :status, presence: true, length: {maximum: 255}
+
+  scope :subscribed, -> { where(creator: false) }
+  scope :published, -> { where("published_at IS NOT NULL", "status = Published") }
 
   # KXM flesh this out... may it reference the existing :children relation?
   # scope :active_children, -> { where("#{self.class.table_name}.") }
@@ -87,6 +93,6 @@ class CrossSellingList < ActiveRecord::Base
   end
 
   def subscribers
-    active_children.includes(:entity).map{|c| c.entity.name}.join(", ")
+    children.active.includes(:entity).map{|c| c.entity.name}.join(", ")
   end
 end
