@@ -62,6 +62,8 @@
     },
 
     render: function() {
+      var qty
+      var pid = ('');
       var pricing = (this.props.product.prices.length <= 3 || this.state.showAll) ? this.fullPricing() : this.abbreviatedPricing();
       var quantity = this.props.product.max_available < 500000 ? this.props.product.max_available + " Available" : "";
       var deleteButton = this.state.cartItemQuantity > 0 ? (<a href="javascript:void(0)" onClick={this.deleteQuantity} className="font-icon icon-clear" style={{marginLeft: "10px"}}></a>) : null;
@@ -69,6 +71,13 @@
       if (this.props.promo)
         inputClass = "redesigned app-product-input promo";
 
+      if (this.props.addItems) {
+          qty = (<input style={{width: "75px"}} type="number" placeholder="0" defaultValue={this.state.cartItemQuantity} name="items_to_add[][quantity]" className={inputClass} onKeyDown={this.clearField} onChange={this.updateQuantity} />);
+          pid = (<input type="hidden" name="items_to_add[][product_id]" value={this.props.product.id}/>);
+      }
+      else
+          qty = (<input style={{width: "75px"}} type="number" placeholder="0" defaultValue={this.state.cartItemQuantity} className={inputClass} onKeyDown={this.clearField} onChange={this.updateQuantity}/>);
+        
       return (
         <tr className="cart_item" data-keep-when-zero="yes" data-cart-item={JSON.stringify(this.props.product.cart_item)}>
           <th>
@@ -85,7 +94,8 @@
           <td colSpan="2">
             <div style={{float:"right", background:"#F7F7F7", width:"100%", minWidth: 200, maxWidth: 200, borderRadius: "4px", border:"1px solid #D1D1D1", padding: "4px 0"}}>
               <div className="quantity" style={{float:"left", width:"50%", textAlign:"center"}}>
-                <input style={{width: "75px"}} type="number" placeholder="0" defaultValue={this.state.cartItemQuantity} className={inputClass} onKeyDown={this.clearField} onChange={this.updateQuantity}/>
+                  {qty}
+                  {pid}
               </div>
               <div style={{float:"left", width:"50%", textAlign:"center", padding: "10px 0"}}>
                 <span className="price">{this.props.product.total_price}</span>

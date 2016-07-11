@@ -75,7 +75,9 @@ class UpdatePurchase
 
     context[:status] = "paid"
 
-    record_charge(amount, charge, account)
+    status = record_charge(amount, charge, account)
+    order.items.update_all(payment_status: status)
+
   rescue => e
     process_exception(e, "order", amount, account)
   end
@@ -105,6 +107,7 @@ class UpdatePurchase
       amount: amount,
       status: status
     )
+    status
   end
 
   def record_refund(amount, charge, refund, bank_account, parent_payment)

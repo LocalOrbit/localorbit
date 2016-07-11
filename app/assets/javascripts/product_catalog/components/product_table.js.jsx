@@ -92,7 +92,7 @@
             return (<div>
                 {addTopCategory}
                 {addSecondCategory}
-                <lo.ProductRow key={product.id} product={product} hideImages={this.state.hideImages} promo={is_promo} supplierOnly={this.props.supplierOnly}/>
+                <lo.ProductRow key={product.id} product={product} hideImages={this.state.hideImages} promo={is_promo} supplierOnly={this.props.supplierOnly} addItems={this.props.addItems} />
             </div> );
         }
     },

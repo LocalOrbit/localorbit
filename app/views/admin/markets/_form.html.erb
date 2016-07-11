@@ -154,6 +154,16 @@
     </div>
   </div>
   <% end %>
+  <div class="row row--field">
+    <div class="field column column--half column--guttered">
+      <label>Add Item Pricing</label>
+      <span class="tooltip" data-tooltip="This option defines the pricing rules for items added to an order"></span>
+      <br>
+      <div style="float: left"><%= f.radio_button :add_item_pricing, false %>&nbsp;Use Current Price&nbsp;&nbsp;<br/></div>
+      <div style="float: left"><%= f.radio_button :add_item_pricing, true %>&nbsp;Use Price at Time of Original Order</div>
+    </div>
+   </div>
+  </div>
   <% if current_user.can_manage_market?(@market) %>
     <div class="row row--field">
       <div class="field column column--half column--guttered" id="allowed-payment-options">

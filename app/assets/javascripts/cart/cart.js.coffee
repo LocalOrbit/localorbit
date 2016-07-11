@@ -260,6 +260,8 @@ $ ->
               @view.showErrorMessage(error, $(elToUpdate).closest('.product'))
             else
               @view.showMessage($('<p class="message">Finished with this product? <a href="/products">Continue Shopping</a></p>'), $(elToUpdate).closest('.product-table--mini'))
+        .error (data)=>
+          @updateOrAddItem(data.item)
 
   view = new CartView
     counter: $("header a.cart")
