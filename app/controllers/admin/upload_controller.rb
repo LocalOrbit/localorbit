@@ -50,7 +50,7 @@ class Admin::UploadController < AdminController
       jsn = ::Imports::SerializeProducts.get_json_data(params[:datafile],params[:curr_user]) # product stuff, row 
       @num_products_loaded = 0
       @errors = nil
-      Delayed::Job.enqueue(::ProductUpload::ProductUploadJob.new(jsn, aud.id))
+      Delayed::Job.enqueue(::Jobs::ProductUploadJob.new(jsn, aud.id))
 
 
       # so this should really enqueue all these things below.
