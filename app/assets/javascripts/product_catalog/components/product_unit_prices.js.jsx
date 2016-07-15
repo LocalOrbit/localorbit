@@ -62,7 +62,7 @@
     },
 
     render: function() {
-      var qty
+      var qty;
       var pid = ('');
       var pricing = (this.props.product.prices.length <= 3 || this.state.showAll) ? this.fullPricing() : this.abbreviatedPricing();
       var quantity = this.props.product.max_available < 500000 ? this.props.product.max_available + " Available" : "";
@@ -71,7 +71,7 @@
       if (this.props.promo)
         inputClass = "redesigned app-product-input promo";
 
-      if (this.props.addItems) {
+      if (this.props.orderId) {
           qty = (<input style={{width: "75px"}} type="number" placeholder="0" defaultValue={this.state.cartItemQuantity} name="items_to_add[][quantity]" className={inputClass} onKeyDown={this.clearField} onChange={this.updateQuantity} />);
           pid = (<input type="hidden" name="items_to_add[][product_id]" value={this.props.product.id}/>);
       }

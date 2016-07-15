@@ -6,7 +6,8 @@ module Api
       before_action :require_market_open
       before_action :require_current_organization
       before_action :require_organization_location
-      before_action :require_current_delivery
+      before_action -> { require_current_delivery(params[:order_id]) }
+      before_action -> { require_cart(params[:order_id])}
 
       def index
         @offset = (params[:offset] || 0).to_i
@@ -15,17 +16,18 @@ module Api
         @category_ids = (params[:category_ids] || [])
         @seller_ids = (params[:seller_ids] || [])
         @sort_by = (params[:sort_by] || "top_level_category.lft, second_level_category.lft, general_products.name")
+        @order = !params[:order_id].nil? ? Order.find(params[:order_id]) : nil
 
         featured_promotion = current_market.featured_promotion(current_organization)
-        products = filtered_available_products(@query, @category_ids, @seller_ids)
+        products = filtered_available_products(@query, @category_ids, @seller_ids, @order)
         sellers = {}
         page_of_products = products
                                .offset(@offset)
                                .limit(@limit)
-                               .map { |p| format_general_product_for_catalog(p, sellers) }
+                               .map { |p| format_general_product_for_catalog(p, sellers, @order) }
         render :json => {
                    product_total: products.count(:all),
-                   featured_promotion: { :details => featured_promotion, :product => featured_promotion ? format_general_product_for_catalog(featured_promotion.product.general_product, sellers) : nil },
+                   featured_promotion: { :details => featured_promotion, :product => featured_promotion ? format_general_product_for_catalog(featured_promotion.product.general_product, sellers, @order) : nil },
                    products: page_of_products,
                    sellers: sellers
                }
@@ -33,7 +35,7 @@ module Api
 
       private
 
-      def filtered_available_products(query, category_ids, seller_ids)
+      def filtered_available_products(query, category_ids, seller_ids, order)
         p_sql = Product.connection.unprepared_statement do
           current_delivery
               .object
@@ -53,6 +55,7 @@ module Api
                               JOIN organizations supplier ON general_products.organization_id=supplier.id
                               JOIN market_organizations ON general_products.organization_id = market_organizations.organization_id
                               AND market_organizations.market_id = #{current_market.id}")
+            .filter_by_current_order(order)
             .filter_by_name_or_category_or_supplier(query)
             .filter_by_categories(category_ids)
             .filter_by_suppliers(seller_ids)
@@ -62,7 +65,7 @@ module Api
             .uniq
       end
 
-      def format_general_product_for_catalog(general_product, sellers)
+      def format_general_product_for_catalog(general_product, sellers, add_to_order)
         general_product = general_product.decorate
 
         sellers[general_product.organization.id] ||= {
@@ -96,15 +99,13 @@ module Api
 
         available_inventory = product.available_inventory(current_delivery.deliver_on)
 
-        prices = product.prices_for_market_and_organization(current_market, current_organization).map { |price|
-          format_price_for_catalog(price)
-        }
+        prices = Orders::UnitPriceLogic.prices(product, current_market, current_organization, current_market.add_item_pricing && @order ? @order.created_at : Time.current.end_of_minute).map { |price| format_price_for_catalog(price)}
 
         # TODO There's a brief window where prices and inventory may change after
         # the general products are found, but before the response is fully generated.
         # If all products become ineligible on a general product, it will appear in
         # the catalog without any prices or units available.
-        if prices && prices.length > 0 && available_inventory && available_inventory > 0 && !product.cart_item.nil?
+        if prices && prices.length > 0 && available_inventory && available_inventory > 0 && (!product.cart_item.nil? || @order)
           cart_item = product.cart_item.decorate
 
           {

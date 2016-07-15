@@ -1,6 +1,7 @@
 $ ->
   return unless $(".cart_item, #product-search-table").length
   selector = $('.cart_item')
+  order_id = $('.add-items-to-order').data('order-id')
 
   window.CartNotificationDuration = 2000
 
@@ -178,7 +179,7 @@ $ ->
 
   class CartModel
     constructor: (opts)->
-      {@url, @view} = opts
+      {@url, @orderId, @view} = opts
 
       @items = _.map opts.items, (el)->
         CartItem.buildWithElement(el)
@@ -228,7 +229,7 @@ $ ->
       @view.updateDeliveryFees(data.delivery_fees)
       @view.updateTotal(data.total)
 
-    saveItem: (productId, quantity, elToUpdate)->
+    saveItem: (productId, quantity, elToUpdate, orderId)->
       # TODO: Add validation for maximum input to prevent
       #       users from entering numbers greater than available
       #       quantities
@@ -243,7 +244,7 @@ $ ->
         @view.showErrorMessage(errorMessage, $(elToUpdate).closest('.product'))
         $(elToUpdate).closest(".quantity").addClass("field_with_errors")
       else
-        $.post(@url, {"_method": "put", product_id: productId, quantity: quantity} )
+        $.post(@url, {"_method": "put", product_id: productId, quantity: quantity, order_id: orderId} )
           .done (data)=>
 
             error = data.error
@@ -254,7 +255,8 @@ $ ->
             else
               @updateOrAddItem(data.item)
 
-            @updateTotals(data)
+            if !order_id
+              @updateTotals(data)
 
             if error
               @view.showErrorMessage(error, $(elToUpdate).closest('.product'))
@@ -268,6 +270,7 @@ $ ->
 
   model = new CartModel
     url: $(".cart_items").data("cart-url")
+    orderId: order_id
     view: view
     items: $(".cart_item")
 
@@ -333,8 +336,9 @@ $ ->
   window.insertCartItemEntry = (el) ->
       model.updateOrAddItem el.data("cart-item"), el, true, true
 
+  if !order_id
+    view.updateCounter()
 
-  view.updateCounter()
   setupAlternateOrderPage()
 
   $(document.body).on 'cart.inputFinished', ".cart_item .quantity input", ->
@@ -342,15 +346,15 @@ $ ->
 
     if this.value.length > 0 && !$(this).hasClass('invalid-input')
       quantity = parseInt($(this).val())
-      model.saveItem(data.product_id, quantity, this)
+      model.saveItem(data.product_id, quantity, this, order_id)
 
     if this.value.length == 0 && !$(this).hasClass("in-cart")
-      model.saveItem(data.product_id, 0, this)
+      model.saveItem(data.product_id, 0, this, order_id)
 
   $(document.body).on 'click', ".cart_item .icon-clear", (e)->
     e.preventDefault()
     data = $(this).closest(".cart_item").data("cart-item")
-    model.saveItem(data.product_id, 0)
+    model.saveItem(data.product_id, 0, order_id)
 
   $(document.body).on 'click', "input[type=radio]", (e)->
     $(".payment-fields").addClass("is-hidden")

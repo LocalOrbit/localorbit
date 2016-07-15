@@ -185,6 +185,8 @@ class Admin::OrdersController < AdminController
       render :show
       return false
     end
+    current_cart.destroy
+    session.delete(:cart_id)
     true
   end
 

@@ -219,25 +219,27 @@
           session[:current_delivery_id] = order.delivery.id
           session[:current_organization_id] = order.organization.id
           %>
-          <%= react_component('lo.ProductFilter', {
-              deliveryDate: order.delivery.buyer_deliver_on,
-              orderCutoff: order.delivery.cutoff_time,
-              buyerInfo: order.organization.name,
-              useTemplates: FeatureAccess.order_templates?(market: current_market),
-              supplierId: nil
-          }) %>
-        <div style="height:700px; overflow-y: scroll">
-          <%= react_component('lo.ProductCatalog', {
-              baseUrl: "#{request.base_url}/api/v1/",
-              cartUrl: nil,
-              deliveryDate: order.delivery.buyer_deliver_on,
-              orderCutoff: order.delivery.cutoff_time,
-              buyerInfo: order.organization.name,
-              limit: 10,
-              useTemplates: FeatureAccess.order_templates?(market: current_market),
-              supplierId: nil,
-              addItems: true
-          }) %>
+          <div class="add-items-to-order" data-order-id="<%= order.id %>">
+            <%= react_component('lo.ProductFilter', {
+                deliveryDate: order.delivery.buyer_deliver_on,
+                orderCutoff: order.delivery.cutoff_time,
+                buyerInfo: order.organization.name,
+                useTemplates: FeatureAccess.order_templates?(market: current_market),
+                supplierId: nil
+            }) %>
+          <div style="height:600px; overflow-y: scroll">
+            <%= react_component('lo.ProductCatalog', {
+                baseUrl: "#{request.base_url}/api/v1/",
+                cartUrl: cart_path,
+                deliveryDate: order.delivery.buyer_deliver_on,
+                orderCutoff: order.delivery.cutoff_time,
+                buyerInfo: order.organization.name,
+                limit: 10,
+                useTemplates: FeatureAccess.order_templates?(market: current_market),
+                supplierId: nil,
+                orderId: order.id
+            }) %>
+          </div>
         </div>
       <% end %>
     </div>

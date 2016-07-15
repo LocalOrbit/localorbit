@@ -7,24 +7,28 @@
 
   var ProductCatalog = React.createClass({
     propTypes: {
-      cartUrl: React.PropTypes.string.isRequired,
+      cartUrl: React.PropTypes.string,
       baseUrl: React.PropTypes.string.isRequired,
       deliveryDate: React.PropTypes.string.isRequired,
-      selectedType: React.PropTypes.string.isRequired,
+      selectedType: React.PropTypes.string,
       orderCutoff: React.PropTypes.string.isRequired,
       buyerInfo: React.PropTypes.string.isRequired,
       useTemplates: React.PropTypes.bool.isRequired,
       supplierId: React.PropTypes.number,
-      addItems: React.PropTypes.bool
+      orderId: React.PropTypes.number
     },
 
+      componentWillMount: function() {
+          window.lo.ProductStore.orderId = this.props.orderId;
+      },
+      
       render: function() {
 
         var orderTemplates;
         var productFilter;
         var productTable;
 
-        if(this.props.useTemplates && !this.props.addItems)
+        if(this.props.useTemplates && !this.props.orderId)
             orderTemplates = (<lo.TemplatePicker baseUrl={this.props.baseUrl} cartUrl={this.props.cartUrl} />);
         else
             orderTemplates = ('');
@@ -32,7 +36,7 @@
         if (this.props.supplierId > 0)
             window.lo.ProductActions.newFilters(null, this.props.supplierId);
 
-        if (!this.props.addItems)
+        if (!this.props.orderId)
             productFilter = (<lo.ProductFilter
             deliveryDate={this.props.deliveryDate}
             selectedType={this.props.selectedType}
@@ -50,7 +54,7 @@
             cartUrl={this.props.cartUrl}
             url={this.props.baseUrl + '/products'}
             supplierOnly={this.props.supplierId > 0}
-            addItems={this.props.addItems}
+            orderId={this.props.orderId}
         />);
         
         return (

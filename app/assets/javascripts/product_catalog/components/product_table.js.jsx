@@ -9,7 +9,7 @@
   var ProductTable = React.createClass({
     propTypes: {
       url: React.PropTypes.string.isRequired,
-      cartUrl: React.PropTypes.string.isRequired
+      cartUrl: React.PropTypes.string
     },
 
     getInitialState: function() {
@@ -92,7 +92,7 @@
             return (<div>
                 {addTopCategory}
                 {addSecondCategory}
-                <lo.ProductRow key={product.id} product={product} hideImages={this.state.hideImages} promo={is_promo} supplierOnly={this.props.supplierOnly} addItems={this.props.addItems} />
+                <lo.ProductRow key={product.id} product={product} hideImages={this.state.hideImages} promo={is_promo} supplierOnly={this.props.supplierOnly} orderId={this.props.orderId} />
             </div> );
         }
     },
@@ -116,14 +116,18 @@
         rows = (<p>No products found. Try broadening your search, removing any filters, or changing your delivery date to see more results.</p>)
       }
 
+      var fullWindow = !this.props.orderId;
+      var scrollThreshold = fullWindow ? 1000 : 50;
+
       return (
-        <div className="product-list cart_items" style={{padding: "20px"}} data-cart-url={this.props.cartUrl}>
+        <div className="product-list cart_items" style={{padding: "20px"}} data-cart-url={this.props.cartUrl} >
           <InfiniteScroll
             pageStart={0}
             hasMore={self.state.hasMore}
-            threshold={500}
+            threshold={scrollThreshold}
             loadMore={self.loadMore}
             loader={(<p>Loading products....</p>)}
+            useWindow={fullWindow}
           >
             <div id="product-search-table" className="product-images-link row pull-right"> <a href="javscript:void(0);" onClick={self.toggleImages}><i className="font-icon" data-icon=""></i> {(self.state.hideImages) ? "Show " : "Hide "} Product Images</a> </div>
               {promo}

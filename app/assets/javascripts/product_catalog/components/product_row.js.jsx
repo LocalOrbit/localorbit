@@ -19,7 +19,7 @@
       var long_description = <div className="long-description-info is-hidden with-anchor top-anchor popup" id={product_id}><div className="popup-header">Details <button className="close"><i className="font-icon icon-close"></i></button></div><div className="popup-body">{gp.long_description}</div></div>
 
       var unit_prices = _.map(gp.available, function(p) {
-        return <lo.ProductUnitPrices key={p.id} product={p} promo={self.props.promo} addItems={self.props.addItems} />
+        return <lo.ProductUnitPrices key={p.id} product={p} promo={self.props.promo} orderId={self.props.orderId} />
       });
 
       return (

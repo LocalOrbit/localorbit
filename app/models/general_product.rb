@@ -57,4 +57,13 @@ class GeneralProduct < ActiveRecord::Base
   def self.filter_by_active_org
     where("supplier.active = 'true' AND market_organizations.deleted_at IS NULL")
   end
+
+  def self.filter_by_current_order(order)
+    if order
+      ids = order.items.map(&:product).map(&:general_product_id).flatten
+      where("general_products.id NOT IN (?)", ids)
+    else
+      all
+    end
+  end
 end
