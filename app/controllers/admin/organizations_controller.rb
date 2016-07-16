@@ -52,10 +52,7 @@ module Admin
         disable_supplier_inventory
       end
 
-      op = organization_params
-      op[:org_type] = update_org_type(params[:organization][:can_sell])
-
-      if @organization.update_attributes(op)
+      if @organization.update_attributes(organization_params)
         redirect_to [:admin, @organization], notice: "Saved #{@organization.name}"
       else
         render action: :show
