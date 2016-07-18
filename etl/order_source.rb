@@ -1,4 +1,3 @@
-
 require 'pg'
 
 class OrderSource
@@ -7,6 +6,8 @@ class OrderSource
 
   Order_Query = '
     select
+    m.organization_id,
+    o.id order_id,
     oi.id order_item_id,
     m.name market,
     mal.city market_city,
@@ -49,7 +50,8 @@ class OrderSource
     da.zip delivery_zip,
     da.country delivery_country,
     o.payment_status buyer_payment_status,
-    oi.payment_status supplier_payment_status
+    oi.payment_status supplier_payment_status,
+    m.active market_active
     from orders o, order_items oi, markets m,
     (select min(id) loc_id, market_id from market_addresses group by market_id) ma, market_addresses mal,
     organizations buyer, organizations seller, locations ba, locations sa, products p, units u, categories c, deliveries d, delivery_schedules ds left join market_addresses da on ds.buyer_pickup_location_id = da.id
@@ -67,6 +69,7 @@ class OrderSource
     and o.delivery_id = d.id
     and d.delivery_schedule_id = ds.id
     and o.updated_at > current_date - integer \'' + ENV['ETL_DAYS'].to_s + '\'
+    and m.demo = false
     order by o.id'
 
   def initialize(connect_url)

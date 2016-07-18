@@ -12,9 +12,11 @@ class OrderDestination
     @conn = PGconn.open(:host =>  host, :port => port, :dbname => db, :user=> username, :password=> password)
 
     #@conn = PG.connect(connect_url)
-    @conn.prepare('check_order', 'SELECT 1 order_exists FROM dw_orders WHERE order_item_id = $1')
+    @conn.prepare('check_order', 'SELECT 1 order_exists FROM dw_orders WHERE order_id = $1')
     @conn.prepare('insert_order', 'INSERT INTO dw_orders
-    (order_item_id,
+    (organization_id,
+    order_id,
+    order_item_id,
     market,
     market_city,
     market_state,
@@ -52,56 +54,60 @@ class OrderDestination
     delivery_country,
     buyer_payment_status,
     supplier_payment_status,
+    market_active,
     last_updated)
     VALUES
-    ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19,$20,$21,$22,$23,$24,$25,$26,$27,$28,$29,$30,$31,$32,$33,$34,$35,$36,$37,$38,$39)
+    ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19,$20,$21,$22,$23,$24,$25,$26,$27,$28,$29,$30,$31,$32,$33,$34,$35,$36,$37,$38,$39,$40,$41,$42)
     ')
     @conn.prepare('update_order', 'UPDATE dw_orders SET
-    market                  = $2,
-    market_city             = $3,
-    market_state            = $4,
-    market_zip              = $5,
-    market_country          = $6,
-    placed_on               = $7,
-    order_number            = $8,
-    buyer                   = $9,
-    buyer_city              = $10,
-    buyer_state             = $11,
-    buyer_zip               = $12,
-    buyer_country           = $13,
-    product                 = $14,
-    short_description       = $15,
-    product_code            = $16,
-    product_category        = $17,
-    supplier                = $18,
-    supplier_city           = $19,
-    supplier_state          = $20,
-    supplier_zip            = $21,
-    supplier_country        = $22,
-    quantity                = $23,
-    unit                    = $24,
-    unit_description        = $25,
-    unit_price              = $26,
-    gross_price             = $27,
-    actual_discount         = $28,
-    net_price               = $29,
-    delivery_status         = $30,
-    delivery_datetime       = $31,
-    shipping_terms          = $32,
-    delivery_city           = $33,
-    delivery_state          = $34,
-    delivery_zip            = $35,
-    delivery_country        = $36,
-    buyer_payment_status    = $37,
-    supplier_payment_status = $38,
-    last_updated            = $39
-    WHERE order_item_id = $1
+    organization_id         = $1,
+    order_id                = $2,
+    market                  = $4,
+    market_city             = $5,
+    market_state            = $6,
+    market_zip              = $7,
+    market_country          = $8,
+    placed_on               = $9,
+    order_number            = $10,
+    buyer                   = $11,
+    buyer_city              = $12,
+    buyer_state             = $13,
+    buyer_zip               = $14,
+    buyer_country           = $15,
+    product                 = $16,
+    short_description       = $17,
+    product_code            = $18,
+    product_category        = $19,
+    supplier                = $20,
+    supplier_city           = $21,
+    supplier_state          = $22,
+    supplier_zip            = $23,
+    supplier_country        = $24,
+    quantity                = $25,
+    unit                    = $26,
+    unit_description        = $27,
+    unit_price              = $28,
+    gross_price             = $29,
+    actual_discount         = $30,
+    net_price               = $31,
+    delivery_status         = $32,
+    delivery_datetime       = $33,
+    shipping_terms          = $34,
+    delivery_city           = $35,
+    delivery_state          = $36,
+    delivery_zip            = $37,
+    delivery_country        = $38,
+    buyer_payment_status    = $39,
+    supplier_payment_status = $40,
+    market_active           = $41,
+    last_updated            = $42
+    WHERE order_item_id = $3
     ')
   end
 
   def write(row)
     time = Time.now
-    row_exists = @conn.exec_prepared('check_order', [row[:order_item_id]])
+    row_exists = @conn.exec_prepared('check_order', [row[:order_id]])
     if row_exists.ntuples > 0
       exec_insert_update('update_order', row, time)
     else
@@ -120,6 +126,8 @@ class OrderDestination
 
   def exec_insert_update(type, row, time)
     @conn.exec_prepared(type, [
+        row[:organization_id],
+        row[:order_id],
         row[:order_item_id],
         row[:market],
         row[:market_city],
@@ -158,6 +166,7 @@ class OrderDestination
         row[:delivery_country],
         row[:buyer_payment_status],
         row[:supplier_payment_status],
+        row[:market_active],
         time
     ])
   end
