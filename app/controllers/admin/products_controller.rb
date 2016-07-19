@@ -35,31 +35,7 @@ module Admin
     end
 
     def search_products(search)
-      # Get the managed prods (the meat of the original query)...
-      # managed_prods = current_user.managed_products
-
-      # # ...and the cross sold items.
-      # x_sold_prods = current_market.cross_selling_list_subscriptions.published.first.products.active
-
-      # # create an array of ALL product ids
-      # prod_ids = x_sold_prods.map{|p| p.id} + managed_prods.map{|p| p.id}
-
-      # # ...and search for them.  This returns the ActiveRecord Relation class needed for search (below)
-      # pool = Product.where(id: prod_ids)
-
-      org_ids = current_user.managed_organizations.map{|o| o.id}
-
-      # KXM N+1 queries still for markets and units (odd, that - units is joined below...)
-      pool = Product
-        .joins('LEFT JOIN cross_selling_list_products cslp ON cslp.product_id = products.id')
-        .joins('LEFT JOIN cross_selling_lists csl ON csl.id = cslp.cross_selling_list_id')
-        .joins('LEFT JOIN organizations o ON o.id = products.organization_id')
-        .joins('LEFT JOIN units u ON u.id = products.unit_id')
-        .where("(cslp.active = true AND csl.deleted_at IS NULL AND csl.status = 'Published' AND csl.creator IS NOT true ) OR (o.can_sell = true AND o.active IS NOT false AND o.id IN (?))",org_ids)
-
-      # binding.pry
-      results = pool.search(search.query)
-
+      results = current_user.managed_products.search(search.query)
       results.sorts = "name asc" if results.sorts.empty?
       results
     end
