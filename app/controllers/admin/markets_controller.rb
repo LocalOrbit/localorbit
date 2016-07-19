@@ -131,7 +131,8 @@ class Admin::MarketsController < AdminController
     if current_user.admin?
       columns.concat([
         :active,
-        :stripe_standalone
+        :stripe_standalone,
+        :demo
       ])
     end
     params.require(:market).permit(columns)
