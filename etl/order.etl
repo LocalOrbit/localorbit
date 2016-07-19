@@ -21,6 +21,8 @@ end
 transform do |row|
   num_rows = num_rows + 1
   newrow = {}
+  newrow[:organization_id] =          row[:organization_id]
+  newrow[:order_id] =                 row[:order_id]
   newrow[:order_item_id] =            row[:order_item_id]
   newrow[:market] =                   row[:market]
   newrow[:market_city] =              row[:market_city]
@@ -59,6 +61,7 @@ transform do |row|
   newrow[:delivery_country] =         row[:delivery_country]
   newrow[:buyer_payment_status] =     row[:buyer_payment_status]
   newrow[:supplier_payment_status] =  row[:supplier_payment_status]
+  newrow[:market_active] =            row[:market_active]
 
   newrow
 end
