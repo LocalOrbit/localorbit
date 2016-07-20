@@ -47,6 +47,7 @@ class DeliverySchedule < ActiveRecord::Base
   end
 
   def products_available_for_sale(organization, deliver_on_date=Time.current.end_of_minute)
+    # KXM It will likely be necessary to create an Arel "Union" with Product.visible.cross_selling_list_items
     participating_products.available_for_sale(market, organization, deliver_on_date)
   end
 

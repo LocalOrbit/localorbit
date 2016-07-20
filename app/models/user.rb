@@ -397,14 +397,11 @@ class User < ActiveRecord::Base
 
   def managed_products
     org_ids = managed_organizations.map(&:id)
+    # KXM Original code here as a convenience for when this whole thing blows up in my face.  Boy Scouts motto: Always be prepared
     # Product.visible.seller_can_sell.where(organization_id: org_ids)
 
-    pool = Product.visible
-      .joins('LEFT JOIN cross_selling_list_products cslp ON cslp.product_id = products.id')
-      .joins('LEFT JOIN cross_selling_lists csl ON csl.id = cslp.cross_selling_list_id')
-      .joins('LEFT JOIN organizations o ON o.id = products.organization_id')
-      .joins('LEFT JOIN units u ON u.id = products.unit_id')
-      .where("((cslp.active = true AND csl.deleted_at IS NULL AND csl.status = 'Published' AND csl.creator IS NOT true ) OR (o.can_sell = true AND o.active IS NOT false AND o.id IN (?)))", org_ids)
+    # KXM create an Arel Union with Product.visible.cross_selling_list_items
+    Product.visible.seller_can_sell.where(organization_id: org_ids)
   end
 
   def buyers_for_select
