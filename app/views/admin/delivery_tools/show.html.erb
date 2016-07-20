@@ -2,10 +2,50 @@
   <div class="column column--eleven-twelfths">
     <h1><i class="font-icon" data-icon="&#xe022;"></i>&nbsp; Upcoming Deliveries</h1>
 
+    <% if @pick_list_delivery_schedules.empty? %>
+      <h2>You currently have no upcoming deliveries.</h2>
+    <% else %>
+      <p>Here is a list of all upcoming supplier deliveries and orders for your market.</p>
+
+      <% @pick_list_delivery_schedules.each do |delivery_schedule| %>
+        <% if not delivery_schedule.deliveries.empty? and not delivery_schedule.deliveries.future.empty? %>
+          <% binding.pry %>
+          <% all_deliveries = delivery_schedule.deliveries.future %>
+          <% first_delivery = all_deliveries.first.decorate %>
+          <div class="upcoming-delivery">
+            <span class="market"><%= delivery_schedule.market.name %></span><br><br>
+            <span>Drop-off begins:</span><br>
+            <h2 class="upcoming-delivery-date"><%= first_delivery.upcoming_delivery_date_heading %></h2>
+            <% if FeatureAccess.not_LE_market_manager?(user:current_user, market: current_market) %>
+              Deliver to:
+              <%= content_tag :div, first_delivery.deliver_to_name, class: "location-name" if first_delivery.deliver_to_name.present? %>
+              <div class="location"><%= delivery_schedule.decorate.seller_fulfillment_address %></div>
+            <% end %>
+
+            <% dc = UserDeliveryContext.build(user: current_user, delivery: first_delivery) 
+               access_master_packing_slips = FeatureAccess.master_packing_slips?(user_delivery_context: dc) && policy(:all_supplier).index?
+               access_packing_labels = FeatureAccess.packing_labels?(user_delivery_context: dc)
+               tool_count = 3
+               tool_count += 1 if access_master_packing_slips
+               tool_count += 2 if access_packing_labels
+            %> 
+          </div>
+          <% else %>
+          
+          <% end %>
+
+        <% end %>
+      <% end %>   
+      
+      
+
+<!--
+
     <% if @upcoming_deliveries.empty? %>
       <h2>You currently have no upcoming deliveries.</h2>
     <% else %>
       <p>This is a list of all upcoming deliveries for your market.</p>
+
       <% @upcoming_deliveries.each do |delivery| %>
         <div class="upcoming-delivery">
           <span class="market"><%= delivery.delivery_schedule.market.name %></span><br><br>
@@ -49,5 +89,8 @@
         </div>
       <% end %>
     <% end %>
+
+-->
+
   </div>
 </div>

@@ -181,6 +181,17 @@ class Market < ActiveRecord::Base
     scope
   end
 
+  # should return a set (an iterable) of hashes of seller delivery start time and seller fulfillment location (dropoff loc) for each on the market
+  def delivery_schedule_sets_for_pick_lists
+    all_options = []
+    delivery_schedules.each do |ds|
+      all_options << {time:ds.seller_delivery_start,
+      loc:ds.seller_fulfillment_location_id}
+    end
+    s = Set.new all_options 
+    s.to_a
+  end
+
   def featured_promotion(buyer)
     promotion = promotions.active.first
     product = promotion.try(:product)
