@@ -9,7 +9,6 @@
 
       <% @pick_list_delivery_schedules.each do |delivery_schedule| %>
         <% if not delivery_schedule.deliveries.empty? and not delivery_schedule.deliveries.future.empty? %>
-          <% binding.pry %>
           <% all_deliveries = delivery_schedule.deliveries.future %>
           <% first_delivery = all_deliveries.first.decorate %>
           <div class="upcoming-delivery">
