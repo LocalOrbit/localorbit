@@ -181,8 +181,6 @@ class Organization < ActiveRecord::Base
   end
 
   def subscription_eligible?
-    # KXM Do we need plan_payable?  I think not...
-    # !subscribed && next_service_payment_at && next_service_payment_at <= Time.now && plan_payable?
     !subscribed && next_service_payment_at && next_service_payment_at <= Time.now
   end
 
