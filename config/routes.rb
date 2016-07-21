@@ -32,6 +32,12 @@ Rails.application.routes.draw do
     end
   end
 
+  concern :confirmable do
+    member do
+      patch :confirm_pending
+    end
+  end
+
   # Hoping that this is the embryo of a RESTful API for future development in
   # the app, especially LocalEyes features.
   namespace :api do
@@ -50,7 +56,7 @@ Rails.application.routes.draw do
   end
 
   namespace :admin do
-    resources :markets, concerns: [:bank_account, :activatable], except: [:edit] do
+    resources :markets, concerns: [:bank_account, :activatable, :confirmable], except: [:edit] do
       resources :market_addresses,   as: :addresses,  path: :addresses
       resources :market_managers,    as: :managers,   path: :managers
       resources :delivery_schedules, path: :deliveries, concerns: [:activatable]
@@ -61,7 +67,6 @@ Rails.application.routes.draw do
       resources :deposit_accounts, only: [:index, :new, :create, :destroy]
       resource  :stripe, controller: :market_stripe, only: [:show]
       get :payment_options
-      patch :confirm_pending
     end
 
     resources :roles
