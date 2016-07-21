@@ -26,7 +26,7 @@ class Admin::CrossSellingListsController < AdminController
     @categories = @entity.categories.includes(:products).order(:name)
 
     # Creators need all products, both need the products on the list.
-    # KXM The 'visible' scope is an attempt to limit products to those that are actually, you know, _visible_.  It doesn't work, but something like it should
+    # KXM Assert Product.visible for cross_selling_list_products
            @all_products = @cross_selling_list.creator ? @entity.supplier_products.visible.order(:name) : []
     @selected_list_prods = @cross_selling_list.cross_selling_list_products.includes(product: [:organization, :category])
       @selected_products = @cross_selling_list.products.includes(:cross_selling_list_products).order(:name)

@@ -7,8 +7,8 @@ class CrossSellingList < ActiveRecord::Base
   attr_accessor :suppliers
   attr_accessor :categories
 
-  # KXM This is so February, 2016 - isn't X-Selling exclusively related to Organizations (albeit of types 'M' or 'S')?
-  # Entity may reference a supplier org or a market org
+  # KXM Relate X-Sell to Organization and remove polymorphic references?
+  # Entity may reference any Organization of type 'S' or 'M' (supplier orgs or market orgs)
   belongs_to :entity, polymorphic: true
 
   belongs_to :parent, class_name: "CrossSellingList"
@@ -37,12 +37,6 @@ class CrossSellingList < ActiveRecord::Base
 
   scope :subscribed, -> { where(creator: false) }
   scope :published, -> { where("published_at IS NOT NULL", "status = Published") }
-
-  # KXM flesh this out... may it reference the existing :children relation?
-  # scope :active_children, -> { where("#{self.class.table_name}.") }
-
-  # Can this specify only_integer without mandating presence: true?
-  # validates :parent_id, numericality: {only_integer: true}
 
   def published?
     status == 'Published' && published_at && published_at.past?
@@ -82,7 +76,6 @@ class CrossSellingList < ActiveRecord::Base
     status == "Draft"
   end
 
-  # KXM Manage publication automatically (after save)?
   def manage_publication!(params)
     if published?
       unpublish!(status) if status != "Published"
