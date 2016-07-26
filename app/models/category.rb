@@ -21,6 +21,10 @@ class Category < ActiveRecord::Base
     each_with_level(root.descendants) do |category, depth|
       names[depth] = category.name
 
+      if depth == 1
+        names[2..2] = nil
+      end
+
       if depth < 3
         hash[names[1]] << [names[2..2].join(" / "), category.id]
       end
