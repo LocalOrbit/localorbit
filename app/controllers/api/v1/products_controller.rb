@@ -95,7 +95,7 @@ module Api
       end
 
       def format_product_for_catalog(product)
-        product = product.decorate(context: {current_cart: current_cart})
+        product = product.decorate(context: {current_cart: current_cart, order: @order} )
 
         available_inventory = product.available_inventory(current_delivery.deliver_on)
 
