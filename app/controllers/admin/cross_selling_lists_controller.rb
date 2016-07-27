@@ -23,13 +23,18 @@ class Admin::CrossSellingListsController < AdminController
     @suppliers = @entity.suppliers.includes(:products).order(:name)
 
     # Get all the categories for all the products for all the suppliers[ for this Market].  Damn, what a mess.
-    @categories = @entity.categories.includes(:products).order(:name)
+    # @categories = @entity.categories.includes(:products).order(:name)
+    if @cross_selling_list.creator then
+      @categories = Category.for_products(@entity.supplier_products).includes(:products).order(:name)
+      @all_products = @entity.supplier_products.order(:name)
+    else
+      @categories = Category.for_products(@cross_selling_list.products).includes(:products).order(:name)
+      @all_products = []
+    end
 
-    # Creators need all products, both need the products on the list.
     # KXM Assert Product.visible for cross_selling_list_products
-           @all_products = @cross_selling_list.creator ? @entity.supplier_products.visible.order(:name) : []
     @selected_list_prods = @cross_selling_list.cross_selling_list_products.includes(product: [:organization, :category])
-      @selected_products = @cross_selling_list.products.includes(:cross_selling_list_products).order(:name)
+      @selected_products = @cross_selling_list.products.active.includes(:cross_selling_list_products).order(:name)
 
     # Get the categories and suppliers for which all items are selected
     @selected_suppliers = []
@@ -88,7 +93,8 @@ class Admin::CrossSellingListsController < AdminController
       # Get all products that belong to the selected categories and are also part of this entities supply chain
       category_ids = (params[:categories] ||= []).map(&:to_i)
       supplier_ids = @entity.suppliers.map{|s| s.id}
-      category_prods = Product.where(category_id: category_ids, organization_id: supplier_ids).map{|p| p.id.to_s}
+      # category_prods = Product.where(category_id: category_ids, organization_id: supplier_ids).map{|p| p.id.to_s}
+      category_prods = []
 
       # Modify product_ids to include those implicitly selected via the Suppliers and Categories tabs.
       cross_selling_list_params["product_ids"] = (cross_selling_list_params["product_ids"] || []) | supplier_prods | category_prods
