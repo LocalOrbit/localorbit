@@ -30,7 +30,7 @@
               <th>Supplier</th>
               <th>Category</th>
               <th>Product</th>
-              <% if @cross_selling_list.creator != true %><th>Active?</th><% end %>
+              <% if !@cross_selling_list.creator %><th>Active?</th><% end %>
             </tr>
           </thead>
           <tbody>
@@ -39,7 +39,7 @@
               <td><%= list.product.organization.name %></td>
               <td><%= list.product.category.name %></td>
               <td><%= list.product.name %></td>
-              <% if @cross_selling_list.creator != true %><th><%= yes_no(list.active)  %></th><% end %>
+              <% if !@cross_selling_list.creator %><th><%= yes_no(list.active)  %></th><% end %>
             </tr>
           <% end %>
           </tbody>

@@ -1,4 +1,4 @@
-<% # KXM This form needs some wholesale changes around editing - i.e. revoked lists ought to be read only, status should be displayed for Pending and Revoked but those statuses are assigned and therefor not available as options, etc... %>
+<% # KXM This form needs some wholesale changes around editing - i.e. revoked lists ought to be read only, status should be displayed for Pending and Revoked but those statuses are assigned and therefore not available as options, etc... %>
 <div class="action_box column column--full">
   <div class="row row--field">
     <div class="field column column--half column--guttered">
@@ -28,4 +28,9 @@
 
     </div>
   </div>
+</div>
+<div>
+  <% @selected_suppliers.each do |supplier_id| %>
+    <%= hidden_field_tag "selected_suppliers[]", supplier_id %>
+  <% end %>
 </div>

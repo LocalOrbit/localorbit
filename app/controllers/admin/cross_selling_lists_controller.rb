@@ -18,34 +18,34 @@ class Admin::CrossSellingListsController < AdminController
     # Get the list in question
     @cross_selling_list = CrossSellingList.includes(:children, :products, :cross_selling_list_products).find(params[:id])
 
-    # Get all the suppliers for the current entity - this may be a Market Organization (with
-    # potentially many suppliers) or a Supplier Organization (with only one - themselves)
-    @suppliers = @entity.suppliers.includes(:products).order(:name)
-
-    # Get all the categories for all the products for all the suppliers[ for this Market].  Damn, what a mess.
-    # @categories = @entity.categories.includes(:products).order(:name)
+    # Retrieve context-sensitive data, subscribers returning only those data that relate to the list
     if @cross_selling_list.creator then
-      @categories = Category.for_products(@entity.supplier_products).includes(:products).order(:name)
+      @suppliers    = @entity.suppliers.includes(:products).order(:name)
+      @categories   = Category.for_products(@entity.supplier_products).includes(:products).order(:name)
       @all_products = @entity.supplier_products.order(:name)
+      @selected_products = @cross_selling_list.products.includes(:cross_selling_list_products).order(:name)
     else
-      @categories = Category.for_products(@cross_selling_list.products).includes(:products).order(:name)
+      @suppliers    = Organization.for_products(@cross_selling_list.products).includes(:products).order(:name)
+      @categories   = Category.for_products(@cross_selling_list.products).includes(:products).order(:name)
       @all_products = []
+      @selected_products = @cross_selling_list.products.active.includes(:cross_selling_list_products).order(:name)
     end
 
     # KXM Assert Product.visible for cross_selling_list_products
     @selected_list_prods = @cross_selling_list.cross_selling_list_products.includes(product: [:organization, :category])
-      @selected_products = @cross_selling_list.products.active.includes(:cross_selling_list_products).order(:name)
 
     # Get the categories and suppliers for which all items are selected
     @selected_suppliers = []
-    @suppliers.map do |s|
+    @suppliers.each do |s|
+      # binding.pry if s.name == "Alex's Urban Farming"
       @selected_suppliers.push(s.id) if s.products.any? && (s.products - @selected_products).empty?
     end
+    # binding.pry
 
     @selected_categories = []
-    @categories.map do |c|
+    @categories.each do |c|
       category_prods = c.products
-      candidate = (category_prods - ( category_prods - @all_products )) - @selected_products
+      candidate = @cross_selling_list.creator ? (category_prods - ( category_prods - @all_products )) - @selected_products : category_prods - @selected_products
       @selected_categories.push(c.id) if candidate.empty?
     end
   end
@@ -78,11 +78,17 @@ class Admin::CrossSellingListsController < AdminController
   end
 
   def update
+    # binding.pry
     @cross_selling_list = CrossSellingList.includes(:children).find(params[:id])
 
+    # List creators may add items individually or en masse (via supplier or category check boxes)
     if @cross_selling_list.creator
+
+
+      # This empty default prevents submission problems when no suppliers are selected
+      supplier_ids = params.fetch(:suppliers, []).map(&:to_i)
       supplier_prods = []
-      supplier_ids = (params[:suppliers] ||= []).map(&:to_i)
+
       # Get all suppliers in the selected set...
       suppliers = Organization.includes(:products).find(supplier_ids)
       suppliers.map do |s|
@@ -91,17 +97,19 @@ class Admin::CrossSellingListsController < AdminController
       end
 
       # Get all products that belong to the selected categories and are also part of this entities supply chain
-      category_ids = (params[:categories] ||= []).map(&:to_i)
+      category_ids = params.fetch(:categories, []).map(&:to_i)
       supplier_ids = @entity.suppliers.map{|s| s.id}
-      # category_prods = Product.where(category_id: category_ids, organization_id: supplier_ids).map{|p| p.id.to_s}
+      category_prods = Product.where(category_id: category_ids, organization_id: supplier_ids).map{|p| p.id.to_s}
+
+      # KXM Does category_prods still need work?
       category_prods = []
 
-      # Modify product_ids to include those implicitly selected via the Suppliers and Categories tabs.
+      # Include product ids implicitly selected via the Suppliers and Categories tabs
       cross_selling_list_params["product_ids"] = (cross_selling_list_params["product_ids"] || []) | supplier_prods | category_prods
       params_with_defaults = cross_selling_list_params
 
     else
-      # Subscribers ought not submit products at all... remove 'em just in case they do
+      # Subscribers ought not modify products at all save for marking them active or not
       params_with_defaults = cross_selling_list_params.except(:product_ids)
     end
 
