@@ -132,6 +132,7 @@ group :development, :test do
   gem 'capybara-slow_finder_errors'
   gem 'wkhtmltopdf-binary', :git => 'https://github.com/zakird/wkhtmltopdf_binary_gem.git'
   gem 'capybara'
+  gem 'capybara-webkit'
 end
 
 group :test do
