@@ -21,6 +21,8 @@ class OrderSource
     ba.state buyer_state,
     ba.zip buyer_zip,
     ba.country buyer_country,
+    o.total_cost,
+    o.delivery_fees,
     p.name product,
     p.short_description short_description,
     p.code product_code,
@@ -60,16 +62,17 @@ class OrderSource
     and m.id = ma.market_id
     and ma.loc_id = mal.id
     and o.organization_id = buyer.id
-    and ba.organization_id = buyer.id and ba.default_shipping = true
     and oi.product_id = p.id
     and p.category_id = c.id
     and p.organization_id = seller.id
     and p.unit_id = u.id
-    and sa.organization_id = seller.id and sa.default_shipping = true
+    and ba.organization_id = buyer.id and ba.id = (select min(id) from locations where organization_id = buyer.id)
+    and sa.organization_id = seller.id and sa.id = (select min(id) from locations where organization_id = seller.id)
     and o.delivery_id = d.id
     and d.delivery_schedule_id = ds.id
     and o.updated_at > current_date - integer \'' + ENV['ETL_DAYS'].to_s + '\'
     and m.demo = false
+    and o.deleted_at is null
     order by o.id'
 
   def initialize(connect_url)

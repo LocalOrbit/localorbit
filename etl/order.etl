@@ -48,6 +48,8 @@ transform do |row|
   newrow[:quantity] =                 row[:quantity]
   newrow[:unit] =                     row[:unit]
   newrow[:unit_description] =         row[:unit_description]
+  newrow[:total_cost] =               row[:total_cost]
+  newrow[:delivery_fees] =            row[:delivery_fees]
   newrow[:unit_price] =               row[:unit_price]
   newrow[:gross_price] =              row[:gross_price]
   newrow[:actual_discount] =          row[:actual_discount]
