@@ -13,7 +13,7 @@ class OrderDestination
     @conn = PGconn.open(:host =>  host, :port => port, :dbname => db, :user=> username, :password=> password)
 
     #@conn = PG.connect(connect_url)
-    @conn.prepare('check_order', 'SELECT 1 order_exists FROM dw_orders WHERE order_id = $1')
+    @conn.prepare('check_order', 'SELECT 1 order_exists FROM dw_orders WHERE order_item_id = $1')
     @conn.prepare('insert_order', 'INSERT INTO dw_orders
     (organization_id,
     order_id,
@@ -112,7 +112,7 @@ class OrderDestination
 
   def write(row)
     time = Time.now
-    row_exists = @conn.exec_prepared('check_order', [row[:order_id]])
+    row_exists = @conn.exec_prepared('check_order', [row[:order_item_id]])
     if row_exists.ntuples > 0
       exec_insert_update('update_order', row, time)
     else
