@@ -34,3 +34,8 @@
     <%= hidden_field_tag "selected_suppliers[]", supplier_id %>
   <% end %>
 </div>
+<div>
+  <% @selected_categories.each do |category_id| %>
+    <%= hidden_field_tag "selected_categories[]", category_id %>
+  <% end %>
+</div>

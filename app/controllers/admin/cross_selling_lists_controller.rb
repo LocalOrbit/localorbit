@@ -18,13 +18,14 @@ class Admin::CrossSellingListsController < AdminController
     # Get the list in question
     @cross_selling_list = CrossSellingList.includes(:children, :products, :cross_selling_list_products).find(params[:id])
 
-    # Retrieve context-sensitive data, subscribers returning only those data that relate to the list
     if @cross_selling_list.creator then
+      # Get everything for list creators...
       @suppliers    = @entity.suppliers.includes(:products).order(:name)
       @categories   = Category.for_products(@entity.supplier_products).includes(:products).order(:name)
       @all_products = @entity.supplier_products.order(:name)
       @selected_products = @cross_selling_list.products.includes(:cross_selling_list_products).order(:name)
     else
+      # ...and list-specific data for subscribers
       @suppliers    = Organization.for_products(@cross_selling_list.products).includes(:products).order(:name)
       @categories   = Category.for_products(@cross_selling_list.products).includes(:products).order(:name)
       @all_products = []
@@ -37,15 +38,18 @@ class Admin::CrossSellingListsController < AdminController
     # Get the categories and suppliers for which all items are selected
     @selected_suppliers = []
     @suppliers.each do |s|
-      # binding.pry if s.name == "Alex's Urban Farming"
       @selected_suppliers.push(s.id) if s.products.any? && (s.products - @selected_products).empty?
     end
-    # binding.pry
 
     @selected_categories = []
     @categories.each do |c|
       category_prods = c.products
-      candidate = @cross_selling_list.creator ? (category_prods - ( category_prods - @all_products )) - @selected_products : category_prods - @selected_products
+      if @cross_selling_list.creator then
+        candidate = (category_prods - ( category_prods - @all_products )) - @selected_products
+      else
+        candidate = (category_prods - @selected_products)
+      end
+
       @selected_categories.push(c.id) if candidate.empty?
     end
   end
@@ -78,7 +82,6 @@ class Admin::CrossSellingListsController < AdminController
   end
 
   def update
-    # binding.pry
     @cross_selling_list = CrossSellingList.includes(:children).find(params[:id])
 
     # List creators may add items individually or en masse (via supplier or category check boxes)
