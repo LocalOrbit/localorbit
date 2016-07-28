@@ -36,7 +36,9 @@
         if (this.props.supplierId > 0)
             window.lo.ProductActions.newFilters(null, this.props.supplierId);
 
-        if (!this.props.orderId)
+        if (this.props.orderId > 0)
+            productFilter = ('');
+        else
             productFilter = (<lo.ProductFilter
             deliveryDate={this.props.deliveryDate}
             selectedType={this.props.selectedType}
@@ -44,9 +46,8 @@
             buyerInfo={this.props.buyerInfo}
             useTemplates={this.props.useTemplates}
             supplierOnly={this.props.supplierId > 0}
+            orderId={this.props.orderId}
             />);
-        else
-            productFilter=('');
 
         productTable = (<lo.ProductTable
             limit={30}

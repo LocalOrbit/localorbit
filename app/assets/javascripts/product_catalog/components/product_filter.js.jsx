@@ -13,7 +13,8 @@
       orderCutoff: React.PropTypes.string.isRequired,
       buyerInfo: React.PropTypes.string.isRequired,
       useTemplates: React.PropTypes.bool.isRequired,
-      supplierOnly: React.PropTypes.bool
+      supplierOnly: React.PropTypes.bool,
+      orderId: React.PropTypes.number
     },
 
     getInitialState: function() {
@@ -119,7 +120,9 @@
         else
             filterText = ('');
 
-        if (this.props.order_id)
+        if (this.props.orderId > 0)
+            headerInformation = ('');
+        else
             headerInformation = (
                 <div className="order-information-container column column--half pull-left">
                     Buyer: <strong>{this.props.buyerInfo}</strong><br/>
@@ -128,9 +131,7 @@
                     <a href="/sessions/organizations/new?redirect_back_to=%2Fsessions/deliveries/new?redirect_back_to=%2Fproducts">Change delivery options</a><br/>
                     {orderTemplates}
                 </div>
-            )
-        else
-            headerInformation = ('');
+            );
 
         return (
         <div style={{borderTop:"1px solid rgb(222, 222, 222)"}}>

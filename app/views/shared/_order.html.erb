@@ -225,7 +225,8 @@
                 orderCutoff: order.delivery.cutoff_time,
                 buyerInfo: order.organization.name,
                 useTemplates: FeatureAccess.order_templates?(market: current_market),
-                supplierId: nil
+                supplierId: nil,
+                orderId: order.id
             }) %>
           <div style="height:600px; overflow-y: scroll">
             <%= react_component('lo.ProductCatalog', {
