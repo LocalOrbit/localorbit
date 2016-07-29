@@ -7,8 +7,10 @@ class CrossSellingList < ActiveRecord::Base
   attr_accessor :suppliers
   attr_accessor :categories
 
-  # KXM Relate X-Sell to Organization and remove polymorphic references?
-  # Entity may reference any Organization of type 'S' or 'M' (supplier orgs or market orgs)
+  # KXM Relate X-Sell to Organization and remove polymorphic references...
+  # Eventually, a list may reference any Organization of type 'S' or 'M' (supplier orgs or market orgs)
+  # belongs_to :organization, -> { where(type: 'S').or(type: 'M') } # ...or something like that
+
   belongs_to :entity, polymorphic: true
 
   belongs_to :parent, class_name: "CrossSellingList"
@@ -74,6 +76,10 @@ class CrossSellingList < ActiveRecord::Base
 
   def draft?
     status == "Draft"
+  end
+
+  def cascade_update?
+    creator && (!draft? || children.any?)
   end
 
   def manage_publication!(params)
