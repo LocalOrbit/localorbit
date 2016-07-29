@@ -18,11 +18,7 @@ class Admin::CrossSellingListsController < AdminController
     # Get the list in question
     @cross_selling_list = CrossSellingList.includes(:children, :products, :cross_selling_list_products).find(params[:id])
 
-    if @cross_selling_list.creator then
-      @scoped_products = @entity.supplier_products.visible.order(:name)
-    else
-      @scoped_products = @cross_selling_list.products
-    end
+    @scoped_products = get_scoped_products(@cross_selling_list, @entity)
 
     @selected_products = @cross_selling_list.products.active.includes(:cross_selling_list_products).order(:name)
 
@@ -66,11 +62,13 @@ class Admin::CrossSellingListsController < AdminController
   def update
     @cross_selling_list = CrossSellingList.includes(:children).find(params[:id])
 
+    @scoped_products = get_scoped_products(@cross_selling_list, @entity)
+
     # List creators may add items individually or en masse (via supplier or category check boxes)
     if @cross_selling_list.creator
 
       # Include product ids implicitly selected via the Suppliers and Categories tabs
-      cross_selling_list_params["product_ids"] = manage_selected_products(params)
+      cross_selling_list_params["product_ids"] = manage_selected_products(params, @scoped_products)
       params_with_defaults = cross_selling_list_params
 
     else
@@ -179,55 +177,67 @@ class Admin::CrossSellingListsController < AdminController
     parent.children.where("parent_id = ? AND entity_id = ?", id_hash[:parent_id], id_hash[:entity_id]).first
   end
 
+  def get_scoped_products(cross_selling_list, entity)
+    if cross_selling_list.creator then
+      scoped_products = entity.supplier_products.visible.order(:name)
+    else
+      scoped_products = cross_selling_list.products
+    end
+  end
+
+
   ##
   # manage_selected_products
   # Compiles product list based on submitted products whether individually or via supplier or category
   # param params (Array) The post payload
+  # param scoped_products (Array) The full set of available products
   # return (Array) product ids
   ##
-  def manage_selected_products(params)
+  def manage_selected_products(params, scoped_products)
     # fetch the submitted ids
-    supplier_prods = get_prods_from_suppliers(params)
-    category_prods = get_prods_from_categories(params)
-    selected_prods = cross_selling_list_params["product_ids"] || []
+    submitted_supplier_prods = get_prods_from_suppliers(params.fetch(:suppliers, []))
+    selected_supplier_prods  = get_prods_from_suppliers(params.fetch(:selected_suppliers, []))
 
-    supplier_prods | category_prods | selected_prods
+    submitted_category_prods = get_prods_from_categories(params.fetch(:categories, []).map(&:to_i), scoped_products)
+    selected_category_prods  = get_prods_from_categories(params.fetch(:selected_categories, []), scoped_products)
+
+    # binding.pry
+    selected_prods = (cross_selling_list_params["product_ids"] || [])
+
+    # Modify based on submitted vs pre-selected suppliers
+    selected_prods = selected_prods - (selected_supplier_prods - submitted_supplier_prods)
+    selected_prods = selected_prods | (submitted_supplier_prods - selected_supplier_prods)
+
+    # Modify based on submitted vs pre-selected categories
+    selected_prods = selected_prods - (selected_category_prods - submitted_category_prods)
+    selected_prods = selected_prods | (submitted_category_prods - selected_category_prods)
+
+    # supplier_prods | category_prods | selected_prods
+    selected_prods
   end
 
-  def get_prods_from_suppliers(params)
-    # Initialize
-    submitted_suppliers   = params.fetch(:suppliers, [])
-
-    # KXM Parsing those suppliers selected at form load may be necessary... right now, now so much
-    # preselected_suppliers = params.fetch(:selected_suppliers, [])
-
+  def get_prods_from_suppliers(supplier_id_array)
     supplier_prods = []
 
     # Get all suppliers in the selected set...
-    suppliers = Organization.includes(:products).find(submitted_suppliers.map(&:to_i))
+    suppliers = Organization.includes(:products).find(supplier_id_array.map(&:to_i))
     suppliers.map do |s|
-      # ...and pull out their products
-      supplier_prods = supplier_prods | s.products.map{|p| p.id.to_s}
+      # ...and pull out their visible products
+      supplier_prods = supplier_prods | s.products.visible.map{|p| p.id.to_s}
     end
 
     supplier_prods
   end
 
-  def get_prods_from_categories(params)
-    supplier_ids   = params.fetch(:suppliers, []).map(&:to_i)
-    category_ids   = params.fetch(:categories, []).map(&:to_i)
-
-    # KXM Parsing those categories selected at form load may be necessary... right now, now so much
-    # preselected_categories = params.fetch(:selected_categories, [])
-
-    category_prods = Product.where(category_id: category_ids, organization_id: supplier_ids).map{|p| p.id.to_s}
+  def get_prods_from_categories(category_id_array, scoped_products)
+    # KXM Not working...
+    category_prods = Product.visible.where(category_id: category_id_array.map(&:to_i), id: scoped_products).map{|p| p.id.to_s}
   end
 
   def get_selected_suppliers(suppliers, selected_products)
-    # KXM get_selected_suppliers isn't working, but it can't be far off
     selected_suppliers = []
     suppliers.each do |s|
-      selected_suppliers.push(s.id) if s.products.any? && (s.products - selected_products).empty?
+      selected_suppliers.push(s.id) if s.products.visible.any? && (s.products.visible - selected_products).empty?
     end
 
     selected_suppliers || []
@@ -235,6 +245,7 @@ class Admin::CrossSellingListsController < AdminController
 
   def get_selected_categories(categories, selected_products, creator, scoped_products)
     # KXM get_selected_categories seems to be working... confirm
+    # binding.pry
     selected_categories = []
     categories.each do |c|
       category_prods = c.products
