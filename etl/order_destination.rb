@@ -1,5 +1,6 @@
 require 'pg'
 
+
 class OrderDestination
   # connect_url should look like;
   def initialize(connect_url)
@@ -12,7 +13,7 @@ class OrderDestination
     @conn = PGconn.open(:host =>  host, :port => port, :dbname => db, :user=> username, :password=> password)
 
     #@conn = PG.connect(connect_url)
-    @conn.prepare('check_order', 'SELECT 1 order_exists FROM dw_orders WHERE order_id = $1')
+    @conn.prepare('check_order', 'SELECT 1 order_exists FROM dw_orders WHERE order_item_id = $1')
     @conn.prepare('insert_order', 'INSERT INTO dw_orders
     (organization_id,
     order_id,
@@ -55,9 +56,11 @@ class OrderDestination
     buyer_payment_status,
     supplier_payment_status,
     market_active,
-    last_updated)
+    last_updated,
+    total_cost,
+    delivery_fees)
     VALUES
-    ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19,$20,$21,$22,$23,$24,$25,$26,$27,$28,$29,$30,$31,$32,$33,$34,$35,$36,$37,$38,$39,$40,$41,$42)
+    ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19,$20,$21,$22,$23,$24,$25,$26,$27,$28,$29,$30,$31,$32,$33,$34,$35,$36,$37,$38,$39,$40,$41,$42,$43,$44)
     ')
     @conn.prepare('update_order', 'UPDATE dw_orders SET
     organization_id         = $1,
@@ -100,18 +103,22 @@ class OrderDestination
     buyer_payment_status    = $39,
     supplier_payment_status = $40,
     market_active           = $41,
-    last_updated            = $42
+    last_updated            = $42,
+    total_cost              = $43,
+    delivery_fees           = $44
     WHERE order_item_id = $3
     ')
   end
 
   def write(row)
     time = Time.now
-    row_exists = @conn.exec_prepared('check_order', [row[:order_id]])
+    row_exists = @conn.exec_prepared('check_order', [row[:order_item_id]])
     if row_exists.ntuples > 0
       exec_insert_update('update_order', row, time)
+      puts 'U: ' + row[:placed_on]
     else
       exec_insert_update('insert_order', row, time)
+      puts 'I: ' + row[:placed_on]
     end
   rescue PG::Error => ex
     puts "ERROR for #{row[:order_item_id]}"
@@ -167,7 +174,9 @@ class OrderDestination
         row[:buyer_payment_status],
         row[:supplier_payment_status],
         row[:market_active],
-        time
+        time,
+        row[:total_cost],
+        row[:delivery_fees]
     ])
   end
 end
