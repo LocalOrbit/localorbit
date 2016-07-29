@@ -24,6 +24,7 @@
       <p><span class="hint"><%= link_to "Manage products", "#product_management", class: "modal-toggle" %></span></p>
 
       <div class="table-wrapper">
+        <%# KXM List products ought not be one... long... list %>
         <table class="sortable" id="cross-sell-lists">
           <thead>
             <tr>
@@ -34,12 +35,12 @@
             </tr>
           </thead>
           <tbody>
-          <% @selected_list_prods.each do |list| %>
+          <% @selected_list_prods.each do |slp| %>
             <tr>
-              <td><%= list.product.organization.name %></td>
-              <td><%= list.product.category.name %></td>
-              <td><%= list.product.name %></td>
-              <% if !@cross_selling_list.creator %><th><%= yes_no(list.active)  %></th><% end %>
+              <td><%= slp.product.organization.name %></td>
+              <td><%= slp.product.category.name %></td>
+              <td><%= slp.product.name %></td>
+              <% if !@cross_selling_list.creator %><th><%= yes_no(slp.active)  %></th><% end %>
             </tr>
           <% end %>
           </tbody>
@@ -47,8 +48,7 @@
       </div>
     <% end %>
 
-    <%= product_management_list = @cross_selling_list.creator ? "product_management" : "product_activiation"
-      render product_management_list, {list: list} %>
+    <%= render "product_management", {list: list} %>
 
     <% end # End of form... %>
   </div>

@@ -12,6 +12,7 @@
     </ul>
 
     <div id="product-add-suppliers" class="bound-list">
+      <%# KXM List product management tables need to be sortable %>
       <table>
         <thead>
           <tr>
@@ -23,8 +24,8 @@
         <tbody>
         <% @suppliers.each do |supplier| %>
           <tr>
-            <td><%= supplier.name %></td>
-            <td><%= supplier.products.count %></td>
+            <td><%= supplier.name %> <%#= "(supplier.id)" %></td>
+            <td><%= @scoped_products.select {|product| product["organization_id"].to_i == supplier.id }.count %></td>
             <td><%= check_box_tag("suppliers[]", supplier.id, @selected_suppliers.include?(supplier.id) ) %></td>
           </tr>
         <% end %>
@@ -37,15 +38,15 @@
         <thead>
           <tr>
             <th>Category</th>
-            <!-- <th>Products</th> -->
+            <th>Products</th>
             <th>&nbsp;</th>
           </tr>
         </thead>
         <tbody>
         <% @categories.each do |category| %>
           <tr>
-            <td><%= category.name %></td>
-            <!-- <td><%#= category.products.count %></td> -->
+            <td><%= category.name %> <%#= "(category.id)" %></td>
+            <td><%= @scoped_products.select {|product| product["category_id"].to_i == category.id }.count %></td>
             <td><%= check_box_tag("categories[]", category.id, @selected_categories.include?(category.id) ) %></td>
           </tr>
         <% end %>
@@ -62,12 +63,24 @@
           </tr>
         </thead>
         <tbody>
-          <% @all_products.each do |product| %>
-          <tr>
-            <td><%= product.name %></td>
-            <td><%= check_box_tag "cross_selling_list[product_ids][]", product.id, list.object.products.include?(product) %></td>
-          </tr>
+        <%# KXM Product listings are different for creators and subscribers %>
+        <%# That may be, but seriously... No no NO... TESTING ONLY %> 
+        <% if @cross_selling_list.creator then %>
+          <% @scoped_products.each do |product| %>
+            <tr>
+              <td><span id="list-product-name"><%= product.name %></span> <span id="list-product-unit-name"><%= "(#{product.unit.singular})" %></span><br /><span id="list-product-supplier"><%= product.organization.name %></span></td>
+              <td><%= check_box_tag "cross_selling_list[product_ids][]", product.id, list.object.products.include?(product) %></td>
+            </tr>
           <% end %>
+        <% else %>
+          <%= list.fields_for :cross_selling_list_products do |cslp| %>
+            <tr>
+              <%= cslp.hidden_field :product_id %>
+              <td><span id="list-product-name"><%= cslp.object.product.name %></span><br /><span id="list-product-supplier"><%= cslp.object.product.organization.name %></span></td>
+              <td><%= cslp.check_box :active %></td>
+            </tr>
+          <% end %>
+        <% end %>
         </tbody>
       </table>
     </div>
