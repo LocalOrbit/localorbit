@@ -115,10 +115,10 @@ class OrderDestination
     row_exists = @conn.exec_prepared('check_order', [row[:order_item_id]])
     if row_exists.ntuples > 0
       exec_insert_update('update_order', row, time)
-      puts 'U'
+      puts 'U: ' + row[:placed_on]
     else
       exec_insert_update('insert_order', row, time)
-      puts 'I'
+      puts 'I: ' + row[:placed_on]
     end
   rescue PG::Error => ex
     puts "ERROR for #{row[:order_item_id]}"
