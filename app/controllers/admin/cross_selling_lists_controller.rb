@@ -230,7 +230,6 @@ class Admin::CrossSellingListsController < AdminController
   end
 
   def get_prods_from_categories(category_id_array, scoped_products)
-    # KXM Not working...
     category_prods = Product.visible.where(category_id: category_id_array.map(&:to_i), id: scoped_products).map{|p| p.id.to_s}
   end
 
