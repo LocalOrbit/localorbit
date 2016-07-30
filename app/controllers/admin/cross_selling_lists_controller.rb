@@ -23,7 +23,7 @@ class Admin::CrossSellingListsController < AdminController
     @selected_products = @cross_selling_list.products.active.includes(:cross_selling_list_products).order(:name)
 
     @suppliers = Organization.for_products(@scoped_products).includes(:products).order(:name)
-    @selected_suppliers = get_selected_suppliers(@suppliers, @selected_products)
+    @selected_suppliers = get_selected_suppliers(@suppliers, @selected_products, @scoped_products)
 
     @categories = Category.for_products(@scoped_products).includes(:products).order(:name)
     @selected_categories = get_selected_categories(@categories, @selected_products, @cross_selling_list.creator, @scoped_products)
@@ -66,13 +66,13 @@ class Admin::CrossSellingListsController < AdminController
 
     # List creators may add items individually or en masse (via supplier or category check boxes)
     if @cross_selling_list.creator
-
       # Include product ids implicitly selected via the Suppliers and Categories tabs
       cross_selling_list_params["product_ids"] = manage_selected_products(params, @scoped_products)
       params_with_defaults = cross_selling_list_params
-
     else
-      # Subscribers ought not modify products at all save for marking them active or not
+      # Make active products implicitly selected via the Suppliers and Categories tabs
+      cross_selling_list_params["cross_selling_list_products_attributes"] = manage_active_products(params, @scoped_products)
+      # Subscribers ought not modify products at all save for marking them active or not... this removes the offending data
       params_with_defaults = cross_selling_list_params.except(:product_ids)
     end
 
@@ -185,14 +185,6 @@ class Admin::CrossSellingListsController < AdminController
     end
   end
 
-
-  ##
-  # manage_selected_products
-  # Compiles product list based on submitted products whether individually or via supplier or category
-  # param params (Array) The post payload
-  # param scoped_products (Array) The full set of available products
-  # return (Array) product ids
-  ##
   def manage_selected_products(params, scoped_products)
     # fetch the submitted ids
     submitted_supplier_prods = get_prods_from_suppliers(params.fetch(:suppliers, []))
@@ -205,15 +197,33 @@ class Admin::CrossSellingListsController < AdminController
     selected_prods = (cross_selling_list_params["product_ids"] || [])
 
     # Modify based on submitted vs pre-selected suppliers
-    selected_prods = selected_prods - (selected_supplier_prods - submitted_supplier_prods)
-    selected_prods = selected_prods | (submitted_supplier_prods - selected_supplier_prods)
+    to_add = (submitted_supplier_prods - selected_supplier_prods) | (submitted_category_prods - selected_category_prods)
+    remove = (selected_supplier_prods - submitted_supplier_prods) | (selected_category_prods - submitted_category_prods)
 
-    # Modify based on submitted vs pre-selected categories
-    selected_prods = selected_prods - (selected_category_prods - submitted_category_prods)
-    selected_prods = selected_prods | (submitted_category_prods - selected_category_prods)
+    selected_prods = (selected_prods | to_add) - remove
 
-    # supplier_prods | category_prods | selected_prods
     selected_prods
+  end
+
+  def manage_active_products(params, cross_selling_list_products)
+    submitted_supplier_prods = get_prods_from_suppliers(params.fetch(:suppliers, []))
+    selected_supplier_prods  = get_prods_from_suppliers(params.fetch(:selected_suppliers, []))
+
+    submitted_category_prods = get_prods_from_categories(params.fetch(:categories, []).map(&:to_i), cross_selling_list_products)
+    selected_category_prods  = get_prods_from_categories(params.fetch(:selected_categories, []), cross_selling_list_products)
+
+    make_active = (submitted_supplier_prods - selected_supplier_prods) | (submitted_category_prods - selected_category_prods)
+    deactivate  = (selected_supplier_prods - submitted_supplier_prods) | (selected_category_prods - submitted_category_prods)
+
+    cross_selling_list_prods = (cross_selling_list_params["cross_selling_list_products_attributes"] || [])
+
+    # Update "active" where appropriate
+    cross_selling_list_prods.each do |key, value|
+      value["active"] = "1" if make_active.include?(value["product_id"])
+      value["active"] = "0" if deactivate.include?(value["product_id"])
+    end
+
+    cross_selling_list_prods
   end
 
   def get_prods_from_suppliers(supplier_id_array)
@@ -233,18 +243,17 @@ class Admin::CrossSellingListsController < AdminController
     category_prods = Product.visible.where(category_id: category_id_array.map(&:to_i), id: scoped_products).map{|p| p.id.to_s}
   end
 
-  def get_selected_suppliers(suppliers, selected_products)
+  def get_selected_suppliers(suppliers, selected_products, scoped_products)
     selected_suppliers = []
     suppliers.each do |s|
-      selected_suppliers.push(s.id) if s.products.visible.any? && (s.products.visible - selected_products).empty?
+      supplier_products = scoped_products.where("products.organization_id = ?", s)
+      selected_suppliers.push(s.id) if supplier_products.any? && (supplier_products - selected_products).empty?
     end
 
     selected_suppliers || []
   end
 
   def get_selected_categories(categories, selected_products, creator, scoped_products)
-    # KXM get_selected_categories seems to be working... confirm
-    # binding.pry
     selected_categories = []
     categories.each do |c|
       category_prods = c.products
