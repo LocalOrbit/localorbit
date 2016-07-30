@@ -61,8 +61,8 @@ class GeneralProduct < ActiveRecord::Base
 
   def self.filter_by_current_order(order)
     if order
-      ids = order.items.map(&:product).map(&:general_product_id).flatten
-      where("general_products.id NOT IN (?)", ids)
+      ids = order.items.map(&:product).map(&:id).flatten
+      where("p_child.id NOT IN (?)", ids)
     else
       all
     end
