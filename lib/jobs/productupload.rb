@@ -18,6 +18,8 @@ module Jobs
 			# 	update_status('success')
 			# end
 
+			# TODO perform needs to do all of the querying and searching and right now that isn't happening, unless the problem is only that the delay is immediate and tied to the view.
+
 		    def perform
 		    	@num_products_loaded = 0
 		    	# iterate over the json data and create / update objects

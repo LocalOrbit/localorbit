@@ -48,9 +48,10 @@ class Admin::UploadController < AdminController
     if params.has_key?(:datafile)
       # TODO here: mimic the existing fxn-ality, in a delayed job
       aud = Audit.create!(user_id:current_user.id,action:"Product upload") # the id of this audit is what should trigger the job
-      @num_products_loaded = 0
-      jsn = ::Imports::SerializeProducts.get_json_data(params[:datafile],params[:curr_user]) # product stuff, row 
-      @num_products_loaded = 0
+      # @num_products_loaded = 0
+      # jsn = ::Imports::SerializeProducts.get_json_data(params[:datafile],params[:curr_user]) # product stuff, row  # TODO this needs to be a delayed job too
+      Delayed::Job.enqueue(::Jobs::ProductUpload::JsonDataJob.new(params[:datafile], params[:curr_user]))
+      # @num_products_loaded = 0
       @errors = nil
       @curr_user = params[:curr_user] # to pass along
       Delayed::Job.enqueue(::Jobs::ProductUpload::ProductUploadJob.new(jsn, aud.id, @curr_user))
@@ -59,7 +60,7 @@ class Admin::UploadController < AdminController
       # (TODO this may mean that the aud reference is not needed in the job, but later on that is probably a good identification point.)
       aud.update_attributes(audited_changes: "#{@num_products_loaded} products updated (or maintained)",associated_type:current_market.subdomain.to_s,comment:"#{User.find(current_user.id).email}") 
       # struct size differs????
-      p "enqueued job for upload"
+      # p "enqueued job for upload" # this did show up at a good time, maybe it's just not delaying properly on local.
 
       # so this should really enqueue all these things below.
 
