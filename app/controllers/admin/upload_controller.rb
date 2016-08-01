@@ -6,6 +6,9 @@ class Admin::UploadController < AdminController
   include Imports
   include Jobs
 
+  # NOTE (TODO):
+  # This look like a good refactor template for this messy mess that works 06-16: http://nlopez.io/using-delayed_job-with-class-methods/ plus (perhaps) a couple gems.
+
   def index
     @plan = current_market.organization.plan.name # check if LocalEyes plan on market # "LocalEyes"
     @sd = current_market.subdomain

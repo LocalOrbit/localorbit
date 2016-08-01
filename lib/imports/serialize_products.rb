@@ -44,6 +44,7 @@ module Imports
 			# OK that it is row 0 for now. Could be more specific with a "format" tag in yml/whatever and view tpl later.
 			end
 		end
+		handle_asynchronously :get_json_data, :priority => 2 # not more than email, but more than any other delayed job -- TODO check will that manage handling this before the delayed performance below?
 
 		# takes a csvfile -- returns true if valid, false if invalid
 		def self.validate_csv_catalog_file_format(csvfile)
