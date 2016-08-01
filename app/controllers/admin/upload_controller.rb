@@ -52,13 +52,13 @@ class Admin::UploadController < AdminController
       # TODO here: mimic the existing fxn-ality, in a delayed job
       aud = Audit.create!(user_id:current_user.id,action:"Product upload") # the id of this audit is what should trigger the job
       # @num_products_loaded = 0
-      # jsn = ::Imports::SerializeProducts.get_json_data(params[:datafile],params[:curr_user]) # product stuff, row  # TODO this needs to be a delayed job too
+      jsn = ::Imports::SerializeProducts.get_json_data(params[:datafile],params[:curr_user]) # product stuff, row  # TODO this needs to be a delayed job too
       # Delayed::Job.enqueue(::Jobs::ProductUpload::JsonDataJob.new(params[:datafile], params[:curr_user]))
       # # @num_products_loaded = 0
       # @errors = nil
       @curr_user = params[:curr_user] # to pass along
-      @datafile = params[:datafile]
-      Delayed::Job.enqueue(::Jobs::ProductUpload::ProductUploadJob.new(@datafile, aud.id, @curr_user))
+      @datafile = params[:datafile] # if needed
+      Delayed::Job.enqueue(::Jobs::ProductUpload::ProductUploadJob.new(jsn, aud.id, @curr_user))
 
       # The following should only occur if the delayed job is successful; given this without a fail-out error it will still be updated. 
       # (TODO this may mean that the aud reference is not needed in the job, but later on that is probably a good identification point.)

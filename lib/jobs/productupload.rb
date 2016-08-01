@@ -2,9 +2,9 @@ module Jobs
 	module ProductUpload
 		include Imports
 		class ProductUploadJob
-			def initialize(datafile, upload_audit_id, curr_user) 
-				# @jsn = jsn
-				@datafile = datafile
+			def initialize(jsn, upload_audit_id, curr_user) 
+				@jsn = jsn
+				# @datafile = datafile
 				@upload_audit_id = upload_audit_id
 				@curr_user = curr_user
 			end
