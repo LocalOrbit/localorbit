@@ -1,8 +1,10 @@
 class Admin::UploadController < AdminController
 	require 'rubyXL'
   require 'open3'
+  require './lib/Jobs/productupload.rb' 
   # include API::V2
   include Imports
+  include Jobs
 
   def index
     @plan = current_market.organization.plan.name # check if LocalEyes plan on market
@@ -50,8 +52,14 @@ class Admin::UploadController < AdminController
       jsn = ::Imports::SerializeProducts.get_json_data(params[:datafile],params[:curr_user]) # product stuff, row 
       @num_products_loaded = 0
       @errors = nil
-      Delayed::Job.enqueue(::Jobs::ProductUploadJob.new(jsn, aud.id))
+      @curr_user = params[:curr_user] # to pass along
+      Delayed::Job.enqueue(::Jobs::ProductUpload::ProductUploadJob.new(jsn, aud.id, @curr_user))
 
+      # The following should only occur if the delayed job is successful; given this without a fail-out error it will still be updated. 
+      # (TODO this may mean that the aud reference is not needed in the job, but later on that is probably a good identification point.)
+      aud.update_attributes(audited_changes: "#{@num_products_loaded} products updated (or maintained)",associated_type:current_market.subdomain.to_s,comment:"#{User.find(current_user.id).email}") 
+      # struct size differs????
+      p "enqueued job for upload"
 
       # so this should really enqueue all these things below.
 

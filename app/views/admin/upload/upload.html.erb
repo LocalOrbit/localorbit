@@ -5,10 +5,11 @@ Make sure to <strong><a href="/admin/products">add inventory to your products</a
 <strong><a href="/admin/upload">Return to upload form</a></strong>
 
 <br>
-<% if @errors.keys.map{|k| @errors[k]["Errors"]}.select{|er| !er.empty?}.any? %>
+<% if @errors and @errors.keys.map{|k| @errors[k]["Errors"]}.select{|er| !er.empty?}.any? %>
 	<h3>Errors</h3>
 <% end %>
 <div id="results">
+<% if @errors %>
 	<% @errors.each do |e| %>
 		<% if @errors.has_key?("File") %>
 			<%= @errors["File"] %>
@@ -21,4 +22,5 @@ Make sure to <strong><a href="/admin/products">add inventory to your products</a
 		<% end %>
 		<br></br>
 	<% end %>
+<% end %>
 </div>
