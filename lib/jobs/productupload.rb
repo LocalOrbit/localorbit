@@ -54,6 +54,9 @@ module Jobs
 
 		        # TODO send email/message here when it is complete
 
+
+		        
+
 		      # THE BEGINNING OF THE IF -- for overall errors -- IS NO LONGER HERE
 		      # else
 		      #   @num_products_loaded = 0
