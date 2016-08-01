@@ -2,8 +2,9 @@ module Jobs
 	module ProductUpload
 		include Imports
 		class ProductUploadJob
-			def initialize(jsn, upload_audit_id, curr_user) 
-				@jsn = jsn
+			def initialize(datafile, upload_audit_id, curr_user) 
+				# @jsn = jsn
+				@datafile = datafile
 				@upload_audit_id = upload_audit_id
 				@curr_user = curr_user
 			end
@@ -21,6 +22,8 @@ module Jobs
 			# TODO perform needs to do all of the querying and searching and right now that isn't happening, unless the problem is only that the delay is immediate and tied to the view.
 
 		    def perform
+		    	@jsn = ::Imports::SerializeProducts.get_json_data(@datafile,@curr_user)
+		    	# p @jsn
 		    	@num_products_loaded = 0
 		    	# iterate over the json data and create / update objects
 		    	aud = Audit.find(@upload_audit_id)

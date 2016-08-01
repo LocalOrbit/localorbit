@@ -7,7 +7,7 @@ class Admin::UploadController < AdminController
   include Jobs
 
   def index
-    @plan = current_market.organization.plan.name # check if LocalEyes plan on market
+    @plan = current_market.organization.plan.name # check if LocalEyes plan on market # "LocalEyes"
     @sd = current_market.subdomain
     @current_mkt_id = current_market.id #TODO maybe useful
     # code for mapping organization and ensuring sign-in authenticated upload
@@ -50,11 +50,12 @@ class Admin::UploadController < AdminController
       aud = Audit.create!(user_id:current_user.id,action:"Product upload") # the id of this audit is what should trigger the job
       # @num_products_loaded = 0
       # jsn = ::Imports::SerializeProducts.get_json_data(params[:datafile],params[:curr_user]) # product stuff, row  # TODO this needs to be a delayed job too
-      Delayed::Job.enqueue(::Jobs::ProductUpload::JsonDataJob.new(params[:datafile], params[:curr_user]))
-      # @num_products_loaded = 0
-      @errors = nil
+      # Delayed::Job.enqueue(::Jobs::ProductUpload::JsonDataJob.new(params[:datafile], params[:curr_user]))
+      # # @num_products_loaded = 0
+      # @errors = nil
       @curr_user = params[:curr_user] # to pass along
-      Delayed::Job.enqueue(::Jobs::ProductUpload::ProductUploadJob.new(jsn, aud.id, @curr_user))
+      @datafile = params[:datafile]
+      Delayed::Job.enqueue(::Jobs::ProductUpload::ProductUploadJob.new(@datafile, aud.id, @curr_user))
 
       # The following should only occur if the delayed job is successful; given this without a fail-out error it will still be updated. 
       # (TODO this may mean that the aud reference is not needed in the job, but later on that is probably a good identification point.)
