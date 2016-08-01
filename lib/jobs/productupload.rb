@@ -44,9 +44,18 @@ module Jobs
 
 		        # TODO put together messaging for the alert to be sent (see upload-html-for-alert-plan file, which is the same as the old version of upload.html before delayedjob implementation here)
 		        @alert_string = ""
+		        @alert_string += "There were #{} products successfully uploaded / updated.\n" 
+		        if not @errors.empty?
+		        	@alert_string += "Your file generated #{} errors."
+		        	@errors.each do |er|
+		        	end
+		        end
+		        if @num_products_loaded > 0
+		        	@alert_string += "\n Don't forget to TBA LINK! update the inventory for your new/updated products."
+		        end
+		        @alert_string += "TBA link Return to your product upload page."
 
-
-		        # TODO send email/message here when it is complete. Put here, at completion of job.
+		        # TODO send email/message here when it is complete with the contents of the @alert_string. Put here, at completion of job.
 		    	
 		    end
 		    # TODO: Any other functionality here? Not needed now. (Jun16)
