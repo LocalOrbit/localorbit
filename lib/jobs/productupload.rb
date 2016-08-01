@@ -36,7 +36,6 @@ module Jobs
 		    	p "hi this is nothing"
 		    	@num_products_loaded = 0
 		    	# iterate over the json data and create / update objects
-		    	binding.pry
 		    	aud = Audit.find(@upload_audit_id)
 		    	unless @jsn.include?("invalid")
 		        @jsn[0]["products"].each do |p|
@@ -55,7 +54,7 @@ module Jobs
 		        # TODO send email/message here when it is complete
 
 
-		        
+
 
 		      # THE BEGINNING OF THE IF -- for overall errors -- IS NO LONGER HERE
 		      # else
