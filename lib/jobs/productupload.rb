@@ -38,6 +38,8 @@ module Jobs
 
 
 		        # TODO put together messaging for the alert to be sent (see upload-html-for-alert-plan file, which is the same as the old version of upload.html before delayedjob implementation here)
+		        @alert_string = ""
+
 
 		        # TODO send email/message here when it is complete. Put here, at completion of job.
 		    	
