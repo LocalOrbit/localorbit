@@ -22,8 +22,6 @@ module Jobs
 			# TODO perform needs to do all of the querying and searching and right now that isn't happening, unless the problem is only that the delay is immediate and tied to the view.
 
 		    def perform
-		    	# @jsn = ::Imports::SerializeProducts.get_json_data(@datafile,@curr_user)
-		    	# p @jsn
 		    	@num_products_loaded = 0
 		    	# iterate over the json data and create / update objects
 		    	aud = Audit.find(@upload_audit_id)
@@ -39,11 +37,7 @@ module Jobs
 
 		        aud.update_attributes(audited_changes: "#{@num_products_loaded} products updated (or maintained)") # should be ok
 
-
-		        # aud.update_attributes(audited_changes: "#{@num_products_loaded} products updated (or maintained)",associated_type:current_market.subdomain.to_s,comment:"#{User.find(current_user.id).email}") ## TODO: can't access this here? May be able to with rescoping.
-
-
-		        # TODO put together messaging for the alert to be sent (see upload-html-for-alert-plan file, which is the same as the old version of upload.html before delayedjob implementation here)
+		        # Here: put together messaging for the alert to be sent
 		        @alert_string = ""
 		        @alert_string += "There were #{@num_products_loaded} products successfully uploaded AND/OR updated.\n" 
 		        if @errors.has_key?("File")
