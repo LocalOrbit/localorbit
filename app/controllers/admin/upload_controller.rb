@@ -49,50 +49,13 @@ class Admin::UploadController < AdminController
 
   def upload
     if params.has_key?(:datafile)
-      # TODO here: mimic the existing fxn-ality, in a delayed job
-      aud = Audit.create!(user_id:current_user.id,action:"Product upload") # the id of this audit is what should trigger the job
-      # @num_products_loaded = 0
-      aud.update_attributes(associated_type:current_market.subdomain.to_s,comment:"#{User.find(current_user.id).email}") # incomplete because no comment with load so that's OK
-      jsn = ::Imports::SerializeProducts.get_json_data(params[:datafile],params[:curr_user]) # product stuff, row  # TODO this needs to be a delayed job too
-      # Delayed::Job.enqueue(::Jobs::ProductUpload::JsonDataJob.new(params[:datafile], params[:curr_user]))
-      # # @num_products_loaded = 0
-      # @errors = nil
+      aud = Audit.create!(user_id:current_user.id,action:"Product upload") # the id of this audit is what could trigger the job. For now, keep track of it.
+      aud.update_attributes(associated_type:current_market.subdomain.to_s,comment:"#{User.find(current_user.id).email}") # incomplete at this juncture because no comment with load, so that's OK
+      jsn = ::Imports::SerializeProducts.get_json_data(params[:datafile],params[:curr_user]) # Does this take too much time?
       @curr_user = params[:curr_user] # to pass along
-      # @datafile = params[:datafile] # if needed
       Delayed::Job.enqueue(::Jobs::ProductUpload::ProductUploadJob.new(jsn, aud.id, @curr_user))
-
-      # The following should only occur if the delayed job is successful; given this without a fail-out error it will still be updated. 
-      # (TODO this may mean that the aud reference is not needed in the job, but later on that is probably a good identification point.)
-      # aud.update_attributes(audited_changes: "#{@num_products_loaded} products updated (or maintained)",associated_type:current_market.subdomain.to_s,comment:"#{User.find(current_user.id).email}") 
-      # struct size differs????
-      # p "enqueued job for upload" # this did show up at a good time, maybe it's just not delaying properly on local.
-
-      # so this should really enqueue all these things below.
-
-
-
-      # pass the datafile to the method with the csv file
-      # jsn = ::Imports::SerializeProducts.get_json_data(params[:datafile],params[:curr_user]) # product stuff, row errors
-      
-      # TODO: the jsn business above it should also be handled by the worker in the delay
-
-      ## TODO this bit should be replaced by performing the delayed job
-      # unless jsn.include?("invalid")
-      #   jsn[0]["products"].each do |p|
-      #     ::Imports::ProductHelpers.create_product_from_hash(p,params[:curr_user])
-      #     @num_products_loaded += 1
-      #     # binding.pry
-      #     if p.has_key?("Multiple Pack Sizes") && !p["Multiple Pack Sizes"].empty?
-      #       @num_products_loaded += 1
-      #     end
-      #   end
-      #   @errors = jsn[1]
-      #   aud.update_attributes(audited_changes: "#{@num_products_loaded} products updated (or maintained)",associated_type:current_market.subdomain.to_s,comment:"#{User.find(current_user.id).email}") 
-      # else
-      #   @num_products_loaded = 0
-      #   @errors = {"File"=>jsn}
-      # end
-
+      # Enqueued, after which success an email should be sent
+      # See lib/jobs/productupload.rb
     end
   end
 
