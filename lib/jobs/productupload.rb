@@ -4,7 +4,7 @@ module Jobs
 		class ProductUploadJob
 			def initialize(jsn, upload_audit_id, curr_user) 
 				@jsn = jsn
-				# @datafile = datafile
+				# @datafile = datafile # ofc assuming it's an arg to initialize
 				@upload_audit_id = upload_audit_id
 				@curr_user = curr_user
 			end
@@ -22,7 +22,7 @@ module Jobs
 			# TODO perform needs to do all of the querying and searching and right now that isn't happening, unless the problem is only that the delay is immediate and tied to the view.
 
 		    def perform
-		    	@jsn = ::Imports::SerializeProducts.get_json_data(@datafile,@curr_user)
+		    	# @jsn = ::Imports::SerializeProducts.get_json_data(@datafile,@curr_user)
 		    	# p @jsn
 		    	@num_products_loaded = 0
 		    	# iterate over the json data and create / update objects
@@ -37,6 +37,7 @@ module Jobs
 		        end
 		        @errors = @jsn[1] # This is info that needs to go in the alert.
 
+		        aud.update_attributes(audited_changes: "#{@num_products_loaded} products updated (or maintained)") # should be ok
 
 
 		        # aud.update_attributes(audited_changes: "#{@num_products_loaded} products updated (or maintained)",associated_type:current_market.subdomain.to_s,comment:"#{User.find(current_user.id).email}") ## TODO: can't access this here? May be able to with rescoping.
