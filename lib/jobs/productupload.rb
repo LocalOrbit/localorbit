@@ -45,16 +45,22 @@ module Jobs
 
 		        # TODO put together messaging for the alert to be sent (see upload-html-for-alert-plan file, which is the same as the old version of upload.html before delayedjob implementation here)
 		        @alert_string = ""
-		        @alert_string += "There were #{} products successfully uploaded / updated.\n" 
-		        if not @errors.empty?
-		        	@alert_string += "Your file generated #{} errors."
-		        	@errors.each do |er|
+		        @alert_string += "There were #{@num_products_loaded} products successfully uploaded AND/OR updated.\n" 
+		        if @errors.has_key?("File")
+		        	@alert_string += "\n #{@errors["File"]}"
+		        elsif not @errors.empty?
+		        	@alert_string += "\n#{@errors.length} lines in your file generated errors:\n"
+		        	@errors.each do |e|
+		        		@alert_string += "\nRow #{e[1]["Row number"]}:"
+		        		e[1]["Errors"].keys.each do |er|
+		        			@alert_string += "\n- #{er} (#{e[1]['Errors'][er]})\n"
+		        		end
 		        	end
 		        end
+
 		        if @num_products_loaded > 0
-		        	@alert_string += "\n Don't forget to TBA LINK! update the inventory for your new/updated products."
+		        	@alert_string += "\n Don't forget to update the inventory for your new/updated products!" # <strong><a href="/admin/products">add inventory to your products</a></strong> # html from former view, link to product admin. Want that to appear in email/msg, dependent on html formatting for that.
 		        end
-		        @alert_string += "TBA link Return to your product upload page."
 
 		        # TODO send email/message here when it is complete with the contents of the @alert_string. Put here, at completion of job.
 		    	
