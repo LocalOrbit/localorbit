@@ -29,6 +29,7 @@
     </div>
   </div>
 </div>
+<% if !@cross_selling_list.new_record? %>
 <div>
   <% @selected_suppliers.each do |supplier_id| %>
     <%= hidden_field_tag "selected_suppliers[]", supplier_id %>
@@ -39,3 +40,4 @@
     <%= hidden_field_tag "selected_categories[]", category_id %>
   <% end %>
 </div>
+<% end %>
