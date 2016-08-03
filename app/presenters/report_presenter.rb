@@ -271,7 +271,7 @@ class ReportPresenter
     end
 
     if includes_filter?(:lot_number)
-      @lot_numbers = Lots.joins(:items).merge(items).uniq.pluck(:lot_number).sort
+      @lot_numbers = Lots.joins(:items).merge(items).uniq.pluck(:number).sort
     end
 
     if includes_filter?(:expired_on_or_after)
