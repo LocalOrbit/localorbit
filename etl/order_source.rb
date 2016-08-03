@@ -26,7 +26,8 @@ class OrderSource
     p.name product,
     p.short_description short_description,
     p.code product_code,
-    c.name product_category,
+    c_top.name top_level_category,
+    c_second.name second_level_category,
     seller.name supplier,
     sa.city supplier_city,
     sa.state supplier_state,
@@ -56,14 +57,16 @@ class OrderSource
     m.active market_active
     from orders o, order_items oi, markets m,
     (select min(id) loc_id, market_id from market_addresses group by market_id) ma, market_addresses mal,
-    organizations buyer, organizations seller, locations ba, locations sa, products p, units u, categories c, deliveries d, delivery_schedules ds left join market_addresses da on ds.buyer_pickup_location_id = da.id
+    organizations buyer, organizations seller, locations ba, locations sa, products p, general_products gp, units u, categories c_top, categories c_second, deliveries d, delivery_schedules ds left join market_addresses da on ds.buyer_pickup_location_id = da.id
     where o.id = oi.order_id
     and o.market_id = m.id
     and m.id = ma.market_id
     and ma.loc_id = mal.id
     and o.organization_id = buyer.id
     and oi.product_id = p.id
-    and p.category_id = c.id
+    and gp.id = p.general_product_id
+    and c_top.id = gp.top_level_category_id
+    and c_second.id = gp.second_level_category_id
     and p.organization_id = seller.id
     and p.unit_id = u.id
     and ba.organization_id = buyer.id and ba.id = (select min(id) from locations where organization_id = buyer.id)
