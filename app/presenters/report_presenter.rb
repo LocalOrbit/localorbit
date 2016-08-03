@@ -29,7 +29,8 @@ class ReportPresenter
     fulfillment_type:       {sort: nil,                      display_name: "Fulfillment Type"},
     discount_code:          {sort: nil,                      display_name: "Discount Code"},
     discount_amount:        {sort: nil,                      display_name: "Discount Amount"},
-    product_code:           {sort: :code,                    display_name: "Product Code"}
+    product_code:           {sort: :code,                    display_name: "Product Code"},
+    # TODO add all needed fields for lot report with display name here
   }.with_indifferent_access
 
   REPORT_MAP = {
@@ -131,7 +132,7 @@ class ReportPresenter
       fields: [:market_name,:seller_name, :placed_at, :order_number, :buyer_name, :category_name, :subcategory_name, :product_name, :lot_number, :good_from, :expired_on_or_after, :remaining_inventory] # TODO define some of these fields
         ],
       mm_only: true,
-      ex_mm: true # true?
+      use_adv_inventory: true # TODO add this specification
     }
   }.with_indifferent_access
 
@@ -269,6 +270,13 @@ class ReportPresenter
       @fulfillment_days = Hash[DeliverySchedule::WEEKDAYS.map.with_index { |day, index| [index, day] }]
     end
 
+    if includes_filter?(:lot_number)
+      @lot_numbers = Lots.joins(:items).merge(items).uniq.pluck(:lot_number).sort
+    end
+
+    if includes_filter?(:expired_on_or_after)
+    end
+
     if includes_filter?(:fulfillment_type)
       @fulfillment_types = DeliverySchedule.joins(deliveries: { orders: :items }).merge(items).all.decorate.map do |ds|
                              key = if ds.fulfillment_type == "Delivery: From Seller to Buyer"
@@ -305,6 +313,21 @@ class ReportPresenter
 
     if includes_field?(:fulfillment_type) || includes_field?(:fulfillment_day)
       items = items.includes(order: { delivery: :delivery_schedule })
+    end
+
+    # TODO includes_field?s for lot stuff
+
+    if includes_field?(:lot_number)
+      items = items.includes(product: :lots) # hmm ??
+    end
+
+    if includes_field?(:expired_on_or_after)
+    end
+
+    if includes_field?(:good_from)
+    end
+
+    if includes_field?(:remaining_inventory)
     end
 
     items
