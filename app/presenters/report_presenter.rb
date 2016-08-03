@@ -125,6 +125,13 @@ class ReportPresenter
       ],
       mm_only: true,
       ex_mm: true
+    },
+    lots: {
+      filters: [:market_name, :seller_name, :product_name, :lot_number, :expired_on_or_after],
+      fields: [:market_name,:seller_name, :placed_at, :order_number, :buyer_name, :category_name, :subcategory_name, :product_name, :lot_number, :good_from, :expired_on_or_after, :remaining_inventory] # TODO define some of these fields
+        ],
+      mm_only: true,
+      ex_mm: true # true?
     }
   }.with_indifferent_access
 
