@@ -9,8 +9,8 @@ module Qlik
       end
 
       def load_certs
-        cert = OpenSSL::X509::Certificate.new(File.read("#{Rails.root}#{ENV['BI_CERT']}"))
-        key = OpenSSL::PKey::RSA.new(File.read("#{Rails.root}#{ENV['BI_CERT_KEY']}"))
+        cert = OpenSSL::X509::Certificate.new(File.read("#{ENV['BI_CERT']}"))
+        key = OpenSSL::PKey::RSA.new(File.read("#{ENV['BI_CERT_KEY']}"))
         {:cert => cert, :ckey => key}
       end
 
