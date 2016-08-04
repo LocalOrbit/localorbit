@@ -33,7 +33,7 @@ class OrderDestination
     product,
     short_description,
     product_code,
-    product_category,
+    top_level_category,
     supplier,
     supplier_city,
     supplier_state,
@@ -58,9 +58,10 @@ class OrderDestination
     market_active,
     last_updated,
     total_cost,
-    delivery_fees)
+    delivery_fees,
+    second_level_category)
     VALUES
-    ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19,$20,$21,$22,$23,$24,$25,$26,$27,$28,$29,$30,$31,$32,$33,$34,$35,$36,$37,$38,$39,$40,$41,$42,$43,$44)
+    ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19,$20,$21,$22,$23,$24,$25,$26,$27,$28,$29,$30,$31,$32,$33,$34,$35,$36,$37,$38,$39,$40,$41,$42,$43,$44,$45)
     ')
     @conn.prepare('update_order', 'UPDATE dw_orders SET
     organization_id         = $1,
@@ -80,7 +81,7 @@ class OrderDestination
     product                 = $16,
     short_description       = $17,
     product_code            = $18,
-    product_category        = $19,
+    top_level_category      = $19,
     supplier                = $20,
     supplier_city           = $21,
     supplier_state          = $22,
@@ -105,7 +106,8 @@ class OrderDestination
     market_active           = $41,
     last_updated            = $42,
     total_cost              = $43,
-    delivery_fees           = $44
+    delivery_fees           = $44,
+    second_level_category   = $45
     WHERE order_item_id = $3
     ')
   end
@@ -151,7 +153,7 @@ class OrderDestination
         row[:product],
         row[:short_description],
         row[:product_code],
-        row[:product_category],
+        row[:top_level_category],
         row[:supplier],
         row[:supplier_city],
         row[:supplier_state],
@@ -176,7 +178,8 @@ class OrderDestination
         row[:market_active],
         time,
         row[:total_cost],
-        row[:delivery_fees]
+        row[:delivery_fees],
+        row[:second_level_category]
     ])
   end
 end
