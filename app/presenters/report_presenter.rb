@@ -128,8 +128,8 @@ class ReportPresenter
       ex_mm: true
     },
     lots: {
-      filters: [:market_name, :seller_name, :product_name, :lot_number, :expired_on_or_after],
-      fields: [:market_name,:seller_name, :placed_at, :order_number, :buyer_name, :category_name, :subcategory_name, :product_name, :lot_number, :good_from, :expired_on_or_after, :remaining_inventory] # TODO define some of these fields
+      filters: [:lot,:market_name, :seller_name, :product_name, :lot_number, :expired_on_or_after],
+      fields: [:market_name,:seller_name, :placed_at, :order_number, :buyer_name, :category_name, :subcategory_name, :product_name] # TODO define some of these fields
         ],
       mm_only: true,
       use_adv_inventory: true
@@ -320,11 +320,10 @@ class ReportPresenter
       items = items.includes(order: { delivery: :delivery_schedule })
     end
 
-    # TODO includes_field?s for lot stuff
-
-    if includes_field?(:lot_number)
-      items = items.includes(:lots) # test
-      # items = items.includes(product: :lots) # hmm ??
+    # Below: additions for lot reporting
+    if includes_field?(:lot)
+      items = items.includes(:lots) 
+      # items = items.includes(product: :lots) 
     end
 
     ## TODO: Possible this information can be drawn from the lot, in-view, if all lots for a given OrderItem are known ^

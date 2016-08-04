@@ -39,6 +39,17 @@
             </td>
           <% end %>
 
+          <% if field == :lot %>
+            <% item.lots each do |lt| %>
+              <td><tr>
+                <td><%= lt.number %></td>
+                <td>Expires <%= lt.expires_at.to_date %></td>
+                <td> <%= lt.quantity %> avail. </td>
+                <td> Good from <%= lt.good_from %></td>
+              </tr><td>
+            <% end %>
+          <% end %>
+
           <% if field == :fulfillment_day %>
             <td class="fulfillment-day"><%= item.fulfillment_day %></td>
           <% end %>
