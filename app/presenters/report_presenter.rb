@@ -132,7 +132,7 @@ class ReportPresenter
       fields: [:market_name,:seller_name, :placed_at, :order_number, :buyer_name, :category_name, :subcategory_name, :product_name, :lot_number, :good_from, :expired_on_or_after, :remaining_inventory] # TODO define some of these fields
         ],
       mm_only: true,
-      use_adv_inventory: true # TODO add this specification
+      use_adv_inventory: true
     }
   }.with_indifferent_access
 
@@ -146,6 +146,10 @@ class ReportPresenter
 
   def self.mm_reports
     REPORT_MAP.keys.select {|k| REPORT_MAP[k][:mm_only]}
+  end
+
+  def self.lot_reports
+    REPORT_MAP.keys.select {|k| REPORT_MAP[k][:use_adv_inventory]}
   end
 
   def self.exclude_mm_reports
@@ -271,10 +275,11 @@ class ReportPresenter
     end
 
     if includes_filter?(:lot_number)
-      @lot_numbers = Lots.joins(:items).merge(items).uniq.pluck(:number).sort
+      @lot_numbers = Lots.joins(:items).merge(items).uniq.pluck(:number).sort # probably
     end
 
     if includes_filter?(:expired_on_or_after)
+      @dates = Lots.joins(:items).merge(items).uniq.pluck(:expires_at).sort # probably
     end
 
     if includes_filter?(:fulfillment_type)
@@ -318,17 +323,20 @@ class ReportPresenter
     # TODO includes_field?s for lot stuff
 
     if includes_field?(:lot_number)
-      items = items.includes(product: :lots) # hmm ??
+      items = items.includes(:lots) # test
+      # items = items.includes(product: :lots) # hmm ??
     end
 
-    if includes_field?(:expired_on_or_after)
-    end
+    ## TODO: Possible this information can be drawn from the lot, in-view, if all lots for a given OrderItem are known ^
 
-    if includes_field?(:good_from)
-    end
+    # if includes_field?(:expired_on_or_after)
+    # end
 
-    if includes_field?(:remaining_inventory)
-    end
+    # if includes_field?(:good_from)
+    # end
+
+    # if includes_field?(:remaining_inventory)
+    # end
 
     items
   end
