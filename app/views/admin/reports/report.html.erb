@@ -55,6 +55,8 @@
             <td class="subcategory"><%= item.subcategory_name %></td>
           <% end %>
 
+          <!-- if the lots is an array, which it always will be, create multiple lines. table within a row, basically -->
+
           <% if field == :product_name %>
             <td class="product">
               <%- if current_user.buyer_only? %>
