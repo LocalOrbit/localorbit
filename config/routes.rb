@@ -64,6 +64,8 @@ Rails.application.routes.draw do
       patch :confirm_pending
     end
 
+    get "qlik" => "qlik#index"
+
     resources :roles
 
     resources :labels, only: [:index, :show]

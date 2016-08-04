@@ -93,6 +93,7 @@ end
       <a href="#reports-dropdown" class="caretted"><i class="font-icon" data-icon="&#xe01e;"></i> Reports</a>
       <ul class="dropdown with-anchor top-anchor" id="reports-dropdown">
         <% if policy(:report).index? %><li><%= link_to raw('<i class="font-icon" data-icon="&#xe006;"></i> Reports'), admin_reports_path %></li><% end %>
+        <% if policy(:qlik).index? %><li><%= link_to raw('<i class="font-icon" data-icon="&#xe01e;"></i> Visualizations'), admin_qlik_path, :target => '_blank' %></li><% end %>
         <!-- admin -->
         <% if policy(:referral).index? %><li><%= link_to raw('<i class="font-icon" data-icon="&#xe04f;"></i> Referrals'), coming_soon_dashboard_path %></li><% end %>
         <% if policy(:metric).index? %><li><%= link_to raw('<i class="font-icon" data-icon="&#xe01e;"></i> Metrics'), admin_metrics_path %></li><% end %>
