@@ -65,6 +65,10 @@ transform do |row|
   newrow[:supplier_payment_status] =  row[:supplier_payment_status]
   newrow[:market_active] =            row[:market_active]
   newrow[:second_level_category] =    row[:second_level_category]
+  newrow[:supplier_latitude] =        row[:supplier_latitude]
+  newrow[:supplier_longitude] =       row[:supplier_longitude]
+  newrow[:buyer_latitude] =           row[:buyer_latitude]
+  newrow[:buyer_longitude] =          row[:buyer_longitude]
 
   newrow
 end

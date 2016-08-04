@@ -21,6 +21,8 @@ class OrderSource
     ba.state buyer_state,
     ba.zip buyer_zip,
     ba.country buyer_country,
+    bgeo.latitude buyer_latitude,
+    bgeo.longitude buyer_longitude,
     o.total_cost,
     o.delivery_fees,
     p.name product,
@@ -33,6 +35,8 @@ class OrderSource
     sa.state supplier_state,
     sa.zip supplier_zip,
     sa.country supplier_country,
+    sgeo.latitude supplier_latitude,
+    sgeo.longitude supplier_longitude,
     oi.quantity quantity,
     oi.unit unit,
     p.unit_description unit_description,
@@ -57,8 +61,8 @@ class OrderSource
     m.active market_active
     from orders o, order_items oi, markets m
     left join (select min(id) loc_id, market_id from market_addresses group by market_id) ma on m.id = ma.market_id
-    left join market_addresses mal on ma.loc_id = mal.id, organizations buyer left join locations ba on ba.organization_id = buyer.id and ba.id = (select min(id) from locations where organization_id = buyer.id),
-    organizations seller left join locations sa on sa.organization_id = seller.id and sa.id = (select min(id) from locations where organization_id = seller.id),
+    left join market_addresses mal on ma.loc_id = mal.id, organizations buyer left join locations ba on ba.organization_id = buyer.id and ba.id = (select min(id) from locations where organization_id = buyer.id) left join zipcodes bgeo on bgeo.zip = ba.zip,
+    organizations seller left join locations sa on sa.organization_id = seller.id and sa.id = (select min(id) from locations where organization_id = seller.id) left join zipcodes sgeo on sgeo.zip = sa.zip,
     products p, general_products gp, units u, categories c_top, categories c_second, deliveries d, delivery_schedules ds left join market_addresses da on ds.buyer_pickup_location_id = da.id
     where o.id = oi.order_id
     and o.market_id = m.id
