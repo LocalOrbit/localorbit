@@ -15,7 +15,8 @@
                 <% if filter_map[:display_name] == "Quantity" %>
                   <%= sort_link @presenter.q, filter_map[:sort], "<abbr title='Quantity'>Qty.</abbr>".html_safe %>
                 <% else %>
-                   <%= sort_link @presenter.q, filter_map[:sort], filter_map[:display_name] %>
+                   <%= sort_link @presenter.q, 
+                   filter_map[:sort], filter_map[:display_name] %>
                 <% end %>
               <% else %>
                 <%= filter_map[:display_name] %>
@@ -40,7 +41,7 @@
           <% end %>
 
           <% if field == :lot %>
-            <% item.lots each do |lt| %>
+            <% item.lots.each do |lt| %>
               <td><tr>
                 <td><%= lt.number %></td>
                 <td>Expires <%= lt.expires_at.to_date %></td>
@@ -65,8 +66,6 @@
           <% if field == :subcategory_name %>
             <td class="subcategory"><%= item.subcategory_name %></td>
           <% end %>
-
-          
 
           <% if field == :product_name %>
             <td class="product">

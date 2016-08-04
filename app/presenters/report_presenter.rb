@@ -128,8 +128,8 @@ class ReportPresenter
       ex_mm: true
     },
     lots: {
-      filters: [:lot,:market_name, :seller_name, :product_name, :lot_number, :expired_on_or_after],
-      fields: [:market_name,:seller_name, :placed_at, :order_number, :buyer_name, :category_name, :subcategory_name, :product_name] # TODO define some of these fields
+      filters: [:lot,:market_name, :seller_name, :product_name, :expired_on_or_after],
+      fields: [:lot, :expired_on_or_after, :good_from, :market_name,:seller_name, :placed_at, :order_number, :buyer_name, :category_name, :subcategory_name, :product_name 
         ],
       mm_only: true,
       use_adv_inventory: true
@@ -275,11 +275,12 @@ class ReportPresenter
     end
 
     if includes_filter?(:lot_number)
-      @lot_numbers = Lots.joins(:items).merge(items).uniq.pluck(:number).sort # probably
+      # @lot_numbers = Lot.joins(:items).merge(items).uniq.pluck(:number).sort # probably
+      @lot_numbers = items.lots
     end
 
     if includes_filter?(:expired_on_or_after)
-      @dates = Lots.joins(:items).merge(items).uniq.pluck(:expires_at).sort # probably
+      # @dates = Lot.joins(:items).merge(items).uniq.pluck(:expires_at).sort # probably
     end
 
     if includes_filter?(:fulfillment_type)
@@ -328,14 +329,14 @@ class ReportPresenter
 
     ## TODO: Possible this information can be drawn from the lot, in-view, if all lots for a given OrderItem are known ^
 
-    # if includes_field?(:expired_on_or_after)
-    # end
+    if includes_field?(:expired_on_or_after)
+    end
 
-    # if includes_field?(:good_from)
-    # end
+    if includes_field?(:good_from)
+    end
 
-    # if includes_field?(:remaining_inventory)
-    # end
+    if includes_field?(:remaining_inventory)
+    end
 
     items
   end
