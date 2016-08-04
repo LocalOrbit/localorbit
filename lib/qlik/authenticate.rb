@@ -1,17 +1,27 @@
 module Qlik
   class Authenticate
     class << self
-      require "net/http"
-      require "uri"
+      require 'net/http'
+      require 'uri'
+      require 'open-uri'
 
       def generate_xref
         [*('A'..'Z'),*('a'..'z'),*('0'..'9')].shuffle[0,16].join
       end
 
       def load_certs
-        cert = OpenSSL::X509::Certificate.new(File.read("#{ENV['BI_CERT']}"))
-        key = OpenSSL::PKey::RSA.new(File.read("#{ENV['BI_CERT_KEY']}"))
+        cert = OpenSSL::X509::Certificate.new(read_cert("#{ENV['BI_CERT']}"))
+        key = OpenSSL::PKey::RSA.new(read_cert("#{ENV['BI_CERT_KEY']}"))
         {:cert => cert, :ckey => key}
+      end
+
+      def read_cert(location)
+        load_cert = nil
+        url = URI.parse(location)
+        open(url) do |http|
+          load_cert = http.read
+        end
+        load_cert
       end
 
       def request_ticket(user, market)
