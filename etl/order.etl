@@ -39,7 +39,7 @@ transform do |row|
   newrow[:product] =                  row[:product]
   newrow[:short_description] =        row[:short_description]
   newrow[:product_code] =             row[:product_code]
-  newrow[:product_category] =         row[:product_category]
+  newrow[:top_level_category] =       row[:top_level_category]
   newrow[:supplier] =                 row[:supplier]
   newrow[:supplier_city] =            row[:supplier_city]
   newrow[:supplier_state] =           row[:supplier_state]
@@ -64,6 +64,7 @@ transform do |row|
   newrow[:buyer_payment_status] =     row[:buyer_payment_status]
   newrow[:supplier_payment_status] =  row[:supplier_payment_status]
   newrow[:market_active] =            row[:market_active]
+  newrow[:second_level_category] =    row[:second_level_category]
 
   newrow
 end
