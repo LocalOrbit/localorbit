@@ -59,9 +59,14 @@ class OrderDestination
     last_updated,
     total_cost,
     delivery_fees,
-    second_level_category)
+    second_level_category,
+    supplier_latitude,
+    supplier_longitude,
+    buyer_latitude,
+    buyer_longitude
+    )
     VALUES
-    ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19,$20,$21,$22,$23,$24,$25,$26,$27,$28,$29,$30,$31,$32,$33,$34,$35,$36,$37,$38,$39,$40,$41,$42,$43,$44,$45)
+    ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19,$20,$21,$22,$23,$24,$25,$26,$27,$28,$29,$30,$31,$32,$33,$34,$35,$36,$37,$38,$39,$40,$41,$42,$43,$44,$45,$46,$47,$48,$49)
     ')
     @conn.prepare('update_order', 'UPDATE dw_orders SET
     organization_id         = $1,
@@ -107,7 +112,11 @@ class OrderDestination
     last_updated            = $42,
     total_cost              = $43,
     delivery_fees           = $44,
-    second_level_category   = $45
+    second_level_category   = $45,
+    supplier_latitude       = $46,
+    supplier_longitude      = $47,
+    buyer_latitude          = $48,
+    buyer_longitude         = $49
     WHERE order_item_id = $3
     ')
   end
@@ -179,7 +188,11 @@ class OrderDestination
         time,
         row[:total_cost],
         row[:delivery_fees],
-        row[:second_level_category]
+        row[:second_level_category],
+        row[:supplier_latitude],
+        row[:supplier_longitude],
+        row[:buyer_latitude],
+        row[:buyer_longitude]
     ])
   end
 end
