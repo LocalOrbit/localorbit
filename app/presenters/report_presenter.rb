@@ -131,7 +131,7 @@ class ReportPresenter
       filters: [:lot,:market_name, :seller_name, :product_name, :expired_on_or_after],
       fields: [:lot, :expired_on_or_after, :good_from, :market_name,:seller_name, :placed_at, :order_number, :buyer_name, :category_name, :subcategory_name, :product_name 
         ],
-      mm_only: true,
+      #mm_only: true,
       use_adv_inventory: true
     }
   }.with_indifferent_access

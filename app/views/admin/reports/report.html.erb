@@ -43,10 +43,13 @@
           <% if field == :lot %>
             <% item.lots.each do |lt| %>
               <td><tr>
-                <td><%= lt.number %></td>
-                <td>Expires <%= lt.expires_at.to_date %></td>
-                <td> <%= lt.quantity %> avail. </td>
-                <td> Good from <%= lt.good_from %></td>
+                <% lt = Lot.find(lt.lot_id) %>
+                <% if not lt.expires_at.nil? %>
+                  <td><%= lt.number %></td>
+                  <td>Expires <%= lt.expires_at.to_date %></td>
+                  <td> <%= lt.quantity %> avail. </td>
+                  <td> Good from <%= lt.good_from %></td>
+                <% end %>
               </tr><td>
             <% end %>
           <% end %>
