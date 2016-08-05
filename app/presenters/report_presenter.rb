@@ -30,6 +30,8 @@ class ReportPresenter
     discount_code:          {sort: nil,                      display_name: "Discount Code"},
     discount_amount:        {sort: nil,                      display_name: "Discount Amount"},
     product_code:           {sort: :code,                    display_name: "Product Code"},
+    lot:                    {sort: :expires_at, 
+      display_name: "Lot"}
     # TODO add all needed fields for lot report with display name here
   }.with_indifferent_access
 
@@ -128,10 +130,10 @@ class ReportPresenter
       ex_mm: true
     },
     lots: {
-      filters: [:lot,:market_name, :seller_name, :product_name, :expired_on_or_after],
-      fields: [:lot, :expired_on_or_after, :good_from, :market_name,:seller_name, :placed_at, :order_number, :buyer_name, :category_name, :subcategory_name, :product_name 
+      filters: [:lot,:market_name, :seller_name, :product_name],
+      fields: [:lot, :market_name,:seller_name, :placed_at, :order_number, :buyer_name, :category_name, :subcategory_name, :product_name 
         ],
-      #mm_only: true,
+      mm_only: true,
       use_adv_inventory: true
     }
   }.with_indifferent_access
@@ -276,7 +278,11 @@ class ReportPresenter
 
     if includes_filter?(:lot_number)
       # @lot_numbers = Lot.joins(:items).merge(items).uniq.pluck(:number).sort # probably
-      @lot_numbers = items.lots
+      # <% item.lots.each do |lt| %>
+      #         <td>
+      #           <% lt = Lot.find(lt.lot_id) %>
+      # @lot_numbers = #items.map(&:lot).select{|lt| Lot.find(lt.id)}.map(&:number)
+      #TODO FIX
     end
 
     if includes_filter?(:expired_on_or_after)
