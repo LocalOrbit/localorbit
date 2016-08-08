@@ -1,8 +1,6 @@
 class Admin::UploadController < AdminController
 	require 'rubyXL'
-  require 'open3'
-  require './lib/Jobs/productupload.rb' 
-  # include API::V2
+  require 'lib/jobs/productupload.rb' 
   include Imports
   include Jobs
 
