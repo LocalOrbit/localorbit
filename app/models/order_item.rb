@@ -146,7 +146,9 @@ class OrderItem < ActiveRecord::Base
 
   def update_quantity_ordered
     if quantity_changed?
-      update_unit_price
+      if !persisted?
+        update_unit_price
+      end
       if quantity.present? && delivery_status == "pending" && quantity == 0
         self.delivery_status = "canceled"
         self.payment_status = "refunded" if refundable?
