@@ -1,6 +1,6 @@
 class Admin::UploadController < AdminController
 	require 'rubyXL'
-  require 'lib/jobs/productupload.rb' 
+  require "#{Rails.root}/lib/jobs/productupload.rb" 
   include Imports
   include Jobs
 
