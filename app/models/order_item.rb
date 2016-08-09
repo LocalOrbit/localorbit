@@ -137,7 +137,7 @@ class OrderItem < ActiveRecord::Base
 
   def update_unit_price
     if order && order.market && order.organization
-      new_price = Orders::UnitPriceLogic.unit_price(product, order.market, order.organization, order.market.add_item_pricing ? order.created_at : Time.current, quantity)
+      new_price = Orders::UnitPriceLogic.unit_price(product, order.market, order.organization, order.market.add_item_pricing || persisted? ? order.created_at : Time.current, quantity)
       if new_price != nil
         self.unit_price = new_price.sale_price
       end
@@ -146,9 +146,7 @@ class OrderItem < ActiveRecord::Base
 
   def update_quantity_ordered
     if quantity_changed?
-      if !persisted?
-        update_unit_price
-      end
+      update_unit_price
       if quantity.present? && delivery_status == "pending" && quantity == 0
         self.delivery_status = "canceled"
         self.payment_status = "refunded" if refundable?
