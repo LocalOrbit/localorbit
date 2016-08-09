@@ -12,7 +12,7 @@ Capybara.register_driver :poltergeist do |app|
                                     phantomjs_options: ['--debug=false', '--ssl-protocol=TLSv1'])
 end
 
-#Capybara.javascript_driver = :poltergeist
+Capybara.javascript_driver = :poltergeist
 
 #Capybara.register_driver :chrome do |app|
 #  Capybara::Selenium::Driver.new(app, :browser => :chrome)
@@ -20,12 +20,12 @@ end
 
 #Capybara.javascript_driver = :chrome
 
-Capybara::Webkit.configure do |config|
-  config.debug = false
-  config.allow_unknown_urls
-end
+#Capybara::Webkit.configure do |config|
+#  config.debug = false
+#  config.allow_unknown_urls
+#end
 
-Capybara.javascript_driver = :webkit
+#Capybara.javascript_driver = :webkit
 
 
 #Capybara.register_driver :selenium do |app|
