@@ -119,9 +119,6 @@ GEM
       launchy
     capybara-slow_finder_errors (0.1.2)
       capybara (~> 2.0)
-    capybara-webkit (1.11.1)
-      capybara (>= 2.3.0, < 2.8.0)
-      json
     celluloid (0.16.0)
       timers (~> 4.0.0)
     chunky_png (1.3.1)
@@ -738,7 +735,6 @@ DEPENDENCIES
   capybara
   capybara-screenshot
   capybara-slow_finder_errors
-  capybara-webkit
   codeclimate-test-reporter
   coffee-rails (~> 4.0.0)
   color
@@ -840,3 +836,6 @@ DEPENDENCIES
   wkhtmltopdf-heroku
   wysihtml5-rails
   wysiwyg-rails
+
+BUNDLED WITH
+   1.10.6
