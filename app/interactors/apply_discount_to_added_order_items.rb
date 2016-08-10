@@ -1,11 +1,11 @@
-class ApplyDiscountToOrderItems
+class ApplyDiscountToAddedOrderItems
   include Interactor
 
   def perform
     return unless order.discount
 
     discounted_items.each do |item|
-      discount_amount = (cart.discount_amount * item.gross_total / subtotal).round(2)
+      discount_amount = (order.discount_amount * item.gross_total / subtotal).round(2)
 
       if order.discount.market?
         item.discount_market = discount_amount
@@ -16,10 +16,10 @@ class ApplyDiscountToOrderItems
 
     discount_field = order.discount.market? ? :discount_market : :discount_seller
 
-    while (curr_discount = discounted_items.each.sum(&:discount)) != cart.discount_amount
-      limit = (curr_discount - cart.discount_amount).abs * 100
+    while (curr_discount = discounted_items.each.sum(&:discount)) != order.discount_amount
+      limit = (curr_discount - order.discount_amount).abs * 100
       items = order.items.sort {|a, b| b.discount <=> a.discount }[0, limit.to_i]
-      if curr_discount > cart.discount_amount
+      if curr_discount > order.discount_amount
         items.each {|i| i.decrement(discount_field, BigDecimal.new("0.01")) }
       else
         items.each {|i| i.increment(discount_field, BigDecimal.new("0.01")) }
