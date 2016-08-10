@@ -623,13 +623,13 @@ module Dom
       end
     end
 
-    class CrossSellList < Domino
+    class CrossSellListRow < Domino
       selector "#cross-sell-lists tr"
 
-      attribute :name
+      attribute :cross_sell_list_name
 
       def list_name
-        node.find(".cross-sell-list-name a").text
+        node.find(".cross-sell-list-name").text
       end
     end
 

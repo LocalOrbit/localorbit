@@ -109,13 +109,9 @@ describe "Manage cross selling lists" do
       end
     end
 
-    xit "displays the existing lists" do
-      # binding.pry
-      # save_and_open_page
-
-      # KXM This isn't working (list_row coming back nil), but I need to get some actual work done now... technical debt incurred
-      list_row = Dom::Admin::CrossSellList.find_by_name(cross_sell_list.name)
-      expect(list_row.list_name.value).to eql("Listy McListface")
+    it "displays the existing lists" do
+      list_row = Dom::Admin::CrossSellListRow.find_by_cross_sell_list_name(cross_sell_list.name)
+      expect(list_row.list_name).to eql("Listy McListface")
     end
   end
 
@@ -137,14 +133,15 @@ describe "Manage cross selling lists" do
       # RIP 'Boaty McBoatface' - democracy is DEAD.  What the hell were they thinking,
       # anyway?  Who asks for the internet's opinion about _anything_?!
 
-      select "Active", from: "List Status"
+      select "Published", from: "List Status"
 
       click_button "Create List"
 
       expect(page).to have_content("Listy McListface")
       
-      expect(page).to have_content("Your Cross Selling list is Empty")
-      expect(page).to have_button("Add Products")
+      expect(page).to have_content("This Cross Selling list is Empty")
+      # expect(page).to have_button("Add Products")
+      expect(page).to have_link("Add products")
     end
 
   end
