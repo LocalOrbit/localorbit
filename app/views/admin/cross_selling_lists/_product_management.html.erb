@@ -63,8 +63,6 @@
           </tr>
         </thead>
         <tbody>
-        <%# KXM Product listings are different for creators and subscribers %>
-        <%# That may be, but seriously... No no NO... TESTING ONLY %> 
         <% if @cross_selling_list.creator then %>
           <% @scoped_products.each do |product| %>
             <tr>

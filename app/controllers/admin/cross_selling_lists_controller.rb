@@ -46,7 +46,6 @@ class Admin::CrossSellingListsController < AdminController
       if @cross_selling_list.published? then
         selected_subscribers = cross_selling_list_params[:children_ids].select(&:present?).map { |submitted_id| {parent_id: @cross_selling_list.id, entity_id: submitted_id.to_i} }
 
-        # This creates the child lists, but it'd be cool it rails automagically did so from the supplied array of children_ids
         selected_subscribers.each do |list_ids|
           create_list(@cross_selling_list, list_ids)
         end
@@ -79,7 +78,7 @@ class Admin::CrossSellingListsController < AdminController
     if @cross_selling_list.update_attributes(params_with_defaults)
       @cross_selling_list.manage_publication!(params_with_defaults)
 
-      # If this is the master list then upsert any children (including product list)
+      # Upsert children (if required)
       if @cross_selling_list.cascade_update?
 
         # This serves to update all child product lists
@@ -120,7 +119,7 @@ class Admin::CrossSellingListsController < AdminController
   end
 
   def cross_selling_list_params
-    # The "||=" below forces lazy caching, allow for the programatic modification of cross_selling_list_params (think product_ids array)
+    # The "||=" below forces lazy caching, allow for the programatic modification of cross_selling_list_params
     @cross_selling_list_params ||= params.require(:cross_selling_list).permit(
       :name,
       :status,
