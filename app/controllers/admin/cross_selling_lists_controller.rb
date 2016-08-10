@@ -123,7 +123,7 @@ class Admin::CrossSellingListsController < AdminController
     @cross_selling_list_params ||= params.require(:cross_selling_list).permit(
       :name,
       :status,
-      :published_date, # KXM published_date anticipates future publication (not yet implemented)
+      :published_date, # ToDo published_date attribute anticipates future publication (not yet implemented)
       :children_ids => [],
       :product_ids => [],
       :cross_selling_list_products_attributes => [:product_id, :active, :id]
