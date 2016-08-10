@@ -1,4 +1,3 @@
-
 require 'pg'
 
 class OrderSource
@@ -7,6 +6,8 @@ class OrderSource
 
   Order_Query = '
     select
+    m.organization_id,
+    o.id order_id,
     oi.id order_item_id,
     m.name market,
     mal.city market_city,
@@ -20,15 +21,22 @@ class OrderSource
     ba.state buyer_state,
     ba.zip buyer_zip,
     ba.country buyer_country,
+    bgeo.latitude buyer_latitude,
+    bgeo.longitude buyer_longitude,
+    o.total_cost,
+    o.delivery_fees,
     p.name product,
     p.short_description short_description,
     p.code product_code,
-    c.name product_category,
+    c_top.name top_level_category,
+    c_second.name second_level_category,
     seller.name supplier,
     sa.city supplier_city,
     sa.state supplier_state,
     sa.zip supplier_zip,
     sa.country supplier_country,
+    sgeo.latitude supplier_latitude,
+    sgeo.longitude supplier_longitude,
     oi.quantity quantity,
     oi.unit unit,
     p.unit_description unit_description,
@@ -49,25 +57,29 @@ class OrderSource
     da.zip delivery_zip,
     da.country delivery_country,
     o.payment_status buyer_payment_status,
-    oi.payment_status supplier_payment_status
-    from orders o, order_items oi, markets m,
-    (select min(id) loc_id, market_id from market_addresses group by market_id) ma, market_addresses mal,
-    organizations buyer, organizations seller, locations ba, locations sa, products p, units u, categories c, deliveries d, delivery_schedules ds left join market_addresses da on ds.buyer_pickup_location_id = da.id
+    oi.payment_status supplier_payment_status,
+    m.active market_active
+    from orders o, order_items oi, markets m
+    left join (select min(id) loc_id, market_id from market_addresses group by market_id) ma on m.id = ma.market_id
+    left join market_addresses mal on ma.loc_id = mal.id, organizations buyer left join locations ba on ba.organization_id = buyer.id and ba.id = (select min(id) from locations where organization_id = buyer.id) left join zipcodes bgeo on bgeo.zip = ba.zip,
+    organizations seller left join locations sa on sa.organization_id = seller.id and sa.id = (select min(id) from locations where organization_id = seller.id) left join zipcodes sgeo on sgeo.zip = sa.zip,
+    products p, general_products gp, units u, categories c_top, categories c_second, deliveries d, delivery_schedules ds left join market_addresses da on ds.buyer_pickup_location_id = da.id
     where o.id = oi.order_id
     and o.market_id = m.id
-    and m.id = ma.market_id
-    and ma.loc_id = mal.id
     and o.organization_id = buyer.id
-    and ba.organization_id = buyer.id and ba.default_shipping = true
     and oi.product_id = p.id
-    and p.category_id = c.id
+    and gp.id = p.general_product_id
+    and c_top.id = gp.top_level_category_id
+    and c_second.id = gp.second_level_category_id
     and p.organization_id = seller.id
     and p.unit_id = u.id
-    and sa.organization_id = seller.id and sa.default_shipping = true
     and o.delivery_id = d.id
     and d.delivery_schedule_id = ds.id
     and o.updated_at > current_date - integer \'' + ENV['ETL_DAYS'].to_s + '\'
-    order by o.id'
+    and m.demo = false
+    and o.deleted_at is null
+    and o.delivery_status != \'canceled\'
+    '
 
   def initialize(connect_url)
     #@conn = PG.connect(connect_url)

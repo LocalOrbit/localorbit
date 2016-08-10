@@ -21,6 +21,8 @@ end
 transform do |row|
   num_rows = num_rows + 1
   newrow = {}
+  newrow[:organization_id] =          row[:organization_id]
+  newrow[:order_id] =                 row[:order_id]
   newrow[:order_item_id] =            row[:order_item_id]
   newrow[:market] =                   row[:market]
   newrow[:market_city] =              row[:market_city]
@@ -37,7 +39,7 @@ transform do |row|
   newrow[:product] =                  row[:product]
   newrow[:short_description] =        row[:short_description]
   newrow[:product_code] =             row[:product_code]
-  newrow[:product_category] =         row[:product_category]
+  newrow[:top_level_category] =       row[:top_level_category]
   newrow[:supplier] =                 row[:supplier]
   newrow[:supplier_city] =            row[:supplier_city]
   newrow[:supplier_state] =           row[:supplier_state]
@@ -46,6 +48,8 @@ transform do |row|
   newrow[:quantity] =                 row[:quantity]
   newrow[:unit] =                     row[:unit]
   newrow[:unit_description] =         row[:unit_description]
+  newrow[:total_cost] =               row[:total_cost]
+  newrow[:delivery_fees] =            row[:delivery_fees]
   newrow[:unit_price] =               row[:unit_price]
   newrow[:gross_price] =              row[:gross_price]
   newrow[:actual_discount] =          row[:actual_discount]
@@ -59,6 +63,12 @@ transform do |row|
   newrow[:delivery_country] =         row[:delivery_country]
   newrow[:buyer_payment_status] =     row[:buyer_payment_status]
   newrow[:supplier_payment_status] =  row[:supplier_payment_status]
+  newrow[:market_active] =            row[:market_active]
+  newrow[:second_level_category] =    row[:second_level_category]
+  newrow[:supplier_latitude] =        row[:supplier_latitude]
+  newrow[:supplier_longitude] =       row[:supplier_longitude]
+  newrow[:buyer_latitude] =           row[:buyer_latitude]
+  newrow[:buyer_longitude] =          row[:buyer_longitude]
 
   newrow
 end

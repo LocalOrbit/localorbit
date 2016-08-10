@@ -192,9 +192,17 @@
     <div class="row row--field">
       <div class="field column column--half column--guttered">
         <label>Stripe Account Type</label><br>
-        <%= f.check_box :stripe_standalone %>
+        <%= f.check_box :stripe_standalone, {checked: !f.object.stripe_standalone?}, 0, 1 %>
         <%= f.label :stripe_standalone %><br>
       </div>
     </div>
+  <% end %>
+  <% if current_user.admin? %>
+      <div class="row row--field">
+        <div class="field column column--half column--guttered">
+          <%= f.check_box :demo %>
+          <%= f.label :demo, 'Demo Market ?' %><br>
+        </div>
+      </div>
   <% end %>
 </fieldset>

@@ -73,6 +73,8 @@ Rails.application.routes.draw do
       patch :toggle_self_enabled_cross_sell
     end
 
+    get "qlik" => "qlik#index"
+
     resources :roles
 
     resources :labels, only: [:index, :show]
