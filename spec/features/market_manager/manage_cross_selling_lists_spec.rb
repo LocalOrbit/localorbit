@@ -2,13 +2,18 @@ require "spec_helper"
 
 describe "Manage cross selling lists" do
   let!(:user) { create(:user, :market_manager) }
+  let!(:user2) { create(:user, :market_manager) }
 
   let!(:cross_selling_disallowed_market) { create(:market, managers: [user]) }
   let!(:cross_selling_is_allowed_market) { create(:market, managers: [user], allow_cross_sell: true) }
   let!(:cross_selling_is_enabled_market) { create(:market, managers: [user], allow_cross_sell: true, self_enabled_cross_sell: true) }
 
-  let!(:cross_selling_market) { create(:market, managers: [user], allow_cross_sell: true, self_enabled_cross_sell: true) }
-  let!(:cross_sell_list) { cross_selling_market.cross_selling_lists.create(name: "Listy McListface", status: "Active") }
+  let!(:cross_selling_subscriber1) { create(:market, managers: [user], allow_cross_sell: true, self_enabled_cross_sell: true) }
+  let!(:cross_selling_subscriber2) { create(:market, managers: [user], allow_cross_sell: true, self_enabled_cross_sell: true) }
+
+  let!(:cross_selling_market) { create(:market, managers: [user], allow_cross_sell: true, self_enabled_cross_sell: true, cross_sells: [cross_selling_subscriber1, cross_selling_subscriber2]) }
+  let!(:cross_sell_list) { cross_selling_market.cross_selling_lists.create(name: "Listy McListface", status: "Published", children_ids: [cross_selling_subscriber1]) }
+  let!(:cross_sell_list2){ create(:cross_selling_list, name: "Subby McSubface", status: "Published", creator: false, parent_id: cross_sell_list.id, entity_id: cross_selling_subscriber1.id, entity_type: "Market")}
 
   context "when cross selling is unavailable" do
     before do
@@ -117,9 +122,9 @@ describe "Manage cross selling lists" do
 
   context "when creating a new list" do
     before do
-      switch_to_subdomain(cross_selling_is_enabled_market.subdomain)
+      switch_to_subdomain(cross_selling_market.subdomain)
       sign_in_as user
-      visit admin_market_path(cross_selling_is_enabled_market)
+      visit admin_market_path(cross_selling_market)
 
       within ".tabs" do
         click_link "Cross Sell"
@@ -129,21 +134,52 @@ describe "Manage cross selling lists" do
     it "saves changes to a new list" do
       click_button "Add Cross Sell List"
 
-      fill_in "List Name", with: "Listy McListface"
       # RIP 'Boaty McBoatface' - democracy is DEAD.  What the hell were they thinking,
       # anyway?  Who asks for the internet's opinion about _anything_?!
-
+      fill_in "List Name", with: "Listy McListface"
       select "Published", from: "List Status"
+      select cross_selling_subscriber1.name, from: "List Visibility"
 
       click_button "Create List"
 
       expect(page).to have_content("Listy McListface")
       
       expect(page).to have_content("This Cross Selling list is Empty")
-      # expect(page).to have_button("Add Products")
       expect(page).to have_link("Add products")
     end
 
+  end
+
+  context "when market is subscribing" do
+    before do
+      switch_to_subdomain(cross_selling_subscriber1.subdomain)
+      sign_in_as user
+      visit admin_market_path(cross_selling_subscriber1)
+
+    end
+
+    it "displays available lists" do
+      within ".tabs" do
+        click_link "Cross Sell"
+      end
+
+      expect(page).to have_content 'Subscriptions (1)'
+
+      click_link 'Subscriptions (1)'
+      expect(page).to have_content 'Subby McSubface'
+    end
+
+    # expect product count to be y
+    # expect content 'Pending review'
+    # click 'Review Cross Sell List'
+    #   expect content 'Product_01'
+    #   expect content 'Product_03' # From Supplier_03, which doesn't sell directly to Mkt_02
+    #   uncheck Product_01
+    #   click 'Close'
+    #   expect product count to be y-1
+    #   select 'Active' from 'List Status'
+    #   click 'Back to My Subscriptions'
+    # expect content 'Active'
   end
 
   context "when adding items to a list" do
@@ -168,7 +204,6 @@ describe "Manage cross selling lists" do
       expect(page).to have_content("Products")
     end
   end
-
 
   # it "adds products by supplier" do
   #       # test adding products by supplier (across categories)
@@ -208,21 +243,5 @@ describe "Manage cross selling lists" do
   #   Lists
   #     expect content 'List_01'
   #     expect content 'active'
-
-  # For market with cross selling and on and subscribing
-  #   expect content 'Subscriptions (1)'
-  #   click 'Subscriptions (1)'
-  #   expect content 'List_01'
-  #   expect product count to be y
-  #   expect content 'Pending review'
-  #   click 'Review Cross Sell List'
-  #     expect content 'Product_01'
-  #     expect content 'Product_03' # From Supplier_03, which doesn't sell directly to Mkt_02
-  #     uncheck Product_01
-  #     click 'Close'
-  #     expect product count to be y-1
-  #     select 'Active' from 'List Status'
-  #     click 'Back to My Subscriptions'
-  #   expect content 'Active'
 
 end

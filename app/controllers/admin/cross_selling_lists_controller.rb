@@ -39,6 +39,8 @@ class Admin::CrossSellingListsController < AdminController
   def create
     @cross_selling_list = @entity.cross_selling_lists.build(cross_selling_list_params)
     @cross_selling_list.creator = true
+    submitted_products = {'product_ids' => cross_selling_list_params[:product_ids] || []}
+
 
     if @cross_selling_list.save
       @cross_selling_list.manage_publication!(cross_selling_list_params)
@@ -47,7 +49,7 @@ class Admin::CrossSellingListsController < AdminController
         selected_subscribers = cross_selling_list_params[:children_ids].select(&:present?).map { |submitted_id| {parent_id: @cross_selling_list.id, entity_id: submitted_id.to_i} }
 
         selected_subscribers.each do |list_ids|
-          create_list(@cross_selling_list, list_ids)
+          create_list(@cross_selling_list, list_ids, submitted_products)
         end
       end
 
