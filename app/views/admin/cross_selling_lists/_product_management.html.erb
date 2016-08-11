@@ -6,8 +6,8 @@
 
   <div id="tabs" class="popup-body">
     <ul id="product-add-tab-list" class="tabs wrapping-tabs">
-      <li class="tab"><a href="#product-add-suppliers">Suppliers</a></li>
-      <li class="tab"><a href="#product-add-categories">Categories</a></li>
+      <li class="tab"><a href="#product-add-suppliers">Products by supplier</a></li>
+      <li class="tab"><a href="#product-add-categories">Products by category</a></li>
       <li class="tab"><a href="#product-add-products">Products</a></li>
     </ul>
 
@@ -24,8 +24,8 @@
         <tbody>
         <% @suppliers.each do |supplier| %>
           <tr>
-            <td><%= supplier.name %><!-- supplier.id: <%= supplier.id %> --></td>
-            <td><%= @scoped_products.select {|product| product["organization_id"].to_i == supplier.id }.count %></td>
+            <td class="supplier-name"><%= supplier.name %><!-- supplier.id: <%= supplier.id %> --></td>
+            <td class="supplier-product-count"><%= @scoped_products.select {|product| product["organization_id"].to_i == supplier.id }.count %></td>
             <td><%= check_box_tag("suppliers[]", supplier.id, @selected_suppliers.include?(supplier.id) ) %></td>
           </tr>
         <% end %>
@@ -45,8 +45,8 @@
         <tbody>
         <% @categories.each do |category| %>
           <tr>
-            <td><%= category.name %><!-- category.id <%= category.id %> --></td>
-            <td><%= @scoped_products.select {|product| product["category_id"].to_i == category.id }.count %></td>
+            <td class="category-name"><%= category.name %><!-- category.id <%= category.id %> --></td>
+            <td class="category-product-count"><%= @scoped_products.select {|product| product["category_id"].to_i == category.id }.count %></td>
             <td><%= check_box_tag("categories[]", category.id, @selected_categories.include?(category.id) ) %></td>
           </tr>
         <% end %>

@@ -1,6 +1,17 @@
 require "spec_helper"
 
 describe "Manage cross selling lists" do
+  let!(:product_01){ create(:product, :sellable) }
+  let!(:product_02){ create(:product, :sellable) }
+  let!(:product_03){ create(:product) }
+  let!(:product_04){ create(:product) }
+  let!(:product_05){ create(:product) }
+  let!(:product_06){ create(:product, :sellable) }
+
+  let!(:supplier_01){ create(:organization, :seller, products: [product_01, product_02, product_03]) }
+  let!(:supplier_02){ create(:organization, :seller, products: [product_04, product_05]) }
+  let!(:supplier_03){ create(:organization, :seller, products: [product_06]) }
+
   let!(:user) { create(:user, :market_manager) }
   let!(:user2) { create(:user, :market_manager) }
 
@@ -8,12 +19,29 @@ describe "Manage cross selling lists" do
   let!(:cross_selling_is_allowed_market) { create(:market, managers: [user], allow_cross_sell: true) }
   let!(:cross_selling_is_enabled_market) { create(:market, managers: [user], allow_cross_sell: true, self_enabled_cross_sell: true) }
 
-  let!(:cross_selling_subscriber1) { create(:market, managers: [user], allow_cross_sell: true, self_enabled_cross_sell: true) }
-  let!(:cross_selling_subscriber2) { create(:market, managers: [user], allow_cross_sell: true, self_enabled_cross_sell: true) }
+  let!(:cross_selling_subscriber1) { create(
+    :market,
+    managers: [user],
+    allow_cross_sell: true,
+    self_enabled_cross_sell: true,
+    organizations: [supplier_02, supplier_03]) }
 
-  let!(:cross_selling_market) { create(:market, managers: [user], allow_cross_sell: true, self_enabled_cross_sell: true, cross_sells: [cross_selling_subscriber1, cross_selling_subscriber2]) }
+  let!(:cross_selling_subscriber2) { create(
+    :market,
+    managers: [user],
+    allow_cross_sell: true,
+    self_enabled_cross_sell: true) }
+
+  let!(:cross_selling_market) { create(
+    :market,
+    managers: [user],
+    allow_cross_sell: true,
+    self_enabled_cross_sell: true,
+    cross_sells: [cross_selling_subscriber1, cross_selling_subscriber2],
+    organizations: [supplier_01, supplier_02]) }
+
   let!(:cross_sell_list) { cross_selling_market.cross_selling_lists.create(name: "Listy McListface", status: "Published", children_ids: [cross_selling_subscriber1]) }
-  let!(:cross_sell_list2){ create(:cross_selling_list, name: "Subby McSubface", status: "Published", creator: false, parent_id: cross_sell_list.id, entity_id: cross_selling_subscriber1.id, entity_type: "Market")}
+  let!(:cross_sell_list2){ create(:cross_selling_list, name: "Subby McSubface", status: "Published", creator: false, parent_id: cross_sell_list.id, entity_id: cross_selling_subscriber1.id, entity_type: "Market") }
 
   context "when cross selling is unavailable" do
     before do
@@ -27,6 +55,7 @@ describe "Manage cross selling lists" do
     end
   end 
 
+  # TODO Test redirection to index when cross selling is available but off
   context "when cross selling is available but off" do
     before do
       switch_to_subdomain(cross_selling_is_allowed_market.subdomain)
@@ -47,8 +76,6 @@ describe "Manage cross selling lists" do
 
       click_button "Turn on Cross Selling"
 
-      # KXM The design specifies this as a link, but a button is easier for now
-      # expect(page).to have_content("Turn off Cross Selling")
       expect(page).to have_button("Turn off Cross Selling")
     end
 
@@ -66,8 +93,6 @@ describe "Manage cross selling lists" do
         click_link "Cross Sell"
       end
 
-      # KXM The design specifies this as a link, but a button is easier for now
-      # expect(page).to have_content("Turn off Cross Selling")
       expect(page).to have_button("Turn off Cross Selling")
 
       click_button "Turn off Cross Selling"
@@ -155,7 +180,6 @@ describe "Manage cross selling lists" do
       switch_to_subdomain(cross_selling_subscriber1.subdomain)
       sign_in_as user
       visit admin_market_path(cross_selling_subscriber1)
-
     end
 
     it "displays available lists" do
@@ -170,16 +194,16 @@ describe "Manage cross selling lists" do
     end
 
     # expect product count to be y
-    # expect content 'Pending review'
-    # click 'Review Cross Sell List'
-    #   expect content 'Product_01'
-    #   expect content 'Product_03' # From Supplier_03, which doesn't sell directly to Mkt_02
+    # expect(page).to have_content "Pending review"
+    # click_link "Review Cross Sell List"
+    #   expect(page).to have_content "Product_01"
+    #   expect(page).to have_content "Product_03" # From Supplier_03, which doesn't sell directly to Mkt_02
     #   uncheck Product_01
-    #   click 'Close'
+    #   click_link "Close"
     #   expect product count to be y-1
-    #   select 'Active' from 'List Status'
-    #   click 'Back to My Subscriptions'
-    # expect content 'Active'
+    #   select "Active", from "List Status"
+    #   click_link "Back to My Subscriptions"
+    # expect(page).to have_content "Active"
   end
 
   context "when adding items to a list" do
@@ -203,45 +227,111 @@ describe "Manage cross selling lists" do
       expect(page).to have_content("Categories")
       expect(page).to have_content("Products")
     end
+
+    # Test adding products by supplier (across categories)
+    it "adds and removes products by supplier via form submission" do
+      # Add 'em first...'
+      click_link "Add products"
+      click_link "Products by supplier"
+
+      expect(page).to have_content(supplier_01.name)
+
+      supplier_row = Dom::Admin::ProductManagementSupplierRow.find_by_supplier_name(supplier_01.name)
+
+      # KXM Unavailable products ought not show - the 'sellable' trait doesn't seem to work (the count should have been 2)... what does?
+      expect(supplier_row.supplier_product_count).to eql("3")
+
+      supplier_row.check
+
+      click_button("Update List", match: :first)
+      expect(page.all('table#cross-sell-list-products tbody tr').count).to eql(3)
+
+      # Having been added, now remove 'em
+      expect(page).to have_link("Manage products")
+      click_link "Manage products"
+
+      expect(supplier_row.checked?).to eql("checked")
+
+      supplier_row.uncheck
+
+      click_button("Update List", match: :first)
+      expect(page.all('table#cross-sell-list-products tbody tr').count).to eql(0)
+
+      # These are AJAX conditions
+      # expect product count of Supplier_01 to be y/y
+      # expect product count of Supplier_02 to be 0/y
+      # click_link "Categories"
+      # expect product count of Category_01 to be x/y # Supplier_01 has some but not all
+      # expect product count of Category_02 to be y/y # Supplier_01 has all
+      # expect product count of Category_03 to be 0/y # Supplier_01 has none
+    end
+
+    # Test adding products by category (across suppliers)
+    it "adds and removes products by category via form submission" do
+      # Add 'em first...'
+      click_link "Add products"
+      click_link "Products by category"
+
+      expect(page).to have_content(product_01.category.name)
+
+      category_row = Dom::Admin::ProductManagementCategoryRow.find_by_category_name(product_01.category.name)
+
+      # KXM Unavailable products ought not show - the 'sellable' trait doesn't seem to work (the count should have been 2)... what does?
+      expect(category_row.category_product_count).to eql("5")
+
+      category_row.check
+
+      click_button("Update List", match: :first)
+      expect(page.all('table#cross-sell-list-products tbody tr').count).to eql(5)
+
+      # Having been added, now remove 'em
+      expect(page).to have_link("Manage products")
+      click_link "Manage products"
+
+      expect(category_row.checked?).to eql("checked")
+      supplier_rows = Dom::Admin::ProductManagementSupplierRow.all
+
+      # Suppliers take precidence on form submission... deselect them here so the category check box works
+      supplier_rows.each do |supplier|
+        supplier.uncheck
+      end
+
+      category_row.uncheck
+
+      click_button("Update List", match: :first)
+      expect(page.all('table#cross-sell-list-products tbody tr').count).to eql(0)
+
+      # Original pseudo-code:
+      # add Category_01
+      # expect product count of Category_01 to be y/y
+      # click_link "Suppliers"
+      # expect product count of Supplier_01 to be y/y
+      # expect product count of Supplier_02 to be w/y # Supplier_02 has some of Category_01
+    end
+
+    # Test adding and removing products by product (across suppliers and categories)
+    xit "adds individual products" do
+
+      # Original pseudo-code:
+      # click_link "Products"
+      # expect Product_01 to be checked
+      # expect Product_02 to be checked
+      # expect Product_03 to be unchecked
+      # add Product_03
+      # click_link "Categories"
+      # expect product count of Category_03 to be 1/y # From adding Product_03
+      # click_link "Suppliers"
+      # expect prduct count of Supplier_03 to be 1/y # From adding Product_03
+
+      # click_link "Add to List" # Perhaps "Save List" to better indicate you're done?
+      # expect product count of List to be y/y
+    end
   end
 
-  # it "adds products by supplier" do
-  #       # test adding products by supplier (across categories)
-  #       add Supplier_01
-  #       expect product count of Supplier_01 to be y/y
-  #       expect product count of Supplier_02 to be 0/y
-  #       click 'Categories'
-  #       expect product count of Category_01 to be x/y # Supplier_01 has some but not all
-  #       expect product count of Category_02 to be y/y # Supplier_01 has all
-  #       expect product count of Category_03 to be 0/y # Supplier_01 has none
-
-  #       # test adding products by category (across suppliers)
-  #       add Category_01
-  #       expect product count of Category_01 to be y/y
-  #       click 'Suppliers'
-  #       expect product count of Supplier_01 to be y/y
-  #       expect product count of Supplier_02 to be w/y # Supplier_02 has some of Category_01
-
-  #       # test adding and removing products by product (across suppliers and categories)
-  #       click 'Products'
-  #       expect Product_01 to be checked
-  #       expect Product_02 to be checked
-  #       expect Product_03 to be unchecked
-  #       add Product_03
-  #       click 'Categories'
-  #       expect product count of Category_03 to be 1/y # From adding Product_03
-  #       click 'Suppliers'
-  #       expect prduct count of Supplier_03 to be 1/y # From adding Product_03
-
-  #       click 'Add to List' # Perhaps 'Save List' to better indicate you're done?
-  #       expect product count of List to be y/y
-
-  #       select 'active' from 'List Status'
-  #       click 'update'
-
-  #       click 'Back to my Lists'
-  #   Lists
-  #     expect content 'List_01'
-  #     expect content 'active'
-
+    #   select "Active", from "List Status"
+    #   click_link "Update"
+    #   click_link "Back to my Lists"
+    # Lists
+    #   expect(page).to have_content "List_01"
+    #   expect(page).to have_content "active"
 end

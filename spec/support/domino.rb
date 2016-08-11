@@ -633,6 +633,51 @@ module Dom
       end
     end
 
+    class CrossSellListProductsRow < Domino
+      selector "cross-sell-list-products tr"
+
+      attribute :supplier_name
+      attribute :category_name
+      attribute :product_name
+      attribute :product_active
+    end
+
+    class ProductManagementSupplierRow < Domino
+      selector "#product-add-suppliers table tbody tr"
+      attribute :supplier_name
+      attribute :supplier_product_count
+
+      def checked?
+        node.find("input").checked? || false
+      end
+
+      def check
+        node.find("input").set(true)
+      end
+
+      def uncheck
+        node.find("input").set(false)
+      end
+    end
+
+    class ProductManagementCategoryRow < Domino
+      selector "#product-add-categories table tbody tr"
+      attribute :category_name
+      attribute :category_product_count
+
+      def checked?
+        node.find("input").checked? || false
+      end
+
+      def check
+        node.find("input").set(true)
+      end
+
+      def uncheck
+        node.find("input").set(false)
+      end
+    end
+
     class DeliverySchedule < Domino
       include Dom::Deletable
 
