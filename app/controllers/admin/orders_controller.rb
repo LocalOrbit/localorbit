@@ -134,7 +134,7 @@ class Admin::OrdersController < AdminController
 
   def setup_add_items_form(order)
     @show_add_items_form = true
-    @order = SellerOrder.new(order, current_user)
+    @order = SellerOrder.new(order, current_user, order.delivery_fees)
     user_order_context = UserOrderContext.build(user: current_user, order: @order)
     if FeatureAccess.add_order_items?(user_order_context: user_order_context)
       if user_order_context.is_admin or user_order_context.is_market_manager
@@ -161,6 +161,7 @@ class Admin::OrdersController < AdminController
   def perform_order_update(order, params) # TODO this needs to handle price edits
     updates = UpdateOrder.perform(payment_provider: order.payment_provider, order: order, order_params: params, request: request)
     if updates.success?
+      order.update_total_cost
       came_from_admin = request.referer.include?("/admin/")
       next_url = if order.reload.items.any?
         came_from_admin ? admin_order_path(order) : order_path(order)
@@ -185,6 +186,8 @@ class Admin::OrdersController < AdminController
       render :show
       return false
     end
+    current_cart.destroy
+    session.delete(:cart_id)
     true
   end
 

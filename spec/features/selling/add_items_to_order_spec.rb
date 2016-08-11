@@ -40,7 +40,7 @@ describe "Adding items to an order" do
       visit admin_order_path(order)
     end
 
-    it "shows the form for adding new items" do
+    xit "shows the form for adding new items" do
       click_button "Add Items"
       expect(page).to have_content(product2.name)
       expect(page).to have_content(product2.organization.name)
@@ -50,7 +50,7 @@ describe "Adding items to an order" do
       expect(page).to have_content(product2.name)
     end
 
-    it "shows errors if adding new items fails" do
+    xit "shows errors if adding new items fails" do
       click_button "Add Items"
       quantity = product2.available_inventory(delivery.deliver_on) + 1
       fill_in "items_to_add_#{product2.id}_quantity", with: quantity

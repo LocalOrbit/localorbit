@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160623013035) do
+ActiveRecord::Schema.define(version: 20160710003544) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -498,6 +498,7 @@ ActiveRecord::Schema.define(version: 20160623013035) do
     t.boolean  "subscribed",                                             default: false
     t.boolean  "routing_plan",                                           default: false
     t.integer  "organization_id"
+    t.boolean  "add_item_pricing",                                       default: true
   end
 
   add_index "markets", ["name"], name: "index_markets_on_name", using: :btree
