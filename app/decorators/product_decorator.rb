@@ -5,8 +5,10 @@ class ProductDecorator < OrganizationItemDecorator
     @cart_item ||= begin
       return unless context[:current_cart]
 
+      order = context[:order]
+
       i = context[:current_cart].items.detect {|i| i.product_id == id }
-      i || CartItem.new(product: object, quantity: 0, cart: context[:current_cart])
+      i || CartItem.new(product: object, quantity: 0, cart: context[:current_cart], order: order)
     end
   end
 

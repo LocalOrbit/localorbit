@@ -214,47 +214,39 @@
         </tr>
         <% end %>
       </tbody>
-
-      <% if can_add_products_to_order?(order, user_order_context) && @show_add_items_form %>
-        <tbody>
-          <% @products_for_sale.each_category_with_products do |category, products| %>
-            <tr><th colspan="9"><%= category.name %></th></tr>
-            <% products.each do |product| %>
-              <tr class="order-item-row">
-                <td class="name">
-                  <span class="product-ordered"><%= product.name %></span> <br>
-                  <span class="seller-name">from <%= product.organization.name %></span>
-                </td>
-                <td class="quantity">
-                  <%= fields_for "items_to_add[]", CartItem.new(product: product) do |item| %>
-                    <%= item.hidden_field :product_id, id: "items_to_add_#{product.id}_product_id" %>
-                    <%= item.text_field :quantity, id: "items_to_add_#{product.id}_quantity", class: 'quantity-ordered' %>
-                  <% end %>
-                </td>
-                <td class="price">
-                  <ul class="tiers">
-                    <% product.prices_for_market_and_organization(current_market, order.organization).each do |price| %>
-                      <% price = price.decorate %>
-                      <% if price.organization_id.present? %>
-                        <li class="negotiated"><span class="unit-price"><%= number_to_currency(price.sale_price)%></span> <span class="tier"><%= price.formatted_units %></span><span class="tooltip tooltip--naked tooltip--notice" data-tooltip="This is a negotiated price specific to you!"><i class="font-icon" data-icon="&#xe01f;"></i></span></li>
-                      <% else %>
-                        <li><span class="unit-price"><%= number_to_currency(price.sale_price)%></span> <span class="tier"><%= price.formatted_units %></span></li>
-                      <% end %>
-                    <% end %>
-                  </ul>
-                </td>
-                <td class="price" colspan="6">
-                  <%= product.available_inventory(order.delivery.deliver_on) %> available
-                </td>
-              </tr>
-            <% end %>
-          <% end %>
-        </tbody>
+      </table>
+      <% if can_add_products_to_order?(order, user_order_context) && @show_add_items_form
+          session[:current_delivery_id] = order.delivery.id
+          session[:current_organization_id] = order.organization.id
+          %>
+          <div class="add-items-to-order" data-order-id="<%= order.id %>">
+            <%= react_component('lo.ProductFilter', {
+                deliveryDate: order.delivery.buyer_deliver_on,
+                orderCutoff: order.delivery.cutoff_time,
+                buyerInfo: order.organization.name,
+                useTemplates: FeatureAccess.order_templates?(market: current_market),
+                supplierId: nil,
+                orderId: order.id
+            }) %>
+          <div style="height:600px; overflow-y: scroll">
+            <%= react_component('lo.ProductCatalog', {
+                baseUrl: "#{request.base_url}/api/v1/",
+                cartUrl: cart_path,
+                deliveryDate: order.delivery.buyer_deliver_on,
+                orderCutoff: order.delivery.cutoff_time,
+                buyerInfo: order.organization.name,
+                limit: 10,
+                useTemplates: FeatureAccess.order_templates?(market: current_market),
+                supplierId: nil,
+                orderId: order.id
+            }) %>
+          </div>
+        </div>
       <% end %>
-    </table>
     </div>
 
     <% if FeatureAccess.order_action_links?(user_order_context: user_order_context)  %>
+      <br/><br/>
       <%= f.submit @show_add_items_form ? "Add items and Update quantities" : "Update quantities", class: 'pull-right btn btn--small mobile-block' %>
     <% end %>
     <% if can_add_products_to_order?(order, user_order_context) && !@show_add_items_form %>
