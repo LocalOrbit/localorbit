@@ -1,11 +1,11 @@
-<font size="5"><strong><%= @num_products_loaded %></strong> products successfully imported.</font>
-<br></br>
+<strong><%= @num_products_loaded %></strong> products successfully imported.
+<br/>
 Make sure to <strong><a href="/admin/products">add inventory to your products</a></strong> so they will appear in the product catalog!<br>(If you updated products that already have inventory, nothing about the inventory has changed.)
 <br><br>
 <strong><a href="/admin/upload">Return to upload form</a></strong>
 
 <br>
-<% if @errors.keys.map{|k| @errors[k]["Errors"]}.select{|er| !er.empty?}.any? %>
+<% if !@errors.nil? && @errors.keys.map{|k| @errors[k]["Errors"]}.select{|er| !er.empty?}.any? %>
 	<h3>Errors</h3>
 <% end %>
 <div id="results">
@@ -19,6 +19,6 @@ Make sure to <strong><a href="/admin/products">add inventory to your products</a
 				<br>
 			<% end %>
 		<% end %>
-		<br></br>
+		<br/>
 	<% end %>
 </div>
