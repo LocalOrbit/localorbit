@@ -225,9 +225,9 @@ describe "Manage cross selling lists" do
       click_link "Add products"
 
       expect(page).to have_content("Add Products to Cross Selling List")
-      expect(page).to have_content("Suppliers")
-      expect(page).to have_content("Categories")
-      expect(page).to have_content("Products")
+      expect(page).to have_content("Products by supplier")
+      expect(page).to have_content("Products by category")
+      expect(page).to have_content("Individual products")
     end
 
     it "adds and removes products by supplier via form submission" do
