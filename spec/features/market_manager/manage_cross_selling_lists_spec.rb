@@ -206,6 +206,8 @@ describe "Manage cross selling lists" do
     # expect(page).to have_content "Active"
   end
 
+  # KXM Check dynamic product counts on product selection once AJAX is implemented
+  # (selecting a supplier should change products checked and vice versa)
   context "when adding items to a list" do
     before do
       switch_to_subdomain(cross_selling_market.subdomain)
@@ -228,7 +230,6 @@ describe "Manage cross selling lists" do
       expect(page).to have_content("Products")
     end
 
-    # Test adding products by supplier (across categories)
     it "adds and removes products by supplier via form submission" do
       # Add 'em first...'
       click_link "Add products"
@@ -256,17 +257,8 @@ describe "Manage cross selling lists" do
 
       click_button("Update List", match: :first)
       expect(page.all('table#cross-sell-list-products tbody tr').count).to eql(0)
-
-      # These are AJAX conditions
-      # expect product count of Supplier_01 to be y/y
-      # expect product count of Supplier_02 to be 0/y
-      # click_link "Categories"
-      # expect product count of Category_01 to be x/y # Supplier_01 has some but not all
-      # expect product count of Category_02 to be y/y # Supplier_01 has all
-      # expect product count of Category_03 to be 0/y # Supplier_01 has none
     end
 
-    # Test adding products by category (across suppliers)
     it "adds and removes products by category via form submission" do
       # Add 'em first...'
       click_link "Add products"
@@ -276,7 +268,8 @@ describe "Manage cross selling lists" do
 
       category_row = Dom::Admin::ProductManagementCategoryRow.find_by_category_name(product_01.category.name)
 
-      # KXM Unavailable products ought not show - the 'sellable' trait doesn't seem to work (the count should have been 2)... what does?
+      # KXM Unavailable products ought not show - the 'sellable' trait doesn't
+      # seem to work (the count should have been 2)... what does?
       expect(category_row.category_product_count).to eql("5")
 
       category_row.check
@@ -291,6 +284,7 @@ describe "Manage cross selling lists" do
       expect(category_row.checked?).to eql("checked")
       supplier_rows = Dom::Admin::ProductManagementSupplierRow.all
 
+      # KXM - Subtractions ought to happen last which should render this supplier de-selection obsolete.
       # Suppliers take precidence on form submission... deselect them here so the category check box works
       supplier_rows.each do |supplier|
         supplier.uncheck
@@ -300,38 +294,35 @@ describe "Manage cross selling lists" do
 
       click_button("Update List", match: :first)
       expect(page.all('table#cross-sell-list-products tbody tr').count).to eql(0)
-
-      # Original pseudo-code:
-      # add Category_01
-      # expect product count of Category_01 to be y/y
-      # click_link "Suppliers"
-      # expect product count of Supplier_01 to be y/y
-      # expect product count of Supplier_02 to be w/y # Supplier_02 has some of Category_01
     end
 
-    # Test adding and removing products by product (across suppliers and categories)
-    xit "adds individual products" do
+    it "adds and removes individual products via form submission" do
+      # Add 'em first...'
+      click_link "Add products"
+      click_link "Individual products"
 
-      # Original pseudo-code:
-      # click_link "Products"
-      # expect Product_01 to be checked
-      # expect Product_02 to be checked
-      # expect Product_03 to be unchecked
-      # add Product_03
-      # click_link "Categories"
-      # expect product count of Category_03 to be 1/y # From adding Product_03
-      # click_link "Suppliers"
-      # expect prduct count of Supplier_03 to be 1/y # From adding Product_03
+      expect(page).to have_content(product_01.name)
 
-      # click_link "Add to List" # Perhaps "Save List" to better indicate you're done?
-      # expect product count of List to be y/y
+      product_row = Dom::Admin::ProductManagementProductRow.find(product_01.name).first
+
+      product_row.check
+
+      click_button("Update List", match: :first)
+      expect(page.all('table#cross-sell-list-products tbody tr').count).to eql(1)
+
+      # Having been added, now remove 'em
+      expect(page).to have_link("Manage products")
+      click_link "Manage products"
+      click_link "Individual products"
+
+      product_row = Dom::Admin::ProductManagementProductRow.find(product_01.name).first
+
+      expect(product_row.checked?).to eql("checked")
+
+      product_row.uncheck
+
+      click_button("Update List", match: :first)
+      expect(page.all('table#cross-sell-list-products tbody tr').count).to eql(0)
     end
   end
-
-    #   select "Active", from "List Status"
-    #   click_link "Update"
-    #   click_link "Back to my Lists"
-    # Lists
-    #   expect(page).to have_content "List_01"
-    #   expect(page).to have_content "active"
 end

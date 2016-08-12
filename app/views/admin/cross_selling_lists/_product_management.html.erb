@@ -8,7 +8,7 @@
     <ul id="product-add-tab-list" class="tabs wrapping-tabs">
       <li class="tab"><a href="#product-add-suppliers">Products by supplier</a></li>
       <li class="tab"><a href="#product-add-categories">Products by category</a></li>
-      <li class="tab"><a href="#product-add-products">Products</a></li>
+      <li class="tab"><a href="#product-add-products">Individual products</a></li>
     </ul>
 
     <div id="product-add-suppliers" class="bound-list">
@@ -66,7 +66,7 @@
         <% if @cross_selling_list.creator then %>
           <% @scoped_products.each do |product| %>
             <tr>
-              <td><span id="list-product-name"><%= product.name %></span> <span id="list-product-unit-name"><%= "(#{product.unit.singular})" %></span><br /><span id="list-product-supplier"><%= product.organization.name %></span></td>
+              <td><span id="product-name"><%= product.name %></span> <span id="product-unit-name"><%= "(#{product.unit.singular})" %></span><br /><span id="product-supplier"><%= product.organization.name %></span></td>
               <td><%= check_box_tag "cross_selling_list[product_ids][]", product.id, list.object.products.include?(product) %></td>
             </tr>
           <% end %>
@@ -74,7 +74,7 @@
           <%= list.fields_for :cross_selling_list_products do |cslp| %>
             <tr>
               <%= cslp.hidden_field :product_id %>
-              <td><span id="list-product-name"><%= cslp.object.product.name %></span><br /><span id="list-product-supplier"><%= cslp.object.product.organization.name %></span></td>
+              <td><span id="product-name"><%= cslp.object.product.name %></span><br /><span id="product-supplier"><%= cslp.object.product.organization.name %></span></td>
               <td><%= cslp.check_box :active %></td>
             </tr>
           <% end %>

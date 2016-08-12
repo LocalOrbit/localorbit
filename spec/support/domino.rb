@@ -678,6 +678,23 @@ module Dom
       end
     end
 
+    class ProductManagementProductRow < Domino
+      selector "#product-add-products table tbody tr"
+      attribute :product_name
+
+      def checked?
+        node.find("input").checked? || false
+      end
+
+      def check
+        node.find("input").set(true)
+      end
+
+      def uncheck
+        node.find("input").set(false)
+      end
+    end
+
     class DeliverySchedule < Domino
       include Dom::Deletable
 
