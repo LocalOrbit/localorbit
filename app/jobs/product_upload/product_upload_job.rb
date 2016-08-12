@@ -1,6 +1,6 @@
 module ProductUpload
-	include Imports
-	class ProductUploadJob  < Struct.new(:jsn, :upload_audit_id) # pass in the datafile like is done right now in uploadcontroller, i.e.
+	class ProductUploadJob  < Struct.new(:jsn, :upload_audit_id, :curr_user) # pass in the datafile like is done right now in uploadcontroller, i.e.
+    #include Imports
 		# :Imports::SerializeProducts.get_json_data(params[:datafile],params[:curr_user])
 		
 		# def enqueue(job)
@@ -30,7 +30,7 @@ module ProductUpload
     	aud = Audit.find(upload_audit_id)
     	unless jsn.include?("invalid")
         jsn[0]["products"].each do |p|
-          ::Imports::ProductHelpers.create_product_from_hash(p,params[:curr_user])
+          ::Imports::ProductHelpers.create_product_from_hash(p, :curr_user)
           @num_products_loaded += 1 # how does this get added to, also? different scope
           if p.has_key?("Multiple Pack Sizes") && !p["Multiple Pack Sizes"].empty?
             @num_products_loaded += 1
