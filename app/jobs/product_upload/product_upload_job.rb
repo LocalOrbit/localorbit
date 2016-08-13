@@ -1,6 +1,6 @@
 module ProductUpload
+  include Imports
 	class ProductUploadJob  < Struct.new(:jsn, :upload_audit_id, :curr_user) # pass in the datafile like is done right now in uploadcontroller, i.e.
-    #include Imports
 		# :Imports::SerializeProducts.get_json_data(params[:datafile],params[:curr_user])
 		
 		# def enqueue(job)
