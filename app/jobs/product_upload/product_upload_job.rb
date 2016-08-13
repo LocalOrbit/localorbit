@@ -9,9 +9,10 @@ module ProductUpload
 		# 	job.save!
 		# end
 
-		# def success(job)
-		# 	update_status('success')
-		# end
+		def success(job)
+		 	#update_status('success')
+      UserMailer.delay.upload_success(:curr_user)
+    end
 
 		# # TODO necessary?
 		# def error(job, exception)
@@ -19,9 +20,10 @@ module ProductUpload
 		# 	# Send any other alert? ? TODO
 		# end
 
-		# def failure(job)
-  #     update_status('failure')
-  #   end
+		def failure(job)
+       #update_status('failure')
+       UserMailer.delay.upload_fail(:curr_user)
+    end
 
     # helper methods to process things here ? can get them from inclusions??
 
@@ -37,12 +39,12 @@ module ProductUpload
           end
         end
         @errors = jsn[1]
-        aud.update_attributes(audited_changes: "#{@num_products_loaded} products updated (or maintained)",associated_type:current_market.subdomain.to_s,comment:"#{User.find(current_user.id).email}") 
+        aud.update_attributes(audited_changes: "#{@num_products_loaded} products updated (or maintained)",associated_type:current_market.subdomain.to_s,comment:"#{User.find(current_user.id).email}")
       else
         @num_products_loaded = 0
         @errors = {"File"=>jsn} # how does errors get to the view this way?
+        raise StandardError.new("Failed to process video with id: #{video.id}") unless video.process?
       end
-    	
     end
 
 

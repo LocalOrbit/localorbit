@@ -54,16 +54,11 @@ class Admin::UploadController < AdminController
         Delayed::Job.enqueue ::ProductUpload::ProductUploadJob.new(jsn, aud.id, params[:curr_user])
       else
         #pass the datafile to the method with the csv file
-        #jsn = ::Imports::SerializeProducts.get_json_data(params[:datafile],params[:curr_user]) # product stuff, row errors
-      
         # TODO: the jsn business above it should also be handled by the worker in the delay
-
-        ## TODO this bit should be replaced by performing the delayed job
         unless jsn.include?("invalid")
          jsn[0]["products"].each do |p|
            ::Imports::ProductHelpers.create_product_from_hash(p,params[:curr_user])
            @num_products_loaded += 1
-           # binding.pry
            if p.has_key?("Multiple Pack Sizes") && !p["Multiple Pack Sizes"].empty?
              @num_products_loaded += 1
            end
