@@ -10,7 +10,7 @@ module ProductUpload
 
 		def success(job)
 		 	#update_status('success')
-      UploadMailer.delay.upload_success(User.find(curr_user).email)
+      UploadMailer.delay.upload_success(User.find(curr_user).email, @num_products_loaded)
     end
 
 		# # TODO necessary?
@@ -21,7 +21,7 @@ module ProductUpload
 
 		def failure(job)
        #update_status('failure')
-      UploadMailer.delay.upload_fail(User.find(curr_user).email)
+      UploadMailer.delay.upload_fail(User.find(curr_user).email, @errors)
     end
 
     # helper methods to process things here ? can get them from inclusions??
@@ -43,7 +43,6 @@ module ProductUpload
       else
         @num_products_loaded = 0
         @errors = {"File"=>jsn} # how does errors get to the view this way?
-        raise StandardError.new("Failed to process video with id: #{video.id}") unless video.process?
       end
     end
 
