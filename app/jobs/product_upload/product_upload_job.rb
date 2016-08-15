@@ -1,17 +1,16 @@
 module ProductUpload
   include Imports
-	class ProductUploadJob  < Struct.new(:jsn, :upload_audit_id, :curr_user) # pass in the datafile like is done right now in uploadcontroller, i.e.
-		# :Imports::SerializeProducts.get_json_data(params[:datafile],params[:curr_user])
-		
-		# def enqueue(job)
+	class ProductUploadJob  < Struct.new(:jsn, :upload_audit_id, :curr_user, :curr_market) # pass in the datafile like is done right now in uploadcontroller, i.e.
+
+		def enqueue(job)
 		# 	job.delayed_reference_id = upload_audit_id
 		# 	job.delayed_reference_type = 'ProductUpload' # ?
 		# 	job.save!
-		# end
+		end
 
 		def success(job)
 		 	#update_status('success')
-      UserMailer.delay.upload_success(:curr_user)
+      UploadMailer.delay.upload_success(User.find(curr_user).email)
     end
 
 		# # TODO necessary?
@@ -22,7 +21,7 @@ module ProductUpload
 
 		def failure(job)
        #update_status('failure')
-       UserMailer.delay.upload_fail(:curr_user)
+      UploadMailer.delay.upload_fail(User.find(curr_user).email)
     end
 
     # helper methods to process things here ? can get them from inclusions??
@@ -30,16 +29,17 @@ module ProductUpload
     def perform
     	# iterate over the json data and create / update objects
     	aud = Audit.find(upload_audit_id)
+      @num_products_loaded = 0
     	unless jsn.include?("invalid")
         jsn[0]["products"].each do |p|
-          ::Imports::ProductHelpers.create_product_from_hash(p, :curr_user)
+          ::Imports::ProductHelpers.create_product_from_hash(p, curr_user)
           @num_products_loaded += 1 # how does this get added to, also? different scope
           if p.has_key?("Multiple Pack Sizes") && !p["Multiple Pack Sizes"].empty?
-            @num_products_loaded += 1
+            #@num_products_loaded += 1
           end
         end
         @errors = jsn[1]
-        aud.update_attributes(audited_changes: "#{@num_products_loaded} products updated (or maintained)",associated_type:current_market.subdomain.to_s,comment:"#{User.find(current_user.id).email}")
+        aud.update_attributes(audited_changes: "#{@num_products_loaded} products updated (or maintained)",associated_type:curr_market.subdomain.to_s,comment:"#{User.find(curr_user).email}")
       else
         @num_products_loaded = 0
         @errors = {"File"=>jsn} # how does errors get to the view this way?

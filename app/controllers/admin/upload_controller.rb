@@ -51,7 +51,8 @@ class Admin::UploadController < AdminController
       @num_products_loaded = 0
       @errors = nil
       if ENV['USE_UPLOAD_QUEUE'] == "true"
-        Delayed::Job.enqueue ::ProductUpload::ProductUploadJob.new(jsn, aud.id, params[:curr_user])
+        Delayed::Job.enqueue ::ProductUpload::ProductUploadJob.new(jsn, aud.id, params[:curr_user], current_market)
+        render :upload_delayed
       else
         #pass the datafile to the method with the csv file
         # TODO: the jsn business above it should also be handled by the worker in the delay
@@ -69,6 +70,7 @@ class Admin::UploadController < AdminController
          @num_products_loaded = 0
          @errors = {"File"=>jsn}
         end
+        render :upload
       end
     end
   end
