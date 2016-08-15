@@ -1,7 +1,7 @@
 class UploadMailer < BaseMailer
-  def upload_success(recipients, num_processed)
+  def upload_success(recipients, num_products_loaded)
 
-    @num_processed = num_processed
+    @num_products_loaded = num_products_loaded
     mail(
       to: recipients,
       subject: "Product upload successful"

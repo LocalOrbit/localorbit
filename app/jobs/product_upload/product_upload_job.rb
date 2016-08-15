@@ -3,29 +3,20 @@ module ProductUpload
 	class ProductUploadJob  < Struct.new(:jsn, :upload_audit_id, :curr_user, :curr_market) # pass in the datafile like is done right now in uploadcontroller, i.e.
 
 		def enqueue(job)
-		# 	job.delayed_reference_id = upload_audit_id
-		# 	job.delayed_reference_type = 'ProductUpload' # ?
-		# 	job.save!
 		end
 
 		def success(job)
-		 	#update_status('success')
       UploadMailer.delay.upload_success(User.find(curr_user).email, @num_products_loaded)
     end
 
-		# # TODO necessary?
-		# def error(job, exception)
-		# 	update_status("There was an error, please try again")
-		# 	# Send any other alert? ? TODO
-		# end
+		def error(job, exception)
+      UploadMailer.delay.upload_fail(User.find(curr_user).email, @errors)
+		end
 
 		def failure(job)
-       #update_status('failure')
       UploadMailer.delay.upload_fail(User.find(curr_user).email, @errors)
     end
-
-    # helper methods to process things here ? can get them from inclusions??
-
+    
     def perform
     	# iterate over the json data and create / update objects
     	aud = Audit.find(upload_audit_id)
@@ -43,6 +34,7 @@ module ProductUpload
       else
         @num_products_loaded = 0
         @errors = {"File"=>jsn} # how does errors get to the view this way?
+        raise StandardError.new("Failed to process file")
       end
     end
 
