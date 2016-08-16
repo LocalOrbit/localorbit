@@ -44,21 +44,8 @@
             </td>
           <% end %>
 
-          <% if field == :lot %>
-     
-            <% item.lots.each do |lt| %>
-              <td class="lot-info">
-                <% lt = Lot.find(lt.lot_id) %>
-                <% if not lt.expires_at.nil? %>
-                  <%= lt.number %> |
-                  Exp <%= lt.expires_at.to_date %> |
-                  <%= lt.quantity %> avail. | 
-                  Good from <%= lt.good_from.to_date %>
-                <% else %>
-                  Single lot
-                <% end %>
-              </td>
-            <% end %>
+          <% if field == :lot_info %>
+            <td class="lot-info"><%= item.lot_info %></td>
           <% end %>
 
           <% if field == :fulfillment_day %>

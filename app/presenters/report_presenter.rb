@@ -30,8 +30,7 @@ class ReportPresenter
     discount_code:          {sort: nil,                      display_name: "Discount Code"},
     discount_amount:        {sort: nil,                      display_name: "Discount Amount"},
     product_code:           {sort: :code,                    display_name: "Product Code"},
-    lot:                    {sort: :expires_at, 
-      display_name: "Lot"}
+    lot_info:               {sort: :expires_at,              display_name: "Lot"}
     # TODO add all needed fields for lot report with display name here
   }.with_indifferent_access
 
@@ -130,8 +129,8 @@ class ReportPresenter
       ex_mm: true
     },
     lots: {
-      filters: [:lot,:market_name, :seller_name, :product_name],
-      fields: [:lot, :market_name,:seller_name, :placed_at, :order_number, :buyer_name, :category_name, :subcategory_name, :product_name 
+      filters: [:market_name, :seller_name, :product_name, :placed_at],
+      fields: [:lot_info, :seller_name, :placed_at, :buyer_name, :category_name, :subcategory_name, :product_name
         ],
       mm_only: true,
       use_adv_inventory: true
@@ -328,7 +327,7 @@ class ReportPresenter
     end
 
     # Below: additions for lot reporting
-    if includes_field?(:lot)
+    if includes_field?(:lot_info)
       items = items.includes(:lots) 
       # items = items.includes(product: :lots) 
     end
