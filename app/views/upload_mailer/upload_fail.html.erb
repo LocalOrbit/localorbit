@@ -5,17 +5,17 @@ Please correct these errors, and upload your file again.
 <% if !@errors.nil? && @errors.keys.map{|k| @errors[k]["Errors"]}.select{|er| !er.empty?}.any? %>
     <h3>Errors:</h3>
     <div id="results">
-      <% @errors.each do |e| %>
-          <% if @errors.has_key?("File") %>
-              <%= @errors["File"] %>
-          <% elsif not e[1]["Errors"].empty? %>
-              <strong><%= "Row #{e[1]["Row number"]}:" %></strong><br>
-              <% e[1]["Errors"].keys.each do |er| %>
-                  &nbsp;&nbsp;&nbsp; <%= "- #{er} (#{e[1]['Errors'][er]})" %>
-                  <br>
-              <% end %>
-          <% end %>
-          <br/>
+      <% if @errors.has_key?("File") %>
+          <%= @errors["File"] %>
+      <% else %>
+        <% @errors["File"].each do |e| %>
+            <strong><%= "Row #{e[1]["Row number"]}:" %></strong><br/>
+            <% e[1]["Errors"].keys.each do |er| %>
+                &nbsp;&nbsp;&nbsp; <%= "- #{er} (#{e[1]['Errors'][er]})" %>
+                <br>
+            <% end %>
+            <br/>
+        <% end %>
       <% end %>
     </div>
 <% end %>

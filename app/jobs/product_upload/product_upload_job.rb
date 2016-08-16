@@ -6,7 +6,7 @@ module ProductUpload
 		end
 
 		def success(job)
-      UploadMailer.delay.upload_success(User.find(curr_user).email, @num_products_loaded)
+      UploadMailer.delay.upload_success(User.find(curr_user).email, @num_products_loaded, @errors)
     end
 
 		def error(job, exception)
@@ -16,7 +16,7 @@ module ProductUpload
 		def failure(job)
       UploadMailer.delay.upload_fail(User.find(curr_user).email, @errors)
     end
-    
+
     def perform
     	# iterate over the json data and create / update objects
     	aud = Audit.find(upload_audit_id)
@@ -33,7 +33,7 @@ module ProductUpload
         aud.update_attributes(audited_changes: "#{@num_products_loaded} products updated (or maintained)",associated_type:curr_market.subdomain.to_s,comment:"#{User.find(curr_user).email}")
       else
         @num_products_loaded = 0
-        @errors = {"File"=>jsn} # how does errors get to the view this way?
+        @errors = {"File"=>jsn}
         raise StandardError.new("Failed to process file")
       end
     end
