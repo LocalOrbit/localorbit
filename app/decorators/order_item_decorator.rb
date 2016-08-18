@@ -147,16 +147,17 @@ class OrderItemDecorator < Draper::Decorator
   end
 
   def lot_info
-    s = ""
+    s = Array.new
     object.lots.each do |lot|
       lt = Lot.find(lot.lot_id)
       if not lt.expires_at.nil?
-        s = s + "#{lt.number.to_s} | Exp #{lt.expires_at.to_date.to_s} | #{lt.quantity.to_s} avail. | Good from #{lt.good_from.to_date.to_s}"
-      else
-        s = 'N/A'
+        s << "#{lt.number.to_s} | Exp #{lt.expires_at.to_date.to_s} | #{lt.quantity.to_s} avail. | Good from #{lt.good_from.to_date.to_s}"
       end
     end
-    s
+    if s.empty?
+      s << 'N/A'
+    end
+    s.join(',')
   end
 
   private

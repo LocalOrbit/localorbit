@@ -276,15 +276,6 @@ class ReportPresenter
       @fulfillment_days = Hash[DeliverySchedule::WEEKDAYS.map.with_index { |day, index| [index, day] }]
     end
 
-    #if includes_filter?(:lot_number)
-      # @lot_numbers = Lot.joins(:items).merge(items).uniq.pluck(:number).sort # probably
-      # <% item.lots.each do |lt| %>
-      #         <td>
-      #           <% lt = Lot.find(lt.lot_id) %>
-      # @lot_numbers = #items.map(&:lot).select{|lt| Lot.find(lt.id)}.map(&:number)
-      #TODO FIX
-    #end
-
     if includes_filter?(:expired_on_or_after)
       # @dates = Lot.joins(:items).merge(items).uniq.pluck(:expires_at).sort # probably
     end
