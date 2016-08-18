@@ -3,10 +3,11 @@ class ReportPresenter
 
   attr_reader :report, :items, :fields, :filters, :q, :totals, :start_date, :end_date,
               :markets, :sellers, :buyers, :products, :categories, :payment_methods,
-              :fulfillment_days, :fulfillment_types
+              :fulfillment_days, :fulfillment_types, :lots
 
   FIELD_MAP = {
     placed_at:              {sort: :created_at,              display_name: "Placed On"},
+    delivered_at:           {sort: :delivered_at,            display_name: "Delivered On"},
     category_name:          {sort: :product_category_name,   display_name: "Category"},
     subcategory_name:       {sort: :subcategory_name,        display_name: "Subcategory"},
     product_name:           {sort: :name,                    display_name: "Product"},
@@ -129,8 +130,8 @@ class ReportPresenter
       ex_mm: true
     },
     lots: {
-      filters: [:market_name, :seller_name, :product_name, :placed_at],
-      fields: [:lot_info, :seller_name, :placed_at, :buyer_name, :category_name, :subcategory_name, :product_name
+      filters: [:lot_number, :market_name, :seller_name, :product_name, :placed_at],
+      fields: [:lot_info, :seller_name, :placed_at, :delivered_at, :buyer_name, :category_name, :subcategory_name, :product_name
         ],
       mm_only: true,
       use_adv_inventory: true
@@ -275,14 +276,14 @@ class ReportPresenter
       @fulfillment_days = Hash[DeliverySchedule::WEEKDAYS.map.with_index { |day, index| [index, day] }]
     end
 
-    if includes_filter?(:lot_number)
+    #if includes_filter?(:lot_number)
       # @lot_numbers = Lot.joins(:items).merge(items).uniq.pluck(:number).sort # probably
       # <% item.lots.each do |lt| %>
       #         <td>
       #           <% lt = Lot.find(lt.lot_id) %>
       # @lot_numbers = #items.map(&:lot).select{|lt| Lot.find(lt.id)}.map(&:number)
       #TODO FIX
-    end
+    #end
 
     if includes_filter?(:expired_on_or_after)
       # @dates = Lot.joins(:items).merge(items).uniq.pluck(:expires_at).sort # probably
@@ -329,7 +330,6 @@ class ReportPresenter
     # Below: additions for lot reporting
     if includes_field?(:lot_info)
       items = items.includes(:lots) 
-      # items = items.includes(product: :lots) 
     end
 
     ## TODO: Possible this information can be drawn from the lot, in-view, if all lots for a given OrderItem are known ^

@@ -20,6 +20,14 @@ class OrderItemDecorator < Draper::Decorator
     order.placed_at.strftime("%m/%d/%Y")
   end
 
+  def delivered_at
+    if !object.delivered_at.nil?
+      object.delivered_at.strftime("%m/%d/%Y")
+    else
+      nil
+    end
+  end
+
   def order_number
     order.order_number
   end
@@ -145,7 +153,7 @@ class OrderItemDecorator < Draper::Decorator
       if not lt.expires_at.nil?
         s = s + "#{lt.number.to_s} | Exp #{lt.expires_at.to_date.to_s} | #{lt.quantity.to_s} avail. | Good from #{lt.good_from.to_date.to_s}"
       else
-        s = s + 'Single lot'
+        s = 'N/A'
       end
     end
     s

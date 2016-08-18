@@ -5,7 +5,7 @@
 
         <% if filter == :order_number %>
           <div>
-            <%= f.label :order_id_or_order_order_number_or_order_payment_note_cont, "Search" %><br>
+            <%= f.label :order_id_or_order_order_number_or_order_payment_note_cont, "Search" %><br/>
             <div class="search-widget">
               <%= f.search_field :order_id_or_order_order_number_or_order_payment_note_cont, placeholder: "Order #", class: append_sticky_class(:order_id_or_order_order_number_or_order_payment_note_cont) -%><%= f.submit "Search", class: "btn--end" %>
             </div>
@@ -13,7 +13,17 @@
           <br>
         <% end %>
 
-        <% if filter == :market_name && current_user.multi_market_membership? %>
+        <% if filter == :lot_number %>
+            <div>
+              <%= f.label :lots_lot_number_cont, "Search" %><br/>
+              <div class="search-widget">
+                <%= f.search_field :lots_lot_number_cont, placeholder: "Lot #", class: append_sticky_class(:lots_lot_number_cont) -%><%= f.submit "Search", class: "btn--end" %>
+              </div>
+            </div>
+            <br>
+        <% end %>
+
+          <% if filter == :market_name && current_user.multi_market_membership? %>
           <span class="preserve-alignment mobile-block">
             <%= f.label :order_market_id_in, "Market" %><br>
             <%= f.select :order_market_id_in, options_from_collection_for_select(presenter.markets, :id, :name, presenter.q.order_market_id_in), { include_blank: nil }, { multiple: true, class: [append_sticky_class(:order_market_id_in, ""),'multiselect'] } %>
