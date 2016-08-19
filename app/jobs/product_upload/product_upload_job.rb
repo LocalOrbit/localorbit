@@ -21,7 +21,7 @@ module ProductUpload
     	# iterate over the json data and create / update objects
     	aud = Audit.find(upload_audit_id)
       @num_products_loaded = 0
-    	unless jsn.include?("invalid")
+    	if !jsn.include?("invalid")
         jsn[0]["products"].each do |p|
           ::Imports::ProductHelpers.create_product_from_hash(p, curr_user)
           @num_products_loaded += 1 # how does this get added to, also? different scope
@@ -37,24 +37,5 @@ module ProductUpload
         raise StandardError.new("Failed to process file")
       end
     end
-
-
-		# private
-
-		# def check_and_update_status
-		# 	upload = Audit.find(upload_audit_id) # this is probably not actually what to do though
-		# 	# check the audit for it being completed or something
-
-		# 	raise StandardError.new("Your upload is not complete") unless upload.status == 'new' # is new a default thing or should this happen elsewhere with update_status
-		# 	job.status = 'processing'
-		# 	job.save!
-		# end
-
-		# def update_status(status)
-		# 	job = Audit.find(upload_audit_id)
-		# 	job.status = status
-		# 	job.save!
-  #   end
-
 	end
 end
