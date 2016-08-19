@@ -44,25 +44,34 @@ class Admin::UploadController < AdminController
 
   def upload
     if params.has_key?(:datafile)
-      # pass the datafile to the method with the csv file
-      jsn = ::Imports::SerializeProducts.get_json_data(params[:datafile],params[:curr_user]) # product stuff, row errors
+      # TODO here: mimic the existing fxn-ality, in a delayed job
+      aud = Audit.create!(user_id:current_user.id,action:"Product upload") # the id of this audit is what should trigger the job
       @num_products_loaded = 0
-      unless jsn.include?("invalid")
-        jsn[0]["products"].each do |p|
-          ::Imports::ProductHelpers.create_product_from_hash(p,params[:curr_user])
-          @num_products_loaded += 1
-          # binding.pry
-          if p.has_key?("Multiple Pack Sizes") && !p["Multiple Pack Sizes"].empty?
-            @num_products_loaded += 1
-          end
-        end
-        @errors = jsn[1]
-        Audit.create!(user_id:current_user.id,action:"Product upload",audited_changes: "#{@num_products_loaded} products updated (or maintained)",associated_type:current_market.subdomain.to_s,comment:"#{User.find(current_user.id).email}")
+      jsn = ::Imports::SerializeProducts.get_json_data(params[:datafile],params[:curr_user]) # product stuff, row 
+      @num_products_loaded = 0
+      @errors = nil
+      if ENV['USE_UPLOAD_QUEUE'] == "true"
+        Delayed::Job.enqueue ::ProductUpload::ProductUploadJob.new(jsn, aud.id, params[:curr_user], current_market)
+        render :upload_delayed
       else
-        @num_products_loaded = 0
-        @errors = {"File"=>jsn}
+        #pass the datafile to the method with the csv file
+        # TODO: the jsn business above it should also be handled by the worker in the delay
+        unless jsn.include?("invalid")
+         jsn[0]["products"].each do |p|
+           ::Imports::ProductHelpers.create_product_from_hash(p,params[:curr_user])
+           @num_products_loaded += 1
+           if p.has_key?("Multiple Pack Sizes") && !p["Multiple Pack Sizes"].empty?
+             @num_products_loaded += 1
+           end
+         end
+         @errors = jsn[1]
+         aud.update_attributes(audited_changes: "#{@num_products_loaded} products updated (or maintained)",associated_type:current_market.subdomain.to_s,comment:"#{User.find(current_user.id).email}")
+        else
+         @num_products_loaded = 0
+         @errors = {"File"=>jsn}
+        end
+        render :upload
       end
-
     end
   end
 
