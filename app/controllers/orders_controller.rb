@@ -26,6 +26,11 @@ class OrdersController < ApplicationController
   end
 
   def create
+    current_cart.items.each do |item|
+      # redirect to cart if there isn't quantity to fill order
+      redirect_to cart_path and return if invalid_qty(item)
+    end
+
     if params[:prev_discount_code] != params[:discount_code]
       @apply_discount = ApplyDiscountToCart.perform(cart: current_cart, code: params[:discount_code])
       flash[:discount_message] = @apply_discount.context[:message]
@@ -58,6 +63,14 @@ class OrdersController < ApplicationController
   end
 
   protected
+
+  def invalid_qty(item)
+    product = Product.includes(:prices).find(item.product.id)
+    delivery_date = current_delivery.deliver_on
+    acual_count = product.available_inventory(delivery_date)
+
+    invalid = item.quantity && item.quantity > 0 && item.quantity > acual_count
+  end
 
   def order_number_missing?
     order_params[:payment_method] == "purchase order" && order_params[:payment_note] == "" && current_market.require_purchase_orders
