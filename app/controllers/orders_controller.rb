@@ -28,7 +28,8 @@ class OrdersController < ApplicationController
   def create
     current_cart.items.each do |item|
       # redirect to cart if there isn't quantity to fill order
-      redirect_to cart_path and return if invalid_qty(item)
+      # KXM disable orders#create validation for testing
+      # redirect_to cart_path and return if invalid_qty(item)
     end
 
     if params[:prev_discount_code] != params[:discount_code]
