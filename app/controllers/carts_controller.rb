@@ -85,7 +85,6 @@ class CartsController < ApplicationController
   protected
 
   def validate_qty(item)
-    # binding.pry
     error = nil
     product = Product.includes(:prices).find(item.product.id)
     delivery_date = current_delivery.deliver_on

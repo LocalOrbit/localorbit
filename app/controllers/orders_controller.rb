@@ -28,8 +28,7 @@ class OrdersController < ApplicationController
   def create
     current_cart.items.each do |item|
       # redirect to cart if there isn't quantity to fill order
-      # KXM disable orders#create validation for testing
-      # redirect_to cart_path and return if invalid_qty(item)
+      redirect_to cart_path and return if invalid_qty(item)
     end
 
     if params[:prev_discount_code] != params[:discount_code]
@@ -39,11 +38,13 @@ class OrdersController < ApplicationController
     elsif order_number_missing?
       reject_order "Your order cannot be completed without a purchase order number."
     else
-       @placed_order = PaymentProvider.place_order(current_market.payment_provider,
-                                                   buyer_organization: current_cart.organization,
-                                                   user: current_user,
-                                                   order_params: order_params,
-                                                   cart: current_cart, request: request)
+      @placed_order = PaymentProvider.place_order(
+        current_market.payment_provider,
+        buyer_organization: current_cart.organization,
+        user: current_user,
+        order_params: order_params,
+        cart: current_cart, request: request
+      )
 
       if @placed_order.context.key?(:order)
         @order = @placed_order.order.decorate
