@@ -28,7 +28,8 @@ class OrdersController < ApplicationController
   def create
     current_cart.items.each do |item|
       # redirect to cart if there isn't quantity to fill order
-      redirect_to cart_path and return if invalid_qty(item)
+      reject_order "Your order could not be completed. Some inventory not available." and return if invalid_qty(item)
+      #redirect_to cart_path and return if invalid_qty(item)
     end
 
     if params[:prev_discount_code] != params[:discount_code]
@@ -69,9 +70,9 @@ class OrdersController < ApplicationController
   def invalid_qty(item)
     product = Product.includes(:prices).find(item.product.id)
     delivery_date = current_delivery.deliver_on
-    acual_count = product.available_inventory(delivery_date)
+    actual_count = product.available_inventory(delivery_date)
 
-    invalid = item.quantity && item.quantity > 0 && item.quantity > acual_count
+    invalid = item.quantity && item.quantity > 0 && item.quantity > actual_count
   end
 
   def order_number_missing?
