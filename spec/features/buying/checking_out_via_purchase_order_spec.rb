@@ -330,10 +330,10 @@ describe "Checking Out via Purchase Order", :js, :vcr do
     checkout
 
     expect(cart_link.count.text).to eql("3")
-    expect(page).to have_content("Your order could not be completed.")
+    expect(page).to have_content("Your order could not be completed. Some inventory not available.")
 
-    expect(page).to have_content("Unfortunately, there are only 2 Potatoes available")
-    expect(page).to have_content("Unfortunately, there are only 1 Kale available")
+    #expect(page).to have_content("Quantity of Potatoes available for purchase: 2")
+    #expect(page).to have_content("Quantity of Kale available for purchase: 1")
   end
 
   it "clearing the cart during checkout preview" do
