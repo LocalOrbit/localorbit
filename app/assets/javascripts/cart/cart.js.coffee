@@ -361,7 +361,7 @@ $ ->
     $paymentFields = $(this).parents(".field").find(".payment-fields")
     $paymentFields.removeClass("is-hidden")
 
-    buttonState = !$paymentFields.data('available') == true
+    buttonState = !$paymentFields.data('available') == true && !$("h2.order-min-msg").text().trim().length > 0
     $("#place-order-button").attr("disabled", buttonState)
 
   $(document.body).on 'keyup', "#provider_card_number", (e) ->
