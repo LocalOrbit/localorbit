@@ -89,11 +89,11 @@ class OrdersController < ApplicationController
     delivery_date = current_delivery.deliver_on
     actual_count = product.available_inventory(delivery_date)
 
-    if item.quantity && item.quantity > 0 && item.quantity > acual_count
+    if item.quantity && item.quantity > 0 && item.quantity > actual_count
       error = {
         item_id: item.id,
         error_msg: "Quantity of #{product.name} (#{product.unit.plural}) available for purchase: #{product.available_inventory(delivery_date)}",
-        actual_count: acual_count
+        actual_count: actual_count
       }
     end
 
