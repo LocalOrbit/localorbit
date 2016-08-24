@@ -25,15 +25,23 @@
     <%= current_top_level_category.name %></div>
   <% end %>
 
-  <div class="product-catalog-second-category"><%= category.name %></div>
+  <div style="font-family: 'Open Sans Condensed', sans-serif;
+    font-weight: bold;
+    font-size: 14px;
+    margin-top: 5px;
+    margin-bottom: 5px;"><%= category.name %></div>
 
     <% products.each do |product| %>
       <div>
       <div style="position: relative;
           max-width: 100%;
-          clear: both;"
-
-           class="row product-listing">
+          clear: both;
+          background: #fff;
+          padding: 20px;
+          border-radius: 4px;
+          border: 1px solid #E0E0E0;
+          margin-bottom: 16px;
+          display: table;">
         <div style="display: table-cell;
             vertical-align: top;
             padding-right: 20px;
@@ -43,9 +51,9 @@
             font-size: 14px;
             width: 66%;">
           <% if product.image_stored? %>
-              <%= image_tag product.image.thumb("150x150>").url, class: "product-image", alt: "" %>
+              <%= image_tag product.image.thumb("150x150>").url, style: "width: 75px; height: 75px; overflow: hidden; border-radius: 4px; float: left; margin: 0;", alt: "" %>
           <% else %>
-              <%= image_tag 'default-product-image.png', class: "product-image", alt: "" %>
+              <%= image_tag 'default-product-image.png', style: "width: 75px; height: 75px; overflow: hidden; border-radius: 4px; float: left; margin: 0;", alt: "" %>
           <% end %>
           <div style="float: left;
               width: 57%;
@@ -64,11 +72,11 @@
             clear: both;
             padding-left: 20px;
             border-left: 1px solid #eaeaea;"></div>
-        <div  style="display: inline-block;
+        <div  style="display: table-cell;
             padding: 0 10px 0 0;
             text-align: left;
             vertical-align: top;
-            width: 58.333333333%;">
+            width: 33%;">
           <table style="width: 125px">
             <tbody>
             <tr style="border: 0;">
@@ -82,10 +90,10 @@
               </th>
             </tr>
             <tr><th>
-              <%= link_to "Add to Order", product_url(product), class: "btn btn--add" %>
+              <%= link_to "Add to Order", product_url(product), style: "font-family: Arial, sans-serif; display: inline-block; padding: 5px; border: solid 1px #a6a6a6; -webkit-border-radius: 5px; -moz-border-radius: 5px; border-radius: 5px; background: #a6a6a6; color: #ffffff; cursor:pointer; font-size: 12px; text-align: center; -webkit-appearance: none; -webkit-font-smoothing: antialiased; -moz-appearance: none; text-decoration: none; background-color: #{@market.text_color}; border-color: #{@market.text_color};" %>
               <% if @preview %>
                   <br/><br/>
-                  <%= link_to "Edit", admin_product_url(product), target: '_top', class: 'btn btn--test' %>
+                  <%= link_to "Edit", admin_product_url(product), target: '_top', style: "font-family: Arial, sans-serif; display: inline-block; padding: 5px; border: solid 1px #a6a6a6; -webkit-border-radius: 5px; -moz-border-radius: 5px; border-radius: 5px; background: #a6a6a6; color: #ffffff; cursor:pointer; font-size: 12px; text-align: center; -webkit-appearance: none; -webkit-font-smoothing: antialiased; -moz-appearance: none; text-decoration: none; background-color: #a6a6a6; border-color: #a6a6a6;" %>
               <% end %>
             </th></tr>
             </tbody>
