@@ -13,35 +13,65 @@
   <% current_top_level_category = category.top_level_category %>
   <% if @previous_top_level_category != current_top_level_category %>
     <% @previous_top_level_category = current_top_level_category %>
-    <div class="product-catalog-category product-category-divider"><%= current_top_level_category.name %></div>
+    <div style="font-family: 'Open Sans Condensed', sans-serif;
+        font-weight: bold;
+        font-size: 24px;
+        color: #FFF;
+        padding: 10px 20px 10px 10px;
+        border-radius: 4px;
+        margin-bottom: 10px;
+        background-color: <%= @market.text_color -%>;
+        border-color: <%= @market.text_color -%>;">
+    <%= current_top_level_category.name %></div>
   <% end %>
 
   <div class="product-catalog-second-category"><%= category.name %></div>
 
     <% products.each do |product| %>
       <div>
-      <div class="row product-listing">
-        <div class="product-details-container column column--five-twelfths">
+      <div style="position: relative;
+          max-width: 100%;
+          clear: both;"
+
+           class="row product-listing">
+        <div style="display: table-cell;
+            vertical-align: top;
+            padding-right: 20px;
+            margin-right: 0;
+            margin-left: 0;
+            text-align: left;
+            font-size: 14px;
+            width: 66%;">
           <% if product.image_stored? %>
               <%= image_tag product.image.thumb("150x150>").url, class: "product-image", alt: "" %>
           <% else %>
               <%= image_tag 'default-product-image.png', class: "product-image", alt: "" %>
           <% end %>
-          <div class="product-details">
+          <div style="float: left;
+              width: 57%;
+              padding-left: 3%;">
             <h3><%= product.name %></h3>
             <h5>
               <span>From: </span>
               <%= product.organization_name %>
             </h5>
             <br/>
-            <div class="product-description"><%= product.short_description %></div>
+            <div style="font-size: 13px;"><%= product.short_description %></div>
           </div>
         </div>
-        <div class="product-details-spacer"> </div>
-        <div class="product-pricing column column--seven-twelfths">
+        <div style="display: table-cell;
+            vertical-align: middle;
+            clear: both;
+            padding-left: 20px;
+            border-left: 1px solid #eaeaea;"></div>
+        <div  style="display: inline-block;
+            padding: 0 10px 0 0;
+            text-align: left;
+            vertical-align: top;
+            width: 58.333333333%;">
           <table style="width: 125px">
             <tbody>
-            <tr class="cart_item">
+            <tr style="border: 0;">
               <th>
                 <%= product.unit_singular %>
                 <br>
