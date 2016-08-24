@@ -1,0 +1,3 @@
+class AdvancedReportingPolicy < ApplicationPolicy
+
+end
