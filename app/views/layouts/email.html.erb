@@ -403,14 +403,24 @@
       font-weight: 600;
     }
   </style>
-  <div class="lo_body">
+  <div style="padding: 0 0 50px;
+      color: #666;
+      background: #e5e5e5;
+      font: normal 10px Arial, sans-serif;
+      text-align: center;">
 <!--     <p class="lo_header">Is this email not displaying correctly? <a href="">View it in your browser.</a></p> -->
 
-    <div class="lo_content">
+    <div style="border: solid 20px #fff;
+         max-width: 540px;
+         margin: 0 auto;
+         color: #000;
+         background: #fff;
+         font: normal 18px/1.44 Arial, sans-serif;
+         text-align: left;">
     <!-- Content Header -->
       <% if @market %>
       <a href="<%= root_url(host: @market.domain) %>" class="lo_visit_link">Visit <%= @market.name %> ➙</a>
-      <table class="lo_content_header">
+      <table style="width: 100%;">
         <tr>
           <td>
             <% logo = @market.logo_stored? ? @market.logo.thumb('240x240>').url : 'logo.png' %>
@@ -418,14 +428,16 @@
           </td>
           <td>
             <% if @market.tagline.present? %>
-            <p class="lo_slogan">“<%= @market.tagline %>”</p>
+            <p style="color: #666;
+                font-weight: lighter;
+                text-align: right;">“<%= @market.tagline %>”</p>
             <% end %>
           </td>
         </tr>
       </table>
       <% else %>
       <a href="<%= root_url %>" class="lo_visit_link">Visit Local Orbit ➙</a>
-      <table class="lo_content_header">
+      <table style="width: 100%">
         <tr>
           <td>
             <a href="<%= root_url %>"><%= image_tag 'logo.png', alt: "Local Orbit", class: "lo_org_logo" %></a>
@@ -445,7 +457,7 @@
     <div class="lo_footer">
       <%= image_tag 'email/local-orbit-logo.png', alt: "Local Orbit Logo", class: 'lo_logo' %><br>
       <strong>Powered by <a href="http://localorbit.com/">Local Orbit</a></strong><br>
-      <em class="lo_copyright">Copyright 2015. All Rights Reserved</em><br>
+      <em class="lo_copyright">Copyright 2016. All Rights Reserved</em><br>
       <% if @unsubscribe_url %>
         <em class="lo_unsubscribe">Click here to <%= link_to "Unsubscribe", @unsubscribe_url, "mc:disable-tracking" => "mc:disable-tracking"%></em>
       <% end %>
