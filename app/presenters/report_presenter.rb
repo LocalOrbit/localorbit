@@ -133,7 +133,6 @@ class ReportPresenter
       filters: [:lot_number, :market_name, :seller_name, :product_name, :placed_at],
       fields: [:lot_info, :seller_name, :placed_at, :delivered_at, :buyer_name, :category_name, :subcategory_name, :product_name
         ],
-      mm_only: true,
       use_adv_inventory: true
     }
   }.with_indifferent_access
@@ -222,17 +221,21 @@ class ReportPresenter
       seller_reports + buyer_reports
     elsif user.buyer_only?
       buyer_reports
-    #   le_mm_reports # TODO check acceptability - r&p fix?
     elsif user.market_manager?
+      reports = nil
       if FeatureAccess.not_LE_market_manager?(user: user, market: market)
         if !Pundit.policy!(user, :all_supplier).index?
-          seller_reports + mm_reports - exclude_ss_reports
+          reports = seller_reports + mm_reports - exclude_ss_reports
         else
-          seller_reports + mm_reports
+          reports = seller_reports + mm_reports
         end
       else
-        mm_reports + le_mm_reports - exclude_mm_reports
+        reports = mm_reports + le_mm_reports - exclude_mm_reports
       end
+      if Pundit.policy!(user, :advanced_inventory).index?
+        reports = reports + lot_reports
+      end
+      reports
     else
       seller_reports
     end

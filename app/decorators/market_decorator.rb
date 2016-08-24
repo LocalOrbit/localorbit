@@ -166,7 +166,4 @@ class MarketDecorator < Draper::Decorator
     end
   end
 
-  def plan_payable?
-    organization.plan_fee && organization.plan_fee > 0 && organization.plan_bank_account.try(:usable_for?, :debit)
-  end
 end

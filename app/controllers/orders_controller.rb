@@ -87,7 +87,7 @@ class OrdersController < ApplicationController
     error = nil
     product = Product.includes(:prices).find(item.product.id)
     delivery_date = current_delivery.deliver_on
-    acual_count = product.available_inventory(delivery_date)
+    actual_count = product.available_inventory(delivery_date)
 
     if item.quantity && item.quantity > 0 && item.quantity > acual_count
       error = {
