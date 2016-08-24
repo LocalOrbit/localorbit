@@ -26,10 +26,26 @@ class OrdersController < ApplicationController
   end
 
   def create
+    # Validate cart items against current inventory...
+    errors ||= []
     current_cart.items.each do |item|
-      # redirect to cart if there isn't quantity to fill order
-      reject_order "Your order could not be completed. Some inventory not available." and return if invalid_qty(item)
-      #redirect_to cart_path and return if invalid_qty(item)
+      invalid = validate_qty(item)
+      errors << invalid if invalid
+
+      if invalid then
+        if invalid[:actual_count] > 0 then
+          item.update(quantity: invalid[:actual_count])
+        else
+          item.update(quantity: 0)
+          item.destroy
+        end
+      end
+    end
+
+    # ...and redirect to cart if there isn't quantity to fill order
+    if errors.count > 0 then
+      flash[:error] = errors.map{|r| r[:error_msg]}.join(". ")
+      redirect_to cart_path and return
     end
 
     if params[:prev_discount_code] != params[:discount_code]
@@ -67,12 +83,21 @@ class OrdersController < ApplicationController
 
   protected
 
-  def invalid_qty(item)
+  def validate_qty(item)
+    error = nil
     product = Product.includes(:prices).find(item.product.id)
     delivery_date = current_delivery.deliver_on
     actual_count = product.available_inventory(delivery_date)
 
-    invalid = item.quantity && item.quantity > 0 && item.quantity > actual_count
+    if item.quantity && item.quantity > 0 && item.quantity > actual_count
+      error = {
+        item_id: item.id,
+        error_msg: "Quantity of #{product.name} (#{product.unit.plural}) available for purchase: #{product.available_inventory(delivery_date)}",
+        actual_count: actual_count
+      }
+    end
+
+    error
   end
 
   def order_number_missing?
