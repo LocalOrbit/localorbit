@@ -27,8 +27,9 @@ class OrdersController < ApplicationController
 
   def create
     # Validate cart items against current inventory...
+    errors ||= []
     current_cart.items.each do |item|
-      invalid = invalid_qty(item)
+      invalid = validate_qty(item)
       errors << invalid if invalid
 
       if invalid then
@@ -82,12 +83,21 @@ class OrdersController < ApplicationController
 
   protected
 
-  def invalid_qty(item)
+  def validate_qty(item)
+    error = nil
     product = Product.includes(:prices).find(item.product.id)
     delivery_date = current_delivery.deliver_on
     acual_count = product.available_inventory(delivery_date)
 
-    invalid = item.quantity && item.quantity > 0 && item.quantity > acual_count
+    if item.quantity && item.quantity > 0 && item.quantity > acual_count
+      error = {
+        item_id: item.id,
+        error_msg: "Quantity of #{product.name} (#{product.unit.plural}) available for purchase: #{product.available_inventory(delivery_date)}",
+        actual_count: acual_count
+      }
+    end
+
+    error
   end
 
   def order_number_missing?
