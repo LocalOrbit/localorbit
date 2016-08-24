@@ -129,8 +129,8 @@ class ApplicationController < ActionController::Base
     scope.find_by(subdomain: SimpleIDN.to_unicode(subdomain))
   end
 
-  def require_selected_market
-    return if current_market
+  def require_selected_market(order_id=nil)
+    return if current_market || order_id
 
     if current_user.markets.size == 1
       redirect_to url_for(host: current_user.markets.first.domain)
@@ -171,10 +171,12 @@ class ApplicationController < ActionController::Base
     end 
   end
 
-  def selected_organization_location
-    @selected_organization_location ||=
-      (session[:current_location] && current_organization.locations.visible.find_by(id: session[:current_location])) ||
-      current_organization.shipping_location
+  def selected_organization_location(org=nil)
+    if org
+      @selected_organization_location ||= (session[:current_location] && org.locations.visible.find_by(id: session[:current_location])) || org.shipping_location
+    else
+      @selected_organization_location ||= (session[:current_location] && current_organization.locations.visible.find_by(id: session[:current_location])) || current_organization.shipping_location
+    end
   end
 
   def set_timezone
@@ -196,24 +198,31 @@ class ApplicationController < ActionController::Base
 
   def require_cart(order_id=nil)
     if (!current_user.nil? && !current_organization.nil? && !current_market.nil? && !current_delivery.nil?) || order_id
-      @current_cart = Cart.find_or_create_by!(user_id: current_user.id, organization_id: current_organization.id, market_id: current_market.id, delivery_id: current_delivery.id) do |c|
-        c.location = selected_organization_location if current_delivery.requires_location?
-      end.decorate
+      if order_id
+        o=Order.find(order_id)
+        @current_cart = Cart.find_or_create_by!(user_id: current_user.id, organization_id: o.organization.id, market_id: o.market.id, delivery_id: o.delivery.id) do |c|
+          c.location = selected_organization_location(o.organization) if o.delivery.requires_location?
+        end.decorate
+      else
+        @current_cart = Cart.find_or_create_by!(user_id: current_user.id, organization_id: current_organization.id, market_id: current_market.id, delivery_id: current_delivery.id) do |c|
+          c.location = selected_organization_location if current_delivery.requires_location?
+        end.decorate
+      end
       session[:cart_id] = @current_cart.id
     end
   end
 
-  def require_organization_location
-    return unless current_organization && current_organization.locations.visible.none?
+  def require_organization_location(order_id=nil)
+    return unless current_organization && current_organization.locations.visible.none? && order_id.nil?
     redirect_to [:new_admin, current_organization, :location], alert: "You must enter an address for this organization before you can shop"
   end
 
-  def require_market_open
-    render "shared/market_closed" if current_market.closed?
+  def require_market_open(order_id=nil)
+    render "shared/market_closed" if current_market.closed? && order_id.nil?
   end
 
-  def require_current_organization
-    return unless current_organization.nil?
+  def require_current_organization(order_id=nil)
+    return unless current_organization.nil? && order_id.nil?
     redirect_to new_sessions_organization_path(redirect_back_to: request.original_url)
   end
 
