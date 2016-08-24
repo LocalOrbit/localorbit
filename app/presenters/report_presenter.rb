@@ -3,10 +3,11 @@ class ReportPresenter
 
   attr_reader :report, :items, :fields, :filters, :q, :totals, :start_date, :end_date,
               :markets, :sellers, :buyers, :products, :categories, :payment_methods,
-              :fulfillment_days, :fulfillment_types
+              :fulfillment_days, :fulfillment_types, :lots
 
   FIELD_MAP = {
     placed_at:              {sort: :created_at,              display_name: "Placed On"},
+    delivered_at:           {sort: :delivered_at,            display_name: "Delivered On"},
     category_name:          {sort: :product_category_name,   display_name: "Category"},
     subcategory_name:       {sort: :subcategory_name,        display_name: "Subcategory"},
     product_name:           {sort: :name,                    display_name: "Product"},
@@ -29,7 +30,9 @@ class ReportPresenter
     fulfillment_type:       {sort: nil,                      display_name: "Fulfillment Type"},
     discount_code:          {sort: nil,                      display_name: "Discount Code"},
     discount_amount:        {sort: nil,                      display_name: "Discount Amount"},
-    product_code:           {sort: :code,                    display_name: "Product Code"}
+    product_code:           {sort: :code,                    display_name: "Product Code"},
+    lot_info:               {sort: :expires_at,              display_name: "Lot"}
+    # TODO add all needed fields for lot report with display name here
   }.with_indifferent_access
 
   REPORT_MAP = {
@@ -125,6 +128,12 @@ class ReportPresenter
       ],
       mm_only: true,
       ex_mm: true
+    },
+    lots: {
+      filters: [:lot_number, :market_name, :seller_name, :product_name, :placed_at],
+      fields: [:lot_info, :seller_name, :placed_at, :delivered_at, :buyer_name, :category_name, :subcategory_name, :product_name
+        ],
+      use_adv_inventory: true
     }
   }.with_indifferent_access
 
@@ -138,6 +147,10 @@ class ReportPresenter
 
   def self.mm_reports
     REPORT_MAP.keys.select {|k| REPORT_MAP[k][:mm_only]}
+  end
+
+  def self.lot_reports
+    REPORT_MAP.keys.select {|k| REPORT_MAP[k][:use_adv_inventory]}
   end
 
   def self.exclude_mm_reports
@@ -208,17 +221,21 @@ class ReportPresenter
       seller_reports + buyer_reports
     elsif user.buyer_only?
       buyer_reports
-    #   le_mm_reports # TODO check acceptability - r&p fix?
     elsif user.market_manager?
+      reports = nil
       if FeatureAccess.not_LE_market_manager?(user: user, market: market)
         if !Pundit.policy!(user, :all_supplier).index?
-          seller_reports + mm_reports - exclude_ss_reports
+          reports = seller_reports + mm_reports - exclude_ss_reports
         else
-          seller_reports + mm_reports
+          reports = seller_reports + mm_reports
         end
       else
-        mm_reports + le_mm_reports - exclude_mm_reports
+        reports = mm_reports + le_mm_reports - exclude_mm_reports
       end
+      if Pundit.policy!(user, :advanced_inventory).index?
+        reports = reports + lot_reports
+      end
+      reports
     else
       seller_reports
     end
@@ -262,6 +279,10 @@ class ReportPresenter
       @fulfillment_days = Hash[DeliverySchedule::WEEKDAYS.map.with_index { |day, index| [index, day] }]
     end
 
+    if includes_filter?(:expired_on_or_after)
+      # @dates = Lot.joins(:items).merge(items).uniq.pluck(:expires_at).sort # probably
+    end
+
     if includes_filter?(:fulfillment_type)
       @fulfillment_types = DeliverySchedule.joins(deliveries: { orders: :items }).merge(items).all.decorate.map do |ds|
                              key = if ds.fulfillment_type == "Delivery: From Seller to Buyer"
@@ -298,6 +319,22 @@ class ReportPresenter
 
     if includes_field?(:fulfillment_type) || includes_field?(:fulfillment_day)
       items = items.includes(order: { delivery: :delivery_schedule })
+    end
+
+    # Below: additions for lot reporting
+    if includes_field?(:lot_info)
+      items = items.includes(:lots) 
+    end
+
+    ## TODO: Possible this information can be drawn from the lot, in-view, if all lots for a given OrderItem are known ^
+
+    if includes_field?(:expired_on_or_after)
+    end
+
+    if includes_field?(:good_from)
+    end
+
+    if includes_field?(:remaining_inventory)
     end
 
     items

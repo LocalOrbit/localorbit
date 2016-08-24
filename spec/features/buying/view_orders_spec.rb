@@ -23,4 +23,15 @@ feature "Viewing orders" do
       find('.icon-clear',:visible => true).click
       expect(page).to have_content("Delivery Fee: $0.00")
   end
+
+  #scenario "add item", :js do
+  #  sign_in_as(user)
+  #  visit admin_orders_path
+  #  click_link order.order_number
+
+  #  expect(page).to have_button("Add Items")
+  #  click_button "Add Items"
+  #  expect(page).to have_content("celery")
+
+  #end
 end

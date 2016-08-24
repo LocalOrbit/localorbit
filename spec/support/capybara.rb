@@ -21,6 +21,7 @@ Capybara.javascript_driver = :poltergeist
 #Capybara.javascript_driver = :chrome
 
 #Capybara::Webkit.configure do |config|
+#  config.debug = false
 #  config.allow_unknown_urls
 #end
 

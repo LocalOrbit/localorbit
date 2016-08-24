@@ -1,24 +1,5 @@
-<font size="5"><strong><%= @num_products_loaded %></strong> products successfully imported.</font>
-<br></br>
-Make sure to <strong><a href="/admin/products">add inventory to your products</a></strong> so they will appear in the product catalog!<br>(If you updated products that already have inventory, nothing about the inventory has changed.)
-<br><br>
-<strong><a href="/admin/upload">Return to upload form</a></strong>
+Your products are being uploaded!
 
-<br>
-<% if @errors.keys.map{|k| @errors[k]["Errors"]}.select{|er| !er.empty?}.any? %>
-	<h3>Errors</h3>
-<% end %>
-<div id="results">
-	<% @errors.each do |e| %>
-		<% if @errors.has_key?("File") %>
-			<%= @errors["File"] %>
-		<% elsif not e[1]["Errors"].empty? %>
-			<strong><%= "Row #{e[1]["Row number"]}:" %></strong><br>
-			<% e[1]["Errors"].keys.each do |er| %>
-				&nbsp;&nbsp;&nbsp; <%= "- #{er} (#{e[1]['Errors'][er]})" %>
-				<br>
-			<% end %>
-		<% end %>
-		<br></br>
-	<% end %>
-</div>
+You will receive an email/alert shortly with the results of the upload, including any errors that resulted, which you can correct and re-upload.
+
+<strong><a href="/admin/upload">Return to upload form</a></strong>

@@ -15,9 +15,11 @@ class SellerOrder
 
   attr_reader :seller
 
-  def initialize(order, seller)
+  def initialize(order, seller, current_fee=0)
     @order = order.decorate
     @seller = seller
+    @current_fee = current_fee
+    @add
     if @seller.is_a?(User)
       @items = order.items.select("order_items.*").joins(:product).where("products.organization_id" => @seller.managed_organization_ids_including_deleted).order("order_items.name")
     elsif @seller.is_a?(Organization)
@@ -57,9 +59,9 @@ class SellerOrder
 
   def total_cost
     if credit_amount > 0
-      gross_total - discount - credit_amount
+      gross_total - discount - credit_amount + @current_fee
     else
-      gross_total - discount
+      gross_total - discount + @current_fee
     end
   end
 
@@ -67,7 +69,7 @@ class SellerOrder
   end
 
   def delivery_fees
-    0
+    @current_fee
   end
 
   def seller_id

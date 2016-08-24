@@ -15,7 +15,8 @@
                 <% if filter_map[:display_name] == "Quantity" %>
                   <%= sort_link @presenter.q, filter_map[:sort], "<abbr title='Quantity'>Qty.</abbr>".html_safe %>
                 <% else %>
-                   <%= sort_link @presenter.q, filter_map[:sort], filter_map[:display_name] %>
+                   <%= sort_link @presenter.q, 
+                   filter_map[:sort], filter_map[:display_name] %>
                 <% end %>
               <% else %>
                 <%= filter_map[:display_name] %>
@@ -26,6 +27,10 @@
       </thead>
 
       <% @presenter.items.decorate.each do |item| %>
+      <% if @presenter.report == "lots" %>
+
+        <% next if Lot.find(item.lots.first.lot_id).number.nil? %>
+      <% end %>
       <tr class="<%= cycle "odd", "even" %> item">
         <% @presenter.fields.each do |field| %>
           <% if field == :placed_at %>
@@ -37,6 +42,14 @@
                 <%= link_to item.order_number, admin_order_path(item.order), class: "order-number" %>
               <% end %>
             </td>
+          <% end %>
+
+          <% if field == :delivered_at %>
+              <td class="delivered_at"><%= item.delivered_at %></td>
+          <% end %>
+
+          <% if field == :lot_info %>
+            <td class="lot-info"><%= item.lot_info %></td>
           <% end %>
 
           <% if field == :fulfillment_day %>

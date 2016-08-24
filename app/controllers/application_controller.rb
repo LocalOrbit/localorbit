@@ -194,8 +194,8 @@ class ApplicationController < ActionController::Base
     @current_cart ||= current_user.carts.includes(items: {product: :prices}).find_by(id: session[:cart_id]).try(:decorate)
   end
 
-  def require_cart
-    if !current_user.nil? && !current_organization.nil? && !current_market.nil? && !current_delivery.nil?
+  def require_cart(order_id=nil)
+    if (!current_user.nil? && !current_organization.nil? && !current_market.nil? && !current_delivery.nil?) || order_id
       @current_cart = Cart.find_or_create_by!(user_id: current_user.id, organization_id: current_organization.id, market_id: current_market.id, delivery_id: current_delivery.id) do |c|
         c.location = selected_organization_location if current_delivery.requires_location?
       end.decorate
@@ -217,13 +217,13 @@ class ApplicationController < ActionController::Base
     redirect_to new_sessions_organization_path(redirect_back_to: request.original_url)
   end
 
-  def require_current_delivery
+  def require_current_delivery(order_id=nil)
     redir_opts = {}
 
-    if current_delivery.present?
-      return if current_delivery.requires_location? && selected_organization_location.nil?
+    if current_delivery.present? || order_id
+      return if order_id || current_delivery.requires_location? && selected_organization_location.nil?
 
-      if current_delivery.can_accept_orders?
+      if current_delivery.can_accept_orders? || order_id
         return
       else
         session[:current_delivery_id] = nil
