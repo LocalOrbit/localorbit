@@ -231,7 +231,7 @@ class ReportPresenter
           seller_reports + mm_reports
         end
       else
-        if Pundit.policy!(user, :advanced_reporting).index?
+        if Pundit.policy!(user, :advanced_inventory).index?
           mm_reports + le_mm_reports + lot_reports - exclude_mm_reports
         else
           mm_reports + le_mm_reports - exclude_mm_reports
