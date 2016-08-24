@@ -63,6 +63,11 @@ class ApplicationController < ActionController::Base
   end
 
   def current_organization
+    if session[:order_id] # We're adding to an order, so use the market from the order
+      @current_organization = Order.find(session[:order_id]).organization
+      return @current_organization
+    end
+
     if @current_organization && (@last_organization_market == current_market || @current_organization.all_markets.include?(current_market))
       @last_organization_market = current_market
       return @current_organization
@@ -87,7 +92,11 @@ class ApplicationController < ActionController::Base
   end
 
   def current_market
-    @current_market ||= market_for_current_subdomain
+    if session[:order_id] # We're adding to an order, so use the market from the order
+      @current_market = Order.find(session[:order_id]).market
+    else
+      @current_market ||= market_for_current_subdomain
+    end
   end
 
   def current_plan
@@ -144,7 +153,11 @@ class ApplicationController < ActionController::Base
   end
 
   def current_delivery
-    return nil if current_market.blank? || current_organization.blank?
+    return nil if (current_market.blank? || current_organization.blank?) && session[:order_id].nil?
+
+    if session[:order_id] # We're adding an item to an order, so use the delivery of the order
+      @current_delivery = Order.find(session[:order_id]).delivery.decorate
+    end
 
     if defined?(@current_delivery)
       @current_delivery
@@ -228,6 +241,10 @@ class ApplicationController < ActionController::Base
 
   def require_current_delivery(order_id=nil)
     redir_opts = {}
+
+    if order_id
+      @current_delivery = Order.find(order_id).delivery.decorate
+    end
 
     if current_delivery.present? || order_id
       return if order_id || current_delivery.requires_location? && selected_organization_location.nil?

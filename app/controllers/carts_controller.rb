@@ -1,7 +1,7 @@
 class CartsController < ApplicationController
-  before_action :require_market_open
-  before_action :require_current_organization
-  before_action :require_organization_location
+  before_action -> { require_market_open(params[:order_id]) }
+  before_action -> { require_current_organization(params[:order_id]) }
+  before_action -> { require_organization_location(params[:order_id]) }
   before_action -> { require_current_delivery(params[:order_id]) }
   before_action -> { require_cart(params[:order_id])}
   #before_action :require_current_delivery

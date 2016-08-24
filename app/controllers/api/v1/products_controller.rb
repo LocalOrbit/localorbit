@@ -19,8 +19,10 @@ module Api
         @order = !params[:order_id].nil? ? Order.find(params[:order_id]) : nil
 
         if @order
+          session[:order_id] = @order.id
           featured_promotion = @order.market.featured_promotion(@order.organization)
         else
+          session[:order_id] = nil
           featured_promotion = current_market.featured_promotion(current_organization)
         end
         products = filtered_available_products(@query, @category_ids, @seller_ids, @order)
@@ -40,15 +42,20 @@ module Api
       private
 
       def filtered_available_products(query, category_ids, seller_ids, order)
-        if order.nil?
-          delv = current_delivery
-          mkt = current_market
-          org = current_organization
-        else
-          delv = order.delivery.decorate
-          mkt = order.market
-          org = order.organization
-        end
+        delv = current_delivery
+        mkt = current_market
+        org = current_organization
+
+        #if order.nil?
+        #  delv = current_delivery
+        #  mkt = current_market
+        #  org = current_organization
+        #else
+        #  delv = order.delivery.decorate
+        #  mkt = order.market
+        #  org = order.organization
+        #end
+
         p_sql = Product.connection.unprepared_statement do
           delv
               .object
@@ -108,19 +115,23 @@ module Api
       end
 
       def format_product_for_catalog(product, order)
-        if order.nil?
-          delv = current_delivery
-          mkt = current_market
-          org = current_organization
-          cart = current_cart
-        else
-          delv = order.delivery.decorate
-          mkt = order.market
-          org = order.organization
-          require_cart(order.id)
-        end
+        delv = current_delivery
+        mkt = current_market
+        org = current_organization
 
-        product = product.decorate(context: {current_cart: @current_cart, order: order} )
+        #if order.nil?
+        #  delv = current_delivery
+        #  mkt = current_market
+        #  org = current_organization
+        #  cart = current_cart
+        #else
+        #  delv = order.delivery.decorate
+        #  mkt = order.market
+        #  org = order.organization
+        #  require_cart(order.id)
+        #end
+
+        product = product.decorate(context: {current_cart: current_cart, order: order} )
 
         available_inventory = product.available_inventory(delv.deliver_on)
 
