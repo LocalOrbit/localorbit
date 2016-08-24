@@ -26,9 +26,25 @@ class OrdersController < ApplicationController
   end
 
   def create
+    # Validate cart items against current inventory...
     current_cart.items.each do |item|
-      # redirect to cart if there isn't quantity to fill order
-      redirect_to cart_path and return if invalid_qty(item)
+      invalid = invalid_qty(item)
+      errors << invalid if invalid
+
+      if invalid then
+        if invalid[:actual_count] > 0 then
+          item.update(quantity: invalid[:actual_count])
+        else
+          item.update(quantity: 0)
+          item.destroy
+        end
+      end
+    end
+
+    # ...and redirect to cart if there isn't quantity to fill order
+    if errors.count > 0 then
+      flash[:error] = errors.map{|r| r[:error_msg]}.join(". ")
+      redirect_to cart_path and return
     end
 
     if params[:prev_discount_code] != params[:discount_code]
