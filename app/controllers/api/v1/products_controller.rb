@@ -2,12 +2,13 @@ module Api
   module V1
     class ProductsController < ApplicationController
       include ActiveSupport::NumberHelper
+      before_action :set_order_id
       before_action :require_selected_market
       before_action :require_market_open
       before_action :require_current_organization
       before_action :require_organization_location
-      before_action -> { require_current_delivery(params[:order_id]) }
-      before_action -> { require_cart(params[:order_id])}
+      before_action :require_current_delivery
+      before_action :require_cart
 
       def index
         @offset = (params[:offset] || 0).to_i
@@ -16,9 +17,14 @@ module Api
         @category_ids = (params[:category_ids] || [])
         @seller_ids = (params[:seller_ids] || [])
         @sort_by = (params[:sort_by] || "top_level_category.lft, second_level_category.lft, general_products.name")
-        @order = !params[:order_id].nil? ? Order.find(params[:order_id]) : nil
+        order = !session[:order_id].nil? ? Order.find(session[:order_id]) : nil
 
-        featured_promotion = current_market.featured_promotion(current_organization)
+        if order
+          featured_promotion = @order.market.featured_promotion(@order.organization)
+        else
+          featured_promotion = current_market.featured_promotion(current_organization)
+        end
+
         products = filtered_available_products(@query, @category_ids, @seller_ids, @order)
         sellers = {}
         page_of_products = products
@@ -36,6 +42,20 @@ module Api
       private
 
       def filtered_available_products(query, category_ids, seller_ids, order)
+        delv = current_delivery
+        mkt = current_market
+        org = current_organization
+
+        #if order.nil?
+        #  delv = current_delivery
+        #  mkt = current_market
+        #  org = current_organization
+        #else
+        #  delv = order.delivery.decorate
+        #  mkt = order.market
+        #  org = order.organization
+        #end
+
         p_sql = Product.connection.unprepared_statement do
           current_delivery
               .object
@@ -65,7 +85,7 @@ module Api
             .uniq
       end
 
-      def format_general_product_for_catalog(general_product, sellers, add_to_order)
+      def format_general_product_for_catalog(general_product, sellers, order)
         general_product = general_product.decorate
 
         sellers[general_product.organization.id] ||= {
@@ -77,7 +97,7 @@ module Api
         }
 
         products = general_product.product.visible
-                       .map { |product| format_product_for_catalog(product) }
+                       .map { |product| format_product_for_catalog(product, order) }
                        .compact
                        .sort { |a, b| a[:unit] <=> b[:unit] }
 
@@ -94,24 +114,24 @@ module Api
         }
       end
 
-      def format_product_for_catalog(product)
-        product = product.decorate(context: {current_cart: current_cart, order: @order} )
+      def format_product_for_catalog(product, order)
+        product = product.decorate(context: {current_cart: current_cart, order: order} )
 
         available_inventory = product.available_inventory(current_delivery.deliver_on)
 
-        prices = Orders::UnitPriceLogic.prices(product, current_market, current_organization, current_market.add_item_pricing && @order ? @order.created_at : Time.current.end_of_minute).map { |price| format_price_for_catalog(price)}
+        prices = Orders::UnitPriceLogic.prices(product, current_market, current_organization, current_market.add_item_pricing && order ? order.created_at : Time.current.end_of_minute).map { |price| format_price_for_catalog(price)}
 
         # TODO There's a brief window where prices and inventory may change after
         # the general products are found, but before the response is fully generated.
         # If all products become ineligible on a general product, it will appear in
         # the catalog without any prices or units available.
-        if prices && prices.length > 0 && available_inventory && available_inventory > 0 && (!product.cart_item.nil? || @order)
+        if prices && prices.length > 0 && available_inventory && available_inventory > 0 && (!product.cart_item.nil?)
           cart_item = product.cart_item.decorate
 
           {
               :id => product.id,
               :max_available => available_inventory,
-              :min_available => product.minimum_quantity_for_purchase({market:current_market,organization:current_organization}),
+              :min_available => product.minimum_quantity_for_purchase({market: current_market,organization: current_organization}),
               :unit => product.unit.plural,
               :unit_description => product.unit_plural,
               :prices => prices,

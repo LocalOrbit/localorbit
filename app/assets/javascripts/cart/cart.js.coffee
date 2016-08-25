@@ -421,6 +421,11 @@ $ ->
       $("#discount_code").val("")
       $(this).parents('form').submit()
 
+  $(document.body).on 'click', "#submit-add-items", (e)->
+    e.preventDefault()
+    $(this).prop("disabled", true)
+    $(this).parents('form').submit()
+
   numItems = $('.payment-method').length
   if numItems == 1
     $('.payment-method').click()
