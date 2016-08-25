@@ -13,7 +13,7 @@ UserOrderContext = ConstructorStruct.new(
       is_market_manager = user.managed_markets.include?(market)
 
       seller_organization = nil
-      order.items.each do |order_item|
+      order.items.includes(product:[:organization]).each do |order_item|
         if user.organizations.include?(order_item.seller)
           seller_organization = order_item.seller
           break

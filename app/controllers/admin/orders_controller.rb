@@ -85,7 +85,7 @@ class Admin::OrdersController < AdminController
   protected
 
   def find_order_items(order_ids)
-    order_items = OrderItem.includes({product: [{general_product: :organization}, :organization]}, {order: :delivery}).joins(:product).where(:order_id => order_ids)
+    order_items = OrderItem.includes({order: :delivery}).joins(:product).where(:order_id => order_ids)
     order_items
   end
 
