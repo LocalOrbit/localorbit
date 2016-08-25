@@ -107,7 +107,7 @@ class ApplicationController < ActionController::Base
   # some capacity. 404 if not.
   def ensure_market_affiliation
     return if current_user.admin?
-    if current_market.nil? || current_market != market_for_current_subdomain(current_user.markets)
+    if (current_market.nil? || current_market != market_for_current_subdomain(current_user.markets)) && session[:order_id].nil?
       return render_404
     end
 
@@ -138,8 +138,8 @@ class ApplicationController < ActionController::Base
     scope.find_by(subdomain: SimpleIDN.to_unicode(subdomain))
   end
 
-  def require_selected_market(order_id=nil)
-    return if current_market || order_id
+  def require_selected_market
+    return if current_market || session[:order_id]
 
     if current_user.markets.size == 1
       redirect_to url_for(host: current_user.markets.first.domain)
@@ -209,10 +209,10 @@ class ApplicationController < ActionController::Base
     @current_cart ||= current_user.carts.includes(items: {product: :prices}).find_by(id: session[:cart_id]).try(:decorate)
   end
 
-  def require_cart(order_id=nil)
-    if (!current_user.nil? && !current_organization.nil? && !current_market.nil? && !current_delivery.nil?) || order_id
-      if order_id
-        o=Order.find(order_id)
+  def require_cart
+    if (!current_user.nil? && !current_organization.nil? && !current_market.nil? && !current_delivery.nil?) || session[:order_id]
+      if session[:order_id]
+        o=Order.find(session[:order_id])
         @current_cart = Cart.find_or_create_by!(user_id: current_user.id, organization_id: o.organization.id, market_id: o.market.id, delivery_id: o.delivery.id) do |c|
           c.location = selected_organization_location(o.organization) if o.delivery.requires_location?
         end.decorate
@@ -225,31 +225,27 @@ class ApplicationController < ActionController::Base
     end
   end
 
-  def require_organization_location(order_id=nil)
-    return unless current_organization && current_organization.locations.visible.none? && order_id.nil?
+  def require_organization_location
+    return unless current_organization && current_organization.locations.visible.none? && session[:order_id].nil?
     redirect_to [:new_admin, current_organization, :location], alert: "You must enter an address for this organization before you can shop"
   end
 
-  def require_market_open(order_id=nil)
-    render "shared/market_closed" if current_market.closed? && order_id.nil?
+  def require_market_open
+    render "shared/market_closed" if current_market.closed? && session[:order_id].nil?
   end
 
-  def require_current_organization(order_id=nil)
-    return unless current_organization.nil? && order_id.nil?
+  def require_current_organization
+    return unless current_organization.nil? && session[:order_id].nil?
     redirect_to new_sessions_organization_path(redirect_back_to: request.original_url)
   end
 
-  def require_current_delivery(order_id=nil)
+  def require_current_delivery
     redir_opts = {}
 
-    if order_id
-      @current_delivery = Order.find(order_id).delivery.decorate
-    end
+    if current_delivery.present? || session[:order_id]
+      return if session[:order_id] || current_delivery.requires_location? && selected_organization_location.nil?
 
-    if current_delivery.present? || order_id
-      return if order_id || current_delivery.requires_location? && selected_organization_location.nil?
-
-      if current_delivery.can_accept_orders? || order_id
+      if current_delivery.can_accept_orders? || session[:order_id]
         return
       else
         session[:current_delivery_id] = nil
@@ -258,6 +254,16 @@ class ApplicationController < ActionController::Base
     end
 
     redirect_to new_sessions_deliveries_path(redirect_back_to: request.fullpath), redir_opts
+  end
+
+  def set_order_id
+    @order = !params[:order_id].nil? ? Order.find(params[:order_id]) : nil
+
+    if @order
+      session[:order_id] = @order.id
+    else
+      session[:order_id] = nil
+    end
   end
 
   def configure_permitted_parameters

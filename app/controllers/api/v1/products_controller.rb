@@ -2,12 +2,13 @@ module Api
   module V1
     class ProductsController < ApplicationController
       include ActiveSupport::NumberHelper
-      before_action -> { require_selected_market(params[:order_id]) }
-      before_action -> { require_market_open(params[:order_id]) }
-      before_action -> { require_current_organization(params[:order_id]) }
-      before_action -> { require_organization_location(params[:order_id]) }
-      before_action -> { require_current_delivery(params[:order_id]) }
-      before_action -> { require_cart(params[:order_id])}
+      before_action :set_order_id
+      before_action :require_selected_market
+      before_action :require_market_open
+      before_action :require_current_organization
+      before_action :require_organization_location
+      before_action :require_current_delivery
+      before_action :require_cart
 
       def index
         @offset = (params[:offset] || 0).to_i
@@ -16,15 +17,14 @@ module Api
         @category_ids = (params[:category_ids] || [])
         @seller_ids = (params[:seller_ids] || [])
         @sort_by = (params[:sort_by] || "top_level_category.lft, second_level_category.lft, general_products.name")
-        @order = !params[:order_id].nil? ? Order.find(params[:order_id]) : nil
+        order = !session[:order_id].nil? ? Order.find(session[:order_id]) : nil
 
-        if @order
-          session[:order_id] = @order.id
+        if order
           featured_promotion = @order.market.featured_promotion(@order.organization)
         else
-          session[:order_id] = nil
           featured_promotion = current_market.featured_promotion(current_organization)
         end
+
         products = filtered_available_products(@query, @category_ids, @seller_ids, @order)
         sellers = {}
         page_of_products = products
@@ -57,13 +57,13 @@ module Api
         #end
 
         p_sql = Product.connection.unprepared_statement do
-          delv
+          current_delivery
               .object
               .delivery_schedule
               .products
               .visible
-              .with_available_inventory(delv.deliver_on)
-              .priced_for_market_and_buyer(mkt, org)
+              .with_available_inventory(current_delivery.deliver_on)
+              .priced_for_market_and_buyer(current_market, current_organization)
               .with_visible_pricing
               .select(:id, :general_product_id)
               .to_sql
@@ -115,27 +115,11 @@ module Api
       end
 
       def format_product_for_catalog(product, order)
-        delv = current_delivery
-        mkt = current_market
-        org = current_organization
-
-        #if order.nil?
-        #  delv = current_delivery
-        #  mkt = current_market
-        #  org = current_organization
-        #  cart = current_cart
-        #else
-        #  delv = order.delivery.decorate
-        #  mkt = order.market
-        #  org = order.organization
-        #  require_cart(order.id)
-        #end
-
         product = product.decorate(context: {current_cart: current_cart, order: order} )
 
-        available_inventory = product.available_inventory(delv.deliver_on)
+        available_inventory = product.available_inventory(current_delivery.deliver_on)
 
-        prices = Orders::UnitPriceLogic.prices(product, mkt, org, mkt.add_item_pricing && order ? order.created_at : Time.current.end_of_minute).map { |price| format_price_for_catalog(price)}
+        prices = Orders::UnitPriceLogic.prices(product, current_market, current_organization, current_market.add_item_pricing && order ? order.created_at : Time.current.end_of_minute).map { |price| format_price_for_catalog(price)}
 
         # TODO There's a brief window where prices and inventory may change after
         # the general products are found, but before the response is fully generated.
@@ -147,7 +131,7 @@ module Api
           {
               :id => product.id,
               :max_available => available_inventory,
-              :min_available => product.minimum_quantity_for_purchase({market: mkt,organization: org}),
+              :min_available => product.minimum_quantity_for_purchase({market: current_market,organization: current_organization}),
               :unit => product.unit.plural,
               :unit_description => product.unit_plural,
               :prices => prices,
