@@ -29,12 +29,12 @@ module PackingLabels
 
       def make_product_info(order_item)
         lot = order_item.lots.first
-        lot_desc = if (lot) && !order_item.product.use_simple_inventory then "Lot ##{lot.lot_id}" else nil end
+        lot_desc = if (lot) && !order_item.product.use_simple_inventory then "Lot ##{lot.number}" else nil end
         product_info = {
           product_name: order_item.name,
           unit_desc: order_item.unit,
           quantity: order_item.quantity,
-          lot_desc: lot_desc,
+          lot_desc: lot_desc.nil? ? '' : lot_desc,
           producer_name: order_item.seller_name,
           product_code: order_item.product.code
         }
