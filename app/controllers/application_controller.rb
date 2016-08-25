@@ -266,6 +266,14 @@ class ApplicationController < ActionController::Base
     end
   end
 
+  def reset_order_id
+    if !session[:order_id].nil?
+      session[:order_id] = nil
+      session[:current_delivery_id] = nil
+      session[:cart_id] = nil
+    end
+  end
+
   def configure_permitted_parameters
     devise_parameter_sanitizer.for(:accept_invitation).concat [:name, :email]
     devise_parameter_sanitizer.for(:account_update).concat [:name]
