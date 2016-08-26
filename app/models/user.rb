@@ -208,7 +208,7 @@ class User < ActiveRecord::Base
     #if !user_organizations[0].nil? && !user_organizations[0].organization.nil?
     #  user_organizations[0].organization.org_type == "A"
     #end
-    user_organizations.includes(:organization).map(&:organization).compact.map(&:org_type).include?('A')
+    user_organizations.map(&:organization).compact.map(&:org_type).include?('A')
   end
 
   def can_manage?(resource)
