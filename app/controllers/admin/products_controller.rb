@@ -22,7 +22,7 @@ module Admin
             #find_organizations_for_filtering
             #find_markets_for_filtering
 
-            markets = @products.flat_map {|prod| prod.organization.all_markets }
+            markets = @products.includes(organization:[:all_markets]).flat_map {|prod| prod.organization.all_markets }
             @net_percents_by_market_id = ::Financials::Pricing.seller_net_percents_by_market(markets)
             @seller_cc_rate = ::Financials::Pricing.seller_cc_rate(current_market)
           end
@@ -35,7 +35,7 @@ module Admin
     end
 
     def search_products(search)
-      results = current_user.managed_products.search(search.query)
+      results = current_user.managed_products.includes(:unit, prices:[:market]).search(search.query)
       results.sorts = "name asc" if results.sorts.empty?
       results
     end
