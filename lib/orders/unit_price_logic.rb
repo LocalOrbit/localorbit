@@ -2,7 +2,11 @@ module Orders
   class UnitPriceLogic
     class << self
       def prices(product, market, organization, time)
-        Price.for_product_and_market_and_org_at_time(product, market, organization, time).order(:min_quantity)
+          price = Price.for_product_and_market_and_org_at_time(product, market, organization, time).order(:min_quantity)
+        if price.empty?
+          price = Price.for_product_and_market_and_org_at_time(product, market, organization, Time.current).order(:min_quantity)
+        end
+        price
       end
 
       def unit_price(product, market, organization, time, quantity)
