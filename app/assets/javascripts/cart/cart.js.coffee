@@ -2,6 +2,8 @@ $ ->
   return unless $(".cart_item, #product-search-table").length
   selector = $('.cart_item')
   order_id = $('.add-items-to-order').data('order-id')
+  order_min = $('.subtotal').data('order-min')
+  subtotal = $('.subtotal').data('subtotal')
 
   window.CartNotificationDuration = 2000
 
@@ -138,6 +140,15 @@ $ ->
     updateSubtotal: (subtotal)->
       totals = $("#totals")
       totals.find(".subtotal").text(accounting.formatMoney(subtotal))
+      if subtotal*1 > order_min*1
+        $('.order-min-msg').html('')
+        $('.payment-method').prop("disabled", false)
+        #$("#place-order-button").prop("disabled", false)
+      else
+        $('.order-min-msg').html('<h2 class="order-min-msg" style="float: left; margin-left: 15px; color: red;">Your order does not meet the subtotal order minimum of ' + accounting.formatMoney(order_min) + '</h2>')
+        $('.payment-method').prop("disabled", true)
+        $('.payment-method').prop("checked", false)
+        #$("#place-order-button").prop("disabled", true)
 
     updateDiscount: (discount) ->
       $discount = $("#totals .discount")
@@ -271,6 +282,7 @@ $ ->
   model = new CartModel
     url: $(".cart_items").data("cart-url")
     orderId: order_id
+    orderMin: order_min
     view: view
     items: $(".cart_item")
 
@@ -338,6 +350,7 @@ $ ->
 
   if !order_id
     view.updateCounter()
+    view.updateSubtotal(subtotal)
 
   setupAlternateOrderPage()
 
