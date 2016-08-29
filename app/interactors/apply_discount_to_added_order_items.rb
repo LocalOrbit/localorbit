@@ -4,7 +4,7 @@ class ApplyDiscountToAddedOrderItems
   def perform
     return unless order.discount && order.payment_method == "purchase order"
     order_total = if order.discount.try(:seller_organization_id).present?
-                    order.delivery_fees + items.joins(:product).where(products: {organization_id: order.discount.seller_organization_id}).each.sum(&:total_price)
+                    order.delivery_fees + discounted_items.joins(:product).where(products: {organization_id: order.discount.seller_organization_id}).each.sum(&:total_price)
                   else
                     order.delivery_fees + subtotal
                   end
