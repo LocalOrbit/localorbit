@@ -37,7 +37,7 @@
             <tbody class="math" id="totals">
               <tr class="cart_total">
                 <th scope="row" colspan="3">Item Subtotal</th>
-                <td class="subtotal"><%= current_cart.display_subtotal %></td>
+                <td class="subtotal" data-order-min="<%= current_delivery.delivery_schedule.order_minimum %>" data-subtotal="<%=current_cart.subtotal %>"><%= current_cart.display_subtotal %></td>
                 <td></td>
               </tr>
 
@@ -49,7 +49,7 @@
 
               <tr class="cart_total">
                 <th scope="row" colspan="3"><%= current_cart.delivery.delivery_schedule.fee_label %></th>
-                <td class="delivery_fees"><%= current_cart.display_delivery_fees%></td>
+                <td class="delivery_fees"><%= current_cart.display_delivery_fees %></td>
                 <td></td>
               </tr>
 
@@ -63,6 +63,7 @@
           <% if FeatureAccess.order_templates?(market: current_market) %>
             <p class="pull-right"><a href="/templates/new" class="app-create-template-link">Create an order template from this cart</a></p>
           <% end %>
+          <h2 class="order-min-msg"></h2>
         </div>
       </div
       ><div class="column column--half column--guttered">
