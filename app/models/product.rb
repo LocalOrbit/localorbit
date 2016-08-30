@@ -26,7 +26,7 @@ class Product < ActiveRecord::Base
   attr_accessor :sibling_id, :sibling_unit_id, :sibling_unit_description, :sibling_product_code
 
   has_many :lots, -> { order("created_at") }, inverse_of: :product, autosave: true, dependent: :destroy
-  has_many :lots_by_expiration, -> { order("expires_at, good_from, created_at") }, class_name: Lot, foreign_key: :product_id
+  has_many :lots_by_expiration, -> { order("organization_id, market_id, expires_at, good_from, created_at") }, class_name: Lot, foreign_key: :product_id
 
   has_many :product_deliveries, dependent: :destroy
   has_many :delivery_schedules, through: :product_deliveries

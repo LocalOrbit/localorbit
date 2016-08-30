@@ -18,7 +18,7 @@ class Lot < ActiveRecord::Base
   }
 
   scope :available_specific, lambda { |time=Time.current.end_of_minute, market_id=nil, organization_id=nil|
-    where("(lots.good_from IS NULL OR lots.good_from < :time) AND (lots.expires_at IS NULL OR lots.expires_at > :time) AND (lots.market_id = :market_id) AND (lots.organization_id = :organization_id) AND quantity > 0", time: time, market_id: market_id, organization_id: organization_id)
+    where("(lots.good_from IS NULL OR lots.good_from < :time) AND (lots.expires_at IS NULL OR lots.expires_at > :time) AND (lots.market_id = :market_id OR lots.market_id IS NULL) OR (lots.organization_id = :organization_id OR lots.organization_id IS NULL) AND quantity > 0", time: time, market_id: market_id, organization_id: organization_id)
   }
 
   # This ransacker method exposes the functionality of available? and available_quantity to 
@@ -49,7 +49,7 @@ class Lot < ActiveRecord::Base
   end
 
   def available_specific?(time=Time.current.end_of_minute, mkt_id=nil, org_id=nil)
-    (expires_at.nil? || expires_at > time) && (good_from.nil? || good_from < time) && (market_id==mkt_id) && (organization_id==org_id)
+    (expires_at.nil? || expires_at > time) && (good_from.nil? || good_from < time) && (market_id==mkt_id) || (organization_id==org_id)
   end
 
   def available_general?(time=Time.current.end_of_minute)
