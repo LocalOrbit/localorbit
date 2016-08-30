@@ -12,7 +12,8 @@
   buyerInfo: current_organization.name,
   limit: 10,
   useTemplates: FeatureAccess.order_templates?(market: current_market),
-  supplierId: supplier_id
+  supplierId: supplier_id,
+  orderMinimum: number_to_currency(current_delivery.delivery_schedule.order_minimum)
 }) %>
 <div id="checkout-button" style="display: none">
     <a href="/cart" style="color: #FFF">
