@@ -48,11 +48,13 @@
   </div>
   <% end %>
 
+  <% if policy(:order_minimum).index? %>
   <div class="field">
     <%= f.label :order_minimum %><br/>
     <%= f.number_field :order_minimum, size: 4 %>
     <span class="tooltip" data-tooltip="Order Minimum Amount"></span>
   </div>
+  <% end %>
 
 </fieldset>
 

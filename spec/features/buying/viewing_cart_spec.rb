@@ -116,9 +116,9 @@ describe "Viewing the cart", js:true do
     bananas_item.set_quantity(0)
     potatoes_item.set_quantity(0)
     kale_item.set_quantity(0)
-    carrots_item.set_quantity(1)
     expect(page).to have_content("Your order does not meet the subtotal order minimum")
     carrots_item.set_quantity(4)
+    carrots_item.quantity_field.click
     expect(page).to_not have_content("Your order does not meet the subtotal order minimum")
   end
 
@@ -177,14 +177,14 @@ describe "Viewing the cart", js:true do
 
   context "delivery fees" do
     it "show in the totals" do
-      expect(cart_totals.delivery_fees).to have_content("$10.00")
+      expect(cart_totals.delivery_fees).to have_content("$10.75")
 
       kale_item.set_quantity(98)
       bananas_item.quantity_field.click
       expect(Dom::CartLink.first).to have_content("Quantity updated!")
       expect(Dom::CartLink.first).to_not have_content("Quantity updated!")
 
-      expect(cart_totals.delivery_fees).to have_content("$29.50")
+      expect(cart_totals.delivery_fees).to have_content("$30.25")
     end
 
     context "when there are no delivery fees" do
@@ -205,14 +205,14 @@ describe "Viewing the cart", js:true do
 
   context "total" do
     it "is the subtotal plus delivery fees" do
-      expect(cart_totals.total).to have_content("$50.00")
+      expect(cart_totals.total).to have_content("$53.75")
 
       kale_item.set_quantity(98)
       bananas_item.quantity_field.click
       expect(Dom::CartLink.first).to have_content("Quantity updated!")
       expect(Dom::CartLink.first).to_not have_content("Quantity updated!")
 
-      expect(cart_totals.total).to have_content("$147.50")
+      expect(cart_totals.total).to have_content("$151.25")
     end
   end
 
@@ -262,14 +262,14 @@ describe "Viewing the cart", js:true do
     end
 
     it "updates item subtotal" do
-      expect(cart_totals.subtotal).to have_content("$40.00")
+      expect(cart_totals.subtotal).to have_content("$43.00")
 
       kale_item.set_quantity(98)
       bananas_item.quantity_field.click
       expect(Dom::CartLink.first).to have_content("Quantity updated!")
       expect(Dom::CartLink.first).to_not have_content("Quantity updated!")
 
-      expect(cart_totals.subtotal).to have_content("$118.00")
+      expect(cart_totals.subtotal).to have_content("$121.00")
     end
 
     context "when updated quantity is greater than available products" do
@@ -399,10 +399,10 @@ describe "Viewing the cart", js:true do
           expect(page).to have_content("Discount")
         end
 
-        expect(cart_totals.subtotal).to have_content("$40.00")
+        expect(cart_totals.subtotal).to have_content("$43.00")
         expect(cart_totals.discount).to have_content("$15.00")
-        expect(cart_totals.delivery_fees).to have_content("$10.00")
-        expect(cart_totals.total).to have_content("$35.00")
+        expect(cart_totals.delivery_fees).to have_content("$10.75")
+        expect(cart_totals.total).to have_content("$38.75")
       end
     end
 
@@ -418,7 +418,7 @@ describe "Viewing the cart", js:true do
         click_link "Order"
 
         kale_item.set_quantity(1)
-        bananas_item.quantity_field.click
+        #bananas_item.quantity_field.node.trigger('click')
         expect(Dom::CartLink.first).to have_content("Quantity updated!")
 
         cart_link.node.click
@@ -509,10 +509,10 @@ describe "Viewing the cart", js:true do
             expect(page).to have_content("Discount")
           end
 
-          expect(cart_totals.subtotal).to have_content("$40.00")
+          expect(cart_totals.subtotal).to have_content("$43.00")
           expect(cart_totals.discount).to have_content("$15.00")
-          expect(cart_totals.delivery_fees).to have_content("$10.00")
-          expect(cart_totals.total).to have_content("$35.00")
+          expect(cart_totals.delivery_fees).to have_content("$10.75")
+          expect(cart_totals.total).to have_content("$38.75")
         end
       end
 
@@ -548,10 +548,10 @@ describe "Viewing the cart", js:true do
             expect(page).to have_content("Discount")
           end
 
-          expect(cart_totals.subtotal).to have_content("$40.00")
-          expect(cart_totals.discount).to have_content("$12.50")
-          expect(cart_totals.delivery_fees).to have_content("$10.00")
-          expect(cart_totals.total).to have_content("$37.50")
+          expect(cart_totals.subtotal).to have_content("$43.00")
+          expect(cart_totals.discount).to have_content("$14.38")
+          expect(cart_totals.delivery_fees).to have_content("$10.75")
+          expect(cart_totals.total).to have_content("$39.37")
         end
       end
     end
@@ -570,10 +570,10 @@ describe "Viewing the cart", js:true do
             expect(page).to have_content("Discount")
           end
 
-          expect(cart_totals.subtotal).to have_content("$40.00")
+          expect(cart_totals.subtotal).to have_content("$43.00")
           expect(cart_totals.discount).to have_content("$15.00")
-          expect(cart_totals.delivery_fees).to have_content("$10.00")
-          expect(cart_totals.total).to have_content("$35.00")
+          expect(cart_totals.delivery_fees).to have_content("$10.75")
+          expect(cart_totals.total).to have_content("$38.75")
         end
       end
 
