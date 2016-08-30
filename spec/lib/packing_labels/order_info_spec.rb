@@ -39,7 +39,7 @@ describe PackingLabels::OrderInfo do
           product_name: order_item.name,
           unit_desc: order_item.unit,
           quantity: order_item.quantity,
-          lot_desc: "Lot ##{lot.lot_id}",
+          lot_desc: "Lot #",
           producer_name: order_item.seller_name,
           product_code: order_item.product.code
         })
@@ -54,7 +54,7 @@ describe PackingLabels::OrderInfo do
           product_name: order_item.name,
           unit_desc: order_item.unit,
           quantity: order_item.quantity,
-          lot_desc: nil,
+          lot_desc: "",
           producer_name: order_item.seller_name,
           product_code: order_item.product.code
         })

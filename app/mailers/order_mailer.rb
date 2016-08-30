@@ -3,15 +3,15 @@ class OrderMailer < BaseMailer
     @market = order.market
     @order = BuyerOrder.new(order)
 
-    to_list =  order.organization.users.map { |u| u.enabled_for_organization?(order.organization) ? u.pretty_email : nil}
+    to_list =  order.organization.users.map { |u| u.enabled_for_organization?(order.organization) && !u.pretty_email.nil? ? u.pretty_email : nil}
+    compact_list = to_list.compact
 
-    logger.info "Seller Confirmation User List: #{order.organization.users.map { |u| u.id}}"
-    logger.info "Seller Confirmation EMail List: #{to_list.inspect}"
-
-    mail(
-      to: to_list,
-      subject: "Thank you for your order"
-    )
+    if !compact_list.blank?
+      mail(
+        to: to_list,
+        subject: "Thank you for your order"
+      )
+    end
   end
 
   def seller_confirmation(order, seller, pdf, csv)
@@ -31,7 +31,6 @@ class OrderMailer < BaseMailer
         subject: "New order on #{@market.name}"
       )
     end
-
   end
 
   def market_manager_confirmation(order)
