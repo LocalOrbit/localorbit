@@ -328,7 +328,7 @@ class Order < ActiveRecord::Base
   end
 
   def discount_amount
-    @discount_amount ||= items.sum(:discount_market) + items.sum(:discount_seller)
+    items.sum(:discount_market) + items.sum(:discount_seller)
   end
 
   def invoice
