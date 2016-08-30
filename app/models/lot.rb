@@ -4,6 +4,8 @@ class Lot < ActiveRecord::Base
   audited allow_mass_assignment: true, associated_with: :product
 
   belongs_to :product, inverse_of: :lots
+  belongs_to :market
+  belongs_to :organization
 
   validates :quantity, numericality: {greater_than_or_equal_to: 0, less_than: 1_000_000}
   validates :number, presence: {message: "can't be blank when 'Expiration Date' is present"}, if: lambda {|obj| obj.expires_at.present? }
@@ -11,8 +13,12 @@ class Lot < ActiveRecord::Base
   validate :expires_at_is_in_future
   validate :good_from_before_expires_at
 
-  scope :available, lambda { |time=Time.current.end_of_minute|
-    where("(lots.good_from IS NULL OR lots.good_from < :time) AND (lots.expires_at IS NULL OR lots.expires_at > :time) AND quantity > 0", time: time)
+  scope :available_general, lambda { |time=Time.current.end_of_minute|
+    where("(lots.good_from IS NULL OR lots.good_from < :time) AND (lots.expires_at IS NULL OR lots.expires_at > :time) AND (lots.market_id IS NULL) AND (lots.organization_id IS NULL) AND quantity > 0", time: time)
+  }
+
+  scope :available_specific, lambda { |time=Time.current.end_of_minute, market_id=nil, organization_id=nil|
+    where("(lots.good_from IS NULL OR lots.good_from < :time) AND (lots.expires_at IS NULL OR lots.expires_at > :time) AND (lots.market_id = :market_id) AND (lots.organization_id = :organization_id) AND quantity > 0", time: time, market_id: market_id, organization_id: organization_id)
   }
 
   # This ransacker method exposes the functionality of available? and available_quantity to 
@@ -42,12 +48,16 @@ class Lot < ActiveRecord::Base
     product.touch
   end
 
-  def available?(time=Time.current.end_of_minute)
-    (expires_at.nil? || expires_at > time) && (good_from.nil? || good_from < time)
+  def available_specific?(time=Time.current.end_of_minute, mkt_id=nil, org_id=nil)
+    (expires_at.nil? || expires_at > time) && (good_from.nil? || good_from < time) && (market_id==mkt_id) && (organization_id==org_id)
+  end
+
+  def available_general?(time=Time.current.end_of_minute)
+    (expires_at.nil? || expires_at > time) && (good_from.nil? || good_from < time) && (market_id==nil) && (organization_id==nil)
   end
 
   def available_quantity
-    available? ? quantity : 0
+    available_general? ? quantity : 0
   end
 
   def simple?

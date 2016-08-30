@@ -19,7 +19,7 @@ class Promotion < ActiveRecord::Base
   scope :active, -> { where(active: true) }
 
   def featureable?(market, buyer, delivery)
-    inventory = product.available_inventory(delivery.deliver_on)
+    inventory = product.available_inventory(delivery.deliver_on, market.id, buyer.id)
     product.prices.any? {|price| price.for_market_and_organization?(market, buyer) && price.min_quantity <= inventory }
   end
 

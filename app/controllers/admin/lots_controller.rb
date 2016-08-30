@@ -63,7 +63,7 @@ class Admin::LotsController < AdminController
   end
 
   def lot_params
-    params.require(:lot).permit(:number, :good_from, :expires_at, :quantity)
+    params.require(:lot).permit(:number, :good_from, :expires_at, :quantity, :market_id, :organization_id)
   end
 
   def query_params
