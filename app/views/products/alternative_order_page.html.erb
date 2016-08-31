@@ -13,7 +13,7 @@
   limit: 10,
   useTemplates: FeatureAccess.order_templates?(market: current_market),
   supplierId: supplier_id,
-  orderMinimum: number_to_currency(current_delivery.delivery_schedule.order_minimum)
+  orderMinimum: current_delivery.delivery_schedule.order_minimum > 0 ? number_to_currency(current_delivery.delivery_schedule.order_minimum) : nil
 }) %>
 <div id="checkout-button" style="display: none">
     <a href="/cart" style="color: #FFF">
