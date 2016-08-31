@@ -15,7 +15,7 @@
       useTemplates: React.PropTypes.bool.isRequired,
       supplierOnly: React.PropTypes.bool,
       orderId: React.PropTypes.number,
-      orderMinimum: React.PropTypes.number
+      orderMinimum: React.PropTypes.string
     },
 
     getInitialState: function() {
@@ -121,7 +121,7 @@
         else
             filterText = ('');
 
-        if (this.props.orderMinimum > 0)
+        if (this.props.orderMinimum)
             orderMinimum = (<span>Order Minimum: <strong>{this.props.orderMinimum}</strong><br/></span>);
         else
             orderMinimum = ('');
