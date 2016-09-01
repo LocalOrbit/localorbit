@@ -56,7 +56,7 @@
                   </div>
                 </td>
                 <% if current_user.multi_market_membership? %>
-                    <td class="market">
+                    <td class="market adv_option" style="display: none">
                       <div class="edit-trigger view-cell">
                         <%= lot.market_name %>
                       </div>
@@ -70,7 +70,7 @@
                       </div>
                     </td>
                 <% end %>
-                <td class="buyer">
+                <td class="buyer adv_option" style="display: none">
                   <div class="edit-trigger view-cell">
                     <%= lot.organization_name %>
                   </div>
