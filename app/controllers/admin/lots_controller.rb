@@ -12,7 +12,7 @@ class Admin::LotsController < AdminController
     auto_upgrade_product_to_advanced_inventory(lot_params, @product.lots.count > 0)
 
     lp = lot_params
-    if lot_params['number'].empty? && !lot_params['quantity'].empty?
+    if lot_params['number'].empty? && !lot_params['quantity'].empty? && (lot_params['market_id'].empty? && lot_params['organization_id'].empty?)
       lp = lot_params.slice('quantity')
     end
 
@@ -32,7 +32,7 @@ class Admin::LotsController < AdminController
     auto_upgrade_product_to_advanced_inventory(lot_params, @product.lots.count > 1)
 
     lp = lot_params
-    if lot_params['number'].empty? && !lot_params['quantity'].empty?
+    if lot_params['number'].empty? && !lot_params['quantity'].empty? && (lot_params['market_id'].empty? && lot_params['organization_id'].empty?)
       lp = lot_params.slice('quantity')
     end
 
