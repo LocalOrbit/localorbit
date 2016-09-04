@@ -35,7 +35,7 @@
 
 <div class="field">
   <%= f.label :image, "Photo" %><br>
-  <img src="<%= f.object.aws_image_url %>" alt="<%= f.object.name if f.object.image %>" style="width: 150px; height: 150px"/>
+  <img src="<%= f.object.image.remote_url %>" alt="<%= f.object.name if f.object.image %>" />
   <%= s3_uploader_form id: "s3_uploader",
                        callback_param: "document[file_url]",
                        expiration: 2.hours.from_now.utc.iso8601,
