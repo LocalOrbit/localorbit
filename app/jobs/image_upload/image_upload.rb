@@ -5,6 +5,7 @@ module ImageUpload
     end
 
     def success(job)
+      puts "success"
     end
 
     def error(job, exception)
@@ -12,18 +13,17 @@ module ImageUpload
     end
 
     def failure(job)
+      puts "failed"
     end
 
     def perform
       img = Dragonfly.app.fetch_url(product.aws_image_url)
-      thumb = img.thumb("150x150>")
+      #thumb = img.thumb("150x150>")
       image_uid = img.store
-      thumb_uid = thumb.store
+      #thumb_uid = thumb.store
 
-      puts image_uid
-      puts thumb_uid
       product.general_product.image_uid = image_uid
-      product.general_product.thumb_uid = thumb_uid
+      #product.general_product.thumb_uid = thumb_uid
       product.save
     end
 
