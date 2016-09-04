@@ -9,7 +9,7 @@ S3DirectUpload.config do |c|
     module UploadHelper
       class S3Uploader
         def url
-          "http#{@options[:ssl] ? 's' : ''}://#{@options[:bucket]}.#{@options[:region]}.amazonaws.com/"
+          "http#{@options[:ssl] ? 's' : ''}://#{@options[:bucket]}.#{@options[:region]}.s3.amazonaws.com/"
         end
       end
     end
