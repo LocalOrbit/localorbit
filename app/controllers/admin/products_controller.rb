@@ -51,7 +51,11 @@ module Admin
       @product.organization = @organizations.detect {|o| o.id == @product.organization_id }
       if @product.save
         update_sibling_units(@product)
-        @product.general_product.update_columns(image_uid: @product.image_uid, thumb_uid: @product.thumb_uid)
+        if ENV['USE_UPLOAD_QUEUE'] == "true"
+          Delayed::Job.enqueue ::ImageUpload::ImageUploadJob.new(@product)
+        else
+          @product.general_product.update_columns(image_uid: @product.image_uid, thumb_uid: @product.thumb_uid)
+        end
         redirect_to after_create_page, notice: "Added #{@product.name}"
       else
         setup_new_form
@@ -69,9 +73,15 @@ module Admin
 
     def update
       updated = update_product
-      @product.general_product.image_uid = @product.image_uid
-      @product.general_product.thumb_uid = @product.thumb_uid
-      @product.save
+      if ENV['USE_UPLOAD_QUEUE'] == "true"
+        Delayed::Job.enqueue ::ImageUpload::ImageUploadJob.new(@product)
+      else
+        img = Dragonfly.app.fetch_url(@product.aws_image_url)
+        image_uid = img.store
+
+        @product.general_product.image_uid = image_uid
+        @product.save
+      end
 
       update_sibling_units(@product)
 
@@ -112,11 +122,12 @@ module Admin
         :who_story, :how_story,
         :use_simple_inventory, :simple_inventory, :use_all_deliveries,
         :unit_description,
+        :aws_image_url,
         delivery_schedule_ids: [],
         sibling_id: [],
         sibling_unit_id: [],
         sibling_unit_description: [],
-        sibling_product_code: []
+        sibling_product_code: [],
       )
 
       unless results.count == 1 && results["simple_inventory"].present?
