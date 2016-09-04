@@ -15,7 +15,7 @@ module ImageUpload
 
     def perform
       img = Dragonfly.app.fetch_url(product.aws_image_url)
-      image_uid = img.save
+      image_uid = img.store
       product.general_product.image_uid = image_uid
       product.save
     end
