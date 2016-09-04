@@ -16,8 +16,9 @@
  *= require froala_style.min.css
  *= require font-awesome
  *= require fSelect
- *= require_tree .
  *= stub divi_styles.css
+ *= require s3_direct_upload_progress_bars
+ *= require_tree .
  */
 
 @import "font-awesome";

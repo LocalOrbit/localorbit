@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160821004510) do
+ActiveRecord::Schema.define(version: 20160902192604) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -164,6 +164,32 @@ ActiveRecord::Schema.define(version: 20160821004510) do
     t.string   "apply_to"
     t.datetime "deleted_at"
   end
+
+  create_table "cross_selling_list_products", force: true do |t|
+    t.integer "cross_selling_list_id"
+    t.integer "product_id"
+    t.boolean "active",                default: true
+  end
+
+  add_index "cross_selling_list_products", ["cross_selling_list_id", "product_id"], name: "cross_selling_list_product_unique_list_products_ids", unique: true, using: :btree
+  add_index "cross_selling_list_products", ["cross_selling_list_id"], name: "index_cross_selling_list_products_on_cross_selling_list_id", using: :btree
+  add_index "cross_selling_list_products", ["product_id"], name: "index_cross_selling_list_products_on_product_id", using: :btree
+
+  create_table "cross_selling_lists", force: true do |t|
+    t.string   "name",                           null: false
+    t.integer  "entity_id",                      null: false
+    t.string   "entity_type",                    null: false
+    t.integer  "parent_id"
+    t.boolean  "creator",      default: false
+    t.string   "status",       default: "Draft", null: false
+    t.datetime "published_at"
+    t.datetime "deleted_at"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "cross_selling_lists", ["parent_id", "entity_id"], name: "cross_selling_lists_unique_parent_entity_ids", unique: true, using: :btree
+  add_index "cross_selling_lists", ["parent_id"], name: "index_cross_selling_lists_on_parent_id", using: :btree
 
   create_table "delayed_jobs", force: true do |t|
     t.integer  "priority",   default: 0, null: false
@@ -366,6 +392,8 @@ ActiveRecord::Schema.define(version: 20160821004510) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "legacy_id"
+    t.integer  "market_id"
+    t.integer  "organization_id"
   end
 
   add_index "lots", ["expires_at"], name: "index_lots_on_expires_at", using: :btree
@@ -500,6 +528,7 @@ ActiveRecord::Schema.define(version: 20160821004510) do
     t.boolean  "routing_plan",                                           default: false
     t.integer  "organization_id"
     t.boolean  "add_item_pricing"
+    t.boolean  "self_enabled_cross_sell",                                default: false
   end
 
   add_index "markets", ["name"], name: "index_markets_on_name", using: :btree
@@ -811,6 +840,7 @@ ActiveRecord::Schema.define(version: 20160821004510) do
     t.string   "code"
     t.integer  "external_product_id"
     t.integer  "general_product_id"
+    t.string   "aws_image_url"
   end
 
   add_index "products", ["category_id"], name: "index_products_on_category_id", using: :btree
