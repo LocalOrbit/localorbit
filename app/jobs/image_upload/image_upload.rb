@@ -8,6 +8,7 @@ module ImageUpload
     end
 
     def error(job, exception)
+      puts exception
     end
 
     def failure(job)
@@ -19,6 +20,8 @@ module ImageUpload
       image_uid = img.store
       thumb_uid = thumb.store
 
+      puts image_uid
+      puts thumb_uid
       product.general_product.image_uid = image_uid
       product.general_product.thumb_uid = thumb_uid
       product.save
