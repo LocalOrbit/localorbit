@@ -40,7 +40,7 @@ class Product < ActiveRecord::Base
     copy_to(:thumb){|a| a.thumb('150x150#') }
   end
   dragonfly_accessor :thumb
-  #define_after_upload_resize(:image, 1200, 1200, thumb: {width: 150, height: 150})
+  define_after_upload_resize(:image, 1200, 1200, thumb: {width: 150, height: 150})
   validates_property :format, of: :image, in: %w(jpg jpeg png gif)
   validates_property :format, of: :thumb, in: %w(jpg jpeg png gif)
 

@@ -76,14 +76,16 @@ module Admin
       if ENV['USE_UPLOAD_QUEUE'] == "true"
         Delayed::Job.enqueue ::ImageUpload::ImageUploadJob.new(@product)
       else
-        img = Dragonfly.app.fetch_url(@product.aws_image_url)
-        thumb = img.thumb("150x150>")
-        image_uid = img.store
-        thumb_uid = thumb.store
+        if !@product.aws_image_url.blank?
+          img = Dragonfly.app.fetch_url(@product.aws_image_url)
+          thumb = img.thumb("150x150>")
+          image_uid = img.store
+          thumb_uid = thumb.store
 
-        @product.general_product.image_uid = image_uid
-        @product.general_product.thumb_uid = thumb_uid
-        @product.save
+          @product.general_product.image_uid = image_uid
+          @product.general_product.thumb_uid = thumb_uid
+          @product.save
+        end
       end
 
       update_sibling_units(@product)
