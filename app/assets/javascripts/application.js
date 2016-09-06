@@ -67,9 +67,6 @@ $(function() {
     $('#s3_uploader').bind('s3_upload_complete', function(e, content) {
         $('#aws_url').val(content.url);
         $('#product_img').html('<img src="'+content.url+'" />');
+        $('.upload').hide();
     });
-
-    // $('#s3_uploader').bind('s3_upload_complete', function(e, content) {
-    // 	window.location.replace("/view");
-    // });
 });
