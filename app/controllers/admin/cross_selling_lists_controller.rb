@@ -189,21 +189,20 @@ class Admin::CrossSellingListsController < AdminController
   def manage_selected_products(params, scoped_products)
     # fetch the submitted ids
     submitted_supplier_prods = get_prods_from_suppliers(params.fetch(:suppliers, []))
-    selected_supplier_prods  = get_prods_from_suppliers(params.fetch(:selected_suppliers, []))
-
     submitted_category_prods = get_prods_from_categories(params.fetch(:categories, []).map(&:to_i), scoped_products)
+
+    # fetch the ids of those selected on request
+    selected_supplier_prods  = get_prods_from_suppliers(params.fetch(:selected_suppliers, []))
     selected_category_prods  = get_prods_from_categories(params.fetch(:selected_categories, []), scoped_products)
 
-    # binding.pry
     selected_prods = (cross_selling_list_params["product_ids"] || [])
+    # binding.pry
 
     # Modify based on submitted vs pre-selected suppliers
-    to_add = (submitted_supplier_prods - selected_supplier_prods) | (submitted_category_prods - selected_category_prods)
-    remove = (selected_supplier_prods - submitted_supplier_prods) | (selected_category_prods - submitted_category_prods)
+    to_add = (submitted_supplier_prods - selected_supplier_prods) + (submitted_category_prods - selected_category_prods)
+    remove = (selected_supplier_prods - submitted_supplier_prods) + (selected_category_prods - submitted_category_prods)
 
-    selected_prods = (selected_prods | to_add) - remove
-
-    selected_prods
+    (selected_prods |= to_add) - remove
   end
 
   def manage_active_products(params, cross_selling_list_products)
