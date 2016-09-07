@@ -7,14 +7,7 @@ module Imports
 			identity_params_hash = {product_name:product_params["Product Name"],category_id: self.get_category_id_from_name(product_params["Category Name"]),organization_id: self.get_organization_id_from_name(product_params["Organization"],product_params["Market Subdomain"],$current_user)}
 			product_unit_identity_hash = {unit_name:product_params["Unit Name"]}#,unit_description:product_params["Unit Description"]} # right now we can't really control for same unit name, diff description; people will just have to bin the units and it's fine.
 			gps = GeneralProduct.where(category_id:identity_params_hash[:category_id]).where(name:identity_params_hash[:product_name]).where(organization_id:identity_params_hash[:organization_id])
-			# if !(gps.empty?)
-			# 	prods = Product.where(general_product_id:gps.first).where(unit_id:get_unit_id_from_name(product_unit_identity_hash[:unit_name])) # bit brittle
-			# 	if !(prods.length > 1)
-			# 		[gps.first.id] + prods # return array of general product, product-unit things to update
-			# 	else
-			# 		gps.first.id # need a hash of gps and product
-			# 	# update product itself if necessary, otherwise unit to GPS -- that's the part of ID not yet covered
-			# 	end
+
 			if !gps.empty?
 				gps.first.id
 			else
@@ -27,13 +20,6 @@ module Imports
 				t = Category.arel_table
 				id = Category.where(depth:2).where(t[:name].matches("#{category_name}%")).first.id # Must be a depth 2 category, where names ought to be unique, so this should be an array of length 1.
 				# TODO: address this problem, perhaps parse recursively?
-
-				## Before -- to save
-				#first.id # going on first, for oldest, at moment
-
-				# TODO Check -- may improve with taxonomy restructure, May16: no category uniqueness by name only -- depends upon taxonomy + varying acceptable depths.
-				# Previous sol'n, holding:
-				# id = Category.find_by_name(category_name).id # works for a given set; case sensitive, which is a problem
 				id
 			rescue
 				return nil

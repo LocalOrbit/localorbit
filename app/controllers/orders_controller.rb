@@ -26,6 +26,28 @@ class OrdersController < ApplicationController
   end
 
   def create
+    # Validate cart items against current inventory...
+    errors ||= []
+    current_cart.items.each do |item|
+      invalid = validate_qty(item)
+      errors << invalid if invalid
+
+      if invalid then
+        if invalid[:actual_count] > 0 then
+          item.update(quantity: invalid[:actual_count])
+        else
+          item.update(quantity: 0)
+          item.destroy
+        end
+      end
+    end
+
+    # ...and redirect to cart if there isn't quantity to fill order
+    if errors.count > 0 then
+      flash[:error] = errors.map{|r| r[:error_msg]}.join(". ")
+      redirect_to cart_path and return
+    end
+
     if params[:prev_discount_code] != params[:discount_code]
       @apply_discount = ApplyDiscountToCart.perform(cart: current_cart, code: params[:discount_code])
       flash[:discount_message] = @apply_discount.context[:message]
@@ -33,11 +55,13 @@ class OrdersController < ApplicationController
     elsif order_number_missing?
       reject_order "Your order cannot be completed without a purchase order number."
     else
-       @placed_order = PaymentProvider.place_order(current_market.payment_provider,
-                                                   buyer_organization: current_cart.organization,
-                                                   user: current_user,
-                                                   order_params: order_params,
-                                                   cart: current_cart, request: request)
+      @placed_order = PaymentProvider.place_order(
+        current_market.payment_provider,
+        buyer_organization: current_cart.organization,
+        user: current_user,
+        order_params: order_params,
+        cart: current_cart, request: request
+      )
 
       if @placed_order.context.key?(:order)
         @order = @placed_order.order.decorate
@@ -58,6 +82,23 @@ class OrdersController < ApplicationController
   end
 
   protected
+
+  def validate_qty(item)
+    error = nil
+    product = Product.includes(:prices).find(item.product.id)
+    delivery_date = current_delivery.deliver_on
+    actual_count = product.available_inventory(delivery_date)
+
+    if item.quantity && item.quantity > 0 && item.quantity > actual_count
+      error = {
+        item_id: item.id,
+        error_msg: "Quantity of #{product.name} (#{product.unit.plural}) available for purchase: #{product.available_inventory(delivery_date)}",
+        actual_count: actual_count
+      }
+    end
+
+    error
+  end
 
   def order_number_missing?
     order_params[:payment_method] == "purchase order" && order_params[:payment_note] == "" && current_market.require_purchase_orders

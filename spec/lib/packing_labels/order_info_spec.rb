@@ -7,7 +7,7 @@ describe PackingLabels::OrderInfo do
 
   let!(:buyer) { create(:organization, :buyer, name: "Big Money", markets: [market]) }
   let!(:seller) { create(:organization, :seller, name: "Good foodz", markets: [market]) }
-  let!(:product1) { create(:product, :sellable, name: "Giant Carrots", organization: seller, code: "C-Better") }
+  let!(:product1) { create(:product, :sellable, name: "Giant Carrots", organization: seller, code: "C-Better", use_simple_inventory: false) }
   let!(:product2) { create(:product, :sellable, name: "Tiny Beets", organization: seller) }
   let!(:delivery_schedule) { create(:delivery_schedule, market: market) }
   let!(:deliver_on) { 2.days.from_now }
@@ -39,7 +39,7 @@ describe PackingLabels::OrderInfo do
           product_name: order_item.name,
           unit_desc: order_item.unit,
           quantity: order_item.quantity,
-          lot_desc: "Lot ##{lot.lot_id}",
+          lot_desc: "Lot #",
           producer_name: order_item.seller_name,
           product_code: order_item.product.code
         })
@@ -54,7 +54,7 @@ describe PackingLabels::OrderInfo do
           product_name: order_item.name,
           unit_desc: order_item.unit,
           quantity: order_item.quantity,
-          lot_desc: nil,
+          lot_desc: "",
           producer_name: order_item.seller_name,
           product_code: order_item.product.code
         })

@@ -1,6 +1,9 @@
 $ ->
   return unless $(".cart_item, #product-search-table").length
   selector = $('.cart_item')
+  order_id = $('.add-items-to-order').data('order-id')
+  order_min = $('.subtotal').data('order-min')
+  subtotal = $('.subtotal').data('subtotal')
 
   window.CartNotificationDuration = 2000
 
@@ -137,6 +140,15 @@ $ ->
     updateSubtotal: (subtotal)->
       totals = $("#totals")
       totals.find(".subtotal").text(accounting.formatMoney(subtotal))
+      if subtotal*1 > order_min*1
+        $('.order-min-msg').html('')
+        $('.payment-method').prop("disabled", false)
+        #$("#place-order-button").prop("disabled", false)
+      else
+        $('.order-min-msg').html('<h2 class="order-min-msg" style="float: left; margin-left: 15px; color: red;">Your order does not meet the subtotal order minimum of ' + accounting.formatMoney(order_min) + '</h2>')
+        $('.payment-method').prop("disabled", true)
+        $('.payment-method').prop("checked", false)
+        #$("#place-order-button").prop("disabled", true)
 
     updateDiscount: (discount) ->
       $discount = $("#totals .discount")
@@ -178,7 +190,7 @@ $ ->
 
   class CartModel
     constructor: (opts)->
-      {@url, @view} = opts
+      {@url, @orderId, @view} = opts
 
       @items = _.map opts.items, (el)->
         CartItem.buildWithElement(el)
@@ -228,7 +240,7 @@ $ ->
       @view.updateDeliveryFees(data.delivery_fees)
       @view.updateTotal(data.total)
 
-    saveItem: (productId, quantity, elToUpdate)->
+    saveItem: (productId, quantity, elToUpdate, orderId)->
       # TODO: Add validation for maximum input to prevent
       #       users from entering numbers greater than available
       #       quantities
@@ -243,7 +255,7 @@ $ ->
         @view.showErrorMessage(errorMessage, $(elToUpdate).closest('.product'))
         $(elToUpdate).closest(".quantity").addClass("field_with_errors")
       else
-        $.post(@url, {"_method": "put", product_id: productId, quantity: quantity} )
+        $.post(@url, {"_method": "put", product_id: productId, quantity: quantity, order_id: orderId} )
           .done (data)=>
 
             error = data.error
@@ -254,18 +266,23 @@ $ ->
             else
               @updateOrAddItem(data.item)
 
-            @updateTotals(data)
+            if !order_id
+              @updateTotals(data)
 
             if error
               @view.showErrorMessage(error, $(elToUpdate).closest('.product'))
             else
               @view.showMessage($('<p class="message">Finished with this product? <a href="/products">Continue Shopping</a></p>'), $(elToUpdate).closest('.product-table--mini'))
+        .error (data)=>
+          @updateOrAddItem(data.item)
 
   view = new CartView
     counter: $("header a.cart")
 
   model = new CartModel
     url: $(".cart_items").data("cart-url")
+    orderId: order_id
+    orderMin: order_min
     view: view
     items: $(".cart_item")
 
@@ -331,8 +348,10 @@ $ ->
   window.insertCartItemEntry = (el) ->
       model.updateOrAddItem el.data("cart-item"), el, true, true
 
+  if !order_id
+    view.updateCounter()
+    view.updateSubtotal(subtotal)
 
-  view.updateCounter()
   setupAlternateOrderPage()
 
   $(document.body).on 'cart.inputFinished', ".cart_item .quantity input", ->
@@ -340,22 +359,22 @@ $ ->
 
     if this.value.length > 0 && !$(this).hasClass('invalid-input')
       quantity = parseInt($(this).val())
-      model.saveItem(data.product_id, quantity, this)
+      model.saveItem(data.product_id, quantity, this, order_id)
 
     if this.value.length == 0 && !$(this).hasClass("in-cart")
-      model.saveItem(data.product_id, 0, this)
+      model.saveItem(data.product_id, 0, this, order_id)
 
   $(document.body).on 'click', ".cart_item .icon-clear", (e)->
     e.preventDefault()
     data = $(this).closest(".cart_item").data("cart-item")
-    model.saveItem(data.product_id, 0)
+    model.saveItem(data.product_id, 0, order_id)
 
   $(document.body).on 'click', "input[type=radio]", (e)->
     $(".payment-fields").addClass("is-hidden")
     $paymentFields = $(this).parents(".field").find(".payment-fields")
     $paymentFields.removeClass("is-hidden")
 
-    buttonState = !$paymentFields.data('available') == true
+    buttonState = !$paymentFields.data('available') == true && !$("h2.order-min-msg").text().trim().length > 0
     $("#place-order-button").attr("disabled", buttonState)
 
   $(document.body).on 'keyup', "#provider_card_number", (e) ->
@@ -414,6 +433,11 @@ $ ->
     if $("#discount_code").val() != ""
       $("#discount_code").val("")
       $(this).parents('form').submit()
+
+  $(document.body).on 'click', "#submit-add-items", (e)->
+    e.preventDefault()
+    $(this).prop("disabled", true)
+    $(this).parents('form').submit()
 
   numItems = $('.payment-method').length
   if numItems == 1

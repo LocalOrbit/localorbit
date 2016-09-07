@@ -1,5 +1,6 @@
 class CartItem < ActiveRecord::Base
   include ActiveSupport::NumberHelper
+  cattr_accessor :order
 
   audited allow_mass_assignment: true, associated_with: :cart
   belongs_to :cart, inverse_of: :items
@@ -13,7 +14,7 @@ class CartItem < ActiveRecord::Base
   validate :quantity_is_available, unless: "errors.has_key? :quantity"
 
   def unit_price
-    Orders::UnitPriceLogic.unit_price(product, cart.market, cart.organization, Time.current.end_of_minute, quantity)
+    Orders::UnitPriceLogic.unit_price(product, cart.market, cart.organization, !order.nil? && order.market.add_item_pricing ? order.created_at : Time.current, quantity)
   end
 
   def total_price

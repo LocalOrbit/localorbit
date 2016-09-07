@@ -63,6 +63,11 @@ class ApplicationController < ActionController::Base
   end
 
   def current_organization
+    if session[:order_id] # We're adding to an order, so use the market from the order
+      @current_organization = Order.find(session[:order_id]).organization
+      return @current_organization
+    end
+
     if @current_organization && (@last_organization_market == current_market || @current_organization.all_markets.include?(current_market))
       @last_organization_market = current_market
       return @current_organization
@@ -87,7 +92,11 @@ class ApplicationController < ActionController::Base
   end
 
   def current_market
-    @current_market ||= market_for_current_subdomain
+    if session[:order_id] # We're adding to an order, so use the market from the order
+      @current_market = Order.find(session[:order_id]).market
+    else
+      @current_market ||= market_for_current_subdomain
+    end
   end
 
   def current_plan
@@ -98,7 +107,7 @@ class ApplicationController < ActionController::Base
   # some capacity. 404 if not.
   def ensure_market_affiliation
     return if current_user.admin?
-    if current_market.nil? || current_market != market_for_current_subdomain(current_user.markets)
+    if (current_market.nil? || current_market != market_for_current_subdomain(current_user.markets)) && session[:order_id].nil?
       return render_404
     end
 
@@ -130,7 +139,7 @@ class ApplicationController < ActionController::Base
   end
 
   def require_selected_market
-    return if current_market
+    return if current_market || session[:order_id]
 
     if current_user.markets.size == 1
       redirect_to url_for(host: current_user.markets.first.domain)
@@ -144,7 +153,11 @@ class ApplicationController < ActionController::Base
   end
 
   def current_delivery
-    return nil if current_market.blank? || current_organization.blank?
+    return nil if (current_market.blank? || current_organization.blank?) && session[:order_id].nil?
+
+    if session[:order_id] # We're adding an item to an order, so use the delivery of the order
+      @current_delivery = Order.find(session[:order_id]).delivery.decorate
+    end
 
     if defined?(@current_delivery)
       @current_delivery
@@ -171,10 +184,12 @@ class ApplicationController < ActionController::Base
     end 
   end
 
-  def selected_organization_location
-    @selected_organization_location ||=
-      (session[:current_location] && current_organization.locations.visible.find_by(id: session[:current_location])) ||
-      current_organization.shipping_location
+  def selected_organization_location(org=nil)
+    if org
+      @selected_organization_location ||= (session[:current_location] && org.locations.visible.find_by(id: session[:current_location])) || org.shipping_location
+    else
+      @selected_organization_location ||= (session[:current_location] && current_organization.locations.visible.find_by(id: session[:current_location])) || current_organization.shipping_location
+    end
   end
 
   def set_timezone
@@ -195,35 +210,42 @@ class ApplicationController < ActionController::Base
   end
 
   def require_cart
-    if !current_user.nil? && !current_organization.nil? && !current_market.nil? && !current_delivery.nil?
-      @current_cart = Cart.find_or_create_by!(user_id: current_user.id, organization_id: current_organization.id, market_id: current_market.id, delivery_id: current_delivery.id) do |c|
-        c.location = selected_organization_location if current_delivery.requires_location?
-      end.decorate
+    if (!current_user.nil? && !current_organization.nil? && !current_market.nil? && !current_delivery.nil?) || session[:order_id]
+      if session[:order_id]
+        o=Order.find(session[:order_id])
+        @current_cart = Cart.find_or_create_by!(user_id: current_user.id, organization_id: o.organization.id, market_id: o.market.id, delivery_id: o.delivery.id) do |c|
+          c.location = selected_organization_location(o.organization) if o.delivery.requires_location?
+        end.decorate
+      else
+        @current_cart = Cart.find_or_create_by!(user_id: current_user.id, organization_id: current_organization.id, market_id: current_market.id, delivery_id: current_delivery.id) do |c|
+          c.location = selected_organization_location if current_delivery.requires_location?
+        end.decorate
+      end
       session[:cart_id] = @current_cart.id
     end
   end
 
   def require_organization_location
-    return unless current_organization && current_organization.locations.visible.none?
+    return unless current_organization && current_organization.locations.visible.none? && session[:order_id].nil?
     redirect_to [:new_admin, current_organization, :location], alert: "You must enter an address for this organization before you can shop"
   end
 
   def require_market_open
-    render "shared/market_closed" if current_market.closed?
+    render "shared/market_closed" if current_market.closed? && session[:order_id].nil?
   end
 
   def require_current_organization
-    return unless current_organization.nil?
+    return unless current_organization.nil? && session[:order_id].nil?
     redirect_to new_sessions_organization_path(redirect_back_to: request.original_url)
   end
 
   def require_current_delivery
     redir_opts = {}
 
-    if current_delivery.present?
-      return if current_delivery.requires_location? && selected_organization_location.nil?
+    if current_delivery.present? || session[:order_id]
+      return if session[:order_id] || current_delivery.requires_location? && selected_organization_location.nil?
 
-      if current_delivery.can_accept_orders?
+      if current_delivery.can_accept_orders? || session[:order_id]
         return
       else
         session[:current_delivery_id] = nil
@@ -232,6 +254,24 @@ class ApplicationController < ActionController::Base
     end
 
     redirect_to new_sessions_deliveries_path(redirect_back_to: request.fullpath), redir_opts
+  end
+
+  def set_order_id
+    @order = !params[:order_id].nil? ? Order.find(params[:order_id]) : nil
+
+    if @order
+      session[:order_id] = @order.id
+    else
+      session[:order_id] = nil
+    end
+  end
+
+  def reset_order_id
+    if !session[:order_id].nil?
+      session[:order_id] = nil
+      session[:current_delivery_id] = nil
+      session[:cart_id] = nil
+    end
   end
 
   def configure_permitted_parameters

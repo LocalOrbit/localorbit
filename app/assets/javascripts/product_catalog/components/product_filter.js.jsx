@@ -9,11 +9,13 @@
   var ProductFilter = React.createClass({
     propTypes: {
       deliveryDate: React.PropTypes.string.isRequired,
-      selectedType: React.PropTypes.string.isRequired,
+      selectedType: React.PropTypes.string,
       orderCutoff: React.PropTypes.string.isRequired,
       buyerInfo: React.PropTypes.string.isRequired,
       useTemplates: React.PropTypes.bool.isRequired,
-      supplierOnly: React.PropTypes.bool.isRequired
+      supplierOnly: React.PropTypes.bool,
+      orderId: React.PropTypes.number,
+      orderMinimum: React.PropTypes.string
     },
 
     getInitialState: function() {
@@ -108,7 +110,7 @@
         )
       }.bind(this));
 
-      var orderTemplates, filterText;
+      var orderTemplates, filterText, orderMinimum, headerInformation;
       if(this.props.useTemplates)
             orderTemplates = (<a href="#templatePicker" className="app-apply-template modal-toggle">Apply an order template to the cart</a>);
         else
@@ -118,6 +120,25 @@
             filterText = (' and suppliers');
         else
             filterText = ('');
+
+        if (this.props.orderMinimum)
+            orderMinimum = (<span>Order Minimum: <strong>{this.props.orderMinimum}</strong><br/></span>);
+        else
+            orderMinimum = ('');
+
+        if (this.props.orderId > 0)
+            headerInformation = ('');
+        else
+            headerInformation = (
+                <div className="order-information-container column column--half pull-left">
+                    Buyer: <strong>{this.props.buyerInfo}</strong><br/>
+                    {this.props.selectedType}: <strong>{this.state.deliveryDate.format('dddd, MMM. D, YYYY')}</strong><br/>
+                    Time left to order: <strong>{this.state.orderCutoff.fromNow(true)}</strong><br/>
+                    {orderMinimum}
+                    <a href="/sessions/organizations/new?redirect_back_to=%2Fsessions/deliveries/new?redirect_back_to=%2Fproducts">Change delivery options</a><br/>
+                    {orderTemplates}
+                </div>
+            );
 
         return (
         <div style={{borderTop:"1px solid rgb(222, 222, 222)"}}>
@@ -130,13 +151,7 @@
                 {activeFilters}
               </div>
             </div>
-            <div className="order-information-container column column--half pull-left">
-              Buyer: <strong>{this.props.buyerInfo}</strong><br/>
-              {this.props.selectedType}: <strong>{this.state.deliveryDate.format('dddd, MMM. D, YYYY')}</strong><br/>
-              Time left to order: <strong>{this.state.orderCutoff.fromNow(true)}</strong><br/>
-              <a href="/sessions/organizations/new?redirect_back_to=%2Fsessions/deliveries/new?redirect_back_to=%2Fproducts">Change delivery options</a><br/>
-              {orderTemplates}
-            </div>
+            {headerInformation}
             <div style={{clear:"both"}}></div>
           </div>
           <div style={{display: (this.state.showFilter) ? "" : "none"}} className="catalog-filter row">
