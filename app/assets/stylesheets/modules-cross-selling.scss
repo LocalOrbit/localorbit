@@ -42,4 +42,29 @@ body.controller-cross_selling_lists{
     margin-bottom: .6em;
   }
 
+  #product_management.modal{
+    width: 700px;
+  }
+
+  .product-list{
+    padding: 10px;
+    min-height:100%;
+
+    .product-listing{
+      display: block;
+      margin-bottom: 0px;
+
+      .product-details-container{
+        float: left;
+        width: 88%;
+        padding-right: 0;
+      }
+
+      .product-pricing{
+        display: inline-block;
+        float: right;
+        width: 8%;
+      }
+    }
+  }
 }

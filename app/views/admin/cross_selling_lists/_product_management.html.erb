@@ -55,32 +55,15 @@
     </div>
 
     <div id="product-add-products" class="bound-list">
-      <table>
-        <thead>
-          <tr>
-            <th>Products</th>
-            <th>&nbsp;</th>
-          </tr>
-        </thead>
-        <tbody>
-        <% if @cross_selling_list.creator then %>
-          <% @scoped_products.each do |product| %>
-            <tr>
-              <td><span id="product-name"><%= product.name %></span> <span id="product-unit-name"><%= "(#{product.unit.singular})" %></span><br /><span id="product-supplier"><%= product.organization.name %></span></td>
-              <td><%= check_box_tag "cross_selling_list[product_ids][]", product.id, list.object.products.include?(product) %></td>
-            </tr>
-          <% end %>
-        <% else %>
-          <%= list.fields_for :cross_selling_list_products do |cslp| %>
-            <tr>
-              <%= cslp.hidden_field :product_id %>
-              <td><span id="product-name"><%= cslp.object.product.name %></span><br /><span id="product-supplier"><%= cslp.object.product.organization.name %></span></td>
-              <td><%= cslp.check_box :active %></td>
-            </tr>
-          <% end %>
+      <% if @cross_selling_list.creator then %>
+        <% @scoped_products.each do |product| %>
+          <%= render "product_management_row", {list: list, product: product} %>
         <% end %>
-        </tbody>
-      </table>
+      <% else %>
+        <%= list.fields_for :cross_selling_list_products do |cslp| %>
+          <%= render "product_management_row", {list: list, cslp: cslp} %>
+        <% end %>
+      <% end %>  
     </div>
 
     <%= list.submit "Update List" %>
