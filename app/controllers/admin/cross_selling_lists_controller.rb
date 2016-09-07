@@ -53,7 +53,7 @@ class Admin::CrossSellingListsController < AdminController
         end
       end
 
-      redirect_to [:admin, @entity, @cross_selling_list], notice: "Successfully created #{@cross_selling_list.name}"
+      redirect_to [:admin, @entity, @cross_selling_list], notice: "Successfully created '#{@cross_selling_list.name}'"
     else
       flash.now[:alert] = "Could not create list"
       render :new
@@ -113,7 +113,7 @@ class Admin::CrossSellingListsController < AdminController
         end
       end
 
-      redirect_to [:admin, @entity, @cross_selling_list]
+      redirect_to [:admin, @entity, @cross_selling_list], notice: "Sucessfully updated '#{@cross_selling_list.name}'"
     else
       flash.now.alert = "Could not update Cross Selling List"
       render :show

@@ -42,10 +42,54 @@ body.controller-cross_selling_lists{
     margin-bottom: .6em;
   }
 
+  ul.cross_selling_sub-header{
+    float: left; 
+    list-style: none;
+    padding: 0;
+    li{
+      display: inline-block;
+      padding-right: 10px;
+    }
+  }
+
+  .product-list-management *{
+    font-size: 14pt;
+  }
+
   #product_management.modal{
     width: 700px;
   }
 
+  /* New listings per 2016-09-07 discussion with Kate and Erika */
+  table.product-listing{
+    tbody.product-details-container{
+      display: table;
+      width: 100%;
+      tr.highlight-active{
+        td{
+          background-color: #F2F2F2;
+        }
+      }
+
+      tr.product-details{
+        line-height: 2em;
+        float: none;
+        td{
+          vertical-align: middle;
+          padding: 8px;
+          h3{
+            margin: 0 0 .4em 0;
+          }
+
+          &.product-unit-name{
+            font-size: 14px;
+          }
+        }
+      }
+    }
+  }
+
+  /* This block may be obsolete... */
   .product-list{
     padding: 10px;
     min-height:100%;
@@ -67,4 +111,5 @@ body.controller-cross_selling_lists{
       }
     }
   }
+
 }

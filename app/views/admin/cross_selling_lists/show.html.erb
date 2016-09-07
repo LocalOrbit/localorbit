@@ -18,10 +18,10 @@
     <hr />
 
     <% if @selected_list_prods.empty? %>
-      <p><span class="hint">This Cross Selling list is Empty... <%= link_to "Add products", "#product_management", class: "modal-toggle" if @cross_selling_list.creator %></span></p>
+      <p class="product-list-management"><span class="hint">This Cross Selling list is Empty... <%= link_to "Add products to cross selling list", "#product_management", class: "modal-toggle" if @cross_selling_list.creator %></span></p>
 
     <% else %>
-      <p><span class="hint"><%= link_to "Manage products", "#product_management", class: "modal-toggle" %></span></p>
+      <p class="product-list-management"><span class="hint"><%= link_to "Edit cross selling product list", "#product_management", class: "modal-toggle" %></span></p>
 
       <div class="table-wrapper">
         <%# KXM List products ought not be one... long... list %>

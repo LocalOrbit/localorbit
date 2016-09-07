@@ -7,4 +7,8 @@ class CrossSellingListProduct < ActiveRecord::Base
   # Manual disambiguation, YO!
   scope :active, -> { where("#{self.class.table_name}.active", true) }
 
+  def active?
+    active == true
+  end
+
 end

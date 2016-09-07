@@ -1,89 +1,11 @@
-<%#
-  list: Active From object
-  product: General Product object
-%>
-<%# binding.pry %>
+<tr class="product-details">
 
-<div class="row product-listing">
-  <div class="product-details-container column column--nine-twelfths">
-    <img style="display:;" class="product-image" src="<%= product.general_product.image_url %>" />
-    <div class="product-details" style="width:;margin-top:;">
-      <h3><%= product.name %></h3>
-      <h5>
-        <span>From: </span>
-        <a href="/sellers/<%= product.general_product.organization_id %>"><%= product.general_product.organization.name %></a>
-      </h5>
+  <td>
+    <h3><%= product.name %></h3>
+    <h5><%= product.organization.name %></h5>
+  </td>
 
-      <p>
-        <span><%= product.general_product.short_description %></span>
-        <span class="font-icon icon-credit" title="<%= product.general_product.long_description %>"></span>
-      </p>
-
-      <ul class="meta list-naked l-inline-list clear-before">
-        <li class="organization-name font-icon icon-credit" title="<%= product.general_product.who_story %>">&nbsp;Who</li>
-        <li class="how-story font-icon icon-archive" title="<%= product.general_product.how_story %>">&nbsp;How</li>
-        <li class="where font-icon icon-direction" title="<%#= product.general_product.location_label %>">&nbsp;Where</li>
-      </ul>
-    </div>
-  </div>
-
-  <div class="product-details-spacer"></div>
-
-  <div class="product-pricing column column--three-twelfths">
-    <%= check_box_tag "cross_selling_list[product_ids][]", product.id, list.object.products.include?(product) %>
-    <!--table>
-      <thead>
-        <tr>
-          <th>&nbsp;</th>
-          <th>&nbsp;</th>
-          <th style="width:100px;text-align:center;color:#727070;text-transform:uppercase;font-weight:bold;font-size:11px;">Order QTY</th>
-          <th style="width:100px;text-align:center;color:#727070;text-transform:uppercase;font-weight:bold;font-size:11px;">Total Cost</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr class="cart_item" data-keep-when-zero="yes" data-cart-item="{&quot;id&quot;:null,&quot;cart_id&quot;:52348,&quot;product_id&quot;:4440,&quot;quantity&quot;:0,&quot;created_at&quot;:null,&quot;updated_at&quot;:null,&quot;total_price&quot;:0,&quot;unit_sale_price&quot;:&quot;12.0&quot;,&quot;valid?&quot;:false,&quot;destroyed?&quot;:false,&quot;formatted_total_price&quot;:&quot;$0.00&quot;}">
-          <th>
-            <a href="/products/4440">Boxes</a><br>
-            <span style="font-size:11px;color:#737373;">
-              <span>8798 Available</span>
-              <span>&nbsp;</span>
-            </span>
-          </th>
-          <td>
-            <table>
-              <tbody>
-                <tr>
-                  <td></td>
-                  <td></td>
-                  <td style="text-align:right;">
-                    <span>
-                      <span>$12.00</span>
-                      <span></span>
-                    </span><br>
-                    <span style="font-size:10px;color:#737373;">
-                      <span>Min </span>
-                      <span>4</span>
-                    </span>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-          </td>
-          <td colspan="2">
-            <div style="float:right;background:#F7F7F7;width:100%;min-width:200px;max-width:200px;border-radius:4px;border:1px solid #D1D1D1;padding:4px 0;">
-              <div class="quantity" style="float:left;width:50%;text-align:center;">
-                <input style="width:75px;" placeholder="0" class="redesigned app-product-input" type="number">
-                <span></span>
-              </div>
-              <div style="float:left;width:50%;text-align:center;padding:10px 0;">
-                <span class="price">$0.00</span>
-              </div>
-            </div>
-          </td>
-        </tr>
-      </tbody>
-    </table -->
-    <div class="errormsg" id="product-4440" style="font-size:11px;text-align:right;color:red;"></div>
-  </div>
-  <div style="clear:both;"></div>
-</div>
+  <td class="product-unit-name"><%= "#{product.unit.singular}" %></td>
+    
+  <td><%= check_box_tag "cross_selling_list[product_ids][]", product.id, list.object.products.include?(product) %></td>
+</tr>
