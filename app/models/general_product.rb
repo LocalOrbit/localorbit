@@ -11,7 +11,14 @@ class GeneralProduct < ActiveRecord::Base
 
   has_many :product
 
-  dragonfly_accessor :image
+  dragonfly_accessor :image do
+    after_assign do |attachment|
+      # Auto orient all the images - so they will look as they should
+      attachment.convert! '-auto-orient'
+    end
+    copy_to(:thumb){|a| a.thumb('150x150#') }
+  end
+
   dragonfly_accessor :thumb
   define_after_upload_resize(:image, 1200, 1200, thumb: {width: 150, height: 150})
   validates_property :format, of: :image, in: %w(jpg jpeg png gif)
