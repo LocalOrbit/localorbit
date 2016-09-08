@@ -28,10 +28,24 @@ class Market < ActiveRecord::Base
 
   has_many :market_cross_sells, class_name: "MarketCrossSells", foreign_key: :source_market_id
   has_many :cross_sells, through: :market_cross_sells
-  has_many :cross_selling_lists, -> { where(creator: true) }, as: :entity
-  has_many :cross_selling_list_subscriptions, -> { where(creator: false) }, class_name: "CrossSellingList", as: :entity
 
-  # KXM Look into the existing Organization model 'active', 'selling', 'with_products', and 'with_a_market' scopes to replace these
+  # KXM Test replacement below and delete...
+  # has_many :cross_selling_lists, -> { where(creator: true) }, as: :entity
+  has_many :cross_selling_lists, as: :entity do
+    def creator
+      where(creator: true)
+    end
+
+    def subscriptions
+      where(creator: false)
+    end
+
+    # KXM Pending already assumes a subscription - can these be cascaded?
+    def pending
+      where(creator: false, status: "Pending")
+    end
+  end
+
   has_many :categories, -> { distinct }, through: :supplier_products
   has_many :supplier_products, class_name: "Product", through: :suppliers, source: :products
   has_many :suppliers, -> { where(active: true, can_sell: true) }, class_name: "Organization", through: :market_organizations, source: :organization

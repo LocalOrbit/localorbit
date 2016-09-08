@@ -20,8 +20,6 @@ class CrossSellingList < ActiveRecord::Base
     end
   end
 
-  has_many :active_children, -> { where(deleted_at: nil) }, class_name: "CrossSellingList", foreign_key: "parent_id"
-
   has_many :cross_selling_list_products, inverse_of: :cross_selling_list
   has_many :products, through: :cross_selling_list_products do
     def active
@@ -39,6 +37,25 @@ class CrossSellingList < ActiveRecord::Base
 
   scope :subscribed, -> { where(creator: false) }
   scope :published, -> { where("published_at IS NOT NULL", "status = Published") }
+
+  def manage_status(parent_status)
+    update!(status: "Revoked") if parent_status == "Inactive" && status != "Revoked"
+    update!(status: "Pending") if parent_status == "Published" && status == "Revoked"
+  end
+
+  def translate_status(status)
+    case status
+    when "Revoked" # Revoked is a subscriber-only status
+      "Deactivated by Publisher"
+
+    when "Published" # Published is translated only for subscribers
+      creator == true ? status : "Active"
+
+    else # All remaining statuses remain intact
+      status
+
+    end
+  end
 
   def published?
     status == 'Published' && published_at && published_at.past?
@@ -91,7 +108,7 @@ class CrossSellingList < ActiveRecord::Base
     end
   end
 
-  def subscribers
+  def subscribers_list
     children.active.includes(:entity).map{|c| c.entity.name}.join(", ")
   end
 end

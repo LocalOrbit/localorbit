@@ -6,12 +6,12 @@ class Admin::CrossSellingListsController < AdminController
   before_action :require_self_enabled_cross_selling, except: :index
 
   def index
-    @cross_selling_lists = @entity.cross_selling_lists
+    @cross_selling_lists = @entity.cross_selling_lists.creator
   end
 
   def subscriptions
     # This processing path will be very similar to, but different from index
-    @cross_selling_subscriptions = @entity.cross_selling_list_subscriptions
+    @cross_selling_subscriptions = @entity.cross_selling_lists.subscriptions
   end
 
   def show
@@ -153,8 +153,7 @@ class Admin::CrossSellingListsController < AdminController
       new_list.update_attributes(params)
     else
       target.update_attribute(:deleted_at, nil)
-      # KXM This is likely not transparent enough to be effective...
-      target.update_attribute(:status, "Active") if target.status = "Revoked"
+      target.update_attribute(:status, "Pending")
       target.update_attributes(params)
     end
   end
@@ -162,12 +161,13 @@ class Admin::CrossSellingListsController < AdminController
   def update_list(parent, id_hash, params)
     target = get_child(parent, id_hash)
     target.update_attribute(:name, parent.name) if target.pending?
+    target.manage_status(parent.status)
     target.update_attributes(params)
   end
 
   def delete_list(parent, id_hash, params)
     target = get_child(parent, id_hash)
-    target.update_attribute(:status, "Revoked") if target.status = "Active"
+    target.update_attribute(:status, "Revoked")
     target.update_attributes(params)
     target.soft_delete
   end
