@@ -1,0 +1,15 @@
+<% if list.children.active.count > 0 then %>
+  <ul style="list-style-type:none; padding:0">
+  <% list.children.active.includes(:entity).each do |c| %>
+    <li style="padding:0 0 6px 0">
+      <%= c.entity.name %><br />
+      <span style="padding-left:6px">Status: <span style="font-style:italic"><%= c.status %></span>
+      <%= ", #{c.products.active.count} of #{c.products.count} products active" if c.status != "Pending" %></span>
+    </li>
+  <% end %>
+  </ul>
+
+<% else %>
+  No subscribers have yet been invited to share this list
+
+<% end %>

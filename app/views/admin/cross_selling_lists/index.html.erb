@@ -52,10 +52,7 @@
         <% @cross_selling_lists.each do |list| %>
           <tr>
             <td class="cross-sell-list-name"><%= link_to list.name, [:admin, @entity, list] %></td>
-            <!--td class="cross-sell-list-subscribers"><%#= list.subscribers_list %></td-->
-            <td class="cross-sell-list-subscribers">
-              <%= render partial: "subscribers", locals:{list: list} %>
-            </td>
+            <td class="cross-sell-list-subscribers"><%= render partial: "subscribers", locals:{list: list} %></td>
             <td class="cross-sell-list-status"><%= list.status %></td>
           </tr>
         <% end %>

@@ -16,8 +16,8 @@
       </div>
 
     <hr />
-
-    <% if @selected_list_prods.empty? %>
+    <%# binding.pry %>
+    <% if @selected_list_prods.nil? || @selected_list_prods.empty? %>
       <p class="product-list-management"><span class="hint">This Cross Selling list is Empty... <%= link_to "Add products to cross selling list", "#product_management", class: "modal-toggle" if @cross_selling_list.creator %></span></p>
 
     <% else %>
@@ -46,9 +46,10 @@
           </tbody>
         </table>
       </div>
-    <% end %>
 
     <%= render "product_management", {list: list} %>
+    <% end %>
+
 
     <% end # End of form... %>
   </div>

@@ -8,12 +8,9 @@
     </div
     ><div class="field column column--half column--guttered">
       <%= list_fields.label :status, "List Status" %>
-      <span class="help-text">This list currently has a status of <span style="font-weight:600"><%= @cross_selling_list.translate_status(@cross_selling_list.status) %></span>, but you may change it here.  Items on lists whose status is <%= @cross_selling_list.translate_status("Published") %> will appear in your product catalog.</span>
+      <span class="help-text"><%= render "list_status_helper_text" %></span>
 
-      <% # Define different options for creators and subscribers
-      select_options = @cross_selling_list.creator ? ['Published', 'Inactive'] : [['Active','Published'], ['Inactive','Inactive'], ['Declined','Declined']] %>
-
-      <%= list_fields.select :status, select_options, options: { prompt: "Select new status..." }, html_options: { class: "column--full" } %>
+      <%= list_fields.select :status, @cross_selling_list.statuses, {}, { class: "column--full" } %>
     </div>
   </div>
   <div class="row row--field">
@@ -31,13 +28,17 @@
 </div>
 <% if !@cross_selling_list.new_record? %>
 <div>
-  <% @selected_suppliers.each do |supplier_id| %>
-    <%= hidden_field_tag "selected_suppliers[]", supplier_id %>
+  <% if !@selected_suppliers.blank? then %>
+    <% @selected_suppliers.each do |supplier_id| %>
+      <%= hidden_field_tag "selected_suppliers[]", supplier_id %>
+    <% end %>
   <% end %>
 </div>
 <div>
-  <% @selected_categories.each do |category_id| %>
-    <%= hidden_field_tag "selected_categories[]", category_id %>
+  <% if !@selected_categories.blank? then %>
+    <% @selected_categories.each do |category_id| %>
+      <%= hidden_field_tag "selected_categories[]", category_id %>
+    <% end %>
   <% end %>
 </div>
 <% end %>

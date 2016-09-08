@@ -38,6 +38,27 @@ class CrossSellingList < ActiveRecord::Base
   scope :subscribed, -> { where(creator: false) }
   scope :published, -> { where("published_at IS NOT NULL", "status = Published") }
 
+  def statuses
+    if creator then
+      minuend = {
+        Published: "Published",
+        Inactive: "Inactive"
+      }
+      subtrahend = [[status.to_sym, status]]
+
+    else
+      minuend = {
+        Active: "Published",
+        Inactive: "Inactive",
+        Declined: "Declined"
+      }
+      subtrahend = [[status.to_sym, translate_status(status)]]
+    end
+
+    # minuend.to_a - subtrahend
+    minuend.to_a
+  end
+
   def manage_status(parent_status)
     update!(status: "Revoked") if parent_status == "Inactive" && status != "Revoked"
     update!(status: "Pending") if parent_status == "Published" && status == "Revoked"

@@ -1,0 +1,6 @@
+<%# KXM Perhaps list status help text should be a helper to better account for context changes? %>
+This list currently has a status of 
+<span style="font-weight:600"><%= @cross_selling_list.translate_status(@cross_selling_list.status) %></span>
+, but you may change it here.  Items on lists whose status is 
+<%= @cross_selling_list.translate_status("Published") %>
+ will appear in your product catalog.
