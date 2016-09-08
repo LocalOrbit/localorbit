@@ -83,7 +83,7 @@ module Api
               JOIN categories top_level_category ON general_products.top_level_category_id = top_level_category.id
               JOIN categories second_level_category ON general_products.second_level_category_id = second_level_category.id
               JOIN organizations supplier ON general_products.organization_id=supplier.id
-              JOIN market_organizations ON general_products.organization_id = market_organizations.organization_id
+              LEFT JOIN market_organizations ON general_products.organization_id = market_organizations.organization_id
               AND market_organizations.market_id = #{current_market.id}")
             .filter_by_current_order(order)
             .filter_by_name_or_category_or_supplier(query)

@@ -230,6 +230,9 @@ describe "Manage cross selling lists" do
       expect(page).to have_content("Individual products")
     end
 
+    # KXM Probably better to split all the 'adds and removes' tests...
+    # Is it better to create a test cross sell list that contains products matching the criteria or re-do
+    # the process of adding (duplicating the 'adds products...' process) just to remove 'em
     it "adds and removes products by supplier via form submission" do
       # Add 'em first...'
       click_link "Add products"
@@ -269,7 +272,7 @@ describe "Manage cross selling lists" do
       category_row = Dom::Admin::ProductManagementCategoryRow.find_by_category_name(product_01.category.name)
 
       # KXM Unavailable products ought not show - the 'sellable' trait doesn't
-      # seem to work (the count should have been 2)... what does?
+      # seem to work (the count should have been 2)... what does work?
       expect(category_row.category_product_count).to eql("5")
 
       category_row.check
@@ -282,13 +285,6 @@ describe "Manage cross selling lists" do
       click_link "Manage products"
 
       expect(category_row.checked?).to eql("checked")
-      supplier_rows = Dom::Admin::ProductManagementSupplierRow.all
-
-      # KXM - Subtractions ought to happen last which should render this supplier de-selection obsolete.
-      # Suppliers take precidence on form submission... deselect them here so the category check box works
-      supplier_rows.each do |supplier|
-        supplier.uncheck
-      end
 
       category_row.uncheck
 

@@ -1,6 +1,6 @@
     <div>
       <ul class="cross_selling_sub-header">
-      	<li><%= link_to_unless_current("My Cross Selling Lists", { action: "index" }) %></li>
+        <li><%= link_to_unless_current("My Cross Selling Lists", { action: "index" }) %></li>
         <li><%= link_to_unless_current("My Subscriptions (#{@entity.cross_selling_list_subscriptions.count})", { action: "subscriptions" }) %></li>
       </ul>
       <%= form_tag [:admin, @entity, :toggle_self_enabled_cross_sell], method: :patch do submit_tag "Turn off Cross Selling", style: "float:right; top:0;" end %>

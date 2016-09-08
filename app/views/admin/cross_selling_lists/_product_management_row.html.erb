@@ -1,11 +1,14 @@
 <tr class="product-details">
-
   <td>
     <h3><%= product.name %></h3>
     <h5><%= product.organization.name %></h5>
   </td>
 
-  <td class="product-unit-name"><%= "#{product.unit.singular}" %></td>
-    
-  <td><%= check_box_tag "cross_selling_list[product_ids][]", product.id, list.object.products.include?(product) %></td>
+  <td class="product-unit-name">
+    <%= "#{product.unit.singular}" %>
+  </td>
+
+  <td>
+    <%= check_box_tag "cross_selling_list[product_ids][]", product.id, list.object.products.include?(product) %>
+  </td>
 </tr>
