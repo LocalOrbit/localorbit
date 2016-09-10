@@ -259,6 +259,9 @@ ActiveRecord::Schema.define(version: 20161006175522) do
     t.boolean  "is_recoverable"
     t.datetime "inactive_at"
     t.decimal  "order_minimum",                  precision: 10, scale: 2, default: 0.0
+    t.string   "delivery_cycle"
+    t.integer  "day_of_month"
+    t.integer  "week_interval"
   end
 
   add_index "delivery_schedules", ["deleted_at"], name: "index_delivery_schedules_on_deleted_at", using: :btree
@@ -527,8 +530,8 @@ ActiveRecord::Schema.define(version: 20161006175522) do
     t.boolean  "subscribed",                                             default: false
     t.boolean  "routing_plan",                                           default: false
     t.integer  "organization_id"
+    t.boolean  "add_item_pricing"
     t.boolean  "self_enabled_cross_sell",                                default: false
-    t.boolean  "add_item_pricing",                                       default: true
   end
 
   add_index "markets", ["name"], name: "index_markets_on_name", using: :btree

@@ -1,9 +1,13 @@
 class DeliverySchedule < ActiveRecord::Base
   audited allow_mass_assignment: true, associated_with: :market
   include SoftDelete
+  NULL_ATTRS = %w( day_of_month week_interval )
+  before_save :nil_if_blank
 
   WEEKDAYS = %w(Sunday Monday Tuesday Wednesday Thursday Friday Saturday)
   WEEKDAY_ABBREVIATIONS = %w(Su M Tu W Th F Sa)
+  INTERVALS = {'weekly' => 1, 'biweekly' => 2, 'monthly_day' => 1, 'monthly_date' => 1}
+  INTERVAL_TYPES = {'weekly' => :week, 'biweekly' => :week, 'monthly_day' => :month, 'monthly_date' => :month}
 
   WeekdayValidation = {presence: true, numericality: {greater_than_or_equal_to: 0, less_than_or_equal_to: 6,   allow_nil: true}}
 
@@ -46,6 +50,10 @@ class DeliverySchedule < ActiveRecord::Base
       END
     SQL
     )
+  end
+
+  def nil_if_blank
+    NULL_ATTRS.each { |attr| self[attr] = nil if self[attr].blank? }
   end
 
   def products_available_for_sale(organization, deliver_on_date=Time.current.end_of_minute)
@@ -112,11 +120,15 @@ class DeliverySchedule < ActiveRecord::Base
   end
 
   def next_delivery_date
-    @next_delivery_date ||= calc_next_delivery_date
+    interval = INTERVALS[delivery_cycle]
+    interval_type = INTERVAL_TYPES[delivery_cycle]
+    @next_delivery_date ||= calc_next_delivery_date(interval, interval_type)
   end
 
   def next_buyer_delivery_date
-    @next_buyer_delivery_date ||= calc_next_buyer_delivery_date(next_delivery_date)
+    interval = INTERVALS[delivery_cycle]
+    interval_type = INTERVAL_TYPES[delivery_cycle]
+    @next_buyer_delivery_date ||= calc_next_buyer_delivery_date(next_delivery_date, interval, interval_type)
   end
 
   def timezone
@@ -200,18 +212,25 @@ class DeliverySchedule < ActiveRecord::Base
   end
 
   # day, seller_delivery_start
-  def calc_next_delivery_date
+  def calc_next_delivery_date(interval, interval_type)
     Time.use_zone timezone do
       current_time = Time.current.end_of_minute
-      beginning = current_time.beginning_of_week(:sunday) - 1.week
-      date = (beginning + day.days).to_date
-      d = Time.zone.parse("#{date} #{seller_delivery_start}")
-      d += 1.week while (d - self.order_cutoff.hours) < current_time
+      beginning = (interval_type == :week ? current_time.beginning_of_week(:sunday) : current_time.beginning_of_month) - interval.send(interval_type)
+      if !day_of_month.nil? && day_of_month > 0 # Using day of month method
+        this_month_date = beginning + 1.months + day_of_month.days - 1.days
+        next_month_date = beginning + 2.months + day_of_month.days - 1.days
+        date = (this_month_date < current_time ? next_month_date : this_month_date).to_date
+        d = Time.zone.parse("#{date} #{seller_delivery_start}")
+      else
+        date = (beginning + (week_interval.nil? ? 0 : interval.week) + day.days).to_date
+        d = Time.zone.parse("#{date} #{seller_delivery_start}")
+        d += interval.weeks while (d - self.order_cutoff.hours) < current_time
+      end
       return d
     end
   end
 
-  def calc_next_buyer_delivery_date(delivery_time)
+  def calc_next_buyer_delivery_date(delivery_time, interval, interval_type)
     time_of_day = if buyer_pickup_start.present? and !direct_to_customer?
                     buyer_pickup_start
                   else
@@ -219,10 +238,17 @@ class DeliverySchedule < ActiveRecord::Base
                   end
     Time.use_zone timezone do
       current_time = Time.current.end_of_minute
-      beginning = current_time.beginning_of_week(:sunday) - 1.week
-      date = (beginning + buyer_day.days).to_date
-      d = Time.zone.parse("#{date} #{time_of_day}")
-      d += 1.week while d < delivery_time
+      beginning = (interval_type == :week ? current_time.beginning_of_week(:sunday) : current_time.beginning_of_month) - interval.send(interval_type)
+      if !day_of_month.nil? && day_of_month > 0
+        this_month_date = beginning + 1.months + day_of_month.days - 1.days
+        next_month_date = beginning + 2.months + day_of_month.days - 1.days
+        date = (this_month_date < current_time ? next_month_date : this_month_date).to_date
+        d = Time.zone.parse("#{date} #{time_of_day}")
+      else
+        date = (beginning + (week_interval.nil? ? 0 : interval.week) + buyer_day.days).to_date
+        d = Time.zone.parse("#{date} #{time_of_day}")
+        d += interval.week while d < delivery_time
+      end
       return d
     end
   end

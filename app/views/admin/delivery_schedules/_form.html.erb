@@ -3,12 +3,21 @@
   <span>You can have multiple delivery options that all of your Buyers will see.</span>
 
   <div class="field">
-    <%= f.label :cycle %><br>
-    <span>Weekly</span>
+    <%= f.label :delivery_cycle %><br>
+    <%= f.select :delivery_cycle, [["Weekly", "weekly"], ["Bi-Weekly", "biweekly"], ["Monthly (by Day)", "monthly_day"], ["Monthly (by Date)", "monthly_date"]] %>
   </div
-  ><div class="field">
+  >
+  <div class="field conditional is-hidden" id="week_interval_option">
+    <%= f.label :week_interval, 'Interval' %><br>
+    <%= f.select :week_interval, week_interval_options %>
+  </div
+  ><div class="field conditional" id="buyer_day_option">
     <%= f.label :buyer_day %><br>
     <%= f.select :buyer_day, weekday_options %>
+  </div
+  ><div class="field conditional is-hidden" id="dom_option">
+    <%= f.label :day_of_month %><br>
+    <%= f.select :day_of_month, day_of_month_options %>
   </div>
 
   <div class="field" style="display:inline-block">

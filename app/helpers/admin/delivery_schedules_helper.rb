@@ -4,6 +4,14 @@ module Admin
       DeliverySchedule::WEEKDAYS.each_with_index.to_a
     end
 
+    def day_of_month_options
+      Array (1..31)
+    end
+
+    def week_interval_options
+        [['First',1],['Second',2],['Third',3],['Fourth',4],['Fifth',5]]
+    end
+
     def quarter_hour_select_options
       @quarter_hour_select_options ||= begin
         t = Time.parse("2014-02-02 12:00 AM")
