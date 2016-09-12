@@ -40,7 +40,7 @@ describe "Manage cross selling lists" do
     cross_sells: [cross_selling_subscriber1, cross_selling_subscriber2],
     organizations: [supplier_01, supplier_02]) }
 
-  let!(:cross_sell_list) { cross_selling_market.cross_selling_lists.create(name: "Listy McListface", status: "Published", children_ids: [cross_selling_subscriber1]) }
+  let!(:cross_sell_list) { cross_selling_market.cross_selling_lists.create(name: "Listy McListface", status: "Published", creator: true, children_ids: [cross_selling_subscriber1]) }
   let!(:cross_sell_list2){ create(:cross_selling_list, name: "Subby McSubface", status: "Published", creator: false, parent_id: cross_sell_list.id, entity_id: cross_selling_subscriber1.id, entity_type: "Market") }
 
   context "when cross selling is unavailable" do
@@ -187,9 +187,9 @@ describe "Manage cross selling lists" do
         click_link "Cross Sell"
       end
 
-      expect(page).to have_content 'Subscriptions (1)'
+      expect(page).to have_content 'My Subscriptions'
 
-      click_link 'Subscriptions (1)'
+      click_link 'My Subscriptions'
       expect(page).to have_content 'Subby McSubface'
     end
 
@@ -222,9 +222,10 @@ describe "Manage cross selling lists" do
     end
 
     it "displays the product management modal form" do
-      click_link "Add products"
+      expect(page).to have_content("Add products to cross selling list")
 
-      expect(page).to have_content("Add Products to Cross Selling List")
+      click_link "Add products to cross selling list"
+
       expect(page).to have_content("Products by supplier")
       expect(page).to have_content("Products by category")
       expect(page).to have_content("Individual products")
