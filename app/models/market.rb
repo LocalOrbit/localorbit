@@ -29,22 +29,7 @@ class Market < ActiveRecord::Base
   has_many :market_cross_sells, class_name: "MarketCrossSells", foreign_key: :source_market_id
   has_many :cross_sells, through: :market_cross_sells
 
-  # KXM Test replacement below and delete...
-  # has_many :cross_selling_lists, -> { where(creator: true) }, as: :entity
-  has_many :cross_selling_lists, as: :entity do
-    def creator
-      where(creator: true)
-    end
-
-    def subscriptions
-      where(creator: false)
-    end
-
-    # KXM Pending already assumes a subscription - can these be cascaded?
-    def pending
-      where(creator: false, status: "Pending")
-    end
-  end
+  has_many :cross_selling_lists, as: :entity
 
   has_many :categories, -> { distinct }, through: :supplier_products
   has_many :supplier_products, class_name: "Product", through: :suppliers, source: :products

@@ -45,11 +45,21 @@ class Admin::CrossSellingListsController < AdminController
     if @cross_selling_list.save
       @cross_selling_list.manage_publication!(cross_selling_list_params)
 
-      if @cross_selling_list.published? then
+      if @cross_selling_list.published? || @cross_selling_list.draft? then
         selected_subscribers = cross_selling_list_params[:children_ids].select(&:present?).map { |submitted_id| {parent_id: @cross_selling_list.id, entity_id: submitted_id.to_i} }
 
-        selected_subscribers.each do |list_ids|
-          create_list(@cross_selling_list, list_ids, submitted_products)
+        if @cross_selling_list.published? then
+          # Published lists should propogate completely
+          selected_subscribers.each do |list_ids|
+            create_list(@cross_selling_list, list_ids, submitted_products)
+          end
+        end
+
+        if @cross_selling_list.draft? then
+          # Draft lists should only create the child lists.  List items will be added once the list is published
+          selected_subscribers.each do |list_ids|
+            create_list(@cross_selling_list, list_ids, {})
+          end
         end
       end
 
@@ -146,14 +156,14 @@ class Admin::CrossSellingListsController < AdminController
       new_list.entity_id = id_hash[:entity_id]
       new_list.entity_type = "Market"
       new_list.creator = false
-      new_list.status = "Pending"
+      new_list.status = parent.status == "Draft" ? "Draft" : "Pending"
       new_list.published_at = nil
       new_list.parent_id = id_hash[:parent_id]
       new_list.save
       new_list.update_attributes(params)
     else
       target.update_attribute(:deleted_at, nil)
-      target.update_attribute(:status, "Pending")
+      target.manage_status(parent.status)
       target.update_attributes(params)
     end
   end
@@ -167,7 +177,7 @@ class Admin::CrossSellingListsController < AdminController
 
   def delete_list(parent, id_hash, params)
     target = get_child(parent, id_hash)
-    target.update_attribute(:status, "Revoked")
+    target.manage_status(parent.status)
     target.update_attributes(params)
     target.soft_delete
   end

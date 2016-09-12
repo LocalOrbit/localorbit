@@ -4,13 +4,14 @@
     <div class="field column column--half column--guttered">
       <%= list_fields.label :name, "List Name" %>
       <span class="help-text">This is the name people will use to identify your list of cross sold items.</span>
-      <%= list_fields.text_field :name, class: "column--full" %>
+      <%= list_name(list_fields) %>
     </div
     ><div class="field column column--half column--guttered">
       <%= list_fields.label :status, "List Status" %>
-      <span class="help-text"><%= render "list_status_helper_text" %></span>
+      <!--span class="help-text"><%#= render "list_status_helper_text" %></span-->
+      <span class="help-text"><%= status_help_text %></span>
 
-      <%= list_fields.select :status, @cross_selling_list.statuses, {}, { class: "column--full" } %>
+      <%= list_fields.select :status, @cross_selling_list.statuses, {}, { class: "column--full" } unless @cross_selling_list.locked? %>
     </div>
   </div>
   <div class="row row--field">

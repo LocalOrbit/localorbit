@@ -35,12 +35,15 @@ class CrossSellingList < ActiveRecord::Base
   validates :entity_type, presence: true, length: {maximum: 255}
   validates :status, presence: true, length: {maximum: 255}
 
-  scope :subscribed, -> { where(creator: false) }
+  scope :subscriptions, -> { where("creator <> ? AND status <> ?", true, 'Draft') }
   scope :published, -> { where("published_at IS NOT NULL", "status = Published") }
+  scope :pending, -> { where(creator: false, status: "Pending") }
+  scope :creator, -> { where(creator: true) }
 
   def statuses
     if creator || new_record? then
       {
+        Draft:     "Draft",
         Published: "Published",
         Inactive:  "Inactive"
       }
@@ -55,7 +58,7 @@ class CrossSellingList < ActiveRecord::Base
 
   def manage_status(parent_status)
     update!(status: "Revoked") if parent_status == "Inactive" && status != "Revoked"
-    update!(status: "Pending") if parent_status == "Published" && status == "Revoked"
+    update!(status: "Pending") if parent_status == "Published" && (status == "Revoked" || status == "Draft")
   end
 
   # Business had some different ideas about status names, 
@@ -110,6 +113,10 @@ class CrossSellingList < ActiveRecord::Base
 
   def draft?
     status == "Draft"
+  end
+
+  def locked?
+    status == 'Revoked'
   end
 
   def cascade_update?
