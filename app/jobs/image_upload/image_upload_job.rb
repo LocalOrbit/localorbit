@@ -18,8 +18,9 @@ module ImageUpload
 
     def perform
       img = Dragonfly.app.fetch_url(product.aws_image_url)
-      thumb = img.thumb("150x150>")
-      image_uid = img.store
+      img_orient = img.convert('-auto-orient')
+      thumb = img_orient.thumb("150x150#")
+      image_uid = img_orient.store
       thumb_uid = thumb.store
 
       product.general_product.image_uid = image_uid
