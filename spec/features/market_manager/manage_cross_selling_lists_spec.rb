@@ -1,6 +1,12 @@
 require "spec_helper"
 
 describe "Manage cross selling lists" do
+  product_management_link = "Edit cross selling product list"
+
+  products_by_category = "Products by category"
+  products_by_supplier = "Products by supplier"
+  individual_products = "Individual products"
+
   let!(:product_01){ create(:product, :sellable) }
   let!(:product_02){ create(:product, :sellable) }
   let!(:product_03){ create(:product) }
@@ -226,9 +232,9 @@ describe "Manage cross selling lists" do
 
       click_link "Add products to cross selling list"
 
-      expect(page).to have_content("Products by supplier")
-      expect(page).to have_content("Products by category")
-      expect(page).to have_content("Individual products")
+      expect(page).to have_content(products_by_supplier)
+      expect(page).to have_content(products_by_category)
+      expect(page).to have_content(individual_products)
     end
 
     # KXM Probably better to split all the 'adds and removes' tests...
@@ -237,7 +243,7 @@ describe "Manage cross selling lists" do
     it "adds and removes products by supplier via form submission" do
       # Add 'em first...'
       click_link "Add products"
-      click_link "Products by supplier"
+      click_link products_by_supplier
 
       expect(page).to have_content(supplier_01.name)
 
@@ -252,8 +258,8 @@ describe "Manage cross selling lists" do
       expect(page.all('table#cross-sell-list-products tbody tr').count).to eql(3)
 
       # Having been added, now remove 'em
-      expect(page).to have_link("Manage products")
-      click_link "Manage products"
+      expect(page).to have_link(product_management_link)
+      click_link product_management_link
 
       expect(supplier_row.checked?).to eql("checked")
 
@@ -266,7 +272,7 @@ describe "Manage cross selling lists" do
     it "adds and removes products by category via form submission" do
       # Add 'em first...'
       click_link "Add products"
-      click_link "Products by category"
+      click_link products_by_category
 
       expect(page).to have_content(product_01.category.name)
 
@@ -282,8 +288,8 @@ describe "Manage cross selling lists" do
       expect(page.all('table#cross-sell-list-products tbody tr').count).to eql(5)
 
       # Having been added, now remove 'em
-      expect(page).to have_link("Manage products")
-      click_link "Manage products"
+      expect(page).to have_link(product_management_link)
+      click_link product_management_link
 
       expect(category_row.checked?).to eql("checked")
 
@@ -296,7 +302,7 @@ describe "Manage cross selling lists" do
     it "adds and removes individual products via form submission" do
       # Add 'em first...'
       click_link "Add products"
-      click_link "Individual products"
+      click_link individual_products
 
       expect(page).to have_content(product_01.name)
 
@@ -308,9 +314,9 @@ describe "Manage cross selling lists" do
       expect(page.all('table#cross-sell-list-products tbody tr').count).to eql(1)
 
       # Having been added, now remove 'em
-      expect(page).to have_link("Manage products")
-      click_link "Manage products"
-      click_link "Individual products"
+      expect(page).to have_link(product_management_link)
+      click_link product_management_link
+      click_link individual_products
 
       product_row = Dom::Admin::ProductManagementProductRow.find(product_01.name).first
 
