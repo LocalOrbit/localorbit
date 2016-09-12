@@ -39,24 +39,18 @@ class CrossSellingList < ActiveRecord::Base
   scope :published, -> { where("published_at IS NOT NULL", "status = Published") }
 
   def statuses
-    if creator then
-      minuend = {
+    if creator || new_record? then
+      {
         Published: "Published",
-        Inactive: "Inactive"
+        Inactive:  "Inactive"
       }
-      subtrahend = [[status.to_sym, status]]
-
     else
-      minuend = {
-        Active: "Published",
-        Inactive: "Inactive",
-        Declined: "Declined"
+      {
+        Active:    "Published",
+        Inactive:  "Inactive",
+        Declined:  "Declined"
       }
-      subtrahend = [[status.to_sym, translate_status(status)]]
     end
-
-    # minuend.to_a - subtrahend
-    minuend.to_a
   end
 
   def manage_status(parent_status)
@@ -64,6 +58,8 @@ class CrossSellingList < ActiveRecord::Base
     update!(status: "Pending") if parent_status == "Published" && status == "Revoked"
   end
 
+  # Business had some different ideas about status names, 
+  # but I like mine better (at least in the database)
   def translate_status(status)
     case status
     when "Revoked" # Revoked is a subscriber-only status
