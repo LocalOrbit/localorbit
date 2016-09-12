@@ -10,6 +10,16 @@
       </div>
     <% else %>
       <div style="clear:both; padding-top:1em;">
+        <% @cross_selling_subscriptions.pending.each do |pending_list| %>
+        <div class='pending_list column column--three-fourths'>
+          <p class="messaging">
+            <span class="message"><span class="announcement"><%= pending_list.parent.entity.name %> shared a list with you</span><br /><span class="detail">List name: '<%= pending_list.name %>' with <%= pending_list.products.count %> products</span></span>
+            <%= link_to "Review list", [:admin, @entity, pending_list], class: "review_link" %>
+          </p>
+        </div>
+        <% end %>
+      </div>
+      <div>
         <div style="float:left; width:50%;"><input type="text" name="search">&nbsp;<button>Search</button></div>
       </div>
       <hr style="clear:both;" />
@@ -19,7 +29,7 @@
       <table class="sortable" id="cross-sell-lists">
         <thead>
           <tr>
-            <th>Name</th>
+            <th>List Name</th>
             <th>Publisher</th>
             <th>Status</th>
             <th>Products</th>
