@@ -266,6 +266,7 @@ describe "Manage cross selling lists" do
       supplier_row.uncheck
 
       click_button("Update List", match: :first)
+      # KXM remove doesn't seem to be working in the test suite, though it works on the site
       expect(page.all('table#cross-sell-list-products tbody tr').count).to eql(0)
     end
 
@@ -296,6 +297,7 @@ describe "Manage cross selling lists" do
       category_row.uncheck
 
       click_button("Update List", match: :first)
+      # KXM remove doesn't seem to be working in the test suite, though it works on the site
       expect(page.all('table#cross-sell-list-products tbody tr').count).to eql(0)
     end
 

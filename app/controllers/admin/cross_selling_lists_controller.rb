@@ -191,7 +191,7 @@ class Admin::CrossSellingListsController < AdminController
     submitted_supplier_prods = get_prods_from_suppliers(params.fetch(:suppliers, []))
     submitted_category_prods = get_prods_from_categories(params.fetch(:categories, []).map(&:to_i), scoped_products)
 
-    # fetch the ids of those selected on request
+    # fetch the ids of those previously selected
     selected_supplier_prods  = get_prods_from_suppliers(params.fetch(:selected_suppliers, []))
     selected_category_prods  = get_prods_from_categories(params.fetch(:selected_categories, []), scoped_products)
 
