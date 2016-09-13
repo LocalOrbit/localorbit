@@ -181,11 +181,11 @@ class Market < ActiveRecord::Base
     scope
   end
 
-  def featured_promotion(buyer)
+  def featured_promotion(buyer, current_delivery)
     promotion = promotions.active.first
     product = promotion.try(:product)
 
-    if product.present? && product.available_inventory > 0 && product.prices_for_market_and_organization(self, buyer).any?
+    if product.present? && product.organization.active? && current_delivery.object.delivery_schedule.products.include?(product) && product.available_inventory > 0 && product.prices_for_market_and_organization(self, buyer).any?
       promotion
     else
       nil
