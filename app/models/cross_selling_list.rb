@@ -9,16 +9,12 @@ class CrossSellingList < ActiveRecord::Base
 
   # KXM Relate X-Sell to Organization and remove polymorphic references...
   # Eventually, a list may reference any Organization of type 'S' or 'M' (supplier orgs or market orgs)
-  # belongs_to :organization, -> { where(type: 'S').or(type: 'M') } # ...or something like that
+  # belongs_to :organization, -> { where("type IN ?", ('S','M') } # ...or something like that
 
   belongs_to :entity, polymorphic: true
 
   belongs_to :parent, class_name: "CrossSellingList"
-  has_many :children, class_name: "CrossSellingList", foreign_key: "parent_id" do
-    def active
-      where(deleted_at: nil)
-    end
-  end
+  has_many :children, class_name: "CrossSellingList", foreign_key: "parent_id"
 
   has_many :cross_selling_list_products, inverse_of: :cross_selling_list
   has_many :products, through: :cross_selling_list_products do
@@ -39,6 +35,7 @@ class CrossSellingList < ActiveRecord::Base
   scope :published, -> { where("published_at IS NOT NULL", "status = Published") }
   scope :pending, -> { where(creator: false, status: "Pending") }
   scope :creator, -> { where(creator: true) }
+  scope :active, -> { where(deleted_at: nil) }
 
   def statuses
     if creator || new_record? then
@@ -59,6 +56,18 @@ class CrossSellingList < ActiveRecord::Base
   def manage_status(parent_status)
     update!(status: "Revoked") if parent_status == "Inactive" && status != "Revoked"
     update!(status: "Pending") if parent_status == "Published" && (status == "Revoked" || status == "Draft")
+  end
+
+  def manage_dates(status)
+    case status
+    when "Revoked"
+      update!(deleted_at: Time.now) if deleted_at.nil?
+    when "Published"
+      update!(published_at: Time.now) if published_at.nil?
+    else
+      update!(deleted_at: nil)
+    end
+
   end
 
   # Business had some different ideas about status names, 
@@ -94,17 +103,6 @@ class CrossSellingList < ActiveRecord::Base
 
   def is_master_list?
   	parent_id.nil?
-  end
-
-  # KXM Active? is likely without good use, at least in this implementation
-  def active?
-  	# Master lists are active if published and not deleted
-    return parent_id.blank? && deleted_at.blank? && published?
-
-  	# Sublists are active if published and not deleted AND master list is active
-    return parent_id.present? && deleted_at.blank? && parent.active? && published?
-
-    false
   end
 
   def pending?

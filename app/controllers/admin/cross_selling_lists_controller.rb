@@ -6,12 +6,12 @@ class Admin::CrossSellingListsController < AdminController
   before_action :require_self_enabled_cross_selling, except: :index
 
   def index
-    @cross_selling_lists = @entity.cross_selling_lists.creator
+    @cross_selling_lists = @entity.cross_selling_lists.creator.order(:name)
   end
 
   def subscriptions
     # This processing path will be very similar to, but different from index
-    @cross_selling_subscriptions = @entity.cross_selling_lists.subscriptions
+    @cross_selling_subscriptions = @entity.cross_selling_lists.subscriptions.order(:name)
   end
 
   def show
@@ -172,12 +172,14 @@ class Admin::CrossSellingListsController < AdminController
     target = get_child(parent, id_hash)
     target.update_attribute(:name, parent.name) if target.pending?
     target.manage_status(parent.status)
+    target.manage_dates(status)
     target.update_attributes(params)
   end
 
   def delete_list(parent, id_hash, params)
     target = get_child(parent, id_hash)
-    target.manage_status(parent.status)
+    target.manage_status("Inactive") # This triggers 'Revoked' on target
+    target.manage_dates(status)
     target.update_attributes(params)
     target.soft_delete
   end
