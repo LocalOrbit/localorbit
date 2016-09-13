@@ -58,4 +58,7 @@ class OrderDecorator < Draper::Decorator
     delivery.deliver_on.strftime("%m/%d/%Y")
   end
 
+  def display_buyer_delivery_date
+    delivery.buyer_deliver_on.strftime("%m/%d/%Y") || delivery.deliver_on.strftime("%m/%d/%Y")
+  end
 end
