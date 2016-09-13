@@ -1,10 +1,12 @@
-<% if list.children.active.count > 0 then %>
-  <ul style="list-style-type:none; padding:0">
-  <% list.children.active.includes(:entity).each do |c| %>
-    <li style="padding:0 0 6px 0">
-      <%= c.entity.name %><br />
-      <span style="padding-left:6px">Status: <span style="font-style:italic"><%= c.status %></span>
-      <%= ", #{c.products.active.count} of #{c.products.count} products active" if c.status != "Pending" %></span>
+<% if list.children.count > 0 then %>
+  <ul class="subscriber-list">
+  <% list.children.includes(:entity).each do |c| %>
+    <li>
+      <span class="subscriber-name"><%= c.entity.name %></span><br />
+      <span class="subscriber-status-line">
+        Status: <span class="subscriber-status"><%= c.status %></span>
+        <span class="subscriber-products"><%= ", #{c.products.active.count} of #{c.products.count} products active" if c.status != "Pending" %></span>
+      </span>
     </li>
   <% end %>
   </ul>

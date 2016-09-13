@@ -68,6 +68,7 @@ body.controller-cross_selling_lists{
       }
     }
   }
+
   .help-text{
     font-family: 'Source Sans Pro', sans-serif;
     font-size: .92em;
@@ -126,27 +127,76 @@ body.controller-cross_selling_lists{
     }
   }
 
-  /* This block may be obsolete... */
-  .product-list{
-    padding: 10px;
-    min-height:100%;
+  // The list of list subscribers on the index page list table
+  .subscriber-list{
+    list-style-type: none;
+    padding: 0;
 
-    .product-listing{
-      display: block;
-      margin-bottom: 0px;
+    li{
+      padding:0 0 6px 0;
 
-      .product-details-container{
-        float: left;
-        width: 88%;
-        padding-right: 0;
+      .subscriber-name{
+        color: #808080;
+        font-weight: 600;
       }
 
-      .product-pricing{
-        display: inline-block;
-        float: right;
-        width: 8%;
+      .subscriber-status-line{
+        padding-left:6px;
+
+        .subscriber-status{
+          font-weight: 600;
+        }
+
+        .subscriber-products{
+          font-style: italic;
+        }
       }
     }
   }
+
+  #tabs{
+    .bound-list{
+      border-width: 0 1px 1px 1px;
+    }
+    .ui-widget-content{
+      border-color-top: #FFFFFF;
+    }
+    .ui-tabs-nav .ui-state-default a{
+      background: #F2F2F2;
+      color: #808080;
+    }
+    .ui-tabs-nav .ui-state-active{
+      border-width:1px 1px 0;
+      a {
+        background: #FFFFFF;
+        color: #000000;
+        // border-width:1px 1px 0;
+        border-width: inherit;
+      }
+    }
+  }
+
+  /* This block may be obsolete... */
+  // .product-list{
+  //   padding: 10px;
+  //   min-height:100%;
+
+  //   .product-listing{
+  //     display: block;
+  //     margin-bottom: 0px;
+
+  //     .product-details-container{
+  //       float: left;
+  //       width: 88%;
+  //       padding-right: 0;
+  //     }
+
+  //     .product-pricing{
+  //       display: inline-block;
+  //       float: right;
+  //       width: 8%;
+  //     }
+  //   }
+  // }
 
 }
