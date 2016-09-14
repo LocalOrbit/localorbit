@@ -19,6 +19,7 @@ class Product < ActiveRecord::Base
   belongs_to :unit
   belongs_to :external_product, inverse_of: :product
   belongs_to :general_product
+  belongs_to :promotion, inverse_of: :product
   default_scope { includes(:general_product) }
 
   # transient properties for conveniently adding sibling (product) units

@@ -17,6 +17,6 @@ class AdminController < ApplicationController
 
   def lookup_manageable_user
     @user = User.find(params[:id])
-    render_404 unless current_user.can_manage_user?(@user)
+    render_404 unless current_user.can_manage_user?(@user) || (current_user.market_manager? && !Pundit.policy!(current_user, :all_supplier).index?)
   end
 end
