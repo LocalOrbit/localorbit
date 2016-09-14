@@ -21,8 +21,8 @@
   <% else %>
     <%= render "header" %>
     <% if @cross_selling_lists.empty? %>
-    <div class='action_box'>
-      <p class="messaging">
+      <div class='action_box column column--full'>
+        <p class="messaging">
           <span class="message">You haven't created any Cross Selling lists yet...</span><br />
           Create a list of products to enable other markets to sell products from your market on your behalf
         </p>
@@ -37,28 +37,28 @@
         <%= form_tag [:new, :admin, @entity, :cross_selling_list], method: :get do submit_tag "Add Cross Sell List", class: "pull-right" end %>
       </div>
       <hr style="clear:both;" />
-    <% end %>
 
-    <div class="table-wrapper">
-      <table class="sortable" id="cross-sell-lists">
-        <thead>
-          <tr>
-            <th>Name</th>
-            <th>Subscribers</th>
-            <th>Status</th>
-          </tr>
-        </thead>
-        <tbody>
-        <% @cross_selling_lists.each do |list| %>
-          <tr>
-            <td class="cross-sell-list-name"><%= link_to list.name, [:admin, @entity, list] %></td>
-            <td class="cross-sell-list-subscribers"><%= render partial: "subscribers", locals:{list: list} %></td>
-            <td class="cross-sell-list-status"><%= list.status %></td>
-          </tr>
-        <% end %>
-        </tbody>
-      </table>
-    </div>
+      <div class="table-wrapper">
+        <table class="sortable" id="cross-sell-lists">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Subscribers</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody>
+          <% @cross_selling_lists.each do |list| %>
+            <tr>
+              <td class="cross-sell-list-name"><%= link_to list.name, [:admin, @entity, list] %></td>
+              <td class="cross-sell-list-subscribers"><%= render partial: "subscribers", locals:{list: list} %></td>
+              <td class="cross-sell-list-status"><%= list.status %></td>
+            </tr>
+          <% end %>
+          </tbody>
+        </table>
+      </div>
+    <% end %>
   <% end %>
   </div>
 </div>
