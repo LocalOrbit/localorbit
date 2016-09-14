@@ -39,7 +39,7 @@
             <tr>
               <td class="supplier-name"><%= slp.product.organization.name %></td>
               <td class="category-name"><%= slp.product.category.name %></td>
-              <td class="product-name"><%= slp.product.name %><%= " (#{slp.product.unit.singular})" %></td>
+              <td class="product-name"><%= slp.product.name %> (<%= "#{slp.product.unit.singular}" %><%= " - #{slp.product.unit_description}" if !slp.product.unit_description.blank? %>)</td>
               <% if !@cross_selling_list.creator %><th class="product-active"><%= yes_no(slp.active)  %></th><% end %>
             </tr>
           <% end %>

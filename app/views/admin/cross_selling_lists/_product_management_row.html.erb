@@ -6,6 +6,7 @@
 
   <td class="product-unit-name">
     <%= "#{product.unit.singular}" %>
+    <%= " - #{product.unit_description}" if !product.unit_description.blank? %>
   </td>
 
   <td>
