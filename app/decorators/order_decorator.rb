@@ -57,5 +57,4 @@ class OrderDecorator < Draper::Decorator
   def delivery_date
     delivery.deliver_on.strftime("%m/%d/%Y")
   end
-
 end

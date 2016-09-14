@@ -277,7 +277,7 @@ feature "sending invoices" do
       expect(page).not_to have_content(market2_order4.order_number)
       expect(page).to have_content(market2_order5.order_number)
       expect(page).to have_content(market2_order6.order_number)
-      expect(page).not_to have_content(market2_order7.order_number)
+      expect(page).to have_content(market2_order7.order_number)
 
       fill_in "q_placed_at_date_gteq", with: 6.weeks.ago.to_date
       click_button "Filter"
