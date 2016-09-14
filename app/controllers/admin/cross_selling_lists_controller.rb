@@ -161,19 +161,25 @@ class Admin::CrossSellingListsController < AdminController
       new_list.parent_id = id_hash[:parent_id]
       new_list.save
       new_list.update_attributes(params)
+      MarketMailer.delay.cross_selling_list(parent.entity, new_list) if new_list.status == "Pending"
     else
       target.update_attribute(:deleted_at, nil)
       target.manage_status(parent.status)
       target.update_attributes(params)
+      MarketMailer.delay.cross_selling_list(parent.entity, new_list) if new_list.status == "Pending"
     end
   end
 
   def update_list(parent, id_hash, params)
     target = get_child(parent, id_hash)
+    starting_status = target.status
+
     target.update_attribute(:name, parent.name) if target.pending?
     target.manage_status(parent.status)
     target.manage_dates(status)
     target.update_attributes(params)
+
+    MarketMailer.delay.cross_selling_list(parent.entity, target) if target.status == "Pending" && starting_status == "Draft"
   end
 
   def delete_list(parent, id_hash, params)
