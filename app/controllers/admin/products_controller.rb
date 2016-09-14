@@ -129,7 +129,6 @@ module Admin
         :use_simple_inventory, :simple_inventory, :use_all_deliveries,
         :unit_description,
         :aws_image_url,
-        :rotation,
         delivery_schedule_ids: [],
         sibling_id: [],
         sibling_unit_id: [],
