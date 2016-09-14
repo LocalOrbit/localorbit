@@ -42,4 +42,3 @@ exclude_paths:
 - spec/
 - vendor/
 - "app/assets/javascripts/bootstrap-colorpicker.js"
-
