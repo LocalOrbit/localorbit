@@ -45,9 +45,28 @@
 //= require plugins/media_manager.min.js
 //= require plugins/tables.min.js
 //= require plugins/urls.min.js
+//= require s3_direct_upload
+
 //
 //= require_tree .
 //= stub sticky-headers
 //= stub resolution
 //= stub synchronousRemote
 //= stub roll_your_own_market
+
+$(function() {
+    $('#s3_uploader').S3Uploader({
+        remove_completed_progress_bar: false,
+        progress_bar_target: $('#uploads_container')
+    });
+
+    $('#s3_uploader').bind('s3_upload_failed', function(e, content) {
+        return alert(content.filename + ' failed to upload. Error: ' + content.error_thrown);
+    });
+
+    $('#s3_uploader').bind('s3_upload_complete', function(e, content) {
+        $('#aws_url').val(content.url);
+        $('#product_img').html('<img src="'+content.url+'" />');
+        $('.upload').hide();
+    });
+});

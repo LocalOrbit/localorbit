@@ -73,6 +73,8 @@ gem "pundit"
 gem 'httparty'
 gem 'omniauth-stripe-connect'
 
+gem 's3_direct_upload', :git => 'https://github.com/waynehoover/s3_direct_upload.git'
+
 gem 'constructor'
 gem 'tabulator', :git => 'https://github.com/dcrosby42/tabulator.git'
 gem 'rschema', :git => 'https://github.com/tomdalling/rschema.git'
@@ -109,8 +111,8 @@ group :development do
   gem 'quiet_assets'
   gem 'aws-sdk'
   gem 'rails_view_annotator'
-  gem 'unicorn'
   gem 'mailcatcher'
+  gem 'puma'
 end
 
 group :development, :test do

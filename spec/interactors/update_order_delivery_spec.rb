@@ -13,6 +13,7 @@ describe UpdateOrderDelivery do
   context "saving successfully" do
     it "saves the new delivery on the order" do
       expect(order).to receive(:valid?).and_return(true)
+      expect(order).to receive(:valid?).and_return(true)
       expect(order).to receive(:save).and_return(true)
       UpdateOrderDelivery.perform(user: user, order: order, delivery_id: delivery.id)
     end
