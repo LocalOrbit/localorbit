@@ -7,7 +7,7 @@ module CrossSellingListsHelper
       current_status = "This list has been <span style='font-weight:600'>#{@cross_selling_list.translate_status(@cross_selling_list.status)}</span>. "
       visibility_target = ""
       visibility_condition = ""
-      product_visibility = "You may still edit product visibility, but products will only appear in your catalog if the Publisher re-enables the list."
+      product_visibility = "You may still edit product visibility for this list, but products will only appear in your catalog if the Publisher re-enables the list."
 
     else
       # Otherwise, content is subject to whether the user is the list creator

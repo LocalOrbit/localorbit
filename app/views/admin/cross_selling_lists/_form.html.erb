@@ -2,7 +2,7 @@
   <div class="row row--field">
     <div class="field column column--half column--guttered">
       <%= list_fields.label :name, "List Name" %>
-      <span class="help-text">This is the name people will use to identify your list of cross sold items.</span>
+      <span class="help-text">This is the name Subscribers will use to identify your list of cross sold items.</span>
       <%= list_name(list_fields) %>
     </div
     ><div class="field column column--half column--guttered">
@@ -17,7 +17,7 @@
 
     <% if @cross_selling_list.display_subscribers? %>
       <%= list_fields.label :children_ids, "List Visibility" %>
-      <span class="help-text">Control who may view, subscribe, or sell your products. Contact admin if you don't see who you're looking for.</span>
+      <span class="help-text">Control who may view, subscribe, or sell your products. Contact Local Orbit if you don't see who you're looking for.</span>
 
       <% current_market.cross_sells.each do |csl_market| %>
         <%= check_box_tag "cross_selling_list[children_ids][]", csl_market.id, @cross_selling_list.children.active.map{|list| list.entity_id}.include?(csl_market.id) %>&nbsp;<%= csl_market.name %><br />
