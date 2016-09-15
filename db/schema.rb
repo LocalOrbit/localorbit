@@ -392,8 +392,6 @@ ActiveRecord::Schema.define(version: 20160902192604) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "legacy_id"
-    t.integer  "market_id"
-    t.integer  "organization_id"
   end
 
   add_index "lots", ["expires_at"], name: "index_lots_on_expires_at", using: :btree
@@ -527,8 +525,8 @@ ActiveRecord::Schema.define(version: 20160902192604) do
     t.boolean  "subscribed",                                             default: false
     t.boolean  "routing_plan",                                           default: false
     t.integer  "organization_id"
-    t.boolean  "add_item_pricing"
     t.boolean  "self_enabled_cross_sell",                                default: false
+    t.boolean  "add_item_pricing",                                       default: true
   end
 
   add_index "markets", ["name"], name: "index_markets_on_name", using: :btree
