@@ -32,8 +32,6 @@
       </div>
     <% else %>
       <div style="clear:both; padding-top:1em;">
-        <%# KXM Enable search once an effort is made to implement it %>
-        <!-- div style="float:left; width:50%;"><input type="text" name="search">&nbsp;<button>Search</button></div -->
         <%= form_tag [:new, :admin, @entity, :cross_selling_list], method: :get do submit_tag "Add Cross Sell List", class: "pull-right" end %>
       </div>
       <hr style="clear:both;" />

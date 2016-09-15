@@ -7,5 +7,4 @@
       </ul>
       <%= form_tag [:admin, @entity, :toggle_self_enabled_cross_sell], method: :patch do submit_tag "Turn off Cross Selling", style: "float:right; top:0;" end %>
     </div>
-    <%# KXM There's a better way to clear both, right? %>
-    <hr style="clear:both" />
+    <hr class="clearfix" />
