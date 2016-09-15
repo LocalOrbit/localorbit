@@ -50,7 +50,7 @@ describe "Manage cross selling" do
         expect(page).to have_css(".tabs", text: "Cross Sell")
       end
 
-      it "shows a list of cross selling markets" do
+      xit "shows a list of cross selling markets" do
         within ".tabs" do
           click_link "Cross Sell"
         end
@@ -59,7 +59,7 @@ describe "Manage cross selling" do
         expect(page).to_not have_content(not_cross_selling_market.name)
       end
 
-      it "saves changes to cross selling markets" do
+      xit "saves changes to cross selling markets" do
         within ".tabs" do
           click_link "Cross Sell"
         end
@@ -112,7 +112,7 @@ describe "Manage cross selling" do
         expect(page).to have_css(".tabs", text: "Cross Sell")
       end
 
-      it "shows a list of cross selling markets" do
+      xit "shows a list of cross selling markets" do
         within ".tabs" do
           click_link "Cross Sell"
         end
@@ -123,7 +123,7 @@ describe "Manage cross selling" do
         expect(page).to_not have_content(not_cross_selling_market.name)
       end
 
-      it "saves changes to cross selling markets" do
+      xit "saves changes to cross selling markets" do
         within ".tabs" do
           click_link "Cross Sell"
         end
