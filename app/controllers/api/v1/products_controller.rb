@@ -75,7 +75,7 @@ module Api
           with_available_inventory(current_delivery.deliver_on).
           priced_for_market_and_buyer(current_market, current_organization).
           with_visible_pricing.
-          select(:general_product_id).
+          select(:id, :general_product_id).
           to_sql
 
         GeneralProduct.joins("JOIN (#{catalog_products} UNION #{cross_sold_products}) p_child 
