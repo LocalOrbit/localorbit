@@ -80,6 +80,9 @@ class CrossSellingList < ActiveRecord::Base
     when "Published" # Published is translated only for subscribers
       creator == true ? status : "Active"
 
+    when "Draft" # Draft is translated for Subscribers, though the translation ought only appear on Publishers index page
+      creator == false ? "Unreleased" : status
+
     else # All remaining statuses remain intact
       status
 
@@ -127,6 +130,14 @@ class CrossSellingList < ActiveRecord::Base
     else
       published_date = params[:published_date] ||= Time.now
       publish!(published_date) if status == "Published"
+    end
+  end
+
+  def display_product_overview?
+    if creator
+      true
+    else
+      status != "Pending" && status != "Draft"
     end
   end
 

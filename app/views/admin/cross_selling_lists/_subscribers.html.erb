@@ -4,8 +4,8 @@
     <li>
       <span class="subscriber-name"><%= c.entity.name %></span><br />
       <span class="subscriber-status-line">
-        Status: <span class="subscriber-status"><%= c.status %></span>
-        <span class="subscriber-products"><%= ", #{c.products.active.count} of #{c.products.count} products active" if c.status != "Pending" %></span>
+        Status: <span class="subscriber-status"><%= c.translate_status(c.status) %></span>
+        <span class="subscriber-products"><%= ", #{c.products.active.count} of #{c.products.count} products active" if c.display_product_overview? %></span>
       </span>
     </li>
   <% end %>
