@@ -13,17 +13,15 @@
     </div>
   </div>
   <div class="row row--field">
-    <div class="field column column--half column--guttered">
+    <div id="cross_selling_target_markets" class="field column column--half column--guttered">
 
-    <% if @cross_selling_list.creator || @cross_selling_list.new_record? %>
+    <% if @cross_selling_list.display_subscribers? %>
       <%= list_fields.label :children_ids, "List Visibility" %>
       <span class="help-text">Control who may view, subscribe, or sell your products. Contact admin if you don't see who you're looking for.</span>
 
       <% current_market.cross_sells.each do |csl_market| %>
-      <%= check_box_tag "cross_selling_list[children_ids][]", csl_market.id, @cross_selling_list.children.active.map{|list| list.entity_id}.include?(csl_market.id) %>&nbsp;<%= csl_market.name %><br />
+        <%= check_box_tag "cross_selling_list[children_ids][]", csl_market.id, @cross_selling_list.children.active.map{|list| list.entity_id}.include?(csl_market.id) %>&nbsp;<%= csl_market.name %><br />
       <% end %>
-
-      <%#= list_fields.select :children_ids, options_for_select(current_market.cross_sells.map {|market| [market.name, market.id] }, @cross_selling_list.children.active.map{|list| list.entity_id} ), { :prompt => "Select market(s)" }, { :multiple => true, :class => "column--full" } %>
     <% end %>
 
     </div>

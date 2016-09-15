@@ -130,6 +130,10 @@ class CrossSellingList < ActiveRecord::Base
     end
   end
 
+  def display_subscribers?
+    creator || new_record?
+  end
+
   def subscribers_list
     children.active.includes(:entity).map{|c| c.entity.name}.join(", ")
   end
