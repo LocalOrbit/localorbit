@@ -1,5 +1,0 @@
-<h1>Welcome!</h1>
-
-<h2>You have a new Cross Selling list waiting for you!</h2>
-
-<p><%= @market.name %> has shared the cross selling list '<%= @cross_selling_list.name %>' with you. Visit <%= link_to "your market", admin_market_cross_selling_list_url(@target, @cross_selling_list, host: (@target ? @target.domain : "app.#{Figaro.env.domain}")) %> to activate your new list and begin selling your new products.</p>

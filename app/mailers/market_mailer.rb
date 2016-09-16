@@ -119,19 +119,4 @@ class MarketMailer < BaseMailer
       )
     end
   end
-
-  def cross_selling_list(from_market, cross_selling_list)
-    @market = from_market
-    @cross_selling_list = cross_selling_list
-    @target = cross_selling_list.entity
-
-    recipients = @target.managers.map(&:pretty_email)
-
-    if recipients.any?
-      mail(
-        to: recipients,
-        subject: "Pending cross selling list"
-      )
-    end
-  end
 end
