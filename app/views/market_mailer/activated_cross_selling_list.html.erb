@@ -1,0 +1,16 @@
+<p>Hello <%= @publisher.contact_name %>,
+
+<h2><%= @subscriber.name %> has activated your Cross Selling List!</h2>
+
+<p><%= @subscriber.name %> has activated the cross selling list '<%= @parent_list.name %>' you shared with them. Your shared products are now available to be sold by <%= @subscriber.name %>.</p>
+
+<div class="lo_call_to_action">
+  <a class="lo_button lo_button_large" href="<%= root_url(host: @publisher.domain) %>">Visit your market</a>
+  <p>
+    If clicking the button doesn't work, right click it and copy the link.<br>
+    After you've copied it, paste it into a new browser window.
+  </p>
+</div>
+
+
+

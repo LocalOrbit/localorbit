@@ -25,6 +25,17 @@ class SendCrossSellMessages
       end
     end
 
+    when "Published"
+      MarketMailer.delay.activated_cross_selling_list(subscriber_list.entity, subscriber_list.parent) if !creator
+    end
+
+    when "Declined"
+      MarketMailer.delay.declined_cross_selling_list(subscriber_list.entity, subscriber_list.parent)
+    end
+
+    when "Inactive"
+    end
+
   def rollback
   end
 end
