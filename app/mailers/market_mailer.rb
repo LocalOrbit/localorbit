@@ -119,4 +119,5 @@ class MarketMailer < BaseMailer
   def filter_for_testing(recipients, testing = false)
     recipients if testing == false
     recipients - recipients.select{|recipient| recipient.match(/Eri/)} - recipients.select{|recipient| recipient.match(/Bryan/)}
+  end
 end

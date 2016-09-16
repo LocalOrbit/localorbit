@@ -184,7 +184,7 @@ class Admin::CrossSellingListsController < AdminController
   end
 
   def update_list(cross_selling_list, id_hash = {}, params = {})
-    if creator
+    if cross_selling_list.creator
       update_parent_list(cross_selling_list, id_hash, params)
     else
       update_subscribing_list(cross_selling_list)

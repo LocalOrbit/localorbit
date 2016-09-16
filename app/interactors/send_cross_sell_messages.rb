@@ -23,18 +23,17 @@ class SendCrossSellMessages
         # create a new, published list (this is the zebra)
         MarketMailer.delay.pending_cross_selling_list(publisher, subscriber_list)
       end
-    end
 
     when "Published"
-      MarketMailer.delay.activated_cross_selling_list(subscriber_list.entity, subscriber_list.parent) if !creator
-    end
+      MarketMailer.delay.activated_cross_selling_list(subscriber_list.entity, subscriber_list.parent) if !subscriber_list.creator
 
     when "Declined"
       MarketMailer.delay.declined_cross_selling_list(subscriber_list.entity, subscriber_list.parent)
-    end
 
     when "Inactive"
+    else
     end
+  end
 
   def rollback
   end
