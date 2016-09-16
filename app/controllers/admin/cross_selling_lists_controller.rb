@@ -28,6 +28,10 @@ class Admin::CrossSellingListsController < AdminController
     @categories = Category.for_products(@scoped_products).includes(:products).order(:name)
     @selected_categories = get_selected_categories(@categories, @selected_products, @cross_selling_list.creator, @scoped_products)
 
+    # Since adding 'distinct' to get_scoped_products, ordering in the original definition of scoped_products (above)
+    # was borking things up when also ordering by supplier or category name.  Avoid the problem by ordering here
+    @scoped_products = @scoped_products.order(:name)
+
     @selected_list_prods = @cross_selling_list.cross_selling_list_products.includes(product: [:organization, :category])
 
   end
@@ -218,7 +222,7 @@ class Admin::CrossSellingListsController < AdminController
 
   def get_scoped_products(cross_selling_list, entity)
     if cross_selling_list.creator then
-      scoped_products = entity.supplier_products.visible.order(:name)
+      scoped_products = entity.supplier_products.visible.distinct
     else
       scoped_products = cross_selling_list.products
     end
@@ -234,7 +238,6 @@ class Admin::CrossSellingListsController < AdminController
     selected_category_prods  = get_prods_from_categories(params.fetch(:selected_categories, []), scoped_products)
 
     selected_prods = (cross_selling_list_params["product_ids"] || [])
-    # binding.pry
 
     # Modify based on submitted vs pre-selected suppliers
     to_add = (submitted_supplier_prods - selected_supplier_prods) + (submitted_category_prods - selected_category_prods)
