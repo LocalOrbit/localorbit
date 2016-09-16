@@ -126,6 +126,7 @@ class Admin::CrossSellingListsController < AdminController
         update_list(@cross_selling_list)
       end
 
+      redirect_to [:admin, @entity, @cross_selling_list], notice: "Sucessfully updated '#{@cross_selling_list.name}'"
     else
       flash.now.alert = "Could not update Cross Selling List"
       render :show
@@ -151,7 +152,7 @@ class Admin::CrossSellingListsController < AdminController
     end
   end
 
-    def create_list(parent_list, id_hash, params)
+  def create_list(parent_list, id_hash, params)
     subscriber_list = get_subscribing_list(parent_list, id_hash)
     if subscriber_list.blank?
       subscriber_list = parent_list.dup
@@ -172,14 +173,6 @@ class Admin::CrossSellingListsController < AdminController
     SendCrossSellMessages.perform({:publisher => parent_list.entity, :subscriber_list => subscriber_list})
   end
 
-  def update_list(cross_selling_list, id_hash = {}, params = {})
-    if creator
-      update_parent_list(cross_selling_list, id_hash, params)
-    else
-      update_subscribing_list(cross_selling_list)
-    end
-  end
-
   def delete_list(parent_list, id_hash, params)
     subscriber_list = get_subscribing_list(parent_list, id_hash)
     subscriber_list.manage_status("Inactive") # This triggers 'Revoked' on subscriber_list
@@ -188,6 +181,14 @@ class Admin::CrossSellingListsController < AdminController
     subscriber_list.soft_delete
 
     SendCrossSellMessages.perform({:publisher => parent_list.entity, :subscriber_list => subscriber_list})
+  end
+
+  def update_list(cross_selling_list, id_hash = {}, params = {})
+    if creator
+      update_parent_list(cross_selling_list, id_hash, params)
+    else
+      update_subscribing_list(cross_selling_list)
+    end
   end
 
   protected
