@@ -91,7 +91,7 @@ class Admin::CrossSellingListsController < AdminController
       @cross_selling_list.manage_publication!(params_with_defaults)
 
       # Upsert children (if required)
-      if @cross_selling_list.cascade_update?
+      if @cross_selling_list.cascade_update? # Only possible for Publishers
 
         # This serves to update all child product lists
         submitted_products = {'product_ids' => cross_selling_list_params[:product_ids]}
@@ -121,9 +121,11 @@ class Admin::CrossSellingListsController < AdminController
         (all_subscribers - existing_subscribers).each do |list_ids|
           update_list(@cross_selling_list, list_ids, submitted_products)
         end
+      else
+        # Subscribers
+        update_list(@cross_selling_list)
       end
 
-      redirect_to [:admin, @entity, @cross_selling_list], notice: "Sucessfully updated '#{@cross_selling_list.name}'"
     else
       flash.now.alert = "Could not update Cross Selling List"
       render :show
@@ -170,7 +172,7 @@ class Admin::CrossSellingListsController < AdminController
     end
   end
 
-  def update_list(parent, id_hash, params)
+  def update_list(parent, id_hash ={}, params = {})
     target = get_child(parent, id_hash)
     starting_status = target.status
 
