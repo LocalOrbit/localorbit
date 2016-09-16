@@ -57,8 +57,8 @@ class MarketMailer < BaseMailer
     @cross_selling_list = cross_selling_list
     @subscriber = cross_selling_list.entity
 
-    # recipients = filter_for_testing(@target.managers.map(&:pretty_email))
-    recipients = ["\"Keith Meisel\" <keith@localorb.it>"]
+    recipients = filter_for_testing(@target.managers.map(&:pretty_email))
+    # recipients = ["\"Keith Meisel\" <keith@localorb.it>"]
 
     if recipients.any?
       mail(
@@ -73,8 +73,8 @@ class MarketMailer < BaseMailer
     @cross_selling_list = cross_selling_list
     @subscriber = cross_selling_list.entity
 
-    # recipients = filter_for_testing(@target.managers.map(&:pretty_email))
-    recipients = ["\"Keith Meisel\" <keith@localorb.it>"]
+    recipients = filter_for_testing(@target.managers.map(&:pretty_email))
+    # recipients = ["\"Keith Meisel\" <keith@localorb.it>"]
 
     if recipients.any?
       mail(
@@ -89,8 +89,8 @@ class MarketMailer < BaseMailer
     @parent_list = parent_list
     @publisher = parent_list.entity
 
-    # recipients = filter_for_testing(@target.managers.map(&:pretty_email))
-    recipients = ["\"Keith Meisel\" <keith@localorb.it>"]
+    recipients = filter_for_testing(@target.managers.map(&:pretty_email))
+    # recipients = ["\"Keith Meisel\" <keith@localorb.it>"]
 
     if recipients.any?
       mail(
@@ -105,8 +105,8 @@ class MarketMailer < BaseMailer
     @parent_list = parent_list
     @publisher = parent_list.entity
 
-    # recipients = filter_for_testing(@target.managers.map(&:pretty_email))
-    recipients = ["\"Keith Meisel\" <keith@localorb.it>"]
+    recipients = filter_for_testing(@target.managers.map(&:pretty_email))
+    # recipients = ["\"Keith Meisel\" <keith@localorb.it>"]
 
     if recipients.any?
       mail(
