@@ -27,8 +27,11 @@ module Admin
             @seller_cc_rate = ::Financials::Pricing.seller_cc_rate(current_market)
           end
           format.csv do
-            @filename = 'products.csv'
-            @products = @products
+            Delayed::Job.enqueue ::CSVExport::CSVProductExportJob.new(current_user, @products)
+            flash[:notice] = "Please check your email for export results."
+            redirect_to admin_products_path
+            #@filename = 'products.csv'
+            #@products = @products
           end
         end
       end

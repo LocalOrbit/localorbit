@@ -36,7 +36,12 @@ class Admin::ReportsController < AdminController
       if @presenter
         respond_to do |format|
           format.html { render "report" }
-          format.csv  { @filename = "report.csv" }
+          format.csv do
+            Delayed::Job.enqueue ::CSVExport::CSVReportExportJob.new(current_user, @presenter)
+            flash[:notice] = "Please check your email for export results."
+            redirect_to admin_reports_path
+            #{ @filename = "report.csv" }
+          end
         end
       else
         render_404
