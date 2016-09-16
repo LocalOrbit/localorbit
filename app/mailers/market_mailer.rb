@@ -52,6 +52,40 @@ class MarketMailer < BaseMailer
     end
   end
 
+  def pending_cross_selling_list(publisher, cross_selling_list)
+    @publisher = @market = publisher
+    @cross_selling_list = cross_selling_list
+    @subscriber = cross_selling_list.entity
+
+    # KXM TESTING ONLY
+    # recipients = @target.managers.map(&:pretty_email)
+    recipients = ["\"Keith Meisel\" <keith@localorb.it>"]
+
+    if recipients.any?
+      mail(
+        to: recipients,
+        subject: "#{@publisher.name} has shared a new Cross Selling List"
+      )
+    end
+  end
+
+  def revoked_cross_selling_list(publisher, cross_selling_list)
+    @publisher = @market = publisher
+    @cross_selling_list = cross_selling_list
+    @subscriber = cross_selling_list.entity
+
+    # KXM TESTING ONLY
+    # recipients = @target.managers.map(&:pretty_email)
+    recipients = ["\"Keith Meisel\" <keith@localorb.it>"]
+
+    if recipients.any?
+      mail(
+        to: recipients,
+        subject: "Cross Selling List '#{@cross_selling_list.name}' is no longer available"
+      )
+    end
+  end
+
   def cross_selling_list(from_market, cross_selling_list)
     @market = from_market
     @cross_selling_list = cross_selling_list
