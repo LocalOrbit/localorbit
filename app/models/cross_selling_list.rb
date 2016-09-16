@@ -134,11 +134,8 @@ class CrossSellingList < ActiveRecord::Base
   end
 
   def display_product_overview?
-    if creator
-      true
-    else
-      status != "Pending" && status != "Draft"
-    end
+    creator if creator
+    status if statuses.to_a.include?(status)
   end
 
   def display_subscribers?
