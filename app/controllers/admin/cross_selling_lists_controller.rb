@@ -173,15 +173,11 @@ class Admin::CrossSellingListsController < AdminController
   end
 
   def update_list(parent, id_hash ={}, params = {})
-    target = get_subscribing_list(parent, id_hash)
-    starting_status = target.status
-
-    target.update_attribute(:name, parent.name) if target.pending?
-    target.manage_status(parent.status)
-    target.manage_dates(status)
-    target.update_attributes(params)
-
-    MarketMailer.delay.cross_selling_list(parent.entity, target) if target.status == "Pending" && starting_status == "Draft"
+    if creator
+      update_parent_list(cross_selling_list, id_hash, params)
+    else
+      update_subscribing_list(cross_selling_list)
+    end
   end
 
   def delete_list(parent, id_hash, params)
@@ -193,6 +189,24 @@ class Admin::CrossSellingListsController < AdminController
   end
 
   protected
+
+  def update_parent_list(parent_list, id_hash, params)
+    subscriber_list = get_subscribing_list(parent_list, id_hash)
+    starting_status = subscriber_list.status
+
+    # This updates the list
+    subscriber_list.update_attribute(:name, parent_list.name) if subscriber_list.pending?
+    subscriber_list.manage_status(parent_list.status)
+    subscriber_list.manage_dates(status)
+
+    # This updates the products
+    subscriber_list.update_attributes(params)
+
+    MarketMailer.delay.cross_selling_list(parent.entity, target) if target.status == "Pending" && starting_status == "Draft"
+  end
+
+  def update_subscribing_list(subscriber_list)
+  end
 
   def get_subscribing_list(parent, id_hash)
     parent.children.where("parent_id = ? AND entity_id = ?", id_hash[:parent_id], id_hash[:entity_id]).first
