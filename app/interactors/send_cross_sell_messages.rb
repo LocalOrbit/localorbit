@@ -10,7 +10,7 @@ class SendCrossSellMessages
     starting_status = context[:starting_status] || ""
 
     case subscriber_list.status
-    when "Revoked" 
+    when "Revoked"
       MarketMailer.delay.revoked_cross_selling_list(publisher, subscriber_list)
 
     when "Pending"
