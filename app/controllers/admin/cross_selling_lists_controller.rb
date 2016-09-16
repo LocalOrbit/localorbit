@@ -173,7 +173,7 @@ class Admin::CrossSellingListsController < AdminController
   end
 
   def update_list(parent, id_hash ={}, params = {})
-    target = get_child(parent, id_hash)
+    target = get_subscribing_list(parent, id_hash)
     starting_status = target.status
 
     target.update_attribute(:name, parent.name) if target.pending?
@@ -185,7 +185,7 @@ class Admin::CrossSellingListsController < AdminController
   end
 
   def delete_list(parent, id_hash, params)
-    target = get_child(parent, id_hash)
+    target = get_subscribing_list(parent, id_hash)
     target.manage_status("Inactive") # This triggers 'Revoked' on target
     target.manage_dates(status)
     target.update_attributes(params)
@@ -194,7 +194,7 @@ class Admin::CrossSellingListsController < AdminController
 
   protected
 
-  def get_child(parent, id_hash)
+  def get_subscribing_list(parent, id_hash)
     parent.children.where("parent_id = ? AND entity_id = ?", id_hash[:parent_id], id_hash[:entity_id]).first
   end
 
