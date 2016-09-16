@@ -151,28 +151,28 @@ class Admin::CrossSellingListsController < AdminController
     end
   end
 
-  def create_list(parent, id_hash, params)
-    target = parent.children.where("parent_id = ? AND entity_id = ?", id_hash[:parent_id], id_hash[:entity_id]).first
-    if target.blank?
-      new_list = parent.dup
-      new_list.entity_id = id_hash[:entity_id]
-      new_list.entity_type = "Market"
-      new_list.creator = false
-      new_list.status = parent.status == "Draft" ? "Draft" : "Pending"
-      new_list.published_at = nil
-      new_list.parent_id = id_hash[:parent_id]
-      new_list.save
-      new_list.update_attributes(params)
-      MarketMailer.delay.cross_selling_list(parent.entity, new_list) if new_list.status == "Pending"
+    def create_list(parent_list, id_hash, params)
+    subscriber_list = get_subscribing_list(parent_list, id_hash)
+    if subscriber_list.blank?
+      subscriber_list = parent_list.dup
+      subscriber_list.entity_id = id_hash[:entity_id]
+      subscriber_list.entity_type = "Market"
+      subscriber_list.creator = false
+      subscriber_list.status = parent_list.status == "Draft" ? "Draft" : "Pending"
+      subscriber_list.published_at = nil
+      subscriber_list.parent_id = id_hash[:parent_id]
+      subscriber_list.save
+      subscriber_list.update_attributes(params)
     else
-      target.update_attribute(:deleted_at, nil)
-      target.manage_status(parent.status)
-      target.update_attributes(params)
-      MarketMailer.delay.cross_selling_list(parent.entity, new_list) if new_list.status == "Pending"
+      subscriber_list.update_attribute(:deleted_at, nil)
+      subscriber_list.manage_status(parent_list.status)
+      subscriber_list.update_attributes(params)
     end
+
+    SendCrossSellMessages.perform({:publisher => parent_list.entity, :subscriber_list => subscriber_list})
   end
 
-  def update_list(parent, id_hash ={}, params = {})
+  def update_list(cross_selling_list, id_hash = {}, params = {})
     if creator
       update_parent_list(cross_selling_list, id_hash, params)
     else
@@ -180,12 +180,14 @@ class Admin::CrossSellingListsController < AdminController
     end
   end
 
-  def delete_list(parent, id_hash, params)
-    target = get_subscribing_list(parent, id_hash)
-    target.manage_status("Inactive") # This triggers 'Revoked' on target
-    target.manage_dates(status)
-    target.update_attributes(params)
-    target.soft_delete
+  def delete_list(parent_list, id_hash, params)
+    subscriber_list = get_subscribing_list(parent_list, id_hash)
+    subscriber_list.manage_status("Inactive") # This triggers 'Revoked' on subscriber_list
+    subscriber_list.manage_dates(status)
+    subscriber_list.update_attributes(params)
+    subscriber_list.soft_delete
+
+    SendCrossSellMessages.perform({:publisher => parent_list.entity, :subscriber_list => subscriber_list})
   end
 
   protected
@@ -202,14 +204,15 @@ class Admin::CrossSellingListsController < AdminController
     # This updates the products
     subscriber_list.update_attributes(params)
 
-    MarketMailer.delay.cross_selling_list(parent.entity, target) if target.status == "Pending" && starting_status == "Draft"
+    SendCrossSellMessages.perform({:publisher => parent_list.entity, :subscriber_list => subscriber_list, :starting_status => starting_status})
   end
 
   def update_subscribing_list(subscriber_list)
+    SendCrossSellMessages.perform({:publisher => subscriber_list.parent.entity, :subscriber_list => subscriber_list})
   end
 
-  def get_subscribing_list(parent, id_hash)
-    parent.children.where("parent_id = ? AND entity_id = ?", id_hash[:parent_id], id_hash[:entity_id]).first
+  def get_subscribing_list(parent_list, id_hash)
+    parent_list.children.where("parent_id = ? AND entity_id = ?", id_hash[:parent_id], id_hash[:entity_id]).first
   end
 
   def get_scoped_products(cross_selling_list, entity)
