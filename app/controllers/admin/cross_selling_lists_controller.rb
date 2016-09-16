@@ -103,7 +103,7 @@ class Admin::CrossSellingListsController < AdminController
         # If the edits are saved successfully then cascade through the related cross selling lists and products...
              all_subscribers = @cross_selling_list.children.map { |l| {parent_id: l.parent_id, entity_id: l.entity_id} }
         existing_subscribers = @cross_selling_list.children.active.map { |l| {parent_id: l.parent_id, entity_id: l.entity_id} }
-        selected_subscribers = cross_selling_list_params[:children_ids].select(&:present?).map { |submitted_id| {parent_id: @cross_selling_list.id, entity_id: submitted_id.to_i} }
+        selected_subscribers = cross_selling_list_params.fetch(:children_ids, []).map { |submitted_id| {parent_id: @cross_selling_list.id, entity_id: submitted_id.to_i} }
          overlap_subscribers = existing_subscribers & selected_subscribers
 
         # Delete those that exist but aren't selected
