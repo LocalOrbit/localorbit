@@ -38,19 +38,9 @@ class CrossSellingList < ActiveRecord::Base
   scope :active, -> { where(deleted_at: nil) }
 
   def statuses
-    if creator || new_record? then
-      {
-        Draft:     "Draft",
-        Published: "Published",
-        Inactive:  "Inactive"
-      }
-    else
-      {
-        Active:    "Published",
-        Inactive:  "Inactive",
-        Declined:  "Declined"
-      }
-    end
+    { Draft: "Draft", Published: "Published", Inactive: "Inactive" } if creator || new_record?
+    { Active: "Published", Inactive: "Inactive", Declined: "Declined" } if status = "Pending"
+    { Active: "Published", Inactive: "Inactive" } if status = "Pending"
   end
 
   def manage_status(parent_status)
