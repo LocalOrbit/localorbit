@@ -86,6 +86,40 @@ class MarketMailer < BaseMailer
     end
   end
 
+  def activated_cross_selling_list(subscriber, parent_list)
+    @subscriber = @market = subscriber
+    @parent_list = parent_list
+    @publisher = parent_list.entity
+
+    # KXM TESTING ONLY
+    # recipients = @target.managers.map(&:pretty_email)
+    recipients = ["\"Keith Meisel\" <keith@localorb.it>"]
+
+    if recipients.any?
+      mail(
+        to: recipients,
+        subject: "#{@subscriber.name} has activated your Cross Selling List"
+      )
+    end
+  end
+
+  def declined_cross_selling_list(subscriber, parent_list)
+    @subscriber = @market = subscriber
+    @parent_list = parent_list
+    @publisher = parent_list.entity
+
+    # KXM TESTING ONLY
+    # recipients = @target.managers.map(&:pretty_email)
+    recipients = ["\"Keith Meisel\" <keith@localorb.it>"]
+
+    if recipients.any?
+      mail(
+        to: recipients,
+        subject: "#{@subscriber.name} has declined your Cross Selling List"
+      )
+    end
+  end
+
   def cross_selling_list(from_market, cross_selling_list)
     @market = from_market
     @cross_selling_list = cross_selling_list
