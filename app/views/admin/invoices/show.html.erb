@@ -399,7 +399,7 @@
         <h1>Invoice</h1>
         <h2>Invoice Number</h2>
         <p class="invoice-num"><%= invoice.order_number %></p><br>
-        <%= "<span class=\"inline-block\"><h2>Delivery Date</h2><p class=\"delivery-date\">#{invoice.delivery_date}</p></span>".html_safe if invoice.delivery_date.present? %>
+        <%= "<span class=\"inline-block\"><h2>Delivery Date</h2><p class=\"delivery-date\">#{invoice.delivery.buyer_deliver_on.strftime("%m/%d/%Y")}</p></span>".html_safe if invoice.delivery.buyer_deliver_on.present? %>
         <%= "<span class=\"inline-block\" style=\"margin-left:15px;\"><h2>Purchase Order #</h2><p class=\"po-num\">#{invoice.payment_note}</p></span>".html_safe if invoice.payment_note.present? %>
         <br><br>
         <div class="invoice-basics">

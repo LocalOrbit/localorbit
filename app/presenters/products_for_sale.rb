@@ -27,7 +27,7 @@ class ProductsForSale
   end
 
   def featured_promotion
-    promotion = @market.featured_promotion(@buyer)
+    promotion = @market.featured_promotion(@buyer, @delivery)
     @featured_promotion ||= promotion.decorate(context: {current_cart: @cart}) if promotion
   end
 

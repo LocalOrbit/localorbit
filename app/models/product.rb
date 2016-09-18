@@ -19,6 +19,7 @@ class Product < ActiveRecord::Base
   belongs_to :unit
   belongs_to :external_product, inverse_of: :product
   belongs_to :general_product
+  belongs_to :promotion, inverse_of: :product
   default_scope { includes(:general_product) }
 
   # transient properties for conveniently adding sibling (product) units
@@ -39,8 +40,9 @@ class Product < ActiveRecord::Base
   dragonfly_accessor :image do
     copy_to(:thumb){|a| a.thumb('150x150#') }
   end
+
   dragonfly_accessor :thumb
-  #define_after_upload_resize(:image, 1200, 1200, thumb: {width: 150, height: 150})
+  define_after_upload_resize(:image, 1200, 1200, thumb: {width: 150, height: 150})
   validates_property :format, of: :image, in: %w(jpg jpeg png gif)
   validates_property :format, of: :thumb, in: %w(jpg jpeg png gif)
 

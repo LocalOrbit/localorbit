@@ -1,0 +1,3 @@
+class OrderMinimumPolicy < ApplicationPolicy
+
+end

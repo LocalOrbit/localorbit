@@ -15,7 +15,8 @@
       buyerInfo: React.PropTypes.string.isRequired,
       useTemplates: React.PropTypes.bool.isRequired,
       supplierId: React.PropTypes.number,
-      orderId: React.PropTypes.number
+      orderId: React.PropTypes.number,
+      orderMinimum: React.PropTypes.string
     },
 
       componentWillMount: function() {
@@ -47,6 +48,7 @@
             useTemplates={this.props.useTemplates}
             supplierOnly={this.props.supplierId > 0}
             orderId={this.props.orderId}
+            orderMinimum={this.props.orderMinimum}
             />);
 
         productTable = (<lo.ProductTable

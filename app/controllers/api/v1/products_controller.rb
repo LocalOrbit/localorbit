@@ -20,9 +20,9 @@ module Api
         order = !session[:order_id].nil? ? Order.find(session[:order_id]) : nil
 
         if order
-          featured_promotion = @order.market.featured_promotion(@order.organization)
+          featured_promotion = @order.market.featured_promotion(@order.organization, current_delivery)
         else
-          featured_promotion = current_market.featured_promotion(current_organization)
+          featured_promotion = current_market.featured_promotion(current_organization, current_delivery)
         end
 
         products = filtered_available_products(@query, @category_ids, @seller_ids, @order)

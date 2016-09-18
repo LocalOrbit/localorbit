@@ -74,6 +74,7 @@ module Admin
         :order_cutoff,
         :require_delivery,
         :require_cross_sell_delivery,
+        :order_minimum,
         :seller_fulfillment_location_id,
         :seller_delivery_start,
         :seller_delivery_end,

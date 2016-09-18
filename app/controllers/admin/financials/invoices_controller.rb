@@ -12,7 +12,7 @@ module Admin::Financials
       else
         base_scope, date_filter_attr = find_base_scope_and_date_filter_attribute
 
-        @search_presenter = OrderSearchPresenter.new(@query_params, current_user, date_filter_attr)
+        @search_presenter = OrderSearchPresenter.new(@query_params, current_user, date_filter_attr, true)
         @q = filter_and_search_orders(base_scope, @query_params, @search_presenter)
 
         @orders = @q.result.page(params[:page]).per(@query_params[:per_page])
