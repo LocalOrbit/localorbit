@@ -6,7 +6,7 @@ describe "Manage cross selling" do
   let!(:cross_selling_market)     { create(:market, allow_cross_sell: true) }
   let!(:not_cross_selling_market) { create(:market) }
 
-  context "for a none-cross selling market" do
+  context "for a non-cross selling market" do
     let!(:market) { create(:market) }
     let!(:organization) { create(:organization, :seller, markets: [market]) }
 
@@ -18,7 +18,7 @@ describe "Manage cross selling" do
       end
 
       it "does not show the cross-sell tab" do
-        expect(page).to_not have_css(".tabs", text: "Cross Sell")
+        expect(page).to_not have_css(".tabs", text: "Admin X-Sell")
       end
     end
 
@@ -30,7 +30,7 @@ describe "Manage cross selling" do
       end
 
       it "does not show the cross-sell tab" do
-        expect(page).to_not have_css(".tabs", text: "Cross Sell")
+        expect(page).to_not have_css(".tabs", text: "Admin X-Sell")
       end
     end
   end
@@ -47,21 +47,21 @@ describe "Manage cross selling" do
       end
 
       it "does show the cross-sell tab" do
-        expect(page).to have_css(".tabs", text: "Cross Sell")
+        expect(page).to have_css(".tabs", text: "Admin X-Sell")
       end
 
-      xit "shows a list of cross selling markets" do
+      it "shows a list of cross selling markets" do
         within ".tabs" do
-          click_link "Cross Sell"
+          click_link "Admin X-Sell"
         end
 
         expect(page).to have_content(cross_selling_market.name)
         expect(page).to_not have_content(not_cross_selling_market.name)
       end
 
-      xit "saves changes to cross selling markets" do
+      it "saves changes to cross selling markets" do
         within ".tabs" do
-          click_link "Cross Sell"
+          click_link "Admin X-Sell"
         end
 
         market_row = Dom::Admin::CrossSell.find_by_name(cross_selling_market.name)
@@ -109,12 +109,12 @@ describe "Manage cross selling" do
       end
 
       it "does show the cross-sell tab" do
-        expect(page).to have_css(".tabs", text: "Cross Sell")
+        expect(page).to have_css(".tabs", text: "Admin X-Sell")
       end
 
-      xit "shows a list of cross selling markets" do
+      it "shows a list of cross selling markets" do
         within ".tabs" do
-          click_link "Cross Sell"
+          click_link "Admin X-Sell"
         end
 
         expect(page).to have_content(cross_selling_market.name)
@@ -123,9 +123,9 @@ describe "Manage cross selling" do
         expect(page).to_not have_content(not_cross_selling_market.name)
       end
 
-      xit "saves changes to cross selling markets" do
+      it "saves changes to cross selling markets" do
         within ".tabs" do
-          click_link "Cross Sell"
+          click_link "Admin X-Sell"
         end
 
         cross_sell_row = Dom::Admin::CrossSell.find_by_name(cross_selling_market.name)
