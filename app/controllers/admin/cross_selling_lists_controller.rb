@@ -50,8 +50,7 @@ class Admin::CrossSellingListsController < AdminController
       @cross_selling_list.manage_publication!(cross_selling_list_params)
 
       if @cross_selling_list.published? || @cross_selling_list.draft? then
-        selected_subscribers = cross_selling_list_params[:children_ids].select(&:present?).map { |submitted_id| {parent_id: @cross_selling_list.id, entity_id: submitted_id.to_i} }
-
+        selected_subscribers = cross_selling_list_params.fetch(:children_ids, []).map { |submitted_id| {parent_id: @cross_selling_list.id, entity_id: submitted_id.to_i} }
         if @cross_selling_list.published? then
           # Published lists should propogate completely
           selected_subscribers.each do |list_ids|
