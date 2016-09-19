@@ -40,8 +40,7 @@
   </div>
   <%= s3_uploader_form id: "s3_uploader",
                        callback_param: "document[file_url]",
-                       expiration: 2.hours.from_now.utc.iso8601,
-                       max_file_size: 2.megabytes do %>
+                       expiration: 2.hours.from_now.utc.iso8601 do %>
 
       <%= file_field_tag :file, multiple: false, data: { url: s3_uploader_url } %>
   <% end %>
