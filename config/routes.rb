@@ -61,7 +61,7 @@ Rails.application.routes.draw do
       resources :market_managers,    as: :managers,   path: :managers
       resources :delivery_schedules, path: :deliveries, concerns: [:activatable]
       resource  :style_chooser, controller: :style_chooser, only: [:show, :update]
-      # resource  :cross_sell, controller: :market_cross_sells, only: [:show, :update]
+      resource  :cross_sell, controller: :market_cross_sells, only: [:show, :update]
       resources :cross_selling_lists do 
         collection do 
           get 'subscriptions' 
