@@ -57,8 +57,7 @@ class MarketMailer < BaseMailer
     @cross_selling_list = cross_selling_list
     @subscriber = cross_selling_list.entity
 
-    recipients = filter_for_testing(@subscriber.managers.map(&:pretty_email))
-    # recipients = ["\"Keith Meisel\" <keith@localorb.it>"]
+    recipients = @publisher.managers.map(&:pretty_email)
 
     if recipients.any?
       mail(
@@ -73,8 +72,7 @@ class MarketMailer < BaseMailer
     @cross_selling_list = cross_selling_list
     @subscriber = cross_selling_list.entity
 
-    recipients = filter_for_testing(@subscriber.managers.map(&:pretty_email))
-    # recipients = ["\"Keith Meisel\" <keith@localorb.it>"]
+    recipients = @publisher.managers.map(&:pretty_email)
 
     if recipients.any?
       mail(
@@ -89,8 +87,7 @@ class MarketMailer < BaseMailer
     @parent_list = parent_list
     @publisher = parent_list.entity
 
-    recipients = filter_for_testing(@publisher.managers.map(&:pretty_email))
-    # recipients = ["\"Keith Meisel\" <keith@localorb.it>"]
+    recipients = @publisher.managers.map(&:pretty_email)
 
     if recipients.any?
       mail(
@@ -105,8 +102,7 @@ class MarketMailer < BaseMailer
     @parent_list = parent_list
     @publisher = parent_list.entity
 
-    recipients = filter_for_testing(@publisher.managers.map(&:pretty_email))
-    # recipients = ["\"Keith Meisel\" <keith@localorb.it>"]
+    recipients = @publisher.managers.map(&:pretty_email)
 
     if recipients.any?
       mail(
@@ -114,10 +110,5 @@ class MarketMailer < BaseMailer
         subject: "#{@subscriber.name} has declined your Cross Selling List"
       )
     end
-  end
-
-  def filter_for_testing(recipients, testing = false)
-    recipients if testing == false
-    recipients - recipients.select{|recipient| recipient.match(/Eri/)} - recipients.select{|recipient| recipient.match(/Bryan/)}
   end
 end
