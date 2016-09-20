@@ -2,6 +2,8 @@ class Category < ActiveRecord::Base
   audited allow_mass_assignment: true
   acts_as_nested_set order: :name
   has_many :products
+
+  # KXM leverage these new associations to get product counts on the cross selling list form
   has_many :top_level_products, class_name: "Product", foreign_key: "top_level_category_id"
   has_many :second_level_products, class_name: "Product", foreign_key: "second_level_category_id"
 

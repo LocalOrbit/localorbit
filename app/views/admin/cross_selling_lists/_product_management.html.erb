@@ -42,23 +42,22 @@
           </tr>
         </thead>
         <tbody>
-        <% @categories.each do |element| %>
+        <% # KXM product_management view must handle 'checked' status %>
+        <% @categories.each do |element| category = element.second[:object] %>
           <tr>
-            <td class="category-name"><%#= raw("&nbsp;" * (category.depth - 1) ) %>Foo<%#= element[:object].name %></td>
+            <td class="category-name"><%= category.name %></td>
             <td class="category-product-count"><%#= @scoped_products.select {|product| product["category_id"].to_i == category.id }.count %></td>
-            <td><%#= check_box_tag("categories[]", element[:object].id, @selected_categories.include?(element[:object].id) ) %></td>
+            <td><%= check_box_tag("categories[]", category.id, @selected_categories.include?(category.id) ) %></td>
           </tr>
+          <% element.second[:data].each do |c| %>
+          <tr>
+            <td class="category-name"><%= raw("&nbsp;&nbsp;" * c.depth ) %><%= c.name %></td>
+            <td class="category-product-count"><%#= @scoped_products.select {|product| product["category_id"].to_i == category.id }.count %></td>
+            <td><%= check_box_tag("categories[]", c.id, @selected_categories.include?(c.id) ) %></td>
+          </tr>
+          <% end %>
         <% end %>
         </tbody>
-        <!-- tbody>
-        <%# @categories.each do |category| %>
-          <tr>
-            <td class="category-name"><%#= category.name %></td>
-            <td class="category-product-count"><%#= @scoped_products.select {|product| product["category_id"].to_i == category.id }.count %></td>
-            <td><%#= check_box_tag("categories[]", category.id, @selected_categories.include?(category.id) ) %></td>
-          </tr>
-        <%# end %>
-        </tbody -->
       </table>
     </div>
 
