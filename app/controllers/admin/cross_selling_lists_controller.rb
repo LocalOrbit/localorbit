@@ -25,13 +25,34 @@ class Admin::CrossSellingListsController < AdminController
     @suppliers = Organization.for_products(@scoped_products).includes(:products).order(:name)
     @selected_suppliers = get_selected_suppliers(@suppliers, @selected_products, @scoped_products)
 
-    @categories = Category.for_products(@scoped_products).includes(:products).order(:name)
-    @selected_categories = get_selected_categories(@categories, @selected_products, @cross_selling_list.creator, @scoped_products)
+    # KXM Category.for_products is a red herring...
+    # ...scoped_products should pull top-level and second-level categories and then cycle through them (ordered by top-level name, second-level name).  Product counts are the count of all scoped_products that reference the top-level or second-level id in question
+    # @categories = Category.for_products(@scoped_products).includes(:products).order(:name)
+
+    @top_categories    = Category.where("id IN (?)", @scoped_products.map{|p|    p.top_level_category_id}).distinct.includes(:products).order(:name)
+    @second_categories = Category.where("id IN (?)", @scoped_products.map{|p| p.second_level_category_id}).distinct.includes(:products).order(:name)
+
+    @categories = {}
+    # @top_categories.each do |top|
+    #   @categories[top.id.to_s] = {object: top, data: []}
+    #   @second_categories.each do |second|
+    #     @categories[top.id.to_s][:data].push(second) if second.parent_id == top.id
+    #   end
+    # end
+    binding.pry
+
+
+    # @selected_categories = get_selected_categories(@categories, @selected_products, @cross_selling_list.creator, @scoped_products)
+    @selected_categories = []
 
     # Since adding 'distinct' to get_scoped_products, ordering in the original definition of scoped_products (above)
     # was borking things up when also ordering by supplier or category name.  Avoid the problem by ordering here
-    @scoped_products = @scoped_products.order(:name)
 
+    # @scoped_products = @scoped_products.order(:name)
+    # @scoped_products = @scoped_products.order("categories.name, second_level_categories_products.name")
+    @scoped_products.order("categories.name, second_level_categories_products.name")
+
+    # binding.pry
     @selected_list_prods = @cross_selling_list.cross_selling_list_products.includes(product: [:organization, :category])
 
   end
@@ -221,9 +242,9 @@ class Admin::CrossSellingListsController < AdminController
 
   def get_scoped_products(cross_selling_list, entity)
     if cross_selling_list.creator then
-      scoped_products = entity.supplier_products.visible.distinct
+      scoped_products = entity.supplier_products.visible.distinct.includes(:top_level_category, :second_level_category)
     else
-      scoped_products = cross_selling_list.products
+      scoped_products = cross_selling_list.products.includes(:top_level_category, :second_level_category)
     end
   end
 
@@ -280,6 +301,8 @@ class Admin::CrossSellingListsController < AdminController
   end
 
   def get_prods_from_categories(category_id_array, scoped_products)
+    # This is the new, replacement text
+    # category_prods = Product.visible.where(top_level_category_id: category_id_array.map(&:to_i), id: scoped_products).map{|p| p.id.to_s}
     category_prods = Product.visible.where(category_id: category_id_array.map(&:to_i), id: scoped_products).map{|p| p.id.to_s}
   end
 

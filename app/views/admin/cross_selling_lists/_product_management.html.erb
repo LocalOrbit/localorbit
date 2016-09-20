@@ -42,14 +42,23 @@
           </tr>
         </thead>
         <tbody>
-        <% @categories.each do |category| %>
+        <% @categories.each do |element| %>
           <tr>
-            <td class="category-name"><%= category.name %></td>
-            <td class="category-product-count"><%= @scoped_products.select {|product| product["category_id"].to_i == category.id }.count %></td>
-            <td><%= check_box_tag("categories[]", category.id, @selected_categories.include?(category.id) ) %></td>
+            <td class="category-name"><%#= raw("&nbsp;" * (category.depth - 1) ) %>Foo<%#= element[:object].name %></td>
+            <td class="category-product-count"><%#= @scoped_products.select {|product| product["category_id"].to_i == category.id }.count %></td>
+            <td><%#= check_box_tag("categories[]", element[:object].id, @selected_categories.include?(element[:object].id) ) %></td>
           </tr>
         <% end %>
         </tbody>
+        <!-- tbody>
+        <%# @categories.each do |category| %>
+          <tr>
+            <td class="category-name"><%#= category.name %></td>
+            <td class="category-product-count"><%#= @scoped_products.select {|product| product["category_id"].to_i == category.id }.count %></td>
+            <td><%#= check_box_tag("categories[]", category.id, @selected_categories.include?(category.id) ) %></td>
+          </tr>
+        <%# end %>
+        </tbody -->
       </table>
     </div>
 

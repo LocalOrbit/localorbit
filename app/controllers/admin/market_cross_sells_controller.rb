@@ -10,6 +10,8 @@ class Admin::MarketCrossSellsController < AdminController
     ids = params[:market].try(:[], :cross_sell_ids) || []
     @market.cross_sell_ids = ids
 
+    # KXM Add code that revokes any cross sell lists related to any markets that no longer cross sell with @market
+
     redirect_to admin_market_cross_sell_path(@market), notice: "Market Updated Successfully"
   end
 

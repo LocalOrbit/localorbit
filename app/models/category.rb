@@ -2,6 +2,9 @@ class Category < ActiveRecord::Base
   audited allow_mass_assignment: true
   acts_as_nested_set order: :name
   has_many :products
+  has_many :top_level_products, class_name: "Product", foreign_key: "top_level_category_id"
+  has_many :second_level_products, class_name: "Product", foreign_key: "second_level_category_id"
+
   has_many :category_fees
 
   validates :name, presence: true
