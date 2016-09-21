@@ -331,8 +331,8 @@ class Admin::CrossSellingListsController < AdminController
         candidate = (category_prods - selected_products)
       end
 
-      selected_categories[c.level] = [] if selected_categories.fetch(c.level, nil).nil?
-      selected_categories[c.level].push(c.id) if candidate.empty?
+      selected_categories[c.get_level] = [] if selected_categories.fetch(c.get_level, nil).nil?
+      selected_categories[c.get_level].push(c.id) if candidate.empty?
       # selected_categories.push(c.id) if candidate.empty?
     end
 
