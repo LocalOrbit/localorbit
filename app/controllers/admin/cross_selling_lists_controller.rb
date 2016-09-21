@@ -25,15 +25,18 @@ class Admin::CrossSellingListsController < AdminController
     @suppliers = Organization.for_products(@scoped_products).includes(:products).order(:name)
     @selected_suppliers = get_selected_suppliers(@suppliers, @selected_products, @scoped_products)
 
-    @top_categories = Category.where("id IN (?)", @scoped_products.map{|p| p.top_level_category_id}).distinct.includes(:products).order(:name)
-    @second_categories = Category.where("id IN (?)", @scoped_products.map{|p| p.second_level_category_id}).distinct.includes(:products).order(:name)
+    top_cat_prods = @scoped_products.map{|p| p.top_level_category_id}
+    top_categories = Category.where(id: top_cat_prods).distinct.includes(:products).order(:name)
+
+    second_cat_prods = @scoped_products.map{|p| p.second_level_category_id}
+    second_categories = Category.where(id: second_cat_prods).distinct.includes(:products).order(:name)
 
     @categories = []
-    @top_categories.each do |top|
+    top_categories.each do |top|
       @categories.push(top)
     end
 
-    @second_categories.reverse.each do |second|
+    second_categories.reverse.each do |second|
       # Get the parent index...
       parent_index = @categories.index(@categories.select{|c| c[:id] == second.parent_id}.first)
 
@@ -88,6 +91,7 @@ class Admin::CrossSellingListsController < AdminController
   end
 
   def update
+    # binding.pry
     @cross_selling_list = CrossSellingList.includes(:children).find(params[:id])
 
     @scoped_products = get_scoped_products(@cross_selling_list, @entity)
@@ -314,7 +318,7 @@ class Admin::CrossSellingListsController < AdminController
   end
 
   def get_selected_categories(categories, selected_products, creator, scoped_products)
-    selected_categories = []
+    selected_categories = {}
     category_prods = []
 
     categories.each do |c|
@@ -327,10 +331,12 @@ class Admin::CrossSellingListsController < AdminController
         candidate = (category_prods - selected_products)
       end
 
-      selected_categories.push(c.id) if candidate.empty?
+      selected_categories[c.level] = [] if selected_categories.fetch(c.level, nil).nil?
+      selected_categories[c.level].push(c.id) if candidate.empty?
+      # selected_categories.push(c.id) if candidate.empty?
     end
 
-    selected_categories || []
+    selected_categories || {}
   end
 
 end

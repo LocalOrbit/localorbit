@@ -38,6 +38,7 @@
 <div>
   <% if !@selected_categories.blank? then %>
     <% @selected_categories.each do |category_id| %>
+      <%# binding.pry %>
       <%= hidden_field_tag "selected_categories[]", category_id %>
     <% end %>
   <% end %>
