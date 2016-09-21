@@ -47,7 +47,7 @@ class Category < ActiveRecord::Base
     array
   end
 
-  def level
+  def get_level
     ret_val = ''
     ret_val = 'top' if top?
     ret_val = 'second' if second?
