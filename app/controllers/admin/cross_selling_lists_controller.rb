@@ -28,17 +28,18 @@ class Admin::CrossSellingListsController < AdminController
     @top_categories    = Category.where("id IN (?)", @scoped_products.map{|p|    p.top_level_category_id}).distinct.includes(:products).order(:name)
     @second_categories = Category.where("id IN (?)", @scoped_products.map{|p| p.second_level_category_id}).distinct.includes(:products).order(:name)
 
-    @categories = {}
+    @categories = []
     @top_categories.each do |top|
-      @categories[top.id.to_s] = {object: top, data: []}
+      @categories.push(top)
       @second_categories.each do |second|
-        @categories[top.id.to_s][:data].push(second) if second.parent_id == top.id
+        @categories.push(second) if second.parent_id == top.id
       end
     end
+    # binding.pry
 
     # KXM selected_categories needs a lot of work
-    # @selected_categories = get_selected_categories(@categories, @selected_products, @cross_selling_list.creator, @scoped_products)
-    @selected_categories = []
+    @selected_categories = get_selected_categories(@categories, @selected_products, @cross_selling_list.creator, @scoped_products)
+    # @selected_categories = []
 
     # Since adding 'distinct' to get_scoped_products, ordering in the original definition of scoped_products (above)
     # was borking things up when also ordering by supplier or category name.  Avoid the problem by ordering here
@@ -291,9 +292,14 @@ class Admin::CrossSellingListsController < AdminController
   end
 
   def get_prods_from_categories(category_id_array, scoped_products)
-    # This is the new, replacement text
-    # category_prods = Product.visible.where(top_level_category_id: category_id_array.map(&:to_i), id: scoped_products).map{|p| p.id.to_s}
-    category_prods = Product.visible.where(category_id: category_id_array.map(&:to_i), id: scoped_products).map{|p| p.id.to_s}
+    # KXM get_prods_from_categories has to be top- and second-level categroy aware.
+    top = category_id_array['top']
+    second = category_id_array['second']
+    prods = category_id_array['product']
+
+    category_prods = Product.visible.where(top_level_category_id: top.map(&:to_i), id: scoped_products).map{|p| p.id.to_s}
+    category_prods |= Product.visible.where(second_level_category_id: second.map(&:to_i), id: scoped_products).map{|p| p.id.to_s}
+    category_prods |= Product.visible.where(category_id: product.map(&:to_i), id: scoped_products).map{|p| p.id.to_s}
   end
 
   def get_selected_suppliers(suppliers, selected_products, scoped_products)
@@ -308,8 +314,12 @@ class Admin::CrossSellingListsController < AdminController
 
   def get_selected_categories(categories, selected_products, creator, scoped_products)
     selected_categories = []
+    category_prods = []
+
     categories.each do |c|
-      category_prods = c.products
+      category_prods = c.top_level_products if c.top?
+      category_prods = c.second_level_products if c.second?
+      category_prods = c.products if category_prods.blank?
       if creator then
         candidate = (category_prods - ( category_prods - scoped_products )) - selected_products
       else

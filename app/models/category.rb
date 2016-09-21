@@ -47,6 +47,14 @@ class Category < ActiveRecord::Base
     array
   end
 
+  def top?
+    depth == 1
+  end
+
+  def second?
+    depth == 2
+  end
+
   def top_level_category
     @top_level_category ||= self_and_ancestors.find_by(depth: 1)
   end
