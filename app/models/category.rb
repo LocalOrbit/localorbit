@@ -47,6 +47,14 @@ class Category < ActiveRecord::Base
     array
   end
 
+  def level
+    ret_val = ''
+    ret_val = 'top' if top?
+    ret_val = 'second' if second?
+    ret_val = 'product' if ret_val.blank?
+    ret_val
+  end
+
   def top?
     depth == 1
   end

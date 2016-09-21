@@ -176,27 +176,15 @@ body.controller-cross_selling_lists{
     }
   }
 
-  /* This block may be obsolete... */
-  // .product-list{
-  //   padding: 10px;
-  //   min-height:100%;
-
-  //   .product-listing{
-  //     display: block;
-  //     margin-bottom: 0px;
-
-  //     .product-details-container{
-  //       float: left;
-  //       width: 88%;
-  //       padding-right: 0;
-  //     }
-
-  //     .product-pricing{
-  //       display: inline-block;
-  //       float: right;
-  //       width: 8%;
-  //     }
-  //   }
-  // }
-
+  #product-add-categories{
+    .category-name{
+      .top{
+        font-weight: 600;
+        size:1.12em
+      }
+      .second{
+        margin-left: 2em
+      }
+    }
+  }
 }
