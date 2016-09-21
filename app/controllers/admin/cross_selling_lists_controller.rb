@@ -34,9 +34,11 @@ class Admin::CrossSellingListsController < AdminController
     end
 
     @second_categories.reverse.each do |second|
-      parent_index = @categories.index(@categories.select{|c| c[:id] == second.parent_id})
+      # Get the parent index...
+      parent_index = @categories.index(@categories.select{|c| c[:id] == second.parent_id}.first)
+
+      # ... and slip it in right behind
       @categories.insert(parent_index+1, second) unless  parent_index.nil?
-      # @categories.push(second) if second.parent_id == top.id
     end
 
     @selected_categories = get_selected_categories(@categories, @selected_products, @cross_selling_list.creator, @scoped_products)
