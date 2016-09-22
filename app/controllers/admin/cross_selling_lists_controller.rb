@@ -89,7 +89,6 @@ class Admin::CrossSellingListsController < AdminController
   end
 
   def update
-    # binding.pry
     @cross_selling_list = CrossSellingList.includes(:children).find(params[:id])
 
     @scoped_products = get_scoped_products(@cross_selling_list, @entity)
@@ -321,7 +320,12 @@ class Admin::CrossSellingListsController < AdminController
 
 
     categories.each do |c|
-      category_prods = scoped_products.select{|p| p.second_level_category_id == c.id}
+      case c.get_level
+      when 'top'
+        category_prods = scoped_products.select{|p| p.top_level_category_id == c.id}
+      when 'second'
+        category_prods = scoped_products.select{|p| p.second_level_category_id == c.id}
+      end
 
       if creator then
         candidate = (category_prods - ( category_prods - scoped_products )) - selected_products
