@@ -25,11 +25,12 @@ class Admin::CrossSellingListsController < AdminController
     @suppliers = Organization.for_products(@scoped_products).includes(:products).order(:name)
     @selected_suppliers = get_selected_suppliers(@suppliers, @selected_products, @scoped_products)
 
-    top_cat_prods = @scoped_products.map{|p| p.top_level_category_id}
-    top_categories = Category.where(id: top_cat_prods).distinct.includes(:products).order(:name)
+    top_categories = @scoped_products.map{|p| p.top_level_category}.sort_by{|c| c[:name]}.uniq{|x| x.id}
 
-    second_cat_prods = @scoped_products.map{|p| p.second_level_category_id}
-    second_categories = Category.where(id: second_cat_prods).distinct.includes(:products).order(:name)
+    second_categories = @scoped_products.map{|p| p.second_level_category}.sort_by{|c| c[:name]}.uniq{|x| x.id}
+    # second_categories = @scoped_products.map{|p| p.second_level_category}
+    # binding.pry
+
 
     @categories = []
     top_categories.each do |top|
@@ -321,10 +322,10 @@ class Admin::CrossSellingListsController < AdminController
     selected_categories = {}
     category_prods = []
 
+
     categories.each do |c|
-      category_prods = c.top_level_products if c.top?
-      category_prods = c.second_level_products if c.second?
-      category_prods = c.products if category_prods.blank?
+      category_prods = scoped_products.select{|p| p.second_level_category_id == c.id}
+
       if creator then
         candidate = (category_prods - ( category_prods - scoped_products )) - selected_products
       else
@@ -336,7 +337,7 @@ class Admin::CrossSellingListsController < AdminController
       # selected_categories.push(c.id) if candidate.empty?
     end
 
-    selected_categories || {}
+    selected_categories.to_a
   end
 
 end
