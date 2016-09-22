@@ -206,7 +206,7 @@ describe Product do
 
     context "without an organization" do
       it "contains the correct products" do
-        expect(Product.available_for_sale(market)).to include(product_in, product_in_expiring_lot)
+        expect(Product.available_for_sale(market, buyer)).to include(product_in, product_in_expiring_lot)
       end
     end
   end

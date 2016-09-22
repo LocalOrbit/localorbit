@@ -101,10 +101,16 @@ class OrderItem < ActiveRecord::Base
   def product_availability
     return unless product.present?
 
-    quantity_available = product.lots_by_expiration.available_specific(Time.current.end_of_minute, order.market.id, order.organization.id).sum(:quantity) + product.lots_by_expiration.available_general.sum(:quantity)
-
-    if quantity_available < quantity
-      errors[:inventory] = "there are only #{quantity_available} #{product.name.pluralize(quantity_available)} available."
+    if !order.nil?
+      market_id = order.market.id
+      organization_id = order.organization.id
+    end
+    qty = product.lots_by_expiration.available_specific(Time.current.end_of_minute, market_id, organization_id).sum(:quantity)
+    #if qty == 0
+      qty += product.lots_by_expiration.available_general(Time.current.end_of_minute).sum(:quantity)
+    #end
+    if qty < quantity
+      errors[:inventory] = "there are only #{qty} #{product.name.pluralize(qty)} available."
     end
   end
 
@@ -123,7 +129,11 @@ class OrderItem < ActiveRecord::Base
   private
 
   def consume_inventory
-    consume_inventory_amount(quantity, order.market.id, order.organization.id)
+    if order
+      market_id = order.market.id
+      organization_id = order.organization.id
+    end
+    consume_inventory_amount(quantity, market_id, organization_id)
   end
 
   def update_delivered_at

@@ -31,10 +31,12 @@
           <thead>
           <tr>
             <th class="created_at adv_option" style="display: none">Date Added</th>
+            <% if policy(:segmented_inventory).index? %>
             <% if current_user.multi_market_membership? %>
                 <th class="market adv_option" style="display: none">Market</th>
             <% end %>
             <th class="buyer adv_option" style="display: none">Buyer</th>
+            <% end %>
             <th class="number adv_option" style="display: none">Lot #</th>
             <th class="good_from adv_option" style="display: none">Good From</th>
             <th class="expires_at adv_option" style="display: none">Expires On</th>
@@ -55,6 +57,7 @@
                     <%= lot.created_at.strftime('%m/%d/%Y') %>
                   </div>
                 </td>
+                <% if policy(:segmented_inventory).index? %>
                 <% if current_user.multi_market_membership? %>
                     <td class="market adv_option" style="display: none">
                       <div class="edit-trigger view-cell">
@@ -83,6 +86,7 @@
                     <% end %>
                   </div>
                 </td>
+                <% end %>
                 <td class="number adv_option" style="display: none">
                   <div class="edit-trigger view-cell">
                     <%= lot.number %>
@@ -135,22 +139,24 @@
 
           <tr class="lot add-row <%= unit_product.lots.count > 0 ? 'is-hidden' : 'editing' %>">
             <td class="edit-cell adv_option" style="display: none"><div><%= Time.current.strftime('%m/%d/%Y') %></div></td>
+            <% if policy(:segmented_inventory).index? %>
             <% if current_user.multi_market_membership? %>
             <td class="edit-cell adv_option" style="display: none">
-              <% if policy(:advanced_pricing).index? || (current_user.seller? && organization_can_access?(@product.organization, :advanced_inventory)) %>
+              <% if current_user.seller? && organization_can_access?(@product.organization, :advanced_inventory) %>
                   <%= f.select :market_id, @product.organization.all_markets_for_select, {include_blank: 'All Markets'}, {class: "lot_market_id chosen"} %>
               <% else %>
-                  All Markets&nbsp;<span class="tooltip" data-tooltip="Market Selection Available in Grow Plan"></span>
+                  All Markets&nbsp;<span class="tooltip" data-tooltip="Market Selection Available in Accelerate Plan"></span>
               <% end %>
             </td>
             <% end %>
             <td class="edit-cell adv_option" style="display: none">
-              <% if policy(:advanced_pricing).index? || (current_user.seller? && organization_can_access?(@product.organization, :advanced_inventory)) %>
+              <% if current_user.seller? && organization_can_access?(@product.organization, :advanced_inventory) %>
                   <%= f.select :organization_id, current_user.buyers_for_select, {include_blank: 'All Buyers'}, {class: "lot_buyer_id chosen"} %>
               <% else %>
-                  All Buyers&nbsp;<span class="tooltip" data-tooltip="Buyer Selection Available in Grow Plan"></span>
+                  All Buyers&nbsp;<span class="tooltip" data-tooltip="Buyer Selection Available in Accelerate Plan"></span>
               <% end %>
             </td>
+            <% end %>
             <td class="edit-cell adv_option" style="display: none"><div><%= f.text_field :number, size: 8  %></div></td>
             <td class="edit-cell adv_option" style="display: none">
               <div>
