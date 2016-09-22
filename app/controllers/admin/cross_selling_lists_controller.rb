@@ -297,11 +297,9 @@ class Admin::CrossSellingListsController < AdminController
   def get_prods_from_categories(category_id_array, scoped_products)
     top = category_id_array.fetch(:top,[]).map{|c| c.to_i}
     second = category_id_array.fetch(:second, []).map{|c| c.to_i}
-    product = category_id_array.fetch(:product,[]).map{|c| c.to_i}
 
-    # KXM benchmark against a select...
-    category_prods = scoped_products.where("top_level_category_id IN (?)", top)
-    category_prods |= scoped_products.where("second_level_category_id IN (?)", second)
+    category_prods = scoped_products.select{|p| top.include?(p.top_level_category_id)}
+    category_prods |= scoped_products.select{|p| second.include?(p.second_level_category_id)}
     category_prods.map{|p| p.id.to_s}
   end
 
