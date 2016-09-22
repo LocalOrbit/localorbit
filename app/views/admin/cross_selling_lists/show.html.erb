@@ -12,7 +12,7 @@
     <%= form_for @cross_selling_list, url: :admin_market_cross_selling_list, method: :patch do |list| %>
       <%= render 'form', {list: list} %>
 
-    <% if @selected_list_prods.nil? || @selected_list_prods.empty? %>
+    <% if @selected_list_prods.blank? %>
       <p class="product-list-management"><span class="hint">This Cross Selling list is Empty... <%= link_to "Add Products", "#product_management", class: "modal-toggle" if @cross_selling_list.creator %></span></p>
 
     <% else %>
