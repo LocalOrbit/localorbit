@@ -1,7 +1,9 @@
 require "spec_helper"
 
 describe "Manage cross selling lists" do
-  product_management_link = "Edit cross selling product list"
+  # product_management_link = "Edit cross selling product list"
+  product_management_link = "Manage Products"
+  product_addition_link = "Add Products"
 
   products_by_category = "Products by category"
   products_by_supplier = "Products by supplier"
@@ -228,9 +230,9 @@ describe "Manage cross selling lists" do
     end
 
     it "displays the product management modal form" do
-      expect(page).to have_content("Add products to cross selling list")
+      expect(page).to have_content(product_addition_link)
 
-      click_link "Add products to cross selling list"
+      click_link product_addition_link
 
       expect(page).to have_content(products_by_supplier)
       expect(page).to have_content(products_by_category)
