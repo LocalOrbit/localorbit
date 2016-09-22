@@ -302,6 +302,7 @@ class Admin::CrossSellingListsController < AdminController
     # KXM benchmark against a select...
     category_prods = scoped_products.where("top_level_category_id IN (?)", top)
     category_prods |= scoped_products.where("second_level_category_id IN (?)", second)
+    category_prods.map{|p| p.id.to_s}
   end
 
   def get_selected_suppliers(suppliers, selected_products, scoped_products)

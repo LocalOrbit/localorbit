@@ -444,6 +444,11 @@ class Product < ActiveRecord::Base
     end
   end
 
+  def categories
+    ret_val = []
+    ret_val.push(category_id).push(second_level_category_id).push(top_level_category_id)
+  end
+
   private
 
   def ensure_product_has_a_general_product
