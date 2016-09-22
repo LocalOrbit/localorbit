@@ -37,9 +37,10 @@
 </div>
 <div>
   <% if !@selected_categories.blank? then %>
-    <% @selected_categories.each do |category_id| %>
-      <%# binding.pry %>
-      <%= hidden_field_tag "selected_categories[]", category_id %>
+    <% @selected_categories.to_h.each_pair do |level, category_ids| %>
+    <% category_ids.each do |category_id| %>
+      <%= hidden_field_tag "selected_categories[#{level}][]", category_id %>
+    <% end %>
     <% end %>
   <% end %>
 </div>

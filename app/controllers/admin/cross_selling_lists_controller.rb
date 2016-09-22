@@ -26,12 +26,9 @@ class Admin::CrossSellingListsController < AdminController
     @selected_suppliers = get_selected_suppliers(@suppliers, @selected_products, @scoped_products)
 
     top_categories = @scoped_products.map{|p| p.top_level_category}.sort_by{|c| c[:name]}.uniq{|x| x.id}
-
     second_categories = @scoped_products.map{|p| p.second_level_category}.sort_by{|c| c[:name]}.uniq{|x| x.id}
-    # second_categories = @scoped_products.map{|p| p.second_level_category}
-    # binding.pry
 
-
+    # KXM pull this code into a separate method
     @categories = []
     top_categories.each do |top|
       @categories.push(top)
@@ -303,9 +300,9 @@ class Admin::CrossSellingListsController < AdminController
     second = category_id_array.fetch(:second, []).map{|c| c.to_i}
     product = category_id_array.fetch(:product,[]).map{|c| c.to_i}
 
-    category_prods = Product.visible.where(top_level_category_id: top, id: scoped_products).map{|p| p.id.to_s}
-    category_prods |= Product.visible.where(second_level_category_id: second, id: scoped_products).map{|p| p.id.to_s}
-    category_prods |= Product.visible.where(category_id: product, id: scoped_products).map{|p| p.id.to_s}
+    # KXM benchmark against a select...
+    category_prods = scoped_products.where("top_level_category_id IN (?)", top)
+    category_prods |= scoped_products.where("second_level_category_id IN (?)", second)
   end
 
   def get_selected_suppliers(suppliers, selected_products, scoped_products)
@@ -334,7 +331,6 @@ class Admin::CrossSellingListsController < AdminController
 
       selected_categories[c.get_level] = [] if selected_categories.fetch(c.get_level, nil).nil?
       selected_categories[c.get_level].push(c.id) if candidate.empty?
-      # selected_categories.push(c.id) if candidate.empty?
     end
 
     selected_categories.to_a
