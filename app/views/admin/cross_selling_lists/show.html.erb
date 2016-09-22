@@ -10,13 +10,8 @@
     <%= render 'shared/errors', { resource: @cross_selling_list } %>
 
     <%= form_for @cross_selling_list, url: :admin_market_cross_selling_list, method: :patch do |list| %>
-      <%= render 'form', {list_fields: list} %>
-      <div class="form-actions">
-        <%= list.submit "Update List" if !@cross_selling_list.locked? %>
-      </div>
+      <%= render 'form', {list: list} %>
 
-    <hr />
-    <%# binding.pry %>
     <% if @selected_list_prods.nil? || @selected_list_prods.empty? %>
       <p class="product-list-management"><span class="hint">This Cross Selling list is Empty... <%= link_to "Add products to cross selling list", "#product_management", class: "modal-toggle" if @cross_selling_list.creator %></span></p>
 

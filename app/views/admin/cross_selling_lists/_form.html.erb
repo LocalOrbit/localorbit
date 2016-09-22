@@ -1,22 +1,22 @@
 <div class="action_box column column--full">
   <div class="row row--field">
     <div class="field column column--half column--guttered">
-      <%= list_fields.label :name, "List Name" %>
+      <%= list.label :name, "List Name" %>
       <span class="help-text">This is the name Subscribers will use to identify your list of cross sold items.</span>
-      <%= list_name(list_fields) %>
+      <%= list_name(list) %>
     </div
     ><div class="field column column--half column--guttered">
-      <%= list_fields.label :status, "List Status" %>
+      <%= list.label :status, "List Status" %>
       <span class="help-text"><%= status_help_text %></span>
 
-      <%= list_fields.select :status, @cross_selling_list.statuses, {}, { class: "column--full" } unless @cross_selling_list.locked? %>
+      <%= list.select :status, @cross_selling_list.statuses, {}, { class: "column--full" } unless @cross_selling_list.locked? %>
     </div>
   </div>
   <div class="row row--field">
     <div id="cross_selling_target_markets" class="field column column--half column--guttered">
 
     <% if @cross_selling_list.display_subscribers? %>
-      <%= list_fields.label :children_ids, "List Visibility" %>
+      <%= list.label :children_ids, "List Visibility" %>
       <span class="help-text">Control who may view, subscribe, or sell your products. Contact Local Orbit if you don't see who you're looking for.</span>
 
       <% current_market.cross_sells.each do |csl_market| %>
@@ -26,6 +26,13 @@
 
     </div>
   </div>
+
+  <div class="row row--field">
+    <div class="form-actions">
+      <%= list.submit "Update List" if !@cross_selling_list.locked? %>
+    </div>
+  </div>
+
 </div>
 <% if !@cross_selling_list.new_record? %>
 <div>
