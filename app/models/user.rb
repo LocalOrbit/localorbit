@@ -397,8 +397,6 @@ class User < ActiveRecord::Base
 
   def managed_products
     org_ids = managed_organizations.map(&:id)
-    # KXM managed_products must include cross sold items
-    # Create an Arel Union with Product.visible.cross_selling_list_items
     Product.visible.seller_can_sell.where(organization_id: org_ids)
   end
 
