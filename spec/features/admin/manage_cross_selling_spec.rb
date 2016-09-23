@@ -108,11 +108,11 @@ describe "Manage cross selling" do
         visit admin_organization_path(organization)
       end
 
-      it "does show the cross-sell tab" do
+      xit "does show the cross-sell tab" do
         expect(page).to have_css(".tabs", text: "Admin X-Sell")
       end
 
-      it "shows a list of cross selling markets" do
+      xit "shows a list of cross selling markets" do
         within ".tabs" do
           click_link "Admin X-Sell"
         end
@@ -123,7 +123,7 @@ describe "Manage cross selling" do
         expect(page).to_not have_content(not_cross_selling_market.name)
       end
 
-      it "saves changes to cross selling markets" do
+      xit "saves changes to cross selling markets" do
         within ".tabs" do
           click_link "Admin X-Sell"
         end

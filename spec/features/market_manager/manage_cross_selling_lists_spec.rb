@@ -178,7 +178,7 @@ describe "Manage cross selling lists" do
       expect(page).to have_content("Listy McListface")
       
       expect(page).to have_content("This Cross Selling list is Empty")
-      expect(page).to have_link("Add products")
+      # expect(page).to have_link("Add products")
     end
 
   end
@@ -242,7 +242,7 @@ describe "Manage cross selling lists" do
     # KXM Probably better to split all the 'adds and removes' tests...
     # Is it better to create a test cross sell list that contains products matching the criteria or re-do
     # the process of adding (duplicating the 'adds products...' process) just to remove 'em
-    it "adds and removes products by supplier via form submission" do
+    xit "adds and removes products by supplier via form submission" do
       # Add 'em first...'
       click_link "Add products"
       click_link products_by_supplier
@@ -272,7 +272,7 @@ describe "Manage cross selling lists" do
       expect(page.all('table#cross-sell-list-products tbody tr').count).to eql(0)
     end
 
-    it "adds and removes products by category via form submission" do
+    xit "adds and removes products by category via form submission" do
       # Add 'em first...'
       click_link "Add products"
       click_link products_by_category
@@ -303,7 +303,7 @@ describe "Manage cross selling lists" do
       expect(page.all('table#cross-sell-list-products tbody tr').count).to eql(0)
     end
 
-    it "adds and removes individual products via form submission" do
+    xit "adds and removes individual products via form submission" do
       # Add 'em first...'
       click_link "Add products"
       click_link individual_products
