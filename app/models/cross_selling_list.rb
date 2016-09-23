@@ -39,19 +39,35 @@ class CrossSellingList < ActiveRecord::Base
 
   def statuses
     if creator || new_record? then
-      {
+      statuses = {
         Draft:     "Draft",
         Published: "Published",
         Inactive:  "Inactive"
       }
+
+      if status == "Draft" then
+        statuses.except!(:Inactive)
+      else
+        # You can't revert to 'Draft'
+        statuses.except!(:Draft)
+      end
+
     else
-      # KXM Declined shouldn't show up except when pending... make that happen
-      {
+      statuses = {
         Active:    "Published",
-        Inactive:  "Inactive",
-        Declined:  "Declined"
+        Declined: "Declined",
+        Inactive:  "Inactive"
       }
+
+      if status == "Pending" then
+        # This may not be as expected by Kate, et al...
+        statuses.except!(:Inactive)
+      else
+        statuses.except!(:Declined)
+      end
     end
+
+    statuses
   end
 
   def manage_status(parent_status)
