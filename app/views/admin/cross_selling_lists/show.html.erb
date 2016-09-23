@@ -12,12 +12,9 @@
     <%= form_for @cross_selling_list, url: :admin_market_cross_selling_list, method: :patch do |list| %>
       <%= render 'form', {list: list} %>
 
-    <% if @selected_list_prods.blank? %>
-      <p class="product-list-management"><span class="hint">This Cross Selling list is Empty... <%= link_to "Add Products", "#product_management", class: "modal-toggle" if @cross_selling_list.creator %></span></p>
+    <p class="product-list-management"><span class="hint"><%= link_to(@selected_list_prods.blank? ? "Add Products" : "Manage Products", "#product_management", class: "modal-toggle btn pull-right") %></span></p>
 
-    <% else %>
-      <p class="product-list-management"><span class="hint"><%= link_to "Manage Products", "#product_management", class: "modal-toggle" %></span></p>
-
+    <% unless @selected_list_prods.blank? %>
       <div class="table-wrapper">
         <%# KXM List products ought not be one... long... list %>
         <table class="sortable" id="cross-sell-list-products">
