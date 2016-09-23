@@ -10,11 +10,8 @@
 
     <%= render 'shared/errors', { resource: @cross_selling_list } %>
 
-    <%= form_for @cross_selling_list, url: :admin_market_cross_selling_lists, method: :post do |list_fields| %>
-      <%= render 'form', {list_fields: list_fields} %>
-      <div class="form-actions">
-        <%= list_fields.submit "Create List" %>
-      </div>
+    <%= form_for @cross_selling_list, url: :admin_market_cross_selling_lists, method: :post do |list| %>
+      <%= render 'form', {list: list} %>
     <% end %>
   </div>
 </div>

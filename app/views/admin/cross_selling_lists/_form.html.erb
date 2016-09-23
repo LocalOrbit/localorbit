@@ -29,7 +29,7 @@
 
   <div class="row row--field">
     <div class="form-actions">
-      <%= list.submit "Update List" if !@cross_selling_list.locked? %>
+      <%= list.submit(@cross_selling_list.new_record? ? "Create List" : "Update List") if !@cross_selling_list.locked? %>
     </div>
   </div>
 
