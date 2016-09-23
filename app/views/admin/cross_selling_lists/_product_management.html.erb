@@ -1,6 +1,7 @@
 <div class="is-hidden modal popup" id="product_management">
   <div class="popup-header">
     <h1>Edit Cross Selling Product List</h1>
+    <%# KXM sure would be nice to just close the damn modal instead of having to submit the fool thing... %>
     <button class="close"><i class="font-icon icon-close"> Close</i></button>
     <p>Select products or groups of products to allow other Markets to sell on your behalf.</p>
   </div>
@@ -18,7 +19,7 @@
           <tr>
             <th>Supplier</th>
             <th>Products</th>
-            <th>&nbsp;</th>
+            <th><%= check_box_tag("all_suppliers") %> Check all</th>
           </tr>
         </thead>
         <tbody>
@@ -39,15 +40,20 @@
           <tr>
             <th>Category</th>
             <th>Products</th>
-            <th>&nbsp;</th>
+            <th><%= check_box_tag("all_categories") %> Check all</th>
           </tr>
         </thead>
-        <tbody>
-        <% @categories.each do |category| %>
+        <% @categories.each_with_index do |category, i| %>
+        <%= raw("</tbody>") if category.get_level == "top" unless i == 0 %>
+        <%= raw("<tbody id=category_#{category.id}>") if category.get_level == "top" %>
           <tr>
-            <td class="category-name"><span class=<%= category.get_level %>><%= category.name %></span></td>
+            <td class="category-name"><span class=<%= category.get_level %>><%= category.name %></span><%#= " (#{category.id})" %></td>
             <td class="category-product-count"><%= @scoped_products.select {|product| product.categories.include?(category.id) }.count %></td>
-            <td><%= check_box_tag("categories[#{category.get_level}][]", category.id,  @selected_categories.to_h[category.get_level].include?(category.id)) %></td>
+            <% if category.get_level == "top" %>
+              <td><%= check_box_tag("top_#{category.id}", category.id, @selected_categories.to_h[category.get_level].include?(category.id), class: category.get_level) %></td>
+            <% else %>
+              <td><%= check_box_tag("categories[#{category.get_level}][]", category.id,  @selected_categories.to_h[category.get_level].include?(category.id), class: "secondlevel") %></td>
+            <% end %>
           </tr>
         <% end %>
         </tbody>

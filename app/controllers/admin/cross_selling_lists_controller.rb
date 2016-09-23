@@ -262,9 +262,9 @@ class Admin::CrossSellingListsController < AdminController
 
   def manage_active_products(params, cross_selling_list_products)
     submitted_supplier_prods = get_prods_from_suppliers(params.fetch(:suppliers, []))
-    selected_supplier_prods  = get_prods_from_suppliers(params.fetch(:selected_suppliers, []))
-
     submitted_category_prods = get_prods_from_categories(params.fetch(:categories, []), cross_selling_list_products)
+
+    selected_supplier_prods  = get_prods_from_suppliers(params.fetch(:selected_suppliers, []))
     selected_category_prods  = get_prods_from_categories(params.fetch(:selected_categories, []), cross_selling_list_products)
 
     make_active = (submitted_supplier_prods - selected_supplier_prods) | (submitted_category_prods - selected_category_prods)
@@ -294,13 +294,19 @@ class Admin::CrossSellingListsController < AdminController
     supplier_prods
   end
 
-  def get_prods_from_categories(category_id_array, scoped_products)
-    top = category_id_array.fetch(:top,[]).map{|c| c.to_i}
-    second = category_id_array.fetch(:second, []).map{|c| c.to_i}
+  def get_prods_from_categories(category_ids, scoped_products)
+    category_prods = []
+    # The overlap between top-level and second level is making this a nightmare.
+    # I'm disabling the static processing of top and implementing some 'select all
+    # subcategories' JavaScript instead...
+    top = []
+    second = category_ids.to_h.fetch("second", []).map{|c| c.to_i}
 
-    category_prods = scoped_products.select{|p| top.include?(p.top_level_category_id)}
-    category_prods |= scoped_products.select{|p| second.include?(p.second_level_category_id)}
-    category_prods.map{|p| p.id.to_s}
+    scoped_products.each do |p|
+      category_prods.push(p.id.to_s) if (top.include?(p.top_level_category_id) || second.include?(p.second_level_category_id))
+    end
+
+    category_prods
   end
 
   def get_selected_suppliers(suppliers, selected_products, scoped_products)
