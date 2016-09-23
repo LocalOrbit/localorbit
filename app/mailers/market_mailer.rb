@@ -97,6 +97,21 @@ class MarketMailer < BaseMailer
     end
   end
 
+  def deactivated_cross_selling_list(subscriber, parent_list)
+    @subscriber = @market = subscriber
+    @parent_list = parent_list
+    @publisher = parent_list.entity
+
+    recipients = @publisher.managers.map(&:pretty_email)
+
+    if recipients.any?
+      mail(
+        to: recipients,
+        subject: "#{@subscriber.name} has deactivated your Cross Selling List"
+      )
+    end
+  end
+
   def declined_cross_selling_list(subscriber, parent_list)
     @subscriber = @market = subscriber
     @parent_list = parent_list

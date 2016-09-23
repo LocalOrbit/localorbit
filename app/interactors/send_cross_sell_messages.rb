@@ -37,7 +37,10 @@ class SendCrossSellMessages
       MarketMailer.delay.declined_cross_selling_list(subscriber_list.entity, subscriber_list.parent)
 
     when "Inactive"
+      MarketMailer.delay.deactivated_cross_selling_list(subscriber_list.entity, subscriber_list.parent)
+
     else
+      # There is no 'else'... MUAHAAHAAHAAHAAAAAA!
     end
   end
 
