@@ -7,9 +7,16 @@ body.controller-cross_selling_lists{
   }
 
   .pull-right{
-    float:right;
-    margin:20px;
+    float: right;
+    margin: 20px;
   }
+
+  .product_management_modal_button{
+    float: right;
+    margin: 10px 10px 30px;
+    color: #FFFFFF;
+  }
+
 
   .action_box{
     margin-top: 1.4em;
@@ -28,6 +35,10 @@ body.controller-cross_selling_lists{
         font-size: 1.2em;
         font-weight: 600;
       }
+    }
+
+    .form-actions{
+      margin: 0 0 15px; 
     }
   }
 
