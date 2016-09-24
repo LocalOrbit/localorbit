@@ -154,8 +154,7 @@ class CrossSellingList < ActiveRecord::Base
   end
 
   def display_product_overview?
-    creator if creator
-    status if statuses.to_a.include?(status)
+    creator || statuses.include?(translate_status(status).to_sym)
   end
 
   def display_subscribers?
