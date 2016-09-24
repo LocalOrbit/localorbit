@@ -171,6 +171,8 @@ describe "Manage cross selling lists" do
       # anyway?  Who asks for the internet's opinion about _anything_?!
       fill_in "List Name", with: "Listy McListface"
       select "Published", from: "List Status"
+
+      # KXM "List Visibility" is now a list of checkboxes... mod the code, dude
       select cross_selling_subscriber1.name, from: "List Visibility"
 
       click_button "Create List"
@@ -178,7 +180,7 @@ describe "Manage cross selling lists" do
       expect(page).to have_content("Listy McListface")
       
       expect(page).to have_content("This Cross Selling list is Empty")
-      # expect(page).to have_link("Add products")
+      # expect(page).to have_link(product_addition_link)
     end
 
   end
@@ -242,9 +244,9 @@ describe "Manage cross selling lists" do
     # KXM Probably better to split all the 'adds and removes' tests...
     # Is it better to create a test cross sell list that contains products matching the criteria or re-do
     # the process of adding (duplicating the 'adds products...' process) just to remove 'em
-    xit "adds and removes products by supplier via form submission" do
+    it "adds and removes products by supplier via form submission" do
       # Add 'em first...'
-      click_link "Add products"
+      click_link product_addition_link
       click_link products_by_supplier
 
       expect(page).to have_content(supplier_01.name)
@@ -272,9 +274,9 @@ describe "Manage cross selling lists" do
       expect(page.all('table#cross-sell-list-products tbody tr').count).to eql(0)
     end
 
-    xit "adds and removes products by category via form submission" do
+    it "adds and removes products by category via form submission" do
       # Add 'em first...'
-      click_link "Add products"
+      click_link product_addition_link
       click_link products_by_category
 
       expect(page).to have_content(product_01.category.name)
@@ -303,9 +305,9 @@ describe "Manage cross selling lists" do
       expect(page.all('table#cross-sell-list-products tbody tr').count).to eql(0)
     end
 
-    xit "adds and removes individual products via form submission" do
+    it "adds and removes individual products via form submission" do
       # Add 'em first...'
-      click_link "Add products"
+      click_link product_addition_link
       click_link individual_products
 
       expect(page).to have_content(product_01.name)
