@@ -48,7 +48,7 @@ class Admin::CrossSellingListsController < AdminController
     # was borking things up when also ordering by supplier or category name.  Avoid the problem by ordering here
     @scoped_products = @scoped_products.order(:name)
 
-    @selected_list_prods = @cross_selling_list.cross_selling_list_products.includes(product: [:organization, :category])
+    @selected_list_prods = @cross_selling_list.cross_selling_list_products.includes(product: [:organization, :category]).order("products.name")
   end
 
   def new
