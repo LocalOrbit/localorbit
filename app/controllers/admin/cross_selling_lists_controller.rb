@@ -44,8 +44,8 @@ class Admin::CrossSellingListsController < AdminController
 
     @selected_categories = get_selected_categories(@categories, @selected_products, @cross_selling_list.creator, @scoped_products)
 
-    # Since adding 'distinct' to get_scoped_products, ordering in the original definition of scoped_products (above)
-    # was borking things up when also ordering by supplier or category name.  Avoid the problem by ordering here
+    # Since adding 'distinct' to get_scoped_products, ordering in the original definition of scoped_products (above) was
+    # borking things up when also ordering by supplier or category name.  Avoid the problem by ordering products here
     @scoped_products = @scoped_products.order(:name)
 
     @selected_list_prods = @cross_selling_list.cross_selling_list_products.includes(product: [:organization, :category]).order("products.name")
@@ -58,7 +58,6 @@ class Admin::CrossSellingListsController < AdminController
   def create
     @cross_selling_list = @entity.cross_selling_lists.build(cross_selling_list_params)
     @cross_selling_list.creator = true
-    submitted_products = {'product_ids' => cross_selling_list_params[:product_ids] || []}
 
 
     if @cross_selling_list.save
@@ -66,18 +65,13 @@ class Admin::CrossSellingListsController < AdminController
 
       if @cross_selling_list.published? || @cross_selling_list.draft? then
         selected_subscribers = cross_selling_list_params.fetch(:children_ids, []).map { |submitted_id| {parent_id: @cross_selling_list.id, entity_id: submitted_id.to_i} }
-        if @cross_selling_list.published? then
-          # Published lists should propogate completely
-          selected_subscribers.each do |list_ids|
-            create_list(@cross_selling_list, list_ids, submitted_products)
-          end
-        end
 
-        if @cross_selling_list.draft? then
-          # Draft lists should only create the child lists.  List items will be added once the list is published
-          selected_subscribers.each do |list_ids|
-            create_list(@cross_selling_list, list_ids, {})
-          end
+        # Published lists should propogate completely while Draft lists should only create
+        # the child lists, sans items.  List items will be added once the list is published
+        submitted_products = @cross_selling_list.published? ? {'product_ids' => cross_selling_list_params.fetch(:product_ids, [])} : {}
+
+        selected_subscribers.each do |list_ids|
+          create_list(@cross_selling_list, list_ids, submitted_products)
         end
       end
 
@@ -240,6 +234,7 @@ class Admin::CrossSellingListsController < AdminController
     else
       scoped_products = cross_selling_list.products.includes(:top_level_category, :second_level_category)
     end
+    scoped_products
   end
 
   def manage_selected_products(params, scoped_products)
@@ -273,9 +268,9 @@ class Admin::CrossSellingListsController < AdminController
     cross_selling_list_prods = (cross_selling_list_params["cross_selling_list_products_attributes"] || [])
 
     # Update "active" where appropriate
-    cross_selling_list_prods.each do |key, value|
-      value["active"] = "1" if make_active.include?(value["product_id"])
-      value["active"] = "0" if deactivate.include?(value["product_id"])
+    cross_selling_list_prods.each do |cslp|
+      cslp["active"] = "1" if make_active.include?(cslp["product_id"])
+      cslp["active"] = "0" if deactivate.include?(cslp["product_id"])
     end
 
     cross_selling_list_prods
