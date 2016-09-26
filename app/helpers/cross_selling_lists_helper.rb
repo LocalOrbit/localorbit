@@ -11,10 +11,10 @@ module CrossSellingListsHelper
       # Otherwise, content is subject to whether the user is the list creator
       if @cross_selling_list.creator then
         visibility_target = "your subscribers'"
-        visibility_condition += "unless they mark them as inactive."
+        visibility_condition = "unless they mark them as inactive."
       else
         visibility_target = "your"
-        visibility_condition += "unless you mark them as inactive."
+        visibility_condition = "unless you mark them as inactive."
       end
 
       # These are the same regardless of creator status
