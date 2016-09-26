@@ -6,16 +6,7 @@ $(document).ready(function(){
   });
 
   // 'Select all' check boxes...
-  // ...for categories
-  $("#all_categories").click(function(){
-    $("#product-add-categories input:checkbox").prop("checked", $(this).prop("checked"));
-  });
-  // ...for suppliers
-  $("#all_suppliers").click(function(){
-    $("#product-add-suppliers input:checkbox").prop("checked", $(this).prop("checked"));
-  });
-  // ...and for products
-  $("#all_products").click(function(){
-    $("#product-add-products input:checkbox").prop("checked", $(this).prop("checked"));
+  $(".select_all").click(function(){
+    $(this).closest(".bound-list").find("input:checkbox").prop("checked", $(this).prop("checked"));
   });
 });

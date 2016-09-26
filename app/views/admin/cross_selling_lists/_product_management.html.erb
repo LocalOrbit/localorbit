@@ -21,7 +21,7 @@
           <tr>
             <th>Supplier</th>
             <th>Products</th>
-            <th><%= check_box_tag("all_suppliers") %> Check all</th>
+            <th><%= check_box_tag("all_suppliers", 1, false, {class: "select_all"}) %> Check all</th>
           </tr>
         </thead>
         <tbody>
@@ -42,7 +42,7 @@
           <tr>
             <th>Category</th>
             <th>Products</th>
-            <th><%= check_box_tag("all_categories") %> Check all</th>
+            <th><%= check_box_tag("all_categories", 1, false, {class: "select_all"}) %> Check all</th>
           </tr>
         </thead>
         <% @categories.each_with_index do |category, i| %>
