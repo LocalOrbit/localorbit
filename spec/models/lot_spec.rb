@@ -158,6 +158,64 @@ describe Lot do
 
   end
 
+  describe "available scope - specific" do
+    let(:product) { create(:product) }
+    let(:market)  { create(:market)}
+    let(:buyer)   { create(:organization, :buyer)}
+
+    it "returns current lots" do
+      expect {
+        product.lots.create!(quantity: 12, market: market, organization: buyer)
+        product.lots.create!(quantity: 12, number: "1", expires_at: 1.day.from_now, market: market, organization: buyer)
+        product.lots.create!(quantity: 12, number: "2", good_from: 1.day.ago, market: market, organization: buyer)
+        product.lots.create!(quantity: 12, number: "3", good_from: 1.day.ago, expires_at: 1.day.from_now, market: market, organization: buyer)
+        product.lots.create!(quantity: 12, number: "4", good_from: 1.day.ago, expires_at: 2.days.from_now, market: market, organization: buyer)
+      }.to change {
+        Lot.available_specific(Time.current, market.id, buyer.id).count
+      }.from(0).to(5)
+    end
+
+    it "returns lots available at the requested date" do
+      expect {
+        product.lots.create!(quantity: 12, market: market, organization: buyer)
+        product.lots.create!(quantity: 12, number: "1", expires_at: 1.day.from_now, market: market, organization: buyer)
+        product.lots.create!(quantity: 12, number: "2", good_from: 1.day.ago, market: market, organization: buyer)
+        product.lots.create!(quantity: 12, number: "3", good_from: 1.day.ago, expires_at: 1.day.from_now, market: market, organization: buyer)
+        product.lots.create!(quantity: 12, number: "4", good_from: 1.day.ago, expires_at: 2.days.from_now, market: market, organization: buyer)
+      }.to change {
+        Lot.available_specific(1.day.from_now, market.id, buyer.id).count
+      }.from(0).to(3)
+    end
+
+    it "excludes expired lots" do
+      expect {
+        lot = product.lots.create!(quantity: 12, number: "1", expires_at: 1.day.from_now, market: market, organization: buyer)
+        lot.update_attribute(:expires_at, 1.day.ago)
+      }.to_not change {
+        Lot.available_specific(nil, market.id, buyer.id).count
+      }
+    end
+
+    it "excludes lots from the future" do
+      expect {
+        lot = product.lots.create!(quantity: 12, number: "1", good_from: 1.day.from_now, expires_at: 2.day.from_now, market: market, organization: buyer)
+      }.to_not change {
+        Lot.available_specific(nil, market.id, buyer.id).count
+      }
+    end
+
+    it "returns available lots, oldest first" do
+      product.lots.create!(quantity: 12)
+      product.lots.create!(quantity: 12, number: "1", expires_at: 1.day.from_now, market: market, organization: buyer)
+      product.lots.create!(quantity: 12, number: "2", good_from: 1.day.ago, market: market, organization: buyer)
+      product.lots.create!(quantity: 12, number: "3", good_from: 1.day.ago, expires_at: 1.day.from_now, market: market, organization: buyer)
+      product.lots.create!(quantity: 12, number: "4", good_from: 1.day.ago, expires_at: 2.days.from_now, market: market, organization: buyer)
+
+      expect(product.lots_by_expiration.available_specific(1.day.from_now, market.id, buyer.id).first.number).to eql("4")
+    end
+
+  end
+
   describe "#available_inventory" do
     before do
       subject.quantity = 42
