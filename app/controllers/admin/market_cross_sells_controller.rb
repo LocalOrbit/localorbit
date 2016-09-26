@@ -6,11 +6,24 @@ class Admin::MarketCrossSellsController < AdminController
     @cross_selling_markets = current_user.markets.where(allow_cross_sell: true).where.not(id: @market.id).order(:name)
   end
 
+  # Clumsy as it is, this is the most natural place to address orphaned
+  # cross selling lists, even if it does bind the classes together
   def update
-    # binding.pry
     ids = params[:market].try(:[], :cross_sell_ids) || []
+
+    # Get removed markets...
+    removed = @market.cross_sells.map{|m| m.id.to_s} - ids
+
+    # ...and revoke any lists published by @market subscribed to by removed markets
+    unless removed.blank?
+      @market.cross_selling_lists.each do |list|
+        list.children.each do |child|
+          child.revoke! if removed.include?(child.entity_id.to_s)
+        end
+      end
+    end
+
     @market.cross_sell_ids = ids
-    # KXM This is the most natural place to address orphaned cross selling lists, even if it does bind the classes together
 
     redirect_to admin_market_cross_sell_path(@market), notice: "Market Updated Successfully"
   end

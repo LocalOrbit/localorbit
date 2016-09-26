@@ -2,9 +2,6 @@ class CrossSellingList < ActiveRecord::Base
   audited allow_mass_assignment: true
   include SoftDelete
 
-  # KXM pre_delete anticipates Admin cross sell orphaned lists... to be continued...
-  # before_destroy :pre_delete
-
   attr_accessor :shared_with
   attr_accessor :children_ids
   attr_accessor :suppliers
@@ -118,6 +115,11 @@ class CrossSellingList < ActiveRecord::Base
     update!(status: "Published", published_at: as_of)
   end
 
+  def revoke!
+    update!(status: "Revoked")
+    update!(deleted_at: Time.now)
+  end
+
   # Triggered by UI action.  Parent unpublish triggers 'Inactive' status in children
   def unpublish!(status = nil)
     new_status = status ||= "Unpublished"
@@ -165,8 +167,4 @@ class CrossSellingList < ActiveRecord::Base
     children.active.includes(:entity).map{|c| c.entity.name}.join(", ")
   end
 
-  def pre_delete
-    # This triggers 'Revoked' for subscribers
-    manage_status("Inactive") if !creator
-  end
 end
