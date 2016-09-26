@@ -1,0 +1,8 @@
+          <tr>
+            <td><%= "#{product.name} (#{product.id})" %></td>
+            <%# if @cross_selling_list.creator %>
+              <td><%= check_box_tag "cross_selling_list[product_ids][]", product.id, list.object.products.include?(product) %></td>
+            <%# else %>
+              <!-- <td><%#= check_box_tag "cross_selling_list[product_ids][]", product.id, list.object.products.include?(product) %></td> -->
+            <%# end %>
+          </tr>

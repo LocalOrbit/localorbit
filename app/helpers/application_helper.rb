@@ -194,4 +194,8 @@ module ApplicationHelper
       resp.body
     end
   end
+
+  def yes_no(boolean)
+    boolean ? "Yes" : "No"
+  end
 end

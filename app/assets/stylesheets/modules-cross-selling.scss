@@ -1,0 +1,201 @@
+@import "mixins";
+
+body.controller-cross_selling_lists{
+  .bound-list{
+    height: 600px;
+    overflow: scroll
+  }
+
+  .pull-right{
+    float: right;
+    margin: 20px;
+  }
+
+  .product_management_modal_button{
+    float: right;
+    margin: 10px 10px 30px;
+    color: #FFFFFF;
+  }
+
+
+  .action_box{
+    margin-top: 1.4em;
+    padding: 10px;
+    background-color: #FAFAFA;
+    border-radius: 5px;
+    display: inline-block;
+    border: 1px solid #ECE9E9;
+
+    .messaging{
+      float: left;
+      width: 60%;
+      color: #808080;
+      
+      .message{
+        font-size: 1.2em;
+        font-weight: 600;
+      }
+    }
+
+    .form-actions{
+      margin: 0 0 15px; 
+    }
+  }
+
+  .pending_list{
+    clear: both;
+    margin: 0.5em 0 0.9em 0;
+    padding: 10px;
+    background-color: #FAFAFA;
+    border-radius: 5px;
+    display: inline-block;
+    border: 1px solid #ECE9E9;
+    width: 100%;
+    color: #808080;
+
+    .messaging{
+      margin: 0 0 0 0;
+
+      .message{
+        padding: 8px 0;
+        float: left;
+        width: 78%;
+
+        .announcement{
+          font-size: 1.2em;
+          font-weight: 600;
+        }
+        .detail{
+          font-style: italic;
+        }
+      }
+
+      .review_link{
+        font-size: 1.2em;
+        display: block;
+        padding: 8px 16px;
+        border-radius: 5px;
+        float: right;
+      }
+    }
+  }
+
+  .help-text{
+    font-family: 'Source Sans Pro', sans-serif;
+    font-size: .92em;
+    font-weight: 300;
+    font-style: italic;
+    color: #606060;
+    display:block;
+    margin-top: .4em;
+    margin-bottom: .6em;
+  }
+
+  ul.cross_selling_sub-header{
+    float: left;
+    list-style: none;
+    padding: 0;
+    li{
+      display: inline-block;
+      padding-right: 10px;
+    }
+  }
+
+  .product-list-management *{
+    font-size: 14pt;
+  }
+
+  #product_management.modal{
+    width: 700px;
+  }
+
+  /* New listings per 2016-09-07 discussion with Kate and Erika */
+  table.product-listing{
+    tbody.product-details-container{
+      display: table;
+      width: 100%;
+      tr.highlight-active{
+        td{
+          background-color: #F2F2F2;
+        }
+      }
+
+      tr.product-details{
+        line-height: 2em;
+        float: none;
+        td{
+          vertical-align: middle;
+          padding: 8px;
+          h3{
+            margin: 0 0 .4em 0;
+          }
+
+          &.product-unit-name{
+            font-size: 14px;
+          }
+        }
+      }
+    }
+  }
+
+  // The list of list subscribers on the index page list table
+  .subscriber-list{
+    list-style-type: none;
+    padding: 0;
+
+    li{
+      padding:0 0 6px 0;
+
+      .subscriber-name{
+        color: #808080;
+        font-weight: 600;
+      }
+
+      .subscriber-status-line{
+        padding-left:6px;
+
+        .subscriber-status{
+          font-weight: 600;
+        }
+
+        .subscriber-products{
+          font-style: italic;
+        }
+      }
+    }
+  }
+
+  #tabs{
+    .bound-list{
+      border-width: 0 1px 1px 1px;
+    }
+    .ui-widget-content{
+      border-color-top: #FFFFFF;
+    }
+    .ui-tabs-nav .ui-state-default a{
+      background: #F2F2F2;
+      color: #808080;
+    }
+    .ui-tabs-nav .ui-state-active{
+      border-width:1px 1px 0;
+      a {
+        background: #FFFFFF;
+        color: #000000;
+        // border-width:1px 1px 0;
+        border-width: inherit;
+      }
+    }
+  }
+
+  #product-add-categories{
+    .category-name{
+      .top{
+        font-weight: 600;
+        size:1.12em
+      }
+      .second{
+        margin-left: 2em
+      }
+    }
+  }
+}

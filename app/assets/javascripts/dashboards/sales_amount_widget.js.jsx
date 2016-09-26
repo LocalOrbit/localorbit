@@ -130,7 +130,6 @@
             if (this.props.userType == "S" || this.props.userType == "M")
                 label_text = 'Total Sales';
             else if (this.props.userType == "P")
-                // # KXM You're welcome, Eric...
                 label_text = 'Total Purchases';
             else
                 label_text = 'Total Spend';

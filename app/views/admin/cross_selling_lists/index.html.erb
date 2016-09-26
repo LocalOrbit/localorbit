@@ -1,0 +1,62 @@
+<%= render partial: "admin/markets/header", locals: { market: @entity } %>
+
+<%= render "shared/errors", resource: @entity %>
+
+<div class="row row--partial">
+  <div class="column column--three-fourths">
+
+  <%# Market may NOT cross sell... %>
+  <% if !@entity.self_enabled_cross_sell? %>
+    <div class='action_box'>
+      <p class="messaging">
+        <span class="message">Cross Selling is Inactive</span><br />
+        Cross Selling allows you to publish lists of products to be sold on other Markets. You may also subscribe to Cross Selling Lists from other Markets to sell on your Market.
+      </p>
+
+      <%= form_tag [:admin, @entity, :toggle_self_enabled_cross_sell], method: :patch do submit_tag "Turn on Cross Selling", class: "pull-right" end %>
+    </div>
+
+
+  <%# Market may cross sell... %>
+  <% else %>
+    <%= render "header" %>
+    <% if @cross_selling_lists.empty? %>
+      <div class='action_box column column--full'>
+        <p class="messaging">
+          <span class="message">You haven't created any Cross Selling lists yet...</span><br />
+          Create a list of products to enable other markets to sell products from your market on your behalf
+        </p>
+
+        <%= form_tag [:new, :admin, @entity, :cross_selling_list], method: :get do submit_tag "Add Cross Sell List", class: "pull-right" end %>
+
+      </div>
+    <% else %>
+      <div style="clear:both; padding-top:1em;">
+        <%= form_tag [:new, :admin, @entity, :cross_selling_list], method: :get do submit_tag "Add Cross Sell List", class: "pull-right" end %>
+      </div>
+      <hr style="clear:both;" />
+
+      <div class="table-wrapper">
+        <table class="sortable" id="cross-sell-lists">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Subscribers</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody>
+          <% @cross_selling_lists.each do |list| %>
+            <tr>
+              <td class="cross-sell-list-name"><%= link_to list.name, [:admin, @entity, list] %></td>
+              <td class="cross-sell-list-subscribers"><%= render partial: "subscribers", locals:{list: list} %></td>
+              <td class="cross-sell-list-status"><%= list.status %></td>
+            </tr>
+          <% end %>
+          </tbody>
+        </table>
+      </div>
+    <% end %>
+  <% end %>
+  </div>
+</div>

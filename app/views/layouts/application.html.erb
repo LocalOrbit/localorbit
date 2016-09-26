@@ -85,6 +85,16 @@
         color: #FFF;
       }
 
+      .controller-cross_selling_lists .review_link {
+        background-color: <%= current_market.text_color -%>;
+        border-color: <%= current_market.text_color -%>;
+        color: #FFF;
+      }
+      .controller-cross_selling_lists .product_management_modal_button {
+        background-color: <%= current_market.text_color -%>;
+        border-color: <%= current_market.text_color -%>;
+      }
+
       .dashboard-widget .calendar .cal-date {
         background-color: <%= current_market.text_color -%>;
       }
@@ -150,7 +160,7 @@
 
 </head>
 
-<body class="controller-<%= controller.controller_name %> <%= current_user.present? ? "" : "signed-out" %> <%= "request-desktop" if cookies[:request_desktop] && cookies[:request_desktop] == "true"  %>">
+<body class="controller-<%= controller.controller_name %> action-<%= controller.action_name %> <%= current_user.present? ? "" : "signed-out" %> <%= "request-desktop" if cookies[:request_desktop] && cookies[:request_desktop] == "true"  %>">
   <%= render "shared/analytics" %>
 
   <div class="page-content">
