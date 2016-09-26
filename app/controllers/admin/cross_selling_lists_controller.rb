@@ -19,29 +19,12 @@ class Admin::CrossSellingListsController < AdminController
     @cross_selling_list = CrossSellingList.includes(:children, :products, :cross_selling_list_products).find(params[:id])
 
     @scoped_products = get_scoped_products(@cross_selling_list, @entity)
-
     @selected_products = @cross_selling_list.products.active.includes(:cross_selling_list_products).order(:name)
 
     @suppliers = Organization.for_products(@scoped_products).includes(:products).order(:name)
     @selected_suppliers = get_selected_suppliers(@suppliers, @selected_products, @scoped_products)
 
-    top_categories = @scoped_products.map{|p| p.top_level_category}.sort_by{|c| c[:name]}.uniq{|x| x.id}
-    second_categories = @scoped_products.map{|p| p.second_level_category}.sort_by{|c| c[:name]}.uniq{|x| x.id}
-
-    # KXM pull this code into a separate method
-    @categories = []
-    top_categories.each do |top|
-      @categories.push(top)
-    end
-
-    second_categories.reverse.each do |second|
-      # Get the parent index...
-      parent_index = @categories.index(@categories.select{|c| c[:id] == second.parent_id}.first)
-
-      # ... and slip it in right behind
-      @categories.insert(parent_index+1, second) unless  parent_index.nil?
-    end
-
+    @categories = build_category_array(@scoped_products)
     @selected_categories = get_selected_categories(@categories, @selected_products, @cross_selling_list.creator, @scoped_products)
 
     # Since adding 'distinct' to get_scoped_products, ordering in the original definition of scoped_products (above) was
@@ -338,6 +321,22 @@ class Admin::CrossSellingListsController < AdminController
     end
 
     selected_categories.to_a
+  end
+
+  def build_category_array(scoped_products)
+    # First get the top-level categories - this provides the structure
+    categories = scoped_products.map{|p| p.top_level_category}.sort_by{|c| c[:name]}.uniq{|x| x.id}
+    second_categories = scoped_products.map{|p| p.second_level_category}.sort_by{|c| c[:name]}.uniq{|x| x.id}
+
+    # Then cycle through the second categories...
+    second_categories.reverse.each do |second|
+      # ...grabbing the parent index...
+      parent_index = categories.index(categories.select{|c| c[:id] == second.parent_id}.first)
+
+      # ... and slipping it in right behind
+      categories.insert(parent_index+1, second) unless  parent_index.nil?
+    end
+    categories
   end
 
 end
