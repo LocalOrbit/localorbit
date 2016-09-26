@@ -51,4 +51,79 @@ class MarketMailer < BaseMailer
       )
     end
   end
+
+  def pending_cross_selling_list(publisher, cross_selling_list)
+    @publisher = @market = publisher
+    @cross_selling_list = cross_selling_list
+    @subscriber = cross_selling_list.entity
+
+    recipients = @publisher.managers.map(&:pretty_email)
+
+    if recipients.any?
+      mail(
+        to: recipients,
+        subject: "#{@publisher.name} has shared a new Cross Selling List"
+      )
+    end
+  end
+
+  def revoked_cross_selling_list(publisher, cross_selling_list)
+    @publisher = @market = publisher
+    @cross_selling_list = cross_selling_list
+    @subscriber = cross_selling_list.entity
+
+    recipients = @publisher.managers.map(&:pretty_email)
+
+    if recipients.any?
+      mail(
+        to: recipients,
+        subject: "Cross Selling List '#{@cross_selling_list.name}' is no longer available"
+      )
+    end
+  end
+
+  def activated_cross_selling_list(subscriber, parent_list)
+    @subscriber = @market = subscriber
+    @parent_list = parent_list
+    @publisher = parent_list.entity
+
+    recipients = @publisher.managers.map(&:pretty_email)
+
+    if recipients.any?
+      mail(
+        to: recipients,
+        subject: "#{@subscriber.name} has activated your Cross Selling List"
+      )
+    end
+  end
+
+  def deactivated_cross_selling_list(subscriber, parent_list)
+    @subscriber = @market = subscriber
+    @parent_list = parent_list
+    @publisher = parent_list.entity
+
+    recipients = @publisher.managers.map(&:pretty_email)
+
+    if recipients.any?
+      mail(
+        to: recipients,
+        subject: "#{@subscriber.name} has deactivated your Cross Selling List"
+      )
+    end
+  end
+
+  def declined_cross_selling_list(subscriber, parent_list)
+    @subscriber = @market = subscriber
+    @parent_list = parent_list
+    @publisher = parent_list.entity
+
+    recipients = @publisher.managers.map(&:pretty_email)
+
+    if recipients.any?
+      mail(
+        to: recipients,
+        subject: "#{@subscriber.name} has declined your Cross Selling List"
+      )
+    end
+  end
 end

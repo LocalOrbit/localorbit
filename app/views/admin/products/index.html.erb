@@ -24,6 +24,8 @@
     <% if !general_product || general_product != product.general_product %>
       <% general_product = product.general_product %>
       <% row_style = cycle "odd", "even" %>
+      <% # This check will likely drive display of sourcing info %>
+      <% list_item = "list_item" if product.cross_selling_list_products.exists? %>
       <% continued_product = false %>
     <% else %>
       <% continued_product = true %>

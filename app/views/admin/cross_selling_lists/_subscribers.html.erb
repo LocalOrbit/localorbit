@@ -1,0 +1,17 @@
+<% if list.children.count > 0 then %>
+  <ul class="subscriber-list">
+  <% list.children.includes(:entity).each do |c| %>
+    <li>
+      <span class="subscriber-name"><%= c.entity.name %></span><br />
+      <span class="subscriber-status-line">
+        Status: <span class="subscriber-status"><%= c.translate_status(c.status) %></span>
+        <span class="subscriber-products"><%= ", #{c.products.active.count} of #{c.products.count} products selected" if c.display_product_overview? %></span>
+      </span>
+    </li>
+  <% end %>
+  </ul>
+
+<% else %>
+  No subscribers have yet been invited to share this list
+
+<% end %>

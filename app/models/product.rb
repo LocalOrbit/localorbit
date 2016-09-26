@@ -37,6 +37,9 @@ class Product < ActiveRecord::Base
   has_many :market_organizations, through: :organization, class_name: MarketOrganization
   has_many :markets, through: :market_organizations, class_name: Market
 
+  has_many :cross_selling_list_products
+  has_many :cross_selling_lists, through: :cross_selling_list_products
+
   dragonfly_accessor :image do
     copy_to(:thumb){|a| a.thumb('150x150#') }
   end
@@ -321,6 +324,29 @@ class Product < ActiveRecord::Base
     search_by_name(query)
   end
 
+  def self.cross_selling_list_items(entity_id)
+    # A few aliases
+    prod = Product.arel_table
+    cslp = CrossSellingListProduct.arel_table
+     csl = CrossSellingList.arel_table
+
+    # Define the joins to both the list_products and the lists
+    product_joins = prod.join(cslp).
+      on(
+        prod[:id].eq(cslp[:product_id]).
+        and(cslp[:active].eq(true))).
+      join(csl).
+      on(
+        cslp[:cross_selling_list_id].eq(csl[:id]).
+        and(csl[:creator].eq(false)).
+        and(csl[:entity_type].eq('Market')).
+        and(csl[:entity_id].eq(entity_id))).
+      join_sources
+
+    # return the joins (in service to chaining)
+    joins(product_joins)
+  end
+
   def self.with_available_inventory(deliver_on_date=Time.current.end_of_minute)
     lot_table = Lot.arel_table
     on_cond = arel_table[:id].eq(lot_table[:product_id]).
@@ -416,6 +442,11 @@ class Product < ActiveRecord::Base
       lots.delete_all
       lots.build(quantity: current_available_inventory).save
     end
+  end
+
+  def categories
+    ret_val = []
+    ret_val.push(category_id).push(second_level_category_id).push(top_level_category_id)
   end
 
   private

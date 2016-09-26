@@ -29,6 +29,12 @@ class Market < ActiveRecord::Base
   has_many :market_cross_sells, class_name: "MarketCrossSells", foreign_key: :source_market_id
   has_many :cross_sells, through: :market_cross_sells
 
+  has_many :cross_selling_lists, as: :entity
+
+  has_many :categories, -> { distinct }, through: :supplier_products
+  has_many :supplier_products, class_name: "Product", through: :suppliers, source: :products
+  has_many :suppliers, -> { where(active: true, can_sell: true) }, class_name: "Organization", through: :market_organizations, source: :organization
+
   has_many :market_organizations
   has_many :organizations, -> { extending(MarketOrganization::AssociationScopes).excluding_deleted }, through: :market_organizations # XXX prefer the merge in the line below to this partially and incorrectly implemened .excluding_deleted scope?
   # TODO has_many :organizations, -> { merge(MarketOrganization.visible) }, through: :market_organizations

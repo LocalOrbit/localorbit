@@ -3,7 +3,7 @@ class Admin::MarketsController < AdminController
 
   before_action :require_admin, only: [:new, :create]
   before_action :require_admin_or_market_manager, except: [:new, :create]
-  before_action :find_scoped_market, only: [:show, :update, :payment_options, :update_active, :confirm_pending]
+  before_action :find_scoped_market, only: [:show, :update, :payment_options, :update_active, :confirm_pending, :toggle_self_enabled_cross_sell]
   before_action :find_sticky_params, only: :index
 
   def index
@@ -55,6 +55,13 @@ class Admin::MarketsController < AdminController
       flash.now.alert = "Could not update market"
       render :show
     end
+  end
+
+  def toggle_self_enabled_cross_sell
+    @market.toggle!(:self_enabled_cross_sell)
+    notice = @market.self_enabled_cross_sell? ? "Cross selling is now active" : "Cross selling is now inactive"
+
+    redirect_to :back, notice: notice
   end
 
   def update_active
