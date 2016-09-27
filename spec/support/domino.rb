@@ -648,7 +648,7 @@ module Dom
     end
 
     class ProductManagementSupplierRow < Domino
-      selector "#product-add-suppliers table tbody tr"
+      selector "div#product-add-suppliers table tbody tr"
       attribute :supplier_name
       attribute :supplier_product_count
 
