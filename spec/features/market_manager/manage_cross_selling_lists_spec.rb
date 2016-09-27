@@ -172,15 +172,13 @@ describe "Manage cross selling lists" do
       fill_in "List Name", with: "Listy McListface"
       select "Published", from: "List Status"
 
-      # KXM "List Visibility" is now a list of checkboxes... mod the code, dude
-      select cross_selling_subscriber1.name, from: "List Visibility"
+      find(:css, "#cross_selling_list_children_ids_[value='#{cross_selling_subscriber1.id}']").set(true)
 
       click_button "Create List"
 
       expect(page).to have_content("Listy McListface")
       
-      expect(page).to have_content("This Cross Selling list is Empty")
-      # expect(page).to have_link(product_addition_link)
+      expect(page).to have_link(product_addition_link)
     end
 
   end
@@ -253,7 +251,8 @@ describe "Manage cross selling lists" do
 
       supplier_row = Dom::Admin::ProductManagementSupplierRow.find_by_supplier_name(supplier_01.name)
 
-      # KXM Unavailable products ought not show - the 'sellable' trait doesn't seem to work (the count should have been 2)... what does?
+      # KXM Unavailable products ought not show - the 'sellable' trait doesn't 
+      # seem to work (the count should have been 2)... what does?
       expect(supplier_row.supplier_product_count).to eql("3")
 
       supplier_row.check
@@ -265,12 +264,13 @@ describe "Manage cross selling lists" do
       expect(page).to have_link(product_management_link)
       click_link product_management_link
 
+      supplier_row = Dom::Admin::ProductManagementSupplierRow.find_by_supplier_name(supplier_01.name)
       expect(supplier_row.checked?).to eql("checked")
+      expect(supplier_row.supplier_product_count).to eql("3")
 
       supplier_row.uncheck
 
       click_button("Update List", match: :first)
-      # KXM remove doesn't seem to be working in the test suite, though it works on the site
       expect(page.all('table#cross-sell-list-products tbody tr').count).to eql(0)
     end
 
@@ -296,6 +296,8 @@ describe "Manage cross selling lists" do
       expect(page).to have_link(product_management_link)
       click_link product_management_link
 
+      category_row = Dom::Admin::ProductManagementCategoryRow.find_by_category_name(product_01.category.name)
+      expect(category_row.category_product_count).to eql("5")
       expect(category_row.checked?).to eql("checked")
 
       category_row.uncheck

@@ -109,13 +109,13 @@ describe "Manage cross selling" do
       end
 
       # KXM Check master-dup for expected result for the Organizational context... this may end up driving the move from polymorphism...
-      xit "does show the cross-sell tab" do
-        expect(page).to have_css(".tabs", text: "Admin X-Sell")
+      it "does show the cross-sell tab" do
+        expect(page).to have_css(".tabs", text: "Cross Sell")
       end
 
-      xit "shows a list of cross selling markets" do
+      it "shows a list of cross selling markets" do
         within ".tabs" do
-          click_link "Admin X-Sell"
+          click_link "Cross Sell"
         end
 
         expect(page).to have_content(cross_selling_market.name)
@@ -124,9 +124,9 @@ describe "Manage cross selling" do
         expect(page).to_not have_content(not_cross_selling_market.name)
       end
 
-      xit "saves changes to cross selling markets" do
+      it "saves changes to cross selling markets" do
         within ".tabs" do
-          click_link "Admin X-Sell"
+          click_link "Cross Sell"
         end
 
         cross_sell_row = Dom::Admin::CrossSell.find_by_name(cross_selling_market.name)

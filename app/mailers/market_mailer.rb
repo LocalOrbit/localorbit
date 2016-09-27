@@ -52,78 +52,20 @@ class MarketMailer < BaseMailer
     end
   end
 
-  def pending_cross_selling_list(publisher, cross_selling_list)
-    @publisher = @market = publisher
-    @cross_selling_list = cross_selling_list
-    @subscriber = cross_selling_list.entity
+  def cross_selling_list_message(sender, list_in_question, subject, action)
+    @sender = @market = sender
+    @list_in_question = list_in_question
+    @recipient = list_in_question.entity
 
-    recipients = @publisher.managers.map(&:pretty_email)
-
-    if recipients.any?
-      mail(
-        to: recipients,
-        subject: "#{@publisher.name} has shared a new Cross Selling List"
-      )
-    end
-  end
-
-  def revoked_cross_selling_list(publisher, cross_selling_list)
-    @publisher = @market = publisher
-    @cross_selling_list = cross_selling_list
-    @subscriber = cross_selling_list.entity
-
-    recipients = @publisher.managers.map(&:pretty_email)
+    recipients = @recipient.managers.map(&:pretty_email)
 
     if recipients.any?
       mail(
         to: recipients,
-        subject: "Cross Selling List '#{@cross_selling_list.name}' is no longer available"
+        subject: subject,
+        template_name: action + "_cross_selling_list"
       )
     end
   end
 
-  def activated_cross_selling_list(subscriber, parent_list)
-    @subscriber = @market = subscriber
-    @parent_list = parent_list
-    @publisher = parent_list.entity
-
-    recipients = @publisher.managers.map(&:pretty_email)
-
-    if recipients.any?
-      mail(
-        to: recipients,
-        subject: "#{@subscriber.name} has activated your Cross Selling List"
-      )
-    end
-  end
-
-  def deactivated_cross_selling_list(subscriber, parent_list)
-    @subscriber = @market = subscriber
-    @parent_list = parent_list
-    @publisher = parent_list.entity
-
-    recipients = @publisher.managers.map(&:pretty_email)
-
-    if recipients.any?
-      mail(
-        to: recipients,
-        subject: "#{@subscriber.name} has deactivated your Cross Selling List"
-      )
-    end
-  end
-
-  def declined_cross_selling_list(subscriber, parent_list)
-    @subscriber = @market = subscriber
-    @parent_list = parent_list
-    @publisher = parent_list.entity
-
-    recipients = @publisher.managers.map(&:pretty_email)
-
-    if recipients.any?
-      mail(
-        to: recipients,
-        subject: "#{@subscriber.name} has declined your Cross Selling List"
-      )
-    end
-  end
 end
