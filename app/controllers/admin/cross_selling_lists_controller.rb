@@ -4,6 +4,7 @@ class Admin::CrossSellingListsController < AdminController
   include CrossSellingListEntity
 
   before_action :require_self_enabled_cross_selling, except: :index
+  before_action :require_target_market
 
   def index
     @cross_selling_lists = @entity.cross_selling_lists.creator.order(:name)
@@ -251,8 +252,8 @@ class Admin::CrossSellingListsController < AdminController
     cross_selling_list_prods = (cross_selling_list_params["cross_selling_list_products_attributes"] || [])
 
     # Update "active" where appropriate
-    cross_selling_list_prods.each do |key, cslp|
-      # due to structural anomolies, 'key' is invoked but disregarded
+    cross_selling_list_prods.each do |_key, cslp|
+      # due to structural anomolies, '_key' is invoked but disregarded
       cslp["active"] = "1" if make_active.include?(cslp["product_id"])
       cslp["active"] = "0" if deactivate.include?(cslp["product_id"])
     end
@@ -338,6 +339,10 @@ class Admin::CrossSellingListsController < AdminController
       categories.insert(parent_index+1, second) unless  parent_index.nil?
     end
     categories
+  end
+
+  def require_target_market
+    @target_market = Market.find(params[:market_id]) || current_market
   end
 
 end

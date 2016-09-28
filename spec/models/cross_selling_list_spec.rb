@@ -72,6 +72,7 @@ describe CrossSellingList do
 
   end
 
+  # KXM CrossSellingList Coverage = 49.38%, mostly due to missing tests for class methods... add them here...
   context "editing a list" do
     xit "allows name to be changed" do
     end
