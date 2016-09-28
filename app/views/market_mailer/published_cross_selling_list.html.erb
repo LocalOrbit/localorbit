@@ -1,9 +1,9 @@
 <%# Message from subscriber to publisher - in other words: recipient is Publisher, sender is Subscriber %>
 <p>Hello <%= @recipient.contact_name %>,
 
-<h2><%= @sender.name %> has declined your Cross Selling List</h2>
+<h2><%= @sender.name %> has activated your Cross Selling List!</h2>
 
-<p><%= @sender.name %> has declined your cross selling list '<%= @list_in_question.name %>' at this time.  Unless you revoke subscription privileges for <%= @sender.name %> this list will remain available for them to activate in the future.</p>
+<p><%= @sender.name %> has activated the cross selling list '<%= @list_in_question.name %>' you shared with them. Your shared products are now available to be sold by <%= @sender.name %>.</p>
 
 <div class="lo_call_to_action">
   <a class="lo_button lo_button_large" href="<%= root_url(host: @recipient.domain) %>">Visit your market</a>
@@ -12,3 +12,6 @@
     After you've copied it, paste it into a new browser window.
   </p>
 </div>
+
+
+

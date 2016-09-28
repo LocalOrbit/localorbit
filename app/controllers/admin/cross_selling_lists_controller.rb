@@ -251,7 +251,8 @@ class Admin::CrossSellingListsController < AdminController
     cross_selling_list_prods = (cross_selling_list_params["cross_selling_list_products_attributes"] || [])
 
     # Update "active" where appropriate
-    cross_selling_list_prods.each do |cslp|
+    cross_selling_list_prods.each do |key, cslp|
+      # due to structural anomolies, 'key' is invoked but disregarded
       cslp["active"] = "1" if make_active.include?(cslp["product_id"])
       cslp["active"] = "0" if deactivate.include?(cslp["product_id"])
     end
