@@ -4,6 +4,7 @@ class Admin::CrossSellingListsController < AdminController
   include CrossSellingListEntity
 
   before_action :require_self_enabled_cross_selling, except: :index
+  before_action :require_target_market
 
   def index
     @cross_selling_lists = @entity.cross_selling_lists.creator.order(:name)
@@ -338,6 +339,10 @@ class Admin::CrossSellingListsController < AdminController
       categories.insert(parent_index+1, second) unless  parent_index.nil?
     end
     categories
+  end
+
+  def require_target_market
+    @target_market = Market.find(params[:market_id]) || current_market
   end
 
 end

@@ -19,7 +19,7 @@
       <%= list.label :children_ids, "List Visibility" %>
       <span class="help-text">Control who may view, subscribe, or sell your products. Contact Local Orbit if you don't see who you're looking for.</span>
 
-      <% current_market.cross_sells.each do |csl_market| %>
+      <% @target_market.cross_sells.each do |csl_market| %>
         <%= check_box_tag "cross_selling_list[children_ids][]", csl_market.id, @cross_selling_list.children.active.map{|list| list.entity_id}.include?(csl_market.id) %>&nbsp;<%= csl_market.name %><br />
       <% end %>
     <% end %>
