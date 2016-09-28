@@ -214,7 +214,7 @@ describe "Manage cross selling lists" do
     # expect(page).to have_content "Active"
   end
 
-  # KXM Check dynamic product counts on product selection once AJAX is implemented
+  # TODO Check dynamic product counts on product selection once AJAX is implemented
   # (selecting a supplier should change products checked and vice versa)
   context "when adding items to a list" do
     before do
@@ -239,9 +239,6 @@ describe "Manage cross selling lists" do
       expect(page).to have_content(individual_products)
     end
 
-    # KXM Probably better to split all the 'adds and removes' tests...
-    # Is it better to create a test cross sell list that contains products matching the criteria or re-do
-    # the process of adding (duplicating the 'adds products...' process) just to remove 'em
     it "adds and removes products by supplier via form submission" do
       # Add 'em first...'
       click_link product_addition_link
