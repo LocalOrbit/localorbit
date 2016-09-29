@@ -1,4 +1,6 @@
 class Lot < ActiveRecord::Base
+
+  before_update :update_product_record
   audited allow_mass_assignment: true, associated_with: :product
 
   belongs_to :product, inverse_of: :lots
@@ -34,6 +36,11 @@ class Lot < ActiveRecord::Base
       END
     SQL
     )
+  end
+
+  def update_product_record
+    product.updated_at=Time.current
+    product.save!
   end
 
   def available?(time=Time.current.end_of_minute)
