@@ -8,7 +8,7 @@ class SendUpdateEmails
     #  OrderMailer.delay.buyer_order_updated(order)
     #end
 
-    if order.is_localeyes_order?
+    #if order.is_localeyes_order?
 
       order.sellers_with_changes.each do |seller|
         unless seller.users.empty?
@@ -35,7 +35,8 @@ class SendUpdateEmails
         end
       end
 
-    end
+
+  #end
 
     #unless order.market.managers.empty?
     #  OrderMailer.delay.market_manager_order_updated(order)
