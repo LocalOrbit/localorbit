@@ -44,9 +44,8 @@ class SendCrossSellMessages
     else
       # There is no 'else'... MUAHAAHAAHAAHAAAAAA!
     end
-    # binding.pry
 
-    MarketMailer.delay.cross_selling_list_message(sender, list, subject, current_status) unless (starting_status.downcase == "pending" && current_status == "pending")
+    MarketMailer.delay.cross_selling_list_message(sender, list, subject, current_status) unless (current_status == "draft" || (starting_status.downcase == "pending" && current_status == "pending"))
   end
 
   def rollback
