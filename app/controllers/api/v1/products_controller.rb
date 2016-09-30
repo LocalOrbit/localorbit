@@ -72,11 +72,24 @@ module Api
         cross_sold_products = Product.
           cross_selling_list_items(current_market.id).
           visible.
-          with_available_inventory(current_delivery.deliver_on).
           priced_for_market_and_buyer(current_market, current_organization).
           with_visible_pricing.
           select(:id, :general_product_id).
           to_sql
+
+          # KXM 'with_available_inventory' is the lynchpin.  implement delivery for cross sold items
+          # with_available_inventory(current_delivery.deliver_on).
+
+        # KXM Original sql generation below... once lots + cross sold items is working then 'with_available_inventory' should alos work.  Can I get the trifecta and have delivery options for cross sold items also work, automagically like?
+
+        # cross_sold_products = Product.
+        #   cross_selling_list_items(current_market.id).
+        #   visible.
+        #   with_available_inventory(current_delivery.deliver_on).
+        #   priced_for_market_and_buyer(current_market, current_organization).
+        #   with_visible_pricing.
+        #   select(:id, :general_product_id).
+        #   to_sql
 
         GeneralProduct.joins("JOIN (#{catalog_products} UNION #{cross_sold_products}) p_child 
               ON general_products.id=p_child.general_product_id
