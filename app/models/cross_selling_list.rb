@@ -106,6 +106,18 @@ class CrossSellingList < ActiveRecord::Base
     end
   end
 
+  def show_product_management_button?
+    publisher? || ( subscriber? && cross_selling_list_products.any? )
+  end
+
+  def subscriber?
+    creator == false && !parent_id.blank?
+  end
+
+  def publisher?
+    creator
+  end
+
   def published?
     status == 'Published' && published_at && published_at.past?
   end
