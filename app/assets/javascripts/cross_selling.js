@@ -7,6 +7,13 @@ $(document).ready(function(){
 
   // 'Select all' check boxes...
   $(".select_all").click(function(){
-    $(this).closest(".bound-list").find("input:checkbox").prop("checked", $(this).prop("checked"));
+    $(this).closest(".popup-body").find("input:checkbox").prop("checked", $(this).prop("checked"));
   });
+
+  // Close button should do just that - close the modal without submission
+  $('#close-modal').click(function(e) {
+    $('.is-open').removeClass('is-open is-dark is-dim is-modal is-editable mobile-dim');
+    $('.popup').addClass('is-hidden');
+  });
+
 });
