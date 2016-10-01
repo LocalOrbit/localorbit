@@ -256,6 +256,73 @@ describe Lot do
     end
   end
 
+  describe "#available_inventory - specific" do
+    let(:market)  { create(:market)}
+    let(:buyer)   { create(:organization, :buyer)}
+    let(:product) { create(:product)}
+
+    context "without expiration" do
+      it "returns the set quantity" do
+        product.lots.create!(quantity: 42, market: market, organization: buyer)
+        expect(product.available_inventory(Time.current, market.id, buyer.id)).to eq(42)
+      end
+    end
+
+    context "without expiration - multiple lot aggregation" do
+      it "returns the set quantity" do
+        product.lots.create!(quantity: 42, market: market, organization: buyer)
+        product.lots.create!(quantity: 42, market: nil, organization: nil)
+        expect(product.available_inventory(Time.current, market.id, buyer.id)).to eq(84)
+      end
+    end
+
+    context "with a current good from date" do
+      it "returns the set quantity" do
+        product.lots.create!(good_from: 1.day.ago, quantity: 42, market: market, organization: buyer)
+        expect(product.available_inventory(Time.current, market.id, buyer.id)).to eq(42)
+      end
+    end
+
+    context "with a future good from date" do
+      it "returns 0" do
+        product.lots.create!(good_from: 1.day.from_now, quantity: 42, market: market, organization: buyer)
+        expect(product.available_inventory(Time.current, market.id, buyer.id)).to eq(0)
+      end
+    end
+
+    context "with a future good from date - multiple lot aggregation" do
+      it "returns the set quantity" do
+        product.lots.create!(quantity: 42, market: market, organization: buyer)
+        product.lots.create!(good_from: 1.day.from_now, quantity: 42, market: nil, organization: nil)
+        expect(product.available_inventory(Time.current, market.id, buyer.id)).to eq(42)
+      end
+    end
+
+    context "with a future expiration date" do
+      it "returns the given quantity" do
+        product.lots.create!(number: '123', expires_at: 1.day.from_now, quantity: 42, market: market, organization: buyer)
+        expect(product.available_inventory(Time.current, market.id, buyer.id)).to eq(42)
+      end
+    end
+
+    context "with a past expiration date" do
+      it "returns 0" do
+        product.lots.create(number: '123', expires_at: 1.day.ago, quantity: 42, market: market, organization: buyer)
+        expect(product.available_inventory(Time.current, market.id, buyer.id)).to eq(0)
+      end
+    end
+
+    context "with a past expiration date - multiple lot aggregation" do
+      it "returns only valid qty" do
+        product.lots.create(number: '123', expires_at: 1.day.ago, quantity: 42, market: market, organization: buyer)
+        product.lots.create(number: '123', expires_at: 1.day.from_now, quantity: 42, market: market, organization: nil)
+        product.lots.create(quantity: 42, market: nil, organization: nil)
+        expect(product.available_inventory(Time.current, market.id, buyer.id)).to eq(84)
+      end
+    end
+
+  end
+
   describe "#available?" do
     it "is true if good_from and expires_at are nil or appropriate values" do
       subject.good_from = nil
