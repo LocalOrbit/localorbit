@@ -172,8 +172,13 @@ class Admin::OrdersController < AdminController
       redirect_to next_url, notice: "Order successfully updated."
     else
       order = updates.context[:order]
+      order.errors.add(:total_cost, "cannot be negative") if updates.context[:status] == "failed_total"
       order.errors.add(:payment_processor, "failed to update your payment") if updates.context[:status] == "failed"
-      @order = SellerOrder.new(order, current_user)
+      if current_user.organization_ids.include?(order.organization_id) || current_user.can_manage_organization?(order.organization)
+        @order = BuyerOrder.new(order)
+      else
+        @order = SellerOrder.new(order, current_user)
+      end
       render :show
     end
   end
