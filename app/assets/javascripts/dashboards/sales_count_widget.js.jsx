@@ -92,6 +92,7 @@
                     zeroline:false,
                     showgrid:false,
                     autotick: false,
+                    type: 'log',
                     tickfont:{
                         size:10
                     }

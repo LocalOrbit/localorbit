@@ -12,8 +12,8 @@ class ValidateOrderTotal
         total += item[0].unit_price * qty
       end
     end
-    context[:status] = "failed_total" unless total - credit_amt > 0
-    context.fail! unless total - credit_amt > 0
+    context[:status] = "failed_total" unless total - credit_amt >= 0
+    context.fail! unless total - credit_amt >= 0
   end
 
   def rollback
