@@ -102,11 +102,12 @@
                     showgrid:false,
                     zeroline:false,
                     autotick: false,
+                    type: 'log',
                     hoverformat: ".2f",
                     showexponent:"all",
                     tickprefix:"$",
                     tickfont:{
-                        size:10
+                        size:9
                     }
                 },
                 xaxis:{
