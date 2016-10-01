@@ -10,7 +10,7 @@ end
   <div class="catalog-header">
     <div class="column--full">
       <div class="row">
-        <div class="branding-container column column--half">
+        <div class="branding-container column column--half no-print">
           <%= link_to logo, signed_in_root_path(current_user), class: "logo-link vc-wrapper pull-left" %>
           <%= content_tag :span, "#{current_market.tagline}", class: "tagline" if current_market && current_market.tagline.present? && (@show_nav_tagline or current_user) %>
         </div>
