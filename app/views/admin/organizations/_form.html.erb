@@ -31,6 +31,8 @@
       >
       <% end %>
       </div>
+    <% else %>
+      <%= hidden_field_tag :can_sell, @organization.can_sell %>
     <% end %>
 
     <% if @organization.new_record? || @organization.can_sell? %>
@@ -89,9 +91,26 @@
       <br>
       <%= f.text_area :how_story, class: "column column--full", rows: 4 %>
     </div>
-  </fieldset>
-  <% end %>
+    <% end %>
+    </fieldset>
+    <div class="field">
+      <div class="buyer-fields is-hidden">
+        <%= f.label :buyer_org_type, 'Buyer Type' %><br>
+        <%= f.select :buyer_org_type, Registration::BUYER_ORG_TYPES, include_blank: true, class: "column--full" %>
+      </div>
 
+      <div class="seller-fields is-hidden">
+        <%= f.label :ownership_type, 'Ownership Type' %><br>
+        <%= f.select :ownership_type, Registration::OWNERSHIP_TYPES, include_blank: true, class: "column--full" %><br/><br/>
+        <%= f.label :non_profit, 'Non-profit?' %>
+        <%= f.check_box :non_profit %><br/><br/>
+      </div>
+    </div>
+    <div class="field">
+      <%= f.label :professional_organizations, 'Professional Organization Membership' %>
+      <span class="tooltip pull-right" data-tooltip="e.g. National Young Farmers Coalition, Woman in Sustainable Agriculture, NACUFS, AASHE, National Restaurant Association, etc. "></span>
+      <%= f.text_field :professional_organizations, maxlength: 255, class: "column--full" %>
+    </div>
     <% if current_user.admin? || current_user.market_manager? %>
       <div class="row row--field">
         <div class="field column column--half column--guttered">
