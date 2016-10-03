@@ -213,21 +213,21 @@ class DeliverySchedule < ActiveRecord::Base
     Time.use_zone timezone do
       current_time = Time.current.end_of_minute
       case delivery_cycle
-        when 'weekly' || 'biweekly'
+        when 'weekly','biweekly'
           beginning = current_time.beginning_of_week(:sunday) - interval.week
           date = (beginning + week_interval.week + day.days).to_date
           d = Time.zone.parse("#{date} #{seller_delivery_start}")
-          d += 1.week while (d - self.order_cutoff.hours) < current_time
+          d += interval.week while (d - self.order_cutoff.hours) < current_time
         when 'monthly_day'
           first_day = current_time.beginning_of_month.to_date
           arr = (first_day..(first_day.end_of_month)).to_a.select {|d| d.wday == day }
           date = week_interval == 'last' ? arr.last : arr[week_interval-1]
           d = Time.zone.parse("#{date} #{seller_delivery_start}")
           if d < current_time
-            d += 1.month
+            d += 1.month + day.days
           end
         when 'monthly_date'
-          date = current_time.beginning_of_month + day_of_month.days - 1.days
+          date = current_time.beginning_of_month.to_date + day_of_month.days - 1.days
           d = Time.zone.parse("#{date} #{seller_delivery_start}")
           if d < current_time
             d += 1.month
@@ -249,7 +249,7 @@ class DeliverySchedule < ActiveRecord::Base
     Time.use_zone timezone do
       current_time = Time.current.end_of_minute
       case delivery_cycle
-        when 'weekly' || 'biweekly'
+        when 'weekly','biweekly'
           beginning = current_time.beginning_of_week(:sunday) - interval.week
           date = (beginning + week_interval.week + buyer_day.days).to_date
           d = Time.zone.parse("#{date} #{time_of_day}")
@@ -260,10 +260,10 @@ class DeliverySchedule < ActiveRecord::Base
           date = week_interval == 'last' ? arr.last : arr[week_interval-1]
           d = Time.zone.parse("#{date} #{time_of_day}")
           if d < current_time
-            d += 1.month
+            d += 1.month + day.days
           end
         when 'monthly_date'
-          date = current_time.beginning_of_month + day_of_month.days - 1.days
+          date = current_time.beginning_of_month.to_date + day_of_month.days - 1.days
           d = Time.zone.parse("#{date} #{time_of_day}")
           if d < current_time
             d += 1.month

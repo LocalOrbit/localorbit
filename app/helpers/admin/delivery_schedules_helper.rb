@@ -9,7 +9,7 @@ module Admin
     end
 
     def week_interval_options
-        [['First',1],['Second',2],['Third',3],['Fourth',4],['Fifth',5]]
+        [['First',1],['Second',2],['Third',3],['Fourth',4],['Last','last']]
     end
 
     def quarter_hour_select_options

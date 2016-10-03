@@ -199,6 +199,100 @@ describe DeliverySchedule do
       Timecop.return
     end
 
+    describe "weekly delivery" do
+      it "creates a delivery for the next weekly delivery time" do
+        delivery = schedule.next_delivery
+        expected_deliver_on_time = Time.parse("2014-05-15 06:00:00 EDT")
+        # NOTE: The buyer_pickup_start time is set to 9am BUT this is a direct-to-customer
+        # delivery, which means the actual buyer_deliver_on start time will be calc'd based
+        # on the seller's start time.  Ideally, buyer_pickup_start should not be different
+        # than seller_delivery_start for direct deliverires.
+        expected_buyer_deliver_on_time = Time.parse("2014-05-15 06:00:00 EDT")
+
+        expect(delivery).to be_a(Delivery)
+        expect(delivery.deliver_on).to eql(expected_deliver_on_time)
+        expect(delivery.buyer_deliver_on).to eql(expected_buyer_deliver_on_time)
+      end
+    end
+
+    describe "bi-weekly delivery" do
+      let(:base_schedule) { { market: market, order_cutoff: 8,
+                              day: 4,
+                              seller_delivery_start: "6:00 am",
+                              seller_delivery_end: "10:00 am",
+                              buyer_pickup_start: "9:00 am",
+                              buyer_pickup_end: "11:00 am",
+                              delivery_cycle: "biweekly",
+                              week_interval: 2} }
+      let(:schedule) { create(:delivery_schedule, base_schedule) }
+
+      it "creates a delivery for the next bi-weekly delivery time" do
+        delivery = schedule.next_delivery
+        expected_deliver_on_time = Time.parse("2014-05-22 06:00:00 EDT")
+        # NOTE: The buyer_pickup_start time is set to 9am BUT this is a direct-to-customer
+        # delivery, which means the actual buyer_deliver_on start time will be calc'd based
+        # on the seller's start time.  Ideally, buyer_pickup_start should not be different
+        # than seller_delivery_start for direct deliverires.
+        expected_buyer_deliver_on_time = Time.parse("2014-05-22 06:00:00 EDT")
+
+        expect(delivery).to be_a(Delivery)
+        expect(delivery.deliver_on).to eql(expected_deliver_on_time)
+        expect(delivery.buyer_deliver_on).to eql(expected_buyer_deliver_on_time)
+      end
+    end
+
+    describe "monthly/day delivery" do
+      let(:base_schedule) { { market: market, order_cutoff: 8,
+                              day: 4,
+                              seller_delivery_start: "6:00 am",
+                              seller_delivery_end: "10:00 am",
+                              buyer_pickup_start: "9:00 am",
+                              buyer_pickup_end: "11:00 am",
+                              delivery_cycle: "monthly_day",
+                              week_interval: 1} }
+      let(:schedule) { create(:delivery_schedule, base_schedule) }
+
+      it "creates a delivery for the next monthly/date delivery time" do
+        delivery = schedule.next_delivery
+        expected_deliver_on_time = Time.parse("2014-06-05 06:00:00 EDT")
+        # NOTE: The buyer_pickup_start time is set to 9am BUT this is a direct-to-customer
+        # delivery, which means the actual buyer_deliver_on start time will be calc'd based
+        # on the seller's start time.  Ideally, buyer_pickup_start should not be different
+        # than seller_delivery_start for direct deliverires.
+        expected_buyer_deliver_on_time = Time.parse("2014-06-05 06:00:00 EDT")
+
+        expect(delivery).to be_a(Delivery)
+        expect(delivery.deliver_on).to eql(expected_deliver_on_time)
+        expect(delivery.buyer_deliver_on).to eql(expected_buyer_deliver_on_time)
+      end
+    end
+
+    describe "monthly/date delivery" do
+      let(:base_schedule) { { market: market, order_cutoff: 8,
+                              day: 4,
+                              seller_delivery_start: "6:00 am",
+                              seller_delivery_end: "10:00 am",
+                              buyer_pickup_start: "9:00 am",
+                              buyer_pickup_end: "11:00 am",
+                              delivery_cycle: "monthly_date",
+                              day_of_month: 13} }
+      let(:schedule) { create(:delivery_schedule, base_schedule) }
+
+      it "creates a delivery for the next monthly/date delivery time" do
+        delivery = schedule.next_delivery
+        expected_deliver_on_time = Time.parse("2014-05-13 06:00:00 EDT")
+        # NOTE: The buyer_pickup_start time is set to 9am BUT this is a direct-to-customer
+        # delivery, which means the actual buyer_deliver_on start time will be calc'd based
+        # on the seller's start time.  Ideally, buyer_pickup_start should not be different
+        # than seller_delivery_start for direct deliverires.
+        expected_buyer_deliver_on_time = Time.parse("2014-05-13 06:00:00 EDT")
+
+        expect(delivery).to be_a(Delivery)
+        expect(delivery.deliver_on).to eql(expected_deliver_on_time)
+        expect(delivery.buyer_deliver_on).to eql(expected_buyer_deliver_on_time)
+      end
+    end
+
     describe "delivery with short cutoff" do
       it "creates a delivery for the next delivery time" do
         delivery = schedule.next_delivery

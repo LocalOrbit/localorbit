@@ -94,6 +94,8 @@ FactoryGirl.define do
     buyer_pickup_start "12:00 AM"
     buyer_pickup_end "12:00 AM"
     association :market, factory: [:market, :with_addresses]
+    delivery_cycle "weekly"
+    week_interval 1
 
     trait :direct_to_customer do
       # this is currently the same as the above defaults
