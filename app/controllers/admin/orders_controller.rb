@@ -74,6 +74,13 @@ class Admin::OrdersController < AdminController
     elsif params[:commit] == "Change Delivery"
       update_delivery(order)
       return
+    elsif params[:commit] == "Merge"
+      dest_order = Order.orders_for_seller(current_user).find_by(id: params[:dest_order]) || Order.orders_for_seller(current_user).find_by(order_number: params[:dest_order])
+      merge_order(order, dest_order)
+      return
+    elsif params[:commit] == "Duplicate Order"
+      duplicate_order(order)
+      return
     elsif params["order"][:delivery_clear] == "true"
       remove_delivery_fee(order)
       return
@@ -86,6 +93,27 @@ class Admin::OrdersController < AdminController
 
     # TODO: Change an order items delivery status to 'removed' or something rather then deleting them
     perform_order_update(order, order_params)
+  end
+
+  def duplicate_order(order)
+    result = DuplicateOrder.perform(user: current_user, order: order)
+    if result.success?
+      session[:cart_id] = result.cart_id
+      session[:current_organization_id] = result.current_organization_id
+      session[:current_delivery_id] = result.current_delivery_id
+      redirect_to cart_path, notice: "Order Duplicated."
+    else
+      redirect_to admin_order_path(order), alert: "Error duplicating order."
+    end
+  end
+
+  def merge_order(orig_order, dest_order)
+    result = MergeOrder.perform(user: current_user, orig_order: orig_order, dest_order: dest_order)
+    if result.success?
+      redirect_to admin_order_path(dest_order), notice: "Order Merged."
+    else
+      redirect_to admin_order_path(orig_order), alert: "Error merging order."
+    end
   end
 
   protected
