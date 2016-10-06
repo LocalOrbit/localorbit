@@ -7,6 +7,6 @@ class Plan < ActiveRecord::Base
   end
 
   def self.ryo_enabled_plans
-    where(cross_selling: true).where.not(stripe_id: nil).order(:name).pluck(:stripe_id)
+    where(ryo_eligible: true).where.not(stripe_id: nil).order(:name).pluck(:stripe_id)
   end
 end
