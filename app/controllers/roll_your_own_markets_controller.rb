@@ -13,21 +13,15 @@ class RollYourOwnMarketsController < ApplicationController
 
 	def get_stripe_plans
     requested_plan = params[:plan]
-
     @_ryo_plans ||= Plan.ryo_enabled_plans
 
-  	# If no plan is sent...
+    # If no plan is sent...
     if(requested_plan == nil)
-    	# ...then return the cached plans...
-    	@_plans ||= 
-	    begin
-    		# ...or get them from Stripe
-		    stripe_plans = PaymentProvider::Stripe.get_stripe_plans
-
-        # ...retaining only those that ought to appear in the list
-        @_plans = stripe_plans.select do |plan|
-          @_ryo_plans.include?(plan.id)
-        end
+      # ...then return the cached plans...
+      @_plans ||=
+      begin
+        # ...or get them from Stripe (filtered through those marked as eligible in the database)
+        @_plans = PaymentProvider::Stripe.get_stripe_plans.select{|plan| @_ryo_plans.include?(plan.id)}
 
 				render json: @_plans
 

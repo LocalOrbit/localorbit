@@ -7,8 +7,6 @@ class Plan < ActiveRecord::Base
   end
 
   def self.ryo_enabled_plans
-    # KXM ryo_enabled_plans will leverage the to-be-created boolean: plans.ryo_option
-    # where(cross_selling: true).order(:name).pluck(:id)
-    where(cross_selling: true).order(:name).pluck(:stripe_id)
+    where(cross_selling: true).where.not(stripe_id: nil).order(:name).pluck(:stripe_id)
   end
 end
