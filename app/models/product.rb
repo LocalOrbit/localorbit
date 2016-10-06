@@ -23,7 +23,7 @@ class Product < ActiveRecord::Base
   default_scope { includes(:general_product) }
 
   # transient properties for conveniently adding sibling (product) units
-  attr_accessor :sibling_id, :sibling_unit_id, :sibling_unit_description, :sibling_product_code
+  attr_accessor :sibling_id, :sibling_unit_id, :sibling_unit_description, :sibling_product_code, :skip_validation
 
   has_many :lots, -> { order("created_at") }, inverse_of: :product, autosave: true, dependent: :destroy
   has_many :lots_by_expiration, -> { order("organization_id, market_id, expires_at, good_from, created_at") }, class_name: Lot, foreign_key: :product_id
@@ -46,8 +46,8 @@ class Product < ActiveRecord::Base
 
   dragonfly_accessor :thumb
   define_after_upload_resize(:image, 1200, 1200, thumb: {width: 150, height: 150})
-  validates_property :format, of: :image, in: %w(jpg jpeg png gif)
-  validates_property :format, of: :thumb, in: %w(jpg jpeg png gif)
+  validates_property :format, of: :image, in: %w(jpg jpeg png gif), :unless => :skip_validation
+  validates_property :format, of: :thumb, in: %w(jpg jpeg png gif), :unless => :skip_validation
 
   validates :name, presence: true
   validates :unit, presence: true
@@ -56,7 +56,7 @@ class Product < ActiveRecord::Base
   validates :short_description, presence: true, length: {maximum: 50}
   validates :long_description, length: {maximum: 500}
 
-  validates :location, presence: true, if: :overrides_organization?
+  validates :location, presence: true, if: :overrides_organization?, :unless => :skip_validation
 
   validate :ensure_organization_can_sell
 
@@ -471,6 +471,7 @@ class Product < ActiveRecord::Base
 
   def update_general_product
     ensure_product_has_a_general_product
+    general_product.skip_validation = self.skip_validation
     self.general_product.save!
   end
   

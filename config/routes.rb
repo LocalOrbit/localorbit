@@ -83,6 +83,7 @@ Rails.application.routes.draw do
 
     get "upload" => "upload#index"
     get "upload/download" => "upload#download"
+    get "upload/export_products" => "upload#export_products"
     get "upload/get_documentation" => "upload#get_documentation"
     post "upload" => "upload#upload"
 
