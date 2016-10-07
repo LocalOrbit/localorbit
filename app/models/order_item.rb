@@ -176,7 +176,8 @@ class OrderItem < ActiveRecord::Base
     end
   end
 
-  def consume_inventory_amount(amount)
+  def consume_inventory_amount(initial_amount)
+    amount = initial_amount
     product.lots_by_expiration.available(deliver_on_date).each do |lot|
       break unless amount > 0
 
@@ -186,6 +187,17 @@ class OrderItem < ActiveRecord::Base
       lots.build(lot: lot, quantity: num_to_consume)
       amount -= num_to_consume
     end
+
+    amount = initial_amount
+    lots.order(created_at: :desc).each do |lot|
+      break unless amount
+
+      num_to_consume = [lot.quantity, amount].min
+      lot.increment!(:quantity, num_to_consume)
+
+      amount -= num_to_consume
+    end
+
   end
 
   def return_inventory_amount(amount)
@@ -194,6 +206,7 @@ class OrderItem < ActiveRecord::Base
 
       num_to_return = [lot.quantity, amount].min
       lot.lot.increment!(:quantity, num_to_return)
+      lot.decrement!(:quantity, num_to_return)
 
       amount -= num_to_return
     end

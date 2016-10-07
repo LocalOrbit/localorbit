@@ -42,20 +42,6 @@ module Api
       private
 
       def filtered_available_products(query, category_ids, seller_ids, order)
-        delv = current_delivery
-        mkt = current_market
-        org = current_organization
-
-        #if order.nil?
-        #  delv = current_delivery
-        #  mkt = current_market
-        #  org = current_organization
-        #else
-        #  delv = order.delivery.decorate
-        #  mkt = order.market
-        #  org = order.organization
-        #end
-
         catalog_products = Product.connection.unprepared_statement do
           current_delivery
               .object
@@ -78,7 +64,7 @@ module Api
           select(:id, :general_product_id).
           to_sql
 
-        GeneralProduct.joins("JOIN (#{catalog_products} UNION #{cross_sold_products}) p_child 
+        gp = GeneralProduct.joins("JOIN (#{catalog_products} UNION #{cross_sold_products}) p_child
               ON general_products.id=p_child.general_product_id
               JOIN categories top_level_category ON general_products.top_level_category_id = top_level_category.id
               JOIN categories second_level_category ON general_products.second_level_category_id = second_level_category.id
