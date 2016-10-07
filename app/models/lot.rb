@@ -39,8 +39,7 @@ class Lot < ActiveRecord::Base
   end
 
   def update_product_record
-    product.updated_at=Time.current
-    product.save!
+    product.touch
   end
 
   def available?(time=Time.current.end_of_minute)

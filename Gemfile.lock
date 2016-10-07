@@ -381,8 +381,7 @@ GEM
       multi_json (~> 1.8)
     hike (1.2.3)
     hitimes (1.2.2)
-    honeybadger (1.16.4)
-      json
+    honeybadger (2.1.5)
     http-cookie (1.0.2)
       domain_name (~> 0.5)
     httparty (0.13.7)
@@ -656,6 +655,8 @@ GEM
     skinny (0.2.3)
       eventmachine (~> 1.0.0)
       thin (~> 1.5.0)
+    skylight (0.10.6)
+      activesupport (>= 3.0.0)
     slop (3.6.0)
     spreadsheet (1.0.3)
       ruby-ole (>= 1.0)
@@ -828,6 +829,7 @@ DEPENDENCIES
   sdoc
   simplecov
   simpleidn
+  skylight
   slop (~> 3.0)
   spreadsheet
   spring
@@ -846,3 +848,6 @@ DEPENDENCIES
   wkhtmltopdf-heroku
   wysihtml5-rails
   wysiwyg-rails
+
+BUNDLED WITH
+   1.10.6

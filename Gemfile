@@ -25,7 +25,6 @@ gem 'active_record_union'
 gem 'acts_as_geocodable'
 gem 'audited-activerecord'
 gem 'awesome_nested_set'
-#gem 'balanced', '~> 0.7'
 gem 'stripe'
 gem 'color'
 gem 'countries'
@@ -40,7 +39,6 @@ gem 'draper'
 gem 'figaro', '~> 1.0.0.rc1'
 gem 'font_assets'
 gem 'graticule'
-gem 'honeybadger'
 gem 'groupdate', :git => 'https://github.com/trestrantham/groupdate.git', :branch => 'custom-calculations' # Waiting on https://github.com/ankane/groupdate/pull/53
 gem 'interactor-rails', '< 3.0'
 gem 'interactor', '< 3.0' # We are not ready for 3 yet
@@ -48,9 +46,7 @@ gem 'intercom-rails', '~> 0.2.26'
 gem 'intercom', '~> 2.3.0'
 gem 'jbuilder'
 gem 'jwt'
-gem 'kaminari'
-gem 'newrelic_rpm', '< 3.9.0' # Rack middleware instrumentation is very broken
-gem 'newrelic-dragonfly'
+gem 'kaminari'                      # Paginator
 gem 'pdfkit'
 gem 'periscope-activerecord'
 gem 'pg_search'
@@ -61,9 +57,9 @@ gem 'simpleidn'
 gem 'stripe_event'
 gem 'font-awesome-rails'
 gem 'wysiwyg-rails'
-gem 'kiba'
+gem 'kiba'                      # ETL Tool
 
-gem "browserify-rails"
+gem "browserify-rails"          # Support
 gem "react-rails"
 
 gem 'migration_data'
@@ -80,7 +76,6 @@ gem 'tabulator', :git => 'https://github.com/dcrosby42/tabulator.git'
 gem 'rschema', :git => 'https://github.com/tomdalling/rschema.git'
 
 gem 'turbolinks'
-
 # wkhtmltopdf versions are a mess. 0.12.1 is stable but not well supported by gems
 # See https://github.com/zakird/wkhtmltopdf_binary_gem/issues/13
 # The github version is massive and makes the Heroku slug huge
@@ -149,7 +144,14 @@ group :test do
   gem 'capybara-screenshot'
 end
 
+group :staging do
+  gem "skylight"
+end
+
 group :production, :staging do
+  gem 'newrelic_rpm', '< 3.9.0'       # Rack middleware instrumentation is very broken
+  gem 'newrelic-dragonfly'
+  gem 'honeybadger'
   gem 'passenger'
   gem 'rack-cache', require: 'rack/cache'
   gem 'rails_12factor'
