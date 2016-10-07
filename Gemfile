@@ -93,6 +93,8 @@ gem 'grape-active_model_serializers' # API v2
 gem 'rack-cors', :require => 'rack/cors' # API v2
 gem 'grape-swagger' # API V2, documentation
 
+gem 'honeybadger'
+
 group :doc do
   gem 'sdoc', require: false
 end
@@ -151,7 +153,6 @@ end
 group :production, :staging do
   gem 'newrelic_rpm', '< 3.9.0'       # Rack middleware instrumentation is very broken
   gem 'newrelic-dragonfly'
-  gem 'honeybadger'
   gem 'passenger'
   gem 'rack-cache', require: 'rack/cache'
   gem 'rails_12factor'
