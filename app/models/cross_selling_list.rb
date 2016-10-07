@@ -16,7 +16,7 @@ class CrossSellingList < ActiveRecord::Base
   belongs_to :parent, class_name: "CrossSellingList"
   has_many :children, class_name: "CrossSellingList", foreign_key: "parent_id"
 
-  has_many :cross_selling_list_products, inverse_of: :cross_selling_list
+  has_many :cross_selling_list_products, inverse_of: :cross_selling_list, dependent: :destroy
   has_many :products, through: :cross_selling_list_products do
     def active
       where("cross_selling_list_products.active = ?", true)
@@ -104,6 +104,18 @@ class CrossSellingList < ActiveRecord::Base
       status
 
     end
+  end
+
+  def show_product_management_button?
+    publisher? || ( subscriber? && cross_selling_list_products.any? )
+  end
+
+  def subscriber?
+    creator == false && !parent_id.blank?
+  end
+
+  def publisher?
+    creator
   end
 
   def published?
