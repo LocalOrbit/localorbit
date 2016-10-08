@@ -7,7 +7,7 @@ describe "Editing a product", :js do
   let(:seller) { create(:organization, :seller)}
   let(:product) { create(:product, organization: seller, name: "Canned Pears") }
   let!(:category_id) { product.category.id }
-  let(:market)  { create(:market, :with_addresses, organizations: [seller]) }
+  let(:market)  { create(:market, :with_delivery_schedule, :with_addresses, organizations: [seller]) }
 
   before do
     switch_to_subdomain(market.subdomain)

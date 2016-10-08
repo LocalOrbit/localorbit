@@ -4,7 +4,7 @@ describe "Editing inventory" do
   let(:user)    { create(:user, :supplier) }
   let!(:lot)    { create(:lot, product: product, quantity: 93) }
   let!(:lot2)   { create(:lot, product: product, quantity: 88) }
-  let!(:market)  { create(:market) }
+  let!(:market)  { create(:market, :with_delivery_schedule) }
   let!(:seller) { create(:organization, :seller, markets: [market]) }
   let(:product) { create(:product, organization: seller, use_simple_inventory: false) }
 

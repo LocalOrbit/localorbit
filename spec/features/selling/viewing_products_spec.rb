@@ -18,7 +18,7 @@ describe "Viewing products" do
   let!(:grapes_price) { create(:price, product: grapes, sale_price: 5.00, min_quantity: 1) }
   let!(:grapes_lot)   { create(:lot, product: grapes, quantity: 1) }
 
-  let!(:market)       { create(:market, organizations: [org1,org2]) }
+  let!(:market)       { create(:market, :with_delivery_schedule, organizations: [org1,org2]) }
   let!(:market_manager) { create(:user, :market_manager, managed_markets: [market, market2]) }
 
   before do
