@@ -73,7 +73,7 @@ describe "Pick list" do
         expect(empty).to be_nil
 
         expect(seller_pick_list.org).to eql("First Seller")
-        expect(seller_pick_list.items.count).to eql(2)
+        expect(seller_pick_list.items.count).to eql(3)
 
         expect(other_pick_list.org).to eql("Second Seller")
         expect(other_pick_list.items.count).to eql(1)
@@ -82,7 +82,7 @@ describe "Pick list" do
         expect(no_longer_pick_list.items.count).to eql(1)
 
         within(seller_pick_list.node) do
-          avocado, beans, empty = Dom::Admin::PickListItem.all
+          apples, avocado, beans, empty = Dom::Admin::PickListItem.all
           expect(empty).to be_nil
 
           expect(avocado.name).to have_content("Avocado")
@@ -171,7 +171,7 @@ describe "Pick list" do
         expect(page).to have_content(seller.name)
 
         lines = Dom::Admin::PickListItem.all
-        expect(lines.count).to eql(2)
+        expect(lines.count).to eql(3)
 
         line = Dom::Admin::PickListItem.find_by_name(seller_product.name)
         expect(line.total_sold).to have_content("1")
@@ -199,7 +199,7 @@ describe "Pick list" do
         expect(page).to have_content("May 9, 2014 between 7:00AM and 11:00AM")
         expect(page).to have_content(seller.name)
 
-        expect(Dom::Admin::PickListItem.count).to eql(2)
+        expect(Dom::Admin::PickListItem.count).to eql(3)
 
         line = Dom::Admin::PickListItem.find_by_name(seller_product.name)
         expect(line.total_sold).to have_content("4")
@@ -224,7 +224,7 @@ describe "Pick list" do
         end
 
         it "displays any numbered lots used" do
-          line = Dom::Admin::PickListItem.all[1]
+          line = Dom::Admin::PickListItem.all[2]
 
           expect(line.name).to have_content(seller_product.name)
           expect(line.breakdown).to have_content("Lot #111: 1")
@@ -262,10 +262,10 @@ describe "Pick list" do
         expect(empty).to be_nil # Should only find 1 list
 
         expect(seller_pick_list.org).to eql("First Seller")
-        expect(seller_pick_list.items.count).to eql(2)
+        expect(seller_pick_list.items.count).to eql(3)
 
         within(seller_pick_list.node) do
-          avocado, beans, empty = Dom::Admin::PickListItem.all
+          apples, avocado, beans, empty = Dom::Admin::PickListItem.all
           expect(empty).to be_nil
 
           expect(avocado.name).to have_content("Avocado")
