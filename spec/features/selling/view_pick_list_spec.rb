@@ -4,8 +4,10 @@ describe "Pick list" do
   let!(:market)                   { create(:market) }
   let!(:seller)                   { create(:organization, :seller, :single_location, markets: [market], name: "First Seller") }
   let!(:seller2)                  { create(:organization, :seller, :single_location, markets: [market], name: "Second Seller") }
+  let!(:seller3)                  { create(:organization, :seller, :single_location, markets: [market], name: "Third Seller") }
   let!(:seller_product)           { create(:product, :sellable, name: "Beans", organization: seller, code: "nifty-product-code") }
   let!(:seller_product2)          { create(:product, :sellable, name: "Avocado", organization: seller, code: "nifty-product-code") }
+  let!(:seller3_product)          { create(:product, :sellable, name: "Apples", organization: seller, code: "nifty-product-code") }
   let!(:delivered_product)        { create(:product, :sellable, organization: seller, code: "nifty-product-code") }
   let!(:seller2_product)          { create(:product, :sellable, name: "Sprouts", organization: seller2, code: "nifty-product-code") }
 
@@ -25,6 +27,14 @@ describe "Pick list" do
 
   let!(:seller2_order_item)       { create(:order_item, product: seller2_product, quantity: 2) }
   let!(:seller2_order)            { create(:order, items: [seller2_order_item], organization: buyer2, market: market, delivery: friday_delivery) }
+
+  let!(:lot1)                     { create(:lot, product: seller3_product, number: "123", quantity: 15) }
+  let!(:order_item_lot1)          { create(:order_item_lot, order_item: seller3_order_item, lot: lot1, quantity: 15) }
+  let!(:lot2)                     { create(:lot, product: seller3_product, number: "456", quantity: 5) }
+  let!(:order_item_lot2)          { create(:order_item_lot, order_item: seller3_order_item, lot: lot2, quantity: 3) }
+
+  let!(:seller3_order_item)       { create(:order_item, product: seller3_product, quantity: 18) }
+  let!(:seller3_order)            { create(:order, items: [seller3_order_item], organization: buyer1, market: market, delivery: friday_delivery) }
 
   before do
     Timecop.travel("May 5, 2014")
@@ -206,7 +216,7 @@ describe "Pick list" do
 
     context "lots" do
       context "single lot" do
-        let!(:lot)            { create(:lot, product: seller_product, number: "123", quantity: 10) }
+        let!(:lot)            { create(:lot, product: seller_product, number: "111", quantity: 10) }
         let!(:order_item_lot) { create(:order_item_lot, order_item: seller_order_item, lot: lot) }
 
         before do
@@ -217,15 +227,11 @@ describe "Pick list" do
           line = Dom::Admin::PickListItem.all[1]
 
           expect(line.name).to have_content(seller_product.name)
-          expect(line.breakdown).to have_content("Lot #123: 1")
+          expect(line.breakdown).to have_content("Lot #111: 1")
         end
       end
 
       context "spanning multiple lots" do
-        let!(:lot1)            { create(:lot, product: seller_product, number: "123", quantity: 15) }
-        let!(:order_item_lot1) { create(:order_item_lot, order_item: seller_order_item, lot: lot1, quantity: 15) }
-        let!(:lot2)            { create(:lot, product: seller_product, number: "456", quantity: 5) }
-        let!(:order_item_lot2) { create(:order_item_lot, order_item: seller_order_item, lot: lot2, quantity: 3) }
 
         before do
           seller_order_item.update(quantity: 18)
@@ -233,7 +239,8 @@ describe "Pick list" do
         end
 
         it "shows the pick list" do
-          line = Dom::Admin::PickListItem.find_by_name(seller_product.name)
+          save_and_open_page
+          line = Dom::Admin::PickListItem.find_by_name(seller3_product.name)
           expect(line.total_sold).to have_content("18.0")
           expect(line.breakdown).to have_content("Lot #123: 15")
           expect(line.breakdown).to have_content("Lot #456: 3")
