@@ -239,7 +239,6 @@ describe "Pick list" do
         end
 
         it "shows the pick list" do
-          save_and_open_page
           line = Dom::Admin::PickListItem.find_by_name(seller3_product.name)
           expect(line.total_sold).to have_content("18.0")
           expect(line.breakdown).to have_content("Lot #123: 15")
