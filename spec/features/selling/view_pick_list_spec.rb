@@ -234,7 +234,7 @@ describe "Pick list" do
 
         it "shows the pick list" do
           line = Dom::Admin::PickListItem.find_by_name(seller_product.name)
-          expect(line.total_sold).to have_content("18")
+          expect(line.total_sold).to have_content("18.0")
           expect(line.breakdown).to have_content("Lot #123: 15")
           expect(line.breakdown).to have_content("Lot #456: 3")
         end

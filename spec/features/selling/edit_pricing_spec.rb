@@ -179,7 +179,7 @@ describe "Editing advanced pricing", js: true do
   end
 
   describe "with different fees" do
-    let(:market) { create(:market, local_orbit_seller_fee: 4, market_seller_fee: 6) }
+    let(:market) { create(:market, :with_delivery_schedule, local_orbit_seller_fee: 4, market_seller_fee: 6) }
     # total fees: CC seller fee as default, plus this 10 %, so 12.9%
     it "shows updated net sale information" do
       Dom::PricingRow.first.click_edit
