@@ -6,20 +6,23 @@ class RollYourOwnMarketsController < ApplicationController
   skip_before_action :ensure_user_not_suspended
 
 	# Cached data objects
-	@_plans  = {}
-	@_plan   = {}
-	@_coupon = {}
+  @_ryo_plans = {}
+  @_plans     = {}
+  @_plan      = {}
+  @_coupon    = {}
 
 	def get_stripe_plans
     requested_plan = params[:plan]
+    @_ryo_plans ||= Plan.ryo_enabled_plans
 
-  	# If no plan is sent...
+    # If no plan is sent...
     if(requested_plan == nil)
-    	# ...then return the cached plans...
-    	@_plans ||= 
-	    begin
-    		# ...or get them from Stripe
-		    @_plans = PaymentProvider::Stripe.get_stripe_plans
+      # ...then return the cached plans...
+      @_plans ||=
+      begin
+        # ...or get them from Stripe (filtered through those marked as eligible in the database)
+        @_plans = PaymentProvider::Stripe.get_stripe_plans.select{|plan| @_ryo_plans.include?(plan.id)}
+
 				render json: @_plans
 
 	    rescue Exception => e

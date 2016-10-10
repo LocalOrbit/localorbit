@@ -9,6 +9,9 @@
 <div class="table-wrapper">
   <table class="sortable">
     <thead class="stickable">
+      <% if current_user.admin? %>
+      <%= content_tag :th, sort_link(@q, :market, "Market") %>
+      <% end %>
       <%= content_tag :th, sort_link(@q, :order_number, "Order #") %>
       <%= content_tag :th, sort_link(@q, :placed_at, "Order Date") %>
       <%= content_tag :th, sort_link(@q, :delivery_deliver_on, "Delivery Date") %>
@@ -23,9 +26,10 @@
           items = Orders::SellerItems.items_for_seller(order, current_user)
       %>
       <tr class="order-row">
-        <td class="order-number">
-          <%= link_to order.order_number, admin_order_path(order) %>
-        </td>
+        <% if current_user.admin? %>
+        <td class="market"><%= order.market.name %></td>
+        <% end %>
+        <td class="order-number"><%= link_to order.order_number, admin_order_path(order) %></td>
         <td class="order-date"><%= order.placed_at.strftime("%m/%d/%Y") %></td>
         <td class="deliver-on"><%= order.delivery.buyer_deliver_on.strftime("%m/%d/%Y") || order.delivery.deliver_on.strftime("%m/%d/%Y")%></td>
         <% if current_user.admin? || current_user.market_manager? || current_user.buyer_only? %>
