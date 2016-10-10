@@ -16,4 +16,8 @@ class ValidateOrderTotal
     context[:status] = "failed_total" unless total - credit_amt >= 0
     context[:failed] = true unless total - credit_amt >= 0
   end
+
+  def rollback
+    order.update(items_attributes: context[:previous_quantities])
+  end
 end
