@@ -159,25 +159,38 @@ class Admin::OrdersController < AdminController
   end
 
   def perform_order_update(order, params) # TODO this needs to handle price edits
-    updates = UpdateOrder.perform(payment_provider: order.payment_provider, order: order, order_params: params, request: request)
-    if updates.success?
-      order.update_total_cost
-      came_from_admin = request.referer.include?("/admin/")
-      next_url = if order.reload.items.any?
-        came_from_admin ? admin_order_path(order) : order_path(order)
+    failed = false
+    validate = ValidateOrderTotal.perform(order: order, order_params: params)
+    if validate.success?
+      updates = UpdateOrder.perform(payment_provider: order.payment_provider, order: order, order_params: params, request: request)
+      if updates.success?
+        order.update_total_cost
+        came_from_admin = request.referer.include?("/admin/")
+        next_url = if order.reload.items.any?
+          came_from_admin ? admin_order_path(order) : order_path(order)
+        else
+          order.soft_delete
+          came_from_admin ? admin_orders_path : orders_path
+        end
+        redirect_to next_url, notice: "Order successfully updated."
       else
-        order.soft_delete
-        came_from_admin ? admin_orders_path : orders_path
-      end
-      redirect_to next_url, notice: "Order successfully updated."
+        failed = true
+        failed_order = updates.context[:order]
+        #failed_order.update(items_attributes: updates.context[:previous_quantities])
+        failed_order.errors.add(:payment_processor, "failed to update your payment") if updates.context[:status] == "failed"
+       end
     else
-      order = updates.context[:order]
-      order.errors.add(:total_cost, "cannot be negative") if updates.context[:status] == "failed_total"
-      order.errors.add(:payment_processor, "failed to update your payment") if updates.context[:status] == "failed"
-      if current_user.organization_ids.include?(order.organization_id) || current_user.can_manage_organization?(order.organization)
-        @order = BuyerOrder.new(order)
+      failed = true
+      failed_order = validate.context[:order]
+      failed_order.errors[:base] << "Invalid quantity value" if validate.context[:status] == "failed_qty"
+      failed_order.errors[:base] << "Total cannot be negative" if validate.context[:status] == "failed_negative"
+    end
+
+    if failed
+      if current_user.organization_ids.include?(failed_order.organization_id) || current_user.can_manage_organization?(failed_order.organization)
+        @order = BuyerOrder.new(failed_order)
       else
-        @order = SellerOrder.new(order, current_user)
+        @order = SellerOrder.new(failed_order, current_user)
       end
       render :show
     end
