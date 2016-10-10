@@ -17,7 +17,8 @@ class MarketsController < ApplicationController
   # markets#new AKA Roll Your Own
   ##
   def new
-    @plan_data ||= PaymentProvider::Stripe.get_stripe_plans
+    ryo_plans = Plan.ryo_enabled_plans
+    @plan_data = PaymentProvider::Stripe.get_stripe_plans.select{|plan| ryo_plans.include?(plan.id)}
 
     requested_plan = params[:plan] || "Start"
     @stripe_plan ||= PaymentProvider::Stripe.get_stripe_plans(requested_plan.upcase)
