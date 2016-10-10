@@ -73,10 +73,12 @@
     <%= f.select :seller_fulfillment_location_id, @market.fulfillment_locations('Direct to customer', customer_pu) %>
   </div>
 
+  <% if policy(:all_supplier).index? %>
   <div class="field conditional<%= ' is-hidden' unless f.object.seller_fulfillment_location %>" id="market_pickup_option">
     <%= f.check_box :market_pickup %>
     <%= f.label :market_pickup, 'Market will pick up from supplier location.' %>
   </div>
+  <% end %>
 
   <div class="row row--field">
     <div class="field column column--third column--guttered">
@@ -98,7 +100,7 @@
 
   <div class="field">
     <%= f.label :buyer_pickup_location_id, "Buyer pick up/delivery location" %><br>
-    <%= f.select :buyer_pickup_location_id, @market.fulfillment_locations('Delivered to Buyer from Market') %>
+    <%= f.select :buyer_pickup_location_id, @market.fulfillment_locations('Delivered to Buyer from Market'), {}, :disabled => !policy(:all_supplier).index? %>
   </div>
   <div class="row row--field">
     <div class="field column column--half column--guttered">

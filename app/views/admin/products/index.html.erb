@@ -37,7 +37,8 @@
       <% if current_user.multi_market_membership? && policy(:all_supplier).index? %>
       <td class="market hidden-mobile">
         <% if !continued_product
-              product.markets.active.uniq.order(:name).each do |m| %>
+              mkts = product.organization.decorate.delivery_schedules.keys.map(&:id)
+              Market.active.where(id: mkts).order(:name).each do |m| %>
                 <%= link_to( m.name, admin_market_path(m.id)) %><br/><br/>
               <% end
            end

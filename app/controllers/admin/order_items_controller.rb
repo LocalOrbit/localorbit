@@ -88,11 +88,11 @@ module Admin
     end
 
     def fetch_sellers_list(order_items)
-      @sellers = Organization.select(:id, :name).where(id: order_items.joins(:product).pluck("products.organization_id")).order(:name).uniq
+      @sellers = Organization.select(:id, :name).where(org_type: 'S', id: order_items.joins(:product).pluck("products.organization_id")).order(:name).uniq
     end
 
     def fetch_buyers_list(order_items)
-      @buyers = Organization.select(:id, :name).where(id: order_items.pluck("orders.organization_id")).order(:name).uniq
+      @buyers = Organization.select(:id, :name).where(org_type: 'B', id: order_items.pluck("orders.organization_id")).order(:name).uniq
     end
 
     def fetch_delivery_statuses(order_items)

@@ -33,6 +33,8 @@ class DeliverySchedule < ActiveRecord::Base
 
   before_validation :ensure_days_are_set
 
+  scope :active, -> { where('inactive_at IS NULL') }
+
   # used on Sales by Fulfillment report where OrderItems are filtered by type
   # (Seller to Buyer or Market to Buyer) or pickup location
   ransacker :fulfillment_type do |_|

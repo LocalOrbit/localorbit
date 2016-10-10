@@ -11,8 +11,8 @@
     <div class="manager-filters unjustify mobile-block">
       <% if current_user.multi_market_membership? %>
       <span class="preserve-alignment mobile-block">
-        <%= f.label :markets_id_in, "Market" %><br>
-        <%= f.collection_select :markets_id_in, @search_presenter.selling_markets, :id, :name, {include_blank: nil}, {id: 'filter_market', multiple: true, class: [append_sticky_class(:markets_id_in, ""),'multiselect']} %>
+        <%= f.label :delivery_schedules_market_id_in, "Market" %><br>
+        <%= f.collection_select :delivery_schedules_market_id_in, @search_presenter.selling_markets, :id, :name, {include_blank: nil}, {id: 'filter_market', multiple: true, class: [append_sticky_class(:delivery_schedules_market_id_in, ""),'multiselect']} %>
       </span>
       <% end %>
 

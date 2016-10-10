@@ -254,11 +254,11 @@ class ReportPresenter
     end
 
     if includes_filter?(:seller_name)
-      @sellers = Organization.select(:id, :name).where(id: items.joins(:product).pluck("products.organization_id")).order(:name).uniq
+      @sellers = Organization.select(:id, :name).where(org_type: 'S', id: items.joins(:product).pluck("products.organization_id")).order(:name).uniq
     end
 
     if includes_filter?(:buyer_name)
-      @buyers = Organization.select(:id, :name).where(id: items.pluck("orders.organization_id")).order(:name).uniq
+      @buyers = Organization.select(:id, :name).where(org_type: 'B', id: items.pluck("orders.organization_id")).order(:name).uniq
     end
 
     if includes_filter?(:category_name)
