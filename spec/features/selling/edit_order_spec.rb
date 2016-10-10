@@ -600,7 +600,7 @@ describe "Editing an order" do
           item.set_quantity_delivered("2147483648")
           click_button "Update quantities"
 
-          expect(page).to have_content("must be less than 999999")
+          expect(page).to have_content("must be less than 99999")
           expect(Dom::Order::ItemRow.first.delivery_status).to eql("Pending")
         end
       end
@@ -780,7 +780,7 @@ describe "Editing an order" do
           item.set_quantity_delivered("2147483648")
           click_button "Update quantities"
 
-          expect(page).to have_content("must be less than 999999")
+          expect(page).to have_content("must be less than 99999")
           expect(page).to_not have_content("failed to update your payment")
           expect(Dom::Order::ItemRow.first.delivery_status).to eql("Pending")
         end

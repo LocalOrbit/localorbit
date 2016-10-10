@@ -182,7 +182,7 @@ class Admin::OrdersController < AdminController
     else
       failed = true
       failed_order = validate.context[:order]
-      failed_order.errors[:base] << "Invalid quantity value" if validate.context[:status] == "failed_qty"
+      failed_order.errors[:base] << "Order item must be greater than or equal to 0" if validate.context[:status] == "failed_qty"
       failed_order.errors[:base] << "Total cannot be negative" if validate.context[:status] == "failed_negative"
     end
 
