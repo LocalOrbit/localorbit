@@ -27,15 +27,27 @@ module Admin
             @seller_cc_rate = ::Financials::Pricing.seller_cc_rate(current_market)
           end
           format.csv do
-            @filename = 'products.csv'
-            @products = @products
+            if ENV["USE_UPLOAD_QUEUE"] == "true"
+              Delayed::Job.enqueue ::CSVExport::CSVProductExportJob.new(current_user, @products)
+              flash[:notice] = "Please check your email for export results."
+              redirect_to admin_products_path
+            else
+              @filename = 'products.csv'
+              @products = @products
+            end
           end
         end
       end
     end
 
     def search_products(search)
-      results = current_user.managed_products.includes(:unit, prices:[:market]).search(search.query)
+      results = current_user
+                    .managed_products
+                    .joins(:product_deliveries, :delivery_schedules)
+                    .includes(:unit, prices:[:market])
+                    .where('delivery_schedules.inactive_at IS NULL AND delivery_schedules.deleted_at IS NULL')
+                    .search(search.query)
+
       results.sorts = "name asc" if results.sorts.empty?
       results
     end

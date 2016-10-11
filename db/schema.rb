@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160921153210) do
+ActiveRecord::Schema.define(version: 20161006175522) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -785,6 +785,7 @@ ActiveRecord::Schema.define(version: 20160921153210) do
     t.boolean  "sellers_edit_orders",      default: false, null: false
     t.boolean  "has_procurement_managers", default: false, null: false
     t.string   "stripe_id"
+    t.boolean  "ryo_eligible",             default: false, null: false
   end
 
   create_table "prices", force: true do |t|

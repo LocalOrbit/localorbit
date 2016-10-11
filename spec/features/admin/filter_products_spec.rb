@@ -1,14 +1,14 @@
 require "spec_helper"
 
 describe "Filter products", :js do
-  let!(:empty_market) { create(:market) }
-  let!(:market1)      { create(:market) }
+  let!(:empty_market) { create(:market, :with_delivery_schedule) }
+  let!(:market1)      { create(:market, :with_delivery_schedule) }
   let!(:org1)         { create(:organization, :seller, markets: [market1]) }
   let!(:org1_product) { create(:product, :sellable, organization: org1) }
   let!(:org2)         { create(:organization, :seller, markets: [market1]) }
   let!(:org2_product) { create(:product, :sellable, organization: org2) }
 
-  let!(:market2)      { create(:market) }
+  let!(:market2)      { create(:market, :with_delivery_schedule) }
   let!(:org3)         { create(:organization, :seller, markets: [market2]) }
   let!(:org3_product) { create(:product, :sellable, organization: org3) }
   let!(:org4)         { create(:organization, :seller, markets: [market2]) }
@@ -33,7 +33,7 @@ describe "Filter products", :js do
       end
 
       it "shows products for only the selected market" do
-        select market1.name, from: "q[markets_id_in][]", visible: false
+        select market1.name, from: "q[delivery_schedules_market_id_in][]", visible: false
         click_button "Search"
 
         expect(page).to have_content(org1_product.name)
@@ -41,7 +41,7 @@ describe "Filter products", :js do
         expect(page).to_not have_content(org3_product.name)
         expect(page).to_not have_content(org4_product.name)
 
-        unselect market1.name, from: "q[markets_id_in][]", visible: false
+        unselect market1.name, from: "q[delivery_schedules_market_id_in][]", visible: false
 
       end
     end
@@ -92,7 +92,7 @@ describe "Filter products", :js do
       end
 
       it "shows products for only the selected market" do
-        select market1.name, from: "q[markets_id_in][]", visible: false
+        select market1.name, from: "q[delivery_schedules_market_id_in][]", visible: false
         click_button "Search"
 
         expect(page).to have_content(org1_product.name)
@@ -101,7 +101,7 @@ describe "Filter products", :js do
         expect(page).to_not have_content(org3_product.name)
         expect(page).to_not have_content(org4_product.name)
 
-        unselect market1.name, from: "q[markets_id_in][]", visible: false
+        unselect market1.name, from: "q[delivery_schedules_market_id_in][]", visible: false
 
       end
     end
@@ -217,7 +217,7 @@ describe "Filter products", :js do
 
     context "by market" do
       it "does not show a market filter dropdown" do
-        expect(page).to_not have_field("q[markets_id_in][]")
+        expect(page).to_not have_field("q[delivery_schedules_market_id_in][]")
       end
     end
 

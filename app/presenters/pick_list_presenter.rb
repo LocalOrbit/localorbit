@@ -26,7 +26,7 @@ class PickListPresenter
     end
     
     def total_sold
-      @total_sold ||= @items.sum(&:quantity).to_i
+      @total_sold ||= @items.sum(&:quantity)
     end
 
     def unit
@@ -40,16 +40,16 @@ class PickListPresenter
         quantity_shown = 0
         line_sep = ""
         buyer.lots.each do |lot|
-          text << "#{line_sep}Lot ##{ERB::Util.html_escape lot.lot.number.to_s}: #{lot.quantity.to_i}"
+          text << "#{line_sep}Lot ##{ERB::Util.html_escape lot.lot.number.to_s}: #{lot.quantity}"
           lots_shown += 1
           quantity_shown += lot.quantity
           line_sep = sep
         end
         if quantity_shown < buyer.quantity || lots_shown > 1
-          text << "#{line_sep}Buyer Total: #{buyer.quantity.to_i}"
+          text << "#{line_sep}Buyer Total: #{buyer.quantity}"
         end
       else
-        text << buyer.quantity.to_i.to_s
+        text << buyer.quantity.to_s
       end
       text.html_safe
     end

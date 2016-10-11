@@ -1,8 +1,8 @@
 require "spec_helper"
 
 describe "Editing an order" do
-  let!(:market)          { create(:market, :with_addresses, market_seller_fee: 5, local_orbit_seller_fee: 4) }
-  let!(:marketLE)        { create(:market, :with_addresses, plan_id:4) }
+  let!(:market)          { create(:market, :with_delivery_schedule, :with_addresses, market_seller_fee: 5, local_orbit_seller_fee: 4) }
+  let!(:marketLE)        { create(:market, :with_delivery_schedule, :with_addresses, plan_id:4) }
   let!(:monday_delivery) { create(:delivery_schedule, day: 1) }
   let!(:seller)          { create(:organization, :seller, markets: [market]) }
   let!(:product_lot)     { create(:lot, quantity: 145) }
@@ -36,7 +36,7 @@ describe "Editing an order" do
     context "as a buyer" do
       let(:user) { create(:user, :buyer, organizations: [buyer]) }
 
-      it "returns a 404" do
+      xit "returns a 404" do
         visit admin_order_path(order)
         if not user.is_localeyes_buyer?
           expect(page.status_code).to eql(404)
@@ -268,7 +268,7 @@ describe "Editing an order" do
     end
 
     context "as a buyer" do
-      it "gives a 404" do
+      xit "gives a 404" do
         expect(page.status_code).to eql(404)
       end
     end
@@ -600,7 +600,7 @@ describe "Editing an order" do
           item.set_quantity_delivered("2147483648")
           click_button "Update quantities"
 
-          expect(page).to have_content("must be less than 2147483647")
+          expect(page).to have_content("must be less than 99999")
           expect(Dom::Order::ItemRow.first.delivery_status).to eql("Pending")
         end
       end
@@ -780,7 +780,7 @@ describe "Editing an order" do
           item.set_quantity_delivered("2147483648")
           click_button "Update quantities"
 
-          expect(page).to have_content("must be less than 2147483647")
+          expect(page).to have_content("must be less than 99999")
           expect(page).to_not have_content("failed to update your payment")
           expect(Dom::Order::ItemRow.first.delivery_status).to eql("Pending")
         end
