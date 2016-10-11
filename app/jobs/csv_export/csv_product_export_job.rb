@@ -15,7 +15,6 @@ module CSVExport
     end
 
     def perform
-      puts "Generate CSV"
       products = Product.where(id: ids)
       csv = CSV.generate do |f|
         f << ["Supplier", "Market", "Name", "Pricing", "Available", "Code"]
@@ -33,9 +32,7 @@ module CSVExport
       end
 
       # Send via email
-      puts "Before Send"
-      ExportMailer.export_success(user.email, csv)
-      puts "After Send"
+      ExportMailer.delay.export_success(user.email, csv)
     end
 
   end
