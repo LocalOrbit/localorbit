@@ -404,7 +404,7 @@ class User < ActiveRecord::Base
   def managed_products
     organization_ids = managed_organizations.map(&:id)
     cross_sold_prods = cross_sold_products
-    Product.visible.seller_can_sell.where("organization_id IN (?) OR products.id IN (?)", organization_ids, cross_sold_prods)
+    Product.visible.seller_can_sell.where("products.organization_id IN (?) OR products.id IN (?)", organization_ids, cross_sold_prods)
   end
 
   def buyers_for_select
