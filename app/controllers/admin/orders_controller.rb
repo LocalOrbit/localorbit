@@ -21,7 +21,10 @@ class Admin::OrdersController < AdminController
         format.csv do
           @order_items = find_order_items(@orders.map(&:id))
           @abort_mission = @order_items.count > 2999
-          @filename = "orders.csv"
+          Delayed::Job.enqueue ::CSVExport::CSVOrderExportJob.new(current_user, @order_items)
+          flash[:notice] = "Please check your email for export results."
+          redirect_to admin_orders_path
+          #@filename = "orders.csv"
         end
       end
     end
