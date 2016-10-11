@@ -1,9 +1,7 @@
 class ExportMailer < BaseMailer
   def export_success(recipients, file)
 
-    attachments['export.csv'] = open(file).read
-    puts recipients
-    puts attachments['export.csv']
+    attachments['export.csv'] = {mime_type: 'text/csv', content: file}
     mail(
       to: recipients,
       subject: "CSV Export results"

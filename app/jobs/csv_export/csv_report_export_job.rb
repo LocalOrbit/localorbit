@@ -15,9 +15,7 @@ module CSVExport
     end
 
     def perform
-      Dir.mkdir(Rails.root.join('tmp'))
-
-      CSV.open("#{Rails.root}/tmp/#{user.id}_report_export.csv", "wb") do |f|
+      csv = CSV.generate do |f|
         # Include Market if it's shown in either a column or as a filter
         all_fields = (ReportPresenter::REPORT_MAP[presenter.report].fetch(:fields, []) + ReportPresenter::REPORT_MAP[presenter.report].fetch(:filters, [])).uniq.compact
         include_market = all_fields.include?(:market_name)
@@ -50,7 +48,7 @@ module CSVExport
       end
 
       # Send via email
-      ExportMailer.delay.export_success(user.email, "#{Rails.root}/tmp/#{user.id}_report_export.csv")
+      ExportMailer.delay.export_success(user.email, csv)
     end
 
   end

@@ -15,9 +15,7 @@ module CSVExport
     end
 
     def perform
-      Dir.mkdir(Rails.root.join('tmp'))
-
-      CSV.open("#{Rails.root}/tmp/#{user.id}_organization_export.csv", "wb") do |f|
+      csv = CSV.generate do |f|
         f << ["Name", "Market", "Contact", "Registered On", "Role", "Shipping Address", "Shipping Phone", "Billing Address", "Billing Phone", "Users", "User Emails"]
 
         def full_address(address)
@@ -56,7 +54,7 @@ module CSVExport
       end
 
       # Send via email
-      ExportMailer.delay.export_success(user.email, "#{Rails.root}/tmp/#{user.id}_organization_export.csv")
+      ExportMailer.delay.export_success(user.email, csv)
     end
 
   end
