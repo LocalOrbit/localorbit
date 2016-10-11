@@ -15,6 +15,8 @@ module CSVExport
     end
 
     def perform
+      Dir.mkdir(Rails.root.join('tmp'))
+
       CSV.open("#{Rails.root}/tmp/#{user.id}_organization_export.csv", "wb") do |f|
         f << ["Name", "Market", "Contact", "Registered On", "Role", "Shipping Address", "Shipping Phone", "Billing Address", "Billing Phone", "Users", "User Emails"]
 

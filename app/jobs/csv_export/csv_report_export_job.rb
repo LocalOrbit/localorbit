@@ -15,6 +15,8 @@ module CSVExport
     end
 
     def perform
+      Dir.mkdir(Rails.root.join('tmp'))
+
       CSV.open("#{Rails.root}/tmp/#{user.id}_report_export.csv", "wb") do |f|
         # Include Market if it's shown in either a column or as a filter
         all_fields = (ReportPresenter::REPORT_MAP[presenter.report].fetch(:fields, []) + ReportPresenter::REPORT_MAP[presenter.report].fetch(:filters, [])).uniq.compact

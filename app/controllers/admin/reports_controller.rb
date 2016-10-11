@@ -37,10 +37,13 @@ class Admin::ReportsController < AdminController
         respond_to do |format|
           format.html { render "report" }
           format.csv do
-            Delayed::Job.enqueue ::CSVExport::CSVReportExportJob.new(current_user, @presenter)
-            flash[:notice] = "Please check your email for export results."
-            redirect_to admin_reports_path
-            #{ @filename = "report.csv" }
+            if ENV["USE_UPLOAD_QUEUE"] == "true"
+              Delayed::Job.enqueue ::CSVExport::CSVReportExportJob.new(current_user, @presenter)
+              flash[:notice] = "Please check your email for export results."
+              redirect_to admin_reports_path
+            else
+              @filename = "report.csv"
+            end
           end
         end
       else
