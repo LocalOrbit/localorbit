@@ -1,5 +1,5 @@
 module CSVExport
-  class CSVProductExportJob < Struct.new(:user, :products) # pass in the datafile like is done right now in uploadcontroller, i.e.
+  class CSVProductExportJob < Struct.new(:user, :ids) # pass in the datafile like is done right now in uploadcontroller, i.e.
 
     def enqueue(job)
     end
@@ -15,6 +15,7 @@ module CSVExport
     end
 
     def perform
+      products = Product.where(id: ids)
       csv = CSV.generate do |f|
         f << ["Supplier", "Market", "Name", "Pricing", "Available", "Code"]
 
@@ -31,9 +32,7 @@ module CSVExport
       end
 
       # Send via email
-      puts "Before Send"
-      ExportMailer.export_success(user.email, csv)
-      puts "After Send"
+      ExportMailer.delay.export_success(user.email, csv)
     end
 
   end

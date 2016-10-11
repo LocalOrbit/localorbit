@@ -1,5 +1,5 @@
 module CSVExport
-  class CSVReportExportJob < Struct.new(:user, :presenter) # pass in the datafile like is done right now in uploadcontroller, i.e.
+  class CSVReportExportJob < Struct.new(:user, :params) # pass in the datafile like is done right now in uploadcontroller, i.e.
 
     def enqueue(job)
     end
@@ -15,6 +15,7 @@ module CSVExport
     end
 
     def perform
+      presenter = ReportPresenter.report_for(params)
       csv = CSV.generate do |f|
         # Include Market if it's shown in either a column or as a filter
         all_fields = (ReportPresenter::REPORT_MAP[presenter.report].fetch(:fields, []) + ReportPresenter::REPORT_MAP[presenter.report].fetch(:filters, [])).uniq.compact
