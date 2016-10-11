@@ -324,7 +324,7 @@ describe "admin manange organization", :vcr do
     let!(:organization2) { create(:organization, :seller, name: "Other organization", markets: [market2]) }
     let!(:admin)         { create(:user, :admin) }
 
-    it "can see a list of organizations" do
+    xit "can see a list of organizations" do
       switch_to_subdomain(market.subdomain)
       sign_in_as(admin)
       visit admin_organizations_path
