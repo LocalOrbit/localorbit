@@ -189,16 +189,11 @@ module Admin
         nil
       end
 
-      @delivery_schedules = if organization
-        organization.decorate.delivery_schedules
-      else
-        {}
-      end
-      @delivery_schedules.merge!(managed_market_deliveries)
+      @delivery_schedules = (organization.try(:decorate).try(:delivery_schedules) || {}).merge(managed_market_deliveries)
     end
 
     def managed_market_deliveries
-      # KXM managed_market_deliveries is a misnomer - this should pull delivery schedules for whatever market is subscribing to the list on which the product appears
+      # KXM managed_market_deliveries should actually pull delivery schedules for whatever market is subscribing to the list on which the product appears...
       current_user.managed_markets.inject({}) do |result, market|
         result[market] = market.delivery_schedules.delivery_visible.order(:day)
         result
