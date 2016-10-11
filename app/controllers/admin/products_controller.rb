@@ -28,7 +28,7 @@ module Admin
           end
           format.csv do
             if ENV["USE_UPLOAD_QUEUE"] == "true"
-              Delayed::Job.enqueue ::CSVExport::CSVProductExportJob.new(current_user, @products)
+              Delayed::Job.enqueue ::CSVExport::CSVProductExportJob.new(current_user, @products.pluck(:id))
               flash[:notice] = "Please check your email for export results."
               redirect_to admin_products_path
             else

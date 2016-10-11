@@ -1,5 +1,5 @@
 module CSVExport
-  class CSVProductExportJob < Struct.new(:user, :products) # pass in the datafile like is done right now in uploadcontroller, i.e.
+  class CSVProductExportJob < Struct.new(:user, :ids) # pass in the datafile like is done right now in uploadcontroller, i.e.
 
     def enqueue(job)
     end
@@ -15,6 +15,8 @@ module CSVExport
     end
 
     def perform
+      puts "Generate CSV"
+      products = Product.where(id: ids)
       csv = CSV.generate do |f|
         f << ["Supplier", "Market", "Name", "Pricing", "Available", "Code"]
 
