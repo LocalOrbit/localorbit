@@ -31,7 +31,9 @@ module CSVExport
       end
 
       # Send via email
-      ExportMailer.delay.export_success(user.email, csv)
+      puts "Before Send"
+      ExportMailer.export_success(user.email, csv)
+      puts "After Send"
     end
 
   end
