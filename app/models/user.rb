@@ -395,9 +395,16 @@ class User < ActiveRecord::Base
     markets.count > 1
   end
 
+  def cross_sold_products
+    managed_market_ids  = managed_markets.pluck(:id)
+    cross_selling_lists = CrossSellingList.active.subscriptions.where(entity_type: "Market", entity_id: managed_market_ids).pluck(:id)
+    cross_sold_products = CrossSellingListProduct.where(cross_selling_list_id: cross_selling_lists).pluck(:product_id)
+  end
+
   def managed_products
-    org_ids = managed_organizations.map(&:id)
-    Product.visible.seller_can_sell.where(organization_id: org_ids)
+    organization_ids = managed_organizations.map(&:id)
+    cross_sold_prods = cross_sold_products
+    Product.visible.seller_can_sell.where("products.organization_id IN (?) OR products.id IN (?)", organization_ids, cross_sold_prods)
   end
 
   def buyers_for_select
