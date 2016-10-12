@@ -201,10 +201,15 @@ module Admin
         nil
       end
 
-      @delivery_schedules = if organization
-        organization.decorate.delivery_schedules
-      else
-        {}
+      @delivery_schedules = (organization.try(:decorate).try(:delivery_schedules) || {}).merge(subscribing_market_deliveries(product))
+    end
+
+    def subscribing_market_deliveries(product=nil)
+      return {} if product.blank?
+
+      product.cross_selling_lists.active.subscriptions.map{|l| l.entity}.inject({}) do |result, market|
+        result[market] = market.delivery_schedules.delivery_visible.order(:day)
+        result
       end
     end
 
