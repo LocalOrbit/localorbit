@@ -34,17 +34,21 @@ class Admin::ReportsController < AdminController
 
       @presenter = ReportPresenter.report_for(presenter_params)
 
-      respond_to do |format|
-        format.html { render "report" }
-        format.csv do
-          if ENV["USE_UPLOAD_QUEUE"] == "true"
-            Delayed::Job.enqueue ::CSVExport::CSVReportExportJob.new(current_user, presenter_params)
-            flash[:notice] = "Please check your email for export results."
-            redirect_to admin_reports_path
-          else
-            @filename = "report.csv"
+      if @presenter
+        respond_to do |format|
+          format.html { render "report" }
+          format.csv do
+            if ENV["USE_UPLOAD_QUEUE"] == "true"
+              Delayed::Job.enqueue ::CSVExport::CSVReportExportJob.new(current_user, presenter_params)
+              flash[:notice] = "Please check your email for export results."
+              redirect_to admin_reports_path
+            else
+              @filename = "report.csv"
+            end
           end
         end
+      else
+        render_404
       end
     end
   end
