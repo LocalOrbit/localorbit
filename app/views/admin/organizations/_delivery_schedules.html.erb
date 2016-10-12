@@ -1,7 +1,5 @@
 <% delivery_schedules.each do |market, schedules| %>
-  <% # This serves to hide schedules belonging to originating markets for cross sold items %>
-  <% # KXM Confirm that managed_markets represent the correct superset here... %>
-  <% if current_user.can_manage?(market) then %>
+  <% if current_user.markets.include?(market) then %>
     <div class="delivery-schedule-options">
 
       <h3 class="heading-conditionals"><%= market.name %></h3>
