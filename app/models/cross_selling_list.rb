@@ -140,10 +140,6 @@ class CrossSellingList < ActiveRecord::Base
     update!(status: new_status, published_at: nil)
   end
 
-  def is_master_list?
-  	parent_id.nil?
-  end
-
   def pending?
     status == "Pending"
   end
