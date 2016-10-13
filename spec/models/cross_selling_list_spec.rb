@@ -88,4 +88,56 @@ describe CrossSellingList do
     xit "sets the 'published_at' date" do
     end
   end
+
+  context "cross selling list" do
+    let(:publishing_list) { create(:cross_selling_list, :market_list, creator: true) }
+    let(:subscribing_list) { create(:cross_selling_list, :market_list, parent_id: publishing_list, creator: false) }
+
+    describe "#publisher?" do  
+      it "is true for publishing lists" do
+        expect(publishing_list.publisher?).to be true
+      end
+
+      it "is false for subscribing lists" do
+        expect(subscribing_list.publisher?).to be false
+      end
+    end
+
+    describe "statuses" do
+      let(:new_publishing_list) { build(:cross_selling_list, :market_list, creator: true) }
+      let(:new_subscribing_list) { build(:cross_selling_list, :market_list, parent_id: new_publishing_list, creator: false, status: 'Pending') }
+
+      it "includes 'Draft' for new publishing lists" do
+        expect(new_publishing_list.statuses).to include(:Draft)
+      end
+
+      it "excludes 'Inactive' for draft publishing lists" do
+        new_publishing_list.save
+        expect(new_publishing_list.statuses).to_not include(:Inactive)
+      end
+
+      it "excludes 'Draft' for published publishing lists" do
+        new_publishing_list.save
+        new_publishing_list.publish!
+
+        expect(new_publishing_list.statuses).to_not include(:Draft)
+      end
+
+      it "excludes 'Inactive' for pending subscribing lists" do
+        new_subscribing_list.save
+        expect(new_subscribing_list.statuses).to_not include(:Inactive)
+      end
+
+      it "includes 'Declined' for pending subscribing lists" do
+        new_subscribing_list.save
+        expect(new_subscribing_list.statuses).to include(:Declined)
+      end
+
+      it "excludes 'Declined' for published subscribing lists" do
+        new_subscribing_list.save
+        new_subscribing_list.publish!
+        expect(new_subscribing_list.statuses).to_not include(:Declined)
+      end
+    end
+  end
 end
