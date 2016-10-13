@@ -33,9 +33,10 @@ class Market < ActiveRecord::Base
 
   has_many :categories, -> { distinct }, through: :supplier_products
   has_many :supplier_products, class_name: "Product", through: :suppliers, source: :products
-  has_many :suppliers, -> { active.selling }, class_name: "Organization", through: :market_organizations, source: :organization
+  has_many :suppliers, -> { active.selling }, class_name: "Organization", through: :active_market_organizations, source: :organization
 
   has_many :market_organizations
+  has_many :active_market_organizations, -> { excluding_deleted }, class_name: "MarketOrganization"
   has_many :organizations, -> { extending(MarketOrganization::AssociationScopes).excluding_deleted }, through: :market_organizations # XXX prefer the merge in the line below to this partially and incorrectly implemened .excluding_deleted scope?
   # TODO has_many :organizations, -> { merge(MarketOrganization.visible) }, through: :market_organizations
 
