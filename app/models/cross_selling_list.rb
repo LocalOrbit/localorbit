@@ -54,16 +54,18 @@ class CrossSellingList < ActiveRecord::Base
 
     else
       statuses = {
-        Active:    "Published",
+        Pending:  "Pending",
+        Active:   "Published",
         Declined: "Declined",
-        Inactive:  "Inactive"
+        Inactive: "Inactive"
       }
 
       if status == "Pending" then
         # This may not be as expected by Kate, et al...
         statuses.except!(:Inactive)
       else
-        statuses.except!(:Declined)
+        # You can't revert to Pending, nor can you decline after accepting
+        statuses.except!(:Declined, :Pending)
       end
     end
 
