@@ -25,11 +25,9 @@ class RollYourOwnMarketsController < ApplicationController
 
 				render json: @_plans
 
-	    rescue Exception => e
-	    	# Pass on any errors
-				err = e.json_body[:error]
-			  render :status => e.http_status, :text => err[:message]
-			end
+      rescue StandardException => e
+        handle_exception(e)
+      end
 
   	# If a plan is sent...
     else
@@ -40,11 +38,9 @@ class RollYourOwnMarketsController < ApplicationController
 		    @_plan = PaymentProvider::Stripe.get_stripe_plans(requested_plan)
 				render json: @_plan
 
-	    rescue Exception => e
-	    	# Pass on any errors
-				err = e.json_body[:error]
-			  render :status => e.http_status, :text => err[:message]
-	    end
+      rescue StandardException => e
+        handle_exception(e)
+      end
     end
 	end
 
@@ -56,10 +52,8 @@ class RollYourOwnMarketsController < ApplicationController
 	    @_coupon = PaymentProvider::Stripe.get_stripe_coupon(params[:coupon])
 			render json: @_coupon
 			
-		rescue Exception => e
-    	# Pass on any errors
-			err = e.json_body[:error]
-		  render :status => e.http_status, :text => err[:message]
+		rescue StandardException => e
+      handle_exception(e)
     end
 	end
 
@@ -72,4 +66,11 @@ class RollYourOwnMarketsController < ApplicationController
 				render json: false
 			end
 	end
+
+  protected
+
+  def handle_exception(e)
+    err = e.json_body[:error]
+    render :status => e.http_status, :text => err[:message]
+  end
 end
