@@ -94,6 +94,15 @@ class Market < ActiveRecord::Base
     joins(:orders).where(orders: {id: order_items.map(&:order_id)}).uniq
   end
 
+  def cross_selling_organizations
+    prod_ids = []
+    cross_selling_lists.subscriptions.published.each do |list|
+      prod_ids |= list.products.pluck(:id) if list.products.any?
+    end
+
+    Organization.for_products(prod_ids).distinct
+  end
+
   def pretty_email
     "#{contact_name.to_s.inspect} <#{contact_email}>"
   end
