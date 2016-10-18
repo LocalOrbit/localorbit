@@ -586,31 +586,31 @@ FactoryGirl.define do
     trait :market_manager do
       org_type 'M'
       name 'Market Manager'
-      activities '{market_fees:index,market_category_fees:index,market_cross_selling:index,order:index,financial:index,market_profile:index,market_manager:index,delivery:index,order_item:index,market_address:index,market_deliveries:index,market_payment_methods:index,market_deposit_accounts:index,template:index,market_custom_branding:index,market:index,send_invoices:index,payment_history:index,organization:index,delivery_schedule:index,financial_overview:index,enter_receipts:index,record_payments:index,product:index,fresh_sheet:index,newsletter:index,promotion:index,all_supplier:index,discount_code:index,dashboard:index,report:index,order_minimum:index}'
+      activities '{catalog:index,about:index,market_fees:index,market_category_fees:index,market_cross_selling:index,order:index,financial:index,market_profile:index,market_manager:index,delivery:index,order_item:index,market_address:index,market_deliveries:index,market_payment_methods:index,market_deposit_accounts:index,template:index,market_custom_branding:index,market:index,send_invoices:index,payment_history:index,organization:index,delivery_schedule:index,financial_overview:index,enter_receipts:index,record_payments:index,product:index,fresh_sheet:index,newsletter:index,promotion:index,all_supplier:index,discount_code:index,dashboard:index,report:index,order_minimum:index}'
     end
 
     trait :buyer do
       org_type 'B'
       name 'Buyer'
-      activities '{payment_history:index,purchase_history:index,purchase_history:index,financial:index,market:index,financial_overview:index,all_supplier:index,dashboard:index,review_invoices:index,report:index}'
+      activities '{catalog:index,about:index,payment_history:index,purchase_history:index,purchase_history:index,financial:index,market:index,financial_overview:index,all_supplier:index,dashboard:index,review_invoices:index,report:index}'
     end
 
     trait :supplier do
       org_type 'S'
       name 'Supplier'
-      activities '{organization_cross_selling:index,payment_history:index,delivery_schedule:index,product:index,dashboard:index,financial:index,order:index,delivery:index,order_item:index,fresh_sheet:index,newsletter:index,promotion:index,discount_code:index,report:index,all_supplier:index}'
+      activities '{catalog:index,about:index,organization_cross_selling:index,payment_history:index,delivery_schedule:index,product:index,dashboard:index,financial:index,order:index,delivery:index,order_item:index,fresh_sheet:index,newsletter:index,promotion:index,discount_code:index,report:index,all_supplier:index}'
     end
 
     trait :start_up_plan do
       org_type 'M'
       name 'Market Manager'
-      activities '{startup_plan:index,order:index,financial:index,market_profile:index,market_manager:index,delivery:index,order_item:index,market_address:index,market_deliveries:index,market_payment_methods:index,market_deposit_accounts:index,template:index,market:index,send_invoices:index,payment_history:index,organization:index,delivery_schedule:index,financial_overview:index,enter_receipts:index,record_payments:index,product:index,fresh_sheet:index,newsletter:index,all_supplier:index,dashboard:index,report:index}'
+      activities '{catalog:index,about:index,startup_plan:index,order:index,financial:index,market_profile:index,market_manager:index,delivery:index,order_item:index,market_address:index,market_deliveries:index,market_payment_methods:index,market_deposit_accounts:index,template:index,market:index,send_invoices:index,payment_history:index,organization:index,delivery_schedule:index,financial_overview:index,enter_receipts:index,record_payments:index,product:index,fresh_sheet:index,newsletter:index,all_supplier:index,dashboard:index,report:index}'
     end
 
     trait :grow_plan do
       org_type 'M'
       name 'Market Manager'
-      activities '{advanced_pricing:index,advanced_inventory:index,market_fees:index,market_category_fees:index,market_cross_selling:index,order:index,financial:index,market_profile:index,market_manager:index,delivery:index,order_item:index,market_address:index,market_deliveries:index,market_payment_methods:index,market_deposit_accounts:index,template:index,market_custom_branding:index,market:index,send_invoices:index,payment_history:index,organization:index,delivery_schedule:index,financial_overview:index,enter_receipts:index,record_payments:index,product:index,fresh_sheet:index,newsletter:index,promotion:index,all_supplier:index,discount_code:index,dashboard:index,report:index}'
+      activities '{catalog:index,about:index,advanced_pricing:index,advanced_inventory:index,market_fees:index,market_category_fees:index,market_cross_selling:index,order:index,financial:index,market_profile:index,market_manager:index,delivery:index,order_item:index,market_address:index,market_deliveries:index,market_payment_methods:index,market_deposit_accounts:index,template:index,market_custom_branding:index,market:index,send_invoices:index,payment_history:index,organization:index,delivery_schedule:index,financial_overview:index,enter_receipts:index,record_payments:index,product:index,fresh_sheet:index,newsletter:index,promotion:index,all_supplier:index,discount_code:index,dashboard:index,report:index}'
     end
   end
 
