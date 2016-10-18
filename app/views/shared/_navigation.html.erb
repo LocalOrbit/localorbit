@@ -16,9 +16,9 @@ end
         </div>
         <% if current_user %>
           <div class="nav nav--main column column--half pull-right" style="text-align: center">
-            <%= link_to "Order", products_path, class: "", tag: :a %>
+            <% if policy(:catalog).index? %><%= link_to "Order", products_path, class: "", tag: :a %><% end %>
             <% if policy(:all_supplier).index? && !current_user.buyer_only? %><%= link_to "Suppliers", sellers_path, class: "", tag: :a %><% end %>
-            <%= link_to "About", market_path, class: "", tag: :a %>
+            <% if policy(:about).index? %><%= link_to "About", market_path, class: "", tag: :a %><% end %>
           </div>
         <% end %>
       </div>
@@ -37,7 +37,7 @@ end
     <!-- admin or market_manager -->
     <% if policy(:market).index? || policy(:organization).index? || policy(:user).index? || policy(:role).index? || policy(:unit).index? || policy(:event).index? || policy(:taxonomy).index? || policy(:internal_financial).index? %>
     <li>
-      <a href="#market-dropdown" class="caretted"><i class="font-icon" data-icon="&#xe054;"></i>Market Admin</a>
+      <a href="#market-dropdown" class="caretted"><i class="font-icon" data-icon="&#xe054;"></i>Administration</a>
       <ul class="dropdown with-anchor top-anchor" id="market-dropdown">
         <% if policy(:market).index? %><li><%= link_to raw('<i class="font-icon" data-icon="&#xe000;"></i> Markets'), admin_markets_path(sort: "name-asc") %></li><% end %>
         <% if policy(:organization).index? %><li><%= link_to raw('<i class="font-icon" data-icon="&#xe027;"></i> Organizations'), admin_organizations_path(sort: "name-asc") %></li><% end %>
@@ -88,7 +88,7 @@ end
     </li>
     <% end %>
 
-    <% if policy(:report).index? || policy(:referral).index? || policy(:metric).index? %>
+    <% if policy(:report).index? || policy(:qlik).index? || policy(:referral).index? || policy(:metric).index? %>
     <li>
       <a href="#reports-dropdown" class="caretted"><i class="font-icon" data-icon="&#xe01e;"></i> Reports</a>
       <ul class="dropdown with-anchor top-anchor" id="reports-dropdown">
@@ -105,13 +105,13 @@ end
       <a href="#account-dropdown" class="caretted"><i class="font-icon" data-icon="&#xe011;"></i>Account</a>
       <ul class="dropdown with-anchor top-anchor" id="account-dropdown">
         <li><%= link_to raw('<i class="font-icon" data-icon="&#xe018;"></i> E-mail &amp; Password'), edit_user_registration_path %></li>
-        <li><%= link_to_my_organization %></li>
+        <% if policy(:organization).index? %><li><%= link_to_my_organization %></li><% end %>
         <li><%= link_to raw('<i class="font-icon" data-icon="&#xe024;"></i> Terms of Service'), TermsOfService.url %></li>
       </ul>
     </li>
-    <li class="mobile-only"><%= link_to "Order", products_path, class: "" %></li>
-    <li class="mobile-only"><%= link_to "Suppliers", sellers_path, class: "" %></li>
-    <li class="mobile-only"><%= link_to "About", market_path, class: "" %></li>
+    <% if policy(:catalog).index? %><li class="mobile-only"><%= link_to "Order", products_path, class: "" %></li><% end %>
+    <% if policy(:all_supplier).index? && !current_user.buyer_only? %><li class="mobile-only"><%= link_to "Suppliers", sellers_path, class: "" %></li><% end %>
+    <% if policy(:about).index? %><li class="mobile-only"><%= link_to "About", market_path, class: "" %></li><% end %>
   </ul>
 <% end %>
 
