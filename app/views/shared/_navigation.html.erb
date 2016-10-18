@@ -37,7 +37,7 @@ end
     <!-- admin or market_manager -->
     <% if policy(:market).index? || policy(:organization).index? || policy(:user).index? || policy(:role).index? || policy(:unit).index? || policy(:event).index? || policy(:taxonomy).index? || policy(:internal_financial).index? %>
     <li>
-      <a href="#market-dropdown" class="caretted"><i class="font-icon" data-icon="&#xe054;"></i>Administration</a>
+      <a href="#market-dropdown" class="caretted"><i class="font-icon" data-icon="&#xe054;"></i>Market Admin</a>
       <ul class="dropdown with-anchor top-anchor" id="market-dropdown">
         <% if policy(:market).index? %><li><%= link_to raw('<i class="font-icon" data-icon="&#xe000;"></i> Markets'), admin_markets_path(sort: "name-asc") %></li><% end %>
         <% if policy(:organization).index? %><li><%= link_to raw('<i class="font-icon" data-icon="&#xe027;"></i> Organizations'), admin_organizations_path(sort: "name-asc") %></li><% end %>
