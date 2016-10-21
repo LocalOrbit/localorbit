@@ -3,9 +3,9 @@ require "spec_helper"
 describe "Deleting a user", :js do
   let(:market_manager) { create(:user, :market_manager) }
   let(:market) { market_manager.managed_markets.first }
-  let!(:org) { create(:organization, markets: [market]) }
-  let!(:user) { create(:user, organizations: [org]) }
-  let!(:user2) { create(:user, organizations: [org]) }
+  let!(:org) { create(:organization, :buyer, markets: [market]) }
+  let!(:user) { create(:user, :buyer, organizations: [org]) }
+  let!(:user2) { create(:user, :buyer, organizations: [org]) }
 
   describe "as a market manager" do
     it "removes a user from an organization" do
