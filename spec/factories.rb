@@ -592,7 +592,7 @@ FactoryGirl.define do
     trait :buyer do
       org_type 'B'
       name 'Buyer'
-      activities '{catalog:index,about:index,payment_history:index,purchase_history:index,purchase_history:index,financial:index,market:index,financial_overview:index,all_supplier:index,dashboard:index,review_invoices:index,report:index}'
+      activities '{organization:index,catalog:index,about:index,payment_history:index,purchase_history:index,purchase_history:index,financial:index,market:index,financial_overview:index,all_supplier:index,dashboard:index,review_invoices:index,report:index}'
     end
 
     trait :supplier do
