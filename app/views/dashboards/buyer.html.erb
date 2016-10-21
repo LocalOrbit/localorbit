@@ -1,2 +1,4 @@
-<%= react_component('lo.dashboard', {
+<% if policy(:dashboard).index? %>
+    <%= react_component('lo.dashboard', {
     baseUrl: "#{request.base_url}/api/v1/dashboards"}) %>
+<% end %>

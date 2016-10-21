@@ -1,7 +1,7 @@
 require "spec_helper"
 
 describe "Add item to cart", js: true do
-  let(:user) { create(:user) }
+  let(:user) { create(:user, :buyer) }
   let!(:buyer) { create(:organization, :single_location, :buyer, users: [user]) }
   let!(:seller) { create(:organization, :seller, :single_location) }
 
