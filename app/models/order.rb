@@ -38,6 +38,11 @@ class Order < ActiveRecord::Base
     end
   end
 
+
+  has_many :cross_selling_lists, through: :market, foreign_key: :entity_id
+  has_many :cross_selling_list_products, through: :cross_selling_lists
+  has_many :cross_sold_products, through: :cross_selling_list_products, source: :product
+
   has_many :order_payments, inverse_of: :order
   has_many :payments, through: :order_payments, inverse_of: :orders
   has_many :products, through: :items
@@ -268,7 +273,7 @@ class Order < ActiveRecord::Base
     if user.admin?
       all
     else
-      where(buyer_orders_arel(user).or(manager_orders_arel(user))).uniq.where(market_id: user.markets)
+      where(buyer_orders_arel(user).or(manager_orders_arel(user))).uniq.where(user_markets(user))
     end
   end
 
@@ -276,8 +281,25 @@ class Order < ActiveRecord::Base
     if user.admin?
       all
     else
-      joins(:products).where(seller_orders_arel(user).or(manager_orders_arel(user))).uniq.where(market_id: user.markets)
+      # KXM orders_for_seller needs cleanup once functionality is confirmed
+      # Original
+      # joins(:products).where(seller_orders_arel(user).or(manager_orders_arel(user))).uniq.where(market_id: user.markets)
+
+      joins(:products).where(seller_orders_arel(user).or(manager_orders_arel(user)).or(cross_sold_products_arel(user))).uniq
+      # joins(:products).where(seller_orders_arel(user).or(manager_orders_arel(user)).or(cross_sold_products_arel(user))).uniq.where(market_id: user.markets)
+      # joins(:products).where(seller_orders_arel(user).or(manager_orders_arel(user)).or(cross_sold_products_arel(user))).uniq.where(user_markets(user))
+      # joins(:products).where(seller_orders_arel(user).or(manager_orders_arel(user)).or(cross_sold_products_arel(user))).uniq.where(user_markets(user).or(cross_selling_markets(user)))
     end
+  end
+
+  def self.user_markets(user)
+    arel_table[:market_id].in(user.markets)
+  end
+
+  def self.cross_selling_markets(user)
+    # KXM cross_selling_markets not yet implemented... is it needed?
+    # The code below is the same as user_markets (above)
+    arel_table[:market_id].in(user.markets)
   end
 
   def self.undelivered_orders_for_seller(user)
@@ -296,6 +318,10 @@ class Order < ActiveRecord::Base
 
   def self.manager_orders_arel(user)
     arel_table[:market_id].in(ManagedMarket.where(user_id: user.id).select(:market_id).arel)
+  end
+
+  def self.cross_sold_products_arel(user)
+    Product.arel_table[:id].in(CrossSellingListProduct.joins(:cross_selling_list).where("cross_selling_lists.entity_type = 'Market' AND cross_selling_lists.creator = ? AND cross_selling_lists.entity_id IN (?)", true, user.markets.pluck(:id)).select(:product_id).arel)
   end
 
   # def self.add_notes_reference(notes_arr) # TODO check aeren
