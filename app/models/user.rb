@@ -387,7 +387,8 @@ class User < ActiveRecord::Base
     @markets ||= if admin?
       Market.all
     else
-      markets_for_non_admin
+      # markets_for_non_admin
+      markets_for_non_admin_including_cross_selling
     end
   end
 
@@ -476,11 +477,24 @@ class User < ActiveRecord::Base
 
   private
 
-  def markets_for_non_admin
+  def standard_market_ids
     managed_market_ids = managed_markets.pluck(:id)
-
     organization_member_market_ids = organizations.map(&:all_market_ids).flatten
-    Market.where(id: (managed_market_ids + organization_member_market_ids))
+
+    (managed_market_ids + organization_member_market_ids)
+  end
+
+  def cross_selling_market_ids
+    publishing_list_ids = CrossSellingList.where(creator: true, entity_type: 'Market', entity_id: standard_market_ids).pluck(:id)
+    subscribing_list_ids = CrossSellingList.where(creator: false, status: 'Published', deleted_at: nil, parent_id: publishing_list_ids).pluck(:entity_id)
+  end
+
+  def markets_for_non_admin
+    Market.where(id: standard_market_ids)
+  end
+
+  def markets_for_non_admin_including_cross_selling
+    Market.where(id: (standard_market_ids + cross_selling_market_ids))
   end
 
   def ids_for_managed_organizations
