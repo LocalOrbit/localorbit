@@ -40,6 +40,6 @@ class SellersController < ApplicationController
   def find_market_sellers
     organization_ids = current_market.organizations.visible.active.selling.collect(&:id) | current_market.cross_selling_organizations.collect(&:id)
 
-    @sellers = Organization.where(id: organization_ids).distinct
+    @sellers = Organization.where(id: organization_ids)
   end
 end
