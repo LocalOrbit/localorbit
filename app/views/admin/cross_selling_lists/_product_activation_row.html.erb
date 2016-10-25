@@ -1,0 +1,14 @@
+<tr class="product-details">
+  <%= cslp.hidden_field :product_id %>
+  <td>
+    <h3><%= cslp.object.product.name %></h3>
+    <h5>From: <%= cslp.object.product.organization.name %></h5>
+  </td>
+  <td class="product-unit-name">
+    <%= "#{cslp.object.product.unit.singular}" %>
+    <%= ", #{cslp.object.product.unit_description}" if !cslp.object.product.unit_description.blank? %>
+  </td>
+  <td>
+    <%= cslp.check_box :active %>
+  </td>
+</tr>

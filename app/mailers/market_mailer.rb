@@ -51,4 +51,24 @@ class MarketMailer < BaseMailer
       )
     end
   end
+
+  def cross_selling_list_message(sender, list_in_question, subject, action)
+    # This triggers a return unless all method parameters are populated.  This is the last line of defense, yo.
+    return if method(__method__).parameters.map{|_,name| binding.local_variable_get(name)}.include?(nil)
+
+    @sender = @market = sender
+    @list_in_question = list_in_question
+    @recipient = list_in_question.entity
+
+    recipients = @recipient.managers.map(&:pretty_email)
+
+    if recipients.any?
+      mail(
+        to: recipients,
+        subject: subject,
+        template_name: action + "_cross_selling_list"
+      )
+    end
+  end
+
 end

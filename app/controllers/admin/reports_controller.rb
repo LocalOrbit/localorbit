@@ -22,21 +22,30 @@ class Admin::ReportsController < AdminController
     if params["clear"]
       redirect_to url_for(params.except(:clear))
     else
-      @presenter = ReportPresenter.report_for(
-        report: params[:id].to_s.underscore,
-        market: current_market,
-        user: current_user,
-        search: @query_params[:q],
-        paginate: {
+      presenter_params = {report: params[:id].to_s.underscore,
+          market: current_market,
+          user: current_user,
+          search: @query_params[:q],
+          paginate: {
           csv: request.format.to_sym == :csv,
           page: @query_params[:page],
           per_page: @query_params[:per_page]
-        })
+      }}
+
+      @presenter = ReportPresenter.report_for(presenter_params)
 
       if @presenter
         respond_to do |format|
           format.html { render "report" }
-          format.csv  { @filename = "report.csv" }
+          format.csv do
+            if ENV["USE_UPLOAD_QUEUE"] == "true"
+              Delayed::Job.enqueue ::CSVExport::CSVReportExportJob.new(current_user, presenter_params)
+              flash[:notice] = "Please check your email for export results."
+              redirect_to admin_reports_path
+            else
+              @filename = "report.csv"
+            end
+          end
         end
       else
         render_404

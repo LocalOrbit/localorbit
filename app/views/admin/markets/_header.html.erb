@@ -1,31 +1,33 @@
+<% market ||= @market %>
 <div class="tab-header stickable">
   <div class="l-constraint">
 
     <%= link_to "< Return to Markets List", admin_markets_path, class: "redundant-nav" %>
 
     <% if current_user.admin? %>
-      <h1 class="pull-left"><%= @market.decorate.header %></h1>
-      <%= form_for [:admin, @market], html: { class: "pull-right" } do |f| %>
-        <%= f.hidden_field :active, value: !@market.active? %>
-        <%= f.submit (@market.active? ? 'Deactivate' : 'Activate'), class: "btn--small btn--activate" %><br/><br/>
+      <h1 class="pull-left"><%= market.decorate.header %></h1>
+      <%= form_for [:admin, market], html: { class: "pull-right" } do |f| %>
+        <%= f.hidden_field :active, value: !market.active? %>
+        <%= f.submit (market.active? ? 'Deactivate' : 'Activate'), class: "btn--small btn--activate" %><br/><br/>
       <% end %>
     <% else %>
-      <h1><%= @market.decorate.header %></h1>
+      <h1><%= market.decorate.header %></h1>
     <% end %>
 
     <div class="tabs-wrapper">
       <ul class="tabs wrapping-tabs">
-        <% if policy(:market_profile).index? %><%= content_tag(:li, link_to_or_span("Market Info",   [:admin, @market]), class: 'tab') %><% end %>
-        <% if policy(:market_manager).index? %><%= content_tag(:li, link_to_or_span("Managers",      [:admin, @market, :managers]), class: 'tab') %><% end %>
-        <%#= content_tag(:li, link_to_or_span("Users",         [:admin, @market, :managers]), class: 'tab todo') %>
-        <% if policy(:market_address).index? %><%= content_tag(:li, link_to_or_span("Addresses",     [:admin, @market, :addresses]), class: 'tab') %><% end %>
-        <% if policy(:market_deliveries).index? %><%= content_tag(:li, link_to_or_span("Deliveries",    [:admin, @market, :delivery_schedules]), class: 'tab') %><% end %>
-        <% if policy(:market_payment_methods).index? %><%= content_tag(:li, link_to_or_span("Payment Methods", [:admin, @market, :bank_accounts]), class: 'tab') %><% end %>
-        <% if policy(:market_deposit_accounts).index? %><%= content_tag(:li, link_to_or_span("Deposit Accounts", [:admin, @market, :deposit_accounts]), class: 'tab') unless PaymentProvider.is_balanced?(@market.payment_provider) || FeatureAccess.stripe_standalone?(market: current_market)%><% end %>
-        <% if policy(:market_fees).index? %><%= content_tag(:li, link_to_or_span("Fees",          [:admin, @market, :fees]), class: 'tab') unless !FeatureAccess.not_LE_market_manager?(user:current_user, market: current_market) %><% end %>
-        <% if policy(:market_custom_branding).index? %><%= content_tag(:li, link_to_or_span("Style Chooser", [:admin, @market, :style_chooser]), class: 'tab') %><% end %>
-        <% if policy(:market_cross_selling).index? %><%= content_tag(:li, link_to_or_span("Cross Sell", [:admin, @market, :cross_sell]), class: 'tab') if @market.allow_cross_sell %><% end %>
-        <% if policy(:market_stripe).index? %><%= content_tag(:li, link_to_or_span("Stripe", [:admin, @market, :stripe]), class: 'tab') if FeatureAccess.stripe_standalone?(market: @market) %><% end %>
+        <% if policy(:market_profile).index? %><%= content_tag(:li, link_to_or_span("Market Info",   [:admin, market]), class: 'tab') %><% end %>
+        <% if policy(:market_manager).index? %><%= content_tag(:li, link_to_or_span("Managers",      [:admin, market, :managers]), class: 'tab') %><% end %>
+        <%#= content_tag(:li, link_to_or_span("Users",         [:admin, market, :managers]), class: 'tab todo') %>
+        <% if policy(:market_address).index? %><%= content_tag(:li, link_to_or_span("Addresses",     [:admin, market, :addresses]), class: 'tab') %><% end %>
+        <% if policy(:market_deliveries).index? %><%= content_tag(:li, link_to_or_span("Deliveries",    [:admin, market, :delivery_schedules]), class: 'tab') %><% end %>
+        <% if policy(:market_payment_methods).index? %><%= content_tag(:li, link_to_or_span("Payment Methods", [:admin, market, :bank_accounts]), class: 'tab') %><% end %>
+        <% if policy(:market_deposit_accounts).index? %><%= content_tag(:li, link_to_or_span("Deposit Accounts", [:admin, market, :deposit_accounts]), class: 'tab') unless PaymentProvider.is_balanced?(market.payment_provider) || FeatureAccess.stripe_standalone?(market: current_market)%><% end %>
+        <% if policy(:market_fees).index? %><%= content_tag(:li, link_to_or_span("Fees",          [:admin, market, :fees]), class: 'tab') unless !FeatureAccess.not_LE_market_manager?(user:current_user, market: current_market) %><% end %>
+        <% if policy(:market_custom_branding).index? %><%= content_tag(:li, link_to_or_span("Style Chooser", [:admin, market, :style_chooser]), class: 'tab') %><% end %>
+        <% if policy(:admin_cross_selling).index? %><%= content_tag(:li, link_to_or_span("Admin X-Sell", [:admin, market, :cross_sell]), class: 'tab') if market.allow_cross_sell && current_user.admin? %><% end %>
+        <% if policy(:market_cross_selling).index? %><%= content_tag(:li, link_to_or_span("Cross Sell", [:admin, market, :cross_selling_lists]), class: 'tab') if market.allow_cross_sell  %><% end %>
+        <% if policy(:market_stripe).index? %><%= content_tag(:li, link_to_or_span("Stripe", [:admin, market, :stripe]), class: 'tab') if !market.nil? && FeatureAccess.stripe_standalone?(market: market) %><% end %>
       </ul>
     </div>
   </div>

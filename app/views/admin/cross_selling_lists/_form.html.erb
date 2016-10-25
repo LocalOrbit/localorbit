@@ -1,0 +1,54 @@
+<div class="action_box column column--full">
+  <div class="row row--field">
+    <div class="field column column--half column--guttered">
+      <%= list.label :name, "List Name" %>
+      <span class="help-text">This is the name Subscribers will use to identify your list of cross sold items.</span>
+      <%= list_name(list) %>
+    </div
+    ><div class="field column column--half column--guttered">
+      <%= list.label :status, "List Status" %>
+      <span class="help-text"><%= status_help_text %></span>
+
+      <%= list.select :status, @cross_selling_list.statuses, {}, { class: "column--full" } unless @cross_selling_list.locked? %>
+    </div>
+  </div>
+  <div class="row row--field">
+    <div id="cross_selling_target_markets" class="field column column--half column--guttered">
+
+    <% if @cross_selling_list.display_subscribers? %>
+      <%= list.label :children_ids, "List Visibility" %>
+      <span class="help-text">Control who may view, subscribe, or sell your products. Contact Local Orbit if you don't see who you're looking for.</span>
+
+      <% @target_market.cross_sells.each do |csl_market| %>
+        <%= check_box_tag "cross_selling_list[children_ids][]", csl_market.id, @cross_selling_list.children.active.map{|list| list.entity_id}.include?(csl_market.id) %>&nbsp;<%= csl_market.name %><br />
+      <% end %>
+    <% end %>
+
+    </div>
+  </div>
+
+  <div class="row row--field">
+    <div class="form-actions">
+      <%= list.submit(@cross_selling_list.new_record? ? "Create List" : "Update List") if !@cross_selling_list.locked? %>
+    </div>
+  </div>
+
+</div>
+<% if !@cross_selling_list.new_record? %>
+<div>
+  <% if !@selected_suppliers.blank? then %>
+    <% @selected_suppliers.each do |supplier_id| %>
+      <%= hidden_field_tag "selected_suppliers[]", supplier_id %>
+    <% end %>
+  <% end %>
+</div>
+<div>
+  <% if !@selected_categories.blank? then %>
+    <% @selected_categories.to_h.each_pair do |level, category_ids| %>
+    <% category_ids.each do |category_id| %>
+      <%= hidden_field_tag "selected_categories[#{level}][]", category_id %>
+    <% end %>
+    <% end %>
+  <% end %>
+</div>
+<% end %>

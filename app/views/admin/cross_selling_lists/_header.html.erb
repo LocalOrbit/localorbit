@@ -1,0 +1,10 @@
+    <div>
+      <ul class="cross_selling_sub-header">
+        <li><%= link_to_unless_current("My Cross Selling Lists", { action: "index" }) %></li>
+
+        <% pending = @entity.cross_selling_lists.pending.count > 0 ? " (#{@entity.cross_selling_lists.pending.count})" : "" %>
+        <li><%= link_to_unless_current("My Subscriptions#{pending}", { action: "subscriptions" }) %></li>
+      </ul>
+      <%= form_tag [:admin, @entity, :toggle_self_enabled_cross_sell], method: :patch do submit_tag "Turn off Cross Selling", style: "float:right; top:0;" end %>
+    </div>
+    <hr class="clearfix" />

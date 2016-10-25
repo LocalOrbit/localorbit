@@ -1,0 +1,55 @@
+<%= render partial: "admin/markets/header", locals: { market: @entity } %>
+
+<div class="row row--partial">
+  <div class="column column--three-fourths">
+    <%= render "header" %>
+
+    <% if @cross_selling_subscriptions.empty? %>
+      <div class='action_box column column--full'>
+        <p class="messaging" style="width:100%">
+          <span class="message">No one has shared a cross selling list with you yet...</span>
+        </p>
+      </div>
+    <% else %>
+      <div class="clearfix" style="padding-top:1em;">
+        <% @cross_selling_subscriptions.pending.each do |pending_list| %>
+        <div class='pending_list column column--three-fourths'>
+          <p class="messaging">
+            <span class="message"><span class="announcement"><%= pending_list.parent.entity.name %> shared a list with you</span><br /><span class="detail">List name: '<%= pending_list.name %>' with <%= pending_list.products.count %> products</span></span>
+            <%= link_to "Review list", [:admin, @entity, pending_list], class: "review_link" %>
+          </p>
+        </div>
+        <% end %>
+      </div>
+      <!--div>
+        <div style="float:left; width:50%;">
+          <input type="text" name="search">&nbsp;<button>Search</button>
+        </div>
+      </div-->
+      <hr style="clear:both;" />
+
+      <div class="table-wrapper">
+        <table class="sortable" id="cross-sell-lists">
+          <thead>
+            <tr>
+              <th>List Name</th>
+              <th>Publisher</th>
+              <th>Status</th>
+              <th>Products</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% @cross_selling_subscriptions.each do |list| %>
+            <tr>
+              <td class="cross-sell-list-name"><%= link_to list.name, [:admin, @entity, list] %></td>
+              <td class="cross-sell-list-subscribers"><%= list.parent.entity.name %></td>
+              <td class="cross-sell-list-status"><%= list.translate_status(list.status) %></td>
+              <td class="cross-sell-list-count"><%= "#{list.products.active.count} of #{list.products.count} products active" %></td>
+            </tr>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
+    <% end %>
+  </div>
+</div>

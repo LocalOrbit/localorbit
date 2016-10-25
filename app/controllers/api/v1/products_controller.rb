@@ -42,21 +42,7 @@ module Api
       private
 
       def filtered_available_products(query, category_ids, seller_ids, order)
-        delv = current_delivery
-        mkt = current_market
-        org = current_organization
-
-        #if order.nil?
-        #  delv = current_delivery
-        #  mkt = current_market
-        #  org = current_organization
-        #else
-        #  delv = order.delivery.decorate
-        #  mkt = order.market
-        #  org = order.organization
-        #end
-
-        p_sql = Product.connection.unprepared_statement do
+        catalog_products = Product.connection.unprepared_statement do
           current_delivery
               .object
               .delivery_schedule
@@ -69,12 +55,22 @@ module Api
               .to_sql
         end
 
-        GeneralProduct.joins("JOIN (#{p_sql}) p_child ON general_products.id=p_child.general_product_id
-                              JOIN categories top_level_category ON general_products.top_level_category_id = top_level_category.id
-                              JOIN categories second_level_category ON general_products.second_level_category_id = second_level_category.id
-                              JOIN organizations supplier ON general_products.organization_id=supplier.id
-                              JOIN market_organizations ON general_products.organization_id = market_organizations.organization_id
-                              AND market_organizations.market_id = #{current_market.id}")
+        cross_sold_products = Product.
+          cross_selling_list_items(current_market.id).
+          visible.
+          with_available_inventory(current_delivery.deliver_on).
+          priced_for_market_and_buyer(current_market, current_organization).
+          with_visible_pricing.
+          select(:id, :general_product_id).
+          to_sql
+
+        gp = GeneralProduct.joins("JOIN (#{catalog_products} UNION #{cross_sold_products}) p_child
+              ON general_products.id=p_child.general_product_id
+              JOIN categories top_level_category ON general_products.top_level_category_id = top_level_category.id
+              JOIN categories second_level_category ON general_products.second_level_category_id = second_level_category.id
+              JOIN organizations supplier ON general_products.organization_id=supplier.id
+              LEFT JOIN market_organizations ON general_products.organization_id = market_organizations.organization_id
+              AND market_organizations.market_id = #{current_market.id}")
             .filter_by_current_order(order)
             .filter_by_name_or_category_or_supplier(query)
             .filter_by_categories(category_ids)

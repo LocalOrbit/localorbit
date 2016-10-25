@@ -85,7 +85,6 @@
 
     <div class="table-wrapper">
       <table class="delivery-tools">
-        <thead>
           <tr>
             <th>Product Code</th>
             <th>Item</th>
@@ -96,7 +95,6 @@
             <th>Item Total Price</th>
             <th>Notes</th>
           </tr>
-        </thead>
         <% order.items.undelivered.includes(:product => :organization).order('products.name').each do |item| %>
           <tr class="pack-list-item">
             <td><%= item.product.code || "-" %></td>

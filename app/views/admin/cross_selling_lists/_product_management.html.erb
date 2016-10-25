@@ -1,0 +1,80 @@
+<div class="is-hidden modal popup" id="product_management">
+  <div class="popup-header">
+    <%= button_tag "Close", type: :reset, id: "close-modal", class: "pull-right" %>
+    <h1>Edit Cross Selling Product List</h1>
+    <p>Select products or groups of products to allow other Markets to sell on your behalf.</p>
+  </div>
+
+  <div id="tabs" class="popup-body">
+    <ul id="product-add-tab-list" class="tabs wrapping-tabs">
+      <li class="tab"><a href="#product-add-suppliers">Products by supplier</a></li>
+      <li class="tab"><a href="#product-add-categories">Products by category</a></li>
+      <li class="tab"><a href="#product-add-products">Individual products</a></li>
+    </ul>
+
+    <div id="product-add-suppliers" class="bound-list">
+      <table>
+        <thead>
+          <tr>
+            <th>Supplier</th>
+            <th>Products</th>
+            <th><%= check_box_tag("all_suppliers", 1, false, {class: "select_all"}) %> Check all</th>
+          </tr>
+        </thead>
+        <tbody>
+        <% @suppliers.each do |supplier| %>
+          <tr>
+            <td class="supplier-name"><%= supplier.name %></td>
+            <td class="supplier-product-count"><%= @scoped_products.select {|product| product["organization_id"].to_i == supplier.id }.count %></td>
+            <td><%= check_box_tag("suppliers[]", supplier.id, @selected_suppliers.include?(supplier.id) ) %></td>
+          </tr>
+        <% end %>
+        </tbody>
+      </table>
+    </div>
+
+    <div id="product-add-categories" class="bound-list">
+      <table>
+        <thead>
+          <tr>
+            <th>Category</th>
+            <th>Products</th>
+            <th><%= check_box_tag("all_categories", 1, false, {class: "select_all"}) %> Check all</th>
+          </tr>
+        </thead>
+        <% @categories.each_with_index do |category, i| %>
+        <%= raw("</tbody>") if category.get_level == "top" unless i == 0 %>
+        <%= raw("<tbody id=category_#{category.id}>") if category.get_level == "top" %>
+          <tr>
+            <td class="category-name"><span class=<%= category.get_level %>><%= category.name %></span><%#= " (#{category.id})" %></td>
+            <td class="category-product-count"><%= @scoped_products.select {|product| product.categories.include?(category.id) }.count %></td>
+            <% if category.get_level == "top" %>
+              <td><%= check_box_tag("top_#{category.id}", category.id, @selected_categories.to_h[category.get_level].include?(category.id), class: category.get_level) %></td>
+            <% else %>
+              <td><%= check_box_tag("categories[#{category.get_level}][]", category.id,  @selected_categories.to_h[category.get_level].include?(category.id), class: "secondlevel") %></td>
+            <% end %>
+          </tr>
+        <% end %>
+        </tbody>
+      </table>
+    </div>
+
+    <div id="product-add-products" class="bound-list">
+    <table class="product-listing">
+      <tbody class="product-details-container">
+      <% if @cross_selling_list.creator then %>
+        <% @scoped_products.each do |product| %>
+          <%= render "product_management_row", {list: list, product: product} %>
+        <% end %>
+      <% else %>
+        <%= list.fields_for :cross_selling_list_products do |cslp| %>
+          <%= render "product_activation_row", {list: list, cslp: cslp} %>
+        <% end %>
+      <% end %>
+      </tbody>
+    </table>
+    </div>
+
+    <%= list.submit "Update List" %> &nbsp; <%= button_tag "Reset List", type: :reset, id: "close-modal" %>
+  </div>
+</div>

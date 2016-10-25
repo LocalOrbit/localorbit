@@ -102,11 +102,12 @@
                     showgrid:false,
                     zeroline:false,
                     autotick: false,
+                    type: 'log',
                     hoverformat: ".2f",
                     showexponent:"all",
                     tickprefix:"$",
                     tickfont:{
-                        size:10
+                        size:9
                     }
                 },
                 xaxis:{
@@ -130,7 +131,6 @@
             if (this.props.userType == "S" || this.props.userType == "M")
                 label_text = 'Total Sales';
             else if (this.props.userType == "P")
-                // # KXM You're welcome, Eric...
                 label_text = 'Total Purchases';
             else
                 label_text = 'Total Spend';

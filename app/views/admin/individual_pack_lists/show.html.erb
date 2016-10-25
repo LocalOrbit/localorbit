@@ -44,7 +44,6 @@
 
       <div class="table-wrapper">
         <table class="delivery-tools">
-          <thead>
             <tr>
               <th>Product Code</th>
               <th>Item</th>
@@ -56,7 +55,6 @@
               <th>Initials</th>
               <th>Notes</th>
             </tr>
-          </thead>
           <% items.each do |item| %>
             <tr class="individual-pack-list-item">
               <td><%= item.product.code || "-" %></td>

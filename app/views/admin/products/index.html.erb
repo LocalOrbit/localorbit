@@ -1,6 +1,6 @@
 <div>
   <div class="l-constraint">
-    <%= link_to "#{svg_icon} Export CSV".html_safe, url_for(format: :csv), class: 'export pull-right ' %>
+    <%= link_to "#{svg_icon} Export CSV".html_safe, url_for(q: params[:q], format: :csv), class: 'export pull-right ' %>
     <h1><i class="font-icon" data-icon="&#xe01f;"></i>&nbsp; Products</h1>
     <%= render "filters" %>
   </div>
@@ -24,6 +24,8 @@
     <% if !general_product || general_product != product.general_product %>
       <% general_product = product.general_product %>
       <% row_style = cycle "odd", "even" %>
+      <% # This check will likely drive display of sourcing info %>
+      <% list_item = "list_item" if product.cross_selling_list_products.exists? %>
       <% continued_product = false %>
     <% else %>
       <% continued_product = true %>
@@ -35,7 +37,8 @@
       <% if current_user.multi_market_membership? && policy(:all_supplier).index? %>
       <td class="market hidden-mobile">
         <% if !continued_product
-              product.markets.active.uniq.order(:name).each do |m| %>
+              mkts = product.organization.decorate.delivery_schedules.keys.map(&:id)
+              Market.active.where(id: mkts).order(:name).each do |m| %>
                 <%= link_to( m.name, admin_market_path(m.id)) %><br/><br/>
               <% end
            end
