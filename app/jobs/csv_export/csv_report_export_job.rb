@@ -49,7 +49,7 @@ module CSVExport
       end
 
       # Send via email
-      ExportMailer.delay.export_success(user.email, csv)
+      ExportMailer.delay.export_success(user.email, 'report', csv)
     end
 
   end
