@@ -105,7 +105,7 @@ end
       <a href="#account-dropdown" class="caretted"><i class="font-icon" data-icon="&#xe011;"></i>Account</a>
       <ul class="dropdown with-anchor top-anchor" id="account-dropdown">
         <li><%= link_to raw('<i class="font-icon" data-icon="&#xe018;"></i> E-mail &amp; Password'), edit_user_registration_path %></li>
-        <% if policy(:organization).index? %><li><%= link_to_my_organization %></li><% end %>
+        <% if policy(:user_organization).index? %><li><%= link_to_my_organization %></li><% end %>
         <li><%= link_to raw('<i class="font-icon" data-icon="&#xe024;"></i> Terms of Service'), TermsOfService.url %></li>
       </ul>
     </li>
