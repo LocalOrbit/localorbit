@@ -61,7 +61,7 @@ module Admin
         disable_supplier_inventory
       end
 
-      org_type = update_org_type(params[:organization][:can_sell])
+      org_type = update_org_type(params[:organization][:can_sell] || params[:can_sell])
 
       if @organization.update_attributes(organization_params.merge({:org_type => org_type}))
         redirect_to [:admin, @organization], notice: "Saved #{@organization.name}"
@@ -78,7 +78,7 @@ module Admin
     end
 
     def update_org_type(can_sell)
-      if can_sell == true || can_sell == "1"
+      if can_sell == true || can_sell == 'true' || can_sell == "1"
         "S"
       else
         "B"
