@@ -1,5 +1,5 @@
 module CSVExport
-  class CSVOrganizationExportJob < Struct.new(:user, :organizations) # pass in the datafile like is done right now in uploadcontroller, i.e.
+  class CSVOrganizationExportJob < Struct.new(:user, :ids) # pass in the datafile like is done right now in uploadcontroller, i.e.
 
     def enqueue(job)
     end
@@ -15,8 +15,9 @@ module CSVExport
     end
 
     def perform
+      organizations = Organization.where(id: ids)
       csv = CSV.generate do |f|
-        f << ["Name", "Market", "Contact", "Registered On", "Role", "Shipping Address", "Shipping Phone", "Billing Address", "Billing Phone", "Users", "User Emails"]
+        f << ["Name", "Market", "Registered On", "Role", "Shipping Address", "Shipping Phone", "Billing Address", "Billing Phone", "Users", "User Emails"]
 
         def full_address(address)
           if address.present?
@@ -54,7 +55,7 @@ module CSVExport
       end
 
       # Send via email
-      ExportMailer.delay.export_success(user.email, csv)
+      ExportMailer.delay.export_success(user.email, 'organization', csv)
     end
 
   end

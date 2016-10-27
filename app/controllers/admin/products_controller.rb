@@ -28,7 +28,7 @@ module Admin
           end
           format.csv do
             if ENV["USE_UPLOAD_QUEUE"] == "true"
-              Delayed::Job.enqueue ::CSVExport::CSVProductExportJob.new(current_user, @products.select("products.id").to_a)
+              Delayed::Job.enqueue ::CSVExport::CSVProductExportJob.new(current_user, @products.map(&:id))
               flash[:notice] = "Please check your email for export results."
               redirect_to admin_products_path
             else
@@ -43,7 +43,7 @@ module Admin
     def search_products(search)
       results = current_user
                     .managed_products
-                    .joins(:product_deliveries, :delivery_schedules)
+                    .joins(:delivery_schedules)
                     .includes(:unit, prices:[:market])
                     .where('delivery_schedules.inactive_at IS NULL AND delivery_schedules.deleted_at IS NULL')
                     .search(search.query)

@@ -1,8 +1,8 @@
 class ExportMailer < BaseMailer
-  def export_success(recipients, file)
+  def export_success(recipients, type, file)
 
-    puts "In Export Mailer"
-    attachments['export.csv'] = {mime_type: 'text/csv', content: file}
+    date = Time.now.strftime("%Y%m%d")
+    attachments["#{date}-#{type}-export.csv"] = {mime_type: 'text/csv', content: file}
     mail(
       to: recipients,
       subject: "CSV Export results"
