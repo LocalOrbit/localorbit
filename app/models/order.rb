@@ -273,6 +273,7 @@ class Order < ActiveRecord::Base
     if user.admin?
       all
     else
+      # where(buyer_orders_arel(user).or(manager_orders_arel(user))).uniq #.where(market_id: user.markets)
       where(buyer_orders_arel(user).or(manager_orders_arel(user))).uniq.where(market_id: user.markets)
     end
   end
