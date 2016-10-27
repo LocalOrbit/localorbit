@@ -32,4 +32,13 @@ module CrossSellingListsHelper
       form_instance.text_field :name, class: "column--full"
     end
   end
+
+  def product_management_button_text
+    if @cross_selling_list.publisher? then
+      text = @cross_selling_list.cross_selling_list_products.any? ? "Manage Products" : "Add Products"
+    else
+      text = @cross_selling_list.cross_selling_list_products.any? ? "Manage Visibility" : "Manage Visibility"
+    end
+    text
+  end
 end

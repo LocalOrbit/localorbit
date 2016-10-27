@@ -12,7 +12,7 @@
     <%= form_for @cross_selling_list, url: :admin_market_cross_selling_list, method: :patch do |list| %>
       <%= render 'form', {list: list} %>
 
-    <p class="product-list-management"><span class="hint"><%= link_to(@selected_list_prods.blank? ? "Add Products" : "Manage Products", "#product_management", class: "modal-toggle btn product_management_modal_button") %></span></p>
+    <p class="product-list-management"><span class="hint"><%= link_to(product_management_button_text, "#product_management", class: "modal-toggle btn product_management_modal_button") if @cross_selling_list.show_product_management_button? %></span></p>
 
     <% unless @selected_list_prods.blank? %>
       <div class="table-wrapper">
@@ -23,7 +23,7 @@
               <th>Supplier</th>
               <th>Category</th>
               <th>Product</th>
-              <% if !@cross_selling_list.creator %><th>Active?</th><% end %>
+              <% if !@cross_selling_list.creator %><th>Visible?&nbsp;&nbsp;<span class="tooltip" data-tooltip="Visible products will appear in your catalog."></span></th><% end %>
             </tr>
           </thead>
           <tbody>
@@ -32,7 +32,9 @@
               <td class="supplier-name"><%= slp.product.organization.name %></td>
               <td class="category-name"><%= slp.product.top_level_category.name %></td>
               <td class="product-name"><%= slp.product.name %> (<%= "#{slp.product.unit.singular}" %><%= " - #{slp.product.unit_description}" if !slp.product.unit_description.blank? %>)</td>
-              <% if !@cross_selling_list.creator %><th class="product-active"><%= yes_no(slp.active)  %></th><% end %>
+              <% if !@cross_selling_list.creator %>
+                <th class="product-active"><%= yes_no(slp.active)  %></th>
+              <% end %>
             </tr>
           <% end %>
           </tbody>

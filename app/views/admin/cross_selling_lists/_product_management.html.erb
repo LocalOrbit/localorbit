@@ -1,10 +1,7 @@
 <div class="is-hidden modal popup" id="product_management">
   <div class="popup-header">
+    <%= button_tag "Close", type: :reset, id: "close-modal", class: "pull-right" %>
     <h1>Edit Cross Selling Product List</h1>
-    <%# KXM sure would be nice to just close the damn modal instead of having to submit the fool thing... %>
-    <%# The link below is close, but the screen remains dark - there's probably a JavaScript method that takes care of all the styling... %>
-    <!--a class="close modal-toggle"><i class="font-icon icon-close"> Close</i></a -->
-    <button class="close"><i class="font-icon icon-close"> Close</i></button>
     <p>Select products or groups of products to allow other Markets to sell on your behalf.</p>
   </div>
 
@@ -78,6 +75,6 @@
     </table>
     </div>
 
-    <%= list.submit "Update List" %>
+    <%= list.submit "Update List" %> &nbsp; <%= button_tag "Reset List", type: :reset, id: "close-modal" %>
   </div>
 </div>

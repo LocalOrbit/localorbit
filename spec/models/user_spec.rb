@@ -342,11 +342,11 @@ describe User do
   end
 
   describe "managed_organizations_within_market" do
-    let(:org1) { create(:organization, name: "Org 1") }
-    let(:org2) { create(:organization, name: "Org 2") }
-    let(:org3) { create(:organization, name: "Org 3") }
-    let(:org4) { create(:organization, name: "Org 4") }
-    let(:org5) { create(:organization, name: "Org 5") }
+    let(:org1) { create(:organization, :buyer, name: "Org 1") }
+    let(:org2) { create(:organization, :buyer, name: "Org 2") }
+    let(:org3) { create(:organization, :buyer, name: "Org 3") }
+    let(:org4) { create(:organization, :buyer, name: "Org 4") }
+    let(:org5) { create(:organization, :buyer, name: "Org 5") }
 
     let!(:market1) { create(:market, organizations: [org1, org5]) }
     let!(:market2) { create(:market, organizations: [org2]) }

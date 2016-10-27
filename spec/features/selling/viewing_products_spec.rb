@@ -1,10 +1,13 @@
 require "spec_helper"
 
 describe "Viewing products" do
-  let!(:market2)      { create(:market) }
-
   let!(:org1)         { create(:organization, :seller, name: "County Park") }
   let!(:org2)         { create(:organization, :seller) }
+
+  let!(:market)       { create(:market, :with_delivery_schedule, organizations: [org1, org2]) }
+  let!(:market_manager) { create(:user, :market_manager, managed_markets: [market, market2]) }
+
+  let!(:market2)      { create(:market) }
 
   let!(:apples)       { create(:product, organization: org1, name: "Apples") }
   let!(:apples_price) { create(:price, product: apples, sale_price: 10.00, min_quantity: 1) }
@@ -17,9 +20,6 @@ describe "Viewing products" do
   let!(:grapes)       { create(:product, organization: org1, name: "Grapes", unit: create(:unit, singular: "Tube", plural: "Tubes")) }
   let!(:grapes_price) { create(:price, product: grapes, sale_price: 5.00, min_quantity: 1) }
   let!(:grapes_lot)   { create(:lot, product: grapes, quantity: 1) }
-
-  let!(:market)       { create(:market, organizations: [org1,org2]) }
-  let!(:market_manager) { create(:user, :market_manager, managed_markets: [market, market2]) }
 
   before do
     switch_to_subdomain(market.subdomain)
@@ -65,7 +65,7 @@ describe "Viewing products" do
     end
 
     it "shows a list of products which the owner manages" do
-      expect(page).to have_select("q[markets_id_in][]")
+      expect(page).to have_select("q[delivery_schedules_market_id_in][]")
 
       product = Dom::ProductRow.first
       expect(product.name).to have_content(apples.name)
@@ -103,7 +103,7 @@ describe "Viewing products" do
 
       it "won't show the market filter" do
         visit admin_products_path
-        expect(page).not_to have_select("q[markets_id_in][]")
+        expect(page).not_to have_select("q[delivery_schedules_market_id_in][]")
       end
     end
   end
@@ -171,7 +171,7 @@ describe "Viewing products" do
 
       expect(page).to have_content(market.name)
 
-      select market.name, from: "q[markets_id_in][]", visible: false
+      select market.name, from: "q[delivery_schedules_market_id_in][]", visible: false
       click_button "Search"
 
       expect(page).to have_content(/Reset/i)
@@ -187,7 +187,7 @@ describe "Viewing products" do
       expect(page).to_not have_content("Edit Inventory")
 
       #expect(page.find("#filter_market").find("option[selected=selected]").text).to eq(market.name)
-      unselect market.name, from: "q[markets_id_in][]", visible: false
+      unselect market.name, from: "q[delivery_schedules_market_id_in][]", visible: false
 
     end
 

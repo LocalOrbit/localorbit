@@ -72,19 +72,367 @@ describe CrossSellingList do
 
   end
 
-  context "editing a list" do
-    xit "allows name to be changed" do
+  context "cross selling list" do
+    let(:publishing_list) { create(:cross_selling_list, :market_list, creator: true) }
+    let(:subscribing_list) { create(:cross_selling_list, :market_list, parent_id: publishing_list.id, creator: false) }
+
+    describe ".publisher?" do
+      it "is true for publishing lists" do
+        expect(publishing_list.publisher?).to be true
+      end
+
+      it "is false for subscribing lists" do
+        expect(subscribing_list.publisher?).to be false
+      end
     end
 
-    xit "allows status to be changed" do
-    end
-  end
+    describe ".statuses" do
+      let(:new_publishing_list) { build(:cross_selling_list, :market_list, creator: true) }
+      let(:new_subscribing_list) { build(:cross_selling_list, :market_list, parent_id: new_publishing_list.id, creator: false, status: 'Pending') }
 
-  context "publishing a list" do
-    xit "sets the status to 'Published'" do
+      it "includes 'Draft' for new publishing lists" do
+        expect(new_publishing_list.statuses).to include(:Draft)
+      end
+
+      it "excludes 'Inactive' for draft publishing lists" do
+        new_publishing_list.save
+        expect(new_publishing_list.statuses).to_not include(:Inactive)
+      end
+
+      it "excludes 'Draft' for published publishing lists" do
+        new_publishing_list.save
+        new_publishing_list.publish!
+
+        expect(new_publishing_list.statuses).to_not include(:Draft)
+      end
+
+      it "excludes 'Inactive' for pending subscribing lists" do
+        new_subscribing_list.save
+        expect(new_subscribing_list.statuses).to_not include(:Inactive)
+      end
+
+      it "includes required items for pending subscribing lists" do
+        new_subscribing_list.save
+        expect(new_subscribing_list.statuses).to include(:Declined)
+        expect(new_subscribing_list.statuses).to include(:Pending)
+      end
+
+      it "excludes erroneous items for published subscribing lists" do
+        new_subscribing_list.save
+        new_subscribing_list.publish!
+        expect(new_subscribing_list.statuses).to_not include(:Declined)
+        expect(new_subscribing_list.statuses).to_not include(:Pending)
+      end
     end
 
-    xit "sets the 'published_at' date" do
+    describe ".manage_status" do
+      let(:subscribing_list) { create(:cross_selling_list, :market_list, parent_id: publishing_list.id, creator: false, status: "Published") }
+
+      it "properly revokes list" do
+        subscribing_list.manage_status("Inactive")
+        expect(subscribing_list.status).to eq "Revoked"
+      end
+
+      it "properly updates status to pending for revoked lists" do
+        subscribing_list.update_column(:status, "Revoked")
+        subscribing_list.manage_status("Published")
+        expect(subscribing_list.status).to eq "Pending"
+      end
+
+      it "properly updates status to pending for draft lists" do
+        subscribing_list.update_column(:status, "Draft")
+        subscribing_list.manage_status("Published")
+        expect(subscribing_list.status).to eq "Pending"
+      end
     end
+
+    describe ".manage_dates" do
+      it "sets revocation date" do
+        expect(subscribing_list.deleted_at).to eq nil
+        subscribing_list.manage_dates("Revoked")
+        expect(subscribing_list.deleted_at).to_not eq nil
+      end
+
+      it "sets publication date" do
+        expect(subscribing_list.published_at).to eq nil
+        subscribing_list.manage_dates("Published")
+        expect(subscribing_list.published_at).to_not eq nil
+      end
+
+      it "unsets deleted_at" do
+        subscribing_list.manage_dates("Revoked")
+        expect(subscribing_list.deleted_at).to_not eq nil
+        subscribing_list.manage_dates("Declined")
+        expect(subscribing_list.deleted_at).to eq nil
+      end
+    end
+
+    describe ".translate_status" do
+      let(:publishing_list) { create(:cross_selling_list, :market_list, creator: true, status: "Inactive") }
+
+      context "publisher list" do
+        it "returns publisher list status unchanged" do
+          expect(publishing_list.translate_status(publishing_list.status)).to eq publishing_list.status
+        end
+      end
+
+      context "subscriber list" do
+        it "translates 'Published'" do
+          expect(subscribing_list.translate_status("Published")).to eq "Active"
+        end
+
+        it "translates 'Draft'" do
+          expect(subscribing_list.translate_status("Draft")).to eq "Unreleased"
+        end
+
+        it "translates 'Revoked'" do
+          expect(subscribing_list.translate_status("Revoked")).to eq "Deactivated by Publisher"
+        end
+      end
+    end
+
+    describe ".subscriber?" do
+      it "returns false for publisher lists" do
+        expect(publishing_list.subscriber?).to eq false
+      end
+
+      it "returns true for subscriber lists" do
+        expect(subscribing_list.subscriber?).to eq true
+      end
+    end
+
+    describe ".published?" do
+      it "returns true for published lists" do
+        publishing_list.publish!
+
+        expect(publishing_list.published?).to eq true
+      end
+
+      it "returns false for unpublished lists" do
+        expect(publishing_list.published?).to eq false
+      end
+
+      it "returns false for future-published lists" do
+        publishing_list.publish!(Time.current + 7.days)
+
+        expect(publishing_list.published?).to eq false
+      end
+    end
+
+    describe ".publish!" do
+      let(:publication_date) { Time.current + 7.days }
+
+      it "publishes the list" do
+        publishing_list.publish!(publication_date)
+
+        expect(publishing_list.published_at).to eq publication_date
+        expect(publishing_list.status).to eq "Published"
+      end
+    end
+
+    describe ".revoke!" do
+      it "revokes the list" do
+        subscribing_list.publish!
+        subscribing_list.revoke!
+
+        expect(subscribing_list.status).to eq "Revoked"
+        expect(subscribing_list.deleted_at).to be_within(5.seconds).of(Time.now)
+      end
+    end
+
+    describe ".unpublish!" do
+      it "unpublishes the list with the default status" do
+        subscribing_list.publish!
+        subscribing_list.unpublish!
+
+        expect(subscribing_list.status).to eq "Unpublished"
+        expect(subscribing_list.published_at).to eq nil
+      end
+
+      it "unpublishes the list with a supplied status" do
+        subscribing_list.publish!
+        subscribing_list.unpublish!("Hoo-DANG")
+
+        expect(subscribing_list.status).to eq "Hoo-DANG"
+        expect(subscribing_list.published_at).to eq nil
+      end
+    end
+
+    describe ".pending?" do
+      it "returns true for pending lists" do
+        subscribing_list.update_column(:status, "Pending")
+
+        expect(subscribing_list.pending?).to eq true
+      end
+
+      it "returns false for non-pending lists" do
+        subscribing_list.revoke!
+
+        expect(subscribing_list.pending?).to eq false
+      end
+    end
+
+    describe ".draft?" do
+      it "returns true for draft lists" do
+        subscribing_list.update_column(:status, "Draft")
+
+        expect(subscribing_list.draft?).to eq true
+      end
+
+      it "returns false for non-draft lists" do
+        subscribing_list.revoke!
+
+        expect(subscribing_list.draft?).to eq false
+      end
+    end
+
+    describe ".locked?" do
+      it "returns true for revoked lists" do
+        subscribing_list.revoke!
+
+        expect(subscribing_list.locked?).to eq true
+      end
+
+      it "returns false for non-revoked lists" do
+        subscribing_list.publish!
+
+        expect(subscribing_list.locked?).to eq false
+      end
+    end
+
+    describe ".subscribers_list" do
+      let(:other_publishing_list) { create(:cross_selling_list, :market_list, creator: true) }
+      let(:other_subscribing_list) { create(:cross_selling_list, :market_list, parent_id: other_publishing_list.id, creator: false) }
+
+      it "returns the list of subscribers" do
+        publishing_list.publish!
+        subscribing_list.publish!
+
+        expect(publishing_list.subscribers_list).to be_an_instance_of(String)
+        expect(publishing_list.subscribers_list).to include(subscribing_list.entity.name)
+      end
+
+      it "excludes non-subscribers" do
+        publishing_list.publish!
+        subscribing_list.publish!
+        other_publishing_list.publish!
+        other_subscribing_list.publish!
+
+        expect(publishing_list.subscribers_list).to be_an_instance_of(String)
+        expect(publishing_list.subscribers_list).to_not include(other_subscribing_list.entity.name)
+      end
+    end
+
+    describe ".display_subscribers?" do
+      let(:new_publishing_list) { build(:cross_selling_list, :market_list, creator: true) }
+
+      it "displays subscribers for publishing lists" do
+        expect(publishing_list.display_subscribers?).to eq true
+      end
+
+      it "displays subscribers for unsaved new lists" do
+        expect(new_publishing_list.display_subscribers?).to eq true
+      end
+
+      it "does not display subscribers for subscribing lists" do
+        expect(subscribing_list.display_subscribers?).to eq false
+      end
+    end
+
+    describe ".display_product_overview?" do
+      it "displays product overview for publishing lists" do
+        expect(publishing_list.display_product_overview?).to eq true
+      end
+
+      it "displays product overview for approved lists" do
+        subscribing_list.publish!
+
+        expect(subscribing_list.display_product_overview?).to eq true
+
+        subscribing_list.update_column(:status, "Inactive")
+        expect(subscribing_list.display_product_overview?).to eq true
+      end
+
+      it "suppresses product overview for unapproved lists" do
+        expect(subscribing_list.display_product_overview?).to eq false
+
+        subscribing_list.update_column(:status, "Declined")
+        expect(subscribing_list.display_product_overview?).to eq false
+
+        subscribing_list.update_column(:status, "Revoked")
+        expect(subscribing_list.display_product_overview?).to eq false
+      end
+    end
+
+# KXM The difficulty writing these test exposes methods that were poorly conceived in the first place... 
+# Figure out what you were really intending to do and fix them...
+
+    # children.any? doesn't seem to work correctly (at least at this hour when I'm this hungry)
+    # Original method:
+      # def cascade_update?
+      #   creator && (!draft? || children.any?)
+      # end
+
+    # describe ".cascade_update?" do
+    #   let(:non_subscribed_list) { create(:cross_selling_list, :market_list, creator: true) }
+    #   it "returns false for subscribing lists" do
+    #     expect(subscribing_list.cascade_update?).to eq false
+    #   end
+
+    #   it "returns true for non-draft lists" do
+    #     non_subscribed_list.publish!
+
+    #     expect(non_subscribed_list.cascade_update?).to eq true
+
+    #     non_subscribed_list.unpublish!
+
+    #     expect(non_subscribed_list.cascade_update?).to eq true
+    #   end
+
+    #   it "returns true for lists with subscribers" do
+    #     expect(publishing_list.cascade_update?).to eq true
+    #   end
+    # end
+
+
+    # Original method:
+      # def manage_publication!(params)
+      #   if published?
+      #     unpublish!(status) if status != "Published"
+      #   else
+      #     published_date = params[:published_date] ||= Time.now
+      #     publish!(published_date) if status == "Published"
+      #   end
+      # end
+    # describe ".manage_publication!" do
+    #   it "has no effect on unpublished lists whose status isn't 'Published'" do
+    #     publishing_list.save
+    #     starting_status = publishing_list.status
+    #     starting_pub_date = publishing_list.published_at
+    #     publishing_list.manage_publication!({})
+
+    #     expect(publishing_list.status).to eq starting_status
+    #     expect(publishing_list.published_at).to eq starting_pub_date
+    #   end
+
+    #   it "properly coordinates attributes for newly published lists" do
+    #     publishing_list.save
+    #     publishing_list.update_column(:status, "Published")
+    #     publishing_list.update_column(:published_at, nil)
+    #     publishing_list.manage_publication!({})
+
+    #     expect(publishing_list.status).to eq "Published"
+    #     expect(publishing_list.published_at).to_not eq nil
+    #   end
+
+    #   it "properly coordinates attributes for newly unpublished lists" do
+    #     publishing_list.publish!
+    #     publishing_list.update_column(:status, "Inactive")
+    #     publishing_list.manage_publication!({})
+
+    #     expect(publishing_list.status).to eq "Inactive"
+    #     expect(publishing_list.published_at).to eq nil
+    #   end
+    # end
   end
 end

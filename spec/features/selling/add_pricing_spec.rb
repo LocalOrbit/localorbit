@@ -2,9 +2,9 @@ require "spec_helper"
 
 describe "Adding advanced pricing" do
   let(:user)          { create(:user, :supplier) }
-  let(:market)        { create(:market) }
-  let(:market2)       { create(:market) }
-  let(:market3)       { create(:market, allow_product_fee: true)}
+  let(:market)        { create(:market, :with_delivery_schedule) }
+  let(:market2)       { create(:market, :with_delivery_schedule) }
+  let(:market3)       { create(:market, :with_delivery_schedule, allow_product_fee: true)}
   let!(:organization) { create(:organization, :seller, markets: [market, market2], users: [user]) }
   let!(:product)      { create(:product, organization: organization) }
   let!(:user2)         { create(:user, :market_manager, managed_markets: [market]) }
@@ -166,7 +166,7 @@ describe "Adding advanced pricing" do
   end
 
   describe "with category market fees", js: true do
-    let(:market) { create(:market, :with_category_fee, allow_product_fee: true) }
+    let(:market) { create(:market, :with_delivery_schedule, :with_category_fee, allow_product_fee: true) }
     let(:user)   { create(:user, :market_manager) }
 
     it "shows updated net sale information - product fee" do
@@ -189,7 +189,7 @@ describe "Adding advanced pricing" do
   end
 
   describe "with product market fees", js: true do
-    let(:market) { create(:market, allow_product_fee: true) }
+    let(:market) { create(:market, :with_delivery_schedule, allow_product_fee: true) }
     let(:user)   { create(:user, :market_manager) }
 
     it "shows updated net sale information - product fee" do

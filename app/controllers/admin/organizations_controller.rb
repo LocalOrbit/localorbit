@@ -15,7 +15,16 @@ module Admin
 
         respond_to do |format|
           format.html { @organizations = @organizations.page(params[:page]).per(@query_params[:per_page]) }
-          format.csv  { @filename = "organizations.csv" }
+          format.csv  do
+            if ENV["USE_UPLOAD_QUEUE"] == "true"
+              orgs = @organizations.map(&:id)
+              Delayed::Job.enqueue ::CSVExport::CSVOrganizationExportJob.new(current_user, orgs)
+              flash[:notice] = "Please check your email for export results."
+              redirect_to admin_organizations_path
+            else
+              @filename = "organizations.csv"
+            end
+          end
         end
       end
     end

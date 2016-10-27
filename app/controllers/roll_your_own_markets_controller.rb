@@ -6,27 +6,28 @@ class RollYourOwnMarketsController < ApplicationController
   skip_before_action :ensure_user_not_suspended
 
 	# Cached data objects
-	@_plans  = {}
-	@_plan   = {}
-	@_coupon = {}
+  @_ryo_plans = {}
+  @_plans     = {}
+  @_plan      = {}
+  @_coupon    = {}
 
 	def get_stripe_plans
     requested_plan = params[:plan]
+    @_ryo_plans ||= Plan.ryo_enabled_plans
 
-  	# If no plan is sent...
+    # If no plan is sent...
     if(requested_plan == nil)
-    	# ...then return the cached plans...
-    	@_plans ||= 
-	    begin
-    		# ...or get them from Stripe
-		    @_plans = PaymentProvider::Stripe.get_stripe_plans
+      # ...then return the cached plans...
+      @_plans ||=
+      begin
+        # ...or get them from Stripe (filtered through those marked as eligible in the database)
+        @_plans = PaymentProvider::Stripe.get_stripe_plans.select{|plan| @_ryo_plans.include?(plan.id)}
+
 				render json: @_plans
 
-	    rescue Exception => e
-	    	# Pass on any errors
-				err = e.json_body[:error]
-			  render :status => e.http_status, :text => err[:message]
-			end
+      rescue StandardException => e
+        handle_exception(e)
+      end
 
   	# If a plan is sent...
     else
@@ -37,11 +38,9 @@ class RollYourOwnMarketsController < ApplicationController
 		    @_plan = PaymentProvider::Stripe.get_stripe_plans(requested_plan)
 				render json: @_plan
 
-	    rescue Exception => e
-	    	# Pass on any errors
-				err = e.json_body[:error]
-			  render :status => e.http_status, :text => err[:message]
-	    end
+      rescue StandardException => e
+        handle_exception(e)
+      end
     end
 	end
 
@@ -53,10 +52,8 @@ class RollYourOwnMarketsController < ApplicationController
 	    @_coupon = PaymentProvider::Stripe.get_stripe_coupon(params[:coupon])
 			render json: @_coupon
 			
-		rescue Exception => e
-    	# Pass on any errors
-			err = e.json_body[:error]
-		  render :status => e.http_status, :text => err[:message]
+		rescue StandardException => e
+      handle_exception(e)
     end
 	end
 
@@ -69,4 +66,11 @@ class RollYourOwnMarketsController < ApplicationController
 				render json: false
 			end
 	end
+
+  protected
+
+  def handle_exception(e)
+    err = e.json_body[:error]
+    render :status => e.http_status, :text => err[:message]
+  end
 end

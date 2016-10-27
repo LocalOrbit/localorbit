@@ -339,6 +339,7 @@ class Product < ActiveRecord::Base
       on(
         cslp[:cross_selling_list_id].eq(csl[:id]).
         and(csl[:creator].eq(false)).
+        and(csl[:deleted_at].eq(nil)).
         and(csl[:entity_type].eq('Market')).
         and(csl[:entity_id].eq(entity_id))).
       join_sources

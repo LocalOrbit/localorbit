@@ -19,7 +19,7 @@ describe UpdateQuantities do
 
     before do
       order.reload
-      @interactor = UpdateQuantities.perform(order: order, order_params: params)
+      @interactor = UpdateQuantities.perform(order: order, order_params: params, failed: false)
     end
 
     it "updates quantities" do

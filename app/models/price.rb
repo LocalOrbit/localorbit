@@ -1,5 +1,6 @@
 class Price < ActiveRecord::Base
   include SoftDelete
+  before_update :update_product_record
 
   audited allow_mass_assignment: true
   belongs_to :product, inverse_of: :prices
@@ -28,6 +29,10 @@ class Price < ActiveRecord::Base
 
   validates :min_quantity, :sale_price, presence: true, numericality: {greater_than: 0, less_than: 1_000_000, allow_blank: true}
   validates :min_quantity, uniqueness: {scope: [:product_id, :market_id, :organization_id, :deleted_at]}
+
+  def update_product_record
+    product.touch
+  end
 
   def net_price(market=nil)
     ((sale_price || 0) * net_percent(market)).round(2)

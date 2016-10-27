@@ -16,7 +16,7 @@ class CrossSellingList < ActiveRecord::Base
   belongs_to :parent, class_name: "CrossSellingList"
   has_many :children, class_name: "CrossSellingList", foreign_key: "parent_id"
 
-  has_many :cross_selling_list_products, inverse_of: :cross_selling_list
+  has_many :cross_selling_list_products, inverse_of: :cross_selling_list, dependent: :destroy
   has_many :products, through: :cross_selling_list_products do
     def active
       where("cross_selling_list_products.active = ?", true)
@@ -54,16 +54,18 @@ class CrossSellingList < ActiveRecord::Base
 
     else
       statuses = {
-        Active:    "Published",
+        Pending:  "Pending",
+        Active:   "Published",
         Declined: "Declined",
-        Inactive:  "Inactive"
+        Inactive: "Inactive"
       }
 
       if status == "Pending" then
         # This may not be as expected by Kate, et al...
         statuses.except!(:Inactive)
       else
-        statuses.except!(:Declined)
+        # You can't revert to Pending, nor can you decline after accepting
+        statuses.except!(:Declined, :Pending)
       end
     end
 
@@ -106,6 +108,18 @@ class CrossSellingList < ActiveRecord::Base
     end
   end
 
+  def show_product_management_button?
+    publisher? || ( subscriber? && cross_selling_list_products.any? )
+  end
+
+  def subscriber?
+    creator == false && !parent_id.blank?
+  end
+
+  def publisher?
+    creator
+  end
+
   def published?
     status == 'Published' && published_at && published_at.past?
   end
@@ -124,10 +138,6 @@ class CrossSellingList < ActiveRecord::Base
   def unpublish!(status = nil)
     new_status = status ||= "Unpublished"
     update!(status: new_status, published_at: nil)
-  end
-
-  def is_master_list?
-  	parent_id.nil?
   end
 
   def pending?

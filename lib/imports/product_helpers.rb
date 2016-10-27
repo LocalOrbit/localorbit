@@ -35,7 +35,7 @@ module Imports
 				end
 				t = Organization.arel_table
 				# org = Organization.find_by_name(organization_name)
-				org = Organization.where(t[:name].matches("#{organization_name}%"),t[:market_id].matches(mkt.id),t[:can_sell].matches(true))
+				org = Organization.where(t[:name].eq("#{organization_name}"),t[:market_id].matches(mkt.id),t[:org_type].eq('S'))
 
 				if org.empty? # if none such that mkt and org match up
 					return nil

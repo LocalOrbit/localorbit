@@ -3,18 +3,18 @@ require 'csv'
 
 describe "Export Products CSV"  do
   let!(:empty_market) { create(:market) }
+  let!(:market1)      { create(:market, :with_delivery_schedule, organizations: [org1, org2]) }
+  let!(:market2)      { create(:market, :with_delivery_schedule, organizations:[org3, org4]) }
   let!(:org1)         { create(:organization, :seller) }
-  let!(:org1_product) { create(:product, :sellable, organization: org1) }
   let!(:org2)         { create(:organization, :seller) }
-  let!(:org2_product) { create(:product, :sellable, organization: org2) }
-  let!(:market1)      { create(:market, organizations: [org1, org2]) }
-
   let!(:org3)         { create(:organization, :seller) }
-  let!(:org3_product) { create(:product, :sellable, organization: org3) }
   let!(:org4)         { create(:organization, :seller) }
-  let!(:org4_product) { create(:product, :sellable, organization: org4) }
   let!(:org5)         { create(:organization, :buyer) }
-  let!(:market2)      { create(:market, organizations:[org3,org4]) }
+
+  let!(:org1_product) { create(:product, :sellable, organization: org1) }
+  let!(:org2_product) { create(:product, :sellable, organization: org2) }
+  let!(:org3_product) { create(:product, :sellable, organization: org3) }
+  let!(:org4_product) { create(:product, :sellable, organization: org4) }
 
   context "as admin" do
     let!(:user) { create(:user, :admin) }
@@ -27,15 +27,16 @@ describe "Export Products CSV"  do
       visit admin_products_path
       rows = download_products_csv
 
-      products = user.managed_products.preload(:prices,:lots,:organization).order('organizations.name asc')
+      products = user.managed_products.joins(:product_deliveries, :delivery_schedules)
+      .preload(:prices,:lots,:organization).order('organizations.name asc')
       see_products_in_csv products: products.decorate, rows: rows
     end
 
     it "export products for a selected Market" do
-      visit admin_products_path(q:{markets_id_in: market2.id, s: 'name asc'})
+      visit admin_products_path(q:{delivery_schedules_market_id_in: market2.id, s: 'name asc'})
       rows = download_products_csv
 
-      products = user.managed_products.preload(:prices,:lots,:organization).order('name asc').search({markets_id_in: market2.id}).result
+      products = user.managed_products.joins(:product_deliveries, :delivery_schedules).preload(:markets, :prices,:lots,:organization).order('name asc').search({markets_id_in: market2.id}).result
       expect(products.count).to eq(2) # should only be 2 results when filtered down
       see_products_in_csv products: products.decorate, rows: rows
     end
@@ -43,23 +44,23 @@ describe "Export Products CSV"  do
     it "export products for a selected Organization" do
       visit admin_products_path(q:{organization_id_in:org1.id})
       rows = download_products_csv
-      products = user.managed_products.preload(:prices,:lots,:organization).order('name asc').search({organization_id_in: org1.id}).result
+      products = user.managed_products.joins(:product_deliveries, :delivery_schedules).preload(:prices,:lots,:organization).order('name asc').search({organization_id_in: org1.id}).result
       expect(products.count).to eq(1) 
       see_products_in_csv products: products.decorate, rows: rows
     end
 
     it "apply sorting to the export" do
       # Sort name descending:
-      visit admin_products_path(q:{markets_id_in: market1.id, s: 'name desc'})
+      visit admin_products_path(q:{delivery_schedules_market_id_in: market1.id, s: 'name desc'})
       rows = download_products_csv
-      products = user.managed_products.preload(:prices,:lots,:organization).order('name desc').search({markets_id_in: market1.id}).result
+      products = user.managed_products.joins(:product_deliveries, :delivery_schedules).preload(:prices,:lots,:organization).order('name desc').search({markets_id_in: market1.id}).result
       expect(products.count).to eq(2) # should only be 2 results when filtered down
       see_products_in_csv products: products.decorate, rows: rows
 
       # Sort name ascending:
-      visit admin_products_path(q:{markets_id_in: market1.id, s: 'name asc'})
+      visit admin_products_path(q:{delivery_schedules_market_id_in: market1.id, s: 'name asc'})
       rows = download_products_csv
-      products = user.managed_products.preload(:prices,:lots,:organization).order('name asc').search({markets_id_in: market1.id}).result
+      products = user.managed_products.joins(:product_deliveries, :delivery_schedules).preload(:prices,:lots,:organization).order('name asc').search({markets_id_in: market1.id}).result
       expect(products.count).to eq(2) # should only be 2 results when filtered down
       see_products_in_csv products: products.decorate, rows: rows
     end

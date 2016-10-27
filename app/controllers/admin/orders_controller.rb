@@ -21,7 +21,13 @@ class Admin::OrdersController < AdminController
         format.csv do
           @order_items = find_order_items(@orders.map(&:id))
           @abort_mission = @order_items.count > 2999
-          @filename = "orders.csv"
+          if ENV["USE_UPLOAD_QUEUE"] == "true"
+            Delayed::Job.enqueue ::CSVExport::CSVOrderExportJob.new(current_user, @order_items.map(&:id))
+            flash[:notice] = "Please check your email for export results."
+            redirect_to admin_orders_path
+          else
+            @filename = "orders.csv"
+          end
         end
       end
     end
@@ -159,27 +165,45 @@ class Admin::OrdersController < AdminController
   end
 
   def perform_order_update(order, params) # TODO this needs to handle price edits
-    updates = UpdateOrder.perform(payment_provider: order.payment_provider, order: order, order_params: params, request: request)
-    if updates.success?
-      order.update_total_cost
-      came_from_admin = request.referer.include?("/admin/")
-      next_url = if order.reload.items.any?
-        came_from_admin ? admin_order_path(order) : order_path(order)
+    failed = false
+    validate = ValidateOrderTotal.perform(order: order, order_params: params)
+    if validate.success?
+      updates = UpdateOrder.perform(payment_provider: order.payment_provider, order: order, order_params: params, request: request)
+      if updates.success?
+        order.update_total_cost
+        came_from_admin = request.referer.include?("/admin/")
+        next_url = if order.reload.items.any?
+          came_from_admin ? admin_order_path(order) : order_path(order)
+        else
+          order.soft_delete
+          came_from_admin ? admin_orders_path : orders_path
+        end
+        redirect_to next_url, notice: "Order successfully updated."
       else
-        order.soft_delete
-        came_from_admin ? admin_orders_path : orders_path
-      end
-      redirect_to next_url, notice: "Order successfully updated."
+        failed = true
+        failed_order = updates.context[:order]
+        #failed_order.update(items_attributes: updates.context[:previous_quantities])
+        failed_order.errors.add(:payment_processor, "failed to update your payment") if updates.context[:status] == "failed"
+       end
     else
-      order = updates.context[:order]
-      order.errors.add(:payment_processor, "failed to update your payment") if updates.context[:status] == "failed"
-      @order = SellerOrder.new(order, current_user)
+      failed = true
+      failed_order = validate.context[:order]
+      failed_order.errors[:base] << "Order item must be greater than or equal to 0" if validate.context[:status] == "failed_qty"
+      failed_order.errors[:base] << "Total cannot be negative" if validate.context[:status] == "failed_negative"
+    end
+
+    if failed
+      if current_user.organization_ids.include?(failed_order.organization_id) || current_user.can_manage_organization?(failed_order.organization)
+        @order = BuyerOrder.new(failed_order)
+      else
+        @order = SellerOrder.new(failed_order, current_user)
+      end
       render :show
     end
   end
 
   def perform_add_items(order)
-    result = UpdateOrderWithNewItems.perform(payment_provider: order.payment_provider, order: order, item_hashes: items_to_add)
+    result = UpdateOrderWithNewItems.perform(payment_provider: order.payment_provider, order: order, item_hashes: items_to_add, request: request)
     if !result.success?
       setup_add_items_form(order)
       order.errors[:base] << "Failed to add items to this order."

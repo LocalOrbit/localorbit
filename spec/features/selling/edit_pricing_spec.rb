@@ -1,7 +1,7 @@
 require "spec_helper"
 
 describe "Editing advanced pricing", js: true do
-  let!(:market)       { create(:market) }
+  let!(:market)       { create(:market, :with_delivery_schedule) }
   let!(:organization) { create(:organization, :seller, markets: [market]) }
   let!(:user)         { create(:user, :supplier, organizations: [organization]) }
   let!(:product)      { create(:product, organization: organization) }
@@ -179,7 +179,7 @@ describe "Editing advanced pricing", js: true do
   end
 
   describe "with different fees" do
-    let(:market) { create(:market, local_orbit_seller_fee: 4, market_seller_fee: 6) }
+    let(:market) { create(:market, :with_delivery_schedule, local_orbit_seller_fee: 4, market_seller_fee: 6) }
     # total fees: CC seller fee as default, plus this 10 %, so 12.9%
     it "shows updated net sale information" do
       Dom::PricingRow.first.click_edit
@@ -200,8 +200,8 @@ describe "Editing advanced pricing", js: true do
 end
 
 describe "price estimator", js: true do
-  let!(:market1) {create(:market, local_orbit_seller_fee:3, market_seller_fee:2, allow_cross_sell:true)}
-  let!(:market2) {create(:market, local_orbit_seller_fee:5, market_seller_fee:10,allow_cross_sell:true)}
+  let!(:market1) {create(:market, :with_delivery_schedule, local_orbit_seller_fee:3, market_seller_fee:2, allow_cross_sell:true)}
+  let!(:market2) {create(:market, :with_delivery_schedule, local_orbit_seller_fee:5, market_seller_fee:10,allow_cross_sell:true)}
 
   let!(:org_cross_sell) {
     org = create(:organization, :seller, markets:[market1])

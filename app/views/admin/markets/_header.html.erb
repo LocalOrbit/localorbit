@@ -27,7 +27,7 @@
         <% if policy(:market_custom_branding).index? %><%= content_tag(:li, link_to_or_span("Style Chooser", [:admin, market, :style_chooser]), class: 'tab') %><% end %>
         <% if policy(:admin_cross_selling).index? %><%= content_tag(:li, link_to_or_span("Admin X-Sell", [:admin, market, :cross_sell]), class: 'tab') if market.allow_cross_sell && current_user.admin? %><% end %>
         <% if policy(:market_cross_selling).index? %><%= content_tag(:li, link_to_or_span("Cross Sell", [:admin, market, :cross_selling_lists]), class: 'tab') if market.allow_cross_sell  %><% end %>
-        <% if policy(:market_stripe).index? %><%= content_tag(:li, link_to_or_span("Stripe", [:admin, market, :stripe]), class: 'tab') if FeatureAccess.stripe_standalone?(market: market) %><% end %>
+        <% if policy(:market_stripe).index? %><%= content_tag(:li, link_to_or_span("Stripe", [:admin, market, :stripe]), class: 'tab') if !market.nil? && FeatureAccess.stripe_standalone?(market: market) %><% end %>
       </ul>
     </div>
   </div>
