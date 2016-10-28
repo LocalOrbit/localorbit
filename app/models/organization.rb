@@ -167,8 +167,13 @@ class Organization < ActiveRecord::Base
     end
   end
 
+  def adjunct_organization
+    # This should probably be boiled down to a single 'master market' flag...
+    !(plan_start_at && plan_interval)
+  end
+
   def next_service_payment_at
-    return nil unless plan_start_at && plan_interval
+    return nil if adjunct_organization
     return nil if last_service_payment_at.nil?
     return plan_start_at if plan_start_at > Time.now
 
