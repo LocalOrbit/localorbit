@@ -169,12 +169,15 @@ class Organization < ActiveRecord::Base
 
   def next_service_payment_at
     return nil unless plan_start_at && plan_interval
+    return nil if last_service_payment_at.nil?
     return plan_start_at if plan_start_at > Time.now
 
-    @next_service_payment_at ||= begin
-      plan_payments = Payment.successful.not_refunded.made_after(plan_start_at).where(payer: self, payment_type: "service")
-      (plan_interval * plan_payments.count).months.from_now(plan_start_at)
-    end
+    # @next_service_payment_at ||= begin
+    #   plan_payments = Payment.successful.not_refunded.made_after(plan_start_at).where(payer: self, payment_type: "service")
+    #   (plan_interval * plan_payments.count).months.from_now(plan_start_at)
+    # end
+
+    @next_service_payment_at ||= plan_interval.months.from_now(last_service_payment_at)
   end
 
   def last_service_payment_at
