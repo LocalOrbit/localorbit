@@ -15,7 +15,7 @@ module CSVExport
     end
 
     def perform
-      organizations = Organization.where(id: ids)
+      organizations = Organization.where(id: ids).order(:name)
       csv = CSV.generate do |f|
         f << ["Name", "Market", "Registered On", "Role", "Shipping Address", "Shipping Phone", "Billing Address", "Billing Phone", "Users", "User Emails"]
 
