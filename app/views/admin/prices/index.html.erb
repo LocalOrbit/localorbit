@@ -19,7 +19,6 @@
   <%= render "shared/errors", {resource: @price} %>
   <%= render "shared/errors", {resource: @price_with_errors} if @price_with_errors %>
 
-  <% category_fee = @product.category.level_fee(current_market) %>
   <% @child_units.each do |unit_product| %>
     <h3 class="unit-name"><%= unit_product.unit_plural %></h3>
     <%= form_for [:admin, unit_product, @price],
@@ -58,6 +57,8 @@
 
           <tbody class="zebra-stripes">
           <% unit_product.prices.view_sorted.decorate.each do |price| %>
+            <% category_fee = @product.category.level_fee(price.market) %>
+
             <%= content_tag_for :tr, price, {data: {"form-url" => url_for([:admin, unit_product, price])},
                                              rel: "price_#{price.id}"} do %>
 
@@ -112,7 +113,7 @@
                       <span></span>
                     </label>
                     <%= f.number_field :net_price, :value => price.net_price(current_market), min: 0, step: 0.01, size: 4, class: 'net-price',
-                                       data:{"category-fee" => category_fee, "product-fee" => json_escape(price.product_fee_pct), "net-percents-by-market-id" => json_escape(@net_percents_by_market_id.to_json), "cc-rate" => @seller_cc_rate} %>
+                                       data:{"category-fee" => json_escape(@category_percents_by_market_id.to_json), "product-fee" => json_escape(price.product_fee_pct), "net-percents-by-market-id" => json_escape(@net_percents_by_market_id.to_json), "cc-rate" => @seller_cc_rate} %>
                   </div>
                 </td>
                 <% if FeatureAccess.product_level_fee?(market: current_market) && (current_user.admin? || current_user.market_manager?) %>

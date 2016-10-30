@@ -48,7 +48,7 @@ $ ->
 
       ccRate = netPrice.data('cc-rate')
       productFee = netPrice.data('product-fee')
-      categoryFee = netPrice.data('category-fee')
+      marketToCategoryPercentMap = netPrice.data('category-fee')
 
       if marketId == ""
         marketId = "all"
@@ -61,7 +61,8 @@ $ ->
         else
           return 0.00
       else if use_category_fee.prop('checked')
-        return 1 - (categoryFee/100 + ccRate)
+        if marketToCategoryPercentMap[marketId] > 0
+          return 1 - (marketToCategoryPercentMap[marketId]/100 + ccRate)
       else
         if marketToNetPercentMap?
           netPercent = marketToNetPercentMap[marketId]
@@ -121,7 +122,6 @@ $ ->
       if netprice_checkbox.prop('checked')
         lock_label.click()
 
-      use_mkt_fee.prop('disabled', true)
       netPrice.prop('disabled', false).css('background','#FFF')
       use_category_fee.prop('checked','checked')
 
@@ -170,6 +170,7 @@ $ ->
     selectedMarket.change ->
       updateNetPrice()
       updateMarkupPct()
+      use_mkt_fee.prop('disabled', false)
 
     netPrice.parent().parent().parent().find('input.product-fee:checked').trigger('click')
     netPrice.parent().parent().parent().find('input.category-fee:checked').trigger('click')

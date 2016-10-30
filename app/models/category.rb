@@ -63,16 +63,20 @@ class Category < ActiveRecord::Base
   end
 
   def level_fee(market, category=nil)
-    if category.nil?
-      cat = self
-    else
-      cat = category
-    end
+    if !market.nil?
+      if category.nil?
+        cat = self
+      else
+        cat = category
+      end
 
-    if !cat.category_fees.where(market_id: market.id).first.nil? && cat.depth > 0
-      cat.category_fees.first.fee_pct
-    elsif !cat.parent.nil?
-      level_fee(market, cat.parent)
+      if !cat.category_fees.where(market_id: market.id).first.nil? && cat.depth > 0
+        cat.category_fees.first.fee_pct
+      elsif !cat.parent.nil?
+        level_fee(market, cat.parent)
+      else
+        0
+      end
     else
       0
     end
