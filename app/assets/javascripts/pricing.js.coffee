@@ -61,7 +61,7 @@ $ ->
         else
           return 0.00
       else if use_category_fee.prop('checked')
-        if marketToCategoryPercentMap[marketId] > 0
+        if marketToCategoryPercentMap?
           return 1 - (marketToCategoryPercentMap[marketId]/100 + ccRate)
       else
         if marketToNetPercentMap?

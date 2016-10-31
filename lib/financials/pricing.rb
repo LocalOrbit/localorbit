@@ -27,6 +27,17 @@ module Financials
 			res[market.id.to_s] = product.category.level_fee(market)
 			res
 			end
+			if markets.length > 0 # result should be {} or populated {}
+				result["all"] = product.category.level_fee(markets.first)
+				markets.each do |mkt|
+					if product.category.level_fee(mkt) > 0 && product.category.level_fee(mkt) < result["all"]
+						result["all"] = product.category.level_fee(mkt)
+					end
+					result
+				end
+			else
+				result["all"] = 1
+			end
 			result
 		end
 
