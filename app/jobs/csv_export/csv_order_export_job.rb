@@ -15,7 +15,7 @@ module CSVExport
     end
 
     def perform
-      order_items = Order.where(id: ids)
+      order_items = OrderItem.where(id: ids).order(:created_at)
       csv = CSV.generate do |f|
         f << [
             "LO Order Number",
