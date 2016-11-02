@@ -33,7 +33,8 @@
           <thead>
           <tr>
             <% if current_user.multi_market_membership? %>
-              <th class="market">Market</th>
+            <% if !@category_percents_by_market_id.nil? && @category_percents_by_market_id.except("all").values.inject { |a, b| a + b } > 0 && unit_product.organization.all_markets_for_select.length > 1 && unit_product.prices.first.market_id == nil && unit_product.prices.first.product_fee_pct == 0 %><th></th><% end%>
+            <th class="market">Market</th>
             <% end %>
             <th class="buyer">Buyer</th>
             <th class="min-qty">
@@ -62,6 +63,7 @@
 
               <%= fields_for :price, price, index: price.id do |f| %>
                 <% if current_user.multi_market_membership? %>
+                  <% if organization_can_access?(unit_product.organization, :advanced_pricing) && !@category_percents_by_market_id.nil? && @category_percents_by_market_id.except("all").values.inject { |a, b| a + b } > 0 && unit_product.organization.all_markets_for_select.length > 1 && unit_product.prices.first.market_id == nil && unit_product.prices.first.product_fee_pct == 0 %><td class="notice" style="font-size: 9px; color: #9A0500">Needs Review</td><% end %>
                   <td class="market">
                     <div class="edit-trigger view-cell">
                       <%= price.market_name %>
@@ -103,21 +105,21 @@
                 </td>
                 <td class="net-price">
                   <div class="edit-trigger view-cell">
-                    <%= number_to_currency price.net_price(current_market) %>
+                    <%= number_to_currency price.net_price(price.market, @category_percents_by_market_id) %>
                   </div>
                   <div class="edit-cell">
                     <label class="lock-label" style="display: none">
                       <input type="checkbox" class="lock-field" name="price[lock]"/>
                       <span></span>
                     </label>
-                    <%= f.number_field :net_price, :value => price.net_price(current_market), min: 0, step: 0.01, size: 4, class: 'net-price',
+                    <%= f.number_field :net_price, :value => price.net_price(price.market, @category_percents_by_market_id), min: 0, step: 0.01, size: 4, class: 'net-price',
                                        data:{"category-fee" => json_escape(@category_percents_by_market_id.to_json), "product-fee" => json_escape(price.product_fee_pct), "net-percents-by-market-id" => json_escape(@net_percents_by_market_id.to_json), "cc-rate" => @seller_cc_rate} %>
                   </div>
                 </td>
                 <% if FeatureAccess.product_level_fee?(market: current_market) && (current_user.admin? || current_user.market_manager?) %>
                 <td class="fee">
                   <div class="edit-trigger view-cell">
-                    <%= if @category_percents_by_market_id[current_market.id.to_s] > 0 && price.product_fee_pct == 0
+                    <%= if !@category_percents_by_market_id.nil? && @category_percents_by_market_id[price.market_id.nil? ? "all" : price.market_id.to_s] > 0 && price.product_fee_pct == 0
                          "Use Category Fee"
                        elsif price.product_fee_pct > 0
                          number_to_percentage(price.product_fee_pct)
@@ -128,14 +130,14 @@
                   </div>
                   <div class="edit-cell">
                     <div style="float: left">
-                    <% if @category_percents_by_market_id[current_market.id.to_s] == 0 %>
+                    <% if !@category_percents_by_market_id.nil? && !price.market.nil? && @category_percents_by_market_id[price.market.id.to_s] == 0 %>
                       <div style="float: left">
                         <label style="font-size: 9px">Mkt</label> <input style="float: left" type="radio" value="0" name="price[<%=price.id%>][fee]" class="mkt-fee" <%= price.product_fee_pct.nil? || price.product_fee_pct == 0 ? "checked" : "" %> />
                       </div>
                       <div style="clear: left"></div>
                     <% else %>
                       <div style="float: left">
-                        <label style="font-size: 9px">Category</label> <input style="float: left" type="radio" value="1" name="price[<%=price.id%>][fee]" class="category-fee" <%= @category_percents_by_market_id[current_market.id.to_s] > 0 ? "checked" : "" %> />
+                        <label style="font-size: 9px">Category</label> <input style="float: left" type="radio" value="1" name="price[<%=price.id%>][fee]" class="category-fee" <%= price.category_checked(@category_percents_by_market_id) %> />
                       </div>
                       <div style="clear: left"></div>
                     <% end %>
@@ -183,6 +185,7 @@
           <% if organization_can_access?(unit_product.organization, :advanced_pricing) && unit_product.prices.view_sorted.any? %>
             <tr class="add-toggle last-row">
               <% if current_user.multi_market_membership? %>
+                  <% if !@category_percents_by_market_id.nil? && @category_percents_by_market_id.except("all").values.inject { |a, b| a + b } > 0 && unit_product.organization.all_markets_for_select.length > 1 && unit_product.prices.first.market_id == nil && unit_product.prices.first.product_fee_pct == 0 %><td></td><% end %>
                 <td></td>
               <% end %>
               <td></td>

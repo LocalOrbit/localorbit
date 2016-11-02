@@ -32,14 +32,14 @@
 <% if FeatureAccess.product_level_fee?(market: current_market) && (current_user.admin? || current_user.market_manager?) %>
 <td>
     <div style="float: left">
-      <% if @category_percents_by_market_id[current_market.id.to_s] == 0 %>
+      <% if !@category_percents_by_market_id.nil? && @category_percents_by_market_id[current_market.id.to_s] == 0 %>
           <div style="float: left">
             <label style="font-size: 9px">Mkt</label> <input style="float: left" type="radio" value="0" name="price[fee]" class="mkt-fee" checked />
           </div>
           <div style="clear: left"></div>
       <% else %>
           <div style="float: left">
-            <label style="font-size: 9px">Category</label> <input style="float: left" type="radio" value="1" name="price[fee]" class="category-fee" <%= @category_percents_by_market_id[current_market.id.to_s] > 0 ? "checked" : "" %> />
+            <label style="font-size: 9px">Category</label> <input style="float: left" type="radio" value="1" name="price[fee]" class="category-fee" <%= !@category_percents_by_market_id.nil? && !@category_percents_by_market_id[current_market.id.to_s].nil? && @category_percents_by_market_id[current_market.id.to_s] > 0 ? "checked" : "" %> />
           </div>
           <div style="clear: left"></div>
       <% end %>
