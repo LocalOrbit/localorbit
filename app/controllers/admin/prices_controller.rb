@@ -8,6 +8,7 @@ class Admin::PricesController < AdminController
     @price = @product.prices.build.decorate
     markets = @product.organization.all_markets
     @net_percents_by_market_id = ::Financials::Pricing.seller_net_percents_by_market(markets)
+    @category_percents_by_market_id = ::Financials::Pricing.category_percents_by_market(markets, @product)
     @seller_cc_rate = ::Financials::Pricing.seller_cc_rate(current_market)
   end
 
@@ -51,6 +52,7 @@ class Admin::PricesController < AdminController
           @price = @product.prices.build.decorate
           markets = @product.organization.all_markets
           @net_percents_by_market_id = ::Financials::Pricing.seller_net_percents_by_market(markets)
+          @category_percents_by_market_id = ::Financials::Pricing.category_percents_by_market(markets, @product)
           flash.now[:alert] = "Could not save price"
           render :index
         end

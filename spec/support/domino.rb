@@ -121,6 +121,10 @@ module Dom
     include Dom::Deletable
     selector ".pricing-table tbody tr.price"
 
+    def notice
+      node.find(".notice").text
+    end
+
     def click_buyer
       node.find(".buyer").click
     end
