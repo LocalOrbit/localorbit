@@ -23,4 +23,13 @@ class PriceDecorator < Draper::Decorator
   def formatted_units
     min_quantity > 1 ? " %d+ #{product.unit_plural}" % min_quantity : "per #{product.unit_singular}"
   end
+
+  def category_checked(pcts)
+    if market.nil?
+      mkt_id = "all"
+    else
+      mkt_id = market.id
+    end
+    !pcts.nil? && !pcts[mkt_id.to_s].nil? && pcts[mkt_id.to_s] > 0 ? "checked" : ""
+  end
 end

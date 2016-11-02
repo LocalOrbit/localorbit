@@ -22,6 +22,25 @@ module Financials
 	    result
 		end
 
+		def category_percents_by_market(markets, product)
+			result = markets.inject({}) do |res,market|
+			res[market.id.to_s] = product.category.level_fee(market.id)
+			res
+			end
+			if markets.length > 0 # result should be {} or populated {}
+				result["all"] = product.category.level_fee(markets.first.id)
+				markets.each do |mkt|
+					if product.category.level_fee(mkt) > 0 && product.category.level_fee(mkt) < result["all"]
+						result["all"] = product.category.level_fee(mkt.id)
+					end
+					result
+				end
+			else
+				result["all"] = 1
+			end
+			result
+		end
+
 		def seller_cc_rate(market)
 			if market
 				cc_rate = BigDecimal(PaymentProvider.approximate_credit_card_rate(market.payment_provider))
