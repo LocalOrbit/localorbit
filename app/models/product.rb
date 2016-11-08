@@ -26,7 +26,7 @@ class Product < ActiveRecord::Base
   attr_accessor :sibling_id, :sibling_unit_id, :sibling_unit_description, :sibling_product_code
 
   has_many :lots, -> { order("created_at") }, inverse_of: :product, autosave: true, dependent: :destroy
-  has_many :lots_by_expiration, -> { order("expires_at, good_from, created_at") }, class_name: Lot, foreign_key: :product_id
+  has_many :lots_by_expiration, -> { order("organization_id, market_id, expires_at, good_from, created_at") }, class_name: Lot, foreign_key: :product_id
 
   has_many :product_deliveries, dependent: :destroy
   has_many :delivery_schedules, through: :product_deliveries
@@ -258,9 +258,9 @@ class Product < ActiveRecord::Base
   end
 
   # Does not explicitly scope to the market. Use in conjunction with available_for_market.
-  def self.available_for_sale(market, buyer=nil, deliver_on_date=Time.current.end_of_minute)
+  def self.available_for_sale(market, buyer, deliver_on_date=Time.current.end_of_minute)
     visible.seller_can_sell.
-      with_available_inventory(deliver_on_date).
+      with_available_inventory(deliver_on_date, market.id, buyer.id).
       priced_for_market_and_buyer(market, buyer).
 
       group("products.id")
@@ -348,13 +348,15 @@ class Product < ActiveRecord::Base
     joins(product_joins)
   end
 
-  def self.with_available_inventory(deliver_on_date=Time.current.end_of_minute)
+  def self.with_available_inventory(deliver_on_date=Time.current.end_of_minute, market_id=nil, organization_id=nil)
     lot_table = Lot.arel_table
     on_cond = arel_table[:id].eq(lot_table[:product_id]).
               and(lot_table[:good_from].eq(nil).or(lot_table[:good_from].lt(deliver_on_date))).
               and(lot_table[:expires_at].eq(nil).or(lot_table[:expires_at].gt(deliver_on_date))).
-              and(lot_table[:quantity].gt(0))
-    join_on = arel_table.create_on(on_cond)
+              and(lot_table[:quantity].gt(0)).
+              and(lot_table[:market_id].eq(nil).or(lot_table[:market_id].eq(market_id))).
+              and(lot_table[:organization_id].eq(nil).or(lot_table[:organization_id].eq(organization_id)))
+  join_on = arel_table.create_on(on_cond)
 
     joins(arel_table.create_join(Lot.arel_table, join_on))
   end
@@ -375,12 +377,19 @@ class Product < ActiveRecord::Base
     lot.quantity = val
   end
 
-  def available_inventory(deliver_on_date=Time.current.end_of_minute)
+  def available_inventory(deliver_on_date=Time.current.end_of_minute, market_id=nil, organization_id=nil)
     if lots.loaded?
-      lots.to_a.sum {|l| l.available?(deliver_on_date) ? l.quantity : 0 }
+      qty = lots.to_a.sum {|l| l.available_specific?(deliver_on_date, market_id, organization_id) ? l.quantity : 0 }
+      #if qty == 0
+        qty += lots.to_a.sum {|l| l.available_general?(deliver_on_date) ? l.quantity : 0 }
+      #end
     else
-      lots.available(deliver_on_date).sum(:quantity)
+      qty = lots.available_specific(deliver_on_date, market_id, organization_id).sum(:quantity)
+      #if qty == 0
+        qty += lots.available_general(deliver_on_date).sum(:quantity)
+      #end
     end
+    qty
   end
 
   def minimum_quantity_for_purchase(opts={})

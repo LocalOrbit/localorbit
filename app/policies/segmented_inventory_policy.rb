@@ -1,0 +1,3 @@
+class SegmentedInventoryPolicy < ApplicationPolicy
+
+end

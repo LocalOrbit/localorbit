@@ -55,9 +55,9 @@ class CartsController < ApplicationController
       @item.quantity = params[:quantity]
       @item.product = product
 
-      if @item.quantity && @item.quantity > 0 && @item.quantity > product.available_inventory(delivery_date)
-        @error = "Quantity of #{product.name} available for purchase: #{product.available_inventory(delivery_date)}"
-        @item.quantity = product.available_inventory(delivery_date)
+      if @item.quantity && @item.quantity > 0 && @item.quantity > product.available_inventory(delivery_date, current_market.id, current_organization.id)
+        @error = "Quantity of #{product.name} available for purchase: #{product.available_inventory(delivery_date, current_market.id, current_organization.id)}"
+        @item.quantity = product.available_inventory(delivery_date, current_market.id, current_organization.id)
       end
 
       @error = @item.errors.full_messages.join(". ") unless @item.save
@@ -86,12 +86,12 @@ class CartsController < ApplicationController
     error = nil
     product = Product.includes(:prices).find(item.product.id)
     delivery_date = current_delivery.deliver_on
-    actual_count = product.available_inventory(delivery_date)
+    actual_count = product.available_inventory(delivery_date, current_market.id, current_organization.id)
 
     if item.quantity && item.quantity > 0 && item.quantity > actual_count
       error = {
         item_id: item.id,
-        error_msg: "Quantity of #{product.name} (#{product.unit.plural}) available for purchase: #{product.available_inventory(delivery_date)}",
+        error_msg: "Quantity of #{product.name} (#{product.unit.plural}) available for purchase: #{product.available_inventory(delivery_date, current_market.id, current_organization.id)}",
         actual_count: actual_count
       }
     end

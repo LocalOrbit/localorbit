@@ -12,7 +12,7 @@ class Admin::LotsController < AdminController
     auto_upgrade_product_to_advanced_inventory(lot_params, @product.lots.count > 0)
 
     lp = lot_params
-    if lot_params['number'].empty? && !lot_params['quantity'].empty?
+    if lot_params['number'].empty? && !lot_params['quantity'].empty? && (lot_params['market_id'].nil && lot_params['organization_id'].nil)
       lp = lot_params.slice('quantity')
     end
 
@@ -32,7 +32,7 @@ class Admin::LotsController < AdminController
     auto_upgrade_product_to_advanced_inventory(lot_params, @product.lots.count > 1)
 
     lp = lot_params
-    if lot_params['number'].empty? && !lot_params['quantity'].empty?
+    if lot_params['number'].empty? && !lot_params['quantity'].empty? && (lot_params['market_id'].nil? && lot_params['organization_id'].nil?)
       lp = lot_params.slice('quantity')
     end
 
@@ -63,7 +63,7 @@ class Admin::LotsController < AdminController
   end
 
   def lot_params
-    params.require(:lot).permit(:number, :good_from, :expires_at, :quantity)
+    params.require(:lot).permit(:number, :good_from, :expires_at, :quantity, :market_id, :organization_id)
   end
 
   def query_params

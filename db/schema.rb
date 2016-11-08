@@ -392,6 +392,8 @@ ActiveRecord::Schema.define(version: 20161006175522) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "legacy_id"
+    t.integer  "market_id"
+    t.integer  "organization_id"
   end
 
   add_index "lots", ["expires_at"], name: "index_lots_on_expires_at", using: :btree
