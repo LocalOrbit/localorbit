@@ -39,7 +39,7 @@ class DeliveryScheduleDecorator < Draper::Decorator
     if html
       str += h.content_tag(:span, class: "weekday") { display_cycle }
     else
-      str += display_cycle
+      str += seller_weekday.pluralize
     end
     str += " from #{seller_delivery_start} to #{seller_delivery_end}"
     if direct_to_customer?
@@ -59,13 +59,13 @@ class DeliveryScheduleDecorator < Draper::Decorator
 
   def display_cycle
     if delivery_cycle == 'biweekly'
-      "Bi-weekly, #{week_interval.ordinalize} #{buyer_weekday}"
+      "Bi-weekly, #{week_interval.ordinalize} #{seller_weekday}"
     elsif delivery_cycle == 'monthly_day'
-      "Monthly (by Day), #{week_interval.ordinalize} #{buyer_weekday}"
+      "Monthly (by Day), #{week_interval.ordinalize} #{seller_weekday}"
     elsif delivery_cycle == 'monthly_date'
       "Monthly (by Date), #{day_of_month.ordinalize} of each month"
     else
-      "Weekly, #{buyer_weekday}"
+      "Weekly, #{seller_weekday}"
     end
   end
 end

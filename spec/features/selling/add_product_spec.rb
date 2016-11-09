@@ -34,7 +34,6 @@ describe "Adding a product", chosen_js: true do
     create(:delivery_schedule, :hub_to_buyer,
       seller_fulfillment_location: aggregation_point,
       market: market,
-      delivery_cycle: 'weekly',
       day: 2,
       seller_delivery_start: "7:00 AM",
       seller_delivery_end: "9:00 AM",

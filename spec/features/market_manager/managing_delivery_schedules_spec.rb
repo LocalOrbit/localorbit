@@ -73,7 +73,7 @@ describe "Market Manager managing delivery schedules" do
 
     delivery_schedules = Dom::Admin::DeliverySchedule.all
     sched = delivery_schedules.first
-    expect(sched.weekday).to eq("Tuesday")
+    expect(sched.weekday).to eq("Weekly")
     expect(sched.cutoff).to match(/ #{delivery.order_cutoff} /)
     expect(sched.delivery_address).to include("#{address.address}, #{address.city}, #{address.state} #{address.zip}")
     expect(sched.delivery_time).to include("Monday")
@@ -115,7 +115,7 @@ describe "Market Manager managing delivery schedules" do
       expect(delivery_schedules.size).to eq(2)
 
       first_schedule = delivery_schedules.first
-      expect(first_schedule.weekday).to eq("Tuesday")
+      expect(first_schedule.weekday).to eq("Weekly")
       expect(first_schedule.cutoff).to match(/ #{delivery1.order_cutoff} /)
       expect(first_schedule.delivery_address).to match(/Direct to customer/)
       expect(first_schedule.delivery_time).to include("Tuesday")
