@@ -123,7 +123,7 @@ describe "Market Manager managing delivery schedules" do
       expect(first_schedule.pickup_time).to be_blank
 
       last_schedule = delivery_schedules.last
-      expect(last_schedule.weekday).to eq("Friday")
+      expect(last_schedule.weekday).to eq("Weekly")
       expect(last_schedule.cutoff).to match(/ #{delivery2.order_cutoff} /)
       expect(last_schedule.delivery_address).to include("#{address.address}, #{address.city}, #{address.state} #{address.zip}")
       expect(last_schedule.delivery_time).to include("Thursday")
