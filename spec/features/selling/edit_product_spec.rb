@@ -188,8 +188,8 @@ describe "Editing a product", :js do
       it "persists changes" do
         uncheck "Make product available on all market delivery dates"
 
-        Dom::Admin::ProductDelivery.find_by_weekday("Mondays").uncheck!
-        Dom::Admin::ProductDelivery.find_by_weekday("Tuesdays").check!
+        Dom::Admin::ProductDelivery.find_by_weekday("Weekly, Monday").uncheck!
+        Dom::Admin::ProductDelivery.find_by_weekday("Weekly, Tuesday").check!
 
         click_button "Save and Continue"
         click_link "Product Info"
@@ -201,20 +201,20 @@ describe "Editing a product", :js do
       it "allows all delivery schedules to be unselected" do
         uncheck "Make product available on all market delivery dates"
 
-        Dom::Admin::ProductDelivery.find_by_weekday("Mondays").uncheck!
-        Dom::Admin::ProductDelivery.find_by_weekday("Tuesdays").uncheck!
+        Dom::Admin::ProductDelivery.find_by_weekday("Weekly, Monday").uncheck!
+        Dom::Admin::ProductDelivery.find_by_weekday("Weekly, Tuesday").uncheck!
 
         click_button "Save and Continue"
         click_link "Product Info"
 
-        expect(Dom::Admin::ProductDelivery.find_by_weekday("Mondays")).to_not be_checked
-        expect(Dom::Admin::ProductDelivery.find_by_weekday("Tuesdays")).to_not be_checked
+        expect(Dom::Admin::ProductDelivery.find_by_weekday("Weekly, Monday")).to_not be_checked
+        expect(Dom::Admin::ProductDelivery.find_by_weekday("Weekly, Tuesday")).to_not be_checked
       end
 
       it "does not allow required delivery to be unselected" do
         uncheck "Make product available on all market delivery dates"
 
-        expect(Dom::Admin::ProductDelivery.find_by_weekday("Thursdays").node.find("input")).to be_disabled
+        expect(Dom::Admin::ProductDelivery.find_by_weekday("Weekly, Thursday").node.find("input")).to be_disabled
       end
     end
 
@@ -250,39 +250,39 @@ describe "Editing a product", :js do
       it "persists changes" do
         uncheck "Make product available on all market delivery dates"
 
-        Dom::Admin::ProductDelivery.find_by_weekday("Mondays").uncheck!
-        Dom::Admin::ProductDelivery.find_by_weekday("Tuesdays").check!
-        Dom::Admin::ProductDelivery.find_by_weekday("Wednesdays").uncheck!
+        Dom::Admin::ProductDelivery.find_by_weekday("Weekly, Monday").uncheck!
+        Dom::Admin::ProductDelivery.find_by_weekday("Weekly, Tuesday").check!
+        Dom::Admin::ProductDelivery.find_by_weekday("Weekly, Wednesday").uncheck!
 
         click_button "Save and Continue"
         click_link "Product Info"
 
-        expect(Dom::Admin::ProductDelivery.find_by_weekday("Mondays")).to_not be_checked
-        expect(Dom::Admin::ProductDelivery.find_by_weekday("Tuesdays")).to be_checked
-        expect(Dom::Admin::ProductDelivery.find_by_weekday("Wednesdays")).to_not be_checked
+        expect(Dom::Admin::ProductDelivery.find_by_weekday("Weekly, Monday")).to_not be_checked
+        expect(Dom::Admin::ProductDelivery.find_by_weekday("Weekly, Tuesday")).to be_checked
+        expect(Dom::Admin::ProductDelivery.find_by_weekday("Weekly, Wednesday")).to_not be_checked
       end
 
       it "allows all optional delivery schedules to be unselected" do
         uncheck "Make product available on all market delivery dates"
 
-        Dom::Admin::ProductDelivery.find_by_weekday("Mondays").uncheck!
-        Dom::Admin::ProductDelivery.find_by_weekday("Tuesdays").uncheck!
-        Dom::Admin::ProductDelivery.find_by_weekday("Wednesdays").uncheck!
+        Dom::Admin::ProductDelivery.find_by_weekday("Weekly, Monday").uncheck!
+        Dom::Admin::ProductDelivery.find_by_weekday("Weekly, Tuesday").uncheck!
+        Dom::Admin::ProductDelivery.find_by_weekday("Weekly, Wednesday").uncheck!
 
         click_button "Save and Continue"
         click_link "Product Info"
 
-        expect(Dom::Admin::ProductDelivery.find_by_weekday("Mondays")).to_not be_checked
-        expect(Dom::Admin::ProductDelivery.find_by_weekday("Tuesdays")).to_not be_checked
-        expect(Dom::Admin::ProductDelivery.find_by_weekday("Wednesdays")).to_not be_checked
+        expect(Dom::Admin::ProductDelivery.find_by_weekday("Weekly, Monday")).to_not be_checked
+        expect(Dom::Admin::ProductDelivery.find_by_weekday("Weekly, Tuesday")).to_not be_checked
+        expect(Dom::Admin::ProductDelivery.find_by_weekday("Weekly, Wednesday")).to_not be_checked
       end
 
       it "saves state when there is an error" do
         uncheck "Make product available on all market delivery dates"
 
-        Dom::Admin::ProductDelivery.find_by_weekday("Mondays").uncheck!
-        Dom::Admin::ProductDelivery.find_by_weekday("Tuesdays").check!
-        Dom::Admin::ProductDelivery.find_by_weekday("Wednesdays").uncheck!
+        Dom::Admin::ProductDelivery.find_by_weekday("Weekly, Monday").uncheck!
+        Dom::Admin::ProductDelivery.find_by_weekday("Weekly, Tuesday").check!
+        Dom::Admin::ProductDelivery.find_by_weekday("Weekly, Wednesday").uncheck!
 
         fill_in "Name", with: ""
 
@@ -290,9 +290,9 @@ describe "Editing a product", :js do
 
         expect(page).to have_content("Name can't be blank")
         expect(find_field("Make product available on all market delivery dates")).to_not be_checked
-        expect(Dom::Admin::ProductDelivery.find_by_weekday("Mondays")).to_not be_checked
-        expect(Dom::Admin::ProductDelivery.find_by_weekday("Tuesdays")).to be_checked
-        expect(Dom::Admin::ProductDelivery.find_by_weekday("Wednesdays")).to_not be_checked
+        expect(Dom::Admin::ProductDelivery.find_by_weekday("Weekly, Monday")).to_not be_checked
+        expect(Dom::Admin::ProductDelivery.find_by_weekday("Weekly, Tuesday")).to be_checked
+        expect(Dom::Admin::ProductDelivery.find_by_weekday("Weekly, Wednesday")).to_not be_checked
       end
     end
   end

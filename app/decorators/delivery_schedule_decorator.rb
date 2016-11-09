@@ -39,7 +39,7 @@ class DeliveryScheduleDecorator < Draper::Decorator
     if html
       str += h.content_tag(:span, class: "weekday") { display_cycle }
     else
-      str += seller_weekday.pluralize
+      str += display_cycle
     end
     str += " from #{seller_delivery_start} to #{seller_delivery_end}"
     if direct_to_customer?

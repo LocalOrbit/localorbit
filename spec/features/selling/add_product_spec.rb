@@ -27,13 +27,14 @@ describe "Adding a product", chosen_js: true do
   let!(:inactive_seller) { create(:organization, :seller, active: false) }
 
   let!(:mondays_schedule) { create(:delivery_schedule, market: market, day: 1, require_delivery: true) }
-  let(:monday_schedule_description) { "Mondays from 7:00 AM to 11:00 AM direct to customer. (required)" }
+  let(:monday_schedule_description) { "Weekly, Monday from 7:00 AM to 11:00 AM direct to customer. (required)" }
   # This is the schedule we'll model after the Appleton bug
   # Seller fulfillment location is what will show for the seller
   let!(:tuesdays_schedule) do
     create(:delivery_schedule, :hub_to_buyer,
       seller_fulfillment_location: aggregation_point,
       market: market,
+      delivery_cycle: 'weekly',
       day: 2,
       seller_delivery_start: "7:00 AM",
       seller_delivery_end: "9:00 AM",
@@ -42,7 +43,7 @@ describe "Adding a product", chosen_js: true do
       buyer_pickup_end: "10:00 AM"
     )
   end
-  let(:tuesday_schedule_description) { "Tuesdays from 7:00 AM to 9:00 AM at 1123 Grand Rd. Appleton, WI 83992. For Buyer pick up/delivery Tuesdays from 8:30 AM to 10:00 AM." }
+  let(:tuesday_schedule_description) { "Weekly, Tuesday from 7:00 AM to 9:00 AM at 1123 Grand Rd. Appleton, WI 83992. For Buyer pick up/delivery Tuesdays from 8:30 AM to 10:00 AM." }
 
   let!(:wed_thu_schedule) do
     create(:delivery_schedule, :buyer_pickup,
@@ -55,7 +56,7 @@ describe "Adding a product", chosen_js: true do
       buyer_pickup_end: "10:12 AM"
     )
   end
-  let(:wednesday_schedule_description) { "Wednesdays from 5:30 PM to 8:15 PM at 44 E. 8th St Holland, MI 49423. For Buyer pick up/delivery Thursdays from 6:05 AM to 10:12 AM." }
+  let(:wednesday_schedule_description) { "Weekly, Wednesday from 5:30 PM to 8:15 PM at 44 E. 8th St Holland, MI 49423. For Buyer pick up/delivery Thursdays from 6:05 AM to 10:12 AM." }
 
   let!(:deleted_schedule) { create(:delivery_schedule, market: market, day: 2, deleted_at: Time.current) }
 
@@ -293,9 +294,9 @@ describe "Adding a product", chosen_js: true do
         click_link "Product Info"
 
         expect(Dom::Admin::ProductDelivery.count).to eql(3)
-        [ ["Mondays", monday_schedule_description],
-          ["Tuesdays", tuesday_schedule_description],
-          ["Wednesdays", wednesday_schedule_description] ].each do |(day, expected_description)|
+        [ ["Weekly, Monday", monday_schedule_description],
+          ["Weekly, Tuesday", tuesday_schedule_description],
+          ["Weekly, Wednesday", wednesday_schedule_description] ].each do |(day, expected_description)|
             del = Dom::Admin::ProductDelivery.find_by_weekday(day)
             expect(del).to be_checked, "#{day} should be checked"
             expect(del.description).to eq(expected_description), "#{day} wrong description, wanted '#{expected_description}' but got '#{del.description}'"
@@ -314,7 +315,7 @@ describe "Adding a product", chosen_js: true do
         fill_in "Long description", with: "There are many kinds of apples."
 
         uncheck "Make product available on all market delivery dates"
-        Dom::Admin::ProductDelivery.find_by_weekday("Tuesdays").uncheck!
+        Dom::Admin::ProductDelivery.find_by_weekday("Weekly, Tuesday").uncheck!
 
         click_button "Save and Continue"
 
@@ -323,9 +324,9 @@ describe "Adding a product", chosen_js: true do
         click_link "Product Info"
 
         expect(Dom::Admin::ProductDelivery.count).to eql(3)
-        expect(Dom::Admin::ProductDelivery.find_by_weekday("Mondays")).to be_checked
-        expect(Dom::Admin::ProductDelivery.find_by_weekday("Tuesdays")).to_not be_checked
-        expect(Dom::Admin::ProductDelivery.find_by_weekday("Wednesdays")).to be_checked
+        expect(Dom::Admin::ProductDelivery.find_by_weekday("Weekly, Monday")).to be_checked
+        expect(Dom::Admin::ProductDelivery.find_by_weekday("Weekly, Tuesday")).to_not be_checked
+        expect(Dom::Admin::ProductDelivery.find_by_weekday("Weekly, Wednesday")).to be_checked
       end
 
       it "user can not deselect required deliveries" do
@@ -340,7 +341,7 @@ describe "Adding a product", chosen_js: true do
         fill_in "Long description", with: "There are many kinds of apples."
 
         uncheck "Make product available on all market delivery dates"
-        expect(Dom::Admin::ProductDelivery.find_by_weekday("Mondays").node.find("input")).to be_disabled
+        expect(Dom::Admin::ProductDelivery.find_by_weekday("Weekly, Monday").node.find("input")).to be_disabled
       end
     end
 
@@ -358,12 +359,12 @@ describe "Adding a product", chosen_js: true do
 
       it "maintains delivery schedule changes on error" do
         uncheck "Make product available on all market delivery dates"
-        Dom::Admin::ProductDelivery.find_by_weekday("Tuesdays").uncheck!
+        Dom::Admin::ProductDelivery.find_by_weekday("Weekly, Tuesday").uncheck!
         click_button "Save and Continue"
 
         expect(page).to have_unchecked_field("Make product available on all market delivery dates")
-        expect(Dom::Admin::ProductDelivery.find_by_weekday("Mondays")).to be_checked
-        expect(Dom::Admin::ProductDelivery.find_by_weekday("Tuesdays")).to_not be_checked
+        expect(Dom::Admin::ProductDelivery.find_by_weekday("Weekly, Monday")).to be_checked
+        expect(Dom::Admin::ProductDelivery.find_by_weekday("Weekly, Tuesday")).to_not be_checked
       end
     end
   end
@@ -445,8 +446,8 @@ describe "Adding a product", chosen_js: true do
       click_button "Save and Continue"
       patiently(20) do
         expect(page).to have_unchecked_field("Make product available on all market delivery dates")
-        expect(Dom::Admin::ProductDelivery.find_by_weekday("Mondays")).to be_checked
-        expect(Dom::Admin::ProductDelivery.find_by_weekday("Tuesdays")).to_not be_checked
+        expect(Dom::Admin::ProductDelivery.find_by_weekday("Weekly, Monday")).to be_checked
+        expect(Dom::Admin::ProductDelivery.find_by_weekday("Weekly, Tuesday")).to_not be_checked
       end
     end
 
