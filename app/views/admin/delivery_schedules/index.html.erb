@@ -17,10 +17,11 @@
       </tr>
       </thead>
       <tbody>
-        <% @delivery_schedules.each do |delivery| %>
+        <% @delivery_schedules.each do |dl| %>
+          <% delivery = dl.decorate %>
           <tr>
             <td class="delivery-text">
-              <strong><%= link_to "#{delivery.buyer_weekday}, order cutoff #{delivery.order_cutoff} hours before delivery.", [:edit, :admin, @market, delivery] %></strong><br>
+              <strong><%= link_to "#{delivery.display_cycle}, order cutoff #{delivery.order_cutoff} hours before delivery.", [:edit, :admin, @market, delivery] %></strong><br>
               <span class="address">Deliver to: <%= delivery.seller_fulfillment_address %></span>
             </td>
             <% if policy(:all_supplier).index? %>

@@ -1,0 +1,3 @@
+class AdvancedDeliveryCyclesPolicy < ApplicationPolicy
+
+end
