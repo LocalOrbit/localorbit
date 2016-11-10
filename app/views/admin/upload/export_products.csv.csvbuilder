@@ -1,0 +1,21 @@
+csv << ["Organization","Market Subdomain","Product Name","Category Name","Short Description","Product Code","Unit Name","Unit Description","Price","Current Inventory","New Inventory","Multiple Pack Sizes","MPS Unit","MPS Unit Description","MPS Price"]
+
+
+# need the @products to be passed through via the controller
+
+@products.each do |product|
+  csv << [
+    product.organization_name,
+    current_market.subdomain,
+    product.name,
+    product.second_level_category.name,
+    product.short_description,
+    product.code,
+    product.unit.singular,
+    product.unit_description,
+    product.prices.view_sorted_export.decorate.map(&:min_1_qty)[0],
+    product.use_simple_inventory && product.lots.count == 1 ? product.lots[0].quantity : "N/A",
+    "",
+    "N"
+  ]
+end

@@ -3,3 +3,22 @@ Your products are being uploaded!
 You will receive an email/alert shortly with the results of the upload, including any errors that resulted, which you can correct and re-upload.
 
 <strong><a href="/admin/upload">Return to upload form</a></strong>
+
+<br>
+<% if !@errors.has_key?("File") && !@errors.first[1]["Errors"].empty? %>
+    <h3>Errors</h3>
+<% end %>
+<div id="results">
+  <% @errors.each do |e| %>
+      <% if @errors.has_key?("File") %>
+          <%= @errors["File"] %>
+      <% elsif not e[1]["Errors"].empty? %>
+          <strong><%= "Row #{e[1]["Row number"]}:" %></strong><br>
+          <% e[1]["Errors"].keys.each do |er| %>
+              &nbsp;&nbsp;&nbsp; <%= "- #{er} (#{e[1]['Errors'][er]})" %>
+              <br>
+          <% end %>
+      <% end %>
+      <br></br>
+  <% end %>
+</div>
