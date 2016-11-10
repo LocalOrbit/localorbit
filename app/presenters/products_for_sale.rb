@@ -60,7 +60,7 @@ class ProductsForSale
 
   def with_enough_inventory(products)
     products.select do |product|
-      inventory = product.available_inventory(@delivery.deliver_on)
+      inventory = product.available_inventory(@delivery.deliver_on, @market.id, @buyer.id)
       product.prices.any? {|price| price.for_market_and_organization?(@market, @buyer) && price.min_quantity <= inventory }
     end
   end

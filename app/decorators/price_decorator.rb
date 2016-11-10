@@ -16,6 +16,10 @@ class PriceDecorator < Draper::Decorator
     str
   end
 
+  def min_1_qty
+    number_to_rounded(sale_price, precision: 2) if min_quantity == 1
+  end
+
   def formatted_price
     number_to_currency sale_price
   end

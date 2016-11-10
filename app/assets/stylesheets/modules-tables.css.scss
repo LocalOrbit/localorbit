@@ -1048,6 +1048,10 @@ td.delete {
   .created_at {
     text-align: left;
   }
+  .market, .buyer {
+    width: 135px;
+    text-align: left;
+  }
   .number, .good_from, .expires_at {
     text-align: center;
   }

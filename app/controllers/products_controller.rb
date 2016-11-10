@@ -37,7 +37,7 @@ class ProductsController < ApplicationController
         .object
         .delivery_schedule
         .products
-        .with_available_inventory(current_delivery.deliver_on)
+        .with_available_inventory(current_delivery.deliver_on, current_market.id, current_organization.id)
         .priced_for_market_and_buyer(current_market, current_organization)
         .where(organization_id: org_filter)
         .search_by_text(search)

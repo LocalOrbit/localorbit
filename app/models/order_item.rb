@@ -101,10 +101,16 @@ class OrderItem < ActiveRecord::Base
   def product_availability
     return unless product.present?
 
-    quantity_available = product.lots_by_expiration.available.sum(:quantity)
-
-    if quantity_available < quantity
-      errors[:inventory] = "there are only #{quantity_available} #{product.name.pluralize(quantity_available)} available."
+    if !order.nil?
+      market_id = order.market.id
+      organization_id = order.organization.id
+    end
+    qty = product.lots_by_expiration.available_specific(Time.current.end_of_minute, market_id, organization_id).sum(:quantity)
+    #if qty == 0
+      qty += product.lots_by_expiration.available_general(Time.current.end_of_minute).sum(:quantity)
+    #end
+    if qty < quantity
+      errors[:inventory] = "there are only #{qty} #{product.name.pluralize(qty)} available."
     end
   end
 
@@ -123,7 +129,11 @@ class OrderItem < ActiveRecord::Base
   private
 
   def consume_inventory
-    consume_inventory_amount(quantity)
+    if order
+      market_id = order.market.id
+      organization_id = order.organization.id
+    end
+    consume_inventory_amount(quantity, market_id, organization_id)
   end
 
   def update_delivered_at
@@ -176,9 +186,10 @@ class OrderItem < ActiveRecord::Base
     end
   end
 
-  def consume_inventory_amount(initial_amount)
+  def consume_inventory_amount(initial_amount, market_id, organization_id)
+    specific = false
     amount = initial_amount
-    product.lots_by_expiration.available(deliver_on_date).each do |lot|
+    product.lots_by_expiration.available_specific(deliver_on_date, market_id, organization_id).each do |lot|
       break unless amount > 0
 
       num_to_consume = [lot.quantity, amount].min
@@ -186,6 +197,19 @@ class OrderItem < ActiveRecord::Base
 
       lots.build(lot: lot, quantity: num_to_consume)
       amount -= num_to_consume
+      specific = true
+    end
+
+    if !specific && amount > 0
+      product.lots_by_expiration.available_general(deliver_on_date).each do |lot|
+        break unless amount > 0
+
+        num_to_consume = [lot.quantity, amount].min
+        lot.decrement!(:quantity, num_to_consume)
+
+        lots.build(lot: lot, quantity: num_to_consume)
+        amount -= num_to_consume
+      end
     end
 
     amount = initial_amount
@@ -217,7 +241,7 @@ class OrderItem < ActiveRecord::Base
       quantity_remaining = changes[:quantity][1] - (changes[:quantity][0] || 0)
 
       if quantity_remaining > 0
-        consume_inventory_amount(quantity_remaining)
+        consume_inventory_amount(quantity_remaining, order.market.id, order.organization.id)
       else
         return_inventory_amount(quantity_remaining.abs)
       end

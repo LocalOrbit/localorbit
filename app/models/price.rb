@@ -13,6 +13,12 @@ class Price < ActiveRecord::Base
     .order("markets.name NULLS FIRST, organizations.name NULLS FIRST, min_quantity")
   }
 
+  scope :view_sorted_export, lambda {
+    visible
+        .joins("LEFT JOIN markets ON prices.market_id = markets.id LEFT JOIN organizations ON prices.organization_id = organizations.id")
+        .where("prices.market_id is null and prices.organization_id is null AND min_quantity = 1")
+  }
+
   scope :for_product_and_market_and_org_at_time, lambda {|product, market, organization, order_time|
     where("product_id = ?", product.id)
     .where("updated_at <= ?", order_time)
