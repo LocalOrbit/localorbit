@@ -101,6 +101,7 @@ class Admin::OrdersController < AdminController
       session[:cart_id] = result.cart_id
       session[:current_organization_id] = result.current_organization_id
       session[:current_delivery_id] = result.current_delivery_id
+      session[:current_delivery_day] = result.current_delivery_day
       redirect_to cart_path, notice: "Order Duplicated."
     else
       redirect_to admin_order_path(order), alert: "Error duplicating order."

@@ -11,6 +11,7 @@
       <h1>Order info for <%= order.order_number %></h1>
       <div class="order-info-date">Placed On: <strong><%= order.placed_at.strftime "%m/%d/%Y at %l:%M%p" %></strong></div>
     </div>
+    <% if policy(:merge_dup_order).index? %>
     <div class="button-bar" style="float: right">
       <ul>
         <li>
@@ -27,6 +28,7 @@
       <%= f.submit "Merge", class: 'btn btn--small mobile-block' %>
       <button id="merge_cancel_button" class="cancel">Cancel</button>
     </div>
+    <% end %>
   </div>
   <div class="row">
     <div class="order-buyer">
