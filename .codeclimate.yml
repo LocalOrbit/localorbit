@@ -19,6 +19,9 @@ engines:
     enabled: true
   fixme:
     enabled: true
+    checks:
+      TODO:
+        enabled: false
   rubocop:
     enabled: true
 ratings:
@@ -41,4 +44,7 @@ exclude_paths:
 - db/
 - spec/
 - vendor/
+- tools/
 - "app/assets/javascripts/bootstrap-colorpicker.js"
+- "app/controllers/dev/pdf_controller.rb"
+
