@@ -72,7 +72,11 @@
                     }
                     else {
                         var selected = $el.is('[selected]') ? ' selected' : '';
-                        choices += '<div class="fs-option' + selected + '" data-value="' + $el.prop('value') + '"><span class="fs-checkbox"><i></i></span><div class="fs-option-label">' + $el.html() + '</div></div>';
+                        if($el.prop('value').includes('"')){
+                            choices += '<div class="fs-option' + selected + '" data-value=' + "'" + $el.prop('value') + "'" + '><span class="fs-checkbox"><i></i></span><div class="fs-option-label">' + $el.html() + '</div></div>';
+                        } else {
+                            choices += '<div class="fs-option' + selected + '" data-value="' + $el.prop('value') + '"><span class="fs-checkbox"><i></i></span><div class="fs-option-label">' + $el.html() + '</div></div>';
+                        }
                     }
                 });
 
