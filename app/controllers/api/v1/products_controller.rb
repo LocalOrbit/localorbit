@@ -48,7 +48,7 @@ module Api
               .delivery_schedule
               .products
               .visible
-              .with_available_inventory(current_delivery.deliver_on)
+              .with_available_inventory(current_delivery.deliver_on, current_market.id, current_organization.id)
               .priced_for_market_and_buyer(current_market, current_organization)
               .with_visible_pricing
               .select(:id, :general_product_id)
@@ -113,7 +113,7 @@ module Api
       def format_product_for_catalog(product, order)
         product = product.decorate(context: {current_cart: current_cart, order: order} )
 
-        available_inventory = product.available_inventory(current_delivery.deliver_on)
+        available_inventory = product.available_inventory(current_delivery.deliver_on, current_market.id, current_organization.id)
 
         prices = Orders::UnitPriceLogic.prices(product, current_market, current_organization, current_market.add_item_pricing && order ? order.created_at : Time.current.end_of_minute).map { |price| format_price_for_catalog(price)}
 
@@ -127,7 +127,7 @@ module Api
           {
               :id => product.id,
               :max_available => available_inventory,
-              :min_available => product.minimum_quantity_for_purchase({market: current_market,organization: current_organization}),
+              :min_available => product.minimum_quantity_for_purchase({market: current_market, organization: current_organization}),
               :unit => product.unit.plural,
               :unit_description => product.unit_plural,
               :prices => prices,

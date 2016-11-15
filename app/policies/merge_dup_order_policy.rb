@@ -1,0 +1,3 @@
+class MergeDupOrderPolicy < ApplicationPolicy
+
+end

@@ -39,8 +39,8 @@ module DeliveryHelpers
 
   def see_product_delivery_choice(info)
     dsd = info[:delivery_schedule].decorate
-    dayname = dsd.buyer_weekday.pluralize
-    obj = Dom::Admin::ProductDelivery.find_by_weekday( dayname )
+    dayname = dsd.buyer_weekday
+    obj = Dom::Admin::ProductDelivery.find_by_weekday( "Weekly, #{dayname}" )
     # See it's checked properly:
     if info[:checked]
       expect(obj).to be_checked, "Expected #{dayname} to be checked"

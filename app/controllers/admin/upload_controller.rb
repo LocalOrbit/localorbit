@@ -33,6 +33,23 @@ class Admin::UploadController < AdminController
     )
   end
 
+  def export_products
+    @products = current_user.managed_products.includes(:unit, prices:[:market]).order("organizations.name, products.name")
+    respond_to do |format|
+      format.html
+      format.csv do
+        if ENV["USE_UPLOAD_QUEUE"] == "true"
+          Delayed::Job.enqueue ::CSVExport::CSVImportProductExportJob.new(current_user, current_market.subdomain, @products.map(&:id))
+          flash[:notice] = "Please check your email for export results."
+          redirect_to admin_upload_path
+        else
+          @filename = 'products.csv'
+          @products = @products
+        end
+      end
+    end
+  end
+
   def get_documentation
     # download pdf or render it in-app? going with download at first because of how browsers work (that's why this is a separate route; it could be combined into download)
     send_file(

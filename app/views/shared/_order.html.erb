@@ -5,9 +5,31 @@
       credit_sign = '-'
 %>
 <div class="order-info">
-  <h1>Order info for <%= order.order_number %></h1>
-  <div class="order-info-date">Placed On: <strong><%= order.placed_at.strftime "%m/%d/%Y at %l:%M%p" %></strong></div>
-
+  <hr/>
+  <div style="display: inline-block; width: 100%">
+    <div style="float: left">
+      <h1>Order info for <%= order.order_number %></h1>
+      <div class="order-info-date">Placed On: <strong><%= order.placed_at.strftime "%m/%d/%Y at %l:%M%p" %></strong></div>
+    </div>
+    <% if policy(:merge_dup_order).index? %>
+    <div class="button-bar" style="float: right">
+      <ul>
+        <li>
+          <button id="merge_button" name="Merge Order">Merge Order</button>
+        </li>
+        <li>
+          <button type="submit" form="new_order" name="commit" value="Duplicate Order">Duplicate Order</button>
+        </li>
+      </ul>
+    </div>
+    <div id="merge_options" style="float: right; display: none">
+      <label>Merge Order Into:</label>
+      <input type="text" name="dest_order" />
+      <%= f.submit "Merge", class: 'btn btn--small mobile-block' %>
+      <button id="merge_cancel_button" class="cancel">Cancel</button>
+    </div>
+    <% end %>
+  </div>
   <div class="row">
     <div class="order-buyer">
       <div>Buyer: <strong><%= order.organization.name %></strong></div>

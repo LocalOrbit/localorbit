@@ -108,8 +108,9 @@ group :development do
   gem 'quiet_assets'
   gem 'aws-sdk'
   gem 'rails_view_annotator'
-  gem 'mailcatcher'
   gem 'puma'
+  gem 'mailcatcher'
+  gem 'unicorn'
 end
 
 group :development, :test do
@@ -131,6 +132,7 @@ group :development, :test do
   gem 'capybara-slow_finder_errors'
   gem 'wkhtmltopdf-binary', :git => 'https://github.com/zakird/wkhtmltopdf_binary_gem.git'
   gem 'capybara'
+  gem 'selenium-webdriver'
 end
 
 group :test do
