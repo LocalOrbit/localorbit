@@ -23,11 +23,11 @@ feature "Admin service payments" do
     expect(page).to have_content("Market Service Payments")
   end
 
-  it "shows the active markets" do
+  it "shows the active, configured markets" do
     visit "/admin/financials/admin/service_payments"
 
     within("#service-payments") do
-      expect(page).to have_content(unconfigured_market.name)
+      expect(page).not_to have_content(unconfigured_market.name)
       expect(page).to have_content(configured_market.name)
       expect(page).not_to have_content(deactivated_market.name)
     end
@@ -41,7 +41,8 @@ feature "Admin service payments" do
     end
   end
 
-  it "does not allow a payment to be run for an unconfigured market" do
+  xit "does not allow a payment to be run for an unconfigured market" do
+    # New Service Payments tab hides unconfigured market - disabled pending acceptance of that idea... 
     visit "/admin/financials/admin/service_payments"
 
     within("#market_#{unconfigured_market.id}") do
