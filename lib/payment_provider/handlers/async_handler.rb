@@ -2,7 +2,8 @@ module PaymentProvider
   module Handlers
     class AsyncHandler
       HANDLER_IMPLS = {
-        'transfer.paid' => PaymentProvider::Handlers::TransferPaid
+        'transfer.paid' => PaymentProvider::Handlers::TransferPaid,
+        'plan.created' => PaymentProvider::Handlers::PlanHandler
       }
 
       def call(event)
