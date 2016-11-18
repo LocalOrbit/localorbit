@@ -8,8 +8,8 @@ describe "stripe invoice.payment_succeeded event", vcr: true, webhook: true do
 
   xit "disregards invoices that aren't for subscriptions" do end
 
-  xit "creates a new payment object" do
-    # post '/webhooks/stripe', JSON.parse(File.read('spec/features/webhooks/invoice.payment_succeeded.json'))
+  it "creates a new payment object" do
+    post '/webhooks/stripe', JSON.parse(File.read('spec/features/webhooks/invoice.payment_succeeded.json'))
   end
 
   #
