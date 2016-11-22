@@ -65,6 +65,7 @@ class Admin::OrdersController < AdminController
   def update
     order = Order.find(params[:id])
     setup_deliveries(order)
+    merge = nil
 
     if params["items_to_add"]
       return unless perform_add_items(order)
@@ -77,6 +78,7 @@ class Admin::OrdersController < AdminController
     elsif params[:commit] == "Merge"
       dest_order = Order.orders_for_seller(current_user).find_by(id: params[:dest_order]) || Order.orders_for_seller(current_user).find_by(order_number: params[:dest_order])
       merge_order(order, dest_order)
+      merge = true
       return
     elsif params[:commit] == "Duplicate Order"
       duplicate_order(order)
@@ -92,7 +94,7 @@ class Admin::OrdersController < AdminController
     end
 
     # TODO: Change an order items delivery status to 'removed' or something rather then deleting them
-    perform_order_update(order, order_params)
+    perform_order_update(order, order_params, merge)
   end
 
   def duplicate_order(order)
@@ -193,11 +195,11 @@ class Admin::OrdersController < AdminController
     @deliveries = recent_deliveries | future_deliveries | [order.delivery]
   end
 
-  def perform_order_update(order, params) # TODO this needs to handle price edits
+  def perform_order_update(order, params, merge) # TODO this needs to handle price edits
     failed = false
     validate = ValidateOrderTotal.perform(order: order, order_params: params)
     if validate.success?
-      updates = UpdateOrder.perform(payment_provider: order.payment_provider, order: order, order_params: params, request: request)
+      updates = UpdateOrder.perform(payment_provider: order.payment_provider, order: order, order_params: params, request: request, merge: merge)
       if updates.success?
         order.update_total_cost
         came_from_admin = request.referer.include?("/admin/")
