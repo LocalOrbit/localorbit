@@ -218,7 +218,14 @@ class ApplicationController < ActionController::Base
         end.decorate
       else
         if session[:cart_id]
-          @current_cart = Cart.find(session[:cart_id]).decorate
+          @current_cart = Cart.find_by(id: session[:cart_id])
+          if @current_cart.nil?
+            @current_cart = Cart.find_or_create_by!(user_id: current_user.id, organization_id: current_organization.id, market_id: current_market.id, delivery_id: current_delivery.id) do |c|
+              c.location = selected_organization_location if current_delivery.requires_location?
+            end.decorate
+          else
+            @current_cart = @current_cart.decorate
+          end
         else
           @current_cart = Cart.find_or_create_by!(user_id: current_user.id, organization_id: current_organization.id, market_id: current_market.id, delivery_id: current_delivery.id) do |c|
             c.location = selected_organization_location if current_delivery.requires_location?
