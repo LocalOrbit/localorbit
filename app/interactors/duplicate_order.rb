@@ -17,7 +17,7 @@ class DuplicateOrder
       order_items.each do |o_item|
         product = Product.find(o_item.product_id)
          item = CartItem.create(cart: cart, product: product, quantity: o_item.quantity.to_i)
-         item.save!
+         item.save!(validate: false)
       end
       cart.save!
       context[:cart_id] = cart.id
