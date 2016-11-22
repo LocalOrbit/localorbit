@@ -5,7 +5,7 @@ class UpdatePurchase
     if PaymentProvider.supports_payment_method?(payment_provider, order.payment_method)
       current_amount = rollup_payment_amounts
 
-      if current_amount > order.total_cost
+      if current_amount > order.total_cost && merge.nil?
         create_refunds(current_amount)
 
       elsif current_amount < order.total_cost

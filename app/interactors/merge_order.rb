@@ -36,7 +36,7 @@ class MergeOrder
       end
 
       # Update order totals
-      RemoveDeliveryFee.perform(order: orig_order)
+      RemoveDeliveryFee.perform(order: orig_order, merge: true)
       RemoveCredit.perform(order: orig_order)
       orig_order.update_total_cost
       orig_order.save!

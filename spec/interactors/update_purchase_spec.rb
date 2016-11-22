@@ -55,7 +55,7 @@ describe UpdatePurchase do
 
     end
 
-    subject { described_class.perform(order: order) }
+    subject { described_class.perform(order: order, merge: nil) }
 
     context "without any items" do
       # before do

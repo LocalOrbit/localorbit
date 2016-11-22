@@ -3,6 +3,8 @@ class RemoveDeliveryFee
 
   def perform
       order.update!(delivery_fees: 0)
-      UpdatePurchase.perform(order: order)
+      if merge.nil? || !merge
+        UpdatePurchase.perform(order: order)
+      end
   end
 end
