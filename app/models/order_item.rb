@@ -200,7 +200,7 @@ class OrderItem < ActiveRecord::Base
       specific = true
     end
 
-    if !specific && amount > 0
+    if amount > 0
       product.lots_by_expiration.available_general(deliver_on_date).each do |lot|
         break unless amount > 0
 
