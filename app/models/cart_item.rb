@@ -55,8 +55,8 @@ class CartItem < ActiveRecord::Base
   end
 
   def quantity_is_available
-    if product && product.available_inventory < quantity
-      errors.add(:quantity, "available for purchase: #{product.available_inventory}")
+    if product && product.available_inventory(Time.current.end_of_minute, cart.market.id, cart.organization.id) < quantity
+      errors.add(:quantity, "available for purchase: #{product.available_inventory(Time.current.end_of_minute, cart.market.id, cart.organization.id)}")
     end
   end
 end

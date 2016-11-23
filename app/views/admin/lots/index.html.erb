@@ -142,7 +142,7 @@
             <% if policy(:segmented_inventory).index? %>
             <% if current_user.multi_market_membership? %>
             <td class="edit-cell adv_option" style="display: none">
-              <% if current_user.seller? && organization_can_access?(@product.organization, :advanced_inventory) %>
+              <% if organization_can_access?(@product.organization, :advanced_inventory) %>
                   <%= f.select :market_id, @product.organization.all_markets_for_select, {include_blank: 'All Markets'}, {class: "lot_market_id chosen"} %>
               <% else %>
                   All Markets&nbsp;<span class="tooltip" data-tooltip="Market Selection Available in Accelerate Plan"></span>
@@ -150,7 +150,7 @@
             </td>
             <% end %>
             <td class="edit-cell adv_option" style="display: none">
-              <% if current_user.seller? && organization_can_access?(@product.organization, :advanced_inventory) %>
+              <% if organization_can_access?(@product.organization, :advanced_inventory) %>
                   <%= f.select :organization_id, current_user.buyers_for_select, {include_blank: 'All Buyers'}, {class: "lot_buyer_id chosen"} %>
               <% else %>
                   All Buyers&nbsp;<span class="tooltip" data-tooltip="Buyer Selection Available in Accelerate Plan"></span>
