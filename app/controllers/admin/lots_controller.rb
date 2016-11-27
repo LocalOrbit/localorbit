@@ -7,7 +7,7 @@ class Admin::LotsController < AdminController
   def index
     @lot = @product.lots.build
     markets = current_user.markets
-    @organizations = Organization.joins(:market_organizations).where("market_organizations.market_id in (?)", markets.map(&:id)).select("organizations.name, organizations.id").order("organizations.name")
+    @organizations = Organization.joins(:market_organizations).where("market_organizations.market_id in (?)", markets.map(&:id)).select("organizations.name, organizations.id").order("organizations.name").uniq
   end
 
   def create

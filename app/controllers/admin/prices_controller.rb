@@ -7,20 +7,15 @@ class Admin::PricesController < AdminController
   def index
     @price = @product.prices.build.decorate
     markets = @product.organization.all_markets
-    @organizations = Organization.joins(:market_organizations).where("market_organizations.market_id in (?)", markets.map(&:id)).select("organizations.name, organizations.id").order("organizations.name")
+    @organizations = Organization.joins(:market_organizations).where("market_organizations.market_id in (?)", markets.map(&:id)).select("organizations.name, organizations.id").order("organizations.name").uniq
     @net_percents_by_market_id = ::Financials::Pricing.seller_net_percents_by_market(markets)
     @category_percents_by_market_id = ::Financials::Pricing.category_percents_by_market(markets, @product)
     @seller_cc_rate = ::Financials::Pricing.seller_cc_rate(current_market)
   end
 
-  def update_organizations
-    @organizations = Organization.joins(:market_organizations).where("market_id = ?", params[:market_id]).select("organizations.name, organizations.id").order("organizations.name")
-    respond_to do |format|
-      format.js
-    end
-  end
-
   def create
+    markets = @product.organization.all_markets
+    @organizations = Organization.joins(:market_organizations).where("market_organizations.market_id in (?)", markets.map(&:id)).select("organizations.name, organizations.id").order("organizations.name").uniq
     @price = @product.prices.create(price_params)
     if @price.persisted?
       redirect_to [:admin, @product, :prices], notice: "Successfully added a new price"
@@ -35,6 +30,8 @@ class Admin::PricesController < AdminController
   end
 
   def update
+    markets = @product.organization.all_markets
+    @organizations = Organization.joins(:market_organizations).where("market_organizations.market_id in (?)", markets.map(&:id)).select("organizations.name, organizations.id").order("organizations.name").uniq
     old_price = @product.prices.find(params[:id])
     params[:price] = params[:price][old_price.id.to_s]
     price = old_price.dup
