@@ -7,9 +7,17 @@ class Admin::PricesController < AdminController
   def index
     @price = @product.prices.build.decorate
     markets = @product.organization.all_markets
+    @organizations = Organization.joins(:market_organizations).where("market_organizations.market_id in (?)", markets.map(&:id)).select("organizations.name, organizations.id").order("organizations.name")
     @net_percents_by_market_id = ::Financials::Pricing.seller_net_percents_by_market(markets)
     @category_percents_by_market_id = ::Financials::Pricing.category_percents_by_market(markets, @product)
     @seller_cc_rate = ::Financials::Pricing.seller_cc_rate(current_market)
+  end
+
+  def update_organizations
+    @organizations = Organization.joins(:market_organizations).where("market_id = ?", params[:market_id]).select("organizations.name, organizations.id").order("organizations.name")
+    respond_to do |format|
+      format.js
+    end
   end
 
   def create

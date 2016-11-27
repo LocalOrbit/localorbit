@@ -18,7 +18,7 @@ $ ->
     use_category_fee = salePrice.parents('tr').first().find('input.category-fee')
     use_product_fee = salePrice.parents('tr').first().find('input.product-fee')
     netPrice = salePrice.parents('tr').first().find('input.net-price')
-    selectedMarket = salePrice.parents('tr').first().find('select.price_market_id')
+    selectedMarket = salePrice.parents('tr').first().find('select.select_market_id')
     has_product_fee = fee.hasClass('has-product-fee')
 
     ccRate = netPrice.data('cc-rate')

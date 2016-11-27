@@ -55,6 +55,8 @@ Rails.application.routes.draw do
     # end
   end
 
+  get "update_organizations" => "admin#update_organizations"
+
   namespace :admin do
     resources :markets, concerns: [:bank_account, :activatable, :confirmable], except: [:edit] do
       resources :market_addresses,   as: :addresses,  path: :addresses
