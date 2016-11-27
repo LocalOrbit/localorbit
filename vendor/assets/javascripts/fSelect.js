@@ -72,7 +72,18 @@
                     }
                     else {
                         var selected = $el.is('[selected]') ? ' selected' : '';
-                        choices += '<div class="fs-option' + selected + '" data-value="' + $el.prop('value') + '"><span class="fs-checkbox"><i></i></span><div class="fs-option-label">' + $el.html() + '</div></div>';
+                        var el_value = $el.prop('value');
+
+                        if( el_value.indexOf('"') > -1 ){
+                            // If the value includes the literal ", then wrap it in single quotes...
+                            el_value = "'" + $el.prop('value') + "'"
+                        }
+                        else{
+                            // ...otherwise wrap it in double quotes
+                            el_value = '"' + $el.prop('value') + '"';
+                        }
+
+                        choices += '<div class="fs-option' + selected + '" data-value=' + el_value + '><span class="fs-checkbox"><i></i></span><div class="fs-option-label">' + $el.html() + '</div></div>';
                     }
                 });
 

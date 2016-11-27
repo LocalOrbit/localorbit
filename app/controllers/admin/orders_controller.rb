@@ -115,7 +115,13 @@ class Admin::OrdersController < AdminController
     if result.success?
       redirect_to admin_order_path(dest_order), notice: "Order Merged."
     else
-      redirect_to admin_order_path(orig_order), alert: "Error merging order."
+      alert = 'Error merging order.'
+      if !result.error.nil?
+        alert = "#{alert} #{result.error}"
+      else
+
+      end
+      redirect_to admin_order_path(orig_order), alert: alert
     end
   end
 

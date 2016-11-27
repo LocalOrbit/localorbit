@@ -1,7 +1,7 @@
 <% if current_user.multi_market_membership? %>
 <td>
   <% if policy(:advanced_pricing).index? || (current_user.seller? && organization_can_access?(@product.organization, :advanced_pricing)) %>
-    <%= f.select :market_id, @product.organization.all_markets_for_select, {include_blank: 'All Markets'}, {class: "price_market_id chosen"} %>
+    <%= f.select :market_id, @product.organization.all_markets_for_select, {include_blank: 'All Markets'}, {id: 'select_market_id', class: "select_market_id chosen"} %>
   <% else %>
       All Markets&nbsp;<span class="tooltip" data-tooltip="Market Selection Available in Grow Plan"></span>
   <% end %>
@@ -9,7 +9,8 @@
 <% end %>
 <td>
   <% if policy(:advanced_pricing).index? || (current_user.seller? && organization_can_access?(@product.organization, :advanced_pricing)) %>
-      <%= f.select :organization_id, current_user.buyers_for_select, {include_blank: 'All Buyers'}, {class: "price_buyer_id chosen"} %>
+      <%= f.select :organization_id, options_for_select(@organizations.collect { |organization|
+        [organization.name.titleize, organization.id] }, 0), {include_blank: 'All Buyers'}, {id: 'select_buyer_id', class: "select_buyer_id chosen"} %>
   <% else %>
       All Buyers&nbsp;<span class="tooltip" data-tooltip="Buyer Selection Available in Grow Plan"></span>
   <% end %>
