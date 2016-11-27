@@ -1,3 +1,16 @@
+$ ->
+  $(document).on 'change', '.select_market_id', (evt) ->
+    $.ajax '/update_organizations',
+      type: 'GET'
+      dataType: 'script'
+      data: {
+        market_id: $(this).find("option:selected").val()
+      }
+      error: (jqXHR, textStatus, errorThrown) ->
+        console.log("AJAX Error: #{textStatus}")
+      success: (data, textStatus, jqXHR) ->
+        console.log("Dynamic country select OK!")
+
 debug = (args...) ->
   # console.log "UTIL: ", args...
 

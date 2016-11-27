@@ -1,4 +1,17 @@
 class AdminController < ApplicationController
+
+  def update_organizations
+    if !params[:market_id].empty?
+      @organizations = Organization.joins(:market_organizations).where("market_id = ?", params[:market_id]).select("organizations.name, organizations.id").order("organizations.name").uniq
+    else
+      markets = current_user.markets
+      @organizations = Organization.joins(:market_organizations).where("market_organizations.market_id in (?)", markets.map(&:id)).select("organizations.name, organizations.id").order("organizations.name").uniq
+    end
+    respond_to do |format|
+      format.js { render '/shared/update_organizations' }
+    end
+  end
+
   protected
 
   def require_admin
