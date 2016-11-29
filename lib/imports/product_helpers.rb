@@ -106,8 +106,11 @@ module Imports
 
 					pr = product.prices.find_or_initialize_by(min_quantity: 1)
 					pr.sale_price = prod_hash["Price"]
-					pr.save!
-
+					if pr.valid?
+						pr.save!
+					else
+						puts "Error validating: #{pr.id}"
+					end
 					if product.use_simple_inventory && prod_hash["New Inventory"].to_i >= 0
 						lt = product.lots.find_or_initialize_by(good_from: nil, expires_at: nil, number: nil)
 						lt.quantity = prod_hash["New Inventory"].to_i
