@@ -71,7 +71,7 @@
                     <div class="edit-cell">
                       <% if organization_can_access?(unit_product.organization, :advanced_pricing) %>
                         <%= f.select :market_id, unit_product.organization.all_markets_for_select,
-                                     {include_blank: 'All Markets'}, {class: "price_market_id chosen"} %>
+                                     {include_blank: 'All Markets'}, {id: 'select_market_id', class: "select_market_id chosen"} %>
                       <% else %>
                         <%= price.market_name %>
                       <% end %>
@@ -84,8 +84,8 @@
                     </div>
                     <div class="edit-cell">
                       <% if organization_can_access?(unit_product.organization, :advanced_pricing) %>
-                          <%= f.select :organization_id, current_user.buyers_for_select,
-                                       {include_blank: 'All Buyers'}, {class: "price_buyer_id chosen"} %>
+                          <%= f.select :organization_id, options_for_select(@organizations.collect { |organization|
+                            [organization.name.titleize, organization.id] }, 0), {include_blank: 'All Buyers'}, {id: 'select_buyer_id', class: "select_buyer_id chosen"} %>
                       <% else %>
                           <%= price.organization_name %>
                       <% end %>
@@ -119,7 +119,7 @@
                 <% if FeatureAccess.product_level_fee?(market: current_market) && (current_user.admin? || current_user.market_manager?) %>
                 <td class="fee">
                   <div class="edit-trigger view-cell">
-                    <%= if !@category_percents_by_market_id.nil? && @category_percents_by_market_id[price.market_id.nil? ? "all" : price.market_id.to_s] > 0 && price.product_fee_pct == 0
+                    <%= if !@category_percents_by_market_id.nil? && !@category_percents_by_market_id[price.market_id.nil? ? "all" : price.market_id.to_s].nil? && @category_percents_by_market_id[price.market_id.nil? ? "all" : price.market_id.to_s] > 0 && price.product_fee_pct == 0
                          "Use Category Fee"
                        elsif price.product_fee_pct > 0
                          number_to_percentage(price.product_fee_pct)

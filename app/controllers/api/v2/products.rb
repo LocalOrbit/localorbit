@@ -48,7 +48,7 @@ module API
 
 				desc "Create a product"
 				params do
-					requires :name, :organization_name, :unit, :category, :unit_description, :short_description, :long_description, :price
+					requires :name, :organization_name, :unit, :category, :unit_description, :short_description, :long_description, :price, :product_id
 				end
 
 				# singular

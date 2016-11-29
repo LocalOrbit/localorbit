@@ -12,7 +12,7 @@ Upload a <strong>.CSV</strong> file of your organization(s)'s products here. For
 	  <%= file_field_tag 'datafile' %>
 	  <%= hidden_field_tag 'curr_user',@curr_user %>
 		<br/><br/>
-	  <%= submit_tag "Import" %>
+	  <%= submit_tag "Import", id:'import_button', disabled: true %>
 	<% end %>
 <br/><br/>
 To download <strong>a template</strong> for filling in your product information, please click here:<br>

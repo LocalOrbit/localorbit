@@ -52,3 +52,8 @@ $ ->
     e.preventDefault()
     $("#merge_options").hide()
     $(".button-bar").show()
+
+  $("#duplicate_button").click (e) ->
+    $(this).parent().find("input").val("Duplicate Order")
+    $(this).closest("form").submit()
+    $(this).prop("disabled","disabled")

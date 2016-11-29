@@ -391,6 +391,30 @@ describe Market do
     end
   end
 
+  describe "#last_service_payment_at" do
+    subject {create(:organization, :market)}
+
+    context "when no payments made" do
+      it "returns nil if no payments made" do
+        expect(subject.last_service_payment_at).to be_nil
+      end
+    end
+
+    context "when payment(s) made" do
+      let!(:payment_one) {create(:payment, :service, organization: subject, payer: subject, created_at: 1.year.ago.noon)}
+
+      it "returns date of last payment when one payment made" do
+        expect(subject.last_service_payment_at).to eq(payment_one.created_at)
+      end
+
+      it "returns date of last payment when multiple payments made" do
+        create(:payment, :service, organization: subject, payer: subject, created_at: 368.day.ago.noon)
+
+        expect(subject.last_service_payment_at).to eq(payment_one.created_at)
+      end
+    end
+  end
+
   describe "#next_service_payment_at" do
     subject{create(:organization, :market)}
 
@@ -434,20 +458,28 @@ describe Market do
         expect(subject.next_service_payment_at).to eq(subject.plan_start_at)
       end
 
-      context "returns the next payment date based on the number of successful plan payments" do
+      context "returns the next payment date based on previous successful plan payment" do
+        let!(:payment_one) {create(:payment, :service, organization: subject, payer: subject, created_at: 58.days.ago.noon, status: "failed")}
+        let!(:payment_two) {create(:payment, :service, organization: subject, payer: subject, created_at: 57.days.ago.noon)}
         before do
-          subject.plan_start_at = 58.days.ago
-          create(:payment, :service, organization: subject, payer: subject, created_at: 58.days.ago, status: "failed")
-          create(:payment, :service, organization: subject, payer: subject, created_at: 57.days.ago)
+          subject.plan_start_at = 58.days.ago.noon
         end
 
         it "with 1 successful payment" do
-          expect(subject.next_service_payment_at).to eq(1.month.from_now(subject.plan_start_at))
+          expect(subject.next_service_payment_at).to eq(1.month.from_now(payment_two.created_at))
+        end
+      end
+
+      context "returns the correct next payment date when there are multiple previous payments" do
+        let!(:payment_one) {create(:payment, :service, organization: subject, payer: subject, created_at: 58.days.ago.noon, status: "failed")}
+        let!(:payment_two) {create(:payment, :service, organization: subject, payer: subject, created_at: 57.days.ago.noon)}
+        let!(:payment_three) {create(:payment, :service, organization: subject, payer: subject, created_at: 28.days.ago.noon)}
+        before do
+          subject.plan_start_at = 58.days.ago.noon
         end
 
         it "with 2 successful payments" do
-          create(:payment, :service, organization: subject, payer: subject, created_at: 28.days.ago)
-          expect(subject.next_service_payment_at).to eq(2.months.from_now(subject.plan_start_at))
+          expect(subject.next_service_payment_at).to eq(1.months.from_now(payment_three.created_at))
         end
       end
     end
@@ -471,20 +503,30 @@ describe Market do
         expect(subject.next_service_payment_at).to eq(subject.plan_start_at)
       end
 
-      context "returns the next payment date based on the number of successful plan payments" do
+      context "returns the next payment date based on previous successful plan payment" do
+        let!(:payment_maize) {create(:payment, :service, organization: subject, payer: subject, created_at: 375.days.ago.noon, status: "failed")}
+        let!(:payment_blue) {create(:payment, :service, organization: subject, payer: subject, created_at: 374.days.ago.noon)}
+
         before do
-          create(:payment, :service, organization: subject, payer: subject, created_at: 375.days.ago, status: "failed")
-          create(:payment, :service, organization: subject, payer: subject, created_at: 374.days.ago)
-          subject.plan_start_at = 375.days.ago
+          subject.plan_start_at = 375.days.ago.noon
         end
 
         it "with 1 successful payment" do
-          expect(subject.next_service_payment_at).to eq(1.year.from_now(subject.plan_start_at))
+          expect(subject.next_service_payment_at).to eq(1.year.from_now(payment_blue.created_at))
+        end
+      end
+
+      context "returns the correct next payment when there are multiple previous successful plan payments" do
+        let!(:payment_maize) {create(:payment, :service, organization: subject, payer: subject, created_at: 375.days.ago.noon, status: "failed")}
+        let!(:payment_blue) {create(:payment, :service, organization: subject, payer: subject, created_at: 374.days.ago.noon)}
+        let!(:payment_green) {create(:payment, :service, organization: subject, payer: subject, created_at: 11.days.ago.noon)}
+
+        before do
+          subject.plan_start_at = 375.days.ago.noon
         end
 
         it "with 2 successful payments" do
-          create(:payment, :service, organization: subject, payer: subject, created_at: 11.days.ago)
-          expect(subject.next_service_payment_at).to eq(2.years.from_now(subject.plan_start_at))
+          expect(subject.next_service_payment_at).to eq(1.years.from_now(payment_green.created_at))
         end
       end
     end

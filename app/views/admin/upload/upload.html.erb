@@ -2,12 +2,12 @@ Your products are being uploaded!
 
 You will receive an email/alert shortly with the results of the upload, including any errors that resulted, which you can correct and re-upload.
 
+<br/><br/>
 <strong><a href="/admin/upload">Return to upload form</a></strong>
 
 <br>
-<% if !@errors.has_key?("File") && !@errors.first[1]["Errors"].empty? %>
+<% if !@errors.nil? && !@errors.has_key?("File") && !@errors.first[1]["Errors"].empty? %>
     <h3>Errors</h3>
-<% end %>
 <div id="results">
   <% @errors.each do |e| %>
       <% if @errors.has_key?("File") %>
@@ -19,6 +19,7 @@ You will receive an email/alert shortly with the results of the upload, includin
               <br>
           <% end %>
       <% end %>
-      <br></br>
+      <br/><br/>
   <% end %>
 </div>
+<% end %>
