@@ -4,9 +4,12 @@ module PaymentProvider
       HANDLER_IMPLS = {
         'transfer.paid' => PaymentProvider::Handlers::TransferPaid,
         'plan.created' => PaymentProvider::Handlers::PlanHandler,
-        'customer.subscription.created' => PaymentProvider::Handlers::SubscriptionHandler,
         'invoice.payment_succeeded' => PaymentProvider::Handlers::InvoiceHandler
+        # 'invoice.payment_failed' => PaymentProvider::Handlers::InvoiceHandler
       }
+
+      # TODO
+      # 'customer.subscription.created' => PaymentProvider::Handlers::SubscriptionHandler,
 
       def call(event)
         handler = HANDLER_IMPLS[event.type]

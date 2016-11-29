@@ -28,6 +28,7 @@ module PaymentProvider
       end
 
       def self.plan_deleted(name, created, stripe_id)
+        # Stubbed here for full-circle plan managment.  This is for future reference
         Rails.logger.info "In plan_deleted method: Name: #{name}, Created: #{created}, Stripe ID: #{stripe_id}"
       end
 
