@@ -73,7 +73,7 @@ module Imports
 			#	#create error and append it
 			#	error_hash["Errors"]["Missing multi-unit/break case data"] = "#{@required_headers[-4]} header has data 'Y' but is missing required Unit and/or Price"
 			#end
-			if product_row["Short Description"].length > 50
+			if !product_row["Short Description"].nil? && product_row["Short Description"].length > 50
 				okay_flag = false
 				error_hash["Errors"]["Short Description too long"] = "Short description cannot be longer than 50 characters."
 			end
