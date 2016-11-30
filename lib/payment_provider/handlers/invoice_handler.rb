@@ -15,18 +15,20 @@ module PaymentProvider
       def self.handle(params)
         # From APIDoc [http://apidock.com/ruby/Object/public_send]:
         # [public_send] Invokes the method identified by [parameter one], passing it any arguments specified...
-        handled_event = params[:event]
-        event_data = handled_event.data.object
+        e = params[:event]
+        event_data = e.data.object
+        event_log  = Event.create!(event_id: e.id, payload: e.to_json)
+
         self.public_send(params[:event_type], event_data)
 
         Rails.logger.info "Handling a successful invoice event. Params: #{params.inspect}"
-        event_log = Event.where(event_id: handled_event[:id])
         event_log.update(successful_at: Time.current.end_of_minute)
 
       rescue Exception => e
         Rails.logger.error "Error handling invoice event. Params: #{params.inspect}"
         error_info = ErrorReporting.interpret_exception(e, "Error handling #{self.name} event from Stripe", {params: params})
         Honeybadger.notify_or_ignore(error_info[:honeybadger_exception])
+        # raise e
       end
 
       def self.invoice_payment_succeeded(event_params)
