@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161006175522) do
+ActiveRecord::Schema.define(version: 20161130171816) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -530,7 +530,7 @@ ActiveRecord::Schema.define(version: 20161006175522) do
     t.boolean  "subscribed",                                             default: false
     t.boolean  "routing_plan",                                           default: false
     t.integer  "organization_id"
-    t.boolean  "add_item_pricing",                                       default: true
+    t.boolean  "add_item_pricing"
     t.boolean  "self_enabled_cross_sell",                                default: false
   end
 
@@ -567,6 +567,14 @@ ActiveRecord::Schema.define(version: 20161006175522) do
   end
 
   add_index "newsletters", ["market_id"], name: "index_newsletters_on_market_id", using: :btree
+
+  create_table "order_item_deliveries", force: true do |t|
+    t.integer  "market_address_id"
+    t.integer  "location_id"
+    t.datetime "delivered_at"
+    t.integer  "quantity_delivered"
+    t.integer  "order_item_id"
+  end
 
   create_table "order_item_lots", force: true do |t|
     t.integer  "order_item_id"
@@ -647,6 +655,7 @@ ActiveRecord::Schema.define(version: 20161006175522) do
     t.integer  "market_id",  null: false
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "buyer_id"
   end
 
   add_index "order_templates", ["market_id", "name"], name: "index_order_templates_on_market_id_and_name", unique: true, using: :btree
@@ -870,15 +879,6 @@ ActiveRecord::Schema.define(version: 20161006175522) do
   add_index "promotions", ["market_id"], name: "index_promotions_on_market_id", using: :btree
   add_index "promotions", ["product_id"], name: "index_promotions_on_product_id", using: :btree
 
-  create_table "qlik_user_attributes", primary_key: "userid", force: true do |t|
-    t.string "type",  null: false
-    t.string "value"
-  end
-
-  create_table "qlik_users", primary_key: "userid", force: true do |t|
-    t.string "name"
-  end
-
   create_table "role_actions", force: true do |t|
     t.string "description"
     t.string "org_types",   default: [], array: true
@@ -994,13 +994,5 @@ ActiveRecord::Schema.define(version: 20161006175522) do
 
   add_index "users_roles", ["role_id"], name: "index_users_roles_on_role_id", using: :btree
   add_index "users_roles", ["user_id"], name: "index_users_roles_on_user_id", using: :btree
-
-  create_table "zipcodes", primary_key: "zip", force: true do |t|
-    t.decimal "latitude",             precision: 9, scale: 6
-    t.decimal "longitude",            precision: 9, scale: 6
-    t.string  "city"
-    t.string  "state",     limit: 2
-    t.string  "county",    limit: 64
-  end
 
 end
