@@ -16,7 +16,7 @@ module PaymentProvider
         if handler
           params = handler.extract_job_params(event)
           Rails.logger.info "Enqueueing job for #{event.type} stripe event with params: #{params.inspect}"
-          handler.delay.handle(params)
+          handler.delay(:run_at => 1.minute.from_now).handle(params)
         end
       end
     end
