@@ -21,7 +21,7 @@ module PaymentProvider
 
         Rails.logger.info "Handling a successful invoice event. Params: #{params.inspect}"
         event_log = Event.where(event_id: handled_event[:id])
-        event_log.destroy!
+        event_log.update(successful_at: Time.current.end_of_minute)
 
       rescue Exception => e
         Rails.logger.error "Error handling invoice event. Params: #{params.inspect}"
