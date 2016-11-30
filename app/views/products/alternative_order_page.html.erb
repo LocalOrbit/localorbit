@@ -11,7 +11,7 @@
   orderCutoff: current_delivery.cutoff_time,
   buyerInfo: current_organization.name,
   limit: 10,
-  useTemplates: FeatureAccess.order_templates?(market: current_market),
+  useTemplates: policy(:template).index?,
   supplierId: supplier_id,
   orderMinimum: current_delivery.delivery_schedule.order_minimum > 0 ? number_to_currency(current_delivery.delivery_schedule.order_minimum) : nil
 }) %>
