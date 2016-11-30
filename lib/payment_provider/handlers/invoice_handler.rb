@@ -25,9 +25,9 @@ module PaymentProvider
         event_log.update(successful_at: Time.current.end_of_minute)
 
       rescue Exception => e
-        Rails.logger.error "Error handling invoice event. Params: #{params.inspect}"
         error_info = ErrorReporting.interpret_exception(e, "Error handling #{self.name} event from Stripe", {params: params})
         Honeybadger.notify_or_ignore(error_info[:honeybadger_exception])
+        Rails.logger.error "Error handling invoice event. Exception: #{e.inspect} Params: #{params.inspect}"
         # raise e
       end
 
