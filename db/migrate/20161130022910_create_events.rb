@@ -8,7 +8,8 @@ class CreateEvents < ActiveRecord::Migration
 
       t.timestamps
 
-      add_index :event_id, unique: true
     end
+
+    add_index :events, :event_id, unique: true
   end
 end

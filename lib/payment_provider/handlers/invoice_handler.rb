@@ -7,16 +7,21 @@ module PaymentProvider
         {
           # This transforms the dot-notation event type to a string suitable for 'public_send'
           event_type: event.type.tr('.','_'),
-          event: event.data.object
+          # event: event.data.object
+          event: event
         }
       end
 
       def self.handle(params)
         # From APIDoc [http://apidock.com/ruby/Object/public_send]:
         # [public_send] Invokes the method identified by [parameter one], passing it any arguments specified...
-        self.public_send(params[:event_type], params[:event])
+        handled_event = params[:event]
+        event_data = handled_event.data.object
+        self.public_send(params[:event_type], event_data)
 
         Rails.logger.info "Handling a successful invoice event. Params: #{params.inspect}"
+        event_log = Event.where(event_id: handled_event[:id])
+        event_log.destroy!
 
       rescue Exception => e
         Rails.logger.error "Error handling invoice event. Params: #{params.inspect}"

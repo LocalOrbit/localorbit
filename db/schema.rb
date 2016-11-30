@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161006175522) do
+ActiveRecord::Schema.define(version: 20161130022910) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -292,6 +292,17 @@ ActiveRecord::Schema.define(version: 20161006175522) do
 
   add_index "discounts", ["code"], name: "index_discounts_on_code", using: :btree
 
+  create_table "events", force: true do |t|
+    t.string   "event_id"
+    t.text     "payload"
+    t.datetime "successful_at"
+    t.string   "timestamps"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "events", ["event_id"], name: "index_events_on_event_id", unique: true, using: :btree
+
   create_table "external_products", force: true do |t|
     t.string   "contrived_key",    null: false
     t.integer  "organization_id",  null: false
@@ -523,10 +534,10 @@ ActiveRecord::Schema.define(version: 20161006175522) do
     t.text     "zpl_logo"
     t.string   "zpl_printer"
     t.boolean  "self_directed_creation",                                 default: false
-    t.boolean  "stripe_standalone",                                      default: true
+    t.boolean  "stripe_standalone"
     t.string   "legacy_stripe_account_id"
-    t.integer  "number_format_numeric",                                  default: 0
     t.boolean  "allow_product_fee"
+    t.integer  "number_format_numeric",                                  default: 0
     t.boolean  "subscribed",                                             default: false
     t.boolean  "routing_plan",                                           default: false
     t.integer  "organization_id"
