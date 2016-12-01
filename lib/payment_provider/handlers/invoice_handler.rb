@@ -17,12 +17,12 @@ module PaymentProvider
         # [public_send] Invokes the method identified by [parameter one], passing it any arguments specified...
         e = params[:event]
         event_data = e.data.object
-        event_log  = Event.create!(event_id: e.id, stripe_customer_id: event_data.customer, payload: e.to_json)
+        event_log  = self.event_log_record(e)
 
         self.public_send(params[:event_type], event_data)
 
         Rails.logger.info "Handling a successful invoice event. Params: #{params.inspect}"
-        event_log.update(successful_at: Time.current.end_of_minute)
+        event_log.update(successful_at: Time.current.end_of_minute) if not event_log.successful_at
 
       rescue Exception => e
         error_info = ErrorReporting.interpret_exception(e, "Error handling #{self.name} event from Stripe", {params: params})
@@ -49,6 +49,10 @@ module PaymentProvider
         Payment.create!(payment_type: 'service', amount: event_params[:total], created_at: event_params[:date], updated_at: event_params[:date], status: 'paid',payer_id: subscriber.organization_id, payer_type: 'Organization', market_id: subscriber.id, bank_account_id: bank_account.id, stripe_id: event_params[:payment], payment_provider: 'stripe', organization_id: subscriber.organization_id )
 
         Rails.logger.info "In invoice_payment_succeeded method. Stripe charge id: #{charge.id}"
+      end
+
+      def self.event_log_record(event)
+        e = Event.where(event_id: event.id).first || Event.create!(event_id: event.id, stripe_customer_id: event.data.object.customer, payload: event.to_json)
       end
 
     end
