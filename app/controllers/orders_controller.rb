@@ -69,6 +69,9 @@ class OrdersController < ApplicationController
 
       if @placed_order.success?
         session.delete(:cart_id)
+        session.delete(:current_organization_id)
+        session.delete(:current_delivery_id)
+        session.delete(:current_delivery_day)
         @grouped_items = @order.items.for_checkout
       else
         if @placed_order.context.key?(:cart_is_empty)
