@@ -6,13 +6,15 @@ class Admin::LotsController < AdminController
 
   def index
     @lot = @product.lots.build
+    markets = current_user.markets
+    @organizations = Organization.joins(:market_organizations).where("market_organizations.market_id in (?)", markets.map(&:id)).select("organizations.name, organizations.id").order("organizations.name").uniq
   end
 
   def create
     auto_upgrade_product_to_advanced_inventory(lot_params, @product.lots.count > 0)
 
     lp = lot_params
-    if lot_params['number'].empty? && !lot_params['quantity'].empty?
+    if lot_params['number'].empty? && !lot_params['quantity'].empty? && (lot_params['market_id'].nil? && lot_params['organization_id'].nil?)
       lp = lot_params.slice('quantity')
     end
 
@@ -32,7 +34,7 @@ class Admin::LotsController < AdminController
     auto_upgrade_product_to_advanced_inventory(lot_params, @product.lots.count > 1)
 
     lp = lot_params
-    if lot_params['number'].empty? && !lot_params['quantity'].empty?
+    if lot_params['number'].empty? && !lot_params['quantity'].empty? && (lot_params['market_id'].nil? && lot_params['organization_id'].nil?)
       lp = lot_params.slice('quantity')
     end
 
@@ -63,7 +65,7 @@ class Admin::LotsController < AdminController
   end
 
   def lot_params
-    params.require(:lot).permit(:number, :good_from, :expires_at, :quantity)
+    params.require(:lot).permit(:number, :good_from, :expires_at, :quantity, :market_id, :organization_id)
   end
 
   def query_params

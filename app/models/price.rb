@@ -1,6 +1,6 @@
 class Price < ActiveRecord::Base
   include SoftDelete
-  before_update :update_product_record
+  after_save :update_product_record
 
   audited allow_mass_assignment: true
   belongs_to :product, inverse_of: :prices
@@ -11,6 +11,12 @@ class Price < ActiveRecord::Base
     visible
     .joins("LEFT JOIN markets ON prices.market_id = markets.id LEFT JOIN organizations ON prices.organization_id = organizations.id")
     .order("markets.name NULLS FIRST, organizations.name NULLS FIRST, min_quantity")
+  }
+
+  scope :view_sorted_export, lambda {
+    visible
+        .joins("LEFT JOIN markets ON prices.market_id = markets.id LEFT JOIN organizations ON prices.organization_id = organizations.id")
+        .where("prices.market_id is null and prices.organization_id is null AND min_quantity = 1")
   }
 
   scope :for_product_and_market_and_org_at_time, lambda {|product, market, organization, order_time|

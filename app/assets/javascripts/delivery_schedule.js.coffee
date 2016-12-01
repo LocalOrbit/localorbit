@@ -1,5 +1,11 @@
 $ ->
   sellerFulfillment = -> $("#delivery_schedule_seller_fulfillment_location_id")
+  cycle             = -> $("#delivery_schedule_delivery_cycle")
+  interval          = -> $("#delivery_schedule_week_interval")
+  intervalOption    = -> $("#week_interval_option")
+  domOption         = -> $("#dom_option")
+  dom               = -> $("#delivery_schedule_day_of_month")
+  buyerDayOption    = -> $("#buyer_day_option")
   buyerDay          = -> $("#delivery_schedule_buyer_day")
   sellerDay         = -> $("#delivery_schedule_day")
 
@@ -70,3 +76,31 @@ $ ->
   # where we should (or shouldn't) sync Day to Seller Delivery Day:
   if buyerDay().val() == sellerDay().val()
     syncSellerDay = true
+
+  month_interval_options = ('<option value="1">First</option><option value="2">Second</option><option value="3">Third</option><option value="4">Fourth</option><option value="last">Last</option>')
+  biweekly_interval_options = ('<option value="1">First</option><option value="2">Second</option>')
+  cycle().change ->
+    if cycle().val() == 'weekly'
+      intervalOption().addClass('is-hidden')
+      domOption().addClass('is-hidden')
+      dom().val('')
+      interval().val('')
+    else if cycle().val() == 'biweekly'
+      interval().empty().append(biweekly_interval_options);
+      intervalOption().removeClass('is-hidden')
+      domOption().addClass('is-hidden')
+      dom().val('')
+    else if cycle().val() == 'monthly_day'
+      interval().empty().append(month_interval_options);
+      intervalOption().removeClass('is-hidden')
+      buyerDayOption().removeClass('is-hidden')
+      domOption().addClass('is-hidden')
+      dom().val('')
+    else if cycle().val() == 'monthly_date'
+      buyerDayOption().addClass('is-hidden')
+      intervalOption().addClass('is-hidden')
+      domOption().removeClass('is-hidden')
+      buyerDay().val('')
+      interval().val('')
+
+  cycle().trigger('change')

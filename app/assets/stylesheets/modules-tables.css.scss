@@ -1015,8 +1015,8 @@ td.delete {
     font-weight: bold;
   }
 
-  .price_market_id,
-  .price_buyer_id {
+  .select_market_id,
+  .select_buyer_id {
     width: 100%;
   }
 
@@ -1046,6 +1046,10 @@ td.delete {
 
 .inventory-table {
   .created_at {
+    text-align: left;
+  }
+  .market, .buyer {
+    width: 135px;
     text-align: left;
   }
   .number, .good_from, .expires_at {

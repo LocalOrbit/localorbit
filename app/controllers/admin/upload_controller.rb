@@ -11,18 +11,6 @@ class Admin::UploadController < AdminController
     # code for mapping organization and ensuring sign-in authenticated upload
     @org_ids = current_user.organizations.map(&:id)
     @curr_user = current_user.id # to pass along, will find user by id in get_org method
-
-
-    # @products_avail = Product.where(organi
-
-    ## no longer needed, TBD
-    #sql = "select subdomain, id from markets where id in (select destination_market_id from market_cross_sells where source_market_id=#{current_mkt_id});"
-    #records = ActiveRecord::Base.connection.execute(sql)
-    # @job_id = Time.now.to_i # send this to the audit
-    # @suppliers_available = Hash.new
-    # records.each do |r|
-    # 	@suppliers_available[r['subdomain']] = {'market_id'=>r['id']}
-    # end
   end
 
   def download
@@ -31,6 +19,23 @@ class Admin::UploadController < AdminController
       filename: "LocalOrbit_product_upload_template.csv",
       type: "application/text"
     )
+  end
+
+  def export_products
+    @products = current_user.managed_products.includes(:unit, prices:[:market]).order("organizations.name, products.name")
+    respond_to do |format|
+      format.html
+      format.csv do
+        if ENV["USE_UPLOAD_QUEUE"] == "true"
+          Delayed::Job.enqueue ::CSVExport::CSVImportProductExportJob.new(current_user, current_market.subdomain, @products.map(&:id))
+          flash[:notice] = "Please check your email for export results."
+          redirect_to admin_upload_path
+        else
+          @filename = 'products.csv'
+          @products = @products
+        end
+      end
+    end
   end
 
   def get_documentation

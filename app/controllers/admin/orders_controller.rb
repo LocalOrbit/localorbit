@@ -65,6 +65,7 @@ class Admin::OrdersController < AdminController
   def update
     order = Order.find(params[:id])
     setup_deliveries(order)
+    merge = nil
 
     if params["items_to_add"]
       return unless perform_add_items(order)
@@ -73,6 +74,14 @@ class Admin::OrdersController < AdminController
       return
     elsif params[:commit] == "Change Delivery"
       update_delivery(order)
+      return
+    elsif params[:commit] == "Merge"
+      dest_order = Order.orders_for_seller(current_user).find_by(id: params[:dest_order]) || Order.orders_for_seller(current_user).find_by(order_number: params[:dest_order])
+      merge_order(order, dest_order)
+      merge = true
+      return
+    elsif params[:commit] == "Duplicate Order"
+      duplicate_order(order)
       return
     elsif params["order"][:delivery_clear] == "true"
       remove_delivery_fee(order)
@@ -85,7 +94,35 @@ class Admin::OrdersController < AdminController
     end
 
     # TODO: Change an order items delivery status to 'removed' or something rather then deleting them
-    perform_order_update(order, order_params)
+    perform_order_update(order, order_params, merge)
+  end
+
+  def duplicate_order(order)
+    result = DuplicateOrder.perform(user: current_user, order: order)
+    if result.success?
+      session[:cart_id] = result.cart_id
+      session[:current_organization_id] = result.current_organization_id
+      session[:current_delivery_id] = result.current_delivery_id
+      session[:current_delivery_day] = result.current_delivery_day
+      redirect_to cart_path, notice: "Order Duplicated."
+    else
+      redirect_to admin_order_path(order), alert: "Error duplicating order."
+    end
+  end
+
+  def merge_order(orig_order, dest_order)
+    result = MergeOrder.perform(user: current_user, orig_order: orig_order, dest_order: dest_order)
+    if result.success?
+      redirect_to admin_order_path(dest_order), notice: "Order Merged."
+    else
+      alert = 'Error merging order.'
+      if !result.error.nil?
+        alert = "#{alert} #{result.error}"
+      else
+
+      end
+      redirect_to admin_order_path(orig_order), alert: alert
+    end
   end
 
   protected
@@ -105,7 +142,7 @@ class Admin::OrdersController < AdminController
   end
 
   def remove_delivery_fee(order)
-    RemoveDeliveryFee.perform(order: order)
+    RemoveDeliveryFee.perform(order: order, merge: false)
     redirect_to admin_order_path(order), notice: order.delivery.delivery_schedule.fee_label + " successfully removed."
   end
 
@@ -164,11 +201,11 @@ class Admin::OrdersController < AdminController
     @deliveries = recent_deliveries | future_deliveries | [order.delivery]
   end
 
-  def perform_order_update(order, params) # TODO this needs to handle price edits
+  def perform_order_update(order, params, merge) # TODO this needs to handle price edits
     failed = false
     validate = ValidateOrderTotal.perform(order: order, order_params: params)
     if validate.success?
-      updates = UpdateOrder.perform(payment_provider: order.payment_provider, order: order, order_params: params, request: request)
+      updates = UpdateOrder.perform(payment_provider: order.payment_provider, order: order, order_params: params, request: request, merge: merge)
       if updates.success?
         order.update_total_cost
         came_from_admin = request.referer.include?("/admin/")

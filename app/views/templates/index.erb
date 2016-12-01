@@ -1,4 +1,4 @@
 <%= react_component('lo.OrderTemplateIndex', {
   baseUrl: "#{request.base_url}/api/v1/order_templates/",
-  templates: OrderTemplate.where(market: current_market).as_json
+  templates: current_user.market_manager? ? OrderTemplate.where("market_id = ? AND buyer_id IS NULL", current_market.id).as_json : OrderTemplate.where("market_id = ? AND buyer_id = ?", current_market.id, current_organization.id).as_json
 }, prerender: false) %>

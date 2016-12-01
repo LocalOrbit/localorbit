@@ -6,8 +6,12 @@ module Imports
 		def self.identify_product_uniqueness(product_params)
 			identity_params_hash = {product_name:product_params["Product Name"],category_id: self.get_category_id_from_name(product_params["Category Name"]),organization_id: self.get_organization_id_from_name(product_params["Organization"],product_params["Market Subdomain"],$current_user)}
 			product_unit_identity_hash = {unit_name:product_params["Unit Name"]}#,unit_description:product_params["Unit Description"]} # right now we can't really control for same unit name, diff description; people will just have to bin the units and it's fine.
-			gps = GeneralProduct.where(category_id:identity_params_hash[:category_id]).where(name:identity_params_hash[:product_name]).where(organization_id:identity_params_hash[:organization_id])
-
+			if product_params["Product ID"].to_i > 0
+				prd = Product.find(product_params["Product ID"].to_i)
+				gps = GeneralProduct.where(id: prd["general_product_id"].to_i)
+			else
+				gps = GeneralProduct.where(category_id:identity_params_hash[:category_id]).where(name:identity_params_hash[:product_name]).where(organization_id:identity_params_hash[:organization_id])
+			end
 			if !gps.empty?
 				gps.first.id
 			else
@@ -30,11 +34,10 @@ module Imports
 			begin
 				mkt = Market.find_by_subdomain(market_subdomain)
 				user = User.find(current_user.to_i)
-				unless user.admin? || user.markets.includes?(mkt)
+				unless user.admin? || user.markets.include?(mkt)
 					return nil
 				end
 				t = Organization.arel_table
-				# org = Organization.find_by_name(organization_name)
 				org = Organization.where(t[:name].eq("#{organization_name}"),t[:market_id].matches(mkt.id),t[:org_type].eq('S'))
 
 				if org.empty? # if none such that mkt and org match up
@@ -71,27 +74,49 @@ module Imports
 				        long_description: prod_hash["Long Description"],
 				        unit_description: prod_hash["Unit Description"]
 				      	)
-				  product.save!
-				  product.prices.find_or_initialize_by(min_quantity: 1) do |pr|
-						pr.sale_price = prod_hash["Price"]
-						pr.save!
-					end
-				unless prod_hash[SerializeProducts.required_headers[-4]].empty? # TODO this should be factored out, later.
-					newprod = product.dup 
-					newprod.unit_id = self.get_unit_id_from_name(prod_hash["Multiple Pack Sizes"][SerializeProducts.required_headers[-3]])
-					newprod.unit_description = prod_hash["Multiple Pack Sizes"][SerializeProducts.required_headers[-2]]
-					newprod.save!
-					newprod.prices.create!(sale_price: prod_hash["Multiple Pack Sizes"][SerializeProducts.required_headers[-1]], min_quantity: 1)
+				product.skip_validation = true
+				product.save!
+
+					pr = product.prices.find_or_initialize_by(min_quantity: 1)
+					pr.sale_price = prod_hash["Price"]
+					pr.save!
+
+				if product.use_simple_inventory && prod_hash["New Inventory"].to_i >= 0
+					lt = product.lots.find_or_initialize_by(good_from: nil, expires_at: nil, number: nil)
+					lt.quantity = prod_hash["New Inventory"].to_i
+					lt.save!
 				end
-			else 
-				product = Product.where(name:prod_hash["Product Name"],category_id: self.get_category_id_from_name(prod_hash["Category Name"]),organization_id: self.get_organization_id_from_name(prod_hash["Organization"],prod_hash["Market Subdomain"],current_user),unit_id: self.get_unit_id_from_name(prod_hash["Unit Name"])).first # should be only one in resulting array if any, because this is searching for a product-unit combination
+
+				#unless prod_hash[SerializeProducts.required_headers[-4]].empty? # TODO this should be factored out, later.
+				#	newprod = product.dup
+				#	newprod.unit_id = self.get_unit_id_from_name(prod_hash["Multiple Pack Sizes"][SerializeProducts.required_headers[-3]])
+				#	newprod.unit_description = prod_hash["Multiple Pack Sizes"][SerializeProducts.required_headers[-2]]
+				#	newprod.save!
+				#	newprod.prices.create!(sale_price: prod_hash["Multiple Pack Sizes"][SerializeProducts.required_headers[-1]], min_quantity: 1)
+				#end
+			else
+				if prod_hash["Product ID"].to_i > 0
+					product = Product.find(prod_hash["Product ID"].to_i)
+				else
+					product = Product.where(name:prod_hash["Product Name"],category_id: self.get_category_id_from_name(prod_hash["Category Name"]),organization_id: self.get_organization_id_from_name(prod_hash["Organization"],prod_hash["Market Subdomain"],current_user),unit_id: self.get_unit_id_from_name(prod_hash["Unit Name"])).first # should be only one in resulting array if any, because this is searching for a product-unit combination
+				end
 				if !product.nil? # if there is a product-unit with this name, category, org
+					product.skip_validation = true
 					product.update_attributes!(unit_description: prod_hash["Unit Description"],code: prod_hash["Product Code"],short_description: prod_hash["Short Description"],long_description: prod_hash["Long Description"])
-					# TODO update price 
-					product.prices.find_or_initialize_by(min_quantity: 1) do |pr|
-						pr.sale_price = prod_hash["Price"]
+
+					pr = product.prices.find_or_initialize_by(min_quantity: 1)
+					pr.sale_price = prod_hash["Price"]
+					if pr.valid?
 						pr.save!
+					else
+						puts "Error validating: #{pr.id}"
 					end
+					if product.use_simple_inventory && prod_hash["New Inventory"].to_i >= 0
+						lt = product.lots.find_or_initialize_by(good_from: nil, expires_at: nil, number: nil)
+						lt.quantity = prod_hash["New Inventory"].to_i
+						lt.save!
+					end
+
 				else # if there is not such a unit, create a new prod-unit
 					product = Product.create(
 								name: prod_hash["Product Name"],
@@ -104,32 +129,40 @@ module Imports
 				        unit_description: prod_hash["Unit Description"],
 				        general_product_id: gp_id_or_false
 				      	)
+					product.skip_validation = true
 					product.save!
-					product.prices.find_or_initialize_by(min_quantity: 1) do |pr|
-						pr.sale_price = prod_hash["Price"]
-						pr.save!
+
+					pr = product.prices.find_or_initialize_by(min_quantity: 1)
+					pr.sale_price = prod_hash["Price"]
+					pr.save!
+
+					if product.use_simple_inventory && prod_hash["New Inventory"].to_i >= 0
+						lt = product.lots.find_or_initialize_by(good_from: nil, expires_at: nil, number: nil)
+						lt.quantity = prod_hash["New Inventory"].to_i
+						lt.save!
 					end
+
 				end
 
-				unless prod_hash[SerializeProducts.required_headers[-4]].empty? # TODO factor out
-					# Check if this other unit exists already for the GeneralProduct.
-					# If not, create it. If so, update other info on it.
-					newprod = Product.where(name:prod_hash["Product Name"],unit_id:self.get_unit_id_from_name(prod_hash["Multiple Pack Sizes"][SerializeProducts.required_headers[-3]]),organization_id:self.get_organization_id_from_name(prod_hash["Organization"],prod_hash["Market Subdomain"],current_user))
+				#unless prod_hash[SerializeProducts.required_headers[-4]].empty? # TODO factor out
+				#	# Check if this other unit exists already for the GeneralProduct.
+				#	# If not, create it. If so, update other info on it.
+				#	newprod = Product.where(name:prod_hash["Product Name"],unit_id:self.get_unit_id_from_name(prod_hash["Multiple Pack Sizes"][SerializeProducts.required_headers[-3]]),organization_id:self.get_organization_id_from_name(prod_hash["Organization"],prod_hash["Market Subdomain"],current_user))
 
-					if newprod.empty?
-						newprod = product.dup
-					else
-						newprod = newprod.first
-					end
-					newprod.update_attributes(unit_id:self.get_unit_id_from_name(prod_hash["Multiple Pack Sizes"][SerializeProducts.required_headers[-3]]),unit_description: prod_hash["Multiple Pack Sizes"][SerializeProducts.required_headers[-2]])
-					newprod.save!
+				#	if newprod.empty?
+				#		newprod = product.dup
+				#	else
+				#		newprod = newprod.first
+				#	end
+				#	newprod.update_attributes(unit_id:self.get_unit_id_from_name(prod_hash["Multiple Pack Sizes"][SerializeProducts.required_headers[-3]]),unit_description: prod_hash["Multiple Pack Sizes"][SerializeProducts.required_headers[-2]])
+				#	newprod.save!
 
-					newprod.prices.find_or_initialize_by(min_quantity: 1) do |pr|
-						pr.sale_price = prod_hash["Multiple Pack Sizes"][SerializeProducts.required_headers[-1]]
-						pr.save!
-					end
+				#	newprod.prices.find_or_initialize_by(min_quantity: 1) do |pr|
+				#		pr.sale_price = prod_hash["Multiple Pack Sizes"][SerializeProducts.required_headers[-1]]
+				#		pr.save!
+				#	end
 					
-				end
+				#end
 			end # end the major if/else/end 
 			# (update or not, basically, wherein the additional unit/line is handled inside each case in the unless stmts)
 		end # end def.self_create_product_from_hash

@@ -16,7 +16,7 @@ class ValidateOrderTotal
         end
       end
     end
-    if context[:status].nil? && total - credit_amt < 0
+    if context[:status].nil? && total > 0 && total - credit_amt < 0
       context[:status] = "failed_negative"
     end
     context.fail! unless context[:status].nil?
