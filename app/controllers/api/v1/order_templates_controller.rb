@@ -5,7 +5,12 @@ module Api
       before_action :check_access
 
       def index
-        render json: {templates: OrderTemplate.where(market: current_market).as_json({include: :items})}
+        if current_user.market_manager?
+          render json: {templates: OrderTemplate.where("market_id = ? AND buyer_id IS NULL", current_market.id).as_json({include: :items})}
+        else
+          render json: {templates: OrderTemplate.where("market_id = ? AND buyer_id = ?", current_market.id, current_organization.id).as_json({include: :items})}
+        end
+
       end
 
       def destroy
@@ -18,7 +23,7 @@ module Api
         cart = Cart.find(params[:cart_id])
         name = params[:name]
         if(cart && name)
-          template = OrderTemplate.create_from_cart!(cart, name)
+          template = OrderTemplate.create_from_cart!(cart, name, current_user)
         end
         render json: {template: template.as_json, url: templates_path}
       end
@@ -26,7 +31,7 @@ module Api
       private
 
       def check_access
-        if !FeatureAccess.order_templates?(market: current_market)
+        if !Pundit.policy(current_user, :template)
           render(:file => File.join(Rails.root, 'public/404.html'), :status => 404, :layout => false)
         end
       end

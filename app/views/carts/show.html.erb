@@ -60,7 +60,7 @@
               </tr>
             </tbody>
           </table>
-          <% if FeatureAccess.order_templates?(market: current_market) %>
+          <% if policy(:template).index? %>
             <p class="pull-right"><a href="/templates/new" class="app-create-template-link">Create an order template from this cart</a></p>
           <% end %>
           <h2 class="order-min-msg"></h2>

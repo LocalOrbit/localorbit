@@ -1,0 +1,3 @@
+class DupOrderPolicy < ApplicationPolicy
+
+end

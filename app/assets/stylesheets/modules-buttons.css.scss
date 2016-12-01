@@ -471,6 +471,13 @@ button {
     -moz-border-radius: 0 18px 18px 0;
     border-radius: 0 18px 18px 0;
   }
+  li:only-child button {
+    border-right: 0;
+    -webkit-border-radius: 18px 18px 18px 18px;
+    -moz-border-radius: 18px 8px 18px 18px;
+    border-radius: 18px 18px 18px 18px;
+    padding: 4px 16px 6px 12px;
+  }
   li button:hover {
     background: #eee;
     background: -webkit-gradient(linear, left top, left bottom, color-stop(.25, #fff), color-stop(1, #eee));

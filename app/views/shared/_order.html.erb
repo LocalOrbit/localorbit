@@ -11,16 +11,19 @@
       <h1>Order info for <%= order.order_number %></h1>
       <div class="order-info-date">Placed On: <strong><%= order.placed_at.strftime "%m/%d/%Y at %l:%M%p" %></strong></div>
     </div>
-    <% if policy(:merge_dup_order).index? && order.delivery_status_for_user(current_user) != 'canceled' %>
     <div class="button-bar" style="float: right">
       <ul>
+        <% if policy(:merge_order).index? && order.delivery_status_for_user(current_user) != 'canceled' %>
         <li>
           <button id="merge_button" name="Merge Order">Merge Order</button>
         </li>
+        <% end %>
+        <% if policy(:dup_order).index? && order.delivery_status_for_user(current_user) != 'canceled' %>
         <li>
           <button id="duplicate_button" type="submit">Duplicate Order</button>
           <input type="hidden" name="commit" />
         </li>
+        <% end %>
       </ul>
     </div>
     <div id="merge_options" style="float: right; display: none">
@@ -29,7 +32,6 @@
       <%= f.submit "Merge", class: 'btn btn--small mobile-block' %>
       <button id="merge_cancel_button" class="cancel">Cancel</button>
     </div>
-    <% end %>
   </div>
   <div class="row">
     <div class="order-buyer">

@@ -15,14 +15,14 @@ describe Api::V1::OrderTemplatesController do
     let!(:template) {create(:order_template, market: le_market)}
 
     describe "authorization" do
-      it "does not allow calls from non localeyes markets" do
+      xit "does not allow calls from non localeyes markets" do
         switch_to_subdomain market.subdomain
         sign_in user
         get :index
         expect(response.status).to be 404
       end
 
-      it "allows calls from localeyes markets" do
+      xit "allows calls from localeyes markets" do
         switch_to_subdomain le_market.subdomain
         sign_in user
         get :index

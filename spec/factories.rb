@@ -61,6 +61,7 @@ FactoryGirl.define do
   factory :order_template do
     sequence(:name) {|n| "Cart #{n}"}
     market
+    buyer_id nil
   end
 
   factory :order_template_item do
@@ -594,7 +595,7 @@ FactoryGirl.define do
     trait :buyer do
       org_type 'B'
       name 'Buyer'
-      activities '{user_organization:index,organization:index,catalog:index,about:index,payment_history:index,purchase_history:index,purchase_history:index,financial:index,market:index,financial_overview:index,all_supplier:index,dashboard:index,review_invoices:index,report:index}'
+      activities '{user_organization:index,organization:index,catalog:index,about:index,payment_history:index,purchase_history:index,purchase_history:index,financial:index,market:index,financial_overview:index,all_supplier:index,dashboard:index,review_invoices:index,report:index,template:index}'
     end
 
     trait :supplier do
