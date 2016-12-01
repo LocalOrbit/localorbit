@@ -16,9 +16,8 @@ module PaymentProvider
         # From APIDoc [http://apidock.com/ruby/Object/public_send]:
         # [public_send] Invokes the method identified by [parameter one], passing it any arguments specified...
         e = params[:event]
-        binding.pry
         event_data = e.data.object
-        event_log  = Event.create!(event_id: e.id, payload: e.to_json)
+        event_log  = Event.create!(event_id: e.id, stripe_customer_id: event_data.customer, payload: e.to_json)
 
         self.public_send(params[:event_type], event_data)
 
