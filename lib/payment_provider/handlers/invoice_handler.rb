@@ -32,6 +32,9 @@ module PaymentProvider
       end
 
       def self.invoice_payment_succeeded(event_params)
+        # Short cicuit if the payment is already there
+        return if Payment.where(stripe_id: event_params[:payment]).any?
+
         # If this is for a valid subscriber...
         raise "Missing subscriber" unless subscriber = Market.where(stripe_customer_id: event_params[:customer]).first
 
@@ -42,13 +45,8 @@ module PaymentProvider
         charge = Stripe.get_charge(event_params[:payment])
         raise "Card not on file" unless bank_account = BankAccount.where(stripe_id: charge.source.id).first
 
-        # ...that isn't duplicate...
-        raise "Duplicate payment" if Payment.where(stripe_id: event_params[:payment]).any?
-
         # ...then create a payment record:
         Payment.create!(payment_type: 'service', amount: event_params[:total], created_at: event_params[:date], updated_at: event_params[:date], status: 'paid',payer_id: subscriber.organization_id, payer_type: 'Organization', market_id: subscriber.id, bank_account_id: bank_account.id, stripe_id: event_params[:payment], payment_provider: 'stripe', organization_id: subscriber.organization_id )
-
-        Rails.logger.info "In invoice_payment_succeeded method. Stripe charge id: #{charge.id}"
       end
 
       def self.event_log_record(event)
