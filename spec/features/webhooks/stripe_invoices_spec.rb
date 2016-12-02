@@ -17,9 +17,16 @@ describe "stripe invoice.payment_succeeded event", vcr: true, webhook: true do
     expect(find_payment(stripe_charge_id).count).to eq 0
   end
 
-  # it "disregards invoices that aren't for subscriptions" do
-  #   # Is this a thing?
-  # end
+  xit "disregards invoices that aren't for subscriptions" do
+    # KXM nullifying the subscription doesn't work because the webhook retrieves the data from Stripe directly
+    # Generate a Stripe invoice that isn't related to a subscription and use that instead
+    initial_count = find_payment(stripe_charge_id).count
+
+    response = post '/webhooks/stripe', JSON.parse(File.read('spec/features/webhooks/invoice.payment_failed.json'))
+    expect(response.status).to eq 200
+
+    expect(find_payment(stripe_charge_id).count).to eq initial_count
+  end
 
   it "creates a new payment object" do
     response = post '/webhooks/stripe', JSON.parse(File.read('spec/features/webhooks/invoice.payment_succeeded.json'))
@@ -27,17 +34,16 @@ describe "stripe invoice.payment_succeeded event", vcr: true, webhook: true do
 
     expect(find_payment(stripe_charge_id).count).to eq 1
   end
+end
 
-  #
-  # HELPERS
-  #
+#
+# HELPERS
+#
 
-  def find_stripe_market(stripe_customer_id)
-    Market.where(stripe_customer_id: stripe_customer_id)
-  end
+def find_stripe_market(stripe_customer_id)
+  Market.where(stripe_customer_id: stripe_customer_id)
+end
 
-  def find_payment(stripe_charge_id)
-    Payment.where(stripe_id: stripe_charge_id)
-  end
-
+def find_payment(stripe_charge_id)
+  Payment.where(stripe_id: stripe_charge_id)
 end
