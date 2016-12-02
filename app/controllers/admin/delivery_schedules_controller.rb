@@ -33,8 +33,8 @@ module Admin
       if params[:delivery_schedule][:day_of_month].nil?
         p = p.merge(:day_of_month => "")
       end
-      if params[:delivery_schedule][:week_interval].nil?
-        p = p.merge(:week_interval => "")
+      if params[:delivery_schedule][:delivery_cycle] == "weekly"
+        p = p.merge(:week_interval => "1")
       end
 
       interactor = UpdateDeliveryScheduleAndCurrentDelivery.perform(params: p,
