@@ -52,7 +52,9 @@ class Lot < ActiveRecord::Base
   end
 
   def update_product_record
-    product.touch
+    if !product.nil?
+      product.touch
+    end
   end
 
   def available_specific?(time=Time.current.end_of_minute, mkt_id, org_id)
