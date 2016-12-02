@@ -3,8 +3,6 @@ module PaymentProvider
     class InvoiceHandler < AbstractMasterHandler
 
       def self.invoice_payment_succeeded(event_params)
-        Rails.logger.info "Handling 'invoice_payment_succeeded' event. Params: #{event_params.inspect}"
-
         # Short cicuit if the payment is already there...
         return if Payment.where(stripe_id: event_params[:payment]).any?
         # ...or if it isn't for a subscription.

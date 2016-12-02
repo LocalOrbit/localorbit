@@ -17,6 +17,8 @@ module PaymentProvider
         event_data = e.data.object
         event_log  = self.event_log_record(e)
 
+        Rails.logger.info "Handling '#{params[:event_type]}' event. Event: #{e.inspect}"
+
         self.public_send(params[:event_type], event_data)
 
         event_log.update(successful_at: Time.current.end_of_minute) if not event_log.successful_at
