@@ -25,19 +25,20 @@ module PaymentProvider
 
       # Upsert and return an event log record
       def self.event_log_record(event)
-        e = Event.where(event_id: event.id).first || Event.create!(event_id: event.id, stripe_customer_id: event.data.object.customer, payload: event.to_json)
+        # Unique constraint on 'event_id' should ensure the first record is the correct record
+        e = Event.where(event_id: event.id).first || Event.create(event_id: event.id, stripe_customer_id: event.data.object.customer, payload: event.to_json)
       end
 
       # Build and return a Payment hash
       def self.payment_params(subscriber, bank_account, event_params)
+        # Research actual status when event_params[:paid] <> true.
+        status = event_params[:paid] == true ? 'paid' : 'TBD'
         {
           payment_type: 'service',
           amount: event_params[:total],
           created_at: event_params[:date],
           updated_at: event_params[:date],
-
-          status: 'paid',
-
+          status: status,
           payer_id: subscriber.organization_id,
           payer_type: 'Organization',
           market_id: subscriber.id,
@@ -45,7 +46,6 @@ module PaymentProvider
           stripe_id: event_params[:payment],
           payment_provider: 'stripe',
           organization_id: subscriber.organization_id,
-
         }
       end
 
