@@ -4,8 +4,8 @@ module PaymentProvider
       HANDLER_IMPLS = {
         'transfer.paid' => PaymentProvider::Handlers::TransferPaid,
         'plan.created' => PaymentProvider::Handlers::PlanHandler,
-        'invoice.payment_succeeded' => PaymentProvider::Handlers::InvoiceHandler
-        # 'invoice.payment_failed' => PaymentProvider::Handlers::InvoiceHandler
+        'invoice.payment_succeeded' => PaymentProvider::Handlers::InvoiceHandler,
+        'charge.failed' => PaymentProvider::Handlers::ChargeHandler
       }
 
       # TODO
