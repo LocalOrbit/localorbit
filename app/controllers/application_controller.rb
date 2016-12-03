@@ -232,6 +232,7 @@ class ApplicationController < ActionController::Base
           end.decorate
         end
       end
+      
       session[:cart_id] = @current_cart.id
     end
   end
