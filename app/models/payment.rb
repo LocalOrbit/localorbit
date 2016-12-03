@@ -90,6 +90,10 @@ class Payment < ActiveRecord::Base
     ["order refund", "service refund"].include? payment_type
   end
 
+  def failed
+    update_attribute(status: 'failed')
+  end
+
   private
 
   def payee_or_payer_is_set

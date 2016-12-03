@@ -3,9 +3,7 @@ module PaymentProvider
     class InvoiceHandler < AbstractMasterHandler
 
       def self.invoice_payment_succeeded(event_params)
-        # Short cicuit if the payment is already there...
         return if Payment.where(stripe_id: event_params[:payment]).any?
-        # ...or if it isn't for a subscription.
         return unless event_params.try(:subscription)
 
         # If this is for a valid subscriber...
@@ -19,6 +17,22 @@ module PaymentProvider
         Payment.create(self.payment_params(subscriber, bank_account, event_params))
 
         # KXM messaging
+      end
+
+      def self.invoice_payment_failed(event_params)
+        return unless event_params.try(:subscription)
+
+        # If this is for a valid subscriber...
+        raise "Missing subscriber" unless subscriber = Market.where(stripe_customer_id: event_params[:customer]).first
+
+        # ...reflecting a credit card on file...
+        charge = Stripe.get_charge(event_params[:payment])
+        raise "Card not on file" unless bank_account = BankAccount.where(stripe_id: charge.source.id).first
+
+        # ...then upsert a payment...
+        payment = Payment.where(stripe_id: event_params[:payment]).first || Payment.create(self.payment_params(subscriber, bank_account, event_params))
+        # ...and fail it
+        payment.failed
       end
 
       private
