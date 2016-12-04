@@ -424,6 +424,12 @@ FactoryGirl.define do
       payment_type   "service"
       payment_method "ach"
     end
+
+    trait :stripe_subscription do
+      payer_type "Organization"
+      payment_type   "service"
+      payment_method "stripe"
+    end
   end
 
   factory :plan do
