@@ -91,7 +91,7 @@ class Payment < ActiveRecord::Base
   end
 
   def failed
-    update_attribute(status: 'failed')
+    status = "failed"
   end
 
   private
