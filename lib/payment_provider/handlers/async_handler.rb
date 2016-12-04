@@ -5,6 +5,7 @@ module PaymentProvider
         'transfer.paid' => PaymentProvider::Handlers::TransferPaid,
         'plan.created' => PaymentProvider::Handlers::PlanHandler,
         'invoice.payment_succeeded' => PaymentProvider::Handlers::InvoiceHandler,
+        'invoice.payment_failed' => PaymentProvider::Handlers::InvoiceHandler,
         'charge.failed' => PaymentProvider::Handlers::ChargeHandler
       }
 
