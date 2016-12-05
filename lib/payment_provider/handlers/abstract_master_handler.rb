@@ -11,17 +11,16 @@ module PaymentProvider
       end
 
       def self.handle(params)
-        Rails.logger.info "Handling '#{params[:event_type]}' event. Event: #{e.inspect}"
-
-        # From APIDoc [http://apidock.com/ruby/Object/public_send]:
-        # [public_send] Invokes the method identified by [parameter one], passing it any arguments specified...
         e = params[:event]
+        Rails.logger.info "Handling '#{params[:event_type]}' event. Event: #{e.inspect}"
         event_data = e.data.object
 
         # Upsert an event log record
         event_log  = self.event_log_record(e)
 
         # Call the event handler
+        # From APIDoc [http://apidock.com/ruby/Object/public_send]:
+        # [public_send] Invokes the method identified by [parameter one], passing it any arguments specified...
         self.public_send(params[:event_type], event_data)
 
         # Mark the log as processed
