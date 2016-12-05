@@ -31,10 +31,12 @@ describe "stripe invoice.payment_succeeded event", vcr: true, webhook: true do
   end
 
   it "creates a new payment object" do
+    initial_count = find_payment(stripe_charge_id).count
+    
     response = post '/webhooks/stripe', JSON.parse(File.read('spec/features/webhooks/invoice.payment_succeeded.json'))
     expect(response.status).to eq 200
 
-    expect(find_payment(stripe_charge_id).count).to eq 1
+    expect(find_payment(stripe_charge_id).count).to eq initial_count + 1
   end
 end
 
