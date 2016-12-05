@@ -155,7 +155,8 @@ end
 group :production, :staging do
   gem 'newrelic_rpm', '< 3.9.0'       # Rack middleware instrumentation is very broken
   gem 'newrelic-dragonfly'
-  gem 'passenger'
+  #gem 'passenger'
+  gem 'puma'
   gem 'rack-cache', require: 'rack/cache'
   gem 'rails_12factor'
   gem 'pgbackups-archive'
