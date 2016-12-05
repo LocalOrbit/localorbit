@@ -11,31 +11,33 @@ module PaymentProvider
       end
 
       def self.handle(params)
+        Rails.logger.info "Handling '#{params[:event_type]}' event. Event: #{e.inspect}"
+
         # From APIDoc [http://apidock.com/ruby/Object/public_send]:
         # [public_send] Invokes the method identified by [parameter one], passing it any arguments specified...
         e = params[:event]
         event_data = e.data.object
+
+        # Upsert an event log record
         event_log  = self.event_log_record(e)
 
-        Rails.logger.info "Handling '#{params[:event_type]}' event. Event: #{e.inspect}"
-
+        # Call the event handler
         self.public_send(params[:event_type], event_data)
 
+        # Mark the log as processed
         event_log.update(successful_at: Time.current.end_of_minute) if not event_log.successful_at
 
       rescue Exception => e
         error_info = ErrorReporting.interpret_exception(e, "Error handling #{self.name} event from Stripe", {params: params})
         Honeybadger.notify_or_ignore(error_info[:honeybadger_exception])
         Rails.logger.error "Error handling event. Exception: #{e.inspect} Params: #{params.inspect}"
-
-        raise e if e.message == "event_log_record must be defined in handler sub class"
       end
 
       private
 
       # Upsert and return an event log record
-      def self.event_log_record(event) 
-        raise "event_log_record must be defined in handler sub class" 
+      def self.event_log_record(event)
+        e = Event.where(event_id: event.id).first || Event.create(event_id: event.id, payload: event.to_json, livemode: !!event.livemode)
       end
 
     end
