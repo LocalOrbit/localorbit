@@ -11,13 +11,13 @@ module PaymentProvider
       end
 
       def self.handle(params)
-        e = params[:event]
+        event = params[:event]
         # KXM remove event.inspect
-        Rails.logger.info "Handling '#{params[:event_type]}' event. Event: #{e.inspect}"
-        event_data = e.data.object
+        Rails.logger.info "Handling '#{params[:event_type]}' event. Event: #{event.inspect}"
+        event_data = event.data.object
 
         # Upsert an event log record
-        event_log  = self.event_log_record(e)
+        event_log  = self.event_log_record(event)
 
         # Call the event handler
         # From APIDoc [http://apidock.com/ruby/Object/public_send]:
