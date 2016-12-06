@@ -3,14 +3,9 @@ module PaymentProvider
     class PlanHandler < AbstractMasterHandler
 
       def self.plan_created(event_params)
-        event_name = event_params[:name]
-        created    = event_params[:created]
-        stripe_id  = event_params[:id]
+        return if Plan.where(stripe_id: event_params[:id]).any?
 
-        plan = Plan.where(stripe_id: stripe_id)
-        if plan.empty?
-          Plan.create(name: event_name, stripe_id: stripe_id, created_at: created, ryo_eligible: false)
-        end
+        Plan.create(name: event_params[:name], stripe_id: event_params[:id], created_at: event_params[:created], ryo_eligible: false)
       end
 
       def self.plan_deleted(name, created, stripe_id)
