@@ -32,7 +32,7 @@ module PaymentProvider
         Honeybadger.notify_or_ignore(error_info[:honeybadger_exception])
         # KXM remove params.inspect
         Rails.logger.error "Error handling event. Exception: #{e.inspect} Params: #{params.inspect}"
-        WebhookMailer.delay.failed_event(params)
+        WebhookMailer.delay.failed_event(e, event)
       end
 
       private

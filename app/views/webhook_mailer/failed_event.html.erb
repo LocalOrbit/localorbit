@@ -1,6 +1,7 @@
 <%# 
 Local variables:
-  @event: the event.data.object for the event
+  @exception: The caught exception
+  @event: the Stripe event object
 %>
 <p>Good day,</p>
 
@@ -8,4 +9,8 @@ Local variables:
 
 <p>Details:</p>
 
-<code><%= @event.inspect %></code>
+<p style="text-decoration: underline;font-weight: 600">Exception:</p>
+<pre><%= @exception.inspect %></pre>
+
+<p style="text-decoration: underline;font-weight: 600">Event:</p>
+<pre><%= @event.inspect %></pre>

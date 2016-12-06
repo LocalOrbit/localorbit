@@ -22,8 +22,9 @@ class WebhookMailer < ActionMailer::Base
     )
   end
 
-  def failed_event(params)
-    @event = params[:event]
+  def failed_event(exception, event)
+    @event     = event
+    @exception = exception
     mail(
       from: Figaro.env.zendesk_email,
       subject: "Failed webhook event: #{@event.type}"
