@@ -1,0 +1,11 @@
+<%# 
+Local variables:
+  @event: the event.data.object for the event
+%>
+<p>Good day,</p>
+
+<p>The Stripe event with id: <%= @event.id %> has failed.</p>
+
+<p>Details:</p>
+
+<code><%= @event.inspect %></code>

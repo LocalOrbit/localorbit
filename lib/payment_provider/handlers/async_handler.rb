@@ -8,8 +8,6 @@ module PaymentProvider
         'invoice.payment_failed' => PaymentProvider::Handlers::InvoiceHandler,
         'charge.failed' => PaymentProvider::Handlers::ChargeHandler
       }
-
-      # TODO
       # 'customer.subscription.created' => PaymentProvider::Handlers::SubscriptionHandler,
 
       def call(event)

@@ -16,7 +16,7 @@ module PaymentProvider
         # ...then create a payment record:
         Payment.create(self.payment_params(subscriber, bank_account, event_params))
 
-        # KXM messaging
+        WebhookMailer.delay.successful_payment(subscriber, event_params)
       end
 
       def self.invoice_payment_failed(event_params)
@@ -33,6 +33,8 @@ module PaymentProvider
         payment = Payment.where(stripe_id: event_params[:payment]).first || Payment.create(self.payment_params(subscriber, bank_account, event_params))
         # ...and fail it
         payment.failed
+
+        WebhookMailer.delay.failed_payment(subscriber, event_params)
       end
 
       private
