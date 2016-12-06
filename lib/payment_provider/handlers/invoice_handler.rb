@@ -49,7 +49,7 @@ module PaymentProvider
         status = event_params[:paid] == true ? 'paid' : 'TBD'
         {
           payment_type: 'service',
-          amount: event_params[:total],
+          amount: ::Financials::MoneyHelpers.cents_to_amount(event_params[:total]),
           created_at: event_params[:date],
           updated_at: event_params[:date],
           status: status,
