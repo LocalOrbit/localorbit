@@ -1,37 +1,24 @@
 module PaymentProvider
   module Handlers
-    class SubscriptionHandler
-    # KXM Inheritance?  Where should the class reside?
+    class SubscriptionHandler < AbstractMasterHandler
 
-      def self.extract_job_params(event)
-        {
-          # event_type: event.type.tr('.','_'),
-          # name:       event.data.object.name,
-          # created:    event.data.object.created,
-          # stripe_id:  event.data.object.id
-        }
-      end
+      def self.customer_subscription_created(event_params)
+        # There isn't a subscription model in LO, the subscription itself ultimately consisting 
+        # of a constellation of market, organization, and plan data.  Implementing a subscription 
+        # entity would entail:
+        #   - Creating the appropriate model and thin controller (including a stripe id reference)
+        #   - Joining all Organizations to their respect plans through the subscription entity
+        #   - Updating the associations of both plans and organizations to go through the subscription join entity
+        #   - Updating the fees page to leverage the submitted data through the new relation
 
-      def self.handle(params)
-        # KXM THis is the structure of the call, with params[:event_type] as the first parameter, the 'sub' parameters falling in line behind - the sub paramters remain to be defined...
-        # self.public_send(params[:event_type], params[:name], params[:created], params[:stripe_id])
+        # The handler, then, will confirm the subscriber and plan and insert the subscription object accordingly
 
-        Rails.logger.info "Handling a customer subscription event. Params: #{params.inspect}"
+        # raise "Missing subscriber" unless subscriber = Organization.where(stripe_id: event_params[:customer])
+        # raise "Missing plan" unless plan = Plan.where(stripe_id: event_params[:plan][:id]) 
 
-      rescue Exception => e
-        error_info = ErrorReporting.interpret_exception(e, "Error handling #{self.name} event from Stripe", {params: params})
-        Honeybadger.notify_or_ignore(error_info[:honeybadger_exception])
-      end
+        # return if Subscription.where(organization_id: subscribe, plan_id: plan, stripe_id: event_params[:id]).any?
 
-      def self.customer_subscription_created(params)
-        # KXM Create a subscription event entry... the rest of the creation should happen once the payment succeeds
-
-        # KXM The event will be structurally similar to plan.create...
-        # plan = Plan.where(stripe_id: stripe_id)
-        # if plan.empty?
-        #   Plan.create!(name: name, stripe_id: stripe_id, created_at: created, ryo_eligible: false)
-        #   Rails.logger.info "In plan_created method. New plan details: Name: #{name}, Created: #{created}, Stripe ID: #{stripe_id}"
-        # end
+        # Subscription.create(organization_id: subscribe, plan_id: plan, stripe_id: event_params[:id])
       end
 
     end

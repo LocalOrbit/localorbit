@@ -11,7 +11,7 @@ describe "stripe customer.subscription.created event", vcr: true, webhook: true 
   # HELPERS
   #
 
-  # KXM An example helper...
+  # An example helper...
   # def find_plans
   #   Plan.all
   # end
