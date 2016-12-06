@@ -24,7 +24,7 @@ module PaymentProvider
         self.public_send(params[:event_type], event_data)
 
         # Mark the log as processed
-        event_log.update(successful_at: Time.current.end_of_minute) if not event_log.successful_at
+        event_log.update(successful_at: Time.now.start_of_minute + 1.minute) if not event_log.successful_at
 
       rescue Exception => e
         error_info = ErrorReporting.interpret_exception(e, "Error handling #{self.name} event from Stripe", {params: params})
