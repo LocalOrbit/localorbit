@@ -5,7 +5,7 @@ Local variables:
 %>
 <p>Good day,</p>
 
-<p>Stripe has reported a <span style="color:green">successful invoice payment</span> for '<%= @subscriber.name %>' (Stripe id: @event_params[:customer])</p>
+<p>Stripe has reported a <span style="color:green">successful invoice payment</span> for '<%= @subscriber.name %>' (Stripe id: '<%= @event_params[:customer] %>')</p>
 
 <p>Details:</p>
 
