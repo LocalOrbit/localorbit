@@ -1,9 +1,7 @@
-<% category_fee = @product.category.level_fee(current_market) %>
-
 <% if current_user.multi_market_membership? %>
 <td>
   <% if policy(:advanced_pricing).index? || (current_user.seller? && organization_can_access?(@product.organization, :advanced_pricing)) %>
-    <%= f.select :market_id, @product.organization.all_markets_for_select, {include_blank: 'All Markets'}, {class: "price_market_id chosen"} %>
+    <%= f.select :market_id, @product.organization.all_markets_for_select, {include_blank: 'All Markets'}, {id: 'select_market_id', class: "select_market_id chosen"} %>
   <% else %>
       All Markets&nbsp;<span class="tooltip" data-tooltip="Market Selection Available in Grow Plan"></span>
   <% end %>
@@ -11,7 +9,8 @@
 <% end %>
 <td>
   <% if policy(:advanced_pricing).index? || (current_user.seller? && organization_can_access?(@product.organization, :advanced_pricing)) %>
-      <%= f.select :organization_id, current_user.buyers_for_select, {include_blank: 'All Buyers'}, {class: "price_buyer_id chosen"} %>
+      <%= f.select :organization_id, options_for_select(@organizations.collect { |organization|
+        [organization.name.titleize, organization.id] }, 0), {include_blank: 'All Buyers'}, {id: 'select_buyer_id', class: "select_buyer_id chosen"} %>
   <% else %>
       All Buyers&nbsp;<span class="tooltip" data-tooltip="Buyer Selection Available in Grow Plan"></span>
   <% end %>
@@ -29,19 +28,19 @@
     <span></span>
   </label>
   <%= f.number_field :net_price, min: 0, step: 0.01, size: 4, class: 'net-price',
-                     data: {"category-fee" => category_fee, "net-percents-by-market-id" => json_escape(@net_percents_by_market_id.to_json), "cc-rate" => @seller_cc_rate} %>
+                     data: {"category-fee" => json_escape(@category_percents_by_market_id.to_json), "net-percents-by-market-id" => json_escape(@net_percents_by_market_id.to_json), "cc-rate" => @seller_cc_rate} %>
 </td>
 <% if FeatureAccess.product_level_fee?(market: current_market) && (current_user.admin? || current_user.market_manager?) %>
 <td>
     <div style="float: left">
-      <% if category_fee == 0 %>
+      <% if !@category_percents_by_market_id.nil? && @category_percents_by_market_id[current_market.id.to_s] == 0 %>
           <div style="float: left">
             <label style="font-size: 9px">Mkt</label> <input style="float: left" type="radio" value="0" name="price[fee]" class="mkt-fee" checked />
           </div>
           <div style="clear: left"></div>
       <% else %>
           <div style="float: left">
-            <label style="font-size: 9px">Category</label> <input style="float: left" type="radio" value="1" name="price[fee]" class="category-fee" <%= category_fee > 0 ? "checked" : "" %> />
+            <label style="font-size: 9px">Category</label> <input style="float: left" type="radio" value="1" name="price[fee]" class="category-fee" <%= !@category_percents_by_market_id.nil? && !@category_percents_by_market_id[current_market.id.to_s].nil? && @category_percents_by_market_id[current_market.id.to_s] > 0 ? "checked" : "" %> />
           </div>
           <div style="clear: left"></div>
       <% end %>

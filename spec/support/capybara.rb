@@ -14,24 +14,7 @@ end
 
 Capybara.javascript_driver = :poltergeist
 
-#Capybara.register_driver :chrome do |app|
-#  Capybara::Selenium::Driver.new(app, :browser => :chrome)
-#end
-
-#Capybara.javascript_driver = :chrome
-
-#Capybara::Webkit.configure do |config|
-#  config.debug = false
-#  config.allow_unknown_urls
-#end
-
-#Capybara.javascript_driver = :webkit
-
-
-#Capybara.register_driver :selenium do |app|
-#  Capybara::Selenium::Driver.new(app)
-#end
-
+#Selenium::WebDriver::Firefox::Binary.path='/Applications/FirefoxDeveloperEdition.app/Contents/MacOS/firefox-bin'
 #Capybara.javascript_driver = :selenium
 
 Capybara.default_max_wait_time = (ENV["CAPYBARA_WAIT_TIME"] || 180).to_i

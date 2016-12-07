@@ -2,7 +2,7 @@
 
 Please correct these errors, and upload your file again.
 <br/><br/>
-<% if !@errors.nil? && @errors.keys.map{|k| @errors[k]["Errors"]}.select{|er| !er.empty?}.any? %>
+<% if !@errors.nil? && (@errors.keys.include?("File") ||@errors.keys.map{|k| @errors[k]["Errors"]}.select{|er| !er.nil? && !er.empty?}.any?) %>
     <h3>Errors:</h3>
     <div id="results">
       <% if @errors.has_key?("File") %>

@@ -62,17 +62,21 @@ class Category < ActiveRecord::Base
     @top_level_category ||= self_and_ancestors.find_by(depth: 1)
   end
 
-  def level_fee(market, category=nil)
-    if category.nil?
-      cat = self
-    else
-      cat = category
-    end
+  def level_fee(market_id, category=nil)
+    if !market_id.nil?
+      if category.nil?
+        cat = self
+      else
+        cat = category
+      end
 
-    if !cat.category_fees.where(market_id: market.id).first.nil? && cat.depth > 0
-      cat.category_fees.first.fee_pct
-    elsif !cat.parent.nil?
-      level_fee(market, cat.parent)
+      if !cat.category_fees.where(market_id: market_id).first.nil? && cat.depth > 0
+        cat.category_fees.first.fee_pct
+      elsif !cat.parent.nil?
+        level_fee(market_id, cat.parent)
+      else
+        0
+      end
     else
       0
     end

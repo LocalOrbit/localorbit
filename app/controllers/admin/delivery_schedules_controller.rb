@@ -29,8 +29,15 @@ module Admin
 
     def update
       @delivery_schedule = @market.delivery_schedules.find(params[:id])
+      p = delivery_schedule_params
+      if params[:delivery_schedule][:day_of_month].nil?
+        p = p.merge(:day_of_month => "")
+      end
+      if params[:delivery_schedule][:delivery_cycle] == "weekly"
+        p = p.merge(:week_interval => "1")
+      end
 
-      interactor = UpdateDeliveryScheduleAndCurrentDelivery.perform(params: delivery_schedule_params,
+      interactor = UpdateDeliveryScheduleAndCurrentDelivery.perform(params: p,
                                                                     delivery_schedule: @delivery_schedule)
       if interactor.success?
         redirect_to [:admin, @market, :delivery_schedules], notice: "Saved delivery schedule."
@@ -66,6 +73,9 @@ module Admin
 
     def delivery_schedule_params
       params.require(:delivery_schedule).permit(
+        :delivery_cycle,
+        :week_interval,
+        :day_of_month,
         :day,
         :buyer_day,
         :fee,

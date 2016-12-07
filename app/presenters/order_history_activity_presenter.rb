@@ -78,6 +78,10 @@ class OrderHistoryActivityPresenter
       data << "Delivery Fee Removed"
     end
 
+    order_merge = last_value_for_change(item, "merge_order")
+    if order_merge
+      data << order_merge
+    end
     data
   end
 

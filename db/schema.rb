@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161006175522) do
+ActiveRecord::Schema.define(version: 20161130171816) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -259,6 +259,9 @@ ActiveRecord::Schema.define(version: 20161006175522) do
     t.boolean  "is_recoverable"
     t.datetime "inactive_at"
     t.decimal  "order_minimum",                  precision: 10, scale: 2, default: 0.0
+    t.string   "delivery_cycle"
+    t.integer  "day_of_month"
+    t.integer  "week_interval"
   end
 
   add_index "delivery_schedules", ["deleted_at"], name: "index_delivery_schedules_on_deleted_at", using: :btree
@@ -392,6 +395,8 @@ ActiveRecord::Schema.define(version: 20161006175522) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "legacy_id"
+    t.integer  "market_id"
+    t.integer  "organization_id"
   end
 
   add_index "lots", ["expires_at"], name: "index_lots_on_expires_at", using: :btree
@@ -461,7 +466,7 @@ ActiveRecord::Schema.define(version: 20161006175522) do
     t.string   "name"
     t.string   "subdomain"
     t.string   "timezone"
-    t.boolean  "active",                                                 default: false, null: false
+    t.boolean  "active",                                                 default: false,     null: false
     t.string   "contact_name"
     t.string   "contact_email"
     t.string   "contact_phone"
@@ -475,16 +480,16 @@ ActiveRecord::Schema.define(version: 20161006175522) do
     t.string   "tagline"
     t.string   "background_image"
     t.string   "balanced_customer_uri"
-    t.boolean  "balanced_underwritten",                                  default: false, null: false
-    t.decimal  "local_orbit_seller_fee",         precision: 5, scale: 3, default: 0.0,   null: false
-    t.decimal  "local_orbit_market_fee",         precision: 5, scale: 3, default: 0.0,   null: false
-    t.decimal  "market_seller_fee",              precision: 5, scale: 3, default: 0.0,   null: false
-    t.decimal  "credit_card_seller_fee",         precision: 5, scale: 3, default: 0.0,   null: false
-    t.decimal  "credit_card_market_fee",         precision: 5, scale: 3, default: 0.0,   null: false
-    t.decimal  "ach_seller_fee",                 precision: 5, scale: 3, default: 0.0,   null: false
-    t.decimal  "ach_market_fee",                 precision: 5, scale: 3, default: 0.0,   null: false
-    t.decimal  "ach_fee_cap",                    precision: 6, scale: 2, default: 8.0,   null: false
-    t.integer  "po_payment_term",                                        default: 14,    null: false
+    t.boolean  "balanced_underwritten",                                  default: false,     null: false
+    t.decimal  "local_orbit_seller_fee",         precision: 5, scale: 3, default: 0.0,       null: false
+    t.decimal  "local_orbit_market_fee",         precision: 5, scale: 3, default: 0.0,       null: false
+    t.decimal  "market_seller_fee",              precision: 5, scale: 3, default: 0.0,       null: false
+    t.decimal  "credit_card_seller_fee",         precision: 5, scale: 3, default: 0.0,       null: false
+    t.decimal  "credit_card_market_fee",         precision: 5, scale: 3, default: 0.0,       null: false
+    t.decimal  "ach_seller_fee",                 precision: 5, scale: 3, default: 0.0,       null: false
+    t.decimal  "ach_market_fee",                 precision: 5, scale: 3, default: 0.0,       null: false
+    t.decimal  "ach_fee_cap",                    precision: 6, scale: 2, default: 8.0,       null: false
+    t.integer  "po_payment_term",                                        default: 14,        null: false
     t.string   "photo_uid"
     t.boolean  "allow_credit_cards",                                     default: true
     t.boolean  "allow_purchase_orders",                                  default: true
@@ -493,40 +498,40 @@ ActiveRecord::Schema.define(version: 20161006175522) do
     t.boolean  "default_allow_credit_cards",                             default: true
     t.boolean  "default_allow_ach",                                      default: true
     t.integer  "legacy_id"
-    t.string   "background_color"
-    t.string   "text_color"
+    t.string   "background_color",                                       default: "#FFFFFF"
+    t.string   "text_color",                                             default: "#46639C"
     t.boolean  "allow_cross_sell",                                       default: false
     t.boolean  "auto_activate_organizations",                            default: false
     t.integer  "plan_id"
     t.boolean  "closed",                                                 default: false
     t.boolean  "demo",                                                   default: false
     t.datetime "plan_start_at"
-    t.integer  "plan_interval",                                          default: 1,     null: false
-    t.decimal  "plan_fee",                       precision: 7, scale: 2, default: 0.0,   null: false
+    t.integer  "plan_interval",                                          default: 1,         null: false
+    t.decimal  "plan_fee",                       precision: 7, scale: 2, default: 0.0,       null: false
     t.integer  "plan_bank_account_id"
     t.text     "store_closed_note"
-    t.boolean  "sellers_edit_orders",                                    default: false, null: false
+    t.boolean  "sellers_edit_orders",                                    default: false,     null: false
     t.string   "stripe_customer_id"
     t.string   "stripe_account_id"
     t.string   "payment_provider"
-    t.string   "country",                                                default: "US",  null: false
-    t.boolean  "require_purchase_orders",                                default: false, null: false
-    t.boolean  "alternative_order_page",                                 default: true,  null: false
+    t.string   "country",                                                default: "US",      null: false
+    t.boolean  "require_purchase_orders",                                default: false,     null: false
+    t.boolean  "alternative_order_page",                                 default: true,      null: false
     t.integer  "product_label_format",                                   default: 4
     t.boolean  "print_multiple_labels_per_item",                         default: false
     t.boolean  "pending",                                                default: false
     t.text     "zpl_logo"
     t.string   "zpl_printer"
     t.boolean  "self_directed_creation",                                 default: false
-    t.boolean  "stripe_standalone"
+    t.boolean  "stripe_standalone",                                      default: true
     t.string   "legacy_stripe_account_id"
-    t.boolean  "allow_product_fee"
     t.integer  "number_format_numeric",                                  default: 0
+    t.boolean  "allow_product_fee"
     t.boolean  "subscribed",                                             default: false
     t.boolean  "routing_plan",                                           default: false
     t.integer  "organization_id"
+    t.boolean  "add_item_pricing"
     t.boolean  "self_enabled_cross_sell",                                default: false
-    t.boolean  "add_item_pricing",                                       default: true
   end
 
   add_index "markets", ["name"], name: "index_markets_on_name", using: :btree
@@ -562,6 +567,14 @@ ActiveRecord::Schema.define(version: 20161006175522) do
   end
 
   add_index "newsletters", ["market_id"], name: "index_newsletters_on_market_id", using: :btree
+
+  create_table "order_item_deliveries", force: true do |t|
+    t.integer  "market_address_id"
+    t.integer  "location_id"
+    t.datetime "delivered_at"
+    t.integer  "quantity_delivered"
+    t.integer  "order_item_id"
+  end
 
   create_table "order_item_lots", force: true do |t|
     t.integer  "order_item_id"
@@ -642,6 +655,7 @@ ActiveRecord::Schema.define(version: 20161006175522) do
     t.integer  "market_id",  null: false
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "buyer_id"
   end
 
   add_index "order_templates", ["market_id", "name"], name: "index_order_templates_on_market_id_and_name", unique: true, using: :btree

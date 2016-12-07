@@ -1,6 +1,6 @@
 class Price < ActiveRecord::Base
   include SoftDelete
-  before_update :update_product_record
+  after_save :update_product_record
 
   audited allow_mass_assignment: true
   belongs_to :product, inverse_of: :prices
@@ -11,6 +11,12 @@ class Price < ActiveRecord::Base
     visible
     .joins("LEFT JOIN markets ON prices.market_id = markets.id LEFT JOIN organizations ON prices.organization_id = organizations.id")
     .order("markets.name NULLS FIRST, organizations.name NULLS FIRST, min_quantity")
+  }
+
+  scope :view_sorted_export, lambda {
+    visible
+        .joins("LEFT JOIN markets ON prices.market_id = markets.id LEFT JOIN organizations ON prices.organization_id = organizations.id")
+        .where("prices.market_id is null and prices.organization_id is null AND min_quantity = 1")
   }
 
   scope :for_product_and_market_and_org_at_time, lambda {|product, market, organization, order_time|
@@ -34,15 +40,19 @@ class Price < ActiveRecord::Base
     product.touch
   end
 
-  def net_price(market=nil)
-    ((sale_price || 0) * net_percent(market)).round(2)
+  def net_price(market=nil, pct_array=nil)
+    ((sale_price || 0) * net_percent(market, pct_array)).round(2)
   end
 
-  def net_percent(curr_market=nil)
+  def net_percent(curr_market=nil, pct_array=nil)
+    mkt_id = nil
+    if !curr_market.nil? || (curr_market.nil? && !pct_array.nil? && pct_array.length > 1)
+      mkt_id = !pct_array.nil? && pct_array.length == 2 ? pct_array.keys[0] : !curr_market.nil? ? curr_market.id : nil
+    end
     if product_fee_pct > 0
       1 - (product_fee_pct/100 + ::Financials::Pricing.seller_cc_rate(product.organization.all_markets.first))
-    elsif curr_market && product.category.level_fee(curr_market) > 0
-      1 - (product.category.level_fee(curr_market)/100 + ::Financials::Pricing.seller_cc_rate(product.organization.all_markets.first))
+    elsif !mkt_id.nil? && product.category.level_fee(mkt_id) > 0
+      1 - (product.category.level_fee(mkt_id)/100 + ::Financials::Pricing.seller_cc_rate(product.organization.all_markets.first))
     elsif market
       market.seller_net_percent
     else

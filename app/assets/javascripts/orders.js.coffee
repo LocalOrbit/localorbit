@@ -42,3 +42,18 @@ $ ->
     if confirm("Are you sure you want to remove the credit?")
       $(this).parent().find("input").val("true")
       $(this).closest("form").submit()
+
+  $("#merge_button").click (e) ->
+    e.preventDefault()
+    $("#merge_options").show()
+    $(".button-bar").hide()
+
+  $("#merge_cancel_button").click (e) ->
+    e.preventDefault()
+    $("#merge_options").hide()
+    $(".button-bar").show()
+
+  $("#duplicate_button").click (e) ->
+    $(this).parent().find("input").val("Duplicate Order")
+    $(this).closest("form").submit()
+    $(this).prop("disabled","disabled")

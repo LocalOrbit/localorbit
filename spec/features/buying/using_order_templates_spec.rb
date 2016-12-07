@@ -9,7 +9,7 @@ describe "Using order templates", :js do
   let!(:ada_farms) { create(:organization, :seller, :single_location, name: "Ada Farms", users: [create(:user)]) }
 
   let(:market_manager) { create(:user, :market_manager) }
-  let(:plan) {create(:plan, :localeyes)}
+  let(:plan) {create(:plan, :grow)}
   let(:market_org) { create(:organization, :market, plan: plan)}
   let(:market) { create(:market, :with_addresses, organization: market_org, organizations: [buyer, fulton_farms, ada_farms], managers: [market_manager], alternative_order_page: true) }
   let!(:delivery_schedule) { create(:delivery_schedule, :percent_fee,  market: market, day: 5) }

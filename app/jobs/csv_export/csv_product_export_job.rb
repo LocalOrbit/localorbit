@@ -15,7 +15,7 @@ module CSVExport
     end
 
     def perform
-      products = Product.where(id: ids)
+      products = Product.where(id: ids).order(:name)
       csv = CSV.generate do |f|
         f << ["Supplier", "Market", "Name", "Pricing", "Available", "Code"]
 

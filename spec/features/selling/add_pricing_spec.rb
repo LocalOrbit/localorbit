@@ -165,9 +165,11 @@ describe "Adding advanced pricing" do
     end
   end
 
-  describe "with category market fees", js: true do
-    let(:market) { create(:market, :with_delivery_schedule, :with_category_fee, allow_product_fee: true) }
-    let(:user)   { create(:user, :market_manager) }
+  describe "with category market fees - single market", js: true do
+    let!(:market) { create(:market, :with_delivery_schedule, :with_category_fee, allow_product_fee: true) }
+    let!(:market2){}
+    let!(:user)   { create(:user, :market_manager) }
+    let!(:organization) { create(:organization, :seller, markets: [market], users: [user]) }
 
     it "shows updated net sale information - product fee" do
       find(:field, 'price[fee]', with: '1').click
@@ -184,6 +186,29 @@ describe "Adding advanced pricing" do
       expect(record.min_quantity).to eq("1")
       expect(record.net_price).to eq("$10.98")
       expect(record.fee).to eq("Use Category Fee")
+      expect(record.sale_price).to eq("$12.90")
+    end
+  end
+
+  describe "with category market fees - multiple markets", js: true do
+    let(:market) { create(:market, :with_delivery_schedule, :with_category_fee, allow_product_fee: true) }
+    let(:user)   { create(:user, :market_manager) }
+
+    it "shows updated net sale information - product fee" do
+      find(:field, 'price[fee]', with: '1').click
+      fill_in "price[sale_price]", with: "12.90"
+
+      expect(find_field("price[net_price]").value).to eq("12.53")
+      click_button "Add"
+
+      expect(page).to have_content("Successfully added a new price")
+
+      record = Dom::PricingRow.first
+      expect(record.notice).to eq("Needs Review")
+      expect(record.market).to eq("All Markets")
+      expect(record.buyer).to eq("All Buyers")
+      expect(record.min_quantity).to eq("1")
+      expect(record.net_price).to eq("$12.14")
       expect(record.sale_price).to eq("$12.90")
     end
   end

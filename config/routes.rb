@@ -55,6 +55,8 @@ Rails.application.routes.draw do
     # end
   end
 
+  get "update_organizations" => "admin#update_organizations"
+
   namespace :admin do
     resources :markets, concerns: [:bank_account, :activatable, :confirmable], except: [:edit] do
       resources :market_addresses,   as: :addresses,  path: :addresses
@@ -83,6 +85,7 @@ Rails.application.routes.draw do
 
     get "upload" => "upload#index"
     get "upload/download" => "upload#download"
+    get "upload/export_products" => "upload#export_products"
     get "upload/get_documentation" => "upload#get_documentation"
     post "upload" => "upload#upload"
 
