@@ -12,8 +12,7 @@ module PaymentProvider
 
       def self.handle(params)
         event = params[:event]
-        # KXM remove event.inspect
-        Rails.logger.info "Handling '#{params[:event_type]}' event. Event: #{event.inspect}"
+        Rails.logger.info "Handling '#{event.type}' event. Stripe Event id: '#{event.id}'"
         event_data = event.data.object
 
         # Upsert an event log record
@@ -30,8 +29,8 @@ module PaymentProvider
       rescue Exception => e
         error_info = ErrorReporting.interpret_exception(e, "Error handling #{self.name} event from Stripe", {params: params})
         Honeybadger.notify_or_ignore(error_info[:honeybadger_exception])
-        # KXM remove params.inspect
-        Rails.logger.error "Error handling event. Exception: #{e.inspect} Params: #{params.inspect}"
+
+        Rails.logger.error "Error handling '#{event.type}' event. Stripe Event id: '#{event.id}', Exception: #{e.inspect}"
         WebhookMailer.delay.failed_event(e, event)
       end
 
