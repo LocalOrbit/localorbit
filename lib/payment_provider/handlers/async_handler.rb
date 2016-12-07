@@ -13,7 +13,7 @@ module PaymentProvider
       def call(event)
         handler = HANDLER_IMPLS[event.type]
         if handler
-          return unless event.livemode
+          return unless event.livemode || Rails.env.test? || Rails.env.development?
 
           params = handler.extract_job_params(event)
           Rails.logger.info "Enqueueing '#{event.type}' event. Stripe Event id: '#{event.id}'"

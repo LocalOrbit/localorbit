@@ -130,14 +130,14 @@ http_interactions:
               "currency": "usd",
               "interval": "month",
               "interval_count": 1,
-              "livemode": true,
+              "livemode": false,
               "metadata": {},
               "name": "KXM - 11/17 - 2",
               "statement_descriptor": null,
               "trial_period_days": null
             }
           },
-          "livemode": true,
+          "livemode": false,
           "pending_webhooks": 1,
           "request": "req_9a4Qe5C0Lx6tPO",
           "type": "plan.created"
