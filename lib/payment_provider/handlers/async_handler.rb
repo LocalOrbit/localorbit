@@ -13,6 +13,8 @@ module PaymentProvider
       def call(event)
         handler = HANDLER_IMPLS[event.type]
         if handler
+          return unless event.livemode
+
           params = handler.extract_job_params(event)
           Rails.logger.info "Enqueueing '#{event.type}' event. Stripe Event id: '#{event.id}'"
           handler.delay(:run_at => 1.minute.from_now).handle(params)
