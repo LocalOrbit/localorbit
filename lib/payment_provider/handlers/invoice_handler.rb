@@ -47,8 +47,7 @@ module PaymentProvider
 
       # Build and return a Payment hash
       def self.payment_params(subscriber, bank_account, event_params)
-        # Research actual status when event_params[:paid] <> true.
-        status = event_params[:paid] == true ? 'paid' : 'TBD'
+        status = event_params[:paid] == true ? 'paid' : 'failed'
         {
           payment_type: 'service',
           amount: ::Financials::MoneyHelpers.cents_to_amount(event_params[:total]),
