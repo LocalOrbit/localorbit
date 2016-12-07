@@ -75,6 +75,22 @@ describe CrossSellingList do
   context "cross selling list" do
     let(:publishing_list) { create(:cross_selling_list, :market_list, creator: true) }
     let(:subscribing_list) { create(:cross_selling_list, :market_list, parent_id: publishing_list.id, creator: false) }
+    let(:subscribing_list2) { create(:cross_selling_list, :market_list, parent_id: publishing_list.id, creator: false) }
+
+    describe ".show_product_management_button?" do
+      it "is true for publishing lists" do
+        expect(publishing_list.show_product_management_button?).to be true
+      end
+
+      it "is false for subscribing lists with no products" do
+        expect(subscribing_list.show_product_management_button?).to be false
+      end
+
+      it "is true for subscribing lists with products" do
+        subscribing_list2.cross_selling_list_products.create
+        expect(subscribing_list2.show_product_management_button?).to be true
+      end
+    end
 
     describe ".publisher?" do
       it "is true for publishing lists" do
@@ -363,76 +379,5 @@ describe CrossSellingList do
         expect(subscribing_list.display_product_overview?).to eq false
       end
     end
-
-# KXM The difficulty writing these test exposes methods that were poorly conceived in the first place... 
-# Figure out what you were really intending to do and fix them...
-
-    # children.any? doesn't seem to work correctly (at least at this hour when I'm this hungry)
-    # Original method:
-      # def cascade_update?
-      #   creator && (!draft? || children.any?)
-      # end
-
-    # describe ".cascade_update?" do
-    #   let(:non_subscribed_list) { create(:cross_selling_list, :market_list, creator: true) }
-    #   it "returns false for subscribing lists" do
-    #     expect(subscribing_list.cascade_update?).to eq false
-    #   end
-
-    #   it "returns true for non-draft lists" do
-    #     non_subscribed_list.publish!
-
-    #     expect(non_subscribed_list.cascade_update?).to eq true
-
-    #     non_subscribed_list.unpublish!
-
-    #     expect(non_subscribed_list.cascade_update?).to eq true
-    #   end
-
-    #   it "returns true for lists with subscribers" do
-    #     expect(publishing_list.cascade_update?).to eq true
-    #   end
-    # end
-
-
-    # Original method:
-      # def manage_publication!(params)
-      #   if published?
-      #     unpublish!(status) if status != "Published"
-      #   else
-      #     published_date = params[:published_date] ||= Time.now
-      #     publish!(published_date) if status == "Published"
-      #   end
-      # end
-    # describe ".manage_publication!" do
-    #   it "has no effect on unpublished lists whose status isn't 'Published'" do
-    #     publishing_list.save
-    #     starting_status = publishing_list.status
-    #     starting_pub_date = publishing_list.published_at
-    #     publishing_list.manage_publication!({})
-
-    #     expect(publishing_list.status).to eq starting_status
-    #     expect(publishing_list.published_at).to eq starting_pub_date
-    #   end
-
-    #   it "properly coordinates attributes for newly published lists" do
-    #     publishing_list.save
-    #     publishing_list.update_column(:status, "Published")
-    #     publishing_list.update_column(:published_at, nil)
-    #     publishing_list.manage_publication!({})
-
-    #     expect(publishing_list.status).to eq "Published"
-    #     expect(publishing_list.published_at).to_not eq nil
-    #   end
-
-    #   it "properly coordinates attributes for newly unpublished lists" do
-    #     publishing_list.publish!
-    #     publishing_list.update_column(:status, "Inactive")
-    #     publishing_list.manage_publication!({})
-
-    #     expect(publishing_list.status).to eq "Inactive"
-    #     expect(publishing_list.published_at).to eq nil
-    #   end
-    # end
   end
 end
