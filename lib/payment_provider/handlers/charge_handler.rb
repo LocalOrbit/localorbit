@@ -3,8 +3,7 @@ module PaymentProvider
     class ChargeHandler < AbstractMasterHandler
 
       def self.charge_failed(event_params)
-        Rails.logger.info "Inside 'charge.failed' handler. Params: #{event_params.inspect}"
-        # KXM messaging
+        return
       end
 
       private
