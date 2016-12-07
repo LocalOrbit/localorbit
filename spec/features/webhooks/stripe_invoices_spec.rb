@@ -19,15 +19,32 @@ describe "stripe invoice.payment_succeeded event", vcr: true, webhook: true do
     expect(find_payment(stripe_charge_id).count).to eq 0
   end
 
-  xit "disregards invoices that aren't for subscriptions" do
-    # KXM nullifying the subscription doesn't work because the webhook retrieves the data from Stripe directly
-    # Generate a Stripe invoice that isn't related to a subscription and use that instead
-    initial_count = find_payment(stripe_charge_id).count
+  it "disregards invoices that aren't for subscriptions" do
+    # This is a contrivance to allow for testing until a like event is recorded for something _other than_ a subscription.  At such time, any reference to the subscription status (within the webhook 'domain') should be updated to reflect any new knowledge.  If that's you, then 'TAG', you're it.
 
-    response = post '/webhooks/stripe', JSON.parse(File.read('spec/features/webhooks/invoice.payment_failed.json'))
+    # Generate a Stripe invoice that isn't related to a subscription and use that instead
+    missing_subscription = {
+      id:"evt_19NxEZ2VpjOYk6TmQLjYsn5Y",
+      data:{
+        object:{
+          id:"in_19NwIT2VpjOYk6TmuXa5PSFl",
+          amount_due:500,
+          charge:"ch_19NxEY2VpjOYk6TmlDvEqqAX",
+          customer:"cus_9gwCSjIO6SlmhA",
+        }
+      },
+      livemode:false,
+      type:"invoice.payment_successful"
+    }
+
+    event = Stripe::Event.construct_from(missing_subscription)
+
+    initial_count = find_payment(event.data.object.charge).count
+
+    response = post '/webhooks/stripe', event.as_json
     expect(response.status).to eq 200
 
-    expect(find_payment(stripe_charge_id).count).to eq initial_count
+    expect(find_payment(event.data.object.charge).count).to eq initial_count
   end
 
   it "creates a new payment object" do
@@ -58,9 +75,11 @@ describe "stripe invoice.payment_failed event", vcr: true, webhook: true do
   end
 
   it "finds the related organization" do
+    expect(find_stripe_market(stripe_customer_id).count).to eq 1
   end
 
   it "finds the related bank_account record" do
+    expect(find_bank_account(stripe_card_id).count).to eq 1
   end
 
   it 'correctly updates an existing payment record' do
@@ -92,4 +111,8 @@ end
 
 def find_payment(stripe_charge_id)
   Payment.where(stripe_id: stripe_charge_id)
+end
+
+def find_bank_account(stripe_card_id)
+  BankAccount.where(stripe_id: stripe_card_id)
 end

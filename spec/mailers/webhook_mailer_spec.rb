@@ -23,6 +23,7 @@ describe WebhookMailer do
 
     it "sends an 'event failed' email upon event failure" do
       email = WebhookMailer.failed_event(exception, event)
+      binding.pry
 
       expect(email.body).to include(event.id)
     end

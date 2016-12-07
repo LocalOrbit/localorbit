@@ -31,10 +31,7 @@
             "description": null,
             "discountable": true,
             "livemode": false,
-            "metadata": {
-              "lo.entity_id": "196",
-              "lo.entity_type": "market"
-            },
+            "metadata": {"lo.entity_id": "196", "lo.entity_type": "market"},
             "period": {
               "start": 1479503442,
               "end": 1511039442
