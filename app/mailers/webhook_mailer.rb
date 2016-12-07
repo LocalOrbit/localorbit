@@ -1,6 +1,8 @@
 class WebhookMailer < ActionMailer::Base
-  # KXM default to: Figaro.env.zendesk_email
-  default to: "Keith Meisel <keith@localorb.it>"
+  default to: [
+    Figaro.env.zendesk_email,
+    "<keith@localorb.it>"
+  ]
 
   def failed_payment(subscriber, event_params)
     @subscriber = subscriber
