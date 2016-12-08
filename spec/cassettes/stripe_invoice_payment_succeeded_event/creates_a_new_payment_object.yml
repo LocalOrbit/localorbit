@@ -1,0 +1,276 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: https://api.stripe.com/v1/events/evt_19HJd92VpjOYk6Tmbt16pXgC
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept:
+      - "*/*; q=0.5, application/xml"
+      Accept-Encoding:
+      - gzip, deflate
+      User-Agent:
+      - Stripe/v1 RubyBindings/1.27.2
+      Authorization:
+      - Bearer sk_test_XTLCfIQMwKblsxIF1N4i7y1G
+      Content-Type:
+      - application/x-www-form-urlencoded
+      X-Stripe-Client-User-Agent:
+      - '{"bindings_version":"1.27.2","lang":"ruby","lang_version":"2.1.2 p95 (2014-05-08)","platform":"x86_64-linux","engine":"ruby","publisher":"stripe","uname":"Linux
+        version 4.4.0-47-generic (buildd@lgw01-12) (gcc version 4.8.4 (Ubuntu 4.8.4-2ubuntu1~14.04.3)
+        ) #68~14.04.1-Ubuntu SMP Wed Oct 26 19:42:11 UTC 2016","hostname":"keith-Latitude-E7450"}'
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx
+      Date:
+      - Fri, 18 Nov 2016 21:18:30 GMT
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '2477'
+      Connection:
+      - keep-alive
+      Access-Control-Allow-Credentials:
+      - 'true'
+      Access-Control-Allow-Methods:
+      - GET, POST, HEAD, OPTIONS, DELETE
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Max-Age:
+      - '300'
+      Cache-Control:
+      - no-cache, no-store
+      Request-Id:
+      - req_9aUkQNXb3P4wXk
+      Stripe-Version:
+      - '2015-04-07'
+      Strict-Transport-Security:
+      - max-age=31556926; includeSubDomains
+    body:
+      encoding: UTF-8
+      string: |
+        {
+          "id": "evt_19HJd92VpjOYk6Tmbt16pXgC",
+          "object": "event",
+          "api_version": "2015-04-07",
+          "created": 1479503443,
+          "data": {
+            "object": {
+              "id": "in_19HJd82VpjOYk6Tm8JU0A8WC",
+              "object": "invoice",
+              "amount_due": 39900,
+              "application_fee": null,
+              "attempt_count": 1,
+              "attempted": true,
+              "charge": "ch_19HJd82VpjOYk6TmrzJdKLYR",
+              "closed": true,
+              "currency": "usd",
+              "customer": "cus_9aUcniAOYTXn42",
+              "date": 1479503442,
+              "description": null,
+              "discount": null,
+              "ending_balance": 0,
+              "forgiven": false,
+              "lines": {
+                "object": "list",
+                "data": [
+                  {
+                    "id": "sub_9aUc7u7cc8IStf",
+                    "object": "line_item",
+                    "amount": 39900,
+                    "currency": "usd",
+                    "description": null,
+                    "discountable": true,
+                    "livemode": false,
+                    "metadata": {
+                      "lo.entity_id": "196",
+                      "lo.entity_type": "market"
+                    },
+                    "period": {
+                      "start": 1479503442,
+                      "end": 1511039442
+                    },
+                    "plan": {
+                      "id": "START",
+                      "object": "plan",
+                      "amount": 39900,
+                      "created": 1453489634,
+                      "currency": "usd",
+                      "interval": "year",
+                      "interval_count": 1,
+                      "livemode": false,
+                      "metadata": {},
+                      "name": "Local Orbit Start Plan",
+                      "statement_descriptor": null,
+                      "trial_period_days": null
+                    },
+                    "proration": false,
+                    "quantity": 1,
+                    "subscription": null,
+                    "type": "subscription"
+                  }
+                ],
+                "has_more": false,
+                "total_count": 1,
+                "url": "/v1/invoices/in_19HJd82VpjOYk6Tm8JU0A8WC/lines"
+              },
+              "livemode": false,
+              "metadata": {},
+              "next_payment_attempt": null,
+              "paid": true,
+              "period_end": 1479503442,
+              "period_start": 1479503442,
+              "receipt_number": null,
+              "starting_balance": 0,
+              "statement_descriptor": null,
+              "subscription": "sub_9aUc7u7cc8IStf",
+              "subtotal": 39900,
+              "tax": null,
+              "tax_percent": null,
+              "total": 39900,
+              "webhooks_delivered_at": null,
+              "payment": "ch_19HJd82VpjOYk6TmrzJdKLYR"
+            }
+          },
+          "livemode": false,
+          "pending_webhooks": 0,
+          "request": "req_9aUc1mY6YORpUT",
+          "type": "invoice.payment_succeeded"
+        }
+    http_version: 
+  recorded_at: Fri, 18 Nov 2016 21:18:29 GMT
+- request:
+    method: get
+    uri: https://api.stripe.com/v1/charges/ch_19HJd82VpjOYk6TmrzJdKLYR
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept:
+      - "*/*; q=0.5, application/xml"
+      Accept-Encoding:
+      - gzip, deflate
+      User-Agent:
+      - Stripe/v1 RubyBindings/1.27.2
+      Authorization:
+      - Bearer sk_test_XTLCfIQMwKblsxIF1N4i7y1G
+      Content-Type:
+      - application/x-www-form-urlencoded
+      X-Stripe-Client-User-Agent:
+      - '{"bindings_version":"1.27.2","lang":"ruby","lang_version":"2.1.2 p95 (2014-05-08)","platform":"x86_64-linux","engine":"ruby","publisher":"stripe","uname":"Linux
+        version 4.4.0-47-generic (buildd@lgw01-12) (gcc version 4.8.4 (Ubuntu 4.8.4-2ubuntu1~14.04.3)
+        ) #68~14.04.1-Ubuntu SMP Wed Oct 26 19:42:11 UTC 2016","hostname":"keith-Latitude-E7450"}'
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx
+      Date:
+      - Fri, 18 Nov 2016 21:35:17 GMT
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '1748'
+      Connection:
+      - keep-alive
+      Access-Control-Allow-Credentials:
+      - 'true'
+      Access-Control-Allow-Methods:
+      - GET, POST, HEAD, OPTIONS, DELETE
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Max-Age:
+      - '300'
+      Cache-Control:
+      - no-cache, no-store
+      Request-Id:
+      - req_9aV03uA4xTM6bu
+      Stripe-Version:
+      - '2015-04-07'
+      Strict-Transport-Security:
+      - max-age=31556926; includeSubDomains
+    body:
+      encoding: UTF-8
+      string: |
+        {
+          "id": "ch_19HJd82VpjOYk6TmrzJdKLYR",
+          "object": "charge",
+          "amount": 39900,
+          "amount_refunded": 0,
+          "application": null,
+          "application_fee": null,
+          "balance_transaction": "txn_19HJd92VpjOYk6TmaTobXYxC",
+          "captured": true,
+          "created": 1479503442,
+          "currency": "usd",
+          "customer": "cus_9aUcniAOYTXn42",
+          "description": null,
+          "destination": null,
+          "dispute": null,
+          "failure_code": null,
+          "failure_message": null,
+          "fraud_details": {},
+          "invoice": "in_19HJd82VpjOYk6Tm8JU0A8WC",
+          "livemode": false,
+          "metadata": {},
+          "order": null,
+          "outcome": {
+            "network_status": "approved_by_network",
+            "reason": null,
+            "risk_level": "normal",
+            "seller_message": "Payment complete.",
+            "type": "authorized"
+          },
+          "paid": true,
+          "receipt_email": null,
+          "receipt_number": null,
+          "refunded": false,
+          "refunds": {
+            "object": "list",
+            "data": [],
+            "has_more": false,
+            "total_count": 0,
+            "url": "/v1/charges/ch_19HJd82VpjOYk6TmrzJdKLYR/refunds"
+          },
+          "review": null,
+          "shipping": null,
+          "source": {
+            "id": "card_19HJd62VpjOYk6TmwKcemuLf",
+            "object": "card",
+            "address_city": null,
+            "address_country": null,
+            "address_line1": null,
+            "address_line1_check": null,
+            "address_line2": null,
+            "address_state": null,
+            "address_zip": null,
+            "address_zip_check": null,
+            "brand": "Visa",
+            "country": "US",
+            "customer": "cus_9aUcniAOYTXn42",
+            "cvc_check": "pass",
+            "dynamic_last4": null,
+            "exp_month": 2,
+            "exp_year": 2020,
+            "fingerprint": "tbZuYbkiqOm1Bfe2",
+            "funding": "credit",
+            "last4": "4242",
+            "metadata": {},
+            "name": null,
+            "tokenization_method": null
+          },
+          "source_transfer": null,
+          "statement_descriptor": null,
+          "status": "succeeded"
+        }
+    http_version: 
+  recorded_at: Fri, 18 Nov 2016 21:35:15 GMT
+recorded_with: VCR 2.9.3

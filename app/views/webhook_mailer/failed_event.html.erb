@@ -1,0 +1,16 @@
+<%# 
+Local variables:
+  @exception: The caught exception
+  @event: the Stripe event object
+%>
+<p>Good day,</p>
+
+<p>The Stripe event with id: <%= @event.id %> has failed.</p>
+
+<p>Details:</p>
+
+<p style="text-decoration: underline;font-weight: 600">Exception:</p>
+<pre><%= @exception.inspect %></pre>
+
+<p style="text-decoration: underline;font-weight: 600">Event:</p>
+<pre><%= @event.inspect %></pre>
