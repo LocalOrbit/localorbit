@@ -31,7 +31,7 @@ module PaymentProvider
         Honeybadger.notify_or_ignore(error_info[:honeybadger_exception])
 
         Rails.logger.error "Error handling '#{event.type}' event. Stripe Event id: '#{event.id}', Exception: #{e.inspect}"
-        WebhookMailer.delay.failed_event(e, event)
+        WebhookMailer.delay.failed_event(e, event) if event.livemode
       end
 
       private
