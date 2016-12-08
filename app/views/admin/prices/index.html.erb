@@ -33,7 +33,13 @@
           <thead>
           <tr>
             <% if current_user.multi_market_membership? %>
-            <% if !@category_percents_by_market_id.nil? && @category_percents_by_market_id.except("all").values.inject { |a, b| a + b } > 0 && unit_product.organization.all_markets_for_select.length > 1 && unit_product.prices.first.market_id == nil && unit_product.prices.first.product_fee_pct == 0 %><th></th><% end%>
+            <% if !@category_percents_by_market_id.nil? &&
+                @category_percents_by_market_id.except("all").values.inject { |a, b| a + b } > 0 &&
+                unit_product.organization.all_markets_for_select.length > 1 &&
+                unit_product.prices.first.market_id == nil &&
+                unit_product.prices.first.product_fee_pct == 0 %>
+                <th></th>
+            <% end %>
             <th class="market">Market</th>
             <% end %>
             <th class="buyer">Buyer</th>
@@ -63,7 +69,14 @@
 
               <%= fields_for :price, price, index: price.id do |f| %>
                 <% if current_user.multi_market_membership? %>
-                  <% if organization_can_access?(unit_product.organization, :advanced_pricing) && !@category_percents_by_market_id.nil? && @category_percents_by_market_id.except("all").values.inject { |a, b| a + b } > 0 && unit_product.organization.all_markets_for_select.length > 1 && unit_product.prices.first.market_id == nil && unit_product.prices.first.product_fee_pct == 0 %><td class="notice" style="font-size: 9px; color: #9A0500">Needs Review</td><% end %>
+                  <% if organization_can_access?(unit_product.organization, :advanced_pricing) &&
+                      !@category_percents_by_market_id.nil? &&
+                      @category_percents_by_market_id.except("all").values.inject { |a, b| a + b } > 0 &&
+                      unit_product.organization.all_markets_for_select.length > 1 &&
+                      unit_product.prices.first.market_id == nil &&
+                      unit_product.prices.first.product_fee_pct == 0 %>
+                      <td class="notice" style="font-size: 9px; color: #9A0500">Needs Review</td>
+                  <% end %>
                   <td class="market">
                     <div class="edit-trigger view-cell">
                       <%= price.market_name %>

@@ -301,7 +301,10 @@ module PaymentProvider
           plan: subscription_params[:plan],
           metadata: {
             "lo.entity_id" => entity.id,
-            "lo.entity_type" => entity.class.name.underscore
+            "lo.entity_type" => entity.class.name.underscore,
+            "lo_entity_id" => entity.id,
+            "lo_entity_type" => entity.class.name.underscore,
+            "lo_entity_name" => entity.name
           }
         }
         # Stripe uses the default card if one exists, making this value optional

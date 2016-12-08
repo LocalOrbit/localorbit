@@ -1,0 +1,290 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: https://api.stripe.com/v1/events/evt_19HJd92VpjOYk6Tmbt16pXgC
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept:
+      - "*/*; q=0.5, application/xml"
+      Accept-Encoding:
+      - gzip, deflate
+      User-Agent:
+      - Stripe/v1 RubyBindings/1.27.2
+      Authorization:
+      - Bearer sk_test_XTLCfIQMwKblsxIF1N4i7y1G
+      Content-Type:
+      - application/x-www-form-urlencoded
+      X-Stripe-Client-User-Agent:
+      - '{"bindings_version":"1.27.2","lang":"ruby","lang_version":"2.1.2 p95 (2014-05-08)","platform":"x86_64-linux","engine":"ruby","publisher":"stripe","uname":"Linux
+        version 4.4.0-51-generic (buildd@lgw01-18) (gcc version 4.8.4 (Ubuntu 4.8.4-2ubuntu1~14.04.3)
+        ) #72~14.04.1-Ubuntu SMP Thu Nov 24 19:22:30 UTC 2016","hostname":"keith-Latitude-E7450"}'
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx
+      Date:
+      - Sun, 04 Dec 2016 00:09:23 GMT
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '2477'
+      Connection:
+      - keep-alive
+      Access-Control-Allow-Credentials:
+      - 'true'
+      Access-Control-Allow-Methods:
+      - GET, POST, HEAD, OPTIONS, DELETE
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Max-Age:
+      - '300'
+      Cache-Control:
+      - no-cache, no-store
+      Request-Id:
+      - req_9g9tFGZzIy4ZiN
+      Stripe-Version:
+      - '2015-04-07'
+      Strict-Transport-Security:
+      - max-age=31556926; includeSubDomains
+    body:
+      encoding: UTF-8
+      string: |
+        {
+          "id": "evt_19HJd92VpjOYk6Tmbt16pXgC",
+          "object": "event",
+          "api_version": "2015-04-07",
+          "created": 1479503443,
+          "data": {
+            "object": {
+              "id": "in_19HJd82VpjOYk6Tm8JU0A8WC",
+              "object": "invoice",
+              "amount_due": 39900,
+              "application_fee": null,
+              "attempt_count": 1,
+              "attempted": true,
+              "charge": "ch_19HJd82VpjOYk6TmrzJdKLYR",
+              "closed": true,
+              "currency": "usd",
+              "customer": "cus_9aUcniAOYTXn42",
+              "date": 1479503442,
+              "description": null,
+              "discount": null,
+              "ending_balance": 0,
+              "forgiven": false,
+              "lines": {
+                "object": "list",
+                "data": [
+                  {
+                    "id": "sub_9aUc7u7cc8IStf",
+                    "object": "line_item",
+                    "amount": 39900,
+                    "currency": "usd",
+                    "description": null,
+                    "discountable": true,
+                    "livemode": false,
+                    "metadata": {
+                      "lo.entity_id": "196",
+                      "lo.entity_type": "market"
+                    },
+                    "period": {
+                      "start": 1479503442,
+                      "end": 1511039442
+                    },
+                    "plan": {
+                      "id": "START",
+                      "object": "plan",
+                      "amount": 39900,
+                      "created": 1453489634,
+                      "currency": "usd",
+                      "interval": "year",
+                      "interval_count": 1,
+                      "livemode": false,
+                      "metadata": {},
+                      "name": "Local Orbit Start Plan",
+                      "statement_descriptor": null,
+                      "trial_period_days": null
+                    },
+                    "proration": false,
+                    "quantity": 1,
+                    "subscription": null,
+                    "type": "subscription"
+                  }
+                ],
+                "has_more": false,
+                "total_count": 1,
+                "url": "/v1/invoices/in_19HJd82VpjOYk6Tm8JU0A8WC/lines"
+              },
+              "livemode": false,
+              "metadata": {},
+              "next_payment_attempt": null,
+              "paid": true,
+              "period_end": 1479503442,
+              "period_start": 1479503442,
+              "receipt_number": null,
+              "starting_balance": 0,
+              "statement_descriptor": null,
+              "subscription": "sub_9aUc7u7cc8IStf",
+              "subtotal": 39900,
+              "tax": null,
+              "tax_percent": null,
+              "total": 39900,
+              "webhooks_delivered_at": null,
+              "payment": "ch_19HJd82VpjOYk6TmrzJdKLYR"
+            }
+          },
+          "livemode": false,
+          "pending_webhooks": 0,
+          "request": "req_9aUc1mY6YORpUT",
+          "type": "invoice.payment_succeeded"
+        }
+    http_version: 
+  recorded_at: Sun, 04 Dec 2016 00:09:20 GMT
+- request:
+    method: get
+    uri: https://api.stripe.com/v1/events/evt_19NxEZ2VpjOYk6TmQLjYsn5Y
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept:
+      - "*/*; q=0.5, application/xml"
+      Accept-Encoding:
+      - gzip, deflate
+      User-Agent:
+      - Stripe/v1 RubyBindings/1.27.2
+      Authorization:
+      - Bearer sk_test_XTLCfIQMwKblsxIF1N4i7y1G
+      Content-Type:
+      - application/x-www-form-urlencoded
+      X-Stripe-Client-User-Agent:
+      - '{"bindings_version":"1.27.2","lang":"ruby","lang_version":"2.1.2 p95 (2014-05-08)","platform":"x86_64-linux","engine":"ruby","publisher":"stripe","uname":"Linux
+        version 4.4.0-51-generic (buildd@lgw01-18) (gcc version 4.8.4 (Ubuntu 4.8.4-2ubuntu1~14.04.3)
+        ) #72~14.04.1-Ubuntu SMP Thu Nov 24 19:22:30 UTC 2016","hostname":"keith-Latitude-E7450"}'
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx
+      Date:
+      - Wed, 07 Dec 2016 07:40:47 GMT
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '2359'
+      Connection:
+      - keep-alive
+      Access-Control-Allow-Credentials:
+      - 'true'
+      Access-Control-Allow-Methods:
+      - GET, POST, HEAD, OPTIONS, DELETE
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Max-Age:
+      - '300'
+      Cache-Control:
+      - no-cache, no-store
+      Request-Id:
+      - req_9hOqPr2nGYJkUD
+      Stripe-Version:
+      - '2015-04-07'
+      Strict-Transport-Security:
+      - max-age=31556926; includeSubDomains
+    body:
+      encoding: UTF-8
+      string: |
+        {
+          "id": "evt_19NxEZ2VpjOYk6TmQLjYsn5Y",
+          "object": "event",
+          "api_version": "2015-04-07",
+          "created": 1481085647,
+          "data": {
+            "object": {
+              "id": "in_19NwIT2VpjOYk6TmuXa5PSFl",
+              "object": "invoice",
+              "amount_due": 500,
+              "application_fee": null,
+              "attempt_count": 1,
+              "attempted": true,
+              "charge": "ch_19NxEY2VpjOYk6TmlDvEqqAX",
+              "closed": false,
+              "currency": "usd",
+              "customer": "cus_9gwCSjIO6SlmhA",
+              "date": 1481082045,
+              "description": null,
+              "discount": null,
+              "ending_balance": 0,
+              "forgiven": false,
+              "lines": {
+                "object": "list",
+                "data": [
+                  {
+                    "id": "sub_9gxjq9c1qGg7BE",
+                    "object": "line_item",
+                    "amount": 500,
+                    "currency": "usd",
+                    "description": null,
+                    "discountable": true,
+                    "livemode": false,
+                    "metadata": {},
+                    "period": {
+                      "start": 1481082006,
+                      "end": 1481168406
+                    },
+                    "plan": {
+                      "id": "KVM",
+                      "object": "plan",
+                      "amount": 500,
+                      "created": 1480994112,
+                      "currency": "usd",
+                      "interval": "day",
+                      "interval_count": 1,
+                      "livemode": false,
+                      "metadata": {},
+                      "name": "KVM - Testing",
+                      "statement_descriptor": null,
+                      "trial_period_days": null
+                    },
+                    "proration": false,
+                    "quantity": 1,
+                    "subscription": null,
+                    "type": "subscription"
+                  }
+                ],
+                "has_more": false,
+                "total_count": 1,
+                "url": "/v1/invoices/in_19NwIT2VpjOYk6TmuXa5PSFl/lines"
+              },
+              "livemode": false,
+              "metadata": {},
+              "next_payment_attempt": 1481344846,
+              "paid": false,
+              "period_end": 1481082006,
+              "period_start": 1480995606,
+              "receipt_number": null,
+              "starting_balance": 0,
+              "statement_descriptor": null,
+              "subscription": "sub_9gxjq9c1qGg7BE",
+              "subtotal": 500,
+              "tax": null,
+              "tax_percent": null,
+              "total": 500,
+              "webhooks_delivered_at": 1481082045,
+              "payment": "ch_19NxEY2VpjOYk6TmlDvEqqAX"
+            }
+          },
+          "livemode": false,
+          "pending_webhooks": 0,
+          "request": null,
+          "type": "invoice.payment_failed"
+        }
+    http_version: 
+  recorded_at: Wed, 07 Dec 2016 07:40:45 GMT
+recorded_with: VCR 2.9.3

@@ -12,6 +12,7 @@
 //
 
 //= require es5-shim.min
+//= require es6-shim.min
 //= require jquery
 //= require jquery_ujs
 //= require jquery-ui

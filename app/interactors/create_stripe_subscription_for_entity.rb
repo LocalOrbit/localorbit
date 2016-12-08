@@ -38,7 +38,10 @@ class CreateStripeSubscriptionForEntity
       plan: sub_params[:plan],
       metadata: {
         "lo.entity_id" => entity.id,
-        "lo.entity_type" => entity.class.name.underscore
+        "lo.entity_type" => entity.class.name.underscore,
+        "lo_entity_id" => entity.id,
+        "lo_entity_name" => entity.name,
+        "lo_entity_type" => entity.class.name.underscore
       }
     }
     # Stripe uses the default card if one exists, but RYO (at least) will provide the stripe token

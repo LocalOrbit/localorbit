@@ -244,6 +244,19 @@ FactoryGirl.define do
     end
   end
 
+  factory :cross_selling_list_product do
+    association :cross_selling_list, :factory => [:cross_selling_list, :market_list]
+    product
+
+    trait :active do
+      active true
+    end
+
+    trait :inactive do
+      active false
+    end
+  end
+
   factory :market_address do
     market
     sequence(:name) {|n| "Market Address #{n}" }
@@ -423,6 +436,12 @@ FactoryGirl.define do
       payee          nil
       payment_type   "service"
       payment_method "ach"
+    end
+
+    trait :stripe_subscription do
+      payer_type "Organization"
+      payment_type   "service"
+      payment_method "stripe"
     end
   end
 
