@@ -488,7 +488,8 @@ class User < ActiveRecord::Base
 
   def cross_selling_market_ids
     publishing_list_ids = CrossSellingList.where(creator: true, entity_type: 'Market', entity_id: standard_market_ids).pluck(:id)
-    subscribing_list_ids = CrossSellingList.where(creator: false, status: 'Published', deleted_at: nil, parent_id: publishing_list_ids).pluck(:entity_id)
+
+    CrossSellingList.where(creator: false, status: 'Published', deleted_at: nil, parent_id: publishing_list_ids).pluck(:entity_id)
   end
 
   def markets_for_non_admin
