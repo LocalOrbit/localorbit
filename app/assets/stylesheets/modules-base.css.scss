@@ -1324,6 +1324,14 @@ label ~ .tooltip {
   }
 }
 
+.tooltip--crowded-top{
+  &:after {
+      bottom: -50%;
+      min-width: 400px;
+      right: 800%;
+  }
+}
+
 @media screen and (max-width: $mobile_break) {
   label ~ .tooltip {
     float: right;
