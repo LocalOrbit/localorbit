@@ -1,0 +1,26 @@
+{
+  "id": "evt_19GuHw2VpjOYk6TmUMHMq2NI",
+  "object": "event",
+  "api_version": "2015-04-07",
+  "created": 1479406028,
+  "data": {
+    "object": {
+      "id": "KXM2",
+      "object": "plan",
+      "amount": 100,
+      "created": 1479406028,
+      "currency": "usd",
+      "interval": "month",
+      "interval_count": 1,
+      "livemode": false,
+      "metadata": {},
+      "name": "KXM - 11/17 - 2",
+      "statement_descriptor": null,
+      "trial_period_days": null
+    }
+  },
+  "livemode": false,
+  "pending_webhooks": 1,
+  "request": "req_9a4Qe5C0Lx6tPO",
+  "type": "plan.created"
+}

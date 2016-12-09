@@ -273,6 +273,7 @@ class Order < ActiveRecord::Base
     if user.admin?
       all
     else
+      # where(buyer_orders_arel(user).or(manager_orders_arel(user))).uniq #.where(market_id: user.markets)
       where(buyer_orders_arel(user).or(manager_orders_arel(user))).uniq.where(market_id: user.markets)
     end
   end
@@ -281,14 +282,7 @@ class Order < ActiveRecord::Base
     if user.admin?
       all
     else
-      # KXM orders_for_seller needs cleanup once functionality is confirmed
-      # Original
-      # joins(:products).where(seller_orders_arel(user).or(manager_orders_arel(user))).uniq.where(market_id: user.markets)
-
       joins(:products).where(seller_orders_arel(user).or(manager_orders_arel(user)).or(cross_sold_products_arel(user))).uniq
-      # joins(:products).where(seller_orders_arel(user).or(manager_orders_arel(user)).or(cross_sold_products_arel(user))).uniq.where(market_id: user.markets)
-      # joins(:products).where(seller_orders_arel(user).or(manager_orders_arel(user)).or(cross_sold_products_arel(user))).uniq.where(user_markets(user))
-      # joins(:products).where(seller_orders_arel(user).or(manager_orders_arel(user)).or(cross_sold_products_arel(user))).uniq.where(user_markets(user).or(cross_selling_markets(user)))
     end
   end
 

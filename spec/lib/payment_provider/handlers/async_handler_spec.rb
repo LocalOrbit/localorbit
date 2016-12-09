@@ -13,7 +13,7 @@ describe PaymentProvider::Handlers::AsyncHandler do
     end
 
     it 'delegates to configured handler for event type' do
-      event = double(type: 'transfer.paid')
+      event = double(type: 'transfer.paid', id: 'evt_1234567', livemode: false)
       delay = double()
       expect(PaymentProvider::Handlers::TransferPaid).to receive(:extract_job_params).with(event).and_return('the params')
       expect(PaymentProvider::Handlers::TransferPaid).to receive(:delay).and_return(delay)

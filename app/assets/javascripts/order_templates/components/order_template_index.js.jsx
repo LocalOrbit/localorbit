@@ -30,6 +30,8 @@
 
     render: function() {
       var self = this;
+      var questions_tool_tip = (<p style={{ marginTop:"2em" }} className="pull-right">Questions&nbsp;<span className="tooltip tooltip--crowded-top" data-tooltip="This is a list of all your Order Templates.  To create a new template, add items to the cart and go to checkout.  From the checkout page, click 'Create an Order Template from this Cart'"><i className="fa"></i></span></p>);
+      //fa fa-question-circle
       var templates = _.map(self.state.templates, function(template) {
         return (
           <tr className="app-template">
@@ -49,6 +51,7 @@
           <div className="l-constraint">
             <div className="l-page-header admin-markets-header">
               <h1><i className="font-icon" data-icon=""></i>&nbsp; Order Templates</h1>
+              {questions_tool_tip}
             </div>
           </div>
         </div>

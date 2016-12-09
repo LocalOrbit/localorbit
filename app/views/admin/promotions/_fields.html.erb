@@ -19,7 +19,7 @@
 
 <div class="field">
   <%= f.label :product_id, "Product" %><br>
-  <%= f.select :product_id, @products.map {|p| ["#{p.organization.name} - #{p.name}", p.id]}, {include_blank: "Select a product"}, class: "column--full" %>
+  <%= f.select :product_id, @products.map {|p| ["#{p.organization.name} - #{p.name}", p.id]}, {include_blank: "Select a product"}, class: "column--full chosen" %>
 </div>
 
 <div class="field promotion-field">
