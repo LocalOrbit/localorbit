@@ -13,7 +13,13 @@ module PaymentProvider
       def call(event)
         handler = HANDLER_IMPLS[event.type]
         if handler
-          return unless event.livemode || Figaro.env.deploy_env != 'production'
+          if event.livemode then
+            # Only process actual events on production...
+            return if Figaro.env.deploy_env != 'production'
+          else
+            # ...and test events elsewhere
+            return if Figaro.env.deploy_env == 'production'
+          end
 
           params = handler.extract_job_params(event)
           Rails.logger.info "Enqueueing '#{event.type}' event. Stripe Event id: '#{event.id}'"
