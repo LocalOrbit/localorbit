@@ -43,9 +43,7 @@ module Admin
     def search_products(search)
       results = current_user
                     .managed_products
-                    .joins(:delivery_schedules)
                     .includes(:unit, prices:[:market])
-                    .where('delivery_schedules.inactive_at IS NULL AND delivery_schedules.deleted_at IS NULL')
                     .search(search.query)
 
       results.sorts = "name asc" if results.sorts.empty?
