@@ -639,7 +639,6 @@ module Dom
 
     class CrossSellTargetMarkets < Domino
       selector "cross_selling_target_markets"
-      # KXM What is my selector when there is no structure (to speak of)?  Restructure the HTML?
     end
 
     class CrossSellListProductsRow < Domino
