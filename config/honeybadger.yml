@@ -1,2 +1,3 @@
----
 api_key: 'a7df8d88'
+metrics: 'false'
+environment_name: "<%= Figaro.env.deploy_env %>"
