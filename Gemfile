@@ -155,7 +155,7 @@ group :production, :staging do
   gem 'newrelic_rpm'       # Rack middleware instrumentation is very broken
   gem 'newrelic-dragonfly'
   #gem 'passenger'
-  gem 'rack-timeout', require: 'rack/timeout/base'
+  gem 'rack-timeout'
   gem 'rack-cache', require: 'rack/cache'
   gem 'rails_12factor'
   gem 'pgbackups-archive'
