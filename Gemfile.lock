@@ -803,7 +803,7 @@ DEPENDENCIES
   mailcatcher
   migration_data
   newrelic-dragonfly
-  newrelic_rpm (< 3.9.0)
+  newrelic_rpm
   omniauth-stripe-connect
   pdfkit
   periscope-activerecord
