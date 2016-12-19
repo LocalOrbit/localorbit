@@ -76,6 +76,8 @@ gem 'tabulator', :git => 'https://github.com/dcrosby42/tabulator.git'
 gem 'rschema', :git => 'https://github.com/tomdalling/rschema.git'
 
 gem 'turbolinks'
+gem 'puma'
+gem 'honeybadger', '~> 2.0.0'
 # wkhtmltopdf versions are a mess. 0.12.1 is stable but not well supported by gems
 # See https://github.com/zakird/wkhtmltopdf_binary_gem/issues/13
 # The github version is massive and makes the Heroku slug huge
@@ -106,7 +108,6 @@ group :development do
   gem 'quiet_assets'
   gem 'aws-sdk'
   gem 'rails_view_annotator'
-  gem 'puma'
   gem 'mailcatcher'
   gem 'unicorn'
 end
@@ -154,9 +155,7 @@ group :production, :staging do
   gem 'newrelic_rpm', '< 3.9.0'       # Rack middleware instrumentation is very broken
   gem 'newrelic-dragonfly'
   #gem 'passenger'
-  gem 'honeybadger'
   gem 'rack-timeout'
-  gem 'puma'
   gem 'rack-cache', require: 'rack/cache'
   gem 'rails_12factor'
   gem 'pgbackups-archive'
