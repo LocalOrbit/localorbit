@@ -41,7 +41,7 @@ module Admin
 
     def create
       org_type = update_org_type(params[:organization][:can_sell])
-      auto_activate = Market.find(params[:initial_market_id]).try(:auto_activate_organizations)
+      auto_activate = Market.find(params[:initial_market_id]).try(:auto_activate_organizations) unless params[:initial_market_id].empty?
 
       op = organization_params.merge({:org_type => org_type})
       op.merge!({active: "1"}) if (org_type == "B" && auto_activate)
