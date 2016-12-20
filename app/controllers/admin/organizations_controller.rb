@@ -41,7 +41,12 @@ module Admin
 
     def create
       org_type = update_org_type(params[:organization][:can_sell])
-      result = RegisterStripeOrganization.perform(organization_params: organization_params.merge({:org_type => org_type}), user: current_user, market_id: params[:initial_market_id])
+      auto_activate = Market.find(params[:initial_market_id]).try(:auto_activate_organizations) unless params[:initial_market_id].empty?
+
+      op = organization_params.merge({:org_type => org_type})
+      op.merge!({active: "1"}) if (org_type == "B" && auto_activate)
+
+      result = RegisterStripeOrganization.perform(organization_params: op, user: current_user, market_id: params[:initial_market_id])
 
       if result.success?
         organization = result.organization
