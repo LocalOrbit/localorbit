@@ -14,9 +14,7 @@ class CreateMarket
 
     context[:market] = market
 
-    unless market.valid? && market.errors.empty?
-      context.fail!(error: "Could not create Market")
-    end
+    context.fail!(error: "Could not create Market") unless market.errors.empty?
   end
 
   def rollback
