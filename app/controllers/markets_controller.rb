@@ -35,7 +35,6 @@ class MarketsController < ApplicationController
   end
 
   def create
-    # This accounts for the new requirement that customers may select their plan on the form.  I hate feature creep.
     plan = Plan.find_by stripe_id: subscription_params[:plan] if subscription_params[:plan].present?
     mp = market_params
     mp[:plan_id] = plan.id
