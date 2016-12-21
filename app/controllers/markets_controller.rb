@@ -28,7 +28,6 @@ class MarketsController < ApplicationController
     @market ||= Market.new do |m|
       m.pending = true
       m.self_directed_creation = true # This flag says "Yes, I have rolled this myself"
-      # m.organization.plan_id = plan.id
       m.plan_id = plan.id
     end
 
@@ -43,7 +42,7 @@ class MarketsController < ApplicationController
 
     results = RollYourOwnMarket.perform({
         :market_params => mp,
-        :billing_params => billing_params, 
+        :billing_params => billing_params,
         :subscription_params => subscription_params,
         :bank_account_params => bank_account_params,
         :amount => subscription_params[:plan_price], # For 'create_service_payment' interactor
@@ -103,12 +102,12 @@ class MarketsController < ApplicationController
 
   def billing_params
     params.require(:billing).permit(
-      :address, 
-      :city, 
-      :state, 
+      :address,
+      :city,
+      :state,
       :country,
-      :zip, 
-      :phone 
+      :zip,
+      :phone
     )
   end
 
