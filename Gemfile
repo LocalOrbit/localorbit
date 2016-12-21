@@ -95,6 +95,7 @@ gem 'grape-swagger' # API V2, documentation
 
 gem 'honeybadger'
 gem 'puma'
+
 group :doc do
   gem 'sdoc', require: false
 end
