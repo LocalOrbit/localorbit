@@ -22,8 +22,6 @@ class CreateServicePayment
       status:           bank_account.bank_account? ? "pending" : "paid"
     })
 
-    context[:recipients] = market.managers.map(&:pretty_email)
-
     unless context[:payment].valid?
       context.fail!(error: "Could not create payment record in database")
     end
@@ -33,7 +31,5 @@ class CreateServicePayment
     if payment = context[:payment]
       payment.destroy
     end
-
-    # FYI context[:recipients] exist only in the context and, therefore, are not subject to rollback
   end
 end

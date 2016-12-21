@@ -7,12 +7,10 @@ class CreateMarket
       stripe_standalone: ENV["USE_STRIPE_STANDALONE_ACCOUNTS"],
     }
 
-    # KXM !! Plan_fee _probably_ ought to refer to the invoiced amount
     defaults[:plan_fee] = context[:amount] if context[:amount]
 
     market = Market.create(defaults.merge(market_params).merge({:organization_id => context[:organization][:id]}))
 
-    # KXM !! Plan data shouldn't be tied to the market, and it shouldn't be tied here in any case
     market.update_attribute(:plan_start_at, Time.current.end_of_minute) if context[:RYO] == true
 
     context[:market] = market
