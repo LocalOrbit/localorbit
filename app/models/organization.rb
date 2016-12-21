@@ -194,13 +194,22 @@ class Organization < ActiveRecord::Base
     update!(subscribed: true)
   end
 
-  def set_subscription(stripe_invoice)
-    update_attribute(:plan_interval, 12)
-    update_attribute(:plan_fee, ::Financials::MoneyHelpers.cents_to_amount(stripe_invoice.amount_due))
+  def set_subscription(subscription)
+    # KXM !! plan_fee ought to equal the invoice amount - maybe the webhook handler?  (stripe_invoice.amount_due)
+    update_attribute(:plan_fee, ::Financials::MoneyHelpers.cents_to_amount(subscription.plan.amount))
+    update_attribute(:plan_interval, translate_interval(subscription.plan.interval))
     update_attribute(:subscribed, true)
+    # KXM !! Capture the subscription.id into not-yet-created field
   end
 
   private
+
+  def translate_interval(interval)
+    return 1 if interval = "month"
+    return 12 if interval = "year"
+    return nil
+  end
+
 
   def reject_location(attributed)
     #attributed["name"].blank? ||

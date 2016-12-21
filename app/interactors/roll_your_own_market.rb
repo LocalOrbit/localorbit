@@ -8,6 +8,5 @@ class RollYourOwnMarket
     CreateStripeCustomerForEntity,
     CreateStripeSubscriptionForEntity,
     CreateBankAccount,
-    CreateServicePayment,
   ]
 end
