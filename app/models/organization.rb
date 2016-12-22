@@ -201,7 +201,7 @@ class Organization < ActiveRecord::Base
       subscribed: true,
       subscription_id: subscription.id,
     }
-    update_attributes{h}
+    update_attributes(h)
   end
 
   def unset_subscription(source)
@@ -211,14 +211,14 @@ class Organization < ActiveRecord::Base
       subscribed: source.subscribed,
       subscription_id: source.subscription_id,
     }
-    update_attributes{h}
+    update_attributes(h)
   end
 
   private
 
   def translate_interval(interval)
-    return 1 if interval = "month"
-    return 12 if interval = "year"
+    return 1 if interval == "month"
+    return 12 if interval == "year"
     return nil
   end
 
