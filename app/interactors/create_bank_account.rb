@@ -8,6 +8,7 @@ class CreateBankAccount
   end
 
   def perform
+    entity = context[:RYO] == true ? context[:organization] : context[:entity]
     if(
       # If the supplied bank_account_params identify this Stripe customer...
       context[:entity].try(:stripe_customer_id) == bank_account_params.try(:customer) &&
