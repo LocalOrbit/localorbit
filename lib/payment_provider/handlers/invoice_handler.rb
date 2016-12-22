@@ -3,6 +3,7 @@ module PaymentProvider
     class InvoiceHandler < AbstractMasterHandler
 
       def self.invoice_payment_succeeded(stripe_invoice)
+        # KXM !! Organization.plan_fee ought to be set in here somewhere...
         return if Payment.where(stripe_id: stripe_invoice[:payment]).any?
         return unless stripe_invoice.try(:subscription)
 

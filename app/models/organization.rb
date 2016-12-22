@@ -195,7 +195,6 @@ class Organization < ActiveRecord::Base
   end
 
   def set_subscription(subscription)
-    # KXM !! plan_fee ought to equal the invoice amount - maybe handled by the webhook?
     h = {
       plan_fee: ::Financials::MoneyHelpers.cents_to_amount(subscription.plan.amount),
       plan_interval: translate_interval(subscription.plan.interval),
