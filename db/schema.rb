@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161205074410) do
+ActiveRecord::Schema.define(version: 20161222052826) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -535,10 +535,10 @@ ActiveRecord::Schema.define(version: 20161205074410) do
     t.text     "zpl_logo"
     t.string   "zpl_printer"
     t.boolean  "self_directed_creation",                                 default: false
-    t.boolean  "stripe_standalone"
+    t.boolean  "stripe_standalone",                                      default: true
     t.string   "legacy_stripe_account_id"
-    t.boolean  "allow_product_fee"
     t.integer  "number_format_numeric",                                  default: 0
+    t.boolean  "allow_product_fee"
     t.boolean  "subscribed",                                             default: false
     t.boolean  "routing_plan",                                           default: false
     t.integer  "organization_id"
@@ -741,6 +741,7 @@ ActiveRecord::Schema.define(version: 20161205074410) do
     t.decimal  "plan_fee",                     precision: 7, scale: 2, default: 0.0,   null: false
     t.integer  "plan_bank_account_id"
     t.boolean  "subscribed",                                           default: false
+    t.string   "subscription_id"
   end
 
   add_index "organizations", ["name"], name: "index_organizations_on_name", using: :btree
