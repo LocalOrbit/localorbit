@@ -30,8 +30,6 @@ class CreateStripeSubscriptionForEntity
       # 'plan' here refers to the Stripe plan ID...
       plan: sub_params[:plan],
       metadata: {
-        "lo.entity_id" => entity.id,
-        "lo.entity_type" => entity.class.name.underscore,
         "lo_entity_id" => entity.id,
         "lo_entity_name" => entity.name,
         "lo_entity_type" => entity.class.name.underscore

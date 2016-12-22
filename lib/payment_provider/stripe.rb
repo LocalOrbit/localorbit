@@ -300,8 +300,6 @@ module PaymentProvider
         submission_data = {
           plan: subscription_params[:plan],
           metadata: {
-            "lo.entity_id" => entity.id,
-            "lo.entity_type" => entity.class.name.underscore,
             "lo_entity_id" => entity.id,
             "lo_entity_type" => entity.class.name.underscore,
             "lo_entity_name" => entity.name

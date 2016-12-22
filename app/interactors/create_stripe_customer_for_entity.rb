@@ -23,8 +23,6 @@ class CreateStripeCustomerForEntity
     {
       description: entity.name,
       metadata: {
-        "lo.entity_id" => entity.id,
-        "lo.entity_type" => entity.class.name.underscore,
         "lo_entity_id" => entity.id,
         "lo_entity_type" => entity.class.name.underscore,
         "lo_entity_name" => entity.name
