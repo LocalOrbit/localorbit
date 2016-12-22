@@ -45,9 +45,8 @@ class UserMailer < BaseMailer
     )
   end
 
-  def market_request_confirmation(market, invoice)
+  def market_request_confirmation(market)
     @market = market
-    @invoice = invoice
 
     mail(
       to: @market.pretty_email,

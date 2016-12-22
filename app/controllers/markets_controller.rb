@@ -51,13 +51,12 @@ class MarketsController < ApplicationController
 
       @market = results.market
       @subscription_params = results.subscription_params
-      @invoice = results.invoice
 
       # Email us about their request
       ZendeskMailer.delay.request_market(@market)
 
       # Email them confirmation of their request
-      UserMailer.delay.market_request_confirmation(@market, @invoice)
+      UserMailer.delay.market_request_confirmation(@market)
 
       redirect_to :action => 'success', :id => @market
     else
