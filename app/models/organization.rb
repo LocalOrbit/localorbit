@@ -198,6 +198,7 @@ class Organization < ActiveRecord::Base
     h = {
       plan_fee: ::Financials::MoneyHelpers.cents_to_amount(subscription.plan.amount),
       plan_interval: translate_interval(subscription.plan.interval),
+      plan_start_at: Time.at(subscription.created).to_datetime,
       subscribed: true,
       subscription_id: subscription.id,
     }
@@ -208,6 +209,7 @@ class Organization < ActiveRecord::Base
     h = {
       plan_fee: source.plan_fee,
       plan_interval: source.plan_interval,
+      plan_start_at: source.plan_start_at,
       subscribed: source.subscribed,
       subscription_id: source.subscription_id,
     }
