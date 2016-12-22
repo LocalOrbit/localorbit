@@ -195,11 +195,24 @@ class Organization < ActiveRecord::Base
   end
 
   def set_subscription(subscription)
-    # KXM !! plan_fee ought to equal the invoice amount - maybe the webhook handler?  (stripe_invoice.amount_due)
-    update_attribute(:plan_fee, ::Financials::MoneyHelpers.cents_to_amount(subscription.plan.amount))
-    update_attribute(:plan_interval, translate_interval(subscription.plan.interval))
-    update_attribute(:subscribed, true)
-    # KXM !! Capture the subscription.id into not-yet-created field
+    # KXM !! plan_fee ought to equal the invoice amount - maybe handled by the webhook?
+    h = {
+      plan_fee: ::Financials::MoneyHelpers.cents_to_amount(subscription.plan.amount),
+      plan_interval: translate_interval(subscription.plan.interval),
+      subscribed: true,
+      subscription_id: subscription.id,
+    }
+    update_attributes{h}
+  end
+
+  def unset_subscription(source)
+    h = {
+      plan_fee: source.plan_fee,
+      plan_interval: source.plan_interval,
+      subscribed: source.subscribed,
+      subscription_id: source.subscription_id,
+    }
+    update_attributes{h}
   end
 
   private
