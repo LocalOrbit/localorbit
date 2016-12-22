@@ -6,9 +6,9 @@ class CreateStripeCustomerForEntity
   end
 
   def perform
-    entity = context[:RYO] ? context[:organization] : context[:entity]
+    entity = context[:RYO] == true ? context[:organization] : context[:entity]
     if entity.stripe_customer_id.nil?
-      customer = PaymentProvider::Stripe.create_customer(stripe_customer_info)
+      customer = PaymentProvider::Stripe.create_customer(stripe_customer_info(entity))
       entity.update_attribute(:stripe_customer_id, customer.id)
       context[:stripe_customer] = customer
     else
@@ -19,7 +19,7 @@ class CreateStripeCustomerForEntity
     context.fail!(error: e.message)
   end
 
-  def stripe_customer_info
+  def stripe_customer_info(entity)
     {
       description: entity.name,
       metadata: {

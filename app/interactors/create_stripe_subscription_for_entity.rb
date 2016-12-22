@@ -2,10 +2,10 @@ class CreateStripeSubscriptionForEntity
   include Interactor
 
   def perform
-    # Initialize
     market_params ||= context[:market_params]
     sub_params    ||= context[:subscription_params]
-    entity        ||= context[:entity]
+
+    entity = context[:RYO] == true ? context[:organization] : context[:entity]
     original_entity = entity.dup
 
     token = market_params && market_params[:stripe_tok]
