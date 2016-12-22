@@ -34,7 +34,6 @@
             <% end %>
 
             <%= hidden_field_tag :market_id, market.id %>
-            <%= hidden_field_tag :plan_stripe_id, market.organization.plan.stripe_id %>
             <%= hidden_field_tag :organization_id, market.organization.id %>
             <%= submit_tag "Run Now", class: "btn btn--small", data: {disable_with: "Running..."} if market.organization.subscription_eligible? %>
           <% end %>
