@@ -90,10 +90,5 @@ describe RollYourOwnMarket do
 	  	results = perform
 	  	expect(results.bank_account).to be
 	  end
-
-	  it "payment record in LO" do
-	  	results = perform
-	  	expect(results.payment).to be
-	  end
 	end
 end
