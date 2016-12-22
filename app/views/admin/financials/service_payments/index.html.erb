@@ -23,7 +23,7 @@
       <tr class="<%= cycle "odd", "even" %> vcard" id="<%= dom_id(market) %>">
         <td class="name fn"><%= link_to market.name, [:admin, market] %></td>
         <td class="plan"><%= market.organization.plan.try(:name) %></td>
-        <td class="interval"><%= market.display_plan_interval %></td>
+        <td class="interval"><%= market.organization.display_plan_interval %></td>
         <td class="fee"><%= number_to_currency(market.organization.plan_fee) %></td>
         <td class="last-payment-date"><%= market.organization.last_service_payment_at.try(:strftime, "%m/%d/%Y") || "N/A" %></td>
         <td class="next-payment-date"><%= market.organization.next_service_payment_at.try(:strftime, "%m/%d/%Y") || 'Not Configured' %></td>

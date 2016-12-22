@@ -155,15 +155,4 @@ class MarketDecorator < Draper::Decorator
   def plan_id
     organization.plan_id
   end
-
-  def display_plan_interval
-    if plan_interval == 1
-      "Monthly"
-    elsif plan_interval == 12
-      "Yearly"
-    else
-      "Not Set"
-    end
-  end
-
 end
