@@ -467,6 +467,14 @@ class Order < ActiveRecord::Base
     self.total_cost    = calculate_total_cost(cost).round(2)
   end
 
+  def mark_as_unpaid
+    update_attributes(payment_status: 'unpaid', paid_at: nil)
+    items.each do |oi|
+      oi.payment_status = "unpaid"
+    end
+    save!
+  end
+
   private
 
   def update_paid_at
