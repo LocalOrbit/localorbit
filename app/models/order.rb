@@ -469,7 +469,9 @@ class Order < ActiveRecord::Base
 
   def mark_as_unpaid
     update_attributes(payment_status: 'unpaid', paid_at: nil)
-    items.update_all(payment_status: 'unpaid')
+    items.each do |oi|
+      oi.payment_status = "unpaid"
+    end
     save!
   end
 
