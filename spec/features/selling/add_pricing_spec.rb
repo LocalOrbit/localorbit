@@ -6,10 +6,17 @@ describe "Adding advanced pricing" do
   let(:market2)       { create(:market, :with_delivery_schedule) }
   let(:market3)       { create(:market, :with_delivery_schedule, allow_product_fee: true)}
   let!(:organization) { create(:organization, :seller, markets: [market, market2], users: [user]) }
+  let!(:organization2) { create(:organization, :seller, markets: [market, market2], users: [user]) }
   let!(:product)      { create(:product, organization: organization) }
   let!(:user2)         { create(:user, :market_manager, managed_markets: [market]) }
 
+
   before do
+    organization2.market_organizations.each do |mo|
+      mo.deleted_at = Time.now
+      mo.save!
+    end
+
     switch_to_subdomain(market.subdomain)
     sign_in_as(user)
     within "#admin-nav" do
@@ -111,6 +118,10 @@ describe "Adding advanced pricing" do
       expect(record.min_quantity).to eq("1")
       expect(record.net_price).to eq("$1.87") # 5.9 % fees
       expect(record.sale_price).to eq("$1.99")
+    end
+
+    it "excludes inactive buyers" do
+      expect(page).to_not have_select("price[organization_id]", :options => ["All Buyers", "Organization 4", "Organization 5"])
     end
   end
 
