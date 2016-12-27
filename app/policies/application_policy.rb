@@ -7,6 +7,7 @@ class ApplicationPolicy
   end
 
   def user_activities
+    # binding.pry if (@record == :admin_cross_selling || @record == :market_cross_selling)
     if @user.roles.count > 0
       @user.roles.select(:activities).where(org_type: @user.primary_user_role).distinct.map(&:activities).flatten
     else

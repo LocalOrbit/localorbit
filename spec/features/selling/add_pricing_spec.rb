@@ -6,7 +6,8 @@ describe "Adding advanced pricing" do
   let(:market2)       { create(:market, :with_delivery_schedule) }
   let(:market3)       { create(:market, :with_delivery_schedule, allow_product_fee: true)}
   let!(:organization) { create(:organization, :seller, markets: [market, market2], users: [user]) }
-  let!(:organization2) { create(:organization, :seller, markets: [market, market2], users: [user]) }
+  # KXM When running :185 (only?), this line throws an 'Market expected, got NilClass' error
+  let!(:organization2) { create(:organization, :buyer, markets: [market, market2], users: [user]) }
   let!(:product)      { create(:product, organization: organization) }
   let!(:user2)         { create(:user, :market_manager, managed_markets: [market]) }
 
