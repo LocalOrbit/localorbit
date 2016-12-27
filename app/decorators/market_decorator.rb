@@ -155,4 +155,8 @@ class MarketDecorator < Draper::Decorator
   def plan_id
     organization.plan_id
   end
+
+  def display_plan_interval
+    organization.display_plan_interval
+  end
 end
