@@ -226,16 +226,6 @@ class Organization < ActiveRecord::Base
     end
   end
 
-  def display_plan_interval
-    if plan_interval == 1
-      "Monthly"
-    elsif plan_interval == 12
-      "Yearly"
-    else
-      "Not Set"
-    end
-  end
-
   private
 
   def translate_interval(interval)
