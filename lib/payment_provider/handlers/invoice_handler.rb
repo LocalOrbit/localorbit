@@ -11,7 +11,7 @@ module PaymentProvider
         subscription = ::Stripe.get_stripe_subscription(stripe_invoice[:subscription])
         if subscription.present? then
           subscriber = Organization.where(stripe_customer_id: stripe_invoice[:customer]).first
-          subscriber.set_subscription(subscription)
+          subscriber.set_subscription(subscription)) if subscriber.respond_to?(:set_subscription)
         end
 
         WebhookMailer.delay.successful_payment(subscriber, stripe_invoice)
@@ -43,7 +43,7 @@ module PaymentProvider
         raise "Missing subscriber" unless subscriber = Organization.where(stripe_customer_id: stripe_invoice[:customer]).first
 
         charge = Stripe.get_charge(stripe_invoice[:charge])
-        raise "Card not on file" unless bank_account = BankAccount.where(stripe_id: charge.source.id).first
+        bank_account = BankAccount.where(stripe_id: charge.source.id).first || BankAccount.create(self.build_card(charge.source, subscriber))
 
         status = stripe_invoice[:paid] == true ? 'paid' : 'failed'
         {
@@ -59,6 +59,19 @@ module PaymentProvider
           payer_type: 'Organization',
           created_at: stripe_invoice[:date],
           updated_at: stripe_invoice[:date],
+        }
+      end
+
+      def self.build_card(source, bankable)
+        {
+          bank_name: source[:brand],
+          last_four: source[:last4],
+          stripe_id: source[:id],
+          account_type: source[:brand],
+          bankable_id: bankable.id
+          bankable_type: bankable.class.name,
+          expiration_month: source[:exp_month],
+          expiration_year: source[:exp_year],
         }
       end
     end

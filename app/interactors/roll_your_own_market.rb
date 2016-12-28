@@ -7,6 +7,6 @@ class RollYourOwnMarket
     CreateMarketAddress,
     CreateStripeCustomerForEntity,
     CreateStripeSubscriptionForEntity,
-    CreateBankAccount,
+    # CreateBankAccount,
   ]
 end
