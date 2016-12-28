@@ -201,6 +201,7 @@ class Organization < ActiveRecord::Base
       plan_start_at: Time.at(subscription.created).to_datetime,
       subscribed: true,
       subscription_id: subscription.id,
+      subscription_status: subscription.status,
     }
     update_attributes(h)
   end
@@ -212,6 +213,7 @@ class Organization < ActiveRecord::Base
       plan_start_at: source.plan_start_at,
       subscribed: source.subscribed,
       subscription_id: source.subscription_id,
+      subscription_status: source.subscription_status,
     }
     update_attributes(h)
   end

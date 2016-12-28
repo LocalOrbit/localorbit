@@ -11,7 +11,7 @@ module PaymentProvider
         subscription = ::Stripe.get_stripe_subscription(stripe_invoice[:subscription])
         if subscription.present? then
           subscriber = Organization.where(stripe_customer_id: stripe_invoice[:customer]).first
-          subscriber.set_subscription(subscription)) if subscriber.respond_to?(:set_subscription)
+          subscriber.set_subscription(subscription) if subscriber.respond_to?(:set_subscription)
         end
 
         WebhookMailer.delay.successful_payment(subscriber, stripe_invoice)
@@ -68,7 +68,7 @@ module PaymentProvider
           last_four: source[:last4],
           stripe_id: source[:id],
           account_type: source[:brand],
-          bankable_id: bankable.id
+          bankable_id: bankable.id,
           bankable_type: bankable.class.name,
           expiration_month: source[:exp_month],
           expiration_year: source[:exp_year],
