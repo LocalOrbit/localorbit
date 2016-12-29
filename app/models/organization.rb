@@ -194,7 +194,7 @@ class Organization < ActiveRecord::Base
     update!(subscribed: true)
   end
 
-  def set_subscription(subscription)
+  def set_subscription(subscription, provider='stripe')
     h = {
       plan_fee: ::Financials::MoneyHelpers.cents_to_amount(subscription.plan.amount),
       plan_interval: translate_interval(subscription.plan.interval),
@@ -202,6 +202,7 @@ class Organization < ActiveRecord::Base
       subscribed: true,
       subscription_id: subscription.id,
       subscription_status: subscription.status,
+      payment_provider: provider
     }
     update_attributes(h)
   end
