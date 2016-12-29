@@ -338,6 +338,27 @@ describe Order do
     end
   end
 
+  describe "#mark_as_unpaid" do
+    let!(:paid_order) { create(:order, items: items, paid_at: Time.now, payment_status: "paid") }
+    let(:items) { create_list(:order_item, 2, product: create(:product, :sellable), payment_status: "paid") }
+
+    context "with order" do
+      it "marks the order unpaid" do
+        paid_order.mark_as_unpaid
+
+        expect(paid_order.paid_at).to be_nil
+        expect(paid_order.payment_status).to eq("unpaid")
+      end
+
+      it "marks the order items as unpaid" do
+        paid_order.mark_as_unpaid
+
+        expect(paid_order.items[0].payment_status).to eq("unpaid")
+        expect(paid_order.items[1].payment_status).to eq("unpaid")
+      end
+    end
+  end
+
   describe "#sellers" do
     context "no order items" do
       it "returns an empty array" do
