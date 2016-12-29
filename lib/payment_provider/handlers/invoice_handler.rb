@@ -5,6 +5,7 @@ module PaymentProvider
       def self.invoice_payment_succeeded(stripe_invoice)
         return if Payment.where(stripe_id: stripe_invoice[:payment]).any?
         return unless stripe_invoice.try(:subscription)
+        # KXM !! Look at upserting the subscribing organization if this starts throwing errors...
         raise "Missing subscriber" unless org = Organization.where(stripe_customer_id: stripe_invoice[:customer]).first
 
         Payment.create(self.build_payment(org, stripe_invoice))
@@ -18,6 +19,7 @@ module PaymentProvider
 
       def self.invoice_payment_failed(stripe_invoice)
         return unless stripe_invoice.try(:subscription)
+        # KXM !! Look at upserting the subscribing organization if this starts throwing errors...
         raise "Missing subscriber" unless org = Organization.where(stripe_customer_id: stripe_invoice[:customer]).first
 
         # Upsert payment...
