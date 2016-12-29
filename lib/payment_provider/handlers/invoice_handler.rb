@@ -5,27 +5,27 @@ module PaymentProvider
       def self.invoice_payment_succeeded(stripe_invoice)
         return if Payment.where(stripe_id: stripe_invoice[:payment]).any?
         return unless stripe_invoice.try(:subscription)
+        raise "Missing subscriber" unless org = Organization.where(stripe_customer_id: stripe_invoice[:customer]).first
 
-        Payment.create(self.build_payment(stripe_invoice))
+        Payment.create(self.build_payment(org, stripe_invoice))
 
-        subscription = ::Stripe.get_stripe_subscription(stripe_invoice[:subscription])
-        if subscription.present? then
-          subscriber = Organization.where(stripe_customer_id: stripe_invoice[:customer]).first
-          subscriber.set_subscription(subscription) if subscriber.respond_to?(:set_subscription)
-        end
+        subscriber = Stripe.get_stripe_customer(stripe_invoice[:customer])
+        subscription = subscriber.subscriptions.retrieve(stripe_invoice[:subscription]) if subscriber.present?
+        org.set_subscription(subscription) if org.respond_to?(:set_subscription) && subscription.present?
 
-        WebhookMailer.delay.successful_payment(subscriber, stripe_invoice)
+        WebhookMailer.delay.successful_payment(org, stripe_invoice)
       end
 
       def self.invoice_payment_failed(stripe_invoice)
         return unless stripe_invoice.try(:subscription)
+        raise "Missing subscriber" unless org = Organization.where(stripe_customer_id: stripe_invoice[:customer]).first
 
         # Upsert payment...
-        payment = Payment.where(stripe_id: stripe_invoice[:payment]).first || Payment.create(self.build_payment(stripe_invoice))
+        payment = Payment.where(stripe_id: stripe_invoice[:payment]).first || Payment.create(self.build_payment(org, stripe_invoice))
         # ...and fail it
         payment.failed
 
-        WebhookMailer.delay.failed_payment(subscriber, stripe_invoice)
+        WebhookMailer.delay.failed_payment(org, stripe_invoice)
       end
 
 
@@ -39,8 +39,7 @@ module PaymentProvider
 
       # Build and return a Payment hash
       # KXM !! Decouple this handler by calling CreateServicePayment (once it can handle receipt of the stripe invoice)
-      def self.build_payment(stripe_invoice)
-        raise "Missing subscriber" unless subscriber = Organization.where(stripe_customer_id: stripe_invoice[:customer]).first
+      def self.build_payment(subscriber, stripe_invoice)
 
         charge = Stripe.get_charge(stripe_invoice[:charge])
         bank_account = BankAccount.where(stripe_id: charge.source.id).first || BankAccount.create(self.build_card(charge.source, subscriber))
