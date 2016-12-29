@@ -86,9 +86,9 @@ describe RollYourOwnMarket do
 	  	expect(results.subscription).to be
 	  end
 
-	  it "bank account" do
-	  	results = perform
-	  	expect(results.bank_account).to be
-	  end
+	  # it "bank account" do
+	  # 	results = perform
+	  # 	expect(results.bank_account).to be
+	  # end
 	end
 end
