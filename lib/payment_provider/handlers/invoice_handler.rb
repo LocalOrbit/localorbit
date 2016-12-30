@@ -2,40 +2,34 @@ module PaymentProvider
   module Handlers
     class InvoiceHandler < AbstractMasterHandler
 
-      def self.invoice_payment_succeeded(event_params)
-        return if Payment.where(stripe_id: event_params[:payment]).any?
-        return unless event_params.try(:subscription)
+      def self.invoice_payment_succeeded(stripe_invoice)
+        return if Payment.where(stripe_id: stripe_invoice[:payment]).any?
+        return unless stripe_invoice.try(:subscription)
+        # KXM !! Look at upserting the subscribing organization if this starts throwing errors...
+        raise "Missing subscriber" unless org = Organization.where(stripe_customer_id: stripe_invoice[:customer]).first
 
-        # If this is for a valid subscriber...
-        raise "Missing subscriber" unless subscriber = Market.where(stripe_customer_id: event_params[:customer]).first
+        Payment.create(self.build_payment(org, stripe_invoice))
 
-        # ...paid with a credit card on file...
-        charge = Stripe.get_charge(event_params[:payment])
-        raise "Card not on file" unless bank_account = BankAccount.where(stripe_id: charge.source.id).first
+        subscriber = Stripe.get_stripe_customer(stripe_invoice[:customer])
+        subscription = subscriber.subscriptions.retrieve(stripe_invoice[:subscription]) if subscriber.present?
+        org.set_subscription(subscription) if org.respond_to?(:set_subscription) && subscription.present?
 
-        # ...then create a payment record:
-        Payment.create(self.payment_params(subscriber, bank_account, event_params))
-
-        WebhookMailer.delay.successful_payment(subscriber, event_params)
+        WebhookMailer.delay.successful_payment(org, stripe_invoice)
       end
 
-      def self.invoice_payment_failed(event_params)
-        return unless event_params.try(:subscription)
+      def self.invoice_payment_failed(stripe_invoice)
+        return unless stripe_invoice.try(:subscription)
+        # KXM !! Look at upserting the subscribing organization if this starts throwing errors...
+        raise "Missing subscriber" unless org = Organization.where(stripe_customer_id: stripe_invoice[:customer]).first
 
-        # If this is for a valid subscriber...
-        raise "Missing subscriber" unless subscriber = Market.where(stripe_customer_id: event_params[:customer]).first
-
-        # ...reflecting a credit card on file...
-        charge = Stripe.get_charge(event_params[:payment])
-        raise "Card not on file" unless bank_account = BankAccount.where(stripe_id: charge.source.id).first
-
-        # ...then upsert a payment...
-        payment = Payment.where(stripe_id: event_params[:payment]).first || Payment.create(self.payment_params(subscriber, bank_account, event_params))
+        # Upsert payment...
+        payment = Payment.where(stripe_id: stripe_invoice[:payment]).first || Payment.create(self.build_payment(org, stripe_invoice))
         # ...and fail it
         payment.failed
 
-        WebhookMailer.delay.failed_payment(subscriber, event_params)
+        WebhookMailer.delay.failed_payment(org, stripe_invoice)
       end
+
 
       private
 
@@ -46,24 +40,41 @@ module PaymentProvider
       end
 
       # Build and return a Payment hash
-      def self.payment_params(subscriber, bank_account, event_params)
-        status = event_params[:paid] == true ? 'paid' : 'failed'
+      # KXM !! Decouple this handler by calling CreateServicePayment (once it can handle receipt of the stripe invoice)
+      def self.build_payment(subscriber, stripe_invoice)
+
+        charge = Stripe.get_charge(stripe_invoice[:charge])
+        bank_account = BankAccount.where(stripe_id: charge.source.id).first || BankAccount.create(self.build_card(charge.source, subscriber))
+
+        status = stripe_invoice[:paid] == true ? 'paid' : 'failed'
         {
+          payment_provider: subscriber.payment_provider,
           payment_type: 'service',
-          amount: ::Financials::MoneyHelpers.cents_to_amount(event_params[:total]),
-          created_at: event_params[:date],
-          updated_at: event_params[:date],
+          organization: subscriber,
+          payer: subscriber,
+          amount: ::Financials::MoneyHelpers.cents_to_amount(stripe_invoice[:total]),
+          stripe_id: stripe_invoice[:charge],
+          bank_account: bank_account,
+          payment_method: bank_account.bank_account? ? "ach" : "credit card",
           status: status,
-          payer_id: subscriber.organization_id,
           payer_type: 'Organization',
-          market_id: subscriber.id,
-          bank_account_id: bank_account.id,
-          stripe_id: event_params[:payment],
-          payment_provider: 'stripe',
-          organization_id: subscriber.organization_id,
+          created_at: stripe_invoice[:date],
+          updated_at: stripe_invoice[:date],
         }
       end
 
+      def self.build_card(source, bankable)
+        {
+          bank_name: source[:brand],
+          last_four: source[:last4],
+          stripe_id: source[:id],
+          account_type: source[:brand],
+          bankable_id: bankable.id,
+          bankable_type: bankable.class.name,
+          expiration_month: source[:exp_month],
+          expiration_year: source[:exp_year],
+        }
+      end
     end
   end
 end
