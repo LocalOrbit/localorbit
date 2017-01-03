@@ -194,13 +194,49 @@ class Organization < ActiveRecord::Base
     update!(subscribed: true)
   end
 
-  def set_subscription(stripe_invoice)
-    update_attribute(:plan_interval, 12)
-    update_attribute(:plan_fee, ::Financials::MoneyHelpers.cents_to_amount(stripe_invoice.amount_due))
-    update_attribute(:subscribed, true)
+  def set_subscription(subscription, provider='stripe')
+    h = {
+      plan_fee: ::Financials::MoneyHelpers.cents_to_amount(subscription.plan.amount),
+      plan_interval: translate_interval(subscription.plan.interval),
+      plan_start_at: Time.at(subscription.created).to_datetime,
+      subscribed: true,
+      subscription_id: subscription.id,
+      subscription_status: subscription.status,
+      payment_provider: provider
+    }
+    update_attributes(h)
+  end
+
+  def unset_subscription(source)
+    h = {
+      plan_fee: source.plan_fee,
+      plan_interval: source.plan_interval,
+      plan_start_at: source.plan_start_at,
+      subscribed: source.subscribed,
+      subscription_id: source.subscription_id,
+      subscription_status: source.subscription_status,
+    }
+    update_attributes(h)
+  end
+
+  def display_plan_interval
+    if plan_interval == 1
+      "Monthly"
+    elsif plan_interval == 12
+      "Yearly"
+    else
+      "Not Set"
+    end
   end
 
   private
+
+  def translate_interval(interval)
+    return 1 if interval == "month"
+    return 12 if interval == "year"
+    return nil
+  end
+
 
   def reject_location(attributed)
     #attributed["name"].blank? ||
