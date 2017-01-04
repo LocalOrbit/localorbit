@@ -8,5 +8,10 @@ Local variables:
 <p>Stripe has reported a <span style="color:green">successful invoice payment</span> for '<%= @subscriber.name %>' (Stripe id: '<%= @event_params[:customer] %>')</p>
 
 <p>Details:</p>
-
-<pre><%= @event_params.inspect %></pre>
+<ul>
+  <li>Invoice id: <%= @event_params.id %></li>
+  <li>Amount: <%= ::Financials::MoneyHelpers.cents_to_amount(@event_params.total) %></li>
+  <% if @event_params.try(:subscription).present? %>
+    <li>Subscription id: <%= @event_params.subscription %></li>
+  <% end %>
+</ul>
