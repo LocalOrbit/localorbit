@@ -11,9 +11,6 @@ class OrderTemplate < ActiveRecord::Base
     else
       template = OrderTemplate.create!(name: name, market: cart.market, buyer_id: nil)
     end
-
-    else
-      template
     cart.items.each do |item|
       OrderTemplateItem.create!(product: item.product, quantity: item.quantity, order_template: template)
     end

@@ -2,34 +2,27 @@ class CreateStripeSubscriptionForEntity
   include Interactor
 
   def perform
-    # Initialize
     market_params ||= context[:market_params]
     sub_params    ||= context[:subscription_params]
-    entity        ||= context[:entity]
+
+    entity = context[:RYO] == true ? context[:organization] : context[:entity]
+    original_entity = entity.dup
 
     token = market_params && market_params[:stripe_tok]
-    old_values = nil
 
     # Create the subscription...
     subscription = PaymentProvider::Stripe.upsert_subscription(entity, stripe_subscription_info(sub_params, entity, token))
     context[:subscription] = subscription
 
-    # Get the invoice...
-    invoices = PaymentProvider::Stripe.get_stripe_invoices(:customer => subscription.customer)
-    context[:invoice] = invoices.data.first
-    # ...update the entity (if it's a Market)...
-    old_values = entity.set_subscription(invoices.data.first) if entity.respond_to?(:set_subscription)
-
-    # ...and populate additional context items
-    context[:amount] ||= amount = ::Financials::MoneyHelpers.cents_to_amount(invoices.data.first.amount_due)
-    context[:bank_account_params] = PaymentProvider::Stripe.glean_card(context[:invoice])
+    # ...update the entity
+    entity.set_subscription(subscription) if entity.respond_to?(:set_subscription)
 
   rescue => e
     context.fail!(error: e.message)
 
     # If the context fails then roll back the subscription (if any)
     PaymentProvider::Stripe.delete_stripe_subscription(subscription.id) if subscription.present?
-    entity.unset_subscription(old_values) if old_values.present? && entity.respond_to?(:unset_subscription)
+    entity.unset_subscription(original_entity) if entity.respond_to?(:unset_subscription)
   end
 
   def stripe_subscription_info(sub_params, entity, token)
@@ -37,8 +30,6 @@ class CreateStripeSubscriptionForEntity
       # 'plan' here refers to the Stripe plan ID...
       plan: sub_params[:plan],
       metadata: {
-        "lo.entity_id" => entity.id,
-        "lo.entity_type" => entity.class.name.underscore,
         "lo_entity_id" => entity.id,
         "lo_entity_name" => entity.name,
         "lo_entity_type" => entity.class.name.underscore
@@ -46,7 +37,7 @@ class CreateStripeSubscriptionForEntity
     }
     # Stripe uses the default card if one exists, but RYO (at least) will provide the stripe token
     ret_val[:source] = token if token.present?
-    
+
     # Stripe complains if you pass an empty coupon.  Only add it if it exists
     ret_val[:coupon] = sub_params[:coupon] if sub_params[:coupon].present?
 

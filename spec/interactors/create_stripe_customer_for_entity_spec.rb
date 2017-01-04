@@ -31,8 +31,8 @@ describe CreateStripeCustomerForEntity do
         expect(customer).to be
         track_stripe_object_for_cleanup customer
         expect(customer.description).to eq org.name
-        expect(customer.metadata["lo.entity_type"]).to eq 'organization'
-        expect(customer.metadata["lo.entity_id"]).to eq org.id.to_s
+        expect(customer.metadata["lo_entity_type"]).to eq 'organization'
+        expect(customer.metadata["lo_entity_id"]).to eq org.id.to_s
       end
     end
 
