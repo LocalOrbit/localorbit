@@ -13,9 +13,9 @@ Local variables:
   <dd><%= @event_params.id %></dd>
 
   <dt>Amount:</dt>
-  <dd><%= @event_params.total %></dd>
+  <dd><%= ::Financials::MoneyHelpers.cents_to_amount(@event_params.total) %></dd>
 
-  <% if @event_params.subscription.present? %>
+  <% if @event_params.try(:subscription).present? %>
     <dt>Subscription id:</dt>
     <dd><%= @event_params.subscription %></dd>
   <% end %>
