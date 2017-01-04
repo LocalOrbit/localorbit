@@ -8,13 +8,16 @@ module PaymentProvider
         # KXM !! Look at upserting the subscribing organization if this starts throwing errors...
         raise "Missing subscriber" unless org = Organization.where(stripe_customer_id: stripe_invoice[:customer]).first
 
-        Payment.create(self.build_payment(org, stripe_invoice))
+        payment = Payment.create(self.build_payment(org, stripe_invoice))
 
         subscriber = Stripe.get_stripe_customer(stripe_invoice[:customer])
         subscription = subscriber.subscriptions.retrieve(stripe_invoice[:subscription]) if subscriber.present?
         org.set_subscription(subscription) if org.respond_to?(:set_subscription) && subscription.present?
 
+        recipients = self.org_managers(org)
+
         WebhookMailer.delay.successful_payment(org, stripe_invoice)
+        PaymentMadeEmailConfirmation.perform(recipients: recipients, payment: payment)
       end
 
       def self.invoice_payment_failed(stripe_invoice)
@@ -32,6 +35,16 @@ module PaymentProvider
 
 
       private
+
+      def self.org_managers(organization)
+        markets = Market.where(organization_id: organization.id)
+        recipients = []
+        markets.each do |market|
+          recipients = recipients | market.managers.map(&:pretty_email)
+        end
+
+        recipients
+      end
 
       # Upsert and return an event log record
       def self.event_log_record(event)
