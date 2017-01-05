@@ -36,7 +36,8 @@
             <% if !@category_percents_by_market_id.nil? &&
                 @category_percents_by_market_id.except("all").values.inject { |a, b| a + b } > 0 &&
                 unit_product.organization.all_markets_for_select.length > 1 &&
-                unit_product.prices.first.market_id == nil &&
+                unit_product.prices.nil? &&
+                unit_product.prices.first.market_id.nil? &&
                 unit_product.prices.first.product_fee_pct == 0 %>
                 <th></th>
             <% end %>
@@ -73,7 +74,8 @@
                       !@category_percents_by_market_id.nil? &&
                       @category_percents_by_market_id.except("all").values.inject { |a, b| a + b } > 0 &&
                       unit_product.organization.all_markets_for_select.length > 1 &&
-                      unit_product.prices.first.market_id == nil &&
+                      unit_product.prices.nil? &&
+                      unit_product.prices.first.market_id.nil? &&
                       unit_product.prices.first.product_fee_pct == 0 %>
                       <td class="notice" style="font-size: 9px; color: #9A0500">Needs Review</td>
                   <% end %>
