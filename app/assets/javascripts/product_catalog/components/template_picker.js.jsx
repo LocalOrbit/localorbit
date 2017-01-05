@@ -50,6 +50,11 @@
         });
     },
 
+    close: function() {
+      $('.is-open').removeClass('is-open is-dark is-dim is-modal is-editable mobile-dim');
+      $('.popup').addClass('is-hidden');
+    },
+
     render: function() {
       var self = this;
       var templates = _.map(self.state.templates, function(template) {
@@ -65,6 +70,7 @@
 
       return (
         <div className="popup modal is-hidden" id="templatePicker" style={{background: "white", position: "fixed", padding: "20px", width: "50%", borderRadius: "5px"}}>
+          <button className="btn pull-right" onClick={this.close}>Close</button>
           <h1><i className="font-icon" data-icon=""></i>&nbsp; Order Templates</h1>
           <table>
             <thead>

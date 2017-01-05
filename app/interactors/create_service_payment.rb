@@ -2,6 +2,7 @@ class CreateServicePayment
   include Interactor
 
   def perform
+    # KXM !! Restructure this so it handles the Stripe invoice object.  The payment is currently handled in the invoice handler - use they 'build_payment' method as an example
     invoice ||= context[:invoice]
     entity  ||= context[:entity]
     organization = entity.class == Market ? entity.organization : entity
@@ -22,8 +23,6 @@ class CreateServicePayment
       status:           bank_account.bank_account? ? "pending" : "paid"
     })
 
-    context[:recipients] = market.managers.map(&:pretty_email)
-
     unless context[:payment].valid?
       context.fail!(error: "Could not create payment record in database")
     end
@@ -33,7 +32,5 @@ class CreateServicePayment
     if payment = context[:payment]
       payment.destroy
     end
-
-    # FYI context[:recipients] exist only in the context and, therefore, are not subject to rollback
   end
 end
