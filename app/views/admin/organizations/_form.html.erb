@@ -125,6 +125,24 @@
           <%= render 'admin/markets/payment_options' %>
         </div>
       </div>
+
+      <%# KXM Usa a permission matrix listing all markets to replace market selection and payment options form? %>
+      <div class="row row--field">
+        <div class="field column column--half column--guttered">
+        <% @organization.markets.each do |mkt| %>
+          <li><%= mkt.name %></li>
+        <% end %>
+        </div>
+      </div>
+
+      <div class="row row--field">
+        <div class="field column column--half column--guttered">
+        <% @current_user.managed_markets.each do |mkt| %>
+          <li><%= mkt.name %></li>
+        <% end %>
+        </div>
+      </div>
+      <%# Testing code %>
     <% end %>
 
   </fieldset>
