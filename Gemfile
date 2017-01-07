@@ -108,7 +108,6 @@ group :development do
   gem 'quiet_assets'
   gem 'aws-sdk'
   gem 'rails_view_annotator'
-  gem 'puma'
   gem 'mailcatcher'
   gem 'unicorn'
 end
@@ -156,10 +155,13 @@ group :production, :staging do
   gem 'newrelic_rpm', '< 3.9.0'       # Rack middleware instrumentation is very broken
   gem 'newrelic-dragonfly'
   #gem 'passenger'
-  gem 'puma'
   gem 'rack-cache', require: 'rack/cache'
   gem 'rails_12factor'
   gem 'pgbackups-archive'
   gem 'heroku-api'
   gem 'wkhtmltopdf-heroku'
+end
+
+group :production, :staging, :development do
+  gem 'puma'
 end
