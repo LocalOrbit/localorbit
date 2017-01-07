@@ -18,7 +18,7 @@ class MarketsController < ApplicationController
   ##
   def new
     ryo_plans = Plan.ryo_enabled_plans
-    @plan_data = PaymentProvider::Stripe.get_stripe_plans.select{|plan| ryo_plans.include?(plan.id)}
+    @plan_data = PaymentProvider::Stripe.get_stripe_plans.select{|plan| ryo_plans.include?(plan.id)}.sort_by{|p| p.amount}.reverse
 
     requested_plan = params[:plan] || "Start"
     @stripe_plan ||= PaymentProvider::Stripe.get_stripe_plans(requested_plan.upcase)
@@ -28,7 +28,6 @@ class MarketsController < ApplicationController
     @market ||= Market.new do |m|
       m.pending = true
       m.self_directed_creation = true # This flag says "Yes, I have rolled this myself"
-      # m.organization.plan_id = plan.id
       m.plan_id = plan.id
     end
 
@@ -36,17 +35,14 @@ class MarketsController < ApplicationController
   end
 
   def create
-    # This accounts for the new requirement that customers may select their plan on the form.  I hate feature creep.
     plan = Plan.find_by stripe_id: subscription_params[:plan] if subscription_params[:plan].present?
-    mp = market_params
-    mp[:plan_id] = plan.id
+    mp = market_params.merge(plan_id: plan.id)
 
     results = RollYourOwnMarket.perform({
         :market_params => mp,
-        :billing_params => billing_params, 
+        :billing_params => billing_params,
         :subscription_params => subscription_params,
         :bank_account_params => bank_account_params,
-        :amount => subscription_params[:plan_price], # For 'create_service_payment' interactor
         :flash => flash,
         :RYO => true})
 
@@ -55,13 +51,12 @@ class MarketsController < ApplicationController
 
       @market = results.market
       @subscription_params = results.subscription_params
-      @invoice = results.invoice
 
       # Email us about their request
       ZendeskMailer.delay.request_market(@market)
 
       # Email them confirmation of their request
-      UserMailer.delay.market_request_confirmation(@market, @invoice)
+      UserMailer.delay.market_request_confirmation(@market)
 
       redirect_to :action => 'success', :id => @market
     else
@@ -103,12 +98,12 @@ class MarketsController < ApplicationController
 
   def billing_params
     params.require(:billing).permit(
-      :address, 
-      :city, 
-      :state, 
+      :address,
+      :city,
+      :state,
       :country,
-      :zip, 
-      :phone 
+      :zip,
+      :phone
     )
   end
 

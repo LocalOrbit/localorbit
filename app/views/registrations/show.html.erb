@@ -11,7 +11,7 @@
         <%= f.check_box :buyer %>
         <%= f.label :buyer, "Would like to buy products" %>
       </div
-      ><% if current_market.organization.plan.name != "Solo Supplier" %><div class="field column column--half column--guttered">
+      ><% if !current_market.organization.plan.solo_supplier? %><div class="field column column--half column--guttered">
         <%= f.check_box :seller %>
         <%= f.label :seller, "Would like to sell products" %>
       </div><% end %>
@@ -44,7 +44,7 @@
         <%= f.label :password_confirmation, "Retype Password", class: 'required' %><br>
         <%= f.password_field :password_confirmation %>
       </div>
-      
+
       <div class="column column--half column--guttered">
       	<p>Passwords must be at least 8 characters long and<br />may be a mix of numbers, letters, and symbols</p>
       </div>

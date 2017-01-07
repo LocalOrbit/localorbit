@@ -2,12 +2,10 @@ class RollYourOwnMarket
   include Interactor::Organizer
 
   organize [
-	  CreateOrganization,
-	  CreateMarket,
-  	CreateMarketAddress, 
-  	CreateStripeCustomerForEntity, 
-  	CreateStripeSubscriptionForEntity,
-  	CreateBankAccount,
-  	CreateServicePayment,
+    CreateOrganization,
+    CreateMarket,
+    CreateMarketAddress,
+    CreateStripeCustomerForEntity,
+    CreateStripeSubscriptionForEntity,
   ]
 end

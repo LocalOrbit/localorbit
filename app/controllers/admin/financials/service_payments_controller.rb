@@ -6,17 +6,17 @@ class Admin::Financials::ServicePaymentsController < AdminController
   end
 
   def create
+    market = Market.find(params[:market_id])
     organization = Organization.find(params[:organization_id])
     results = ChargeServiceFee.perform(entity: organization, subscription_params: {plan: organization.plan.stripe_id}, flash: flash)
 
     if results.success?
-      market.subscribe!
-      market.set_subscription(results.invoice)
+      organization.subscribe!
+      organization.set_subscription(results.subscription)
 
-      PaymentMadeEmailConfirmation.perform(recipients: results.recipients, payment: results.payment)
-      notice = "Payment made for #{market.name}"
+      notice = "Subscription created for #{market.name}.  Payment to be processed shortly"
     else
-      notice = results.context[:error] || "Payment failed for #{market.name}"
+      notice = results.context[:error] || "Subscription creation failed for #{market.name}"
     end
 
     redirect_to admin_financials_service_payments_path, notice: notice

@@ -52,10 +52,10 @@ class MergeOrder
         aud_dest = Audit.create!(user_id:context[:user].id, action:"update", auditable_type: "Order", auditable_id: dest_order.id)
         aud_dest.update_attributes(audited_changes: { 'merge_order' => "Merge order: #{orig_order.order_number} into order: #{dest_order.order_number}"})
       else
-        context.fail!(error: 'Origin and Destination Buyer must be the same, and Destination Order must be Undelivered')
+        context.fail!(message: "Origin and Destination Buyer must be the same, and Destination Order must be Undelivered")
       end
     else
-      context.fail!
+      context.fail!(message: "")
     end
   end
 end

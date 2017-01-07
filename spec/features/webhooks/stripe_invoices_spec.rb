@@ -5,7 +5,8 @@ describe "stripe invoice.payment_succeeded event", vcr: true, webhook: true do
   let(:stripe_charge_id) {'ch_19HJd82VpjOYk6TmrzJdKLYR'} # matches invoice.payment_succeeded.json
   let(:stripe_card_id) {'card_19HJd62VpjOYk6TmwKcemuLf'} # matches card related to invoice.payment_succeeded.json charge
 
-  let!(:market) { create(:market, stripe_customer_id: stripe_customer_id) }
+  let!(:organization) { create(:organization, stripe_customer_id: stripe_customer_id, org_type: 'M') }
+  let!(:market) { create(:market, stripe_customer_id: stripe_customer_id, organization_id: organization.id) }
   let!(:market_2) { create(:market, stripe_customer_id: stripe_customer_id + 'KXM') }
   let!(:credit_card) { create(:bank_account, bankable: market, stripe_id: stripe_card_id) }
 
