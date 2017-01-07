@@ -1,7 +1,6 @@
 class WebhookMailer < ActionMailer::Base
   default to: [
-    Figaro.env.zendesk_email,
-    "<keith@localorb.it>"
+    Figaro.env.zendesk_email
   ]
 
   def failed_payment(subscriber, event_params)

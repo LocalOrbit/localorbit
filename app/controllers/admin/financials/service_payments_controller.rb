@@ -14,10 +14,9 @@ class Admin::Financials::ServicePaymentsController < AdminController
       organization.subscribe!
       organization.set_subscription(results.subscription)
 
-      PaymentMadeEmailConfirmation.perform(recipients: market.managers.map(&:pretty_email), payment: results.payment)
-      notice = "Payment made for #{market.name}"
+      notice = "Subscription created for #{market.name}.  Payment to be processed shortly"
     else
-      notice = results.context[:error] || "Payment failed for #{market.name}"
+      notice = results.context[:error] || "Subscription creation failed for #{market.name}"
     end
 
     redirect_to admin_financials_service_payments_path, notice: notice
