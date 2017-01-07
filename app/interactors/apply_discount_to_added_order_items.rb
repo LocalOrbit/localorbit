@@ -23,7 +23,7 @@ class ApplyDiscountToAddedOrderItems
     discount_field = order.discount.market? ? :discount_market : :discount_seller
 
     while (curr_discount = discounted_items.each.sum(&:discount)) != discount_value
-      limit = (curr_discount - order.discount_amount).abs * 100
+      limit = (curr_discount - discount_value).abs * 100
       items = order.items.sort {|a, b| b.discount <=> a.discount }[0, limit.to_i]
       if curr_discount > discount_value
         items.each {|i| i.decrement(discount_field, BigDecimal.new("0.01")) }

@@ -61,7 +61,7 @@ describe "Manage cross selling lists" do
     it "doesn't show the cross sell tab" do
       expect(page).to_not have_css(".tabs", text: "Cross Sell")
     end
-  end 
+  end
 
   # TODO Test redirection to index when cross selling is available but off
   context "when cross selling is available but off" do
@@ -177,7 +177,7 @@ describe "Manage cross selling lists" do
       click_button "Create List"
 
       expect(page).to have_content("Listy McListface")
-      
+
       expect(page).to have_link(product_addition_link)
     end
 
@@ -248,8 +248,6 @@ describe "Manage cross selling lists" do
 
       supplier_row = Dom::Admin::ProductManagementSupplierRow.find_by_supplier_name(supplier_01.name)
 
-      # KXM Unavailable products ought not show - the 'sellable' trait doesn't 
-      # seem to work (the count should have been 2)... what does?
       expect(supplier_row.supplier_product_count).to eql("3")
 
       supplier_row.check
@@ -280,8 +278,6 @@ describe "Manage cross selling lists" do
 
       category_row = Dom::Admin::ProductManagementCategoryRow.find_by_category_name(product_01.category.name)
 
-      # KXM Unavailable products ought not show - the 'sellable' trait doesn't
-      # seem to work (the count should have been 2)... what does work?
       expect(category_row.category_product_count).to eql("5")
 
       category_row.check
@@ -300,7 +296,7 @@ describe "Manage cross selling lists" do
       category_row.uncheck
 
       click_button("Update List", match: :first)
-      # KXM remove doesn't seem to be working in the test suite, though it works on the site
+
       expect(page.all('table#cross-sell-list-products tbody tr').count).to eql(0)
     end
 
