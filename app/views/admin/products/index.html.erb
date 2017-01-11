@@ -53,7 +53,63 @@
           <% product.prices.view_sorted.decorate.each do |price| %>
             <li>
               <%= link_to price.quick_info, "#edit_price_#{price.id}", class: 'edit-toggle popup-toggle' %>
-              <%= render partial: "edit_price_advanced", locals: { price: price.decorate } %>
+              <%= form_for [:admin, price.product, price], url: admin_product_price_path(price.product, price, format: :js, query_params: @query_params), html: { class: "popup popup--edit is-hidden edit_price", novalidate: "novalidate", data: { prefix: "price_#{price.id}" }} do |f| %>
+                  <button type="button" class="pull-right close"><i class="font-icon icon-close"></i></button>
+                  <hgroup>
+                    <h2>Edit Price</h2>
+                    <h3><%= price.product.name %></h3>
+                  </hgroup>
+                  <%= fields_for :price, price, index: price.id do |f| %>
+                      <div class="fields">
+                        <% if policy(:advanced_pricing).index? || (current_user.seller? && organization_can_access?(price.product.organization, :advanced_pricing)) %>
+                            <%= f.select :market_id, price.product.organization.all_markets_for_select, {include_blank: 'All Markets'}, {class: "select_market_id chosen"} %>
+                        <% else %>
+                            All Markets&nbsp;<span class="tooltip" data-tooltip="Market Selection Available in Grow Plan"></span>
+                        <% end %>
+                        <h3>Price for All Buyers</h3>
+                        <span class="preserve-alignment" style="vertical-align: top">
+                          <label style="float: left" for="<%= "price_#{price.id}_net_price" %>">Net Price</label>
+                          <% if FeatureAccess.product_level_fee?(market: current_market) && price.product_fee_pct > 0 && (current_user.admin? || current_user.market_manager?) %>
+                          <label class="lock-label" for="lockFieldID" style="float: left">
+                            <input type="checkbox" id="lockFieldID" class="lock-field"/>
+                            <span></span>
+                          </label>
+                          <% end %>
+                          <div style="clear: left"></div>
+                          <%= f.number_field :net_price, min: 0, step: 0.01, size: 4, class: 'net-price', data: {"net-percents-by-market-id" => json_escape(@net_percents_by_market_id.to_json), "cc-rate" => @seller_cc_rate} %>
+                        </span>
+                        <% if FeatureAccess.product_level_fee?(market: current_market) && price.product_fee_pct > 0 && (current_user.admin? || current_user.market_manager?) %>
+                        <span class="preserve-alignment" style="vertical-align: top">
+                          <label for="<%= "price_#{price.id}_product_fee_pct" %>">Fee</label>
+                          <div>
+                            <%= f.number_field :product_fee_pct, min: 0, step: 0.01, size: 4, class: "fee has-product-fee", inputmode: "numeric" %>
+                            <div class="markup-pct"></div>
+                          </div>
+                        </span>
+                        <% end %>
+                        <span class="preserve-alignment" style="vertical-align: top">
+                          <label for="<%= "price_#{price.id}_sale_price" %>">Sale Price</label>
+                          <%= f.number_field :sale_price, min: 0, step: 0.01, size: 4, class: "sale-price", inputmode: "numeric" %>
+                        </span>
+                        <span class="preserve-alignment" style="vertical-align: top">
+                          <label for="<%= "price_#{price.id}_min_quantity" %>">Min Qty</label>
+                          <%= f.number_field :min_quantity, min: 0, size: 4 %>
+                        </span>
+                        <div class="popup-error">
+                        </div>
+                      </div>
+                      <div class="form-actions pull-right">
+                        <%= f.submit f.object.new_record? ? "Add" : "Save Price" %>
+                      </div>
+                      <% if can_access?(:advanced_pricing) %>
+                          <div class="links">
+                            <%= link_to "✚ Add New Price", [:admin, price.product, :prices] %>
+                            <%= link_to "Go to Price List", [:admin, price.product, :prices] %>
+                          </div>
+                      <% end %>
+                  <% end %>
+              <% end %>
+              <%#= render partial: "edit_price_advanced", locals: { price: price.decorate } %>
             </li>
           <% end %>
         </ul>
@@ -62,11 +118,69 @@
         <% if product.use_simple_inventory? %>
           <%= link_to product.available_inventory, "#edit_product_#{product.id}",
                       class: "edit-toggle popup-toggle" %>
-          <%= render partial: "edit_lot", locals: { product: product } %>
+            <%= form_for [:admin, product], url: admin_product_path(product, format: :js, query_params: @query_params), html: { class: "popup popup--edit is-hidden", data: { organizations: @organizations.to_json(include: :locations), type: "edit"}} do |f| %>
+                <div class="fields">
+                  <button type="button" class="pull-right close"><i class="font-icon icon-close"></i></button>
+                  <hgroup>
+                    <h2>Edit Inventory</h2>
+                    <h3><%= product.name %></h3>
+                  </hgroup>
+
+                  <%= f.label :simple_inventory, "Quantity" %><br>
+                  <%= f.number_field :simple_inventory, min: 0, size: 3 %>
+                  <div class="popup-error">
+                  </div>
+                </div>
+
+                <div class="form-actions">
+                  <%= f.submit "Save Inventory", class: "btn--small" %>
+                </div>
+            <% end %>
+            <%#= render partial: "edit_lot", locals: { product: product } %>
         <% else %>
           <%= link_to product.available_inventory, "#add_inventory_product_#{product.id}",
                       class: "edit-toggle popup-toggle" %>
-          <%= render partial: "edit_lot_advanced", locals: { product: product } %>
+            <%= form_for [:admin, product, product.lots.build], url: admin_product_lots_path(product, format: :js, query_params: @query_params), html: { class: "popup popup--edit is-hidden", id: "add_inventory_product_#{product.id}" } do |f| %>
+                <div class="fields">
+                  <button type="button" class="pull-right close"><i class="font-icon icon-close"></i></button>
+                  <h2>Edit Inventory</h2>
+                  <fieldset>
+                    <legend>Add a lot for “<%= product.name %>”</legend>
+
+                    <div class="row">
+                      <div class="column column--half">
+                        <%= f.label :number, "Lot #" %><br>
+                        <%= f.text_field :number, size: 8  %>
+                      </div><div class="column column--half">
+                      <%= f.label :quantity %><br>
+                      <%= f.number_field :quantity, min: 0, size: 3 %>
+                    </div>
+                    </div>
+
+                    <div class="row">
+                      <div class="column column--half">
+                        <label for="lot_<%= product.id %>_good_from">Good From</label>
+                        <%= f.datetime_field :good_from, size: 8, class: 'alt-datepicker', id: "lot_#{product.id}_good_from" %><a href="#lot_<%= product.id %>_good_from" class="btn btn--end calendar-toggle" title="Select a date"><i class="font-icon icon-calendar"></i></a>
+                        <div class="datepicker" data-input="lot_<%= product.id %>_good_from"></div>
+                      </div>
+                      <div class="column column--half">
+                        <label for="lot_<%= product.id %>_expires_at">Expires On</label>
+                        <%= f.datetime_field :expires_at, size: 8, class: 'alt-datepicker', id: "lot_#{product.id}_expires_at", data: {'min-date' => 0} %><a href="#lot_<%= product.id %>_expires_at" class="btn btn--end calendar-toggle" title="Select a date"><i class="font-icon icon-calendar"></i></a>
+                        <div class="datepicker" data-input="lot_<%= product.id %>_expires_at"></div>
+                      </div>
+                    </div>
+                  </fieldset>
+
+                  <div class="popup-error">
+                  </div>
+                </div>
+
+                <div class="form-actions">
+                  <%= f.submit "Save Lot", class: "btn--small" %>
+                  <p><%= link_to "Edit Existing Lot",  admin_product_lots_path(product) %></p>
+                </div>
+            <% end %>
+            <%#= render partial: "edit_lot_advanced", locals: { product: product } %>
         <% end %>
       </td>
       <td><%= product.updated_at_dte %></td>
