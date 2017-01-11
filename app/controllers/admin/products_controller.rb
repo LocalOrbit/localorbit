@@ -118,7 +118,7 @@ module Admin
     private
 
     def find_product
-      @product = current_user.managed_products.find(params[:id]).decorate
+      @product = current_user.managed_products.includes(delivery_schedules:[:seller_fulfillment_location]).find(params[:id]).decorate
     end
 
     def update_product
@@ -224,7 +224,7 @@ module Admin
     def find_sibling_units(product)
       @sibling_units = []
       if product && product.general_product
-        @sibling_units = product.general_product.product.visible.all
+        @sibling_units = product.general_product.product.includes(:unit).visible.all
                            .reject { |sibling| sibling.id == product.id }
                            .sort { |a, b| a.unit.plural <=> b.unit.plural }
       end
