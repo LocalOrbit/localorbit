@@ -179,7 +179,6 @@ describe "Adding advanced pricing" do
 
   describe "with category market fees - single market", js: true do
     let!(:market) { create(:market, :with_delivery_schedule, :with_category_fee, allow_product_fee: true) }
-    let!(:market2){}
     let!(:user)   { create(:user, :market_manager) }
     let!(:organization) { create(:organization, :seller, markets: [market], users: [user]) }
 
