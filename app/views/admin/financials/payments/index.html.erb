@@ -32,7 +32,7 @@
         <tr class="payment-row">
           <td class="date"><%= payment.created_at.strftime("%m/%d/%Y") %></td>
           <td class="description">
-            <% if payment.payment_type == "order" || payment.payment_type == "seller payment" || payment.payment_type == "market payment" %>
+            <% if payment.orders.count > 0 && (payment.payment_type == "order" || payment.payment_type == "seller payment" || payment.payment_type == "market payment") %>
               <%- order_link_path = current_user.buyer_only? ? order_path(payment.orders.first) : admin_order_path(payment.orders.first) %>
               Order #: <%= link_to payment.orders.first.order_number, order_link_path %>
               <% if payment.orders.count > 1 %>
