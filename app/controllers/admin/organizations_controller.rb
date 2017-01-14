@@ -59,9 +59,12 @@ module Admin
     end
 
     def show
+      @markets = current_user.markets.order('name')
+      @org_markets = @organization.markets.pluck(:id)
     end
 
     def update
+      # KXM Market Matrix: @organization.markets = params[organization[markets]] (or something)
       if @organization.can_sell && organization_params[:can_sell]=="0" && (current_user.admin? || current_user.market_manager?)
         disable_supplier_inventory
       end
