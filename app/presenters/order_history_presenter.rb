@@ -14,7 +14,7 @@ class OrderHistoryPresenter
 
   # Groups of audits
   def activities
-    audits = Audit.includes(:auditable, :user, :masquerader).where("(associated_type = 'Order' AND associated_id = :order_id) OR
+    audits = Audit.includes(:user, :masquerader).where("(associated_type = 'Order' AND associated_id = :order_id) OR
     (auditable_type = 'Order' AND auditable_id = :order_id) OR
     (auditable_type = 'Credit' AND auditable_id = :order_id) OR
     (auditable_type = 'Payment' AND auditable_id IN (:payment_ids))",
