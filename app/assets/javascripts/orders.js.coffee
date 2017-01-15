@@ -57,3 +57,8 @@ $ ->
     $(this).parent().find("input").val("Duplicate Order")
     $(this).closest("form").submit()
     $(this).prop("disabled","disabled")
+
+  $("#export_button").click (e) ->
+    $(this).parent().find("input").val("Export Invoice")
+    $(this).closest("form").submit()
+    $(this).prop("disabled","disabled")

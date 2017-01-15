@@ -95,6 +95,9 @@ gem 'grape-swagger' # API V2, documentation
 
 gem 'honeybadger'
 
+gem 'quickbooks-ruby', '~> 0.4.6', :git => 'https://github.com/ruckus/quickbooks-ruby.git'
+gem "attr_encrypted", '~> 3.0.0'
+
 group :doc do
   gem 'sdoc', require: false
 end

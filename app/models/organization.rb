@@ -36,6 +36,9 @@ class Organization < ActiveRecord::Base
   belongs_to :plan, inverse_of: :organizations
   belongs_to :plan_bank_account, class_name: "BankAccount"
 
+  has_one :qb_token
+  has_one :qb_profile
+
   validates :name, presence: true, length: {maximum: 255, allow_blank: true}
   validate :require_payment_method
 
@@ -53,6 +56,7 @@ class Organization < ActiveRecord::Base
   serialize :twitter, TwitterUser
 
   accepts_nested_attributes_for :locations, reject_if: :reject_location
+  accepts_nested_attributes_for :qb_profile
 
   dragonfly_accessor :photo
   define_after_upload_resize(:photo, 1200, 1200)

@@ -15,6 +15,7 @@ class BuyerOrder
     :delivery_date,
     :gross_total,
     :sellers,
+    :qb_ref_id,
     to: :@order
 
   def initialize(order)

@@ -1,0 +1,68 @@
+<%= render "admin/markets/header" %>
+
+<%= render 'shared/errors', resource: @market.organization.qb_profile %>
+
+<h1>Quickbooks Profile</h1>
+<%= form_for @market.organization.qb_profile, url: [:admin, @market, :qb_profile], html: { class: "column column--two-thirds" } do |f| %>
+    <div class="row row--field">
+      <div class="field column column--half column--guttered">
+        <%= f.label :income_account_name, 'Receivables: Income Account for Sales' %><br>
+        <%= f.text_field :income_account_name, class: "column--full" %>
+      </div>
+    </div>
+    <div class="row row--field">
+      <div class="field column column--half column--guttered">
+        <%= f.label :asset_account_name, 'Payables: Liability Account for Products' %><br>
+        <%= f.text_field :asset_account_name, class: "column--full" %>
+      </div>
+    </div>
+    <div class="row row--field">
+      <div class="field column column--half column--guttered">
+        <%= f.label :expense_account_name, 'COGS: Expense account for Inventory' %><br>
+        <%= f.text_field :expense_account_name, class: "column--full" %>
+      </div>
+    </div>
+    <div class="row row--field">
+      <div class="field column column--half column--guttered">
+        <%= f.label :delivery_fee_item_name, 'Delivery Fee Item Name' %><br>
+        <%= f.text_field :delivery_fee_item_name, class: "column--full" %>
+      </div>
+    </div>
+    <div class="row row--field">
+      <div class="field column column--half column--guttered">
+        <%= f.label :prefix, 'PO/Invoice Number Prefix' %><br>
+        <%= f.text_field :prefix, class: "column--full" %>
+      </div>
+    </div>
+    <div class="row row--field">
+      <div class="field column column--one-third column--guttered">
+        <div class="form-actions">
+          <%= f.submit "Save" %>
+        </div>
+      </div>
+      <div class="field column column--two-thirds column--guttered">
+        <div class="form-actions">
+          <%= link_to 'Update QB Entities', sync_admin_market_qb_profile_url, class: 'btn' %>
+        </div>
+      </div>
+    </div>
+<% end %>
+
+<% if session[:qb_token].nil? %>
+<div class="row row--partial">
+
+  <!-- somewhere in your document include the Javascript -->
+  <script type="text/javascript" src="https://appcenter.intuit.com/Content/IA/intuit.ipp.anywhere.js"></script>
+
+  <!-- configure the Intuit object: 'grantUrl' is a URL in your application which kicks off the flow, see below -->
+  <script>
+      intuit.ipp.anywhere.setup({menuProxy: '/path/to/blue-dot', grantUrl: '<%= authenticate_admin_market_qb_profile_url %>'});
+  </script>
+
+  <!-- this will display a button that the user clicks to start the flow -->
+  <ipp:connectToIntuit></ipp:connectToIntuit>
+
+
+</div>
+<% end %>
+
