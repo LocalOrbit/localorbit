@@ -900,8 +900,8 @@ ActiveRecord::Schema.define(version: 20170119221117) do
     t.string  "asset_account_name"
     t.integer "asset_account_id"
     t.string  "prefix"
+    t.string "delivery_fee_item_name"
     t.integer "delivery_fee_item_id"
-    t.string  "delivery_fee_item_name"
   end
 
   create_table "qb_tokens", force: true do |t|
