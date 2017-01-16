@@ -6,6 +6,7 @@ module Admin
     before_action :ensure_selling_organization
     before_action :find_product, only: [:show, :update, :destroy]
     before_action :find_sticky_params, only: :index
+    before_action :load_qb_session
 
     def index
       if params["clear"]
@@ -102,6 +103,8 @@ module Admin
       update_sibling_units(@product)
 
       find_sibling_units(@product)
+
+      update_quickbooks(@product)
 
       message = updated ? "Saved #{@product.name}" : nil
       respond_to do |format|
@@ -291,6 +294,12 @@ module Admin
 
       status_code = updated ? 200 : 422
       render json: @data, status: status_code
+    end
+
+    def update_quickbooks(product)
+      if Pundit.policy(current_user, :market_quickbooks) && !product.qb_item_id.nil?
+        result = Quickbooks::Item.update_item(product, session)
+      end
     end
   end
 end

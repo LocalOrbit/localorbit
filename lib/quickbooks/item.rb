@@ -30,6 +30,19 @@ module Quickbooks
         service.create(item)
       end
 
+      def update_item (product, session)
+        service = Quickbooks::Service::Item.new
+        service.company_id = session[:qb_realm_id]
+        access_token = OAuth::AccessToken.new(QB_OAUTH_CONSUMER, session[:qb_token], session[:qb_secret])
+        service.access_token = access_token
+
+        item = service.fetch_by_id(product.qb_item_id)
+        item.name = "#{product.id}-#{product.name}"
+        item.description = product.short_description
+
+        service.update(item, :sparse => true)
+      end
+
       def query_item (item_name, session)
         item = Quickbooks::Model::Item.new
 
