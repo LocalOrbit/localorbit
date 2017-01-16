@@ -102,5 +102,10 @@ $ ->
       domOption().removeClass('is-hidden')
       buyerDay().val('')
       interval().val('')
-
+    else if cycle().val() == 'manual'
+      buyerDayOption().addClass('is-hidden')
+      intervalOption().addClass('is-hidden')
+      domOption().addClass('is-hidden')
+      buyerDay().val('')
+      interval().val('')
   cycle().trigger('change')
