@@ -152,7 +152,11 @@ Rails.application.routes.draw do
     end
 
     resource :delivery_tools, only: :show do
+
       resources :pick_lists, only: :show
+
+      get "pick_lists_date(/:buyer_deliver_on)", to: "pick_lists#show"
+
       resources :pack_lists, only: :show
       resources :individual_pack_lists, only: :show
       resources :order_summaries, only: :show
