@@ -31,7 +31,7 @@
 
   <div class="row row--field">
     <%= f.label :role_id, 'Permission Set' %>
-    <%= f.select :role_id, !@roles.nil? ? @roles.collect { |p| [ p.name, p.id ] } : '', {include_blank: "Select Role Set", :selected => @user.roles.first.id}, class: "column--full" %>
+    <%= f.select :role_id, !@roles.nil? ? @roles.collect { |p| [ p.name, p.id ] } : '', {include_blank: "Select Role Set", :selected => !@user.roles.empty? ? @user.roles.first.id : ''}, class: "column--full" %>
   </div>
 
     <div class="table-wrapper">
