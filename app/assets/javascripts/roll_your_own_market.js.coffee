@@ -42,11 +42,10 @@ $(document).ready ->
     ret_val
 
 
-  ###*
-  # change_price
-  # Coordinates update to price field, which is submitted for creation of the payment record
-  #
-  ###
+  change_plan =(modifier) ->
+    change_price modifier
+    change_interval modifier
+    return
 
   change_price = (modifier) ->
     price_box = $('#details_plan_price')
@@ -64,6 +63,11 @@ $(document).ready ->
         price_box.val new_price
         break
     price_box.prop 'readonly', true
+    return
+
+  change_interval = (modifier) ->
+    cycle = $('#cycle')
+    cycle.prop('innerHTML', modifier.interval)
     return
 
   ###*
@@ -136,7 +140,7 @@ $(document).ready ->
     target = '/roll_your_own_market/get_stripe_plans'
     retrieved_plan = $.post(target, 'plan': plan_id)
     retrieved_plan.success (response) ->
-      change_price response
+      change_plan response
       $('#apply_discount').prop 'disabled', false
       $('#details_coupon').prop 'readonly', false
       $('#progress-bar').addClass 'is-hidden'
@@ -162,7 +166,7 @@ $(document).ready ->
       target = '/roll_your_own_market/get_stripe_coupon'
       retrieved_coupon = $.post(target, 'coupon': coupon)
       retrieved_coupon.success (response) ->
-        change_price response
+        change_plan response
         discount_box.prop 'readonly', true
         $('#progress-bar').addClass 'is-hidden'
         return
