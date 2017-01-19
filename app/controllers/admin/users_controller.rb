@@ -17,7 +17,7 @@ module Admin
     end
 
     def edit
-      @roles = Role.all.order(:description)
+      @roles = Role.all.order(:name)
     end
 
     def update
