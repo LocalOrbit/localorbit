@@ -18,9 +18,9 @@ class MarketsController < ApplicationController
   ##
   def new
     ryo_plans = Plan.ryo_enabled_plans
-    @plan_data = PaymentProvider::Stripe.get_stripe_plans.select{|plan| ryo_plans.include?(plan.id)}.sort_by{|p| p.amount}.reverse
+    @plan_data = PaymentProvider::Stripe.get_stripe_plans.select{|plan| ryo_plans.include?(plan.id)}.sort_by{|p| p.interval == 'month' ? p.amount * 12 : p.amount}.reverse
 
-    requested_plan = params[:plan] || "Start"
+    requested_plan = params[:plan] || @plan_data.first.id
     @stripe_plan ||= PaymentProvider::Stripe.get_stripe_plans(requested_plan.upcase)
 
     plan ||= Plan.find_by stripe_id: requested_plan.upcase

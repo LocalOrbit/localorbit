@@ -48,7 +48,7 @@ class User < ActiveRecord::Base
   has_many :subscriptions
   has_many :subscription_types, through: :subscriptions
 
-  attr_accessor :terms_of_service
+  attr_accessor :terms_of_service, :role_id
 
   validates :terms_of_service, acceptance: true, on: :create
   validates :name, presence: true, if: -> { name.present? }
