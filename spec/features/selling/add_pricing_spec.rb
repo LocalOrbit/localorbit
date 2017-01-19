@@ -198,7 +198,7 @@ describe "Adding advanced pricing" do
       find(:field, 'price[fee]', with: '1').click
       fill_in "price[sale_price]", with: "12.90"
 
-      expect(find_field("price[net_price]").value).to eq("12.53")
+      expect(find_field("price[net_price]").value).to eq("10.98")
       click_button "Add"
 
       expect(page).to have_content("Successfully added a new price")
