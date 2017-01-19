@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161228040940) do
+ActiveRecord::Schema.define(version: 20170113181710) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -258,10 +258,10 @@ ActiveRecord::Schema.define(version: 20161228040940) do
     t.string   "fee_label",                                               default: "Delivery Fee"
     t.boolean  "is_recoverable"
     t.datetime "inactive_at"
-    t.decimal  "order_minimum",                  precision: 10, scale: 2, default: 0.0
+    t.decimal  "order_minimum",                  precision: 10, scale: 2, default: 0.0,            null: false
     t.string   "delivery_cycle"
     t.integer  "day_of_month"
-    t.integer  "week_interval"
+    t.integer  "week_interval",                                           default: 1
   end
 
   add_index "delivery_schedules", ["deleted_at"], name: "index_delivery_schedules_on_deleted_at", using: :btree
@@ -824,6 +824,7 @@ ActiveRecord::Schema.define(version: 20161228040940) do
 
   add_index "prices", ["market_id"], name: "index_prices_on_market_id", using: :btree
   add_index "prices", ["organization_id"], name: "index_prices_on_organization_id", using: :btree
+  add_index "prices", ["product_id", "market_id", "organization_id", "updated_at", "deleted_at"], name: "index_prices_on_product_market_organization_updated_deleted", using: :btree
   add_index "prices", ["product_id", "market_id", "organization_id"], name: "index_prices_on_product_id_and_market_id_and_organization_id", using: :btree
   add_index "prices", ["product_id"], name: "index_prices_on_product_id", using: :btree
 
