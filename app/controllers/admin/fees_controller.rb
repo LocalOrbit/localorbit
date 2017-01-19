@@ -9,7 +9,7 @@ module Admin
 
     def update
       market_attrs = fee_params.except(:organization)
-      org_attrs = fee_params.slice(:organization)["organization"]
+      org_attrs = fee_params.slice(:organization)["organization"] || {}
       payment_fees_paid_by = market_attrs.delete('payment_fees_paid_by')
       @market.set_credit_card_payment_fee_payer(payment_fees_paid_by)
 

@@ -77,6 +77,9 @@
       <%= f.fields_for :organization, @organization do |organization_form| %>
         <fieldset>
           <legend>Plan Payment Schedule</legend>
+          <% if current_user.admin? %>
+          <p>The plan values below do not yet sync with Stripe. While they should be accurate (at least for subscribed markets), changing them here is a pretty meaningless exercise. Syncing with Stripe is on the development timeline.</p>
+          <% end %>
 
           <div class="row row--field">
             <div class="field column column--half column--guttered">
