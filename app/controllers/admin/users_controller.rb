@@ -17,10 +17,16 @@ module Admin
     end
 
     def edit
+      @roles = Role.all.order(:description)
     end
 
     def update
       original_email = @user.email
+
+      @user.roles.clear
+      if user_params[:role_id]
+        @user.roles << Role.find_by_id(user_params[:role_id])
+      end
 
       if @user.update_attributes(user_params)
         redirect_to admin_users_path, notice: "User saved successfully."
@@ -77,7 +83,7 @@ module Admin
     end
 
     def user_params
-      params.require(:user).permit(:name, :email, :password, :password_confirmation).reject {|_, v| v.empty? }
+      params.require(:user).permit(:name, :email, :password, :password_confirmation, :role_id).reject {|_, v| v.empty? }
     end
   end
 end

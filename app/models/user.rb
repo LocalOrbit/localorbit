@@ -12,7 +12,7 @@ class User < ActiveRecord::Base
 
   trimmed_fields :email
 
-  has_and_belongs_to_many :roles, :join_table => :users_roles
+  has_and_belongs_to_many :roles, :join_table => :user_roles
 
   has_many :managed_markets_join, class_name: "ManagedMarket"
   #has_many :audits
@@ -48,7 +48,7 @@ class User < ActiveRecord::Base
   has_many :subscriptions
   has_many :subscription_types, through: :subscriptions
 
-  attr_accessor :terms_of_service
+  attr_accessor :terms_of_service, :role_id
 
   validates :terms_of_service, acceptance: true, on: :create
   validates :name, presence: true, if: -> { name.present? }
