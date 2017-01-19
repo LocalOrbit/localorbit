@@ -13,7 +13,7 @@
     <fieldset class="role-info">
       <div class="field">
         <br>
-        <%= f.collection_check_boxes(:activities, @role_actions, :id, :section, {:checked => @act.map(&:id)}) do |cb| %>
+        <%= f.collection_check_boxes(:activities, @role_actions, :id, :section, {:checked => !@act.nil? ? @act.map(&:id) : ''}) do |cb| %>
           <div class="row">
           <%= cb.label(class: "check_box") do %>
             <div style="float: left">
