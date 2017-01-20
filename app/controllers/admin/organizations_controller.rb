@@ -48,10 +48,13 @@ module Admin
       op = organization_params.merge({:org_type => org_type})
       op.merge!({active: "1"}) if (org_type == "B" && auto_activate)
 
+
       result = RegisterStripeOrganization.perform(organization_params: op, user: current_user, market_id: params[:initial_market_id])
 
       if result.success?
         organization = result.organization
+        # This updates the association through market_organizations, adding and deleting rows (rather than setting deleted_at)
+        organization.markets = Market.find(params[:organization][:markets].map(&:to_i))
         redirect_to [:admin, organization], notice: "#{organization.name} has been created"
       else
         @markets = current_user.markets
@@ -62,11 +65,17 @@ module Admin
 
     def show
       @markets = current_user.markets.order('name')
-      @org_markets = @organization.markets.pluck(:id)
+      if @organization.blank?
+        redirect_to action: :index, alert: "That organization is no longer available"
+      else
+        @org_markets = @organization.markets.pluck(:id)
+      end
     end
 
     def update
-      # KXM Market Matrix: @organization.markets = params[organization[markets]] (or something)
+      # This updates the association through market_organizations, adding and deleting rows (rather than setting deleted_at)
+      @organization.markets = Market.find(params[:organization][:markets].map(&:to_i))
+
       if @organization.can_sell && organization_params[:can_sell]=="0" && (current_user.admin? || current_user.market_manager?)
         disable_supplier_inventory
       end
