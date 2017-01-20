@@ -71,50 +71,58 @@
       </div>
     </fieldset>
 
-    <% if !@market.self_directed_creation %>
-
-    <fieldset>
-      <legend>Plan Payment Schedule</legend>
-
-      <div class="row row--field">
-        <div class="field column column--half column--guttered">
-          <%= f.label :plan_id %><br>
-          <%= f.select :plan_id, Plan.options_for_select, include_blank: 'Select a plan' %>
-        </div
-        ><div class="field column column--half column--guttered">
-          <%= f.label :plan_interval, "Plan Schedule" %><br>
-          <%= f.select :plan_interval, [["Monthly", 1], ["Yearly", 12]], include_blank: 'Select a schedule' %><br>
-          IMPORTANT: When changing the plan schedule, set the Plan Start Date to be the date the next payment is due.
-        </div>
-      </div>
-
-      <div class="row row--field">
-        <div class="field column column--half column--guttered">
-          <%= f.label :plan_fee %><br>
-          $<%= f.number_field :plan_fee, min: 0, max: 9999.99, step: "0.01", size: 6 %>
-        </div
-        ><div class="field column column--half column--guttered">
-          <%= f.label :plan_start_at, "Plan Start Date" %><br>
-          <%= f.datetime_field :plan_start_at, size: 8, class: "alt-datepicker" %><a href="#market_plan_start_at" class="btn btn--end calendar-toggle" title="Select a date"><i class="font-icon icon-calendar"></i></a>
-          <div class="datepicker" data-input="market_plan_start_at"></div>
-        </div>
-      </div>
-
-      <div class="row row--field">
-        <div class="field column column--half column--guttered">
-          <%= f.label :plan_bank_account_id %><br>
-          <%= f.select :plan_bank_account_id, @market.decorate.payment_accounts_for_select, include_blank: 'Select a bank account' %>
-        </div
-        ><div class="field column column--half column--guttered">
-          <% if (payment_date = @market.organization.next_service_payment_at) %>
-          Next Payment Due On:<br>
-          <%= payment_date.strftime("%b %d, %Y") %>
+    <%# KXM Fees tab has to account for plan up/downgrades %>
+    <%# MVP may end up disabling plan maintenence for Accelerate subscribers altogether, depending instead on a manual process for that specific downgrade.  In any case, there must be some workflow documentation of said downgrades (ASAP), and defining the workflow will be the first step in automating the process. %>
+    <% if current_user.admin? || current_user.market_manager? %>
+      <%= f.fields_for :organization, @organization do |organization_form| %>
+        <fieldset>
+          <legend>Plan Payment Schedule</legend>
+          <% if current_user.admin? %>
+          <p>The plan values below do not yet sync with Stripe. While they should be accurate (at least for subscribed markets), changing them here is a pretty meaningless exercise. Syncing with Stripe is on the development timeline.</p>
           <% end %>
-        </div>
-      </div>
-    </fieldset>
 
-    <% end %>
+          <div class="row row--field">
+            <div class="field column column--half column--guttered">
+              <%= organization_form.label :plan_id %><br>
+              <%= organization_form.select :plan_id, Plan.options_for_select, {include_blank: 'Select a plan'}, {disabled: current_user.market_manager?} %>
+            </div
+            ><div class="field column column--half column--guttered">
+              <%= organization_form.label :plan_interval, "Plan Schedule" %><br>
+              <%= organization_form.select :plan_interval, [["Monthly", 1], ["Yearly", 12]], {include_blank: 'Select a schedule'}, {disabled: current_user.market_manager?} %><br>
+              IMPORTANT: When changing the plan schedule, set the Plan Start Date to be the date the next payment is due.
+            </div>
+          </div>
+
+          <div class="row row--field">
+            <div class="field column column--half column--guttered">
+              <%= organization_form.label :plan_fee %><br>
+              $<%= organization_form.number_field :plan_fee, min: 0, max: 9999.99, step: "0.01", size: 6, disabled: current_user.market_manager? %>
+            </div
+            ><div class="field column column--half column--guttered">
+              <%= organization_form.label :plan_start_at, "Plan Start Date" %><br>
+              <%= organization_form.datetime_field :plan_start_at, size: 8, class: "alt-datepicker", disabled: current_user.market_manager? %><a href="#market_plan_start_at" class="btn btn--end calendar-toggle" title="Select a date"><i class="font-icon icon-calendar"></i></a>
+              <div class="datepicker" data-input="market_plan_start_at"></div>
+            </div>
+          </div>
+
+          <div class="row row--field">
+            <div class="field column column--half column--guttered">
+              <% if (last_payment_date = @market.organization.last_service_payment_at) %>
+                <label>Last Payment Made On:</label><br>
+              <%= last_payment_date.strftime("%b %d, %Y") %>
+              <% end %>
+            </div
+            ><div class="field column column--half column--guttered">
+              <% if (payment_date = @market.organization.next_service_payment_at) %>
+              <label>Next Payment Due On:</label><br>
+              <%= payment_date.strftime("%b %d, %Y") %>
+              <% end %>
+            </div>
+          </div>
+        </fieldset>
+      <% end %> <%# fields_for block %>
+    <% end %> <%# admin conditional %>
+
 
     <div class="form-actions">
       <%= f.submit "Update Fees", class: "mobile-block" %>
