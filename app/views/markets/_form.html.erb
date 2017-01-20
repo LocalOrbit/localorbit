@@ -21,7 +21,7 @@
           <div class="row">
             <div class="field column column--third column--guttered">
               <%= select(:details, :plan, @plan_data.each.map {|plan| [plan[:name], plan[:id]] }, {selected: @stripe_plan.try(:id) }, { class: "required column--full" } ) %><br />
-              <span class="help-text">You will be billed annually for your<br />Local Orbit Service Plan</span>
+              <span class="help-text">You will be billed once every <span id="cycle"><%= @stripe_plan.interval %></span> for this<br />Local Orbit Service Plan</span>
             </div
             ><div class="field column column--third">
               <%= text_field(:details, :plan_price, placeholder: 'Price', class: "column--full", readonly: "readonly", value: @stripe_plan.try(:amount)/100) %><br />
