@@ -6,28 +6,38 @@
   <%= form_for @market, url: [:admin, @market, :style_chooser], html: { class: "column column--two-thirds" } do |f| %>
     <fieldset>
       <legend>Style Chooser</legend>
-      <div class="field">
-        <%= f.label :text_color, "Market Color" %>
-        <span class="tooltip" data-tooltip="This will be the color of the main navigation and headers on your site.  It will also be used for your Fresh Sheet, Newsletter and transactional email templates.  Enter a hex color from your brand or click on the color swatch to select a color."></span>
-        <div class="input-append color" data-color="<%= @market.text_color.present? ? @market.text_color : "#3f5d98" %>">
-          <%= f.text_field :text_color, size: "7", class: "input-hex", value: (@market.text_color.present? ? @market.text_color : "#3f5d98") -%><button class="add-on btn btn--end" type="button"><i class="swatch"></i></button>
+      <div class="row">
+        <div class="column column--half">
+          <div class="field">
+            <%= f.label :text_color, "Market Color" %>
+            <span class="tooltip" data-tooltip="This will be the color of the main navigation and headers on your site.  It will also be used for your Fresh Sheet, Newsletter and transactional email templates.  Enter a hex color from your brand or click on the color swatch to select a color."></span>
+            <div class="input-append color" data-color="<%= @market.text_color.present? ? @market.text_color : "#3f5d98" %>">
+              <%= f.text_field :text_color, size: "7", class: "input-hex", value: (@market.text_color.present? ? @market.text_color : "#3f5d98") -%><button class="add-on btn btn--end" type="button"><i class="swatch"></i></button>
+            </div>
+          </div>
+          <div class="field">
+            <%= f.label :background_color %>
+            <span class="tooltip" data-tooltip="You can select a solid color that fits your brand or you can select a Background Image below.  If you do not want a background, enter hex code #ffffff for white."></span>
+            <div class="input-append color" data-color="<%= @market.background_color.present? ? @market.background_color : "#ffffff" %>">
+              <%= f.text_field :background_color, size: "7", class: "input-hex", value: (@market.background_color.present? ? @market.background_color : "#ffffff") -%><button class="add-on btn btn--end" type="button"><i class="swatch"></i></button>
+            </div>
+          </div>
+        </div>
+        <div class="column column--half">
+          <label class="column column--guttered column--third background-choice">
+            <div class="field column column--guttered">
+              <%= image_tag @market.background_img.remote_url if @market.background_img_stored? %><br/>
+              <%= f.file_field :background_img, class: "background-img-button" %><br>
+              <%= f.radio_button :background_image, "", {:checked => (@market.background_img_stored? ? "checked" : false)} %> Uploaded Image
+            </div>
+          </label>
         </div>
       </div>
-      <div class="field">
-        <%= f.label :background_color %>
-        <span class="tooltip" data-tooltip="You can select a solid color that fits your brand or you can select a Background Image below.  If you do not want a background, enter hex code #ffffff for white."></span>
-        <div class="input-append color" data-color="<%= @market.background_color.present? ? @market.background_color : "#ffffff" %>">
-          <%= f.text_field :background_color, size: "7", class: "input-hex", value: (@market.background_color.present? ? @market.background_color : "#ffffff") -%><button class="add-on btn btn--end" type="button"><i class="swatch"></i></button>
-        </div>
-      </div>
-
       <div class="field ">
-        <%= f.label :background_image %><br>
-
         <div class="row row--squash">
           <label class="column column--guttered column--third background-choice">
             <div class="background_swatch" id="background_swatch"></div>
-            <%= f.radio_button :background_image, "", {:checked => (@market.background_image.blank? ? "checked" : false)} %> Solid Color
+            <%= f.radio_button :background_image, "solid_color", {:checked => (@market.background_image. == "solid_color" ? "checked" : false)} %> Solid Color
           </label><% background_options.each do |background| %><%= cycle '', '', '<div class="row row--squash">'.html_safe, name: "open_row" -%><label class="column column--guttered column--third background-choice">
               <%= image_tag "backgrounds/#{background[1]}", alt: background[0] %><br>
               <%= f.radio_button :background_image, background[1], {:checked => (@market.background_image == background[1] ? "checked" : false)} %> <%= background[0] %>

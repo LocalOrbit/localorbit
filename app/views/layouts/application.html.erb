@@ -18,9 +18,12 @@
       body {
       <% if current_market.background_color.present? -%>
         background-color: <%= current_market.background_color -%>;
+        background-image: none;
       <% end -%>
       <% if !current_market.background_image.blank? -%>
         background-image: url(<%= asset_path "backgrounds/#{current_market.background_image}" -%>);
+      <% elsif !current_market.background_img.blank? -%>
+        background-image: url(<%= current_market.background_img.remote_url -%>);
       <% else -%>
         background-image: none;
       <% end -%>

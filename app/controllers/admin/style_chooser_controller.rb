@@ -17,7 +17,7 @@ module Admin
     protected
 
     def style_params
-      params.require(:market).permit(:background_color, :background_image, :text_color)
+      params.require(:market).permit(:background_color, :background_image, :background_img, :text_color)
     end
 
     def validate_colors(style_params)
