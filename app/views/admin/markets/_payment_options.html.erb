@@ -1,8 +1,8 @@
-<%# KXM Market Matrix: 'Allowed payment methods' partial should disply the existing organization values for the 'show' action %>
+<%# KXM Market Matrix: 'Allowed payment methods' partial should display the existing organization values for the 'show' action %>
 <label>Allowed payment methods</label><br>
-<% if @markets && @markets.size > 1 %>
-  <p>Select a market to see payment options</p>
-<% else %>
+<%# if @markets && @markets.size > 1 %>
+  <!--p>Select a market to see payment options</p-->
+<%# else %>
   <% if allow_payment_type?("allow_purchase_orders") %>
     <input type="hidden" name="organization[allow_purchase_orders]" value="0">
     <input type="checkbox" name="organization[allow_purchase_orders]" id="organization_allow_purchase_orders" value="1" <%= 'checked="checked"' if payment_type_enabled?("allow_purchase_orders") %>>
@@ -19,4 +19,4 @@
     <input type="checkbox" name="organization[allow_ach]" id="organization_allow_ach" value="1" <%= 'checked="checked"' if payment_type_enabled?("allow_ach") %>>
     <label for="organization_allow_ach">Allow ACH</label><br>
   <% end %>
-<% end %>
+<%# end %>

@@ -5,13 +5,12 @@
   <fieldset class="organization-info">
     <legend>Organization Information</legend>
     <% if @organization.new_record? %>
+      <%= hidden_field_tag :initial_market_id, current_market.id %>
       <% if @markets.size > 1 %>
       <div class="field column column--half">
         <%= label_tag :initial_market_id, "Market" %><br>
-        <%= select_tag :initial_market_id, options_for_select(@markets.map {|m| [m.name, m.id] }, selected: params[:initial_market_id]), prompt: "Select a Market", class: "column--full chosen" %>
+        <%= select_tag :initial_market_id, options_for_select(@markets.map {|m| [m.name, m.id] }, selected: params[:initial_market_id] || current_market.id), prompt: "Select a Market", class: "column--full chosen" %>
       </div>
-      <% else %>
-        <%= hidden_field_tag :initial_market_id, @markets.first.id %>
       <% end %>
     <% end %>
 
