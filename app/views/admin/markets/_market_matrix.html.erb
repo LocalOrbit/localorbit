@@ -1,7 +1,5 @@
 <label>Market associations</label><br>
 
-<%# KXM Market Matrix: is based on the flawed assumption that a single, unique buyer may be assoviated with multiple markets %>
-<%# Though technically possible (via the matket_organizations table), wrapping the allowed payment methods into the organization table means that Markets with different allowed payment methods have to create their own unique copy of an organization for the organization payment methods to reflect correctly.  Add one more day to the list of days I should have been in the room to discuss the long-term impact of a bad decision... %> 
 <% @markets.each do |m| %>
   <input type="checkbox" name="organization[markets][]" id="organization_market_<%= m.id %>" value="<%= m.id %>" <%= 'checked="checked"' if @org_markets.include?(m.id) %>>
   <label for="organization_market_<%= m.id %>"><%= m.name %></label><br>

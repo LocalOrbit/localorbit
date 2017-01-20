@@ -37,6 +37,8 @@ module Admin
         allow_purchase_orders: first_market.default_allow_purchase_orders,
         allow_credit_cards: first_market.default_allow_credit_cards
       )
+
+      @org_markets = @organization.markets.pluck(:id)
     end
 
     def create
