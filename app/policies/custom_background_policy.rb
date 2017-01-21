@@ -1,0 +1,3 @@
+class CustomBackgroundPolicy < ApplicationPolicy
+
+end

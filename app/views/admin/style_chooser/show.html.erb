@@ -23,6 +23,7 @@
             </div>
           </div>
         </div>
+        <% if policy(:custom_background).index? %>
         <div class="column column--half">
           <label class="column column--guttered column--third background-choice">
             <div class="field column column--guttered">
@@ -33,6 +34,7 @@
           </label>
         </div>
       </div>
+      <% end %>
       <div class="field ">
         <div class="row row--squash">
           <label class="column column--guttered column--third background-choice">
