@@ -11,7 +11,8 @@ module Admin
         @market.update_attributes(style_params)
         render :show, notice: "Styles Updated"
       else
-        render :show, alert: error
+        #error = error + @market.errors.full_messages.map(&:inspect).join(', ')
+        render :show, alert: error.delete('"')
       end
     end
 
