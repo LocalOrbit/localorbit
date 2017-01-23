@@ -16,14 +16,13 @@
 
     <style>
       body {
-      <% if current_market.background_color.present? -%>
+      <% if current_market.background_image == "solid_color" -%>
         background-color: <%= current_market.background_color -%>;
         background-image: none;
-      <% end -%>
-      <% if !current_market.background_image.blank? -%>
-        background-image: url(<%= asset_path "backgrounds/#{current_market.background_image}" -%>);
-      <% elsif !current_market.background_img.blank? -%>
+      <% elsif current_market.background_image == "uploaded" -%>
         background-image: url(<%= current_market.background_img.remote_url -%>);
+      <% elsif !current_market.background_image.blank? && current_market.background_image != "solid_color" && current_market.background_image != "uploaded" -%>
+        background-image: url(<%= asset_path "backgrounds/#{current_market.background_image}" -%>);
       <% else -%>
         background-image: none;
       <% end -%>
