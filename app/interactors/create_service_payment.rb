@@ -2,7 +2,7 @@ class CreateServicePayment
   include Interactor
 
   def perform
-    # KXM !! Restructure this so it handles the Stripe invoice object.  The payment is currently handled in the invoice handler - use they 'build_payment' method as an example
+    # KXM Stripe Webhook: Restructure this so it handles the Stripe invoice object.  The payment is currently handled in the invoice handler - use they 'build_payment' method as an example
     invoice ||= context[:invoice]
     entity  ||= context[:entity]
     organization = entity.class == Market ? entity.organization : entity
