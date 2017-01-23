@@ -7,10 +7,11 @@ module Admin
 
     def update
       error = validate_colors(style_params)
-      if error.length == 0 && @market.update_attributes(style_params)
-        redirect_to [:admin, @market, :style_chooser], notice: "Styles updated"
+      if @market.valid? && error.length == 0
+        @market.update_attributes(style_params)
+        render :show, notice: "Styles Updated"
       else
-        redirect_to [:admin, @market, :style_chooser], alert: error
+        render :show, alert: error
       end
     end
 
