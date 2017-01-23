@@ -60,6 +60,7 @@ class Market < ActiveRecord::Base
   define_after_upload_resize(:background_img, 1366, 768)
   validates_property :format, of: :logo,  in: %w(jpg jpeg png gif)
   validates_property :format, of: :photo, in: %w(jpg jpeg png gif)
+  validates_property :format, of: :background_img, in: %w(jpg jpeg png gif), if: :background_img_changed?
 
   scope_accessible :sort, method: :for_sort, ignore_blank: true
   scope_accessible :search, method: :for_search, ignore_blank: true

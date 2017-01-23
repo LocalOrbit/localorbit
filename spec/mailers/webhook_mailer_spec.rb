@@ -64,7 +64,9 @@ describe WebhookMailer do
           id: "in_19No6p2VpjOYk6TmrOCmZzL2",
           charge: "ch_19No6p2VpjOYk6TmwCZ6FHzb",
           customer: "cus_9hCVFBPgpw7DTe",
-          payment: "ch_19No6p2VpjOYk6TmwCZ6FHzb"
+          payment: "ch_19No6p2VpjOYk6TmwCZ6FHzb",
+          total: 39900,
+          subscription: "sub_ThisIsADummySub"
         }
       }, 
       livemode: false, 
