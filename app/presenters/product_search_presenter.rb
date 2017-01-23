@@ -15,6 +15,6 @@ class ProductSearchPresenter
   end
 
   def categories(user, market)
-    @categories = Category.select("products.category_id, products.name").joins(:products).where(products: {organization_id: user.managed_markets.map {|m| m.organizations.pluck(:id).flatten}}).order("products.name").uniq
+    @categories = Category.select("products.category_id, products.name").joins(:products).where(depth: [1..2], products: {organization_id: user.managed_markets.map {|m| m.organizations.pluck(:id).flatten}}).order("products.name").uniq
   end
 end
