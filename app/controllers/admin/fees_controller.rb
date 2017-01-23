@@ -8,8 +8,8 @@ module Admin
     end
 
     def update
-      market_attrs = fee_params.except(:plan_id, :plan_start_at, :plan_interval, :plan_fee, :plan_bank_account_id)
-      org_attrs = fee_params.slice(:plan_id, :plan_start_at, :plan_interval, :plan_fee, :plan_bank_account_id)
+      market_attrs = fee_params.except(:organization)
+      org_attrs = fee_params.slice(:organization)["organization"] || {}
       payment_fees_paid_by = market_attrs.delete('payment_fees_paid_by')
       @market.set_credit_card_payment_fee_payer(payment_fees_paid_by)
 
@@ -48,12 +48,8 @@ module Admin
         :ach_seller_fee, :ach_market_fee, :ach_fee_cap,
         :market_seller_fee,
         :po_payment_term,
-        :plan_id,
-        :plan_start_at,
-        :plan_interval,
-        :plan_fee,
-        :plan_bank_account_id,
         :payment_fees_paid_by,
+        organization: [:plan_id, :plan_start_at, :plan_interval, :plan_fee, :plan_bank_account_id]
       ])
     end
   end

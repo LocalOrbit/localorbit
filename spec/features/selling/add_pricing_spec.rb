@@ -6,10 +6,18 @@ describe "Adding advanced pricing" do
   let(:market2)       { create(:market, :with_delivery_schedule) }
   let(:market3)       { create(:market, :with_delivery_schedule, allow_product_fee: true)}
   let!(:organization) { create(:organization, :seller, markets: [market, market2], users: [user]) }
+  # KXM When running :185 (only?), this line throws an 'Market expected, got NilClass' error
+  let!(:organization2) { create(:organization, :buyer, markets: [market, market2], users: [user]) }
   let!(:product)      { create(:product, organization: organization) }
   let!(:user2)         { create(:user, :market_manager, managed_markets: [market]) }
 
+
   before do
+    organization2.market_organizations.each do |mo|
+      mo.deleted_at = Time.now
+      mo.save!
+    end
+
     switch_to_subdomain(market.subdomain)
     sign_in_as(user)
     within "#admin-nav" do
@@ -112,6 +120,10 @@ describe "Adding advanced pricing" do
       expect(record.net_price).to eq("$1.87") # 5.9 % fees
       expect(record.sale_price).to eq("$1.99")
     end
+
+    it "excludes inactive buyers" do
+      expect(page).to_not have_select("price[organization_id]", :options => ["All Buyers", "Organization 4", "Organization 5"])
+    end
   end
 
   it "canceling adding a price", js: true do
@@ -167,7 +179,6 @@ describe "Adding advanced pricing" do
 
   describe "with category market fees - single market", js: true do
     let!(:market) { create(:market, :with_delivery_schedule, :with_category_fee, allow_product_fee: true) }
-    let!(:market2){}
     let!(:user)   { create(:user, :market_manager) }
     let!(:organization) { create(:organization, :seller, markets: [market], users: [user]) }
 
@@ -198,7 +209,7 @@ describe "Adding advanced pricing" do
       find(:field, 'price[fee]', with: '1').click
       fill_in "price[sale_price]", with: "12.90"
 
-      expect(find_field("price[net_price]").value).to eq("12.53")
+      expect(find_field("price[net_price]").value).to eq("10.98")
       click_button "Add"
 
       expect(page).to have_content("Successfully added a new price")

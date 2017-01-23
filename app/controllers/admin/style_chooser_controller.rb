@@ -7,17 +7,19 @@ module Admin
 
     def update
       error = validate_colors(style_params)
-      if error.length == 0 && @market.update_attributes(style_params)
-        redirect_to [:admin, @market, :style_chooser], notice: "Styles updated"
+      if @market.valid? && error.length == 0
+        @market.update_attributes(style_params)
+        render :show, notice: "Styles Updated"
       else
-        redirect_to [:admin, @market, :style_chooser], alert: error
+        #error = error + @market.errors.full_messages.map(&:inspect).join(', ')
+        render :show, alert: error.delete('"')
       end
     end
 
     protected
 
     def style_params
-      params.require(:market).permit(:background_color, :background_image, :text_color)
+      params.require(:market).permit(:background_color, :background_image, :background_img, :text_color)
     end
 
     def validate_colors(style_params)

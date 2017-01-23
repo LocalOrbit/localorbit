@@ -1,4 +1,7 @@
-<%= form_for @role, url: [:admin, @role], html: { class: "column column--two-thirds" } do |f| %>
+<%= form_for [:admin, @role], html: {class: "organization column column--full"} do |f| %>
+
+    <%= render "shared/errors", { resource: @role } %>
+
     <fieldset class="role-info">
       <div class="field">
         <%= f.label :name %>
@@ -9,14 +12,25 @@
 
     <fieldset class="role-info">
       <div class="field">
-        <%= f.label :activities %>
         <br>
-        <%= f.collection_select :activities, @role_actions, :id, :description, { multiple: true } %>
+        <%= f.collection_check_boxes(:activities, @role_actions, :id, :section, {:checked => !@act.nil? ? @act.map(&:id) : ''}) do |cb| %>
+          <div class="row">
+          <%= cb.label(class: "check_box") do %>
+            <div style="float: left">
+              <%= cb.check_box(class: "check_box") %>
+            </div>
+
+            <div style="float: left">
+              <%= cb.text.humanize %>
+            </div>
+        <% end %>
+      </div>
+<% end %>
       </div>
     </fieldset>
 
-    <div class="form-actions">
-      <%= link_to "Cancel", admin_roles_path, class: "btn cancel" %>
-      <%= f.submit "Add Role" %>
+    <div class="field form-actions">
+      <%= link_to "Cancel", (@role.new_record? ? admin_roles_path : admin_role_path(@role)), class: "btn cancel org-cancel" %>
+      <%= f.submit "#{@role.new_record? ? 'Add' : 'Save'} Role" %>
     </div>
 <% end %>

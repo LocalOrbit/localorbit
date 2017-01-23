@@ -262,7 +262,7 @@ class ReportPresenter
     end
 
     if includes_filter?(:category_name)
-      @categories = Category.select(:id, :name).where(id: items.joins(:product).pluck("products.category_id")).order(:name).uniq
+      @categories = Category.select(:id, :name).where(depth: [1..2], id: items.joins(:product).pluck("products.category_id")).order(:name).uniq
     end
 
     if includes_filter?(:product_name)

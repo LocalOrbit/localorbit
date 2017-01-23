@@ -167,6 +167,14 @@
                     </div>
                   </div>
                 </td>
+                <% else # For suppliers fee option is not shown %>
+                  <% if (price.product_fee_pct.nil? || price.product_fee_pct == 0) && price.category_checked(@category_percents_by_market_id) != "checked" %>
+                    <!-- market fee -->
+                  <% elsif price.category_checked(@category_percents_by_market_id) == "checked" %>
+                    <input type="hidden" name="price[<%=price.id%>][fee]" value="<%= price.category_checked(@category_percents_by_market_id) %>" class="category-fee">
+                  <% else %>
+                    <input type="hidden" name="price[<%=price.id%>][fee]" value="<%= price.product_fee_pct > 0 ? "checked" : "" %>" class="product-fee">
+                  <% end %>
                 <% end %>
                 <td class="sale-price">
                   <div class="edit-trigger view-cell">

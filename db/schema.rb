@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161228040940) do
+ActiveRecord::Schema.define(version: 20170119221117) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -258,10 +258,10 @@ ActiveRecord::Schema.define(version: 20161228040940) do
     t.string   "fee_label",                                               default: "Delivery Fee"
     t.boolean  "is_recoverable"
     t.datetime "inactive_at"
-    t.decimal  "order_minimum",                  precision: 10, scale: 2, default: 0.0
+    t.decimal  "order_minimum",                  precision: 10, scale: 2, default: 0.0,            null: false
     t.string   "delivery_cycle"
     t.integer  "day_of_month"
-    t.integer  "week_interval"
+    t.integer  "week_interval",                                           default: 1
   end
 
   add_index "delivery_schedules", ["deleted_at"], name: "index_delivery_schedules_on_deleted_at", using: :btree
@@ -544,6 +544,7 @@ ActiveRecord::Schema.define(version: 20161228040940) do
     t.integer  "organization_id"
     t.boolean  "add_item_pricing",                                       default: true
     t.boolean  "self_enabled_cross_sell",                                default: false
+    t.string   "background_img_uid"
   end
 
   add_index "markets", ["name"], name: "index_markets_on_name", using: :btree
@@ -701,6 +702,7 @@ ActiveRecord::Schema.define(version: 20161228040940) do
     t.string   "invoice_pdf_name"
     t.string   "payment_provider"
     t.decimal  "market_seller_fee_pct",     precision: 5,  scale: 3
+    t.integer  "qb_ref_id"
   end
 
   add_index "orders", ["delivery_id"], name: "index_orders_on_delivery_id", using: :btree
@@ -744,6 +746,7 @@ ActiveRecord::Schema.define(version: 20161228040940) do
     t.string   "subscription_id"
     t.string   "payment_provider"
     t.string   "subscription_status"
+    t.integer  "qb_org_id"
   end
 
   add_index "organizations", ["name"], name: "index_organizations_on_name", using: :btree
@@ -824,6 +827,7 @@ ActiveRecord::Schema.define(version: 20161228040940) do
 
   add_index "prices", ["market_id"], name: "index_prices_on_market_id", using: :btree
   add_index "prices", ["organization_id"], name: "index_prices_on_organization_id", using: :btree
+  add_index "prices", ["product_id", "market_id", "organization_id", "updated_at", "deleted_at"], name: "index_prices_on_product_market_organization_updated_deleted", using: :btree
   add_index "prices", ["product_id", "market_id", "organization_id"], name: "index_prices_on_product_id_and_market_id_and_organization_id", using: :btree
   add_index "prices", ["product_id"], name: "index_prices_on_product_id", using: :btree
 
@@ -861,6 +865,7 @@ ActiveRecord::Schema.define(version: 20161228040940) do
     t.integer  "external_product_id"
     t.integer  "general_product_id"
     t.string   "aws_image_url"
+    t.integer  "qb_item_id"
   end
 
   add_index "products", ["category_id"], name: "index_products_on_category_id", using: :btree
@@ -885,6 +890,30 @@ ActiveRecord::Schema.define(version: 20161228040940) do
   add_index "promotions", ["market_id", "product_id"], name: "index_promotions_on_market_id_and_product_id", using: :btree
   add_index "promotions", ["market_id"], name: "index_promotions_on_market_id", using: :btree
   add_index "promotions", ["product_id"], name: "index_promotions_on_product_id", using: :btree
+
+  create_table "qb_profiles", force: true do |t|
+    t.integer "organization_id"
+    t.string  "income_account_name"
+    t.integer "income_account_id"
+    t.string  "expense_account_name"
+    t.integer "expense_account_id"
+    t.string  "asset_account_name"
+    t.integer "asset_account_id"
+    t.string  "prefix"
+    t.integer "delivery_fee_item_id"
+    t.string  "delivery_fee_item_name"
+  end
+
+  create_table "qb_tokens", force: true do |t|
+    t.integer  "organization_id"
+    t.string   "encrypted_access_token"
+    t.string   "encrypted_access_secret"
+    t.string   "encrypted_realm_id"
+    t.datetime "token_expires_at"
+    t.string   "encrypted_access_token_iv"
+    t.string   "encrypted_access_secret_iv"
+    t.string   "encrypted_realm_id_iv"
+  end
 
   create_table "qlik_user_attributes", primary_key: "userid", force: true do |t|
     t.string "type",  null: false
@@ -1003,7 +1032,7 @@ ActiveRecord::Schema.define(version: 20161228040940) do
   add_index "users", ["invited_by_id"], name: "index_users_on_invited_by_id", using: :btree
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
 
-  create_table "users_roles", id: false, force: true do |t|
+  create_table "users_roles", force: true do |t|
     t.integer "user_id"
     t.integer "role_id"
   end

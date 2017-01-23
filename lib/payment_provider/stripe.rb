@@ -291,7 +291,6 @@ module PaymentProvider
         customer = get_stripe_customer(entity.try(:stripe_customer_id))
         raise "'#{entity.name}' has no Stripe Account" if customer.nil?
         raise "Stripe account for '#{entity.name}' is deleted" if customer.try(:deleted) == true
-        # KXM !! Challenge the validity of "customer.try(:default_source).blank?"
         raise "'#{entity.name}' has no default payment method in Stripe" if customer.try(:default_source).blank? && subscription_params[:source].blank?
 
         # Initialize 'subscription not found' state

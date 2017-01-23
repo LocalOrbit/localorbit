@@ -36,7 +36,8 @@ feature "Reports" do
     5.times do |i|
       this_date = order_date + i.days
       Timecop.freeze(this_date) do
-        category = create(:category, name: "Category-01-#{i}")
+        p_category = create(:category, name: 'Parent')
+        category = create(:category, name: "Category-01-#{i}", parent_id: p_category.id)
         product = create(:product,
                          :sellable,
                          name: "Product#{i}",
