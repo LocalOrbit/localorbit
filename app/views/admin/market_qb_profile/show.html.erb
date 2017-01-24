@@ -2,6 +2,7 @@
 
 <%= render 'shared/errors', resource: @market.organization.qb_profile %>
 
+<% if !session[:qb_token].nil? %>
 <h1>Quickbooks Profile</h1>
 <%= form_for @market.organization.qb_profile, url: [:admin, @market, :qb_profile], html: { class: "column column--two-thirds" } do |f| %>
     <div class="row row--field">
@@ -47,8 +48,7 @@
       </div>
     </div>
 <% end %>
-
-<% if session[:qb_token].nil? %>
+<% else %>
 <div class="row row--partial">
 
   <!-- somewhere in your document include the Javascript -->

@@ -48,7 +48,7 @@ class Admin::MarketQbProfileController < AdminController
     qb_profile.organization_id = current_market.organization.id
     qb_profile.save
 
-    redirect_to admin_market_qb_profile_path, notice: "Your QuickBooks account has been successfully linked."
+    render :oauth_callback , notice: "Your QuickBooks account has been successfully linked."
   end
 
   def sync
@@ -123,6 +123,6 @@ class Admin::MarketQbProfileController < AdminController
   private
 
   def qb_params
-    params.require(:qb_profile).permit(:income_account_name, :expense_account_name, :asset_account_name, :delivery_fee_account_name, :prefix)
+    params.require(:qb_profile).permit(:income_account_name, :expense_account_name, :asset_account_name, :delivery_fee_item_name, :prefix)
   end
 end

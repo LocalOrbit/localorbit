@@ -65,7 +65,7 @@ module Quickbooks
         end
 
         # Add shipping/service fee to line items
-        if !order.delivery_fees.nil?
+        if !order.delivery_fees.nil? && order.delivery_fees > 0
           line_item = Quickbooks::Model::InvoiceLineItem.new
           line_item.detail_type = "SalesItemLineDetail"
           line_item.description = "Delivery Fee"
