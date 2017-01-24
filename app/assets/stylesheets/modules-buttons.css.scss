@@ -94,6 +94,10 @@ input[type=submit] {
     padding: 1px 6px;
     font-size: 12px;
   }
+  &.btn--large {
+    padding: 8px 12px;
+    font-size: 18px;
+  }
   &.btn--activate {
     margin-top: 38px;
     @media screen and (max-width: $mobile_break) {
