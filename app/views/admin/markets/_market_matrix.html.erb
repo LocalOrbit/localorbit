@@ -1,6 +1,10 @@
 <label>Market associations</label><br>
 
-<% @markets.each do |m| %>
-  <input type="checkbox" class="organization_markets" name="organization[markets][]" id="organization_market_<%= m.id %>" value="<%= m.id %>" <%= 'checked="checked"' if (@org_markets && @org_markets.include?(m.id)) || (@organization.new_record? && current_market.id == m.id) %>>
-  <label for="organization_market_<%= m.id %>"><%= m.name %></label><br>
+<% if @markets.size > 1 %>
+  <% @markets.each do |m| %>
+    <input type="checkbox" class="organization_markets" name="organization[markets][]" id="organization_market_<%= m.id %>" value="<%= m.id %>" <%= 'checked="checked"' if (@org_markets && @org_markets.include?(m.id)) || (@organization.new_record? && current_market.id == m.id) %>>
+    <label for="organization_market_<%= m.id %>"><%= m.name %></label><br>
+  <% end %>
+<% else %>
+  <input type="hidden" name="organization[markets][]" value=<%= @markets.first.id.to_s %> />
 <% end %>

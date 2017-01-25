@@ -47,7 +47,7 @@ module Admin
 
       op = organization_params.merge({:org_type => org_type})
       op.merge!({active: "1"}) if (org_type == "B" && auto_activate)
-
+      op.except!(:markets)
 
       result = RegisterStripeOrganization.perform(organization_params: op, user: current_user, market_id: params[:initial_market_id])
 
@@ -82,7 +82,7 @@ module Admin
 
       org_type = update_org_type(params[:organization][:can_sell] || params[:can_sell])
 
-      if @organization.update_attributes(organization_params.merge({:org_type => org_type}))
+      if @organization.update_attributes(organization_params.except(:markets).merge({:org_type => org_type}))
         redirect_to [:admin, @organization], notice: "Saved #{@organization.name}"
       else
         render action: :show
@@ -160,6 +160,7 @@ module Admin
         :org_type,
         :plan_id,
         locations_attributes: [:name, :address, :city, :state, :zip, :phone, :fax, :country],
+        markets: []
       )
     end
 

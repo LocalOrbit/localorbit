@@ -111,6 +111,7 @@
       <span class="tooltip pull-right" data-tooltip="e.g. National Young Farmers Coalition, Woman in Sustainable Agriculture, NACUFS, AASHE, National Restaurant Association, etc. "></span>
       <%= f.text_field :professional_organizations, maxlength: 255, class: "column--full" %>
     </div>
+
     <% if current_user.admin? || current_user.market_manager? %>
       <div class="row row--field">
         <div class="field column column--half column--guttered">
@@ -126,13 +127,12 @@
         </div>
       </div>
 
-      <% if @markets.size > 1 %>
       <div class="row row--field">
         <div class="field column column--half column--guttered">
           <%= render 'admin/markets/market_matrix' %>
         </div>
       </div>
-      <% end %>
+
     <% end %>
 
   </fieldset>
