@@ -1,6 +1,6 @@
 <%= render "admin/markets/header" %>
 
-<%= render 'shared/errors', resource: @market.organization.qb_profile %>
+<%= render 'shared/errors', resource: @market.organization.qb_profile.nil? ? @market : @market.organization.qb_profile %>
 
 <% if !session[:qb_token].nil? %>
 <h1>Quickbooks Profile</h1>
