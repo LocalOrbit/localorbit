@@ -52,16 +52,18 @@ module Quickbooks
             end
           end
 
-          line_item = Quickbooks::Model::BillLineItem.new
-          line_item.amount = item.unit_price * item.quantity
-          line_item.description = item.name
-          line_item.sales_item! do |detail|
-            detail.unit_price = item.unit_price
-            detail.quantity = item.quantity
-            detail.item_id = order.item.qb_item_id # Item ID here
+          if item.delivery_status == 'delivered'
+            line_item = Quickbooks::Model::BillLineItem.new
+            line_item.amount = item.unit_price * item.quantity
+            line_item.description = item.name
+            line_item.sales_item! do |detail|
+              detail.unit_price = item.unit_price
+              detail.quantity = item.quantity
+              detail.item_id = order.item.qb_item_id # Item ID here
+            end
+            bill.line_items << line_item
           end
         end
-        bill.line_items << line_item
 
         service = Quickbooks::Service::Bill.new
         service.company_id = session[:qb_realm_id]

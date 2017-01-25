@@ -52,16 +52,18 @@ module Quickbooks
             end
           end
 
-          line_item = Quickbooks::Model::InvoiceLineItem.new
-          line_item.amount = item.unit_price * item.quantity_delivered
-          line_item.description = item.name
-          line_item.detail_type = "SalesItemLineDetail"
-          line_item.sales_item! do |detail|
-            detail.unit_price = item.unit_price
-            detail.quantity = item.quantity_delivered
-            detail.item_id = item.product.qb_item_id # Item ID here
+          if item.delivery_status == 'delivered'
+            line_item = Quickbooks::Model::InvoiceLineItem.new
+            line_item.amount = item.unit_price * item.quantity_delivered
+            line_item.description = item.name
+            line_item.detail_type = "SalesItemLineDetail"
+            line_item.sales_item! do |detail|
+                detail.unit_price = item.unit_price
+                detail.quantity = item.quantity_delivered
+                detail.item_id = item.product.qb_item_id # Item ID here
+            end
+            invoice.line_items << line_item
           end
-          invoice.line_items << line_item
         end
 
         # Add shipping/service fee to line items
