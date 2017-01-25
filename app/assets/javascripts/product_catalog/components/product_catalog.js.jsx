@@ -30,6 +30,7 @@
         var productTable;
         var divClass;
         var divStyle;
+        var closeButton;
 
         if(this.props.useTemplates && !this.props.orderId)
             orderTemplates = (<lo.TemplatePicker baseUrl={this.props.baseUrl} cartUrl={this.props.cartUrl} />);
@@ -43,7 +44,7 @@
         }
         else {
             divClass = ('');
-            divStyle = ('');
+            divStyle = ({});
         }
 
 
@@ -76,7 +77,7 @@
           {productFilter}
           {productTable}
         </div>
-      );
+        );
     }
   });
 
