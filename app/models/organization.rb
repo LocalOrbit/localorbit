@@ -195,7 +195,7 @@ class Organization < ActiveRecord::Base
   end
 
   def set_subscription(subscription, provider='stripe')
-    plan = Plan.where(:stripe_id = subscription.plan.id)
+    plan = Plan.where(stripe_id: subscription.plan.id)
     h = {
       plan_id: plan.id,
       plan_fee: ::Financials::MoneyHelpers.cents_to_amount(subscription.plan.amount),
