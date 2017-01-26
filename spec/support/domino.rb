@@ -1154,6 +1154,13 @@ module Dom
     end
   end
 
+  class NewProduct < Domino
+    selector ".product-listing"
+
+    attribute :name
+
+  end
+
   class ProductFilter < Domino
     selector "#product-filter"
 
