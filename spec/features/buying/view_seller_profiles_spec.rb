@@ -108,11 +108,11 @@ feature "View Seller Profiles" do
       visit seller_path(seller1)
       sleep 10
 
-      save_and_open_page
+      click_link "View Products"
 
-      expect(page).to have_content ("Currently Selling")
+      #expect(page).to have_content ("Currently Selling")
 
-      products = Dom::Product.all
+      products = Dom::NewProduct.all
       expect(products.count).to eq(1)
       expect(products.map(&:name)).to match_array([product1.name])
     end
@@ -130,7 +130,9 @@ feature "View Seller Profiles" do
       expect(page).to have_content(seller1.who_story)
       expect(page).to have_content(seller1.how_story)
 
-      products = Dom::Product.all
+      click_link "View Products"
+
+      products = Dom::NewProduct.all
       expect(products.count).to eq(1)
       expect(products.map(&:name)).to match_array([product1.name])
     end
@@ -157,7 +159,7 @@ feature "View Seller Profiles" do
 
       #expect(page).to have_content ("Currently Selling")
 
-      products = Dom::Product.all
+      products = Dom::NewProduct.all
       expect(products.count).to eq(3)
       # two inner headers (apples/bananas)
       expect(page).to have_content ("Apples")
