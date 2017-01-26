@@ -195,7 +195,9 @@ class Organization < ActiveRecord::Base
   end
 
   def set_subscription(subscription, provider='stripe')
+    plan = Plan.where(stripe_id: subscription.plan.id)
     h = {
+      plan_id: plan.id,
       plan_fee: ::Financials::MoneyHelpers.cents_to_amount(subscription.plan.amount),
       plan_interval: translate_interval(subscription.plan.interval),
       plan_start_at: Time.at(subscription.created).to_datetime,
@@ -209,6 +211,7 @@ class Organization < ActiveRecord::Base
 
   def unset_subscription(source)
     h = {
+      plan_id: source.plan_id,
       plan_fee: source.plan_fee,
       plan_interval: source.plan_interval,
       plan_start_at: source.plan_start_at,
