@@ -74,7 +74,7 @@ module Admin
 
     def update
       # This updates the association through market_organizations, adding and deleting rows (rather than setting deleted_at)
-      @organization.markets = Market.find(params[:organization][:markets].map(&:to_i))
+      @organization.markets = Market.find(params[:organization][:markets].map(&:to_i)) unless params[:organization][:markets].blank?
 
       if @organization.can_sell && organization_params[:can_sell]=="0" && (current_user.admin? || current_user.market_manager?)
         disable_supplier_inventory
