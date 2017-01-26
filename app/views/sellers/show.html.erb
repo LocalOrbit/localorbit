@@ -89,7 +89,7 @@
   </div>
 </div>
 
-<% if !current_market.closed? && !@products_for_sale.product_groups.empty? %>
+<% if !current_market.closed? && !@current_seller.nil? %>
     <%= react_component('lo.ProductCatalog', {
         baseUrl: "#{request.base_url}/api/v1/",
         cartUrl: cart_path,
