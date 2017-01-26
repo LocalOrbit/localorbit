@@ -14,6 +14,7 @@ $ ->
 
   $("#initial_market_id").change (e) ->
     market_id = $(this).val()
+    manageMarketAssociations(market_id)
     $.get "/admin/markets/#{market_id}/payment_options", (response) =>
       $("#allowed-payment-methods").html(response)
 
@@ -30,4 +31,7 @@ $ ->
   $("#organization_can_buy").change (e)->
     orgCanBuy = $(this).prop("checked")
     updateBuyerFields(orgCanBuy)
-  
+
+  manageMarketAssociations = (market_id)->
+    $(".organization_markets").prop("checked", false)
+    $("#organization_market_"+market_id).prop("checked", true)
