@@ -108,6 +108,8 @@ feature "View Seller Profiles" do
       visit seller_path(seller1)
       sleep 10
 
+      save_and_open_page
+
       expect(page).to have_content ("Currently Selling")
 
       products = Dom::Product.all
@@ -151,7 +153,9 @@ feature "View Seller Profiles" do
     scenario "viewing the products with their categories" do
       visit seller_path(seller1)
       sleep 10
-      expect(page).to have_content ("Currently Selling")
+      click_link "View Products"
+
+      #expect(page).to have_content ("Currently Selling")
 
       products = Dom::Product.all
       expect(products.count).to eq(3)

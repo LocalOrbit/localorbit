@@ -1132,7 +1132,7 @@ module Dom
   end
 
   class Product < Domino
-    selector ".product"
+    selector ".product-listing"
 
     attribute :name
     attribute :organization_name
