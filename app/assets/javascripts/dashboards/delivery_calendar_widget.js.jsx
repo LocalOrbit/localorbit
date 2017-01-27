@@ -12,7 +12,7 @@
             view_deliveries_link = "/orders/" + delivery_day['order_id'];
         else
             MyDateString = process_date.getFullYear() + ('0' + (process_date.getMonth()+1)).slice(-2) + ('0' + process_date.getDate()).slice(-2)
-            view_deliveries_link = "/admin/delivery_tools/pick_lists_date/" + MyDateString;
+            view_deliveries_link = "/admin/delivery_tools/pick_list_date/" + MyDateString;
         return view_deliveries_link;
     }
 

@@ -19,7 +19,7 @@ class Admin::PickListsController < AdminController
 
     else
 
-      dt = params[:buyer_deliver_on].to_date
+      dt = params[:deliver_on].to_date
       dte = dt.strftime("%Y-%m-%d")
 
       #@delivery = DeliverySchedule
@@ -29,13 +29,13 @@ class Admin::PickListsController < AdminController
       #                .where(delivery_schedules: {market_id: current_market.id}).first.decorate
 
       @delivery = Delivery.joins(:delivery_schedule)
-                      .where("DATE(deliveries.buyer_deliver_on) = '#{dte}'")
+                      .where("DATE(deliveries.deliver_on) = '#{dte}'")
                       .where(delivery_schedules: {market_id: current_market.id}).first
                       .decorate
 
       order_items = OrderItem
                         .where(delivery_status: "pending")
-                        .where("DATE(deliveries.buyer_deliver_on) = '#{dte}'")
+                        .where("DATE(deliveries.deliver_on) = '#{dte}'")
                         .where(orders: {market_id: current_market.id})
                         .eager_load(:order, order: [:delivery], product: :organization)
                         .order("organizations.name, products.name")

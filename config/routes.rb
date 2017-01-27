@@ -155,12 +155,21 @@ Rails.application.routes.draw do
 
       resources :pick_lists, only: :show
 
-      get "pick_lists_date(/:buyer_deliver_on)", to: "pick_lists#show"
+      get "pick_list_date(/:deliver_on)", to: "pick_lists#show"
 
       resources :pack_lists, only: :show
+
+      get "pack_list_date(/:deliver_on)", to: "pack_lists#show"
+
       resources :individual_pack_lists, only: :show
+
+      get "individual_pack_list_date(/:deliver_on)", to: "individual_pack_lists#show"
+
       resources :order_summaries, only: :show
-      resources :deliveries do
+
+      get "order_summary_date(/:deliver_on)", to: "order_summaries#show"
+
+      resources :deliveries, param: :deliver_on do
         resources :packing_labels, :controller=>"/deliveries/packing_labels", only: [:show, :index]
         resources :individual_packing_labels, :controller=>"/deliveries/packing_labels", only: [:show, :index]
       end
