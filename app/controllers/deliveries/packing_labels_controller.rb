@@ -26,7 +26,8 @@ class Deliveries::PackingLabelsController < ApplicationController
         request: RequestUrlPresenter.new(request),
         product_labels_only: product_only,
         product_label_format: current_market.product_label_format,
-        print_multiple_labels_per_item: current_market.print_multiple_labels_per_item
+        print_multiple_labels_per_item: current_market.print_multiple_labels_per_item,
+        delivery_date: dte
       )
     end
     track_event EventTracker::DownloadedPackingLabels.name
