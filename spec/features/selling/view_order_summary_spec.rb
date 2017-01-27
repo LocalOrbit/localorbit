@@ -81,7 +81,7 @@ describe "Order summary" do
       it "lists order summary for the market" do
         switch_to_subdomain(market.subdomain)
         sign_in_as(market_manager)
-        visit admin_delivery_tools_order_summary_path(friday_delivery.id)
+        visit admin_delivery_tools_order_summary_path(friday_delivery.deliver_on)
         see_orders_for_entire_market
       end
 
@@ -104,7 +104,7 @@ describe "Order summary" do
       it "lists order summary for the market" do
         switch_to_subdomain(market.subdomain)
         sign_in_as(admin)
-        visit admin_delivery_tools_order_summary_path(friday_delivery.id)
+        visit admin_delivery_tools_order_summary_path(friday_delivery.deliver_on)
         see_orders_for_entire_market
       end
     end

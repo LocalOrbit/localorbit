@@ -850,14 +850,10 @@ module Dom
       end
     end
 
-    class PickList < Domino
-      selector ".pick-list"
+    class PickListOrg < Domino
+      selector ".pick-list-supplier"
 
       attribute :org
-
-      def items
-        node.all(".pick-list-item .name")
-      end
     end
 
     class PickListItem < Domino
