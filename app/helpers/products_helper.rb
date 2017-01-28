@@ -38,6 +38,10 @@ module ProductsHelper
     orgs.map {|org| [org.markets.first.name + " - " + org.name, org.id] }
   end
 
+  def market_products
+    current_user.managed_products.order(:name).map {|product| [product.name, product.id] }
+  end
+
   def should_show_simple_inventory?
     allows_advanced_inventory = @organizations.any? {|org| org.decorate.can_use_advanced_inventory? }
 

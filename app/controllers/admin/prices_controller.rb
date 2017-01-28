@@ -16,7 +16,7 @@ class Admin::PricesController < AdminController
   def create
     markets = @product.organization.all_markets
     @organizations = Organization.joins(:market_organizations).where("market_organizations.deleted_at IS null AND market_organizations.market_id in (?)", markets.map(&:id)).select("organizations.name, organizations.id").order("organizations.name").uniq
-    @price = @product.prices.create(price_params)
+    @price = @product.prices.create(price_params.merge({is_consignment_market: current_market.is_consignment_market?}))
     if @price.persisted?
       redirect_to [:admin, @product, :prices], notice: "Successfully added a new price"
     else
@@ -37,7 +37,7 @@ class Admin::PricesController < AdminController
     price = old_price.dup
     Price.soft_delete(old_price)
     price.save
-    if price.update price_params
+    if price.update price_params.merge({is_consignment_market: current_market.is_consignment_market?})
       respond_to do |format|
         format.html { redirect_to [:admin, @product, :prices], notice: "Successfully saved price" }
         format.js   do
@@ -79,7 +79,7 @@ class Admin::PricesController < AdminController
   private
 
   def price_params
-    params.require(:price).slice(:market_id, :organization_id, :min_quantity, :product_fee_pct, :sale_price).permit!
+    params.require(:price).slice(:market_id, :organization_id, :min_quantity, :product_fee_pct, :sale_price, :net_price, :is_consignment_market).permit!
   end
 
   def query_params

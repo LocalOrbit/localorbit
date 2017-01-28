@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170119221117) do
+ActiveRecord::Schema.define(version: 20170128151319) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -768,6 +768,7 @@ ActiveRecord::Schema.define(version: 20170119221117) do
     t.datetime "updated_at"
     t.json     "zpl"
     t.string   "zpl_name"
+    t.string   "deliver_on"
   end
 
   create_table "payments", force: true do |t|
@@ -831,6 +832,7 @@ ActiveRecord::Schema.define(version: 20170119221117) do
     t.integer  "legacy_id"
     t.datetime "deleted_at"
     t.decimal  "product_fee_pct", precision: 5,  scale: 3, default: 0.0, null: false
+    t.decimal  "net_price",       precision: 10, scale: 2, default: 0.0
   end
 
   add_index "prices", ["market_id"], name: "index_prices_on_market_id", using: :btree
@@ -873,6 +875,9 @@ ActiveRecord::Schema.define(version: 20170119221117) do
     t.integer  "general_product_id"
     t.string   "aws_image_url"
     t.integer  "qb_item_id"
+    t.integer  "parent_product_id"
+    t.integer  "unit_quantity"
+    t.boolean  "organic"
   end
 
   add_index "products", ["category_id"], name: "index_products_on_category_id", using: :btree
