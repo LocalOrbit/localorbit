@@ -1,0 +1,41 @@
+<%= render 'admin/markets/header' %>
+
+<div class="row row--partial">
+  <div class="column column--three-fourths">
+
+    <div>
+      <div class="l-constraint">
+        <%= link_to 'Add Storage Location', new_admin_market_storage_location_url, class: "pull-right btn btn--add btn--small" %>
+        <h1><i class="font-icon" data-icon="&#xe027;"></i>&nbsp; Storage Locations</h1>
+
+        <div class="clearfix"></div>
+      </div>
+    </div>
+
+    <div class="table-wrapper">
+      <table class="sortable role-table market-org-list">
+        <thead class="stickable">
+        <tr>
+          <th data-column="name" class="<%= column_sort_classes("name")%>">Name</th>
+          <th></th>
+        </tr>
+        </thead>
+        <tbody>
+        <% @market.storage_locations.each do |location| %>
+            <tr>
+              <td class="name"><%= link_to location.name, admin_market_storage_location_path(@market, location) %></td>
+            </tr>
+        <% end %>
+        </tbody>
+      </table>
+    </div>
+
+    <% if @market.storage_locations.none? %>
+        <div class="info-note">
+          <h2>No Results</h2>
+          This table is empty, either because there is no data, or because the filter you've applied is hiding it.
+        </div>
+    <% end %>
+  </div>
+</div>
+

@@ -1,0 +1,17 @@
+<%= form_for [:admin, @market, @storage_location], html: {class: "organization column column--full"} do |f| %>
+
+    <%= render "shared/errors", { resource: @storage_location } %>
+
+    <fieldset class="role-info">
+      <div class="field">
+        <%= f.label :name %>
+        <br>
+        <%= f.text_field :name %>
+      </div>
+    </fieldset>
+
+    <div class="field form-actions">
+      <%= link_to "Cancel", (@storage_location.new_record? ? admin_market_storage_locations_path : admin_market_storage_locations_path(@storage_location)), class: "btn cancel org-cancel" %>
+      <%= f.submit "#{@storage_location.new_record? ? 'Add' : 'Save'} Storage Location" %>
+    </div>
+<% end %>

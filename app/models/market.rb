@@ -46,6 +46,7 @@ class Market < ActiveRecord::Base
   has_many :newsletters
   has_many :promotions, inverse_of: :market
   has_many :order_templates
+  has_many :storage_locations
   belongs_to :organization
 
   has_many :bank_accounts, as: :bankable
