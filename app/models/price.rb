@@ -23,8 +23,19 @@ class Price < ActiveRecord::Base
     where("product_id = ?", product.id)
     .where("updated_at <= ?", order_time)
     .where("deleted_at IS NULL OR deleted_at >= ?", order_time)
-    .where("market_id IS NULL OR market_id = ?", market.id)
-    .where("organization_id IS NULL OR organization_id = ?", organization.id)
+    .where("market_id IS NULL", market.id)
+    .where("organization_id IS NULL", organization.id)
+  }
+
+  scope :for_product_and_market_and_org_at_time_specific, lambda {|product, market, organization, order_time|
+    where("product_id = ?", product.id)
+        .where("updated_at <= ?", order_time)
+        .where("deleted_at IS NULL OR deleted_at >= ?", order_time)
+        .where("
+          (market_id = :market_id) AND (organization_id = :organization_id) OR
+          (market_id IS NULL) AND (organization_id = :organization_id) OR
+          (market_id = :market_id) AND (organization_id IS NULL)
+        ", market_id: market.id, organization_id: organization.id)
   }
 
   scope :for_market_and_org, lambda { |market, organization|
