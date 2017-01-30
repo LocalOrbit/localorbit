@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170115053825) do
+ActiveRecord::Schema.define(version: 20170119221117) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -900,7 +900,7 @@ ActiveRecord::Schema.define(version: 20170115053825) do
     t.string  "asset_account_name"
     t.integer "asset_account_id"
     t.string  "prefix"
-    t.string "delivery_fee_item_name"
+    t.string  "delivery_fee_item_name"
     t.integer "delivery_fee_item_id"
   end
 
