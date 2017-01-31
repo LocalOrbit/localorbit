@@ -10,16 +10,14 @@
         previous_delivery_date = ''
 
         @upcoming_deliveries.each do |delivery|
-            delivery_date = delivery.deliver_on.strftime("%Y%m%d")
-
-      %>
-        <% if delivery.deliver_on.strftime("%Y%m%d") != previous_delivery_date %>
+            delivery_date = "#{delivery.deliver_on.strftime("%Y%m%d") + delivery.type[0]}"
+        %>
+        <% if delivery_date != previous_delivery_date %>
         <div class="upcoming-delivery">
           <span class="market"><%= delivery.delivery_schedule.market.name %></span><br><br>
-          <span>Delivery or Pick-up Begins:</span><br>
           <h2 class="upcoming-delivery-date"><%= delivery.upcoming_delivery_date_heading %></h2>
           <% if FeatureAccess.not_LE_market_manager?(user:current_user, market: current_market) %>
-            Deliver to:
+            <strong><%= delivery.type.humanize %></strong>
             <%= content_tag :div, delivery.deliver_to_name, class: "location-name" if delivery.deliver_to_name.present? %>
             <div class="location"><%= delivery.deliver_to_location %></div>
           <% end %>
@@ -54,7 +52,7 @@
           </div>
           <hr>
         </div>
-        <% previous_delivery_date = delivery.deliver_on.strftime("%Y%m%d") %>
+        <% previous_delivery_date = delivery_date %>
         <% end %>
       <% end %>
     <% end %>

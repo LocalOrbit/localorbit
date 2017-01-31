@@ -19,37 +19,25 @@ class Admin::PickListsController < AdminController
 
     else
 
-      dt = params[:deliver_on].to_date
-      dte = dt.strftime("%Y-%m-%d")
-
-      #@delivery = DeliverySchedule
-      #                .select('deliveries.*')
-      #                .joins(:deliveries)
-      #                .where("DATE(deliveries.buyer_deliver_on) = '#{dte}'")
-      #                .where(delivery_schedules: {market_id: current_market.id}).first.decorate
+      dt = params[:deliver_on]
+      pd = dt[-1,1] == 'D' ? 'delivery_schedules.buyer_pickup_location_id = 0' : 'delivery_schedules.buyer_pickup_location_id > 0'
+      dte = dt.chomp.to_date.strftime("%Y-%m-%d")
 
       @delivery = Delivery.joins(:delivery_schedule)
                       .where("DATE(deliveries.deliver_on) = '#{dte}'")
+                      .where(pd)
                       .where(delivery_schedules: {market_id: current_market.id}).first
                       .decorate
 
       order_items = OrderItem
                         .where(delivery_status: "pending")
-                        .where("DATE(deliveries.deliver_on) = '#{dte}'")
+                        .where(deliveries: {id: @delivery.object.id})
                         .where(orders: {market_id: current_market.id})
                         .eager_load(:order, order: [:delivery], product: :organization)
                         .order("organizations.name, products.name")
                         .preload(order: :organization)
 
       @delivery_notes = DeliveryNote.joins(:order).where(order: order_items.map(&:order_id))
-
-      #order_items = OrderItem
-      #                .includes(:order, order: [:delivery])
-      #                .eager_load(product: :organization)
-      #                .where(deliveries: {buyer_deliver_on: dt})
-      #                .where(delivery_status: 'pending')
-      #                .where(orders: {market_id: current_market.id})
-      #                .order("organizations.name, products.name")
 
       @pick_lists = order_items.group_by {|item| item.product.organization_id }.map do |_, items|
         PickListPresenter.new(items, @delivery_notes)

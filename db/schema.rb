@@ -909,8 +909,8 @@ ActiveRecord::Schema.define(version: 20170202160435) do
     t.string  "asset_account_name"
     t.integer "asset_account_id"
     t.string  "prefix"
-    t.integer "delivery_fee_item_id"
     t.string  "delivery_fee_item_name"
+    t.integer "delivery_fee_item_id"
   end
 
   create_table "qb_tokens", force: true do |t|
@@ -943,9 +943,9 @@ ActiveRecord::Schema.define(version: 20170202160435) do
 
   create_table "roles", force: true do |t|
     t.string   "name"
-    t.string   "org_type"
+    t.string   "org_type",        default: "M"
     t.integer  "organization_id"
-    t.string   "activities",      default: [], array: true
+    t.string   "activities",      default: [],  array: true
     t.datetime "created_at"
     t.datetime "updated_at"
   end
