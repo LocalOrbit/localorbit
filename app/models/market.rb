@@ -273,6 +273,10 @@ class Market < ActiveRecord::Base
     organization.plan.stripe_id != "CONSIGNMENT"
   end
 
+  def is_localeyes_market?
+    organization.plan.stripe_id != "LOCALEYES"
+  end
+
   private
 
   def require_payment_method

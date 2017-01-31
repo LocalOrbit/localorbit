@@ -8,7 +8,7 @@ module Sessions
     def new
       current_organization.carts.find_by(id: session[:cart_id]).try(:destroy)
 
-      if current_market.organization.plan.name != "Consignment"
+      if current_market.is_buysell_market?
         @deliveries = current_market.delivery_schedules.includes(:buyer_pickup_location).delivery_visible.
                       map {|ds| ds.next_delivery.decorate(context: {current_organization: current_organization}) }.
                       sort_by {|d| d.deliver_on }
@@ -16,7 +16,7 @@ module Sessions
     end
 
     def create
-      if current_market.organization.plan.name == "Consignment"
+      if current_market.is_consignment_market?
         delivery_schedule = DeliverySchedule.find_by_delivery_cycle("manual")
         delivery = delivery_schedule.deliveries.create!(
             deliver_on: params[:buyer_deliver_on],

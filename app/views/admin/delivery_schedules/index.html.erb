@@ -3,7 +3,7 @@
 <div class="row row--partial">
   <div class="column column--three-fourths">
     <div class="l-page-header">
-      <% if current_market.organization.plan.name != "Consignment" || (current_market.organization.plan.name == "Consignment" && @delivery_schedules.length == 0) %>
+      <% if current_market.is_buysell_market? || (current_market.is_consignment_market? && @delivery_schedules.length == 0) %>
         <%= link_to 'Add Delivery', new_admin_market_delivery_schedule_path(@market), class: "btn btn--add btn--small pull-right" %>
       <% end %>
     </div>
