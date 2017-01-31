@@ -274,7 +274,7 @@ class Market < ActiveRecord::Base
   end
 
   def is_localeyes_market?
-    organization.plan.stripe_id != "LOCALEYES"
+    organization.plan.stripe_id == "LOCALEYES"
   end
 
   private
