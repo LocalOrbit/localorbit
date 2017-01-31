@@ -2,6 +2,9 @@ class Admin::OrdersController < AdminController
   include StickyFilters
 
   before_action :find_sticky_params, only: :index
+  before_action :load_qb_session
+
+
 
   def index
     if params["clear"]
@@ -83,6 +86,9 @@ class Admin::OrdersController < AdminController
     elsif params[:commit] == "Duplicate Order"
       duplicate_order(order)
       return
+    elsif params[:commit] == "Export Invoice"
+      export_invoice(order)
+      return
     elsif params["order"][:delivery_clear] == "true"
       remove_delivery_fee(order)
       return
@@ -122,6 +128,15 @@ class Admin::OrdersController < AdminController
 
       end
       redirect_to admin_order_path(orig_order), alert: alert
+    end
+  end
+
+  def export_invoice(order)
+    result = ExportInvoiceToQb.perform(order: order, curr_market: current_market, session: session)
+    if result.success?
+      redirect_to admin_order_path(order), notice: "Invoice Exported to QB."
+    else
+      redirect_to admin_order_path(order), error: "Failed to Export Invoice."
     end
   end
 
