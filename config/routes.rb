@@ -80,6 +80,7 @@ Rails.application.routes.draw do
           get :sync
         end
       end
+      resources :storage_locations, controller: :market_storage_locations
       get :payment_options
       patch :toggle_self_enabled_cross_sell
     end
