@@ -37,12 +37,16 @@ module Admin
         p = p.merge(:week_interval => "1")
       end
 
-      interactor = UpdateDeliveryScheduleAndCurrentDelivery.perform(params: p,
-                                                                    delivery_schedule: @delivery_schedule)
-      if interactor.success?
-        redirect_to [:admin, @market, :delivery_schedules], notice: "Saved delivery schedule."
+      if params[:delivery_schedule][:delivery_cycle] != "manual"
+        interactor = UpdateDeliveryScheduleAndCurrentDelivery.perform(params: p,
+                                                                      delivery_schedule: @delivery_schedule)
+        if interactor.success?
+          redirect_to [:admin, @market, :delivery_schedules], notice: "Saved delivery schedule."
+        else
+          render :new
+        end
       else
-        render :new
+        redirect_to [:admin, @market, :delivery_schedules], notice: "Saved delivery schedule."
       end
     end
 

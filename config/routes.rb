@@ -73,6 +73,14 @@ Rails.application.routes.draw do
       resources :category_fees, only: [:index, :new, :create, :destroy]
       resources :deposit_accounts, only: [:index, :new, :create, :destroy]
       resource  :stripe, controller: :market_stripe, only: [:show]
+      resource :qb_profile, controller: :market_qb_profile do
+        collection do
+          get :authenticate
+          get :oauth_callback
+          get :sync
+        end
+      end
+      resources :storage_locations, controller: :market_storage_locations
       get :payment_options
       patch :toggle_self_enabled_cross_sell
     end

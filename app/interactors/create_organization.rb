@@ -2,6 +2,8 @@ class CreateOrganization
   include Interactor
 
   def perform
+    organization_params = context[:organization_params]
+
     if respond_to?(:market_id) && (market_id.nil? || market_id.blank?) # Creating an buyer/supplier that is tied to a given market
       context[:organization] = Organization.new(organization_params)
       organization.valid?

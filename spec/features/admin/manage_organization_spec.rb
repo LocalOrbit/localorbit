@@ -16,8 +16,6 @@ describe "admin manange organization", :vcr do
     expect(page).to have_content("Who")
     expect(page).to have_content("How")
 
-    expect(page).to have_content("Select a market to see payment options")
-
     select "Market 1", from: "Market", visible: false
 
     expect(find_field("Allow purchase orders")).to be_checked

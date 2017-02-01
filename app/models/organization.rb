@@ -36,6 +36,9 @@ class Organization < ActiveRecord::Base
   belongs_to :plan, inverse_of: :organizations
   belongs_to :plan_bank_account, class_name: "BankAccount"
 
+  has_one :qb_token
+  has_one :qb_profile
+
   validates :name, presence: true, length: {maximum: 255, allow_blank: true}
   validate :require_payment_method
 
@@ -53,6 +56,7 @@ class Organization < ActiveRecord::Base
   serialize :twitter, TwitterUser
 
   accepts_nested_attributes_for :locations, reject_if: :reject_location
+  accepts_nested_attributes_for :qb_profile
 
   dragonfly_accessor :photo
   define_after_upload_resize(:photo, 1200, 1200)
@@ -195,7 +199,9 @@ class Organization < ActiveRecord::Base
   end
 
   def set_subscription(subscription, provider='stripe')
+    plan = Plan.where(stripe_id: subscription.plan.id)
     h = {
+      plan_id: plan.id,
       plan_fee: ::Financials::MoneyHelpers.cents_to_amount(subscription.plan.amount),
       plan_interval: translate_interval(subscription.plan.interval),
       plan_start_at: Time.at(subscription.created).to_datetime,
@@ -209,6 +215,7 @@ class Organization < ActiveRecord::Base
 
   def unset_subscription(source)
     h = {
+      plan_id: source.plan_id,
       plan_fee: source.plan_fee,
       plan_interval: source.plan_interval,
       plan_start_at: source.plan_start_at,
