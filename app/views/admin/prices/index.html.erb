@@ -48,7 +48,7 @@
               Min Qty <span class="tooltip" data-tooltip="This is the minimum quantity available for sale of this product."></span>
             </th>
             <th class="net-price">
-              <div style="float: left">Estimated<br/>Net Price</div><span class="tooltip tool-tip-test" data-tooltip="The Net Price is the amount that
+              <div style="float: left"><% current_market.is_buysell_market? ? 'Estimated<br/>' : '' %>Net Price</div><span class="tooltip tool-tip-test" data-tooltip="The Net Price is the amount that
               the seller will receive. This amount is an estimate, calculated by subtracting the market fee and any
               applicable payment processing fees from the Sale Price."></span>
             </th>
@@ -120,14 +120,15 @@
                 </td>
                 <td class="net-price">
                   <div class="edit-trigger view-cell">
-                    <%= number_to_currency price.net_price(price.market, @category_percents_by_market_id) %>
+                    <%= number_to_currency price.net_price(price.market, @category_percents_by_market_id, current_market.is_consignment_market?) %>
                   </div>
                   <div class="edit-cell">
                     <label class="lock-label" style="display: none">
                       <input type="checkbox" class="lock-field" name="price[lock]"/>
                       <span></span>
                     </label>
-                    <%= f.number_field :net_price, :value => price.net_price(price.market, @category_percents_by_market_id), min: 0, step: 0.01, size: 4, class: 'net-price',
+                    <% net_class = current_market.is_consignment_market? ? 'net-price consignment' : 'net-price' %>
+                    <%= f.number_field :net_price, :value => price.net_price(price.market, @category_percents_by_market_id, current_market.is_consignment_market?), min: 0, step: 0.01, size: 4, class: net_class,
                                        data:{"category-fee" => json_escape(@category_percents_by_market_id.to_json), "product-fee" => json_escape(price.product_fee_pct), "net-percents-by-market-id" => json_escape(@net_percents_by_market_id.to_json), "cc-rate" => @seller_cc_rate} %>
                   </div>
                 </td>
@@ -181,7 +182,8 @@
                     <%= number_to_currency price.sale_price %>
                   </div>
                   <div class="edit-cell">
-                    <%= f.number_field :sale_price,   min: 0, step: 0.01, size: 4, class: 'sale-price' %>
+                    <% sale_class = current_market.is_consignment_market? ? 'sale-price consignment' : 'sale-price' %>
+                    <%= f.number_field :sale_price,   min: 0, step: 0.01, size: 4, class: sale_class %>
                   </div>
                 </td>
                 <td class="edit">
@@ -218,7 +220,7 @@
               <td></td>
               <% end %>
               <td></td>
-              <td><%= link_to "Add Price", '#add-row', class: 'add-toggle' %></td>
+              <td><%= link_to "Add Price", '#add-row', class: 'add-toggle' if current_market.is_buysell_market? %></td>
             </tr>
           <% end %>
           </tbody>

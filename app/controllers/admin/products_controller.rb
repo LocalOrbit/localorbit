@@ -135,9 +135,9 @@ module Admin
 
     def product_params
       results = params.require(:product).permit(
-        :name, :image, :category_id, :unit_id, :location_id, :organization_id,
+        :parent_product_id, :name, :image, :category_id, :unit_id, :unit_quantity, :location_id, :organization_id,
         :code,
-        :short_description, :long_description,
+        :short_description, :long_description, :organic,
         :who_story, :how_story,
         :use_simple_inventory, :simple_inventory, :use_all_deliveries,
         :unit_description,
@@ -147,6 +147,7 @@ module Admin
         sibling_unit_id: [],
         sibling_unit_description: [],
         sibling_product_code: [],
+        sibling_unit_quantity: [],
       )
 
       unless results.count == 1 && results["simple_inventory"].present?
@@ -239,18 +240,20 @@ module Admin
           sibling_unit_id = product.sibling_unit_id[i]
           sibling_unit_description = product.sibling_unit_description[i]
           sibling_product_code = product.sibling_product_code[i]
+          sibling_unit_quantity = product.sibling_unit_quantity[i]
           if sibling_unit_id && sibling_unit_id != ""
             if sibling_id == "0"
               sibling = product.model.dup
               sibling.unit_id = sibling_unit_id
               sibling.unit_description = sibling_unit_description
               sibling.code = sibling_product_code
+              sibling.unit_quantity = sibling_unit_quantity
               sibling.save
             else
               sibling = Product.find_by(id: sibling_id)
               if sibling
                 sibling.update(unit_id: sibling_unit_id, unit_description: sibling_unit_description,
-                               code: sibling_product_code)
+                               code: sibling_product_code, unit_quantity: sibling_unit_quantity)
               end
             end
           end

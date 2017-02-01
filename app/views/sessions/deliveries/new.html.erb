@@ -7,7 +7,7 @@
       <h1 class="clear-before">Welcome to <%= current_market.name %></h1>
       <p class="faux-label">Please choose a <% if FeatureAccess.not_LE_market_manager?(user:current_user, market: current_market) %>pick up or <% end %> delivery date.</p>
 
-    <% if current_market.organization.plan.name != "Consignment" && current_market.organization.plan.name != "LocalEyes" %>
+    <% if current_market.is_buysell_market? && !current_market.is_localeyes_market? %>
       <div class="row"><% @deliveries.each do |d| -%><div class="column column--guttered column--half">
           <div class="conditional field vcard delivery">
             <%= radio_button_tag "delivery_id", d.id %>
@@ -31,9 +31,9 @@
         </div><%= cycle '', raw('</div><div class="row">') if d != @deliveries.last -%><%- end -%>
       </div>
 
-    <% elsif current_market.organization.plan.name == "Consignment" %>
+    <% elsif current_market.is_consignment_market? %>
         <%= datetime_field_tag "buyer_deliver_on", nil, class: 'datepicker' %>
-    <% elsif current_market.organization.plan.name == "LocalEyes" %>
+    <% elsif current_market.is_localeyes_market? %>
 
 	  <%
          first_delivery = @deliveries.first.buyer_deliver_on

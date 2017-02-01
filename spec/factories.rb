@@ -471,6 +471,7 @@ FactoryGirl.define do
       order_printables   false
       packing_labels     false
       sellers_edit_orders false
+      stripe_id 'STARTUP'
     end
 
     trait :start_up do
@@ -485,6 +486,7 @@ FactoryGirl.define do
       order_printables   false
       packing_labels     false
       sellers_edit_orders false
+      stripe_id 'STARTUP'
     end
 
     trait :grow do
@@ -499,6 +501,7 @@ FactoryGirl.define do
       order_printables   true
       packing_labels     true
       sellers_edit_orders     true
+      stripe_id 'GROW'
     end
 
     trait :automate do
@@ -513,6 +516,7 @@ FactoryGirl.define do
       order_printables   true
       packing_labels     true
       sellers_edit_orders     true
+      stripe_id 'AUTOMATE'
     end
 
     trait :localeyes do
@@ -528,6 +532,7 @@ FactoryGirl.define do
       packing_labels     true
       sellers_edit_orders     false
       has_procurement_managers true
+      stripe_id 'LOCALEYES'
     end
   end
 

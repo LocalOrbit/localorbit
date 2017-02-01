@@ -265,6 +265,18 @@ class Market < ActiveRecord::Base
     end
   end
 
+  def is_consignment_market?
+    organization.plan.stripe_id == "CONSIGNMENT"
+  end
+
+  def is_buysell_market?
+    organization.plan.stripe_id != "CONSIGNMENT"
+  end
+
+  def is_localeyes_market?
+    organization.plan.stripe_id == "LOCALEYES"
+  end
+
   private
 
   def require_payment_method
@@ -276,6 +288,4 @@ class Market < ActiveRecord::Base
   def process_cross_sells_change
     remove_cross_selling_from_market unless allow_cross_sell?
   end
-
-
 end
