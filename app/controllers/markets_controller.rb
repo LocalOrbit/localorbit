@@ -36,7 +36,7 @@ class MarketsController < ApplicationController
 
   def create
     plan = Plan.find_by stripe_id: subscription_params[:plan] if subscription_params[:plan].present?
-    mp = market_params.merge(plan_id: plan.id)
+    mp = market_params.merge(plan_id: plan.id.to_s)
 
     results = RollYourOwnMarket.perform({
         :market_params => mp,
