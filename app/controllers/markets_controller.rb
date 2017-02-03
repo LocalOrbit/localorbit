@@ -63,7 +63,7 @@ class MarketsController < ApplicationController
       flash.alert = error_msg = results.context[:error] || "Could not create market"
 
       @market = results.market
-binding.pry
+
       # Email us about their request
       ZendeskMailer.delay.failed_market_request(@market, error_msg) unless @market.blank?
 
