@@ -85,7 +85,7 @@
             return (<div>
                 {addTopCategory}
                 {addSecondCategory}
-                <lo.MobileProductRow key={product.id} product={product} hideImages={this.state.hideImages} promo={is_promo}/>
+                <lo.MobileProductRow key={product.id} product={product} hideImages={this.state.hideImages} promo={is_promo} supplierOnly={this.props.supplierOnly} orderId={this.props.orderId}/>
             </div> );
         }
         else {

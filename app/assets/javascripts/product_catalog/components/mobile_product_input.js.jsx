@@ -6,9 +6,19 @@
     mixins: [window.lo.ProductInputMixin],
 
     render: function() {
+        var qty;
+        var pid = ('');
         var inputClass = "redesigned app-product-input";
         if (this.props.promo)
             inputClass = "redesigned app-product-input promo";
+
+        if (this.props.orderId) {
+            qty = (<input style={{width: "75px"}} type="number" placeholder="0" defaultValue={this.state.cartItemQuantity} name="items_to_add[][quantity]" className={inputClass} onKeyDown={this.clearField} onChange={this.updateQuantity} />);
+            pid = (<input type="hidden" name="items_to_add[][product_id]" value={this.props.product.id}/>);
+        }
+        else
+            qty = (<input style={{width: "75px"}} type="number" placeholder="0" defaultValue={this.state.cartItemQuantity} className={inputClass} onKeyDown={this.clearField} onChange={this.updateQuantity}/>);
+
         var deleteButton = this.state.cartItemQuantity > 0 ? (<a href="javascript:void(0)" onClick={this.deleteQuantity} className="font-icon icon-clear" style={{marginLeft: "10px"}}></a>) : null;
 
         return (
@@ -19,8 +29,9 @@
           </header>
           <div style={{display: "table-row"}}>
             <div className="quantity" style={{display: "table-cell"}}>
-              <input type="number" className={inputClass} placeholder="0" defaultValue={this.state.cartItemQuantity} onKeyDown={this.clearField} onChange={this.updateQuantity} style={{width: 90}}/>
-              <span style={{display: "block", fontSize: "11px", color: "#999", fontWeight: "600"}}>{this.props.product.unit}</span></div>
+                {qty}
+                {pid}
+                <span style={{display: "block", fontSize: "11px", color: "#999", fontWeight: "600"}}>{this.props.product.unit}</span></div>
             <div style={{display: "table-cell", fontWeight: "600"}}>
                <span className="price">{this.props.product.total_price}</span>
               {deleteButton}
