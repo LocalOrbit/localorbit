@@ -197,7 +197,13 @@
 		<div id="et-main-area">
 			<div id="main-content">
 
-        <% if notice || alert.present? || flash[:error].present? %>
+        <div id="flash-messages">
+          <% if notice %>
+            <div class="flash flash--notice"><p><%= notice %></p></div>
+          <% end %>
+        </div>
+
+        <% if alert.present? || flash[:error].present? %>
           <div class="modal popup" id="ryo-errors" style="border: red 2px solid;">
             <div class="popup-header">
               <%= button_tag "Close", type: :reset, id: "close-modal", class: "pull-right" %>
