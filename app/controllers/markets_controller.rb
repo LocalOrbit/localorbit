@@ -60,8 +60,13 @@ class MarketsController < ApplicationController
 
       redirect_to :action => 'success', :id => @market
     else
-      flash.alert = results.context[:error] || "Could not create market"
+      flash.alert = error_msg = results.context[:error] || "Could not create market"
+
       @market = results.market
+binding.pry
+      # Email us about their request
+      ZendeskMailer.delay.failed_market_request(@market, error_msg) unless @market.blank?
+
       redirect_to :action => 'new', :id => @market
     end
   end
