@@ -36,7 +36,7 @@ class MarketsController < ApplicationController
 
   def create
     plan = Plan.find_by stripe_id: subscription_params[:plan] if subscription_params[:plan].present?
-    mp = market_params.merge(plan_id: plan.id)
+    mp = market_params.merge(plan_id: plan.id.to_s)
 
     results = RollYourOwnMarket.perform({
         :market_params => mp,
@@ -60,8 +60,13 @@ class MarketsController < ApplicationController
 
       redirect_to :action => 'success', :id => @market
     else
-      flash.alert = results.context[:error] || "Could not create market"
+      flash.alert = error_msg = results.context[:error] || "Could not create market"
+
       @market = results.market
+
+      # Email us about their request
+      ZendeskMailer.delay.failed_market_request(@market, error_msg) unless @market.blank?
+
       redirect_to :action => 'new', :id => @market
     end
   end

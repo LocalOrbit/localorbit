@@ -197,19 +197,34 @@
 		<div id="et-main-area">
 			<div id="main-content">
 
-		    <% if flash[:error].present? %>
-		      <div id="error_explanation"><p><%= flash[:error] %></p></div>
-		    <% end %>
-		    
-		    <div id="flash-messages">
-		      <% if notice %>
-		        <div class="flash flash--notice"><p><%= notice %></p></div>
-		      <% end %>
+        <div id="flash-messages">
+          <% if notice %>
+            <div class="flash flash--notice"><p><%= notice %></p></div>
+          <% end %>
+        </div>
 
-		      <% if alert.present? %>
-		        <div class="flash flash--alert"><p><%= alert %></div>
-		      <% end %>
-		    </div>
+        <% if alert.present? || flash[:error].present? %>
+          <div class="modal popup" id="ryo-errors" style="border: red 2px solid;">
+            <div class="popup-header">
+              <%= button_tag "Close", type: :reset, id: "close-modal", class: "pull-right" %>
+              <h1>Processing error:</h1>
+            </div>
+
+            <div class="popup-body" style="text-align: center; margin-top: 1em">
+              <% if flash[:error].present? %>
+              <p><%= flash[:error] %></p>
+              <% end %>
+
+              <% if notice %>
+              <p><%= notice %></p>
+    		      <% end %>
+
+              <% if alert.present? %>
+                <p><%= alert %></p>
+              <% end %>
+            </div>
+          </div>
+        <% end %>
 
 				<article class="page type-page status-publish hentry">
 
