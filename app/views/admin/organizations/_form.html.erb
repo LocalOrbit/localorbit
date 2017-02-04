@@ -29,6 +29,8 @@
         <span class="tooltip" data-tooltip="This allows a customer to be a Seller and a Buyer."></span>
       </div
       >
+      <% else %>
+        <%= hidden_field_tag :can_sell, @organization.can_sell %>
       <% end %>
       </div>
     <% else %>
