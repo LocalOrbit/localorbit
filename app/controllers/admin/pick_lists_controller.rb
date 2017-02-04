@@ -19,13 +19,11 @@ class Admin::PickListsController < AdminController
 
     else
 
-      dt = params[:deliver_on]
-      pd = dt[-1,1] == 'D' ? 'delivery_schedules.buyer_pickup_location_id = 0' : 'delivery_schedules.buyer_pickup_location_id > 0'
-      dte = dt.chomp.to_date.strftime("%Y-%m-%d")
+      dt = params[:deliver_on].to_date
+      dte = dt.strftime("%Y-%m-%d")
 
       @delivery = Delivery.joins(:delivery_schedule)
                       .where("DATE(deliveries.deliver_on) = '#{dte}'")
-                      .where(pd)
                       .where(delivery_schedules: {market_id: current_market.id}).first
                       .decorate
 
