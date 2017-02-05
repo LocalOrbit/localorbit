@@ -57,7 +57,7 @@ describe "Using order templates", :js do
   end
 
   def create_template
-    order_template = create(:order_template, market: market)
+    order_template = create(:order_template, market: market, buyer_id: buyer.id)
     create(:order_template_item, order_template: order_template, product: bananas, quantity: 10)
     create(:order_template_item, order_template: order_template, product: potatoes, quantity: 5)
     create(:order_template_item, order_template: order_template, product: kale, quantity: 20)
