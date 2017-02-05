@@ -76,11 +76,11 @@
       var self = this;
       var gp = self.props.product;
       var unitPrices = _.map(gp.available, function(p) {
-        return <lo.MobileProductUnitPrices key={p.id} product={p} />
+        return <lo.MobileProductUnitPrices key={p.id} product={p} orderId={self.props.orderId} />
       });
 
       var inputs = _.map(gp.available, function(p) {
-        return <lo.MobileProductInput key={p.id} product={p} promo={self.props.promo}/>
+        return <lo.MobileProductInput key={p.id} product={p} promo={self.props.promo} orderId={self.props.orderId}/>
       });
 
       var info = this.generateInfo();
