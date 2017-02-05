@@ -267,11 +267,11 @@ class Market < ActiveRecord::Base
   end
 
   def is_consignment_market?
-    organization.plan.stripe_id == "CONSIGNMENT"
+    organization.payment_model == "consignment"
   end
 
   def is_buysell_market?
-    organization.plan.stripe_id != "CONSIGNMENT"
+    organization.payment_model == 'buysell'
   end
 
   def is_localeyes_market?

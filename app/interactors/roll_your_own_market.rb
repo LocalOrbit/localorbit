@@ -7,5 +7,6 @@ class RollYourOwnMarket
     CreateMarketAddress,
     CreateStripeCustomerForEntity,
     CreateStripeSubscriptionForEntity,
+    CreateSupplierOrgForProducer
   ]
 end

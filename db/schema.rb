@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170201151301) do
+ActiveRecord::Schema.define(version: 20170202160435) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -730,7 +730,7 @@ ActiveRecord::Schema.define(version: 20170201151301) do
     t.text     "how_story"
     t.string   "photo_uid"
     t.string   "balanced_customer_uri"
-    t.boolean  "balanced_underwritten",                                default: false, null: false
+    t.boolean  "balanced_underwritten",                                default: false,     null: false
     t.string   "facebook"
     t.string   "twitter"
     t.boolean  "display_facebook",                                     default: false
@@ -750,14 +750,15 @@ ActiveRecord::Schema.define(version: 20170201151301) do
     t.string   "org_type"
     t.integer  "plan_id"
     t.datetime "plan_start_at"
-    t.integer  "plan_interval",                                        default: 1,     null: false
-    t.decimal  "plan_fee",                     precision: 7, scale: 2, default: 0.0,   null: false
+    t.integer  "plan_interval",                                        default: 1,         null: false
+    t.decimal  "plan_fee",                     precision: 7, scale: 2, default: 0.0,       null: false
     t.integer  "plan_bank_account_id"
     t.boolean  "subscribed",                                           default: false
     t.string   "subscription_id"
     t.string   "payment_provider"
     t.string   "subscription_status"
     t.integer  "qb_org_id"
+    t.string   "payment_model",                                        default: "buysell"
   end
 
   add_index "organizations", ["name"], name: "index_organizations_on_name", using: :btree

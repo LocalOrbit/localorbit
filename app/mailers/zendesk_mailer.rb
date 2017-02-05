@@ -31,6 +31,17 @@ class ZendeskMailer < ActionMailer::Base
     )
   end
 
+  def failed_market_request(market, message)
+    @market = market
+    @message = message
+
+    mail(
+      to: "service@localorbit.com",
+      from: @market.pretty_email,
+      subject: "An attempt to create a new Market has failed"
+    )
+  end
+
   def error_intervention(user, title, data)
     @user = user
     @title = title
