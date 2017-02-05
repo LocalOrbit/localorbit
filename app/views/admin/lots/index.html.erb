@@ -14,7 +14,7 @@
   <% @child_units.each do |unit_product| %>
     <%= form_for [:admin, unit_product, @lot],
                  namespace: "p#{unit_product.id}",
-                 html: {class: "inventory-form row row--partial"} do |f| %>
+                 html: {class: "inventory_form row row--partial"} do |f| %>
 
       <h3 class="unit-name"><%= unit_product.unit_plural %></h3><br/>
       <% if policy(:advanced_inventory).index? || (current_user.seller? && organization_can_access?(@product.organization, :advanced_inventory)) || !unit_product.use_simple_inventory %>
@@ -122,7 +122,7 @@
                     <%= lot.quantity %>
                   </div>
                   <div class="edit-cell">
-                    <%= lot_in_table.number_field :quantity, min: 0, size: 3 %>
+                    <%= lot_in_table.number_field :quantity, min: 0, size: 3, class: 'quantity_input' %>
                   </div>
                 </td>
                 <td>
@@ -175,7 +175,7 @@
                 <div class="datepicker" data-input="p<%= unit_product.id %>_lot_expires_at"></div>
               </div>
             </td>
-            <td class="edit-cell"><div><%= f.number_field :quantity, min: 0, size: 3 %></div></td>
+            <td class="edit-cell"><div><%= f.number_field :quantity, min: 0, size: 3, class: 'quantity_input' %></div></td>
             <td class="edit-cell">
               <% if unit_product.lots.count > 0 %><button class="cancel">Cancel</button>&nbsp;<% end %><%= f.submit "Add", class: "btn--small" %>
             </td>
