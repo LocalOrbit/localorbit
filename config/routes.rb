@@ -132,6 +132,8 @@ Rails.application.routes.draw do
       resources :order_items, only: [:show, :update] # for order price editing
     end
 
+    get "purchase_orders" => "orders#purchase_orders"
+
     resources :organizations, concerns: [:bank_account, :activatable] do
       resources :organization_users, as: :users, path: :users do
         get :invite

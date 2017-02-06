@@ -1,7 +1,7 @@
 class Admin::OrdersController < AdminController
   include StickyFilters
 
-  before_action :find_sticky_params, only: :index
+  before_action :find_sticky_params, only: [:index, :purchase_orders]
   before_action :load_qb_session
 
 
@@ -33,6 +33,40 @@ class Admin::OrdersController < AdminController
           end
         end
       end
+    end
+  end
+
+  def purchase_orders
+    # binding.pry
+    if params["clear"]
+      redirect_to url_for(params.except(:clear))
+    else
+      po_filter = {:q => {"order_type_eq" => "purchase"}}
+      @query_params.merge!(po_filter)
+
+      @search_presenter = OrderSearchPresenter.new(@query_params, current_user, :placed_at)
+      @q, @totals = search_and_calculate_totals(@search_presenter)
+
+      @orders = @q.result(distinct: true)
+
+      respond_to do |format|
+        format.html do
+          @orders = @orders.page(params[:page]).per(@query_params[:per_page])
+          render :index
+        end
+        format.csv do
+          @order_items = find_order_items(@orders.map(&:id))
+          @abort_mission = @order_items.count > 2999
+          if ENV["USE_UPLOAD_QUEUE"] == "true"
+            Delayed::Job.enqueue ::CSVExport::CSVOrderExportJob.new(current_user, @order_items.map(&:id))
+            flash[:notice] = "Please check your email for export results."
+            redirect_to admin_orders_path
+          else
+            @filename = "orders.csv"
+          end
+        end
+      end
+
     end
   end
 
