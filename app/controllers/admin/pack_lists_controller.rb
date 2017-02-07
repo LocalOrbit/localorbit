@@ -7,9 +7,9 @@ class Admin::PackListsController < AdminController
     dte = dt.strftime("%Y-%m-%d")
     @orders = Order.joins(:items, :delivery)
                   .where(order_items: {delivery_status: "pending"})
-                  .order(:order_number).group("deliveries.buyer_deliver_on, orders.id")
+                  .order(:order_number).group("deliveries.deliver_on, orders.id")
                   .where("DATE(deliveries.deliver_on) = '#{dte}'")
-                  .select("deliveries.buyer_deliver_on, orders.*")
+                  .select("deliveries.deliver_on, orders.*")
 
     #@orders = @delivery.orders.joins(:items).where(order_items: {delivery_status: "pending"}).order(:order_number).group("orders.id")
     #@delivery_notes = DeliveryNote.joins(:order).where(orders: {delivery_id: @delivery.id})
