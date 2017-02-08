@@ -1,2 +1,2 @@
 $ ->
-  EditTable.build ".inventory-form"
+  EditTable.build ".inventory_form"
