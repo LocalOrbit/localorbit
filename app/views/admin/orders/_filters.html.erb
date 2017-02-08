@@ -46,12 +46,12 @@
 
           <span class="preserve-alignment mobile-block">
             <%= f.label :delivery_status_in, "Delivery Status" %><br>
-            <%= f.select :delivery_status_in, Order::DELIVERY_STATUSES.map { |ds| [ds[1], ds[0]] }, {include_blank: nil}, {multiple: false, class: [append_sticky_class(:delivery_status_in, ""),'multiselect']} %>
+            <%= f.select :delivery_status_in, Order::DELIVERY_STATUSES.map { |ds| [ds[1], ds[0]] }, {include_blank: 'Select'}, {multiple: false} %>
           </span>
 
           <span class="preserve-alignment mobile-block">
             <%= f.label :payment_status_in, "Payment Status" %><br>
-            <%= f.select :payment_status_in, Order::PAYMENT_STATUSES.map { |ps| [ps[1], ps[0]] }, {include_blank: nil}, {multiple: false, class: [append_sticky_class(:payment_status_in, ""),'multiselect']} %>
+            <%= f.select :payment_status_in, Order::PAYMENT_STATUSES.map { |ps| [ps[1], ps[0]] }, {include_blank: 'Select'}, {multiple: false} %>
           </span>
         </div>
       </div>
