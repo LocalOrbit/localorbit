@@ -5,6 +5,21 @@ class Order < ActiveRecord::Base
 
   INVOICE_STATUSES = %w(due overdue).freeze
 
+  DELIVERY_STATUSES = {
+      "pending" => "Pending",
+      "delivered" => "Delivered"
+  }.freeze
+
+  PAYMENT_STATUSES = {
+      "unpaid" => "Unpaid",
+      "paid" => "Paid",
+      "exported" => "Exported"
+  }.freeze
+
+  BATCH_ACTIONS = {
+      "export" => "Export"
+  }.freeze
+
   paginates_per 50
 
   before_save :update_paid_at

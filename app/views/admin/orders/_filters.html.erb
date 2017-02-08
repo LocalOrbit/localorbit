@@ -41,6 +41,19 @@
           </span>
           <% end %>
         </div>
+
+        <div class="manager-filters unjustify mobile-block">
+
+          <span class="preserve-alignment mobile-block">
+            <%= f.label :delivery_status_in, "Delivery Status" %><br>
+            <%= f.select :delivery_status_in, Order::DELIVERY_STATUSES.map { |ds| [ds[1], ds[0]] }, {include_blank: 'Select'}, {multiple: false} %>
+          </span>
+
+          <span class="preserve-alignment mobile-block">
+            <%= f.label :payment_status_in, "Payment Status" %><br>
+            <%= f.select :payment_status_in, Order::PAYMENT_STATUSES.map { |ps| [ps[1], ps[0]] }, {include_blank: 'Select'}, {multiple: false} %>
+          </span>
+        </div>
       </div>
       <div class="column column--fourth column--guttered">
         <div class="pull-right" style="margin-top: 45px">
