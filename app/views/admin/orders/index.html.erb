@@ -36,7 +36,7 @@
         <% if current_user.admin? %>
         <td class="market"><%= order.market.name %></td>
         <% end %>
-        <td class="order-number"><%= link_to order.order_number, admin_order_path(order) %><%= order.notes ? "<span class='tooltip--flag' data-tooltip='#{order.notes}'></span>".html_safe : '' %></td>
+        <td class="order-number"><%= link_to order.order_number, admin_order_path(order) %><%= order.decorate.note_indicator %></td>
         <td class="order-date"><%= order.placed_at.strftime("%m/%d/%Y") %></td>
         <td class="deliver-on"><%= order.delivery.buyer_deliver_on.strftime("%m/%d/%Y") || order.delivery.deliver_on.strftime("%m/%d/%Y")%></td>
         <% if current_user.admin? || current_user.market_manager? || current_user.buyer_only? %>
