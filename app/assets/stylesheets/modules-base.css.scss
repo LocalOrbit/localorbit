@@ -1272,6 +1272,26 @@ label ~ .tooltip {
   }
 }
 
+@mixin tooltip-flag-icon {
+  position: relative;
+  display: inline-block;
+  width: 14px;
+  height: 14px;
+  color: red;
+  font-size: .9em;
+  font-weight: bold;
+  line-height: 1em;
+  text-align: center;
+  cursor: pointer;
+  @media screen and (max-width: $mobile_break) {
+    width: 20px;
+    height: 20px;
+  }
+  &:before {
+    content: '\f024';
+    font-family: FontAwesome;
+  }
+}
 
 
 .tooltip-popup {
@@ -1311,6 +1331,41 @@ label ~ .tooltip {
     margin-right: .5em;
   }
 }
+
+.tooltip--flag {
+  @include tooltip-flag-icon;
+
+  &:after {
+    position: absolute;
+    right: 50%;
+    bottom: 120%;
+    display: none;
+    z-index: 1000;
+    min-width: 210px;
+    max-width: 300px;
+    padding: .5em 1em;
+    border: solid 1px #aaa;
+    @include border-radius(5px);
+    @include box-shadow(2px 2px 5px rgba(0,0,0,0.3));
+    content: attr(data-tooltip);
+    color: #333;
+    background: #fff;
+    font-weight: normal;
+    line-height: 1.1;
+    text-align: left;
+  }
+  &:hover,
+  &:active,
+  &:focus {
+    &:after {
+      display: block;
+    }
+  }
+  &.pull-right + .pull-right {
+    margin-right: .5em;
+  }
+}
+
 .tooltip--naked {
   color: inherit;
   background: none;

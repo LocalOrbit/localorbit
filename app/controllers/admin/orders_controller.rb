@@ -4,8 +4,6 @@ class Admin::OrdersController < AdminController
   before_action :find_sticky_params, only: :index
   before_action :load_qb_session
 
-
-
   def index
     if params["clear"]
       redirect_to url_for(params.except(:clear))
@@ -52,6 +50,26 @@ class Admin::OrdersController < AdminController
       totals = OrderTotals.new(OrderItem.where("1 = 0"))
     end
     [results, totals]
+  end
+
+  def create
+    case params["order_batch_action"]
+      when "export"
+        params["order_id"].each do |o|
+          order = Order.find(o)
+          if order.delivery_status_for_user(current_user) == 'delivered' && order.qb_ref_id.nil?
+            export_invoice(order, true)
+          end
+        end
+        redirect_to admin_orders_path, notice: 'Orders Processed.'
+
+      when nil, ""
+        redirect_to admin_orders_path, alert: 'No action provided.'
+
+    else
+      redirect_to admin_orders_path, alert: "Unsupported action: '#{params[:order_batch_action]}'"
+
+    end
   end
 
   def show
@@ -131,12 +149,14 @@ class Admin::OrdersController < AdminController
     end
   end
 
-  def export_invoice(order)
+  def export_invoice(order, batch = nil)
     result = ExportInvoiceToQb.perform(order: order, curr_market: current_market, session: session)
-    if result.success?
-      redirect_to admin_order_path(order), notice: "Invoice Exported to QB."
-    else
-      redirect_to admin_order_path(order), error: "Failed to Export Invoice."
+    if batch.nil?
+      if result.success?
+        redirect_to admin_order_path(order), notice: "Invoice Exported to QB."
+      else
+        redirect_to admin_order_path(order), error: "Failed to Export Invoice."
+      end
     end
   end
 
@@ -151,7 +171,7 @@ class Admin::OrdersController < AdminController
     params[:order].delete(:delivery_id) # Remove the parameter so it doesn't conflict
     params[:order].delete(:delivery_clear) # Remove the parameter so it doesn't conflict
     params[:order].delete(:credit_clear) # Remove the parameter so it doesn't conflict
-    params.require(:order).permit(:delivery_clear, :notes, items_attributes: [
+    params.require(:order).permit(:delivery_clear, :notes, :order_batch_action, :order_id, items_attributes: [
       :id, :quantity, :quantity_delivered, :delivery_status, :_destroy
     ])
   end

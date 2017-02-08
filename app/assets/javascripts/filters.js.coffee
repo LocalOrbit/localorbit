@@ -55,6 +55,11 @@ $ ->
     if confirm("Are you sure you want to mark all items invoiced?")
       submitInvoiceList "mark-selected-invoiced"
 
+  orderList = -> $('#orders-list')
+
+  $('#submit_multi_button').click ->
+    orderList().trigger('submit')
+
   parseSearchString = () ->
     list = window.location.search.substr(1).split("&")
     params = {}
