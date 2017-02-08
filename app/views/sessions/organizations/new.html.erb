@@ -1,4 +1,5 @@
-
+<% # KXM GC: Purchase orders will need a corresponding view for vendor selection %>
+<% # KXM GC: Purchase orders will also need to set current_organization to current_market.organization (or something of the like) %>
 <div class="row row--partial">
   <%= form_tag [:sessions, :organizations], method: :post, class: "column column--seven-twelfths organization-form" do |f| %>
     <%= hidden_field_tag :redirect_back_to, params[:redirect_back_to] %>

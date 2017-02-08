@@ -12,6 +12,7 @@ class CartsController < ApplicationController
       format.html do
         errors ||= []
         if current_cart.items.empty?
+          # KXM GC: carts#show must be PO aware when redirecting
           redirect_to [:products], alert: "Your cart is empty. Please add items to your cart before checking out."
         else
           current_cart.items.each do |item|

@@ -3,16 +3,24 @@ class ProductsController < ApplicationController
   #before_action :reset_order_id
   before_action :require_selected_market
   before_action :require_market_open
-  before_action :require_current_organization
+  before_action :require_current_organization, except: [:purchase]
   before_action :require_organization_location
-  before_action :require_current_delivery
+  before_action :require_current_delivery, except: [:purchase]
   before_action :require_cart
   before_action :hide_admin_navigation
-  before_action :load_products
+  before_action :load_products, except: [:purchase] # KXM GC: Temporarily disable products
   before_action :load_sellers, only: [:search]
 
   def index
     if current_market.alternative_order_page
+      render 'alternative_order_page'
+      return
+    end
+  end
+
+  def purchase
+    if current_market.alternative_order_page
+      # KXM GC: Products#purchase may end up rendering a different page, with different React components, submitting to a (slightly) different controller#action
       render 'alternative_order_page'
       return
     end

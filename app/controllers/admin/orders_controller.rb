@@ -6,6 +6,7 @@ class Admin::OrdersController < AdminController
 
 
 
+  # KXM GC: admin/orders#index and admin/orders#purchase_orders likely may be factorable...
   def index
     if params["clear"]
       redirect_to url_for(params.except(:clear))

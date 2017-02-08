@@ -1,3 +1,4 @@
+<% # KXM GC: alternative_order_page may be factorable
 <%
   if !policy(:all_supplier).index?
      supplier_id = current_market.organizations.where("org_type = 'S'")[0].id

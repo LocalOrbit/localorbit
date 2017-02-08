@@ -244,6 +244,7 @@ Rails.application.routes.draw do
   post '/delivery_notes/new' => "delivery_notes#create"
 
   get '/products/search' => "products#search"
+  get '/products/purchase' => "products#purchase"
   resources :products, only: [:index, :show] do
     get '/row' => "products#render_product_row"
   end

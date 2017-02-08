@@ -10,6 +10,7 @@ class OrdersController < ApplicationController
   before_action :hide_admin_navigation,          only: :create
   before_action :find_sticky_params, only: :index
 
+  # KXM GC: orders#purchase_orders needs to go in here
   def index
     @query_params["placed_at_date_gteq"] ||= 7.days.ago.to_date.to_s
     @query_params["placed_at_date_lteq"] ||= Date.today.to_s
