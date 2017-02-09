@@ -9,7 +9,8 @@
   var ProductTable = React.createClass({
     propTypes: {
       url: React.PropTypes.string.isRequired,
-      cartUrl: React.PropTypes.string
+      cartUrl: React.PropTypes.string,
+      purchaseOrder: React.PropTypes.string
     },
 
     getInitialState: function() {

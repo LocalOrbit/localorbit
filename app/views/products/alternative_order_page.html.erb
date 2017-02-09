@@ -1,4 +1,5 @@
-<% # KXM GC: alternative_order_page may be factorable
+<% # KXM GC: alternative_order_page may be factorable %>
+<% binding.pry if params[:order_type].blank? %>
 <%
   if !policy(:all_supplier).index?
      supplier_id = current_market.organizations.where("org_type = 'S'")[0].id
@@ -11,6 +12,7 @@
   selectedType: current_delivery.selected_type.capitalize,
   orderCutoff: current_delivery.cutoff_time,
   buyerInfo: current_organization.name,
+  purchaseOrder: params[:order_type] == 'purchase'
   limit: 10,
   useTemplates: policy(:template).index?,
   supplierId: supplier_id,

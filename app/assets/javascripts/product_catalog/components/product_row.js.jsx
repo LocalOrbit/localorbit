@@ -2,6 +2,10 @@
 
 (function() {
   var ProductRow = React.createClass({
+    propTypes: {
+      purchaseOrder: React.PropTypes.string
+    },
+
     mixins: [window.lo.ProductRowMixin],
 
     render: function() {
@@ -18,8 +22,9 @@
       // The long description HTML
       var long_description = <div className="long-description-info is-hidden with-anchor top-anchor popup" id={product_id}><div className="popup-header">Details <button className="close"><i className="font-icon icon-close"></i></button></div><div className="popup-body">{gp.long_description}</div></div>
 
+      //var unit_prices = '';
       var unit_prices = _.map(gp.available, function(p) {
-        return <lo.ProductUnitPrices key={p.id} product={p} promo={self.props.promo} orderId={self.props.orderId} />
+        return <lo.ProductUnitPrices key={p.id} product={p} promo={self.props.promo} orderId={self.props.orderId} purchaseOrder={self.props.purchaseOrder} />
       });
 
       return (
@@ -78,7 +83,7 @@
                       Order QTY
                     </th>
                     <th style={{width: 100, textAlign: "center", color:"#727070", textTransform:"uppercase", fontWeight: "bold", fontSize: "11px"}}>
-                      Total Cost
+                      {(this.props.purchaseOrder) ? "" : "Total Cost"}
                     </th>
                 </tr>
               </thead>

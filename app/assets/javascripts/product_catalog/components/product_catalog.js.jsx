@@ -13,6 +13,7 @@
       selectedType: React.PropTypes.string,
       orderCutoff: React.PropTypes.string.isRequired,
       buyerInfo: React.PropTypes.string.isRequired,
+      purchaseOrder: React.PropTypes.string,
       useTemplates: React.PropTypes.bool.isRequired,
       supplierId: React.PropTypes.number,
       orderId: React.PropTypes.number,
@@ -56,6 +57,7 @@
             selectedType={this.props.selectedType}
             orderCutoff={this.props.orderCutoff}
             buyerInfo={this.props.buyerInfo}
+            purchaseOrder={this.props.purchaseOrder}
             useTemplates={this.props.useTemplates}
             supplierOnly={this.props.supplierId > 0}
             orderId={this.props.orderId}
@@ -69,6 +71,7 @@
             url={this.props.baseUrl + '/products'}
             supplierOnly={this.props.supplierId > 0}
             orderId={this.props.orderId}
+            purchaseOrder={this.props.purchaseOrder}
         />);
         
         return (
