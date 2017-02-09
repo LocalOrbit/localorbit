@@ -127,7 +127,7 @@ Rails.application.routes.draw do
       end
     end
 
-    resources :orders, only: [:index, :show, :update] do
+    resources :orders, only: [:index, :show, :update, :create] do
       resources :table_tents_and_posters, :controller=>"/table_tents_and_posters", only: [:index, :show, :create]
       resources :order_items, only: [:show, :update] # for order price editing
     end

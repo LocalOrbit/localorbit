@@ -57,4 +57,8 @@ class OrderDecorator < Draper::Decorator
   def delivery_date
     delivery.deliver_on.strftime("%m/%d/%Y")
   end
+
+  def note_indicator
+    !notes.nil? && notes.length > 0 ? "<span class='tooltip--flag' data-tooltip='#{notes}'></span>".html_safe : ''
+  end
 end

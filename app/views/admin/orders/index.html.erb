@@ -6,10 +6,14 @@
     <%= render "filters" %>
   </div>
 </div>
+<%= form_tag admin_orders_path, method: :post, id: 'orders-list' do %>
 <div class="table-wrapper">
-  <table class="sortable">
-    <thead class="stickable">
-      <% if current_user.admin? %>
+  <table class="sort-able">
+    <thead class="stick-able">
+    <% if current_market.is_consignment_market? %>
+    <th><input type="checkbox" class="select-all"></th>
+    <% end %>
+    <% if current_user.admin? %>
       <%= content_tag :th, sort_link(@q, :market, "Market") %>
       <% end %>
       <%= content_tag :th, sort_link(@q, :order_number, "Order #") %>
@@ -26,10 +30,13 @@
           items = Orders::SellerItems.items_for_seller(order, current_user)
       %>
       <tr class="order-row">
+        <% if current_market.is_consignment_market? %>
+        <td><%= check_box_tag "order_id[]", order.id %></td>
+        <% end %>
         <% if current_user.admin? %>
         <td class="market"><%= order.market.name %></td>
         <% end %>
-        <td class="order-number"><%= link_to order.order_number, admin_order_path(order) %></td>
+        <td class="order-number"><%= link_to order.order_number, admin_order_path(order) %><%= order.decorate.note_indicator %></td>
         <td class="order-date"><%= order.placed_at.strftime("%m/%d/%Y") %></td>
         <td class="deliver-on"><%= order.delivery.buyer_deliver_on.strftime("%m/%d/%Y") || order.delivery.deliver_on.strftime("%m/%d/%Y")%></td>
         <% if current_user.admin? || current_user.market_manager? || current_user.buyer_only? %>
@@ -45,6 +52,15 @@
     </tbody>
   </table>
 </div>
+
+<% if current_market.is_consignment_market? %>
+<div class="pull-right">
+  <%= label_tag :order_batch_action, 'Multiple Action:' %>
+  <%= select_tag :order_batch_action, options_for_select(Order::BATCH_ACTIONS.map { |op| [op[1], op[0]] }), {include_blank: 'Select:'} %>
+  <%= button_tag "Go", id: 'submit_multi_button', class: 'btn btn--primary' %>
+</div>
+<% end %>
+<% end %>
 
 <%= paginate @orders %>
 <%= render "shared/total_sales", totals: @totals, is_market_manager: current_user.can_manage_market?(current_market), buyer_only: current_user.buyer_only? %>
