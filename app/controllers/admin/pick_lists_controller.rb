@@ -12,11 +12,6 @@ class Admin::PickListsController < AdminController
       unless @very_important_person
         order_items = order_items.where(products: {organization_id: current_user.organization_ids})
       end
-
-      @pick_lists = order_items.group_by {|item| item.product.organization_id }.map do |_, items|
-        PickListPresenter.new(items, @delivery_notes)
-      end
-
     else
 
       dt = params[:deliver_on].to_date
@@ -34,13 +29,14 @@ class Admin::PickListsController < AdminController
                         .eager_load(:order, order: [:delivery], product: :organization)
                         .order("organizations.name, products.name")
                         .preload(order: :organization)
-
       @delivery_notes = DeliveryNote.joins(:order).where(order: order_items.map(&:order_id))
-
-      @pick_lists = order_items.group_by {|item| item.product.organization_id }.map do |_, items|
-        PickListPresenter.new(items, @delivery_notes)
+      @very_important_person = current_user.admin? || current_user.managed_market_ids.include?(@delivery.delivery_schedule.market_id)
+      unless @very_important_person
+        order_items = order_items.where(products: {organization_id: current_user.organization_ids})
       end
-
+    end
+    @pick_lists = order_items.group_by {|item| item.product.organization_id }.map do |_, items|
+      PickListPresenter.new(items, @delivery_notes)
     end
 
     if @pick_lists.empty?
