@@ -17,8 +17,13 @@ class DeliveryDecorator < Draper::Decorator
     direct_to_customer? ? "Customer" : "Market"
   end
 
-  def seller_display_date
-    deliver_on.strftime("%A %B %e, %Y")
+  def seller_display_date(current_user = nil)
+    if !current_user.nil? && (current_user.buyer_only? || current_user.market_manager?)
+      buyer_deliver_on.strftime("%A %B %e, %Y")
+    else
+      deliver_on.strftime("%A %B %e, %Y")
+    end
+
   end
   alias_method :display_date, :seller_display_date
 
@@ -96,8 +101,8 @@ class DeliveryDecorator < Draper::Decorator
   end
 
   # Display for upcoming delivery
-  def upcoming_delivery_date_heading
-    "#{seller_display_date}"
+  def upcoming_delivery_date_heading(current_user)
+    "#{seller_display_date(current_user)}"
   end
 
   def deliver_to_name

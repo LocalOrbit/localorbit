@@ -47,7 +47,8 @@ describe "Master Pack List" do
     context "single order" do
       context "delivered to the buyer" do
         before do
-          visit admin_delivery_tools_pack_list_path(thursday_delivery)
+          dte = thursday_delivery.buyer_deliver_on.strftime("%Y%m%d")
+          visit admin_delivery_tools_pack_list_path(dte)
         end
 
         it "shows a packing slip for the buyer" do
@@ -84,7 +85,8 @@ describe "Master Pack List" do
 
       context "pickup at the market" do
         before do
-          visit admin_delivery_tools_pack_list_path(friday_delivery)
+          dte = friday_delivery.buyer_deliver_on.strftime("%Y%m%d")
+          visit admin_delivery_tools_pack_list_path(dte)
         end
 
         it "shows a packing slip for the buyer" do
@@ -122,7 +124,8 @@ describe "Master Pack List" do
       let!(:order2)             { create(:order, buyer2_delivery.merge(items: [order2_item1], delivery: thursday_delivery, market: market, organization: buyer2)) }
 
       before do
-        visit admin_delivery_tools_pack_list_path(thursday_delivery)
+        dte = thursday_delivery.deliver_on.strftime("%Y%m%d")
+        visit admin_delivery_tools_pack_list_path(dte)
       end
 
       it "shows packing slips for the buyers" do

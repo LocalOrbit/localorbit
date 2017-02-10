@@ -10,12 +10,16 @@
         previous_delivery_date = ''
 
         @upcoming_deliveries.each do |delivery|
-            delivery_date = "#{delivery.deliver_on.strftime("%Y%m%d")}"
+            if current_user.buyer_only? || current_user.market_manager?
+              delivery_date = "#{delivery.buyer_deliver_on.strftime("%Y%m%d")}"
+            else
+              delivery_date = "#{delivery.deliver_on.strftime("%Y%m%d")}"
+            end
         %>
         <% if delivery_date != previous_delivery_date %>
         <div class="upcoming-delivery">
           <span class="market"><%= delivery.delivery_schedule.market.name %></span><br><br>
-          <h2 class="upcoming-delivery-date"><%= delivery.upcoming_delivery_date_heading %></h2>
+          <h2 class="upcoming-delivery-date"><%= delivery.upcoming_delivery_date_heading(current_user) %></h2>
 
           <% dc = UserDeliveryContext.build(user: current_user, delivery: delivery) 
              access_master_packing_slips = FeatureAccess.master_packing_slips?(user_delivery_context: dc) && policy(:all_supplier).index?

@@ -145,7 +145,6 @@ describe "Pick list" do
       end
 
       it "shows the pick list" do
-        save_and_open_page
         expect(page).to have_content("Pick List")
         expect(page).to have_content("May 9, 2014")
         expect(page).to_not have_content("Ordering has not yet closed for this delivery")

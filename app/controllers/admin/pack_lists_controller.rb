@@ -5,11 +5,19 @@ class Admin::PackListsController < AdminController
     #@delivery = Delivery.find(params[:id]).decorate
     dt = params[:deliver_on].to_date
     dte = dt.strftime("%Y-%m-%d")
-    @orders = Order.joins(:items, :delivery)
-                  .where(order_items: {delivery_status: "pending"})
-                  .order(:order_number).group("deliveries.deliver_on, orders.id")
-                  .where("DATE(deliveries.deliver_on) = '#{dte}'")
-                  .select("deliveries.deliver_on, orders.*")
+    if current_user.buyer_only? || current_user.market_manager?
+      @orders = Order.joins(:items, :delivery)
+                    .where(order_items: {delivery_status: "pending"})
+                    .order(:order_number).group("deliveries.buyer_deliver_on, orders.id")
+                    .where("DATE(deliveries.buyer_deliver_on) = '#{dte}'")
+                    .select("deliveries.buyer_deliver_on, orders.*")
+    else
+      @orders = Order.joins(:items, :delivery)
+                    .where(order_items: {delivery_status: "pending"})
+                    .order(:order_number).group("deliveries.deliver_on, orders.id")
+                    .where("DATE(deliveries.deliver_on) = '#{dte}'")
+                    .select("deliveries.deliver_on, orders.*")
+    end
 
     #@orders = @delivery.orders.joins(:items).where(order_items: {delivery_status: "pending"}).order(:order_number).group("orders.id")
     #@delivery_notes = DeliveryNote.joins(:order).where(orders: {delivery_id: @delivery.id})
