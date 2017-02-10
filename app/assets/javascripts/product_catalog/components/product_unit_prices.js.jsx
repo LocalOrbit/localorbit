@@ -1,6 +1,10 @@
 (function() {
 
   var ProductUnitPrices = React.createClass({
+    propTypes: {
+      purchaseOrder: React.PropTypes.bool
+    },
+
     mixins: [window.lo.ProductInputMixin],
 
     fullPricingRow: function(prices, showCaret) {
@@ -88,7 +92,7 @@
         <tr className="cart_item" data-keep-when-zero="yes" data-cart-item={JSON.stringify(this.props.product.cart_item)}>
           <th>
             <a href={"/products/" + this.props.product.id}>{this.props.product.unit_description}</a><br/>
-            <span style={{fontSize:"11px", color:"#737373"}}>{quantity}&nbsp;</span>
+            <span style={{fontSize:"11px", color:"#737373"}}>{this.props.purchaseOrder ? '' : quantity &nbsp};</span>
           </th>
           <td>
             <table>
@@ -104,7 +108,7 @@
                   {pid}
               </div>
               <div style={{float:"left", width:"50%", textAlign:"center", padding: "10px 0"}}>
-                <span className="price">{this.props.product.total_price}</span>
+                <span className="price" style={{display: (this.props.purchaseOrder) ? "none" : "inherit" }}>{this.props.product.total_price}</span>
                 {deleteButton}
               </div>
             </div>

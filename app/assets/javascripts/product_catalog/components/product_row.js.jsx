@@ -3,7 +3,7 @@
 (function() {
   var ProductRow = React.createClass({
     propTypes: {
-      purchaseOrder: React.PropTypes.string
+      purchaseOrder: React.PropTypes.bool
     },
 
     mixins: [window.lo.ProductRowMixin],

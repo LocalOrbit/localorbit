@@ -86,14 +86,14 @@
             return (<div>
                 {addTopCategory}
                 {addSecondCategory}
-                <lo.MobileProductRow key={product.id} product={product} hideImages={this.state.hideImages} promo={is_promo} supplierOnly={this.props.supplierOnly} orderId={this.props.orderId}/>
+                <lo.MobileProductRow key={product.id} product={product} hideImages={this.state.hideImages} promo={is_promo} supplierOnly={this.props.supplierOnly} orderId={this.props.orderId} purchaseOrder={this.props.purchaseOrder}/>
             </div> );
         }
         else {
             return (<div>
                 {addTopCategory}
                 {addSecondCategory}
-                <lo.ProductRow key={product.id} product={product} hideImages={this.state.hideImages} promo={is_promo} supplierOnly={this.props.supplierOnly} orderId={this.props.orderId} />
+                <lo.ProductRow key={product.id} product={product} hideImages={this.state.hideImages} promo={is_promo} supplierOnly={this.props.supplierOnly} orderId={this.props.orderId} purchaseOrder={this.props.purchaseOrder}/>
             </div> );
         }
     },

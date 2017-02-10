@@ -13,7 +13,7 @@
       selectedType: React.PropTypes.string,
       orderCutoff: React.PropTypes.string.isRequired,
       buyerInfo: React.PropTypes.string.isRequired,
-      purchaseOrder: React.PropTypes.string,
+      purchaseOrder: React.PropTypes.bool,
       useTemplates: React.PropTypes.bool.isRequired,
       supplierId: React.PropTypes.number,
       orderId: React.PropTypes.number,

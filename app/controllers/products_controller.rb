@@ -21,9 +21,10 @@ class ProductsController < ApplicationController
   def purchase
     # Elegant solution to follow...
     @current_organization = current_market.organization
+    @order_type = 'purchase'
 
     if current_market.alternative_order_page
-      render partial: 'alternative_order_page', locals: {order_type: 'purchase'}
+      render 'alternative_order_page'
       return
     end
   end
