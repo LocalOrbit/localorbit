@@ -1,11 +1,13 @@
 class ProductsController < ApplicationController
   include ActiveSupport::NumberHelper
   #before_action :reset_order_id
+  before_action :set_order_type, only: [:purchase]
+  before_action :require_current_vendor, only: [:purchase]
   before_action :require_selected_market
   before_action :require_market_open
-  before_action :require_current_organization, except: [:purchase]
+  before_action :require_current_organization
   before_action :require_organization_location
-  before_action :require_current_delivery #, except: [:purchase]
+  before_action :require_current_delivery
   before_action :require_cart
   before_action :hide_admin_navigation
   before_action :load_products
@@ -19,8 +21,6 @@ class ProductsController < ApplicationController
   end
 
   def purchase
-    # Elegant solution to follow...
-    @current_organization = current_market.organization
     @order_type = 'purchase'
 
     if current_market.alternative_order_page
@@ -93,5 +93,9 @@ class ProductsController < ApplicationController
 
   def load_products
     @products_for_sale = ProductsForSale.new(current_delivery, current_organization, current_cart, request.query_parameters, product_id: params[:id])
+  end
+
+  def set_order_type
+    session[:order_type] = 'purchase'
   end
 end

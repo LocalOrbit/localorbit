@@ -68,6 +68,8 @@ class ApplicationController < ActionController::Base
       return @current_organization
     end
 
+    return current_market.organization if current_market.is_consignment_market? && session[:order_type] == 'purchase'
+
     if @current_organization && (@last_organization_market == current_market || @current_organization.all_markets.include?(current_market))
       @last_organization_market = current_market
       return @current_organization
