@@ -79,6 +79,13 @@ class ApplicationController < ActionController::Base
     @current_organization = find_current_organization
   end
 
+  def current_supplier
+    if session[:current_supplier_id]
+      @current_supplier = current_market.suppliers.find_by(id: session[:current_supplier_id])
+      return @current_supplier
+    end
+  end
+
   def find_current_organization
     return nil unless current_market
     return nil unless current_user
@@ -250,6 +257,11 @@ class ApplicationController < ActionController::Base
   def require_current_organization
     return unless current_organization.nil? && session[:order_id].nil?
     redirect_to new_sessions_organization_path(redirect_back_to: request.original_url)
+  end
+
+  def require_current_supplier
+    return unless current_supplier.nil?
+    redirect_to new_sessions_supplier_path(redirect_back_to: request.original_url)
   end
 
   def require_current_delivery

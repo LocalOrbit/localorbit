@@ -226,6 +226,7 @@ Rails.application.routes.draw do
 
   namespace :sessions do
     resources :organizations
+    resources :suppliers
     resource :deliveries do
       get :reset
     end

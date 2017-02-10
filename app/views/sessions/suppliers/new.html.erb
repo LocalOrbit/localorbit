@@ -1,0 +1,16 @@
+<div class="row row--partial">
+  <%= form_tag [:sessions, :suppliers], method: :post, class: "column column--seven-twelfths organization-form" do |f| %>
+    <%= hidden_field_tag :redirect_back_to, params[:redirect_back_to] %>
+
+    <h1>Select a Supplier</h1>
+    <div class="info-note">You may purchase from multiple suppliers. From which supplier would you like to order?</div>
+
+    <div class="field">
+      <%= label_tag :org_id, "Supplier" %><br>
+      <%= select_tag(:org_id, options_from_collection_for_select(@suppliers, 'id', 'name'), class: "column column--full chosen") %>
+    </div>
+    <div class="form-actions">
+      <%= submit_tag "Select Supplier", class: "mobile-block" %>
+    </div>
+  <% end %>
+</div>
