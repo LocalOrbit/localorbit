@@ -851,7 +851,7 @@ module Dom
     end
 
     class PickListOrg < Domino
-      selector ".pick-list-supplier"
+      selector ".vcard--seller"
 
       attribute :org
     end

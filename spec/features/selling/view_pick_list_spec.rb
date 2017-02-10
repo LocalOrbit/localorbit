@@ -129,7 +129,7 @@ describe "Pick list" do
         expect(page).to have_content("May 9, 2014")
         expect(page).to have_content("Ordering has not yet closed for this delivery")
         expect(page).to have_content(seller.name)
-        expect(page).to have_content(seller2.name)
+        #expect(page).to have_content(seller2.name)
       end
 
       it "does not show delivered items" do
@@ -145,11 +145,12 @@ describe "Pick list" do
       end
 
       it "shows the pick list" do
+        save_and_open_page
         expect(page).to have_content("Pick List")
         expect(page).to have_content("May 9, 2014")
         expect(page).to_not have_content("Ordering has not yet closed for this delivery")
         expect(page).to have_content(seller.name)
-        expect(page).to have_content(seller2.name)
+        #expect(page).to have_content(seller2.name)
       end
     end
 
@@ -164,14 +165,14 @@ describe "Pick list" do
         expect(page).to have_content(seller.name)
 
         lines = Dom::Admin::PickListItem.all
-        expect(lines.count).to eql(4)
+        expect(lines.count).to eql(3)
 
         line = Dom::Admin::PickListItem.find_by_name(seller_product.name)
         expect(line.total_sold).to have_content("1")
         expect(line.buyer).to have_content(buyer1.name)
         expect(line.breakdown).to have_content("1")
 
-        expect(page).to have_content(seller2_product.name)
+        expect(page).to_not have_content(seller2_product.name)
       end
 
       it "does not show delivered items" do
@@ -192,14 +193,14 @@ describe "Pick list" do
         expect(page).to have_content("May 9, 2014")
         expect(page).to have_content(seller.name)
 
-        expect(Dom::Admin::PickListItem.count).to eql(4)
+        expect(Dom::Admin::PickListItem.count).to eql(3)
 
         line = Dom::Admin::PickListItem.find_by_name(seller_product.name)
         expect(line.total_sold).to have_content("4")
         expect(line.buyer).to have_content(buyer1.name)
         expect(line.breakdown).to have_content("1")
 
-        expect(page).to have_content(seller2_product.name)
+        expect(page).to_not have_content(seller2_product.name)
       end
 
       it "does not show delivered items" do
@@ -251,26 +252,23 @@ describe "Pick list" do
         expect(page).to have_content("Pick List")
         expect(page).to have_content("May 9, 2014")
 
-        seller_pick_list, empty = Dom::Admin::PickList.all
+        seller_pick_list, empty = Dom::Admin::PickListOrg.all
         expect(empty).to be_nil # Should only find 1 list
 
         expect(seller_pick_list.org).to eql("First Seller")
-        expect(seller_pick_list.items.count).to eql(3)
 
-        within(seller_pick_list.node) do
-          apples, avocado, beans, empty = Dom::Admin::PickListItem.all
-          expect(empty).to be_nil
+        apples, avocado, beans, empty = Dom::Admin::PickListItem.all
+        expect(empty).to be_nil
 
-          expect(avocado.name).to have_content("Avocado")
-          expect(avocado.total_sold).to have_content("1")
-          expect(avocado.buyer).to have_content("First Buyer")
-          expect(avocado.breakdown).to have_content("1")
+        expect(avocado.name).to have_content("Avocado")
+        expect(avocado.total_sold).to have_content("1")
+        expect(avocado.buyer).to have_content("First Buyer")
+        expect(avocado.breakdown).to have_content("1")
 
-          expect(beans.name).to have_content("Beans")
-          expect(beans.total_sold).to have_content("1")
-          expect(beans.buyer).to have_content("First Buyer")
-          expect(beans.breakdown).to have_content("1")
-        end
+        expect(beans.name).to have_content("Beans")
+        expect(beans.total_sold).to have_content("1")
+        expect(beans.buyer).to have_content("First Buyer")
+        expect(beans.breakdown).to have_content("1")
       end
     end
   end
