@@ -4,7 +4,7 @@ module PackingLabels
       def make_pages(labels, product_label_format)
 
         if product_label_format == 1
-          labels.each_slice(1).map do |(a)|
+          labels.each_slice(1).map do |a|
             {
                 a: a
             }

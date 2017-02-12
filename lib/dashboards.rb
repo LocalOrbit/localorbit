@@ -4,7 +4,7 @@ module Dashboards
     if user_type == "B" || user_type == "M"
       @deliveries = Order.orders_for_buyer(current_user).upcoming_buyer_delivery.joins(:items).where(order_items: {delivery_status: "pending"}, market: current_market).select('orders.id AS order_id','deliveries.*').
           sort_by {|d| d.buyer_deliver_on }
-      use_date = :buyer_deliver_on
+      use_date = :deliver_on # used to be buyer_deliver_on - changed for date consistency with delivery tools
 
       pending_amount = Order.orders_for_buyer(current_user).where(:delivery => @deliveries.map(&:id), market: current_market).sum(:total_cost)
     else

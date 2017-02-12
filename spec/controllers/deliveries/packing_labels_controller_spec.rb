@@ -11,7 +11,8 @@ describe Deliveries::PackingLabelsController do
 
   describe "#index" do
     def get_index
-      get :index, delivery_id: delivery.id
+      dte = delivery.deliver_on.strftime("%Y%m%d")
+      get :index, delivery_deliver_on: dte, delivery_id: delivery.id
     end
 
     def expect_process_delivery_printable
@@ -44,10 +45,12 @@ describe Deliveries::PackingLabelsController do
 
       get_index
 
-      delivery_printable = PackingLabelsPrintable.where(delivery_id: delivery.id).first
+      dte = delivery.deliver_on.strftime("%Y-%m-%d")
+      dte1 = delivery.deliver_on.strftime("%Y%m%d")
+      delivery_printable = PackingLabelsPrintable.where(deliver_on: dte).first
       expect(delivery_printable).to be
 
-      expect(response).to redirect_to(admin_delivery_tools_delivery_packing_label_path(delivery_id: delivery.id, id: delivery_printable.id))
+      expect(response).to redirect_to(admin_delivery_tools_delivery_packing_label_path(deliver_on: dte, id: delivery_printable.id))
 
       expect(@delayed_job_args).to be
       expect(@delayed_job_args[:packing_labels_printable_id]).to eq delivery_printable.id
@@ -63,14 +66,16 @@ describe Deliveries::PackingLabelsController do
 
     context "GET html" do
       it "returns HTML" do
-        get :show, delivery_id: delivery.id, id: packing_labels_printable.id
+        dte = delivery.deliver_on.strftime("%Y%m%d")
+        get :show, delivery_deliver_on: dte, id: packing_labels_printable.id
         expect(response.status).to eq 200
         expect(response.content_type).to eq "text/html"
       end
 
       context "when PDF is not available" do
         it "returns the JSON status with pdf_url nil" do
-          get :show, delivery_id:delivery.id, id: packing_labels_printable.id, format: :json
+          dte = delivery.deliver_on.strftime("%Y%m%d")
+          get :show, delivery_deliver_on: dte, id: packing_labels_printable.id, format: :json
           expect(response.status).to eq 200
           expect(response.content_type).to eq "application/json"
           data = JSON.parse(response.body)
@@ -87,7 +92,8 @@ describe Deliveries::PackingLabelsController do
         end
 
         it "returns the JSON status with pdf_url set appropriately" do
-          get :show, delivery_id:delivery.id, id: packing_labels_printable.id, format: :json
+          dte = delivery.deliver_on.strftime("%Y%m%d")
+          get :show, delivery_deliver_on: dte, id: packing_labels_printable.id, format: :json
           expect(response.status).to eq 200
           expect(response.content_type).to eq "application/json"
           data = JSON.parse(response.body)
