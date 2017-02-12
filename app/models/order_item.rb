@@ -41,6 +41,14 @@ class OrderItem < ActiveRecord::Base
     joins(order: :delivery).where(orders: {delivery_id: delivery.id})
   end
 
+  def self.for_delivery_date(delivery_date, current_user)
+    if current_user.buyer_only? || current_user.market_manager?
+      joins(order: :delivery).where("DATE(deliveries.buyer_deliver_on) = '#{delivery_date}'")
+    else
+      joins(order: :delivery).where("DATE(deliveries.deliver_on) = '#{delivery_date}'")
+    end
+  end
+
   def self.create_with_order_and_item_and_deliver_on_date(order, item, deliver_on_date, category_fee_pct)
     new(
       deliver_on_date: deliver_on_date,
@@ -60,6 +68,11 @@ class OrderItem < ActiveRecord::Base
   def self.for_delivery_and_user(delivery, user)
     ids = user.managed_organization_ids_including_deleted
     OrderItem.for_delivery(delivery).joins(:product).where(products: {organization_id: ids})
+  end
+
+  def self.for_delivery_date_and_user(delivery_date, user)
+    ids = user.managed_organization_ids_including_deleted
+    OrderItem.for_delivery_date(delivery_date, user).joins(:product).where(products: {organization_id: ids})
   end
 
   def self.for_user_purchases(user)
