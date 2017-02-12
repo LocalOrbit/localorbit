@@ -1,0 +1,3 @@
+class MarketStorageLocationsPolicy < ApplicationPolicy
+
+end

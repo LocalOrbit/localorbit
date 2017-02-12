@@ -73,6 +73,14 @@ Rails.application.routes.draw do
       resources :category_fees, only: [:index, :new, :create, :destroy]
       resources :deposit_accounts, only: [:index, :new, :create, :destroy]
       resource  :stripe, controller: :market_stripe, only: [:show]
+      resource :qb_profile, controller: :market_qb_profile do
+        collection do
+          get :authenticate
+          get :oauth_callback
+          get :sync
+        end
+      end
+      resources :storage_locations, controller: :market_storage_locations
       get :payment_options
       patch :toggle_self_enabled_cross_sell
     end
@@ -119,7 +127,7 @@ Rails.application.routes.draw do
       end
     end
 
-    resources :orders, only: [:index, :show, :update] do
+    resources :orders, only: [:index, :show, :update, :create] do
       resources :table_tents_and_posters, :controller=>"/table_tents_and_posters", only: [:index, :show, :create]
       resources :order_items, only: [:show, :update] # for order price editing
     end
@@ -144,11 +152,24 @@ Rails.application.routes.draw do
     end
 
     resource :delivery_tools, only: :show do
-      resources :pick_lists, only: :show
-      resources :pack_lists, only: :show
-      resources :individual_pack_lists, only: :show
-      resources :order_summaries, only: :show
-      resources :deliveries do
+
+      resources :pick_lists, param: :deliver_on, only: :show
+
+      get "pick_list_date(/:deliver_on)", to: "pick_lists#show"
+
+      resources :pack_lists, param: :deliver_on, only: :show
+
+      get "pack_list_date(/:deliver_on)", to: "pack_lists#show"
+
+      resources :individual_pack_lists, param: :deliver_on, only: :show
+
+      get "individual_pack_list_date(/:deliver_on)", to: "individual_pack_lists#show"
+
+      resources :order_summaries, param: :deliver_on, only: :show
+
+      get "order_summary_date(/:deliver_on)", to: "order_summaries#show"
+
+      resources :deliveries, param: :deliver_on do
         resources :packing_labels, :controller=>"/deliveries/packing_labels", only: [:show, :index]
         resources :individual_packing_labels, :controller=>"/deliveries/packing_labels", only: [:show, :index]
       end

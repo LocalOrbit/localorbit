@@ -7,11 +7,12 @@
         return test.getDate() === 1;
     }
 
-    function generateDeliveryLink(delivery_day, user_type) {
+    function generateDeliveryLink(delivery_day, user_type, process_date) {
         if (user_type == "B")
             view_deliveries_link = "/orders/" + delivery_day['order_id'];
         else
-            view_deliveries_link = "/admin/delivery_tools/pick_lists/" + delivery_day['delivery_id'];
+            MyDateString = process_date.getFullYear() + ('0' + (process_date.getMonth()+1)).slice(-2) + ('0' + process_date.getDate()).slice(-2)
+            view_deliveries_link = "/admin/delivery_tools/pick_list_date/" + MyDateString;
         return view_deliveries_link;
     }
 
@@ -46,7 +47,7 @@
                         month_day = process_date.getDate();
                         dow = process_date.getDay() + 1;
                         if (day['css_class'] == "cal-date")
-                            dlvr_href=generateDeliveryLink(day, user_type);
+                            dlvr_href=generateDeliveryLink(day, user_type, process_date);
                         else
                             dlvr_href='#';
                         wks = wks + '<td class="' + day['css_class'] + '"><a style="color: white" href=' + dlvr_href + '>' + month_day  + '</a></td>';

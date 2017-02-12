@@ -8,10 +8,10 @@
       <% if @markets.size > 1 %>
       <div class="field column column--half">
         <%= label_tag :initial_market_id, "Market" %><br>
-        <%= select_tag :initial_market_id, options_for_select(@markets.map {|m| [m.name, m.id] }, selected: params[:initial_market_id]), prompt: "Select a Market", class: "column--full chosen" %>
+        <%= select_tag :initial_market_id, options_for_select(@markets.map {|m| [m.name, m.id] }, selected: params[:initial_market_id] || current_market.id), prompt: "Select a Market", class: "column--full chosen" %>
       </div>
       <% else %>
-        <%= hidden_field_tag :initial_market_id, @markets.first.id %>
+      <%= hidden_field_tag :initial_market_id, current_market.id %>
       <% end %>
     <% end %>
 
@@ -22,13 +22,15 @@
 
     <% if @organization.new_record? || current_user.can_manage_market?(current_market) %>
       <div class="row row--field">
-      <% if policy(:all_supplier).index? %>
+      <% if policy(:all_supplier).index?  || current_user.admin? %>
       <div class="field column column--half column--guttered">
         <%= f.check_box :can_sell %>
         <%= f.label :can_sell, "Can sell products" %>
         <span class="tooltip" data-tooltip="This allows a customer to be a Seller and a Buyer."></span>
       </div
       >
+      <% else %>
+        <%= hidden_field_tag :can_sell, @organization.can_sell %>
       <% end %>
       </div>
     <% else %>
@@ -111,6 +113,7 @@
       <span class="tooltip pull-right" data-tooltip="e.g. National Young Farmers Coalition, Woman in Sustainable Agriculture, NACUFS, AASHE, National Restaurant Association, etc. "></span>
       <%= f.text_field :professional_organizations, maxlength: 255, class: "column--full" %>
     </div>
+
     <% if current_user.admin? || current_user.market_manager? %>
       <div class="row row--field">
         <div class="field column column--half column--guttered">
@@ -125,6 +128,13 @@
           <%= render 'admin/markets/payment_options' %>
         </div>
       </div>
+
+      <div class="row row--field">
+        <div class="field column column--half column--guttered">
+          <%= render 'admin/markets/market_matrix' %>
+        </div>
+      </div>
+
     <% end %>
 
   </fieldset>

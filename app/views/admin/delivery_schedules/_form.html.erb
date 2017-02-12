@@ -4,8 +4,9 @@
 
   <div class="field">
     <%= f.label :delivery_cycle %><br>
-    <%= f.select :delivery_cycle, [["Weekly", "weekly"]] if !policy(:advanced_delivery_cycles).index? %>
-    <%= f.select :delivery_cycle, [["Weekly", "weekly"], ["Bi-Weekly", "biweekly"], ["Monthly (by Day)", "monthly_day"], ["Monthly (by Date)", "monthly_date"]] if policy(:advanced_delivery_cycles).index?%>
+    <%= f.select :delivery_cycle, [["Manual", "manual"]] if current_market.is_consignment_market? %>
+    <%= f.select :delivery_cycle, [["Weekly", "weekly"]] if current_market.is_buysell_market? && !policy(:advanced_delivery_cycles).index? %>
+    <%= f.select :delivery_cycle, [["Weekly", "weekly"], ["Bi-Weekly", "biweekly"], ["Monthly (by Day)", "monthly_day"], ["Monthly (by Date)", "monthly_date"], ["Manual", "manual"]] if current_market.is_buysell_market? && policy(:advanced_delivery_cycles).index?%>
   </div
   ><div class="field conditional" id="buyer_day_option">
   <%= f.label :buyer_day %><br>
@@ -95,7 +96,7 @@
       <%= f.label :day, title: 'Delivery Day' %><br>
       <%= f.select :day, weekday_options, {}, :disabled => !policy(:all_supplier).index? %>
     </div
-    ><div class="field column column--third column--guttered">
+    ><% if policy(:all_supplier).index? %><div class="field column column--third column--guttered">
       <%= f.label :seller_delivery_start, "Delivery start" %><br>
       <%= f.select :seller_delivery_start, quarter_hour_select_options %>
     </div
@@ -103,6 +104,7 @@
       <%= f.label :seller_delivery_end, "Delivery end" %><br>
       <%= f.select :seller_delivery_end, quarter_hour_select_options %>
     </div>
+    <% end %>
   </div>
 </fieldset>
 
@@ -110,7 +112,7 @@
 
   <div class="field">
     <%= f.label :buyer_pickup_location_id, "Buyer pick up/delivery location" %><br>
-    <%= f.select :buyer_pickup_location_id, @market.fulfillment_locations('Delivered to Buyer from Market'), {}, :disabled => !policy(:all_supplier).index? %>
+    <%= f.select :buyer_pickup_location_id, @market.fulfillment_locations('Delivered to Buyer from Market'), {} %>
   </div>
   <div class="row row--field">
     <div class="field column column--half column--guttered">

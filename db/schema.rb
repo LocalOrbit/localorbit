@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170119221117) do
+ActiveRecord::Schema.define(version: 20170202160435) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -703,6 +703,9 @@ ActiveRecord::Schema.define(version: 20170119221117) do
     t.string   "payment_provider"
     t.decimal  "market_seller_fee_pct",     precision: 5,  scale: 3
     t.integer  "qb_ref_id"
+    t.string   "order_type"
+    t.string   "payment_model"
+    t.boolean  "sold_through"
   end
 
   add_index "orders", ["delivery_id"], name: "index_orders_on_delivery_id", using: :btree
@@ -719,7 +722,7 @@ ActiveRecord::Schema.define(version: 20170119221117) do
     t.text     "how_story"
     t.string   "photo_uid"
     t.string   "balanced_customer_uri"
-    t.boolean  "balanced_underwritten",                                default: false, null: false
+    t.boolean  "balanced_underwritten",                                default: false,     null: false
     t.string   "facebook"
     t.string   "twitter"
     t.boolean  "display_facebook",                                     default: false
@@ -739,14 +742,15 @@ ActiveRecord::Schema.define(version: 20170119221117) do
     t.string   "org_type"
     t.integer  "plan_id"
     t.datetime "plan_start_at"
-    t.integer  "plan_interval",                                        default: 1,     null: false
-    t.decimal  "plan_fee",                     precision: 7, scale: 2, default: 0.0,   null: false
+    t.integer  "plan_interval",                                        default: 1,         null: false
+    t.decimal  "plan_fee",                     precision: 7, scale: 2, default: 0.0,       null: false
     t.integer  "plan_bank_account_id"
     t.boolean  "subscribed",                                           default: false
     t.string   "subscription_id"
     t.string   "payment_provider"
     t.string   "subscription_status"
     t.integer  "qb_org_id"
+    t.string   "payment_model",                                        default: "buysell"
   end
 
   add_index "organizations", ["name"], name: "index_organizations_on_name", using: :btree
@@ -760,6 +764,7 @@ ActiveRecord::Schema.define(version: 20170119221117) do
     t.datetime "updated_at"
     t.json     "zpl"
     t.string   "zpl_name"
+    t.string   "deliver_on"
   end
 
   create_table "payments", force: true do |t|
@@ -823,6 +828,7 @@ ActiveRecord::Schema.define(version: 20170119221117) do
     t.integer  "legacy_id"
     t.datetime "deleted_at"
     t.decimal  "product_fee_pct", precision: 5,  scale: 3, default: 0.0, null: false
+    t.decimal  "net_price",       precision: 10, scale: 2, default: 0.0
   end
 
   add_index "prices", ["market_id"], name: "index_prices_on_market_id", using: :btree
@@ -866,6 +872,9 @@ ActiveRecord::Schema.define(version: 20170119221117) do
     t.integer  "general_product_id"
     t.string   "aws_image_url"
     t.integer  "qb_item_id"
+    t.integer  "parent_product_id"
+    t.integer  "unit_quantity"
+    t.boolean  "organic"
   end
 
   add_index "products", ["category_id"], name: "index_products_on_category_id", using: :btree
@@ -900,8 +909,8 @@ ActiveRecord::Schema.define(version: 20170119221117) do
     t.string  "asset_account_name"
     t.integer "asset_account_id"
     t.string  "prefix"
-    t.integer "delivery_fee_item_id"
     t.string  "delivery_fee_item_name"
+    t.integer "delivery_fee_item_id"
   end
 
   create_table "qb_tokens", force: true do |t|
@@ -934,9 +943,9 @@ ActiveRecord::Schema.define(version: 20170119221117) do
 
   create_table "roles", force: true do |t|
     t.string   "name"
-    t.string   "org_type"
+    t.string   "org_type",        default: "M"
     t.integer  "organization_id"
-    t.string   "activities",      default: [], array: true
+    t.string   "activities",      default: [],  array: true
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -947,6 +956,11 @@ ActiveRecord::Schema.define(version: 20170119221117) do
   end
 
   add_index "sequences", ["name"], name: "index_sequences_on_name", unique: true, using: :btree
+
+  create_table "storage_locations", force: true do |t|
+    t.integer "market_id"
+    t.string  "name"
+  end
 
   create_table "subscription_types", force: true do |t|
     t.string   "keyword"

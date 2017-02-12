@@ -28,14 +28,25 @@
         var orderTemplates;
         var productFilter;
         var productTable;
+        var divClass;
+        var divStyle;
+        var closeButton;
 
         if(this.props.useTemplates && !this.props.orderId)
             orderTemplates = (<lo.TemplatePicker baseUrl={this.props.baseUrl} cartUrl={this.props.cartUrl} />);
         else
             orderTemplates = ('');
 
-        if (this.props.supplierId > 0)
+        if (this.props.supplierId > 0) {
             window.lo.ProductActions.newFilters(null, this.props.supplierId);
+            divClass = 'popup modal is-hidden app-supplier-catalog-modal';
+            divStyle = ({width: '900px', height: '700px', background: 'white', overflow: 'scroll', top: '400'});
+        }
+        else {
+            divClass = ('');
+            divStyle = ({});
+        }
+
 
         if (this.props.orderId > 0)
             productFilter = ('');
@@ -61,12 +72,12 @@
         />);
         
         return (
-        <div>
+        <div id='supplierCatalog' className={divClass} style={divStyle}>
           {orderTemplates}
           {productFilter}
           {productTable}
         </div>
-      );
+        );
     }
   });
 

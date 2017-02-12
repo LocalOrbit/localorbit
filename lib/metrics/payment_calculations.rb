@@ -1,6 +1,6 @@
 module Metrics
   class PaymentCalculations < Base
-    BASE_SCOPE = Payment.joins(:market).where.not(market_id: TEST_MARKET_IDS)
+    BASE_SCOPE = Payment.joins(:organization).where.not(organization_id: TEST_ORG_IDS)
     METRICS = {
       total_service_fees: {
         title: "Total Service Fees",

@@ -360,8 +360,9 @@ module PaymentProvider
         ::Stripe::Subscription.retrieve(subscription_id)
       end
 
-      def delete_stripe_subscription(subscription_id)
-        ::Stripe::Subscription.retrieve(subscription_id).delete
+      def delete_stripe_subscription(stripe_customer_id, subscription_id)
+        customer = get_stripe_customer(stripe_customer_id)
+        customer.subscriptions.retrieve(subscription_id).delete
       end
 
       def create_stripe_card_for_stripe_customer(stripe_customer:nil,stripe_customer_id:nil, stripe_tok:)

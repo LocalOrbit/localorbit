@@ -21,7 +21,7 @@ class CreateStripeSubscriptionForEntity
     context.fail!(error: e.message)
 
     # If the context fails then roll back the subscription (if any)
-    PaymentProvider::Stripe.delete_stripe_subscription(subscription.id) if subscription.present?
+    PaymentProvider::Stripe.delete_stripe_subscription(entity.stripe_customer_id, subscription.id) if (subscription.present? && entity.try(:stripe_customer_id))
     entity.unset_subscription(original_entity) if entity.respond_to?(:unset_subscription)
   end
 

@@ -24,6 +24,12 @@
           <input type="hidden" name="commit" />
         </li>
         <% end %>
+        <% if policy(:market_quickbooks).index? && order.delivery_status_for_user(current_user) == 'delivered' && order.qb_ref_id.nil? %>
+        <li>
+          <button id="export_button" name="Export Invoice">Export Invoice to QB</button>
+          <input type="hidden" name="commit" />
+        </li>
+        <% end %>
       </ul>
     </div>
     <div id="merge_options" style="float: right; display: none">

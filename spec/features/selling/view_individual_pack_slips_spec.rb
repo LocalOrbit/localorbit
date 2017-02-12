@@ -36,7 +36,7 @@ describe "Individual pack slips" do
       before do
         switch_to_subdomain(market.subdomain)
         sign_in_as(user)
-        visit admin_delivery_tools_individual_pack_list_path(friday_delivery.id)
+        visit admin_delivery_tools_individual_pack_list_path(friday_delivery.deliver_on)
       end
 
       it "shows a packing slip for the seller to the buyer" do
@@ -63,7 +63,7 @@ describe "Individual pack slips" do
       before do
         switch_to_subdomain(market.subdomain)
         sign_in_as(user)
-        visit admin_delivery_tools_individual_pack_list_path(friday_delivery.id)
+        visit admin_delivery_tools_individual_pack_list_path(friday_delivery.deliver_on)
       end
 
       it "shows a packing slip for the seller to the buyer" do
@@ -112,7 +112,7 @@ describe "Individual pack slips" do
       before do
         switch_to_subdomain(market.subdomain)
         sign_in_as(user)
-        visit admin_delivery_tools_individual_pack_list_path(friday_delivery.id)
+        visit admin_delivery_tools_individual_pack_list_path(friday_delivery.deliver_on)
       end
 
       it "shows a packing slip for the seller to the buyer" do
@@ -138,7 +138,7 @@ describe "Individual pack slips" do
       before do
         switch_to_subdomain(market.subdomain)
         sign_in_as(user)
-        visit admin_delivery_tools_individual_pack_list_path(friday_delivery.id)
+        visit admin_delivery_tools_individual_pack_list_path(friday_delivery.deliver_on)
       end
 
       it "shows a packing slip for the seller to the buyer" do

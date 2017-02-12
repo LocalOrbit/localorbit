@@ -46,6 +46,7 @@ class Market < ActiveRecord::Base
   has_many :newsletters
   has_many :promotions, inverse_of: :market
   has_many :order_templates
+  has_many :storage_locations
   belongs_to :organization
 
   has_many :bank_accounts, as: :bankable
@@ -195,7 +196,12 @@ class Market < ActiveRecord::Base
   end
 
   def upcoming_deliveries_for_user(user)
-    scope = deliveries.future.with_undelivered_orders.order("deliver_on")
+    if user.buyer_only? || user.market_manager?
+      o_scope = "buyer_deliver_on"
+    else
+      o_scope = "deliver_on"
+    end
+    scope = deliveries.future.with_undelivered_orders.order(o_scope)
     scope = scope.with_undelivered_orders_for_user(user) unless user.market_manager? || user.admin?
     scope
   end
@@ -265,6 +271,18 @@ class Market < ActiveRecord::Base
     end
   end
 
+  def is_consignment_market?
+    organization.payment_model == "consignment"
+  end
+
+  def is_buysell_market?
+    organization.payment_model == 'buysell'
+  end
+
+  def is_localeyes_market?
+    organization.plan.stripe_id == "LOCALEYES"
+  end
+
   private
 
   def require_payment_method
@@ -276,6 +294,4 @@ class Market < ActiveRecord::Base
   def process_cross_sells_change
     remove_cross_selling_from_market unless allow_cross_sell?
   end
-
-
 end

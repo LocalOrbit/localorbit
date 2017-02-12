@@ -5,6 +5,21 @@ class Order < ActiveRecord::Base
 
   INVOICE_STATUSES = %w(due overdue).freeze
 
+  DELIVERY_STATUSES = {
+      "pending" => "Pending",
+      "delivered" => "Delivered"
+  }.freeze
+
+  PAYMENT_STATUSES = {
+      "unpaid" => "Unpaid",
+      "paid" => "Paid",
+      "exported" => "Exported"
+  }.freeze
+
+  BATCH_ACTIONS = {
+      "export" => "Export"
+  }.freeze
+
   paginates_per 50
 
   before_save :update_paid_at
@@ -19,8 +34,6 @@ class Order < ActiveRecord::Base
   has_associated_audits
 
   dragonfly_accessor :invoice_pdf
-
-
 
   attr_accessor :credit_card, :bank_account
 
@@ -494,6 +507,7 @@ class Order < ActiveRecord::Base
   def update_payment_status
     statuses = items.map(&:payment_status).uniq
     self.payment_status = "refunded" if statuses == ["refunded"]
+    self.payment_status = "exported" if !qb_ref_id.nil?
   end
 
   def update_order_item_payment_status

@@ -6,7 +6,7 @@ class DeliverySchedule < ActiveRecord::Base
 
   WEEKDAYS = %w(Sunday Monday Tuesday Wednesday Thursday Friday Saturday)
   WEEKDAY_ABBREVIATIONS = %w(Su M Tu W Th F Sa)
-  INTERVALS = {'weekly' => 1, 'biweekly' => 2, 'monthly_day' => 1, 'monthly_date' => 1}
+  INTERVALS = {'weekly' => 1, 'biweekly' => 2, 'monthly_day' => 1, 'monthly_date' => 1, 'manual' => 0}
 
   WeekdayValidation = {presence: true, numericality: {greater_than_or_equal_to: 0, less_than_or_equal_to: 6,   allow_nil: true}}
 
@@ -133,15 +133,19 @@ class DeliverySchedule < ActiveRecord::Base
   end
 
   def next_delivery
-    delivery = find_next_delivery
-    unless delivery
-      delivery = deliveries.create!(
-        deliver_on: next_delivery_date,
-        buyer_deliver_on: next_buyer_delivery_date,
-        cutoff_time: next_order_cutoff_time
-      )
+    if delivery_cycle != "manual"
+      delivery = find_next_delivery
+      unless delivery
+        delivery = deliveries.create!(
+          deliver_on: next_delivery_date,
+          buyer_deliver_on: next_buyer_delivery_date,
+          cutoff_time: next_order_cutoff_time
+        )
+      end
+      delivery
+    else
+      nil
     end
-    delivery
   end
 
   def next_delivery_for_date(date)

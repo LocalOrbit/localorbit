@@ -4,7 +4,7 @@ $(document).ready ->
     @optional(element) or /^[a-z]+$/.test(value)
 
   $.validator.methods.email = (value, element) ->
-    @optional(element) or /[a-z]+@[a-z]+\.[a-z][a-z]+/.test(value)
+    @optional(element) or /(.+)@(.+){2,}\.(.+){2,}/.test(value)
 
   ###*
   # validateForm
