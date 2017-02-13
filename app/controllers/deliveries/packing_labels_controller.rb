@@ -10,9 +10,16 @@ class Deliveries::PackingLabelsController < ApplicationController
     dt = params[:delivery_deliver_on].to_date
     dte = dt.strftime("%Y-%m-%d")
 
+    if params[:market_id].nil?
+      market_id = current_market.id
+    else
+      market_id = params[:market_id]
+    end
+
     printable = PackingLabelsPrintable.create!(user: current_user, deliver_on: dte)
     if Rails.env == "development" || current_market.product_label_format == 1 # Print zebra labels directly
       ProcessPackingLabelsPrintable.perform(
+        market_id: market_id,
         packing_labels_printable_id: printable.id, 
         request: RequestUrlPresenter.new(request),
         product_labels_only: product_only,
@@ -22,7 +29,8 @@ class Deliveries::PackingLabelsController < ApplicationController
       )
     else
       ProcessPackingLabelsPrintable.delay.perform(
-        packing_labels_printable_id: printable.id, 
+        market_id: market_id,
+        packing_labels_printable_id: printable.id,
         request: RequestUrlPresenter.new(request),
         product_labels_only: product_only,
         product_label_format: current_market.product_label_format,
