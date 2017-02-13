@@ -30,10 +30,10 @@
           %>
           <div class="seller-tools toolbar" data-tools="<%= tool_count %>">
             <% if FeatureAccess.not_LE_market_manager?(user:current_user, market: current_market) %>
-              <div class="tool"><%= link_to "Pick List", "/admin/delivery_tools/pick_list_date/" + delivery_date %></div>
+              <div class="tool"><%= link_to "Pick List", "/admin/delivery_tools/pick_list_date/" + delivery_date + "?market_id=#{delivery.delivery_schedule.market.id}" %></div>
             <% end %>
             <% if access_master_packing_slips %>
-              <div class="tool"><%= link_to "Master Packing Slips <span class='note'>for aggregation</span>".html_safe, "/admin/delivery_tools/pack_list_date/" + delivery_date %></div>
+              <div class="tool"><%= link_to "Master Packing Slips <span class='note'>for aggregation</span>".html_safe, "/admin/delivery_tools/pack_list_date/" + delivery_date + "?market_id=#{delivery.delivery_schedule.market.id}" %></div>
             <% end %>
             <% if FeatureAccess.not_LE_market_manager?(user:current_user, market: current_market) %>
               <div class="tool"><%= link_to policy(:all_supplier).index? ? "Individual Packing Slips <span class='note'>per Supplier</span>".html_safe : "Packing Slips", "/admin/delivery_tools/individual_pack_list_date/" + delivery_date %></div>
