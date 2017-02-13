@@ -25,13 +25,13 @@ class Admin::PickListsController < AdminController
 
       @delivery = Delivery.joins(:delivery_schedule)
                       .where(d_scope)
-                      .where(delivery_schedules: {market_id: current_market.id}).first
+                      .where(delivery_schedules: {market_id: params[:market_id]}).first
                       .decorate
 
       order_items = OrderItem
                         .where(delivery_status: "pending")
                         .where(d_scope)
-                        .where(orders: {market_id: current_market.id})
+                        .where(orders: {market_id: params[:market_id]})
                         .eager_load(:order, order: [:delivery], product: :organization)
                         .order("organizations.name, products.name")
                         .preload(order: :organization)
