@@ -104,6 +104,9 @@
       <%= f.label :seller_delivery_end, "Delivery end" %><br>
       <%= f.select :seller_delivery_end, quarter_hour_select_options %>
     </div>
+    <% else %>
+        <%= f.hidden_field :seller_delivery_start, :value => '12:00 AM' %>
+        <%= f.hidden_field :seller_delivery_end, :value => '11:59 PM' %>
     <% end %>
   </div>
 </fieldset>

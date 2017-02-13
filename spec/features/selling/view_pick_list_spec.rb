@@ -50,7 +50,7 @@ describe "Pick list" do
     let!(:user) { create(:user, :market_manager, managed_markets: [market]) }
 
     it "shows a product code" do
-      visit admin_delivery_tools_pick_list_path(friday_delivery.deliver_on)
+      visit admin_delivery_tools_pick_list_path(friday_delivery.deliver_on, market_id: market.id)
       expect(page).to have_content("nifty-product-code")
     end
 
@@ -62,7 +62,7 @@ describe "Pick list" do
 
     context "orders for multiple sellers" do
       before do
-        visit admin_delivery_tools_pick_list_path(friday_delivery.deliver_on)
+        visit admin_delivery_tools_pick_list_path(friday_delivery.deliver_on, market_id: market.id)
       end
 
       xit "shows the pick list" do
@@ -121,7 +121,7 @@ describe "Pick list" do
 
     context "before the delivery cutoff" do
       before do
-        visit admin_delivery_tools_pick_list_path(friday_delivery.deliver_on)
+        visit admin_delivery_tools_pick_list_path(friday_delivery.deliver_on, market_id: market.id)
       end
 
       it "shows the pick list" do
@@ -141,7 +141,7 @@ describe "Pick list" do
       before do
         Timecop.travel("May 9, 2014")
         sign_in_as(user)
-        visit admin_delivery_tools_pick_list_path(friday_delivery.deliver_on)
+        visit admin_delivery_tools_pick_list_path(friday_delivery.deliver_on, market_id: market.id)
       end
 
       it "shows the pick list" do
@@ -155,7 +155,7 @@ describe "Pick list" do
 
     context "single order" do
       before do
-        visit admin_delivery_tools_pick_list_path(friday_delivery.deliver_on)
+        visit admin_delivery_tools_pick_list_path(friday_delivery.deliver_on, market_id: market.id)
       end
 
       it "shows the pick list" do
@@ -184,7 +184,7 @@ describe "Pick list" do
       let!(:order2)      { create(:order, items: [order_item2], organization: buyer2, market: market, delivery: friday_delivery) }
 
       before do
-        visit admin_delivery_tools_pick_list_path(friday_delivery.deliver_on)
+        visit admin_delivery_tools_pick_list_path(friday_delivery.deliver_on, market_id: market.id)
       end
 
       it "shows the pick list" do
@@ -213,7 +213,7 @@ describe "Pick list" do
         let!(:order_item_lot) { create(:order_item_lot, order_item: seller_order_item, lot: lot) }
 
         before do
-          visit admin_delivery_tools_pick_list_path(friday_delivery.deliver_on)
+          visit admin_delivery_tools_pick_list_path(friday_delivery.deliver_on, market_id: market.id)
         end
 
         it "displays any numbered lots used" do
@@ -228,7 +228,7 @@ describe "Pick list" do
 
         before do
           seller_order_item.update(quantity: 18)
-          visit admin_delivery_tools_pick_list_path(friday_delivery.deliver_on)
+          visit admin_delivery_tools_pick_list_path(friday_delivery.deliver_on, market_id: market.id)
         end
 
         it "shows the pick list" do
@@ -244,7 +244,7 @@ describe "Pick list" do
       let!(:market2) { create(:market, managers: [user]) }
 
       before do
-        visit admin_delivery_tools_pick_list_path(friday_delivery.deliver_on)
+        visit admin_delivery_tools_pick_list_path(friday_delivery.deliver_on, market_id: market.id)
       end
 
       it "shows only the seller pick list" do
