@@ -48,7 +48,7 @@ describe "Master Pack List" do
       context "delivered to the buyer" do
         before do
           dte = thursday_delivery.buyer_deliver_on.strftime("%Y%m%d")
-          visit admin_delivery_tools_pack_list_path(dte)
+          visit admin_delivery_tools_pack_list_path(dte, market_id: market.id)
         end
 
         it "shows a packing slip for the buyer" do
@@ -86,7 +86,7 @@ describe "Master Pack List" do
       context "pickup at the market" do
         before do
           dte = friday_delivery.buyer_deliver_on.strftime("%Y%m%d")
-          visit admin_delivery_tools_pack_list_path(dte)
+          visit admin_delivery_tools_pack_list_path(dte, market_id: market.id)
         end
 
         it "shows a packing slip for the buyer" do
@@ -125,7 +125,7 @@ describe "Master Pack List" do
 
       before do
         dte = thursday_delivery.deliver_on.strftime("%Y%m%d")
-        visit admin_delivery_tools_pack_list_path(dte)
+        visit admin_delivery_tools_pack_list_path(dte, market_id: market.id)
       end
 
       it "shows packing slips for the buyers" do
