@@ -8,14 +8,14 @@ class Admin::PackListsController < AdminController
     if current_user.buyer_only? || current_user.market_manager?
       @orders = Order.joins(:items, :delivery)
                     .where(order_items: {delivery_status: "pending"})
-                    .where(orders: {market_id: current_market.id})
+                    .where(orders: {market_id: params[:market_id]})
                     .order(:order_number).group("deliveries.buyer_deliver_on, orders.id")
                     .where("DATE(deliveries.buyer_deliver_on) = '#{dte}'")
                     .select("deliveries.buyer_deliver_on, orders.*")
     else
       @orders = Order.joins(:items, :delivery)
                     .where(order_items: {delivery_status: "pending"})
-                    .where(orders: {market_id: current_market.id})
+                    .where(orders: {market_id: params[:market_id]})
                     .order(:order_number).group("deliveries.deliver_on, orders.id")
                     .where("DATE(deliveries.deliver_on) = '#{dte}'")
                     .select("deliveries.deliver_on, orders.*")
