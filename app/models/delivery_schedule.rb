@@ -37,6 +37,7 @@ class DeliverySchedule < ActiveRecord::Base
   before_validation :ensure_days_are_set
 
   scope :active, -> { where('inactive_at IS NULL') }
+  scope :manual, -> { where('delivery_cycle = ?', "manual") }
 
   # used on Sales by Fulfillment report where OrderItems are filtered by type
   # (Seller to Buyer or Market to Buyer) or pickup location
