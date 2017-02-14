@@ -100,6 +100,7 @@
         limit: 10,
         useTemplates: policy(:template).index?,
         supplierId: @current_seller.id,
+        supplierView: true,
         orderMinimum: current_delivery.delivery_schedule.order_minimum > 0 ? number_to_currency(current_delivery.delivery_schedule.order_minimum) : nil
     }) %>
 <% end %>

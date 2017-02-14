@@ -261,7 +261,7 @@ ActiveRecord::Schema.define(version: 20170202160435) do
     t.decimal  "order_minimum",                  precision: 10, scale: 2, default: 0.0,            null: false
     t.string   "delivery_cycle"
     t.integer  "day_of_month"
-    t.integer  "week_interval"
+    t.integer  "week_interval",                                           default: 1
   end
 
   add_index "delivery_schedules", ["deleted_at"], name: "index_delivery_schedules_on_deleted_at", using: :btree
@@ -542,7 +542,7 @@ ActiveRecord::Schema.define(version: 20170202160435) do
     t.boolean  "subscribed",                                             default: false
     t.boolean  "routing_plan",                                           default: false
     t.integer  "organization_id"
-    t.boolean  "add_item_pricing"
+    t.boolean  "add_item_pricing",                                       default: true
     t.boolean  "self_enabled_cross_sell",                                default: false
     t.string   "background_img_uid"
   end
@@ -580,14 +580,6 @@ ActiveRecord::Schema.define(version: 20170202160435) do
   end
 
   add_index "newsletters", ["market_id"], name: "index_newsletters_on_market_id", using: :btree
-
-  create_table "order_item_deliveries", force: true do |t|
-    t.integer  "market_address_id"
-    t.integer  "location_id"
-    t.datetime "delivered_at"
-    t.integer  "quantity_delivered"
-    t.integer  "order_item_id"
-  end
 
   create_table "order_item_lots", force: true do |t|
     t.integer  "order_item_id"
@@ -841,6 +833,7 @@ ActiveRecord::Schema.define(version: 20170202160435) do
 
   add_index "prices", ["market_id"], name: "index_prices_on_market_id", using: :btree
   add_index "prices", ["organization_id"], name: "index_prices_on_organization_id", using: :btree
+  add_index "prices", ["product_id", "market_id", "organization_id", "updated_at", "deleted_at"], name: "index_prices_on_product_market_organization_updated_deleted", using: :btree
   add_index "prices", ["product_id", "market_id", "organization_id"], name: "index_prices_on_product_id_and_market_id_and_organization_id", using: :btree
   add_index "prices", ["product_id"], name: "index_prices_on_product_id", using: :btree
 
@@ -931,6 +924,15 @@ ActiveRecord::Schema.define(version: 20170202160435) do
     t.string   "encrypted_realm_id_iv"
   end
 
+  create_table "qlik_user_attributes", primary_key: "userid", force: true do |t|
+    t.string "type",  null: false
+    t.string "value"
+  end
+
+  create_table "qlik_users", primary_key: "userid", force: true do |t|
+    t.string "name"
+  end
+
   create_table "role_actions", force: true do |t|
     t.string "description"
     t.string "org_types",   default: [], array: true
@@ -941,9 +943,9 @@ ActiveRecord::Schema.define(version: 20170202160435) do
 
   create_table "roles", force: true do |t|
     t.string   "name"
-    t.string   "org_type"
+    t.string   "org_type",        default: "M"
     t.integer  "organization_id"
-    t.string   "activities",      default: [], array: true
+    t.string   "activities",      default: [],  array: true
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -1044,12 +1046,20 @@ ActiveRecord::Schema.define(version: 20170202160435) do
   add_index "users", ["invited_by_id"], name: "index_users_on_invited_by_id", using: :btree
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
 
-  create_table "users_roles", id: false, force: true do |t|
+  create_table "users_roles", force: true do |t|
     t.integer "user_id"
     t.integer "role_id"
   end
 
   add_index "users_roles", ["role_id"], name: "index_users_roles_on_role_id", using: :btree
   add_index "users_roles", ["user_id"], name: "index_users_roles_on_user_id", using: :btree
+
+  create_table "zipcodes", primary_key: "zip", force: true do |t|
+    t.decimal "latitude",             precision: 9, scale: 6
+    t.decimal "longitude",            precision: 9, scale: 6
+    t.string  "city"
+    t.string  "state",     limit: 2
+    t.string  "county",    limit: 64
+  end
 
 end

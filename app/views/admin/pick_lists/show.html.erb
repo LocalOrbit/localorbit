@@ -10,13 +10,6 @@
 </div>
 
 <div class="print-page">
-<%
-  @pick_lists.each_with_index do |pick_list, index|
-%>
-
-  <% if index != 0 %>
-    <div class="pdf-page-break"></div>
-  <% end %>
 
   <div class="pick-list">
 
@@ -24,31 +17,40 @@
     <div class="upcoming-delivery">
 
       <h2 class="heading heading-delivery-tool">Delivery</h2>
-      <div class="upcoming-delivery-date"><%= @delivery.seller_display_date %> <%= @delivery.seller_time_range %></div>
+      <div class="upcoming-delivery-date"><%= @delivery.seller_display_date(current_user) %> </div>
       <% if @delivery.available_to_order? %>
         <p class="note">Ordering has not yet closed for this delivery</p>
       <% end %>
+      <hr/>
+      <%
+        @pick_lists.each_with_index do |pick_list, index|
+      %>
 
-      <h2 class="heading heading-delivery-tool">Supplier</h2>
-      <div class="vcard vcard--seller">
-        <h3 class="fn org"><%= pick_list.seller_name %></h3>
-        <%= pick_list.seller_ship_from_address %>
+      <% if index != 0 %>
+          <div class="pdf-page-break"></div>
+      <% end %>
 
-        <% if !pick_list.notes.empty? 
-          # Only include this section if it, you know, *contains* anything..
-        %>
-        <div>
-        <h3>Delivery Notes</h3>
-          <% pick_list.notes.each do |note| %>
-          <p><span class="buyer-name"><%= note.buyer.name %></span>: <%= note.note %></p>
+      <div class="upcoming-delivery">
+
+        <h2 class="heading heading-delivery-tool pick-list-supplier">Supplier</h2>
+        <div class="vcard vcard--seller">
+          <h3 class="fn org"><%= pick_list.seller_name %></h3>
+          <%= pick_list.seller_ship_from_address %>
+
+          <% if !pick_list.notes.empty?
+            # Only include this section if it, you know, *contains* anything..
+          %>
+          <div>
+          <h3>Delivery Notes</h3>
+            <% pick_list.notes.each do |note| %>
+            <p><span class="buyer-name"><%= note.buyer.name %></span>: <%= note.note %></p>
+            <% end %>
+          </div>
           <% end %>
-        </div>
-        <% end %>
         
+        </div>
       </div>
-    </div>
-
-    <div class="table-wrapper">
+      <div class="table-wrapper">
       <table class="delivery-tools">
           <tr>
             <th>Product Code</th>
@@ -87,6 +89,7 @@
         <% end %>
       </table>
     </div>
+      <% end %>
+    </div>
   </div>
-<% end %>
 </div>

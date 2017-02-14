@@ -6,16 +6,20 @@
       <h2>You currently have no upcoming deliveries.</h2>
     <% else %>
       <p>This is a list of all upcoming deliveries for your market.</p>
-      <% @upcoming_deliveries.each do |delivery| %>
+      <%
+        previous_delivery_date = ''
+
+        @upcoming_deliveries.each do |delivery|
+            if current_user.buyer_only? || current_user.market_manager?
+              delivery_date = "#{delivery.buyer_deliver_on.strftime("%Y%m%d")}"
+            else
+              delivery_date = "#{delivery.deliver_on.strftime("%Y%m%d")}"
+            end
+        %>
+        <% if delivery_date != previous_delivery_date %>
         <div class="upcoming-delivery">
           <span class="market"><%= delivery.delivery_schedule.market.name %></span><br><br>
-          <span>Delivery or Pick-up Begins:</span><br>
-          <h2 class="upcoming-delivery-date"><%= delivery.upcoming_delivery_date_heading %></h2>
-          <% if FeatureAccess.not_LE_market_manager?(user:current_user, market: current_market) %>
-            Deliver to:
-            <%= content_tag :div, delivery.deliver_to_name, class: "location-name" if delivery.deliver_to_name.present? %>
-            <div class="location"><%= delivery.deliver_to_location %></div>
-          <% end %>
+          <h2 class="upcoming-delivery-date"><%= delivery.upcoming_delivery_date_heading(current_user) %></h2>
 
           <% dc = UserDeliveryContext.build(user: current_user, delivery: delivery) 
              access_master_packing_slips = FeatureAccess.master_packing_slips?(user_delivery_context: dc) && policy(:all_supplier).index?
@@ -26,27 +30,29 @@
           %>
           <div class="seller-tools toolbar" data-tools="<%= tool_count %>">
             <% if FeatureAccess.not_LE_market_manager?(user:current_user, market: current_market) %>
-              <div class="tool"><%= link_to "Pick List", admin_delivery_tools_pick_list_path(delivery) %></div>
+              <div class="tool"><%= link_to "Pick List", "/admin/delivery_tools/pick_list_date/" + delivery_date + "?market_id=#{delivery.delivery_schedule.market.id}" %></div>
             <% end %>
             <% if access_master_packing_slips %>
-              <div class="tool"><%= link_to "Master Packing Slips <span class='note'>for aggregation</span>".html_safe, admin_delivery_tools_pack_list_path(delivery) %></div>
+              <div class="tool"><%= link_to "Master Packing Slips <span class='note'>for aggregation</span>".html_safe, "/admin/delivery_tools/pack_list_date/" + delivery_date + "?market_id=#{delivery.delivery_schedule.market.id}" %></div>
             <% end %>
             <% if FeatureAccess.not_LE_market_manager?(user:current_user, market: current_market) %>
-              <div class="tool"><%= link_to policy(:all_supplier).index? ? "Individual Packing Slips <span class='note'>per Supplier</span>".html_safe : "Packing Slips", admin_delivery_tools_individual_pack_list_path(delivery) %></div>
+              <div class="tool"><%= link_to policy(:all_supplier).index? ? "Individual Packing Slips <span class='note'>per Supplier</span>".html_safe : "Packing Slips", "/admin/delivery_tools/individual_pack_list_date/" + delivery_date %></div>
             <% end %>
-            <div class="tool"><%= link_to "Order Summary", admin_delivery_tools_order_summary_path(delivery)%></div>
+            <div class="tool"><%= link_to "Order Summary", "/admin/delivery_tools/order_summary_date/" + delivery_date %></div>
             <% if access_packing_labels %>
               <% target = if Rails.env.test? then "" else "_blank" end %>
                 <div class="tool">
-                    <%= link_to "Master Labels <span class='note'>per Order</span>".html_safe, admin_delivery_tools_delivery_packing_labels_path(delivery_id: delivery.id, product_only: false), class: "app-labels-link", target: target %>
+                    <%= link_to "Master Labels <span class='note'>per Order</span>".html_safe, "/admin/delivery_tools/deliveries/" + delivery_date + "/packing_labels?product_only=false&market_id=#{delivery.delivery_schedule.market.id}", class: "app-labels-link", target: target %>
                 </div>
                 <div class="tool">
-                  <%= link_to "Individual Labels <span class='note'>per Product</span>".html_safe, admin_delivery_tools_delivery_packing_labels_path(delivery_id: delivery.id, product_only: true), class: "app-labels-link", target: target %>
+                  <%= link_to "Individual Labels <span class='note'>per Product</span>".html_safe, "/admin/delivery_tools/deliveries/" + delivery_date + "/packing_labels?product_only=true&market_id=#{delivery.delivery_schedule.market.id}", class: "app-labels-link", target: target %>
                 </div>
             <% end %>
           </div>
           <hr>
         </div>
+        <% previous_delivery_date = delivery_date %>
+        <% end %>
       <% end %>
     <% end %>
   </div>

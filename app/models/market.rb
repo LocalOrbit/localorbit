@@ -196,7 +196,12 @@ class Market < ActiveRecord::Base
   end
 
   def upcoming_deliveries_for_user(user)
-    scope = deliveries.future.with_undelivered_orders.order("deliver_on")
+    if user.buyer_only? || user.market_manager?
+      o_scope = "buyer_deliver_on"
+    else
+      o_scope = "deliver_on"
+    end
+    scope = deliveries.future.with_undelivered_orders.order(o_scope)
     scope = scope.with_undelivered_orders_for_user(user) unless user.market_manager? || user.admin?
     scope
   end

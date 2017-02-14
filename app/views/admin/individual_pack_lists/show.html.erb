@@ -29,10 +29,10 @@
 
       <div class="row">
         <div class="column column--half">
-          <h2 class="heading heading-delivery-tool">Supplier Delivers to <%= @delivery.display_dropoff_location_type %> on</h2>
-          <span class="upcoming-delivery-date"><%= @delivery.seller_display_date %> <%= @delivery.fulfillment_time_range %></span>
-          <% if @delivery.buyer_pickup? %>
-          <p class="note">For pick up on <%= @delivery.buyer_display_date %> <%= @delivery.buyer_time_range %></p>
+          <h2 class="heading heading-delivery-tool">Supplier Delivers to <%= order.delivery.decorate.display_dropoff_location_type %> on</h2>
+          <span class="upcoming-delivery-date"><%= order.delivery.decorate.seller_display_date %> <%= order.delivery.decorate.fulfillment_time_range %></span>
+          <% if order.delivery.decorate.buyer_pickup? %>
+          <p class="note">For pick up on <%= order.delivery.decorate.buyer_display_date %> <%= order.delivery.decorate.buyer_time_range %></p>
           <% end %>
         </div><div class="column column--half">
 
