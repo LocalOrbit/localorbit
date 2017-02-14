@@ -100,7 +100,7 @@ describe ProcessPackingLabelsPrintable do
       expect_generate_packing_labels_for_orders(all_orders, admin_user)
       dte = delivery.buyer_deliver_on.strftime("%Y-%m-%d")
 
-      subject.perform(packing_labels_printable_id: admin_printable.id, request: request, product_labels_only: product_labels_only, product_label_format: product_label_format, print_multiple_labels_per_item: print_multiple_labels_per_item, delivery_date: dte)
+      subject.perform(market_id: market.id, packing_labels_printable_id: admin_printable.id, request: request, product_labels_only: product_labels_only, product_label_format: product_label_format, print_multiple_labels_per_item: print_multiple_labels_per_item, delivery_date: dte)
 
       verify_pdf_generated_on admin_printable
     end
@@ -111,7 +111,7 @@ describe ProcessPackingLabelsPrintable do
       expect_generate_packing_labels_for_orders(seller_orders,seller_user)
       dte = delivery.deliver_on.strftime("%Y-%m-%d")
 
-      subject.perform(packing_labels_printable_id: seller_printable.id, request: request, product_labels_only: product_labels_only, product_label_format: product_label_format, print_multiple_labels_per_item: print_multiple_labels_per_item, delivery_date: dte)
+      subject.perform(market_id: market.id, packing_labels_printable_id: seller_printable.id, request: request, product_labels_only: product_labels_only, product_label_format: product_label_format, print_multiple_labels_per_item: print_multiple_labels_per_item, delivery_date: dte)
 
       verify_pdf_generated_on seller_printable
     end
@@ -122,7 +122,7 @@ describe ProcessPackingLabelsPrintable do
       expect_generate_packing_labels_for_orders(seller2_orders, seller_user2)
       dte = delivery.deliver_on.strftime("%Y-%m-%d")
 
-      subject.perform(packing_labels_printable_id: seller2_printable.id, request: request, product_labels_only: product_labels_only, product_label_format: product_label_format, print_multiple_labels_per_item: print_multiple_labels_per_item, delivery_date: dte)
+      subject.perform(market_id: market.id, packing_labels_printable_id: seller2_printable.id, request: request, product_labels_only: product_labels_only, product_label_format: product_label_format, print_multiple_labels_per_item: print_multiple_labels_per_item, delivery_date: dte)
 
       verify_pdf_generated_on seller2_printable
     end
@@ -133,7 +133,7 @@ describe ProcessPackingLabelsPrintable do
       expect_generate_packing_labels_for_orders(all_orders, manager)
       dte = delivery.buyer_deliver_on.strftime("%Y-%m-%d")
 
-      subject.perform(packing_labels_printable_id: manager_printable.id, request: request, product_labels_only: product_labels_only, product_label_format: product_label_format, print_multiple_labels_per_item: print_multiple_labels_per_item, delivery_date: dte)
+      subject.perform(market_id: market.id, packing_labels_printable_id: manager_printable.id, request: request, product_labels_only: product_labels_only, product_label_format: product_label_format, print_multiple_labels_per_item: print_multiple_labels_per_item, delivery_date: dte)
 
       verify_pdf_generated_on manager_printable
     end
