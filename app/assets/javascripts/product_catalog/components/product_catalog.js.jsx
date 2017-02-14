@@ -16,7 +16,8 @@
       useTemplates: React.PropTypes.bool.isRequired,
       supplierId: React.PropTypes.number,
       orderId: React.PropTypes.number,
-      orderMinimum: React.PropTypes.string
+      orderMinimum: React.PropTypes.string,
+      supplierView: React.PropTypes.boolean
     },
 
       componentWillMount: function() {
@@ -37,7 +38,7 @@
         else
             orderTemplates = ('');
 
-        if (this.props.supplierId > 0) {
+        if (this.props.supplierId > 0 && this.props.supplierView) {
             window.lo.ProductActions.newFilters(null, this.props.supplierId);
             divClass = 'popup modal is-hidden app-supplier-catalog-modal';
             divStyle = ({width: '900px', height: '700px', background: 'white', overflow: 'scroll', top: '400'});

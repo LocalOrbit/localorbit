@@ -13,6 +13,7 @@
   limit: 10,
   useTemplates: policy(:template).index?,
   supplierId: supplier_id,
+  supplierView: false,
   orderMinimum: current_delivery.delivery_schedule.order_minimum > 0 ? number_to_currency(current_delivery.delivery_schedule.order_minimum) : nil
 }) %>
 <div id="checkout-button" style="display: none">
