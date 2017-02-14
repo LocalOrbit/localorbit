@@ -10,7 +10,7 @@ module PackingLabels
       let(:orders)      { "some orders"  }
       let(:order_infos) { double "A list of order infos"  }
       let(:labels)      { double "A list of labels"  }
-      let(:pages)       {[:a=>{:template=>"avery_labels/vertical_product_1", :data=>{:order=>{:id=>20159, :deliver_on=>"March  3, 2016", :order_number=>"LO-16-SPRINGFIELD-0000020", :buyer_name=>"Bistro LeBeau", :market_logo_url=>"/media/W1siZiIsIjIwMTQvMDUvMDcvMDgvMzQvMjAvNjc5L2xvZ29fbGFyZ2UuanBnIl1d?sha=ac02f564a982c800", :zpl_logo=>"", :qr_code_url=>"http://chart.apis.google.com/chart?cht=qr&chs=300x300&chl=http%3A%2F%2Fapp.localtest.me%3A3000%2Fo%2F20159&chld=H|0"}, :product=>{:product_name=>"Flounder, Summer", :unit_desc=>"Pound", :quantity=>2, :lot_desc=>"Lot #446", :producer_name=>"Local Ocean", :product_code=>nil}}}]}
+      let(:pages)       {[:a=>[{:template=>"avery_labels/vertical_product_1", :data=>{:order=>{:id=>20159, :deliver_on=>"March  3, 2016", :order_number=>"LO-16-SPRINGFIELD-0000020", :buyer_name=>"Bistro LeBeau", :market_logo_url=>"/media/W1siZiIsIjIwMTQvMDUvMDcvMDgvMzQvMjAvNjc5L2xvZ29fbGFyZ2UuanBnIl1d?sha=ac02f564a982c800", :zpl_logo=>"", :qr_code_url=>"http://chart.apis.google.com/chart?cht=qr&chs=300x300&chl=http%3A%2F%2Fapp.localtest.me%3A3000%2Fo%2F20159&chld=H|0"}, :product=>{:product_name=>"Flounder, Summer", :unit_desc=>"Pound", :quantity=>2, :lot_desc=>"Lot #446", :producer_name=>"Local Ocean", :product_code=>nil}}}]]}
       let(:pdf_result)  { "the pdf result" }
       let(:zpl_result)  { "the zpl result" }
       let(:product_labels_only) { true }

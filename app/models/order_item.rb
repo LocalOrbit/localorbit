@@ -41,11 +41,11 @@ class OrderItem < ActiveRecord::Base
     joins(order: :delivery).where(orders: {delivery_id: delivery.id})
   end
 
-  def self.for_delivery_date(delivery_date, current_user)
+  def self.for_delivery_date(delivery_date, current_user, market_id)
     if current_user.buyer_only? || current_user.market_manager?
-      joins(order: :delivery).where("DATE(deliveries.buyer_deliver_on) = '#{delivery_date}'")
+      joins(order: :delivery).where("DATE(deliveries.buyer_deliver_on) = '#{delivery_date}' AND orders.market_id = #{market_id}")
     else
-      joins(order: :delivery).where("DATE(deliveries.deliver_on) = '#{delivery_date}'")
+      joins(order: :delivery).where("DATE(deliveries.deliver_on) = '#{delivery_date}' AND orders.market_id = #{market_id}")
     end
   end
 
@@ -70,9 +70,9 @@ class OrderItem < ActiveRecord::Base
     OrderItem.for_delivery(delivery).joins(:product).where(products: {organization_id: ids})
   end
 
-  def self.for_delivery_date_and_user(delivery_date, user)
+  def self.for_delivery_date_and_user(delivery_date, user, market_id)
     ids = user.managed_organization_ids_including_deleted
-    OrderItem.for_delivery_date(delivery_date, user).joins(:product).where(products: {organization_id: ids})
+    OrderItem.for_delivery_date(delivery_date, user, market_id).joins(:product).where(products: {organization_id: ids})
   end
 
   def self.for_user_purchases(user)

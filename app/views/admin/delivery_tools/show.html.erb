@@ -8,6 +8,7 @@
       <p>This is a list of all upcoming deliveries for your market.</p>
       <%
         previous_delivery_date = ''
+        previous_market = ''
 
         @upcoming_deliveries.each do |delivery|
             if current_user.buyer_only? || current_user.market_manager?
@@ -16,9 +17,9 @@
               delivery_date = "#{delivery.deliver_on.strftime("%Y%m%d")}"
             end
         %>
-        <% if delivery_date != previous_delivery_date %>
+        <% if delivery_date != previous_delivery_date || delivery.delivery_schedule.market_id != previous_market %>
         <div class="upcoming-delivery">
-          <span class="market"><%= delivery.delivery_schedule.market.name %></span><br><br>
+          <span class="market"><strong><%= delivery.delivery_schedule.market.name %></strong></span><br><br>
           <h2 class="upcoming-delivery-date"><%= delivery.upcoming_delivery_date_heading(current_user) %></h2>
 
           <% dc = UserDeliveryContext.build(user: current_user, delivery: delivery) 
@@ -36,9 +37,9 @@
               <div class="tool"><%= link_to "Master Packing Slips <span class='note'>for aggregation</span>".html_safe, "/admin/delivery_tools/pack_list_date/" + delivery_date + "?market_id=#{delivery.delivery_schedule.market.id}" %></div>
             <% end %>
             <% if FeatureAccess.not_LE_market_manager?(user:current_user, market: current_market) %>
-              <div class="tool"><%= link_to policy(:all_supplier).index? ? "Individual Packing Slips <span class='note'>per Supplier</span>".html_safe : "Packing Slips", "/admin/delivery_tools/individual_pack_list_date/" + delivery_date %></div>
+              <div class="tool"><%= link_to policy(:all_supplier).index? ? "Individual Packing Slips <span class='note'>per Supplier</span>".html_safe : "Packing Slips", "/admin/delivery_tools/individual_pack_list_date/" + delivery_date + "?market_id=#{delivery.delivery_schedule.market.id}" %></div>
             <% end %>
-            <div class="tool"><%= link_to "Order Summary", "/admin/delivery_tools/order_summary_date/" + delivery_date %></div>
+            <div class="tool"><%= link_to "Order Summary", "/admin/delivery_tools/order_summary_date/" + delivery_date + "?market_id=#{delivery.delivery_schedule.market.id}" %></div>
             <% if access_packing_labels %>
               <% target = if Rails.env.test? then "" else "_blank" end %>
                 <div class="tool">
@@ -51,7 +52,10 @@
           </div>
           <hr>
         </div>
-        <% previous_delivery_date = delivery_date %>
+        <%
+            previous_delivery_date = delivery_date
+            previous_market = delivery.delivery_schedule.market_id
+        %>
         <% end %>
       <% end %>
     <% end %>
