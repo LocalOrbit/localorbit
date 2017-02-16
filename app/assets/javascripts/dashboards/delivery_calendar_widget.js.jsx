@@ -43,7 +43,7 @@
                 $.each(delivery_weeks, function (k1, week) {
                     wks = wks + '<tr>';
                     $.each(week, function (k2, day) {
-                        process_date = new Date(day['day']);
+                        process_date = new Date(day['day'] + " 00:00:00 EST");
                         month_day = process_date.getDate();
                         dow = process_date.getDay() + 1;
                         if (day['css_class'] == "cal-date")
