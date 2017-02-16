@@ -18,7 +18,7 @@ module Dashboards
     end
 
     if @deliveries.length > 0
-      first_delivery = @deliveries.first.send(use_date)
+      first_delivery = @deliveries.first.send(use_date).in_time_zone(current_market.timezone).to_date
     else
       first_delivery = Date.today
     end
@@ -27,6 +27,7 @@ module Dashboards
     delivery_for_day = @deliveries.each_with_object({}) { |d,map| map[d.send(use_date).yday] ||= d }
 
     now = DateTime.now
+    now = Time.now.in_time_zone(current_market.timezone).to_date
     calendar_start = now - now.wday
     calendar_end = last_delivery + (6 - last_delivery.wday)
 
