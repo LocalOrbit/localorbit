@@ -41,7 +41,7 @@
         if (this.props.supplierId > 0 && this.props.supplierView) {
             window.lo.ProductActions.newFilters(null, this.props.supplierId);
             divClass = 'popup modal is-hidden app-supplier-catalog-modal';
-            divStyle = ({width: '900px', height: '700px', background: 'white', overflow: 'scroll', top: '400'});
+            divStyle = ({maxHeight: '700px', background: 'white', overflow: 'scroll', top: '400'});
         }
         else {
             divClass = ('');
@@ -70,6 +70,7 @@
             url={this.props.baseUrl + '/products'}
             supplierOnly={this.props.supplierId > 0}
             orderId={this.props.orderId}
+            supplierView={this.props.supplierView}
         />);
         
         return (
