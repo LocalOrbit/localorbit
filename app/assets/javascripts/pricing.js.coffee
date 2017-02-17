@@ -147,6 +147,7 @@ $ ->
 
     salePrice.on 'blur', ->
       formatFieldAsMoney($(this))
+      $(this).trigger('change')
 
     salePrice.trigger('blur')
 
