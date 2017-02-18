@@ -71,7 +71,7 @@ class Category < ActiveRecord::Base
       end
 
       if !cat.category_fees.where(market_id: market_id).first.nil? && cat.depth > 0
-        cat.category_fees.first.fee_pct
+        cat.category_fees.where(market_id: market_id).first.fee_pct
       elsif !cat.parent.nil?
         level_fee(market_id, cat.parent)
       else
