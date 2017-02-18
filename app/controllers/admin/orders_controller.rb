@@ -177,7 +177,7 @@ class Admin::OrdersController < AdminController
   end
 
   def remove_delivery_fee(order)
-    RemoveDeliveryFee.perform(order: order, merge: false)
+    RemoveDeliveryFee.perform(order: order, orig_delivery_fees: order.delivery_fees, merge: false)
     redirect_to admin_order_path(order), notice: order.delivery.delivery_schedule.fee_label + " successfully removed."
   end
 
