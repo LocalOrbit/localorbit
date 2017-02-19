@@ -3,13 +3,16 @@ class MergeOrder
 
   def perform
     # Retrieve orig_order items
-    if !orig_order.nil? && !dest_order.nil?
+    if !orig_order.nil? && !dest_order.nil? && orig_order.payment_method == dest_order.payment_method
       orig_order = context[:orig_order]
       dest_order = context[:dest_order]
 
       if orig_order.organization == dest_order.organization && dest_order.delivery_status != 'delivered'
         orig_order_items = orig_order.items
         dest_order_items = dest_order.items
+
+        orig_delivery_fees = orig_order.delivery_fees
+        dest_delivery_fees = dest_order.delivery_fees
 
         # Update qty of existing dest_order items, and remove from array
         orig_order_items.each do |o_item|
@@ -37,13 +40,16 @@ class MergeOrder
         end
 
         # Update order totals
-        RemoveDeliveryFee.perform(order: orig_order, merge: true)
         RemoveCredit.perform(order: orig_order)
         orig_order.update_total_cost
         orig_order.save!
 
+        UpdatePurchase.perform(payment_provider: orig_order.payment_provider, order: orig_order)
+
         dest_order.update_total_cost
         dest_order.save!
+
+        UpdatePurchase.perform(payment_provider: dest_order.payment_provider, order: dest_order)
 
         # Add order merge entry to audit trail
         aud_orig = Audit.create!(user_id:context[:user].id, action:"update", auditable_type: "Order", auditable_id: orig_order.id)
@@ -52,7 +58,7 @@ class MergeOrder
         aud_dest = Audit.create!(user_id:context[:user].id, action:"update", auditable_type: "Order", auditable_id: dest_order.id)
         aud_dest.update_attributes(audited_changes: { 'merge_order' => "Merge order: #{orig_order.order_number} into order: #{dest_order.order_number}"})
       else
-        context.fail!(message: "Origin and Destination Buyer must be the same, and Destination Order must be Undelivered")
+        context.fail!(message: "Origin and Destination Buyer must be the same, Destination Order must be Undelivered, and Payment Methods must be the same")
       end
     else
       context.fail!(message: "")
