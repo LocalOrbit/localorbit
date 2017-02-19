@@ -2,11 +2,11 @@ class ApplyDiscountToAddedOrderItems
   include Interactor
 
   def perform
-    return unless order.discount && order.payment_method == "purchase order"
+    return unless order.discount #&& order.payment_method == "purchase order"
     order_total = if order.discount.try(:seller_organization_id).present?
-                    order.delivery_fees + discounted_items.each.sum(&:gross_total)
+                    discounted_items.each.sum(&:gross_total)
                   else
-                    order.delivery_fees + subtotal
+                    subtotal
                   end
     discount_value = order.discount.value_for(order_total)
 
