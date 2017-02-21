@@ -38,12 +38,14 @@
             var self = this;
             var i;
             var dlvr_href;
+            var p_date;
 
             if (delivery_weeks) {
                 $.each(delivery_weeks, function (k1, week) {
                     wks = wks + '<tr>';
                     $.each(week, function (k2, day) {
-                        process_date = new Date(day['day']);
+                        p_date = day['day'].split("-");
+                        process_date = new Date(p_date[1] + '/' + p_date[2] + '/' + p_date[0] + ' 00:00:00');
                         month_day = process_date.getDate();
                         dow = process_date.getDay() + 1;
                         if (day['css_class'] == "cal-date")

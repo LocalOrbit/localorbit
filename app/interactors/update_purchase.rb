@@ -3,14 +3,17 @@ class UpdatePurchase
 
   def perform
     if PaymentProvider.supports_payment_method?(payment_provider, order.payment_method)
-      current_amount = rollup_payment_amounts
+      if !context[:remove_delivery_fees].nil?
+        create_refunds(context[:orig_delivery_fees], true)
+      else
+        current_amount = rollup_payment_amounts
 
-      if current_amount > order.total_cost
-        create_refunds(current_amount)
+        if current_amount > order.total_cost #order.gross_total
+          create_refunds(current_amount)
 
-      elsif current_amount < order.total_cost
-        create_new_charge(current_amount)
-
+        elsif current_amount < order.total_cost
+          create_new_charge(current_amount)
+        end
       end
     end
   ensure
@@ -26,8 +29,12 @@ class UpdatePurchase
     debit = charge(charge_amount)
   end
 
-  def create_refunds(amount)
-    refund_amount = amount - order.total_cost
+  def create_refunds(amount, delivery_fees = nil)
+    if !delivery_fees.nil?
+      refund_amount = amount
+    else
+      refund_amount = amount - order.total_cost
+    end
     refund(refund_amount)
   end
 
