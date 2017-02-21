@@ -1,6 +1,6 @@
 class PurchaseOrderPolicy < ApplicationPolicy
 
-  def create?
+  # def create?
     # binding.pry
 
     # KXM GC: policy PurchaseOrder#create? checking current_market didn't work.  Other ideas?
@@ -26,7 +26,7 @@ class PurchaseOrderPolicy < ApplicationPolicy
     #   UserContext.new(current_user, request.ip)
     # end
 
-    true
-  end
+  #   true
+  # end
 
 end

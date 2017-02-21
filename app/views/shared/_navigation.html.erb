@@ -16,9 +16,9 @@ end
         </div>
         <% if current_user %>
           <div class="nav nav--main column column--half pull-right" style="text-align: center">
-            <% if policy(:purchase_order).create? %><%= link_to "PO", products_purchase_path, class: "", tag: :a %><% end %>
+            <% if current_market.is_consignment_market? %><%= link_to "PO", products_purchase_path, class: "", tag: :a %><% end %>
             <% if policy(:catalog).index? %><%= link_to "Order", products_path, class: "", tag: :a %><% end %>
-            <br />
+            <% if current_market.is_consignment_market? %><br /><% end %>
             <% if policy(:all_supplier).index? %><%= link_to "Suppliers", sellers_path, class: "", tag: :a %><% end %>
             <% if policy(:about).index? %><%= link_to "About", market_path, class: "", tag: :a %><% end %>
           </div>
@@ -57,11 +57,11 @@ end
     <% if policy(:financial).index? && show_financials?(current_user, current_market) %><li><%= link_to raw('<i class="font-icon" data-icon="&#xe00f;"></i>Financials'), admin_financials_path %></li><% end %>
 
     <!-- buyer -->
-    <% if policy(:purchase_order).index? || policy(:order).index? || policy(:template).index? || policy(:delivery).index? || policy(:order_item).index? || policy(:delivery_schedule).index? %>
+    <% if policy(:order).index? || policy(:template).index? || policy(:delivery).index? || policy(:order_item).index? || policy(:delivery_schedule).index? %>
     <li>
       <a href="#orders-dropdown" class="caretted"><i class="font-icon" data-icon="&#xe024;"></i>Orders &amp; Delivery</a>
       <ul class="dropdown with-anchor top-anchor" id="orders-dropdown">
-        <% if policy(:purchase_order).create? %><li><%= link_to raw('<i class="font-icon" data-icon="&#xe025;"></i> Purchase Orders'), admin_orders_path(:order_type => 'purchase') %></li><% end %>
+        <% if current_market.is_consignment_market? %><li><%= link_to raw('<i class="font-icon" data-icon="&#xe025;"></i> Purchase Orders'), admin_orders_path(:order_type => 'purchase') %></li><% end %>
         <% if policy(:order).index? %><li><%= link_to raw('<i class="font-icon" data-icon="&#xe025;"></i> Orders'), admin_orders_path %></li><% end %>
         <% if policy(:template).index? %><li><%= link_to raw('<i class="font-icon" data-icon="&#xe024;"></i> Order Templates'), templates_path %></li><% end %>
         <% if policy(:delivery).index? %><li><%= link_to raw('<i class="font-icon" data-icon="&#xe022;"></i> Upcoming Deliveries'), admin_delivery_tools_path %></li><% end %>
