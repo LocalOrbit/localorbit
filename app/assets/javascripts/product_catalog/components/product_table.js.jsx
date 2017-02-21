@@ -10,7 +10,7 @@
     propTypes: {
       url: React.PropTypes.string.isRequired,
       cartUrl: React.PropTypes.string,
-      purchaseOrder: React.PropTypes.string
+      purchaseOrder: React.PropTypes.bool
     },
 
     getInitialState: function() {

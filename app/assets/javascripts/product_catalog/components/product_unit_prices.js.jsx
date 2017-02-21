@@ -92,7 +92,7 @@
         <tr className="cart_item" data-keep-when-zero="yes" data-cart-item={JSON.stringify(this.props.product.cart_item)}>
           <th>
             <a href={"/products/" + this.props.product.id}>{this.props.product.unit_description}</a><br/>
-            <span style={{fontSize:"11px", color:"#737373"}}>{this.props.purchaseOrder ? '' : quantity &nbsp};</span>
+            <span style={{fontSize:"11px", color:"#737373"}}>{this.props.purchaseOrder ? '' : quantity};</span>
           </th>
           <td>
             <table>
