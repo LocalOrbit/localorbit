@@ -1,12 +1,11 @@
 class PurchaseOrderPolicy < ApplicationPolicy
+# This policy implementation deprecated for now.  Leverage current_market.present? && current_market.is_consignment_market?
 
   # def create?
-    # binding.pry
 
-    # KXM GC: policy PurchaseOrder#create? checking current_market didn't work.  Other ideas?
-    # current_market.present? && current_market.is_consignment_market?
+    # Not feasible for the intended purpose as Pundit (out of the box) only allows reference to the current_user.
 
-    # I played with setting a custom user context (defined below) that includes the market, but that nests the current user as an instance variable (along with current_market) of the pundit user, making all calls to 'user' have to be 'user.user'.  Ugly.  Tried assigning user to UserContext self, but that threw an error (as expected, really)
+    # I played with setting a custom user context (defined below) that includes the market, but that nests the current user as an instance variable (along with current_market) of the Pundit user, making all calls to 'user' have to be 'user.user'.  Ugly.  Tried assigning user to UserContext self, but that threw an error (as expected, really)
 
     # Defined somewhere:
     # -------------------
