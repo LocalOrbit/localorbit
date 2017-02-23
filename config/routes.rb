@@ -278,7 +278,12 @@ Rails.application.routes.draw do
   resource :cart, only: [:update, :show, :destroy]
   resources :orders, only: [:index, :show, :create] do
     resources :table_tents_and_posters, :controller=>"table_tents_and_posters", only: [:index, :show, :create]
+
   end
+
+  # KXM GC: purchase_orders will likely become a resource (here and under admin namespace)
+  get "purchase_orders" => "orders#purchase_orders"
+
   resource :registration, only: [:show, :create]
 
   get "/pdf_view/header", to: "pdf_view#header"

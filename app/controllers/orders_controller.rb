@@ -8,10 +8,22 @@ class OrdersController < ApplicationController
   before_action :require_current_delivery,       only: :create
   before_action :require_cart,                   only: :create
   before_action :hide_admin_navigation,          only: :create
-  before_action :find_sticky_params, only: :index
+  before_action :find_sticky_params, only: [:index, :purchase_orders]
 
-  # KXM GC: orders#purchase_orders needs to go in here
   def index
+    order_list
+  end
+
+  def purchase_orders
+    po_filter = {:q => {"order_type_eq" => "purchase"}}
+    @query_params.merge!(po_filter)
+
+    order_list
+
+    render :index
+  end
+
+  def order_list
     @query_params["placed_at_date_gteq"] ||= 7.days.ago.to_date.to_s
     @query_params["placed_at_date_lteq"] ||= Date.today.to_s
     @presenter = BuyerOrderPresenter.new(current_user, current_market, request.query_parameters, @query_params)
