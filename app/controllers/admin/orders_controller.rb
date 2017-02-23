@@ -4,17 +4,14 @@ class Admin::OrdersController < AdminController
   before_action :find_sticky_params, only: [:index, :purchase_orders]
   before_action :load_qb_session
 
-  # KXM GC: admin/orders#index and admin/orders#purchase_orders likely may be factorable...
   def index
     if params["clear"]
       redirect_to url_for(params.except(:clear))
     else
-      #@query_params["placed_at_date_gteq"] ||= 7.days.ago.to_date.to_s
-      #@query_params["placed_at_date_lteq"] ||= Date.today.to_s
-      @search_presenter = OrderSearchPresenter.new(@query_params, current_user, :placed_at)
-      @q, @totals = search_and_calculate_totals(@search_presenter)
+      po_filter = {:q => {"order_type_matches" => "sales"}}
+      @query_params.merge!(po_filter)
 
-      @orders = @q.result(distinct: true)
+      build_order_list
 
       respond_to do |format|
         format.html do
@@ -36,17 +33,13 @@ class Admin::OrdersController < AdminController
   end
 
   def purchase_orders
-    # binding.pry
     if params["clear"]
       redirect_to url_for(params.except(:clear))
     else
-      po_filter = {:q => {"order_type_eq" => "purchase"}}
+      po_filter = {:q => {"order_type_matches" => "purchase"}}
       @query_params.merge!(po_filter)
 
-      @search_presenter = OrderSearchPresenter.new(@query_params, current_user, :placed_at)
-      @q, @totals = search_and_calculate_totals(@search_presenter)
-
-      @orders = @q.result(distinct: true)
+      build_order_list
 
       respond_to do |format|
         format.html do
@@ -59,7 +52,7 @@ class Admin::OrdersController < AdminController
           if ENV["USE_UPLOAD_QUEUE"] == "true"
             Delayed::Job.enqueue ::CSVExport::CSVOrderExportJob.new(current_user, @order_items.map(&:id))
             flash[:notice] = "Please check your email for export results."
-            redirect_to admin_orders_path
+            redirect_to admin_purchase_orders_path
           else
             @filename = "orders.csv"
           end
@@ -67,6 +60,13 @@ class Admin::OrdersController < AdminController
       end
 
     end
+  end
+
+  def build_order_list
+    @search_presenter = OrderSearchPresenter.new(@query_params, current_user, :placed_at)
+    @q, @totals = search_and_calculate_totals(@search_presenter)
+
+    @orders = @q.result(distinct: true)
   end
 
   def search_and_calculate_totals(search)
