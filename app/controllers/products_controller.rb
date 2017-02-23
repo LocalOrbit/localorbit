@@ -1,7 +1,7 @@
 class ProductsController < ApplicationController
   include ActiveSupport::NumberHelper
   #before_action :reset_order_id
-  before_action :set_order_type, only: [:purchase]
+  before_action :set_order_type, only: [:purchase, :index]
   before_action :require_current_supplier, only: [:purchase]
   before_action :require_selected_market
   before_action :require_market_open
@@ -21,8 +21,6 @@ class ProductsController < ApplicationController
   end
 
   def purchase
-    @order_type = 'purchase'
-
     if current_market.alternative_order_page
       render 'alternative_order_page'
       return
@@ -96,6 +94,12 @@ class ProductsController < ApplicationController
   end
 
   def set_order_type
-    session[:order_type] = 'purchase'
+    @order_type = case params[:action]
+      when 'index' then 'sales'
+      else params[:action]
+    end
+
+    # binding.pry
+    session[:order_type] = @order_type
   end
 end
