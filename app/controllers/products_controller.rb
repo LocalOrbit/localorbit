@@ -99,7 +99,6 @@ class ProductsController < ApplicationController
       else params[:action]
     end
 
-    # binding.pry
-    session[:order_type] = @order_type
+    session[:order_type] = @order_type unless session[:order_type] == @order_type
   end
 end
