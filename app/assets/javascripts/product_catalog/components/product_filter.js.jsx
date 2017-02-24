@@ -15,7 +15,8 @@
       useTemplates: React.PropTypes.bool.isRequired,
       supplierOnly: React.PropTypes.bool,
       orderId: React.PropTypes.number,
-      orderMinimum: React.PropTypes.string
+      orderMinimum: React.PropTypes.string,
+      purchaseOrder: React.PropTypes.bool
     },
 
     getInitialState: function() {
@@ -110,7 +111,7 @@
         )
       }.bind(this));
 
-      var orderTemplates, filterText, orderMinimum, headerInformation;
+      var orderTemplates, filterText, orderMinimum, headerInformation, editDeliveryOptions;
       if(this.props.useTemplates)
             orderTemplates = (<a href="#templatePicker" className="app-apply-template modal-toggle">Apply an order template to the cart</a>);
         else
@@ -126,6 +127,11 @@
         else
             orderMinimum = ('');
 
+        if(this.props.purchaseOrder)
+          editDeliveryOptions = (<span><a href="/sessions/suppliers/new?redirect_back_to=%2Fsessions/deliveries/new?redirect_back_to=%2Fproducts/purchase">Change purchase order options</a><br/></span>);
+        else
+          editDeliveryOptions = (<span><a href="/sessions/organizations/new?redirect_back_to=%2Fsessions/deliveries/new?redirect_back_to=%2Fproducts">Change delivery options</a><br/></span>);
+
         if (this.props.orderId > 0)
             headerInformation = ('');
         else
@@ -135,7 +141,7 @@
                     {this.props.selectedType}: <strong>{this.state.deliveryDate.format('dddd, MMM. D, YYYY')}</strong><br/>
                     Time left to order: <strong>{this.state.orderCutoff.fromNow(true)}</strong><br/>
                     {orderMinimum}
-                    <a href="/sessions/organizations/new?redirect_back_to=%2Fsessions/deliveries/new?redirect_back_to=%2Fproducts">Change delivery options</a><br/>
+                    {editDeliveryOptions}
                     {orderTemplates}
                 </div>
             );

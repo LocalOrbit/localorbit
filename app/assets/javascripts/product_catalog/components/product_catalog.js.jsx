@@ -14,6 +14,7 @@
       orderCutoff: React.PropTypes.string.isRequired,
       buyerInfo: React.PropTypes.string.isRequired,
       purchaseOrder: React.PropTypes.bool,
+      currentSupplier: React.PropTypes.number,
       useTemplates: React.PropTypes.bool.isRequired,
       supplierId: React.PropTypes.number,
       orderId: React.PropTypes.number,
@@ -49,6 +50,9 @@
             divStyle = ({});
         }
 
+        if(this.props.currentSupplier > 0 && this.props.purchaseOrder) {
+            window.lo.ProductActions.newFilters(null, this.props.currentSupplier);
+        }
 
         if (this.props.orderId > 0)
             productFilter = ('');

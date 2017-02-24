@@ -2,6 +2,7 @@
   if !policy(:all_supplier).index?
      supplier_id = current_market.organizations.where("org_type = 'S'")[0].id
   end
+  current_supplier_id = @current_supplier.try(:id) || 0
 %>
 <%= react_component('lo.ProductCatalog', {
   baseUrl: "#{request.base_url}/api/v1/",
@@ -11,6 +12,7 @@
   orderCutoff: current_delivery.cutoff_time,
   buyerInfo: current_organization.name,
   purchaseOrder: @order_type == 'purchase',
+  currentSupplier: current_supplier_id,
   limit: 10,
   useTemplates: policy(:template).index?,
   supplierId: supplier_id,
