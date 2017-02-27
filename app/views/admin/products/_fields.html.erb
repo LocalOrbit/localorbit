@@ -1,19 +1,15 @@
 <%= render "shared/errors", {resource: @product} %>
 
 <% if current_market.is_consignment_market? %>
-<label>
   <div class="field">
     <%= f.label :parent_product_id, "Parent Product" %><br>
     <%= f.select :parent_product_id, market_products, {include_blank: "Select an product"}, class: "column--full chosen" %>
   </div>
-</label>
 <% end %>
 <% if @product.persisted? %>
-  <label>
-    Supplier Organization<br>
+  <label>Supplier Organization</label><br>
     <%= link_to @product.organization.name, [:admin, @product.organization] %>
-  </label>
-  <%= f.hidden_field :organization_id %>
+    <%= f.hidden_field :organization_id %>
 <% else %>
   <% if @organizations.count > 1 %>
     <div class="field">
