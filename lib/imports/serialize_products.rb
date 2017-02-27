@@ -1,6 +1,7 @@
 module Imports
 	module SerializeProducts
 		require 'csv'
+		@all_headers = ["Organization","Market Subdomain","Product Name","Category Name","Short Description","Product Code","Unit Name","Unit Description","Price","New Inventory","Product ID", "Parent Product Name", "Organic", "Unit Quantity", "Lot Number"] # Required headers for imminent future
 		@required_headers = ["Organization","Market Subdomain","Product Name","Category Name","Short Description","Product Code","Unit Name","Unit Description","Price","New Inventory","Product ID"] # Required headers for imminent future
 
 		# TODO should this be a diff kind of accessor? Later, works.
@@ -17,7 +18,7 @@ module Imports
 					if validate_product_row(row, i, current_user) # if the row is valid (see method)
 						# then build a hash for it
 						product_row_hash = {}
-						@required_headers[0..10].each do |rh|
+						@all_headers[0..14].each do |rh|
 							product_row_hash[rh] = row[rh]
 						end
 						$product_rows["products"] << product_row_hash
@@ -45,7 +46,7 @@ module Imports
 				if csvfile.size < 1 # not counting headers -- if no data, false
 					return false
 				end
-				@required_headers[0..-4].each do |h| # if all the required headers aren't here, false
+				@required_headers[0..10].each do |h| # if all the required headers aren't here, false
 					unless headers.include?(h)
 						return false
 					end
@@ -102,10 +103,14 @@ module Imports
 				#create error and append it
 				error_hash["Errors"]["Missing or invalid price"] = "Check product price validity. Must be a valid decimal greater than 0. Input was: #{product_row["Price"]}"
 			end
-			if product_row["New Inventory"].to_i < 0
+			if !product_row["Unit Quantity"].nil? && !(product_row["Unit Quantity"].to_i and product_row["Unit Quantity"].to_i > 0)
 				okay_flag = false
 				#create error and append it
-				error_hash["Errors"]["Invalid Inventory"] = "Check product inventory validity. Must be a valid number greater than or equal to 0. Input was: #{product_row["New Inventory"]}"
+				error_hash["Errors"]["Invalid Unit Quantity"] = "Check unit quantity. Must be a valid number greater than or equal to 0. Input was: #{product_row["Unit Quantity"]}"
+			end
+			if !product_row["Parent Product Name"].nil? && ProductHelpers.get_parent_product_id_from_name(product_row["Parent Product Name"], product_row["Organization"], product_row["Market Subdomain"], current_user).nil?
+				okay_flag = false
+				error_hash["Errors"]["Invalid Parent Product"] = "Specified Parent Product was not found. Your input was: #{product_row["Parent Product Name"]}" # TODO should have more info provided about category problems
 			end
 			#if product_row[@required_headers[-4]] and product_row[@required_headers[-4]].upcase == "Y" and product_row[@required_headers.last].to_f <= 0
 			#	okay_flag = false

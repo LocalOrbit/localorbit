@@ -19,6 +19,15 @@ module Imports
 			end
 		end
 
+		def self.get_parent_product_id_from_name(product_name, organization_name, subdomain, current_user)
+			begin
+				p = Product.where(name: product_name, organization_id: self.get_organization_id_from_name(organization_name, subdomain, current_user))
+				p[0].id
+			rescue
+				return nil
+			end
+		end
+
 		def self.get_category_id_from_name(category_name)
 			begin
 				t = Category.arel_table
@@ -30,7 +39,7 @@ module Imports
 			end
 		end
 
-		def self.get_organization_id_from_name(organization_name,market_subdomain,current_user)
+		def self.get_organization_id_from_name(organization_name, market_subdomain, current_user)
 			begin
 				mkt = Market.find_by_subdomain(market_subdomain)
 				user = User.find(current_user.to_i)
@@ -72,8 +81,12 @@ module Imports
 				        code: prod_hash["Product Code"],
 				        short_description: prod_hash["Short Description"],
 				        long_description: prod_hash["Long Description"],
-				        unit_description: prod_hash["Unit Description"]
-				      	)
+				        unit_description: prod_hash["Unit Description"],
+								unit_quantity: prod_hash["Unit Quantity"],
+								organic: prod_hash["Organic"],
+								parent_product_id: self.get_parent_product_id_from_name(prod_hash["Parent Product Name"], prod_hash["Organization"], prod_hash["Market Subdomain"], current_user),
+								use_simple_inventory: prod_hash["Lot Number"].nil?
+				)
 				product.skip_validation = true
 				product.save!
 
@@ -81,8 +94,8 @@ module Imports
 					pr.sale_price = prod_hash["Price"]
 					pr.save!
 
-				if product.use_simple_inventory && prod_hash["New Inventory"].to_i >= 0
-					lt = product.lots.find_or_initialize_by(good_from: nil, expires_at: nil, number: nil)
+				if prod_hash["New Inventory"].to_i >= 0
+					lt = product.lots.find_or_initialize_by(good_from: nil, expires_at: nil, number: prod_hash["Lot Number"].nil? ? nil : prod_hash["Lot Number"])
 					lt.quantity = prod_hash["New Inventory"].to_i
 					lt.save!
 				end
@@ -102,7 +115,14 @@ module Imports
 				end
 				if !product.nil? # if there is a product-unit with this name, category, org
 					product.skip_validation = true
-					product.update_attributes!(unit_description: prod_hash["Unit Description"],code: prod_hash["Product Code"],short_description: prod_hash["Short Description"],long_description: prod_hash["Long Description"])
+					product.update_attributes!(unit_description: prod_hash["Unit Description"],
+																		 unit_quantity: prod_hash["Unit Quantity"],
+																		 code: prod_hash["Product Code"],
+																		 short_description: prod_hash["Short Description"],
+																		 long_description: prod_hash["Long Description"],
+																		 organic: prod_hash["Organic"],
+																		 parent_product_id: self.get_parent_product_id_from_name(prod_hash["Parent Product Name"], prod_hash["Organization"], prod_hash["Market Subdomain"], current_user),
+																		 use_simple_inventory: prod_hash["Lot Number"].nil?)
 
 					pr = product.prices.find_or_initialize_by(min_quantity: 1)
 					pr.sale_price = prod_hash["Price"]
@@ -111,8 +131,8 @@ module Imports
 					else
 						puts "Error validating: #{pr.id}"
 					end
-					if product.use_simple_inventory && prod_hash["New Inventory"].to_i >= 0
-						lt = product.lots.find_or_initialize_by(good_from: nil, expires_at: nil, number: nil)
+					if prod_hash["New Inventory"].to_i >= 0
+						lt = product.lots.find_or_initialize_by(good_from: nil, expires_at: nil, number: prod_hash["Lot Number"].nil? ? nil : prod_hash["Lot Number"])
 						lt.quantity = prod_hash["New Inventory"].to_i
 						lt.save!
 					end
@@ -127,7 +147,11 @@ module Imports
 				        short_description: prod_hash["Short Description"],
 				        long_description: prod_hash["Long Description"],
 				        unit_description: prod_hash["Unit Description"],
-				        general_product_id: gp_id_or_false
+								unit_quantity: prod_hash["Unit Quantity"],
+								general_product_id: gp_id_or_false,
+								organic: prod_hash["Organic"],
+								parent_product_id: self.get_parent_product_id_from_name(prod_hash["Parent Product Name"], prod_hash["Organization"], prod_hash["Market Subdomain"], current_user),
+								use_simple_inventory: prod_hash["Lot Number"].nil?
 				      	)
 					product.skip_validation = true
 					product.save!
@@ -136,8 +160,8 @@ module Imports
 					pr.sale_price = prod_hash["Price"]
 					pr.save!
 
-					if product.use_simple_inventory && prod_hash["New Inventory"].to_i >= 0
-						lt = product.lots.find_or_initialize_by(good_from: nil, expires_at: nil, number: nil)
+					if prod_hash["New Inventory"].to_i >= 0
+						lt = product.lots.find_or_initialize_by(good_from: nil, expires_at: nil, number: prod_hash["Lot Number"].nil? ? nil : prod_hash["Lot Number"])
 						lt.quantity = prod_hash["New Inventory"].to_i
 						lt.save!
 					end

@@ -36,6 +36,7 @@ ActiveRecord::Schema.define(version: 20170223150136) do
     t.string   "masquerader_username"
   end
 
+  add_index "audits", ["action", "associated_type"], name: "action_associated_type", using: :btree
   add_index "audits", ["associated_id", "associated_type"], name: "associated_index", using: :btree
   add_index "audits", ["auditable_id", "auditable_type"], name: "auditable_index", using: :btree
   add_index "audits", ["created_at"], name: "index_audits_on_created_at", using: :btree
@@ -1049,7 +1050,7 @@ ActiveRecord::Schema.define(version: 20170223150136) do
   add_index "users", ["invited_by_id"], name: "index_users_on_invited_by_id", using: :btree
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
 
-  create_table "users_roles", force: true do |t|
+  create_table "users_roles", id: false, force: true do |t|
     t.integer "user_id"
     t.integer "role_id"
   end
