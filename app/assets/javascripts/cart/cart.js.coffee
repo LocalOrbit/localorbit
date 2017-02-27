@@ -4,6 +4,7 @@ $ ->
   order_id = $('.add-items-to-order').data('order-id')
   order_min = $('.subtotal').data('order-min')
   subtotal = $('.subtotal').data('subtotal')
+  order_type = $('#order_type').prop('value')
 
   window.CartNotificationDuration = 2000
 
@@ -140,7 +141,7 @@ $ ->
     updateSubtotal: (subtotal)->
       totals = $("#totals")
       totals.find(".subtotal").text(accounting.formatMoney(subtotal))
-      if subtotal*1 > order_min*1
+      if subtotal*1 > order_min*1 || order_type == 'purchase'
         $('.order-min-msg').html('')
         $('.payment-method').prop("disabled", false)
         #$("#place-order-button").prop("disabled", false)

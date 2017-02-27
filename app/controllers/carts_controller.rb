@@ -8,12 +8,13 @@ class CartsController < ApplicationController
   before_action :set_payment_provider
 
   def show
+    @order_type = session[:order_type]
     respond_to do |format|
       format.html do
         errors ||= []
         if current_cart.items.empty?
           target = 'products'
-          target += '_purchase' if session[:order_type] == 'purchase'
+          target += '_purchase' if @order_type == 'purchase'
 
           redirect_to [target.to_sym], alert: "Your cart is empty. Please add items to your cart before checking out."
         else
