@@ -1,7 +1,7 @@
 <div class="cart-page">
   <h1 class="heading-cart"><i class="font-icon icon-cart"></i> Cart</h1>
   <%= form_for :order, url: [:orders], html: {id: "order-form"} do |f| %>
-    <%= hidden_field_tag 'order_type', @order_type %>
+    <%= f.hidden_field 'order_type', value: @order_type %>
     <%= render "shared/errors", {resource: @order} if @order %>
     <% if flash[:error] %>
       <div class="flash flash--warning">

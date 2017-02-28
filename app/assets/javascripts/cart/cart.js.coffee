@@ -4,7 +4,7 @@ $ ->
   order_id = $('.add-items-to-order').data('order-id')
   order_min = $('.subtotal').data('order-min')
   subtotal = $('.subtotal').data('subtotal')
-  order_type = $('#order_type').prop('value')
+  order_type = $('#order_order_type').prop('value')
 
   window.CartNotificationDuration = 2000
 

@@ -42,6 +42,7 @@ class CreateOrder
       delivery_fees: cart.delivery_fees,
       total_cost: cart.total,
       placed_at: Time.current,
+      order_type: params[:order_type] || 'sales',
     )
 
     order.apply_delivery_address(cart.delivery_location)

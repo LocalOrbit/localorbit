@@ -132,6 +132,7 @@ class OrdersController < ApplicationController
 
   def order_params
     params.require(:order).permit(
+      :order_type,
       :discount_code,
       :payment_method,
       :payment_note,
