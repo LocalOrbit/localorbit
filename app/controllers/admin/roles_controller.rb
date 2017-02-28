@@ -6,7 +6,7 @@ class Admin::RolesController < AdminController
   end
 
   def show
-    @role_actions = RoleAction.all.order(:section)
+    @role_actions = RoleAction.all.published.order(:section)
     if !@role.activities.empty?
       @act = @role_actions.select("id").where("lower(description) in (#{@role.activities.map { |i| "'" + i.to_s + "'" }.join(',')})")
     end
