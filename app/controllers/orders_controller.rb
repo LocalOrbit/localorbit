@@ -87,6 +87,7 @@ class OrdersController < ApplicationController
       if @placed_order.success?
         session.delete(:cart_id)
         session.delete(:current_organization_id)
+        session.delete(:current_supplier_id)
         session.delete(:current_delivery_id)
         session.delete(:current_delivery_day)
         @grouped_items = @order.items.for_checkout
