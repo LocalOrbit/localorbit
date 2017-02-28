@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170202160435) do
+ActiveRecord::Schema.define(version: 20170223150136) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -36,6 +36,7 @@ ActiveRecord::Schema.define(version: 20170202160435) do
     t.string   "masquerader_username"
   end
 
+  add_index "audits", ["action", "associated_type"], name: "action_associated_type", using: :btree
   add_index "audits", ["associated_id", "associated_type"], name: "associated_index", using: :btree
   add_index "audits", ["auditable_id", "auditable_type"], name: "auditable_index", using: :btree
   add_index "audits", ["created_at"], name: "index_audits_on_created_at", using: :btree
@@ -751,6 +752,9 @@ ActiveRecord::Schema.define(version: 20170202160435) do
     t.string   "subscription_status"
     t.integer  "qb_org_id"
     t.string   "payment_model",                                        default: "buysell"
+    t.string   "contact_first_name"
+    t.string   "contact_last_name"
+    t.string   "contact_email"
   end
 
   add_index "organizations", ["name"], name: "index_organizations_on_name", using: :btree
@@ -1046,7 +1050,7 @@ ActiveRecord::Schema.define(version: 20170202160435) do
   add_index "users", ["invited_by_id"], name: "index_users_on_invited_by_id", using: :btree
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
 
-  create_table "users_roles", force: true do |t|
+  create_table "users_roles", id: false, force: true do |t|
     t.integer "user_id"
     t.integer "role_id"
   end
