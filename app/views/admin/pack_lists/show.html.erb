@@ -7,7 +7,7 @@
         mkt = order.market.decorate
         @orig = "#{current_market.addresses[0].geocode.latitude},#{current_market.addresses[0].geocode.longitude}"
         @dest = @orig
-        if FeatureAccess.routing_plan?(market: current_market) && !order.delivery.delivery_schedule.buyer_pickup?
+        if policy(:routing_plan).index? && !order.delivery.delivery_schedule.buyer_pickup?
             if !order.delivery_lat_long.nil?
               @wp = @wp + "#{order.delivery_lat_long}|"
             end
@@ -146,7 +146,7 @@
 <% end %>
   <div class="pdf-page-break"></div>
 
-  <% if FeatureAccess.routing_plan?(market: current_market) && !@orig.nil? && !@dest.nil? %>
+  <% if policy(:routing_plan).index? && !@orig.nil? && !@dest.nil? %>
     <h1>Routing Plan</h1>
     <div id="path" class="pathdata"></div>
     <div id="map-container">
