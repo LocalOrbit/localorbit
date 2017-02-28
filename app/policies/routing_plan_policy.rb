@@ -1,0 +1,3 @@
+class RoutingPlanPolicy < ApplicationPolicy
+
+end
