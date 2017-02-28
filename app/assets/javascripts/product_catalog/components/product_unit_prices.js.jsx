@@ -68,12 +68,18 @@
     render: function() {
       var qty;
       var pid = ('');
+      var unit_desc;
       var pricing;
 
       if(this.props.purchaseOrder)
         pricing = ''
       else
         pricing = (this.props.product.prices.length <= 3 || this.state.showAll) ? this.fullPricing() : this.abbreviatedPricing();
+
+      if(this.props.purchaseOrder)
+        unit_desc = (this.props.product.unit_description);
+      else
+        unit_desc = (<span><a href={"/products/" + this.props.product.id}>{this.props.product.unit_description}</a><br/><span style={{fontSize:"11px", color:"#737373"}}>quantity</span></span>);
 
       var quantity = this.props.product.max_available < 500000 ? this.props.product.max_available + " Available" : "";
       var deleteButton = this.state.cartItemQuantity > 0 ? (<a href="javascript:void(0)" onClick={this.deleteQuantity} className="font-icon icon-clear" style={{marginLeft: "10px"}}></a>) : null;
@@ -91,8 +97,7 @@
       return (
         <tr className="cart_item" data-keep-when-zero="yes" data-cart-item={JSON.stringify(this.props.product.cart_item)}>
           <th>
-            <a href={"/products/" + this.props.product.id}>{this.props.product.unit_description}</a><br/>
-            <span style={{fontSize:"11px", color:"#737373"}}>{this.props.purchaseOrder ? '' : quantity};</span>
+            {unit_desc}
           </th>
           <td>
             <table>
