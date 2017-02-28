@@ -156,7 +156,7 @@ class Organization < ActiveRecord::Base
   def primary_payment_provider
     if m = markets.first
       m.primary_payment_provider
-    elsif market.is_consignment_market?
+    elsif market.try(:is_consignment_market?)
       market.primary_payment_provider
     else
       nil

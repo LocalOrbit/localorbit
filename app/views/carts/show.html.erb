@@ -1,7 +1,7 @@
 <div class="cart-page">
   <h1 class="heading-cart"><i class="font-icon icon-cart"></i> Cart</h1>
   <%= form_for :order, url: [:orders], html: {id: "order-form"} do |f| %>
-    <%= f.hidden_field 'order_type', value: @order_type %>
+    <%= f.hidden_field 'order_type', value: (@order_type || 'sales') %>
     <%= render "shared/errors", {resource: @order} if @order %>
     <% if flash[:error] %>
       <div class="flash flash--warning">
@@ -12,7 +12,7 @@
       <div class="column column--half column--guttered">
         <div class="cart_items" data-cart-url="<%= cart_path %>">
           <table class="cart">
-          <%= render partial: @order_type+'_order' %>
+          <%= render partial: (@order_type || 'sales')+'_order' %>
           </table>
           <% if policy(:template).index? %>
             <p class="pull-right"><a href="/templates/new" class="app-create-template-link">Create an order template from this cart</a></p>
