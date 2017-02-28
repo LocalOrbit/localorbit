@@ -106,7 +106,7 @@
 
       var isMobile = self.state.width <= MOBILE_WIDTH;
       var promo = null;
-      if (this.state.featuredPromotion && this.state.featuredPromotion.details != null && !this.props.supplierOnly) {
+      if (this.state.featuredPromotion && this.state.featuredPromotion.details != null && !this.props.supplierOnly && !this.props.purchaseOrder) {
           promo = (<lo.ProductFeaturedPromotion hideImages={this.state.hideImages} promo={self.state.featuredPromotion} />)
       }
       var rows = self.state.products.map(function(product) {
