@@ -224,7 +224,7 @@ class User < ActiveRecord::Base
   end
 
   def can_manage_user?(user)
-    admin? || user.organizations_including_suspended.any? {|org| can_manage_organization?(org) }
+    admin? || user.market_manager? || user.organizations_including_suspended.any? {|org| can_manage_organization?(org) }
   end
 
   def enabled_for_organization?(org)
