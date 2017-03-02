@@ -16,6 +16,7 @@ class BuyerOrder
     :gross_total,
     :sellers,
     :qb_ref_id,
+    :order_type,
     :sales_order?,
     :purchase_order?,
     to: :@order
