@@ -290,7 +290,7 @@
       <%= f.submit "Add Items", class: 'pull-right btn btn--small mobile-block' %>
     <% end %>
   </div>
-  <% if !current_user.buyer_only? && FeatureAccess.not_LE_market_manager?(user: current_user, market: current_market) %>
+  <% if !current_user.buyer_only? && FeatureAccess.not_LE_market_manager?(user: current_user, market: current_market) && order.sales_order? %>
   <div class="order-totals">
     <div class="table-wrapper">
       <h2>Order Totals</h2>
@@ -390,7 +390,7 @@
   <% end %>
 </div>
 
-<% if FeatureAccess.order_printables?(user: current_user, order: order) %>
+<% if FeatureAccess.order_printables?(user: current_user, order: order) && order.sales_order? %>
   <%= render :partial=>"table_tents_and_posters/ad", locals: { order: order } %>
 <% end %>
 
