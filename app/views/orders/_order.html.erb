@@ -2,14 +2,13 @@
   <div class="row">
     <div class="column column--half column--guttered">
       <table class="cart">
-      <%= render partial: @order.order_type+'_order' %>
+      <%= render partial: "#{@order.order_type}_order" %>
       </table>
     </div
     ><div class="column column--half column--guttered">
       <div id="additional-information">
         <div class="">
-          <% # KXM GC: Create purchase_order_path(@order) route and branch here %>
-          <%= link_to "Review Order", @order.order_type+'_order_path'(@order), class: "review-order" %> &nbsp;
+          <%= link_to "Review Order", send("#{@order.order_type}_order_path",@order), class: "review-order" %> &nbsp;
           <button class="btn btn--small btn--primary print-button order-print" id="print-button">Print Order Confirmation</button>
         </div>
 
