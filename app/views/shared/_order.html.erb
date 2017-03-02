@@ -181,8 +181,10 @@
           <th>Product Name</th>
           <th>Quantity</th>
           <th>Product Code</th>
+          <% if order.sales_order? %>
           <th>Price</th>
           <th>Total</th>
+          <% end %>
           <th>Delivery</th>
           <th>Buyer Payment</th>
           <% if !current_user.buyer_only? && policy(:all_supplier).index? %>
@@ -222,11 +224,13 @@
               -
             <% end %>
           </td>
+          <% if order.sales_order? %>
           <td class="price"> <% if FeatureAccess.not_LE_market_manager?(user:current_user, market: current_market) && FeatureAccess.can_edit_order?(user: current_user, order: order) and order.payment_status == "unpaid" %>
            <%= link_to "#{number_to_currency item.object.unit_price}", "/admin/orders/#{order.id}/order_items/#{item.object.id}", class: 'edit-toggle' %><% else %> <%= number_to_currency item.object.unit_price %>
             <% end %>
           </td>
           <td class="total"><%= number_to_currency item.object.gross_total %></td>
+          <% end %>
           <td class="delivery-status">
             <%= item.hidden_field :delivery_status %>
             <%= item.object.delivery_status.titleize %>
@@ -248,7 +252,7 @@
         <% end %>
       </tbody>
       </table>
-      <% if can_add_products_to_order?(order, user_order_context) && @show_add_items_form
+      <% if can_add_products_to_order?(order, user_order_context) && !order.purchase_order? && @show_add_items_form
           session[:current_delivery_id] = order.delivery.id
           session[:current_organization_id] = order.organization.id
           %>
@@ -282,7 +286,7 @@
       <br/><br/>
       <%= f.submit @show_add_items_form ? "Add items and Update quantities" : "Update quantities", id: 'submit-add-items', class: 'pull-right btn btn--small mobile-block' %>
     <% end %>
-    <% if can_add_products_to_order?(order, user_order_context) && !@show_add_items_form %>
+    <% if can_add_products_to_order?(order, user_order_context) && !order.purchase_order? && !@show_add_items_form %>
       <%= f.submit "Add Items", class: 'pull-right btn btn--small mobile-block' %>
     <% end %>
   </div>
