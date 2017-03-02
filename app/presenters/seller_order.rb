@@ -11,6 +11,8 @@ class SellerOrder
     :credit,
     :sellers,
     :errors,
+    :sales_order?,
+    :purchase_order?,
     to: :@order
 
   attr_reader :seller

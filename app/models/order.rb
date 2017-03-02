@@ -488,6 +488,14 @@ class Order < ActiveRecord::Base
     save!
   end
 
+  def sales_order?
+    order_type == 'sales'
+  end
+
+  def purchase_order?
+    order_type == 'purchase'
+  end
+
   private
 
   def update_paid_at
