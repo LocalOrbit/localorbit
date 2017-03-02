@@ -135,7 +135,8 @@ Rails.application.routes.draw do
     get "purchase_orders" => "orders#purchase_orders"
     resources :purchase_orders, only: [:show], :path => "purchase_order", :as => "purchase_order", :controller => 'orders'
 
-    resources :sales_orders, only: [:index, :show, :update, :create], :path => "sales_order", :as => "sales_order", :controller => 'orders'
+    get "/sales_orders" => "orders#index", :path => "sales_orders", :as => "sales_orders"
+    resources :sales_orders, only: [:show, :update, :create], :path => "sales_order", :as => "sales_order", :controller => 'orders'
 
     resources :organizations, concerns: [:bank_account, :activatable] do
       resources :organization_users, as: :users, path: :users do
@@ -286,7 +287,9 @@ Rails.application.routes.draw do
 
   get "/purchase_orders" => "orders#purchase_orders"
   resources :purchase_orders, only: [:show], :path => "purchase_order", :as => "purchase_order", :controller => 'orders'
-  resources :sales_orders,    only: [:show], :path => "sales_order",    :as => "sales_order",    :controller => 'orders'
+
+  get "/sales_orders" => "orders#index", :path => "sales_orders", :as => "sales_orders"
+  resources :sales_orders, only: [:show, :update, :create], :path => "sales_order", :as => "sales_order", :controller => 'orders'
 
   resource :registration, only: [:show, :create]
 
