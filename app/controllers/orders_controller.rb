@@ -11,7 +11,6 @@ class OrdersController < ApplicationController
   before_action :find_sticky_params, only: [:index, :purchase_orders]
 
   def index
-    # KXM GC: Need a migration to set null order_type to 'sales'
     po_filter = {:q => {"order_type_matches" => 'sales'}}
     @query_params.merge!(po_filter)
 

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170223150136) do
+ActiveRecord::Schema.define(version: 20170302004407) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -36,7 +36,6 @@ ActiveRecord::Schema.define(version: 20170223150136) do
     t.string   "masquerader_username"
   end
 
-  add_index "audits", ["action", "associated_type"], name: "action_associated_type", using: :btree
   add_index "audits", ["associated_id", "associated_type"], name: "associated_index", using: :btree
   add_index "audits", ["auditable_id", "auditable_type"], name: "auditable_index", using: :btree
   add_index "audits", ["created_at"], name: "index_audits_on_created_at", using: :btree
@@ -704,7 +703,7 @@ ActiveRecord::Schema.define(version: 20170223150136) do
     t.string   "payment_provider"
     t.decimal  "market_seller_fee_pct",     precision: 5,  scale: 3
     t.integer  "qb_ref_id"
-    t.string   "order_type"
+    t.string   "order_type",                                         default: "sales", null: false
     t.string   "payment_model"
     t.boolean  "sold_through"
   end
