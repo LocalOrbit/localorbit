@@ -184,7 +184,9 @@
     resize: none;
   }
 }
-
+.delivery_sig {
+  display: none;
+}
 @media screen and (max-width: $mobile_break) {
   .order-notes {
     width: 100%;
@@ -192,5 +194,13 @@
   .review-order {
     margin-bottom: 15px;
     display: inline-block;
+  }
+  .delivery_sig {
+    display: inherit;
+  }
+  .signature {
+    border: 1px solid #DDDDDD;
+    padding: 3px;
+    margin: 5px;
   }
 }

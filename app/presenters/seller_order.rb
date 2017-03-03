@@ -11,6 +11,7 @@ class SellerOrder
     :credit,
     :sellers,
     :errors,
+    :signature_data,
     to: :@order
 
   attr_reader :seller

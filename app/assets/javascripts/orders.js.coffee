@@ -1,4 +1,7 @@
 $ ->
+
+  $("#signature").jSignature()
+
   $("input.check-all").change ->
     $("input[name='item_ids[]']").prop("checked", $(this).prop("checked"))
 
@@ -54,11 +57,24 @@ $ ->
     $(".button-bar").show()
 
   $("#duplicate_button").click (e) ->
+    e.preventDefault()
     $(this).parent().find("input").val("Duplicate Order")
     $(this).closest("form").submit()
     $(this).prop("disabled","disabled")
 
   $("#export_button").click (e) ->
+    e.preventDefault()
     $(this).parent().find("input").val("Export Invoice")
     $(this).closest("form").submit()
     $(this).prop("disabled","disabled")
+
+  $("#save_sig").click (e) ->
+    e.preventDefault()
+    datapair = $("#signature").jSignature("getData","base30")
+    $("input[name='order[signature_data]']").val(datapair[1])
+    $(this).closest("form").submit()
+    $(this).prop("disabled","disabled")
+
+  $("#clear_sig").click (e) ->
+    e.preventDefault()
+    datapair = $("#signature").jSignature("clear")
