@@ -5,10 +5,6 @@ class FeatureAccess
       market.stripe_standalone
     end
 
-    def routing_plan?(market:)
-      market.routing_plan
-    end
-
     def order_templates?(market:)
       market.organization.plan.name == "LocalEyes"
     end
@@ -70,10 +66,6 @@ class FeatureAccess
 
     def has_procurement_managers?(market:)
       !!market.organization.plan.try(:has_procurement_managers?)
-    end
-
-    def product_level_fee?(market:)
-      !!market.try(:allow_product_fee?)
     end
 
     private

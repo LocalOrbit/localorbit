@@ -246,6 +246,23 @@
         <% end %>
       </tbody>
       </table>
+      <% if current_market.is_consignment_market? %>
+      <div class="delivery_sig">
+        <br/>
+        <h2>Delivery Signature:</h2>
+        <% if order.signature_data.nil? && order.delivery_status_for_user(current_user) == "pending" %>
+          <div id="signature" class="signature"></div>
+            <button id="save_sig" name="Save Signature">Save Signature</button>
+            <button id="clear_sig" name="Clear Signature">Clear Signature</button>
+        <% else %>
+            <div style="padding: 5px">
+              <%= JSignatureBase30.new(order.signature_data).to_svg.html_safe %>
+            </div>
+        <% end %>
+        <%= f.hidden_field :signature_data %>
+        <input type="hidden" name="commit" />
+      </div>
+      <% end %>
       <% if can_add_products_to_order?(order, user_order_context) && @show_add_items_form
           session[:current_delivery_id] = order.delivery.id
           session[:current_organization_id] = order.organization.id

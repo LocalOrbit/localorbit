@@ -1,0 +1,3 @@
+class ProductFeesPolicy < ApplicationPolicy
+
+end

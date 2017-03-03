@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170223150136) do
+ActiveRecord::Schema.define(version: 20170302235555) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -704,9 +704,10 @@ ActiveRecord::Schema.define(version: 20170223150136) do
     t.string   "payment_provider"
     t.decimal  "market_seller_fee_pct",     precision: 5,  scale: 3
     t.integer  "qb_ref_id"
-    t.string   "order_type"
+    t.string   "order_type",                                         default: "sales", null: false
     t.string   "payment_model"
     t.boolean  "sold_through"
+    t.text     "signature_data"
   end
 
   add_index "orders", ["delivery_id"], name: "index_orders_on_delivery_id", using: :btree
@@ -938,11 +939,14 @@ ActiveRecord::Schema.define(version: 20170223150136) do
   end
 
   create_table "role_actions", force: true do |t|
-    t.string "description"
-    t.string "org_types",   default: [], array: true
-    t.string "section"
-    t.string "action"
-    t.string "plan_ids",    default: [], array: true
+    t.string  "description"
+    t.string  "org_types",   default: [],   array: true
+    t.string  "section"
+    t.string  "action"
+    t.string  "plan_ids",    default: [],   array: true
+    t.boolean "published",   default: true
+    t.string  "help_text"
+    t.string  "grouping"
   end
 
   create_table "roles", force: true do |t|
