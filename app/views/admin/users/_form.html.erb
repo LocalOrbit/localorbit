@@ -29,13 +29,12 @@
     </div>
   </div>
 
-  <% if current_user.admin? %>
+  <% if @user.primary_user_role == "M" || current_user.admin? %>
   <div class="row row--field">
     <%= f.label :role_id, 'Permission Set' %>
-    <%= f.select :role_id, !@roles.nil? ? @roles.collect { |p| [ p.name, p.id ] } : '', {include_blank: "Select Role Set", :selected => !@user.roles.empty? ? @user.roles.first.id : ''}, class: "column--full" %>
+    <%= f.select :role_id, !@roles.nil? ? @roles.collect { |p| [ p.name + p.role_org, p.id ] } : '', {include_blank: "Select Role Set", :selected => !@user.roles.empty? ? @user.roles.first.id : ''}, class: "column--full" %>
   </div>
   <% end %>
-    
     <div class="table-wrapper">
     <table class="sortable">
       <thead>

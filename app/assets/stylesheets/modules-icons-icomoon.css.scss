@@ -108,7 +108,9 @@ h1 .font-icon {
 .icon-checkbox-checked:before {
   content: "\e034";
 }
-
+.icon-role:before {
+  content: "\e011";
+}
 /* Use the following CSS code if you want to have a class per icon */
 /*
 Instead of a list of all class selectors,

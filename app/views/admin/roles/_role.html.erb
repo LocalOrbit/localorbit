@@ -1,4 +1,10 @@
 <tr>
   <td class="name"><%= link_to role.name, [:admin, role] %></td>
+  <td>
+    <%  users = role.users
+        users.each do |u| %>
+          <%=u.name %><br/>
+        <% end %>
+  </td>
 </tr>
 
