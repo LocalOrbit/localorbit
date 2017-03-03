@@ -250,7 +250,7 @@
       <div class="delivery_sig">
         <br/>
         <h2>Delivery Signature:</h2>
-        <% if order.signature_data.nil? && order.delivery_status == "pending" %>
+        <% if order.signature_data.nil? && order.delivery_status_for_user(current_user) == "pending" %>
           <div id="signature" class="signature"></div>
             <button id="save_sig" name="Save Signature">Save Signature</button>
             <button id="clear_sig" name="Clear Signature">Clear Signature</button>

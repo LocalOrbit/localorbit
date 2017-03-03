@@ -204,3 +204,17 @@
     margin: 5px;
   }
 }
+
+@media only screen
+and (min-device-width : 768px)
+and (max-device-width : 1024px)  { /* STYLES GO HERE */
+
+  .delivery_sig {
+    display: inherit;
+  }
+  .signature {
+      border: 1px solid #DDDDDD;
+      padding: 3px;
+      margin: 5px;
+  }
+}
