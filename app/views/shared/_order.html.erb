@@ -12,6 +12,7 @@
       <div class="order-info-date">Placed On: <strong><%= order.placed_at.strftime "%m/%d/%Y at %l:%M%p" %></strong></div>
     </div>
     <div class="button-bar" style="float: right">
+      <input type="hidden" name="commit" />
       <ul>
         <% if policy(:merge_order).index? && order.delivery_status_for_user(current_user) != 'canceled' %>
         <li>
@@ -20,14 +21,20 @@
         <% end %>
         <% if policy(:dup_order).index? && order.delivery_status_for_user(current_user) != 'canceled' %>
         <li>
-          <button id="duplicate_button" type="submit">Duplicate Order</button>
-          <input type="hidden" name="commit" />
+          <button id="duplicate_button" name="Duplicate Order">Duplicate Order</button>
         </li>
         <% end %>
-        <% if policy(:market_quickbooks).index? && order.delivery_status_for_user(current_user) == 'delivered' && order.qb_ref_id.nil? %>
+        <% if policy(:market_quickbooks).index? && order.order_type == "sales" && order.payment_status == 'unpaid' && order.delivery_status_for_user(current_user) == 'delivered' && order.qb_ref_id.nil? %>
         <li>
-          <button id="export_button" name="Export Invoice">Export Invoice to QB</button>
-          <input type="hidden" name="commit" />
+          <button id="export_invoice_button" name="Export Invoice">Export Invoice to QB</button>
+        </li>
+        <% elsif policy(:market_quickbooks).index? && order.order_type == "purchase" && order.payment_status == 'unpaid' && order.delivery_status_for_user(current_user) == 'delivered' && order.qb_ref_id.nil? %>
+        <li>
+          <button id="export_bill_button" name="Export Bill">Export Bill to QB</button>
+        </li>
+        <% elsif policy(:market_quickbooks).index? && order.payment_status == 'exported' && !order.qb_ref_id.nil? %>
+        <li>
+          <button id="unclose_order" name="Unclose Order">Unclose Order</button>
         </li>
         <% end %>
       </ul>
@@ -254,13 +261,12 @@
           <div id="signature" class="signature"></div>
             <button id="save_sig" name="Save Signature">Save Signature</button>
             <button id="clear_sig" name="Clear Signature">Clear Signature</button>
-        <% else %>
+        <% elsif !order.signature_data.nil? %>
             <div style="padding: 5px">
               <%= JSignatureBase30.new(order.signature_data).to_svg.html_safe %>
             </div>
         <% end %>
         <%= f.hidden_field :signature_data %>
-        <input type="hidden" name="commit" />
       </div>
       <% end %>
       <% if can_add_products_to_order?(order, user_order_context) && @show_add_items_form
