@@ -21,7 +21,7 @@
       <% @role_actions.each do |r| %>
       <tr>
         <td>
-          <input type="checkbox" name="role[activities][]" value="<%=r.id%>" <%= !@act.nil? && @act.map(&:id).include?(r.id) ? 'checked' : '' %> />
+          <input type="checkbox" name="role[activities][]" id="<%= r.section + '-perm' %>" value="<%=r.id%>" <%= !@act.nil? && @act.map(&:id).include?(r.id) ? 'checked' : '' %> />
         </td>
         <td>
           <%= r.section.titleize %>

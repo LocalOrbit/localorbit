@@ -548,6 +548,15 @@ module Dom
       end
     end
 
+    class RoleRow < Domino
+      include Dom::Deletable
+
+      selector ".role-row"
+
+      attribute :name
+
+    end
+
     class MarketRow < Domino
       selector ".market-org-list tbody tr"
 
