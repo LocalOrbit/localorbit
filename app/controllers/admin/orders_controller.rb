@@ -58,7 +58,20 @@ class Admin::OrdersController < AdminController
         params["order_id"].each do |o|
           order = Order.find(o)
           if order.delivery_status_for_user(current_user) == 'delivered' && order.qb_ref_id.nil?
-            export_invoice(order, true)
+            if order.order_type == "purchase"
+              export_bill(order, true)
+            else
+              export_invoice(order, true)
+            end
+          end
+        end
+        redirect_to admin_orders_path, notice: 'Orders Processed.'
+
+      when "unclose"
+        params["order_id"].each do |o|
+          order = Order.find(o)
+          if order.delivery_status_for_user(current_user) == 'exported' && !order.qb_ref_id.nil?
+            unclose_order(order, true)
           end
         end
         redirect_to admin_orders_path, notice: 'Orders Processed.'
@@ -106,6 +119,12 @@ class Admin::OrdersController < AdminController
       return
     elsif params[:commit] == "Export Invoice"
       export_invoice(order)
+      return
+    elsif params[:commit] == "Export Bill"
+      export_bill(order)
+      return
+    elsif params[:commit] == "Unclose Order"
+      unclose_order(order)
       return
     elsif params["order"][:delivery_clear] == "true"
       remove_delivery_fee(order)
@@ -156,6 +175,28 @@ class Admin::OrdersController < AdminController
         redirect_to admin_order_path(order), notice: "Invoice Exported to QB."
       else
         redirect_to admin_order_path(order), error: "Failed to Export Invoice."
+      end
+    end
+  end
+
+  def export_bill(order, batch = nil)
+    result = ExportBillToQb.perform(order: order, curr_market: current_market, session: session)
+    if batch.nil?
+      if result.success?
+        redirect_to admin_order_path(order), notice: "Bill Exported to QB."
+      else
+        redirect_to admin_order_path(order), error: "Failed to Export Bill."
+      end
+    end
+  end
+
+  def unclose_order(order, batch = nil)
+    result = UncloseOrder.perform(order: order)
+    if batch.nil?
+      if result.success?
+        redirect_to admin_order_path(order), notice: "Order Unclosed."
+      else
+        redirect_to admin_order_path(order), error: "Failed to Unclose Order."
       end
     end
   end
