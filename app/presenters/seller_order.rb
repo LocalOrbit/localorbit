@@ -11,7 +11,9 @@ class SellerOrder
     :credit,
     :sellers,
     :errors,
+    :qb_ref_id,
     :signature_data,
+    :order_type,
     to: :@order
 
   attr_reader :seller
