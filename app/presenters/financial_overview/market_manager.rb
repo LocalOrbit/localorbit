@@ -49,12 +49,12 @@ module FinancialOverview
     private
 
     def sum_order_total(orders)
-      orders.map(&:total_cost).reduce(:+) || 0
+      orders.map(&:total_cost).compact.reduce(:+) || 0
     end
 
     def sum_money_to_sellers(orders)
       orders.inject(0) do |total, order|
-        total + order.items.map(&:seller_net_total).reduce(:+)
+        total + order.items.map(&:seller_net_total).compact.reduce(:+)
       end
     end
 
