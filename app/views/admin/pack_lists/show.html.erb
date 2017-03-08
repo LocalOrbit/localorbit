@@ -1,19 +1,17 @@
 <%= link_to "< Back to Upcoming Deliveries", admin_delivery_tools_path, class: 'back-button' %>
 <button class="btn btn--primary btn--small pull-right print-button" id="print-button">Print</button>
 <div class="print-page">
-<% @orders.decorate.each_with_index do |order, index|
-      mkt = order.market.decorate
-      @wp = ""
-      if FeatureAccess.routing_plan?(market: current_market) && !order.delivery.delivery_schedule.buyer_pickup?
-          if index == 0
-            @orig = "#{current_market.addresses[0].geocode.latitude},#{current_market.addresses[0].geocode.longitude}"
-            #@dest = "#{order.delivery_lat_long}"
-            @dest = @orig
-          end
-          if !order.delivery_lat_long.nil?
-            @wp = @wp + "#{order.delivery_lat_long}|"
-          end
-      end
+
+  <%  @wp = ""
+      @orders.decorate.each_with_index do |order, index|
+        mkt = order.market.decorate
+        @orig = "#{current_market.addresses[0].geocode.latitude},#{current_market.addresses[0].geocode.longitude}"
+        @dest = @orig
+        if policy(:routing_plan).index? && !order.delivery.delivery_schedule.buyer_pickup?
+            if !order.delivery_lat_long.nil?
+              @wp = @wp + "#{order.delivery_lat_long}|"
+            end
+        end
   %>
   <% if index != 0 %>
     <div class="pdf-page-break"></div>
@@ -148,7 +146,7 @@
 <% end %>
   <div class="pdf-page-break"></div>
 
-  <% if FeatureAccess.routing_plan?(market: current_market) && !@orig.nil? && !@dest.nil? %>
+  <% if policy(:routing_plan).index? && !@orig.nil? && !@dest.nil? %>
     <h1>Routing Plan</h1>
     <div id="path" class="pathdata"></div>
     <div id="map-container">

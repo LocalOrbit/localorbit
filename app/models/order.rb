@@ -17,7 +17,8 @@ class Order < ActiveRecord::Base
   }.freeze
 
   BATCH_ACTIONS = {
-      "export" => "Export"
+      "export" => "Export",
+      "unclose" => "Unclose"
   }.freeze
 
   paginates_per 50

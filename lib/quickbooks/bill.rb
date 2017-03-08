@@ -4,11 +4,11 @@ module Quickbooks
       def create_bill (order, session, config)
 
         # Create buyer org if necessary
-        if order.organization.qb_org_id.nil?
+        if order.products.first.organization.qb_org_id.nil?
           retry_cnt = 0
           loop do
             begin
-              org = order.organization
+              org = order.products.first.organization
               result = Quickbooks::Vendor.create_vendor(org, session)
               org.qb_org_id = result.id
               org.save!(validate: false)
@@ -23,7 +23,7 @@ module Quickbooks
         end
 
         bill = Quickbooks::Model::Bill.new
-        bill.vendor_id = order.organization.qb_org_id
+        bill.vendor_id = order.products.first.organization.qb_org_id
         bill.txn_date = Date
         bill.doc_number = order.order_number
 
@@ -56,10 +56,10 @@ module Quickbooks
             line_item = Quickbooks::Model::BillLineItem.new
             line_item.amount = item.unit_price * item.quantity
             line_item.description = item.name
-            line_item.sales_item! do |detail|
+            line_item.item_based_expense_item! do |detail|
               detail.unit_price = item.unit_price
               detail.quantity = item.quantity
-              detail.item_id = order.item.qb_item_id # Item ID here
+              detail.item_id = item.product.qb_item_id # Item ID here
             end
             bill.line_items << line_item
           end
