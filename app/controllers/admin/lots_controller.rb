@@ -58,7 +58,9 @@ class Admin::LotsController < AdminController
     if @product.use_simple_inventory
       lot_number = params[:number] && params[:number] != ""
       expires_at = params[:expires_at] && params[:expires_at] != ""
-      if has_multiple_lots || lot_number || expires_at
+      market = params[:market_id] && !params[:market_id].empty?
+      buyer = params[:organization_id] && !params[:organization_id].empty?
+      if has_multiple_lots || lot_number || expires_at || market || buyer
         @product.update(use_simple_inventory: false)
       end
     end
