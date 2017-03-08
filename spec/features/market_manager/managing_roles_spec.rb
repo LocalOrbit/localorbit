@@ -5,7 +5,7 @@ describe "Managing roles" do
 
   let!(:role) { create(:role, name: "Test Role", activities:["dashboard:index"], organization_id: market.id) }
 
-  context "as a market manager" do
+  context "as a market manager", :js do
     let(:user) { create(:user, :market_manager, managed_markets: [market]) }
 
     before do
@@ -53,32 +53,31 @@ describe "Managing roles" do
         end
       end
 
-      context "update a role" do
-        it "accepts valid input" do
-          click_link role.name
+      it "accepts valid input" do
+        click_link role.name
 
-          fill_in "Name", with: "Changed Role"
+        fill_in "Name", with: "Changed Role"
 
-          click_button "Save Role"
+        click_button "Save Role"
 
-          expect(page).to have_content("Successfully updated role")
+        expect(page).to have_content("Successfully updated role")
 
-          roles = Dom::Admin::RoleRow.all
-          expect(roles.count).to eql(1)
-          expect(roles.map(&:name)).to include("Changed Role")
-        end
-
-        it "displays errors for invalid input" do
-          click_link role.name
-
-          fill_in "Name", with: ""
-
-          click_button "Save Role"
-
-          expect(page).to_not have_content("Successfully updated role")
-          expect(page).to have_content("Unable to update role")
-        end
+        roles = Dom::Admin::RoleRow.all
+        expect(roles.count).to eql(1)
+        expect(roles.map(&:name)).to include("Changed Role")
       end
+
+      it "displays errors for invalid input" do
+        click_link role.name
+
+        fill_in "Name", with: ""
+
+        click_button "Save Role"
+
+        expect(page).to_not have_content("Successfully updated role")
+        expect(page).to have_content("Unable to update role")
+      end
+
     end
   end
 end
