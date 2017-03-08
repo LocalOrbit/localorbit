@@ -51,7 +51,12 @@ module FinancialOverview
 
     def sum_seller_items(orders)
       orders.inject(0) do |total, order|
-        total + order.items.for_user(@user).map(&@calculation_method).compact.reduce(:+)
+        cm = order.items.for_user(@user).map(&@calculation_method).reduce(:+)
+        if !cm.nil?
+          total + cm
+        else
+          total + 0
+        end
       end
     end
   end
