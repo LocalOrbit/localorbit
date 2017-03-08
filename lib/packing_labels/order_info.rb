@@ -29,8 +29,8 @@ module PackingLabels
 
       def make_product_info(order_item)
         lot_desc = nil
-        if !order_item.lots.nil? && !order_item.product.use_simple_inventory
-          lot_desc = "Lot #: " + order_item.lots.collect(&:number).join(', ')
+        if order_item.lots.count > 0 && !order_item.product.use_simple_inventory
+          lot_desc = "Lot #" + order_item.lots.collect(&:number).join(', ')
         end
         product_info = {
           product_name: order_item.name,
