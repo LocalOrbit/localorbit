@@ -8,7 +8,7 @@
   <hr/>
   <div style="display: inline-block; width: 100%">
     <div style="float: left">
-      <h1>Order info for <%= order.order_number %></h1>
+      <h1>Order info for <%= order.purchase_order? ? "Purchase Order " : "" %><%= order.order_number %></h1>
       <div class="order-info-date">Placed On: <strong><%= order.placed_at.strftime "%m/%d/%Y at %l:%M%p" %></strong></div>
     </div>
     <div class="button-bar" style="float: right">
