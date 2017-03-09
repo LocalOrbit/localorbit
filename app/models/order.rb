@@ -348,17 +348,12 @@ class Order < ActiveRecord::Base
   def add_cart_items(cart_items, deliver_on)
     cart_items.each do |cart_item|
       add_cart_item(cart_item, deliver_on)
-      upsert_consignment_product(cart_item) if self.purchase_order?
     end
   end
 
   def add_cart_item(cart_item, deliver_on)
     category_fee_pct = cart_item.product.category.level_fee(self.market.id)
     items << OrderItem.create_with_order_and_item_and_deliver_on_date(self, cart_item, deliver_on, category_fee_pct)
-  end
-
-  def upsert_consignment_product(cart_item)
-    ConsignmentProduct.upsert(self, cart_item)
   end
 
   def delivered_at
