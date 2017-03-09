@@ -10,27 +10,31 @@
       </div>
     </fieldset>
 
-    <fieldset class="role-info">
-      <div class="field">
-        <br>
-        <%= f.collection_check_boxes(:activities, @role_actions, :id, :section, {:checked => !@act.nil? ? @act.map(&:id) : ''}) do |cb| %>
-          <div class="row">
-          <%= cb.label(class: "check_box") do %>
-            <div style="float: left">
-              <%= cb.check_box(class: "check_box") %>
-            </div>
-
-            <div style="float: left">
-              <%= cb.text.humanize %>
-            </div>
-        <% end %>
-      </div>
-<% end %>
-      </div>
-    </fieldset>
+    <table>
+      <thead>
+        <tr>
+          <th><input type="checkbox" class="select-all"></th>
+          <th>Permission</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <% @role_actions.each do |r| %>
+      <tr>
+        <td>
+          <input type="checkbox" name="role[activities][]" id="<%= r.section + '-perm' %>" value="<%=r.id%>" <%= !@act.nil? && @act.map(&:id).include?(r.id) ? 'checked' : '' %> />
+        </td>
+        <td>
+          <%= r.section.titleize %>
+        </td>
+        <td>
+          <%= r.help_text %>
+        </td>
+      </tr>
+      <% end %>
+    </table>
 
     <div class="field form-actions">
-      <%= link_to "Cancel", (@role.new_record? ? admin_roles_path : admin_role_path(@role)), class: "btn cancel org-cancel" %>
+      <%= link_to "Cancel", admin_roles_path, class: "btn cancel org-cancel" %>
       <%= f.submit "#{@role.new_record? ? 'Add' : 'Save'} Role" %>
     </div>
 <% end %>

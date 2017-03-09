@@ -48,6 +48,7 @@
 //= require plugins/tables.min.js
 //= require plugins/urls.min.js
 //= require s3_direct_upload
+//= require jSignature.min.js
 
 //
 //= require_tree .

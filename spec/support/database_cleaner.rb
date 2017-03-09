@@ -4,11 +4,11 @@ RSpec.configure do |config|
   end
 
   config.before(:each, js: true) do
-    DatabaseCleaner.strategy = :truncation, {except: %w(categories)}
+    DatabaseCleaner.strategy = :truncation, {except: %w(categories role_actions)}
   end
 
   config.before(:each, truncate: true) do
-    DatabaseCleaner.strategy = :truncation, {except: %w(categories)}
+    DatabaseCleaner.strategy = :truncation, {except: %w(categories role_actions)}
   end
 
   config.before(:each) do
@@ -20,6 +20,6 @@ RSpec.configure do |config|
   end
 
   config.after(:all, truncate_after_all: true) do
-    DatabaseCleaner.clean_with(:truncation, except: %w(categories))
+    DatabaseCleaner.clean_with(:truncation, except: %w(categories role_actions))
   end
 end

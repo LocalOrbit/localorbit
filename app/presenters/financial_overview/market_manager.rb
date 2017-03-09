@@ -49,18 +49,28 @@ module FinancialOverview
     private
 
     def sum_order_total(orders)
-      orders.map(&:total_cost).reduce(:+) || 0
+      orders.map(&:total_cost).compact.reduce(:+) || 0
     end
 
     def sum_money_to_sellers(orders)
       orders.inject(0) do |total, order|
-        total + order.items.map(&:seller_net_total).reduce(:+)
+        snt = order.items.map(&:seller_net_total).reduce(:+)
+        if !snt.nil?
+          total + snt
+        else
+          total + 0
+        end
       end
     end
 
     def sum_local_orbit_fees(orders)
       orders.inject(0) do |total, order|
-        total + order.items.sum(:local_orbit_market_fee)
+        lomf = order.items.sum(:local_orbit_market_fee)
+        if !lomf.nil?
+          total + lomf
+        else
+          total + 0
+        end
       end
     end
   end
