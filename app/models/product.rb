@@ -40,6 +40,13 @@ class Product < ActiveRecord::Base
   has_many :cross_selling_list_products
   has_many :cross_selling_lists, through: :cross_selling_list_products
 
+  has_many :consignment_products
+  has_many :child_products, through: :consignment_products, source: :consignment_product
+  has_one  :consignment_product, foreign_key: :consignment_product_id
+  has_one  :parent_product, through: :consignment_product, source: :product
+
+  # p.parent_product.orders.includes(:items).po.not_sold_through.map{|o| [o.id, o.items.where('product_id = ?', p.parent_product.id).map{|i| i.quantity}]}
+
   dragonfly_accessor :image do
     copy_to(:thumb){|a| a.thumb('150x150#') }
   end

@@ -17,7 +17,11 @@ module Admin
     end
 
     def edit
-      @roles = Role.all.order(:name)
+      if current_user.admin?
+        @roles = Role.all.order(:name)
+      else
+        @roles = Role.where(organization_id: current_market.organization.id).order(:name)
+      end
     end
 
     def update

@@ -1,4 +1,4 @@
-<% if resource.errors.full_messages.present? %>
+<% !resource.nil? && if resource.errors.full_messages.present? %>
 <ul class="form-errors">
   <% resource.errors.full_messages.each do |err| %>
     <li><%= err %></li>

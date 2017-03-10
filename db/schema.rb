@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170302004407) do
+ActiveRecord::Schema.define(version: 20170307220222) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -147,6 +147,14 @@ ActiveRecord::Schema.define(version: 20170302004407) do
     t.integer  "category_id"
     t.integer  "market_id"
     t.decimal  "fee_pct",     precision: 5, scale: 3
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "consignment_products", force: true do |t|
+    t.integer  "product_id",                  null: false
+    t.integer  "consignment_product_id",      null: false
+    t.integer  "consignment_organization_id", null: false
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -714,6 +722,7 @@ ActiveRecord::Schema.define(version: 20170302004407) do
     t.string   "order_type",                                         default: "sales", null: false
     t.string   "payment_model"
     t.boolean  "sold_through"
+    t.text     "signature_data"
   end
 
   add_index "orders", ["delivery_id"], name: "index_orders_on_delivery_id", using: :btree

@@ -3,8 +3,8 @@ module Quickbooks
     class << self
       def create_vendor (org, session)
         vendor = Quickbooks::Model::Vendor.new
-        vendor.company_name = org.name
-        vendor.display_name = org.name
+        vendor.company_name = "#{org.id}-#{org.name}"
+        vendor.display_name = "#{org.id}-#{org.name}"
 
         billing_address = org.locations.default_billing.nil? ? org.locations.first : org.locations.default_billing
         address = Quickbooks::Model::PhysicalAddress.new

@@ -8,10 +8,11 @@
   <hr/>
   <div style="display: inline-block; width: 100%">
     <div style="float: left">
-      <h1>Order info for <%= order.order_number %></h1>
+      <h1>Order info for <%= order.purchase_order? ? "Purchase Order " : "" %><%= order.order_number %></h1>
       <div class="order-info-date">Placed On: <strong><%= order.placed_at.strftime "%m/%d/%Y at %l:%M%p" %></strong></div>
     </div>
     <div class="button-bar" style="float: right">
+      <input type="hidden" name="commit" />
       <ul>
         <% if policy(:merge_order).index? && order.delivery_status_for_user(current_user) != 'canceled' %>
         <li>
@@ -20,14 +21,20 @@
         <% end %>
         <% if policy(:dup_order).index? && order.delivery_status_for_user(current_user) != 'canceled' %>
         <li>
-          <button id="duplicate_button" type="submit">Duplicate Order</button>
-          <input type="hidden" name="commit" />
+          <button id="duplicate_button" name="Duplicate Order">Duplicate Order</button>
         </li>
         <% end %>
-        <% if policy(:market_quickbooks).index? && order.delivery_status_for_user(current_user) == 'delivered' && order.qb_ref_id.nil? %>
+        <% if policy(:market_quickbooks).index? && order.order_type == "sales" && order.payment_status == 'unpaid' && order.delivery_status_for_user(current_user) == 'delivered' && order.qb_ref_id.nil? %>
         <li>
-          <button id="export_button" name="Export Invoice">Export Invoice to QB</button>
-          <input type="hidden" name="commit" />
+          <button id="export_invoice_button" name="Export Invoice">Export Invoice to QB</button>
+        </li>
+        <% elsif policy(:market_quickbooks).index? && order.order_type == "purchase" && order.payment_status == 'unpaid' && order.delivery_status_for_user(current_user) == 'delivered' && order.qb_ref_id.nil? %>
+        <li>
+          <button id="export_bill_button" name="Export Bill">Export Bill to QB</button>
+        </li>
+        <% elsif policy(:market_quickbooks).index? && order.payment_status == 'exported' && !order.qb_ref_id.nil? %>
+        <li>
+          <button id="unclose_order" name="Unclose Order">Unclose Order</button>
         </li>
         <% end %>
       </ul>
@@ -252,6 +259,22 @@
         <% end %>
       </tbody>
       </table>
+      <% if current_market.is_consignment_market? %>
+      <div class="delivery_sig">
+        <br/>
+        <h2>Delivery Signature:</h2>
+        <% if order.signature_data.nil? && order.delivery_status_for_user(current_user) == "pending" %>
+          <div id="signature" class="signature"></div>
+            <button id="save_sig" name="Save Signature">Save Signature</button>
+            <button id="clear_sig" name="Clear Signature">Clear Signature</button>
+        <% elsif !order.signature_data.nil? %>
+            <div style="padding: 5px">
+              <%= JSignatureBase30.new(order.signature_data).to_svg.html_safe %>
+            </div>
+        <% end %>
+        <%= f.hidden_field :signature_data %>
+      </div>
+      <% end %>
       <% if can_add_products_to_order?(order, user_order_context) && !order.purchase_order? && @show_add_items_form
           session[:current_delivery_id] = order.delivery.id
           session[:current_organization_id] = order.organization.id

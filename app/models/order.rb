@@ -17,7 +17,8 @@ class Order < ActiveRecord::Base
   }.freeze
 
   BATCH_ACTIONS = {
-      "export" => "Export"
+      "export" => "Export",
+      "unclose" => "Unclose"
   }.freeze
 
   paginates_per 50
@@ -106,6 +107,10 @@ class Order < ActiveRecord::Base
   scope :not_balanced, -> { where.not(payment_provider: PaymentProvider::Balanced.id.to_s) }
   scope :stripe,       -> { where(payment_provider: PaymentProvider::Stripe.id.to_s) }
   scope :not_stripe,   -> { where.not(payment_provider: PaymentProvider::Stripe.id.to_s) }
+
+  scope :po, -> {visible.where(order_type: "purchase")}
+  scope :sold_through, -> {visible.where(sold_through: true)}
+  scope :not_sold_through, -> {visible.where("sold_through IS NULL OR sold_through IS false")}
 
   scope :placed_between, lambda {|range| visible.where(placed_at: range) }
 
