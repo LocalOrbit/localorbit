@@ -46,6 +46,12 @@ module OrderPresenter
     @order.payment_status
   end
 
+  def buyer_payment_invoice_status
+    if @order.payment_method == "purchase order"
+      @order.invoiced? ? ' / Invoiced' : ' / Not Invoiced'
+    end
+  end
+
   def errors
     @order.errors
   end
