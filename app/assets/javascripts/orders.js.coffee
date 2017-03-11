@@ -58,25 +58,31 @@ $ ->
 
   $("#duplicate_button").click (e) ->
     e.preventDefault()
-    $(this).parent().parent().parent().find("input[name=commit]").val("Duplicate Order")
+    $(this).parent().parent().parent().parent().find("input[name=commit]").val("Duplicate Order")
     $(this).closest("form").submit()
     $(this).prop("disabled","disabled")
 
   $("#export_invoice_button").click (e) ->
     e.preventDefault()
-    $(this).parent().parent().parent().find("input[name=commit]").val("Export Invoice")
+    $(this).parent().parent().parent().parent().find("input[name=commit]").val("Export Invoice")
     $(this).closest("form").submit()
     $(this).prop("disabled","disabled")
 
   $("#export_bill_button").click (e) ->
     e.preventDefault()
-    $(this).parent().parent().parent().find("input[name=commit]").val("Export Bill")
+    $(this).parent().parent().parent().parent().find("input[name=commit]").val("Export Bill")
     $(this).closest("form").submit()
     $(this).prop("disabled","disabled")
 
   $("#unclose_order").click (e) ->
     e.preventDefault()
-    $(this).parent().parent().parent().find("input[name=commit]").val("Unclose Order")
+    $(this).parent().parent().parent().parent().find("input[name=commit]").val("Unclose Order")
+    $(this).closest("form").submit()
+    $(this).prop("disabled","disabled")
+
+  $("#uninvoice_order").click (e) ->
+    e.preventDefault()
+    $(this).parent().parent().parent().parent().find("input[name=commit]").val("Uninvoice Order")
     $(this).closest("form").submit()
     $(this).prop("disabled","disabled")
 

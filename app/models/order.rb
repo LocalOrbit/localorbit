@@ -370,6 +370,11 @@ class Order < ActiveRecord::Base
     self.invoice_due_date = market.po_payment_term.days.from_now(invoiced_at)
   end
 
+  def uninvoice
+    self.invoiced_at      = nil
+    self.invoice_due_date = nil
+  end
+
   def invoiced?
     invoiced_at.present?
   end

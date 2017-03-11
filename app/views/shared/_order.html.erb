@@ -7,12 +7,12 @@
 <div class="order-info">
   <hr/>
   <div style="display: inline-block; width: 100%">
+    <input type="hidden" name="commit" />
     <div style="float: left">
       <h1>Order info for <%= order.order_number %></h1>
       <div class="order-info-date">Placed On: <strong><%= order.placed_at.strftime "%m/%d/%Y at %l:%M%p" %></strong></div>
     </div>
     <div class="button-bar" style="float: right">
-      <input type="hidden" name="commit" />
       <ul>
         <% if policy(:merge_order).index? && order.delivery_status_for_user(current_user) != 'canceled' %>
         <li>
@@ -164,10 +164,13 @@
         </tr>
         <tr>
           <th scope="row">Buyer Payment: </th>
-          <td><%= order.buyer_payment_status.titleize %></td>
+          <td><%= order.buyer_payment_status.titleize %><%= order.buyer_payment_invoice_status %></td>
         </tr>
         </tbody>
       </table>
+      <% if order.payment_method=="purchase order" && !order.invoiced_at.nil? %>
+          <button id="uninvoice_order" class="btn btn--small btn--primary" name="Uninvoice Order">Uninvoice Order</button>
+      <% end %>
     </div>
   </div>
   <div class="row order-data">
