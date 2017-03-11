@@ -6,7 +6,8 @@ feature "Viewing orders" do
   let(:organization) { create(:organization, markets: [market]) }
   let!(:user)        { create(:user, :market_manager, managed_markets: [market]) }
 
-  let!(:order) {create(:order, :with_items, payment_method: "credit card", organization: organization, market: market, delivery_fees: 10)}
+  let!(:order) {create(:order, :with_items, payment_method: "credit card", organization: organization, market: market, delivery_fees: 10) }
+  let!(:order2) {create(:order, :with_items, payment_method: "purchase order", organization: organization, market: market, delivery_fees: 10, invoiced_at: 1.day.from_now.strftime("%m/%d/%Y"), invoice_due_date: 30.days.from_now.strftime("%m/%d/%Y")) }
 
   before do
     switch_to_subdomain market.subdomain
@@ -22,6 +23,18 @@ feature "Viewing orders" do
       expect(page).to have_content("Order info")
       find('.icon-clear',:visible => true).click
       expect(page).to have_content("Delivery Fee: $0.00")
+  end
+
+  scenario "uninvoice order", :js do
+    sign_in_as(user)
+    visit admin_orders_path
+
+    click_link order2.order_number
+    expect(page).to have_content("Invoiced")
+
+    expect(page).to have_content("Uninvoice Order")
+    click_button "Uninvoice Order"
+    expect(page).to_not have_content("/ Invoiced")
   end
 
   #scenario "add item", :js do
