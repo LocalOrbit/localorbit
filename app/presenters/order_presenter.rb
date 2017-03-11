@@ -48,7 +48,7 @@ module OrderPresenter
 
   def buyer_payment_invoice_status
     if @order.payment_method == "purchase order"
-      @order.invoiced? ? ' / Invoiced' : ' / Not Invoiced'
+      @order.invoiced? ? ' / Invoiced' : ''
     end
   end
 

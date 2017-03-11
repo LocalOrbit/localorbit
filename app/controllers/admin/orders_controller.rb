@@ -207,6 +207,7 @@ class Admin::OrdersController < AdminController
   def uninvoice_order(order, batch = nil)
     result = MarkOrderUninvoiced.perform(order: order)
     if result.success?
+      Audit.create!(user_id:current_user.id, action:"update", auditable_type: "Order", auditable_id: order.id, audited_changes: {'uninvoice_order' => 'Order Un-Invoiced'})
       redirect_to admin_order_path(order), notice: "Order Uninvoiced."
     else
       redirect_to admin_order_path(order), error: "Failed to Uninvoice Order."

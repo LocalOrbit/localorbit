@@ -82,6 +82,12 @@ class OrderHistoryActivityPresenter
     if order_merge
       data << order_merge
     end
+
+    order_uninvoice = last_value_for_change(item, "uninvoice_order")
+    if order_uninvoice
+      data << order_uninvoice
+    end
+
     data
   end
 
