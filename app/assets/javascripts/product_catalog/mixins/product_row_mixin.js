@@ -22,7 +22,12 @@
           price_for_quantity: React.PropTypes.string,
           cart_item_persisted: React.PropTypes.bool,
           cart_item_quantity: React.PropTypes.number,
-          cart_item: React.PropTypes.object
+          cart_item: React.PropTypes.object,
+          lots: React.PropTypes.arrayOf(React.PropTypes.shape({
+            id: React.PropTypes.number.isRequired,
+            quantity: React.PropTypes.number.isRequired,
+            number: React.PropTypes.string,
+          }))
         })).isRequired,
 
         who_story: React.PropTypes.string,

@@ -2,6 +2,9 @@
             <tbody class="item-group">
               <tr class="<%= index == 0 ? "" : "is-hidden" %>">
                 <th class="subheading-cart">Your Order</th>
+                <% if current_market.is_consignment_market? %>
+                <td class="cart-lot-column">Lot</td>
+                <% end %>
                 <td class="cart-quantity-column">Quantity</td>
                 <td class="cart-price-column">Price</td>
                 <td class="cart-total-column">Total</td>
@@ -13,8 +16,11 @@
               <% items.each do |item| %>
                 <%= content_tag_for(:tr, item, id: "cart_item_#", supplier: seller_name.gsub(/[^a-zA-Z]/, ''), class: "product supplier-#{seller_name.gsub(/[^a-zA-Z]/, '')}", data: {id: item.product.id, :"cart-item" => item.to_json}) do %>
                   <td class="name"><%= item.product.name %> (<%= item.product.unit_plural %>)</td>
+                  <% if current_market.is_consignment_market? %>
+                  <td class="lot"><%= item.lot.present? ? item.lot.number : '' %></td>
+                  <% end %>
                   <td class="quantity math="><input class="cart-input in-cart" name="quantity" type="text" size="3" autocomplete="off" min="0" value="<%= item.quantity %>" max="<%= item.product.available_inventory %>"></td>
-                  <td class="price-for-quantity math"><%= number_to_currency(item.unit_price.sale_price) %></td>
+                  <td class="price-for-quantity math"><%= number_to_currency(item.unit_sale_price) %></td>
                   <td class="price math"><%= number_to_currency(item.total_price)%></td>
                   <td class="product-clear"><%= link_to "", "#", class: "font-icon icon-clear" %></td>
                 <% end %>

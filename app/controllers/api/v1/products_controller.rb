@@ -117,6 +117,8 @@ module Api
 
         prices = Orders::UnitPriceLogic.prices(product, current_market, current_organization, current_market.add_item_pricing && order ? order.created_at : Time.current.end_of_minute).map { |price| format_price_for_catalog(price)}
 
+        lots = product.lots.select('id, quantity, number')
+
         # TODO There's a brief window where prices and inventory may change after
         # the general products are found, but before the response is fully generated.
         # If all products become ineligible on a general product, it will appear in
@@ -131,10 +133,11 @@ module Api
               :unit => product.unit.plural,
               :unit_description => product.unit_plural,
               :prices => prices,
+              :lots => lots,
               :cart_item => cart_item.object,
               :cart_item_persisted => cart_item.persisted?,
               :cart_item_quantity => cart_item.quantity,
-              :price_for_quantity => number_to_currency(cart_item.unit_price.sale_price),
+              :price_for_quantity => number_to_currency(cart_item.unit_sale_price),
               :total_price => cart_item.display_total_price
           }
         else

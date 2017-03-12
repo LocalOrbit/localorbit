@@ -14,6 +14,7 @@
       orderCutoff: React.PropTypes.string.isRequired,
       buyerInfo: React.PropTypes.string.isRequired,
       purchaseOrder: React.PropTypes.bool,
+      salesOrder: React.PropTypes.bool,
       currentSupplier: React.PropTypes.number,
       useTemplates: React.PropTypes.bool.isRequired,
       supplierId: React.PropTypes.number,
@@ -77,6 +78,7 @@
             supplierOnly={this.props.supplierId > 0}
             orderId={this.props.orderId}
             purchaseOrder={this.props.purchaseOrder}
+            salesOrder={this.props.salesOrder}
             supplierView={this.props.supplierView}
         />);
         

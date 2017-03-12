@@ -384,17 +384,21 @@ class Product < ActiveRecord::Base
     lot.quantity = val
   end
 
-  def available_inventory(deliver_on_date=Time.current.end_of_minute, market_id=nil, organization_id=nil)
-    if lots.loaded?
-      qty = lots.to_a.sum {|l| l.available_specific?(deliver_on_date, market_id, organization_id) ? l.quantity : 0 }
-      #if qty == 0
-        qty += lots.to_a.sum {|l| l.available_general?(deliver_on_date) ? l.quantity : 0 }
-      #end
+  def available_inventory(deliver_on_date=Time.current.end_of_minute, market_id=nil, organization_id=nil, lot_id=nil)
+    if lot_id.present? && lot_id > 0
+      qty = lots.find(lot_id).quantity
     else
-      qty = lots.available_specific(deliver_on_date, market_id, organization_id).sum(:quantity)
-      #if qty == 0
-        qty += lots.available_general(deliver_on_date).sum(:quantity)
-      #end
+      if lots.loaded?
+        qty = lots.to_a.sum {|l| l.available_specific?(deliver_on_date, market_id, organization_id) ? l.quantity : 0 }
+        #if qty == 0
+          qty += lots.to_a.sum {|l| l.available_general?(deliver_on_date) ? l.quantity : 0 }
+        #end
+      else
+        qty = lots.available_specific(deliver_on_date, market_id, organization_id).sum(:quantity)
+        #if qty == 0
+          qty += lots.available_general(deliver_on_date).sum(:quantity)
+        #end
+      end
     end
     qty
   end

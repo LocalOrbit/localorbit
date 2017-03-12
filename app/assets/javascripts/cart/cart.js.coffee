@@ -21,7 +21,12 @@ $ ->
 
     setElement: (el) ->
       @el = el
-      $(@el).find(".quantity input.cart-input").keyup ->
+
+      lot_id = @el.find('.lot_id').val()
+
+      qty_class_basic = '.quantity' + lot_id + 'input.cart-input'
+
+      $(@el).find(qty_class_basic).keyup ->
         window.clearTimeout(@timer)
 
         @timer = window.setTimeout =>
@@ -52,11 +57,17 @@ $ ->
     updateView: ->
       if @el?
 
+        lot_id = @el.find('.lot_id').val()
         totalPrice = accounting.formatMoney(@data.total_price)
+        price_class = '.price' + lot_id
 
+        qty_class_basic = '.quantity' + lot_id
+        qty_class = '.quantity' + lot_id + ' input:not(.redesigned)'
+
+        @el.find(price_class)
         @el.find(".price-for-quantity").text(accounting.formatMoney(@data.unit_sale_price))
-        @el.find(".price").text(totalPrice)
-        @el.find(".quantity input:not(.redesigned)").val(@data.quantity)
+        @el.find(price_class).text(totalPrice)
+        @el.find(qty_class).val(@data.quantity)
 
         if @el.find(".quantity input").hasClass("promo") && @data.quantity > 0
           $(".promo").val(@data.quantity)
@@ -94,19 +105,29 @@ $ ->
         $(".promo").parent().parent().find(".price").text(totalPrice)
 
     showError: ->
-      @el.find(".quantity").addClass("field_with_errors")
+      lot_id = @el.find('.lot_id').val()
+      qty_class_basic = '.quantity' + lot_id
+      @el.find(qty_class_basic).addClass("field_with_errors")
 
     clearError: ->
-      @el.find(".quantity").removeClass("field_with_errors")
+      lot_id = @el.find('.lot_id').val()
+      qty_class_basic = '.quantity' + lot_id
+      @el.find(qty_class_basic).removeClass("field_with_errors")
 
     showUpdate: ->
-      @el.find(".quantity").addClass("updated")
+      lot_id = @el.find('.lot_id').val()
+      price_class = '.price' + lot_id
+
+      qty_class_basic = '.quantity' + lot_id
+      qty_class = '.quantity' + lot_id + ' input:not(.redesigned)'
+
+      @el.find(qty_class_basic).addClass("updated")
       window.setTimeout =>
-        @el.find(".quantity").addClass("finished")
+        @el.find(qty_class_basic).addClass("finished")
       , window.CartNotificationDuration
 
       window.setTimeout =>
-        @el.find(".quantity").removeClass("updated").removeClass("finished")
+        @el.find(qty_class_basic).removeClass("updated").removeClass("finished")
       , (window.CartNotificationDuration + 200)
       $(".promo").parent().parent().find(".updated").removeClass("updated")
 
@@ -241,7 +262,7 @@ $ ->
       @view.updateDeliveryFees(data.delivery_fees)
       @view.updateTotal(data.total)
 
-    saveItem: (productId, quantity, elToUpdate, orderId)->
+    saveItem: (productId, quantity, netPrice, salesPrice, lotId, elToUpdate, orderId)->
       # TODO: Add validation for maximum input to prevent
       #       users from entering numbers greater than available
       #       quantities
@@ -256,12 +277,12 @@ $ ->
         @view.showErrorMessage(errorMessage, $(elToUpdate).closest('.product'))
         $(elToUpdate).closest(".quantity").addClass("field_with_errors")
       else
-        $.post(@url, {"_method": "put", product_id: productId, quantity: quantity, order_id: orderId} )
+        $.post(@url, {"_method": "put", product_id: productId, quantity: quantity, net_price: netPrice, sales_price: salesPrice, order_id: orderId, lot_id: lotId} )
           .done (data)=>
 
             error = data.error
 
-            window.lo.ProductActions.updateProduct(data.item.product_id, data.item.quantity, data.item.formatted_total_price)
+            window.lo.ProductActions.updateProduct(data.item.product_id, data.item.quantity, data.item.net_price, data.item.sales_price, data.item.formatted_total_price, data.item.lot_id)
             if data.item["destroyed?"]
               @removeItem(data.item)
             else
@@ -355,20 +376,23 @@ $ ->
 
   setupAlternateOrderPage()
 
-  $(document.body).on 'cart.inputFinished', ".cart_item .quantity input", ->
+  $(document.body).on 'cart.inputFinished', ".cart_item .qty input", ->
     data = $(this).closest(".cart_item").data("cart-item")
 
     if this.value.length > 0 && !$(this).hasClass('invalid-input')
       quantity = parseInt($(this).val())
-      model.saveItem(data.product_id, quantity, this, order_id)
+      netPrice = parseFloat($(this).parent().parent().parent().parent().find('.app-net-price-input').val())
+      salesPrice = parseFloat($(this).parent().parent().parent().parent().find('.app-sales-price-input').val())
+      lotId = parseInt($(this).parent().parent().parent().find('.lot_id').val())
+      model.saveItem(data.product_id, quantity, netPrice, salesPrice, lotId, this, order_id)
 
     if this.value.length == 0 && !$(this).hasClass("in-cart")
-      model.saveItem(data.product_id, 0, this, order_id)
+      model.saveItem(data.product_id, 0, 0, 0, 0, this, order_id)
 
   $(document.body).on 'click', ".cart_item .icon-clear", (e)->
     e.preventDefault()
     data = $(this).closest(".cart_item").data("cart-item")
-    model.saveItem(data.product_id, 0, order_id)
+    model.saveItem(data.product_id, 0, 0, 0, 0, order_id)
 
   $(document.body).on 'click', "input[type=radio]", (e)->
     $(".payment-fields").addClass("is-hidden")

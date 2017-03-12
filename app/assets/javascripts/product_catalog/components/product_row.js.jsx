@@ -3,7 +3,8 @@
 (function() {
   var ProductRow = React.createClass({
     propTypes: {
-      purchaseOrder: React.PropTypes.bool
+        purchaseOrder: React.PropTypes.bool,
+        salesOrder: React.PropTypes.bool
     },
 
     mixins: [window.lo.ProductRowMixin],
@@ -12,6 +13,9 @@
       var self = this;
       var gp = this.props.product;
       var supplierStyle;
+      var lots;
+      var unit_prices;
+      var total_cost_header;
 
       // Initialize the convenience variable
       var product_id = "product-"+gp.id+"-long-description"
@@ -22,10 +26,35 @@
       // The long description HTML
       var long_description = <div className="long-description-info is-hidden with-anchor top-anchor popup" id={product_id}><div className="popup-header">Details <button className="close"><i className="font-icon icon-close"></i></button></div><div className="popup-body">{gp.long_description}</div></div>
 
+      if (self.props.salesOrder) {
+          _.map(gp.available, function (p) {
+              lots = _.map(p.lots, function (l) {
+                  return <lo.ProductLots key={l.id} product={p} lot={l} purchaseOrder={self.props.purchaseOrder}
+                                         salesOrder={self.props.salesOrder}/>
+              })
+          });
+          total_cost_header = ('');
+      }
+      else {
+          lots = ('');
+          total_cost_header = (<th style={{
+              width: 100,
+              textAlign: "center",
+              color: "#727070",
+              textTransform: "uppercase",
+              fontWeight: "bold",
+              fontSize: "11px"
+          }}>
+              {(this.props.purchaseOrder) ? "" : "Total Cost"}
+          </th>);
+      }
+
       //var unit_prices = '';
-      var unit_prices = _.map(gp.available, function(p) {
-        return <lo.ProductUnitPrices key={p.id} product={p} promo={self.props.promo} orderId={self.props.orderId} purchaseOrder={self.props.purchaseOrder} />
-      });
+      if (self.props.purchaseOrder)
+          unit_prices = _.map(gp.available, function(p) {
+            return <lo.ProductUnitPrices key={p.id} product={p} promo={self.props.promo} orderId={self.props.orderId} purchaseOrder={self.props.purchaseOrder} salesOrder={self.props.salesOrder} /> });
+      else
+          unit_prices = ('');
 
       return (
         <div className="row product-listing">
@@ -77,18 +106,18 @@
             <table>
               <thead>
                 <tr>
-                    <th>&nbsp;</th>
-                    <th>&nbsp;</th>
+                    <th style={{width: 100, textAlign: "center", color:"#727070", textTransform:"uppercase", fontWeight: "bold", fontSize: "11px"}}>Lot / Quantity</th>
+                    <th style={{width: 100, textAlign: "center", color:"#727070", textTransform:"uppercase", fontWeight: "bold", fontSize: "11px"}}>Sales Price</th>
+                    <th style={{width: 100, textAlign: "center", color:"#727070", textTransform:"uppercase", fontWeight: "bold", fontSize: "11px"}}>Net Price</th>
                     <th style={{width: 100, textAlign: "center", color:"#727070", textTransform:"uppercase", fontWeight: "bold", fontSize: "11px"}}>
                       Order QTY
                     </th>
-                    <th style={{width: 100, textAlign: "center", color:"#727070", textTransform:"uppercase", fontWeight: "bold", fontSize: "11px"}}>
-                      {(this.props.purchaseOrder) ? "" : "Total Cost"}
-                    </th>
+                    {total_cost_header}
                 </tr>
               </thead>
               <tbody>
-                {unit_prices}
+              {lots}
+              {unit_prices}
               </tbody>
             </table>
             <div className="errormsg" id={'product-'+gp.id} style={{ fontSize: 11, textAlign:"right", color:"red"}}></div>

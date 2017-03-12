@@ -22,7 +22,7 @@
     getInitialState: function() {
       return {
         showAll: false,
-        cartItemQuantity: this.props.product.cart_item_quantity > 0 ? this.props.product.cart_item_quantity : null
+        cartItemQuantity: this.props.product && this.props.product.cart_item_quantity > 0 ? this.props.product.cart_item_quantity : null
       };
     },
 

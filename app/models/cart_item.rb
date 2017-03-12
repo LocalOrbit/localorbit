@@ -5,6 +5,7 @@ class CartItem < ActiveRecord::Base
   audited allow_mass_assignment: true, associated_with: :cart
   belongs_to :cart, inverse_of: :items
   belongs_to :product
+  belongs_to :lot
 
   validates :cart, presence: true
   validates :product, presence: true
@@ -14,12 +15,23 @@ class CartItem < ActiveRecord::Base
   validate :quantity_is_available, unless: "errors.has_key? :quantity"
 
   def unit_price
-    Orders::UnitPriceLogic.unit_price(product, cart.market, cart.organization, !order.nil? && order.market.add_item_pricing ? order.created_at : Time.current, quantity)
+    if sales_price > 0
+      nil
+    else
+      Orders::UnitPriceLogic.unit_price(product, cart.market, cart.organization, !order.nil? && order.market.add_item_pricing ? order.created_at : Time.current, quantity)
+    end
   end
 
   def total_price
-    return 0.0 unless quantity && quantity > 0 && unit_price
-    unit_price.sale_price * quantity
+    if quantity && quantity > 0
+      if unit_price.nil?
+        sales_price * quantity
+      else
+        unit_price.sale_price * quantity
+      end
+    else
+      0.0
+    end
   end
 
   def formatted_total_price
@@ -27,8 +39,13 @@ class CartItem < ActiveRecord::Base
   end
 
   def unit_sale_price
-    return 0.0 unless unit_price
-    unit_price.sale_price
+    if sales_price > 0
+      sales_price
+    elsif unit_price
+      unit_price.sale_price
+    else
+      0.0
+    end
   end
 
   def as_json(_opts=nil)

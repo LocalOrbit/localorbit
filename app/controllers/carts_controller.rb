@@ -57,6 +57,9 @@ class CartsController < ApplicationController
 
     if params[:quantity].to_i > 0
       @item.quantity = params[:quantity]
+      @item.sales_price = params[:sales_price]
+      @item.net_price = params[:net_price]
+      @item.lot_id = params[:lot_id]
       @item.product = product
 
       if @item.quantity && @item.quantity > 0 && @item.quantity > product.available_inventory(delivery_date, current_market.id, current_organization.id)
