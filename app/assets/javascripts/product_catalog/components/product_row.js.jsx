@@ -16,12 +16,15 @@
       var lots;
       var unit_prices;
       var total_cost_header;
+      var lot_qty_header;
+      var sales_price_header;
+      var net_price_header;
 
       // Initialize the convenience variable
-      var product_id = "product-"+gp.id+"-long-description"
+      var product_id = "product-"+gp.id+"-long-description";
 
       // The 'plus sign' link HTML, keyed to the product id
-      var description_link = <a className="popup-toggle" href={'#'+product_id} tabIndex="-1"><i className="font-icon icon-plus-circle"> </i></a>
+      var description_link = <a className="popup-toggle" href={'#'+product_id} tabIndex="-1"><i className="font-icon icon-plus-circle"> </i></a>;
 
       // The long description HTML
       var long_description = <div className="long-description-info is-hidden with-anchor top-anchor popup" id={product_id}><div className="popup-header">Details <button className="close"><i className="font-icon icon-close"></i></button></div><div className="popup-body">{gp.long_description}</div></div>
@@ -34,9 +37,15 @@
               })
           });
           total_cost_header = ('');
+          lot_qty_header = (<th style={{width: 100, textAlign: "center", color:"#727070", textTransform:"uppercase", fontWeight: "bold", fontSize: "11px"}}>Lot / Quantity</th>);
+          sales_price_header = (<th style={{width: 100, textAlign: "center", color:"#727070", textTransform:"uppercase", fontWeight: "bold", fontSize: "11px"}}>Sales Price</th>);
+          net_price_header = (<th style={{width: 100, textAlign: "center", color:"#727070", textTransform:"uppercase", fontWeight: "bold", fontSize: "11px"}}>Net Price</th>);
       }
       else {
           lots = ('');
+          lot_qty_header = ('');
+          sales_price_header = (<th></th>);
+          net_price_header = (<th></th>);
           total_cost_header = (<th style={{
               width: 100,
               textAlign: "center",
@@ -50,7 +59,7 @@
       }
 
       //var unit_prices = '';
-      if (self.props.purchaseOrder)
+      if (self.props.purchaseOrder || (!self.props.purchaseOrder && !self.props.salesOrder))
           unit_prices = _.map(gp.available, function(p) {
             return <lo.ProductUnitPrices key={p.id} product={p} promo={self.props.promo} orderId={self.props.orderId} purchaseOrder={self.props.purchaseOrder} salesOrder={self.props.salesOrder} /> });
       else
@@ -106,9 +115,9 @@
             <table>
               <thead>
                 <tr>
-                    <th style={{width: 100, textAlign: "center", color:"#727070", textTransform:"uppercase", fontWeight: "bold", fontSize: "11px"}}>Lot / Quantity</th>
-                    <th style={{width: 100, textAlign: "center", color:"#727070", textTransform:"uppercase", fontWeight: "bold", fontSize: "11px"}}>Sales Price</th>
-                    <th style={{width: 100, textAlign: "center", color:"#727070", textTransform:"uppercase", fontWeight: "bold", fontSize: "11px"}}>Net Price</th>
+                    {lot_qty_header}
+                    {sales_price_header}
+                    {net_price_header}
                     <th style={{width: 100, textAlign: "center", color:"#727070", textTransform:"uppercase", fontWeight: "bold", fontSize: "11px"}}>
                       Order QTY
                     </th>

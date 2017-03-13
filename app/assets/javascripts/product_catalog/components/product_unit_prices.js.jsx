@@ -70,6 +70,7 @@
       var pid = ('');
       var unit_desc;
       var pricing;
+      var quantity;
 
       if(this.props.purchaseOrder)
         pricing = ''
@@ -78,10 +79,12 @@
 
       if(this.props.purchaseOrder)
         unit_desc = (this.props.product.unit_description);
-      else
-        unit_desc = (<span><a href={"/products/" + this.props.product.id}>{this.props.product.unit_description}</a><br/><span style={{fontSize:"11px", color:"#737373"}}>quantity</span></span>);
-
-      var quantity = this.props.product.max_available < 500000 ? this.props.product.max_available + " Available" : "";
+      else {
+          quantity = this.props.product.max_available < 500000 ? this.props.product.max_available + " Available" : "";
+          unit_desc = (
+              <span><a href={"/products/" + this.props.product.id}>{this.props.product.unit_description}</a><br/><span
+                  style={{fontSize: "11px", color: "#737373"}}>{quantity}</span></span>);
+      }
       var deleteButton = this.state.cartItemQuantity > 0 ? (<a href="javascript:void(0)" onClick={this.deleteQuantity} className="font-icon icon-clear" style={{marginLeft: "10px"}}></a>) : null;
       var inputClass = "redesigned app-product-input";
       if (this.props.promo)
@@ -108,7 +111,7 @@
           </td>
           <td colSpan="2">
             <div style={{float:"right", background:"#F7F7F7", width:"100%", minWidth: 200, maxWidth: 200, borderRadius: "4px", border:"1px solid #D1D1D1", padding: "4px 0"}}>
-              <div className="quantity" style={{float:"left", width:"50%", textAlign:"center"}}>
+              <div className="qty quantity" style={{float:"left", width:"50%", textAlign:"center"}}>
                   {qty}
                   {pid}
               </div>
