@@ -22,7 +22,9 @@
     getInitialState: function() {
       return {
         showAll: false,
-        cartItemQuantity: this.props.product && this.props.product.cart_item_quantity > 0 ? this.props.product.cart_item_quantity : null
+        cartItemQuantity: this.props.product && this.props.product.cart_item_quantity > 0 ? this.props.product.cart_item_quantity : null,
+        cartSalesPrice: this.props.product && this.props.product.cart_item_sales_price > 0 ? this.props.product.cart_item_sale_price : null,
+        cartNetPrice: this.props.product && this.props.product.cart_item_net_price > 0 ? this.props.product.cart_item_net_price : null
       };
     },
 
@@ -35,6 +37,8 @@
         $(target).removeClass('invalid-value');
         $(target).val('');
         context.setState({cartItemQuantity: null});
+        context.setState({cartSalesPrice: null});
+        context.setState({cartNetPrice: null});
         $(target).trigger("cart.inputFinished");
         in_str = '';
     },
@@ -78,7 +82,9 @@
     deleteQuantity: function() {
       var prodId = this.props.product.id;
       $("#product-" + prodId).html("");
-      this.setState({cartItemQuantity: null});
+        this.setState({cartItemQuantity: null});
+        this.setState({cartSalesPrice: null});
+        this.setState({cartNetPrice: null});
       $(this.getDOMNode()).find('input').val('');
       $(this.getDOMNode()).keyup();
     }

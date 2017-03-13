@@ -22,11 +22,11 @@
       if (this.props.salesOrder) {
           sales_entry = (
               <input className=" redesigned app-sales-price-input" style={{width: "75px"}} type="number" placeholder="0"
-                     defaultValue={this.state.cartItemQuantity} onKeyDown={this.clearField} onChange={this.updateQuantity}/>
+                     defaultValue={this.state.cartSalesPrice} onKeyDown={this.clearField} />
           );
           net_entry = (
               <input className="redesigned app-net-price-input" style={{width: "75px"}} type="number" placeholder="0"
-                     defaultValue={this.state.cartItemQuantity} onKeyDown={this.clearField} onChange={this.updateQuantity}/>
+                     defaultValue={this.state.cartNetPrice} onKeyDown={this.clearField} />
           );
       }
 
@@ -43,11 +43,6 @@
       else
           qty = (<input style={{width: "75px"}} type="number" placeholder="0" defaultValue={this.state.cartItemQuantity} className={inputClass} onKeyDown={this.clearField} onChange={this.updateQuantity}/>);
 
-      sales_entry_class = 'sales_price' + this.props.lot.id;
-      net_entry_class = 'net_price' + this.props.lot.id;
-      quantity_class= 'qty quantity' + this.props.lot.id;
-      price_class = 'price' + this.props.lot.id;
-
       return (
         <tr className="cart_item" data-keep-when-zero="yes" data-cart-item={JSON.stringify(this.props.product.cart_item)}>
           <th>
@@ -55,13 +50,13 @@
           </th>
           <td colSpan="4">
             <div style={{float:"right", background:"#F7F7F7", width:"100%", borderRadius: "4px", border:"1px solid #D1D1D1", padding: "4px 0"}}>
-                <div className={sales_entry_class} style={{float:"left", width:"33%", textAlign:"center"}}>
+                <div className="sales_price" style={{float:"left", width:"33%", textAlign:"center"}}>
                   {sales_entry}
                 </div>
-                <div className={net_entry_class} style={{float:"left", width:"32%", textAlign:"center"}}>
+                <div className="net_price" style={{float:"left", width:"32%", textAlign:"center"}}>
                   {net_entry}
                 </div>
-                <div className={quantity_class} style={{float:"left", width:"33%", textAlign:"center"}}>
+                <div className="quantity" style={{float:"left", width:"33%", textAlign:"center"}}>
                   {qty}
                   {pid}
               </div>

@@ -95,7 +95,7 @@
       product.cart_item_quantity = quantity;
       product.cart_item_net_price = netPrice;
       product.cart_item_sales_price = salesPrice;
-      product.cart_item_lot_id = lotId
+      product.cart_item_lot_id = lotId;
       product.total_price = totalPrice;
       this.trigger(this.catalog);
     },

@@ -22,11 +22,7 @@ $ ->
     setElement: (el) ->
       @el = el
 
-      lot_id = @el.find('.lot_id').val()
-
-      qty_class_basic = '.quantity' + lot_id + 'input.cart-input'
-
-      $(@el).find(qty_class_basic).keyup ->
+      $(@el).find('.quantity input.cart-input').keyup ->
         window.clearTimeout(@timer)
 
         @timer = window.setTimeout =>
@@ -56,18 +52,11 @@ $ ->
 
     updateView: ->
       if @el?
-
-        lot_id = @el.find('.lot_id').val()
         totalPrice = accounting.formatMoney(@data.total_price)
-        price_class = '.price' + lot_id
 
-        qty_class_basic = '.quantity' + lot_id
-        qty_class = '.quantity' + lot_id + ' input:not(.redesigned)'
-
-        @el.find(price_class)
         @el.find(".price-for-quantity").text(accounting.formatMoney(@data.unit_sale_price))
-        @el.find(price_class).text(totalPrice)
-        @el.find(qty_class).val(@data.quantity)
+        @el.find('.price').text(totalPrice)
+        @el.find('.quantity input:not(.redesigned)').val(@data.quantity)
 
         if @el.find(".quantity input").hasClass("promo") && @data.quantity > 0
           $(".promo").val(@data.quantity)
@@ -105,29 +94,19 @@ $ ->
         $(".promo").parent().parent().find(".price").text(totalPrice)
 
     showError: ->
-      lot_id = @el.find('.lot_id').val()
-      qty_class_basic = '.quantity' + lot_id
-      @el.find(qty_class_basic).addClass("field_with_errors")
+      @el.find('.quantity').addClass("field_with_errors")
 
     clearError: ->
-      lot_id = @el.find('.lot_id').val()
-      qty_class_basic = '.quantity' + lot_id
-      @el.find(qty_class_basic).removeClass("field_with_errors")
+      @el.find('.quantity').removeClass("field_with_errors")
 
     showUpdate: ->
-      lot_id = @el.find('.lot_id').val()
-      price_class = '.price' + lot_id
-
-      qty_class_basic = '.quantity' + lot_id
-      qty_class = '.quantity' + lot_id + ' input:not(.redesigned)'
-
-      @el.find(qty_class_basic).addClass("updated")
+      @el.find('.quantity').addClass("updated")
       window.setTimeout =>
-        @el.find(qty_class_basic).addClass("finished")
+        @el.find('.quantity').addClass("finished")
       , window.CartNotificationDuration
 
       window.setTimeout =>
-        @el.find(qty_class_basic).removeClass("updated").removeClass("finished")
+        @el.find('.quantity').removeClass("updated").removeClass("finished")
       , (window.CartNotificationDuration + 200)
       $(".promo").parent().parent().find(".updated").removeClass("updated")
 
@@ -376,7 +355,7 @@ $ ->
 
   setupAlternateOrderPage()
 
-  $(document.body).on 'cart.inputFinished', ".cart_item .qty input", ->
+  $(document.body).on 'cart.inputFinished', ".cart_item .quantity input", ->
     data = $(this).closest(".cart_item").data("cart-item")
 
     if this.value.length > 0 && !$(this).hasClass('invalid-input')

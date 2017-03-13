@@ -9,7 +9,7 @@ class Admin::OrdersController < AdminController
       redirect_to url_for(params.except(:clear))
     else
       po_filter = {:q => {"order_type_matches" => "sales"}}
-      @query_params.merge!(po_filter)
+      @query_params = @query_params.deep_merge!(po_filter)
 
       build_order_list
 
@@ -37,7 +37,7 @@ class Admin::OrdersController < AdminController
       redirect_to url_for(params.except(:clear))
     else
       po_filter = {:q => {"order_type_matches" => "purchase"}}
-      @query_params.merge!(po_filter)
+      @query_params = @query_params.deep_merge!(po_filter)
 
       build_order_list
 

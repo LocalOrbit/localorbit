@@ -4,7 +4,8 @@
   var ProductRow = React.createClass({
     propTypes: {
         purchaseOrder: React.PropTypes.bool,
-        salesOrder: React.PropTypes.bool
+        salesOrder: React.PropTypes.bool,
+        consignmentMarket: React.PropTypes.bool
     },
 
     mixins: [window.lo.ProductRowMixin],
@@ -29,7 +30,7 @@
       // The long description HTML
       var long_description = <div className="long-description-info is-hidden with-anchor top-anchor popup" id={product_id}><div className="popup-header">Details <button className="close"><i className="font-icon icon-close"></i></button></div><div className="popup-body">{gp.long_description}</div></div>
 
-      if (self.props.salesOrder) {
+      if (self.props.salesOrder && self.props.consignmentMarket) {
           _.map(gp.available, function (p) {
               lots = _.map(p.lots, function (l) {
                   return <lo.ProductLots key={l.id} product={p} lot={l} purchaseOrder={self.props.purchaseOrder}
@@ -59,9 +60,9 @@
       }
 
       //var unit_prices = '';
-      if (self.props.purchaseOrder || (!self.props.purchaseOrder && !self.props.salesOrder))
+      if (self.props.purchaseOrder || !self.props.consignmentMarket)
           unit_prices = _.map(gp.available, function(p) {
-            return <lo.ProductUnitPrices key={p.id} product={p} promo={self.props.promo} orderId={self.props.orderId} purchaseOrder={self.props.purchaseOrder} salesOrder={self.props.salesOrder} /> });
+            return <lo.ProductUnitPrices key={p.id} product={p} promo={self.props.promo} orderId={self.props.orderId} purchaseOrder={self.props.purchaseOrder} salesOrder={self.props.salesOrder} consignmentMarket={self.props.consignmentMarket} /> });
       else
           unit_prices = ('');
 

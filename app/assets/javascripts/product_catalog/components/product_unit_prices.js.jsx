@@ -73,7 +73,7 @@
       var quantity;
 
       if(this.props.purchaseOrder)
-        pricing = ''
+        pricing = '';
       else
         pricing = (this.props.product.prices.length <= 3 || this.state.showAll) ? this.fullPricing() : this.abbreviatedPricing();
 
@@ -111,7 +111,7 @@
           </td>
           <td colSpan="2">
             <div style={{float:"right", background:"#F7F7F7", width:"100%", minWidth: 200, maxWidth: 200, borderRadius: "4px", border:"1px solid #D1D1D1", padding: "4px 0"}}>
-              <div className="qty quantity" style={{float:"left", width:"50%", textAlign:"center"}}>
+              <div className="quantity" style={{float:"left", width:"50%", textAlign:"center"}}>
                   {qty}
                   {pid}
               </div>
