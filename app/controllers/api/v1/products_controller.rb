@@ -121,9 +121,9 @@ module Api
         committed = nil
 
         if current_market.is_consignment_market?
-          lots = product.lots.select("id, quantity, number, 'available' AS status")
-          awaiting_delivery = Order.joins(:items).where("orders.order_type = 'purchase' AND order_items.delivery_status = 'pending' AND orders.market_id = ? AND order_items.product_id = ?", current_market.id, product.id).select("order_items.product_id AS id, trunc(order_items.quantity) AS quantity, '' AS number, 'awaiting_delivery' AS status")
-          committed = Order.joins(:organization, items: [lots: [:lot]]).where("orders.order_type = 'sales' AND order_items.delivery_status = 'pending' AND orders.market_id = ? AND order_items.product_id = ?", current_market.id, product.id).select("order_items.product_id AS id, order_item_lots.lot_id, lots.number, organizations.name AS buyer_name, order_items.quantity, order_items.unit_price AS sale_price, order_items.net_price")
+          lots = product.lots.select("lots.id, lots.quantity, lots.number, 'available'::text AS status")
+          awaiting_delivery = Order.joins(:items).where("orders.order_type = 'purchase' AND order_items.delivery_status = 'pending' AND orders.market_id = ? AND order_items.product_id = ?", current_market.id, product.id).select("null AS id, trunc(order_items.quantity) AS quantity, '' AS number, 'awaiting_delivery'::text AS status")
+          committed = Order.joins(:organization, items: [lots: [:lot]]).where("orders.order_type = 'sales' AND order_items.delivery_status = 'pending' AND orders.market_id = ? AND order_items.product_id = ?", current_market.id, product.id).select("order_items.product_id AS id, order_item_lots.lot_id, lots.number, organizations.name AS buyer_name, trunc(order_items.quantity) AS quantity, order_items.unit_price AS sale_price, order_items.net_price")
           lots = lots + awaiting_delivery
         end
 
