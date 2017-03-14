@@ -161,6 +161,9 @@ class Admin::OrdersController < AdminController
     elsif params[:commit] == "Unclose Order"
       unclose_order(order)
       return
+    elsif params[:commit] == "Uninvoice Order"
+      uninvoice_order(order)
+      return
     elsif params["order"][:delivery_clear] == "true"
       remove_delivery_fee(order)
       return
@@ -233,6 +236,16 @@ class Admin::OrdersController < AdminController
       else
         redirect_to admin_order_path(order), error: "Failed to Unclose Order."
       end
+    end
+  end
+
+  def uninvoice_order(order, batch = nil)
+    result = MarkOrderUninvoiced.perform(order: order)
+    if result.success?
+      Audit.create!(user_id:current_user.id, action:"update", auditable_type: "Order", auditable_id: order.id, audited_changes: {'uninvoice_order' => 'Order Un-Invoiced'})
+      redirect_to admin_order_path(order), notice: "Order Uninvoiced."
+    else
+      redirect_to admin_order_path(order), error: "Failed to Uninvoice Order."
     end
   end
 
