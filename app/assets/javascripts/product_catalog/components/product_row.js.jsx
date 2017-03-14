@@ -18,7 +18,7 @@
       var unit_prices;
       var total_cost_header;
       var lot_qty_header;
-      var sales_price_header;
+      var sale_price_header;
       var net_price_header;
 
       // Initialize the convenience variable
@@ -39,13 +39,13 @@
           });
           total_cost_header = ('');
           lot_qty_header = (<th style={{width: 100, textAlign: "center", color:"#727070", textTransform:"uppercase", fontWeight: "bold", fontSize: "11px"}}>Lot / Quantity</th>);
-          sales_price_header = (<th style={{width: 100, textAlign: "center", color:"#727070", textTransform:"uppercase", fontWeight: "bold", fontSize: "11px"}}>Sales Price</th>);
+          sale_price_header = (<th style={{width: 100, textAlign: "center", color:"#727070", textTransform:"uppercase", fontWeight: "bold", fontSize: "11px"}}>Sale Price</th>);
           net_price_header = (<th style={{width: 100, textAlign: "center", color:"#727070", textTransform:"uppercase", fontWeight: "bold", fontSize: "11px"}}>Net Price</th>);
       }
       else {
           lots = ('');
           lot_qty_header = ('');
-          sales_price_header = (<th></th>);
+          sale_price_header = (<th></th>);
           net_price_header = (<th></th>);
           total_cost_header = (<th style={{
               width: 100,
@@ -117,7 +117,7 @@
               <thead>
                 <tr>
                     {lot_qty_header}
-                    {sales_price_header}
+                    {sale_price_header}
                     {net_price_header}
                     <th style={{width: 100, textAlign: "center", color:"#727070", textTransform:"uppercase", fontWeight: "bold", fontSize: "11px"}}>
                       Order QTY

@@ -241,7 +241,7 @@ $ ->
       @view.updateDeliveryFees(data.delivery_fees)
       @view.updateTotal(data.total)
 
-    saveItem: (productId, quantity, netPrice, salesPrice, lotId, elToUpdate, orderId)->
+    saveItem: (productId, quantity, netPrice, salePrice, lotId, elToUpdate, orderId)->
       # TODO: Add validation for maximum input to prevent
       #       users from entering numbers greater than available
       #       quantities
@@ -256,12 +256,12 @@ $ ->
         @view.showErrorMessage(errorMessage, $(elToUpdate).closest('.product'))
         $(elToUpdate).closest(".quantity").addClass("field_with_errors")
       else
-        $.post(@url, {"_method": "put", product_id: productId, quantity: quantity, net_price: netPrice, sales_price: salesPrice, order_id: orderId, lot_id: lotId} )
+        $.post(@url, {"_method": "put", product_id: productId, quantity: quantity, net_price: netPrice, sale_price: salePrice, order_id: orderId, lot_id: lotId} )
           .done (data)=>
 
             error = data.error
 
-            window.lo.ProductActions.updateProduct(data.item.product_id, data.item.quantity, data.item.net_price, data.item.sales_price, data.item.formatted_total_price, data.item.lot_id)
+            window.lo.ProductActions.updateProduct(data.item.product_id, data.item.quantity, data.item.net_price, data.item.sale_price, data.item.formatted_total_price, data.item.lot_id)
             if data.item["destroyed?"]
               @removeItem(data.item)
             else
@@ -361,9 +361,9 @@ $ ->
     if this.value.length > 0 && !$(this).hasClass('invalid-input')
       quantity = parseInt($(this).val())
       netPrice = parseFloat($(this).parent().parent().parent().parent().find('.app-net-price-input').val())
-      salesPrice = parseFloat($(this).parent().parent().parent().parent().find('.app-sales-price-input').val())
+      salePrice = parseFloat($(this).parent().parent().parent().parent().find('.app-sale-price-input').val())
       lotId = parseInt($(this).parent().parent().parent().find('.lot_id').val())
-      model.saveItem(data.product_id, quantity, netPrice, salesPrice, lotId, this, order_id)
+      model.saveItem(data.product_id, quantity, netPrice, salePrice, lotId, this, order_id)
 
     if this.value.length == 0 && !$(this).hasClass("in-cart")
       model.saveItem(data.product_id, 0, 0, 0, 0, this, order_id)

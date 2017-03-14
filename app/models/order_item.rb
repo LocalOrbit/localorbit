@@ -57,9 +57,9 @@ class OrderItem < ActiveRecord::Base
       name: item.product.name,
       quantity: item.quantity,
       unit: item.unit,
-      unit_price: item.sales_price > 0 ? item.sales_price : item.unit_price.sale_price,
+      unit_price: item.sale_price > 0 ? item.sale_price : item.unit_price.sale_price,
       net_price: item.net_price,
-      product_fee_pct: item.sales_price.nil? ? item.unit_price.product_fee_pct : 0,
+      product_fee_pct: item.sale_price.nil? ? item.unit_price.product_fee_pct : 0,
       category_fee_pct: category_fee_pct,
       seller_name: item.product.organization.name,
       delivery_status: "pending"
@@ -143,6 +143,7 @@ class OrderItem < ActiveRecord::Base
   private
 
   def consume_inventory
+    return if self.order.order_type == "purchase"
     if order
       market_id = order.market.id
       organization_id = order.organization.id
@@ -201,6 +202,7 @@ class OrderItem < ActiveRecord::Base
   end
 
   def consume_inventory_amount(initial_amount, market_id, organization_id)
+    return if self.order.order_type == "purchase"
     specific = false
     amount = initial_amount
     product.lots_by_expiration.available_specific(deliver_on_date, market_id, organization_id).each do |lot|

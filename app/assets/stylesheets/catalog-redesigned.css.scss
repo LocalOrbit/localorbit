@@ -272,6 +272,16 @@
   border: 1px solid #E0E0E0;
 }
 
+.committed-table {
+  thead th {
+    font-size: 10pt;
+  }
+  tbody td {
+    font-size: 10pt;
+    color: #333
+  }
+}
+
 @media (max-width: 786px) {
   .catalog-header{
     .branding-container{

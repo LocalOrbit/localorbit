@@ -21,7 +21,7 @@
       supplierId: React.PropTypes.number,
       orderId: React.PropTypes.number,
       orderMinimum: React.PropTypes.string,
-      supplierView: React.PropTypes.boolean
+      supplierView: React.PropTypes.bool
     },
 
       componentWillMount: function() {

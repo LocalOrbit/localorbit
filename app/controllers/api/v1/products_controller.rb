@@ -117,7 +117,15 @@ module Api
 
         prices = Orders::UnitPriceLogic.prices(product, current_market, current_organization, current_market.add_item_pricing && order ? order.created_at : Time.current.end_of_minute).map { |price| format_price_for_catalog(price)}
 
-        lots = product.lots.select('id, quantity, number')
+        lots = nil
+        committed = nil
+
+        if current_market.is_consignment_market?
+          lots = product.lots.select("id, quantity, number, 'available' AS status")
+          awaiting_delivery = Order.joins(:items).where("orders.order_type = 'purchase' AND order_items.delivery_status = 'pending' AND orders.market_id = ? AND order_items.product_id = ?", current_market.id, product.id).select("order_items.product_id AS id, trunc(order_items.quantity) AS quantity, '' AS number, 'awaiting_delivery' AS status")
+          committed = Order.joins(:organization, items: [lots: [:lot]]).where("orders.order_type = 'sales' AND order_items.delivery_status = 'pending' AND orders.market_id = ? AND order_items.product_id = ?", current_market.id, product.id).select("order_items.product_id AS id, order_item_lots.lot_id, lots.number, organizations.name AS buyer_name, order_items.quantity, order_items.unit_price AS sale_price, order_items.net_price")
+          lots = lots + awaiting_delivery
+        end
 
         # TODO There's a brief window where prices and inventory may change after
         # the general products are found, but before the response is fully generated.
@@ -134,6 +142,7 @@ module Api
               :unit_description => product.unit_plural,
               :prices => prices,
               :lots => lots,
+              :committed => committed,
               :cart_item => cart_item.object,
               :cart_item_persisted => cart_item.persisted?,
               :cart_item_quantity => cart_item.quantity,
