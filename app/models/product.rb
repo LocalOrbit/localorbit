@@ -368,6 +368,17 @@ class Product < ActiveRecord::Base
     joins(arel_table.create_join(Lot.arel_table, join_on))
   end
 
+  def self.consignment(organization_id)
+    consignment_product_table = ConsignmentProduct.arel_table
+
+    on_cond = arel_table[:id].eq(consignment_product_table[:consignment_product_id]).
+      and(consignment_product_table[:consignment_organization_id].eq(organization_id))
+
+    join_on = arel_table.create_on(on_cond)
+
+    joins(arel_table.create_join(ConsignmentProduct.arel_table, join_on))
+  end
+
   def can_use_simple_inventory?
     use_simple_inventory? || !lots.where("(expires_at IS NULL OR expires_at > ?) AND quantity > 0", Time.current.end_of_minute).exists?
   end
