@@ -250,6 +250,11 @@ class ApplicationController < ActionController::Base
     redirect_to [:new_admin, current_organization, :location], alert: "You must enter an address for this organization before you can shop"
   end
 
+  def require_manual_delivery_schedule
+    return unless current_market && current_market.delivery_schedules.manual.none?
+    redirect_to [:new_admin, current_market, :delivery_schedule], alert: "You must enter a manual delivery schedule before you can purchase"
+  end
+
   def require_market_open
     render "shared/market_closed" if current_market.closed? && session[:order_id].nil?
   end

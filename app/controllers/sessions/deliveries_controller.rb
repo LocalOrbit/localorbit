@@ -3,6 +3,7 @@ module Sessions
     before_action :require_selected_market
     before_action :require_current_organization
     before_action :require_organization_location
+    before_action :require_manual_delivery_schedule, only: [:create]
     before_action :hide_admin_navigation
 
     def new
