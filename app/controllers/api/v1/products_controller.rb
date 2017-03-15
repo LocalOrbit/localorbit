@@ -18,6 +18,7 @@ module Api
         @seller_ids = (params[:seller_ids] || [])
         @sort_by = (params[:sort_by] || "top_level_category.lft, second_level_category.lft, general_products.name")
         order = !session[:order_id].nil? ? Order.find(session[:order_id]) : nil
+        order_type = session[:order_type].present? ? session[:order_type] : nil
 
         if order
           featured_promotion = @order.market.featured_promotion(@order.organization, current_delivery)
@@ -25,7 +26,12 @@ module Api
           featured_promotion = current_market.featured_promotion(current_organization, current_delivery)
         end
 
-        products = filtered_available_products(@query, @category_ids, @seller_ids, @order)
+        if current_market.try(:is_consignment_market?) && order_type == 'sales'
+          products = filtered_available_consignment_products(@query, @category_ids, @seller_ids, @order, order_type)
+        else
+          products = filtered_available_products(@query, @category_ids, @seller_ids, @order)
+        end
+
         sellers = {}
         page_of_products = products
                                .offset(@offset)
@@ -76,6 +82,42 @@ module Api
             .filter_by_categories(category_ids)
             .filter_by_suppliers(seller_ids)
             .filter_by_active_org
+            .select("top_level_category.lft, top_level_category.name, second_level_category.lft, second_level_category.name, general_products.*")
+            .order(@sort_by)
+            .uniq
+      end
+
+      def filtered_available_consignment_products(query, category_ids, seller_ids, order, order_type=nil)
+        catalog_products = cross_sold_products = Product.connection.unprepared_statement do
+          Product
+            .visible
+            .consignment(current_market.organization.id)
+            .with_available_inventory(current_delivery.deliver_on, current_market.id, current_organization.id)
+            .select(:id, :general_product_id)
+            .to_sql
+        end
+
+        # KXM GC: Disable cross selling products for now.
+        # Once re-enabled you can delete the double assignment in catalog_products above...
+
+        # cross_sold_products = Product.
+        #   cross_selling_list_items(current_market.id).
+        #   visible.
+        #   with_available_inventory(current_delivery.deliver_on).
+        #   priced_for_market_and_buyer(current_market, current_organization).
+        #   with_visible_pricing.
+        #   select(:id, :general_product_id).
+        #   to_sql
+
+        gp = GeneralProduct.joins("JOIN (#{catalog_products} UNION #{cross_sold_products}) p_child
+              ON general_products.id=p_child.general_product_id
+              JOIN categories top_level_category ON general_products.top_level_category_id = top_level_category.id
+              JOIN categories second_level_category ON general_products.second_level_category_id = second_level_category.id
+              JOIN organizations supplier ON general_products.organization_id=supplier.id")
+            .filter_by_current_order(order)
+            .filter_by_name_or_category_or_supplier(query)
+            .filter_by_categories(category_ids)
+            .filter_by_suppliers(seller_ids)
             .select("top_level_category.lft, top_level_category.name, second_level_category.lft, second_level_category.name, general_products.*")
             .order(@sort_by)
             .uniq
