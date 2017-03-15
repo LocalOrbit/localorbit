@@ -49,7 +49,7 @@ class CartItem < ActiveRecord::Base
   end
 
   def as_json(_opts=nil)
-    super(methods: [:total_price, :unit_sale_price, :valid?, :destroyed?, :formatted_total_price])
+    super(methods: [:total_price, :unit_sale_price, :net_price, :valid?, :destroyed?, :formatted_total_price])
   end
 
   def unit

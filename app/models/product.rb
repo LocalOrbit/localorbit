@@ -415,7 +415,7 @@ class Product < ActiveRecord::Base
   end
 
   def minimum_quantity_for_purchase(opts={})
-    prices.for_market_and_org(opts[:market], opts[:organization]).minimum("min_quantity")
+    prices.for_market_and_org(opts[:market], opts[:organization]).minimum("min_quantity") || 0
   end
 
   def market_name
