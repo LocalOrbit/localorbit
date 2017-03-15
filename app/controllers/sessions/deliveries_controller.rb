@@ -18,8 +18,6 @@ module Sessions
 
     def create
       if current_market.is_consignment_market?
-        # KXM GC: Redirect to new delivery schedule if there isn't a manual one
-        # Probably best handled as a before_action callback
         delivery_schedule = current_market.delivery_schedules.manual.first
         delivery = delivery_schedule.deliveries.create!(
             deliver_on: params[:buyer_deliver_on],
