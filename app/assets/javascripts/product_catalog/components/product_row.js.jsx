@@ -33,7 +33,7 @@
       if (self.props.salesOrder && self.props.consignmentMarket) {
           _.map(gp.available, function (p) {
               lots = _.map(p.lots, function (l) {
-                  return <lo.ProductLots key={l.id} product={p} lot={l} purchaseOrder={self.props.purchaseOrder}
+                  return <lo.ProductLots key={l.id} product={p} lot={l} orderId={self.props.orderId} purchaseOrder={self.props.purchaseOrder}
                                          salesOrder={self.props.salesOrder}/>
               })
           });

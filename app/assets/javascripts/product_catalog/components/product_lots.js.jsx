@@ -22,15 +22,30 @@
         var lot;
 
         if (this.props.salesOrder) {
-            sale_entry = (
-                <input className=" redesigned app-sale-price-input" style={{width: "75px"}} type="number"
-                       placeholder="0"
-                       defaultValue={this.state.cartSalePrice} onKeyDown={this.clearField}/>
-            );
-            net_entry = (
-                <input className="redesigned app-net-price-input" style={{width: "75px"}} type="number" placeholder="0"
-                       defaultValue={this.state.cartNetPrice} onKeyDown={this.clearField}/>
-            );
+            if (this.props.orderId) {
+                sale_entry = (
+                    <input className="redesigned app-sale-price-input" style={{width: "75px"}} type="number"
+                           placeholder="0" name="items_to_add[][sale_price]"
+                           defaultValue={this.state.cartSalePrice} onKeyDown={this.clearField}/>
+                );
+                net_entry = (
+                    <input className="redesigned app-net-price-input" style={{width: "75px"}} type="number"
+                           placeholder="0" name="items_to_add[][net_price]"
+                           defaultValue={this.state.cartNetPrice} onKeyDown={this.clearField}/>
+                );
+            }
+            else {
+                sale_entry = (
+                    <input className=" redesigned app-sale-price-input" style={{width: "75px"}} type="number"
+                           placeholder="0"
+                           defaultValue={this.state.cartSalePrice} onKeyDown={this.clearField}/>
+                );
+                net_entry = (
+                    <input className="redesigned app-net-price-input" style={{width: "75px"}} type="number"
+                           placeholder="0"
+                           defaultValue={this.state.cartNetPrice} onKeyDown={this.clearField}/>
+                );
+            }
         }
 
         if (this.props.lot.status == 'available' && this.props.lot.quantity > 0) {
