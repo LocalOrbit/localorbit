@@ -7,7 +7,7 @@ feature "Viewing orders" do
   let!(:user)        { create(:user, :market_manager, managed_markets: [market]) }
 
   let!(:order) {create(:order, :with_items, payment_method: "credit card", organization: organization, market: market, delivery_fees: 10) }
-  let!(:order2) {create(:order, :with_items, payment_method: "purchase order", organization: organization, market: market, delivery_fees: 10, invoiced_at: 1.day.from_now.strftime("%m/%d/%Y"), invoice_due_date: 30.days.from_now.strftime("%m/%d/%Y")) }
+  let!(:order2) {create(:order, :with_items, payment_method: "purchase order", organization: organization, market: market, delivery_fees: 10, placed_at: 1.week.ago, invoiced_at: 2.day.ago, invoice_due_date: 30.days.from_now) }
 
   before do
     switch_to_subdomain market.subdomain
