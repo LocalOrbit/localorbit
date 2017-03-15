@@ -301,7 +301,10 @@
                 limit: 10,
                 useTemplates: FeatureAccess.order_templates?(market: current_market),
                 supplierId: nil,
-                orderId: order.id
+                orderId: order.id,
+                purchaseOrder: order.order_type == 'purchase',
+                salesOrder: order.order_type == 'sales',
+                consignmentMarket: current_market.is_consignment_market?
             }) %>
           </div>
         </div>
@@ -316,7 +319,12 @@
       <%= f.submit "Add Items", class: 'pull-right btn btn--small mobile-block' %>
     <% end %>
   </div>
-  <% if !current_user.buyer_only? && FeatureAccess.not_LE_market_manager?(user: current_user, market: current_market) %>
+
+  <% if order.purchase_order? %>
+  <%= render "shared/po_trans", {order: order} %>
+  <% end %>
+
+  <% if !current_user.buyer_only? && FeatureAccess.not_LE_market_manager?(user: current_user, market: current_market) && order.sales_order? %>
   <div class="order-totals">
     <div class="table-wrapper">
       <h2>Order Totals</h2>
@@ -416,7 +424,7 @@
   <% end %>
 </div>
 
-<% if FeatureAccess.order_printables?(user: current_user, order: order) %>
+<% if FeatureAccess.order_printables?(user: current_user, order: order) && order.sales_order? %>
   <%= render :partial=>"table_tents_and_posters/ad", locals: { order: order } %>
 <% end %>
 

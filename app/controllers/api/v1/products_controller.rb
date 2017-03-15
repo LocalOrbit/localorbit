@@ -117,6 +117,16 @@ module Api
 
         prices = Orders::UnitPriceLogic.prices(product, current_market, current_organization, current_market.add_item_pricing && order ? order.created_at : Time.current.end_of_minute).map { |price| format_price_for_catalog(price)}
 
+        lots = nil
+        committed = nil
+
+        if current_market.is_consignment_market?
+          lots = product.lots.select("lots.id, lots.quantity, lots.number, 'available'::text AS status")
+          awaiting_delivery = Order.joins(:items).where("orders.order_type = 'purchase' AND order_items.delivery_status = 'pending' AND orders.market_id = ? AND order_items.product_id = ?", current_market.id, product.id).select("null AS id, trunc(order_items.quantity) AS quantity, '' AS number, 'awaiting_delivery'::text AS status")
+          committed = Order.joins(:organization, items: [lots: [:lot]]).where("orders.order_type = 'sales' AND order_items.delivery_status = 'pending' AND orders.market_id = ? AND order_items.product_id = ?", current_market.id, product.id).select("order_items.product_id AS id, order_item_lots.lot_id, lots.number, organizations.name AS buyer_name, trunc(order_items.quantity) AS quantity, order_items.unit_price AS sale_price, order_items.net_price")
+          lots = lots + awaiting_delivery
+        end
+
         # TODO There's a brief window where prices and inventory may change after
         # the general products are found, but before the response is fully generated.
         # If all products become ineligible on a general product, it will appear in
@@ -131,10 +141,12 @@ module Api
               :unit => product.unit.plural,
               :unit_description => product.unit_plural,
               :prices => prices,
+              :lots => lots,
+              :committed => committed,
               :cart_item => cart_item.object,
               :cart_item_persisted => cart_item.persisted?,
               :cart_item_quantity => cart_item.quantity,
-              :price_for_quantity => number_to_currency(cart_item.unit_price.sale_price),
+              :price_for_quantity => number_to_currency(cart_item.unit_sale_price),
               :total_price => cart_item.display_total_price
           }
         else

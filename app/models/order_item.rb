@@ -57,8 +57,9 @@ class OrderItem < ActiveRecord::Base
       name: item.product.name,
       quantity: item.quantity,
       unit: item.unit,
-      unit_price: item.unit_price.sale_price,
-      product_fee_pct: item.unit_price.product_fee_pct,
+      unit_price: item.sale_price > 0 ? item.sale_price : item.unit_price.sale_price,
+      net_price: item.net_price,
+      product_fee_pct: item.sale_price.nil? ? item.unit_price.product_fee_pct : 0,
       category_fee_pct: category_fee_pct,
       seller_name: item.product.organization.name,
       delivery_status: "pending"
@@ -161,7 +162,7 @@ class OrderItem < ActiveRecord::Base
   def update_unit_price
     if order && order.market && order.organization
       new_price = Orders::UnitPriceLogic.unit_price(product, order.market, order.organization, order.market.add_item_pricing || persisted? ? order.created_at : Time.current, quantity)
-      if new_price != nil
+      if new_price != nil && self.net_price == 0
         self.unit_price = new_price.sale_price
       end
     end

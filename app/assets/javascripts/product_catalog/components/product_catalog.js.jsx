@@ -14,12 +14,14 @@
       orderCutoff: React.PropTypes.string.isRequired,
       buyerInfo: React.PropTypes.string.isRequired,
       purchaseOrder: React.PropTypes.bool,
+      salesOrder: React.PropTypes.bool,
+      consignmentMarket: React.PropTypes.bool,
       currentSupplier: React.PropTypes.number,
       useTemplates: React.PropTypes.bool.isRequired,
       supplierId: React.PropTypes.number,
       orderId: React.PropTypes.number,
       orderMinimum: React.PropTypes.string,
-      supplierView: React.PropTypes.boolean
+      supplierView: React.PropTypes.bool
     },
 
       componentWillMount: function() {
@@ -77,6 +79,8 @@
             supplierOnly={this.props.supplierId > 0}
             orderId={this.props.orderId}
             purchaseOrder={this.props.purchaseOrder}
+            salesOrder={this.props.salesOrder}
+            consignmentMarket={this.props.consignmentMarket}
             supplierView={this.props.supplierView}
         />);
         

@@ -10,7 +10,9 @@
     propTypes: {
       url: React.PropTypes.string.isRequired,
       cartUrl: React.PropTypes.string,
-      purchaseOrder: React.PropTypes.bool
+      purchaseOrder: React.PropTypes.bool,
+      salesOrder: React.PropTypes.bool,
+      consignmentMarket: React.PropTypes.bool
     },
 
     getInitialState: function() {
@@ -86,14 +88,14 @@
             return (<div>
                 {addTopCategory}
                 {addSecondCategory}
-                <lo.MobileProductRow key={product.id} product={product} hideImages={this.state.hideImages} promo={is_promo} supplierOnly={this.props.supplierOnly} orderId={this.props.orderId} purchaseOrder={this.props.purchaseOrder}/>
+                <lo.MobileProductRow key={product.id} product={product} hideImages={this.state.hideImages} promo={is_promo} supplierOnly={this.props.supplierOnly} orderId={this.props.orderId} purchaseOrder={this.props.purchaseOrder} salesOrder={this.props.salesOrder} consignmentMarket={this.props.consignmentMarket} />
             </div> );
         }
         else {
             return (<div>
                 {addTopCategory}
                 {addSecondCategory}
-                <lo.ProductRow key={product.id} product={product} hideImages={this.state.hideImages} promo={is_promo} supplierOnly={this.props.supplierOnly} orderId={this.props.orderId} purchaseOrder={this.props.purchaseOrder}/>
+                <lo.ProductRow key={product.id} product={product} hideImages={this.state.hideImages} promo={is_promo} supplierOnly={this.props.supplierOnly} orderId={this.props.orderId} purchaseOrder={this.props.purchaseOrder} salesOrder={this.props.salesOrder} consignmentMarket={this.props.consignmentMarket} />
             </div> );
         }
     },
