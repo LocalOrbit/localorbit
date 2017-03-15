@@ -143,7 +143,6 @@ class OrderItem < ActiveRecord::Base
   private
 
   def consume_inventory
-    return if self.order.order_type == "purchase"
     if order
       market_id = order.market.id
       organization_id = order.organization.id
@@ -202,7 +201,6 @@ class OrderItem < ActiveRecord::Base
   end
 
   def consume_inventory_amount(initial_amount, market_id, organization_id)
-    return if self.order.order_type == "purchase"
     specific = false
     amount = initial_amount
     product.lots_by_expiration.available_specific(deliver_on_date, market_id, organization_id).each do |lot|
