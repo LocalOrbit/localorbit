@@ -178,6 +178,10 @@ class Organization < ActiveRecord::Base
     !(plan_start_at && plan_interval)
   end
 
+  def is_consignment_organization?
+    payment_model == 'consignment'
+  end
+
   def next_service_payment_at
     return nil if adjunct_organization
 

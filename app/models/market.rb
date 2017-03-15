@@ -273,7 +273,7 @@ class Market < ActiveRecord::Base
 
   def is_consignment_market?
     # KXM GC: The organization should be set by here, but this method throws errors... does the factory reflect the relationship correctly?
-    organization.try(:payment_model) == "consignment"
+    organization.try(:is_consignment_organization?)
   end
 
   def is_buysell_market?
