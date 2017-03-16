@@ -4,12 +4,18 @@ class OrderItemLot < ActiveRecord::Base
   belongs_to :lot
 
   before_destroy :return_inventory_to_lot
-
+  before_create :check_po
   def number
     lot.number
   end
 
   protected
+
+  def check_po
+    if order_item.order.order_type == "purchase"
+      self.quantity = 0
+    end
+  end
 
   def return_inventory_to_lot
     lot.increment!(:quantity, quantity)

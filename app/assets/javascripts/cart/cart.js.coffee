@@ -448,5 +448,6 @@ $ ->
     $('.payment-method').click()
 
   if ($('#order_credit_card_id option').size() == 2)
-    $('#order_credit_card_id option:last').attr("selected","selected");
+    $('#order_credit_card_id option:last').attr("selected","selected")
 
+  $('.quantity').removeClass("updated").removeClass("finished")
