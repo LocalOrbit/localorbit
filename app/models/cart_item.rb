@@ -1,6 +1,7 @@
 class CartItem < ActiveRecord::Base
   include ActiveSupport::NumberHelper
   cattr_accessor :order
+  attr_accessor :order_type
 
   audited allow_mass_assignment: true, associated_with: :cart
   belongs_to :cart, inverse_of: :items
@@ -72,7 +73,7 @@ class CartItem < ActiveRecord::Base
   end
 
   def quantity_is_available
-    if product && product.available_inventory(Time.current.end_of_minute, cart.market.id, cart.organization.id) < quantity
+    if order_type != "purchase" && product && product.available_inventory(Time.current.end_of_minute, cart.market.id, cart.organization.id) < quantity
       errors.add(:quantity, "available for purchase: #{product.available_inventory(Time.current.end_of_minute, cart.market.id, cart.organization.id)}")
     end
   end

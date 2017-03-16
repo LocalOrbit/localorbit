@@ -50,6 +50,7 @@ class CartsController < ApplicationController
   end
 
   def update
+    @order_type = session[:order_type]
     product = Product.includes(:prices).find(params[:product_id])
     delivery_date = current_delivery.deliver_on
 
@@ -61,6 +62,7 @@ class CartsController < ApplicationController
       @item.net_price = params[:net_price]
       @item.lot_id = params[:lot_id]
       @item.product = product
+      @item.order_type = @order_type
 
       if @order_type == "sales" && @item.quantity && @item.quantity > 0 && @item.quantity > product.available_inventory(delivery_date, current_market.id, current_organization.id)
         @error = "Quantity of #{product.name} available for purchase: #{product.available_inventory(delivery_date, current_market.id, current_organization.id)}"
