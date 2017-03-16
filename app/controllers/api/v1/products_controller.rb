@@ -26,9 +26,7 @@ module Api
           featured_promotion = current_market.featured_promotion(current_organization, current_delivery)
         end
 
-        if current_market.try(:is_consignment_market?) && order_type == 'sales'
-          products = filtered_available_so_consignment_products(@query, @category_ids, @seller_ids, @order)
-        elsif current_market.try(:is_consignment_market?) && order_type == 'purchase'
+        if current_market.try(:is_consignment_market?) && order_type == 'purchase'
           products = filtered_available_po_consignment_products(@query, @category_ids, @seller_ids, @order)
         else
           products = filtered_available_products(@query, @category_ids, @seller_ids, @order)
@@ -124,42 +122,6 @@ module Api
                  .uniq
       end
 
-      def filtered_available_so_consignment_products(query, category_ids, seller_ids, order)
-        catalog_products = cross_sold_products = Product.connection.unprepared_statement do
-          Product
-            .visible
-            .consignment(current_market.organization.id)
-            .with_available_inventory(current_delivery.deliver_on, current_market.id, current_organization.id)
-            .select(:id, :general_product_id)
-            .to_sql
-        end
-
-        # KXM GC: Disable cross selling products for now.
-        # Once re-enabled you can delete the double assignment in catalog_products above...
-
-        # cross_sold_products = Product.
-        #   cross_selling_list_items(current_market.id).
-        #   visible.
-        #   with_available_inventory(current_delivery.deliver_on).
-        #   priced_for_market_and_buyer(current_market, current_organization).
-        #   with_visible_pricing.
-        #   select(:id, :general_product_id).
-        #   to_sql
-
-        gp = GeneralProduct.joins("JOIN (#{catalog_products} UNION #{cross_sold_products}) p_child
-              ON general_products.id=p_child.general_product_id
-              JOIN categories top_level_category ON general_products.top_level_category_id = top_level_category.id
-              JOIN categories second_level_category ON general_products.second_level_category_id = second_level_category.id
-              JOIN organizations supplier ON general_products.organization_id=supplier.id")
-            .filter_by_current_order(order)
-            .filter_by_name_or_category_or_supplier(query)
-            .filter_by_categories(category_ids)
-            .filter_by_suppliers(seller_ids)
-            .select("top_level_category.lft, top_level_category.name, second_level_category.lft, second_level_category.name, general_products.*")
-            .order(@sort_by)
-            .uniq
-      end
-
       def format_general_product_for_catalog(general_product, sellers, order)
         general_product = general_product.decorate
 
@@ -201,7 +163,7 @@ module Api
 
         if current_market.is_consignment_market?
           lots = product.lots.select("lots.id, lots.quantity, lots.number, 'available'::text AS status")
-          awaiting_delivery = Order.joins(items: [product: [:consignment_product]]).where("orders.order_type = 'purchase' AND order_items.delivery_status = 'pending' AND orders.market_id = ? AND consignment_products.consignment_product_id = ?", current_market.id, product.id).select("null AS id, trunc(order_items.quantity) AS quantity, '' AS number, 'awaiting_delivery'::text AS status")
+          awaiting_delivery = Order.joins(:items).where("orders.order_type = 'purchase' AND order_items.delivery_status = 'pending' AND orders.market_id = ? AND order_items.product_id = ?", current_market.id, product.id).select("null AS id, trunc(order_items.quantity) AS quantity, '' AS number, 'awaiting_delivery'::text AS status")
           committed = Order.joins(:organization, items: [lots: [:lot]]).where("orders.order_type = 'sales' AND order_items.delivery_status = 'pending' AND orders.market_id = ? AND order_items.product_id = ?", current_market.id, product.id).select("order_items.product_id AS id, order_item_lots.lot_id, lots.number, organizations.name AS buyer_name, trunc(order_items.quantity) AS quantity, order_items.unit_price AS sale_price, order_items.net_price")
           lots = lots + awaiting_delivery
         end
