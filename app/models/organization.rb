@@ -156,6 +156,8 @@ class Organization < ActiveRecord::Base
   def primary_payment_provider
     if m = markets.first
       m.primary_payment_provider
+    elsif market.try(:is_consignment_market?)
+      market.primary_payment_provider
     else
       nil
     end
@@ -174,6 +176,10 @@ class Organization < ActiveRecord::Base
   def adjunct_organization
     # This should probably be boiled down to a single 'master market' flag...
     !(plan_start_at && plan_interval)
+  end
+
+  def is_consignment_organization?
+    payment_model == 'consignment'
   end
 
   def next_service_payment_at

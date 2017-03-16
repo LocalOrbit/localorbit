@@ -68,6 +68,8 @@ class ApplicationController < ActionController::Base
       return @current_organization
     end
 
+    return current_market.organization if current_market.try(:is_consignment_market?) && session[:order_type] == 'purchase'
+
     if @current_organization && (@last_organization_market == current_market || @current_organization.all_markets.include?(current_market))
       @last_organization_market = current_market
       return @current_organization
@@ -75,6 +77,13 @@ class ApplicationController < ActionController::Base
 
     @last_organization_market = current_market
     @current_organization = find_current_organization
+  end
+
+  def current_supplier
+    if session[:current_supplier_id]
+      @current_supplier = current_market.suppliers.find_by(id: session[:current_supplier_id])
+      return @current_supplier
+    end
   end
 
   def find_current_organization
@@ -241,6 +250,11 @@ class ApplicationController < ActionController::Base
     redirect_to [:new_admin, current_organization, :location], alert: "You must enter an address for this organization before you can shop"
   end
 
+  def require_manual_delivery_schedule
+    return unless current_market && current_market.delivery_schedules.manual.none?
+    redirect_to [:new_admin, current_market, :delivery_schedule], alert: "You must enter a manual delivery schedule before you can purchase"
+  end
+
   def require_market_open
     render "shared/market_closed" if current_market.closed? && session[:order_id].nil?
   end
@@ -248,6 +262,11 @@ class ApplicationController < ActionController::Base
   def require_current_organization
     return unless current_organization.nil? && session[:order_id].nil?
     redirect_to new_sessions_organization_path(redirect_back_to: request.original_url)
+  end
+
+  def require_current_supplier
+    return unless current_supplier.nil?
+    redirect_to new_sessions_supplier_path(redirect_back_to: request.original_url)
   end
 
   def require_current_delivery

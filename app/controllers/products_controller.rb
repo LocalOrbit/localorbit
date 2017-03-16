@@ -1,6 +1,8 @@
 class ProductsController < ApplicationController
   include ActiveSupport::NumberHelper
   #before_action :reset_order_id
+  before_action :set_order_type, only: [:purchase, :index]
+  before_action :require_current_supplier, only: [:purchase]
   before_action :require_selected_market
   before_action :require_market_open
   before_action :require_current_organization
@@ -12,6 +14,13 @@ class ProductsController < ApplicationController
   before_action :load_sellers, only: [:search]
 
   def index
+    if current_market.alternative_order_page
+      render 'alternative_order_page'
+      return
+    end
+  end
+
+  def purchase
     if current_market.alternative_order_page
       render 'alternative_order_page'
       return
@@ -82,5 +91,14 @@ class ProductsController < ApplicationController
 
   def load_products
     @products_for_sale = ProductsForSale.new(current_delivery, current_organization, current_cart, request.query_parameters, product_id: params[:id])
+  end
+
+  def set_order_type
+    @order_type = case params[:action]
+      when 'index' then 'sales'
+      else params[:action]
+    end
+
+    session[:order_type] = @order_type unless session[:order_type] == @order_type
   end
 end

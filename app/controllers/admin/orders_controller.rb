@@ -1,19 +1,17 @@
 class Admin::OrdersController < AdminController
   include StickyFilters
 
-  before_action :find_sticky_params, only: :index
+  before_action :find_sticky_params, only: [:index, :purchase_orders]
   before_action :load_qb_session
 
   def index
     if params["clear"]
       redirect_to url_for(params.except(:clear))
     else
-      #@query_params["placed_at_date_gteq"] ||= 7.days.ago.to_date.to_s
-      #@query_params["placed_at_date_lteq"] ||= Date.today.to_s
-      @search_presenter = OrderSearchPresenter.new(@query_params, current_user, :placed_at)
-      @q, @totals = search_and_calculate_totals(@search_presenter)
+      po_filter = {:q => {"order_type_matches" => "sales"}}
+      @query_params = @query_params.deep_merge!(po_filter)
 
-      @orders = @q.result(distinct: true)
+      build_order_list
 
       respond_to do |format|
         format.html do
@@ -32,6 +30,43 @@ class Admin::OrdersController < AdminController
         end
       end
     end
+  end
+
+  def purchase_orders
+    if params["clear"]
+      redirect_to url_for(params.except(:clear))
+    else
+      po_filter = {:q => {"order_type_matches" => "purchase"}}
+      @query_params = @query_params.deep_merge!(po_filter)
+
+      build_order_list
+
+      respond_to do |format|
+        format.html do
+          @orders = @orders.page(params[:page]).per(@query_params[:per_page])
+          render :index
+        end
+        format.csv do
+          @order_items = find_order_items(@orders.map(&:id))
+          @abort_mission = @order_items.count > 2999
+          if ENV["USE_UPLOAD_QUEUE"] == "true"
+            Delayed::Job.enqueue ::CSVExport::CSVOrderExportJob.new(current_user, @order_items.map(&:id))
+            flash[:notice] = "Please check your email for export results."
+            redirect_to admin_purchase_orders_path
+          else
+            @filename = "orders.csv"
+          end
+        end
+      end
+
+    end
+  end
+
+  def build_order_list
+    @search_presenter = OrderSearchPresenter.new(@query_params, current_user, :placed_at)
+    @q, @totals = search_and_calculate_totals(@search_presenter)
+
+    @orders = @q.result(distinct: true)
   end
 
   def search_and_calculate_totals(search)

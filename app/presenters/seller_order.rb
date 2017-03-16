@@ -14,6 +14,8 @@ class SellerOrder
     :qb_ref_id,
     :signature_data,
     :order_type,
+    :sales_order?,
+    :purchase_order?,
     to: :@order
 
   attr_reader :seller

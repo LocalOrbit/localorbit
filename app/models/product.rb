@@ -40,6 +40,8 @@ class Product < ActiveRecord::Base
   has_many :cross_selling_list_products
   has_many :cross_selling_lists, through: :cross_selling_list_products
 
+  # p.parent_product.orders.includes(:items).po.not_sold_through.map{|o| [o.id, o.items.where('product_id = ?', p.parent_product.id).map{|i| i.quantity}]}
+
   dragonfly_accessor :image do
     copy_to(:thumb){|a| a.thumb('150x150#') }
   end
@@ -377,23 +379,27 @@ class Product < ActiveRecord::Base
     lot.quantity = val
   end
 
-  def available_inventory(deliver_on_date=Time.current.end_of_minute, market_id=nil, organization_id=nil)
-    if lots.loaded?
-      qty = lots.to_a.sum {|l| l.available_specific?(deliver_on_date, market_id, organization_id) ? l.quantity : 0 }
-      #if qty == 0
-        qty += lots.to_a.sum {|l| l.available_general?(deliver_on_date) ? l.quantity : 0 }
-      #end
+  def available_inventory(deliver_on_date=Time.current.end_of_minute, market_id=nil, organization_id=nil, lot_id=nil)
+    if lot_id.present? && lot_id > 0
+      qty = lots.find(lot_id).quantity
     else
-      qty = lots.available_specific(deliver_on_date, market_id, organization_id).sum(:quantity)
-      #if qty == 0
-        qty += lots.available_general(deliver_on_date).sum(:quantity)
-      #end
+      if lots.loaded?
+        qty = lots.to_a.sum {|l| l.available_specific?(deliver_on_date, market_id, organization_id) ? l.quantity : 0 }
+        #if qty == 0
+          qty += lots.to_a.sum {|l| l.available_general?(deliver_on_date) ? l.quantity : 0 }
+        #end
+      else
+        qty = lots.available_specific(deliver_on_date, market_id, organization_id).sum(:quantity)
+        #if qty == 0
+          qty += lots.available_general(deliver_on_date).sum(:quantity)
+        #end
+      end
     end
     qty
   end
 
   def minimum_quantity_for_purchase(opts={})
-    prices.for_market_and_org(opts[:market], opts[:organization]).minimum("min_quantity")
+    prices.for_market_and_org(opts[:market], opts[:organization]).minimum("min_quantity") || 0
   end
 
   def market_name

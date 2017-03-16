@@ -5,6 +5,7 @@ class PlaceStripeOrder
     CreateStripeCustomerForEntity, 
     EnsureCartIsNotEmpty,
     CreateOrder,
+    UpdateConsignmentTransaction,
     CreateTemporaryStripeCreditCard, 
     ApplyDiscountToOrderItems,
     StoreOrderFees,
