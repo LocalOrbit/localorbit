@@ -1,0 +1,17 @@
+        <% @grouped_items.each.with_index do |(seller_name, items), index| %>
+          <tbody class="item-group">
+            <tr class="<%= index == 0 ? "" : "is-hidden" %>">
+              <th class="subheading-cart">Your Order</th>
+              <th class="cart-quantity-column">Quantity</th>
+            </tr>
+            <tr>
+              <th colspan="3" class="seller"><%= seller_name %></th>
+            </tr>
+            <% items.each do |item| %>
+              <%= content_tag_for(:tr, item, id: item.product.id, class: "product order-item-row", data: {id: item.product.id}) do %>
+                <td class="name"><%= item.product.name %></td>
+                <td class="quantity math"><%= item.decorate.quantity_with_unit %></td>
+              <% end %>
+            <% end %>
+          </tbody>
+        <% end %>

@@ -1,9 +1,12 @@
 <div class="row row--partial order-page">
   <div class="column column--eleven-twelfths">
+    <% if !current_market.is_consignment_market? %>
+    <% # KXM GC: Order creation messaging needs an update for consignment markets %>
     <h1>Thank you for your order!</h1>
 
     <p>You will receive a confirmation email with details of your order and a link to track its progress.</p>
     <p>If you have any questions, <%= link_to "please let us know.", help_path %></p>
+    <% end %>
 
     <%= render "order" %>
   </div>

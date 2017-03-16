@@ -132,6 +132,12 @@ Rails.application.routes.draw do
       resources :order_items, only: [:show, :update] # for order price editing
     end
 
+    get "purchase_orders" => "orders#purchase_orders"
+    resources :purchase_orders, only: [:show], :path => "purchase_order", :as => "purchase_order", :controller => 'orders'
+
+    get "/sales_orders" => "orders#index", :path => "sales_orders", :as => "sales_orders"
+    resources :sales_orders, only: [:show, :update, :create], :path => "sales_order", :as => "sales_order", :controller => 'orders'
+
     resources :organizations, concerns: [:bank_account, :activatable] do
       resources :organization_users, as: :users, path: :users do
         get :invite
@@ -237,6 +243,7 @@ Rails.application.routes.draw do
 
   namespace :sessions do
     resources :organizations
+    resources :suppliers
     resource :deliveries do
       get :reset
     end
@@ -255,6 +262,7 @@ Rails.application.routes.draw do
   post '/delivery_notes/new' => "delivery_notes#create"
 
   get '/products/search' => "products#search"
+  get '/products/purchase' => "products#purchase"
   resources :products, only: [:index, :show] do
     get '/row' => "products#render_product_row"
   end
@@ -274,7 +282,15 @@ Rails.application.routes.draw do
   resource :cart, only: [:update, :show, :destroy]
   resources :orders, only: [:index, :show, :create] do
     resources :table_tents_and_posters, :controller=>"table_tents_and_posters", only: [:index, :show, :create]
+
   end
+
+  get "/purchase_orders" => "orders#purchase_orders"
+  resources :purchase_orders, only: [:show], :path => "purchase_order", :as => "purchase_order", :controller => 'orders'
+
+  get "/sales_orders" => "orders#index", :path => "sales_orders", :as => "sales_orders"
+  resources :sales_orders, only: [:show, :update, :create], :path => "sales_order", :as => "sales_order", :controller => 'orders'
+
   resource :registration, only: [:show, :create]
 
   get "/pdf_view/header", to: "pdf_view#header"

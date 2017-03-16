@@ -3,6 +3,7 @@ module Sessions
     before_action :require_selected_market
     before_action :require_current_organization
     before_action :require_organization_location
+    before_action :require_manual_delivery_schedule, only: [:create]
     before_action :hide_admin_navigation
 
     def new
@@ -17,7 +18,7 @@ module Sessions
 
     def create
       if current_market.is_consignment_market?
-        delivery_schedule = DeliverySchedule.find_by_delivery_cycle("manual")
+        delivery_schedule = current_market.delivery_schedules.manual.first
         delivery = delivery_schedule.deliveries.create!(
             deliver_on: params[:buyer_deliver_on],
             buyer_deliver_on: params[:buyer_deliver_on],

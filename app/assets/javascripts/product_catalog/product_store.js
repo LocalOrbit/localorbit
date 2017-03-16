@@ -85,7 +85,7 @@
       });
     },
 
-    updateProduct: function(productId, quantity, totalPrice) {
+    updateProduct: function(productId, quantity, netPrice, salePrice, totalPrice, lotId) {
       // I can pull out a non-general product from our catalog, edit it, and automatically alter the catalog
       // itself because JS always passes objects by reference.
       //
@@ -93,6 +93,9 @@
       var product = _.find(_.flatten(_.pluck(this.catalog.products, 'available')), {id: productId});
       if(!product) return;
       product.cart_item_quantity = quantity;
+      product.cart_item_net_price = netPrice;
+      product.cart_item_sale_price = salePrice;
+      product.cart_item_lot_id = lotId;
       product.total_price = totalPrice;
       this.trigger(this.catalog);
     },

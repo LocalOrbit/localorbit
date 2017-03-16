@@ -8,9 +8,25 @@ class OrdersController < ApplicationController
   before_action :require_current_delivery,       only: :create
   before_action :require_cart,                   only: :create
   before_action :hide_admin_navigation,          only: :create
-  before_action :find_sticky_params, only: :index
+  before_action :find_sticky_params, only: [:index, :purchase_orders]
 
   def index
+    po_filter = {:q => {"order_type_matches" => 'sales'}}
+    @query_params.merge!(po_filter)
+
+    order_list
+  end
+
+  def purchase_orders
+    po_filter = {:q => {"order_type_eq" => "purchase"}}
+    @query_params.merge!(po_filter)
+
+    order_list
+
+    render :index
+  end
+
+  def order_list
     @query_params["placed_at_date_gteq"] ||= 7.days.ago.to_date.to_s
     @query_params["placed_at_date_lteq"] ||= Date.today.to_s
     @presenter = BuyerOrderPresenter.new(current_user, current_market, request.query_parameters, @query_params)
@@ -26,10 +42,11 @@ class OrdersController < ApplicationController
   end
 
   def create
+    @order_type = session[:order_type]
     # Validate cart items against current inventory...
     errors ||= []
     current_cart.items.each do |item|
-      invalid = validate_qty(item)
+      invalid = validate_qty(item, @order_type)
       errors << invalid if invalid
 
       if invalid then
@@ -70,6 +87,7 @@ class OrdersController < ApplicationController
       if @placed_order.success?
         session.delete(:cart_id)
         session.delete(:current_organization_id)
+        session.delete(:current_supplier_id)
         session.delete(:current_delivery_id)
         session.delete(:current_delivery_day)
         @grouped_items = @order.items.for_checkout
@@ -86,18 +104,20 @@ class OrdersController < ApplicationController
 
   protected
 
-  def validate_qty(item)
+  def validate_qty(item, order_type)
     error = nil
-    product = Product.includes(:prices).find(item.product.id)
-    delivery_date = current_delivery.deliver_on
-    actual_count = product.available_inventory(delivery_date, current_market.id, current_organization.id)
+    if order_type == "sales"
+      product = Product.includes(:prices).find(item.product.id)
+      delivery_date = current_delivery.deliver_on
+      actual_count = product.available_inventory(delivery_date, current_market.id, current_organization.id, item.lot_id)
 
-    if item.quantity && item.quantity > 0 && item.quantity > actual_count
-      error = {
-        item_id: item.id,
-        error_msg: "Quantity of #{product.name} (#{product.unit.plural}) available for purchase: #{product.available_inventory(delivery_date, current_market.id, current_organization.id)}",
-        actual_count: actual_count
-      }
+      if item.quantity && item.quantity > 0 && item.quantity > actual_count
+        error = {
+          item_id: item.id,
+          error_msg: "Quantity of #{product.name} (#{product.unit.plural}) available for purchase: #{product.available_inventory(delivery_date, current_market.id, current_organization.id)}",
+          actual_count: actual_count
+        }
+      end
     end
 
     error
@@ -115,6 +135,7 @@ class OrdersController < ApplicationController
 
   def order_params
     params.require(:order).permit(
+      :order_type,
       :discount_code,
       :payment_method,
       :payment_note,

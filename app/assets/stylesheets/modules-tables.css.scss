@@ -539,6 +539,18 @@ span.price-for-quantity {
   }
 }
 
+.sale_price{
+  input {
+    text-align: center;
+  }
+}
+
+.net_price {
+  input {
+    text-align: center;
+  }
+}
+
 .unit-price {
   font-size: 14px;
   font-weight: bold;

@@ -9,7 +9,10 @@
   var ProductTable = React.createClass({
     propTypes: {
       url: React.PropTypes.string.isRequired,
-      cartUrl: React.PropTypes.string
+      cartUrl: React.PropTypes.string,
+      purchaseOrder: React.PropTypes.bool,
+      salesOrder: React.PropTypes.bool,
+      consignmentMarket: React.PropTypes.bool
     },
 
     getInitialState: function() {
@@ -85,14 +88,14 @@
             return (<div>
                 {addTopCategory}
                 {addSecondCategory}
-                <lo.MobileProductRow key={product.id} product={product} hideImages={this.state.hideImages} promo={is_promo} supplierOnly={this.props.supplierOnly} orderId={this.props.orderId}/>
+                <lo.MobileProductRow key={product.id} product={product} hideImages={this.state.hideImages} promo={is_promo} supplierOnly={this.props.supplierOnly} orderId={this.props.orderId} purchaseOrder={this.props.purchaseOrder} salesOrder={this.props.salesOrder} consignmentMarket={this.props.consignmentMarket} />
             </div> );
         }
         else {
             return (<div>
                 {addTopCategory}
                 {addSecondCategory}
-                <lo.ProductRow key={product.id} product={product} hideImages={this.state.hideImages} promo={is_promo} supplierOnly={this.props.supplierOnly} orderId={this.props.orderId} />
+                <lo.ProductRow key={product.id} product={product} hideImages={this.state.hideImages} promo={is_promo} supplierOnly={this.props.supplierOnly} orderId={this.props.orderId} purchaseOrder={this.props.purchaseOrder} salesOrder={this.props.salesOrder} consignmentMarket={this.props.consignmentMarket} />
             </div> );
         }
     },
@@ -105,7 +108,7 @@
 
       var isMobile = self.state.width <= MOBILE_WIDTH;
       var promo = null;
-      if (this.state.featuredPromotion && this.state.featuredPromotion.details != null && !this.props.supplierOnly) {
+      if (this.state.featuredPromotion && this.state.featuredPromotion.details != null && !this.props.supplierOnly && !this.props.purchaseOrder) {
           promo = (<lo.ProductFeaturedPromotion hideImages={this.state.hideImages} promo={self.state.featuredPromotion} />)
       }
       var rows = self.state.products.map(function(product) {

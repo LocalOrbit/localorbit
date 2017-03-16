@@ -6,7 +6,7 @@ module ReportHelpers
     follow_order_link order: order
 
     # (cheat: peek at the path to see we're on buyer version of the page:)
-    expect(page.current_path).to eq(order_path(order))
+    expect(page.current_path).to eq(send("#{order.order_type}_order_path",order))
   end
 
   def follow_admin_order_link(order:nil, order_number:nil)
@@ -49,7 +49,7 @@ module ReportHelpers
   def see_buyer_order_link(order:)
     link = page.first("a", text: order.order_number)
     expect(link).to be, "Didn't find any links for Order #{order.order_number}"
-    expect(link[:href]).to eq(order_path(order)), "Didn't see the Buyer-specific version of a link to Order #{order.order_number}"
+    expect(link[:href]).to eq(send("#{order.order_type}_order_path",order)), "Didn't see the Buyer-specific version of a link to Order #{order.order_number}"
   end
   
   # 
