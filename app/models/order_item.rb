@@ -113,7 +113,7 @@ class OrderItem < ActiveRecord::Base
   end
 
   def product_availability
-    return unless product.present? && order.order_type == "sales"
+    return unless product.present?
 
     if !order.nil?
       market_id = order.market.id
