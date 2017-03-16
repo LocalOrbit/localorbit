@@ -40,11 +40,6 @@ class Product < ActiveRecord::Base
   has_many :cross_selling_list_products
   has_many :cross_selling_lists, through: :cross_selling_list_products
 
-  has_many :consignment_products
-  has_many :child_products, through: :consignment_products, source: :consignment_product
-  has_one  :consignment_product, foreign_key: :consignment_product_id
-  has_one  :parent_product, through: :consignment_product, source: :product
-
   # p.parent_product.orders.includes(:items).po.not_sold_through.map{|o| [o.id, o.items.where('product_id = ?', p.parent_product.id).map{|i| i.quantity}]}
 
   dragonfly_accessor :image do
@@ -368,17 +363,6 @@ class Product < ActiveRecord::Base
     joins(arel_table.create_join(Lot.arel_table, join_on))
   end
 
-  def self.consignment(organization_id)
-    consignment_product_table = ConsignmentProduct.arel_table
-
-    on_cond = arel_table[:id].eq(consignment_product_table[:consignment_product_id]).
-      and(consignment_product_table[:consignment_organization_id].eq(organization_id))
-
-    join_on = arel_table.create_on(on_cond)
-
-    joins(arel_table.create_join(ConsignmentProduct.arel_table, join_on))
-  end
-
   def can_use_simple_inventory?
     use_simple_inventory? || !lots.where("(expires_at IS NULL OR expires_at > ?) AND quantity > 0", Time.current.end_of_minute).exists?
   end
@@ -415,7 +399,7 @@ class Product < ActiveRecord::Base
   end
 
   def minimum_quantity_for_purchase(opts={})
-    prices.for_market_and_org(opts[:market], opts[:organization]).minimum("min_quantity")
+    prices.for_market_and_org(opts[:market], opts[:organization]).minimum("min_quantity") || 0
   end
 
   def market_name

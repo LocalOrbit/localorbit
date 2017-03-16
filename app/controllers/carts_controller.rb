@@ -19,7 +19,7 @@ class CartsController < ApplicationController
           redirect_to [target.to_sym], alert: "Your cart is empty. Please add items to your cart before checking out."
         else
           current_cart.items.each do |item|
-            invalid = validate_qty(item)
+            invalid = validate_qty(item, @order_type)
             errors << invalid if invalid
 
             if invalid then
@@ -50,6 +50,7 @@ class CartsController < ApplicationController
   end
 
   def update
+    @order_type = session[:order_type]
     product = Product.includes(:prices).find(params[:product_id])
     delivery_date = current_delivery.deliver_on
 
@@ -61,8 +62,9 @@ class CartsController < ApplicationController
       @item.net_price = params[:net_price]
       @item.lot_id = params[:lot_id]
       @item.product = product
+      @item.order_type = @order_type
 
-      if @item.quantity && @item.quantity > 0 && @item.quantity > product.available_inventory(delivery_date, current_market.id, current_organization.id)
+      if @order_type == "sales" && @item.quantity && @item.quantity > 0 && @item.quantity > product.available_inventory(delivery_date, current_market.id, current_organization.id)
         @error = "Quantity of #{product.name} available for purchase: #{product.available_inventory(delivery_date, current_market.id, current_organization.id)}"
         @item.quantity = product.available_inventory(delivery_date, current_market.id, current_organization.id)
       end
@@ -89,20 +91,21 @@ class CartsController < ApplicationController
 
   protected
 
-  def validate_qty(item)
+  def validate_qty(item, order_type)
     error = nil
-    product = Product.includes(:prices).find(item.product.id)
-    delivery_date = current_delivery.deliver_on
-    actual_count = product.available_inventory(delivery_date, current_market.id, current_organization.id)
+    if order_type == "sales"
+      product = Product.includes(:prices).find(item.product.id)
+      delivery_date = current_delivery.deliver_on
+      actual_count = product.available_inventory(delivery_date, current_market.id, current_organization.id)
 
-    if item.quantity && item.quantity > 0 && item.quantity > actual_count
-      error = {
-        item_id: item.id,
-        error_msg: "Quantity of #{product.name} (#{product.unit.plural}) available for purchase: #{product.available_inventory(delivery_date, current_market.id, current_organization.id)}",
-        actual_count: actual_count
-      }
+      if item.quantity && item.quantity > 0 && item.quantity > actual_count
+        error = {
+          item_id: item.id,
+          error_msg: "Quantity of #{product.name} (#{product.unit.plural}) available for purchase: #{product.available_inventory(delivery_date, current_market.id, current_organization.id)}",
+          actual_count: actual_count
+        }
+      end
     end
-
     error
   end
 

@@ -26,8 +26,8 @@ module Api
           featured_promotion = current_market.featured_promotion(current_organization, current_delivery)
         end
 
-        if current_market.try(:is_consignment_market?) && order_type == 'sales'
-          products = filtered_available_consignment_products(@query, @category_ids, @seller_ids, @order, order_type)
+        if current_market.try(:is_consignment_market?) && order_type == 'purchase'
+          products = filtered_available_po_consignment_products(@query, @category_ids, @seller_ids, @order)
         else
           products = filtered_available_products(@query, @category_ids, @seller_ids, @order)
         end
@@ -87,14 +87,13 @@ module Api
             .uniq
       end
 
-      def filtered_available_consignment_products(query, category_ids, seller_ids, order, order_type=nil)
+      def filtered_available_po_consignment_products(query, category_ids, seller_ids, order)
         catalog_products = cross_sold_products = Product.connection.unprepared_statement do
-          Product
-            .visible
-            .consignment(current_market.organization.id)
-            .with_available_inventory(current_delivery.deliver_on, current_market.id, current_organization.id)
-            .select(:id, :general_product_id)
-            .to_sql
+          Product.joins(organization: [market_organizations: [:market]])
+              .where("markets.id = ?", current_market.id)
+              .visible
+              .select(:id, :general_product_id)
+              .to_sql
         end
 
         # KXM GC: Disable cross selling products for now.
@@ -109,18 +108,18 @@ module Api
         #   select(:id, :general_product_id).
         #   to_sql
 
-        gp = GeneralProduct.joins("JOIN (#{catalog_products} UNION #{cross_sold_products}) p_child
+        gp = GeneralProduct.joins("JOIN (#{catalog_products}) p_child
               ON general_products.id=p_child.general_product_id
               JOIN categories top_level_category ON general_products.top_level_category_id = top_level_category.id
               JOIN categories second_level_category ON general_products.second_level_category_id = second_level_category.id
               JOIN organizations supplier ON general_products.organization_id=supplier.id")
-            .filter_by_current_order(order)
-            .filter_by_name_or_category_or_supplier(query)
-            .filter_by_categories(category_ids)
-            .filter_by_suppliers(seller_ids)
-            .select("top_level_category.lft, top_level_category.name, second_level_category.lft, second_level_category.name, general_products.*")
-            .order(@sort_by)
-            .uniq
+                 .filter_by_current_order(order)
+                 .filter_by_name_or_category_or_supplier(query)
+                 .filter_by_categories(category_ids)
+                 .filter_by_suppliers(seller_ids)
+                 .select("top_level_category.lft, top_level_category.name, second_level_category.lft, second_level_category.name, general_products.*")
+                 .order(@sort_by)
+                 .uniq
       end
 
       def format_general_product_for_catalog(general_product, sellers, order)
@@ -173,7 +172,7 @@ module Api
         # the general products are found, but before the response is fully generated.
         # If all products become ineligible on a general product, it will appear in
         # the catalog without any prices or units available.
-        if prices && prices.length > 0 && available_inventory && available_inventory > 0 && (!product.cart_item.nil?)
+        if current_market.is_consignment_market? || (prices && prices.length > 0 && available_inventory && available_inventory > 0 && (!product.cart_item.nil?))
           cart_item = product.cart_item.decorate
 
           {
