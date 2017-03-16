@@ -42,10 +42,11 @@ class OrdersController < ApplicationController
   end
 
   def create
+    @order_type = session[:order_type]
     # Validate cart items against current inventory...
     errors ||= []
     current_cart.items.each do |item|
-      invalid = validate_qty(item)
+      invalid = validate_qty(item, @order_type)
       errors << invalid if invalid
 
       if invalid then
@@ -103,18 +104,20 @@ class OrdersController < ApplicationController
 
   protected
 
-  def validate_qty(item)
+  def validate_qty(item, order_type)
     error = nil
-    product = Product.includes(:prices).find(item.product.id)
-    delivery_date = current_delivery.deliver_on
-    actual_count = product.available_inventory(delivery_date, current_market.id, current_organization.id, item.lot_id)
+    if order_type == "sales"
+      product = Product.includes(:prices).find(item.product.id)
+      delivery_date = current_delivery.deliver_on
+      actual_count = product.available_inventory(delivery_date, current_market.id, current_organization.id, item.lot_id)
 
-    if item.quantity && item.quantity > 0 && item.quantity > actual_count
-      error = {
-        item_id: item.id,
-        error_msg: "Quantity of #{product.name} (#{product.unit.plural}) available for purchase: #{product.available_inventory(delivery_date, current_market.id, current_organization.id)}",
-        actual_count: actual_count
-      }
+      if item.quantity && item.quantity > 0 && item.quantity > actual_count
+        error = {
+          item_id: item.id,
+          error_msg: "Quantity of #{product.name} (#{product.unit.plural}) available for purchase: #{product.available_inventory(delivery_date, current_market.id, current_organization.id)}",
+          actual_count: actual_count
+        }
+      end
     end
 
     error

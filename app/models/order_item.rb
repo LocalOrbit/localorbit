@@ -57,8 +57,8 @@ class OrderItem < ActiveRecord::Base
       name: item.product.name,
       quantity: item.quantity,
       unit: item.unit,
-      unit_price: item.sale_price > 0 ? item.sale_price : item.unit_price.sale_price,
-      net_price: item.net_price,
+      unit_price: item.sale_price > 0 ? item.sale_price : item.unit_price.nil? ? 0 : item.unit_price.sale_price,
+      net_price: item.net_price > 0 ? item.net_price : 0,
       product_fee_pct: item.sale_price.nil? ? item.unit_price.product_fee_pct : 0,
       category_fee_pct: category_fee_pct,
       seller_name: item.product.organization.name,
@@ -113,7 +113,7 @@ class OrderItem < ActiveRecord::Base
   end
 
   def product_availability
-    return unless product.present?
+    return unless product.present? && !order.nil? && order.order_type == "sales"
 
     if !order.nil?
       market_id = order.market.id

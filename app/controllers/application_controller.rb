@@ -251,7 +251,7 @@ class ApplicationController < ActionController::Base
   end
 
   def require_manual_delivery_schedule
-    return unless current_market && current_market.delivery_schedules.manual.none?
+    return unless current_market.is_consignment_market? && current_market.delivery_schedules.manual.none?
     redirect_to [:new_admin, current_market, :delivery_schedule], alert: "You must enter a manual delivery schedule before you can purchase"
   end
 
