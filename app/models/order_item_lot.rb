@@ -12,7 +12,7 @@ class OrderItemLot < ActiveRecord::Base
   protected
 
   def check_po
-    if order_item.order.order_type == "purchase"
+    if !order_item.order.nil? && order_item.order.order_type == "purchase"
       self.quantity = 0
     end
   end

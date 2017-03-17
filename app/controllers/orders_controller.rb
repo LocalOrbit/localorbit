@@ -46,7 +46,7 @@ class OrdersController < ApplicationController
     # Validate cart items against current inventory...
     errors ||= []
     current_cart.items.each do |item|
-      invalid = validate_qty(item, @order_type)
+      invalid = validate_qty(item)
       errors << invalid if invalid
 
       if invalid then
@@ -104,9 +104,9 @@ class OrdersController < ApplicationController
 
   protected
 
-  def validate_qty(item, order_type)
+  def validate_qty(item)
     error = nil
-    if order_type == "sales"
+    if current_market.is_buysell_market?
       product = Product.includes(:prices).find(item.product.id)
       delivery_date = current_delivery.deliver_on
       actual_count = product.available_inventory(delivery_date, current_market.id, current_organization.id, item.lot_id)

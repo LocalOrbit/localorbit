@@ -49,7 +49,7 @@
         }
 
         if (this.props.lot.status == 'available' && this.props.lot.quantity > 0) {
-            lot_desc = (<div>{this.props.lot.number} / {this.props.lot.quantity}</div>);
+            lot_desc = (<div>{this.props.lot.number} / {this.props.lot.quantity}<br/><div style={{fontSize: '12px', color: '#999'}}>{this.props.lot.delivery_date}</div></div>);
             status = (<div style={{fontSize: "11px"}}>On Hand</div>);
         }
         else if (this.props.lot.status == 'awaiting_delivery' && this.props.lot.quantity > 0) {
@@ -90,12 +90,12 @@
 
       return (
         <tr className="cart_item" data-keep-when-zero="yes" data-cart-item={JSON.stringify(this.props.product.cart_item)}>
-          <th>
+          <th style={{verticalAlign: 'top'}}>
             {lot_desc}
             {status}
             {committed_summary}
           </th>
-          <td colSpan="4">
+          <td colSpan="4" style={{verticalAlign: 'top'}}>
             <div style={{float:"right", background:"#F7F7F7", width:"100%", borderRadius: "4px", border:"1px solid #D1D1D1", padding: "4px 0"}}>
                 <div className="sale_price" style={{float:"left", width:"32%", textAlign:"center"}}>
                   {sale_entry}

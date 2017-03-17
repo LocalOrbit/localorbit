@@ -26,6 +26,7 @@
           lots: React.PropTypes.arrayOf(React.PropTypes.shape({
               id: React.PropTypes.number,
               quantity: React.PropTypes.number,
+              delivery_date: React.PropTypes.string,
               number: React.PropTypes.string,
               status: React.PropTypes.string,
           })),

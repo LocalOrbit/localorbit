@@ -19,7 +19,7 @@ class CartsController < ApplicationController
           redirect_to [target.to_sym], alert: "Your cart is empty. Please add items to your cart before checking out."
         else
           current_cart.items.each do |item|
-            invalid = validate_qty(item, @order_type)
+            invalid = validate_qty(item)
             errors << invalid if invalid
 
             if invalid then
@@ -62,9 +62,9 @@ class CartsController < ApplicationController
       @item.net_price = params[:net_price]
       @item.lot_id = params[:lot_id]
       @item.product = product
-      @item.order_type = @order_type
+      @item.check_qty = !params[:lot_id].nil?
 
-      if @order_type == "sales" && @item.quantity && @item.quantity > 0 && @item.quantity > product.available_inventory(delivery_date, current_market.id, current_organization.id)
+      if !params[:lot_id].nil? && @item.quantity && @item.quantity > 0 && @item.quantity > product.available_inventory(delivery_date, current_market.id, current_organization.id)
         @error = "Quantity of #{product.name} available for purchase: #{product.available_inventory(delivery_date, current_market.id, current_organization.id)}"
         @item.quantity = product.available_inventory(delivery_date, current_market.id, current_organization.id)
       end
@@ -91,9 +91,9 @@ class CartsController < ApplicationController
 
   protected
 
-  def validate_qty(item, order_type)
+  def validate_qty(item)
     error = nil
-    if order_type == "sales"
+    if current_market.is_buysell_market?
       product = Product.includes(:prices).find(item.product.id)
       delivery_date = current_delivery.deliver_on
       actual_count = product.available_inventory(delivery_date, current_market.id, current_organization.id)
