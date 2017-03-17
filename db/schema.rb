@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170316022744) do
+ActiveRecord::Schema.define(version: 20170317150346) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -163,16 +163,18 @@ ActiveRecord::Schema.define(version: 20170316022744) do
   end
 
   create_table "consignment_transactions", force: true do |t|
-    t.string  "transaction_type"
-    t.integer "order_id"
-    t.integer "order_item_id"
-    t.integer "lot_id"
-    t.integer "product_id"
-    t.integer "quantity"
-    t.integer "assoc_order_id"
-    t.integer "assoc_order_item_id"
-    t.integer "assoc_lot_id"
-    t.integer "assoc_product_id"
+    t.string   "transaction_type"
+    t.integer  "order_id"
+    t.integer  "order_item_id"
+    t.integer  "lot_id"
+    t.integer  "product_id"
+    t.integer  "quantity"
+    t.integer  "assoc_order_id"
+    t.integer  "assoc_order_item_id"
+    t.integer  "assoc_lot_id"
+    t.integer  "assoc_product_id"
+    t.datetime "delivery_date"
+    t.datetime "created_at"
   end
 
   create_table "credits", force: true do |t|

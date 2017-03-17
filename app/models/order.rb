@@ -102,6 +102,8 @@ class Order < ActiveRecord::Base
   scope :for_seller, -> (user) { orders_for_seller(user) }
   scope :on_automate_plan, -> { joins(market: [organization: :plan]).where(plans: {name: 'Automate'}) }
   scope :not_on_automate_plan, -> { joins(market: [organization: :plan]).where.not(plans: {name: 'Automate'}) }
+  scope :so_orders, -> { where(order_type: 'sales')}
+  scope :po_orders, -> { where(order_type: 'purchase')}
 
   scope :balanced,     -> { where(payment_provider: PaymentProvider::Balanced.id.to_s) }
   scope :not_balanced, -> { where.not(payment_provider: PaymentProvider::Balanced.id.to_s) }
