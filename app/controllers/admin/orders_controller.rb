@@ -127,12 +127,22 @@ class Admin::OrdersController < AdminController
     else
       @order = SellerOrder.new(order, current_user)
     end
+
+    if current_market.is_consignment_market?
+      load_consignment_transactions(@order)
+    end
+
     setup_deliveries(@order)
     track_event EventTracker::ViewedOrder.name, order: { url: admin_order_url(order.id), value: @order.order_number }
   end
 
   def update
     order = Order.find(params[:id])
+
+    if current_market.is_consignment_market?
+      load_consignment_transactions(order)
+    end
+
     setup_deliveries(order)
     merge = nil
 
@@ -382,5 +392,16 @@ class Admin::OrdersController < AdminController
     setup_add_items_form(order)
     flash.now[:notice] = "Add items below."
     render :show
+  end
+
+  def load_consignment_transactions(order)
+    @po_transactions = ConsignmentTransaction.joins("
+      LEFT JOIN lots ON consignment_transactions.lot_id = lots.id
+      LEFT JOIN products ON consignment_transactions.product_id = products.id
+      LEFT JOIN order_items ON consignment_transactions.order_item_id = order_items.id")
+       .where(order_id: order.id).select("products.name as product_name, lots.number as lot_name, order_items.delivery_status, consignment_transactions.quantity, 0 as price, 0 as total")
+
+    @so_transactions = ConsignmentTransaction.joins("JOIN orders ON consignment_transactions.order_id = orders.id JOIN organizations ON orders.organization_id = organizations.id")
+                           .where(assoc_order_id: order.id).select("organizations.name AS buyer_name")
   end
 end

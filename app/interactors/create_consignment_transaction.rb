@@ -15,17 +15,21 @@ class CreateConsignmentTransaction
         end
       end
 
-      ct = ConsignmentTransaction.create(
-        market_id: order.market.id,
-        transaction_type: order.sales_order? ? 'SO' : 'PO',
-        order_id: order.id,
-        order_item_id: item.id,
-        lot_id: order.sales_order? && !item.lots.empty? ? item.lots.first.id : nil,
-        delivery_date: order.delivery.deliver_on,
-        product_id: item.product_id,
-        quantity: item.quantity
-      )
-      ct.save
+      check_existing = ConsignmentTransaction.where(market_id: order.market.id, transaction_type: order.sales_order? ? 'SO' : 'PO', order_id: order.id, product_id: item.product.id, lot_id: order.sales_order? && !item.lots.empty? ? item.lots.first.id : nil)
+
+      if check_existing.empty?
+        ct = ConsignmentTransaction.create(
+          market_id: order.market.id,
+          transaction_type: order.sales_order? ? 'SO' : 'PO',
+          order_id: order.id,
+          order_item_id: item.id,
+          lot_id: order.sales_order? && !item.lots.empty? ? item.lots.first.id : nil,
+          delivery_date: order.delivery.deliver_on,
+          product_id: item.product_id,
+          quantity: item.quantity
+        )
+        ct.save
+      end
     end
   end
 end

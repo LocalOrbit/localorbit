@@ -62,9 +62,11 @@ class CartsController < ApplicationController
       @item.net_price = params[:net_price]
       @item.lot_id = params[:lot_id]
       @item.product = product
-      @item.check_qty = !params[:lot_id].nil?
 
-      if !params[:lot_id].nil? && @item.quantity && @item.quantity > 0 && @item.quantity > product.available_inventory(delivery_date, current_market.id, current_organization.id)
+      check_qty = !params[:lot_id].nil? && params[:lot_id] != "NaN" && Integer(params[:lot_id]) > 0
+      @item.check_qty = check_qty
+
+      if check_qty && @item.quantity && @item.quantity > 0 && @item.quantity > product.available_inventory(delivery_date, current_market.id, current_organization.id)
         @error = "Quantity of #{product.name} available for purchase: #{product.available_inventory(delivery_date, current_market.id, current_organization.id)}"
         @item.quantity = product.available_inventory(delivery_date, current_market.id, current_organization.id)
       end

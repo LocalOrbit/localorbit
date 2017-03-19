@@ -28,7 +28,7 @@
         <li>
           <button id="export_invoice_button" name="Export Invoice">Export Invoice to QB</button>
         </li>
-        <% elsif policy(:market_quickbooks).index? && order.order_type == "purchase" && order.payment_status == 'unpaid' && order.delivery_status_for_user(current_user) == 'delivered' && order.qb_ref_id.nil? %>
+        <% elsif policy(:market_quickbooks).index? && order.order_type == "purchase" && order.payment_status == 'unpaid' && order.delivery_status_for_user(current_user) == 'delivered' && order.qb_ref_id.nil? #TODO: also need to check for sold through %>
         <li>
           <button id="export_bill_button" name="Export Bill">Export Bill to QB</button>
         </li>
@@ -278,7 +278,7 @@
         <%= f.hidden_field :signature_data %>
       </div>
       <% end %>
-      <% if can_add_products_to_order?(order, user_order_context) && !order.purchase_order? && @show_add_items_form
+      <% if can_add_products_to_order?(order, user_order_context) && @show_add_items_form
           session[:current_delivery_id] = order.delivery.id
           session[:current_organization_id] = order.organization.id
           %>
@@ -304,7 +304,8 @@
                 orderId: order.id,
                 purchaseOrder: order.order_type == 'purchase',
                 salesOrder: order.order_type == 'sales',
-                consignmentMarket: current_market.is_consignment_market?
+                consignmentMarket: current_market.is_consignment_market?,
+                currentSupplier: order.order_type == 'purchase' ? order.sellers[0].id : nil,
             }) %>
           </div>
         </div>
@@ -315,13 +316,17 @@
       <br/><br/>
       <%= f.submit @show_add_items_form ? "Add items and Update quantities" : "Update quantities", id: 'submit-add-items', class: 'pull-right btn btn--small mobile-block' %>
     <% end %>
-    <% if can_add_products_to_order?(order, user_order_context) && !order.purchase_order? && !@show_add_items_form %>
+    <% if can_add_products_to_order?(order, user_order_context) && !@show_add_items_form %>
       <%= f.submit "Add Items", class: 'pull-right btn btn--small mobile-block' %>
     <% end %>
   </div>
 
   <% if order.purchase_order? %>
-  <%= render "shared/po_trans", {order: order} %>
+    <%= render "shared/po_trans", {order: order} %>
+  <% end %>
+
+  <% if order.sales_order? && current_market.is_consignment_market? %>
+    <%= render "shared/so_trans", {order: order} %>
   <% end %>
 
   <% if !current_user.buyer_only? && FeatureAccess.not_LE_market_manager?(user: current_user, market: current_market) && order.sales_order? %>
