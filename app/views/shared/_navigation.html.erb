@@ -16,11 +16,11 @@ end
         </div>
         <% if current_user %>
           <div class="nav nav--main column column--half pull-right" style="text-align: center">
-            <% if current_market.try(:is_consignment_market?) %><%= link_to "PO", products_purchase_path, class: "", tag: :a %><% end %>
-            <% if policy(:catalog).index? %><%= link_to "Order", products_path, class: "", tag: :a %><% end %>
-            <% if current_market.try(:is_consignment_market?) %><br /><% end %>
-            <% if policy(:all_supplier).index? %><%= link_to "Suppliers", sellers_path, class: "", tag: :a %><% end %>
-            <% if policy(:about).index? %><%= link_to "About", market_path, class: "", tag: :a %><% end %>
+            <% if current_market.try(:is_consignment_market?) %><%= link_to "Purchase Order", products_purchase_path, class: "", tag: :a %><% end %>
+            <% if current_market.try(:is_consignment_market?) %><%= link_to "Sales Order", products_path, class: "", tag: :a %><% end %>
+            <% if current_market.try(:is_buysell_market?) && policy(:catalog).index? %><%= link_to "Order", products_path, class: "", tag: :a %><% end %>
+            <% if current_market.try(:is_buysell_market?) && policy(:all_supplier).index? %><%= link_to "Suppliers", sellers_path, class: "", tag: :a %><% end %>
+            <% if current_market.try(:is_buysell_market?) && policy(:about).index? %><%= link_to "About", market_path, class: "", tag: :a %><% end %>
           </div>
         <% end %>
       </div>
@@ -61,8 +61,8 @@ end
     <li>
       <a href="#orders-dropdown" class="caretted"><i class="font-icon" data-icon="&#xe024;"></i>Orders &amp; Delivery</a>
       <ul class="dropdown with-anchor top-anchor" id="orders-dropdown">
-        <% if current_market && current_market.is_consignment_market? %><li><%= link_to raw('<i class="font-icon" data-icon="&#xe025;"></i> Purchase Orders'), admin_purchase_orders_path %></li><% end %>
-        <% if current_market && current_market.is_consignment_market? %><li><%= link_to raw('<i class="font-icon" data-icon="&#xe025;"></i> Sales Orders'), admin_orders_path %></li><% end %>
+        <% if current_market && (current_user.admin? || current_market.is_consignment_market?) %><li><%= link_to raw('<i class="font-icon" data-icon="&#xe025;"></i> Purchase Orders'), admin_purchase_orders_path %></li><% end %>
+        <% if current_market && (current_user.admin? || current_market.is_consignment_market?) %><li><%= link_to raw('<i class="font-icon" data-icon="&#xe025;"></i> Sales Orders'), admin_orders_path %></li><% end %>
         <% if policy(:order).index? && (current_user.admin? || current_market.is_buysell_market?) %><li><%= link_to raw('<i class="font-icon" data-icon="&#xe025;"></i> Orders'), admin_orders_path %></li><% end %>
         <% if policy(:template).index? %><li><%= link_to raw('<i class="font-icon" data-icon="&#xe024;"></i> Order Templates'), templates_path %></li><% end %>
         <% if policy(:delivery).index? %><li><%= link_to raw('<i class="font-icon" data-icon="&#xe022;"></i> Upcoming Deliveries'), admin_delivery_tools_path %></li><% end %>
