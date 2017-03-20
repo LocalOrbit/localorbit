@@ -37,9 +37,19 @@
           <td></td>
           <% if po_qty - so_qty > 0 # not sold_through %>
             <td colspan="3" align="right">
-              <%= link_to "Split", '#', class: "btn btn--small" %>
-              <%= link_to "Holdover", '#', class: "btn btn--small" %>
-              <%= link_to "Repack", '#', class: "btn btn--small" %>
+              <div class="product_ops" >
+                <%= link_to "Shrink", '#', class: "shrink_button btn btn--small" %>
+                <%= link_to "Holdover", '#', class: "btn btn--small" %>
+                <%= link_to "Repack", '#', class: "btn btn--small" %>
+              </div>
+              <div class="shrink_options" style="float: right; display: none">
+                <label>Shrink:</label>
+                <input type="text" title="Quantity" style="width: 100px" name="shrink_qty" />
+                <input type="text" title="Amount" style="width: 100px" name="shrink_cost" /><br/>
+                <input type="hidden" name="transaction_id" value="<%=po.id %>"/><br/>
+                <%= f.submit "Shrink", class: 'btn btn--small mobile-block' %>
+                <button class="shrink_cancel_button btn btn--small">Cancel</button>
+              </div>
             </td>
           <% else %>
             <td></td>

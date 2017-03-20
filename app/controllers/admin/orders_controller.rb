@@ -180,6 +180,9 @@ class Admin::OrdersController < AdminController
     elsif params["order"][:credit_clear] == "true"
       remove_credit(order)
       return
+    elsif params[:commit] == "Shrink"
+      shrink_transaction(order)
+      return
     # elsif params[:commit] == "Undo Mark Delivered"
     #   undo_delivery(order) # But this is not where Mark Delivered goes,sooooo
     end
@@ -256,6 +259,15 @@ class Admin::OrdersController < AdminController
       redirect_to admin_order_path(order), notice: "Order Uninvoiced."
     else
       redirect_to admin_order_path(order), error: "Failed to Uninvoice Order."
+    end
+  end
+
+  def shrink_transaction(order)
+    result = CreateShrinkTransaction(order: order)
+    if result.success?
+      redirect_to admin_order_path(order), notice: "Shrink Successful."
+    else
+      redirect_to admin_order_path(order), error: "Failed to Shrink."
     end
   end
 
@@ -399,9 +411,9 @@ class Admin::OrdersController < AdminController
       LEFT JOIN lots ON consignment_transactions.lot_id = lots.id
       LEFT JOIN products ON consignment_transactions.product_id = products.id
       LEFT JOIN order_items ON consignment_transactions.order_item_id = order_items.id")
-       .where(order_id: order.id).select("products.name as product_name, lots.number as lot_name, order_items.delivery_status, consignment_transactions.quantity, 0 as price, 0 as total")
+       .where(order_id: order.id).select("consignment_transactions.id, products.name as product_name, lots.number as lot_name, order_items.delivery_status, consignment_transactions.quantity, 0 as price, 0 as total")
 
     @so_transactions = ConsignmentTransaction.joins("JOIN orders ON consignment_transactions.order_id = orders.id JOIN organizations ON orders.organization_id = organizations.id")
-                           .where(assoc_order_id: order.id).select("organizations.name AS buyer_name")
+                           .where(assoc_order_id: order.id).select("consignment_transactions.id, organizations.name AS buyer_name")
   end
 end

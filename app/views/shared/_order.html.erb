@@ -322,11 +322,11 @@
   </div>
 
   <% if order.purchase_order? %>
-    <%= render "shared/po_trans", {order: order} %>
+    <%= render "shared/po_trans", {order: order, f: f} %>
   <% end %>
 
   <% if order.sales_order? && current_market.is_consignment_market? %>
-    <%= render "shared/so_trans", {order: order} %>
+    <%= render "shared/so_trans", {order: order, f: f} %>
   <% end %>
 
   <% if !current_user.buyer_only? && FeatureAccess.not_LE_market_manager?(user: current_user, market: current_market) && order.sales_order? %>
