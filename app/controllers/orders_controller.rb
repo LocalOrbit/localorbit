@@ -38,6 +38,11 @@ class OrdersController < ApplicationController
 
   def show
     @order = BuyerOrder.find(current_user, params[:id])
+
+    if current_market.is_consignment_market?
+      load_consignment_transactions(@order)
+    end
+
     track_event EventTracker::ViewedOrder.name, order: { url: order_url(id: @order.id), value: @order.order_number }
   end
 
@@ -161,5 +166,16 @@ class OrdersController < ApplicationController
     results.sorts = "placed_at desc" if results.sorts.empty?
 
     results
+  end
+
+  def load_consignment_transactions(order)
+    @po_transactions = ConsignmentTransaction.joins("
+      LEFT JOIN lots ON consignment_transactions.lot_id = lots.id
+      LEFT JOIN products ON consignment_transactions.product_id = products.id
+      LEFT JOIN order_items ON consignment_transactions.order_item_id = order_items.id")
+                           .where(order_id: order.id).select("consignment_transactions.id, products.name as product_name, lots.number as lot_name, order_items.delivery_status, consignment_transactions.quantity, 0 as price, 0 as total")
+
+    @so_transactions = ConsignmentTransaction.joins("JOIN orders ON consignment_transactions.order_id = orders.id JOIN organizations ON orders.organization_id = organizations.id")
+                           .where(assoc_order_id: order.id).select("consignment_transactions.id, organizations.name AS buyer_name")
   end
 end

@@ -224,7 +224,7 @@ describe OrderItem do
         end
 
         context "and order item quantity is greater than available product inventory" do
-          subject { OrderItem.new(product: product, quantity: 9) }
+          subject { OrderItem.new( order: order, product: product, quantity: 9) }
 
           it "has no inventory errors" do
             expect(subject).to have(1).errors_on(:inventory)

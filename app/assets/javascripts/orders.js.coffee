@@ -96,3 +96,13 @@ $ ->
   $("#clear_sig").click (e) ->
     e.preventDefault()
     datapair = $("#signature").jSignature("clear")
+
+  $(".shrink_button").click (e) ->
+    e.preventDefault()
+    $(this).parent().parent().find(".shrink_options").show()
+    $(this).parent().parent().find(".product_ops").hide()
+
+  $(".shrink_cancel_button").click (e) ->
+    e.preventDefault()
+    $(this).parent().parent().find(".product_ops").show()
+    $(this).parent().parent().find(".shrink_options").hide()
