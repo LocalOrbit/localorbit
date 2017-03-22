@@ -174,11 +174,11 @@ class ReportPresenter
 
     # Set our initial scope and lookup any applicable filter data
     items = if self.class.buyer_reports.include?(report)
-              OrderItem.for_user_purchases(user)
+              OrderItem.sales_orders.for_user_purchases(user)
             elsif FeatureAccess.has_procurement_managers?(market: market)
-              OrderItem.joins(:product).where(products: {organization_id:user.managed_markets.map {|m| m.organizations.pluck(:id)}.flatten})
+              OrderItem.sales_orders.joins(:product).where(products: {organization_id:user.managed_markets.map {|m| m.organizations.pluck(:id)}.flatten})
             else
-              OrderItem.for_user(user)
+              OrderItem.sales_orders.for_user(user)
             end.joins(:order).uniq
 
     # Filter items by discount for the Discount Code report
