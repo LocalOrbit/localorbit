@@ -1,6 +1,6 @@
 <div class="row row--partial order-page">
   <div class="column column--eleven-twelfths">
-    <% if !current_market.is_consignment_market? %>
+    <% if !current_market.is_consignment_market? || current_user.admin? %>
     <% # KXM GC: Order creation messaging needs an update for consignment markets %>
     <h1>Thank you for your order!</h1>
 
