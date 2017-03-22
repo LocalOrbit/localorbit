@@ -39,8 +39,9 @@
     </thead>
     <tbody>
     <% @buyer_orders.each do |order| %>
+        <% order_path = order.order_type == "purchase" ? "purchase_order_path" : "order_path" %>
         <tr class="order-row">
-          <td class="order-number"><%= link_to order.order_number, send("#{order.order_type}_order_path",order.id) %></td>
+          <td class="order-number"><%= link_to order.order_number, send(order_path, order.id) %></td>
           <td class="order-date"><%= order.placed_at.strftime("%m/%d/%Y") %></td>
           <td class="delivery-status"><%= order.delivery_status_for_user(current_user).titleize %></td>
           <td class="payment-status"><%= order.payment_status.titleize %></td>
