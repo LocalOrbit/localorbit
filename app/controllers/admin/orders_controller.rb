@@ -181,7 +181,10 @@ class Admin::OrdersController < AdminController
       remove_credit(order)
       return
     elsif params[:commit] == "Shrink"
-      shrink_transaction(order)
+      shrink_transaction(order, params)
+      return
+    elsif params[:commit] == "Undo Shrink"
+      unshrink_transaction(order, params)
       return
     # elsif params[:commit] == "Undo Mark Delivered"
     #   undo_delivery(order) # But this is not where Mark Delivered goes,sooooo
@@ -262,12 +265,21 @@ class Admin::OrdersController < AdminController
     end
   end
 
-  def shrink_transaction(order)
-    result = CreateShrinkTransaction(order: order)
+  def shrink_transaction(order, params)
+    result = CreateShrinkTransaction.perform(order: order, params: params)
     if result.success?
       redirect_to admin_order_path(order), notice: "Shrink Successful."
     else
       redirect_to admin_order_path(order), error: "Failed to Shrink."
+    end
+  end
+
+  def unshrink_transaction(order, params)
+    result = UnShrinkTransaction.perform(params: params)
+    if result.success?
+      redirect_to admin_order_path(order), notice: "Unshrink Successful."
+    else
+      redirect_to admin_order_path(order), error: "Failed to Unshrink."
     end
   end
 
@@ -411,9 +423,16 @@ class Admin::OrdersController < AdminController
       LEFT JOIN lots ON consignment_transactions.lot_id = lots.id
       LEFT JOIN products ON consignment_transactions.product_id = products.id
       LEFT JOIN order_items ON consignment_transactions.order_item_id = order_items.id")
-       .where(order_id: order.id).select("consignment_transactions.id, products.name as product_name, lots.number as lot_name, order_items.delivery_status, consignment_transactions.quantity, 0 as price, 0 as total")
-
-    @so_transactions = ConsignmentTransaction.joins("JOIN orders ON consignment_transactions.order_id = orders.id JOIN organizations ON orders.organization_id = organizations.id")
-                           .where(assoc_order_id: order.id).select("consignment_transactions.id, organizations.name AS buyer_name")
+       .where(order_id: order.id)
+       .where("parent_id IS NULL")
+       .select("consignment_transactions.id, consignment_transactions.transaction_type, consignment_transactions.product_id, products.name as product_name, lots.number as lot_name, order_items.delivery_status, consignment_transactions.quantity, consignment_transactions.net_price, consignment_transactions.sale_price")
+       .order("consignment_transactions.id, consignment_transactions.parent_id")
+    @child_transactions = ConsignmentTransaction.joins("
+      LEFT JOIN orders ON consignment_transactions.order_id = orders.id
+      LEFT JOIN organizations ON orders.organization_id = organizations.id")
+      .where(order_id: order.id)
+      .where("parent_id IS NOT NULL")
+      .select("consignment_transactions.id, consignment_transactions.transaction_type, consignment_transactions.product_id, consignment_transactions.quantity, consignment_transactions.net_price, consignment_transactions.sale_price, organizations.name AS buyer_name")
+      .order("consignment_transactions.product_id, consignment_transactions.created_at")
   end
 end

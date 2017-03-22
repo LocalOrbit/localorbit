@@ -1,5 +1,6 @@
 module Inventory
   class ShrinkOps
+    class << self
 
 =begin
 
@@ -8,14 +9,29 @@ Likely do not need to add/change existing products of a PO, but need to create v
 
 =end
 
-    def shrink_product(product_id, net_price, quantity)
-    end
+      def shrink_product(order, params)
 
-    def unshrink_product
-    end
+        t_id = ConsignmentTransaction.find(params[:transaction_id])
+        ct = ConsignmentTransaction.create(
+            parent_id: params[:transaction_id],
+            market_id: order.market.id,
+            transaction_type: 'SHRINK',
+            order_id: order.id,
+            product_id: t_id.product_id,
+            quantity: params[:shrink_qty],
+            net_price: params[:shrink_cost]
+        )
+        ct.save
+      end
 
-    def can_shrink_product?
-    end
+      def unshrink_product(params)
+        t_id = ConsignmentTransaction.find(params[:transaction_id])
+        t_id.delete
+      end
 
+      def can_shrink_product?
+      end
+
+    end
   end
 end
