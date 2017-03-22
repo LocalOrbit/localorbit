@@ -522,7 +522,7 @@ describe Product do
 
       it "is zero" do
         quantity = product.minimum_quantity_for_purchase(market: market, organization: buyer)
-        expect(quantity).to 0
+        expect(quantity).to eql(0)
       end
     end
   end

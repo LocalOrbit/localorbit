@@ -19,6 +19,7 @@
             <% end %>
           </tbody>
         <% end %>
+        <% if !@order.nil? %>
         <tbody class="pseudopod math" id="totals">
           <tr class="cart_total">
             <th scope="row" colspan="3">Item Subtotal</th>
@@ -44,3 +45,4 @@
             <td></td>
           </tr>
         </tbody>
+        <% end %>
