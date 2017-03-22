@@ -10,7 +10,7 @@ class CreateConsignmentTransaction
         if !item.lots.empty?
           po_order = ConsignmentTransaction.where(transaction_type: 'PO', product_id: item.product_id, lot_id: item.lots.first.id).first
           if !po_order.nil?
-            po_order.update_attributes(assoc_order_id: order.id, assoc_order_item_id: item.id, assoc_lot_id: item.lots.first.id, assoc_product_id: item.product_id)
+            po_order.update_attributes(parent_id: po_order.id)
           end
         end
       end
@@ -26,7 +26,9 @@ class CreateConsignmentTransaction
           lot_id: order.sales_order? && !item.lots.empty? ? item.lots.first.id : nil,
           delivery_date: order.delivery.deliver_on,
           product_id: item.product_id,
-          quantity: item.quantity
+          quantity: item.quantity,
+          sale_price: item.sale_price,
+          net_price: item.net_price
         )
         ct.save
       end
