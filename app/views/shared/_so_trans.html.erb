@@ -3,22 +3,35 @@
   <table>
     <thead>
       <tr>
-        <th>Product</th><th>Status</th><th>Ordered</th><th>On Hand</th><th>Sale Price</th><th>Net Price</th><th>Due</th>
+        <th></th><th>Status</th><th>Ordered</th><th>On Hand</th><th>Sale Price</th><th>Net Price</th><th>Due</th>
       </tr>
     </thead>
     <tbody>
-    <% if !@child_transactions.empty? %>
-    <% @child_transactions.flatten.decorate.each do |so| %>
-        <tr>
-          <td></td>
-          <td></td>
-          <td></td>
-          <td></td>
-          <td></td>
-          <td></td>
-          <td></td>
-        </tr>
-    <% end %>
+    <% if !@so_transactions.empty? %>
+      <% @so_transactions.each do |so| %>
+          <tr>
+            <td><strong><%= so.product_name %></strong></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+          <% if !@parent_transactions.nil? %>
+            <% @parent_transactions.flatten.each do |parent| %>
+                  <tr>
+                    <td>&nbsp;&nbsp;<%= link_to "PO: #{parent.order_id}", purchase_order_path(parent.order_id) %></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                  </tr>
+            <% end %>
+          <% end %>
+      <% end %>
     <% end %>
     </tbody>
   </table>
