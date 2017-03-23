@@ -6,14 +6,14 @@ class UpdateLots
     lot_number = generate_lot_number
 
     order.items.each do |item|
-      upsert_lot(item, lot_number) if item.quantity_delivered > 0
+      upsert_lot(item, lot_number)
     end
   end
 
   def upsert_lot(item, lot_number)
     lot = Lot.where("product_id = ? AND number = ? AND EXTRACT(YEAR FROM created_at) = ?", item.product.id, lot_number, Time.now.year.to_s).first
     if lot.present?
-      lot.update_attribute(quantity: item.quantity_delivered)
+      lot.update_attribute(:quantity, item.quantity_delivered)
     else
       lot = Lot.create(
         product_id: item.product.id,
