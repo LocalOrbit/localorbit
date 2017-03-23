@@ -102,11 +102,17 @@ class Order < ActiveRecord::Base
   scope :for_seller, -> (user) { orders_for_seller(user) }
   scope :on_automate_plan, -> { joins(market: [organization: :plan]).where(plans: {name: 'Automate'}) }
   scope :not_on_automate_plan, -> { joins(market: [organization: :plan]).where.not(plans: {name: 'Automate'}) }
+  scope :so_orders, -> { where(order_type: 'sales')}
+  scope :po_orders, -> { where(order_type: 'purchase')}
 
   scope :balanced,     -> { where(payment_provider: PaymentProvider::Balanced.id.to_s) }
   scope :not_balanced, -> { where.not(payment_provider: PaymentProvider::Balanced.id.to_s) }
   scope :stripe,       -> { where(payment_provider: PaymentProvider::Stripe.id.to_s) }
   scope :not_stripe,   -> { where.not(payment_provider: PaymentProvider::Stripe.id.to_s) }
+
+  scope :po, -> {visible.where(order_type: "purchase")}
+  scope :sold_through, -> {visible.where(sold_through: true)}
+  scope :not_sold_through, -> {visible.where("sold_through IS NULL OR sold_through IS false")}
 
   scope :placed_between, lambda {|range| visible.where(placed_at: range) }
 
@@ -370,6 +376,11 @@ class Order < ActiveRecord::Base
     self.invoice_due_date = market.po_payment_term.days.from_now(invoiced_at)
   end
 
+  def uninvoice
+    self.invoiced_at      = nil
+    self.invoice_due_date = nil
+  end
+
   def invoiced?
     invoiced_at.present?
   end
@@ -487,6 +498,14 @@ class Order < ActiveRecord::Base
       oi.payment_status = "unpaid"
     end
     save!
+  end
+
+  def sales_order?
+    order_type == 'sales'
+  end
+
+  def purchase_order?
+    order_type == 'purchase'
   end
 
   private

@@ -7,12 +7,12 @@
 <div class="order-info">
   <hr/>
   <div style="display: inline-block; width: 100%">
+    <input type="hidden" name="commit" />
     <div style="float: left">
-      <h1>Order info for <%= order.order_number %></h1>
+      <h1>Order info for <%= order.purchase_order? ? "Purchase Order " : "" %><%= order.order_number %></h1>
       <div class="order-info-date">Placed On: <strong><%= order.placed_at.strftime "%m/%d/%Y at %l:%M%p" %></strong></div>
     </div>
     <div class="button-bar" style="float: right">
-      <input type="hidden" name="commit" />
       <ul>
         <% if policy(:merge_order).index? && order.delivery_status_for_user(current_user) != 'canceled' %>
         <li>
@@ -28,7 +28,7 @@
         <li>
           <button id="export_invoice_button" name="Export Invoice">Export Invoice to QB</button>
         </li>
-        <% elsif policy(:market_quickbooks).index? && order.order_type == "purchase" && order.payment_status == 'unpaid' && order.delivery_status_for_user(current_user) == 'delivered' && order.qb_ref_id.nil? %>
+        <% elsif policy(:market_quickbooks).index? && order.order_type == "purchase" && order.payment_status == 'unpaid' && order.delivery_status_for_user(current_user) == 'delivered' && order.qb_ref_id.nil? #TODO: also need to check for sold through %>
         <li>
           <button id="export_bill_button" name="Export Bill">Export Bill to QB</button>
         </li>
@@ -83,6 +83,7 @@
       </div>
     </div>
     <div style="float: left; margin-right: 50px">
+    <% if order.sales_order? %>
       <h2>Financial Summary</h2>
       <table class="order-totals-table">
         <tbody>
@@ -143,6 +144,7 @@
       <% if FeatureAccess.not_LE_market_manager?(user: current_user, market: current_market) && FeatureAccess.can_edit_order?(user: current_user, order: order) && order.payment_method=="purchase order" && order.payment_status == "unpaid" # is this how it should be for quantities too? %>
           <a href="#creditEdit" class="btn btn--small btn--primary modal-toggle app-edit-credit-modal-button"><%= order.credit_amount > 0 ? "Modify" : "Add" %> Credit</a></td>
       <% end %>
+    <% end %>
     </div>
     <div class="order-info-status-section" style="float: left">
       <h2>Payment Status</h2>
@@ -164,10 +166,13 @@
         </tr>
         <tr>
           <th scope="row">Buyer Payment: </th>
-          <td><%= order.buyer_payment_status.titleize %></td>
+          <td><%= order.buyer_payment_status.titleize %><%= order.buyer_payment_invoice_status %></td>
         </tr>
         </tbody>
       </table>
+      <% if order.payment_method=="purchase order" && !order.invoiced_at.nil? %>
+          <button id="uninvoice_order" class="btn btn--small btn--primary" name="Uninvoice Order">Uninvoice Order</button>
+      <% end %>
     </div>
   </div>
   <div class="row order-data">
@@ -186,8 +191,10 @@
           <th>Product Name</th>
           <th>Quantity</th>
           <th>Product Code</th>
+          <% if order.sales_order? %>
           <th>Price</th>
           <th>Total</th>
+          <% end %>
           <th>Delivery</th>
           <th>Buyer Payment</th>
           <% if !current_user.buyer_only? && policy(:all_supplier).index? %>
@@ -227,11 +234,13 @@
               -
             <% end %>
           </td>
+          <% if order.sales_order? %>
           <td class="price"> <% if FeatureAccess.not_LE_market_manager?(user:current_user, market: current_market) && FeatureAccess.can_edit_order?(user: current_user, order: order) and order.payment_status == "unpaid" %>
            <%= link_to "#{number_to_currency item.object.unit_price}", "/admin/orders/#{order.id}/order_items/#{item.object.id}", class: 'edit-toggle' %><% else %> <%= number_to_currency item.object.unit_price %>
             <% end %>
           </td>
           <td class="total"><%= number_to_currency item.object.gross_total %></td>
+          <% end %>
           <td class="delivery-status">
             <%= item.hidden_field :delivery_status %>
             <%= item.object.delivery_status.titleize %>
@@ -292,7 +301,11 @@
                 limit: 10,
                 useTemplates: FeatureAccess.order_templates?(market: current_market),
                 supplierId: nil,
-                orderId: order.id
+                orderId: order.id,
+                purchaseOrder: order.order_type == 'purchase',
+                salesOrder: order.order_type == 'sales',
+                consignmentMarket: current_market.is_consignment_market?,
+                currentSupplier: order.order_type == 'purchase' ? order.sellers[0].id : nil,
             }) %>
           </div>
         </div>
@@ -307,7 +320,16 @@
       <%= f.submit "Add Items", class: 'pull-right btn btn--small mobile-block' %>
     <% end %>
   </div>
-  <% if !current_user.buyer_only? && FeatureAccess.not_LE_market_manager?(user: current_user, market: current_market) %>
+
+  <% if order.purchase_order? %>
+    <%= render "shared/po_trans", {order: order, f: f} %>
+  <% end %>
+
+  <% if order.sales_order? && current_market.is_consignment_market? %>
+    <%= render "shared/so_trans", {order: order, f: f} %>
+  <% end %>
+
+  <% if !current_user.buyer_only? && FeatureAccess.not_LE_market_manager?(user: current_user, market: current_market) && order.sales_order? %>
   <div class="order-totals">
     <div class="table-wrapper">
       <h2>Order Totals</h2>
@@ -407,7 +429,7 @@
   <% end %>
 </div>
 
-<% if FeatureAccess.order_printables?(user: current_user, order: order) %>
+<% if FeatureAccess.order_printables?(user: current_user, order: order) && order.sales_order? %>
   <%= render :partial=>"table_tents_and_posters/ad", locals: { order: order } %>
 <% end %>
 

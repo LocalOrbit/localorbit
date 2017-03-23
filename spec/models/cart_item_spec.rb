@@ -28,7 +28,7 @@ describe CartItem do
   context "quantity is greater than the available product" do
     let(:product) { create(:product, :sellable, name: "Bananas") } # lot w/ quantity 150
 
-    subject { build(:cart_item, product: product, quantity: 151) }
+    subject { build(:cart_item, product: product, quantity: 151, check_qty: true) }
 
     it "has an error" do
       expect(subject).to have(1).error_on(:quantity)

@@ -8,11 +8,15 @@ class CartsController < ApplicationController
   before_action :set_payment_provider
 
   def show
+    @order_type = session[:order_type]
     respond_to do |format|
       format.html do
         errors ||= []
         if current_cart.items.empty?
-          redirect_to [:products], alert: "Your cart is empty. Please add items to your cart before checking out."
+          target = 'products'
+          target += '_purchase' if @order_type == 'purchase'
+
+          redirect_to [target.to_sym], alert: "Your cart is empty. Please add items to your cart before checking out."
         else
           current_cart.items.each do |item|
             invalid = validate_qty(item)
@@ -46,6 +50,7 @@ class CartsController < ApplicationController
   end
 
   def update
+    @order_type = session[:order_type]
     product = Product.includes(:prices).find(params[:product_id])
     delivery_date = current_delivery.deliver_on
 
@@ -53,9 +58,15 @@ class CartsController < ApplicationController
 
     if params[:quantity].to_i > 0
       @item.quantity = params[:quantity]
+      @item.sale_price = params[:sale_price]
+      @item.net_price = params[:net_price]
+      @item.lot_id = params[:lot_id]
       @item.product = product
 
-      if @item.quantity && @item.quantity > 0 && @item.quantity > product.available_inventory(delivery_date, current_market.id, current_organization.id)
+      check_qty = !params[:lot_id].nil? && params[:lot_id] != "NaN" && Integer(params[:lot_id]) > 0
+      @item.check_qty = check_qty
+
+      if check_qty && @item.quantity && @item.quantity > 0 && @item.quantity > product.available_inventory(delivery_date, current_market.id, current_organization.id)
         @error = "Quantity of #{product.name} available for purchase: #{product.available_inventory(delivery_date, current_market.id, current_organization.id)}"
         @item.quantity = product.available_inventory(delivery_date, current_market.id, current_organization.id)
       end
@@ -84,18 +95,19 @@ class CartsController < ApplicationController
 
   def validate_qty(item)
     error = nil
-    product = Product.includes(:prices).find(item.product.id)
-    delivery_date = current_delivery.deliver_on
-    actual_count = product.available_inventory(delivery_date, current_market.id, current_organization.id)
+    if current_market.is_buysell_market?
+      product = Product.includes(:prices).find(item.product.id)
+      delivery_date = current_delivery.deliver_on
+      actual_count = product.available_inventory(delivery_date, current_market.id, current_organization.id)
 
-    if item.quantity && item.quantity > 0 && item.quantity > actual_count
-      error = {
-        item_id: item.id,
-        error_msg: "Quantity of #{product.name} (#{product.unit.plural}) available for purchase: #{product.available_inventory(delivery_date, current_market.id, current_organization.id)}",
-        actual_count: actual_count
-      }
+      if item.quantity && item.quantity > 0 && item.quantity > actual_count
+        error = {
+          item_id: item.id,
+          error_msg: "Quantity of #{product.name} (#{product.unit.plural}) available for purchase: #{product.available_inventory(delivery_date, current_market.id, current_organization.id)}",
+          actual_count: actual_count
+        }
+      end
     end
-
     error
   end
 

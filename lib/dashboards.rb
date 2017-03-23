@@ -2,17 +2,17 @@ module Dashboards
 
   def upcoming_deliveries(user_type)
     if user_type == "B" || user_type == "M"
-      @deliveries = Order.orders_for_buyer(current_user).upcoming_buyer_delivery.joins(:items).where(order_items: {delivery_status: "pending"}, market: current_market).select('orders.id AS order_id','deliveries.*').
+      @deliveries = Order.so_orders.orders_for_buyer(current_user).upcoming_buyer_delivery.joins(:items).where(order_items: {delivery_status: "pending"}, market: current_market).select('orders.id AS order_id','deliveries.*').
           sort_by {|d| d.buyer_deliver_on }
       use_date = :buyer_deliver_on
 
-      pending_amount = Order.orders_for_buyer(current_user).where(:delivery => @deliveries.map(&:id), market: current_market).sum(:total_cost)
+      pending_amount = Order.so_orders.orders_for_buyer(current_user).where(:delivery => @deliveries.map(&:id), market: current_market).sum(:total_cost)
     else
-      @deliveries = Order.orders_for_seller(current_user).upcoming_delivery.where(order_items: {delivery_status: "pending"}, market: current_market).select('orders.id AS order_id','deliveries.*').
+      @deliveries = Order.so_orders.orders_for_seller(current_user).upcoming_delivery.where(order_items: {delivery_status: "pending"}, market: current_market).select('orders.id AS order_id','deliveries.*').
           sort_by {|d| d.deliver_on }
       use_date = :deliver_on
 
-      pending_orders = Order.orders_for_seller(current_user).where(:delivery => @deliveries.map(&:id), market: current_market)
+      pending_orders = Order.so_orders.orders_for_seller(current_user).where(:delivery => @deliveries.map(&:id), market: current_market)
 
       pending_amount = sum_money_to_sellers(pending_orders, current_user)
     end
@@ -76,7 +76,12 @@ module Dashboards
         count[g] = BigDecimal(0)
       end
 
-      total[g] = total[g] + order.items.map(&:seller_net_total).reduce(:+)
+      snt = order.items.map(&:seller_net_total).reduce(:+)
+      if !snt.nil?
+        total[g] = total[g] + snt
+      else
+        total[g] = total[g] + 0
+      end
       count[g] = count[g] + 1
     end
     {:grp => grp.to_a, :count => count.to_a, :total => total.to_a}
@@ -121,7 +126,12 @@ module Dashboards
 
   def sum_money_to_sellers(orders, current_user)
     orders.inject(0) do |total, order|
-      total + order.items.for_user(current_user).map(&:seller_net_total).reduce(:+)
+      snt = order.items.for_user(current_user).map(&:seller_net_total).reduce(:+)
+      if !snt.nil?
+        total + snt
+      else
+        total + 0
+      end
     end
   end
 

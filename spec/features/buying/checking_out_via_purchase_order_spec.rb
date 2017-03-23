@@ -136,7 +136,7 @@ describe "Checking Out via Purchase Order", :js, :vcr do
         checkout
 
         # Find the current order:
-        order = if page.find("a.review-order")["href"] =~ /\/orders\/(\d+)/
+        order = if page.find("a.review-order")["href"] =~ /.*order[s]*\/(\d+)/
                   order_id = $1
                   order = Order.find(order_id)
                 else

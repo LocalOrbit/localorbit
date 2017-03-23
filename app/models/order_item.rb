@@ -28,8 +28,10 @@ class OrderItem < ActiveRecord::Base
 
   validate :product_availability, on: :create
 
-  scope :delivered,    -> { where(delivery_status: "delivered") }
-  scope :undelivered,  -> { where(delivery_status: "pending") }
+  scope :delivered,       -> { where(delivery_status: "delivered") }
+  scope :undelivered,     -> { where(delivery_status: "pending") }
+  scope :sales_orders,    -> { where(orders: {order_type: 'sales'}) }
+  scope :purchase_orders, -> { where(orders: {order_type: 'purchase'}) }
 
   has_one :seller, through: :product, class_name: Organization
 
@@ -57,8 +59,9 @@ class OrderItem < ActiveRecord::Base
       name: item.product.name,
       quantity: item.quantity,
       unit: item.unit,
-      unit_price: item.unit_price.sale_price,
-      product_fee_pct: item.unit_price.product_fee_pct,
+      unit_price: !item.sale_price.nil? && item.sale_price > 0 ? item.sale_price : item.unit_price.nil? ? 0 : item.unit_price.sale_price,
+      net_price: !item.net_price.nil? && item.net_price > 0 ? item.net_price : 0,
+      product_fee_pct: item.sale_price.nil? ? item.unit_price.product_fee_pct : 0,
       category_fee_pct: category_fee_pct,
       seller_name: item.product.organization.name,
       delivery_status: "pending"
@@ -112,7 +115,7 @@ class OrderItem < ActiveRecord::Base
   end
 
   def product_availability
-    return unless product.present?
+    return unless product.present? && !order.nil? && order.market.is_buysell_market?
 
     if !order.nil?
       market_id = order.market.id
@@ -161,7 +164,7 @@ class OrderItem < ActiveRecord::Base
   def update_unit_price
     if order && order.market && order.organization
       new_price = Orders::UnitPriceLogic.unit_price(product, order.market, order.organization, order.market.add_item_pricing || persisted? ? order.created_at : Time.current, quantity)
-      if new_price != nil
+      if new_price != nil && self.net_price == 0
         self.unit_price = new_price.sale_price
       end
     end

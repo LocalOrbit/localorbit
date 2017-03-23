@@ -52,7 +52,9 @@ module Admin
     private
 
     def find_organization
-      @organization = current_user.managed_organizations.find_by_id(params[:organization_id])
+      # KXM GC: Locations#find_organization will need refinement
+      # specifically related to returning the current_market parent organization (here reflected by current_user.managed_markets.first.organization)
+      @organization = current_user.managed_organizations.find_by_id(params[:organization_id]) || current_user.managed_markets.first.organization
     end
 
     def location_params

@@ -1,6 +1,7 @@
 <div class="cart-page">
   <h1 class="heading-cart"><i class="font-icon icon-cart"></i> Cart</h1>
   <%= form_for :order, url: [:orders], html: {id: "order-form"} do |f| %>
+    <%= f.hidden_field 'order_type', value: (@order_type || 'sales') %>
     <%= render "shared/errors", {resource: @order} if @order %>
     <% if flash[:error] %>
       <div class="flash flash--warning">
@@ -11,54 +12,7 @@
       <div class="column column--half column--guttered">
         <div class="cart_items" data-cart-url="<%= cart_path %>">
           <table class="cart">
-          <% @grouped_items.each.with_index do |(seller_name, items), index| %>
-            <tbody class="item-group">
-              <tr class="<%= index == 0 ? "" : "is-hidden" %>">
-                <th class="subheading-cart">Your Order</th>
-                <td class="cart-quantity-column">Quantity</td>
-                <td class="cart-price-column">Price</td>
-                <td class="cart-total-column">Total</td>
-                <td class="product-clear"></td>
-              </tr>
-              <tr>
-                <th colspan="5" supplier="<%= seller_name.gsub(" ","") %>" class="seller"> <%= seller_name %> <%= link_to "Note", new_delivery_note_path(:supplier => Organization.where(name:seller_name).first.id, :current_cart => current_cart, :buyer => current_organization.id) %> </th> 
-              </tr>
-              <% items.each do |item| %>
-                <%= content_tag_for(:tr, item, id: "cart_item_#", supplier: seller_name.gsub(/[^a-zA-Z]/, ''), class: "product supplier-#{seller_name.gsub(/[^a-zA-Z]/, '')}", data: {id: item.product.id, :"cart-item" => item.to_json}) do %>
-                  <td class="name"><%= item.product.name %> (<%= item.product.unit_plural %>)</td>
-                  <td class="quantity math="><input class="cart-input in-cart" name="quantity" type="text" size="3" autocomplete="off" min="0" value="<%= item.quantity %>" max="<%= item.product.available_inventory %>"></td>
-                  <td class="price-for-quantity math"><%= number_to_currency(item.unit_price.sale_price) %></td>
-                  <td class="price math"><%= number_to_currency(item.total_price)%></td>
-                  <td class="product-clear"><%= link_to "", "#", class: "font-icon icon-clear" %></td>
-                <% end %>
-              <% end %>
-            </tbody>
-          <% end %>
-            <tbody class="math" id="totals">
-              <tr class="cart_total">
-                <th scope="row" colspan="3">Item Subtotal</th>
-                <td class="subtotal" data-order-min="<%= current_delivery.delivery_schedule.order_minimum %>" data-subtotal="<%=current_cart.subtotal %>"><%= current_cart.display_subtotal %></td>
-                <td></td>
-              </tr>
-
-              <tr class="cart_total <%= "is-hidden" unless current_cart.discount_amount > 0%>">
-                <th scope="row" colspan="3">Discount</th>
-                <td class="discount"><%= current_cart.display_discount %></td>
-                <td></td>
-              </tr>
-
-              <tr class="cart_total">
-                <th scope="row" colspan="3"><%= current_cart.delivery.delivery_schedule.fee_label %></th>
-                <td class="delivery_fees"><%= current_cart.display_delivery_fees %></td>
-                <td></td>
-              </tr>
-
-              <tr class="cart_total">
-                <th scope="row" colspan="3"><strong>Total</strong></th>
-                <td class="total"><strong><%= current_cart.display_total %></strong></td>
-                <td></td>
-              </tr>
-            </tbody>
+          <%= render partial: (@order_type || 'sales')+'_order' %>
           </table>
           <% if policy(:template).index? %>
             <p class="pull-right"><a href="/templates/new" class="app-create-template-link">Create an order template from this cart</a></p>

@@ -58,25 +58,31 @@ $ ->
 
   $("#duplicate_button").click (e) ->
     e.preventDefault()
-    $(this).parent().parent().parent().find("input[name=commit]").val("Duplicate Order")
+    $(this).parent().parent().parent().parent().find("input[name=commit]").val("Duplicate Order")
     $(this).closest("form").submit()
     $(this).prop("disabled","disabled")
 
   $("#export_invoice_button").click (e) ->
     e.preventDefault()
-    $(this).parent().parent().parent().find("input[name=commit]").val("Export Invoice")
+    $(this).parent().parent().parent().parent().find("input[name=commit]").val("Export Invoice")
     $(this).closest("form").submit()
     $(this).prop("disabled","disabled")
 
   $("#export_bill_button").click (e) ->
     e.preventDefault()
-    $(this).parent().parent().parent().find("input[name=commit]").val("Export Bill")
+    $(this).parent().parent().parent().parent().find("input[name=commit]").val("Export Bill")
     $(this).closest("form").submit()
     $(this).prop("disabled","disabled")
 
   $("#unclose_order").click (e) ->
     e.preventDefault()
-    $(this).parent().parent().parent().find("input[name=commit]").val("Unclose Order")
+    $(this).parent().parent().parent().parent().find("input[name=commit]").val("Unclose Order")
+    $(this).closest("form").submit()
+    $(this).prop("disabled","disabled")
+
+  $("#uninvoice_order").click (e) ->
+    e.preventDefault()
+    $(this).parent().parent().parent().parent().find("input[name=commit]").val("Uninvoice Order")
     $(this).closest("form").submit()
     $(this).prop("disabled","disabled")
 
@@ -90,3 +96,33 @@ $ ->
   $("#clear_sig").click (e) ->
     e.preventDefault()
     datapair = $("#signature").jSignature("clear")
+
+  $(".shrink_button").click (e) ->
+    e.preventDefault()
+    $(this).parent().parent().find(".shrink_options").show()
+    $(this).parent().parent().find(".product_ops").hide()
+
+  $(".shrink_cancel_button").click (e) ->
+    e.preventDefault()
+    $(this).parent().parent().find(".product_ops").show()
+    $(this).parent().parent().find(".shrink_options").hide()
+
+  $(".submit_shrink_button").click (e) ->
+    e.preventDefault()
+    $(this).prop("disabled","disabled")
+    shrink_qty = $(this).parent().parent().find(".shrink_qty").val()
+    shrink_cost = $(this).parent().parent().find(".shrink_cost").val()
+    transaction_id = $(this).parent().parent().find(".transaction_id").val()
+    $(this).parent().parent().parent().parent().parent().parent().find("input[name=shrink_qty]").val(shrink_qty)
+    $(this).parent().parent().parent().parent().parent().parent().find("input[name=shrink_cost]").val(shrink_cost)
+    $(this).parent().parent().parent().parent().parent().parent().find("input[name=transaction_id]").val(transaction_id)
+    $(this).parent().parent().parent().parent().parent().parent().parent().find("input[name=commit]").val("Shrink")
+    $(this).closest("form").submit()
+
+  $(".submit_undo_shrink_button").click (e) ->
+    e.preventDefault()
+    $(this).prop("disabled","disabled")
+    transaction_id = $(this).parent().parent().data("transaction-id")
+    $(this).parent().parent().parent().parent().parent().parent().find("input[name=transaction_id]").val(transaction_id)
+    $(this).parent().parent().parent().parent().parent().parent().parent().find("input[name=commit]").val("Undo Shrink")
+    $(this).closest("form").submit()

@@ -1,19 +1,17 @@
 class Admin::OrdersController < AdminController
   include StickyFilters
 
-  before_action :find_sticky_params, only: :index
+  before_action :find_sticky_params, only: [:index, :purchase_orders]
   before_action :load_qb_session
 
   def index
     if params["clear"]
       redirect_to url_for(params.except(:clear))
     else
-      #@query_params["placed_at_date_gteq"] ||= 7.days.ago.to_date.to_s
-      #@query_params["placed_at_date_lteq"] ||= Date.today.to_s
-      @search_presenter = OrderSearchPresenter.new(@query_params, current_user, :placed_at)
-      @q, @totals = search_and_calculate_totals(@search_presenter)
+      po_filter = {:q => {"order_type_matches" => "sales"}}
+      @query_params = @query_params.deep_merge!(po_filter)
 
-      @orders = @q.result(distinct: true)
+      build_order_list
 
       respond_to do |format|
         format.html do
@@ -32,6 +30,43 @@ class Admin::OrdersController < AdminController
         end
       end
     end
+  end
+
+  def purchase_orders
+    if params["clear"]
+      redirect_to url_for(params.except(:clear))
+    else
+      po_filter = {:q => {"order_type_matches" => "purchase"}}
+      @query_params = @query_params.deep_merge!(po_filter)
+
+      build_order_list
+
+      respond_to do |format|
+        format.html do
+          @orders = @orders.page(params[:page]).per(@query_params[:per_page])
+          render :index
+        end
+        format.csv do
+          @order_items = find_order_items(@orders.map(&:id))
+          @abort_mission = @order_items.count > 2999
+          if ENV["USE_UPLOAD_QUEUE"] == "true"
+            Delayed::Job.enqueue ::CSVExport::CSVOrderExportJob.new(current_user, @order_items.map(&:id))
+            flash[:notice] = "Please check your email for export results."
+            redirect_to admin_purchase_orders_path
+          else
+            @filename = "orders.csv"
+          end
+        end
+      end
+
+    end
+  end
+
+  def build_order_list
+    @search_presenter = OrderSearchPresenter.new(@query_params, current_user, :placed_at)
+    @q, @totals = search_and_calculate_totals(@search_presenter)
+
+    @orders = @q.result(distinct: true)
   end
 
   def search_and_calculate_totals(search)
@@ -92,12 +127,22 @@ class Admin::OrdersController < AdminController
     else
       @order = SellerOrder.new(order, current_user)
     end
+
+    if current_market.is_consignment_market?
+      load_consignment_transactions(@order)
+    end
+
     setup_deliveries(@order)
     track_event EventTracker::ViewedOrder.name, order: { url: admin_order_url(order.id), value: @order.order_number }
   end
 
   def update
     order = Order.find(params[:id])
+
+    if current_market.is_consignment_market?
+      load_consignment_transactions(order)
+    end
+
     setup_deliveries(order)
     merge = nil
 
@@ -126,11 +171,20 @@ class Admin::OrdersController < AdminController
     elsif params[:commit] == "Unclose Order"
       unclose_order(order)
       return
+    elsif params[:commit] == "Uninvoice Order"
+      uninvoice_order(order)
+      return
     elsif params["order"][:delivery_clear] == "true"
       remove_delivery_fee(order)
       return
     elsif params["order"][:credit_clear] == "true"
       remove_credit(order)
+      return
+    elsif params[:commit] == "Shrink"
+      shrink_transaction(order, params)
+      return
+    elsif params[:commit] == "Undo Shrink"
+      unshrink_transaction(order, params)
       return
     # elsif params[:commit] == "Undo Mark Delivered"
     #   undo_delivery(order) # But this is not where Mark Delivered goes,sooooo
@@ -198,6 +252,34 @@ class Admin::OrdersController < AdminController
       else
         redirect_to admin_order_path(order), error: "Failed to Unclose Order."
       end
+    end
+  end
+
+  def uninvoice_order(order, batch = nil)
+    result = MarkOrderUninvoiced.perform(order: order)
+    if result.success?
+      Audit.create!(user_id:current_user.id, action:"update", auditable_type: "Order", auditable_id: order.id, audited_changes: {'uninvoice_order' => 'Order Un-Invoiced'})
+      redirect_to admin_order_path(order), notice: "Order Uninvoiced."
+    else
+      redirect_to admin_order_path(order), error: "Failed to Uninvoice Order."
+    end
+  end
+
+  def shrink_transaction(order, params)
+    result = CreateShrinkTransaction.perform(order: order, params: params)
+    if result.success?
+      redirect_to admin_order_path(order), notice: "Shrink Successful."
+    else
+      redirect_to admin_order_path(order), error: "Failed to Shrink."
+    end
+  end
+
+  def unshrink_transaction(order, params)
+    result = UnShrinkTransaction.perform(params: params)
+    if result.success?
+      redirect_to admin_order_path(order), notice: "Unshrink Successful."
+    else
+      redirect_to admin_order_path(order), error: "Failed to Unshrink."
     end
   end
 
@@ -334,5 +416,23 @@ class Admin::OrdersController < AdminController
     setup_add_items_form(order)
     flash.now[:notice] = "Add items below."
     render :show
+  end
+
+  def load_consignment_transactions(order)
+    @po_transactions = ConsignmentTransaction.joins("
+      LEFT JOIN lots ON consignment_transactions.lot_id = lots.id
+      LEFT JOIN products ON consignment_transactions.product_id = products.id
+      LEFT JOIN order_items ON consignment_transactions.order_item_id = order_items.id")
+       .where(order_id: order.id)
+       .where("parent_id IS NULL")
+       .select("consignment_transactions.id, consignment_transactions.transaction_type, consignment_transactions.product_id, products.name as product_name, lots.number as lot_name, order_items.delivery_status, consignment_transactions.quantity, consignment_transactions.net_price, consignment_transactions.sale_price")
+       .order("consignment_transactions.id, consignment_transactions.parent_id")
+    @child_transactions = ConsignmentTransaction.joins("
+      LEFT JOIN orders ON consignment_transactions.order_id = orders.id
+      LEFT JOIN organizations ON orders.organization_id = organizations.id")
+      .where(order_id: order.id)
+      .where("parent_id IS NOT NULL")
+      .select("consignment_transactions.id, consignment_transactions.transaction_type, consignment_transactions.product_id, consignment_transactions.quantity, consignment_transactions.net_price, consignment_transactions.sale_price, organizations.name AS buyer_name")
+      .order("consignment_transactions.product_id, consignment_transactions.created_at")
   end
 end

@@ -335,6 +335,8 @@ FactoryGirl.define do
     payment_method   "purchase order"
     payment_status   "unpaid"
 
+    order_type       "sales"
+
     total_cost       100.99
 
     trait :with_items do

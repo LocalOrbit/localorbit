@@ -1,0 +1,89 @@
+<div>
+  <h2>Transactions</h2>
+  <table>
+    <thead>
+      <tr>
+        <th>Product</th><th>Lot</th><th>Quantity</th><th>Price</th><th>Total</th><th></th>
+      </tr>
+    </thead>
+    <tbody>
+    <% balance_due = 0 %>
+    <% @po_transactions.each do |po| %>
+        <% po_qty = 0 %>
+        <tr>
+          <td colspan="<% po.delivery_status == 'delivered' ? 1 : 6 %>"><%=po.product_name %></td>
+          <% if po.delivery_status == 'delivered' %>
+          <% po_qty = po.quantity %>
+          <td></td>
+          <td><%=po.quantity %></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <% end %>
+        </tr>
+        <% so_qty = 0 %>
+        <% @child_transactions.each do |child| %>
+            <% so_qty = so_qty + child.quantity %>
+            <% if child.product_id == po.product_id %>
+                 <% if child.transaction_type == "SO" %>
+                    <% balance_due = balance_due + (child.quantity * child.net_price) %>
+                    <tr data-transaction-id="<%= child.id %>">
+                    <td><%= child.buyer_name %></td>
+                    <td><%= child.lot_name %></td>
+                    <td><%= child.quantity %><span style="font-size: 8px"><%= child.lot_name.nil? ? 'Awaiting Delivery' : '' %></span></td>
+                    <td><%= child.number_to_currency(net_price) %></td>
+                    <td></td>
+                  </tr>
+                  <% elsif child.transaction_type == "SHRINK" %>
+                  <tr data-transaction-id="<%=child.id %>">
+                    <td>&nbsp;&nbsp;Shrink</td>
+                    <td></td>
+                    <td><%= child.quantity %>
+                    </td><td><%= number_to_currency(child.net_price) %></td>
+                    <td><%= number_to_currency(child.quantity * child.net_price) %></td>
+                    <td></td>
+                    <td><button class="submit_undo_shrink_button btn btn--tiny">Undo</button></td>
+                  </tr>
+                <% end %>
+            <% else so_qty = 0 %>
+            <% end %>
+        <% end %>
+        <tr>
+          <td></td>
+          <td></td>
+          <td><strong><%= po_qty - so_qty %></strong><%= po_qty - so_qty == 0 ? '&nbsp;<i style="color: #559955" class="fa fa-check"></i>'.html_safe : '' %></td>
+          <td></td>
+          <td></td>
+          <% if po_qty - so_qty > 0 # not sold_through %>
+            <td colspan="3" align="right">
+              <div class="product_ops" >
+                <%= link_to "Shrink", '#', class: "shrink_button btn btn--tiny" %>
+                <%= link_to "Holdover", '#', class: "btn btn--tiny" %>
+                <%= link_to "Repack", '#', class: "btn btn--tiny" %>
+              </div>
+              <div class="shrink_options" style="float: right; display: none">
+                <label>Shrink:</label>
+                <input type="text" title="Quantity" style="width: 100px" class="shrink_qty" />
+                <input type="text" title="Amount" style="width: 100px" class="shrink_cost" /><br/>
+                <input type="hidden" class="transaction_id" value="<%=po.id %>"/><br/>
+                <button class="submit_shrink_button btn btn--primary btn--tiny">Shrink</button>
+                <button class="shrink_cancel_button btn btn--tiny">Cancel</button>
+              </div>
+            </td>
+          <% else %>
+            <td></td>
+          <% end %>
+        </tr>
+    <% end %>
+    <tr style="background-color: #DDD">
+      <td colspan="4" align="right"><strong>Balance Due:</strong></td>
+      <td><%= number_to_currency(balance_due) %></td>
+      <td></td>
+      <td></td>
+    </tr>
+    </tbody>
+  </table>
+  <input type="hidden" name="shrink_qty"/>
+  <input type="hidden" name="shrink_cost" />
+  <input type="hidden" name="transaction_id" />
+</div>

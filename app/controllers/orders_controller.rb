@@ -8,9 +8,25 @@ class OrdersController < ApplicationController
   before_action :require_current_delivery,       only: :create
   before_action :require_cart,                   only: :create
   before_action :hide_admin_navigation,          only: :create
-  before_action :find_sticky_params, only: :index
+  before_action :find_sticky_params, only: [:index, :purchase_orders]
 
   def index
+    po_filter = {:q => {"order_type_matches" => 'sales'}}
+    @query_params.merge!(po_filter)
+
+    order_list
+  end
+
+  def purchase_orders
+    po_filter = {:q => {"order_type_eq" => "purchase"}}
+    @query_params.merge!(po_filter)
+
+    order_list
+
+    render :index
+  end
+
+  def order_list
     @query_params["placed_at_date_gteq"] ||= 7.days.ago.to_date.to_s
     @query_params["placed_at_date_lteq"] ||= Date.today.to_s
     @presenter = BuyerOrderPresenter.new(current_user, current_market, request.query_parameters, @query_params)
@@ -22,10 +38,16 @@ class OrdersController < ApplicationController
 
   def show
     @order = BuyerOrder.find(current_user, params[:id])
+
+    if current_market.is_consignment_market?
+      load_consignment_transactions(@order)
+    end
+
     track_event EventTracker::ViewedOrder.name, order: { url: order_url(id: @order.id), value: @order.order_number }
   end
 
   def create
+    @order_type = session[:order_type]
     # Validate cart items against current inventory...
     errors ||= []
     current_cart.items.each do |item|
@@ -70,6 +92,7 @@ class OrdersController < ApplicationController
       if @placed_order.success?
         session.delete(:cart_id)
         session.delete(:current_organization_id)
+        session.delete(:current_supplier_id)
         session.delete(:current_delivery_id)
         session.delete(:current_delivery_day)
         @grouped_items = @order.items.for_checkout
@@ -88,16 +111,18 @@ class OrdersController < ApplicationController
 
   def validate_qty(item)
     error = nil
-    product = Product.includes(:prices).find(item.product.id)
-    delivery_date = current_delivery.deliver_on
-    actual_count = product.available_inventory(delivery_date, current_market.id, current_organization.id)
+    if current_market.is_buysell_market?
+      product = Product.includes(:prices).find(item.product.id)
+      delivery_date = current_delivery.deliver_on
+      actual_count = product.available_inventory(delivery_date, current_market.id, current_organization.id, item.lot_id)
 
-    if item.quantity && item.quantity > 0 && item.quantity > actual_count
-      error = {
-        item_id: item.id,
-        error_msg: "Quantity of #{product.name} (#{product.unit.plural}) available for purchase: #{product.available_inventory(delivery_date, current_market.id, current_organization.id)}",
-        actual_count: actual_count
-      }
+      if item.quantity && item.quantity > 0 && item.quantity > actual_count
+        error = {
+          item_id: item.id,
+          error_msg: "Quantity of #{product.name} (#{product.unit.plural}) available for purchase: #{product.available_inventory(delivery_date, current_market.id, current_organization.id)}",
+          actual_count: actual_count
+        }
+      end
     end
 
     error
@@ -115,6 +140,7 @@ class OrdersController < ApplicationController
 
   def order_params
     params.require(:order).permit(
+      :order_type,
       :discount_code,
       :payment_method,
       :payment_note,
@@ -140,5 +166,23 @@ class OrdersController < ApplicationController
     results.sorts = "placed_at desc" if results.sorts.empty?
 
     results
+  end
+
+  def load_consignment_transactions(order)
+    @po_transactions = ConsignmentTransaction.joins("
+      LEFT JOIN lots ON consignment_transactions.lot_id = lots.id
+      LEFT JOIN products ON consignment_transactions.product_id = products.id
+      LEFT JOIN order_items ON consignment_transactions.order_item_id = order_items.id")
+                           .where(order_id: order.id)
+                           .where("parent_id IS NULL")
+                           .select("consignment_transactions.id, consignment_transactions.transaction_type, consignment_transactions.product_id, products.name as product_name, lots.number as lot_name, order_items.delivery_status, consignment_transactions.quantity, consignment_transactions.net_price, consignment_transactions.sale_price")
+                           .order("consignment_transactions.id, consignment_transactions.parent_id")
+    @child_transactions = ConsignmentTransaction.joins("
+      LEFT JOIN orders ON consignment_transactions.order_id = orders.id
+      LEFT JOIN organizations ON orders.organization_id = organizations.id")
+                              .where(order_id: order.id)
+                              .where("parent_id IS NOT NULL")
+                              .select("consignment_transactions.id, consignment_transactions.transaction_type, consignment_transactions.product_id, consignment_transactions.quantity, consignment_transactions.net_price, consignment_transactions.sale_price, organizations.name AS buyer_name")
+                              .order("consignment_transactions.product_id, consignment_transactions.created_at")
   end
 end
