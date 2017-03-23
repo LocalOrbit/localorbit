@@ -8,6 +8,7 @@ class CreateConsignmentTransaction
     order.items.each do |item|
 
       check_existing = ConsignmentTransaction.where(market_id: order.market.id, transaction_type: order.sales_order? ? 'SO' : 'PO', order_id: order.id, product_id: item.product.id, lot_id: order.sales_order? && !item.lots.empty? ? item.lots.first.id : nil)
+      po_order = ConsignmentTransaction.where(transaction_type: 'PO', product_id: item.product_id).first
 
       ct = nil
       if check_existing.empty?
@@ -21,18 +22,10 @@ class CreateConsignmentTransaction
           product_id: item.product_id,
           quantity: item.quantity,
           sale_price: item.unit_price,
-          net_price: item.net_price
+          net_price: item.net_price,
+          parent_id: order.sales_order? && !po_order.nil? ? po_order.id : nil
         )
         ct.save
-      end
-
-      if order.sales_order?
-        if !item.lots.empty?
-          po_order = ConsignmentTransaction.where(transaction_type: 'PO', product_id: item.product_id, lot_id: nil).first
-          if !po_order.nil?
-            po_order.update_attributes(parent_id: ct.id, lot_id: item.lots.first.id)
-          end
-        end
       end
     end
   end

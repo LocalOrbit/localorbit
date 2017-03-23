@@ -30,7 +30,7 @@
                     <tr data-transaction-id="<%= child.id %>">
                     <td>&nbsp;&nbsp;<%= child.buyer_name %></td>
                     <td><%= child.lot_name %></td>
-                    <td><%= child.quantity %><span style="font-size: 8px"><%= child.lot_name.nil? ? 'Awaiting Delivery' : '' %></span></td>
+                    <td><%= child.quantity %><span style="font-size: 9px">&nbsp;<%= child.lot_name.nil? ? 'Awaiting Delivery' : '' %></span></td>
                     <td><%= number_to_currency(child.net_price) %></td>
                     <td><%= number_to_currency(child.quantity * child.net_price) %></td>
                   </tr>
