@@ -35,6 +35,7 @@
                     <td><%= number_to_currency(child.quantity * child.net_price) %></td>
                   </tr>
                   <% elsif child.transaction_type == "SHRINK" %>
+                  <% balance_due = balance_due + (child.quantity * child.net_price) %>
                   <tr data-transaction-id="<%=child.id %>">
                     <td>&nbsp;&nbsp;Shrink</td>
                     <td></td>
@@ -44,6 +45,16 @@
                     <td></td>
                     <td><button class="submit_undo_shrink_button btn btn--tiny">Undo</button></td>
                   </tr>
+                <% elsif child.transaction_type == "HOLDOVER" %>
+                    <tr data-transaction-id="<%=child.id %>">
+                      <td>&nbsp;&nbsp;Holdover</td>
+                      <td><%= link_to "PO: #{child.holdover_order_id}", purchase_order_path(child.holdover_order_id) %></td>
+                      <td><%= child.quantity %></td>
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                      <td><button class="submit_undo_holdover_button btn btn--tiny">Undo</button></td>
+                    </tr>
                 <% end %>
             <% else so_qty = 0 %>
             <% end %>
@@ -58,16 +69,38 @@
             <td colspan="3" align="right">
               <div class="product_ops" >
                 <%= link_to "Shrink", '#', class: "shrink_button btn btn--tiny" %>
-                <%= link_to "Holdover", '#', class: "btn btn--tiny" %>
+                <%= link_to "Holdover", '#', class: "holdover_button btn btn--tiny" %>
                 <%= link_to "Repack", '#', class: "btn btn--tiny" %>
               </div>
               <div class="shrink_options" style="float: right; display: none">
-                <label>Shrink:</label>
-                <input type="text" title="Quantity" style="width: 100px" class="shrink_qty" />
-                <input type="text" title="Amount" style="width: 100px" class="shrink_cost" /><br/>
+                <div>
+                  <label>Quantity</label>
+                  <input type="text" title="Quantity" style="width: 100px" class="shrink_qty" />
+                </div>
+                <div>
+                  <label>Cost</label>
+                  <input type="text" title="Amount" style="width: 100px" class="shrink_cost" /><br/>
+                </div>
                 <input type="hidden" class="transaction_id" value="<%=po.id %>"/><br/>
                 <button class="submit_shrink_button btn btn--primary btn--tiny">Shrink</button>
                 <button class="shrink_cancel_button btn btn--tiny">Cancel</button>
+              </div>
+              <div class="holdover_options" style="float: right; display: none">
+                <div>
+                  <label>Quantity</label>
+                  <input type="text" title="Quantity" style="width: 100px" class="holdover_qty" />
+                </div>
+                <div>
+                  <label>Order</label>
+                <input type="text" title="Order" style="width: 100px" value="New" class="holdover_po" />
+                </div>
+                <div>
+                  <label>Delivery</label>
+                  <input type="text" title="Delivery" style="width: 100px" class="holdover_delivery_date" disabled /><br/>
+                </div>
+                <input type="hidden" class="transaction_id" value="<%=po.id %>"/><br/>
+                <button class="submit_holdover_button btn btn--primary btn--tiny">Holdover</button>
+                <button class="holdover_cancel_button btn btn--tiny">Cancel</button>
               </div>
             </td>
           <% else %>
@@ -85,5 +118,8 @@
   </table>
   <input type="hidden" name="shrink_qty"/>
   <input type="hidden" name="shrink_cost" />
+  <input type="hidden" name="holdover_qty"/>
+  <input type="hidden" name="holdover_po" />
+  <input type="hidden" name="holdover_delivery_date" />
   <input type="hidden" name="transaction_id" />
 </div>

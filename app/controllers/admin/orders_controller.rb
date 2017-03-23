@@ -187,7 +187,12 @@ class Admin::OrdersController < AdminController
     elsif params[:commit] == "Undo Shrink"
       unshrink_transaction(order, params)
       return
-    # elsif params[:commit] == "Undo Mark Delivered"
+    elsif params[:commit] == "Holdover"
+      holdover_transaction(order, params)
+      return
+    elsif params[:commit] == "Undo Holdover"
+      unholdover_transaction(order, params)
+      return    # elsif params[:commit] == "Undo Mark Delivered"
     #   undo_delivery(order) # But this is not where Mark Delivered goes,sooooo
     end
 
@@ -281,6 +286,24 @@ class Admin::OrdersController < AdminController
       redirect_to admin_order_path(order), notice: "Unshrink Successful."
     else
       redirect_to admin_order_path(order), error: "Failed to Unshrink."
+    end
+  end
+
+  def holdover_transaction(order, params)
+    result = CreateHoldoverTransaction.perform(order: order, params: params)
+    if result.success?
+      redirect_to admin_order_path(order), notice: "Holdover Successful."
+    else
+      redirect_to admin_order_path(order), error: "Failed to Holdover."
+    end
+  end
+
+  def unholdover_transaction(order, params)
+    result = UnHoldoverTransaction.perform(params: params)
+    if result.success?
+      redirect_to admin_order_path(order), notice: "Unholdover Successful."
+    else
+      redirect_to admin_order_path(order), error: "Failed to Unholdover."
     end
   end
 

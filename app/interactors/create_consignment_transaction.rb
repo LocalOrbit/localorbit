@@ -27,6 +27,7 @@ class CreateConsignmentTransaction
         )
         ct.save
       end
+      context[:transaction_id] = ct.id
     end
   end
 end
