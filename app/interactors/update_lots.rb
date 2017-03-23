@@ -4,6 +4,7 @@ class UpdateLots
     return unless order.purchase_order?
 
     lot_number = generate_lot_number
+
     order.items.each do |item|
       upsert_lot(item, lot_number) if item.quantity_delivered > 0
     end
@@ -25,6 +26,12 @@ class UpdateLots
   end
 
   def generate_lot_number
-    'C1'
+    days = %w(A B C D E F G)
+    current_time = Time.now
+
+    weekday = days[current_time.wday]
+    monthweek = (current_time.mday / 7.0).ceil
+
+    "#{weekday}#{monthweek}"
   end
 end
