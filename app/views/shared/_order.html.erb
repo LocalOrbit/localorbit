@@ -190,6 +190,9 @@
         <tr>
           <th>Product Name</th>
           <th>Quantity</th>
+          <% if order.purchase_order? %>
+          <th>Lot</th>
+          <% end %>
           <th>Product Code</th>
           <% if order.sales_order? %>
           <th>Price</th>
@@ -227,6 +230,17 @@
               <span class="quantity-delivered-ro"><%= Format.quantity_no_delimiter item.object.quantity_delivered %></span>
             <% end %> <%= item.object.unit %> (Delivered)
           </td>
+
+          <% if order.purchase_order? %>
+            <td>
+            <% if %>
+              <span><%= item.object.product.lots.available_general.map(&:number).join(", ") %></span>
+            <% else %>
+              -
+            <% end %>
+            </td>
+          <% end %>
+
           <td>
             <% if item.object.product.code.present? %>
               <span><%= item.object.product.code %></span> <br />
