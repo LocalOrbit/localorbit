@@ -7,7 +7,8 @@
       </tr>
     </thead>
     <tbody>
-    <% @child_transactions.decorate.each do |so| %>
+    <% if !@child_transactions.empty? %>
+    <% @child_transactions.flatten.decorate.each do |so| %>
         <tr>
           <td></td>
           <td></td>
@@ -17,6 +18,7 @@
           <td></td>
           <td></td>
         </tr>
+    <% end %>
     <% end %>
     </tbody>
   </table>
