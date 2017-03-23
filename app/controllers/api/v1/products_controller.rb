@@ -191,7 +191,7 @@ module Api
 
         if current_market.is_consignment_market?
           lots = Lot.where(product_id: product.id).where("quantity > 0 AND number IS NOT NULL")
-                     .select("id, quantity, number, (SELECT TO_CHAR(delivery_date, 'MM/DD/YYYY') FROM consignment_transactions WHERE lot_id = lots.id) delivery_date, 'available'::text AS status")
+                     .select("id, quantity, number, (SELECT TO_CHAR(delivery_date, 'MM/DD/YYYY') FROM consignment_transactions WHERE lot_id = lots.id AND transaction_type = 'PO') delivery_date, 'available'::text AS status")
           #ct = ConsignmentTransaction.joins("LEFT JOIN (#{lots}) l_child
           #ON consignment_transactions.lot_id = l_child.id")
           #.select()
