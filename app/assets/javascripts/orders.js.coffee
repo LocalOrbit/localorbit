@@ -126,3 +126,35 @@ $ ->
     $(this).parent().parent().parent().parent().parent().parent().find("input[name=transaction_id]").val(transaction_id)
     $(this).parent().parent().parent().parent().parent().parent().parent().find("input[name=commit]").val("Undo Shrink")
     $(this).closest("form").submit()
+
+  $(".holdover_button").click (e) ->
+    e.preventDefault()
+    $(this).parent().parent().find(".holdover_options").show()
+    $(this).parent().parent().find(".product_ops").hide()
+
+  $(".holdover_cancel_button").click (e) ->
+    e.preventDefault()
+    $(this).parent().parent().find(".product_ops").show()
+    $(this).parent().parent().find(".holdover_options").hide()
+
+  $(".submit_holdover_button").click (e) ->
+    e.preventDefault()
+    $(this).prop("disabled","disabled")
+    holdover_qty = $(this).parent().parent().find(".holdover_qty").val()
+    holdover_po = $(this).parent().parent().find(".holdover_po").val()
+    holdover_delivery_date = $(this).parent().parent().find(".holdover_delivery_date").val()
+    transaction_id = $(this).parent().parent().find(".transaction_id").val()
+    $(this).parent().parent().parent().parent().parent().parent().find("input[name=holdover_qty]").val(holdover_qty)
+    $(this).parent().parent().parent().parent().parent().parent().find("input[name=holdover_po]").val(holdover_po)
+    $(this).parent().parent().parent().parent().parent().parent().find("input[name=holdover_delivery_date]").val(holdover_delivery_date)
+    $(this).parent().parent().parent().parent().parent().parent().find("input[name=transaction_id]").val(transaction_id)
+    $(this).parent().parent().parent().parent().parent().parent().parent().find("input[name=commit]").val("Holdover")
+    $(this).closest("form").submit()
+
+  $(".submit_undo_holdover_button").click (e) ->
+    e.preventDefault()
+    $(this).prop("disabled","disabled")
+    transaction_id = $(this).parent().parent().data("transaction-id")
+    $(this).parent().parent().parent().parent().parent().parent().find("input[name=transaction_id]").val(transaction_id)
+    $(this).parent().parent().parent().parent().parent().parent().parent().find("input[name=commit]").val("Undo Holdover")
+    $(this).closest("form").submit()
