@@ -232,7 +232,13 @@
           </td>
 
           <% if order.purchase_order? %>
-            <td>Lot</td>
+            <td>
+            <% if %>
+              <span><%= item.object.product.lots.available_general.map(&:number).join(", ") %></span>
+            <% else %>
+              -
+            <% end %>
+            </td>
           <% end %>
 
           <td>
