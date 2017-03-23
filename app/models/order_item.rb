@@ -28,8 +28,10 @@ class OrderItem < ActiveRecord::Base
 
   validate :product_availability, on: :create
 
-  scope :delivered,    -> { where(delivery_status: "delivered") }
-  scope :undelivered,  -> { where(delivery_status: "pending") }
+  scope :delivered,       -> { where(delivery_status: "delivered") }
+  scope :undelivered,     -> { where(delivery_status: "pending") }
+  scope :sales_orders,    -> { where(orders: {order_type: 'sales'}) }
+  scope :purchase_orders, -> { where(orders: {order_type: 'purchase'}) }
 
   has_one :seller, through: :product, class_name: Organization
 

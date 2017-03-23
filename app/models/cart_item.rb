@@ -61,6 +61,10 @@ class CartItem < ActiveRecord::Base
     end
   end
 
+  def gross_total
+    unit_price.sale_price * quantity
+  end
+
   protected
 
   def validate_minimum_quantity
