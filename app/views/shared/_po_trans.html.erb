@@ -22,17 +22,17 @@
           <% end %>
         </tr>
         <% so_qty = 0 %>
-        <% @child_transactions.each do |child| %>
+        <% @child_transactions.flatten.each do |child| %>
             <% so_qty = so_qty + child.quantity %>
             <% if child.product_id == po.product_id %>
                  <% if child.transaction_type == "SO" %>
                     <% balance_due = balance_due + (child.quantity * child.net_price) %>
                     <tr data-transaction-id="<%= child.id %>">
-                    <td><%= child.buyer_name %></td>
+                    <td>&nbsp;&nbsp;<%= child.buyer_name %></td>
                     <td><%= child.lot_name %></td>
                     <td><%= child.quantity %><span style="font-size: 8px"><%= child.lot_name.nil? ? 'Awaiting Delivery' : '' %></span></td>
-                    <td><%= child.number_to_currency(net_price) %></td>
-                    <td></td>
+                    <td><%= number_to_currency(child.net_price) %></td>
+                    <td><%= number_to_currency(child.quantity * child.net_price) %></td>
                   </tr>
                   <% elsif child.transaction_type == "SHRINK" %>
                   <tr data-transaction-id="<%=child.id %>">
