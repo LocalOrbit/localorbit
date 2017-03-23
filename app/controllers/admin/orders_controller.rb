@@ -419,6 +419,7 @@ class Admin::OrdersController < AdminController
   end
 
   def load_consignment_transactions(order)
+    @child_transactions = []
     @po_transactions = ConsignmentTransaction.joins("
       LEFT JOIN lots ON consignment_transactions.lot_id = lots.id
       LEFT JOIN products ON consignment_transactions.product_id = products.id
@@ -427,12 +428,19 @@ class Admin::OrdersController < AdminController
        .where("parent_id IS NULL")
        .select("consignment_transactions.id, consignment_transactions.transaction_type, consignment_transactions.product_id, products.name as product_name, lots.number as lot_name, order_items.delivery_status, consignment_transactions.quantity, consignment_transactions.net_price, consignment_transactions.sale_price")
        .order("consignment_transactions.id, consignment_transactions.parent_id")
-    @child_transactions = ConsignmentTransaction.joins("
-      LEFT JOIN orders ON consignment_transactions.order_id = orders.id
-      LEFT JOIN organizations ON orders.organization_id = organizations.id")
-      .where(order_id: order.id)
-      .where("parent_id IS NOT NULL")
-      .select("consignment_transactions.id, consignment_transactions.transaction_type, consignment_transactions.product_id, consignment_transactions.quantity, consignment_transactions.net_price, consignment_transactions.sale_price, organizations.name AS buyer_name")
-      .order("consignment_transactions.product_id, consignment_transactions.created_at")
-  end
+
+      if !@po_transactions.nil?
+        @po_transactions.each do |po|
+          ct = ConsignmentTransaction.joins("
+          LEFT JOIN orders ON consignment_transactions.order_id = orders.id
+          LEFT JOIN lots ON consignment_transactions.lot_id = lots.id
+          LEFT JOIN organizations ON orders.organization_id = organizations.id")
+           .where(parent_id: po.id)
+           .select("consignment_transactions.id, consignment_transactions.transaction_type, consignment_transactions.product_id, consignment_transactions.quantity, lots.number as lot_name, consignment_transactions.net_price, consignment_transactions.sale_price, organizations.name AS buyer_name")
+           .order("consignment_transactions.product_id, consignment_transactions.created_at")
+
+          @child_transactions << ct.to_a
+        end
+      end
+    end
 end
