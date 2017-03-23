@@ -1,5 +1,6 @@
 class Admin::OrdersController < AdminController
   include StickyFilters
+  include Inventory
 
   before_action :find_sticky_params, only: [:index, :purchase_orders]
   before_action :load_qb_session
@@ -418,6 +419,7 @@ class Admin::OrdersController < AdminController
     render :show
   end
 
+=begin
   def load_consignment_transactions(order)
     @child_transactions = []
     @po_transactions = ConsignmentTransaction.joins("
@@ -449,7 +451,7 @@ class Admin::OrdersController < AdminController
         LEFT JOIN products ON consignment_transactions.product_id = products.id
         LEFT JOIN order_items ON consignment_transactions.order_item_id = order_items.id")
          .where(order_id: order.id, transaction_type: 'SO')
-         .select("consignment_transactions.id, consignment_transactions.transaction_type, consignment_transactions.product_id, products.name as product_name, lots.number as lot_name, order_items.delivery_status, consignment_transactions.quantity, consignment_transactions.net_price, consignment_transactions.sale_price, consignment_transactions.parent_id")
+         .select("consignment_transactions.id, consignment_transactions.transaction_type, consignment_transactions.product_id, products.name as product_name, lots.number as lot_name, lots.quantity as lot_quantity, order_items.delivery_status, consignment_transactions.quantity, consignment_transactions.net_price, consignment_transactions.sale_price, consignment_transactions.parent_id")
          .order("consignment_transactions.id, consignment_transactions.parent_id")
 
 
@@ -467,4 +469,5 @@ class Admin::OrdersController < AdminController
       end
     end
   end
+=end
 end

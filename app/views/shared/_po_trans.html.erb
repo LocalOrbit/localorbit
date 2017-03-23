@@ -23,12 +23,12 @@
         </tr>
         <% so_qty = 0 %>
         <% @child_transactions.flatten.each do |child| %>
-            <% so_qty = so_qty + child.quantity %>
+            <% so_qty = so_qty + (child.delivery_status == 'pending' ? 0 : child.quantity) %>
             <% if child.product_id == po.product_id %>
                  <% if child.transaction_type == "SO" %>
                     <% balance_due = balance_due + (child.quantity * child.net_price) %>
                     <tr data-transaction-id="<%= child.id %>">
-                    <td>&nbsp;&nbsp;<%= child.buyer_name %></td>
+                    <td>&nbsp;&nbsp;Sold: <%= link_to child.buyer_name, admin_order_path(child.order_id) %></td>
                     <td><%= child.lot_name %></td>
                     <td><%= child.quantity %><span style="font-size: 10px">&nbsp;<%= child.delivery_status == 'pending' ? 'Awaiting Delivery' : '' %></span></td>
                     <td><%= number_to_currency(child.net_price) %></td>

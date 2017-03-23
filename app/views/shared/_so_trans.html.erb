@@ -21,12 +21,12 @@
           <% if !@parent_transactions.nil? %>
             <% @parent_transactions.flatten.each do |parent| %>
                   <tr>
-                    <td>&nbsp;&nbsp;<%= link_to "PO: #{parent.order_id}", purchase_order_path(parent.order_id) %></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
+                    <td>&nbsp;&nbsp;<%= link_to "PO: #{parent.order_id}", admin_purchase_order_path(parent.order_id) %></td>
+                    <td><%= parent.delivery_status == 'delivered' ? 'On Hand' : 'Awaiting Delivery' %></td>
+                    <td><%= so.quantity %></td>
+                    <td><%= so.lot_quantity %></td>
+                    <td><%= number_to_currency(so.sale_price) %></td>
+                    <td><%= number_to_currency(so.net_price) %></td>
                     <td></td>
                   </tr>
             <% end %>
