@@ -1,6 +1,6 @@
 class Lot < ActiveRecord::Base
 
-  after_save :update_product_record
+  after_update :update_product_record
   audited allow_mass_assignment: true, associated_with: :product
 
   belongs_to :product, inverse_of: :lots

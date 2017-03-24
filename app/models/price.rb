@@ -1,6 +1,6 @@
 class Price < ActiveRecord::Base
   include SoftDelete
-  after_save :update_product_record
+  after_update :update_product_record
 
   audited allow_mass_assignment: true
   belongs_to :product, inverse_of: :prices
