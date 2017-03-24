@@ -95,7 +95,7 @@ class Admin::OrdersController < AdminController
           order = Order.find(o)
           if order.delivery_status_for_user(current_user) == 'delivered' && order.qb_ref_id.nil?
             if order.order_type == "purchase"
-              export_bill(order, true)
+              export_bill(order, @po_transactions, @child_transactions, true)
             else
               export_invoice(order, true)
             end
@@ -131,6 +131,7 @@ class Admin::OrdersController < AdminController
 
     if current_market.is_consignment_market?
       load_consignment_transactions(@order)
+      load_open_po
     end
 
     setup_deliveries(@order)
@@ -167,7 +168,7 @@ class Admin::OrdersController < AdminController
       export_invoice(order)
       return
     elsif params[:commit] == "Export Bill"
-      export_bill(order)
+      export_bill(order, @po_transactions, @child_transactions)
       return
     elsif params[:commit] == "Unclose Order"
       unclose_order(order)
@@ -239,8 +240,8 @@ class Admin::OrdersController < AdminController
     end
   end
 
-  def export_bill(order, batch = nil)
-    result = ExportBillToQb.perform(order: order, curr_market: current_market, session: session)
+  def export_bill(order, po_transactions, child_transactions, batch = nil)
+    result = ExportBillToQb.perform(order: order, po_transactions: po_transactions, child_transactions: child_transactions, curr_market: current_market, session: session)
     if batch.nil?
       if result.success?
         redirect_to admin_order_path(order), notice: "Bill Exported to QB."

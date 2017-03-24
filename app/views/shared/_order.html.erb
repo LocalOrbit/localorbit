@@ -14,7 +14,7 @@
     </div>
     <div class="button-bar" style="float: right">
       <ul>
-        <% if policy(:merge_order).index? && order.delivery_status_for_user(current_user) != 'canceled' %>
+        <% if policy(:merge_order).index? && current_market.is_buysell_market? && order.delivery_status_for_user(current_user) != 'canceled' %>
         <li>
           <button id="merge_button" name="Merge Order">Merge Order</button>
         </li>
