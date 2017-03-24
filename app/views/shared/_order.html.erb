@@ -233,7 +233,7 @@
 
           <% if order.purchase_order? %>
             <td>
-            <% if %>
+            <% if item.object.product.lots.available_general %>
               <span><%= item.object.product.lots.available_general.map(&:number).join(", ") %></span>
             <% else %>
               -

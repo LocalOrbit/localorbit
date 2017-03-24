@@ -98,10 +98,10 @@ module Imports
 				#create error and append it 
 				error_hash["Errors"]["Missing or invalid Unit name"] = "Check unit of measure validity. Must be singular and included in LO system. Input was: #{product_row["Unit Name"]}" # TODO more info provided?
 			end
-			if !(product_row["Price"].to_f and product_row["Price"].to_f > 0) 
+			if !(product_row["Price"].to_f)
 				okay_flag = false
 				#create error and append it
-				error_hash["Errors"]["Missing or invalid price"] = "Check product price validity. Must be a valid decimal greater than 0. Input was: #{product_row["Price"]}"
+				error_hash["Errors"]["Missing or invalid price"] = "Check product price validity. Must be a valid decimal. Input was: #{product_row["Price"]}"
 			end
 			if !product_row["Unit Quantity"].nil? && !(product_row["Unit Quantity"].to_i and product_row["Unit Quantity"].to_i > 0)
 				okay_flag = false
