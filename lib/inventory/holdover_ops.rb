@@ -12,7 +12,7 @@ Product is removed from the current PO, and moved to another PO (new or existing
 
         t_id = ConsignmentTransaction.find(params[:transaction_id])
 
-        if params[:holdover_po] != "New"
+        if params[:holdover_po] != ""
           dest_order = Order.find(params[:holdover_po])
         else
         # Create new Purchase Order
@@ -49,9 +49,9 @@ Product is removed from the current PO, and moved to another PO (new or existing
         orig_item = OrderItem.find(t_id.order_item_id)
         dest_item = OrderItem.new(orig_item.attributes.reject{ |k| k == 'id' })
         dest_item.quantity = params[:holdover_qty]
-        if dest_item.quantity_delivered > Integer(params[:holdover_qty])
-          dest_item.quantity_delivered = Integer(params[:holdover_qty])
-        end
+        #if dest_item.quantity_delivered > Integer(params[:holdover_qty])
+        #  dest_item.quantity_delivered = Integer(params[:holdover_qty])
+        #end
         dest_order.items << dest_item
 
         ct_parent = CreateConsignmentTransaction.perform(order: dest_order)
@@ -86,7 +86,8 @@ Product is removed from the current PO, and moved to another PO (new or existing
         ct_dest.save
       end
 
-      def unholdover_product
+      def unholdover_product(order, params)
+
       end
 
       def can_holdover_product?

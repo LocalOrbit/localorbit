@@ -1,9 +1,9 @@
 module Quickbooks
   class Bill
     class << self
-      def create_bill (order, session, config)
+      def create_bill (order, po_transactions, child_transactions, session, config)
 
-        # Create buyer org if necessary
+        # Create supplier org if necessary
         if order.products.first.organization.qb_org_id.nil?
           retry_cnt = 0
           loop do
@@ -27,15 +27,20 @@ module Quickbooks
         bill.txn_date = Date
         bill.doc_number = order.order_number
 
-        order.items.each do |item|
+        # Add items for shrink transactions
+        result = Quickbooks::Item.query_item('Shrink', session)
+        shrink_item_id = result.entries[0].id
+
+        po_transactions.each do |trans|
+          @product = Product.find(trans.product_id)
 
           # Create items if necessary
           itm_result = nil
-          if item.product.qb_item_id.nil?
+          if @product.qb_item_id.nil?
             retry_cnt = 0
             loop do
               begin
-                prd = item.product
+                prd = product
                 itm_result = Quickbooks::Item.create_item(prd, session, config)
                 if !itm_result.nil?
                   prd.qb_item_id = itm_result.id
@@ -51,18 +56,26 @@ module Quickbooks
               break if !failed || retry_cnt > 10
             end
           end
+        end
 
-          if item.delivery_status == 'delivered'
-            line_item = Quickbooks::Model::BillLineItem.new
-            line_item.amount = item.unit_price * item.quantity
-            line_item.description = item.name
-            line_item.item_based_expense_item! do |detail|
-              detail.unit_price = item.unit_price
-              detail.quantity = item.quantity
-              detail.item_id = item.product.qb_item_id # Item ID here
-            end
-            bill.line_items << line_item
+        child_transactions.flatten.each do |trans|
+          if trans.transaction_type == "SHRINK"
+            desc = "Shrink : #{@product.name}"
+            qb_item = shrink_item_id
+          elsif trans.transaction_type == "SO"
+            buyer_name = Order.find(trans.order_id).organization.name
+            desc = "#{buyer_name} : #{@product.name}"
+            qb_item = @product.qb_item_id
           end
+          line_item = Quickbooks::Model::BillLineItem.new
+          line_item.amount = trans.net_price * trans.quantity
+          line_item.description = desc
+          line_item.item_based_expense_item! do |detail|
+            detail.unit_price = trans.net_price
+            detail.quantity = trans.quantity
+            detail.item_id = qb_item # Item ID here
+          end
+          bill.line_items << line_item
         end
 
         service = Quickbooks::Service::Bill.new
