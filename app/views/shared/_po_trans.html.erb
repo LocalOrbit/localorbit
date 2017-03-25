@@ -53,7 +53,7 @@
                       <td></td>
                       <td></td>
                       <td></td>
-                      <td><button class="submit_undo_holdover_button btn btn--tiny">Undo</button></td>
+                      <td><%= child.holdover_master ? '<button class="submit_undo_holdover_button btn btn--tiny">Undo</button>'.html_safe : '' %></td>
                     </tr>
                 <% end %>
             <% else so_qty = 0 %>
@@ -95,7 +95,7 @@
                 </div><br/><br/>
                 <div style="float: left; margin-left: 10px;">
                   <label>Delivery</label>
-                  <input type="text" title="Delivery" style="width: 100px" class="holdover_delivery_date datepicker" disabled />
+                  <input type="text" title="Delivery" style="width: 100px" class="holdover_delivery_date datepicker" />
                 </div><br/>
                 <input type="hidden" class="transaction_id" value="<%=po.id %>"/><br/>
                 <button class="submit_holdover_button btn btn--primary btn--tiny">Holdover</button>
