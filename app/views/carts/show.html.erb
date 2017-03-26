@@ -14,7 +14,7 @@
           <table class="cart">
           <%= render partial: (@order_type || 'sales')+'_order' %>
           </table>
-          <% if policy(:template).index? %>
+          <% if policy(:template).index? && @order_type == 'sales' %>
             <p class="pull-right"><a href="/templates/new" class="app-create-template-link">Create an order template from this cart</a></p>
           <% end %>
           <h2 class="order-min-msg"></h2>

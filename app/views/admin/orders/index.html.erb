@@ -20,7 +20,11 @@
       <%= content_tag :th, sort_link(@q, :placed_at, "Order Date") %>
       <%= content_tag :th, sort_link(@q, :delivery_deliver_on, "Delivery Date") %>
       <%= content_tag :th, sort_link(@q, :total_cost, "Amount Owed") %>
+      <% if @order_type == 'sales' %>
       <%= content_tag :th, sort_link(@q, :organization_name, "Buyer") %>
+      <% else %>
+      <th>Supplier</th>
+      <% end %>
       <th>Delivery</th>
       <%= content_tag :th, sort_link(@q, :payment_status, "Payment Status") %>
     </thead>
@@ -44,7 +48,11 @@
         <% else %>
         <td class="amount-owed"><%= number_to_currency(items.map(&:seller_net_total).reduce(:+)||0) %></td>
         <% end %>
+        <% if @order_type == 'sales' %>
         <td class="buyer-name"><%= order.organization.name %></td>
+        <% else %>
+        <td class="seller-name"><%= order.items[0].product.organization.name %></td>
+        <% end %>
         <td class="delivery-status"><%= order.delivery_status_for_user(current_user).titleize %></td>
         <td class="buyer-status"><%= order.payment_status.titleize %></td>
       </tr>
@@ -56,8 +64,9 @@
 <% if current_market.is_consignment_market? %>
 <div class="pull-right">
   <%= label_tag :order_batch_action, 'Multiple Action:' %>
-  <%= select_tag :order_batch_action, options_for_select(Order::BATCH_ACTIONS.map { |op| [op[1], op[0]] }), {include_blank: 'Select:'} %>
-  <%= button_tag "Go", id: 'submit_multi_button', class: 'btn btn--primary' %>
+  <% option_list = (@order_type=='purchase' ? Order::BATCH_PO_ACTIONS : Order::BATCH_SO_ACTIONS) %>
+  <%= select_tag :order_batch_action, options_for_select(option_list.map { |op| [op[1], op[0]] }), {include_blank: 'Select:'} %>
+  <%= button_tag "Go", id: 'submit-multi-button', class: 'btn btn--primary' %>
 </div>
 <% end %>
 <% end %>

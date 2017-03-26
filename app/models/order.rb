@@ -16,8 +16,13 @@ class Order < ActiveRecord::Base
       "exported" => "Exported"
   }.freeze
 
-  BATCH_ACTIONS = {
+  BATCH_PO_ACTIONS = {
       "receipt" => "Generate Receipts",
+      "export" => "Export",
+      "unclose" => "Unclose"
+  }.freeze
+
+  BATCH_SO_ACTIONS = {
       "export" => "Export",
       "unclose" => "Unclose"
   }.freeze
