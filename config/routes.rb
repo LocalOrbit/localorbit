@@ -224,6 +224,20 @@ Rails.application.routes.draw do
       end
     end
 
+    resources :consignment_receipts, only: :show do
+      member do
+        get "consignment_receipt" => "consignment_receipts#show"
+        get :await_pdf, to: "consignment_receipts#await_pdf"
+        get :peek, to: "consignment_receipts#peek"
+      end
+    end
+
+    resources :batch_consignment_receipts, only: :show do
+      member do
+        get :progress
+      end
+    end
+
     resources :activities, only: :index
     resources :categories, only: [:index, :show, :new, :create], path: :taxonomy
     resource :unit_request, only: :create

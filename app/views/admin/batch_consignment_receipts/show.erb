@@ -1,0 +1,43 @@
+<div class="batch-consignment-receipt-progress" data-status-uri="<%=progress_admin_batch_consignment_receipt_path(@batch_consignment_receipt, format:'json') %>" align="center">
+  <h1>Generating Consignment Receipts...</h1>
+  <div>
+    <div class="loading-progress batch-consignment-receipt-progress-spinner">
+      <%= image_tag "loading-progress.gif" %>
+    </div>
+    <span class="batch-consignment-receipt-progress-text">Progress: 0%</span>
+    <p>(This may take a few minutes if you are previewing a lot of receipts.)</p>
+  </div>
+</div>
+
+<div class="batch-consignment-receipt-ready" style="display:none;">
+  <p>Your receipts are ready for download.</p>
+</div>
+
+<div class="batch-consignment-receipt-partial-fail" style="display:none;">
+  <p>Your receipts are ready for download, but we encountered some difficulties. Some receipts are not included in your preview.</p>
+</div>
+
+<div class="batch-consignment-receipt-failed" style="display:none;">
+  <p>We're sorry, we couldn't generate your receipts.</p>
+</div>
+
+<div class="batch-consignment-receipt-support-notice" style="display:none;">
+  <p>Please contact <a href="mailto:service@localorbit.com ">service@localorbit.com</a> or call 734.545.8100 for additional assistance.</p>
+</div>
+
+<div class="batch-consignment-receipt-download" style="display:none;">
+  <p>
+    <a class="btn btn--save btn--small mobile-block" href="#">Download Consignment Receipts PDF</a>
+  </p>
+</div>
+
+<div class="batch-consignment-receipt-close" style="display:none;">
+  <p>
+    <a class="btn btn--save btn--small mobile-block" class="close-tab" href="#">Close</a>
+  </p>
+</div>
+
+<div class="batch-consignment-receipt-errors" style="display:none;">
+  <p>Errors:</p>
+  <ul class="batch-consignment-receipt-error-list"></ul>
+</div>

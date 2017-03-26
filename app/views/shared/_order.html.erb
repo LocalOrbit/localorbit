@@ -24,6 +24,11 @@
           <button id="duplicate_button" name="Duplicate Order">Duplicate Order</button>
         </li>
         <% end %>
+        <% if order.purchase_order? %>
+        <li>
+          <button id="generate_receipt_button" name="Generate Receipt">Generate Receipt</button>
+        </li>
+        <% end %>
         <% if policy(:market_quickbooks).index? && order.order_type == "sales" && order.payment_status == 'unpaid' && order.delivery_status_for_user(current_user) == 'delivered' && order.qb_ref_id.nil? %>
         <li>
           <button id="export_invoice_button" name="Export Invoice">Export Invoice to QB</button>
