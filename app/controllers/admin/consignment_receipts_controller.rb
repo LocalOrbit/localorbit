@@ -1,5 +1,5 @@
 module Admin
-  class InvoicesController < AdminController
+  class ConsignmentReceiptsController < AdminController
     before_action :fetch_order
 
     def show
@@ -11,17 +11,15 @@ module Admin
     end
 
     def generate_development_pdf
-      ClearInvoicePdf.perform(order: @order)
-      GenerateInvoicePdf.perform(order: @order,
-                                 pre_invoice: true,
+      ClearConsignmentReceiptPdf.perform(order: @order)
+      GenerateConsignmentReceiptPdf.perform(order: @order,
                                  request: RequestUrlPresenter.new(request))
       redirect_to action: :await_pdf
     end
 
     def generate_production_pdf
-      ClearInvoicePdf.perform(order: @order)
-      GenerateInvoicePdf.delay.perform(order: @order,
-                                       pre_invoice: true,
+      ClearConsignmentReceiptPdf.perform(order: @order)
+      GenerateConsignmentReceiptPdf.delay.perform(order: @order,
                                        request: RequestUrlPresenter.new(request))
       redirect_to action: :await_pdf
     end
@@ -30,8 +28,8 @@ module Admin
       respond_to do |format|
         format.html {}
         format.json do
-          status = if @order.invoice_pdf.present?
-                     { pdf_url: @order.invoice_pdf.remote_url }
+          status = if @order.receipt_pdf.present?
+                     { pdf_url: @order.receipt_pdf.remote_url }
                    else
                      { pdf_url: nil }
                    end
@@ -42,21 +40,17 @@ module Admin
 
     # Secret: peek at an HTML version of the Invoice
     def peek
-      @invoice = BuyerOrder.new(@order)
-      @market  = @invoice.market.decorate
+      @receipt = BuyerOrder.new(@order)
+      @market  = @receipt.market.decorate
       @needs_js = true
 
-      render "show", layout: false, locals: { invoice: @invoice, market: @market, user: current_user }
+      render "show", layout: false, locals: { receipt: @receipt, market: @market, user: current_user }
     end
 
     private
 
     def fetch_order
-      @order = if current_user.admin? || current_user.market_manager?
-        Order.so_orders.orders_for_buyer(current_user).find(params[:id])
-      else
-        Order.so.orders.orders_for_buyer(current_user).invoiced.find(params[:id])
-      end
+      @orders =  Order.po_orders.orders_for_buyer(current_user).find(params[:id])
     end
   end
 end
