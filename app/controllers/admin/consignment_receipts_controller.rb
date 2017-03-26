@@ -50,7 +50,7 @@ module Admin
     private
 
     def fetch_order
-      @orders =  Order.po_orders.orders_for_buyer(current_user).find(params[:id])
+      @order =  Order.po_orders.orders_for_buyer(current_user).find(params[:id])
     end
   end
 end
