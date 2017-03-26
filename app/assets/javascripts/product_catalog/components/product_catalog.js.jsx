@@ -68,6 +68,8 @@
             useTemplates={this.props.useTemplates}
             supplierOnly={this.props.supplierId > 0}
             orderId={this.props.orderId}
+            purchaseOrder={this.props.purchaseOrder}
+            salesOrder={this.props.salesOrder}
             orderMinimum={this.props.orderMinimum}
             />);
 

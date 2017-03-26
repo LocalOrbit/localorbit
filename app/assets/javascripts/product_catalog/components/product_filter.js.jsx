@@ -112,7 +112,7 @@
       }.bind(this));
 
       var orderTemplates, filterText, orderMinimum, headerInformation, editDeliveryOptions;
-      if(this.props.useTemplates)
+      if(this.props.useTemplates && this.props.sales_order)
             orderTemplates = (<a href="#templatePicker" className="app-apply-template modal-toggle">Apply an order template to the cart</a>);
         else
             orderTemplates = ('');
