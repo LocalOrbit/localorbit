@@ -90,6 +90,19 @@ class Admin::OrdersController < AdminController
 
   def create
     case params["order_batch_action"]
+      when "receipt"
+        orders = Order.where(id: params["order_id"])
+        context = InitializeBatchConsignmentReceipt.perform(user: current_user, orders: orders)
+        if context.success?
+          batch_consignment_receipt = context.batch_consignment_receipt
+          GenerateBatchConsignmentReceiptPdf.delay.perform(batch_consignment_receipt: batch_consignment_receipt,
+                                              request: RequestUrlPresenter.new(request))
+          track_event EventTracker::GenerateBatchConsignmentReceipts.name, num_invoices: orders.count
+          redirect_to admin_batch_consignment_receipt_path(batch_consignment_receipt)
+        else
+          redirect_to admin_orders_path, alert: context.message
+        end
+
       when "export"
         params["order_id"].each do |o|
           order = Order.find(o)
@@ -170,6 +183,9 @@ class Admin::OrdersController < AdminController
     elsif params[:commit] == "Export Bill"
       export_bill(order, @po_transactions, @child_transactions)
       return
+    elsif params[:commit] == "Generate Receipt"
+      generate_receipt(order)
+      return
     elsif params[:commit] == "Unclose Order"
       unclose_order(order)
       return
@@ -249,6 +265,10 @@ class Admin::OrdersController < AdminController
         redirect_to admin_order_path(order), error: "Failed to Export Bill."
       end
     end
+  end
+
+  def generate_receipt(order)
+    redirect_to admin_consignment_receipt_path(order) and return
   end
 
   def unclose_order(order, batch = nil)

@@ -74,6 +74,12 @@ $ ->
     $(this).closest("form").submit()
     $(this).prop("disabled","disabled")
 
+  $("#generate_receipt_button").click (e) ->
+    e.preventDefault()
+    $(this).parent().parent().parent().parent().find("input[name=commit]").val("Generate Receipt")
+    $(this).closest("form").submit()
+    $(this).prop("disabled","disabled")
+
   $("#unclose_order").click (e) ->
     e.preventDefault()
     $(this).parent().parent().parent().parent().find("input[name=commit]").val("Unclose Order")
