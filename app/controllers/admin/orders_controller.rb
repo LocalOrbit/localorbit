@@ -202,15 +202,19 @@ class Admin::OrdersController < AdminController
       return
     elsif params[:commit] == "Shrink"
       shrink_transaction(order, params)
+      check_sold_through(order)
       return
     elsif params[:commit] == "Undo Shrink"
       unshrink_transaction(order, params)
+      check_sold_through(order)
       return
     elsif params[:commit] == "Holdover"
       holdover_transaction(order, params)
+      check_sold_through(order)
       return
     elsif params[:commit] == "Undo Holdover"
       unholdover_transaction(order, params)
+      check_sold_through(order)
       return    # elsif params[:commit] == "Undo Mark Delivered"
     #   undo_delivery(order) # But this is not where Mark Delivered goes,sooooo
     end
@@ -464,12 +468,37 @@ class Admin::OrdersController < AdminController
   end
 
   def show_add_items_form(order)
+    if current_market.is_consignment_market?
+      load_consignment_transactions(order)
+      load_open_po
+    end
+
     setup_add_items_form(order)
     flash.now[:notice] = "Add items below."
     render :show
   end
 
   def check_sold_through(order)
-
+    result = ActiveRecord::Base.connection.exec_query("
+    SELECT coalesce(po.quantity,0) - coalesce(po_other.quantity,0) - coalesce(so.quantity,0) AS quantity
+    FROM
+    (SELECT sum(quantity) quantity
+    FROM consignment_transactions
+    WHERE order_id = $1
+    AND transaction_type = 'PO') po,
+    (SELECT sum(quantity) quantity
+    FROM consignment_transactions
+    WHERE order_id = $1
+    AND transaction_type != 'PO') po_other,
+    (SELECT sum(so1.quantity) quantity
+    FROM consignment_transactions po1, consignment_transactions so1
+    WHERE po1.id = so1.parent_id AND po1.order_id = $1
+    AND so1.transaction_type = 'SO') so", 'sold_through_query', [[nil,order.id]])
+    if Integer(result[0]['quantity']) == 0
+      order.sold_through = true
+    else
+      order.sold_through = false
+    end
+    order.save
   end
 end

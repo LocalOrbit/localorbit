@@ -54,7 +54,7 @@
         <td class="seller-name"><%= order.items[0].product.organization.name %></td>
         <% end %>
         <td class="delivery-status"><%= order.delivery_status_for_user(current_user).titleize %></td>
-        <td class="buyer-status"><%= order.payment_status.titleize %></td>
+        <td class="buyer-status"><%= order.payment_status.titleize %><%= order.sold_through ? '&nbsp;<i style="color: #559955" class="fa fa-check"></i>'.html_safe : '' %></td>
       </tr>
       <% end %>
     </tbody>
