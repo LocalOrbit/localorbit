@@ -33,7 +33,7 @@
             </address>
           </div>
 
-          <% if current_market.organization.plan.discount_codes? %>
+          <% if current_market.organization.plan.discount_codes? && @order_type == 'sales'%>
           <div id="discount-info">
             <h2 class="subheading-cart"><i class="font-icon icon-coins"></i> Discount Information</h2>
           </div>
