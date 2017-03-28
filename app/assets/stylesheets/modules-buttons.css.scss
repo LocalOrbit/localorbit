@@ -442,11 +442,12 @@ button {
     display: block;
     float: left;
   }
-  li button {
+  li button,a {
     border-radius: 0;
     padding: 4px 12px 6px 16px;
     display: block;
     font-weight: bold;
+    font-size: 15px;
     text-decoration: none;
     color: #888;
     text-shadow: 0 1px #fff;

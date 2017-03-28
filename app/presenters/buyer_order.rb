@@ -20,6 +20,8 @@ class BuyerOrder
     :order_type,
     :sales_order?,
     :purchase_order?,
+    :created_at,
+    :delivery_status,
     to: :@order
 
   def initialize(order)

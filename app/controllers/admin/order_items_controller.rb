@@ -72,7 +72,8 @@ module Admin
       OrderItem.for_user(current_user).
         joins(:order).
         includes(order: :organization, product: :organization).
-        preload(product: [:organization, :category], order: [:market, :organization])
+        preload(product: [:organization, :category], order: [:market, :organization]).
+        where("orders.order_type = 'sales'")
     end
 
     def prepare_filter_data(order_items)

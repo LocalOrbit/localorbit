@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170323001951) do
+ActiveRecord::Schema.define(version: 20170325155536) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -64,6 +64,36 @@ ActiveRecord::Schema.define(version: 20170323001951) do
   end
 
   add_index "bank_accounts", ["bankable_type", "bankable_id"], name: "index_bank_accounts_on_bankable_type_and_bankable_id", using: :btree
+
+  create_table "batch_consignment_receipts", force: true do |t|
+    t.integer  "user_id"
+    t.string   "pdf_uid"
+    t.string   "pdf_name"
+    t.string   "generation_status",                           default: "not_started", null: false
+    t.decimal  "generation_progress", precision: 5, scale: 2, default: 0.0,           null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "batch_consignment_receipts", ["user_id"], name: "index_batch_consignment_receipts_on_user_id", using: :btree
+
+  create_table "batch_consignment_receipt_errors", force: true do |t|
+    t.integer  "batch_consignment_receipt_id"
+    t.string   "task"
+    t.text     "message"
+    t.text     "exception"
+    t.text     "backtrace"
+    t.integer  "order_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "batch_consignment_receipts_orders", force: true do |t|
+    t.integer  "batch_consignment_receipt_id"
+    t.integer  "order_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "batch_invoice_errors", force: true do |t|
     t.integer  "batch_invoice_id"
@@ -180,6 +210,7 @@ ActiveRecord::Schema.define(version: 20170323001951) do
     t.decimal  "sale_price",          precision: 10, scale: 2, default: 0.0
     t.decimal  "net_price",           precision: 10, scale: 2, default: 0.0
     t.integer  "holdover_order_id"
+    t.boolean  "holdover_master"
   end
 
   create_table "credits", force: true do |t|
@@ -747,6 +778,8 @@ ActiveRecord::Schema.define(version: 20170323001951) do
     t.string   "payment_model"
     t.boolean  "sold_through"
     t.text     "signature_data"
+    t.string   "receipt_pdf_uid"
+    t.string   "receipt_pdf_name"
   end
 
   add_index "orders", ["delivery_id"], name: "index_orders_on_delivery_id", using: :btree

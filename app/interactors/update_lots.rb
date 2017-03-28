@@ -6,7 +6,8 @@ class UpdateLots
     lot_number = generate_lot_number
 
     order.items.each do |item|
-      upsert_lot(item, lot_number)
+      lot = upsert_lot(item, lot_number)
+      update_pending_so(item, lot)
     end
   end
 
@@ -23,6 +24,18 @@ class UpdateLots
     end
 
     lot
+  end
+
+  def update_pending_so(item, lot)
+    # When SO has been placed against undelivered PO, and PO is delivered, the newly created lot needs to be assigned to the SO consignment transaction
+    ct_po = ConsignmentTransaction.where(transaction_type: 'PO', order_id: order.id, product_id: item.product.id).first
+    ct_so = ConsignmentTransaction.where(transaction_type: 'SO', parent_id: ct_po.id, product_id: item.product.id)
+    ct_so.each do |so|
+      so.lot_id = lot.id
+      so.save
+      lot.quantity = lot_quantity - item.quantity
+      lot.save
+    end
   end
 
   def generate_lot_number

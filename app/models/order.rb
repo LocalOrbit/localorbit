@@ -16,7 +16,13 @@ class Order < ActiveRecord::Base
       "exported" => "Exported"
   }.freeze
 
-  BATCH_ACTIONS = {
+  BATCH_PO_ACTIONS = {
+      "receipt" => "Generate Receipts",
+      "export" => "Export",
+      "unclose" => "Unclose"
+  }.freeze
+
+  BATCH_SO_ACTIONS = {
       "export" => "Export",
       "unclose" => "Unclose"
   }.freeze
@@ -35,6 +41,7 @@ class Order < ActiveRecord::Base
   has_associated_audits
 
   dragonfly_accessor :invoice_pdf
+  dragonfly_accessor :receipt_pdf
 
   attr_accessor :credit_card, :bank_account
 

@@ -77,7 +77,7 @@ module Admin::Financials
     end
 
     def resend_overdue
-      @orders = Order.orders_for_seller(current_user).payment_overdue
+      @orders = Order.so_orders.orders_for_seller(current_user).payment_overdue
       resend_invoices_and_redirect
     end
 
@@ -85,14 +85,14 @@ module Admin::Financials
 
     def find_base_scope_and_date_filter_attribute
       if current_user.buyer_only?
-        [Order.orders_for_buyer(current_user).invoiced, :invoice_due_date]
+        [Order.so_orders.orders_for_buyer(current_user).invoiced, :invoice_due_date]
       else
-        [Order.orders_for_seller(current_user).uninvoiced, :placed_at]
+        [Order.so_orders.orders_for_seller(current_user).uninvoiced, :placed_at]
       end
     end
 
     def find_orders_for_invoicing
-      @orders = Order.orders_for_seller(current_user).where(id: params[:order_id])
+      @orders = Order.so_orders.orders_for_seller(current_user).where(id: params[:order_id])
     end
 
     def filter_and_search_orders(scope, params, presenter)

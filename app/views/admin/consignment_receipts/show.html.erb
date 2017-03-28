@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<head>
+  <meta charset="utf-8">
+  <meta name="pdfkit-print_media_type" content="true">
+  <meta name="pdfkit-header_html" content="<%= request.base_url.gsub(/:3000/, ':3500') + pdf_view_header_path + "?order_number=" + receipt.order_number  %>">
+  <meta name="pdfkit-header_spacing" content="15">
+  <meta name="pdfkit-footer_spacing" content="15">
+  <meta name="pdfkit-margin_top" content="0.25in"/>
+  <meta name="pdfkit-margin_right" content="0.25in"/>
+  <meta name="pdfkit-margin_bottom" content="0.25in"/>
+  <meta name="pdfkit-margin_left" content="0.25in"/>
+  <meta name="pdfkit-header_font_size" content="10">
+  <title>Local Orbit</title>
+  <%= render 'shared/print_opensanscondensed_bold' %>
+  <%= render 'shared/print_opensans' %>
+  <%= render 'shared/print_opensans_bold' %>
+  <style type="text/css">
+
+    .signature {
+      display:inline-block;
+      width:45%;
+      color:#666;
+      border-top:1px solid #666;
+      font-family:Arial;
+      font-weight:bold;
+      font-size:14px;
+      margin-top:60px;
+    }
+
+    .receipts-wrapper {
+      font-size: 14px;
+      font-family: OpenSans, "Open Sans", Geneva, Arial, sans-serif;
+    }
+
+    .receipts-wrapper .btn {
+        display: inline-block;
+        padding: 12px 18px;
+        border: solid 1px #b0b0b0;
+        -webkit-border-radius: 3px;
+        -moz-border-radius: 3px;
+        border-radius: 3px;
+        background-image: -moz-linear-gradient(top, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.2));
+        background-image: -webkit-linear-gradient(top, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.2));
+        background-image: -o-linear-gradient(top, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.2));
+        background-image: -ms-linear-gradient(top, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.2));
+        background-image: linear-gradient(top, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.2));
+        margin-bottom: .5em;
+        color: #fff;
+        background-color: #43639F;
+        font-family: inherit;
+        font-size: 17px;
+        text-decoration: none;
+        -webkit-appearance: none;
+        -webkit-font-smoothing: antialiased
+    }
+
+    .receipts-wrapper .btn:hover {
+        background-image: none;
+        text-decoration: none
+    }
+
+    .receipts-wrapper .btn:disabled, .receipts-wrapper .btn.disabled {
+        opacity: 0.15;
+        cursor: default;
+        cursor: not-allowed
+    }
+
+    .receipts-wrapper .btn:active {
+        -webkit-box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.5);
+        -moz-box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.5);
+        box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.5);
+        background-image: -moz-linear-gradient(top, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.3));
+        background-image: -webkit-linear-gradient(top, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.3));
+        background-image: -o-linear-gradient(top, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.3));
+        background-image: -ms-linear-gradient(top, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.3));
+        background-image: linear-gradient(top, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.3))
+    }
+
+    .receipts-wrapper .btn:focus {
+        outline: none
+    }
+
+    .receipts-wrapper .btn:first-child {
+        margin-bottom: 1em
+    }
+
+    .receipts-wrapper .btn:last-child {
+        margin-right: 0
+    }
+
+    .receipts-wrapper .btn.btn--small {
+        padding: 4px 18px;
+        font-size: 14px
+    }
+
+    .receipts-wrapper .column, .receipts-wrapper .row {
+        position: relative;
+        -webkit-box-sizing: border-box;
+        -moz-box-sizing: border-box;
+        box-sizing: border-box
+    }
+
+    .receipts-wrapper .column {
+        display: inline-block;
+        padding: 0 10px 0 0;
+        text-align: left;
+        vertical-align: top
+    }
+
+    .receipts-wrapper .column:last-child {
+        padding-right: 0
+    }
+
+    .receipts-wrapper .column--three-fourths {
+        width: 75%
+    }
+
+    .receipts-wrapper .column--two-thirds {
+        width: 66%
+    }
+
+    .receipts-wrapper .column--half {
+        width: 50%
+    }
+
+    .receipts-wrapper .column--third {
+        width: 33%
+    }
+
+    .receipts-wrapper .column--fourth {
+        width: 25%
+    }
+
+    .receipts-wrapper .ar {
+        text-align: right
+    }
+
+    .receipts-wrapper .al {
+        text-align: left
+    }
+
+    .receipts-wrapper .ac {
+        text-align: center
+    }
+
+    .receipts-wrapper .left-padded {
+        padding-left: 20px
+    }
+
+    .receipts-wrapper h1 {
+        margin: 0 0 .5em;
+        font: bold 25px Arial
+    }
+
+    .receipts-wrapper h2 {
+        margin: 0;
+        color: #666;
+        font: bold 14px Arial
+    }
+
+    .receipts-wrapper table {
+        width: 100%;
+        border-collapse: collapse
+    }
+
+    .receipts-wrapper caption {
+        color: #000;
+        font: bold 14px Arial;
+        text-align: left
+    }
+
+    .receipts-wrapper tr, .receipts-wrapper td, .receipts-wrapper th {
+        page-break-inside: avoid;
+    }
+
+    .receipts-wrapper td:first-child {
+        padding-left:8px;
+    }
+
+    .receipts-wrapper td:last-child {
+        padding-right:8px;
+    }
+
+    .receipts-wrapper th {
+        padding: 4px;
+        color: #666;
+        font-size: 12px;
+        text-align: left;
+        vertical-align: top;
+    }
+
+    .receipts-wrapper .pseudopod th {
+        vertical-align: middle;
+    }
+
+    .receipts-wrapper td {
+        padding: 10px 3px 10px 3px;
+        font-size: 12px
+    }
+
+    .receipts-wrapper tbody tr:nth-child(odd) {
+        background: #f9f9f9
+    }
+
+    .receipts-wrapper .pseudopod th {
+        padding-right:10px;
+        font-size: 12px;
+        font-weight: normal
+    }
+
+    .receipts-wrapper .canceled>span {
+        text-decoration: line-through
+    }
+
+    .receipts-wrapper .canceled:after {
+        color: #911;
+        content: " Cancelled";
+        text-decoration: none
+    }
+
+    .receipts-wrapper .discounts th, .receipts-wrapper .discounts td {
+        padding: 10px 10px 2px
+    }
+
+    .receipts-wrapper .delivery th, .receipts-wrapper .delivery td {
+        padding: 2px 10px 10px
+    }
+
+    .receipts-wrapper .total {
+        border-top: solid 1px #ccc;
+        color: #666
+    }
+
+    .receipts-wrapper .total .amount {
+        padding-left: 10px;
+        color: #000;
+        font: bold 24px Arial
+    }
+
+    .receipts-wrapper .total td, .receipts-wrapper .total th {
+        padding-left: 0;
+        font-size: 18px
+    }
+
+    .receipts-wrapper .total td:first-child {
+        font-style: italic
+    }
+
+    .receipts-wrapper .date {
+        font-family: Arial;
+        font-weight: bold
+    }
+
+    .receipts-wrapper .gray-box {
+        width:112px;
+        display:inline-block;
+        padding: 5px;
+        border: solid 2px #C7C7C7;
+        background: #f9f9f9;
+        font: bold 22px Arial
+    }
+
+    .receipts-wrapper .inline {
+        display: inline
+    }
+
+    .receipts-wrapper .receipt-basics {
+        margin-bottom: 1em
+    }
+
+    .receipts-wrapper .receipt-parties {
+        margin-bottom: 1em
+    }
+
+    .receipts-wrapper .logo {
+        max-width: 1in;
+    }
+        .receipts-wrapper .logo img, .receipts-wrapper .logo-column { width: 1in; }
+
+    .receipts-wrapper .inline-block {
+        display: inline-block;
+    }
+
+    .receipts-wrapper .left {
+        float:left;
+    }
+
+    .receipts-wrapper .right {
+        float:right;
+    }
+
+    .receipts-wrapper .vcard {
+        overflow: hidden;
+        word-break: break-all;
+        word-wrap: break-word;
+    }
+
+    .receipts-wrapper .vcard-buyer {
+        margin-bottom: 25px
+    }
+
+    .receipts-wrapper .buyer-name, .receipts-wrapper .org-from, .receipts-wrapper .receipt-num,
+    .receipts-wrapper .po-num, .receipts-wrapper .delivery-date {
+        margin: 0;
+        font: bold 16px Arial
+    }
+
+    .receipts-wrapper .receipt-num, .receipts-wrapper .buyer-name, .receipts-wrapper .org-from {
+        word-break: break-all;
+        word-wrap: break-word;
+    }
+
+    @media print {
+        .controller-receipts .l-app-header, .controller-receipts .l-app-footer,
+        .controller-receipts .btn--save, .controller-receipts .logo-link,
+        .controller-receipts .nav--main, .controller-receipts .nav--admin,
+        .controller-receipts .tab-header, .controller-receipts .teflon, .controller-receipts .no-print {
+            display: none
+        }
+
+        .controller-receipts .logo {
+            display: block
+        }
+    }
+
+    @media screen {
+        body>.receipts-wrapper {
+            width: 7.5in;
+            min-height: 9in;
+            padding: 0 .5in 1in;
+            margin: 0 auto;
+            background: #fff
+        }
+
+        body>.receipts-wrapper .btn--save {
+            float: right
+        }
+    }
+
+    body.os-android .print-button{display:none}
+
+  </style>
+</head>
+
+<body class="controller-receipts" style="margin:0px;padding:30px;">
+  <% @logo_path = asset_url("logo.png") # needed if market doesn't have a logo %>
+  <div class="receipts-wrapper">
+    <div class="row">
+      <div class="column">
+        <div class="row">
+          <div class="column logo-column" style="width:1.1in">
+            <br>
+              <%=
+                if market.logo_stored?
+                  image_tag(ensure_full_url((market.logo_stored?) ? market.logo.thumb('200x150').url : nil), alt: "#{market.name} logo ", class: "logo", width: 100)
+                elsif @logo_path
+                  image_tag(ensure_full_url(@logo_path), alt: "Local  Orbit logo", class: "logo left")
+                else
+                  image_tag(ensure_full_url(asset_url("logo.png")), alt: " Local Orbit logo", class: "logo left")
+                end
+             %>
+          </div><div class="column receipt-parties" style="width:2.6in">
+            <div class="vcard app-remit-contact-info">
+              <h2>Warehouse:</h2>
+              <% if market.has_remit_to_address? %>
+                <h3 class="fn org org-from"><%= market.remit_to_name %></h3>
+                <div>
+                  <%= (market.has_remit_to_address?) ? market.remit_to_street_address : nil %><br>
+                  <%= (market.has_remit_to_address?) ? market.remit_to_city_state_zip : nil %><br>
+                  <%= (market.remit_to_address) ? market.remit_to_phone_number : nil %><br>
+                  <%= market.contact_email %>
+                </div>
+              <% elsif market.has_address? %>
+                  <h3 class="fn org org-from"><%= market.name %></h3>
+                  <div>
+                    <%= (market.has_address?) ? market.billing_street_address : nil %><br>
+                    <%= (market.has_address?) ? market.billing_city_state_zip : nil %><br>
+                    <%= (market.billing_address) ? market.billing_address_phone_number : nil %><br>
+                    <%= market.contact_email %>
+                  </div>
+              <% end %>
+            </div>
+            <br>
+          </div>
+        </div>
+      </div><div class="column" style="width:2.7in;display:inline-block;">
+        <h1>Purchase Order</h1>
+        <h2>PO Number</h2>
+        <p class="receipt-num"><%= receipt.order_number %></p><br>
+        <h2>PO Date</h2>
+        <%= receipt.created_at.strftime("%-m/%-d/%Y") %>
+      </div>
+    </div>
+    <div>
+      <h2>Supplier</h2>
+      <%= receipt.items[0].product.organization.name %><br/>
+      <%= receipt.items[0].product.organization.shipping_location.address %><br/>
+      <%= receipt.items[0].product.organization.shipping_location.city %>, <%= receipt.items[0].product.organization.shipping_location.state %> <%= receipt.items[0].product.organization.shipping_location.zip %>
+    </div>
+    <br/><br/>
+    <div>
+      <% if receipt.delivery_status == 'delivered' %>
+      <table>
+        <thead>
+        <tr>
+          <th>Product</th>
+          <th>Expected Quantity</th>
+        </tr>
+        </thead>
+        <tbody>
+        <% receipt.items.each do |item| %>
+        <tr>
+          <td><%= item.name %></td>
+          <td><%=item.quantity %></td>
+        </tr>
+        <% end %>
+        </tbody>
+      </table>
+      <% end %>
+    </div>
+    <div style="page-break-inside:unset;page-break-after:unset;width:7in;">
+      <br>
+      <div class="signature" style="float:right;">Signature</div>
+    </div>
+  </div>
+</body>
+</html>

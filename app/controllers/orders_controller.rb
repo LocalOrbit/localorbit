@@ -42,6 +42,7 @@ class OrdersController < ApplicationController
 
     if current_market.is_consignment_market?
       load_consignment_transactions(@order)
+      load_open_po
     end
 
     track_event EventTracker::ViewedOrder.name, order: { url: order_url(id: @order.id), value: @order.order_number }

@@ -11,6 +11,7 @@ class Admin::OrdersController < AdminController
     else
       po_filter = {:q => {"order_type_matches" => "sales"}}
       @query_params = @query_params.deep_merge!(po_filter)
+      @order_type = 'sales'
 
       build_order_list
 
@@ -39,6 +40,7 @@ class Admin::OrdersController < AdminController
     else
       po_filter = {:q => {"order_type_matches" => "purchase"}}
       @query_params = @query_params.deep_merge!(po_filter)
+      @order_type = 'purchase'
 
       build_order_list
 
@@ -90,12 +92,25 @@ class Admin::OrdersController < AdminController
 
   def create
     case params["order_batch_action"]
+      when "receipt"
+        orders = Order.where(id: params["order_id"])
+        context = InitializeBatchConsignmentReceipt.perform(user: current_user, orders: orders)
+        if context.success?
+          batch_consignment_receipt = context.batch_consignment_receipt
+          GenerateBatchConsignmentReceiptPdf.delay.perform(batch_consignment_receipt: batch_consignment_receipt,
+                                              request: RequestUrlPresenter.new(request))
+          track_event EventTracker::GenerateBatchConsignmentReceipts.name, num_invoices: orders.count
+          redirect_to admin_batch_consignment_receipt_path(batch_consignment_receipt)
+        else
+          redirect_to admin_orders_path, alert: context.message
+        end
+
       when "export"
         params["order_id"].each do |o|
           order = Order.find(o)
           if order.delivery_status_for_user(current_user) == 'delivered' && order.qb_ref_id.nil?
             if order.order_type == "purchase"
-              export_bill(order, true)
+              export_bill(order, @po_transactions, @child_transactions, true)
             else
               export_invoice(order, true)
             end
@@ -131,6 +146,7 @@ class Admin::OrdersController < AdminController
 
     if current_market.is_consignment_market?
       load_consignment_transactions(@order)
+      load_open_po
     end
 
     setup_deliveries(@order)
@@ -167,7 +183,10 @@ class Admin::OrdersController < AdminController
       export_invoice(order)
       return
     elsif params[:commit] == "Export Bill"
-      export_bill(order)
+      export_bill(order, @po_transactions, @child_transactions)
+      return
+    elsif params[:commit] == "Generate Receipt"
+      generate_receipt(order)
       return
     elsif params[:commit] == "Unclose Order"
       unclose_order(order)
@@ -183,21 +202,29 @@ class Admin::OrdersController < AdminController
       return
     elsif params[:commit] == "Shrink"
       shrink_transaction(order, params)
+      check_sold_through(order)
       return
     elsif params[:commit] == "Undo Shrink"
       unshrink_transaction(order, params)
+      check_sold_through(order)
       return
     elsif params[:commit] == "Holdover"
       holdover_transaction(order, params)
+      check_sold_through(order)
       return
     elsif params[:commit] == "Undo Holdover"
       unholdover_transaction(order, params)
+      check_sold_through(order)
       return    # elsif params[:commit] == "Undo Mark Delivered"
     #   undo_delivery(order) # But this is not where Mark Delivered goes,sooooo
     end
 
     # TODO: Change an order items delivery status to 'removed' or something rather then deleting them
     perform_order_update(order, order_params, merge)
+
+    if current_market.is_consignment_market?
+      check_sold_through(order)
+    end
   end
 
   def duplicate_order(order)
@@ -239,8 +266,8 @@ class Admin::OrdersController < AdminController
     end
   end
 
-  def export_bill(order, batch = nil)
-    result = ExportBillToQb.perform(order: order, curr_market: current_market, session: session)
+  def export_bill(order, po_transactions, child_transactions, batch = nil)
+    result = ExportBillToQb.perform(order: order, po_transactions: po_transactions, child_transactions: child_transactions, curr_market: current_market, session: session)
     if batch.nil?
       if result.success?
         redirect_to admin_order_path(order), notice: "Bill Exported to QB."
@@ -248,6 +275,10 @@ class Admin::OrdersController < AdminController
         redirect_to admin_order_path(order), error: "Failed to Export Bill."
       end
     end
+  end
+
+  def generate_receipt(order)
+    redirect_to admin_consignment_receipt_path(order) and return
   end
 
   def unclose_order(order, batch = nil)
@@ -437,60 +468,37 @@ class Admin::OrdersController < AdminController
   end
 
   def show_add_items_form(order)
+    if current_market.is_consignment_market?
+      load_consignment_transactions(order)
+      load_open_po
+    end
+
     setup_add_items_form(order)
     flash.now[:notice] = "Add items below."
     render :show
   end
 
-=begin
-  def load_consignment_transactions(order)
-    @child_transactions = []
-    @po_transactions = ConsignmentTransaction.joins("
-      LEFT JOIN lots ON consignment_transactions.lot_id = lots.id
-      LEFT JOIN products ON consignment_transactions.product_id = products.id
-      LEFT JOIN order_items ON consignment_transactions.order_item_id = order_items.id")
-       .where(order_id: order.id, transaction_type: 'PO')
-       .where("parent_id IS NULL")
-       .select("consignment_transactions.id, consignment_transactions.transaction_type, consignment_transactions.product_id, products.name as product_name, lots.number as lot_name, order_items.delivery_status, consignment_transactions.quantity, consignment_transactions.net_price, consignment_transactions.sale_price")
-       .order("consignment_transactions.id, consignment_transactions.parent_id")
-
-    if !@po_transactions.nil?
-      @po_transactions.each do |po|
-        ct = ConsignmentTransaction.joins("
-        LEFT JOIN orders ON consignment_transactions.order_id = orders.id
-        LEFT JOIN lots ON consignment_transactions.lot_id = lots.id
-        LEFT JOIN organizations ON orders.organization_id = organizations.id")
-         .where(parent_id: po.id)
-         .select("consignment_transactions.id, consignment_transactions.transaction_type, consignment_transactions.product_id, consignment_transactions.quantity, lots.number as lot_name, consignment_transactions.net_price, consignment_transactions.sale_price, organizations.name AS buyer_name, orders.delivery_status")
-         .order("consignment_transactions.product_id, consignment_transactions.created_at")
-
-        @child_transactions << ct.to_a
-      end
+  def check_sold_through(order)
+    result = ActiveRecord::Base.connection.exec_query("
+    SELECT coalesce(po.quantity,0) - coalesce(po_other.quantity,0) - coalesce(so.quantity,0) AS quantity
+    FROM
+    (SELECT sum(quantity) quantity
+    FROM consignment_transactions
+    WHERE order_id = $1
+    AND transaction_type = 'PO') po,
+    (SELECT sum(quantity) quantity
+    FROM consignment_transactions
+    WHERE order_id = $1
+    AND transaction_type != 'PO') po_other,
+    (SELECT sum(so1.quantity) quantity
+    FROM consignment_transactions po1, consignment_transactions so1
+    WHERE po1.id = so1.parent_id AND po1.order_id = $1
+    AND so1.transaction_type = 'SO') so", 'sold_through_query', [[nil,order.id]])
+    if Integer(result[0]['quantity']) == 0
+      order.sold_through = true
+    else
+      order.sold_through = false
     end
-
-    @parent_transactions = []
-    @so_transactions = ConsignmentTransaction.joins("
-        LEFT JOIN lots ON consignment_transactions.lot_id = lots.id
-        LEFT JOIN products ON consignment_transactions.product_id = products.id
-        LEFT JOIN order_items ON consignment_transactions.order_item_id = order_items.id")
-         .where(order_id: order.id, transaction_type: 'SO')
-         .select("consignment_transactions.id, consignment_transactions.transaction_type, consignment_transactions.product_id, products.name as product_name, lots.number as lot_name, lots.quantity as lot_quantity, order_items.delivery_status, consignment_transactions.quantity, consignment_transactions.net_price, consignment_transactions.sale_price, consignment_transactions.parent_id")
-         .order("consignment_transactions.id, consignment_transactions.parent_id")
-
-
-    if !@so_transactions.nil?
-      @so_transactions.each do |so|
-        ct = ConsignmentTransaction.joins("
-            LEFT JOIN orders ON consignment_transactions.order_id = orders.id
-            LEFT JOIN lots ON consignment_transactions.lot_id = lots.id
-            LEFT JOIN organizations ON orders.organization_id = organizations.id")
-             .where(id: so.parent_id)
-             .select("consignment_transactions.id, consignment_transactions.transaction_type, consignment_transactions.order_id, consignment_transactions.product_id, consignment_transactions.quantity, lots.number as lot_name, consignment_transactions.net_price, consignment_transactions.sale_price, organizations.name AS buyer_name, orders.delivery_status")
-             .order("consignment_transactions.product_id, consignment_transactions.created_at")
-
-        @parent_transactions << ct.to_a
-      end
-    end
+    order.save
   end
-=end
 end

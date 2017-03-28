@@ -5,6 +5,13 @@ $ ->
   $("input.check-all").change ->
     $("input[name='item_ids[]']").prop("checked", $(this).prop("checked"))
 
+  $('#submit-multi-button').click ->
+    selected = $('#order_batch_action option').filter(':selected').val()
+    if selected == 'receipt'
+      orderForm = $(this).closest("form")
+      orderForm.prop("target", "_blank")
+      orderForm.submit()
+
   $("#mark-all-delivered").click (e) ->
     e.preventDefault()
     if confirm("Are you sure you want to mark all items delivered?")
@@ -73,6 +80,13 @@ $ ->
     $(this).parent().parent().parent().parent().find("input[name=commit]").val("Export Bill")
     $(this).closest("form").submit()
     $(this).prop("disabled","disabled")
+
+  $("#generate_receipt_button").click (e) ->
+    e.preventDefault()
+    $(this).parent().parent().parent().parent().find("input[name=commit]").val("Generate Receipt")
+    orderForm = $(this).closest("form")
+    orderForm.prop("target", "_blank")
+    orderForm.submit()
 
   $("#unclose_order").click (e) ->
     e.preventDefault()

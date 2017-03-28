@@ -14,7 +14,7 @@
     </div>
     <div class="button-bar" style="float: right">
       <ul>
-        <% if policy(:merge_order).index? && order.delivery_status_for_user(current_user) != 'canceled' %>
+        <% if policy(:merge_order).index? && current_market.is_buysell_market? && order.delivery_status_for_user(current_user) != 'canceled' %>
         <li>
           <button id="merge_button" name="Merge Order">Merge Order</button>
         </li>
@@ -24,11 +24,16 @@
           <button id="duplicate_button" name="Duplicate Order">Duplicate Order</button>
         </li>
         <% end %>
+        <% if order.purchase_order? %>
+        <li>
+          <button id="generate_receipt_button" name="Generate Receipt">Generate Receipt</button>
+        </li>
+        <% end %>
         <% if policy(:market_quickbooks).index? && order.order_type == "sales" && order.payment_status == 'unpaid' && order.delivery_status_for_user(current_user) == 'delivered' && order.qb_ref_id.nil? %>
         <li>
           <button id="export_invoice_button" name="Export Invoice">Export Invoice to QB</button>
         </li>
-        <% elsif policy(:market_quickbooks).index? && order.order_type == "purchase" && order.payment_status == 'unpaid' && order.delivery_status_for_user(current_user) == 'delivered' && order.qb_ref_id.nil? #TODO: also need to check for sold through %>
+        <% elsif policy(:market_quickbooks).index? && order.order_type == "purchase" && order.payment_status == 'unpaid' && order.delivery_status_for_user(current_user) == 'delivered' && order.qb_ref_id.nil? && order.sold_through %>
         <li>
           <button id="export_bill_button" name="Export Bill">Export Bill to QB</button>
         </li>
@@ -150,6 +155,12 @@
       <h2>Payment Status</h2>
       <table class="order-info-status">
         <tbody>
+        <% if order.purchase_order? %>
+            <tr>
+              <th scope="row">Sold Through ?</th>
+              <td><%= order.sold_through ? 'Yes&nbsp;<i style="color: #559955" class="fa fa-check"></i>'.html_safe : 'No' %></td>
+            </tr>
+        <% end %>
         <tr>
           <th scope="row">Payment Method: </th>
           <td><%= order.payment_method.titleize %></td>
