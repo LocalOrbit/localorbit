@@ -245,7 +245,10 @@
           <% if order.purchase_order? %>
             <td>
             <% if item.object.product.lots.available_general %>
-              <span><%= item.object.product.lots.available_general.map(&:number).join(", ") %></span>
+              <!--span><%= item.object.product.lots.available_general.map(&:number).join(", ") %></span-->
+              <% item.object.product.lots.available_general.each do |lot| %>
+                <%= lot.number %>:&nbsp;<%= select(:lot, :storage_location_id, options_for_select(StorageLocation.where("market_id = ?", current_market.id).map{|l| [l.name, l.id]}, selected: lot.storage_location_id), {include_blank: true}, {class: 'three-quarters chosen'}) %><br/>
+              <% end %>
             <% else %>
               -
             <% end %>
