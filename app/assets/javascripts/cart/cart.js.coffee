@@ -198,7 +198,7 @@ $ ->
 
     itemAt: (id, lot_id)->
       _.find @items, (item)->
-        item.data.product_id == id && item.data.lot_id == lot_id
+        item.data.product_id == id && (item.data.lot_id == lot_id || item.data.lot_id == null)
 
     updateOrAddItem: (data, element, silent, newElement)->
       item = @itemAt(data.product_id, data.lot_id)
@@ -359,7 +359,10 @@ $ ->
     data = $(this).closest(".cart_item").data("cart-item")
 
     if this.value.length > 0 && !$(this).hasClass('invalid-input')
-      quantity = parseInt($(this).parent().parent().parent().parent().find('.app-product-input').val())
+      if $(this).hasClass('app-product-input')
+        quantity = parseInt($(this).val())
+      else
+        quantity = parseInt($(this).parent().parent().parent().parent().find('.app-product-input').val())
       netPrice = parseFloat($(this).parent().parent().parent().parent().find('.app-net-price-input').val())
       salePrice = parseFloat($(this).parent().parent().parent().parent().find('.app-sale-price-input').val())
       lotId = parseInt($(this).parent().parent().parent().find('.lot-id').val())
