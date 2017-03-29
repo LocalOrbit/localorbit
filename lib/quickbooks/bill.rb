@@ -40,7 +40,7 @@ module Quickbooks
             retry_cnt = 0
             loop do
               begin
-                prd = product
+                prd = @product
                 itm_result = Quickbooks::Item.create_item(prd, session, config)
                 if !itm_result.nil?
                   prd.qb_item_id = itm_result.id
