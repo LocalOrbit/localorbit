@@ -188,6 +188,9 @@ Rails.application.routes.draw do
           delete :destroy
         end
       end
+      collection do
+        post :split
+      end
     end
 
     resources :order_items, only: [:index, :update], path: :sold_items do

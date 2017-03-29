@@ -54,7 +54,7 @@ class CartsController < ApplicationController
     product = Product.includes(:prices).find(params[:product_id])
     delivery_date = current_delivery.deliver_on
 
-    @item = current_cart.items.find_or_initialize_by(product_id: product.id)
+    @item = current_cart.items.find_or_initialize_by(product_id: product.id, lot_id: params[:lot_id])
 
     if params[:quantity].to_i > 0
       @item.quantity = params[:quantity]

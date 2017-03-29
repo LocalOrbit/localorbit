@@ -84,20 +84,27 @@
 
         is_promo = (promo == product.id);
 
-        if (isMobile) {
-            return (<div>
-                {addTopCategory}
-                {addSecondCategory}
-                <lo.MobileProductRow key={product.id} product={product} hideImages={this.state.hideImages} promo={is_promo} supplierOnly={this.props.supplierOnly} orderId={this.props.orderId} purchaseOrder={this.props.purchaseOrder} salesOrder={this.props.salesOrder} consignmentMarket={this.props.consignmentMarket} />
-            </div> );
-        }
-        else {
-            return (<div>
-                {addTopCategory}
-                {addSecondCategory}
-                <lo.ProductRow key={product.id} product={product} hideImages={this.state.hideImages} promo={is_promo} supplierOnly={this.props.supplierOnly} orderId={this.props.orderId} purchaseOrder={this.props.purchaseOrder} salesOrder={this.props.salesOrder} consignmentMarket={this.props.consignmentMarket} />
-            </div> );
-        }
+        if (this.props.consignmentMarket)
+            if (product.available[0].lots.length > 0 || this.props.purchaseOrder)
+                include_so_row = true;
+            else
+                include_so_row = false;
+
+        if (!this.props.consignmentMarket || include_so_row)
+            if (isMobile) {
+                return (<div>
+                    {addTopCategory}
+                    {addSecondCategory}
+                    <lo.MobileProductRow key={product.id} product={product} hideImages={this.state.hideImages} promo={is_promo} supplierOnly={this.props.supplierOnly} orderId={this.props.orderId} purchaseOrder={this.props.purchaseOrder} salesOrder={this.props.salesOrder} consignmentMarket={this.props.consignmentMarket} />
+                </div> );
+            }
+            else {
+                return (<div>
+                    {addTopCategory}
+                    {addSecondCategory}
+                    <lo.ProductRow key={product.id} product={product} hideImages={this.state.hideImages} promo={is_promo} supplierOnly={this.props.supplierOnly} orderId={this.props.orderId} purchaseOrder={this.props.purchaseOrder} salesOrder={this.props.salesOrder} consignmentMarket={this.props.consignmentMarket} />
+                </div> );
+            }
     },
 
     render: function() {
@@ -121,6 +128,9 @@
 
       var fullWindow = !this.props.orderId;
       var scrollThreshold = fullWindow ? 1000 : 50;
+
+      if (this.props.purchaseOrder || this.props.salesOrder)
+          this.state.hideImages = true;
 
       return (
         <div className="product-list cart_items" style={{padding: "20px"}} data-cart-url={this.props.cartUrl} >

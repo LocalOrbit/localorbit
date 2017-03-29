@@ -188,13 +188,11 @@ module Api
 
         lots = nil
         committed = nil
+        split_options = nil
 
         if current_market.is_consignment_market?
-          lots = Lot.where(product_id: product.id).where("quantity > 0 AND number IS NOT NULL")
-                     .select("id, quantity, number, (SELECT TO_CHAR(delivery_date, 'MM/DD/YYYY') FROM consignment_transactions WHERE lot_id = lots.id AND transaction_type = 'PO') delivery_date, 'available'::text AS status")
-          #ct = ConsignmentTransaction.joins("LEFT JOIN (#{lots}) l_child
-          #ON consignment_transactions.lot_id = l_child.id")
-          #.select()
+          lots = Lot.where(product_id: product.id).where("lots.quantity > 0 AND lots.number IS NOT NULL")
+            .select("lots.id, lots.quantity, lots.number, (SELECT TO_CHAR(delivery_date, 'MM/DD/YYYY') FROM consignment_transactions WHERE lot_id = lots.id AND transaction_type = 'PO') delivery_date, 'available'::text AS status")
 
           awaiting_delivery = Order.joins(:items).where("orders.order_type = 'purchase' AND order_items.delivery_status = 'pending' AND orders.market_id = ? AND order_items.product_id = ?", current_market.id, product.id).select("null AS id, trunc(order_items.quantity) AS quantity, '' AS number, 'awaiting_delivery'::text AS status")
           awaiting_delivery_qty = ConsignmentTransaction.where("transaction_type = 'PO' AND lot_id IS NULL AND market_id = ? AND product_id = ?", current_market.id, product.id).sum(:quantity)
@@ -205,6 +203,8 @@ module Api
             .where("orders.delivery_status = 'pending' AND consignment_transactions.transaction_type = 'PO' AND consignment_transactions.lot_id IS NULL AND consignment_transactions.market_id = ? AND consignment_transactions.product_id = ?", current_market.id, product.id).select("null AS id, #{awaiting_delivery_qty - awaiting_ordered_qty} AS quantity, '' AS number, '' AS delivery_date, 'awaiting_delivery'::text AS status")
           committed = Order.joins(:organization, items: [lots: [:lot]]).so_orders.where("order_items.delivery_status = 'pending' AND orders.market_id = ? AND order_items.product_id = ?", current_market.id, product.id).select("order_items.product_id AS id, order_item_lots.lot_id, lots.number, organizations.name AS buyer_name, trunc(order_items.quantity) AS quantity, order_items.unit_price AS sale_price, order_items.net_price")
           lots = lots + awaiting_delivery
+
+          split_options = Product.where(parent_product_id: product.id).select("products.id, products.name, products.general_product_id")
         end
 
         # TODO There's a brief window where prices and inventory may change after
@@ -223,9 +223,13 @@ module Api
               :prices => prices,
               :lots => lots,
               :committed => committed,
+              :split_options => split_options,
               :cart_item => cart_item.object,
               :cart_item_persisted => cart_item.persisted?,
               :cart_item_quantity => cart_item.quantity,
+              :cart_item_net_price => cart_item.net_price,
+              :cart_item_sale_price => cart_item.sale_price,
+              :cart_item_lot_id => cart_item.lot_id,
               :price_for_quantity => number_to_currency(cart_item.unit_sale_price),
               :total_price => cart_item.display_total_price
           }

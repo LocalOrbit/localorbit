@@ -499,6 +499,7 @@ class Admin::OrdersController < AdminController
     else
       order.sold_through = false
     end
+    # TODO: Update sales_price with balance due for PO
     order.save
   end
 end
