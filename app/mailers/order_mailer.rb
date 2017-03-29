@@ -50,9 +50,10 @@ class OrderMailer < BaseMailer
   end
 
   def invoice(order_id)
-    return if order.market.is_consignment_market?
 
     @order  = BuyerOrder.new(Order.find(order_id))
+    return if @order.market.is_consignment_market?
+
     @market = @order.market
 
     attachments["invoice.pdf"] = {mime_type: "application/pdf", content: @order.invoice_pdf.try(:data)}

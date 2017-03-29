@@ -19,7 +19,7 @@
                   <% if current_market.is_consignment_market? %>
                   <td class="lot"><%= item.lot.present? ? item.lot.number : '' %></td>
                   <% end %>
-                  <td class="quantity math="><input class="cart-input in-cart" name="quantity" type="text" size="3" autocomplete="off" min="0" value="<%= item.quantity %>" max="<%= item.product.available_inventory %>"></td>
+                  <td class="quantity math="><input class="cart-input app-product-input in-cart" name="quantity" type="text" size="3" autocomplete="off" min="0" value="<%= item.quantity %>" max="<%= item.product.available_inventory %>"></td>
                   <td class="price-for-quantity math"><%= number_to_currency(item.unit_sale_price) %></td>
                   <td class="price math"><%= number_to_currency(item.total_price)%></td>
                   <td class="product-clear"><%= link_to "", "#", class: "font-icon icon-clear" %></td>
