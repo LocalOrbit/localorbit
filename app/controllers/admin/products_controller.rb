@@ -74,6 +74,11 @@ module Admin
       end
     end
 
+    def split
+      CreateProductSplit.perform(params: params)
+      redirect_to products_path, notice: "Product successfully split."
+    end
+
     def show
       @organizations = [@product.organization]
 

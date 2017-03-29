@@ -405,14 +405,14 @@
         <thead>
         <tr>
           <th>Product</th>
-          <th>Expected Quantity</th>
+          <th>Delivered Quantity</th>
         </tr>
         </thead>
         <tbody>
         <% receipt.items.each do |item| %>
         <tr>
           <td><%= item.name %></td>
-          <td><%=item.quantity %></td>
+          <td><%=item.quantity_delivered %></td>
         </tr>
         <% end %>
         </tbody>

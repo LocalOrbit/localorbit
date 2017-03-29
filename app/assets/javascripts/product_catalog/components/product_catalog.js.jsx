@@ -13,6 +13,7 @@
       selectedType: React.PropTypes.string,
       orderCutoff: React.PropTypes.string.isRequired,
       buyerInfo: React.PropTypes.string.isRequired,
+      supplierInfo: React.PropTypes.string,
       purchaseOrder: React.PropTypes.bool,
       salesOrder: React.PropTypes.bool,
       consignmentMarket: React.PropTypes.bool,
@@ -27,7 +28,7 @@
       componentWillMount: function() {
           window.lo.ProductStore.orderId = this.props.orderId;
       },
-      
+
       render: function() {
 
         var orderTemplates;
@@ -64,11 +65,11 @@
             selectedType={this.props.selectedType}
             orderCutoff={this.props.orderCutoff}
             buyerInfo={this.props.buyerInfo}
+            supplierInfo={this.props.supplierInfo}
             purchaseOrder={this.props.purchaseOrder}
             useTemplates={this.props.useTemplates}
             supplierOnly={this.props.supplierId > 0}
             orderId={this.props.orderId}
-            purchaseOrder={this.props.purchaseOrder}
             salesOrder={this.props.salesOrder}
             orderMinimum={this.props.orderMinimum}
             />);

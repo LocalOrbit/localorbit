@@ -22,6 +22,9 @@
           price_for_quantity: React.PropTypes.string,
           cart_item_persisted: React.PropTypes.bool,
           cart_item_quantity: React.PropTypes.number,
+          cart_item_net_price: React.PropTypes.number,
+          cart_item_sale_price: React.PropTypes.number,
+          cart_item_lot_id: React.PropTypes.number,
           cart_item: React.PropTypes.object,
           lots: React.PropTypes.arrayOf(React.PropTypes.shape({
               id: React.PropTypes.number,
@@ -38,6 +41,10 @@
               quantity: React.PropTypes.number,
               sale_price: React.PropTypes.string,
               net_price: React.PropTypes.string,
+          })),
+          split_options: React.PropTypes.arrayOf(React.PropTypes.shape({
+              id: React.PropTypes.number,
+              name: React.PropTypes.string
           }))
         })).isRequired,
 

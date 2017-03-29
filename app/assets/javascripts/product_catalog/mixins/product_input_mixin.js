@@ -15,6 +15,9 @@
         max_available: React.PropTypes.number.isRequired,
         min_available: React.PropTypes.number.isRequired,
         cart_item_quantity: React.PropTypes.number.isRequired,
+        cart_item_net_price: React.PropTypes.number,
+        cart_item_sale_price: React.PropTypes.number,
+        cart_item_lot_id: React.PropTypes.number,
         cart_item: React.PropTypes.object.isRequired
       }).isRequired
     },
@@ -24,7 +27,8 @@
         showAll: false,
         cartItemQuantity: this.props.product && this.props.product.cart_item_quantity > 0 ? this.props.product.cart_item_quantity : null,
         cartSalePrice: this.props.product && this.props.product.cart_item_sale_price > 0 ? this.props.product.cart_item_sale_price : null,
-        cartNetPrice: this.props.product && this.props.product.cart_item_net_price > 0 ? this.props.product.cart_item_net_price : null
+        cartNetPrice: this.props.product && this.props.product.cart_item_net_price > 0 ? this.props.product.cart_item_net_price : null,
+        cartLotId: this.props.product && this.props.product.cart_item_lot_id > 0 ? this.props.product.cart_item_lot_id : null
       };
     },
 
@@ -39,6 +43,7 @@
         context.setState({cartItemQuantity: null});
         context.setState({cartSalePrice: null});
         context.setState({cartNetPrice: null});
+        context.setState({cartLotId: null});
         $(target).trigger("cart.inputFinished");
         in_str = '';
     },
@@ -54,18 +59,14 @@
     },
 
     updateSalePrice: function(event) {
-        var prodId = this.props.product.id;
         var context = this;
-        var target = event.target;
         var in_str = event.target.value;
 
         context.setState({cartItemSalePrice: in_str});
      },
 
     updateNetPrice: function(event) {
-        var prodId = this.props.product.id;
         var context = this;
-        var target = event.target;
         var in_str = event.target.value;
 
         context.setState({cartItemNetPrice: in_str});
@@ -97,14 +98,69 @@
         }, doneTypingInterval);
     },
 
+    inputFinished: function(target) {
+
+        if (this.state.cartSalePrice > 0 && this.state.cartNetPrice > 0 && this.state.cartItemQuantity > 0)
+            $(target).trigger("cart.inputFinished");
+    },
+
+    updateSOQuantity: function(event) {
+        var target = event.target;
+        var addedLotId = $(target).parent().parent().find('.lot-id').val();
+        var in_str = event.target.value;
+
+        this.setState({cartItemQuantity: in_str});
+        this.cItemQuantity = in_str;
+
+        this.setState({cartLotId: addedLotId});
+
+        if (this.cSalePrice > 0 && this.cNetPrice > 0 && this.cItemQuantity > 0)
+            $(target).trigger("cart.inputFinished");
+    },
+
+    updateSOSalePrice: function(event) {
+        var target = event.target;
+        var in_str = event.target.value;
+
+        this.setState({cartSalePrice: in_str});
+        this.cSalePrice = in_str;
+
+        if (this.cSalePrice > 0 && this.cNetPrice > 0 && this.cItemQuantity > 0)
+            $(target).trigger("cart.inputFinished");
+    },
+
+    updateSONetPrice: function(event) {
+        var target = event.target;
+        var in_str = event.target.value;
+
+        this.setState({cartNetPrice: in_str});
+        this.cNetPrice = in_str;
+
+        if (this.cSalePrice > 0 && this.cNetPrice > 0 && this.cItemQuantity > 0) {
+            $(target).trigger("cart.inputFinished");
+            this.cSalePrice = 0;
+            this.cNetPrice = 0
+            this.cItemQuantity = 0;
+        }
+    },
+
     deleteQuantity: function() {
       var prodId = this.props.product.id;
       $("#product-" + prodId).html("");
         this.setState({cartItemQuantity: null});
-        this.setState({cartSalePrice: null});
-        this.setState({cartNetPrice: null});
       $(this.getDOMNode()).find('input').val('');
       $(this.getDOMNode()).keyup();
+    },
+
+    deleteSOFields: function() {
+        var prodId = this.props.product.id;
+        $("#product-" + prodId).html("");
+        this.setState({cartItemQuantity: null});
+        this.setState({cartSalePrice: null});
+        this.setState({cartNetPrice: null});
+        this.setState({cartLotId: null});
+        $(this.getDOMNode()).find('input').val('');
+        $(this.getDOMNode()).keyup();
     }
   };
 
