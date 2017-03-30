@@ -18,7 +18,7 @@ class UpdateLots
     ct_so.each do |so|
       so.lot_id = lot.id
       so.save
-      lot.quantity = lot_quantity - item.quantity
+      lot.quantity = lot.quantity - so.quantity
       lot.save
     end
   end

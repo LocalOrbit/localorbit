@@ -222,7 +222,7 @@ class Admin::OrdersController < AdminController
     # TODO: Change an order items delivery status to 'removed' or something rather then deleting them
     perform_order_update(order, order_params, merge)
 
-    if current_market.is_consignment_market?
+    if current_market.is_consignment_market? && order.purchase_order?
       check_sold_through(order)
     end
   end
@@ -480,26 +480,32 @@ class Admin::OrdersController < AdminController
 
   def check_sold_through(order)
     result = ActiveRecord::Base.connection.exec_query("
-    SELECT coalesce(po.quantity,0) - coalesce(po_other.quantity,0) - coalesce(so.quantity,0) AS quantity
+    SELECT coalesce(po.quantity,0) - coalesce(po_other.quantity,0) - coalesce(so.quantity,0) AS quantity, so.net_price + po_other.net_price_other AS balance_due
     FROM
-    (SELECT sum(quantity) quantity
-    FROM consignment_transactions
-    WHERE order_id = $1
-    AND transaction_type = 'PO') po,
-    (SELECT sum(quantity) quantity
-    FROM consignment_transactions
-    WHERE order_id = $1
-    AND transaction_type != 'PO') po_other,
-    (SELECT sum(so1.quantity) quantity
-    FROM consignment_transactions po1, consignment_transactions so1
-    WHERE po1.id = so1.parent_id AND po1.order_id = $1
-    AND so1.transaction_type = 'SO') so", 'sold_through_query', [[nil,order.id]])
+      (SELECT sum(quantity) quantity
+      FROM consignment_transactions
+      WHERE order_id = $1
+      AND transaction_type = 'PO') po,
+      (SELECT sum(quantity) quantity, sum(net_price * quantity) net_price_other
+      FROM consignment_transactions
+      WHERE order_id = $1
+      AND transaction_type != 'PO') po_other,
+      (SELECT sum(so1.quantity) quantity, sum(so1.net_price * so1.quantity) net_price
+      FROM consignment_transactions po1, consignment_transactions so1
+      WHERE po1.id = so1.parent_id AND po1.order_id = $1
+      AND so1.transaction_type = 'SO') so",
+    'sold_through_query', [[nil,order.id]])
+
     if Integer(result[0]['quantity']) == 0
       order.sold_through = true
     else
       order.sold_through = false
     end
-    # TODO: Update sales_price with balance due for PO
+
+    if !result[0]['balance_due'].nil? && Float(result[0]['balance_due']) > 0
+      order.total_cost = Float(result[0]['balance_due'])
+    end
+
     order.save
   end
 end

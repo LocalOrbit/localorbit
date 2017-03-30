@@ -128,12 +128,23 @@ module Api
         catalog_products = cross_sold_products = Product.connection.unprepared_statement do
           Product.joins(organization: [market_organizations: [:market]])
             .where("markets.id = ?", current_market.id)
+            .with_available_so_inventory(current_delivery.deliver_on)
             .visible
             .select(:id, :general_product_id)
             .to_sql
-          end
+        end
 
-        gp = GeneralProduct.joins("JOIN (#{catalog_products}) p_child
+        cp = "#{catalog_products} UNION
+        SELECT products.id, products.general_product_id
+        FROM products
+        INNER JOIN organizations ON organizations.id = products.organization_id
+        INNER JOIN market_organizations ON market_organizations.organization_id = organizations.id
+        INNER JOIN markets ON markets.id = market_organizations.market_id
+        INNER JOIN consignment_transactions ON consignment_transactions.product_id = products.id AND consignment_transactions.market_id = markets.id AND consignment_transactions.transaction_type = 'PO' AND consignment_transactions.lot_id IS NULL
+        INNER JOIN orders ON consignment_transactions.order_id = orders.id AND orders.delivery_status = 'pending'
+        WHERE markets.id = #{current_market.id} AND products.deleted_at IS NULL"
+
+        gp = GeneralProduct.joins("JOIN (#{cp}) p_child
               ON general_products.id=p_child.general_product_id
               JOIN categories top_level_category ON general_products.top_level_category_id = top_level_category.id
               JOIN categories second_level_category ON general_products.second_level_category_id = second_level_category.id
@@ -194,7 +205,6 @@ module Api
           lots = Lot.where(product_id: product.id).where("lots.quantity > 0 AND lots.number IS NOT NULL")
             .select("lots.id, lots.quantity, lots.number, (SELECT TO_CHAR(delivery_date, 'MM/DD/YYYY') FROM consignment_transactions WHERE lot_id = lots.id AND transaction_type = 'PO') delivery_date, 'available'::text AS status")
 
-          awaiting_delivery = Order.joins(:items).where("orders.order_type = 'purchase' AND order_items.delivery_status = 'pending' AND orders.market_id = ? AND order_items.product_id = ?", current_market.id, product.id).select("null AS id, trunc(order_items.quantity) AS quantity, '' AS number, 'awaiting_delivery'::text AS status")
           awaiting_delivery_qty = ConsignmentTransaction.where("transaction_type = 'PO' AND lot_id IS NULL AND market_id = ? AND product_id = ?", current_market.id, product.id).sum(:quantity)
           awaiting_ordered_qty = ConsignmentTransaction.where("transaction_type = 'SO' AND lot_id IS NULL AND market_id = ? AND product_id = ?", current_market.id, product.id).sum(:quantity)
 
