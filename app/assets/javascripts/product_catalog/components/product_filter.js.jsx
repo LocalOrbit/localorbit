@@ -17,7 +17,8 @@
       supplierOnly: React.PropTypes.bool,
       orderId: React.PropTypes.number,
       orderMinimum: React.PropTypes.string,
-      purchaseOrder: React.PropTypes.bool
+      purchaseOrder: React.PropTypes.bool,
+      salesOrder: React.PropTypes.bool
     },
 
     getInitialState: function() {
@@ -115,7 +116,7 @@
       var orderTemplates, filterText, orderMinimum, headerInformation, editDeliveryOptions;
       var buyerSeller, entityInfo;
 
-      if(this.props.useTemplates && this.props.sales_order)
+        if(this.props.useTemplates && this.props.salesOrder)
             orderTemplates = (<a href="#templatePicker" className="app-apply-template modal-toggle">Apply an order template to the cart</a>);
         else
             orderTemplates = ('');
