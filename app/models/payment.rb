@@ -27,7 +27,17 @@ class Payment < ActiveRecord::Base
     "cash" => "Cash",
     "check" => "Check",
     "credit card" => "Credit Card",
-    "purchase order" => "Purchase Order"
+    "purchase order" => "Purchase Order",
+  }.freeze
+
+  PAYMENT_METHODS_CHECK = {
+      "ach" => "ACH",
+      "cash" => "Cash",
+      "check" => "Check",
+      "credit card" => "Credit Card",
+      "purchase order" => "Purchase Order",
+      "external credit card" => "External Credit Card",
+      "external purchase order" => "External Purchase Order"
   }.freeze
 
   belongs_to :payee, polymorphic: true

@@ -31,6 +31,7 @@ Product is removed from the current PO, and moved to another PO (new or existing
               billing_zip: order.billing_zip,
               billing_phone: order.billing_phone,
               payment_status: "unpaid",
+              delivery_status: "pending",
               payment_method: order.payment_method,
               payment_note: nil,
               delivery_fees: order.delivery_fees,

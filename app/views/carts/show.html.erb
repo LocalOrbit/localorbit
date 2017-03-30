@@ -60,7 +60,7 @@
           <fieldset class="conditional">
             <legend class="haiku">Select Payment Method</legend>
               <% if current_market.is_consignment_market? %>
-                <%= select_tag "order[payment_method]", options_for_select([["Purchase Order","purchase order"], ["Credit Card", "credit card"], ["Cash", "cash"], ["Check", "check"]]), class: 'payment_method', prompt: 'Choose:' %>
+                <%= select_tag "order[payment_method]", options_for_select([["Purchase Order","external purchase order"], ["Credit Card", "external credit card"], ["Cash", "cash"], ["Check", "check"]]), class: 'payment_method', prompt: 'Choose:' %>
               <% else %>
                 <% if allow_payment_option?(:purchase_order, current_market, current_organization) %>
                   <div class="field">

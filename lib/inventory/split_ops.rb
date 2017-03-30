@@ -38,11 +38,40 @@ module Inventory
         orig_lot.quantity = orig_lot.quantity - Integer(quantity)
         dest_lot.quantity = dest_lot.quantity + ((orig_unit_quantity / dest_unit_quantity) * Integer(quantity))
 
+        ct = ConsignmentTransaction.create(
+            market_id: order.market.id,
+            transaction_type: 'SPLIT',
+            product_id: orig_product.product_id,
+            lot_id: orig_lot.id,
+            child_lot_id: dest_lot.id,
+            quantity: quantity,
+        )
+        ct.save
+
         orig_lot.save
         dest_lot.save
       end
 
-      def unsplit_product
+      def unsplit_product(product_id)
+        child_product = Product.find(product_id)
+        parent_ct = ConsignmentTransaction.where(transaction_type: 'SPLIT', product_id: child_product.parent_id).last
+        child_lot = Lot.find(parent_ct.child_lot_id)
+
+        parent_product = Product.find(product.parent_product_id)
+        parent_lot = Lot.find(parent_ct.lot_id)
+
+        quantity = ct.quantity
+
+        child_unit_quantity = child_product.unit_quantity
+        parent_unit_quantity = parent_product.unit_quantity
+
+        child_lot.quantity = child_lot.quantity - ((parent_unit_quantity / child_unit_quantity) * Integer(quantity))
+        parent_lot.quantity = parent_lot.quantity + quantity
+
+        child_lot.save
+        parent_lot.save
+
+        parent_ct.delete
       end
 
       def can_split_product?(product)
