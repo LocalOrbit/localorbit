@@ -396,7 +396,7 @@ feature "Viewing products" do
 
       sign_in_as(user)
 
-      expect(page).to have_content("Please choose a pick up or delivery date.")
+      expect(page).to have_content("Please choose a pick up or delivery date")
 
       delivery_choices = Dom::Buying::DeliveryChoice.all
       expect(delivery_choices.size).to eq(3)
@@ -436,7 +436,7 @@ feature "Viewing products" do
       scenario "selecting a direct to buyer delivery with multiple organization locations" do
         sign_in_as(user)
 
-        expect(page).to have_content("Please choose a pick up or delivery date.")
+        expect(page).to have_content("Please choose a pick up or delivery date")
 
         delivery = Dom::Buying::DeliveryChoice.first
         expect(delivery.type).to eq("Delivery:")
@@ -457,7 +457,7 @@ feature "Viewing products" do
 
         sign_in_as(user)
 
-        expect(page).to have_content("Please choose a pick up or delivery date.")
+        expect(page).to have_content("Please choose a pick up or delivery date")
 
         delivery = Dom::Buying::DeliveryChoice.first
         expect(delivery.type).to eq("Delivery:")
@@ -493,7 +493,7 @@ feature "Viewing products" do
 
           click_button "Select Organization"
 
-          expect(page).to have_content("Please choose a pick up or delivery date.")
+          expect(page).to have_content("Please choose a pick up or delivery date")
 
           delivery = Dom::Buying::DeliveryChoice.first
           expect(delivery.type).to eq("Delivery:")
@@ -518,7 +518,7 @@ feature "Viewing products" do
 
           click_button "Select Organization"
 
-          expect(page).to have_content("Please choose a pick up or delivery date.")
+          expect(page).to have_content("Please choose a pick up or delivery date")
 
           delivery = Dom::Buying::DeliveryChoice.first
           expect(delivery.type).to eq("Delivery:")
@@ -538,7 +538,7 @@ feature "Viewing products" do
 
           click_button "Select Organization"
 
-          expect(page).to have_content("Please choose a pick up or delivery date.")
+          expect(page).to have_content("Please choose a pick up or delivery date")
 
           delivery = Dom::Buying::DeliveryChoice.first
           expect(delivery.type).to eq("Delivery:")

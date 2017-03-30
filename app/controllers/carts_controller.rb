@@ -54,7 +54,11 @@ class CartsController < ApplicationController
     product = Product.includes(:prices).find(params[:product_id])
     delivery_date = current_delivery.deliver_on
 
-    @item = current_cart.items.find_or_initialize_by(product_id: product.id, lot_id: params[:lot_id])
+    if current_market.is_consignment_market? && @order_type == "sales"
+      @item = current_cart.items.find_or_initialize_by(product_id: product.id, lot_id: params[:lot_id])
+    else
+      @item = current_cart.items.find_or_initialize_by(product_id: product.id)
+    end
 
     if params[:quantity].to_i > 0
       @item.quantity = params[:quantity]
@@ -63,7 +67,7 @@ class CartsController < ApplicationController
       @item.lot_id = params[:lot_id]
       @item.product = product
 
-      check_qty = !params[:lot_id].nil? && params[:lot_id] != "NaN" && Integer(params[:lot_id]) > 0
+      check_qty = current_market.is_buysell_market? || (@order_type == "sales" && !params[:lot_id].nil? && params[:lot_id] != "NaN" && Integer(params[:lot_id]) > 0)
       @item.check_qty = check_qty
 
       if check_qty && @item.quantity && @item.quantity > 0 && @item.quantity > product.available_inventory(delivery_date, current_market.id, current_organization.id)
