@@ -54,6 +54,7 @@ Product is removed from the current PO, and moved to another PO (new or existing
         dest_item = OrderItem.new(orig_item.attributes.reject{ |k| k == 'id' })
         dest_item.quantity = params[:holdover_qty]
         dest_item.quantity_delivered = nil
+        dest_item.delivery_status = 'pending'
 
         #if dest_item.quantity_delivered > Integer(params[:holdover_qty])
         #  dest_item.quantity_delivered = Integer(params[:holdover_qty])
@@ -87,7 +88,7 @@ Product is removed from the current PO, and moved to another PO (new or existing
             transaction_type: 'HOLDOVER',
             order_id: dest_order.id,
             product_id: t_id.product_id,
-            quantity: params[:holdover_qty],
+            quantity: 0,
             holdover_order_id: order.id
         )
         ct_dest.save

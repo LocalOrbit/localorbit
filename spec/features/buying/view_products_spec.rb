@@ -320,9 +320,9 @@ feature "Viewing products" do
         scenario "shows the 'change' link" do
           visit products_path
 
-          select buyer_org.name, from: "Organization"
+          select buyer_org.name, from: "Buyer"
 
-          click_button "Select Organization"
+          click_button "Select Buyer"
 
           within(".selected-delivery") do
             expect(page).to have_link("Change")
@@ -340,9 +340,9 @@ feature "Viewing products" do
       scenario "has to select an organization to shop as" do
         click_link "Order", match: :first
 
-        select buyer_org.name, from: "Organization"
+        select buyer_org.name, from: "Buyer"
 
-        click_button "Select Organization"
+        click_button "Select Buyer"
 
         expect(page).to have_content(org1_product.name)
       end
@@ -489,9 +489,9 @@ feature "Viewing products" do
           expect(select).to have_option(buyer_org2.name)
           expect(select).to_not have_option(buyer_org_outside_market.name)
 
-          select buyer_org.name, from: "Organization"
+          select buyer_org.name, from: "Buyer"
 
-          click_button "Select Organization"
+          click_button "Select Buyer"
 
           expect(page).to have_content("Please choose a pick up or delivery date")
 
@@ -514,9 +514,9 @@ feature "Viewing products" do
           #expect(select).to have_option(buyer_org2.name)
           #expect(select).to_not have_option(buyer_org_outside_market.name)
 
-          select buyer_org.name, from: "Organization", visible: false
+          select buyer_org.name, from: "Buyer", visible: false
 
-          click_button "Select Organization"
+          click_button "Select Buyer"
 
           expect(page).to have_content("Please choose a pick up or delivery date")
 
@@ -534,9 +534,9 @@ feature "Viewing products" do
             click_link "Change"
           end
 
-          select buyer_org2.name, from: "Organization", visible: false
+          select buyer_org2.name, from: "Buyer", visible: false
 
-          click_button "Select Organization"
+          click_button "Select Buyer"
 
           expect(page).to have_content("Please choose a pick up or delivery date")
 
