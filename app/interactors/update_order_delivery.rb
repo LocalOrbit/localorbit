@@ -4,8 +4,8 @@ class UpdateOrderDelivery
   def perform
     if schedule_and_location_changed?
       if new_delivery.requires_location?
-        if order.organization.locations.count == 1
-          address = order.organization.locations.first
+        if order.organization.locations.visible.count == 1
+          address = order.organization.locations.visible.first
         else
           fail_and_notify
           return
