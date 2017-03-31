@@ -25,7 +25,7 @@ module Inventory
 
 =end
 
-      def split_product(orig_product_id, dest_product_id, orig_lot_id, quantity)
+      def split_product(market_id, orig_product_id, dest_product_id, orig_lot_id, quantity)
         orig_product = Product.find(orig_product_id)
         orig_lot = Lot.find(orig_lot_id)
         dest_product = Product.find(dest_product_id)
@@ -35,16 +35,22 @@ module Inventory
         orig_unit_quantity = orig_product.unit_quantity
         dest_unit_quantity = dest_product.unit_quantity
 
-        orig_lot.quantity = orig_lot.quantity - Integer(quantity)
-        dest_lot.quantity = dest_lot.quantity + ((orig_unit_quantity / dest_unit_quantity) * Integer(quantity))
+        qty = Integer(quantity)
+        if qty > orig_lot.quantity
+          qty = orig_lot.quantity
+        end
+
+        orig_lot.quantity = orig_lot.quantity - qty
+        dest_lot.quantity = dest_lot.quantity + ((orig_unit_quantity / dest_unit_quantity) * qty)
 
         ct = ConsignmentTransaction.create(
-            market_id: order.market.id,
+            market_id: market_id,
             transaction_type: 'SPLIT',
-            product_id: orig_product.product_id,
+            product_id: orig_product.id,
+            child_product_id: dest_product.id,
             lot_id: orig_lot.id,
             child_lot_id: dest_lot.id,
-            quantity: quantity,
+            quantity: qty,
         )
         ct.save
 
@@ -54,13 +60,13 @@ module Inventory
 
       def unsplit_product(product_id)
         child_product = Product.find(product_id)
-        parent_ct = ConsignmentTransaction.where(transaction_type: 'SPLIT', product_id: child_product.parent_id).last
+        parent_ct = ConsignmentTransaction.where(transaction_type: 'SPLIT', child_product_id: child_product.id).last
         child_lot = Lot.find(parent_ct.child_lot_id)
 
-        parent_product = Product.find(product.parent_product_id)
+        parent_product = Product.find(child_product.parent_product_id)
         parent_lot = Lot.find(parent_ct.lot_id)
 
-        quantity = ct.quantity
+        quantity = parent_ct.quantity
 
         child_unit_quantity = child_product.unit_quantity
         parent_unit_quantity = parent_product.unit_quantity
