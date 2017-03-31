@@ -190,6 +190,7 @@ Rails.application.routes.draw do
       end
       collection do
         post :split
+        post :undo_split
       end
     end
 
