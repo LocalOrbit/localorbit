@@ -457,11 +457,6 @@ $ ->
     $(this).prop("disabled", true)
     $(this).parents('form').submit()
 
-
-  $(document.body).on 'change', ".payment_method", (e)->
-    if $(this).text() != 'Choose:'
-      $("#place-order-button").prop("disabled", false)
-
   numItems = $('.payment-method').length
   if numItems == 1
     $('.payment-method').click()

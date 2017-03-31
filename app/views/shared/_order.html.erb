@@ -163,12 +163,20 @@
         <% end %>
         <tr>
           <th scope="row">Payment Method: </th>
-          <td><%= order.payment_method.titleize %></td>
+          <% if current_market.is_consignment_market? && order.undelivered_for_user?(current_user) %>
+              <td><%= f.select :payment_method, options_for_select([["Purchase Order","po"], ["Credit Card", "credit"], ["Cash", "cash"], ["Check", "check"]], selected: order.payment_method) %></td>
+          <% else %>
+            <td><%= order.payment_method.titleize %></td>
+          <% end %>
         </tr>
-        <% if order.payment_method == "purchase order" && !order.payment_note.nil? && order.payment_note.length > 0 %>
+        <% if order.payment_method == "purchase order" || order.payment_method == "po" || order.payment_method == "check" && order.payment_note.length > 0 %>
         <tr>
           <th scope="row">Payment Ref. #: </th>
-          <td><%= order.payment_note %></td>
+          <% if current_market.is_consignment_market? && order.undelivered_for_user?(current_user) %>
+              <td><%= f.text_field :payment_note %></td>
+          <% else %>
+              <td><%= order.payment_note %></td>
+          <% end %>
         </tr>
         <% end %>
         <tr>

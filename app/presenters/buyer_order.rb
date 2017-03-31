@@ -22,6 +22,8 @@ class BuyerOrder
     :purchase_order?,
     :created_at,
     :delivery_status,
+    :sold_through,
+    :payment_method,
     to: :@order
 
   def initialize(order)

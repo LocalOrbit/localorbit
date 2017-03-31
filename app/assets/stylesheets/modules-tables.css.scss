@@ -539,13 +539,13 @@ span.price-for-quantity {
   }
 }
 
-.sale_price{
+.sale-price{
   input {
     text-align: center;
   }
 }
 
-.net_price {
+.net-price {
   input {
     text-align: center;
   }
@@ -950,7 +950,7 @@ td.delete {
   .name, .price, .price-for-quantity {
     padding-top: 10px;
   }
-  .quantity {
+  .quantity, .sale-price, .net-price {
     padding-top: 2px;
   }
   th {

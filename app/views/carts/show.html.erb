@@ -60,7 +60,12 @@
           <fieldset class="conditional">
             <legend class="haiku">Select Payment Method</legend>
               <% if current_market.is_consignment_market? %>
-                <%= select_tag "order[payment_method]", options_for_select([["Purchase Order","external purchase order"], ["Credit Card", "external credit card"], ["Cash", "cash"], ["Check", "check"]]), class: 'payment_method', prompt: 'Choose:' %>
+                <%= select_tag "order[payment_method]", options_for_select([["Purchase Order","po"], ["Credit Card", "credit"], ["Cash", "cash"], ["Check", "check"]]), class: 'payment_method' %>
+                <br/><br/>
+                <div class="payment-field">
+                  <%= f.label :payment_note, "PO Number/Check #" %><br>
+                  <%= f.text_field :payment_note, class: "input--short" %>
+                </div>
               <% else %>
                 <% if allow_payment_option?(:purchase_order, current_market, current_organization) %>
                   <div class="field">
@@ -159,7 +164,7 @@
           </fieldset>
         </div>
         <div class="form-actions">
-          <%= f.submit "Place Order", class: 'btn btn btn--money', id: 'place-order-button', disabled: true, data: {disable_with: "Please wait..."} %>
+          <%= f.submit "Place Order", class: 'btn btn btn--money', id: 'place-order-button', disabled: current_market.is_buysell_market?, data: {disable_with: "Please wait..."} %>
           <span class="pull-left cancel-link">
             <%= link_to "Cancel Order", [:cart], data: {method: :delete, confirm: "Are you sure you want to clear the cart?"}, class: "btn btn--small destructive", id: "cancel-button" %>
             <span class="note">(Clear Cart)</span>

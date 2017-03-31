@@ -43,6 +43,14 @@
   }
 }
 
+.cart input[type=text] {
+  height: 24px;
+  padding-right: 7px;
+  padding-left: 7px;
+  margin: 2px 0;
+  font-size: 12px;
+}
+
 .updated input {
   background-color: #bfd9ad;
   @include transition(background-color 0.1s ease-in);
