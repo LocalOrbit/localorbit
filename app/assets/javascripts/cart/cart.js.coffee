@@ -393,11 +393,19 @@ $ ->
   $(document.body).on 'click', ".submit-split", (e)->
     e.preventDefault()
     $(this).attr("disabled", true)
-    quantity = $(this).parent().parent().find(".split-qty").val()
-    productId = $(this).parent().parent().find(".split-product option:selected").val()
-    lotId = $(this).parent().parent().parent().parent().find(".lot-id").val()
-    parentProductId = $(this).parent().parent().parent().parent().parent().parent().data("cart-item")["product_id"]
+    quantity = $(this).parent().parent().parent().find(".split-qty").val()
+    productId = $(this).parent().parent().parent().find(".split-product option:selected").val()
+    lotId = $(this).parent().parent().parent().parent().parent().parent().parent().find(".lot-id").val()
+    parentProductId = $(this).parent().parent().parent().parent().parent().parent().parent().parent().parent().data("cart-item")["product_id"]
     $.post("/admin/products/split", {parent_product_id: parentProductId, product_id: productId, lot_id: lotId, quantity: quantity} )
+      .done (data)=>
+        location.reload()
+
+  $(document.body).on 'click', ".undo-submit-split", (e)->
+    e.preventDefault()
+    #$(this).attr("disabled", true)
+    productId = $(this).parent().parent().parent().parent().parent().data("cart-item")["product_id"]
+    $.post("/admin/products/undo_split", {product_id: productId} )
       .done (data)=>
         location.reload()
 

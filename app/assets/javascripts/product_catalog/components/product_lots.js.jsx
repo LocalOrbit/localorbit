@@ -26,6 +26,7 @@
         var lot;
         var split_select_options;
         var split_action;
+        var undo_split_action;
 
         if (this.props.salesOrder) {
             if (this.props.orderId) {
@@ -99,28 +100,37 @@
               return <option key={option.id}
                              value={option.id}>{option.name}</option>;
           });
+
           split_action = (
-          <div>
-              <table>
-                  <tr>
-                      <td>
-                          <strong>Split:</strong>
-                      </td>
-                      <td>
-                          <input style={{float: "left", width: "50px", marginLeft: "10px", height: "inherit"}} type="number" placeholder="0" className="redesigned split-qty"/>
-                      </td>
-                      <td>
-                          <div style={{float: "left", marginLeft: "10px"}} className="split-options"><select className="split-product">{split_select_options}</select></div>
-                      </td>
-                      <td>
-                          <div style={{float: "left", marginLeft: "10px"}}><button className="submit-split btn btn--primary btn--tiny">Split</button></div>
-                      </td>
-                  </tr>
-              </table>
-          </div>)
+              <div style={{display: "inline-block", width: "100%", borderTop: "1px solid #DDD", marginTop: "5px"}}>
+                  <table>
+                      <tr>
+                          <td>
+                              <strong>Split:</strong>
+                          </td>
+                          <td>
+                              <input style={{float: "left", textAlign: "center", width: "50px", marginLeft: "10px", height: "inherit"}} type="number" placeholder="0" className="redesigned split-qty"/>
+                          </td>
+                          <td>
+                              <div style={{float: "left", marginLeft: "10px"}} className="split-options"><select className="split-product">{split_select_options}</select></div>
+                          </td>
+                          <td>
+                              <div style={{float: "left", marginLeft: "10px"}}><button className="submit-split btn btn--primary btn--tiny">Split</button></div>
+                          </td>
+                      </tr>
+                  </table>
+              </div>)
       }
       else
           split_action = ('');
+
+      if (this.props.product.undo_split_id && this.props.product.undo_split_id == this.props.lot.id)
+          split_action = (
+              <div style={{display: "inline-block", width: "100%", borderTop: "1px solid #DDD", marginTop: "5px"}}>
+                  <div style={{float: "left", marginLeft: "10px"}}><button data-product-id={this.props.product.id} className="undo-submit-split btn btn--primary btn--tiny">Undo Split</button></div>
+              </div>);
+      else
+          undo_split_action = ('');
 
       return (
         <tr className="cart_item" data-keep-when-zero="yes" data-cart-item={JSON.stringify(this.props.product.cart_item)}>
@@ -146,6 +156,7 @@
                 </div>
                 <input type="hidden" className="lot-id" defaultValue={this.props.lot.id} />
                 {split_action}
+                {undo_split_action}
             </div>
             <div dangerouslySetInnerHTML={{__html: committed_detail }}></div>
           </td>

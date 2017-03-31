@@ -200,6 +200,7 @@ module Api
         lots = nil
         committed = nil
         split_options = nil
+        undo_split_options = nil
 
         if current_market.is_consignment_market?
           lots = Lot.where(product_id: product.id)
@@ -236,6 +237,7 @@ module Api
           lots = lots + awaiting_delivery
 
           split_options = Product.where(parent_product_id: product.id).select("products.id, products.name, products.general_product_id")
+          undo_split_options = ConsignmentTransaction.where(child_product_id: product.id).select(:child_lot_id).first
         end
 
         # TODO There's a brief window where prices and inventory may change after
@@ -255,6 +257,7 @@ module Api
               :lots => lots,
               :committed => committed,
               :split_options => split_options,
+              :undo_split_id => !undo_split_options.nil? ? undo_split_options.child_lot_id : nil,
               :cart_item => cart_item.object,
               :cart_item_persisted => cart_item.persisted?,
               :cart_item_quantity => cart_item.quantity,
