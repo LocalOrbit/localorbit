@@ -506,6 +506,9 @@ class Product < ActiveRecord::Base
     ret_val.push(category_id).push(second_level_category_id).push(top_level_category_id)
   end
 
+  def consignment_inventory
+
+  end
   private
 
   def ensure_product_has_a_general_product

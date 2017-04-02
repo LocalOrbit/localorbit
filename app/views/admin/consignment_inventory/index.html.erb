@@ -1,0 +1,52 @@
+<div>
+  <div class="l-constraint">
+    <h1><i class="font-icon" data-icon="&#xe027;"></i>&nbsp; Inventory</h1>
+    <%= render "filters" %>
+
+    <div class="clearfix"></div>
+  </div>
+</div>
+
+<div class="table-wrapper">
+  <table class="sortable organization-table market-org-list">
+    <thead class="stickable">
+    <tr>
+      <th data-column="name" class="<%= column_sort_classes("name")%>">Product</th>
+      <th>Supplier</th>
+      <th>Lot</th>
+      <th>Location</th>
+      <th>On Hand</th>
+      <th>Committed</th>
+      <th>Notes</th>
+    </tr>
+    </thead>
+    <tbody>
+    <% @inventories.each do |inv| %>
+    <tr>
+      <td class="name"><%= link_to inv.product_name, admin_products_path(inv.id) %></td>
+      <td class="supplier"><%= link_to "PO: #{inv.order_id} - #{inv.supplier_name}", purchase_order_path(inv.order_id) %></td>
+      <td class="lot">
+          <%=inv.lot_number %><br/>
+      </td>
+      <td>
+        <%= inv.status =='waiting' ? 'Awaiting Delivery' : 'Storage' %>
+      </td>
+      <td>
+        <%= inv.status =='waiting' ? inv.ct_quantity : inv.lot_quantity %>
+      </td>
+      <td class="committed"><%= Inventory::Utils.qty_committed(current_market.id, inv.product_id) %></td>
+      <td></td>
+    </tr>
+    <% end %>
+    </tbody>
+  </table>
+</div>
+
+<%= paginate @inventories %>
+
+<% if @inventories.none? %>
+    <div class="info-note">
+      <h2>No Results</h2>
+      This table is empty, either because there is no data, or because the filter you've applied is hiding it.
+    </div>
+<% end %>
