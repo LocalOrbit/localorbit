@@ -194,6 +194,8 @@ Rails.application.routes.draw do
       end
     end
 
+    get "consignment_inventory" => "consignment_inventory#index"
+
     resources :order_items, only: [:index, :update], path: :sold_items do
       collection do
         post :set_status
@@ -233,6 +235,14 @@ Rails.application.routes.draw do
         get "consignment_receipt" => "consignment_receipts#show"
         get :await_pdf, to: "consignment_receipts#await_pdf"
         get :peek, to: "consignment_receipts#peek"
+      end
+    end
+
+    resources :consignment_pick_lists, only: :show do
+      member do
+        get "consignment_pick_list" => "consignment_pick_list#show"
+        get :await_pdf, to: "consignment_pick_lists#await_pdf"
+        get :peek, to: "consignment_pick_lists#peek"
       end
     end
 
