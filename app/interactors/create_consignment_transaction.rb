@@ -27,6 +27,11 @@ class CreateConsignmentTransaction
         )
         ct.save
       end
+
+      if !po_order.nil? && order.sales_order? && po_order.lot_id.nil?
+        po_order.update_attribute(:lot_id, item.lots.first.lot_id)
+      end
+
       context[:transaction_id] = ct.id
     end
   end

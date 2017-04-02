@@ -105,6 +105,11 @@ class Admin::OrdersController < AdminController
           redirect_to admin_orders_path, alert: context.message
         end
 
+      when "pick_list"
+        orders = Order.where(id: params["order_id"])
+        context = GenerateConsignmentPickListPdf.perform(orders: orders, request: RequestUrlPresenter.new(request))
+        send_data(context.picklist_pdf, filename: 'picklist.pdf', type: 'application/pdf')
+
       when "export"
         params["order_id"].each do |o|
           order = Order.find(o)
