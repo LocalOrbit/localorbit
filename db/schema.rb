@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170331141052) do
+ActiveRecord::Schema.define(version: 20170402230227) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -213,6 +213,7 @@ ActiveRecord::Schema.define(version: 20170331141052) do
     t.boolean  "holdover_master"
     t.integer  "child_lot_id"
     t.integer  "child_product_id"
+    t.datetime "deleted_at"
   end
 
   create_table "credits", force: true do |t|

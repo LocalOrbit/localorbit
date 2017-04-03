@@ -35,7 +35,7 @@
         <%= inv.status =='waiting' ? inv.ct_quantity : inv.lot_quantity %>
       </td>
       <td class="committed"><%= Inventory::Utils.qty_committed(current_market.id, inv.product_id) %></td>
-      <td></td>
+      <td><button class="btn btn--tiny">Note</button></td>
     </tr>
     <% end %>
     </tbody>

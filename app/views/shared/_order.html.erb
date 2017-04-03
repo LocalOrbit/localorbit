@@ -42,6 +42,16 @@
           <button id="unclose_order" name="Unclose Order">Unclose Order</button>
         </li>
         <% end %>
+        <% if current_market.is_consignment_market? && order.delivery_status == 'pending' && Inventory::Utils.can_delete_order?(order) %>
+            <li>
+              <button>
+                <%= link_to raw('<i class="fa fa-trash-o">&nbsp;</i>'), [:admin, :order],
+                        class: "delete order-delete font-icon", style: 'font-size: 17px; color: #990000; padding: 0px; margin: 0px',
+                        data: {method: :delete, confirm: "Are you sure you want to permanently delete order #{order.id}?"},
+                        title: "Delete" %>
+              </button>
+            </li>
+        <% end %>
       </ul>
     </div>
     <div id="merge_options" style="float: right; display: none">
