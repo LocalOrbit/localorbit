@@ -64,7 +64,7 @@
                 <%= select_tag "order[payment_method]", options_for_select([["Invoice","invoice"], ["Purchase Order", "po"], ["Credit Card", "credit"], ["Cash", "cash"], ["Check", "check"]]), class: 'payment_method' %>
                 <br/><br/>
                 <div class="payment-field">
-                  <%= f.label :payment_note, "Supplier #" %><br>
+                  <%= f.label :payment_note, "Payment Ref. #" %><br>
                   <%= f.text_field :payment_note, class: "input--short" %>
                 </div>
               <% else %>

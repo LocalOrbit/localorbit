@@ -364,7 +364,7 @@ class Admin::OrdersController < AdminController
     params[:order].delete(:delivery_id) # Remove the parameter so it doesn't conflict
     params[:order].delete(:delivery_clear) # Remove the parameter so it doesn't conflict
     params[:order].delete(:credit_clear) # Remove the parameter so it doesn't conflict
-    params.require(:order).permit(:delivery_clear, :notes, :order_batch_action, :order_id, :signature_data, items_attributes: [
+    params.require(:order).permit(:delivery_clear, :notes, :order_batch_action, :order_id, :signature_data, :payment_method, items_attributes: [
       :id, :quantity, :quantity_delivered, :delivery_status, :_destroy
     ])
   end
