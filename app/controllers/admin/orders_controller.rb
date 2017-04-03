@@ -318,7 +318,7 @@ class Admin::OrdersController < AdminController
   end
 
   def shrink_transaction(order, params)
-    result = CreateShrinkTransaction.perform(order: order, params: params)
+    result = CreateShrinkTransaction.perform(user: current_user, order: order, params: params)
     if result.success?
       redirect_to admin_order_path(order), notice: "Shrink Successful."
     else
@@ -327,7 +327,7 @@ class Admin::OrdersController < AdminController
   end
 
   def unshrink_transaction(order, params)
-    result = UnShrinkTransaction.perform(params: params)
+    result = UnShrinkTransaction.perform(user: current_user, params: params)
     if result.success?
       redirect_to admin_order_path(order), notice: "Unshrink Successful."
     else
@@ -336,7 +336,7 @@ class Admin::OrdersController < AdminController
   end
 
   def holdover_transaction(order, params)
-    result = CreateHoldoverTransaction.perform(order: order, params: params)
+    result = CreateHoldoverTransaction.perform(user: current_user, order: order, params: params)
     if result.success?
       redirect_to admin_order_path(order), notice: "Holdover Successful."
     else
@@ -345,7 +345,7 @@ class Admin::OrdersController < AdminController
   end
 
   def unholdover_transaction(order, params)
-    result = UnHoldoverTransaction.perform(params: params)
+    result = UnHoldoverTransaction.perform(user: current_user, params: params)
     if result.success?
       redirect_to admin_order_path(order), notice: "Unholdover Successful."
     else
@@ -468,7 +468,7 @@ class Admin::OrdersController < AdminController
   end
 
   def perform_add_items(order)
-    result = UpdateOrderWithNewItems.perform(payment_provider: order.payment_provider, order: order, item_hashes: items_to_add, request: request)
+    result = UpdateOrderWithNewItems.perform(buyer: current_user, payment_provider: order.payment_provider, order: order, item_hashes: items_to_add, request: request)
     if !result.success?
       setup_add_items_form(order)
       order.errors[:base] << "Failed to add items to this order."

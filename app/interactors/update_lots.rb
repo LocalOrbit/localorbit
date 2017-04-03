@@ -31,8 +31,10 @@ class UpdateLots
       lot.quantity = lot.quantity - so.quantity
       lot.save
     end
-    ct_po.lot_id = lot.id
-    ct_po.save
+    if !ct_po.nil?
+      ct_po.lot_id = lot.id
+      ct_po.save
+    end
 
   end
 end

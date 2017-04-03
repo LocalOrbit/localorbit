@@ -28,6 +28,7 @@
               <%= current_cart.delivery.decorate.cart_type %> <%= current_cart.delivery.decorate.checkout_date %>
             </div>
             <address class="adr">
+              <span class="buyer-name"><%= current_cart.organization.name %></span><br/>
               <span class="street-address"><%= current_cart.delivery_location.address %></span><br />
               <span class="locality"><%= current_cart.delivery_location.city %></span>, <span class="region"><%= current_cart.delivery_location.state %></span> <span class="postal-code"><%= current_cart.delivery_location.zip %></span>
             </address>
@@ -60,10 +61,10 @@
           <fieldset class="conditional">
             <legend class="haiku">Select Payment Method</legend>
               <% if current_market.is_consignment_market? %>
-                <%= select_tag "order[payment_method]", options_for_select([["Purchase Order","po"], ["Credit Card", "credit"], ["Cash", "cash"], ["Check", "check"]]), class: 'payment_method' %>
+                <%= select_tag "order[payment_method]", options_for_select([["Invoice","invoice"], ["Purchase Order", "po"], ["Credit Card", "credit"], ["Cash", "cash"], ["Check", "check"]]), class: 'payment_method' %>
                 <br/><br/>
                 <div class="payment-field">
-                  <%= f.label :payment_note, "PO Number/Check #" %><br>
+                  <%= f.label :payment_note, "Supplier #" %><br>
                   <%= f.text_field :payment_note, class: "input--short" %>
                 </div>
               <% else %>

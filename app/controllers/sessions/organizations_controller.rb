@@ -3,7 +3,7 @@ module Sessions
     before_action :hide_admin_navigation
 
     def new
-      @organizations = current_user.managed_organizations_within_market(current_market).order(:name)
+      @organizations = current_user.managed_organizations_within_market(current_market).where(org_type: 'B').order(:name)
       session.delete(:cart_id)
       session.delete(:current_organization_id)
       session.delete(:current_delivery_id)
@@ -15,7 +15,7 @@ module Sessions
         session[:current_organization_id] = org.id
         redirect_to redirect_to_url
       else
-        flash[:alert] = "Please select an organization"
+        flash[:alert] = "Please select a buyer"
         new
         render :new
       end

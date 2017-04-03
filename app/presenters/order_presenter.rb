@@ -74,4 +74,12 @@ module OrderPresenter
       end
     end
   end
+
+  def display_payment_method
+    if payment_method == 'po'
+      'Purchase Order'
+    else
+      payment_method.titleize
+    end
+  end
 end
