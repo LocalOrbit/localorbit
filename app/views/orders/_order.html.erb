@@ -22,7 +22,8 @@
         <!-- <h3 class="fn order-subheading">Delivery Location Name</h3> -->
         <p class="adr">
           <%#= link_to @product.organization.name, seller_path(@product.organization) %>
-          <span class="street-address"><%= @order.delivery_address %></span><br>
+          <span class="buyer-name"><%= @order.organization.name %></span><br/>
+          <span class="street-address"><%= @order.delivery_address %></span><br/>
           <span class="locality"><%= @order.delivery_city %></span>, <span class="region"><%= @order.delivery_state %></span> <span class="postal-code"><%= @order.delivery_zip %></span>
           <% if @order.delivery_phone.present? %>
             <br><span class="tel">T: <%= link_to @order.delivery_phone, "tel:#{@order.delivery_phone}", class: "value" %></span>

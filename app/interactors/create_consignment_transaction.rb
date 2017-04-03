@@ -7,11 +7,11 @@ class CreateConsignmentTransaction
 
     order.items.each do |item|
 
-      check_existing = ConsignmentTransaction.where(market_id: order.market.id, transaction_type: order.sales_order? ? 'SO' : 'PO', order_id: order.id, product_id: item.product.id, lot_id: order.sales_order? && !item.lots.empty? ? item.lots.first.id : nil)
+      check_existing = ConsignmentTransaction.where(market_id: order.market.id, transaction_type: order.sales_order? ? 'SO' : 'PO', order_id: order.id, product_id: item.product.id, lot_id: order.sales_order? && !item.lots.empty? ? item.lots.first.id : nil).first
       po_order = ConsignmentTransaction.joins("JOIN orders ON orders.id = consignment_transactions.order_id").where(transaction_type: 'PO', product_id: item.product_id).where("orders.sold_through = 'f'").order(:created_at).first
 
       ct = nil
-      if check_existing.empty?
+      if check_existing.nil?
         ct = ConsignmentTransaction.create(
           market_id: order.market.id,
           transaction_type: order.sales_order? ? 'SO' : 'PO',
@@ -26,13 +26,16 @@ class CreateConsignmentTransaction
           parent_id: order.sales_order? && !po_order.nil? ? po_order.id : nil
         )
         ct.save
+        Audit.create!(user_id:buyer.id, action:"create", auditable_type: "ConsignmentTransaction", auditable_id: order.id, audited_changes: {'transaction_type' => order.sales_order? ? 'SO' : 'PO'})
+
       end
+
 
       if !po_order.nil? && order.sales_order? && po_order.lot_id.nil?
-        po_order.update_attribute(:lot_id, item.lots.first.lot_id)
+        po_order.update_attributes(lot_id: item.lots.first.lot_id)
       end
 
-      context[:transaction_id] = ct.id
+      #context[:transaction_id] = !ct.nil? ? ct.id : nil
     end
   end
 end
