@@ -3,7 +3,7 @@
   <table>
     <thead>
       <tr>
-        <th></th><th>Status</th><th>Ordered</th><th>On Hand</th><th>Sale Price</th><th>Net Price</th><th>Due</th>
+        <th></th><th>Status</th><th>Ordered</th><th>On Hand</th><th>Sale Price</th><th>Net Price</th>
       </tr>
     </thead>
     <tbody>
@@ -28,7 +28,6 @@
                     <td><%= so.lot_quantity %></td>
                     <td><%= number_to_currency(so.sale_price) %></td>
                     <td><%= number_to_currency(so.net_price) %></td>
-                    <td></td>
                   </tr>
                 <% end %>
             <% end %>

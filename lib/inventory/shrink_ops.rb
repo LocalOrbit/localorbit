@@ -9,7 +9,7 @@ Likely do not need to add/change existing products of a PO, but need to create v
 
 =end
 
-      def shrink_product(order, params)
+      def shrink_product(user, order, params)
 
         t_id = ConsignmentTransaction.find(params[:transaction_id])
         ct = ConsignmentTransaction.create(
@@ -22,11 +22,15 @@ Likely do not need to add/change existing products of a PO, but need to create v
             net_price: params[:shrink_cost]
         )
         ct.save
+        Audit.create!(user_id:user.id, action:"create", auditable_type: "ConsignmentTransaction", auditable_id: order.id, audited_changes: {'transaction_type' => 'Shrink', 'quantity' => params[:shrink_qty], 'net_price' => params[:shrink_cost]})
+
       end
 
-      def unshrink_product(params)
+      def unshrink_product(user, params)
         t_id = ConsignmentTransaction.find(params[:transaction_id])
         t_id.soft_delete
+        Audit.create!(user_id:user.id, action:"create", auditable_type: "ConsignmentTransaction", auditable_id: order.id, audited_changes: {'transaction_type' => 'Undo Shrink'})
+
       end
 
       def can_shrink_product?

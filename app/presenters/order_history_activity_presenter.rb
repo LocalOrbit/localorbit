@@ -51,6 +51,8 @@ class OrderHistoryActivityPresenter
           process_payment(item)
         when "Credit"
           process_credit(item)
+        when "ConsignmentTransaction"
+          process_consignment_transaction(item)
         else
           nil
       end
@@ -73,7 +75,7 @@ class OrderHistoryActivityPresenter
       data << "Order #{delivery_status.humanize.capitalize}"
     end
 
-    delivery_fees = last_value_for_change(item, "delivery_fees")
+    delivery_fees = last_value_for_change(item, "delivery_fees") && last_value_for_change(item, "created_at") == nil
     if delivery_fees == 0
       data << "Delivery Fee Removed"
     end
@@ -105,7 +107,9 @@ class OrderHistoryActivityPresenter
     elsif item.audited_changes["quantity"].present?
       "Item Quantity Updated: #{item_name} from #{item.audited_changes['quantity'].first} to #{item.audited_changes['quantity'].last}"
     elsif item.audited_changes["unit_price"].present?
-      "Item Unit Price Updated: #{item_name} - from #{item.audited_changes['unit_price'].first} to #{item.audited_changes['unit_price'].last}"
+      "Item Sale Price Updated: #{item_name} - from #{item.audited_changes['unit_price'].first} to #{item.audited_changes['unit_price'].last}"
+    elsif item.audited_changes["net_price"].present?
+      "Item Net Price Updated: #{item_name} - from #{item.audited_changes['net_price'].first} to #{item.audited_changes['net_price'].last}"
     end
   end
 
@@ -140,6 +144,24 @@ class OrderHistoryActivityPresenter
           "Credit Changed: #{amount}"
         end
       end
+    end
+  end
+
+  def process_consignment_transaction(item)
+    transaction_type = last_value_for_change(item, "transaction_type")
+    if transaction_type == 'Shrink'
+      qty = last_value_for_change(item, "quantity")
+      cost = last_value_for_change(item, "net_price")
+      "Shrink - Quantity: #{qty}, Cost: #{cost}"
+    elsif transaction_type == 'Undo Shrink'
+      "Undo Shrink"
+    elsif transaction_type == 'Holdover'
+      qty = last_value_for_change(item, "quantity")
+      order_id = last_value_for_change(item, "holdover_order_id")
+      delivery_date = last_value_for_change(item, "holdover_delivery_date")
+      "Holdover - Quantity: #{qty}, Order: #{order_id}, Delivery Date: #{delivery_date}"
+    elsif transaction_type == 'Undo Shrink'
+      "Undo Holdover"
     end
   end
 

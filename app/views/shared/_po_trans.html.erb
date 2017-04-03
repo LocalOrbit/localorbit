@@ -72,13 +72,13 @@
                 <%= link_to "Repack", '#', class: "btn btn--tiny" %>
               </div>
               <div class="shrink_options" style="float: right; display: none">
-                <div style="float: left">
-                  <label>#</label>
-                  <input type="text" title="Quantity" style="width: 100px; height: inherit" class="shrink_qty" />
-                </div>
                 <div style="float: left; margin-left: 10px;">
                   <label>Cost</label>
-                  <input type="text" title="Amount" style="width: 100px; height: inherit" class="shrink_cost" /><br/>
+                  <input type="text" size="3" title="Amount" style="width: 100px; height: inherit" class="shrink_cost" /><br/>
+                </div>
+                <div style="float: left">
+                  <label>#</label>
+                  <input type="text" size="3" title="Quantity" style="width: 100px; height: inherit" class="shrink_qty" />
                 </div>
                 <input type="hidden" class="transaction_id" value="<%=po.id %>"/><br/>
                 <button class="submit_shrink_button btn btn--primary btn--tiny">Shrink</button>
@@ -87,7 +87,7 @@
               <div class="holdover_options" style="float: right; display: none">
                 <div style="float: left">
                   <label>#</label>
-                  <input type="text" title="Quantity" style="width: 50px; height:inherit" class="holdover_qty" />
+                  <input type="text" size="3" title="Quantity" style="width: 50px; height:inherit" class="holdover_qty" />
                 </div>
                 <div style="float: left; margin-left: 10px;">
                   <label>Order</label>
@@ -103,16 +103,16 @@
               </div>
             </td>
           <% else %>
-            <td></td>
-            <td></td>
+            <td colspan="4">&nbsp;</td>
+            <td>&nbsp;</td>
           <% end %>
         </tr>
     <% end %>
     <tr style="background-color: #DDD">
       <td colspan="4" align="right"><strong>Balance Due:</strong></td>
       <td><%= number_to_currency(balance_due) %></td>
-      <td></td>
-      <td></td>
+      <td>&nbsp;</td>
+      <td>&nbsp;</td>
     </tr>
     </tbody>
   </table>
