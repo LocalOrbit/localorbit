@@ -73,7 +73,7 @@ class Admin::OrdersController < AdminController
   end
 
   def search_and_calculate_totals(search)
-    results = Order.includes(:market, :organization, :items, :delivery).orders_for_seller(current_user).search(search.query)
+    results = Order.includes(:market, :organization, :items, :delivery).orders_for_seller(current_user).visible.search(search.query)
     results.sorts = "placed_at desc" if results.sorts.empty?
 
     if !current_user.admin? && (current_user.market_manager? || current_user.buyer_only?)
@@ -207,19 +207,19 @@ class Admin::OrdersController < AdminController
       return
     elsif params[:commit] == "Shrink"
       shrink_transaction(order, params)
-      check_sold_through(order)
+      Inventory::Utils.check_sold_through(order)
       return
     elsif params[:commit] == "Undo Shrink"
       unshrink_transaction(order, params)
-      check_sold_through(order)
+      Inventory::Utils.check_sold_through(order)
       return
     elsif params[:commit] == "Holdover"
       holdover_transaction(order, params)
-      check_sold_through(order)
+      Inventory::Utils.check_sold_through(order)
       return
     elsif params[:commit] == "Undo Holdover"
       unholdover_transaction(order, params)
-      check_sold_through(order)
+      Inventory::Utils.check_sold_through(order)
       return    # elsif params[:commit] == "Undo Mark Delivered"
     #   undo_delivery(order) # But this is not where Mark Delivered goes,sooooo
     end
@@ -228,7 +228,17 @@ class Admin::OrdersController < AdminController
     perform_order_update(order, order_params, merge)
 
     if current_market.is_consignment_market? && order.purchase_order?
-      check_sold_through(order)
+      Inventory::Utils.check_sold_through(order)
+    end
+  end
+
+  def destroy
+    o = Order.find(params[:id])
+    result = RemoveConsignmentOrder.perform(order: o)
+    if result.success?
+      redirect_to o.sales_order? ? admin_orders_path : admin_purchase_orders_path, notice: 'Order Removed Successfully'
+    else
+      redirect_to o.sales_order? ? admin_order_path(order) : admin_purchase_order_path(order), error: 'Error Removing Order'
     end
   end
 
@@ -481,36 +491,5 @@ class Admin::OrdersController < AdminController
     setup_add_items_form(order)
     flash.now[:notice] = "Add items below."
     render :show
-  end
-
-  def check_sold_through(order)
-    result = ActiveRecord::Base.connection.exec_query("
-    SELECT coalesce(po.quantity,0) - coalesce(po_other.quantity,0) - coalesce(so.quantity,0) AS quantity, so.net_price + po_other.net_price_other AS balance_due
-    FROM
-      (SELECT sum(quantity) quantity
-      FROM consignment_transactions
-      WHERE order_id = $1
-      AND transaction_type = 'PO') po,
-      (SELECT sum(quantity) quantity, sum(net_price * quantity) net_price_other
-      FROM consignment_transactions
-      WHERE order_id = $1
-      AND transaction_type != 'PO') po_other,
-      (SELECT sum(so1.quantity) quantity, sum(so1.net_price * so1.quantity) net_price
-      FROM consignment_transactions po1, consignment_transactions so1
-      WHERE po1.id = so1.parent_id AND po1.order_id = $1
-      AND so1.transaction_type = 'SO') so",
-    'sold_through_query', [[nil,order.id]])
-
-    if Integer(result[0]['quantity']) == 0
-      order.sold_through = true
-    else
-      order.sold_through = false
-    end
-
-    if !result[0]['balance_due'].nil? && Float(result[0]['balance_due']) > 0
-      order.total_cost = Float(result[0]['balance_due'])
-    end
-
-    order.save
   end
 end

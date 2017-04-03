@@ -27,6 +27,7 @@ class Admin::ConsignmentInventoryController < AdminController
     .joins("INNER JOIN consignment_transactions ct ON ct.order_id != consignment_transactions.order_id AND ct.transaction_type = 'HOLDOVER' AND ct.quantity > 0")
     .where("consignment_transactions.market_id = ?", current_market.id)
     .where(transaction_type: 'PO')
+    .visible
     .select("products.id product_id,
     products.name AS product_name,
     organizations.id AS supplier_id,

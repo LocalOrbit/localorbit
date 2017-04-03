@@ -77,7 +77,7 @@ module Inventory
         child_lot.save
         parent_lot.save
 
-        parent_ct.delete
+        parent_ct.soft_delete
       end
 
       def can_split_product?(product)
