@@ -7,14 +7,16 @@ class UpdateLots
 
     order.items.each do |item|
       lot = Inventory::Utils.upsert_lot(item.product, lot_number, item.quantity_delivered)
-      update_pending_so(item, lot)
+      if !item.quantity_delivered.nil?
+        update_pending_so(item, lot)
+      end
     end
   end
 
   def update_pending_so(item, lot)
     # When SO has been placed against undelivered PO, and PO is delivered, the newly created lot needs to be assigned to the SO consignment transaction
-    ct_po = ConsignmentTransaction.where(transaction_type: 'PO', order_id: order.id, product_id: item.product.id, lot_id: nil).last
-    ct_so = ConsignmentTransaction.where(transaction_type: 'SO', parent_id: nil, product_id: item.product.id, lot_id: nil)
+    ct_po = ConsignmentTransaction.where(transaction_type: 'PO', order_id: order.id, product_id: item.product.id, lot_id: nil).visible.last
+    ct_so = ConsignmentTransaction.where(transaction_type: 'SO', parent_id: nil, product_id: item.product.id, lot_id: nil).visible
 
     ct_so.each do |so|
       so_order_item = OrderItem.find(so.order_item_id)

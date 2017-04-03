@@ -26,7 +26,7 @@ Likely do not need to add/change existing products of a PO, but need to create v
 
       def unshrink_product(params)
         t_id = ConsignmentTransaction.find(params[:transaction_id])
-        t_id.delete
+        t_id.soft_delete
       end
 
       def can_shrink_product?

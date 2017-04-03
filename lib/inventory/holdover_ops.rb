@@ -99,7 +99,7 @@ Product is removed from the current PO, and moved to another PO (new or existing
 
         # Remove new order
         new_order = Order.find(t_id.holdover_order_id)
-        new_order.delete
+        new_order.soft_delete
 
         # Adjust qty of order item
         orig_product = OrderItem.where(order_id: t_id.order_id, product_id: t_id.product_id).first
@@ -112,9 +112,9 @@ Product is removed from the current PO, and moved to another PO (new or existing
         # Remove holdover consignment transactions
         dest_t_ids = ConsignmentTransaction.where(order_id: t_id.holdover_order_id)
         dest_t_ids.each do |trans|
-          trans.delete
+          trans.soft_delete
         end
-        t_id.delete
+        t_id.soft_delete
 
       end
 
