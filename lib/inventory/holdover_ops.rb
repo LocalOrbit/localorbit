@@ -117,7 +117,7 @@ Product is removed from the current PO, and moved to another PO (new or existing
           trans.soft_delete
         end
         t_id.soft_delete
-        Audit.create!(user_id:user.id, action:"create", auditable_type: "ConsignmentTransaction", auditable_id: order.id, audited_changes: {'transaction_type' => 'Undo Holdover'})
+        Audit.create!(user_id:user.id, action:"create", auditable_type: "ConsignmentTransaction", auditable_id: t_id.order_id, audited_changes: {'transaction_type' => 'Undo Holdover'})
 
       end
 
