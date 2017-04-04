@@ -2,7 +2,7 @@ class CreateOrder
   include Interactor
 
   def perform
-    context[:order] = create_order_from_cart(order_params, cart, buyer)
+    context[:order] = create_order_from_cart(order_params, cart, user)
     context.fail! if context[:order].errors.any?
   end
 
@@ -19,12 +19,12 @@ class CreateOrder
 
   protected
 
-  def create_order_from_cart(params, cart, buyer)
+  def create_order_from_cart(params, cart, user)
 
     billing = cart.organization.locations.default_billing
     order = Order.new(
       payment_provider: payment_provider,
-      placed_by: buyer,
+      placed_by: user,
       order_number: OrderNumber.new(cart.market).id,
       organization: cart.organization,
       market: cart.market,

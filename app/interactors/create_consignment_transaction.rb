@@ -26,7 +26,7 @@ class CreateConsignmentTransaction
           parent_id: order.sales_order? && !po_order.nil? ? po_order.id : nil
         )
         ct.save
-        Audit.create!(user_id:user.id, action:"create", auditable_type: "ConsignmentTransaction", auditable_id: order.id, audited_changes: {'transaction_type' => order.sales_order? ? 'SO' : 'PO'})
+        Audit.create!(user_id: user.id, action:"create", auditable_type: "ConsignmentTransaction", auditable_id: order.id, audited_changes: {'transaction_type' => order.sales_order? ? 'SO' : 'PO'})
 
       end
 

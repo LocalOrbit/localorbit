@@ -55,7 +55,7 @@ module PaymentProvider
       def place_order(buyer_organization:, user:, order_params:, cart:, request:)
         PlaceStripeOrder.perform(payment_provider: self.id.to_s,
                                  entity: buyer_organization,
-                                 buyer: user,
+                                 user: user,
                                  order_params: order_params,
                                  cart: cart, request: request,
                                  holdover: false, repack: false
