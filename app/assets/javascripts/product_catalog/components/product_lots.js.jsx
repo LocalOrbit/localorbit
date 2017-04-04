@@ -27,6 +27,7 @@
         var split_select_options;
         var split_action;
         var undo_split_action;
+        var note_indicator;
 
         if (this.props.salesOrder) {
             if (this.props.orderId) {
@@ -55,8 +56,13 @@
             }
         }
 
+        if (this.props.lot.order_note)
+            note_indicator = (<span className="tooltip--flag" data-tooltip={this.props.lot.order_note}></span>);
+        else
+            note_indicator = ('');
+
         if (this.props.lot.status == 'available' && this.props.lot.quantity > 0) {
-            lot_desc = (<div>{this.props.lot.number} / {this.props.lot.quantity}<br/><div style={{fontSize: '12px', color: '#999'}}>{this.props.lot.delivery_date}</div></div>);
+            lot_desc = (<div><div>{note_indicator}</div>{this.props.lot.number} / {this.props.lot.quantity}<br/><div style={{fontSize: '12px', color: '#999'}}>{this.props.lot.delivery_date}</div></div>);
             status = (<div style={{fontSize: "11px"}}>On Hand</div>);
         }
         else if (this.props.lot.status == 'awaiting_delivery' && this.props.lot.quantity > 0) {
@@ -65,12 +71,12 @@
         }
 
         lot = this.props.lot;
-        build_committed = '<table class="committed-table"> <thead> <th></th> <th>Qty</th> <th>Sale</th> <th>Net</th> </thead> <tbody>';
+        build_committed = '<table class="committed-table"> <thead> <th></th> <th>Date</th> <th>Qty</th> <th>Sale</th> <th>Net</th> </thead> <tbody>';
         committed_count = 0;
         _.map(this.props.product.committed, function (c) {
                 if (lot.number === c.number) {
                     committed_count = committed_count + (c.quantity * 1);
-                    build_committed = build_committed +  '<tr> <td>' + c.buyer_name+'</td> <td>' + c.quantity + '</td> <td>' + c.sale_price + '</td> <td>' + c.net_price + '</td> </tr>';
+                    build_committed = build_committed +  '<tr> <td>' + c.buyer_name+'</td> <td>' + c.created_at + '</td><td>' + c.quantity + '</td> <td>' + c.sale_price + '</td> <td>' + c.net_price + '</td> </tr>';
                 }
             });
 
@@ -154,7 +160,9 @@
                 <div style={{float:"left", width:"2%", textAlign:"center", padding: "10px 0"}}>
                     {deleteButton}
                 </div>
+                <div>
                 <input type="hidden" className="lot-id" defaultValue={this.props.lot.id} />
+                </div>
                 {split_action}
                 {undo_split_action}
             </div>

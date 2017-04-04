@@ -49,6 +49,7 @@ module Admin
         @order_item.save!
         @order.update_total_cost
         @order.save!
+        UpdateConsignmentTransaction.perform(order: @order, item: @order_item)
       end
       redirect_to admin_order_path(params[:order_id])
     end

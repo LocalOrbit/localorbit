@@ -33,6 +33,7 @@
                   <% end %>
                   <td class="price math"><%= number_to_currency(item.total_price)%></td>
                   <td class="product-clear"><%= link_to "", "#", class: "font-icon icon-clear" %></td>
+                  <input type="hidden" class="lot-id" name="lot-id" value="<%=item.lot_id %>" />
                 <% end %>
               <% end %>
             </tbody>
