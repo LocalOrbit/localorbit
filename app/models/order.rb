@@ -25,7 +25,8 @@ class Order < ActiveRecord::Base
   BATCH_SO_ACTIONS = {
       "export" => "Export",
       "unclose" => "Unclose",
-      "pick_list" => "Pick List"
+      "pick_list" => "Pick List",
+      "invoice" => "Invoice"
   }.freeze
 
   paginates_per 50
