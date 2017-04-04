@@ -138,6 +138,12 @@ module Inventory
         .where("p.product_id = ?", item.product.id)
         .where("p.order_id = ?", order.id).first
       end
+
+      def load_parent_products(product_id)
+        child_product = Product.find(product_id)
+        Product.where(id: child_product.parent_product_id).select(:id, :general_product_id, :name, :unit_quantity).order(:name)
+      end
+
     end
   end
 end

@@ -61,7 +61,7 @@ Product is removed from the current PO, and moved to another PO (new or existing
         #end
         dest_order.items << dest_item
 
-        ct_parent = CreateConsignmentTransaction.perform(user: user, order: dest_order)
+        ct_parent = CreateConsignmentTransaction.perform(user: user, order: dest_order, holdover: true, repack: false)
 
         # Remove Items from original PO
         orig_item.update_attributes(:quantity => orig_item.quantity - Integer(params[:holdover_qty]))
@@ -78,7 +78,7 @@ Product is removed from the current PO, and moved to another PO (new or existing
             product_id: t_id.product_id,
             quantity: params[:holdover_qty],
             holdover_order_id: dest_order.id,
-            holdover_master: true
+            master: true
         )
         ct_orig.save
 

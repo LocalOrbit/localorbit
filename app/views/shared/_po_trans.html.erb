@@ -11,6 +11,7 @@
     <% @po_transactions.each do |po| %>
         <% po_qty = 0 %>
         <% so_qty = 0 %>
+        <% @parent_products = Inventory::Utils.load_parent_products(po.product_id) %>
         <tr>
           <td colspan="<% po.delivery_status == 'delivered' ? 1 : 6 %>"><strong><%=po.product_name %></strong></td>
           <% if po.delivery_status == 'delivered' %>
@@ -54,7 +55,7 @@
                       <td></td>
                       <td></td>
                       <td></td>
-                      <td><%= child.holdover_master ? '<button class="submit_undo_holdover_button btn btn--tiny">Undo</button>'.html_safe : '' %></td>
+                      <td><%= child.master ? '<button class="submit_undo_holdover_button btn btn--tiny">Undo</button>'.html_safe : '' %></td>
                     </tr>
                 <% end %>
             <% end %>
@@ -69,7 +70,7 @@
               <div class="product_ops" >
                 <%= link_to "Shrink", '#', class: "shrink_button btn btn--tiny" %>
                 <%= link_to "Holdover", '#', class: "holdover_button btn btn--tiny" %>
-                <%= link_to "Repack", '#', class: "btn btn--tiny" %>
+                <%= link_to "Repack", '#', class: "repack_button btn btn--tiny" %>
               </div>
               <div class="shrink_options" style="float: right; display: none">
                 <div style="float: left; margin-left: 10px;">
@@ -101,6 +102,19 @@
                 <button class="submit_holdover_button btn btn--primary btn--tiny">Holdover</button>
                 <button class="holdover_cancel_button btn btn--tiny">Cancel</button>
               </div>
+              <div class="repack_options" style="float: right; display: none">
+                <div style="float: left">
+                  <label># </label>
+                  <input type="text" size="3" title="Quantity" style="width: 100px; height: inherit" class="repack_qty" />
+                </div>
+                <div style="float: left; margin-left: 10px;">
+                  <label>Product: </label>
+                  <%= select_tag :repack_product_id, options_for_select(@parent_products.map{|p| ["#{p.name}: #{p.unit_quantity} Units", p.id]}), :include_blank =>'Choose:', class: 'repack_product_id' %>
+                </div><br/>
+                <input type="hidden" class="transaction_id" value="<%=po.id %>"/><br/>
+                <button class="submit_repack_button btn btn--primary btn--tiny">Repack</button>
+                <button class="repack_cancel_button btn btn--tiny">Cancel</button>
+              </div>
             </td>
           <% else %>
             <td colspan="4">&nbsp;</td>
@@ -121,5 +135,9 @@
   <input type="hidden" name="holdover_qty"/>
   <input type="hidden" name="holdover_po" />
   <input type="hidden" name="holdover_delivery_date" />
+  <input type="hidden" name="repack_qty"/>
+  <input type="hidden" name="repack_product_id"/>
+
   <input type="hidden" name="transaction_id" />
+
 </div>

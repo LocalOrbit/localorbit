@@ -35,10 +35,12 @@ describe PaymentProvider::Stripe do
       expect(PlaceStripeOrder).to receive(:perform).with(
         payment_provider: PaymentProvider::Stripe.id.to_s,
         entity: params[:buyer_organization],
-        buyer: params[:user],
+        user: params[:user],
         order_params: params[:order_params],
         cart: params[:cart],
-        request: params[:request]
+        request: params[:request],
+        holdover: false,
+        repack: false
       )
 
       subject.place_order(params)
