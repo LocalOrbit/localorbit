@@ -162,6 +162,13 @@ class OrderHistoryActivityPresenter
       "Holdover - Quantity: #{qty}, Order: #{order_id}, Delivery Date: #{delivery_date}"
     elsif transaction_type == 'Undo Shrink'
       "Undo Holdover"
+    elsif transaction_type == 'Repack'
+      qty = last_value_for_change(item, "quantity")
+      repack_product_id = last_value_for_change(item, "repack_product_id")
+      product = Product.find(repack_product_id)
+      "Repack - #{qty} into #{product.name}"
+    elsif transaction_type == 'Undo Repack'
+      "Undo Repack"
     end
   end
 
