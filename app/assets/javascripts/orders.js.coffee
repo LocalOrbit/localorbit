@@ -152,6 +152,16 @@ $ ->
     $(this).parent().parent().find(".product_ops").show()
     $(this).parent().parent().find(".holdover_options").hide()
 
+  $(".repack_button").click (e) ->
+    e.preventDefault()
+    $(this).parent().parent().find(".repack_options").show()
+    $(this).parent().parent().find(".product_ops").hide()
+
+  $(".repack_cancel_button").click (e) ->
+    e.preventDefault()
+    $(this).parent().parent().find(".product_ops").show()
+    $(this).parent().parent().find(".repack_options").hide()
+
   $(".submit_holdover_button").click (e) ->
     e.preventDefault()
     $(this).prop("disabled","disabled")
@@ -172,4 +182,24 @@ $ ->
     transaction_id = $(this).parent().parent().data("transaction-id")
     $(this).parent().parent().parent().parent().parent().parent().find("input[name=transaction_id]").val(transaction_id)
     $(this).parent().parent().parent().parent().parent().parent().parent().find("input[name=commit]").val("Undo Holdover")
+    $(this).closest("form").submit()
+
+  $(".submit_repack_button").click (e) ->
+    e.preventDefault()
+    $(this).prop("disabled","disabled")
+    repack_qty = $(this).parent().parent().find(".repack_qty").val()
+    repack_product_id = $(this).parent().parent().find(".repack_product_id").val()
+    transaction_id = $(this).parent().parent().find(".transaction_id").val()
+    $(this).parent().parent().parent().parent().parent().parent().find("input[name=repack_qty]").val(repack_qty)
+    $(this).parent().parent().parent().parent().parent().parent().find("input[name=repack_product_id]").val(repack_product_id)
+    $(this).parent().parent().parent().parent().parent().parent().find("input[name=transaction_id]").val(transaction_id)
+    $(this).parent().parent().parent().parent().parent().parent().parent().find("input[name=commit]").val("Repack")
+    $(this).closest("form").submit()
+
+  $(".submit_undo_repack_button").click (e) ->
+    e.preventDefault()
+    $(this).prop("disabled","disabled")
+    transaction_id = $(this).parent().parent().data("transaction-id")
+    $(this).parent().parent().parent().parent().parent().parent().find("input[name=transaction_id]").val(transaction_id)
+    $(this).parent().parent().parent().parent().parent().parent().parent().find("input[name=commit]").val("Undo Repack")
     $(this).closest("form").submit()

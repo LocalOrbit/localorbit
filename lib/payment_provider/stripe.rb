@@ -57,7 +57,9 @@ module PaymentProvider
                                  entity: buyer_organization,
                                  buyer: user,
                                  order_params: order_params,
-                                 cart: cart, request: request)
+                                 cart: cart, request: request,
+                                 holdover: false, repack: false
+                                )
       end
 
       def translate_status(charge:, amount:nil, payment_method:nil)

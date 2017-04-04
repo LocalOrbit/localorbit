@@ -26,7 +26,7 @@ class CreateConsignmentTransaction
           parent_id: order.sales_order? && !po_order.nil? ? po_order.id : nil
         )
         ct.save
-        Audit.create!(user_id:buyer.id, action:"create", auditable_type: "ConsignmentTransaction", auditable_id: order.id, audited_changes: {'transaction_type' => order.sales_order? ? 'SO' : 'PO'})
+        Audit.create!(user_id:user.id, action:"create", auditable_type: "ConsignmentTransaction", auditable_id: order.id, audited_changes: {'transaction_type' => order.sales_order? ? 'SO' : 'PO'})
 
       end
 
@@ -35,7 +35,10 @@ class CreateConsignmentTransaction
         po_order.update_attributes(lot_id: item.lots.first.lot_id)
       end
 
-      #context[:transaction_id] = !ct.nil? ? ct.id : nil
+      if holdover || repack
+        context[:transaction_id] = !ct.nil? ? ct.id : nil
+      end
+
     end
   end
 end

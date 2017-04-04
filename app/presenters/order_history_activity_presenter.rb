@@ -75,8 +75,8 @@ class OrderHistoryActivityPresenter
       data << "Order #{delivery_status.humanize.capitalize}"
     end
 
-    delivery_fees = last_value_for_change(item, "delivery_fees") && last_value_for_change(item, "created_at") == nil
-    if delivery_fees == 0
+    delivery_fees = last_value_for_change(item, "delivery_fees")
+    if delivery_fees == 0 && last_value_for_change(item, "created_at") != nil
       data << "Delivery Fee Removed"
     end
 
