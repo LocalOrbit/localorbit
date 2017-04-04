@@ -20,7 +20,7 @@ module Inventory
         lot_number = Inventory::Utils.generate_lot_number
         repack_into_qty = (repack_qty/repack_product_unit_qty).floor
         if repack_into_qty > 0
-          lot = Inventory::Utils.upsert_lot(repack_into_product, lot_number, repack_into_qty)
+          Inventory::Utils.upsert_lot(repack_into_product, lot_number, repack_into_qty)
 
           # Add new order item - allocated from repack product lot
           new_order_item = OrderItem.new(
@@ -37,7 +37,6 @@ module Inventory
           order.items << new_order_item
 
           # Remove repack quantity from original lot
-
           orig_order_item.quantity = orig_order_item.quantity - (repack_into_qty * repack_product_unit_qty)
           orig_order_item.quantity_delivered = orig_order_item.quantity_delivered - (repack_into_qty * repack_product_unit_qty)
           orig_order_item.save
