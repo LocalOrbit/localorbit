@@ -167,10 +167,11 @@ $ ->
   $(".submit_holdover_button").click (e) ->
     e.preventDefault()
     holdover_qty = $(this).parent().parent().find(".holdover_qty").val()
-    holdover_po = $(this).parent().parent().find(".holdover_po").val()
+    holdover_po = $(this).parent().parent().find(".holdover_po :selected").val()
+    holdover_po_text = $(this).parent().parent().find(".holdover_po :selected").text()
     holdover_delivery_date = $(this).parent().parent().find(".holdover_delivery_date").val()
     transaction_id = $(this).parent().parent().find(".transaction_id").val()
-    if holdover_qty > 0 && ((holdover_po == "New" && holdover_delivery_date) || (holdover_po > 0))
+    if holdover_qty > 0 && ((holdover_po_text == "New" && holdover_delivery_date) || (holdover_po > 0))
       $(this).prop("disabled","disabled")
       $(this).parent().parent().parent().parent().parent().parent().find("input[name=holdover_qty]").val(holdover_qty)
       $(this).parent().parent().parent().parent().parent().parent().find("input[name=holdover_po]").val(holdover_po)
