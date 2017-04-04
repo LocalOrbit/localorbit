@@ -110,6 +110,11 @@ class Admin::OrdersController < AdminController
         context = GenerateConsignmentPickListPdf.perform(orders: orders, request: RequestUrlPresenter.new(request))
         send_data(context.picklist_pdf, filename: 'picklist.pdf', type: 'application/pdf')
 
+      when "invoice"
+        orders = Order.where(id: params["order_id"])
+        context = GenerateConsignmentInvoicePdf.perform(invoices: orders, request: RequestUrlPresenter.new(request))
+        send_data(context.invoice_pdf, filename: 'invoice.pdf', type: 'application/pdf')
+
       when "export"
         params["order_id"].each do |o|
           order = Order.find(o)

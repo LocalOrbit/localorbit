@@ -19,7 +19,7 @@ describe Sessions::OrganizationsController do
     end
 
     it "displays an error message" do
-      expect(flash[:alert]).to eql("Please select an organization")
+      expect(flash[:alert]).to eql("Please select an buyer")
     end
   end
 
@@ -29,7 +29,7 @@ describe Sessions::OrganizationsController do
     end
 
     it "displays an error message" do
-      expect(flash[:alert]).to eql("Please select an organization")
+      expect(flash[:alert]).to eql("Please select an buyer")
     end
   end
 
