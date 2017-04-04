@@ -365,7 +365,7 @@ $ ->
         quantity = parseInt($(this).parent().parent().parent().parent().find('.app-product-input').val())
       netPrice = parseFloat($(this).parent().parent().parent().parent().find('.app-net-price-input').val())
       salePrice = parseFloat($(this).parent().parent().parent().parent().find('.app-sale-price-input').val())
-      lotId = parseInt($(this).parent().parent().parent().find('.lot-id').val())
+      lotId = parseInt($(this).parent().parent().parent().parent().find('.lot-id').val())
       model.saveItem(data.product_id, quantity, netPrice, salePrice, lotId, this, order_id)
 
     if this.value.length == 0 && !$(this).hasClass("in-cart")

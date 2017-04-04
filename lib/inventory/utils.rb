@@ -132,6 +132,12 @@ module Inventory
 
         result
       end
+
+      def get_associated_po_item(order, item)
+        ConsignmentTransaction.joins("JOIN consignment_transactions p ON p.parent_id = consignment_transactions.id")
+        .where("p.product_id = ?", item.product.id)
+        .where("p.order_id = ?", order.id).first
+      end
     end
   end
 end

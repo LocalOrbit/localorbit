@@ -203,9 +203,10 @@ module Api
         undo_split_options = nil
 
         if current_market.is_consignment_market?
-          lots = Lot.where(product_id: product.id)
+          lots = Lot
+                .where(product_id: product.id)
                 .where("lots.quantity > 0 AND lots.number IS NOT NULL")
-                .select("lots.id, lots.quantity, lots.number, (SELECT TO_CHAR(MAX(delivery_date), 'MM/DD/YYYY') FROM consignment_transactions WHERE lot_id = lots.id AND transaction_type = 'PO') delivery_date, 'available'::text AS status")
+                .select("lots.id, lots.quantity, lots.number, (SELECT DISTINCT notes FROM consignment_transactions, orders WHERE consignment_transactions.order_id = orders.id AND consignment_transactions.lot_id = lots.id AND transaction_type = 'PO') order_note, (SELECT TO_CHAR(MAX(delivery_date), 'MM/DD/YYYY') FROM consignment_transactions WHERE lot_id = lots.id AND transaction_type = 'PO') delivery_date, 'available'::text AS status")
 
           awaiting_delivery_qty = ConsignmentTransaction
                 .where("transaction_type = 'PO' AND lot_id IS NULL AND market_id = ? AND product_id = ?", current_market.id, product.id)
@@ -233,7 +234,7 @@ module Api
             AND consignment_transactions.product_id = ?", current_market.id, product.id)
             .select("null AS id, #{awaiting_delivery_qty - awaiting_ordered_qty} AS quantity, '' AS number, '' AS delivery_date, 'awaiting_delivery'::text AS status")
 
-          committed = Order.joins(:organization, items: [lots: [:lot]]).so_orders.where("order_items.delivery_status = 'pending' AND orders.market_id = ? AND order_items.product_id = ?", current_market.id, product.id).select("order_items.product_id AS id, order_item_lots.lot_id, lots.number, organizations.name AS buyer_name, trunc(order_items.quantity) AS quantity, order_items.unit_price AS sale_price, order_items.net_price")
+          committed = Order.joins(:organization, items: [lots: [:lot]]).so_orders.where("order_items.delivery_status = 'pending' AND orders.market_id = ? AND order_items.product_id = ?", current_market.id, product.id).select("order_items.product_id AS id, TO_CHAR(order_items.created_at,'MM/DD/YYYY') AS created_at, order_item_lots.lot_id, lots.number, organizations.name AS buyer_name, trunc(order_items.quantity) AS quantity, order_items.unit_price AS sale_price, order_items.net_price")
           lots = lots + awaiting_delivery
 
           split_options = Product.where(parent_product_id: product.id).select("products.id, products.name, products.general_product_id")
