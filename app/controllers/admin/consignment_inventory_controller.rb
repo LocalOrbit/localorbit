@@ -33,6 +33,7 @@ class Admin::ConsignmentInventoryController < AdminController
     organizations.id AS supplier_id,
     organizations.name AS supplier_name,
     consignment_transactions.order_id,
+    (SELECT DISTINCT notes FROM consignment_transactions, orders WHERE consignment_transactions.order_id = orders.id AND consignment_transactions.lot_id = lots.id AND transaction_type = 'PO') order_note,
     CASE WHEN consignment_transactions.lot_id IS NULL THEN 'waiting' ELSE 'onhand' END AS status,
     consignment_transactions.quantity AS ct_quantity,
     lots.number AS lot_number,

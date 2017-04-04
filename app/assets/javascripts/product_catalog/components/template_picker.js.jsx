@@ -24,14 +24,16 @@
       });
     },
 
-    addProduct: function(productId, quantity) {
+    addProduct: function(productId, quantity, netPrice, salePrice) {
       var deferred = Q.defer();
       $.ajax({
         url: this.props.cartUrl,
         type: 'PUT',
         data: {
           product_id: productId,
-          quantity: quantity
+          quantity: quantity,
+          net_price: netPrice,
+          sale_price: salePrice
         },
         success: deferred.resolve,
         error: deferred.reject
@@ -42,7 +44,7 @@
     applyTemplate: function(template) {
       var self = this;
       var promises = _.map(template.items, function(item) {
-        return self.addProduct(item.product_id, item.quantity);
+        return self.addProduct(item.product_id, item.quantity, item.sale_price, item.net_price);
       });
       Q.allSettled(promises)
         .done(function(res) {
