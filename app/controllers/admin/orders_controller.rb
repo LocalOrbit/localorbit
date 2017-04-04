@@ -225,7 +225,16 @@ class Admin::OrdersController < AdminController
     elsif params[:commit] == "Undo Holdover"
       unholdover_transaction(order, params)
       Inventory::Utils.check_sold_through(order)
-      return    # elsif params[:commit] == "Undo Mark Delivered"
+      return
+    elsif params[:commit] == "Repack"
+      repack_transaction(order, params)
+      Inventory::Utils.check_sold_through(order)
+      return
+    elsif params[:commit] == "Undo Repack"
+      unrepack_transaction(order, params)
+      Inventory::Utils.check_sold_through(order)
+      return
+      # elsif params[:commit] == "Undo Mark Delivered"
     #   undo_delivery(order) # But this is not where Mark Delivered goes,sooooo
     end
 
@@ -358,6 +367,24 @@ class Admin::OrdersController < AdminController
     end
   end
 
+  def repack_transaction(order, params)
+    result = CreateRepackTransaction.perform(user: current_user, order: order, params: params)
+    if result.success?
+      redirect_to admin_order_path(order), notice: "Repack Successful."
+    else
+      redirect_to admin_order_path(order), error: "Failed to Repack."
+    end
+  end
+
+  def unrepack_transaction(order, params)
+    result = UnRepackTransaction.perform(user: current_user, params: params)
+    if result.success?
+      redirect_to admin_order_path(order), notice: "Unrepack Successful."
+    else
+      redirect_to admin_order_path(order), error: "Failed to Unrepack."
+    end
+  end
+
   protected
 
   def find_order_items(order_ids)
@@ -473,7 +500,7 @@ class Admin::OrdersController < AdminController
   end
 
   def perform_add_items(order)
-    result = UpdateOrderWithNewItems.perform(buyer: current_user, payment_provider: order.payment_provider, order: order, item_hashes: items_to_add, request: request)
+    result = UpdateOrderWithNewItems.perform(buyer: current_user, payment_provider: order.payment_provider, order: order, item_hashes: items_to_add, request: request, holdover: false, repack: false)
     if !result.success?
       setup_add_items_form(order)
       order.errors[:base] << "Failed to add items to this order."

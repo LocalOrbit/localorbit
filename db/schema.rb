@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170403185944) do
+ActiveRecord::Schema.define(version: 20170404152807) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -210,7 +210,7 @@ ActiveRecord::Schema.define(version: 20170403185944) do
     t.decimal  "sale_price",          precision: 10, scale: 2, default: 0.0
     t.decimal  "net_price",           precision: 10, scale: 2, default: 0.0
     t.integer  "holdover_order_id"
-    t.boolean  "holdover_master"
+    t.boolean  "master"
     t.integer  "child_lot_id"
     t.integer  "child_product_id"
     t.datetime "deleted_at"

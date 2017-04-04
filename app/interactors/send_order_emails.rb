@@ -6,7 +6,7 @@ class SendOrderEmails
       OrderMailer.delay.buyer_confirmation(order)
     end
 
-    if Pundit.policy(context[:buyer], :all_supplier)
+    if Pundit.policy(context[:user], :all_supplier)
       order.sellers.each do |seller|
         unless seller.users.empty? || !seller.active?
 
