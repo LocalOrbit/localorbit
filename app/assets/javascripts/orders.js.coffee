@@ -124,22 +124,24 @@ $ ->
 
   $(".submit_shrink_button").click (e) ->
     e.preventDefault()
-    $(this).prop("disabled","disabled")
     shrink_qty = $(this).parent().parent().find(".shrink_qty").val()
     shrink_cost = $(this).parent().parent().find(".shrink_cost").val()
     transaction_id = $(this).parent().parent().find(".transaction_id").val()
-    $(this).parent().parent().parent().parent().parent().parent().find("input[name=shrink_qty]").val(shrink_qty)
-    $(this).parent().parent().parent().parent().parent().parent().find("input[name=shrink_cost]").val(shrink_cost)
-    $(this).parent().parent().parent().parent().parent().parent().find("input[name=transaction_id]").val(transaction_id)
-    $(this).parent().parent().parent().parent().parent().parent().parent().find("input[name=commit]").val("Shrink")
-    $(this).closest("form").submit()
+    if shrink_qty > 0 && shrink_cost > 0
+      $(this).prop("disabled", "disabled")
+      $(this).parent().parent().parent().parent().parent().parent().find("input[name=shrink_qty]").val(shrink_qty)
+      $(this).parent().parent().parent().parent().parent().parent().find("input[name=shrink_cost]").val(shrink_cost)
+      $(this).parent().parent().parent().parent().parent().parent().find("input[name=transaction_id]").val(transaction_id)
+      $(this).parent().parent().parent().parent().parent().parent().parent().find("input[name=commit][type=hidden]").val("Shrink")
+      $(this).closest("form").submit()
+
 
   $(".submit_undo_shrink_button").click (e) ->
     e.preventDefault()
     $(this).prop("disabled","disabled")
     transaction_id = $(this).parent().parent().data("transaction-id")
     $(this).parent().parent().parent().parent().parent().parent().find("input[name=transaction_id]").val(transaction_id)
-    $(this).parent().parent().parent().parent().parent().parent().parent().find("input[name=commit]").val("Undo Shrink")
+    $(this).parent().parent().parent().parent().parent().parent().parent().find("input[name=commit][type=hidden]").val("Undo Shrink")
     $(this).closest("form").submit()
 
   $(".holdover_button").click (e) ->
@@ -164,42 +166,44 @@ $ ->
 
   $(".submit_holdover_button").click (e) ->
     e.preventDefault()
-    $(this).prop("disabled","disabled")
     holdover_qty = $(this).parent().parent().find(".holdover_qty").val()
     holdover_po = $(this).parent().parent().find(".holdover_po").val()
     holdover_delivery_date = $(this).parent().parent().find(".holdover_delivery_date").val()
     transaction_id = $(this).parent().parent().find(".transaction_id").val()
-    $(this).parent().parent().parent().parent().parent().parent().find("input[name=holdover_qty]").val(holdover_qty)
-    $(this).parent().parent().parent().parent().parent().parent().find("input[name=holdover_po]").val(holdover_po)
-    $(this).parent().parent().parent().parent().parent().parent().find("input[name=holdover_delivery_date]").val(holdover_delivery_date)
-    $(this).parent().parent().parent().parent().parent().parent().find("input[name=transaction_id]").val(transaction_id)
-    $(this).parent().parent().parent().parent().parent().parent().parent().find("input[name=commit]").val("Holdover")
-    $(this).closest("form").submit()
+    if holdover_qty > 0 && ((holdover_po == "New" && holdover_delivery_date) || (holdover_po > 0))
+      $(this).prop("disabled","disabled")
+      $(this).parent().parent().parent().parent().parent().parent().find("input[name=holdover_qty]").val(holdover_qty)
+      $(this).parent().parent().parent().parent().parent().parent().find("input[name=holdover_po]").val(holdover_po)
+      $(this).parent().parent().parent().parent().parent().parent().find("input[name=holdover_delivery_date]").val(holdover_delivery_date)
+      $(this).parent().parent().parent().parent().parent().parent().find("input[name=transaction_id]").val(transaction_id)
+      $(this).parent().parent().parent().parent().parent().parent().parent().find("input[name=commit][type=hidden]").val("Holdover")
+      $(this).closest("form").submit()
 
   $(".submit_undo_holdover_button").click (e) ->
     e.preventDefault()
     $(this).prop("disabled","disabled")
     transaction_id = $(this).parent().parent().data("transaction-id")
     $(this).parent().parent().parent().parent().parent().parent().find("input[name=transaction_id]").val(transaction_id)
-    $(this).parent().parent().parent().parent().parent().parent().parent().find("input[name=commit]").val("Undo Holdover")
+    $(this).parent().parent().parent().parent().parent().parent().parent().find("input[name=commit][type=hidden]").val("Undo Holdover")
     $(this).closest("form").submit()
 
   $(".submit_repack_button").click (e) ->
     e.preventDefault()
-    $(this).prop("disabled","disabled")
     repack_qty = $(this).parent().parent().find(".repack_qty").val()
     repack_product_id = $(this).parent().parent().find(".repack_product_id").val()
     transaction_id = $(this).parent().parent().find(".transaction_id").val()
-    $(this).parent().parent().parent().parent().parent().parent().find("input[name=repack_qty]").val(repack_qty)
-    $(this).parent().parent().parent().parent().parent().parent().find("input[name=repack_product_id]").val(repack_product_id)
-    $(this).parent().parent().parent().parent().parent().parent().find("input[name=transaction_id]").val(transaction_id)
-    $(this).parent().parent().parent().parent().parent().parent().parent().find("input[name=commit]").val("Repack")
-    $(this).closest("form").submit()
+    if repack_qty > 0 && repack_product_id
+      $(this).prop("disabled","disabled")
+      $(this).parent().parent().parent().parent().parent().parent().find("input[name=repack_qty]").val(repack_qty)
+      $(this).parent().parent().parent().parent().parent().parent().find("input[name=repack_product_id]").val(repack_product_id)
+      $(this).parent().parent().parent().parent().parent().parent().find("input[name=transaction_id]").val(transaction_id)
+      $(this).parent().parent().parent().parent().parent().parent().parent().find("input[name=commit][type=hidden]").val("Repack")
+      $(this).closest("form").submit()
 
   $(".submit_undo_repack_button").click (e) ->
     e.preventDefault()
     $(this).prop("disabled","disabled")
     transaction_id = $(this).parent().parent().data("transaction-id")
     $(this).parent().parent().parent().parent().parent().parent().find("input[name=transaction_id]").val(transaction_id)
-    $(this).parent().parent().parent().parent().parent().parent().parent().find("input[name=commit]").val("Undo Repack")
+    $(this).parent().parent().parent().parent().parent().parent().parent().find("input[name=commit][type=hidden]").val("Undo Repack")
     $(this).closest("form").submit()

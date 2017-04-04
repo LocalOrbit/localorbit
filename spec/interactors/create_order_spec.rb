@@ -13,7 +13,7 @@ describe CreateOrder do
   let(:params)            { {payment_method: "purchase order"} }
   let(:payment_provider)  { PaymentProvider::Stripe.id }
 
-  subject { CreateOrder.perform(payment_provider: payment_provider, order_params: params, cart: cart, buyer: buyer).order }
+  subject { CreateOrder.perform(payment_provider: payment_provider, order_params: params, cart: cart, user: buyer).order }
 
   before do
     # In trying to expose a bug relating to calling Order#destroy on an unpersisted order,
@@ -56,7 +56,7 @@ describe CreateOrder do
 
   context "when an exception occurs when creating cart items", truncate: true do
     let(:problem_product) { cart.items[1].product }
-    subject { CreateOrder.perform(payment_provider: payment_provider, order_params: params, cart: cart, buyer: buyer) }
+    subject { CreateOrder.perform(payment_provider: payment_provider, order_params: params, cart: cart, user: buyer) }
 
     before do
       expect(problem_product).to receive(:lots_by_expiration).and_raise
