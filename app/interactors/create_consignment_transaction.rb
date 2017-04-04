@@ -7,7 +7,7 @@ class CreateConsignmentTransaction
 
     order.items.each do |item|
 
-      check_existing = ConsignmentTransaction.where(market_id: order.market.id, transaction_type: order.sales_order? ? 'SO' : 'PO', order_id: order.id, product_id: item.product.id, lot_id: order.sales_order? && !item.lots.empty? ? item.lots.first.id : nil).first
+      check_existing = ConsignmentTransaction.where(market_id: order.market.id, transaction_type: order.sales_order? ? 'SO' : 'PO', order_id: order.id, product_id: item.product.id).first
       po_order = ConsignmentTransaction.joins("JOIN orders ON orders.id = consignment_transactions.order_id").where(transaction_type: 'PO', product_id: item.product_id).where("orders.sold_through = 'f'").order(:created_at).first
 
       ct = nil
