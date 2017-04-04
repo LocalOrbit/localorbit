@@ -17,7 +17,8 @@ $ ->
     if confirm("Are you sure you want to mark all items delivered?")
       $(".order-item-row .delivery-status > input").val("delivered")
       amt = $(".order-item-row .quantity-ordered-ro").val()
-      $(".order-item-row .quantity .quantity-delivered").val(amt)
+      if $(".order-item-row .quantity .quantity-delivered").val() == null
+        $(".order-item-row .quantity .quantity-delivered").val(amt)
       $(this).closest("form").submit()
 
   $("#undo-delivery").click (e) ->

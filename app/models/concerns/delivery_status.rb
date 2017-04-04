@@ -11,7 +11,7 @@ module DeliveryStatus
   end
 
   def undelivered_for_user?(user)
-    delivery_status_for_user(user) == "pending"
+    delivery_status_for_user(user) == "pending" || delivery_status_for_user(user) == "partially delivered"
   end
 
   def cache_delivery_status
