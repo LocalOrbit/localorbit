@@ -73,7 +73,7 @@ class Admin::OrdersController < AdminController
   end
 
   def search_and_calculate_totals(search)
-    results = Order.includes(:market, :organization, :items, :delivery).orders_for_seller(current_user).search(search.query)
+    results = Order.includes(:market, :organization, :items, :delivery).orders_for_seller(current_user).visible.search(search.query)
     results.sorts = "placed_at desc" if results.sorts.empty?
 
     if !current_user.admin? && (current_user.market_manager? || current_user.buyer_only?)
@@ -93,17 +93,30 @@ class Admin::OrdersController < AdminController
   def create
     case params["order_batch_action"]
       when "receipt"
+        #orders = Order.where(id: params["order_id"])
+        #context = InitializeBatchConsignmentReceipt.perform(user: current_user, orders: orders)
+        #if context.success?
+        #  batch_consignment_receipt = context.batch_consignment_receipt
+        #  GenerateBatchConsignmentReceiptPdf.delay.perform(batch_consignment_receipt: batch_consignment_receipt,
+        #                                      request: RequestUrlPresenter.new(request))
+        #  track_event EventTracker::GenerateBatchConsignmentReceipts.name, num_invoices: orders.count
+        #  redirect_to admin_batch_consignment_receipt_path(batch_consignment_receipt)
+        #else
+        #  redirect_to admin_orders_path, alert: context.message
+        #end
         orders = Order.where(id: params["order_id"])
-        context = InitializeBatchConsignmentReceipt.perform(user: current_user, orders: orders)
-        if context.success?
-          batch_consignment_receipt = context.batch_consignment_receipt
-          GenerateBatchConsignmentReceiptPdf.delay.perform(batch_consignment_receipt: batch_consignment_receipt,
-                                              request: RequestUrlPresenter.new(request))
-          track_event EventTracker::GenerateBatchConsignmentReceipts.name, num_invoices: orders.count
-          redirect_to admin_batch_consignment_receipt_path(batch_consignment_receipt)
-        else
-          redirect_to admin_orders_path, alert: context.message
-        end
+        context = GenerateConsignmentReceiptPdf.perform(orders: orders, request: RequestUrlPresenter.new(request))
+        send_data(context.receipt_pdf, filename: 'receipt.pdf', type: 'application/pdf')
+
+      when "pick_list"
+        orders = Order.where(id: params["order_id"])
+        context = GenerateConsignmentPickListPdf.perform(orders: orders, request: RequestUrlPresenter.new(request))
+        send_data(context.picklist_pdf, filename: 'picklist.pdf', type: 'application/pdf')
+
+      when "invoice"
+        orders = Order.where(id: params["order_id"])
+        context = GenerateConsignmentInvoicePdf.perform(invoices: orders, request: RequestUrlPresenter.new(request))
+        send_data(context.invoice_pdf, filename: 'invoice.pdf', type: 'application/pdf')
 
       when "export"
         params["order_id"].each do |o|
@@ -202,28 +215,47 @@ class Admin::OrdersController < AdminController
       return
     elsif params[:commit] == "Shrink"
       shrink_transaction(order, params)
-      check_sold_through(order)
+      Inventory::Utils.check_sold_through(order)
       return
     elsif params[:commit] == "Undo Shrink"
       unshrink_transaction(order, params)
-      check_sold_through(order)
+      Inventory::Utils.check_sold_through(order)
       return
     elsif params[:commit] == "Holdover"
       holdover_transaction(order, params)
-      check_sold_through(order)
+      Inventory::Utils.check_sold_through(order)
       return
     elsif params[:commit] == "Undo Holdover"
       unholdover_transaction(order, params)
-      check_sold_through(order)
-      return    # elsif params[:commit] == "Undo Mark Delivered"
+      Inventory::Utils.check_sold_through(order)
+      return
+    elsif params[:commit] == "Repack"
+      repack_transaction(order, params)
+      Inventory::Utils.check_sold_through(order)
+      return
+    elsif params[:commit] == "Undo Repack"
+      unrepack_transaction(order, params)
+      Inventory::Utils.check_sold_through(order)
+      return
+      # elsif params[:commit] == "Undo Mark Delivered"
     #   undo_delivery(order) # But this is not where Mark Delivered goes,sooooo
     end
 
     # TODO: Change an order items delivery status to 'removed' or something rather then deleting them
     perform_order_update(order, order_params, merge)
 
-    if current_market.is_consignment_market?
-      check_sold_through(order)
+    if current_market.is_consignment_market? && order.purchase_order?
+      Inventory::Utils.check_sold_through(order)
+    end
+  end
+
+  def destroy
+    o = Order.find(params[:id])
+    result = RemoveConsignmentOrder.perform(order: o)
+    if result.success?
+      redirect_to o.sales_order? ? admin_orders_path : admin_purchase_orders_path, notice: 'Order Removed Successfully'
+    else
+      redirect_to o.sales_order? ? admin_order_path(order) : admin_purchase_order_path(order), error: 'Error Removing Order'
     end
   end
 
@@ -303,7 +335,7 @@ class Admin::OrdersController < AdminController
   end
 
   def shrink_transaction(order, params)
-    result = CreateShrinkTransaction.perform(order: order, params: params)
+    result = CreateShrinkTransaction.perform(user: current_user, order: order, params: params)
     if result.success?
       redirect_to admin_order_path(order), notice: "Shrink Successful."
     else
@@ -312,7 +344,7 @@ class Admin::OrdersController < AdminController
   end
 
   def unshrink_transaction(order, params)
-    result = UnShrinkTransaction.perform(params: params)
+    result = UnShrinkTransaction.perform(user: current_user, params: params)
     if result.success?
       redirect_to admin_order_path(order), notice: "Unshrink Successful."
     else
@@ -321,7 +353,7 @@ class Admin::OrdersController < AdminController
   end
 
   def holdover_transaction(order, params)
-    result = CreateHoldoverTransaction.perform(order: order, params: params)
+    result = CreateHoldoverTransaction.perform(user: current_user, order: order, params: params)
     if result.success?
       redirect_to admin_order_path(order), notice: "Holdover Successful."
     else
@@ -330,11 +362,29 @@ class Admin::OrdersController < AdminController
   end
 
   def unholdover_transaction(order, params)
-    result = UnHoldoverTransaction.perform(params: params)
+    result = UnHoldoverTransaction.perform(user: current_user, params: params)
     if result.success?
       redirect_to admin_order_path(order), notice: "Unholdover Successful."
     else
       redirect_to admin_order_path(order), error: "Failed to Unholdover."
+    end
+  end
+
+  def repack_transaction(order, params)
+    result = CreateRepackTransaction.perform(user: current_user, order: order, params: params)
+    if result.success?
+      redirect_to admin_order_path(order), notice: "Repack Successful."
+    else
+      redirect_to admin_order_path(order), error: "Failed to Repack."
+    end
+  end
+
+  def unrepack_transaction(order, params)
+    result = UnRepackTransaction.perform(user: current_user, params: params)
+    if result.success?
+      redirect_to admin_order_path(order), notice: "Unrepack Successful."
+    else
+      redirect_to admin_order_path(order), error: "Failed to Unrepack."
     end
   end
 
@@ -349,7 +399,7 @@ class Admin::OrdersController < AdminController
     params[:order].delete(:delivery_id) # Remove the parameter so it doesn't conflict
     params[:order].delete(:delivery_clear) # Remove the parameter so it doesn't conflict
     params[:order].delete(:credit_clear) # Remove the parameter so it doesn't conflict
-    params.require(:order).permit(:delivery_clear, :notes, :order_batch_action, :order_id, :signature_data, items_attributes: [
+    params.require(:order).permit(:delivery_clear, :notes, :order_batch_action, :order_id, :signature_data, :payment_method, items_attributes: [
       :id, :quantity, :quantity_delivered, :delivery_status, :_destroy
     ])
   end
@@ -453,7 +503,7 @@ class Admin::OrdersController < AdminController
   end
 
   def perform_add_items(order)
-    result = UpdateOrderWithNewItems.perform(payment_provider: order.payment_provider, order: order, item_hashes: items_to_add, request: request)
+    result = UpdateOrderWithNewItems.perform(buyer: current_user, payment_provider: order.payment_provider, order: order, item_hashes: items_to_add, request: request, holdover: false, repack: false)
     if !result.success?
       setup_add_items_form(order)
       order.errors[:base] << "Failed to add items to this order."
@@ -476,29 +526,5 @@ class Admin::OrdersController < AdminController
     setup_add_items_form(order)
     flash.now[:notice] = "Add items below."
     render :show
-  end
-
-  def check_sold_through(order)
-    result = ActiveRecord::Base.connection.exec_query("
-    SELECT coalesce(po.quantity,0) - coalesce(po_other.quantity,0) - coalesce(so.quantity,0) AS quantity
-    FROM
-    (SELECT sum(quantity) quantity
-    FROM consignment_transactions
-    WHERE order_id = $1
-    AND transaction_type = 'PO') po,
-    (SELECT sum(quantity) quantity
-    FROM consignment_transactions
-    WHERE order_id = $1
-    AND transaction_type != 'PO') po_other,
-    (SELECT sum(so1.quantity) quantity
-    FROM consignment_transactions po1, consignment_transactions so1
-    WHERE po1.id = so1.parent_id AND po1.order_id = $1
-    AND so1.transaction_type = 'SO') so", 'sold_through_query', [[nil,order.id]])
-    if Integer(result[0]['quantity']) == 0
-      order.sold_through = true
-    else
-      order.sold_through = false
-    end
-    order.save
   end
 end

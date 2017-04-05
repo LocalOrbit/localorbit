@@ -4,6 +4,8 @@ if current_market.try(:logo_stored?)
 else
   logo = image_tag(asset_path('logo.png'), alt: "Local Orbit logo", class: "vertical-centerer logo")
 end
+
+on_catalog = current_page?(products_path) || current_page?(products_purchase_path)
 %>
 
 <% if current_market %>
@@ -16,8 +18,8 @@ end
         </div>
         <% if current_user %>
           <div class="nav nav--main column column--half pull-right" style="text-align: center">
-            <% if current_market.try(:is_consignment_market?) %><%= link_to "Purchase Order", products_purchase_path, class: "", tag: :a %><% end %>
-            <% if current_market.try(:is_consignment_market?) %><%= link_to "Sales Order", products_path, class: "", tag: :a %><% end %>
+            <% if current_market.try(:is_consignment_market?) && !on_catalog %><%= link_to "Purchase Order", products_purchase_path, class: "", tag: :a %><% end %>
+            <% if current_market.try(:is_consignment_market?) && !on_catalog %><%= link_to "Sales Order", products_path, class: "", tag: :a %><% end %>
             <% if current_market.try(:is_buysell_market?) && policy(:catalog).index? %><%= link_to "Order", products_path, class: "", tag: :a %><% end %>
             <% if current_market.try(:is_buysell_market?) && policy(:all_supplier).index? %><%= link_to "Suppliers", sellers_path, class: "", tag: :a %><% end %>
             <% if current_market.try(:is_buysell_market?) && policy(:about).index? %><%= link_to "About", market_path, class: "", tag: :a %><% end %>
@@ -63,6 +65,7 @@ end
       <ul class="dropdown with-anchor top-anchor" id="orders-dropdown">
         <% if current_market && (current_user.admin? || current_market.is_consignment_market?) %><li><%= link_to raw('<i class="font-icon" data-icon="&#xe025;"></i> Purchase Orders'), admin_purchase_orders_path %></li><% end %>
         <% if current_market && (current_user.admin? || current_market.is_consignment_market?) %><li><%= link_to raw('<i class="font-icon" data-icon="&#xe025;"></i> Sales Orders'), admin_orders_path %></li><% end %>
+        <% if current_market && (current_user.admin? || current_market.is_consignment_market?) %><li><%= link_to raw('<i class="font-icon" data-icon="&#xe025;"></i> Inventory'), admin_consignment_inventory_path %></li><% end %>
         <% if policy(:order).index? && current_market && (current_user.admin? || current_market.is_buysell_market?) %><li><%= link_to raw('<i class="font-icon" data-icon="&#xe025;"></i> Orders'), admin_orders_path %></li><% end %>
         <% if policy(:template).index? %><li><%= link_to raw('<i class="font-icon" data-icon="&#xe024;"></i> Order Templates'), templates_path %></li><% end %>
         <% if policy(:delivery).index? %><li><%= link_to raw('<i class="font-icon" data-icon="&#xe022;"></i> Upcoming Deliveries'), admin_delivery_tools_path %></li><% end %>

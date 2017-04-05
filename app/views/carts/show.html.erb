@@ -28,6 +28,7 @@
               <%= current_cart.delivery.decorate.cart_type %> <%= current_cart.delivery.decorate.checkout_date %>
             </div>
             <address class="adr">
+              <span class="buyer-name"><%= current_cart.organization.name %></span><br/>
               <span class="street-address"><%= current_cart.delivery_location.address %></span><br />
               <span class="locality"><%= current_cart.delivery_location.city %></span>, <span class="region"><%= current_cart.delivery_location.state %></span> <span class="postal-code"><%= current_cart.delivery_location.zip %></span>
             </address>
@@ -59,108 +60,124 @@
 
           <fieldset class="conditional">
             <legend class="haiku">Select Payment Method</legend>
-              <% if allow_payment_option?(:purchase_order, current_market, current_organization) %>
-                <div class="field">
-                  <label>
-                    <%= f.radio_button :payment_method, "purchase order", :class=>"payment-method" %>
-                    Pay by Purchase Order
-                  </label>
-                  <fieldset id="purchase-order-fields" class="payment-fields is-hidden" data-available="true">
-                    <div class="payment-field">
-                      <%= f.label :payment_note, "PO Number" %><br>
-                      <%= f.text_field :payment_note, class: "input--short" %>
-                    </div>
-                  </fieldset>
+              <% if current_market.is_consignment_market? && @order_type == 'sales' %>
+                <%= select_tag "order[payment_method]", options_for_select([["Invoice","invoice"], ["Purchase Order", "po"], ["Credit Card", "credit"], ["Cash", "cash"], ["Check", "check"]]), class: 'payment_method' %>
+                <br/><br/>
+                <div class="payment-field">
+                  <%= f.label :payment_note, "Payment Ref. #" %><br>
+                  <%= f.text_field :payment_note, class: "input--short" %>
                 </div>
-              <% end %>
+              <% elsif current_market.is_consignment_market? && @order_type == 'purchase' %>
+                <%= select_tag "order[payment_method]", options_for_select([["Purchase Order", "po"], ["Credit Card", "credit"], ["Cash", "cash"], ["Check", "check"]]), class: 'payment_method' %>
+                <br/><br/>
+                <div class="payment-field">
+                  <%= f.label :payment_note, "Supplier Inv. #" %><br>
+                  <%= f.text_field :payment_note, class: "input--short" %>
+                </div>
+              <% else %>
+                <% if allow_payment_option?(:purchase_order, current_market, current_organization) %>
+                  <div class="field">
+                    <label>
+                      <%= f.radio_button :payment_method, "purchase order", :class=>"payment-method" %>
+                      Pay by Purchase Order
+                    </label>
+                    <fieldset id="purchase-order-fields" class="payment-fields is-hidden" data-available="true">
+                      <div class="payment-field">
+                        <%= f.label :payment_note, "PO Number" %><br>
+                        <%= f.text_field :payment_note, class: "input--short" %>
+                      </div>
+                    </fieldset>
+                  </div>
+                <% end %>
 
-              <% if allow_payment_option?(:credit_card, current_market, current_organization) %>
-                <div class="field">
-                  <label>
-                    <%= f.radio_button :payment_method, "credit card", :class=>"payment-method" %>
-                    Pay by Credit Card
-                  </label>
-                  <fieldset id="credit-card-fields" class="payment-fields is-hidden" data-available="<%= current_organization.decorate.credit_cards_available? %>">
-                    <div class="payment-field">
-                      <% if current_organization.decorate.credit_cards_available? %>
-                        <label for="order_credit_card_id">Saved credit cards</label><br>
-                        <%= select_tag "order[credit_card][id]", options_for_select(current_organization.decorate.credit_card_options), prompt: 'Select a Stored Credit Card' %><br>
-                      <% else %>
-                        Add a <%= link_to "credit card", new_admin_organization_bank_account_path(current_organization) %> to your account.
-                      <% end %><br>
+                <% if allow_payment_option?(:credit_card, current_market, current_organization) %>
+                  <div class="field">
+                    <label>
+                      <%= f.radio_button :payment_method, "credit card", :class=>"payment-method" %>
+                      Pay by Credit Card
+                    </label>
+                    <fieldset id="credit-card-fields" class="payment-fields is-hidden" data-available="<%= current_organization.decorate.credit_cards_available? %>">
+                      <div class="payment-field">
+                        <% if current_organization.decorate.credit_cards_available? %>
+                          <label for="order_credit_card_id">Saved credit cards</label><br>
+                          <%= select_tag "order[credit_card][id]", options_for_select(current_organization.decorate.credit_card_options), prompt: 'Select a Stored Credit Card' %><br>
+                        <% else %>
+                          Add a <%= link_to "credit card", new_admin_organization_bank_account_path(current_organization) %> to your account.
+                        <% end %><br>
 
-                      <label>New Credit Card</label><br>
+                        <label>New Credit Card</label><br>
 
-                      <fieldset id="payment-provider-container" data-payment-provider="<%= @payment_provider %>" data-balanced-marketplace-uri="<%= ENV["BALANCED_MARKETPLACE_URI"] %>" data-stripe-publishable-key="<%= ENV["STRIPE_PUBLISHABLE_KEY"] %>">
-                        <div class="row">
-                          <div class="column column--full column--guttered">
-                            <label for="provider_account_name">Name</label>
-                            <span class="hint">Full name as it appears on the account</span>
-                            <br>
-                            <input id="provider_account_name" type="text" value="" name="order[credit_card][name]" class="column--full">
-                          </div>
-                        </div>
-                        <div class="row">
-                          <div class="column column--full column--guttered">
-                            <label for="provider_card_number">Card Number</label><br>
-                            <input class="column--full" id="provider_card_number" type="text" name="card_number">
-                          </div>
-                        </div>
-                        <div class="row">
-                          <div class="column column--third column--guttered">
-                            <label for="expiration_month">Month</label><br>
-                            <%= select_tag(:expiration_month, options_for_select(expiration_month_options), class: "column--full") %>
-                          </div
-                          ><div class="column column--third column--guttered">
-                            <label for="expiration_year">Year</label><br>
-                            <%= select_tag(:expiration_year, options_for_select(expiration_year_options), class: "column--full") %>
-                          </div
-                          ><div class="column column--third column--guttered">
-                            <label for="provider_security_code">Security Code</label><br>
-                            <input class="column--full" id="provider_security_code" type="text" name="security_code">
-                          </div>
+                        <fieldset id="payment-provider-container" data-payment-provider="<%= @payment_provider %>" data-balanced-marketplace-uri="<%= ENV["BALANCED_MARKETPLACE_URI"] %>" data-stripe-publishable-key="<%= ENV["STRIPE_PUBLISHABLE_KEY"] %>">
                           <div class="row">
-                            <div class="field column column--full column--guttered">
-                              <input id="save_for_future" type="checkbox" name="order[credit_card][save_for_future]">
-                              <label for="save_for_future">Save credit card for future use</label>
+                            <div class="column column--full column--guttered">
+                              <label for="provider_account_name">Name</label>
+                              <span class="hint">Full name as it appears on the account</span>
+                              <br>
+                              <input id="provider_account_name" type="text" value="" name="order[credit_card][name]" class="column--full">
                             </div>
                           </div>
-                        </div>
-                      </fieldset>
+                          <div class="row">
+                            <div class="column column--full column--guttered">
+                              <label for="provider_card_number">Card Number</label><br>
+                              <input class="column--full" id="provider_card_number" type="text" name="card_number">
+                            </div>
+                          </div>
+                          <div class="row">
+                            <div class="column column--third column--guttered">
+                              <label for="expiration_month">Month</label><br>
+                              <%= select_tag(:expiration_month, options_for_select(expiration_month_options), class: "column--full") %>
+                            </div
+                            ><div class="column column--third column--guttered">
+                              <label for="expiration_year">Year</label><br>
+                              <%= select_tag(:expiration_year, options_for_select(expiration_year_options), class: "column--full") %>
+                            </div
+                            ><div class="column column--third column--guttered">
+                              <label for="provider_security_code">Security Code</label><br>
+                              <input class="column--full" id="provider_security_code" type="text" name="security_code">
+                            </div>
+                            <div class="row">
+                              <div class="field column column--full column--guttered">
+                                <input id="save_for_future" type="checkbox" name="order[credit_card][save_for_future]">
+                                <label for="save_for_future">Save credit card for future use</label>
+                              </div>
+                            </div>
+                          </div>
+                        </fieldset>
 
-                    </div>
-                  </fieldset>
-                </div>
-              <% end %>
+                      </div>
+                    </fieldset>
+                  </div>
+                <% end %>
 
-              <% if allow_payment_option?(:ach, current_market, current_organization) %>
-                <div class="field">
-                  <label>
-                    <%= f.radio_button :payment_method, "ach", :class=>"payment-method" %>
-                    Pay by ACH
-                  </label>
-                  <fieldset id="ach-fields" class="payment-fields is-hidden" data-available="<%= current_organization.decorate.ach_available? %>">
-                    <div class="payment-field">
-                      <% if current_organization.decorate.ach_available? %>
-                        <%= f.label :bank_account, "Account" %><br>
-                        <%= f.select :bank_account, options_for_select(current_organization.decorate.ach_options) %>
-                      <% else %>
-                        You currently do not have any verified bank accounts.<br>
-                        Please <%= link_to "create and/or verify one", new_admin_organization_bank_account_path(current_organization) %> to use ACH.
-                      <% end %>
-                    </div>
-                  </fieldset>
-                </div>
+                <% if allow_payment_option?(:ach, current_market, current_organization) %>
+                  <div class="field">
+                    <label>
+                      <%= f.radio_button :payment_method, "ach", :class=>"payment-method" %>
+                      Pay by ACH
+                    </label>
+                    <fieldset id="ach-fields" class="payment-fields is-hidden" data-available="<%= current_organization.decorate.ach_available? %>">
+                      <div class="payment-field">
+                        <% if current_organization.decorate.ach_available? %>
+                          <%= f.label :bank_account, "Account" %><br>
+                          <%= f.select :bank_account, options_for_select(current_organization.decorate.ach_options) %>
+                        <% else %>
+                          You currently do not have any verified bank accounts.<br>
+                          Please <%= link_to "create and/or verify one", new_admin_organization_bank_account_path(current_organization) %> to use ACH.
+                        <% end %>
+                      </div>
+                    </fieldset>
+                  </div>
+                <% end %>
               <% end %>
           </fieldset>
         </div>
         <div class="form-actions">
-          <%= f.submit "Place Order", class: 'btn btn btn--money', id: 'place-order-button', disabled: true, data: {disable_with: "Please wait..."} %>
+          <%= f.submit "Place Order", class: 'btn btn btn--money', id: 'place-order-button', disabled: current_market.is_buysell_market?, data: {disable_with: "Please wait..."} %>
           <span class="pull-left cancel-link">
             <%= link_to "Cancel Order", [:cart], data: {method: :delete, confirm: "Are you sure you want to clear the cart?"}, class: "btn btn--small destructive", id: "cancel-button" %>
             <span class="note">(Clear Cart)</span>
           </span>
-          <%= link_to "Continue Ordering", products_path, class: "continue-shop" %>  
+          <%= link_to "Continue Ordering", @order_type == 'sales' ? products_path : products_purchase_path, class: "continue-shop" %>  
         </div>
       </div>
     </div>

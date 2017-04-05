@@ -8,7 +8,7 @@ Product is removed from the current PO, and moved to another PO (new or existing
 
 =end
 
-      def holdover_product(order, params)
+      def holdover_product(user, order, params)
 
         t_id = ConsignmentTransaction.find(params[:transaction_id])
 
@@ -31,6 +31,7 @@ Product is removed from the current PO, and moved to another PO (new or existing
               billing_zip: order.billing_zip,
               billing_phone: order.billing_phone,
               payment_status: "unpaid",
+              delivery_status: "pending",
               payment_method: order.payment_method,
               payment_note: nil,
               delivery_fees: order.delivery_fees,
@@ -53,13 +54,14 @@ Product is removed from the current PO, and moved to another PO (new or existing
         dest_item = OrderItem.new(orig_item.attributes.reject{ |k| k == 'id' })
         dest_item.quantity = params[:holdover_qty]
         dest_item.quantity_delivered = nil
+        dest_item.delivery_status = 'pending'
 
         #if dest_item.quantity_delivered > Integer(params[:holdover_qty])
         #  dest_item.quantity_delivered = Integer(params[:holdover_qty])
         #end
         dest_order.items << dest_item
 
-        ct_parent = CreateConsignmentTransaction.perform(order: dest_order)
+        ct_parent = CreateConsignmentTransaction.perform(user: user, order: dest_order, holdover: true, repack: false)
 
         # Remove Items from original PO
         orig_item.update_attributes(:quantity => orig_item.quantity - Integer(params[:holdover_qty]))
@@ -76,7 +78,7 @@ Product is removed from the current PO, and moved to another PO (new or existing
             product_id: t_id.product_id,
             quantity: params[:holdover_qty],
             holdover_order_id: dest_order.id,
-            holdover_master: true
+            master: true
         )
         ct_orig.save
 
@@ -86,18 +88,20 @@ Product is removed from the current PO, and moved to another PO (new or existing
             transaction_type: 'HOLDOVER',
             order_id: dest_order.id,
             product_id: t_id.product_id,
-            quantity: params[:holdover_qty],
+            quantity: 0,
             holdover_order_id: order.id
         )
         ct_dest.save
+        Audit.create!(user_id:user.id, action:"create", auditable_type: "ConsignmentTransaction", auditable_id: order.id, audited_changes: {'transaction_type' => 'Holdover', 'quantity' => params[:holdover_qty], 'holdover_order_id' => params[:holdover_order_id], 'holdover_delivery_date' => params[:holdover_delivery_date]})
+
       end
 
-      def unholdover_product(params)
+      def unholdover_product(user, params)
         t_id = ConsignmentTransaction.find(params[:transaction_id])
 
         # Remove new order
         new_order = Order.find(t_id.holdover_order_id)
-        new_order.delete
+        new_order.soft_delete
 
         # Adjust qty of order item
         orig_product = OrderItem.where(order_id: t_id.order_id, product_id: t_id.product_id).first
@@ -110,9 +114,10 @@ Product is removed from the current PO, and moved to another PO (new or existing
         # Remove holdover consignment transactions
         dest_t_ids = ConsignmentTransaction.where(order_id: t_id.holdover_order_id)
         dest_t_ids.each do |trans|
-          trans.delete
+          trans.soft_delete
         end
-        t_id.delete
+        t_id.soft_delete
+        Audit.create!(user_id:user.id, action:"create", auditable_type: "ConsignmentTransaction", auditable_id: t_id.order_id, audited_changes: {'transaction_type' => 'Undo Holdover'})
 
       end
 

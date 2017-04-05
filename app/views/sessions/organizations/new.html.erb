@@ -2,15 +2,15 @@
   <%= form_tag [:sessions, :organizations], method: :post, class: "column column--seven-twelfths organization-form" do |f| %>
     <%= hidden_field_tag :redirect_back_to, params[:redirect_back_to] %>
 
-    <h1>Select an Organization</h1>
-    <div class="info-note">You manage multiple organizations. For which organization would you like to place an order?</div>
+    <h1>Select an Buyer</h1>
+    <div class="info-note">You manage multiple buyers. For which buyer would you like to place an order?</div>
 
     <div class="field">
-      <%= label_tag :org_id, "Organization" %><br>
+      <%= label_tag :org_id, "Buyer" %><br>
       <%= select_tag(:org_id, options_from_collection_for_select(@organizations, 'id', 'name'), class: "column column--full chosen") %>
     </div>
     <div class="form-actions">
-      <%= submit_tag "Select Organization", class: "mobile-block" %>
+      <%= submit_tag "Select Buyer", class: "mobile-block" %>
     </div>
   <% end %>
 </div>

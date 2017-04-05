@@ -74,6 +74,16 @@ module Admin
       end
     end
 
+    def split
+      CreateProductSplit.perform(market_id: current_market.id, params: params)
+      redirect_to products_path, notice: "Product successfully split."
+    end
+
+    def undo_split
+      UnSplitProductTransaction.perform(params: params)
+      redirect_to products_path, notice: "Product successfully unsplit."
+    end
+
     def show
       @organizations = [@product.organization]
 

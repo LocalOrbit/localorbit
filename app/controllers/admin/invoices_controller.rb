@@ -55,7 +55,7 @@ module Admin
       @order = if current_user.admin? || current_user.market_manager?
         Order.so_orders.orders_for_buyer(current_user).find(params[:id])
       else
-        Order.so.orders.orders_for_buyer(current_user).invoiced.find(params[:id])
+        Order.so_orders.orders_for_buyer(current_user).invoiced.find(params[:id])
       end
     end
   end

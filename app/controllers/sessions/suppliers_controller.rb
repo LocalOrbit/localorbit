@@ -15,7 +15,7 @@ module Sessions
         session[:current_supplier_id] = org.id
         redirect_to redirect_to_url
       else
-        flash[:alert] = "Please select a vendor"
+        flash[:alert] = "Please select a supplier"
         new
         render :new
       end

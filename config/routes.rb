@@ -127,7 +127,7 @@ Rails.application.routes.draw do
       end
     end
 
-    resources :orders, only: [:index, :show, :update, :create] do
+    resources :orders, only: [:index, :show, :update, :create, :destroy] do
       resources :table_tents_and_posters, :controller=>"/table_tents_and_posters", only: [:index, :show, :create]
       resources :order_items, only: [:show, :update] # for order price editing
     end
@@ -188,7 +188,13 @@ Rails.application.routes.draw do
           delete :destroy
         end
       end
+      collection do
+        post :split
+        post :undo_split
+      end
     end
+
+    get "consignment_inventory" => "consignment_inventory#index"
 
     resources :order_items, only: [:index, :update], path: :sold_items do
       collection do
@@ -229,6 +235,14 @@ Rails.application.routes.draw do
         get "consignment_receipt" => "consignment_receipts#show"
         get :await_pdf, to: "consignment_receipts#await_pdf"
         get :peek, to: "consignment_receipts#peek"
+      end
+    end
+
+    resources :consignment_pick_lists, only: :show do
+      member do
+        get "consignment_pick_list" => "consignment_pick_list#show"
+        get :await_pdf, to: "consignment_pick_lists#await_pdf"
+        get :peek, to: "consignment_pick_lists#peek"
       end
     end
 

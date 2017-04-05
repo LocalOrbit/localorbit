@@ -10,13 +10,8 @@
               </tr>
               <% items.each do |item| %>
                 <%= content_tag_for(:tr, item, id: "cart_item_#", supplier: seller_name.gsub(/[^a-zA-Z]/, ''), class: "product supplier-#{seller_name.gsub(/[^a-zA-Z]/, '')}", data: {id: item.product.id, :"cart-item" => item.to_json}) do %>
-                  <td class="name">
-                    <%= item.product.name %> (<%= item.product.unit_plural %>)
-                    <% if current_market.storage_locations.any? %><br/>
-                    Preferred location: <%= select(:item, :lot_id, options_for_select(current_market.storage_locations.map{|l| [l.name, l.id]}), {include_blank: true}, {class: 'chosen'}) %>
-                    <% end %>
-                  </td>
-                  <td class="quantity math="><input class="cart-input in-cart" name="quantity" type="text" size="3" autocomplete="off" min="0" value="<%= item.quantity %>" max="<%= item.product.available_inventory %>"></td>
+                  <td class="name"><%= item.product.name %> (<%= item.product.unit_plural %>)</td>
+                  <td class="quantity math="><input class="cart-input app-product-input in-cart" name="quantity" type="text" size="3" autocomplete="off" min="0" value="<%= item.quantity %>" max="<%= item.product.available_inventory %>"></td>
                   <td class="product-clear"><%= link_to "", "#", class: "font-icon icon-clear" %></td>
                 <% end %>
               <% end %>

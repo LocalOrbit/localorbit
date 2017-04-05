@@ -1,0 +1,9 @@
+<div data-ko-module="consignment_pick_list_preview_pdf" align="center">
+  <h1>Generating Consignment Pick List...</h1>
+  <%= image_tag "loading-progress.gif", data: { bind: "visible: !pdfUri()" } %>
+  <div style="display:none;" data-bind="visible: pdfUri">
+    <p>
+      <a class="btn btn--save btn--small mobile-block" data-bind="attr: { href: pdfUri }">Download Consignment Pick List</a>
+    </p>
+  </div>
+</div>

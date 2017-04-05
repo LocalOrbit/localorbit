@@ -3,7 +3,7 @@
   <table>
     <thead>
       <tr>
-        <th></th><th>Status</th><th>Ordered</th><th>On Hand</th><th>Sale Price</th><th>Net Price</th><th>Due</th>
+        <th></th><th>Status</th><th>Ordered</th><th>On Hand</th><th>Sale Price</th><th>Net Price</th>
       </tr>
     </thead>
     <tbody>
@@ -20,15 +20,16 @@
           </tr>
           <% if !@parent_transactions.nil? %>
             <% @parent_transactions.flatten.each do |parent| %>
-                  <tr>
+                  <% if parent.product_id == so.product_id %>
+                    <tr>
                     <td>&nbsp;&nbsp;<%= link_to "PO: #{parent.order_id}", admin_purchase_order_path(parent.order_id) %></td>
                     <td><%= parent.delivery_status == 'delivered' ? 'On Hand' : 'Awaiting Delivery' %></td>
                     <td><%= so.quantity %></td>
                     <td><%= so.lot_quantity %></td>
                     <td><%= number_to_currency(so.sale_price) %></td>
                     <td><%= number_to_currency(so.net_price) %></td>
-                    <td></td>
                   </tr>
+                <% end %>
             <% end %>
           <% end %>
       <% end %>

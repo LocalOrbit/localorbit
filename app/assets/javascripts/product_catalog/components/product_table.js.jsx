@@ -122,6 +122,9 @@
       var fullWindow = !this.props.orderId;
       var scrollThreshold = fullWindow ? 1000 : 50;
 
+      if (this.props.purchaseOrder || this.props.salesOrder)
+          this.state.hideImages = true;
+
       return (
         <div className="product-list cart_items" style={{padding: "20px"}} data-cart-url={this.props.cartUrl} >
           <InfiniteScroll

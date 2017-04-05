@@ -61,4 +61,12 @@ class OrderDecorator < Draper::Decorator
   def note_indicator
     !notes.nil? && notes.length > 0 ? "<span class='tooltip--flag' data-tooltip='#{notes}'></span>".html_safe : ''
   end
+
+  def display_payment_method
+    if payment_method == 'po'
+      'Purchase Order'
+    else
+      payment_method.titleize
+    end
+  end
 end

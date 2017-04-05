@@ -20,6 +20,8 @@
       var lot_qty_header;
       var sale_price_header;
       var net_price_header;
+      var consignment_qty_header;
+      var order_qty_header;
 
       // Initialize the convenience variable
       var product_id = "product-"+gp.id+"-long-description";
@@ -41,12 +43,15 @@
           lot_qty_header = (<th style={{width: 100, textAlign: "center", color:"#727070", textTransform:"uppercase", fontWeight: "bold", fontSize: "11px"}}>Lot / Quantity</th>);
           sale_price_header = (<th style={{width: 100, textAlign: "center", color:"#727070", textTransform:"uppercase", fontWeight: "bold", fontSize: "11px"}}>Sale Price</th>);
           net_price_header = (<th style={{width: 100, textAlign: "center", color:"#727070", textTransform:"uppercase", fontWeight: "bold", fontSize: "11px"}}>Net Price</th>);
+          consignment_qty_header = (<th style={{width: 100, textAlign: "center", color:"#727070", textTransform:"uppercase", fontWeight: "bold", fontSize: "11px"}}>Order QTY</th>);
       }
       else {
           lots = ('');
+          consignment_qty_header = ('');
           lot_qty_header = ('');
           sale_price_header = (<th></th>);
           net_price_header = (<th></th>);
+          order_qty_header = (<th style={{width: 100, textAlign: "center", color:"#727070", textTransform:"uppercase", fontWeight: "bold", fontSize: "11px"}}>Order QTY</th>);
           total_cost_header = (<th style={{
               width: 100,
               textAlign: "center",
@@ -117,11 +122,10 @@
               <thead>
                 <tr>
                     {lot_qty_header}
+                    {consignment_qty_header}
                     {sale_price_header}
                     {net_price_header}
-                    <th style={{width: 100, textAlign: "center", color:"#727070", textTransform:"uppercase", fontWeight: "bold", fontSize: "11px"}}>
-                      Order QTY
-                    </th>
+                    {order_qty_header}
                     {total_cost_header}
                 </tr>
               </thead>
