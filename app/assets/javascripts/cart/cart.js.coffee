@@ -40,7 +40,6 @@ $ ->
         else if (this.data.quantity > 0) && (data.quantity == 0)
           msg = "Removed from cart!"
 
-          
         else if (this.data.quantity > 0) && (data.quantity > 0)
           msg = "Quantity updated!"
 
@@ -87,26 +86,26 @@ $ ->
       unless @el.hasClass("product-row") || @el.data("keep-when-zero")
         @el.remove()
 
-      if @el.find(".quantity input").hasClass("promo")
+      if @el.find(".app-product-input input").hasClass("promo")
         totalPrice = accounting.formatMoney(@data.total_price)
         $(".promo").parent().parent().find(".icon-clear").addClass("is-hidden")
         $(".promo").parent().parent().find(".quantity input").val('')
         $(".promo").parent().parent().find(".price").text(totalPrice)
 
     showError: ->
-      @el.find('.quantity').addClass("field_with_errors")
+      @el.find('.app-product-input').addClass("field_with_errors")
 
     clearError: ->
-      @el.find('.quantity').removeClass("field_with_errors")
+      @el.find('.app-product-input').removeClass("field_with_errors")
 
     showUpdate: ->
-      @el.find('.quantity').addClass("updated")
+      @el.find('.app-product-input').addClass("updated")
       window.setTimeout =>
-        @el.find('.quantity').addClass("finished")
+        @el.find('.app-product-input').addClass("finished")
       , window.CartNotificationDuration
 
       window.setTimeout =>
-        @el.find('.quantity').removeClass("updated").removeClass("finished")
+        @el.find('.app-product-input').removeClass("updated").removeClass("finished")
       , (window.CartNotificationDuration + 200)
       $(".promo").parent().parent().find(".updated").removeClass("updated")
 
@@ -374,7 +373,8 @@ $ ->
   $(document.body).on 'click', ".cart_item .icon-clear", (e)->
     e.preventDefault()
     data = $(this).closest(".cart_item").data("cart-item")
-    model.saveItem(data.product_id, 0, 0, 0, 0, order_id)
+    lotId = $(this).parent().parent().parent().parent().parent().parent().parent().find(".lot-id").val()
+    model.saveItem(data.product_id, 0, 0, 0, lotId, this, order_id)
 
   $(document.body).on 'click', "input[type=radio]", (e)->
     $(".payment-fields").addClass("is-hidden")

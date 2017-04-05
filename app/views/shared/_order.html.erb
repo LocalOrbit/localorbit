@@ -19,7 +19,7 @@
           <button id="merge_button" name="Merge Order">Merge Order</button>
         </li>
         <% end %>
-        <% if policy(:dup_order).index? && order.delivery_status_for_user(current_user) != 'canceled' %>
+        <% if policy(:dup_order).index? && current_market.is_buysell_market? && order.delivery_status_for_user(current_user) != 'canceled' %>
         <li>
           <button id="duplicate_button" name="Duplicate Order">Duplicate Order</button>
         </li>
