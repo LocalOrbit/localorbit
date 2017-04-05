@@ -267,19 +267,21 @@
             <% end %> <%= item.object.unit %> (Ordered)<br />
 
             <% if FeatureAccess.edit_delivered_quantity?(user_order_item_context: user_order_item_context) %>
-              <%= item.text_field :quantity_delivered, :autocomplete => :off, value: Format.quantity_no_delimiter(item.object.quantity_delivered), class: 'quantity-delivered' %>
+              <%= item.text_field :quantity_delivered, :autocomplete => :off, value: Format.quantity_no_delimiter(item.object.quantity_delivered), class: 'quantity-delivered' %> <%= item.object.unit %> (Delivered)<br/>
+              <%= item.select(:preferred_storage_location_id, options_for_select(StorageLocation.where("market_id = ?", current_market.id).map{|l| [l.name, l.id]}, item.object.preferred_storage_location_id), {include_blank: true}, {class: 'chosen'}) %>
             <% else %>
               <span class="quantity-delivered-ro"><%= Format.quantity_no_delimiter item.object.quantity_delivered %></span>
-            <% end %> <%= item.object.unit %> (Delivered)
+            <% end %>
           </td>
 
           <% if current_market.is_consignment_market? %>
             <td>
             <% if item.object.product.lots.available_general %>
-              <!--span><%= item.object.product.lots.available_general.map(&:number).join(", ") %></span-->
-              <% item.object.product.lots.available_general.each do |lot| %>
-                <%= lot.number %>:&nbsp;<%= select(:lot, :storage_location_id, options_for_select(StorageLocation.where("market_id = ?", current_market.id).map{|l| [l.name, l.id]}, selected: lot.storage_location_id), {include_blank: true}, {class: 'three-quarters chosen'}) %><br/>
-              <% end %>
+              <span>
+                <% item.object.product.lots.available_general.each do |l| %>
+                  <%= "#{l.number}#{l.storage_location.nil? ? '' : ' - ' + l.storage_location.name}" %><br />
+                <% end %>
+              </span>
             <% else %>
               -
             <% end %>

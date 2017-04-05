@@ -6,6 +6,7 @@ class Lot < ActiveRecord::Base
   belongs_to :product, inverse_of: :lots
   belongs_to :market
   belongs_to :organization
+  belongs_to :storage_location
 
   validates :quantity, numericality: {greater_than_or_equal_to: 0, less_than: 1_000_000}
   validates :number, presence: {message: "can't be blank when 'Expiration Date' is present"}, if: lambda {|obj| obj.expires_at.present? }
