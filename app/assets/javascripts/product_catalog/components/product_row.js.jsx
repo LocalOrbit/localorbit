@@ -22,6 +22,7 @@
       var net_price_header;
       var consignment_qty_header;
       var order_qty_header;
+      var whowherewhy;
 
       // Initialize the convenience variable
       var product_id = "product-"+gp.id+"-long-description";
@@ -71,6 +72,46 @@
       else
           unit_prices = ('');
 
+      if (!self.props.consignmentMarket)
+          whowherewhy = (
+              <ul className="meta list-naked l-inline-list clear-before">
+                  <li className="organization-name">
+                      <a className="popup-toggle" href={'#product-'+gp.id+'-who'} tabIndex="-1"><i className="font-icon icon-credit"></i>&nbsp;Who</a>
+                      <div className="who-info is-hidden with-anchor top-anchor popup" id={'product-'+gp.id+'-who'}>
+                          <div className="popup-header">
+                              Who <button className="close"><i className="font-icon icon-close"></i></button>
+                          </div>
+                          <div className="popup-body">
+                              {gp.who_story}
+                          </div>
+                      </div>
+                  </li>
+                  <li className="how-story">
+                      <a className="popup-toggle" href={'#product-'+gp.id+'-how'} tabIndex="-1"><i className="font-icon icon-archive"></i> How</a>
+                      <div className="how-info is-hidden with-anchor top-anchor popup" id={'product-'+gp.id+'-how'}>
+                          <div className="popup-header">
+                              How <button className="close"><i className="font-icon icon-close"></i></button>
+                          </div>
+                          <div className="popup-body">
+                              {gp.how_story}
+                          </div>
+                      </div>
+                  </li>
+                  <li className="where">
+                      <a className="popup-toggle" href={'#product-'+gp.id+'-where'} tabIndex="-1"><i className="font-icon icon-direction"></i> Where</a>
+                      <div className="where-info is-hidden with-anchor top-anchor popup" id={'product-'+gp.id+'-where'}>
+                          <div className="popup-header">
+                              {gp.location_label}
+                              <button className="close"><i className="font-icon icon-close"></i></button>
+                          </div>
+                          <img className="location-map" alt="" src="" data-src={gp.location_map_url}/>
+                      </div>
+                  </li>
+              </ul>
+          );
+      else
+          whowherewhy = ('');
+
       return (
         <div className="row product-listing">
           <div className="product-details-container column column--five-twelfths">
@@ -80,41 +121,8 @@
               <h5>From: <a href={"/sellers/" + gp.seller_id}>{gp.seller_name}</a></h5>
               <p>{gp.short_description} {(gp.long_description) ? description_link : "" }</p>
               {(gp.long_description) ? long_description : ""}
-              <ul className="meta list-naked l-inline-list clear-before">
-                <li className="organization-name">
-                  <a className="popup-toggle" href={'#product-'+gp.id+'-who'} tabIndex="-1"><i className="font-icon icon-credit"></i>&nbsp;Who</a>
-                  <div className="who-info is-hidden with-anchor top-anchor popup" id={'product-'+gp.id+'-who'}>
-                    <div className="popup-header">
-                      Who <button className="close"><i className="font-icon icon-close"></i></button>
-                    </div>
-                    <div className="popup-body">
-                      {gp.who_story}
-                    </div>
-                  </div>
-                </li>
-                <li className="how-story">
-                  <a className="popup-toggle" href={'#product-'+gp.id+'-how'} tabIndex="-1"><i className="font-icon icon-archive"></i> How</a>
-                  <div className="how-info is-hidden with-anchor top-anchor popup" id={'product-'+gp.id+'-how'}>
-                    <div className="popup-header">
-                      How <button className="close"><i className="font-icon icon-close"></i></button>
-                    </div>
-                    <div className="popup-body">
-                      {gp.how_story}
-                    </div>
-                  </div>
-                </li>
-                <li className="where">
-                  <a className="popup-toggle" href={'#product-'+gp.id+'-where'} tabIndex="-1"><i className="font-icon icon-direction"></i> Where</a>
-                  <div className="where-info is-hidden with-anchor top-anchor popup" id={'product-'+gp.id+'-where'}>
-                    <div className="popup-header">
-                      {gp.location_label}
-                      <button className="close"><i className="font-icon icon-close"></i></button>
-                    </div>
-                    <img className="location-map" alt="" src="" data-src={gp.location_map_url}/>
-                  </div>
-                </li>
-              </ul>
             </div>
+              {whowherewhy}
           </div>
           <div className="product-details-spacer"> </div>
           <div className="product-pricing column column--seven-twelfths">

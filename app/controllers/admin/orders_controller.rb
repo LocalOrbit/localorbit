@@ -380,7 +380,7 @@ class Admin::OrdersController < AdminController
   end
 
   def unrepack_transaction(order, params)
-    result = UnRepackTransaction.perform(user: current_user, params: params)
+    result = UnRepackTransaction.perform(user: current_user, order: order, params: params)
     if result.success?
       redirect_to admin_order_path(order), notice: "Unrepack Successful."
     else
@@ -503,7 +503,7 @@ class Admin::OrdersController < AdminController
   end
 
   def perform_add_items(order)
-    result = UpdateOrderWithNewItems.perform(buyer: current_user, payment_provider: order.payment_provider, order: order, item_hashes: items_to_add, request: request, holdover: false, repack: false)
+    result = UpdateOrderWithNewItems.perform(user: current_user, payment_provider: order.payment_provider, order: order, item_hashes: items_to_add, request: request, holdover: false, repack: false)
     if !result.success?
       setup_add_items_form(order)
       order.errors[:base] << "Failed to add items to this order."
