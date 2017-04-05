@@ -1,3 +1,4 @@
+<% receipts.each do |receipt| %>
 <!DOCTYPE html>
 <html lang="en-us">
 <head>
@@ -29,6 +30,7 @@
     }
 
     .receipts-wrapper {
+      page-break-after: always;
       font-size: 14px;
       font-family: OpenSans, "Open Sans", Geneva, Arial, sans-serif;
     }
@@ -426,3 +428,4 @@
   </div>
 </body>
 </html>
+<% end %>
