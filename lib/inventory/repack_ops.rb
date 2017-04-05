@@ -60,7 +60,7 @@ module Inventory
           ct_orig.save
 
           ct_dest = ConsignmentTransaction.create(
-              parent_id: ct_parent.transaction_id,
+              parent_id: ct_orig.id,
               market_id: order.market.id,
               transaction_type: 'REPACK',
               order_id: order.id,
@@ -73,7 +73,43 @@ module Inventory
         end
       end
 
-      def unrepack_product(order, params)
+      def unrepack_product(user, order, params)
+        # Get transactions
+        child_ct = ConsignmentTransaction.find(params[:transaction_id])
+        parent_ct = ConsignmentTransaction.where(parent_id: child_ct.id).first
+
+        # Remove the child item
+        parent_order_item = OrderItem.find(parent_ct.order_item_id)
+        parent_order_item_lot = parent_order_item.lots.first
+        parent_order_item_qty = parent_order_item.quantity
+        parent_order_item.delete
+
+        # Subtract qty from child product lot
+        parent_order_item_lot.quantity = parent_order_item_lot.quantity - parent_order_item_qty
+
+        # Add appropriate qty to parent product lot
+        parent_product = Product.find(parent_ct.product_id)
+        parent_unit_quantity = parent_product.unit_quantity
+
+        # Increase parent item by appropriate qty
+        child_order_item = OrderItem.find(child_ct.order_item_id)
+        child_order_item.quantity = child_order_item.quantity + (parent_order_item_qty * parent_unit_quantity)
+        if child_order_item.quantity_delivered > 0
+          child_order_item.quantity_delivered = child_order_item.quantity
+        end
+        child_order_item.save
+
+        # Remove repacked PO CT
+        parent_po_ct = ConsignmentTransaction.where(transaction_type: 'PO', order_item_id: parent_ct.order_item_id).first
+        parent_po_ct.soft_delete
+
+        # Remove repack consignment transactions
+        child_ct.soft_delete
+        parent_ct.soft_delete
+
+        # Create audit entry
+        Audit.create!(user_id: user.id, action:"create", auditable_type: "ConsignmentTransaction", auditable_id: order.id, audited_changes: {'transaction_type' => 'Undo Repack', 'repack_product_id' => parent_product.id})
+
       end
 
       def can_repack_product?
