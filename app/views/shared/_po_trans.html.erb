@@ -57,6 +57,16 @@
                       <td></td>
                       <td><%= child.master ? '<button class="submit_undo_holdover_button btn btn--tiny">Undo</button>'.html_safe : '' %></td>
                     </tr>
+                <% elsif child.transaction_type == "REPACK" %>
+                    <tr data-transaction-id="<%=child.id %>">
+                      <td>&nbsp;&nbsp;Repack</td>
+                      <td></td>
+                      <td><%= child.quantity %></td>
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                      <td><%= child.master ? '<button class="submit_undo_repack_button btn btn--tiny">Undo</button>'.html_safe : '' %></td>
+                    </tr>
                 <% end %>
             <% end %>
         <% end %>
