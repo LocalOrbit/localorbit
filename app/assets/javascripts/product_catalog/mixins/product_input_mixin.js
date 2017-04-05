@@ -138,9 +138,6 @@
 
         if (this.cSalePrice > 0 && this.cNetPrice > 0 && this.cItemQuantity > 0) {
             $(target).trigger("cart.inputFinished");
-            this.cSalePrice = 0;
-            this.cNetPrice = 0
-            this.cItemQuantity = 0;
         }
     },
 
