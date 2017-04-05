@@ -60,6 +60,7 @@ module Admin
       @product = Product.new(product_params).decorate
       find_selling_organizations
       @product.organization = @organizations.detect {|o| o.id == @product.organization_id }
+      @product.consignment_market = current_market.is_consignment_market?
       if @product.save
         update_sibling_units(@product)
         if ENV['USE_UPLOAD_QUEUE'] == "true"
@@ -93,6 +94,7 @@ module Admin
     end
 
     def update
+      @product.consignment_market = current_market.is_consignment_market?
       updated = update_product
       if ENV['USE_UPLOAD_QUEUE'] == "true"
         Delayed::Job.enqueue ::ImageUpload::ImageUploadJob.new(@product)

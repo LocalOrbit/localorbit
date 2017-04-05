@@ -1,7 +1,7 @@
 <div class="row row--field">
   <div class="field column column--half column--guttered">
     <%= form.label :name, "Address Label" %><br>
-    <%= form.text_field :name, placeholder: "Give your organization a location name", class: "column column--full" %>
+    <%= form.text_field :name, placeholder: "Give your location a label (Default, Billing, etc)", class: "column column--full" %>
   </div
   ><div class="field column column--half column--guttered">
     <%= form.label :address %><br>
@@ -37,5 +37,12 @@
   ><div class="field column column--guttered column--half">
     <%= form.label :fax %><br>
     <%= form.text_field :fax, maxlength: 18, size: 18, class: "column--full" %>
+  </div>
+</div>
+
+<div class="row row--field">
+  <div class="field column column--guttered column--half">
+    <%= form.label :email %><br>
+    <%= form.text_field :email, class: "column--full" %>
   </div>
 </div>

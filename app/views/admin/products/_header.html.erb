@@ -20,14 +20,18 @@
       <ul class="tabs">
         <% if @product.persisted? %>
             <%= content_tag(:li, link_to_or_span("Product Info", [:admin, @product]), class: "completed tab") %>
+            <% if current_market.is_buysell_market? %>
             <%= content_tag(:li, link_to_or_span("Inventory", [:admin, @product, :lots]),
                             id: 'product-inventory-nav', class: (inventory_tab_complete? ? 'completed tab' : 'tab')) %>
+            <% end %>
             <%= content_tag(:li, link_to_or_span("Pricing", [:admin, @product, :prices]),
                             id: 'product-pricing-nav', class: (pricing_tab_complete? ? 'completed tab' : 'tab')) %>
         <% else %>
             <li class="tab"><span>Product Info</span></li>
+            <% if current_market.is_buysell_market? %>
             <%= content_tag :li, raw('<span class="is-disabled" data-error="Save this product to add inventory.">Inventory</span>'),
                             id: 'product-inventory-nav', class: 'tab' %>
+            <% end %>
             <%= content_tag :li, raw('<span class="is-disabled" data-error="Save this product to add pricing.">Pricing</span>'),
                             id: 'product-pricing-nav', class: 'tab' %>
         <% end %>

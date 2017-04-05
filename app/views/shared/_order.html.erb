@@ -383,15 +383,18 @@
       <% end %>
     </div>
 
-    <% if FeatureAccess.order_action_links?(user_order_context: user_order_context)  %>
+    <% if FeatureAccess.order_action_links?(user_order_context: user_order_context) && current_market.is_buysell_market? %>
       <br/><br/>
       <%= f.submit @show_add_items_form ? "Add items and Update quantities" : "Update quantities", id: 'submit-add-items', class: 'pull-right btn btn--small mobile-block' %>
+    <% elsif FeatureAccess.order_action_links?(user_order_context: user_order_context) && current_market.is_consignment_market? && @show_add_items_form %>
+         <br/><br/>
+         <%= f.submit "Add items", id: 'submit-add-items', class: 'pull-right btn btn--small mobile-block' %>
     <% end %>
     <% if can_add_products_to_order?(order, user_order_context) && !@show_add_items_form %>
       <%= f.submit "Add Items", class: 'pull-right btn btn--small mobile-block' %>
     <% end %>
   </div>
-
+  <br/><br/>
   <% if order.purchase_order? %>
     <%= render "shared/po_trans", {order: order, f: f} %>
   <% end %>

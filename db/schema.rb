@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170404152807) do
+ActiveRecord::Schema.define(version: 20170405214410) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -36,7 +36,6 @@ ActiveRecord::Schema.define(version: 20170404152807) do
     t.string   "masquerader_username"
   end
 
-  add_index "audits", ["action", "associated_type"], name: "action_associated_type", using: :btree
   add_index "audits", ["associated_id", "associated_type"], name: "associated_index", using: :btree
   add_index "audits", ["auditable_id", "auditable_type"], name: "auditable_index", using: :btree
   add_index "audits", ["created_at"], name: "index_audits_on_created_at", using: :btree
@@ -77,13 +76,6 @@ ActiveRecord::Schema.define(version: 20170404152807) do
     t.datetime "updated_at"
   end
 
-  create_table "batch_consignment_receipt_orders", force: true do |t|
-    t.integer  "batch_consignment_receipt_id"
-    t.integer  "order_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
   create_table "batch_consignment_receipts", force: true do |t|
     t.integer  "user_id"
     t.string   "pdf_uid"
@@ -95,6 +87,13 @@ ActiveRecord::Schema.define(version: 20170404152807) do
   end
 
   add_index "batch_consignment_receipts", ["user_id"], name: "index_batch_consignment_receipts_on_user_id", using: :btree
+
+  create_table "batch_consignment_receipts_orders", force: true do |t|
+    t.integer  "batch_consignment_receipt_id"
+    t.integer  "order_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "batch_invoice_errors", force: true do |t|
     t.integer  "batch_invoice_id"
@@ -198,13 +197,13 @@ ActiveRecord::Schema.define(version: 20170404152807) do
     t.integer  "order_id"
     t.integer  "order_item_id"
     t.integer  "lot_id"
-    t.datetime "delivery_date"
     t.integer  "product_id"
     t.integer  "quantity"
     t.integer  "assoc_order_id"
     t.integer  "assoc_order_item_id"
     t.integer  "assoc_lot_id"
     t.integer  "assoc_product_id"
+    t.datetime "delivery_date"
     t.datetime "created_at"
     t.integer  "market_id"
     t.integer  "parent_id"
@@ -327,7 +326,7 @@ ActiveRecord::Schema.define(version: 20170404152807) do
     t.decimal  "order_minimum",                  precision: 10, scale: 2, default: 0.0,            null: false
     t.string   "delivery_cycle"
     t.integer  "day_of_month"
-    t.integer  "week_interval",                                           default: 1
+    t.integer  "week_interval"
   end
 
   add_index "delivery_schedules", ["deleted_at"], name: "index_delivery_schedules_on_deleted_at", using: :btree
@@ -608,7 +607,7 @@ ActiveRecord::Schema.define(version: 20170404152807) do
     t.boolean  "subscribed",                                             default: false
     t.boolean  "routing_plan",                                           default: false
     t.integer  "organization_id"
-    t.boolean  "add_item_pricing",                                       default: true
+    t.boolean  "add_item_pricing"
     t.boolean  "self_enabled_cross_sell",                                default: false
     t.string   "background_img_uid"
   end
@@ -646,6 +645,14 @@ ActiveRecord::Schema.define(version: 20170404152807) do
   end
 
   add_index "newsletters", ["market_id"], name: "index_newsletters_on_market_id", using: :btree
+
+  create_table "order_item_deliveries", force: true do |t|
+    t.integer  "market_address_id"
+    t.integer  "location_id"
+    t.datetime "delivered_at"
+    t.integer  "quantity_delivered"
+    t.integer  "order_item_id"
+  end
 
   create_table "order_item_lots", force: true do |t|
     t.integer  "order_item_id"
@@ -827,6 +834,7 @@ ActiveRecord::Schema.define(version: 20170404152807) do
     t.string   "contact_first_name"
     t.string   "contact_last_name"
     t.string   "contact_email"
+    t.string   "email"
   end
 
   add_index "organizations", ["name"], name: "index_organizations_on_name", using: :btree
@@ -909,7 +917,6 @@ ActiveRecord::Schema.define(version: 20170404152807) do
 
   add_index "prices", ["market_id"], name: "index_prices_on_market_id", using: :btree
   add_index "prices", ["organization_id"], name: "index_prices_on_organization_id", using: :btree
-  add_index "prices", ["product_id", "market_id", "organization_id", "updated_at", "deleted_at"], name: "index_prices_on_product_market_organization_updated_deleted", using: :btree
   add_index "prices", ["product_id", "market_id", "organization_id"], name: "index_prices_on_product_id_and_market_id_and_organization_id", using: :btree
   add_index "prices", ["product_id"], name: "index_prices_on_product_id", using: :btree
 
@@ -1000,15 +1007,6 @@ ActiveRecord::Schema.define(version: 20170404152807) do
     t.string   "encrypted_realm_id_iv"
   end
 
-  create_table "qlik_user_attributes", primary_key: "userid", force: true do |t|
-    t.string "type",  null: false
-    t.string "value"
-  end
-
-  create_table "qlik_users", primary_key: "userid", force: true do |t|
-    t.string "name"
-  end
-
   create_table "role_actions", force: true do |t|
     t.string  "description"
     t.string  "org_types",   default: [],   array: true
@@ -1022,9 +1020,9 @@ ActiveRecord::Schema.define(version: 20170404152807) do
 
   create_table "roles", force: true do |t|
     t.string   "name"
-    t.string   "org_type",        default: "M"
+    t.string   "org_type"
     t.integer  "organization_id"
-    t.string   "activities",      default: [],  array: true
+    t.string   "activities",      default: [], array: true
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -1132,13 +1130,5 @@ ActiveRecord::Schema.define(version: 20170404152807) do
 
   add_index "users_roles", ["role_id"], name: "index_users_roles_on_role_id", using: :btree
   add_index "users_roles", ["user_id"], name: "index_users_roles_on_user_id", using: :btree
-
-  create_table "zipcodes", primary_key: "zip", force: true do |t|
-    t.decimal "latitude",             precision: 9, scale: 6
-    t.decimal "longitude",            precision: 9, scale: 6
-    t.string  "city"
-    t.string  "state",     limit: 2
-    t.string  "county",    limit: 64
-  end
 
 end
