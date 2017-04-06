@@ -28,7 +28,7 @@
             cart_item: React.PropTypes.object,
             lots: React.PropTypes.arrayOf(React.PropTypes.shape({
                 id: React.PropTypes.number,
-                order_note: React.PropTypes.string,
+                inv_note: React.PropTypes.string,
                 quantity: React.PropTypes.number,
                 delivery_date: React.PropTypes.string,
                 number: React.PropTypes.string,

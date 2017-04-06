@@ -27,21 +27,37 @@ class Admin::ConsignmentInventoryController < AdminController
     .joins("INNER JOIN consignment_transactions ct ON ct.order_id != consignment_transactions.order_id AND ct.transaction_type = 'HOLDOVER' AND ct.quantity > 0")
     .where("consignment_transactions.market_id = ?", current_market.id)
     .where(transaction_type: 'PO')
+    .where("lots.quantity > 0 OR consignment_transactions.lot_id IS NULL")
     .visible
-    .select("products.id product_id,
+    .select("consignment_transactions.id AS ct_id,
+    products.id AS product_id,
     products.name AS product_name,
     organizations.id AS supplier_id,
     organizations.name AS supplier_name,
     consignment_transactions.order_id,
-    (SELECT DISTINCT notes FROM consignment_transactions, orders WHERE consignment_transactions.order_id = orders.id AND consignment_transactions.lot_id = lots.id AND transaction_type = 'PO') order_note,
     CASE WHEN consignment_transactions.lot_id IS NULL THEN 'waiting' ELSE 'onhand' END AS status,
     consignment_transactions.quantity AS ct_quantity,
     lots.number AS lot_number,
-    lots.quantity AS lot_quantity")
+    lots.quantity AS lot_quantity,
+    consignment_transactions.notes as note")
     .order("products.name")
     .search(search.query)
 
     #results.sorts = "name asc" if results.sorts.empty?
     results
+  end
+
+  def update
+    ct = ConsignmentTransaction.find(params[:consignment_inventory][:transaction_id])
+    ct.update_attributes(:notes => params[:consignment_inventory][:notes])
+    ct.save
+
+    redirect_to admin_consignment_inventory_path
+  end
+
+  protected
+
+  def consignment_inventory_params
+    params.require(:consignment_transaction).permit(:notes)
   end
 end
