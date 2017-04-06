@@ -140,7 +140,7 @@
             <%= f.hidden_field :credit_clear, :value=>nil %>
           </tr>
           <% end %>
-          <% if order.display_delivery_fees?(current_user) %>
+          <% if order.display_delivery_fees?(current_user) && current_market.is_buysell_market? %>
           <tr>
             <th class="math-symbol">+</th>
             <th><%= order.delivery.delivery_schedule.fee_label %>:</th>
@@ -149,6 +149,15 @@
             <td class="delivery-clear"><%= link_to "", "#", class: "font-icon icon-clear" %></td>
             <% end %>
             <%= f.hidden_field :delivery_clear, :value=>nil %>
+          </tr>
+          <% else %>
+          <tr>
+            <th class="math-symbol">+</th>
+            <th><%= order.delivery.delivery_schedule.fee_label %>:</th>
+            <td>
+              <%= f.text_field :delivery_fees, value: order.delivery_fees, style: 'text-align: right' %><br/>
+              <%= f.submit "Save", class: "btn btn--tiny" %>
+            </td>
           </tr>
           <% end %>
           <% if order.credit_amount > 0 && order.credit.apply_to == "total" %>
