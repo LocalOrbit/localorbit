@@ -69,7 +69,7 @@
       });
 
       return (
-        <div className="popup modal is-hidden" id="templatePicker" style={{background: "white", position: "fixed", padding: "20px", width: "50%", borderRadius: "5px"}}>
+        <div className="popup modal is-hidden" id="templatePicker" style={{top: "400px", height: "500px", overflow: "scroll", background: "white", position: "fixed", padding: "20px", width: "50%", borderRadius: "5px"}}>
           <button className="btn pull-right" onClick={this.close}>Close</button>
           <h1><i className="font-icon" data-icon=""></i>&nbsp; Order Templates</h1>
           <table>
