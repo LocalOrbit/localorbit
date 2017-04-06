@@ -497,7 +497,9 @@ class Order < ActiveRecord::Base
     if credit && credit.apply_to == "subtotal"
       cost = gross_total - credit_amount
     end
-    self.delivery_fees = calculate_delivery_fees(cost).round(2) unless delivery_fees == 0
+    if market.is_buysell_market?
+      self.delivery_fees = calculate_delivery_fees(cost).round(2) unless delivery_fees == 0
+    end
     self.total_cost    = calculate_total_cost(cost).round(2)
   end
 
