@@ -7,6 +7,7 @@ class UpdateLots
 
     order.items.each do |item|
       lot = Inventory::Utils.upsert_lot(item.product, lot_number, item.quantity_delivered)
+      lot.update_attribute(:storage_location_id, item.preferred_storage_location_id) unless lot.storage_location_id == item.preferred_storage_location_id
       if !item.quantity_delivered.nil?
         update_pending_so(item, lot)
       end
