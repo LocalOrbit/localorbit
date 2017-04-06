@@ -268,7 +268,7 @@
 
             <% if FeatureAccess.edit_delivered_quantity?(user_order_item_context: user_order_item_context) %>
               <%= item.text_field :quantity_delivered, :autocomplete => :off, value: Format.quantity_no_delimiter(item.object.quantity_delivered), class: 'quantity-delivered' %> <%= item.object.unit %> (Delivered)<br/>
-              <%= item.select(:preferred_storage_location_id, options_for_select(StorageLocation.where("market_id = ?", current_market.id).map{|l| [l.name, l.id]}, item.object.preferred_storage_location_id), {include_blank: true}, {class: 'chosen'}) %>
+              <%= item.select(:preferred_storage_location_id, options_for_select(StorageLocation.where("market_id = ?", current_market.id).map{|l| [l.name, l.id]}, item.object.product.lots.last.storage_location_id), {include_blank: true}, {class: 'chosen'}) %>
             <% else %>
               <span class="quantity-delivered-ro"><%= Format.quantity_no_delimiter item.object.quantity_delivered %></span>
             <% end %>

@@ -12,6 +12,7 @@ class OrderItem < ActiveRecord::Base
 
   attr_accessor :deliver_on_date
   attr_accessor :_destroy
+  attr_accessor :preferred_storage_location_id
 
   belongs_to :order, inverse_of: :items
   belongs_to :product
