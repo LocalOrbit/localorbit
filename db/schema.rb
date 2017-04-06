@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170405234633) do
+ActiveRecord::Schema.define(version: 20170406124215) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -215,6 +215,7 @@ ActiveRecord::Schema.define(version: 20170405234633) do
     t.integer  "child_lot_id"
     t.integer  "child_product_id"
     t.datetime "deleted_at"
+    t.text     "notes"
   end
 
   create_table "credits", force: true do |t|
@@ -458,6 +459,7 @@ ActiveRecord::Schema.define(version: 20170405234633) do
     t.string   "fax"
     t.integer  "legacy_id"
     t.string   "country",          default: "US",  null: false
+    t.string   "email"
   end
 
   add_index "locations", ["deleted_at"], name: "index_locations_on_deleted_at", using: :btree
@@ -828,7 +830,6 @@ ActiveRecord::Schema.define(version: 20170405234633) do
     t.string   "contact_first_name"
     t.string   "contact_last_name"
     t.string   "contact_email"
-    t.string   "email"
   end
 
   add_index "organizations", ["name"], name: "index_organizations_on_name", using: :btree

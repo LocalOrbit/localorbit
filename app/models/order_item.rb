@@ -62,7 +62,7 @@ class OrderItem < ActiveRecord::Base
       unit: item.unit,
       unit_price: !item.sale_price.nil? && item.sale_price > 0 ? item.sale_price : item.unit_price.nil? ? 0 : item.unit_price.sale_price,
       net_price: !item.net_price.nil? && item.net_price > 0 ? item.net_price : 0,
-      product_fee_pct: item.sale_price.nil? ? item.unit_price.product_fee_pct : 0,
+      product_fee_pct: !item.sale_price.nil? && item.sale_price > 0 ? 0 : item.unit_price.product_fee_pct,
       category_fee_pct: category_fee_pct,
       seller_name: item.product.organization.name,
       delivery_status: "pending"

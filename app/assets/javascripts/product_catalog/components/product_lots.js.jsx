@@ -56,8 +56,8 @@
             }
         }
 
-        if (this.props.lot.order_note)
-            note_indicator = (<span className="tooltip--flag" data-tooltip={this.props.lot.order_note}></span>);
+        if (this.props.lot.inv_note)
+            note_indicator = (<span className="tooltip--flag" data-tooltip={this.props.lot.inv_note}></span>);
         else
             note_indicator = ('');
 

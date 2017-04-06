@@ -194,7 +194,10 @@ Rails.application.routes.draw do
       end
     end
 
+    resources :consignment_transactions
+
     get "consignment_inventory" => "consignment_inventory#index"
+    put "consignment_inventory" => "consignment_inventory#update"
 
     resources :order_items, only: [:index, :update], path: :sold_items do
       collection do
