@@ -21,21 +21,31 @@
     </tr>
     </thead>
     <tbody>
-    <% @inventories.each do |inv| %>
+    <% @inventories.decorate.each do |inv| %>
     <tr>
       <td class="name"><%= link_to inv.product_name, admin_products_path(inv.id) %></td>
-      <td class="supplier"><%= link_to "PO: #{inv.order_id} - #{inv.supplier_name}", purchase_order_path(inv.order_id) %>&nbsp;<%= !inv.order_note.nil? && inv.order_note.length > 0 ? "<span class='tooltip--flag' data-tooltip='#{inv.order_note}'></span>".html_safe : '' %></td>
+      <td class="supplier"><%= link_to "PO: #{inv.order_id} - #{inv.supplier_name}", purchase_order_path(inv.order_id) %>&nbsp;<%= !inv.note.nil? && inv.note.length > 0 ? "<span class='tooltip--flag' data-tooltip='#{inv.note}'></span>".html_safe : '' %></td>
       <td class="lot">
           <%=inv.lot_number %><br/>
       </td>
       <td>
-        <%= inv.status =='waiting' ? 'Awaiting Delivery' : 'Storage' %>
+      <%= inv.decorate.location_info %>
       </td>
       <td>
         <%= inv.status =='waiting' ? inv.ct_quantity : inv.lot_quantity %>
       </td>
       <td class="committed"><%= Inventory::Utils.qty_committed(current_market.id, inv.product_id) %></td>
-      <td><button class="btn btn--tiny">Note</button></td>
+      <td>
+        <%= link_to "Note", "#inventory-note-#{inv.ct_id}", class: "create-inventory-note btn btn--tiny modal-toggle" %>
+        <div class="is-hidden modal popup" id="inventory-note-<%= inv.ct_id %>" style="padding: 10px; width: 50%">
+          <%= form_for :consignment_inventory, method: "put" do |f| %>
+          <%= f.label :notes, "Inventory Note for #{inv.product_name}<br/>PO: #{inv.order_id} - #{inv.supplier_name}".html_safe %>
+          <%= f.text_area :notes, rows: 5, value: inv.note %>
+          <%= f.hidden_field :transaction_id, value: inv.ct_id %>
+          <%= f.submit "Save Note", class: 'btn btn--small mobile-block' %>
+          <% end %>
+        </div>
+      </td>
     </tr>
     <% end %>
     </tbody>

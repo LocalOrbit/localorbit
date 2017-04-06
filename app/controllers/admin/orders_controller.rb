@@ -201,6 +201,12 @@ class Admin::OrdersController < AdminController
     elsif params[:commit] == "Generate Receipt"
       generate_receipt(order)
       return
+    elsif params[:commit] == "Generate Picklist"
+      generate_picklist(order)
+      return
+    elsif params[:commit] == "Generate Invoice"
+      generate_invoice(order)
+      return
     elsif params[:commit] == "Unclose Order"
       unclose_order(order)
       return
@@ -310,7 +316,9 @@ class Admin::OrdersController < AdminController
   end
 
   def generate_receipt(order)
-    redirect_to admin_consignment_receipt_path(order) and return
+    orders = []
+    context = GenerateConsignmentReceiptPdf.perform(orders: orders << order, request: RequestUrlPresenter.new(request))
+    send_data(context.receipt_pdf, filename: 'receipt.pdf', type: 'application/pdf')
   end
 
   def unclose_order(order, batch = nil)
@@ -388,6 +396,18 @@ class Admin::OrdersController < AdminController
     end
   end
 
+  def generate_picklist(order)
+    orders = []
+    context = GenerateConsignmentPickListPdf.perform(orders: orders << order, request: RequestUrlPresenter.new(request))
+    send_data(context.picklist_pdf, filename: 'picklist.pdf', type: 'application/pdf')
+  end
+
+  def generate_invoice(order)
+    orders = []
+    context = GenerateConsignmentInvoicePdf.perform(invoices: orders << order, request: RequestUrlPresenter.new(request))
+    send_data(context.invoice_pdf, filename: 'invoice.pdf', type: 'application/pdf')
+  end
+
   protected
 
   def find_order_items(order_ids)
@@ -397,10 +417,11 @@ class Admin::OrdersController < AdminController
 
   def order_params
     params[:order].delete(:delivery_id) # Remove the parameter so it doesn't conflict
+    params[:order].delete(:deliver_on) # Remove the parameter so it doesn't conflict
     params[:order].delete(:delivery_clear) # Remove the parameter so it doesn't conflict
     params[:order].delete(:credit_clear) # Remove the parameter so it doesn't conflict
     params.require(:order).permit(:delivery_clear, :notes, :order_batch_action, :order_id, :signature_data, :payment_method, items_attributes: [
-      :id, :quantity, :quantity_delivered, :delivery_status, :_destroy
+      :id, :quantity, :quantity_delivered, :delivery_status, :preferred_storage_location_id, :_destroy
     ])
   end
 
@@ -417,7 +438,7 @@ class Admin::OrdersController < AdminController
   def update_delivery(order)
     order = Order.find(params[:id])
 
-    updates = UpdateOrderDelivery.perform(user: current_user, order: order, delivery_id: params.require(:order)[:delivery_id])
+    updates = UpdateOrderDelivery.perform(user: current_user, order: order, delivery_id: params.require(:order)[:delivery_id], deliver_on: params.require(:order)[:deliver_on] )
     if updates.success?
       redirect_to admin_order_path(order), notice: "Delivery successfully updated."
     else

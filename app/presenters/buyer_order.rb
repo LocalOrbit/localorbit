@@ -6,6 +6,7 @@ class BuyerOrder
   delegate :display_delivery_or_pickup,
     :display_delivery_address,
     :delivery_id,
+    :deliver_on,
     :organization_id,
     :invoice_pdf,
     :credit,

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170406020332) do
+ActiveRecord::Schema.define(version: 20170406124215) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -214,6 +214,7 @@ ActiveRecord::Schema.define(version: 20170406020332) do
     t.integer  "child_lot_id"
     t.integer  "child_product_id"
     t.datetime "deleted_at"
+    t.text     "notes"
   end
 
   create_table "credits", force: true do |t|
@@ -475,6 +476,7 @@ ActiveRecord::Schema.define(version: 20170406020332) do
     t.integer  "legacy_id"
     t.integer  "market_id"
     t.integer  "organization_id"
+    t.integer  "storage_location_id"
   end
 
   add_index "lots", ["expires_at"], name: "index_lots_on_expires_at", using: :btree

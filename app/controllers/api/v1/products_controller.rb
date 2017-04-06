@@ -206,7 +206,7 @@ module Api
           lots = Lot
                 .where(product_id: product.id)
                 .where("lots.quantity > 0 AND lots.number IS NOT NULL")
-                .select("lots.id, lots.quantity, lots.number, (SELECT DISTINCT notes FROM consignment_transactions, orders WHERE consignment_transactions.order_id = orders.id AND consignment_transactions.lot_id = lots.id AND transaction_type = 'PO') order_note, (SELECT TO_CHAR(MAX(delivery_date), 'MM/DD/YYYY') FROM consignment_transactions WHERE lot_id = lots.id AND transaction_type = 'PO') delivery_date, 'available'::text AS status")
+                .select("lots.id, lots.quantity, lots.number, (SELECT DISTINCT notes FROM consignment_transactions WHERE consignment_transactions.lot_id = lots.id AND transaction_type = 'PO') inv_note, (SELECT TO_CHAR(MAX(delivery_date), 'MM/DD/YYYY') FROM consignment_transactions WHERE lot_id = lots.id AND transaction_type = 'PO') delivery_date, 'available'::text AS status")
 
           awaiting_delivery_qty = ConsignmentTransaction
                 .where("transaction_type = 'PO' AND lot_id IS NULL AND market_id = ? AND product_id = ?", current_market.id, product.id)
