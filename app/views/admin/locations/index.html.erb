@@ -13,7 +13,7 @@
             <tr>
               <td><input type="checkbox" class="check-all"></td>
               <th>Address</th>
-              <th>Telephone</th>
+              <th>Telephone/<br/>Email</th>
               <th>Default Billing</th>
               <th>Default Shipping</th>
             </tr>
@@ -23,7 +23,7 @@
               <tr>
                 <td><%= check_box_tag "location_ids[]", location.id %></td>
                 <td><%= location.name_and_address %></td>
-                <td><%= number_to_phone location.phone %></td>
+                <td><%= number_to_phone location.phone %><br/><%= location.email %></td>
                 <td><%= radio_button_tag :default_billing_id, location.id, location.default_billing? %></td>
                 <td><%= radio_button_tag :default_shipping_id, location.id, location.default_shipping? %></td>
                 <td class="delete"><button class="delete delete-location font-icon" title="Delete"><i class="fa fa-trash-o">&nbsp;</i></button>
