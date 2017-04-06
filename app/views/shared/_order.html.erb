@@ -29,6 +29,14 @@
           <button id="generate_receipt_button" name="Generate Receipt">Generate Receipt</button>
         </li>
         <% end %>
+        <% if order.sales_order? && order.delivery_status == 'delivered' %>
+            <li>
+              <button id="generate_picklist_button" name="Generate Picklist">Generate Pick List</button>
+            </li>
+            <li>
+              <button id="generate_invoice_button" name="Generate Invoice">Generate Invoice</button>
+            </li>
+        <% end %>
         <% if policy(:market_quickbooks).index? && order.order_type == "sales" && order.payment_status == 'unpaid' && order.delivery_status_for_user(current_user) == 'delivered' && order.qb_ref_id.nil? %>
         <li>
           <button id="export_invoice_button" name="Export Invoice">Export Invoice to QB</button>
@@ -95,6 +103,11 @@
             </div>
           </div>
         <% end %>
+        <% else %>
+        <p class="delivery-time">
+          <%= f.datetime_field :deliver_on, value: order.delivery.deliver_on, class: 'datepicker'  %><br/><br/>
+          <%= f.submit "Change Delivery", class: "btn btn--tiny" %>
+        </p>
         <% end %>
       </div>
     </div>
@@ -197,10 +210,12 @@
           <th scope="row">Delivery Status: </th>
           <td><%= order.delivery_status_for_user(current_user).titleize %></td>
         </tr>
+        <% if order.sales_order? %>
         <tr>
           <th scope="row">Buyer Payment: </th>
           <td><%= order.buyer_payment_status.titleize %><%= order.buyer_payment_invoice_status %></td>
         </tr>
+        <% end %>
         </tbody>
       </table>
       <% if order.payment_method=="purchase order" && !order.invoiced_at.nil? %>
@@ -268,7 +283,9 @@
 
             <% if FeatureAccess.edit_delivered_quantity?(user_order_item_context: user_order_item_context) %>
               <%= item.text_field :quantity_delivered, :autocomplete => :off, value: Format.quantity_no_delimiter(item.object.quantity_delivered), class: 'quantity-delivered' %> <%= item.object.unit %> (Delivered)<br/>
-              <%= item.select(:preferred_storage_location_id, options_for_select(StorageLocation.where("market_id = ?", current_market.id).map{|l| [l.name, l.id]}, item.object.product.lots.last.storage_location_id), {include_blank: true}, {class: 'chosen'}) %>
+              <% if current_market.is_consignment_market? && order.purchase_order? && order.delivery_status == 'pending' %>
+              <%= item.select(:preferred_storage_location_id, options_for_select(StorageLocation.where("market_id = ?", current_market.id).map{|l| [l.name, l.id]}), {include_blank: true}, {class: 'chosen'}) %>
+              <% end %>
             <% else %>
               <span class="quantity-delivered-ro"><%= Format.quantity_no_delimiter item.object.quantity_delivered %></span>
             <% end %>

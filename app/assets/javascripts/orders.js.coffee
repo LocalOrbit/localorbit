@@ -89,6 +89,18 @@ $ ->
     orderForm.prop("target", "_blank")
     orderForm.submit()
 
+  $("#generate_picklist_button").click (e) ->
+    e.preventDefault()
+    $(this).parent().parent().parent().parent().find("input[name=commit]").val("Generate Picklist")
+    orderForm = $(this).closest("form")
+    orderForm.submit()
+
+  $("#generate_invoice_button").click (e) ->
+    e.preventDefault()
+    $(this).parent().parent().parent().parent().find("input[name=commit]").val("Generate Invoice")
+    orderForm = $(this).closest("form")
+    orderForm.submit()
+
   $("#unclose_order").click (e) ->
     e.preventDefault()
     $(this).parent().parent().parent().parent().find("input[name=commit]").val("Unclose Order")

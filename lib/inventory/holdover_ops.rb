@@ -49,10 +49,11 @@ Product is removed from the current PO, and moved to another PO (new or existing
           dest_order.save
         end
 
+        holdover_qty = Integer(params[:holdover_qty]) <= Integer(params[:poso]) ? Integer(params[:holdover_qty]) : Integer(params[:poso])
         # Add Items to new PO
         orig_item = OrderItem.find(t_id.order_item_id)
         dest_item = OrderItem.new(orig_item.attributes.reject{ |k| k == 'id' })
-        dest_item.quantity = params[:holdover_qty]
+        dest_item.quantity = holdover_qty
         dest_item.quantity_delivered = nil
         dest_item.delivery_status = 'pending'
 
@@ -64,9 +65,9 @@ Product is removed from the current PO, and moved to another PO (new or existing
         ct_parent = CreateConsignmentTransaction.perform(user: user, order: dest_order, holdover: true, repack: false)
 
         # Remove Items from original PO
-        orig_item.update_attributes(:quantity => orig_item.quantity - Integer(params[:holdover_qty]))
-        if orig_item.quantity_delivered > Integer(params[:holdover_qty])
-          orig_item.update_attributes(:quantity_delivered => orig_item.quantity_delivered - Integer(params[:holdover_qty]))
+        orig_item.update_attributes(:quantity => orig_item.quantity - holdover_qty)
+        if orig_item.quantity_delivered > holdover_qty
+          orig_item.update_attributes(:quantity_delivered => orig_item.quantity_delivered - holdover_qty)
         end
 
         # Create Transaction entry
@@ -76,7 +77,7 @@ Product is removed from the current PO, and moved to another PO (new or existing
             transaction_type: 'HOLDOVER',
             order_id: order.id,
             product_id: t_id.product_id,
-            quantity: params[:holdover_qty],
+            quantity: holdover_qty,
             holdover_order_id: dest_order.id,
             master: true
         )
@@ -92,7 +93,7 @@ Product is removed from the current PO, and moved to another PO (new or existing
             holdover_order_id: order.id
         )
         ct_dest.save
-        Audit.create!(user_id:user.id, action:"create", auditable_type: "ConsignmentTransaction", auditable_id: order.id, audited_changes: {'transaction_type' => 'Holdover', 'quantity' => params[:holdover_qty], 'holdover_order_id' => params[:holdover_order_id], 'holdover_delivery_date' => params[:holdover_delivery_date]})
+        Audit.create!(user_id:user.id, action:"create", auditable_type: "ConsignmentTransaction", auditable_id: order.id, audited_changes: {'transaction_type' => 'Holdover', 'quantity' => holdover_qty, 'holdover_order_id' => params[:holdover_order_id], 'holdover_delivery_date' => params[:holdover_delivery_date]})
 
       end
 

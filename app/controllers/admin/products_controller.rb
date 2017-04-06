@@ -176,7 +176,7 @@ module Admin
     def after_create_page
       if params[:after_save]
         params[:after_save]
-      elsif @product.lots.count > 0
+      elsif @product.lots.count > 0 || current_market.is_consignment_market?
         [:admin, @product, :prices]
       else
         [:admin, @product, :lots]

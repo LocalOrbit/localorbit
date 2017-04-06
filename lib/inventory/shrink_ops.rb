@@ -16,9 +16,10 @@ Likely do not need to add/change existing products of a PO, but need to create v
 
         # Remove product from lot
         lot = Lot.find(t_id.lot_id)
-        if lot.quantity - shrink_qty > 0
+        if lot.quantity >= shrink_qty
           lot.quantity = lot.quantity - shrink_qty
         else
+          shrink_qty = lot.quantity
           lot.quantity = 0
         end
 
