@@ -35,8 +35,10 @@ class Admin::ConsignmentInventoryController < AdminController
     organizations.id AS supplier_id,
     organizations.name AS supplier_name,
     consignment_transactions.order_id,
+    consignment_transactions.order_item_id,
     CASE WHEN consignment_transactions.lot_id IS NULL THEN 'waiting' ELSE 'onhand' END AS status,
     consignment_transactions.quantity AS ct_quantity,
+    lots.id AS lot_id,
     lots.number AS lot_number,
     lots.quantity AS lot_quantity,
     consignment_transactions.notes as note")

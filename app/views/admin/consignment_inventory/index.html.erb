@@ -21,7 +21,7 @@
     </tr>
     </thead>
     <tbody>
-    <% @inventories.each do |inv| %>
+    <% @inventories.decorate.each do |inv| %>
     <tr>
       <td class="name"><%= link_to inv.product_name, admin_products_path(inv.id) %></td>
       <td class="supplier"><%= link_to "PO: #{inv.order_id} - #{inv.supplier_name}", purchase_order_path(inv.order_id) %>&nbsp;<%= !inv.note.nil? && inv.note.length > 0 ? "<span class='tooltip--flag' data-tooltip='#{inv.note}'></span>".html_safe : '' %></td>
@@ -29,7 +29,7 @@
           <%=inv.lot_number %><br/>
       </td>
       <td>
-        <%= inv.status =='waiting' ? 'Awaiting Delivery' : 'Storage' %>
+      <%= inv.decorate.location_info %>
       </td>
       <td>
         <%= inv.status =='waiting' ? inv.ct_quantity : inv.lot_quantity %>
