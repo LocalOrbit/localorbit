@@ -28,8 +28,10 @@ module Inventory
       def split_product(market_id, orig_product_id, dest_product_id, orig_lot_id, quantity)
         orig_product = Product.find(orig_product_id)
         orig_lot = Lot.find(orig_lot_id)
+        orig_lot_order = orig_lot.number.split('-')[0]
+        order = Order.find(orig_lot_order)
         dest_product = Product.find(dest_product_id)
-        lot_number = Inventory::Utils.generate_lot_number
+        lot_number = Inventory::Utils.generate_lot_number(order)
         dest_lot = Inventory::Utils.upsert_lot(dest_product, lot_number, 0, true)
 
         orig_unit_quantity = orig_product.unit_quantity

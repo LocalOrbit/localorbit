@@ -17,7 +17,7 @@ module Inventory
         repack_into_product = Product.find(repack_into_product_id)
         repack_product_unit_qty = repack_into_product.unit_quantity
 
-        lot_number = Inventory::Utils.generate_lot_number
+        lot_number = Inventory::Utils.generate_lot_number(order)
         repack_into_qty = (repack_qty/repack_product_unit_qty).floor
         if repack_into_qty > 0
           Inventory::Utils.upsert_lot(repack_into_product, lot_number, repack_into_qty)
