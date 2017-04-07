@@ -56,7 +56,7 @@ on_catalog = current_page?(products_path) || current_page?(products_purchase_pat
       </ul>
     </li>
     <% end %>
-    <% if policy(:financial).index? && show_financials?(current_user, current_market) && (current_user.admin? || current_market.is_buysell_market?) %><li><%= link_to raw('<i class="font-icon" data-icon="&#xe00f;"></i>Financials'), admin_financials_path %></li><% end %>
+    <% if policy(:financial).index? && show_financials?(current_user, current_market) && current_market && (current_user.admin? || current_market.is_buysell_market?) %><li><%= link_to raw('<i class="font-icon" data-icon="&#xe00f;"></i>Financials'), admin_financials_path %></li><% end %>
 
     <!-- buyer -->
     <% if policy(:order).index? || policy(:template).index? || policy(:delivery).index? || policy(:order_item).index? || policy(:delivery_schedule).index? %>
