@@ -24,7 +24,7 @@
           <button id="duplicate_button" name="Duplicate Order">Duplicate Order</button>
         </li>
         <% end %>
-        <% if order.purchase_order? %>
+        <% if order.purchase_order? && order.delivery_status == "delivered" %>
         <li>
           <button id="generate_receipt_button" name="Generate Receipt">Generate Receipt</button>
         </li>
@@ -364,7 +364,7 @@
         <% end %>
       </tbody>
       </table>
-      <% if current_market.is_consignment_market? %>
+      <% if current_market.is_consignment_market? && order.sales_order? %>
       <div class="delivery_sig">
         <br/>
         <h2>Delivery Signature:</h2>

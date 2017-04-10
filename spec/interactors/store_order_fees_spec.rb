@@ -22,9 +22,9 @@ describe StoreOrderFees do
   let(:payment_provider) { PaymentProvider::Stripe.id }
 
   subject do
-    order = CreateOrder.perform(payment_provider: payment_provider, order_params: params, cart: cart, buyer: user).order
+    order = CreateOrder.perform(payment_provider: payment_provider, order_params: params, cart: cart, user: user).order
     order.update(payment_method: params[:payment_method])
-    StoreOrderFees.perform(payment_provider: payment_provider, order_params: params, cart: cart, order: order).order.reload.items.index_by {|item| item.product_id }
+    StoreOrderFees.perform(payment_provider: payment_provider, order_params: params, cart: cart, order: order, user: user).order.reload.items.index_by {|item| item.product_id }
   end
 
   context "discounts" do
@@ -46,7 +46,7 @@ describe StoreOrderFees do
       order_item = create(:order_item, product: product1, quantity: 10, discount_seller: 1.00)
       discounted_order = create(:order, market: market, items: [order_item])
 
-      StoreOrderFees.perform(payment_provider: payment_provider, order_params: params, cart: cart, order: discounted_order).order.reload.items.index_by {|item| item.product_id }
+      StoreOrderFees.perform(payment_provider: payment_provider, order_params: params, cart: cart, order: discounted_order, user: user).order.reload.items.index_by {|item| item.product_id }
 
       item = discounted_order.items.first # 69.90
       expect(item.market_seller_fee.to_f).to eq(6.89)

@@ -47,7 +47,7 @@
       </div>
     <% end %>
 
-    <% if @organization.new_record? || (current_user.can_manage_organization?(@organization))  %>
+    <% if @organization.new_record? || (current_user.can_manage_organization?(@organization)) && current_market.is_buysell_market? %>
     <fieldset class="seller-fields<%= ' is-hidden' unless @organization.can_sell? %>">
       <div class="field field--inline">
         <%= f.label :facebook %><br>
@@ -118,7 +118,7 @@
       <div class="row row--field">
         <div class="field column column--half column--guttered">
           <label>Organization Status</label><br>
-          <%= f.check_box :active %>
+          <%= f.check_box :active, :checked => current_market.is_consignment_market? %>
           <%= f.label :active, "Organization is active" %>
         </div>
       </div>
