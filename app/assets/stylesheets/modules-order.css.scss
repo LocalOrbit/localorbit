@@ -106,10 +106,30 @@
   font-size: 24px;
   text-align: center;
 }
+
+.shrink_button {
+  &:after {
+    content: '\f1f8';
+    font-family: FontAwesome;
+  }
+}
+.holdover_button {
+  &:after {
+    content: '\f064';
+    font-family: FontAwesome;
+  }
+}
+.repack_button {
+  &:after {
+    content: '\f079';
+    font-family: FontAwesome;
+  }
+}
+
 @media screen and (max-width: 960px) {
   .order-buyer,
   .order-info-total {
-    width: 45%;
+    width: 40%;
     }
   th {
       min-width: 50%;
@@ -201,6 +221,33 @@
     border: 1px solid #DDDDDD;
     padding: 3px;
     margin: 5px;
+  }
+  .shrink_button {
+    span {
+      display: none
+    }
+    &:after {
+      content: '\f1f8';
+      font-family: FontAwesome;
+    }
+  }
+  .holdover_button {
+    span {
+      display: none
+    }
+    &:after {
+      content: '\f064';
+      font-family: FontAwesome;
+    }
+  }
+  .repack_button {
+    span {
+      display: none
+    }
+    &:after {
+      content: '\f079';
+      font-family: FontAwesome;
+    }
   }
 }
 
