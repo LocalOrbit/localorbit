@@ -3,7 +3,12 @@
   <table>
     <thead>
       <tr>
-        <th></th><th>Lot</th><th>Quantity</th><th>Price</th><th>Total</th><th></th>
+        <th></th>
+        <th>Lot</th>
+        <th>Quantity</th>
+        <th>Price</th>
+        <th>Total</th>
+        <th></th>
       </tr>
     </thead>
     <tbody>
@@ -74,13 +79,12 @@
           <td></td>
           <td></td>
           <td><strong><%= @po_qty - @so_qty %></strong><%= @po_qty - @so_qty == 0 ? '&nbsp;<i style="color: #559955" class="fa fa-check"></i>'.html_safe : '' %></td>
-          <td></td>
           <% if @po_qty - @so_qty > 0 # not sold_through %>
-            <td colspan="4" align="right">
+            <td colspan="5" align="right">
               <div class="product_ops" >
-                <%= link_to "Shrink", '#', class: "shrink_button btn btn--tiny" %>
-                <%= link_to "Holdover", '#', class: "holdover_button btn btn--tiny" %>
-                <%= link_to "Repack", '#', class: "repack_button btn btn--tiny" %>
+                <%= link_to "<span>Shrink</span> ".html_safe, '#', style: 'color: #000', class: "shrink_button btn btn--tiny" %>
+                <%= link_to "<span>Holdover</span> ".html_safe, '#', style: 'color: #000', class: "holdover_button btn btn--tiny" %>
+                <%= link_to "<span>Repack</span> ".html_safe, '#', style: 'color: #000', class: "repack_button btn btn--tiny" %>
               </div>
               <div class="shrink_options" style="float: right; display: none">
                 <div style="float: left; margin-left: 10px;">
@@ -91,7 +95,7 @@
                   <label>#</label>
                   <input type="text" size="3" title="Quantity" style="width: 50px; height: inherit" class="shrink_qty" />
                 </div>
-                <input type="hidden" class="transaction_id" value="<%=po.id %>"/><br/>
+                <input type="hidden" class="transaction_id" value="<%=po.id %>"/><br/><br/>
                 <button class="submit_shrink_button btn btn--primary btn--tiny">Shrink</button>
                 <button class="shrink_cancel_button btn btn--tiny">Cancel</button>
               </div>
@@ -127,6 +131,7 @@
               </div>
             </td>
           <% else %>
+            <td></td>
             <td colspan="4">&nbsp;</td>
             <td>&nbsp;</td>
           <% end %>

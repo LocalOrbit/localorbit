@@ -34,11 +34,11 @@ module Inventory
 
       def upsert_lot(product, lot_number, quantity, split_op = nil)
         lot = Lot.where("product_id = ? AND number = ? AND EXTRACT(YEAR FROM created_at) = ?", product.id, lot_number, Time.now.year.to_s).first
-        if lot.present?
+        if lot.present? && !quantity.nil?
           if split_op
             quantity = lot.quantity + quantity
           end
-          lot.update_attribute(:quantity, quantity)
+          lot.update_attribute(:quantity, quantity + lot.quantity)
         else
           lot = Lot.create(
               product_id: product.id,
@@ -50,7 +50,7 @@ module Inventory
         lot
       end
 
-      def generate_lot_number
+      def generate_lot_number(order=nil)
         days = %w(A B C D E F G)
         current_time = Time.now
 

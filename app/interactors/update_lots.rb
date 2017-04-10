@@ -3,7 +3,7 @@ class UpdateLots
   def perform
     return unless order.purchase_order?
 
-    lot_number = Inventory::Utils.generate_lot_number
+    lot_number = Inventory::Utils.generate_lot_number(order)
 
     order.items.each do |item|
       lot = Inventory::Utils.upsert_lot(item.product, lot_number, item.quantity_delivered)

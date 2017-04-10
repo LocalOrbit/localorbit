@@ -24,7 +24,7 @@ class Admin::ConsignmentInventoryController < AdminController
 
     results = ConsignmentTransaction.joins(product: [:organization])
     .joins("LEFT JOIN lots ON lots.id = consignment_transactions.lot_id")
-    .joins("INNER JOIN consignment_transactions ct ON ct.order_id != consignment_transactions.order_id AND ct.transaction_type = 'HOLDOVER' AND ct.quantity > 0")
+    .joins("LEFT JOIN consignment_transactions ct ON ct.order_id != consignment_transactions.order_id AND ct.transaction_type = 'HOLDOVER' AND ct.quantity > 0")
     .where("consignment_transactions.market_id = ?", current_market.id)
     .where(transaction_type: 'PO')
     .where("lots.quantity > 0 OR consignment_transactions.lot_id IS NULL")

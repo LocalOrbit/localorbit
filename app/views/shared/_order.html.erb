@@ -24,7 +24,7 @@
           <button id="duplicate_button" name="Duplicate Order">Duplicate Order</button>
         </li>
         <% end %>
-        <% if order.purchase_order? %>
+        <% if order.purchase_order? && order.delivery_status == "delivered" %>
         <li>
           <button id="generate_receipt_button" name="Generate Receipt">Generate Receipt</button>
         </li>
@@ -105,7 +105,7 @@
         <% end %>
         <% else %>
         <p class="delivery-time">
-          <%= f.datetime_field :deliver_on, value: order.delivery.deliver_on, class: 'datepicker'  %><br/><br/>
+          <%= f.datetime_field :deliver_on, value: order.delivery.deliver_on, class: 'datepicker'  %><br/>
           <%= f.submit "Change Delivery", class: "btn btn--tiny" %>
         </p>
         <% end %>
@@ -155,8 +155,8 @@
             <th class="math-symbol">+</th>
             <th><%= order.delivery.delivery_schedule.fee_label %>:</th>
             <td>
-              <%= f.text_field :delivery_fees, value: order.delivery_fees, style: 'text-align: right' %><br/>
-              <%= f.submit "Save", class: "btn btn--tiny" %>
+              <%= f.text_field :delivery_fees, size: 3, value: order.delivery_fees, style: 'width: 50px; text-align: right' %>&nbsp;
+              <%= f.button raw("<i class='fa fa-check'>&nbsp;</i>").html_safe, class: "btn btn--primary btn--tiny" %>
             </td>
           </tr>
           <% end %>
@@ -293,7 +293,7 @@
             <% if FeatureAccess.edit_delivered_quantity?(user_order_item_context: user_order_item_context) %>
               <%= item.text_field :quantity_delivered, :autocomplete => :off, value: Format.quantity_no_delimiter(item.object.quantity_delivered), class: 'quantity-delivered' %> <%= item.object.unit %> (Delivered)<br/>
               <% if current_market.is_consignment_market? && order.purchase_order? && order.delivery_status == 'pending' %>
-              <%= item.select(:preferred_storage_location_id, options_for_select(StorageLocation.where("market_id = ?", current_market.id).map{|l| [l.name, l.id]}), {include_blank: true}, {class: 'chosen'}) %>
+              <%= item.select(:preferred_storage_location_id, options_for_select(StorageLocation.where("market_id = ?", current_market.id).map{|l| [l.name, l.id]}), {include_blank: false}, {class: 'chosen'}) %>
               <% end %>
             <% else %>
               <span class="quantity-delivered-ro"><%= Format.quantity_no_delimiter item.object.quantity_delivered %></span>
@@ -364,7 +364,7 @@
         <% end %>
       </tbody>
       </table>
-      <% if current_market.is_consignment_market? %>
+      <% if current_market.is_consignment_market? && order.sales_order? %>
       <div class="delivery_sig">
         <br/>
         <h2>Delivery Signature:</h2>
