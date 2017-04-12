@@ -10,7 +10,7 @@ KnockoutModules.register "consignment_printable_preview_pdf",
 
   $('#submit-multi-button').click ->
     selected = $('#order_batch_action option').filter(':selected').val()
-    if selected == 'receipt' || selected == 'picklist' || selected == 'invoice'
+    if selected == 'receipt' || selected == 'pick_list' || selected == 'invoice'
       orderForm = $(this).closest("form")
       orderForm.prop("target", "_blank")
       orderForm.submit()
