@@ -110,7 +110,7 @@ class Admin::OrdersController < AdminController
         if Rails.env.development?
           context = GenerateConsignmentReceiptPdf.perform(printable: printable, orders: orders, request: RequestUrlPresenter.new(request))
         else
-          context = GenerateConsignmentReceiptPdf.delay.perform(printable: printable, orders: orders, request: RequestUrlPresenter.new(request))
+          context = GenerateConsignmentReceiptPdf.perform(printable: printable, orders: orders, request: RequestUrlPresenter.new(request))
         end
           redirect_to action: :printable_show, id: printable.id
 
@@ -123,7 +123,7 @@ class Admin::OrdersController < AdminController
         if Rails.env.development?
           context = GenerateConsignmentPickListPdf.perform(printable: printable, orders: orders, request: RequestUrlPresenter.new(request))
         else
-          context = GenerateConsignmentPickListPdf.delay.perform(printable: printable, orders: orders, request: RequestUrlPresenter.new(request))
+          context = GenerateConsignmentPickListPdf.perform(printable: printable, orders: orders, request: RequestUrlPresenter.new(request))
         end
           redirect_to action: :printable_show, id: printable.id
 
@@ -136,7 +136,7 @@ class Admin::OrdersController < AdminController
         if Rails.env.development?
           context = GenerateConsignmentInvoicePdf.perform(printable: printable, invoices: orders, request: RequestUrlPresenter.new(request))
         else
-          context = GenerateConsignmentInvoicePdf.delay.perform(printable: printable, invoices: orders, request: RequestUrlPresenter.new(request))
+          context = GenerateConsignmentInvoicePdf.perform(printable: printable, invoices: orders, request: RequestUrlPresenter.new(request))
         end
         redirect_to action: :printable_show, id: printable.id
 
