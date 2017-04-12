@@ -1,14 +1,14 @@
 module ConsignmentPickLists
   class ConsignmentPickListPdfGenerator
     class << self
-      def generate_pdf(request:,orders:,path:nil)
+      def generate_pdf(request:,order:,path:nil)
 
         TemplatedPdfGenerator.generate_pdf(
           request: request,
           template: "admin/consignment_pick_lists/show",
           locals: {
-            orders: orders,
-            market: orders.first.market.decorate,
+            order: order,
+            market: order.market.decorate,
             user: nil
           },
           pdf_settings: { 
