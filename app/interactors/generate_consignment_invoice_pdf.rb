@@ -4,7 +4,9 @@ class GenerateConsignmentInvoicePdf
   def perform
     if context[:invoices].present?
       pdf_result = ConsignmentInvoices::ConsignmentInvoicePdfGenerator.generate_pdf(request: request, invoices: invoices)
-      context[:invoice_pdf] = pdf_result.data
+      printable.pdf = pdf_result.data
+      printable.pdf.name = "invoice.pdf"
+      printable.save!
     end
   end
 end
