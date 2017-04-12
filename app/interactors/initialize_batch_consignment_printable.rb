@@ -11,7 +11,7 @@ class InitializeBatchConsignmentPrintable
       end
     rescue Exception => e
       begin 
-        batch_printable = BatchConsignementPrintable.create(user: user, orders:[], generation_status: BatchConsignmentPrintable::GenerationStatus::Failed)
+        batch_consignment_printable = BatchConsignmentPrintable.create(user: user, orders:[], generation_status: BatchConsignmentPrintable::GenerationStatus::Failed)
         GenerateBatchConsignmentPrintablePdf::BatchConsignmentPrintableUpdater.record_error!(batch_consignment_printable,
                                                                    task: "Initializing batch printable",
                                                                    message: "Selected order ids: #{orders.map do |o| o.id end.inspect}",
