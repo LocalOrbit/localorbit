@@ -121,12 +121,12 @@ class Admin::OrdersController < AdminController
           receipt_tempfiles << tempfile
         end
         merged_pdf = GhostscriptWrapper.merge_pdf_files(receipt_tempfiles)
+        receipt_tempfiles.each { |file| file.unlink }
 
         printable.pdf = merged_pdf
         printable.pdf.name = "receipt.pdf"
         printable.save!
 
-        receipt_tempfiles.each { |file| file.unlink }
 
         redirect_to action: :printable_show, id: printable.id
 
@@ -142,19 +142,19 @@ class Admin::OrdersController < AdminController
           tempfile = Tempfile.new("tmp-picklist-#{order.order_number}")
 
           if Rails.env.development?
-            context = GenerateConsignmentPickListPdf.perform(printable: printable, order: order, request: RequestUrlPresenter.new(request), path: tempfile.path)
+            context = GenerateConsignmentPickListPdf.delay.perform(printable: printable, order: order, request: RequestUrlPresenter.new(request), path: tempfile.path)
           else
             context = GenerateConsignmentPickListPdf.delay.perform(printable: printable, order: order, request: RequestUrlPresenter.new(request), path: tempfile.path)
           end
           picklist_tempfiles << tempfile
         end
         merged_pdf = GhostscriptWrapper.merge_pdf_files(picklist_tempfiles)
+        picklist_tempfiles.each { |file| file.unlink }
 
         printable.pdf = merged_pdf
         printable.pdf.name = "picklist.pdf"
         printable.save!
 
-        picklist_tempfiles.each { |file| file.unlink }
 
         redirect_to action: :printable_show, id: printable.id
 
@@ -178,12 +178,12 @@ class Admin::OrdersController < AdminController
         end
 
         merged_pdf = GhostscriptWrapper.merge_pdf_files(invoice_tempfiles)
+        invoice_tempfiles.each { |file| file.unlink }
 
         printable.pdf = merged_pdf
         printable.pdf.name = "invoice.pdf"
         printable.save!
 
-        invoice_tempfiles.each { |file| file.unlink }
 
         redirect_to action: :printable_show, id: printable.id
 
