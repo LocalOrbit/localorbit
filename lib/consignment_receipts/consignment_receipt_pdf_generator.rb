@@ -1,15 +1,15 @@
 module ConsignmentReceipts
   class ConsignmentReceiptPdfGenerator
     class << self
-      def generate_pdf(request:,orders:,path:nil)
+      def generate_pdf(request:,order:,path:nil)
         #receipt = BuyerOrder.new(order)
 
         TemplatedPdfGenerator.generate_pdf(
           request: request,
           template: "admin/consignment_receipts/show",
           locals: {
-            receipts: orders,
-            market: orders.first.market.decorate,
+            receipt: order,
+            market: order.market.decorate,
             user: nil
           },
           pdf_settings: { 

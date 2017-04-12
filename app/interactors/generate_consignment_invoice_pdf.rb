@@ -2,11 +2,13 @@ class GenerateConsignmentInvoicePdf
   include Interactor
 
   def perform
-    if context[:invoices].present?
-      pdf_result = ConsignmentInvoices::ConsignmentInvoicePdfGenerator.generate_pdf(request: request, invoices: invoices)
-      printable.pdf = pdf_result.data
-      printable.pdf.name = "invoice.pdf"
-      printable.save!
+    if context[:invoice].present?
+      pdf_result = ConsignmentInvoices::ConsignmentInvoicePdfGenerator.generate_pdf(request: request, invoice: invoice, path: path)
+      if !context[:path].present?
+        printable.pdf = pdf_result.data
+        printable.pdf.name = "invoice.pdf"
+        printable.save!
+      end
     end
   end
 end
