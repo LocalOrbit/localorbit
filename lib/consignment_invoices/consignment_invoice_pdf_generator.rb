@@ -1,14 +1,14 @@
 module ConsignmentInvoices
   class ConsignmentInvoicePdfGenerator
     class << self
-      def generate_pdf(request:,invoices:,path:nil)
+      def generate_pdf(request:,invoice:,path:nil)
 
           TemplatedPdfGenerator.generate_pdf(
             request: request,
             template: "admin/consignment_invoices/show",
             locals: {
-              invoices: invoices,
-              market: invoices.first.market.decorate,
+              invoice: invoice,
+              market: invoice.market.decorate,
               user: nil
             },
             pdf_settings: {

@@ -107,12 +107,28 @@ class Admin::OrdersController < AdminController
         printable = ConsignmentPrintable.create!(user: current_user)
 
         orders = Order.where(id: params["order_id"])
-        if Rails.env.development?
-          context = GenerateConsignmentReceiptPdf.perform(printable: printable, orders: orders, request: RequestUrlPresenter.new(request))
-        else
-          context = GenerateConsignmentReceiptPdf.perform(printable: printable, orders: orders, request: RequestUrlPresenter.new(request))
+        receipt_tempfiles = []
+
+        orders.each do |order|
+          tempfile = Tempfile.new("tmp-receipt-#{order.order_number}")
+
+          if Rails.env.development?
+            context = GenerateConsignmentReceiptPdf.perform(printable: printable, order: order, request: RequestUrlPresenter.new(request), path: tempfile.path)
+          else
+            context = GenerateConsignmentReceiptPdf.delay.perform(printable: printable, order: order, request: RequestUrlPresenter.new(request), path: tempfile.path)
+          end
+
+          receipt_tempfiles << tempfile
         end
-          redirect_to action: :printable_show, id: printable.id
+        merged_pdf = GhostscriptWrapper.merge_pdf_files(receipt_tempfiles)
+
+        printable.pdf = merged_pdf
+        printable.pdf.name = "receipt.pdf"
+        printable.save!
+
+        receipt_tempfiles.each { |file| file.unlink }
+
+        redirect_to action: :printable_show, id: printable.id
 
         #send_data(context.receipt_pdf, filename: 'receipt.pdf', type: 'application/pdf')
 
@@ -120,12 +136,27 @@ class Admin::OrdersController < AdminController
         printable = ConsignmentPrintable.create!(user: current_user)
 
         orders = Order.where(id: params["order_id"])
-        if Rails.env.development?
-          context = GenerateConsignmentPickListPdf.perform(printable: printable, orders: orders, request: RequestUrlPresenter.new(request))
-        else
-          context = GenerateConsignmentPickListPdf.perform(printable: printable, orders: orders, request: RequestUrlPresenter.new(request))
+        picklist_tempfiles = []
+
+        orders.each do |order|
+          tempfile = Tempfile.new("tmp-picklist-#{order.order_number}")
+
+          if Rails.env.development?
+            context = GenerateConsignmentPickListPdf.perform(printable: printable, order: order, request: RequestUrlPresenter.new(request), path: tempfile.path)
+          else
+            context = GenerateConsignmentPickListPdf.delay.perform(printable: printable, order: order, request: RequestUrlPresenter.new(request), path: tempfile.path)
+          end
+          picklist_tempfiles << tempfile
         end
-          redirect_to action: :printable_show, id: printable.id
+        merged_pdf = GhostscriptWrapper.merge_pdf_files(picklist_tempfiles)
+
+        printable.pdf = merged_pdf
+        printable.pdf.name = "picklist.pdf"
+        printable.save!
+
+        picklist_tempfiles.each { |file| file.unlink }
+
+        redirect_to action: :printable_show, id: printable.id
 
         #send_data(context.picklist_pdf, filename: 'picklist.pdf', type: 'application/pdf')
 
@@ -133,11 +164,27 @@ class Admin::OrdersController < AdminController
         printable = ConsignmentPrintable.create!(user: current_user)
 
         orders = Order.where(id: params["order_id"])
-        if Rails.env.development?
-          context = GenerateConsignmentInvoicePdf.perform(printable: printable, invoices: orders, request: RequestUrlPresenter.new(request))
-        else
-          context = GenerateConsignmentInvoicePdf.perform(printable: printable, invoices: orders, request: RequestUrlPresenter.new(request))
+        invoice_tempfiles = []
+
+        orders.each do |order|
+          tempfile = Tempfile.new("tmp-invoice-#{order.order_number}")
+
+          if Rails.env.development?
+            context = GenerateConsignmentInvoicePdf.perform(printable: printable, invoice: order, request: RequestUrlPresenter.new(request), path: tempfile.path)
+          else
+            context = GenerateConsignmentInvoicePdf.delay.perform(printable: printable, invoice: order, request: RequestUrlPresenter.new(request), path: tempfile.path)
+          end
+          invoice_tempfiles << tempfile
         end
+
+        merged_pdf = GhostscriptWrapper.merge_pdf_files(invoice_tempfiles)
+
+        printable.pdf = merged_pdf
+        printable.pdf.name = "invoice.pdf"
+        printable.save!
+
+        invoice_tempfiles.each { |file| file.unlink }
+
         redirect_to action: :printable_show, id: printable.id
 
         #send_data(context.invoice_pdf, filename: 'invoice.pdf', type: 'application/pdf')
@@ -417,11 +464,10 @@ class Admin::OrdersController < AdminController
   def generate_receipt(order)
     printable = ConsignmentPrintable.create!(user: current_user)
 
-    orders = []
     if Rails.env.development?
-      context = GenerateConsignmentReceiptPdf.perform(printable: printable, orders: orders << order, request: RequestUrlPresenter.new(request))
+      context = GenerateConsignmentReceiptPdf.perform(printable: printable, order: order, request: RequestUrlPresenter.new(request), path: nil)
     else
-      context = GenerateConsignmentReceiptPdf.delay.perform(printable: printable, orders: orders << order, request: RequestUrlPresenter.new(request))
+      context = GenerateConsignmentReceiptPdf.delay.perform(printable: printable, order: order, request: RequestUrlPresenter.new(request), path: nil)
     end
     redirect_to action: :printable_show, id: printable.id
 
@@ -431,11 +477,10 @@ class Admin::OrdersController < AdminController
   def generate_picklist(order)
     printable = ConsignmentPrintable.create!(user: current_user)
 
-    orders = []
     if Rails.env.development?
-      context = GenerateConsignmentPickListPdf.perform(printable: printable, orders: orders << order, request: RequestUrlPresenter.new(request))
+      context = GenerateConsignmentPickListPdf.perform(printable: printable, order: order, request: RequestUrlPresenter.new(request), path: nil)
     else
-      context = GenerateConsignmentPickListPdf.delay.perform(printable: printable, orders: orders << order, request: RequestUrlPresenter.new(request))
+      context = GenerateConsignmentPickListPdf.delay.perform(printable: printable, order: order, request: RequestUrlPresenter.new(request), path: nil)
     end
     redirect_to action: :printable_show, id: printable.id
 
@@ -445,11 +490,10 @@ class Admin::OrdersController < AdminController
   def generate_invoice(order)
     printable = ConsignmentPrintable.create!(user: current_user)
 
-    orders = []
     if Rails.env.development?
-      context = GenerateConsignmentInvoicePdf.perform(printable: printable, invoices: orders << order, request: RequestUrlPresenter.new(request))
+      context = GenerateConsignmentInvoicePdf.perform(printable: printable, invoice: order, request: RequestUrlPresenter.new(request), path: nil)
     else
-      context = GenerateConsignmentInvoicePdf.delay.perform(printable: printable, invoices: orders << order, request: RequestUrlPresenter.new(request))
+      context = GenerateConsignmentInvoicePdf.delay.perform(printable: printable, invoice: order, request: RequestUrlPresenter.new(request), path: nil)
     end
     redirect_to action: :printable_show, id: printable.id
 

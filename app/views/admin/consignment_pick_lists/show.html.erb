@@ -356,17 +356,16 @@
 <body class="controller-picklists" style="margin:0px;padding:30px;">
 <div class="picklists-wrapper">
   <table>
-    <% orders.each do |o| %>
         <thead></thead>
         <tbody class="order-header">
         <tr>
           <td colspan="6">
               <div class="inline-block">
-                <h1 class="left">Order: <%= o.order_number %></h1> <div class="right" style="text-align: right"><h2>Buyer: <%=o.organization.name %></h2><h2>Delivery: <%=o.delivery.deliver_on.strftime("%-m/%-d/%Y") %></h2></div>
+                <h1 class="left">Order: <%= order.order_number %></h1> <div class="right" style="text-align: right"><h2>Buyer: <%=order.organization.name %></h2><h2>Delivery: <%=order.delivery.deliver_on.strftime("%-m/%-d/%Y") %></h2></div>
               </div>
           </td>
         </tr>
-        <tr><td colspan="6"><div class="notes"><%= o.notes.nil? ? '' : "Notes: #{o.notes}" %></div></td></tr>
+        <tr><td colspan="6"><div class="notes"><%= order.notes.nil? ? '' : "Notes: #{order.notes}" %></div></td></tr>
         </tbody>
         <thead>
         <tr>
@@ -379,7 +378,7 @@
         </tr>
         </thead>
         <tbody class="order-detail">
-        <% o.items.order(:name).each do |item| %>
+        <% order.items.order(:name).each do |item| %>
         <tr>
           <td><%= item.name %></td>
           <td><%= item.product.organization.name %></td>
@@ -392,7 +391,6 @@
         <tr></tr>
         <tr></tr>
       </tbody>
-    <% end %>
   </table>
 </div>
 </body>
