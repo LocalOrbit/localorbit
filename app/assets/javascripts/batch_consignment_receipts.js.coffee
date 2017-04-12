@@ -204,7 +204,7 @@ Test =
 
   seq3: ->
     [ Test.mkStatus("not_started", "0.0")
-      Test.mkStatus("failed", "0.9", null, ["Orders not valid in InitializeBatchConsignmentReceipt"]) ]
+      Test.mkStatus("failed", "0.9", null, ["Orders not valid in InitializeBatchConsignmentPrintable"]) ]
 
   sequenceStates: (states,interval) ->
     handle = setInterval ->

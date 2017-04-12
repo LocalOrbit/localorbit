@@ -93,17 +93,32 @@ class Admin::OrdersController < AdminController
   def create
     case params["order_batch_action"]
       when "pick_list", "invoice", "receipt"
-        printable = ConsignmentPrintable.create!(user: current_user)
 
-        printable_type = params[:order_batch_action]
         orders = Order.where(id: params["order_id"])
-        if Rails.env.development?
-          context = GenerateConsignmentPrintablePdf.perform(printable: printable, type: printable_type, orders: orders, request: RequestUrlPresenter.new(request))
+        printable_type = params[:order_batch_action]
+
+        context = InitializeBatchConsignmentPrintable.perform(user: current_user, orders: orders)
+        if context.success?
+          batch_consignment_printable = context.batch_consignment_printable
+          GenerateBatchConsignmentPrintablePdf.delay.perform(batch_consignment_printable: batch_consignment_printable, type: printable_type,
+                                                request: RequestUrlPresenter.new(request))
+
+          redirect_to action: :batch_printable_show, id: batch_consignment_printable.id
         else
-          context = GenerateConsignmentPrintablePdf.perform(printable: printable, type: printable_type, orders: orders, request: RequestUrlPresenter.new(request))
+          redirect_to admin_orders_path, alert: "Unsupported action: '#{params[:order_batch_action]}'"
         end
 
-        redirect_to action: :printable_show, id: printable.id
+        # printable = ConsignmentPrintable.create!(user: current_user)
+        #
+        # printable_type = params[:order_batch_action]
+        # orders = Order.where(id: params["order_id"])
+        # if Rails.env.development?
+        #   context = GenerateConsignmentPrintablePdf.perform(printable: printable, type: printable_type, orders: orders, request: RequestUrlPresenter.new(request))
+        # else
+        #   context = GenerateConsignmentPrintablePdf.perform(printable: printable, type: printable_type, orders: orders, request: RequestUrlPresenter.new(request))
+        # end
+        #
+        # redirect_to action: :printable_show, id: printable.id
 
       when "export"
         params["order_id"].each do |o|
@@ -404,6 +419,17 @@ class Admin::OrdersController < AdminController
     end
   end
 
+  def batch_printable_show
+    @batch_consignment_printable = BatchConsignmentPrintable.for_user(current_user).find params[:id]
+
+    respond_to do |format|
+      format.html {}
+      format.json do
+        output = if @batch_consignment_printable.pdf then {pdf_url: @batch_consignment_printable.pdf.remote_url} else {pdf_url: nil} end
+        render json: output
+      end
+    end
+  end
   protected
 
   def find_order_items(order_ids)

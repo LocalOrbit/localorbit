@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170411214924) do
+ActiveRecord::Schema.define(version: 20170412150843) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -65,8 +65,8 @@ ActiveRecord::Schema.define(version: 20170411214924) do
 
   add_index "bank_accounts", ["bankable_type", "bankable_id"], name: "index_bank_accounts_on_bankable_type_and_bankable_id", using: :btree
 
-  create_table "batch_consignment_receipt_errors", force: true do |t|
-    t.integer  "batch_consignment_receipt_id"
+  create_table "batch_consignment_printable_errors", force: true do |t|
+    t.integer  "batch_consignment_printable_id"
     t.string   "task"
     t.text     "message"
     t.text     "exception"
@@ -76,7 +76,7 @@ ActiveRecord::Schema.define(version: 20170411214924) do
     t.datetime "updated_at"
   end
 
-  create_table "batch_consignment_receipts", force: true do |t|
+  create_table "batch_consignment_printables", force: true do |t|
     t.integer  "user_id"
     t.string   "pdf_uid"
     t.string   "pdf_name"
@@ -86,10 +86,10 @@ ActiveRecord::Schema.define(version: 20170411214924) do
     t.datetime "updated_at"
   end
 
-  add_index "batch_consignment_receipts", ["user_id"], name: "index_batch_consignment_receipts_on_user_id", using: :btree
+  add_index "batch_consignment_printables", ["user_id"], name: "index_batch_consignment_printables_on_user_id", using: :btree
 
-  create_table "batch_consignment_receipts_orders", force: true do |t|
-    t.integer  "batch_consignment_receipt_id"
+  create_table "batch_consignment_printables_orders", force: true do |t|
+    t.integer  "batch_consignment_printable_id"
     t.integer  "order_id"
     t.datetime "created_at"
     t.datetime "updated_at"
