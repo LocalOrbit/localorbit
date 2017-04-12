@@ -205,7 +205,7 @@
               <td><%= order.display_payment_method %></td>
           <% end %>
         </tr>
-        <% if order.payment_method == "invoice" || order.payment_method == "purchase order" || order.payment_method == "po" || order.payment_method == "check" && order.payment_note.length > 0 %>
+        <% if (order.payment_method == "invoice" || order.payment_method == "purchase order" || order.payment_method == "po" || order.payment_method == "check") && order.payment_note.length > 0 %>
         <tr>
           <th scope="row"><%= order.sales_order? ? 'Payment Ref. #' : 'Supplier Inv. #' %></th>
           <% if current_market.is_consignment_market? && order.undelivered_for_user?(current_user) %>

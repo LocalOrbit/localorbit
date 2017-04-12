@@ -1,4 +1,7 @@
 $ ->
+KnockoutModules.register "consignment_printable_preview_pdf",
+  viewModel: (ko,el) ->
+    PdfUriPoller.viewModel(ko,el)
 
   $("#signature").jSignature()
 
@@ -7,7 +10,7 @@ $ ->
 
   $('#submit-multi-button').click ->
     selected = $('#order_batch_action option').filter(':selected').val()
-    if selected == 'receipt'
+    if selected == 'receipt' || selected == 'picklist' || selected == 'invoice'
       orderForm = $(this).closest("form")
       orderForm.prop("target", "_blank")
       orderForm.submit()
@@ -93,12 +96,14 @@ $ ->
     e.preventDefault()
     $(this).parent().parent().parent().parent().find("input[name=commit]").val("Generate Picklist")
     orderForm = $(this).closest("form")
+    orderForm.prop("target", "_blank")
     orderForm.submit()
 
   $("#generate_invoice_button").click (e) ->
     e.preventDefault()
     $(this).parent().parent().parent().parent().find("input[name=commit]").val("Generate Invoice")
     orderForm = $(this).closest("form")
+    orderForm.prop("target", "_blank")
     orderForm.submit()
 
   $("#unclose_order").click (e) ->
