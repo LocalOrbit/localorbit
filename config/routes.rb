@@ -132,6 +132,8 @@ Rails.application.routes.draw do
       resources :order_items, only: [:show, :update] # for order price editing
       member do
         get :printable_show, to: "orders#printable_show"
+        get :batch_printable_show, to: "orders#batch_printable_show"
+        get :progress
       end
     end
 
@@ -228,31 +230,37 @@ Rails.application.routes.draw do
     end
     resources :newsletters
 
-    resources :invoices, only: :show do
-      member do
-        get "invoice" => "invoices#show"
-        get :await_pdf, to: "invoices#await_pdf"
-        get :peek, to: "invoices#peek"
-      end
-    end
-
-    resources :consignment_receipts, only: :show do
-      member do
-        get "consignment_receipt" => "consignment_receipts#show"
-        get :await_pdf, to: "consignment_receipts#await_pdf"
-        get :peek, to: "consignment_receipts#peek"
-      end
-    end
-
-    resources :consignment_pick_lists, only: :show do
-      member do
-        get "consignment_pick_list" => "consignment_pick_list#show"
-        get :await_pdf, to: "consignment_pick_lists#await_pdf"
-        get :peek, to: "consignment_pick_lists#peek"
-      end
-    end
+    # resources :invoices, only: :show do
+    #   member do
+    #     get "invoice" => "invoices#show"
+    #     get :await_pdf, to: "invoices#await_pdf"
+    #     get :peek, to: "invoices#peek"
+    #   end
+    # end
+    #
+    # resources :consignment_receipts, only: :show do
+    #   member do
+    #     get "consignment_receipt" => "consignment_receipts#show"
+    #     get :await_pdf, to: "consignment_receipts#await_pdf"
+    #     get :peek, to: "consignment_receipts#peek"
+    #   end
+    # end
+    #
+    # resources :consignment_pick_lists, only: :show do
+    #   member do
+    #     get "consignment_pick_list" => "consignment_pick_list#show"
+    #     get :await_pdf, to: "consignment_pick_lists#await_pdf"
+    #     get :peek, to: "consignment_pick_lists#peek"
+    #   end
+    # end
 
     resources :batch_consignment_receipts, only: :show do
+      member do
+        get :progress
+      end
+    end
+
+    resources :batch_consignment_printables, only: :show do
       member do
         get :progress
       end

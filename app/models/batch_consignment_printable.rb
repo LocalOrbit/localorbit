@@ -1,4 +1,4 @@
-class BatchConsignmentReceipt < ActiveRecord::Base
+class BatchConsignmentPrintable < ActiveRecord::Base
   module GenerationStatus
     NotStarted = "not_started"
     Generating = "generating"
@@ -8,7 +8,7 @@ class BatchConsignmentReceipt < ActiveRecord::Base
 
   belongs_to :user
   has_and_belongs_to_many :orders
-  has_many :batch_consignment_receipt_errors
+  has_many :batch_consignment_printable_errors
 
   validates_presence_of :user
 
