@@ -253,12 +253,12 @@ Rails.application.routes.draw do
     #     get :peek, to: "consignment_pick_lists#peek"
     #   end
     # end
-
-    resources :batch_consignment_receipts, only: :show do
-      member do
-        get :progress
-      end
-    end
+    #
+    # resources :batch_consignment_receipts, only: :show do
+    #   member do
+    #     get :progress
+    #   end
+    # end
 
     resources :batch_consignment_printables, only: :show do
       member do
