@@ -230,14 +230,14 @@ Rails.application.routes.draw do
     end
     resources :newsletters
 
-    # resources :invoices, only: :show do
-    #   member do
-    #     get "invoice" => "invoices#show"
-    #     get :await_pdf, to: "invoices#await_pdf"
-    #     get :peek, to: "invoices#peek"
-    #   end
-    # end
-    #
+    resources :invoices, only: :show do
+      member do
+        get "invoice" => "invoices#show"
+        get :await_pdf, to: "invoices#await_pdf"
+        get :peek, to: "invoices#peek"
+      end
+    end
+    
     # resources :consignment_receipts, only: :show do
     #   member do
     #     get "consignment_receipt" => "consignment_receipts#show"
