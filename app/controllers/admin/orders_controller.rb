@@ -105,20 +105,8 @@ class Admin::OrdersController < AdminController
 
           redirect_to action: :batch_printable_show, id: batch_consignment_printable.id
         else
-          redirect_to admin_orders_path, alert: "Unsupported action: '#{params[:order_batch_action]}'"
+          redirect_to @order_type == 'sales' ? admin_orders_path : admin_purchase_order_path, alert: "Error generating documents."
         end
-
-        # printable = ConsignmentPrintable.create!(user: current_user)
-        #
-        # printable_type = params[:order_batch_action]
-        # orders = Order.where(id: params["order_id"])
-        # if Rails.env.development?
-        #   context = GenerateConsignmentPrintablePdf.perform(printable: printable, type: printable_type, orders: orders, request: RequestUrlPresenter.new(request))
-        # else
-        #   context = GenerateConsignmentPrintablePdf.perform(printable: printable, type: printable_type, orders: orders, request: RequestUrlPresenter.new(request))
-        # end
-        #
-        # redirect_to action: :printable_show, id: printable.id
 
       when "export"
         params["order_id"].each do |o|
