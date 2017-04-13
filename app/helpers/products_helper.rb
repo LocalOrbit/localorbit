@@ -29,7 +29,7 @@ module ProductsHelper
       condition.push "fix the following Errors:"
     end
 
-    if condition.length > 0
+    if condition.length > 0 && current_market.is_buysell_market?
       content_tag(:div, "#{@product.plural_units_with_name} will not appear in the shop until you #{condition.join(" and ")}".html_safe, class: "product-status-alert")
     end
   end
