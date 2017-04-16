@@ -47,7 +47,7 @@
       </div>
     <% end %>
 
-    <% if @organization.new_record? || (current_user.can_manage_organization?(@organization)) && current_market.is_buysell_market? %>
+    <% if current_market.is_buysell_market? && (@organization.new_record? || current_user.can_manage_organization?(@organization)) %>
     <fieldset class="seller-fields<%= ' is-hidden' unless @organization.can_sell? %>">
       <div class="field field--inline">
         <%= f.label :facebook %><br>
