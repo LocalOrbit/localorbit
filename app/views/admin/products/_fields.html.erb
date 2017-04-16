@@ -29,12 +29,12 @@
     </div>
 
     <div class="field">
-      <% children_products = Product.where(parent_product_id: @product.id) %>
-      <% if !children_products.empty? %>
-      <label>Associated Child Products</label><br/>
-      <% children_products.each do |child_product| %>
-        <%= link_to "#{child_product.name}: ##{child_product.unit_quantity}, #{child_product.unit_quantity > 1 ? child_product.unit_plural : child_product.unit_singular}", admin_product_path(child_product.id) %><br/>
-      <% end %>
+      <% children_products = !@product.object.id.nil? ? Product.where(parent_product_id: @product.object.id) : nil %>
+      <% if !children_products.nil? && !children_products.empty? %>
+        <label>Associated Child Products</label><br/>
+        <% children_products.each do |child_product| %>
+          <%= link_to "#{child_product.name}: ##{child_product.unit_quantity}, #{child_product.unit_quantity > 1 ? child_product.unit_plural : child_product.unit_singular}", admin_product_path(child_product.id) %><br/>
+        <% end %>
       <% end %>
     </div>
 <% end %>

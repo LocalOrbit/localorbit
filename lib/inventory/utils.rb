@@ -32,6 +32,28 @@ module Inventory
         order.save
       end
 
+      def consignment_can_undeliver?(order)
+        if order.sales_order?
+          true
+          #result = ActiveRecord::Base.connection.exec_query("
+          #SELECT count(1) cnt FROM consignment_transactions
+          #WHERE order_id = $1 AND transaction_type = 'SO'
+          #", 'has_so_query', [[nil,order.id]])
+
+          #Integer(result[0]['cnt']) == 0 ? true : false
+        else
+          result = ActiveRecord::Base.connection.exec_query("
+          SELECT count(1) cnt
+          FROM consignment_transactions ct, consignment_transactions ct2
+          WHERE ct.id = ct2.parent_id
+          AND ct.transaction_type = 'PO'
+          AND ct.order_id = $1
+          AND ct2.deleted_at IS NULL", 'has_po_query', [[nil,order.id]])
+
+          Integer(result[0]['cnt']) == 0 ? true : false
+        end
+      end
+
       def upsert_lot(product, lot_number, quantity, split_op = nil)
         lot = Lot.where("product_id = ? AND number = ? AND EXTRACT(YEAR FROM created_at) = ?", product.id, lot_number, Time.now.year.to_s).first
         if lot.present? && !quantity.nil?

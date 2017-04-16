@@ -1060,6 +1060,39 @@ module Dom
       end
     end
 
+    class ConsignmentItem < Domino
+      selector ".product-listing"
+
+      attribute :name
+
+      def quantity
+        node.find(".app-product-input")
+      end
+
+      def sale_price
+        node.find(".app-sale-price-input")
+      end
+
+      def net_price
+        node.find(".app-net-price-input")
+      end
+
+      def set_quantity(n)
+        quantity.set("")
+        quantity.native.send_keys(n.to_s)
+      end
+
+      def set_sale_price(n)
+        sale_price.set("")
+        sale_price.native.send_keys(n.to_s)
+      end
+
+      def set_net_price(n)
+        net_price.set("")
+        net_price.native.send_keys(n.to_s)
+      end
+    end
+
     class Item < Domino
       selector ".cart_item"
 
