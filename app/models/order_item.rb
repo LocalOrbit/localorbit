@@ -7,6 +7,7 @@ class OrderItem < ActiveRecord::Base
   before_save :update_delivery_status
   before_save :update_delivered_at
   before_save :update_consumed_inventory
+  before_destroy :remove_consignment_transaction
 
   audited allow_mass_assignment: true, associated_with: :order
 
@@ -141,6 +142,13 @@ class OrderItem < ActiveRecord::Base
 
   def delivered?
     delivery_status == "delivered"
+  end
+
+  def remove_consignment_transaction
+    ct = ConsignmentTransaction.where(order_id: self.order.id, order_item_id: self.id).first
+    if !ct.nil?
+      ct.soft_delete
+    end
   end
 
   private

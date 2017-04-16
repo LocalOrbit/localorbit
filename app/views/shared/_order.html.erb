@@ -238,7 +238,10 @@
     <% if !current_user.buyer_only? && order.undelivered_for_user?(current_user) %>
       <%= button_tag "Mark all delivered", class: 'pull-right btn btn--small btn--primary mobile-block', id: 'mark-all-delivered', type: 'button' %>
     <% end %>
-    <% if current_user.can_manage_market?(order.market) && !order.undelivered_for_user?(current_user) %>
+    <% if
+        (current_market.is_buysell_market? && current_user.can_manage_market?(order.market) && !order.undelivered_for_user?(current_user)) ||
+        (current_market.is_consignment_market? && current_user.can_manage_market?(order.market) && !order.undelivered_for_user?(current_user) && Inventory::Utils.consignment_can_undeliver?(order))
+    %>
       <%= button_tag "Undo mark delivery", class: 'pull-right btn btn--small btn--primary mobile-block' , id: 'undo-delivery', type: 'button' %>
     <% end %>
     <div class="table-wrapper">
