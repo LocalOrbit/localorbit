@@ -28,36 +28,56 @@
         var split_action;
         var undo_split_action;
         var note_indicator;
+        var defaultSale;
+        var defaultNet;
 
         if (this.props.salesOrder) {
+            if (this.state.cartSalePrice && this.state.cartLotId == this.props.lot.id)
+                defaultSale = this.state.cartSalePrice;
+            else if (this.props.product.prices.length > 0 && this.props.product.prices[0].sale_price) {
+                defaultSale = this.props.product.prices[0].sale_price;
+                this.cSalePrice = this.props.product.prices[0].sale_price;
+            }
+            else
+                defaultSale = '';
+
+            if (this.state.cartNetPrice && this.state.cartLotId == this.props.lot.id)
+                defaultNet = this.state.cartNetPrice;
+            else if (this.props.product.prices.length > 0 && this.props.product.prices[0].net_price) {
+                defaultNet = this.props.product.prices[0].net_price;
+                this.cNetPrice = this.props.product.prices[0].net_price;
+            }
+            else
+                defaultNet = '';
+
             if (this.props.orderId) {
                 sale_entry = (
                     <input className="redesigned app-sale-price-input" style={{width: "75px"}} type="number"
                            placeholder="0" name="items_to_add[][sale_price]"
-                           defaultValue={this.state.cartSalePrice && this.state.cartLotId == this.props.lot.id ? this.state.cartSalePrice : ''} onKeyDown={this.clearField} onChange={this.updateSOSalePrice}/>
+                           defaultValue={defaultSale} onKeyDown={this.clearField} onChange={this.updateSOSalePrice}/>
                 );
                 net_entry = (
                     <input className="redesigned app-net-price-input" style={{width: "75px"}} type="number"
                            placeholder="0" name="items_to_add[][net_price]"
-                           defaultValue={this.state.cartNetPrice && this.state.cartLotId == this.props.lot.id ? this.state.cartNetPrice : ''} onKeyDown={this.clearField} onChange={this.updateSONetPrice}/>
+                           defaultValue={defaultNet} onKeyDown={this.clearField} onChange={this.updateSONetPrice}/>
                 );
             }
             else {
                 sale_entry = (
                     <input className=" redesigned app-sale-price-input" style={{width: "75px"}} type="number"
                            placeholder="0"
-                           defaultValue={this.state.cartSalePrice && this.state.cartLotId == this.props.lot.id ? this.state.cartSalePrice : ''} onKeyDown={this.clearField} onChange={this.updateSOSalePrice}/>
+                           defaultValue={defaultSale} onKeyDown={this.clearField} onChange={this.updateSOSalePrice}/>
                 );
                 net_entry = (
                     <input className="redesigned app-net-price-input" style={{width: "75px"}} type="number"
                            placeholder="0"
-                           defaultValue={this.state.cartNetPrice && this.state.cartLotId == this.props.lot.id ? this.state.cartNetPrice : ''} onKeyDown={this.clearField} onChange={this.updateSONetPrice}/>
+                           defaultValue={defaultNet} onKeyDown={this.clearField} onChange={this.updateSONetPrice}/>
                 );
             }
         }
 
         if (this.props.lot.inv_note)
-            note_indicator = (<span className="tooltip--flag" data-tooltip={this.props.lot.inv_note}></span>);
+            note_indicator = (<div className="tooltip--flag" data-tooltip={this.props.lot.inv_note}></div>);
         else
             note_indicator = ('');
 
@@ -110,6 +130,7 @@
           split_action = (
               <div style={{display: "inline-block", width: "100%", borderTop: "1px solid #DDD", marginTop: "5px"}}>
                   <table>
+                      <tbody>
                       <tr>
                           <td>
                               <strong>Split:</strong>
@@ -124,6 +145,7 @@
                               <div style={{float: "left", marginLeft: "10px"}}><button className="submit-split btn btn--primary btn--tiny">Split</button></div>
                           </td>
                       </tr>
+                      </tbody>
                   </table>
               </div>)
       }

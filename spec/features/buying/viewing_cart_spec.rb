@@ -181,8 +181,8 @@ describe "Viewing the cart", js:true do
 
       kale_item.set_quantity(98)
       bananas_item.quantity_field.click
-      expect(Dom::CartLink.first).to have_content("Quantity updated!")
-      expect(Dom::CartLink.first).to_not have_content("Quantity updated!")
+      expect(Dom::CartLink.first).to have_content("Item updated!")
+      expect(Dom::CartLink.first).to_not have_content("Item updated!")
 
       expect(cart_totals.delivery_fees).to have_content("$30.25")
     end
@@ -195,8 +195,8 @@ describe "Viewing the cart", js:true do
 
         kale_item.set_quantity(98)
         bananas_item.quantity_field.click
-        expect(Dom::CartLink.first).to have_content("Quantity updated!")
-        expect(Dom::CartLink.first).to_not have_content("Quantity updated!")
+        expect(Dom::CartLink.first).to have_content("Item updated!")
+        expect(Dom::CartLink.first).to_not have_content("Item updated!")
 
         expect(cart_totals.delivery_fees).to have_content("Free!")
       end
@@ -209,8 +209,8 @@ describe "Viewing the cart", js:true do
 
       kale_item.set_quantity(98)
       bananas_item.quantity_field.click
-      expect(Dom::CartLink.first).to have_content("Quantity updated!")
-      expect(Dom::CartLink.first).to_not have_content("Quantity updated!")
+      expect(Dom::CartLink.first).to have_content("Item updated!")
+      expect(Dom::CartLink.first).to_not have_content("Item updated!")
 
       expect(cart_totals.total).to have_content("$151.25")
     end
@@ -222,20 +222,20 @@ describe "Viewing the cart", js:true do
 
       kale_item.set_quantity(4)
       bananas_item.quantity_field.click
-      expect(Dom::CartLink.first).to have_content("Quantity updated!")
-      expect(Dom::CartLink.first).to_not have_content("Quantity updated!")
+      expect(Dom::CartLink.first).to have_content("Item updated!")
+      expect(Dom::CartLink.first).to_not have_content("Item updated!")
       expect(kale_item.price_for_quantity).to have_content("$2.50")
 
       kale_item.set_quantity(1)
       bananas_item.quantity_field.click
-      expect(Dom::CartLink.first).to have_content("Quantity updated!")
-      expect(Dom::CartLink.first).to_not have_content("Quantity updated!")
+      expect(Dom::CartLink.first).to have_content("Item updated!")
+      expect(Dom::CartLink.first).to_not have_content("Item updated!")
       expect(kale_item.price_for_quantity).to have_content("$3.00")
 
       kale_item.set_quantity(5)
       bananas_item.quantity_field.click
-      expect(Dom::CartLink.first).to have_content("Quantity updated!")
-      expect(Dom::CartLink.first).to_not have_content("Quantity updated!")
+      expect(Dom::CartLink.first).to have_content("Item updated!")
+      expect(Dom::CartLink.first).to_not have_content("Item updated!")
       expect(kale_item.price_for_quantity).to have_content("$2.50")
     end
 
@@ -244,20 +244,20 @@ describe "Viewing the cart", js:true do
 
       kale_item.set_quantity(4)
       bananas_item.quantity_field.click
-      expect(Dom::CartLink.first).to have_content("Quantity updated!")
-      expect(Dom::CartLink.first).to_not have_content("Quantity updated!")
+      expect(Dom::CartLink.first).to have_content("Item updated!")
+      expect(Dom::CartLink.first).to_not have_content("Item updated!")
       expect(kale_item.price).to have_content("$10.00")
 
       kale_item.set_quantity(5)
       bananas_item.quantity_field.click
-      expect(Dom::CartLink.first).to have_content("Quantity updated!")
-      expect(Dom::CartLink.first).to_not have_content("Quantity updated!")
+      expect(Dom::CartLink.first).to have_content("Item updated!")
+      expect(Dom::CartLink.first).to_not have_content("Item updated!")
       expect(kale_item.price).to have_content("$12.50")
 
       kale_item.set_quantity(1)
       bananas_item.quantity_field.click
-      expect(Dom::CartLink.first).to have_content("Quantity updated!")
-      expect(Dom::CartLink.first).to_not have_content("Quantity updated!")
+      expect(Dom::CartLink.first).to have_content("Item updated!")
+      expect(Dom::CartLink.first).to_not have_content("Item updated!")
       expect(kale_item.price).to have_content("$3.00")
     end
 
@@ -266,8 +266,8 @@ describe "Viewing the cart", js:true do
 
       kale_item.set_quantity(98)
       bananas_item.quantity_field.click
-      expect(Dom::CartLink.first).to have_content("Quantity updated!")
-      expect(Dom::CartLink.first).to_not have_content("Quantity updated!")
+      expect(Dom::CartLink.first).to have_content("Item updated!")
+      expect(Dom::CartLink.first).to_not have_content("Item updated!")
 
       expect(cart_totals.subtotal).to have_content("$121.00")
     end
@@ -276,8 +276,8 @@ describe "Viewing the cart", js:true do
       before do
         kale_item.set_quantity(101)
         bananas_item.quantity_field.click
-        expect(Dom::CartLink.first).to have_content("Quantity updated!")
-        expect(Dom::CartLink.first).to_not have_content("Quantity updated!")
+        expect(Dom::CartLink.first).to have_content("Item updated!")
+        expect(Dom::CartLink.first).to_not have_content("Item updated!")
         expect(page).to have_content("Quantity of Kale available for purchase: 100")
       end
 
@@ -419,7 +419,7 @@ describe "Viewing the cart", js:true do
 
         kale_item.set_quantity(1)
         #bananas_item.quantity_field.node.trigger('click')
-        expect(Dom::CartLink.first).to have_content("Quantity updated!")
+        expect(Dom::CartLink.first).to have_content("Item updated!")
 
         cart_link.node.click
 

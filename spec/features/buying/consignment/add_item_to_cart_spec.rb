@@ -127,13 +127,13 @@ describe "Add item to cart", js: true do
       expect(bananas_row.price).to have_content("$3.00")
 
       bananas_row.set_quantity(8)
-      expect(page).to have_content("Quantity updated!")
+      expect(page).to have_content("Item updated!")
 
       expect(Dom::CartLink.first.count).to have_content("1")
       expect(bananas_row.price).to have_content("$24.00")
 
       bananas_row.set_quantity(9)
-      expect(page).to have_content("Quantity updated!")
+      expect(page).to have_content("Item updated!")
 
       expect(Dom::CartLink.first.count).to have_content("1")
       expect(bananas_row.price).to have_content("$27.00")

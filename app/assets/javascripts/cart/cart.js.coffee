@@ -41,7 +41,7 @@ $ ->
           msg = "Removed from cart!"
 
         else if (this.data.quantity > 0) && (data.quantity > 0)
-          msg = "Quantity updated!"
+          msg = "Item updated!"
 
       CartLink.deferredUpdateMessage(msg)
 
