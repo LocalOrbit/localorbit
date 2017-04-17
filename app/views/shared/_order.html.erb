@@ -537,11 +537,11 @@
   <% end %>
 </div>
 
-<% if FeatureAccess.order_printables?(user: current_user, order: order) && order.sales_order? %>
+<% if FeatureAccess.order_printables?(user: current_user, order: order) && current_market.is_buysell_market? %>
   <%= render :partial=>"table_tents_and_posters/ad", locals: { order: order } %>
 <% end %>
 
-<% if FeatureAccess.can_edit_order?(user: current_user, order: order) %>
+<% if FeatureAccess.can_edit_order?(user: current_user, order: order) && current_market.is_buysell_market? %>
   <%= react_component('lo.ModifyCreditModal', {
     baseUrl: "#{request.base_url}/api/v1/",
     credit: order.credit,

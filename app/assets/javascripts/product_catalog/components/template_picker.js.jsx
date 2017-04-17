@@ -61,7 +61,7 @@
       var self = this;
       var templates = _.map(self.state.templates, function(template) {
         return (
-          <tr>
+          <tr key={template.id}>
             <td>{template.name}</td>
             <td>
               <button className="btn btn--primary app-apply-template-btn" onClick={self.applyTemplate.bind(this, template)}>Apply</button>

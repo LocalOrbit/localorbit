@@ -42,6 +42,7 @@ module Admin
       @order = Order.find(params[:order_id])
       if params[:order_item][:unit_price]
         @order_item.unit_price = params[:order_item][:unit_price]
+        @order_item.net_price = params[:order_item][:net_price]
         sof = StoreOrderFees.new
         sof.update_accounting_fees_for(@order_item)
         # TODO: is this the only specific update that's needed?
