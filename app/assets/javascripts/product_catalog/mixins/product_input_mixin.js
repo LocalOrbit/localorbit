@@ -107,12 +107,18 @@
     updateSOQuantity: function(event) {
         var target = event.target;
         var addedLotId = $(target).parent().parent().find('.lot-id').val();
+        this.cSalePrice = $(target).parent().parent().find('.app-sale-price-input').val();
+        this.cNetPrice = $(target).parent().parent().find('.app-net-price-input').val();
+
         var in_str = event.target.value;
 
         this.setState({cartItemQuantity: in_str});
         this.cItemQuantity = in_str;
 
         this.setState({cartLotId: addedLotId});
+        this.setState({cartNetPrice: this.cNetPrice});
+        this.setState({cartSalePrice: this.cSalePrice});
+
 
         if (this.cSalePrice > 0 && this.cNetPrice > 0 && this.cItemQuantity > 0)
             $(target).trigger("cart.inputFinished");
@@ -121,9 +127,16 @@
     updateSOSalePrice: function(event) {
         var target = event.target;
         var in_str = event.target.value;
+        var addedLotId = $(target).parent().parent().find('.lot-id').val();
+        this.cItemQuantity = $(target).parent().parent().find('.app-product-input').val();
+        this.cNetPrice = $(target).parent().parent().find('.app-net-price-input').val();
 
         this.setState({cartSalePrice: in_str});
         this.cSalePrice = in_str;
+
+        this.setState({cartLotId: addedLotId});
+        this.setState({cartNetPrice: this.cNetPrice});
+        this.setState({cartItemQuantity: this.cItemQuantity});
 
         if (this.cSalePrice > 0 && this.cNetPrice > 0 && this.cItemQuantity > 0)
             $(target).trigger("cart.inputFinished");
@@ -132,9 +145,16 @@
     updateSONetPrice: function(event) {
         var target = event.target;
         var in_str = event.target.value;
+        var addedLotId = $(target).parent().parent().find('.lot-id').val();
+        this.cItemQuantity = $(target).parent().parent().find('.app-product-input').val();
+        this.cSalePrice = $(target).parent().parent().find('.app-sale-price-input').val();
 
         this.setState({cartNetPrice: in_str});
         this.cNetPrice = in_str;
+
+        this.setState({cartLotId: addedLotId});
+        this.setState({cartItemQuantity: this.cItemQuantity});
+        this.setState({cartSalePrice: this.cSalePrice});
 
         if (this.cSalePrice > 0 && this.cNetPrice > 0 && this.cItemQuantity > 0) {
             $(target).trigger("cart.inputFinished");

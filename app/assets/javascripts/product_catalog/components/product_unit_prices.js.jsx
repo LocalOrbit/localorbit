@@ -14,14 +14,14 @@
       for(var i = 0; i < 3; i++) {
         if(prices[i]) {
             if (prices[i].organization_id)
-                priceDisplay=(<span style={{ color: "#3E8212", fontWeight: "bold" }}>{prices[i].sale_price}{caret}&nbsp;<span className="tooltip tooltip--naked tooltip--notice" data-tooltip="This is a negotiated price specific to you!"><i className="fa fa-question-circle"></i></span></span>);
+                priceDisplay=(<div style={{ color: "#3E8212", fontWeight: "bold" }}>{prices[i].sale_price}{caret}&nbsp;<div className="tooltip tooltip--naked tooltip--notice" data-tooltip="This is a negotiated price specific to you!"><i className="fa fa-question-circle"></i></div></div>);
             else
-                priceDisplay=(<span>{prices[i].sale_price}{caret}</span>);
+                priceDisplay=(<div>{prices[i].sale_price}{caret}</div>);
 
             if (prices[i].min_quantity == 1)
-                qtyDisplay = (<span style={{fontSize:"10px", color:"#737373"}}>&nbsp;</span>)
+                qtyDisplay = (<div style={{fontSize:"10px", color:"#737373"}}>&nbsp;</div>);
             else
-                qtyDisplay = (<span style={{fontSize:"10px", color:"#737373"}}>Min {prices[i].min_quantity}</span>);
+                qtyDisplay = (<div style={{fontSize:"10px", color:"#737373"}}>Min {prices[i].min_quantity}</div>);
 
         priceCells.unshift(
             <td style={{textAlign: "right"}}>
@@ -55,7 +55,7 @@
           <td colSpan="3" style={{textAlign: "right"}}>
             {prices[prices.length - 1].sale_price} - {prices[0].sale_price}
             <i onClick={this.toggleView} style={{cursor: "pointer"}} className="caretted"/><br/>
-            <span style={{fontSize:"11px", color:"#737373"}}>&nbsp;</span>
+            <div style={{fontSize:"11px", color:"#737373"}}>&nbsp;</div>
           </td>
         </tr>
       );
@@ -82,8 +82,8 @@
       else {
           quantity = this.props.product.max_available < 500000 ? this.props.product.max_available + " Available" : "";
           unit_desc = (
-              <span><a href={"/products/" + this.props.product.id}>{this.props.product.unit_description}</a><br/><span
-                  style={{fontSize: "11px", color: "#737373"}}>{quantity}</span></span>);
+              <div><a href={"/products/" + this.props.product.id}>{this.props.product.unit_description}</a><br/><div
+                  style={{fontSize: "11px", color: "#737373"}}>{quantity}</div></div>);
       }
       var deleteButton = this.state.cartItemQuantity > 0 ? (<a href="javascript:void(0)" onClick={this.deleteQuantity} className="font-icon icon-clear" style={{marginLeft: "10px"}}></a>) : null;
       var inputClass = "redesigned app-product-input";
@@ -116,7 +116,7 @@
                   {pid}
               </div>
               <div style={{float:"left", width:"50%", textAlign:"center", padding: "10px 0"}}>
-                <span className="price" style={{display: (this.props.purchaseOrder) ? "none" : "inherit" }}>{this.props.product.total_price}</span>
+                <div className="price" style={{display: (this.props.purchaseOrder) ? "none" : "inherit" }}>{this.props.product.total_price}</div>
                 {deleteButton}
               </div>
             </div>

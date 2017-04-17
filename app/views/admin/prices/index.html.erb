@@ -52,7 +52,7 @@
               the seller will receive. This amount is an estimate, calculated by subtracting the market fee and any
               applicable payment processing fees from the Sale Price."></span>
             </th>
-            <% if policy(:product_fees).index? %>
+            <% if policy(:product_fees).index? && current_market.is_buysell_market? %>
             <th class="fee">Fee %</th>
             <% end %>
             <th class="sale-price">
@@ -132,7 +132,7 @@
                                        data:{"category-fee" => json_escape(@category_percents_by_market_id.to_json), "product-fee" => json_escape(price.product_fee_pct), "net-percents-by-market-id" => json_escape(@net_percents_by_market_id.to_json), "cc-rate" => @seller_cc_rate} %>
                   </div>
                 </td>
-                <% if policy(:product_fees).index? %>
+                <% if policy(:product_fees).index? && current_market.is_buysell_market? %>
                 <td class="fee">
                   <div class="edit-trigger view-cell">
                     <%= if !@category_percents_by_market_id.nil? && !@category_percents_by_market_id[price.market_id.nil? ? "all" : price.market_id.to_s].nil? && @category_percents_by_market_id[price.market_id.nil? ? "all" : price.market_id.to_s] > 0 && price.product_fee_pct == 0
@@ -215,7 +215,7 @@
               <td></td>
               <td></td>
               <td></td>
-              <% if policy(:product_fees).index? %>
+              <% if policy(:product_fees).index? && current_market.is_buysell_market? %>
               <td></td>
               <% end %>
               <td></td>

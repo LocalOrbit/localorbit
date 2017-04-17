@@ -195,7 +195,11 @@ module Api
 
         available_inventory = product.available_inventory(current_delivery.deliver_on, current_market.id, current_organization.id)
 
-        prices = Orders::UnitPriceLogic.prices(product, current_market, current_organization, current_market.add_item_pricing && order ? order.created_at : Time.current.end_of_minute).map { |price| format_price_for_catalog(price)}
+        if current_market.is_buysell_market?
+          prices = Orders::UnitPriceLogic.prices(product, current_market, current_organization, current_market.add_item_pricing && order ? order.created_at : Time.current.end_of_minute).map { |price| format_price_for_catalog(price)}
+        else
+          prices = Price.where(product_id: product.id).visible.map { |price| format_consignment_price_for_catalog(price)}
+        end
 
         lots = nil
         committed = nil
@@ -278,6 +282,15 @@ module Api
 
         {
             :sale_price => number_to_currency(price.sale_price),
+            :min_quantity => price.min_quantity,
+            :organization_id => price.organization_id
+        }
+      end
+
+      def format_consignment_price_for_catalog(price)
+        {
+            :sale_price => price.sale_price,
+            :net_price => price.net_price(nil, nil, current_market.is_consignment_market?),
             :min_quantity => price.min_quantity,
             :organization_id => price.organization_id
         }
