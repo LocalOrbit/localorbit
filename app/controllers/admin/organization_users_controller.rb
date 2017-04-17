@@ -24,16 +24,21 @@ module Admin
 
     def create
       market = current_market || @organization.original_market
-      @invite_user = InviteUserToOrganization.perform(
-        inviter: current_user,
-        email: user_params[:email],
-        organization: @organization,
-        market: market)
+      dup = dup_user(user_params)
+      if !dup
+        @invite_user = InviteUserToOrganization.perform(
+          inviter: current_user,
+          email: user_params[:email],
+          organization: @organization,
+          market: market)
 
-      if @invite_user.success?
-        redirect_to [:admin, @organization, :users], notice: "Sent invitation to #{@invite_user.user.email}"
+        if @invite_user.success?
+          redirect_to [:admin, @organization, :users], notice: "Sent invitation to #{@invite_user.user.email}"
+        else
+          redirect_to [:admin, @organization, :users], alert: @invite_user.message
+        end
       else
-        redirect_to [:admin, @organization, :users], alert: @invite_user.message
+        redirect_to [:admin, @organization, :users], alert: "User email already exists. User linked with orgs: #{dup}"
       end
     end
 
@@ -60,6 +65,16 @@ module Admin
 
     def find_organization
       @organization = current_user.managed_organizations.find_by_id(params[:organization_id])
+    end
+
+    def dup_user(params)
+      email = params[:email]
+      u = User.find_by_email(email)
+      if !u.nil?
+        u.organizations.map(&:name).join(', ')
+      else
+        false
+      end
     end
   end
 end

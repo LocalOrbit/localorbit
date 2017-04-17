@@ -104,7 +104,7 @@ describe "Editing inventory" do
 
         Dom::LotRow.first.click_number
 
-        expect(page.find("#lot_#{lot.id}_number").value).to be_blank
+        expect(page.find("#lot_#{lot.id}_number").value).to eql("A1")
         expect(page.find("#lot_#{lot.id}_quantity").value).to eql("93")
       end
     end
