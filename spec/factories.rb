@@ -335,10 +335,7 @@ FactoryGirl.define do
 
     payment_method   "purchase order"
     payment_status   "unpaid"
-
-    transient do
-      order_type       "sales"
-    end
+    order_type       "sales"
 
     total_cost       100.99
 
