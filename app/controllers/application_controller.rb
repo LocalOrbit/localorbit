@@ -125,6 +125,11 @@ class ApplicationController < ActionController::Base
     end
   end
 
+  def ensure_allow_signups
+    return if current_market.allow_signups
+    render file: Rails.root.join("public/signups_disabled.html"), status: :forbidden
+  end
+
   def ensure_active_organization
     return if current_user.nil?
     return if current_user.admin? || current_user.can_manage_market?(market_for_current_subdomain)
