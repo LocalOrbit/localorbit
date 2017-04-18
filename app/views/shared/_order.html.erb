@@ -29,13 +29,15 @@
           <button id="generate_receipt_button" name="Generate Receipt">Generate Receipt</button>
         </li>
         <% end %>
+        <% if order.sales_order? && order.delivery_status == 'pending' %>
+        <li>
+          <button id="generate_picklist_button" name="Generate Picklist">Generate Pick List</button>
+        </li>
+        <% end %>
         <% if order.sales_order? && order.delivery_status == 'delivered' %>
-            <li>
-              <button id="generate_picklist_button" name="Generate Picklist">Generate Pick List</button>
-            </li>
-            <li>
-              <button id="generate_invoice_button" name="Generate Invoice">Generate Invoice</button>
-            </li>
+        <li>
+          <button id="generate_invoice_button" name="Generate Invoice">Generate Invoice</button>
+        </li>
         <% end %>
         <% if policy(:market_quickbooks).index? && order.order_type == "sales" && order.payment_status == 'unpaid' && order.delivery_status_for_user(current_user) == 'delivered' && order.qb_ref_id.nil? %>
         <li>
@@ -208,9 +210,12 @@
         <% if (order.payment_method == "invoice" || order.payment_method == "purchase order" || order.payment_method == "po" || order.payment_method == "check") %>
         <tr>
           <th scope="row"><%= order.sales_order? ? 'Payment Ref. #' : 'Supplier Inv. #' %></th>
-          <% if current_market.is_consignment_market? && order.undelivered_for_user?(current_user) %>
-              <td><%= f.text_field :payment_note %></td>
-          <% else %>
+          <% if current_market.is_consignment_market? %>
+              <td>
+                <%= f.text_field :payment_note, size: 4, value: order.payment_note %>
+                <%= f.button raw("<i class='fa fa-check'>&nbsp;</i>").html_safe, class: "btn btn--primary btn--tiny" %>
+              </td>
+        <% else %>
               <td><%= order.payment_note %></td>
           <% end %>
         </tr>
@@ -287,29 +292,28 @@
           </td>
           <td class="quantity">
             <%# if (current_user.admin? || current_user.market_manager?) && item.object.delivery_status == 'pending' %>
-            <% if FeatureAccess.edit_ordered_quantity?(user_order_item_context: user_order_item_context) %>
+            <% if (current_market.is_buysell_market? && FeatureAccess.edit_ordered_quantity?(user_order_item_context: user_order_item_context)) || (current_market.is_consignment_market? && order.delivery_status == 'pending') %>
               <%= item.text_field :quantity, :autocomplete => :off, value: Format.quantity_no_delimiter(item.object.quantity), class: 'quantity-ordered' %>
             <% else %>
               <span class="quantity-ordered-ro"><%= Format.quantity_no_delimiter(item.object.quantity) %></span>
             <% end %> <%= item.object.unit %> (Ordered)<br />
 
-            <% if FeatureAccess.edit_delivered_quantity?(user_order_item_context: user_order_item_context) %>
+            <% if (current_market.is_buysell_market? && FeatureAccess.edit_delivered_quantity?(user_order_item_context: user_order_item_context)) || (current_market.is_consignment_market? && order.delivery_status == 'pending') %>
               <%= item.text_field :quantity_delivered, :autocomplete => :off, value: Format.quantity_no_delimiter(item.object.quantity_delivered), class: 'quantity-delivered' %> <%= item.object.unit %> (Delivered)<br/>
               <% if current_market.is_consignment_market? && order.purchase_order? && order.delivery_status == 'pending' %>
-              <%= item.select(:preferred_storage_location_id, options_for_select(StorageLocation.where("market_id = ?", current_market.id).map{|l| [l.name, l.id]}), {include_blank: false}, {class: 'chosen'}) %>
+              <%= item.select(:preferred_storage_location_id, options_for_select(StorageLocation.where("market_id = ?", current_market.id).map{|l| [l.name, l.id]}), {include_blank: false}) %>
               <% end %>
             <% else %>
               <span class="quantity-delivered-ro"><%= Format.quantity_no_delimiter item.object.quantity_delivered %></span>
-            <% end %>
+            <% end %> <%= item.object.unit %> (Delivered)<br />
           </td>
 
           <% if current_market.is_consignment_market? %>
             <td>
-            <% if item.object.product.lots.available_general %>
+            <% if item.object.product.lots.available_general.last %>
               <span>
-                <% item.object.product.lots.available_general.each do |l| %>
-                  <%= "#{l.number}#{l.storage_location.nil? ? '' : ' - ' + l.storage_location.name}" %><br />
-                <% end %>
+                  <%= "#{item.object.product.lots.available_general.last.number}" %><br/>
+                  <%= "#{item.object.product.lots.available_general.last.storage_location.nil? ? '' : item.object.product.lots.available_general.last.storage_location.name}" %>
               </span>
             <% else %>
               -
@@ -417,7 +421,7 @@
       <% end %>
     </div>
 
-    <% if FeatureAccess.order_action_links?(user_order_context: user_order_context) && current_market.is_buysell_market? %>
+    <% if (FeatureAccess.order_action_links?(user_order_context: user_order_context) && current_market.is_buysell_market?) || (current_market.is_consignment_market? && order.delivery_status == 'pending') %>
       <br/><br/>
       <%= f.submit @show_add_items_form ? "Add items and Update quantities" : "Update quantities", id: 'submit-add-items', class: 'pull-right btn btn--small mobile-block' %>
     <% elsif FeatureAccess.order_action_links?(user_order_context: user_order_context) && current_market.is_consignment_market? && @show_add_items_form %>
