@@ -58,9 +58,21 @@ module Inventory
         lot = Lot.where("product_id = ? AND number = ? AND EXTRACT(YEAR FROM created_at) = ?", product.id, lot_number, Time.now.year.to_s).first
         if lot.present? && !quantity.nil?
           if split_op
-            quantity = lot.quantity + quantity
+            new_qty = lot.quantity + quantity
+          else
+            if lot.nil?
+              new_qty = quantity
+            else
+              if quantity > lot.quantity
+                new_qty = lot.quantity + (quantity - lot.quantity)
+              elsif quantity < lot.quantity
+                new_qty = lot.quantity - (lot.quantity - quantity)
+              else
+                new_qty = quantity
+              end
+            end
           end
-          lot.update_attribute(:quantity, quantity + lot.quantity)
+          lot.update_attribute(:quantity, new_qty)
         else
           lot = Lot.create(
               product_id: product.id,
@@ -79,7 +91,7 @@ module Inventory
         weekday = days[current_time.wday]
         monthweek = (current_time.mday / 7.0).ceil
 
-        "#{weekday}#{monthweek}"
+        "#{order.id}-#{weekday}#{monthweek}"
       end
 
       def qty_committed(market_id, product_id)

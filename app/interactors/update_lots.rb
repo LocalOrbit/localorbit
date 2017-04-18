@@ -6,10 +6,15 @@ class UpdateLots
     lot_number = Inventory::Utils.generate_lot_number(order)
 
     order.items.each do |item|
-      lot = Inventory::Utils.upsert_lot(item.product, lot_number, item.quantity_delivered)
-      lot.update_attribute(:storage_location_id, item.preferred_storage_location_id) unless lot.storage_location_id == item.preferred_storage_location_id
+      if !item.lots.first.nil?
+        lot_number = item.lots.first.lot.number
+      end
       if !item.quantity_delivered.nil?
-        update_pending_so(item, lot)
+        lot = Inventory::Utils.upsert_lot(item.product, lot_number, item.quantity_delivered)
+        lot.update_attribute(:storage_location_id, item.preferred_storage_location_id) unless lot.storage_location_id == item.preferred_storage_location_id
+        if !item.quantity_delivered.nil?
+          update_pending_so(item, lot)
+        end
       end
     end
   end

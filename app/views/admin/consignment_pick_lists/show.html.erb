@@ -383,7 +383,7 @@
           <td><%= item.name %></td>
           <td><%= item.product.organization.name %></td>
           <td><%= item.quantity %></td>
-          <td><%= item.lots.empty? ? 0 : "On Hand: #{item.lots.last.lot.quantity}" %></td>
+          <td><%= item.lots.empty? ? 0 : "On Hand: #{item.lots.last.lot.quantity + item.quantity}" %></td>
           <td><%= !item.lots.empty? && !item.lots.last.lot.storage_location.nil? ? item.lots.last.lot.storage_location.name : 'No Location Provided' %></td>
           <td><%= item.lots.empty? ? 0 : item.lots.last.lot.number %></td>
         </tr>
