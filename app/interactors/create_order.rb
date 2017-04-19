@@ -39,8 +39,8 @@ class CreateOrder
       payment_status: "unpaid",
       payment_method: params[:payment_method],
       payment_note: params[:payment_note],
-      delivery_fees: cart.delivery_fees,
-      total_cost: cart.total,
+      delivery_fees: cart.market.is_consignment_market? && !params[:delivery_fees].nil? ? params[:delivery_fees] : cart.delivery_fees,
+      total_cost: cart.market.is_consignment_market? && !params[:delivery_fees].nil? ? params[:delivery_fees] + cart.total : cart.total,
       placed_at: Time.current,
       order_type: params[:order_type] || 'sales',
     )
