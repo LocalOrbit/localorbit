@@ -22,7 +22,8 @@ class CartDecorator < Draper::Decorator
     DeliveryNote.where(cart_id:id).visible
   end
 
-  def display_delivery_fees
+  def display_delivery_fees(market)
+    return 0.0 if market.is_consignment_market?
     return "Free!" if delivery.delivery_schedule.free_delivery?
 
     number_to_currency delivery_fees

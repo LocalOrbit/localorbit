@@ -144,6 +144,7 @@ class OrdersController < ApplicationController
     params.require(:order).permit(
       :order_type,
       :discount_code,
+      :delivery_fees,
       :payment_method,
       :payment_note,
       :bank_account,
