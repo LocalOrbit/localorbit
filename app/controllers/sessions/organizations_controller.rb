@@ -6,6 +6,7 @@ module Sessions
       @organizations = current_user.managed_organizations_within_market(current_market).where(org_type: 'B').order(:name)
       session.delete(:cart_id)
       session.delete(:current_organization_id)
+      session.delete(:current_supplier_id)
       session.delete(:current_delivery_id)
       session.delete(:current_delivery_day)
     end

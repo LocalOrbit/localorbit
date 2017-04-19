@@ -405,15 +405,48 @@
         <thead>
         <tr>
           <th>Product</th>
+          <% if receipt.sold_through? %>
+          <th>Quantity</th>
+          <% else %>
           <th>Delivered Quantity</th>
+          <% end %>
+          <% if receipt.sold_through? %>
+          <th>Price</th>
+          <th>Total</th>
+          <% end %>
         </tr>
         </thead>
         <tbody>
-        <% receipt.items.each do |item| %>
+        <% grand_total = 0 %>
+        <% receipt.items.order(:name).each do |item| %>
+        <% avg_price = ConsignmentTransaction.where(product_id: item.product.id, transaction_type: 'SO').average(:net_price) %>
+        <% total_price = item.quantity_delivered * avg_price %>
+        <% grand_total = grand_total + total_price %>
+        <% sold_cnt = ConsignmentTransaction.where(product_id: item.product.id, transaction_type: 'SO').sum(:quantity) %>
+        <% split_cnt = ConsignmentTransaction.where(product_id: item.product.id, transaction_type: 'SPLIT').sum(:quantity) %>
+        <% held_over_cnt = ConsignmentTransaction.where(product_id: item.product.id, transaction_type: 'HOLDOVER', master: true).count(:id) %>
+        <% held_over_po = ConsignmentTransaction.where(product_id: item.product.id, transaction_type: 'HOLDOVER', master: nil).first %>
         <tr>
-          <td><%= item.name %></td>
+          <td><%= held_over_po.nil? ? '' : "(Holdover PO: #{held_over_po.order_id})" %> <%= item.name %></td>
           <td><%=item.quantity_delivered %></td>
+          <% if receipt.sold_through? %>
+          <td style="text-align: right;"><%= number_to_currency(avg_price) %></td>
+          <td style="text-align: right;"><%= number_to_currency(total_price) %></td>
+          <% end %>
         </tr>
+        <% if receipt.sold_through? %>
+        <tr><td style="text-align: right; font-size: 9px;font-weight: bold">Sold:</td><td><%= sold_cnt %></td></tr>
+        <% if held_over_cnt > 0 %>
+        <tr><td style="text-align: right; font-size: 9px;font-weight: bold">Holdover:</td><td><%= held_over_cnt %></td></tr>
+        <% end %>
+        <% if split_cnt > 0 %>
+        <tr><td style="text-align: right; font-size: 9px;font-weight: bold">Split:</td><td><%= split_cnt %></td></tr>
+        <% end %>
+        <tr><td></td><td style="font-weight: bold; border-top: 1px solid #000"><%= sold_cnt + split_cnt + held_over_cnt %></td></tr>
+        <% end %>
+        <% end %>
+        <% if receipt.sold_through? %>
+        <tr><td colspan="4" style="text-align: right; font-weight: bold; border-top: 1px solid #000"><%= number_to_currency(grand_total) %></td></tr>
         <% end %>
         </tbody>
       </table>

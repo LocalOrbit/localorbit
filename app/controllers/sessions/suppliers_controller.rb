@@ -5,6 +5,7 @@ module Sessions
     def new
       @suppliers = current_market.suppliers.order(:name)
       session.delete(:cart_id)
+      session.delete(:current_organization_id)
       session.delete(:current_supplier_id)
       session.delete(:current_delivery_id)
       session.delete(:current_delivery_day)

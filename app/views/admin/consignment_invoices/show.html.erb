@@ -475,6 +475,11 @@
   </body>
   <div style="page-break-inside:unset;page-break-after:unset;width:7in;">
     <br>
+    <% if !invoice.signature_data.nil? %>
+    <div style="padding: 5px">
+      <%= JSignatureBase30.new(invoice.signature_data).to_svg.html_safe %>
+    </div>
+    <% end %>
     <div class="signature" style="float:right;">Signature</div>
   </div>
 </div>

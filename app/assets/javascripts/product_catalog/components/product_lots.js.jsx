@@ -81,26 +81,26 @@
         else
             note_indicator = ('');
 
+        lot = this.props.lot;
+        build_committed = '<table class="committed-table"> <thead> <th></th> <th>Date</th> <th>Qty</th> <th>Sale</th> <th>Net</th> </thead> <tbody>';
+        committed_count = 0;
+        _.map(this.props.product.committed, function (c) {
+            if (lot.number === c.number) {
+                committed_count = committed_count + (c.quantity * 1);
+                build_committed = build_committed +  '<tr> <td>' + c.buyer_name+'</td> <td>' + c.created_at + '</td><td>' + c.quantity + '</td> <td>' + c.sale_price + '</td> <td>' + c.net_price + '</td> </tr>';
+            }
+        });
+
+        build_committed = build_committed + '</tbody></table>';
+
         if (this.props.lot.status == 'available' && this.props.lot.quantity > 0) {
-            lot_desc = (<div><div>{note_indicator}</div>{this.props.lot.number} / {this.props.lot.quantity}<br/><div style={{fontSize: '12px', color: '#999'}}>{this.props.lot.delivery_date}</div></div>);
+            lot_desc = (<div><div>{note_indicator}</div>{this.props.lot.number} / {this.props.lot.quantity + committed_count}<br/><div style={{fontSize: '12px', color: '#999'}}>{this.props.lot.delivery_date}</div></div>);
             status = (<div style={{fontSize: "11px"}}>On Hand</div>);
         }
         else if (this.props.lot.status == 'awaiting_delivery' && this.props.lot.quantity > 0) {
             lot_desc = (<div>{this.props.lot.quantity}</div>);
             status = (<div style={{fontSize: "11px", color: "#991111"}}>Awaiting Delivery</div>);
         }
-
-        lot = this.props.lot;
-        build_committed = '<table class="committed-table"> <thead> <th></th> <th>Date</th> <th>Qty</th> <th>Sale</th> <th>Net</th> </thead> <tbody>';
-        committed_count = 0;
-        _.map(this.props.product.committed, function (c) {
-                if (lot.number === c.number) {
-                    committed_count = committed_count + (c.quantity * 1);
-                    build_committed = build_committed +  '<tr> <td>' + c.buyer_name+'</td> <td>' + c.created_at + '</td><td>' + c.quantity + '</td> <td>' + c.sale_price + '</td> <td>' + c.net_price + '</td> </tr>';
-                }
-            });
-
-        build_committed = build_committed + '</tbody></table>';
 
         if (committed_count > 0) {
             committed_detail = build_committed;

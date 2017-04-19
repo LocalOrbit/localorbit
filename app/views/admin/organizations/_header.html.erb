@@ -13,7 +13,9 @@
     <div class="tabs-wrapper organization-tabs">
       <ul class="tabs">
         <%= content_tag(:li, link_to_or_span("Info", [:admin, @organization]), class: 'tab') %>
+        <% if current_market.is_buysell_market? %>
         <%= content_tag(:li, link_to_or_span("Users", [:admin, @organization, :users]), class: 'tab') %>
+        <% end %>
         <%= content_tag(:li, link_to_or_span("Addresses", [:admin, @organization, :locations]), class: 'tab')%>
         <% if current_market.is_buysell_market? %>
         <%= content_tag(:li, link_to_or_span("Payment Methods", [:admin, @organization, :bank_accounts]), class: 'tab')%>
