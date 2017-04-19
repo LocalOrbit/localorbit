@@ -1,6 +1,5 @@
 class ProductsController < ApplicationController
   include ActiveSupport::NumberHelper
-  #before_action :reset_order_id
   before_action :set_order_type, only: [:purchase, :index]
   before_action :require_current_supplier, only: [:purchase]
   before_action :require_selected_market

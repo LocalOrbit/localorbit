@@ -12,7 +12,7 @@
       <div class="column column--half column--guttered">
         <div class="cart_items" data-cart-url="<%= cart_path %>">
           <table class="cart">
-          <%= render partial: (@order_type || 'sales')+'_order' %>
+          <%= render partial: (@order_type || 'sales')+'_order', locals: {f: f} %>
           </table>
           <% if policy(:template).index? && @order_type == 'sales' %>
             <p class="pull-right"><a href="/templates/new" class="app-create-template-link">Create an order template from this cart</a></p>
