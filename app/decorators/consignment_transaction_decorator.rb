@@ -6,8 +6,8 @@ class ConsignmentTransactionDecorator < Draper::Decorator
     if status == 'waiting'
       'Awaiting Delivery'
     else
-      l = Lot.where(id: lot_id).last
-      "#{l.storage_location.nil? ? '' : l.storage_location.name}"
+      #l = Lot.where(id: lot_id).last
+      "#{storage_location_name.nil? ? '' : storage_location_name}"
     end
   end
 

@@ -5,7 +5,9 @@
       <%= hidden_field_tag :redirect_back_to, params[:redirect_back_to] %>
 
       <h1 class="clear-before">Welcome to <%= current_market.name %></h1>
+        <h2>Order For: <strong><%= !session[:current_organization_id].nil? ? current_organization.name  : Organization.find(session[:current_supplier_id]).name %></strong></h2>
       <p class="faux-label">Please choose a <% if FeatureAccess.not_LE_market_manager?(user:current_user, market: current_market) && current_market.is_buysell_market? %>pick up or<% end %> delivery date:</p><br/>
+
 
     <% if current_market.is_buysell_market? && !current_market.is_localeyes_market? %>
       <div class="row"><% @deliveries.each do |d| -%><div class="column column--guttered column--half">

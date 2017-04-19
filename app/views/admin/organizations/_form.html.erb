@@ -37,7 +37,7 @@
       <%= hidden_field_tag :can_sell, @organization.can_sell %>
     <% end %>
 
-    <% if @organization.new_record? || @organization.can_sell? %>
+    <% if (@organization.new_record? || @organization.can_sell?) && current_market.is_buysell_market? %>
       <div class="row row--field">
         <div class="field column column--half column--guttered">
           <%= f.check_box :show_profile %>
