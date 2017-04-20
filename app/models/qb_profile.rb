@@ -40,5 +40,24 @@ class QbProfile < ActiveRecord::Base
         errors.add(:delivery_fee_item_name, :invalid)
       end
     end
+
+    if !consolidated_supplier_item_name.nil? && !consolidated_supplier_item_name.empty?
+      result = Quickbooks::Item.query_item(consolidated_supplier_item_name, session)
+      if result.entries.length > 0
+        self.consolidated_supplier_item_id = result.entries[0].id
+      else
+        errors.add(:consolidated_supplier_item_name, :invalid)
+      end
+    end
+
+    if !consolidated_buyer_item_name.nil? && !consolidated_buyer_item_name.empty?
+      result = Quickbooks::Item.query_item(consolidated_buyer_item_name, session)
+      if result.entries.length > 0
+        self.consolidated_buyer_item_id = result.entries[0].id
+      else
+        errors.add(:consolidated_buyer_item_name, :invalid)
+      end
+    end
+
   end
 end
