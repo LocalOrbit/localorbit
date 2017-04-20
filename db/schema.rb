@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170417201043) do
+ActiveRecord::Schema.define(version: 20170420143002) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -1005,7 +1005,13 @@ ActiveRecord::Schema.define(version: 20170417201043) do
     t.string  "prefix"
     t.string  "delivery_fee_item_name"
     t.integer "delivery_fee_item_id"
+    t.string  "consolidated_supplier_item_name"
+    t.integer "consolidated_supplier_item_id"
+    t.string  "consolidated_buyer_item_name"
+    t.integer "consolidated_buyer_item_id"
   end
+
+  add_index "qb_profiles", ["organization_id"], name: "org_id", unique: true, using: :btree
 
   create_table "qb_tokens", force: true do |t|
     t.integer  "organization_id"
