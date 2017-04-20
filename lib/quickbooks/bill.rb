@@ -61,7 +61,7 @@ module Quickbooks
         product_count = 0
 
         child_transactions.flatten.each do |trans|
-          if config.consolidate_supplier_line_item.nil?
+          if config.consolidated_supplier_item_id.nil?
             if trans.transaction_type == "SO"
               buyer_name = Order.find(trans.order_id).organization.name
               desc = "#{buyer_name} : #{@product.name}"
