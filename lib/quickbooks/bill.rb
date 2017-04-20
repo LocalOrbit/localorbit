@@ -67,15 +67,19 @@ module Quickbooks
             desc = "#{buyer_name} : #{@product.name}"
             qb_item = @product.qb_item_id
           end
-          line_item = Quickbooks::Model::BillLineItem.new
-          line_item.amount = trans.net_price * trans.quantity
-          line_item.description = desc
-          line_item.item_based_expense_item! do |detail|
-            detail.unit_price = trans.net_price
-            detail.quantity = trans.quantity
-            detail.item_id = qb_item # Item ID here
+          if (trans.transaction_type == "SO" || trans.transaction_type == "SHRINK")
+            avg_price = ConsignmentTransaction.where(product_id: item.product.id, transaction_type: 'SO').average(:net_price)
+
+            line_item = Quickbooks::Model::BillLineItem.new
+            line_item.amount = trans.net_price * trans.quantity
+            line_item.description = desc
+            line_item.item_based_expense_item! do |detail|
+              detail.unit_price = trans.net_price
+              detail.quantity = trans.quantity
+              detail.item_id = qb_item # Item ID here
+            end
+            bill.line_items << line_item
           end
-          bill.line_items << line_item
         end
 
         service = Quickbooks::Service::Bill.new

@@ -35,6 +35,7 @@ class AdminController < ApplicationController
 
   def load_qb_session
     if Pundit.policy(current_user, :market_quickbooks) && !current_market.nil? && !current_market.organization.nil? && !current_market.organization.qb_token.nil?
+      session[:qb_id] = current_market.organization.qb_token.id
       session[:qb_token] = current_market.organization.qb_token.access_token
       session[:qb_secret] = current_market.organization.qb_token.access_secret
       session[:qb_realm_id] = current_market.organization.qb_token.realm_id
