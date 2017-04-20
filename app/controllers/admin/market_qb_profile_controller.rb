@@ -41,7 +41,7 @@ class Admin::MarketQbProfileController < AdminController
     qb_token.access_secret = at.secret
     qb_token.realm_id = params['realmId']
     qb_token.token_expires_at = 180.days.from_now
-    qb_token.save
+    session[:qb_id] = qb_token.save
 
     # Create profile entry
     qb_profile = QbProfile.new
@@ -49,6 +49,18 @@ class Admin::MarketQbProfileController < AdminController
     qb_profile.save
 
     render :oauth_callback , notice: "Your QuickBooks account has been successfully linked."
+  end
+
+  def disconnect
+    qb_token = QbToken.find(session[:qb_id])
+    qb_token.delete
+    session.delete(:qb_id)
+    session.delete(:qb_token)
+    session.delete(:qb_secret)
+    session.delete(:qb_realm_id)
+
+    redirect_to admin_market_qb_profile_path
+
   end
 
   def sync

@@ -78,6 +78,7 @@ Rails.application.routes.draw do
           get :authenticate
           get :oauth_callback
           get :sync
+          get :disconnect
         end
       end
       resources :storage_locations, controller: :market_storage_locations
