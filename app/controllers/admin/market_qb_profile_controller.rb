@@ -35,7 +35,11 @@ class Admin::MarketQbProfileController < AdminController
     # store the token, secret & RealmID somewhere for this user, you will need all 3 to work with Quickbooks-Ruby
 
     # Create token entry
-    qb_token = QbToken.new
+    if !session[:qb_id].nil?
+      qb_token = QbToken.find(session[:qb_id])
+    else
+      qb_token = QbToken.new
+    end
     qb_token.organization_id = current_market.organization.id
     qb_token.access_token = at.token
     qb_token.access_secret = at.secret
@@ -44,9 +48,12 @@ class Admin::MarketQbProfileController < AdminController
     session[:qb_id] = qb_token.save
 
     # Create profile entry
-    qb_profile = QbProfile.new
-    qb_profile.organization_id = current_market.organization.id
-    qb_profile.save
+    qb_profile = QbProfile.find_by_organization_id(current_market.organization.id)
+    if qb_profile.nil?
+      qb_profile = QbProfile.new
+      qb_profile.organization_id = current_market.organization.id
+      qb_profile.save
+    end
 
     render :oauth_callback , notice: "Your QuickBooks account has been successfully linked."
   end
@@ -135,6 +142,6 @@ class Admin::MarketQbProfileController < AdminController
   private
 
   def qb_params
-    params.require(:qb_profile).permit(:income_account_name, :expense_account_name, :asset_account_name, :delivery_fee_item_name, :prefix)
+    params.require(:qb_profile).permit(:income_account_name, :expense_account_name, :asset_account_name, :delivery_fee_item_name, :consolidated_supplier_item_name, :consolidated_buyer_item_name, :prefix)
   end
 end

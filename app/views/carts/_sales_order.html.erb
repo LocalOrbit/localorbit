@@ -54,7 +54,7 @@
               <tr class="cart_total">
                 <th scope="row" colspan="<%= current_market.is_consignment_market? ? "5" : "3" %>"><%= current_cart.delivery.delivery_schedule.fee_label %></th>
                 <% if current_market.is_consignment_market? && @order_type == 'sales' %>
-                <td><%= f.number_field :delivery_fees, size: 3, style: 'text-align: right' %></td>
+                <td><%= f.number_field :delivery_fees, value: current_cart.display_delivery_fees(current_market), size: 3, style: 'text-align: right' %></td>
                 <% else %>
                 <td class="delivery_fees"><%= current_cart.display_delivery_fees(current_market) %></td>
                 <% end %>
