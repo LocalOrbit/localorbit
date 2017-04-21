@@ -1,14 +1,13 @@
 class Deliveries::PackingLabelsController < ApplicationController
 
 
-  # Arrive at index when user clicks "Lables" on their Upcoming Deliveries.
+  # Arrive at index when user clicks "Labels" on their Upcoming Deliveries.
   # Triggers creation of a new Packing Labels printable PDF and redirects 
   # to the #show action where you wait for the generator to complete.
   def index
     product_only = params[:product_only]
-    #delivery =  Delivery.find(params[:delivery_id])
     dt = params[:delivery_deliver_on].to_date
-    dte = dt.strftime("%Y-%m-%d")
+    dte = dt.strftime('%Y-%m-%d')
 
     if params[:market_id].nil?
       market_id = current_market.id
@@ -17,7 +16,7 @@ class Deliveries::PackingLabelsController < ApplicationController
     end
 
     printable = PackingLabelsPrintable.create!(user: current_user, deliver_on: dte)
-    if Rails.env == "development" || current_market.product_label_format == 1 # Print zebra labels directly
+    if Rails.env == 'development' || current_market.product_label_format == 1 # Print zebra labels directly
       ProcessPackingLabelsPrintable.perform(
         market_id: market_id,
         packing_labels_printable_id: printable.id, 

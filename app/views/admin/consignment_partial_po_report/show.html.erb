@@ -1,0 +1,34 @@
+<%= render "admin/reports/header" %>
+<%= render "admin/consignment_partial_po_report/filters" %>
+
+<div class="report-table">
+  <div class="table-wrapper">
+    <table class="sortable report-table">
+      <thead>
+      <tr>
+        <th>Supplier</th>
+        <th>Created</th>
+        <th>Order</th>
+        <th>Amount</th>
+      </tr>
+      </thead>
+      <tbody>
+      <% @orders.each do |order| %>
+      <% so_value = ConsignmentTransaction
+          .joins("JOIN consignment_transactions ct2 ON ct2.parent_id = consignment_transactions.id AND ct2.transaction_type = 'SO'")
+          .where(order_id: order.id).select("sum(ct2.sale_price * ct2.quantity) AS amt")
+        supplier = order.products[0].organization.name
+      %>
+
+      <tr class="<%= cycle "odd", "even" %> item">
+        <td><%= supplier %></td>
+        <td><%= order.created_at.strftime("%m/%d/%Y") %></td>
+        <td><%= link_to order.id, admin_purchase_order_path(order.id) %></td>
+        <td><%= number_to_currency(so_value[0].amt) %></td>
+      </tr>
+
+      <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>

@@ -24,17 +24,17 @@
           <button id="duplicate_button" name="Duplicate Order">Duplicate Order</button>
         </li>
         <% end %>
-        <% if order.purchase_order? && order.delivery_status == "delivered" %>
+        <% if current_market.is_consignment_market? && order.purchase_order? && order.delivery_status == "delivered" %>
         <li>
           <button id="generate_receipt_button" name="Generate Receipt">Generate Receipt</button>
         </li>
         <% end %>
-        <% if order.sales_order? && order.delivery_status == 'pending' %>
+        <% if current_market.is_consignment_market? && order.sales_order? && order.delivery_status == 'pending' %>
         <li>
           <button id="generate_picklist_button" name="Generate Picklist">Generate Pick List</button>
         </li>
         <% end %>
-        <% if order.sales_order? && order.delivery_status == 'delivered' %>
+        <% if current_market.is_consignment_market? && order.sales_order? && order.delivery_status == 'delivered' %>
         <li>
           <button id="generate_invoice_button" name="Generate Invoice">Generate Invoice</button>
         </li>
@@ -47,7 +47,7 @@
         <li>
           <button id="export_bill_button" name="Export Bill">Export Bill to QB</button>
         </li>
-        <% elsif policy(:market_quickbooks).index? && order.payment_status == 'exported' && !order.qb_ref_id.nil? %>
+        <% elsif policy(:market_quickbooks).index? && current_market.is_consignment_market? && order.payment_status == 'exported' && !order.qb_ref_id.nil? %>
         <li>
           <button id="unclose_order" name="Unclose Order">Unclose Order</button>
         </li>

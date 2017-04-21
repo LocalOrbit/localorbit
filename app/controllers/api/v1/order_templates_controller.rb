@@ -22,7 +22,8 @@ module Api
       def create
         cart = Cart.find(params[:cart_id])
         name = params[:name]
-        if(cart && name)
+        template = nil
+        if cart && name
           template = OrderTemplate.create_from_cart!(cart, name, current_user)
         end
         render json: {template: template.as_json, url: templates_path}
