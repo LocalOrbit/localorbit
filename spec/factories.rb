@@ -202,6 +202,7 @@ FactoryGirl.define do
     alternative_order_page         false
     stripe_standalone              false
     allow_product_fee              false
+    allow_signups                  true
     number_format_numeric 0
     organization           {create(:organization, :market)}
 
