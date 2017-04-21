@@ -35,6 +35,7 @@
         <%= f.text_field :prefix, class: "column--full" %>
       </div>
     </div>
+    <% if current_market.is_consignment_market? %>
     <div class="row row--field">
       <div class="field column column--half column--guttered">
         <%= f.label :consolidated_supplier_item_name, 'Consolidated Supplier Item Name' %><br>
@@ -47,6 +48,7 @@
         <%= f.text_field :consolidated_buyer_item_name, class: "column--full" %>
       </div>
     </div>
+    <% end %>
     <div class="row row--field">
       <div class="field column column--one-third column--guttered">
         <div class="form-actions">

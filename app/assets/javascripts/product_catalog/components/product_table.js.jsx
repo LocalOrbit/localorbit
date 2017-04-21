@@ -62,26 +62,29 @@
 
     buildRow: function(product, isMobile, promo) {
         var addTopCategory=null, addSecondCategory=null;
-        current_top_level_category = product.top_level_category_name;
-        if (previous_top_level_category != current_top_level_category || isFirstTopCategory) {
-            previous_top_level_category = current_top_level_category;
+        if (!this.props.consignmentMarket) {
+            current_top_level_category = product.top_level_category_name;
+            if (previous_top_level_category != current_top_level_category || isFirstTopCategory) {
+                previous_top_level_category = current_top_level_category;
 
-            addTopCategory = (<lo.ProductCategoryRow category={current_top_level_category}/>);
-            isFirstTopCategory = false;
+                addTopCategory = (<lo.ProductCategoryRow category={current_top_level_category}/>);
+                isFirstTopCategory = false;
+            }
+            else
+                addTopCategory = null;
         }
-        else
-            addTopCategory = null;
 
-        current_second_level_category = product.second_level_category_name;
-        if (previous_second_level_category != current_second_level_category || isFirstSecondCategory) {
-            previous_second_level_category = current_second_level_category;
+        if (!this.props.consignmentMarket) {
+            current_second_level_category = product.second_level_category_name;
+            if (previous_second_level_category != current_second_level_category || isFirstSecondCategory) {
+                previous_second_level_category = current_second_level_category;
 
-            addSecondCategory = (<lo.ProductSecondCategoryRow category={current_second_level_category}/>);
-            isFirstSecondCategory = false;
+                addSecondCategory = (<lo.ProductSecondCategoryRow category={current_second_level_category}/>);
+                isFirstSecondCategory = false;
+            }
+            else
+                addSecondCategory = null;
         }
-        else
-            addSecondCategory = null;
-
         is_promo = (promo == product.id);
 
         if (isMobile) {

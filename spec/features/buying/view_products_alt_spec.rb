@@ -53,12 +53,12 @@ feature "Viewing products" do
     Timecop.return
   end
 
-  scenario "Purchase Order", :js do
+  it "Purchase Order", :js do
     sign_in_as(market_manager)
     click_link("Purchase Order", match: :first)
 
     expect(page).to have_content("Select a Supplier")
-    select "Organization 2", from: "Supplier", visible: false
+    select org1.name, from: "Supplier", visible: false
     click_button "Select Supplier"
 
     # TODO: Fix alternative order page test to check for items in catalog
@@ -70,12 +70,9 @@ feature "Viewing products" do
     expect(page).to have_content("celery")
     celery_item.set_quantity(1)
     expect(Dom::CartLink.first.count).to have_content("1")
-
-
-
   end
 
-  scenario "Sales Order", :js do
+  it "Sales Order", :js do
     sign_in_as(market_manager)
     click_link("Sales Order", match: :first)
 

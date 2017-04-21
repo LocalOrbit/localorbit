@@ -24,9 +24,9 @@ feature "View Seller Profiles" do
     scenario "redirects to organization select page" do
       click_link "Suppliers", match: :first
 
-      expect(page).to have_content("Select an Organization")
+      expect(page).to have_content("Select a Buyer")
       select buyer.name, from: "org_id"
-      click_button "Select Organization"
+      click_button "Select Buyer"
 
       expect(page).to have_content(seller1.name)
     end
@@ -39,7 +39,7 @@ feature "View Seller Profiles" do
       scenario "does not redirect" do
         click_link "Suppliers", match: :first
 
-        expect(page).not_to have_content("Select an Organization")
+        expect(page).not_to have_content("Select a Buyer")
         expect(page).to have_content("Date Change Confirmation")
       end
     end
