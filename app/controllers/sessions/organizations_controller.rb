@@ -16,7 +16,7 @@ module Sessions
         session[:current_organization_id] = org.id
         redirect_to redirect_to_url
       else
-        flash[:alert] = "Please select a buyer"
+        flash[:alert] = 'Please select a buyer'
         new
         render :new
       end
