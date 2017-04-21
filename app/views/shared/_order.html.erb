@@ -34,7 +34,7 @@
           <button id="generate_picklist_button" name="Generate Picklist">Generate Pick List</button>
         </li>
         <% end %>
-        <% if current_market.is_consignment_market? order.sales_order? && order.delivery_status == 'delivered' %>
+        <% if current_market.is_consignment_market? && order.sales_order? && order.delivery_status == 'delivered' %>
         <li>
           <button id="generate_invoice_button" name="Generate Invoice">Generate Invoice</button>
         </li>
