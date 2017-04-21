@@ -49,7 +49,7 @@ module Sessions
       session.delete(:current_delivery_id)
       session.delete(:current_organization_id)
 
-      redirect_to new_session_deliveries_path(redirect_back_to: redirect_to_url)
+      redirect_to new_sessions_deliveries_path(redirect_back_to: redirect_to_url)
     end
 
     protected
