@@ -33,9 +33,9 @@
             var isMobile = this.state.width <= MOBILE_WIDTH;
 
             if (isMobile)
-                productRow = (<lo.MobileProductRow key={gp.id} product={gp} hideImages={this.props.hideImages} promo={true}/>);
+                productRow = (<lo.MobileProductRow key={gp.id} product={gp} hideImages={this.props.hideImages} promo={this.props.promo}/>);
             else
-                productRow = (<lo.ProductRow key={gp.id} product={gp} hideImages={this.props.hideImages} promo={true} />);
+                productRow = (<lo.ProductRow key={gp.id} product={gp} hideImages={this.props.hideImages} promo={this.props.promo} />);
 
                 return (
             <div className="products-featured">
