@@ -23,6 +23,7 @@
       var consignment_qty_header;
       var order_qty_header;
       var whowherewhy;
+      var img;
 
       // Initialize the convenience variable
       var product_id = "product-"+gp.id+"-long-description";
@@ -112,10 +113,15 @@
       else
           whowherewhy = ('');
 
+      if (self.props.promo.image_url)
+        img = self.props.promo.image_url;
+      else
+        img = gp.image_url;
+
       return (
         <div className="row product-listing">
           <div className="product-details-container column column--five-twelfths">
-            <img style={{display: (this.props.hideImages) ? "none" : ""}} className="product-image" src={gp.image_url}/>
+            <img style={{display: (this.props.hideImages) ? "none" : ""}} className="product-image" src={img}/>
             <div className="product-details" style={{ width: (this.props.supplierOnly) ? "unset" : "", marginTop: (this.props.supplierOnly) ? "10px" : "" }}>
               <h3 className="name">{gp.name}</h3>
               <h5>From: <a href={"/sellers/" + gp.seller_id}>{gp.seller_name}</a></h5>
