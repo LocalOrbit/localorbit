@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170321035111) do
+ActiveRecord::Schema.define(version: 20170422024211) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -64,6 +64,36 @@ ActiveRecord::Schema.define(version: 20170321035111) do
   end
 
   add_index "bank_accounts", ["bankable_type", "bankable_id"], name: "index_bank_accounts_on_bankable_type_and_bankable_id", using: :btree
+
+  create_table "batch_consignment_printable_errors", force: true do |t|
+    t.integer  "batch_consignment_printable_id"
+    t.string   "task"
+    t.text     "message"
+    t.text     "exception"
+    t.text     "backtrace"
+    t.integer  "order_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "batch_consignment_printables", force: true do |t|
+    t.integer  "user_id"
+    t.string   "pdf_uid"
+    t.string   "pdf_name"
+    t.string   "generation_status",                           default: "not_started", null: false
+    t.decimal  "generation_progress", precision: 5, scale: 2, default: 0.0,           null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "batch_consignment_printables", ["user_id"], name: "index_batch_consignment_printables_on_user_id", using: :btree
+
+  create_table "batch_consignment_printables_orders", force: true do |t|
+    t.integer  "batch_consignment_printable_id"
+    t.integer  "order_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "batch_invoice_errors", force: true do |t|
     t.integer  "batch_invoice_id"
@@ -154,6 +184,14 @@ ActiveRecord::Schema.define(version: 20170321035111) do
     t.datetime "updated_at"
   end
 
+  create_table "consignment_printables", force: true do |t|
+    t.integer  "user_id"
+    t.string   "pdf_uid"
+    t.string   "pdf_name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "consignment_products", force: true do |t|
     t.integer  "product_id",                  null: false
     t.integer  "consignment_product_id",      null: false
@@ -179,6 +217,12 @@ ActiveRecord::Schema.define(version: 20170321035111) do
     t.integer  "parent_id"
     t.decimal  "sale_price",          precision: 10, scale: 2, default: 0.0
     t.decimal  "net_price",           precision: 10, scale: 2, default: 0.0
+    t.integer  "holdover_order_id"
+    t.boolean  "master"
+    t.integer  "child_lot_id"
+    t.integer  "child_product_id"
+    t.datetime "deleted_at"
+    t.text     "notes"
   end
 
   create_table "credits", force: true do |t|
@@ -422,6 +466,7 @@ ActiveRecord::Schema.define(version: 20170321035111) do
     t.string   "fax"
     t.integer  "legacy_id"
     t.string   "country",          default: "US",  null: false
+    t.string   "email"
   end
 
   add_index "locations", ["deleted_at"], name: "index_locations_on_deleted_at", using: :btree
@@ -439,6 +484,7 @@ ActiveRecord::Schema.define(version: 20170321035111) do
     t.integer  "legacy_id"
     t.integer  "market_id"
     t.integer  "organization_id"
+    t.integer  "storage_location_id"
   end
 
   add_index "lots", ["expires_at"], name: "index_lots_on_expires_at", using: :btree
@@ -575,6 +621,7 @@ ActiveRecord::Schema.define(version: 20170321035111) do
     t.boolean  "add_item_pricing"
     t.boolean  "self_enabled_cross_sell",                                default: false
     t.string   "background_img_uid"
+    t.boolean  "allow_signups"
   end
 
   add_index "markets", ["name"], name: "index_markets_on_name", using: :btree
@@ -687,11 +734,14 @@ ActiveRecord::Schema.define(version: 20170321035111) do
   end
 
   create_table "order_template_items", force: true do |t|
-    t.integer  "order_template_id", null: false
-    t.integer  "product_id",        null: false
-    t.integer  "quantity",          null: false
+    t.integer  "order_template_id",                                        null: false
+    t.integer  "product_id",                                               null: false
+    t.integer  "quantity",                                                 null: false
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.decimal  "sale_price",        precision: 10, scale: 2, default: 0.0
+    t.decimal  "net_price",         precision: 10, scale: 2, default: 0.0
+    t.integer  "lot_id"
   end
 
   create_table "order_templates", force: true do |t|
@@ -746,6 +796,8 @@ ActiveRecord::Schema.define(version: 20170321035111) do
     t.string   "payment_model"
     t.boolean  "sold_through"
     t.text     "signature_data"
+    t.string   "receipt_pdf_uid"
+    t.string   "receipt_pdf_name"
   end
 
   add_index "orders", ["delivery_id"], name: "index_orders_on_delivery_id", using: :btree
@@ -936,6 +988,7 @@ ActiveRecord::Schema.define(version: 20170321035111) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "image_uid"
+    t.string   "thumb_uid"
   end
 
   add_index "promotions", ["market_id", "product_id"], name: "index_promotions_on_market_id_and_product_id", using: :btree
@@ -953,7 +1006,13 @@ ActiveRecord::Schema.define(version: 20170321035111) do
     t.string  "prefix"
     t.string  "delivery_fee_item_name"
     t.integer "delivery_fee_item_id"
+    t.string  "consolidated_supplier_item_name"
+    t.integer "consolidated_supplier_item_id"
+    t.string  "consolidated_buyer_item_name"
+    t.integer "consolidated_buyer_item_id"
   end
+
+  add_index "qb_profiles", ["organization_id"], name: "org_id", unique: true, using: :btree
 
   create_table "qb_tokens", force: true do |t|
     t.integer  "organization_id"

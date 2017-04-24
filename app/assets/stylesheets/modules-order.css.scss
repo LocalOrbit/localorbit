@@ -61,7 +61,7 @@
   @include border-radius(5px);
   float: left;
   width: 30%;
-  margin-right: 30px;
+  margin-right: 20px;
   padding: 5px 10px;
   background: #F9F9F9;
   font-size: 14px;
@@ -87,7 +87,6 @@
   }
 }
 .order-info-status {
-  pointer-events:none;
   min-width: 200px;
   font-size: 14px;
 }
@@ -107,10 +106,30 @@
   font-size: 24px;
   text-align: center;
 }
+
+.shrink_button {
+  &:after {
+    content: '\f1f8';
+    font-family: FontAwesome;
+  }
+}
+.holdover_button {
+  &:after {
+    content: '\f064';
+    font-family: FontAwesome;
+  }
+}
+.repack_button {
+  &:after {
+    content: '\f079';
+    font-family: FontAwesome;
+  }
+}
+
 @media screen and (max-width: 960px) {
   .order-buyer,
   .order-info-total {
-    width: 45%;
+    width: 40%;
     }
   th {
       min-width: 50%;
@@ -202,6 +221,33 @@
     border: 1px solid #DDDDDD;
     padding: 3px;
     margin: 5px;
+  }
+  .shrink_button {
+    span {
+      display: none
+    }
+    &:after {
+      content: '\f1f8';
+      font-family: FontAwesome;
+    }
+  }
+  .holdover_button {
+    span {
+      display: none
+    }
+    &:after {
+      content: '\f064';
+      font-family: FontAwesome;
+    }
+  }
+  .repack_button {
+    span {
+      display: none
+    }
+    &:after {
+      content: '\f079';
+      font-family: FontAwesome;
+    }
   }
 }
 

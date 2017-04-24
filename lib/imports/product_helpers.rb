@@ -88,16 +88,16 @@ module Imports
 								use_simple_inventory: prod_hash["Lot Number"].nil?
 				)
 				product.skip_validation = true
-				product.save!
+				product.save
 
 					pr = product.prices.find_or_initialize_by(min_quantity: 1)
 					pr.sale_price = prod_hash["Price"]
-					pr.save!
+					pr.save
 
 				if prod_hash["New Inventory"].to_i >= 0
 					lt = product.lots.find_or_initialize_by(good_from: nil, expires_at: nil, number: prod_hash["Lot Number"].nil? ? nil : prod_hash["Lot Number"])
 					lt.quantity = prod_hash["New Inventory"].to_i
-					lt.save!
+					lt.save
 				end
 
 				#unless prod_hash[SerializeProducts.required_headers[-4]].empty? # TODO this should be factored out, later.
@@ -127,14 +127,14 @@ module Imports
 					pr = product.prices.find_or_initialize_by(min_quantity: 1)
 					pr.sale_price = prod_hash["Price"]
 					if pr.valid?
-						pr.save!
+						pr.save
 					else
 						puts "Error validating: #{pr.id}"
 					end
 					if prod_hash["New Inventory"].to_i >= 0
 						lt = product.lots.find_or_initialize_by(good_from: nil, expires_at: nil, number: prod_hash["Lot Number"].nil? ? nil : prod_hash["Lot Number"])
 						lt.quantity = prod_hash["New Inventory"].to_i
-						lt.save!
+						lt.save
 					end
 
 				else # if there is not such a unit, create a new prod-unit
@@ -154,16 +154,16 @@ module Imports
 								use_simple_inventory: prod_hash["Lot Number"].nil?
 				      	)
 					product.skip_validation = true
-					product.save!
+					product.save
 
 					pr = product.prices.find_or_initialize_by(min_quantity: 1)
 					pr.sale_price = prod_hash["Price"]
-					pr.save!
+					pr.save
 
 					if prod_hash["New Inventory"].to_i >= 0
 						lt = product.lots.find_or_initialize_by(good_from: nil, expires_at: nil, number: prod_hash["Lot Number"].nil? ? nil : prod_hash["Lot Number"])
 						lt.quantity = prod_hash["New Inventory"].to_i
-						lt.save!
+						lt.save
 					end
 
 				end

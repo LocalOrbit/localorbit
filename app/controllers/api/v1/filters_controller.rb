@@ -17,11 +17,11 @@ module Api
         # This is a compromise between accuracy and speed: all of the products listed for
         # a market, but without checking pricing and inventory data.
 
-        if(params[:parent_id] && params[:parent_id] === "suppliers")
+        if params[:parent_id] && params[:parent_id] === "suppliers"
           filters = current_market
             .organizations
             .where(can_sell: true, active: true).order('name')
-        elsif(params[:parent_id])
+        elsif params[:parent_id]
           filters = Category
             .where("id in (#{secondary_subquery.to_sql})")
             .where(parent_id: params[:parent_id])

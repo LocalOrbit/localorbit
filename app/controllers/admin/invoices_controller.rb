@@ -53,9 +53,9 @@ module Admin
 
     def fetch_order
       @order = if current_user.admin? || current_user.market_manager?
-        Order.orders_for_buyer(current_user).find(params[:id])
+        Order.so_orders.orders_for_buyer(current_user).find(params[:id])
       else
-        Order.orders_for_buyer(current_user).invoiced.find(params[:id])
+        Order.so_orders.orders_for_buyer(current_user).invoiced.find(params[:id])
       end
     end
   end

@@ -78,6 +78,7 @@ Rails.application.routes.draw do
           get :authenticate
           get :oauth_callback
           get :sync
+          get :disconnect
         end
       end
       resources :storage_locations, controller: :market_storage_locations
@@ -127,9 +128,14 @@ Rails.application.routes.draw do
       end
     end
 
-    resources :orders, only: [:index, :show, :update, :create] do
+    resources :orders, only: [:index, :show, :update, :create, :destroy] do
       resources :table_tents_and_posters, :controller=>"/table_tents_and_posters", only: [:index, :show, :create]
       resources :order_items, only: [:show, :update] # for order price editing
+      member do
+        get :printable_show, to: "orders#printable_show"
+        get :batch_printable_show, to: "orders#batch_printable_show"
+        get :progress
+      end
     end
 
     get "purchase_orders" => "orders#purchase_orders"
@@ -188,7 +194,16 @@ Rails.application.routes.draw do
           delete :destroy
         end
       end
+      collection do
+        post :split
+        post :undo_split
+      end
     end
+
+    resources :consignment_transactions
+
+    get "consignment_inventory" => "consignment_inventory#index"
+    put "consignment_inventory" => "consignment_inventory#update"
 
     resources :order_items, only: [:index, :update], path: :sold_items do
       collection do
@@ -224,12 +239,43 @@ Rails.application.routes.draw do
       end
     end
 
+    # resources :consignment_receipts, only: :show do
+    #   member do
+    #     get "consignment_receipt" => "consignment_receipts#show"
+    #     get :await_pdf, to: "consignment_receipts#await_pdf"
+    #     get :peek, to: "consignment_receipts#peek"
+    #   end
+    # end
+    #
+    # resources :consignment_pick_lists, only: :show do
+    #   member do
+    #     get "consignment_pick_list" => "consignment_pick_list#show"
+    #     get :await_pdf, to: "consignment_pick_lists#await_pdf"
+    #     get :peek, to: "consignment_pick_lists#peek"
+    #   end
+    # end
+    #
+    # resources :batch_consignment_receipts, only: :show do
+    #   member do
+    #     get :progress
+    #   end
+    # end
+
+    resources :batch_consignment_printables, only: :show do
+      member do
+        get :progress
+      end
+    end
+
     resources :activities, only: :index
     resources :categories, only: [:index, :show, :new, :create], path: :taxonomy
     resource :unit_request, only: :create
     resource :category_request, only: :create
 
     resources :reports, only: [:index, :show]
+
+    resources :consignment_partial_po_report, only: [:show]
+
     resources :metrics, only: [:index, :show] do
       collection do
         get "map" => "metrics#map"

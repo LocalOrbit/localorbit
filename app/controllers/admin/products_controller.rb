@@ -60,6 +60,7 @@ module Admin
       @product = Product.new(product_params).decorate
       find_selling_organizations
       @product.organization = @organizations.detect {|o| o.id == @product.organization_id }
+      @product.consignment_market = current_market.is_consignment_market?
       if @product.save
         update_sibling_units(@product)
         if ENV['USE_UPLOAD_QUEUE'] == "true"
@@ -74,6 +75,16 @@ module Admin
       end
     end
 
+    def split
+      CreateProductSplit.perform(market_id: current_market.id, params: params)
+      redirect_to products_path, notice: "Product successfully split."
+    end
+
+    def undo_split
+      UnSplitProductTransaction.perform(params: params)
+      redirect_to products_path, notice: "Product successfully unsplit."
+    end
+
     def show
       @organizations = [@product.organization]
 
@@ -83,6 +94,7 @@ module Admin
     end
 
     def update
+      @product.consignment_market = current_market.is_consignment_market?
       updated = update_product
       if ENV['USE_UPLOAD_QUEUE'] == "true"
         Delayed::Job.enqueue ::ImageUpload::ImageUploadJob.new(@product)
@@ -164,7 +176,7 @@ module Admin
     def after_create_page
       if params[:after_save]
         params[:after_save]
-      elsif @product.lots.count > 0
+      elsif @product.lots.count > 0 || current_market.is_consignment_market?
         [:admin, @product, :prices]
       else
         [:admin, @product, :lots]

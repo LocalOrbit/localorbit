@@ -11,6 +11,7 @@
   selectedType: current_delivery.selected_type.capitalize,
   orderCutoff: current_delivery.cutoff_time,
   buyerInfo: current_organization.name,
+  supplierInfo: !@current_supplier.nil? ? @current_supplier.name : nil,
   purchaseOrder: @order_type == 'purchase',
   salesOrder: @order_type == 'sales',
   consignmentMarket: current_market.is_consignment_market?,

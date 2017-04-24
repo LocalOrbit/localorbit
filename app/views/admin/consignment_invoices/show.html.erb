@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<head>
+  <meta charset="utf-8">
+  <meta name="pdfkit-print_media_type" content="true">
+  <meta name="pdfkit-header_html" content="<%= request.base_url.gsub(/:3000/, ':3500') + pdf_view_header_path + "?order_number=" + invoice.order_number  %>">
+  <meta name="pdfkit-header_spacing" content="15">
+  <meta name="pdfkit-footer_spacing" content="15">
+  <meta name="pdfkit-margin_top" content="0.25in"/>
+  <meta name="pdfkit-margin_right" content="0.25in"/>
+  <meta name="pdfkit-margin_bottom" content="0.25in"/>
+  <meta name="pdfkit-margin_left" content="0.25in"/>
+  <meta name="pdfkit-header_font_size" content="10">
+  <title>Local Orbit</title>
+  <%= render 'shared/print_opensanscondensed_bold' %>
+  <%= render 'shared/print_opensans' %>
+  <%= render 'shared/print_opensans_bold' %>
+  <style type="text/css">
+
+    .signature {
+      display:inline-block;
+      width:45%;
+      color:#666;
+      border-top:1px solid #666;
+      font-family:Arial;
+      font-weight:bold;
+      font-size:14px;
+      margin-top:60px;
+    }
+
+    .invoices-wrapper {
+      font-size: 14px;
+      font-family: OpenSans, "Open Sans", Geneva, Arial, sans-serif;
+    }
+
+    .invoices-wrapper .btn {
+      display: inline-block;
+      padding: 12px 18px;
+      border: solid 1px #b0b0b0;
+      -webkit-border-radius: 3px;
+      -moz-border-radius: 3px;
+      border-radius: 3px;
+      background-image: -moz-linear-gradient(top, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.2));
+      background-image: -webkit-linear-gradient(top, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.2));
+      background-image: -o-linear-gradient(top, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.2));
+      background-image: -ms-linear-gradient(top, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.2));
+      background-image: linear-gradient(top, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.2));
+      margin-bottom: .5em;
+      color: #fff;
+      background-color: #43639F;
+      font-family: inherit;
+      font-size: 17px;
+      text-decoration: none;
+      -webkit-appearance: none;
+      -webkit-font-smoothing: antialiased
+    }
+
+    .invoices-wrapper .btn:hover {
+      background-image: none;
+      text-decoration: none
+    }
+
+    .invoices-wrapper .btn:disabled, .invoices-wrapper .btn.disabled {
+      opacity: 0.15;
+      cursor: default;
+      cursor: not-allowed
+    }
+
+    .invoices-wrapper .btn:active {
+      -webkit-box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.5);
+      -moz-box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.5);
+      box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.5);
+      background-image: -moz-linear-gradient(top, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.3));
+      background-image: -webkit-linear-gradient(top, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.3));
+      background-image: -o-linear-gradient(top, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.3));
+      background-image: -ms-linear-gradient(top, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.3));
+      background-image: linear-gradient(top, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.3))
+    }
+
+    .invoices-wrapper .btn:focus {
+      outline: none
+    }
+
+    .invoices-wrapper .btn:first-child {
+      margin-bottom: 1em
+    }
+
+    .invoices-wrapper .btn:last-child {
+      margin-right: 0
+    }
+
+    .invoices-wrapper .btn.btn--small {
+      padding: 4px 18px;
+      font-size: 14px
+    }
+
+    .invoices-wrapper .column, .invoices-wrapper .row {
+      position: relative;
+      -webkit-box-sizing: border-box;
+      -moz-box-sizing: border-box;
+      box-sizing: border-box
+    }
+
+    .invoices-wrapper .column {
+      display: inline-block;
+      padding: 0 10px 0 0;
+      text-align: left;
+      vertical-align: top
+    }
+
+    .invoices-wrapper .column:last-child {
+      padding-right: 0
+    }
+
+    .invoices-wrapper .column--three-fourths {
+      width: 75%
+    }
+
+    .invoices-wrapper .column--two-thirds {
+      width: 66%
+    }
+
+    .invoices-wrapper .column--half {
+      width: 50%
+    }
+
+    .invoices-wrapper .column--third {
+      width: 33%
+    }
+
+    .invoices-wrapper .column--fourth {
+      width: 25%
+    }
+
+    .invoices-wrapper .ar {
+      text-align: right
+    }
+
+    .invoices-wrapper .al {
+      text-align: left
+    }
+
+    .invoices-wrapper .ac {
+      text-align: center
+    }
+
+    .invoices-wrapper .left-padded {
+      padding-left: 20px
+    }
+
+    .invoices-wrapper h1 {
+      margin: 0 0 .5em;
+      font: bold 25px Arial
+    }
+
+    .invoices-wrapper h2 {
+      margin: 0;
+      color: #666;
+      font: bold 14px Arial
+    }
+
+    .invoices-wrapper table {
+      width: 100%;
+      border-collapse: collapse
+    }
+
+    .invoices-wrapper caption {
+      color: #000;
+      font: bold 14px Arial;
+      text-align: left
+    }
+
+    .invoices-wrapper tr, .invoices-wrapper td, .invoices-wrapper th {
+      page-break-inside: avoid;
+    }
+
+    .invoices-wrapper td:first-child {
+      padding-left:8px;
+    }
+
+    .invoices-wrapper td:last-child {
+      padding-right:8px;
+    }
+
+    .invoices-wrapper th {
+      padding: 4px;
+      color: #666;
+      font-size: 12px;
+      text-align: left;
+      vertical-align: top;
+    }
+
+    .invoices-wrapper .pseudopod th {
+      vertical-align: middle;
+    }
+
+    .invoices-wrapper td {
+      padding: 10px 3px 10px 3px;
+      font-size: 12px
+    }
+
+    .invoices-wrapper tbody tr:nth-child(odd) {
+      background: #f9f9f9
+    }
+
+    .invoices-wrapper .pseudopod th {
+      padding-right:10px;
+      font-size: 12px;
+      font-weight: normal
+    }
+
+    .invoices-wrapper .canceled>span {
+      text-decoration: line-through
+    }
+
+    .invoices-wrapper .canceled:after {
+      color: #911;
+      content: " Cancelled";
+      text-decoration: none
+    }
+
+    .invoices-wrapper .discounts th, .invoices-wrapper .discounts td {
+      padding: 10px 10px 2px
+    }
+
+    .invoices-wrapper .delivery th, .invoices-wrapper .delivery td {
+      padding: 2px 10px 10px
+    }
+
+    .invoices-wrapper .total {
+      border-top: solid 1px #ccc;
+      color: #666
+    }
+
+    .invoices-wrapper .total .amount {
+      padding-left: 10px;
+      color: #000;
+      font: bold 24px Arial
+    }
+
+    .invoices-wrapper .total td, .invoices-wrapper .total th {
+      padding-left: 0;
+      font-size: 18px
+    }
+
+    .invoices-wrapper .total td:first-child {
+      font-style: italic
+    }
+
+    .invoices-wrapper .date {
+      font-family: Arial;
+      font-weight: bold
+    }
+
+    .invoices-wrapper .gray-box {
+      width:112px;
+      display:inline-block;
+      padding: 5px;
+      border: solid 2px #C7C7C7;
+      background: #f9f9f9;
+      font: bold 22px Arial
+    }
+
+    .invoices-wrapper .inline {
+      display: inline
+    }
+
+    .invoices-wrapper .invoice-basics {
+      margin-bottom: 1em
+    }
+
+    .invoices-wrapper .invoice-parties {
+      margin-bottom: 1em
+    }
+
+    .invoices-wrapper .logo {
+      max-width: 1in;
+    }
+    .invoices-wrapper .logo img, .invoices-wrapper .logo-column { width: 1in; }
+
+    .invoices-wrapper .inline-block {
+      display: inline-block;
+    }
+
+    .invoices-wrapper .left {
+      float:left;
+    }
+
+    .invoices-wrapper .right {
+      float:right;
+    }
+
+    .invoices-wrapper .vcard {
+      overflow: hidden;
+      word-break: break-all;
+      word-wrap: break-word;
+    }
+
+    .invoices-wrapper .vcard-buyer {
+      margin-bottom: 25px
+    }
+
+    .invoices-wrapper .buyer-name, .invoices-wrapper .org-from, .invoices-wrapper .invoice-num,
+    .invoices-wrapper .po-num, .invoices-wrapper .delivery-date {
+      margin: 0;
+      font: bold 16px Arial
+    }
+
+    .invoices-wrapper .invoice-num, .invoices-wrapper .buyer-name, .invoices-wrapper .org-from {
+      word-break: break-all;
+      word-wrap: break-word;
+    }
+
+    @media print {
+      .controller-invoices .l-app-header, .controller-invoices .l-app-footer,
+      .controller-invoices .btn--save, .controller-invoices .logo-link,
+      .controller-invoices .nav--main, .controller-invoices .nav--admin,
+      .controller-invoices .tab-header, .controller-invoices .teflon, .controller-invoices .no-print {
+        display: none
+      }
+
+      .controller-invoices .logo {
+        display: block
+      }
+    }
+
+    @media screen {
+      body>.invoices-wrapper {
+        width: 7.5in;
+        min-height: 9in;
+        padding: 0 .5in 1in;
+        margin: 0 auto;
+        background: #fff
+      }
+
+      body>.invoices-wrapper .btn--save {
+        float: right
+      }
+    }
+
+    body.os-android .print-button{display:none}
+
+  </style>
+</head>
+
+<body class="controller-invoices" style="margin:0px;padding:30px;">
+<% @logo_path = asset_url("logo.png") # needed if market doesn't have a logo %>
+<div class="invoices-wrapper">
+  <div class="row">
+    <div class="column">
+      <div class="row">
+        <div class="column logo-column" style="width:1.1in">
+          <br>
+          <%=
+            if market.logo_stored?
+              image_tag(ensure_full_url((market.logo_stored?) ? market.logo.thumb('200x150').url : nil), alt: "#{market.name} logo ", class: "logo", width: 100)
+            elsif @logo_path
+              image_tag(ensure_full_url(@logo_path), alt: "Local  Orbit logo", class: "logo left")
+            else
+              image_tag(ensure_full_url(asset_url("logo.png")), alt: " Local Orbit logo", class: "logo left")
+            end
+          %>
+        </div><div class="column invoice-parties" style="width:2.6in">
+        <div class="vcard app-remit-contact-info">
+          <h2>Remit To:</h2>
+          <% if market.has_remit_to_address? %>
+              <h3 class="fn org org-from"><%= market.remit_to_name %></h3>
+              <div>
+                <%= (market.has_remit_to_address?) ? market.remit_to_street_address : nil %><br>
+                <%= (market.has_remit_to_address?) ? market.remit_to_city_state_zip : nil %><br>
+                <%= (market.remit_to_address) ? market.remit_to_phone_number : nil %><br>
+                <%= market.contact_email %>
+              </div>
+          <% elsif market.has_address? %>
+              <h3 class="fn org org-from"><%= market.name %></h3>
+              <div>
+                <%= (market.has_address?) ? market.billing_street_address : nil %><br>
+                <%= (market.has_address?) ? market.billing_city_state_zip : nil %><br>
+                <%= (market.billing_address) ? market.billing_address_phone_number : nil %><br>
+                <%= market.contact_email %>
+              </div>
+          <% end %>
+        </div>
+        <br>
+        <div class="vcard vcard-buyer">
+          <h2>Bill To:</h2>
+          <h3 class="fn org buyer-name"><%= invoice.billing_organization_name %></h3>
+          <div>
+            <%= invoice.billing_address %><br>
+            <%= invoice.billing_city %>,
+            <%= invoice.billing_state %>
+            <%= invoice.billing_zip %><br>
+            <%= invoice.billing_phone %>
+          </div>
+        </div>
+      </div>
+      </div>
+    </div><div class="column" style="width:2.7in;display:inline-block;">
+    <h1>Invoice</h1>
+    <h2>Invoice Number</h2>
+    <p class="invoice-num"><%= invoice.order_number %></p><br>
+    <%= "<span class=\"inline-block\"><h2>Delivery Date</h2><p class=\"delivery-date\">#{invoice.delivery.buyer_deliver_on.strftime("%m/%d/%Y")}</p></span>".html_safe if invoice.delivery.buyer_deliver_on.present? %>
+    <%= "<span class=\"inline-block\" style=\"margin-left:15px;\"><h2>Purchase Order #</h2><p class=\"po-num\">#{invoice.payment_note}</p></span>".html_safe if invoice.payment_note.present? %>
+    <br><br>
+    <div class="invoice-basics">
+      <div class="gray-box">
+        <h2>Due Date</h2>
+        <%= (invoice.invoice_due_date || market.po_payment_term.to_i.days.from_now).strftime("%-m/%-d/%Y") %>
+      </div>
+      <div class="gray-box">
+        <h2>Total</h2>
+        <span class="app-header-total"><%= number_to_currency invoice.total_cost %></span>
+      </div>
+      <h2 class="inline">Invoice Date&nbsp;&nbsp;</h2>
+      <span class="date">
+            <%= (invoice.invoiced_at || Date.current).strftime("%-m/%-d/%Y") %>
+          </span>
+    </div>
+  </div>
+  </div>
+  <div style="float: left" class="invoice-basics">
+    Payment:	[  ]Check  [  ]Cash  [  ]Invoice  [  ]Credit Card<br/><br/>
+    Check No. _________
+  </div>
+  <br/>
+  <body style="margin:0; padding:0;">
+  <%= link_to "Return to Invoices", admin_financials_invoices_path, class: "no-print" if user %>
+  <table>
+    <thead>
+    <tr>
+      <th style="min-width:200px">Item</th>
+      <th style="min-width:200px">Supplier</th>
+      <th>Quantity</th>
+      <th>Unit Price</th>
+      <th>Total</th>
+    </tr>
+    </thead>
+    <% invoice.items.each do |item| %>
+        <tr class="line-item">
+          <td class="al"><%= item.name %></td>
+          <td><%= item.seller_name %></td>
+          <td><%= item.quantity_delivered || item.delivery_status.try(:titleize) %></td>
+          <td class="invoice-amount"><%= number_to_currency item.unit_price %></td>
+          <td class="invoice-amount <%= item.delivery_status %>"><%= number_to_currency item.gross_total %></td>
+        </tr>
+    <% end %>
+    <tbody class="pseudopod">
+    <tr>
+      <th scope="row" colspan="4" class="ar">Subtotal</th>
+      <td class="invoice-amount"><%= number_to_currency invoice.gross_total %></td>
+    </tr>
+    <tr>
+      <th scope="row" colspan="4" class="ar">Discounts</th>
+      <td class="invoice-amount"><%= number_to_currency invoice.discount %></td>
+    </tr>
+    <% if invoice.credit_amount > 0 %>
+        <tr>
+          <th><%if invoice.credit.notes %><%= invoice.credit.notes.length > 0 ? "Note: #{invoice.credit.notes}" : "" %><% end %></th>
+          <th scope="row" colspan="4" class="ar">Credits</th>
+          <td class="invoice-amount"><%= number_to_currency invoice.credit_amount %></td>
+        </tr>
+    <% end %>
+    <tr>
+      <th scope="row" colspan="4" class="ar"><%= invoice.delivery.delivery_schedule.fee_label %></th>
+      <td class="invoice-amount"><%= number_to_currency invoice.delivery_fees %></td>
+    </tr>
+    <tr class="total">
+      <td colspan="3">Thank you for your business.</td>
+      <th colspan="2" class="ar"><span>Total</span> <span class="amount app-total"><%= number_to_currency invoice.total_cost %></span></th>
+    </tr>
+    </tbody>
+  </table>
+
+  <%= javascript_include_tag "application" if @needs_js %>
+  </body>
+  <div style="page-break-inside:unset;page-break-after:unset;width:7in;">
+    <br>
+    <% if !invoice.signature_data.nil? %>
+    <div style="padding: 5px">
+      <%= JSignatureBase30.new(invoice.signature_data).to_svg.html_safe %>
+    </div>
+    <% end %>
+    <div class="signature" style="float:right;">Signature</div>
+  </div>
+</div>
+</body>
+</html>

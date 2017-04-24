@@ -2,13 +2,18 @@ class UpdateQuantities
   include Interactor
 
   def perform
-    context[:delivery_fees] = order.delivery_fees
     context[:previous_quantities] = order.items.map {|item| {id: item.id, quantity: item.quantity, quantity_delivered: item.quantity_delivered} }
     context.fail! unless order.update_attributes(order_params.merge(updated_at: Time.current))
     order.cache_delivery_status
     result = ApplyDiscountToAddedOrderItems.perform(order: order)
+    if order.market.is_consignment_market? && !order.delivery.deliver_on.nil?
+      d_time = Time.current
+      order.delivery.deliver_on = d_time
+      order.delivery.save
+    end
     order.save
     order.update_total_cost
+    context[:delivery_fees] = order.delivery_fees
   end
 
   def rollback

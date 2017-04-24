@@ -42,6 +42,7 @@ module Admin
       @order = Order.find(params[:order_id])
       if params[:order_item][:unit_price]
         @order_item.unit_price = params[:order_item][:unit_price]
+        @order_item.net_price = params[:order_item][:net_price]
         sof = StoreOrderFees.new
         sof.update_accounting_fees_for(@order_item)
         # TODO: is this the only specific update that's needed?
@@ -49,6 +50,7 @@ module Admin
         @order_item.save!
         @order.update_total_cost
         @order.save!
+        UpdateConsignmentTransaction.perform(order: @order, item: @order_item)
       end
       redirect_to admin_order_path(params[:order_id])
     end
@@ -72,7 +74,8 @@ module Admin
       OrderItem.for_user(current_user).
         joins(:order).
         includes(order: :organization, product: :organization).
-        preload(product: [:organization, :category], order: [:market, :organization])
+        preload(product: [:organization, :category], order: [:market, :organization]).
+        where("orders.order_type = 'sales'")
     end
 
     def prepare_filter_data(order_items)

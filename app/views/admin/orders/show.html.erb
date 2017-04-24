@@ -1,2 +1,2 @@
-<%= link_to "< Return to Orders List", admin_orders_path, class: "redundant-nav" %>
+<%= link_to "< Return to Orders List", @order.sales_order? ? admin_orders_path : admin_purchase_orders_path, class: "redundant-nav" %>
 <%= render "shared/order", {order: @order} %>

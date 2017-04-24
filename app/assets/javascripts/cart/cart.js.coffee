@@ -22,7 +22,7 @@ $ ->
     setElement: (el) ->
       @el = el
 
-      $(@el).find('.quantity input.cart-input').keyup ->
+      $(@el).find('.quantity input.cart-input, .net-price input.cart-input, .sale-price input.cart-input').keyup ->
         window.clearTimeout(@timer)
 
         @timer = window.setTimeout =>
@@ -40,9 +40,8 @@ $ ->
         else if (this.data.quantity > 0) && (data.quantity == 0)
           msg = "Removed from cart!"
 
-          
         else if (this.data.quantity > 0) && (data.quantity > 0)
-          msg = "Quantity updated!"
+          msg = "Item updated!"
 
       CartLink.deferredUpdateMessage(msg)
 
@@ -87,26 +86,26 @@ $ ->
       unless @el.hasClass("product-row") || @el.data("keep-when-zero")
         @el.remove()
 
-      if @el.find(".quantity input").hasClass("promo")
+      if @el.find(".app-product-input input").hasClass("promo")
         totalPrice = accounting.formatMoney(@data.total_price)
         $(".promo").parent().parent().find(".icon-clear").addClass("is-hidden")
         $(".promo").parent().parent().find(".quantity input").val('')
         $(".promo").parent().parent().find(".price").text(totalPrice)
 
     showError: ->
-      @el.find('.quantity').addClass("field_with_errors")
+      @el.find('.app-product-input').addClass("field_with_errors")
 
     clearError: ->
-      @el.find('.quantity').removeClass("field_with_errors")
+      @el.find('.app-product-input').removeClass("field_with_errors")
 
     showUpdate: ->
-      @el.find('.quantity').addClass("updated")
+      @el.find('.app-product-input').addClass("updated")
       window.setTimeout =>
-        @el.find('.quantity').addClass("finished")
+        @el.find('.app-product-input').addClass("finished")
       , window.CartNotificationDuration
 
       window.setTimeout =>
-        @el.find('.quantity').removeClass("updated").removeClass("finished")
+        @el.find('.app-product-input').removeClass("updated").removeClass("finished")
       , (window.CartNotificationDuration + 200)
       $(".promo").parent().parent().find(".updated").removeClass("updated")
 
@@ -141,7 +140,7 @@ $ ->
     updateSubtotal: (subtotal)->
       totals = $("#totals")
       totals.find(".subtotal").text(accounting.formatMoney(subtotal))
-      if subtotal*1 > order_min*1 || order_type == 'purchase'
+      if subtotal*1 >= order_min*1 || order_type == 'purchase'
         $('.order-min-msg').html('')
         $('.payment-method').prop("disabled", false)
         #$("#place-order-button").prop("disabled", false)
@@ -196,12 +195,12 @@ $ ->
       @items = _.map opts.items, (el)->
         CartItem.buildWithElement(el)
 
-    itemAt: (id)->
+    itemAt: (id, lot_id)->
       _.find @items, (item)->
-        item.data.product_id == id
+        item.data.product_id == id && (item.data.lot_id == lot_id || item.data.lot_id == null)
 
     updateOrAddItem: (data, element, silent, newElement)->
-      item = @itemAt(data.product_id)
+      item = @itemAt(data.product_id, data.lot_id)
 
       if item?
         item.update(data, silent)
@@ -216,7 +215,7 @@ $ ->
       return item
 
     removeItem: (data)->
-      item = @itemAt(data.product_id)
+      item = @itemAt(data.product_id, data.lot_id)
       item.update(data)
 
       item.data.id = null
@@ -355,14 +354,17 @@ $ ->
 
   setupAlternateOrderPage()
 
-  $(document.body).on 'cart.inputFinished', ".cart_item .quantity input", ->
+  $(document.body).on 'cart.inputFinished', ".cart_item .quantity input, .cart_item .net-price input, .cart_item .sale-price input", ->
     data = $(this).closest(".cart_item").data("cart-item")
 
     if this.value.length > 0 && !$(this).hasClass('invalid-input')
-      quantity = parseInt($(this).val())
+      if $(this).hasClass('app-product-input')
+        quantity = parseInt($(this).val())
+      else
+        quantity = parseInt($(this).parent().parent().parent().parent().find('.app-product-input').val())
       netPrice = parseFloat($(this).parent().parent().parent().parent().find('.app-net-price-input').val())
       salePrice = parseFloat($(this).parent().parent().parent().parent().find('.app-sale-price-input').val())
-      lotId = parseInt($(this).parent().parent().parent().find('.lot_id').val())
+      lotId = parseInt($(this).parent().parent().parent().parent().find('.lot-id').val())
       model.saveItem(data.product_id, quantity, netPrice, salePrice, lotId, this, order_id)
 
     if this.value.length == 0 && !$(this).hasClass("in-cart")
@@ -371,7 +373,8 @@ $ ->
   $(document.body).on 'click', ".cart_item .icon-clear", (e)->
     e.preventDefault()
     data = $(this).closest(".cart_item").data("cart-item")
-    model.saveItem(data.product_id, 0, 0, 0, 0, order_id)
+    lotId = $(this).parent().parent().parent().parent().parent().parent().parent().find(".lot-id").val()
+    model.saveItem(data.product_id, 0, 0, 0, lotId, this, order_id)
 
   $(document.body).on 'click', "input[type=radio]", (e)->
     $(".payment-fields").addClass("is-hidden")
@@ -386,6 +389,25 @@ $ ->
       $("#place-order-button").attr("disabled", false)
     else
       $("#place-order-button").attr("disabled", true)
+
+  $(document.body).on 'click', ".submit-split", (e)->
+    e.preventDefault()
+    $(this).attr("disabled", true)
+    quantity = $(this).parent().parent().parent().find(".split-qty").val()
+    productId = $(this).parent().parent().parent().find(".split-product option:selected").val()
+    lotId = $(this).parent().parent().parent().parent().parent().parent().parent().find(".lot-id").val()
+    parentProductId = $(this).parent().parent().parent().parent().parent().parent().parent().parent().parent().data("cart-item")["product_id"]
+    $.post("/admin/products/split", {parent_product_id: parentProductId, product_id: productId, lot_id: lotId, quantity: quantity} )
+      .done (data)=>
+        location.reload()
+
+  $(document.body).on 'click', ".undo-submit-split", (e)->
+    e.preventDefault()
+    #$(this).attr("disabled", true)
+    productId = $(this).parent().parent().parent().parent().parent().data("cart-item")["product_id"]
+    $.post("/admin/products/undo_split", {product_id: productId} )
+      .done (data)=>
+        location.reload()
 
   $(document.body).on 'click', "#place-order-button", (e)->
     e.preventDefault()
@@ -449,5 +471,3 @@ $ ->
 
   if ($('#order_credit_card_id option').size() == 2)
     $('#order_credit_card_id option:last').attr("selected","selected")
-
-  $('.quantity').removeClass("updated").removeClass("finished")

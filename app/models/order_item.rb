@@ -7,11 +7,13 @@ class OrderItem < ActiveRecord::Base
   before_save :update_delivery_status
   before_save :update_delivered_at
   before_save :update_consumed_inventory
+  before_destroy :remove_consignment_transaction
 
   audited allow_mass_assignment: true, associated_with: :order
 
   attr_accessor :deliver_on_date
   attr_accessor :_destroy
+  attr_accessor :preferred_storage_location_id
 
   belongs_to :order, inverse_of: :items
   belongs_to :product
@@ -61,8 +63,8 @@ class OrderItem < ActiveRecord::Base
       unit: item.unit,
       unit_price: !item.sale_price.nil? && item.sale_price > 0 ? item.sale_price : item.unit_price.nil? ? 0 : item.unit_price.sale_price,
       net_price: !item.net_price.nil? && item.net_price > 0 ? item.net_price : 0,
-      product_fee_pct: !item.sale_price.nil? && item.sale_price > 0 ? 0 : item.unit_price.product_fee_pct,
-      category_fee_pct: category_fee_pct,
+      product_fee_pct: !item.sale_price.nil? && item.sale_price > 0 ? 0 : item.unit_price.nil? ? 0 : item.unit_price.product_fee_pct,
+      category_fee_pct: category_fee_pct.nil? ? 0 : category_fee_pct,
       seller_name: item.product.organization.name,
       delivery_status: "pending"
     )
@@ -140,6 +142,13 @@ class OrderItem < ActiveRecord::Base
 
   def delivered?
     delivery_status == "delivered"
+  end
+
+  def remove_consignment_transaction
+    ct = ConsignmentTransaction.where(order_id: self.order.id, order_item_id: self.id).first
+    if !ct.nil?
+      ct.soft_delete
+    end
   end
 
   private

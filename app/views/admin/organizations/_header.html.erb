@@ -13,10 +13,14 @@
     <div class="tabs-wrapper organization-tabs">
       <ul class="tabs">
         <%= content_tag(:li, link_to_or_span("Info", [:admin, @organization]), class: 'tab') %>
+        <% if current_market.is_buysell_market? %>
         <%= content_tag(:li, link_to_or_span("Users", [:admin, @organization, :users]), class: 'tab') %>
+        <% end %>
         <%= content_tag(:li, link_to_or_span("Addresses", [:admin, @organization, :locations]), class: 'tab')%>
+        <% if current_market.is_buysell_market? %>
         <%= content_tag(:li, link_to_or_span("Payment Methods", [:admin, @organization, :bank_accounts]), class: 'tab')%>
         <%= content_tag(:li, link_to_or_span("Cross Sell", admin_organization_cross_sell_path(@organization)), class: 'tab') if @organization.can_cross_sell? %>
+        <% end %>
       </ul>
     </div>
   </div>

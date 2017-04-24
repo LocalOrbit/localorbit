@@ -16,9 +16,17 @@ class Order < ActiveRecord::Base
       "exported" => "Exported"
   }.freeze
 
-  BATCH_ACTIONS = {
+  BATCH_PO_ACTIONS = {
+      "receipt" => "Generate Receipts",
       "export" => "Export",
       "unclose" => "Unclose"
+  }.freeze
+
+  BATCH_SO_ACTIONS = {
+      "export" => "Export",
+      "unclose" => "Unclose",
+      "pick_list" => "Pick List",
+      "invoice" => "Invoice"
   }.freeze
 
   paginates_per 50
@@ -35,6 +43,7 @@ class Order < ActiveRecord::Base
   has_associated_audits
 
   dragonfly_accessor :invoice_pdf
+  dragonfly_accessor :receipt_pdf
 
   attr_accessor :credit_card, :bank_account
 
@@ -78,7 +87,7 @@ class Order < ActiveRecord::Base
   validates :market_id, presence: true
   #validates :order_number, presence: true
   validates :organization_id, presence: true
-  validates :payment_method, presence: true, inclusion: {in: Payment::PAYMENT_METHODS.keys, allow_blank: true}
+  validates :payment_method, presence: true, inclusion: {in: Payment::PAYMENT_METHODS_CHECK.keys, allow_blank: true}
   validates :payment_status, presence: true
   validates :placed_at, presence: true
   validates :total_cost, presence: true
@@ -488,7 +497,9 @@ class Order < ActiveRecord::Base
     if credit && credit.apply_to == "subtotal"
       cost = gross_total - credit_amount
     end
-    self.delivery_fees = calculate_delivery_fees(cost).round(2) unless delivery_fees == 0
+    if market.is_buysell_market?
+      self.delivery_fees = calculate_delivery_fees(cost).round(2) unless delivery_fees == 0
+    end
     self.total_cost    = calculate_total_cost(cost).round(2)
   end
 

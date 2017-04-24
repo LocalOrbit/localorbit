@@ -55,7 +55,7 @@ module Sessions
     protected
 
     def invalid_delivery_selection
-      flash.now[:alert] = "Please select a delivery"
+      flash.now[:alert] = 'Please select a delivery'
       new
       render :new
     end

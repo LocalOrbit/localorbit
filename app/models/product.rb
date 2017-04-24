@@ -23,7 +23,7 @@ class Product < ActiveRecord::Base
   default_scope { includes(:general_product) }
 
   # transient properties for conveniently adding sibling (product) units
-  attr_accessor :sibling_id, :sibling_unit_id, :sibling_unit_description, :sibling_product_code, :sibling_unit_quantity, :skip_validation
+  attr_accessor :sibling_id, :sibling_unit_id, :sibling_unit_description, :sibling_product_code, :sibling_unit_quantity, :skip_validation, :consignment_market
 
   has_many :lots, -> { order("created_at") }, inverse_of: :product, autosave: true, dependent: :destroy
   has_many :lots_by_expiration, -> { order("organization_id, market_id, expires_at, good_from, created_at") }, class_name: Lot, foreign_key: :product_id
@@ -55,7 +55,7 @@ class Product < ActiveRecord::Base
   validates :unit, presence: true
   validates :category_id, presence: true
   validates :organization_id, presence: true
-  validates :short_description, presence: true, length: {maximum: 50}
+  validates :short_description, presence: true, length: {maximum: 50}, :unless => :consignment_market
   validates :long_description, length: {maximum: 500}
 
   validates :location, presence: true, if: :overrides_organization?, :unless => :skip_validation
@@ -363,6 +363,47 @@ class Product < ActiveRecord::Base
     joins(arel_table.create_join(Lot.arel_table, join_on))
   end
 
+  def self.with_available_so_inventory(deliver_on_date=Time.current.end_of_minute, market_id=nil, organization_id=nil)
+    lot_table = Lot.arel_table
+
+    lot_join_cond = arel_table[:id].eq(lot_table[:product_id]).
+        and(lot_table[:good_from].eq(nil).or(lot_table[:good_from].lt(deliver_on_date))).
+        and(lot_table[:expires_at].eq(nil).or(lot_table[:expires_at].gt(deliver_on_date))).
+        and(lot_table[:quantity].gt(0)).
+        and(lot_table[:number].not_eq(nil)).
+        and(lot_table[:market_id].eq(nil).or(lot_table[:market_id].eq(market_id))).
+        and(lot_table[:organization_id].eq(nil).or(lot_table[:organization_id].eq(organization_id)))
+    join_on = arel_table.create_on(lot_join_cond)
+
+    joins(arel_table.create_join(Lot.arel_table, join_on))
+
+    #joins("INNER JOIN lots ON products.id = lots.product_id AND lots.quantity > 0 and lots.number IS NOT NULL")
+  end
+
+  def self.with_waiting_so_inventory
+
+    awaiting_delivery = ConsignmentTransaction
+                            .joins("JOIN orders ON consignment_transactions.order_id = orders.id")
+                            .where("orders.delivery_status = 'pending' AND consignment_transactions.transaction_type = 'PO' AND consignment_transactions.lot_id IS NULL AND consignment_transactions.market_id = ? AND consignment_transactions.product_id = ?", current_market.id, product.id).select("null AS id, #{awaiting_delivery_qty - awaiting_ordered_qty} AS quantity, '' AS number, '' AS delivery_date, 'awaiting_delivery'::text AS status")
+
+    ct_table = ConsignmentTransaction.arel_table
+    order_table = Order.arel_table
+
+    ct_join_cond = arel_table[:id].eq(ct_table[:product_id]).
+      and(arel_table['markets.id'].eq(ct_table[:market_id]))
+    ct_join_on = arel_table.create_on(ct_join_cond)
+
+    order_join_cond = ct_table[:order_id].eq(order_table[:id])
+    order_join_on = ct_table.create_on(order_join_cond)
+
+    joins(arel_table.create_join(ConsignmentTransaction.arel_table, ct_join_on)).
+    joins(arel_table.create_join(Order.arel_table, order_join_on))
+    .where(order_table[:delivery_status].eq("pending")
+    .and(ct_table[:transaction_type].eq("PO"))
+    .and(ct_table[:lot_id].eq(nil)))
+
+  end
+
   def can_use_simple_inventory?
     use_simple_inventory? || !lots.where("(expires_at IS NULL OR expires_at > ?) AND quantity > 0", Time.current.end_of_minute).exists?
   end
@@ -465,6 +506,9 @@ class Product < ActiveRecord::Base
     ret_val.push(category_id).push(second_level_category_id).push(top_level_category_id)
   end
 
+  def consignment_inventory
+
+  end
   private
 
   def ensure_product_has_a_general_product

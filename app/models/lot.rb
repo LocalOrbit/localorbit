@@ -1,11 +1,12 @@
 class Lot < ActiveRecord::Base
 
-  after_save :update_product_record
+  after_update :update_product_record
   audited allow_mass_assignment: true, associated_with: :product
 
   belongs_to :product, inverse_of: :lots
   belongs_to :market
   belongs_to :organization
+  belongs_to :storage_location
 
   validates :quantity, numericality: {greater_than_or_equal_to: 0, less_than: 1_000_000}
   validates :number, presence: {message: "can't be blank when 'Expiration Date' is present"}, if: lambda {|obj| obj.expires_at.present? }

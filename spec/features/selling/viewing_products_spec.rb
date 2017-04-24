@@ -11,15 +11,15 @@ describe "Viewing products" do
 
   let!(:apples)       { create(:product, organization: org1, name: "Apples") }
   let!(:apples_price) { create(:price, product: apples, sale_price: 10.00, min_quantity: 1) }
-  let!(:apples_lot)   { create(:lot, product: apples, quantity: 10) }
+  let!(:apples_lot)   { create(:lot, product: apples, quantity: 10, number: nil) }
 
   let!(:bananas)      { create(:product, organization: org1, name: "Bananas") }
   let!(:bananas_price){ create(:price, product: bananas, sale_price: 1.00, min_quantity: 1) }
-  let!(:bananas_lot)  { create(:lot, product: bananas, quantity: 100) }
+  let!(:bananas_lot)  { create(:lot, product: bananas, quantity: 100, number: nil) }
 
   let!(:grapes)       { create(:product, organization: org1, name: "Grapes", unit: create(:unit, singular: "Tube", plural: "Tubes")) }
   let!(:grapes_price) { create(:price, product: grapes, sale_price: 5.00, min_quantity: 1) }
-  let!(:grapes_lot)   { create(:lot, product: grapes, quantity: 1) }
+  let!(:grapes_lot)   { create(:lot, product: grapes, quantity: 1, number: nil) }
 
   before do
     switch_to_subdomain(market.subdomain)

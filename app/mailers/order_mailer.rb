@@ -1,5 +1,7 @@
 class OrderMailer < BaseMailer
   def buyer_confirmation(order)
+    return if order.market.is_consignment_market?
+
     @market = order.market
     @order = BuyerOrder.new(order)
 
@@ -15,6 +17,8 @@ class OrderMailer < BaseMailer
   end
 
   def seller_confirmation(order, seller, pdf, csv)
+    return if order.market.is_consignment_market?
+
     @market = order.market
     @order = SellerOrder.new(order, seller) # Selling users organizations only see
     @seller = seller
@@ -34,6 +38,8 @@ class OrderMailer < BaseMailer
   end
 
   def market_manager_confirmation(order)
+    return if order.market.is_consignment_market?
+
     @market = order.market
     @order = BuyerOrder.new(order) # Market Managers should see all items
 
@@ -44,7 +50,10 @@ class OrderMailer < BaseMailer
   end
 
   def invoice(order_id)
+
     @order  = BuyerOrder.new(Order.find(order_id))
+    return if @order.market.is_consignment_market?
+
     @market = @order.market
 
     attachments["invoice.pdf"] = {mime_type: "application/pdf", content: @order.invoice_pdf.try(:data)}
@@ -58,6 +67,8 @@ class OrderMailer < BaseMailer
   end
 
   def buyer_order_updated(order)
+    return if order.market.is_consignment_market?
+
     @market = order.market
     @order = BuyerOrder.new(order) # Market Managers should see all items
 
@@ -71,6 +82,8 @@ class OrderMailer < BaseMailer
   end
 
   def buyer_order_removed(order)
+    return if order.market.is_consignment_market?
+
     @market = order.market
     @order = BuyerOrder.new(order) # Market Managers should see all items
 
@@ -84,6 +97,8 @@ class OrderMailer < BaseMailer
   end
 
   def seller_order_updated(order, seller, pdf, csv)
+    return if order.market.is_consignment_market?
+
     @market = order.market
     @order = SellerOrder.new(order, seller) # Selling users organizations only see
     @seller = seller
@@ -103,6 +118,8 @@ class OrderMailer < BaseMailer
   end
 
   def market_manager_order_updated(order)
+    return if order.market.is_consignment_market?
+
     @market = order.market
     @order = BuyerOrder.new(order) # Market Managers should see all items
 
@@ -114,6 +131,8 @@ class OrderMailer < BaseMailer
   end
 
   def seller_order_item_removal(order, seller, pdf, csv)
+    return if order.market.is_consignment_market?
+
     @market = order.market
     @order = SellerOrder.new(order, seller) # Selling users organizations only see
     @seller = seller

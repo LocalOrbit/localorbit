@@ -12,11 +12,13 @@
       selectedType: React.PropTypes.string,
       orderCutoff: React.PropTypes.string.isRequired,
       buyerInfo: React.PropTypes.string.isRequired,
+      supplierInfo: React.PropTypes.string,
       useTemplates: React.PropTypes.bool.isRequired,
       supplierOnly: React.PropTypes.bool,
       orderId: React.PropTypes.number,
       orderMinimum: React.PropTypes.string,
-      purchaseOrder: React.PropTypes.bool
+      purchaseOrder: React.PropTypes.bool,
+      salesOrder: React.PropTypes.bool
     },
 
     getInitialState: function() {
@@ -112,7 +114,9 @@
       }.bind(this));
 
       var orderTemplates, filterText, orderMinimum, headerInformation, editDeliveryOptions;
-      if(this.props.useTemplates)
+      var buyerSeller, entityInfo;
+
+        if(this.props.useTemplates && this.props.salesOrder)
             orderTemplates = (<a href="#templatePicker" className="app-apply-template modal-toggle">Apply an order template to the cart</a>);
         else
             orderTemplates = ('');
@@ -132,12 +136,21 @@
         else
           editDeliveryOptions = (<span><a href="/sessions/organizations/new?redirect_back_to=%2Fsessions/deliveries/new?redirect_back_to=%2Fproducts">Change delivery options</a><br/></span>);
 
+        if (this.props.purchaseOrder) {
+            buyerSeller = 'Supplier';
+            entityInfo = this.props.supplierInfo;
+        }
+        else {
+            buyerSeller = 'Buyer';
+            entityInfo = this.props.buyerInfo;
+        }
+
         if (this.props.orderId > 0)
             headerInformation = ('');
         else
             headerInformation = (
                 <div className="order-information-container column column--half pull-left">
-                    Buyer: <strong>{this.props.buyerInfo}</strong><br/>
+                    {buyerSeller}: <strong>{entityInfo}</strong><br/>
                     {this.props.selectedType}: <strong>{this.state.deliveryDate.format('dddd, MMM. D, YYYY')}</strong><br/>
                     Time left to order: <strong>{this.state.orderCutoff.fromNow(true)}</strong><br/>
                     {orderMinimum}
@@ -151,7 +164,7 @@
           <div className="row catalog-search-container">
             <div className="catalog-search column column--half pull-left">
               <input className="app-search" name="app-search" type="text" onChange={this.inputChanged} value={this.state.query} placeholder="Search..."/>
-              <a href="javascript:void(0);" onClick={this.toggleShowFilter} className="btn--secondary btn pull-right">Select Filters</a>
+              <a href="javascript:void(0);" onClick={this.toggleShowFilter} className="pull-right">{this.state.showFilter ? "Hide" : "Show"} Filter Options</a>
               <div className="filter-tags pull-left" style={{display: (activeFilters.length === 0) ? "none" : ""}}>
                 <span className="filter-tags-title">Filtering by: </span>
                 {activeFilters}

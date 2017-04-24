@@ -1,5 +1,6 @@
 class Admin::OrdersController < AdminController
   include StickyFilters
+  include Inventory
 
   before_action :find_sticky_params, only: [:index, :purchase_orders]
   before_action :load_qb_session
@@ -10,6 +11,7 @@ class Admin::OrdersController < AdminController
     else
       po_filter = {:q => {"order_type_matches" => "sales"}}
       @query_params = @query_params.deep_merge!(po_filter)
+      @order_type = 'sales'
 
       build_order_list
 
@@ -38,6 +40,7 @@ class Admin::OrdersController < AdminController
     else
       po_filter = {:q => {"order_type_matches" => "purchase"}}
       @query_params = @query_params.deep_merge!(po_filter)
+      @order_type = 'purchase'
 
       build_order_list
 
@@ -70,7 +73,7 @@ class Admin::OrdersController < AdminController
   end
 
   def search_and_calculate_totals(search)
-    results = Order.includes(:market, :organization, :items, :delivery).orders_for_seller(current_user).search(search.query)
+    results = Order.includes(:market, :organization, :items, :delivery).orders_for_seller(current_user).visible.search(search.query)
     results.sorts = "placed_at desc" if results.sorts.empty?
 
     if !current_user.admin? && (current_user.market_manager? || current_user.buyer_only?)
@@ -89,12 +92,28 @@ class Admin::OrdersController < AdminController
 
   def create
     case params["order_batch_action"]
+      when "pick_list", "invoice", "receipt"
+
+        orders = Order.where(id: params["order_id"])
+        printable_type = params[:order_batch_action]
+
+        context = InitializeBatchConsignmentPrintable.perform(user: current_user, orders: orders)
+        if context.success?
+          batch_consignment_printable = context.batch_consignment_printable
+          GenerateBatchConsignmentPrintablePdf.delay.perform(batch_consignment_printable: batch_consignment_printable, type: printable_type,
+                                                request: RequestUrlPresenter.new(request))
+
+          redirect_to action: :batch_printable_show, id: batch_consignment_printable.id
+        else
+          redirect_to @order_type == 'sales' ? admin_orders_path : admin_purchase_order_path, alert: "Error generating documents."
+        end
+
       when "export"
         params["order_id"].each do |o|
           order = Order.find(o)
           if order.delivery_status_for_user(current_user) == 'delivered' && order.qb_ref_id.nil?
             if order.order_type == "purchase"
-              export_bill(order, true)
+              export_bill(order, @po_transactions, @child_transactions, true)
             else
               export_invoice(order, true)
             end
@@ -130,6 +149,7 @@ class Admin::OrdersController < AdminController
 
     if current_market.is_consignment_market?
       load_consignment_transactions(@order)
+      load_open_po
     end
 
     setup_deliveries(@order)
@@ -166,7 +186,19 @@ class Admin::OrdersController < AdminController
       export_invoice(order)
       return
     elsif params[:commit] == "Export Bill"
-      export_bill(order)
+      export_bill(order, @po_transactions, @child_transactions)
+      return
+    elsif params[:commit] == "Generate Receipt"
+      orders = []
+      generate_consignment_printable(orders << order,'receipt')
+      return
+    elsif params[:commit] == "Generate Picklist"
+      orders = []
+      generate_consignment_printable(orders << order,'pick_list')
+      return
+    elsif params[:commit] == "Generate Invoice"
+      orders = []
+      generate_consignment_printable(orders << order,'invoice')
       return
     elsif params[:commit] == "Unclose Order"
       unclose_order(order)
@@ -182,16 +214,48 @@ class Admin::OrdersController < AdminController
       return
     elsif params[:commit] == "Shrink"
       shrink_transaction(order, params)
+      Inventory::Utils.check_sold_through(order)
       return
     elsif params[:commit] == "Undo Shrink"
       unshrink_transaction(order, params)
+      Inventory::Utils.check_sold_through(order)
       return
-    # elsif params[:commit] == "Undo Mark Delivered"
+    elsif params[:commit] == "Holdover"
+      holdover_transaction(order, params)
+      Inventory::Utils.check_sold_through(order)
+      return
+    elsif params[:commit] == "Undo Holdover"
+      unholdover_transaction(order, params)
+      Inventory::Utils.check_sold_through(order)
+      return
+    elsif params[:commit] == "Repack"
+      repack_transaction(order, params)
+      Inventory::Utils.check_sold_through(order)
+      return
+    elsif params[:commit] == "Undo Repack"
+      unrepack_transaction(order, params)
+      Inventory::Utils.check_sold_through(order)
+      return
+      # elsif params[:commit] == "Undo Mark Delivered"
     #   undo_delivery(order) # But this is not where Mark Delivered goes,sooooo
     end
 
     # TODO: Change an order items delivery status to 'removed' or something rather then deleting them
     perform_order_update(order, order_params, merge)
+
+    if current_market.is_consignment_market? && order.purchase_order?
+      Inventory::Utils.check_sold_through(order)
+    end
+  end
+
+  def destroy
+    o = Order.find(params[:id])
+    result = RemoveConsignmentOrder.perform(order: o)
+    if result.success?
+      redirect_to o.sales_order? ? admin_orders_path : admin_purchase_orders_path, notice: 'Order Removed Successfully'
+    else
+      redirect_to o.sales_order? ? admin_order_path(order) : admin_purchase_order_path(order), error: 'Error Removing Order'
+    end
   end
 
   def duplicate_order(order)
@@ -233,8 +297,8 @@ class Admin::OrdersController < AdminController
     end
   end
 
-  def export_bill(order, batch = nil)
-    result = ExportBillToQb.perform(order: order, curr_market: current_market, session: session)
+  def export_bill(order, po_transactions, child_transactions, batch = nil)
+    result = ExportBillToQb.perform(order: order, po_transactions: po_transactions, child_transactions: child_transactions, curr_market: current_market, session: session)
     if batch.nil?
       if result.success?
         redirect_to admin_order_path(order), notice: "Bill Exported to QB."
@@ -266,7 +330,7 @@ class Admin::OrdersController < AdminController
   end
 
   def shrink_transaction(order, params)
-    result = CreateShrinkTransaction.perform(order: order, params: params)
+    result = CreateShrinkTransaction.perform(user: current_user, order: order, params: params)
     if result.success?
       redirect_to admin_order_path(order), notice: "Shrink Successful."
     else
@@ -275,7 +339,7 @@ class Admin::OrdersController < AdminController
   end
 
   def unshrink_transaction(order, params)
-    result = UnShrinkTransaction.perform(params: params)
+    result = UnShrinkTransaction.perform(user: current_user, params: params)
     if result.success?
       redirect_to admin_order_path(order), notice: "Unshrink Successful."
     else
@@ -283,6 +347,77 @@ class Admin::OrdersController < AdminController
     end
   end
 
+  def holdover_transaction(order, params)
+    result = CreateHoldoverTransaction.perform(user: current_user, order: order, params: params)
+    if result.success?
+      redirect_to admin_order_path(order), notice: "Holdover Successful."
+    else
+      redirect_to admin_order_path(order), error: "Failed to Holdover."
+    end
+  end
+
+  def unholdover_transaction(order, params)
+    result = UnHoldoverTransaction.perform(user: current_user, params: params)
+    if result.success?
+      redirect_to admin_order_path(order), notice: "Unholdover Successful."
+    else
+      redirect_to admin_order_path(order), error: "Failed to Unholdover."
+    end
+  end
+
+  def repack_transaction(order, params)
+    result = CreateRepackTransaction.perform(user: current_user, order: order, params: params)
+    if result.success?
+      redirect_to admin_order_path(order), notice: "Repack Successful."
+    else
+      redirect_to admin_order_path(order), error: "Failed to Repack."
+    end
+  end
+
+  def unrepack_transaction(order, params)
+    result = UnRepackTransaction.perform(user: current_user, order: order, params: params)
+    if result.success?
+      redirect_to admin_order_path(order), notice: "Unrepack Successful."
+    else
+      redirect_to admin_order_path(order), error: "Failed to Unrepack."
+    end
+  end
+
+  def generate_consignment_printable(orders, printable_type)
+    printable = ConsignmentPrintable.create!(user: current_user)
+
+    if Rails.env.development?
+      context = GenerateConsignmentPrintablePdf.perform(printable: printable, type: printable_type, orders: orders, request: RequestUrlPresenter.new(request))
+    else
+      context = GenerateConsignmentPrintablePdf.delay.perform(printable: printable, type: printable_type, orders: orders, request: RequestUrlPresenter.new(request))
+    end
+
+    redirect_to action: :printable_show, id: printable.id
+  end
+
+  def printable_show
+    @printable = ConsignmentPrintable.for_user(current_user).find params[:id]
+
+    respond_to do |format|
+      format.html {}
+      format.json do
+        output = if @printable.pdf then {pdf_url: @printable.pdf.remote_url} else {pdf_url: nil} end
+        render json: output
+      end
+    end
+  end
+
+  def batch_printable_show
+    @batch_consignment_printable = BatchConsignmentPrintable.for_user(current_user).find params[:id]
+
+    respond_to do |format|
+      format.html {}
+      format.json do
+        output = if @batch_consignment_printable.pdf then {pdf_url: @batch_consignment_printable.pdf.remote_url} else {pdf_url: nil} end
+        render json: output
+      end
+    end
+  end
   protected
 
   def find_order_items(order_ids)
@@ -292,10 +427,11 @@ class Admin::OrdersController < AdminController
 
   def order_params
     params[:order].delete(:delivery_id) # Remove the parameter so it doesn't conflict
+    params[:order].delete(:deliver_on) # Remove the parameter so it doesn't conflict
     params[:order].delete(:delivery_clear) # Remove the parameter so it doesn't conflict
     params[:order].delete(:credit_clear) # Remove the parameter so it doesn't conflict
-    params.require(:order).permit(:delivery_clear, :notes, :order_batch_action, :order_id, :signature_data, items_attributes: [
-      :id, :quantity, :quantity_delivered, :delivery_status, :_destroy
+    params.require(:order).permit(:delivery_clear, :delivery_fees, :notes, :order_batch_action, :order_id, :signature_data, :payment_method, :payment_note, items_attributes: [
+      :id, :quantity, :quantity_delivered, :delivery_status, :preferred_storage_location_id, :_destroy
     ])
   end
 
@@ -312,7 +448,7 @@ class Admin::OrdersController < AdminController
   def update_delivery(order)
     order = Order.find(params[:id])
 
-    updates = UpdateOrderDelivery.perform(user: current_user, order: order, delivery_id: params.require(:order)[:delivery_id])
+    updates = UpdateOrderDelivery.perform(user: current_user, order: order, delivery_id: params.require(:order)[:delivery_id], deliver_on: params.require(:order)[:deliver_on] )
     if updates.success?
       redirect_to admin_order_path(order), notice: "Delivery successfully updated."
     else
@@ -398,7 +534,7 @@ class Admin::OrdersController < AdminController
   end
 
   def perform_add_items(order)
-    result = UpdateOrderWithNewItems.perform(payment_provider: order.payment_provider, order: order, item_hashes: items_to_add, request: request)
+    result = UpdateOrderWithNewItems.perform(user: current_user, payment_provider: order.payment_provider, order: order, item_hashes: items_to_add, request: request, holdover: false, repack: false)
     if !result.success?
       setup_add_items_form(order)
       order.errors[:base] << "Failed to add items to this order."
@@ -413,26 +549,13 @@ class Admin::OrdersController < AdminController
   end
 
   def show_add_items_form(order)
+    if current_market.is_consignment_market?
+      load_consignment_transactions(order)
+      load_open_po
+    end
+
     setup_add_items_form(order)
     flash.now[:notice] = "Add items below."
     render :show
-  end
-
-  def load_consignment_transactions(order)
-    @po_transactions = ConsignmentTransaction.joins("
-      LEFT JOIN lots ON consignment_transactions.lot_id = lots.id
-      LEFT JOIN products ON consignment_transactions.product_id = products.id
-      LEFT JOIN order_items ON consignment_transactions.order_item_id = order_items.id")
-       .where(order_id: order.id)
-       .where("parent_id IS NULL")
-       .select("consignment_transactions.id, consignment_transactions.transaction_type, consignment_transactions.product_id, products.name as product_name, lots.number as lot_name, order_items.delivery_status, consignment_transactions.quantity, consignment_transactions.net_price, consignment_transactions.sale_price")
-       .order("consignment_transactions.id, consignment_transactions.parent_id")
-    @child_transactions = ConsignmentTransaction.joins("
-      LEFT JOIN orders ON consignment_transactions.order_id = orders.id
-      LEFT JOIN organizations ON orders.organization_id = organizations.id")
-      .where(order_id: order.id)
-      .where("parent_id IS NOT NULL")
-      .select("consignment_transactions.id, consignment_transactions.transaction_type, consignment_transactions.product_id, consignment_transactions.quantity, consignment_transactions.net_price, consignment_transactions.sale_price, organizations.name AS buyer_name")
-      .order("consignment_transactions.product_id, consignment_transactions.created_at")
   end
 end

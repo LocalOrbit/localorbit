@@ -15,6 +15,7 @@ module EventTracker
   DownloadedPosters       = EventType.new("downloaded-posters")
   DownloadedTableTents    = EventType.new("downloaded-table-tents")
   PreviewedBatchInvoices  = EventType.new("previewed-batch-invoices")
+  GenerateBatchConsignmentReceipts  = EventType.new("generated-batch-consignment-receipts")
 
   #
   # METHODS

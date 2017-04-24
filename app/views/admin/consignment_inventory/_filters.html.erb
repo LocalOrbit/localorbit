@@ -1,0 +1,26 @@
+<%= search_form_for @q, url: admin_consignment_inventory_path, html: { class: "product_search clear-after" } do |f| %>
+<div class="row product-header filter-group">
+  <div class="column product-filters" id="product-filter">
+    <span class="preserve-alignment">
+      <%= f.label :product_name_cont, "Search Products" %><br>
+      <%# NOTE: Do not change the whitespace on the following line %>
+      <%= f.search_field :product_name_cont, class: append_sticky_class(:name_cont) -%>
+    </span>
+
+    <div class="manager-filters unjustify mobile-block">
+      <span class="preserve-alignment mobile-block">
+        <%= f.label :product_organization_id_in, "Supplier" %><br>
+        <%= f.collection_select :product_organization_id_in, @search_presenter.seller_organizations, :id, :name, {include_blank: nil}, {id: 'filter_organization', multiple: true, class: [append_sticky_class(:organization_id_in, ""),'multiselect']} %>
+      </span>
+      <span class="preserve-alignment mobile-block">
+        <%= f.label :lot_storage_location_id_in, "Storage Location" %><br>
+        <%= f.collection_select :lot_storage_location_id_in, StorageLocation.where(market_id: current_market.id), :id, :name, {include_blank: nil}, {id: 'filter_storage', multiple: true, class: [append_sticky_class(:lot_storage_location_id_in, ""),'multiselect']} %>
+      </span>
+      <div class="pull-right">
+        <%= f.submit "Search", class: "btn--small" %>
+        <%= link_to "Reset", admin_consignment_inventory_path(clear: ''), class: 'btn reset' if can_reset?(@query_params) %>
+      </div>
+    </div>
+  </div>
+</div>
+<% end %>

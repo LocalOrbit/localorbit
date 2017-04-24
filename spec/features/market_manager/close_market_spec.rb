@@ -27,7 +27,7 @@ feature "Opening and closing a market:" do
       click_link "Order", match: :first
       expect(page).to have_content("The Market Is Currently Closed")
 
-      expect(page).not_to have_content("Select an Organization")
+      expect(page).not_to have_content("Select a Buyer")
     
     end
   end
@@ -46,7 +46,7 @@ feature "Opening and closing a market:" do
 
       click_link "Order", match: :first
       expect(page).not_to have_content("The Market Is Currently Closed")
-      expect(page).to have_content("Select an Organization")
+      expect(page).to have_content("Select a Buyer")
     end
   end
 
@@ -75,7 +75,7 @@ feature "Opening and closing a market:" do
       expect(page).to have_content("We're closed go away.")
       expect(page).not_to have_content("Thanks for stopping by.")
 
-      expect(page).not_to have_content("Select an Organization")
+      expect(page).not_to have_content("Select a Buyer")
     
     end
   end

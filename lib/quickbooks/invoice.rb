@@ -27,43 +27,63 @@ module Quickbooks
         invoice.txn_date = Date
         invoice.doc_number = config.prefix.empty? ? order.id : "#{config.prefix}-#{order.id}"
 
+        order_total = 0
         order.items.each do |item|
-
-          # Create items if necessary
-          itm_result = nil
-          if item.product.qb_item_id.nil?
-            retry_cnt = 0
-            loop do
-              begin
-                prd = item.product
-                itm_result = Quickbooks::Item.create_item(prd, session, config)
-                if !itm_result.nil?
-                  prd.qb_item_id = itm_result.id
-                  prd.skip_validation = true
-                  prd.save!(validate: false)
-                  failed = false
+          if config.consolidated_buyer_item_id.nil?
+            # Create items if necessary
+            itm_result = nil
+            if item.product.qb_item_id.nil?
+              retry_cnt = 0
+              loop do
+                begin
+                  prd = item.product
+                  itm_result = Quickbooks::Item.create_item(prd, session, config)
+                  if !itm_result.nil?
+                    prd.qb_item_id = itm_result.id
+                    prd.skip_validation = true
+                    prd.save!(validate: false)
+                    failed = false
+                  end
+                rescue => e
+                  puts e
+                  failed = true
+                  retry_cnt = retry_cnt + 1
                 end
-              rescue => e
-                puts e
-                failed = true
-                retry_cnt = retry_cnt + 1
+                break if !failed || retry_cnt > 10
               end
-              break if !failed || retry_cnt > 10
             end
-          end
 
-          if item.delivery_status == 'delivered'
-            line_item = Quickbooks::Model::InvoiceLineItem.new
-            line_item.amount = item.unit_price * item.quantity_delivered
-            line_item.description = item.name
-            line_item.detail_type = "SalesItemLineDetail"
-            line_item.sales_item! do |detail|
+            if item.delivery_status == 'delivered'
+              line_item = Quickbooks::Model::InvoiceLineItem.new
+              line_item.amount = item.unit_price * item.quantity_delivered
+              line_item.description = item.name
+              line_item.detail_type = "SalesItemLineDetail"
+              line_item.sales_item! do |detail|
                 detail.unit_price = item.unit_price
                 detail.quantity = item.quantity_delivered
                 detail.item_id = item.product.qb_item_id # Item ID here
+              end
+              invoice.line_items << line_item
             end
-            invoice.line_items << line_item
+
+          else
+            if item.delivery_status == 'delivered'
+              order_total = order_total + (item.unit_price * item.quantity_delivered)
+            end
           end
+        end
+
+        if !config.consolidated_buyer_item_id.nil?
+          line_item = Quickbooks::Model::InvoiceLineItem.new
+          line_item.amount = order_total
+          line_item.description = config.consolidated_buyer_item_name
+          line_item.detail_type = "SalesItemLineDetail"
+          line_item.sales_item! do |detail|
+            detail.unit_price = order_total
+            detail.quantity = 1
+            detail.item_id = config.consolidated_buyer_item_id # Item ID here
+          end
+          invoice.line_items << line_item
         end
 
         # Add shipping/service fee to line items

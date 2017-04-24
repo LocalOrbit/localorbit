@@ -62,26 +62,29 @@
 
     buildRow: function(product, isMobile, promo) {
         var addTopCategory=null, addSecondCategory=null;
-        current_top_level_category = product.top_level_category_name;
-        if (previous_top_level_category != current_top_level_category || isFirstTopCategory) {
-            previous_top_level_category = current_top_level_category;
+        if (!this.props.consignmentMarket) {
+            current_top_level_category = product.top_level_category_name;
+            if (previous_top_level_category != current_top_level_category || isFirstTopCategory) {
+                previous_top_level_category = current_top_level_category;
 
-            addTopCategory = (<lo.ProductCategoryRow category={current_top_level_category}/>);
-            isFirstTopCategory = false;
+                addTopCategory = (<lo.ProductCategoryRow category={current_top_level_category}/>);
+                isFirstTopCategory = false;
+            }
+            else
+                addTopCategory = null;
         }
-        else
-            addTopCategory = null;
 
-        current_second_level_category = product.second_level_category_name;
-        if (previous_second_level_category != current_second_level_category || isFirstSecondCategory) {
-            previous_second_level_category = current_second_level_category;
+        if (!this.props.consignmentMarket) {
+            current_second_level_category = product.second_level_category_name;
+            if (previous_second_level_category != current_second_level_category || isFirstSecondCategory) {
+                previous_second_level_category = current_second_level_category;
 
-            addSecondCategory = (<lo.ProductSecondCategoryRow category={current_second_level_category}/>);
-            isFirstSecondCategory = false;
+                addSecondCategory = (<lo.ProductSecondCategoryRow category={current_second_level_category}/>);
+                isFirstSecondCategory = false;
+            }
+            else
+                addSecondCategory = null;
         }
-        else
-            addSecondCategory = null;
-
         is_promo = (promo == product.id);
 
         if (isMobile) {
@@ -108,7 +111,7 @@
 
       var isMobile = self.state.width <= MOBILE_WIDTH;
       var promo = null;
-      if (this.state.featuredPromotion && this.state.featuredPromotion.details != null && !this.props.supplierOnly && !this.props.purchaseOrder) {
+      if (this.state.featuredPromotion && this.state.featuredPromotion.details != null && !this.props.supplierOnly && this.props.salesOrder) {
           promo = (<lo.ProductFeaturedPromotion hideImages={this.state.hideImages} promo={self.state.featuredPromotion} />)
       }
       var rows = self.state.products.map(function(product) {
@@ -121,6 +124,9 @@
 
       var fullWindow = !this.props.orderId;
       var scrollThreshold = fullWindow ? 1000 : 50;
+
+      if (this.props.purchaseOrder || this.props.salesOrder)
+          this.state.hideImages = true;
 
       return (
         <div className="product-list cart_items" style={{padding: "20px"}} data-cart-url={this.props.cartUrl} >

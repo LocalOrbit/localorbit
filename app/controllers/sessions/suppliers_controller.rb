@@ -5,6 +5,7 @@ module Sessions
     def new
       @suppliers = current_market.suppliers.order(:name)
       session.delete(:cart_id)
+      session.delete(:current_organization_id)
       session.delete(:current_supplier_id)
       session.delete(:current_delivery_id)
       session.delete(:current_delivery_day)
@@ -15,7 +16,7 @@ module Sessions
         session[:current_supplier_id] = org.id
         redirect_to redirect_to_url
       else
-        flash[:alert] = "Please select a vendor"
+        flash[:alert] = 'Please select a supplier'
         new
         render :new
       end

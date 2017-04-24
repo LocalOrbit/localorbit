@@ -14,28 +14,53 @@
     </div>
     <div class="button-bar" style="float: right">
       <ul>
-        <% if policy(:merge_order).index? && order.delivery_status_for_user(current_user) != 'canceled' %>
+        <% if policy(:merge_order).index? && current_market.is_buysell_market? && order.delivery_status_for_user(current_user) != 'canceled' %>
         <li>
           <button id="merge_button" name="Merge Order">Merge Order</button>
         </li>
         <% end %>
-        <% if policy(:dup_order).index? && order.delivery_status_for_user(current_user) != 'canceled' %>
+        <% if policy(:dup_order).index? && current_market.is_buysell_market? && order.delivery_status_for_user(current_user) != 'canceled' %>
         <li>
           <button id="duplicate_button" name="Duplicate Order">Duplicate Order</button>
+        </li>
+        <% end %>
+        <% if current_market.is_consignment_market? && order.purchase_order? && order.delivery_status == "delivered" %>
+        <li>
+          <button id="generate_receipt_button" name="Generate Receipt">Generate Receipt</button>
+        </li>
+        <% end %>
+        <% if current_market.is_consignment_market? && order.sales_order? && order.delivery_status == 'pending' %>
+        <li>
+          <button id="generate_picklist_button" name="Generate Picklist">Generate Pick List</button>
+        </li>
+        <% end %>
+        <% if current_market.is_consignment_market? && order.sales_order? && order.delivery_status == 'delivered' %>
+        <li>
+          <button id="generate_invoice_button" name="Generate Invoice">Generate Invoice</button>
         </li>
         <% end %>
         <% if policy(:market_quickbooks).index? && order.order_type == "sales" && order.payment_status == 'unpaid' && order.delivery_status_for_user(current_user) == 'delivered' && order.qb_ref_id.nil? %>
         <li>
           <button id="export_invoice_button" name="Export Invoice">Export Invoice to QB</button>
         </li>
-        <% elsif policy(:market_quickbooks).index? && order.order_type == "purchase" && order.payment_status == 'unpaid' && order.delivery_status_for_user(current_user) == 'delivered' && order.qb_ref_id.nil? #TODO: also need to check for sold through %>
+        <% elsif policy(:market_quickbooks).index? && order.order_type == "purchase" && order.payment_status == 'unpaid' && order.delivery_status_for_user(current_user) == 'delivered' && order.qb_ref_id.nil? && order.sold_through %>
         <li>
           <button id="export_bill_button" name="Export Bill">Export Bill to QB</button>
         </li>
-        <% elsif policy(:market_quickbooks).index? && order.payment_status == 'exported' && !order.qb_ref_id.nil? %>
+        <% elsif policy(:market_quickbooks).index? && current_market.is_consignment_market? && order.payment_status == 'exported' && !order.qb_ref_id.nil? %>
         <li>
           <button id="unclose_order" name="Unclose Order">Unclose Order</button>
         </li>
+        <% end %>
+        <% if current_market.is_consignment_market? && order.delivery_status == 'pending' && Inventory::Utils.can_delete_order?(order) %>
+            <li>
+              <button>
+                <%= link_to raw('<i class="fa fa-trash-o">&nbsp;</i>'), [:admin, :order],
+                        class: "delete order-delete font-icon", style: 'font-size: 17px; color: #990000; padding: 0px; margin: 0px',
+                        data: {method: :delete, confirm: "Are you sure you want to permanently delete order #{order.id}?"},
+                        title: "Delete" %>
+              </button>
+            </li>
         <% end %>
       </ul>
     </div>
@@ -62,10 +87,10 @@
         <p class="vcard">
           <%= order.display_delivery_address %><br>
         </p>
+        <% if current_market.is_buysell_market? %>
         <p class="delivery-time">
           <%= order.delivery.decorate.human_delivery_date %>
         </p>
-
         <% if @deliveries && can_change_delivery_on_placed_order?(order) %>
           <div id="delivery-changer">
             <span class="change-delivery">
@@ -79,6 +104,12 @@
               <%= f.submit "Change Delivery", class: "btn btn--small" %>
             </div>
           </div>
+        <% end %>
+        <% else %>
+        <p class="delivery-time">
+          <%= f.datetime_field :deliver_on, value: order.delivery.deliver_on, class: 'datepicker'  %><br/>
+          <%= f.submit "Change Delivery", class: "btn btn--tiny" %>
+        </p>
         <% end %>
       </div>
     </div>
@@ -111,7 +142,7 @@
             <%= f.hidden_field :credit_clear, :value=>nil %>
           </tr>
           <% end %>
-          <% if order.display_delivery_fees?(current_user) %>
+          <% if order.display_delivery_fees?(current_user) && current_market.is_buysell_market? %>
           <tr>
             <th class="math-symbol">+</th>
             <th><%= order.delivery.delivery_schedule.fee_label %>:</th>
@@ -120,6 +151,15 @@
             <td class="delivery-clear"><%= link_to "", "#", class: "font-icon icon-clear" %></td>
             <% end %>
             <%= f.hidden_field :delivery_clear, :value=>nil %>
+          </tr>
+          <% else %>
+          <tr>
+            <th class="math-symbol">+</th>
+            <th><%= order.delivery.delivery_schedule.fee_label %>:</th>
+            <td>
+              <%= f.text_field :delivery_fees, size: 3, value: order.delivery_fees, style: 'width: 50px; text-align: right' %>&nbsp;
+              <%= f.button raw("<i class='fa fa-check'>&nbsp;</i>").html_safe, class: "btn btn--primary btn--tiny" %>
+            </td>
           </tr>
           <% end %>
           <% if order.credit_amount > 0 && order.credit.apply_to == "total" %>
@@ -150,24 +190,46 @@
       <h2>Payment Status</h2>
       <table class="order-info-status">
         <tbody>
+        <% if order.purchase_order? %>
+            <tr>
+              <th scope="row">Sold Through ?</th>
+              <td><%= order.sold_through ? 'Yes&nbsp;<i style="color: #559955" class="fa fa-check"></i>'.html_safe : 'No' %></td>
+            </tr>
+        <% end %>
         <tr>
           <th scope="row">Payment Method: </th>
-          <td><%= order.payment_method.titleize %></td>
+
+          <% if current_market.is_consignment_market? && order.sales_order? && order.undelivered_for_user?(current_user) %>
+              <td><%= f.select :payment_method, options_for_select([["Invoice","invoice"], ["Purchase Order", "po"], ["Credit Card", "credit"], ["Cash", "cash"], ["Check", "check"]]), class: 'payment_method' %></td>
+          <% elsif current_market.is_consignment_market? && order.purchase_order? && order.undelivered_for_user?(current_user) %>
+              <td><%= f.select :payment_method, options_for_select([["Purchase Order", "po"], ["Credit Card", "credit"], ["Cash", "cash"], ["Check", "check"]]), class: 'payment_method' %></td>
+          <% else %>
+              <td><%= order.display_payment_method %></td>
+          <% end %>
         </tr>
-        <% if order.payment_method == "purchase order" && !order.payment_note.nil? && order.payment_note.length > 0 %>
+        <% if (order.payment_method == "invoice" || order.payment_method == "purchase order" || order.payment_method == "po" || order.payment_method == "check") %>
         <tr>
-          <th scope="row">Payment Ref. #: </th>
-          <td><%= order.payment_note %></td>
+          <th scope="row"><%= order.sales_order? ? 'Payment Ref. #' : 'Supplier Inv. #' %></th>
+          <% if current_market.is_consignment_market? %>
+              <td>
+                <%= f.text_field :payment_note, size: 4, value: order.payment_note %>
+                <%= f.button raw("<i class='fa fa-check'>&nbsp;</i>").html_safe, class: "btn btn--primary btn--tiny" %>
+              </td>
+        <% else %>
+              <td><%= order.payment_note %></td>
+          <% end %>
         </tr>
         <% end %>
         <tr>
           <th scope="row">Delivery Status: </th>
           <td><%= order.delivery_status_for_user(current_user).titleize %></td>
         </tr>
+        <% if order.sales_order? %>
         <tr>
           <th scope="row">Buyer Payment: </th>
           <td><%= order.buyer_payment_status.titleize %><%= order.buyer_payment_invoice_status %></td>
         </tr>
+        <% end %>
         </tbody>
       </table>
       <% if order.payment_method=="purchase order" && !order.invoiced_at.nil? %>
@@ -178,10 +240,13 @@
   <div class="row order-data">
     <br/><br/>
     <h2 class="pull-left">Items for Delivery</h2>
-    <% if !current_user.buyer_only? && order.undelivered_for_user?(current_user) %>
-      <%= button_tag "Mark all delivered", class: 'pull-right btn btn--small btn--primary mobile-block', id: 'mark-all-delivered', type: 'button' %>
+    <% if !current_user.buyer_only? && (order.delivery_status == 'pending' || order.delivery_status == 'partially delivered') %>
+      <%= button_tag "Mark all delivered", class: 'pull-right btn btn--small btn--primary mobile-block', style: 'margin-left: 15px;', id: 'mark-all-delivered', type: 'button' %>
     <% end %>
-    <% if current_user.can_manage_market?(order.market) && !order.undelivered_for_user?(current_user) %>
+    <% if
+        (current_market.is_buysell_market? && current_user.can_manage_market?(order.market) && !order.undelivered_for_user?(current_user)) ||
+        (current_market.is_consignment_market? && current_user.can_manage_market?(order.market) && (order.delivery_status == 'delivered' || order.delivery_status == 'partially delivered') && Inventory::Utils.consignment_can_undeliver?(order))
+    %>
       <%= button_tag "Undo mark delivery", class: 'pull-right btn btn--small btn--primary mobile-block' , id: 'undo-delivery', type: 'button' %>
     <% end %>
     <div class="table-wrapper">
@@ -190,15 +255,27 @@
         <tr>
           <th>Product Name</th>
           <th>Quantity</th>
+          <% if order.purchase_order? %>
+          <th>Lot</th>
+          <th>Delivery</th>
+          <% end %>
+          <% if current_market.is_buysell_market? %>
           <th>Product Code</th>
-          <% if order.sales_order? %>
           <th>Price</th>
           <th>Total</th>
-          <% end %>
+          <% elsif order.sales_order?%>
+          <th>Lot</th>
           <th>Delivery</th>
+          <th>Sale Price</th>
+          <th>Net Price</th>
+          <th>Total</th>
+          <% end %>
+          <th>Delivery Status</th>
+          <% if current_market.is_buysell_market? %>
           <th>Buyer Payment</th>
           <% if !current_user.buyer_only? && policy(:all_supplier).index? %>
             <th>Seller Payment</th>
+          <% end %>
           <% end %>
           <% if FeatureAccess.order_action_links?(user_order_context: user_order_context) %>
             <th></th>
@@ -215,18 +292,36 @@
           </td>
           <td class="quantity">
             <%# if (current_user.admin? || current_user.market_manager?) && item.object.delivery_status == 'pending' %>
-            <% if FeatureAccess.edit_ordered_quantity?(user_order_item_context: user_order_item_context) %>
+            <% if (current_market.is_buysell_market? && FeatureAccess.edit_ordered_quantity?(user_order_item_context: user_order_item_context)) || (current_market.is_consignment_market?) %>
               <%= item.text_field :quantity, :autocomplete => :off, value: Format.quantity_no_delimiter(item.object.quantity), class: 'quantity-ordered' %>
             <% else %>
               <span class="quantity-ordered-ro"><%= Format.quantity_no_delimiter(item.object.quantity) %></span>
             <% end %> <%= item.object.unit %> (Ordered)<br />
 
-            <% if FeatureAccess.edit_delivered_quantity?(user_order_item_context: user_order_item_context) %>
+            <% if (current_market.is_buysell_market? && FeatureAccess.edit_delivered_quantity?(user_order_item_context: user_order_item_context)) || (current_market.is_consignment_market?) %>
               <%= item.text_field :quantity_delivered, :autocomplete => :off, value: Format.quantity_no_delimiter(item.object.quantity_delivered), class: 'quantity-delivered' %>
+              <% if current_market.is_consignment_market? && order.purchase_order? && item.object.delivery_status == 'pending' %>
+              <%= item.select(:preferred_storage_location_id, options_for_select(StorageLocation.where("market_id = ?", current_market.id).map{|l| [l.name, l.id]}), {include_blank: false}) %>
+              <% end %>
             <% else %>
               <span class="quantity-delivered-ro"><%= Format.quantity_no_delimiter item.object.quantity_delivered %></span>
-            <% end %> <%= item.object.unit %> (Delivered)
+            <% end %> <%= item.object.unit %> (Delivered)<br />
           </td>
+
+          <% if current_market.is_consignment_market? %>
+            <td>
+            <% if item.object.product.lots.available_general.last && item.object.delivery_status == 'delivered' %>
+              <span>
+                  <%= "#{item.object.product.lots.available_general.last.number}" %><br/>
+                  <%= "#{item.object.product.lots.available_general.last.storage_location.nil? ? '' : item.object.product.lots.available_general.last.storage_location.name}" %>
+              </span>
+            <% else %>
+              -
+            <% end %>
+            </td>
+            <td><%= !item.object.delivered_at.nil? ? item.object.delivered_at.strftime("%m/%d/%y") : '' %></td>
+          <% end %>
+          <% if current_market.is_buysell_market? %>
           <td>
             <% if item.object.product.code.present? %>
               <span><%= item.object.product.code %></span> <br />
@@ -234,9 +329,20 @@
               -
             <% end %>
           </td>
-          <% if order.sales_order? %>
           <td class="price"> <% if FeatureAccess.not_LE_market_manager?(user:current_user, market: current_market) && FeatureAccess.can_edit_order?(user: current_user, order: order) and order.payment_status == "unpaid" %>
            <%= link_to "#{number_to_currency item.object.unit_price}", "/admin/orders/#{order.id}/order_items/#{item.object.id}", class: 'edit-toggle' %><% else %> <%= number_to_currency item.object.unit_price %>
+            <% end %>
+          </td>
+          <td class="total"><%= number_to_currency item.object.gross_total %></td>
+          <% elsif order.sales_order?%>
+          <td class="price">
+            <%if order.payment_status == "unpaid" %>
+                <%= link_to "#{number_to_currency item.object.unit_price}", "/admin/orders/#{order.id}/order_items/#{item.object.id}", class: 'edit-toggle' %><% else %> <%= number_to_currency item.object.unit_price %>
+            <% end %>
+          </td>
+          <td class="price">
+            <%if order.payment_status == "unpaid" %>
+                <%= link_to "#{number_to_currency item.object.net_price}", "/admin/orders/#{order.id}/order_items/#{item.object.id}", class: 'edit-toggle' %><% else %> <%= number_to_currency item.object.net_price %>
             <% end %>
           </td>
           <td class="total"><%= number_to_currency item.object.gross_total %></td>
@@ -246,9 +352,12 @@
             <%= item.object.delivery_status.titleize %>
           </td>
           <td class="delivered-at" style="display:none;"><% item.hidden_field :delivered_at %></td>
+          <% if current_market.is_buysell_market? %>
+
           <td class="payment-status"><%= item.object.buyer_payment_status.titleize %></td>
           <% if !current_user.buyer_only? && policy(:all_supplier).index? %>
             <td class="seller-status"><%= item.object.seller_payment_status %></td>
+          <% end %>
           <% end %>
           <% if FeatureAccess.order_action_links?(user_order_context: user_order_context) %>
             <td class="action-link">
@@ -262,11 +371,11 @@
         <% end %>
       </tbody>
       </table>
-      <% if current_market.is_consignment_market? %>
+      <% if current_market.is_consignment_market? && order.sales_order? %>
       <div class="delivery_sig">
         <br/>
         <h2>Delivery Signature:</h2>
-        <% if order.signature_data.nil? && order.delivery_status_for_user(current_user) == "pending" %>
+        <% if order.signature_data.nil? && order.delivery_status == "pending" %>
           <div id="signature" class="signature"></div>
             <button id="save_sig" name="Save Signature">Save Signature</button>
             <button id="clear_sig" name="Clear Signature">Clear Signature</button>
@@ -312,15 +421,18 @@
       <% end %>
     </div>
 
-    <% if FeatureAccess.order_action_links?(user_order_context: user_order_context)  %>
+    <% if (FeatureAccess.order_action_links?(user_order_context: user_order_context) && current_market.is_buysell_market?) || (current_market.is_consignment_market? && (order.delivery_status == 'pending' || order.delivery_status == 'partially delivered')) %>
       <br/><br/>
       <%= f.submit @show_add_items_form ? "Add items and Update quantities" : "Update quantities", id: 'submit-add-items', class: 'pull-right btn btn--small mobile-block' %>
+    <% elsif FeatureAccess.order_action_links?(user_order_context: user_order_context) && current_market.is_consignment_market? && @show_add_items_form %>
+         <br/><br/>
+         <%= f.submit "Add items", id: 'submit-add-items', class: 'pull-right btn btn--small mobile-block' %>
     <% end %>
     <% if can_add_products_to_order?(order, user_order_context) && !@show_add_items_form %>
       <%= f.submit "Add Items", class: 'pull-right btn btn--small mobile-block' %>
     <% end %>
   </div>
-
+  <br/><br/>
   <% if order.purchase_order? %>
     <%= render "shared/po_trans", {order: order, f: f} %>
   <% end %>
@@ -373,7 +485,7 @@
   <% if current_user.can_manage_market?(order.market) %>
     <div class="order-notes">
       <%= f.label :notes %>
-      <%= f.text_area :notes, rows: 10 %>
+      <%= f.text_area :notes, rows: 5 %>
       <%= f.submit "Save Notes", class: 'btn btn--small mobile-block' %>
     </div>
   <% end %>
@@ -429,11 +541,11 @@
   <% end %>
 </div>
 
-<% if FeatureAccess.order_printables?(user: current_user, order: order) && order.sales_order? %>
+<% if FeatureAccess.order_printables?(user: current_user, order: order) && current_market.is_buysell_market? %>
   <%= render :partial=>"table_tents_and_posters/ad", locals: { order: order } %>
 <% end %>
 
-<% if FeatureAccess.can_edit_order?(user: current_user, order: order) %>
+<% if FeatureAccess.can_edit_order?(user: current_user, order: order) && current_market.is_buysell_market? %>
   <%= react_component('lo.ModifyCreditModal', {
     baseUrl: "#{request.base_url}/api/v1/",
     credit: order.credit,

@@ -41,7 +41,11 @@ module Api
                                .map { |p| format_general_product_for_catalog(p, sellers, @order) }
         render :json => {
                    product_total: products.count(:all),
-                   featured_promotion: { :details => featured_promotion, :product => featured_promotion ? format_general_product_for_catalog(featured_promotion.product.general_product, sellers, @order) : nil },
+                   featured_promotion: {
+                       :details => featured_promotion,
+                       :image_url => get_image_url(featured_promotion),
+                       :product => featured_promotion ? format_general_product_for_catalog(featured_promotion.product.general_product, sellers, @order) : nil
+                   },
                    products: page_of_products,
                    sellers: sellers
                }
@@ -128,12 +132,23 @@ module Api
         catalog_products = cross_sold_products = Product.connection.unprepared_statement do
           Product.joins(organization: [market_organizations: [:market]])
             .where("markets.id = ?", current_market.id)
+            .with_available_so_inventory(current_delivery.deliver_on)
             .visible
             .select(:id, :general_product_id)
             .to_sql
-          end
+        end
 
-        gp = GeneralProduct.joins("JOIN (#{catalog_products}) p_child
+        cp = "#{catalog_products} UNION
+        SELECT products.id, products.general_product_id
+        FROM products
+        INNER JOIN organizations ON organizations.id = products.organization_id
+        INNER JOIN market_organizations ON market_organizations.organization_id = organizations.id
+        INNER JOIN markets ON markets.id = market_organizations.market_id
+        INNER JOIN consignment_transactions ON consignment_transactions.product_id = products.id AND consignment_transactions.market_id = markets.id AND consignment_transactions.transaction_type = 'PO' AND consignment_transactions.lot_id IS NULL
+        INNER JOIN orders ON consignment_transactions.order_id = orders.id AND orders.delivery_status = 'pending'
+        WHERE markets.id = #{current_market.id} AND products.deleted_at IS NULL"
+
+        gp = GeneralProduct.joins("JOIN (#{cp}) p_child
               ON general_products.id=p_child.general_product_id
               JOIN categories top_level_category ON general_products.top_level_category_id = top_level_category.id
               JOIN categories second_level_category ON general_products.second_level_category_id = second_level_category.id
@@ -184,25 +199,54 @@ module Api
 
         available_inventory = product.available_inventory(current_delivery.deliver_on, current_market.id, current_organization.id)
 
-        prices = Orders::UnitPriceLogic.prices(product, current_market, current_organization, current_market.add_item_pricing && order ? order.created_at : Time.current.end_of_minute).map { |price| format_price_for_catalog(price)}
+        if current_market.is_buysell_market?
+          prices = Orders::UnitPriceLogic.prices(product, current_market, current_organization, current_market.add_item_pricing && order ? order.created_at : Time.current.end_of_minute).map { |price| format_price_for_catalog(price)}
+        else
+          prices = Price.where(product_id: product.id).visible.map { |price| format_consignment_price_for_catalog(price)}
+        end
 
         lots = nil
         committed = nil
+        split_options = nil
+        undo_split_options = nil
 
         if current_market.is_consignment_market?
-          lots = Lot.where(product_id: product.id).where("quantity > 0 AND number IS NOT NULL")
-                     .select("id, quantity, number, (SELECT TO_CHAR(delivery_date, 'MM/DD/YYYY') FROM consignment_transactions WHERE lot_id = lots.id) delivery_date, 'available'::text AS status")
-          #ct = ConsignmentTransaction.joins("LEFT JOIN (#{lots}) l_child
-          #ON consignment_transactions.lot_id = l_child.id")
-          #.select()
+          lots = Lot
+                .where(product_id: product.id)
+                .where("lots.quantity > 0 AND lots.number IS NOT NULL")
+                .select("lots.id, lots.quantity, lots.number, (SELECT DISTINCT notes FROM consignment_transactions WHERE consignment_transactions.lot_id = lots.id AND transaction_type = 'PO') inv_note, (SELECT TO_CHAR(MAX(delivery_date), 'MM/DD/YYYY') FROM consignment_transactions WHERE lot_id = lots.id AND transaction_type = 'PO') delivery_date, 'available'::text AS status")
 
-          #awaiting_delivery = Order.joins(:items).where("orders.order_type = 'purchase' AND order_items.delivery_status = 'pending' AND orders.market_id = ? AND order_items.product_id = ?", current_market.id, product.id).select("null AS id, trunc(order_items.quantity) AS quantity, '' AS number, 'awaiting_delivery'::text AS status")
-          awaiting_delivery_qty = ConsignmentTransaction.where("transaction_type = 'PO' AND lot_id IS NULL AND market_id = ? AND product_id = ?", current_market.id, product.id).sum(:quantity)
-          awaiting_ordered_qty = ConsignmentTransaction.where("transaction_type = 'SO' AND lot_id IS NULL AND market_id = ? AND product_id = ?", current_market.id, product.id).sum(:quantity)
+          awaiting_delivery_qty = ConsignmentTransaction
+                .where("transaction_type = 'PO' AND lot_id IS NULL AND market_id = ? AND product_id = ?", current_market.id, product.id)
+                .sum(:quantity)
 
-          awaiting_delivery = ConsignmentTransaction.where("transaction_type = 'PO' AND lot_id IS NULL AND market_id = ? AND product_id = ?", current_market.id, product.id).select("null AS id, #{awaiting_delivery_qty - awaiting_ordered_qty} AS quantity, '' AS number, '' AS delivery_date, 'awaiting_delivery'::text AS status")
-          committed = Order.joins(:organization, items: [lots: [:lot]]).so_orders.where("order_items.delivery_status = 'pending' AND orders.market_id = ? AND order_items.product_id = ?", current_market.id, product.id).select("order_items.product_id AS id, order_item_lots.lot_id, lots.number, organizations.name AS buyer_name, trunc(order_items.quantity) AS quantity, order_items.unit_price AS sale_price, order_items.net_price")
+          awaiting_delivery_holdover_qty = ConsignmentTransaction
+               .joins("JOIN consignment_transactions ct ON consignment_transactions.order_id = ct.holdover_order_id")
+               .where("consignment_transactions.transaction_type='HOLDOVER'
+                        AND ct.transaction_type='PO'
+                        AND consignment_transactions.lot_id IS NULL
+                        AND consignment_transactions.market_id = ?
+                        AND consignment_transactions.product_id = ?", current_market.id, product.id)
+               .sum("consignment_transactions.quantity")
+
+          awaiting_ordered_qty = ConsignmentTransaction
+               .where("transaction_type = 'SO' AND lot_id IS NULL AND market_id = ? AND product_id = ?", current_market.id, product.id)
+               .sum(:quantity)
+
+          awaiting_delivery = ConsignmentTransaction
+            .joins("JOIN orders ON consignment_transactions.order_id = orders.id")
+            .where("orders.delivery_status = 'pending'
+            AND consignment_transactions.transaction_type = 'PO'
+            AND consignment_transactions.lot_id IS NULL
+            AND consignment_transactions.market_id = ?
+            AND consignment_transactions.product_id = ?", current_market.id, product.id)
+            .select("null AS id, #{awaiting_delivery_qty - awaiting_ordered_qty} AS quantity, '' AS number, '' AS delivery_date, 'awaiting_delivery'::text AS status")
+
+          committed = Order.joins(:organization, items: [lots: [:lot]]).so_orders.where("order_items.delivery_status = 'pending' AND orders.market_id = ? AND order_items.product_id = ?", current_market.id, product.id).select("order_items.product_id AS id, TO_CHAR(order_items.created_at,'MM/DD/YYYY') AS created_at, order_item_lots.lot_id, lots.number, organizations.name AS buyer_name, trunc(order_items.quantity) AS quantity, order_items.unit_price AS sale_price, order_items.net_price")
           lots = lots + awaiting_delivery
+
+          split_options = Product.where(parent_product_id: product.id).select("products.id, products.name, products.general_product_id")
+          undo_split_options = ConsignmentTransaction.where(child_product_id: product.id).select(:child_lot_id).first
         end
 
         # TODO There's a brief window where prices and inventory may change after
@@ -221,9 +265,14 @@ module Api
               :prices => prices,
               :lots => lots,
               :committed => committed,
+              :split_options => split_options,
+              :undo_split_id => !undo_split_options.nil? ? undo_split_options.child_lot_id : nil,
               :cart_item => cart_item.object,
               :cart_item_persisted => cart_item.persisted?,
               :cart_item_quantity => cart_item.quantity,
+              :cart_item_net_price => cart_item.net_price,
+              :cart_item_sale_price => cart_item.sale_price,
+              :cart_item_lot_id => cart_item.lot_id,
               :price_for_quantity => number_to_currency(cart_item.unit_sale_price),
               :total_price => cart_item.display_total_price
           }
@@ -242,10 +291,19 @@ module Api
         }
       end
 
+      def format_consignment_price_for_catalog(price)
+        {
+            :sale_price => price.sale_price,
+            :net_price => price.net_price(nil, nil, current_market.is_consignment_market?),
+            :min_quantity => price.min_quantity,
+            :organization_id => price.organization_id
+        }
+      end
+
       def get_image_url(product)
-        if product.thumb_stored?
+        if !product.nil? && product.thumb_stored?
           view_context.image_url(product.thumb.url)
-        elsif product.image_stored?
+        elsif !product.nil? && product.image_stored?
           view_context.image_url(product.image.thumb("150x150").url)
         else
           view_context.image_url('default-product-image.png')

@@ -163,6 +163,7 @@ FactoryGirl.define do
   factory :lot do
     product
     quantity 150
+    number 'A1'
 
     trait :with_expiration do
       sequence(:number) {|n| "lot-#{n}" }
@@ -201,6 +202,7 @@ FactoryGirl.define do
     alternative_order_page         false
     stripe_standalone              false
     allow_product_fee              false
+    allow_signups                  true
     number_format_numeric 0
     organization           {create(:organization, :market)}
 
@@ -334,7 +336,6 @@ FactoryGirl.define do
 
     payment_method   "purchase order"
     payment_status   "unpaid"
-
     order_type       "sales"
 
     total_cost       100.99
@@ -342,6 +343,24 @@ FactoryGirl.define do
     trait :with_items do
       before(:create) do |order|
         order.items = create_list(:order_item, 1, product: create(:product, :sellable))
+      end
+    end
+
+    trait :consignment_po do
+      order_type       "purchase"
+      after(:create) do |order|
+        order.items.each do |item|
+          create(:consignment_transaction, order_id: order.id, transaction_type: 'PO', order_item_id: item.id, product_id: item.product.id, quantity: item.quantity)
+        end
+      end
+    end
+
+    trait :consignment_so do
+      order_type       "sales"
+      after(:create) do |order|
+        order.items.each do |item|
+          create(:consignment_transaction, order_id: order.id, transaction_type: 'SO', order_item_id: item.id, product_id: item.product.id, quantity: item.quantity, sale_price: item.sale_price, net_price: item.net_price)
+        end
       end
     end
   end
@@ -751,5 +770,8 @@ FactoryGirl.define do
     delivery
   end
 
+  factory :consignment_transaction do
+
+  end
 
 end

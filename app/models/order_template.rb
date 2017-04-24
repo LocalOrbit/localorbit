@@ -12,7 +12,7 @@ class OrderTemplate < ActiveRecord::Base
       template = OrderTemplate.create!(name: name, market: cart.market, buyer_id: nil)
     end
     cart.items.each do |item|
-      OrderTemplateItem.create!(product: item.product, quantity: item.quantity, order_template: template)
+      OrderTemplateItem.create!(product: item.product, quantity: item.quantity, net_price: item.net_price, sale_price: item.unit_price, order_template: template)
     end
     template
   end

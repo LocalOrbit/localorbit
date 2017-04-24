@@ -6,6 +6,7 @@ class BuyerOrder
   delegate :display_delivery_or_pickup,
     :display_delivery_address,
     :delivery_id,
+    :deliver_on,
     :organization_id,
     :invoice_pdf,
     :credit,
@@ -20,6 +21,11 @@ class BuyerOrder
     :order_type,
     :sales_order?,
     :purchase_order?,
+    :created_at,
+    :delivery_status,
+    :sold_through,
+    :payment_method,
+    :delivery_fees,
     to: :@order
 
   def initialize(order)

@@ -5,6 +5,7 @@ class OrderItemLot < ActiveRecord::Base
 
   before_destroy :return_inventory_to_lot
   before_create :check_po
+
   def number
     lot.number
   end
@@ -12,7 +13,7 @@ class OrderItemLot < ActiveRecord::Base
   protected
 
   def check_po
-    if !order_item.order.nil? && order_item.order.order_type == "purchase"
+    if !order_item.order.nil? && order_item.order.purchase_order?
       self.quantity = 0
     end
   end
