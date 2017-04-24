@@ -85,6 +85,9 @@ class DeliveryDecorator < Draper::Decorator
   def display_locations
     if buyer_pickup?
       [delivery_schedule.buyer_pickup_location]
+    elsif !context[:current_organization].shipping_location.nil?
+      locations = []
+      locations << context[:current_organization].shipping_location
     else
       context[:current_organization].locations.visible
     end

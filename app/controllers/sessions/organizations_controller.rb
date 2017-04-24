@@ -3,7 +3,7 @@ module Sessions
     before_action :hide_admin_navigation
 
     def new
-      @organizations = current_user.managed_organizations_within_market(current_market).where(org_type: 'B').order(:name)
+      @organizations = current_user.managed_organizations_within_market(current_market).active.where(org_type: 'B').order(:name)
       session.delete(:cart_id)
       session.delete(:current_organization_id)
       session.delete(:current_supplier_id)
