@@ -3,7 +3,7 @@ module Sessions
     before_action :hide_admin_navigation
 
     def new
-      @suppliers = current_market.suppliers.order(:name)
+      @suppliers = current_market.suppliers.active.order(:name)
       session.delete(:cart_id)
       session.delete(:current_organization_id)
       session.delete(:current_supplier_id)

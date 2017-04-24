@@ -23,8 +23,10 @@ class Cart < ActiveRecord::Base
   def delivery_location
     if delivery.delivery_schedule.buyer_pickup?
       delivery.delivery_schedule.buyer_pickup_location
+    elsif !organization.shipping_location.nil?
+      organization.shipping_location
     else
-      location || organization.shipping_location
+      location
     end
   end
 
