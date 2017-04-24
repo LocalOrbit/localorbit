@@ -12,7 +12,11 @@ class Promotion < ActiveRecord::Base
 
   validate :one_active_per_market, if: "market.present? && active?"
 
-  dragonfly_accessor :image
+  dragonfly_accessor :image do
+    copy_to(:thumb){|a| a.thumb('150x150#') }
+  end
+
+  dragonfly_accessor :thumb
   define_after_upload_resize(:image, 1200, 1200)
   validates_property :format, of: :image, in: %w(jpg jpeg png gif)
 

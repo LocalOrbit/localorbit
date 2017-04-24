@@ -41,7 +41,11 @@ module Api
                                .map { |p| format_general_product_for_catalog(p, sellers, @order) }
         render :json => {
                    product_total: products.count(:all),
-                   featured_promotion: { :details => featured_promotion, :product => featured_promotion ? format_general_product_for_catalog(featured_promotion.product.general_product, sellers, @order) : nil },
+                   featured_promotion: {
+                       :details => featured_promotion,
+                       :image_url => get_image_url(featured_promotion),
+                       :product => featured_promotion ? format_general_product_for_catalog(featured_promotion.product.general_product, sellers, @order) : nil
+                   },
                    products: page_of_products,
                    sellers: sellers
                }
@@ -297,9 +301,9 @@ module Api
       end
 
       def get_image_url(product)
-        if product.thumb_stored?
+        if !product.nil? && product.thumb_stored?
           view_context.image_url(product.thumb.url)
-        elsif product.image_stored?
+        elsif !product.nil? && product.image_stored?
           view_context.image_url(product.image.thumb("150x150").url)
         else
           view_context.image_url('default-product-image.png')
