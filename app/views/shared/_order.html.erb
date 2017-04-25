@@ -34,7 +34,7 @@
           <button id="generate_picklist_button" name="Generate Picklist">Generate Pick List</button>
         </li>
         <% end %>
-        <% if current_market.is_consignment_market? && order.sales_order? && order.delivery_status == 'delivered' %>
+        <% if current_market.is_consignment_market? && order.sales_order? %>
         <li>
           <button id="generate_invoice_button" name="Generate Invoice">Generate Invoice</button>
         </li>
@@ -302,6 +302,8 @@
               <%= item.text_field :quantity_delivered, :autocomplete => :off, value: Format.quantity_no_delimiter(item.object.quantity_delivered), class: 'quantity-delivered' %>
               <% if current_market.is_consignment_market? && order.purchase_order? && item.object.delivery_status == 'pending' %>
               <%= item.select(:preferred_storage_location_id, options_for_select(StorageLocation.where("market_id = ?", current_market.id).map{|l| [l.name, l.id]}), {include_blank: false}) %>
+              <% elsif current_market.is_consignment_market? && order.purchase_order? && item.object.delivery_status != 'pending' %>
+              <%= item.hidden_field :preferred_storage_location_id, value: item.object.product.lots.available_general.last.storage_location.id %>
               <% end %>
             <% else %>
               <span class="quantity-delivered-ro"><%= Format.quantity_no_delimiter item.object.quantity_delivered %></span>
