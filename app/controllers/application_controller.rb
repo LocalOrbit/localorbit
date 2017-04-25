@@ -228,21 +228,33 @@ class ApplicationController < ActionController::Base
       if session[:order_id]
         o=Order.find(session[:order_id])
         @current_cart = Cart.find_or_create_by!(user_id: current_user.id, organization_id: o.organization.id, market_id: o.market.id, delivery_id: o.delivery.id) do |c|
-          c.location = selected_organization_location(o.organization) if o.delivery.requires_location?
+          if !session[:current_location].nil? && o.delivery.requires_location?
+            c.location = Location.find(session[:current_location])
+          elsif session[:current_location].nil? && o.delivery.requires_location?
+            c.location = selected_organization_location(o.organization)
+          end
         end.decorate
       else
         if session[:cart_id]
           @current_cart = Cart.find_by(id: session[:cart_id])
           if @current_cart.nil?
             @current_cart = Cart.find_or_create_by!(user_id: current_user.id, organization_id: current_organization.id, market_id: current_market.id, delivery_id: current_delivery.id) do |c|
-              c.location = selected_organization_location if current_delivery.requires_location?
+              if !session[:current_location].nil? && current_delivery.requires_location?
+                c.location = Location.find(session[:current_location])
+              elsif session[:current_location].nil? && current_delivery.requires_location?
+                c.location = selected_organization_location
+              end
             end.decorate
           else
             @current_cart = @current_cart.decorate
           end
         else
           @current_cart = Cart.find_or_create_by!(user_id: current_user.id, organization_id: current_organization.id, market_id: current_market.id, delivery_id: current_delivery.id) do |c|
-            c.location = selected_organization_location if current_delivery.requires_location?
+            if !session[:current_location].nil? && current_delivery.requires_location?
+              c.location = Location.find(session[:current_location])
+            elsif session[:current_location].nil? && current_delivery.requires_location?
+              c.location = selected_organization_location
+            end
           end.decorate
         end
       end
