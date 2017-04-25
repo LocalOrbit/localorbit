@@ -144,7 +144,7 @@ KnockoutModules.register "consignment_printable_preview_pdf",
     shrink_qty = $(this).parent().parent().find(".shrink_qty").val()
     shrink_cost = $(this).parent().parent().find(".shrink_cost").val()
     transaction_id = $(this).parent().parent().find(".transaction_id").val()
-    if shrink_qty > 0 && shrink_cost > 0
+    if shrink_qty > 0 && shrink_cost >= 0
       $(this).prop("disabled", "disabled")
       $(this).parent().parent().parent().parent().parent().parent().find("input[name=shrink_qty]").val(shrink_qty)
       $(this).parent().parent().parent().parent().parent().parent().find("input[name=shrink_cost]").val(shrink_cost)
