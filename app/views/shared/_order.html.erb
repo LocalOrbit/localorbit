@@ -303,7 +303,7 @@
               <% if current_market.is_consignment_market? && order.purchase_order? && item.object.delivery_status == 'pending' %>
               <%= item.select(:preferred_storage_location_id, options_for_select(StorageLocation.where("market_id = ?", current_market.id).map{|l| [l.name, l.id]}), {include_blank: false}) %>
               <% elsif current_market.is_consignment_market? && order.purchase_order? && item.object.delivery_status != 'pending' %>
-              <%= item.hidden_field :preferred_storage_location_id, value: item.object.product.lots.available_general.last.storage_location.id %>
+              <%= item.hidden_field :preferred_storage_location_id, value: item.object.product.lots.last.storage_location_id %>
               <% end %>
             <% else %>
               <span class="quantity-delivered-ro"><%= Format.quantity_no_delimiter item.object.quantity_delivered %></span>
@@ -443,7 +443,7 @@
     <%= render "shared/so_trans", {order: order, f: f} %>
   <% end %>
 
-  <% if !current_user.buyer_only? && FeatureAccess.not_LE_market_manager?(user: current_user, market: current_market) && order.sales_order? %>
+  <% if !current_user.buyer_only? && FeatureAccess.not_LE_market_manager?(user: current_user, market: current_market) && current_market.is_buysell_market? %>
   <div class="order-totals">
     <div class="table-wrapper">
       <h2>Order Totals</h2>

@@ -15,6 +15,17 @@ module Quickbooks
         address.postal_code = billing_address.zip
         customer.billing_address = address
 
+        customer.primary_email_address = billing_address.email
+
+        shipping_address = org.locations.default_shipping.nil? ? org.locations.first : org.locations.default_shipping
+        address = Quickbooks::Model::PhysicalAddress.new
+        address.line1 = shipping_address.address
+        address.city = shipping_address.city
+        address.country = shipping_address.country
+        address.country_sub_division_code = shipping_address.state
+        address.postal_code = shipping_address.zip
+        customer.shipping_address = address
+
         service = Quickbooks::Service::Customer.new
         service.company_id = session[:qb_realm_id]
         access_token = OAuth::AccessToken.new(QB_OAUTH_CONSUMER, session[:qb_token], session[:qb_secret])
