@@ -125,7 +125,7 @@
       var fullWindow = !this.props.orderId;
       var scrollThreshold = fullWindow ? 1000 : 50;
 
-      if (this.props.purchaseOrder || this.props.salesOrder)
+      if (this.props.consignmentMarket)
           this.state.hideImages = true;
 
       return (
@@ -140,6 +140,7 @@
           >
             <div id="product-search-table" className="product-images-link row pull-right"> <a href="javscript:void(0);" onClick={self.toggleImages}><i className="font-icon" data-icon=""></i> {(self.state.hideImages) ? "Show " : "Hide "} Product Images</a> </div>
               {promo}
+              <br/><br/>
               {rows}
           </InfiniteScroll>
         </div>

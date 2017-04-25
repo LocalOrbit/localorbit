@@ -1,7 +1,7 @@
 module Imports
 	module SerializeProducts
 		require 'csv'
-		@all_headers = ["Organization","Market Subdomain","Product Name","Category Name","Short Description","Product Code","Unit Name","Unit Description","Price","New Inventory","Product ID", "Parent Product Name", "Organic", "Unit Quantity", "Lot Number"] # Required headers for imminent future
+		@all_headers = ["Organization","Market Subdomain","Product Name","Category Name","Short Description","Product Code","Unit Name","Unit Description","Price","New Inventory","Product ID", "Parent Product Name", "Organic", "Unit Quantity", "Lot Number", "Net Price"] # Required headers for imminent future
 		@required_headers = ["Organization","Market Subdomain","Product Name","Category Name","Short Description","Product Code","Unit Name","Unit Description","Price","New Inventory","Product ID"] # Required headers for imminent future
 
 		# TODO should this be a diff kind of accessor? Later, works.
@@ -103,11 +103,10 @@ module Imports
 				#create error and append it
 				error_hash["Errors"]["Missing or invalid price"] = "Check product price validity. Must be a valid decimal. Input was: #{product_row["Price"]}"
 			end
-			if !product_row["Unit Quantity"].nil? && !(product_row["Unit Quantity"].to_i and product_row["Unit Quantity"].to_i > 0)
-				okay_flag = false
-				#create error and append it
-				error_hash["Errors"]["Invalid Unit Quantity"] = "Check unit quantity. Must be a valid number greater than or equal to 0. Input was: #{product_row["Unit Quantity"]}"
-			end
+			#if !product_row["Unit Quantity"].nil? && !(product_row["Unit Quantity"].to_i and product_row["Unit Quantity"].to_i > 0)
+			#		okay_flag = false
+			#	error_hash["Errors"]["Invalid Unit Quantity"] = "Check unit quantity. Must be a valid number greater than or equal to 0. Input was: #{product_row["Unit Quantity"]}"
+			#end
 			if !product_row["Parent Product Name"].nil? && ProductHelpers.get_parent_product_id_from_name(product_row["Parent Product Name"], product_row["Organization"], product_row["Market Subdomain"], current_user).nil?
 				okay_flag = false
 				error_hash["Errors"]["Invalid Parent Product"] = "Specified Parent Product was not found. Your input was: #{product_row["Parent Product Name"]}" # TODO should have more info provided about category problems
