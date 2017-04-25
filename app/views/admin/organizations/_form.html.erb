@@ -129,11 +129,13 @@
         </div>
       </div>
 
+      <% if current_market.is_buysell_market? %>
       <div class="row row--field">
         <div class="field column column--half column--guttered">
           <%= render 'admin/markets/market_matrix' %>
         </div>
       </div>
+      <% end %>
 
     <% end %>
 
@@ -151,6 +153,15 @@
         <%= render "admin/locations/fields", form: location %>
       <% end %>
     </fieldset>
+  <% end %>
+
+  <% if current_market.is_consignment_market? && @organization.org_type == 'B' %>
+  <div class="row row--field">
+    <div class="field column column--half column--guttered">
+      <%= f.label :qb_check_name, "QuickBooks Check Name" %><br/>
+      <%= f.text_field :qb_check_name %>
+    </div>
+  </div>
   <% end %>
 
   <div class="field form-actions">

@@ -54,12 +54,9 @@ Product is removed from the current PO, and moved to another PO (new or existing
         orig_item = OrderItem.find(t_id.order_item_id)
         dest_item = OrderItem.new(orig_item.attributes.reject{ |k| k == 'id' })
         dest_item.quantity = holdover_qty
-        dest_item.quantity_delivered = nil
-        dest_item.delivery_status = 'pending'
+        dest_item.quantity_delivered = holdover_qty
+        dest_item.delivery_status = 'delivered'
 
-        #if dest_item.quantity_delivered > Integer(params[:holdover_qty])
-        #  dest_item.quantity_delivered = Integer(params[:holdover_qty])
-        #end
         dest_order.items << dest_item
 
         ct_parent = CreateConsignmentTransaction.perform(user: user, order: dest_order, holdover: true, repack: false)
