@@ -23,6 +23,7 @@ class UpdateOrderDelivery
     else
       if !order.delivery.deliver_on.nil?
         order.delivery.deliver_on = deliver_on
+        order.delivery.buyer_deliver_on = deliver_on
         order.delivery.save
         order.items.each do |item|
           if !item.quantity_delivered.nil? && item.quantity_delivered > 0

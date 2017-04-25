@@ -89,7 +89,7 @@ module Inventory
         current_time = Time.now
 
         weekday = days[current_time.wday]
-        monthweek = (current_time.mday / 7.0).ceil
+        monthweek = (((current_time.mday - current_time.wday) - 1) / 7.0).ceil + 1
 
         "#{order.id}-#{weekday}#{monthweek}"
       end

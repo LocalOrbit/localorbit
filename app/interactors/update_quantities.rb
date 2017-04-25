@@ -9,6 +9,7 @@ class UpdateQuantities
     if order.market.is_consignment_market? && !order.delivery.deliver_on.nil?
       d_time = Time.current
       order.delivery.deliver_on = d_time
+      order.delivery.buyer_deliver_on = d_time
       order.delivery.save
     end
     order.save
