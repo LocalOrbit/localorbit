@@ -6,7 +6,7 @@ module Sessions
       if current_market.is_consignment_market?
         @organizations = current_user.managed_organizations_within_market(current_market).active.where(org_type: 'B').order(:name)
       else
-        @organizations = current_user.managed_organizations_within_market(current_market).order(:name)
+        @organizations = current_user.managed_organizations_within_market(current_market).active.order(:name)
       end
       session.delete(:cart_id)
       session.delete(:current_organization_id)

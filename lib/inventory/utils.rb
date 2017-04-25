@@ -95,10 +95,13 @@ module Inventory
       end
 
       def qty_committed(market_id, product_id)
-        o = ConsignmentTransaction
-            .where(market_id: market_id, product_id: product_id, transaction_type: 'SO', lot_id: nil)
-            .select("quantity").visible.first
-        o.nil? ? 0 : o.quantity
+        o = OrderItem.joins("JOIN orders ON order_items.order_id = orders.id")
+        .where("orders.market_id = ?", market_id)
+        .where("order_items.product_id = ?", product_id)
+        .where("orders.order_type = 'sales'")
+        .where("order_items.delivery_status = 'pending'")
+        .select("order_items.quantity").first
+        o.nil? ? 0 : o.quantity.to_i
       end
 
       def qty_awaiting_delivery(market_id, product_id)

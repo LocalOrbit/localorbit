@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170422024211) do
+ActiveRecord::Schema.define(version: 20170425154640) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -485,6 +485,7 @@ ActiveRecord::Schema.define(version: 20170422024211) do
     t.integer  "market_id"
     t.integer  "organization_id"
     t.integer  "storage_location_id"
+    t.datetime "deleted_at"
   end
 
   add_index "lots", ["expires_at"], name: "index_lots_on_expires_at", using: :btree
@@ -846,6 +847,7 @@ ActiveRecord::Schema.define(version: 20170422024211) do
     t.string   "contact_first_name"
     t.string   "contact_last_name"
     t.string   "contact_email"
+    t.string   "qb_check_name"
   end
 
   add_index "organizations", ["name"], name: "index_organizations_on_name", using: :btree

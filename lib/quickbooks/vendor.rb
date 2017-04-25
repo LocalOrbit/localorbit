@@ -5,6 +5,7 @@ module Quickbooks
         vendor = Quickbooks::Model::Vendor.new
         vendor.company_name = "#{org.id}-#{org.name}"
         vendor.display_name = "#{org.id}-#{org.name}"
+        vendor.print_on_check_name = org.qb_check_name.nil? ? org.name : org.qb_check_name
 
         billing_address = org.locations.default_billing.nil? ? org.locations.first : org.locations.default_billing
         address = Quickbooks::Model::PhysicalAddress.new

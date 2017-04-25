@@ -22,10 +22,16 @@ module Quickbooks
           end
         end
 
+        term_ref = Quickbooks::Term.query_term("Net 15", session)
+
         invoice = Quickbooks::Model::Invoice.new
         invoice.customer_id = order.organization.qb_org_id
         invoice.txn_date = Date
         invoice.doc_number = config.prefix.empty? ? order.id : "#{config.prefix}-#{order.id}"
+        invoice.sales_term_ref do |term|
+          term.id = term_ref.entries[0].id
+          term.name = "Net 15"
+        end
 
         order_total = 0
         order.items.each do |item|

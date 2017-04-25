@@ -439,7 +439,7 @@
         <tr class="line-item">
           <td class="al"><%= item.name %></td>
           <td><%= item.seller_name %></td>
-          <td><%= item.quantity_delivered || item.delivery_status.try(:titleize) %></td>
+          <td><%= item.quantity_delivered || item.quantity %></td>
           <td class="invoice-amount"><%= number_to_currency item.unit_price %></td>
           <td class="invoice-amount <%= item.delivery_status %>"><%= number_to_currency item.gross_total %></td>
         </tr>
