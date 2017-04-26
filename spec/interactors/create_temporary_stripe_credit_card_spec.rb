@@ -70,7 +70,7 @@ describe CreateTemporaryStripeCreditCard do
         order_params[:credit_card][:stripe_tok] = "NO GOOD"
       end
 
-      it "reports an interpreted error to Honeybadger and fails the context" do
+      xit "reports an interpreted error to Honeybadger and fails the context" do
         expect(Honeybadger).to receive(:notify_or_ignore)
 
         result = subject.perform(order_params: order_params, cart: cart, order: order)

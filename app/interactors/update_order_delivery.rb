@@ -60,11 +60,11 @@ class UpdateOrderDelivery
 
   def fail_and_notify
     error_data = {order_id: order.id, delivery_id: delivery_id, error_messages: order.errors.full_messages.join(" ")}
-    Rollbar.notify(
-        error_class: "Change Order Delivery",
-        error_message: "Can't change delivery on an order.",
-        parameters: error_data
-      )
+    #Rollbar.notify(
+    #    error_class: "Change Order Delivery",
+    #    error_message: "Can't change delivery on an order.",
+    #    parameters: error_data
+    #  )
     ZendeskMailer.delay.error_intervention(user, "Change Order Delivery", error_data)
     context.fail!
   end
