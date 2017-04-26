@@ -4,9 +4,15 @@
     <%= f.hidden_field 'order_type', value: (@order_type || 'sales') %>
     <%= render "shared/errors", {resource: @order} if @order %>
     <% if flash[:error] %>
-      <div class="flash flash--warning">
-        <p><%= flash[:error] %></p>
-      </div>
+      <% if current_market.is_consignment_market? %>
+        <div style="width: 50%; font-weight: bold" class="flash--alert">
+          <p><%= flash[:error] %></p>
+        </div>
+      <% else %>
+        <div class="flash flash--warning">
+          <p><%= flash[:error] %></p>
+        </div>
+      <% end %>
     <% end %>
     <div class="row">
       <div class="column column--half column--guttered">
