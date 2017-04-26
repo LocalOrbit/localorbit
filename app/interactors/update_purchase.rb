@@ -91,7 +91,7 @@ class UpdatePurchase
 
   def process_exception(exception, type, amount, account, parent_payment=nil)
 
-    Honeybadger.notify_or_ignore(exception) unless Rails.env.test? || Rails.env.development?
+    #Honeybadger.notify_or_ignore(exception) unless Rails.env.test? || Rails.env.development?
     if type == "order"
       record_charge(amount, nil, account)
     else

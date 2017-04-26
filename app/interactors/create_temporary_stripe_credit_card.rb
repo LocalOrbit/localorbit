@@ -67,7 +67,7 @@ class CreateTemporaryStripeCreditCard
     rescue => e
       error_info = ErrorReporting.interpret_exception(e)
 
-      Honeybadger.notify_or_ignore(error_info[:honeybadger_exception])
+      #Honeybadger.notify_or_ignore(error_info[:honeybadger_exception])
 
       context[:order].errors.add(:credit_card, ": #{error_info[:application_error_message]}")
       context.fail!

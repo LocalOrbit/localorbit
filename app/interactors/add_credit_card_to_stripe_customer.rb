@@ -18,7 +18,7 @@ class AddCreditCardToStripeCustomer
       bank_account.destroy
       context[:bank_account] = nil
       error_info = ErrorReporting.interpret_exception(e)
-      Honeybadger.notify_or_ignore(error_info[:honeybadger_exception])
+      #Honeybadger.notify_or_ignore(error_info[:honeybadger_exception])
       context[:error] = error_info[:application_error_message]
       context.fail!
     end

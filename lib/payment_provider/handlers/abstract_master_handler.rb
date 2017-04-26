@@ -28,7 +28,7 @@ module PaymentProvider
 
       rescue Exception => e
         error_info = ErrorReporting.interpret_exception(e, "Error handling #{self.name} event from Stripe", {params: params})
-        Honeybadger.notify_or_ignore(error_info[:honeybadger_exception])
+        #Honeybadger.notify_or_ignore(error_info[:honeybadger_exception])
 
         Rails.logger.error "Error handling '#{event.type}' event. Stripe Event id: '#{event.id}', Exception: #{e.inspect}"
         WebhookMailer.delay.failed_event(e, event) if event.livemode
