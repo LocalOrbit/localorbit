@@ -75,7 +75,7 @@ class Lot < ActiveRecord::Base
   end
 
   def simple?
-    number.nil? && good_from.nil? && expires_at.nil?
+    (number.nil? || number.empty?) && good_from.nil? && expires_at.nil?
   end
 
   private
