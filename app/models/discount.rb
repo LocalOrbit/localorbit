@@ -29,11 +29,11 @@ class Discount < ActiveRecord::Base
     elsif fixed?
       [subtotal, discount].min
     else
-      Honeybadger.notify(
-        error_class:   "Invalid Discount Code",
-        error_message: "Discount code has an unknown type",
-        parameters:    {discount_id: id}
-      )
+      #Honeybadger.notify(
+      #  error_class:   "Invalid Discount Code",
+      #  error_message: "Discount code has an unknown type",
+      #  parameters:    {discount_id: id}
+      #)
       0
     end
   end

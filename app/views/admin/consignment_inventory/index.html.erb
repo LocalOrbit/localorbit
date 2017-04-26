@@ -22,6 +22,7 @@
     </thead>
     <tbody>
     <% @inventories.decorate.each do |inv| %>
+    <% committed = Inventory::Utils.qty_committed(current_market.id, inv.product_id) %>
     <tr>
       <td class="name"><%= link_to inv.product_name, admin_product_path(inv.product_id) %></td>
       <td class="supplier"><%= link_to "PO: #{inv.order_id} - #{inv.supplier_name}", purchase_order_path(inv.order_id) %>&nbsp;<%= !inv.note.nil? && inv.note.length > 0 ? "<span class='tooltip--flag' data-tooltip='#{inv.note}'></span>".html_safe : '' %></td>
@@ -32,9 +33,9 @@
       <%= inv.decorate.location_info %>
       </td>
       <td>
-        <%= inv.status =='waiting' ? inv.ct_quantity : inv.lot_quantity %>
+        <%= inv.status =='waiting' ? inv.ct_quantity : inv.lot_quantity + committed %>
       </td>
-      <td class="committed"><%= Inventory::Utils.qty_committed(current_market.id, inv.product_id) %></td>
+      <td class="committed"><%= committed %></td>
       <td>
         <%= link_to "Note", "#inventory-note-#{inv.ct_id}", class: "create-inventory-note btn btn--tiny modal-toggle" %>
         <div class="is-hidden modal popup" id="inventory-note-<%= inv.ct_id %>" style="padding: 10px; width: 50%">

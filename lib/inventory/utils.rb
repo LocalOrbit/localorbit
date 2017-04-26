@@ -95,10 +95,13 @@ module Inventory
       end
 
       def qty_committed(market_id, product_id)
-        o = ConsignmentTransaction
-            .where(market_id: market_id, product_id: product_id, transaction_type: 'SO', lot_id: nil)
-            .select("quantity").visible.first
-        o.nil? ? 0 : o.quantity
+        o = OrderItem.joins("JOIN orders ON order_items.order_id = orders.id")
+        .where("orders.market_id = ?", market_id)
+        .where("order_items.product_id = ?", product_id)
+        .where("orders.order_type = 'sales'")
+        .where("order_items.delivery_status = 'pending'")
+        .select("order_items.quantity").first
+        o.nil? ? 0 : o.quantity.to_i
       end
 
       def qty_awaiting_delivery(market_id, product_id)
@@ -178,6 +181,25 @@ module Inventory
         Product.where(id: child_product.parent_product_id).select(:id, :general_product_id, :name, :unit_quantity).order(:name)
       end
 
+      def validate_qty(item, order_type, market, organization, delivery)
+        error = nil
+        actual_count = nil
+        product = Product.includes(:prices).find(item.product.id)
+        if market.is_buysell_market? || (market.is_consignment_market? && order_type == 'sales' && item.lot_id > 0)
+          delivery_date = delivery.deliver_on
+          actual_count = product.available_inventory(delivery_date, market.id, organization.id)
+        elsif market.is_consignment_market? && order_type == 'sales' && item.lot_id == 0 # Checking consignment awaiting delivery item
+          actual_count = ConsignmentTransaction.where(transaction_type: 'PO', product_id: item.product_id, lot_id: nil).sum(:quantity)
+        end
+        if item.quantity && item.quantity > 0 && !actual_count.nil? && item.quantity > actual_count
+          error = {
+              item_id: item.id,
+              error_msg: "Quantity of #{product.name} (#{product.unit.plural}) available for purchase: #{actual_count}",
+              actual_count: actual_count
+          }
+        end
+        error
+      end
     end
   end
 end

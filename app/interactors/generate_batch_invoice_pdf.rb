@@ -85,15 +85,15 @@ class GenerateBatchInvoicePdf
           order: order)
 
         if Rails.env.production?
-          Honeybadger.notify(
-            error_class: "Generate Batch Invoice PDF",
-            error_message: message,
-            parameters: {
-              task: task, 
-              message: message, 
-              order_id: order ? order.id : nil, 
-              exception: exception, 
-              backtrace: backtrace })
+          #Honeybadger.notify(
+          #  error_class: "Generate Batch Invoice PDF",
+          #  error_message: message,
+          #  parameters: {
+          #    task: task,
+          #    message: message,
+          #    order_id: order ? order.id : nil,
+          #    exception: exception,
+          #    backtrace: backtrace })
         end
       end
     end

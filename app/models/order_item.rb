@@ -29,6 +29,7 @@ class OrderItem < ActiveRecord::Base
   validates :delivery_status, presence: true, inclusion: {in: DELIVERY_STATUSES}
 
   validate :product_availability, on: :create
+  validate :consignment_product_availability, on: [:create, :update]
 
   scope :delivered,       -> { where(delivery_status: "delivered") }
   scope :undelivered,     -> { where(delivery_status: "pending") }
@@ -125,8 +126,26 @@ class OrderItem < ActiveRecord::Base
     end
     qty = product.lots_by_expiration.available_specific(Time.current.end_of_minute, market_id, organization_id).sum(:quantity)
     #if qty == 0
-      qty += product.lots_by_expiration.available_general(Time.current.end_of_minute).sum(:quantity)
+    qty += product.lots_by_expiration.available_general(Time.current.end_of_minute).sum(:quantity)
     #end
+    if qty < quantity
+      errors[:inventory] = "there are only #{qty} #{product.name.pluralize(qty)} available."
+    end
+  end
+
+  def consignment_product_availability
+    return unless product.present? && !order.nil? && order.market.is_consignment_market? && order.sales_order?
+
+    if !order.nil?
+      market_id = order.market.id
+      organization_id = order.organization.id
+    end
+    if !product.lots.empty?
+      qty = product.lots_by_expiration.available_specific(Time.current.end_of_minute, market_id, organization_id).sum(:quantity)
+      qty += product.lots_by_expiration.available_general(Time.current.end_of_minute).sum(:quantity)
+    else
+      qty = ConsignmentTransaction.where(transaction_type: 'PO', product_id: product_id, lot_id: nil).sum(:quantity)
+    end
     if qty < quantity
       errors[:inventory] = "there are only #{qty} #{product.name.pluralize(qty)} available."
     end
