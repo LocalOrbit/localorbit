@@ -53,7 +53,7 @@ class OrdersController < ApplicationController
     # Validate cart items against current inventory...
     errors ||= []
     current_cart.items.each do |item|
-      invalid = Inventory::Utils.validate_qty(item, current_market, current_organization, current_delivery)
+      invalid = Inventory::Utils.validate_qty(item, @order_type, current_market, current_organization, current_delivery)
       errors << invalid if invalid
 
       if invalid then

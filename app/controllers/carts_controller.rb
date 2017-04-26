@@ -19,7 +19,7 @@ class CartsController < ApplicationController
           redirect_to [target.to_sym], alert: "Your cart is empty. Please add items to your cart before checking out."
         else
           current_cart.items.each do |item|
-            invalid = Inventory::Utils.validate_qty(item, current_market, current_organization, current_delivery)
+            invalid = Inventory::Utils.validate_qty(item, @order_type, current_market, current_organization, current_delivery)
             errors << invalid if invalid
 
             if invalid then
@@ -67,7 +67,7 @@ class CartsController < ApplicationController
       @item.lot_id = params[:lot_id]
       @item.product = product
 
-      invalid_qty = Inventory::Utils.validate_qty(@item, current_market, current_organization, current_delivery)
+      invalid_qty = Inventory::Utils.validate_qty(@item, @order_type, current_market, current_organization, current_delivery)
       if !invalid_qty.nil?
         @error = invalid_qty[:error_msg]
         @item.quantity = invalid_qty[:actual_count]

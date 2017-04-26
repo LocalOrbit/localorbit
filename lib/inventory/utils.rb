@@ -181,16 +181,17 @@ module Inventory
         Product.where(id: child_product.parent_product_id).select(:id, :general_product_id, :name, :unit_quantity).order(:name)
       end
 
-      def validate_qty(item, market, organization, delivery)
+      def validate_qty(item, order_type, market, organization, delivery)
         error = nil
+        actual_count = nil
         product = Product.includes(:prices).find(item.product.id)
-        if market.is_buysell_market? || (market.is_consignment_market? && item.lot_id > 0)
+        if market.is_buysell_market? || (market.is_consignment_market? && order_type == 'sales' && item.lot_id > 0)
           delivery_date = delivery.deliver_on
           actual_count = product.available_inventory(delivery_date, market.id, organization.id)
-        else # Checking consignment awaiting delivery item
+        elsif market.is_consignment_market? && order_type == 'sales' && item.lot_id == 0 # Checking consignment awaiting delivery item
           actual_count = ConsignmentTransaction.where(transaction_type: 'PO', product_id: item.product_id, lot_id: nil).sum(:quantity)
         end
-        if item.quantity && item.quantity > 0 && item.quantity > actual_count
+        if item.quantity && item.quantity > 0 && !actual_count.nil? && item.quantity > actual_count
           error = {
               item_id: item.id,
               error_msg: "Quantity of #{product.name} (#{product.unit.plural}) available for purchase: #{actual_count}",
