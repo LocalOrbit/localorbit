@@ -292,13 +292,13 @@
           </td>
           <td class="quantity">
             <%# if (current_user.admin? || current_user.market_manager?) && item.object.delivery_status == 'pending' %>
-            <% if (current_market.is_buysell_market? && FeatureAccess.edit_ordered_quantity?(user_order_item_context: user_order_item_context)) || (current_market.is_consignment_market?) %>
+            <% if (current_market.is_buysell_market? && FeatureAccess.edit_ordered_quantity?(user_order_item_context: user_order_item_context)) || (current_market.is_consignment_market? && item.object.delivery_status == 'pending') %>
               <%= item.text_field :quantity, :autocomplete => :off, value: Format.quantity_no_delimiter(item.object.quantity), class: 'quantity-ordered' %>
             <% else %>
               <span class="quantity-ordered-ro"><%= Format.quantity_no_delimiter(item.object.quantity) %></span>
             <% end %> <%= item.object.unit %> (Ordered)<br />
 
-            <% if (current_market.is_buysell_market? && FeatureAccess.edit_delivered_quantity?(user_order_item_context: user_order_item_context)) || (current_market.is_consignment_market?) %>
+            <% if (current_market.is_buysell_market? && FeatureAccess.edit_delivered_quantity?(user_order_item_context: user_order_item_context)) || (current_market.is_consignment_market? && item.object.delivery_status == 'pending') %>
               <%= item.text_field :quantity_delivered, :autocomplete => :off, value: Format.quantity_no_delimiter(item.object.quantity_delivered), class: 'quantity-delivered' %>
               <% if current_market.is_consignment_market? && order.purchase_order? && item.object.delivery_status == 'pending' %>
               <%= item.select(:preferred_storage_location_id, options_for_select(StorageLocation.where("market_id = ?", current_market.id).map{|l| [l.name, l.id]}), {include_blank: false}) %>
