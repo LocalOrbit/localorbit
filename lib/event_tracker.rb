@@ -31,8 +31,8 @@ module EventTracker
       rescue Exception => ex
         puts ex.message
         puts ex.backtrace.join("\n")
-        Honeybadger.notify_or_ignore(ex,
-          context: {user: user.inspect, event: event, metadata: metadata})
+        #Honeybadger.notify_or_ignore(ex,
+        #  context: {user: user.inspect, event: event, metadata: metadata})
       end
     end
     nil
