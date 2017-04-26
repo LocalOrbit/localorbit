@@ -43,7 +43,7 @@ class CreateTemporaryCreditCard
     if Rails.env.test? || Rails.env.development?
       raise e
     else
-      Honeybadger.notify_or_ignore(e)
+      #Honeybadger.notify_or_ignore(e)
     end
     context[:order].errors.add(:credit_card, "was denied by the payment processor.")
     context.fail!

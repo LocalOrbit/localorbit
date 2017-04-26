@@ -28,7 +28,7 @@ class OrderItem < ActiveRecord::Base
   validates :unit_price, presence: true
   validates :delivery_status, presence: true, inclusion: {in: DELIVERY_STATUSES}
 
-  validate :product_availability, on: :create
+  validate :product_availability, on: [:create, :update]
 
   scope :delivered,       -> { where(delivery_status: "delivered") }
   scope :undelivered,     -> { where(delivery_status: "pending") }
@@ -117,7 +117,7 @@ class OrderItem < ActiveRecord::Base
   end
 
   def product_availability
-    return unless product.present? && !order.nil? && order.market.is_buysell_market?
+    return unless product.present? && !order.nil? && (order.market.is_buysell_market? || (order.market.is_consignment_market? && order.sales_order?))
 
     if !order.nil?
       market_id = order.market.id
