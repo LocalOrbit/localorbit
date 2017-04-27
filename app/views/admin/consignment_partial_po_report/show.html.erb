@@ -13,21 +13,29 @@
       </tr>
       </thead>
       <tbody>
+      <% total = 0 %>
       <% @orders.each do |order| %>
       <% so_value = ConsignmentTransaction
           .joins("JOIN consignment_transactions ct2 ON ct2.parent_id = consignment_transactions.id AND ct2.transaction_type = 'SO'")
           .where(order_id: order.id).select("sum(ct2.sale_price * ct2.quantity) AS amt")
         supplier = order.products[0].organization.name
+        if !so_value[0].amt.nil?
+          total = total + so_value[0].amt
+        end
       %>
 
       <tr class="<%= cycle "odd", "even" %> item">
         <td><%= supplier %></td>
         <td><%= order.created_at.strftime("%m/%d/%Y") %></td>
         <td><%= link_to order.id, admin_purchase_order_path(order.id) %></td>
-        <td><%= number_to_currency(so_value[0].amt) %></td>
+        <td><%= number_to_currency(so_value[0].nil? ? 0 : so_value[0].amt) %></td>
       </tr>
 
       <% end %>
+      <tr>
+        <td colspan="3" style="text-align: right"><strong>Total:</strong></td>
+        <td><%= number_to_currency(total) %></td>
+      </tr>
       </tbody>
     </table>
   </div>
