@@ -24,7 +24,7 @@
         <td><%= supplier %></td>
         <td><%= order.created_at.strftime("%m/%d/%Y") %></td>
         <td><%= link_to order.id, admin_purchase_order_path(order.id) %></td>
-        <td><%= number_to_currency(so_value[0].amt) %></td>
+        <td><%= number_to_currency(so_value[0].nil? ? 0 : so_value[0].amt) %></td>
       </tr>
 
       <% end %>
