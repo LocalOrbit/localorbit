@@ -420,7 +420,7 @@
         <% grand_total = 0 %>
         <% receipt.items.order(:name).each do |item| %>
         <% avg_price = ConsignmentTransaction.where(product_id: item.product.id, transaction_type: 'SO').average(:net_price) %>
-        <% total_price = (item.quantity_delivered.nil? && item.quantity_delivered > 0 ? item.quantity_delivered : 0) * avg_price %>
+        <% total_price = (!item.quantity_delivered.nil? && item.quantity_delivered > 0 ? item.quantity_delivered : 0) * (avg_price.nil? ? 0 : avg_price) %>
         <% grand_total = grand_total + total_price %>
         <% sold_cnt = ConsignmentTransaction.where(product_id: item.product.id, transaction_type: 'SO').sum(:quantity) %>
         <% split_cnt = ConsignmentTransaction.where(product_id: item.product.id, transaction_type: 'SPLIT').sum(:quantity) %>

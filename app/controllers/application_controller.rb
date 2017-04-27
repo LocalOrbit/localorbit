@@ -17,6 +17,8 @@ class ApplicationController < ActionController::Base
   helper_method :current_delivery
   helper_method :redirect_to_url
   helper_method :signed_in_root_path
+  
+  after_filter :cors_auth
 
   # Includes Authorization mechanism
   include Pundit
@@ -37,6 +39,12 @@ class ApplicationController < ActionController::Base
   # Enforces access right checks for collections
   #after_filter :verify_policy_scoped, :only => :index
 
+  def cors_auth
+    headers['Access-Control-Allow-Origin'] = '*'
+    headers['Access-Control-Allow-Methods'] = 'POST, PUT, DELETE, GET, OPTIONS'
+    headers['Access-Control-Request-Method'] = '*'
+    headers['Access-Control-Allow-Headers'] = 'Origin, X-Requested-With, Content-Type, Accept, Authorization'
+  end
 
   def track_event(event, metadata={})
     EventTracker.track_event_for_user current_user, event, metadata if current_user
