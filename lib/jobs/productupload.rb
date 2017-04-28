@@ -2,11 +2,12 @@ module Jobs
 	module ProductUpload
 		include Imports
 		class ProductUploadJob
-			def initialize(jsn, upload_audit_id, curr_user) 
+			def initialize(jsn, upload_audit_id, curr_user, curr_market)
 				@jsn = jsn
 				# @datafile = datafile # ofc assuming it's an arg to initialize
 				@upload_audit_id = upload_audit_id
 				@curr_user = curr_user
+				@curr_market = curr_market
 			end
 			
 			# def enqueue(job)
@@ -27,7 +28,7 @@ module Jobs
 		    	aud = Audit.find(@upload_audit_id)
 		    	unless @jsn.include?("invalid")
 		        @jsn[0]["products"].each do |p|
-		          ::Imports::ProductHelpers.create_product_from_hash(p,@curr_user)
+		          ::Imports::ProductHelpers.create_product_from_hash(p,@curr_user, @curr_market)
 		          @num_products_loaded += 1 # This is info that needs to go in the alert
 		          if p.has_key?("Multiple Pack Sizes") && !p["Multiple Pack Sizes"].empty?
 		            @num_products_loaded += 1

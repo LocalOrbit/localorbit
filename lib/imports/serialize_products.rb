@@ -1,7 +1,7 @@
 module Imports
 	module SerializeProducts
 		require 'csv'
-		@all_headers = ["Organization","Market Subdomain","Product Name","Category Name","Short Description","Product Code","Unit Name","Unit Description","Price","New Inventory","Product ID", "Parent Product Name", "Organic", "Unit Quantity", "Lot Number", "Net Price"] # Required headers for imminent future
+		@all_headers = ["Organization","Market Subdomain","Product Name","Category Name","Short Description","Product Code","Unit Name","Unit Description","Net Price","Price","New Inventory","Product ID", "Parent Product Name", "Organic", "Unit Quantity", "Lot Number"] # Required headers for imminent future
 		@required_headers = ["Organization","Market Subdomain","Product Name","Category Name","Short Description","Product Code","Unit Name","Unit Description","Price","New Inventory","Product ID"] # Required headers for imminent future
 
 		# TODO should this be a diff kind of accessor? Later, works.
@@ -64,7 +64,7 @@ module Imports
 			## This shouldn't be needed for anything outside verifying CSV files uploaded. Check w
 			error_hash["Row number"] = line_num.to_s 
 			error_hash["Errors"] = {}
-			if [product_row["Product Name"],product_row["Category Name"],product_row["Short Description"],product_row["Unit Name"],product_row["Price"]].any? {|obj| obj.blank?}
+			if [product_row["Product Name"],product_row["Category Name"],product_row["Unit Name"],product_row["Price"]].any? {|obj| obj.blank?}
 				okay_flag = false
 				#create error and append it (TODO could have clearer error info for this one - which one is blank)
 				error_hash["Errors"]["Invalid Data under required headers"] = "Some required data is blank."
