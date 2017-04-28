@@ -254,7 +254,13 @@ class ApplicationController < ActionController::Base
               end
             end.decorate
           else
-            @current_cart = @current_cart.decorate
+            c = @current_cart
+            if !session[:current_location].nil? && current_delivery.requires_location?
+              c.location = Location.find(session[:current_location])
+            elsif session[:current_location].nil? && current_delivery.requires_location?
+              c.location = selected_organization_location
+            end
+            @current_cart = c.decorate
           end
         else
           @current_cart = Cart.find_or_create_by!(user_id: current_user.id, organization_id: current_organization.id, market_id: current_market.id, delivery_id: current_delivery.id) do |c|
