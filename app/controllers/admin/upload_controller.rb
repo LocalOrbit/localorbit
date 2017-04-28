@@ -63,7 +63,7 @@ class Admin::UploadController < AdminController
         # TODO: the jsn business above it should also be handled by the worker in the delay
         unless jsn.include?("invalid")
          jsn[0]["products"].each do |p|
-           ::Imports::ProductHelpers.create_product_from_hash(p,params[:curr_user])
+           ::Imports::ProductHelpers.create_product_from_hash(p,params[:curr_user], current_market)
            @num_products_loaded += 1
            if p.has_key?("Multiple Pack Sizes") && !p["Multiple Pack Sizes"].empty?
              @num_products_loaded += 1

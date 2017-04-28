@@ -4,8 +4,8 @@ module Imports
 		$current_user = Figaro.env.api_admin_user_id.to_i
 
 		def self.identify_product_uniqueness(product_params)
-			identity_params_hash = {product_name:product_params["Product Name"],category_id: self.get_category_id_from_name(product_params["Category Name"]),organization_id: self.get_organization_id_from_name(product_params["Organization"],product_params["Market Subdomain"],$current_user)}
-			product_unit_identity_hash = {unit_name:product_params["Unit Name"]}#,unit_description:product_params["Unit Description"]} # right now we can't really control for same unit name, diff description; people will just have to bin the units and it's fine.
+			identity_params_hash = {product_name:product_params["Product Name"].strip, category_id: self.get_category_id_from_name(product_params["Category Name"].strip),organization_id: self.get_organization_id_from_name(product_params["Organization"].strip,product_params["Market Subdomain"],$current_user)}
+			product_unit_identity_hash = {unit_name:product_params["Unit Name"], unit_quantity: product_params["Unit Quantity"]} #,unit_description:product_params["Unit Description"]} # right now we can't really control for same unit name, diff description; people will just have to bin the units and it's fine.
 			if product_params["Product ID"].to_i > 0
 				prd = Product.find(product_params["Product ID"].to_i)
 				gps = GeneralProduct.where(id: prd["general_product_id"].to_i)
@@ -21,7 +21,7 @@ module Imports
 
 		def self.get_parent_product_id_from_name(product_name, organization_name, subdomain, current_user)
 			begin
-				p = Product.where(name: product_name, organization_id: self.get_organization_id_from_name(organization_name, subdomain, current_user))
+				p = Product.where(name: product_name.strip, organization_id: self.get_organization_id_from_name(organization_name, subdomain, current_user))
 				p[0].id
 			rescue
 				return nil
@@ -31,7 +31,7 @@ module Imports
 		def self.get_category_id_from_name(category_name)
 			begin
 				t = Category.arel_table
-				id = Category.where(depth:2).where(t[:name].matches("#{category_name}%")).first.id # Must be a depth 2 category, where names ought to be unique, so this should be an array of length 1.
+				id = Category.where(depth:2).where(t[:name].matches("#{category_name.strip}%")).first.id # Must be a depth 2 category, where names ought to be unique, so this should be an array of length 1.
 				# TODO: address this problem, perhaps parse recursively?
 				id
 			rescue
@@ -47,7 +47,7 @@ module Imports
 					return nil
 				end
 				t = Organization.arel_table
-				org = Organization.where(t[:name].eq("#{organization_name}"),t[:market_id].matches(mkt.id),t[:org_type].eq('S'))
+				org = Organization.where(t[:name].eq("#{organization_name.strip}"),t[:market_id].matches(mkt.id),t[:org_type].eq('S'))
 
 				if org.empty? # if none such that mkt and org match up
 					return nil
@@ -62,7 +62,7 @@ module Imports
 		def self.get_unit_id_from_name(unit_name) # assuming name is singular - this is input req
 			begin
 				t = Unit.arel_table
-				unit = Unit.where(t[:singular].matches("#{unit_name}%"))
+				unit = Unit.where(t[:singular].matches("#{unit_name.strip}%"))
 				# unit = Unit.find_by_singular(unit_name).id
 				unit.first.id
 			rescue
@@ -70,11 +70,11 @@ module Imports
 			end
 		end
 
-		def self.create_product_from_hash(prod_hash,current_user)
+		def self.create_product_from_hash(prod_hash,current_user, current_market)
 			gp_id_or_false = self.identify_product_uniqueness(prod_hash)
 			if !gp_id_or_false
 				product = Product.create(
-								name: prod_hash["Product Name"],
+								name: prod_hash["Product Name"].strip,
 				        organization_id: self.get_organization_id_from_name(prod_hash["Organization"],prod_hash["Market Subdomain"],current_user),
 				        unit_id: self.get_unit_id_from_name(prod_hash["Unit Name"]),
 				        category_id: self.get_category_id_from_name(prod_hash["Category Name"]),
@@ -88,11 +88,12 @@ module Imports
 								use_simple_inventory: prod_hash["Lot Number"].nil?
 				)
 				product.skip_validation = true
+				product.consignment_market = current_market.is_consignment_market?
 				product.save
 
 					pr = product.prices.find_or_initialize_by(min_quantity: 1)
 					pr.sale_price = prod_hash["Price"]
-					pr.net_price = prod_hash["Net Price"] > 0 ? prod_hash["Net Price"] : 0
+					pr.net_price = Float(prod_hash["Net Price"]) > 0 ? Float(prod_hash["Net Price"]) : 0
 					pr.save
 
 				if prod_hash["New Inventory"].to_i >= 0
@@ -116,6 +117,7 @@ module Imports
 				end
 				if !product.nil? # if there is a product-unit with this name, category, org
 					product.skip_validation = true
+					product.consignment_market = current_market.is_consignment_market?
 					product.update_attributes!(unit_description: prod_hash["Unit Description"],
 																		 unit_quantity: prod_hash["Unit Quantity"],
 																		 code: prod_hash["Product Code"],
@@ -127,7 +129,7 @@ module Imports
 
 					pr = product.prices.find_or_initialize_by(min_quantity: 1)
 					pr.sale_price = prod_hash["Price"]
-					pr.net_price = prod_hash["Net Price"] > 0 ? prod_hash["Net Price"] : 0
+					pr.net_price = Float(prod_hash["Net Price"]) > 0 ? Float(prod_hash["Net Price"]) : 0
 					if pr.valid?
 						pr.save
 					else
@@ -156,11 +158,12 @@ module Imports
 								use_simple_inventory: prod_hash["Lot Number"].nil?
 				      	)
 					product.skip_validation = true
+					product.consignment_market = current_market.is_consignment_market?
 					product.save
 
 					pr = product.prices.find_or_initialize_by(min_quantity: 1)
 					pr.sale_price = prod_hash["Price"]
-					pr.net_price = prod_hash["Net Price"] > 0 ? prod_hash["Net Price"] : 0
+					pr.net_price = Float(prod_hash["Net Price"]) > 0 ? Float(prod_hash["Net Price"]) : 0
 					pr.save
 
 					if prod_hash["New Inventory"].to_i >= 0
