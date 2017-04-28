@@ -23,7 +23,7 @@ module ProductUpload
       @num_products_loaded = 0
     	unless jsn.include?("invalid")
         jsn[0]["products"].each do |p|
-          ::Imports::ProductHelpers.create_product_from_hash(p, curr_user)
+          ::Imports::ProductHelpers.create_product_from_hash(p, curr_user, curr_market)
           @num_products_loaded += 1 # how does this get added to, also? different scope
           if p.has_key?("Multiple Pack Sizes") && !p["Multiple Pack Sizes"].empty?
             #@num_products_loaded += 1

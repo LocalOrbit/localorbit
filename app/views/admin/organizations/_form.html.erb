@@ -153,7 +153,7 @@
     </fieldset>
   <% end %>
 
-  <% if current_market.is_consignment_market? && @organization.org_type == 'B' %>
+  <% if current_market.is_consignment_market? && @organization.org_type == 'S' %>
   <div class="row row--field">
     <div class="field column column--half column--guttered">
       <%= f.label :qb_check_name, "QuickBooks Check Name" %><br/>
