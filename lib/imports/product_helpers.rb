@@ -21,7 +21,7 @@ module Imports
 
 		def self.get_parent_product_id_from_name(product_name, organization_name, subdomain, current_user)
 			begin
-				p = Product.where(name: product_name.strip, organization_id: self.get_organization_id_from_name(organization_name, subdomain, current_user))
+				p = Product.where(name: product_name.strip, organization_id: self.get_organization_id_from_name(organization_name.strip, subdomain, current_user))
 				p[0].id
 			rescue
 				return nil
