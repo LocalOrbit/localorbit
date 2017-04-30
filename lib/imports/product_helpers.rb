@@ -93,7 +93,7 @@ module Imports
 
 					pr = product.prices.find_or_initialize_by(min_quantity: 1)
 					pr.sale_price = prod_hash["Price"]
-					pr.net_price = Float(prod_hash["Net Price"]) > 0 ? Float(prod_hash["Net Price"]) : 0
+					pr.net_price = (!prod_hash["Net Price"].nil? && Float(prod_hash["Net Price"]) > 0) ? Float(prod_hash["Net Price"]) : 0
 					pr.save
 
 				if prod_hash["New Inventory"].to_i >= 0
@@ -129,7 +129,7 @@ module Imports
 
 					pr = product.prices.find_or_initialize_by(min_quantity: 1)
 					pr.sale_price = prod_hash["Price"]
-					pr.net_price = Float(prod_hash["Net Price"]) > 0 ? Float(prod_hash["Net Price"]) : 0
+					pr.net_price = (!prod_hash["Net Price"].nil? && Float(prod_hash["Net Price"]) > 0) ? Float(prod_hash["Net Price"]) : 0
 					if pr.valid?
 						pr.save
 					else
@@ -163,7 +163,7 @@ module Imports
 
 					pr = product.prices.find_or_initialize_by(min_quantity: 1)
 					pr.sale_price = prod_hash["Price"]
-					pr.net_price = Float(prod_hash["Net Price"]) > 0 ? Float(prod_hash["Net Price"]) : 0
+					pr.net_price = (!prod_hash["Net Price"].nil? && Float(prod_hash["Net Price"]) > 0) ? Float(prod_hash["Net Price"]) : 0
 					pr.save
 
 					if prod_hash["New Inventory"].to_i >= 0

@@ -4,6 +4,9 @@
       <table class="cart">
       <%= render partial: "#{@order.order_type}_order" %>
       </table>
+      <br/><br/>
+      <label>Notes:</label><br/>
+      <%= @order.notes %>
     </div
     ><div class="column column--half column--guttered">
       <div id="additional-information">
@@ -33,12 +36,12 @@
 
       <% if current_market.is_buysell_market? %>
       <div>
-        <p><strong>Payment Status</strong>  &nbsp; <%= @order.payment_status.titleize %></p>
+        <p><strong>Payment Status:</strong>  &nbsp; <%= @order.payment_status.titleize %></p>
       </div>
       <% end %>
 
       <div>
-        <p><strong>Payment Method</strong>  &nbsp; <%= @order.display_payment_method %></p>
+        <p><strong>Payment Method:</strong>  &nbsp; <%= @order.display_payment_method %></p>
       </div>
     </div>
   </div>

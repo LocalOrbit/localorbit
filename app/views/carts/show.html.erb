@@ -25,7 +25,13 @@
           <% end %>
           <h2 class="order-min-msg"></h2>
         </div>
-      </div
+        <% if @order_type == 'purchase' %>
+            <div style="margin-top: 10px;">
+              <%= f.label :notes %>
+              <%= f.text_area :notes, rows: 5 %>
+            </div>
+        <% end %>
+        </div
       ><div class="column column--half column--guttered">
         <div id="additional-information">
           <div id="address">
