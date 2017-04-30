@@ -4,9 +4,11 @@
       <table class="cart">
       <%= render partial: "#{@order.order_type}_order" %>
       </table>
+      <% if @order.purchase_order? %>
       <br/><br/>
       <label>Notes:</label><br/>
       <%= @order.notes %>
+      <% end %>
     </div
     ><div class="column column--half column--guttered">
       <div id="additional-information">
