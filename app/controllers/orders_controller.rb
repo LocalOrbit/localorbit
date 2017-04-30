@@ -148,6 +148,7 @@ class OrdersController < ApplicationController
       :payment_method,
       :payment_note,
       :bank_account,
+      :notes,
       credit_card: [
         :id,
         :name,
