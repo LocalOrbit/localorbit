@@ -51,7 +51,7 @@ class Product < ActiveRecord::Base
   validates_property :format, of: :image, in: %w(jpg jpeg png gif), :unless => :skip_validation
   validates_property :format, of: :thumb, in: %w(jpg jpeg png gif), :unless => :skip_validation
 
-  validates :name, presence: true
+  validates :name, presence: true, uniqueness: {scope: :organization_id, allow_blank: false, case_sensitive: false}
   validates :unit, presence: true
   validates :category_id, presence: true
   validates :organization_id, presence: true
