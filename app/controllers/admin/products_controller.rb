@@ -53,8 +53,8 @@ module Admin
 
     def new
       @product = Product.new(use_simple_inventory: true).decorate
-      @supplier_products = []
-      @supplier_products << Product.for_market_id(current_market.id).visible.order("products.name").first
+      @supplier_products = nil
+      #@supplier_products << Product.for_market_id(current_market.id).visible.order("products.name").first
 
       setup_new_form
     end
