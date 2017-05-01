@@ -26,9 +26,9 @@ module Api
           featured_promotion = current_market.featured_promotion(current_organization, current_delivery)
         end
 
-        if current_market.try(:is_consignment_market?) && order_type == 'purchase'
+        if current_market.try(:is_consignment_market?) && (order_type == 'purchase' || order.purchase_order?)
           products = filtered_available_po_consignment_products(@query, @category_ids, @seller_ids, @order)
-        elsif current_market.try(:is_consignment_market?) && order_type == 'sales'
+        elsif current_market.try(:is_consignment_market?) && (order_type == 'sales' || order.sales_order?)
           products = filtered_available_so_consignment_products(@query, @category_ids, @seller_ids, @order)
         else
           products = filtered_available_products(@query, @category_ids, @seller_ids, @order)
