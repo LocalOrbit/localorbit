@@ -133,9 +133,9 @@ describe Product do
 
     it "can be added to an existing GeneralProduct after creation" do
       product1 = Product.create!(short_description: "desc", name: "New Product", organization: org, category: category, unit: unit)
-      product2 = Product.create!(short_description: "desc", name: "New Product", organization: org, category: category, unit: unit)
-      product2.general_product = product1.general_product
-      product2.save!
+      product2 = Product.create!(short_description: "desc", name: "New Product", organization: org, category: category, unit: unit, general_product_id: product1.general_product.id)
+      #product2.general_product = product1.general_product
+      #product2.save!
       expect(product1.general_product.product.count).to eq(2)
     end
   end
