@@ -124,7 +124,7 @@ module Api
                  .filter_by_categories(category_ids)
                  .filter_by_suppliers(seller_ids)
                  .select("top_level_category.lft, top_level_category.name, second_level_category.lft, second_level_category.name, general_products.*")
-                 .order(@sort_by)
+                 .order("general_products.name")
                  .uniq
       end
 

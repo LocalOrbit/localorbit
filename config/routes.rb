@@ -197,6 +197,7 @@ Rails.application.routes.draw do
       collection do
         post :split
         post :undo_split
+        get :update_supplier_products
       end
     end
 
