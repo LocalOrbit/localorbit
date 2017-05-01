@@ -260,3 +260,15 @@ $ ->
     window.setTimeout ->
         window.fade_flash()
       , 10
+
+  $(document).on 'change', '#supplier_select', (evt) ->
+    $.ajax 'update_supplier_products',
+      type: 'GET'
+      dataType: 'script'
+      data: {
+        organization_id: $("#supplier_select option:selected").val()
+      }
+      error: (jqXHR, textStatus, errorThrown) ->
+        console.log("AJAX Error: #{textStatus}")
+      success: (data, textStatus, jqXHR) ->
+        console.log("Dynamic country select OK!")
