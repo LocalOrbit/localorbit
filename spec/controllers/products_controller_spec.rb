@@ -114,7 +114,7 @@ describe ProductsController do
     it "only shows products that can be sold on the market" do
       no_prices = create(:product, name: "Bad apples", organization: seller, delivery_schedules: [delivery])
       create(:lot, product: no_prices)
-      no_inventory = create(:product, name: "Bad apples", organization: seller, delivery_schedules: [delivery])
+      no_inventory = create(:product, name: "Bad apples", organization: seller, delivery_schedules: [delivery], general_product_id: no_prices.general_product.id)
       expect(search("bad ap")).to eq []
     end
   end
