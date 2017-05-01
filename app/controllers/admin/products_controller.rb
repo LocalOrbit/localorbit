@@ -53,6 +53,9 @@ module Admin
 
     def new
       @product = Product.new(use_simple_inventory: true).decorate
+      @supplier_products = []
+      @supplier_products << Product.for_market_id(current_market.id).visible.order("products.name").first
+
       setup_new_form
     end
 
@@ -87,6 +90,7 @@ module Admin
 
     def show
       @organizations = [@product.organization]
+      @supplier_products = Product.visible.where("organization_id = ?", @product.organization.id).order("products.name")
 
       find_delivery_schedules(@product)
       find_selected_delivery_schedule_ids(@product)
@@ -128,6 +132,13 @@ module Admin
     def destroy
       @product.soft_delete
       redirect_to [:admin, :products], notice: "Successfully deleted #{@product.name}"
+    end
+
+    def update_supplier_products
+      @supplier_products = Product.visible.where("organization_id = ?", params[:organization_id]).order("products.name")
+      respond_to do |format|
+        format.js
+      end
     end
 
     private
