@@ -23,8 +23,8 @@ class Admin::ConsignmentInventoryController < AdminController
   def search_products(search)
 
     results = ConsignmentTransaction
-    .joins("JOIN products ON products.id = consignment_transactions.product_id")
-    .joins("JOIN organizations ON organizations.id = products.organization_id")
+    .joins("JOIN products p2 ON p2.id = consignment_transactions.product_id")
+    .joins("JOIN organizations ON organizations.id = p2.organization_id")
     .joins("LEFT JOIN lots lts ON lts.id = consignment_transactions.lot_id")
     .joins("LEFT JOIN consignment_transactions ct ON ct.order_id != consignment_transactions.order_id AND ct.transaction_type = 'HOLDOVER' AND ct.quantity > 0")
     .joins("LEFT JOIN storage_locations stl ON stl.id = lts.storage_location_id")
@@ -33,8 +33,8 @@ class Admin::ConsignmentInventoryController < AdminController
     .where("lts.quantity > 0 OR consignment_transactions.lot_id IS NULL")
     .visible
     .select("consignment_transactions.id AS ct_id,
-    products.id AS product_id,
-    products.name AS product_name,
+    p2.id AS product_id,
+    p2.name AS product_name,
     organizations.id AS supplier_id,
     organizations.name AS supplier_name,
     consignment_transactions.order_id,
@@ -47,7 +47,7 @@ class Admin::ConsignmentInventoryController < AdminController
     lts.number AS lot_number,
     lts.quantity AS lot_quantity,
     consignment_transactions.notes as note")
-    .order("products.name")
+    .order("p2.name")
     .search(search.query)
 
     #results.sorts = "name asc" if results.sorts.empty?
