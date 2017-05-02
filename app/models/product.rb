@@ -511,6 +511,9 @@ class Product < ActiveRecord::Base
   def ensure_product_has_a_general_product
     unless self.general_product
       self.general_product = GeneralProduct.new
+      self.general_product.consignment_market = self.consignment_market
+      self.general_product.sales_market = !self.consignment_market
+      self.general_product.skip_validation = self.skip_validation
       self.general_product.use_all_deliveries = true
       self.general_product.product << self
     end
@@ -518,7 +521,9 @@ class Product < ActiveRecord::Base
 
   def update_general_product
     ensure_product_has_a_general_product
-    general_product.skip_validation = self.skip_validation
+    self.general_product.consignment_market = self.consignment_market
+    self.general_product.sales_market = !self.consignment_market
+    self.general_product.skip_validation = self.skip_validation
     self.general_product.save!
   end
   

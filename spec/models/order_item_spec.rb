@@ -292,6 +292,7 @@ describe OrderItem do
       let(:lot3) { build(:lot, number: 3, quantity: 7, expires_at: 1.hour.from_now) }
       let(:product2) { create(:product, :sellable, lots: [lot1, lot2, lot3]) }
 
+
       it "decrements lot quantity on OrderItem creation" do
         item = OrderItem.create!(
           deliver_on_date: Date.current,
@@ -300,7 +301,8 @@ describe OrderItem do
           unit: create(:unit),
           product: product2,
           delivery_status: "pending",
-          quantity: 8
+          quantity: 8,
+          order: order
         )
 
         expect(item).to be_valid
