@@ -283,13 +283,15 @@ class OrderItem < ActiveRecord::Base
   end
 
   def update_consumed_inventory
-    if persisted? && quantity_changed?
-      quantity_remaining = changes[:quantity][1] - (changes[:quantity][0] || 0)
+    if !order.nil? && order.sales_order?
+      if persisted? && quantity_changed?
+        quantity_remaining = changes[:quantity][1] - (changes[:quantity][0] || 0)
 
-      if quantity_remaining > 0
-        consume_inventory_amount(quantity_remaining, order.market.id, order.organization.id)
-      else
-        return_inventory_amount(quantity_remaining.abs)
+        if quantity_remaining > 0
+          consume_inventory_amount(quantity_remaining, order.market.id, order.organization.id)
+        else
+          return_inventory_amount(quantity_remaining.abs)
+        end
       end
     end
   end

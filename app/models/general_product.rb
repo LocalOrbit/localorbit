@@ -11,13 +11,14 @@ class GeneralProduct < ActiveRecord::Base
 
   has_many :product
 
-  attr_accessor :skip_validation
+  attr_accessor :skip_validation, :consignment_market, :sales_market
 
   dragonfly_accessor :image do
     copy_to(:thumb){|a| a.thumb('150x150#') }
   end
 
-  validates :name, presence: true, uniqueness: {scope: :organization_id, allow_blank: false, case_sensitive: false}
+  validates :name, presence: true, :unless => :consignment_market
+  validates :name, presence: true, uniqueness: {scope: :organization_id, allow_blank: false, case_sensitive: false}, :unless => :sales_market
 
   dragonfly_accessor :thumb
   define_after_upload_resize(:image, 1200, 1200, thumb: {width: 150, height: 150})
