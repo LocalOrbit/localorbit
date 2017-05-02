@@ -173,11 +173,13 @@ class OrderItem < ActiveRecord::Base
   private
 
   def consume_inventory
-    if order
-      market_id = order.market.id
-      organization_id = order.organization.id
+    if order.sales_order?
+      if order
+        market_id = order.market.id
+        organization_id = order.organization.id
+      end
+      consume_inventory_amount(quantity, market_id, organization_id)
     end
-    consume_inventory_amount(quantity, market_id, organization_id)
   end
 
   def update_delivered_at
