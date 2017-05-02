@@ -173,7 +173,7 @@ class OrderItem < ActiveRecord::Base
   private
 
   def consume_inventory
-    if order.sales_order?
+    if !order.nil? && order.sales_order?
       if order
         market_id = order.market.id
         organization_id = order.organization.id
