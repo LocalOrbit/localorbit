@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170427150255) do
+ActiveRecord::Schema.define(version: 20170503033420) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -467,6 +467,7 @@ ActiveRecord::Schema.define(version: 20170427150255) do
     t.integer  "legacy_id"
     t.string   "country",          default: "US",  null: false
     t.string   "email"
+    t.string   "contact_name"
   end
 
   add_index "locations", ["deleted_at"], name: "index_locations_on_deleted_at", using: :btree
