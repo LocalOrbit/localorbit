@@ -261,12 +261,12 @@ $ ->
         window.fade_flash()
       , 10
 
-  $(document).on 'change', '#supplier_select', (evt) ->
+  $(document).on 'change', 'select[name="product[organization_id]"]', (evt) ->
     $.ajax 'update_supplier_products',
       type: 'GET'
       dataType: 'script'
       data: {
-        organization_id: $("#supplier_select option:selected").val()
+        organization_id: $("select[name='product[organization_id]'] option:selected").val()
       }
       error: (jqXHR, textStatus, errorThrown) ->
         console.log("AJAX Error: #{textStatus}")

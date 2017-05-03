@@ -30,13 +30,17 @@
 </div>
 
 <div class="row row--field">
-  <div class="field column column--guttered column--half">
-    <%= form.label :phone %><br>
-    <%= form.text_field :phone, maxlength: 18, size: 18, class: "column--full" %>
+  <div class="field column column--third column--guttered">
+    <%= form.label :contact_name %><br>
+    <%= form.text_field :contact_name %>
   </div
-  ><div class="field column column--guttered column--half">
+  ><div class="field column column--third column--guttered">
+    <%= form.label :phone %><br>
+    <%= form.text_field :phone, maxlength: 18, size: 18 %>
+  </div
+  ><div class="field column column--third column--guttered">
     <%= form.label :fax %><br>
-    <%= form.text_field :fax, maxlength: 18, size: 18, class: "column--full" %>
+    <%= form.text_field :fax, maxlength: 18, size: 18 %>
   </div>
 </div>
 
