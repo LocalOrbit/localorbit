@@ -184,7 +184,7 @@
         <% end %>
       </td>
       <td><%= product.updated_at_dte %></td>
-      <% if current_market.is_buysell_market? %>
+      <% if current_user.admin? || current_market.is_buysell_market? %>
       <td class="delete action-link">
         <%= link_to raw('<i class="fa fa-trash-o">&nbsp;</i>'), [:admin, product], method: :delete,
                     data: { confirm: "Are you sure you want to permanently delete #{product.plural_units_with_name}?" },

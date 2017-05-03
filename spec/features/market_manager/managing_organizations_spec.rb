@@ -399,7 +399,7 @@ describe "A Market Manager", :vcr do
     end
 
     context "when the user is an active member of an organization" do
-      let(:user) { create(:user, :market_manager) }
+      let(:user) { create(:user, :admin) }
       before do
         org.users << user
       end
@@ -416,7 +416,7 @@ describe "A Market Manager", :vcr do
           click_button "Invite New User"
         end
 
-        expect(page).to have_content("User email already exists")
+        expect(page).to have_content("You have already added this user")
       end
     end
 

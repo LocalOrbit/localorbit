@@ -161,7 +161,7 @@ module Admin
         :plan_id,
         :qb_check_name,
         :notes,
-        locations_attributes: [:name, :address, :city, :state, :zip, :phone, :fax, :email, :country],
+        locations_attributes: [:name, :address, :city, :state, :zip, :phone, :fax, :email, :country, :contact_name],
         qb_profile_attributes: [:organization_id, :income_account_name, :expense_account_name, :asset_account_name, :prefix],
         markets: []
       )
