@@ -58,7 +58,7 @@ module Admin
     end
 
     def location_params
-      params.require(:location).permit(:name, :address, :city, :state, :zip, :country, :phone, :fax, :email, :default_billing)
+      params.require(:location).permit(:name, :address, :city, :state, :zip, :country, :phone, :fax, :email, :contact_name, :default_billing)
     end
 
     def location_names

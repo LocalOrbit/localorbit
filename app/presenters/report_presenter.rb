@@ -184,7 +184,7 @@ class ReportPresenter
     # Filter items by discount for the Discount Code report
     items = items.joins(order: :discount) if report == "discount_code_use"
 
-    setup_filter_data(items)
+    setup_filter_data(items, market, user)
 
     # Initialize ransack and set a default sort order
     query = Search::QueryDefaults.new(search, :order_placed_at).query
@@ -248,7 +248,7 @@ class ReportPresenter
 
   private
 
-  def setup_filter_data(items)
+  def setup_filter_data(items, market, user)
     if includes_filter?(:market_name)
       @markets = Market.select(:id, :name).where(id: items.pluck("orders.market_id")).order(:name).uniq
     end
@@ -258,7 +258,7 @@ class ReportPresenter
     end
 
     if includes_filter?(:buyer_name)
-      @buyers = Organization.select(:id, :name).where(org_type: 'B', id: items.pluck("orders.organization_id")).order(:name).uniq
+      @buyers = Organization.active.select(:id, :name).where(id: items.pluck("orders.organization_id")).order(:name).uniq
     end
 
     if includes_filter?(:category_name)

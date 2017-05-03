@@ -17,7 +17,9 @@
       <%= content_tag :th, sort_link(@q, :market, "Market") %>
       <% end %>
       <%= content_tag :th, sort_link(@q, :order_number, "Order #") %>
+      <% if @order_type == 'sales' %>
       <%= content_tag :th, sort_link(@q, :placed_at, "Order Date") %>
+      <% end %>
       <%= content_tag :th, sort_link(@q, :delivery_deliver_on, "Delivery Date") %>
       <% if current_market.is_buysell_market? %>
       <%= content_tag :th, sort_link(@q, :total_cost, "Amount Owed") %>
@@ -43,7 +45,9 @@
         <td class="market"><%= order.market.name %></td>
         <% end %>
         <td class="order-number"><%= link_to order.order_number, admin_order_path(order) %><%= order.decorate.note_indicator %></td>
+        <% if @order_type == 'sales' %>
         <td class="order-date"><%= order.placed_at.strftime("%m/%d/%Y") %></td>
+        <% end %>
         <td class="deliver-on"><%= order.delivery.buyer_deliver_on.strftime("%m/%d/%Y") || order.delivery.deliver_on.strftime("%m/%d/%Y")%></td>
         <% if current_market.is_buysell_market? %>
           <% if current_user.admin? || current_user.market_manager? || current_user.buyer_only? %>
