@@ -13,7 +13,8 @@ describe "Editing an order" do
   let!(:buyer)           { create(:organization, :buyer, markets: [market]) }
 
   let!(:delivery)        { monday_delivery.next_delivery }
-  let!(:order_item)      { create(:order_item, product: product, quantity: 5, unit_price: 3.00, payment_status: "pending", delivery_status: "pending") }
+  let!(:temp_order)      { create(:order, market: market, organization: buyer, delivery: delivery, total_cost: 15.00, payment_provider: PaymentProvider::Stripe.id, payment_method: "credit card") }
+  let!(:order_item)      { create(:order_item, product: product, order: temp_order, quantity: 5, unit_price: 3.00, payment_status: "pending", delivery_status: "pending") }
   let!(:order_item_lot)  { create(:order_item_lot, quantity: 5, lot: product_lot, order_item: order_item) }
   let!(:order)           { create(:order, market: market, organization: buyer, delivery: delivery, items: [order_item], total_cost: 15.00, payment_provider: PaymentProvider::Stripe.id, payment_method: "credit card") }
   let!(:bank_account)    { create(:bank_account, :checking, :verified, bankable: buyer) }
