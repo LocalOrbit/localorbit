@@ -29,8 +29,8 @@ module CSVExport
               product.code,
               product.unit.singular,
               product.unit_description,
-              product.prices.view_sorted_export.decorate.map(&:min_1_qty)[0],
-              product.use_simple_inventory && product.lots.count == 1 ? product.lots[0].quantity : "N/A",
+              product.prices.view_sorted_export.empty? ? 0 : product.prices.view_sorted_export.decorate.map(&:min_1_qty)[0],
+              product.use_simple_inventory && product.lots.count == 1 ? product.lots[0].quantity : "Adv Inv",
               "",
               product.id
           ]
