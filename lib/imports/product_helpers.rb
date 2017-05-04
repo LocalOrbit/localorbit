@@ -43,11 +43,13 @@ module Imports
 			begin
 				mkt = Market.find_by_subdomain(market_subdomain)
 				user = User.find(current_user.to_i)
-				unless user.admin? || user.markets.include?(mkt)
-					return nil
-				end
-				t = Organization.arel_table
-				org = Organization.where(t[:name].eq("#{organization_name.strip}"),t[:market_id].matches(mkt.id),t[:org_type].eq('S'))
+				org = user.managed_organizations_within_market(mkt).where(name: "#{organization_name.strip}", org_type: 'S')
+
+				#unless user.admin? || user.markets.include?(mkt)
+				#	return nil
+				#end
+				#t = Organization.arel_table
+				#org = Organization.where(t[:name].eq("#{organization_name.strip}"),t[:market_id].matches(mkt.id),t[:org_type].eq('S'))
 
 				if org.empty? # if none such that mkt and org match up
 					return nil

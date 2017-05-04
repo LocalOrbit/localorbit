@@ -62,9 +62,9 @@ class OrderItem < ActiveRecord::Base
       name: item.product.name,
       quantity: item.quantity,
       unit: item.unit,
-      unit_price: !item.sale_price.nil? && item.sale_price > 0 ? item.sale_price : item.unit_price.nil? ? 0 : item.unit_price.sale_price,
-      net_price: !item.net_price.nil? && item.net_price > 0 ? item.net_price : 0,
-      product_fee_pct: !item.sale_price.nil? && item.sale_price > 0 ? 0 : item.unit_price.nil? ? 0 : item.unit_price.product_fee_pct,
+      unit_price: !item.sale_price.nil? && item.sale_price >= 0 && order.market.is_consignment_market? ? item.sale_price : item.unit_price.nil? ? 0 : item.unit_price.sale_price,
+      net_price: !item.net_price.nil? && item.net_price >= 0 && order.market.is_consignment_market? ? item.net_price : 0,
+      product_fee_pct: !item.sale_price.nil? && item.sale_price > 0 && order.market.is_consignment_market? ? 0 : item.unit_price.nil? ? 0 : item.unit_price.product_fee_pct,
       category_fee_pct: category_fee_pct.nil? ? 0 : category_fee_pct,
       seller_name: item.product.organization.name,
       delivery_status: "pending"
@@ -146,8 +146,8 @@ class OrderItem < ActiveRecord::Base
     else
       qty = ConsignmentTransaction.where(transaction_type: 'PO', product_id: product_id, lot_id: nil).sum(:quantity)
     end
-    if qty < quantity
-      errors[:inventory] = "there are only #{qty} #{product.name.pluralize(qty)} available."
+    if qty < (quantity - (quantity_was || 0))
+      errors[:inventory] = "there are only #{Integer(qty + quantity_was)} #{product.name.pluralize(qty)} available."
     end
   end
 
