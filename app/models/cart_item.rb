@@ -16,7 +16,7 @@ class CartItem < ActiveRecord::Base
   validate :quantity_is_available, unless: "errors.has_key? :quantity"
 
   def unit_price
-    if !sale_price.nil? && sale_price > 0
+    if !sale_price.nil? && sale_price >= 0 && cart.market.is_consignment_market?
       nil
     else
       Orders::UnitPriceLogic.unit_price(product, cart.market, cart.organization, !order.nil? && order.market.add_item_pricing ? order.created_at : Time.current, quantity)
@@ -40,7 +40,7 @@ class CartItem < ActiveRecord::Base
   end
 
   def unit_sale_price
-    if !sale_price.nil? && sale_price > 0
+    if !sale_price.nil? && sale_price >= 0 && cart.market.is_consignment_market?
       sale_price
     elsif unit_price
       unit_price.sale_price

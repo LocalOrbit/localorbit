@@ -120,7 +120,7 @@
         this.setState({cartSalePrice: this.cSalePrice});
 
 
-        if (this.cSalePrice > 0 && this.cNetPrice > 0 && this.cItemQuantity > 0)
+        if (this.cSalePrice >= 0 && this.cNetPrice >= 0 && this.cItemQuantity > 0)
             $(target).trigger("cart.inputFinished");
     },
 
@@ -138,7 +138,7 @@
         this.setState({cartNetPrice: this.cNetPrice});
         this.setState({cartItemQuantity: this.cItemQuantity});
 
-        if (this.cSalePrice > 0 && this.cNetPrice > 0 && this.cItemQuantity > 0)
+        if (this.cSalePrice >= 0 && this.cNetPrice >= 0 && this.cItemQuantity > 0)
             $(target).trigger("cart.inputFinished");
     },
 
@@ -156,7 +156,7 @@
         this.setState({cartItemQuantity: this.cItemQuantity});
         this.setState({cartSalePrice: this.cSalePrice});
 
-        if (this.cSalePrice > 0 && this.cNetPrice > 0 && this.cItemQuantity > 0) {
+        if (this.cSalePrice >= 0 && this.cNetPrice >= 0 && this.cItemQuantity > 0) {
             $(target).trigger("cart.inputFinished");
         }
     },
