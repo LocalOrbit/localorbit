@@ -35,8 +35,10 @@ class UpdateOrderDelivery
     end
     if order.valid?
       order.save
-      UpdateDeliveryFee.perform(order: order)
-      UpdatePurchase.perform(order: order)
+      if order.market.is_buysell_market?
+        UpdateDeliveryFee.perform(order: order)
+        UpdatePurchase.perform(order: order)
+      end
     else
       fail_and_notify
     end
