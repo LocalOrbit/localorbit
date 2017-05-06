@@ -20,6 +20,10 @@ class PriceDecorator < Draper::Decorator
     number_to_rounded(sale_price, precision: 2) if min_quantity == 1
   end
 
+  def rounded_net_price
+    number_to_rounded(net_price, precision: 2)
+  end
+
   def formatted_price
     number_to_currency sale_price
   end

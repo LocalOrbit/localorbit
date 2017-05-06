@@ -43,7 +43,7 @@ class CreateOrder
       delivery_fees: cart.market.is_consignment_market? && !params[:delivery_fees].nil? ? Float(params[:delivery_fees]) : cart.delivery_fees,
       total_cost: cart.market.is_consignment_market? && !params[:delivery_fees].nil? ? Float(params[:delivery_fees]) + cart.total : cart.total,
       placed_at: Time.current,
-      order_type: params[:order_type] || 'sales',
+      order_type: cart.market.is_buysell_market? ? 'sales' : params[:order_type],
     )
 
     order.apply_delivery_address(cart.delivery_location)
