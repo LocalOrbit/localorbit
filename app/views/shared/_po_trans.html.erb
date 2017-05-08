@@ -64,6 +64,7 @@
                       <td><%= child.master ? '<button class="submit_undo_holdover_button btn btn--tiny">Undo</button>'.html_safe : '' %></td>
                     </tr>
                 <% elsif child.transaction_type == "REPACK" %>
+                    <% @so_qty = @so_qty + child.quantity %>
                     <tr data-transaction-id="<%=child.id %>">
                       <td>&nbsp;&nbsp;Repack</td>
                       <td></td>

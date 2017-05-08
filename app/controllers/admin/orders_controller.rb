@@ -489,11 +489,13 @@ class Admin::OrdersController < AdminController
   # Builds a list of deliveries for potential changes
   # Some from the past, some from future, and the order's actual one.
   def setup_deliveries(order)
-    ::Orders::PotentialDeliveries.get_potential_deliveries(order.delivery, 3)
-    recent_deliveries = order.market.deliveries.recent.active.uniq
-    future_deliveries = order.market.deliveries.future.active.uniq
+    if current_market.is_buysell_market?
+      ::Orders::PotentialDeliveries.get_potential_deliveries(order.delivery, 3)
+      recent_deliveries = order.market.deliveries.recent.active.uniq
+      future_deliveries = order.market.deliveries.future.active.uniq
 
-    @deliveries = recent_deliveries | future_deliveries | [order.delivery]
+      @deliveries = recent_deliveries | future_deliveries | [order.delivery]
+    end
   end
 
   def perform_order_update(order, params, merge) # TODO this needs to handle price edits
