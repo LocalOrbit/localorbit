@@ -119,27 +119,35 @@ class DeliverySchedule < ActiveRecord::Base
     WEEKDAYS[buyer_day]
   end
 
-  def next_delivery_date
+  def next_delivery_date(start_delivery = nil)
     interval = INTERVALS[delivery_cycle]
-    @next_delivery_date ||= calc_next_delivery_date(interval)
+    if start_delivery.nil?
+      @next_delivery_date ||= calc_next_delivery_date(interval, start_delivery)
+    else
+      calc_next_delivery_date(interval, start_delivery)
+    end
   end
 
-  def next_buyer_delivery_date
+  def next_buyer_delivery_date(start_delivery = nil)
     interval = INTERVALS[delivery_cycle]
-    @next_buyer_delivery_date ||= calc_next_buyer_delivery_date(next_delivery_date, interval)
+    if start_delivery.nil?
+      @next_buyer_delivery_date ||= calc_next_buyer_delivery_date(next_delivery_date(start_delivery), interval)
+    else
+      calc_next_buyer_delivery_date(next_delivery_date(start_delivery), interval)
+    end
   end
 
   def timezone
     market.timezone || Time.zone
   end
 
-  def next_delivery
+  def next_delivery(start_delivery = nil)
     if delivery_cycle != "manual"
-      delivery = find_next_delivery
+      delivery = find_next_delivery(start_delivery)
       unless delivery
         delivery = deliveries.create!(
-          deliver_on: next_delivery_date,
-          buyer_deliver_on: next_buyer_delivery_date,
+          deliver_on: next_delivery_date(start_delivery),
+          buyer_deliver_on: next_buyer_delivery_date(start_delivery),
           cutoff_time: next_order_cutoff_time
         )
       end
@@ -157,12 +165,12 @@ class DeliverySchedule < ActiveRecord::Base
     )
   end
 
-  def find_next_delivery
-    deliveries.find_by(deliver_on: next_delivery_date)
+  def find_next_delivery(start_delivery = nil)
+    deliveries.find_by(deliver_on: next_delivery_date(start_delivery))
   end
 
-  def next_order_cutoff_time
-    next_delivery_date - order_cutoff.hours
+  def next_order_cutoff_time(start_delivery = nil)
+    next_delivery_date(start_delivery) - order_cutoff.hours
   end
 
   def free_delivery?
@@ -214,9 +222,13 @@ class DeliverySchedule < ActiveRecord::Base
   end
 
   # day, seller_delivery_start
-  def calc_next_delivery_date(interval)
+  def calc_next_delivery_date(interval, start_delivery = nil)
     Time.use_zone timezone do
-      current_time = Time.current.end_of_minute
+      if !start_delivery.nil?
+        current_time = start_delivery.deliver_on
+      else
+        current_time = Time.current.end_of_minute
+      end
       case delivery_cycle
         when 'weekly','biweekly'
           beginning = current_time.beginning_of_week(:sunday) - interval.week
@@ -244,7 +256,7 @@ class DeliverySchedule < ActiveRecord::Base
     end
   end
 
-  def calc_next_buyer_delivery_date(delivery_time, interval)
+  def calc_next_buyer_delivery_date(delivery_time, interval, start_delivery = nil)
     time_of_day = if buyer_pickup_start.present? and !direct_to_customer?
                     buyer_pickup_start
                   else
@@ -252,7 +264,11 @@ class DeliverySchedule < ActiveRecord::Base
                   end
 
     Time.use_zone timezone do
-      current_time = Time.current.end_of_minute
+      if !start_delivery.nil?
+        current_time = start_delivery.deliver_on
+      else
+        current_time = Time.current.end_of_minute
+      end
       case delivery_cycle
         when 'weekly','biweekly'
           beginning = current_time.beginning_of_week(:sunday) - interval.week
