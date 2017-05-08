@@ -489,6 +489,7 @@ class Admin::OrdersController < AdminController
   # Builds a list of deliveries for potential changes
   # Some from the past, some from future, and the order's actual one.
   def setup_deliveries(order)
+    ::Orders::PotentialDeliveries.get_potential_deliveries(order.delivery, 3)
     recent_deliveries = order.market.deliveries.recent.active.uniq
     future_deliveries = order.market.deliveries.future.active.uniq
 
