@@ -29,7 +29,7 @@ module Inventory
               product: repack_into_product,
               name: repack_into_product.name,
               quantity: repack_into_qty,
-              unit: repack_into_product.unit,
+              unit: repack_into_qty > 1 ? repack_into_product.unit_plural : repack_into_product.unit_singular,
               product_fee_pct: 0,
               seller_name: repack_into_product.organization.name,
               delivery_status: "pending"
