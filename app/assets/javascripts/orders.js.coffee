@@ -14,6 +14,7 @@ KnockoutModules.register "consignment_printable_preview_pdf",
       orderForm = $(this).closest("form")
       orderForm.prop("target", "_blank")
       orderForm.submit()
+      orderForm.prop("target", "")
 
   $("#mark-all-delivered").click (e) ->
     e.preventDefault()
@@ -72,18 +73,21 @@ KnockoutModules.register "consignment_printable_preview_pdf",
     $(this).parent().parent().parent().parent().find("input[name=commit]").val("Duplicate Order")
     $(this).closest("form").submit()
     $(this).prop("disabled","disabled")
+    $(this).parent().parent().parent().parent().find("input[name=commit]").val("")
 
   $("#export_invoice_button").click (e) ->
     e.preventDefault()
     $(this).parent().parent().parent().parent().find("input[name=commit]").val("Export Invoice")
     $(this).closest("form").submit()
     $(this).prop("disabled","disabled")
+    $(this).parent().parent().parent().parent().find("input[name=commit]").val("")
 
   $("#export_bill_button").click (e) ->
     e.preventDefault()
     $(this).parent().parent().parent().parent().find("input[name=commit]").val("Export Bill")
     $(this).closest("form").submit()
     $(this).prop("disabled","disabled")
+    $(this).parent().parent().parent().parent().find("input[name=commit]").val("")
 
   $("#generate_receipt_button").click (e) ->
     e.preventDefault()
@@ -91,6 +95,9 @@ KnockoutModules.register "consignment_printable_preview_pdf",
     orderForm = $(this).closest("form")
     orderForm.prop("target", "_blank")
     orderForm.submit()
+    $(this).parent().parent().parent().parent().find("input[name=commit]").val("")
+    orderForm.prop("target", "")
+
 
   $("#generate_picklist_button").click (e) ->
     e.preventDefault()
@@ -98,6 +105,8 @@ KnockoutModules.register "consignment_printable_preview_pdf",
     orderForm = $(this).closest("form")
     orderForm.prop("target", "_blank")
     orderForm.submit()
+    $(this).parent().parent().parent().parent().find("input[name=commit]").val("")
+    orderForm.prop("target", "")
 
   $("#generate_invoice_button").click (e) ->
     e.preventDefault()
@@ -105,18 +114,22 @@ KnockoutModules.register "consignment_printable_preview_pdf",
     orderForm = $(this).closest("form")
     orderForm.prop("target", "_blank")
     orderForm.submit()
+    $(this).parent().parent().parent().parent().find("input[name=commit]").val("")
+    orderForm.prop("target", "")
 
   $("#unclose_order").click (e) ->
     e.preventDefault()
     $(this).parent().parent().parent().parent().find("input[name=commit]").val("Unclose Order")
     $(this).closest("form").submit()
     $(this).prop("disabled","disabled")
+    $(this).parent().parent().parent().parent().find("input[name=commit]").val("")
 
   $("#uninvoice_order").click (e) ->
     e.preventDefault()
     $(this).parent().parent().parent().parent().find("input[name=commit]").val("Uninvoice Order")
     $(this).closest("form").submit()
     $(this).prop("disabled","disabled")
+    $(this).parent().parent().parent().parent().find("input[name=commit]").val("")
 
   $("#save_sig").click (e) ->
     e.preventDefault()
