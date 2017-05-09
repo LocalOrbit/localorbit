@@ -200,9 +200,9 @@
           <th scope="row">Payment Method: </th>
 
           <% if current_market.is_consignment_market? && order.sales_order? && order.undelivered_for_user?(current_user) %>
-              <td><%= f.select :payment_method, options_for_select([["Invoice","invoice"], ["Purchase Order", "po"], ["Credit Card", "credit"], ["Cash", "cash"], ["Check", "check"]]), class: 'payment_method' %></td>
+              <td><%= f.select :payment_method, options_for_select([["Invoice","invoice"], ["Purchase Order", "po"], ["Credit Card", "credit"], ["Cash", "cash"], ["Check", "check"]], @order.payment_method), class: 'payment_method' %></td>
           <% elsif current_market.is_consignment_market? && order.purchase_order? && order.undelivered_for_user?(current_user) %>
-              <td><%= f.select :payment_method, options_for_select([["Purchase Order", "po"], ["Credit Card", "credit"], ["Cash", "cash"], ["Check", "check"]]), class: 'payment_method' %></td>
+              <td><%= f.select :payment_method, options_for_select([["Purchase Order", "po"], ["Credit Card", "credit"], ["Cash", "cash"], ["Check", "check"]], @order.payment_method), class: 'payment_method' %></td>
           <% else %>
               <td><%= order.display_payment_method %></td>
           <% end %>
