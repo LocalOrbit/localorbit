@@ -420,7 +420,7 @@
   </div>
   <div style="float: left" class="invoice-basics">
     Payment:	[  ]Check  [  ]Cash  [  ]Invoice  [  ]Credit Card<br/><br/>
-    <%= "<span class=\"inline-block\" style=\"margin-left:15px;\"><h2>Check #</h2><p class=\"check\">#{invoice.payment_note}</p></span>".html_safe if invoice.payment_note.present? && invoice.payment_method == "check" %>
+    <%= "<span><strong>Check #: </strong>#{invoice.payment_note}</span>".html_safe if invoice.payment_note.present? && invoice.payment_method == "check" %>
   </div>
   <br/>
   <body style="margin:0; padding:0;">

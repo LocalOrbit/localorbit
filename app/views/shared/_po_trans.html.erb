@@ -64,7 +64,7 @@
                       <td><%= child.master ? '<button class="submit_undo_holdover_button btn btn--tiny">Undo</button>'.html_safe : '' %></td>
                     </tr>
                 <% elsif child.transaction_type == "REPACK" %>
-                    <% @so_qty = @so_qty + child.quantity %>
+                    <% @so_qty = @so_qty - child.quantity %>
                     <tr data-transaction-id="<%=child.id %>">
                       <td>&nbsp;&nbsp;Repack</td>
                       <td></td>
@@ -125,7 +125,7 @@
                 </div>
                 <div style="float: left; margin-left: 10px;">
                   <label>Product: </label>
-                  <%= select_tag :repack_product_id, options_for_select(@products.map{|p| ["#{p.name}: #{p.unit_quantity} Units", p.id]}), :include_blank =>'Choose:', class: 'repack_product_id' %>
+                  <%= select_tag :repack_product_id, options_for_select(@products.map{|p| ["#{p.organization.name} - #{p.name}: #{p.unit_quantity} Units", p.id]}), :include_blank =>'Choose:', class: 'repack_product_id' %>
                 </div><br/>
                 <input type="hidden" class="transaction_id" value="<%=po.id %>"/><br/>
                 <button class="submit_repack_button btn btn--primary btn--tiny">Repack</button>
