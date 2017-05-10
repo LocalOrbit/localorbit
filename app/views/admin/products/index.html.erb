@@ -54,6 +54,38 @@
             <li>
               <%= link_to price.quick_info, "#edit_price_#{price.id}", class: 'edit-toggle popup-toggle' %>
               <%= form_for [:admin, price.product, price], url: admin_product_price_path(price.product, price, format: :js, query_params: @query_params), html: { class: "popup popup--edit is-hidden edit_price", novalidate: "novalidate", data: { prefix: "price_#{price.id}" }} do |f| %>
+
+              <% if !current_user.admin? && current_market.is_consignment_market? %>
+                  <button type="button" class="pull-right close"><i class="font-icon icon-close"></i></button>
+                  <hgroup>
+                    <h2>Edit Consignment Price</h2>
+                    <h3><%= price.product.name %></h3>
+                  </hgroup>
+                  <%= fields_for :price, price, index: price.id do |f| %>
+                  <table class="pricing-table">
+                    <thead>
+                    <tr>
+                      <th><label for="<%= "price_#{price.id}_sale_price" %>">Sale Price</label></th>
+                      <th><label for="<%= "price_#{price.id}_net_price" %>">Net Price</label></th>
+                    </tr>
+                    </thead>
+
+                    <tr>
+                      <td>
+                        <%= f.number_field :sale_price, min: 0, size: 4 %>
+                      </td>
+                      <td>
+                        <%= f.number_field :net_price, min: 0, size: 4 %>
+                      </td>
+                    </tr>
+                  </table>
+
+                  <div class="form-actions pull-right">
+                    <%= f.submit f.object.new_record? ? "Add" : "Save Price" %>
+                  </div>
+
+                <% end %>
+              <% else %>
                   <button type="button" class="pull-right close"><i class="font-icon icon-close"></i></button>
                   <hgroup>
                     <h2>Edit Price</h2>
@@ -109,6 +141,7 @@
                       <% end %>
                   <% end %>
               <% end %>
+              <% end %>
               <%#= render partial: "edit_price_advanced", locals: { price: price.decorate } %>
             </li>
           <% end %>
@@ -116,8 +149,12 @@
       </td>
       <td class="stock">
         <% if product.use_simple_inventory? %>
-          <%= link_to product.available_inventory, "#edit_product_#{product.id}",
+            <% if current_user.admin? || current_market.is_buysell_market? %>
+              <%= link_to product.available_inventory, "#edit_product_#{product.id}",
                       class: "edit-toggle popup-toggle" %>
+            <% else %>
+              <%= product.available_inventory %>
+            <% end %>
             <%= form_for [:admin, product], url: admin_product_path(product, format: :js, query_params: @query_params), html: { class: "popup popup--edit is-hidden", data: { organizations: @organizations.to_json(include: :locations), type: "edit"}} do |f| %>
                 <div class="fields">
                   <button type="button" class="pull-right close"><i class="font-icon icon-close"></i></button>
