@@ -1577,6 +1577,7 @@ label ~ .tooltip {
       position: absolute;
       z-index: 3;
       left: 0;
+      width: 100%;
     }
     &.js-fixed {
       position: fixed;
