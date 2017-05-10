@@ -55,7 +55,7 @@
               <%= link_to price.quick_info, "#edit_price_#{price.id}", class: 'edit-toggle popup-toggle' %>
               <%= form_for [:admin, price.product, price], url: admin_product_price_path(price.product, price, format: :js, query_params: @query_params), html: { class: "popup popup--edit is-hidden edit_price", novalidate: "novalidate", data: { prefix: "price_#{price.id}" }} do |f| %>
 
-              <% if current_market.is_consignment_market? %>
+              <% if !current_user.admin? && current_market.is_consignment_market? %>
                   <button type="button" class="pull-right close"><i class="font-icon icon-close"></i></button>
                   <hgroup>
                     <h2>Edit Consignment Price</h2>
@@ -149,7 +149,7 @@
       </td>
       <td class="stock">
         <% if product.use_simple_inventory? %>
-            <% if current_market.is_buysell_market? %>
+            <% if current_user.admin? || current_market.is_buysell_market? %>
               <%= link_to product.available_inventory, "#edit_product_#{product.id}",
                       class: "edit-toggle popup-toggle" %>
             <% else %>
