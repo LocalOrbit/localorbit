@@ -365,10 +365,18 @@ $ ->
       netPrice = parseFloat($(this).parent().parent().parent().parent().find('.app-net-price-input').val())
       salePrice = parseFloat($(this).parent().parent().parent().parent().find('.app-sale-price-input').val())
       lotId = parseInt($(this).parent().parent().parent().parent().find('.lot-id').val())
+
+      if netPrice == 'NaN'
+        netPrice = 0.0
+
+      if salePrice == 'NaN'
+        salePrice = 0.0
+
       model.saveItem(data.product_id, quantity, netPrice, salePrice, lotId, this, order_id)
 
     if this.value.length == 0 && !$(this).hasClass("in-cart")
-      model.saveItem(data.product_id, 0, 0, 0, 0, this, order_id)
+      lotId = $(this).parent().parent().parent().parent().parent().parent().parent().find(".lot-id").val()
+      model.saveItem(data.product_id, 0, 0, 0, lotId, this, order_id)
 
   $(document.body).on 'click', ".cart_item .icon-clear", (e)->
     e.preventDefault()

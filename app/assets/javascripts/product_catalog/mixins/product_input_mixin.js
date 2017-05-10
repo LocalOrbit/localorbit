@@ -41,10 +41,15 @@
         $(target).removeClass('invalid-value');
         $(target).val('');
         context.setState({cartItemQuantity: null});
-        context.setState({cartSalePrice: null});
-        context.setState({cartNetPrice: null});
-        context.setState({cartLotId: null});
-        $(target).trigger("cart.inputFinished");
+        //context.setState({cartSalePrice: null});
+        //context.setState({cartNetPrice: null});
+        //context.setState({cartLotId: null});
+        this.cSalePrice = $(target).parent().parent().find('.app-sale-price-input').val();
+        this.cNetPrice = $(target).parent().parent().find('.app-net-price-input').val();
+
+        if ((this.cSalePrice > 0 || this.cSalePrice === 0) && (this.cNetPrice > 0 || this.cNetPrice === 0) && this.cItemQuantity > 0)
+            $(target).trigger("cart.inputFinished");
+
         in_str = '';
     },
 
@@ -100,7 +105,7 @@
 
     inputFinished: function(target) {
 
-        if (this.state.cartSalePrice > 0 && this.state.cartNetPrice > 0 && this.state.cartItemQuantity > 0)
+        if ((this.cSalePrice > 0 || this.cSalePrice === 0) && (this.cNetPrice > 0 || this.cNetPrice === 0) && this.cItemQuantity > 0)
             $(target).trigger("cart.inputFinished");
     },
 
@@ -120,7 +125,7 @@
         this.setState({cartSalePrice: this.cSalePrice});
 
 
-        if (this.cSalePrice >= 0 && this.cNetPrice >= 0 && this.cItemQuantity > 0)
+        if ((this.cSalePrice > 0 || this.cSalePrice === 0) && (this.cNetPrice > 0 || this.cNetPrice === 0) && this.cItemQuantity > 0)
             $(target).trigger("cart.inputFinished");
     },
 
@@ -156,9 +161,8 @@
         this.setState({cartItemQuantity: this.cItemQuantity});
         this.setState({cartSalePrice: this.cSalePrice});
 
-        if (this.cSalePrice >= 0 && this.cNetPrice >= 0 && this.cItemQuantity > 0) {
+        if ((this.cSalePrice > 0 || this.cSalePrice === 0) && (this.cNetPrice > 0 || this.cNetPrice === 0) && this.cItemQuantity > 0)
             $(target).trigger("cart.inputFinished");
-        }
     },
 
     deleteQuantity: function() {

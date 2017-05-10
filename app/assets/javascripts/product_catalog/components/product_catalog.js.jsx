@@ -37,6 +37,7 @@
         var divClass;
         var divStyle;
         var closeButton;
+        var stickFilters;
 
         if(this.props.useTemplates && !this.props.orderId)
             orderTemplates = (<lo.TemplatePicker baseUrl={this.props.baseUrl} cartUrl={this.props.cartUrl} />);
@@ -52,6 +53,11 @@
             divClass = ('');
             divStyle = ({});
         }
+
+        if (this.props.consignmentMarket)
+            stickFilters = ('stickable');
+        else
+            stickFilters = ('');
 
         if(this.props.currentSupplier > 0 && this.props.purchaseOrder) {
             window.lo.ProductActions.newFilters(null, this.props.currentSupplier);
@@ -90,7 +96,9 @@
         return (
         <div id='supplierCatalog' className={divClass} style={divStyle}>
           {orderTemplates}
-          {productFilter}
+          <div className={stickFilters}>
+              {productFilter}
+          </div>
           {productTable}
         </div>
         );
