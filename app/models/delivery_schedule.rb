@@ -62,16 +62,16 @@ class DeliverySchedule < ActiveRecord::Base
 
   def participating_products
     scope = if require_delivery? && require_cross_sell_delivery?
-      Product
-    elsif require_delivery?
-      Product.joins("LEFT JOIN product_deliveries ON products.id = product_deliveries.product_id").
-              where("(market_organizations.cross_sell_origin_market_id IS NULL) OR product_deliveries.delivery_schedule_id = :id", id: id)
-    elsif require_cross_sell_delivery?
-      Product.joins("LEFT JOIN product_deliveries ON products.id = product_deliveries.product_id").
-              where("(market_organizations.cross_sell_origin_market_id IS NOT NULL) OR product_deliveries.delivery_schedule_id = :id", id: id)
-    else
-      products
-    end
+              Product
+            elsif require_delivery?
+              Product.joins("LEFT JOIN product_deliveries ON products.id = product_deliveries.product_id").
+                  where("(market_organizations.cross_sell_origin_market_id IS NULL) OR product_deliveries.delivery_schedule_id = :id", id: id)
+            elsif require_cross_sell_delivery?
+              Product.joins("LEFT JOIN product_deliveries ON products.id = product_deliveries.product_id").
+                  where("(market_organizations.cross_sell_origin_market_id IS NOT NULL) OR product_deliveries.delivery_schedule_id = :id", id: id)
+            else
+              products
+            end
     scope.for_market_id(market_id)
   end
 
@@ -119,36 +119,28 @@ class DeliverySchedule < ActiveRecord::Base
     WEEKDAYS[buyer_day]
   end
 
-  def next_delivery_date(start_delivery = nil)
+  def next_delivery_date
     interval = INTERVALS[delivery_cycle]
-    if start_delivery.nil?
-      @next_delivery_date ||= calc_next_delivery_date(interval, start_delivery)
-    else
-      calc_next_delivery_date(interval, start_delivery)
-    end
+    @next_delivery_date ||= calc_next_delivery_date(interval)
   end
 
-  def next_buyer_delivery_date(start_delivery = nil)
+  def next_buyer_delivery_date
     interval = INTERVALS[delivery_cycle]
-    if start_delivery.nil?
-      @next_buyer_delivery_date ||= calc_next_buyer_delivery_date(next_delivery_date(start_delivery), interval)
-    else
-      calc_next_buyer_delivery_date(next_delivery_date(start_delivery), interval)
-    end
+    @next_buyer_delivery_date ||= calc_next_buyer_delivery_date(next_delivery_date, interval)
   end
 
   def timezone
     market.timezone || Time.zone
   end
 
-  def next_delivery(start_delivery = nil)
+  def next_delivery
     if delivery_cycle != "manual"
-      delivery = find_next_delivery(start_delivery)
+      delivery = find_next_delivery
       unless delivery
         delivery = deliveries.create!(
-          deliver_on: next_delivery_date(start_delivery),
-          buyer_deliver_on: next_buyer_delivery_date(start_delivery),
-          cutoff_time: next_order_cutoff_time
+            deliver_on: next_delivery_date,
+            buyer_deliver_on: next_buyer_delivery_date,
+            cutoff_time: next_order_cutoff_time
         )
       end
       delivery
@@ -159,18 +151,18 @@ class DeliverySchedule < ActiveRecord::Base
 
   def next_delivery_for_date(date)
     deliveries.create!(
-      deliver_on: date.change(hour:17,min:0,sec:0),
-      buyer_deliver_on: date.change(hour:6,min:0,sec:0),
-      cutoff_time: date.change(hour:3,min:0,sec:0)
+        deliver_on: date.change(hour:17,min:0,sec:0),
+        buyer_deliver_on: date.change(hour:6,min:0,sec:0),
+        cutoff_time: date.change(hour:3,min:0,sec:0)
     )
   end
 
-  def find_next_delivery(start_delivery = nil)
-    deliveries.find_by(deliver_on: next_delivery_date(start_delivery))
+  def find_next_delivery
+    deliveries.find_by(deliver_on: next_delivery_date)
   end
 
-  def next_order_cutoff_time(start_delivery = nil)
-    next_delivery_date(start_delivery) - order_cutoff.hours
+  def next_order_cutoff_time
+    next_delivery_date - order_cutoff.hours
   end
 
   def free_delivery?
@@ -179,17 +171,17 @@ class DeliverySchedule < ActiveRecord::Base
 
   def required?(organization)
     (require_delivery? && organization.market_organizations.not_cross_selling.where(market_id: market_id).exists?) ||
-    (require_cross_sell_delivery? && organization.market_organizations.cross_selling.where(market_id: market_id).exists?)
+        (require_cross_sell_delivery? && organization.market_organizations.cross_selling.where(market_id: market_id).exists?)
   end
 
   def fees_for_amount(amount)
     case fee_type
-    when "fixed"
-      fee || 0
-    when "percent"
-      amount * ((fee || 0) / 100)
-    else
-      0.0
+      when "fixed"
+        fee || 0
+      when "percent"
+        amount * ((fee || 0) / 100)
+      else
+        0.0
     end
   end
 
@@ -222,13 +214,9 @@ class DeliverySchedule < ActiveRecord::Base
   end
 
   # day, seller_delivery_start
-  def calc_next_delivery_date(interval, start_delivery = nil)
+  def calc_next_delivery_date(interval)
     Time.use_zone timezone do
-      if !start_delivery.nil?
-        current_time = start_delivery.deliver_on
-      else
-        current_time = Time.current.end_of_minute
-      end
+      current_time = Time.current.end_of_minute
       case delivery_cycle
         when 'weekly','biweekly'
           beginning = current_time.beginning_of_week(:sunday) - interval.week
@@ -256,7 +244,7 @@ class DeliverySchedule < ActiveRecord::Base
     end
   end
 
-  def calc_next_buyer_delivery_date(delivery_time, interval, start_delivery = nil)
+  def calc_next_buyer_delivery_date(delivery_time, interval)
     time_of_day = if buyer_pickup_start.present? and !direct_to_customer?
                     buyer_pickup_start
                   else
@@ -264,11 +252,7 @@ class DeliverySchedule < ActiveRecord::Base
                   end
 
     Time.use_zone timezone do
-      if !start_delivery.nil?
-        current_time = start_delivery.deliver_on
-      else
-        current_time = Time.current.end_of_minute
-      end
+      current_time = Time.current.end_of_minute
       case delivery_cycle
         when 'weekly','biweekly'
           beginning = current_time.beginning_of_week(:sunday) - interval.week

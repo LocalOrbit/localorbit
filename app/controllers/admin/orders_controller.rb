@@ -490,9 +490,9 @@ class Admin::OrdersController < AdminController
   # Some from the past, some from future, and the order's actual one.
   def setup_deliveries(order)
     if current_market.is_buysell_market?
-      curr_delivery = order.delivery
-      ::Orders::PotentialDeliveries.get_potential_deliveries(order.delivery, 3)
-      @current_delivery = order.delivery
+      #curr_delivery = order.delivery
+      #::Orders::PotentialDeliveries.get_potential_deliveries(order.delivery, 3)
+      #@current_delivery = order.delivery
       recent_deliveries = order.market.deliveries.recent.active.uniq
       future_deliveries = order.market.deliveries.future.active.uniq
 
