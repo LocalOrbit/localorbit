@@ -118,7 +118,7 @@
       <div class="row row--field">
         <div class="field column column--half column--guttered">
           <label>Organization Status</label><br>
-          <%= f.check_box :active %>
+          <%= f.check_box :active, checked: (@organization.new_record? && current_market.is_consignment_market?) || f.object.active %>
           <%= f.label :active, "Organization is active" %>
         </div>
       </div>
