@@ -101,7 +101,9 @@
     <td><%= f.label :unit_description %> <span class="hint">Up to 20 characters</span></td>
     <% end %>
     <td><%= f.label :code, "Product Code" %> <span class="tooltip" data-tooltip="Optional product code"></span></td>
+    <% if current_market.is_consignment_market? %>
     <td><%= f.label :unit_quantity, "Unit Quantity" %> <span class="tooltip" data-tooltip="Quantity for this unit"></span></td>
+    <% end %>
     <td></td>
   </tr></thead>
 
@@ -120,9 +122,11 @@
     <td class="field">
       <%= f.text_field :code, class: "column column--full" %>
     </td>
+    <% if current_market.is_consignment_market? %>
     <td class="field">
       <%= f.text_field :unit_quantity, class: "column column--full" %>
     </td>
+    <% end %>
     <td></td>
   </tr>
 

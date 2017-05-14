@@ -100,7 +100,7 @@
                     <div class="edit-cell">
                       <% if organization_can_access?(unit_product.organization, :advanced_pricing) %>
                           <%= f.select :organization_id, options_for_select(@organizations.collect { |organization|
-                            [organization.name.titleize, organization.id] }, 0), {include_blank: 'All Buyers'}, {id: 'select_buyer_id', class: "select_buyer_id chosen"} %>
+                            [organization.name.titleize, organization.id] }, price.organization_id), {include_blank: 'All Buyers'}, {id: 'select_buyer_id', class: "select_buyer_id chosen"} %>
                       <% else %>
                           <%= price.organization_name %>
                       <% end %>
