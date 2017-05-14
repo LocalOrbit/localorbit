@@ -170,6 +170,17 @@ module Inventory
         result
       end
 
+      def get_supplier_net(order)
+        ConsignmentTransaction.joins("
+        JOIN consignment_transactions p ON p.id = consignment_transactions.parent_id
+        JOIN products ON products.id = p.product_id
+        JOIN organizations ON organizations.id = products.organization_id")
+        .select("p.order_id, organizations.name, sum(consignment_transactions.quantity * consignment_transactions.net_price) AS amt, max((consignment_transactions.sale_price * consignment_transactions.quantity) - (consignment_transactions.net_price * consignment_transactions.quantity)) AS profit")
+        .where("consignment_transactions.order_id = ?", order.id)
+        .where("consignment_transactions.transaction_type = 'SO'")
+        .group("p.order_id, organizations.name")
+      end
+
       def get_associated_po_item(order, item)
         ConsignmentTransaction.joins("JOIN consignment_transactions p ON p.parent_id = consignment_transactions.id")
         .where("p.product_id = ?", item.product.id)

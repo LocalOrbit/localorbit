@@ -311,7 +311,9 @@ class Order < ActiveRecord::Base
     if user.admin?
       all
     else
-      joins(:products).where(seller_orders_arel(user).or(manager_orders_arel(user)).or(cross_sold_products_arel(user))).uniq
+      # TODO: check cross selling logic
+      #joins(:products).where(seller_orders_arel(user).or(manager_orders_arel(user)).or(cross_sold_products_arel(user))).uniq
+      joins(:products).where(seller_orders_arel(user).or(manager_orders_arel(user))).uniq
     end
   end
 
@@ -344,7 +346,7 @@ class Order < ActiveRecord::Base
   end
 
   def self.cross_sold_products_arel(user)
-    Product.arel_table[:id].in(CrossSellingListProduct.joins(:cross_selling_list).where("cross_selling_lists.entity_type = 'Market' AND cross_selling_lists.creator = ? AND cross_selling_lists.entity_id IN (?)", true, user.markets.pluck(:id)).select(:product_id).arel)
+    Product.arel_table[:id].in(CrossSellingListProduct.joins(:cross_selling_list).where("cross_selling_lists.deleted_at IS NULL AND cross_selling_lists.status = 'Published' AND cross_selling_lists.entity_type = 'Market' AND cross_selling_lists.creator = ? AND cross_selling_lists.entity_id IN (?)", true, user.markets.pluck(:id)).select(:product_id).arel)
   end
 
   # def self.add_notes_reference(notes_arr) # TODO check aeren
