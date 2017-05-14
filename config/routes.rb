@@ -276,6 +276,7 @@ Rails.application.routes.draw do
     resources :reports, only: [:index, :show]
 
     resources :consignment_partial_po_report, only: [:show]
+    resources :consignment_qb_report, only: [:show]
 
     resources :metrics, only: [:index, :show] do
       collection do
