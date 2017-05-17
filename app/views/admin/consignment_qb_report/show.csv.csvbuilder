@@ -6,7 +6,7 @@ csv << ["Journal No", "Journal Date", "Memo", "Account", "Amount", "Description"
         order.items.map(&:delivered_at).max.strftime("%m/%d/%Y"),
         "",
         "Accounts Receivable",
-        order.total_cost - order.delivery_fees,
+        order.total_cost,
         order.id,
         order.organization.name,
         "",

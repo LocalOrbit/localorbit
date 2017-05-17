@@ -79,7 +79,7 @@ class Admin::PricesController < AdminController
   private
 
   def price_params
-    params.require(:price).slice(:market_id, :organization_id, :min_quantity, :product_fee_pct, :sale_price, :net_price, :is_consignment_market).permit!
+    params.require(:price).slice(:market_id, :organization_id, :min_quantity, :fee, :product_fee_pct, :sale_price, :net_price, :is_consignment_market).permit!
   end
 
   def query_params
