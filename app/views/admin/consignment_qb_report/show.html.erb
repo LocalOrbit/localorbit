@@ -28,7 +28,7 @@
         <td><%= order.items.map(&:delivered_at).max.strftime("%m/%d/%Y") %></td>
         <td></td>
         <td>Accounts Receivable</td>
-        <td><%= order.total_cost - order.delivery_fees %></td>
+        <td><%= order.total_cost %></td>
         <td><%= order.id %></td>
         <td><%= order.organization.name %></td>
         <td></td>

@@ -10,6 +10,8 @@ class Admin::OrderSummariesController < AdminController
       market_id = params[:market_id]
     end
 
+    #market_id = Market.managed_by(current_user).pluck(:id)
+
     order_items = OrderItem.for_delivery_date_and_user(dte, current_user, market_id)
     @summaries = OrdersBySellerPresenter.new(order_items)
     #@delivery_notes = DeliveryNote.joins(:order).where(orders: {delivery_id: @delivery.id})

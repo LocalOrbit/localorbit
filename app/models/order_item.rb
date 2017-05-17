@@ -48,9 +48,9 @@ class OrderItem < ActiveRecord::Base
 
   def self.for_delivery_date(delivery_date, current_user, market_id)
     if current_user.buyer_only? || current_user.market_manager?
-      joins(order: :delivery).where("DATE(deliveries.buyer_deliver_on) = '#{delivery_date}' AND orders.market_id = #{market_id}")
+      joins(order: :delivery).where("DATE(deliveries.buyer_deliver_on) = '#{delivery_date}' AND orders.market_id IN (#{market_id.compact})")
     else
-      joins(order: :delivery).where("DATE(deliveries.deliver_on) = '#{delivery_date}' AND orders.market_id = #{market_id}")
+      joins(order: :delivery).where("DATE(deliveries.deliver_on) = '#{delivery_date}' AND orders.market_id IN (#{market_id.compact})")
     end
   end
 
