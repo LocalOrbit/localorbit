@@ -15,8 +15,8 @@ module Financials
           rate = product_fee_item_pct / 100
         elsif !category_fee_item_pct.nil? && category_fee_item_pct > 0
           rate = category_fee_item_pct / 100
-        elsif !category_fee_pct.nil? && category_fee_pct > 0
-          rate = category_fee_pct / 100
+        #elsif !category_fee_pct.nil? && category_fee_pct > 0
+        #  rate = category_fee_pct / 100
         else
           if order_item.order.market_seller_fee_pct.nil? #
             rate = market.market_seller_fee / 100

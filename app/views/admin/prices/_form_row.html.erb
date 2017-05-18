@@ -53,6 +53,8 @@
       <br/><div class="markup-pct"></div>
     </div>
 </td>
+<% else %>
+  <input type="hidden" name="price[fee]" value="0" class="mkt-fee" />
 <% end %>
 <td>
   <% sale_class = current_market.is_consignment_market? ? 'sale-price consignment' : 'sale-price' %>

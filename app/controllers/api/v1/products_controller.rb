@@ -294,7 +294,7 @@ module Api
       def format_consignment_price_for_catalog(price)
         {
             :sale_price => price.sale_price,
-            :net_price => price.net_price(nil, nil, current_market.is_consignment_market?),
+            :net_price => price.net_price(nil, nil, current_market, current_market.is_consignment_market?),
             :min_quantity => price.min_quantity,
             :organization_id => price.organization_id
         }
