@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170516171531) do
+ActiveRecord::Schema.define(version: 20170517180129) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -138,6 +138,7 @@ ActiveRecord::Schema.define(version: 20170516171531) do
     t.decimal  "net_price",  precision: 10, scale: 2, default: 0.0
     t.decimal  "sale_price", precision: 10, scale: 2, default: 0.0
     t.integer  "lot_id"
+    t.integer  "fee"
   end
 
   add_index "cart_items", ["cart_id"], name: "index_cart_items_on_cart_id", using: :btree
@@ -708,6 +709,7 @@ ActiveRecord::Schema.define(version: 20170516171531) do
     t.decimal  "market_seller_fee_pct",  precision: 5,  scale: 3
     t.decimal  "category_fee_pct",       precision: 5,  scale: 3
     t.decimal  "net_price",              precision: 10, scale: 2, default: 0.0
+    t.integer  "fee"
   end
 
   add_index "order_items", ["order_id", "product_id"], name: "index_order_items_on_order_id_and_product_id", using: :btree
@@ -973,7 +975,7 @@ ActiveRecord::Schema.define(version: 20170516171531) do
     t.string   "aws_image_url"
     t.integer  "qb_item_id"
     t.integer  "parent_product_id"
-    t.integer  "unit_quantity"
+    t.decimal  "unit_quantity"
     t.boolean  "organic"
   end
 
