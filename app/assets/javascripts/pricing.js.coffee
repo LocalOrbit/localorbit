@@ -56,14 +56,14 @@ $ ->
       if marketId == ""
         marketId = "all"
 
-      if use_product_fee.val() == '2'
+      if use_product_fee.prop('checked')
         if getFeeValue() > 0
           return 1 - (getFeeValue()/100 + ccRate)
         else if productFee > 0
           return 1 - (productFee/100 + ccRate)
         else
           return 0.00
-      else if use_category_fee.val() == '1'
+      else if use_category_fee.prop('checked')
         if marketToCategoryPercentMap?
           return 1 - (marketToCategoryPercentMap[marketId]/100 + ccRate)
       else

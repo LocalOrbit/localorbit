@@ -40,7 +40,7 @@
       <div style="clear: left"></div>
       <% if policy(:market_category_fees).index? %>
       <div style="float: left">
-        <label style="font-size: 9px">Category</label> <input style="float: left" type="radio" value="1" name="price[fee]" class="category-fee" <%= !@category_percents_by_market_id.nil? && !@category_percents_by_market_id[current_market.id.to_s].nil? && @category_percents_by_market_id[current_market.id.to_s] > 0 ? "checked" : "" %> />
+        <label style="font-size: 9px">Category</label> <input style="float: left" type="radio" value="1" name="price[fee]" class="category-fee" />
       </div>
       <% end %>
       <div style="clear: left"></div>
