@@ -66,6 +66,7 @@ class OrderItem < ActiveRecord::Base
       net_price: !item.net_price.nil? && item.net_price >= 0 && order.market.is_consignment_market? ? item.net_price : 0,
       product_fee_pct: !item.sale_price.nil? && item.sale_price > 0 && order.market.is_consignment_market? ? 0 : item.unit_price.nil? ? 0 : item.unit_price.product_fee_pct,
       category_fee_pct: category_fee_pct.nil? ? 0 : category_fee_pct,
+      fee: item.product.prices.first.fee,
       seller_name: item.product.organization.name,
       delivery_status: "pending"
     )

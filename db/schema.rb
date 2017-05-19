@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170503033420) do
+ActiveRecord::Schema.define(version: 20170517180129) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -138,6 +138,7 @@ ActiveRecord::Schema.define(version: 20170503033420) do
     t.decimal  "net_price",  precision: 10, scale: 2, default: 0.0
     t.decimal  "sale_price", precision: 10, scale: 2, default: 0.0
     t.integer  "lot_id"
+    t.integer  "fee"
   end
 
   add_index "cart_items", ["cart_id"], name: "index_cart_items_on_cart_id", using: :btree
@@ -624,6 +625,7 @@ ActiveRecord::Schema.define(version: 20170503033420) do
     t.boolean  "self_enabled_cross_sell",                                default: false
     t.string   "background_img_uid"
     t.boolean  "allow_signups"
+    t.string   "qb_integration_type"
   end
 
   add_index "markets", ["name"], name: "index_markets_on_name", using: :btree
@@ -707,6 +709,7 @@ ActiveRecord::Schema.define(version: 20170503033420) do
     t.decimal  "market_seller_fee_pct",  precision: 5,  scale: 3
     t.decimal  "category_fee_pct",       precision: 5,  scale: 3
     t.decimal  "net_price",              precision: 10, scale: 2, default: 0.0
+    t.integer  "fee"
   end
 
   add_index "order_items", ["order_id", "product_id"], name: "index_order_items_on_order_id_and_product_id", using: :btree
@@ -928,6 +931,7 @@ ActiveRecord::Schema.define(version: 20170503033420) do
     t.datetime "deleted_at"
     t.decimal  "product_fee_pct", precision: 5,  scale: 3, default: 0.0, null: false
     t.decimal  "net_price",       precision: 10, scale: 2, default: 0.0
+    t.integer  "fee"
   end
 
   add_index "prices", ["market_id"], name: "index_prices_on_market_id", using: :btree
@@ -971,7 +975,7 @@ ActiveRecord::Schema.define(version: 20170503033420) do
     t.string   "aws_image_url"
     t.integer  "qb_item_id"
     t.integer  "parent_product_id"
-    t.integer  "unit_quantity"
+    t.decimal  "unit_quantity"
     t.boolean  "organic"
   end
 
@@ -1014,6 +1018,14 @@ ActiveRecord::Schema.define(version: 20170503033420) do
     t.integer "consolidated_supplier_item_id"
     t.string  "consolidated_buyer_item_name"
     t.integer "consolidated_buyer_item_id"
+    t.string  "ar_account_name"
+    t.integer "ar_account_id"
+    t.string  "ap_account_name"
+    t.integer "ap_account_id"
+    t.string  "fee_income_account_name"
+    t.integer "fee_income_account_id"
+    t.string  "delivery_fee_account_name"
+    t.integer "delivery_fee_account_id"
   end
 
   add_index "qb_profiles", ["organization_id"], name: "org_id", unique: true, using: :btree

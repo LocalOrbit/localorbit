@@ -120,7 +120,7 @@
                 </td>
                 <td class="net-price">
                   <div class="edit-trigger view-cell">
-                    <%= number_to_currency price.net_price(price.market, @category_percents_by_market_id, current_market.is_consignment_market?) %>
+                    <%= number_to_currency price.net_price(price.market, @category_percents_by_market_id, current_market, current_market.is_consignment_market?) %>
                   </div>
                   <div class="edit-cell">
                     <label class="lock-label" style="display: none">
@@ -128,16 +128,16 @@
                       <span></span>
                     </label>
                     <% net_class = current_market.is_consignment_market? ? 'net-price consignment' : 'net-price' %>
-                    <%= f.number_field :net_price, :value => price.net_price(price.market, @category_percents_by_market_id, current_market.is_consignment_market?), min: 0, step: 0.01, size: 4, class: net_class,
+                    <%= f.number_field :net_price, :value => price.net_price(price.market, @category_percents_by_market_id, current_market, current_market.is_consignment_market?), min: 0, step: 0.01, size: 4, class: net_class,
                                        data:{"category-fee" => json_escape(@category_percents_by_market_id.to_json), "product-fee" => json_escape(price.product_fee_pct), "net-percents-by-market-id" => json_escape(@net_percents_by_market_id.to_json), "cc-rate" => @seller_cc_rate} %>
                   </div>
                 </td>
                 <% if policy(:product_fees).index? && current_market.is_buysell_market? %>
                 <td class="fee">
                   <div class="edit-trigger view-cell">
-                    <%= if !@category_percents_by_market_id.nil? && !@category_percents_by_market_id[price.market_id.nil? ? "all" : price.market_id.to_s].nil? && @category_percents_by_market_id[price.market_id.nil? ? "all" : price.market_id.to_s] > 0 && price.product_fee_pct == 0
+                    <%= if price.fee == 1
                          "Use Category Fee"
-                       elsif price.product_fee_pct > 0
+                       elsif price.fee == 2
                          number_to_percentage(price.product_fee_pct)
                        else
                          "Use Mkt Fee"
@@ -147,18 +147,18 @@
                   <div class="edit-cell">
                     <div style="float: left">
                       <div style="float: left">
-                        <label style="font-size: 9px">Mkt</label> <input style="float: left" type="radio" value="0" name="price[<%=price.id%>][fee]" class="mkt-fee" <%= price.product_fee_pct.nil? || price.product_fee_pct == 0 ? "checked" : "" %> />
+                        <label style="font-size: 9px">Mkt</label> <input style="float: left" type="radio" value="0" name="price[<%=price.id%>][fee]" class="mkt-fee" <%= price.fee == 0 ? "checked" : "" %> />
                       </div>
                       <div style="clear: left"></div>
                       <% if policy(:market_category_fees).index? %>
                       <div style="float: left">
-                        <label style="font-size: 9px">Category</label> <input style="float: left" type="radio" value="1" name="price[<%=price.id%>][fee]" class="category-fee" <%= price.category_checked(@category_percents_by_market_id) %> />
+                        <label style="font-size: 9px">Category</label> <input style="float: left" type="radio" value="1" name="price[<%=price.id%>][fee]" class="category-fee" <%= price.fee == 1 ? "checked" : "" %> />
                       </div>
                       <% end %>
                       <div style="clear: left"></div>
                       <div style="clear: left"></div>
                       <div style="float: left">
-                        <label style="font-size: 9px">Product</label> <input style="float: left" type="radio" value="2" name="price[<%=price.id%>][fee]" class="product-fee" <%= price.product_fee_pct > 0 ? "checked" : "" %> />
+                        <label style="font-size: 9px">Product</label> <input style="float: left" type="radio" value="2" name="price[<%=price.id%>][fee]" class="product-fee" <%= price.fee == 2 ? "checked" : "" %> />
                       </div>
                     </div>
                     <div style="float: left">
@@ -168,12 +168,12 @@
                   </div>
                 </td>
                 <% else # For suppliers fee option is not shown %>
-                  <% if (price.product_fee_pct.nil? || price.product_fee_pct == 0) && price.category_checked(@category_percents_by_market_id) != "checked" %>
-                    <!-- market fee -->
-                  <% elsif price.category_checked(@category_percents_by_market_id) == "checked" %>
-                    <input type="hidden" name="price[<%=price.id%>][fee]" value="<%= price.category_checked(@category_percents_by_market_id) %>" class="category-fee">
-                  <% else %>
-                    <input type="hidden" name="price[<%=price.id%>][fee]" value="<%= price.product_fee_pct > 0 ? "checked" : "" %>" class="product-fee">
+                  <% if price.fee == 0 %>
+                    <input type="hidden" name="price[<%=price.id%>][fee]" value="0" class="mkt-fee">
+                  <% elsif price.fee == 1 %>
+                    <input type="hidden" name="price[<%=price.id%>][fee]" value="1" class="category-fee">
+                  <% elsif price.fee == 2 %>
+                    <input type="hidden" name="price[<%=price.id%>][fee]" value="2" class="product-fee">
                   <% end %>
                 <% end %>
                 <td class="sale-price">

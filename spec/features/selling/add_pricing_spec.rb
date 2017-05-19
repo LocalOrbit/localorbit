@@ -159,7 +159,7 @@ describe "Adding advanced pricing" do
   end
 
   describe "with different fees", js: true do
-    let(:market) { create(:market, local_orbit_seller_fee: 4, market_seller_fee: 6) }
+    let!(:market) { create(:market, local_orbit_seller_fee: 4, market_seller_fee: 6) }
 
     it "shows updated net sale information" do
       fill_in "price[sale_price]", with: "12.90"
@@ -202,10 +202,11 @@ describe "Adding advanced pricing" do
   end
 
   describe "with category market fees - multiple markets", js: true do
-    let(:market) { create(:market, :with_delivery_schedule, :with_category_fee, allow_product_fee: true) }
-    let(:user)   { create(:user, :market_manager) }
+    let!(:market) { create(:market, :with_delivery_schedule, :with_category_fee, allow_product_fee: true) }
+    let!(:user)   { create(:user, :market_manager) }
 
     it "shows updated net sale information - product fee" do
+      select market.name, from: 'price[market_id]', visible: false
       find(:field, 'price[fee]', with: '1').click
       fill_in "price[sale_price]", with: "12.90"
 
@@ -216,17 +217,17 @@ describe "Adding advanced pricing" do
 
       record = Dom::PricingRow.first
       #expect(record.notice).to eq("Needs Review")
-      expect(record.market).to eq("All Markets")
+      expect(record.market).to eq(market.name)
       expect(record.buyer).to eq("All Buyers")
       expect(record.min_quantity).to eq("1")
-      expect(record.net_price).to eq("$12.14")
+      expect(record.net_price).to eq("$10.98")
       expect(record.sale_price).to eq("$12.90")
     end
   end
 
   describe "with product market fees", js: true do
-    let(:market) { create(:market, :with_delivery_schedule, allow_product_fee: true) }
-    let(:user)   { create(:user, :market_manager) }
+    let!(:market) { create(:market, :with_delivery_schedule, allow_product_fee: true) }
+    let!(:user)   { create(:user, :market_manager) }
 
     it "shows updated net sale information - product fee" do
       find(:field, 'price[fee]', with: '2').click

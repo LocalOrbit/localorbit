@@ -5,6 +5,7 @@
 <% if !session[:qb_token].nil? %>
 <h1>QuickBooks Profile</h1>
 <%= form_for @market.organization.qb_profile, url: [:admin, @market, :qb_profile], html: { class: "column column--two-thirds" } do |f| %>
+    <% if current_market.qb_integration_type.nil? || current_market.qb_integration_type != 'journal entry' %>
     <div class="row row--field">
       <div class="field column column--half column--guttered">
         <%= f.label :income_account_name, 'Receivables: Income Account for Sales' %><br>
@@ -29,13 +30,39 @@
         <%= f.text_field :delivery_fee_item_name, class: "column--full" %>
       </div>
     </div>
+    <% else %>
+    <div class="row row--field">
+      <div class="field column column--half column--guttered">
+        <%= f.label :ar_account_name, 'Journal Entry: Receivables Account' %><br>
+        <%= f.text_field :ar_account_name, class: "column--full" %>
+      </div>
+    </div>
+    <div class="row row--field">
+      <div class="field column column--half column--guttered">
+        <%= f.label :ap_account_name, 'Journal Entry: Payables Account' %><br>
+        <%= f.text_field :ap_account_name, class: "column--full" %>
+      </div>
+    </div>
+    <div class="row row--field">
+      <div class="field column column--half column--guttered">
+        <%= f.label :fee_income_account_name, 'Journal Entry: Fee Income Account' %><br>
+        <%= f.text_field :fee_income_account_name, class: "column--full" %>
+      </div>
+    </div>
+    <div class="row row--field">
+      <div class="field column column--half column--guttered">
+        <%= f.label :delivery_fee_account_name, 'Journal Entry: Delivery Fees Income Account' %><br>
+        <%= f.text_field :delivery_fee_account_name, class: "column--full" %>
+      </div>
+    </div>
+    <% end %>
     <div class="row row--field">
       <div class="field column column--half column--guttered">
         <%= f.label :prefix, 'PO/Invoice Number Prefix' %><br>
         <%= f.text_field :prefix, class: "column--full" %>
       </div>
     </div>
-    <% if current_market.is_consignment_market? %>
+    <% if current_market.is_consignment_market? && (current_market.qb_integration_type.nil? || current_market.qb_integration_type == 'invoice') %>
     <div class="row row--field">
       <div class="field column column--half column--guttered">
         <%= f.label :consolidated_supplier_item_name, 'Consolidated Supplier Item Name' %><br>

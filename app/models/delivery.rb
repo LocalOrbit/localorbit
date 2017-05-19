@@ -39,6 +39,6 @@ class Delivery < ActiveRecord::Base
   end
 
   def can_accept_orders?
-    cutoff_time > Time.current.end_of_minute || delivery_schedule.delivery_cycle == 'manual'
+    cutoff_time > Time.current.end_of_minute || (!delivery_schedule.nil? && delivery_schedule.delivery_cycle == 'manual')
   end
 end
