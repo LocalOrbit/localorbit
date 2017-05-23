@@ -53,7 +53,7 @@ class Price < ActiveRecord::Base
   def net_percent(price_market=nil, pct_array=nil, current_market=nil)
     mkt_id = nil
     if !price_market.nil? || (price_market.nil? && !pct_array.nil? && pct_array.length > 1)
-      mkt_id = !pct_array.nil? && pct_array.length == 2 ? pct_array.keys[0] : !price_market.nil? ? price_market.id : nil
+      mkt_id = !pct_array.nil? && pct_array.length == 2 ? pct_array.keys[0] : !current_market.nil? ? current_market.id : nil
     end
     if fee == 2
       1 - (product_fee_pct/100 + ::Financials::Pricing.seller_cc_rate(product.organization.all_markets.first))
