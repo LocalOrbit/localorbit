@@ -58,8 +58,8 @@ $ ->
         @el.find('.quantity input:not(.redesigned)').val(@data.quantity)
 
         if @el.find(".quantity input").hasClass("promo") && @data.quantity > 0
-          $(".promo").val(@data.quantity)
-          $(".promo").parent().parent().find(".price").text(totalPrice)
+          @el.find(".promo").val(@data.quantity)
+          @el.find(".promo").parent().parent().find(".price").text(totalPrice)
 
         if @data.quantity && @data.quantity > 0
           @el.find(".icon-clear").removeClass("is-hidden")
