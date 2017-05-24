@@ -395,8 +395,10 @@
     <div>
       <h2>Supplier</h2>
       <%= receipt.items[0].product.organization.name %><br/>
+      <% if !receipt.items[0].product.organization.shipping_location.nil? %>
       <%= receipt.items[0].product.organization.shipping_location.address %><br/>
       <%= receipt.items[0].product.organization.shipping_location.city %>, <%= receipt.items[0].product.organization.shipping_location.state %> <%= receipt.items[0].product.organization.shipping_location.zip %>
+      <% end %>
     </div>
     <br/><br/>
     <div>
