@@ -1,28 +1,34 @@
 <h1>Purchase History</h1>
 <%= search_form_for @q, url: orders_path, html: { class: "order_search clear-after" } do |f| %>
-    <div class="pull-left order-search-widget">
-      <span class="preserve-alignment">
-        <%= f.label :id_or_order_number_or_organization_name_or_items_seller_name_cont, "Search Orders" %><br>
-        <%# NOTE: Do not change the whitespace on the following line %>
-        <%= f.search_field :id_or_order_number_or_organization_name_or_items_seller_name_cont, placeholder: "Order #, Buyer, etc." -%><%= f.submit "Search", class: "btn--end" %>
-      </span>
+    <div class="column column--two-thirds column--guttered">
+      <div class="pull-left order-search-widget">
+        <span class="preserve-alignment">
+          <%= f.label :id_or_order_number_or_organization_name_or_items_seller_name_cont, "Search Orders" %><br>
+          <%# NOTE: Do not change the whitespace on the following line %>
+          <%= f.search_field :id_or_order_number_or_organization_name_or_items_seller_name_cont, placeholder: "Order #, Buyer, etc.", class: append_sticky_class(:id_or_order_number_or_organization_name_or_items_seller_name_cont) -%><%= f.submit "Search", class: "btn--end" %>
+        </span>
+      </div>
+
+      <div class="pull-right date-filters">
+        <div class="pull-right date-filters mobile-block">
+          <span class="preserve-alignment">
+            <label for="q_placed_at_date_gteq">Filter by Date</label><br>
+            <%= datetime_field_tag "q[placed_at_date_gteq]", @search_presenter.start_date, class: append_sticky_class("placed_at_date_gteq", "datepicker", [30.days.ago.to_date.to_s]) %>
+          </span>
+
+          <span class="preserve-alignment">
+            <label for="q_placed_at_date_lteq" class="is-invisible">End Date</label><br>
+            <%= datetime_field_tag "q[placed_at_date_lteq]", @search_presenter.end_date, class: append_sticky_class("placed_at_date_lteq", "datepicker", [Date.today.to_s]) %>
+          </span>
+        </div>
+      </div>
     </div>
-
-    <div class="pull-right date-filters">
-      <span class="preserve-alignment">
-        <label for="q_placed_at_date_gteq">Filter by Date</label><br>
-        <%=  datetime_field_tag "q[placed_at_date_gteq]", @presenter.start_date, class: 'datepicker' %>
-      </span>
-
-      <span class="preserve-alignment">
-        <label for="q_placed_at_date_lteq" class="is-invisible">End Date</label><br>
-        <%=  datetime_field_tag "q[placed_at_date_lteq]", @presenter.end_date, class: 'datepicker' %>
-      </span>
-
-      <span class="preserve-alignment">
-        <br>
+    <div class="column column--fourth column--guttered">
+      <div class="pull-right preserve-alignment">
+        <br/>
         <%= f.submit "Filter", class: "btn--small" %>
-      </span>
+        <%= link_to "Reset", orders_path(clear: ''), class: 'btn reset' if can_reset?(@query_params) %>
+      </div>
     </div>
 <% end %>
 
@@ -32,9 +38,9 @@
     <tr>
       <%= content_tag :th, sort_link(@q, :order_number, "Order #") %>
       <%= content_tag :th, sort_link(@q, :placed_at, "Order Date") %>
-      <%= content_tag :th, sort_link(@q, :delivery_deliver_on, "Delivery Date") %>
+      <%= content_tag :th, sort_link(@q, :delivery_status, "Delivery Status") %>
       <%= content_tag :th, sort_link(@q, :payment_status, "Payment") %>
-      <%= content_tag :th, sort_link(@q, :total_cost, "Amount Owed") %>
+      <%= content_tag :th, sort_link(@q, :total_cost, "Order Total") %>
     </tr>
     </thead>
     <tbody>
