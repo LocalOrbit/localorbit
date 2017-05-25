@@ -32,6 +32,42 @@ class QbProfile < ActiveRecord::Base
       end
     end
 
+    if !ar_account_name.nil? && !ar_account_name.empty?
+      result = Quickbooks::Account.query_account(ar_account_name, session)
+      if result.entries.length > 0
+        self.ar_account_id = result.entries[0].id
+      else
+        errors.add(:ar_account_name, :invalid)
+      end
+    end
+
+    if !ap_account_name.nil? && !ap_account_name.empty?
+      result = Quickbooks::Account.query_account(ap_account_name, session)
+      if result.entries.length > 0
+        self.ap_account_id = result.entries[0].id
+      else
+        errors.add(:ap_account_name, :invalid)
+      end
+    end
+
+    if !fee_income_account_name.nil? && !fee_income_account_name.empty?
+      result = Quickbooks::Account.query_account(fee_income_account_name, session)
+      if result.entries.length > 0
+        self.fee_income_account_id = result.entries[0].id
+      else
+        errors.add(:fee_income_account_name, :invalid)
+      end
+    end
+
+    if !delivery_fee_account_name.nil? && !delivery_fee_account_name.empty?
+      result = Quickbooks::Account.query_account(delivery_fee_account_name, session)
+      if result.entries.length > 0
+        self.delivery_fee_account_id = result.entries[0].id
+      else
+        errors.add(:delivery_fee_account_name, :invalid)
+      end
+    end
+
     if !delivery_fee_item_name.nil? && !delivery_fee_item_name.empty?
       result = Quickbooks::Item.query_item(delivery_fee_item_name, session)
       if result.entries.length > 0

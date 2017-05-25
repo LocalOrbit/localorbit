@@ -142,6 +142,17 @@ class Admin::MarketQbProfileController < AdminController
   private
 
   def qb_params
-    params.require(:qb_profile).permit(:income_account_name, :expense_account_name, :asset_account_name, :delivery_fee_item_name, :consolidated_supplier_item_name, :consolidated_buyer_item_name, :prefix)
+    params.require(:qb_profile).permit(
+        :income_account_name,
+        :expense_account_name,
+        :asset_account_name,
+        :ar_account_name,
+        :ap_account_name,
+        :fee_income_account_name,
+        :delivery_fee_account_name,
+        :delivery_fee_item_name,
+        :consolidated_supplier_item_name,
+        :consolidated_buyer_item_name,
+        :prefix)
   end
 end

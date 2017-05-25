@@ -2,6 +2,9 @@ class CreateOrder
   include Interactor
 
   def perform
+    if cart.market.qb_integration_type == 'journal entry'
+      check_order_for_je_limit(cart)
+    end
     context[:order] = create_order_from_cart(order_params, cart, user)
     context.fail! if context[:order].errors.any?
   end
@@ -18,6 +21,14 @@ class CreateOrder
   end
 
   protected
+
+  def check_order_for_je_limit(cart)
+    entry_count = 3
+    entry_count = entry_count + cart.items.map(&:product).map(&:organization_id).uniq.count
+    if entry_count > 100
+      context.fail!('Number of suppliers on order exceeds journal entry limit. Please split order.')
+    end
+  end
 
   def create_order_from_cart(params, cart, user)
 

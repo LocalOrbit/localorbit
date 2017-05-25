@@ -108,7 +108,15 @@
                           </label>
                           <% end %>
                           <div style="clear: left"></div>
-                          <%= f.number_field :net_price, min: 0, step: 0.01, size: 4, class: 'net-price', data: {"net-percents-by-market-id" => json_escape(@net_percents_by_market_id.to_json), "cc-rate" => @seller_cc_rate} %>
+                          <% if price.fee == 0 %>
+                            <input type="hidden" name="price[<%=price.id%>][fee]" value="0" class="mkt-fee">
+                          <% elsif price.fee == 1 %>
+                            <input type="hidden" name="price[<%=price.id%>][fee]" value="1" class="category-fee">
+                          <% elsif price.fee == 2 %>
+                            <input type="hidden" name="price[<%=price.id%>][fee]" value="2" class="product-fee">
+                          <% end %>
+
+                          <%= f.number_field :net_price, min: 0, step: 0.01, size: 4, class: 'net-price', data: {"category-fee" => json_escape(::Financials::Pricing.category_percents_by_market(price.product.organization.all_markets, price.product).to_json), "product-fee" => json_escape(price.product_fee_pct), "net-percents-by-market-id" => json_escape(::Financials::Pricing.seller_net_percents_by_market(price.product.organization.all_markets).to_json), "cc-rate" =>::Financials::Pricing.seller_cc_rate(current_market)} %>
                         </span>
                         <% if policy(:product_fees).index? && price.product_fee_pct > 0 %>
                         <span class="preserve-alignment" style="vertical-align: top">

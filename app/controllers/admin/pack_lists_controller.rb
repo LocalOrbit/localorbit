@@ -12,6 +12,8 @@ class Admin::PackListsController < AdminController
       market_id = params[:market_id]
     end
 
+    #market_id = Market.managed_by(current_user).pluck(:id)
+
     if current_user.buyer_only? || current_user.market_manager?
       @orders = Order.joins(:items, :delivery)
                     .where(order_items: {delivery_status: "pending"})

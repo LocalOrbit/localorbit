@@ -66,6 +66,7 @@ class OrderItem < ActiveRecord::Base
       net_price: !item.net_price.nil? && item.net_price >= 0 && order.market.is_consignment_market? ? item.net_price : 0,
       product_fee_pct: !item.sale_price.nil? && item.sale_price > 0 && order.market.is_consignment_market? ? 0 : item.unit_price.nil? ? 0 : item.unit_price.product_fee_pct,
       category_fee_pct: category_fee_pct.nil? ? 0 : category_fee_pct,
+      fee: !item.product.prices.nil? && !item.product.prices.empty? ? item.product.prices.first.fee : 0,
       seller_name: item.product.organization.name,
       delivery_status: "pending"
     )
@@ -140,7 +141,7 @@ class OrderItem < ActiveRecord::Base
       market_id = order.market.id
       organization_id = order.organization.id
     end
-    if !product.lots.empty?
+    if !product.lots.empty? && product.lots.sum(:quantity) > 0
       qty = product.lots_by_expiration.available_specific(Time.current.end_of_minute, market_id, organization_id).sum(:quantity)
       qty += product.lots_by_expiration.available_general(Time.current.end_of_minute).sum(:quantity)
     else
