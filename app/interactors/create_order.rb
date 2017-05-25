@@ -2,7 +2,7 @@ class CreateOrder
   include Interactor
 
   def perform
-    if cart.market.qb_integration_type == 'journal entry'
+    if !cart.market.qb_integration_type.nil? && cart.market.qb_integration_type == 'journal entry'
       check_order_for_je_limit(cart)
     end
     context[:order] = create_order_from_cart(order_params, cart, user)
