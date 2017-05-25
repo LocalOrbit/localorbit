@@ -39,10 +39,14 @@
           <button id="generate_invoice_button" name="Generate Invoice">Generate Invoice</button>
         </li>
         <% end %>
-        <% if policy(:market_quickbooks).index? && order.order_type == "sales" && order.payment_status == 'unpaid' && order.delivery_status_for_user(current_user) == 'delivered' && order.qb_ref_id.nil? %>
+        <% if policy(:market_quickbooks).index? && order.order_type == "sales" && order.payment_status == 'unpaid' && order.delivery_status_for_user(current_user) == 'delivered' && order.qb_ref_id.nil? && (current_market.qb_integration_type.nil? || current_market.qb_integration_type == 'invoice') %>
         <li>
           <button id="export_invoice_button" name="Export Invoice">Export Invoice to QB</button>
         </li>
+        <% elsif policy(:market_quickbooks).index? && order.order_type == "sales" && order.payment_status == 'unpaid' && order.delivery_status_for_user(current_user) == 'delivered' && order.qb_ref_id.nil? && current_market.qb_integration_type == 'journal entry' %>
+                <li>
+                  <button id="export_invoice_button" name="Export Invoice">Export JE to QB</button>
+                </li>
         <% elsif policy(:market_quickbooks).index? && order.order_type == "purchase" && order.payment_status == 'unpaid' && order.delivery_status_for_user(current_user) == 'delivered' && order.qb_ref_id.nil? && order.sold_through %>
         <li>
           <button id="export_bill_button" name="Export Bill">Export Bill to QB</button>
