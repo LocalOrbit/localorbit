@@ -175,10 +175,10 @@ module Inventory
         JOIN consignment_transactions p ON p.id = consignment_transactions.parent_id
         JOIN products ON products.id = p.product_id
         JOIN organizations ON organizations.id = products.organization_id")
-        .select("organizations.name, sum(consignment_transactions.quantity * consignment_transactions.net_price) AS amt, sum((consignment_transactions.sale_price * consignment_transactions.quantity) - (consignment_transactions.net_price * consignment_transactions.quantity)) AS profit")
+        .select("p.order_id, organizations.name, sum(consignment_transactions.quantity * consignment_transactions.net_price) AS amt, sum((consignment_transactions.sale_price * consignment_transactions.quantity) - (consignment_transactions.net_price * consignment_transactions.quantity)) AS profit")
         .where("consignment_transactions.order_id = ?", order.id)
         .where("consignment_transactions.transaction_type = 'SO'")
-        .group("organizations.name")
+        .group("p.order_id, organizations.name")
       end
 
       def get_associated_po_item(order, item)
