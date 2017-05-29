@@ -44,6 +44,8 @@ module Quickbooks
         jentry_so.amount = order.total_cost
         jentry_so.description = order.id
 
+        puts "SO: #{jentry_so.amount}"
+
         jentry_so.journal_entry! do |entry|
           entry.posting_type = 'Credit'
           entry.entity = entity
@@ -94,6 +96,8 @@ module Quickbooks
           jentry_po.amount = po.amt
           jentry_po.description = po.order_id
 
+          puts "PO: #{jentry_po.amount}"
+
           jentry_po.journal_entry! do |entry|
             entry.posting_type = 'Debit'
             entry.entity = entity
@@ -113,6 +117,8 @@ module Quickbooks
         jentry_income.amount = profit_sum
         jentry_income.description = order.id
 
+        puts "Income: #{jentry_income.amount}"
+
         jentry_income.journal_entry! do |entry|
           entry.posting_type = 'Debit'
           entry.account_ref = income_acct
@@ -129,6 +135,8 @@ module Quickbooks
         jentry_dlvy = Quickbooks::Model::Line.new
         jentry_dlvy.amount = order.delivery_fees
         jentry_dlvy.description = order.id
+
+        puts "Delivery: #{jentry_dlvy.amount}"
 
         jentry_dlvy.journal_entry! do |entry|
           entry.posting_type = 'Debit'
