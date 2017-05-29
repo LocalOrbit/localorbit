@@ -67,7 +67,7 @@ ActiveRecord::Schema.define(version: 20170517180129) do
   add_index "bank_accounts", ["bankable_type", "bankable_id"], name: "index_bank_accounts_on_bankable_type_and_bankable_id", using: :btree
 
   create_table "batch_consignment_printable_errors", force: true do |t|
-    t.integer  "batch_consignment_receipt_id"
+    t.integer  "batch_consignment_printable_id"
     t.string   "task"
     t.text     "message"
     t.text     "exception"
@@ -90,23 +90,11 @@ ActiveRecord::Schema.define(version: 20170517180129) do
   add_index "batch_consignment_printables", ["user_id"], name: "index_batch_consignment_printables_on_user_id", using: :btree
 
   create_table "batch_consignment_printables_orders", force: true do |t|
-    t.integer  "batch_consignment_receipt_id"
+    t.integer  "batch_consignment_printable_id"
     t.integer  "order_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
-
-  create_table "batch_consignment_receipts", force: true do |t|
-    t.integer  "user_id"
-    t.string   "pdf_uid"
-    t.string   "pdf_name"
-    t.string   "generation_status",                           default: "not_started", null: false
-    t.decimal  "generation_progress", precision: 5, scale: 2, default: 0.0,           null: false
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  add_index "batch_consignment_receipts", ["user_id"], name: "index_batch_consignment_receipts_on_user_id", using: :btree
 
   create_table "batch_invoice_errors", force: true do |t|
     t.integer  "batch_invoice_id"
