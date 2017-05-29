@@ -86,7 +86,7 @@ module Quickbooks
           end
 
           vendor = Quickbooks::Model::BaseReference.new
-          vendor.value = result.nil? ? order.products.first.organization.qb_org_id.to_s : result.id.to_s
+          vendor.value = result.nil? ? po.products.first.organization.qb_org_id.to_s : result.id.to_s
 
           entity = Quickbooks::Model::Entity.new
           entity.type = 'Vendor'
