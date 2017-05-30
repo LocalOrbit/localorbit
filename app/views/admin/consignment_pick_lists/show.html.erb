@@ -384,7 +384,7 @@
           <td><%= item.name %></td>
           <td><%= item.product.organization.name %></td>
           <td><%= item.quantity %></td>
-          <td><%= lt.nil? ? 0 : "On Hand: #{lt.quantity}" %></td>
+          <td><%= lt.nil? ? 0 : "On Hand: #{lt.quantity + item.quantity}" %></td>
           <td><%= !lt.nil? && !lt.storage_location.nil? ? lt.storage_location.name : 'No Location Provided' %></td>
           <td><%= lt.nil? ? 0 : lt.number %></td>
         </tr>
