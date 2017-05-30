@@ -42,6 +42,16 @@
                     <td><%= number_to_currency(child.net_price) %></td>
                     <td><%= number_to_currency(child.quantity * child.net_price) %></td>
                   </tr>
+                  <% elsif child.transaction_type == "SPLIT" %>
+                    <tr data-transaction-id="<%=child.id %>">
+                      <td>&nbsp;&nbsp;Split</td>
+                      <td></td>
+                      <td><%= child.quantity %></td>
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                    </tr>
                   <% elsif child.transaction_type == "SHRINK" %>
                   <% balance_due = balance_due + (child.quantity * child.net_price) %>
                   <tr data-transaction-id="<%=child.id %>">
