@@ -28,8 +28,9 @@ module Inventory
       def split_product(market_id, orig_product_id, dest_product_id, orig_lot_id, quantity)
         orig_product = Product.find(orig_product_id)
         orig_lot = Lot.find(orig_lot_id)
-        #orig_lot_order = orig_lot.number.split('-')[0]
-        #order = Order.find(orig_lot_order)
+        orig_lot_order = orig_lot.number.split('-')[0]
+        order = Order.find(orig_lot_order)
+        order_item = OrderItem.where(order_id: order.id, product_id: orig_product_id).first
         dest_product = Product.find(dest_product_id)
         #lot_number = Inventory::Utils.generate_lot_number(order)
         lot_number = orig_lot.number
@@ -45,6 +46,9 @@ module Inventory
 
         orig_lot.quantity = orig_lot.quantity - qty
         dest_lot.quantity = dest_lot.quantity + ((orig_unit_quantity / dest_unit_quantity) * qty)
+        dest_lot.storage_location_id = orig_lot.storage_location_id
+
+        orig_ct = ConsignmentTransaction.where(order_id: order.id, transaction_type: 'PO', product_id: orig_product.id).first
 
         ct = ConsignmentTransaction.create(
             market_id: market_id,
@@ -54,16 +58,39 @@ module Inventory
             lot_id: orig_lot.id,
             child_lot_id: dest_lot.id,
             quantity: qty,
+            parent_id: orig_ct.id,
         )
         ct.save
 
         orig_lot.save
         dest_lot.save
+
+        # Decrement quantity of original transaction
+        #orig_ct.quantity = orig_ct.quantity - qty
+        #orig_ct.save
+
+        # Add split product to PO
+        po_ct = ConsignmentTransaction.create(
+            market_id: order.market.id,
+            transaction_type: 'PO',
+            order_id: order.id,
+            order_item_id: order_item.id,
+            lot_id: dest_lot.id,
+            delivery_date: order.delivery.deliver_on,
+            product_id: dest_product.id,
+            quantity: ((orig_unit_quantity / dest_unit_quantity) * qty),
+            sale_price: order_item.unit_price,
+            net_price: order_item.net_price,
+            parent_id: ct.id
+        )
+        po_ct.save
+
       end
 
       def unsplit_product(product_id)
         child_product = Product.find(product_id)
         parent_ct = ConsignmentTransaction.where(transaction_type: 'SPLIT', child_product_id: child_product.id).last
+        child_po_ct = ConsignmentTransaction.where(transaction_type: 'PO', product_id: child_product.id).last
         child_lot = Lot.find(parent_ct.child_lot_id)
 
         parent_product = Product.find(child_product.parent_product_id)
@@ -81,12 +108,16 @@ module Inventory
         parent_lot.save
 
         parent_ct.soft_delete
+        child_po_ct.soft_delete
       end
 
       def can_split_product?(product)
         product.parent_id.present? && product.unit_quantity % 2 == 0
       end
 
+      def can_unsplit_product?(product_id)
+        ConsignmentTransaction.where(transaction_type: 'SO', product_id: product_id).length == 0
+      end
     end
   end
 end
