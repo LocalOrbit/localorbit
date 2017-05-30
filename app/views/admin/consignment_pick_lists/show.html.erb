@@ -379,13 +379,14 @@
         </thead>
         <tbody class="order-detail">
         <% order.items.order(:name).each do |item| %>
+        <% lt = Lot.find(!item.po_lot_id.nil? && item.po_lot_id ? item.po_lot_id : item.lots.last.lot.id) %>
         <tr>
           <td><%= item.name %></td>
           <td><%= item.product.organization.name %></td>
           <td><%= item.quantity %></td>
-          <td><%= item.lots.empty? ? 0 : "On Hand: #{item.lots.last.lot.quantity + item.quantity}" %></td>
-          <td><%= !item.lots.empty? && !item.lots.last.lot.storage_location.nil? ? item.lots.last.lot.storage_location.name : 'No Location Provided' %></td>
-          <td><%= item.lots.empty? ? 0 : item.lots.last.lot.number %></td>
+          <td><%= lt.nil? ? 0 : "On Hand: #{lt.quantity}" %></td>
+          <td><%= !lt.nil? && !lt.storage_location.nil? ? lt.storage_location.name : 'No Location Provided' %></td>
+          <td><%= lt.nil? ? 0 : lt.number %></td>
         </tr>
         <% end %>
         <tr></tr>

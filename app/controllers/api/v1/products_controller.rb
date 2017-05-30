@@ -245,8 +245,11 @@ module Api
           committed = Order.joins(:organization, items: [lots: [:lot]]).so_orders.where("order_items.delivery_status = 'pending' AND orders.market_id = ? AND order_items.product_id = ?", current_market.id, product.id).select("order_items.product_id AS id, TO_CHAR(order_items.created_at,'MM/DD/YYYY') AS created_at, order_item_lots.lot_id, lots.number, organizations.name AS buyer_name, trunc(order_items.quantity) AS quantity, order_items.unit_price AS sale_price, order_items.net_price")
           lots = lots + awaiting_delivery
 
+          undo_split_options = nil
           split_options = Product.where(parent_product_id: product.id).select("products.id, products.name, products.general_product_id")
-          undo_split_options = ConsignmentTransaction.where(child_product_id: product.id).select(:child_lot_id).first
+          if Inventory::SplitOps.can_unsplit_product?(product.id)
+            undo_split_options = ConsignmentTransaction.where(child_product_id: product.id).select(:child_lot_id).first
+          end
         end
 
         # TODO There's a brief window where prices and inventory may change after

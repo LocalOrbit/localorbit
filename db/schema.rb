@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170517180129) do
+ActiveRecord::Schema.define(version: 20170530133936) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -36,7 +36,6 @@ ActiveRecord::Schema.define(version: 20170517180129) do
     t.string   "masquerader_username"
   end
 
-  add_index "audits", ["action", "associated_type"], name: "action_associated_type", using: :btree
   add_index "audits", ["associated_id", "associated_type"], name: "associated_index", using: :btree
   add_index "audits", ["auditable_id", "auditable_type"], name: "auditable_index", using: :btree
   add_index "audits", ["created_at"], name: "index_audits_on_created_at", using: :btree
@@ -207,13 +206,13 @@ ActiveRecord::Schema.define(version: 20170517180129) do
     t.integer  "order_id"
     t.integer  "order_item_id"
     t.integer  "lot_id"
-    t.datetime "delivery_date"
     t.integer  "product_id"
     t.integer  "quantity"
     t.integer  "assoc_order_id"
     t.integer  "assoc_order_item_id"
     t.integer  "assoc_lot_id"
     t.integer  "assoc_product_id"
+    t.datetime "delivery_date"
     t.datetime "created_at"
     t.integer  "market_id"
     t.integer  "parent_id"
@@ -337,7 +336,7 @@ ActiveRecord::Schema.define(version: 20170517180129) do
     t.decimal  "order_minimum",                  precision: 10, scale: 2, default: 0.0,            null: false
     t.string   "delivery_cycle"
     t.integer  "day_of_month"
-    t.integer  "week_interval",                                           default: 1
+    t.integer  "week_interval"
   end
 
   add_index "delivery_schedules", ["deleted_at"], name: "index_delivery_schedules_on_deleted_at", using: :btree
@@ -488,6 +487,7 @@ ActiveRecord::Schema.define(version: 20170517180129) do
     t.integer  "market_id"
     t.integer  "organization_id"
     t.integer  "storage_location_id"
+    t.datetime "deleted_at"
   end
 
   add_index "lots", ["expires_at"], name: "index_lots_on_expires_at", using: :btree
@@ -621,10 +621,10 @@ ActiveRecord::Schema.define(version: 20170517180129) do
     t.boolean  "subscribed",                                             default: false
     t.boolean  "routing_plan",                                           default: false
     t.integer  "organization_id"
-    t.boolean  "add_item_pricing",                                       default: true
+    t.boolean  "add_item_pricing"
     t.boolean  "self_enabled_cross_sell",                                default: false
     t.string   "background_img_uid"
-    t.boolean  "allow_signups",                                          default: true
+    t.boolean  "allow_signups"
     t.string   "qb_integration_type"
   end
 
@@ -661,6 +661,14 @@ ActiveRecord::Schema.define(version: 20170517180129) do
   end
 
   add_index "newsletters", ["market_id"], name: "index_newsletters_on_market_id", using: :btree
+
+  create_table "order_item_deliveries", force: true do |t|
+    t.integer  "market_address_id"
+    t.integer  "location_id"
+    t.datetime "delivered_at"
+    t.integer  "quantity_delivered"
+    t.integer  "order_item_id"
+  end
 
   create_table "order_item_lots", force: true do |t|
     t.integer  "order_item_id"
@@ -702,6 +710,7 @@ ActiveRecord::Schema.define(version: 20170517180129) do
     t.decimal  "category_fee_pct",       precision: 5,  scale: 3
     t.decimal  "net_price",              precision: 10, scale: 2, default: 0.0
     t.integer  "fee"
+    t.integer  "po_lot_id"
   end
 
   add_index "order_items", ["order_id", "product_id"], name: "index_order_items_on_order_id_and_product_id", using: :btree
@@ -928,7 +937,6 @@ ActiveRecord::Schema.define(version: 20170517180129) do
 
   add_index "prices", ["market_id"], name: "index_prices_on_market_id", using: :btree
   add_index "prices", ["organization_id"], name: "index_prices_on_organization_id", using: :btree
-  add_index "prices", ["product_id", "market_id", "organization_id", "updated_at", "deleted_at"], name: "index_prices_on_product_market_organization_updated_deleted", using: :btree
   add_index "prices", ["product_id", "market_id", "organization_id"], name: "index_prices_on_product_id_and_market_id_and_organization_id", using: :btree
   add_index "prices", ["product_id"], name: "index_prices_on_product_id", using: :btree
 
@@ -968,7 +976,7 @@ ActiveRecord::Schema.define(version: 20170517180129) do
     t.string   "aws_image_url"
     t.integer  "qb_item_id"
     t.integer  "parent_product_id"
-    t.integer  "unit_quantity"
+    t.decimal  "unit_quantity"
     t.boolean  "organic"
   end
 
@@ -1021,6 +1029,8 @@ ActiveRecord::Schema.define(version: 20170517180129) do
     t.integer "delivery_fee_account_id"
   end
 
+  add_index "qb_profiles", ["organization_id"], name: "org_id", unique: true, using: :btree
+
   create_table "qb_tokens", force: true do |t|
     t.integer  "organization_id"
     t.string   "encrypted_access_token"
@@ -1030,15 +1040,6 @@ ActiveRecord::Schema.define(version: 20170517180129) do
     t.string   "encrypted_access_token_iv"
     t.string   "encrypted_access_secret_iv"
     t.string   "encrypted_realm_id_iv"
-  end
-
-  create_table "qlik_user_attributes", primary_key: "userid", force: true do |t|
-    t.string "type",  null: false
-    t.string "value"
-  end
-
-  create_table "qlik_users", primary_key: "userid", force: true do |t|
-    t.string "name"
   end
 
   create_table "role_actions", force: true do |t|
@@ -1054,9 +1055,9 @@ ActiveRecord::Schema.define(version: 20170517180129) do
 
   create_table "roles", force: true do |t|
     t.string   "name"
-    t.string   "org_type",        default: "M"
+    t.string   "org_type"
     t.integer  "organization_id"
-    t.string   "activities",      default: [],  array: true
+    t.string   "activities",      default: [], array: true
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -1164,13 +1165,5 @@ ActiveRecord::Schema.define(version: 20170517180129) do
 
   add_index "users_roles", ["role_id"], name: "index_users_roles_on_role_id", using: :btree
   add_index "users_roles", ["user_id"], name: "index_users_roles_on_user_id", using: :btree
-
-  create_table "zipcodes", primary_key: "zip", force: true do |t|
-    t.decimal "latitude",             precision: 9, scale: 6
-    t.decimal "longitude",            precision: 9, scale: 6
-    t.string  "city"
-    t.string  "state",     limit: 2
-    t.string  "county",    limit: 64
-  end
 
 end
