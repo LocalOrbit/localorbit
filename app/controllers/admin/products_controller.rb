@@ -150,6 +150,7 @@ module Admin
     def update_product
       if product_params[:simple_inventory].present? && product_params.count == 1
         @product.simple_inventory = product_params[:simple_inventory]
+        @product.lots.last.edit_qty = true
         @product.lots.last.save
       else
         @product.update_attributes(product_params)
