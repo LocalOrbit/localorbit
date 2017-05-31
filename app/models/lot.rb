@@ -8,6 +8,8 @@ class Lot < ActiveRecord::Base
   belongs_to :organization
   belongs_to :storage_location
 
+  attr_accessor :edit_qty
+
   validates :quantity, numericality: {greater_than_or_equal_to: 0, less_than: 1_000_000}
   validates :number, presence: {message: "can't be blank when 'Expiration Date' is present"}, if: lambda {|obj| obj.expires_at.present? }
   #validates :number, uniqueness: {scope: :product_id, allow_blank: true}
@@ -53,7 +55,7 @@ class Lot < ActiveRecord::Base
   end
 
   def update_product_record
-    if !product.nil?
+    if !product.nil? && edit_qty
       product.touch
     end
   end
