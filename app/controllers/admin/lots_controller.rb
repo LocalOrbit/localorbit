@@ -31,6 +31,8 @@ class Admin::LotsController < AdminController
     @lot = @product.lots.find(params[:id])
     params[:lot] = params[:lot][@lot.id.to_s]
 
+    @lot.edit_qty = true
+    
     auto_upgrade_product_to_advanced_inventory(lot_params, @product.lots.count > 1)
 
     lp = lot_params
