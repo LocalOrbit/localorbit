@@ -28,11 +28,11 @@
                   <% if current_market.is_buysell_market? %>
                   <td class="price-for-quantity math"><%= number_to_currency(item.unit_sale_price) %></td>
                   <% else %>
-                  <td class="sale-price math"><div><div><input class="cart-input app-sale-price-input in-cart" type="text" size="3" name="sale-price" autocomplete="off" value="<%= item.sale_price %>" /></div></div></td>
-                  <td class="net-price math"><div><div><input class="cart-input app-net-price-input in-cart" type="text" size="3" name="net-price" autocomplete="off" value="<%= item.net_price %>" /></div></div></td>
+                  <td class="sale-price math"><input class="cart-input app-sale-price-input in-cart" type="text" size="3" name="sale-price" autocomplete="off" value="<%= item.sale_price %>" /></td>
+                  <td class="net-price math"><input class="cart-input app-net-price-input in-cart" type="text" size="3" name="net-price" autocomplete="off" value="<%= item.net_price %>" /></td>
                   <% end %>
                   <td class="price math"><%= number_to_currency(item.total_price)%></td>
-                  <td class="product-clear"><%= link_to "", "#", class: "font-icon icon-clear" %></td>
+                  <td class="product-clear"><%= link_to "", "#", class: "in-cart font-icon icon-clear" %></td>
                   <input type="hidden" class="lot-id" name="lot-id" value="<%=item.lot_id %>" />
                 <% end %>
               <% end %>

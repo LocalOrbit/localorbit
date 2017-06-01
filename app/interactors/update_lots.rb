@@ -27,6 +27,7 @@ class UpdateLots
     ct_so.each do |so|
       so_order_item = OrderItem.find(so.order_item_id)
       so_order_item.lots << OrderItemLot.create(order_item_id: so_order_item.id, lot_id: lot.id, quantity: so.quantity)
+      so_order_item.po_lot_id = lot.id
       so_order_item.save
 
       so.lot_id = lot.id
