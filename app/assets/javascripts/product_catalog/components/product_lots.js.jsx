@@ -87,7 +87,7 @@
         _.map(this.props.product.committed, function (c) {
             if (lot.number === c.number) {
                 committed_count = committed_count + (c.quantity * 1);
-                build_committed = build_committed +  '<tr> <td>' + c.buyer_name+'</td> <td>' + c.created_at + '</td><td>' + c.quantity + '</td> <td>' + c.sale_price + '</td> <td>' + c.net_price + '</td> </tr>';
+                build_committed = build_committed +  '<tr> <td>' + c.buyer_name+'</td> <td>' + c.delivered_at + '</td><td>' + c.quantity + '</td> <td>' + c.sale_price + '</td> <td>' + c.net_price + '</td> </tr>';
             }
         });
 
