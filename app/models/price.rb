@@ -46,22 +46,22 @@ class Price < ActiveRecord::Base
     if is_consignment_market
       self[:net_price]
     else
-      ((sale_price || 0) * net_percent(market, pct_array, current_market)).round(2)
+      ((sale_price || 0) * net_percent(market, pct_array)).round(2)
     end
   end
 
-  def net_percent(price_market=nil, pct_array=nil, current_market=nil)
+  def net_percent(curr_market=nil, pct_array=nil)
     mkt_id = nil
-    if !price_market.nil? || (price_market.nil? && !pct_array.nil? && pct_array.length > 1)
-      mkt_id = !pct_array.nil? && pct_array.length == 2 ? pct_array.keys[0] : !current_market.nil? ? current_market.id : nil
+    if !curr_market.nil? || (curr_market.nil? && !pct_array.nil? && pct_array.length > 1)
+      mkt_id = !pct_array.nil? && pct_array.length == 2 ? pct_array.keys[0] : !curr_market.nil? ? curr_market.id : nil
     end
     if fee == 2
       1 - (product_fee_pct/100 + ::Financials::Pricing.seller_cc_rate(product.organization.all_markets.first))
     elsif fee == 1
       1 - (product.category.level_fee(mkt_id)/100 + ::Financials::Pricing.seller_cc_rate(product.organization.all_markets.first))
     elsif fee == 0
-      if !price_market.nil?
-        price_market.seller_net_percent
+      if market
+        market.seller_net_percent
       else
         product.organization.all_markets.map{|mkt| mkt.seller_net_percent}.min
       end
