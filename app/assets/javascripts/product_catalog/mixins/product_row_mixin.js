@@ -36,7 +36,7 @@
             })),
             committed: React.PropTypes.arrayOf(React.PropTypes.shape({
                 id: React.PropTypes.number,
-                created_at: React.PropTypes.string,
+                delivered_at: React.PropTypes.string,
                 lot_id: React.PropTypes.number,
                 number: React.PropTypes.string,
                 buyer_name: React.PropTypes.string,

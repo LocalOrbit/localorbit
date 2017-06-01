@@ -361,10 +361,25 @@ $ ->
       if $(this).hasClass('app-product-input')
         quantity = parseInt($(this).val())
       else
-        quantity = parseInt($(this).parent().parent().parent().parent().find('.app-product-input').val())
-      netPrice = parseFloat($(this).parent().parent().parent().parent().find('.app-net-price-input').val())
-      salePrice = parseFloat($(this).parent().parent().parent().parent().find('.app-sale-price-input').val())
-      lotId = parseInt($(this).parent().parent().parent().parent().find('.lot-id').val())
+        if $(this).hasClass("in-cart")
+          quantity = parseInt($(this).parent().parent().find('.app-product-input').val())
+        else
+          quantity = parseInt($(this).parent().parent().parent().parent().find('.app-product-input').val())
+
+      if $(this).hasClass("in-cart")
+        netPrice = parseFloat($(this).parent().parent().find('.app-net-price-input').val())
+      else
+        netPrice = parseFloat($(this).parent().parent().parent().parent().find('.app-net-price-input').val())
+
+      if $(this).hasClass("in-cart")
+        salePrice = parseFloat($(this).parent().parent().find('.app-sale-price-input').val())
+      else
+        salePrice = parseFloat($(this).parent().parent().parent().parent().find('.app-sale-price-input').val())
+
+      if $(this).hasClass("in-cart")
+        lotId = parseInt($(this).parent().parent().find('.lot-id').val())
+      else
+        lotId = parseInt($(this).parent().parent().parent().parent().find('.lot-id').val())
 
       if netPrice == 'NaN'
         netPrice = 0.0
@@ -381,7 +396,11 @@ $ ->
   $(document.body).on 'click', ".cart_item .icon-clear", (e)->
     e.preventDefault()
     data = $(this).closest(".cart_item").data("cart-item")
-    lotId = $(this).parent().parent().parent().parent().parent().parent().parent().find(".lot-id").val()
+    if $(this).hasClass("in-cart")
+      lotId = $(this).parent().parent().find(".lot-id").val()
+    else
+      lotId = $(this).parent().parent().parent().parent().parent().parent().parent().find(".lot-id").val()
+
     model.saveItem(data.product_id, 0, 0, 0, lotId, this, order_id)
 
   $(document.body).on 'click', "input[type=radio]", (e)->
