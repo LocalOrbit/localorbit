@@ -242,7 +242,14 @@ module Api
             AND consignment_transactions.product_id = ?", current_market.id, product.id)
             .select("null AS id, #{awaiting_delivery_qty - awaiting_ordered_qty} AS quantity, '' AS number, '' AS delivery_date, 'awaiting_delivery'::text AS status")
 
-          committed = Order.joins(:organization, items: [lots: [:lot]]).so_orders.where("order_items.delivery_status = 'pending' AND orders.market_id = ? AND order_items.product_id = ?", current_market.id, product.id).select("order_items.product_id AS id, TO_CHAR(order_items.delivered_at,'MM/DD/YYYY') AS delivered_at, order_item_lots.lot_id, lots.number, organizations.name AS buyer_name, trunc(order_items.quantity) AS quantity, order_items.unit_price AS sale_price, order_items.net_price")
+          committed = Order.joins(:delivery, :organization, items: [lots: [:lot]])
+                          .so_orders
+                          .where("order_items.delivery_status = 'pending' AND orders.market_id = ? AND order_items.product_id = ?", current_market.id, product.id)
+                          .select("order_items.product_id AS id, TO_CHAR(deliveries.deliver_on,'MM/DD/YYYY') AS delivered_at, order_item_lots.lot_id, lots.number, organizations.name AS buyer_name, trunc(order_items.quantity) AS quantity, order_items.unit_price AS sale_price, order_items.net_price")
+          committed_array = []
+          committed.each do |c|
+            committed_array << {:id => c['id'], :delivered_at => c['delivered_at'], :lot_id => c['lot_id'], :number => c['number'], :buyer_name => c['buyer_name'], :quantity => c['quantity'], :sale_price => c['sale_price'], :net_price => c['net_price']}
+          end
           lots = lots + awaiting_delivery
 
           undo_split_options = nil
@@ -267,7 +274,7 @@ module Api
               :unit_description => product.unit_plural,
               :prices => prices,
               :lots => lots,
-              :committed => committed,
+              :committed => committed_array,
               :split_options => split_options,
               :undo_split_id => !undo_split_options.nil? ? undo_split_options.child_lot_id : nil,
               :cart_item => cart_item.object,
