@@ -16,10 +16,6 @@ class OrderItemLot < ActiveRecord::Base
     if !order_item.order.nil? && order_item.order.purchase_order?
       self.quantity = 0
     end
-
-    if !order_item.po_lot_id.nil? && order_item.po_lot_id > 0
-      self.lot_id = order_item.po_lot_id
-    end
   end
 
   def return_inventory_to_lot

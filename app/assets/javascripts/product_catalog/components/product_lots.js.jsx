@@ -183,7 +183,8 @@
                     {deleteButton}
                 </div>
                 <div>
-                <input type="hidden" className="lot-id" defaultValue={this.props.lot.id} />
+                    <input type="hidden" className="lot-id" defaultValue={this.props.lot.id} />
+                    <input type="hidden" className="ct-id" defaultValue={this.props.lot.ct_id} />
                 </div>
                 {split_action}
                 {undo_split_action}

@@ -9,22 +9,21 @@ class CreateConsignmentTransaction
 
       po_order = nil
       check_existing = ConsignmentTransaction.where(market_id: order.market.id, transaction_type: order.sales_order? ? 'SO' : 'PO', order_id: order.id, product_id: item.product.id).first
-      if (!item.po_lot_id.nil? && item.po_lot_id > 0) || !item.lots.first.nil?
-        po_order = ConsignmentTransaction.joins("JOIN orders ON orders.id = consignment_transactions.order_id").where(transaction_type: 'PO', product_id: item.product_id, lot_id: !item.po_lot_id.nil? && item.po_lot_id > 0 ? item.po_lot_id : item.lots.first.lot.id).where("orders.sold_through = 'f'").order(:created_at).last
-        if po_order.nil? # Dealing with a split
-          split_trans = ConsignmentTransaction.where(transaction_type: 'SPLIT', child_product_id: item.product_id, child_lot_id: !item.po_lot_id.nil? && item.po_lot_id > 0 ? item.po_lot_id : item.lots.first.lot.id).first
-          if !split_trans.nil?
-            po_order = ConsignmentTransaction.joins("JOIN orders ON orders.id = consignment_transactions.order_id").where(transaction_type: 'PO', product_id: split_trans.product_id, lot_id: split_trans.lot_id).where("orders.sold_through = 'f'").order(:created_at).last
-          end
-        end
+      if !item.po_ct_id.nil? && item.po_ct_id > 0
+        po_order = ConsignmentTransaction.find(item.po_ct_id)
+
+        #if po_order.nil? # Dealing with a split
+        #  split_trans = ConsignmentTransaction.where(transaction_type: 'SPLIT', child_product_id: item.product_id, child_lot_id: !item.po_lot_id.nil? && item.po_lot_id > 0 ? item.po_lot_id : item.lots.first.lot.id).first
+        #  if !split_trans.nil?
+        #    po_order = ConsignmentTransaction.joins("JOIN orders ON orders.id = consignment_transactions.order_id").where(transaction_type: 'PO', product_id: split_trans.product_id, lot_id: split_trans.lot_id).where("orders.sold_through = 'f'").order(:created_at).last
+        #  end
+        #end
       end
 
       ct = nil
       if check_existing.nil?
         if order.sales_order? && !item.po_lot_id.nil? && item.po_lot_id > 0
           lt_id = item.po_lot_id
-        elsif order.sales_order? && !item.lots.empty?
-          lt_id = item.lots.first.lot.id
         else
           lt_id = nil
         end
@@ -49,7 +48,7 @@ class CreateConsignmentTransaction
 
 
       if !po_order.nil? && order.sales_order? && po_order.lot_id.nil?
-        po_order.update_attributes(lot_id: !item.po_lot_id.nil? ? item.po_lot_id : item.lots.first.lot.id)
+        po_order.update_attributes(lot_id: !item.po_lot_id.nil? ? item.po_lot_id : nil)
       end
 
       if holdover || repack
