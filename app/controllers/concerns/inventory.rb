@@ -34,7 +34,7 @@ module Inventory
       LEFT JOIN order_items ON consignment_transactions.order_item_id = order_items.id")
      .where(order_id: order.id, transaction_type: 'SO')
      .visible
-     .select("consignment_transactions.id, consignment_transactions.transaction_type, consignment_transactions.product_id, products.name as product_name, lots.id as lot_id, lots.number as lot_name, lots.quantity as lot_quantity, order_items.delivery_status, consignment_transactions.quantity, consignment_transactions.net_price, consignment_transactions.sale_price, consignment_transactions.parent_id")
+     .select("consignment_transactions.id, consignment_transactions.transaction_type, consignment_transactions.product_id, products.name as product_name, lots.id as lot_id, lots.number as lot_name, coalesce(lots.quantity, 0) as lot_quantity, order_items.delivery_status, consignment_transactions.quantity, consignment_transactions.net_price, consignment_transactions.sale_price, consignment_transactions.parent_id")
      .order("consignment_transactions.id, consignment_transactions.parent_id")
 
 

@@ -69,7 +69,8 @@ class OrderItem < ActiveRecord::Base
       fee: !item.product.prices.nil? && !item.product.prices.empty? ? item.product.prices.first.fee : 0,
       seller_name: item.product.organization.name,
       delivery_status: "pending",
-      po_lot_id: !item.lot_id.nil? ? item.lot_id : nil,
+      po_lot_id: !item.lot_id.nil? && item.lot_id > 0 ? item.lot_id : nil,
+      po_ct_id: !item.ct_id.nil? && item.ct_id > 0 ? item.ct_id : nil,
     )
   end
 
@@ -239,6 +240,7 @@ class OrderItem < ActiveRecord::Base
       lot = Lot.find(po_lot_id)
       num_to_consume = [lot.quantity, initial_amount].min
       lot.decrement!(:quantity, num_to_consume)
+      lots.build(lot: lot, quantity: num_to_consume)
     else
       specific = false
       amount = initial_amount

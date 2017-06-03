@@ -65,6 +65,7 @@ class CartsController < ApplicationController
       @item.sale_price = params[:sale_price]
       @item.net_price = params[:net_price]
       @item.lot_id = params[:lot_id]
+      @item.ct_id = params[:ct_id]
       @item.product = product
 
       invalid_qty = Inventory::Utils.validate_qty(@item, @order_type, current_market, current_organization, current_delivery)
