@@ -212,9 +212,10 @@ module Api
 
         if current_market.is_consignment_market?
           lots = Lot
+                .joins("JOIN consignment_transactions ON order_id = split_part(lots.number,'-',1)::integer AND consignment_transactions.transaction_type='PO' AND consignment_transactions.product_id = lots.product_id")
                 .where(product_id: product.id)
                 .where("lots.quantity > 0 AND lots.number IS NOT NULL")
-                .select("lots.id, lots.quantity, lots.number, (SELECT DISTINCT notes FROM consignment_transactions WHERE consignment_transactions.lot_id = lots.id AND transaction_type = 'PO') inv_note, (SELECT TO_CHAR(MAX(delivery_date), 'MM/DD/YYYY') FROM consignment_transactions WHERE lot_id = lots.id AND transaction_type = 'PO') delivery_date, 'available'::text AS status")
+                .select("consignment_transactions.id AS ct_id, lots.id, lots.quantity, lots.number, (SELECT DISTINCT notes FROM consignment_transactions WHERE consignment_transactions.lot_id = lots.id AND transaction_type = 'PO') inv_note, (SELECT TO_CHAR(MAX(delivery_date), 'MM/DD/YYYY') FROM consignment_transactions WHERE lot_id = lots.id AND transaction_type = 'PO') delivery_date, 'available'::text AS status")
 
           awaiting_delivery_qty = ConsignmentTransaction
                 .where("transaction_type = 'PO' AND lot_id IS NULL AND market_id = ? AND product_id = ?", current_market.id, product.id)
@@ -240,7 +241,7 @@ module Api
             AND consignment_transactions.lot_id IS NULL
             AND consignment_transactions.market_id = ?
             AND consignment_transactions.product_id = ?", current_market.id, product.id)
-            .select("null AS id, #{awaiting_delivery_qty - awaiting_ordered_qty} AS quantity, '' AS number, '' AS delivery_date, 'awaiting_delivery'::text AS status")
+            .select("consignment_transactions.id AS ct_id, #{awaiting_delivery_qty - awaiting_ordered_qty} AS quantity, '' AS number, '' AS delivery_date, 'awaiting_delivery'::text AS status")
 
           committed = Order.joins(:delivery, :organization, items: [lots: [:lot]])
                           .so_orders
