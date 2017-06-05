@@ -183,8 +183,8 @@
                     {deleteButton}
                 </div>
                 <div>
-                    <input type="hidden" className="lot-id" defaultValue={this.props.lot.id} />
-                    <input type="hidden" className="ct-id" defaultValue={this.props.lot.ct_id} />
+                    <input type="hidden" className="lot-id" defaultValue={this.state.cartLotId && this.state.cartLotId == this.props.lot.id ? this.state.cartLotId : this.props.lot.id} />
+                    <input type="hidden" className="ct-id" defaultValue={this.state.cartCtId && this.state.cartLotId == this.props.lot.id ? this.state.cartCtId : this.props.lot.ct_id} />
                 </div>
                 {split_action}
                 {undo_split_action}

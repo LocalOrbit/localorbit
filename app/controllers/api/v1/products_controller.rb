@@ -284,6 +284,7 @@ module Api
               :cart_item_net_price => cart_item.net_price,
               :cart_item_sale_price => cart_item.sale_price,
               :cart_item_lot_id => cart_item.lot_id,
+              :cart_item_ct_id => cart_item.ct_id,
               :price_for_quantity => number_to_currency(cart_item.unit_sale_price),
               :total_price => cart_item.display_total_price
           }

@@ -25,6 +25,7 @@
             cart_item_net_price: React.PropTypes.number,
             cart_item_sale_price: React.PropTypes.number,
             cart_item_lot_id: React.PropTypes.number,
+            cart_item_ct_id: React.PropTypes.number,
             cart_item: React.PropTypes.object,
             lots: React.PropTypes.arrayOf(React.PropTypes.shape({
                 id: React.PropTypes.number,
