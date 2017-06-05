@@ -389,7 +389,10 @@
         <h2>PO Number</h2>
         <p class="receipt-num"><%= receipt.order_number %></p><br>
         <h2>PO Date</h2>
-        <%= receipt.created_at.strftime("%-m/%-d/%Y") %>
+        <%= receipt.created_at.strftime("%-m/%-d/%Y") %><br/><br/>
+
+        <h2>Delivery Date</h2>
+        <%= receipt.delivery.deliver_on.strftime("%-m/%-d/%Y") %>
       </div>
     </div>
     <div>
