@@ -18,6 +18,7 @@
         cart_item_net_price: React.PropTypes.number,
         cart_item_sale_price: React.PropTypes.number,
         cart_item_lot_id: React.PropTypes.number,
+        cart_item_ct_id: React.PropTypes.number,
         cart_item: React.PropTypes.object.isRequired
       }).isRequired
     },
@@ -28,7 +29,8 @@
         cartItemQuantity: this.props.product && this.props.product.cart_item_quantity > 0 ? this.props.product.cart_item_quantity : null,
         cartSalePrice: this.props.product && this.props.product.cart_item_sale_price > 0 ? this.props.product.cart_item_sale_price : null,
         cartNetPrice: this.props.product && this.props.product.cart_item_net_price > 0 ? this.props.product.cart_item_net_price : null,
-        cartLotId: this.props.product && this.props.product.cart_item_lot_id > 0 ? this.props.product.cart_item_lot_id : null
+        cartLotId: this.props.product && this.props.product.cart_item_lot_id > 0 ? this.props.product.cart_item_lot_id : null,
+        cartCtId: this.props.product && this.props.product.cart_item_ct_id > 0 ? this.props.product.cart_item_ct_id : null
       };
     },
 
@@ -116,6 +118,7 @@
     updateSOQuantity: function(event) {
         var target = event.target;
         var addedLotId = $(target).parent().parent().find('.lot-id').val();
+        var addedCtId = $(target).parent().parent().find('.ct-id').val();
         this.cSalePrice = $(target).parent().parent().find('.app-sale-price-input').val();
         this.cNetPrice = $(target).parent().parent().find('.app-net-price-input').val();
 
@@ -125,6 +128,7 @@
         this.cItemQuantity = in_str;
 
         this.setState({cartLotId: addedLotId});
+        this.setState({cartCtId: addedCtId});
         this.setState({cartNetPrice: this.cNetPrice});
         this.setState({cartSalePrice: this.cSalePrice});
 
@@ -137,6 +141,7 @@
         var target = event.target;
         var in_str = event.target.value;
         var addedLotId = $(target).parent().parent().find('.lot-id').val();
+        var addedCtId = $(target).parent().parent().find('.ct-id').val();
         this.cItemQuantity = $(target).parent().parent().find('.app-product-input').val();
         this.cNetPrice = $(target).parent().parent().find('.app-net-price-input').val();
 
@@ -144,6 +149,7 @@
         this.cSalePrice = in_str;
 
         this.setState({cartLotId: addedLotId});
+        this.setState({cartCtId: addedCtId});
         this.setState({cartNetPrice: this.cNetPrice});
         this.setState({cartItemQuantity: this.cItemQuantity});
 
@@ -155,6 +161,7 @@
         var target = event.target;
         var in_str = event.target.value;
         var addedLotId = $(target).parent().parent().find('.lot-id').val();
+        var addedCtId = $(target).parent().parent().find('.ct-id').val();
         this.cItemQuantity = $(target).parent().parent().find('.app-product-input').val();
         this.cSalePrice = $(target).parent().parent().find('.app-sale-price-input').val();
 
@@ -162,6 +169,7 @@
         this.cNetPrice = in_str;
 
         this.setState({cartLotId: addedLotId});
+        this.setState({cartCtId: addedCtId});
         this.setState({cartItemQuantity: this.cItemQuantity});
         this.setState({cartSalePrice: this.cSalePrice});
 
@@ -184,7 +192,8 @@
         this.setState({cartSalePrice: null});
         this.setState({cartNetPrice: null});
         this.setState({cartLotId: null});
-        $(this.getDOMNode()).find('input').val('');
+        this.setState({cartCtId: null});
+        $(this.getDOMNode()).find('.app-product-input,.app-sale-price-input,.app-net-price-input').val('');
         $(this.getDOMNode()).keyup();
     }
   };
