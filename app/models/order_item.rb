@@ -150,7 +150,7 @@ class OrderItem < ActiveRecord::Base
       qty = ConsignmentTransaction.where(transaction_type: 'PO', product_id: product_id, lot_id: nil).sum(:quantity)
     end
     if qty < (quantity - (quantity_was || 0))
-      errors[:inventory] = "there are only #{Integer(qty + quantity_was)} #{product.name.pluralize(qty)} available."
+      errors[:inventory] = "there are only #{Integer(qty + (quantity_was || 0))} #{product.name.pluralize(qty)} available."
     end
   end
 
