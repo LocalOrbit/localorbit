@@ -116,7 +116,7 @@
 
       if (this.props.orderId) {
           qty = (<input style={{width: "75px"}} type="number" placeholder="0" defaultValue={this.state.cartItemQuantity && this.state.cartLotId == this.props.lot.id ? this.state.cartItemQuantity : ''} name="items_to_add[][quantity]" className={inputClass} onKeyDown={this.clearField} onChange={this.updateQuantity} />);
-          pid = (<input type="hidden" name="items_to_add[][product_id]" value={this.props.product.id}/>);
+          pid = (<input type="hidden" name="items_to_add[][product_id]" defaultValue={this.props.product.id}/>);
       }
       else
           qty = (<input style={{width: "75px"}} type="number" placeholder="0" defaultValue={this.state.cartItemQuantity && this.state.cartLotId == this.props.lot.id ? this.state.cartItemQuantity : ''} className={inputClass} onKeyDown={this.clearField} onChange={this.updateSOQuantity}/>);
