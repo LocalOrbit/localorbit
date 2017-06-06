@@ -47,7 +47,7 @@ module Inventory
           LEFT JOIN organizations ON orders.organization_id = organizations.id")
          .where(id: so.parent_id)
          .visible
-         .select("consignment_transactions.id, consignment_transactions.transaction_type, consignment_transactions.order_id, consignment_transactions.product_id, products.name as product_name, consignment_transactions.quantity, lots.number as lot_name, consignment_transactions.net_price, consignment_transactions.sale_price, organizations.name AS buyer_name, orders.delivery_status")
+         .select("consignment_transactions.id, consignment_transactions.transaction_type, consignment_transactions.order_id, consignment_transactions.product_id, products.name as product_name, consignment_transactions.quantity, lots.id AS lot_id, lots.number as lot_name, consignment_transactions.net_price, consignment_transactions.sale_price, organizations.name AS buyer_name, orders.delivery_status")
          .order("consignment_transactions.product_id, consignment_transactions.created_at")
 
         @parent_transactions << ct.to_a
