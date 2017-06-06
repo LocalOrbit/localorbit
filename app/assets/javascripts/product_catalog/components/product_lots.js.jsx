@@ -87,7 +87,7 @@
         _.map(this.props.product.committed, function (c) {
             if (lot.number === c.number) {
                 committed_count = committed_count + (c.quantity * 1);
-                build_committed = build_committed +  '<tr> <td>' + c.buyer_name+'</td> <td>' + c.created_at + '</td><td>' + c.quantity + '</td> <td>' + c.sale_price + '</td> <td>' + c.net_price + '</td> </tr>';
+                build_committed = build_committed +  '<tr> <td>' + c.buyer_name+'</td> <td>' + c.delivered_at + '</td><td>' + c.quantity + '</td> <td>' + c.sale_price + '</td> <td>' + c.net_price + '</td> </tr>';
             }
         });
 
@@ -116,7 +116,7 @@
 
       if (this.props.orderId) {
           qty = (<input style={{width: "75px"}} type="number" placeholder="0" defaultValue={this.state.cartItemQuantity && this.state.cartLotId == this.props.lot.id ? this.state.cartItemQuantity : ''} name="items_to_add[][quantity]" className={inputClass} onKeyDown={this.clearField} onChange={this.updateQuantity} />);
-          pid = (<input type="hidden" name="items_to_add[][product_id]" value={this.props.product.id}/>);
+          pid = (<input type="hidden" name="items_to_add[][product_id]" defaultValue={this.props.product.id}/>);
       }
       else
           qty = (<input style={{width: "75px"}} type="number" placeholder="0" defaultValue={this.state.cartItemQuantity && this.state.cartLotId == this.props.lot.id ? this.state.cartItemQuantity : ''} className={inputClass} onKeyDown={this.clearField} onChange={this.updateSOQuantity}/>);
@@ -183,7 +183,8 @@
                     {deleteButton}
                 </div>
                 <div>
-                <input type="hidden" className="lot-id" defaultValue={this.props.lot.id} />
+                    <input type="hidden" className="lot-id" defaultValue={this.state.cartLotId && this.state.cartLotId == this.props.lot.id ? this.state.cartLotId : this.props.lot.id} />
+                    <input type="hidden" className="ct-id" defaultValue={this.state.cartCtId && this.state.cartLotId == this.props.lot.id ? this.state.cartCtId : this.props.lot.ct_id} />
                 </div>
                 {split_action}
                 {undo_split_action}

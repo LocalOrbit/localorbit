@@ -6,7 +6,7 @@ class UpdateQuantities
     context.fail! unless order.update_attributes(order_params.merge(updated_at: Time.current))
     order.cache_delivery_status
     result = ApplyDiscountToAddedOrderItems.perform(order: order)
-    if order.market.is_consignment_market? && !order.delivery.deliver_on.nil?
+    if order.market.is_consignment_market? && !order.delivery.deliver_on.nil? && order_params.has_key?(:quantity_delivered)
       d_time = Time.current
       order.delivery.deliver_on = d_time
       order.delivery.buyer_deliver_on = d_time

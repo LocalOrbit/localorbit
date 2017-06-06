@@ -240,7 +240,7 @@ $ ->
       @view.updateDeliveryFees(data.delivery_fees)
       @view.updateTotal(data.total)
 
-    saveItem: (productId, quantity, netPrice, salePrice, lotId, elToUpdate, orderId)->
+    saveItem: (productId, quantity, netPrice, salePrice, lotId, ctId, elToUpdate, orderId)->
       # TODO: Add validation for maximum input to prevent
       #       users from entering numbers greater than available
       #       quantities
@@ -255,12 +255,12 @@ $ ->
         @view.showErrorMessage(errorMessage, $(elToUpdate).closest('.product'))
         $(elToUpdate).closest(".quantity").addClass("field_with_errors")
       else
-        $.post(@url, {"_method": "put", product_id: productId, quantity: quantity, net_price: netPrice, sale_price: salePrice, order_id: orderId, lot_id: lotId} )
+        $.post(@url, {"_method": "put", product_id: productId, quantity: quantity, net_price: netPrice, sale_price: salePrice, order_id: orderId, lot_id: lotId, ct_id: ctId} )
           .done (data)=>
 
             error = data.error
 
-            window.lo.ProductActions.updateProduct(data.item.product_id, data.item.quantity, data.item.net_price, data.item.sale_price, data.item.formatted_total_price, data.item.lot_id)
+            window.lo.ProductActions.updateProduct(data.item.product_id, data.item.quantity, data.item.net_price, data.item.sale_price, data.item.formatted_total_price, data.item.lot_id, data.ct_id)
             if data.item["destroyed?"]
               @removeItem(data.item)
             else
@@ -361,10 +361,30 @@ $ ->
       if $(this).hasClass('app-product-input')
         quantity = parseInt($(this).val())
       else
-        quantity = parseInt($(this).parent().parent().parent().parent().find('.app-product-input').val())
-      netPrice = parseFloat($(this).parent().parent().parent().parent().find('.app-net-price-input').val())
-      salePrice = parseFloat($(this).parent().parent().parent().parent().find('.app-sale-price-input').val())
-      lotId = parseInt($(this).parent().parent().parent().parent().find('.lot-id').val())
+        if $(this).hasClass("in-cart")
+          quantity = parseInt($(this).parent().parent().find('.app-product-input').val())
+        else
+          quantity = parseInt($(this).parent().parent().parent().parent().find('.app-product-input').val())
+
+      if $(this).hasClass("in-cart")
+        netPrice = parseFloat($(this).parent().parent().find('.app-net-price-input').val())
+      else
+        netPrice = parseFloat($(this).parent().parent().parent().parent().find('.app-net-price-input').val())
+
+      if $(this).hasClass("in-cart")
+        salePrice = parseFloat($(this).parent().parent().find('.app-sale-price-input').val())
+      else
+        salePrice = parseFloat($(this).parent().parent().parent().parent().find('.app-sale-price-input').val())
+
+      if $(this).hasClass("in-cart")
+        lotId = parseInt($(this).parent().parent().find('.lot-id').val())
+      else
+        lotId = parseInt($(this).parent().parent().parent().parent().find('.lot-id').val())
+
+      if $(this).hasClass("in-cart")
+        ctId = parseInt($(this).parent().parent().find('.ct-id').val())
+      else
+        ctId = parseInt($(this).parent().parent().parent().parent().find('.ct-id').val())
 
       if netPrice == 'NaN'
         netPrice = 0.0
@@ -372,17 +392,26 @@ $ ->
       if salePrice == 'NaN'
         salePrice = 0.0
 
-      model.saveItem(data.product_id, quantity, netPrice, salePrice, lotId, this, order_id)
+      model.saveItem(data.product_id, quantity, netPrice, salePrice, lotId, ctId, this, order_id)
 
     if this.value.length == 0 && !$(this).hasClass("in-cart")
       lotId = $(this).parent().parent().parent().parent().parent().parent().parent().find(".lot-id").val()
-      model.saveItem(data.product_id, 0, 0, 0, lotId, this, order_id)
+      model.saveItem(data.product_id, 0, 0, 0, lotId, ctId, this, order_id)
 
   $(document.body).on 'click', ".cart_item .icon-clear", (e)->
     e.preventDefault()
     data = $(this).closest(".cart_item").data("cart-item")
-    lotId = $(this).parent().parent().parent().parent().parent().parent().parent().find(".lot-id").val()
-    model.saveItem(data.product_id, 0, 0, 0, lotId, this, order_id)
+    if $(this).hasClass("in-cart")
+      lotId = $(this).parent().parent().find(".lot-id").val()
+    else
+      lotId = $(this).parent().parent().parent().parent().parent().parent().parent().find(".lot-id").val()
+
+    if $(this).hasClass("in-cart")
+      ctId = $(this).parent().parent().find(".ct-id").val()
+    else
+      ctId = $(this).parent().parent().parent().parent().parent().parent().parent().find(".ct-id").val()
+
+    model.saveItem(data.product_id, 0, 0, 0, lotId, ctId, this, order_id)
 
   $(document.body).on 'click', "input[type=radio]", (e)->
     $(".payment-fields").addClass("is-hidden")

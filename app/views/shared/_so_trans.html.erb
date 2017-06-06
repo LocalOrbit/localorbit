@@ -29,9 +29,9 @@
           </tr>
           <% if !@parent_transactions.nil? %>
             <% @parent_transactions.flatten.each do |parent| %>
-                  <% if parent.product_id == so.product_id %>
+                  <% if parent.product_id == so.product_id && parent.lot_id == so.lot_id %>
                     <%
-                        if order.delivery_status == 'pending'
+                        if order.delivery_status == 'pending' && parent.delivery_status == 'delivered'
                           onhand = so.lot_quantity + so.quantity
                           if onhand > parent.quantity
                             onhand = parent.quantity

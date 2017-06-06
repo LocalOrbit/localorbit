@@ -212,9 +212,10 @@ module Api
 
         if current_market.is_consignment_market?
           lots = Lot
+                .joins("JOIN consignment_transactions ON order_id = split_part(lots.number,'-',1)::integer AND consignment_transactions.transaction_type='PO' AND consignment_transactions.product_id = lots.product_id")
                 .where(product_id: product.id)
                 .where("lots.quantity > 0 AND lots.number IS NOT NULL")
-                .select("lots.id, lots.quantity, lots.number, (SELECT DISTINCT notes FROM consignment_transactions WHERE consignment_transactions.lot_id = lots.id AND transaction_type = 'PO') inv_note, (SELECT TO_CHAR(MAX(delivery_date), 'MM/DD/YYYY') FROM consignment_transactions WHERE lot_id = lots.id AND transaction_type = 'PO') delivery_date, 'available'::text AS status")
+                .select("consignment_transactions.id AS ct_id, lots.id, lots.quantity, lots.number, (SELECT DISTINCT notes FROM consignment_transactions WHERE consignment_transactions.lot_id = lots.id AND transaction_type = 'PO') inv_note, (SELECT TO_CHAR(MAX(delivery_date), 'MM/DD/YYYY') FROM consignment_transactions WHERE lot_id = lots.id AND transaction_type = 'PO') delivery_date, 'available'::text AS status")
 
           awaiting_delivery_qty = ConsignmentTransaction
                 .where("transaction_type = 'PO' AND lot_id IS NULL AND market_id = ? AND product_id = ?", current_market.id, product.id)
@@ -240,13 +241,23 @@ module Api
             AND consignment_transactions.lot_id IS NULL
             AND consignment_transactions.market_id = ?
             AND consignment_transactions.product_id = ?", current_market.id, product.id)
-            .select("null AS id, #{awaiting_delivery_qty - awaiting_ordered_qty} AS quantity, '' AS number, '' AS delivery_date, 'awaiting_delivery'::text AS status")
+            .select("consignment_transactions.id AS ct_id, #{awaiting_delivery_qty - awaiting_ordered_qty} AS quantity, '' AS number, '' AS delivery_date, 'awaiting_delivery'::text AS status")
 
-          committed = Order.joins(:organization, items: [lots: [:lot]]).so_orders.where("order_items.delivery_status = 'pending' AND orders.market_id = ? AND order_items.product_id = ?", current_market.id, product.id).select("order_items.product_id AS id, TO_CHAR(order_items.created_at,'MM/DD/YYYY') AS created_at, order_item_lots.lot_id, lots.number, organizations.name AS buyer_name, trunc(order_items.quantity) AS quantity, order_items.unit_price AS sale_price, order_items.net_price")
+          committed = Order.joins(:delivery, :organization, items: [lots: [:lot]])
+                          .so_orders
+                          .where("order_items.delivery_status = 'pending' AND orders.market_id = ? AND order_items.product_id = ?", current_market.id, product.id)
+                          .select("order_items.product_id AS id, TO_CHAR(deliveries.deliver_on,'MM/DD/YYYY') AS delivered_at, order_item_lots.lot_id, lots.number, organizations.name AS buyer_name, trunc(order_items.quantity) AS quantity, order_items.unit_price AS sale_price, order_items.net_price")
+          committed_array = []
+          committed.each do |c|
+            committed_array << {:id => c['id'], :delivered_at => c['delivered_at'], :lot_id => c['lot_id'], :number => c['number'], :buyer_name => c['buyer_name'], :quantity => c['quantity'], :sale_price => c['sale_price'], :net_price => c['net_price']}
+          end
           lots = lots + awaiting_delivery
 
+          undo_split_options = nil
           split_options = Product.where(parent_product_id: product.id).select("products.id, products.name, products.general_product_id")
-          undo_split_options = ConsignmentTransaction.where(child_product_id: product.id).select(:child_lot_id).first
+          if Inventory::SplitOps.can_unsplit_product?(product.id)
+            undo_split_options = ConsignmentTransaction.where(child_product_id: product.id).select(:child_lot_id).first
+          end
         end
 
         # TODO There's a brief window where prices and inventory may change after
@@ -264,7 +275,7 @@ module Api
               :unit_description => product.unit_plural,
               :prices => prices,
               :lots => lots,
-              :committed => committed,
+              :committed => committed_array,
               :split_options => split_options,
               :undo_split_id => !undo_split_options.nil? ? undo_split_options.child_lot_id : nil,
               :cart_item => cart_item.object,
@@ -273,6 +284,7 @@ module Api
               :cart_item_net_price => cart_item.net_price,
               :cart_item_sale_price => cart_item.sale_price,
               :cart_item_lot_id => cart_item.lot_id,
+              :cart_item_ct_id => cart_item.ct_id,
               :price_for_quantity => number_to_currency(cart_item.unit_sale_price),
               :total_price => cart_item.display_total_price
           }

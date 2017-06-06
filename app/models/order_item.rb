@@ -68,7 +68,9 @@ class OrderItem < ActiveRecord::Base
       category_fee_pct: category_fee_pct.nil? ? 0 : category_fee_pct,
       fee: !item.product.prices.nil? && !item.product.prices.empty? ? item.product.prices.first.fee : 0,
       seller_name: item.product.organization.name,
-      delivery_status: "pending"
+      delivery_status: "pending",
+      po_lot_id: !item.lot_id.nil? && item.lot_id > 0 ? item.lot_id : nil,
+      po_ct_id: !item.ct_id.nil? && item.ct_id > 0 ? item.ct_id : nil,
     )
   end
 
@@ -148,7 +150,7 @@ class OrderItem < ActiveRecord::Base
       qty = ConsignmentTransaction.where(transaction_type: 'PO', product_id: product_id, lot_id: nil).sum(:quantity)
     end
     if qty < (quantity - (quantity_was || 0))
-      errors[:inventory] = "there are only #{Integer(qty + quantity_was)} #{product.name.pluralize(qty)} available."
+      errors[:inventory] = "there are only #{Integer(qty + (quantity_was || 0))} #{product.name.pluralize(qty)} available."
     end
   end
 
@@ -234,21 +236,15 @@ class OrderItem < ActiveRecord::Base
   end
 
   def consume_inventory_amount(initial_amount, market_id, organization_id)
-    specific = false
-    amount = initial_amount
-    product.lots_by_expiration.available_specific(deliver_on_date, market_id, organization_id).each do |lot|
-      break unless amount > 0
-
-      num_to_consume = [lot.quantity, amount].min
+    if !po_lot_id.nil? && po_lot_id > 0 # Decrement specific consignment lot
+      lot = Lot.find(po_lot_id)
+      num_to_consume = [lot.quantity, initial_amount].min
       lot.decrement!(:quantity, num_to_consume)
-
       lots.build(lot: lot, quantity: num_to_consume)
-      amount -= num_to_consume
-      specific = true
-    end
-
-    if amount > 0
-      product.lots_by_expiration.available_general(deliver_on_date).each do |lot|
+    else
+      specific = false
+      amount = initial_amount
+      product.lots_by_expiration.available_specific(deliver_on_date, market_id, organization_id).each do |lot|
         break unless amount > 0
 
         num_to_consume = [lot.quantity, amount].min
@@ -256,30 +252,49 @@ class OrderItem < ActiveRecord::Base
 
         lots.build(lot: lot, quantity: num_to_consume)
         amount -= num_to_consume
+        specific = true
+      end
+
+      if amount > 0
+        product.lots_by_expiration.available_general(deliver_on_date).each do |lot|
+          break unless amount > 0
+
+          num_to_consume = [lot.quantity, amount].min
+          lot.decrement!(:quantity, num_to_consume)
+
+          lots.build(lot: lot, quantity: num_to_consume)
+          amount -= num_to_consume
+        end
+      end
+
+      amount = initial_amount
+      lots.order(created_at: :desc).each do |lot|
+        break unless amount
+
+        num_to_consume = [lot.quantity, amount].min
+        lot.increment!(:quantity, num_to_consume)
+
+        amount -= num_to_consume
       end
     end
-
-    amount = initial_amount
-    lots.order(created_at: :desc).each do |lot|
-      break unless amount
-
-      num_to_consume = [lot.quantity, amount].min
-      lot.increment!(:quantity, num_to_consume)
-
-      amount -= num_to_consume
-    end
-
   end
 
   def return_inventory_amount(amount)
-    lots.order(created_at: :desc).each do |lot|
-      break unless amount
-
+    if !po_lot_id.nil? && po_lot_id > 0 # Decrement specific consignment lot
+      lot = Lot.find(po_lot_id)
       num_to_return = [lot.quantity, amount].min
       lot.lot.increment!(:quantity, num_to_return)
       lot.decrement!(:quantity, num_to_return)
+    else
+      lots.order(created_at: :desc).each do |lot|
+        break unless amount
 
-      amount -= num_to_return
+        num_to_return = [lot.quantity, amount].min
+        lot.lot.increment!(:quantity, num_to_return)
+        lot.decrement!(:quantity, num_to_return)
+
+        amount -= num_to_return
+      end
     end
   end
 
