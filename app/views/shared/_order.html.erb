@@ -320,7 +320,7 @@
           <% if current_market.is_consignment_market? %>
             <td>
             <% if item.object.order.sales_order? %>
-              <% lt = Lot.find(item.object.po_lot_id) %>
+              <% lt = !item.object.po_lot_id.nil? ? Lot.find(item.object.po_lot_id) : nil %>
             <% else %>
               <% lt = item.object.product.lots.where("#{item.object.order.id} = split_part(lots.number,'-',1)::integer").last %>
             <% end %>
