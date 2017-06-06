@@ -319,7 +319,11 @@
 
           <% if current_market.is_consignment_market? %>
             <td>
-            <% lt = item.object.product.lots.where("#{item.object.order.id} = split_part(lots.number,'-',1)::integer").last %>
+            <% if item.object.order.sales_order? %>
+              <% lt = item.object.product.lots.available_general.last %>
+            <% else %>
+              <% lt = item.object.product.lots.where("#{item.object.order.id} = split_part(lots.number,'-',1)::integer").last %>
+            <% end %>
             <% if !lt.nil? && item.object.delivery_status == 'delivered' %>
               <span>
                   <%= "#{lt.number}" %><br/>
