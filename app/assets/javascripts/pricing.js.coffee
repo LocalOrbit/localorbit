@@ -14,6 +14,7 @@ $ ->
     lock_label = salePrice.parents('tr').first().find('label.lock-label')
     netprice_checkbox = salePrice.parents('tr').first().find('input.lock-field')
     fee = salePrice.parents('tr').first().find('input.fee')
+    fee_type = salePrice.parents('tr').first().find('input[name="price[fee]"]')
     markup_pct = salePrice.parents('tr').first().find('div.markup-pct')
     use_mkt_fee = salePrice.parents('tr').first().find('input.mkt-fee')
     use_category_fee = salePrice.parents('tr').first().find('input.category-fee')
@@ -56,14 +57,14 @@ $ ->
       if marketId == ""
         marketId = "all"
 
-      if use_product_fee.prop('checked')
+      if use_product_fee.prop('checked') || fee_type.val() == "2"
         if getFeeValue() > 0
           return 1 - (getFeeValue()/100 + ccRate)
         else if productFee > 0
           return 1 - (productFee/100 + ccRate)
         else
           return 0.00
-      else if use_category_fee.prop('checked')
+      else if use_category_fee.prop('checked') || fee_type.val() == "1"
         if marketToCategoryPercentMap?
           return 1 - (marketToCategoryPercentMap[marketId]/100 + ccRate)
       else
