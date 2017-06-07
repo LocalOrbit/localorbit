@@ -54,7 +54,11 @@
     </div>
 </td>
 <% else %>
-  <input type="hidden" name="price[fee]" value="0" class="mkt-fee" />
+    <% if current_user.seller? && !@category_percents_by_market_id.nil? %>
+      <input type="hidden" name="price[fee]" value="1" class="category-fee" />
+    <% else %>
+      <input type="hidden" name="price[fee]" value="0" class="mkt-fee" />
+    <% end %>
 <% end %>
 <td>
   <% sale_class = current_market.is_consignment_market? ? 'sale-price consignment' : 'sale-price' %>
