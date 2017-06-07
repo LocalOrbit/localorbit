@@ -376,6 +376,7 @@ FactoryGirl.define do
     discount_market     0.0
     discount_seller     0.0
     product_fee_pct     0.0
+    fee 0
 
     trait :delivered do
       delivery_status "delivered"
