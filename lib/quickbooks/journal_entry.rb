@@ -41,13 +41,13 @@ module Quickbooks
         entity.entity_ref = customer
 
         jentry_so = Quickbooks::Model::Line.new
-        jentry_so.amount = order.total_cost * -1
+        jentry_so.amount = order.total_cost
         jentry_so.description = order.id
 
         puts "SO: #{jentry_so.amount}"
 
         jentry_so.journal_entry! do |entry|
-          entry.posting_type = 'Credit'
+          entry.posting_type = 'Debit'
           entry.entity = entity
           entry.account_ref = ar_acct
         end
@@ -93,13 +93,13 @@ module Quickbooks
           entity.entity_ref = vendor
 
           jentry_po = Quickbooks::Model::Line.new
-          jentry_po.amount = po.amt * -1
+          jentry_po.amount = po.amt
           jentry_po.description = po.order_id
 
           puts "PO: #{jentry_po.amount}"
 
           jentry_po.journal_entry! do |entry|
-            entry.posting_type = 'Debit'
+            entry.posting_type = 'Credit'
             entry.entity = entity
             entry.account_ref = ap_acct
           end
@@ -114,13 +114,13 @@ module Quickbooks
         income_acct.value = config.fee_income_account_id
 
         jentry_income = Quickbooks::Model::Line.new
-        jentry_income.amount = profit_sum * -1
+        jentry_income.amount = profit_sum
         jentry_income.description = order.id
 
         puts "Income: #{jentry_income.amount}"
 
         jentry_income.journal_entry! do |entry|
-          entry.posting_type = 'Debit'
+          entry.posting_type = 'Credit'
           entry.account_ref = income_acct
         end
 
@@ -133,13 +133,13 @@ module Quickbooks
         dlvy_acct.value = config.delivery_fee_account_id
 
         jentry_dlvy = Quickbooks::Model::Line.new
-        jentry_dlvy.amount = order.delivery_fees * -1
+        jentry_dlvy.amount = order.delivery_fees
         jentry_dlvy.description = order.id
 
         puts "Delivery: #{jentry_dlvy.amount}"
 
         jentry_dlvy.journal_entry! do |entry|
-          entry.posting_type = 'Debit'
+          entry.posting_type = 'Credit'
           entry.account_ref = dlvy_acct
         end
 
