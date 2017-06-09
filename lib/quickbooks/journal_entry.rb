@@ -47,7 +47,7 @@ module Quickbooks
         puts "SO: #{jentry_so.amount}"
 
         jentry_so.journal_entry! do |entry|
-          entry.posting_type = 'Credit'
+          entry.posting_type = 'Debit'
           entry.entity = entity
           entry.account_ref = ar_acct
         end
@@ -99,7 +99,7 @@ module Quickbooks
           puts "PO: #{jentry_po.amount}"
 
           jentry_po.journal_entry! do |entry|
-            entry.posting_type = 'Debit'
+            entry.posting_type = 'Credit'
             entry.entity = entity
             entry.account_ref = ap_acct
           end
@@ -120,7 +120,7 @@ module Quickbooks
         puts "Income: #{jentry_income.amount}"
 
         jentry_income.journal_entry! do |entry|
-          entry.posting_type = 'Debit'
+          entry.posting_type = 'Credit'
           entry.account_ref = income_acct
         end
 
@@ -139,7 +139,7 @@ module Quickbooks
         puts "Delivery: #{jentry_dlvy.amount}"
 
         jentry_dlvy.journal_entry! do |entry|
-          entry.posting_type = 'Debit'
+          entry.posting_type = 'Credit'
           entry.account_ref = dlvy_acct
         end
 
