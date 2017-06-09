@@ -22,7 +22,7 @@
       <ul class="tabs">
         <% if @product.persisted? %>
             <%= content_tag(:li, link_to_or_span("Product Info", [:admin, @product]), class: "completed tab") %>
-            <% if current_market.is_buysell_market? %>
+            <% if current_market.is_buysell_market? || (current_market.is_consignment_market? && policy(:lot).index?) %>
             <%= content_tag(:li, link_to_or_span("Inventory", [:admin, @product, :lots]),
                             id: 'product-inventory-nav', class: (inventory_tab_complete? ? 'completed tab' : 'tab')) %>
             <% end %>
