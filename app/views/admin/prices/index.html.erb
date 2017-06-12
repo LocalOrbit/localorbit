@@ -169,11 +169,11 @@
                 </td>
                 <% else # For suppliers fee option is not shown %>
                   <% if price.fee == 0 %>
-                    <input type="hidden" name="price[<%=price.id%>][fee]" value="0" class="mkt-fee">
+                    <input type="hidden" name="price[<%=price.id%>][fee]" value="0" class="fee-type mkt-fee">
                   <% elsif price.fee == 1 %>
-                    <input type="hidden" name="price[<%=price.id%>][fee]" value="1" class="category-fee">
+                    <input type="hidden" name="price[<%=price.id%>][fee]" value="1" class="fee-type category-fee">
                   <% elsif price.fee == 2 %>
-                    <input type="hidden" name="price[<%=price.id%>][fee]" value="2" class="product-fee">
+                    <input type="hidden" name="price[<%=price.id%>][fee]" value="2" class="fee-type product-fee">
                   <% end %>
                 <% end %>
                 <td class="sale-price">
