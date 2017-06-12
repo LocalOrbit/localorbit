@@ -14,7 +14,7 @@ $ ->
     lock_label = salePrice.parents('tr').first().find('label.lock-label')
     netprice_checkbox = salePrice.parents('tr').first().find('input.lock-field')
     fee = salePrice.parents('tr').first().find('input.fee')
-    fee_type = salePrice.parents('tr').first().find('input[name="price[fee]"]')
+    fee_type = salePrice.parents('tr').first().find('.fee-type')
     markup_pct = salePrice.parents('tr').first().find('div.markup-pct')
     use_mkt_fee = salePrice.parents('tr').first().find('input.mkt-fee')
     use_category_fee = salePrice.parents('tr').first().find('input.category-fee')
