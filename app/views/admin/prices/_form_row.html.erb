@@ -56,12 +56,12 @@
 <% else %>
     <% if current_user.seller? %>
         <% if !@category_percents_by_market_id.nil? && Float(@category_percents_by_market_id.values_at(current_market.id.to_s)[0]) > 0 %>
-        <input type="hidden" name="price[fee]" value="1" class="category-fee" />
+        <input type="hidden" name="price[fee]" value="1" class="fee-type category-fee" />
         <% else %>
-        <input type="hidden" name="price[fee]" value="0" class="mkt-fee" />
+        <input type="hidden" name="price[fee]" value="0" class="fee-type mkt-fee" />
         <% end %>
     <% else %>
-        <input type="hidden" name="price[fee]" value="0" class="mkt-fee" />
+        <input type="hidden" name="price[fee]" value="0" class="fee-type mkt-fee" />
     <% end %>
 <% end %>
 <td>
