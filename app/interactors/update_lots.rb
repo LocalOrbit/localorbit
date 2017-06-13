@@ -22,8 +22,8 @@ class UpdateLots
 
   def update_pending_so(item, lot)
     # When SO has been placed against undelivered PO, and PO is delivered, the newly created lot needs to be assigned to the SO consignment transaction
-    ct_po = ConsignmentTransaction.where(transaction_type: 'PO', order_id: order.id, product_id: item.product.id).visible.last
-    ct_so = ConsignmentTransaction.where(transaction_type: 'SO', parent_id: ct_po.id, product_id: item.product.id, lot_id: nil).visible.last
+    ct_po = ConsignmentTransaction.where(transaction_type: 'PO', order_id: order.id, product_id: item.product.id, deleted_at: nil).visible.last
+    ct_so = ConsignmentTransaction.where(transaction_type: 'SO', parent_id: ct_po.id, product_id: item.product.id, lot_id: nil, deleted_at: nil).visible.last
 
       if !ct_so.nil?
         so_order_item = OrderItem.find(ct_so.order_item_id)
@@ -51,7 +51,7 @@ class UpdateLots
 
   def update_po(item, lot)
     # When SO has been placed against undelivered PO, and PO is delivered, the newly created lot needs to be assigned to the SO consignment transaction
-    ct_po = ConsignmentTransaction.where(transaction_type: 'PO', order_id: order.id, product_id: item.product.id).visible.last
+    ct_po = ConsignmentTransaction.where(transaction_type: 'PO', order_id: order.id, product_id: item.product.id, deleted_at: nil).visible.last
 
     if !ct_po.nil? && lot.id > 0
       ct_po.lot_id = lot.id
