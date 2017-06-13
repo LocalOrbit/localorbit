@@ -89,8 +89,8 @@ module Inventory
 
       def unsplit_product(product_id)
         child_product = Product.find(product_id)
-        parent_ct = ConsignmentTransaction.where(transaction_type: 'SPLIT', child_product_id: child_product.id).last
-        child_po_ct = ConsignmentTransaction.where(transaction_type: 'PO', product_id: child_product.id).last
+        parent_ct = ConsignmentTransaction.where(transaction_type: 'SPLIT', child_product_id: child_product.id, deleted_at: nil).last
+        child_po_ct = ConsignmentTransaction.where(transaction_type: 'PO', product_id: child_product.id, deleted_at: nil).last
         child_lot = Lot.find(parent_ct.child_lot_id)
 
         parent_product = Product.find(child_product.parent_product_id)
@@ -116,7 +116,7 @@ module Inventory
       end
 
       def can_unsplit_product?(product_id)
-        ConsignmentTransaction.where(transaction_type: 'SO', product_id: product_id).length == 0
+        ConsignmentTransaction.where(transaction_type: 'SO', product_id: product_id, deleted_at: nil).length == 0
       end
     end
   end

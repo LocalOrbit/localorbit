@@ -15,6 +15,8 @@
     render: function() {
         var qty;
         var pid = ('');
+        var lid = ('');
+        var cid = ('');
         var lot_desc;
         var sale_entry;
         var net_entry;
@@ -141,8 +143,10 @@
       var inputClass = "redesigned app-product-input";
 
       if (this.props.orderId) {
-          qty = (<input style={{width: "75px"}} type="number" placeholder="0" defaultValue={this.state.cartItemQuantity && this.state.cartLotId == this.props.lot.id ? this.state.cartItemQuantity : ''} name="items_to_add[][quantity]" className={inputClass} onKeyDown={this.clearField} onChange={this.updateQuantity} />);
+          qty = (<input style={{width: "75px"}} type="number" placeholder="0" defaultValue={this.state.cartItemQuantity && this.state.cartLotId == lot.id ? this.state.cartItemQuantity : ''} name="items_to_add[][quantity]" className={inputClass} onKeyDown={this.clearField} onChange={this.updateQuantity} />);
           pid = (<input type="hidden" name="items_to_add[][product_id]" value={prd.id} />);
+          lid = (<input type="hidden" name="items_to_add[][lot_id]" value={lot.id ? lot.id : 0} />);
+          cid = (<input type="hidden" name="items_to_add[][ct_id]" value={lot.ct_id ? lot.ct_id : 0} />);
       }
       else {
           qty = (<input style={{width: "75px"}} type="number" placeholder="0"
@@ -202,6 +206,8 @@
                 <div className="quantity" style={{float:"left", width:"33%", textAlign:"center"}}>
                     {qty}
                     {pid}
+                    {lid}
+                    {cid}
                 </div>
                 <div className="sale-price" style={{float:"left", width:"32%", textAlign:"center"}}>
                   {sale_entry}

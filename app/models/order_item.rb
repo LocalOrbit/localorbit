@@ -144,14 +144,14 @@ class OrderItem < ActiveRecord::Base
       organization_id = order.organization.id
     end
     qty = 0
-    ct = ConsignmentTransaction.where(id: po_ct_id).where(lot_id:nil)
+    ct = ConsignmentTransaction.where(id: po_ct_id).where(lot_id:nil).where(deleted_at: nil)
     if !ct.nil? && !ct.empty?
       qty = ct.sum(:quantity)
     elsif !product.lots.empty? && product.lots.sum(:quantity) > 0
       qty = product.lots_by_expiration.available_specific(Time.current.end_of_minute, market_id, organization_id).sum(:quantity)
       qty += product.lots_by_expiration.available_general(Time.current.end_of_minute).sum(:quantity)
     end
-    if qty < (quantity - (quantity_was || 0))
+    if qty > 0 && qty < (quantity - (quantity_was || 0))
       errors[:inventory] = "there are only #{Integer(qty + (quantity_was || 0))} #{product.name.pluralize(qty)} available."
     end
   end
@@ -169,7 +169,7 @@ class OrderItem < ActiveRecord::Base
   end
 
   def remove_consignment_transaction
-    ct = ConsignmentTransaction.where(order_id: self.order.id, order_item_id: self.id).first
+    ct = ConsignmentTransaction.where(order_id: self.order.id, order_item_id: self.id, deleted_at: nil).first
     if !ct.nil?
       ct.soft_delete
     end

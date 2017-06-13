@@ -9,9 +9,9 @@ class CreateConsignmentTransaction
 
       po_order = nil
       if order.sales_order?
-        check_existing = ConsignmentTransaction.where(market_id: order.market.id, transaction_type: 'SO', order_id: order.id, product_id: item.product.id, lot_id: item.po_lot_id).first
+        check_existing = ConsignmentTransaction.where(market_id: order.market.id, transaction_type: 'SO', order_id: order.id, product_id: item.product.id, lot_id: item.po_lot_id, deleted_at: nil).first
       else
-        check_existing = ConsignmentTransaction.where(market_id: order.market.id, transaction_type: 'PO', order_id: order.id, product_id: item.product.id).first
+        check_existing = ConsignmentTransaction.where(market_id: order.market.id, transaction_type: 'PO', order_id: order.id, product_id: item.product.id, deleted_at: nil).first
       end
       
       if !item.po_ct_id.nil? && item.po_ct_id > 0
