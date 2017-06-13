@@ -76,7 +76,7 @@ module Inventory
       def unrepack_product(user, order, params)
         # Get transactions
         child_ct = ConsignmentTransaction.find(params[:transaction_id])
-        parent_ct = ConsignmentTransaction.where(parent_id: child_ct.id).first
+        parent_ct = ConsignmentTransaction.where(parent_id: child_ct.id, deleted_at: nil).first
 
         # Remove the child item
         parent_order_item = OrderItem.find(parent_ct.order_item_id)
