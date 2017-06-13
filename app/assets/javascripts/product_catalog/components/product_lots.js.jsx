@@ -20,9 +20,13 @@
         var net_entry;
         var status;
         var build_committed;
+        var build_committed_ad;
         var committed_detail;
         var committed_summary;
+        var committed_ad_detail;
+        var committed_ad_summary;
         var committed_count;
+        var committed_ad_count;
         var lot;
         var split_select_options;
         var split_action;
@@ -30,6 +34,9 @@
         var note_indicator;
         var defaultSale;
         var defaultNet;
+        var prd;
+
+        prd = this.props.product;
 
         if (this.props.salesOrder) {
             if (this.state.cartSalePrice && this.state.cartLotId == this.props.lot.id)
@@ -93,6 +100,17 @@
 
         build_committed = build_committed + '</tbody></table>';
 
+        build_committed_ad = '<table class="committed-table"> <thead> <th></th> <th>Date</th> <th>Qty</th> <th>Sale</th> <th>Net</th> </thead> <tbody>';
+        committed_ad_count = 0;
+        _.map(this.props.product.committed_ad, function (c) {
+            if (lot.number === "") {
+                committed_ad_count = committed_ad_count + (c.quantity * 1);
+                build_committed_ad = build_committed_ad +  '<tr> <td>' + c.buyer_name+'</td> <td>' + c.delivered_at + '</td><td>' + c.quantity + '</td> <td>' + c.sale_price + '</td> <td>' + c.net_price + '</td> </tr>';
+            }
+        });
+
+        build_committed_ad = build_committed_ad + '</tbody></table>';
+
         if (this.props.lot.status == 'available' && this.props.lot.quantity > 0) {
             lot_desc = (<div><div>{note_indicator}</div>{this.props.lot.number} / {this.props.lot.quantity + committed_count}<br/><div style={{fontSize: '12px', color: '#999'}}>{this.props.lot.delivery_date}</div></div>);
             status = (<div style={{fontSize: "11px"}}>On Hand</div>);
@@ -105,6 +123,14 @@
         if (committed_count > 0) {
             committed_detail = build_committed;
             committed_summary = <div style={{marginTop: "10px", fontSize: "10px"}}>{committed_count} Committed</div>
+            committed_ad_detail = ('');
+            committed_ad_summary = ('');
+        }
+        else if (committed_ad_count > 0) {
+            committed_ad_detail = build_committed_ad;
+            committed_ad_summary = <div style={{marginTop: "10px", fontSize: "10px"}}>{committed_ad_count} Committed</div>
+            committed_detail = ('');
+            committed_summary = ('');
         }
         else {
             committed_detail = ('');
@@ -116,11 +142,14 @@
 
       if (this.props.orderId) {
           qty = (<input style={{width: "75px"}} type="number" placeholder="0" defaultValue={this.state.cartItemQuantity && this.state.cartLotId == this.props.lot.id ? this.state.cartItemQuantity : ''} name="items_to_add[][quantity]" className={inputClass} onKeyDown={this.clearField} onChange={this.updateQuantity} />);
-          pid = (<input type="hidden" name="items_to_add[][product_id]" defaultValue={this.props.product.id}/>);
+          pid = (<input type="hidden" name="items_to_add[][product_id]" value={prd.id} />);
       }
-      else
-          qty = (<input style={{width: "75px"}} type="number" placeholder="0" defaultValue={this.state.cartItemQuantity && this.state.cartLotId == this.props.lot.id ? this.state.cartItemQuantity : ''} className={inputClass} onKeyDown={this.clearField} onChange={this.updateSOQuantity}/>);
-
+      else {
+          qty = (<input style={{width: "75px"}} type="number" placeholder="0"
+                        defaultValue={this.state.cartItemQuantity && this.state.cartLotId == this.props.lot.id ? this.state.cartItemQuantity : ''}
+                        className={inputClass} onKeyDown={this.clearField} onChange={this.updateSOQuantity}/>);
+          pid = ('');
+      }
       if (this.props.product.split_options.length > 0 && this.props.lot.status == 'available') {
           split_select_options = this.props.product.split_options.map(function (option) {
               return <option key={option.id}
@@ -166,6 +195,7 @@
             {lot_desc}
             {status}
             {committed_summary}
+            {committed_ad_summary}
           </th>
           <td colSpan="4" style={{verticalAlign: 'top'}}>
             <div style={{float:"right", background:"#F7F7F7", width:"100%", borderRadius: "4px", border:"1px solid #D1D1D1", padding: "4px 0"}}>
@@ -183,13 +213,14 @@
                     {deleteButton}
                 </div>
                 <div>
-                    <input type="hidden" className="lot-id" defaultValue={this.state.cartLotId && this.state.cartLotId == this.props.lot.id ? this.state.cartLotId : this.props.lot.id} />
-                    <input type="hidden" className="ct-id" defaultValue={this.state.cartCtId && this.state.cartLotId == this.props.lot.id ? this.state.cartCtId : this.props.lot.ct_id} />
+                    <input type="hidden" className="lot-id" value={this.state.cartLotId && this.state.cartLotId == this.props.lot.id ? this.state.cartLotId : this.props.lot.id} />
+                    <input type="hidden" className="ct-id" value={this.state.cartCtId && this.state.cartLotId == this.props.lot.id ? this.state.cartCtId : this.props.lot.ct_id} />
                 </div>
                 {split_action}
                 {undo_split_action}
             </div>
-            <div dangerouslySetInnerHTML={{__html: committed_detail }}></div>
+              <div dangerouslySetInnerHTML={{__html: committed_detail }}></div>
+              <div dangerouslySetInnerHTML={{__html: committed_ad_detail }}></div>
           </td>
           </tr>
       );

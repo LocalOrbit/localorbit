@@ -243,7 +243,7 @@ module Api
             AND consignment_transactions.product_id = ?", current_market.id, product.id)
             .select("consignment_transactions.id AS ct_id, #{awaiting_delivery_qty - awaiting_ordered_qty} AS quantity, '' AS number, '' AS delivery_date, 'awaiting_delivery'::text AS status")
 
-          committed = Order.joins(:delivery, :organization, items: [lots: [:lot]])
+          committed = Order.joins(:delivery, :organization, items: [lots: [:lot]]).joins("JOIN consignment_transactions ON consignment_transactions.order_id = orders.id AND consignment_transactions.order_item_id = order_items.id AND consignment_transactions.transaction_type='SO' AND consignment_transactions.lot_id IS NOT NULL")
                           .so_orders
                           .where("order_items.delivery_status = 'pending' AND orders.market_id = ? AND order_items.product_id = ?", current_market.id, product.id)
                           .select("order_items.product_id AS id, TO_CHAR(deliveries.deliver_on,'MM/DD/YYYY') AS delivered_at, order_item_lots.lot_id, lots.number, organizations.name AS buyer_name, trunc(order_items.quantity) AS quantity, order_items.unit_price AS sale_price, order_items.net_price")
@@ -251,6 +251,16 @@ module Api
           committed.each do |c|
             committed_array << {:id => c['id'], :delivered_at => c['delivered_at'], :lot_id => c['lot_id'], :number => c['number'], :buyer_name => c['buyer_name'], :quantity => c['quantity'], :sale_price => c['sale_price'], :net_price => c['net_price']}
           end
+
+          committed_ad = Order.joins(:delivery, :organization, :items).joins("JOIN consignment_transactions ON consignment_transactions.order_id = orders.id AND consignment_transactions.order_item_id = order_items.id AND consignment_transactions.transaction_type='SO' AND consignment_transactions.lot_id IS NULL")
+                          .so_orders
+                          .where("order_items.delivery_status = 'pending' AND orders.market_id = ? AND order_items.product_id = ?", current_market.id, product.id)
+                          .select("order_items.product_id AS id, TO_CHAR(deliveries.deliver_on,'MM/DD/YYYY') AS delivered_at, organizations.name AS buyer_name, trunc(order_items.quantity) AS quantity, order_items.unit_price AS sale_price, order_items.net_price")
+          committed_ad_array = []
+          committed_ad.each do |c|
+            committed_ad_array << {:id => c['id'], :delivered_at => c['delivered_at'], :lot_id => nil, :number => nil, :buyer_name => c['buyer_name'], :quantity => c['quantity'], :sale_price => c['sale_price'], :net_price => c['net_price']}
+          end
+
           lots = lots + awaiting_delivery
 
           undo_split_options = nil
@@ -276,6 +286,7 @@ module Api
               :prices => prices,
               :lots => lots,
               :committed => committed_array,
+              :committed_ad => committed_ad_array,
               :split_options => split_options,
               :undo_split_id => !undo_split_options.nil? ? undo_split_options.child_lot_id : nil,
               :cart_item => cart_item.object,
