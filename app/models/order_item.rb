@@ -143,11 +143,13 @@ class OrderItem < ActiveRecord::Base
       market_id = order.market.id
       organization_id = order.organization.id
     end
-    if !product.lots.empty? && product.lots.sum(:quantity) > 0
+    qty = 0
+    ct = ConsignmentTransaction.where(id: po_ct_id).where(lot_id:nil)
+    if !ct.nil? && !ct.empty?
+      qty = ct.sum(:quantity)
+    elsif !product.lots.empty? && product.lots.sum(:quantity) > 0
       qty = product.lots_by_expiration.available_specific(Time.current.end_of_minute, market_id, organization_id).sum(:quantity)
       qty += product.lots_by_expiration.available_general(Time.current.end_of_minute).sum(:quantity)
-    else
-      qty = ConsignmentTransaction.where(transaction_type: 'PO', product_id: product_id, lot_id: nil).sum(:quantity)
     end
     if qty < (quantity - (quantity_was || 0))
       errors[:inventory] = "there are only #{Integer(qty + (quantity_was || 0))} #{product.name.pluralize(qty)} available."

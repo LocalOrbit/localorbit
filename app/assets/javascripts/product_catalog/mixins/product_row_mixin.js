@@ -45,6 +45,16 @@
                 sale_price: React.PropTypes.string,
                 net_price: React.PropTypes.string,
             })),
+            committed_ad: React.PropTypes.arrayOf(React.PropTypes.shape({
+                id: React.PropTypes.number,
+                delivered_at: React.PropTypes.string,
+                lot_id: React.PropTypes.number,
+                number: React.PropTypes.string,
+                buyer_name: React.PropTypes.string,
+                quantity: React.PropTypes.number,
+                sale_price: React.PropTypes.string,
+                net_price: React.PropTypes.string,
+            })),
             split_options: React.PropTypes.arrayOf(React.PropTypes.shape({
                 id: React.PropTypes.number,
                 name: React.PropTypes.string
