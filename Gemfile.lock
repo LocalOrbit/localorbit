@@ -384,6 +384,16 @@ GEM
       guard (~> 2.1)
       rspec (>= 2.14, < 4.0)
     hashie (3.4.3)
+    heroku (3.32.0)
+      heroku-api (>= 0.3.19)
+      launchy (>= 0.3.2)
+      multi_json (>= 1.10)
+      netrc (>= 0.10.0)
+      rest-client (>= 1.6.0)
+      rubyzip (>= 0.9.9)
+    heroku-api (0.3.23)
+      excon (~> 0.44)
+      multi_json (~> 1.8)
     hike (1.2.3)
     hitimes (1.2.2)
     http-cookie (1.0.2)
@@ -502,6 +512,11 @@ GEM
       activerecord (>= 3.1)
       activesupport (>= 3.1)
       arel
+    pgbackups-archive (1.1.0)
+      fog-aws
+      heroku (>= 3.28.6, <= 3.32)
+      heroku-api (~> 0.3.23)
+      rake
     poltergeist (1.8.1)
       capybara (~> 2.1)
       cliver (~> 0.3.1)
@@ -789,6 +804,7 @@ DEPENDENCIES
   groupdate!
   guard-konacha-rails
   guard-rspec
+  heroku-api
   httparty
   interactor (< 3.0)
   interactor-rails (< 3.0)
@@ -812,6 +828,7 @@ DEPENDENCIES
   periscope-activerecord
   pg
   pg_search
+  pgbackups-archive
   poltergeist
   postgres_ext
   pry-byebug
