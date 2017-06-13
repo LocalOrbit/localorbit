@@ -218,7 +218,7 @@ module Api
                 .select("consignment_transactions.id AS ct_id, lots.id, lots.quantity, lots.number, (SELECT DISTINCT notes FROM consignment_transactions WHERE consignment_transactions.lot_id = lots.id AND transaction_type = 'PO') inv_note, (SELECT TO_CHAR(MAX(delivery_date), 'MM/DD/YYYY') FROM consignment_transactions WHERE lot_id = lots.id AND transaction_type = 'PO') delivery_date, 'available'::text AS status")
 
           awaiting_delivery_qty = ConsignmentTransaction
-                .where("transaction_type = 'PO' AND lot_id IS NULL AND market_id = ? AND product_id = ?", current_market.id, product.id)
+                .where("transaction_type = 'PO' AND lot_id IS NULL AND market_id = ? AND product_id = ? AND deleted_at IS NULL", current_market.id, product.id)
                 .sum(:quantity)
 
           awaiting_delivery_holdover_qty = ConsignmentTransaction
@@ -231,7 +231,7 @@ module Api
                .sum("consignment_transactions.quantity")
 
           awaiting_ordered_qty = ConsignmentTransaction
-               .where("transaction_type = 'SO' AND lot_id IS NULL AND market_id = ? AND product_id = ?", current_market.id, product.id)
+               .where("transaction_type = 'SO' AND lot_id IS NULL AND market_id = ? AND product_id = ? AND deleted_at IS NULL", current_market.id, product.id)
                .sum(:quantity)
 
           awaiting_delivery = ConsignmentTransaction

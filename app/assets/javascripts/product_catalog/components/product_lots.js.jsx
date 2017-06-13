@@ -116,7 +116,7 @@
             status = (<div style={{fontSize: "11px"}}>On Hand</div>);
         }
         else if (this.props.lot.status == 'awaiting_delivery' && this.props.lot.quantity > 0) {
-            lot_desc = (<div>{this.props.lot.quantity}</div>);
+            lot_desc = (<div>{this.props.lot.quantity + committed_ad_count}</div>);
             status = (<div style={{fontSize: "11px", color: "#991111"}}>Awaiting Delivery</div>);
         }
 
