@@ -227,8 +227,8 @@ module CloneProductionHelper
   end
 
   def backup_and_download
-    sh "heroku pg:backups capture -a #{source_app}"
-    sh "curl -o #{dump_file} `heroku pg:backups public-url -a #{source_app}`"
+    #sh "heroku pg:backups capture -a #{source_app}"
+    #sh "curl -o #{dump_file} `heroku pg:backups public-url -a #{source_app}`"
   end
 
   def import_local_copy
