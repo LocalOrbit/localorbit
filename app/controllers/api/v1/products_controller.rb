@@ -155,7 +155,6 @@ module Api
               JOIN organizations supplier ON general_products.organization_id=supplier.id
               LEFT JOIN market_organizations ON general_products.organization_id = market_organizations.organization_id
               AND market_organizations.market_id = #{current_market.id}")
-                 .filter_by_current_order(order)
                  .filter_by_name_or_category_or_supplier(query)
                  .filter_by_categories(category_ids)
                  .filter_by_suppliers(seller_ids)
