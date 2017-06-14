@@ -117,7 +117,7 @@
             lot_desc = (<div><div>{note_indicator}</div>{this.props.lot.number} / {this.props.lot.quantity + committed_count}<br/><div style={{fontSize: '12px', color: '#999'}}>{this.props.lot.delivery_date}</div></div>);
             status = (<div style={{fontSize: "11px"}}>On Hand</div>);
         }
-        else if (this.props.lot.status == 'awaiting_delivery' && this.props.lot.quantity > 0) {
+        else if (this.props.lot.status == 'awaiting_delivery' && this.props.lot.quantity + committed_ad_count > 0) {
             lot_desc = (<div>{this.props.lot.quantity + committed_ad_count}</div>);
             status = (<div style={{fontSize: "11px", color: "#991111"}}>Awaiting Delivery</div>);
         }
