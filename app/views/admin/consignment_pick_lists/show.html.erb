@@ -379,7 +379,7 @@
         </thead>
         <tbody class="order-detail">
         <% order.items.order(:name).each do |item| %>
-        <% lt = Lot.find(!item.po_lot_id.nil? && item.po_lot_id ? item.po_lot_id : item.lots.last.lot.id) %>
+        <% lt = !item.po_lot_id.nil? && item.po_lot_id ? Lot.find(item.po_lot_id) : nil %>
         <tr>
           <td><%= item.name %></td>
           <td><%= item.product.organization.name %></td>

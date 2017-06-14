@@ -48,7 +48,7 @@ module Inventory
           WHERE ct.id = ct2.parent_id
           AND ct.transaction_type = 'PO'
           AND ct.order_id = $1
-          AND ct2.deleted_at IS NULL", 'has_po_query', [[nil,order.id]])
+          AND ct.deleted_at IS NULL AND ct2.deleted_at IS NULL", 'has_po_query', [[nil,order.id]])
 
           Integer(result[0]['cnt']) == 0 ? true : false
         end
@@ -110,6 +110,7 @@ module Inventory
             .where("orders.delivery_status = 'pending'
             AND consignment_transactions.transaction_type = 'PO'
             AND consignment_transactions.lot_id IS NULL
+            AND consignment_transactions.deleted_at IS NULL
             AND consignment_transactions.market_id = ?
             AND consignment_transactions.product_id = ?", market_id, product_id)
             .select(:quantity).visible.first
@@ -117,7 +118,7 @@ module Inventory
       end
 
       def can_delete_order?(order)
-        ct = ConsignmentTransaction.where("order_id = ? AND transaction_type IN ('HOLDOVER','SHRINK','REPACK')", order.id).select(:id).visible.first
+        ct = ConsignmentTransaction.where(deleted_at: nil).where("order_id = ? AND transaction_type IN ('HOLDOVER','SHRINK','REPACK')", order.id).select(:id).visible.first
         ct.nil? ? true : false
       end
 
@@ -141,7 +142,7 @@ module Inventory
 
       def remove_so(order)
         ct = ConsignmentTransaction
-         .where(order_id: order.id, transaction_type: 'SO')
+         .where(order_id: order.id, transaction_type: 'SO', deleted_at: nil)
 
         order.items.each do |item|
           item.destroy
@@ -178,12 +179,14 @@ module Inventory
         .select("p.order_id, organizations.name, sum(consignment_transactions.quantity * consignment_transactions.net_price) AS amt, sum((consignment_transactions.sale_price * consignment_transactions.quantity) - (consignment_transactions.net_price * consignment_transactions.quantity)) AS profit")
         .where("consignment_transactions.order_id = ?", order.id)
         .where("consignment_transactions.transaction_type = 'SO'")
+        .where(deleted_at: nil)
         .group("p.order_id, organizations.name")
       end
 
       def get_associated_po_item(order, item)
         ConsignmentTransaction.joins("JOIN consignment_transactions p ON p.parent_id = consignment_transactions.id")
         .where("p.product_id = ?", item.product.id)
+        .where(deleted_at: nil)
         .where("p.order_id = ?", order.id).first
       end
 
@@ -200,7 +203,7 @@ module Inventory
           delivery_date = delivery.deliver_on
           actual_count = product.available_inventory(delivery_date, market.id, organization.id, market.is_consignment_market? && order_type == 'sales' && item.lot_id > 0 ? item.lot_id : nil)
         elsif market.is_consignment_market? && order_type == 'sales' && item.lot_id == 0 # Checking consignment awaiting delivery item
-          actual_count = ConsignmentTransaction.where(transaction_type: 'PO', product_id: item.product_id, lot_id: nil).sum(:quantity)
+          actual_count = ConsignmentTransaction.where(transaction_type: 'PO', product_id: item.product_id, lot_id: nil, deleted_at: nil).sum(:quantity)
         end
         if item.quantity && item.quantity > 0 && !actual_count.nil? && item.quantity > actual_count
           error = {

@@ -110,7 +110,7 @@ Product is removed from the current PO, and moved to another PO (new or existing
         orig_product.save
 
         # Remove holdover consignment transactions
-        dest_t_ids = ConsignmentTransaction.where(order_id: t_id.holdover_order_id)
+        dest_t_ids = ConsignmentTransaction.where(order_id: t_id.holdover_order_id, deleted_at: nil)
         dest_t_ids.each do |trans|
           trans.soft_delete
         end
