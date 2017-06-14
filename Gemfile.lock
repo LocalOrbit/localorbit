@@ -384,10 +384,6 @@ GEM
       guard (~> 2.1)
       rspec (>= 2.14, < 4.0)
     hashie (3.4.3)
-    heroics (0.0.22)
-      erubis (~> 2.0)
-      excon
-      multi_json (>= 1.9.2)
     heroku (3.32.0)
       heroku-api (>= 0.3.19)
       launchy (>= 0.3.2)
@@ -466,7 +462,6 @@ GEM
     mime-types (2.99.1)
     mini_portile (0.6.2)
     minitest (5.8.4)
-    moneta (0.8.1)
     multi_json (1.12.0)
     multi_xml (0.5.5)
     multipart-post (1.2.0)
@@ -522,9 +517,6 @@ GEM
       heroku (>= 3.28.6, <= 3.32)
       heroku-api (~> 0.3.23)
       rake
-    platform-api (2.0.0)
-      heroics (~> 0.0.22)
-      moneta (~> 0.8.1)
     poltergeist (1.8.1)
       capybara (~> 2.1)
       cliver (~> 0.3.1)
@@ -812,6 +804,7 @@ DEPENDENCIES
   groupdate!
   guard-konacha-rails
   guard-rspec
+  heroku-api
   httparty
   interactor (< 3.0)
   interactor-rails (< 3.0)
@@ -836,7 +829,6 @@ DEPENDENCIES
   pg
   pg_search
   pgbackups-archive
-  platform-api
   poltergeist
   postgres_ext
   pry-byebug
