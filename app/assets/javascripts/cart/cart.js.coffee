@@ -144,7 +144,7 @@ $ ->
         $('.order-min-msg').html('')
         $('.payment-method').prop("disabled", false)
         #$("#place-order-button").prop("disabled", false)
-      else
+      else if order_min > 0
         $('.order-min-msg').html('<h2 class="order-min-msg" style="float: left; margin-left: 15px; color: red;">Your order does not meet the subtotal order minimum of ' + accounting.formatMoney(order_min) + '</h2>')
         $('.payment-method').prop("disabled", true)
         $('.payment-method').prop("checked", false)
