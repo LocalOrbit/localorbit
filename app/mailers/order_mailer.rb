@@ -59,11 +59,14 @@ class OrderMailer < BaseMailer
     attachments["invoice.pdf"] = {mime_type: "application/pdf", content: @order.invoice_pdf.try(:data)}
 
     to_list = @order.organization.users.map { |u| u.enabled_for_organization?(@order.organization) && u.is_confirmed? ? u.pretty_email : nil}
+    compact_list = to_list.compact
 
-    result = mail(
-      to: to_list,
-      subject: "New Invoice"
-    )
+    if !compact_list.blank?
+      mail(
+        to: to_list,
+        subject: "New Invoice"
+      )
+    end
   end
 
   def buyer_order_updated(order)
