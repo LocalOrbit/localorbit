@@ -41,7 +41,7 @@
             </div>
             <address class="adr">
               <span class="buyer-name"><%= current_cart.organization.name %></span><br/>
-              <span class="street-address"><%= current_cart.delivery_location.address %></span><br />
+              <span class="street-address"><%= !current_cart.delivery_location.address.nil? ? current_cart.delivery_location.address : ''  %></span><br />
               <span class="locality"><%= current_cart.delivery_location.city %></span>, <span class="region"><%= current_cart.delivery_location.state %></span> <span class="postal-code"><%= current_cart.delivery_location.zip %></span>
             </address>
           </div>
