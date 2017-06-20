@@ -112,22 +112,48 @@
           </tr>
         <% end %>
         <% if order.delivery_fees > 0.00 %>
+            <% subtotal = Financials::Orders::Calc.gross_item_total(items: order.items) %>
+            <% total = subtotal %>
             <tr class="totals">
               <th colspan="6" style="text-align: right">Subtotal:</th>
-              <th class="total-price"><%= number_to_currency Financials::Orders::Calc.gross_item_total(items: order.items) %></th>
+              <th class="total-price"><%= number_to_currency subtotal %></th>
             </tr>
+            <% if order.credit_amount > 0 && order.credit.apply_to == "subtotal" %>
+                <% total = total - order.credit_amount %>
+                <tr class="totals">
+                  <th colspan="6" style="text-align:right">Credit:</th>
+                  <th><%= number_to_currency order.credit_amount %></th>
+                </tr>
+            <% end %>
             <tr class="totals">
+              <% total = total + order.delivery_fees %>
               <th colspan="6" style="text-align:right">Delivery Fee:</th>
               <th class="total-price"><%= number_to_currency order.delivery_fees %></th>
             </tr>
+            <% if order.credit_amount > 0 && order.credit.apply_to == "total" %>
+                <tr class="totals">
+                  <% total = total - order.credit_amount %>
+                  <th colspan="6" style="text-align:right">Credit:</th>
+                  <th><%= number_to_currency order.credit_amount %></th>
+                </tr>
+            <% end %>
             <tr class="totals">
               <th colspan="6" style="text-align:right">Total:</th>
-              <th class="total-price"><%= number_to_currency Financials::Orders::Calc.gross_item_total(items: order.items) + order.delivery_fees %>
+              <th class="total-price"><%= number_to_currency total %>
             </tr>
         <% else %>
+            <% subtotal = Financials::Orders::Calc.gross_item_total(items: order.items) %>
+            <% total = subtotal %>
+            <% if order.credit_amount > 0 %>
+                <tr class="totals">
+                  <% total = total - order.credit_amount %>
+                  <th colspan="6" style="text-align:right">Credit:</th>
+                  <th><%= number_to_currency order.credit_amount %></th>
+                </tr>
+            <% end %>
             <tr class="totals">
               <th colspan="6" style="text-align: right">Total:</th>
-              <th class="total-price"><%= number_to_currency Financials::Orders::Calc.gross_item_total(items: order.items) %></th>
+              <th class="total-price"><%= number_to_currency total %></th>
             </tr>
         <% end %>
       </table>
