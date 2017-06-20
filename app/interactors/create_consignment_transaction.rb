@@ -54,6 +54,7 @@ class CreateConsignmentTransaction
 
       if !po_order.nil? && order.sales_order? && po_order.lot_id.nil?
         po_order.update_attributes(lot_id: !item.po_lot_id.nil? ? item.po_lot_id : nil)
+        Inventory::Utils.check_sold_through(po_order)
       end
 
       if holdover || repack
