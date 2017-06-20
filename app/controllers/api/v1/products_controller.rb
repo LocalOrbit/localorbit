@@ -245,7 +245,7 @@ module Api
           committed = Order.joins(:delivery, :organization, items: [lots: [:lot]]).joins("JOIN consignment_transactions ON consignment_transactions.order_id = orders.id AND consignment_transactions.order_item_id = order_items.id AND consignment_transactions.transaction_type='SO' AND consignment_transactions.lot_id IS NOT NULL")
                           .so_orders
                           .where("order_items.delivery_status = 'pending' AND orders.market_id = ? AND order_items.product_id = ?", current_market.id, product.id)
-                          .select("orders.id, order_items.product_id AS id, TO_CHAR(deliveries.deliver_on,'MM/DD/YYYY') AS delivered_at, order_item_lots.lot_id, lots.number, organizations.name AS buyer_name, trunc(order_items.quantity) AS quantity, order_items.unit_price AS sale_price, order_items.net_price")
+                          .select("orders.id AS order_id, order_items.product_id AS id, TO_CHAR(deliveries.deliver_on,'MM/DD/YYYY') AS delivered_at, order_item_lots.lot_id, lots.number, organizations.name AS buyer_name, trunc(order_items.quantity) AS quantity, order_items.unit_price AS sale_price, order_items.net_price")
                           .uniq
           committed_array = []
           committed.each do |c|
@@ -255,7 +255,7 @@ module Api
           committed_ad = Order.joins(:delivery, :organization, :items).joins("JOIN consignment_transactions ON consignment_transactions.order_id = orders.id AND consignment_transactions.order_item_id = order_items.id AND consignment_transactions.transaction_type='SO' AND consignment_transactions.lot_id IS NULL")
                           .so_orders
                           .where("order_items.delivery_status = 'pending' AND orders.market_id = ? AND order_items.product_id = ?", current_market.id, product.id)
-                          .select("orders.id, order_items.product_id AS id, TO_CHAR(deliveries.deliver_on,'MM/DD/YYYY') AS delivered_at, organizations.name AS buyer_name, trunc(order_items.quantity) AS quantity, order_items.unit_price AS sale_price, order_items.net_price")
+                          .select("orders.id AS order_id, order_items.product_id AS id, TO_CHAR(deliveries.deliver_on,'MM/DD/YYYY') AS delivered_at, organizations.name AS buyer_name, trunc(order_items.quantity) AS quantity, order_items.unit_price AS sale_price, order_items.net_price")
                           .uniq
           committed_ad_array = []
           committed_ad.each do |c|
