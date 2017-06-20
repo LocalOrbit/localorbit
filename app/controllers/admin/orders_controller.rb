@@ -141,6 +141,11 @@ class Admin::OrdersController < AdminController
 
   def show
     order = Order.orders_for_seller(current_user).find(params[:id])
+
+    if order.purchase_order? && !order.sold_through
+      Inventory::Utils.check_sold_through(order)
+    end
+
     if current_user.organization_ids.include?(order.organization_id) || current_user.can_manage_organization?(order.organization)
       @order = BuyerOrder.new(order)
     else
