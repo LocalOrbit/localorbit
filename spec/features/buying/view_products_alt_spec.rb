@@ -72,7 +72,7 @@ feature "Viewing products" do
     expect(Dom::CartLink.first.count).to have_content("1")
   end
 
-  it "Sales Order", :js do
+  xit "Sales Order", :js do
     sign_in_as(market_manager)
     click_link("Sales Order", match: :first)
 
