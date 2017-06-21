@@ -31,10 +31,13 @@ class Admin::PickListsController < AdminController
         d_scope = "DATE(deliveries.deliver_on) = '#{dte}'"
       end
 
-      @delivery = Delivery.joins(:delivery_schedule)
+      dlv = Delivery.joins(:delivery_schedule)
                       .where(d_scope)
                       .where(delivery_schedules: {market_id: market_id}).first
-                      .decorate
+
+      if !@delivery.nil?
+        @delivery = dlv.decorate
+      end
 
       order_items = OrderItem
                         .where(delivery_status: "pending")
