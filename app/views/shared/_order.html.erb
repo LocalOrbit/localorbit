@@ -51,9 +51,9 @@
         <li>
           <button id="export_bill_button" name="Export Bill">Export Bill to QB</button>
         </li>
-        <% elsif policy(:market_quickbooks).index? && current_market.is_consignment_market? && order.payment_status == 'exported' && !order.qb_ref_id.nil? %>
+        <% elsif policy(:market_quickbooks).index? && order.payment_status == 'exported' && !order.qb_ref_id.nil? %>
         <li>
-          <button id="unclose_order" name="Unclose Order">Unclose Order</button>
+          <button id="unclose_order" title="Closed orders have been exported to QBO" name="Unclose Order">Unclose Order</button>
         </li>
         <% end %>
         <% if current_market.is_consignment_market? && order.delivery_status == 'pending' && Inventory::Utils.can_delete_order?(order) %>

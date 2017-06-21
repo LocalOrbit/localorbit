@@ -13,7 +13,7 @@ class Order < ActiveRecord::Base
   PAYMENT_STATUSES = {
       "unpaid" => "Unpaid",
       "paid" => "Paid",
-      "exported" => "Exported"
+      "exported" => "Exported to QBO"
   }.freeze
 
   BATCH_PO_ACTIONS = {
