@@ -227,8 +227,8 @@ module CloneProductionHelper
   end
 
   def backup_and_download
-    sh "heroku pg:backups capture -a #{source_app}"
-    sh "curl -o #{dump_file} `heroku pg:backups public-url -a #{source_app}`"
+    sh "/usr/local/bin/heroku pg:backups capture -a #{source_app}"
+    sh "curl -o #{dump_file} `/usr/local/bin/heroku pg:backups public-url -a #{source_app}`"
   end
 
   def import_local_copy
@@ -333,7 +333,7 @@ module CloneProductionHelper
 
     # Step 2: Restore
     puts "Restoring db from backup on S3"
-    sh "heroku pg:backups restore '#{dump_url}' #{target_database} -a #{target_app} --confirm #{target_app}"
+    sh "/usr/local/bin/heroku pg:backups restore '#{dump_url}' #{target_database} -a #{target_app} --confirm #{target_app}"
   end
 
   def secrets_for(key)

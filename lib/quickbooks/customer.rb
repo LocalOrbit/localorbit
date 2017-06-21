@@ -6,7 +6,7 @@ module Quickbooks
         customer.company_name = "#{org.id}-#{org.name}"
         customer.display_name = "#{org.id}-#{org.name}"
 
-        billing_address = org.locations.default_billing.nil? ? org.locations.first : org.locations.default_billing
+        billing_address = org.locations.default_billing ? org.locations.default_billing : org.locations.first
         address = Quickbooks::Model::PhysicalAddress.new
         address.line1 = billing_address.address
         address.city = billing_address.city
@@ -17,7 +17,7 @@ module Quickbooks
 
         customer.primary_email_address = billing_address.email
 
-        shipping_address = org.locations.default_shipping.nil? ? org.locations.first : org.locations.default_shipping
+        shipping_address = org.locations.default_shipping ? org.locations.default_shipping : org.locations.first
         address = Quickbooks::Model::PhysicalAddress.new
         address.line1 = shipping_address.address
         address.city = shipping_address.city
