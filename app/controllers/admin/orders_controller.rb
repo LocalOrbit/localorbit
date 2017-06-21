@@ -544,7 +544,7 @@ class Admin::OrdersController < AdminController
   end
 
   def perform_add_items(order)
-    result = UpdateOrderWithNewItems.perform(user: current_user, payment_provider: order.payment_provider, order: order, item_hashes: items_to_add, request: request, holdover: false, repack: false)
+    result = UpdateOrderWithNewItems.perform(user: current_user, payment_provider: order.payment_provider, order: order, cart: current_cart, request: request, holdover: false, repack: false)
     if !result.success?
       setup_add_items_form(order)
       order.errors[:base] << "Failed to add items to this order."
