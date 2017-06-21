@@ -420,9 +420,6 @@
           <th>Total</th>
           <% end %>
         </tr>
-        <% if receipt.sold_through? %>
-        <tr><td colspan="5"><%= receipt.notes %></td></tr>
-        <% end %>
         </thead>
         <tbody>
         <% grand_total = 0 %>

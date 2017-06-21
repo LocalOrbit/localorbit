@@ -15,9 +15,9 @@ module Inventory
           WHERE order_id = $1
           AND transaction_type != 'PO' AND deleted_at IS NULL) po_other,
           (SELECT sum(so1.quantity) quantity, sum(so1.net_price * so1.quantity) net_price
-          FROM consignment_transactions po1, consignment_transactions so1
-          WHERE po1.id = so1.parent_id AND po1.order_id = $1
-          AND so1.transaction_type = 'SO' AND so1.deleted_at IS NULL) so", 'sold_through_query', [[nil,order.id]])
+          FROM consignment_transactions po1, consignment_transactions so1, orders o
+          WHERE po1.id = so1.parent_id AND so1.order_id = o.id AND po1.order_id = $1
+          AND so1.transaction_type = 'SO' AND so1.deleted_at IS NULL AND o.delivery_status='delivered') so", 'sold_through_query', [[nil,order.id]])
 
         if Integer(result[0]['quantity']) == 0
           order.sold_through = true

@@ -79,7 +79,7 @@ class ReportPresenter
         seller_only: true
     },
     sales_by_supplier: {
-      filters: [:placed_at, :order_number, :market_name, :seller_name],
+      filters: [:placed_at, :order_number, :market_name, :seller_name, :product_name],
       fields: [
         :placed_at, :category_name, :subcategory_name, :product_name, :product_code, :seller_name, :quantity, :unit_price, :unit, :discount,
         :row_total, :net_sale, :delivery_status, :buyer_payment_status, :seller_payment_status
@@ -96,7 +96,7 @@ class ReportPresenter
       seller_only: true
     },
     sales_by_product: {
-      filters: [:placed_at, :order_number, :market_name, :category_name, :subcategory_name, :product_name],
+      filters: [:placed_at, :order_number, :market_name, :category_name, :subcategory_name, :product_name, :seller_name],
       fields: [
         :placed_at, :category_name, :subcategory_name, :product_name, :product_code, :seller_name, :quantity, :unit_price, :unit, :discount,
         :row_total, :net_sale, :fee_pct, :profit, :delivery_status, :buyer_payment_status, :seller_payment_status
