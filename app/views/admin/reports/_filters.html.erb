@@ -83,7 +83,7 @@
     </div>
 
     <% if presenter.filters.include?(:placed_at) %>
-      <div class="pull-right date-filters">
+      <div class="pull-right date-filters" style="margin-top:15px">
         <span class="preserve-alignment">
           <label for="q_order_placed_at_date_gteq">Placed on or after</label><br>
           <%= datetime_field_tag "q[order_placed_at_date_gteq]", @presenter.start_date, class: append_sticky_class('order_placed_at_date_gteq', 'datepicker', [1.months.ago.to_date.to_s]) %>
