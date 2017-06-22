@@ -15,7 +15,9 @@ module Quickbooks
         address.postal_code = billing_address.zip
         customer.billing_address = address
 
-        customer.primary_email_address = billing_address.email
+        emailaddress = Quickbooks::Model::EmailAddress.new
+        emailaddress.address = billing_address.email.blank? ? nil : billing_address.email
+        customer.primary_email_address = emailaddress
 
         shipping_address = org.locations.default_shipping ? org.locations.default_shipping : org.locations.first
         address = Quickbooks::Model::PhysicalAddress.new
