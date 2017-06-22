@@ -327,10 +327,21 @@ class ApplicationController < ActionController::Base
     end
   end
 
-  def reset_order_id
+  def check_order_id
+    if !session[:order_id].nil?
+      reset_session_ids
+      if !current_cart.nil?
+        current_cart.destroy
+      end
+    end
+  end
+
+  def reset_session_ids
     if !session[:order_id].nil?
       session[:order_id] = nil
       session[:current_delivery_id] = nil
+      session[:current_organization_id] = nil
+      session[:current_supplier_id] = nil
       session[:cart_id] = nil
     end
   end

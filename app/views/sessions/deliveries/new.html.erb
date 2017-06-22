@@ -94,6 +94,11 @@
       </div>
 	<% end %>
       <div class="form-actions">
+        <% if session[:current_supplier_id].nil? %>
+            <%= link_to "Back to Buyer", new_sessions_organization_path(redirect_back_to: request.original_url), class: 'btn' %>
+        <% else %>
+            <%= link_to "Back to Supplier", new_sessions_supplier_path(redirect_back_to: request.original_url), class: 'btn' %>
+        <% end %>
         <%= submit_tag "Start Ordering", class: "mobile-block" %>
       </div>
     <% end %>
