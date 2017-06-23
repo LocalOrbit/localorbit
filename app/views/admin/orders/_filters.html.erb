@@ -10,17 +10,29 @@
           </span>
         </div>
 
+        <% if current_market.is_consignment_market? %>
         <div class="pull-right date-filters mobile-block">
           <span class="preserve-alignment">
-            <label for="q_placed_at_date_gteq">Filter by Date</label><br>
+            <label for="q_delivered_at_date_gteq">Filter by Delivery Date</label><br>
+            <%=  datetime_field_tag "q[delivered_at_date_gteq]", @search_presenter.start_date, class: append_sticky_class("delivered_at_date_gteq", "datepicker", [30.days.ago.to_date.to_s]) %>
+          </span>
+              <span class="preserve-alignment">
+            <label for="q_delivered_at_date_lteq" class="is-invisible">End Date</label><br>
+                <%=  datetime_field_tag "q[delivered_at_date_lteq]", @search_presenter.end_date, class: append_sticky_class("delivered_at_date_lteq", "datepicker", [Date.today.to_s]) %>
+          </span>
+        </div>
+        <% else %>
+        <div class="pull-right date-filters mobile-block">
+          <span class="preserve-alignment">
+            <label for="q_placed_at_date_gteq">Filter by Creation Date</label><br>
             <%=  datetime_field_tag "q[placed_at_date_gteq]", @search_presenter.start_date, class: append_sticky_class("placed_at_date_gteq", "datepicker", [30.days.ago.to_date.to_s]) %>
           </span>
-
           <span class="preserve-alignment">
             <label for="q_placed_at_date_lteq" class="is-invisible">End Date</label><br>
             <%=  datetime_field_tag "q[placed_at_date_lteq]", @search_presenter.end_date, class: append_sticky_class("placed_at_date_lteq", "datepicker", [Date.today.to_s]) %>
           </span>
         </div>
+        <% end %>
 
         <div class="manager-filters unjustify mobile-block">
           <% if current_user.multi_market_membership? %>
