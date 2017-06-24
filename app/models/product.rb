@@ -373,11 +373,38 @@ class Product < ActiveRecord::Base
         and(lot_table[:number].not_eq(nil)).
         and(lot_table[:market_id].eq(nil).or(lot_table[:market_id].eq(market_id))).
         and(lot_table[:organization_id].eq(nil).or(lot_table[:organization_id].eq(organization_id)))
-    join_on = arel_table.create_on(lot_join_cond)
+    lot_join_on = arel_table.create_on(lot_join_cond)
 
-    joins(arel_table.create_join(Lot.arel_table, join_on))
+    joins(arel_table.create_join(Lot.arel_table, lot_join_on))
+  end
 
-    #joins("INNER JOIN lots ON products.id = lots.product_id AND lots.quantity > 0 and lots.number IS NOT NULL")
+  def self.with_pending_so_inventory(deliver_on_date=Time.current.end_of_minute, market_id=nil, organization_id=nil)
+    lot_table = Lot.arel_table
+
+    lot_join_cond = arel_table[:id].eq(lot_table[:product_id]).
+        and(lot_table[:good_from].eq(nil).or(lot_table[:good_from].lt(deliver_on_date))).
+        and(lot_table[:expires_at].eq(nil).or(lot_table[:expires_at].gt(deliver_on_date))).
+        and(lot_table[:quantity].eq(0)).
+        and(lot_table[:number].not_eq(nil)).
+        and(lot_table[:market_id].eq(nil).or(lot_table[:market_id].eq(market_id))).
+        and(lot_table[:organization_id].eq(nil).or(lot_table[:organization_id].eq(organization_id)))
+    lot_join_on = arel_table.create_on(lot_join_cond)
+
+    order_item_lot_table = OrderItemLot.arel_table
+
+    order_item_lot_join_cond = lot_table[:id].eq(order_item_lot_table[:lot_id])
+    order_item_lot_join_on = order_item_lot_table.create_on(order_item_lot_join_cond)
+
+    order_item_table = OrderItem.arel_table
+
+    order_item_join_cond = order_item_lot_table[:order_item_id].eq(order_item_table[:id]).
+        and(order_item_table[:delivery_status].eq('pending'))
+    order_item_join_on = order_item_table.create_on(order_item_join_cond)
+
+    joins(arel_table.create_join(Lot.arel_table, lot_join_on)).
+    joins(arel_table.create_join(OrderItemLot.arel_table, order_item_lot_join_on)).
+    joins(arel_table.create_join(OrderItem.arel_table, order_item_join_on))
+
   end
 
   def self.with_waiting_so_inventory
