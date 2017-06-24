@@ -138,14 +138,23 @@ module Api
             .to_sql
         end
 
-        cp = "#{catalog_products} UNION
+        catalog_products2 = cross_sold_products2 = Product.connection.unprepared_statement do
+          Product.joins(organization: [market_organizations: [:market]])
+              .where("markets.id = ?", current_market.id)
+              .with_pending_so_inventory(current_delivery.deliver_on)
+              .visible
+              .select(:id, :general_product_id)
+              .to_sql
+        end
+
+        cp = "#{catalog_products} UNION #{catalog_products2} UNION
         SELECT products.id, products.general_product_id
         FROM products
         INNER JOIN organizations ON organizations.id = products.organization_id
         INNER JOIN market_organizations ON market_organizations.organization_id = organizations.id
         INNER JOIN markets ON markets.id = market_organizations.market_id
         INNER JOIN consignment_transactions ON consignment_transactions.product_id = products.id AND consignment_transactions.market_id = markets.id AND consignment_transactions.transaction_type = 'PO' AND consignment_transactions.lot_id IS NULL
-        INNER JOIN orders ON consignment_transactions.order_id = orders.id AND orders.delivery_status = 'pending'
+        INNER JOIN orders ON consignment_transactions.order_id = orders.id AND orders.delivery_status in ('pending','partially delivered')
         WHERE markets.id = #{current_market.id} AND products.deleted_at IS NULL"
 
         gp = GeneralProduct.joins("JOIN (#{cp}) p_child
@@ -213,7 +222,7 @@ module Api
           lots = Lot
                 .joins("JOIN consignment_transactions ON order_id = split_part(lots.number,'-',1)::integer AND consignment_transactions.transaction_type='PO' AND consignment_transactions.product_id = lots.product_id")
                 .where(product_id: product.id)
-                .where("lots.quantity > 0 AND lots.number IS NOT NULL")
+                .where("lots.quantity >= 0 AND lots.number IS NOT NULL")
                 .select("consignment_transactions.id AS ct_id, lots.id, lots.quantity, lots.number, (SELECT DISTINCT notes FROM consignment_transactions WHERE consignment_transactions.lot_id = lots.id AND transaction_type = 'PO') inv_note, (SELECT TO_CHAR(MAX(delivery_date), 'MM/DD/YYYY') FROM consignment_transactions WHERE lot_id = lots.id AND transaction_type = 'PO') delivery_date, 'available'::text AS status")
 
           awaiting_delivery_qty = ConsignmentTransaction
@@ -235,7 +244,7 @@ module Api
 
           awaiting_delivery = ConsignmentTransaction
             .joins("JOIN orders ON consignment_transactions.order_id = orders.id")
-            .where("orders.delivery_status = 'pending'
+            .where("orders.delivery_status in ('pending','partially delivered')
             AND consignment_transactions.transaction_type = 'PO'
             AND consignment_transactions.lot_id IS NULL
             AND consignment_transactions.market_id = ?
