@@ -113,7 +113,7 @@
 
         build_committed_ad = build_committed_ad + '</tbody></table>';
 
-        if (this.props.lot.status == 'available' && this.props.lot.quantity > 0) {
+        if (this.props.lot.status == 'available' && this.props.lot.quantity >= 0) {
             lot_desc = (<div><div>{note_indicator}</div>{this.props.lot.number} / {this.props.lot.quantity + committed_count}<br/><div style={{fontSize: '12px', color: '#999'}}>{this.props.lot.delivery_date}</div></div>);
             status = (<div style={{fontSize: "11px"}}>On Hand</div>);
         }

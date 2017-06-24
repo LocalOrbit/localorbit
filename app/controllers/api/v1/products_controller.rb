@@ -138,7 +138,16 @@ module Api
             .to_sql
         end
 
-        cp = "#{catalog_products} UNION
+        catalog_products2 = cross_sold_products2 = Product.connection.unprepared_statement do
+          Product.joins(organization: [market_organizations: [:market]])
+              .where("markets.id = ?", current_market.id)
+              .with_pending_so_inventory(current_delivery.deliver_on)
+              .visible
+              .select(:id, :general_product_id)
+              .to_sql
+        end
+
+        cp = "#{catalog_products} UNION #{catalog_products2} UNION
         SELECT products.id, products.general_product_id
         FROM products
         INNER JOIN organizations ON organizations.id = products.organization_id

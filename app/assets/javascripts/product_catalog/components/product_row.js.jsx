@@ -24,6 +24,9 @@
       var order_qty_header;
       var whowherewhy;
       var img;
+      var committed_count;
+      var cmt;
+
 
       // Initialize the convenience variable
       var product_id = "product-"+gp.id+"-long-description";
@@ -37,8 +40,17 @@
       if (self.props.salesOrder && self.props.consignmentMarket) {
           _.map(gp.available, function (p) {
               lots = _.map(p.lots, function (l) {
-                  return <lo.ProductLots key={l.id} product={p} lot={l} orderId={self.props.orderId} purchaseOrder={self.props.purchaseOrder}
-                                         salesOrder={self.props.salesOrder}/>
+                  committed_count = 0;
+                  cmt = _.map(p.committed, function (c) {
+                      if (l.number === c.number) {
+                          committed_count = committed_count + (c.quantity * 1);
+                      }
+                  });
+                  if (l.status == 'available' && (l.quantity > 0 || (l.quantity == 0 && committed_count > 0) )) {
+                      return <lo.ProductLots key={l.id} product={p} lot={l} orderId={self.props.orderId}
+                                             purchaseOrder={self.props.purchaseOrder}
+                                             salesOrder={self.props.salesOrder}/>
+                  }
               })
           });
           total_cost_header = ('');
