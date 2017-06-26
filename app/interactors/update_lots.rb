@@ -23,28 +23,31 @@ class UpdateLots
   def update_pending_so(item, lot)
     # When SO has been placed against undelivered PO, and PO is delivered, the newly created lot needs to be assigned to the SO consignment transaction
     ct_po = ConsignmentTransaction.where(transaction_type: 'PO', order_id: order.id, product_id: item.product.id, deleted_at: nil).visible.last
-    ct_so = ConsignmentTransaction.where(transaction_type: 'SO', parent_id: ct_po.id, product_id: item.product.id, lot_id: nil, deleted_at: nil).visible.last
+    ct_so = ConsignmentTransaction.where(transaction_type: 'SO', parent_id: ct_po.id, product_id: item.product.id, lot_id: nil, deleted_at: nil).visible
 
-      if !ct_so.nil?
-        so_order_item = OrderItem.find(ct_so.order_item_id)
-        so_order_item.lots << OrderItemLot.create(order_item_id: so_order_item.id, lot_id: lot.id, quantity: so_order_item.quantity)
-        so_order_item.po_lot_id = lot.id
-        so_order_item.save
+      ct_so.each do |so|
 
-        ct_so.lot_id = lot.id
+        if !so.nil?
+          so_order_item = OrderItem.find(so.order_item_id)
+          so_order_item.lots << OrderItemLot.create(order_item_id: so_order_item.id, lot_id: lot.id, quantity: so_order_item.quantity)
+          so_order_item.po_lot_id = lot.id
+          so_order_item.save
 
-        if ct_so.parent_id.nil?
-          ct_so.parent_id = ct_po.id
-        end
+          so.lot_id = lot.id
 
-        ct_so.save
+          if so.parent_id.nil?
+            so.parent_id = ct_po.id
+          end
 
-        lot.quantity = lot.quantity - ct_so.quantity
-        lot.save
+          so.save
 
-        if !ct_po.nil? && lot.id > 0
-          ct_po.lot_id = lot.id
-          ct_po.save
+          lot.quantity = lot.quantity - so.quantity
+          lot.save
+
+          if !ct_po.nil? && lot.id > 0
+            ct_po.lot_id = lot.id
+            ct_po.save
+          end
         end
       end
   end
