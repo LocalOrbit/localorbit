@@ -118,6 +118,13 @@
               <th colspan="6" style="text-align: right">Subtotal:</th>
               <th class="total-price"><%= number_to_currency subtotal %></th>
             </tr>
+            <% if order.discount_amount > 0 %>
+            <tr class="totals">
+              <% total = total - order.discount_amount %>
+              <th colspan="6" style="text-align: right">Discount:</th>
+              <th class="total-price"><%= number_to_currency order.discount_amount %></th>
+            </tr>
+            <% end %>
             <% if order.credit_amount > 0 && order.credit.apply_to == "subtotal" %>
                 <% total = total - order.credit_amount %>
                 <tr class="totals">
@@ -144,6 +151,17 @@
         <% else %>
             <% subtotal = Financials::Orders::Calc.gross_item_total(items: order.items) %>
             <% total = subtotal %>
+            <tr class="totals">
+              <th colspan="6" style="text-align: right">Subtotal:</th>
+              <th class="total-price"><%= number_to_currency subtotal %></th>
+            </tr>
+            <% if order.discount_amount > 0 %>
+            <tr class="totals">
+              <% total = total - order.discount_amount %>
+              <th colspan="6" style="text-align: right">Discount:</th>
+              <th class="total-price"><%= number_to_currency order.discount_amount %></th>
+            </tr>
+            <% end %>
             <% if order.credit_amount > 0 %>
                 <tr class="totals">
                   <% total = total - order.credit_amount %>
