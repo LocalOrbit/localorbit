@@ -117,6 +117,7 @@
 
     updateSOQuantity: function(event) {
         var target = event.target;
+        var context = this;
         var addedLotId = $(target).parent().parent().find('.lot-id').val();
         var addedCtId = $(target).parent().parent().find('.ct-id').val();
         this.cSalePrice = $(target).parent().parent().find('.app-sale-price-input').val();
@@ -124,22 +125,28 @@
 
         var in_str = event.target.value;
 
-        this.setState({cartItemQuantity: in_str});
-        this.cItemQuantity = in_str;
+        clearTimeout(typingTimer);
+        typingTimer = setTimeout(function () {
 
-        this.setState({cartLotId: addedLotId});
-        this.setState({cartCtId: addedCtId});
-        this.setState({cartNetPrice: this.cNetPrice});
-        this.setState({cartSalePrice: this.cSalePrice});
+            context.setState({cartItemQuantity: in_str});
+            context.cItemQuantity = in_str;
+
+            context.setState({cartLotId: addedLotId});
+            context.setState({cartCtId: addedCtId});
+            context.setState({cartNetPrice: context.cNetPrice});
+            context.setState({cartSalePrice: context.cSalePrice});
 
 
-        if ((this.cSalePrice > 0 || this.cSalePrice === 0) && (this.cNetPrice > 0 || this.cNetPrice === 0) && this.cItemQuantity > 0)
-            $(target).trigger("cart.inputFinished");
+            if ((context.cSalePrice > 0 || context.cSalePrice === 0) && (context.cNetPrice > 0 || context.cNetPrice === 0) && context.cItemQuantity > 0)
+                $(target).trigger("cart.inputFinished");
+
+        }, doneTypingInterval);
     },
 
     updateSOSalePrice: function(event) {
         var target = event.target;
         var in_str = event.target.value;
+        var context = this;
         var addedLotId = $(target).parent().parent().find('.lot-id').val();
         var addedCtId = $(target).parent().parent().find('.ct-id').val();
         this.cItemQuantity = $(target).parent().parent().find('.app-product-input').val();
@@ -148,18 +155,22 @@
         this.setState({cartSalePrice: in_str});
         this.cSalePrice = in_str;
 
-        this.setState({cartLotId: addedLotId});
-        this.setState({cartCtId: addedCtId});
-        this.setState({cartNetPrice: this.cNetPrice});
-        this.setState({cartItemQuantity: this.cItemQuantity});
+        clearTimeout(typingTimer);
+        typingTimer = setTimeout(function () {
+            context.setState({cartLotId: addedLotId});
+            context.setState({cartCtId: addedCtId});
+            context.setState({cartNetPrice: context.cNetPrice});
+            context.setState({cartItemQuantity: context.cItemQuantity});
 
-        if (this.cSalePrice >= 0 && this.cNetPrice >= 0 && this.cItemQuantity > 0)
-            $(target).trigger("cart.inputFinished");
+            if (context.cSalePrice >= 0 && context.cNetPrice >= 0 && context.cItemQuantity > 0)
+                $(target).trigger("cart.inputFinished");
+        }, doneTypingInterval);
     },
 
     updateSONetPrice: function(event) {
         var target = event.target;
         var in_str = event.target.value;
+        var context = this;
         var addedLotId = $(target).parent().parent().find('.lot-id').val();
         var addedCtId = $(target).parent().parent().find('.ct-id').val();
         this.cItemQuantity = $(target).parent().parent().find('.app-product-input').val();
@@ -168,13 +179,16 @@
         this.setState({cartNetPrice: in_str});
         this.cNetPrice = in_str;
 
-        this.setState({cartLotId: addedLotId});
-        this.setState({cartCtId: addedCtId});
-        this.setState({cartItemQuantity: this.cItemQuantity});
-        this.setState({cartSalePrice: this.cSalePrice});
+        clearTimeout(typingTimer);
+        typingTimer = setTimeout(function () {
+            context.setState({cartLotId: addedLotId});
+            context.setState({cartCtId: addedCtId});
+            context.setState({cartItemQuantity: context.cItemQuantity});
+            context.setState({cartSalePrice: context.cSalePrice});
 
-        if ((this.cSalePrice > 0 || this.cSalePrice === 0) && (this.cNetPrice > 0 || this.cNetPrice === 0) && this.cItemQuantity > 0)
-            $(target).trigger("cart.inputFinished");
+            if ((context.cSalePrice > 0 || context.cSalePrice === 0) && (context.cNetPrice > 0 || context.cNetPrice === 0) && context.cItemQuantity > 0)
+                $(target).trigger("cart.inputFinished");
+        }, doneTypingInterval);
     },
 
     deleteQuantity: function() {
