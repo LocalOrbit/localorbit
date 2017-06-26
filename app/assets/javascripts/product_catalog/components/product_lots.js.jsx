@@ -37,6 +37,7 @@
         var defaultSale;
         var defaultNet;
         var prd;
+        var disabled;
 
         prd = this.props.product;
 
@@ -142,6 +143,12 @@
       var deleteButton = (this.state.cartItemQuantity > 0 ||  this.state.cartNetPrice > 0 || this.state.cartSalePrice > 0) && this.state.cartLotId == this.props.lot.id ? (<a href="javascript:void(0)" onClick={this.deleteSOFields} className="font-icon icon-clear" style={{marginLeft: "10px"}}></a>) : null;
       var inputClass = "redesigned app-product-input";
 
+      if (committed_ad_count > 0 && this.props.lot.quantity == 0 || committed_count> 0 && this.props.lot.quantity == 0) {
+          disabled = 'disabled';
+      }
+      else
+          disabled = '';
+
       if (this.props.orderId) {
           qty = (<input style={{width: "75px"}} type="number" placeholder="0" defaultValue={this.state.cartItemQuantity && this.state.cartLotId == lot.id ? this.state.cartItemQuantity : ''} name="items_to_add[][quantity]" className={inputClass} onKeyDown={this.clearField} onChange={this.updateQuantity} />);
           pid = (<input type="hidden" name="items_to_add[][product_id]" value={prd.id} />);
@@ -149,7 +156,7 @@
           cid = (<input type="hidden" name="items_to_add[][ct_id]" value={lot.ct_id ? lot.ct_id : 0} />);
       }
       else {
-          qty = (<input style={{width: "75px"}} type="number" placeholder="0"
+          qty = (<input style={{width: "75px"}} type="number" placeholder="0" disabled={disabled}
                         defaultValue={this.state.cartItemQuantity && this.state.cartLotId == this.props.lot.id ? this.state.cartItemQuantity : ''}
                         className={inputClass} onKeyDown={this.clearField} onChange={this.updateSOQuantity}/>);
           pid = ('');

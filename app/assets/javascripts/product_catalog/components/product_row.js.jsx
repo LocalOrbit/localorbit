@@ -46,7 +46,7 @@
                           committed_count = committed_count + (c.quantity * 1);
                       }
                   });
-                  if (l.status == 'available' && (l.quantity > 0 || (l.quantity == 0 && committed_count > 0) )) {
+                  if (l.status == 'awaiting_delivery' || (l.quantity > 0 || (l.quantity == 0 && committed_count > 0))) {
                       return <lo.ProductLots key={l.id} product={p} lot={l} orderId={self.props.orderId}
                                              purchaseOrder={self.props.purchaseOrder}
                                              salesOrder={self.props.salesOrder}/>
