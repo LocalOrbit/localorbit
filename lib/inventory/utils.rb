@@ -86,7 +86,7 @@ module Inventory
 
       def generate_lot_number(order=nil)
         days = %w(A B C D E F G)
-        current_time = Time.now
+        current_time = Time.now.in_time_zone('Eastern Time (US & Canada)')
 
         weekday = days[current_time.wday]
         monthweek = (((current_time.mday - current_time.wday) - 1) / 7.0).ceil + 1
