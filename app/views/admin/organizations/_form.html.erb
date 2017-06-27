@@ -20,6 +20,15 @@
       <%= f.text_field :name, class: "column column--full" %>
     </div>
 
+    <% if current_market.is_consignment_market? %>
+        <div class="row row--field">
+          <div class="field column column--half column--guttered">
+            <label>Phone</label><br/>
+            <%= @organization.locations.map(&:phone).join(', ') %>
+          </div>
+        </div>
+    <% end %>
+
     <% if @organization.new_record? || current_user.can_manage_market?(current_market) %>
       <div class="row row--field">
       <% if policy(:all_supplier).index?  || current_user.admin? %>
