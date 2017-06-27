@@ -66,7 +66,7 @@ class Admin::OrdersController < AdminController
   end
 
   def build_order_list
-    @search_presenter = OrderSearchPresenter.new(@query_params, current_user, current_market.is_consignment_market? ? :delivered_at : :placed_at)
+    @search_presenter = OrderSearchPresenter.new(@query_params, current_user, current_market.is_consignment_market? ? :delivery_deliver_on : :placed_at)
     @q, @totals = search_and_calculate_totals(@search_presenter)
 
     @orders = @q.result(distinct: true)

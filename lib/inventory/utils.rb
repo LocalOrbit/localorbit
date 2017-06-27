@@ -100,8 +100,8 @@ module Inventory
         .where("order_items.product_id = ?", product_id)
         .where("orders.order_type = 'sales'")
         .where("order_items.delivery_status = 'pending'")
-        .select("order_items.quantity").first
-        o.nil? ? 0 : o.quantity.to_i
+        .sum("order_items.quantity")
+        o.nil? ? 0 : o.to_i
       end
 
       def qty_awaiting_delivery(market_id, product_id)
