@@ -23,6 +23,7 @@
     <tbody>
     <% @inventories.decorate.each do |inv| %>
     <% committed = Inventory::Utils.qty_committed(current_market.id, inv.product_id) %>
+    <% if (inv.lot_quantity || 0) + committed > 0 %>
     <tr>
       <td class="name"><%= link_to inv.product_name, admin_product_path(inv.product_id) %></td>
       <td class="supplier"><%= link_to "PO: #{inv.order_id} - #{inv.supplier_name}", purchase_order_path(inv.order_id) %>&nbsp;<%= !inv.note.nil? && inv.note.length > 0 ? "<span class='tooltip--flag' data-tooltip='#{inv.note}'></span>".html_safe : '' %></td>
@@ -48,6 +49,7 @@
         </div>
       </td>
     </tr>
+    <% end %>
     <% end %>
     </tbody>
   </table>

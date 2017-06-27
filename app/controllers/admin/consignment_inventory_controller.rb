@@ -30,7 +30,7 @@ class Admin::ConsignmentInventoryController < AdminController
     .joins("LEFT JOIN storage_locations stl ON stl.id = lts.storage_location_id")
     .where("consignment_transactions.market_id = ?", current_market.id)
     .where(transaction_type: 'PO')
-    .where("lts.quantity > 0 OR consignment_transactions.lot_id IS NULL")
+    .where("lts.quantity >= 0 OR consignment_transactions.lot_id IS NULL")
     .visible
     .select("consignment_transactions.id AS ct_id,
     p2.id AS product_id,
