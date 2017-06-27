@@ -361,7 +361,7 @@
         <tr>
           <td colspan="6">
               <div class="inline-block">
-                <h1 class="left">Order: <%= order.order_number %></h1> <div class="right" style="text-align: right"><h2>Buyer: <%=order.organization.name %></h2><h2>Delivery: <%=order.delivery.deliver_on.strftime("%-m/%-d/%Y") %></h2></div>
+                <h1 class="left">Buyer: <%=order.organization.name %></h1> <div class="right" style="text-align: right"><h2>Order: <%= order.order_number %></h2><h2>Delivery: <%=order.delivery.deliver_on.strftime("%-m/%-d/%Y") %></h2></div>
               </div>
           </td>
         </tr>
@@ -384,8 +384,8 @@
           <td><%= item.name %></td>
           <td><%= item.product.organization.name %></td>
           <td><%= item.quantity %></td>
-          <td><%= lt.nil? ? 0 : "On Hand: #{lt.quantity + item.quantity}" %></td>
-          <td><%= !lt.nil? && !lt.storage_location.nil? ? lt.storage_location.name : 'No Location Provided' %></td>
+          <td><%= lt.nil? ? '' : "On Hand: #{lt.quantity + item.quantity}" %></td>
+          <td><%= !lt.nil? && !lt.storage_location.nil? ? lt.storage_location.name : 'Awaiting Delivery' %></td>
           <td><%= lt.nil? ? 0 : lt.number %></td>
         </tr>
         <% end %>
