@@ -285,18 +285,17 @@ class OrderItem < ActiveRecord::Base
     if !po_lot_id.nil? && po_lot_id > 0 # Decrement specific consignment lot
       lot = Lot.find(po_lot_id)
       num_to_return = [lot.quantity, amount].min
+      #lot.decrement!(:quantity, num_to_return)
+    end
+
+    lots.order(created_at: :desc).each do |lot|
+      break unless amount
+
+      num_to_return = [lot.quantity, amount].min
       lot.lot.increment!(:quantity, num_to_return)
       lot.decrement!(:quantity, num_to_return)
-    else
-      lots.order(created_at: :desc).each do |lot|
-        break unless amount
 
-        num_to_return = [lot.quantity, amount].min
-        lot.lot.increment!(:quantity, num_to_return)
-        lot.decrement!(:quantity, num_to_return)
-
-        amount -= num_to_return
-      end
+      amount -= num_to_return
     end
   end
 
