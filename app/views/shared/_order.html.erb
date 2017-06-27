@@ -306,12 +306,12 @@
               <%= item.text_field :quantity_delivered, :autocomplete => :off, value: Format.quantity_no_delimiter(item.object.quantity_delivered), class: 'quantity-delivered' %>
               <% if current_market.is_consignment_market? && order.purchase_order? && item.object.delivery_status == 'pending' %>
               <%= item.select(:preferred_storage_location_id, options_for_select(StorageLocation.where("market_id = ?", current_market.id).map{|l| [l.name, l.id]}), {include_blank: false}) %>
-              <% elsif current_market.is_consignment_market? && order.purchase_order? && item.object.delivery_status != 'pending' %>
+              <% elsif current_market.is_consignment_market? && order.purchase_order? && (item.object.delivery_status != 'pending' && item.object.delivery_status != 'canceled') %>
               <%= item.hidden_field :preferred_storage_location_id, value: item.object.product.lots.last.storage_location_id %>
               <% end %>
             <% else %>
               <span class="quantity-delivered-ro"><%= Format.quantity_no_delimiter item.object.quantity_delivered %></span>
-              <% if current_market.is_consignment_market? && order.purchase_order? && item.object.delivery_status != 'pending' %>
+              <% if current_market.is_consignment_market? && order.purchase_order? && (item.object.delivery_status != 'pending' && item.object.delivery_status != 'canceled') %>
               <%= item.hidden_field :preferred_storage_location_id, value: item.object.product.lots.last.storage_location_id %>
               <% end %>
             <% end %> <%= item.object.unit %> (Delivered)<br />
