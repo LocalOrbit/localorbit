@@ -105,6 +105,17 @@ module Inventory
         o.nil? ? 0 : o.to_i
       end
 
+      def qty_delivered(market_id, product_id, ct_id)
+        o = OrderItem.joins("JOIN orders ON order_items.order_id = orders.id")
+                .where("orders.market_id = ?", market_id)
+                .where("order_items.product_id = ?", product_id)
+                .where("order_items.po_ct_id = ?", ct_id)
+                .where("orders.order_type = 'sales'")
+                .where("order_items.delivery_status = 'delivered'")
+                .sum("order_items.quantity")
+        o.nil? ? 0 : o.to_i
+      end
+
       def qty_awaiting_delivery(market_id, product_id)
         ct = ConsignmentTransaction
             .joins("JOIN orders ON consignment_transactions.order_id = orders.id")
