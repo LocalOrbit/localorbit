@@ -23,6 +23,7 @@
     <tbody>
     <% @inventories.decorate.each do |inv| %>
     <% committed = Inventory::Utils.qty_committed(current_market.id, inv.product_id, inv.ct_id) %>
+    <% delivered = Inventory::Utils.qty_delivered(current_market.id, inv.product_id, inv.ct_id) %>
     <% if (inv.lot_quantity || 0) + committed > 0 %>
     <tr>
       <td class="name"><%= link_to inv.product_name, admin_product_path(inv.product_id) %></td>
@@ -34,7 +35,14 @@
       <%= inv.decorate.location_info %>
       </td>
       <td>
-        <%= inv.status =='waiting' ? inv.ct_quantity : inv.lot_quantity + committed %>
+        <% if inv.status == 'waiting' %>
+          <%= inv.ct_quantity %>
+        <% elsif committed > inv.ct_quantity %>
+          <%= inv.ct_quantity - delivered %>
+        <% else %>
+          <%= inv.lot_quantity + committed %>
+        <% end %>
+        <%#= inv.status =='waiting' ? inv.ct_quantity : inv.lot_quantity + committed %>
       </td>
       <td class="committed"><%= committed %></td>
       <td>
