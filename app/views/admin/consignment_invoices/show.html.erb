@@ -419,10 +419,21 @@
   </div>
   </div>
   <div style="float: left" class="invoice-basics">
-    Payment:	[  ]Check  [  ]Cash  [  ]Invoice  [  ]Credit Card<br/><br/>
-    <%= "<span><strong>Check #: </strong>#{invoice.payment_note}</span>".html_safe if invoice.payment_note.present? && invoice.payment_method == "check" %>
+    <%= "<span><h2>Payment Ref #</h2><p class='invoice-num'>#{invoice.payment_note}</p></span><br/>".html_safe if invoice.payment_note.present? && invoice.payment_method == "invoice" %>
+    Payment:	[  ]Check  [  ]Cash  [  ]Invoice  [  ]Credit Card<br/>
+    <%= "<span><h2>Check # </h2><br/><p class='invoice-num'>#{invoice.payment_note}</p></span><br/>".html_safe if invoice.payment_note.present? && invoice.payment_method == "check" %>
   </div>
   <br/>
+  <div style="clear: left"></div>
+  <% if invoice.notes.present? %>
+  <div style="float: left; font-weight: normal" class="invoice-basics">
+    <h2>Notes</h2>
+    <%= invoice.notes %>
+  </div>
+  <br/>
+  <% end %>
+  <div style="clear: left"></div>
+  <hr/>
   <body style="margin:0; padding:0;">
   <%= link_to "Return to Invoices", admin_financials_invoices_path, class: "no-print" if user %>
   <table>
