@@ -2,7 +2,7 @@
 <html>
   <head></head>
   <body>
-    <% if page > 1 %>
+    <% if page > 1 && current_market.is_buysell_market? %>
       <div style="position:relative;">
         <p style="position:absolute;top:22px;left:0px;font-size:10px;font-family:OpenSans,'Open Sans',Geneva,Arial,sans-serif"><%= order_number %> </p>
         <p style="position:absolute;top:22px;right:0px;font-size:10px;font-family:OpenSans,'Open Sans',Geneva,Arial,sans-serif"><%= "#{page ||= 0} of #{topage ||= 0}" %> </p>
