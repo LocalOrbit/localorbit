@@ -416,7 +416,12 @@ $ ->
     else
       ctId = $(this).parent().parent().parent().parent().parent().parent().parent().find(".ct-id").val()
 
-    model.saveItem(data.product_id, 0, 0, 0, lotId, ctId, this, order_id)
+    if $(this).hasClass("in-cart")
+      feeType = $(this).parent().parent().find(".fee-type").val()
+    else
+      feeType = $(this).parent().parent().parent().parent().parent().parent().parent().find(".fee-type").val()
+
+    model.saveItem(data.product_id, 0, 0, 0, feeType, lotId, ctId, this, order_id)
 
   $(document.body).on 'click', "input[type=radio]", (e)->
     $(".payment-fields").addClass("is-hidden")
