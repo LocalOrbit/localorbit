@@ -320,7 +320,8 @@ module Api
         {
             :sale_price => number_to_currency(price.sale_price),
             :min_quantity => price.min_quantity,
-            :organization_id => price.organization_id
+            :organization_id => price.organization_id,
+            :fee_type => price.fee
         }
       end
 

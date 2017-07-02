@@ -71,6 +71,7 @@
       var unit_desc;
       var pricing;
       var quantity;
+      var fee_type = ('');
 
       if(this.props.purchaseOrder)
         pricing = '';
@@ -93,10 +94,13 @@
       if (this.props.orderId) {
           qty = (<input style={{width: "75px"}} type="number" placeholder="0" defaultValue={this.state.cartItemQuantity} name="items_to_add[][quantity]" className={inputClass} onKeyDown={this.clearField} onChange={this.updateQuantity} />);
           pid = (<input type="hidden" name="items_to_add[][product_id]" value={this.props.product.id}/>);
+          fee_type = (<input type="hidden" name="items_to_add[][fee_type]" className="fee-type" value={this.props.product.prices[0].fee_type}/>);
       }
-      else
-          qty = (<input style={{width: "75px"}} type="number" placeholder="0" defaultValue={this.state.cartItemQuantity} className={inputClass} onKeyDown={this.clearField} onChange={this.updateQuantity}/>);
-        
+      else {
+          qty = (<input style={{width: "75px"}} type="number" placeholder="0" defaultValue={this.state.cartItemQuantity}
+                        className={inputClass} onKeyDown={this.clearField} onChange={this.updateQuantity}/>);
+          fee_type = (<input type="hidden" className="fee-type" value={this.props.product.prices[0].fee_type}/>);
+      }
       return (
         <tr className="cart_item" data-keep-when-zero="yes" data-cart-item={JSON.stringify(this.props.product.cart_item)}>
           <th>
@@ -114,6 +118,7 @@
               <div className="quantity" style={{float:"left", width:"50%", textAlign:"center"}}>
                   {qty}
                   {pid}
+                  {fee_type}
               </div>
               <div style={{float:"left", width:"50%", textAlign:"center", padding: "10px 0"}}>
                 <div className="price" style={{display: (this.props.purchaseOrder) ? "none" : "inherit" }}>{this.props.product.total_price}</div>
