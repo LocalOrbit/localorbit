@@ -66,7 +66,7 @@ class OrderItem < ActiveRecord::Base
       net_price: !item.net_price.nil? && item.net_price >= 0 && order.market.is_consignment_market? ? item.net_price : 0,
       product_fee_pct: !item.sale_price.nil? && item.sale_price > 0 && order.market.is_consignment_market? ? 0 : item.unit_price.nil? ? 0 : item.unit_price.product_fee_pct,
       category_fee_pct: category_fee_pct.nil? ? 0 : category_fee_pct,
-      fee: !item.product.prices.nil? && !item.product.prices.empty? ? item.product.prices.first.fee : 0,
+      fee: !item.fee.nil? ? item.fee : 0,
       seller_name: item.product.organization.name,
       delivery_status: "pending",
       po_lot_id: !item.lot_id.nil? && item.lot_id > 0 ? item.lot_id : nil,
@@ -288,14 +288,16 @@ class OrderItem < ActiveRecord::Base
       #lot.decrement!(:quantity, num_to_return)
     end
 
-    lots.order(created_at: :desc).each do |lot|
-      break unless amount
+    if order.market.is_buysell_market? || (order.market.is_consignment_market? && delivery_status == 'pending')
+      lots.order(created_at: :desc).each do |lot|
+        break unless amount
 
-      num_to_return = [lot.quantity, amount].min
-      lot.lot.increment!(:quantity, num_to_return)
-      lot.decrement!(:quantity, num_to_return)
+        num_to_return = [lot.quantity, amount].min
+        lot.lot.increment!(:quantity, num_to_return)
+        lot.decrement!(:quantity, num_to_return)
 
-      amount -= num_to_return
+        amount -= num_to_return
+      end
     end
   end
 
