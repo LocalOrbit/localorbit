@@ -35,6 +35,7 @@
                   <td class="product-clear"><%= link_to "", "#", class: "in-cart font-icon icon-clear" %></td>
                   <input type="hidden" class="lot-id" name="lot-id" value="<%=item.lot_id %>" />
                   <input type="hidden" class="ct-id" name="ct-id" value="<%=item.ct_id %>" />
+                  <input type="hidden" class="fee-type" name="fee-type" value="<%=item.fee %>" />
                 <% end %>
               <% end %>
             </tbody>

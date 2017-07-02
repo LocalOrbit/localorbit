@@ -240,7 +240,7 @@ $ ->
       @view.updateDeliveryFees(data.delivery_fees)
       @view.updateTotal(data.total)
 
-    saveItem: (productId, quantity, netPrice, salePrice, lotId, ctId, elToUpdate, orderId)->
+    saveItem: (productId, quantity, netPrice, salePrice, feeType, lotId, ctId, elToUpdate, orderId)->
       # TODO: Add validation for maximum input to prevent
       #       users from entering numbers greater than available
       #       quantities
@@ -255,12 +255,12 @@ $ ->
         @view.showErrorMessage(errorMessage, $(elToUpdate).closest('.product'))
         $(elToUpdate).closest(".quantity").addClass("field_with_errors")
       else
-        $.post(@url, {"_method": "put", product_id: productId, quantity: quantity, net_price: netPrice, sale_price: salePrice, order_id: orderId, lot_id: lotId, ct_id: ctId} )
+        $.post(@url, {"_method": "put", product_id: productId, quantity: quantity, net_price: netPrice, sale_price: salePrice, fee_type: feeType, order_id: orderId, lot_id: lotId, ct_id: ctId} )
           .done (data)=>
 
             error = data.error
 
-            window.lo.ProductActions.updateProduct(data.item.product_id, data.item.quantity, data.item.net_price, data.item.sale_price, data.item.formatted_total_price, data.item.lot_id, data.ct_id)
+            window.lo.ProductActions.updateProduct(data.item.product_id, data.item.quantity, data.item.net_price, data.item.sale_price, data.item.fee_type, data.item.formatted_total_price, data.item.lot_id, data.ct_id)
             if data.item["destroyed?"]
               @removeItem(data.item)
             else
@@ -386,13 +386,18 @@ $ ->
       else
         ctId = parseInt($(this).parent().parent().parent().parent().find('.ct-id').val())
 
+      if $(this).hasClass("in-cart")
+        feeType = parseInt($(this).parent().parent().find('.fee-type').val())
+      else
+        feeType = parseInt($(this).parent().parent().parent().parent().find('.fee-type').val())
+
       if netPrice == 'NaN'
         netPrice = 0.0
 
       if salePrice == 'NaN'
         salePrice = 0.0
 
-      model.saveItem(data.product_id, quantity, netPrice, salePrice, lotId, ctId, this, order_id)
+      model.saveItem(data.product_id, quantity, netPrice, salePrice, feeType, lotId, ctId, this, order_id)
 
     if this.value.length == 0 && !$(this).hasClass("in-cart")
       lotId = $(this).parent().parent().parent().parent().parent().parent().parent().find(".lot-id").val()
@@ -411,7 +416,12 @@ $ ->
     else
       ctId = $(this).parent().parent().parent().parent().parent().parent().parent().find(".ct-id").val()
 
-    model.saveItem(data.product_id, 0, 0, 0, lotId, ctId, this, order_id)
+    if $(this).hasClass("in-cart")
+      feeType = $(this).parent().parent().find(".fee-type").val()
+    else
+      feeType = $(this).parent().parent().parent().parent().parent().parent().parent().find(".fee-type").val()
+
+    model.saveItem(data.product_id, 0, 0, 0, feeType, lotId, ctId, this, order_id)
 
   $(document.body).on 'click', "input[type=radio]", (e)->
     $(".payment-fields").addClass("is-hidden")

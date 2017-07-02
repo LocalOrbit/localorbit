@@ -1,6 +1,6 @@
 module ProductImport
   module FileImporters
-    class <%= class_name %> < Framework::FileImporter
+    #class <%= class_name %> < Framework::FileImporter
 
       # if any of these are missing, don't even try to process the file
       REQUIRED_HEADERS = %w(foo bar baz)
@@ -36,7 +36,7 @@ module ProductImport
         # canonical data.
         s.transform :ensure_canonical_data
       end
-    end
+    #end
   end
 end
 
