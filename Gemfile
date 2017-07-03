@@ -162,8 +162,8 @@ group :production, :staging do
   gem 'rack-cache', require: 'rack/cache'
   gem 'rails_12factor'
   gem 'pgbackups-archive'
-  gem 'heroku-api'
-  #gem 'platform-api'
+  #gem 'heroku-api'
+  gem 'platform-api'
   gem 'wkhtmltopdf-heroku'
 end
 
