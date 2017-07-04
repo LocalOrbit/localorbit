@@ -17,6 +17,7 @@
         <% @po_qty = 0 %>
         <% @so_qty = 0 %>
         <% @products = Product.for_market_id(current_market.id).visible.order(:name) %>
+        <% allocated = Inventory::Utils.qty_allocated(current_market.id, po.product_id, po.id) %>
         <tr>
           <td colspan="<% po.delivery_status == 'delivered' ? 1 : 6 %>"><strong><%=po.product_name %></strong></td>
           <% if po.delivery_status == 'delivered' %>
@@ -87,7 +88,7 @@
                 <% end %>
             <% end %>
         <% end %>
-        <tr>
+        <tr data-unallocated="<%= po.quantity - allocated %>">
           <td></td>
           <td></td>
           <td><strong><%= @po_qty - @so_qty %></strong><%= @po_qty - @so_qty == 0 ? '&nbsp;<i style="color: #559955" class="fa fa-check"></i>'.html_safe : '' %></td>
@@ -131,12 +132,12 @@
               <div class="repack_options" style="float: right; display: none">
                 <div style="float: left">
                   <label># </label>
-                  <input type="text" size="3" title="Quantity" style="width: 50px; height: inherit" class="repack_qty" />
+                  <input type="text" size="3" title="Quantity" style="width: 50px; height: inherit" class="repack_qty" value="<%= po.quantity - allocated %>"/>
                 </div>
                 <div style="float: left; margin-left: 10px;">
                   <label>Product: </label>
                   <%= select_tag :repack_product_id, options_for_select(@products.map{|p| ["#{p.organization.name} - #{p.name}: #{p.unit_quantity} Units", p.id]}), :include_blank =>'Choose:', class: 'repack_product_id' %>
-                </div><br/>
+                </div><br/><br/>
                 <input type="hidden" class="transaction_id" value="<%=po.id %>"/><br/>
                 <button class="submit_repack_button btn btn--primary btn--tiny">Repack</button>
                 <button class="repack_cancel_button btn btn--tiny">Cancel</button>
