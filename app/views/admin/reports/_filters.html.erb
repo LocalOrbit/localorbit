@@ -98,5 +98,22 @@
         </span>
       </div>
     <% end %>
+
+    <% if presenter.filters.include?(:delivered_at) %>
+        <div class="pull-right date-filters" style="margin-top:15px">
+        <span class="preserve-alignment">
+          <label for="q_delivery_deliver_on_date_gteq">Delivered on or after</label><br>
+          <%= datetime_field_tag "q[delivery_deliver_on_date_gteq]", @presenter.start_date, class: append_sticky_class('delivery_deliver_on_date_gteq', 'datepicker', [1.months.ago.to_date.to_s]) %>
+        </span>
+          <span class="preserve-alignment">
+          <label for="q_delivery_deliver_on_date_lteq">Delivered on or before</label><br>
+            <%= datetime_field_tag "q[delivery_deliver_on_date_lteq]", @presenter.end_date, class: append_sticky_class('delivery_deliver_on_date_lteq', 'datepicker', [Date.today.to_s]) %>
+        </span>
+          <span class="preserve-alignment">
+          <br>
+            <%= f.submit "Filter", class: "btn--small mobile-block screen-only" %>
+        </span>
+        </div>
+    <% end %>
   </div>
 <% end %>

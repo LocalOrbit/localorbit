@@ -157,7 +157,8 @@ KnockoutModules.register "consignment_printable_preview_pdf",
     shrink_qty = $(this).parent().parent().find(".shrink_qty").val()
     shrink_cost = $(this).parent().parent().find(".shrink_cost").val()
     transaction_id = $(this).parent().parent().find(".transaction_id").val()
-    if shrink_qty > 0 && shrink_cost >= 0
+    unallocated = $(this).parent().parent().parent().data("unallocated")
+    if shrink_qty > 0 && shrink_cost >= 0 && shrink_qty <= unallocated
       $(this).prop("disabled", "disabled")
       $(this).parent().parent().parent().parent().parent().parent().find("input[name=shrink_qty]").val(shrink_qty)
       $(this).parent().parent().parent().parent().parent().parent().find("input[name=shrink_cost]").val(shrink_cost)
@@ -201,7 +202,8 @@ KnockoutModules.register "consignment_printable_preview_pdf",
     holdover_po_text = $(this).parent().parent().find(".holdover_po :selected").text()
     holdover_delivery_date = $(this).parent().parent().find(".holdover_delivery_date").val()
     transaction_id = $(this).parent().parent().find(".transaction_id").val()
-    if holdover_qty > 0 && ((holdover_po_text == "New" && holdover_delivery_date) || (holdover_po > 0))
+    unallocated = $(this).parent().parent().parent().data("unallocated")
+    if holdover_qty > 0 && ((holdover_po_text == "New" && holdover_delivery_date) || (holdover_po > 0)) && holdover_qty <= unallocated
       $(this).prop("disabled","disabled")
       $(this).parent().parent().parent().parent().parent().parent().find("input[name=holdover_qty]").val(holdover_qty)
       $(this).parent().parent().parent().parent().parent().parent().find("input[name=holdover_po]").val(holdover_po)
@@ -223,7 +225,8 @@ KnockoutModules.register "consignment_printable_preview_pdf",
     repack_qty = $(this).parent().parent().find(".repack_qty").val()
     repack_product_id = $(this).parent().parent().find(".repack_product_id").val()
     transaction_id = $(this).parent().parent().find(".transaction_id").val()
-    if repack_qty > 0 && repack_product_id
+    unallocated = $(this).parent().parent().parent().data("unallocated")
+    if repack_qty > 0 && repack_product_id && repack_qty <= unallocated
       $(this).prop("disabled","disabled")
       $(this).parent().parent().parent().parent().parent().parent().find("input[name=repack_qty]").val(repack_qty)
       $(this).parent().parent().parent().parent().parent().parent().find("input[name=repack_product_id]").val(repack_product_id)
