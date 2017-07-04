@@ -56,7 +56,7 @@ class CartsController < ApplicationController
     #delivery_date = current_delivery.deliver_on
 
     if current_market.is_consignment_market? && ((!order.nil? && order.sales_order?) || @order_type == 'sales')
-      @item = current_cart.items.find_or_initialize_by(product_id: product.id, lot_id: params[:lot_id])
+      @item = current_cart.items.find_or_initialize_by(product_id: product.id, lot_id: params[:lot_id], ct_id: params[:ct_id])
     else
       @item = current_cart.items.find_or_initialize_by(product_id: product.id)
     end

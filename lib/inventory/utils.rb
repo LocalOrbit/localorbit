@@ -94,6 +94,16 @@ module Inventory
         "#{order.id}-#{weekday}#{monthweek}"
       end
 
+      def qty_allocated(market_id, product_id, ct_id)
+        o = OrderItem.joins("JOIN orders ON order_items.order_id = orders.id")
+                .where("orders.market_id = ?", market_id)
+                .where("order_items.product_id = ?", product_id)
+                .where("order_items.po_ct_id = ?", ct_id)
+                .where("orders.order_type = 'sales'")
+                .sum("order_items.quantity")
+        o.nil? ? 0 : o.to_i
+      end
+
       def qty_committed(market_id, product_id, ct_id)
         o = OrderItem.joins("JOIN orders ON order_items.order_id = orders.id")
         .where("orders.market_id = ?", market_id)
