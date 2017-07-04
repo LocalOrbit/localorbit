@@ -260,7 +260,7 @@ $ ->
 
             error = data.error
 
-            window.lo.ProductActions.updateProduct(data.item.product_id, data.item.quantity, data.item.net_price, data.item.sale_price, data.item.fee_type, data.item.formatted_total_price, data.item.lot_id, data.ct_id)
+            window.lo.ProductActions.updateProduct(data.item.product_id, data.item.quantity, data.item.net_price, data.item.sale_price, data.item.fee_type, data.item.formatted_total_price, data.item.lot_id, data.item.ct_id)
             if data.item["destroyed?"]
               @removeItem(data.item)
             else
@@ -400,28 +400,29 @@ $ ->
       model.saveItem(data.product_id, quantity, netPrice, salePrice, feeType, lotId, ctId, this, order_id)
 
     if this.value.length == 0 && !$(this).hasClass("in-cart")
-      lotId = $(this).parent().parent().parent().parent().parent().parent().parent().find(".lot-id").val()
-      model.saveItem(data.product_id, 0, 0, 0, lotId, ctId, this, order_id)
+      lotId = $(this).parent().parent().find(".lot-id").val()
+      ctId = $(this).parent().parent().find(".ct-id").val()
+      model.saveItem(data.product_id, 0, 0, 0, 0, lotId, ctId, this, order_id)
 
   $(document.body).on 'click', ".cart_item .icon-clear", (e)->
     e.preventDefault()
     data = $(this).closest(".cart_item").data("cart-item")
-    if $(this).hasClass("in-cart")
+    if $(this).hasClass("in-cart") || $(this).hasClass("consignment")
       lotId = $(this).parent().parent().find(".lot-id").val()
     else
       lotId = $(this).parent().parent().parent().parent().parent().parent().parent().find(".lot-id").val()
 
-    if $(this).hasClass("in-cart")
+    if $(this).hasClass("in-cart") || $(this).hasClass("consignment")
       ctId = $(this).parent().parent().find(".ct-id").val()
     else
       ctId = $(this).parent().parent().parent().parent().parent().parent().parent().find(".ct-id").val()
 
-    if $(this).hasClass("in-cart")
+    if $(this).hasClass("in-cart") || $(this).hasClass("consignment")
       feeType = $(this).parent().parent().find(".fee-type").val()
     else
       feeType = $(this).parent().parent().parent().parent().parent().parent().parent().find(".fee-type").val()
 
-    model.saveItem(data.product_id, 0, 0, 0, feeType, lotId, ctId, this, order_id)
+    model.saveItem(data.product_id, 0, 0, 0, 0, lotId, ctId, this, order_id)
 
   $(document.body).on 'click', "input[type=radio]", (e)->
     $(".payment-fields").addClass("is-hidden")
