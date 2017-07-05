@@ -2,7 +2,7 @@ class UpdateQuantities
   include Interactor
 
   def perform
-    context[:previous_quantities] = order.items.map {|item| {id: item.id, quantity: item.quantity, quantity_delivered: item.quantity_delivered} }
+    context[:previous_quantities] = order.items.map {|item| {id: item.id, quantity: item.quantity, quantity_delivered: item.quantity_delivered, delivery_status: item.delivery_status} }
     context.fail! unless order.update_attributes(order_params.merge(updated_at: Time.current))
     order.cache_delivery_status
     result = ApplyDiscountToAddedOrderItems.perform(order: order)
