@@ -172,12 +172,12 @@
               <div style={{display: "inline-block", width: "100%", borderTop: "1px solid #DDD", marginTop: "5px"}}>
                   <table>
                       <tbody>
-                      <tr>
+                      <tr data-unallocated={this.props.lot.quantity - committed_count}>
                           <td>
                               <strong>Split:</strong>
                           </td>
                           <td>
-                              <input style={{float: "left", textAlign: "center", width: "50px", marginLeft: "10px", height: "inherit"}} type="number" placeholder="0" className="redesigned split-qty"/>
+                              <input style={{float: "left", textAlign: "center", width: "50px", marginLeft: "10px", height: "inherit"}} type="number" placeholder="0" disabled={disabled} className="redesigned split-qty"/>
                           </td>
                           <td>
                               <div style={{float: "left", marginLeft: "10px"}} className="split-options"><select className="split-product">{split_select_options}</select></div>
