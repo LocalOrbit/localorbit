@@ -120,7 +120,7 @@
             status = (<div style={{fontSize: "11px"}}>On Hand</div>);
         }
         else if (this.props.lot.status == 'awaiting_delivery' && this.props.lot.quantity + committed_ad_count > 0) {
-            lot_desc = (<div>{this.props.lot.quantity + committed_ad_count}</div>);
+            lot_desc = (<div>{this.props.lot.quantity + committed_ad_count}<br/><div style={{fontSize: '12px', color: '#999'}}>{this.props.lot.delivery_date}</div></div>);
             status = (<div style={{fontSize: "11px", color: "#991111"}}>Awaiting Delivery</div>);
         }
 
@@ -172,12 +172,12 @@
               <div style={{display: "inline-block", width: "100%", borderTop: "1px solid #DDD", marginTop: "5px"}}>
                   <table>
                       <tbody>
-                      <tr>
+                      <tr data-unallocated={this.props.lot.quantity - committed_count}>
                           <td>
                               <strong>Split:</strong>
                           </td>
                           <td>
-                              <input style={{float: "left", textAlign: "center", width: "50px", marginLeft: "10px", height: "inherit"}} type="number" placeholder="0" className="redesigned split-qty"/>
+                              <input style={{float: "left", textAlign: "center", width: "50px", marginLeft: "10px", height: "inherit"}} type="number" placeholder="0" disabled={disabled} className="redesigned split-qty"/>
                           </td>
                           <td>
                               <div style={{float: "left", marginLeft: "10px"}} className="split-options"><select className="split-product">{split_select_options}</select></div>
