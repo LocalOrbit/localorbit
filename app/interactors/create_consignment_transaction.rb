@@ -8,10 +8,11 @@ class CreateConsignmentTransaction
     order.items.each do |item|
 
       po_order = nil
+      existing_ct = nil
       if order.sales_order?
-        check_existing = ConsignmentTransaction.where(market_id: order.market.id, transaction_type: 'SO', order_id: order.id, product_id: item.product.id, lot_id: item.po_lot_id, deleted_at: nil).first
+        existing_ct = ConsignmentTransaction.where(market_id: order.market.id, transaction_type: 'SO', order_id: order.id, product_id: item.product.id, lot_id: item.po_lot_id, deleted_at: nil).first
       else
-        check_existing = ConsignmentTransaction.where(market_id: order.market.id, transaction_type: 'PO', order_id: order.id, product_id: item.product.id, deleted_at: nil).first
+        existing_ct = ConsignmentTransaction.where(market_id: order.market.id, transaction_type: 'PO', order_id: order.id, product_id: item.product.id, deleted_at: nil).first
       end
       
       if !item.po_ct_id.nil? && item.po_ct_id > 0
@@ -26,7 +27,7 @@ class CreateConsignmentTransaction
       end
 
       ct = nil
-      if check_existing.nil?
+      if existing_ct.nil?
         if order.sales_order? && !item.po_lot_id.nil? && item.po_lot_id > 0
           lt_id = item.po_lot_id
         else
@@ -48,7 +49,9 @@ class CreateConsignmentTransaction
           )
           ct.save
           Audit.create!(user_id: user.id, action:"create", auditable_type: "ConsignmentTransaction", auditable_id: order.id, audited_changes: {'transaction_type' => order.sales_order? ? 'SO' : 'PO'})
-
+      else # Add to an existing SO entry
+        existing_ct.quantity = check_existing.quantity + item.quantity
+        existing_ct.save!
       end
 
 

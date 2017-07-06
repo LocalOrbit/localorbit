@@ -249,7 +249,7 @@ module Api
             AND consignment_transactions.lot_id IS NULL
             AND consignment_transactions.market_id = ?
             AND consignment_transactions.product_id = ?", current_market.id, product.id)
-            .select("consignment_transactions.id AS ct_id, #{awaiting_delivery_qty - awaiting_ordered_qty} AS quantity, '' AS number, '' AS delivery_date, 'awaiting_delivery'::text AS status")
+            .select("consignment_transactions.id AS ct_id, #{awaiting_delivery_qty - awaiting_ordered_qty} AS quantity, '' AS number, TO_CHAR(consignment_transactions.delivery_date,'MM/DD/YYYY') AS delivery_date, 'awaiting_delivery'::text AS status")
 
           committed = Order.joins(:delivery, :organization, items: [lots: [:lot]]).joins("JOIN consignment_transactions ON consignment_transactions.order_id = orders.id AND consignment_transactions.order_item_id = order_items.id AND consignment_transactions.transaction_type='SO' AND consignment_transactions.lot_id  = lots.id")
                           .so_orders
