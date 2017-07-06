@@ -9,12 +9,14 @@ class UpdateLots
       if !item.lots.first.nil?
         lot_number = item.lots.first.lot.number
       end
-      if !item.quantity_delivered.nil?
-        lot = Inventory::Utils.upsert_lot(item.product, lot_number, item.quantity_delivered)
-        lot.update_attribute(:storage_location_id, item.preferred_storage_location_id) unless lot.storage_location_id == item.preferred_storage_location_id
-        update_po(item, lot)
-        if !item.quantity_delivered.nil?
-          update_pending_so(item, lot)
+      previous_quantities.each do |attr|
+        if attr[:id] == item.id && attr[:delivery_status] == 'pending' && item.delivery_status == 'delivered' && !item.quantity_delivered.nil?
+          lot = Inventory::Utils.upsert_lot(item.product, lot_number, item.quantity_delivered)
+          lot.update_attribute(:storage_location_id, item.preferred_storage_location_id) unless lot.storage_location_id == item.preferred_storage_location_id
+          update_po(item, lot)
+          if !item.quantity_delivered.nil?
+            update_pending_so(item, lot)
+          end
         end
       end
     end
