@@ -69,21 +69,28 @@ module Inventory
         #orig_ct.quantity = orig_ct.quantity - qty
         #orig_ct.save
 
-        # Add split product to PO
-        po_ct = ConsignmentTransaction.create(
-            market_id: order.market.id,
-            transaction_type: 'PO',
-            order_id: order.id,
-            order_item_id: order_item.id,
-            lot_id: dest_lot.id,
-            delivery_date: order.delivery.deliver_on,
-            product_id: dest_product.id,
-            quantity: ((orig_unit_quantity / dest_unit_quantity) * qty),
-            sale_price: order_item.unit_price,
-            net_price: order_item.net_price,
-            parent_id: ct.id
-        )
-        po_ct.save
+        split_trans = ConsignmentTransaction.where(transaction_type: 'PO', child_product_id: dest_product.id, child_lot_id: dest_lot.id).first
+
+        if split_trans.nil?
+          # Add split product to PO
+          po_ct = ConsignmentTransaction.create(
+              market_id: order.market.id,
+              transaction_type: 'PO',
+              order_id: order.id,
+              order_item_id: order_item.id,
+              lot_id: dest_lot.id,
+              delivery_date: order.delivery.deliver_on,
+              product_id: dest_product.id,
+              quantity: ((orig_unit_quantity / dest_unit_quantity) * qty),
+              sale_price: order_item.unit_price,
+              net_price: order_item.net_price,
+              parent_id: ct.id
+          )
+          po_ct.save
+        else
+          split_trans.quantity = split_trans.quantity + ((orig_unit_quantity / dest_unit_quantity) * qty)
+          split_trans.save!
+        end
 
       end
 
@@ -107,8 +114,14 @@ module Inventory
         child_lot.save
         parent_lot.save
 
+        child_po_ct.quantity = child_po_ct.quantity - ((parent_unit_quantity / child_unit_quantity) * Integer(quantity))
+        if child_po_ct.quantity == 0
+          child_po_ct.soft_delete
+        else
+          child_po_ct.save!
+        end
+
         parent_ct.soft_delete
-        child_po_ct.soft_delete
       end
 
       def can_split_product?(product)
