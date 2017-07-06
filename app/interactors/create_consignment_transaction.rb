@@ -50,7 +50,7 @@ class CreateConsignmentTransaction
           ct.save
           Audit.create!(user_id: user.id, action:"create", auditable_type: "ConsignmentTransaction", auditable_id: order.id, audited_changes: {'transaction_type' => order.sales_order? ? 'SO' : 'PO'})
       else # Add to an existing SO entry
-        existing_ct.quantity = check_existing.quantity + item.quantity
+        existing_ct.quantity = existing_ct.quantity + item.quantity
         existing_ct.save!
       end
 
