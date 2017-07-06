@@ -18,6 +18,7 @@ class UpdateQuantities
   end
 
   def rollback
-    order.update(items_attributes: context[:previous_quantities])
+    prev_qty = context[:previous_quantities].each { |h| h.delete(:delivery_status) }
+    order.update(items_attributes: prev_qty)
   end
 end
