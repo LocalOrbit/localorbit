@@ -69,7 +69,7 @@ module Inventory
         #orig_ct.quantity = orig_ct.quantity - qty
         #orig_ct.save
 
-        split_trans = ConsignmentTransaction.where(transaction_type: 'PO', child_product_id: dest_product.id, child_lot_id: dest_lot.id).first
+        split_trans = ConsignmentTransaction.where(transaction_type: 'PO', product_id: dest_product.id, lot_id: dest_lot.id).first
 
         if split_trans.nil?
           # Add split product to PO
