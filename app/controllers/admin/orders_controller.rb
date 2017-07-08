@@ -172,7 +172,8 @@ class Admin::OrdersController < AdminController
     merge = nil
 
     if params["items_to_add"]
-      return unless perform_add_items(order)
+      perform_add_items(order)
+      return
     elsif params[:commit] == "Add Items"
       show_add_items_form(order)
       return
@@ -549,13 +550,21 @@ class Admin::OrdersController < AdminController
       setup_add_items_form(order)
       order.errors[:base] << "Failed to add items to this order."
       render :show
-      return false
     end
     if current_cart
       current_cart.destroy
     end
     session.delete(:cart_id)
-    true
+
+    order.update_total_cost
+    came_from_admin = request.referer.include?("/admin/")
+    next_url = if order.reload.items.any?
+                 came_from_admin ? admin_order_path(order) : order_path(order)
+               else
+                 order.soft_delete
+                 came_from_admin ? admin_orders_path : orders_path
+               end
+    redirect_to next_url, notice: "Order successfully updated."
   end
 
   def show_add_items_form(order)

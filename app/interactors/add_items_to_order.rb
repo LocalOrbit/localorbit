@@ -6,9 +6,12 @@ class AddItemsToOrder
       delivery = order.delivery
       cart.items.each do |cart_item|
         if order.market.is_consignment_market? && order.items.map(&:po_lot_id).include?(cart_item.lot_id) && cart_item.quantity > 0
-          oi = order.items.where(po_lot_id: cart_item.lot_id).first
-          oi.quantity = oi.quantity + cart_item.quantity
-          oi.save!
+          order.items.each do |oi|
+            if oi.po_lot_id == cart_item.lot_id
+              oi.quantity = oi.quantity + cart_item.quantity
+              oi.save
+            end
+          end
         else
           if cart_item.quantity > 0
             order.add_cart_item(cart_item, delivery.deliver_on)
