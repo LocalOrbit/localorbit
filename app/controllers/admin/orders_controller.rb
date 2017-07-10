@@ -73,8 +73,8 @@ class Admin::OrdersController < AdminController
   end
 
   def search_and_calculate_totals(search)
-    if current_market.is_consignment_market?
-      results = Order.includes(:market, :organization, :delivery, :items).orders_for_consignment_seller(current_user).visible.search(search.query)
+    if current_market.is_consignment_market? && search.query.has_key?('products_organization_id_in')
+      results = Order.includes(:market, :organization, :items, :delivery).orders_for_consignment_seller(current_user).visible.search(search.query)
     else
       results = Order.includes(:market, :organization, :items, :delivery).orders_for_seller(current_user).visible.search(search.query)
     end
