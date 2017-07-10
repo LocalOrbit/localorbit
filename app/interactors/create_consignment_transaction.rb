@@ -9,10 +9,13 @@ class CreateConsignmentTransaction
 
       po_order = nil
       existing_ct = nil
-      so_qty = 0;
+      so_qty = 0
       if order.sales_order?
         existing_ct = ConsignmentTransaction.where(market_id: order.market.id, transaction_type: 'SO', order_id: order.id, product_id: item.product.id, lot_id: item.po_lot_id, deleted_at: nil).first
-        so_qty = cart.items.where(lot_id: item.po_lot_id).first.quantity
+        cart_item = cart.items.where(lot_id: item.po_lot_id)
+        if !cart_item.nil? && !cart_item.empty?
+          so_qty = cart_item.first.quantity
+        end
       else
         existing_ct = ConsignmentTransaction.where(market_id: order.market.id, transaction_type: 'PO', order_id: order.id, product_id: item.product.id, deleted_at: nil).first
       end
