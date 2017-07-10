@@ -307,6 +307,16 @@ class Order < ActiveRecord::Base
     end
   end
 
+  def self.orders_for_consignment_seller(user)
+    if user.admin?
+      all
+    else
+      # TODO: check cross selling logic
+      #joins(:products).where(seller_orders_arel(user).or(manager_orders_arel(user)).or(cross_sold_products_arel(user))).uniq
+      includes(:products).where(seller_orders_arel(user).or(manager_orders_arel(user))).uniq
+    end
+  end
+
   def self.orders_for_seller(user)
     if user.admin?
       all
