@@ -155,12 +155,14 @@
                          multiple: true,
                          class: "column column--full" %>
       </td>
+      <% if current_market.is_consignment_market? %>
       <td class="field">
         <%= f.text_field :sibling_unit_quantity,
                          value: sibling.unit_quantity,
                          multiple: true,
                          class: "column column--full" %>
       </td>
+      <% end %>
       <td></td>
     </tr>
   <% end %>
@@ -187,12 +189,14 @@
                        multiple: true,
                        class: "column column--full" %>
     </td>
+    <% if current_market.is_consignment_market? %>
     <td class="edit-cell">
       <%= f.text_field :sibling_unit_quantity,
                        value: @product.unit_quantity,
                        multiple: true,
                        class: "column column--full" %>
     </td>
+    <% end %>
     <% if !current_market.is_consignment_market? %>
     <td class="edit-cell">
       <button class="cancel">Cancel</button>&nbsp;/&nbsp;<%= link_to "Add", '#add-unit', class: 'add-copy' %>
@@ -205,7 +209,9 @@
     <td></td>
     <td></td>
     <td></td>
+    <% if current_market.is_consignment_market? %>
     <td></td>
+    <% end %>
     <% if !current_market.is_consignment_market? %>
     <td><%= link_to "Add Unit", '#add-unit', class: 'add-toggle' %></td>
     <% end %>
