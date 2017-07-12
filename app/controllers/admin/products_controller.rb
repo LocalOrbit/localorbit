@@ -264,7 +264,11 @@ module Admin
           sibling_unit_id = product.sibling_unit_id[i]
           sibling_unit_description = product.sibling_unit_description[i]
           sibling_product_code = product.sibling_product_code[i]
-          sibling_unit_quantity = product.sibling_unit_quantity[i]
+          if current_market.is_consignment_market?
+            sibling_unit_quantity = product.sibling_unit_quantity[i]
+          else
+            sibling_unit_quantity = 0
+          end
           if sibling_unit_id && sibling_unit_id != ""
             if sibling_id == "0"
               sibling = product.model.dup
