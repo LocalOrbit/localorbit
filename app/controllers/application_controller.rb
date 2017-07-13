@@ -134,7 +134,7 @@ class ApplicationController < ActionController::Base
   end
 
   def ensure_allow_signups
-    return if !current_market.nil? && current_market.allow_signups || current_user.admin?
+    return if !current_market.nil? && !current_user.nil? && current_market.allow_signups || current_user.admin?
     render file: Rails.root.join("public/signups_disabled.html"), status: :forbidden
   end
 
