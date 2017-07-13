@@ -50,8 +50,12 @@ class CartsController < ApplicationController
   end
 
   def update
-    @order_type = session[:order_type]
     order = !params[:order_id].nil? ? Order.find(params[:order_id]) : nil
+    if order.nil?
+      @order_type = session[:order_type]
+    else
+      @order_type = order.order_type
+    end
     product = Product.includes(:prices).find(params[:product_id])
     #delivery_date = current_delivery.deliver_on
 
