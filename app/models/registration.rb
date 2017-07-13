@@ -53,9 +53,9 @@ class Registration
         organization.org_type = "B"
       end
 
-      organization.markets = [market]
+      organization.markets << market
       organization.locations.build(location_params)
-      organization.save!
+      organization.save!(validate:false)
 
       # create the user second so we have the organization available
       # to the confirmation email
