@@ -165,6 +165,7 @@ group :production, :staging do
   #gem 'heroku-api'
   gem 'platform-api'
   gem 'wkhtmltopdf-heroku'
+  gem 'scout_apm'
 end
 
 group :production, :staging, :development do

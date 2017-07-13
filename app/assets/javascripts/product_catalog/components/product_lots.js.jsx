@@ -119,7 +119,7 @@
             lot_desc = (<div><div>{note_indicator}</div>{this.props.lot.number} / {this.props.lot.quantity + committed_count}<br/><div style={{fontSize: '12px', color: '#999'}}>{this.props.lot.delivery_date}</div></div>);
             status = (<div style={{fontSize: "11px"}}>On Hand</div>);
         }
-        else if (this.props.lot.status == 'awaiting_delivery' && this.props.lot.quantity + committed_ad_count > 0) {
+        else if (this.props.lot.status == 'awaiting_delivery' && this.props.lot.quantity + committed_ad_count >= 0) {
             lot_desc = (<div>{this.props.lot.quantity + committed_ad_count}<br/><div style={{fontSize: '12px', color: '#999'}}>{this.props.lot.delivery_date}</div></div>);
             status = (<div style={{fontSize: "11px", color: "#991111"}}>Awaiting Delivery</div>);
         }
@@ -144,7 +144,7 @@
       var deleteButton = (this.state.cartItemQuantity > 0 ||  this.state.cartNetPrice > 0 || this.state.cartSalePrice > 0) && (this.state.cartLotId == lot.id || this.state.cartCtId == lot.ct_id) ? (<a href="javascript:void(0)" onClick={this.deleteSOFields} className="font-icon icon-clear consignment" style={{marginLeft: "10px"}}></a>) : null;
       var inputClass = "redesigned app-product-input";
 
-      if (committed_ad_count > 0 && this.props.lot.quantity == 0 || committed_count> 0 && this.props.lot.quantity == 0) {
+      if (committed_ad_count >= 0 && this.props.lot.quantity == 0 || committed_count >= 0 && this.props.lot.quantity == 0) {
           disabled = 'disabled';
       }
       else
