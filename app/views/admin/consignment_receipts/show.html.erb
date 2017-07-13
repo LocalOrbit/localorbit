@@ -423,10 +423,11 @@
         <tbody>
         <% grand_total = 0 %>
         <% receipt.items.order(:name).each do |item| %>
-        <% avg_price = ConsignmentTransaction.where(product_id: item.product.id, transaction_type: 'SO').average(:net_price) %>
-        <% total_price = (!item.quantity_delivered.nil? && item.quantity_delivered > 0 ? item.quantity_delivered : 0) * (avg_price.nil? ? 0 : avg_price) %>
+        <% avg_price = ConsignmentTransaction.where(product_id: item.product.id, transaction_type: ['SO','SHRINK']).average(:net_price) %>
+        <% total_price = (!item.quantity_delivered.nil? && item.quantity_delivered > 0 ? item.quantity_delivered : 0) * (avg_price.nil? ? 0 : avg_price.round(2)) %>
         <% grand_total = grand_total + total_price %>
         <% sold_cnt = ConsignmentTransaction.where(product_id: item.product.id, transaction_type: 'SO', deleted_at: nil).sum(:quantity) %>
+        <% shrink_cnt = ConsignmentTransaction.where(product_id: item.product.id, transaction_type: 'SHRINK', deleted_at: nil).sum(:quantity) %>
         <% split_cnt = ConsignmentTransaction.where(product_id: item.product.id, transaction_type: 'SPLIT', deleted_at: nil).sum(:quantity) %>
         <% held_over_cnt = ConsignmentTransaction.where(product_id: item.product.id, transaction_type: 'HOLDOVER', master: true, deleted_at: nil).count(:id) %>
         <% held_over_po = ConsignmentTransaction.where(product_id: item.product.id, transaction_type: 'HOLDOVER', master: nil, deleted_at: nil).first %>
