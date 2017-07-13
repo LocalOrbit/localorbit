@@ -16,7 +16,7 @@
     <% @po_transactions.each do |po| %>
         <% @po_qty = 0 %>
         <% @so_qty = 0 %>
-        <% @products = Product.for_market_id(current_market.id).visible.order(:name) %>
+        <% @products = Product.for_market_id(current_market.id).visible.order("organizations.name, products.name") %>
         <% allocated = Inventory::Utils.qty_allocated(current_market.id, po.product_id, po.id) %>
         <tr>
           <td colspan="<% po.delivery_status == 'delivered' ? 1 : 6 %>"><strong><%=po.product_name %></strong></td>
@@ -136,7 +136,7 @@
                 </div>
                 <div style="float: left; margin-left: 10px;">
                   <label>Product: </label>
-                  <%= select_tag :repack_product_id, options_for_select(@products.map{|p| ["#{p.organization.name} - #{p.name}: #{p.unit_quantity} Units", p.id]}), :include_blank =>'Choose:', class: 'repack_product_id' %>
+                  <%= select_tag :repack_product_id, options_for_select(@products.map{|p| ["#{p.organization.name} - #{p.name}: #{p.unit_quantity} Units", p.id]}), :include_blank =>'Choose:', class: 'repack_product_id chosen' %>
                 </div><br/><br/>
                 <input type="hidden" class="transaction_id" value="<%=po.id %>"/><br/>
                 <button class="submit_repack_button btn btn--primary btn--tiny">Repack</button>
