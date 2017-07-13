@@ -29,7 +29,7 @@
       <% @presenter.items.decorate.each do |item| %>
       <% if @presenter.report == "lots" %>
 
-        <% next if Lot.find(item.lots.first.lot_id).number.nil? %>
+        <% next if item.lots.first.nil? || Lot.find(item.lots.first.lot_id).number.nil? %>
       <% end %>
       <tr class="<%= cycle "odd", "even" %> item">
         <% @presenter.fields.each do |field| %>

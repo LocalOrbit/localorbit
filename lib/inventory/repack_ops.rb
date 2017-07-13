@@ -70,6 +70,10 @@ module Inventory
               quantity: repack_into_qty,
           )
           ct_dest.save
+
+          t_id.quantity = t_id.quantity - (repack_into_qty * repack_product_unit_qty)
+          t_id.save
+
           Audit.create!(user_id:user.id, action:"create", auditable_type: "ConsignmentTransaction", auditable_id: order.id, audited_changes: {'transaction_type' => 'Repack', 'quantity' => repack_into_qty * repack_product_unit_qty, 'repack_product_id' => repack_into_product_id})
         end
       end
@@ -81,12 +85,12 @@ module Inventory
 
         # Remove the child item
         parent_order_item = OrderItem.find(parent_ct.order_item_id)
-        parent_order_item_lot = parent_order_item.lots.first
+        #parent_order_item_lot = parent_order_item.lots.first
         parent_order_item_qty = parent_order_item.quantity
         parent_order_item.delete
 
         # Subtract qty from child product lot
-        parent_order_item_lot.quantity = parent_order_item_lot.quantity - parent_order_item_qty
+        #parent_order_item_lot.quantity = parent_order_item_lot.quantity - parent_order_item_qty
 
         # Add appropriate qty to parent product lot
         parent_product = Product.find(parent_ct.product_id)
@@ -107,6 +111,11 @@ module Inventory
         # Remove repack consignment transactions
         child_ct.soft_delete
         parent_ct.soft_delete
+
+        # Update orig qty
+        t_id = ConsignmentTransaction.find(child_ct.parent_id)
+        t_id.quantity = t_id.quantity + (parent_order_item_qty * parent_unit_quantity)
+        t_id.save
 
         # Create audit entry
         Audit.create!(user_id: user.id, action:"create", auditable_type: "ConsignmentTransaction", auditable_id: order.id, audited_changes: {'transaction_type' => 'Undo Repack', 'repack_product_id' => parent_product.id})

@@ -11,7 +11,7 @@ class Admin::ConsignmentPartialPoReportController < AdminController
   end
 
   def search_orders(search)
-    results = Order.where(market_id: current_market.id, order_type: 'purchase', sold_through: false).search(search.query)
+    results = Order.where(market_id: current_market.id, order_type: 'purchase', sold_through: false).visible.search(search.query)
     results.sorts = "placed_at" if results.sorts.empty?
     results
   end

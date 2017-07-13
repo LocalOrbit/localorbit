@@ -18,7 +18,7 @@
       <% so_value = ConsignmentTransaction
           .joins("JOIN consignment_transactions ct2 ON ct2.parent_id = consignment_transactions.id AND ct2.transaction_type = 'SO'")
           .where(order_id: order.id).select("sum(ct2.net_price * ct2.quantity) AS amt")
-        supplier = order.products[0].organization.name
+        supplier = !order.products.empty? ? order.products[0].organization.name : ''
         if !so_value[0].amt.nil?
           total = total + so_value[0].amt
         end
