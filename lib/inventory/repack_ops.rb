@@ -2,6 +2,7 @@ module Inventory
   class RepackOps
     class << self
 
+      
       def repack_product(user, order, params)
         # repack x into y product
 
