@@ -151,8 +151,8 @@ class OrderItem < ActiveRecord::Base
       qty = product.lots_by_expiration.available_specific(Time.current.end_of_minute, market_id, organization_id).sum(:quantity)
       qty += product.lots_by_expiration.available_general(Time.current.end_of_minute).sum(:quantity)
     end
-    if qty > 0 && qty < (quantity - (quantity_was || 0))
-      errors[:inventory] = "there are only #{Integer(qty + (quantity_was || 0))} #{product.name.pluralize(qty)} available."
+    if qty > 0 && qty < quantity
+      errors.add(:inventory, "there are only #{Integer(qty)} #{product.name.pluralize(qty)} available.")
     end
   end
 
