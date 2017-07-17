@@ -120,7 +120,9 @@ module Imports
 				if !product.nil? # if there is a product-unit with this name, category, org
 					product.skip_validation = true
 					product.consignment_market = current_market.is_consignment_market?
-					product.update_attributes!(unit_description: prod_hash["Unit Description"],
+					product.update_attributes!(name: prod_hash["Product Name"].strip,
+																		 category_id: self.get_category_id_from_name(prod_hash["Category Name"]),
+																		 unit_description: prod_hash["Unit Description"],
 																		 unit_quantity: prod_hash["Unit Quantity"],
 																		 code: prod_hash["Product Code"],
 																		 short_description: prod_hash["Short Description"],
