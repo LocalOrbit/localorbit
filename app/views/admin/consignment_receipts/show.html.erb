@@ -423,7 +423,7 @@
         <tbody>
         <% grand_total = 0 %>
         <% receipt.items.order(:name).each do |item| %>
-        <% avg_price = ConsignmentTransaction.where(product_id: item.product.id, transaction_type: ['SO','SHRINK']).average(:net_price) %>
+        <% avg_price = ConsignmentTransaction.where(product_id: item.product.id, transaction_type: ['SO','SHRINK'], deleted_at: nil).average(:net_price) %>
         <% total_price = (!item.quantity_delivered.nil? && item.quantity_delivered > 0 ? item.quantity_delivered : 0) * (avg_price.nil? ? 0 : avg_price.round(2)) %>
         <% grand_total = grand_total + total_price %>
         <% sold_cnt = ConsignmentTransaction.where(product_id: item.product.id, transaction_type: 'SO', deleted_at: nil).sum(:quantity) %>
