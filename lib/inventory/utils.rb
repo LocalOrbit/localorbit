@@ -4,7 +4,7 @@ module Inventory
 
       def check_sold_through(order)
         result = ActiveRecord::Base.connection.exec_query("
-        SELECT coalesce(po.quantity,0) - coalesce(po_other.quantity,0) - coalesce(so.quantity,0) AS quantity, so.net_price + po_other.net_price_other AS balance_due
+        SELECT coalesce(po.quantity,0) - coalesce(po_other.quantity,0) - coalesce(po_other2.quantity,0) - coalesce(so.quantity,0) AS quantity, so.net_price + po_other.net_price_other + po_other2.net_price_other AS balance_due
         FROM
           (SELECT sum(quantity) quantity
           FROM consignment_transactions
@@ -15,6 +15,10 @@ module Inventory
           WHERE ct.id = parent.parent_id
           AND parent.order_id = $1
           AND ct.transaction_type != 'PO' AND ct.deleted_at IS NULL) po_other,
+          (SELECT sum(ct.quantity) quantity, sum(ct.net_price * ct.quantity) net_price_other
+          FROM consignment_transactions ct
+          WHERE ct.order_id = $1
+          AND (ct.transaction_type != 'PO') AND ct.deleted_at IS NULL) po_other2,
           (SELECT sum(so1.quantity) quantity, sum(so1.net_price * so1.quantity) net_price
           FROM consignment_transactions po1, consignment_transactions so1, orders o
           WHERE po1.id = so1.parent_id AND so1.order_id = o.id AND po1.order_id = $1
@@ -101,7 +105,7 @@ module Inventory
                 .where("order_items.product_id = ?", product_id)
                 .where("order_items.po_ct_id = ?", ct_id)
                 .where("orders.order_type = 'sales'")
-                .sum("order_items.quantity")
+                .sum("order_items.quantity_delivered")
         o.nil? ? 0 : o.to_i
       end
 
@@ -123,7 +127,7 @@ module Inventory
                 .where("order_items.po_ct_id = ?", ct_id)
                 .where("orders.order_type = 'sales'")
                 .where("order_items.delivery_status = 'delivered'")
-                .sum("order_items.quantity")
+                .sum("order_items.quantity_delivered")
         o.nil? ? 0 : o.to_i
       end
 

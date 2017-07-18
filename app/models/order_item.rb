@@ -154,6 +154,9 @@ class OrderItem < ActiveRecord::Base
     if qty > 0 && (qty + (quantity_was || 0)) < quantity
       errors.add(:inventory, "there are only #{Integer(qty)} #{product.name.pluralize(qty)} available.")
     end
+    if !quantity_delivered.nil? && qty > 0 && (qty + (quantity_delivered_was || 0)) < quantity_delivered
+      errors.add(:inventory, "there are only #{Integer(qty + quantity)} #{product.name.pluralize(qty)} available.")
+    end
   end
 
   def seller
@@ -302,14 +305,40 @@ class OrderItem < ActiveRecord::Base
   end
 
   def update_consumed_inventory
-    if !order.nil? && order.sales_order?
-      if persisted? && quantity_changed?
-        quantity_remaining = changes[:quantity][1] - (changes[:quantity][0] || 0)
+    quantity_remaining = nil
+    if order.market.is_consignment_market?
+      if !order.nil? && order.sales_order?
+        if persisted? && quantity_changed?
+          quantity_remaining = changes[:quantity][1] - (changes[:quantity][0] || 0)
+        end
 
-        if quantity_remaining > 0
-          consume_inventory_amount(quantity_remaining, order.market.id, order.organization.id)
-        else
-          return_inventory_amount(quantity_remaining.abs)
+        if persisted? && quantity_delivered_changed?
+          if changes[:quantity_delivered][0].nil?
+            quantity_remaining = changes[:quantity_delivered][1] - quantity
+          else
+            quantity_remaining = changes[:quantity_delivered][1] - (changes[:quantity_delivered][0] || 0)
+          end
+        end
+
+        if !quantity_remaining.nil?
+          if quantity_remaining > 0
+            consume_inventory_amount(quantity_remaining, order.market.id, order.organization.id)
+          else
+            return_inventory_amount(quantity_remaining.abs)
+          end
+        end
+
+      end
+    else
+      if !order.nil? && order.sales_order?
+        if persisted? && quantity_changed?
+          quantity_remaining = changes[:quantity][1] - (changes[:quantity][0] || 0)
+
+          if quantity_remaining > 0
+            consume_inventory_amount(quantity_remaining, order.market.id, order.organization.id)
+          else
+            return_inventory_amount(quantity_remaining.abs)
+          end
         end
       end
     end

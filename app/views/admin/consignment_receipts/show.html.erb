@@ -435,6 +435,10 @@
             total_quantity = 0
             total_sum = 0
             avg_price = 0
+            sold_count = 0
+            shrink_count = 0
+            split_count = 0
+            holdover_count = 0
             held_over_po = nil
             so_ct.each do |so|
               if so.transaction_type == 'SO'
