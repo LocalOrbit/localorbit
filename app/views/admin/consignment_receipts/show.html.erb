@@ -421,16 +421,45 @@
         </tr>
         </thead>
         <tbody>
-        <% grand_total = 0 %>
-        <% receipt.items.order(:name).each do |item| %>
-        <% avg_price = ConsignmentTransaction.where(product_id: item.product.id, transaction_type: ['SO','SHRINK'], deleted_at: nil).average(:net_price) %>
-        <% total_price = (!item.quantity_delivered.nil? && item.quantity_delivered > 0 ? item.quantity_delivered : 0) * (avg_price.nil? ? 0 : avg_price.round(2)) %>
-        <% grand_total = grand_total + total_price %>
-        <% sold_cnt = ConsignmentTransaction.where(product_id: item.product.id, transaction_type: 'SO', deleted_at: nil).sum(:quantity) %>
-        <% shrink_cnt = ConsignmentTransaction.where(product_id: item.product.id, transaction_type: 'SHRINK', deleted_at: nil).sum(:quantity) %>
-        <% split_cnt = ConsignmentTransaction.where(product_id: item.product.id, transaction_type: 'SPLIT', deleted_at: nil).sum(:quantity) %>
-        <% held_over_cnt = ConsignmentTransaction.where(product_id: item.product.id, transaction_type: 'HOLDOVER', master: true, deleted_at: nil).count(:id) %>
-        <% held_over_po = ConsignmentTransaction.where(product_id: item.product.id, transaction_type: 'HOLDOVER', master: nil, deleted_at: nil).first %>
+        <%
+          grand_total = 0
+          sold_count = 0
+          shrink_count = 0
+          split_count = 0
+          holdover_count = 0
+        %>
+        <%
+          receipt.items.order(:name).each do |item|
+            po_ct = ConsignmentTransaction.where(order_id: receipt.id, order_item_id: item.id, deleted_at: nil).first
+            so_ct = ConsignmentTransaction.where(parent_id: po_ct.id, deleted_at: nil)
+            total_quantity = 0
+            total_sum = 0
+            avg_price = 0
+            held_over_po = nil
+            so_ct.each do |so|
+              if so.transaction_type == 'SO'
+                sold_count = sold_count + so.quantity
+              end
+              if so.transaction_type == 'SHRINK'
+                shrink_count = shrink_count + so.quantity
+              end
+              if so.transaction_type == 'SPLIT'
+                split_count = split_count + so.quantity
+              end
+              if so.transaction_type == 'HOLDOVER'
+                holdover_count = holdover_count + so.quantity
+                held_over_po = ConsignmentTransaction.where(id: po_ct.id, transaction_type: 'HOLDOVER', master: nil, deleted_at: nil).first
+              end
+              so_total = so.net_price * so.quantity
+              total_quantity = total_quantity + so.quantity
+              total_sum = total_sum + so_total
+            end
+            if total_quantity > 0
+              avg_price = total_sum/total_quantity
+            end
+            total_price = total_sum
+            grand_total = grand_total + total_sum
+        %>
         <tr>
           <td><%= held_over_po.nil? ? '' : "(Holdover PO: #{held_over_po.order_id})" %> <%= item.name %></td>
           <td><%=item.quantity_delivered %></td>
@@ -440,14 +469,14 @@
           <% end %>
         </tr>
         <% if receipt.sold_through? %>
-        <tr><td style="text-align: right; font-size: 9px;font-weight: bold">Sold:</td><td><%= sold_cnt %></td></tr>
-        <% if held_over_cnt > 0 %>
-        <tr><td style="text-align: right; font-size: 9px;font-weight: bold">Holdover:</td><td><%= held_over_cnt %></td></tr>
+        <tr><td style="text-align: right; font-size: 9px;font-weight: bold">Sold:</td><td><%= sold_count %></td></tr>
+        <% if holdover_count > 0 %>
+        <tr><td style="text-align: right; font-size: 9px;font-weight: bold">Holdover:</td><td><%= holdover_count %></td></tr>
         <% end %>
-        <% if split_cnt > 0 %>
-        <tr><td style="text-align: right; font-size: 9px;font-weight: bold">Split:</td><td><%= split_cnt %></td></tr>
+        <% if split_count > 0 %>
+        <tr><td style="text-align: right; font-size: 9px;font-weight: bold">Split:</td><td><%= split_count %></td></tr>
         <% end %>
-        <tr><td></td><td style="font-weight: bold; border-top: 1px solid #000"><%= sold_cnt + split_cnt + held_over_cnt %></td></tr>
+        <tr><td></td><td style="font-weight: bold; border-top: 1px solid #000"><%= sold_count + split_count + holdover_count %></td></tr>
         <% end %>
         <% end %>
         <% if receipt.sold_through? %>
