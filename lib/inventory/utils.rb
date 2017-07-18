@@ -10,10 +10,11 @@ module Inventory
           FROM consignment_transactions
           WHERE order_id = $1
           AND transaction_type = 'PO' AND deleted_at IS NULL) po,
-          (SELECT sum(quantity) quantity, sum(net_price * quantity) net_price_other
-          FROM consignment_transactions
-          WHERE order_id = $1
-          AND transaction_type != 'PO' AND deleted_at IS NULL) po_other,
+          (SELECT sum(ct.quantity) quantity, sum(ct.net_price * ct.quantity) net_price_other
+          FROM consignment_transactions ct, consignment_transactions parent
+          WHERE ct.id = parent.parent_id
+          AND parent.order_id = $1
+          AND ct.transaction_type != 'PO' AND ct.deleted_at IS NULL) po_other,
           (SELECT sum(so1.quantity) quantity, sum(so1.net_price * so1.quantity) net_price
           FROM consignment_transactions po1, consignment_transactions so1, orders o
           WHERE po1.id = so1.parent_id AND so1.order_id = o.id AND po1.order_id = $1
