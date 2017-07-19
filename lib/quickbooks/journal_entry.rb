@@ -24,7 +24,7 @@ module Quickbooks
 
         jentry = Quickbooks::Model::JournalEntry.new
         jentry.doc_number = order.id
-        jentry.txn_date = order.items.map(&:delivered_at).max.strftime("%m/%d/%Y")
+        jentry.txn_date = order.items.where("quantity_delivered > 0").map(&:delivered_at).max.strftime("%m/%d/%Y")
 
 
         # Sales Order

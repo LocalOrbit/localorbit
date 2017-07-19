@@ -243,9 +243,11 @@ class OrderItem < ActiveRecord::Base
   def consume_inventory_amount(initial_amount, market_id, organization_id)
     if !po_lot_id.nil? && po_lot_id > 0 # Decrement specific consignment lot
       lot = Lot.find(po_lot_id)
-      num_to_consume = [lot.quantity, initial_amount].min
-      lot.decrement!(:quantity, num_to_consume)
-      lots.build(lot: lot, quantity: num_to_consume)
+      if initial_amount <= lot.quantity
+        num_to_consume = [lot.quantity, initial_amount].min
+        lot.decrement!(:quantity, num_to_consume)
+        lots.build(lot: lot, quantity: num_to_consume)
+      end
     else
       specific = false
       amount = initial_amount
@@ -306,7 +308,7 @@ class OrderItem < ActiveRecord::Base
 
   def update_consumed_inventory
     quantity_remaining = nil
-    if order.market.is_consignment_market?
+    if !order.nil? && order.market.is_consignment_market?
       if !order.nil? && order.sales_order?
         if persisted? && quantity_changed?
           quantity_remaining = changes[:quantity][1] - (changes[:quantity][0] || 0)
