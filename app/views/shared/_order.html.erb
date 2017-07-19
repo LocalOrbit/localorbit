@@ -49,7 +49,7 @@
                 </li>
         <% elsif policy(:market_quickbooks).index? && order.order_type == "purchase" && order.payment_status == 'unpaid' && order.delivery_status_for_user(current_user) == 'delivered' && order.qb_ref_id.nil? && order.sold_through %>
         <li>
-          <button id="export_bill_button" name="Export Bill">Export Bill to QB</button>
+          <button id="export_bill_button" name="Export Bill">Update Payment Status</button>
         </li>
         <% elsif policy(:market_quickbooks).index? && order.payment_status == 'exported' && !order.qb_ref_id.nil? %>
         <li>
