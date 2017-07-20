@@ -5,6 +5,9 @@ class RegistrationsController < ApplicationController
   skip_before_action :ensure_user_not_suspended
   #before_action :ensure_allow_signups
 
+  def index
+  end
+
   def show
     @registration = Registration.new(buyer: true)
   end

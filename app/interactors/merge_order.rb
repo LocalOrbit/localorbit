@@ -3,7 +3,7 @@ class MergeOrder
 
   def perform
     # Retrieve orig_order items
-    if orig_order.id != dest_order.id
+    if !orig_order.nil? && !dest_order.nil? && orig_order.id != dest_order.id
 
       if !orig_order.nil? && !dest_order.nil? && orig_order.payment_method == dest_order.payment_method
         orig_order = context[:orig_order]
