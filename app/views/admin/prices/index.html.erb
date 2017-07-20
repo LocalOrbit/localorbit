@@ -150,7 +150,7 @@
                         <label style="font-size: 9px">Mkt</label> <input style="float: left" type="radio" value="0" name="price[<%=price.id%>][fee]" class="mkt-fee" <%= price.fee == 0 ? "checked" : "" %> />
                       </div>
                       <div style="clear: left"></div>
-                      <% mkt_id = !price.market_id.to_s.empty? || "all" %>
+                      <% mkt_id = !price.market_id.to_s.empty? ? price.market_id.to_s : 'all' %>
                       <% if policy(:market_category_fees).index? && !mkt_id.nil? && !@category_percents_by_market_id.nil? && !@category_percents_by_market_id[mkt_id].nil? && @category_percents_by_market_id[mkt_id] > 0 %>
                       <div style="float: left">
                         <label style="font-size: 9px">Category</label> <input style="float: left" type="radio" value="1" name="price[<%=price.id%>][fee]" class="category-fee" <%= price.fee == 1 ? "checked" : "" %> />
