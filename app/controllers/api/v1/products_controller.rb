@@ -274,7 +274,7 @@ module Api
           lots = lots + awaiting_delivery
 
           undo_split_options = nil
-          split_options = Product.where(parent_product_id: product.id).select("products.id, products.name, products.general_product_id")
+          split_options = Product.where(parent_product_id: product.id).visible.select("products.id, products.name, products.general_product_id")
           if Inventory::SplitOps.can_unsplit_product?(product.id)
             undo_split_options = ConsignmentTransaction.where(child_product_id: product.id).select(:child_lot_id).first
           end
