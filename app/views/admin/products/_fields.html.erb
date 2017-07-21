@@ -30,7 +30,7 @@
     </div>
 
     <div class="field">
-      <% children_products = !@product.object.id.nil? ? Product.where(parent_product_id: @product.object.id) : nil %>
+      <% children_products = !@product.object.id.nil? ? Product.where(parent_product_id: @product.object.id).visible : nil %>
       <% if !children_products.nil? && !children_products.empty? %>
         <label>Associated Child Products</label><br/>
         <% children_products.each do |child_product| %>
