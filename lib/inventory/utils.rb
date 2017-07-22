@@ -3,26 +3,39 @@ module Inventory
     class << self
 
       def check_sold_through(order)
+        # result = ActiveRecord::Base.connection.exec_query("
+        # SELECT coalesce(po.quantity,0) - coalesce(po_other.quantity,0) - coalesce(po_other2.quantity,0) - coalesce(so.quantity,0) AS quantity, so.net_price + po_other.net_price_other + po_other2.net_price_other AS balance_due
+        # FROM
+        #   (SELECT sum(quantity) quantity
+        #   FROM consignment_transactions
+        #   WHERE order_id = $1
+        #   AND transaction_type = 'PO' AND deleted_at IS NULL) po,
+        #   (SELECT sum(ct.quantity) quantity, sum(ct.net_price * ct.quantity) net_price_other
+        #   FROM consignment_transactions ct, consignment_transactions parent
+        #   WHERE ct.id = parent.parent_id
+        #   AND parent.order_id = $1
+        #   AND ct.transaction_type != 'PO' AND ct.deleted_at IS NULL) po_other,
+        #   (SELECT sum(ct.quantity) quantity, sum(ct.net_price * ct.quantity) net_price_other
+        #   FROM consignment_transactions ct
+        #   WHERE ct.order_id = $1
+        #   AND (ct.transaction_type != 'PO') AND ct.deleted_at IS NULL) po_other2,
+        #   (SELECT sum(so1.quantity) quantity, sum(so1.net_price * so1.quantity) net_price
+        #   FROM consignment_transactions po1, consignment_transactions so1, orders o
+        #   WHERE po1.id = so1.parent_id AND so1.order_id = o.id AND po1.order_id = $1
+        #   AND so1.transaction_type = 'SO' AND so1.deleted_at IS NULL AND o.delivery_status='delivered') so", 'sold_through_query', [[nil,order.id]])
+
         result = ActiveRecord::Base.connection.exec_query("
-        SELECT coalesce(po.quantity,0) - coalesce(po_other.quantity,0) - coalesce(po_other2.quantity,0) - coalesce(so.quantity,0) AS quantity, so.net_price + po_other.net_price_other + po_other2.net_price_other AS balance_due
+        SELECT coalesce(po.quantity,0) - coalesce(so.quantity,0) AS quantity, so.net_price AS balance_due
         FROM
-          (SELECT sum(quantity) quantity
-          FROM consignment_transactions
-          WHERE order_id = $1
-          AND transaction_type = 'PO' AND deleted_at IS NULL) po,
-          (SELECT sum(ct.quantity) quantity, sum(ct.net_price * ct.quantity) net_price_other
-          FROM consignment_transactions ct, consignment_transactions parent
-          WHERE ct.id = parent.parent_id
-          AND parent.order_id = $1
-          AND ct.transaction_type != 'PO' AND ct.deleted_at IS NULL) po_other,
-          (SELECT sum(ct.quantity) quantity, sum(ct.net_price * ct.quantity) net_price_other
-          FROM consignment_transactions ct
-          WHERE ct.order_id = $1
-          AND (ct.transaction_type != 'PO') AND ct.deleted_at IS NULL) po_other2,
-          (SELECT sum(so1.quantity) quantity, sum(so1.net_price * so1.quantity) net_price
-          FROM consignment_transactions po1, consignment_transactions so1, orders o
-          WHERE po1.id = so1.parent_id AND so1.order_id = o.id AND po1.order_id = $1
-          AND so1.transaction_type = 'SO' AND so1.deleted_at IS NULL AND o.delivery_status='delivered') so", 'sold_through_query', [[nil,order.id]])
+        (SELECT sum(quantity) quantity
+        FROM consignment_transactions
+        WHERE order_id = $1
+        AND transaction_type = 'PO' AND deleted_at IS NULL) po,
+        (SELECT sum(ct.quantity) quantity, sum(ct.net_price * ct.quantity) net_price
+        FROM consignment_transactions ct, consignment_transactions parent
+        WHERE ct.parent_id = parent.id
+        AND parent.order_id = $1
+        AND ct.deleted_at IS NULL and parent.deleted_at is null) so", 'sold_through_query', [[nil,order.id]])
 
         if Integer(result[0]['quantity']) == 0
           order.sold_through = true
