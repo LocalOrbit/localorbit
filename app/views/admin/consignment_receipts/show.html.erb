@@ -429,9 +429,14 @@
           holdover_count = 0
         %>
         <%
-          receipt.items.order(:name).each do |item|
-            po_ct = ConsignmentTransaction.where(order_id: receipt.id, order_item_id: item.id, deleted_at: nil).first
-            so_ct = ConsignmentTransaction.where(parent_id: po_ct.id, deleted_at: nil)
+          if receipt.sold_through?
+            po_ct = ConsignmentTransaction.where(order_id: receipt.id, deleted_at: nil)
+          else
+            po_ct = ConsignmentTransaction.where(order_id: receipt.id, deleted_at: nil, parent_id: nil)
+          end
+          po_ct.each do |po|
+            pname = Product.find(po.product_id).name
+            so_ct = ConsignmentTransaction.where(parent_id: po.id, deleted_at: nil)
             total_quantity = 0
             total_sum = 0
             avg_price = 0
@@ -465,8 +470,8 @@
             grand_total = grand_total + total_sum
         %>
         <tr>
-          <td><%= held_over_po.nil? ? '' : "(Holdover PO: #{held_over_po.order_id})" %> <%= item.name %></td>
-          <td><%=item.quantity_delivered %></td>
+          <td><%= held_over_po.nil? ? '' : "(Holdover PO: #{held_over_po.order_id})" %> <%= pname %></td>
+          <td><%=po.quantity %></td>
           <% if receipt.sold_through? %>
           <td style="text-align: right;"><%= number_to_currency(avg_price) %></td>
           <td style="text-align: right;"><%= number_to_currency(total_price) %></td>
