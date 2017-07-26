@@ -430,42 +430,46 @@
         %>
         <%
           if receipt.sold_through?
-            po_ct = ConsignmentTransaction.where(order_id: receipt.id, deleted_at: nil)
+            po_ct = ConsignmentTransaction.where(order_id: receipt.id, deleted_at: nil, transaction_type: 'PO')
           else
-            po_ct = ConsignmentTransaction.where(order_id: receipt.id, deleted_at: nil, parent_id: nil)
+            po_ct = ConsignmentTransaction.where(order_id: receipt.id, deleted_at: nil, parent_id: nil, transaction_type: 'PO')
           end
           po_ct.each do |po|
             pname = Product.find(po.product_id).name
             so_ct = ConsignmentTransaction.where(parent_id: po.id, deleted_at: nil)
             total_quantity = 0
-            total_sum = 0
+            avg_sum = 0
             avg_price = 0
             sold_count = 0
             shrink_count = 0
             split_count = 0
             holdover_count = 0
             held_over_po = nil
+            total_sum = 0
             so_ct.each do |so|
               if so.transaction_type == 'SO'
-                sold_count = sold_count + so.quantity
+                sold_count = sold_count + (so.quantity || 0)
               end
               if so.transaction_type == 'SHRINK'
-                shrink_count = shrink_count + so.quantity
+                shrink_count = shrink_count + (so.quantity || 0)
               end
               if so.transaction_type == 'SPLIT'
-                split_count = split_count + so.quantity
+                split_count = split_count + (so.quantity || 0)
               end
               if so.transaction_type == 'HOLDOVER'
-                holdover_count = holdover_count + so.quantity
+                holdover_count = holdover_count + (so.quantity || 0)
                 held_over_po = ConsignmentTransaction.where(id: po_ct.id, transaction_type: 'HOLDOVER', master: nil, deleted_at: nil).first
               end
-              so_total = so.net_price * so.quantity
-              total_quantity = total_quantity + so.quantity
-              total_sum = total_sum + so_total
+              so_total = so.net_price * (so.quantity || 0)
+              if so.transaction_type != 'SHRINK'
+                total_quantity = total_quantity + (so.quantity || 0)
+              end
+              avg_sum = avg_sum + so_total
             end
             if total_quantity > 0
-              avg_price = total_sum/total_quantity
+              avg_price = avg_sum/total_quantity
             end
+            total_sum = total_sum + (total_quantity * avg_price)
             total_price = total_sum
             grand_total = grand_total + total_sum
         %>
