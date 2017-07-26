@@ -74,11 +74,18 @@ $ ->
         else
           return 0.00
 
-    updateMarkupPct= ->
+    updateMarkupPct = ->
       netPriceValue = getNetPriceValue()
       salePriceValue = getSalePriceValue()
       feeValue = ((salePriceValue - netPriceValue) / netPriceValue) * 100
       setMarkupValue(feeValue)
+
+    updateFeeOps = ->
+      marketId = selectedMarket.val()
+      if marketToCategoryPercentMap[marketId] > 0
+        use_category_fee.prop('disabled',false)
+      else
+        use_category_fee.prop('disabled',true)
 
     updateFee = ->
       netPriceValue = getNetPriceValue()
@@ -175,6 +182,7 @@ $ ->
     selectedMarket.change ->
       updateNetPrice()
       updateMarkupPct()
+      updateFeeOps()
       use_mkt_fee.prop('disabled', false)
 
     netPrice.parent().parent().parent().find('input.product-fee:checked').trigger('click')
@@ -182,6 +190,7 @@ $ ->
     netPrice.parent().parent().parent().find('input.mkt-fee:checked').trigger('click')
 
     updateMarkupPct()
+    updateFeeOps()
 
   $('input.sale-price').each ->
     if !$(this).hasClass('consignment')
