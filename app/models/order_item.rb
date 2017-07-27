@@ -293,7 +293,7 @@ class OrderItem < ActiveRecord::Base
       #lot.decrement!(:quantity, num_to_return)
     end
 
-    if order.market.is_buysell_market? || (order.market.is_consignment_market? && delivery_status == 'pending')
+    if order.market.is_buysell_market? || (order.market.is_consignment_market? && (delivery_status == 'pending' || delivery_status == 'canceled'))
       lots.order(created_at: :desc).each do |lot|
         break unless amount
 
@@ -314,7 +314,7 @@ class OrderItem < ActiveRecord::Base
           quantity_remaining = changes[:quantity][1] - (changes[:quantity][0] || 0)
         end
 
-        if persisted? && quantity_delivered_changed?
+        if persisted? && quantity_delivered_changed? && changes[:quantity_delivered][1] > 0
           if changes[:quantity_delivered][0].nil?
             quantity_remaining = changes[:quantity_delivered][1] - quantity
           else
