@@ -172,7 +172,7 @@
               <div style={{display: "inline-block", width: "100%", borderTop: "1px solid #DDD", marginTop: "5px"}}>
                   <table>
                       <tbody>
-                      <tr data-unallocated={this.props.lot.quantity - committed_count}>
+                      <tr data-unallocated={this.props.lot.quantity}>
                           <td>
                               <strong>Split:</strong>
                           </td>
