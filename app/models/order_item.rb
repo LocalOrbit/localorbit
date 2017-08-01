@@ -248,6 +248,8 @@ class OrderItem < ActiveRecord::Base
         lot.decrement!(:quantity, num_to_consume)
         lots.build(lot: lot, quantity: num_to_consume)
       end
+    elsif po_lot_id.nil? && !po_ct_id.nil?
+      # This condition represents a consignment PO product awaiting delivery that does not have a lot yet
     else
       specific = false
       amount = initial_amount
