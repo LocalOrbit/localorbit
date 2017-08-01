@@ -87,7 +87,8 @@ module Imports
 								unit_quantity: prod_hash["Unit Quantity"],
 								organic: prod_hash["Organic"],
 								parent_product_id: self.get_parent_product_id_from_name(prod_hash["Parent Product Name"], prod_hash["Organization"], prod_hash["Market Subdomain"], current_user),
-								use_simple_inventory: prod_hash["Lot Number"].nil?
+								use_simple_inventory: prod_hash["Lot Number"].nil?,
+								general_product_id: gp_id_or_false,
 				)
 				product.skip_validation = true
 				product.consignment_market = current_market.is_consignment_market?
@@ -123,13 +124,12 @@ module Imports
 					product.update_attributes!(name: prod_hash["Product Name"].strip,
 																		 category_id: self.get_category_id_from_name(prod_hash["Category Name"]),
 																		 unit_description: prod_hash["Unit Description"],
-																		 unit_quantity: prod_hash["Unit Quantity"],
-																		 code: prod_hash["Product Code"],
+																		 unit_quantity: !prod_hash["Unit Quantity"].nil? ? rod_hash["Unit Quantity"] : product.unit_quantity,
+																		 code: !prod_hash["Product Code"].nil? ? prod_hash["Product Code"] : product.code,
 																		 short_description: prod_hash["Short Description"],
-																		 long_description: prod_hash["Long Description"],
-																		 organic: prod_hash["Organic"],
-																		 parent_product_id: self.get_parent_product_id_from_name(prod_hash["Parent Product Name"], prod_hash["Organization"], prod_hash["Market Subdomain"], current_user),
-																		 use_simple_inventory: prod_hash["Lot Number"].nil?)
+																		 long_description: !prod_hash["Long Description"].nil? ? prod_hash["Long Description"] : product.long_description,
+																		 organic: !prod_hash["Organic"].nil? ? prod_hash["Organic"] : product.organic,
+																		 parent_product_id: self.get_parent_product_id_from_name(prod_hash["Parent Product Name"], prod_hash["Organization"], prod_hash["Market Subdomain"], current_user))
 
 					pr = product.prices.find_or_initialize_by(min_quantity: 1)
 					pr.sale_price = prod_hash["Price"]
