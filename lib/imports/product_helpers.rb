@@ -124,11 +124,11 @@ module Imports
 					product.update_attributes!(name: prod_hash["Product Name"].strip,
 																		 category_id: self.get_category_id_from_name(prod_hash["Category Name"]),
 																		 unit_description: prod_hash["Unit Description"],
-																		 unit_quantity: !prod_hash["Unit Quantity"].nil? ? rod_hash["Unit Quantity"] : nil,
-																		 code: !prod_hash["Product Code"].nil? ? prod_hash["Product Code"] : nil,
+																		 unit_quantity: !prod_hash["Unit Quantity"].nil? ? rod_hash["Unit Quantity"] : product.unit_quantity,
+																		 code: !prod_hash["Product Code"].nil? ? prod_hash["Product Code"] : product.code,
 																		 short_description: prod_hash["Short Description"],
-																		 long_description: !prod_hash["Long Description"].nil? ? prod_hash["Long Description"] : nil,
-																		 organic: !prod_hash["Organic"].nil? ? prod_hash["Organic"] : nil,
+																		 long_description: !prod_hash["Long Description"].nil? ? prod_hash["Long Description"] : product.long_description,
+																		 organic: !prod_hash["Organic"].nil? ? prod_hash["Organic"] : product.organic,
 																		 parent_product_id: self.get_parent_product_id_from_name(prod_hash["Parent Product Name"], prod_hash["Organization"], prod_hash["Market Subdomain"], current_user))
 
 					pr = product.prices.find_or_initialize_by(min_quantity: 1)

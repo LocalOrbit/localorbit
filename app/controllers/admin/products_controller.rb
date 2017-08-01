@@ -264,6 +264,8 @@ module Admin
         product.sibling_id.each_with_index do |sibling_id, i|
           sibling_name = product.name
           sibling_short_description = product.short_description
+          sibling_long_description = product.long_description
+          sibling_organic = product.organic
           sibling_unit_id = product.sibling_unit_id[i]
           sibling_unit_description = product.sibling_unit_description[i]
           sibling_product_code = product.sibling_product_code[i]
@@ -283,7 +285,7 @@ module Admin
             else
               sibling = Product.find_by(id: sibling_id)
               if sibling
-                sibling.update(name: sibling_name, short_description: sibling_short_description, unit_id: sibling_unit_id, unit_description: sibling_unit_description,
+                sibling.update(name: sibling_name, short_description: sibling_short_description, long_description: sibling_long_description, organic: sibling_organic, unit_id: sibling_unit_id, unit_description: sibling_unit_description,
                                code: sibling_product_code, unit_quantity: sibling_unit_quantity)
               end
             end
