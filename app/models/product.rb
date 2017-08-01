@@ -23,7 +23,7 @@ class Product < ActiveRecord::Base
   default_scope { includes(:general_product) }
 
   # transient properties for conveniently adding sibling (product) units
-  attr_accessor :sibling_id, :sibling_unit_id, :sibling_unit_description, :sibling_product_code, :sibling_unit_quantity, :skip_validation, :consignment_market
+  attr_accessor :sibling_id, :sibling_name, :sibling_short_description, :sibling_long_description, :sibling_organic, :sibling_unit_id, :sibling_unit_description, :sibling_product_code, :sibling_unit_quantity, :skip_validation, :consignment_market
 
   has_many :lots, -> { order("created_at") }, inverse_of: :product, autosave: true, dependent: :destroy
   has_many :lots_by_expiration, -> { order("organization_id, market_id, expires_at, good_from, created_at") }, class_name: Lot, foreign_key: :product_id

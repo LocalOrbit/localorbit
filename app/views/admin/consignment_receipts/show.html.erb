@@ -461,7 +461,7 @@
                 held_over_po = ConsignmentTransaction.where(id: po_ct.id, transaction_type: 'HOLDOVER', master: nil, deleted_at: nil).first
               end
               so_total = so.net_price * (so.quantity || 0)
-              if so.transaction_type != 'SHRINK'
+              if so.transaction_type != 'SPLIT' && so.transaction_type != 'REPACK'
                 total_quantity = total_quantity + (so.quantity || 0)
               end
               avg_sum = avg_sum + so_total
