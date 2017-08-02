@@ -467,7 +467,7 @@
               avg_sum = avg_sum + so_total
             end
             if total_quantity > 0
-              avg_price = avg_sum/total_quantity
+              avg_price = (avg_sum/total_quantity).round(2)
             end
             total_sum = total_sum + (total_quantity * avg_price)
             total_price = total_sum
