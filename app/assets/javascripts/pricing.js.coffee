@@ -81,7 +81,7 @@ $ ->
       setMarkupValue(feeValue)
 
     updateFeeOps = ->
-      marketId = selectedMarket.val()
+      marketId = selectedMarket.val() || 'all'
       if marketToCategoryPercentMap[marketId] > 0
         use_category_fee.prop('disabled',false)
       else
