@@ -153,7 +153,7 @@ module Api
         INNER JOIN organizations ON organizations.id = products.organization_id
         INNER JOIN market_organizations ON market_organizations.organization_id = organizations.id
         INNER JOIN markets ON markets.id = market_organizations.market_id
-        INNER JOIN consignment_transactions ON consignment_transactions.product_id = products.id AND consignment_transactions.market_id = markets.id AND consignment_transactions.transaction_type = 'PO' AND consignment_transactions.lot_id IS NULL
+        INNER JOIN consignment_transactions ON consignment_transactions.product_id = products.id AND consignment_transactions.market_id = markets.id AND consignment_transactions.transaction_type = 'PO' AND consignment_transactions.lot_id IS NULL AND consignment_transactions.deleted_at IS NULL
         INNER JOIN orders ON consignment_transactions.order_id = orders.id AND orders.delivery_status in ('pending','partially delivered')
         WHERE markets.id = #{current_market.id} AND products.deleted_at IS NULL"
 
@@ -236,6 +236,7 @@ module Api
                         AND ct.transaction_type='PO'
                         AND consignment_transactions.lot_id IS NULL
                         AND consignment_transactions.market_id = ?
+                        AND consignment_transactions.deleted_at IS NULL
                         AND consignment_transactions.product_id = ?", current_market.id, product.id)
                .sum("consignment_transactions.quantity")
 
@@ -248,13 +249,14 @@ module Api
             .where("orders.delivery_status in ('pending','partially delivered')
             AND consignment_transactions.transaction_type = 'PO'
             AND consignment_transactions.lot_id IS NULL
+            AND consignment_transactions.deleted_at IS NULL
             AND consignment_transactions.market_id = ?
             AND consignment_transactions.product_id = ?", current_market.id, product.id)
             .select("consignment_transactions.id AS ct_id, #{awaiting_delivery_qty - awaiting_ordered_qty} AS quantity, '' AS number, TO_CHAR(consignment_transactions.delivery_date,'MM/DD/YYYY') AS delivery_date, 'awaiting_delivery'::text AS status")
 
           committed = Order.joins(:delivery, :organization, items: [lots: [:lot]]).joins("JOIN consignment_transactions ON consignment_transactions.order_id = orders.id AND consignment_transactions.order_item_id = order_items.id AND consignment_transactions.transaction_type='SO' AND consignment_transactions.lot_id  = lots.id")
                           .so_orders
-                          .where("order_items.delivery_status = 'pending' AND orders.market_id = ? AND order_items.product_id = ?", current_market.id, product.id)
+                          .where("consignment_transactions.deleted_at IS NULL AND order_items.delivery_status = 'pending' AND orders.market_id = ? AND order_items.product_id = ?", current_market.id, product.id)
                           .select("orders.id AS order_id, order_items.product_id AS id, TO_CHAR(deliveries.deliver_on,'MM/DD/YYYY') AS delivered_at, order_item_lots.lot_id, lots.number, organizations.name AS buyer_name, trunc(order_items.quantity) AS quantity, order_items.unit_price AS sale_price, order_items.net_price")
                           .uniq
           committed_array = []
@@ -264,7 +266,7 @@ module Api
 
           committed_ad = Order.joins(:delivery, :organization, :items).joins("JOIN consignment_transactions ON consignment_transactions.order_id = orders.id AND consignment_transactions.order_item_id = order_items.id AND consignment_transactions.transaction_type='SO' AND consignment_transactions.lot_id IS NULL")
                           .so_orders
-                          .where("order_items.delivery_status = 'pending' AND orders.market_id = ? AND order_items.product_id = ?", current_market.id, product.id)
+                          .where("consignment_transactions.deleted_at IS NULL AND order_items.delivery_status = 'pending' AND orders.market_id = ? AND order_items.product_id = ?", current_market.id, product.id)
                           .select("orders.id AS order_id, order_items.product_id AS id, TO_CHAR(deliveries.deliver_on,'MM/DD/YYYY') AS delivered_at, organizations.name AS buyer_name, trunc(order_items.quantity) AS quantity, order_items.unit_price AS sale_price, order_items.net_price")
                           .uniq
           committed_ad_array = []
@@ -277,7 +279,7 @@ module Api
           undo_split_options = nil
           split_options = Product.where(parent_product_id: product.id).visible.select("products.id, products.name, products.general_product_id")
           if Inventory::SplitOps.can_unsplit_product?(product.id)
-            undo_split_options = ConsignmentTransaction.where(child_product_id: product.id).select(:child_lot_id).first
+            undo_split_options = ConsignmentTransaction.visible.where(child_product_id: product.id).select(:child_lot_id).first
           end
         end
 
