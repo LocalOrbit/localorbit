@@ -197,12 +197,12 @@ module Inventory
         WITH RECURSIVE consignment_trans AS (
         SELECT id, order_id, transaction_type, created_at
         FROM consignment_transactions
-        WHERE order_id = $1
+        WHERE order_id = $1 AND deleted_at IS NULL
         UNION
         SELECT c.id, c.order_id, c.transaction_type, c.created_at
         FROM consignment_transactions c
           JOIN consignment_transactions p ON c.parent_id = p.id
-        WHERE p.order_id = $1
+        WHERE p.order_id = $1 AND c.deleted_at IS NULL
         )
         SELECT id, order_id, transaction_type
         FROM consignment_trans
