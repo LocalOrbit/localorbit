@@ -410,10 +410,11 @@ class Product < ActiveRecord::Base
   def self.with_waiting_so_inventory
 
     awaiting_delivery = ConsignmentTransaction
+                            .visible
                             .joins("JOIN orders ON consignment_transactions.order_id = orders.id")
                             .where("orders.delivery_status = 'pending' AND consignment_transactions.transaction_type = 'PO' AND consignment_transactions.lot_id IS NULL AND consignment_transactions.market_id = ? AND consignment_transactions.product_id = ?", current_market.id, product.id).select("null AS id, #{awaiting_delivery_qty - awaiting_ordered_qty} AS quantity, '' AS number, '' AS delivery_date, 'awaiting_delivery'::text AS status")
 
-    ct_table = ConsignmentTransaction.arel_table
+    ct_table = ConsignmentTransaction.visible.arel_table
     order_table = Order.arel_table
 
     ct_join_cond = arel_table[:id].eq(ct_table[:product_id]).
@@ -423,7 +424,7 @@ class Product < ActiveRecord::Base
     order_join_cond = ct_table[:order_id].eq(order_table[:id])
     order_join_on = ct_table.create_on(order_join_cond)
 
-    joins(arel_table.create_join(ConsignmentTransaction.arel_table, ct_join_on)).
+    joins(arel_table.create_join(ConsignmentTransaction.visible.arel_table, ct_join_on)).
     joins(arel_table.create_join(Order.arel_table, order_join_on))
     .where(order_table[:delivery_status].eq("pending")
     .and(ct_table[:transaction_type].eq("PO"))
