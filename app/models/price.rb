@@ -62,7 +62,7 @@ class Price < ActiveRecord::Base
       1 - (product_fee_pct/100 + ::Financials::Pricing.seller_cc_rate(product.organization.all_markets.first))
     elsif fee == 1
       1 - ((category_fee_pct/100) + ::Financials::Pricing.seller_cc_rate(product.organization.all_markets.first))
-    elsif fee == 0
+    elsif fee == nil || fee == 0
       if market
         market.seller_net_percent
       else
