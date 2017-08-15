@@ -447,7 +447,7 @@
             held_over_po = nil
             total_sum = 0
             so_ct.each do |so|
-              if so.transaction_type == 'SO'
+              if so.transaction_type == 'SO' || so.transaction_type == 'SHRINK'
                 sold_count = sold_count + (so.quantity || 0)
               end
               if so.transaction_type == 'SHRINK'

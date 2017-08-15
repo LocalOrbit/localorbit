@@ -10,9 +10,23 @@ module Admin
         if params["clear"]
           redirect_to url_for(params.except(:clear))
         else
-          @search_presenter = PaymentSearchPresenter.new(user: current_user, query: @query_params)
-          @finder = Search::SellerPaymentGroupFinder.new(user: current_user, query: @query_params, current_market: current_market)
-          @sellers = @finder.payment_groups
+        end
+
+        respond_to do |format|
+          format.html do
+            @search_presenter = PaymentSearchPresenter.new(user: current_user, query: @query_params)
+            @finder = Search::SellerPaymentGroupFinder.new(user: current_user, query: @query_params, current_market: current_market)
+            @sellers = @finder.payment_groups
+          end
+          format.csv do
+            if ENV["USE_UPLOAD_QUEUE"] == "true"
+              Delayed::Job.enqueue ::CSVExport::CSVVendorPaymentsExportJob.new(current_user, current_market, @query_params)
+              flash[:notice] = "Please check your email for export results."
+              redirect_to [:admin, :financials, :vendor_payments]
+            else
+              @filename = "vendor_payments.csv"
+            end
+          end
         end
       end
 
