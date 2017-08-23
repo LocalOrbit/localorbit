@@ -239,6 +239,7 @@ module Inventory
         error = nil
         actual_count = nil
         product = Product.includes(:prices).find(item.product.id)
+        committed = 0
         if market.is_buysell_market? || (market.is_consignment_market? && order_type == 'sales' && item.lot_id > 0)
           delivery_date = delivery.deliver_on
           actual_count = product.available_inventory(delivery_date, market.id, organization.id, market.is_consignment_market? && order_type == 'sales' && item.lot_id > 0 ? item.lot_id : nil)
