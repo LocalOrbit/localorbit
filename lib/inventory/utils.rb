@@ -244,12 +244,17 @@ module Inventory
           actual_count = product.available_inventory(delivery_date, market.id, organization.id, market.is_consignment_market? && order_type == 'sales' && item.lot_id > 0 ? item.lot_id : nil)
         elsif market.is_consignment_market? && order_type == 'sales' && item.lot_id == 0 # Checking consignment awaiting delivery item
           actual_count = ConsignmentTransaction.where(transaction_type: 'PO', product_id: item.product_id, lot_id: nil, deleted_at: nil).sum(:quantity)
+          committed = Order.joins(:items)
+            .joins("JOIN consignment_transactions ON consignment_transactions.order_id = orders.id AND consignment_transactions.order_item_id = order_items.id AND consignment_transactions.transaction_type='SO'")
+            .so_orders
+            .where("consignment_transactions.deleted_at IS NULL AND orders.market_id = ? AND order_items.product_id = ?", market.id, item.product_id)
+            .sum("order_items.quantity")
         end
-        if item.quantity && item.quantity > 0 && !actual_count.nil? && item.quantity > actual_count
+        if item.quantity && item.quantity > 0 && !actual_count.nil? && item.quantity > actual_count - committed
           error = {
               item_id: item.id,
-              error_msg: "Quantity of #{product.name} (#{product.unit.plural}) available for purchase: #{actual_count}",
-              actual_count: actual_count
+              error_msg: "Quantity of #{product.name} (#{product.unit.plural}) available for purchase: #{actual_count - committed}",
+              actual_count: actual_count - committed
           }
         end
         error
