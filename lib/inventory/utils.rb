@@ -133,6 +133,19 @@ module Inventory
         o.nil? ? 0 : o.to_i
       end
 
+      def check_qty_committed(order_id, product_id)
+        o = ConsignmentTransaction
+                .joins("JOIN consignment_transactions ct_so ON ct_so.parent_id = consignment_transactions.id")
+                .where("consignment_transactions.deleted_at IS NULL")
+                .where("ct_so.deleted_at IS NULL")
+                .where("consignment_transactions.transaction_type = 'PO'")
+                .where("ct_so.transaction_type = 'SO'")
+                .where("consignment_transactions.order_id = ?", order_id)
+                .where("consignment_transactions.product_id = ?", product_id)
+                .sum("ct_so.quantity")
+        !o.nil? && o == 0
+      end
+
       def qty_delivered(market_id, product_id, ct_id)
         o = OrderItem.joins("JOIN orders ON order_items.order_id = orders.id")
                 .where("orders.market_id = ?", market_id)

@@ -375,7 +375,8 @@
           <% end %>
           <% if FeatureAccess.order_action_links?(user_order_context: user_order_context) %>
             <td class="action-link">
-              <% if FeatureAccess.delete_order_item?(user_order_item_context: user_order_item_context) %>
+              <% if (FeatureAccess.delete_order_item?(user_order_item_context: user_order_item_context) && (order.market.is_buysell_market?) ||
+                  (order.market.is_consignment_market? && Inventory::Utils.check_qty_committed(order.id, item.object.product_id))) %>
                 <%= item.hidden_field :_destroy %>
                 <%= link_to raw('<i class="fa fa-trash-o">&nbsp;</i>'), "#delete" %>
               <% end %>
