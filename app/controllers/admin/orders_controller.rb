@@ -246,7 +246,10 @@ class Admin::OrdersController < AdminController
       unrepack_transaction(order, params)
       Inventory::Utils.check_sold_through(order)
       return
-      # elsif params[:commit] == "Undo Mark Delivered"
+    elsif params[:commit] == "Save Notes"
+      save_note(order, order_params)
+      return
+    # elsif params[:commit] == "Undo Mark Delivered"
     #   undo_delivery(order) # But this is not where Mark Delivered goes,sooooo
     end
 
@@ -266,6 +269,11 @@ class Admin::OrdersController < AdminController
     else
       redirect_to o.sales_order? ? admin_order_path(order) : admin_purchase_order_path(order), error: 'Error Removing Order'
     end
+  end
+
+  def save_note(order, params)
+    order.update_attribute(:notes, params[:notes])
+    redirect_to admin_order_path(order), notice: "Note Saved."
   end
 
   def duplicate_order(order)
