@@ -832,7 +832,7 @@ describe "Editing an order" do
         fill_in "Notes", with: "This is a test note"
         click_button "Save Notes"
 
-        expect(page).to have_content("Order successfully updated")
+        expect(page).to have_content("Note Saved.")
         expect(find_field("Notes")).to have_content("This is a test note")
       end
     end
@@ -850,7 +850,7 @@ describe "Editing an order" do
         fill_in "Notes", with: "This is a test note"
         click_button "Save Notes"
 
-        expect(page).to have_content("Order successfully updated")
+        expect(page).to have_content("Note Saved.")
         expect(find_field("Notes")).to have_content("This is a test note")
       end
     end
