@@ -119,7 +119,9 @@
                 </div>
                 <div style="float: left; margin-left: 10px;">
                   <label>Order</label>
+                  <% if !@open_po.nil? %>
                   <%= select_tag :holdover_po, options_for_select(@open_po.map{|o| ["#{o.id} - #{o.delivery.deliver_on.strftime("%m/%d/%y")}", o.id]}), :include_blank =>'New', class: 'holdover_po' %>
+                  <% end %>
                 </div><br/><br/>
                 <div style="float: left; margin-left: 10px;">
                   <label>Delivery</label>
