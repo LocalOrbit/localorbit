@@ -7,7 +7,7 @@ class ValidateOrderTotal
     total = 0
     if !context[:order_params]["items_attributes"].nil?
       context[:order_params]["items_attributes"].each do |p|
-        if p[1]["_destroy"] && p[1]["_destroy"].empty?
+        if p[1]["_destroy"] && p[1]["_destroy"].empty? && p[1].key?("quantity")
           if is_number?(p[1]["quantity"]) && BigDecimal(p[1]["quantity"]) >= 0
             qty = BigDecimal(p[1]["quantity"])
             item = OrderItem.where(id: p[1]["id"])
