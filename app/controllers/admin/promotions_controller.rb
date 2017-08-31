@@ -77,6 +77,6 @@ class Admin::PromotionsController < AdminController
 
   def fetch_markets_and_products
     @markets = current_user.markets.order(:name)
-    @products = current_user.managed_products.order("organizations.name, products.name")
+    @products = current_user.managed_products.visible.order("organizations.name, products.name")
   end
 end
