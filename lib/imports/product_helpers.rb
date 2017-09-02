@@ -88,7 +88,6 @@ module Imports
 								organic: prod_hash["Organic"],
 								parent_product_id: self.get_parent_product_id_from_name(prod_hash["Parent Product Name"], prod_hash["Organization"], prod_hash["Market Subdomain"], current_user),
 								use_simple_inventory: prod_hash["Lot Number"].nil?,
-								general_product_id: gp_id_or_false,
 				)
 				product.skip_validation = true
 				product.consignment_market = current_market.is_consignment_market?
@@ -156,7 +155,6 @@ module Imports
 				        long_description: prod_hash["Long Description"],
 				        unit_description: prod_hash["Unit Description"],
 								unit_quantity: prod_hash["Unit Quantity"],
-								general_product_id: gp_id_or_false,
 								organic: prod_hash["Organic"],
 								parent_product_id: self.get_parent_product_id_from_name(prod_hash["Parent Product Name"], prod_hash["Organization"], prod_hash["Market Subdomain"], current_user),
 								use_simple_inventory: prod_hash["Lot Number"].nil?

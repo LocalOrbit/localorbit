@@ -51,9 +51,9 @@ describe "Using order templates", :js do
 
   def create_cart
     cart = create(:cart, market: market, organization: buyer, user: user, location: buyer.locations.first, delivery: delivery)
-    create(:cart_item, cart: cart, product: bananas, quantity: 10)
-    create(:cart_item, cart: cart, product: potatoes, quantity: 5)
-    create(:cart_item, cart: cart, product: kale, quantity: 20)
+    create(:cart_item, cart: cart, product: bananas, quantity: 10, fee: 0)
+    create(:cart_item, cart: cart, product: potatoes, quantity: 5, fee: 0)
+    create(:cart_item, cart: cart, product: kale, quantity: 20, fee: 0)
   end
 
   def create_template
