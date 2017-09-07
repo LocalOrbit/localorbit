@@ -33,7 +33,8 @@ module Admin
       def create
         seller = current_user.managed_organizations_including_deleted.find_by_id(params[:seller_id])
         payment = RecordVendorPayment.perform(seller: seller, payment_params: payment_params)
-        redirect_to [:admin, :financials, :vendor_payments], payment.flash_message
+        redirect_to admin_financials_vendor_payments_path(no_detail: params[:no_detail]), payment.flash_message
+
       end
 
       protected
