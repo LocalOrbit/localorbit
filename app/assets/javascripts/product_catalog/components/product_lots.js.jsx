@@ -151,7 +151,7 @@
           disabled = '';
 
       if (this.props.orderId) {
-          qty = (<input style={{width: "75px"}} type="number" placeholder="0" defaultValue={this.state.cartItemQuantity && this.state.cartLotId == lot.id ? this.state.cartItemQuantity : ''} name="items_to_add[][quantity]" className={inputClass} onKeyDown={this.clearField} onChange={this.updateSOQuantity} />);
+          qty = (<input style={{width: "75px"}} type="number" placeholder="0" disabled={disabled} defaultValue={this.state.cartItemQuantity && this.state.cartLotId == lot.id ? this.state.cartItemQuantity : ''} name="items_to_add[][quantity]" className={inputClass} onKeyDown={this.clearField} onChange={this.updateSOQuantity} />);
           pid = (<input type="hidden" name="items_to_add[][product_id]" value={prd.id} />);
           lid = (<input type="hidden" name="items_to_add[][lot_id]" value={lot.id ? lot.id : 0} />);
           cid = (<input type="hidden" name="items_to_add[][ct_id]" value={lot.ct_id ? lot.ct_id : 0} />);
