@@ -158,24 +158,16 @@
               <div class="field column column--half column--guttered">
                 <span>&nbsp;</span><br />
                 <%= text_field_tag(:card_name, nil, placeholder: 'Name', class: "required column--full", name: nil) %>
-              </div
-              ><div class="field column column--half column--guttered">
-                <span>&nbsp;</span><span class="tooltip pull-right" data-tooltip="We offer no-questions-asked refunds to all customers within 30 days of your purchase. If you are not satisfied with our product, then simply send us an email and we will refund your purchase right away. The refunded amount will include the annual service fees, minus any payment processing fees, (If you process any actual, rather than test, transactions).">&nbsp;</span>
-                <%= text_field_tag(:card_number, nil, placeholder: 'Credit Card #', class: "required card_num column--full", name: nil) %> 
               </div>
             </div>
-
             <div class="row row--field">
               <div class="field column column--half column--guttered">
-                <div class="column column--half column--guttered">
-                  <%= text_field_tag(:expiration_month, nil, placeholder: "#{t.strftime("%m")}", class: "required card_month column--full", name: nil) %> 
-                </div
-                ><div class="column column--half column--guttered">
-                  <%= text_field_tag(:expiration_year, nil, placeholder: "#{t.strftime("%Y")}", class: "required card_year column--full", name: nil) %> 
-                </div>
-              </div
-              ><div class="field column column--half column--guttered">
-                <%= text_field_tag(:security_code, nil, placeholder: 'Security Code', class: "required card_code column--full", name: nil) %>
+                  <div id="card-element" style="background: #E8E8E8; padding: 10px">
+                    <!-- a Stripe Element will be inserted here. -->
+                  </div>
+
+                  <!-- Used to display form errors -->
+                  <div id="card-errors"></div>
               </div>
             </div>
           <% end %>
