@@ -152,7 +152,7 @@ module Imports
 				        category_id: self.get_category_id_from_name(prod_hash["Category Name"]),
 				        code: prod_hash["Product Code"],
 				        short_description: prod_hash["Short Description"],
-				        long_description: prod_hash["Long Description"],
+				        long_description: !prod_hash["Long Description"].nil? ? prod_hash["Long Description"] : nil,
 				        unit_description: prod_hash["Unit Description"],
 								unit_quantity: prod_hash["Unit Quantity"],
 								organic: prod_hash["Organic"],
