@@ -1,7 +1,7 @@
 module Imports
 	module SerializeProducts
 		require 'csv'
-		@all_headers = ["Organization","Market Subdomain","Product Name","Category Name","Short Description","Product Code","Unit Name","Unit Description","Net Price","Price","New Inventory","Product ID", "Parent Product Name", "Organic", "Unit Quantity", "Lot Number"] # Required headers for imminent future
+		@all_headers = ["Organization","Market Subdomain","Product Name","Category Name","Short Description","Long Description","Product Code","Unit Name","Unit Description","Net Price","Price","New Inventory","Product ID", "Parent Product Name", "Organic", "Unit Quantity", "Lot Number"] # Required headers for imminent future
 		@required_headers = ["Organization","Market Subdomain","Product Name","Category Name","Short Description","Product Code","Unit Name","Unit Description","Price","New Inventory","Product ID"] # Required headers for imminent future
 
 		# TODO should this be a diff kind of accessor? Later, works.
