@@ -117,44 +117,40 @@
                           Add a <%= link_to "credit card", new_admin_organization_bank_account_path(current_organization) %> to your account.
                         <% end %><br>
 
-                        <label>New Credit Card</label><br>
+                        <div id="cc-fields">
+                          <label>New Credit Card</label><br>
 
-                        <fieldset id="payment-provider-container" data-payment-provider="<%= @payment_provider %>" data-balanced-marketplace-uri="<%= ENV["BALANCED_MARKETPLACE_URI"] %>" data-stripe-publishable-key="<%= ENV["STRIPE_PUBLISHABLE_KEY"] %>">
-                          <div class="row">
-                            <div class="column column--full column--guttered">
-                              <label for="provider_account_name">Name</label>
-                              <span class="hint">Full name as it appears on the account</span>
-                              <br>
-                              <input id="provider_account_name" type="text" value="" name="order[credit_card][name]" class="column--full">
-                            </div>
-                          </div>
-                          <div class="row">
-                            <div class="column column--full column--guttered">
-                              <label for="provider_card_number">Card Number</label><br>
-                              <input class="column--full" id="provider_card_number" type="text" name="card_number">
-                            </div>
-                          </div>
-                          <div class="row">
-                            <div class="column column--third column--guttered">
-                              <label for="expiration_month">Month</label><br>
-                              <%= select_tag(:expiration_month, options_for_select(expiration_month_options), class: "column--full") %>
-                            </div
-                            ><div class="column column--third column--guttered">
-                              <label for="expiration_year">Year</label><br>
-                              <%= select_tag(:expiration_year, options_for_select(expiration_year_options), class: "column--full") %>
-                            </div
-                            ><div class="column column--third column--guttered">
-                              <label for="provider_security_code">Security Code</label><br>
-                              <input class="column--full" id="provider_security_code" type="text" name="security_code">
-                            </div>
+                          <fieldset id="payment-provider-container" data-payment-provider="<%= @payment_provider %>" data-balanced-marketplace-uri="<%= ENV["BALANCED_MARKETPLACE_URI"] %>" data-stripe-publishable-key="<%= ENV["STRIPE_PUBLISHABLE_KEY"] %>">
                             <div class="row">
-                              <div class="field column column--full column--guttered">
-                                <input id="save_for_future" type="checkbox" name="order[credit_card][save_for_future]">
-                                <label for="save_for_future">Save credit card for future use</label>
+                              <div class="column column--full column--guttered">
+                                <label for="provider_account_name">Name</label>
+                                <span class="hint">Full name as it appears on the account</span>
+                                <br>
+                                <input id="provider_account_name" type="text" value="" name="order[credit_card][name]" class="column--full">
                               </div>
                             </div>
-                          </div>
-                        </fieldset>
+                            <br/>
+                            <div class="row">
+                              <div class="column column--full column--guttered">
+                                <label for="provider_account_name">Card</label>
+                                <span class="hint">All card info is entered into this field</span>
+                                <div style="height: 36px; border: 1px solid #aaa; border-radius:3px; padding: 5px 5px .071em 12px; margin: 4px 0; box-sizing: border-box;">
+                                  <div id="card-element">
+                                    <!-- a Stripe Element will be inserted here. -->
+                                  </div>
+                                </div>
+                                <!-- Used to display form errors -->
+                                <div id="card-errors"></div>
+                                <div class="row">
+                                  <div class="field column column--full column--guttered">
+                                    <input id="save_for_future" type="checkbox" name="order[credit_card][save_for_future]">
+                                    <label for="save_for_future">Save credit card for future use</label>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </fieldset>
+                        </div>
 
                       </div>
                     </fieldset>

@@ -18,7 +18,7 @@ module CSVExport
       products = Product.where(id: ids).order(:name)
       market = Market.find_by_subdomain(subdomain)
       csv = CSV.generate do |f|
-        buysell_headers =  ["Organization","Market Subdomain","Product Name","Category Name","Short Description","Product Code","Unit Name","Unit Description","Price","Current Inventory","New Inventory","Product ID"]
+        buysell_headers =  ["Organization","Market Subdomain","Product Name","Category Name","Short Description","Long Description","Product Code","Unit Name","Unit Description","Price","Current Inventory","New Inventory","Product ID"]
         consignment_headers =  ["Organization","Market Subdomain","Product Name","Category Name","Short Description","Product Code","Unit Name","Unit Quantity","Unit Description","Price","Net Price", "Current Inventory","New Inventory","Parent Product Name","Organic","Product ID"]
 
         market.is_consignment_market? ? f << consignment_headers : f << buysell_headers
@@ -52,6 +52,7 @@ module CSVExport
                 product.name,
                 product.second_level_category.name,
                 product.short_description,
+                product.long_description,
                 product.code,
                 product.unit.singular,
                 product.unit_description,

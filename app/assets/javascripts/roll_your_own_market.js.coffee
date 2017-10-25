@@ -1,5 +1,39 @@
 $(document).ready ->
 
+  stripe_v3 = Stripe($('meta[name="stripe-key"]').attr('content'))
+
+  # Create an instance of Elements
+  elements = stripe_v3.elements()
+
+  # Custom styling can be passed to options when creating an Element.
+  # (Note that this demo uses a wider set of styles than the guide below.)
+  style =
+    base:
+      color: '#444444'
+      lineHeight: '24px'
+      fontFamily: 'Helvetica Neue'
+      fontSmoothing: 'antialiased'
+      fontSize: '16px'
+      '::placeholder': color: '#aab7c4'
+    invalid:
+      color: '#fa755a'
+      iconColor: '#fa755a'
+
+  # Create an instance of the card Element
+  card = elements.create('card', style: style)
+
+  # Add an instance of the card Element into the `card-element` <div>
+  card.mount '#card-element'
+
+  # Handle real-time validation errors from the card Element.
+  card.addEventListener 'change', (event) ->
+    displayError = document.getElementById('card-errors')
+    if event.error
+      displayError.textContent = event.error.message
+    else
+      displayError.textContent = ''
+    return
+
   $.validator.methods.lowercase = (value, element) ->
     @optional(element) or /^[a-z]+$/.test(value)
 
@@ -190,15 +224,30 @@ $(document).ready ->
         validateForm($('#new_market_registration'))
         validation_boolean = $('#new_market_registration').valid()
         if validation_boolean
-          if $('#card_number').length
-            new_market.processCard()
+          if $('#card-element').length
+            stripe_v3.createToken(card).then (result) ->
+              if result.error
+                # Inform the user if there was an error
+                errorElement = document.getElementById('card-errors')
+                errorElement.textContent = result.error.message
+                console.log result.error.message
+                $("#place-order-button").prop("disabled", false)
+              else
+                # Send the token to your server
+                #alert JSON.stringify(result.token)
+                #console.log JSON.stringify(result.token)
+                # Insert the token ID into the form so it gets submitted to the server
+                $('#market_stripe_tok').val(result.token.id)
+                $('#new_market_registration')[0].submit()
+              return
             false
           else
             true
         else
           $('input[type=submit]').attr('disabled', false)
           false
-    
+
+  ###
     processCard: ->
       card =
         number: $('#card_number').val()
@@ -206,7 +255,7 @@ $(document).ready ->
         expMonth: $('#expiration_month').val()
         expYear: $('#expiration_year').val()
       Stripe.createToken(card, new_market.handleStripeResponse)
-    
+
     handleStripeResponse: (status, response) ->
       if status == 200
         $('#market_stripe_tok').val(response.id)
@@ -214,6 +263,6 @@ $(document).ready ->
       else
         alert('Status: ' + status + '\nError message: ' + response.error.message)
         $('input[type=submit]').attr('disabled', false)
+  Stripe.setPublishableKey($('meta[name="stripe-key"]').attr('content'))###
 
-  Stripe.setPublishableKey($('meta[name="stripe-key"]').attr('content'))
   new_market.setupForm()
