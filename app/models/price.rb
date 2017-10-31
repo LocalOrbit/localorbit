@@ -59,9 +59,9 @@ class Price < ActiveRecord::Base
     end
     #mkt_id = !pct_array.nil? && pct_array.length == 2 ? pct_array.keys[0] : !curr_market.nil? ? curr_market.id : nil
     if fee == 2
-      1 - (product_fee_pct/100 + ::Financials::Pricing.seller_cc_rate(product.organization.all_markets.first))
+      1 - (product_fee_pct/100 + ::Financials::Pricing.seller_cc_rate(current_market.nil? ? product.organization.all_markets.first : current_market))
     elsif fee == 1
-      1 - ((category_fee_pct/100) + ::Financials::Pricing.seller_cc_rate(product.organization.all_markets.first))
+      1 - ((category_fee_pct/100) + ::Financials::Pricing.seller_cc_rate(current_market.nil? ? product.organization.all_markets.first : current_market))
     elsif fee == nil || fee == 0
       if market
         market.seller_net_percent
