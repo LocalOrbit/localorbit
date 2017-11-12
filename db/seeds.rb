@@ -9,12 +9,24 @@
 #
 
 # Admin
-User.find_or_create_by!(email: 'admin@example.com') { |user|
+admin_org = Organization.find_or_create_by!(name: "Admin Org", allow_purchase_orders: true) {|org|
+  org.can_sell = false
+}
+admin_org.active = true
+admin_org.needs_activated_notification = false
+admin_org.save!
+
+admin_user = User.find_or_create_by!(email: "admin@example.com") {|user|
   user.password = "password1"
   user.password_confirmation = "password1"
   user.role = "admin"
   user.confirmed_at = Time.current
 }
+
+unless admin_org.users.include?(admin_user)
+  admin_org.users << admin_user
+  admin_org.save!
+end
 
 Market.where(subdomain:"springfield").exists? || Market.create(
   name:"Springfield Market",
