@@ -22,7 +22,9 @@ See the `docs/` directory for more documentation.
 3. `bundle`
 4. `cp config/application.yml{.example,}` and modify if needed
 5. `cp config/database.yml{.example,}` and modify if needed (Some modification is probably necessary. Try adding `template: template0`)
-7. `rake db:setup`
+6. `npm install`
+7. `create postgres database`
+8. `rake db:setup`
 9. `rake db:seed`
 10. `rake db:seed:development`
 11. `rails server`
@@ -31,12 +33,6 @@ See the `docs/` directory for more documentation.
 
 ### Production Setup
 * At least one Market must be created before creating Organizations
-
-### Updating Passenger
-`config/passenger_nginx.erb` is copied from `resources/templates/standalone/config.erb` in the gem.
-
-After updating the gem copy the file from the gem, then use git to keep the section between the keep me comments.
-Everything in this section has been added so just keep it all.
 
 ### Test Accounts
 Running `rake db:seed:development` makes the following test accounts available

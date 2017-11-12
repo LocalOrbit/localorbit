@@ -1,19 +1,37 @@
-BALANCED_API_KEY: "ak-test-2nUrWp1vUFJ9T17cN1sbKBGvue3lZkHmE"
-BALANCED_MARKETPLACE_URI: "/v1/marketplaces/TEST-MP4X7mSSQwAyDzwUfc5TAQ7D"
-SECRET_TOKEN: 02a52cf6230014a0ba90ed4ab8aa8fe91d6cb4bd9fd295656f51cc3019f4ec8c095ec5a792f290e04906ed859b166709abacd80832db765112bec0bbaac9a055
-GOOGLE_MAPS_KEY: "AIzaSyDRQCjRSGyFnuGb5kNdk7IHjUyyRWmsPrQ"
+SECRET_TOKEN: <long random string>
+GOOGLE_MAPS_KEY: <api key for google maps>
 ASSET_HOST: "http://localhost:3000"
 DOMAIN: "localtest.me" # localtest.me points to 127.0.0.1 and lets us use subdomains. localhost does not. see http://readme.localtest.me/
 ZENDESK_EMAIL: "service@localorbit.com"
 ZENDESK_SHARED_SECRET: "fake"
 ZENDESK_SUBDOMAIN: "localorbit"
-UPLOADS_BUCKET: "localorbit-fake"
-UPLOADS_ACCESS_KEY_ID: 'fakety-fake'
-UPLOADS_SECRET_ACCESS_KEY: 'fakety-fake'
-UPLOADS_REGION: 'us-west-1'
-MAPBOX_API_KEY: 'localorbit.i0ao0akd'
+UPLOADS_BUCKET: <S3 upload bucket (dev)>
+UPLOADS_ACCESS_KEY_ID: <S3 upload access key id>
+UPLOADS_SECRET_ACCESS_KEY: <S3 upload secret access key>
+UPLOADS_REGION: <S3 upload region>
 TWITTER_WIDGET_ID: 'create-me-at-twitter-dot-com'
 DEPLOY_ENV: 'test'
-STRIPE_PUBLISHABLE_KEY: 'pk_test_Eoz8RbtL63wQhcFyGLTNxfTw'
-STRIPE_SECRET_KEY: 'sk_test_XTLCfIQMwKblsxIF1N4i7y1G'
-FROALA_KEY: '2zxD-17xvtnD-8wkC7bmn==' 
+STRIPE_PUBLISHABLE_KEY: <stripe publishable key (test on local system)>
+STRIPE_SECRET_KEY: <stripe secret key (test on local system)>
+STRIPE_CLIENT_ID: <stripe client key (test on local system)>
+FROALA_KEY: <api key for froala>
+CODECLIMATE_REPO_TOKEN: <optional codeclimate api token>
+USE_STRIPE_STANDALONE_ACCOUNTS: 'true'
+SMTP_USERNAME: <mandrill smtp username>
+SMTP_PASSWORD: <mandrill smtp password>
+TRANS_DB_URL: <transactional db>
+DW_DB_URL: <dw url>
+ETL_DAYS: '720'
+BI_SERVER: <qlik url>
+BI_CERT: <url to BI CERT file>
+BI_CERT_KEY: <url to BI CERT KEY file>
+BI_DASHBOARD_URL: <url to BI dashboard>
+USE_UPLOAD_QUEUE: 'true'
+API_ADMIN_USER_ID: <admin user id>
+MAX_POOL_SIZE: '10'
+QB_APP_TOKEN: <QB app token>
+QB_CONSUMER_KEY: <QB consumer key>
+QB_CONSUMER_SECRET: <QB consumer secret>
+QB_ACCESS_TOKEN: <QB access token>
+QB_ACCESS_TOKEN_SECRET: <QB access token secret>
+QB_REALM_ID: <QB realm id>
