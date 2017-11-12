@@ -13,6 +13,7 @@ admin_org = Organization.find_or_create_by!(name: "Admin Org", allow_purchase_or
   org.can_sell = false
 }
 admin_org.active = true
+admin_org.org_type = "A"
 admin_org.needs_activated_notification = false
 admin_org.save!
 
