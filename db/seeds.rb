@@ -8,44 +8,21 @@
 #
 #
 
+# Admin
+User.find_or_create_by!(email: 'admin@example.com') { |user|
+  user.password = "password1"
+  user.password_confirmation = "password1"
+  user.role = "admin"
+  user.confirmed_at = Time.current
+}
+
 Market.where(subdomain:"springfield").exists? || Market.create(
   name:"Springfield Market",
   subdomain:"springfield"
 )
 
-User.where(email: "erika@localorbit.com").exists? || User.create!(
-  email: "erika@localorbit.com",
-  password: "password1",
-  password_confirmation: "password1",
-  role: "admin",
-  name: "Erika Block"
-)
-
-User.where(email: "anna@localorbit.com").exists? || User.create!(
-  email: "anna@localorbit.com",
-  password: "password1",
-  password_confirmation: "password1",
-  role: "admin",
-  name: "Anna Richardson"
-)
-
-User.where(email: "ragan@localorbit.com").exists? || User.create!(
-  email: "ragan@localorbit.com",
-  password: "password1",
-  password_confirmation: "password1",
-  role: "admin",
-  name: "Ragan Erickson"
-)
-
-User.where(email: "kate@localorbit.com").exists? || User.create!(
-  email: "kate@localorbit.com",
-  password: "password1",
-  password_confirmation: "password1",
-  role: "admin",
-  name: "Kate Barker"
-)
-
 ImportLegacyTaxonomy.run(File.expand_path('../taxonomy.csv', __FILE__))
+ImportRoleActions.run(File.expand_path('../role_actions.csv', __FILE__))
 
 Unit.find_or_create_by!(singular: 'Pound', plural: 'Pounds')
 Unit.find_or_create_by!(singular: 'Bushel', plural: 'Bushels')
