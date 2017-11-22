@@ -6,7 +6,7 @@ Major tasks:
 
 * Setup app server
 	* Ruby, Rails
-	* Passenger
+	* Puma
 * Restore Database
 * Setup SSL
 * Setup application configs (database.yml, application.yml or ENV vars)
