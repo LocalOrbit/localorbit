@@ -23,7 +23,7 @@ describe HtmlToPdfConverter, :pdf do
       pdf_result = subject.generate_pdf(html: html, pdf_settings: pdf_settings, path: path)
       expect(pdf_result).to be
       expect(pdf_result.data).to be
-      expect(pdf_result.data.index("%PDF-1.5\n")).to eq(0)
+      expect(pdf_result.data.index("%PDF-1.4\n")).to eq(0)
       expect(pdf_result.path).to eq(path)
 
       expect(File.read(path)).to eq(pdf_result.data)

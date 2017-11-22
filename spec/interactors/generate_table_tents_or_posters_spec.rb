@@ -169,7 +169,7 @@ describe GenerateTableTentsOrPosters do
   describe "#perform"  do
     it "creates a pdf", pdf: true do
       context = GenerateTableTentsOrPosters.perform(order: order, type: "poster", include_product_names: false, request: request)
-      expect(context.pdf_result.data.match("%PDF-1.5\n")).to_not eq nil
+      expect(context.pdf_result.data.match("%PDF-1.4\n")).to_not eq nil
     end
 
     it "sends the correct Poster parameters to TemplatedPdfGenerator" do
