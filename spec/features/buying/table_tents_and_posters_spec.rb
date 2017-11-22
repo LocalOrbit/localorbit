@@ -28,7 +28,7 @@ feature "Downloading table tents or posters", js:true do
       expect(order_printably).to be
       expect(order_printably.pdf).to be
       expect(order_printably.pdf.file).to be
-      expect(order_printably.pdf.file.readlines.first).to match(/PDF-1\.4/)
+      expect(order_printably.pdf.file.readlines.first).to match("%PDF-1.4\n")
     end
   end
 
@@ -49,7 +49,7 @@ feature "Downloading table tents or posters", js:true do
       expect(order_printably).to be
       expect(order_printably.pdf).to be
       expect(order_printably.pdf.file).to be
-      expect(order_printably.pdf.file.readlines.first).to match(/PDF-1\.4/)
+      expect(order_printably.pdf.file.readlines.first).to match("%PDF-1.4\n")
     end
   end
 end
