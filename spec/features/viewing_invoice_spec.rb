@@ -153,7 +153,7 @@ feature "Viewing invoices" do
           expect(the_order).to be
           expect(the_order.invoice_pdf).to be
           expect(the_order.invoice_pdf.file).to be
-          expect(the_order.invoice_pdf.file.readlines.first).to match(/PDF-1\.4/)
+          expect(the_order.invoice_pdf.file.readlines.first).to match("%PDF-1.4\n")
         end
       end
 
