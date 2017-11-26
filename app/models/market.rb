@@ -213,7 +213,7 @@ class Market < ActiveRecord::Base
     if product.present? &&
         product.organization.active? &&
         current_delivery.object.delivery_schedule.products.include?(product) &&
-        product.available_inventory > 0 &&
+        product.available_inventory(current_delivery.deliver_on, self.id, buyer.id) > 0 &&
         product.prices_for_market_and_organization(self, buyer).any?
       promotion
     else
