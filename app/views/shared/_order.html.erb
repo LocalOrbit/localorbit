@@ -287,7 +287,8 @@
         </tr>
       </thead>
       <tbody>
-        <%= f.fields_for :items do |item| %>
+        <% @items = order.items.order('name asc') %>
+        <%= f.fields_for :items, @items do |item| %>
           <% user_order_item_context = UserOrderItemContext.build(user: current_user, order_item: item.object) %>
         <tr class="order-item-row">
           <td class="name">
