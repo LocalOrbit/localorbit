@@ -354,6 +354,9 @@
             <%if order.payment_status == "unpaid" %>
                 <%= link_to "#{number_to_currency item.object.unit_price}", "/admin/orders/#{order.id}/order_items/#{item.object.id}", class: 'edit-toggle' %><% else %> <%= number_to_currency item.object.unit_price %>
             <% end %>
+            <% if current_market.is_consignment_market? && item.object.unit_price < item.object.net_price %>
+                <br/><span style="color: red">Error: Sale Price < Net Price</span>
+            <% end %>
           </td>
           <td class="price">
             <%if order.payment_status == "unpaid" %>
@@ -384,7 +387,7 @@
             </td>
           <% end %>
         </tr>
-        <% end %>
+      <% end %>
       </tbody>
       </table>
       <% if can_add_products_to_order?(order, user_order_context) && @show_add_items_form
