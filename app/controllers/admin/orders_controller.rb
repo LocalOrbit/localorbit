@@ -310,7 +310,7 @@ class Admin::OrdersController < AdminController
       if result.success?
         redirect_to admin_order_path(order), notice: "Invoice Exported to QB."
       else
-        puts 'Failed JE: ' + result
+        #puts 'Failed JE: ' + result
         redirect_to admin_order_path(order), error: "Failed to Export Invoice."
       end
     end
