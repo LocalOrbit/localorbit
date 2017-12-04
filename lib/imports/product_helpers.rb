@@ -103,14 +103,6 @@ module Imports
 					lt.quantity = prod_hash["New Inventory"].to_i
 					lt.save
 				end
-
-				#unless prod_hash[SerializeProducts.required_headers[-4]].empty? # TODO this should be factored out, later.
-				#	newprod = product.dup
-				#	newprod.unit_id = self.get_unit_id_from_name(prod_hash["Multiple Pack Sizes"][SerializeProducts.required_headers[-3]])
-				#	newprod.unit_description = prod_hash["Multiple Pack Sizes"][SerializeProducts.required_headers[-2]]
-				#	newprod.save!
-				#	newprod.prices.create!(sale_price: prod_hash["Multiple Pack Sizes"][SerializeProducts.required_headers[-1]], min_quantity: 1)
-				#end
 			else
 				if prod_hash["Product ID"].to_i > 0
 					product = Product.find(prod_hash["Product ID"].to_i)
@@ -138,7 +130,7 @@ module Imports
 					else
 						puts "Error validating: #{pr.id}"
 					end
-					if prod_hash["New Inventory"].to_i >= 0
+					if !prod_hash["New Inventory"].nil? && prod_hash["New Inventory"].to_i >= 0
 						lt = product.lots.find_or_initialize_by(good_from: nil, expires_at: nil, number: prod_hash["Lot Number"].nil? ? nil : prod_hash["Lot Number"])
 						lt.quantity = prod_hash["New Inventory"].to_i
 						lt.save
@@ -157,8 +149,9 @@ module Imports
 								unit_quantity: prod_hash["Unit Quantity"],
 								organic: prod_hash["Organic"],
 								parent_product_id: self.get_parent_product_id_from_name(prod_hash["Parent Product Name"], prod_hash["Organization"], prod_hash["Market Subdomain"], current_user),
-								use_simple_inventory: prod_hash["Lot Number"].nil?
-				      	)
+								use_simple_inventory: prod_hash["Lot Number"].nil?,
+								general_product_id: gp_id_or_false
+					)
 					product.skip_validation = true
 					product.consignment_market = current_market.is_consignment_market?
 					product.save
@@ -168,7 +161,7 @@ module Imports
 					pr.net_price = (!prod_hash["Net Price"].nil? && Float(prod_hash["Net Price"]) > 0) ? Float(prod_hash["Net Price"]) : 0
 					pr.save
 
-					if prod_hash["New Inventory"].to_i >= 0
+					if !prod_hash["New Inventory"].nil? && prod_hash["New Inventory"].to_i >= 0
 						lt = product.lots.find_or_initialize_by(good_from: nil, expires_at: nil, number: prod_hash["Lot Number"].nil? ? nil : prod_hash["Lot Number"])
 						lt.quantity = prod_hash["New Inventory"].to_i
 						lt.save
@@ -176,25 +169,6 @@ module Imports
 
 				end
 
-				#unless prod_hash[SerializeProducts.required_headers[-4]].empty? # TODO factor out
-				#	# Check if this other unit exists already for the GeneralProduct.
-				#	# If not, create it. If so, update other info on it.
-				#	newprod = Product.where(name:prod_hash["Product Name"],unit_id:self.get_unit_id_from_name(prod_hash["Multiple Pack Sizes"][SerializeProducts.required_headers[-3]]),organization_id:self.get_organization_id_from_name(prod_hash["Organization"],prod_hash["Market Subdomain"],current_user))
-
-				#	if newprod.empty?
-				#		newprod = product.dup
-				#	else
-				#		newprod = newprod.first
-				#	end
-				#	newprod.update_attributes(unit_id:self.get_unit_id_from_name(prod_hash["Multiple Pack Sizes"][SerializeProducts.required_headers[-3]]),unit_description: prod_hash["Multiple Pack Sizes"][SerializeProducts.required_headers[-2]])
-				#	newprod.save!
-
-				#	newprod.prices.find_or_initialize_by(min_quantity: 1) do |pr|
-				#		pr.sale_price = prod_hash["Multiple Pack Sizes"][SerializeProducts.required_headers[-1]]
-				#		pr.save!
-				#	end
-					
-				#end
 			end # end the major if/else/end 
 			# (update or not, basically, wherein the additional unit/line is handled inside each case in the unless stmts)
 		end # end def.self_create_product_from_hash
