@@ -10,7 +10,7 @@ describe HtmlToPdfConverter, :pdf do
     pdf_result = subject.generate_pdf(html: html, pdf_settings: pdf_settings)
     expect(pdf_result).to be
     expect(pdf_result.data).to be
-    expect(pdf_result.data).to match("%PDF-1.5\n")
+    expect(pdf_result.data).to match("%PDF-1.4\n")
     expect(pdf_result.path).to be_nil
   end
 
