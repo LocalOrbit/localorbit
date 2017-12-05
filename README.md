@@ -14,6 +14,7 @@ See the `docs/` directory for more documentation.
 * PostgreSQL
 * PhantomJS (for running tests)
 * ImageMagick
+* Yarn
 
 ### Setup
 
@@ -22,10 +23,9 @@ See the `docs/` directory for more documentation.
 3. `bundle`
 4. `cp config/application.yml{.example,}` and modify if needed
 5. `cp config/database.yml{.example,}` and modify if needed (Some modification is probably necessary. Try adding `template: template0`)
-6. `npm install`
-7. `create postgres database`
-8. `rake db:setup`
-9. `rake db:seed`
+6. `yarn`
+7. `rake db:create`
+8. `rake db:setup` - runs `db:schema:load` and `db:seed`
 10. `rake db:seed:development`
 11. `rails server`
 12. Add `127.0.0.1 localtest.me` to `/etc/hosts`

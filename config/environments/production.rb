@@ -101,6 +101,16 @@ Rails.application.configure do
     end
     config.action_mailer.default_url_options = {protocol: 'https', host: Figaro.env.domain}
   end
+  config.action_mailer.delivery_method = :smtp
+  config.action_mailer.smtp_settings = {
+    address: "smtp.mandrillapp.com",
+    port: 587,
+    domain: "localorb.it",
+    authentication: :login,
+    user_name: Figaro.env.smtp_username,
+    password: Figaro.env.smtp_password,
+    enable_starttls_auto: true
+  }
 
   config.react.variant = :production
 
