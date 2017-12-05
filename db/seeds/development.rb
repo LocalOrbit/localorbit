@@ -6,6 +6,13 @@ admin = User.find_or_create_by!(email: 'admin@example.com') { |user|
 }
 
 # Market
+mkt_org = Organization.find_or_create_by!(name: "Fulton Market Growers Association", allow_purchase_orders: true) {|org|
+  org.can_sell = true
+}
+mkt_org.active = true
+mkt_org.needs_activated_notification = false
+mkt_org.save!
+
 market = Market.find_or_create_by!(name: "Fulton Market") {|m|
   m.subdomain = "fulton"
   m.timezone = "EST"
@@ -14,6 +21,7 @@ market = Market.find_or_create_by!(name: "Fulton Market") {|m|
   m.contact_phone = '616-222-2222'
   m.closed = false
   m.active = true
+  m.organization = mkt_org
   m.organization.plan = Plan.find_by_name("Grow")
 }
 

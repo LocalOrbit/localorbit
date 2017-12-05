@@ -1,4 +1,19 @@
 namespace :db do
+
+  namespace :seed do
+    desc "Loads a basic set of development data"
+    task development: [:environment] do
+      require File.join Rails.root, "db", "seeds", "development"
+    end
+  end
+
+  namespace :rebuild do
+    desc "Re-creates the development database from the db/seeds/development.rb file"
+    task development: [:reset, "seed:development"] do
+      puts "Rebuilt the development database..."
+    end
+  end
+
   namespace :dump do
     desc "Overwrites your development database w/ data from staging, and sets all user passwords to 'password1'"
 
