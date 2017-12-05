@@ -105,6 +105,7 @@ end
 
 group :development do
   gem 'bullet'
+  gem 'letter_opener'
   gem 'ultrahook'
   gem 'spring'
   gem 'spring-commands-rspec'
