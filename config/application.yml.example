@@ -15,7 +15,6 @@ STRIPE_PUBLISHABLE_KEY: <stripe publishable key (test on local system)>
 STRIPE_SECRET_KEY: <stripe secret key (test on local system)>
 STRIPE_CLIENT_ID: <stripe client key (test on local system)>
 FROALA_KEY: <api key for froala>
-CODECLIMATE_REPO_TOKEN: <optional codeclimate api token>
 USE_STRIPE_STANDALONE_ACCOUNTS: 'true'
 SMTP_USERNAME: <mandrill smtp username>
 SMTP_PASSWORD: <mandrill smtp password>
