@@ -1,4 +1,4 @@
-FactoryGirl.define do
+FactoryBot.define do
   factory :bank_account do
     association :bankable, factory: :market
 
@@ -579,7 +579,7 @@ FactoryGirl.define do
     category { Category.find_by(name: "Apples") }
     short_description "Apples"
 
-    # We need to set this in the factory because FactoryGirl doesn't trigger before_save
+    # We need to set this in the factory because FactoryBot doesn't trigger before_save
     top_level_category { category.top_level_category }
     organization
     unit { Unit.first || create(:unit) }
@@ -674,7 +674,7 @@ FactoryGirl.define do
 
     trait :market_manager do
       #role "user"
-      roles {[FactoryGirl.create(:role, :market_manager)]}
+      roles {[FactoryBot.create(:role, :market_manager)]}
 
       after(:create) do |user|
         if user.managed_markets.empty?
@@ -690,7 +690,7 @@ FactoryGirl.define do
 
     trait :admin do
       #role "admin"
-      roles {[FactoryGirl.create(:role, :admin)]}
+      roles {[FactoryBot.create(:role, :admin)]}
       after(:create) do |user|
         if user.organizations.empty?
           o = create(:organization, :admin)
@@ -700,7 +700,7 @@ FactoryGirl.define do
     end
 
     trait :supplier do
-      roles {[FactoryGirl.create(:role, :supplier)]}
+      roles {[FactoryBot.create(:role, :supplier)]}
       after(:create) do |user|
         #m = create(:market)
         if user.organizations.empty?
@@ -711,7 +711,7 @@ FactoryGirl.define do
     end
 
     trait :buyer do
-      roles {[FactoryGirl.create(:role, :buyer)]}
+      roles {[FactoryBot.create(:role, :buyer)]}
       after(:create) do |user|
         #m = create :market
         if user.organizations.empty?
@@ -723,7 +723,7 @@ FactoryGirl.define do
   end
 
   factory :user_with_role, :parent => :user do
-    role {[FactoryGirl.create(:role, :market_manager)]}
+    role {[FactoryBot.create(:role, :market_manager)]}
   end
 
   factory :subscription do

@@ -105,6 +105,7 @@ end
 
 group :development do
   gem 'bullet'
+  gem 'letter_opener'
   gem 'ultrahook'
   gem 'spring'
   gem 'spring-commands-rspec'
@@ -125,8 +126,6 @@ group :development, :test do
   gem 'byebug'
   gem 'pry-byebug'
   gem 'launchy'
-  gem 'guard-rspec'
-  gem 'guard-konacha-rails'
   gem 'awesome_print'
   gem 'konacha'
   gem 'konacha-chai-matchers'
@@ -139,12 +138,13 @@ group :development, :test do
 end
 
 group :test do
-  gem 'codeclimate-test-reporter', require: false
   gem 'simplecov', require: false
   gem 'domino'
-  gem 'factory_girl_rails'
+  gem 'factory_bot_rails'
   gem 'email_spec'
   gem 'database_cleaner'
+  gem 'guard-rspec', require: false
+  gem 'guard-konacha-rails'
   gem 'timecop'
   gem 'vcr'
   gem 'fire_poll', '1.2.0'
@@ -161,8 +161,8 @@ group :production, :staging do
   #gem 'passenger'
   gem 'rack-cache', require: 'rack/cache'
   gem 'rails_12factor'
-  gem 'pgbackups-archive'
-  #gem 'heroku-api'
+  # TODO: migrate to https://github.com/kbaum/heroku-database-backups
+  # gem 'pgbackups-archive'
   gem 'platform-api'
   gem 'wkhtmltopdf-heroku'
   gem 'scout_apm'

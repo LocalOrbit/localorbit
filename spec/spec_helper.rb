@@ -1,8 +1,6 @@
 require 'simplecov'
-require 'codeclimate-test-reporter'
 SimpleCov.formatter = SimpleCov::Formatter::MultiFormatter[
-    SimpleCov::Formatter::HTMLFormatter,
-    CodeClimate::TestReporter::Formatter
+    SimpleCov::Formatter::HTMLFormatter
 ]
 
 if ENV['CIRCLE_ARTIFACTS']
@@ -75,7 +73,7 @@ RSpec.configure do |config|
   # https://relishapp.com/rspec/rspec-rails/v/3-0/docs
   config.infer_spec_type_from_file_location!
 
-  config.include FactoryGirl::Syntax::Methods
+  config.include FactoryBot::Syntax::Methods
   config.include EmailSpec::Helpers
   config.include EmailSpec::Matchers
   config.include ChosenJs::Helpers, chosen_js: true

@@ -35,6 +35,5 @@ Service | Purpose | Owner | Notes
 [Pivotal Tracker](http://pivotaltracker.com) | Project Management | LO
 [Basecamp](http://basecamp.com) | Communication | [i]
 [Travis CI](https://travis-ci.com) | Continuous integration | [i]
-[Code Climate](https://codeclimate.com) | Code metrics | [i]
 [Gemnasium](https://gemnasium.com) | Gem update notification | [i] | May magically keep working after moving the app.
 
