@@ -225,10 +225,10 @@ GEM
     eventmachine (1.0.5)
     excon (0.45.4)
     execjs (2.2.1)
-    factory_girl (4.4.0)
+    factory_bot (4.8.2)
       activesupport (>= 3.0.0)
-    factory_girl_rails (4.4.1)
-      factory_girl (~> 4.4.0)
+    factory_bot_rails (4.8.2)
+      factory_bot (~> 4.8.2)
       railties (>= 3.0.0)
     faraday (0.8.9)
       multipart-post (~> 1.2.0)
@@ -785,7 +785,7 @@ DEPENDENCIES
   dragonfly-s3_data_store
   draper
   email_spec
-  factory_girl_rails
+  factory_bot_rails
   figaro (~> 1.0.0.rc1)
   fire_poll (= 1.2.0)
   font-awesome-rails
