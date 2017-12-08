@@ -1,6 +1,6 @@
 class CreateBatchConsignmentReceiptsOrders < ActiveRecord::Migration
   def change
-    create_table :batch_consignment_receipt_orders do |t|
+    create_table :batch_consignment_receipts_orders do |t|
       t.integer :batch_consignment_receipt_id
       t.integer :order_id
 

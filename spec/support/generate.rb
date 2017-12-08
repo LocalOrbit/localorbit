@@ -18,20 +18,20 @@ module Generate
     #
     # Market
     #
-    plan = FactoryGirl.create(:plan, plan_sym)
-    organization = FactoryGirl.create(:organization, :market, plan: plan)
+    plan = FactoryBot.create(:plan, plan_sym)
+    organization = FactoryBot.create(:organization, :market, plan: plan)
     if market_name
-      market = FactoryGirl.create(:market, organization: organization, name: market_name)
+      market = FactoryBot.create(:market, organization: organization, name: market_name)
     else
-      market = FactoryGirl.create(:market, organization: organization)
+      market = FactoryBot.create(:market, organization: organization)
     end
-    num_market_bank_accounts.times do 
-      FactoryGirl.create(:bank_account, :checking, :verified,
+    num_market_bank_accounts.times do
+      FactoryBot.create(:bank_account, :checking, :verified,
                         name: "MarqetBanc", bankable: market)
     end
-    market_manager = FactoryGirl.create(:user, name: "Mr Mgr #{market.id}", managed_markets: [market])
-    
-    
+    market_manager = FactoryBot.create(:user, name: "Mr Mgr #{market.id}", managed_markets: [market])
+
+
 
     #
     # Buyers
@@ -40,9 +40,9 @@ module Generate
     buyer_users = []
     buyer_orgs = []
     n.times do |i|
-      user = FactoryGirl.create(:user)
+      user = FactoryBot.create(:user)
       buyer_users << user
-      org = FactoryGirl.create(:organization, :buyer, users: [user], markets: [market])
+      org = FactoryBot.create(:organization, :buyer, users: [user], markets: [market])
       buyer_orgs << org
     end
 
@@ -53,29 +53,29 @@ module Generate
     seller_users = []
     seller_orgs = []
     n.times do |i|
-      user = FactoryGirl.create(:user)
+      user = FactoryBot.create(:user)
       seller_users << user
-      org = FactoryGirl.create(:organization, :seller, 
-                               users: [user], 
+      org = FactoryBot.create(:organization, :seller,
+                               users: [user],
                                markets: [market],
                                bank_accounts: [
-                                 FactoryGirl.create(:bank_account, :credit_card),
-                                 FactoryGirl.create(:bank_account, :savings, bank_name: "West Bank"),
-                                 FactoryGirl.create(:bank_account, :savings, :verified, bank_name: "East Bank"),
-                                 FactoryGirl.create(:bank_account, :checking, :verified, bank_name: "North Bank"),
+                                 FactoryBot.create(:bank_account, :credit_card),
+                                 FactoryBot.create(:bank_account, :savings, bank_name: "West Bank"),
+                                 FactoryBot.create(:bank_account, :savings, :verified, bank_name: "East Bank"),
+                                 FactoryBot.create(:bank_account, :checking, :verified, bank_name: "North Bank"),
                               ])
       seller_orgs << org
     end
 
     #
-    # Products 
+    # Products
     #
     products = []
     n = num_products
     sorgs = seller_orgs.cycle
     n.times do |i|
       seller_org = sorgs.next
-      product = FactoryGirl.create(:product, :sellable, organization: seller_org)
+      product = FactoryBot.create(:product, :sellable, organization: seller_org)
       # TODO SET PRICE OF PRODUCT?
       # price = (i.to_f + (i.to_f/10)).to_d
       products << product
@@ -95,9 +95,9 @@ module Generate
         product = prods.next
         quant = i+1
         price = (quant.to_f + (quant.to_f/10)).to_d # TODO: somehow derive from Product?
-        order_item = FactoryGirl.create(:order_item, 
-                                        product: product, 
-                                        quantity: quant, 
+        order_item = FactoryBot.create(:order_item,
+                                        product: product,
+                                        quantity: quant,
                                         unit_price: price.to_d,
                                         market_seller_fee:      0.1.to_d,
                                         local_orbit_seller_fee: 0.2.to_d,
@@ -113,10 +113,10 @@ module Generate
         order_items << order_item
       end
 
-      delivery_schedule = FactoryGirl.create(:delivery_schedule, :percent_fee, fee: delivery_fee_percent)
-      delivery = FactoryGirl.create(:delivery, delivery_schedule: delivery_schedule)
+      delivery_schedule = FactoryBot.create(:delivery_schedule, :percent_fee, fee: delivery_fee_percent)
+      delivery = FactoryBot.create(:delivery, delivery_schedule: delivery_schedule)
 
-      order = FactoryGirl.create(:order, items: order_items, organization: buyer_org, market: market, delivery: delivery)
+      order = FactoryBot.create(:order, items: order_items, organization: buyer_org, market: market, delivery: delivery)
       if order_time
         order.update_column(:created_at, order_time)
         order.update_column(:updated_at, order_time)
@@ -125,7 +125,7 @@ module Generate
       if deliver_time
         order.delivery.update(deliver_on: deliver_time, buyer_deliver_on: deliver_time)
       end
-      
+
       if paid_with
         order.update(payment_status: "paid", payment_method: paid_with)
       end

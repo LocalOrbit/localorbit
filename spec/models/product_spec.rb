@@ -38,7 +38,7 @@ describe Product do
     let(:unit) { create(:unit) }
     let(:top_level) { create(:category, parent: Category.root) }
     let!(:category) { create(:category, parent: top_level) }
-    
+
     it "creates and belongs to a new GeneralProduct upon creation" do
       expect(GeneralProduct.count).to eq(0)
       newProduct = Product.create!(short_description: "desc", name: "New Product", organization: org, category: category, unit: unit)
@@ -48,8 +48,8 @@ describe Product do
     end
 
     it "updates GeneralProduct when updated" do
-      newProduct = FactoryGirl.create(:product)
-      newLocation = FactoryGirl.create(:location)
+      newProduct = create(:product)
+      newLocation = create(:location)
       params = {
         name:                     "test_name",
         category_id:              category.id,
@@ -85,7 +85,7 @@ describe Product do
     end
 
     it 'uses GeneralProduct attributes' do
-      newLocation = FactoryGirl.create(:location)
+      newLocation = create(:location)
       params = {
         name:                     "test_name",
         category_id:              category.id,

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170602031726) do
+ActiveRecord::Schema.define(version: 20171208004303) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -207,13 +207,13 @@ ActiveRecord::Schema.define(version: 20170602031726) do
     t.integer  "order_id"
     t.integer  "order_item_id"
     t.integer  "lot_id"
+    t.datetime "delivery_date"
     t.integer  "product_id"
     t.integer  "quantity"
     t.integer  "assoc_order_id"
     t.integer  "assoc_order_item_id"
     t.integer  "assoc_lot_id"
     t.integer  "assoc_product_id"
-    t.datetime "delivery_date"
     t.datetime "created_at"
     t.integer  "market_id"
     t.integer  "parent_id"
@@ -488,7 +488,6 @@ ActiveRecord::Schema.define(version: 20170602031726) do
     t.integer  "market_id"
     t.integer  "organization_id"
     t.integer  "storage_location_id"
-    t.datetime "deleted_at"
   end
 
   add_index "lots", ["expires_at"], name: "index_lots_on_expires_at", using: :btree
@@ -590,8 +589,8 @@ ActiveRecord::Schema.define(version: 20170602031726) do
     t.boolean  "default_allow_credit_cards",                             default: true
     t.boolean  "default_allow_ach",                                      default: true
     t.integer  "legacy_id"
-    t.string   "background_color",                                       default: "#FFFFFF"
-    t.string   "text_color",                                             default: "#46639C"
+    t.string   "background_color",                                       default: "#ffffff"
+    t.string   "text_color",                                             default: "#46639c"
     t.boolean  "allow_cross_sell",                                       default: false
     t.boolean  "auto_activate_organizations",                            default: false
     t.integer  "plan_id"
@@ -612,20 +611,20 @@ ActiveRecord::Schema.define(version: 20170602031726) do
     t.integer  "product_label_format",                                   default: 4
     t.boolean  "print_multiple_labels_per_item",                         default: false
     t.boolean  "pending",                                                default: false
+    t.integer  "organization_id"
     t.text     "zpl_logo"
     t.string   "zpl_printer"
-    t.boolean  "self_directed_creation",                                 default: false
     t.boolean  "stripe_standalone",                                      default: true
     t.string   "legacy_stripe_account_id"
+    t.boolean  "self_directed_creation",                                 default: false
     t.integer  "number_format_numeric",                                  default: 0
     t.boolean  "allow_product_fee"
     t.boolean  "subscribed",                                             default: false
     t.boolean  "routing_plan",                                           default: false
-    t.integer  "organization_id"
-    t.boolean  "add_item_pricing"
     t.boolean  "self_enabled_cross_sell",                                default: false
+    t.boolean  "add_item_pricing",                                       default: true
     t.string   "background_img_uid"
-    t.boolean  "allow_signups"
+    t.boolean  "allow_signups",                                          default: true
     t.string   "qb_integration_type"
   end
 
@@ -662,14 +661,6 @@ ActiveRecord::Schema.define(version: 20170602031726) do
   end
 
   add_index "newsletters", ["market_id"], name: "index_newsletters_on_market_id", using: :btree
-
-  create_table "order_item_deliveries", force: true do |t|
-    t.integer  "market_address_id"
-    t.integer  "location_id"
-    t.datetime "delivered_at"
-    t.integer  "quantity_delivered"
-    t.integer  "order_item_id"
-  end
 
   create_table "order_item_lots", force: true do |t|
     t.integer  "order_item_id"
@@ -750,6 +741,8 @@ ActiveRecord::Schema.define(version: 20170602031726) do
     t.decimal  "sale_price",        precision: 10, scale: 2, default: 0.0
     t.decimal  "net_price",         precision: 10, scale: 2, default: 0.0
     t.integer  "lot_id"
+    t.integer  "ct_id"
+    t.integer  "fee"
   end
 
   create_table "order_templates", force: true do |t|
@@ -835,16 +828,16 @@ ActiveRecord::Schema.define(version: 20170602031726) do
     t.boolean  "active",                                               default: false
     t.boolean  "needs_activated_notification",                         default: true
     t.string   "stripe_customer_id"
-    t.string   "buyer_org_type"
-    t.string   "ownership_type"
-    t.boolean  "non_profit"
-    t.string   "professional_organizations"
     t.string   "org_type"
     t.integer  "plan_id"
     t.datetime "plan_start_at"
     t.integer  "plan_interval",                                        default: 1,         null: false
     t.decimal  "plan_fee",                     precision: 7, scale: 2, default: 0.0,       null: false
     t.integer  "plan_bank_account_id"
+    t.string   "buyer_org_type"
+    t.string   "ownership_type"
+    t.boolean  "non_profit"
+    t.string   "professional_organizations"
     t.boolean  "subscribed",                                           default: false
     t.string   "subscription_id"
     t.string   "payment_provider"
@@ -973,12 +966,12 @@ ActiveRecord::Schema.define(version: 20170602031726) do
     t.string   "thumb_uid"
     t.integer  "second_level_category_id"
     t.string   "code"
-    t.integer  "external_product_id"
     t.integer  "general_product_id"
+    t.integer  "external_product_id"
     t.string   "aws_image_url"
     t.integer  "qb_item_id"
     t.integer  "parent_product_id"
-    t.decimal  "unit_quantity"
+    t.integer  "unit_quantity"
     t.boolean  "organic"
   end
 
@@ -1030,8 +1023,6 @@ ActiveRecord::Schema.define(version: 20170602031726) do
     t.string  "delivery_fee_account_name"
     t.integer "delivery_fee_account_id"
   end
-
-  add_index "qb_profiles", ["organization_id"], name: "org_id", unique: true, using: :btree
 
   create_table "qb_tokens", force: true do |t|
     t.integer  "organization_id"
