@@ -1,7 +1,7 @@
 require 'rollbar'
 
 Rollbar.configure do |config|
-  config.access_token = 'd9b4e2c39e564c18948da47387482174'
+  config.access_token = '57707544d96f4bffb09f5a3ea60fae81'
   unless Rails.env.production?
     config.enabled = false
   end
