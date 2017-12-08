@@ -14,6 +14,32 @@ namespace :db do
     end
   end
 
+  def current_database
+    ActiveRecord::Base.connection.current_database
+  end
+
+  if Rails.env[/development|test|staging/]
+
+    desc 'disconnect clients from db so it can be dropped'
+    task :disconnect => :environment do
+      sql = <<-SQL
+      SELECT
+        pg_terminate_backend(pid)
+      FROM
+        pg_stat_activity
+      WHERE
+        -- don't kill my own connection!
+        pid <> pg_backend_pid()
+        -- don't kill the connections to other databases
+        AND datname IN ('#{current_database}', 'grn_test');
+      SQL
+      ActiveRecord::Base.connection.execute(sql)
+    end
+
+    task :drop => :disconnect
+
+  end
+
   namespace :dump do
     desc "Overwrites your development database w/ data from staging, and sets all user passwords to 'password1'"
 

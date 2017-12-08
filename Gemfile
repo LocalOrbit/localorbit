@@ -126,8 +126,6 @@ group :development, :test do
   gem 'byebug'
   gem 'pry-byebug'
   gem 'launchy'
-  gem 'guard-rspec'
-  gem 'guard-konacha-rails'
   gem 'awesome_print'
   gem 'konacha'
   gem 'konacha-chai-matchers'
@@ -140,12 +138,13 @@ group :development, :test do
 end
 
 group :test do
-  gem 'codeclimate-test-reporter', require: false
   gem 'simplecov', require: false
   gem 'domino'
-  gem 'factory_girl_rails'
+  gem 'factory_bot_rails'
   gem 'email_spec'
   gem 'database_cleaner'
+  gem 'guard-rspec', require: false
+  gem 'guard-konacha-rails'
   gem 'timecop'
   gem 'vcr'
   gem 'fire_poll', '1.2.0'
