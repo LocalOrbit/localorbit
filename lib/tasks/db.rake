@@ -54,7 +54,7 @@ namespace :db do
 
       # This works for local dev data
       # NEVER USE ON A SERVER
-      User.update_all(encrypted_password: Devise.bcrypt(User, "password1"))
+      User.update_all(encrypted_password: Devise::Encryptor.digest(User, "password1"))
 
       # Triggers all app files to load
       Rails.application.config.eager_load_namespaces.each(&:eager_load!)

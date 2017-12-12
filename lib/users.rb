@@ -12,7 +12,7 @@ module Users
 
   def confirm_user(user)
     user.accept_invitation!
-    user.confirm!
+    user.confirm
     user.save
   end
 

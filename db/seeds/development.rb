@@ -133,7 +133,7 @@ unless sell_org.users.include?(seller_user)
 end
 
 market_manager.save!
-market_manager.confirm!
+market_manager.confirm
 
 market.organizations << buy_org unless market.organizations.include?(buy_org)
 market.organizations << sell_org unless market.organizations.include?(sell_org)
