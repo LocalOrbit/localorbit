@@ -225,7 +225,7 @@ GEM
     erubis (2.7.0)
     eventmachine (1.0.5)
     excon (0.45.4)
-    execjs (2.2.1)
+    execjs (2.7.0)
     factory_bot (4.8.2)
       activesupport (>= 3.0.0)
     factory_bot_rails (4.8.2)
@@ -712,7 +712,7 @@ GEM
       coffee-rails
     tzinfo (1.2.4)
       thread_safe (~> 0.1)
-    uglifier (2.5.3)
+    uglifier (2.7.2)
       execjs (>= 0.3.0)
       json (>= 1.8.0)
     ultrahook (0.1.3)
@@ -865,7 +865,7 @@ DEPENDENCIES
   tabulator!
   timecop
   turbolinks
-  uglifier (>= 1.3.0)
+  uglifier (~> 2.7.2)
   ultrahook
   underscore-rails
   unicorn
