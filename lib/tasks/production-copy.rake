@@ -286,9 +286,9 @@ module CloneProductionHelper
 
   def clear_all_payment_provider_refs
     refs_to_clear = []
-    refs_to_clear += balanced_payments_refs_to_clear 
-    refs_to_clear += stripe_refs_to_clear 
-    
+    refs_to_clear += balanced_payments_refs_to_clear
+    refs_to_clear += stripe_refs_to_clear
+
     refs_to_clear.each do |model:,fields:|
       fields.each do |field|
         puts "Setting all #{model.name}##{field} to nil"
@@ -299,7 +299,7 @@ module CloneProductionHelper
 
   def reset_all_passwords
     puts "Setting all user passwords to 'password1'"
-    User.update_all(encrypted_password: Devise.bcrypt(User, "password1"))
+    User.update_all(encrypted_password: Devise::Encryptor.digest(User, "password1"))
   end
 
   def nerf_all_email_addresses
