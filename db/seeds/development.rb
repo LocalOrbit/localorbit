@@ -1,11 +1,3 @@
-# Admin
-admin = User.find_or_create_by!(email: 'admin@example.com') { |user|
-  user.password = "password1"
-  user.password_confirmation = "password1"
-  user.role = "admin"
-  user.skip_confirmation!
-}
-
 # Market
 mkt_org = Organization.find_or_create_by!(name: 'Fulton Market Growers Association') {|org|
   org.can_sell = true
