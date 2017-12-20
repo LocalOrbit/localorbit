@@ -112,6 +112,7 @@ group :development do
   gem 'rubocop', require: false
   gem 'quiet_assets'
   gem 'aws-sdk'
+  gem 'railroady'
   gem 'rails_view_annotator'
   gem 'mailcatcher'
   gem 'unicorn'
