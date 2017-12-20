@@ -42,6 +42,11 @@ unless market_manager.managed_markets.include?(market_manager)
   market_manager.managed_markets << market
 end
 
+unless mkt_org.users.include?(market_manager)
+  mkt_org.users << market_manager
+  mkt_org.save!
+end
+
 delivery_schedule = DeliverySchedule.find_or_create_by!(
   day: 2,
   fee_type: 'percent',
