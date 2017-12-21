@@ -15,7 +15,7 @@ ActiveRecord::Schema.define(version: 20171208004303) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
-  # enable_extension "pg_stat_statements"
+  enable_extension "pg_stat_statements"
 
   create_table "audits", force: true do |t|
     t.integer  "auditable_id"
