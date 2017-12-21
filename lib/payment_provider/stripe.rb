@@ -375,8 +375,8 @@ module PaymentProvider
       end
 
       # set_default_source
-      # Update the Stripe customer to reflect a new default source.  By 
-      # default this happens whenever a customer adds a new credit card, 
+      # Update the Stripe customer to reflect a new default source.  By
+      # default this happens whenever a customer adds a new credit card,
       # though we may want to expose this as an option
       def set_default_source(stripe_customer, stripe_card)
         # Only credit cards should be set as the default source
