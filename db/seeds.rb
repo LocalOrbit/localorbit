@@ -9,7 +9,8 @@
 #
 
 # Admin
-admin_org = Organization.find_or_create_by!(name: "Admin Org", allow_purchase_orders: true) {|org|
+admin_org = Organization.find_or_create_by!(name: "Admin Org") {|org|
+  org.allow_purchase_orders = true
   org.can_sell = false
 }
 admin_org.active = true

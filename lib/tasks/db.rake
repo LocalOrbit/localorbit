@@ -80,3 +80,7 @@ namespace :db do
     end
   end
 end
+
+desc 'Reset instance'
+task_dependencies = %w(db:rebuild:development)
+task :reset => task_dependencies

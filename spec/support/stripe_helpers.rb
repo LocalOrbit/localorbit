@@ -66,7 +66,7 @@ module StripeSpecHelpers
     }
   }
   }) # end Charge
-  
+
   Templates[:application_fee] = JSON.parse(%{
     {
       "id": "fee_6C3CvCyYu1aT71",
@@ -131,7 +131,7 @@ module StripeSpecHelpers
     def [](key)
       @params[key.to_s]
     end
-    
+
     def keys
       @params.keys.map { |k| k.to_sym }
     end
@@ -154,11 +154,11 @@ module StripeSpecHelpers
   #
   # REAL STUFF:
   #
-  
+
   def create_stripe_token(opts={})
     card_params = {
-      number: "4012888888881881", 
-      exp_month: 5, 
+      number: "4012888888881881",
+      exp_month: 5,
       exp_year: 2020,
       cvc: "314"
     }.merge(opts)
@@ -167,9 +167,9 @@ module StripeSpecHelpers
   end
 
   def create_stripe_bank_account_token
-    bank_account_params = { 
-      routing_number: "110000000", 
-      account_number: "000123456789", 
+    bank_account_params = {
+      routing_number: "110000000",
+      account_number: "000123456789",
       country: 'US' }
     Stripe::Token.create(bank_account: bank_account_params)
   end
@@ -182,7 +182,7 @@ module StripeSpecHelpers
   end
 
   def create_and_attach_stripe_credit_card(organization:,stripe_customer:)
-    bank_account = create(:bank_account, :credit_card) 
+    bank_account = create(:bank_account, :credit_card)
     create_stripe_credit_card(stripe_customer: stripe_customer, bank_account: bank_account)
     organization.bank_accounts << bank_account
     bank_account
@@ -195,12 +195,12 @@ module StripeSpecHelpers
         "lo.entity_id" => organization.id,
         "lo.entity_type" => 'organization'
       }
-    ) 
+    )
     organization.update stripe_customer_id: customer.id
     track_stripe_object_for_cleanup customer
     customer
   end
-  
+
 
   def get_or_create_stripe_account_for_market(market)
     # Don't judge me.
@@ -208,11 +208,11 @@ module StripeSpecHelpers
     # See if there's already an Account lurking out there in Test land:
     acct = Stripe::Account.all(limit:100).detect { |a| a.email == market.contact_email }
     acct ||= Stripe::Account.create(
-      managed: true,
       country: 'US',
-      email: market.contact_email
+      email: market.contact_email,
+      type: 'standard'
     )
-    
+
     market.update(stripe_account_id: acct.id)
     acct
   end
@@ -231,7 +231,7 @@ module StripeSpecHelpers
         obj.delete
       rescue Exception => e
         puts "(Error while trying to delete Stripe object #{obj.inspect}: #{e.message})"
-      end 
+      end
     end
   end
 end

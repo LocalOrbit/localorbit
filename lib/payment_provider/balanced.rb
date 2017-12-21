@@ -46,7 +46,7 @@ module PaymentProvider
           description: "#{market.name} purchase",
           appears_on_statement_as: market.on_statement_as,
           meta: {'order number' => order.order_number}
-        ) 
+        )
       end
 
       def fully_refund(charge:nil, payment:, order:)
@@ -102,8 +102,8 @@ module PaymentProvider
       def add_payment_method(type:, entity:, bank_account_params:, representative_params:)
         # raise "add_payment_method not implemented for PaymentProvider::Balanced!"
         params = {
-          entity: entity, 
-          bank_account_params: bank_account_params, 
+          entity: entity,
+          bank_account_params: bank_account_params,
           representative_params: representative_params
         }
         if type == "card"

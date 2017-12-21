@@ -14,7 +14,7 @@ class BankAccount < ActiveRecord::Base
   scope :creditable_bank_accounts, -> { visible.where(account_type: %w(savings checking)) }
   scope :credit_cards, -> { visible.where.not(account_type: %w(savings checking)) }
   scope :deposit_accounts, -> { visible.where(account_role: 'deposit') }
-  
+  scope :chrono, -> { order :created_at }
 
   def balanced_verification
     return nil if verified? || balanced_verification_uri.nil?
