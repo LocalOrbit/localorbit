@@ -116,7 +116,10 @@
                         <% end %><br>
 
                         <div id="cc-fields" class="<%= classes('is-hidden' => current_organization.decorate.credit_cards_available?) %>">
+
+                          <% if current_organization.decorate.credit_cards_available? %>
                           <label>New Credit Card</label><br>
+                          <% end %>
 
                           <fieldset id="payment-provider-container" data-payment-provider="<%= @payment_provider %>" data-balanced-marketplace-uri="<%= ENV["BALANCED_MARKETPLACE_URI"] %>" data-stripe-publishable-key="<%= ENV["STRIPE_PUBLISHABLE_KEY"] %>">
                             <div class="row">
