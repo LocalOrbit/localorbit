@@ -217,7 +217,7 @@ describe "Checking Out using Stripe payment provider", :js do
         expect(order.payments.first.status).to eql("paid")
       end
 
-      xit "saves the card for later use" do
+      it "saves the card for later use" do
         expect(buyer.bank_accounts.visible.count).to eql(2)
 
         choose "Pay by Credit Card"
@@ -230,7 +230,7 @@ describe "Checking Out using Stripe payment provider", :js do
           fill_in "postal", with: "49423"
         end
 
-        # check "Save credit card for future use" # TODO: further verification.  This feature is broken as of May 2015, so should it be removed from this test, and/or verified more carefully?
+        check "Save credit card for future use" # TODO: further verification.  This feature is broken as of May 2015, so should it be removed from this test, and/or verified more carefully?
 
         checkout
 
