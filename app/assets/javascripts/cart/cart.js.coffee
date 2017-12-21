@@ -467,14 +467,16 @@ $ ->
     $paymentFields = $(this).parents(".field").find(".payment-fields")
     $paymentFields.removeClass("is-hidden")
 
-    buttonState = !$paymentFields.data('available') == true && !$("h2.order-min-msg").text().trim().length > 0
+    buttonState = $("h2.order-min-msg").text().trim().length > 0
     $("#place-order-button").attr("disabled", buttonState)
 
-  $(document.body).on 'change', "#order_credit_card_id", (e) ->
+  toggleNewCreditCard = (e) ->
     if ($("#order_credit_card_id").val() == '' || $("#order_credit_card_id").val() == undefined)
       $("#cc-fields").removeClass("is-hidden")
     else
       $("#cc-fields").addClass("is-hidden")
+
+  $(document.body).on 'change', "#order_credit_card_id", toggleNewCreditCard
 
   $(document.body).on 'keyup', "#provider_card_number", (e) ->
     if $(this).val() != ''
@@ -625,5 +627,5 @@ $ ->
   if numItems == 1
     $('.payment-method').click()
 
-  if ($('#order_credit_card_id option').size() == 2)
+  if ($('#order_credit_card_id option').size() >= 2)
     $('#order_credit_card_id option:last').attr("selected","selected")

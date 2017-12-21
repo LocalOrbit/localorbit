@@ -104,7 +104,7 @@ class CartsController < ApplicationController
   # add Delivery Note deletion to cart's destroy
   def destroy
     DeliveryNote.where(cart_id:current_cart.id).each do |dn|
-      DeliveryNote.soft_delete(dn.id) 
+      DeliveryNote.soft_delete(dn.id)
     end
     current_cart.destroy
     session.delete(:cart_id)
