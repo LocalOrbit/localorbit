@@ -3,7 +3,7 @@ class Admin::BankAccountsController < AdminController
   before_action :set_payment_provider
 
   def index
-    @bank_accounts = @entity.bank_accounts.visible
+    @bank_accounts = @entity.bank_accounts.visible.chrono
   end
 
   def new
@@ -11,9 +11,9 @@ class Admin::BankAccountsController < AdminController
   end
 
   def create
-    results = PaymentProvider.add_payment_method(@payment_provider, 
-                                                 type: params[:type], 
-                                                 entity: @entity, 
+    results = PaymentProvider.add_payment_method(@payment_provider,
+                                                 type: params[:type],
+                                                 entity: @entity,
                                                  bank_account_params: bank_account_params,
                                                  representative_params: representative_params)
 

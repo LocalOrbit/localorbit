@@ -55,7 +55,7 @@ class OrganizationDecorator < Draper::Decorator
   end
 
   def credit_card_options
-    @credit_card_options ||= PaymentProvider.select_usable_bank_accounts(primary_payment_provider, bank_accounts.credit_cards).map do |card|
+    @credit_card_options ||= PaymentProvider.select_usable_bank_accounts(primary_payment_provider, bank_accounts.credit_cards.chrono).map do |card|
       [card.display_name, card.id]
     end
   end
