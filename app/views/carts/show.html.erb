@@ -113,8 +113,6 @@
                         <% if current_organization.decorate.credit_cards_available? %>
                           <label for="order_credit_card_id">Choose Credit Card</label><br>
                           <%= select_tag "order[credit_card][id]", options_for_select(current_organization.decorate.credit_card_options), prompt: 'Add a new Credit Card' %><br>
-                        <% else %>
-                          Add a <%= link_to "credit card", new_admin_organization_bank_account_path(current_organization) %> to your account.
                         <% end %><br>
 
                         <div id="cc-fields" class="<%= classes('is-hidden' => current_organization.decorate.credit_cards_available?) %>">
