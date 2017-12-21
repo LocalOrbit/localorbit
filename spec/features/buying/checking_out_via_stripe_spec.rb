@@ -112,7 +112,7 @@ describe "Checking Out using Stripe payment provider", :js do
       it "uses a stored credit card" do
 
         choose "Pay by Credit Card"
-        select "Visa", from: "Saved Credit Cards"
+        select "Visa", from: "Choose Credit Card"
 
         checkout
 
@@ -150,7 +150,7 @@ describe "Checking Out using Stripe payment provider", :js do
 
         it "allows a zero dollar purchase" do
           choose "Pay by Credit Card"
-          select "Visa", from: "Saved Credit Cards"
+          select "Visa", from: "Choose Credit Card"
 
           checkout
 
@@ -176,7 +176,7 @@ describe "Checking Out using Stripe payment provider", :js do
 
       it "displays an error, and creates no Orders nor Payments" do
         choose "Pay by Credit Card"
-        select "Visa", from: "Saved Credit Cards"
+        select "Visa", from: "Choose Credit Card"
 
         checkout
 
@@ -191,7 +191,7 @@ describe "Checking Out using Stripe payment provider", :js do
     context "unsaved credit card" do
       it "uses the card as a one off transaction" do
         choose "Pay by Credit Card"
-        select "Select a Saved Credit Card", from: "Saved Credit Cards"
+        select "Add a new Credit Card", from: "Choose Credit Card"
 
         within_frame('__privateStripeFrame3') do
           fill_in "cardnumber", with: "4000000000000077"
@@ -221,7 +221,7 @@ describe "Checking Out using Stripe payment provider", :js do
         expect(buyer.bank_accounts.visible.count).to eql(2)
 
         choose "Pay by Credit Card"
-        select "Select a Saved Credit Card", from: "Saved Credit Cards"
+        select "Add a new Credit Card", from: "Choose Credit Card"
 
         within_frame('__privateStripeFrame3') do
           fill_in "cardnumber", with: "4000000000000077"
@@ -250,7 +250,7 @@ describe "Checking Out using Stripe payment provider", :js do
           num_orders = Order.count
 
           choose "Pay by Credit Card"
-          select "Select a Saved Credit Card", from: "Saved Credit Cards"
+          select "Add a new Credit Card", from: "Choose Credit Card"
 
           within_frame('__privateStripeFrame3') do
             fill_in "cardnumber", with: "4242424242424247"
@@ -269,7 +269,7 @@ describe "Checking Out using Stripe payment provider", :js do
           num_orders = Order.count
 
           choose "Pay by Credit Card"
-          select "Select a Saved Credit Card", from: "Saved Credit Cards"
+          select "Add a new Credit Card", from: "Choose Credit Card"
 
           within_frame('__privateStripeFrame3') do
             fill_in "cardnumber", with: "4000000000000077"
@@ -295,7 +295,7 @@ describe "Checking Out using Stripe payment provider", :js do
         expect(buyer.bank_accounts.visible.count).to eql(2)
 
         choose "Pay by Credit Card"
-        select "Select a Saved Credit Card", from: "Saved Credit Cards"
+        select "Add a new Credit Card", from: "Choose Credit Card"
 
         within_frame('__privateStripeFrame3') do
           fill_in "cardnumber", with: "4000000000000077"

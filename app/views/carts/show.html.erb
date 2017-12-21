@@ -111,13 +111,13 @@
                     <fieldset id="credit-card-fields" class="payment-fields is-hidden" data-available="<%= current_organization.decorate.credit_cards_available? %>">
                       <div class="payment-field">
                         <% if current_organization.decorate.credit_cards_available? %>
-                          <label for="order_credit_card_id">Saved credit cards</label><br>
-                          <%= select_tag "order[credit_card][id]", options_for_select(current_organization.decorate.credit_card_options), prompt: 'Select a Stored Credit Card' %><br>
+                          <label for="order_credit_card_id">Choose Credit Card</label><br>
+                          <%= select_tag "order[credit_card][id]", options_for_select(current_organization.decorate.credit_card_options), prompt: 'Add a new Credit Card' %><br>
                         <% else %>
                           Add a <%= link_to "credit card", new_admin_organization_bank_account_path(current_organization) %> to your account.
                         <% end %><br>
 
-                        <div id="cc-fields">
+                        <div id="cc-fields" class="<%= classes('is-hidden' => current_organization.decorate.credit_cards_available?) %>">
                           <label>New Credit Card</label><br>
 
                           <fieldset id="payment-provider-container" data-payment-provider="<%= @payment_provider %>" data-balanced-marketplace-uri="<%= ENV["BALANCED_MARKETPLACE_URI"] %>" data-stripe-publishable-key="<%= ENV["STRIPE_PUBLISHABLE_KEY"] %>">
