@@ -20,9 +20,9 @@ logging in to your account.
 <%= render "order" %>
 
 <% if @order.payment_method && @order.payment_method == "purchase order"%>
-  <h2>Method of Payment</h2>
+  <h2>Pay By Invoice</h2>
   <dl>
-    <dt>Purchase Order:</dt>
+    <dt>PO Number:</dt>
     <dd><%= @order.payment_note %></dd>
   </dl>
 <% end %>

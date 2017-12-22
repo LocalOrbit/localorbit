@@ -9,7 +9,7 @@
   <div style="display: inline-block; width: 100%">
     <input type="hidden" name="commit" />
     <div style="float: left">
-      <h1>Order info for <%= order.purchase_order? ? "Purchase Order " : "" %><%= order.order_number %></h1>
+      <h1>Order info for <%= order.purchase_order? ? "Invoice " : "" %><%= order.order_number %></h1>
       <div class="order-info-date">Placed On: <strong><%= order.placed_at.strftime "%m/%d/%Y at %l:%M%p" %></strong></div>
     </div>
     <div class="button-bar" style="float: right">
@@ -213,7 +213,7 @@
         </tr>
         <% if (order.payment_method == "invoice" || order.payment_method == "purchase order" || order.payment_method == "po" || order.payment_method == "check") %>
         <tr>
-          <th scope="row"><%= order.sales_order? ? 'Payment Ref. #' : 'Supplier Inv. #' %></th>
+          <th scope="row"><%= order.sales_order? ? 'Purchase Order #' : 'Supplier Inv. #' %>:</th>
           <% if current_market.is_consignment_market? %>
               <td>
                 <%= f.text_field :payment_note, size: 4, value: order.payment_note %>

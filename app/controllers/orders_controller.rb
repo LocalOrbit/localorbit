@@ -76,9 +76,9 @@ class OrdersController < ApplicationController
     if params[:prev_discount_code] != params[:discount_code]
       @apply_discount = ApplyDiscountToCart.perform(cart: current_cart, code: params[:discount_code])
       flash[:discount_message] = @apply_discount.context[:message]
-      redirect_to cart_path
+      redirect_to cart_path and return
     elsif order_number_missing?
-      reject_order "Your order cannot be completed without a purchase order number."
+      redirect_to cart_path, alert: "Your order cannot be completed without a purchase order number." and return
     else
       @placed_order = PaymentProvider.place_order(
         current_market.payment_provider,
@@ -102,9 +102,9 @@ class OrdersController < ApplicationController
       else
         if @placed_order.context.key?(:cart_is_empty)
           @grouped_items = current_cart.items.for_checkout
-          redirect_to [:products], alert: @placed_order.message
+          redirect_to [:products], alert: @placed_order.message and return
         else
-          reject_order "Your order could not be completed."
+          redirect_to cart_path, alert: "Your order could not be completed." and return
         end
       end
     end
@@ -133,12 +133,6 @@ class OrdersController < ApplicationController
 
   def order_number_missing?
     order_params[:payment_method] == "purchase order" && order_params[:payment_note] == "" && current_market.require_purchase_orders
-  end
-
-  def reject_order(message)
-    @grouped_items = current_cart.items.for_checkout
-    flash.now[:alert] = message
-    render "carts/show"
   end
 
   def order_params

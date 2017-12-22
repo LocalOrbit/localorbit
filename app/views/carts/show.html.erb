@@ -91,12 +91,17 @@
                   <div class="field">
                     <label>
                       <%= f.radio_button :payment_method, "purchase order", :class=>"payment-method" %>
-                      Pay by Purchase Order
+                      Pay by Invoice
                     </label>
                     <fieldset id="purchase-order-fields" class="payment-fields is-hidden" data-available="true">
                       <div class="payment-field">
-                        <%= f.label :payment_note, "PO Number" %><br>
-                        <%= f.text_field :payment_note, class: "input--short" %>
+                        <%= f.label :payment_note, 'PO Number' %><br>
+                        <%= f.text_field :payment_note, class: "input--short column--half" %>
+                        <% if current_market.require_purchase_orders? %>
+                          <span class="hint">A purchase order number is required.</span>
+                        <% else %>
+                          <span class="hint">A purchase order number is optional.</span>
+                        <% end %>
                       </div>
                     </fieldset>
                   </div>

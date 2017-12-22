@@ -30,7 +30,7 @@
 <% if @order.payment_method && @order.payment_method == "purchase order"%>
   <h1>Method of Payment</h1>
   <dl>
-    <dt>Purchase Order:</dt>
+    <dt>Invoice:</dt>
     <dd><%= @order.payment_note %></dd>
   </dl>
 <% end %>
