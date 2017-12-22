@@ -8,12 +8,12 @@ gem 'pg'
 
 # Assets
 gem 'sass-rails',   '~> 4.0.0'
-gem 'uglifier',     '>= 1.3.0'
+gem 'uglifier',     '~> 2.7.2'
 gem 'coffee-rails', '~> 4.0.0'
 
 # The jQuery update is doing something weird
 # with data confirms and poltergeist
-gem 'jquery-rails', '< 3.1.1'
+gem 'jquery-rails', '~> 3.1.3'
 gem 'jquery-ui-rails'
 gem 'accountingjs-rails'
 gem 'compass-rails'
@@ -31,12 +31,12 @@ gem 'countries'
 gem 'csv_builder'
 gem 'delayed_job'
 gem 'delayed_job_active_record'
-gem 'devise'
+gem 'devise', '~> 3.5.10'
 gem 'devise_invitable'
 gem 'devise_masquerade'
 gem 'dragonfly-s3_data_store'
 gem 'draper'
-gem 'figaro', '~> 1.0.0.rc1'
+gem 'figaro'
 gem 'font_assets'
 gem 'graticule'
 gem 'groupdate', :git => 'https://github.com/trestrantham/groupdate.git', :branch => 'custom-calculations' # Waiting on https://github.com/ankane/groupdate/pull/53
@@ -112,6 +112,7 @@ group :development do
   gem 'rubocop', require: false
   gem 'quiet_assets'
   gem 'aws-sdk'
+  gem 'railroady'
   gem 'rails_view_annotator'
   gem 'mailcatcher'
   gem 'unicorn'

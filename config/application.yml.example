@@ -34,3 +34,5 @@ QB_CONSUMER_SECRET: <QB consumer secret>
 QB_ACCESS_TOKEN: <QB access token>
 QB_ACCESS_TOKEN_SECRET: <QB access token secret>
 QB_REALM_ID: <QB realm id>
+development:
+  STRIPE_DEV_MARKET_ACCOUNT_ID: <stripe user id of market that did oauth flow, see docs/stripe.md>

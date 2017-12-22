@@ -24,14 +24,16 @@ See the `docs/` directory for more documentation.
 4. `cp config/application.yml{.example,}` and modify if needed
 5. `cp config/database.yml{.example,}` and modify if needed (Some modification is probably necessary. Try adding `template: template0`)
 6. `yarn`
-7. `rake db:create`
-8. `rake db:setup` - runs `db:schema:load` and `db:seed`
-10. `rake db:seed:development`
-11. `rails server`
-12. Add `127.0.0.1 localtest.me` to `/etc/hosts`
-13. Go to http://localtest.me:3000 in a browser (we use localtest.me to always point to 127.0.0.1 so we can use subdomains, which localhost doesn't allow.)
+7. `rake db:setup` - runs `db:create`, `db:schema:load` and `db:seed`
+8. `rake db:seed:development`
+9. `rails server`
+10. Add `127.0.0.1 localtest.me` to `/etc/hosts`
+11. Go to http://localtest.me:3000 in a browser (we use localtest.me to always point to 127.0.0.1 so we can use subdomains, which localhost doesn't allow.)
+
+See also [stripe howto](docs/stripe_in_development.md) for configuring stripe for development.
 
 ### Production Setup
+
 * At least one Market must be created before creating Organizations
 
 ### Test Accounts
@@ -51,7 +53,7 @@ Password: password1
 
 ### Javascript Specs
 
-Specs live in spec/javascripts/*.js.coffee
+Specs live in spec/javascripts/\*.js.coffee
 
 Run suite on command line:  bundle exec rake konacha:run
 Run suite via browser:  bundle exec rake konacha:serve (then visit http://localhost:3500)
@@ -73,3 +75,5 @@ Run `rake db:dump:staging`
 6. Create a Pull Request. Visit `https://github.com/collectiveidea/localorbit/compare/master...my-awesome-feature-name`
 
 ![mmmmk](http://cdn.memegenerator.net/instances/400x/36691061.jpg)
+
+
