@@ -75,3 +75,5 @@ Run `rake db:dump:staging`
 6. Create a Pull Request. Visit `https://github.com/collectiveidea/localorbit/compare/master...my-awesome-feature-name`
 
 ![mmmmk](http://cdn.memegenerator.net/instances/400x/36691061.jpg)
+
+
