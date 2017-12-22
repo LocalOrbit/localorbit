@@ -434,8 +434,6 @@ GEM
     konacha-chai-matchers (1.0.0)
     launchy (2.4.3)
       addressable (~> 2.3)
-    letter_opener (1.4.1)
-      launchy (~> 2.2)
     listen (3.0.8)
       rb-fsevent (~> 0.9, >= 0.9.4)
       rb-inotify (~> 0.9, >= 0.9.7)
@@ -811,7 +809,6 @@ DEPENDENCIES
   konacha
   konacha-chai-matchers
   launchy
-  letter_opener
   mailcatcher
   migration_data
   newrelic-dragonfly
