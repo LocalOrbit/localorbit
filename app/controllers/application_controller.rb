@@ -17,7 +17,7 @@ class ApplicationController < ActionController::Base
   helper_method :current_delivery
   helper_method :redirect_to_url
   helper_method :signed_in_root_path
-  
+
   after_filter :cors_auth
 
   # Includes Authorization mechanism
@@ -193,17 +193,17 @@ class ApplicationController < ActionController::Base
       delivery_day = DateTime.parse(session[:current_delivery_day])
       delivery = Delivery.find(session[:current_delivery_id])
       if not delivery.buyer_deliver_on.day == delivery_day.day
-        new_delivery = DeliverySchedule.find(delivery.delivery_schedule_id).next_delivery_for_date(delivery_day) 
+        new_delivery = DeliverySchedule.find(delivery.delivery_schedule_id).next_delivery_for_date(delivery_day)
         session[:current_delivery_id] = new_delivery.id
       end
       session[:current_delivery_day] = nil
     end
-    if selected = Delivery.current_selected(current_market, session[:current_delivery_id]) 
+    if selected = Delivery.current_selected(current_market, session[:current_delivery_id])
       selected
     elsif only_delivery = current_market.only_delivery
       session[:current_delivery_id] = only_delivery.id
       only_delivery
-    end 
+    end
   end
 
   def selected_organization_location(org=nil)
@@ -277,8 +277,14 @@ class ApplicationController < ActionController::Base
   end
 
   def require_organization_location
-    return unless current_organization && current_organization.locations.visible.none? && session[:order_id].nil?
-    redirect_to [:new_admin, current_organization, :location], alert: "You must enter an address for this organization before you can shop"
+    # Bail if no current org or in "Add items to order" mode
+    return unless current_organization && session[:order_id].nil?
+
+    if current_organization.locations.visible.none?
+      redirect_to [:new_admin, current_organization, :location], alert: "You must enter an address for this organization before you can shop"
+    elsif current_organization.locations.visible.default_shipping.nil? || current_organization.locations.visible.default_billing.nil?
+      redirect_to [:admin, current_organization, :locations], alert: "You must select a default billing and shipping address for this organization before you can shop"
+    end
   end
 
   def require_manual_delivery_schedule
