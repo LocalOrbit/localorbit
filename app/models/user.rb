@@ -101,6 +101,9 @@ class User < ActiveRecord::Base
     merge(Subscription.visible)
   }
 
+  # TODO: Remove this after devise gem is upgraded. Hack for issue 153892173.
+  def after_password_reset; end
+
   def self.with_primary_market(market)
     User.all.select {|u| u.primary_market == market }
   end
