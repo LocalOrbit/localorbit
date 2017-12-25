@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-feature 'User resets a password' do
+feature 'User resets password' do
   scenario 'user enters a valid email' do
     user = create :user
 
