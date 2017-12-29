@@ -173,7 +173,13 @@ class OrderItem < ActiveRecord::Base
 
   def remove_consignment_transaction
     ct = ConsignmentTransaction.where(order_id: self.order.id, order_item_id: self.id, deleted_at: nil).first
+
     if !ct.nil?
+      if !ct.lot_id.nil?
+        lot = Lot.find_by_id(ct.lot_id)
+        lot.quantity = 0
+        lot.save
+      end
       ct.soft_delete
     end
   end
