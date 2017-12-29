@@ -172,10 +172,14 @@ class OrderItem < ActiveRecord::Base
   end
 
   def remove_consignment_transaction
+    # If an order item is to be removed, any associated consignment transaction is retrieved.
+    # If there is a PO lot associated (which indicates delivery of the PO item), it must be zeroed out.
+    # Finally, the consignment transaction is soft deleted.
+
     ct = ConsignmentTransaction.where(order_id: self.order.id, order_item_id: self.id, deleted_at: nil).first
 
     if !ct.nil?
-      if !ct.lot_id.nil?
+      if !ct.lot_id.nil? && ct.transaction_type == 'PO'
         lot = Lot.find_by_id(ct.lot_id)
         lot.quantity = 0
         lot.save
@@ -295,10 +299,10 @@ class OrderItem < ActiveRecord::Base
   end
 
   def return_inventory_amount(amount)
-    if !po_lot_id.nil? && po_lot_id > 0 # Decrement specific consignment lot
+    if !po_lot_id.nil? && po_lot_id > 0 # Increment specific consignment lot
       lot = Lot.find(po_lot_id)
       num_to_return = [lot.quantity, amount].min
-      #lot.decrement!(:quantity, num_to_return)
+      lot.increment!(:quantity, num_to_return)
     end
 
     if order.market.is_buysell_market? || (order.market.is_consignment_market? && (delivery_status == 'pending' || delivery_status == 'canceled'))
