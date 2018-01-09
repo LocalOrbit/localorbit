@@ -13,7 +13,12 @@ class SendOrderEmails
           @pack_lists = OrdersBySellerPresenter.new(order.items, seller)
           @delivery = Delivery.find(order.delivery.id).decorate
 
-          pdf = PackingLists::Generator.generate_pdf(request: request, pack_lists: @pack_lists, delivery: @delivery)
+          begin
+            pdf = PackingLists::Generator.generate_pdf(request: request, pack_lists: @pack_lists, delivery: @delivery)
+          rescue RuntimeError => e
+            Rollbar.error(e, 'Failed to generate packing list PDF for seller order confirmation email', :order_id => order.id)
+          end
+
           csv = PackingLists::Generator.generate_csv(pack_lists: @pack_lists)
 
           OrderMailer.delay.seller_confirmation(order, seller, pdf, csv)

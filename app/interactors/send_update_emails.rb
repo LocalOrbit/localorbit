@@ -16,7 +16,12 @@ class SendUpdateEmails
           @pack_lists = OrdersBySellerPresenter.new(order.items, seller)
           @delivery = Delivery.find(order.delivery.id).decorate
 
-          pdf = PackingLists::Generator.generate_pdf(request: request, pack_lists: @pack_lists, delivery: @delivery)
+          begin
+            pdf = PackingLists::Generator.generate_pdf(request: request, pack_lists: @pack_lists, delivery: @delivery)
+          rescue RuntimeError => e
+            Rollbar.error(e, 'Failed to generate packing list PDF for seller order updated email', :order_id => order.id)
+          end
+
           csv = PackingLists::Generator.generate_csv(pack_lists: @pack_lists)
 
           OrderMailer.delay.seller_order_updated(order, seller, pdf, csv)
@@ -28,7 +33,12 @@ class SendUpdateEmails
           @pack_lists = OrdersBySellerPresenter.new(order.items, seller)
           @delivery = Delivery.find(order.delivery.id).decorate
 
-          pdf = PackingLists::Generator.generate_pdf(request: request, pack_lists: @pack_lists, delivery: @delivery) if !@pack_lists.sellers.empty?
+          begin
+            pdf = PackingLists::Generator.generate_pdf(request: request, pack_lists: @pack_lists, delivery: @delivery) if !@pack_lists.sellers.empty?
+          rescue RuntimeError => e
+            Rollbar.error(e, 'Failed to generate packing list PDF for seller order item removed email', :order_id => order.id)
+          end
+
           csv = PackingLists::Generator.generate_csv(pack_lists: @pack_lists) if !@pack_lists.sellers.empty?
 
           OrderMailer.delay.seller_order_item_removal(order, seller, pdf, csv)
