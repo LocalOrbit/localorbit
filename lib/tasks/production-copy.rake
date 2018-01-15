@@ -126,24 +126,24 @@ module CloneProductionHelper
         bucket: "localorbit-uploads-staging",
         database: "HEROKU_POSTGRESQL_RED"
       },
-      alpha: {
-        app: "localorbit-alpha",
-        env: "alpha",
-        bucket: "localorbit-alpha",
-        database: "HEROKU_POSTGRESQL_IVORY"
-      },
+      # alpha: {
+      #   app: "localorbit-alpha",
+      #   env: "alpha",
+      #   bucket: "localorbit-alpha",
+      #   database: "HEROKU_POSTGRESQL_IVORY"
+      # },
       # dev1: {
       #   app: "localorbit-dev1",
       #   env: "dev1",
       #   bucket: "localorbit-uploads-dev1",
       #   database: "HEROKU_POSTGRESQL_COBALT"
       # },
-      dev2: {
-        app: "localorbit-dev2",
-        env: "dev2",
-        bucket: "localorbit-uploads-dev2",
-        database: "HEROKU_POSTGRESQL_AQUA"
-      },
+      # dev2: {
+      #   app: "localorbit-dev2",
+      #   env: "dev2",
+      #   bucket: "localorbit-uploads-dev2",
+      #   database: "HEROKU_POSTGRESQL_AQUA"
+      # },
       # dev3: {
       #   app: "localorbit-dev3",
       #   env: "dev3",
@@ -308,7 +308,7 @@ module CloneProductionHelper
       email = user.email
       unless email =~ /@example\.com$/ or email =~ /atomicobject/ or email =~ /localorb/
         new_email = user.email.gsub("@","_at_") + "@example.com"
-        user.update(email: new_email)
+        user.update_columns(email: new_email)
       end
     end
   end
