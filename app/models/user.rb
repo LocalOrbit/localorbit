@@ -461,10 +461,8 @@ class User < ActiveRecord::Base
   private
 
   def standard_market_ids
-    managed_market_ids = managed_markets.pluck(:id)
     organization_member_market_ids = organizations.map(&:all_market_ids).flatten
-
-    (managed_market_ids + organization_member_market_ids)
+    managed_market_ids + organization_member_market_ids
   end
 
   def cross_selling_market_ids
