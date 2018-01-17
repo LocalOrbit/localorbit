@@ -17,7 +17,7 @@ class ApplicationController < ActionController::Base
   helper_method :current_delivery
   helper_method :redirect_to_url
   helper_method :signed_in_root_path
-  
+
   after_filter :cors_auth
 
   # Includes Authorization mechanism
@@ -109,7 +109,7 @@ class ApplicationController < ActionController::Base
   end
 
   def current_market
-    if session[:order_id] # We're adding to an order, so use the market from the order
+    @current_market ||= if session[:order_id] # We're adding to an order, so use the market from the order
       @current_market = Order.find(session[:order_id]).market
     else
       @current_market = market_for_current_subdomain
@@ -193,17 +193,17 @@ class ApplicationController < ActionController::Base
       delivery_day = DateTime.parse(session[:current_delivery_day])
       delivery = Delivery.find(session[:current_delivery_id])
       if not delivery.buyer_deliver_on.day == delivery_day.day
-        new_delivery = DeliverySchedule.find(delivery.delivery_schedule_id).next_delivery_for_date(delivery_day) 
+        new_delivery = DeliverySchedule.find(delivery.delivery_schedule_id).next_delivery_for_date(delivery_day)
         session[:current_delivery_id] = new_delivery.id
       end
       session[:current_delivery_day] = nil
     end
-    if selected = Delivery.current_selected(current_market, session[:current_delivery_id]) 
+    if selected = Delivery.current_selected(current_market, session[:current_delivery_id])
       selected
     elsif only_delivery = current_market.only_delivery
       session[:current_delivery_id] = only_delivery.id
       only_delivery
-    end 
+    end
   end
 
   def selected_organization_location(org=nil)
