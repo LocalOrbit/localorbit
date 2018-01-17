@@ -457,7 +457,7 @@ GEM
     mini_portile2 (2.3.0)
     minitest (5.11.1)
     moneta (0.8.1)
-    multi_json (1.12.2)
+    multi_json (1.13.1)
     multi_xml (0.5.5)
     multipart-post (1.2.0)
     nenv (0.3.0)
@@ -536,6 +536,8 @@ GEM
     puma (2.14.0)
     pundit (1.1.0)
       activesupport (>= 3.0.0)
+    quiet_assets (1.0.3)
+      railties (>= 3.1, < 5.0)
     rack (1.5.5)
     rack-accept (0.4.5)
       rack (>= 0.4)
@@ -832,6 +834,7 @@ DEPENDENCIES
   puma
   pundit
   quickbooks-ruby (~> 0.4.6)!
+  quiet_assets
   rack-cache
   rack-canonical-host
   rack-cors
