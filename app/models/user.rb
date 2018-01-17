@@ -285,7 +285,7 @@ class User < ActiveRecord::Base
   end
 
   def primary_user_role
-    if admin?
+    @primary_user_role ||= if admin?
       "A"
     elsif market_manager?
       "M"
