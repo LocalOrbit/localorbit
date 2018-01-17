@@ -204,11 +204,7 @@ class User < ActiveRecord::Base
   end
 
   def admin?
-    #role == "admin"
-    #if !user_organizations[0].nil? && !user_organizations[0].organization.nil?
-    #  user_organizations[0].organization.org_type == "A"
-    #end
-    user_organizations.map(&:organization).compact.map(&:org_type).include?('A')
+    @admin ||= user_organizations.includes(:organization).where(organizations: {org_type: 'A'}).exists?
   end
 
   def can_manage?(resource)

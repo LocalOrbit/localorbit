@@ -158,8 +158,8 @@ describe User do
     end
 
     it 'admin? returns true if role is "admin"' do
-      user = build(:user, :admin)
-      org = build(:organization, :admin)
+      user = create(:user, :admin)
+      org = create(:organization, :admin)
       user.organizations << org
 
       #user.role = "admin"
