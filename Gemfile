@@ -109,7 +109,6 @@ group :development do
   gem 'spring'
   gem 'spring-commands-rspec'
   gem 'rubocop', require: false
-  gem 'quiet_assets'
   gem 'aws-sdk'
   gem 'railroady'
   gem 'rails_view_annotator'

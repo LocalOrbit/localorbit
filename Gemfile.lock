@@ -534,8 +534,6 @@ GEM
     puma (2.14.0)
     pundit (1.1.0)
       activesupport (>= 3.0.0)
-    quiet_assets (1.0.3)
-      railties (>= 3.1, < 5.0)
     rack (1.5.5)
     rack-accept (0.4.5)
       rack (>= 0.4)
@@ -827,7 +825,6 @@ DEPENDENCIES
   puma
   pundit
   quickbooks-ruby (~> 0.4.6)!
-  quiet_assets
   rack-cache
   rack-canonical-host
   rack-cors
