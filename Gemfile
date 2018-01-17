@@ -114,6 +114,12 @@ group :development do
   gem 'rails_view_annotator'
   gem 'mailcatcher'
   gem 'unicorn'
+
+  # profiling, see https://github.com/MiniProfiler/rack-mini-profiler#installation
+  gem 'rack-mini-profiler'
+  gem 'memory_profiler'
+  gem 'flamegraph'
+  gem 'stackprof'
 end
 
 group :development, :test do

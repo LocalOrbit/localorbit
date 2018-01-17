@@ -238,6 +238,7 @@ GEM
     fire_poll (1.2.0)
     fission (0.5.0)
       CFPropertyList (~> 2.2)
+    flamegraph (0.9.5)
     fog (1.30.0)
       fog-atmos
       fog-aws (~> 0.0)
@@ -448,6 +449,7 @@ GEM
       skinny (~> 0.2.3)
       sqlite3 (~> 1.3)
       thin (~> 1.5.0)
+    memory_profiler (0.9.8)
     method_source (0.9.0)
     migration_data (0.2.1)
     mime-types (2.99.3)
@@ -543,6 +545,8 @@ GEM
       addressable
       rack (~> 1.0)
     rack-cors (0.4.0)
+    rack-mini-profiler (0.10.7)
+      rack (>= 1.2.0)
     rack-mount (0.8.3)
       rack (>= 1.0.0)
     rack-protection (1.5.3)
@@ -688,6 +692,7 @@ GEM
       activesupport (>= 3.0)
       sprockets (>= 2.8, < 4.0)
     sqlite3 (1.3.11)
+    stackprof (0.2.11)
     stripe (1.27.2)
       json (~> 1.8.1)
       rest-client (~> 1.4)
@@ -784,6 +789,7 @@ DEPENDENCIES
   factory_bot_rails
   figaro
   fire_poll (= 1.2.0)
+  flamegraph
   font-awesome-rails
   font_assets
   grape
@@ -808,6 +814,7 @@ DEPENDENCIES
   konacha-chai-matchers
   launchy
   mailcatcher
+  memory_profiler
   migration_data
   newrelic-dragonfly
   newrelic_rpm (< 3.9.0)
@@ -828,6 +835,7 @@ DEPENDENCIES
   rack-cache
   rack-canonical-host
   rack-cors
+  rack-mini-profiler
   railroady
   rails (~> 4.1.11)
   rails_12factor
@@ -853,6 +861,7 @@ DEPENDENCIES
   spreadsheet
   spring
   spring-commands-rspec
+  stackprof
   stripe
   stripe_event
   tabulator!
