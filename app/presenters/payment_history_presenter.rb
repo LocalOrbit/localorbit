@@ -86,8 +86,10 @@ class PaymentHistoryPresenter
     @payments = @q.result
     @payments = @payments.page(page).per(per_page) if paginate
 
-    @payers = options_for_payments(payments, :payer)
-    @payees = options_for_payments(payments, :payee)
+    if paginate && (user.admin? || user.market_manager?)
+      @payers = options_for_payments(payments, :payer)
+      @payees = options_for_payments(payments, :payee)
+    end
   end
 
   private
