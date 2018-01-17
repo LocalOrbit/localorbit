@@ -198,8 +198,8 @@ describe User do
 
     context "#buyer_only?" do
       it "returns true if the user is only a buyer" do
-        user = build(:user, :buyer)
-        org = build(:organization, :buyer)
+        user = create(:user, :buyer)
+        org = create(:organization, :buyer)
         user.organizations << org
         expect(user).to be_buyer_only
       end
