@@ -87,7 +87,7 @@ class PaymentHistoryPresenter
     @payments = @q.result
     @payments = @payments.page(page).per(per_page) if paginate
 
-    build_options_for_party_filters(payments)
+    build_options_for_party_filters(payments) if advanced_filters
   end
 
   private
