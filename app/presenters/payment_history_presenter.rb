@@ -70,10 +70,11 @@ class PaymentHistoryPresenter
       Payment.where(payee: user.organizations)
     end
 
-    new(payments, search, page, per_page, paginate)
+    advanced_filters = user.admin? || user.market_manager?
+    new(payments, search, page, per_page, advanced_filters, paginate)
   end
 
-  def initialize(payments, query, page, per_page, paginate=true)
+  def initialize(payments, query, page, per_page, advanced_filters=false, paginate=true)
     search = Search::QueryDefaults.new(query, :created_at).query
 
     @start_date = format_date(search[:created_at_date_gteq])
@@ -86,7 +87,7 @@ class PaymentHistoryPresenter
     @payments = @q.result
     @payments = @payments.page(page).per(per_page) if paginate
 
-    if paginate && (user.admin? || user.market_manager?)
+    if paginate && advanced_filters
       @payers = options_for_payments(payments, :payer)
       @payees = options_for_payments(payments, :payee)
     end
