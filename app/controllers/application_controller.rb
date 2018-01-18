@@ -110,9 +110,9 @@ class ApplicationController < ActionController::Base
 
   def current_market
     @current_market ||= if session[:order_id] # We're adding to an order, so use the market from the order
-      @current_market = Order.find(session[:order_id]).market
+      Order.find(session[:order_id]).market
     else
-      @current_market = market_for_current_subdomain
+      market_for_current_subdomain
     end
   end
 
