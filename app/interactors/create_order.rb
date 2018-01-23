@@ -68,7 +68,7 @@ class CreateOrder
     ActiveRecord::Base.transaction do
       begin
         order.add_cart_items(cart.items, cart.delivery.deliver_on)
-        success = order.save 
+        success = order.save
       rescue
         # empty
       end
