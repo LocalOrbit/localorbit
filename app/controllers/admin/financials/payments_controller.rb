@@ -1,7 +1,7 @@
 module Admin::Financials
   class PaymentsController < AdminController
     def index
-      @payment_history = PaymentHistoryPresenter.build(user: current_user,
+      @payment_history = PaymentHistoryPresenter.new(user: current_user,
                                                        options: params,
                                                        paginate: params[:format] != "csv")
       respond_to do |format|
