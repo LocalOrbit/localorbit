@@ -45,21 +45,21 @@ class PaymentHistoryPresenter
         ).uniq
         p_query
       else
-      Payment.joins(
-        payment_table.join(order_payment_table, Arel::Nodes::OuterJoin).
-          on(order_payment_table[:payment_id].eq(payment_table[:id])).join_sources
-      ).joins(
-        order_payment_table.join(order_table, Arel::Nodes::OuterJoin).
-          on(order_payment_table[:order_id].eq(order_table[:id])).join_sources
-      ).where(
-          order_table[:market_id].in(market_ids).
-        or(
-          payment_table[:payer_type].eq("Market").
-          and(payment_table[:payer_id].in(market_ids))).
-        or(
-          payment_table[:payee_type].eq("Market").
-          and(payment_table[:payee_id].in(market_ids)))
-      ).uniq
+        Payment.joins(
+          payment_table.join(order_payment_table, Arel::Nodes::OuterJoin).
+            on(order_payment_table[:payment_id].eq(payment_table[:id])).join_sources
+        ).joins(
+          order_payment_table.join(order_table, Arel::Nodes::OuterJoin).
+            on(order_payment_table[:order_id].eq(order_table[:id])).join_sources
+        ).where(
+            order_table[:market_id].in(market_ids).
+          or(
+            payment_table[:payer_type].eq("Market").
+            and(payment_table[:payer_id].in(market_ids))).
+          or(
+            payment_table[:payee_type].eq("Market").
+            and(payment_table[:payee_id].in(market_ids)))
+        ).uniq
       end
     elsif user.buyer_only?
       Payment.
@@ -70,10 +70,11 @@ class PaymentHistoryPresenter
       Payment.where(payee: user.organizations)
     end
 
-    new(payments, search, page, per_page, paginate)
+    advanced_filters = user.admin? || user.market_manager?
+    new(payments, search, page, per_page, advanced_filters, paginate)
   end
 
-  def initialize(payments, query, page, per_page, paginate=true)
+  def initialize(payments, query, page, per_page, advanced_filters=false, paginate=true)
     search = Search::QueryDefaults.new(query, :created_at).query
 
     @start_date = format_date(search[:created_at_date_gteq])
@@ -86,30 +87,25 @@ class PaymentHistoryPresenter
     @payments = @q.result
     @payments = @payments.page(page).per(per_page) if paginate
 
-    @payers = options_for_payments(payments, :payer)
-    @payees = options_for_payments(payments, :payee)
+    build_options_for_party_filters(payments) if advanced_filters
   end
 
   private
 
-  def options_for_payments(payments, payment_attribute)
-    case payment_attribute
-    when :payer
-      payments.map do |payment|
-        if payment.payer.nil?
-          ["Local Orbit", -1]
-        else
-          [payment.payer.name, "#{payment.payer_type}#{payment.payer_id}"]
-        end
-      end.sort_by{|k|k[0]}.uniq.compact
-    when :payee
-      payments.map do |payment|
-        if payment.payee.nil?
-          ["Local Orbit", -1]
-        else
-          [payment.payee.name, "#{payment.payee_type}#{payment.payee_id}"]
-        end
-      end.sort_by{|k|k[0]}.uniq.compact
+  def build_options_for_party_filters(payments)
+    payers_tmp = []
+    payees_tmp = []
+    Payment.includes(:payer, :payee).where(id: payments).map do |payment|
+      payers_tmp.push(create_option(payment.payer))
+      payees_tmp.push(create_option(payment.payee))
     end
+    @payers = payers_tmp.compact.uniq.sort_by{|k| k[0] }
+    @payees = payees_tmp.compact.uniq.sort_by{|k| k[0] }
   end
+
+  def create_option(party)
+    return ['Local Orbit', -1] if party.nil?
+    [party.name, "#{party.class}#{party.id}"]
+  end
+
 end

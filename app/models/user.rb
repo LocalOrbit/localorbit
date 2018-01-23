@@ -204,11 +204,7 @@ class User < ActiveRecord::Base
   end
 
   def admin?
-    #role == "admin"
-    #if !user_organizations[0].nil? && !user_organizations[0].organization.nil?
-    #  user_organizations[0].organization.org_type == "A"
-    #end
-    user_organizations.map(&:organization).compact.map(&:org_type).include?('A')
+    @admin ||= user_organizations.includes(:organization).where(organizations: {org_type: 'A'}).exists?
   end
 
   def can_manage?(resource)
@@ -238,21 +234,13 @@ class User < ActiveRecord::Base
   end
 
   def market_manager?
-    #managed_markets.any?
-    #if !user_organizations[0].nil? && !user_organizations[0].organization.nil?
-    #  self.user_organizations[0].organization.org_type == "M"
-    #end
-    !admin? && user_organizations.map(&:organization).compact.map(&:org_type).include?('M')
-
+    return false if admin?
+    @market_manager ||= user_organizations.includes(:organization).where(organizations: {org_type: 'M'}).exists?
   end
 
   def seller?
-    #organizations.selling.any?
-    #if !user_organizations[0].nil? && !user_organizations[0].organization.nil?
-    #  self.user_organizations[0].organization.org_type == "S"
-    #end
-    !admin? && !market_manager? && user_organizations.map(&:organization).compact.map(&:org_type).include?('S')
-
+    return false if market_manager?
+    @seller ||= user_organizations.includes(:organization).where(organizations: {org_type: 'S'}).exists?
   end
 
   def admin_or_mm?
@@ -260,12 +248,8 @@ class User < ActiveRecord::Base
   end
 
   def buyer_only?
-    #!admin? && !market_manager? && !seller?
-    #if !user_organizations[0].nil? && !user_organizations[0].organization.nil?
-    #  self.user_organizations[0].organization.org_type == "B"
-    #end
-    !admin? && !market_manager? && !seller? && user_organizations.map(&:organization).compact.map(&:org_type).include?('B')
-
+    return false if seller?
+    @buyer ||= user_organizations.includes(:organization).where(organizations: {org_type: 'B'}).exists?
   end
 
   def is_seller_with_purchase?
@@ -285,7 +269,7 @@ class User < ActiveRecord::Base
   end
 
   def primary_user_role
-    if admin?
+    @primary_user_role ||= if admin?
       "A"
     elsif market_manager?
       "M"
@@ -480,10 +464,8 @@ class User < ActiveRecord::Base
   private
 
   def standard_market_ids
-    managed_market_ids = managed_markets.pluck(:id)
     organization_member_market_ids = organizations.map(&:all_market_ids).flatten
-
-    (managed_market_ids + organization_member_market_ids)
+    managed_market_ids + organization_member_market_ids
   end
 
   def cross_selling_market_ids

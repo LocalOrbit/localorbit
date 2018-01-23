@@ -53,10 +53,10 @@ feature "Payment history", :truncate_after_all do
     @orders = []
     @orders2 = []
     6.times do |i|
-      order_item = create(:order_item, 
-                          unit_price: 20.00 + i, 
-                          quantity: 1, 
-                          product: create(:product, :sellable, 
+      order_item = create(:order_item,
+                          unit_price: 20.00 + i,
+                          quantity: 1,
+                          product: create(:product, :sellable,
                                           organization: @seller))
       @orders << create(:order,
                        market: @market,
@@ -68,10 +68,10 @@ feature "Payment history", :truncate_after_all do
                        order_number: "LO-01-234-4567890-#{i}",
                        total_cost: 20.00 + i
                        )
-      order_item2 = create(:order_item, 
-                           unit_price: 20.01 + i, 
+      order_item2 = create(:order_item,
+                           unit_price: 20.01 + i,
                            quantity: 1,
-                           product: create(:product, :sellable, 
+                           product: create(:product, :sellable,
                                           organization: @seller2))
       @orders2 << create(:order,
                         market: @market2,
