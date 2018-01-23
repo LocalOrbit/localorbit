@@ -239,7 +239,7 @@ class User < ActiveRecord::Base
   end
 
   def seller?
-    return false if market_manager?
+    return false if admin? || market_manager?
     @seller ||= user_organizations.includes(:organization).where(organizations: {org_type: 'S'}).exists?
   end
 
@@ -248,7 +248,7 @@ class User < ActiveRecord::Base
   end
 
   def buyer_only?
-    return false if seller?
+    return false if admin? || market_manager? || seller?
     @buyer ||= user_organizations.includes(:organization).where(organizations: {org_type: 'B'}).exists?
   end
 
