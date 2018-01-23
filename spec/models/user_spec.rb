@@ -158,8 +158,8 @@ describe User do
     end
 
     it 'admin? returns true if role is "admin"' do
-      user = build(:user, :admin)
-      org = build(:organization, :admin)
+      user = create(:user, :admin)
+      org = create(:organization, :admin)
       user.organizations << org
 
       #user.role = "admin"
@@ -198,8 +198,8 @@ describe User do
 
     context "#buyer_only?" do
       it "returns true if the user is only a buyer" do
-        user = build(:user, :buyer)
-        org = build(:organization, :buyer)
+        user = create(:user, :buyer)
+        org = create(:organization, :buyer)
         user.organizations << org
         expect(user).to be_buyer_only
       end
