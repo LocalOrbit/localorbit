@@ -1,7 +1,7 @@
 class UpdateLots
   include Interactor
   def perform
-    return unless order.purchase_order?
+    return unless order.purchase_order? # ie. is a consignment
 
     lot_number = Inventory::Utils.generate_lot_number(order)
 
