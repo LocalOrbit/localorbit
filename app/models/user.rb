@@ -281,8 +281,7 @@ class User < ActiveRecord::Base
   end
 
   def managed_organizations(opts={})
-    defaults = {include_suspended: false}
-    opts = defaults.merge!(opts)
+    opts.reverse_merge! include_suspended: false
 
     org_membership_scope = opts[:include_suspended] ? organizations_including_suspended : organizations
 
@@ -297,8 +296,7 @@ class User < ActiveRecord::Base
   end
 
   def managed_organizations_including_cross_sellers(opts={})
-    defaults = {include_suspended: false}
-    opts = defaults.merge!(opts)
+    opts.reverse_merge! include_suspended: false
 
     org_membership_scope = opts[:include_suspended] ? organizations_including_suspended : organizations
 
@@ -314,12 +312,10 @@ class User < ActiveRecord::Base
   end
 
   def managed_organizations_including_deleted
-    if admin?
+    @managed_organizations_including_deleted ||= if admin?
       Organization.all
     else
-      market_ids = managed_markets_join.map(&:market_id)
-
-      Organization.managed_by_market_ids(market_ids).
+      Organization.managed_by_market_ids(managed_market_ids).
         union(organizations).
         joins(:market_organizations).
         order(:name).
@@ -328,7 +324,7 @@ class User < ActiveRecord::Base
   end
 
   def managed_organization_ids_including_deleted
-    managed_organizations_including_deleted.map(&:id)
+    @managed_organization_ids_including_deleted ||= managed_organizations_including_deleted.map(&:id)
   end
 
   def managed_organizations_within_market_including_crossellers(market)
@@ -358,8 +354,7 @@ class User < ActiveRecord::Base
   end
 
   def multi_organization_membership?
-    return @multi_organization_membership if defined?(@multi_organization_membership)
-    @multi_organization_membership = managed_organizations.count > 1
+    @multi_organization_membership ||= managed_organizations.count > 1
   end
 
   # shortcut for grabbing the "primary" market for things like email layout
@@ -487,7 +482,7 @@ class User < ActiveRecord::Base
       if admin?
         Market.all.pluck(:id)
       elsif market_manager?
-        managed_markets_join.map(&:market_id)
+        managed_market_ids
       end
     end
   end
