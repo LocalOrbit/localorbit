@@ -253,16 +253,16 @@ module Inventory
         actual_count = nil
         product = Product.includes(:prices).find(item.product.id)
         committed = 0
-        if market.is_buysell_market? || (market.is_consignment_market? && order_type == 'sales' && item.lot_id > 0)
-          delivery_date = delivery.deliver_on
-          actual_count = product.available_inventory(delivery_date, market.id, organization.id, market.is_consignment_market? && order_type == 'sales' && item.lot_id > 0 ? item.lot_id : nil)
-        elsif market.is_consignment_market? && order_type == 'sales' && item.lot_id == 0 # Checking consignment awaiting delivery item
+        if market.is_consignment_market? && order_type == 'sales' && item.lot_id == nil # Checking consignment awaiting delivery item
           actual_count = ConsignmentTransaction.where(transaction_type: 'PO', product_id: item.product_id, lot_id: nil, deleted_at: nil).sum(:quantity)
           committed = Order.joins(:items)
             .joins("JOIN consignment_transactions ON consignment_transactions.order_id = orders.id AND consignment_transactions.order_item_id = order_items.id AND consignment_transactions.transaction_type='SO' AND consignment_transactions.lot_id IS NULL")
             .so_orders
             .where("consignment_transactions.deleted_at IS NULL AND orders.market_id = ? AND order_items.product_id = ?", market.id, item.product_id)
             .sum("order_items.quantity")
+        elsif market.is_buysell_market? || (market.is_consignment_market? && order_type == 'sales' && item.lot_id > 0)
+          delivery_date = delivery.deliver_on
+          actual_count = product.available_inventory(delivery_date, market.id, organization.id, market.is_consignment_market? && order_type == 'sales' && item.lot_id > 0 ? item.lot_id : nil)
         end
         if item.quantity && item.quantity > 0 && !actual_count.nil? && item.quantity > actual_count - committed
           error = {

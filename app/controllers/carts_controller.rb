@@ -72,7 +72,7 @@ class CartsController < ApplicationController
       @item.quantity = params[:quantity]
       @item.sale_price = params[:sale_price]
       @item.net_price = params[:net_price]
-      @item.lot_id = params[:lot_id]
+      @item.lot_id = params[:lot_id] == 'NaN' ? nil : params[:lot_id]
       @item.ct_id = params[:ct_id]
       @item.fee = params[:fee_type]
       @item.product = product
