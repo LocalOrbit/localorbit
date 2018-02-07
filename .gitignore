@@ -43,6 +43,9 @@ cleansed.prod.dump
 /localorbit.iml
 node_modules/
 
+*.sublime-project
+*.sublime-workspace
+
 /coverage
 
 /snippets
