@@ -45,7 +45,8 @@ module Admin
     end
 
     def destroy
-      @locations = @organization.locations.soft_delete(*params[:location_ids])
+      loc_ids = *params[:location_ids]
+      @locations = @organization.locations.where(id: loc_ids).each { |loc| loc.soft_delete }
       redirect_to [:admin, @organization, :locations], notice: "Successfully removed the address(es) #{location_names}"
     end
 

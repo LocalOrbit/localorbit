@@ -113,5 +113,36 @@ module Admin
         delete :destroy, organization_id: org.id, location_ids: []
       }
     end
+
+    describe "#destroy resets defaults" do
+      it "makes the first remaining location the default" do
+        sign_in member
+
+        location.reload
+        expect(location).to be_default_billing
+        expect(location).to be_default_shipping
+
+        location2 = create(:location, organization: org)
+        expect(location2).not_to be_default_billing
+        expect(location2).not_to be_default_shipping
+
+        delete :destroy, organization_id: org.id, location_ids: [location.id]
+        location.reload
+        location2.reload
+
+        expect(location2).to be_default_billing
+        expect(location2).to be_default_shipping
+      end
+
+      it "marks new location default after destroying all" do
+        sign_in member
+        delete :destroy, organization_id: org.id, location_ids: [location.id]
+        new_location = create(:location, organization: org)
+        new_location.reload
+
+        expect(new_location).to be_default_billing
+        expect(new_location).to be_default_shipping
+      end
+    end
   end
 end
