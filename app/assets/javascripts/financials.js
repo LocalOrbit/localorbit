@@ -14,8 +14,8 @@
     }
 
     $('.vendor-payment .review-orders').click(function(e) {
-      var form, link, paymentFields;
       e.preventDefault();
+      var form, link, orderDetails;
       link = $(this);
       form = link.parents('form');
       orderDetails = form.find('.order-details');
