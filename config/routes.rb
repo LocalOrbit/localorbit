@@ -50,7 +50,7 @@ Rails.application.routes.draw do
       resources :order_templates, only: [:index, :create, :destroy]
       resources :dashboards, only: [:index]
     end
-    # namespace :v2 do 
+    # namespace :v2 do
     #   resources :products
     # end
   end
@@ -64,10 +64,10 @@ Rails.application.routes.draw do
       resources :delivery_schedules, path: :deliveries, concerns: [:activatable]
       resource  :style_chooser, controller: :style_chooser, only: [:show, :update]
       resource  :cross_sell, controller: :market_cross_sells, only: [:show, :update]
-      resources :cross_selling_lists do 
-        collection do 
-          get 'subscriptions' 
-        end 
+      resources :cross_selling_lists do
+        collection do
+          get 'subscriptions'
+        end
       end
       resource  :fees, only: [:show, :update]
       resources :category_fees, only: [:index, :new, :create, :destroy]
@@ -118,6 +118,11 @@ Rails.application.routes.draw do
       end
       resources :receipts, only: [:index, :edit, :update]
       resources :vendor_payments
+      resources :markets, only: [] do
+        resources :sellers, only: [] do
+          resource :seller_payment_group, only: :show
+        end
+      end
 
       scope path: :admin do
         resources :market_payments,  only: [:index, :create]

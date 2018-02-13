@@ -2,7 +2,7 @@ module Admin
   module Financials
     class VendorPaymentsController < AdminController
       include StickyFilters
-      
+
       before_action :find_sticky_params, only: :index
       before_action :require_admin_or_market_manager
 
@@ -33,8 +33,7 @@ module Admin
       def create
         seller = current_user.managed_organizations_including_deleted.find_by_id(params[:seller_id])
         payment = RecordVendorPayment.perform(seller: seller, payment_params: payment_params)
-        redirect_to admin_financials_vendor_payments_path(no_detail: params[:no_detail]), payment.flash_message
-
+        redirect_to admin_financials_vendor_payments_path, payment.flash_message
       end
 
       protected

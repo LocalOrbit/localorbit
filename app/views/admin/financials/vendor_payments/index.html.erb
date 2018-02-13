@@ -30,46 +30,22 @@
           </tr>
           <% end %>
           <tr class="product-row">
-            <td class="order-count"><%= pluralize(seller.order_count, "order") %> from <b><%= seller.market_name %></b> <%= params[:no_detail].nil? ? (link_to "Review", "#", class: "review-orders") : '' %></td>
+            <td class="order-count">
+              <%= pluralize(seller.order_count, "order") %> from <b><%= seller.market_name %></b>
+              <%= link_to 'Review', admin_financials_market_seller_seller_payment_group_path(market_id: seller.market.id, seller_id: seller.id), class: 'review-orders' %>
+            </td>
             <td class="delivery-status">All Delivered</td>
             <td class="buyer-payment-status"><%= seller.unpaid_count == 0 ? "All paid" : "#{seller.unpaid_count} unpaid" %></td>
             <td class="owed"><%= number_to_currency owed %></td>
             <td class="pay-now action-link"><button class="pay-all-now cancel"><i class="font-icon icon-money"></i> Record Payment</button></td>
-            <% if !params[:no_detail].nil? %>
-              <% seller.orders.each do |order| %>
-                  <%= hidden_field_tag 'payment[order_ids][]', order.id %>
-              <% end %>
-              <%= hidden_field_tag :no_detail, 1 %>
-          <% end %>
           </tr>
         </table>
       </div>
-      <div class="table-wrapper">
-        <table class="order-details is-hidden">
-          <% if params[:no_detail].nil? %>
-            <% seller.orders.each do |order| %>
-              <tr class="payment-order">
-                <% net_total = order.net_total %>
-                <td><%= check_box_tag 'payment[order_ids][]', order.id, true, class: 'seller-order-id', data: {owed: net_total} %></td>
-                <td class="order-number">
-                  <%= link_to order.order_number, admin_order_path(order.id) %>
-                  <%= link_to 'PDF', admin_invoice_path(order.id, format: 'pdf'), class: 'pdf-download', target: '_blank' if order.invoiced? %>
-                </td>
-                <td class="order-placed-on"><%= order.placed_at.strftime("%b %d, %Y") %></td>
-                <td class="individual-delivery-status"><%= order.delivery_status_for_user(current_user).titleize %></td>
-                <td class="individual-payment-status"><%= order.payment_status.titleize %></td>
-                <td class="line-total"><%= number_to_currency net_total %></td>
-              </tr>
-            <% end %>
-          <% end %>
-          <tr class="make-payment">
-            <td colspan="5" class="math">Total Selected</td>
-            <td class="total-owed line-total"><%= number_to_currency owed %></td>
-          </tr>
-          <tr class="make-payment pay-selected-now">
-            <td colspan="6" class="math pay-selected"><button class="btn--small btn--save">Record Payment</button></td>
-          </tr>
-        </table>
+      <div class="table-wrapper order-details is-hidden">
+        <%# The content of .order-details are replaced by ajax if manager clicks 'Review' %>
+        <% seller.orders.each do |order| %>
+          <%= hidden_field_tag 'payment[order_ids][]', order.id %>
+        <% end %>
       </div>
       <div class="payment-details is-hidden">
          <div class="vendor-payment-cancel pull-right">
