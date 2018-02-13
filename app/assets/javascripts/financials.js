@@ -46,7 +46,7 @@
       form.find('.payment-details').removeClass('is-hidden');
     });
 
-    $('.vendor-payment .pay-selected-now').click(function(e) {
+    $('.vendor-payment').on('click', '.pay-selected-now', function(e) {
       var element;
       e.preventDefault();
       element = $(this);
