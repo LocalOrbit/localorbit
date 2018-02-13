@@ -32,7 +32,7 @@
           <tr class="product-row">
             <td class="order-count">
               <%= pluralize(seller.order_count, "order") %> from <b><%= seller.market_name %></b>
-              <%= link_to 'Review', admin_financials_market_seller_seller_payment_group_path(market_id: seller.market.id, seller_id: seller.id), class: 'review-orders' %>
+              <%= link_to 'Review', admin_financials_market_seller_seller_payment_group_path(seller.market, seller.organization, params.permit(q: [:order_number_cont, :placed_at_date_gteq, :placed_at_date_lteq, :market_id_in, :payment_status_in])), class: 'review-orders' %>
             </td>
             <td class="delivery-status">All Delivered</td>
             <td class="buyer-payment-status"><%= seller.unpaid_count == 0 ? "All paid" : "#{seller.unpaid_count} unpaid" %></td>
