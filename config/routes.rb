@@ -12,7 +12,11 @@ Rails.application.routes.draw do
       "#{request.protocol}app.#{Figaro.env.domain}/#{params[:path]}"
     }
 
-  devise_for :users, :controllers => { :omniauth_callbacks => "omniauth_callbacks" }, skip: [:registrations]
+  devise_for :users, skip: [:registrations],
+    controllers: {
+      omniauth_callbacks: 'omniauth_callbacks',
+      sessions: 'users/sessions'
+    }
   devise_scope :user do
     get "account" => "devise/registrations#edit", as: :edit_user_registration
     put "account" => "devise/registrations#update", as: :user_registration
@@ -50,7 +54,7 @@ Rails.application.routes.draw do
       resources :order_templates, only: [:index, :create, :destroy]
       resources :dashboards, only: [:index]
     end
-    # namespace :v2 do 
+    # namespace :v2 do
     #   resources :products
     # end
   end
@@ -64,10 +68,10 @@ Rails.application.routes.draw do
       resources :delivery_schedules, path: :deliveries, concerns: [:activatable]
       resource  :style_chooser, controller: :style_chooser, only: [:show, :update]
       resource  :cross_sell, controller: :market_cross_sells, only: [:show, :update]
-      resources :cross_selling_lists do 
-        collection do 
-          get 'subscriptions' 
-        end 
+      resources :cross_selling_lists do
+        collection do
+          get 'subscriptions'
+        end
       end
       resource  :fees, only: [:show, :update]
       resources :category_fees, only: [:index, :new, :create, :destroy]

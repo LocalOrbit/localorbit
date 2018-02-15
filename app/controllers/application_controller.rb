@@ -27,10 +27,6 @@ class ApplicationController < ActionController::Base
   # For APIs, you may want to use :null_session instead.
   protect_from_forgery with: :exception
 
-  # Skip CSRF check on log in to avoid InvalidAuthenticityToken
-  # error with a stale browser tab.
-  skip_before_filter :verify_authenticity_token, if: -> { controller_name == 'sessions' && action_name == 'create' }
-
   rescue_from ActiveRecord::RecordNotFound, with: :render_404
 
   # Globally rescue Authorization Errors in controller.
