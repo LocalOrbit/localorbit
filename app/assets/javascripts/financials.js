@@ -5,12 +5,19 @@
       form.find('.order-details').removeClass('is-hidden');
       form.find('.pay-all-now').addClass('is-invisible');
       link.html('Hide Orders');
+      showSuborderPaymentUI(form);
     }
 
     function hideSuborders(link, form) {
       form.find('.order-details').addClass('is-hidden');
       form.find('.pay-all-now').removeClass('is-invisible');
       link.html('Review');
+      showSuborderPaymentUI(form);
+    }
+
+    function showSuborderPaymentUI(form) {
+      form.find('.pay-selected-now').removeClass('is-hidden');
+      form.find('.payment-details').addClass('is-hidden');
     }
 
     $('.vendor-payment .review-orders').click(function(e) {
@@ -25,7 +32,7 @@
         if (orderDetails.find('tr').length === 0) {
           link.html('Retrieving ...');
           $.get($(this).attr('href'), function(data) {
-            form.find('.order-details').html(data);
+            orderDetails.html(data);
             showSuborders(link, form);
           });
         } else {
