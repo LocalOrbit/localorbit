@@ -46,4 +46,23 @@ feature 'Record payments to suppliers', :js  do
     expect(page).to have_content("Payment of $13.98 recorded for Sally's Staples")
   end
 
+  it 'allows partial payment of some unpaid orders for seller within a market' do
+    visit admin_financials_vendor_payments_path
+
+    first('.review-orders').click
+    expect(page).to have_content('Hide Orders')
+    expect(page).to have_content(order1.order_number)
+    expect(first('.line-total')).to have_content('$6.99')
+    expect(page).to have_content(order2.order_number)
+    first('.payment-order').uncheck('payment_order_ids_')
+    expect(first('.total-owed')).to have_content('$6.99')
+
+    first('.pay-selected-now').click
+    expect(page).to have_content('Cash')
+    first('.payment-types').choose('Check')
+    first('.check').fill_in('Check #', with: '123')
+    first('.record-payment').click_button('Record Payment')
+    expect(page).to have_content("Payment of $6.99 recorded for Sally's Staples")
+  end
+
 end
