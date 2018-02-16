@@ -104,6 +104,7 @@ group :doc do
 end
 
 group :development do
+  gem 'bootsnap' # TODO: Remove this when we upgrade to rails 5.2
   gem 'bullet'
   gem 'ultrahook'
   gem 'spring'
