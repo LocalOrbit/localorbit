@@ -35,4 +35,15 @@ feature 'Record payments to suppliers', :js  do
     expect(page).to have_content('$19.98')
   end
 
+  it 'allows complete payment of all unpaid orders for seller within a market' do
+    visit admin_financials_vendor_payments_path
+
+    first('.pay-all-now').click
+    expect(page).to have_content('Cash')
+    first('.payment-types').choose('Check')
+    first('.check').fill_in('Check #', with: '123')
+    first('.record-payment').click_button('Record Payment')
+    expect(page).to have_content("Payment of $13.98 recorded for Sally's Staples")
+  end
+
 end
