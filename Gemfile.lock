@@ -607,7 +607,7 @@ GEM
       http-cookie (>= 1.0.2, < 2.0)
       mime-types (>= 1.16, < 3.0)
       netrc (~> 0.7)
-    rollbar (2.14.1)
+    rollbar (2.15.5)
       multi_json
     roxml (3.3.1)
       activesupport (>= 2.3.0)
@@ -885,4 +885,4 @@ RUBY VERSION
    ruby 2.1.2p95
 
 BUNDLED WITH
-   1.16.0
+   1.16.1
