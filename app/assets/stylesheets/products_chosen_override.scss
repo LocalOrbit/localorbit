@@ -1,0 +1,4 @@
+// hide the × that clears the selection because people think it deletes the unit (mistakenly)
+body.controller-products.action-show #units_table abbr.search-choice-close {
+  display: none;
+}
