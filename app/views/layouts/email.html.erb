@@ -449,7 +449,7 @@
       <%= yield %>
 
       <p class="lo_note">
-        <em>For customer service please reply to this email or call <%= !@market.nil? && @market.try(:pending) == false ? @market.contact_phone : "734.545.8100" %></em>
+        <em>For customer service please reply to this email or call <%= !@market.nil? && @market.try(:pending) == false ? @market.contact_phone : Figaro.env.support_phone_number %></em>
       </p>
 
     </div>
@@ -457,7 +457,7 @@
     <div class="lo_footer">
       <%= image_tag 'email/local-orbit-logo.png', alt: "Local Orbit Logo", class: 'lo_logo' %><br>
       <strong>Powered by <a href="http://localorbit.com/">Local Orbit</a></strong><br>
-      <em class="lo_copyright">Copyright 2016. All Rights Reserved</em><br>
+      <em class="lo_copyright">Copyright <%= Date.current.year %>. All Rights Reserved.</em><br>
       <% if @unsubscribe_url %>
         <em class="lo_unsubscribe">Click here to <%= link_to "Unsubscribe", @unsubscribe_url, "mc:disable-tracking" => "mc:disable-tracking"%></em>
       <% end %>
