@@ -5,7 +5,7 @@ class Users::SessionsController < Devise::SessionsController
   private
 
   def back_to_sign_in
-    redirect_to new_user_session_path, notice: 'Sorry, please try again'
+    redirect_to new_user_session_path, notice: "Sorry, your browser's security token expired. Please sign in again."
   end
 
 end

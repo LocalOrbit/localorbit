@@ -22,7 +22,7 @@ RSpec.describe Users::SessionsController, type: :controller do
 
       it 'sets a helpful flash message' do
         post :create, user: {email: user.email, password: user.password}
-        expect(flash[:notice ]).to eq('Sorry, please try again')
+        expect(flash[:notice ]).to eq("Sorry, your browser's security token expired. Please sign in again.")
       end
 
     end
