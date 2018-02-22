@@ -32,12 +32,12 @@
           <tr class="product-row">
             <td class="order-count">
               <%= pluralize(seller.order_count, "order") %> from <b><%= seller.market_name %></b>
-              <%= link_to 'Review', admin_financials_market_seller_seller_payment_group_path(seller.market, seller.organization, params.permit(q: [:order_number_cont, :placed_at_date_gteq, :placed_at_date_lteq, :market_id_in, :payment_status_in])), class: 'review-orders' %>
+              <%= content_tag :button, 'Review', class: 'review-orders cancel', disabled: true, data: {href: admin_financials_market_seller_seller_payment_group_path(seller.market, seller.organization, params.permit(q: [:order_number_cont, :placed_at_date_gteq, :placed_at_date_lteq, :market_id_in, :payment_status_in])) } %>
             </td>
             <td class="delivery-status">All Delivered</td>
             <td class="buyer-payment-status"><%= seller.unpaid_count == 0 ? "All paid" : "#{seller.unpaid_count} unpaid" %></td>
             <td class="owed"><%= number_to_currency owed %></td>
-            <td class="pay-now action-link"><button class="pay-all-now cancel"><i class="font-icon icon-money"></i> Record Payment</button></td>
+            <td class="pay-now action-link"><button class="pay-all-now cancel" disabled><i class="font-icon icon-money"></i> Record Payment</button></td>
           </tr>
         </table>
       </div>

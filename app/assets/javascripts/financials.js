@@ -1,17 +1,17 @@
 ;(function($, undefined) {
   $(function() {
 
-    function showSuborders(link, form) {
+    function showSuborders(button, form) {
       form.find('.order-details').removeClass('is-hidden');
       form.find('.pay-all-now').addClass('is-invisible');
-      link.html('Hide Orders');
+      button.html('Hide Orders');
       showSuborderPaymentUI(form);
     }
 
-    function hideSuborders(link, form) {
+    function hideSuborders(button, form) {
       form.find('.order-details').addClass('is-hidden');
       form.find('.pay-all-now').removeClass('is-invisible');
-      link.html('Review');
+      button.html('Review');
       showSuborderPaymentUI(form);
     }
 
@@ -22,26 +22,26 @@
 
     $('.vendor-payment .review-orders').click(function(e) {
       e.preventDefault();
-      var form, link, orderDetails;
-      link = $(this);
-      form = link.parents('form');
+      var form, button, orderDetails;
+      button = $(this);
+      form = button.parents('form');
       orderDetails = form.find('.order-details');
-      link.prop('disabled', true);
+      button.prop('disabled', true);
 
       if (orderDetails.is(':hidden')) {
         if (orderDetails.find('tr').length === 0) {
-          link.html('Retrieving ...');
-          $.get($(this).attr('href'), function(data) {
+          button.html('Retrieving ...');
+          $.get($(this).data('href'), function(data) {
             orderDetails.html(data);
-            showSuborders(link, form);
+            showSuborders(button, form);
           });
         } else {
-          showSuborders(link, form);
+          showSuborders(button, form);
         }
       } else {
-        hideSuborders(link, form);
+        hideSuborders(button, form);
       }
-      link.prop('disabled', false);
+      button.prop('disabled', false);
     });
 
     $('.vendor-payment .pay-all-now').click(function(e) {
@@ -101,6 +101,9 @@
       details.removeClass('is-hidden');
       paymentDetails.find('.record-payment').removeClass('is-hidden');
     });
+
+    $('.vendor-payment .review-orders').prop('disabled', false);
+    $('.vendor-payment .pay-all-now').prop('disabled', false);
 
   });
 })(jQuery);
