@@ -8,7 +8,7 @@ class User < ActiveRecord::Base
   # :lockable, :timeoutable and :omniauthable
   devise :invitable, :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable,
-         :confirmable, :masqueradable, :timeoutable, :omniauthable
+         :confirmable, :masqueradable, :omniauthable
 
   trimmed_fields :email
 
