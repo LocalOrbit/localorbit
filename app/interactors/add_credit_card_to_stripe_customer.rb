@@ -14,7 +14,7 @@ class AddCreditCardToStripeCustomer
 
       bank_account.update(stripe_id: stripe_card.id)
 
-    rescue Exception => e
+    rescue StandardError => e
       bank_account.destroy
       context[:bank_account] = nil
       error_info = ErrorReporting.interpret_exception(e)

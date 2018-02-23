@@ -20,12 +20,12 @@ module Admin::Financials
 
       as_of_time_str = params[:as_of_time]
       as_of_time = Time.zone.parse(as_of_time_str)
-      
+
       seller_id = params[:seller_id].to_i
 
       #
       # Get payment info
-      # 
+      #
       seller_sections = ::Financials::SellerPayments::Finder.find_seller_payment_sections(
         as_of: as_of_time,
         seller_id: seller_id,
@@ -47,7 +47,7 @@ module Admin::Financials
 
       redirect_to action: :index
 
-    rescue Exception => e
+    rescue StandardError => e
       # Payment failures are serious.  Let's be sure to capture these failures
       # in the log in a way we can monitor and analyze them:
       # NOTE: The PaperTrail add-on for the LO Heroko Production instance has an alert

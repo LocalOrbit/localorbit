@@ -20,7 +20,7 @@ class ConvertFreshSheetAndNewsletterSubscriptions < ActiveRecord::Migration
 
   private
   def update_user_subscriptions(user)
-    begin 
+    begin
       fresh_sub = Subscription.find_by(user_id: user.id, subscription_type_id: fresh_sheet_type.id)
       if fresh_sub.nil?
         fresh_sub = Subscription.create(user_id: user.id, subscription_type_id: fresh_sheet_type.id, token: new_token)
@@ -33,7 +33,7 @@ class ConvertFreshSheetAndNewsletterSubscriptions < ActiveRecord::Migration
       if fresh_sub.token.nil?
         fresh_sub.update_attribute(:token, new_token)
       end
-    rescue Exception => e
+    rescue StandardError => e
       say "!! FAILED to update User #{user.try(:id)} Fresh Sheet subscription: #{e.message}: #{e.backtrace.join("\n")}"
     end
 
@@ -50,7 +50,7 @@ class ConvertFreshSheetAndNewsletterSubscriptions < ActiveRecord::Migration
       if news_sub.token.nil?
         news_sub.update_attribute(:token, new_token)
       end
-    rescue Exception => e
+    rescue StandardError => e
       say "!! FAILED to update User #{user.try(:id)} Newsletter subscription: #{e.message}: #{e.backtrace.join("\n")}"
     end
   end
@@ -62,7 +62,7 @@ class ConvertFreshSheetAndNewsletterSubscriptions < ActiveRecord::Migration
   def ensure_fresh_sheet_and_newsletter_exist
     SubscriptionType.create!(name: "Fresh Sheet", keyword: "fresh_sheet") if fresh_sheet_type.nil?
     SubscriptionType.create!(name: "Newsletter", keyword: "newsletter") if newsletter_type.nil?
-  rescue Exception => e
+  rescue StandardError => e
     say "!! FAILED to ensure fresh sheet and newsletter exist: #{e.message}: #{e.backtrace.join("\n")}"
   end
 

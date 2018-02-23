@@ -4,7 +4,7 @@ describe ErrorReporting do
   subject { described_class }
 
   describe ".interpret_generic_exception" do
-    let(:error) { begin; raise "FOOMP!"; rescue Exception => e; e; end }
+    let(:error) { begin; raise "FOOMP!"; rescue StandardError => e; e; end }
 
     it "generates a friendly error reporting structure" do
       error_info = ErrorReporting.interpret_generic_exception(error, "Dang")
@@ -25,10 +25,10 @@ describe ErrorReporting do
     end
 
     context "when the error has a cause" do
-      let(:error2) { begin; raise "FOOMP!"; rescue Exception => e; begin; raise "CLUNK!"; rescue Exception => e2; e2; end; end }
+      let(:error2) { begin; raise "FOOMP!"; rescue StandardError => e; begin; raise "CLUNK!"; rescue StandardError => e2; e2; end; end }
       it "expands the cause exception in the error data" do
         error_info = ErrorReporting.interpret_generic_exception(error2, "Drat")
-        
+
         SchemaValidation.validate!(ErrorReporting::Schema::ErrorInfo, error_info)
 
         expect(error_info[:application_error_message]).to eq "Drat"
@@ -59,7 +59,7 @@ describe ErrorReporting do
       VCR.turn_off!
       begin
         Stripe::Charge.create
-      rescue Exception => e
+      rescue StandardError => e
         captured = e
       end
       VCR.turn_on!
@@ -119,7 +119,7 @@ describe ErrorReporting do
       end
     end
 
-    context "when given any ol' exception" do 
+    context "when given any ol' exception" do
       let (:error) { RuntimeError.new("OUCH") }
 
       it "delegates to .interpret_generic_exception" do

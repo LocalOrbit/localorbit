@@ -3,7 +3,7 @@ require "spec_helper"
 feature "Payment of 'market payments' to Markets on non-Automate plans", :js  do
 
   include_context "the mini market"
-  
+
   let(:order_time) { Time.zone.parse("May 20, 2014 2:00 PM") }
   let(:deliver_time) { Time.zone.parse("May 25, 2014 3:30 PM") }
   let(:now_time) { Time.zone.parse("May 30, 2014 1:15 AM") }
@@ -12,7 +12,7 @@ feature "Payment of 'market payments' to Markets on non-Automate plans", :js  do
 
   let!(:m1) { Generate.market_with_orders(
                 market_name: "Four Pigs",
-                order_time: order_time, 
+                order_time: order_time,
                 deliver_time: deliver_time,
                 paid_with: "credit card",
                 delivered: "delivered",
@@ -23,7 +23,7 @@ feature "Payment of 'market payments' to Markets on non-Automate plans", :js  do
   )}
   let!(:m2) { Generate.market_with_orders(
                 market_name: "Too Hoss",
-                order_time: order_time, 
+                order_time: order_time,
                 deliver_time: deliver_time,
                 paid_with: "credit card",
                 delivered: "delivered",
@@ -57,19 +57,19 @@ feature "Payment of 'market payments' to Markets on non-Automate plans", :js  do
     sign_in_as aaron
   end
 
-  it "displays all pending Seller payments info and lets you pay one of the Markes" 
+  it "displays all pending Seller payments info and lets you pay one of the Markes"
   # TODO: this entire test was simply missing from the suite.  Today's focus was just to ensure the proper filtering
   # is in place wrt seller payments, see the spec below which focuses on that.
 
   it "does NOT include orders whose sellers were paid by other types of payments, eg, from previous Automate plan participation, where some orders may be linked to 'seller payments'" do
-    begin 
+    begin
       visit admin_financials_market_payments_path
       expect(page).to have_content("Make Payments to Markets")
 
       # Determine which orders we expect to see:
       market = m1[:market]
       section = Dom::Admin::Financials::MarketSection.find_by_market_name(market.name)
-      # (m1 has four orders, 
+      # (m1 has four orders,
       #   the first of which should have a 'seller payment' and thus should not be included,
       #   the second of which has Stripe payment provider and thus should not be included)
       expected_order_nums = m1[:orders][2..-1].map do |o| o.order_number end
@@ -79,7 +79,7 @@ feature "Payment of 'market payments' to Markets on non-Automate plans", :js  do
 
       expect(order_nums).to contain_exactly(*expected_order_nums)
 
-    rescue Exception => e
+    rescue StandardError => e
       puts ">>>>>> Market Payments SPEC FAILED: #{e.message} <<<<<<<<"
       puts ">>>>>>BODY:\n#{page.body}"
       puts ">>>>>> m1:"
@@ -131,7 +131,7 @@ feature "Payment of 'market payments' to Markets on non-Automate plans", :js  do
   end
 
   def market_bank_account(market, name_matcher)
-    acct = market.bank_accounts.detect { |a| a.display_name =~ /#{name_matcher}/ } 
+    acct = market.bank_accounts.detect { |a| a.display_name =~ /#{name_matcher}/ }
     expect(acct).to be, "market #{market.name} doesn't have a BankAccount whose display_name matches #{name_matcher.inspect}.  It has names #{market.bank_accounts.map {|ba|ba.display_name}} from #{market.bank_accounts.to_a.inspect}"
     acct
   end

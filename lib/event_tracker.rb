@@ -19,7 +19,7 @@ module EventTracker
 
   #
   # METHODS
-  # 
+  #
   def self.track_event_for_user(user, event, metadata={})
     if(self.capture_events)
       self.previously_captured_events << {user: user, event: event, metadata: metadata}
@@ -28,7 +28,7 @@ module EventTracker
         self.find_or_create_user!(user)
         Intercom::Event.create event_name: event, created_at: Time.now.to_i,
           metadata: metadata, email: user.email
-      rescue Exception => ex
+      rescue StandardError => ex
         puts ex.message
         puts ex.backtrace.join("\n")
         #Honeybadger.notify_or_ignore(ex,

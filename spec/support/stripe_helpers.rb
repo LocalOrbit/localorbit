@@ -229,7 +229,7 @@ module StripeSpecHelpers
     (@stripe_objects_to_cleanup || []).each do |obj|
       begin
         obj.delete
-      rescue Exception => e
+      rescue StandardError => e
         puts "(Error while trying to delete Stripe object #{obj.inspect}: #{e.message})"
       end
     end

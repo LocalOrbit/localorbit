@@ -46,7 +46,7 @@ module Admin::Financials
       # Delivery fees:
       #
       delivery_payment_config = ::Financials::PaymentMetadata.payment_config_for(:delivery_fees_to_market)
-      
+
       handle_results ::Financials::PaymentProcessor.pay_and_notify(
         payment_config: delivery_payment_config,
         inputs: { market_section: market_section,
@@ -54,7 +54,7 @@ module Admin::Financials
 
       redirect_to action: :index
 
-    rescue Exception => e
+    rescue StandardError => e
       # Payment failures are serious.  Let's be sure to capture these failures
       # in the log in a way we can monitor and analyze them:
       # NOTE: The PaperTrail add-on for the LO Heroko Production instance has an alert

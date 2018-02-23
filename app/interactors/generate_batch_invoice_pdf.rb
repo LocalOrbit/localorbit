@@ -13,9 +13,9 @@ class GenerateBatchInvoicePdf
         pdf_result = Invoices::InvoicePdfGenerator.generate_pdf(request:request, order:order, path:tempfile.path)
 
         invoice_tempfiles << tempfile
-        
-      rescue Exception => e
-        BatchInvoiceUpdater.record_error!(batch_invoice, 
+
+      rescue StandardError => e
+        BatchInvoiceUpdater.record_error!(batch_invoice,
                                           task: "Generating invoice PDF",
                                           message: "Unexpected exception in InvoicePdfGenerator",
                                           exception: e.inspect,
@@ -26,13 +26,13 @@ class GenerateBatchInvoicePdf
       completed_count += 1
       BatchInvoiceUpdater.update_generation_progress!(batch_invoice, completed_count: completed_count)
     end
-    
+
     merged_pdf = GhostscriptWrapper.merge_pdf_files(invoice_tempfiles)
     invoice_tempfiles.each { |file| file.unlink }
 
     BatchInvoiceUpdater.complete_generation!(batch_invoice, pdf: merged_pdf, pdf_name: "invoices.pdf")
 
-  rescue Exception => e
+  rescue StandardError => e
     BatchInvoiceUpdater.record_error!(batch_invoice,
                                       task: "Generating batch invoice PDF",
                                       message: "Unexpected exception while processing and merging invoice PDFs",
@@ -49,7 +49,7 @@ class GenerateBatchInvoicePdf
     class << self
       def start_generation!(batch_invoice)
         batch_invoice.update!(
-          generation_progress: 0.0, 
+          generation_progress: 0.0,
           generation_status: BatchInvoice::GenerationStatus::Generating)
       end
 

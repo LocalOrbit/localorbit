@@ -9,8 +9,8 @@ class InitializeBatchInvoice
       else
         fail!(message: "Please select one or more invoices to preview.")
       end
-    rescue Exception => e
-      begin 
+    rescue StandardError => e
+      begin
         batch_invoice = BatchInvoice.create(user: user, orders:[], generation_status: BatchInvoice::GenerationStatus::Failed)
         GenerateBatchInvoicePdf::BatchInvoiceUpdater.record_error!(batch_invoice,
                                                                    task: "Initializing batch invoice",
@@ -18,7 +18,7 @@ class InitializeBatchInvoice
                                                                    exception: e.inspect,
                                                                    backtrace: e.backtrace)
 
-      rescue Exception => e
+      rescue StandardError => e
         # Fuhgetaboutit
       end
       fail!(message: "There was an error trying to preview these invoices.")

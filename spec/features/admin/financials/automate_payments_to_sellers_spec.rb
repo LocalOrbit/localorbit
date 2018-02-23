@@ -3,7 +3,7 @@ require "spec_helper"
 feature "Payments of net sales to Sellers on Automate plan", :js do
 
   include_context "the mini market"
-  
+
   let(:order_time) { Time.zone.parse("May 20, 2014 2:00 PM") }
   let(:deliver_time) { Time.zone.parse("May 25, 2014 3:30 PM") }
   let(:now_time) { Time.zone.parse("May 30, 2014 1:15 AM") }
@@ -11,7 +11,7 @@ feature "Payments of net sales to Sellers on Automate plan", :js do
   let!(:m00) { Generate.market_with_orders }
 
   let!(:m1) { Generate.market_with_orders(
-                order_time: order_time, 
+                order_time: order_time,
                 deliver_time: deliver_time,
                 paid_with: "credit card",
                 delivered: "delivered",
@@ -19,7 +19,7 @@ feature "Payments of net sales to Sellers on Automate plan", :js do
                 num_sellers: 2
   )}
   let!(:m2) { Generate.market_with_orders(
-                order_time: order_time, 
+                order_time: order_time,
                 deliver_time: deliver_time,
                 paid_with: "credit card",
                 delivered: "delivered"
@@ -37,14 +37,14 @@ feature "Payments of net sales to Sellers on Automate plan", :js do
     bank_account = market.bank_accounts.first
     create(:payment, payment_type: "market payment", payee: market, orders: [ m1[:orders][2] ], market: market, bank_account: bank_account, payment_method: "ach", amount: 100)
   }
-    
+
   before do
     switch_to_subdomain mini_market.subdomain
     sign_in_as aaron
   end
 
   xit "displays all pending Seller payments info and lets you pay one of the Sellers" do
-    begin 
+    begin
       visit admin_financials_automate_seller_payments_path
       expect(page).to have_content("Make Weekly Payments to Sellers")
 
@@ -56,11 +56,11 @@ feature "Payments of net sales to Sellers on Automate plan", :js do
 
       verify_seller_payment_section(
         seller: seller_b,
-        seller_name: seller_b.name, 
+        seller_name: seller_b.name,
         orders: [
-          :order_number, :net_sales, :gross_sales, :market_fees, :transaction_fees, :payment_processing_fees, :discounts, :delivery_status, :buyer_payment_status, :seller_payment_status, :payment_method, 
+          :order_number, :net_sales, :gross_sales, :market_fees, :transaction_fees, :payment_processing_fees, :discounts, :delivery_status, :buyer_payment_status, :seller_payment_status, :payment_method,
           order_b.order_number, "$0.10", "$1.10", "$0.10", "$0.20", "$0.30", "$0.40", "Delivered", "Paid", "Unpaid", "Credit Card",
-        ], 
+        ],
         totals: {
           net_sales: "$0.10",
           gross_sales: "$1.10",
@@ -79,10 +79,10 @@ feature "Payments of net sales to Sellers on Automate plan", :js do
         seller: seller_a,
         seller_name: seller_a.name,
         orders: [
-          :order_number, :net_sales, :gross_sales, :market_fees, :transaction_fees, :payment_processing_fees, :discounts, :delivery_status, :buyer_payment_status, :seller_payment_status, :payment_method, 
+          :order_number, :net_sales, :gross_sales, :market_fees, :transaction_fees, :payment_processing_fees, :discounts, :delivery_status, :buyer_payment_status, :seller_payment_status, :payment_method,
           order_a2.order_number, "$0.10", "$1.10", "$0.10", "$0.20", "$0.30", "$0.40", "Delivered", "Paid", "Unpaid", "Credit Card",
           order_a4.order_number, "$0.10", "$1.10", "$0.10", "$0.20", "$0.30", "$0.40", "Delivered", "Paid", "Unpaid", "Credit Card",
-        ], 
+        ],
         totals: {
           net_sales: "$0.20",
           gross_sales: "$2.20",
@@ -152,7 +152,7 @@ feature "Payments of net sales to Sellers on Automate plan", :js do
       expect(mail.body).to match(/payment was sent to.*#{seller_a.name}/i)
       expect(mail.body).to match(/#{Regexp.escape(expected_payment_amount_str)}/)
       expect(mail.body).to match(/Visit #{expected_market.name}/)
-    rescue Exception => e
+    rescue StandardError => e
       puts ">>>>>> Payments to Sellers SPEC FAILED: #{e.message} <<<<<<<<"
       puts ">>>>>>BODY:\n#{page.body}"
       puts ">>>>>> m1:"
@@ -204,7 +204,7 @@ feature "Payments of net sales to Sellers on Automate plan", :js do
   end
 
   def seller_bank_account(seller_org, name_matcher)
-    acct = seller_org.bank_accounts.detect { |a| a.display_name =~ /#{name_matcher}/ } 
+    acct = seller_org.bank_accounts.detect { |a| a.display_name =~ /#{name_matcher}/ }
     expect(acct).to be, "Seller #{seller_org.name} doesn't have a BankAccount whose display_name matches #{name_matcher.inspect}.  It has names #{seller_org.bank_accounts.map {|ba|ba.display_name}} from #{seller_org.bank_accounts.to_a.inspect}"
     acct
   end
