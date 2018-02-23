@@ -15,8 +15,7 @@ class InitializeBatchInvoice
         GenerateBatchInvoicePdf::BatchInvoiceUpdater.record_error!(batch_invoice,
                                                                    task: "Initializing batch invoice",
                                                                    message: "Selected order ids: #{orders.map do |o| o.id end.inspect}",
-                                                                   exception: e.inspect,
-                                                                   backtrace: e.backtrace)
+                                                                   exception: e)
 
       rescue StandardError => e
         # Fuhgetaboutit
