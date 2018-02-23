@@ -29,6 +29,7 @@ See the `docs/` directory for more documentation.
 9. `rails server`
 10. Add `127.0.0.1 localtest.me` to `/etc/hosts`
 11. Go to http://localtest.me:3000 in a browser (we use localtest.me to always point to 127.0.0.1 so we can use subdomains, which localhost doesn't allow.)
+12. Startup delayed job with `./bin/delayed_job` (caveat: delete jobs from that table first if loading in production data)
 
 See also:
   * [stripe howto](docs/stripe_in_development.md) for configuring stripe for development.
