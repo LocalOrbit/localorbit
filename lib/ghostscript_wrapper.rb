@@ -1,5 +1,9 @@
-class GhostscriptWrapper
-  def self.merge_pdf_files(files)
+require 'open3'
+
+module GhostscriptWrapper
+  extend self
+
+  def merge_pdf_files(files)
     # A tempfile to store merged output:
     out_file = Tempfile.new("merged_pdf")
 
@@ -15,7 +19,7 @@ class GhostscriptWrapper
 
     infile_paths = redistilled_files.map do |file| file.path end
 
-    # Merge 
+    # Merge
     ghostscript_merge_pdfs infile_paths: infile_paths, outfile_path: out_file.path
 
     # Read merged PDF content from the temp file:
@@ -32,13 +36,18 @@ class GhostscriptWrapper
     return pdf
   end
 
-  def self.ghostscript_redistill_pdf(infile_path:, outfile_path:)
-    cmd = "gs -o #{outfile_path} -sDEVICE=pdfwrite #{infile_path} 2>&1"
-    output = `#{cmd}`
+  def ghostscript_redistill_pdf(infile_path:, outfile_path:)
+    cmd = "gs -o #{outfile_path} -sDEVICE=pdfwrite #{infile_path}"
+    syscmd(cmd)
   end
 
-  def self.ghostscript_merge_pdfs(infile_paths:, outfile_path:)
-    cmd = "gs -dBATCH -dNOPAUSE -q -sDEVICE=pdfwrite -dPDFSETTINGS=/prepress -sOutputFile=#{outfile_path} #{infile_paths.join(" ")} 2>&1"
-    output = `#{cmd}`
+  def ghostscript_merge_pdfs(infile_paths:, outfile_path:)
+    cmd = "gs -dBATCH -dNOPAUSE -q -sDEVICE=pdfwrite -dPDFSETTINGS=/prepress -sOutputFile=#{outfile_path} #{infile_paths.join(" ")}"
+    syscmd(cmd)
   end
+
+  def syscmd(cmd)
+    stdout, stderr, status = Open3.capture3(cmd)
+  end
+
 end
