@@ -123,11 +123,7 @@ class OrderItem < ActiveRecord::Base
   def product_availability
     return unless product.present? && !order.nil? && order.market.is_buysell_market?
 
-    if !order.nil?
-      market_id = order.market.id
-      organization_id = order.organization.id
-    end
-    qty = product.lots_by_expiration.available_specific(Time.current.end_of_minute, market_id, organization_id).sum(:quantity)
+    qty = product.lots_by_expiration.available_specific(Time.current.end_of_minute, order.market_id, order.organization_id).sum(:quantity)
     #if qty == 0
     qty += product.lots_by_expiration.available_general(Time.current.end_of_minute).sum(:quantity)
     #end
