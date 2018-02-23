@@ -122,6 +122,11 @@ Rails.application.routes.draw do
       end
       resources :receipts, only: [:index, :edit, :update]
       resources :vendor_payments
+      resources :markets, only: [] do
+        resources :sellers, only: [] do
+          resource :seller_payment_group, only: :show
+        end
+      end
 
       scope path: :admin do
         resources :market_payments,  only: [:index, :create]

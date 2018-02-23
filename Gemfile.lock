@@ -123,6 +123,8 @@ GEM
       babel-source (>= 4.0, < 6)
       execjs (~> 2.0)
     bcrypt (3.1.11)
+    bootsnap (1.1.8)
+      msgpack (~> 1.0)
     browserify-rails (0.9.3)
       sprockets (~> 2.2)
     builder (3.2.3)
@@ -457,6 +459,7 @@ GEM
     mini_portile2 (2.3.0)
     minitest (5.11.1)
     moneta (0.8.1)
+    msgpack (1.2.2)
     multi_json (1.13.1)
     multi_xml (0.5.5)
     multipart-post (1.2.0)
@@ -765,6 +768,7 @@ DEPENDENCIES
   awesome_nested_set
   awesome_print
   aws-sdk
+  bootsnap
   browserify-rails
   bullet
   byebug
