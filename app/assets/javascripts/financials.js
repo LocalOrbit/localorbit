@@ -30,7 +30,7 @@
 
       if (orderDetails.is(':hidden')) {
         if (orderDetails.find('tr').length === 0) {
-          button.html('Retrieving ...');
+          button.html('Retrieving...');
           $.get($(this).data('href'), function(data) {
             orderDetails.html(data);
             showSuborders(button, form);
