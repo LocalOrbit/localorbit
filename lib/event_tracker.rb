@@ -28,11 +28,8 @@ module EventTracker
         self.find_or_create_user!(user)
         Intercom::Event.create event_name: event, created_at: Time.now.to_i,
           metadata: metadata, email: user.email
-      rescue StandardError => ex
-        puts ex.message
-        puts ex.backtrace.join("\n")
-        #Honeybadger.notify_or_ignore(ex,
-        #  context: {user: user.inspect, event: event, metadata: metadata})
+      rescue StandardError => e
+        Rollbar.error(e)
       end
     end
     nil

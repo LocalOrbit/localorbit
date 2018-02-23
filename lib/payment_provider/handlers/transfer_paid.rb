@@ -33,7 +33,7 @@ module PaymentProvider
           amount_in_cents: amount_in_cents
         }
         error_info = ErrorReporting.interpret_exception(e, "Error handling transfer.paid event from Stripe", {params: params})
-        #Honeybadger.notify_or_ignore(error_info[:honeybadger_exception])
+        Rollbar.info(e)
       end
     end
   end

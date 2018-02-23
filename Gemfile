@@ -93,7 +93,6 @@ gem 'grape-active_model_serializers' # API v2
 gem 'rack-cors', :require => 'rack/cors' # API v2
 gem 'grape-swagger' # API V2, documentation
 
-#gem 'honeybadger'
 gem 'rollbar'
 
 gem 'quickbooks-ruby', '~> 0.4.6', :git => 'https://github.com/ruckus/quickbooks-ruby.git'
