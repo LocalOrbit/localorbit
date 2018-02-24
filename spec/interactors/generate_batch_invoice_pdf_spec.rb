@@ -4,7 +4,7 @@ describe GenerateBatchInvoicePdf do
   subject { described_class }
 
   let!(:orders) { [ create(:order), create(:order) ] }
-  let!(:batch_invoice) { create(:batch_invoice, orders: orders) } 
+  let!(:batch_invoice) { create(:batch_invoice, orders: orders) }
   let(:request) { double("Request") }
 
   def expect_updater_start
@@ -19,7 +19,7 @@ describe GenerateBatchInvoicePdf do
     batch_invoice.orders.each.with_index do |order,i|
       expect(Invoices::InvoicePdfGenerator).to receive(:generate_pdf) do |args|
         expect(args[:request]).to eq request
-        expect(args[:order]).to eq order 
+        expect(args[:order]).to eq order
         if ex = generator_exceptions[order.id]
           raise ex
         end
@@ -49,8 +49,7 @@ describe GenerateBatchInvoicePdf do
     expect(GenerateBatchInvoicePdf::BatchInvoiceUpdater).
       to receive(:record_error!) do |bi, args|
         expect(bi).to eq batch_invoice
-        expect(args[:exception]).to eq(exception.inspect)
-        expect(args[:backtrace]).to eq(exception.backtrace)
+        expect(args[:exception]).to eq(exception)
         if order
           expect(args[:order]).to eq(order)
         end
@@ -143,11 +142,17 @@ describe GenerateBatchInvoicePdf do
 
     describe ".record_error!" do
       let!(:order) { create(:order) }
+      let(:exception) { StandardError.new('foo bar') }
+      let(:backtrace) { ['a', 'list', 'of'] }
+
+      before do
+        allow(exception).to receive(:backtrace).and_return(backtrace)
+      end
 
       it "adds a BatchInvoiceError record to the given BatchInvoice, referencing an Order" do
         expect(batch_invoice.batch_invoice_errors).to be_empty
 
-        subject.record_error!(batch_invoice, task: "The task", message: "The message", order: order)
+        subject.record_error!(batch_invoice, task: "The task", message: "The message", order: order, exception: exception)
         batch_invoice.reload
         expect(batch_invoice).to have(1).batch_invoice_error
 
@@ -155,32 +160,27 @@ describe GenerateBatchInvoicePdf do
         expect(error0.task).to eq("The task")
         expect(error0.message).to eq("The message")
         expect(error0.order).to eq(order)
-        expect(error0.exception).to be_nil
-        expect(error0.backtrace).to be_nil
+        expect(error0.exception).to eq('#<StandardError: foo bar>')
+        expect(error0.backtrace).to eq("a\nlist\nof")
       end
 
       it "can be built without an Order" do
         expect(batch_invoice.batch_invoice_errors).to be_empty
 
-        subject.record_error!(batch_invoice, task: "The task", message: "The message")
+        subject.record_error!(batch_invoice, task: "The task", message: "The message", exception: exception)
         batch_invoice.reload
         expect(batch_invoice).to have(1).batch_invoice_error
 
         error0 = batch_invoice.batch_invoice_errors.first
-        expect(error0.task).to eq("The task")
-        expect(error0.message).to eq("The message")
         expect(error0.order).to be_nil
-        expect(error0.exception).to be_nil
-        expect(error0.backtrace).to be_nil
       end
 
       it "can have an exception and backtrace" do
         expect(batch_invoice.batch_invoice_errors).to be_empty
 
-        subject.record_error!(batch_invoice, task: "The task", 
-                                             message: "The message", 
-                                             exception: "The exception", 
-                                             backtrace: "The backtrace", 
+        subject.record_error!(batch_invoice, task: "The task",
+                                             message: "The message",
+                                             exception: exception,
                                              order: order)
         batch_invoice.reload
         expect(batch_invoice).to have(1).batch_invoice_error
@@ -189,17 +189,17 @@ describe GenerateBatchInvoicePdf do
         expect(error0.task).to eq("The task")
         expect(error0.message).to eq("The message")
         expect(error0.order).to eq(order)
-        expect(error0.exception).to eq("The exception")
-        expect(error0.backtrace).to eq("The backtrace")
+        expect(error0.exception).to eq("#<StandardError: foo bar>")
+        expect(error0.backtrace).to eq("a\nlist\nof")
       end
 
-      it "converts backtrace arrays into strings w newlines" do
-        subject.record_error!(batch_invoice, task: "The task", 
-                                             message: "The message", 
-                                             backtrace: ["an", "list", "of"])
+      it "converts backtrace arrays into strings w/ newlines" do
+        subject.record_error!(batch_invoice, task: "The task",
+                                             message: "The message",
+                                             exception: exception)
         batch_invoice.reload
         error0 = batch_invoice.batch_invoice_errors.first
-        expect(error0.backtrace).to eq("an\nlist\nof")
+        expect(error0.backtrace).to eq("a\nlist\nof")
       end
     end
 

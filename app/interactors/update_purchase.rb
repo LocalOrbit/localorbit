@@ -91,7 +91,7 @@ class UpdatePurchase
 
   def process_exception(exception, type, amount, account, parent_payment=nil)
 
-    Rollbar.info(e)
+    Rollbar.info(exception)
     if type == "order"
       record_charge(amount, nil, account)
     else

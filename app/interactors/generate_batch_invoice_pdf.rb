@@ -78,7 +78,7 @@ class GenerateBatchInvoicePdf
           backtrace: exception.backtrace.join("\n"),
           order: order)
 
-        Rollbar.error(e)
+        Rollbar.error(exception)
       end
     end
   end
