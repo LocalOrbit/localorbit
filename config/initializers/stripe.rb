@@ -5,6 +5,7 @@ Rails.configuration.stripe = {
 }
 
 Stripe.api_key = Rails.configuration.stripe[:secret_key]
+Stripe.api_version = '2015-04-07'
 
 StripeEvent.configure do |events|
   events.all PaymentProvider::Handlers::AsyncHandler.new
