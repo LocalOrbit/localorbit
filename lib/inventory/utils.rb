@@ -73,7 +73,7 @@ module Inventory
       end
 
       def upsert_lot(product, lot_number, quantity, split_op = nil)
-        lot = Lot.where("product_id = ? AND number = ? AND EXTRACT(YEAR FROM created_at) = ?", product.id, lot_number, Time.now.year.to_s).first
+        lot = Lot.where("product_id = ? AND number = ?", product.id, lot_number).first
         if lot.present? && !quantity.nil?
           if split_op
             new_qty = lot.quantity + quantity

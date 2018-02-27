@@ -104,8 +104,8 @@ group :doc do
 end
 
 group :development do
+  gem 'bootsnap' # TODO: Remove this when we upgrade to rails 5.2
   gem 'bullet'
-  gem 'letter_opener'
   gem 'ultrahook'
   gem 'spring'
   gem 'spring-commands-rspec'
@@ -116,6 +116,12 @@ group :development do
   gem 'rails_view_annotator'
   gem 'mailcatcher'
   gem 'unicorn'
+
+  # profiling, see https://github.com/MiniProfiler/rack-mini-profiler#installation
+  gem 'rack-mini-profiler'
+  gem 'memory_profiler'
+  gem 'flamegraph'
+  gem 'stackprof'
 end
 
 group :development, :test do

@@ -123,11 +123,7 @@ class OrderItem < ActiveRecord::Base
   def product_availability
     return unless product.present? && !order.nil? && order.market.is_buysell_market?
 
-    if !order.nil?
-      market_id = order.market.id
-      organization_id = order.organization.id
-    end
-    qty = product.lots_by_expiration.available_specific(Time.current.end_of_minute, market_id, organization_id).sum(:quantity)
+    qty = product.lots_by_expiration.available_specific(Time.current.end_of_minute, order.market_id, order.organization_id).sum(:quantity)
     #if qty == 0
     qty += product.lots_by_expiration.available_general(Time.current.end_of_minute).sum(:quantity)
     #end
@@ -172,8 +168,18 @@ class OrderItem < ActiveRecord::Base
   end
 
   def remove_consignment_transaction
+    # If an order item is to be removed, any associated consignment transaction is retrieved.
+    # If there is a PO lot associated (which indicates delivery of the PO item), it must be zeroed out.
+    # Finally, the consignment transaction is soft deleted.
+
     ct = ConsignmentTransaction.where(order_id: self.order.id, order_item_id: self.id, deleted_at: nil).first
+
     if !ct.nil?
+      if !ct.lot_id.nil? && ct.transaction_type == 'PO'
+        lot = Lot.find_by_id(ct.lot_id)
+        lot.quantity = 0
+        lot.save
+      end
       ct.soft_delete
     end
   end
@@ -289,10 +295,10 @@ class OrderItem < ActiveRecord::Base
   end
 
   def return_inventory_amount(amount)
-    if !po_lot_id.nil? && po_lot_id > 0 # Decrement specific consignment lot
+    if !po_lot_id.nil? && po_lot_id > 0 # Increment specific consignment lot
       lot = Lot.find(po_lot_id)
       num_to_return = [lot.quantity, amount].min
-      #lot.decrement!(:quantity, num_to_return)
+      lot.increment!(:quantity, num_to_return)
     end
 
     if order.market.is_buysell_market? || (order.market.is_consignment_market? && (delivery_status == 'pending' || delivery_status == 'canceled'))
@@ -353,14 +359,14 @@ class OrderItem < ActiveRecord::Base
   end
 
   def share_of_credit
-    seller = find_applicable_seller
+    seller_id = self.product.organization_id
     if order.credit && order.credit.paying_org == nil
       if order.credit.amount_type == "fixed"
         (order.credit_amount / (order.sellers.count || 1)).round 2
       else
         (gross_total / order.gross_total * order.credit_amount).round 2
       end
-    elsif seller.nil? || order.credit.paying_org.id == seller.id
+    elsif order.credit && seller && order.credit.paying_org.id == seller_id
       # When a user belongs to more than one organization that are on the order,
       # the display will be confusing because they won't know which organization
       # is paying the credit.
@@ -368,17 +374,5 @@ class OrderItem < ActiveRecord::Base
     else
       0
     end
-  end
-
-  def find_applicable_seller
-    if order.credit && order.credit.paying_org
-      order.sellers.each do |s|
-        if s.id == order.credit.paying_org.id
-          s
-        end
-      end
-      nil
-    end
-    nil
   end
 end

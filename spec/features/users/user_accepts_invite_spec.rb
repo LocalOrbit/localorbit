@@ -1,6 +1,6 @@
 require "spec_helper"
 
-feature "Accepting an invitation to an organization" do
+feature "User accepts an invitation to an organization" do
 
   let(:org) { create(:organization) }
   # let(:inviter) { create(:user, :market_manager) }
@@ -11,7 +11,7 @@ feature "Accepting an invitation to an organization" do
     user.invite!
   end
 
-  scenario "a user signs up and sets their name & password" do
+  scenario "user signs up, sets name and password" do
     visit accept_user_invitation_path(invitation_token: user.raw_invitation_token)
     fill_in "Name", with: "Sam Body"
     fill_in "Email", with: "sam@example.com"

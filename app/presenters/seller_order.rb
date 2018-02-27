@@ -43,7 +43,7 @@ class SellerOrder
       if credit.amount_type == "fixed"
         (@order.credit_amount / (@order.sellers.count || 1)).round 2
       else
-        (gross_total / @order.gross_total * @order.credit_amount).round 2
+        (gross_total / @order.gross_total * @order.credit_amount).round 2 #/
       end
     elsif credit.paying_org == @seller || (@seller.is_a?(User) && @seller.member_of_organization?(credit.paying_org))
       # When a user belongs to more than one organization that are on the order,

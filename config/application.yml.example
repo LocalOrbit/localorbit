@@ -5,6 +5,7 @@ DOMAIN: "localtest.me" # localtest.me points to 127.0.0.1 and lets us use subdom
 ZENDESK_EMAIL: "service@localorbit.com"
 ZENDESK_SHARED_SECRET: "fake"
 ZENDESK_SUBDOMAIN: "localorbit"
+SUPPORT_PHONE_NUMBER: '(800) 598-3351'
 UPLOADS_BUCKET: <S3 upload bucket (dev)>
 UPLOADS_ACCESS_KEY_ID: <S3 upload access key id>
 UPLOADS_SECRET_ACCESS_KEY: <S3 upload secret access key>
@@ -36,3 +37,5 @@ QB_ACCESS_TOKEN_SECRET: <QB access token secret>
 QB_REALM_ID: <QB realm id>
 development:
   STRIPE_DEV_MARKET_ACCOUNT_ID: <stripe user id of market that did oauth flow, see docs/stripe.md>
+  MAILTRAP_USERNAME: <MT username>
+  MAILTRAP_PASSWORD: <MT secret>

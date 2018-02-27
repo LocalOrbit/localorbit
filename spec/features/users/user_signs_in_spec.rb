@@ -1,6 +1,6 @@
 require "spec_helper"
 
-feature "User signing in" do
+feature "User signs in" do
   let!(:admin) { create(:user, :admin) }
   let!(:market2) { create(:market) }
   let!(:org2) { create(:organization, markets: [market2]) }
@@ -8,7 +8,7 @@ feature "User signing in" do
 
   let(:session_cookie_name) { "_LocalOrbit_session_data_test" }
 
-  scenario "A user can sign in" do
+  scenario 'with valid credentials' do
     visit "/"
 
     fill_in "Email", with: admin.email
@@ -16,9 +16,10 @@ feature "User signing in" do
     click_button "Sign In"
 
     expect(page).to have_text("Dashboard")
+    expect(page.current_path).to eq(dashboard_path)
   end
 
-  scenario "A returning users login is remembered" do
+  scenario 'as returning user and login remembered' do
     visit "/"
     fill_in "Email", with: admin.email
     fill_in "Password", with: "password"
@@ -32,7 +33,7 @@ feature "User signing in" do
   end
 
   # Make sure the cookie jar hack still works
-  scenario "A returning users session is remembered" do
+  scenario 'as returning user and session is remembered' do
     visit "/"
     fill_in "Email", with: admin.email
     fill_in "Password", with: "password"
@@ -44,7 +45,7 @@ feature "User signing in" do
     expect(page).to_not have_text("Dashboard")
   end
 
-  scenario "A user can sign out" do
+  scenario "user signs out" do
     sign_in_as admin
     visit "/"
     click_link "Sign Out"
@@ -53,14 +54,17 @@ feature "User signing in" do
     expect(page).to have_text("Please Sign In")
   end
 
-  scenario "After logging in an admin should be on the dashboard" do
-    visit "/"
+  scenario 'user attempts to sign in with invalid credentials' do
+    user = build :user
 
-    fill_in "Email", with: admin.email
-    fill_in "Password", with: "password"
-    click_button "Sign In"
+    visit new_user_session_path
 
-    expect(page.current_path).to eq(dashboard_path)
+    fill_in 'Email', with: user.email
+    fill_in 'Password', with: user.password
+    click_button 'Sign In'
+
+    expect(page).to have_text 'Invalid email or password.'
+    expect(page).to have_no_link 'Sign Out'
   end
 
   scenario "After logging in through the organizations page an admin should be on the organizations page" do

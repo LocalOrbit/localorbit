@@ -158,8 +158,8 @@ describe User do
     end
 
     it 'admin? returns true if role is "admin"' do
-      user = build(:user, :admin)
-      org = build(:organization, :admin)
+      user = create(:user, :admin)
+      org = create(:organization, :admin)
       user.organizations << org
 
       #user.role = "admin"
@@ -170,14 +170,6 @@ describe User do
       user = build(:user, :supplier)
       org = build(:organization, :seller)
       user.organizations << org
-
-      #user.role = "user"
-      expect(user.admin?).to be false
-
-      #user.role = "manager"
-      expect(user.admin?).to be false
-
-      #user.role = "something else"
       expect(user.admin?).to be false
     end
 
@@ -194,12 +186,23 @@ describe User do
         user = create(:user, :buyer, organizations: [create(:organization, can_sell: false)])
         expect(user).not_to be_seller
       end
+
+      it "returns false if user is an admin" do
+        market_org = create(:organization, :market)
+        market = create(:market, organization: market_org)
+        org = create(:organization, :seller, can_sell: true, markets: [market])
+        user = create(:user, :supplier, organizations: [org])
+        # HACK, set this up properly
+        allow(user).to receive(:admin?).and_return(true)
+        expect(user).not_to be_seller
+      end
+
     end
 
     context "#buyer_only?" do
       it "returns true if the user is only a buyer" do
-        user = build(:user, :buyer)
-        org = build(:organization, :buyer)
+        user = create(:user, :buyer)
+        org = create(:organization, :buyer)
         user.organizations << org
         expect(user).to be_buyer_only
       end
@@ -217,7 +220,10 @@ describe User do
       end
 
       it "returns false if the user is an admin" do
-        user = build(:user)
+        user = create(:user, :buyer)
+        org = create(:organization, :buyer)
+        user.organizations << org
+        # HACK, set this up properly
         allow(user).to receive(:admin?).and_return(true)
         expect(user).not_to be_buyer_only
       end
