@@ -63,7 +63,7 @@ class OrderDecorator < Draper::Decorator
   end
 
   def display_payment_method
-    if payment_method == 'po'
+    if payment_method == 'po' || payment_method == 'purchase order'
       'Invoice'
     else
       payment_method.titleize
