@@ -375,7 +375,7 @@ class User < ActiveRecord::Base
   end
 
   def multi_market_membership?
-    markets.count > 1
+    markets.active.count > 1
   end
 
   def cross_sold_products

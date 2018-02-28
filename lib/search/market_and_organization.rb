@@ -5,7 +5,7 @@ module Search
     end
 
     def selling_markets
-      @user.markets.order(:name)
+      @user.markets.active.order(:name)
     end
 
     def organization_id
