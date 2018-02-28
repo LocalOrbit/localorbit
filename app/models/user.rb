@@ -435,10 +435,10 @@ class User < ActiveRecord::Base
       if admin_market
         admin_market
       else
-        markets.first
+        markets.active.first
       end
     else
-      markets.first
+      markets.active.first
     end
   end
 
