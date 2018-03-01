@@ -18,7 +18,7 @@ class InitializeBatchInvoice
                                                                    exception: e)
 
       rescue StandardError => e
-        # Fuhgetaboutit
+        Rollbar.e(e, 'FIX THIS')
       end
       fail!(message: "There was an error trying to preview these invoices.")
     end
