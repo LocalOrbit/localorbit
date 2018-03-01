@@ -29,8 +29,8 @@ class FlipMarketToStripe
 
           # @market.organizations.update_all(allow_ach: false) # XXX Not yet.  Let's leave this as knowledge, overridden by the fact that the payment provider doesn't support ACH.
         end
-          
-      rescue Exception => ex
+
+      rescue StandardError => ex
         log "!! ERROR FLIPPING MARKET TO STRIPE ACCOUNT - #{@market.stripe_account_id}: #{ex.message}"
       end
     else
@@ -59,7 +59,7 @@ class FlipMarketToStripe
     log " Flipping market to use Stripe."
     log ""
     log " Rails.env: #{Rails.env}"
-    log " Stripe key: #{ENV['STRIPE_PUBLISHABLE_KEY']}" 
+    log " Stripe key: #{ENV['STRIPE_PUBLISHABLE_KEY']}"
     log "="*100
     if @dry_run
       log ""
@@ -84,7 +84,7 @@ class FlipMarketToStripe
   def close_log_file
     begin
       @log_file.close if @log_file
-    rescue Exception => e
+    rescue StandardError => e
       # nothing
     end
     @log_file = nil

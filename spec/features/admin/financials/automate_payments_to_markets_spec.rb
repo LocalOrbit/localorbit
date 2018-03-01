@@ -3,7 +3,7 @@ require "spec_helper"
 feature "Payment of hub and delivery fees to Markets on the Automate plan", :js  do
 
   include_context "the mini market"
-  
+
   let(:order_time) { Time.zone.parse("May 20, 2014 2:00 PM") }
   let(:deliver_time) { Time.zone.parse("May 25, 2014 3:30 PM") }
   let(:now_time) { Time.zone.parse("May 30, 2014 1:15 AM") }
@@ -12,7 +12,7 @@ feature "Payment of hub and delivery fees to Markets on the Automate plan", :js 
 
   let!(:m1) { Generate.market_with_orders(
                 market_name: "Four Pigs",
-                order_time: order_time, 
+                order_time: order_time,
                 deliver_time: deliver_time,
                 paid_with: "credit card",
                 delivered: "delivered",
@@ -22,7 +22,7 @@ feature "Payment of hub and delivery fees to Markets on the Automate plan", :js 
   )}
   let!(:m2) { Generate.market_with_orders(
                 market_name: "Too Hoss",
-                order_time: order_time, 
+                order_time: order_time,
                 deliver_time: deliver_time,
                 paid_with: "credit card",
                 delivered: "delivered",
@@ -52,7 +52,7 @@ feature "Payment of hub and delivery fees to Markets on the Automate plan", :js 
   end
 
   it "displays all pending Market payments info and lets you pay one of the Markets" do
-    begin 
+    begin
       visit admin_financials_automate_market_payments_path
       expect(page).to have_content("Make Payments to Markets on Automate Plan")
 
@@ -66,12 +66,12 @@ feature "Payment of hub and delivery fees to Markets on the Automate plan", :js 
 
       verify_market_payment_section(
         market: market_b,
-        market_name: market_b.name, 
+        market_name: market_b.name,
         orders: [
           :order_number,        :owed,   :order_total, :delivery_fee, :market_fee,
-          order_b.order_number, "$0.29", "$0.89",      "$0.19",       "$0.10", 
-          # ...there are more rows but we're not looking at all 
-        ], 
+          order_b.order_number, "$0.29", "$0.89",      "$0.19",       "$0.10",
+          # ...there are more rows but we're not looking at all
+        ],
         totals: {
           owed: "$0.57",
           order_total: "$1.78",
@@ -88,10 +88,10 @@ feature "Payment of hub and delivery fees to Markets on the Automate plan", :js 
         market_name: market_a.name,
         orders: [
           :order_number,         :owed,   :order_total, :delivery_fee, :market_fee,
-          order_a2.order_number, "$0.23", "$0.83",      "$0.13",       "$0.10", 
-          order_a4.order_number, "$0.23", "$0.83",      "$0.13",       "$0.10", 
-          # ...there are more rows but we're not looking at all 
-        ], 
+          order_a2.order_number, "$0.23", "$0.83",      "$0.13",       "$0.10",
+          order_a4.order_number, "$0.23", "$0.83",      "$0.13",       "$0.10",
+          # ...there are more rows but we're not looking at all
+        ],
         totals: {
           owed: "$0.68",
           order_total: "$2.49",
@@ -156,13 +156,13 @@ feature "Payment of hub and delivery fees to Markets on the Automate plan", :js 
       # Make sure we got em both:
       expect(payments.keys).to contain_exactly(:market_fee_payment, :delivery_fee_payment), "Didn't capture the payments we wanted to see"
       # expect(payments.keys).to contain_exactly(:market_fee_payment), "Didn't capture the payments we wanted to see"
-        
+
       market_fee_payment = payments[:market_fee_payment]
       delivery_fee_payment = payments[:delivery_fee_payment]
 
       #
       # Verify Market Fee Payment details:
-      # 
+      #
       expect(market_fee_payment.payment_type).to eq "hub fee"
       expect(market_fee_payment.payment_method).to eq "ach"
       expect(market_fee_payment.status).to eq "pending"
@@ -181,10 +181,10 @@ feature "Payment of hub and delivery fees to Markets on the Automate plan", :js 
       expect(mail.body).to match(/payment was sent to.*#{market_a.name}/i)
       expect(mail.body).to match(/#{Regexp.escape(expected_market_fee_str)}/)
       expect(mail.body).to match(/Visit #{expected_market.name}/)
-      
+
       #
       # Verify Delivery Fee Payment details:
-      # 
+      #
       expect(delivery_fee_payment.payment_type).to eq "delivery fee"
       expect(delivery_fee_payment.payment_method).to eq "ach"
       expect(delivery_fee_payment.status).to eq "pending"
@@ -205,7 +205,7 @@ feature "Payment of hub and delivery fees to Markets on the Automate plan", :js 
       expect(mail.body).to match(/#{Regexp.escape(expected_delivery_fee_str)}/)
       expect(mail.body).to match(/Visit #{expected_market.name}/)
 
-    rescue Exception => e
+    rescue StandardError => e
       puts ">>>>>> Payments to Market SPEC FAILED: #{e.message} <<<<<<<<"
       puts ">>>>>>BODY:\n#{page.body}"
       puts ">>>>>> m1:"
@@ -257,7 +257,7 @@ feature "Payment of hub and delivery fees to Markets on the Automate plan", :js 
   end
 
   def market_bank_account(market, name_matcher)
-    acct = market.bank_accounts.detect { |a| a.display_name =~ /#{name_matcher}/ } 
+    acct = market.bank_accounts.detect { |a| a.display_name =~ /#{name_matcher}/ }
     expect(acct).to be, "market #{market.name} doesn't have a BankAccount whose display_name matches #{name_matcher.inspect}.  It has names #{market.bank_accounts.map {|ba|ba.display_name}} from #{market.bank_accounts.to_a.inspect}"
     acct
   end

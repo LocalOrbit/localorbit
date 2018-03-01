@@ -156,7 +156,7 @@ describe PaymentProvider::Stripe do
         begin
           subject.charge_for_order(charge_params)
           raise ".charge_for_order should have raised an error"
-        rescue Exception => e
+        rescue StandardError => e
           # TODO: refactor this area, as the following hashes are duplicated in a few places in this file.
           expected_data = {
             error_json_body: err.json_body,
@@ -199,7 +199,7 @@ describe PaymentProvider::Stripe do
         begin
           subject.charge_for_order(charge_params)
           raise ".charge_for_order should have raised an error"
-        rescue Exception => e
+        rescue StandardError => e
           # TODO: refactor this area, as the following hashes are duplicated in a few places in this file.
           expected_data = {
             charge_params: {

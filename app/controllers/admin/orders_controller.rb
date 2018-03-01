@@ -405,11 +405,7 @@ class Admin::OrdersController < AdminController
   def generate_consignment_printable(orders, printable_type)
     printable = ConsignmentPrintable.create!(user: current_user)
 
-    if Rails.env.development?
-      context = GenerateConsignmentPrintablePdf.perform(printable: printable, type: printable_type, orders: orders, request: RequestUrlPresenter.new(request))
-    else
-      context = GenerateConsignmentPrintablePdf.delay.perform(printable: printable, type: printable_type, orders: orders, request: RequestUrlPresenter.new(request))
-    end
+    context = GenerateConsignmentPrintablePdf.delay.perform(printable: printable, type: printable_type, orders: orders, request: RequestUrlPresenter.new(request))
 
     redirect_to action: :printable_show, id: printable.id
   end

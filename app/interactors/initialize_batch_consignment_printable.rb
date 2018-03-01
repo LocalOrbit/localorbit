@@ -18,7 +18,7 @@ class InitializeBatchConsignmentPrintable
                                                                    exception: e)
 
       rescue StandardError => e
-        # Fuhgetaboutit
+        Rollbar.e(e, 'FIX THIS ALSO')
       end
       fail!(message: "There was an error trying to generate these docs.")
     end

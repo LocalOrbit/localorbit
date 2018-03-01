@@ -10,7 +10,7 @@ class SubscriptionsController < ApplicationController
 
   def unsubscribe
     get_token_and_subscription_type
-  rescue Exception => e
+  rescue StandardError => e
     redirect_to confirm_unsubscribe_subscriptions_path(skip:true)
   end
 

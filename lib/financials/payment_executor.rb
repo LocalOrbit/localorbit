@@ -40,7 +40,7 @@ module Financials
           end
 
           payment
-        rescue Exception => e 
+        rescue StandardError => e
           handle_payment_error payment, e.message, e.try(:category_code)
           payment
         end
@@ -62,4 +62,4 @@ module Financials
     end
   end
 end
-          
+
