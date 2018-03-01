@@ -25,6 +25,7 @@ gem 'active_record_union'
 gem 'acts_as_geocodable'
 gem 'audited-activerecord'
 gem 'awesome_nested_set'
+gem 'bootsnap', require: false # TODO: Remove this when we upgrade to rails 5.2
 gem 'stripe'
 gem 'color'
 gem 'countries'
@@ -123,7 +124,6 @@ group :development do
 end
 
 group :development, :test do
-  gem 'bootsnap', require: false # TODO: Remove this when we upgrade to rails 5.2
   gem 'rspec-rails', '~> 3.0'
   gem 'rspec-collection_matchers'
   gem 'rspec_junit_formatter', :git => 'https://github.com/circleci/rspec_junit_formatter.git'
