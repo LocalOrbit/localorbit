@@ -112,6 +112,19 @@ module Admin
       it_behaves_like "an action restricted to admin, market manager, member", lambda {
         delete :destroy, organization_id: org.id, location_ids: []
       }
+
+      it 'redirects to organization locations path' do
+        sign_in member
+        delete :destroy, organization_id: org.id, location_ids: [location.id]
+        expect(response).to redirect_to(admin_organization_locations_path(org))
+      end
+
+      it 'calls DeleteLocations' do
+        sign_in member
+        expect(DeleteLocations).to receive(:perform)
+          .and_return(double("interactor", success?: true, locations: [location]))
+        delete :destroy, organization_id: org.id, location_ids: [location.id]
+      end
     end
   end
 end

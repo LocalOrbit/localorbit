@@ -277,8 +277,14 @@ class ApplicationController < ActionController::Base
   end
 
   def require_organization_location
-    return unless current_organization && current_organization.locations.visible.none? && session[:order_id].nil?
-    redirect_to [:new_admin, current_organization, :location], alert: "You must enter an address for this organization before you can shop"
+    # Bail if no current org or in "Add items to order" mode
+    return unless current_organization && session[:order_id].nil?
+
+    if current_organization.locations.visible.none?
+      redirect_to [:new_admin, current_organization, :location], alert: "You must enter an address for this organization before you can shop"
+    elsif current_organization.locations.visible.default_shipping.nil? || current_organization.locations.visible.default_billing.nil?
+      redirect_to [:admin, current_organization, :locations], alert: "You must select a default billing and shipping address for this organization before you can shop"
+    end
   end
 
   def require_manual_delivery_schedule
