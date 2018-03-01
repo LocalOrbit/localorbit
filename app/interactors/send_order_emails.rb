@@ -16,7 +16,8 @@ class SendOrderEmails
           begin
             pdf = PackingLists::Generator.generate_pdf(request: request, pack_lists: @pack_lists, delivery: @delivery)
           rescue RuntimeError => e
-            Rollbar.error(e, 'Failed to generate packing list PDF for seller order confirmation email', :order_id => order.id)
+            pdf = nil
+            Rollbar.error(e, 'Failed to generate packing list PDF for seller order confirmation email', order_id: order.id)
           end
 
           csv = PackingLists::Generator.generate_csv(pack_lists: @pack_lists)

@@ -19,7 +19,8 @@ class SendUpdateEmails
           begin
             pdf = PackingLists::Generator.generate_pdf(request: request, pack_lists: @pack_lists, delivery: @delivery)
           rescue RuntimeError => e
-            Rollbar.error(e, 'Failed to generate packing list PDF for seller order updated email', :order_id => order.id)
+            pdf = nil
+            Rollbar.error(e, 'Failed to generate packing list PDF for seller order updated email', order_id: order.id)
           end
 
           csv = PackingLists::Generator.generate_csv(pack_lists: @pack_lists)
@@ -36,7 +37,8 @@ class SendUpdateEmails
           begin
             pdf = PackingLists::Generator.generate_pdf(request: request, pack_lists: @pack_lists, delivery: @delivery) if !@pack_lists.sellers.empty?
           rescue RuntimeError => e
-            Rollbar.error(e, 'Failed to generate packing list PDF for seller order item removed email', :order_id => order.id)
+            pdf = nil
+            Rollbar.error(e, 'Failed to generate packing list PDF for seller order item removed email', order_id: order.id)
           end
 
           csv = PackingLists::Generator.generate_csv(pack_lists: @pack_lists) if !@pack_lists.sellers.empty?
