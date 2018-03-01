@@ -40,11 +40,8 @@ class CreateTemporaryCreditCard
     @org.balanced_customer.add_card(temp_card.balanced_uri)
     context[:order_params]["credit_card"]["id"] = temp_card.id
   rescue => e
-    if Rails.env.test? || Rails.env.development?
-      raise e
-    else
-      #Honeybadger.notify_or_ignore(e)
-    end
+    Rollbar.error(e)
+    raise e if Rails.env.test? || Rails.env.development?
     context[:order].errors.add(:credit_card, "was denied by the payment processor.")
     context.fail!
   end

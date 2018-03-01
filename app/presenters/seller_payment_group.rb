@@ -2,7 +2,6 @@ class SellerPaymentGroup
   attr_reader :orders
   attr_reader :organization
 
-  # This goes on the model
   def self.for_scope(scope, seller_id=nil)
     grouped_orders = scope.group_by {|order| [order.seller_id, order.market_id] }
 
@@ -29,8 +28,12 @@ class SellerPaymentGroup
     @organization.id
   end
 
+  def market
+    @market ||= @orders.first.market
+  end
+
   def market_name
-    @market_name ||= @orders.first.market.name
+    market.name
   end
 
   def name
@@ -47,10 +50,7 @@ class SellerPaymentGroup
 
   def owed
     # .each.sum forces the use of ruby sum instead of a sql sum
-    if(@owed)
-      return @owed
-    end
-    @owed = @orders.sum do |o|
+    @owed ||= @orders.sum do |o|
       total = o.items.each.sum(&:seller_net_total)
       total -= o.credit_amount
       total

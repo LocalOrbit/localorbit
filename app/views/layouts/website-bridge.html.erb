@@ -14,7 +14,7 @@
 <head>
 	<meta charset="UTF-8" />
 	<title>Get Started - Local Orbit</title>
-  
+
   <!--[if lt IE 9]>
   <script src="//localorbit.com/wp-content/themes/Divi/js/html5.js" type="text/javascript"></script>
   <![endif]-->
@@ -40,7 +40,7 @@
 
 	<style type="text/css" id="et-custom-css"> @media only screen and (min-width: 1024px) {.menu-item-3464 span {padding: 4px 15px; background: #7ebec5; color: #FFF; border-radius: 10px; } } @media only screen and (max-width: 980px) {.et_pb_fullwidth_menu .fullwidth-menu-nav, nav#top-menu-nav {display: block !important; } } @media only screen and (max-width: 767px) {nav#top-menu-nav,av, #et-top-navigation {width: 100%; } h3 {font-size:60px; word-wrap: break-word; } } @media only screen and (max-width: 420px) {h3 {font-size:60px; word-wrap: break-word; } } #logo {max-height: 95%; } .sub-menu {width: 50% !important; margin-left: 50%; } .fa {line-height: inherit !important; } .fa-ul {list-style-type: none !important; } .fa-li {top: 0px !important; } .logo_container {padding: 10px; } .menu-item-3532 span {padding: 4px 15px; background: #7ebec5; border-radius: 10px; } #top-menu li.mega-menu > ul > li > a:first-child{border: none; } .sub-menu li a span {font-weight: normal; border: none; } .network-icon .et_pb_main_blurb_image img {border-radius: 50%; border: 3px solid #FFF; padding: 20px; width: 150px; } .truck-icon .et_pb_main_blurb_image img {border-radius: 50%; border: 3px solid #FFF; padding: 20px; width: 150px; } </style> <style> @-ms-viewport{ width: auto !important; } </style>
 
-  <style type="text/css"> 
+  <style type="text/css">
     /* All this is for fixing the footer in an intellegent way... */
     html{height: 100%; }
     body{position: relative; background-image: none !important; background-color: #FFFFFF !important; min-height: 100%; }
@@ -48,7 +48,7 @@
     #et-main-area{min-height: 100%; position: relative; padding-bottom: 90px; }
     #main-footer{position: absolute; bottom: 0px; width: 100%; clear: both; }
   </style>
-  
+
   <script type="text/javascript" src="https://www.google.com/jsapi"></script>
   <!-- ================================================= -->
   <%= tag :meta, :name => "stripe-key", :content => Rails.configuration.stripe[:publishable_key] %>
@@ -145,7 +145,7 @@
         .nav--main > a:hover {
           background-color: <%= current_market.text_color -%>;
         }
-        
+
         #admin-nav a:hover {
            color: inherit;
         }
@@ -169,17 +169,17 @@
 		<div id="top-header">
 			<div class="container clearfix">
 				<div id="et-info">
-					<span id="">734.545.8100</span>&nbsp;&nbsp;
+					<span id=""><%= Figaro.env.support_phone_number %></span>&nbsp;&nbsp;
 					<a href="mailto:service@localorbit.com"><span id="">service@localorbit.com</span></a>
 				</div> <!-- #et-info -->
 				<div id="et-secondary-menu">
 					<ul id="et-secondary-nav" class="gfcustomizedmenu-secondary-menu menu"><li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-3532"><a href="//localorbit.com/demosignup/"><span class="gfcustomizedmenuitem gfcustomizedmedmenuitem-secondary-menu">Sign Up for a Demo</span></a></li>
 						<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-3632"><a target="_blank" href="https://app.localorbit.com/users/sign_in"><span class="gfcustomizedmenuitem gfcustomizedmedmenuitem-secondary-menu">Customer Log In</span></a></li>
-					</ul>				
+					</ul>
 				</div> <!-- #et-secondary-menu -->
 			</div> <!-- .container -->
 		</div> <!-- #top-header -->
-	
+
 		<header id="kxm-main-header" class="et-fixed-header">
 			<div class="container clearfix et_menu_container">
 				<div class="logo_container" style="z-index: 2">
@@ -228,9 +228,9 @@
 
 				<article class="page type-page status-publish hentry">
 
-			<%# === Content rendered here === %> 
+			<%# === Content rendered here === %>
 			<%= yield %>
-			<%# ============================= %> 
+			<%# ============================= %>
 
 				</article> <!-- .et_pb_post -->
         <div id="push"></div>

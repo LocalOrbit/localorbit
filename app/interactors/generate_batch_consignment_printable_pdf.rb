@@ -11,25 +11,21 @@ class GenerateBatchConsignmentPrintablePdf
         tempfile = Tempfile.new("tmp-#{type}-#{order.order_number}")
         case type
           when "receipt"
-            pdf_result = ConsignmentReceipts::ConsignmentReceiptPdfGenerator.generate_pdf(request: request, order: order, path: tempfile.path)
-
+            ConsignmentReceipts::ConsignmentReceiptPdfGenerator.generate_pdf(request: request, order: order, path: tempfile.path)
           when "pick_list"
-            pdf_result = ConsignmentPickLists::ConsignmentPickListPdfGenerator.generate_pdf(request: request, order: order, path: tempfile.path)
-
+            ConsignmentPickLists::ConsignmentPickListPdfGenerator.generate_pdf(request: request, order: order, path: tempfile.path)
           when "invoice"
-            pdf_result = ConsignmentInvoices::ConsignmentInvoicePdfGenerator.generate_pdf(request: request, order: order, path: tempfile.path)
-
+            ConsignmentInvoices::ConsignmentInvoicePdfGenerator.generate_pdf(request: request, order: order, path: tempfile.path)
           else
-            nil
+            raise ArgumentError, 'No pdf type provided'
         end
         printable_tempfiles << tempfile
 
-      rescue Exception => e
+      rescue StandardError => e
         BatchConsignmentPrintableUpdater.record_error!(batch_consignment_printable,
                                                      task: "Generating printable PDF",
                                                      message: "Unexpected exception in ConsignmentPrintablePdfGenerator",
-                                                     exception: e.inspect,
-                                                     backtrace: e.backtrace,
+                                                     exception: e,
                                                      order: order)
       end
 
@@ -42,12 +38,11 @@ class GenerateBatchConsignmentPrintablePdf
 
     BatchConsignmentPrintableUpdater.complete_generation!(batch_consignment_printable, pdf: merged_pdf, pdf_name: "#{type}.pdf")
 
-  rescue Exception => e
+  rescue StandardError => e
     BatchConsignmentPrintableUpdater.record_error!(batch_consignment_printable,
                                                  task: "Generating batch printable PDF",
                                                  message: "Unexpected exception while processing and merging receipt PDFs",
-                                                 exception: e.inspect,
-                                                 backtrace: e.backtrace)
+                                                 exception: e)
     BatchConsignmentPrintableUpdater.fail_generation!(batch_consignment_printable)
   end
 
@@ -82,29 +77,15 @@ class GenerateBatchConsignmentPrintablePdf
         )
       end
 
-      def record_error!(batch_consignment_printable, task:, message:, order: nil, exception: nil, backtrace: nil)
-        if backtrace and Array === backtrace
-          backtrace = backtrace.join("\n")
-        end
-
+      def record_error!(batch_consignment_printable, task:, message:, order: nil, exception: nil)
         batch_consignment_printable.batch_consignment_printable_errors.create(
             task: task,
             message: message,
-            exception: exception,
-            backtrace: backtrace,
+            exception: exception.inspect,
+            backtrace: exception.backtrace.join("\n"),
             order: order)
 
-        if Rails.env.production?
-          #Honeybadger.notify(
-          #    error_class: "Generate Batch Printable PDF",
-          #    error_message: message,
-          #    parameters: {
-          #        task: task,
-          #        message: message,
-          #        order_id: order ? order.id : nil,
-          #        exception: exception,
-          #        backtrace: backtrace })
-        end
+        Rollbar.error(e)
       end
     end
   end

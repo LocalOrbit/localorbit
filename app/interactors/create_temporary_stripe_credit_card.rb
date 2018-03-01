@@ -31,7 +31,7 @@ class CreateTemporaryStripeCreditCard
                      # create new card in Stripe and add to our Stripe customer
                      create_stripe_card_bank_account(@org, stripe_tok, credit_card_params)
                    end
-    
+
     if bank_account
       # create_stripe_card_bank_account could fail and return nil, in which case the context has been failed, and we cannot set the card for the transaction
       set_card_for_transaction(bank_account)
@@ -67,7 +67,7 @@ class CreateTemporaryStripeCreditCard
     rescue => e
       error_info = ErrorReporting.interpret_exception(e)
 
-      #Honeybadger.notify_or_ignore(error_info[:honeybadger_exception])
+      Rollbar.info(e)
 
       context[:order].errors.add(:credit_card, ": #{error_info[:application_error_message]}")
       context.fail!

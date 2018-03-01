@@ -26,9 +26,9 @@ module PaymentProvider
         # Mark the log as processed
         event_log.update(successful_at: Time.current.beginning_of_minute + 1.minute) if not event_log.successful_at
 
-      rescue Exception => e
+      rescue StandardError => e
         error_info = ErrorReporting.interpret_exception(e, "Error handling #{self.name} event from Stripe", {params: params})
-        #Honeybadger.notify_or_ignore(error_info[:honeybadger_exception])
+        Rollbar.info(e)
 
         Rails.logger.error "Error handling '#{event.type}' event. Stripe Event id: '#{event.id}', Exception: #{e.inspect}"
         WebhookMailer.delay.failed_event(e, event) if event.livemode

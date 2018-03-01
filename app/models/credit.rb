@@ -57,8 +57,9 @@ class Credit < ActiveRecord::Base
 
   def amount_cannot_exceed_paying_org_total
     if amount != nil && payer_type == Credit::ORGANIZATION && paying_org != nil
-      seller_items = order.items.select {|i| i.seller == paying_org }
-      seller_total = seller_items.sum(&:seller_net_total)
+      seller_total = order.items.joins(:product).
+        where(products: {organization_id: paying_org.id}).each.
+        sum(&:seller_net_total)
       if calculated_amount > seller_total
         errors.add(:amount, "total cannot exceed the net profit of the organization responsible for it")
       end

@@ -14,8 +14,8 @@ class AttemptPurchase
     # This is necessary to avoid busting up on POs.
     return unless PaymentProvider.supports_payment_method?(payment_provider, payment_method)
 
-    cart             = context[:cart] 
-    order            = context[:order] 
+    cart             = context[:cart]
+    order            = context[:order]
     order_params     = context[:order_params]
     buyer_organization = cart.organization
 
@@ -29,29 +29,29 @@ class AttemptPurchase
       charge = nil
       bank_account = nil
       if cart.total > 0
-        bank_account_id = if payment_method == "credit card" 
-                            order_params["credit_card"]["id"] 
+        bank_account_id = if payment_method == "credit card"
+                            order_params["credit_card"]["id"]
                           else
                             order_params["bank_account"]
                           end
         bank_account = buyer_organization.bank_accounts.find(bank_account_id)
 
-        charge = PaymentProvider.charge_for_order(payment_provider, 
-                                                  amount:             cart.total, 
+        charge = PaymentProvider.charge_for_order(payment_provider,
+                                                  amount:             cart.total,
                                                   buyer_organization: buyer_organization,
                                                   bank_account:       bank_account,
-                                                  market:             cart.market, 
+                                                  market:             cart.market,
                                                   order:              order)
       end
-      status = PaymentProvider.translate_status(payment_provider, 
-                                                charge: charge, 
-                                                amount: cart.total, 
+      status = PaymentProvider.translate_status(payment_provider,
+                                                charge: charge,
+                                                amount: cart.total,
                                                 payment_method: payment_method)
       #
       # Record payment
       #
       payment = PaymentProvider.create_order_payment(payment_provider,
-                                                     charge:         charge, 
+                                                     charge:         charge,
                                                      market_id:      cart.market_id,
                                                      bank_account:   bank_account,
                                                      payer:          buyer_organization,
@@ -60,11 +60,11 @@ class AttemptPurchase
                                                      status:         status,
                                                      order:          order)
 
-      
+
       #
       # Record metadata on the charge
-      #   (NOTE: This is NOT generic, but accidentally tilted toward Stripe's metadata structure. 
-      #   Which is ok since we're not actually pushing Balanced processing through this interactor.  
+      #   (NOTE: This is NOT generic, but accidentally tilted toward Stripe's metadata structure.
+      #   Which is ok since we're not actually pushing Balanced processing through this interactor.
       #   crosby 5/5/2015)
       #
       if charge
@@ -77,7 +77,7 @@ class AttemptPurchase
       #
       # Update status and payment method on the order and all items:
       #
-      order.update(payment_method: payment_method, 
+      order.update(payment_method: payment_method,
                    payment_status: status)
       order.items.update_all(payment_status: status)
 
@@ -86,14 +86,14 @@ class AttemptPurchase
       # Execute a refund if Payment didn't save to our database correctly:
       # TODO: Someday we should decide just how stupid this maneuver really is and see if there's an alternative.  crosby 5/6/2015
       if !payment.persisted?
-        PaymentProvider.fully_refund(payment_provider, 
-                                     charge: charge, 
+        PaymentProvider.fully_refund(payment_provider,
+                                     charge: charge,
                                      order: order)
         context.fail!
       end
 
     rescue => e
-      #Honeybadger.notify_or_ignore(e) unless Rails.env.test? || Rails.env.development?
+      Rollbar.info(e)
       raise e if Rails.env.development?
       context[:order].errors.add(:credit_card, "Payment processor error.")
       context.fail!
@@ -104,9 +104,9 @@ class AttemptPurchase
 
   def rollback
     if context[:payment]
-      PaymentProvider.fully_refund(context[:payment_provider], 
-                                   payment: context[:payment], 
-                                   order: context[:order]) 
+      PaymentProvider.fully_refund(context[:payment_provider],
+                                   payment: context[:payment],
+                                   order: context[:order])
       context.delete(:payment)
     end
   end

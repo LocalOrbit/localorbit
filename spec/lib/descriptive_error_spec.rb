@@ -22,7 +22,7 @@ describe DescriptiveError do
     root = nil
     begin
       raise "Boom!"
-    rescue Exception => e
+    rescue StandardError => e
       root = e
     end
 

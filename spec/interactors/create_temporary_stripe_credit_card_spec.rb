@@ -29,7 +29,7 @@ describe CreateTemporaryStripeCreditCard do
     let(:stripe_card_token) { create_stripe_token }
 
     before :all do
-      VCR.turn_off!  # CUT! CUT! CUT! 
+      VCR.turn_off!  # CUT! CUT! CUT!
     end
 
     after :all do
@@ -41,7 +41,7 @@ describe CreateTemporaryStripeCreditCard do
       before do
         order_params[:credit_card][:stripe_tok] = stripe_card_token.id
       end
-      let!(:stripe_customer) { 
+      let!(:stripe_customer) {
         create_stripe_customer(organization: org)
       }
 
@@ -49,7 +49,7 @@ describe CreateTemporaryStripeCreditCard do
       it "creates a new BankAccount and Stripe::Customer" do
         result = subject.perform(order_params: order_params, cart: cart, order: order)
         expect(result.success?).to be true
-        
+
         bank_account_id = result.context[:order_params]["credit_card"]["id"]
         expect(bank_account_id).to be
 
@@ -70,8 +70,8 @@ describe CreateTemporaryStripeCreditCard do
         order_params[:credit_card][:stripe_tok] = "NO GOOD"
       end
 
-      xit "reports an interpreted error to Honeybadger and fails the context" do
-        expect(Honeybadger).to receive(:notify_or_ignore)
+      it "reports an interpreted error to Rollbar and fails the context" do
+        expect(Rollbar).to receive(:info)
 
         result = subject.perform(order_params: order_params, cart: cart, order: order)
 
@@ -112,7 +112,7 @@ describe CreateTemporaryStripeCreditCard do
                                   last_four: "1111",
                                   bank_name: "Horse the Bank",
                                   name: "My Test Visa") }
-      
+
       it "sets that bank account" do
         order_params[:credit_card][:stripe_tok] = "not matter"
         result = subject.perform(order_params: order_params, cart: cart, order: order)

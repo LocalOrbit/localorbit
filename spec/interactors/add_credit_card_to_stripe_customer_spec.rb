@@ -39,7 +39,7 @@ describe AddCreditCardToStripeCustomer do
       application_error_message: "A bad happened."
     }}
 
-    it "clears the :bank_account from the context and reports the error to Honeybadger" do
+    it "clears the :bank_account from the context and reports the error to Rollbar" do
       expect(PaymentProvider::Stripe).to receive(:create_stripe_card_for_stripe_customer)
         .and_raise(creation_error)
 
@@ -49,10 +49,10 @@ describe AddCreditCardToStripeCustomer do
         .with(creation_error)
         .and_return(error_info)
 
-      #expect(Honeybadger).to receive(:notify_or_ignore).with(error_info[:honeybadger_exception])
+      expect(Rollbar).to receive(:info)
 
       result = subject.perform(params)
-      
+
       expect(result.success?).to be false
       expect(result.context[:error]).to eq error_info[:application_error_message]
       expect(result.context[:bank_account]).to be nil

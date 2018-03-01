@@ -75,7 +75,7 @@ class UpdatePurchase
 
     context[:type] = payment.payment_method
 
-    charge = PaymentProvider.charge_for_order(payment_provider, 
+    charge = PaymentProvider.charge_for_order(payment_provider,
       amount: amount,
       bank_account: account, market: order.market, order: order,
       buyer_organization: order.organization)
@@ -91,7 +91,7 @@ class UpdatePurchase
 
   def process_exception(exception, type, amount, account, parent_payment=nil)
 
-    #Honeybadger.notify_or_ignore(exception) unless Rails.env.test? || Rails.env.development?
+    Rollbar.info(exception)
     if type == "order"
       record_charge(amount, nil, account)
     else

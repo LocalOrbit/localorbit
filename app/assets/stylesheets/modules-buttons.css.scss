@@ -47,14 +47,14 @@ input[type=submit] {
     padding: 4px 10px;
     font-size: 14px;
   }
-  
+
   &#cancel-button {
     display:inline;
     a {
       padding:none;
      }
   }
-  
+
   &.alert {
     border-color: $alert_text;
     color: $alert_text;
@@ -70,7 +70,7 @@ input[type=submit] {
     color: $warning_text;
     background-color: $warning_bg;
   }
-  
+
   &#place-order-button{
     width:100%;
     margin:20px 0 55px;
@@ -142,6 +142,7 @@ input[type=reset],
 input[type=submit] {
   &.reset,
   &.cancel,
+  &.textlink,
   &.close,
   &.delete {
     padding: 0;
@@ -275,7 +276,7 @@ input[type=submit].btn--end {
 
   &:hover{
    color:#aaa;
-   box-shadow:none !important; 
+   box-shadow:none !important;
    cursor:text;
   }
 }

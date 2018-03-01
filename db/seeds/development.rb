@@ -116,7 +116,7 @@ sell_loc = Location.find_or_create_by!(name: "Default Location") {|loc|
 product = Product.find_or_create_by!(name: "Grapes") {|prod|
   prod.short_description = "These grapes are amazing!"
   prod.name = "Grapes"
-  prod.category_id = Category.where(depth: 2).last.id
+  prod.category_id = Category.find_by(name: 'Grapes').id
   prod.organization_id = sell_org.id
   prod.unit_id = Unit.last.id
 }
