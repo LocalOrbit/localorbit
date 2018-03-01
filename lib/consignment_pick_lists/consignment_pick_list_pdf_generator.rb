@@ -11,8 +11,8 @@ module ConsignmentPickLists
             market: order.market.decorate,
             user: nil
           },
-          pdf_settings: { 
-            page_size: "letter", 
+          pdf_settings: {
+            page_size: "letter",
             print_media_type: true
           },
           path: path

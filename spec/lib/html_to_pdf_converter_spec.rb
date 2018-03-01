@@ -19,7 +19,7 @@ describe HtmlToPdfConverter, :pdf do
     let(:path) { tempfile.path }
 
 
-    it "creates a PdfResult containing a File object refering to thePDF data" do
+    it "creates a PdfResult containing a File object refering to the PDF data" do
       pdf_result = subject.generate_pdf(html: html, pdf_settings: pdf_settings, path: path)
       expect(pdf_result).to be
       expect(pdf_result.data).to be
