@@ -103,7 +103,6 @@ group :doc do
 end
 
 group :development do
-  gem 'bootsnap' # TODO: Remove this when we upgrade to rails 5.2
   gem 'bullet'
   gem 'ultrahook'
   gem 'spring'
@@ -124,6 +123,7 @@ group :development do
 end
 
 group :development, :test do
+  gem 'bootsnap', require: false # TODO: Remove this when we upgrade to rails 5.2
   gem 'rspec-rails', '~> 3.0'
   gem 'rspec-collection_matchers'
   gem 'rspec_junit_formatter', :git => 'https://github.com/circleci/rspec_junit_formatter.git'
