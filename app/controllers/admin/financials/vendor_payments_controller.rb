@@ -17,6 +17,7 @@ module Admin
             @search_presenter = PaymentSearchPresenter.new(user: current_user, query: @query_params)
             @finder = Search::SellerPaymentGroupFinder.new(user: current_user, query: @query_params, current_market: current_market)
             @sellers = @finder.payment_groups
+            @payment_group_params = ActionController::Parameters.new(@query_params).permit(q: [:order_number_cont, :placed_at_date_gteq, :placed_at_date_lteq, :market_id_in, :payment_status_in])
           end
           format.csv do
             if ENV["USE_UPLOAD_QUEUE"] == "true"
