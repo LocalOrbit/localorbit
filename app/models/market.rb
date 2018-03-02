@@ -147,7 +147,7 @@ class Market < ActiveRecord::Base
 
   def stripe_account
     Stripe::Account.retrieve(stripe_account_id) if stripe_account_id
-  rescue Exception => e
+  rescue StandardError => e
     nil
   end
 

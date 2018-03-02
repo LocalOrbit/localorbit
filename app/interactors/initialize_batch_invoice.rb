@@ -9,17 +9,16 @@ class InitializeBatchInvoice
       else
         fail!(message: "Please select one or more invoices to preview.")
       end
-    rescue Exception => e
-      begin 
+    rescue StandardError => e
+      begin
         batch_invoice = BatchInvoice.create(user: user, orders:[], generation_status: BatchInvoice::GenerationStatus::Failed)
         GenerateBatchInvoicePdf::BatchInvoiceUpdater.record_error!(batch_invoice,
                                                                    task: "Initializing batch invoice",
                                                                    message: "Selected order ids: #{orders.map do |o| o.id end.inspect}",
-                                                                   exception: e.inspect,
-                                                                   backtrace: e.backtrace)
+                                                                   exception: e)
 
-      rescue Exception => e
-        # Fuhgetaboutit
+      rescue StandardError => e
+        Rollbar.e(e, 'FIX THIS')
       end
       fail!(message: "There was an error trying to preview these invoices.")
     end
