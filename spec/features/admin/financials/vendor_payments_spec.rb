@@ -6,9 +6,9 @@ feature 'Record payments to suppliers', :js  do
   include_context 'second market'
 
   let!(:order3_item1) { create(:order_item, product: sally_product1, unit_price: 9.99) }
-  let!(:order3) { create(:order, items: [order3_item1], market: second_market, organization: buyer2_organization) }
+  let!(:order3) { create(:order, placed_at: 4.days.ago, items: [order3_item1], market: second_market, organization: buyer2_organization) }
   let!(:order4_item1) { create(:order_item, product: sally_product2, unit_price: 9.99) }
-  let!(:order4) { create(:order, items: [order4_item1], market: second_market, organization: buyer2_organization) }
+  let!(:order4) { create(:order, placed_at: 4.days.ago, items: [order4_item1], market: second_market, organization: buyer2_organization) }
 
   before do
     second_market.managers << mary
@@ -63,6 +63,19 @@ feature 'Record payments to suppliers', :js  do
     first('.check').fill_in('Check #', with: '123')
     first('.record-payment').click_button('Record Payment')
     expect(page).to have_content("Payment of $6.99 recorded for Sally's Staples")
+  end
+
+  it 'uses sticky filter params when scoping orders' do
+    visit admin_financials_vendor_payments_path
+
+    expect(page).to have_selector('.vendor-payment', count: 2)
+    fill_in('q_placed_at_date_gteq', with: 2.days.ago.strftime("%Y-%m-%d"))
+    click_on('Filter')
+    # filter works?
+    expect(page).to have_selector('.vendor-payment', count: 1)
+    # sticky filter works?
+    visit admin_financials_vendor_payments_path
+    expect(page).to have_selector('.vendor-payment', count: 1)
   end
 
 end
