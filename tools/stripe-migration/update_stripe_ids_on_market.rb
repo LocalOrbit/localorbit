@@ -16,8 +16,8 @@ class UpdateStripeIdsOnMarket
     print_header
 
     if @market.balanced_customer_uri
-      update_market_stripe_customer_id 
-      update_market_stripe_account_id 
+      update_market_stripe_customer_id
+      update_market_stripe_account_id
     else
       log "!! Market has no balanced_customer_uri; not updating its stripe_customer_id or stripe_account_id"
     end
@@ -150,7 +150,7 @@ class UpdateStripeIdsOnMarket
   def close_log_file
     begin
       @log_file.close if @log_file
-    rescue Exception => e
+    rescue StandardError => e
       # nothing
     end
     @log_file = nil

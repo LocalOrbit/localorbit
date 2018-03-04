@@ -14,7 +14,7 @@ module DavesQuickPrompt
       begin
         x = eval(line, binding)
         p x
-      rescue Exception => e
+      rescue StandardError => e
         puts e.message
         puts e.backtrace
       end
@@ -24,6 +24,6 @@ module DavesQuickPrompt
   end
 end
 
-RSpec.configure do |c| 
+RSpec.configure do |c|
   c.include DavesQuickPrompt
 end

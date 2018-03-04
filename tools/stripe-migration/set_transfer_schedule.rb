@@ -28,9 +28,9 @@ class SetTransferSchedule
           stripe_account.transfer_schedule = PaymentProvider::Stripe::TransferSchedule.stringify_keys
           stripe_account.debit_negative_balances = true
           stripe_account.save
-          
+
         end
-      rescue Exception => ex
+      rescue StandardError => ex
         log "!! ERROR UPDATING STRIPE ACCOUNT #{@market.stripe_account_id}: #{ex.message}"
       end
     else
@@ -90,7 +90,7 @@ class SetTransferSchedule
   def close_log_file
     begin
       @log_file.close if @log_file
-    rescue Exception => e
+    rescue StandardError => e
       # nothing
     end
     @log_file = nil

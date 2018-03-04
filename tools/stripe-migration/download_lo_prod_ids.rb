@@ -33,7 +33,7 @@ module DownloadLoProdIds
     if entity.balanced_customer_uri
       begin
         meta = entity.balanced_customer.meta
-      rescue Exception => e 
+      rescue StandardError => e
         meta = { "exception" => e.message }
       end
     end

@@ -21,7 +21,7 @@ Service | Purpose | Owner | Notes
 [Heroku Scheduler](https://scheduler.heroku.com)<br>(via Heroku add-on) | Periodic tasks | LO | offsite backups (daily), check ACH status (daily), update metrics (hourly)
 [New Relic](http://newrelic.com)<br>(via Heroku add-on) | App stats & notifications | LO
 [Papertrail](https://papertrailapp.com)<br>(via Heroku add-on) | App logs | LO | Archived to S3
-[Honeybadger](https://www.honeybadger.io) | Error Reporting | [i]
+[Rollbar](https://rollbar.com) | Error Reporting | [i]
 [Dead Man's Snitch](https://deadmanssnitch.com)<br>(via Heroku add-on) | Failed Heroku Scheduler notification | LO
 
 
@@ -32,8 +32,7 @@ Stuff used by devs but doesn't affect functionality.
 Service | Purpose | Owner | Notes
 --------|---------|-------|------
 [GitHub](https://github.com) | Git repo | [i]
-[Pivotal Tracker](http://pivotaltracker.com) | Project Management | LO
-[Basecamp](http://basecamp.com) | Communication | [i]
-[Travis CI](https://travis-ci.com) | Continuous integration | [i]
-[Gemnasium](https://gemnasium.com) | Gem update notification | [i] | May magically keep working after moving the app.
+[JIRA](https://localorbit.atlassian.net) | Project Management | LO
+[Circle CI](https://circleci.com/gh/LocalOrbit/localorbit) | Continuous integration | [i]
+[Gemnasium](https://gemnasium.com) | Gem update notification | [i] | May magically keep working after moving the app???
 

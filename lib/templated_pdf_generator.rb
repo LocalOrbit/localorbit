@@ -4,8 +4,8 @@ class TemplatedPdfGenerator
   class << self
     def generate_pdf(request:, template:, locals:, pdf_settings:{}, path:nil )
       html = HtmlTemplateRenderer.generate_html(
-        request: request, 
-        template: template, 
+        request: request,
+        template: template,
         locals: locals)
 
       # pdf_settings = pdf_settings.merge(ZeroMargins)
@@ -17,7 +17,7 @@ class TemplatedPdfGenerator
         puts "#{pref} PDF_SETTINGS: #{pdf_settings.inspect} <<<"
       end
 
-      return HtmlToPdfConverter.generate_pdf(html: html, pdf_settings: pdf_settings, path: path)
+      HtmlToPdfConverter.generate_pdf(html: html, pdf_settings: pdf_settings, path: path)
     end
   end
 end

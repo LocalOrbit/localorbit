@@ -10,16 +10,13 @@ class GenerateConsignmentPrintablePdf
         tempfile = Tempfile.new("tmp-#{type}-#{order.order_number}")
         case type
           when "receipt"
-            pdf_result = ConsignmentReceipts::ConsignmentReceiptPdfGenerator.generate_pdf(request: request, order: order, path: tempfile.path)
-
+            ConsignmentReceipts::ConsignmentReceiptPdfGenerator.generate_pdf(request: request, order: order, path: tempfile.path)
           when "pick_list"
-            pdf_result = ConsignmentPickLists::ConsignmentPickListPdfGenerator.generate_pdf(request: request, order: order, path: tempfile.path)
-
+            ConsignmentPickLists::ConsignmentPickListPdfGenerator.generate_pdf(request: request, order: order, path: tempfile.path)
           when "invoice"
-            pdf_result = ConsignmentInvoices::ConsignmentInvoicePdfGenerator.generate_pdf(request: request, order: order, path: tempfile.path)
-
+            ConsignmentInvoices::ConsignmentInvoicePdfGenerator.generate_pdf(request: request, order: order, path: tempfile.path)
           else
-            nil
+            raise ArgumentError, 'No pdf type provided'
         end
         printable_tempfiles << tempfile
       end
