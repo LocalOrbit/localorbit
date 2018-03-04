@@ -171,7 +171,6 @@ group :production, :staging do
   # gem 'pgbackups-archive'
   gem 'platform-api'
   gem 'wkhtmltopdf-heroku'
-  gem 'scout_apm'
 end
 
 group :production, :staging, :development do
