@@ -657,7 +657,6 @@ GEM
       sass (~> 3.2.2)
       sprockets (~> 2.8, < 3.0)
       sprockets-rails (~> 2.0)
-    scout_apm (2.1.26)
     sdoc (0.4.1)
       json (~> 1.7, >= 1.7.7)
       rdoc (~> 4.0)
@@ -858,7 +857,6 @@ DEPENDENCIES
   rubyXL
   s3_direct_upload!
   sass-rails (~> 4.0.0)
-  scout_apm
   sdoc
   selenium-webdriver
   simplecov
