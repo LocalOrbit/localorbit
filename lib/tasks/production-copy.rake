@@ -124,7 +124,7 @@ module CloneProductionHelper
         app: "localorbit-staging",
         env: "staging",
         bucket: "localorbit-uploads-staging",
-        database: "HEROKU_POSTGRESQL_RED"
+        database: "HEROKU_POSTGRESQL_COBALT"
       },
       # alpha: {
       #   app: "localorbit-alpha",
