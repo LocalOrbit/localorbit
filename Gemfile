@@ -158,7 +158,7 @@ group :test do
 end
 
 group :staging do
-  gem "skylight"
+  gem 'skylight'
 end
 
 group :production, :staging do
