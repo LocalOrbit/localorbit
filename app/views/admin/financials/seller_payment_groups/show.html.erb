@@ -1,0 +1,10 @@
+<table>
+  <%= render seller_payment_group.orders %>
+  <tr class="make-payment">
+    <td colspan="5" class="math">Total Selected</td>
+    <td class="total-owed line-total"><%= number_to_currency seller_payment_group.owed %></td>
+  </tr>
+  <tr class="make-payment pay-selected-now">
+    <td colspan="6" class="math pay-selected"><button class="btn--small btn--save">Record Payment</button></td>
+  </tr>
+</table>

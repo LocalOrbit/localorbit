@@ -136,12 +136,14 @@ describe Location do
         location = create(:location, organization: organization)
 
         expect(location.default_billing).to eq(true)
+        expect(organization.locations.default_billing).to eq(location)
       end
 
       it "sets default shipping" do
         location = create(:location, organization: organization)
 
         expect(location.default_shipping).to eq(true)
+        expect(organization.locations.default_shipping).to eq(location)
       end
     end
   end

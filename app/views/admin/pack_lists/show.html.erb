@@ -5,7 +5,7 @@
   <%  @wp = ""
       @orders.decorate.each_with_index do |order, index|
         mkt = order.market.decorate
-        @orig = "#{current_market.addresses[0].geocode.latitude},#{current_market.addresses[0].geocode.longitude}"
+        @orig = "#{current_market.addresses.visible.first.geocode.latitude},#{current_market.addresses.visible.first.geocode.longitude}"
         @dest = @orig
         if policy(:routing_plan).index? && !order.delivery.delivery_schedule.buyer_pickup?
             if !order.delivery_lat_long.nil?
@@ -47,7 +47,7 @@
         <div class="city-state-zip"><%= order.display_delivery_city_state_zip %></div>
         <div class="phone"><%= number_to_phone order.display_delivery_phone %></div>
       </div
-      
+
       ><div class="column column--half vcard vcard--seller">
         <h2 class="heading heading-delivery-tool">From Market</h2>
         <% if mkt.has_remit_to_address? %>
@@ -76,7 +76,7 @@
         <h2 class="heading heading-delivery-tool delivery-message"><%= order.display_fulfillment_info %></h2>
         <span class="upcoming-delivery-date"><%= order.delivery.decorate.buyer_display_date %> <%= order.delivery.decorate.buyer_time_range %></span>
       </div>
-      
+
       <div class="column column--half">
         <h2 class="heading heading-delivery-tool">Order Number</h2>
         <span class="upcoming-delivery-order order-number"><%= order.order_number %></span>
@@ -176,7 +176,7 @@
         <% end %>
       </table>
     </div>
-    
+
     <% if @delivery_notes.where(buyer_org: order.organization.id).exists? %>
     <div class="delivery-notes">
       <h2>Delivery Notes</h2>
@@ -185,7 +185,7 @@
       <% end %>
     </div> <!-- end delivery-notes -->
     <% end %>
-    
+
   </div>
 <% end %>
   <div class="pdf-page-break"></div>

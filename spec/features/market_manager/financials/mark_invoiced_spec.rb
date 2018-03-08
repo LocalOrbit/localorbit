@@ -117,7 +117,7 @@ feature "sending invoices" do
     ensure
       begin
         page.execute_script %|$("#invoice-list").prop("data-suppress-target",null)|
-      rescue Exception => e2
+      rescue StandardError => e2
         puts "(Couldn't clear the data-suppress-target data attribute from #invoice-list, probably due to an error or being on a different page.)"
       end
     end

@@ -22,6 +22,17 @@ describe ProductsController do
 
         expect(response).to redirect_to(new_admin_organization_location_path(org1))
       end
+
+      it "redirects to new address page if you don't have a default billing or default shipping location" do
+        # Emulate LO-786 where there could be locations, but no defaults
+        allow(Location).to receive(:default_billing).and_return(nil)
+        allow(Location).to receive(:default_shipping).and_return(nil)
+
+        sign_in user
+        get :index
+
+        expect(response).to redirect_to(admin_organization_locations_path(org1))
+      end
     end
 
     context "on the main domain" do

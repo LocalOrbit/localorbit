@@ -123,6 +123,8 @@ GEM
       babel-source (>= 4.0, < 6)
       execjs (~> 2.0)
     bcrypt (3.1.11)
+    bootsnap (1.1.8)
+      msgpack (~> 1.0)
     browserify-rails (0.9.3)
       sprockets (~> 2.2)
     builder (3.2.3)
@@ -457,6 +459,7 @@ GEM
     mini_portile2 (2.3.0)
     minitest (5.11.1)
     moneta (0.8.1)
+    msgpack (1.2.2)
     multi_json (1.13.1)
     multi_xml (0.5.5)
     multipart-post (1.2.0)
@@ -496,7 +499,7 @@ GEM
     parser (2.2.0.pre.4)
       ast (>= 1.1, < 3.0)
       slop (~> 3.4, >= 3.4.5)
-    pdfkit (0.6.2)
+    pdfkit (0.8.2)
     periscope (2.1.0)
     periscope-activerecord (2.1.0)
       activerecord (>= 3, < 5)
@@ -607,7 +610,7 @@ GEM
       http-cookie (>= 1.0.2, < 2.0)
       mime-types (>= 1.16, < 3.0)
       netrc (~> 0.7)
-    rollbar (2.14.1)
+    rollbar (2.15.5)
       multi_json
     roxml (3.3.1)
       activesupport (>= 2.3.0)
@@ -654,7 +657,6 @@ GEM
       sass (~> 3.2.2)
       sprockets (~> 2.8, < 3.0)
       sprockets-rails (~> 2.0)
-    scout_apm (2.1.26)
     sdoc (0.4.1)
       json (~> 1.7, >= 1.7.7)
       rdoc (~> 4.0)
@@ -765,6 +767,7 @@ DEPENDENCIES
   awesome_nested_set
   awesome_print
   aws-sdk
+  bootsnap
   browserify-rails
   bullet
   byebug
@@ -854,7 +857,6 @@ DEPENDENCIES
   rubyXL
   s3_direct_upload!
   sass-rails (~> 4.0.0)
-  scout_apm
   sdoc
   selenium-webdriver
   simplecov
@@ -885,4 +887,4 @@ RUBY VERSION
    ruby 2.1.2p95
 
 BUNDLED WITH
-   1.16.0
+   1.16.1

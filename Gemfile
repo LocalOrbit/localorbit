@@ -25,6 +25,7 @@ gem 'active_record_union'
 gem 'acts_as_geocodable'
 gem 'audited-activerecord'
 gem 'awesome_nested_set'
+gem 'bootsnap', require: false # TODO: Remove this when we upgrade to rails 5.2
 gem 'stripe'
 gem 'color'
 gem 'countries'
@@ -93,7 +94,6 @@ gem 'grape-active_model_serializers' # API v2
 gem 'rack-cors', :require => 'rack/cors' # API v2
 gem 'grape-swagger' # API V2, documentation
 
-#gem 'honeybadger'
 gem 'rollbar'
 
 gem 'quickbooks-ruby', '~> 0.4.6', :git => 'https://github.com/ruckus/quickbooks-ruby.git'
@@ -171,7 +171,6 @@ group :production, :staging do
   # gem 'pgbackups-archive'
   gem 'platform-api'
   gem 'wkhtmltopdf-heroku'
-  gem 'scout_apm'
 end
 
 group :production, :staging, :development do

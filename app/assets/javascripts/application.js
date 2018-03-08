@@ -11,8 +11,8 @@
 // about supported directives.
 //
 
-//= require es5-shim.min
-//= require es6-shim.min
+//= require es5-shim
+//= require es6-shim
 //= require jquery
 //= require jquery_ujs
 //= require jquery-ui

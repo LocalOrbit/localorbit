@@ -1,0 +1,11 @@
+<tr class="payment-order">
+  <td><%= check_box_tag 'payment[order_ids][]', seller_order.id, true, class: 'seller-order-id', data: {owed: seller_order.net_total} %></td>
+  <td class="order-number">
+    <%= link_to seller_order.order_number, admin_order_path(seller_order.id) %>
+    <%= link_to 'PDF', admin_invoice_path(seller_order.id, format: 'pdf'), class: 'pdf-download', target: '_blank' if seller_order.invoiced? %>
+  </td>
+  <td class="order-placed-on"><%= seller_order.placed_at.strftime("%b %d, %Y") %></td>
+  <td class="individual-delivery-status"><%= seller_order.delivery_status_for_user(current_user).titleize %></td>
+  <td class="individual-payment-status"><%= seller_order.payment_status.titleize %></td>
+  <td class="line-total"><%= number_to_currency seller_order.net_total %></td>
+</tr>

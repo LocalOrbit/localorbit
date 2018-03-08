@@ -21,7 +21,7 @@ class ChangeCrossSellInMarketOrganization < ActiveRecord::Migration
 
       begin
         mo.update!(cross_sell_origin_market_id: origin.id)
-      rescue Exception => e
+      rescue StandardError => e
         puts "Could not update the MarketOrganization id: #{mo.id}"
         raise
       end

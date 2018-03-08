@@ -8,7 +8,7 @@ class User < ActiveRecord::Base
   # :lockable, :timeoutable and :omniauthable
   devise :invitable, :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable,
-         :confirmable, :masqueradable, :timeoutable, :omniauthable
+         :confirmable, :masqueradable, :omniauthable
 
   trimmed_fields :email
 
@@ -257,6 +257,7 @@ class User < ActiveRecord::Base
   end
 
   def is_localeyes_buyer? # this really aligns with procurement_manager role and should probably be refactored when that is complete.
+    return false
     #intersect = []
     #localeyes_mkts = markets.joins(:plan).where("has_procurement_managers = 't'").all
     #intersect = managed_organizations.select{|o| o.can_sell? == false} & localeyes_mkts.flat_map{|lm| lm.organizations}
@@ -264,8 +265,8 @@ class User < ActiveRecord::Base
 
     #current_plan == "LocalEyes"
 
-    orgs = user_organizations.map(&:organization)
-    orgs.compact.map(&:org_type).include?('M') && orgs.compact.map(&:plan).compact.map(&:name).include?('LocalEyes')
+    # orgs = user_organizations.map(&:organization)
+    # orgs.compact.map(&:org_type).include?('M') && orgs.compact.map(&:plan).compact.map(&:name).include?('LocalEyes')
   end
 
   def primary_user_role
@@ -281,8 +282,7 @@ class User < ActiveRecord::Base
   end
 
   def managed_organizations(opts={})
-    defaults = {include_suspended: false}
-    opts = defaults.merge!(opts)
+    opts.reverse_merge! include_suspended: false
 
     org_membership_scope = opts[:include_suspended] ? organizations_including_suspended : organizations
 
@@ -297,8 +297,7 @@ class User < ActiveRecord::Base
   end
 
   def managed_organizations_including_cross_sellers(opts={})
-    defaults = {include_suspended: false}
-    opts = defaults.merge!(opts)
+    opts.reverse_merge! include_suspended: false
 
     org_membership_scope = opts[:include_suspended] ? organizations_including_suspended : organizations
 
@@ -314,12 +313,10 @@ class User < ActiveRecord::Base
   end
 
   def managed_organizations_including_deleted
-    if admin?
+    @managed_organizations_including_deleted ||= if admin?
       Organization.all
     else
-      market_ids = managed_markets_join.map(&:market_id)
-
-      Organization.managed_by_market_ids(market_ids).
+      Organization.managed_by_market_ids(managed_market_ids).
         union(organizations).
         joins(:market_organizations).
         order(:name).
@@ -328,7 +325,7 @@ class User < ActiveRecord::Base
   end
 
   def managed_organization_ids_including_deleted
-    managed_organizations_including_deleted.map(&:id)
+    @managed_organization_ids_including_deleted ||= managed_organizations_including_deleted.map(&:id)
   end
 
   def managed_organizations_within_market_including_crossellers(market)
@@ -358,8 +355,7 @@ class User < ActiveRecord::Base
   end
 
   def multi_organization_membership?
-    return @multi_organization_membership if defined?(@multi_organization_membership)
-    @multi_organization_membership = managed_organizations.count > 1
+    @multi_organization_membership ||= managed_organizations.count > 1
   end
 
   # shortcut for grabbing the "primary" market for things like email layout
@@ -487,7 +483,7 @@ class User < ActiveRecord::Base
       if admin?
         Market.all.pluck(:id)
       elsif market_manager?
-        managed_markets_join.map(&:market_id)
+        managed_market_ids
       end
     end
   end
