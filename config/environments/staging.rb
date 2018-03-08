@@ -82,12 +82,12 @@ Rails.application.configure do
   # SSL config
   config.force_ssl = true
 
-  config.action_mailer.default_url_options = {protocol: 'https', host: "app.#{Figaro.env.domain}"}
+  config.action_mailer.default_url_options = {protocol: 'https', host: Figaro.env.domain}
   config.action_mailer.delivery_method = :smtp
   config.action_mailer.smtp_settings = {
     address: "smtp.mandrillapp.com",
     port: 587,
-    domain: "localorb.it",
+    domain: Figaro.env.domain,
     authentication: :login,
     user_name: Figaro.env.smtp_username,
     password: Figaro.env.smtp_password,

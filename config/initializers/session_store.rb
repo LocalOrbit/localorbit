@@ -1,18 +1,8 @@
 # Be sure to restart your server when you modify this file.
 
-session_environment =
-    if Figaro.env.deploy_env == 'production'
-      ""
-    else
-      "_#{Figaro.env.deploy_env}"
-    end
+session_environment = Rails.env.production? ? '' : "_#{Rails.env}"
 
-session_suffix =
-    if Figaro.env.localorbit_internal == 'YES'
-      "_INTERNAL"
-    else
-      ""
-    end
+session_suffix = Figaro.env.localorbit_internal == 'YES' ? '_INTERNAL' : ''
 
 session_key = "_LocalOrbit_session_data#{session_environment}#{session_suffix}"
 
