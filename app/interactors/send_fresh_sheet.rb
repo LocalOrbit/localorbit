@@ -22,7 +22,7 @@ class SendFreshSheet
   end
 
   def send_fresh_sheets_to_subscribed_members
-    fresh_sheet_type = SubscriptionType.find_by(keyword: SubscriptionType::Keywords::FreshSheet)
+    fresh_sheet_type = SubscriptionType.find_by(keyword: SubscriptionType::Keywords::FRESHSHEET)
     User.
       confirmed.
       in_market(market).
