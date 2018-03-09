@@ -140,7 +140,7 @@
         .nav--main > a:hover {
           background-color: <%= current_market.text_color -%>;
         }
-        
+
         #admin-nav a:hover {
            color: inherit;
         }
@@ -232,7 +232,6 @@
   <div class="overlay"></div>
 
   <script>RAILS_ENV = '<%= Rails.env %>';</script>
-  <script>DEPLOY_ENV = '<%= Figaro.env.deploy_env %>';</script>
   <script>DEBUG = <%= Figaro.env.debug == 'ON' ? "true" : "false" %>;</script>
 
   <%= javascript_include_tag "application" %>

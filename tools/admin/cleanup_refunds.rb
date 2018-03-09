@@ -5,7 +5,7 @@ module Admin
         puts "\n\n\n\n"
         puts "***************************************************************"
         puts
-        puts "Connected to LocalOrbit environment '#{Figaro.env.deploy_env}'"
+        puts "Connected to LocalOrbit environment '#{Rails.env}'"
         puts
         puts "***************************************************************"
         puts "Clean up Payments and Order History"
@@ -58,9 +58,9 @@ module Admin
         ans = gets
         if ans =~ /delete/i
           puts "Deleting Payment #{pmt.id}..."
-          pmt.audits.each do |audit| 
+          pmt.audits.each do |audit|
             puts "  destoying Audit #{audit.id}"
-            audit.destroy 
+            audit.destroy
           end
           pmt.destroy
           puts "Payment #{pmt.id} removed."
@@ -82,7 +82,7 @@ module Admin
       end
 
       def attstring(obj, *keys)
-        str = keys.map do |key| 
+        str = keys.map do |key|
           val = obj.send(key)
           "#{key}: #{val}"
         end.join(", ")
