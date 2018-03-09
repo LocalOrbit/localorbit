@@ -7,13 +7,13 @@ class SendNewsletter
       context[:notice] = "Successfully sent a test to #{email}"
 
     elsif commit == "Send Now"
-      newsletter_type = SubscriptionType.find_by(keyword: SubscriptionType::Keywords::Newsletter)
+      newsletter_type = SubscriptionType.find_by(keyword: SubscriptionType::Keywords::NEWSLETTER)
       newsletter.recipients.each do |user|
           token = user.unsubscribe_token(subscription_type: newsletter_type)
           MarketMailer.delay.newsletter(
-            newsletter: newsletter, 
-            market: market, 
-            to: user.pretty_email, 
+            newsletter: newsletter,
+            market: market,
+            to: user.pretty_email,
             unsubscribe_token: token,
             port: get_port)
         end

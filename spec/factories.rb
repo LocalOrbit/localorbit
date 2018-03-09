@@ -737,12 +737,12 @@ FactoryBot.define do
 
     trait :fresh_sheet do
       name "Fresh Sheet (testing)"
-      keyword SubscriptionType::Keywords::FreshSheet
+      keyword SubscriptionType::Keywords::FRESHSHEET
     end
 
     trait :newsletter do
       name "Newsletter (testing)"
-      keyword SubscriptionType::Keywords::Newsletter
+      keyword SubscriptionType::Keywords::NEWSLETTER
     end
   end
 

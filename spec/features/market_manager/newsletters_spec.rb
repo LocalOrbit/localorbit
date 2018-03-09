@@ -126,7 +126,7 @@ describe "A Market Manager managing Newsletters" do
     describe "to groups" do
       it "sends to Manager" do
         newsletter.market_managers=true
-        mmtoken = market_manager.unsubscribe_token(subscription_type: SubscriptionType.find_by(keyword:SubscriptionType::Keywords::Newsletter))
+        mmtoken = market_manager.unsubscribe_token(subscription_type: SubscriptionType.find_by(keyword:SubscriptionType::Keywords::NEWSLETTER))
         expect_send_newsletter_mail(newsletter:newsletter, market:market, to:market_manager.pretty_email,unsubscribe_token:mmtoken)
         check "Manager"
         click_button "Send Now"

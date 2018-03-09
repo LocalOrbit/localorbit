@@ -22,15 +22,15 @@ class SendFreshSheet
   end
 
   def send_fresh_sheets_to_subscribed_members
-    fresh_sheet_type = SubscriptionType.find_by(keyword: SubscriptionType::Keywords::FreshSheet)
+    fresh_sheet_type = SubscriptionType.find_by(keyword: SubscriptionType::Keywords::FRESHSHEET)
     User.in_market(market).
       subscribed_to(fresh_sheet_type).
-      uniq. 
+      uniq.
       includes(:subscriptions).
       each do |user|
         token = user.unsubscribe_token(subscription_type: fresh_sheet_type)
-        MarketMailer.delay.fresh_sheet(market: market, 
-                                       to: user.pretty_email, 
+        MarketMailer.delay.fresh_sheet(market: market,
+                                       to: user.pretty_email,
                                        note: CGI::unescapeHTML(note),
                                        unsubscribe_token: token,
                                        port: get_port)
