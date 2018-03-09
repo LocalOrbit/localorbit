@@ -1,7 +1,7 @@
 IntercomRails.config do |config|
   # == Intercom app_id
 
-  if Figaro.env.deploy_env == 'production'
+  if Rails.env.production?
     # config.app_id = ["INTERCOM_APP_ID"] || "oh52vbpl"
     config.app_id = "oh52vbpl"
     config.api_secret = "mFWk_GyKfsZmhnekr3r0uky-pjjPLAgKIkut4yNN"
@@ -25,7 +25,7 @@ IntercomRails.config do |config|
   # == Enabled Environments
   # Which environments is auto inclusion of the Javascript enabled for
   #
-  config.enabled_environments = ["development", "production"]
+  config.enabled_environments = ['development', 'staging', 'production']
 
   # == Current user method/variable
   # The method/variable that contains the logged in user in your controllers.

@@ -678,7 +678,7 @@ GEM
     skinny (0.2.3)
       eventmachine (~> 1.0.0)
       thin (~> 1.5.0)
-    skylight (0.10.6)
+    skylight (1.5.1)
       activesupport (>= 3.0.0)
     slop (3.6.0)
     spreadsheet (1.0.3)

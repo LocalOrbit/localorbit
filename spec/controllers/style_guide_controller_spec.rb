@@ -1,22 +1,16 @@
-require "spec_helper"
+require 'spec_helper'
 
-describe StyleGuideController do
-  describe "/index" do
-    after do
-      ENV['DEPLOY_ENV'] = 'test'
+RSpec.describe StyleGuideController, type: :controller do
+  describe 'GET show' do
+
+    it 'renders in non-production environments' do
+      get :show
+      expect(response).to be_success
     end
 
-    it "renders in non-production deploy environments" do
-      %w[ dev1 dev2 dev3 test staging ].each do |env|
-        ENV['DEPLOY_ENV'] = env
-        get :index
-        expect(response).to be_success
-      end
-    end
-
-    it "raises a routing error in the production deploy environment" do
-      ENV['DEPLOY_ENV'] = 'production'
-      expect { get :index }.to raise_error(ActionController::RoutingError)
+    it 'raises a routing error in the production environment' do
+      allow(Rails).to receive(:env).and_return ( double(production?: true) )
+      expect { get :show }.to raise_error(ActionController::RoutingError)
     end
   end
 end
