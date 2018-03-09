@@ -27,10 +27,10 @@ describe SendNewsletter do
   end
 
   describe "sending to groups" do
-    let!(:newsletter_type) { create(:subscription_type, 
-                                    keyword: SubscriptionType::Keywords::Newsletter, 
+    let!(:newsletter_type) { create(:subscription_type,
+                                    keyword: SubscriptionType::Keywords::NEWSLETTER,
                                     name: "Test News!") }
-    before do 
+    before do
       [mary, bill, basil, steve, sol, clarence, craig].each do |user|
         user.subscribe_to(newsletter_type)
       end
@@ -70,8 +70,8 @@ describe SendNewsletter do
   it "do nothing on unknown action" do
     context = SendNewsletter.perform(
       commit: "lol wat",
-      market: fresh_market, 
-      newsletter: news_for_all, 
+      market: fresh_market,
+      newsletter: news_for_all,
       email:"hossnfeffer@example.com", port:80)
 
     expect(context.success?).to eq(true)
@@ -82,16 +82,16 @@ describe SendNewsletter do
   # HELPERS
   #
   def send_newsletter(newsletter)
-    context = SendNewsletter.perform(newsletter: newsletter, 
-                           market: fresh_market, 
+    context = SendNewsletter.perform(newsletter: newsletter,
+                           market: fresh_market,
                            commit: "Send Now",port:80)
-  
+
     expect(context.success?).to eq(true)
     expect(context.notice).to eq("Successfully sent this Newsletter")
-  
+
     return ActionMailer::Base.deliveries
   end
-  
+
   def assert_newsletter_sent_to(mail,market,sent_to,newsletter)
     expect(mail).to be
     expect(mail.to.first).to eq(sent_to)
