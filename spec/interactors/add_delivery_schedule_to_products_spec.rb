@@ -26,7 +26,7 @@ describe AddDeliveryScheduleToProducts do
   context 'when no products exist' do
     subject(:perform) { AddDeliveryScheduleToProducts.perform(delivery_schedule: delivery_schedule, market: market) }
 
-    it 'returns success' do
+    it 'is still successful' do
       expect(perform.success?).to be true
     end
   end
