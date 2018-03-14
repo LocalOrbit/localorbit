@@ -5,13 +5,16 @@ class AddDeliveryScheduleToProducts
     require_in_context(:delivery_schedule, :market)
 
     gpt = GeneralProduct.arel_table
-    product_ids = Product.joins({organization: :all_markets}, :general_product).where(market_organizations: {market: market}).where(gpt[:use_all_deliveries].eq(true)).uniq.pluck(:id)
+    product_ids = Product.joins({organization: :all_markets}, :general_product).
+      where(market_organizations: {market: market}).
+      where(gpt[:use_all_deliveries].eq(true)).uniq.pluck(:id)
 
     columns = %w(product_id delivery_schedule_id)
 
     to_insert = product_ids.map do |product_id|
       vals = [product_id, delivery_schedule.id]
-      ActiveRecord::Base.send(:replace_bind_variables, "(#{vals.length.times.collect {'?'}.join(',')})", vals)
+      ActiveRecord::Base.send(:replace_bind_variables,
+        "(#{vals.length.times.collect {'?'}.join(',')})", vals)
     end
 
     ActiveRecord::Base.connection.execute(<<-SQL)
