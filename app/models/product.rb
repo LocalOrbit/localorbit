@@ -104,8 +104,8 @@ class Product < ActiveRecord::Base
     self.general_product && self.general_product.long_description
   end
   def use_all_deliveries
-    if self.general_product
-      self.general_product.use_all_deliveries
+    if general_product
+      general_product.use_all_deliveries
     else
       true # Default
     end
@@ -227,7 +227,7 @@ class Product < ActiveRecord::Base
     else
       nil
     end
-    association(:second_level_category).writer(input) 
+    association(:second_level_category).writer(input)
   end
   def general_product_id=(input)
     gp = GeneralProduct.find(input)
@@ -554,7 +554,7 @@ class Product < ActiveRecord::Base
     self.general_product.skip_validation = self.skip_validation
     self.general_product.save!
   end
-  
+
   def self.order_by_name(direction)
     direction == "asc" ? order(name: :asc) : order(name: :desc)
   end
