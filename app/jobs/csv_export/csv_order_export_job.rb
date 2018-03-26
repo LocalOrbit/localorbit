@@ -15,7 +15,7 @@ module CSVExport
     end
 
     def perform
-      order_items = OrderItem.where(id: ids).order(:created_at)
+      order_items = OrderItem.includes({order: :delivery}, :product).joins(:product).where(id: ids).order(:created_at)
       csv = CSV.generate do |f|
         f << [
             "LO Order Number",
@@ -33,7 +33,7 @@ module CSVExport
             "Product Total"
         ]
 
-        order_items.each do |order_item|
+        order_items.find_each do |order_item|
           f << [
               order_item.order.order_number,
               order_item.order.placed_at.strftime("%m/%d/%Y"),
