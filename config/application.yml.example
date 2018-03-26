@@ -38,6 +38,7 @@ development:
   STRIPE_DEV_MARKET_ACCOUNT_ID: <stripe user id of market that did oauth flow, see docs/stripe.md>
   MAILTRAP_USERNAME: <MT username>
   MAILTRAP_PASSWORD: <MT secret>
+  USE_DELAYED_JOB: 'true'
 staging:
   MAILTRAP_USERNAME: <MT username>
   MAILTRAP_PASSWORD: <MT secret>
