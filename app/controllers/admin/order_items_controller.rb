@@ -23,7 +23,7 @@ module Admin
           format.csv do
             Delayed::Job.enqueue ::CSVExport::CSVSoldItemsExportJob.new(current_user, @q.result.map(&:id))
             flash[:notice] = "Please check your email for export results."
-            redirect_to admin_orders_path
+            redirect_to admin_order_items_path
           end
         end
       end
