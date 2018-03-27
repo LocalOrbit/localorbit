@@ -1,6 +1,5 @@
 # Local Orbit
 
-* **[Alpha Deploy (Preview)](https://github.com/LocalOrbit/localorbit/compare/alpha...master)**
 * **[Staging Deploy (Preview)](https://github.com/LocalOrbit/localorbit/compare/staging...master)**
 * **[Production Deploy (Preview)](https://github.com/LocalOrbit/localorbit/compare/production...staging)**
 
