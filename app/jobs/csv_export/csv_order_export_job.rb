@@ -1,5 +1,5 @@
 module CSVExport
-  class CSVOrderExportJob < Struct.new(:user, :ids) # pass in the datafile like is done right now in uploadcontroller, i.e.
+  class CSVOrderExportJob < Struct.new(:user, :ids)
 
     def enqueue(job)
     end
@@ -49,7 +49,7 @@ module CSVExport
               order_item.quantity,
               order_item.gross_total
           ]
-          end
+        end
       end
 
       # Send via email
