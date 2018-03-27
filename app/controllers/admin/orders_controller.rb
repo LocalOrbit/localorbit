@@ -23,7 +23,7 @@ class Admin::OrdersController < AdminController
           @order_items = find_order_items(@orders.map(&:id))
           @abort_mission = @order_items.count > 2999
           if ENV["USE_UPLOAD_QUEUE"] == "true"
-            Delayed::Job.enqueue ::CSVExport::CSVOrderExportJob.new(current_user, @order_items.map(&:id))
+            Delayed::Job.enqueue ::CSVExport::CSVOrderExportJob.new(current_user, @order_items.pluck(:id))
             flash[:notice] = "Please check your email for export results."
             redirect_to admin_orders_path
           else
@@ -53,7 +53,7 @@ class Admin::OrdersController < AdminController
           @order_items = find_order_items(@orders.map(&:id))
           @abort_mission = @order_items.count > 2999
           if ENV["USE_UPLOAD_QUEUE"] == "true"
-            Delayed::Job.enqueue ::CSVExport::CSVOrderExportJob.new(current_user, @order_items.map(&:id))
+            Delayed::Job.enqueue ::CSVExport::CSVOrderExportJob.new(current_user, @order_items.pluck(:id))
             flash[:notice] = "Please check your email for export results."
             redirect_to admin_purchase_orders_path
           else
@@ -433,11 +433,11 @@ class Admin::OrdersController < AdminController
       end
     end
   end
+
   protected
 
   def find_order_items(order_ids)
-    order_items = OrderItem.includes({order: :delivery}).joins(:product).where(:order_id => order_ids)
-    order_items
+    OrderItem.includes({order: :delivery}).joins(:product).where(:order_id => order_ids)
   end
 
   def order_params
