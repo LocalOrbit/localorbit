@@ -21,8 +21,9 @@ module Admin
         respond_to do |format|
           format.html { @order_items = @q.result.page(params[:page]).per(@query_params[:per_page]) }
           format.csv do
-            @order_items = @q.result
-            @filename = "sold_items.csv"
+            Delayed::Job.enqueue ::CSVExport::CSVSoldItemsExportJob.new(current_user, @q.result.map(&:id))
+            flash[:notice] = "Please check your email for export results."
+            redirect_to admin_orders_path
           end
         end
       end
