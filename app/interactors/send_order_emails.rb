@@ -3,7 +3,7 @@ class SendOrderEmails
 
   def perform
     unless order.organization.users.empty?
-      OrderMailer.delay.buyer_confirmation(order)
+      OrderMailer.delay(priority: 10).buyer_confirmation(order)
     end
 
     if Pundit.policy(context[:user], :all_supplier)
