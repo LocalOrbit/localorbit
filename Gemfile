@@ -113,6 +113,7 @@ group :development do
   gem 'aws-sdk'
   gem 'railroady'
   gem 'rails_view_annotator'
+  gem 'rubycritic', require: false
   gem 'mailcatcher'
   gem 'unicorn'
 
