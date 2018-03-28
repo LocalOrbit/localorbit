@@ -22,13 +22,13 @@ class SendOrderEmails
 
           csv = PackingLists::Generator.generate_csv(pack_lists: @pack_lists)
 
-          OrderMailer.delay.seller_confirmation(order, seller, pdf, csv)
+          OrderMailer.delay(priority: 10).seller_confirmation(order, seller, pdf, csv)
         end
       end
     end
 
     unless order.market.managers.empty?
-      OrderMailer.delay.market_manager_confirmation(order)
+      OrderMailer.delay(priority: 10).market_manager_confirmation(order)
     end
   end
 end
