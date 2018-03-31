@@ -10,10 +10,10 @@ class SendNewsletter
       newsletter_type = SubscriptionType.find_by(keyword: SubscriptionType::Keywords::Newsletter)
       newsletter.recipients.each do |user|
           token = user.unsubscribe_token(subscription_type: newsletter_type)
-          MarketMailer.delay.newsletter(
-            newsletter: newsletter, 
-            market: market, 
-            to: user.pretty_email, 
+          MarketMailer.delay(priority: 20).newsletter(
+            newsletter: newsletter,
+            market: market,
+            to: user.pretty_email,
             unsubscribe_token: token,
             port: get_port)
         end

@@ -8,12 +8,12 @@ RSpec.describe Admin::Financials::SellerPaymentGroupsController, type: :controll
     sign_in mary
   end
 
-    describe 'GET show' do
+  describe 'GET show' do
 
-      it 'returns success' do
-        get :show, market_id: mini_market.id, seller_id: seller_organization.id
-        expect(response).to have_http_status(:success)
-      end
-
+    it 'returns success' do
+      get :show, market_id: mini_market.id, seller_id: seller_organization.id
+      expect(response).to have_http_status(:success)
     end
+
+  end
 end
