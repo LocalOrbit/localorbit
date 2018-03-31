@@ -82,9 +82,12 @@ module Admin
 
       org_type = update_org_type(params[:organization][:can_sell] || params[:can_sell])
 
+      # Should this be setting deleted_at for any unchecked market association boxes?
+      # Why is Tap Root checked though if other two have deleted_at IS null though?
       if @organization.update_attributes(organization_params.except(:markets).merge({:org_type => org_type}))
         redirect_to [:admin, @organization], notice: "Saved #{@organization.name}"
       else
+        # TODO: Barfs, what to do?
         render action: :show
       end
     end

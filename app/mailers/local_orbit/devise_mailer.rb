@@ -11,7 +11,7 @@ module LocalOrbit
       if organization = record.organizations.first
         @org_or_market_name = organization.name
         @market = organization.original_market
-      elsif @market = record.primary_market
+      elsif @market = record.default_market
         @org_or_market_name = @market.name
       else
         @org_or_market_name = "Local Orbit"

@@ -101,10 +101,6 @@ class User < ActiveRecord::Base
     merge(Subscription.visible)
   }
 
-  def self.with_primary_market(market)
-    User.all.select {|u| u.primary_market == market }
-  end
-
   def self.arel_column_for_sort(column_name)
     if column_name == "email"
       arel_table[:email]
@@ -358,18 +354,10 @@ class User < ActiveRecord::Base
     @multi_organization_membership ||= managed_organizations.count > 1
   end
 
-  # shortcut for grabbing the "primary" market for things like email layout
-  # when we don't know. We can make this more intelligent later.
-  # confirmation email needs the organizations bit.
-  def primary_market
-    admin? ? nil : markets.order(:created_at).first
-  end
-
   def markets
     @markets ||= if admin?
       Market.all
     else
-      # markets_for_non_admin
       markets_for_non_admin_including_cross_selling
     end
   end
@@ -430,15 +418,14 @@ class User < ActiveRecord::Base
   end
 
   def default_market
-    if admin?
-      admin_market = markets.select do |m| m.subdomain == "admin" end.first
-      if admin_market
-        admin_market
-      else
-        markets.active.first
-      end
+    @default_market ||= if admin?
+      markets.select{ |m| m.subdomain == "admin" }.first
+    elsif market_manager?
+      managed_markets.active.first
     else
-      markets.active.first
+      # Use market_ids since User.markets includes markets via cross selling organizations
+      organization_member_market_ids = organizations.active.map(&:market_ids).flatten
+      Market.where(id: organization_member_market_ids).active.first
     end
   end
 
@@ -459,6 +446,8 @@ class User < ActiveRecord::Base
 
   private
 
+  # Seems like this is buggy as it doesn't just pull "standard" markets, but
+  # rather includes cross selling markets since it calls all_ not market_ids
   def standard_market_ids
     organization_member_market_ids = organizations.map(&:all_market_ids).flatten
     managed_market_ids + organization_member_market_ids
