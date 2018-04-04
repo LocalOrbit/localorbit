@@ -2,16 +2,20 @@
 <button class="btn btn--primary btn--small pull-right print-button" id="print-button">Print</button>
 <div class="print-page">
 
-  <%  @wp = ""
-      @orders.decorate.each_with_index do |order, index|
-        mkt = order.market.decorate
-        @orig = "#{current_market.addresses.visible.first.geocode.latitude},#{current_market.addresses.visible.first.geocode.longitude}"
-        @dest = @orig
-        if policy(:routing_plan).index? && !order.delivery.delivery_schedule.buyer_pickup?
-            if !order.delivery_lat_long.nil?
-              @wp = @wp + "#{order.delivery_lat_long}|"
-            end
-        end
+  <%
+  orig_geocode = current_market.addresses.visible.first.geocode
+  if !orig_geocode.nil?
+    @orig = "#{orig_geocode.latitude},#{orig_geocode.longitude}"
+    @dest = @orig
+  end
+
+  @wp = ""
+  @orders.decorate.each_with_index do |order, index|
+    mkt = order.market.decorate
+
+    if policy(:routing_plan).index? && !order.delivery.delivery_schedule.buyer_pickup? && !@orig.nil? && !order.delivery_lat_long.nil?
+      @wp = @wp + "#{order.delivery_lat_long}|"
+    end
   %>
   <% if index != 0 %>
     <div class="pdf-page-break"></div>
@@ -191,37 +195,39 @@
   <div class="pdf-page-break"></div>
 
   <% if policy(:routing_plan).index? && !@orig.nil? && !@dest.nil? %>
-    <h1>Routing Plan</h1>
-    <div id="path" class="pathdata"></div>
-    <div id="map-container">
-      <div id="map" data-orig="<%= @orig %>" data-dest="<%= @dest %>" data-wp="<%= @wp %>" style="height:100%"></div>
-    </div>
-    <div id="my_textual_div"></div>
+    <div id="routing-plan">
+      <h1>Routing Plan</h1>
+      <div id="path" class="pathdata"></div>
+      <div id="map-container">
+        <div id="map" data-orig="<%= @orig %>" data-dest="<%= @dest %>" data-wp="<%= @wp %>" style="height:100%"></div>
+      </div>
+      <div id="my_textual_div"></div>
 
-    <div style="display: none">
-      <div id="routeDrag"></div>
-      <div id="exportGoogle"></div>
-      <div id="exportDataButton"></div>
-      <div id="exportData"></div>
-      <div id="exportLabelButton"></div>
-      <div id="exportLabelData"></div>
-      <div id="exportAddrButton"></div>
-      <div id="exportAddrData"></div>
-      <div id="exportOrderButton"></div>
-      <div id="exportOrderData"></div>
-      <div id="garmin"></div>
-      <div id="tomtom"></div>
-      <div id="durations" class="pathdata"></div>
-      <div id="durationsData"></div>
-      <div id="reverseRoute"></div>
-      <div id="exportData_hidden" style="visibility: hidden;"></div>
-      <div id="exportLabelData_hidden" style="visibility: hidden;"></div>
-      <div id="exportAddrData_hidden" style="visibility: hidden;"></div>
-      <div id="exportOrderData_hidden" style="visibility: hidden;"></div>
-      <div id="durationsData_hidden" style="visibility: hidden;"></div>
-    </div>
-    <div id="dialogProgress" title="Calculating route...">
-      <div id="progressBar"></div>
+      <div style="display: none">
+        <div id="routeDrag"></div>
+        <div id="exportGoogle"></div>
+        <div id="exportDataButton"></div>
+        <div id="exportData"></div>
+        <div id="exportLabelButton"></div>
+        <div id="exportLabelData"></div>
+        <div id="exportAddrButton"></div>
+        <div id="exportAddrData"></div>
+        <div id="exportOrderButton"></div>
+        <div id="exportOrderData"></div>
+        <div id="garmin"></div>
+        <div id="tomtom"></div>
+        <div id="durations" class="pathdata"></div>
+        <div id="durationsData"></div>
+        <div id="reverseRoute"></div>
+        <div id="exportData_hidden" style="visibility: hidden;"></div>
+        <div id="exportLabelData_hidden" style="visibility: hidden;"></div>
+        <div id="exportAddrData_hidden" style="visibility: hidden;"></div>
+        <div id="exportOrderData_hidden" style="visibility: hidden;"></div>
+        <div id="durationsData_hidden" style="visibility: hidden;"></div>
+      </div>
+      <div id="dialogProgress" title="Calculating route...">
+        <div id="progressBar"></div>
+      </div>
     </div>
 <% end %>
 </div>
