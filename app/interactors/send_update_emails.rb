@@ -25,7 +25,7 @@ class SendUpdateEmails
 
           csv = PackingLists::Generator.generate_csv(pack_lists: @pack_lists)
 
-          OrderMailer.delay.seller_order_updated(order, seller, pdf, csv)
+          OrderMailer.delay(priority: 10).seller_order_updated(order, seller, pdf, csv)
         end
       end
 
@@ -43,7 +43,7 @@ class SendUpdateEmails
 
           csv = PackingLists::Generator.generate_csv(pack_lists: @pack_lists) if !@pack_lists.sellers.empty?
 
-          OrderMailer.delay.seller_order_item_removal(order, seller, pdf, csv)
+          OrderMailer.delay(priority: 10).seller_order_item_removal(order, seller, pdf, csv)
         end
       end
 

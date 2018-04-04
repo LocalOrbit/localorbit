@@ -45,7 +45,7 @@ Rails.application.configure do
   # Raises error for missing translations
   # config.action_view.raise_on_missing_translations = true
 
-  Delayed::Worker.delay_jobs = false
+  Delayed::Worker.delay_jobs = Figaro.env.use_delayed_job == 'true'
 
   config.react.variant = :development
 

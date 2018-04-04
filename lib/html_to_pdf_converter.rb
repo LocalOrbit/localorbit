@@ -3,7 +3,7 @@ class HtmlToPdfConverter
     def generate_pdf(html:, pdf_settings:, path:nil)
       pdf_kit = PDFKit.new(html, pdf_settings)
       PdfResult.new(
-        data: pdf_kit.to_pdf(path),
+        data: pdf_kit.to_pdf(path) || File.read(path),
         path: path
       )
     end

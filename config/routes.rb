@@ -5,7 +5,7 @@ Rails.application.routes.draw do
   # mount API::Base, at: "/"
   # mount API::GrapeSwaggerRails::Engine, at: "/documentation"
 
-  get 'style_guide/index'
+  resource :style_guide, only: :show, controller: :style_guide
 
   get '*path', constraints: NonMarketDomain.new, format: false,
     to: redirect {|params, request|
