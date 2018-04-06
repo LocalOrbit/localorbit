@@ -205,7 +205,10 @@ describe "price estimator", js: true do
 
   let!(:org_cross_sell) {
     org = create(:organization, :seller, markets:[market1])
-    org.update_cross_sells!(from_market:market1,to_ids:[market2.id])
+    UpdateCrossSellingMarketOrganizations.perform(
+      organization: org,
+      source_market_id: market1.id,
+      destination_market_ids: [market2.id])
     org
   }
   let!(:user) { create(:user, :supplier, organizations: [org_cross_sell]) }

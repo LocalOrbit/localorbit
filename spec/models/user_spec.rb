@@ -262,8 +262,6 @@ describe User do
     end
 
     context "for a market manager" do
-
-
       let(:org1) { create(:organization, name: "Org 1") }
       let(:org2) { create(:organization, name: "Org 2") }
       let(:org3) { create(:organization, name: "Org 3") }
@@ -290,7 +288,10 @@ describe User do
         user.managed_organizations << org2
         user.managed_organizations << org4
         user.managed_organizations << org5
-        org6.update_cross_sells!(from_market: market3, to_ids: [market2.id])
+        UpdateCrossSellingMarketOrganizations.perform(
+          organization: org6,
+          source_market_id: market3.id,
+          destination_market_ids: [market2.id])
         org7.market_organizations.where(market_id: market2).soft_delete_all
       end
 

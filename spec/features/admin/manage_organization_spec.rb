@@ -539,7 +539,10 @@ describe "admin manange organization", :vcr do
         let!(:cross_sell_to) { create(:market) }
 
         before do
-          seller.update_cross_sells!(from_market: market, to_ids: [cross_sell_to.id])
+          UpdateCrossSellingMarketOrganizations.perform(
+            organization: seller,
+            source_market_id: market.id,
+            destination_market_ids: [cross_sell_to.id])
         end
 
         it "removes cross sell associations" do
