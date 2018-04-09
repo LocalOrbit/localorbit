@@ -1,5 +1,15 @@
 namespace :stripe do
 
+  desc 'Create plans at Stripe'
+  task create_plans: :environment do
+    stripe_plans = [
+      {id: 'PRODUCER_2017', product: {name: 'Producer Plan - Annual'}, amount: 6900, interval: 'year', currency: 'usd'},
+      {id: 'START_M_2017', product: {name: 'Start Plan - Monthly'}, amount: 7000, interval: 'month', currency: 'usd'},
+      {id: 'GROW_M_2017', product: {name: 'Grow Plan - Monthly'}, amount: 12500, interval: 'month', currency: 'usd'},
+      {id: 'ACCELERATE_M_2017', product: {name: 'Accelerate Plan - Monthly'}, amount: 45000, interval: 'month', currency: 'usd'}
+    ].map {|plan| Stripe::Plan.create(plan) }
+  end
+
   namespace :dev do
     desc "Convert Apple Ridge Farm and Judith Coleman over to Stripe in the local dev database"
     task switch_apple_ridge_farm: :environment do
@@ -77,7 +87,7 @@ namespace :stripe do
     #   puts "\n\n"
     # end
 
-    desc "Update stripe*_ids for orgs and bank accounts in a given Market" 
+    desc "Update stripe*_ids for orgs and bank accounts in a given Market"
     task :update_stripe_ids_on_market do
       env = { 'RAILS_ENV' => 'production' }
       market_id = ENV['market_id'] || ENV['market'] || raise("Set market id, eg, market=18")
