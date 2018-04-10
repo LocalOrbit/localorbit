@@ -44,4 +44,11 @@ Rails.application.configure do
   config.assets.configure do |env|
     env.cache = ThreadSafe::Cache.new
   end
+
+  # Disable logging by default
+  #   from: https://jtway.co/speed-up-your-rails-test-suite-by-6-in-1-line-13fedb869ec4
+  unless ENV['RAILS_ENABLE_TEST_LOG']
+    config.logger = Logger.new(nil)
+    config.log_level = :fatal
+  end
 end
