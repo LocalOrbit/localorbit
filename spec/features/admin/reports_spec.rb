@@ -276,7 +276,8 @@ feature "Reports" do
 
       end
 
-      scenario "can download a CSV of report" do
+      # FIXME: behavior was changed to a background job instead of rendered inline, fails without USE_UPLOAD_QUEUE = false
+      scenario "FIXME: can download a CSV of report" do
         items = Dom::Report::ItemRow.all
         html_headers = page.all(".report-table th").map(&:text)
 
@@ -314,7 +315,8 @@ feature "Reports" do
         end
       end
 
-      scenario "can download a CSV of all records irrespective of pagniation" do
+      # FIXME: behavior was changed to a background job instead of rendered inline, fails without USE_UPLOAD_QUEUE = false
+      scenario "FIXME: can download a CSV of all records irrespective of pagniation" do
         category = create(:category)
         product = create(:product,
                          :sellable,
