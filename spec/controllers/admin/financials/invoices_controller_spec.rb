@@ -1,7 +1,9 @@
 require "spec_helper"
 
 describe Admin::Financials::InvoicesController do
+
   include_context "the mini market"
+  include_context "intercom enabled"
 
   before do
     switch_to_subdomain mini_market.subdomain
@@ -15,8 +17,8 @@ describe Admin::Financials::InvoicesController do
       e = EventTracker.previously_captured_events.first
       expect(e).to be
       expect(e).to eq({
-        user: mary, 
-        event: EventTracker::ViewedInvoices.name, 
+        user: mary,
+        event: EventTracker::ViewedInvoices.name,
         metadata: {}
       })
     end
@@ -29,13 +31,13 @@ describe Admin::Financials::InvoicesController do
       e = EventTracker.previously_captured_events.first
       expect(e).to be
       expect(e).to eq({
-        user: mary, 
-        event: EventTracker::PreviewedBatchInvoices.name, 
+        user: mary,
+        event: EventTracker::PreviewedBatchInvoices.name,
         metadata: {
           num_invoices: 2
         }
       })
-      
+
     end
   end
 end
