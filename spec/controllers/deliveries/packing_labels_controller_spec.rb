@@ -1,8 +1,8 @@
 require "spec_helper"
 
 describe Deliveries::PackingLabelsController do
-
   include_context "the mini market"
+  include_context "intercom enabled"
 
   before do
     switch_to_subdomain mini_market.subdomain
@@ -28,7 +28,7 @@ describe Deliveries::PackingLabelsController do
       expect(e).to be
       expect(e).to eq({
         user: barry,
-        event: EventTracker::DownloadedPackingLabels.name, 
+        event: EventTracker::DownloadedPackingLabels.name,
         metadata: { }
       })
     end

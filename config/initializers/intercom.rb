@@ -25,7 +25,9 @@ IntercomRails.config do |config|
   # == Enabled Environments
   # Which environments is auto inclusion of the Javascript enabled for
   #
-  config.enabled_environments = ['development', 'staging', 'production']
+  # config.enabled_environments = ['development', 'staging', 'production']
+  # Disable intercom for now, April 23, 2018
+  config.enabled_environments = []
 
   # == Current user method/variable
   # The method/variable that contains the logged in user in your controllers.
