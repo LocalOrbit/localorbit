@@ -3,6 +3,7 @@ require "spec_helper"
 describe TableTentsAndPostersController do
 
   include_context "the mini market"
+  include_context "intercom enabled"
 
   before do
     switch_to_subdomain mini_market.subdomain
@@ -69,11 +70,11 @@ describe TableTentsAndPostersController do
           e = EventTracker.previously_captured_events.first
           expect(e).to be
           expect(e).to eq({
-            user: barry, 
-            event: intercom_event_type, 
+            user: barry,
+            event: intercom_event_type,
             metadata: {
-              order: { 
-                url: admin_order_url(order), 
+              order: {
+                url: admin_order_url(order),
                 value: order.order_number
               }
             }
