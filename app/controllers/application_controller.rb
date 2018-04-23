@@ -9,7 +9,7 @@ class ApplicationController < ActionController::Base
   before_action :ensure_active_organization
 
   before_action :set_timezone
-  before_action :set_intercom_attributes
+  before_action :set_intercom_attributes, if: :intercom_enabled?
 
   helper_method :current_market
   helper_method :current_organization
@@ -47,10 +47,15 @@ class ApplicationController < ActionController::Base
   end
 
   def track_event(event, metadata={})
+    return unless intercom_enabled?
     EventTracker.track_event_for_user current_user, event, metadata if current_user
   end
 
   private
+
+  def intercom_enabled?
+    IntercomRails.config.enabled_environments.include?(Rails.env)
+  end
 
   def signed_in_root_path(user)
     return root_path unless user
