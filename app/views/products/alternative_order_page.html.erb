@@ -6,6 +6,7 @@
 %>
 <%= react_component('lo.ProductCatalog', {
   baseUrl: "#{request.base_url}/api/v1/",
+  resourcesPath: @resources_path,
   cartUrl: cart_path,
   deliveryDate: current_delivery.buyer_deliver_on,
   selectedType: current_delivery.selected_type.capitalize,

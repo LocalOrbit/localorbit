@@ -9,6 +9,7 @@
     propTypes: {
       cartUrl: React.PropTypes.string,
       baseUrl: React.PropTypes.string.isRequired,
+      resourcesPath: React.PropTypes.string.isRequired,
       deliveryDate: React.PropTypes.string.isRequired,
       selectedType: React.PropTypes.string,
       orderCutoff: React.PropTypes.string.isRequired,
@@ -84,7 +85,7 @@
             limit={30}
             filter={null}
             cartUrl={this.props.cartUrl}
-            url={this.props.baseUrl + '/products'}
+            url={this.props.baseUrl + this.props.resourcesPath}
             supplierOnly={this.props.supplierId > 0}
             orderId={this.props.orderId}
             purchaseOrder={this.props.purchaseOrder}
@@ -92,7 +93,7 @@
             consignmentMarket={this.props.consignmentMarket}
             supplierView={this.props.supplierView}
         />);
-        
+
         return (
         <div id='supplierCatalog' className={divClass} style={divStyle}>
           {orderTemplates}

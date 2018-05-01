@@ -14,16 +14,23 @@ class ProductsController < ApplicationController
   before_action :load_sellers, only: [:search]
 
   def index
+    @resources_path = 'products'
     if current_market.alternative_order_page
       render 'alternative_order_page'
-      return
     end
   end
 
   def purchase
+    @resources_path = 'purchaseable_products'
     if current_market.alternative_order_page
       render 'alternative_order_page'
-      return
+    end
+  end
+
+  def sell
+    @resources_path = 'saleable_products'
+    if current_market.alternative_order_page
+      render 'alternative_order_page'
     end
   end
 
@@ -96,9 +103,10 @@ class ProductsController < ApplicationController
   def set_order_type
     @order_type = case params[:action]
       when 'index' then 'sales'
+      when 'sell' then 'sales'
       else params[:action]
     end
 
-    session[:order_type] = @order_type unless session[:order_type] == @order_type
+    session[:order_type] = @order_type
   end
 end

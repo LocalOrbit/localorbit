@@ -74,6 +74,7 @@ GEM
       erubis (~> 2.7.0)
     active_model_serializers (0.9.0)
       activemodel (>= 3.2)
+    active_record_query_trace (1.5.4)
     active_record_union (1.0.1)
       activerecord (>= 4.0)
     activemodel (4.1.16)
@@ -759,6 +760,7 @@ PLATFORMS
 DEPENDENCIES
   accountingjs-rails
   active_model_serializers
+  active_record_query_trace
   active_record_union
   activerecord-import
   acts_as_geocodable

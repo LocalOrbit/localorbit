@@ -42,17 +42,20 @@ Rails.application.routes.draw do
     end
   end
 
-  # Hoping that this is the embryo of a RESTful API for future development in
-  # the app, especially LocalEyes features.
   namespace :api do
     namespace :v1 do
       resources :orders, only: [] do
-        resources :credits, only: [:create]
+        resources :credits, only: :create
       end
-      resources :products, only: [:index]
-      resources :filters, only: [:index]
+      resources :products, only: :index
+
+      # consignment-only apis for product data
+      resources :purchaseable_products, only: :index
+      resources :saleable_products, only: :index
+
+      resources :filters, only: :index
       resources :order_templates, only: [:index, :create, :destroy]
-      resources :dashboards, only: [:index]
+      resources :dashboards, only: :index
     end
     # namespace :v2 do
     #   resources :products
@@ -319,10 +322,16 @@ Rails.application.routes.draw do
   post '/delivery_notes/new' => "delivery_notes#create"
 
   get '/products/search' => "products#search"
-  get '/products/purchase' => "products#purchase"
+  # get '/products/purchase' => "products#purchase"
   resources :products, only: [:index, :show] do
     get '/row' => "products#render_product_row"
+    collection do
+      get :purchase
+      get :sell
+    end
   end
+  resources :to_purchase_products, only: :index
+  resources :to_sell_products, only: :index
   resources :organizations, only: :index
 
   resource  :market, only: [:show]

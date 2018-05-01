@@ -13,7 +13,7 @@ module Api
       def index
         @offset = (params[:offset] || 0).to_i
         @limit = (params[:limit] || 30).to_i
-        @query = (params[:query] || '').gsub(/\W+/, '+') || ''
+        @query = (params[:query] || '').gsub(/\W+/, '+')
         @category_ids = (params[:category_ids] || [])
         @seller_ids = (params[:seller_ids] || [])
         @sort_by = (params[:sort_by] || "top_level_category.lft, second_level_category.lft, general_products.name")
@@ -26,28 +26,31 @@ module Api
           featured_promotion = current_market.featured_promotion(current_organization, current_delivery)
         end
 
-        if current_market.try(:is_consignment_market?) && (order_type == 'purchase' || (!order.nil? && order.purchase_order?))
-          products = filtered_available_po_consignment_products(@query, @category_ids, @seller_ids, @order)
-        elsif current_market.try(:is_consignment_market?) && (order_type == 'sales' || (!order.nil? && order.sales_order?))
-          products = filtered_available_so_consignment_products(@query, @category_ids, @seller_ids, @order)
-        else
-          products = filtered_available_products(@query, @category_ids, @seller_ids, @order)
-        end
+        # products = if current_market.try(:is_consignment_market?) && (order_type == 'purchase' || (!order.nil? && order.purchase_order?))
+        #   filtered_available_po_consignment_products(@query, @category_ids, @seller_ids, @order)
+        # elsif current_market.try(:is_consignment_market?) && (order_type == 'sales' || (!order.nil? && order.sales_order?))
+        #   filtered_available_so_consignment_products(@query, @category_ids, @seller_ids, @order)
+        # else
+        #   filtered_available_products(@query, @category_ids, @seller_ids, @order)
+        # end
+        products = filtered_available_products(@query, @category_ids, @seller_ids, @order)
 
         sellers = {}
+        # page_of_products = products
         page_of_products = products
-                               .offset(@offset)
-                               .limit(@limit)
-                               .map { |p| format_general_product_for_catalog(p, sellers, @order) }
-        render :json => {
-                   product_total: products.count(:all),
-                   featured_promotion: {
-                       :details => featured_promotion,
-                       :image_url => get_image_url(featured_promotion),
-                       :product => featured_promotion ? format_general_product_for_catalog(featured_promotion.product.general_product, sellers, @order) : nil
-                   },
-                   products: page_of_products,
-                   sellers: sellers
+                             .includes(:organization)
+                             .offset(@offset)
+                             .limit(@limit)
+                             .map { |p| format_general_product_for_catalog(p, sellers, @order) }
+        render json: {
+                 product_total: products.count(:all),
+                 featured_promotion: {
+                   :details => featured_promotion,
+                   :image_url => get_image_url(featured_promotion),
+                   :product => featured_promotion ? format_general_product_for_catalog(featured_promotion.product.general_product, sellers, @order) : nil
+                 },
+                 products: page_of_products,
+                 sellers: sellers
                }
       end
 
@@ -93,85 +96,85 @@ module Api
             .uniq
       end
 
-      def filtered_available_po_consignment_products(query, category_ids, seller_ids, order)
-        catalog_products = cross_sold_products = Product.connection.unprepared_statement do
-          Product.joins(organization: [market_organizations: [:market]])
-              .where("markets.id = ?", current_market.id)
-              .visible
-              .select(:id, :general_product_id)
-              .to_sql
-        end
+      # def filtered_available_po_consignment_products(query, category_ids, seller_ids, order)
+      #   catalog_products = cross_sold_products = Product.connection.unprepared_statement do
+      #     Product.joins(organization: [market_organizations: [:market]])
+      #         .where("markets.id = ?", current_market.id)
+      #         .visible
+      #         .select(:id, :general_product_id)
+      #         .to_sql
+      #   end
 
-        # KXM GC: Disable cross selling products for now.
-        # Once re-enabled you can delete the double assignment in catalog_products above...
+      #   # KXM GC: Disable cross selling products for now.
+      #   # Once re-enabled you can delete the double assignment in catalog_products above...
 
-        # cross_sold_products = Product.
-        #   cross_selling_list_items(current_market.id).
-        #   visible.
-        #   with_available_inventory(current_delivery.deliver_on).
-        #   priced_for_market_and_buyer(current_market, current_organization).
-        #   with_visible_pricing.
-        #   select(:id, :general_product_id).
-        #   to_sql
+      #   # cross_sold_products = Product.
+      #   #   cross_selling_list_items(current_market.id).
+      #   #   visible.
+      #   #   with_available_inventory(current_delivery.deliver_on).
+      #   #   priced_for_market_and_buyer(current_market, current_organization).
+      #   #   with_visible_pricing.
+      #   #   select(:id, :general_product_id).
+      #   #   to_sql
 
-        gp = GeneralProduct.joins("JOIN (#{catalog_products}) p_child
-              ON general_products.id=p_child.general_product_id
-              JOIN categories top_level_category ON general_products.top_level_category_id = top_level_category.id
-              JOIN categories second_level_category ON general_products.second_level_category_id = second_level_category.id
-              JOIN organizations supplier ON general_products.organization_id=supplier.id")
-                 .filter_by_current_order(order)
-                 .filter_by_name_or_category_or_supplier(query)
-                 .filter_by_categories(category_ids)
-                 .filter_by_suppliers(seller_ids)
-                 .select("top_level_category.lft, top_level_category.name, second_level_category.lft, second_level_category.name, general_products.*")
-                 .order("general_products.name")
-                 .uniq
-      end
+      #   gp = GeneralProduct.joins("JOIN (#{catalog_products}) p_child
+      #         ON general_products.id=p_child.general_product_id
+      #         JOIN categories top_level_category ON general_products.top_level_category_id = top_level_category.id
+      #         JOIN categories second_level_category ON general_products.second_level_category_id = second_level_category.id
+      #         JOIN organizations supplier ON general_products.organization_id=supplier.id")
+      #            .filter_by_current_order(order)
+      #            .filter_by_name_or_category_or_supplier(query)
+      #            .filter_by_categories(category_ids)
+      #            .filter_by_suppliers(seller_ids)
+      #            .select("top_level_category.lft, top_level_category.name, second_level_category.lft, second_level_category.name, general_products.*")
+      #            .order("general_products.name")
+      #            .uniq
+      # end
 
-      def filtered_available_so_consignment_products(query, category_ids, seller_ids, order)
-        catalog_products = cross_sold_products = Product.connection.unprepared_statement do
-          Product.joins(organization: [market_organizations: [:market]])
-            .where("markets.id = ?", current_market.id)
-            .with_available_so_inventory(current_delivery.deliver_on)
-            .visible
-            .select(:id, :general_product_id)
-            .to_sql
-        end
+      # def filtered_available_so_consignment_products(query, category_ids, seller_ids, order)
+      #   catalog_products = cross_sold_products = Product.connection.unprepared_statement do
+      #     Product.joins(organization: [market_organizations: [:market]])
+      #       .where("markets.id = ?", current_market.id)
+      #       .with_available_so_inventory(current_delivery.deliver_on)
+      #       .visible
+      #       .select(:id, :general_product_id)
+      #       .to_sql
+      #   end
 
-        catalog_products2 = cross_sold_products2 = Product.connection.unprepared_statement do
-          Product.joins(organization: [market_organizations: [:market]])
-              .where("markets.id = ?", current_market.id)
-              .with_pending_so_inventory(current_delivery.deliver_on)
-              .visible
-              .select(:id, :general_product_id)
-              .to_sql
-        end
+      #   catalog_products2 = cross_sold_products2 = Product.connection.unprepared_statement do
+      #     Product.joins(organization: [market_organizations: [:market]])
+      #         .where("markets.id = ?", current_market.id)
+      #         .with_pending_so_inventory(current_delivery.deliver_on)
+      #         .visible
+      #         .select(:id, :general_product_id)
+      #         .to_sql
+      #   end
 
-        cp = "#{catalog_products} UNION #{catalog_products2} UNION
-        SELECT products.id, products.general_product_id
-        FROM products
-        INNER JOIN organizations ON organizations.id = products.organization_id
-        INNER JOIN market_organizations ON market_organizations.organization_id = organizations.id
-        INNER JOIN markets ON markets.id = market_organizations.market_id
-        INNER JOIN consignment_transactions ON consignment_transactions.product_id = products.id AND consignment_transactions.market_id = markets.id AND consignment_transactions.transaction_type = 'PO' AND consignment_transactions.lot_id IS NULL AND consignment_transactions.deleted_at IS NULL
-        INNER JOIN orders ON consignment_transactions.order_id = orders.id AND orders.delivery_status in ('pending','partially delivered')
-        WHERE markets.id = #{current_market.id} AND products.deleted_at IS NULL"
+      #   cp = "#{catalog_products} UNION #{catalog_products2} UNION
+      #   SELECT products.id, products.general_product_id
+      #   FROM products
+      #   INNER JOIN organizations ON organizations.id = products.organization_id
+      #   INNER JOIN market_organizations ON market_organizations.organization_id = organizations.id
+      #   INNER JOIN markets ON markets.id = market_organizations.market_id
+      #   INNER JOIN consignment_transactions ON consignment_transactions.product_id = products.id AND consignment_transactions.market_id = markets.id AND consignment_transactions.transaction_type = 'PO' AND consignment_transactions.lot_id IS NULL AND consignment_transactions.deleted_at IS NULL
+      #   INNER JOIN orders ON consignment_transactions.order_id = orders.id AND orders.delivery_status in ('pending','partially delivered')
+      #   WHERE markets.id = #{current_market.id} AND products.deleted_at IS NULL"
 
-        gp = GeneralProduct.joins("JOIN (#{cp}) p_child
-              ON general_products.id=p_child.general_product_id
-              JOIN categories top_level_category ON general_products.top_level_category_id = top_level_category.id
-              JOIN categories second_level_category ON general_products.second_level_category_id = second_level_category.id
-              JOIN organizations supplier ON general_products.organization_id=supplier.id
-              LEFT JOIN market_organizations ON general_products.organization_id = market_organizations.organization_id
-              AND market_organizations.market_id = #{current_market.id}")
-                 .filter_by_name_or_category_or_supplier(query)
-                 .filter_by_categories(category_ids)
-                 .filter_by_suppliers(seller_ids)
-                 .filter_by_active_org
-                 .select("top_level_category.lft, top_level_category.name, second_level_category.lft, second_level_category.name, general_products.*")
-                 .order("general_products.name")
-                 .uniq
-      end
+      #   gp = GeneralProduct.joins("JOIN (#{cp}) p_child
+      #         ON general_products.id=p_child.general_product_id
+      #         JOIN categories top_level_category ON general_products.top_level_category_id = top_level_category.id
+      #         JOIN categories second_level_category ON general_products.second_level_category_id = second_level_category.id
+      #         JOIN organizations supplier ON general_products.organization_id=supplier.id
+      #         LEFT JOIN market_organizations ON general_products.organization_id = market_organizations.organization_id
+      #         AND market_organizations.market_id = #{current_market.id}")
+      #            .filter_by_name_or_category_or_supplier(query)
+      #            .filter_by_categories(category_ids)
+      #            .filter_by_suppliers(seller_ids)
+      #            .filter_by_active_org
+      #            .select("top_level_category.lft, top_level_category.name, second_level_category.lft, second_level_category.name, general_products.*")
+      #            .order("general_products.name")
+      #            .uniq
+      # end
 
       def format_general_product_for_catalog(general_product, sellers, order)
         general_product = general_product.decorate

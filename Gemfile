@@ -124,6 +124,7 @@ group :development do
 end
 
 group :development, :test do
+  gem 'active_record_query_trace'
   gem 'rspec-rails', '~> 3.0'
   gem 'rspec-collection_matchers'
   gem 'rspec_junit_formatter', :git => 'https://github.com/circleci/rspec_junit_formatter.git'

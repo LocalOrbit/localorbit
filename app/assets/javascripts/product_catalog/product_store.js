@@ -19,7 +19,7 @@
         products: [],
         hasMore: true
       };
-      this.url = window.location.protocol + "//" + window.location.host + "/api/v1/products";
+      // this.url = window.location.protocol + "//" + window.location.host + "/api/v1/products";
       this.orderId = null;
       this.parameters = {
         offset: 0,
@@ -45,11 +45,11 @@
       ProductActions.loadProducts();
     },
 
-    loadProducts: function() {
+    loadProducts: function(url) {
       this.loading = true;
       this.parameters.offset = 0;
       this.parameters.order_id = this.orderId;
-      $.getJSON(this.url, this.parameters, this.onLoad, this.onLoadError);
+      $.getJSON(url, this.parameters, this.onLoad, this.onLoadError);
     },
 
     onLoad: function(res) {
@@ -57,12 +57,12 @@
       this.onLoadMore(res);
     },
 
-    loadMoreProducts: function() {
+    loadMoreProducts: function(url) {
       if(this.loading || !this.catalog.hasMore) return;
       this.loading = true;
       this.parameters.offset = this.catalog.products.length;
       this.parameters.order_id = this.orderId;
-      $.getJSON(this.url, this.parameters, this.onLoadMore, this.onLoadError);
+      $.getJSON(url, this.parameters, this.onLoadMore, this.onLoadError);
     },
 
     onLoadMore: function(res) {
