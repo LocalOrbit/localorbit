@@ -340,6 +340,10 @@ FactoryBot.define do
 
     total_cost       100.99
 
+    trait :delivered do
+      delivery_status 'delivered'
+    end
+
     trait :with_items do
       before(:create) do |order|
         order.items = create_list(:order_item, 1, product: create(:product, :sellable))
