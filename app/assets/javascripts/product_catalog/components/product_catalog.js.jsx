@@ -10,7 +10,9 @@
       cartUrl: React.PropTypes.string,
       baseUrl: React.PropTypes.string.isRequired,
       deliveryDate: React.PropTypes.string.isRequired,
-      selectedType: React.PropTypes.string,
+      deliveryDateLabel: React.PropTypes.string.isRequired,
+      addressLabel: React.PropTypes.string,
+      addressLabelLabel: React.PropTypes.string.isRequired,
       orderCutoff: React.PropTypes.string.isRequired,
       buyerInfo: React.PropTypes.string.isRequired,
       supplierInfo: React.PropTypes.string,
@@ -68,7 +70,9 @@
         else
             productFilter = (<lo.ProductFilter
             deliveryDate={this.props.deliveryDate}
-            selectedType={this.props.selectedType}
+            deliveryDateLabel={this.props.deliveryDateLabel}
+            addressLabel={this.props.addressLabel}
+            addressLabelLabel={this.props.addressLabelLabel}
             orderCutoff={this.props.orderCutoff}
             buyerInfo={this.props.buyerInfo}
             supplierInfo={this.props.supplierInfo}
@@ -92,7 +96,7 @@
             consignmentMarket={this.props.consignmentMarket}
             supplierView={this.props.supplierView}
         />);
-        
+
         return (
         <div id='supplierCatalog' className={divClass} style={divStyle}>
           {orderTemplates}

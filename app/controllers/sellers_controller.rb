@@ -13,7 +13,7 @@ class SellersController < ApplicationController
     if @sellers.empty?
       @empty_message = "#{current_market.name} has no sellers at this time."
     else
-      @current_seller = @sellers.order("RANDOM()").first.decorate
+      @current_seller = @sellers.first.decorate
       load_products(@current_seller)
     end
     render :show
@@ -40,6 +40,6 @@ class SellersController < ApplicationController
   def find_market_sellers
     organization_ids = current_market.organizations.visible.active.selling.collect(&:id) | current_market.cross_selling_organizations.collect(&:id)
 
-    @sellers = Organization.where(id: organization_ids)
+    @sellers = Organization.where(id: organization_ids).order(:name)
   end
 end

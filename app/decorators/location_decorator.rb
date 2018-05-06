@@ -9,4 +9,8 @@ class LocationDecorator < Draper::Decorator
       concat "<br> #{address}, #{city}, #{state} #{zip} #{country}".html_safe
     end
   end
+
+  def name_and_street_text
+    "#{name} - #{address}"
+  end
 end

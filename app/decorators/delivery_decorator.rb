@@ -2,7 +2,7 @@ class DeliveryDecorator < Draper::Decorator
   delegate_all
 
   def type
-    buyer_pickup? ? "Pick up:" : "Delivery:"
+    buyer_pickup? ? "Pickup" : "Delivery"
   end
 
   def cart_type
@@ -100,8 +100,12 @@ class DeliveryDecorator < Draper::Decorator
 
   # Display methods for currently selected delivery
 
-  def selected_type
+  def date_label
     buyer_pickup? ? "Pick Up Date" : "Delivery Date"
+  end
+
+  def address_label_label
+    buyer_pickup? ? "From" : "Deliver To"
   end
 
   # Display for upcoming delivery

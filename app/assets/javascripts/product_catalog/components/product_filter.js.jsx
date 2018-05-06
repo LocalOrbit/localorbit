@@ -9,7 +9,9 @@
   var ProductFilter = React.createClass({
     propTypes: {
       deliveryDate: React.PropTypes.string.isRequired,
-      selectedType: React.PropTypes.string,
+      deliveryDateLabel: React.PropTypes.string.isRequired,
+      addressLabel: React.PropTypes.string,
+      addressLabelLabel: React.PropTypes.string.isRequired,
       orderCutoff: React.PropTypes.string.isRequired,
       buyerInfo: React.PropTypes.string.isRequired,
       supplierInfo: React.PropTypes.string,
@@ -151,7 +153,8 @@
             headerInformation = (
                 <div className="order-information-container column column--half pull-left">
                     {buyerSeller}: <strong>{entityInfo}</strong><br/>
-                    {this.props.selectedType}: <strong>{this.state.deliveryDate.format('dddd, MMM. D, YYYY')}</strong><br/>
+                    {this.props.deliveryDateLabel}: <strong>{this.state.deliveryDate.format('dddd, MMM. D')}</strong><br/>
+                    {this.props.addressLabelLabel}: <strong>{this.props.addressLabel}</strong><br/>
                     Time left to order: <strong>{this.state.orderCutoff.fromNow(true)}</strong><br/>
                     {orderMinimum}
                     {editDeliveryOptions}

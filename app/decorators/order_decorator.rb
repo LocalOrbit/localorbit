@@ -6,7 +6,7 @@ class OrderDecorator < Draper::Decorator
   delegate_all
 
   def display_delivery_or_pickup
-    delivery.delivery_schedule.buyer_pickup? ? "can be picked up at:" : "will be delivered to:"
+    delivery.delivery_schedule.buyer_pickup? ? "to be picked up at:" : "will be delivered to:"
   end
 
   def display_fulfillment_info
@@ -14,7 +14,8 @@ class OrderDecorator < Draper::Decorator
   end
 
   def display_delivery_address
-    "#{delivery_address}<br> #{delivery_city}, #{delivery_state} #{delivery_zip}".html_safe
+    label = delivery_address_label.present? ? "#{delivery_address_label}<br> " : ''
+    "#{label}#{delivery_address}<br> #{delivery_city}, #{delivery_state} #{delivery_zip}".html_safe
   end
 
   def display_delivery_street

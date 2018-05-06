@@ -2,12 +2,7 @@
   <div class="row mobile-panes" data-panes="4">
     <aside class="column column--fourth column--guttered secondary-panes" data-panes="3">
 
-      <div class="mobile-pane" id="delivery-information">
-        <div class="vacuus"></div>
-        <a href="#seller-info" class="pane-toggle mobile-only btn">Return to the Supplier</a>
-        <%= render "products/selected_delivery" %>
-      </div
-      ><div class="mobile-pane" id="sellers">
+      <div class="mobile-pane" id="sellers">
         <div class="vacuus"></div>
         <a href="#seller-info" class="pane-toggle mobile-only btn">Return to the Supplier</a>
         <% unless @sellers.empty? %>
@@ -22,10 +17,10 @@
       ><div class="mobile-pane" id="social">
         <div class="vacuus"></div>
         <a href="#seller-info" class="pane-toggle mobile-only btn">Return to the Supplier</a>
-        
+
         <%= twitter_feed(@current_seller.try(:twitter), @current_seller.try(:display_twitter)) %>
         <%= facebook_feed(@current_seller.try(:facebook), @current_seller.try(:display_facebook)) %>
-        
+
       </div>
 
     </aside
@@ -94,7 +89,9 @@
         baseUrl: "#{request.base_url}/api/v1/",
         cartUrl: cart_path,
         deliveryDate: current_delivery.buyer_deliver_on,
-        selectedType: current_delivery.selected_type.capitalize,
+        deliveryDateLabel: current_delivery.date_label.capitalize,
+        addressLabel: !current_cart.location.nil? ? current_cart.location.decorate.name_and_street_text : current_delivery.delivery_schedule.buyer_pickup_location.name,
+        addressLabelLabel: current_delivery.address_label_label.capitalize,
         orderCutoff: current_delivery.cutoff_time,
         buyerInfo: current_organization.name,
         limit: 10,

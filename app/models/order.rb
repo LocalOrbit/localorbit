@@ -78,6 +78,9 @@ class Order < ActiveRecord::Base
   validates :billing_organization_name, presence: true
   validates :billing_state, presence: true
   validates :billing_zip, presence: true
+  # Can delivery_address_label be nil for legacy data???
+  # allow_blank: true???
+  validates :delivery_address_label, presence: true
   validates :delivery_address, presence: true
   validates :delivery_city, presence: true
   validates :delivery_fees, presence: true
@@ -476,11 +479,12 @@ class Order < ActiveRecord::Base
   end
 
   def apply_delivery_address(address)
-    self.delivery_address = address.address
-    self.delivery_city    = address.city
-    self.delivery_state   = address.state
-    self.delivery_zip     = address.zip
-    self.delivery_phone   = address.phone
+    self.delivery_address_label = address.name
+    self.delivery_address       = address.address
+    self.delivery_city          = address.city
+    self.delivery_state         = address.state
+    self.delivery_zip           = address.zip
+    self.delivery_phone         = address.phone
   end
 
   def usable_items

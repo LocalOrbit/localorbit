@@ -17,7 +17,7 @@
 
 <div class="selected-delivery">
   <div class="header header--column ">
-    <h2 class="heading heading--sidebar delivery-type"><%= current_delivery.selected_type %></h2>
+    <h2 class="heading heading--sidebar delivery-type"><%= current_delivery.date_label %></h2>
     <% if can_change_delivery? %>
       <span class="change-delivery">
         <%= link_to "Change", "#change-delivery-warning", id: "change-delivery-date", class: "reset btn modal-toggle" %>

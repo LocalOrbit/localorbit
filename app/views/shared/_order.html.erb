@@ -243,7 +243,7 @@
   </div>
   <div class="row order-data">
     <br/><br/>
-    <h2 class="pull-left">Items for Delivery</h2>
+    <h2 class="pull-left">Items for <%= @order.delivery.decorate.type %></h2>
     <% if !current_user.buyer_only? && (order.delivery_status == 'pending' || order.delivery_status == 'partially delivered') %>
       <%= button_tag "Mark all delivered", class: 'pull-right btn btn--small btn--primary mobile-block', style: 'margin-left: 15px;', id: 'mark-all-delivered', type: 'button' %>
     <% end %>

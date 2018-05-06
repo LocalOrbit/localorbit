@@ -3,12 +3,15 @@
      supplier_id = current_market.organizations.where("org_type = 'S'")[0].id
   end
   current_supplier_id = @current_supplier.try(:id) || 0
+# binding.pry
 %>
 <%= react_component('lo.ProductCatalog', {
   baseUrl: "#{request.base_url}/api/v1/",
   cartUrl: cart_path,
   deliveryDate: current_delivery.buyer_deliver_on,
-  selectedType: current_delivery.selected_type.capitalize,
+  deliveryDateLabel: current_delivery.date_label.capitalize,
+  addressLabel: !current_cart.location.nil? ? current_cart.location.decorate.name_and_street_text : current_delivery.delivery_schedule.buyer_pickup_location.name,
+  addressLabelLabel: current_delivery.address_label_label.capitalize,
   orderCutoff: current_delivery.cutoff_time,
   buyerInfo: current_organization.name,
   supplierInfo: !@current_supplier.nil? ? @current_supplier.name : nil,

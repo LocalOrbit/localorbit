@@ -17,4 +17,8 @@ class MarketAddressDecorator < Draper::Decorator
     end
     a.join(', ')
   end
+
+  def name_and_street_text
+    "#{name} - #{address}"
+  end
 end

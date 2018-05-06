@@ -9,7 +9,7 @@
       <p class="faux-label">Please choose a <% if FeatureAccess.not_LE_market_manager?(user:current_user, market: current_market) && current_market.is_buysell_market? %>pick up or<% end %> delivery date:</p><br/>
 
 
-    <% if current_market.is_buysell_market? && !current_market.is_localeyes_market? %>
+    <% if current_market.is_buysell_market? %>
       <div class="row"><% @deliveries.each do |d| -%><div class="column column--guttered column--half">
           <div class="conditional field vcard delivery">
             <%= radio_button_tag "delivery_id", d.id %>
@@ -20,11 +20,11 @@
             </label>
 
             <% if d.display_locations.count > 1 %>
-              <%= select_tag "location_id[#{d.id}]", options_from_collection_for_select(d.display_locations, "id", "address", current_organization.shipping_location.id), class: "mobile-block" %>
+              <%= select_tag "location_id[#{d.id}]", options_from_collection_for_select(d.display_locations.decorate, "id", "name_and_street_text", current_organization.shipping_location.id), class: "mobile-block" %>
             <% else %>
               <%= content_tag_for :div, d.display_locations.first, class: "adr" do |location| %>
                 <%= hidden_field_tag "location_id[#{d.id}]", location.id unless d.buyer_pickup? %>
-                <span class="fn"><%= location.name %></span><br>
+                <span class="address-label"><%= location.name %></span><br>
                 <span class="street-address"><%= location.address %></span><br>
                 <span class="locality"><%= location.city %></span>, <span class="region"><%= location.state %></span> <span class="postal-code"><%= location.zip %></span>
               <% end %>
@@ -33,66 +33,9 @@
         </div><%= cycle '', raw('</div><div class="row">') if d != @deliveries.last -%><%- end -%>
       </div>
 
-    <% elsif current_market.is_consignment_market? %>
+    <% else # is_consignment_market %>
         <%= datetime_field_tag "buyer_deliver_on", nil, class: 'datepicker' %>
-    <% elsif current_market.is_localeyes_market? %>
-
-	  <%
-         first_delivery = @deliveries.first.buyer_deliver_on
-         last_delivery = first_delivery + 30.days
-         delivery_for_day = @deliveries.each_with_object({}) { |d,map| map[d.buyer_deliver_on.wday] ||= d }
-
-         now = DateTime.now
-         calendar_start = now - now.wday
-         calendar_end = last_delivery + (6 - last_delivery.wday)
-
-         delivery_weeks = [ [] ]
-
-         (calendar_start..calendar_end).each { |day|
-           delivery_id = nil
-           css_class = if day < first_delivery || last_delivery < day
-                         "cal-date disabled"
-                       elsif delivery_for_day[day.wday]
-                         delivery_id = delivery_for_day[day.wday].id
-                         "cal-date"
-                       else
-                         "cal-date disabled"
-                       end
-           if delivery_weeks[-1].length == 7
-             delivery_weeks.push [ ]
-           end
-           delivery_weeks[-1].push({ day: day, css_class: css_class, delivery_id: delivery_id })
-         }
-      %>
-
-      <div>
-        <%= hidden_field_tag :delivery_id %>
-        <%= hidden_field_tag :delivery_day %>
-        <table class="calendar">
-          <tr><th class="cal-header">S</th><th class="cal-header">M</th><th class="cal-header">T</th><th class="cal-header">W</th><th class="cal-header">T</th><th class="cal-header">F</th><th class="cal-header">S</th></tr>
-          <% delivery_weeks.each do |w| %>
-              <tr>
-                <% w.each do |d| %>
-                    <% if d[:delivery_id] %>
-                        <td onclick="setDelivery(this,'<%= d[:day] %>',<%= d[:delivery_id] %>)"
-                            class="<%= d[:css_class] %>"><%= d[:day].day %></td>
-                    <% else %>
-                        <td class="<%= d[:css_class] %>"><%= d[:day].day %></td>
-                    <% end %>
-                <% end %>
-              </tr>
-          <% end %>
-        </table>
-        <script type="text/javascript">
-            function setDelivery(td,day,id){
-                $('input:hidden[name=delivery_id]').val(id);
-                $('input:hidden[name=delivery_day]').val(day);
-                $('.cal-date').removeClass("active");
-                $(td).addClass("active");
-            }
-        </script>
-      </div>
-	<% end %>
+	  <% end %>
       <div class="form-actions">
         <% if session[:current_supplier_id].nil? %>
             <%= link_to "Back to Buyer", new_sessions_organization_path(redirect_back_to: request.original_url), class: 'btn' %>
