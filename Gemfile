@@ -125,6 +125,7 @@ group :development do
 end
 
 group :development, :test do
+  gem 'factory_bot_rails'
   gem 'rspec-rails', '~> 3.0'
   gem 'rspec-collection_matchers'
   gem 'rspec_junit_formatter', :git => 'https://github.com/circleci/rspec_junit_formatter.git'
@@ -147,7 +148,6 @@ end
 group :test do
   gem 'simplecov', require: false
   gem 'domino'
-  gem 'factory_bot_rails'
   gem 'email_spec'
   gem 'database_cleaner'
   gem 'guard-rspec', require: false
