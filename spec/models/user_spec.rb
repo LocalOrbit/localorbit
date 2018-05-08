@@ -134,29 +134,6 @@ describe User do
       end
     end
 
-    describe "#with_primary_market" do
-      let!(:market) { create(:market) }
-      let!(:market2) { create(:market) }
-      let!(:organization) { create(:organization, markets: [market]) }
-      let!(:organization2) { create(:organization, markets: [market2]) }
-
-      let!(:user) { create(:user, organizations: [organization]) }
-      let!(:user2) { create(:user, organizations: [organization2]) }
-      let!(:market_manager) { create(:user, :market_manager, managed_markets: [market]) }
-
-      it "finds all users for organizations in the market" do
-        result = User.with_primary_market(market)
-
-        expect(result).to include(user)
-        expect(result).not_to include(user2)
-      end
-
-      it "finds market_managers" do
-        result = User.with_primary_market(market)
-        expect(result).to include(market_manager)
-      end
-    end
-
     it 'admin? returns true if role is "admin"' do
       user = create(:user, :admin)
       org = create(:organization, :admin)
@@ -603,24 +580,6 @@ describe User do
     end
   end
 
-  describe "#primary_market" do
-    context "as a market manager" do
-      let!(:user) { create(:user, :market_manager) }
-
-      it "returns the primary market" do
-        expect(user.primary_market).to eq(user.markets.first)
-      end
-    end
-
-    context "as an admin" do
-      let!(:user) { create(:user, :admin) }
-
-      it "returns nil" do
-        expect(user.primary_market).to eq(nil)
-      end
-    end
-  end
-
   context "oranizations scopes" do
     let!(:market) { create(:market) }
     let!(:user) { create(:user) }
@@ -881,53 +840,84 @@ describe User do
   end
 
   describe "#default_market" do
-    let(:market0) { create(:market) }
-    let(:org1) { create(:organization, markets: [market0]) }
-    let(:user) { create(:user, :admin) }
+    let(:buyer_org1) { create(:organization, :buyer, name: "Buyer Org 1") }
 
-    context "when the user belongs to multiple markets" do
-      let!(:market1) { create(:market) }
-      let!(:market2) { create(:market) }
-      let!(:market3) { create(:market) }
+    let(:supplier_org_inactive1) { create(:organization, :seller, name: "Inactive Supplier Org 1", active: false) }
 
-      before do
-        user.managed_markets << market1
-        user.organizations << org1
-        user.managed_markets << market2
-      end
+    let(:supplier_org1) { create(:organization, :seller, name: "Supplier Org 1") }
+    let(:supplier_org2) { create(:organization, :seller, name: "Supplier Org 2") }
 
-      it "returns the user's first Market" do
-        expect(user.default_market).to be
-        expect(user.default_market).to eq(user.markets.first)
-      end
+    let!(:market_inactive1) { create(:market, organizations: [buyer_org1, supplier_org1], active: false) }
+    let!(:market_inactive2) { create(:market, organizations: [buyer_org1, supplier_org1, supplier_org2], active: false) }
 
-      context "when user is an admin" do
-        let!(:organization) { create(:organization, :admin) }
-        let!(:user) { create(:user, :admin) }
+    let!(:market_active1) { create(:market, organizations: [buyer_org1, supplier_org1, supplier_org_inactive1]) }
 
-        context "and the 'admin' market exists" do
-          let!(:admin_market) { create(:market, subdomain: "admin") }
+    context "as an admin" do
+      let(:admin_org) { create(:organization, :admin) }
+      let(:admin) { create(:user, :admin, organizations: [admin_org]) }
 
-          before do
-            user.organizations << organization
-          end
+      context "and the 'admin' market exists" do
+        let!(:admin_market) { create(:market, subdomain: "admin") }
 
-          it "returns the admin market" do
-             expect(user.default_market).to eq(admin_market)
-          end
+        it "returns the admin market" do
+           expect(admin.default_market).to eq(admin_market)
         end
-        context "but the 'admin' market doesn't exist" do
-          it "returns the first market" do
-            expect(user.default_market).to be
-            expect(user.default_market).to eq(user.markets.first)
-          end
+      end
+
+      context "but the 'admin' market doesn't exist" do
+        it "returns nil" do
+          expect(admin.default_market).to be_nil
         end
       end
     end
 
-    context "when user has no markets" do
-      it "returns nil" do
-        expect(user.default_market).to be_nil
+    context "as a market manager" do
+      let(:market_manager) { create(:user, :market_manager, managed_markets: managed_markets) }
+
+      context "who manages active and inactive markets" do
+        let(:managed_markets) { [market_inactive1, market_active1, market_inactive2] }
+
+        it "returns the first active market" do
+          expect(market_manager.default_market).to eq(market_active1)
+        end
+      end
+
+      context "who manages only an inactive market" do
+        let(:managed_markets) { [market_inactive1] }
+
+        it "returns nil" do
+          expect(market_manager.default_market).to be_nil
+        end
+      end
+    end
+
+    context "as a supplier" do
+      let(:supplier) { create(:user, :supplier, organizations: organizations) }
+
+      context "who belongs to an active organization" do
+        context "in both active and inactive markets" do
+          let(:organizations) { [supplier_org1] }
+
+          it "returns the first active market" do
+            expect(supplier.default_market).to eq(market_active1)
+          end
+        end
+
+        context "in an inactive market" do
+          let(:organizations) { [supplier_org2] }
+
+          it "returns nil" do
+            expect(supplier.default_market).to be_nil
+          end
+        end
+      end
+
+      context "who belongs to an inactive organization in an active market" do
+        let(:organizations) { [supplier_org_inactive1] }
+
+        it "returns nil" do
+          expect(supplier.default_market).to be_nil
+        end
       end
     end
   end
