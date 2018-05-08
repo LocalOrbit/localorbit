@@ -667,17 +667,21 @@ FactoryBot.define do
       name 'Market Manager'
       activities '{product_fees:index,merge_dup_order:index,advanced_delivery_cycles:index,user_organization:index,catalog:index,about:index,advanced_pricing:index,advanced_inventory:index,market_fees:index,market_category_fees:index,market_cross_selling:index,order:index,financial:index,market_profile:index,market_manager:index,delivery:index,order_item:index,market_address:index,market_deliveries:index,market_payment_methods:index,market_deposit_accounts:index,template:index,market_custom_branding:index,market:index,send_invoices:index,payment_history:index,organization:index,delivery_schedule:index,financial_overview:index,enter_receipts:index,record_payments:index,product:index,fresh_sheet:index,newsletter:index,promotion:index,all_supplier:index,discount_code:index,dashboard:index,report:index}'
     end
+
+    trait :accelerate_plan do
+      org_type 'M'
+      name 'Market Manager'
+      activities '{routing_plan:index,product_fees:index,template:index,promotion:index,financial:index,order_item:index,fresh_sheet:index,newsletter:index,payment_history:index,catalog:index,about:index,merge_order:index,order_minimum:index,advanced_delivery_cycles:index,dup_order:index,import:index,market_category_fees:index,discount_code:index,user_organization:index,order:index,delivery:index,delivery_schedule:index,product:index,sent_email:index,email_test:index,report:index,referral:index,metric:index,purchase_history:index,market_custom_branding:index,market_cross_selling:index,organization_cross_selling:index,market_fees:index,advanced_pricing:index,all_supplier:index,market_profile:index,market_manager:index,market_address:index,advanced_inventory:index,market_deliveries:index,market_payment_methods:index,market_deposit_accounts:index,market_fees:index,financial_overview:index,send_invoices:index,enter_receipts:index,record_payments:index,review_invoices:index,market_stripe:index,dashboard:index,market:index,organization:index,user:index,role:index,unit:index,event:index,taxonomy:index,internal_financial:index,segmented_inventory:index}'
+    end
   end
 
   factory :user do
     sequence(:email) {|n| "user#{n}@example.com" }
     password "password"
     password_confirmation "password"
-    #role "user"
     confirmed_at { Time.current }
 
     trait :market_manager do
-      #role "user"
       roles {[FactoryBot.create(:role, :market_manager)]}
 
       after(:create) do |user|
@@ -693,7 +697,6 @@ FactoryBot.define do
     end
 
     trait :admin do
-      #role "admin"
       roles {[FactoryBot.create(:role, :admin)]}
       after(:create) do |user|
         if user.organizations.empty?
@@ -706,7 +709,6 @@ FactoryBot.define do
     trait :supplier do
       roles {[FactoryBot.create(:role, :supplier)]}
       after(:create) do |user|
-        #m = create(:market)
         if user.organizations.empty?
           o = create(:organization, :seller)
           user.organizations << o
@@ -717,7 +719,6 @@ FactoryBot.define do
     trait :buyer do
       roles {[FactoryBot.create(:role, :buyer)]}
       after(:create) do |user|
-        #m = create :market
         if user.organizations.empty?
           o = create(:organization, :buyer)
           user.organizations << o
