@@ -937,6 +937,22 @@ module Dom
 
     end
 
+    class RoutingPlan < Domino
+      selector "#routing-plan"
+
+      def path
+        node.find("#path")
+      end
+
+      def route_map
+        node.find("#map")
+      end
+
+      def directions
+        node.find("#my_textual_div")
+      end
+    end
+
     class ProductForm < Domino
       selector "form.product"
 

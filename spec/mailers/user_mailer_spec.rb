@@ -2,7 +2,7 @@ require "spec_helper"
 
 describe UserMailer do
   describe "#user_updated" do
-    let(:user) { double(:user, email: "user@test.com", primary_market: nil) }
+    let(:user) { double(:user, email: "user@test.com", default_market: nil) }
     let(:updater) { double(:updater, email: "updater@test.com") }
 
     it "notifies a user that their account has been updated" do
