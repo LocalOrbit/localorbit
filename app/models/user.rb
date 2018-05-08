@@ -419,13 +419,17 @@ class User < ActiveRecord::Base
 
   def default_market
     @default_market ||= if admin?
-      markets.select{ |m| m.subdomain == "admin" }.first
+      Market.find_by(subdomain: 'admin')
     elsif market_manager?
       managed_markets.active.first
     else
-      # Use market_ids since User.markets includes markets via cross selling organizations
-      organization_member_market_ids = organizations.active.map(&:market_ids).flatten
-      Market.where(id: organization_member_market_ids).active.first
+      Market.joins(market_organizations: {organization: :user_organizations}).
+        merge(Market.active).
+        merge(MarketOrganization.excluding_deleted).
+        merge(MarketOrganization.not_cross_selling).
+        merge(Organization.active).
+        merge(UserOrganization.enabled).
+        where(user_organizations: {user_id: id}).first
     end
   end
 
@@ -446,8 +450,6 @@ class User < ActiveRecord::Base
 
   private
 
-  # Seems like this is buggy as it doesn't just pull "standard" markets, but
-  # rather includes cross selling markets since it calls all_ not market_ids
   def standard_market_ids
     organization_member_market_ids = organizations.map(&:all_market_ids).flatten
     managed_market_ids + organization_member_market_ids

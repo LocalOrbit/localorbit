@@ -872,8 +872,10 @@ describe User do
     end
 
     context "as a market manager" do
+      let(:market_manager) { create(:user, :market_manager, managed_markets: managed_markets) }
+
       context "who manages active and inactive markets" do
-        let(:market_manager) { create(:user, :market_manager, managed_markets: [market_inactive1, market_active1, market_inactive2]) }
+        let(:managed_markets) { [market_inactive1, market_active1, market_inactive2] }
 
         it "returns the first active market" do
           expect(market_manager.default_market).to eq(market_active1)
@@ -881,7 +883,7 @@ describe User do
       end
 
       context "who manages only an inactive market" do
-        let(:market_manager) { create(:user, :market_manager, managed_markets: [market_inactive1]) }
+        let(:managed_markets) { [market_inactive1] }
 
         it "returns nil" do
           expect(market_manager.default_market).to be_nil
@@ -890,25 +892,28 @@ describe User do
     end
 
     context "as a supplier" do
+      let(:supplier) { create(:user, :supplier, organizations: organizations) }
 
-      context "who belongs to an active organization in both active and inactive markets" do
-        let(:supplier) { create(:user, :supplier, organizations: [supplier_org1]) }
+      context "who belongs to an active organization" do
+        context "in both active and inactive markets" do
+          let(:organizations) { [supplier_org1] }
 
-        it "returns the first active market" do
-          expect(supplier.default_market).to eq(market_active1)
+          it "returns the first active market" do
+            expect(supplier.default_market).to eq(market_active1)
+          end
         end
-      end
 
-      context "who belongs to an active organization in an inactive market" do
-        let(:supplier) { create(:user, :supplier, organizations: [supplier_org2]) }
+        context "in an inactive market" do
+          let(:organizations) { [supplier_org2] }
 
-        it "returns nil" do
-          expect(supplier.default_market).to be_nil
+          it "returns nil" do
+            expect(supplier.default_market).to be_nil
+          end
         end
       end
 
       context "who belongs to an inactive organization in an active market" do
-        let(:supplier) { create(:user, :supplier, organizations: [supplier_org_inactive1]) }
+        let(:organizations) { [supplier_org_inactive1] }
 
         it "returns nil" do
           expect(supplier.default_market).to be_nil
