@@ -1,5 +1,5 @@
 <%# gets the market for the email layout. Isn't ideal, but works well. %>
-<% if @market = @user.primary_market
+<% if @market = @user.default_market
      market_name = @market.name
    else
      market_name = "Local Orbit"
