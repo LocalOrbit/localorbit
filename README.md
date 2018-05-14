@@ -73,6 +73,8 @@ Run suite automatically on changes to javascript sources or specs:  bundle exec 
 
 Run `rake db:dump:staging`
 
+**WARNING: This will replace EVERYTHING in your development db with what is currently on staging**
+
 ### Load production data into development or staging
 
 Below is a quick overview, for more granular tasks see [production-copy.rake](lib/tasks/production-copy.rake).
@@ -94,12 +96,14 @@ Or two step
 
 #### Into staging
 
-Do the steps for development above, then load development data into staging, and copy production s3 files to staging:
+Load production data into staging via development, will also sync s3 from production to staging:
 
     rake production_copy:to[staging]
 
+Or if you already have a recent copy of production in development do:
 
-**WARNING: This will replace EVERYTHING in your development db with what is currently on staging**
+    rake production_copy:push_out[staging]
+
 
 ## Contributing
 
