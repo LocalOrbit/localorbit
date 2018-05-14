@@ -101,10 +101,6 @@ class User < ActiveRecord::Base
     merge(Subscription.visible)
   }
 
-  def self.with_primary_market(market)
-    User.all.select {|u| u.primary_market == market }
-  end
-
   def self.arel_column_for_sort(column_name)
     if column_name == "email"
       arel_table[:email]
@@ -358,18 +354,10 @@ class User < ActiveRecord::Base
     @multi_organization_membership ||= managed_organizations.count > 1
   end
 
-  # shortcut for grabbing the "primary" market for things like email layout
-  # when we don't know. We can make this more intelligent later.
-  # confirmation email needs the organizations bit.
-  def primary_market
-    admin? ? nil : markets.order(:created_at).first
-  end
-
   def markets
     @markets ||= if admin?
       Market.all
     else
-      # markets_for_non_admin
       markets_for_non_admin_including_cross_selling
     end
   end
@@ -430,15 +418,18 @@ class User < ActiveRecord::Base
   end
 
   def default_market
-    if admin?
-      admin_market = markets.select do |m| m.subdomain == "admin" end.first
-      if admin_market
-        admin_market
-      else
-        markets.first
-      end
+    @default_market ||= if admin?
+      Market.find_by(subdomain: 'admin')
+    elsif market_manager?
+      managed_markets.active.first
     else
-      markets.first
+      Market.joins(market_organizations: {organization: :user_organizations}).
+        merge(Market.active).
+        merge(MarketOrganization.excluding_deleted).
+        merge(MarketOrganization.not_cross_selling).
+        merge(Organization.active).
+        merge(UserOrganization.enabled).
+        where(user_organizations: {user_id: id}).first
     end
   end
 

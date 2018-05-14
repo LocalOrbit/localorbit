@@ -2,6 +2,7 @@ require "spec_helper"
 
 describe Admin::OrdersController do
   include_context "the mini market"
+  include_context "intercom enabled"
 
   let(:order) { order1 } # defined in mini market
 
@@ -17,11 +18,11 @@ describe Admin::OrdersController do
       e = EventTracker.previously_captured_events.first
       expect(e).to be
       expect(e).to eq({
-        user: mary, 
-        event: EventTracker::ViewedOrder.name, 
+        user: mary,
+        event: EventTracker::ViewedOrder.name,
         metadata: {
-          order: { 
-            url: admin_order_url(order), 
+          order: {
+            url: admin_order_url(order),
             value: order.order_number
           }
         }
