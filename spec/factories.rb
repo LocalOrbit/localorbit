@@ -4,7 +4,7 @@ FactoryBot.define do
 
     # Default as CC account:
     bank_name        "Visa"
-    account_type     "visa"
+    account_type     "card"
     sequence(:last_four) {|n| "#{'%04d' % n}"}
     expiration_month 5
     expiration_year  2020

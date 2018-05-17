@@ -15,10 +15,10 @@ describe CreateTemporaryStripeCreditCard do
     HashWithIndifferentAccess.new(
       payment_method: payment_method,
       credit_card: HashWithIndifferentAccess.new(
-        account_type: "visa",
+        account_type: "card",
         last_four: "1111",
-        bank_name: "Horse the Bank",
-        name: "My Test Visa",
+        bank_name: "Visa",
+        name: "John Doe",
         expiration_month: "06",
         expiration_year: "2016"
       )
@@ -38,30 +38,91 @@ describe CreateTemporaryStripeCreditCard do
 
 
     context "when Stripe customer already associated with the entity" do
+
+      let!(:stripe_customer) { create_stripe_customer(organization: org) }
+
       before do
         order_params[:credit_card][:stripe_tok] = stripe_card_token.id
       end
-      let!(:stripe_customer) {
-        create_stripe_customer(organization: org)
-      }
 
-
-      it "creates a new BankAccount and Stripe::Customer" do
+      it "creates a new BankAccount and Stripe::Customer::Source" do
         result = subject.perform(order_params: order_params, cart: cart, order: order)
         expect(result.success?).to be true
 
         bank_account_id = result.context[:order_params]["credit_card"]["id"]
-        expect(bank_account_id).to be
+        expect(bank_account_id).to_not be_nil
 
         bank_account = BankAccount.find(bank_account_id)
-        expect(bank_account).to be
-        expect(bank_account.bankable).to eq org
-        expect(bank_account.deleted_at).to be
-        expect(bank_account.stripe_id).to be
+        expect(bank_account).to_not be_nil
+        expect(bank_account.bankable).to eq(org)
+        expect(bank_account.deleted_at).to_not be_nil
+        expect(bank_account.stripe_id).to_not be_nil
 
         card = stripe_customer.sources.retrieve(bank_account.stripe_id)
-        expect(card).to be
+        expect(card).to_not be_nil
+      end
 
+      context "bank account already exists with same last four digits" do
+        context "and same expiration date" do
+          let!(:bank_account) { create(:bank_account, :credit_card,
+                                bankable: org,
+                                last_four: order_params[:credit_card][:last_four],
+                                bank_name: order_params[:credit_card][:bank_name],
+                                expiration_month: order_params[:credit_card][:expiration_month],
+                                expiration_year: order_params[:credit_card][:expiration_year],
+                                name: order_params[:credit_card][:name]) }
+
+          it "sets that bank account" do
+            result = subject.perform(order_params: order_params, cart: cart, order: order)
+            expect(result.success?).to be true
+
+            bank_account_id = result.context[:order_params][:credit_card][:id]
+            expect(bank_account_id).to eq bank_account.id
+          end
+        end
+
+        context "but different expiration date" do
+          let!(:bank_account) { create(:bank_account, :credit_card,
+                                bankable: org,
+                                last_four: order_params[:credit_card][:last_four],
+                                bank_name: order_params[:credit_card][:bank_name],
+                                expiration_month: "09",
+                                expiration_year: "2032",
+                                name: order_params[:credit_card][:name]) }
+
+          it "adds a new bank account" do
+            result = subject.perform(order_params: order_params, cart: cart, order: order)
+            expect(result.success?).to be true
+
+            bank_account_id = result.context[:order_params][:credit_card][:id]
+            expect(bank_account_id).to_not eq bank_account.id
+          end
+        end
+
+        context "but pointing to a deleted card on Stripe" do
+          let!(:bank_account) { create(:bank_account, :credit_card,
+                                bankable: org,
+                                last_four: order_params[:credit_card][:last_four],
+                                bank_name: order_params[:credit_card][:bank_name],
+                                expiration_month: order_params[:credit_card][:expiration_month],
+                                expiration_year: order_params[:credit_card][:expiration_year],
+                                name: order_params[:credit_card][:name],
+                                stripe_id: "DELETED FROM STRIPE") }
+
+          it "creates a new card and points existing bank_account to it" do
+            result = subject.perform(order_params: order_params, cart: cart, order: order)
+            expect(result.success?).to be true
+
+            bank_account_result_id = result.context[:order_params][:credit_card][:id]
+            expect(bank_account_result_id).to_not be_nil
+            expect(bank_account_result_id).to eq(bank_account.id)
+
+            bank_account_result = BankAccount.find(bank_account_result_id)
+            expect(bank_account_result).to_not be_nil
+            expect(bank_account_result.stripe_id).to_not be_nil
+            expect(bank_account_result.stripe_id).to_not eq(bank_account.stripe_id)
+          end
+        end
       end
     end
 
@@ -105,23 +166,5 @@ describe CreateTemporaryStripeCreditCard do
         expect(result.success?).to be true
       end
     end
-
-    context "bank account already exists for given card info" do
-      let!(:bank_account) { create(:bank_account, :credit_card,
-                                  bankable: org,
-                                  last_four: "1111",
-                                  bank_name: "Horse the Bank",
-                                  name: "My Test Visa") }
-
-      it "sets that bank account" do
-        order_params[:credit_card][:stripe_tok] = "not matter"
-        result = subject.perform(order_params: order_params, cart: cart, order: order)
-        expect(result.success?).to be true
-
-        bank_account_id = result.context[:order_params]["credit_card"]["id"]
-        expect(bank_account_id).to eq bank_account.id
-      end
-    end
   end
-
 end
