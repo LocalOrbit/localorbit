@@ -23,7 +23,12 @@ class CreateTemporaryStripeCreditCard
     credit_card_params.delete(:id)
     SchemaValidation.validate!(CardSchema::NewParams, credit_card_params)
 
-    bank_account = find_or_create_stripe_card_and_bank_account(@org, stripe_tok, credit_card_params)
+    bank_account = if existing_bank_account = find_bank_account(@org, credit_card_params)
+                     existing_bank_account
+                   else
+                     create_stripe_card_bank_account(@org, stripe_tok, credit_card_params)
+                   end
+
     if bank_account
       # create_stripe_card_bank_account could fail and return nil, in which case the context has been failed, and we cannot set the card for the transaction
       set_card_for_transaction(bank_account)
@@ -46,26 +51,17 @@ class CreateTemporaryStripeCreditCard
     context[:order_params]["credit_card"]["id"] = bank_account.id
   end
 
-  def find_or_create_stripe_card_and_bank_account(org, stripe_tok, card_params)
+  def create_stripe_card_bank_account(org, stripe_tok, card_params)
     bank_account = nil
 
     begin
       SchemaValidation.validate!(CardSchema::NewParams, card_params)
 
-      stripe_customer = PaymentProvider::Stripe.get_stripe_customer(org.stripe_customer_id)
-      bank_account = find_bank_account(org, card_params)
-
-      card = find_stripe_card(bank_account, stripe_customer)
-      if card.nil?
-        card = PaymentProvider::Stripe.create_stripe_card_for_stripe_customer(
-          stripe_customer: stripe_customer,
-          stripe_tok: stripe_tok
-        )
-
-        bank_account ||= org.bank_accounts.new(card_params)
-        bank_account.stripe_id = card.id
-        bank_account.save!
-      end
+      card = PaymentProvider::Stripe.create_stripe_card_for_stripe_customer(
+        stripe_customer_id: org.stripe_customer_id,
+        stripe_tok: stripe_tok
+      )
+      bank_account = org.bank_accounts.create!(card_params.merge(stripe_id: card.id))
 
     rescue => e
       error_info = ErrorReporting.interpret_exception(e)
@@ -77,16 +73,5 @@ class CreateTemporaryStripeCreditCard
     end
 
     bank_account
-  end
-
-  def find_stripe_card(bank_account, stripe_customer)
-    card = nil
-    if !bank_account.nil? && !bank_account.stripe_id.nil?
-      begin
-        card = stripe_customer.sources.retrieve(bank_account.stripe_id)
-      rescue Stripe::InvalidRequestError => e
-      end
-    end
-    card
   end
 end

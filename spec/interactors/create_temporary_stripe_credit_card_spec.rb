@@ -98,31 +98,6 @@ describe CreateTemporaryStripeCreditCard do
             expect(bank_account_id).to_not eq bank_account.id
           end
         end
-
-        context "but pointing to a deleted card on Stripe" do
-          let!(:bank_account) { create(:bank_account, :credit_card,
-                                bankable: org,
-                                last_four: order_params[:credit_card][:last_four],
-                                bank_name: order_params[:credit_card][:bank_name],
-                                expiration_month: order_params[:credit_card][:expiration_month],
-                                expiration_year: order_params[:credit_card][:expiration_year],
-                                name: order_params[:credit_card][:name],
-                                stripe_id: "DELETED FROM STRIPE") }
-
-          it "creates a new card and points existing bank_account to it" do
-            result = subject.perform(order_params: order_params, cart: cart, order: order)
-            expect(result.success?).to be true
-
-            bank_account_result_id = result.context[:order_params][:credit_card][:id]
-            expect(bank_account_result_id).to_not be_nil
-            expect(bank_account_result_id).to eq(bank_account.id)
-
-            bank_account_result = BankAccount.find(bank_account_result_id)
-            expect(bank_account_result).to_not be_nil
-            expect(bank_account_result.stripe_id).to_not be_nil
-            expect(bank_account_result.stripe_id).to_not eq(bank_account.stripe_id)
-          end
-        end
       end
     end
 
