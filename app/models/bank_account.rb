@@ -35,7 +35,7 @@ class BankAccount < ActiveRecord::Base
     if bank_account?
       "ACH: #{bank_name} - *********#{last_four}#{" NOT VERIFIED" unless verified?}"
     else
-      "#{bank_name} ending in #{last_four}"
+      "#{bank_name} ending in #{last_four} (exp. #{expiration_month}/#{expiration_year})"
     end
   end
 
@@ -65,12 +65,24 @@ class BankAccount < ActiveRecord::Base
       raise "Bankable #{bankable.inspect} doesn't respond to :primary_payment_provider"
     end
   end
+
   private
 
   def account_is_unique_to_bankable
-    accounts = bankable.bank_accounts.visible.where(account_type: account_type, last_four: last_four, bank_name: bank_name, name: name)
+    unique_params = {
+      account_type: account_type,
+      last_four: last_four,
+      bank_name: bank_name,
+      name: name
+    }
+
+    if credit_card?
+      unique_params.merge!(expiration_month: expiration_month, expiration_year: expiration_year)
+    end
+
+    accounts = bankable.bank_accounts.visible.where(unique_params)
     accounts = accounts.where.not(id: id) if persisted?
 
-    errors.add(:bankable_id, "already exists for this #{bankable_type.downcase}.") if accounts.any?
+    errors.add(:bankable_id, "#{account_type} info already exists for this #{bankable_type.downcase}.") if accounts.any?
   end
 end
