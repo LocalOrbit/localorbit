@@ -200,7 +200,8 @@ class User < ActiveRecord::Base
   end
 
   def admin?
-    @admin ||= user_organizations.includes(:organization).where(organizations: {org_type: 'A'}).exists?
+    return @admin if !@admin.nil?
+    @admin = user_organizations.includes(:organization).where(organizations: {org_type: 'A'}).exists?
   end
 
   def can_manage?(resource)
@@ -231,12 +232,14 @@ class User < ActiveRecord::Base
 
   def market_manager?
     return false if admin?
-    @market_manager ||= user_organizations.includes(:organization).where(organizations: {org_type: 'M'}).exists?
+    return @market_manager if !@market_manager.nil?
+    @market_manager = user_organizations.includes(:organization).where(organizations: {org_type: 'M'}).exists?
   end
 
   def seller?
     return false if admin? || market_manager?
-    @seller ||= user_organizations.includes(:organization).where(organizations: {org_type: 'S'}).exists?
+    return @seller if !@seller.nil?
+    @seller = user_organizations.includes(:organization).where(organizations: {org_type: 'S'}).exists?
   end
 
   def admin_or_mm?
@@ -245,7 +248,8 @@ class User < ActiveRecord::Base
 
   def buyer_only?
     return false if admin? || market_manager? || seller?
-    @buyer ||= user_organizations.includes(:organization).where(organizations: {org_type: 'B'}).exists?
+    return @buyer if !@buyer.nil?
+    @buyer = user_organizations.includes(:organization).where(organizations: {org_type: 'B'}).exists?
   end
 
   def is_seller_with_purchase?
