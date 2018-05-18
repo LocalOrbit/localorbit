@@ -21,6 +21,7 @@ gem 'underscore-rails'
 gem 'wysihtml5-rails'
 
 gem 'active_model_serializers'
+gem 'active_record_query_trace'
 gem 'active_record_union'
 gem 'acts_as_geocodable'
 gem 'audited-activerecord'
