@@ -15,7 +15,6 @@ class CreateTemporaryStripeCreditCard
 
     @org = cart.organization
 
-    # Munge card params:
     should_save_card = credit_card_params.delete(:save_for_future) == "true"
     unless should_save_card
       credit_card_params.merge!(deleted_at: Time.current)
@@ -24,14 +23,7 @@ class CreateTemporaryStripeCreditCard
     credit_card_params.delete(:id)
     SchemaValidation.validate!(CardSchema::NewParams, credit_card_params)
 
-    bank_account = if existing_bank_account = find_bank_account(@org, credit_card_params)
-                     # use this account
-                     existing_bank_account
-                   else
-                     # create new card in Stripe and add to our Stripe customer
-                     create_stripe_card_bank_account(@org, stripe_tok, credit_card_params)
-                   end
-
+    bank_account = find_bank_account(@org, credit_card_params) || create_stripe_card_bank_account(@org, stripe_tok, credit_card_params)
     if bank_account
       # create_stripe_card_bank_account could fail and return nil, in which case the context has been failed, and we cannot set the card for the transaction
       set_card_for_transaction(bank_account)
@@ -41,12 +33,13 @@ class CreateTemporaryStripeCreditCard
   private
 
   def find_bank_account(org, params)
-    org.bank_accounts.visible.where(
-      # account_type: params[:account_type], # XXX during the May 2015 Balanced-Stripe migration, we boiled-down account_type for CC's to "card" instead of "mastercard", "visa" etc. In transition we might fail a match if we use this field. crosby 5/11
+    org.bank_accounts.visible.find_by(
       last_four: params[:last_four],
+      expiration_month: params[:expiration_month],
+      expiration_year: params[:expiration_year],
       bank_name: params[:bank_name],
       name: params[:name]
-    ).first
+    )
   end
 
   def set_card_for_transaction(bank_account)
@@ -63,7 +56,8 @@ class CreateTemporaryStripeCreditCard
         stripe_customer_id: org.stripe_customer_id,
         stripe_tok: stripe_tok
       )
-      bank_account = org.bank_accounts.create(card_params.merge(stripe_id: card.id))
+      bank_account = org.bank_accounts.create!(card_params.merge(stripe_id: card.id))
+
     rescue => e
       error_info = ErrorReporting.interpret_exception(e)
 
@@ -75,5 +69,4 @@ class CreateTemporaryStripeCreditCard
 
     bank_account
   end
-
 end

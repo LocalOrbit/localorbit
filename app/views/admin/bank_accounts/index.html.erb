@@ -3,19 +3,15 @@
   <%= link_to "Add Payment Method", [:new, :admin, @entity, :bank_account], class: "btn btn--add btn--small pull-right mobile-block" %>
 </div>
 
+<% if @entity.is_a? Market %>
+  <p>These payment methods are where funds from any credit card purchases will be deposited as well as where Local Orbit subscription fees are charged. Contact customer support to have your deposit or charge account changed.</p>
+<% elsif @entity.is_a? Organization %>
+  <p>These payment methods will be available during order checkout.</p>
+<% end %>
+
 <% if @bank_accounts.empty? %>
   <p>You don't have any payment methods set up. Please add a payment method.</p>
-
 <% else %>
-  <% if  current_user.market_manager? %>
-    <p>This payment method will be used to deliver payments from orders and from where you will be charged Local Orbit fees.</p>
-
-  <% elsif current_user.buyer_only? %>
-    <p>This payment method will be used to fulfill your orders.</p>
-
-  <% else current_user.seller? %>
-    <P>This payment method will be used to deliver payments from orders.</P>
-  <% end %>
 
   <div class="table-wrapper">
     <table class="sortable" id="bank-accounts">

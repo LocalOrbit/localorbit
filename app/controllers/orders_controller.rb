@@ -100,6 +100,8 @@ class OrdersController < ApplicationController
         session.delete(:current_delivery_day)
         @grouped_items = @order.items.for_checkout
       else
+        Rollbar.info('Order could not be completed', context: @placed_order.context)
+
         if @placed_order.context.key?(:cart_is_empty)
           @grouped_items = current_cart.items.for_checkout
           redirect_to [:products], alert: @placed_order.message

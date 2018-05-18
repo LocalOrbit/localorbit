@@ -39,6 +39,9 @@ development:
   MAILTRAP_USERNAME: <MT username>
   MAILTRAP_PASSWORD: <MT secret>
   USE_DELAYED_JOB: 'true'
+  USE_ROLLBAR: 'false'
+test:
+  USE_ROLLBAR: 'false'
 staging:
   MAILTRAP_USERNAME: <MT username>
   MAILTRAP_PASSWORD: <MT secret>
