@@ -23,12 +23,7 @@ class CreateTemporaryStripeCreditCard
     credit_card_params.delete(:id)
     SchemaValidation.validate!(CardSchema::NewParams, credit_card_params)
 
-    bank_account = if existing_bank_account = find_bank_account(@org, credit_card_params)
-                     existing_bank_account
-                   else
-                     create_stripe_card_bank_account(@org, stripe_tok, credit_card_params)
-                   end
-
+    bank_account = find_bank_account(@org, credit_card_params) || create_stripe_card_bank_account(@org, stripe_tok, credit_card_params)
     if bank_account
       # create_stripe_card_bank_account could fail and return nil, in which case the context has been failed, and we cannot set the card for the transaction
       set_card_for_transaction(bank_account)

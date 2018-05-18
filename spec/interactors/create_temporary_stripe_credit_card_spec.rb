@@ -50,16 +50,16 @@ describe CreateTemporaryStripeCreditCard do
         expect(result.success?).to be true
 
         bank_account_id = result.context[:order_params]["credit_card"]["id"]
-        expect(bank_account_id).to_not be_nil
+        expect(bank_account_id).to be
 
         bank_account = BankAccount.find(bank_account_id)
-        expect(bank_account).to_not be_nil
+        expect(bank_account).to be
         expect(bank_account.bankable).to eq(org)
-        expect(bank_account.deleted_at).to_not be_nil
-        expect(bank_account.stripe_id).to_not be_nil
+        expect(bank_account.deleted_at).to be
+        expect(bank_account.stripe_id).to be
 
         card = stripe_customer.sources.retrieve(bank_account.stripe_id)
-        expect(card).to_not be_nil
+        expect(card).to be
       end
 
       context "bank account already exists with same last four digits" do
