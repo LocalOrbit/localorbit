@@ -66,18 +66,45 @@ describe Admin::ProductsController do
   end
 
   describe "/update" do
-    let(:product) { create(:product) }
 
-    before do
-      org1.users << user
-      sign_in(user)
+    context 'a product that belongs to the user’s organization' do
+
+      let!(:product) { create(:product, organization: org1) }
+
+      before do
+        org1.users << user
+        market.organizations << org1
+        sign_in(user)
+      end
+
+      let(:unit) { create(:unit) }
+
+      it 'should respond with redirect' do
+        post :update, id: product.id, product: {organization_id: org1, name: 'Apple', category_id: 1, short_description: 'desc', unit_id: unit.id}
+        expect(response).to redirect_to admin_product_lots_path(product)
+      end
+
+      it 'should call UpdateDeliverySchedulesForProduct' do
+        expect(UpdateDeliverySchedulesForProduct).to receive_message_chain(:delay, :perform)
+        post :update, id: product.id, product: {organization_id: org1, name: 'Apple', category_id: 1, short_description: 'desc', unit_id: unit.id}
+      end
     end
 
-    it "should not let a user update a product that does not belong to their organization" do
-      put :update, id: product.id, product: {organization_id: org1.id, name: "Apple", category_id: 1}
+    context 'a product that does not belong to the user’s organization' do
+      let!(:product) { create(:product, organization: org1) }
 
-      expect(response).to be_not_found
+      before do
+        org2.users << user
+        sign_in(user)
+      end
+
+      it "should not let user update product" do
+        put :update, id: product.id, product: {organization_id: org2.id, name: "Apple", category_id: 1}
+
+        expect(response).to be_not_found
+      end
     end
+
   end
 
   describe "/new" do

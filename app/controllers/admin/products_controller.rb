@@ -120,6 +120,8 @@ module Admin
       update_sibling_units(@product)
       update_general_product(@product)
 
+      UpdateDeliverySchedulesForProduct.delay.perform(product: @product)
+
       find_sibling_units(@product)
 
       update_quickbooks(@product)
