@@ -303,7 +303,7 @@ module Dom
         end
 
         def review
-          node.click_link("Review")
+          node.first('.review-orders').click
         end
 
         def pay_all_now
