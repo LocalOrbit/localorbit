@@ -83,45 +83,6 @@ describe "Editing a product", :js do
       click_link "Canned Pears"
     end
 
-    describe "a user can request a new inventory unit" do
-      it "allows the user to request a new unit" do
-        click_link "Request a New Unit"
-
-        expect(page).to have_css(".popup-body", visible: true)
-        expect(ZendeskMailer).to receive(:request_unit).with(user, {
-          "singular" => "fathom",
-          "plural" => "fathoms",
-          "additional_notes" => "See more notes"
-        }).and_return(double(:mailer, deliver: true))
-
-        fill_in "Singular", with: "fathom"
-        fill_in "Plural", with: "fathoms"
-        fill_in "Additional Notes", with: "See more notes"
-        click_button "Request Unit"
-
-        expect(page).to_not have_css(".popup-body", visible: true)
-        expect(page).to have_content("Update Canned Pears")
-      end
-
-      it "does not refresh the page", js: true do
-        fill_in "Product Name", with: "Canned Peaches"
-        click_link "Request a New Unit"
-
-        expect(page).to have_css(".popup-body", visible: true)
-        expect(ZendeskMailer).to receive(:request_unit).and_return(double(:mailer, deliver: true))
-
-        fill_in "Singular", with: "fathom"
-        fill_in "Plural", with: "fathoms"
-        fill_in "Additional Notes", with: "See more notes"
-
-        click_button "Request Unit"
-
-        expect(page).to_not have_css(".popup-body", visible: true)
-        expect(page).to have_field("Product Name", with: "Canned Peaches")
-        expect(page).not_to have_field("Singular")
-      end
-    end
-
     describe "a user can request a new category" do
       it "allows the user to request a new category" do
         click_link "Request a New Category"
