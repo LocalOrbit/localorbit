@@ -560,24 +560,6 @@ describe "Adding a product", chosen_js: true do
       visit "/admin/products/new"
     end
 
-    it "a user can request a new inventory unit" do
-      click_link "Request a New Unit"
-
-      expect(ZendeskMailer).to receive(:request_unit).with(
-        user,
-        "singular"         => "fathom",
-        "plural"           => "fathoms",
-        "additional_notes" => "See more notes"
-      ).and_return(double(:mailer, deliver: true))
-
-      fill_in "Singular", with: "fathom"
-      fill_in "Plural", with: "fathoms"
-      fill_in "Additional Notes", with: "See more notes"
-      click_button "Request Unit"
-
-      expect(page).to have_content("Add Product")
-    end
-
     it "a user can request a new category" do
       click_link "Request a New Category"
 
