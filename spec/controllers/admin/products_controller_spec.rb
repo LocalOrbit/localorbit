@@ -1,13 +1,13 @@
 require "spec_helper"
 
 describe Admin::ProductsController do
-  let(:supplier) { create(:organization, :seller)}
+  let(:supplier) { create(:organization, :seller) }
   let(:product1) { create(:product, organization: supplier) }
   let(:product2) { create(:product) }
   let(:market) { create(:market, organizations: [supplier]) }
   let(:org1) { create(:organization, :seller) }
   let(:org2) { create(:organization, :seller) }
-  let(:user) { create(:user, :supplier, organizations:[supplier]) }
+  let(:user) { create(:user, organizations:[supplier]) }
 
   before do
     switch_to_subdomain market.subdomain
@@ -41,24 +41,70 @@ describe Admin::ProductsController do
     it "should not let a user create a product for an organization they do not belong to" do
       post :create, product: {organization_id: org2, name: "Apple", category_id: 1}
 
-      expect(response).to render_template("admin/products/new")
-      expect(assigns(:product).organization).to eq(product1.organization)
+      expect(response).to have_http_status(:not_found)
+    end
+
+    context 'with valid params' do
+      before do
+        market.organizations << org1
+        user.organizations << org1
+      end
+
+      let(:unit) { create(:unit) }
+
+      it 'creates a product' do
+        expect do
+          post :create, product: {organization_id: org1, name: 'Apple', category_id: 1, short_description: 'desc', unit_id: unit.id}
+        end.to change { Product.count }.by(1)
+      end
+
+      it 'calls UpdateDeliverySchedulesForProduct' do
+        expect(UpdateDeliverySchedulesForProduct).to receive_message_chain(:delay, :perform)
+        post :create, product: {organization_id: org1, name: 'Apple', category_id: 1, short_description: 'desc', unit_id: unit.id}
+      end
     end
   end
 
   describe "/update" do
-    let(:product) { create(:product) }
 
-    before do
-      org1.users << user
-      sign_in(user)
+    context 'a product that belongs to the user’s organization' do
+
+      let!(:product) { create(:product, organization: org1) }
+
+      before do
+        org1.users << user
+        market.organizations << org1
+        sign_in(user)
+      end
+
+      let(:unit) { create(:unit) }
+
+      it 'should respond with redirect' do
+        post :update, id: product.id, product: {organization_id: org1, name: 'Apple', category_id: 1, short_description: 'desc', unit_id: unit.id}
+        expect(response).to redirect_to admin_product_lots_path(product)
+      end
+
+      it 'should call UpdateDeliverySchedulesForProduct' do
+        expect(UpdateDeliverySchedulesForProduct).to receive_message_chain(:delay, :perform)
+        post :update, id: product.id, product: {organization_id: org1, name: 'Apple', category_id: 1, short_description: 'desc', unit_id: unit.id}
+      end
     end
 
-    it "should not let a user update a product that does not belong to their organization" do
-      put :update, id: product.id, product: {organization_id: org1.id, name: "Apple", category_id: 1}
+    context 'a product that does not belong to the user’s organization' do
+      let!(:product) { create(:product, organization: org1) }
 
-      expect(response).to be_not_found
+      before do
+        org2.users << user
+        sign_in(user)
+      end
+
+      it "should not let user update product" do
+        put :update, id: product.id, product: {organization_id: org2.id, name: "Apple", category_id: 1}
+
+        expect(response).to be_not_found
+      end
     end
+
   end
 
   describe "/new" do
