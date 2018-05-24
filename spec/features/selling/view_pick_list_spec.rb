@@ -139,6 +139,7 @@ describe "Pick list" do
 
     context "after the delivery cutoff" do
       before do
+        sign_out
         Timecop.travel("May 9, 2014")
         sign_in_as(user)
         visit admin_delivery_tools_pick_list_path(friday_delivery.deliver_on, market_id: market.id)
