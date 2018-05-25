@@ -41,6 +41,7 @@ development:
   USE_DELAYED_JOB: 'true'
   USE_ROLLBAR: 'false'
 test:
+  RAILS_ENABLE_TEST_LOG: ~
   USE_ROLLBAR: 'false'
   USE_UPLOAD_QUEUE: 'false'
 staging:
