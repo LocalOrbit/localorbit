@@ -38,6 +38,7 @@ class Organization < ActiveRecord::Base
   has_one :qb_token
   has_one :qb_profile
 
+  validates :org_type, inclusion: { :in => ['A', 'M', 'S', 'B'] }
   validates :name, presence: true, length: {maximum: 255, allow_blank: true}
   validate :require_payment_method
 

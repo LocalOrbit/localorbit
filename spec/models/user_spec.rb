@@ -154,20 +154,20 @@ describe User do
       it "returns true if the user is a member of any selling organizations" do
         market_org = create(:organization, :market)
         market = create(:market, organization: market_org)
-        org = create(:organization, :seller, can_sell: true, markets: [market])
+        org = create(:organization, :seller, markets: [market])
         user = create(:user, :supplier, organizations: [org])
         expect(user).to be_seller
       end
 
       it "returns false if the user is not a member of any selling organizations" do
-        user = create(:user, :buyer, organizations: [create(:organization, can_sell: false)])
+        user = create(:user, :buyer, organizations: [create(:organization, :buyer)])
         expect(user).not_to be_seller
       end
 
       it "returns false if user is an admin" do
         market_org = create(:organization, :market)
         market = create(:market, organization: market_org)
-        org = create(:organization, :seller, can_sell: true, markets: [market])
+        org = create(:organization, :seller, markets: [market])
         user = create(:user, :supplier, organizations: [org])
         # HACK, set this up properly
         allow(user).to receive(:admin?).and_return(true)
