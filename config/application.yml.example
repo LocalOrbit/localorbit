@@ -41,3 +41,4 @@ development:
   MAILTRAP_PASSWORD: <MT secret>
 test:
   USE_UPLOAD_QUEUE: 'false'
+  RAILS_ENABLE_TEST_LOG: ~
