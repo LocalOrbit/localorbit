@@ -762,7 +762,7 @@ GEM
       rack
       raindrops (~> 0.7)
     uniform_notifier (1.11.0)
-    vcr (2.9.3)
+    vcr (4.0.0)
     virtus (1.0.5)
       axiom-types (~> 0.1)
       coercible (~> 1.0)

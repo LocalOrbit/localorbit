@@ -9,7 +9,7 @@ class Newsletter < ActiveRecord::Base
   validates_property :format, of: :image,  in: %w(jpg jpeg png gif)
 
   def recipients
-    newsletter_type = SubscriptionType::Keywords::Newsletter
+    newsletter_type = SubscriptionType::Keywords::NEWSLETTER
     subscribers = User.in_market(market).subscribed_to(newsletter_type).includes(:subscriptions)
 
     recipients = Set.new

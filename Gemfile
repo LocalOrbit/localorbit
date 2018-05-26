@@ -169,8 +169,6 @@ group :production, :staging do
   #gem 'passenger'
   gem 'rack-cache', require: 'rack/cache'
   gem 'rails_12factor'
-  # TODO: migrate to https://github.com/kbaum/heroku-database-backups
-  # gem 'pgbackups-archive'
   gem 'platform-api'
   gem 'wkhtmltopdf-heroku'
 end

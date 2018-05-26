@@ -2,462 +2,29 @@
 http_interactions:
 - request:
     method: post
-    uri: https://ak-test-2nUrWp1vUFJ9T17cN1sbKBGvue3lZkHmE:@api.balancedpayments.com/v1/customers
-    body:
-      encoding: UTF-8
-      string: '{"name":"Fake Organization","meta":{"entity_id":1,"entity_name":"Fake
-        Organization","entity_type":"organization"}}'
-    headers:
-      User-Agent:
-      - balanced-ruby/0.8.2
-      Content-Type:
-      - application/json
-      Accept-Encoding:
-      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
-      Accept:
-      - "*/*"
-  response:
-    status:
-      code: 201
-      message: CREATED
-    headers:
-      Content-Type:
-      - application/json
-      Date:
-      - Thu, 14 Aug 2014 15:30:54 GMT
-      Location:
-      - http://bapi-integration-prod-8u30f7.us-west-1.vandelay.io/v1/customers/CU7DVS8gPgojsxukLEUqjon6
-      Server:
-      - ngx_openresty/1.2.6.3
-      X-Balanced-Guru:
-      - OHMfb25b62023c711e49cde02a1fe53e539
-      X-Balanced-Host:
-      - bapi-integration-prod-8u30f7-10-3-5-17
-      X-Balanced-Marketplace:
-      - TEST-MP4X7mSSQwAyDzwUfc5TAQ7D
-      X-Balanced-Merchant:
-      - TEST-MR4RZnrOZZQznEBncFS5xnVS
-      X-Balanced-Revision:
-      - '1.0'
-      X-Balanced-Software-Build:
-      - 1.8.2
-      X-Midlr-Version:
-      - '2'
-      X-Newrelic-App-Data:
-      - PxQFWFNXCQYTUllWAgAAU0YdFhE1AwE2QgNWEVlbQFtcCxYxSBVbDQoZVA4IF0pcXAgEEBhSQhUQXltWEBVNAUIHWRZdGhgSA0kZUR9QClJWBQFRX1IOAgNTV1sCAhtGVQACH0JEBgADAQ9QW14NAFYGX1VSABFORFBWDRUGZQ==
-      Content-Length:
-      - '1720'
-      Connection:
-      - keep-alive
-    body:
-      encoding: UTF-8
-      string: |-
-        {
-          "_type": "customer",
-          "twitter": null,
-          "reversals_uri": "/v1/customers/CU7DVS8gPgojsxukLEUqjon6/reversals",
-          "phone": null,
-          "meta": {
-            "entity_id": "1",
-            "entity_name": "Fake Organization",
-            "entity_type": "organization"
-          },
-          "facebook": null,
-          "address": {},
-          "business_name": null,
-          "bank_accounts_uri": "/v1/customers/CU7DVS8gPgojsxukLEUqjon6/bank_accounts",
-          "id": "CU7DVS8gPgojsxukLEUqjon6",
-          "credits_uri": "/v1/customers/CU7DVS8gPgojsxukLEUqjon6/credits",
-          "cards_uri": "/v1/customers/CU7DVS8gPgojsxukLEUqjon6/cards",
-          "holds_uri": "/v1/customers/CU7DVS8gPgojsxukLEUqjon6/holds",
-          "name": "Fake Organization",
-          "refunds_uri": "/v1/customers/CU7DVS8gPgojsxukLEUqjon6/refunds",
-          "dob": null,
-          "created_at": "2014-08-14T15:30:54.733019Z",
-          "destination": null,
-          "is_identity_verified": false,
-          "uri": "/v1/customers/CU7DVS8gPgojsxukLEUqjon6",
-          "source": null,
-          "_uris": {
-            "transactions_uri": {
-              "_type": "page",
-              "key": "transactions"
-            },
-            "bank_accounts_uri": {
-              "_type": "page",
-              "key": "bank_accounts"
-            },
-            "refunds_uri": {
-              "_type": "page",
-              "key": "refunds"
-            },
-            "debits_uri": {
-              "_type": "page",
-              "key": "debits"
-            },
-            "holds_uri": {
-              "_type": "page",
-              "key": "holds"
-            },
-            "reversals_uri": {
-              "_type": "page",
-              "key": "reversals"
-            },
-            "credits_uri": {
-              "_type": "page",
-              "key": "credits"
-            },
-            "cards_uri": {
-              "_type": "page",
-              "key": "cards"
-            }
-          },
-          "debits_uri": "/v1/customers/CU7DVS8gPgojsxukLEUqjon6/debits",
-          "transactions_uri": "/v1/customers/CU7DVS8gPgojsxukLEUqjon6/transactions",
-          "ssn_last4": null,
-          "email": null,
-          "ein": null
-        }
-    http_version: 
-  recorded_at: Thu, 14 Aug 2014 15:30:56 GMT
-- request:
-    method: get
-    uri: https://ak-test-2nUrWp1vUFJ9T17cN1sbKBGvue3lZkHmE:@api.balancedpayments.com/
-    body:
-      encoding: US-ASCII
-      string: ''
-    headers:
-      User-Agent:
-      - balanced-ruby/0.8.2
-      Accept-Encoding:
-      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
-      Accept:
-      - "*/*"
-  response:
-    status:
-      code: 200
-      message: OK
-    headers:
-      Content-Type:
-      - application/json
-      Date:
-      - Thu, 14 Aug 2014 15:30:55 GMT
-      Server:
-      - ngx_openresty/1.2.6.3
-      X-Balanced-Guru:
-      - OHMfb87e95823c711e4b88e02b12035401b
-      X-Balanced-Host:
-      - bapi-integration-prod-8u30f7-10-3-5-17
-      X-Balanced-Marketplace:
-      - TEST-MP4X7mSSQwAyDzwUfc5TAQ7D
-      X-Balanced-Merchant:
-      - TEST-MR4RZnrOZZQznEBncFS5xnVS
-      X-Balanced-Revision:
-      - '1.1'
-      X-Balanced-Software-Build:
-      - 1.8.2
-      Content-Length:
-      - '564'
-      Connection:
-      - keep-alive
-    body:
-      encoding: UTF-8
-      string: |-
-        {
-          "first_uri": "/?limit=10&offset=0",
-          "_type": "page",
-          "items": [
-            {
-              "uri": "/v1"
-            }
-          ],
-          "previous_uri": null,
-          "uri": "/?limit=10&offset=0",
-          "_uris": {
-            "first_uri": {
-              "_type": "page",
-              "key": "first"
-            },
-            "next_uri": {
-              "_type": "page",
-              "key": "next"
-            },
-            "previous_uri": {
-              "_type": "page",
-              "key": "previous"
-            },
-            "last_uri": {
-              "_type": "page",
-              "key": "last"
-            }
-          },
-          "limit": 10,
-          "offset": 0,
-          "total": 1,
-          "next_uri": null,
-          "last_uri": "/?limit=10&offset=0"
-        }
-    http_version: 
-  recorded_at: Thu, 14 Aug 2014 15:30:57 GMT
-- request:
-    method: get
-    uri: https://ak-test-2nUrWp1vUFJ9T17cN1sbKBGvue3lZkHmE:@api.balancedpayments.com/v1/customers/CU7DVS8gPgojsxukLEUqjon6
-    body:
-      encoding: US-ASCII
-      string: ''
-    headers:
-      User-Agent:
-      - balanced-ruby/0.8.2
-      Accept-Encoding:
-      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
-      Accept:
-      - "*/*"
-  response:
-    status:
-      code: 200
-      message: OK
-    headers:
-      Content-Type:
-      - application/json
-      Date:
-      - Thu, 14 Aug 2014 15:33:59 GMT
-      Server:
-      - ngx_openresty/1.2.6.3
-      X-Balanced-Guru:
-      - OHM690d12e623c811e48ad106429171ffad
-      X-Balanced-Host:
-      - bapi-integration-prod-8u30f7-10-3-4-8
-      X-Balanced-Marketplace:
-      - TEST-MP4X7mSSQwAyDzwUfc5TAQ7D
-      X-Balanced-Merchant:
-      - TEST-MR4RZnrOZZQznEBncFS5xnVS
-      X-Balanced-Revision:
-      - '1.0'
-      X-Balanced-Software-Build:
-      - 1.8.2
-      Content-Length:
-      - '494'
-      Connection:
-      - keep-alive
-    body:
-      encoding: UTF-8
-      string: |-
-        {
-          "_type": "customer",
-          "twitter": null,
-          "reversals_uri": "/v1/customers/CU7DVS8gPgojsxukLEUqjon6/reversals",
-          "phone": null,
-          "meta": {
-            "entity_id": "1",
-            "entity_name": "Fake Organization",
-            "entity_type": "organization"
-          },
-          "facebook": null,
-          "address": {},
-          "business_name": null,
-          "bank_accounts_uri": "/v1/customers/CU7DVS8gPgojsxukLEUqjon6/bank_accounts",
-          "id": "CU7DVS8gPgojsxukLEUqjon6",
-          "credits_uri": "/v1/customers/CU7DVS8gPgojsxukLEUqjon6/credits",
-          "cards_uri": "/v1/customers/CU7DVS8gPgojsxukLEUqjon6/cards",
-          "holds_uri": "/v1/customers/CU7DVS8gPgojsxukLEUqjon6/holds",
-          "name": "Fake Organization",
-          "refunds_uri": "/v1/customers/CU7DVS8gPgojsxukLEUqjon6/refunds",
-          "dob": null,
-          "created_at": "2014-08-14T15:30:54.733019Z",
-          "destination": null,
-          "is_identity_verified": false,
-          "uri": "/v1/customers/CU7DVS8gPgojsxukLEUqjon6",
-          "source": null,
-          "_uris": {
-            "transactions_uri": {
-              "_type": "page",
-              "key": "transactions"
-            },
-            "bank_accounts_uri": {
-              "_type": "page",
-              "key": "bank_accounts"
-            },
-            "refunds_uri": {
-              "_type": "page",
-              "key": "refunds"
-            },
-            "debits_uri": {
-              "_type": "page",
-              "key": "debits"
-            },
-            "holds_uri": {
-              "_type": "page",
-              "key": "holds"
-            },
-            "reversals_uri": {
-              "_type": "page",
-              "key": "reversals"
-            },
-            "credits_uri": {
-              "_type": "page",
-              "key": "credits"
-            },
-            "cards_uri": {
-              "_type": "page",
-              "key": "cards"
-            }
-          },
-          "debits_uri": "/v1/customers/CU7DVS8gPgojsxukLEUqjon6/debits",
-          "transactions_uri": "/v1/customers/CU7DVS8gPgojsxukLEUqjon6/transactions",
-          "ssn_last4": null,
-          "email": null,
-          "ein": null
-        }
-    http_version: 
-  recorded_at: Thu, 14 Aug 2014 15:34:00 GMT
-- request:
-    method: put
-    uri: https://ak-test-2nUrWp1vUFJ9T17cN1sbKBGvue3lZkHmE:@api.balancedpayments.com/v1/customers/CU7DVS8gPgojsxukLEUqjon6
-    body:
-      encoding: UTF-8
-      string: '{"_type":"customer","twitter":null,"reversals_uri":"/v1/customers/CU7DVS8gPgojsxukLEUqjon6/reversals","phone":null,"meta":{"entity_id":"1","entity_name":"Fake
-        Organization","entity_type":"organization"},"facebook":null,"address":{},"business_name":null,"bank_accounts_uri":"/v1/customers/CU7DVS8gPgojsxukLEUqjon6/bank_accounts","id":"CU7DVS8gPgojsxukLEUqjon6","credits_uri":"/v1/customers/CU7DVS8gPgojsxukLEUqjon6/credits","cards_uri":"/v1/customers/CU7DVS8gPgojsxukLEUqjon6/cards","holds_uri":"/v1/customers/CU7DVS8gPgojsxukLEUqjon6/holds","name":"Fake
-        Organization","refunds_uri":"/v1/customers/CU7DVS8gPgojsxukLEUqjon6/refunds","dob":null,"created_at":"2014-08-14T15:30:54.733019Z","destination":null,"is_identity_verified":false,"source":null,"_uris":{"transactions_uri":{"_type":"page","key":"transactions"},"bank_accounts_uri":{"_type":"page","key":"bank_accounts"},"refunds_uri":{"_type":"page","key":"refunds"},"debits_uri":{"_type":"page","key":"debits"},"holds_uri":{"_type":"page","key":"holds"},"reversals_uri":{"_type":"page","key":"reversals"},"credits_uri":{"_type":"page","key":"credits"},"cards_uri":{"_type":"page","key":"cards"}},"debits_uri":"/v1/customers/CU7DVS8gPgojsxukLEUqjon6/debits","transactions_uri":"/v1/customers/CU7DVS8gPgojsxukLEUqjon6/transactions","ssn_last4":null,"email":null,"ein":null,"card_uri":"/v1/marketplaces/TEST-MP4X7mSSQwAyDzwUfc5TAQ7D/cards/CC3b4KFw8pzvzM7ohGvpjig5"}'
-    headers:
-      User-Agent:
-      - balanced-ruby/0.8.2
-      Content-Type:
-      - application/json
-      Accept-Encoding:
-      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
-      Accept:
-      - "*/*"
-  response:
-    status:
-      code: 200
-      message: OK
-    headers:
-      Content-Type:
-      - application/json
-      Date:
-      - Thu, 14 Aug 2014 15:33:59 GMT
-      Server:
-      - ngx_openresty/1.2.6.3
-      X-Balanced-Guru:
-      - OHM694e80e623c811e4ba9202a1fe52a36c
-      X-Balanced-Host:
-      - bapi-integration-prod-8u30f7-10-3-5-17
-      X-Balanced-Marketplace:
-      - TEST-MP4X7mSSQwAyDzwUfc5TAQ7D
-      X-Balanced-Merchant:
-      - TEST-MR4RZnrOZZQznEBncFS5xnVS
-      X-Balanced-Revision:
-      - '1.0'
-      X-Balanced-Software-Build:
-      - 1.8.2
-      X-Midlr-Version:
-      - '2'
-      X-Newrelic-App-Data:
-      - PxQFWFNXCQYTUllWAgAAU0YdFhE1AwE2QgNWEVlbQFtcCxYxSBVbDQoZVA4IF0pcXAgEEBhSQhUQXltWEBVNF0AGWRZdGhgSA0kZUR9TAFVTBgJYUlYBBQhSU1UOAhtGVQUHBk5GQQMHVV1RAQFRUFdUXABTAAVASBZRAAoQXW4=
-      Content-Length:
-      - '545'
-      Connection:
-      - keep-alive
-    body:
-      encoding: UTF-8
-      string: |-
-        {
-          "_type": "customer",
-          "twitter": null,
-          "reversals_uri": "/v1/customers/CU7DVS8gPgojsxukLEUqjon6/reversals",
-          "phone": null,
-          "meta": {
-            "entity_id": "1",
-            "entity_name": "Fake Organization",
-            "entity_type": "organization"
-          },
-          "facebook": null,
-          "address": {
-            "country_code": "USA"
-          },
-          "source_uri": "/v1/customers/CU7DVS8gPgojsxukLEUqjon6/cards/CC3b4KFw8pzvzM7ohGvpjig5",
-          "business_name": null,
-          "bank_accounts_uri": "/v1/customers/CU7DVS8gPgojsxukLEUqjon6/bank_accounts",
-          "id": "CU7DVS8gPgojsxukLEUqjon6",
-          "credits_uri": "/v1/customers/CU7DVS8gPgojsxukLEUqjon6/credits",
-          "cards_uri": "/v1/customers/CU7DVS8gPgojsxukLEUqjon6/cards",
-          "holds_uri": "/v1/customers/CU7DVS8gPgojsxukLEUqjon6/holds",
-          "name": "Fake Organization",
-          "dob": null,
-          "created_at": "2014-08-14T15:30:54.733019Z",
-          "destination": null,
-          "is_identity_verified": false,
-          "uri": "/v1/customers/CU7DVS8gPgojsxukLEUqjon6",
-          "refunds_uri": "/v1/customers/CU7DVS8gPgojsxukLEUqjon6/refunds",
-          "_uris": {
-            "holds_uri": {
-              "_type": "page",
-              "key": "holds"
-            },
-            "source_uri": {
-              "_type": "card",
-              "key": "source"
-            },
-            "bank_accounts_uri": {
-              "_type": "page",
-              "key": "bank_accounts"
-            },
-            "refunds_uri": {
-              "_type": "page",
-              "key": "refunds"
-            },
-            "debits_uri": {
-              "_type": "page",
-              "key": "debits"
-            },
-            "transactions_uri": {
-              "_type": "page",
-              "key": "transactions"
-            },
-            "reversals_uri": {
-              "_type": "page",
-              "key": "reversals"
-            },
-            "credits_uri": {
-              "_type": "page",
-              "key": "credits"
-            },
-            "cards_uri": {
-              "_type": "page",
-              "key": "cards"
-            }
-          },
-          "debits_uri": "/v1/customers/CU7DVS8gPgojsxukLEUqjon6/debits",
-          "transactions_uri": "/v1/customers/CU7DVS8gPgojsxukLEUqjon6/transactions",
-          "ssn_last4": null,
-          "email": null,
-          "ein": null
-        }
-    http_version: 
-  recorded_at: Thu, 14 Aug 2014 15:34:01 GMT
-- request:
-    method: post
     uri: https://api.stripe.com/v1/customers
     body:
       encoding: US-ASCII
-      string: description=Fake%20Organization&metadata[lo.entity_id]=1&metadata[lo.entity_type]=organization
+      string: description=Fake%20Organization&metadata[lo_entity_id]=2&metadata[lo_entity_type]=organization&metadata[lo_entity_name]=Fake%20Organization
     headers:
       Accept:
       - "*/*; q=0.5, application/xml"
       Accept-Encoding:
       - gzip, deflate
       User-Agent:
-      - Stripe/v1 RubyBindings/1.21.0
+      - Stripe/v1 RubyBindings/1.27.2
       Authorization:
-      - Bearer sk_test_XTLCfIQMwKblsxIF1N4i7y1G
+      - Bearer sk_test_KagdXeHZHHOHNrXETSTkPuX6
       Content-Type:
       - application/x-www-form-urlencoded
+      Stripe-Version:
+      - '2015-04-07'
       X-Stripe-Client-User-Agent:
-      - '{"bindings_version":"1.21.0","lang":"ruby","lang_version":"2.1.2 p95 (2014-05-08)","platform":"x86_64-darwin13.0","engine":"ruby","publisher":"stripe","uname":"Darwin
-        XandersBeatBox.local 13.4.0 Darwin Kernel Version 13.4.0: Wed Dec 17 19:05:52
-        PST 2014; root:xnu-2422.115.10~1/RELEASE_X86_64 x86_64","hostname":"XandersBeatBox.local"}'
+      - '{"bindings_version":"1.27.2","lang":"ruby","lang_version":"2.1.2 p95 (2014-05-08)","platform":"x86_64-darwin17.0","engine":"ruby","publisher":"stripe","uname":"Darwin
+        kite 17.4.0 Darwin Kernel Version 17.4.0: Sun Dec 17 09:19:54 PST 2017; root:xnu-4570.41.2~1/RELEASE_X86_64
+        x86_64","hostname":"kite"}'
       Content-Length:
-      - '94'
+      - '139'
   response:
     status:
       code: 200
@@ -466,11 +33,11 @@ http_interactions:
       Server:
       - nginx
       Date:
-      - Wed, 13 May 2015 18:59:33 GMT
+      - Sat, 10 Mar 2018 00:04:09 GMT
       Content-Type:
       - application/json
       Content-Length:
-      - '912'
+      - '774'
       Connection:
       - keep-alive
       Access-Control-Allow-Credentials:
@@ -479,64 +46,60 @@ http_interactions:
       - GET, POST, HEAD, OPTIONS, DELETE
       Access-Control-Allow-Origin:
       - "*"
+      Access-Control-Expose-Headers:
+      - Request-Id, Stripe-Manage-Version, X-Stripe-External-Auth-Required, X-Stripe-Privileged-Session-Required
       Access-Control-Max-Age:
       - '300'
       Cache-Control:
       - no-cache, no-store
       Request-Id:
-      - req_cdgJdHDwyKyTf8mt
+      - req_5NFQHVxgORd5r0
       Stripe-Version:
       - '2015-04-07'
       Strict-Transport-Security:
-      - max-age=31556926; includeSubDomains
+      - max-age=31556926; includeSubDomains; preload
     body:
       encoding: UTF-8
       string: |
         {
+          "id": "cus_CSqt433jLI012E",
           "object": "customer",
-          "created": 1431543573,
-          "id": "cus_6EYBWzx8q0Zq8v",
-          "livemode": false,
-          "description": "Fake Organization",
-          "email": null,
+          "account_balance": 0,
+          "created": 1520640249,
+          "currency": null,
+          "default_source": null,
           "delinquent": false,
+          "description": "Fake Organization",
+          "discount": null,
+          "email": null,
+          "invoice_prefix": "9CB1523",
+          "livemode": false,
           "metadata": {
-            "lo.entity_id": "1",
-            "lo.entity_type": "organization"
+            "lo_entity_id": "2",
+            "lo_entity_type": "organization",
+            "lo_entity_name": "Fake Organization"
+          },
+          "shipping": null,
+          "sources": {
+            "object": "list",
+            "data": [],
+            "has_more": false,
+            "total_count": 0,
+            "url": "/v1/customers/cus_CSqt433jLI012E/sources"
           },
           "subscriptions": {
             "object": "list",
-            "total_count": 0,
+            "data": [],
             "has_more": false,
-            "url": "/v1/customers/cus_6EYBWzx8q0Zq8v/subscriptions",
-            "data": []
-          },
-          "discount": null,
-          "account_balance": 0,
-          "currency": null,
-          "bank_accounts": {
-            "object": "list",
             "total_count": 0,
-            "has_more": false,
-            "url": "/v1/customers/cus_6EYBWzx8q0Zq8v/bank_accounts",
-            "data": []
-          },
-          "default_bank_account": null,
-          "default_source_type": null,
-          "sources": {
-            "object": "list",
-            "total_count": 0,
-            "has_more": false,
-            "url": "/v1/customers/cus_6EYBWzx8q0Zq8v/sources",
-            "data": []
-          },
-          "default_source": null
+            "url": "/v1/customers/cus_CSqt433jLI012E/subscriptions"
+          }
         }
     http_version: 
-  recorded_at: Wed, 13 May 2015 18:59:33 GMT
+  recorded_at: Sat, 10 Mar 2018 00:04:09 GMT
 - request:
     method: get
-    uri: https://api.stripe.com/v1/customers/cus_6EYBWzx8q0Zq8v
+    uri: https://api.stripe.com/v1/customers/cus_CSqt433jLI012E
     body:
       encoding: US-ASCII
       string: ''
@@ -546,15 +109,17 @@ http_interactions:
       Accept-Encoding:
       - gzip, deflate
       User-Agent:
-      - Stripe/v1 RubyBindings/1.21.0
+      - Stripe/v1 RubyBindings/1.27.2
       Authorization:
-      - Bearer sk_test_XTLCfIQMwKblsxIF1N4i7y1G
+      - Bearer sk_test_KagdXeHZHHOHNrXETSTkPuX6
       Content-Type:
       - application/x-www-form-urlencoded
+      Stripe-Version:
+      - '2015-04-07'
       X-Stripe-Client-User-Agent:
-      - '{"bindings_version":"1.21.0","lang":"ruby","lang_version":"2.1.2 p95 (2014-05-08)","platform":"x86_64-darwin13.0","engine":"ruby","publisher":"stripe","uname":"Darwin
-        XandersBeatBox.local 13.4.0 Darwin Kernel Version 13.4.0: Wed Dec 17 19:05:52
-        PST 2014; root:xnu-2422.115.10~1/RELEASE_X86_64 x86_64","hostname":"XandersBeatBox.local"}'
+      - '{"bindings_version":"1.27.2","lang":"ruby","lang_version":"2.1.2 p95 (2014-05-08)","platform":"x86_64-darwin17.0","engine":"ruby","publisher":"stripe","uname":"Darwin
+        kite 17.4.0 Darwin Kernel Version 17.4.0: Sun Dec 17 09:19:54 PST 2017; root:xnu-4570.41.2~1/RELEASE_X86_64
+        x86_64","hostname":"kite"}'
   response:
     status:
       code: 200
@@ -563,11 +128,11 @@ http_interactions:
       Server:
       - nginx
       Date:
-      - Wed, 13 May 2015 18:59:33 GMT
+      - Sat, 10 Mar 2018 00:04:10 GMT
       Content-Type:
       - application/json
       Content-Length:
-      - '912'
+      - '774'
       Connection:
       - keep-alive
       Access-Control-Allow-Credentials:
@@ -576,82 +141,80 @@ http_interactions:
       - GET, POST, HEAD, OPTIONS, DELETE
       Access-Control-Allow-Origin:
       - "*"
+      Access-Control-Expose-Headers:
+      - Request-Id, Stripe-Manage-Version, X-Stripe-External-Auth-Required, X-Stripe-Privileged-Session-Required
       Access-Control-Max-Age:
       - '300'
       Cache-Control:
       - no-cache, no-store
       Request-Id:
-      - req_irIMXlB28RBTOhsB
+      - req_HgtcbwGLLdtYo6
       Stripe-Version:
       - '2015-04-07'
       Strict-Transport-Security:
-      - max-age=31556926; includeSubDomains
+      - max-age=31556926; includeSubDomains; preload
     body:
       encoding: UTF-8
       string: |
         {
+          "id": "cus_CSqt433jLI012E",
           "object": "customer",
-          "created": 1431543573,
-          "id": "cus_6EYBWzx8q0Zq8v",
-          "livemode": false,
-          "description": "Fake Organization",
-          "email": null,
+          "account_balance": 0,
+          "created": 1520640249,
+          "currency": null,
+          "default_source": null,
           "delinquent": false,
+          "description": "Fake Organization",
+          "discount": null,
+          "email": null,
+          "invoice_prefix": "9CB1523",
+          "livemode": false,
           "metadata": {
-            "lo.entity_id": "1",
-            "lo.entity_type": "organization"
+            "lo_entity_id": "2",
+            "lo_entity_type": "organization",
+            "lo_entity_name": "Fake Organization"
+          },
+          "shipping": null,
+          "sources": {
+            "object": "list",
+            "data": [],
+            "has_more": false,
+            "total_count": 0,
+            "url": "/v1/customers/cus_CSqt433jLI012E/sources"
           },
           "subscriptions": {
             "object": "list",
-            "total_count": 0,
+            "data": [],
             "has_more": false,
-            "url": "/v1/customers/cus_6EYBWzx8q0Zq8v/subscriptions",
-            "data": []
-          },
-          "discount": null,
-          "account_balance": 0,
-          "currency": null,
-          "bank_accounts": {
-            "object": "list",
             "total_count": 0,
-            "has_more": false,
-            "url": "/v1/customers/cus_6EYBWzx8q0Zq8v/bank_accounts",
-            "data": []
-          },
-          "default_bank_account": null,
-          "default_source_type": null,
-          "sources": {
-            "object": "list",
-            "total_count": 0,
-            "has_more": false,
-            "url": "/v1/customers/cus_6EYBWzx8q0Zq8v/sources",
-            "data": []
-          },
-          "default_source": null
+            "url": "/v1/customers/cus_CSqt433jLI012E/subscriptions"
+          }
         }
     http_version: 
-  recorded_at: Wed, 13 May 2015 18:59:33 GMT
+  recorded_at: Sat, 10 Mar 2018 00:04:10 GMT
 - request:
     method: post
-    uri: https://api.stripe.com/v1/customers/cus_6EYBWzx8q0Zq8v/sources
+    uri: https://api.stripe.com/v1/customers/cus_CSqt433jLI012E/sources
     body:
       encoding: US-ASCII
-      string: source=tok_16254q2VpjOYk6TmrNnOtVuI
+      string: source=tok_1C3vC0JgIq5cKVWgqe6tz1HN
     headers:
       Accept:
       - "*/*; q=0.5, application/xml"
       Accept-Encoding:
       - gzip, deflate
       User-Agent:
-      - Stripe/v1 RubyBindings/1.21.0
+      - Stripe/v1 RubyBindings/1.27.2
       Authorization:
-      - Bearer sk_test_XTLCfIQMwKblsxIF1N4i7y1G
+      - Bearer sk_test_KagdXeHZHHOHNrXETSTkPuX6
       Content-Type:
       - application/x-www-form-urlencoded
+      Stripe-Version:
+      - '2015-04-07'
       X-Stripe-Client-User-Agent:
-      - '{"bindings_version":"1.21.0","lang":"ruby","lang_version":"2.1.2 p95 (2014-05-08)","platform":"x86_64-darwin13.0","engine":"ruby","publisher":"stripe","uname":"Darwin
-        XandersBeatBox.local 13.4.0 Darwin Kernel Version 13.4.0: Wed Dec 17 19:05:52
-        PST 2014; root:xnu-2422.115.10~1/RELEASE_X86_64 x86_64","hostname":"XandersBeatBox.local"}'
+      - '{"bindings_version":"1.27.2","lang":"ruby","lang_version":"2.1.2 p95 (2014-05-08)","platform":"x86_64-darwin17.0","engine":"ruby","publisher":"stripe","uname":"Darwin
+        kite 17.4.0 Darwin Kernel Version 17.4.0: Sun Dec 17 09:19:54 PST 2017; root:xnu-4570.41.2~1/RELEASE_X86_64
+        x86_64","hostname":"kite"}'
       Content-Length:
       - '35'
   response:
@@ -662,11 +225,11 @@ http_interactions:
       Server:
       - nginx
       Date:
-      - Wed, 13 May 2015 18:59:34 GMT
+      - Sat, 10 Mar 2018 00:04:11 GMT
       Content-Type:
       - application/json
       Content-Length:
-      - '553'
+      - '584'
       Connection:
       - keep-alive
       Access-Control-Allow-Credentials:
@@ -675,48 +238,51 @@ http_interactions:
       - GET, POST, HEAD, OPTIONS, DELETE
       Access-Control-Allow-Origin:
       - "*"
+      Access-Control-Expose-Headers:
+      - Request-Id, Stripe-Manage-Version, X-Stripe-External-Auth-Required, X-Stripe-Privileged-Session-Required
       Access-Control-Max-Age:
       - '300'
       Cache-Control:
       - no-cache, no-store
       Request-Id:
-      - req_Rh2NcytsOPpq8eGH
+      - req_0FYLwzEy0u60nx
       Stripe-Version:
       - '2015-04-07'
       Strict-Transport-Security:
-      - max-age=31556926; includeSubDomains
+      - max-age=31556926; includeSubDomains; preload
     body:
       encoding: UTF-8
       string: |
         {
-          "id": "card_16254q2VpjOYk6TmeLU9YN2c",
+          "id": "card_1C3vC0JgIq5cKVWgDYYfCYZe",
           "object": "card",
-          "last4": "5100",
-          "brand": "MasterCard",
-          "funding": "prepaid",
-          "exp_month": 5,
-          "exp_year": 2020,
-          "fingerprint": "6xiSYSawDcmtWfRX",
-          "country": "US",
-          "name": null,
-          "address_line1": null,
-          "address_line2": null,
           "address_city": null,
+          "address_country": null,
+          "address_line1": null,
+          "address_line1_check": null,
+          "address_line2": null,
           "address_state": null,
           "address_zip": null,
-          "address_country": null,
-          "cvc_check": "pass",
-          "address_line1_check": null,
           "address_zip_check": null,
+          "brand": "MasterCard",
+          "country": "US",
+          "customer": "cus_CSqt433jLI012E",
+          "cvc_check": "pass",
           "dynamic_last4": null,
+          "exp_month": 5,
+          "exp_year": 2020,
+          "fingerprint": "u8gSkOFwf9OvBKSB",
+          "funding": "prepaid",
+          "last4": "5100",
           "metadata": {},
-          "customer": "cus_6EYBWzx8q0Zq8v"
+          "name": null,
+          "tokenization_method": null
         }
     http_version: 
-  recorded_at: Wed, 13 May 2015 18:59:34 GMT
+  recorded_at: Sat, 10 Mar 2018 00:04:11 GMT
 - request:
     method: get
-    uri: https://api.stripe.com/v1/customers/cus_6EYBWzx8q0Zq8v
+    uri: https://api.stripe.com/v1/customers/cus_CSqt433jLI012E
     body:
       encoding: US-ASCII
       string: ''
@@ -728,13 +294,15 @@ http_interactions:
       User-Agent:
       - Stripe/v1 RubyBindings/1.27.2
       Authorization:
-      - Bearer sk_test_XTLCfIQMwKblsxIF1N4i7y1G
+      - Bearer sk_test_KagdXeHZHHOHNrXETSTkPuX6
       Content-Type:
       - application/x-www-form-urlencoded
+      Stripe-Version:
+      - '2015-04-07'
       X-Stripe-Client-User-Agent:
-      - '{"bindings_version":"1.27.2","lang":"ruby","lang_version":"2.1.2 p95 (2014-05-08)","platform":"x86_64-darwin13.0","engine":"ruby","publisher":"stripe","uname":"Darwin
-        Vectura 15.4.0 Darwin Kernel Version 15.4.0: Fri Feb 26 22:08:05 PST 2016;
-        root:xnu-3248.40.184~3/RELEASE_X86_64 x86_64","hostname":"Vectura"}'
+      - '{"bindings_version":"1.27.2","lang":"ruby","lang_version":"2.1.2 p95 (2014-05-08)","platform":"x86_64-darwin17.0","engine":"ruby","publisher":"stripe","uname":"Darwin
+        kite 17.4.0 Darwin Kernel Version 17.4.0: Sun Dec 17 09:19:54 PST 2017; root:xnu-4570.41.2~1/RELEASE_X86_64
+        x86_64","hostname":"kite"}'
   response:
     status:
       code: 200
@@ -743,11 +311,11 @@ http_interactions:
       Server:
       - nginx
       Date:
-      - Fri, 10 Jun 2016 20:24:17 GMT
+      - Sat, 10 Mar 2018 00:04:12 GMT
       Content-Type:
       - application/json
       Content-Length:
-      - '1727'
+      - '1540'
       Connection:
       - keep-alive
       Access-Control-Allow-Credentials:
@@ -756,51 +324,45 @@ http_interactions:
       - GET, POST, HEAD, OPTIONS, DELETE
       Access-Control-Allow-Origin:
       - "*"
+      Access-Control-Expose-Headers:
+      - Request-Id, Stripe-Manage-Version, X-Stripe-External-Auth-Required, X-Stripe-Privileged-Session-Required
       Access-Control-Max-Age:
       - '300'
       Cache-Control:
       - no-cache, no-store
       Request-Id:
-      - req_8cAVkxmfEWENgb
+      - req_VTXx9J6O2jN0C2
       Stripe-Version:
       - '2015-04-07'
       Strict-Transport-Security:
-      - max-age=31556926; includeSubDomains
+      - max-age=31556926; includeSubDomains; preload
     body:
       encoding: UTF-8
       string: |
         {
-          "id": "cus_6EYBWzx8q0Zq8v",
+          "id": "cus_CSqt433jLI012E",
           "object": "customer",
           "account_balance": 0,
-          "bank_accounts": {
-            "object": "list",
-            "data": [],
-            "has_more": false,
-            "total_count": 0,
-            "url": "/v1/customers/cus_6EYBWzx8q0Zq8v/bank_accounts"
-          },
-          "business_vat_id": null,
-          "created": 1431543573,
+          "created": 1520640249,
           "currency": null,
-          "default_bank_account": null,
-          "default_source": "card_16254q2VpjOYk6TmeLU9YN2c",
-          "default_source_type": "card",
+          "default_source": "card_1C3vC0JgIq5cKVWgDYYfCYZe",
           "delinquent": false,
           "description": "Fake Organization",
           "discount": null,
           "email": null,
+          "invoice_prefix": "9CB1523",
           "livemode": false,
           "metadata": {
-            "lo.entity_id": "1",
-            "lo.entity_type": "organization"
+            "lo_entity_id": "2",
+            "lo_entity_type": "organization",
+            "lo_entity_name": "Fake Organization"
           },
           "shipping": null,
           "sources": {
             "object": "list",
             "data": [
               {
-                "id": "card_16254q2VpjOYk6TmeLU9YN2c",
+                "id": "card_1C3vC0JgIq5cKVWgDYYfCYZe",
                 "object": "card",
                 "address_city": null,
                 "address_country": null,
@@ -812,12 +374,12 @@ http_interactions:
                 "address_zip_check": null,
                 "brand": "MasterCard",
                 "country": "US",
-                "customer": "cus_6EYBWzx8q0Zq8v",
+                "customer": "cus_CSqt433jLI012E",
                 "cvc_check": "pass",
                 "dynamic_last4": null,
                 "exp_month": 5,
                 "exp_year": 2020,
-                "fingerprint": "6xiSYSawDcmtWfRX",
+                "fingerprint": "u8gSkOFwf9OvBKSB",
                 "funding": "prepaid",
                 "last4": "5100",
                 "metadata": {},
@@ -827,24 +389,24 @@ http_interactions:
             ],
             "has_more": false,
             "total_count": 1,
-            "url": "/v1/customers/cus_6EYBWzx8q0Zq8v/sources"
+            "url": "/v1/customers/cus_CSqt433jLI012E/sources"
           },
           "subscriptions": {
             "object": "list",
             "data": [],
             "has_more": false,
             "total_count": 0,
-            "url": "/v1/customers/cus_6EYBWzx8q0Zq8v/subscriptions"
+            "url": "/v1/customers/cus_CSqt433jLI012E/subscriptions"
           }
         }
     http_version: 
-  recorded_at: Fri, 10 Jun 2016 20:24:21 GMT
+  recorded_at: Sat, 10 Mar 2018 00:04:12 GMT
 - request:
     method: post
-    uri: https://api.stripe.com/v1/customers/cus_6EYBWzx8q0Zq8v
+    uri: https://api.stripe.com/v1/customers/cus_CSqt433jLI012E
     body:
       encoding: US-ASCII
-      string: default_source=card_16254q2VpjOYk6TmeLU9YN2c
+      string: default_source=card_1C3vC0JgIq5cKVWgDYYfCYZe
     headers:
       Accept:
       - "*/*; q=0.5, application/xml"
@@ -853,13 +415,15 @@ http_interactions:
       User-Agent:
       - Stripe/v1 RubyBindings/1.27.2
       Authorization:
-      - Bearer sk_test_XTLCfIQMwKblsxIF1N4i7y1G
+      - Bearer sk_test_KagdXeHZHHOHNrXETSTkPuX6
       Content-Type:
       - application/x-www-form-urlencoded
+      Stripe-Version:
+      - '2015-04-07'
       X-Stripe-Client-User-Agent:
-      - '{"bindings_version":"1.27.2","lang":"ruby","lang_version":"2.1.2 p95 (2014-05-08)","platform":"x86_64-darwin13.0","engine":"ruby","publisher":"stripe","uname":"Darwin
-        Vectura 15.4.0 Darwin Kernel Version 15.4.0: Fri Feb 26 22:08:05 PST 2016;
-        root:xnu-3248.40.184~3/RELEASE_X86_64 x86_64","hostname":"Vectura"}'
+      - '{"bindings_version":"1.27.2","lang":"ruby","lang_version":"2.1.2 p95 (2014-05-08)","platform":"x86_64-darwin17.0","engine":"ruby","publisher":"stripe","uname":"Darwin
+        kite 17.4.0 Darwin Kernel Version 17.4.0: Sun Dec 17 09:19:54 PST 2017; root:xnu-4570.41.2~1/RELEASE_X86_64
+        x86_64","hostname":"kite"}'
       Content-Length:
       - '44'
   response:
@@ -870,11 +434,11 @@ http_interactions:
       Server:
       - nginx
       Date:
-      - Fri, 10 Jun 2016 20:24:17 GMT
+      - Sat, 10 Mar 2018 00:04:13 GMT
       Content-Type:
       - application/json
       Content-Length:
-      - '1727'
+      - '1540'
       Connection:
       - keep-alive
       Access-Control-Allow-Credentials:
@@ -883,51 +447,45 @@ http_interactions:
       - GET, POST, HEAD, OPTIONS, DELETE
       Access-Control-Allow-Origin:
       - "*"
+      Access-Control-Expose-Headers:
+      - Request-Id, Stripe-Manage-Version, X-Stripe-External-Auth-Required, X-Stripe-Privileged-Session-Required
       Access-Control-Max-Age:
       - '300'
       Cache-Control:
       - no-cache, no-store
       Request-Id:
-      - req_8cAVSE399Af0dX
+      - req_cN39pzSWhYJ6nj
       Stripe-Version:
       - '2015-04-07'
       Strict-Transport-Security:
-      - max-age=31556926; includeSubDomains
+      - max-age=31556926; includeSubDomains; preload
     body:
       encoding: UTF-8
       string: |
         {
-          "id": "cus_6EYBWzx8q0Zq8v",
+          "id": "cus_CSqt433jLI012E",
           "object": "customer",
           "account_balance": 0,
-          "bank_accounts": {
-            "object": "list",
-            "data": [],
-            "has_more": false,
-            "total_count": 0,
-            "url": "/v1/customers/cus_6EYBWzx8q0Zq8v/bank_accounts"
-          },
-          "business_vat_id": null,
-          "created": 1431543573,
+          "created": 1520640249,
           "currency": null,
-          "default_bank_account": null,
-          "default_source": "card_16254q2VpjOYk6TmeLU9YN2c",
-          "default_source_type": "card",
+          "default_source": "card_1C3vC0JgIq5cKVWgDYYfCYZe",
           "delinquent": false,
           "description": "Fake Organization",
           "discount": null,
           "email": null,
+          "invoice_prefix": "9CB1523",
           "livemode": false,
           "metadata": {
-            "lo.entity_id": "1",
-            "lo.entity_type": "organization"
+            "lo_entity_id": "2",
+            "lo_entity_type": "organization",
+            "lo_entity_name": "Fake Organization"
           },
           "shipping": null,
           "sources": {
             "object": "list",
             "data": [
               {
-                "id": "card_16254q2VpjOYk6TmeLU9YN2c",
+                "id": "card_1C3vC0JgIq5cKVWgDYYfCYZe",
                 "object": "card",
                 "address_city": null,
                 "address_country": null,
@@ -939,12 +497,12 @@ http_interactions:
                 "address_zip_check": null,
                 "brand": "MasterCard",
                 "country": "US",
-                "customer": "cus_6EYBWzx8q0Zq8v",
+                "customer": "cus_CSqt433jLI012E",
                 "cvc_check": "pass",
                 "dynamic_last4": null,
                 "exp_month": 5,
                 "exp_year": 2020,
-                "fingerprint": "6xiSYSawDcmtWfRX",
+                "fingerprint": "u8gSkOFwf9OvBKSB",
                 "funding": "prepaid",
                 "last4": "5100",
                 "metadata": {},
@@ -954,16 +512,16 @@ http_interactions:
             ],
             "has_more": false,
             "total_count": 1,
-            "url": "/v1/customers/cus_6EYBWzx8q0Zq8v/sources"
+            "url": "/v1/customers/cus_CSqt433jLI012E/sources"
           },
           "subscriptions": {
             "object": "list",
             "data": [],
             "has_more": false,
             "total_count": 0,
-            "url": "/v1/customers/cus_6EYBWzx8q0Zq8v/subscriptions"
+            "url": "/v1/customers/cus_CSqt433jLI012E/subscriptions"
           }
         }
     http_version: 
-  recorded_at: Fri, 10 Jun 2016 20:24:21 GMT
-recorded_with: VCR 2.9.3
+  recorded_at: Sat, 10 Mar 2018 00:04:13 GMT
+recorded_with: VCR 4.0.0

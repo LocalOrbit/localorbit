@@ -1,7 +1,7 @@
 class SubscriptionType < ActiveRecord::Base
   module Keywords
-    FreshSheet = "fresh_sheet"
-    Newsletter = "newsletter"
+    FRESHSHEET = 'fresh_sheet'
+    NEWSLETTER = 'newsletter'
   end
 
   has_many :subscriptions

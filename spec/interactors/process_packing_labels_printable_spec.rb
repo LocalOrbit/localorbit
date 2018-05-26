@@ -4,7 +4,7 @@ describe ProcessPackingLabelsPrintable do
   subject { described_class }
 
   ####
-  
+
   let(:admin_user) { create(:user, :admin, name: "Admin user") }
 
   let(:market) { create(:market) }

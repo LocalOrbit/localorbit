@@ -258,7 +258,7 @@ describe "admin manange organization", :vcr do
       click_button("Delete Selected")
 
       expect(Dom::Admin::OrganizationLocation.count).to eq(0)
-      expect(page).to have_content("Successfully removed the address(es) #{location_1.name} and #{location_2.name}")
+      expect(page).to have_content("Successfully removed the address(es) #{location_2.name} and #{location_1.name}")
     end
 
     it "updates default address settings", js: true do

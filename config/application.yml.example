@@ -42,6 +42,8 @@ development:
   USE_ROLLBAR: 'false'
 test:
   USE_ROLLBAR: 'false'
+  USE_UPLOAD_QUEUE: 'false'
+  RAILS_ENABLE_TEST_LOG: ~
 staging:
   MAILTRAP_USERNAME: <MT username>
   MAILTRAP_PASSWORD: <MT secret>

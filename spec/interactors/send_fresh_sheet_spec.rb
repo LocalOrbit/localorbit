@@ -1,7 +1,7 @@
 require "spec_helper"
 
 describe SendFreshSheet do
-  
+
   let!(:market) { create(:market, name: "Mad Dog Farm n Fry", delivery_schedules: [create(:delivery_schedule)]) }
   let(:note) { "B flat" }
 
@@ -21,8 +21,8 @@ describe SendFreshSheet do
   end
 
   it "sends Fresh Sheet emails to all users in the given market who subscribe to Fresh Sheets" do
-    fresh = create(:subscription_type, 
-                   keyword: SubscriptionType::Keywords::FreshSheet, 
+    fresh = create(:subscription_type,
+                   keyword: SubscriptionType::Keywords::FRESHSHEET,
                    name: "Test Fresh!")
 
     user1 = create(:user, :buyer)
@@ -67,7 +67,7 @@ describe SendFreshSheet do
   #
   # HELPERS
   #
-  
+
   def assert_fresh_sheet_sent_to(mail,market,sent_to,note)
     expect(mail).to be
     expect(mail.to.first).to eq(sent_to)
