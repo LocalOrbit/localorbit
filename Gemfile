@@ -115,6 +115,7 @@ group :development do
   gem 'rails_view_annotator'
   gem 'mailcatcher'
   gem 'unicorn'
+  gem 'wkhtmltopdf-binary', git: 'https://github.com/zakird/wkhtmltopdf_binary_gem.git'
 
   # profiling, see https://github.com/MiniProfiler/rack-mini-profiler#installation
   gem 'rack-mini-profiler'
@@ -138,7 +139,6 @@ group :development, :test do
   gem 'poltergeist'
   gem 'webmock'
   gem 'capybara-slow_finder_errors'
-  gem 'wkhtmltopdf-binary', :git => 'https://github.com/zakird/wkhtmltopdf_binary_gem.git'
   gem 'capybara'
   gem 'selenium-webdriver'
 end
@@ -155,6 +155,7 @@ group :test do
   gem 'vcr'
   gem 'fire_poll', '1.2.0'
   gem 'capybara-screenshot'
+  gem 'wkhtmltopdf-heroku'
 end
 
 group :staging do
