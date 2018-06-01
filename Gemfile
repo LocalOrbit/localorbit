@@ -77,11 +77,17 @@ gem 'tabulator', :git => 'https://github.com/dcrosby42/tabulator.git'
 gem 'rschema', :git => 'https://github.com/tomdalling/rschema.git'
 
 gem 'turbolinks'
-# wkhtmltopdf versions are a mess. 0.12.1 is stable but not well supported by gems
+
+# wkhtmltopdf versions are a mess. 0.12.1 is stable
 # See https://github.com/zakird/wkhtmltopdf_binary_gem/issues/13
+#  we are waiting for 0.12.5 to land for https://github.com/wkhtmltopdf/wkhtmltopdf/issues/3241
 # The github version is massive and makes the Heroku slug huge
-# gem 'wkhtmltopdf-binary'
-# gem 'wkhtmltopdf-binary', github: 'zakird/wkhtmltopdf_binary_gem'
+install_if -> { RUBY_PLATFORM =~ /darwin/ } do
+  gem 'wkhtmltopdf-binary', git: 'https://github.com/zakird/wkhtmltopdf_binary_gem.git'
+end
+install_if -> { RUBY_PLATFORM =~ /linux/ } do
+  gem 'wkhtmltopdf-heroku'
+end
 
 # Product import/export
 gem 'rubyXL', require: false # XLSX
@@ -115,7 +121,6 @@ group :development do
   gem 'rails_view_annotator'
   gem 'mailcatcher'
   gem 'unicorn'
-  gem 'wkhtmltopdf-binary', git: 'https://github.com/zakird/wkhtmltopdf_binary_gem.git'
 
   # profiling, see https://github.com/MiniProfiler/rack-mini-profiler#installation
   gem 'rack-mini-profiler'
@@ -155,7 +160,6 @@ group :test do
   gem 'vcr'
   gem 'fire_poll', '1.2.0'
   gem 'capybara-screenshot'
-  gem 'wkhtmltopdf-heroku'
 end
 
 group :staging do
@@ -169,7 +173,6 @@ group :production, :staging do
   gem 'rack-cache', require: 'rack/cache'
   gem 'rails_12factor'
   gem 'platform-api'
-  gem 'wkhtmltopdf-heroku'
 end
 
 group :production, :staging, :development do
