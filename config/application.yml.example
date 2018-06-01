@@ -35,6 +35,8 @@ QB_CONSUMER_SECRET: <QB consumer secret>
 QB_ACCESS_TOKEN: <QB access token>
 QB_ACCESS_TOKEN_SECRET: <QB access token secret>
 QB_REALM_ID: <QB realm id>
+# Use staging DRAGONFLY_HOST for dev and test
+DRAGONFLY_HOST: 'https://d3jv177czn6wv2.cloudfront.net'
 development:
   STRIPE_DEV_MARKET_ACCOUNT_ID: <stripe user id of market that did oauth flow, see docs/stripe.md>
   MAILTRAP_USERNAME: <MT username>
