@@ -1,5 +1,10 @@
 source 'https://rubygems.org'
 
+git_source(:github) do |repo_name|
+  repo_name = "#{repo_name}/#{repo_name}" unless repo_name.include?("/")
+  "https://github.com/#{repo_name}.git"
+end
+
 ruby '2.1.2'
 
 gem 'rails', '~> 4.1.11'
@@ -96,7 +101,7 @@ gem 'grape-swagger' # API V2, documentation
 
 gem 'rollbar'
 
-gem 'quickbooks-ruby', '~> 0.4.6', :git => 'https://github.com/ruckus/quickbooks-ruby.git'
+gem 'quickbooks-ruby', github: 'ruckus/quickbooks-ruby', ref: 'ba54c446bf37'
 gem "attr_encrypted", '~> 3.0.0'
 
 group :doc do
