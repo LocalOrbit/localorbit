@@ -484,7 +484,7 @@ GEM
     newrelic-dragonfly (0.0.4)
       dragonfly
       newrelic_rpm
-    newrelic_rpm (3.8.1.221)
+    newrelic_rpm (5.2.0.345)
     nokogiri (1.8.1)
       mini_portile2 (~> 2.3.0)
     nokogiri-happymapper (0.5.9)
@@ -855,7 +855,7 @@ DEPENDENCIES
   memory_profiler
   migration_data
   newrelic-dragonfly
-  newrelic_rpm (< 3.9.0)
+  newrelic_rpm
   omniauth-stripe-connect
   pdfkit
   periscope-activerecord
