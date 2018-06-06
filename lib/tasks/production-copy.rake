@@ -205,6 +205,11 @@ module CloneProductionHelper
     configs["development"]["database"]
   end
 
+  def local_development_db_port
+    configs = YAML.load_file(File.new("config/database.yml"))
+    configs["development"]["port"]
+  end
+
   def production_copy_params
     {
       database:"localorbit-production-copy",
@@ -246,7 +251,7 @@ module CloneProductionHelper
     end
 
     sh "rake db:drop db:create RAILS_ENV=development"
-    cmd =  "pg_restore --clean --no-acl --no-owner -h localhost -d #{local_development_db} #{cleansed_dump_file} > /dev/null 2>&1"
+    cmd =  "pg_restore --clean --no-acl --no-owner -h localhost -p #{local_development_db_port} -d #{local_development_db} #{cleansed_dump_file} > /dev/null 2>&1"
     puts "#{cmd}"
     `#{cmd}`
   end
