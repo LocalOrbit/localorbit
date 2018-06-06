@@ -11,8 +11,6 @@ describe Order::DeliveryStatusPolicy do
 
   let(:order)          { create(:order, :with_items, market: market) }
 
-  let(:delivery_status_policy) { Order::DeliveryStatusPolicy.new(user, order) }
-
   before do
     allow(order).to receive(:undelivered_for_user?).with(user) { undelivered }
   end
@@ -24,22 +22,22 @@ describe Order::DeliveryStatusPolicy do
       context 'when order is not yet delivered' do
         let(:undelivered) { true }
 
-        it 'returns true if order not direct delivery' do
+        it 'grants access if order is not direct delivery' do
           allow(order).to receive_message_chain('delivery.delivery_schedule.direct_to_customer?') { false }
-          expect(delivery_status_policy.mark_delivered?).to be true
+          expect(described_class).to permit(user, order)
         end
 
-        it 'returns true if order is direct delivery' do
+        it 'grants access if order is direct delivery' do
           allow(order).to receive_message_chain('delivery.delivery_schedule.direct_to_customer?') { true }
-          expect(delivery_status_policy.mark_delivered?).to be true
+          expect(described_class).to permit(user, order)
         end
       end
 
       context 'when order is delivered' do
         let(:undelivered) { false }
 
-        it 'returns false' do
-          expect(delivery_status_policy.mark_delivered?).to be false
+        it 'denies access' do
+          expect(described_class).to_not permit(user, order)
         end
       end
     end
@@ -50,22 +48,22 @@ describe Order::DeliveryStatusPolicy do
       context 'when order is undelivered' do
         let(:undelivered) { true }
 
-        it 'returns false if order not direct delivery' do
+        it 'denies access if order is not direct delivery' do
           allow(order).to receive_message_chain('delivery.delivery_schedule.direct_to_customer?') { false }
-          expect(delivery_status_policy.mark_delivered?).to be false
+          expect(described_class).to_not permit(user, order)
         end
 
-        it 'returns true if order is direct delivery' do
+        it 'grants access if order is direct delivery' do
           allow(order).to receive_message_chain('delivery.delivery_schedule.direct_to_customer?') { true }
-          expect(delivery_status_policy.mark_delivered?).to be true
+          expect(described_class).to permit(user, order)
         end
       end
 
       context 'when order is delivered' do
         let(:undelivered) { false }
 
-        it 'returns false' do
-          expect(delivery_status_policy.mark_delivered?).to be false
+        it 'denies access' do
+          expect(described_class).to_not permit(user, order)
         end
       end
     end
@@ -74,8 +72,8 @@ describe Order::DeliveryStatusPolicy do
       let(:user) { buyer }
       let(:undelivered) { true }
 
-      it 'returns false' do
-        expect(delivery_status_policy.mark_delivered?).to be false
+      it 'denies access' do
+        expect(described_class).to_not permit(user, order)
       end
     end
   end
@@ -87,16 +85,16 @@ describe Order::DeliveryStatusPolicy do
       context 'when order is not yet delivered' do
         let(:undelivered) { true }
 
-        it 'returns false' do
-          expect(delivery_status_policy.mark_undelivered?).to be false
+        it 'denies access' do
+          expect(described_class).to_not permit(user, order)
         end
       end
 
       context 'when order is delivered' do
         let(:undelivered) { false }
 
-        it 'returns true' do
-          expect(delivery_status_policy.mark_undelivered?).to be true
+        it 'grants access' do
+          expect(described_class).to permit(user, order)
         end
       end
     end
@@ -105,8 +103,8 @@ describe Order::DeliveryStatusPolicy do
       let(:user) { supplier }
       let(:undelivered) { true }
 
-      it 'returns false' do
-        expect(delivery_status_policy.mark_undelivered?).to be false
+      it 'denies access' do
+        expect(described_class).to_not permit(user, order)
       end
     end
 
@@ -114,8 +112,8 @@ describe Order::DeliveryStatusPolicy do
       let(:user) { buyer }
       let(:undelivered) { true }
 
-      it 'returns false' do
-        expect(delivery_status_policy.mark_undelivered?).to be false
+      it 'denies access' do
+        expect(described_class).to_not permit(user, order)
       end
     end
   end
