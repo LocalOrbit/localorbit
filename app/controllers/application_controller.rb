@@ -180,16 +180,14 @@ class ApplicationController < ActionController::Base
   end
 
   def current_delivery
-    return nil if (current_market.blank? || current_organization.blank?) && session[:order_id].nil?
+    return if (current_market.blank? || current_organization.blank?) &&
+      session[:order_id].nil?
 
-    if session[:order_id] # We're adding an item to an order, so use the delivery of the order
-      @current_delivery = Order.find(session[:order_id]).delivery.decorate
-    end
-
-    if defined?(@current_delivery)
-      @current_delivery
+    # We're adding an item to an order, so use the delivery of the order
+    @current_delivery ||= if session[:order_id]
+      Order.find(session[:order_id]).delivery.decorate
     else
-      @current_delivery = find_or_build_current_delivery.try(:decorate)
+      find_or_build_current_delivery.try(:decorate)
     end
   end
 
