@@ -209,12 +209,11 @@ class ApplicationController < ActionController::Base
     end
   end
 
-  def selected_organization_location(org=nil)
-    if org
-      @selected_organization_location ||= (session[:current_location] && org.locations.visible.find_by(id: session[:current_location])) || org.shipping_location
-    else
-      @selected_organization_location ||= (session[:current_location] && current_organization.locations.visible.find_by(id: session[:current_location])) || current_organization.shipping_location
-    end
+  def selected_organization_location(org=current_organization)
+    @selected_organization_location ||=
+        (session[:current_location] &&
+          org.locations.visible.find_by(id: session[:current_location])) ||
+        org.shipping_location
   end
 
   def set_timezone
