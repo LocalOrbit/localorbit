@@ -179,6 +179,24 @@ class ApplicationController < ActionController::Base
     request.host == Figaro.env.domain || request.host == "app.#{Figaro.env.domain}"
   end
 
+  def require_current_delivery
+    if current_delivery.blank?
+      # falls through to redirect
+
+    # Ask Rob if we want to preserve ability to order without pickup OR delivery!!!
+    # elsif current_delivery.requires_location? && selected_organization_location.nil?
+    #   return
+    elsif !current_delivery.can_accept_orders?
+      session[:current_delivery_id] = nil
+      flash[:alert] = current_delivery.delivery_expired_notice
+    else
+      # we have a valid current_delivery
+      return
+    end
+
+    redirect_to new_sessions_deliveries_path(redirect_back_to: request.fullpath)
+  end
+
   def current_delivery
     return if (current_market.blank? || current_organization.blank?) &&
       session[:order_id].nil?
@@ -211,9 +229,9 @@ class ApplicationController < ActionController::Base
 
   def selected_organization_location(org=current_organization)
     @selected_organization_location ||=
-        (session[:current_location] &&
-          org.locations.visible.find_by(id: session[:current_location])) ||
-        org.shipping_location
+      (session[:current_location] &&
+        org.locations.visible.find_by(id: session[:current_location])) ||
+      org.shipping_location
   end
 
   def set_timezone
@@ -306,23 +324,6 @@ class ApplicationController < ActionController::Base
   def require_current_supplier
     return unless current_supplier.nil?
     redirect_to new_sessions_supplier_path(redirect_back_to: request.original_url)
-  end
-
-  def require_current_delivery
-    redir_opts = {}
-
-    if current_delivery.present? || session[:order_id]
-      return if session[:order_id] || current_delivery.requires_location? && selected_organization_location.nil?
-
-      if current_delivery.can_accept_orders? || session[:order_id]
-        return
-      else
-        session[:current_delivery_id] = nil
-        redir_opts[:alert] = current_delivery.delivery_expired_notice
-      end
-    end
-
-    redirect_to new_sessions_deliveries_path(redirect_back_to: request.fullpath), redir_opts
   end
 
   def set_order_id
