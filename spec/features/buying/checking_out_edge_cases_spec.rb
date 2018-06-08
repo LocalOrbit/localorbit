@@ -56,7 +56,6 @@ describe "Checking Out", :js, :vcr do
     click_button "Place Order"
   end
 
-=begin
   context "user enters items into cart before cutoff, then cutoff time lapses, then the user checks out", :js do
     it "shows them an error" do
       switch_to_subdomain(market.subdomain)
@@ -73,7 +72,6 @@ describe "Checking Out", :js, :vcr do
 
       # Travel to a few minutes after the cutoff
       Timecop.travel((Delivery.last.cutoff_time + 8.minutes).to_s)
-      sign_in_as(user)
 
       choose "Pay by Purchase Order"
       fill_in "PO Number", with: "12345"
@@ -83,5 +81,4 @@ describe "Checking Out", :js, :vcr do
       expect(page).to have_content("Ordering for your selected pickup or delivery date ended")
     end
   end
-=end
 end
