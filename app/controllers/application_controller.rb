@@ -183,9 +183,6 @@ class ApplicationController < ActionController::Base
     if current_delivery.blank?
       # falls through to redirect
 
-    # Ask Rob if we want to preserve ability to order without pickup OR delivery!!!
-    # elsif current_delivery.requires_location? && selected_organization_location.nil?
-    #   return
     elsif !current_delivery.can_accept_orders?
       session[:current_delivery_id] = nil
       flash[:alert] = current_delivery.delivery_expired_notice
