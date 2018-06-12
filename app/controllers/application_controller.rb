@@ -314,7 +314,7 @@ class ApplicationController < ActionController::Base
   end
 
   def require_current_organization
-    return unless current_organization.nil? && session[:order_id].nil?
+    return if current_organization || session[:order_id]
     redirect_to new_sessions_organization_path(redirect_back_to: request.original_url)
   end
 
