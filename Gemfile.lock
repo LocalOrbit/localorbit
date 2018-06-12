@@ -16,6 +16,7 @@ GIT
 GIT
   remote: https://github.com/ruckus/quickbooks-ruby.git
   revision: ba54c446bf37d9c1a0b5f763d01989228df298d6
+  ref: ba54c446bf37
   specs:
     quickbooks-ruby (0.4.6)
       activemodel
@@ -74,6 +75,7 @@ GEM
       erubis (~> 2.7.0)
     active_model_serializers (0.9.0)
       activemodel (>= 3.2)
+    active_record_query_trace (1.5.4)
     active_record_union (1.0.1)
       activerecord (>= 4.0)
     activemodel (4.1.16)
@@ -483,7 +485,7 @@ GEM
     newrelic-dragonfly (0.0.4)
       dragonfly
       newrelic_rpm
-    newrelic_rpm (3.8.1.221)
+    newrelic_rpm (5.2.0.345)
     nokogiri (1.8.1)
       mini_portile2 (~> 2.3.0)
     nokogiri-happymapper (0.5.9)
@@ -791,6 +793,7 @@ PLATFORMS
 DEPENDENCIES
   accountingjs-rails
   active_model_serializers
+  active_record_query_trace
   active_record_union
   activerecord-import
   acts_as_geocodable
@@ -854,7 +857,7 @@ DEPENDENCIES
   memory_profiler
   migration_data
   newrelic-dragonfly
-  newrelic_rpm (< 3.9.0)
+  newrelic_rpm
   omniauth-stripe-connect
   pdfkit
   periscope-activerecord
@@ -868,7 +871,7 @@ DEPENDENCIES
   pry-remote
   puma
   pundit
-  quickbooks-ruby (~> 0.4.6)!
+  quickbooks-ruby!
   quiet_assets
   rack-cache
   rack-canonical-host
