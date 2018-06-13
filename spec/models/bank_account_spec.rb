@@ -1,26 +1,94 @@
 require "spec_helper"
 
 describe BankAccount do
+  context "model" do
+    let(:bank_account) { create(:bank_account, bank_name: "Visa", last_four: "4280", expiration_month: 8, expiration_year: 2032) }
+
+    it "formats card display_name correctly" do
+      expect(bank_account.display_name).to eq("Visa ending in 4280 (exp. 8/2032)")
+    end
+  end
+
   context "validations" do
     let!(:organization) { create(:organization) }
 
-    it "does not allow duplication accounts" do
-      atts = {
-        account_type: "visa",
+    context "for checking accounts" do
+      let(:account_params) {{
+        account_type: "checking",
         last_four: "1234",
+        name: "John User",
         bankable: organization,
         bank_name: "House of Dollars"
-      }
-      create(:bank_account, atts.dup)
+      }}
+      let!(:bank_account) { create(:bank_account, account_params) }
 
-      subject = BankAccount.new(atts.dup)
-      expect(subject).to have(1).errors_on(:bankable_id)
-      field,msg = subject.errors.first
-      expect(field).to eq(:bankable_id)
-      expect(msg).to match(/already exists/)
+      it "does not allow duplicate account" do
+        subject = BankAccount.new(account_params)
+        expect(subject).to have(1).errors_on(:bankable_id)
+        field,msg = subject.errors.first
+        expect(field).to eq(:bankable_id)
+        expect(msg).to match(/already exists/)
+      end
 
-      subject = BankAccount.new(bankable: organization, account_type: "visa", last_four: "1235")
-      expect(subject).to be_valid
+      it "does not allow account with different expiration month/year" do
+        subject = BankAccount.new(account_params.merge(expiration_month: "9", expiration_year: "2044"))
+        expect(subject).to have(1).errors_on(:bankable_id)
+        field,msg = subject.errors.first
+        expect(field).to eq(:bankable_id)
+        expect(msg).to match(/already exists/)
+      end
+
+      it "allows checking account with different last_four" do
+        subject = BankAccount.new(account_params.merge(last_four: "6789"))
+        expect(subject).to be_valid
+      end
+    end
+
+    context "for credit card accounts" do
+      let(:account_params) {{
+        account_type: "card",
+        last_four: "1234",
+        expiration_month: "08",
+        expiration_year: "2032",
+        name: "John User",
+        bankable: organization,
+        bank_name: "Visa"
+      }}
+      let!(:bank_account) { create(:bank_account, account_params) }
+
+      it "does not allow identical account" do
+        subject = BankAccount.new(account_params.dup)
+        expect(subject).to have(1).errors_on(:bankable_id)
+        field,msg = subject.errors.first
+        expect(field).to eq(:bankable_id)
+        expect(msg).to match(/already exists/)
+      end
+
+      it "allows identical account associated with different organization" do
+        new_org = create(:organization, :buyer)
+        subject = BankAccount.new(account_params.merge(bankable: new_org))
+        expect(subject).to be_valid
+      end
+
+      it "allows account with different name" do
+        subject = BankAccount.new(account_params.merge(name: "New Name"))
+        expect(subject).to be_valid
+      end
+
+      it "allows account with different last four" do
+        subject = BankAccount.new(account_params.merge(last_four: "6789"))
+        expect(subject).to be_valid
+      end
+
+      it "allows account with different expiration month" do
+        subject = BankAccount.new(account_params.merge(expiration_month: "04"))
+        expect(subject).to be_valid
+      end
+
+      it "allows account with different expiration month" do
+        subject = BankAccount.new(account_params.merge(expiration_year: "2026"))
+        expect(subject).to be_valid
+      end
     end
 
     it "does not check soft deleted bank accounts when checking for duplications" do
@@ -83,7 +151,7 @@ describe BankAccount do
         # a BankAccount has bankable that's not an Organization or a Market
         allow(bank_account).to receive(:bankable).and_return "oops"
       end
-      
+
       it "raises an error" do
         expect(lambda { bank_account.primary_payment_provider }).to raise_error(/oops.*primary_payment_provider/)
       end
