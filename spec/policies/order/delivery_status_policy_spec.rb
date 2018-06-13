@@ -53,6 +53,12 @@ describe Order::DeliveryStatusPolicy do
           expect(described_class).to_not permit(user, order)
         end
 
+        it 'grants access if suppliers can edit orders and not direct delivery' do
+          allow(market).to receive(:sellers_edit_orders?) { true }
+          allow(order).to receive_message_chain('delivery.delivery_schedule.direct_to_customer?') { false }
+          expect(described_class).to permit(user, order)
+        end
+
         it 'grants access if order is direct delivery' do
           allow(order).to receive_message_chain('delivery.delivery_schedule.direct_to_customer?') { true }
           expect(described_class).to permit(user, order)
@@ -72,7 +78,13 @@ describe Order::DeliveryStatusPolicy do
       let(:user) { buyer }
       let(:undelivered) { true }
 
-      it 'denies access' do
+      it 'denies access by default' do
+        expect(described_class).to_not permit(user, order)
+      end
+
+      it 'denies access even if suppliers can edit orders' do
+        allow(market).to receive(:sellers_edit_orders?) { true }
+        allow(order).to receive_message_chain('delivery.delivery_schedule.direct_to_customer?') { false }
         expect(described_class).to_not permit(user, order)
       end
     end
@@ -103,7 +115,13 @@ describe Order::DeliveryStatusPolicy do
       let(:user) { supplier }
       let(:undelivered) { true }
 
-      it 'denies access' do
+      it 'denies access by default' do
+        expect(described_class).to_not permit(user, order)
+      end
+
+      it 'denies access even if suppliers can edit orders and is direct delivery' do
+        allow(market).to receive(:sellers_edit_orders?) { true }
+        allow(order).to receive_message_chain('delivery.delivery_schedule.direct_to_customer?') { true }
         expect(described_class).to_not permit(user, order)
       end
     end
