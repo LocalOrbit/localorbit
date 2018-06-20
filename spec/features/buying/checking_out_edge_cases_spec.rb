@@ -15,7 +15,6 @@ describe "Checking Out", :js, :vcr do
   let!(:delivery_schedule) { create(:delivery_schedule, :percent_fee,  order_cutoff: 24, day:1, fee:nil, market: market, day: 5, require_delivery: false, require_cross_sell_delivery: false, seller_delivery_start: "8:00 AM", seller_delivery_end: "5:00 PM", buyer_pickup_location_id: 0, buyer_pickup_start: "12:00 AM", buyer_pickup_end: "12:00 AM", market_pickup: false) }
   let!(:delivery_schedule2) { create(:delivery_schedule, :percent_fee,  order_cutoff: 24, day:2, fee:nil, market: market, day: 5, require_delivery: false, require_cross_sell_delivery: false, seller_delivery_start: "8:00 AM", seller_delivery_end: "5:00 PM", buyer_pickup_location_id: 0, buyer_pickup_start: "12:00 AM", buyer_pickup_end: "12:00 AM", market_pickup: false) }
 
-
   # Fulton St. Farms
   let!(:bananas) { create(:product, :sellable, name: "Bananas", organization: fulton_farms) }
   let!(:bananas_lot) { create(:lot, product: bananas, quantity: 100) }
@@ -52,11 +51,28 @@ describe "Checking Out", :js, :vcr do
     Timecop.return
   end
 
-  def checkout
+  def checkout_with_po
+    choose "Pay by Purchase Order"
+    fill_in "PO Number", with: "12345"
     click_button "Place Order"
   end
 
-  context 'buyer creates an order' do
+  def add_to_order_as_market_manager
+    sign_in_as(market_manager)
+    visit admin_order_path(1)
+    click_button 'Add Items'
+    # TODO? should we figure out Domino way?
+    # ap Dom::ProductListing::Item.find_by_name('Kale')
+    # pause
+    # Dom::ProductListing::Item.find_by_name('Kale').set_order_quantity(9)
+    within('#supplierCatalog') do
+      find('.app-product-input', match: :first).set('9') # Beans
+      expect(page).to have_content('$27.00')
+    end
+    click_button 'Add items and Update quantities'
+  end
+
+  context 'buyer fills their cart' do
     before do
       switch_to_subdomain(market.subdomain)
       sign_in_as(user)
@@ -71,61 +87,39 @@ describe "Checking Out", :js, :vcr do
       cart_link.node.click
     end
 
-    it 'permits the market manager to add to the order' do
-      choose "Pay by Purchase Order"
-      fill_in "PO Number", with: "12345"
-      checkout
-      sign_out
-      sign_in_as(market_manager)
-      visit admin_order_path(1)
-      click_button 'Add Items'
-      # ap Dom::ProductListing::Item.find_by_name('Kale')
-      # pause
-      # Dom::ProductListing::Item.find_by_name('Kale').set_order_quantity(9)
-      within('#supplierCatalog') do
-        find('.app-product-input', match: :first).set('9') # Beans
-        expect(page).to have_content('$27.00')
-      end
-      click_button 'Add items and Update quantities'
-      expect(page).to have_content('Order successfully updated')
-      expect(page).to have_content('Beans')
-    end
-
-    context 'then cutoff time lapses' do
-      context 'then the buyer checks out' do
-        it "shows them a past cutoff error" do
-          # Travel to a few minutes after the cutoff
-          Timecop.travel((Delivery.last.cutoff_time + 8.minutes).to_s)
-
-          choose "Pay by Purchase Order"
-          fill_in "PO Number", with: "12345"
-          checkout
-          expect(page).to have_content("Ordering for your selected pickup or delivery date ended")
-        end
-      end
-
-      it 'still permits the market manager to add to the order' do
-        choose "Pay by Purchase Order"
-        fill_in "PO Number", with: "12345"
-        checkout
-        sign_out
-
+    context 'then cutoff time passes, and buyer checks out' do
+      it "shows them a past cutoff error" do
         # Travel to a few minutes after the cutoff
         Timecop.travel((Delivery.last.cutoff_time + 8.minutes).to_s)
 
-        sign_in_as(market_manager)
-        visit admin_order_path(1)
-        click_button 'Add Items'
-        # ap Dom::ProductListing::Item.find_by_name('Kale')
-        # pause
-        # Dom::ProductListing::Item.find_by_name('Kale').set_order_quantity(9)
-        within('#supplierCatalog') do
-          find('.app-product-input', match: :first).set('9') # Beans
-          expect(page).to have_content('$27.00')
-        end
-        click_button 'Add items and Update quantities'
+        checkout_with_po
+        expect(page).to have_content("Ordering for your selected pickup or delivery date ended")
+      end
+    end
+
+    context 'then buyer checks out' do
+      before do
+        checkout_with_po
+        sign_out
+      end
+
+      it 'permits the market manager to add to the order' do
+        add_to_order_as_market_manager
         expect(page).to have_content('Order successfully updated')
         expect(page).to have_content('Beans')
+      end
+
+      context 'then cutoff time passes' do
+        before do
+          # Travel to a few minutes after the cutoff
+          Timecop.travel((Delivery.last.cutoff_time + 8.minutes).to_s)
+        end
+
+        it 'still permits the market manager to add to the order' do
+          add_to_order_as_market_manager
+          expect(page).to have_content('Order successfully updated')
+          expect(page).to have_content('Beans')
+        end
       end
     end
   end
