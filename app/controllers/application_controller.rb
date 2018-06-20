@@ -184,11 +184,10 @@ class ApplicationController < ActionController::Base
   end
 
   def require_current_delivery
-    # return if adding_items_to_existing_order?
+    return if adding_items_to_existing_order?
 
     if current_delivery.blank?
       # falls through to redirect
-
     elsif !current_delivery.can_accept_orders?
       session[:current_delivery_id] = nil
       flash[:alert] = current_delivery.delivery_expired_notice

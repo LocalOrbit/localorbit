@@ -72,7 +72,6 @@ describe "Checking Out", :js, :vcr do
     end
 
     it 'permits the market manager to add to the order' do
-      ap "made it to our test!"
       choose "Pay by Purchase Order"
       fill_in "PO Number", with: "12345"
       checkout
@@ -80,26 +79,53 @@ describe "Checking Out", :js, :vcr do
       sign_in_as(market_manager)
       visit admin_order_path(1)
       click_button 'Add Items'
-      ap Dom::ProductListing::Item.find_by_name('Kale')
-      $stdin.gets
-      Dom::ProductListing::Item.find_by_name('Kale').set_order_quantity(9)
+      # ap Dom::ProductListing::Item.find_by_name('Kale')
+      # pause
+      # Dom::ProductListing::Item.find_by_name('Kale').set_order_quantity(9)
+      within('#supplierCatalog') do
+        find('.app-product-input', match: :first).set('9') # Beans
+        expect(page).to have_content('$27.00')
+      end
       click_button 'Add items and Update quantities'
-      expect(page).to have_content('Order Successfully Updated')
-      ap 'profit!'
+      expect(page).to have_content('Order successfully updated')
+      expect(page).to have_content('Beans')
     end
 
-    xcontext "then cutoff time lapses, then the buyer checks out", :js do
-      it "shows them an error" do
+    context 'then cutoff time lapses' do
+      context 'then the buyer checks out' do
+        it "shows them a past cutoff error" do
+          # Travel to a few minutes after the cutoff
+          Timecop.travel((Delivery.last.cutoff_time + 8.minutes).to_s)
+
+          choose "Pay by Purchase Order"
+          fill_in "PO Number", with: "12345"
+          checkout
+          expect(page).to have_content("Ordering for your selected pickup or delivery date ended")
+        end
+      end
+
+      it 'still permits the market manager to add to the order' do
+        choose "Pay by Purchase Order"
+        fill_in "PO Number", with: "12345"
+        checkout
+        sign_out
+
         # Travel to a few minutes after the cutoff
         Timecop.travel((Delivery.last.cutoff_time + 8.minutes).to_s)
 
-        choose "Pay by Purchase Order"
-        sleep 10
-        fill_in "PO Number", with: "12345"
-
-        checkout
-
-        expect(page).to have_content("Ordering for your selected pickup or delivery date ended")
+        sign_in_as(market_manager)
+        visit admin_order_path(1)
+        click_button 'Add Items'
+        # ap Dom::ProductListing::Item.find_by_name('Kale')
+        # pause
+        # Dom::ProductListing::Item.find_by_name('Kale').set_order_quantity(9)
+        within('#supplierCatalog') do
+          find('.app-product-input', match: :first).set('9') # Beans
+          expect(page).to have_content('$27.00')
+        end
+        click_button 'Add items and Update quantities'
+        expect(page).to have_content('Order successfully updated')
+        expect(page).to have_content('Beans')
       end
     end
   end
