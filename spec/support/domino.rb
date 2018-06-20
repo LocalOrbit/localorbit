@@ -1358,7 +1358,7 @@ module Dom
     class Item < Domino
       selector '.product-list .product-listing'
 
-      attribute :name, '.product-details .name'
+      attribute :name
 
       def order_quantity_field
         node.first('.app-product-input')
