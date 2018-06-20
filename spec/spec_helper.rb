@@ -80,6 +80,7 @@ RSpec.configure do |config|
   config.include FirePoll
   config.include CapybaraApp, webhook: true
   config.include Rack::Test::Methods, webhook: true
+  config.include PauseHelpers, type: :feature
 
   config.use_transactional_fixtures = false
 
