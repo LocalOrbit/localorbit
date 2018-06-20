@@ -1354,6 +1354,22 @@ module Dom
     end
   end
 
+  module ProductListing
+    class Item < Domino
+      selector '.product-list .product-listing'
+
+      attribute :name, '.product-details .name'
+
+      def order_quantity_field
+        node.first('.app-product-input')
+      end
+
+      def set_order_quantity(qty)
+        order_quantity_field.set(qty)
+      end
+    end
+  end
+
   module Order
     class ItemRow < Domino
       selector ".order-item-row"

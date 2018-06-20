@@ -56,29 +56,51 @@ describe "Checking Out", :js, :vcr do
     click_button "Place Order"
   end
 
-  context "user enters items into cart before cutoff, then cutoff time lapses, then the user checks out", :js do
-    it "shows them an error" do
+  context 'buyer creates an order' do
+    before do
       switch_to_subdomain(market.subdomain)
       sign_in_as(user)
 
       choose_delivery
 
-      Dom::Cart::Item.find_by_name("Bananas").set_quantity(12)
+      Dom::Cart::Item.find_by_name("Bananas").set_quantity(101)
       expect(page).to have_content("Added to cart!")
       expect(page).to_not have_content("Added to cart!")
       expect(page).to have_text("Cart 1")
 
       cart_link.node.click
+    end
 
-      # Travel to a few minutes after the cutoff
-      Timecop.travel((Delivery.last.cutoff_time + 8.minutes).to_s)
-
+    it 'permits the market manager to add to the order' do
+      ap "made it to our test!"
       choose "Pay by Purchase Order"
       fill_in "PO Number", with: "12345"
-
       checkout
+      sign_out
+      sign_in_as(market_manager)
+      visit admin_order_path(1)
+      click_button 'Add Items'
+      ap Dom::ProductListing::Item.find_by_name('Kale')
+      $stdin.gets
+      Dom::ProductListing::Item.find_by_name('Kale').set_order_quantity(9)
+      click_button 'Add items and Update quantities'
+      expect(page).to have_content('Order Successfully Updated')
+      ap 'profit!'
+    end
 
-      expect(page).to have_content("Ordering for your selected pickup or delivery date ended")
+    xcontext "then cutoff time lapses, then the buyer checks out", :js do
+      it "shows them an error" do
+        # Travel to a few minutes after the cutoff
+        Timecop.travel((Delivery.last.cutoff_time + 8.minutes).to_s)
+
+        choose "Pay by Purchase Order"
+        sleep 10
+        fill_in "PO Number", with: "12345"
+
+        checkout
+
+        expect(page).to have_content("Ordering for your selected pickup or delivery date ended")
+      end
     end
   end
 end

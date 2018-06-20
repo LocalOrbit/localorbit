@@ -179,7 +179,13 @@ class ApplicationController < ActionController::Base
     request.host == Figaro.env.domain || request.host == "app.#{Figaro.env.domain}"
   end
 
+  def adding_items_to_existing_order?
+    session[:order_id]
+  end
+
   def require_current_delivery
+    # return if adding_items_to_existing_order?
+
     if current_delivery.blank?
       # falls through to redirect
 
