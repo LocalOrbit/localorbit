@@ -1,0 +1,463 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Email template</title>
+</head>
+<body style="background: #e5e5e5; padding: 0; margin: 0;">
+  <style>
+    body {
+      padding: 0;
+      margin: 0;
+      color: #666;
+      background: #e5e5e5;
+    }
+
+    h3{
+      margin: 0;
+      color: #0a4399;
+      font-size: 18px;
+      line-height: 18px;
+    }
+    h5{ margin:0; }
+    p{
+      margin-top: 6px;
+      margin-bottom: 8px;
+      font-size:13px;
+    }
+    ul {
+      font-size: 11px;
+    }
+    ul li { padding-right: 10px; }
+
+    a {
+      color: #6e0206;
+      text-decoration: none;
+    }
+    h1 {
+      font: bolder 22px/1.5 Arial, sans-serif;
+    }
+    h2 {
+      margin: 0;
+      font: lighter 24px/1.25 Arial, sans-serif;
+    }
+    dl {
+      margin: 0;
+    }
+    dt {
+      display: inline;
+    }
+    dd {
+      display: inline;
+      margin: 0;
+      font-weight: bold;
+    }
+    th dl {
+      display: inline-block;
+      margin: 0;
+      vertical-align: middle;
+    }
+    th dt {
+      display: block;
+      color: #6e0206;
+      font: normal 18px/1.666 Arial, sans-serif;
+    }
+    th dd {
+      display: inline;
+      padding: 0;
+      margin: 0;
+      color: #575757;
+      font-size: 14px;
+    }
+    table {
+      width: 100%;
+    }
+    tfoot {
+      font-weight: bold;
+    }
+      tfoot th {
+        font-weight: bold;
+        text-align: right;
+      }
+    th {
+      font-weight: normal;
+      text-align: left;
+    }
+    div.lo_body {
+      padding: 0 0 50px;
+      color: #666;
+      background: #e5e5e5;
+      font: normal 10px Arial, sans-serif;
+      text-align: center;
+    }
+    p.lo_header {
+      font: normal 10px Arial, sans-serif;
+    }
+    div.lo_content {
+      border: solid 20px #fff;
+      max-width: 540px;
+      margin: 0 auto;
+      color: #000;
+      background: #fff;
+      font: normal 18px/1.44 Arial, sans-serif;
+      text-align: left;
+    }
+      a.lo_button {
+        display: inline-block;
+        padding: 0 8px;
+        border: solid 1px #0d3459;
+        border-top-color: #164c80;
+        border-bottom-color: #041c32;
+        border-radius: 5px;
+        box-shadow: inset 0 1px 0 rgba(255,255,255,0.5), 0 1px 0 rgba(0,0,0,0.75);
+        color: #fff;
+        background: #356797;
+        text-shadow: 0 2px 0 rgba(0,0,0,0.75);
+      }
+      a.lo_button_large {
+        padding: 10px 25px;
+        font-size: 18px;
+      }
+      a.lo_add_link {
+        font-size: 14px;
+      }
+      a.lo_visit_link {
+        display: block;
+        font-size: 12px;
+        font-weight: bold;
+        text-align: right;
+      }
+      h2.pull-left {
+        float: left;
+      }
+      h3.clear {
+        clear: both;
+      }
+      a.pull-right {
+        float: right;
+      }
+      div.lo_blockquote_wrapper {
+        position: relative;
+        padding: 25px;
+        margin: 25px 0;
+        color: #666;
+        font-size: 14px;
+      }
+        div.lo_blockquote_wrapper:before,
+        div.lo_blockquote_wrapper:after {
+          position: absolute;
+          color: #d2d2d2;
+          font: normal 62px 'Proxima Nova', Times, 'Times New Roman', serif;
+        }
+        div.lo_blockquote_wrapper:before {
+          top: 0;
+          left: 0;
+          content: "“";
+        }
+        div.lo_blockquote_wrapper:after {
+          right: 0;
+          bottom: 0;
+          content: "”";
+        }
+        div.lo_blockquote_wrapper blockquote {
+          margin: 0;
+        }
+      div.lo_call_to_action {
+        padding: 23px 23px 10px;
+        margin: 0 0 25px;
+        text-align: center;
+        color: #666;
+        background: #eee;
+        font-size: 12px;
+      }
+      img.lo_org_logo {
+        width: 120px;
+      }
+      p.lo_note {
+        font-size: 14px;
+        line-height: 2.1;
+        text-align: center;
+      }
+      p.lo_slogan {
+        color: #666;
+        font-weight: lighter;
+        text-align: right;
+      }
+      span.lo_availability {
+        font-size: 12px;
+      }
+      span.lo_hint {
+        display: block;
+        font-size: 14px;
+      }
+      h2.lo_reference_number {
+        margin-bottom: .5em;
+        color: #6e0206;
+        font-weight: bold;
+      }
+      span.lo_order_number {
+        color: #6e0206;
+        font-weight: bold;
+      }
+      table.lo_content_header {
+        width: 100%;
+      }
+    table.lo_fresh_sheet {
+      border-collapse: collapse;
+      margin: 0 0 25px;
+    }
+      table.lo_fresh_sheet tr:nth-child(odd) {
+        background: #eee;
+      }
+      table.lo_fresh_sheet td,
+      table.lo_fresh_sheet th {
+        padding: 13px;
+      }
+      table.lo_fresh_sheet td {
+        text-align: right;
+      }
+      table.lo_fresh_sheet td a {
+        font-weight: bold;
+      }
+      table.lo_fresh_sheet img {
+        width: 48px;
+        margin: 0 13px 0 0;
+        vertical-align: middle;
+      }
+    table.lo_order {
+      border-collapse: collapse;
+      font-size: 14px;
+    }
+      table.lo_order td,
+      table.lo_order th {
+        padding: 4px 10px;
+      }
+      table.lo_order th {
+        font-weight: bold;
+        line-height: 1.7;
+      }
+      table.lo_order tbody tr:nth-child(odd) {
+        background: #f7f7f7;
+      }
+      th.lo_vendor {
+        font-style: italic;
+      }
+      td.lo_currency {
+        text-align: right;
+      }
+      th.lo_currency {
+        text-align: right;
+      }
+    table.lo_steps {
+      padding: 25px;
+      margin: 25px 0;
+      background: #eee;
+    }
+      table.lo_steps td {
+        padding: 6px;
+        vertical-align: top;
+      }
+      td.lo_call_to_action {
+        text-align: center;
+      }
+      span.lo_step {
+        display: block;
+        width: 2em;
+        -webkit-border-radius: 50%;
+        -moz-border-radius: 50%;
+        border-radius: 50%;
+        color: #c7c7c7;
+        background: #fff;
+        font: bold 18px/2em Arial, sans-serif;
+        text-align: center;
+      }
+    td.lo_placed_by {
+      text-align: right;
+    }
+    div.lo_footer {
+      font-size: 12px;
+    }
+      img.lo_logo {
+        height: 45px;
+        margin: 20px 0 0;
+      }
+    div.previous_value, tr.canceled td:not(.status) {
+      text-decoration: line-through;
+    }
+    .credit-header {
+        font-weight: bold;
+    }
+    .credit-notes {
+        font-size: 12px;
+        font-style: italic;
+        font-weight: normal;
+    }
+    .product-catalog-category{
+      font-family: Arial, sans-serif;;
+      font-weight: bold;
+      font-size: 24px;
+      color: #FFF;
+      padding: 10px 20px 10px 10px;
+      border-radius: 4px;
+      margin-bottom: 10px;
+    }
+
+    .product-catalog-second-category{
+      font-family: Arial, sans-serif;
+      font-weight: bold;
+      font-size: 14px;
+      margin-top: 5px;
+      margin-bottom: 5px;
+    }
+
+    .btn {
+      font-family: Arial, sans-serif;
+      display: inline-block;
+      padding: 5px;
+      border: solid 1px #a6a6a6;
+      -webkit-border-radius: 5px;
+      -moz-border-radius: 5px;
+      border-radius: 5px;
+      background: #a6a6a6;
+      color: #ffffff;
+      cursor:pointer;
+      font-size: 12px;
+      text-align: center;
+      -webkit-appearance: none;
+      -webkit-font-smoothing: antialiased;
+      -moz-appearance: none;
+    }
+
+    <% if @market %>
+    .product-category-divider,
+    .btn--primary,
+    .btn--add,
+    .btn--save {
+      background-color: <%= @market.text_color -%>;
+      border-color: <%= @market.text_color -%>;
+    }
+    <% end %>
+
+    .btn .btn--test {
+       background-color: #a6a6a6;
+       border-color: #a6a6a6;
+     }
+
+    .row {
+      position: relative;
+      -webkit-box-sizing: border-box;
+      -moz-box-sizing: border-box;
+      box-sizing: border-box;
+    }
+
+    .product-listing {
+      background: #fff;
+      padding: 10px;
+      border-radius: 4px;
+      border: 1px solid #E0E0E0;
+      margin-bottom: 16px;
+      display: table;
+      width: 100%
+    }
+
+    .product-listing .product-image {
+      width: 75px;
+      height: 75px;
+      overflow: hidden;
+      border-radius: 4px;
+      float: left;
+      margin: 0;
+    }
+
+    .product-listing .product-description {
+      font-size: 13px;
+    }
+
+    .product-listing img {
+      width:75px;
+      height: auto;
+    }
+
+    .product-details-container{
+      display: table-cell;
+      vertical-align: top;
+      padding-right: 20px;
+      min-width: 350px;
+    }
+
+    .product-details{
+      float: left;
+      width: 57%;
+      padding-left: 3%;
+    }
+
+    .product-details-spacer{
+      display: table-cell;
+      vertical-align: middle;
+      clear: both;
+      padding-left: 20px;
+      border-left: 1px solid #eaeaea;
+    }
+    .lo_bigger_bolder{
+      font-size: 14px;
+      font-weight: 600;
+    }
+  </style>
+  <div style="padding: 0 0 50px;
+      color: #666;
+      background: #e5e5e5;
+      font: normal 10px Arial, sans-serif;
+      text-align: center;">
+    <div style="border: solid 20px #fff;
+         max-width: 540px;
+         margin: 0 auto;
+         color: #000;
+         background: #fff;
+         font: normal 18px/1.44 Arial, sans-serif;
+         text-align: left;">
+    <!-- Content Header -->
+      <% if @market %>
+      <table style="width: 100%;">
+        <tr>
+          <td>
+            <% logo = @market.logo_stored? ? @market.logo.thumb('240x240>').url : 'logo.png' %>
+            <%= image_tag logo, alt: @market.name, class: "lo_org_logo" %>
+          </td>
+          <td>
+            <% if @market.tagline.present? %>
+            <p style="color: #666;
+                font-weight: lighter;
+                text-align: right;">“<%= @market.tagline %>”</p>
+            <% end %>
+          </td>
+        </tr>
+      </table>
+      <% else %>
+      <table style="width: 100%">
+        <tr>
+          <td>
+            <%= image_tag 'logo.png', alt: "Local Orbit", class: "lo_org_logo" %>
+          </td>
+        </tr>
+      </table>
+      <% end %>
+
+      <%= yield %>
+
+      <p class="lo_note">
+        <em>For customer service please reply to this email or call <%= !@market.nil? && @market.try(:pending) == false ? @market.contact_phone : Figaro.env.support_phone_number %></em>
+      </p>
+
+    </div>
+
+    <div class="lo_footer">
+      <%= image_tag 'email/local-orbit-logo.png', alt: "Local Orbit Logo", class: 'lo_logo' %><br>
+      <strong>Powered by Local Orbit</strong><br>
+      <em class="lo_copyright">Copyright <%= Date.current.year %>. All Rights Reserved.</em><br>
+      <% if @unsubscribe_url %>
+        <em class="lo_unsubscribe">Click here to <%= link_to "Unsubscribe", @unsubscribe_url, "mc:disable-tracking" => "mc:disable-tracking"%></em>
+      <% end %>
+    </div>
+  </div>
+</body>
+</html>

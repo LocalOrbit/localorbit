@@ -437,12 +437,8 @@ class User < ActiveRecord::Base
     end
   end
 
-  def is_confirmed?
-    confirmed_at != nil
-  end
-
-  def is_invited?
-    invitation_token != nil && confirmed_at == nil
+  def reinvitable?
+    invitation_token != nil && !confirmed?
   end
 
   def attempt_set_password(params)
