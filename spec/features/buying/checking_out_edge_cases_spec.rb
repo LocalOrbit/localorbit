@@ -44,7 +44,6 @@ describe "Checking Out", :js, :vcr do
 
   before do
     Timecop.travel(DateTime.now - delivery_schedule.order_cutoff - 25.hours)
-    sign_in_as(user)
   end
 
   after do
@@ -61,10 +60,6 @@ describe "Checking Out", :js, :vcr do
     sign_in_as(market_manager)
     visit admin_order_path(1)
     click_button 'Add Items'
-    # TODO? should we figure out Domino way?
-    # ap Dom::ProductListing::Item.find_by_name('Kale')
-    # pause
-    # Dom::ProductListing::Item.find_by_name('Kale').set_order_quantity(9)
     within('#supplierCatalog') do
       find('.app-product-input', match: :first).set('9') # Beans
       expect(page).to have_content('$27.00')
