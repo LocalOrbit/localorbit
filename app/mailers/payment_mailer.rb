@@ -1,6 +1,6 @@
 class PaymentMailer < BaseMailer
-  def payment_made(recipients, payment_id)
-    @payment = Payment.find(payment_id)
+  def payment_made(recipients, payment)
+    @payment = payment
     @market  = @payment.market
 
     mail(
@@ -9,8 +9,8 @@ class PaymentMailer < BaseMailer
     )
   end
 
-  def payment_received(recipients, payment_id)
-    @payment = Payment.find(payment_id)
+  def payment_received(recipients, payment)
+    @payment = payment
     @market  = @payment.market
 
     mail(
