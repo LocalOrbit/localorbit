@@ -26,6 +26,7 @@ module LocalOrbit
     # config.i18n.load_path += Dir[Rails.root.join('my', 'locales', '*.{rb,yml}').to_s]
     # config.i18n.default_locale = :de
     Figaro.load
+
     config.action_mailer.asset_host = Figaro.env.asset_host
     config.action_mailer.default_url_options = {host: Figaro.env.domain}
 
@@ -34,8 +35,6 @@ module LocalOrbit
       DeviseController.skip_before_action :ensure_market_affiliation
       DeviseController.skip_before_action :ensure_active_organization
       DeviseController.skip_before_action :ensure_user_not_suspended
-
-
     end
 
     config.font_assets.origin = "*"
