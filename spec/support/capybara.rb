@@ -1,6 +1,6 @@
 require 'capybara/rails'
 require 'capybara/rspec'
-# require 'capybara-screenshot/rspec'
+require 'capybara-screenshot/rspec'
 
 Capybara.default_max_wait_time = (ENV['CAPYBARA_WAIT_TIME'] || 180).to_i
 

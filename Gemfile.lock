@@ -144,8 +144,8 @@ GEM
       rack (>= 1.0.0)
       rack-test (>= 0.5.4)
       xpath (>= 2.0, < 4.0)
-    capybara-screenshot (1.0.11)
-      capybara (>= 1.0, < 3)
+    capybara-screenshot (1.0.21)
+      capybara (>= 1.0, < 4)
       launchy
     capybara-slow_finder_errors (0.1.2)
       capybara (~> 2.0)
