@@ -201,7 +201,7 @@ class ApplicationController < ActionController::Base
 
   def current_delivery
     return if (current_market.blank? || current_organization.blank?) &&
-      session[:order_id].nil?
+      !adding_items_to_existing_order?
 
     # We're adding an item to an order, so use the delivery of the order
     @current_delivery ||= if adding_items_to_existing_order?
