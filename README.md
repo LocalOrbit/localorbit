@@ -33,7 +33,9 @@ See the `docs/` directory for more documentation.
 #### AWS
 
 Amazon AWS is used by the app to store images as well as transferring db backups between environments.
-Get an invitation to the AWS account and configure an API key and secret. Install the [aws cli](https://docs.aws.amazon.com/cli/latest/userguide/installing.html)(already included in Brewfile) and [configure it](https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-getting-started.html).
+1. Get an invitation to the AWS account 
+2. Configure an API key and secret
+3. [Configure the AWS cli tools](https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-getting-started.html) (which should already be installed via brew.)
 
 #### Other required services to setup
 
