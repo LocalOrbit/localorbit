@@ -149,6 +149,7 @@ group :development, :test do
   gem 'wkhtmltopdf-binary', :git => 'https://github.com/zakird/wkhtmltopdf_binary_gem.git'
   gem 'capybara'
   gem 'selenium-webdriver'
+  gem 'chromedriver-helper'
 end
 
 group :test do
