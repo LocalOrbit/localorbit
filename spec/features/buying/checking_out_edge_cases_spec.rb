@@ -7,14 +7,19 @@ describe "Checking Out", :js, :vcr do
   let!(:credit_card)  { create(:bank_account, :credit_card, bankable: buyer) }
   let!(:bank_account) { create(:bank_account, :checking, :verified, bankable: buyer) }
 
-  let!(:fulton_farms) { create(:organization, :seller, :single_location, name: "Fulton St. Farms", users:[create(:user), create(:user)]) }
+  let!(:seller) { create(:user) }
+  let!(:fulton_farms) { create(:organization, :seller, :single_location, name: "Fulton St. Farms", users:[seller, create(:user)]) }
   let!(:ada_farms){ create(:organization, :seller, :single_location, name: "Ada Farms", users: [create(:user)]) }
 
   let!(:market_manager) { create(:user) }
-  let!(:market) { create(:market, :with_addresses, organizations: [buyer, fulton_farms, ada_farms], managers: [market_manager]) }
+  let!(:market) do
+    create(:market, :with_addresses,
+           organizations: [buyer, fulton_farms, ada_farms],
+           managers: [market_manager],
+           sellers_edit_orders: true)
+  end
   let!(:delivery_schedule) { create(:delivery_schedule, :percent_fee,  order_cutoff: 24, day:1, fee:nil, market: market, day: 5, require_delivery: false, require_cross_sell_delivery: false, seller_delivery_start: "8:00 AM", seller_delivery_end: "5:00 PM", buyer_pickup_location_id: 0, buyer_pickup_start: "12:00 AM", buyer_pickup_end: "12:00 AM", market_pickup: false) }
   let!(:delivery_schedule2) { create(:delivery_schedule, :percent_fee,  order_cutoff: 24, day:2, fee:nil, market: market, day: 5, require_delivery: false, require_cross_sell_delivery: false, seller_delivery_start: "8:00 AM", seller_delivery_end: "5:00 PM", buyer_pickup_location_id: 0, buyer_pickup_start: "12:00 AM", buyer_pickup_end: "12:00 AM", market_pickup: false) }
-
 
   # Fulton St. Farms
   let!(:bananas) { create(:product, :sellable, name: "Bananas", organization: fulton_farms) }
@@ -37,7 +42,7 @@ describe "Checking Out", :js, :vcr do
   let!(:potatoes) { create(:product, :sellable, name: "Potatoes", organization: ada_farms) }
   let!(:potatoes_lot) { create(:lot, product: potatoes, quantity: 100) }
 
-  let!(:beans) { create(:product, :sellable, name: "Beans", organization: ada_farms) }
+  let!(:spinach) { create(:product, :sellable, name: "Spinach", organization: ada_farms) }
 
   def cart_link
     Dom::CartLink.first
@@ -45,43 +50,112 @@ describe "Checking Out", :js, :vcr do
 
   before do
     Timecop.travel(DateTime.now - delivery_schedule.order_cutoff - 25.hours)
-    sign_in_as(user)
   end
 
   after do
     Timecop.return
   end
 
-  def checkout
+  def checkout_with_po
+    choose "Pay by Purchase Order"
+    fill_in "PO Number", with: "12345"
     click_button "Place Order"
   end
 
-=begin
-  context "user enters items into cart before cutoff, then cutoff time lapses, then the user checks out", :js do
-    it "shows them an error" do
+  def add_to_order_as_market_manager
+    sign_in_as(market_manager)
+    visit admin_order_path(1)
+    click_button 'Add Items'
+    within('#supplierCatalog') do
+      find('.app-product-input', match: :first).set('9') # Kale
+      expect(page).to have_content('$9.00')
+    end
+    click_button 'Add items and Update quantities'
+  end
+
+  def add_to_order_as_seller
+    sign_in_as(seller)
+    visit admin_order_path(1)
+    click_button 'Add Items'
+    within('#supplierCatalog') do
+      find('.app-product-input', match: :first).set('9') # Kale
+      expect(page).to have_content('$9.00')
+    end
+    click_button 'Add items and Update quantities'
+  end
+
+  context 'buyer fills their cart' do
+    before do
       switch_to_subdomain(market.subdomain)
       sign_in_as(user)
 
       choose_delivery
 
-      Dom::Cart::Item.find_by_name("Bananas").set_quantity(12)
+      Dom::Cart::Item.find_by_name("Bananas").set_quantity(101)
       expect(page).to have_content("Added to cart!")
       expect(page).to_not have_content("Added to cart!")
       expect(page).to have_text("Cart 1")
 
       cart_link.node.click
+    end
 
-      # Travel to a few minutes after the cutoff
-      Timecop.travel((Delivery.last.cutoff_time + 8.minutes).to_s)
-      sign_in_as(user)
+    context 'then cutoff time passes, and buyer checks out' do
+      it "shows them a past cutoff error" do
+        # Travel to a few minutes after the cutoff
+        Timecop.travel((Delivery.last.cutoff_time + 8.minutes).to_s)
 
-      choose "Pay by Purchase Order"
-      fill_in "PO Number", with: "12345"
+        checkout_with_po
+        expect(page).to have_content("Ordering for your selected pickup or delivery date ended")
+      end
+    end
 
-      checkout
+    context 'then buyer checks out' do
+      before do
+        checkout_with_po
+        sign_out
+      end
 
-      expect(page).to have_content("Ordering for your selected pickup or delivery date ended")
+      it 'permits the market manager to add to the order' do
+        add_to_order_as_market_manager
+        expect(page).to have_content('Order successfully updated')
+        expect(page).to have_content('Kale')
+      end
+
+      context 'then cutoff time passes' do
+        before do
+          # Travel to a few minutes after the cutoff
+          Timecop.travel((Delivery.last.cutoff_time + 8.minutes).to_s)
+        end
+
+        it 'still permits the market manager to add to the order' do
+          add_to_order_as_market_manager
+          expect(page).to have_content('Order successfully updated')
+          expect(page).to have_content('Kale')
+        end
+      end
+
+      context 'market has seller editing enabled' do
+        context 'before cutoff passes' do
+          it 'seller can add items to order' do
+            add_to_order_as_seller
+            expect(page).to have_content('Order successfully updated')
+            expect(page).to have_content('Kale')
+          end
+        end
+
+        context 'after cutoff passes' do
+          before do
+            # Travel to a few minutes after the cutoff
+            Timecop.travel((Delivery.last.cutoff_time + 8.minutes).to_s)
+          end
+
+          it 'seller can still add items to order' do
+            add_to_order_as_seller
+            expect(page).to have_content('Order successfully updated')
+            expect(page).to have_content('Kale')
+          end
+        end
+      end
     end
   end
-=end
 end
