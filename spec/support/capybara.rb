@@ -10,7 +10,7 @@ Capybara.default_max_wait_time = (ENV['CAPYBARA_WAIT_TIME'] || 180).to_i
 client = Selenium::WebDriver::Remote::Http::Default.new
 client.read_timeout = 120 # instead of default 60, in seconds
 
-browser_options = ::Selenium::WebDriver::Chrome::Options.new()
+browser_options = Selenium::WebDriver::Chrome::Options.new()
 browser_options.args << '--headless'
 browser_options.args << '--disable-gpu'
 
