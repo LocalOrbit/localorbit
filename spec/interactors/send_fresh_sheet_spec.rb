@@ -71,7 +71,7 @@ describe SendFreshSheet do
       end
 
       it "should not send to markets users deactivated from organization" do
-        subscribed_buyer.user_organizations.first.update_column(:enabled, false)
+        UserOrganization.where(user_id: subscribed_buyer.id).update_all(enabled: false)
 
         SendFreshSheet.perform(market: market, commit: "Send to Everyone Now", note: note)
         mails = ActionMailer::Base.deliveries
