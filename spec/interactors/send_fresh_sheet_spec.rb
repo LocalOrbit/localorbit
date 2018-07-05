@@ -64,6 +64,14 @@ describe SendFreshSheet do
         expect(context.notice).to eq("Successfully sent the Fresh Sheet")
       end
 
+      it "should not send to unconfirmed users" do
+        subscribed_buyer.update_column(:confirmed_at, nil)
+        SendFreshSheet.perform(market: market, commit: "Send to Everyone Now", note: note)
+        mails = ActionMailer::Base.deliveries
+        emails = mails.map(&:to).map do |recips| recips.first end
+        expect(emails).not_to include(subscribed_buyer.email)
+      end
+
       it "should not send to inactive markets" do
         market.update_column(:active, false)
         SendFreshSheet.perform(market: market, commit: "Send to Everyone Now", note: note)

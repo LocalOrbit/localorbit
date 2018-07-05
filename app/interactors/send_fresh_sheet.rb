@@ -28,7 +28,9 @@ class SendFreshSheet
     end
 
     fresh_sheet_type = SubscriptionType.find_by(keyword: SubscriptionType::Keywords::FreshSheet)
-    User.in_market(market).
+    User.
+      where.not(confirmed_at: nil).
+      in_market(market).
       subscribed_to(fresh_sheet_type).
       uniq.
       includes(:subscriptions).
