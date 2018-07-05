@@ -22,6 +22,11 @@ class SendFreshSheet
   end
 
   def send_fresh_sheets_to_subscribed_members
+    unless market.active?
+      context[:notice] = "Provided market (#{market.name}) for fresh sheet distribution is not active."
+      return
+    end
+
     fresh_sheet_type = SubscriptionType.find_by(keyword: SubscriptionType::Keywords::FreshSheet)
     User.in_market(market).
       subscribed_to(fresh_sheet_type).

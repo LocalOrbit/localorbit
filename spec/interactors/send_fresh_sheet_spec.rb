@@ -64,10 +64,8 @@ describe SendFreshSheet do
         expect(context.notice).to eq("Successfully sent the Fresh Sheet")
       end
 
-      #TODO - this might not be correct - what does 'active' mean for markets?
-      xit "should not send to inactive markets" do
+      it "should not send to inactive markets" do
         market.update_column(:active, false)
-
         SendFreshSheet.perform(market: market, commit: "Send to Everyone Now", note: note)
         expect(ActionMailer::Base.deliveries.size).to equal(0)
       end
