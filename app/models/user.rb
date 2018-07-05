@@ -221,7 +221,11 @@ class User < ActiveRecord::Base
   end
 
   def enabled_for_organization?(org)
-    user_organizations.find_by(organization: org).try(:enabled?)
+    user_organizations.where(enabled: true, organization_id: org.id).exists?
+  end
+
+  def enabled_for_market?(market)
+    user_organizations.where(enabled: true, organization_id: market.organization_ids).exists?
   end
 
   def suspended_from_all_orgs?(market)
