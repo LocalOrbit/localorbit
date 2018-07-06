@@ -21,10 +21,8 @@ describe OrderMailer do
 
   describe "seller_confirmation" do
     before do
-      pdf = PdfResult.new(data: "data", path: "/")
-
       Audit.all.update_all(request_uuid: SecureRandom.uuid)
-      @notification = OrderMailer.seller_confirmation(order.reload, seller1, pdf, csv)
+      @notification = OrderMailer.seller_confirmation(order.reload, seller1)
     end
 
     it "delivers to all users in the organization" do
