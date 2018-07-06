@@ -13,7 +13,7 @@ class SendOrderEmails
           @pack_lists = OrdersBySellerPresenter.new(order.items, seller)
           @delivery = Delivery.find(order.delivery.id).decorate
 
-          OrderMailer.delay(priority: 10).seller_confirmation(order, seller, pdf, csv)
+          OrderMailer.delay(priority: 10).seller_confirmation(order, seller)
         end
       end
     end
