@@ -19,9 +19,9 @@ module Financials
         if users.present?
           recipients = users.map(&:pretty_email)
           if async
-            ::PaymentMailer.delay.payment_received(recipients, payment.id) 
+            ::PaymentMailer.delay.payment_received(recipients, payment)
           else
-            ::PaymentMailer.payment_received(recipients, payment.id).deliver
+            ::PaymentMailer.payment_received(recipients, payment).deliver
           end
         end
         nil
