@@ -62,7 +62,7 @@ class User < ActiveRecord::Base
 
   scope :buyers, -> { joins(:organizations).merge(Organization.buying) }
   scope :sellers, -> { joins(:organizations).merge(Organization.selling) }
-  scope :confirmed, -> {where.not(confirmed_at: nil)}
+  scope :confirmed, -> { where.not(confirmed_at: nil) }
 
   scope :in_market, ->(market) {
     market_id = case market
