@@ -10,6 +10,8 @@ class User < ActiveRecord::Base
          :recoverable, :rememberable, :trackable, :validatable,
          :confirmable, :masqueradable, :omniauthable
 
+  alias_method :is_confirmed?, :confirmed?
+
   trimmed_fields :email
 
   has_and_belongs_to_many :roles, :join_table => :users_roles
@@ -62,6 +64,7 @@ class User < ActiveRecord::Base
 
   scope :buyers, -> { joins(:organizations).merge(Organization.buying) }
   scope :sellers, -> { joins(:organizations).merge(Organization.selling) }
+  scope :confirmed, -> {where.not(confirmed_at: nil)}
 
   scope :in_market, ->(market) {
     market_id = case market
@@ -74,18 +77,6 @@ class User < ActiveRecord::Base
       where(market_organizations: {market_id: market_id}).
       merge(MarketOrganization.visible)
   }
-
-  # TODO: this needs a spec if we're to bring it in:
-  # scope :managing_market, ->(market) {
-  #   market_id = case market
-  #               when Market
-  #                 market.id
-  #               else
-  #                 market.to_i
-  #               end
-  #   joins(:managed_markets).
-  #   where(managed_markets: {market_id: market_id})
-  # }
 
   scope :subscribed_to, ->(subscription) {
     where_opts = case subscription
@@ -222,10 +213,6 @@ class User < ActiveRecord::Base
 
   def enabled_for_organization?(org)
     user_organizations.where(enabled: true, organization_id: org.id).exists?
-  end
-
-  def enabled_for_market?(market)
-    user_organizations.where(enabled: true, organization_id: market.organization_ids).exists?
   end
 
   def suspended_from_all_orgs?(market)
@@ -441,12 +428,9 @@ class User < ActiveRecord::Base
     end
   end
 
-  def is_confirmed?
-    confirmed_at != nil
-  end
 
   def is_invited?
-    invitation_token != nil && confirmed_at == nil
+    invitation_token != nil && !confirmed?
   end
 
   def attempt_set_password(params)

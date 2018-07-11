@@ -72,12 +72,6 @@ describe SendFreshSheet do
         expect(emails).not_to include(subscribed_buyer.email)
       end
 
-      it "should not send to inactive markets" do
-        market.update_column(:active, false)
-        SendFreshSheet.perform(market: market, commit: "Send to Everyone Now", note: note)
-        expect(ActionMailer::Base.deliveries.size).to equal(0)
-      end
-
       it "should not send to markets users deactivated from organization" do
         UserOrganization.where(user_id: subscribed_buyer.id).update_all(enabled: false)
 
