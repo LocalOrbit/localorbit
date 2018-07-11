@@ -64,41 +64,6 @@ describe SendFreshSheet do
         expect(context.notice).to eq("Successfully sent the Fresh Sheet")
       end
 
-      it "should not send to unconfirmed users" do
-        subscribed_buyer.update_column(:confirmed_at, nil)
-        SendFreshSheet.perform(market: market, commit: "Send to Everyone Now", note: note)
-        mails = ActionMailer::Base.deliveries
-        emails = mails.map(&:to).map do |recips| recips.first end
-        expect(emails).not_to include(subscribed_buyer.email)
-      end
-
-      it "should not send to markets users deactivated from organization" do
-        UserOrganization.where(user_id: subscribed_buyer.id).update_all(enabled: false)
-
-        SendFreshSheet.perform(market: market, commit: "Send to Everyone Now", note: note)
-        mails = ActionMailer::Base.deliveries
-        emails = mails.map(&:to).map do |recips| recips.first end
-        expect(emails).not_to include(subscribed_buyer.email)
-      end
-
-      it "should not send to subscribed users from another market" do
-        subscriber_in_other_market
-
-        SendFreshSheet.perform(market: market, commit: "Send to Everyone Now", note: note)
-        mails = ActionMailer::Base.deliveries
-        emails = mails.map(&:to).map do |recips| recips.first end
-        expect(emails).to_not contain_exactly(subscriber_in_other_market.email)
-      end
-
-      it "should not send to unsubscribed users" do
-        unsubscribed_buyer
-
-        SendFreshSheet.perform(market: market, commit: "Send to Everyone Now", note: note)
-        mails = ActionMailer::Base.deliveries
-        emails = mails.map(&:to).map do |recips| recips.first end
-        expect(emails).to_not contain_exactly(unsubscribed_buyer.email)
-      end
-
       it "should have valid data in the emails" do
         SendFreshSheet.perform(market: market, commit: "Send to Everyone Now", note: note)
         mails = ActionMailer::Base.deliveries
@@ -107,6 +72,54 @@ describe SendFreshSheet do
 
         mail2 = mails.select do |m| m.to.first == subscribed_supplier.email end.first
         assert_fresh_sheet_sent_to mail2, market, subscribed_supplier.email, note
+      end
+
+      context "when there unconfirmed users for the market" do
+        before :each do
+          subscribed_buyer.update_column(:confirmed_at, nil)
+        end
+        it "should not send to unconfirmed users" do
+          SendFreshSheet.perform(market: market, commit: "Send to Everyone Now", note: note)
+          mails = ActionMailer::Base.deliveries
+          emails = mails.map(&:to).map do |recips| recips.first end
+          expect(emails).not_to include(subscribed_buyer.email)
+        end
+      end
+
+      context "when some market users have been deactivated from an organization" do
+        before :each do
+          UserOrganization.where(user_id: subscribed_buyer.id).update_all(enabled: false)
+        end
+        it "should not send to markets users deactivated from organization" do
+          SendFreshSheet.perform(market: market, commit: "Send to Everyone Now", note: note)
+          mails = ActionMailer::Base.deliveries
+          emails = mails.map(&:to).map do |recips| recips.first end
+          expect(emails).not_to include(subscribed_buyer.email)
+        end
+      end
+
+      context "there exists users in other markets" do
+        before :each do
+          subscriber_in_other_market
+        end
+        it "should not send to users only subscribed to other markets" do
+          SendFreshSheet.perform(market: market, commit: "Send to Everyone Now", note: note)
+          mails = ActionMailer::Base.deliveries
+          emails = mails.map(&:to).map do |recips| recips.first end
+          expect(emails).to_not contain_exactly(subscriber_in_other_market.email)
+        end
+      end
+
+      context "there are unsubscribed users in the market" do
+        before :each do
+          unsubscribed_buyer
+        end
+        it "should not send to unsubscribed users" do
+          SendFreshSheet.perform(market: market, commit: "Send to Everyone Now", note: note)
+          mails = ActionMailer::Base.deliveries
+          emails = mails.map(&:to).map do |recips| recips.first end
+          expect(emails).to_not contain_exactly(unsubscribed_buyer.email)
+        end
       end
     end
   end
