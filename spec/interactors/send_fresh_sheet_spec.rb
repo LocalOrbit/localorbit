@@ -37,20 +37,6 @@ describe SendFreshSheet do
       user
     end
 
-    let(:unsubscribed_buyer) do
-      user = create(:user, :buyer)
-      create(:organization, :buyer, users:[user], markets:[market])
-      user.subscribe_to(fresh_subscription)
-      user.unsubscribe_from(fresh_subscription)
-      user
-    end
-
-    let(:subscriber_in_other_market) do
-      user = create(:user, :buyer)
-      create(:organization, :buyer, users:[user], markets:[create(:market)])
-      user.subscribe_to(fresh_subscription)
-      user
-    end
 
     context "sends Fresh Sheet emails to all users in the given market who subscribe to Fresh Sheets" do
       before :each do
@@ -99,8 +85,11 @@ describe SendFreshSheet do
       end
 
       context "there exists users in other markets" do
-        before :each do
-          subscriber_in_other_market
+        let!(:subscriber_in_other_market) do
+          user = create(:user, :buyer)
+          create(:organization, :buyer, users:[user], markets:[create(:market)])
+          user.subscribe_to(fresh_subscription)
+          user
         end
         it "should not send to users only subscribed to other markets" do
           SendFreshSheet.perform(market: market, commit: "Send to Everyone Now", note: note)
@@ -111,8 +100,12 @@ describe SendFreshSheet do
       end
 
       context "there are unsubscribed users in the market" do
-        before :each do
-          unsubscribed_buyer
+        let!(:unsubscribed_buyer) do
+          user = create(:user, :buyer)
+          create(:organization, :buyer, users:[user], markets:[market])
+          user.subscribe_to(fresh_subscription)
+          user.unsubscribe_from(fresh_subscription)
+          user
         end
         it "should not send to unsubscribed users" do
           SendFreshSheet.perform(market: market, commit: "Send to Everyone Now", note: note)
