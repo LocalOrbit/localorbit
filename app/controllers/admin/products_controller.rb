@@ -52,7 +52,7 @@ module Admin
     end
 
     def new
-      @product = Product.new(use_simple_inventory: true)
+      @product = Product.new(use_simple_inventory: true).decorate
       @supplier_products = nil
       #@supplier_products << Product.for_market_id(current_market.id).visible.order("products.name").first
 
