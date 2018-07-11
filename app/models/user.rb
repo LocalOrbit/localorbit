@@ -10,8 +10,6 @@ class User < ActiveRecord::Base
          :recoverable, :rememberable, :trackable, :validatable,
          :confirmable, :masqueradable, :omniauthable
 
-  alias_method :is_confirmed?, :confirmed?
-
   trimmed_fields :email
 
   has_and_belongs_to_many :roles, :join_table => :users_roles
