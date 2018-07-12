@@ -75,7 +75,7 @@ module Dom
     selector ".inventory-table tbody tr.lot"
 
     def click_number
-      node.find(".number .edit-trigger").trigger(:click)
+      node.find(".number .edit-trigger").click
     end
 
     def number
@@ -1267,11 +1267,11 @@ module Dom
     end
 
     def click_pricing
-      node.find(".pricing .popup-toggle").trigger(:click)
+      node.find(".pricing .popup-toggle").click
     end
 
     def click_stock
-      node.find(".stock .popup-toggle").trigger(:click)
+      node.find(".stock .popup-toggle").click
     end
   end
 
