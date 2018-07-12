@@ -155,6 +155,7 @@ describe "Editing advanced pricing", js: true do
     it "allows the user to delete one of multiple prices" do
       expect(Dom::PricingRow.count).to be(2)
       first(".view-cell .delete").click
+      page.driver.browser.switch_to.alert.accept
 
       expect(page).to have_content("Successfully removed price")
       expect(Dom::PricingRow.count).to be(1)
