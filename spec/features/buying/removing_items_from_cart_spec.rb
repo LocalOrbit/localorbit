@@ -85,12 +85,14 @@ describe "Removing items" do
 
     it "by clear the entire cart" do
       click_link "Cancel Order"
+      page.driver.browser.switch_to.alert.accept
 
       expect(cart_link.count).to have_content("0")
     end
 
     it "by clicking an items delete link" do
-      kale_item.remove_link.trigger("click")
+      kale_item.remove_link.click
+
       expect(Dom::CartLink.first).to have_content("Removed from cart!")
 
       expect(cart_link.count).to have_content("2")
