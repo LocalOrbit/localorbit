@@ -106,6 +106,7 @@ feature "sending invoices" do
   def click_mark_selected_invoiced
     suppressing_new_tab do
       click_button "Mark Selected Invoiced"
+      page.driver.browser.switch_to.alert.accept
       expect(internal_server_error_message).to be_nil
     end
   end

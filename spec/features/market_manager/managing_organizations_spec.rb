@@ -287,6 +287,7 @@ describe "A Market Manager", :vcr do
         expect(seller_row.market).to eql(market.name)
 
         seller_row.click_delete
+        page.driver.browser.switch_to.alert.accept
       end
 
       it "removes the organization from the organizations list" do
@@ -321,13 +322,13 @@ describe "A Market Manager", :vcr do
         expect(seller_row).to_not be_nil
 
         seller_row.click_delete
-        sleep(2)
       end
 
       context "and the market manager only manages one of the markets" do
         let!(:market_manager) { create(:user, :market_manager, managed_markets: [market]) }
 
         it "will not prompt to select a market" do
+          page.driver.browser.switch_to.alert.accept
           expect(page).to have_content("Removed Holland Farms from #{market.name}")
           seller_row = Dom::Admin::OrganizationRow.find_by_name("Holland Farms")
           expect(seller_row).to be_nil
