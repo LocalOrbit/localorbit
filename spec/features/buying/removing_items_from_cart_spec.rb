@@ -129,7 +129,7 @@ describe "Removing items" do
     end
 
     it "by clicking an items delete link" do
-      kale_item.remove_link.trigger("click")
+      kale_item.remove_link.click
       expect(Dom::CartLink.first).to have_content("Removed from cart!")
       expect(Dom::CartLink.first).to_not have_content("Removed from cart!")
 
