@@ -5,7 +5,7 @@ class OrderMailer < BaseMailer
     @market = order.market
     @order = BuyerOrder.new(order)
 
-    to_list =  order.organization.users.map { |u| u.enabled_for_organization?(order.organization) && u.is_confirmed? && !u.pretty_email.nil? ? u.pretty_email : nil}
+    to_list =  order.organization.users.map { |u| u.enabled_for_organization?(order.organization) && u.confirmed? && !u.pretty_email.nil? ? u.pretty_email : nil}
     compact_list = to_list.compact
 
     if !compact_list.blank?
@@ -16,19 +16,14 @@ class OrderMailer < BaseMailer
     end
   end
 
-  def seller_confirmation(order, seller, pdf, csv)
+  def seller_confirmation(order, seller)
     return if order.market.is_consignment_market?
 
     @market = order.market
     @order = SellerOrder.new(order, seller) # Selling users organizations only see
     @seller = seller
 
-    if pdf
-      attachments["packing_list.pdf"] = {mime_type: "application/pdf", content: pdf.data}
-      attachments["packing_list.csv"] = {mime_type: "application/csv", content: csv}
-    end
-
-    to_list = seller.users.map { |u| u.enabled_for_organization?(seller) && u.is_confirmed? && !u.pretty_email.nil? ? u.pretty_email : nil}
+    to_list = seller.users.map { |u| u.enabled_for_organization?(seller) && u.confirmed? && !u.pretty_email.nil? ? u.pretty_email : nil}
     compact_list = to_list.compact
 
     if !compact_list.blank?
@@ -60,7 +55,7 @@ class OrderMailer < BaseMailer
 
     attachments["invoice.pdf"] = {mime_type: "application/pdf", content: @order.invoice_pdf.try(:data)}
 
-    to_list = @order.organization.users.map { |u| u.enabled_for_organization?(@order.organization) && u.is_confirmed? ? u.pretty_email : nil}
+    to_list = @order.organization.users.map { |u| u.enabled_for_organization?(@order.organization) && u.confirmed? ? u.pretty_email : nil}
     compact_list = to_list.compact
 
     if !compact_list.blank?
@@ -77,7 +72,7 @@ class OrderMailer < BaseMailer
     @market = order.market
     @order = BuyerOrder.new(order) # Market Managers should see all items
 
-    to_list = order.organization.users.map { |u| u.enabled_for_organization?(order.organization) && u.is_confirmed? ? u.pretty_email : nil}
+    to_list = order.organization.users.map { |u| u.enabled_for_organization?(order.organization) && u.confirmed? ? u.pretty_email : nil}
 
     mail(
       to: to_list,
@@ -92,7 +87,7 @@ class OrderMailer < BaseMailer
     @market = order.market
     @order = BuyerOrder.new(order) # Market Managers should see all items
 
-    to_list = order.organization.users.map { |u| u.enabled_for_organization?(order.organization) && u.is_confirmed? ? u.pretty_email : nil}
+    to_list = order.organization.users.map { |u| u.enabled_for_organization?(order.organization) && u.confirmed? ? u.pretty_email : nil}
 
     mail(
         to: to_list,
@@ -101,17 +96,12 @@ class OrderMailer < BaseMailer
     )
   end
 
-  def seller_order_updated(order, seller, pdf, csv)
+  def seller_order_updated(order, seller)
     return if order.market.is_consignment_market?
 
     @market = order.market
     @order = SellerOrder.new(order, seller) # Selling users organizations only see
     @seller = seller
-
-    if pdf
-      attachments["packing_list.pdf"] = {mime_type: "application/pdf", content: pdf.data}
-      attachments["packing_list.csv"] = {mime_type: "application/csv", content: csv}
-    end
 
     to_list = seller.users.map { |u| u.enabled_for_organization?(seller) ? u.pretty_email : nil}
 

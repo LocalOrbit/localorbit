@@ -1,0 +1,6 @@
+en:
+  payment_mailer:
+    payment_made:
+      subject: You Have Made a Payment
+    payment_received:
+      subject: You Have Received a Payment
