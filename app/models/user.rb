@@ -62,6 +62,7 @@ class User < ActiveRecord::Base
 
   scope :buyers, -> { joins(:organizations).merge(Organization.buying) }
   scope :sellers, -> { joins(:organizations).merge(Organization.selling) }
+  scope :confirmed, -> { where.not(confirmed_at: nil) }
 
   scope :in_market, ->(market) {
     market_id = case market
@@ -71,21 +72,9 @@ class User < ActiveRecord::Base
                   market.to_i
                 end
     joins(organizations: :market_organizations).
-    where(market_organizations: {market_id: market_id}).
-    merge(MarketOrganization.visible)
+      where(market_organizations: {market_id: market_id}).
+      merge(MarketOrganization.visible)
   }
-
-  # TODO: this needs a spec if we're to bring it in:
-  # scope :managing_market, ->(market) {
-  #   market_id = case market
-  #               when Market
-  #                 market.id
-  #               else
-  #                 market.to_i
-  #               end
-  #   joins(:managed_markets).
-  #   where(managed_markets: {market_id: market_id})
-  # }
 
   scope :subscribed_to, ->(subscription) {
     where_opts = case subscription
@@ -221,7 +210,7 @@ class User < ActiveRecord::Base
   end
 
   def enabled_for_organization?(org)
-    user_organizations.find_by(organization: org).try(:enabled?)
+    user_organizations.where(enabled: true, organization_id: org.id).exists?
   end
 
   def suspended_from_all_orgs?(market)

@@ -1,6 +1,6 @@
 brew 'graphviz'
 brew 'postgresql'
-brew 'phantomjs'
 brew 'imagemagick'
 brew 'yarn'
 brew 'ghostscript'
+brew 'awscli'

@@ -1,26 +1,27 @@
-require "capybara/rspec"
-require "capybara/rails"
-require "capybara/poltergeist"
+require 'capybara/rails'
+require 'capybara/rspec'
 require 'capybara-screenshot/rspec'
 
-Capybara.register_driver :poltergeist do |app|
-  Capybara::Poltergeist::Driver.new(app,
-                                    timeout: 120,
-                                    inspector: false,
-                                    debug: false,
-                                    js_errors: false,
-                                    phantomjs_options: ['--debug=false', '--ssl-protocol=TLSv1'])
-end
-
-Capybara.javascript_driver = :poltergeist
-
-#Selenium::WebDriver::Firefox::Binary.path='/Applications/FirefoxDeveloperEdition.app/Contents/MacOS/firefox-bin'
-#Capybara.javascript_driver = :selenium
-
-Capybara.default_max_wait_time = (ENV["CAPYBARA_WAIT_TIME"] || 180).to_i
+Capybara.default_max_wait_time = (ENV['CAPYBARA_WAIT_TIME'] || 180).to_i
 
 # hidden elements are ignored by default
 # Capybara.ignore_hidden_elements = true
+
+client = Selenium::WebDriver::Remote::Http::Default.new
+client.read_timeout = 120 # instead of default 60, in seconds
+
+browser_options = Selenium::WebDriver::Chrome::Options.new()
+browser_options.args << '--headless'
+browser_options.args << '--disable-gpu'
+
+Capybara.register_driver :selenium_chrome_headless do |app|
+  Capybara::Selenium::Driver.new(app,
+                                 http_client: client,
+                                 browser: :chrome,
+                                 options: browser_options)
+end
+
+Capybara.javascript_driver = :selenium_chrome_headless
 
 #RSpec.configure do |config|
 #  config.before(:each, js: true) do

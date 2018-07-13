@@ -9,7 +9,7 @@ ruby '2.1.2'
 
 gem 'rails', '~> 4.1.11'
 
-gem 'pg'
+gem 'pg', '~> 0.21.0'
 
 # Assets
 gem 'sass-rails',   '~> 4.0.0'
@@ -149,6 +149,7 @@ group :development, :test do
   gem 'wkhtmltopdf-binary', :git => 'https://github.com/zakird/wkhtmltopdf_binary_gem.git'
   gem 'capybara'
   gem 'selenium-webdriver'
+  gem 'chromedriver-helper'
 end
 
 group :test do

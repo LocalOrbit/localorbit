@@ -93,6 +93,9 @@ Rails.application.configure do
     authentication: :cram_md5
   }
 
-  config.react.variant = :production
+  # Enable mailer previews on staging
+  config.action_mailer.show_previews = true
+  config.action_mailer.preview_path = "#{Rails.root}/spec/mailers/previews"
 
+  config.react.variant = :production
 end

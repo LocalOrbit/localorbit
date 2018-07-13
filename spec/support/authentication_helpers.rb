@@ -48,7 +48,7 @@ module AuthenticationHelpers
     jar.delete(cookie_name)
   end
 
-  
+
 end
 
 RSpec.configure do |config|
