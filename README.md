@@ -1,3 +1,5 @@
+test semaphore
+
 # Local Orbit
 
 * **[Staging Deploy (Preview)](https://github.com/LocalOrbit/localorbit/compare/staging...master)**
@@ -33,7 +35,7 @@ See the `docs/` directory for more documentation.
 #### AWS
 
 Amazon AWS is used by the app to store images as well as transferring db backups between environments.
-1. Get an invitation to the AWS account 
+1. Get an invitation to the AWS account
 2. Configure an API key and secret
 3. [Configure the AWS cli tools](https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-getting-started.html) (which should already be installed via brew.)
 
