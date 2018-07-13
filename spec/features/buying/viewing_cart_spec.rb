@@ -342,7 +342,7 @@ describe "Viewing the cart", js:true do
 
       choose "Pay by Purchase Order"
 
-      expect(page.find('#place-order-button')[:disabled]).to be false
+      expect(page.find('#place-order-button')[:disabled]).to be_falsey
     end
 
     context "credit cards" do
