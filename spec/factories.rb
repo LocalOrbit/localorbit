@@ -180,7 +180,7 @@ FactoryBot.define do
     tagline                'Connecting Farm to Market'
     timezone               'US/Eastern'
     contact_name           'Jill Smith'
-    contact_email          'jill@smith.com'
+    sequence(:contact_email) {|n| "jill@localorbittestdomain#{n}.com"}
     contact_phone          '616-222-2222'
     policies               'Do no harm...'
     profile                'Market profile...'
