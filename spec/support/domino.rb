@@ -63,7 +63,7 @@ module Dom
     end
 
     def click
-      node.trigger("click")
+      node.click
     end
 
     def inputs
@@ -209,7 +209,7 @@ module Dom
     end
 
     def click_next
-      node.find('a[title="Next"]').trigger("click")
+      node.find('a[title="Next"]').click
     end
 
     def click_day(day)
@@ -307,7 +307,7 @@ module Dom
         end
 
         def pay_all_now
-          node.find_button("Record Payment").trigger("click")
+          node.find_button("Record Payment").click
         end
 
         def pay_selected
@@ -1145,7 +1145,7 @@ module Dom
       end
 
       def remove!
-        node.find(".icon-clear").trigger("click")
+        node.find(".icon-clear").click
       end
     end
 
