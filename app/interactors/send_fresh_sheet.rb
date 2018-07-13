@@ -23,7 +23,9 @@ class SendFreshSheet
 
   def send_fresh_sheets_to_subscribed_members
     fresh_sheet_type = SubscriptionType.find_by(keyword: SubscriptionType::Keywords::FreshSheet)
-    User.in_market(market).
+    User.
+      confirmed.
+      in_market(market).
       subscribed_to(fresh_sheet_type).
       uniq.
       includes(:subscriptions).
