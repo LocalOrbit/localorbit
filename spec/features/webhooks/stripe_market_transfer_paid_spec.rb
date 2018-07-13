@@ -18,6 +18,7 @@ describe "stripe market transfer.paid event", vcr: true, webhook: true do
 
   # FIXME see LO-1074: when legacy cassette is deleted this fails, event has changed to transfer.created,
   #   and lo.order_id metadata is missing
+  # NOTE: we are not currently subscribed to this event on production!
   it "creates a payment and emails the market's managers" do
     expect(find_payments.count).to eq 0
     post '/webhooks/stripe', JSON.parse(File.read('spec/features/webhooks/transfer.paid.json'))
