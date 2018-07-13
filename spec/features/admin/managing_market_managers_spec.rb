@@ -111,6 +111,7 @@ describe "Admin Managing Market Managers" do
 
       manager_row = Dom::Admin::UserRow.find_by_email(user2.email)
       manager_row.remove!
+      page.driver.browser.switch_to.alert.accept
 
       expect(page).to_not have_text(user2.email)
     end
