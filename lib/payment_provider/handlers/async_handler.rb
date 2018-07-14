@@ -12,8 +12,9 @@ module PaymentProvider
 
       def call(event)
         ::Rails::logger.info("WEBHOOK: #{event.type} CONNECT: #{event.try(:account)} LIVEMODE: #{event.livemode}")
+        raise RuntimeError if event.livemode && !Rails.env.production?
         handler = HANDLER_IMPLS[event.type]
-        return unless handler && event.livemode && Rails.env.production?
+        return unless handler
 
         params = handler.extract_job_params(event)
         Rails.logger.info "Enqueueing '#{event.type}' event. Stripe Event id: '#{event.id}'"
