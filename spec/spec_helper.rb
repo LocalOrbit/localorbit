@@ -43,6 +43,14 @@ module CapybaraApp
   def app; Capybara.app; end
 end
 
+def temporarily_find_hidden_elements
+  ap "setting Capybara.ignore_hidden_elements = false "
+  Capybara.ignore_hidden_elements = false
+  yield
+  "setting Capybara.ignore_hidden_elements = true"
+  Capybara.ignore_hidden_elements = true
+end
+
 RSpec.configure do |config|
   # ## Mock Framework
   #
@@ -98,5 +106,3 @@ RSpec.configure do |config|
     ActionMailer::Base.deliveries.clear
   end
 end
-
-
