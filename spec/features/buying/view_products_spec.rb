@@ -46,7 +46,7 @@ feature "Viewing products" do
 
   scenario "list of products" do
     sign_in_as(user)
-    
+
     products = Dom::Product.all
 
     within(".table-summary") do
@@ -513,10 +513,11 @@ feature "Viewing products" do
           #expect(select).to have_option(buyer_org.name)
           #expect(select).to have_option(buyer_org2.name)
           #expect(select).to_not have_option(buyer_org_outside_market.name)
-
-          select buyer_org.name, from: "Buyer", visible: false
-
-          click_button "Select Buyer"
+          temporarily_find_hidden_elements do
+            ap "select buyer name"
+            select buyer_org.name, from: "Buyer", visible: false
+            click_button "Select Buyer"
+          end
 
           expect(page).to have_content("Please choose a pick up or delivery date")
 
