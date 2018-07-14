@@ -11,8 +11,9 @@ module PaymentProvider
       # 'customer.subscription.created' => PaymentProvider::Handlers::SubscriptionHandler,
 
       def call(event)
+        raise RuntimeError if event.livemode && !Rails.env.production?
         handler = HANDLER_IMPLS[event.type]
-        return unless handler && event.livemode && Rails.env.production?
+        return unless handler
 
         params = handler.extract_job_params(event)
         Rails.logger.info "Enqueueing '#{event.type}' event. Stripe Event id: '#{event.id}'"
