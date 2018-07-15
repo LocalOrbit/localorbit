@@ -386,11 +386,11 @@ describe "Managing Markets" do
     it "can mark an active market as inactive" do
       visit "/admin/markets/#{market.id}"
 
-      expect(find(:xpath, "//input[@id='market_active']").value).to eq("false")
+      expect(find(:xpath, "//input[@id='market_active']", visible: false).value).to eq("false")
 
       click_button "Deactivate"
 
-      expect(find(:xpath, "//input[@id='market_active']").value).to eq("true")
+      expect(find(:xpath, "//input[@id='market_active']", visible: false).value).to eq("true")
     end
 
     it "can mark an inactive market as active" do
@@ -398,10 +398,10 @@ describe "Managing Markets" do
 
       visit "/admin/markets/#{market.id}"
 
-      expect(find(:xpath, "//input[@id='market_active']").value).to eq("true")
+      expect(find(:xpath, "//input[@id='market_active']", visible: false).value).to eq("true")
       click_button "Activate"
 
-      expect(find(:xpath, "//input[@id='market_active']").value).to eq("false")
+      expect(find(:xpath, "//input[@id='market_active']", visible: false).value).to eq("false")
     end
 
     it "can update the market fee structure" do

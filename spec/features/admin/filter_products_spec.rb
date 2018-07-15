@@ -1,6 +1,11 @@
-require "spec_helper"
+require 'spec_helper'
+require 'support/multiselect_helpers'
 
-describe "Filter products", :js do
+RSpec.configure do |c|
+  c.include MultiselectHelpers
+end
+
+describe 'Filter products', :js do
   let!(:empty_market) { create(:market, :with_delivery_schedule) }
   let!(:market1)      { create(:market, :with_delivery_schedule) }
   let!(:org1)         { create(:organization, :seller, markets: [market1]) }
@@ -14,65 +19,6 @@ describe "Filter products", :js do
   let!(:org4)         { create(:organization, :seller, markets: [market2]) }
   let!(:org4_product) { create(:product, :sellable, organization: org4) }
   let!(:org5)         { create(:organization, :buyer, markets: [market2]) }
-
-  context "as admin" do
-    let!(:user) { create(:user, :admin) }
-
-    before do
-      sign_in_as(user)
-      visit admin_products_path
-    end
-
-    context "by market" do
-
-      it "shows all products when unfiltered" do
-        expect(page).to have_content(org1_product.name)
-        expect(page).to have_content(org2_product.name)
-        expect(page).to have_content(org3_product.name)
-        expect(page).to have_content(org4_product.name)
-      end
-
-      it "shows products for only the selected market" do
-        select market1.name, from: "q[delivery_schedules_market_id_in][]", visible: false
-        click_button "Search"
-
-        expect(page).to have_content(org1_product.name)
-        expect(page).to have_content(org2_product.name)
-        expect(page).to_not have_content(org3_product.name)
-        expect(page).to_not have_content(org4_product.name)
-
-        unselect market1.name, from: "q[delivery_schedules_market_id_in][]", visible: false
-
-      end
-    end
-
-    context "by organization" do
-      it "only show sellers for filtering" do
-        expect(page).to_not have_select("q[organization_id_in][]", with_options: [org5.name])
-      end
-
-      it "shows all products when unfiltered" do
-        expect(page).to have_content(org1_product.name)
-        expect(page).to have_content(org2_product.name)
-        expect(page).to have_content(org3_product.name)
-        expect(page).to have_content(org4_product.name)
-      end
-
-      it "shows products for only the selected organization" do
-        select org1.name, from: "q[organization_id_in][]", visible: false
-        click_button "Search"
-
-        expect(page).to have_content(org1_product.name)
-
-        expect(page).to_not have_content(org2_product.name)
-        expect(page).to_not have_content(org3_product.name)
-        expect(page).to_not have_content(org4_product.name)
-
-        unselect org1.name, from: "q[organization_id_in][]", visible: false
-
-      end
-    end
-  end
 
   context "as multi-market manager", :js do
     let!(:user) { create(:user, :market_manager, managed_markets: [market1, market2, empty_market]) }
@@ -92,7 +38,7 @@ describe "Filter products", :js do
       end
 
       it "shows products for only the selected market" do
-        select market1.name, from: "q[delivery_schedules_market_id_in][]", visible: false
+        select_option_on_multiselect('#filter-options-market', market1.name)
         click_button "Search"
 
         expect(page).to have_content(org1_product.name)
@@ -101,8 +47,7 @@ describe "Filter products", :js do
         expect(page).to_not have_content(org3_product.name)
         expect(page).to_not have_content(org4_product.name)
 
-        unselect market1.name, from: "q[delivery_schedules_market_id_in][]", visible: false
-
+        unselect_option_on_multiselect('#filter-options-market', market1.name)
       end
     end
 
@@ -114,8 +59,8 @@ describe "Filter products", :js do
         expect(page).to have_content(org4_product.name)
       end
 
-      it "shows products for only the selected organization" do
-        select org1.name, from: "q[organization_id_in][]", visible: false
+      it "shows products for only the selected supplier" do
+        select_option_on_multiselect('#filter-options-supplier', org1.name)
         click_button "Search"
 
         expect(page).to have_content(org1_product.name)
@@ -124,8 +69,7 @@ describe "Filter products", :js do
         expect(page).to_not have_content(org3_product.name)
         expect(page).to_not have_content(org4_product.name)
 
-        unselect org1.name, from: "q[organization_id_in][]", visible: false
-
+        unselect_option_on_multiselect('#filter-options-supplier', org1.name)
       end
     end
   end
@@ -153,15 +97,13 @@ describe "Filter products", :js do
       end
 
       it "shows products for only the selected organization" do
-        select org1.name, from: "q[organization_id_in][]", visible: false
+        select_option_on_multiselect('#filter-options-supplier', org1.name)
         click_button "Search"
 
         expect(page).to have_content(org1_product.name)
-
         expect(page).to_not have_content(org2_product.name)
 
-        unselect org1.name, from: "q[organization_id_in][]", visible: false
-
+        unselect_option_on_multiselect('#filter-options-supplier', org1.name)
       end
     end
   end
@@ -191,15 +133,13 @@ describe "Filter products", :js do
       end
 
       it "shows products for only the selected organization" do
-        select org1.name, from: "q[organization_id_in][]", visible: false
+        select_option_on_multiselect('#filter-options-supplier', org1.name)
         click_button "Search"
 
         expect(page).to have_content(org1_product.name)
-
         expect(page).to_not have_content(org2_product.name)
 
-        unselect org1.name, from: "q[organization_id_in][]", visible: false
-
+        unselect_option_on_multiselect('#filter-options-supplier', org1.name)
       end
     end
   end
