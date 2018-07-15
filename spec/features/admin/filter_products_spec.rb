@@ -1,9 +1,4 @@
 require 'spec_helper'
-require 'support/multiselect_helpers'
-
-RSpec.configure do |c|
-  c.include MultiselectHelpers
-end
 
 describe 'Filter products', :js do
   let!(:empty_market) { create(:market, :with_delivery_schedule) }
