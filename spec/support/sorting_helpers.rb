@@ -1,5 +1,5 @@
 def click_header(text)
-  find(:xpath, "//table[contains(@class, 'js-sticky')]/thead/tr/th[@data-column='#{text}']").click
+  find(:xpath, "//table[contains(@class, 'sortable')]/thead/tr/th[@data-column='#{text}']").click
 end
 
 def click_header_twice(text)
