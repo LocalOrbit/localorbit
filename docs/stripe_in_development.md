@@ -57,3 +57,29 @@ Although the above steps ensure your development seed's markets are configured w
 1. With _Viewing test data_ still enabled, click _Add redirect URI..._
 1. Enter `http://app.localtest.me:3000/users/auth/stripe_connect/callback` and hit Save.
 1. Now if you create a new Market locally, you can test the complete UX from the Market > Stripe tab.
+
+## How to set up webhook testing
+
+We use the [`stripe-event`](https://github.com/integrallis/stripe_event) gem with an
+ endpoint configured at `/webhooks/stripe` to receive event notifications from
+ [Stripe webhooks](https://stripe.com/docs/webhooks).
+
+We can use [ngrok](https://ngrok.com/) to map a development domain to the
+webhook receiver in your stripe developer account settings.
+
+To use ngrok, create an account, then configure it with a [reserved domain](https://ngrok.com/docs#custom-domains)
+, and setup the CNAME for app.yourdevdomain.com.
+
+Then in a terminal type:
+
+    ngrok http -region=us -hostname=app.yourdevdomain.com 3000
+
+and add your webhooks url to your own development
+[Stripe webhook settings](https://dashboard.stripe.com/account/webhooks)
+Eg.
+
+    http://app.yourdevdomain.com/webhooks/stripe
+
+and then open the ngrok web interface to inspect the requests:
+
+    http://127.0.0.1:4040/http/in
