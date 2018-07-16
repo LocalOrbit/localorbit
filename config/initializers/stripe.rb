@@ -1,11 +1,7 @@
-Rails.configuration.stripe = {
-  :publishable_key => ENV['STRIPE_PUBLISHABLE_KEY'],
-  :secret_key      => ENV['STRIPE_SECRET_KEY']
-}
-
-Stripe.api_key = Rails.configuration.stripe[:secret_key]
+Stripe.api_key = Figaro.env.stripe_secret_key
 Stripe.api_version = '2015-04-07'
 
+StripeEvent.signing_secret = Figaro.env.stripe_signing_secret
 StripeEvent.configure do |events|
   events.all PaymentProvider::Handlers::AsyncHandler.new
 end
