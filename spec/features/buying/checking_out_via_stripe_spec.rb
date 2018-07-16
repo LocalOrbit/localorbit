@@ -86,14 +86,15 @@ describe "Checking Out using Stripe payment provider", :js do
 
   context "via credit card" do
 
-    let!(:stripe_customer) { Stripe::Customer.create(
+    let!(:stripe_customer) do
+      Stripe::Customer.create(
         description: buyer.name,
         metadata: {
           "lo.entity_id" => buyer.id,
           "lo.entity_type" => 'organization'
         }
       )
-    }
+    end
 
     let!(:stripe_card_token) { create_stripe_token() }
 
