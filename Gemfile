@@ -61,7 +61,7 @@ gem 'postgres_ext'
 gem 'rack-canonical-host'
 gem 'ransack'
 gem 'simpleidn'
-gem 'stripe_event'
+gem 'stripe_event', '1.9.1'
 gem 'font-awesome-rails'
 gem 'wysiwyg-rails'
 gem 'kiba'                      # ETL Tool
