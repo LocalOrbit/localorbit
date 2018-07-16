@@ -13,6 +13,7 @@ UPLOADS_REGION: <S3 upload region>
 TWITTER_WIDGET_ID: 'create-me-at-twitter-dot-com'
 STRIPE_PUBLISHABLE_KEY: <stripe publishable key (test on local system)>
 STRIPE_SECRET_KEY: <stripe secret key (test on local system)>
+STRIPE_SIGNING_SECRET: <stripe signing secretSTRIPE_SIGNING_SECRET>
 STRIPE_CLIENT_ID: <stripe client key (test on local system)>
 FROALA_KEY: <api key for froala>
 USE_STRIPE_STANDALONE_ACCOUNTS: 'true'
