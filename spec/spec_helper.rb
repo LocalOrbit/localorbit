@@ -94,6 +94,7 @@ RSpec.configure do |config|
   config.include Rack::Test::Methods, webhook: true
   config.include PauseHelpers, type: :feature
   config.include DropdownHelpers, type: :feature
+  config.include StripeWebhooksHelpers, type: :request
 
   config.use_transactional_fixtures = false
 
