@@ -96,8 +96,8 @@ class Payment < ActiveRecord::Base
     ["order refund", "service refund"].include? payment_type
   end
 
-  def failed
-    status = "failed"
+  def fail!
+    update_attribute(:status, 'failed')
   end
 
   private
