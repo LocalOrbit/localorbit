@@ -6,7 +6,7 @@ StripeEvent.configure do |events|
   events.all PaymentProvider::Handlers::AsyncHandler.new
 end
 
-StripeEvent.event_retriever = lambda do |params|
+StripeEvent.event_filter = lambda do |params|
   if params[:type] == 'transfer.paid' then
     managed_account_id = params[:user_id]
     # TODO: branch on presence of managed_account_id in case we're receiving a platform event,
