@@ -411,7 +411,7 @@ GEM
     httparty (0.13.7)
       json (~> 1.8)
       multi_xml (>= 0.5.2)
-    i18n (0.9.1)
+    i18n (0.9.5)
       concurrent-ruby (~> 1.0)
     ice_nine (0.11.2)
     inflecto (0.0.2)
@@ -476,7 +476,7 @@ GEM
     mime-types-data (3.2016.0521)
     mini_mime (1.0.0)
     mini_portile2 (2.3.0)
-    minitest (5.11.1)
+    minitest (5.11.3)
     moneta (0.8.1)
     msgpack (1.2.2)
     multi_json (1.13.1)
@@ -731,9 +731,9 @@ GEM
     stackprof (0.2.11)
     stripe (3.17.0)
       faraday (~> 0.10)
-    stripe_event (1.9.1)
+    stripe_event (2.1.1)
       activesupport (>= 3.1)
-      stripe (>= 1.6, < 4.0)
+      stripe (>= 2.8, < 4.0)
     thin (1.5.1)
       daemons (>= 1.0.9)
       eventmachine (>= 0.12.6)
@@ -745,7 +745,7 @@ GEM
     tty-which (0.3.0)
     turbolinks (2.5.3)
       coffee-rails
-    tzinfo (1.2.4)
+    tzinfo (1.2.5)
       thread_safe (~> 0.1)
     uglifier (2.7.2)
       execjs (>= 0.3.0)
@@ -899,7 +899,7 @@ DEPENDENCIES
   spring-commands-rspec
   stackprof
   stripe
-  stripe_event (= 1.9.1)
+  stripe_event
   tabulator!
   timecop
   turbolinks
