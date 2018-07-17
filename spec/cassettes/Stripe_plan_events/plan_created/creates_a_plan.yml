@@ -7,12 +7,8 @@ http_interactions:
       encoding: US-ASCII
       string: ''
     headers:
-      Accept:
-      - "*/*; q=0.5, application/xml"
-      Accept-Encoding:
-      - gzip, deflate
       User-Agent:
-      - Stripe/v1 RubyBindings/1.27.2
+      - Stripe/v1 RubyBindings/3.17.0
       Authorization:
       - Bearer sk_test_XTLCfIQMwKblsxIF1N4i7y1G
       Content-Type:
@@ -20,9 +16,13 @@ http_interactions:
       Stripe-Version:
       - '2015-04-07'
       X-Stripe-Client-User-Agent:
-      - '{"bindings_version":"1.27.2","lang":"ruby","lang_version":"2.1.2 p95 (2014-05-08)","platform":"x86_64-darwin17.0","engine":"ruby","publisher":"stripe","uname":"Darwin
-        kite 17.4.0 Darwin Kernel Version 17.4.0: Sun Dec 17 09:19:54 PST 2017; root:xnu-4570.41.2~1/RELEASE_X86_64
+      - '{"bindings_version":"3.17.0","lang":"ruby","lang_version":"2.1.2 p95 (2014-05-08)","platform":"x86_64-darwin17.0","engine":"ruby","publisher":"stripe","uname":"Darwin
+        kite 17.6.0 Darwin Kernel Version 17.6.0: Tue May  8 15:22:16 PDT 2018; root:xnu-4570.61.1~1/RELEASE_X86_64
         x86_64","hostname":"kite"}'
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
   response:
     status:
       code: 200
@@ -31,7 +31,7 @@ http_interactions:
       Server:
       - nginx
       Date:
-      - Mon, 09 Apr 2018 18:56:06 GMT
+      - Mon, 16 Jul 2018 21:18:12 GMT
       Content-Type:
       - application/json
       Content-Length:
@@ -51,7 +51,7 @@ http_interactions:
       Cache-Control:
       - no-cache, no-store
       Request-Id:
-      - req_B4lwLaPfCLG0ey
+      - req_HpCBU5F5VaianF
       Stripe-Version:
       - '2015-04-07'
       Strict-Transport-Security:
@@ -86,5 +86,5 @@ http_interactions:
           "type": "plan.created"
         }
     http_version: 
-  recorded_at: Mon, 09 Apr 2018 18:56:06 GMT
+  recorded_at: Mon, 16 Jul 2018 21:18:12 GMT
 recorded_with: VCR 4.0.0
