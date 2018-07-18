@@ -39,10 +39,6 @@ Dir[Rails.root.join("spec/support/**/*.rb")].each {|f| require f }
 # If you are not using ActiveRecord, you can remove this line.
 ActiveRecord::Migration.maintain_test_schema!
 
-module CapybaraApp
-  def app; Capybara.app; end
-end
-
 def temporarily_find_hidden_elements
   ap "setting Capybara.ignore_hidden_elements = false "
   Capybara.ignore_hidden_elements = false
@@ -90,8 +86,6 @@ RSpec.configure do |config|
   config.include EmailSpec::Matchers
   config.include ChosenJs::Helpers, chosen_js: true
   config.include FirePoll
-  config.include CapybaraApp, webhook: true
-  config.include Rack::Test::Methods, webhook: true
   config.include PauseHelpers, type: :feature
   config.include DropdownHelpers, type: :feature
   config.include StripeWebhooksHelpers, type: :request
