@@ -16,12 +16,12 @@ describe "admin manange organization", :vcr do
     expect(page).to have_content("Who")
     expect(page).to have_content("How")
 
-    select "Market 1", from: "Market", visible: false
+    select_option_on_singleselect('#initial_market_id_chosen', 'Market 1')
 
     expect(find_field("Allow purchase orders")).to be_checked
     expect(find_field("Allow credit cards")).to be_checked
 
-    select "Market 2", from: "Market", visible: false
+    select_option_on_singleselect('#initial_market_id_chosen', 'Market 2')
 
     check "Can sell products"
     expect(page).to have_content("Who")
@@ -97,7 +97,7 @@ describe "admin manange organization", :vcr do
     expect(find_field("Organization is active")).not_to be_checked
   end
 
-  it "maintains market selection on form errors" do
+  it "maintains market selection on form errors", :js do
     market1 = create(:market, name: "Market 1")
     market2 = create(:market, name: "Market 2")
 
@@ -106,10 +106,10 @@ describe "admin manange organization", :vcr do
     visit "/admin/organizations"
     click_link "Add Organization"
 
-    select "Market 2", from: "Market"
+    select_option_on_singleselect('#initial_market_id_chosen', market2.name)
     click_button "Add Organization"
 
-    expect(find_field("Market").value).to eq(market2.id.to_s)
+    expect(find('#initial_market_id_chosen .chosen-single span').text).to eq(market2.name)
   end
 
   describe "locations" do

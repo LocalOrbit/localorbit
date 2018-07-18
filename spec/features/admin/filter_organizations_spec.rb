@@ -22,12 +22,6 @@ describe "Filter organizations", :js do
         visit admin_organizations_path
       end
 
-      #it "shows an empty state" do
-      #  select empty_market.name, from: "filter_market"
-      #
-      #  expect(page).to have_content("No Results")
-      #end
-
       it "shows all markets when unfiltered" do
         expect(page).to have_content(org1.name)
         expect(page).to have_content(org2.name)
@@ -36,19 +30,19 @@ describe "Filter organizations", :js do
       end
 
       it "shows organizations for only the selected market" do
-        select market1.name, from: "filter_market", visible: false
+        select_option_on_multiselect('#filter-options-market', market1.name)
 
         expect(page).to have_content(org1.name)
         expect(page).to have_content(org2.name)
 
         expect(page).to_not have_content(org3.name)
         expect(page).to_not have_content(org4.name)
-        unselect market1.name, from: "filter_market", visible: false
 
+        unselect_option_on_multiselect('#filter-options-market', market1.name)
       end
     end
 
-    context "by can sell" do
+    context "by role" do
       before do
         sign_in_as(user)
         visit admin_organizations_path
@@ -61,15 +55,26 @@ describe "Filter organizations", :js do
         expect(page).to have_content(org4.name)
       end
 
-      it "shows organizations that can sell" do
-        select "Supplier", from: "filter_can_sell", visible: false
+      it "shows only suppliers" do
+        select_option_on_multiselect('#filter-options-role', 'Supplier')
 
         expect(page).to have_content(org1.name)
         expect(page).to have_content(org3.name)
         expect(page).to_not have_content(org2.name)
         expect(page).to_not have_content(org4.name)
-        unselect "Supplier", from: "filter_can_sell", visible: false
 
+        unselect_option_on_multiselect('#filter-options-role', 'Supplier')
+      end
+
+      it "shows only buyers" do
+        select_option_on_multiselect('#filter-options-role', 'Buyer')
+
+        expect(page).to have_content(org2.name)
+        expect(page).to have_content(org4.name)
+        expect(page).to_not have_content(org1.name)
+        expect(page).to_not have_content(org3.name)
+
+        unselect_option_on_multiselect('#filter-options-role', 'Buyer')
       end
     end
 
@@ -117,11 +122,6 @@ describe "Filter organizations", :js do
           visit admin_organizations_path
         end
 
-        #it "shows an empty state" do
-        #  select empty_market.name, from: "filter_market"
-        #  expect(page).to have_content("No Results")
-        #end
-
         it "shows all managed markets when unfiltered" do
           expect(page).to have_content(org1.name)
           expect(page).to have_content(org2.name)
@@ -131,7 +131,7 @@ describe "Filter organizations", :js do
         end
 
         it "shows organizations for only the selected market" do
-          select market3.name, from: "filter_market", visible: false
+          select_option_on_multiselect('#filter-options-market', market3.name)
 
           expect(page).to have_content(org5.name)
 
@@ -139,13 +139,13 @@ describe "Filter organizations", :js do
           expect(page).to_not have_content(org2.name)
           expect(page).to_not have_content(org3.name)
           expect(page).to_not have_content(org4.name)
-          unselect market3.name, from: "filter_market", visible: false
 
+          unselect_option_on_multiselect('#filter-options-market', market3.name)
         end
       end
     end
 
-    context "by can sell" do
+    context "by role" do
       before do
         switch_to_subdomain(market1.subdomain)
         sign_in_as(market_manager)
@@ -160,16 +160,28 @@ describe "Filter organizations", :js do
         expect(page).to_not have_content(org4.name)
       end
 
-      it "shows organizations that can sell" do
-        select "Supplier", from: "filter_can_sell", visible: false
+      it "shows only suppliers" do
+        select_option_on_multiselect('#filter-options-role', 'Supplier')
 
         expect(page).to have_content(org1.name)
-        expect(page).to have_content(org5.name)
         expect(page).to_not have_content(org2.name)
         expect(page).to_not have_content(org3.name)
         expect(page).to_not have_content(org4.name)
-        unselect "Supplier", from: "filter_can_sell", visible: false
+        expect(page).to_not have_content(org5.name)
 
+        unselect_option_on_multiselect('#filter-options-role', 'Supplier')
+      end
+
+      it "shows only buyers" do
+        select_option_on_multiselect('#filter-options-role', 'Buyer')
+
+        expect(page).to have_content(org2.name)
+        expect(page).to have_content(org5.name)
+        expect(page).to_not have_content(org1.name)
+        expect(page).to_not have_content(org3.name)
+        expect(page).to_not have_content(org4.name)
+
+        unselect_option_on_multiselect('#filter-options-role', 'Buyer')
       end
     end
   end
