@@ -11,6 +11,7 @@ module PaymentProvider
       # 'customer.subscription.created' => PaymentProvider::Handlers::SubscriptionHandler,
 
       def call(event)
+        ::Rails::logger.error("WEBHOOK: #{event.type} CONNECT: #{event.try(:account)} LIVEMODE: #{event.livemode}")
         handler = HANDLER_IMPLS[event.type]
         return unless handler && event.livemode && Rails.env.production?
 
