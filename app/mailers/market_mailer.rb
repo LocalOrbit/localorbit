@@ -41,13 +41,13 @@ class MarketMailer < BaseMailer
 
   def registration(market, organization)
     @market = market
-    @organization = organization
+    @organization = organization.decorate
     recipients = market.managers.map(&:pretty_email)
 
     if recipients.any?
       mail(
         to: recipients,
-        subject: "New organization registration"
+        subject: "New #{@organization.org_type_string} registration"
       )
     end
   end

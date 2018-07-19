@@ -116,6 +116,14 @@ class Organization < ActiveRecord::Base
     can_sell? && markets.joins(:organization => [:plan]).where(allow_cross_sell: true, plans: {cross_selling: true}).any?
   end
 
+  def buyer?
+    org_type == 'B'
+  end
+
+  def supplier?
+    org_type == 'S'
+  end
+
   def update_product_delivery_schedules
     reload.products.each(&:save) if persisted?
   end
