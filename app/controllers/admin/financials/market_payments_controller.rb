@@ -3,6 +3,7 @@ module Admin::Financials
     before_action :require_admin
 
     def index
+      dead_code!
       @orders_by_market = Order.balanced_payable_to_market.group_by(&:market).sort {|a, b| a.first.name <=> b.first.name }
     end
 
