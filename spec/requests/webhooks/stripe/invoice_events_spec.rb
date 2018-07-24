@@ -9,9 +9,6 @@ RSpec.describe 'Stripe invoice events', :vcr, type: :request do
     let(:stripe_card_id) {'card_19HJd62VpjOYk6TmwKcemuLf'} # matches card related to invoice.payment_succeeded.json charge
 
     let!(:organization) { create(:organization, stripe_customer_id: stripe_customer_id, org_type: 'M') }
-    let!(:market) { create(:market, stripe_customer_id: stripe_customer_id, organization_id: organization.id) }
-    let!(:market_2) { create(:market, stripe_customer_id: stripe_customer_id + 'KXM') }
-    let!(:credit_card) { create(:bank_account, bankable: market, stripe_id: stripe_card_id) }
 
     context 'no subscription' do
       # This is a contrivance to allow for testing until a like event is recorded for
@@ -24,11 +21,11 @@ RSpec.describe 'Stripe invoice events', :vcr, type: :request do
       let(:charge) { 'ch_19NxEY2VpjOYk6TmlDvEqqAX' }
 
       it 'disregards invoices that are not for subscriptions' do
-        initial_count = find_payment(charge).count
+        initial_count = payment_count(charge)
 
         post '/webhooks/stripe', payload
         expect(response).to have_http_status(:ok)
-        expect(find_payment(charge).count).to eq initial_count
+        expect(payment_count(charge)).to eq initial_count
       end
     end
 
@@ -36,12 +33,12 @@ RSpec.describe 'Stripe invoice events', :vcr, type: :request do
       let(:payload) { File.read('spec/fixtures/webhooks/stripe/invoice.payment_succeeded.json') }
 
       it 'creates a new payment object' do
-        initial_count = find_payment(stripe_charge_id).count
+        initial_count = payment_count(stripe_charge_id)
 
         post '/webhooks/stripe', payload
         expect(response).to have_http_status(:ok)
 
-        expect(find_payment(stripe_charge_id).count).to eq initial_count + 1
+        expect(payment_count(stripe_charge_id)).to eq initial_count + 1
       end
     end
   end
@@ -74,19 +71,11 @@ RSpec.describe 'Stripe invoice events', :vcr, type: :request do
       post '/webhooks/stripe', payload
 
       expect(response).to have_http_status(:ok)
-      expect(find_payment(stripe_charge_id).count).to eq 1
+      expect(payment_count(stripe_charge_id)).to eq 1
     end
   end
 end
 
-def find_stripe_market(stripe_customer_id)
-  Market.where(stripe_customer_id: stripe_customer_id)
-end
-
-def find_payment(stripe_charge_id)
-  Payment.where(stripe_id: stripe_charge_id)
-end
-
-def find_bank_account(stripe_card_id)
-  BankAccount.where(stripe_id: stripe_card_id)
+def payment_count(stripe_charge_id)
+  Payment.where(stripe_id: stripe_charge_id).count
 end
