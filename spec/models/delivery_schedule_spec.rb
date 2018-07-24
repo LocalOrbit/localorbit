@@ -459,7 +459,10 @@ describe DeliverySchedule do
     let!(:market_org)     { create(:organization, markets: [market]) }
     let!(:cross_sell_org) do
       create(:organization, markets: [origin_market]).tap do |o|
-        o.update_cross_sells!(from_market: origin_market, to_ids: [market.id])
+        UpdateCrossSellingMarketOrganizations.perform(
+          organization: o,
+          source_market_id: origin_market.id,
+          destination_market_ids: [market.id])
       end
     end
 
@@ -512,7 +515,10 @@ describe DeliverySchedule do
     let(:primary_org)    { create(:organization, :seller, markets: [market]) }
     let(:cross_sell_org) do
       create(:organization, :seller).tap do |org|
-        org.update_cross_sells!(from_market: other_market, to_ids: [market.id])
+        UpdateCrossSellingMarketOrganizations.perform(
+          organization: org,
+          source_market_id: other_market.id,
+          destination_market_ids: [market.id])
       end
     end
     let(:delivery_schedule) { create(:delivery_schedule, market: market, require_delivery: @require_primary_org_delivery, require_cross_sell_delivery: @require_cross_sell_org_delivery) }

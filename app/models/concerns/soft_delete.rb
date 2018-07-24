@@ -4,7 +4,6 @@ module SoftDelete
   included do
     scope :visible, -> { where(visible_conditional) }
     scope :delivery_visible, -> { where(delivery_visible_conditional) }
-    scope :delivery_not_deleted, -> { where('deleted_at is null') }
   end
 
   def soft_delete
@@ -30,6 +29,7 @@ module SoftDelete
       arel_table[:deleted_at].eq(nil).or(arel_table[:deleted_at].gt(Time.current.end_of_minute))
     end
 
+    # FIXME move this out to it's own mixin
     def delivery_visible_conditional
       (arel_table[:deleted_at].eq(nil).or(arel_table[:deleted_at].gt(Time.current.end_of_minute))).and(arel_table[:inactive_at].eq(nil).or(arel_table[:inactive_at].gt(Time.current.end_of_minute)))
     end

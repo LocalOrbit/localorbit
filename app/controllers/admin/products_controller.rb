@@ -60,11 +60,12 @@ module Admin
     end
 
     def create
-      @product = Product.new(product_params).decorate
-      find_selling_organizations
-      @product.organization = @organizations.detect {|o| o.id == @product.organization_id }
+      organization = find_selling_organizations.find_by!(id: product_params[:organization_id])
+      @product = organization.products.build(product_params)
       @product.consignment_market = current_market.is_consignment_market?
+
       if @product.save
+        UpdateDeliverySchedulesForProduct.delay.perform(product: @product)
         update_sibling_units(@product)
         if ENV['USE_UPLOAD_QUEUE'] == "true"
           Delayed::Job.enqueue ::ImageUpload::ImageUploadJob.new(@product)
@@ -118,6 +119,8 @@ module Admin
 
       update_sibling_units(@product)
       update_general_product(@product)
+
+      UpdateDeliverySchedulesForProduct.delay.perform(product: @product)
 
       find_sibling_units(@product)
 
@@ -203,7 +206,7 @@ module Admin
     end
 
     def find_selling_organizations
-      @organizations = current_user.managed_organizations.active.selling.order(:name).preload(:locations).to_a
+      @organizations = current_user.managed_organizations.active.selling.order(:name).preload(:locations)
     end
 
     def find_organizations_for_filtering

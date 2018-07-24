@@ -25,7 +25,10 @@ describe RemoveOrganizationFromMarkets do
       cross_sell_to = create(:market)
 
       organization = create(:organization, markets: [market])
-      organization.update_cross_sells!(from_market: market, to_ids: [cross_sell_to.id])
+      UpdateCrossSellingMarketOrganizations.perform(
+        organization: organization,
+        source_market_id: market.id,
+        destination_market_ids: [cross_sell_to.id])
       expect(MarketOrganization.count).to eq(2)
 
       remove_organization_from_market = RemoveOrganizationFromMarkets.perform(
@@ -42,8 +45,10 @@ describe RemoveOrganizationFromMarkets do
       cross_sell_from = create(:market)
 
       organization = create(:organization, markets: [market, cross_sell_from])
-      organization.update_cross_sells!(from_market: cross_sell_from, to_ids: [market.id])
-
+      UpdateCrossSellingMarketOrganizations.perform(
+        organization: organization,
+        source_market_id: cross_sell_from.id,
+        destination_market_ids: [market.id])
       remove_organization_from_market = RemoveOrganizationFromMarkets.perform(
         market_ids: [market.id], organization: organization
       )
@@ -89,7 +94,10 @@ describe RemoveOrganizationFromMarkets do
     cross_sell_from = create(:market)
 
     organization = create(:organization, markets: [market, cross_sell_from])
-    organization.update_cross_sells!(from_market: cross_sell_from, to_ids: [market.id])
+    UpdateCrossSellingMarketOrganizations.perform(
+      organization: organization,
+      source_market_id: cross_sell_from.id,
+      destination_market_ids: [market.id])
 
     expect(organization.markets).to contain_exactly(market, cross_sell_from)
     expect(organization.cross_sells).to eq([market])

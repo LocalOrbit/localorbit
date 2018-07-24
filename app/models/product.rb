@@ -7,7 +7,6 @@ class Product < ActiveRecord::Base
   paginates_per 50
 
   before_save :update_cached_categories
-  before_save :update_delivery_schedules
   before_save :update_general_product
   audited allow_mass_assignment: true, associated_with: :organization
 
@@ -23,7 +22,10 @@ class Product < ActiveRecord::Base
   default_scope { includes(:general_product) }
 
   # transient properties for conveniently adding sibling (product) units
-  attr_accessor :sibling_id, :sibling_name, :sibling_short_description, :sibling_long_description, :sibling_organic, :sibling_unit_id, :sibling_unit_description, :sibling_product_code, :sibling_unit_quantity, :skip_validation, :consignment_market
+  attr_accessor :sibling_id, :sibling_name, :sibling_short_description,
+    :sibling_long_description, :sibling_organic, :sibling_unit_id,
+    :sibling_unit_description, :sibling_product_code, :sibling_unit_quantity,
+    :skip_validation, :consignment_market
 
   has_many :lots, -> { order("created_at") }, inverse_of: :product, autosave: true, dependent: :destroy
   has_many :lots_by_expiration, -> { order("organization_id, market_id, expires_at, good_from, created_at") }, class_name: Lot, foreign_key: :product_id
@@ -605,19 +607,6 @@ class Product < ActiveRecord::Base
 
   def overrides_organization?
     who_story.present? || how_story.present?
-  end
-
-  def update_delivery_schedules
-    markets = organization.all_markets.excluding_deleted
-
-    if self.use_all_deliveries?
-      self.delivery_schedule_ids = markets.map do |market|
-        market.delivery_schedules.delivery_not_deleted.map(&:id)
-      end.flatten
-    else
-      ids = markets.map(&:id)
-      self.delivery_schedules = delivery_schedules.select {|ds| ids.include?(ds.market.id) }
-    end
   end
 
 end

@@ -92,14 +92,12 @@ class Organization < ActiveRecord::Base
   end
 
   def self.managed_by_market_ids(market_ids)
-    select("organizations.*").
     joins(:market_organizations).
     where(market_organizations: {market_id: market_ids}).
     where(market_organizations: {cross_sell_origin_market_id: nil})
   end
 
   def self.all_for_market_ids(market_ids)
-    select("organizations.*").
     joins(:market_organizations).
     where(market_organizations: {market_id: market_ids})
   end
@@ -114,27 +112,6 @@ class Organization < ActiveRecord::Base
 
   def can_cross_sell?
     can_sell? && markets.joins(:organization => [:plan]).where(allow_cross_sell: true, plans: {cross_selling: true}).any?
-  end
-
-  def update_product_delivery_schedules
-    reload.products.each(&:save) if persisted?
-  end
-
-  def update_cross_sells!(from_market: nil, to_ids: [])
-    ids = to_ids.map(&:to_i)
-
-    original_cross_sells  = market_organizations.visible.where(cross_sell_origin_market: from_market)
-    cross_sells_to_remove = original_cross_sells.where.not(market_id: ids)
-    new_cross_sell_ids = ids - original_cross_sells.map(&:market_id)
-
-    # Create the new ones
-    new_cross_sell_ids.each do |new_cross_sell_id|
-      market_organizations.create(market_id: new_cross_sell_id, cross_sell_origin_market: from_market)
-    end
-
-    # Destroy the old ones
-    cross_sells_to_remove.soft_delete_all
-    update_product_delivery_schedules
   end
 
   def balanced_customer
