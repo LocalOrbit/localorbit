@@ -525,7 +525,7 @@ GEM
     periscope-activerecord (2.1.0)
       activerecord (>= 3, < 5)
       periscope (~> 2.1.0)
-    pg (0.17.1)
+    pg (0.21.0)
     pg_array_parser (0.0.9)
     pg_search (0.7.8)
       activerecord (>= 3.1)
@@ -637,7 +637,7 @@ GEM
       http-cookie (>= 1.0.2, < 2.0)
       mime-types (>= 1.16, < 3.0)
       netrc (~> 0.7)
-    rollbar (2.15.5)
+    rollbar (2.16.3)
       multi_json
     roxml (3.3.1)
       activesupport (>= 2.3.0)
@@ -867,7 +867,7 @@ DEPENDENCIES
   omniauth-stripe-connect
   pdfkit
   periscope-activerecord
-  pg
+  pg (~> 0.21.0)
   pg_search
   platform-api
   poltergeist

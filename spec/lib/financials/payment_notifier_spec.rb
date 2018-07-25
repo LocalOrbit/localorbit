@@ -32,7 +32,7 @@ describe Financials::PaymentNotifier do
 
         it "invokes the PaymentMailer.payment_received in a delayed job for all users in the seller org" do
           expect(mailer).to receive(:delay).and_return(delayed_mailer)
-          expect(delayed_mailer).to receive(:payment_received).with(email_addresses, payment.id)
+          expect(delayed_mailer).to receive(:payment_received).with(email_addresses, payment)
 
           notifier.send(method_sym, payment: payment)
         end
@@ -42,7 +42,7 @@ describe Financials::PaymentNotifier do
 
           it "delivers immediately, not via 'delay'" do
             expect(mailer).not_to receive(:delay)
-            expect(mailer).to receive(:payment_received).with(email_addresses, payment.id).and_return(mail_object)
+            expect(mailer).to receive(:payment_received).with(email_addresses, payment).and_return(mail_object)
             expect(mail_object).to receive(:deliver)
 
             notifier.send(method_sym, payment: payment, async: false)

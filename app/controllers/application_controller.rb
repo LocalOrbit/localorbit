@@ -1,5 +1,6 @@
 class ApplicationController < ActionController::Base
   include EventTracker
+  include DeadCode
 
   before_action :configure_permitted_parameters, if: :devise_controller?
   before_action :masquerade_user!
@@ -17,6 +18,7 @@ class ApplicationController < ActionController::Base
   helper_method :current_delivery
   helper_method :redirect_to_url
   helper_method :signed_in_root_path
+  helper_method :dead_code!
 
   after_filter :cors_auth
 

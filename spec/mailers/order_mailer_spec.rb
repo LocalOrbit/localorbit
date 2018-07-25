@@ -21,10 +21,8 @@ describe OrderMailer do
 
   describe "seller_confirmation" do
     before do
-      pdf = PdfResult.new(data: "data", path: "/")
-
       Audit.all.update_all(request_uuid: SecureRandom.uuid)
-      @notification = OrderMailer.seller_confirmation(order.reload, seller1, pdf, csv)
+      @notification = OrderMailer.seller_confirmation(order.reload, seller1)
     end
 
     it "delivers to all users in the organization" do
@@ -167,10 +165,9 @@ describe OrderMailer do
         order.reload.update(updated_at: Time.current, items_attributes: {"0" => {id: order_item1.id, quantity: 15}})
         OrderItem.disable_auditing
         Order.disable_auditing
-        pdf = PdfResult.new(data: "data", path: "/")
 
         Audit.all.update_all(request_uuid: SecureRandom.uuid)
-        @notification = OrderMailer.seller_order_updated(order.reload, seller1, pdf, csv)
+        @notification = OrderMailer.seller_order_updated(order.reload, seller1)
       end
 
       it "has a subject indicating it is an update" do
@@ -197,10 +194,9 @@ describe OrderMailer do
         order.reload.update(updated_at: Time.current, items_attributes: {"0" => {id: order_item1.id, quantity: 0, delivery_status: "canceled"}})
         OrderItem.disable_auditing
         Order.disable_auditing
-        pdf = PdfResult.new(data: "data", path: "/")
 
         Audit.all.update_all(request_uuid: SecureRandom.uuid)
-        @notification = OrderMailer.seller_order_updated(order.reload, seller1, pdf, csv)
+        @notification = OrderMailer.seller_order_updated(order.reload, seller1)
       end
 
       it "has a subject indicating it is an update" do
@@ -249,10 +245,9 @@ describe OrderMailer do
         order.reload.update(updated_at: Time.current, items_attributes: {"0" => {id: order_item1.id, quantity: 15}})
         OrderItem.disable_auditing
         Order.disable_auditing
-        pdf = PdfResult.new(data: "data", path: "/")
 
         Audit.all.update_all(request_uuid: SecureRandom.uuid)
-        @notification = OrderMailer.seller_order_updated(order.reload, seller1, pdf, csv)
+        @notification = OrderMailer.seller_order_updated(order.reload, seller1)
       end
 
       it "does not show the refund section" do
