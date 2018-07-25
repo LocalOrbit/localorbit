@@ -148,15 +148,14 @@ GEM
     capybara-screenshot (1.0.21)
       capybara (>= 1.0, < 4)
       launchy
-    capybara-slow_finder_errors (0.1.2)
-      capybara (~> 2.0)
+    capybara-slow_finder_errors (0.1.4)
+      capybara (~> 2.5)
     childprocess (0.9.0)
       ffi (~> 1.0, >= 1.0.11)
     chromedriver-helper (1.2.0)
       archive-zip (~> 0.10)
       nokogiri (~> 1.8)
     chunky_png (1.3.1)
-    cliver (0.3.2)
     codeclimate-engine-rb (0.4.1)
       virtus (~> 1.0)
     coderay (1.1.2)
@@ -493,7 +492,7 @@ GEM
       dragonfly
       newrelic_rpm
     newrelic_rpm (5.2.0.345)
-    nokogiri (1.8.3)
+    nokogiri (1.8.4)
       mini_portile2 (~> 2.3.0)
     nokogiri-happymapper (0.5.9)
       nokogiri (~> 1.5)
@@ -534,11 +533,6 @@ GEM
     platform-api (2.0.0)
       heroics (~> 0.0.22)
       moneta (~> 0.8.1)
-    poltergeist (1.8.1)
-      capybara (~> 2.1)
-      cliver (~> 0.3.1)
-      multi_json (~> 1.0)
-      websocket-driver (>= 0.2.0)
     polyamorous (1.1.0)
       activerecord (>= 3.0)
     postgres_ext (2.3.0)
@@ -780,9 +774,6 @@ GEM
     webmock (1.18.0)
       addressable (>= 2.3.6)
       crack (>= 0.3.2)
-    websocket-driver (0.6.3)
-      websocket-extensions (>= 0.1.0)
-    websocket-extensions (0.1.2)
     wkhtmltopdf-heroku (2.12.3.0)
     wysihtml5-rails (0.0.4)
       railties (>= 3.1.0)
@@ -870,7 +861,6 @@ DEPENDENCIES
   pg (~> 0.21.0)
   pg_search
   platform-api
-  poltergeist
   postgres_ext
   pry-byebug
   pry-rails
