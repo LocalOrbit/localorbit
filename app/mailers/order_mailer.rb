@@ -56,7 +56,7 @@ class OrderMailer < BaseMailer
 
     attachments["invoice.pdf"] = {mime_type: "application/pdf", content: @order.invoice_pdf.try(:data)}
 
-    to_list = recipient_list(order)
+    to_list = recipient_list(@order)
     if !to_list.blank?
       mail(
         to: to_list,

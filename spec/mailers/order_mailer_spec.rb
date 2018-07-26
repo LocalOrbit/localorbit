@@ -255,4 +255,14 @@ describe OrderMailer do
       end
     end
   end
+
+  describe '.invoice' do
+    before do
+      @notification = OrderMailer.invoice(order.reload.id)
+    end
+
+    it "delivers to all users in the buyer organization" do
+      expect(@notification).to deliver_to(buyer_user.email)
+    end
+  end
 end
