@@ -784,7 +784,6 @@ describe User do
     end
   end
 
-
   describe ".buyers scope" do
     include_context "the fresh market"
 
@@ -842,15 +841,18 @@ describe User do
   describe "#default_market" do
     let(:buyer_org1) { create(:organization, :buyer, name: "Buyer Org 1") }
 
-    let(:supplier_org_inactive1) { create(:organization, :seller, name: "Inactive Supplier Org 1", active: false) }
+    let(:supplier_org_inactive_newer) { create(:organization, :seller, name: "Inactive Supplier Org 1 (Newer)", active: false) }
+    let(:supplier_org_inactive_older) { create(:organization, :seller, name: "Inactive Supplier Org 2 (Oldest)", active: false, created_at: 1.year.ago) }
 
-    let(:supplier_org1) { create(:organization, :seller, name: "Supplier Org 1") }
-    let(:supplier_org2) { create(:organization, :seller, name: "Supplier Org 2") }
+    let(:supplier_org1) { create(:organization, :seller, name: "Supplier Org 1 (Newer)") }
+    let(:supplier_org2) { create(:organization, :seller, name: "Supplier Org 2 (Older)", created_at: 2.months.ago) }
+    let(:supplier_org3) { create(:organization, :seller, name: "Supplier Org 3 (Oldest)", created_at: 3.years.ago) }
 
-    let!(:market_inactive1) { create(:market, organizations: [buyer_org1, supplier_org1], active: false) }
-    let!(:market_inactive2) { create(:market, organizations: [buyer_org1, supplier_org1, supplier_org2], active: false) }
+    let!(:market_inactive1) { create(:market, name: 'Inactive Market 1', organizations: [buyer_org1, supplier_org1], active: false) }
+    let!(:market_inactive2) { create(:market, name: 'Inactive Market 2', organizations: [buyer_org1, supplier_org1, supplier_org2], active: false) }
 
-    let!(:market_active1) { create(:market, organizations: [buyer_org1, supplier_org1, supplier_org_inactive1]) }
+    let!(:market_active1) { create(:market, name: 'Active Market 1', organizations: [buyer_org1, supplier_org1, supplier_org_inactive_newer]) }
+    let!(:market_active2) { create(:market, name: 'Active Market 2', organizations: [buyer_org1, supplier_org3, supplier_org_inactive_older]) }
 
     context "as an admin" do
       let(:admin_org) { create(:organization, :admin) }
@@ -895,10 +897,10 @@ describe User do
       let(:supplier) { create(:user, :supplier, organizations: organizations) }
 
       context "who belongs to an active organization" do
-        context "in both active and inactive markets" do
-          let(:organizations) { [supplier_org1] }
+        context "in both an active and inactive market" do
+          let(:organizations) { [supplier_org1, supplier_org3] }
 
-          it "returns the first active market" do
+          it "returns the market associated with the most recently created active organization" do
             expect(supplier.default_market).to eq(market_active1)
           end
         end
@@ -912,11 +914,11 @@ describe User do
         end
       end
 
-      context "who belongs to an inactive organization in an active market" do
-        let(:organizations) { [supplier_org_inactive1] }
+      context "who belongs to two inactive organizations in separate active markets" do
+        let(:organizations) { [supplier_org_inactive_older, supplier_org_inactive_newer] }
 
-        it "returns nil" do
-          expect(supplier.default_market).to be_nil
+        it "returns the market associated with the most recently created inactive organization" do
+          expect(supplier.default_market).to eq(market_active1)
         end
       end
     end
