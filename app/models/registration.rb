@@ -55,15 +55,25 @@ class Registration
 
       organization.markets << market
       organization.locations.build(location_params)
-      organization.save!(validate:false)
+      organization.save!(validate: false)
 
-      # create the user second so we have the organization available
-      # to the confirmation email
       self.user = User.find_by(email: email) || User.new(user_params)
+
+      # Skip automatic confirmation email so we can be sure UserOrganization
+      # associations are saved completely before sending email.
+      user.skip_confirmation_notification!
+
       user.organizations << organization
-      user.attempt_set_password(user_params)
-      user.invitation_token=nil
-      user.save!
+      user.password = user_params[:password]
+      user.password_confirmation = user_params[:password_confirmation]
+      user.invitation_token = nil
+      success = user.save!
+
+      # Ensure Org, User, and UserOrg relation are saved before sending email
+      # so we can display proper content.
+      user.send_confirmation_instructions
+
+      success
     else
       false
     end

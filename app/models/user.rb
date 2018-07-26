@@ -416,26 +416,23 @@ class User < ActiveRecord::Base
     elsif market_manager?
       managed_markets.active.first
     else
+      # Prefer active Organizations, but if can't find any active Orgs
+      # then pick the most recently created Org for this user
       Market.joins(market_organizations: {organization: :user_organizations}).
         merge(Market.active).
         merge(MarketOrganization.excluding_deleted).
         merge(MarketOrganization.not_cross_selling).
-        merge(Organization.active).
         merge(UserOrganization.enabled).
-        where(user_organizations: {user_id: id}).first
+        where(user_organizations: {user_id: id}).
+        order(
+          Organization.arel_table[:active].desc,
+          Organization.arel_table[:created_at].desc).
+        first
     end
   end
 
-
   def is_invited?
     invitation_token != nil && !confirmed?
-  end
-
-  def attempt_set_password(params)
-    p = {}
-    p[:password] = params[:password]
-    p[:password_confirmation] = params[:password_confirmation]
-    update_attributes(p)
   end
 
   private
