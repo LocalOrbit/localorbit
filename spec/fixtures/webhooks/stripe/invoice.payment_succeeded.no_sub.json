@@ -1,0 +1,13 @@
+{
+  "id": "evt_19NxEZ2VpjOYk6TmQLjYsn5Y",
+  "data": {
+    "object": {
+      "id": "in_19NwIT2VpjOYk6TmuXa5PSFl",
+      "amount_due": 500,
+      "charge": "ch_19NxEY2VpjOYk6TmlDvEqqAX",
+      "customer": "cus_9gwCSjIO6SlmhA"
+    }
+  },
+  "livemode": false,
+  "type": "invoice.payment_successful"
+}

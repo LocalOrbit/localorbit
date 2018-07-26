@@ -74,6 +74,7 @@ describe "Editing an order" do
             expect(Dom::Order::ItemRow.all.map(&:name)).to include(long_name(order_item), long_name(order_item2))
 
             first_order_item.click_delete
+            page.driver.browser.switch_to.alert.accept
 
             expect(page).to have_content("Order successfully updated")
             expect(Dom::Order::ItemRow.count).to eq(1)
@@ -86,6 +87,7 @@ describe "Editing an order" do
             expect(page).to have_content("Order Total: $45.00")
 
             first_order_item.click_delete
+            page.driver.browser.switch_to.alert.accept
 
             expect(page).to have_content("Order successfully updated")
             expect(page).to have_content("Order Total: $30.00")
@@ -97,6 +99,7 @@ describe "Editing an order" do
             expect(Dom::Admin::OrderSummaryRow.first.gross_total).to eql("$45.00")
 
             first_order_item.click_delete
+            page.driver.browser.switch_to.alert.accept
 
             expect(page).to have_content("Order successfully updated")
             expect(Dom::Admin::OrderSummaryRow.first.gross_total).to eql("$30.00")
@@ -107,6 +110,7 @@ describe "Editing an order" do
             expect(product.available_inventory).to eql(145)
 
             first_order_item.click_delete
+            page.driver.browser.switch_to.alert.accept
 
             expect(page).to have_content("Order successfully updated")
             expect(product.reload.available_inventory).to eql(150)
@@ -125,6 +129,7 @@ describe "Editing an order" do
             expect(Dom::Order::ItemRow.all.map(&:name)).to include(long_name(order_item), long_name(order_item2))
 
             first_order_item.click_delete
+            page.driver.browser.switch_to.alert.accept
 
             expect(page).to have_content("Order successfully updated")
             expect(Dom::Order::ItemRow.count).to eq(1)
@@ -137,6 +142,7 @@ describe "Editing an order" do
             expect(page).to have_content("Order Total: $45.00")
 
             first_order_item.click_delete
+            page.driver.browser.switch_to.alert.accept
 
             expect(page).to have_content("Order successfully updated")
             expect(page).to have_content("Order Total: $30.00")
@@ -148,6 +154,7 @@ describe "Editing an order" do
             expect(Dom::Admin::OrderSummaryRow.first.gross_total).to eql("$45.00")
 
             first_order_item.click_delete
+            page.driver.browser.switch_to.alert.accept
 
             expect(page).to have_content("Order successfully updated")
             expect(Dom::Admin::OrderSummaryRow.first.gross_total).to eql("$30.00")
@@ -158,6 +165,7 @@ describe "Editing an order" do
             expect(product.available_inventory).to eql(145)
 
             first_order_item.click_delete
+            page.driver.browser.switch_to.alert.accept
 
             expect(page).to have_content("Order successfully updated")
             expect(product.reload.available_inventory).to eql(150)
@@ -193,6 +201,7 @@ describe "Editing an order" do
           expect(UpdatePurchase).to receive(:perform).and_return(double("interactor", "success?" => true))
 
           first_order_item.click_delete
+          page.driver.browser.switch_to.alert.accept
 
           expect(page).to have_content("Order successfully updated")
           expect(page.current_path).to match(/#{admin_orders_path}/)
@@ -202,6 +211,7 @@ describe "Editing an order" do
           expect(UpdatePurchase).to receive(:perform).and_return(double("interactor", "success?" => true))
 
           first_order_item.click_delete
+          page.driver.browser.switch_to.alert.accept
 
           expect(page).to have_content("Order successfully updated")
           expect(order.reload.deleted_at).to_not be_nil
@@ -212,6 +222,7 @@ describe "Editing an order" do
           expect(product.available_inventory).to eql(145)
 
           first_order_item.click_delete
+          page.driver.browser.switch_to.alert.accept
 
           expect(page).to have_content("Order successfully updated")
           expect(product.reload.available_inventory).to eql(150)
@@ -232,6 +243,7 @@ describe "Editing an order" do
           expect(UpdatePurchase).to receive(:perform).and_return(double("interactor", "success?" => true))
 
           first_order_item.click_delete
+          page.driver.browser.switch_to.alert.accept
 
           expect(page).to have_content("Order successfully updated")
           expect(page.current_path).to match(/#{admin_orders_path}/)
@@ -241,6 +253,7 @@ describe "Editing an order" do
           expect(UpdatePurchase).to receive(:perform).and_return(double("interactor", "success?" => true))
 
           first_order_item.click_delete
+          page.driver.browser.switch_to.alert.accept
 
           expect(page).to have_content("Order successfully updated")
           expect(order.reload.deleted_at).to_not be_nil
@@ -251,6 +264,7 @@ describe "Editing an order" do
           expect(product.available_inventory).to eql(145)
 
           first_order_item.click_delete
+          page.driver.browser.switch_to.alert.accept
 
           expect(page).to have_content("Order successfully updated")
           expect(product.reload.available_inventory).to eql(150)
@@ -281,6 +295,7 @@ describe "Editing an order" do
         expect(Dom::Order::ItemRow.first.delivery_status).to eql("Pending")
 
         click_button "Mark all delivered"
+        page.driver.browser.switch_to.alert.accept
 
         expect(Dom::Order::ItemRow.first.delivery_status).to eql("Delivered")
         expect(page).to_not have_button("Mark all delivered")
@@ -294,6 +309,7 @@ describe "Editing an order" do
         expect(Dom::Order::ItemRow.first.delivery_status).to eql("Pending")
 
         click_button "Mark all delivered"
+        page.driver.browser.switch_to.alert.accept
 
         expect(Dom::Order::ItemRow.first.delivery_status).to eql("Delivered")
         expect(page).to_not have_button("Mark all delivered")
@@ -315,10 +331,12 @@ describe "Editing an order" do
         expect(Dom::Order::ItemRow.first.delivery_status).to eql("Pending")
 
         click_button "Mark all delivered"
-        
+        page.driver.browser.switch_to.alert.accept
+
         expect(Dom::Order::ItemRow.first.delivery_status).to eql("Delivered")
 
         click_button "Undo mark delivery"
+        page.driver.browser.switch_to.alert.accept
 
         expect(Dom::Order::ItemRow.first.delivery_status).to eql("Pending")
         expect(page).to have_button("Mark all delivered")
@@ -332,6 +350,7 @@ describe "Editing an order" do
         expect(Dom::Order::ItemRow.first.delivery_status).to eql("Pending")
 
         click_button "Mark all delivered"
+        page.driver.browser.switch_to.alert.accept
 
         expect(Dom::Order::ItemRow.first.delivery_status).to eql("Delivered")
         expect(page).to_not have_button("Mark all delivered")
@@ -353,10 +372,12 @@ describe "Editing an order" do
         expect(Dom::Order::ItemRow.first.delivery_status).to eql("Pending")
 
         click_button "Mark all delivered"
-        
+        page.driver.browser.switch_to.alert.accept
+
         expect(Dom::Order::ItemRow.first.delivery_status).to eql("Delivered")
 
         click_button "Undo mark delivery"
+        page.driver.browser.switch_to.alert.accept
 
         expect(Dom::Order::ItemRow.first.delivery_status).to eql("Pending")
         expect(page).to have_button("Mark all delivered")
@@ -506,7 +527,7 @@ describe "Editing an order" do
           expect(Dom::Admin::OrderSummaryRow.first.gross_total).to eql("$6.90")
           expect(Dom::Admin::OrderSummaryRow.first.market_fees).to eql("$0.35")
           # Payment fees WON'T BE UPDATED because this test mocks the call to UpdatePurchase, which since Stripe, is where we invoke the payment fee update code.
-          expect(Dom::Admin::OrderSummaryRow.first.net_sale).to eql("$6.27") 
+          expect(Dom::Admin::OrderSummaryRow.first.net_sale).to eql("$6.27")
         end
       end
 

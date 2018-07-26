@@ -8,7 +8,7 @@ describe RollYourOwnMarket do
   # after(:all) { VCR.turn_on! }
 
   let(:mkt) { create(:market) }
-  
+
   let!(:stripe_customer) { create_stripe_customer(organization: mkt) }
   let!(:stripe_token) { create_stripe_token }
 
@@ -37,7 +37,7 @@ describe RollYourOwnMarket do
 
   let(:subscription_params) {
     HashWithIndifferentAccess.new(
-	  	"plan"=>"GROW",
+	  	"plan"=>"GROW_M_2017",
 	  	"plan_price"=>"700.00"
   	)
   }
@@ -53,7 +53,7 @@ describe RollYourOwnMarket do
   def perform
   	subject.perform(
 			market_params: market_params,
-			billing_params: billing_params, 
+			billing_params: billing_params,
 			subscription_params: subscription_params,
 			bank_account_params: bank_account_params,
 			amount: subscription_params[:plan_price]

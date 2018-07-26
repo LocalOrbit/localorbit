@@ -26,8 +26,8 @@ class Subscription < ActiveRecord::Base
   end
 
   def self.ensure_user_has_subscription_links_to_fresh_sheet_and_newsletter(user)
-    [ SubscriptionType::Keywords::FreshSheet,
-      SubscriptionType::Keywords::Newsletter 
+    [ SubscriptionType::Keywords::FRESHSHEET,
+      SubscriptionType::Keywords::NEWSLETTER
     ].each do |keyword|
       Subscription.ensure_user_has_subscription_link_to(user, subscription_type_keyword: keyword)
     end

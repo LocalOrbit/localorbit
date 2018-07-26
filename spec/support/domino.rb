@@ -63,7 +63,7 @@ module Dom
     end
 
     def click
-      node.trigger("click")
+      node.click
     end
 
     def inputs
@@ -75,7 +75,7 @@ module Dom
     selector ".inventory-table tbody tr.lot"
 
     def click_number
-      node.find(".number .edit-trigger").trigger(:click)
+      node.find(".number .edit-trigger").click
     end
 
     def number
@@ -209,7 +209,7 @@ module Dom
     end
 
     def click_next
-      node.find('a[title="Next"]').trigger("click")
+      node.find('a[title="Next"]').click
     end
 
     def click_day(day)
@@ -303,11 +303,11 @@ module Dom
         end
 
         def review
-          node.click_link("Review")
+          node.first('.review-orders').click
         end
 
         def pay_all_now
-          node.find_button("Record Payment").trigger("click")
+          node.find_button("Record Payment").click
         end
 
         def pay_selected
@@ -1145,7 +1145,7 @@ module Dom
       end
 
       def remove!
-        node.find(".icon-clear").trigger("click")
+        node.find(".icon-clear").click
       end
     end
 
@@ -1267,11 +1267,11 @@ module Dom
     end
 
     def click_pricing
-      node.find(".pricing .popup-toggle").trigger(:click)
+      node.find(".pricing .popup-toggle").click
     end
 
     def click_stock
-      node.find(".stock .popup-toggle").trigger(:click)
+      node.find(".stock .popup-toggle").click
     end
   end
 

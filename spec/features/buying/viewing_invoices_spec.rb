@@ -54,6 +54,10 @@ describe "Buyer invoices" do
 
       expect(page).to have_content("Invoices")
 
+      fill_in "q_invoice_due_date_date_gteq", with: 4.weeks.ago.strftime("%a, %e %B %Y")
+      fill_in "q_invoice_due_date_date_lteq", with: 1.day.from_now.strftime("%a, %e %B %Y")
+      click_button "Filter"
+
       invoices = Dom::Admin::Financials::InvoiceRow.all
       dom_order_numbers = invoices.map(&:order_number)
       invoiced_order_numbers = [invoiced_order, invoiced_order2, invoiced_order3].map(&:order_number)

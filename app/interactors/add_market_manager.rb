@@ -2,6 +2,8 @@ class AddMarketManager
   include Interactor
 
   def perform
+    require_in_context(:market, :email, :inviter)
+
     user = User.find_for_authentication(email: email)
 
     if user

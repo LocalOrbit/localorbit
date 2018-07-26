@@ -21,7 +21,9 @@ describe SendFreshSheet do
   end
 
   context "sending to subscribers" do
-    let(:fresh_subscription) { create(:subscription_type, keyword: SubscriptionType::Keywords::FreshSheet, name: "Test Fresh!") }
+    let(:fresh_subscription) { create(:subscription_type,
+                                      keyword: SubscriptionType::Keywords::FRESHSHEET,
+                                      name: "Test Fresh!") }
 
     let(:subscribed_buyer) do
       user = create(:user, :buyer)
@@ -36,7 +38,6 @@ describe SendFreshSheet do
       user.subscribe_to(fresh_subscription)
       user
     end
-
 
     context "sends Fresh Sheet emails to all users in the given market who subscribe to Fresh Sheets" do
       before :each do

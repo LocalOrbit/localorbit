@@ -1,20 +1,20 @@
-
-Rails.configuration.stripe = {
-  :publishable_key => ENV['STRIPE_PUBLISHABLE_KEY'],
-  :secret_key      => ENV['STRIPE_SECRET_KEY']
-}
-
-Stripe.api_key = Rails.configuration.stripe[:secret_key]
+Stripe.api_key = Figaro.env.stripe_secret_key
 Stripe.api_version = '2015-04-07'
+
+StripeEvent.signing_secrets = [
+  Figaro.env.stripe_account_signing_secret,
+  Figaro.env.stripe_connect_signing_secret
+]
 
 StripeEvent.configure do |events|
   events.all PaymentProvider::Handlers::AsyncHandler.new
 end
 
-StripeEvent.event_retriever = lambda do |params|
+StripeEvent.event_filter = lambda do |params|
   if params[:type] == 'transfer.paid' then
     managed_account_id = params[:user_id]
-    # TODO: branch on presence of managed_account_id in case we're receiving a platform event, in which case retrieve without second arg
+    # TODO: branch on presence of managed_account_id in case we're receiving a platform event,
+    #        in which case retrieve without second arg
     # TODO: tack on event[:account_type] = :platform or something to indicate source of event
     event = Stripe::Event.retrieve(params[:id], {stripe_account: managed_account_id})
     event[:user_id] = managed_account_id

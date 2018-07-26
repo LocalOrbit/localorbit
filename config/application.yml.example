@@ -13,6 +13,8 @@ UPLOADS_REGION: <S3 upload region>
 TWITTER_WIDGET_ID: 'create-me-at-twitter-dot-com'
 STRIPE_PUBLISHABLE_KEY: <stripe publishable key (test on local system)>
 STRIPE_SECRET_KEY: <stripe secret key (test on local system)>
+STRIPE_ACCOUNT_SIGNING_SECRET: <stripe account signing secret>
+STRIPE_CONNECT_SIGNING_SECRET: <stripe connect signing secret>
 STRIPE_CLIENT_ID: <stripe client key (test on local system)>
 FROALA_KEY: <api key for froala>
 USE_STRIPE_STANDALONE_ACCOUNTS: 'true'
@@ -34,6 +36,8 @@ QB_CONSUMER_SECRET: <QB consumer secret>
 QB_ACCESS_TOKEN: <QB access token>
 QB_ACCESS_TOKEN_SECRET: <QB access token secret>
 QB_REALM_ID: <QB realm id>
+# Use staging DRAGONFLY_HOST for dev and test
+DRAGONFLY_HOST: 'https://d3jv177czn6wv2.cloudfront.net'
 development:
   STRIPE_DEV_MARKET_ACCOUNT_ID: <stripe user id of market that did oauth flow, see docs/stripe.md>
   MAILTRAP_USERNAME: <MT username>
@@ -41,7 +45,9 @@ development:
   USE_DELAYED_JOB: 'true'
   USE_ROLLBAR: 'false'
 test:
+  RAILS_ENABLE_TEST_LOG: ~
   USE_ROLLBAR: 'false'
+  USE_UPLOAD_QUEUE: 'false'
 staging:
   MAILTRAP_USERNAME: <MT username>
   MAILTRAP_PASSWORD: <MT secret>

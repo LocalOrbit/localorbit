@@ -39,8 +39,12 @@ Dir[Rails.root.join("spec/support/**/*.rb")].each {|f| require f }
 # If you are not using ActiveRecord, you can remove this line.
 ActiveRecord::Migration.maintain_test_schema!
 
-module CapybaraApp
-  def app; Capybara.app; end
+def temporarily_find_hidden_elements
+  ap "setting Capybara.ignore_hidden_elements = false "
+  Capybara.ignore_hidden_elements = false
+  yield
+  "setting Capybara.ignore_hidden_elements = true"
+  Capybara.ignore_hidden_elements = true
 end
 
 RSpec.configure do |config|
@@ -57,6 +61,10 @@ RSpec.configure do |config|
   # the seed, which is printed after each run.
   #     --seed 1234
   config.order = "random"
+
+  # Store status of last run so we can use --only-failures and --next-failure
+  config.example_status_persistence_file_path = "examples.txt"
+  config.run_all_when_everything_filtered = true
 
   # RSpec Rails can automatically mix in different behaviours to your tests
   # based on their file location, for example enabling you to call `get` and
@@ -78,9 +86,9 @@ RSpec.configure do |config|
   config.include EmailSpec::Matchers
   config.include ChosenJs::Helpers, chosen_js: true
   config.include FirePoll
-  config.include CapybaraApp, webhook: true
-  config.include Rack::Test::Methods, webhook: true
   config.include PauseHelpers, type: :feature
+  config.include DropdownHelpers, type: :feature
+  config.include StripeWebhooksHelpers, type: :request
 
   config.use_transactional_fixtures = false
 
@@ -94,5 +102,3 @@ RSpec.configure do |config|
     ActionMailer::Base.deliveries.clear
   end
 end
-
-

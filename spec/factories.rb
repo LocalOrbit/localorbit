@@ -180,7 +180,7 @@ FactoryBot.define do
     tagline                'Connecting Farm to Market'
     timezone               'US/Eastern'
     contact_name           'Jill Smith'
-    contact_email          'jill@smith.com'
+    sequence(:contact_email) {|n| "jill@localorbittestdomain#{n}.com"}
     contact_phone          '616-222-2222'
     policies               'Do no harm...'
     profile                'Market profile...'
@@ -743,12 +743,12 @@ FactoryBot.define do
 
     trait :fresh_sheet do
       name "Fresh Sheet (testing)"
-      keyword SubscriptionType::Keywords::FreshSheet
+      keyword SubscriptionType::Keywords::FRESHSHEET
     end
 
     trait :newsletter do
       name "Newsletter (testing)"
-      keyword SubscriptionType::Keywords::Newsletter
+      keyword SubscriptionType::Keywords::NEWSLETTER
     end
   end
 
