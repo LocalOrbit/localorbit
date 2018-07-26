@@ -507,19 +507,12 @@ feature "Viewing products" do
           expect(page).to have_content(org1_product.name)
         end
 
-        scenario "changing organization to shop for after creating a cart", js: true  do
-          #select = Dom::Select.first
+        scenario "changing organization to shop for after creating a cart", :js do
+          select_option_on_singleselect('#org_id_chosen',
+                                        buyer_org.name)
+          click_button "Select Buyer"
 
-          #expect(select).to have_option(buyer_org.name)
-          #expect(select).to have_option(buyer_org2.name)
-          #expect(select).to_not have_option(buyer_org_outside_market.name)
-          temporarily_find_hidden_elements do
-            ap "select buyer name"
-            select buyer_org.name, from: "Buyer", visible: false
-            click_button "Select Buyer"
-          end
-
-          expect(page).to have_content("Please choose a pick up or delivery date")
+          expect(page).to have_content('Please choose a pick up or delivery date')
 
           delivery = Dom::Buying::DeliveryChoice.first
           expect(delivery.type).to eq("Delivery:")
@@ -535,8 +528,8 @@ feature "Viewing products" do
             click_link "Change"
           end
 
-          select buyer_org2.name, from: "Buyer", visible: false
-
+          select_option_on_singleselect('#org_id_chosen',
+                                        buyer_org2.name)
           click_button "Select Buyer"
 
           expect(page).to have_content("Please choose a pick up or delivery date")
