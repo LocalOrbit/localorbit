@@ -255,4 +255,12 @@ describe OrderMailer do
       end
     end
   end
+
+  describe '.invoice' do
+    let(:notification) { OrderMailer.invoice(order.id) }
+
+    it 'delivers to all users in the buyer organization' do
+      expect(notification).to deliver_to(buyer_user.email)
+    end
+  end
 end
