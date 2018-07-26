@@ -47,7 +47,7 @@ class MarketMailer < BaseMailer
     if recipients.any?
       mail(
         to: recipients,
-        subject: "New #{@organization.org_type_string} registration"
+        subject: "New #{@organization.human_org_type} registration"
       )
     end
   end
