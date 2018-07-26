@@ -257,12 +257,10 @@ describe OrderMailer do
   end
 
   describe '.invoice' do
-    before do
-      @notification = OrderMailer.invoice(order.reload.id)
-    end
+    let(:notification) { OrderMailer.invoice(order.id) }
 
-    it "delivers to all users in the buyer organization" do
-      expect(@notification).to deliver_to(buyer_user.email)
+    it 'delivers to all users in the buyer organization' do
+      expect(notification).to deliver_to(buyer_user.email)
     end
   end
 end
