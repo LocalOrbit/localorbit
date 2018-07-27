@@ -739,7 +739,7 @@ feature "Payment history", :truncate_after_all do
       follow_buyer_order_link order: @orders[5]
     end
 
-    scenario "can view their purchase history after market manage deletes an organization" do
+    scenario "can view their purchase history after market manage deletes an organization", :js do
       switch_user(market_manager) do
         delete_organization(@seller)
       end

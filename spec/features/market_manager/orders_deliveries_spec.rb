@@ -92,7 +92,7 @@ context "Viewing sold items" do
         visit admin_order_items_path
       end
 
-      it "lists all sold items for the market" do
+      it "lists all sold items for the market", :js do
         sold_items = Dom::Admin::SoldItemRow.all
 
         expect(sold_items.count).to eq(3)
