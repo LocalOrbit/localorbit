@@ -69,15 +69,24 @@ module Admin
       user = User.find(params[:user_id])
       confirm_user(user)
 
-      redirect_to [:admin, :users], notice: "User #{user.decorate.display_name} Confirmed"
+      if user.errors.blank?
+        redirect_to [:admin, :users], notice: "User #{user.decorate.display_name} Confirmed"
+      else
+        Rollbar.warning('Unable to confirm user', errors: user.errors)
+        redirect_to :back, alert: "Unable to confirm #{user.decorate.display_name}: " + user.errors.full_messages.join(', ')
+      end
     end
 
     def invite
       user = User.find(params[:user_id])
       invite_user(user)
 
-      redirect_to [:admin, :users], notice: "User #{user.decorate.display_name} Re-Invited"
-
+      if user.errors.blank?
+        redirect_to [:admin, :users], notice: "User #{user.decorate.display_name} Re-Invited"
+      else
+        Rollbar.warning('Unable to invite user', errors: user.errors)
+        redirect_to :back, alert: "Unable to invite #{user.decorate.display_name}: " + user.errors.full_messages.join(', ')
+      end
     end
 
     private

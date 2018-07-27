@@ -33,7 +33,7 @@ module LocalOrbit
     config.action_mailer.default_url_options = {host: Figaro.env.domain}
 
     config.to_prepare do
-      Devise::Mailer.layout "email"
+      Devise::Mailer.layout 'email_devise'
       DeviseController.skip_before_action :ensure_market_affiliation
       DeviseController.skip_before_action :ensure_active_organization
       DeviseController.skip_before_action :ensure_user_not_suspended

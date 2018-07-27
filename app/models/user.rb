@@ -426,8 +426,7 @@ class User < ActiveRecord::Base
     end
   end
 
-
-  def is_invited?
+  def reinvitable?
     invitation_token != nil && !confirmed?
   end
 

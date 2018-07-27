@@ -28,7 +28,7 @@
             <%= user.toggle_enabled_button %>
           </td>
           <td>
-            <% if user.is_invited? %>
+            <% if user.reinvitable? %>
                 <%= link_to "Re-Invite", admin_organization_user_invite_path(@organization, user), class: "btn btn--small btn--save" %>
             <% end %>
           </td>
