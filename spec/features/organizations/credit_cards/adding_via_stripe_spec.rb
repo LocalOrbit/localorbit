@@ -43,8 +43,8 @@ feature "Adding a credit card to an organization", :js, :vcr do
       click_button "Save"
 
       expect(page).not_to have_content("Successfully added a credit card")
-      
-      # Commented out until we enable Account Types beyond 'Credit Card' 
+
+      # Commented out until we enable Account Types beyond 'Credit Card'
       #expect(page).to have_content("Account type: Please select an account type.")
 
       select "Credit Card", from: "provider_account_type"
@@ -67,13 +67,11 @@ feature "Adding a credit card to an organization", :js, :vcr do
       fill_in "Name", with: "John Doe"
       fill_in "Card Number", with: "5105105105105100"
       fill_in "Security Code", with: "123"
-      select "12", from: "expiration_month"
+      select "5", from: "expiration_month"
       select "2020", from: "expiration_year"
-
       click_button "Save"
 
-      #expect(page).to have_content("Unable to save payment method")
-      expect(page).to have_content("Payment method already exists for this organization")
+      expect(page).to have_content('Payment method card info already exists for this organization')
     end
   end
 
