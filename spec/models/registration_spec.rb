@@ -1,6 +1,6 @@
 require "spec_helper"
 
-# TODO: THIS CLASS NEEDS MORE UNIT TESTS! 
+# TODO: THIS CLASS NEEDS MORE UNIT TESTS!
 describe Registration do
   let(:market) { create(:market) }
 
@@ -23,13 +23,30 @@ describe Registration do
     Registration.new(registration_attrs)
   }
 
+  context "when new user is not invited" do
+    context "and market does not have 'auto-activate organizations' enabled" do
+
+      before :each do
+        #Default is false, but ensure test is valid
+        market.update_column(:auto_activate_organizations, false)
+      end
+
+      it "user should have an enabled relation to an inactive organization" do
+        registration.save
+        org = registration.organization
+        user = registration.user
+        expect(user.enabled_for_organization? org).to be true
+        expect(org.active?).to be false
+      end
+    end
+  end
+
   describe "address_label" do
     it "saves Location name based on address_label" do
       label = "The Address Label"
       registration_attrs[:address_label] = label
 
-      success = registration.save
-      expect(success).to be true
+      expect(registration.save).to be true
 
       expect(registration.organization.locations.first.name).to eq(label)
     end

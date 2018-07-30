@@ -60,6 +60,7 @@ class Registration
       # create the user second so we have the organization available
       # to the confirmation email
       self.user = User.find_by(email: email) || User.new(user_params)
+
       user.organizations << organization
       user.attempt_set_password(user_params)
       user.invitation_token=nil
@@ -79,7 +80,9 @@ class Registration
       buyer_org_type: buyer_org_type,
       ownership_type: ownership_type,
       non_profit: non_profit,
-      professional_organizations: professional_organizations
+      professional_organizations: professional_organizations,
+      #TODO - does this affect invited orgs/users ?
+      active: market.auto_activate_organizations
     }
   end
 
