@@ -48,10 +48,7 @@ namespace :production_copy do
     include CloneProductionHelper
     connect_production_copy
     cleanse_production_copy
-
-
   end
-
 
   desc "Copy the production S3 bucket to a target env"
   task :bucket, [:env] do |_, args|

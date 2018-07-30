@@ -48,9 +48,9 @@ class Registration
       self.organization = Organization.new(organization_params)
 
       if organization_params[:can_sell]
-        organization.org_type = "S"
+        organization.org_type = 'S'
       else
-        organization.org_type = "B"
+        organization.org_type = 'B'
       end
 
       organization.markets << market
@@ -89,7 +89,8 @@ class Registration
       buyer_org_type: buyer_org_type,
       ownership_type: ownership_type,
       non_profit: non_profit,
-      professional_organizations: professional_organizations
+      professional_organizations: professional_organizations,
+      active: market.auto_activate_organizations
     }
   end
 
