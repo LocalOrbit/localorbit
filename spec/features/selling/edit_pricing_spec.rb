@@ -200,7 +200,7 @@ describe "Editing advanced pricing", js: true do
   end
 end
 
-describe "price estimator", js: true do
+describe "price estimator", :js do
   let!(:market1) {create(:market, :with_delivery_schedule, local_orbit_seller_fee:3, market_seller_fee:2, allow_cross_sell:true)}
   let!(:market2) {create(:market, :with_delivery_schedule, local_orbit_seller_fee:5, market_seller_fee:10,allow_cross_sell:true)}
 
@@ -223,12 +223,19 @@ describe "price estimator", js: true do
     click_link "Pricing"
   end
 
-  it "allows price adding and editing properly in both markets" do
+  def select_option_on_chosen_widget(selector, text)
+    find(selector).click
+    within(selector) do
+      find('.active-result', text: text).click
+    end
+  end
+
+  it 'allows price adding and editing properly in both markets' do
     # Pricing adding tests
     form = Dom::NewPricingForm.first
-    # DO NOT click btn add here -- there is a row already open
     within form.node do
-      find("select.select_market_id", visible: false).find("option[value='#{market1.id}']", visible: false).select_option
+      select_option_on_chosen_widget('#p1_select_market_id_chosen', market1.name)
+
       fill_in "price[sale_price]", with: "12.90"
       click_button "Add"
     end
@@ -239,15 +246,13 @@ describe "price estimator", js: true do
     price_row.click_edit
 
     within price_row.node do
-      find("select.select_market_id", visible: false).find("option[value='#{market1.id}']", visible: false).select_option
       price_row.node.find("input.sale-price").set("16.80")
       expect(price_row.node.find("input.net-price").value).to eq("15.47")
 
-      find("select.select_market_id", visible: false).find("option[value='#{market2.id}']", visible: false).select_option
+      select_option_on_chosen_widget('#select_market_id_chosen', market2.name)
       price_row.node.find("input.sale-price").set("16.80")
       expect(price_row.node.find("input.net-price").value).to eq("13.79")
 
-      find("select.select_market_id", visible: false).select("All Markets", visible: false)
       price_row.node.find("input.sale-price").set("16.80")
       expect(price_row.node.find("input.net-price").value).to eq("13.79")
 
@@ -255,6 +260,5 @@ describe "price estimator", js: true do
     end
     price_row = Dom::PricingRow.first
     expect(price_row.net_price).to eq("$13.79")
-
   end
 end
