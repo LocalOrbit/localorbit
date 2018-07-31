@@ -196,7 +196,6 @@ FactoryBot.define do
     allow_credit_cards     true
     default_allow_purchase_orders   false
     default_allow_credit_cards      true
-    auto_activate_organizations     false
     product_label_format 4
     print_multiple_labels_per_item false
     alternative_order_page         false

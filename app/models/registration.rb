@@ -81,7 +81,6 @@ class Registration
       ownership_type: ownership_type,
       non_profit: non_profit,
       professional_organizations: professional_organizations,
-      #TODO - does this affect invited orgs/users ?
       active: market.auto_activate_organizations
     }
   end

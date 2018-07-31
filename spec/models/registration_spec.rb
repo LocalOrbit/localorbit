@@ -23,21 +23,24 @@ describe Registration do
     Registration.new(registration_attrs)
   }
 
-  context "when new user is not invited" do
-    context "and market does not have 'auto-activate organizations' enabled" do
+  context "market does have 'auto-activate organizations' enabled" do
+    let(:market) { create(:market,  auto_activate_organizations: true ) }
+    it "should have a registration organization is enabled" do
+      registration.save
+      org = registration.organization
+      user = registration.user
+      expect(user.enabled_for_organization? org).to be true
+      expect(org.active?).to be true
+    end
+  end
 
-      before :each do
-        #Default is false, but ensure test is valid
-        market.update_column(:auto_activate_organizations, false)
-      end
-
-      it "user should have an enabled relation to an inactive organization" do
-        registration.save
-        org = registration.organization
-        user = registration.user
-        expect(user.enabled_for_organization? org).to be true
-        expect(org.active?).to be false
-      end
+  context "market does *not* have 'auto-activate organizations' enabled" do
+    it "should have a registered organization that is not be enabled" do
+      registration.save
+      org = registration.organization
+      user = registration.user
+      expect(user.enabled_for_organization? org).to be true
+      expect(org.active?).to be false
     end
   end
 
