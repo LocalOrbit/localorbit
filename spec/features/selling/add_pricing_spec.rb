@@ -46,7 +46,7 @@ describe "Adding advanced pricing" do
     expect(page).to_not have_content("You don't have any Prices yet!")
   end
 
-  describe "invalid input" do 
+  describe "invalid input" do
     before do
       fill_in "price[sale_price]", with: "0"
       fill_in "price[min_quantity]", with: "0"
@@ -201,12 +201,16 @@ describe "Adding advanced pricing" do
     end
   end
 
-  describe "with category market fees - multiple markets", js: true do
+  describe 'with category market fees - multiple markets', :js do
     let!(:market) { create(:market, :with_delivery_schedule, :with_category_fee, allow_product_fee: true) }
     let!(:user)   { create(:user, :market_manager) }
 
-    it "shows updated net sale information - product fee" do
-      select market.name, from: 'price[market_id]', visible: false
+    it 'shows updated net sale information - product fee' do
+      find('#p1_select_market_id_chosen').click
+      within('#p1_select_market_id_chosen') do
+        all('.active-result')[2].click
+      end
+
       find(:field, 'price[fee]', with: '1').click
       fill_in "price[sale_price]", with: "12.90"
 
