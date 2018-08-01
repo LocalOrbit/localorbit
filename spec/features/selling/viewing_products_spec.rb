@@ -74,24 +74,29 @@ describe "Viewing products" do
       expect(product.stock).to have_content(apples.lots.map(&:quantity).join(" "))
     end
 
-    it "limits the number of rows based on user's choice", js: true do
+    it "limits the number of rows based on user's choice", :js do
       peppers = create(:product, created_at: 1.week.ago, organization: org2, name: "Peppers", unit: create(:unit, singular: "Tube", plural: "Tubes"))
       create(:price, product: peppers, sale_price: 5.00, min_quantity: 1)
       create(:lot, product: peppers, quantity: 1)
 
       visit admin_products_path(per_page: 2)
+      within('#filter-options-supplier') do
+        find('.fs-label', text: 'Select Options').click
+        find('.fs-option-label', text: org1.name).click
+      end
 
-      select "County Park", from: "q[organization_id_in][]", visible: false
       click_button "Search"
-      # I know, I know, but I can't find another way to make Capybara wait :/
-      sleep 3
       expect(Dom::ProductRow.count).to eq(2)
 
       select "Show 250 rows", from: "per_page"
       expect(page).to have_content("Grapes")
       expect(Dom::ProductRow.count).to eq(3)
 
-      unselect "County Park", from: "q[organization_id_in][]", visible: false
+      within('#filter-options-supplier') do
+        find('.fs-label', text: org1.name).click
+        find('.fs-option-label', text: org1.name).click
+      end
+
       click_button "Search"
 
       expect(page).to have_content("Peppers")
@@ -161,17 +166,20 @@ describe "Viewing products" do
     end
   end
 
-  context "updating prices and quantities", js: true do
+  context 'updating prices and quantities', js: true do
     let!(:user) { create(:user, :supplier, organizations: [org1]) }
 
-    it "maintains filters when updating updating price or inventory" do
+    it 'maintains filters when updating updating price or inventory' do
       sign_in_as(market_manager)
 
       visit admin_products_path
 
       expect(page).to have_content(market.name)
 
-      select market.name, from: "q[delivery_schedules_market_id_in][]", visible: false
+      within('#filter-options-market') do
+        find('.fs-label', text: 'Select Options').click
+        find('.fs-option-label', text: market.name).click
+      end
       click_button "Search"
 
       expect(page).to have_content(/Reset/i)
@@ -185,10 +193,6 @@ describe "Viewing products" do
       click_button "Save Inventory"
 
       expect(page).to_not have_content("Edit Inventory")
-
-      #expect(page.find("#filter_market").find("option[selected=selected]").text).to eq(market.name)
-      unselect market.name, from: "q[delivery_schedules_market_id_in][]", visible: false
-
     end
 
     it "updates simple inventory" do
