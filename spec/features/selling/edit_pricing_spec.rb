@@ -223,18 +223,11 @@ describe "price estimator", :js do
     click_link "Pricing"
   end
 
-  def select_option_on_chosen_widget(selector, text)
-    find(selector).click
-    within(selector) do
-      find('.active-result', text: text).click
-    end
-  end
-
   it 'allows price adding and editing properly in both markets' do
     # Pricing adding tests
     form = Dom::NewPricingForm.first
     within form.node do
-      select_option_on_chosen_widget('#p1_select_market_id_chosen', market1.name)
+      select_option_on_singleselect('#p1_select_market_id_chosen', market1.name)
 
       fill_in "price[sale_price]", with: "12.90"
       click_button "Add"
@@ -249,7 +242,7 @@ describe "price estimator", :js do
       price_row.node.find("input.sale-price").set("16.80")
       expect(price_row.node.find("input.net-price").value).to eq("15.47")
 
-      select_option_on_chosen_widget('#select_market_id_chosen', market2.name)
+      select_option_on_singleselect('#select_market_id_chosen', market2.name)
       price_row.node.find("input.sale-price").set("16.80")
       expect(price_row.node.find("input.net-price").value).to eq("13.79")
 

@@ -478,7 +478,7 @@ describe "Adding a product", chosen_js: true do
     end
 
     it "does not save a product with invalid product info", js: true do
-      select org2.name, from: "Supplier Organization", visible: false
+      select_option_on_singleselect('#product_organization_id_chosen', org2.name)
       uncheck 'seller_info'
 
       click_button "Save and Continue"

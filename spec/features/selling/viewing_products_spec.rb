@@ -80,10 +80,7 @@ describe "Viewing products" do
       create(:lot, product: peppers, quantity: 1)
 
       visit admin_products_path(per_page: 2)
-      within('#filter-options-supplier') do
-        find('.fs-label', text: 'Select Options').click
-        find('.fs-option-label', text: org1.name).click
-      end
+      select_option_on_multiselect('#filter-options-supplier', org1.name)
 
       click_button "Search"
       expect(Dom::ProductRow.count).to eq(2)
@@ -92,10 +89,7 @@ describe "Viewing products" do
       expect(page).to have_content("Grapes")
       expect(Dom::ProductRow.count).to eq(3)
 
-      within('#filter-options-supplier') do
-        find('.fs-label', text: org1.name).click
-        find('.fs-option-label', text: org1.name).click
-      end
+      unselect_option_on_multiselect('#filter-options-supplier', org1.name)
 
       click_button "Search"
 
@@ -176,10 +170,7 @@ describe "Viewing products" do
 
       expect(page).to have_content(market.name)
 
-      within('#filter-options-market') do
-        find('.fs-label', text: 'Select Options').click
-        find('.fs-option-label', text: market.name).click
-      end
+      select_option_on_multiselect('#filter-options-market', market.name)
       click_button "Search"
 
       expect(page).to have_content(/Reset/i)

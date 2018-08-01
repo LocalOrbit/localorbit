@@ -206,10 +206,7 @@ describe "Adding advanced pricing" do
     let!(:user)   { create(:user, :market_manager) }
 
     it 'shows updated net sale information - product fee' do
-      find('#p1_select_market_id_chosen').click
-      within('#p1_select_market_id_chosen') do
-        all('.active-result')[2].click
-      end
+      select_option_on_singleselect('#p1_select_market_id_chosen', market.name)
 
       find(:field, 'price[fee]', with: '1').click
       fill_in "price[sale_price]", with: "12.90"
