@@ -435,6 +435,12 @@ FactoryBot.define do
         create(:location, organization: org)
       end
     end
+
+    trait :decorated do
+      initialize_with do
+        OrganizationDecorator.new(new)
+      end
+    end
   end
 
   factory :payment do

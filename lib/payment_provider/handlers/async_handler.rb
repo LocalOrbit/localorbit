@@ -12,6 +12,7 @@ module PaymentProvider
 
       def call(event)
         raise RuntimeError if event.livemode && !Rails.env.production?
+        ::Rails::logger.info("WEBHOOK: #{event.type} CONNECT: #{event.try(:account)} LIVEMODE: #{event.livemode}")
         handler = HANDLER_IMPLS[event.type]
         return unless handler
 

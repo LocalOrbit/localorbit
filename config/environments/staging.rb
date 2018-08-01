@@ -94,8 +94,9 @@ Rails.application.configure do
   }
 
   # Enable mailer previews on staging
-  config.action_mailer.show_previews = true
-  config.action_mailer.preview_path = "#{Rails.root}/spec/mailers/previews"
+  # TODO: uncomment this when we get to rails 4.2+
+  # config.action_mailer.show_previews = true
+  # config.action_mailer.preview_path = "#{Rails.root}/spec/mailers/previews"
 
   config.react.variant = :production
 end
