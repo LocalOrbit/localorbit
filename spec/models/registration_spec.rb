@@ -23,42 +23,51 @@ describe Registration do
     Registration.new(registration_attrs)
   }
 
-  describe '#save' do
-    describe "address_label" do
-      it "saves Location name based on address_label" do
-        label = "The Address Label"
-        registration_attrs[:address_label] = label
+  context "market does have 'auto-activate organizations' enabled" do
+    let(:market) { create(:market,  auto_activate_organizations: true ) }
+    it "should have a registration organization is enabled" do
+      registration.save
+      org = registration.organization
+      user = registration.user
+      expect(user.enabled_for_organization? org).to be true
+      expect(org.active?).to be true
+    end
+  end
 
-        success = registration.save
-        expect(success).to be true
+  context "market does *not* have 'auto-activate organizations' enabled" do
+    it "should have a registered organization that is not be enabled" do
+      registration.save
+      org = registration.organization
+      user = registration.user
+      expect(user.enabled_for_organization? org).to be true
+      expect(org.active?).to be false
+    end
+  end
 
-        expect(registration.organization.locations.first.name).to eq(label)
-      end
-
-      it "defaults to 'Default Address' when saving a new Location" do
-        registration_attrs[:address_label] = nil
-
-        success = registration.save
-        expect(success).to be true
-
-        expect(registration.organization.locations.first.name).to eq("Default Address")
-      end
+  describe "address_label" do
+    it "saves Location name based on address_label" do
+      label = "The Address Label"
+      registration_attrs[:address_label] = label
+      expect(registration.save).to be true
+      expect(registration.organization.locations.first.name).to eq(label)
     end
 
-    describe 'user' do
-      it 'belongs to proper organization' do
-        success = registration.save
-        expect(success).to be true
+    it "defaults to 'Default Address' when saving a new Location" do
+      registration_attrs[:address_label] = nil
+      expect(registration.save).to be true
+      expect(registration.organization.locations.first.name).to eq("Default Address")
+    end
+  end
 
-        expect(registration.user.organizations).to include(registration.organization)
-      end
+  describe 'user' do
+    it 'belongs to proper organization' do
+      expect(registration.save).to be true
+      expect(registration.user.organizations).to include(registration.organization)
+    end
 
-      it 'password is valid' do
-        success = registration.save
-        expect(success).to be true
-
-        expect(registration.user.valid_password?('password1')).to be_truthy
-      end
+    it 'password is valid' do
+      expect(registration.save).to be true
+      expect(registration.user.valid_password?('password1')).to be_truthy
     end
   end
 end
