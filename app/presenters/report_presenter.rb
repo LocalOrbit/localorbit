@@ -266,11 +266,21 @@ class ReportPresenter
     end
 
     if includes_filter?(:seller_name)
-      @sellers = Organization.select(:id, :name).where(org_type: 'S', id: items.joins(:product).pluck("products.organization_id")).order(:name).uniq
+      @sellers = Organization.
+                   select(:id, :name).
+                   where(org_type: Organization::TYPE_SUPPLIER,
+                         id: items.joins(:product).pluck("products.organization_id")).
+                   order(:name).
+                   uniq
     end
 
     if includes_filter?(:buyer_name)
-      @buyers = Organization.active.select(:id, :name).where(id: items.pluck("orders.organization_id")).order(:name).uniq
+      @buyers = Organization.
+                  active.
+                  select(:id, :name).
+                  where(id: items.pluck("orders.organization_id")).
+                  order(:name).
+                  uniq
     end
 
     if includes_filter?(:category_name)
@@ -335,7 +345,7 @@ class ReportPresenter
 
     # Below: additions for lot reporting
     if includes_field?(:lot_info)
-      items = items.includes(:lots) 
+      items = items.includes(:lots)
     end
 
     ## TODO: Possible this information can be drawn from the lot, in-view, if all lots for a given OrderItem are known ^
