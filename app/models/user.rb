@@ -72,6 +72,7 @@ class User < ActiveRecord::Base
                   market.to_i
                 end
     joins(organizations: :market_organizations).
+      merge(Organization.active).
       where(market_organizations: {market_id: market_id}).
       merge(MarketOrganization.visible)
   }

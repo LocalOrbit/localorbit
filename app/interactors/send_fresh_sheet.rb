@@ -21,23 +21,31 @@ class SendFreshSheet
     context[:notice] = "Successfully sent a test to #{email}"
   end
 
-  def send_fresh_sheets_to_subscribed_members
-    fresh_sheet_type = SubscriptionType.find_by(keyword: SubscriptionType::Keywords::FreshSheet)
+  def fresh_sheet_subscribers
     User.
       confirmed.
       in_market(market).
       subscribed_to(fresh_sheet_type).
       uniq.
-      includes(:subscriptions).
-      each do |user|
-        token = user.unsubscribe_token(subscription_type: fresh_sheet_type)
-        MarketMailer.delay(priority: 20).fresh_sheet(market: market,
-                                       to: user.pretty_email,
-                                       note: CGI::unescapeHTML(note),
-                                       unsubscribe_token: token,
-                                       port: get_port)
-      end
+      includes(:subscriptions)
+  end
+
+  def send_fresh_sheets_to_subscribed_members
+    fresh_sheet_subscribers.each do |user|
+      token = user.unsubscribe_token(subscription_type: fresh_sheet_type)
+      MarketMailer.
+        delay(priority: 20).
+        fresh_sheet(market: market,
+                    to: user.pretty_email,
+                    note: CGI::unescapeHTML(note),
+                    unsubscribe_token: token,
+                    port: get_port)
+    end
     context[:notice] = "Successfully sent the Fresh Sheet"
+  end
+
+  def fresh_sheet_type
+    @fresh_sheet_type ||= SubscriptionType.find_by(keyword: SubscriptionType::Keywords::FreshSheet)
   end
 
   def get_port
