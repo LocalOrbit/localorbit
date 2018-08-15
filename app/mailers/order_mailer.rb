@@ -10,7 +10,7 @@ class OrderMailer < BaseMailer
     if !to_list.blank?
       mail(
         to: to_list,
-        subject: "Thank you for your order"
+        subject: 'Thank you for your order'
       )
     end
   end
@@ -54,13 +54,13 @@ class OrderMailer < BaseMailer
     @market = @order.market
     return if @market.is_consignment_market?
 
-    attachments["invoice.pdf"] = {mime_type: "application/pdf", content: @order.invoice_pdf.try(:data)}
+    attachments['invoice.pdf'] = {mime_type: 'application/pdf', content: @order.invoice_pdf.try(:data)}
 
     to_list = recipient_list(@order)
     if !to_list.blank?
       mail(
         to: to_list,
-        subject: "New Invoice"
+        subject: 'New Invoice'
       )
     end
   end
@@ -74,7 +74,7 @@ class OrderMailer < BaseMailer
     mail(
       to: recipient_list(order),
       subject: "#{@market.name}: Order #{order.order_number} Updated",
-      template_name: "order_updated"
+      template_name: 'order_updated'
     )
   end
 
@@ -87,26 +87,28 @@ class OrderMailer < BaseMailer
     mail(
         to: recipient_list(order),
         subject: "#{@market.name}: Order #{order.order_number} Updated - Item Removed",
-        template_name: "order_updated"
+        template_name: 'order_updated'
     )
   end
 
   def seller_order_updated(order, seller)
     return if order.market.is_consignment_market?
 
-    @market = order.market
-    @order = SellerOrder.new(order, seller) # Selling users organizations only see
-    @seller = seller
-
     to_list = seller.
                 users.
                 map { |u| u.enabled_for_organization?(seller) ? u.pretty_email : nil}.
                 compact
 
+    return if to_list.blank?
+
+    @market = order.market
+    @order = SellerOrder.new(order, seller) # Selling users organizations only see
+    @seller = seller
+
     mail(
       to: to_list,
       subject: "#{@market.name}: Order #{order.order_number} Updated",
-      template_name: "order_updated"
+      template_name: 'order_updated'
     )
   end
 
@@ -119,26 +121,21 @@ class OrderMailer < BaseMailer
     mail(
       to: order.market.managers.map(&:pretty_email),
       subject: "#{@market.name}: Order #{order.order_number} Updated",
-      template_name: "order_updated"
+      template_name: 'order_updated'
     )
   end
 
-  def seller_order_item_removal(order, seller, pdf, csv)
+  def seller_order_item_removal(order, seller)
     return if order.market.is_consignment_market?
 
     @market = order.market
     @order = SellerOrder.new(order, seller) # Selling users organizations only see
     @seller = seller
 
-    if pdf
-      attachments["packing_list.pdf"] = {mime_type: "application/pdf", content: pdf.data}
-      attachments["packing_list.csv"] = {mime_type: "application/csv", content: csv}
-    end
-
     mail(
         to: seller.users.map(&:pretty_email),
         subject: "#{@market.name}: Order #{order.order_number} Updated - Item Removed",
-        template_name: "order_updated"
+        template_name: 'order_updated'
     )
   end
 
