@@ -2,8 +2,8 @@ class SendUpdateEmails
   include Interactor
 
   def perform
-    send_update_to_sellers order.sellers_with_changes
-    send_update_to_sellers order.sellers_with_cancel
+    send_update_to_suppliers order.sellers_with_changes
+    send_update_to_suppliers order.sellers_with_cancel
   end
 
   def users_should_be_updated?
@@ -33,14 +33,14 @@ class SendUpdateEmails
 
   private
 
-  def send_update_to_sellers(sellers)
-    sellers.each do |seller|
-      if seller.users.present?
+  def send_update_to_suppliers(suppliers)
+    suppliers.each do |supplier|
+      if supplier.users.present?
         OrderMailer.
           delay(priority: 10).
-          seller_order_updated(order, seller)
+          seller_order_updated(order, supplier)
       else
-        ap "Warning: trying to send update email to seller with no users."
+        ap "Warning: trying to send update email to supplier with no users."
       end
     end
   end
