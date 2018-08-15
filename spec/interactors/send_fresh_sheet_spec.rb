@@ -24,11 +24,14 @@ describe SendFreshSheet do
     user
   end
 
+  #Note - this context currently tests a private method on the interactor that
+  #should eventually be separated into its own object
   context 'finding valid subscribers' do
-    subject(:interactor) do
+
+    let(:target_users) do
       interactor = SendFreshSheet.new
       interactor.context[:market] = market
-      interactor
+      interactor.send(:fresh_sheet_subscribers)
     end
 
     context 'when market users have been deactivated from an organization' do
@@ -36,7 +39,6 @@ describe SendFreshSheet do
         UserOrganization.where(user_id: subscribed_buyer.id).update_all(enabled: false)
       end
       it 'should not find deactivated organization users' do
-        target_users = subject.send(:fresh_sheet_subscribers)
         expect(target_users).not_to include(subscribed_buyer)
       end
     end
@@ -47,7 +49,6 @@ describe SendFreshSheet do
         Organization.where(id: subbed_org_ids).update_all(active: false)
       end
       it 'should not find the user' do
-        target_users = subject.send(:fresh_sheet_subscribers)
         expect(target_users).not_to include(subscribed_buyer)
       end
     end
@@ -63,7 +64,6 @@ describe SendFreshSheet do
         subscribed_buyer.organizations << inactive_org
       end
       it 'should find the user' do
-        target_users = subject.send(:fresh_sheet_subscribers)
         expect(target_users).to include(subscribed_supplier)
       end
     end
@@ -76,7 +76,6 @@ describe SendFreshSheet do
         user
       end
       it 'should not find users only belonging to other markets' do
-        target_users = subject.send(:fresh_sheet_subscribers)
         expect(target_users).not_to include(subscriber_in_other_market.email)
       end
     end
@@ -90,7 +89,6 @@ describe SendFreshSheet do
         user
       end
       it 'should not find unsubscribed users' do
-        target_users = subject.send(:fresh_sheet_subscribers)
         expect(target_users).not_to include(unsubscribed_buyer)
       end
     end
@@ -100,22 +98,27 @@ describe SendFreshSheet do
         subscribed_buyer.update_column(:confirmed_at, nil)
       end
       it 'should not find unconfirmed users' do
-        target_users = subject.send(:fresh_sheet_subscribers)
         expect(target_users).not_to include(subscribed_buyer)
       end
     end
   end
 
-  context 'sending to subscribers' do
+  describe '.perform' do
+    let(:commit) {'Send to Everyone Now'}
+
+    let! (:context) do
+      SendFreshSheet.perform(
+        market: market,
+        commit: commit,
+        note: note)
+    end
 
     it 'should set success in the interactor context' do
-      context = SendFreshSheet.perform(market: market, commit: 'Send to Everyone Now', note: note)
       expect(context.success?).to eq(true)
       expect(context.notice).to eq('Successfully sent the Fresh Sheet')
     end
 
     it 'should have valid data in the emails' do
-      SendFreshSheet.perform(market: market, commit: 'Send to Everyone Now', note: note)
       mails = ActionMailer::Base.deliveries
       mail1 = mails.select do |m| m.to.first == subscribed_buyer.email end.first
       assert_fresh_sheet_sent_to mail1, market, subscribed_buyer.email, note
@@ -124,10 +127,12 @@ describe SendFreshSheet do
       assert_fresh_sheet_sent_to mail2, market, subscribed_supplier.email, note
     end
 
-    it 'fails on bad commit value' do
-      context = SendFreshSheet.perform(market: market, commit: 'oops bad', email: 'hossnfeffer@example.com', note:note)
-      expect(context.failure?).to eq(true)
-      expect(context.error).to eq('Invalid action chosen')
+    context 'with bad commit value' do
+      let(:commit){'oops bad'}
+      it 'fails' do
+        expect(context.failure?).to eq(true)
+        expect(context.error).to eq('Invalid action chosen')
+      end
     end
   end
 

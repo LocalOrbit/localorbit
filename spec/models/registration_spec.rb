@@ -23,39 +23,41 @@ describe Registration do
     Registration.new(registration_attrs)
   }
 
-  context "market does have 'auto-activate organizations' enabled" do
-    let(:market) { create(:market,  auto_activate_organizations: true ) }
-    it "should have a registration organization is enabled" do
-      registration.save
-      org = registration.organization
-      user = registration.user
-      expect(user.enabled_for_organization? org).to be true
-      expect(org.active?).to be true
-    end
-  end
-
-  context "market does *not* have 'auto-activate organizations' enabled" do
-    it "should have a registered organization that is not be enabled" do
-      registration.save
-      org = registration.organization
-      user = registration.user
-      expect(user.enabled_for_organization? org).to be true
-      expect(org.active?).to be false
-    end
-  end
-
-  describe "address_label" do
-    it "saves Location name based on address_label" do
-      label = "The Address Label"
-      registration_attrs[:address_label] = label
-      expect(registration.save).to be true
-      expect(registration.organization.locations.first.name).to eq(label)
+  describe '.save' do
+    context "market does have 'auto-activate organizations' enabled" do
+      let(:market) { create(:market,  auto_activate_organizations: true ) }
+      it "should have a registration organization is enabled" do
+        registration.save
+        org = registration.organization
+        user = registration.user
+        expect(user.enabled_for_organization? org).to be true
+        expect(org.active?).to be true
+      end
     end
 
-    it "defaults to 'Default Address' when saving a new Location" do
-      registration_attrs[:address_label] = nil
-      expect(registration.save).to be true
-      expect(registration.organization.locations.first.name).to eq("Default Address")
+    context "market does *not* have 'auto-activate organizations' enabled" do
+      it "should have a registered organization that is not be enabled" do
+        registration.save
+        org = registration.organization
+        user = registration.user
+        expect(user.enabled_for_organization? org).to be true
+        expect(org.active?).to be false
+      end
+    end
+
+    describe "address_label" do
+      it "saves Location name based on address_label" do
+        label = "The Address Label"
+        registration_attrs[:address_label] = label
+        expect(registration.save).to be true
+        expect(registration.organization.locations.first.name).to eq(label)
+      end
+
+      it "defaults to 'Default Address' when saving a new Location" do
+        registration_attrs[:address_label] = nil
+        expect(registration.save).to be true
+        expect(registration.organization.locations.first.name).to eq("Default Address")
+      end
     end
   end
 
