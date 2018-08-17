@@ -46,14 +46,10 @@ describe ProcessPackingLabelsPrintable do
   let(:seller_orders) { [ order ] }
   let(:seller2_orders) { [ order2 ] }
 
-  ####
-
   let(:admin_printable) { create(:packing_labels_printable, user: admin_user, delivery: delivery) }
   let(:seller_printable) { create(:packing_labels_printable, user: seller_user, delivery: delivery) }
   let(:seller2_printable) { create(:packing_labels_printable, user: seller_user2, delivery: delivery) }
   let(:manager_printable) { create(:packing_labels_printable, user: manager, delivery: delivery) }
-
-  ####
 
   let(:product_labels_only) { false }
   let(:product_label_format) { 4 }
@@ -65,7 +61,7 @@ describe ProcessPackingLabelsPrintable do
   let(:pdf_result) {double('Pdf result', data: 'the pdf data')}
 
   def unfortunately_forcible_reload(obj)
-    # Dragonfly's side effects are only observible in this test if we get a fresh new AR instance. :(
+    # Dragonfly's side effects are only observable in this test if we get a fresh new AR instance. :(
     obj.class.find(obj.id)
   end
 
