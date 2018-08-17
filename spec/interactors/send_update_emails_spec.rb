@@ -73,22 +73,20 @@ describe SendUpdateEmails do
     OrderItem.enable_auditing
 
     order.reload.update(update_params)
-    # UpdateQuantities.perform(order: order.reload, order_params: update_params)
 
     OrderItem.disable_auditing
     Order.disable_auditing
 
     # Set all audits to be the same request
     Audit.all.update_all(request_uuid: SecureRandom.uuid)
-
   end
 
-  context "a update that should send an email" do
+  context 'a update that should send an email' do
     let!(:update_params) do
       {
         updated_at: Time.current,
         items_attributes: {
-          "0" => {
+          '0' => {
             id: item1.id,
             quantity: 5
           }
@@ -96,54 +94,27 @@ describe SendUpdateEmails do
       }
     end
 
-    it "sends an email to sellers whose items have been updated" do
+    it 'sends an email to sellers whose items have been updated' do
       request = @request
-
       if order.market.organization.plan == plan
         expect_any_instance_of(OrderMailer).to receive(:seller_order_updated)
         SendUpdateEmails.perform(order: order, request: request)
-
       end
     end
 
-    it "does not send an email to sellers whose items have not been updated" do
+    it 'does not send an email to sellers whose items have not been updated' do
       request = @request
       expect_any_instance_of(OrderMailer).to_not receive(:seller_order_updated).with(order, seller2, nil, nil)
       SendUpdateEmails.perform(order: order, request: request)
     end
   end
 
-  context "when an order item has been deleted" do
-    let!(:update_params) do
-      {
-        items_attributes: {
-          "0"=>{
-            id: item1.id.to_s,
-            quantity: "2",
-            "_destroy" => "true"
-          }
-        }
-      }
-    end
-
-=begin
-    it "sends an email to users in the organization" do
-      expect_any_instance_of(OrderMailer).to receive(:buyer_order_updated).with(order)
-      request = @request
-
-      expect {
-        SendUpdateEmails.perform(order: order, request: request)
-      }.to_not raise_error
-    end
-=end
-  end
-
-  context "a update that should not send emails" do
+  context 'a update that should not send emails' do
     let!(:update_params) do
       {
         updated_at: Time.current,
         items_attributes: {
-          "0" => {
+          '0' => {
             id: item1.id,
             quantity_delivered: 4
           }
@@ -151,14 +122,14 @@ describe SendUpdateEmails do
       }
     end
 
-    it "does not send an email to users in the organization" do
+    it 'does not send an email to users in the organization' do
       request = @request
       expect_any_instance_of(OrderMailer).not_to receive(:buyer_order_updated)
 
       SendUpdateEmails.perform(request: request, order: order)
     end
 
-    it "does not send an email to sellers whose items have not been updated" do
+    it 'does not send an email to sellers whose items have not been updated' do
       request = @request
       expect_any_instance_of(OrderMailer).not_to receive(:seller_order_updated)
 
