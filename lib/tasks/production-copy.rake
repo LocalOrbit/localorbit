@@ -22,7 +22,7 @@ namespace :production_copy do
   end
 
   desc "Get a local copy of production (no cleansing)"
-  task fetch_db: [:environment]  do
+  task fetch_db: [:environment] do
     include CloneProductionHelper
     copy_production_to_local
   end
@@ -44,7 +44,7 @@ namespace :production_copy do
   end
 
   desc "Clean up BalancedPayments refs and user email and passwords"
-  task :cleanse do
+  task cleanse: [:environment] do
     include CloneProductionHelper
     connect_production_copy
     cleanse_production_copy
@@ -261,23 +261,23 @@ module CloneProductionHelper
 
   def balanced_payments_refs_to_clear
     if ENV["KEEP_BALANCED_URIS"] =~ /^(y|on|true)/i
-      [ { model: Payment,     fields: [ :balanced_uri ] } ]
+      [ { model: ::Payment,     fields: [ :balanced_uri ] } ]
     else
-      [ { model: BankAccount, fields: [ :balanced_uri, :balanced_verification_uri ] },
-        { model: Market     , fields: [ :balanced_customer_uri ] },
-        { model: Organization,fields: [ :balanced_customer_uri ] },
-        { model: Payment,     fields: [ :balanced_uri ] } ]
+      [ { model: ::BankAccount, fields: [ :balanced_uri, :balanced_verification_uri ] },
+        { model: ::Market     , fields: [ :balanced_customer_uri ] },
+        { model: ::Organization,fields: [ :balanced_customer_uri ] },
+        { model: ::Payment,     fields: [ :balanced_uri ] } ]
     end
   end
 
   def stripe_refs_to_clear
     if ENV["KEEP_STRIPE_IDS"] =~ /^(y|on|true)/i
-      [ { model: Payment,     fields: [ :stripe_id ] } ]
+      [ { model: ::Payment,     fields: [ :stripe_id ] } ]
     else
-      [ { model: BankAccount, fields: [ :stripe_id ] },
-        { model: Market     , fields: [ :stripe_customer_id, :stripe_account_id ] },
-        { model: Organization,fields: [ :stripe_customer_id ] },
-        { model: Payment,     fields: [ :stripe_id ] } ]
+      [ { model: ::BankAccount, fields: [ :stripe_id ] },
+        { model: ::Market     , fields: [ :stripe_customer_id, :stripe_account_id ] },
+        { model: ::Organization,fields: [ :stripe_customer_id ] },
+        { model: ::Payment,     fields: [ :stripe_id ] } ]
     end
   end
 
@@ -303,11 +303,15 @@ module CloneProductionHelper
     puts "Transforming all user emails to @example.com"
     User.all.each do |user|
       email = user.email
-      unless email =~ /@example\.com$/ or email =~ /atomicobject/ or email =~ /localorb/
+      if email.present? && email_needs_cleansing?(email)
         new_email = user.email.gsub("@","_at_") + "@example.com"
         user.update_columns(email: new_email)
       end
     end
+  end
+
+  def email_needs_cleansing?(email)
+    !(email =~ /@example\.com$/ || email =~ /atomicobject/ || email =~ /local||b/)
   end
 
   def dump_cleansed_copy
