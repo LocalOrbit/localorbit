@@ -46,10 +46,18 @@ describe ProcessPackingLabelsPrintable do
   let(:seller_orders) { [ order ] }
   let(:seller2_orders) { [ order2 ] }
 
-  let(:admin_printable) { create(:packing_labels_printable, user: admin_user, delivery: delivery) }
-  let(:seller_printable) { create(:packing_labels_printable, user: seller_user, delivery: delivery) }
-  let(:seller2_printable) { create(:packing_labels_printable, user: seller_user2, delivery: delivery) }
-  let(:manager_printable) { create(:packing_labels_printable, user: manager, delivery: delivery) }
+  let(:admin_printable) { create(:packing_labels_printable,
+                                 user: admin_user,
+                                 delivery: delivery) }
+  let(:seller_printable) { create(:packing_labels_printable,
+                                  user: seller_user,
+                                  delivery: delivery) }
+  let(:seller2_printable) { create(:packing_labels_printable,
+                                   user: seller_user2,
+                                   delivery: delivery) }
+  let(:manager_printable) { create(:packing_labels_printable,
+                                   user: manager,
+                                   delivery: delivery) }
 
   let(:product_labels_only) { false }
   let(:product_label_format) { 4 }
@@ -105,7 +113,13 @@ describe ProcessPackingLabelsPrintable do
       expect_generate_packing_labels_for_orders(seller_orders,seller_user)
       dte = delivery.deliver_on.strftime('%Y-%m-%d')
 
-      subject.perform(market_id: market.id, packing_labels_printable_id: seller_printable.id, request: request, product_labels_only: product_labels_only, product_label_format: product_label_format, print_multiple_labels_per_item: print_multiple_labels_per_item, delivery_date: dte)
+      subject.perform(market_id: market.id,
+                      packing_labels_printable_id: seller_printable.id,
+                      request: request,
+                      product_labels_only: product_labels_only,
+                      product_label_format: product_label_format,
+                      print_multiple_labels_per_item: print_multiple_labels_per_item,
+                      delivery_date: dte)
 
       verify_pdf_generated_on seller_printable
     end

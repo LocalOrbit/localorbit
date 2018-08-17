@@ -25,7 +25,6 @@ class ProcessPackingLabelsPrintable
                   .order(:order_number).group(d_group)
                   .select(d_select)
 
-
     orders = orders.for_seller(user).sort_by(&:billing_organization_name)
     seller_orders = orders.map do |o| SellerOrder.new(o,user) end
 
