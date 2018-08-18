@@ -14,7 +14,7 @@ namespace :production_copy do
   end
 
   desc "Get and cleanse a local copy of production"
-  task bring_down: [:environment]  do
+  task bring_down: :environment  do
     include CloneProductionHelper
     copy_production_to_local
     connect_production_copy
@@ -22,7 +22,7 @@ namespace :production_copy do
   end
 
   desc "Get a local copy of production (no cleansing)"
-  task fetch_db: [:environment] do
+  task fetch_db: :environment do
     include CloneProductionHelper
     copy_production_to_local
   end
@@ -44,7 +44,7 @@ namespace :production_copy do
   end
 
   desc "Clean up BalancedPayments refs and user email and passwords"
-  task cleanse: [:environment] do
+  task cleanse: :environment do
     include CloneProductionHelper
     connect_production_copy
     cleanse_production_copy
