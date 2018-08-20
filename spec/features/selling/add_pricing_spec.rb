@@ -11,7 +11,6 @@ describe "Adding advanced pricing" do
   let!(:product)      { create(:product, organization: organization) }
   let!(:user2)         { create(:user, :market_manager, managed_markets: [market]) }
 
-
   before do
     organization2.market_organizations.each do |mo|
       mo.deleted_at = Time.now
@@ -21,7 +20,6 @@ describe "Adding advanced pricing" do
     switch_to_subdomain(market.subdomain)
     sign_in_as(user)
     within "#admin-nav" do
-
       click_link "Products"
     end
     click_link product.name
@@ -46,7 +44,7 @@ describe "Adding advanced pricing" do
     expect(page).to_not have_content("You don't have any Prices yet!")
   end
 
-  describe "invalid input" do
+  context "with invalid input" do
     before do
       fill_in "price[sale_price]", with: "0"
       fill_in "price[min_quantity]", with: "0"
@@ -58,7 +56,7 @@ describe "Adding advanced pricing" do
       expect(page).to have_content("Minimum quantity must be greater than 0")
     end
 
-    it "re-enables the net pricing calculator for the new form", js: true do
+    it "re-enables the net pricing calculator for the new form", :js do
       fill_in "price[sale_price]", with: "12"
       new_price_form = Dom::NewPricingForm.first
       expect(new_price_form.net_price.value).to eq("11.29") # 5.9% fees subtracted
@@ -126,7 +124,7 @@ describe "Adding advanced pricing" do
     end
   end
 
-  it "canceling adding a price", js: true do
+  it "canceling adding a price", :js do
     fill_in "price[min_quantity]", with: "2"
     fill_in "price[sale_price]", with: "1.99"
     click_button "Add"
@@ -140,7 +138,7 @@ describe "Adding advanced pricing" do
     expect(find_field("price[sale_price]").value).to eq("")
   end
 
-  it "hides the new form if you start editing a price but retains entered values", js: true do
+  it 'hides the new form if you start editing a price but retains entered values', :js do
     fill_in "price[min_quantity]", with: "2"
     fill_in "price[sale_price]", with: "1.99"
     click_button "Add"
@@ -158,7 +156,7 @@ describe "Adding advanced pricing" do
     expect(find_field("price[sale_price]").value).to eq("1.90")
   end
 
-  describe "with different fees", js: true do
+  context 'with different fees', :js do
     let!(:market) { create(:market, local_orbit_seller_fee: 4, market_seller_fee: 6) }
 
     it "shows updated net sale information" do
@@ -177,12 +175,12 @@ describe "Adding advanced pricing" do
     end
   end
 
-  describe "with category market fees - single market", js: true do
+  context 'with category market fees - single market', :js do
     let!(:market) { create(:market, :with_delivery_schedule, :with_category_fee, allow_product_fee: true) }
     let!(:user)   { create(:user, :market_manager) }
     let!(:organization) { create(:organization, :seller, markets: [market], users: [user]) }
 
-    it "shows updated net sale information - product fee" do
+    it 'shows updated net sale information - product fee' do
       find(:field, 'price[fee]', with: '1').click
       fill_in "price[sale_price]", with: "12.90"
 
@@ -201,9 +199,11 @@ describe "Adding advanced pricing" do
     end
   end
 
-  describe 'with category market fees - multiple markets', :js do
-    let!(:market) { create(:market, :with_delivery_schedule, :with_category_fee, allow_product_fee: true) }
-    let!(:user)   { create(:user, :market_manager) }
+  context 'with category market fees - multiple markets', :js do
+    let!(:market) { create(:market, :with_delivery_schedule, :with_category_fee,
+                           allow_product_fee: true) }
+    let!(:user)   { create(:user, :market_manager,
+                           roles: [FactoryBot.create(:role, :market_manager)]) }
 
     it 'shows updated net sale information - product fee' do
       select_option_on_singleselect('#p1_select_market_id_chosen', market.name)
@@ -226,7 +226,7 @@ describe "Adding advanced pricing" do
     end
   end
 
-  describe "with product market fees", js: true do
+  context "with product market fees", :js do
     let!(:market) { create(:market, :with_delivery_schedule, allow_product_fee: true) }
     let!(:user)   { create(:user, :market_manager) }
 
