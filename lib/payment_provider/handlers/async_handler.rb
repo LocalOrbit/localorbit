@@ -13,6 +13,7 @@ module PaymentProvider
       def call(event)
         ::Rails::logger.info("WEBHOOK: #{event.type} CONNECT: #{event.try(:account)} LIVEMODE: #{event.livemode}")
         handler = HANDLER_IMPLS[event.type]
+        Rollbar.info('webhook', event)
         return unless handler && event.livemode && Rails.env.production?
 
         params = handler.extract_job_params(event)
