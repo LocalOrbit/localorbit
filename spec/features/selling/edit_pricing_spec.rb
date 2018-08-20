@@ -162,7 +162,7 @@ describe "Editing advanced pricing", js: true do
     end
 
     it "allows the user to delete all prices" do
-      pending "a new design is needed for deleting all prices"
+      skip "a new design is needed for deleting all prices"
 
       find(".select-all").click
 
@@ -216,7 +216,6 @@ describe "price estimator", :js do
     switch_to_subdomain(market1.subdomain)
     sign_in_as(user)
     within "#admin-nav" do
-
       click_link "Products"
     end
     click_link product1.name
@@ -225,13 +224,11 @@ describe "price estimator", :js do
 
   it 'allows price adding and editing properly in both markets' do
     # Pricing adding tests
-    form = Dom::NewPricingForm.first
-    within form.node do
-      select_option_on_singleselect('#p1_select_market_id_chosen', market1.name)
+    select_option_on_singleselect('#p1_select_market_id_chosen', market1.name)
 
-      fill_in "price[sale_price]", with: "12.90"
-      click_button "Add"
-    end
+    fill_in "price[sale_price]", with: "12.90"
+    click_button "Add"
+
     price_row = Dom::PricingRow.first
     expect(price_row.net_price).to eq("$11.88") # market 1, 7.9% fees deducted first
 
