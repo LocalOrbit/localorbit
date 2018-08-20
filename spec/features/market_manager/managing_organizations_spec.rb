@@ -113,7 +113,7 @@ describe "A Market Manager", :vcr do
         click_link "Add Organization"
 
         fill_in "Name", with: "Famous Farm"
-        select market2.name, from: "Market", visible: false
+        select_option_on_singleselect('#initial_market_id_chosen', market2.name)
 
         expect(page).to have_content("Allow purchase orders")
         check "Allow purchase orders"
