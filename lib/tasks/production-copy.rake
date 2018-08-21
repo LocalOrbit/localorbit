@@ -36,7 +36,6 @@ namespace :production_copy do
     replicate_s3_bucket unless (ENV["BUCKET"] =~ /^(n|off|false|skip)/i)
   end
 
-
   desc "Clone the production database to local Postgresql db 'localorbit-production-copy'"
   task :get do
     include CloneProductionHelper
@@ -107,7 +106,6 @@ namespace :production_copy do
     include CloneProductionHelper
     console
   end
-
 end
 
 #
@@ -286,7 +284,7 @@ module CloneProductionHelper
     refs_to_clear += balanced_payments_refs_to_clear
     refs_to_clear += stripe_refs_to_clear
 
-    refs_to_clear.each do |model:,fields:|
+    refs_to_clear.each do |model, fields|
       fields.each do |field|
         puts "Setting all #{model.name}##{field} to nil"
         model.update_all("#{field} = NULL")
