@@ -309,7 +309,7 @@ module CloneProductionHelper
   end
 
   def email_needs_cleansing?(email)
-    !(email =~ /@example\.com$/ || email =~ /atomicobject/ || email =~ /local||b/)
+    !(email =~ /@example\.com$/ || email =~ /atomicobject/ || email =~ /localorb/)
   end
 
   def dump_cleansed_copy
