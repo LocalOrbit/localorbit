@@ -4,6 +4,13 @@ class Organization < ActiveRecord::Base
   include Sortable
   include PgSearch
 
+  ORG_TYPES = [
+    TYPE_BUYER    = 'B',
+    TYPE_SUPPLIER = 'S',
+    TYPE_MARKET   = 'M',
+    TYPE_ADMIN    = 'A'
+  ]
+
   before_update :process_plan_change, if: :plan_id_changed?
 
   has_one  :market
@@ -38,13 +45,13 @@ class Organization < ActiveRecord::Base
   has_one :qb_token
   has_one :qb_profile
 
-  validates :org_type, inclusion: { :in => ['A', 'M', 'S', 'B'] }
+  validates :org_type, inclusion: { in: ORG_TYPES }
   validates :name, presence: true, length: {maximum: 255, allow_blank: true}
   validate :require_payment_method
 
   scope :active,  -> { where(active: true) }
-  scope :selling, -> { where(org_type: "S") }
-  scope :buying,  -> { where(org_type: "B") } # needs a new boolean
+  scope :selling, -> { where(org_type: TYPE_SUPPLIER) }
+  scope :buying,  -> { where(org_type: TYPE_BUYER) }
   scope :visible, -> { where(show_profile: true) }
   scope :with_products, -> { joins(:products).select("DISTINCT organizations.*").order(name: :asc) }
   scope :buyers_for_orders, lambda {|orders| joins(:orders).where(orders: {id: orders}).uniq }
@@ -117,11 +124,11 @@ class Organization < ActiveRecord::Base
   end
 
   def buyer?
-    org_type == 'B'
+    org_type == TYPE_BUYER
   end
 
   def supplier?
-    org_type == 'S'
+    org_type == TYPE_SUPPLIER
   end
 
   def update_product_delivery_schedules
@@ -268,7 +275,7 @@ class Organization < ActiveRecord::Base
   end
 
   def require_payment_method
-    unless self.payment_model == "consignment" || self.org_type == "M" || allow_purchase_orders? || allow_credit_cards? || allow_ach?
+    unless self.payment_model == "consignment" || self.org_type == TYPE_MARKET || allow_purchase_orders? || allow_credit_cards? || allow_ach?
       errors.add(:payment_method, "At least one payment method is required for the organization")
     end
   end

@@ -72,6 +72,7 @@ class User < ActiveRecord::Base
                   market.to_i
                 end
     joins(organizations: :market_organizations).
+      merge(Organization.active).
       where(market_organizations: {market_id: market_id}).
       merge(MarketOrganization.visible)
   }
@@ -228,7 +229,10 @@ class User < ActiveRecord::Base
   def seller?
     return false if admin? || market_manager?
     return @seller if !@seller.nil?
-    @seller = user_organizations.includes(:organization).where(organizations: {org_type: 'S'}).exists?
+    @seller = user_organizations.
+                includes(:organization).
+                where(organizations: {org_type: Organization::TYPE_SUPPLIER}).
+                exists?
   end
 
   def admin_or_mm?
@@ -238,7 +242,11 @@ class User < ActiveRecord::Base
   def buyer_only?
     return false if admin? || market_manager? || seller?
     return @buyer if !@buyer.nil?
-    @buyer = user_organizations.includes(:organization).where(organizations: {org_type: 'B'}).exists?
+    @buyer = user_organizations.
+               includes(:organization).
+               where(
+                 organizations: {org_type: Organization::TYPE_BUYER}
+               ).exists?
   end
 
   def is_seller_with_purchase?
