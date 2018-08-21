@@ -74,7 +74,10 @@ class Admin::MarketQbProfileController < AdminController
     # TODO: Disable button during use, add status indicator? Separate buttons for each?
 
     @qb_profile = @market.organization.qb_profile
-    customers = current_user.managed_organizations.where(org_type: 'B').where(qb_org_id: nil)
+    customers = current_user.
+                  managed_organizations.
+                  where(org_type: Organization::TYPE_BUYER,
+                        qb_org_id: nil)
     puts customers.length
     customers.each do |cust|
       retry_cnt = 0
@@ -93,7 +96,10 @@ class Admin::MarketQbProfileController < AdminController
         end
       end
 
-    vendors = current_user.managed_organizations.where(org_type: 'S').where(qb_org_id: nil)
+    vendors = current_user.
+                managed_organizations.
+                where(org_type: Organization::TYPE_SUPPLIER,
+                      qb_org_id: nil)
     puts customers.length
     vendors.each do |vend|
       retry_cnt = 0

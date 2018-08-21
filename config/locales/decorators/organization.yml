@@ -1,0 +1,8 @@
+en:
+  decorators:
+    organization:
+       org_type:
+         S: supplier
+         B: buyer
+         M: market
+         A: admin
