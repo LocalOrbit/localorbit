@@ -1,6 +1,8 @@
 require "spec_helper"
 
-describe "Checking Out using Stripe payment provider", :js do
+xdescribe "Checking Out using Stripe payment provider", :js do
+  # FIXME spec must setup us up as a platform at Stripe
+  skip 'These run against Stripe API, need work to setup platform'
   let!(:user) { create(:user, :buyer) }
   let!(:other_buying_user) {  create(:user, :buyer) }
   let!(:buyer) { create(:organization, :single_location, :buyer, users: [user, other_buying_user]) }
