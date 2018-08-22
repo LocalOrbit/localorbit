@@ -202,8 +202,7 @@ describe "Adding advanced pricing" do
   context 'with category market fees - multiple markets', :js do
     let!(:market) { create(:market, :with_delivery_schedule, :with_category_fee,
                            allow_product_fee: true) }
-    let!(:user)   { create(:user, :market_manager,
-                           roles: [FactoryBot.create(:role, :market_manager)]) }
+    let!(:user)   { create(:user, :market_manager) }
 
     it 'shows updated net sale information - product fee' do
       select_option_on_singleselect('#p1_select_market_id_chosen', market.name)
