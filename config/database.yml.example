@@ -17,7 +17,7 @@
 development:
   adapter: postgresql
   encoding: unicode
-  database: local_orbit_development
+  database: localorbit_development
   pool: 5
 
   # Connect on a TCP socket. Omitted by default since the client uses a
@@ -44,13 +44,5 @@ development:
 test:
   adapter: postgresql
   encoding: unicode
-  database: local_orbit_test
+  database: localorbit_test
   pool: 5
-
-production:
-  adapter: postgresql
-  encoding: unicode
-  database: local_orbit_production
-  pool: 5
-  username: local_orbit
-  password:
