@@ -208,6 +208,7 @@ describe 'Adding advanced pricing' do
                              allow_product_fee: true) }
 
       it 'shows updated net sale information - product fee' do
+        expect(page).to have_content('Market')
         select_option_on_singleselect('#p1_select_market_id_chosen', market.name)
 
         find(:field, 'price[fee]', with: '1').click
