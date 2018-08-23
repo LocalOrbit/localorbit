@@ -70,7 +70,7 @@ jobs:
 
       - run:
           name: Database setup
-          command: rake db:schema:load --trace
+          command: bundle exec rake db:schema:load --trace
 
       # Run rspec in parallel
       - run:
