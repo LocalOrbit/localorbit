@@ -1,6 +1,6 @@
-require "spec_helper"
+require 'spec_helper'
 
-describe "Editing advanced pricing", js: true do
+describe 'Editing advanced pricing', :js do
   let!(:market)       { create(:market, :with_delivery_schedule) }
   let!(:organization) { create(:organization, :seller, markets: [market]) }
   let!(:user)         { create(:user, :supplier, organizations: [organization]) }
@@ -14,34 +14,34 @@ describe "Editing advanced pricing", js: true do
     sign_in_as(user)
     #within "#admin-nav" do
 
-      click_link "Products"
+      click_link 'Products'
     #end
     click_link product.name
-    click_link "Pricing"
+    click_link 'Pricing'
   end
 
-  describe "clicking on a price row" do
+  describe 'clicking on a price row' do
     before do
       Dom::PricingRow.first.click_edit
     end
 
-    it "opens the clicked on price row to editing" do
+    it 'opens the clicked on price row to editing' do
       edit_price_form = Dom::PricingRow.first
 
       expect(edit_price_form).to be_editable
     end
 
-    it "changes the action and method for the form" do
+    it 'changes the action and method for the form' do
       form = page.find("#p#{product.id}_new_price")
-      hidden_method = page.find("[name=_method]", visible: false)
+      hidden_method = page.find('[name=_method]', visible: false)
 
-      uri=URI.parse(form["action"])
+      uri=URI.parse(form['action'])
       expect(uri.path).to eql("/admin/products/#{product.id}/prices/#{price.id}")
-      expect(hidden_method.value).to eql("put")
+      expect(hidden_method.value).to eql('put')
     end
 
-    describe "then clicking on another price row" do
-      it "will change the row being edited" do
+    describe 'then clicking on another price row' do
+      it 'will change the row being edited' do
         fill_in("price_#{price.id}_sale_price", with: 55)
         Dom::PricingRow.all.last.click_buyer
 
@@ -49,158 +49,158 @@ describe "Editing advanced pricing", js: true do
         expect(Dom::PricingRow.all.last).to be_editable
 
         Dom::PricingRow.first.click_buyer
-        expect(find_field("price_#{price.id}_sale_price").value).to eq("55.00")
+        expect(find_field("price_#{price.id}_sale_price").value).to eq('55.00')
       end
     end
 
-    describe "then canceling" do
+    describe 'then canceling' do
       let(:price_row) { Dom::PricingRow.first }
 
       before do
-        price_row.node.find_button("Cancel").click
+        price_row.node.find_button('Cancel').click
       end
 
-      it "replaces the open field with the previous table row" do
+      it 'replaces the open field with the previous table row' do
         price_row = Dom::PricingRow.first
         expect(price_row).to_not be_editable
       end
 
       it "sets the form url back" do
         form = page.find("#p#{product.id}_new_price")
-        uri = URI.parse(form["action"])
+        uri = URI.parse(form['action'])
         expect(uri.path).to eql("/admin/products/#{product.id}/prices")
-        expect(form["method"]).to eql("post")
+        expect(form['method']).to eql('post')
       end
 
-      it "restores the fields to their original state" do
+      it 'restores the fields to their original state' do
         price_row = Dom::PricingRow.first
         price_row.click_buyer
 
         price_row.inputs.each do |input|
-          expect(input["disabled"]).to be_falsey
-          expect(input["readonly"]).to be_falsey
+          expect(input['disabled']).to be_falsey
+          expect(input['readonly']).to be_falsey
         end
 
         fill_in("price_#{price.id}_sale_price", with: 55)
         fill_in("price_#{price.id}_min_quantity", with: 66)
 
-        click_button "Cancel"
+        click_button 'Cancel'
 
         Dom::PricingRow.first.click_buyer
 
-        expect(page.find("#price_#{price.id}_sale_price").value).to eql("3.00")
-        expect(page.find("#price_#{price.id}_min_quantity").value).to eql("1")
+        expect(page.find("#price_#{price.id}_sale_price").value).to eql('3.00')
+        expect(page.find("#price_#{price.id}_min_quantity").value).to eql('1')
       end
     end
 
-    describe "submitting the form" do
-      context "sale price is valid" do
+    describe 'submitting the form' do
+      context 'sale price is valid' do
         before do
           fill_in("price_#{price.id}_sale_price", with: 66)
-          click_button "Save"
+          click_button 'Save'
         end
 
-        it "saves the price" do
+        it 'saves the price' do
           price_row = Dom::PricingRow.first
-          expect(price_row.sale_price).to eql("$66.00")
-          expect(page).to have_content("Successfully saved price")
+          expect(price_row.sale_price).to eql('$66.00')
+          expect(page).to have_content('Successfully saved price')
         end
 
-        it "hides the form" do
+        it 'hides the form' do
           expect(Dom::PricingRow.first).to_not be_editable
         end
       end
 
-      context "sale_price is invalid" do
+      context 'sale_price is invalid' do
         before do
-          fill_in("price_#{price.id}_sale_price", with: "-10")
-          fill_in("price_#{price.id}_min_quantity", with: "-2")
+          fill_in("price_#{price.id}_sale_price", with: '-10')
+          fill_in("price_#{price.id}_min_quantity", with: '-2')
 
-          click_button "Save"
+          click_button 'Save'
         end
 
-        it "responds with an error message" do
-          expect(page).to have_content("Could not save price")
-          expect(page).to have_content("Minimum quantity must be greater than 0")
+        it 'responds with an error message' do
+          expect(page).to have_content('Could not save price')
+          expect(page).to have_content('Minimum quantity must be greater than 0')
         end
 
-        it "opens the price row for editing" do
+        it 'opens the price row for editing' do
           price_row = Dom::PricingRow.first
           expect(price_row).to be_editable
 
-          sale_price_field = price_row.node.all(".sale-price")[1]
-          expect(sale_price_field.value).to eql("-10.00")
+          sale_price_field = price_row.node.all('.sale-price')[1]
+          expect(sale_price_field.value).to eql('-10.00')
         end
 
-        it "allows the user cancel editing multiple times" do
-          click_button "Cancel"
+        it 'allows the user cancel editing multiple times' do
+          click_button 'Cancel'
           expect(Dom::PricingRow.first).not_to be_editable
           Dom::PricingRow.first.click_buyer
           expect(Dom::PricingRow.first).to be_editable
-          click_button "Cancel"
+          click_button 'Cancel'
           expect(Dom::PricingRow.first).not_to be_editable
         end
 
-        it "calculates and formats the net price" do
+        it 'calculates and formats the net price' do
           price_row = Dom::PricingRow.first
-          net_price = price_row.node.all(".net-price")[1]
-          expect(net_price.value).to eql("-9.41") # appropriate fees
+          net_price = price_row.node.all('.net-price')[1]
+          expect(net_price.value).to eql('-9.41') # appropriate fees
         end
       end
 
     end
   end
 
-  describe "deleting a price" do
-    it "allows the user to delete one of multiple prices" do
+  describe 'deleting a price' do
+    it 'allows the user to delete one of multiple prices' do
       expect(Dom::PricingRow.count).to be(2)
-      first(".view-cell .delete").click
+      first('.view-cell .delete').click
       page.driver.browser.switch_to.alert.accept
 
-      expect(page).to have_content("Successfully removed price")
+      expect(page).to have_content('Successfully removed price')
       expect(Dom::PricingRow.count).to be(1)
     end
 
-    it "allows the user to delete all prices" do
-      skip "a new design is needed for deleting all prices"
+    it 'allows the user to delete all prices' do
+      skip 'a new design is needed for deleting all prices'
 
-      find(".select-all").click
+      find('.select-all').click
 
-      all("td:first-child input").each do |field|
+      all('td:first-child input').each do |field|
         expect(field).to be_checked
       end
 
-      click_button "Delete Selected Prices"
+      click_button 'Delete Selected Prices'
 
-      expect(page).to have_content("Successfully removed prices")
+      expect(page).to have_content('Successfully removed prices')
       # verify the pricing row remaining is an edit row, not an actual price
       expect(Dom::PricingRow.count).to be(1)
-      expect(Dom::PricingRow.all_classes).to eq(["add-price add-row price"])
+      expect(Dom::PricingRow.all_classes).to eq(['add-price add-row price'])
     end
   end
 
-  describe "with different fees" do
+  describe 'with different fees' do
     let(:market) { create(:market, :with_delivery_schedule, local_orbit_seller_fee: 4, market_seller_fee: 6) }
     # total fees: CC seller fee as default, plus this 10 %, so 12.9%
-    it "shows updated net sale information" do
+    it 'shows updated net sale information' do
       Dom::PricingRow.first.click_edit
-      fill_in "price_#{price.id}_sale_price", with: "12.90"
+      fill_in "price_#{price.id}_sale_price", with: '12.90'
       find("#price_#{price.id}_net_price").click
-      expect(find_field("price_#{price.id}_net_price").value).to eq("11.24") # 12.9% fees deducted
-      click_button "Save"
+      expect(find_field("price_#{price.id}_net_price").value).to eq('11.24') # 12.9% fees deducted
+      click_button 'Save'
 
-      expect(page).to have_content("Successfully saved price")
+      expect(page).to have_content('Successfully saved price')
 
       record = Dom::PricingRow.first
-      expect(record.buyer).to eq("All Buyers")
-      expect(record.min_quantity).to eq("1")
-      expect(record.net_price).to eq("$11.24") # 12.9% fees deducted
-      expect(record.sale_price).to eq("$12.90")
+      expect(record.buyer).to eq('All Buyers')
+      expect(record.min_quantity).to eq('1')
+      expect(record.net_price).to eq('$11.24') # 12.9% fees deducted
+      expect(record.sale_price).to eq('$12.90')
     end
   end
 end
 
-describe "price estimator", :js do
+describe 'price estimator', :js do
   let!(:market1) {create(:market, :with_delivery_schedule, local_orbit_seller_fee:3, market_seller_fee:2, allow_cross_sell:true)}
   let!(:market2) {create(:market, :with_delivery_schedule, local_orbit_seller_fee:5, market_seller_fee:10,allow_cross_sell:true)}
 
@@ -215,40 +215,40 @@ describe "price estimator", :js do
   before do
     switch_to_subdomain(market1.subdomain)
     sign_in_as(user)
-    within "#admin-nav" do
-      click_link "Products"
+    within '#admin-nav' do
+      click_link 'Products'
     end
     click_link product1.name
-    click_link "Pricing"
+    click_link 'Pricing'
   end
 
   it 'allows price adding and editing properly in both markets' do
     # Pricing adding tests
     select_option_on_singleselect('#p1_select_market_id_chosen', market1.name)
 
-    fill_in "price[sale_price]", with: "12.90"
-    click_button "Add"
+    fill_in "price[sale_price]", with: '12.90'
+    click_button 'Add'
 
     price_row = Dom::PricingRow.first
-    expect(price_row.net_price).to eq("$11.88") # market 1, 7.9% fees deducted first
+    expect(price_row.net_price).to eq('$11.88') # market 1, 7.9% fees deducted first
 
     # Pricing editing tests
     price_row.click_edit
 
     within price_row.node do
-      price_row.node.find("input.sale-price").set("16.80")
-      expect(price_row.node.find("input.net-price").value).to eq("15.47")
+      price_row.node.find('input.sale-price').set('16.80')
+      expect(price_row.node.find('input.net-price').value).to eq('15.47')
 
       select_option_on_singleselect('#select_market_id_chosen', market2.name)
-      price_row.node.find("input.sale-price").set("16.80")
-      expect(price_row.node.find("input.net-price").value).to eq("13.79")
+      price_row.node.find('input.sale-price').set('16.80')
+      expect(price_row.node.find('input.net-price').value).to eq('13.79')
 
-      price_row.node.find("input.sale-price").set("16.80")
-      expect(price_row.node.find("input.net-price").value).to eq("13.79")
+      price_row.node.find('input.sale-price').set('16.80')
+      expect(price_row.node.find('input.net-price').value).to eq('13.79')
 
-      click_button "Save" # prep for following
+      click_button 'Save' # prep for following
     end
     price_row = Dom::PricingRow.first
-    expect(price_row.net_price).to eq("$13.79")
+    expect(price_row.net_price).to eq('$13.79')
   end
 end
