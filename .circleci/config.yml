@@ -69,7 +69,11 @@ jobs:
           command: dockerize -wait tcp://localhost:5432 -timeout 1m
 
       - run:
-          name: Database setup
+          name: Copy database.yml
+          command: cp config/database.yml.example config/database.yml
+
+      - run:
+          name: Load database schema
           command: bundle exec rake db:schema:load --trace
 
       # Run rspec in parallel
