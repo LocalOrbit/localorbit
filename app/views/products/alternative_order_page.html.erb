@@ -1,6 +1,6 @@
 <%
   if !policy(:all_supplier).index?
-     supplier_id = current_market.organizations.where("org_type = 'S'")[0].id
+     supplier_id = current_market.organizations.where(org_type: Organization::TYPE_SUPPLIER)[0].id
   end
   current_supplier_id = @current_supplier.try(:id) || 0
 %>

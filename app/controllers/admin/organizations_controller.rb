@@ -7,7 +7,7 @@ module Admin
     before_action :find_sticky_params, only: :index
 
     def index
-      if params["clear"]
+      if params['clear']
         redirect_to url_for(params.except(:clear))
       else
         @organizations = current_user.managed_organizations.periscope(@query_params)
@@ -16,13 +16,13 @@ module Admin
         respond_to do |format|
           format.html { @organizations = @organizations.page(params[:page]).per(@query_params[:per_page]) }
           format.csv  do
-            if ENV["USE_UPLOAD_QUEUE"] == "true"
+            if ENV['USE_UPLOAD_QUEUE'] == 'true'
               orgs = @organizations.map(&:id)
               Delayed::Job.enqueue ::CSVExport::CSVOrganizationExportJob.new(current_user, orgs)
-              flash[:notice] = "Please check your email for export results."
+              flash[:notice] = 'Please check your email for export results.'
               redirect_to admin_organizations_path
             else
-              @filename = "organizations.csv"
+              @filename = 'organizations.csv'
             end
           end
         end
@@ -46,7 +46,7 @@ module Admin
       auto_activate = Market.find(params[:initial_market_id]).try(:auto_activate_organizations) unless params[:initial_market_id].empty?
 
       op = organization_params.merge({:org_type => org_type, :payment_model => current_market.is_consignment_market? ? 'consignment' : 'buysell'})
-      op.merge!({active: "1"}) if (org_type == "B" && auto_activate)
+      op.merge!({active: '1'}) if (org_type == Organization::TYPE_BUYER && auto_activate)
       op.except!(:markets)
 
       result = RegisterStripeOrganization.perform(organization_params: op, user: current_user, market_id: params[:initial_market_id])
@@ -66,7 +66,7 @@ module Admin
     def show
       @markets = current_user.markets.order('name')
       if @organization.blank?
-        redirect_to action: :index, alert: "That organization is no longer available"
+        redirect_to action: :index, alert: 'That organization is no longer available'
       else
         @org_markets = @organization.markets.pluck(:id)
       end
@@ -76,7 +76,7 @@ module Admin
       # This updates the association through market_organizations, adding and deleting rows (rather than setting deleted_at)
       @organization.markets = Market.find(params[:organization][:markets].map(&:to_i)) unless params[:organization][:markets].blank?
 
-      if @organization.can_sell && organization_params[:can_sell]=="0" && (current_user.admin? || current_user.market_manager?)
+      if @organization.can_sell && organization_params[:can_sell]=='0' && (current_user.admin? || current_user.market_manager?)
         disable_supplier_inventory
       end
 
@@ -97,10 +97,10 @@ module Admin
     end
 
     def update_org_type(can_sell)
-      if can_sell == true || can_sell == 'true' || can_sell == "1"
-        "S"
+      if can_sell == true || can_sell == 'true' || can_sell == '1'
+        Organization::TYPE_SUPPLIER
       else
-        "B"
+        Organization::TYPE_BUYER
       end
     end
 
@@ -124,15 +124,15 @@ module Admin
       schedules = find_delivery_schedules
       ids = schedules.values.flatten.map {|schedule| schedule.id.to_s }
 
-      render partial: "delivery_schedules", locals: {delivery_schedules: schedules, selected_ids: ids, product: nil, organization: @organization}
+      render partial: 'delivery_schedules', locals: {delivery_schedules: schedules, selected_ids: ids, product: nil, organization: @organization}
     end
 
     def market_memberships
-      render partial: "market_memberships"
+      render partial: 'market_memberships'
     end
 
     def available_inventory
-      render partial: "available_inventory", locals: { organization: @organization }
+      render partial: 'available_inventory', locals: { organization: @organization }
     end
 
     private

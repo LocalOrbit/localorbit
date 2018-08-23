@@ -196,7 +196,6 @@ FactoryBot.define do
     allow_credit_cards     true
     default_allow_purchase_orders   false
     default_allow_credit_cards      true
-    auto_activate_organizations     false
     product_label_format 4
     print_multiple_labels_per_item false
     alternative_order_page         false
@@ -394,7 +393,7 @@ FactoryBot.define do
   factory :organization do
     sequence(:name) {|n| "Organization #{n}" }
     can_sell true
-    org_type 'S'
+    org_type Organization::TYPE_SUPPLIER
     show_profile true
     allow_purchase_orders true
     allow_credit_cards    true
@@ -405,22 +404,22 @@ FactoryBot.define do
     payment_model         'buysell'
 
     trait :admin do
-      org_type 'A'
+      org_type Organization::TYPE_ADMIN
     end
 
     trait :market do
       plan                { create(:plan, :grow) }
-      org_type 'M'
+      org_type Organization::TYPE_MARKET
     end
 
     trait :seller do
       can_sell true
-      org_type 'S'
+      org_type Organization::TYPE_SUPPLIER
     end
 
     trait :buyer do
       can_sell false
-      org_type 'B'
+      org_type Organization::TYPE_BUYER
     end
 
     trait :single_location do
