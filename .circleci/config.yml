@@ -20,6 +20,14 @@ jobs:
       - checkout
 
       - run:
+          name: Update rubygems
+          command: gem update --system
+
+      - run:
+          name: Install rake
+          command: gem install rake --version 12.3.1
+
+      - run:
           name: Install apt pkg dependencies
           command: sudo apt-get update && sudo apt-get -y install imagemagick
 
