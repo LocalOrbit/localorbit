@@ -182,7 +182,7 @@ GEM
     constructor (2.0.0)
     countries (0.9.3)
       currencies (~> 0.4.2)
-    crack (0.4.2)
+    crack (0.4.3)
       safe_yaml (~> 1.0.0)
     csv_builder (2.1.1)
       actionpack (>= 3.0.0)
@@ -403,6 +403,7 @@ GEM
       guard (~> 2.1)
       guard-compat (~> 1.1)
       rspec (>= 2.99.0, < 4.0)
+    hashdiff (0.3.7)
     hashie (3.4.3)
     heroics (0.0.22)
       erubis (~> 2.0)
@@ -551,7 +552,7 @@ GEM
     pry-remote (0.1.8)
       pry (~> 0.9)
       slop (~> 3.0)
-    public_suffix (3.0.2)
+    public_suffix (3.0.3)
     puma (2.14.0)
     pundit (1.1.0)
       activesupport (>= 3.0.0)
@@ -683,7 +684,7 @@ GEM
       tty-which (~> 0.3.0)
       virtus (~> 1.0)
     rubyzip (1.2.1)
-    safe_yaml (1.0.3)
+    safe_yaml (1.0.4)
     sass (3.2.19)
     sass-rails (4.0.5)
       railties (>= 4.0.0, < 5.0)
@@ -771,9 +772,10 @@ GEM
       equalizer (~> 0.0, >= 0.0.9)
     warden (1.2.7)
       rack (>= 1.0)
-    webmock (1.18.0)
+    webmock (3.4.2)
       addressable (>= 2.3.6)
       crack (>= 0.3.2)
+      hashdiff
     wkhtmltopdf-heroku (2.12.3.0)
     wysihtml5-rails (0.0.4)
       railties (>= 3.1.0)
@@ -916,7 +918,7 @@ DEPENDENCIES
   wysiwyg-rails
 
 RUBY VERSION
-   ruby 2.1.2p95
+   ruby 2.3.7p456
 
 BUNDLED WITH
-   1.16.2
+   1.16.4
