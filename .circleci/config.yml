@@ -21,7 +21,7 @@ jobs:
 
       - run:
           name: Intall apt pkg dependencies
-          command: sudo apt-get update && sudo apt-get install libjpeg62 ghostscript libicu52 imagemagick
+          command: sudo apt-get update && sudo apt-get install libjpeg62 libgs9 ghostscript libicu52 imagemagick
 
       # Which version of bundler?
       - run:
