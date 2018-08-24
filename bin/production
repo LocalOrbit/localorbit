@@ -1,0 +1,3 @@
+#!/bin/sh
+HEROKU_APP=localorbit-production exec heroku "$@"
+
