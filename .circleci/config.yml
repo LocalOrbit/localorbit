@@ -49,20 +49,20 @@ jobs:
             - vendor/bundle
 
       # Only necessary if app uses webpacker or yarn in some other way
-      # - restore_cache:
-      #     keys:
-      #       - localorbit-yarn-{{ checksum "yarn.lock" }}
-      #       - localorbit-yarn-
+      - restore_cache:
+          keys:
+            - localorbit-yarn-{{ checksum "yarn.lock" }}
+            - localorbit-yarn-
 
-      # - run:
-      #     name: Yarn Install
-      #     command: yarn install --cache-folder ~/.cache/yarn
+      - run:
+          name: Yarn Install
+          command: yarn install --cache-folder ~/.cache/yarn
 
-      # # Store yarn / webpacker cache
-      # - save_cache:
-      #     key: localorbit-yarn-{{ checksum "yarn.lock" }}
-      #     paths:
-      #       - ~/.cache/yarn
+      # Store yarn / webpacker cache
+      - save_cache:
+          key: localorbit-yarn-{{ checksum "yarn.lock" }}
+          paths:
+            - ~/.cache/yarn
 
       - run:
           name: Wait for DB
