@@ -8,9 +8,11 @@ jobs:
           BUNDLE_JOBS: 3
           BUNDLE_RETRY: 3
           BUNDLE_PATH: vendor/bundle
+          DOMAIN: localtest.me
           PGHOST: 127.0.0.1
           PGUSER: localorbit
           RAILS_ENV: test
+          USE_UPLOAD_QUEUE: 'false'
       - image: circleci/postgres:10-alpine-ram
         environment:
           POSTGRES_USER: localorbit
