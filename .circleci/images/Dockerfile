@@ -45,7 +45,7 @@ RUN mkdir -p "$GEM_HOME" && chmod 777 "$GEM_HOME"
 
 ## Custom
 # Remove existing xenial ruby2.3 (2.3.1) that came with base image
-RUN apt-get autoremove ruby2.3
+RUN apt-get autoremove ruby2.3 libruby2.3 rubygems-integration
 
 # Install newer ruby via Brightbox repo
 #   from: https://www.brightbox.com/docs/ruby/ubuntu/#adding-the-repository
