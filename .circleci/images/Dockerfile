@@ -43,6 +43,10 @@ RUN apt-get update && apt-get install -y ruby2.3 ruby-switch
 RUN ruby-switch --set ruby2.3
 RUN ruby -v
 
+# Gems
+RUN gem update --system 2.7.7
+RUN gem install bundler --version 1.16.4
+
 ## CircleCI basic, again
 # Add circleci user,
 RUN groupadd --gid 3434 circleci \
@@ -51,11 +55,6 @@ RUN groupadd --gid 3434 circleci \
   && echo 'Defaults    env_keep += "DEBIAN_FRONTEND"' >> /etc/sudoers.d/env_keep
 
 USER circleci
-
-## Custom again
-# Gems
-RUN gem update --system 2.7.7
-RUN gem install bundler --version 1.16.4
 
 ## CircleCI, browsers
 # install chrome
