@@ -51,7 +51,7 @@ RUN apt-get autoremove ruby2.3 libruby2.3 rubygems-integration
 #   from: https://www.brightbox.com/docs/ruby/ubuntu/#adding-the-repository
 RUN apt-get update && apt-get install -y software-properties-common
 RUN apt-add-repository ppa:brightbox/ruby-ng
-RUN apt-get update && apt-get install -y ruby2.3 ruby-switch
+RUN apt-get update && apt-get install -y ruby2.3 ruby2.3-dev ruby-switch
 RUN ruby-switch --set ruby2.3
 RUN ruby -v
 
