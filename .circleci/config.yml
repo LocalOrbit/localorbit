@@ -12,6 +12,7 @@ jobs:
           PGHOST: 127.0.0.1
           PGUSER: localorbit
           RAILS_ENV: test
+          USE_STRIPE_STANDALONE_ACCOUNTS: 'true'
           USE_UPLOAD_QUEUE: 'false'
           ZENDESK_SUBDOMAIN: localorbit
       - image: circleci/postgres:10-alpine-ram
