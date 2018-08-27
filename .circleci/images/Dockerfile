@@ -47,6 +47,15 @@ RUN ruby -v
 RUN gem update --system 2.7.7
 RUN gem install bundler --version 1.16.4
 
+# Node
+RUN curl -sL https://deb.nodesource.com/setup_10.x | sudo -E bash -
+RUN sudo apt-get install -y nodejs
+
+# Yarn
+RUN curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | sudo apt-key add -
+RUN echo "deb https://dl.yarnpkg.com/debian/ stable main" | sudo tee /etc/apt/sources.list.d/yarn.list
+RUN sudo apt-get update && sudo apt-get install -y yarn
+
 ## CircleCI basic, again
 # Add circleci user,
 RUN groupadd --gid 3434 circleci \
