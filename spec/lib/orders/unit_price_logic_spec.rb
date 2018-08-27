@@ -8,10 +8,10 @@ describe Orders::UnitPriceLogic do
   let(:organization) { order.organization }
 
   let(:prices) do
-    [ 
+    [
       create(:price, min_quantity: 1, sale_price: 3),
       create(:price, min_quantity: 5, sale_price: 2),
-      create(:price, min_quantity: 8, sale_price: 1) 
+      create(:price, min_quantity: 8, sale_price: 1)
     ]
   end
 
@@ -70,7 +70,7 @@ describe Orders::UnitPriceLogic do
 
       it "returns generic pricing when org doesn't have special pricing" do
         other_org = double "other org", id: organization.id+1
-        
+
         [ 0,1,4 ].each do |quantity|
           price =  logic.unit_price(product, market, other_org, order_time, quantity)
           expect(price.sale_price).to eql(3)

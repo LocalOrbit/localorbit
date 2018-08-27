@@ -51,7 +51,7 @@ feature "Viewing admin/organizations list" do
         sign_in_as(user)
       end
 
-      scenario "cannot list deleted organizations" do
+      scenario "cannot list deleted organizations", :js do
         visit organizations_path
         expect(page).to have_content(org1.name)
         expect(page).to have_link(org1.name)

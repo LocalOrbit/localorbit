@@ -9,6 +9,9 @@
 
 /config/database.yml
 
+# rspec failures
+examples.txt
+
 # Ignore the default SQLite database.
 /db/*.sqlite3
 /db/*.sqlite3-journal
@@ -27,20 +30,18 @@ dragonfly.log
 /dragonfly
 public/system/dragonfly/development
 
-.DS_Store
-
 tags
 *.swp
 *.swo
 latest.prod.dump
 cleansed.prod.dump
 
-.DS_Store
 ~*.xlsx
 
 # IntelliJ
 /.idea
 /localorbit.iml
+
 node_modules/
 
 *.sublime-project

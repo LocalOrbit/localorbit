@@ -20,6 +20,7 @@ describe "Deleting a user", :js do
 
       user_row = Dom::Admin::UserRow.find_by_email(user.email)
       user_row.remove!
+      page.driver.browser.switch_to.alert.accept
 
       expect(page).to have_content("Successfully removed #{user.email}.")
       expect(Dom::Admin::UserRow.find_by_email(user.email)).to be_nil
@@ -37,6 +38,7 @@ describe "Deleting a user", :js do
 
       user_row = Dom::Admin::UserRow.find_by_email(user2.email)
       user_row.remove!
+      page.driver.browser.switch_to.alert.accept
 
       expect(page).to have_content("Successfully removed #{user2.email}.")
       expect(Dom::Admin::UserRow.find_by_email(user2.email)).to be_nil

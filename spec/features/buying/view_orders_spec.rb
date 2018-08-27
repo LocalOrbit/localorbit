@@ -22,6 +22,7 @@ feature "Viewing orders" do
 
       expect(page).to have_content("Order info")
       find('.icon-clear',:visible => true).click
+      page.driver.browser.switch_to.alert.accept
       expect(page).to have_content("Delivery Fee: $0.00")
   end
 

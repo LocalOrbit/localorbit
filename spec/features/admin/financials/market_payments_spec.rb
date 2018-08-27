@@ -61,7 +61,8 @@ feature "Payment of 'market payments' to Markets on non-Automate plans", :js  do
   # TODO: this entire test was simply missing from the suite.  Today's focus was just to ensure the proper filtering
   # is in place wrt seller payments, see the spec below which focuses on that.
 
-  it "does NOT include orders whose sellers were paid by other types of payments, eg, from previous Automate plan participation, where some orders may be linked to 'seller payments'" do
+  # TODO: DeadCode deletion
+  xit "does NOT include orders whose sellers were paid by other types of payments, eg, from previous Automate plan participation, where some orders may be linked to 'seller payments'" do
     begin
       visit admin_financials_market_payments_path
       expect(page).to have_content("Make Payments to Markets")
@@ -141,4 +142,3 @@ feature "Payment of 'market payments' to Markets on non-Automate plans", :js  do
   end
 
 end
-

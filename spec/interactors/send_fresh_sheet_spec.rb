@@ -6,7 +6,7 @@ describe SendFreshSheet do
   let(:note) { 'B flat' } #lol
   let(:fresh_subscription) do
     create(:subscription_type,
-           keyword: SubscriptionType::Keywords::FreshSheet,
+           keyword: SubscriptionType::Keywords::FRESHSHEET,
            name: 'Test Fresh!')
   end
 
