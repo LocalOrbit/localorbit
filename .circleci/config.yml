@@ -3,7 +3,7 @@ jobs:
   build:
     parallelism: 4
     docker:
-      - image: circleci/ruby:2.3.7-jessie-node-browsers
+      - image: localorbit/heroku16-ruby2.3.7
         environment:
           BUNDLE_JOBS: 3
           BUNDLE_RETRY: 3
@@ -22,14 +22,9 @@ jobs:
       - checkout
 
       - run:
-          name: Update rubygems
-          command: gem update --system
-
-      - run:
           name: Install apt pkg dependencies
           command: sudo apt-get clean && sudo apt-get update && sudo dpkg --configure -a && sudo apt-get -fy install imagemagick ghostscript
 
-      # Which version of bundler?
       - run:
           name: Which bundler?
           command: bundle -v
