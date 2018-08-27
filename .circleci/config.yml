@@ -13,6 +13,7 @@ jobs:
           PGUSER: localorbit
           RAILS_ENV: test
           USE_UPLOAD_QUEUE: 'false'
+          ZENDESK_SUBDOMAIN: localorbit
       - image: circleci/postgres:10-alpine-ram
         environment:
           POSTGRES_USER: localorbit
