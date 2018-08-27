@@ -627,7 +627,7 @@ describe PaymentProvider::Stripe, vcr: true do
   subject { described_class }
 
   describe '.order_ids_for_market_payout_transfer' do
-    # FIXME: see LO-1047, `metadata: {lo.order_id: NNN}` is now missing on responses from Stripe
+    # FIXME: see #3301, `metadata: {lo.order_id: NNN}` is now missing on responses from Stripe
     # currently passes because we have an ancient VCR cassette
     it "returns lo order ids from a transaction's payments" do
       order_ids = subject.order_ids_for_market_payout_transfer(
