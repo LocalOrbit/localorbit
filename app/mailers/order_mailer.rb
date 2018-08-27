@@ -1,30 +1,13 @@
 class OrderMailer < BaseMailer
-  def buyer_confirmation(order)
+  def market_manager_order_updated(order)
     return if order.market.is_consignment_market?
-    to_list = recipient_list(order.organization)
-    return if to_list.blank?
 
     @market = order.market
-    @order = BuyerOrder.new(order)
-
+    @order = BuyerOrder.new(order) # Market Managers should see all items
     mail(
-      to: to_list,
-      subject: 'Thank you for your order'
-    )
-  end
-
-  def seller_confirmation(order, seller)
-    return if order.market.is_consignment_market?
-    to_list = recipient_list(seller)
-    return if to_list.blank?
-
-    @market = order.market
-    @order = SellerOrder.new(order, seller) # Selling users organizations only see
-    @seller = seller
-
-    mail(
-      to: to_list,
-      subject: "New order on #{@market.name}"
+      to: order.market.managers.map(&:pretty_email),
+      subject: "#{@market.name}: Order #{order.order_number} Updated",
+      template_name: 'order_updated'
     )
   end
 
@@ -33,7 +16,6 @@ class OrderMailer < BaseMailer
 
     @market = order.market
     @order = BuyerOrder.new(order) # Market Managers should see all items
-
     mail(
       to: order.market.managers.map(&:pretty_email),
       subject: "New order on #{@market.name}"
@@ -47,91 +29,90 @@ class OrderMailer < BaseMailer
     return if to_list.blank?
 
     @market = @order.market
-
     attachments['invoice.pdf'] = {mime_type: 'application/pdf', content: @order.invoice_pdf.try(:data)}
-
     mail(
       to: to_list,
       subject: 'New Invoice'
     )
   end
 
+  def buyer_confirmation(order)
+    ensure_buysell_and_list(order, order.organization) do |to_list|
+      @order = BuyerOrder.new(order)
+      mail(
+        to: to_list,
+        subject: 'Thank you for your order'
+      )
+    end
+  end
+
   def buyer_order_updated(order)
-    return if order.market.is_consignment_market?
-    to_list = recipient_list(order.organization)
-    return if to_list.blank?
-
-    @market = order.market
-    @order = BuyerOrder.new(order) # Market Managers should see all items
-
-    mail(
-      to: to_list,
-      subject: "#{@market.name}: Order #{order.order_number} Updated",
-      template_name: 'order_updated'
-    )
+    ensure_buysell_and_list(order, order.organization) do |to_list|
+      @order = BuyerOrder.new(order) # Market Managers should see all items
+      mail(
+        to: to_list,
+        subject: "#{@market.name}: Order #{order.order_number} Updated",
+        template_name: 'order_updated'
+      )
+    end
   end
 
   def buyer_order_removed(order)
-    return if order.market.is_consignment_market?
-    to_list = recipient_list(order.organization)
-    return if to_list.blank?
+    ensure_buysell_and_list(order, order.organization) do |to_list|
+      @order = BuyerOrder.new(order) # Market Managers should see all items
+      mail(
+          to: to_list,
+          subject: "#{@market.name}: Order #{order.order_number} Updated - Item Removed",
+          template_name: 'order_updated'
+      )
+    end
+  end
 
-    @market = order.market
-    @order = BuyerOrder.new(order) # Market Managers should see all items
-
-    mail(
+  def seller_confirmation(order, seller)
+    ensure_buysell_and_list(order, seller) do |to_list|
+      @order = SellerOrder.new(order, seller)
+      @seller = seller
+      mail(
         to: to_list,
-        subject: "#{@market.name}: Order #{order.order_number} Updated - Item Removed",
-        template_name: 'order_updated'
-    )
+        subject: "New order on #{@market.name}"
+      )
+    end
   end
 
   def seller_order_updated(order, seller)
-    return if order.market.is_consignment_market?
-    to_list = recipient_list(seller)
-    return if to_list.blank?
-
-    @market = order.market
-    @order = SellerOrder.new(order, seller) # Selling users organizations only see
-    @seller = seller
-
-    mail(
-      to: to_list,
-      subject: "#{@market.name}: Order #{order.order_number} Updated",
-      template_name: 'order_updated'
-    )
-  end
-
-  def market_manager_order_updated(order)
-    return if order.market.is_consignment_market?
-
-    @market = order.market
-    @order = BuyerOrder.new(order) # Market Managers should see all items
-
-    mail(
-      to: order.market.managers.map(&:pretty_email),
-      subject: "#{@market.name}: Order #{order.order_number} Updated",
-      template_name: 'order_updated'
-    )
+    ensure_buysell_and_list(order, seller) do |to_list|
+      @order = SellerOrder.new(order, seller)
+      @seller = seller
+      mail(
+        to: to_list,
+        subject: "#{@market.name}: Order #{order.order_number} Updated",
+        template_name: 'order_updated'
+      )
+    end
   end
 
   def seller_order_item_removal(order, seller)
-    return if order.market.is_consignment_market?
-    to_list = recipient_list(seller)
-    return if to_list.blank?
-
-    @market = order.market
-    @order = SellerOrder.new(order, seller) # Selling users organizations only see
-    @seller = seller
-
-    mail(
-      to: to_list,
-      subject: "#{@market.name}: Order #{order.order_number} Updated - Item Removed",
-      template_name: 'order_updated'
-    )
+    ensure_buysell_and_list(order, seller) do |to_list|
+      @order = SellerOrder.new(order, seller)
+      @seller = seller
+      mail(
+        to: to_list,
+        subject: "#{@market.name}: Order #{order.order_number} Updated - Item Removed",
+        template_name: 'order_updated'
+      )
+    end
   end
 
   private
+
+  def ensure_buysell_and_list(order, seller )
+    return if order.market.is_consignment_market?
+    send_to_list = recipient_list(seller)
+    return if send_to_list.blank?
+    @market = order.market
+
+    yield send_to_list
+  end
 
   def recipient_list(organization)
     organization.
