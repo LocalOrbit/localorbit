@@ -22,10 +22,6 @@ jobs:
       - checkout
 
       - run:
-          name: Install apt pkg dependencies
-          command: sudo apt-get clean && sudo apt-get update && sudo dpkg --configure -a && sudo apt-get -fy install imagemagick ghostscript
-
-      - run:
           name: Which bundler?
           command: bundle -v
 
