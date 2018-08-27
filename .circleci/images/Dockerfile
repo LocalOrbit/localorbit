@@ -55,10 +55,18 @@ RUN apt-get update && apt-get install -y ruby2.3 ruby2.3-dev ruby-switch
 RUN ruby-switch --set ruby2.3
 RUN ruby -v
 
+# dependencies for our native extensions
+RUN apt-get install -y build-essential \
+  zlib1g-dev \
+  libsqlite3-dev \
+  libpq-dev
+
+## docker-library/ruby
 # Gems
 RUN gem update --system 2.7.7
 RUN gem install bundler --version 1.16.4
 
+## CircleCI browsers
 # Node
 RUN curl -sL https://deb.nodesource.com/setup_10.x | sudo -E bash -
 RUN sudo apt-get install -y nodejs
