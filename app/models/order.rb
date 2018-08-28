@@ -359,16 +359,6 @@ class Order < ActiveRecord::Base
     Product.arel_table[:id].in(CrossSellingListProduct.joins(:cross_selling_list).where("cross_selling_lists.deleted_at IS NULL AND cross_selling_lists.status = 'Published' AND cross_selling_lists.entity_type = 'Market' AND cross_selling_lists.creator = ? AND cross_selling_lists.entity_id IN (?)", true, user.markets.pluck(:id)).select(:product_id).arel)
   end
 
-  # def self.add_notes_reference(notes_arr) # TODO check aeren
-  #   #org = current_organization
-  #   #binding.pry
-  #   self.delivery_notes = notes_arr.select{|n| n if n.supplier_org == current_organization.id}
-  # end
-
-  # def delivery_notes
-  #   self.delivery_notes
-  # end
-
   def add_cart_items(cart_items, deliver_on)
     cart_items.each do |cart_item|
       add_cart_item(cart_item, deliver_on)
