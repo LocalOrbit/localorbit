@@ -113,7 +113,6 @@ describe Order do
   end
 
   describe ".orders_for_buyer" do
-
     context "admin" do
       let(:market)       { create(:market) }
       let!(:delivery_schedule) { create(:delivery_schedule, market: market) }
@@ -126,7 +125,6 @@ describe Order do
 
       it "returns all orders" do
         orders = Order.orders_for_buyer(user)
-
         expect(orders).to eq(Order.all)
       end
     end

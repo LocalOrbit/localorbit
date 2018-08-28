@@ -2,6 +2,8 @@ class SendUpdateEmails
   include Interactor
 
   def perform
+    require_in_context :order
+
     send_update_to_suppliers order.sellers_with_changes
     send_update_to_suppliers order.sellers_with_cancel
   end
