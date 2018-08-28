@@ -82,7 +82,6 @@ class OrderMailer < BaseMailer
   def seller_order_updated(order, seller)
     ensure_buysell_and_list(order, seller) do |to_list|
       @order = SellerOrder.new(order, seller)
-      @seller = seller
       mail(
         to: to_list,
         subject: "#{@market.name}: Order #{order.order_number} Updated",
@@ -94,7 +93,6 @@ class OrderMailer < BaseMailer
   def seller_order_item_removal(order, seller)
     ensure_buysell_and_list(order, seller) do |to_list|
       @order = SellerOrder.new(order, seller)
-      @seller = seller
       mail(
         to: to_list,
         subject: "#{@market.name}: Order #{order.order_number} Updated - Item Removed",
