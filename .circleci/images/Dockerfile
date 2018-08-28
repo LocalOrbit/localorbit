@@ -67,11 +67,11 @@ RUN gem update --system 2.7.7
 RUN gem install bundler --version 1.16.4
 
 ## CircleCI browsers
-# Node
+# Node, see https://nodejs.org/en/download/package-manager/#debian-and-ubuntu-based-linux-distributions
 RUN curl -sL https://deb.nodesource.com/setup_10.x | sudo -E bash -
 RUN sudo apt-get install -y nodejs
 
-# Yarn
+# Yarn, see https://yarnpkg.com/en/docs/install#debian-stable
 RUN curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | sudo apt-key add -
 RUN echo "deb https://dl.yarnpkg.com/debian/ stable main" | sudo tee /etc/apt/sources.list.d/yarn.list
 RUN sudo apt-get update && sudo apt-get install -y yarn
