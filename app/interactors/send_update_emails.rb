@@ -40,7 +40,7 @@ class SendUpdateEmails
           delay(priority: 10).
           seller_order_updated(order, supplier)
       else
-        ap "Warning: trying to send update email to supplier with no users."
+        Rollbar.warning("Warning: Trying to send update email (for order id ##{order.id}) to supplier (#{supplier.id} - #{supplier.name}) with 0 users")
       end
     end
   end
