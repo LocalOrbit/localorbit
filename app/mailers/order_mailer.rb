@@ -5,7 +5,7 @@ class OrderMailer < BaseMailer
     @market = order.market
     @order = BuyerOrder.new(order) # Market Managers should see all items
     mail(
-      to: order.market.managers.map(&:pretty_email),
+      to: @market.managers.map(&:pretty_email),
       subject: "#{@market.name}: Order #{order.order_number} Updated",
       template_name: 'order_updated'
     )
@@ -17,7 +17,7 @@ class OrderMailer < BaseMailer
     @market = order.market
     @order = BuyerOrder.new(order) # Market Managers should see all items
     mail(
-      to: order.market.managers.map(&:pretty_email),
+      to: @market.managers.map(&:pretty_email),
       subject: "New order on #{@market.name}"
     )
   end
