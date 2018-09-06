@@ -124,9 +124,7 @@ class OrderItem < ActiveRecord::Base
     return unless product.present? && !order.nil? && order.market.is_buysell_market?
 
     qty = product.lots_by_expiration.available_specific(Time.current.end_of_minute, order.market_id, order.organization_id).sum(:quantity)
-    #if qty == 0
     qty += product.lots_by_expiration.available_general(Time.current.end_of_minute).sum(:quantity)
-    #end
     if qty < quantity
       errors[:inventory] = "there are only #{qty} #{product.name.pluralize(qty)} available."
     end
