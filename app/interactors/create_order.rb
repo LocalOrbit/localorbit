@@ -31,7 +31,6 @@ class CreateOrder
   end
 
   def create_order_from_cart(params, cart, user)
-
     billing = cart.organization.locations.default_billing
     order = Order.new(
       payment_provider: payment_provider,
