@@ -123,10 +123,8 @@ class OrderItem < ActiveRecord::Base
   def product_availability
     return unless product.present? && !order.nil? && order.market.is_buysell_market?
 
-    qty = product.lots_by_expiration.available_specific(Time.current.end_of_minute, order.market_id, order.organization_id).sum(:quantity)
-    #if qty == 0
-    qty += product.lots_by_expiration.available_general(Time.current.end_of_minute).sum(:quantity)
-    #end
+    qty = product.lots.available_specific(deliver_on_date, order.market_id, order.organization_id).sum(:quantity)
+    qty += product.lots.available_general(deliver_on_date).sum(:quantity)
     if qty < quantity
       errors[:inventory] = "there are only #{qty} #{product.name.pluralize(qty)} available."
     end
@@ -144,8 +142,8 @@ class OrderItem < ActiveRecord::Base
     if !ct.nil? && !ct.empty?
       qty = ct.sum(:quantity)
     elsif !product.lots.empty? && product.lots.sum(:quantity) > 0
-      qty = product.lots_by_expiration.available_specific(Time.current.end_of_minute, market_id, organization_id).sum(:quantity)
-      qty += product.lots_by_expiration.available_general(Time.current.end_of_minute).sum(:quantity)
+      qty = product.lots.available_specific(Time.current.end_of_minute, market_id, organization_id).sum(:quantity)
+      qty += product.lots.available_general(Time.current.end_of_minute).sum(:quantity)
     end
     if qty > 0 && (qty + (quantity_was || 0)) < quantity
       errors.add(:inventory, "there are only #{Integer(qty)} #{product.name.pluralize(qty)} available.")

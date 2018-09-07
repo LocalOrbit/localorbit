@@ -5,43 +5,34 @@
 
 See the `docs/` directory for more documentation.
 
-## Running
+## Developer Setup
 
-### Requirements
-
-* Ruby 2.1.2
-* PostgreSQL
-* PhantomJS (for running tests)
-* ImageMagick
-* Yarn
-
-### Setup
-
-1. Clone the repo
-2. `brew bundle` (on OS X. Install Requirements above for other platforms. May require you to unlink and reinstall previously installed packages.)
-3. `bundle`
-4. `cp config/application.yml{.example,}` and modify if needed
-5. `cp config/database.yml{.example,}` and modify if needed (Some modification is probably necessary. Try adding `template: template0`)
-6. `yarn`
-7. `rake db:setup` - runs `db:create`, `db:schema:load` and `db:seed`
-8. `rake db:seed:development`
-9. `rails server`
-10. Add `127.0.0.1 localtest.me` to `/etc/hosts`
-11. Go to http://localtest.me:3000 in a browser (we use localtest.me to always point to 127.0.0.1 so we can use subdomains, which localhost doesn't allow.)
-12. Startup delayed job with `./bin/delayed_job` (caveat: delete jobs from that table first if loading in production data)
-
-#### AWS
-
-Amazon AWS is used by the app to store images as well as transferring db backups between environments.
-1. Get an invitation to the AWS account 
-2. Configure an API key and secret
-3. [Configure the AWS cli tools](https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-getting-started.html) (which should already be installed via brew.)
+1. Install `ruby 2.3.7` (use a ruby version manage like [rbenv](https://github.com/rbenv/rbenv) or [rvm](https://rvm.io/))
+1. Clone this repo `git clone git@github.com:LocalOrbit/localorbit.git`, `cd localorbit` into it
+1. Install dependencies (for MacOs) via [Homebrew](https://brew.sh/) with `brew bundle`. Other platforms see requirements in [`Brewfile`](./Brewfile).
+1. `bundle`
+1. `cp config/application.yml{.example,}` and modify if needed, see [Environment variables](#environment_variables) below
+1. `cp config/database.yml{.example,}` and modify if needed (Some modification is probably necessary. Try adding `template: template0`)
+1. `yarn`
+1. `rake db:setup` - runs `db:create`, `db:schema:load` and `db:seed`
+1. `rake db:seed:development`
+1. `rails server`
+1.  Add `127.0.0.1 localtest.me` to `/etc/hosts`
+1.  Go to http://localtest.me:3000 in a browser (we use localtest.me to always point to 127.0.0.1 so we can use subdomains, which localhost doesn't allow.)
+1.  Run delayed job in foreground with `./bin/delayed_job run` (caveat: delete jobs from that table first if loading in production data)
 
 #### Other required services to setup
 
-* [stripe howto](docs/stripe_in_development.md) for configuring stripe for development.
+* See [stripe howto](docs/stripe_in_development.md) for configuring stripe for development.
 * Setup a [mailtrap](https://mailtrap.io/) account and put the username and password into your application.yml
+* AWS is used by the app to store images as well as transferring db backups between environments.
+  1. Get an invitation to the AWS account
+  2. Configure an API key and secret
+  3. [Configure the AWS cli tools](https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-getting-started.html) (which should already be installed via `brew bundle`.)
 
+### Environment variables
+
+`ENV` is generally accessed via [figaro](https://github.com/laserlemon/figaro) in application code. Figaro enforces presence of required `ENV` vars via [`config/initializers/figaro.rb`](./config/figaro.rb). In `development` and local `test` environments we populate/customize `ENV` via figaro with `config/application.yml` (see an [example application.yml](./config/application.yml.example)). For Heroku `staging` and `production` environments the `ENV` vars are populated with [Heroku cli](https://devcenter.heroku.com/articles/config-vars). For [CircleCI](https://circleci.com/gh/LocalOrbit), sensitive `ENV` vars like API keys and other secrets are managed via the [Circle CI web application](https://circleci.com/gh/LocalOrbit/localorbit/edit#env-vars), and non-sensitive `ENV` vars are managed via the [`.circleci/config.yml`](./.circleci/config.yml).
 
 ### Production Setup
 
