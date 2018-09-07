@@ -16,10 +16,6 @@ class CreateOrder
     end
   end
 
-  def rollback_order(order)
-    OrderNumber.relinquish(order.order_number)
-  end
-
   protected
 
   def check_order_for_je_limit(cart)
@@ -35,7 +31,6 @@ class CreateOrder
     order = Order.new(
       payment_provider: payment_provider,
       placed_by: user,
-      order_number: OrderNumber.new(cart.market).id,
       organization: cart.organization,
       market: cart.market,
       delivery: cart.delivery,
@@ -58,13 +53,11 @@ class CreateOrder
 
     order.apply_delivery_address(cart.delivery_location)
 
-    DeliveryNote.where(cart_id:cart.id).each do |dn|
-      #binding.pry # there is no id available yet, it's not created
-      dn.update_attributes(order_id:order.id)
-    end
-
     success = false
     ActiveRecord::Base.transaction do
+      # in the transaction because it updates sequences table
+      order.order_number = OrderNumber.new(cart.market).id
+
       begin
         order.add_cart_items(cart.items, cart.delivery.deliver_on)
         success = order.save
@@ -75,12 +68,13 @@ class CreateOrder
         raise ActiveRecord::Rollback
       end
     end
-    unless success
-      rollback_order(order)
+
+    if success
+      DeliveryNote.where(cart_id: cart.id).each do |dn|
+        dn.update_attributes(order_id: order.id)
+      end
     end
-    DeliveryNote.where(cart_id:cart.id).each do |dn|
-      dn.update_attributes(order_id:order.id)
-    end
+
     order
   end
 
