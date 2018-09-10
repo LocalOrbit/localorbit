@@ -4,6 +4,7 @@ class SendUpdateEmails
   def perform
     require_in_context :order
 
+
     send_update_to_suppliers order.sellers_with_changes
     send_update_to_suppliers order.sellers_with_cancel
   end
@@ -36,14 +37,12 @@ class SendUpdateEmails
   private
 
   def send_update_to_suppliers(suppliers)
-    suppliers.each do |supplier|
-      if supplier.users.present?
+    suppliers.
+      find_all {|supplier| supplier.users.present? }.
+      each do |supplier|
         OrderMailer.
           delay(priority: 10).
           seller_order_updated(order, supplier)
-      else
-        Rollbar.warning("Warning: Trying to send update email (for order id ##{order.id}) to supplier (#{supplier.id} - #{supplier.name}) with 0 users")
       end
-    end
   end
 end
