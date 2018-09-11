@@ -38,7 +38,7 @@ class SendUpdateEmails
 
   def send_update_to_suppliers(suppliers)
     suppliers.
-      find_all {|supplier| supplier.users.present? }.
+      find_all {|supplier| supplier.users.present?}.
       each do |supplier|
         OrderMailer.
           delay(priority: 10).
