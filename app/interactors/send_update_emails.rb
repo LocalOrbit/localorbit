@@ -2,48 +2,11 @@ class SendUpdateEmails
   include Interactor
 
   def perform
-    #return if Rails.env.production?
-
-    #if users_should_be_updated?
-    #  OrderMailer.delay.buyer_order_updated(order)
-    #end
-
-    #if order.is_localeyes_order?
-
-      order.sellers_with_changes.each do |seller|
-        unless seller.users.empty?
-
-          @pack_lists = OrdersBySellerPresenter.new(order.items, seller)
-          @delivery = Delivery.find(order.delivery.id).decorate
-
-          OrderMailer.delay(priority: 10).seller_order_updated(order, seller)
-        end
-      end
-
-      order.sellers_with_cancel.each do |seller|
-        unless seller.users.empty?
-          @pack_lists = OrdersBySellerPresenter.new(order.items, seller)
-          @delivery = Delivery.find(order.delivery.id).decorate
-
-          begin
-            pdf = PackingLists::Generator.generate_pdf(request: request, pack_lists: @pack_lists, delivery: @delivery) if !@pack_lists.sellers.empty?
-          rescue RuntimeError => e
-            pdf = nil
-            Rollbar.error(e, 'Failed to generate packing list PDF for seller order item removed email', order_id: order.id)
-          end
-
-          csv = PackingLists::Generator.generate_csv(pack_lists: @pack_lists) if !@pack_lists.sellers.empty?
-
-          OrderMailer.delay(priority: 10).seller_order_item_removal(order, seller, pdf, csv)
-        end
-      end
+    require_in_context :order
 
 
-  #end
-
-    #unless order.market.managers.empty?
-    #  OrderMailer.delay.market_manager_order_updated(order)
-    #end
+    send_update_to_suppliers order.sellers_with_changes
+    send_update_to_suppliers order.sellers_with_cancel
   end
 
   def users_should_be_updated?
@@ -71,4 +34,15 @@ class SendUpdateEmails
     end
   end
 
+  private
+
+  def send_update_to_suppliers(suppliers)
+    suppliers.
+      find_all {|supplier| supplier.users.present?}.
+      each do |supplier|
+        OrderMailer.
+          delay(priority: 10).
+          seller_order_updated(order, supplier)
+      end
+  end
 end
