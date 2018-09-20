@@ -72,6 +72,7 @@ class User < ActiveRecord::Base
                   market.to_i
                 end
     joins(organizations: :market_organizations).
+      merge(Organization.active).
       where(market_organizations: {market_id: market_id}).
       merge(MarketOrganization.visible)
   }
@@ -190,7 +191,7 @@ class User < ActiveRecord::Base
 
   def admin?
     return @admin if !@admin.nil?
-    @admin = user_organizations.includes(:organization).where(organizations: {org_type: 'A'}).exists?
+    @admin = user_organizations.includes(:organization).where(organizations: {org_type: Organization::TYPE_ADMIN}).exists?
   end
 
   def can_manage?(resource)
@@ -222,13 +223,16 @@ class User < ActiveRecord::Base
   def market_manager?
     return false if admin?
     return @market_manager if !@market_manager.nil?
-    @market_manager = user_organizations.includes(:organization).where(organizations: {org_type: 'M'}).exists?
+    @market_manager = user_organizations.includes(:organization).where(organizations: {org_type: Organization::TYPE_MARKET}).exists?
   end
 
   def seller?
     return false if admin? || market_manager?
     return @seller if !@seller.nil?
-    @seller = user_organizations.includes(:organization).where(organizations: {org_type: 'S'}).exists?
+    @seller = user_organizations.
+                includes(:organization).
+                where(organizations: {org_type: Organization::TYPE_SUPPLIER}).
+                exists?
   end
 
   def admin_or_mm?
@@ -238,7 +242,11 @@ class User < ActiveRecord::Base
   def buyer_only?
     return false if admin? || market_manager? || seller?
     return @buyer if !@buyer.nil?
-    @buyer = user_organizations.includes(:organization).where(organizations: {org_type: 'B'}).exists?
+    @buyer = user_organizations.
+               includes(:organization).
+               where(
+                 organizations: {org_type: Organization::TYPE_BUYER}
+               ).exists?
   end
 
   def is_seller_with_purchase?
@@ -416,26 +424,23 @@ class User < ActiveRecord::Base
     elsif market_manager?
       managed_markets.active.first
     else
+      # Prefer active Organizations, but if can't find any active Orgs
+      # then pick the most recently created Org for this user
       Market.joins(market_organizations: {organization: :user_organizations}).
         merge(Market.active).
         merge(MarketOrganization.excluding_deleted).
         merge(MarketOrganization.not_cross_selling).
-        merge(Organization.active).
         merge(UserOrganization.enabled).
-        where(user_organizations: {user_id: id}).first
+        where(user_organizations: {user_id: id}).
+        order(
+          Organization.arel_table[:active].desc,
+          Organization.arel_table[:created_at].desc).
+        first
     end
   end
 
-
   def is_invited?
     invitation_token != nil && !confirmed?
-  end
-
-  def attempt_set_password(params)
-    p = {}
-    p[:password] = params[:password]
-    p[:password_confirmation] = params[:password_confirmation]
-    update_attributes(p)
   end
 
   private

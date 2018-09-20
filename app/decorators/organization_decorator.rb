@@ -4,6 +4,10 @@ class OrganizationDecorator < Draper::Decorator
 
   delegate_all
 
+  def human_org_type
+    h.t(org_type, scope: [:decorators, :organization, :org_type])
+  end
+
   def locations_map(w=340, h=300)
     addresses = locations.visible.map do |location|
       location.geocode if location

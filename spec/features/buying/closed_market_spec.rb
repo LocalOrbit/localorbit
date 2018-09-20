@@ -43,6 +43,10 @@ feature "When a Market is closed" do
 
       scenario "the Buyer may view her Orders" do
         click_link "Purchase History"
+        fill_in "q_placed_at_date_gteq", with: 3.days.ago.strftime("%a, %e %B %Y")
+        fill_in "q_placed_at_date_lteq", with: 1.day.from_now.strftime("%a, %e %B %Y")
+        click_button "Filter"
+
         follow_buyer_order_link order: order1
       end
     end

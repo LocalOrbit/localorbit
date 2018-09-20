@@ -12,10 +12,10 @@ feature "A Market Manager sending a weekly Fresh Sheet" do
 
   # Intentionally not let! changing that will break tests
   let(:buyer_org) { create(:organization, :buyer, markets: [market]) }
-  let(:buyer_user) { 
+  let(:buyer_user) {
     jack = create(:user, :buyer, organizations: [buyer_org], name: "Jack Stevens")
-    jack.subscribe_to(SubscriptionType::Keywords::FreshSheet)
-    jack 
+    jack.subscribe_to(SubscriptionType::Keywords::FRESHSHEET)
+    jack
   }
 
   scenario "navigating to the page" do

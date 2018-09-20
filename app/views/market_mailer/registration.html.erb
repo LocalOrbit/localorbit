@@ -1,5 +1,5 @@
 <h1>You’re growing!</h1>
-<p>A new organization has registered for your market!</p>
+<p>A new <%= @organization.human_org_type %> has registered for your market!</p>
 
 <dl>
   <dt>Company:</dt>
@@ -13,8 +13,29 @@
   <dt>Email:</dt>
   <dd><%= @organization.users.first.email %></dd>
 </dl>
+<% unless @organization.locations.empty? %>
+<dl>
+  <dt>Phone:</dt>
+  <dd><%= @organization.locations.first.phone %></dd>
+</dl>
+<dl>
+  <dt>Address:</dt>
+  <dd>
+    <%= @organization.locations.first.name %><br />
+    <%= @organization.locations.first.address %><br />
+    <%= @organization.locations.first.city %>, <%= @organization.locations.first.state %> <%= @organization.locations.first.zip %>
+  </dd>
+</dl>
+<% end %>
+<% if @organization.buyer? %>
+<dl>
+  <dt>Buyer Type:</dt>
+  <dd><%= @organization.buyer_org_type %></dd>
+</dl>
+<% end %>
 
 <% unless @organization.active? %>
+<br />
 <div class="lo_call_to_action">
 
   <p>

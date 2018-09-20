@@ -15,14 +15,14 @@ module Admin
 
       if @market.update_attributes(market_attrs) && @organization.update_attributes(org_attrs)
 
-        if @market.organization.plan.solo_supplier? && @market.organizations.where(org_type: "S").count == 0
+        if @market.organization.plan.solo_supplier? && @market.organizations.where(org_type: Organization::TYPE_SUPPLIER).count == 0
           organization_params = {
-              :name => @market.name,
-              :can_sell => true,
-              :org_type => 'S',
-              :active => true,
-              :allow_credit_cards => @market.allow_credit_cards,
-              :allow_purchase_orders => @market.allow_purchase_orders
+              name: @market.name,
+              can_sell: true,
+              org_type: Organization::TYPE_SUPPLIER,
+              active: true,
+              allow_credit_cards: @market.allow_credit_cards,
+              allow_purchase_orders: @market.allow_purchase_orders
           }
           result = CreateOrganization.perform(organization_params: organization_params, user: current_user, market_id: @market.id)
           puts 'Solo Org Result: ' + result.to_s

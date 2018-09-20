@@ -17,11 +17,6 @@ describe Order do
       expect(subject).to have(1).error_on(:delivery_id)
     end
 
-    #it "requires a order number" do
-    #  expect(subject).to be_invalid
-    #  expect(subject).to have(1).error_on(:order_number)
-    #end
-
     it "requires a placed_at date" do
       expect(subject).to be_invalid
       expect(subject).to have(1).error_on(:placed_at)
@@ -130,7 +125,6 @@ describe Order do
 
       it "returns all orders" do
         orders = Order.orders_for_buyer(user)
-
         expect(orders).to eq(Order.all)
       end
     end
@@ -418,10 +412,11 @@ describe Order do
         items_attributes: {
           "0" => {
             id: order_item1.id,
-            quantity: 4
+            quantity: 2
           },
           "1" => {
             id: order_item2.id,
+            quantity: 3,
             quantity_delivered: 4
           },
           "2" => {
@@ -445,13 +440,11 @@ describe Order do
 
     it "returns sellers where the item quantity has changed" do
       sellers_with_change = order.reload.sellers_with_changes
-
-      expect(sellers_with_change).to eql([seller1])
+      expect(sellers_with_change).to eql([seller2])
     end
 
     it "returns sellers where the item has been deleted" do
       sellers_with_remove = order.reload.sellers_with_cancel
-
       expect(sellers_with_remove).to eql([seller3])
     end
   end

@@ -8,8 +8,8 @@ describe "Upcoming Deliveries" do
   let!(:market)  { create(:market) }
   let!(:seller)  { create(:organization, :seller, markets: [market]) }
   let!(:seller2) { create(:organization, :seller, markets: [market]) }
-  let!(:product) { create(:product, :sellable, organization: seller) }
-  let!(:seller2_product) { create(:product, :sellable, organization: seller2) }
+  let!(:product) { create(:product, :sellable, name: 'Apples', organization: seller) }
+  let!(:seller2_product) { create(:product, :sellable, name: 'Oranges', organization: seller2) }
 
   let!(:sunday_delivery_schedule) { create(:delivery_schedule, market: market, day: 0) }
   let!(:sunday_delivery) { create(:delivery, delivery_schedule: sunday_delivery_schedule, deliver_on: Date.parse("May 4, 2014")) }
@@ -55,7 +55,9 @@ describe "Upcoming Deliveries" do
       end
 
       it "shows a delivery until 11:59 the day of the delivery" do
-        Timecop.travel("May 8, 2014 11:30 PM") do
+        # Subtract 4 hours to allow for EDT
+        Timecop.travel("May 8, 2014 7:30 PM") do
+          sign_out
           sign_in_as(user)
           visit admin_delivery_tools_path
 

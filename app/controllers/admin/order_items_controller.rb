@@ -6,7 +6,7 @@ module Admin
     before_action :find_sticky_params, only: :index
 
     def index
-      if params["clear"]
+      if params['clear']
         redirect_to url_for(params.except(:clear))
       else
         items = fetch_order_items
@@ -22,7 +22,7 @@ module Admin
           format.html { @order_items = @q.result.page(params[:page]).per(@query_params[:per_page]) }
           format.csv do
             Delayed::Job.enqueue ::CSVExport::CSVSoldItemsExportJob.new(current_user, @q.result.map(&:id))
-            flash[:notice] = "Please check your email for export results."
+            flash[:notice] = 'Please check your email for export results.'
             redirect_to admin_order_items_path
           end
         end
@@ -67,7 +67,7 @@ module Admin
 
     def perform_search_and_calculate_totals(items, search)
       query = items.includes(:product, :order).search(search)
-      query.sorts = ["order_placed_at desc", "name"] if query.sorts.empty?
+      query.sorts = ['order_placed_at desc', 'name'] if query.sorts.empty?
       [query, OrderTotals.new(query.result)]
     end
 
@@ -88,15 +88,21 @@ module Admin
     end
 
     def fetch_markets_list(order_items)
-      @markets = Market.select(:id, :name).where(id: order_items.pluck("orders.market_id")).order(:name).uniq
+      @markets = Market.select(:id, :name).where(id: order_items.pluck('orders.market_id')).order(:name).uniq
     end
 
     def fetch_sellers_list(order_items)
-      @sellers = Organization.select(:id, :name).where(org_type: 'S', id: order_items.joins(:product).pluck("products.organization_id")).order(:name).uniq
+      @sellers = Organization.select(:id, :name).where(
+        org_type: Organization::TYPE_SUPPLIER,
+        id: order_items.joins(:product).pluck('products.organization_id')
+      ).order(:name).uniq
     end
 
     def fetch_buyers_list(order_items)
-      @buyers = Organization.select(:id, :name).where(org_type: 'B', id: order_items.pluck("orders.organization_id")).order(:name).uniq
+      @buyers = Organization.select(:id, :name).where(
+        org_type: Organization::TYPE_BUYER,
+        id: order_items.pluck('orders.organization_id')
+      ).order(:name).uniq
     end
 
     def fetch_delivery_statuses(order_items)

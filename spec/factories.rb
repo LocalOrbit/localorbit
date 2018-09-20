@@ -180,7 +180,7 @@ FactoryBot.define do
     tagline                'Connecting Farm to Market'
     timezone               'US/Eastern'
     contact_name           'Jill Smith'
-    contact_email          'jill@smith.com'
+    sequence(:contact_email) {|n| "jill@localorbittestdomain#{n}.com"}
     contact_phone          '616-222-2222'
     policies               'Do no harm...'
     profile                'Market profile...'
@@ -196,7 +196,6 @@ FactoryBot.define do
     allow_credit_cards     true
     default_allow_purchase_orders   false
     default_allow_credit_cards      true
-    auto_activate_organizations     false
     product_label_format 4
     print_multiple_labels_per_item false
     alternative_order_page         false
@@ -394,7 +393,7 @@ FactoryBot.define do
   factory :organization do
     sequence(:name) {|n| "Organization #{n}" }
     can_sell true
-    org_type 'S'
+    org_type Organization::TYPE_SUPPLIER
     show_profile true
     allow_purchase_orders true
     allow_credit_cards    true
@@ -405,22 +404,22 @@ FactoryBot.define do
     payment_model         'buysell'
 
     trait :admin do
-      org_type 'A'
+      org_type Organization::TYPE_ADMIN
     end
 
     trait :market do
       plan                { create(:plan, :grow) }
-      org_type 'M'
+      org_type Organization::TYPE_MARKET
     end
 
     trait :seller do
       can_sell true
-      org_type 'S'
+      org_type Organization::TYPE_SUPPLIER
     end
 
     trait :buyer do
       can_sell false
-      org_type 'B'
+      org_type Organization::TYPE_BUYER
     end
 
     trait :single_location do
@@ -433,6 +432,12 @@ FactoryBot.define do
       after(:create) do |org|
         create(:location, organization: org)
         create(:location, organization: org)
+      end
+    end
+
+    trait :decorated do
+      initialize_with do
+        OrganizationDecorator.new(new)
       end
     end
   end
@@ -743,12 +748,12 @@ FactoryBot.define do
 
     trait :fresh_sheet do
       name "Fresh Sheet (testing)"
-      keyword SubscriptionType::Keywords::FreshSheet
+      keyword SubscriptionType::Keywords::FRESHSHEET
     end
 
     trait :newsletter do
       name "Newsletter (testing)"
-      keyword SubscriptionType::Keywords::Newsletter
+      keyword SubscriptionType::Keywords::NEWSLETTER
     end
   end
 
