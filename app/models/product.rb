@@ -454,14 +454,10 @@ class Product < ActiveRecord::Base
     else
       if lots.loaded?
         qty = lots.to_a.sum {|l| l.available_specific?(deliver_on_date, market_id, organization_id) ? l.quantity : 0 }
-        #if qty == 0
-          qty += lots.to_a.sum {|l| l.available_general?(deliver_on_date) ? l.quantity : 0 }
-        #end
+        qty += lots.to_a.sum {|l| l.available_general?(deliver_on_date) ? l.quantity : 0 }
       else
         qty = lots.available_specific(deliver_on_date, market_id, organization_id).sum(:quantity)
-        #if qty == 0
-          qty += lots.available_general(deliver_on_date).sum(:quantity)
-        #end
+        qty += lots.available_general(deliver_on_date).sum(:quantity)
       end
     end
     qty
