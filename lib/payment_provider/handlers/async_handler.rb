@@ -15,6 +15,7 @@ module PaymentProvider
         ::Rails::logger.info("WEBHOOK: #{event.type} CONNECT: #{event.try(:account)} LIVEMODE: #{event.livemode}")
         handler = HANDLER_IMPLS[event.type]
         return unless handler
+        Rollbar.info('webhook', event)
 
         params = handler.extract_job_params(event)
         Rails.logger.info "Enqueueing '#{event.type}' event. Stripe Event id: '#{event.id}'"
