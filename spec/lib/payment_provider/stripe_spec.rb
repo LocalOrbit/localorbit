@@ -150,7 +150,7 @@ describe PaymentProvider::Stripe do
 
     context "when Stripe charge fails" do
       it "recreates and raises the exception without a root cause (to dance around Honeybadger's unwrap_exception which occludes the cause." do
-        err = Stripe::InvalidRequestError.new("The message", "the_param", 123, "the http body", {the:'json body'})
+        err = Stripe::InvalidRequestError.new("The message", "the_param", 123, "the http body", {the: 'json body'})
         expect(Stripe::Charge).to receive(:create).and_raise(err)
 
         begin
@@ -627,6 +627,8 @@ describe PaymentProvider::Stripe, vcr: true do
   subject { described_class }
 
   describe '.order_ids_for_market_payout_transfer' do
+    # FIXME: see #3301, `metadata: {lo.order_id: NNN}` is now missing on responses from Stripe
+    # currently passes because we have an ancient VCR cassette
     it "returns lo order ids from a transaction's payments" do
       order_ids = subject.order_ids_for_market_payout_transfer(
         transfer_id: 'tr_15xxwkHouQbaP1MV8O0tEg2b', stripe_account_id: 'acct_15xJY9HouQbaP1MV')

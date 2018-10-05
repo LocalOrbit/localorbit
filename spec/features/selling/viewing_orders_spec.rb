@@ -158,7 +158,7 @@ feature "Viewing orders" do
     end
 
 
-    scenario "list of orders after the market manager deletes an organization" do
+    scenario "list of orders after the market manager deletes an organization", :js do
       delete_organization(market1_seller_org1)
       delete_organization(market1_seller_org2)
 
@@ -233,7 +233,7 @@ feature "Viewing orders" do
         end
       end
 
-      scenario "order details" do
+      scenario "order details", :js do
         visit admin_orders_path
 
         click_link market1_order1.order_number

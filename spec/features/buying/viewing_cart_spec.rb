@@ -337,25 +337,21 @@ describe "Viewing the cart", js:true do
   end
 
   context "place order button" do
-    it "enables/disables the button when cycling through the payment options" do
-      expect(page).to have_button("Place Order", disabled: true)
+    it "enables the button when purchase order payment method chosen" do
+      expect(page.find('#place-order-button')[:disabled]).to be
 
       choose "Pay by Purchase Order"
 
-      expect(page).to have_button("Place Order")
-
-      choose "Pay by Credit Card"
-
-      expect(page).to have_button("Place Order", disabled: true)
+      expect(page.find('#place-order-button')[:disabled]).to be_falsey
     end
 
     context "credit cards" do
-      it "stays disabled if there are no valid credit cards" do
-        expect(page).to have_button("Place Order", disabled: true)
+      xit "stays disabled if there are no valid credit cards" do
+        expect(page.find('#place-order-button')[:disabled]).to be
 
         choose "Pay by Credit Card"
 
-        expect(page).to have_button("Place Order", disabled: true)
+        expect(page.find('#place-order-button')[:disabled]).to be
       end
 
       it "enables the button if there is at least one valid credit card for the organization" do

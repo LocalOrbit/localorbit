@@ -9,7 +9,7 @@ def get_results(num_results)
   visit(current_url + link_char + "per_page=" + num_results.to_s)
 end
 
-feature "Payment history", :truncate_after_all do
+feature "Payment history" do
   def remember_payment(payment)
     @payments[payment.created_at.strftime("%m/%d/%Y")] = payment.orders.map(&:order_number).join(",")
   end
@@ -449,7 +449,6 @@ feature "Payment history", :truncate_after_all do
         expect(payment_row("$56.78").description).to eq("Service Fee")
       end
 
-
     end
   end
 
@@ -739,32 +738,34 @@ feature "Payment history", :truncate_after_all do
       follow_buyer_order_link order: @orders[5]
     end
 
-    scenario "can view their purchase history after market manage deletes an organization" do
-      switch_user(market_manager) do
-        delete_organization(@seller)
+    context 'market manager has deleted an organization' do
+      before do
+        @seller.destroy
       end
 
-      expect(Dom::Admin::Financials::PaymentRow.all.count).to eq(5)
+      scenario "can still view their purchase history" do
+        expect(Dom::Admin::Financials::PaymentRow.all.count).to eq(5)
 
-      expect(payment_row("$21.00")).not_to be_nil
-      expect(payment_row("$21.00").payment_method).to eql("Cash")
-      expect(payment_row("$21.00").date).to eql(format_date(@payment_day + 1.day))
+        expect(payment_row("$21.00")).not_to be_nil
+        expect(payment_row("$21.00").payment_method).to eql("Cash")
+        expect(payment_row("$21.00").date).to eql(format_date(@payment_day + 1.day))
 
-      expect(payment_row("$22.00")).not_to be_nil
-      expect(payment_row("$22.00").payment_method).to eql("Check: #12345")
-      expect(payment_row("$22.00").date).to eql(format_date(@payment_day + 2.days))
+        expect(payment_row("$22.00")).not_to be_nil
+        expect(payment_row("$22.00").payment_method).to eql("Check: #12345")
+        expect(payment_row("$22.00").date).to eql(format_date(@payment_day + 2.days))
 
-      expect(payment_row("$23.00")).not_to be_nil
-      expect(payment_row("$23.00").payment_method).to eql("ACH: *********9983")
-      expect(payment_row("$23.00").date).to eql(format_date(@payment_day + 3.days))
+        expect(payment_row("$23.00")).not_to be_nil
+        expect(payment_row("$23.00").payment_method).to eql("ACH: *********9983")
+        expect(payment_row("$23.00").date).to eql(format_date(@payment_day + 3.days))
 
-      expect(payment_row("$24.00")).not_to be_nil
-      expect(payment_row("$24.00").payment_method).to eql("ACH: *********2231")
-      expect(payment_row("$24.00").date).to eql(format_date(@payment_day + 4.days))
+        expect(payment_row("$24.00")).not_to be_nil
+        expect(payment_row("$24.00").payment_method).to eql("ACH: *********2231")
+        expect(payment_row("$24.00").date).to eql(format_date(@payment_day + 4.days))
 
-      expect(payment_row("$25.00")).not_to be_nil
-      expect(payment_row("$25.00").payment_method).to eql("Credit Card: ************7732")
-      expect(payment_row("$25.00").date).to eql(format_date(@payment_day + 5.days))
+        expect(payment_row("$25.00")).not_to be_nil
+        expect(payment_row("$25.00").payment_method).to eql("Credit Card: ************7732")
+        expect(payment_row("$25.00").date).to eql(format_date(@payment_day + 5.days))
+      end
     end
 
     scenario "cannot view market-to-seller payments" do

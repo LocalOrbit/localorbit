@@ -58,6 +58,10 @@ RSpec.configure do |config|
   #     --seed 1234
   config.order = "random"
 
+  # Store status of last run so we can use --only-failures and --next-failure
+  config.example_status_persistence_file_path = "examples.txt"
+  config.run_all_when_everything_filtered = true
+
   # RSpec Rails can automatically mix in different behaviours to your tests
   # based on their file location, for example enabling you to call `get` and
   # `post` in specs under `spec/controllers`.
@@ -81,6 +85,7 @@ RSpec.configure do |config|
   config.include CapybaraApp, webhook: true
   config.include Rack::Test::Methods, webhook: true
   config.include PauseHelpers, type: :feature
+  config.include DropdownHelpers, type: :feature
 
   config.use_transactional_fixtures = false
 
@@ -94,5 +99,3 @@ RSpec.configure do |config|
     ActionMailer::Base.deliveries.clear
   end
 end
-
-

@@ -262,13 +262,15 @@ $ ->
       , 10
 
   $(document).on 'change', 'select[name="product[organization_id]"]', (evt) ->
-    $.ajax 'update_supplier_products',
-      type: 'GET'
-      dataType: 'script'
-      data: {
-        organization_id: $("select[name='product[organization_id]'] option:selected").val()
-      }
-      error: (jqXHR, textStatus, errorThrown) ->
-        console.log("AJAX Error: #{textStatus}")
-      success: (data, textStatus, jqXHR) ->
-        console.log("Dynamic country select OK!")
+    organizationId = $("select[name='product[organization_id]'] option:selected").val();
+    if organizationId
+      $.ajax 'update_supplier_products',
+        type: 'GET'
+        dataType: 'script'
+        data: {
+          organization_id: organizationId
+        }
+        error: (jqXHR, textStatus, errorThrown) ->
+          console.log("AJAX Error: #{textStatus}")
+        success: (data, textStatus, jqXHR) ->
+          console.log("Dynamic country select OK!")

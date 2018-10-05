@@ -2,9 +2,9 @@ module Orders
   class UnitPriceLogic
     class << self
       def prices(product, market, organization, time)
-        price = Price.for_product_and_market_and_org_at_time(product, market, organization, time).visible.order("min_quantity, organization_id")
+        price = Price.for_product_and_market_and_org_at_time(product, market, organization, time).order("min_quantity, organization_id")
         if price.empty?
-          price = Price.for_product_and_market_and_org_at_time(product, market, organization, Time.current).visible.order(:organization_id, :min_quantity)
+          price = Price.for_product_and_market_and_org_at_time(product, market, organization, Time.current).order(:organization_id, :min_quantity)
         end
         temp_min = nil
         dups = []

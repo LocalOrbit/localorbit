@@ -1,4 +1,3 @@
-
 Rails.configuration.stripe = {
   :publishable_key => ENV['STRIPE_PUBLISHABLE_KEY'],
   :secret_key      => ENV['STRIPE_SECRET_KEY']
@@ -14,7 +13,8 @@ end
 StripeEvent.event_retriever = lambda do |params|
   if params[:type] == 'transfer.paid' then
     managed_account_id = params[:user_id]
-    # TODO: branch on presence of managed_account_id in case we're receiving a platform event, in which case retrieve without second arg
+    # TODO: branch on presence of managed_account_id in case we're receiving a platform event,
+    #        in which case retrieve without second arg
     # TODO: tack on event[:account_type] = :platform or something to indicate source of event
     event = Stripe::Event.retrieve(params[:id], {stripe_account: managed_account_id})
     event[:user_id] = managed_account_id

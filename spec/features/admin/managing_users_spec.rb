@@ -165,7 +165,7 @@ feature "viewing and managing users" do
       expect(page.body).to have_content("The page you were looking for is not available at this address.")
     end
 
-    scenario "viewing only relevant users after deleting an organization" do
+    scenario "viewing only relevant users after deleting an organization", :js do
       delete_organization(organization)
       visit admin_users_path
 

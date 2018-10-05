@@ -191,7 +191,7 @@ class User < ActiveRecord::Base
 
   def admin?
     return @admin if !@admin.nil?
-    @admin = user_organizations.includes(:organization).where(organizations: {org_type: 'A'}).exists?
+    @admin = user_organizations.includes(:organization).where(organizations: {org_type: Organization::TYPE_ADMIN}).exists?
   end
 
   def can_manage?(resource)
@@ -223,7 +223,7 @@ class User < ActiveRecord::Base
   def market_manager?
     return false if admin?
     return @market_manager if !@market_manager.nil?
-    @market_manager = user_organizations.includes(:organization).where(organizations: {org_type: 'M'}).exists?
+    @market_manager = user_organizations.includes(:organization).where(organizations: {org_type: Organization::TYPE_MARKET}).exists?
   end
 
   def seller?

@@ -4,7 +4,7 @@ module DeadCode
   def dead_code!
     error = NotDeadCodeError.new("NOT dead code: #{caller.first.inspect}")
 
-    if Rails.env[/development|test/]
+    if Rails.env.development?
       raise error
     else
       Rollbar.notify(error)

@@ -1,17 +1,17 @@
+# coding: utf-8
 require "spec_helper"
 
 describe OrderItem do
+  let(:lots) { [create(:lot, quantity: 3), create(:lot, quantity: 5)] }
   let(:product) do
-    create(:product, lots: [
-      create(:lot, quantity: 3),
-      create(:lot, quantity: 5)
-    ],
-    prices: [
-      create(:price, min_quantity: 1, sale_price: 3),
-      create(:price, min_quantity: 5, sale_price: 2),
-      create(:price, min_quantity: 8, sale_price: 1)
-    ]
-  )
+    create(:product,
+      lots: lots,
+      prices: [
+        create(:price, min_quantity: 1, sale_price: 3),
+        create(:price, min_quantity: 5, sale_price: 2),
+        create(:price, min_quantity: 8, sale_price: 1)
+      ]
+    )
   end
   let!(:delivery_schedule) { create(:delivery_schedule) }
   let!(:delivery)    { delivery_schedule.next_delivery }
@@ -221,12 +221,54 @@ describe OrderItem do
           it "has no inventory errors" do
             expect(subject).to have(:no).errors_on(:inventory)
           end
+
+          context 'and order and deliver_on_date are present' do
+            subject { build(:order_item,
+                            product: product,
+                            quantity: 8,
+                            order: order,
+                            deliver_on_date: delivery.deliver_on) }
+
+            context 'and delivery date falls between lots’ good_from and expiry dates' do
+              let(:lots) do
+                [
+                  create(:lot, quantity: 3,
+                         good_from: delivery.deliver_on - 1.day,
+                         expires_at: delivery.deliver_on + 1.day),
+                  create(:lot, quantity: 5,
+                         good_from: delivery.deliver_on - 1.day,
+                         expires_at: delivery.deliver_on + 1.day)
+                ]
+              end
+
+              it 'has no inventory errors' do
+                expect(subject).to have(:no).errors_on(:inventory)
+              end
+            end
+
+            context 'and delivery date falls outside lots’ good_from and expiry dates' do
+              let(:lots) do
+                [
+                  create(:lot, quantity: 3,
+                         good_from: delivery.deliver_on - 3.days,
+                         expires_at: delivery.deliver_on - 1.day),
+                  create(:lot, quantity: 5,
+                         good_from: delivery.deliver_on - 3.days,
+                         expires_at: delivery.deliver_on - 1.day)
+                ]
+              end
+
+              it 'has 1 inventory error' do
+                expect(subject).to have(1).errors_on(:inventory)
+              end
+            end
+          end
         end
 
         context "and order item quantity is greater than available product inventory" do
           subject { OrderItem.new( order: order, product: product, quantity: 9) }
 
-          it "has no inventory errors" do
+          it "has 1 inventory error" do
             expect(subject).to have(1).errors_on(:inventory)
           end
         end

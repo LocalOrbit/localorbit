@@ -26,11 +26,11 @@ describe "Viewing featured promotion" do
 
       it "can be toggled between minimized and maximized", js: true do
         expect(page).to have_content("Big savings!")
-        find(".featured-product-toggle").trigger("click")
+        find(".featured-product-toggle").click
 
         expect(page).not_to have_content("Big savings!")
 
-        find(".featured-product-toggle").trigger("click")
+        find(".featured-product-toggle").click
         expect(page).to have_content("Big savings!")
       end
     end

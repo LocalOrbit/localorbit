@@ -10,7 +10,7 @@
 
   <% unless @product.prices.view_sorted.any? %>
     <p>
-      You don't have any Prices for <%= @product.plural_units_with_name %> yet! We've gone ahead and started the entry for you. When you enter a Sale Price,
+      You don’t have any Prices for <%= @product.plural_units_with_name %> yet! We’ve gone ahead and started the entry for you. When you enter a Sale Price,
       the Net Price will automatically update. You can adjust these numbers to arrive at the Net Price that you want
       to receive per unit.
     </p>
@@ -33,15 +33,15 @@
           <thead>
           <tr>
             <% if current_user.multi_market_membership? %>
-            <% if !@category_percents_by_market_id.nil? &&
-                @category_percents_by_market_id.except("all").values.inject { |a, b| a + b } > 0 &&
-                unit_product.organization.all_markets_for_select.length > 1 &&
-                unit_product.prices.nil? &&
-                unit_product.prices.first.market_id.nil? &&
-                unit_product.prices.first.product_fee_pct == 0 %>
-                <th></th>
-            <% end %>
-            <th class="market">Market</th>
+              <% if !@category_percents_by_market_id.nil? &&
+                  @category_percents_by_market_id.except("all").values.inject { |a, b| a + b } > 0 &&
+                  unit_product.organization.all_markets_for_select.length > 1 &&
+                  unit_product.prices.nil? &&
+                  unit_product.prices.first.market_id.nil? &&
+                  unit_product.prices.first.product_fee_pct == 0 %>
+                  <th></th>
+              <% end %>
+              <th class="market">Market</th>
             <% end %>
             <th class="buyer">Buyer</th>
             <th class="min-qty">
