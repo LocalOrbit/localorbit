@@ -284,10 +284,10 @@ module CloneProductionHelper
     refs_to_clear += balanced_payments_refs_to_clear
     refs_to_clear += stripe_refs_to_clear
 
-    refs_to_clear.each do |model, fields|
-      fields.each do |field|
-        puts "Setting all #{model.name}##{field} to nil"
-        model.update_all("#{field} = NULL")
+    refs_to_clear.each do |hash|
+      hash[:fields].each do |field|
+        puts "Setting all #{hash[:model].name}##{field} to nil"
+        hash[:model].update_all("#{field} = NULL")
       end
     end
   end
