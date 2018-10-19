@@ -86,7 +86,9 @@ describe ErrorReporting do
         error_data: {
           error: {
             type: "invalid_request_error",
-            message: "Must provide source or customer."
+            message: "Must provide source or customer.",
+            code: "parameter_missing",
+            doc_url: "https://stripe.com/docs/error-codes/parameter-missing"
           }
         }
       )

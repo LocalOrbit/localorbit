@@ -43,7 +43,12 @@ module Imports
 			begin
 				mkt = Market.find_by_subdomain(market_subdomain)
 				user = User.find(current_user.to_i)
-				org = user.managed_organizations_within_market(mkt).where(name: "#{organization_name.strip}", org_type: 'S')
+				org = user.
+                managed_organizations_within_market(mkt).
+                where(
+                  name: "#{organization_name.strip}",
+                  org_type: Organization::TYPE_SUPPLIER
+                )
 
 				#unless user.admin? || user.markets.include?(mkt)
 				#	return nil
@@ -169,7 +174,7 @@ module Imports
 
 				end
 
-			end # end the major if/else/end 
+			end # end the major if/else/end
 			# (update or not, basically, wherein the additional unit/line is handled inside each case in the unless stmts)
 		end # end def.self_create_product_from_hash
 

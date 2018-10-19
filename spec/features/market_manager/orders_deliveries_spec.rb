@@ -92,7 +92,7 @@ context "Viewing sold items" do
         visit admin_order_items_path
       end
 
-      it "lists all sold items for the market" do
+      it "lists all sold items for the market", :js do
         sold_items = Dom::Admin::SoldItemRow.all
 
         expect(sold_items.count).to eq(3)
@@ -113,12 +113,10 @@ context "Viewing sold items" do
       end
     end
 
-    it "lists all sold items for the market as a CSV" do
+    it "can queue a csv export", :js do
       html_headers = page.all("#sold-items th").map(&:text)[1..-1] # remove checkbox column
       click_link "Export CSV"
-      csv_headers = CSV.parse(page.body).first
-      expect(html_headers - csv_headers).to be_empty # CSV expands stacked columns for order date, market, and unit price
-      expect(page).to have_content("LO-ADA-0000001")
+      expect(page).to have_content("Please check your email for export results")
     end
 
     it "sets item delivery status" do

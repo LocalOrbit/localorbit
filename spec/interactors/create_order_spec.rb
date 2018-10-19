@@ -21,7 +21,7 @@ describe CreateOrder do
     # (It's normally de-activated for tests, see spec/support/audited.rb)
     # I think the ROOT cause of the exception being raised in the first place is a bug in
     # the Audited rubygem: https://github.com/collectiveidea/audited
-    # 
+    #
     # Enabling auditing helps expose the bug that busted us in production. crosby - 2015-07-20
     Order.enable_auditing
   end
@@ -36,7 +36,7 @@ describe CreateOrder do
     it "sets the payment note" do
       expect(subject.payment_note).to eql("1234")
     end
-    
+
     it "sets the payment provider" do
       expect(subject.payment_provider).to eq payment_provider
     end

@@ -10,20 +10,20 @@
 
     <div class="manager-filters unjustify mobile-block">
       <% if current_user.multi_market_membership? %>
-      <span class="preserve-alignment mobile-block">
+      <span id="filter-options-market" class="preserve-alignment mobile-block">
         <%= f.label :delivery_schedules_market_id_in, "Market" %><br>
         <%= f.collection_select :delivery_schedules_market_id_in, @search_presenter.selling_markets, :id, :name, {include_blank: nil}, {id: 'filter_market', multiple: true, class: [append_sticky_class(:delivery_schedules_market_id_in, ""),'multiselect']} %>
       </span>
       <% end %>
 
       <% if current_user.multi_organization_membership? && policy(:all_supplier).index? %>
-      <span class="preserve-alignment mobile-block">
+      <span id="filter-options-supplier" class="preserve-alignment mobile-block">
         <%= f.label :organization_id_in, "Supplier" %><br>
         <%= f.collection_select :organization_id_in, @search_presenter.seller_organizations, :id, :name, {include_blank: nil}, {id: 'filter_organization', multiple: true, class: [append_sticky_class(:organization_id_in, ""),'multiselect']} %>
       </span>
       <% end %>
 
-      <span class="preserve-alignment mobile-block">
+      <span id="filter-options-product-availability" class="preserve-alignment mobile-block">
         <%= f.label :lots_sellable_quantity_eq, "Product availability" %><br>
         <%= f.select :lots_sellable_quantity_eq, options_for_select([["Items with inventory", 't'], ["Items without inventory", 'f']], selected: @q.lots_sellable_quantity_eq), {include_blank: "all items"}, {class: [append_sticky_class(:lots_sellable_quantity_eq, "vanilla_select")]} %>
       </span>

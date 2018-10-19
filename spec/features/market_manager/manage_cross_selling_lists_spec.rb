@@ -260,7 +260,7 @@ describe "Manage cross selling lists" do
       click_link product_management_link
 
       supplier_row = Dom::Admin::ProductManagementSupplierRow.find_by_supplier_name(supplier_01.name)
-      expect(supplier_row.checked?).to eql("checked")
+      expect(supplier_row.checked?).to be
       expect(supplier_row.supplier_product_count).to eql("3")
 
       supplier_row.uncheck
@@ -291,7 +291,7 @@ describe "Manage cross selling lists" do
 
       category_row = Dom::Admin::ProductManagementCategoryRow.find_by_category_name(product_01.category.name)
       expect(category_row.category_product_count).to eql("5")
-      expect(category_row.checked?).to eql("checked")
+      expect(category_row.checked?).to be
 
       category_row.uncheck
 
@@ -321,7 +321,7 @@ describe "Manage cross selling lists" do
 
       product_row = Dom::Admin::ProductManagementProductRow.find(product_01.name).first
 
-      expect(product_row.checked?).to eql("checked")
+      expect(product_row.checked?).to be
 
       product_row.uncheck
 

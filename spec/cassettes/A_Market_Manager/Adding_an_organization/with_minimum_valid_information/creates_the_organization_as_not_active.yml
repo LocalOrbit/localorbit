@@ -2,146 +2,29 @@
 http_interactions:
 - request:
     method: post
-    uri: https://ak-test-2nUrWp1vUFJ9T17cN1sbKBGvue3lZkHmE:@api.balancedpayments.com/v1/customers
-    body:
-      encoding: UTF-8
-      string: '{"name":"Famous Farm","meta":{"entity_id":1,"entity_name":"Famous Farm","entity_type":"organization"}}'
-    headers:
-      User-Agent:
-      - balanced-ruby/0.8.2
-      Content-Type:
-      - application/json
-      Accept-Encoding:
-      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
-      Accept:
-      - "*/*"
-  response:
-    status:
-      code: 201
-      message: CREATED
-    headers:
-      Content-Type:
-      - application/json
-      Date:
-      - Thu, 14 Aug 2014 16:03:17 GMT
-      Location:
-      - http://bapi-integration-prod-8u30f7.us-west-1.vandelay.io/v1/customers/CU3VQi2G1rM5t73gX9OUmhsA
-      Server:
-      - ngx_openresty/1.2.6.3
-      X-Balanced-Guru:
-      - OHM8136c4c623cc11e48da902a1fe53e539
-      X-Balanced-Host:
-      - bapi-integration-prod-8u30f7-10-3-5-17
-      X-Balanced-Marketplace:
-      - TEST-MP4X7mSSQwAyDzwUfc5TAQ7D
-      X-Balanced-Merchant:
-      - TEST-MR4RZnrOZZQznEBncFS5xnVS
-      X-Balanced-Revision:
-      - '1.0'
-      X-Balanced-Software-Build:
-      - 1.8.2
-      X-Midlr-Version:
-      - '2'
-      X-Newrelic-App-Data:
-      - PxQFWFNXCQYTUllWAgAAU0YdFhE1AwE2QgNWEVlbQFtcCxYxSBVbDQoZVA4IF0pcXAgEEBhSQhUQXltWEBVNAUIHWRZdGhgSA0kZUR9TA1JcBwZQUlQOCwlcUFsEBRtGVQEEH0JEBwEEUwhVXAsBBQQGDVQAAxFORFBWDRUGZQ==
-      Content-Length:
-      - '1708'
-      Connection:
-      - keep-alive
-    body:
-      encoding: UTF-8
-      string: |-
-        {
-          "_type": "customer",
-          "twitter": null,
-          "reversals_uri": "/v1/customers/CU3VQi2G1rM5t73gX9OUmhsA/reversals",
-          "phone": null,
-          "meta": {
-            "entity_id": "1",
-            "entity_name": "Famous Farm",
-            "entity_type": "organization"
-          },
-          "facebook": null,
-          "address": {},
-          "business_name": null,
-          "bank_accounts_uri": "/v1/customers/CU3VQi2G1rM5t73gX9OUmhsA/bank_accounts",
-          "id": "CU3VQi2G1rM5t73gX9OUmhsA",
-          "credits_uri": "/v1/customers/CU3VQi2G1rM5t73gX9OUmhsA/credits",
-          "cards_uri": "/v1/customers/CU3VQi2G1rM5t73gX9OUmhsA/cards",
-          "holds_uri": "/v1/customers/CU3VQi2G1rM5t73gX9OUmhsA/holds",
-          "name": "Famous Farm",
-          "refunds_uri": "/v1/customers/CU3VQi2G1rM5t73gX9OUmhsA/refunds",
-          "dob": null,
-          "created_at": "2014-08-14T16:03:17.641093Z",
-          "destination": null,
-          "is_identity_verified": false,
-          "uri": "/v1/customers/CU3VQi2G1rM5t73gX9OUmhsA",
-          "source": null,
-          "_uris": {
-            "transactions_uri": {
-              "_type": "page",
-              "key": "transactions"
-            },
-            "bank_accounts_uri": {
-              "_type": "page",
-              "key": "bank_accounts"
-            },
-            "refunds_uri": {
-              "_type": "page",
-              "key": "refunds"
-            },
-            "debits_uri": {
-              "_type": "page",
-              "key": "debits"
-            },
-            "holds_uri": {
-              "_type": "page",
-              "key": "holds"
-            },
-            "reversals_uri": {
-              "_type": "page",
-              "key": "reversals"
-            },
-            "credits_uri": {
-              "_type": "page",
-              "key": "credits"
-            },
-            "cards_uri": {
-              "_type": "page",
-              "key": "cards"
-            }
-          },
-          "debits_uri": "/v1/customers/CU3VQi2G1rM5t73gX9OUmhsA/debits",
-          "transactions_uri": "/v1/customers/CU3VQi2G1rM5t73gX9OUmhsA/transactions",
-          "ssn_last4": null,
-          "email": null,
-          "ein": null
-        }
-    http_version: 
-  recorded_at: Thu, 14 Aug 2014 16:03:17 GMT
-- request:
-    method: post
     uri: https://api.stripe.com/v1/customers
     body:
       encoding: US-ASCII
-      string: description=Famous%20Farm&metadata[lo.entity_id]=1&metadata[lo.entity_type]=organization
+      string: description=Famous%20Farm&metadata[lo_entity_id]=4&metadata[lo_entity_type]=organization&metadata[lo_entity_name]=Famous%20Farm
     headers:
       Accept:
       - "*/*; q=0.5, application/xml"
       Accept-Encoding:
       - gzip, deflate
       User-Agent:
-      - Stripe/v1 RubyBindings/1.21.0
+      - Stripe/v1 RubyBindings/1.27.2
       Authorization:
-      - Bearer sk_test_XTLCfIQMwKblsxIF1N4i7y1G
+      - Bearer sk_test_KagdXeHZHHOHNrXETSTkPuX6
       Content-Type:
       - application/x-www-form-urlencoded
+      Stripe-Version:
+      - '2015-04-07'
       X-Stripe-Client-User-Agent:
-      - '{"bindings_version":"1.21.0","lang":"ruby","lang_version":"2.1.2 p95 (2014-05-08)","platform":"x86_64-darwin13.0","engine":"ruby","publisher":"stripe","uname":"Darwin
-        XandersBeatBox.local 13.4.0 Darwin Kernel Version 13.4.0: Wed Dec 17 19:05:52
-        PST 2014; root:xnu-2422.115.10~1/RELEASE_X86_64 x86_64","hostname":"XandersBeatBox.local"}'
+      - '{"bindings_version":"1.27.2","lang":"ruby","lang_version":"2.1.2 p95 (2014-05-08)","platform":"x86_64-darwin17.0","engine":"ruby","publisher":"stripe","uname":"Darwin
+        kite 17.4.0 Darwin Kernel Version 17.4.0: Sun Dec 17 09:19:54 PST 2017; root:xnu-4570.41.2~1/RELEASE_X86_64
+        x86_64","hostname":"kite"}'
       Content-Length:
-      - '88'
+      - '127'
   response:
     status:
       code: 200
@@ -150,11 +33,11 @@ http_interactions:
       Server:
       - nginx
       Date:
-      - Fri, 12 Jun 2015 20:14:49 GMT
+      - Fri, 09 Mar 2018 23:51:55 GMT
       Content-Type:
       - application/json
       Content-Length:
-      - '906'
+      - '762'
       Connection:
       - keep-alive
       Access-Control-Allow-Credentials:
@@ -163,59 +46,55 @@ http_interactions:
       - GET, POST, HEAD, OPTIONS, DELETE
       Access-Control-Allow-Origin:
       - "*"
+      Access-Control-Expose-Headers:
+      - Request-Id, Stripe-Manage-Version, X-Stripe-External-Auth-Required, X-Stripe-Privileged-Session-Required
       Access-Control-Max-Age:
       - '300'
       Cache-Control:
       - no-cache, no-store
       Request-Id:
-      - req_BhmbaFHI2LBTl6x1
+      - req_O2lJuaeBpm75pL
       Stripe-Version:
       - '2015-04-07'
       Strict-Transport-Security:
-      - max-age=31556926; includeSubDomains
+      - max-age=31556926; includeSubDomains; preload
     body:
       encoding: UTF-8
       string: |
         {
+          "id": "cus_CSqheIsw9goeKs",
           "object": "customer",
-          "created": 1434140089,
-          "id": "cus_6PoAWxRbx9u5xm",
-          "livemode": false,
-          "description": "Famous Farm",
-          "email": null,
+          "account_balance": 0,
+          "created": 1520639515,
+          "currency": null,
+          "default_source": null,
           "delinquent": false,
+          "description": "Famous Farm",
+          "discount": null,
+          "email": null,
+          "invoice_prefix": "C4431A2",
+          "livemode": false,
           "metadata": {
-            "lo.entity_id": "1",
-            "lo.entity_type": "organization"
+            "lo_entity_id": "4",
+            "lo_entity_type": "organization",
+            "lo_entity_name": "Famous Farm"
+          },
+          "shipping": null,
+          "sources": {
+            "object": "list",
+            "data": [],
+            "has_more": false,
+            "total_count": 0,
+            "url": "/v1/customers/cus_CSqheIsw9goeKs/sources"
           },
           "subscriptions": {
             "object": "list",
-            "total_count": 0,
+            "data": [],
             "has_more": false,
-            "url": "/v1/customers/cus_6PoAWxRbx9u5xm/subscriptions",
-            "data": []
-          },
-          "discount": null,
-          "account_balance": 0,
-          "currency": null,
-          "bank_accounts": {
-            "object": "list",
             "total_count": 0,
-            "has_more": false,
-            "url": "/v1/customers/cus_6PoAWxRbx9u5xm/bank_accounts",
-            "data": []
-          },
-          "default_bank_account": null,
-          "default_source_type": null,
-          "sources": {
-            "object": "list",
-            "total_count": 0,
-            "has_more": false,
-            "url": "/v1/customers/cus_6PoAWxRbx9u5xm/sources",
-            "data": []
-          },
-          "default_source": null
+            "url": "/v1/customers/cus_CSqheIsw9goeKs/subscriptions"
+          }
         }
     http_version: 
-  recorded_at: Fri, 12 Jun 2015 20:14:50 GMT
-recorded_with: VCR 2.9.3
+  recorded_at: Fri, 09 Mar 2018 23:51:55 GMT
+recorded_with: VCR 4.0.0

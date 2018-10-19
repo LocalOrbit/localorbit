@@ -22,9 +22,3 @@ Capybara.register_driver :selenium_chrome_headless do |app|
 end
 
 Capybara.javascript_driver = :selenium_chrome_headless
-
-#RSpec.configure do |config|
-#  config.before(:each, js: true) do
-    # page.driver.browser.url_blacklist = ['intercom.io']
-#  end
-#end

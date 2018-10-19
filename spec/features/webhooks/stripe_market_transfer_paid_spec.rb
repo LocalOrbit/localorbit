@@ -8,7 +8,7 @@ describe "stripe market transfer.paid event", vcr: true, webhook: true do
   let!(:orders) { create_list(:order, 3, market: market) }
 
   # We need to brow-beat the test orders in the db to have IDs that match the hand-configured metadatain transfer.paid.json:
-  let(:replace_order_ids) { [ 1234, 187, 1337 ] } 
+  let(:replace_order_ids) { [ 1234, 187, 1337 ] }
 
   before do
     orders.zip(replace_order_ids).each do |order, new_id|
@@ -16,6 +16,9 @@ describe "stripe market transfer.paid event", vcr: true, webhook: true do
     end
   end
 
+  # FIXME see LO-1074: when legacy cassette is deleted this fails, event has changed to transfer.created,
+  #   and lo.order_id metadata is missing
+  # NOTE: we are not currently subscribed to this event on production!
   it "creates a payment and emails the market's managers" do
     expect(find_payments.count).to eq 0
     post '/webhooks/stripe', JSON.parse(File.read('spec/features/webhooks/transfer.paid.json'))
