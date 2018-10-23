@@ -522,7 +522,6 @@ class Admin::OrdersController < AdminController
       updates = UpdateOrder.perform(payment_provider: order.payment_provider, order: order, order_params: params, request: request, merge: merge)
       if updates.success?
         order.update_total_cost
-        came_from_admin = request.referer.include?("/admin/")
         next_url = if order.reload.items.any?
           came_from_admin ? admin_order_path(order) : order_path(order)
         else
@@ -566,7 +565,6 @@ class Admin::OrdersController < AdminController
     session.delete(:cart_id)
 
     order.update_total_cost
-    came_from_admin = request.referer.include?("/admin/")
     next_url = if order.reload.items.any?
                  came_from_admin ? admin_order_path(order) : order_path(order)
                else
@@ -585,5 +583,11 @@ class Admin::OrdersController < AdminController
     setup_add_items_form(order)
     flash.now[:notice] = "Add items below."
     render :show
+  end
+
+  private
+
+  def came_from_admin
+    @came_from_admin ||= request.referer.present? && request.referer.include?("/admin/")
   end
 end
