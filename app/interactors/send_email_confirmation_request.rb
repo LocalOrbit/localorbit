@@ -2,7 +2,7 @@ class SendEmailConfirmationRequest
   include Interactor
 
   def perform
-    dead_code!
+    # dead_code!
 
     require_in_context :user
 
