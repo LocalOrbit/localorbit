@@ -43,7 +43,6 @@ describe 'Editing inventory' do
 
     it 'opens the clicked on lot row to editing' do
       edit_lot_form = Dom::LotRow.first
-      edit_lot_form.click_number
       expect(edit_lot_form).to be_editable
     end
 
