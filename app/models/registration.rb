@@ -89,8 +89,7 @@ class Registration
       buyer_org_type: buyer_org_type,
       ownership_type: ownership_type,
       non_profit: non_profit,
-      professional_organizations: professional_organizations,
-      active: market.auto_activate_organizations
+      professional_organizations: professional_organizations
     }
   end
 

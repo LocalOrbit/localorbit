@@ -24,27 +24,6 @@ describe Registration do
   }
 
   describe '.save' do
-    context "market does have 'auto-activate organizations' enabled" do
-      let(:market) { create(:market,  auto_activate_organizations: true ) }
-      it "should have a registration organization is enabled" do
-        registration.save
-        org = registration.organization
-        user = registration.user
-        expect(user.enabled_for_organization? org).to be true
-        expect(org.active?).to be true
-      end
-    end
-
-    context "market does *not* have 'auto-activate organizations' enabled" do
-      it "should have a registered organization that is not be enabled" do
-        registration.save
-        org = registration.organization
-        user = registration.user
-        expect(user.enabled_for_organization? org).to be true
-        expect(org.active?).to be false
-      end
-    end
-
     describe "address_label" do
       it "saves Location name based on address_label" do
         label = "The Address Label"
