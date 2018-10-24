@@ -2,7 +2,7 @@ module Financials
   module BankAccounts
     class Finder
       class << self
-        def creditable_bank_accounts(bank_accounts: bank_accounts)
+        def creditable_bank_accounts(bank_accounts:)
           bank_accounts.
             verified.
             creditable_bank_accounts.
