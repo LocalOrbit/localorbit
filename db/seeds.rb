@@ -10,7 +10,7 @@
 
 # Admin
 ap 'creating admin organization...'
-admin_org = Organization.find_or_initialize_by(name: 'Admin Org', org_type: 'A')
+admin_org = Organization.find_or_initialize_by(name: 'Admin Org', org_type: Organization::TYPE_ADMIN)
 admin_org.allow_purchase_orders = true
 admin_org.can_sell = false
 admin_org.active = true

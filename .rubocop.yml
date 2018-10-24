@@ -285,7 +285,7 @@ Layout/DefEndAlignment:
 
 # Multi-line method chaining should be done with leading dots.
 Layout/DotPosition:
-  EnforcedStyle: leading
+  EnforcedStyle: trailing
   SupportedStyles:
     - leading
     - trailing
@@ -589,7 +589,7 @@ Layout/SpaceInsideArrayLiteralBrackets:
     - no_space
 
 Layout/SpaceInsideBlockBraces:
-  EnforcedStyle: space
+  EnforcedStyle: no_space
   SupportedStyles:
     - space
     - no_space

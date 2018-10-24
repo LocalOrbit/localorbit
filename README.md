@@ -98,6 +98,9 @@ Or if you already have a recent copy of production in development do:
     rake production_copy:push_out[staging]
 
 
+### Heroku Notes
+
+There are _binstub_ helpers in `$RAILS_ROOT/bin` that allow for shortcuts when dealing with Heroku environments. See [binstubs plugin](https://github.com/tpope/heroku-binstubs) for usage & more info.
 ## Contributing
 
 See [development process](docs/development_process.md).
