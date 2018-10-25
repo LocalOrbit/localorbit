@@ -21,6 +21,10 @@ jobs:
           POSTGRES_DB: localorbit_test
           POSTGRES_PASSWORD: ""
     steps:
+      - add_ssh_keys:
+          fingerprints:
+            - '08:9a:5b:59:c1:c0:d2:1f:a4:f3:b6:57:3b:a9:d0:8c'
+
       - checkout
 
       - run:
