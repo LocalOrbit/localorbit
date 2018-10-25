@@ -523,10 +523,10 @@ class Admin::OrdersController < AdminController
       if updates.success?
         order.update_total_cost
         next_url = if order.reload.items.any?
-          came_from_admin? ? admin_order_path(order) : order_path(order)
+          admin_order_path(order)
         else
           order.soft_delete
-          came_from_admin? ? admin_orders_path : orders_path
+          admin_orders_path
         end
         redirect_to next_url, notice: "Order successfully updated."
       else
@@ -566,10 +566,10 @@ class Admin::OrdersController < AdminController
 
     order.update_total_cost
     next_url = if order.reload.items.any?
-                 came_from_admin? ? admin_order_path(order) : order_path(order)
+                 admin_order_path(order)
                else
                  order.soft_delete
-                 came_from_admin? ? admin_orders_path : orders_path
+                 admin_orders_path
                end
     redirect_to next_url, notice: "Order successfully updated."
   end
@@ -583,12 +583,5 @@ class Admin::OrdersController < AdminController
     setup_add_items_form(order)
     flash.now[:notice] = "Add items below."
     render :show
-  end
-
-  private
-
-  def came_from_admin?
-    return @came_from_admin if !@came_from_admin.nil?
-    @came_from_admin = request.referer.present? && request.referer.include?("/admin/")
   end
 end
