@@ -522,12 +522,11 @@ class Admin::OrdersController < AdminController
       updates = UpdateOrder.perform(payment_provider: order.payment_provider, order: order, order_params: params, request: request, merge: merge)
       if updates.success?
         order.update_total_cost
-        came_from_admin = request.referer.include?("/admin/")
         next_url = if order.reload.items.any?
-          came_from_admin ? admin_order_path(order) : order_path(order)
+          admin_order_path(order)
         else
           order.soft_delete
-          came_from_admin ? admin_orders_path : orders_path
+          admin_orders_path
         end
         redirect_to next_url, notice: "Order successfully updated."
       else
@@ -566,12 +565,11 @@ class Admin::OrdersController < AdminController
     session.delete(:cart_id)
 
     order.update_total_cost
-    came_from_admin = request.referer.include?("/admin/")
     next_url = if order.reload.items.any?
-                 came_from_admin ? admin_order_path(order) : order_path(order)
+                 admin_order_path(order)
                else
                  order.soft_delete
-                 came_from_admin ? admin_orders_path : orders_path
+                 admin_orders_path
                end
     redirect_to next_url, notice: "Order successfully updated."
   end
