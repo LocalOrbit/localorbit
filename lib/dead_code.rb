@@ -7,7 +7,7 @@ module DeadCode
     if Rails.env.development?
       raise error
     else
-      Rollbar.notify(error)
+      Rollbar.warning(error)
     end
   end
 end

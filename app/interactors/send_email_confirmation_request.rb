@@ -1,8 +1,9 @@
 class SendEmailConfirmationRequest
   include Interactor
+  include DeadCode
 
   def perform
-    # dead_code!
+    dead_code!
 
     require_in_context :user
 
