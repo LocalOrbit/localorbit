@@ -37,14 +37,14 @@ context "Downloading packing labels", js:true do
       expect(order_printably).to be
       expect(order_printably.pdf).to be
       expect(order_printably.pdf.file).to be
-      expect(order_printably.pdf.file.readlines.first).to match("%PDF-1.4\n")
+      expect(order_printably.pdf.file.readlines.first).to start_with("%PDF-1.")
     end
   end
 
   before do
     switch_to_subdomain market.subdomain
   end
-  
+
   context "as a Seller" do
     before do
       sign_in_as seller

@@ -169,7 +169,7 @@ describe GenerateTableTentsOrPosters do
   describe "#perform"  do
     it "creates a pdf", pdf: true do
       context = GenerateTableTentsOrPosters.perform(order: order, type: "poster", include_product_names: false, request: request)
-      expect(context.pdf_result.data.match("%PDF-1.4\n")).to_not eq nil
+      expect(context.pdf_result.data).to start_with("%PDF-1.")
     end
 
     it "sends the correct Poster parameters to TemplatedPdfGenerator" do
@@ -178,7 +178,7 @@ describe GenerateTableTentsOrPosters do
              template: "table_tents_and_posters/poster",
              pdf_settings: TemplatedPdfGenerator::ZeroMargins.merge({page_size: "letter"}),
              locals: {
-               params: { 
+               params: {
                  page_list: GenerateTableTentsOrPosters.get_page_list(order: order.reload, include_product_names: false),
                  include_product_names: false,
                  market: order.market
@@ -195,7 +195,7 @@ describe GenerateTableTentsOrPosters do
         with(request: request,
              template: "table_tents_and_posters/table_tent",
              locals: {
-               params: { 
+               params: {
                  page_list: GenerateTableTentsOrPosters.get_page_list(order: order.reload, include_product_names: false),
                  include_product_names: false,
                  market: order.market

@@ -11,7 +11,7 @@ RSpec.describe GhostscriptWrapper do
     end
 
     it 'returns a pdf' do
-      expect(GhostscriptWrapper.merge_pdf_files(pdf_files).index("%PDF-1.5\n")).to eq 0
+      expect(GhostscriptWrapper.merge_pdf_files(pdf_files)).to start_with("%PDF-1.")
     end
   end
 
