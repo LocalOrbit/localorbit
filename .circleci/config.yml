@@ -3,7 +3,7 @@ jobs:
   build:
     parallelism: 4
     docker:
-      - image: localorbit/heroku16-ruby2.3.7:0.0.8
+      - image: circleci/ruby:2.3.8-stretch-node-browsers
         environment:
           BUNDLE_JOBS: 3
           BUNDLE_RETRY: 3
@@ -24,6 +24,10 @@ jobs:
       - add_ssh_keys
 
       - checkout
+
+      - run:
+          name: Install package dependencies
+          command: sudo apt-get install -f libjpeg-dev libgs9 ghostscript libicu-dev imagemagick wkhtmltopdf
 
       - run:
           name: Which bundler?
