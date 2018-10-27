@@ -91,7 +91,7 @@ gem 'turbolinks'
 install_if -> { RUBY_PLATFORM =~ /darwin/ } do
   gem 'wkhtmltopdf-binary', git: 'https://github.com/zakird/wkhtmltopdf_binary_gem.git'
 end
-install_if -> { RUBY_PLATFORM =~ /linux/ } do
+install_if -> { ENV['ON_HEROKU'] } do
   gem 'wkhtmltopdf-heroku'
 end
 
