@@ -55,8 +55,7 @@ describe "Upcoming Deliveries" do
       end
 
       it "shows a delivery until 11:59 the day of the delivery" do
-        # Subtract 4 hours to allow for EDT
-        Timecop.travel("May 8, 2014 7:30 PM") do
+        Timecop.travel(ActiveSupport::TimeZone.new(market.timezone).local_to_utc(Time.new(2014, 5, 8, 23, 59, 00))) do
           sign_out
           sign_in_as(user)
           visit admin_delivery_tools_path
