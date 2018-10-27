@@ -3,7 +3,7 @@ jobs:
   build:
     parallelism: 4
     docker:
-      - image: localorbit/heroku16-ruby2.3.7:0.0.8
+      - image: circleci/ruby:2.3.8-stretch-node-browsers
         environment:
           BUNDLE_JOBS: 3
           BUNDLE_RETRY: 3
@@ -30,10 +30,10 @@ jobs:
           command: bundle -v
 
       # Restore bundle cache
-      # - restore_cache:
-      #     keys:
-      #       - localorbit-bundle-{{ checksum "Gemfile.lock" }}
-      #       - localorbit-bundle-
+      - restore_cache:
+          keys:
+            - localorbit-bundle-{{ checksum "Gemfile.lock" }}
+            - localorbit-bundle-
 
       - run:
           name: Bundle Install
