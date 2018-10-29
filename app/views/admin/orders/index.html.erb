@@ -35,7 +35,8 @@
     <tbody>
       <%
         @orders.each do |order|
-          items = Orders::SellerItems.items_for_seller(order, current_user)
+          # FIXME
+          items = Orders::OrderItems.items_for_seller(order, current_user)
       %>
       <tr class="order-row">
         <% if current_market.is_consignment_market? %>

@@ -3,11 +3,11 @@ module DeliveryStatus
 
   def delivery_status_for_user(user)
     order_items = items_for_seller(user)
-    aggrigate_delivery_status_for_items(order_items)
+    aggregate_delivery_status_for_items(order_items)
   end
 
   def delivered?
-    aggrigate_delivery_status_for_items(items) == "delivered"
+    aggregate_delivery_status_for_items(items) == "delivered"
   end
 
   def undelivered_for_user?(user)
@@ -15,7 +15,7 @@ module DeliveryStatus
   end
 
   def cache_delivery_status
-    self.delivery_status = aggrigate_delivery_status_for_items(items)
+    self.delivery_status = aggregate_delivery_status_for_items(items)
   end
 
   private
@@ -24,6 +24,7 @@ module DeliveryStatus
     (query & statuses) == query
   end
 
+  # FIXME: Merge with mess in Orders::OrderItems and clean up
   def items_for_seller(user)
     organization_ids = user.managed_organizations.map(&:id)
     if user.admin? || user.market_manager? || organization_ids.include?(organization_id)
@@ -33,7 +34,7 @@ module DeliveryStatus
     end
   end
 
-  def aggrigate_delivery_status_for_items(items)
+  def aggregate_delivery_status_for_items(items)
     statuses = (items.try(:loaded?) ? items.map(&:delivery_status) : items.pluck(:delivery_status)).map(&:downcase).uniq
 
     Orders::DeliveryStatusLogic.overall_status(statuses)
