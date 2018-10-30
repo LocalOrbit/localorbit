@@ -20,7 +20,7 @@ class Admin::OrdersController < AdminController
           @orders = @orders.page(params[:page]).per(@query_params[:per_page])
         end
         format.csv do
-          @order_items = Orders::OrderItems.find_order_items(@orders.map(&:id), current_user)
+          @order_items = Orders::OrderItems.find_order_items(@orders.pluck(:id)), current_user)
           @abort_mission = @order_items.count > 2999
           if ENV["USE_UPLOAD_QUEUE"] == "true"
             Delayed::Job.enqueue ::CSVExport::CSVOrderExportJob.new(current_user, @order_items.pluck(:id))
@@ -50,7 +50,7 @@ class Admin::OrdersController < AdminController
           render :index
         end
         format.csv do
-          @order_items = Orders::OrderItems.find_order_items(@orders.map(&:id), current_user)
+          @order_items = Orders::OrderItems.find_order_items(@orders.pluck(:id), current_user)
           @abort_mission = @order_items.count > 2999
           if ENV["USE_UPLOAD_QUEUE"] == "true"
             Delayed::Job.enqueue ::CSVExport::CSVOrderExportJob.new(current_user, @order_items.pluck(:id))
