@@ -2,7 +2,6 @@ shared_context "the mini market" do
   let!(:mini_market_plan) {create(:plan, :grow) }
   let!(:mini_market_org) { create(:organization, :market, plan: mini_market_plan)}
   let!(:mini_market) { create(:market, name: "Mini Market", organization: mini_market_org) }
-  let!(:mary) { create(:user, :market_manager, name: "Mary", managed_markets: [mini_market]) }
   let!(:mary) { create(:user, :market_manager, name: "Mary", managed_markets: [mini_market], email: "mary+testing@example.com") }
 
   let!(:sally) { create(:user, :supplier, name: "Sally") }

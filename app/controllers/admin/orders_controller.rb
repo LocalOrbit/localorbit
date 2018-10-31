@@ -20,7 +20,7 @@ class Admin::OrdersController < AdminController
           @orders = @orders.page(params[:page]).per(@query_params[:per_page])
         end
         format.csv do
-          @order_items = find_order_items(@orders.map(&:id))
+          @order_items = Orders::OrderItems.find_order_items(@orders.pluck(:id)), current_user)
           @abort_mission = @order_items.count > 2999
           if ENV["USE_UPLOAD_QUEUE"] == "true"
             Delayed::Job.enqueue ::CSVExport::CSVOrderExportJob.new(current_user, @order_items.pluck(:id))
@@ -50,7 +50,7 @@ class Admin::OrdersController < AdminController
           render :index
         end
         format.csv do
-          @order_items = find_order_items(@orders.map(&:id))
+          @order_items = Orders::OrderItems.find_order_items(@orders.pluck(:id), current_user)
           @abort_mission = @order_items.count > 2999
           if ENV["USE_UPLOAD_QUEUE"] == "true"
             Delayed::Job.enqueue ::CSVExport::CSVOrderExportJob.new(current_user, @order_items.pluck(:id))
@@ -80,13 +80,14 @@ class Admin::OrdersController < AdminController
     end
     results.sorts = "placed_at desc" if results.sorts.empty?
 
+    # FIXME: OMG
     if !current_user.admin? && (current_user.market_manager? || current_user.buyer_only?)
       order_ids = results.result.map(&:id)
-      order_items = find_order_items(order_ids)
+      order_items = Orders::OrderItems.find_order_items(order_ids, current_user)
       totals = OrderTotals.new(order_items)
     elsif current_user.seller?
       order_ids = results.result.map(&:id)
-      order_items = Orders::SellerItems.items_for_seller(order_ids, current_user)
+      order_items = Orders::OrderItems.items_for_seller(order_ids, current_user)
       totals = OrderTotals.new(order_items)
     else
       totals = OrderTotals.new(OrderItem.where("1 = 0"))
@@ -435,10 +436,6 @@ class Admin::OrdersController < AdminController
   end
 
   protected
-
-  def find_order_items(order_ids)
-    OrderItem.includes({order: :delivery}).joins(:product).where(:order_id => order_ids)
-  end
 
   def order_params
     params[:order].delete(:delivery_id) # Remove the parameter so it doesn't conflict
