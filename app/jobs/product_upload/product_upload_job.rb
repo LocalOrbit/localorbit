@@ -6,15 +6,15 @@ module ProductUpload
 		end
 
 		def success(job)
-      UploadMailer.delay.upload_success(User.find(curr_user).email, @num_products_loaded, @errors)
+      UploadMailer.delay(priority: 30).upload_success(User.find(curr_user).email, @num_products_loaded, @errors)
     end
 
 		def error(job, exception)
-      UploadMailer.delay.upload_fail(User.find(curr_user).email, @errors)
+      UploadMailer.delay(priority: 30).upload_fail(User.find(curr_user).email, @errors)
 		end
 
 		def failure(job)
-      UploadMailer.delay.upload_fail(User.find(curr_user).email, @errors)
+      UploadMailer.delay(priority: 30).upload_fail(User.find(curr_user).email, @errors)
     end
 
     def perform

@@ -32,7 +32,7 @@ module CSVExport
       end
 
       # Send via email
-      ExportMailer.delay.export_success(user.email, 'product', csv)
+      ExportMailer.delay(priority: 30).export_success(user.email, 'product', csv)
     end
 
   end

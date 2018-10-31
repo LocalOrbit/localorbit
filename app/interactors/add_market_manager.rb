@@ -8,7 +8,7 @@ class AddMarketManager
 
     if user
       market.managers << user
-      UserMailer.delay.market_invitation(user, inviter, market)
+      UserMailer.delay(queue: 'urgent').market_invitation(user, inviter, market)
     else
       user = User.invite!({email: email, managed_markets: [market]}, inviter)
     end

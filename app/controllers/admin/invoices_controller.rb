@@ -4,7 +4,7 @@ module Admin
 
     def show
       ClearInvoicePdf.perform(order: @order)
-      GenerateInvoicePdf.delay.perform(order: @order,
+      GenerateInvoicePdf.delay(queue: 'urgent').perform(order: @order,
                                        pre_invoice: true,
                                        request: RequestUrlPresenter.new(request))
       redirect_to action: :await_pdf

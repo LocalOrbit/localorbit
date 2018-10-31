@@ -41,7 +41,7 @@ class SendUpdateEmails
       find_all {|supplier| supplier.users.present?}.
       each do |supplier|
         OrderMailer.
-          delay(priority: 10).
+          delay(queue: 'urgent', priority: 10).
           seller_order_updated(order, supplier)
       end
   end

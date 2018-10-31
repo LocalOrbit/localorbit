@@ -23,7 +23,7 @@ class Admin::OrdersController < AdminController
           @order_items = find_order_items(@orders.map(&:id))
           @abort_mission = @order_items.count > 2999
           if ENV["USE_UPLOAD_QUEUE"] == "true"
-            Delayed::Job.enqueue ::CSVExport::CSVOrderExportJob.new(current_user, @order_items.pluck(:id))
+            Delayed::Job.enqueue ::CSVExport::CSVOrderExportJob.new(current_user, @order_items.pluck(:id)), priority: 30
             flash[:notice] = "Please check your email for export results."
             redirect_to admin_orders_path
           else
@@ -53,7 +53,7 @@ class Admin::OrdersController < AdminController
           @order_items = find_order_items(@orders.map(&:id))
           @abort_mission = @order_items.count > 2999
           if ENV["USE_UPLOAD_QUEUE"] == "true"
-            Delayed::Job.enqueue ::CSVExport::CSVOrderExportJob.new(current_user, @order_items.pluck(:id))
+            Delayed::Job.enqueue ::CSVExport::CSVOrderExportJob.new(current_user, @order_items.pluck(:id)), priority: 30
             flash[:notice] = "Please check your email for export results."
             redirect_to admin_purchase_orders_path
           else
@@ -104,7 +104,7 @@ class Admin::OrdersController < AdminController
         context = InitializeBatchConsignmentPrintable.perform(user: current_user, orders: orders)
         if context.success?
           batch_consignment_printable = context.batch_consignment_printable
-          GenerateBatchConsignmentPrintablePdf.delay.perform(batch_consignment_printable: batch_consignment_printable, type: printable_type,
+          GenerateBatchConsignmentPrintablePdf.delay(queue: 'urgent').perform(batch_consignment_printable: batch_consignment_printable, type: printable_type,
                                                 request: RequestUrlPresenter.new(request))
 
           redirect_to action: :batch_printable_show, id: batch_consignment_printable.id
@@ -405,7 +405,7 @@ class Admin::OrdersController < AdminController
   def generate_consignment_printable(orders, printable_type)
     printable = ConsignmentPrintable.create!(user: current_user)
 
-    context = GenerateConsignmentPrintablePdf.delay.perform(printable: printable, type: printable_type, orders: orders, request: RequestUrlPresenter.new(request))
+    context = GenerateConsignmentPrintablePdf.delay(queue: 'urgent').perform(printable: printable, type: printable_type, orders: orders, request: RequestUrlPresenter.new(request))
 
     redirect_to action: :printable_show, id: printable.id
   end

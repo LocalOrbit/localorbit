@@ -20,16 +20,13 @@ module Admin
         respond_to do |format|
           format.html do
             @products = @products.page(params[:page]).per(@query_params[:per_page])
-            #find_organizations_for_filtering
-            #find_markets_for_filtering
-
             markets = @products.includes(organization:[:all_markets]).flat_map {|prod| prod.organization.all_markets }
             @net_percents_by_market_id = ::Financials::Pricing.seller_net_percents_by_market(markets)
             @seller_cc_rate = ::Financials::Pricing.seller_cc_rate(current_market)
           end
           format.csv do
             if ENV["USE_UPLOAD_QUEUE"] == "true"
-              Delayed::Job.enqueue ::CSVExport::CSVProductExportJob.new(current_user, @products.map(&:id))
+              Delayed::Job.enqueue ::CSVExport::CSVProductExportJob.new(current_user, @products.map(&:id)), priority: 30
               flash[:notice] = "Please check your email for export results."
               redirect_to admin_products_path
             else
@@ -54,8 +51,6 @@ module Admin
     def new
       @product = Product.new(use_simple_inventory: true).decorate
       @supplier_products = nil
-      #@supplier_products << Product.for_market_id(current_market.id).visible.order("products.name").first
-
       setup_new_form
     end
 
@@ -67,7 +62,7 @@ module Admin
       if @product.save
         update_sibling_units(@product)
         if ENV['USE_UPLOAD_QUEUE'] == "true"
-          Delayed::Job.enqueue ::ImageUpload::ImageUploadJob.new(@product)
+          Delayed::Job.enqueue ::ImageUpload::ImageUploadJob.new(@product), queue: 'urgent'
         else
           @product.general_product.update_columns(image_uid: @product.image_uid, thumb_uid: @product.thumb_uid)
         end
@@ -101,7 +96,7 @@ module Admin
       @product.consignment_market = current_market.is_consignment_market?
       updated = update_product
       if ENV['USE_UPLOAD_QUEUE'] == "true"
-        Delayed::Job.enqueue ::ImageUpload::ImageUploadJob.new(@product)
+        Delayed::Job.enqueue ::ImageUpload::ImageUploadJob.new(@product), queue: 'urgent'
       else
         if !@product.aws_image_url.blank?
           img = Dragonfly.app.fetch_url(@product.aws_image_url)

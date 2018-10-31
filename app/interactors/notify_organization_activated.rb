@@ -14,6 +14,6 @@ class NotifyOrganizationActivated
       confirm_user(u)
     end
     market = organization.markets.last
-    UserMailer.delay.organization_activated(organization, market)
+    UserMailer.delay(queue: 'urgent').organization_activated(organization, market)
   end
 end

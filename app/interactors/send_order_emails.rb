@@ -3,7 +3,7 @@ class SendOrderEmails
 
   def perform
     unless order.organization.users.empty?
-      OrderMailer.delay(priority: 10).buyer_confirmation(order)
+      OrderMailer.delay(queue: 'urgent', priority: 10).buyer_confirmation(order)
     end
 
     if Pundit.policy(context[:user], :all_supplier)
@@ -13,13 +13,13 @@ class SendOrderEmails
           @pack_lists = OrdersBySellerPresenter.new(order.items, seller)
           @delivery = Delivery.find(order.delivery.id).decorate
 
-          OrderMailer.delay(priority: 10).seller_confirmation(order, seller)
+          OrderMailer.delay(queue: 'urgent', priority: 10).seller_confirmation(order, seller)
         end
       end
     end
 
     unless order.market.managers.empty?
-      OrderMailer.delay(priority: 10).market_manager_confirmation(order)
+      OrderMailer.delay(queue: 'urgent', priority: 10).market_manager_confirmation(order)
     end
   end
 end
