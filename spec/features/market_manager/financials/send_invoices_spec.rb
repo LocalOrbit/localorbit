@@ -128,7 +128,7 @@ feature "sending invoices" do
           expect(batch_invoice).to be
           expect(batch_invoice.pdf).to be
           expect(batch_invoice.pdf.file).to be
-          expect(batch_invoice.pdf.file.readlines.first).to match("%PDF-1.5\n")
+          expect(batch_invoice.pdf.file.readlines.first).to start_with("%PDF-1.")
         end
       end
     end

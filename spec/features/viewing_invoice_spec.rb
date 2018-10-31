@@ -153,7 +153,7 @@ feature "Viewing invoices" do
           expect(the_order).to be
           expect(the_order.invoice_pdf).to be
           expect(the_order.invoice_pdf.file).to be
-          expect(the_order.invoice_pdf.file.readlines.first).to match("%PDF-1.4\n")
+          expect(the_order.invoice_pdf.file.readlines.first).to start_with("%PDF-1.")
         end
       end
 
@@ -183,7 +183,7 @@ feature "Viewing invoices" do
           expect(page).to have_content("Subtotal $427.96")
           expect(find(".app-total")).to have_content("$440.91")
           expect(find(".app-header-total")).to have_content("$440.91")
-          
+
           # There should be 3 line items
           expect(all(".line-item").size).to eq(3)
 

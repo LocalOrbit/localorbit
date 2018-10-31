@@ -10,6 +10,7 @@ UPLOADS_BUCKET: <S3 upload bucket (dev)>
 UPLOADS_ACCESS_KEY_ID: <S3 upload access key id>
 UPLOADS_SECRET_ACCESS_KEY: <S3 upload secret access key>
 UPLOADS_REGION: <S3 upload region>
+ON_HEROKU: 'false'
 TWITTER_WIDGET_ID: 'create-me-at-twitter-dot-com'
 STRIPE_PUBLISHABLE_KEY: <stripe publishable key (test on local system)>
 STRIPE_SECRET_KEY: <stripe secret key (test on local system)>

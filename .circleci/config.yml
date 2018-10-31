@@ -1,0 +1,93 @@
+version: 2
+jobs:
+  build:
+    parallelism: 4
+    docker:
+      - image: circleci/ruby:2.3.8-stretch-node-browsers
+        environment:
+          BUNDLE_JOBS: 3
+          BUNDLE_RETRY: 3
+          BUNDLE_PATH: vendor/bundle
+          DOMAIN: localtest.me
+          PGHOST: 127.0.0.1
+          PGUSER: localorbit
+          RAILS_ENV: test
+          USE_STRIPE_STANDALONE_ACCOUNTS: 'true'
+          USE_UPLOAD_QUEUE: 'false'
+          ZENDESK_SUBDOMAIN: localorbit
+      - image: circleci/postgres:10-alpine-ram
+        environment:
+          POSTGRES_USER: localorbit
+          POSTGRES_DB: localorbit_test
+          POSTGRES_PASSWORD: ""
+    steps:
+      - add_ssh_keys
+
+      - checkout
+
+      - run:
+          name: Install package dependencies
+          command: sudo apt-get install -f libjpeg-dev libgs9 ghostscript libicu-dev imagemagick wkhtmltopdf
+
+      - run:
+          name: Which bundler?
+          command: bundle -v
+
+      # Restore bundle cache
+      # - restore_cache:
+      #     keys:
+      #       - localorbit-bundle-{{ checksum "Gemfile.lock" }}
+      #       - localorbit-bundle-
+
+      - run:
+          name: Bundle Install
+          command: bundle check || bundle install
+
+      # Store bundle cache
+      - save_cache:
+          key: localorbit-bundle-{{ checksum "Gemfile.lock" }}
+          paths:
+            - vendor/bundle
+
+      # Only necessary if app uses webpacker or yarn in some other way
+      - restore_cache:
+          keys:
+            - localorbit-yarn-{{ checksum "yarn.lock" }}
+            - localorbit-yarn-
+
+      - run:
+          name: Yarn Install
+          command: yarn install --cache-folder ~/.cache/yarn
+
+      # Store yarn / webpacker cache
+      - save_cache:
+          key: localorbit-yarn-{{ checksum "yarn.lock" }}
+          paths:
+            - ~/.cache/yarn
+
+      - run:
+          name: Wait for DB
+          command: dockerize -wait tcp://localhost:5432 -timeout 1m
+
+      - run:
+          name: Copy database.yml
+          command: cp config/database.yml.example config/database.yml
+
+      - run:
+          name: Load database schema
+          command: bundle exec rake db:schema:load --trace
+
+      # Run rspec in parallel
+      - run:
+          name: Run rspec in parallel
+          command: |
+            bundle exec rspec --profile 10 \
+                              --format RspecJunitFormatter \
+                              --out test_results/rspec.xml \
+                              --format progress \
+                              $(circleci tests glob "spec/**/*_spec.rb" | circleci tests split --split-by=timings)
+
+
+      # Save test results for timing analysis
+      - store_test_results:
+          path: test_results

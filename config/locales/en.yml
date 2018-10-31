@@ -63,8 +63,3 @@ en:
           attributes:
             bankable_id:
               taken: already exists for this organization
-  devise:
-    invitations:
-      edit:
-        header: "Set up your account"
-        submit_button: "Save"

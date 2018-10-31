@@ -22,3 +22,4 @@ Capybara.register_driver :selenium_chrome_headless do |app|
 end
 
 Capybara.javascript_driver = :selenium_chrome_headless
+Chromedriver.set_version '2.37'
