@@ -39,9 +39,9 @@ module Admin::Financials
         context = InitializeBatchInvoice.perform(user: current_user, orders: @orders)
         if context.success?
           batch_invoice = context.batch_invoice
-          GenerateBatchInvoicePdf.delay.perform(batch_invoice: batch_invoice,
+          GenerateBatchInvoicePdf.delay(queue: :urgent).perform(batch_invoice: batch_invoice,
                                                 request: RequestUrlPresenter.new(request))
-          track_event EventTracker::PreviewedBatchInvoices.name, num_invoices: @orders.count 
+          track_event EventTracker::PreviewedBatchInvoices.name, num_invoices: @orders.count
           redirect_to admin_financials_batch_invoice_path(batch_invoice)
         else
           redirect_to admin_financials_invoices_path, alert: context.message
@@ -57,7 +57,7 @@ module Admin::Financials
               logger.error("While marking orders as invoiced, something didn't go perfectly.\n#{results.inspect}")
             end
           end
-        
+
           message = mk_order_number_message what: "Invoice marked", orders: @orders
 
           redirect_to admin_financials_invoices_path, notice: message

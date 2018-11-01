@@ -20,7 +20,7 @@ module Admin
           end
           format.csv do
             if ENV["USE_UPLOAD_QUEUE"] == "true"
-              Delayed::Job.enqueue ::CSVExport::CSVVendorPaymentsExportJob.new(current_user, current_market, @query_params)
+              Delayed::Job.enqueue ::CSVExport::CSVVendorPaymentsExportJob.new(current_user, current_market, @query_params), priority: 30
               flash[:notice] = "Please check your email for export results."
               redirect_to [:admin, :financials, :vendor_payments]
             else

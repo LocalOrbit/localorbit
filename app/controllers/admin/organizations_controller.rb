@@ -18,7 +18,7 @@ module Admin
           format.csv  do
             if ENV['USE_UPLOAD_QUEUE'] == 'true'
               orgs = @organizations.map(&:id)
-              Delayed::Job.enqueue ::CSVExport::CSVOrganizationExportJob.new(current_user, orgs)
+              Delayed::Job.enqueue ::CSVExport::CSVOrganizationExportJob.new(current_user, orgs), priority: 30
               flash[:notice] = 'Please check your email for export results.'
               redirect_to admin_organizations_path
             else

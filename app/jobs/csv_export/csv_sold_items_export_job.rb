@@ -38,7 +38,7 @@ module CSVExport
         end
       end
 
-      ExportMailer.delay.export_success(user.email, 'sold_items', csv)
+      ExportMailer.delay(priority: 30).export_success(user.email, 'sold_items', csv)
     end
 
   end

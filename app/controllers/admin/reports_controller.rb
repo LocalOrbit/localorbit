@@ -39,7 +39,7 @@ class Admin::ReportsController < AdminController
           format.html { render "report" }
           format.csv do
             if ENV["USE_UPLOAD_QUEUE"] == "true"
-              Delayed::Job.enqueue ::CSVExport::CSVReportExportJob.new(current_user, presenter_params)
+              Delayed::Job.enqueue ::CSVExport::CSVReportExportJob.new(current_user, presenter_params), priority: 30
               flash[:notice] = "Please check your email for export results."
               redirect_to admin_reports_path
             else

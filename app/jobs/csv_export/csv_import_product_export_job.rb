@@ -66,7 +66,7 @@ module CSVExport
       end
 
       # Send via email
-      ExportMailer.delay.export_success(user.email, 'product', csv.encode!('UTF-8', 'binary', invalid: :replace, undef: :replace, replace: ''))
+      ExportMailer.delay(priority: 30).export_success(user.email, 'product', csv.encode!('UTF-8', 'binary', invalid: :replace, undef: :replace, replace: ''))
     end
 
   end

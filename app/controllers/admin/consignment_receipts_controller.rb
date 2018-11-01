@@ -19,7 +19,7 @@ module Admin
 
     def generate_production_pdf
       ClearConsignmentReceiptPdf.perform(order: @order)
-      GenerateConsignmentReceiptPdf.delay.perform(order: @order,
+      GenerateConsignmentReceiptPdf.delay(queue: :urgent).perform(order: @order,
                                        request: RequestUrlPresenter.new(request))
       redirect_to action: :await_pdf
     end

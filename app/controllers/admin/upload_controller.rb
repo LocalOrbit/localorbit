@@ -27,7 +27,7 @@ class Admin::UploadController < AdminController
       format.html
       format.csv do
         if ENV["USE_UPLOAD_QUEUE"] == "true"
-          Delayed::Job.enqueue ::CSVExport::CSVImportProductExportJob.new(current_user, current_market.subdomain, @products.map(&:id))
+          Delayed::Job.enqueue ::CSVExport::CSVImportProductExportJob.new(current_user, current_market.subdomain, @products.map(&:id)), priority: 30
           flash[:notice] = "Please check your email for export results."
           redirect_to admin_upload_path
         else
@@ -52,11 +52,11 @@ class Admin::UploadController < AdminController
       # TODO here: mimic the existing fxn-ality, in a delayed job
       aud = Audit.create!(user_id:current_user.id,action:"Product upload") # the id of this audit is what should trigger the job
       @num_products_loaded = 0
-      jsn = ::Imports::SerializeProducts.get_json_data(params[:datafile],params[:curr_user]) # product stuff, row 
+      jsn = ::Imports::SerializeProducts.get_json_data(params[:datafile],params[:curr_user]) # product stuff, row
       @num_products_loaded = 0
       @errors = nil
       if ENV['USE_UPLOAD_QUEUE'] == "true"
-        Delayed::Job.enqueue ::ProductUpload::ProductUploadJob.new(jsn, aud.id, params[:curr_user], current_market)
+        Delayed::Job.enqueue ::ProductUpload::ProductUploadJob.new(jsn, aud.id, params[:curr_user], current_market), priority: 30
         render :upload_delayed
       else
         #pass the datafile to the method with the csv file
