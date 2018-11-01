@@ -39,7 +39,7 @@ module Admin::Financials
         context = InitializeBatchInvoice.perform(user: current_user, orders: @orders)
         if context.success?
           batch_invoice = context.batch_invoice
-          GenerateBatchInvoicePdf.delay(queue: 'urgent').perform(batch_invoice: batch_invoice,
+          GenerateBatchInvoicePdf.delay(queue: :urgent).perform(batch_invoice: batch_invoice,
                                                 request: RequestUrlPresenter.new(request))
           track_event EventTracker::PreviewedBatchInvoices.name, num_invoices: @orders.count
           redirect_to admin_financials_batch_invoice_path(batch_invoice)

@@ -104,7 +104,7 @@ class Admin::OrdersController < AdminController
         context = InitializeBatchConsignmentPrintable.perform(user: current_user, orders: orders)
         if context.success?
           batch_consignment_printable = context.batch_consignment_printable
-          GenerateBatchConsignmentPrintablePdf.delay(queue: 'urgent').perform(batch_consignment_printable: batch_consignment_printable, type: printable_type,
+          GenerateBatchConsignmentPrintablePdf.delay(queue: :urgent).perform(batch_consignment_printable: batch_consignment_printable, type: printable_type,
                                                 request: RequestUrlPresenter.new(request))
 
           redirect_to action: :batch_printable_show, id: batch_consignment_printable.id
@@ -405,7 +405,7 @@ class Admin::OrdersController < AdminController
   def generate_consignment_printable(orders, printable_type)
     printable = ConsignmentPrintable.create!(user: current_user)
 
-    context = GenerateConsignmentPrintablePdf.delay(queue: 'urgent').perform(printable: printable, type: printable_type, orders: orders, request: RequestUrlPresenter.new(request))
+    context = GenerateConsignmentPrintablePdf.delay(queue: :urgent).perform(printable: printable, type: printable_type, orders: orders, request: RequestUrlPresenter.new(request))
 
     redirect_to action: :printable_show, id: printable.id
   end

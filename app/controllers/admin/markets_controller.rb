@@ -80,7 +80,7 @@ class Admin::MarketsController < AdminController
       @market.update_attribute(:active, true)
 
       # ...send market requester a welcome email...
-      UserMailer.delay(queue: 'urgent').market_welcome(@market)
+      UserMailer.delay(queue: :urgent).market_welcome(@market)
 
       # ...and redirect with a notification message
       redirect_to :back, notice: "Updated #{@market.name}"
