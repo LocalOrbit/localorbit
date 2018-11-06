@@ -54,7 +54,7 @@ feature "sending invoices" do
 
     Dom::Admin::Financials::InvoiceRow.first.send_invoice
 
-    expect(page).to have_content("Invoice sent for order number LO-001")
+    expect(page).to have_content('Successfully sent 1 invoice.')
     expect(Dom::Admin::Financials::InvoiceRow.all.size).to eq(2)
 
     open_email(buyer_user.email)
@@ -76,7 +76,7 @@ feature "sending invoices" do
 
     Dom::Admin::Financials::InvoiceRow.all.last.send_invoice
 
-    expect(page).to have_content("Invoice sent for order number LO-006")
+    expect(page).to have_content('Successfully sent 1 invoice.')
     expect(Dom::Admin::Financials::InvoiceRow.all.size).to eq(2)
 
     expect(ActionMailer::Base.deliveries.size).to eq(0)
@@ -90,7 +90,7 @@ feature "sending invoices" do
     Dom::Admin::Financials::InvoiceRow.select_all
     click_button "Send Selected"
 
-    expect(page).to have_content("Invoice sent for order numbers LO-001, LO-005, LO-006")
+    expect(page).to have_content('Successfully sent 3 invoices.')
     expect(Dom::Admin::Financials::InvoiceRow.all.size).to eq(0)
   end
 
