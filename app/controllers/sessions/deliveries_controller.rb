@@ -12,7 +12,7 @@ module Sessions
       if current_market.is_buysell_market?
         @deliveries = current_market.delivery_schedules.includes(:buyer_pickup_location).delivery_visible.
                       map {|ds| ds.next_delivery.decorate(context: {current_organization: current_organization}) }.
-                      sort_by {|d| d.deliver_on }
+                      sort_by {|d| d.buyer_deliver_on }
       end
     end
 
