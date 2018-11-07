@@ -196,7 +196,7 @@ module CloneProductionHelper
   end
 
   def local_development_db
-    configs = YAML.load_file(File.new("config/database.yml"))
+    configs = YAML.load_file('config/database.yml')
     configs["development"]["database"]
   end
 

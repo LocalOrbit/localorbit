@@ -53,7 +53,7 @@ feature "sending invoices" do
 
         row.mark_invoiced
 
-        expect(page).to have_content("Invoice marked for order number #{order.order_number}")
+        expect(page).to have_content("Successfully marked 1 order invoiced.")
 
         expect(invoice_row_for(order: order)).to be nil
 
@@ -86,7 +86,7 @@ feature "sending invoices" do
 
         click_mark_selected_invoiced
 
-        expect(page).to have_content("Invoice marked for order numbers #{orders.map { |o| o.order_number }.join(', ')}")
+        expect(page).to have_content("Successfully marked #{orders.size} orders invoiced.")
 
         # See the orders gone from this page:
         orders.each do |order|

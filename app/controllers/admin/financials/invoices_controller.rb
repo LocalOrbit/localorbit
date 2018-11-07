@@ -32,8 +32,7 @@ module Admin::Financials
           CreateInvoice.perform(order: order,
                                 request: RequestUrlPresenter.new(request))
         end
-        message = mk_order_number_message what: "Invoice sent", orders: @orders
-        redirect_to admin_financials_invoices_path, notice: message
+        redirect_to admin_financials_invoices_path, notice: "Successfully sent #{@orders.size} #{"invoice".pluralize(@orders.size)}. Sent invoices can be downloaded from the Enter Receipts page."
 
       when "preview-selected-invoices"
         context = InitializeBatchInvoice.perform(user: current_user, orders: @orders)
@@ -58,9 +57,7 @@ module Admin::Financials
             end
           end
 
-          message = mk_order_number_message what: "Invoice marked", orders: @orders
-
-          redirect_to admin_financials_invoices_path, notice: message
+          redirect_to admin_financials_invoices_path, notice: "Successfully marked #{@orders.size} #{"order".pluralize(@orders.size)} invoiced. Invoices can be downloaded from the Enter Receipts page."
         end
 
       when nil, ""
@@ -114,10 +111,6 @@ module Admin::Financials
 
       redirect_path = params[:redirect_to] || admin_financials_invoices_path
       redirect_to redirect_path, notice: resend_message(@orders)
-    end
-
-    def mk_order_number_message(what:,orders:)
-      "#{what} for order #{"number".pluralize(orders.size)} #{orders.map(&:order_number).sort.join(", ")}. Invoices can be downloaded on the Enter Receipts page"
     end
   end
 end
