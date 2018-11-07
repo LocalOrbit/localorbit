@@ -20,9 +20,9 @@ class Admin::OrdersController < AdminController
           @orders = @orders.page(params[:page]).per(@query_params[:per_page])
         end
         format.csv do
-          @order_items = Orders::OrderItems.find_order_items(@orders.pluck(:id), current_user)
+          @order_items = Orders::OrderItems.find_order_items(@orders.map(&:id), current_user)
           @abort_mission = @order_items.count > 2999
-          if ENV["USE_UPLOAD_QUEUE"] == "true"
+          if Figaro.env.use_upload_queue == "true"
             Delayed::Job.enqueue ::CSVExport::CSVOrderExportJob.new(current_user, @order_items.pluck(:id)), priority: 30
             flash[:notice] = "Please check your email for export results."
             redirect_to admin_orders_path
@@ -50,9 +50,9 @@ class Admin::OrdersController < AdminController
           render :index
         end
         format.csv do
-          @order_items = Orders::OrderItems.find_order_items(@orders.pluck(:id), current_user)
+          @order_items = Orders::OrderItems.find_order_items(@orders.map(&:id), current_user)
           @abort_mission = @order_items.count > 2999
-          if ENV["USE_UPLOAD_QUEUE"] == "true"
+          if Figaro.env.use_upload_queue == "true"
             Delayed::Job.enqueue ::CSVExport::CSVOrderExportJob.new(current_user, @order_items.pluck(:id)), priority: 30
             flash[:notice] = "Please check your email for export results."
             redirect_to admin_purchase_orders_path
