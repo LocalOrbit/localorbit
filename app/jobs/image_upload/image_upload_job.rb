@@ -1,15 +1,8 @@
 module ImageUpload
   class ImageUploadJob < Struct.new(:product) # pass in the datafile like is done right now in uploadcontroller, i.e.
 
-    def enqueue(job)
-    end
-
-    def success(job)
-      puts "success"
-    end
-
     def error(job, exception)
-      puts exception
+      Rollbar.error(exception, job: job.inspect)
     end
 
     def failure(job)
