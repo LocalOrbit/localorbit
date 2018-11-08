@@ -62,7 +62,7 @@ module Admin
       if @product.save
         update_sibling_units(@product)
         if ENV['USE_UPLOAD_QUEUE'] == "true"
-          Delayed::Job.enqueue ::ImageUpload::ImageUploadJob.new(@product), queue: :urgent
+          Delayed::Job.enqueue ::ImageUpload::ImageUploadJob.new(@product.object), queue: :urgent
         else
           @product.general_product.update_columns(image_uid: @product.image_uid, thumb_uid: @product.thumb_uid)
         end
@@ -95,8 +95,8 @@ module Admin
     def update
       @product.consignment_market = current_market.is_consignment_market?
       updated = update_product
-      if ENV['USE_UPLOAD_QUEUE'] == "true"
-        Delayed::Job.enqueue ::ImageUpload::ImageUploadJob.new(@product), queue: :urgent
+      if ENV['USE_UPLOAD_QUEUE'] == 'true'
+        Delayed::Job.enqueue ::ImageUpload::ImageUploadJob.new(@product.object), queue: :urgent
       else
         if !@product.aws_image_url.blank?
           img = Dragonfly.app.fetch_url(@product.aws_image_url)
