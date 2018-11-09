@@ -224,7 +224,7 @@ describe 'price estimator', :js do
 
   it 'allows price adding and editing properly in both markets' do
     # Pricing adding tests
-    expect(page).to have_content('Market')
+    expect(page).to have_content('All Markets')
     select_option_on_singleselect('#p1_select_market_id_chosen', market1.name)
 
     fill_in "price[sale_price]", with: '12.90'
