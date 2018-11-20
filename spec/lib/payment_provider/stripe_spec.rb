@@ -1,22 +1,20 @@
 require 'spec_helper'
 
 describe PaymentProvider::Stripe do
-  subject { described_class }
-
   before :all do VCR.turn_off! end
   after :all do VCR.turn_on! end
 
   describe ".supported_payment_methods" do
     it "has 'credit card'" do
-      expect(subject.supported_payment_methods).to eq ['credit card']
+      expect(described_class.supported_payment_methods).to eq ['credit card']
     end
   end
 
   describe ".default_currency_for_country(country)" do
     it "returns the correct currency" do
-      expect(subject.default_currency_for_country('US')).to eq 'USD'
-      expect(subject.default_currency_for_country('CA')).to eq 'CAD'
-      expect { subject.default_currency_for_country('Gondor')}.to raise_error(ArgumentError, "Gondor is not a supported country.")
+      expect(described_class.default_currency_for_country('US')).to eq 'USD'
+      expect(described_class.default_currency_for_country('CA')).to eq 'CAD'
+      expect { described_class.default_currency_for_country('Gondor')}.to raise_error(ArgumentError, 'Gondor is not a supported country.')
     end
   end
 
@@ -43,7 +41,7 @@ describe PaymentProvider::Stripe do
         repack: false
       )
 
-      subject.place_order(params)
+      described_class.place_order(params)
     end
   end
 
@@ -59,21 +57,21 @@ describe PaymentProvider::Stripe do
       expectations.each do |input,output|
         input = nil if input == '_nil_'
         charge = create_stripe_mock(:charge, status: input)
-        translated = subject.translate_status(charge: charge, amount:nil, payment_method:nil)
+        translated = described_class.translate_status(charge: charge, amount:nil, payment_method:nil)
         expect(translated).to eq(output), "Expected status '#{input}' to translate to '#{output}' but got '#{translated}'"
       end
     end
 
     context "when charge is nil" do
       it "returns 'failed' for nil charge" do
-        translated = subject.translate_status(charge: nil, amount:nil, payment_method:"credit card")
+        translated = described_class.translate_status(charge: nil, amount:nil, payment_method:"credit card")
         expect(translated).to eq('failed')
       end
       context "...and amount is 0 and payment_method is 'credit card'" do
         it "returns 'paid' for nil charge" do
           # This is part of the hokey dance of pretending 0-amount payments are paid.  See AttemptPurchase to
           # understand the context for this odd interpretation.
-          translated = subject.translate_status(charge: nil, amount:"0".to_d, payment_method:"credit card")
+          translated = described_class.translate_status(charge: nil, amount:"0".to_d, payment_method:"credit card")
           expect(translated).to eq('paid')
         end
       end
@@ -112,7 +110,7 @@ describe PaymentProvider::Stripe do
     }}
 
     it "creates a Stripe charge" do
-      charge = subject.charge_for_order(charge_params)
+      charge = described_class.charge_for_order(charge_params)
       # XXX:
         # amount: amount,
         # bank_account: credit_card,
@@ -154,7 +152,7 @@ describe PaymentProvider::Stripe do
         expect(Stripe::Charge).to receive(:create).and_raise(err)
 
         begin
-          subject.charge_for_order(charge_params)
+          described_class.charge_for_order(charge_params)
           raise ".charge_for_order should have raised an error"
         rescue StandardError => e
           # TODO: refactor this area, as the following hashes are duplicated in a few places in this file.
@@ -197,7 +195,7 @@ describe PaymentProvider::Stripe do
       before { mini_market.update(stripe_account_id: nil) }
       it "raises an error" do
         begin
-          subject.charge_for_order(charge_params)
+          described_class.charge_for_order(charge_params)
           raise ".charge_for_order should have raised an error"
         rescue StandardError => e
           # TODO: refactor this area, as the following hashes are duplicated in a few places in this file.
@@ -252,7 +250,7 @@ describe PaymentProvider::Stripe do
           }
         ).and_return(new_refund)
 
-        ref = subject.fully_refund(
+        ref = described_class.fully_refund(
           charge: charge,
           payment: payment,
           order: order
@@ -273,7 +271,7 @@ describe PaymentProvider::Stripe do
           }
         ).and_return(new_refund)
 
-        ref = subject.fully_refund(
+        ref = described_class.fully_refund(
           payment: payment,
           order: order
         )
@@ -306,7 +304,7 @@ describe PaymentProvider::Stripe do
       expect(order1_item1.payment_seller_fee).to eq 0
       expect(order1_item2.payment_seller_fee).to eq 0
 
-      res = subject.store_payment_fees(order: order1)
+      res = described_class.store_payment_fees(order: order1)
       expect(res).to be nil
 
       expect(order1_item1.payment_seller_fee).to eq "0.36".to_d
@@ -322,7 +320,7 @@ describe PaymentProvider::Stripe do
         expect(order1_item1.payment_market_fee).to eq 0
         expect(order1_item2.payment_market_fee).to eq 0
 
-        subject.store_payment_fees(order: order1)
+        described_class.store_payment_fees(order: order1)
 
         expect(order1_item1.payment_market_fee).to eq "0.36".to_d
         expect(order1_item2.payment_market_fee).to eq "0.99".to_d
@@ -351,7 +349,7 @@ describe PaymentProvider::Stripe do
 
     it "stores a Payment record corresponding to a charge" do
       expect(Stripe::ApplicationFee).to receive(:retrieve).with(charge.application_fee).and_return(app_fee)
-      payment = subject.create_order_payment(params)
+      payment = described_class.create_order_payment(params)
       expect(payment).to be
       expect(payment.id).to be # stored to database
       expect(payment.market_id).to eq mini_market.id
@@ -371,7 +369,7 @@ describe PaymentProvider::Stripe do
     context "when the ApplicationFee is not found" do
       it "sets 0 for app fee" do
         expect(Stripe::ApplicationFee).to receive(:retrieve).with(charge.application_fee).and_return(nil)
-        payment = subject.create_order_payment(params)
+        payment = described_class.create_order_payment(params)
         expect(payment.stripe_id).to eq charge.id
         expect(payment.stripe_payment_fee).to eq "0".to_d
       end
@@ -380,7 +378,7 @@ describe PaymentProvider::Stripe do
     context "when the charge is nil" do
       it "leaves the stripe_id unset and sets 0 for app fee" do
         params[:charge] = nil
-        payment = subject.create_order_payment(params)
+        payment = described_class.create_order_payment(params)
         expect(payment.stripe_id).to be nil
         expect(payment.stripe_payment_fee).to eq "0".to_d
       end
@@ -413,7 +411,7 @@ describe PaymentProvider::Stripe do
     }
 
     def create_refund_payment
-      subject.create_refund_payment(params)
+      described_class.create_refund_payment(params)
     end
 
 
@@ -473,7 +471,7 @@ describe PaymentProvider::Stripe do
 
     it "retrieves the Charge from Stripe per the stripe_id of the given Payment" do
       expect(Stripe::Charge).to receive(:retrieve).with(payment.stripe_id).and_return(charge)
-      expect(subject.find_charge(payment: payment)).to eq charge
+      expect(described_class.find_charge(payment: payment)).to eq charge
     end
   end
 
@@ -495,7 +493,7 @@ describe PaymentProvider::Stripe do
         }
       ).and_return refund
 
-      expect(subject.refund_charge(charge:charge, amount:amount, order:order)).to eq refund
+      expect(described_class.refund_charge(charge:charge, amount:amount, order:order)).to eq refund
     end
 
   end
@@ -518,7 +516,7 @@ describe PaymentProvider::Stripe do
     }}
 
     it "creates and returns a Payment record to track the Stripe transfer and the involved Orders" do
-      payment = subject.create_market_payment(params)
+      payment = described_class.create_market_payment(params)
       expect(payment).to be
       expect(payment.id).to be
       expect(payment.payment_type).to eq 'market payment'
@@ -538,7 +536,7 @@ describe PaymentProvider::Stripe do
         original_ids = params[:order_ids].dup
         params[:order_ids].push 1234
         params[:order_ids].unshift 187
-        payment = subject.create_market_payment(params)
+        payment = described_class.create_market_payment(params)
         expect(payment.order_ids.to_set).to eq(original_ids.to_set)
       end
     end
@@ -571,14 +569,14 @@ describe PaymentProvider::Stripe do
 
     it "invokes AddStripeCreditCardToEntity" do
       expect(AddStripeCreditCardToEntity).to receive(:perform).with(params)
-      subject.add_payment_method(params.merge(type: "card"))
+      described_class.add_payment_method(params.merge(type: "card"))
     end
 
     it "raises error for type not equal card" do
       expect(AddStripeCreditCardToEntity).not_to receive(:perform)
 
       expect {
-        subject.add_payment_method(params.merge(type: "checking"))
+        described_class.add_payment_method(params.merge(type: "checking"))
       }.to raise_error(/doesn't support/)
     end
   end
@@ -593,14 +591,14 @@ describe PaymentProvider::Stripe do
 
     it "invokes AddStripeCreditCardToEntity" do
       expect(AddStripeDepositAccountToMarket).to receive(:perform).with(params)
-      subject.add_deposit_account(params.merge(type: "checking"))
+      described_class.add_deposit_account(params.merge(type: "checking"))
     end
 
     it "raises error for type not equal 'checking'" do
       expect(AddStripeDepositAccountToMarket).not_to receive(:perform)
 
       expect {
-        subject.add_deposit_account(params.merge(type: "savings"))
+        described_class.add_deposit_account(params.merge(type: "savings"))
       }.to raise_error(/only supports.*'checking'.*dunno.*savings/)
     end
   end
@@ -618,19 +616,17 @@ describe PaymentProvider::Stripe do
     let(:cards) { [ cc1,cc2,cc3] }
 
     it "returns only bank accounts with stripe_ids set" do
-      expect(subject.select_usable_bank_accounts(cards).to_set).to eq([cc1,cc3].to_set)
+      expect(described_class.select_usable_bank_accounts(cards).to_set).to eq([cc1,cc3].to_set)
     end
   end
 end
 
-describe PaymentProvider::Stripe, vcr: true do
-  subject { described_class }
-
+xdescribe PaymentProvider::Stripe, vcr: true do
   describe '.order_ids_for_market_payout_transfer' do
-    # FIXME: see #3301, `metadata: {lo.order_id: NNN}` is now missing on responses from Stripe
-    # currently passes because we have an ancient VCR cassette
+    # ISSUE: relies on data in test account that has changed
+    # some `metadata: {lo.order_id: NNN}` is now missing on responses from Stripe
     it "returns lo order ids from a transaction's payments" do
-      order_ids = subject.order_ids_for_market_payout_transfer(
+      order_ids = described_class.order_ids_for_market_payout_transfer(
         transfer_id: 'tr_15xxwkHouQbaP1MV8O0tEg2b', stripe_account_id: 'acct_15xJY9HouQbaP1MV')
       expect(order_ids).to eq([1234, 187, 1337])
     end
