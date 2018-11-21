@@ -1,3 +1,4 @@
+# coding: utf-8
 require 'spec_helper'
 
 describe 'invoice.payment_succeeded webhook', type: :request, vcr: true do
@@ -10,32 +11,32 @@ describe 'invoice.payment_succeeded webhook', type: :request, vcr: true do
   let!(:market_2) { create(:market, stripe_customer_id: stripe_customer_id + 'KXM') }
   let!(:credit_card) { create(:bank_account, bankable: market, stripe_id: stripe_card_id) }
 
-  it "finds the related organization" do
+  it 'finds the related organization' do
     expect(find_stripe_market(stripe_customer_id).count).to eq 1
   end
 
-  it "errors out on no related organization" do end
+  it 'errors out on no related organization' do end
 
-  it "confirms payment as new and unique" do
+  it 'confirms payment as new and unique' do
     expect(find_payment(stripe_charge_id).count).to eq 0
   end
 
-  it "disregards invoices that aren't for subscriptions" do
+  it 'disregards invoices that aren’t for subscriptions' do
     # This is a contrivance to allow for testing until a like event is recorded for something _other than_ a subscription.  At such time, any reference to the subscription status (within the webhook 'domain') should be updated to reflect any new knowledge.  If that's you, then 'TAG', you're it.
 
     # Generate a Stripe invoice that isn't related to a subscription and use that instead
     missing_subscription = {
-      id:"evt_19NxEZ2VpjOYk6TmQLjYsn5Y",
-      data:{
-        object:{
-          id:"in_19NwIT2VpjOYk6TmuXa5PSFl",
-          amount_due:500,
-          charge:"ch_19NxEY2VpjOYk6TmlDvEqqAX",
-          customer:"cus_9gwCSjIO6SlmhA",
+      id: 'evt_19NxEZ2VpjOYk6TmQLjYsn5Y',
+      data: {
+        object: {
+          id: 'in_19NwIT2VpjOYk6TmuXa5PSFl',
+          amount_due: 500,
+          charge: 'ch_19NxEY2VpjOYk6TmlDvEqqAX',
+          customer: 'cus_9gwCSjIO6SlmhA',
         }
       },
-      livemode:false,
-      type:"invoice.payment_successful"
+      livemode: false,
+      type: 'invoice.payment_successful'
     }
 
     event = Stripe::Event.construct_from(missing_subscription)
@@ -48,7 +49,7 @@ describe 'invoice.payment_succeeded webhook', type: :request, vcr: true do
     expect(find_payment(event.data.object.charge).count).to eq initial_count
   end
 
-  it "creates a new payment object" do
+  it 'creates a new payment object' do
     initial_count = find_payment(stripe_charge_id).count
 
     post '/webhooks/stripe', JSON.parse(File.read('spec/fixtures/webhooks/stripe_requests/invoice.payment_succeeded.json'))
@@ -75,11 +76,11 @@ describe 'invoice.payment_failed webhook', type: :request, vcr: true do
     failed_payment.failed
   end
 
-  it "finds the related organization" do
+  it 'finds the related organization' do
     expect(find_stripe_market(stripe_customer_id).count).to eq 1
   end
 
-  it "finds the related bank_account record" do
+  it 'finds the related bank_account record' do
     expect(find_bank_account(stripe_card_id).count).to eq 1
   end
 
