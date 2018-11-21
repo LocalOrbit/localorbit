@@ -7,7 +7,7 @@ module PaymentProvider
         'invoice.payment_succeeded' => PaymentProvider::Handlers::InvoiceHandler,
         'invoice.payment_failed' => PaymentProvider::Handlers::InvoiceHandler
       }
-      # 'charge.failed' => PaymentProvider::Handlers::ChargeHandler
+      # 'charge.failed' => PaymentProvider::Handlers::ChargeFailedHandler
       # 'customer.subscription.created' => PaymentProvider::Handlers::SubscriptionHandler,
 
       def call(event)

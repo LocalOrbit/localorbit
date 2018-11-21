@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe "stripe invoice.payment_succeeded event", vcr: true, webhook: true do
+describe 'invoice.payment_succeeded webhook', type: :request, vcr: true do
   let(:stripe_customer_id) {'cus_9aUcniAOYTXn42'} # matches invoice.payment_succeeded.json
   let(:stripe_charge_id) {'ch_19HJd82VpjOYk6TmrzJdKLYR'} # matches invoice.payment_succeeded.json
   let(:stripe_card_id) {'card_19HJd62VpjOYk6TmwKcemuLf'} # matches card related to invoice.payment_succeeded.json charge
@@ -42,7 +42,7 @@ describe "stripe invoice.payment_succeeded event", vcr: true, webhook: true do
 
     initial_count = find_payment(event.data.object.charge).count
 
-    response = post '/webhooks/stripe', event.as_json
+    post '/webhooks/stripe', event.as_json
     expect(response.status).to eq 200
 
     expect(find_payment(event.data.object.charge).count).to eq initial_count
@@ -51,14 +51,14 @@ describe "stripe invoice.payment_succeeded event", vcr: true, webhook: true do
   it "creates a new payment object" do
     initial_count = find_payment(stripe_charge_id).count
 
-    response = post '/webhooks/stripe', JSON.parse(File.read('spec/features/webhooks/invoice.payment_succeeded.json'))
+    post '/webhooks/stripe', JSON.parse(File.read('spec/fixtures/webhooks/stripe_requests/invoice.payment_succeeded.json'))
     expect(response.status).to eq 200
 
     expect(find_payment(stripe_charge_id).count).to eq initial_count + 1
   end
 end
 
-describe "stripe invoice.payment_failed event", vcr: true, webhook: true do
+describe 'invoice.payment_failed webhook', type: :request, vcr: true do
   let(:stripe_customer_id) {'cus_9aUcniAOYTXn42'} # matches invoice.payment_failed.json
   let(:stripe_charge_id) {'ch_19HJd82VpjOYk6TmrzJdKLYR'} # matches invoice.payment_failed.json
   let(:stripe_card_id) {'card_19HJd62VpjOYk6TmwKcemuLf'} # matches card related to invoice.payment_failed.json charge
@@ -85,7 +85,7 @@ describe "stripe invoice.payment_failed event", vcr: true, webhook: true do
 
   it 'correctly updates an existing payment record' do
     base = Payment.all.count
-    response = post '/webhooks/stripe', JSON.parse(File.read('spec/features/webhooks/invoice.payment_failed.json'))
+    post '/webhooks/stripe', JSON.parse(File.read('spec/fixtures/webhooks/stripe_requests/invoice.payment_failed.json'))
     expect(response.status).to eq 200
 
     expect(Payment.all.count).to eq base
@@ -93,18 +93,13 @@ describe "stripe invoice.payment_failed event", vcr: true, webhook: true do
   end
 
   it 'creates a new payment record if necessary' do
-    response = post '/webhooks/stripe', JSON.parse(File.read('spec/features/webhooks/invoice.payment_failed.json'))
+    post '/webhooks/stripe', JSON.parse(File.read('spec/fixtures/webhooks/stripe_requests/invoice.payment_failed.json'))
     expect(response.status).to eq 200
 
     # expect(find_payment(stripe_charge_id).count).to eq 1
   end
 
 end
-
-
-#
-# HELPERS
-#
 
 def find_stripe_market(stripe_customer_id)
   Market.where(stripe_customer_id: stripe_customer_id)

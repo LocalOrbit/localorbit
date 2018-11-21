@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe "stripe market transfer.paid event", vcr: true, webhook: true do
+describe 'transfer.paid webhook', type: :request, vcr: true do
   let(:stripe_account_id) { "acct_15xJY9HouQbaP1MV" } # matches transfer.paid.json
   let(:stripe_transfer_id) { "tr_15xxwkHouQbaP1MV8O0tEg2b" } # matches transfer.paid.json
   let!(:market) { create(:market, stripe_account_id: stripe_account_id) }
@@ -16,11 +16,11 @@ describe "stripe market transfer.paid event", vcr: true, webhook: true do
     end
   end
 
-  # FIXME see LO-1074: when legacy cassette is deleted this fails, event has changed to transfer.created,
-  #   and lo.order_id metadata is missing
+  # FIXME this fails, event has changed to transfer.created, and lo.order_id metadata is missing
+  # need to recreate the payload manually and store it
   it "creates a payment and emails the market's managers" do
     expect(find_payments.count).to eq 0
-    post '/webhooks/stripe', JSON.parse(File.read('spec/features/webhooks/transfer.paid.json'))
+    post '/webhooks/stripe', JSON.parse(File.read('spec/fixtures/webhooks/stripe_requests/transfer.paid.json'))
 
     # See the Payment in the database:
     expect(find_payments.count).to eq 1
@@ -45,10 +45,6 @@ describe "stripe market transfer.paid event", vcr: true, webhook: true do
     expect(mail.body).to match(/#{Regexp.escape("$332.10")}/)
   end
 
-  #
-  # HELPERS
-  #
-
   def find_payments
     Payment.where(payee: market)
   end
@@ -56,5 +52,4 @@ describe "stripe market transfer.paid event", vcr: true, webhook: true do
   def forcibly_change_order_id(order, new_id)
     Order.where(id:order.id).update_all(id: new_id) # not something you'd normally do
   end
-
 end
