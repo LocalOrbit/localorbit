@@ -1,10 +1,11 @@
+# coding: utf-8
 require 'spec_helper'
 
 describe 'transfer.paid webhook', type: :request, vcr: true do
-  let(:stripe_account_id) { "acct_15xJY9HouQbaP1MV" } # matches transfer.paid.json
-  let(:stripe_transfer_id) { "tr_15xxwkHouQbaP1MV8O0tEg2b" } # matches transfer.paid.json
+  let(:stripe_account_id) { 'acct_15xJY9HouQbaP1MV' } # matches transfer.paid.json
+  let(:stripe_transfer_id) { 'tr_15xxwkHouQbaP1MV8O0tEg2b' } # matches transfer.paid.json
   let!(:market) { create(:market, stripe_account_id: stripe_account_id) }
-  let!(:merri) { create(:user, :market_manager, name: "Merri", managed_markets: [market]) }
+  let!(:merri) { create(:user, :market_manager, name: 'Merri', managed_markets: [market]) }
   let!(:orders) { create_list(:order, 3, market: market) }
 
   # We need to brow-beat the test orders in the db to have IDs that match the hand-configured metadatain transfer.paid.json:
@@ -18,17 +19,13 @@ describe 'transfer.paid webhook', type: :request, vcr: true do
 
   # FIXME this fails, event has changed to transfer.created, and lo.order_id metadata is missing
   # need to recreate the payload manually and store it
-  it "creates a payment and emails the market's managers" do
-    expect(find_payments.count).to eq 0
-    post '/webhooks/stripe', JSON.parse(File.read('spec/fixtures/webhooks/stripe_requests/transfer.paid.json'))
-
-    # See the Payment in the database:
-    expect(find_payments.count).to eq 1
+  it 'creates a payment and emails the market’s managers' do
+    expect { post_webhook('transfer.paid') }.to change { Payment.count}.by(1)
     payment = find_payments.first
-    expect(payment.payment_type).to eq "market payment"
+    expect(payment.payment_type).to eq 'market payment'
     expect(payment.market).to eq market
     expect(payment.payee).to eq market
-    expect(payment.amount).to eq "332.1".to_d
+    expect(payment.amount).to eq '332.1'.to_d
     expect(payment.stripe_transfer_id).to eq stripe_transfer_id
 
     fixed_orders = replace_order_ids.map do |id| Order.find(id) end
@@ -38,7 +35,7 @@ describe 'transfer.paid webhook', type: :request, vcr: true do
     mail = ActionMailer::Base.deliveries[0] # Market payment is probably first.
     expect(mail).to be, "No payment email sent"
     expect(mail.to).to eq market.managers.map(&:email)
-    expect(mail.subject).to eq "You Have Received a Payment"
+    expect(mail.subject).to eq 'You Have Received a Payment'
     expect(mail.body).to match(/You have received a payment/i)
     expect(mail.body).to match(/payment was sent to.*#{market.name}/i)
     expect(mail.body).to match(/Visit #{market.name}/)

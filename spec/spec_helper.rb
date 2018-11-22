@@ -80,6 +80,7 @@ RSpec.configure do |config|
   config.include FirePoll
   config.include PauseHelpers, type: :feature
   config.include DropdownHelpers, type: :feature
+  config.include WebhookHelpers, type: :request
 
   config.use_transactional_fixtures = false
 
