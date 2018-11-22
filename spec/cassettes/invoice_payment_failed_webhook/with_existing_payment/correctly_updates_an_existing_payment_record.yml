@@ -31,7 +31,7 @@ http_interactions:
       Server:
       - nginx
       Date:
-      - Wed, 21 Nov 2018 03:13:33 GMT
+      - Thu, 22 Nov 2018 20:28:28 GMT
       Content-Type:
       - application/json
       Content-Length:
@@ -51,7 +51,7 @@ http_interactions:
       Cache-Control:
       - no-cache, no-store
       Request-Id:
-      - req_2gV52oafKb81dx
+      - req_6VrlxRHe5Q9C2X
       Stripe-Version:
       - '2015-04-07'
       Strict-Transport-Security:
@@ -148,5 +148,5 @@ http_interactions:
           "type": "invoice.payment_failed"
         }
     http_version: 
-  recorded_at: Wed, 21 Nov 2018 03:13:29 GMT
+  recorded_at: Thu, 22 Nov 2018 20:28:29 GMT
 recorded_with: VCR 4.0.0

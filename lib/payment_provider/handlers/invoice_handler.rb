@@ -26,11 +26,10 @@ module PaymentProvider
         # Upsert payment...
         payment = Payment.where(stripe_id: stripe_invoice[:payment]).first || Payment.create(self.build_payment(org, stripe_invoice))
         # ...and fail it
-        payment.failed
+        payment.fail!
 
         WebhookMailer.delay.failed_payment(org, stripe_invoice)
       end
-
 
       private
 

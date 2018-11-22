@@ -443,7 +443,7 @@ FactoryBot.define do
   end
 
   factory :payment do
-    payee          { Organization.first }
+    payee          { Organization.first } # FIXME should use org factory
     payment_type   "order"
     payment_method "purchase order"
     amount         199.99

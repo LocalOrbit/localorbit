@@ -31,7 +31,7 @@ http_interactions:
       Server:
       - nginx
       Date:
-      - Thu, 22 Nov 2018 20:28:29 GMT
+      - Thu, 22 Nov 2018 20:28:28 GMT
       Content-Type:
       - application/json
       Content-Length:
@@ -51,7 +51,7 @@ http_interactions:
       Cache-Control:
       - no-cache, no-store
       Request-Id:
-      - req_sPaUcZxmprb46Z
+      - req_pZuyNDOuGvBDBa
       Stripe-Version:
       - '2015-04-07'
       Strict-Transport-Security:
@@ -148,5 +148,145 @@ http_interactions:
           "type": "invoice.payment_failed"
         }
     http_version: 
-  recorded_at: Thu, 22 Nov 2018 20:28:30 GMT
+  recorded_at: Thu, 22 Nov 2018 20:28:28 GMT
+- request:
+    method: get
+    uri: https://api.stripe.com/v1/charges/ch_19NxEY2VpjOYk6TmlDvEqqAX
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept:
+      - "*/*; q=0.5, application/xml"
+      Accept-Encoding:
+      - gzip, deflate
+      User-Agent:
+      - Stripe/v1 RubyBindings/1.27.2
+      Authorization:
+      - Bearer sk_test_XTLCfIQMwKblsxIF1N4i7y1G
+      Content-Type:
+      - application/x-www-form-urlencoded
+      Stripe-Version:
+      - '2015-04-07'
+      X-Stripe-Client-User-Agent:
+      - '{"bindings_version":"1.27.2","lang":"ruby","lang_version":"2.3.8 p459 (2018-10-18)","platform":"x86_64-darwin18","engine":"ruby","publisher":"stripe","uname":"Darwin
+        kite 18.2.0 Darwin Kernel Version 18.2.0: Fri Oct  5 19:41:49 PDT 2018; root:xnu-4903.221.2~2/RELEASE_X86_64
+        x86_64","hostname":"kite"}'
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx
+      Date:
+      - Thu, 22 Nov 2018 20:28:28 GMT
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '1906'
+      Connection:
+      - keep-alive
+      Access-Control-Allow-Credentials:
+      - 'true'
+      Access-Control-Allow-Methods:
+      - GET, POST, HEAD, OPTIONS, DELETE
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Expose-Headers:
+      - Request-Id, Stripe-Manage-Version, X-Stripe-External-Auth-Required, X-Stripe-Privileged-Session-Required
+      Access-Control-Max-Age:
+      - '300'
+      Cache-Control:
+      - no-cache, no-store
+      Request-Id:
+      - req_dTAOEisnUCuTHo
+      Stripe-Version:
+      - '2015-04-07'
+      Strict-Transport-Security:
+      - max-age=31556926; includeSubDomains; preload
+    body:
+      encoding: UTF-8
+      string: |
+        {
+          "id": "ch_19NxEY2VpjOYk6TmlDvEqqAX",
+          "object": "charge",
+          "amount": 500,
+          "amount_refunded": 0,
+          "application": null,
+          "application_fee": null,
+          "balance_transaction": null,
+          "captured": false,
+          "created": 1481085646,
+          "currency": "usd",
+          "customer": "cus_9gwCSjIO6SlmhA",
+          "description": null,
+          "destination": null,
+          "dispute": null,
+          "failure_code": "card_declined",
+          "failure_message": "Your card was declined.",
+          "fraud_details": {
+          },
+          "invoice": "in_19NwIT2VpjOYk6TmuXa5PSFl",
+          "livemode": false,
+          "metadata": {
+          },
+          "on_behalf_of": null,
+          "order": null,
+          "outcome": {
+            "network_status": "declined_by_network",
+            "reason": "generic_decline",
+            "risk_level": "normal",
+            "seller_message": "The bank did not return any further details with this decline.",
+            "type": "issuer_declined"
+          },
+          "paid": false,
+          "payment_intent": null,
+          "receipt_email": null,
+          "receipt_number": null,
+          "refunded": false,
+          "refunds": {
+            "object": "list",
+            "data": [
+
+            ],
+            "has_more": false,
+            "total_count": 0,
+            "url": "/v1/charges/ch_19NxEY2VpjOYk6TmlDvEqqAX/refunds"
+          },
+          "review": null,
+          "shipping": null,
+          "source": {
+            "id": "card_19NZex2VpjOYk6TmzbAeLklt",
+            "object": "card",
+            "address_city": null,
+            "address_country": null,
+            "address_line1": null,
+            "address_line1_check": null,
+            "address_line2": null,
+            "address_state": null,
+            "address_zip": null,
+            "address_zip_check": null,
+            "brand": "Visa",
+            "country": "US",
+            "customer": "cus_9gwCSjIO6SlmhA",
+            "cvc_check": null,
+            "dynamic_last4": null,
+            "exp_month": 12,
+            "exp_year": 2017,
+            "fingerprint": "DabNDObWem4znOlf",
+            "funding": "credit",
+            "last4": "0341",
+            "metadata": {
+            },
+            "name": null,
+            "tokenization_method": null
+          },
+          "source_transfer": null,
+          "statement_descriptor": null,
+          "status": "failed",
+          "transfer_group": null
+        }
+    http_version: 
+  recorded_at: Thu, 22 Nov 2018 20:28:28 GMT
 recorded_with: VCR 4.0.0
