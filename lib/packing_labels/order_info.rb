@@ -18,7 +18,6 @@ module PackingLabels
           buyer_name: order.organization.name,
           market_logo_url: market_logo_url,
           zpl_logo: order.market.zpl_logo,
-          qr_code_url: PackingLabels::QrCode.make_qr_code(order, host: host),
           products: make_product_infos(order)
         }
       end
