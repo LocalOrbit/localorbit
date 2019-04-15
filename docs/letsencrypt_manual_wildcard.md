@@ -8,7 +8,7 @@ credentials from Weston or Rob.
 
 Can see all certs, their expiries, and learn their heroku names with:
 
-    heroku certs --a localorbit-staging
+    heroku certs -a localorbit-staging
 
 There are [docs for the DNSMadeEasy letencrypt api options](https://github.com/Neilpang/acme.sh/tree/dev/dnsapi#9-use-dnsmadeeasy-domain-api), but you can just follow the specific instructions below.
 
@@ -16,8 +16,8 @@ There are [docs for the DNSMadeEasy letencrypt api options](https://github.com/N
 
 If it's the first run on your machine you need to setup these environment vars:
 
-    export ME_Key="secret from dnsmadeeasy"
-    export ME_Secret="secret from dnsmadeeasy"
+    export ME_Key="API key from dnsmadeeasy"
+    export ME_Secret="Secret key from dnsmadeeasy"
 
 then you can reissue the certs:
 
