@@ -34,4 +34,4 @@ Once you've run the acme.sh command above once the `ME_Key` and `ME_Secret` will
 
     acme.sh --issue --dns dns_me -d '*.localorbit.com'
 
-    heroku certs:update '~/.acme.sh/*.localorbit.com/ca.cer' '~/.acme.sh/*.localorbit.com/*.localorbit.com.cer' '~/.acme.sh/*.localorbit.com/*.localorbit.com.key' -a localorbit-production
+    heroku certs:update ~/.acme.sh/\*.localorbit.com/ca.cer ~/.acme.sh/\*.localorbit.com/\*.localorbit.com.cer ~/.acme.sh/\*.localorbit.com/\*.localorbit.com.key -a localorbit-production
