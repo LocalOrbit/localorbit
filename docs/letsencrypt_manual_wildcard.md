@@ -25,7 +25,7 @@ then you can reissue the certs:
 
 and update heroku with the new certs:
 
-    heroku certs:update /Users/weston/.acme.sh/next.localorbit.com/ca.cer /Users/weston/.acme.sh/next.localorbit.com/next.localorbit.com.cer /Users/weston/.acme.sh/next.localorbit.com/next.localorbit.com.key -a localorbit-staging
+    heroku certs:update ~/.acme.sh/next.localorbit.com/ca.cer ~/.acme.sh/next.localorbit.com/next.localorbit.com.cer ~/.acme.sh/next.localorbit.com/next.localorbit.com.key -a localorbit-staging
 
 Once you've run the acme.sh command above once the `ME_Key` and `ME_Secret` will get saved to your
 `~/.acme.sh/account.conf` and should not need to be set again.
@@ -34,4 +34,4 @@ Once you've run the acme.sh command above once the `ME_Key` and `ME_Secret` will
 
     acme.sh --issue --dns dns_me -d '*.localorbit.com'
 
-    heroku certs:update '/Users/weston/.acme.sh/*.localorbit.com/ca.cer' '/Users/weston/.acme.sh/*.localorbit.com/*.localorbit.com.cer' '/Users/weston/.acme.sh/*.localorbit.com/*.localorbit.com.key' -a localorbit-production
+    heroku certs:update '~/.acme.sh/*.localorbit.com/ca.cer' '~/.acme.sh/*.localorbit.com/*.localorbit.com.cer' '~/.acme.sh/*.localorbit.com/*.localorbit.com.key' -a localorbit-production
