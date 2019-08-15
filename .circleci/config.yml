@@ -26,12 +26,8 @@ jobs:
       - checkout
 
       - run:
-          name: Update package dependencies
-          command: sudo apt-get update
-
-      - run:
           name: Install package dependencies
-          command: sudo apt-get install -f libjpeg-dev libgs9 ghostscript libicu-dev imagemagick wkhtmltopdf
+          command: sudo apt-get update && sudo apt-get install -f libjpeg-dev libgs9 ghostscript libicu-dev imagemagick wkhtmltopdf
 
       - run:
           name: Which bundler?
