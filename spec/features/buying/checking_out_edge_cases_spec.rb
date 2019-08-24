@@ -116,8 +116,8 @@ describe 'Checking Out', :js, :vcr do
       end
 
       it 'permits the market manager to add to the order' do
-        add_to_order_as_market_manager
         skip 'Fails intermittently, revisit w/ rails 5 transactional rollbacks in specs'
+        add_to_order_as_market_manager
         expect(page).to have_content('Order successfully updated')
         expect(page).to have_content('Kale')
       end
