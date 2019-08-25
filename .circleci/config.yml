@@ -91,3 +91,6 @@ jobs:
       # Save test results for timing analysis
       - store_test_results:
           path: test-results
+
+      - store_artifacts:
+          path: coverage
