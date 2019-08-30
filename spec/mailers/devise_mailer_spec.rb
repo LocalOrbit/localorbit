@@ -23,7 +23,17 @@ describe LocalOrbit::DeviseMailer do
   end
 
   describe 'reset_import_password_instructions' do
+    skip 'Remove if truly dead code'
+
     let(:mailer)   { LocalOrbit::DeviseMailer.reset_import_password_instructions(user, 'abc123') }
+
+    it 'has reply-to set to market manager' do
+      expect(mailer.reply_to).to contain_exactly('manager@market.com')
+    end
+  end
+
+  describe 'reset_password_instructions' do
+    let(:mailer)   { LocalOrbit::DeviseMailer.reset_password_instructions(user, 'abc123') }
 
     it 'has reply-to set to market manager' do
       expect(mailer.reply_to).to contain_exactly('manager@market.com')

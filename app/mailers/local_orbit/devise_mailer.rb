@@ -1,6 +1,10 @@
 module LocalOrbit
   class DeviseMailer < Devise::Mailer
+    include DeadCode
+
     def reset_import_password_instructions(user, token, opts={})
+      dead_code!
+
       @token = token
 
       if organization = user.organizations.first
@@ -9,6 +13,17 @@ module LocalOrbit
       end
 
       devise_mail(user, :reset_import_password_instructions, opts)
+    end
+
+    def reset_password_instructions(user, token, opts={})
+      @token = token
+
+      if organization = user.organizations.first
+        market = organization.original_market
+        opts[:reply_to] = market.try(:contact_email)
+      end
+
+      devise_mail(user, :reset_password_instructions, opts)
     end
 
     def invitation_instructions(user, token, opts = {})
