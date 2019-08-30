@@ -5,7 +5,7 @@ describe MarketMailer do
     let!(:fulton_farms) { create(:organization, :seller, name: "Fulton St. Farms") }
     let!(:ada_farms)    { create(:organization, :seller, name: "Ada Farms") }
 
-    let!(:market_in)  { create(:market, organizations: [fulton_farms], contact_phone: "616-123-4567") }
+    let!(:market_in)  { create(:market, organizations: [fulton_farms], contact_phone: "616-123-4567", contact_email: 'manager@market.com') }
     let!(:market_out) { create(:market, organizations: [ada_farms]) }
 
     let!(:delivery_schedule1) { create(:delivery_schedule, market: market_in, day: 5, order_cutoff: 24, buyer_pickup_start: "12:00 PM", buyer_pickup_end: "2:00 PM") }
@@ -17,6 +17,8 @@ describe MarketMailer do
     include_context "fresh sheet and newsletter subscription types"
 
     let!(:token) {"xyz--unsubscribe-me-987"}
+
+    let(:mailer) { MarketMailer.fresh_sheet(market: market_in, note: "Rockin") }
 
     it "only shows products for the given market" do
       user = create(:user)
@@ -33,23 +35,32 @@ describe MarketMailer do
       expect(fresh_sheet.body).to include(%|href="#{unsubscribe_subscriptions_url(host:market_in.domain, token:token)}"|)
     end
 
-    it "displays the fresh sheet note if present" do
-      fresh_sheet = MarketMailer.fresh_sheet(market: market_in, note: "Rockin")
+    it "displays the fresh sheet note" do
+      expect(mailer.body).to include("Rockin")
+    end
 
-      expect(fresh_sheet.body).to include("Rockin")
-      expect(fresh_sheet.body).not_to include("Click here to")
-      expect(fresh_sheet.body).not_to include(%|href="#{unsubscribe_subscriptions_url(token:token)}"|)
+    it 'shows unsubscribe link' do
+      expect(mailer.body).not_to include("Click here to")
+      expect(mailer.body).not_to include(%|href="#{unsubscribe_subscriptions_url(token:token)}"|)
+    end
+
+    it 'has reply-to set to market manager' do
+      expect(mailer.reply_to).to contain_exactly('manager@market.com')
     end
   end
 
   describe 'registration' do
-    let(:market)   { create(:market, organizations: [organization]) }
+    let(:market)   { create(:market, organizations: [organization], contact_email: 'manager@market.com') }
     let!(:manager) { create(:user, :market_manager, managed_markets: [market]) }
     let(:mailer)   { MarketMailer.registration(market, organization) }
 
     context 'new supplier mail' do
       let(:organization) { create(:organization, :seller, :single_location, active: false) }
       let!(:user)        { create(:user, :supplier, organizations: [organization]) }
+
+      it 'has reply-to set to market manager' do
+        expect(mailer.reply_to).to contain_exactly('manager@market.com')
+      end
 
       it 'is sent to market manager' do
         expect(mailer).to deliver_to([manager.email])

@@ -14,7 +14,7 @@ describe "Checking Out via Purchase Order", :js, :vcr do
 
   let(:market) { create(:market, :with_addresses,
                         payment_provider: PaymentProvider::Stripe.id,
-                        organizations: [buyer, fulton_farms, ada_farms], managers: [market_manager]) }
+                        organizations: [buyer, fulton_farms, ada_farms], managers: [market_manager], contact_email: 'manager@market.com') }
 
   let(:delivery_schedule) { create(:delivery_schedule, :percent_fee,  market: market, day: 5) }
   let(:delivery_day) { DateTime.parse("May 9, 2014, 11:00:00") }
@@ -194,6 +194,8 @@ describe "Checking Out via Purchase Order", :js, :vcr do
       sign_out
       sign_in_as(seller_user)
       open_email(seller_user.email)
+
+      expect(current_email).to reply_to('manager@market.com')
 
       expect(current_email).to have_subject("New order on #{market.name}")
       expect(current_email.default_part_body).to have_content("You have a new order!")
