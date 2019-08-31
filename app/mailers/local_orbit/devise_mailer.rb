@@ -7,10 +7,7 @@ module LocalOrbit
 
       @token = token
 
-      if organization = user.organizations.first
-        market = organization.original_market
-        opts[:reply_to] = market.try(:contact_email)
-      end
+      _set_reply_to(user, opts)
 
       devise_mail(user, :reset_import_password_instructions, opts)
     end
@@ -18,10 +15,7 @@ module LocalOrbit
     def reset_password_instructions(user, token, opts={})
       @token = token
 
-      if organization = user.organizations.first
-        market = organization.original_market
-        opts[:reply_to] = market.try(:contact_email)
-      end
+      _set_reply_to(user, opts)
 
       devise_mail(user, :reset_password_instructions, opts)
     end
@@ -45,12 +39,17 @@ module LocalOrbit
     end
 
     def confirmation_instructions(user, token, opts={})
+      _set_reply_to(user, opts)
+      super
+    end
+
+    private
+
+    def _set_reply_to(user, opts)
       if organization = user.organizations.first
         market = organization.original_market
         opts[:reply_to] = market.try(:contact_email)
       end
-
-      super
     end
   end
 end
