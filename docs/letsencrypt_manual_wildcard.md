@@ -8,7 +8,7 @@ credentials from Weston or Rob.
 
 Can see all certs, their expiries, and learn their heroku names with:
 
-    heroku certs --a localorbit-staging
+    heroku certs -a localorbit-staging
 
 There are [docs for the DNSMadeEasy letencrypt api options](https://github.com/Neilpang/acme.sh/tree/dev/dnsapi#9-use-dnsmadeeasy-domain-api), but you can just follow the specific instructions below.
 
@@ -16,8 +16,8 @@ There are [docs for the DNSMadeEasy letencrypt api options](https://github.com/N
 
 If it's the first run on your machine you need to setup these environment vars:
 
-    export ME_Key="secret from dnsmadeeasy"
-    export ME_Secret="secret from dnsmadeeasy"
+    export ME_Key="API key from dnsmadeeasy"
+    export ME_Secret="Secret key from dnsmadeeasy"
 
 then you can reissue the certs:
 
@@ -25,7 +25,7 @@ then you can reissue the certs:
 
 and update heroku with the new certs:
 
-    heroku certs:update /Users/weston/.acme.sh/next.localorbit.com/ca.cer /Users/weston/.acme.sh/next.localorbit.com/next.localorbit.com.cer /Users/weston/.acme.sh/next.localorbit.com/next.localorbit.com.key -a localorbit-staging
+    heroku certs:update ~/.acme.sh/next.localorbit.com/ca.cer ~/.acme.sh/next.localorbit.com/next.localorbit.com.cer ~/.acme.sh/next.localorbit.com/next.localorbit.com.key -a localorbit-staging
 
 Once you've run the acme.sh command above once the `ME_Key` and `ME_Secret` will get saved to your
 `~/.acme.sh/account.conf` and should not need to be set again.
@@ -34,4 +34,4 @@ Once you've run the acme.sh command above once the `ME_Key` and `ME_Secret` will
 
     acme.sh --issue --dns dns_me -d '*.localorbit.com'
 
-    heroku certs:update '/Users/weston/.acme.sh/*.localorbit.com/ca.cer' '/Users/weston/.acme.sh/*.localorbit.com/*.localorbit.com.cer' '/Users/weston/.acme.sh/*.localorbit.com/*.localorbit.com.key' -a localorbit-production
+    heroku certs:update ~/.acme.sh/\*.localorbit.com/ca.cer ~/.acme.sh/\*.localorbit.com/\*.localorbit.com.cer ~/.acme.sh/\*.localorbit.com/\*.localorbit.com.key -a localorbit-production

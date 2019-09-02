@@ -23,7 +23,6 @@ describe PackingLabels::OrderInfo do
   let!(:order) { create(:order, items: order_items, organization: buyer, market: market, delivery: delivery, order_number: order_number, total_cost: order_items.sum(&:gross_total)) }
 
   let(:host) { "the host" }
-  let(:qr_code) { "the QR code" }
 
   before do
     market.update(logo: dont_panic)
@@ -81,8 +80,6 @@ describe PackingLabels::OrderInfo do
     context "a normal Order" do
 
       it "returns an order_info" do
-        expect(PackingLabels::QrCode).to receive(:make_qr_code).with(order,host:host).and_return(qr_code)
-
         order_info = subject.make_order_info(order,host:host)
         expect(order_info).to eq({
           id: order.id,
@@ -91,7 +88,6 @@ describe PackingLabels::OrderInfo do
           buyer_name: buyer.name,
           zpl_logo: market.zpl_logo,
           market_logo_url: market.logo.url,
-          qr_code_url: qr_code,
           products: expected_product_infos
         })
       end
@@ -103,8 +99,6 @@ describe PackingLabels::OrderInfo do
       end
 
       it "includes a nil logo url" do
-        expect(PackingLabels::QrCode).to receive(:make_qr_code).with(order,host:host).and_return(qr_code)
-
         order_info = subject.make_order_info(order,host:host)
         expect(order_info).to eq({
           id: order.id,
@@ -113,7 +107,6 @@ describe PackingLabels::OrderInfo do
           buyer_name: buyer.name,
           market_logo_url: nil,
           zpl_logo: nil,
-          qr_code_url: qr_code,
           products: expected_product_infos
         })
       end
@@ -152,8 +145,6 @@ describe PackingLabels::OrderInfo do
     let(:orders) { delivery.orders }
 
     it "generates a list of order_infos based on a list of Orders" do
-      allow(PackingLabels::QrCode).to receive(:make_qr_code).and_return(qr_code)
-
       order_infos = subject.make_order_infos(orders:orders, host:host)
 
       expect(order_infos).to contain_exactly(
