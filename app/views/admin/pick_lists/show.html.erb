@@ -47,7 +47,7 @@
             <% end %>
           </div>
           <% end %>
-        
+
         </div>
       </div>
       <div class="table-wrapper">
@@ -58,9 +58,8 @@
             <th>Total Sold</th>
             <th>Units</th>
             <th>Buyer</th>
-            <th>Breakdown</th>
-            <th>Initials</th>
-            <th>Notes</th>
+            <th>Buyer Subtotal</th>
+            <th>Lots</th>
           </tr>
 
         <% pick_list.products.each do |product| %>
@@ -71,8 +70,7 @@
             <td class="units"><%= product.unit %></td>
             <td class="buyer"><%= product.first_buyer.name %></td>
             <td class="breakdown"><%= product.breakdown(product.first_buyer) %></td>
-            <td class="initials"></td>
-            <td class="notes"></td>
+            <td class="lots"><%= product.lots(product.first_buyer) %></td>
           </tr>
           <% product.remaining_buyers.each do |buyer| %>
             <tr>
@@ -82,8 +80,7 @@
               <td></td>
               <td class="buyer"><%= buyer.name %></td>
               <td class="breakdown"><%= product.breakdown(buyer) %></td>
-              <td></td>
-              <td></td>
+              <td class="lots"><%= product.lots(buyer) %></td>
             </tr>
           <% end %>
         <% end %>

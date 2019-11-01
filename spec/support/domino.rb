@@ -872,6 +872,7 @@ module Dom
       attribute :total_sold
       attribute :buyer
       attribute :breakdown
+      attribute :lots
     end
 
     class PackList < Domino

@@ -24,7 +24,7 @@ class PickListPresenter
     def name
       @product.name
     end
-    
+
     def total_sold
       @total_sold ||= @items.sum(&:quantity)
     end
@@ -32,8 +32,12 @@ class PickListPresenter
     def unit
       @unit ||= total_sold == 1 ? @product.unit_singular : @product.unit_plural
     end
-    
-    def breakdown(buyer, sep = "<br/>")
+
+    def breakdown(buyer)
+      text = buyer.quantity.to_s
+    end
+
+    def lots(buyer, sep = "<br/>")
       text = ""
       if buyer.lots.present?
         lots_shown = 0
@@ -45,11 +49,6 @@ class PickListPresenter
           quantity_shown += lot.quantity
           line_sep = sep
         end
-        if quantity_shown < buyer.quantity || lots_shown > 1
-          text << "#{line_sep}Buyer Total: #{buyer.quantity}"
-        end
-      else
-        text << buyer.quantity.to_s
       end
       text.html_safe
     end
