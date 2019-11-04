@@ -23,8 +23,6 @@ class Admin::PickListsController < AdminController
         market_id = params[:market_id]
       end
 
-      #market_id = Market.managed_by(current_user).pluck(:id)
-
       if current_user.buyer_only? || current_user.market_manager?
         d_scope = "DATE(deliveries.buyer_deliver_on) = '#{dte}'"
       else

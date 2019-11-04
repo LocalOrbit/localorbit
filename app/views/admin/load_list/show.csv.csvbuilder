@@ -1,0 +1,30 @@
+csv << ["Buyer Fulfillment Date",
+        "Buyer Fulfillment Method",
+        "Buyer Fulfillment Location",
+        "Buyer",
+        "Item",
+        "Quantity",
+        "Units",
+        "Supplier"]
+
+@load_lists.each_with_index do |load_list, index|
+  load_list.order_items.each do |order_item|
+    location = if load_list.buyer_pickup?
+      load_list.buyer_delivery_location_label + ', ' + load_list.buyer_pickup_location.address + ', ' +
+        load_list.buyer_pickup_location.city + ', ' + load_list.buyer_pickup_location.state + ' ' + load_list.buyer_pickup_location.zip
+    else
+      order_item.order.delivery_address + ', ' + order_item.order.delivery_city + ', ' + order_item.order.delivery_state + ' ' + order_item.order.delivery_zip
+    end
+
+    csv << [
+      load_list.delivery.get_buyer_deliver_on,
+      load_list.buyer_delivery_method,
+      location,
+      order_item.order.organization.name,
+      order_item.name,
+      order_item.quantity,
+      order_item.unit,
+      order_item.product.organization.name
+    ]
+  end
+end

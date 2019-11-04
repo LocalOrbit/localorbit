@@ -2,9 +2,6 @@ Rails.application.routes.draw do
 
   mount StripeEvent::Engine, at: '/webhooks/stripe'
 
-  # mount API::Base, at: "/"
-  # mount API::GrapeSwaggerRails::Engine, at: "/documentation"
-
   resource :style_guide, only: :show, controller: :style_guide
 
   get '*path', constraints: NonMarketDomain.new, format: false,
@@ -190,6 +187,8 @@ Rails.application.routes.draw do
 
       get "order_summary_date(/:deliver_on)", to: "order_summaries#show"
 
+      resources :load_list, param: :deliver_on, only: :show
+
       resources :deliveries, param: :deliver_on do
         resources :packing_labels, :controller=>"/deliveries/packing_labels", only: [:show, :index]
         resources :individual_packing_labels, :controller=>"/deliveries/packing_labels", only: [:show, :index]
@@ -248,28 +247,6 @@ Rails.application.routes.draw do
         get :peek, to: "invoices#peek"
       end
     end
-
-    # resources :consignment_receipts, only: :show do
-    #   member do
-    #     get "consignment_receipt" => "consignment_receipts#show"
-    #     get :await_pdf, to: "consignment_receipts#await_pdf"
-    #     get :peek, to: "consignment_receipts#peek"
-    #   end
-    # end
-    #
-    # resources :consignment_pick_lists, only: :show do
-    #   member do
-    #     get "consignment_pick_list" => "consignment_pick_list#show"
-    #     get :await_pdf, to: "consignment_pick_lists#await_pdf"
-    #     get :peek, to: "consignment_pick_lists#peek"
-    #   end
-    # end
-    #
-    # resources :batch_consignment_receipts, only: :show do
-    #   member do
-    #     get :progress
-    #   end
-    # end
 
     resources :batch_consignment_printables, only: :show do
       member do

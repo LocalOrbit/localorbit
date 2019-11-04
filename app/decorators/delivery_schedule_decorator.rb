@@ -49,7 +49,7 @@ class DeliveryScheduleDecorator < Draper::Decorator
       str += " at #{addr.address} #{addr.city}, #{addr.state} #{addr.zip}."
       str += " For Buyer pick up/delivery #{buyer_weekday.pluralize} from #{buyer_pickup_start} to #{buyer_pickup_end}."
     end
-    
+
     if html
       raw(str)
     else

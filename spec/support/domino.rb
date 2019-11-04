@@ -875,6 +875,16 @@ module Dom
       attribute :lots
     end
 
+    class LoadListItem < Domino
+      selector ".load-list-item"
+
+      attribute :buyer
+      attribute :product
+      attribute :quantity
+      attribute :units
+      attribute :supplier
+    end
+
     class PackList < Domino
       selector ".pack-list"
 

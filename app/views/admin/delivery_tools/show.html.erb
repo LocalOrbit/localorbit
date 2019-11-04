@@ -22,7 +22,7 @@
           <span class="market"><strong><%= delivery.delivery_schedule.market.name %></strong></span><br><br>
           <h2 class="upcoming-delivery-date"><%= delivery.upcoming_delivery_date_heading(current_user) %></h2>
 
-          <% dc = UserDeliveryContext.build(user: current_user, delivery: delivery) 
+          <% dc = UserDeliveryContext.build(user: current_user, delivery: delivery)
              access_master_packing_slips = FeatureAccess.master_packing_slips?(user_delivery_context: dc) && policy(:all_supplier).index?
              access_packing_labels = FeatureAccess.packing_labels?(user_delivery_context: dc)
              tool_count = 3
@@ -30,13 +30,11 @@
              tool_count += 2 if access_packing_labels
           %>
           <div class="seller-tools toolbar" data-tools="<%= tool_count %>">
-            <% if FeatureAccess.not_LE_market_manager?(user:current_user, market: current_market) %>
-              <div class="tool"><%= link_to "Pick List", "/admin/delivery_tools/pick_list_date/" + delivery_date + "?market_id=#{delivery.delivery_schedule.market.id}" %></div>
-            <% end %>
+            <div class="tool"><%= link_to "Pick List", "/admin/delivery_tools/pick_list_date/" + delivery_date + "?market_id=#{delivery.delivery_schedule.market.id}" %></div>
             <% if access_master_packing_slips %>
               <div class="tool"><%= link_to "Master Packing Slips <span class='note'>for aggregation</span>".html_safe, "/admin/delivery_tools/pack_list_date/" + delivery_date + "?market_id=#{delivery.delivery_schedule.market.id}" %></div>
-            <% end %>
-            <% if FeatureAccess.not_LE_market_manager?(user:current_user, market: current_market) %>
+              <div class="tool"><%= link_to "Master Load List <span class='note'>for aggregation</span>".html_safe, "/admin/delivery_tools/load_list/" + delivery_date + "?market_id=#{delivery.delivery_schedule.market.id}" %></div>
+            <% elsif %>
               <div class="tool"><%= link_to policy(:all_supplier).index? ? "Individual Packing Slips <span class='note'>per Supplier</span>".html_safe : "Packing Slips", "/admin/delivery_tools/individual_pack_list_date/" + delivery_date + "?market_id=#{delivery.delivery_schedule.market.id}" %></div>
             <% end %>
             <div class="tool"><%= link_to "Order Summary", "/admin/delivery_tools/order_summary_date/" + delivery_date + "?market_id=#{delivery.delivery_schedule.market.id}" %></div>
