@@ -61,9 +61,13 @@ module CSVExport
     private
 
     def buyer_type(order_item)
-      return '' if order_item.order.organization.buyer_org_type.nil?
-
-      order_item.order.organization.buyer? ? order_item.order.organization.buyer_org_type : 'Supplier'
+      if order_item.order.organization.supplier?
+        'Supplier'
+      elsif order_item.order.organization.buyer_org_type.nil?
+        ''
+      else
+        order_item.order.organization.buyer_org_type
+      end
     end
   end
 end
